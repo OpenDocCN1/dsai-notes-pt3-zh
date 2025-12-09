@@ -2,6 +2,7 @@
 +   [fast.ai 深度学习笔记](docs/fastai-dl/README.md)
 +   [fast.ai 机器学习笔记](docs/fastai-ml/README.md)
 +   [fast.ai 数值线性代数讲义中文版 v2](docs/fastai-num-linalg-v2/README.md)
++   [哈佛 CS249r：机器学习系统](docs/hav-cs249r-mlsys/README.md)
 +   [MIT 6.0001：Python 计算和编程入门第三版](docs/intr-comp-prog-py/README.md)
 +   [大语言模型系列综述](docs/llm-survey/README.md)
 +   [MIT 18.06 线性代数笔记](docs/mit-18.06-linalg-notes/README.md)
