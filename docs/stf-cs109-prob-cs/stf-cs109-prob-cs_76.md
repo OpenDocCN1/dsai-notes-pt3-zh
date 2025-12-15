@@ -20,7 +20,7 @@
 
 ## 从样本中估计均值和方差
 
-我们假设我们观察到的数据是从同一潜在分布（$F$）中独立同分布（IID）的，具有真实的均值（$\mu$）和真实的方差（$\sigma²$）。由于我们无法与不丹的所有人交谈，我们必须依靠我们的样本来估计均值和方差。从我们的样本中，我们可以计算出样本均值（$\bar{X}$）和样本方差（$S²$）。这些是我们对真实均值和真实方差的最好猜测。 \begin{align*} \bar{X} &= \sum_{i=1}^n \frac{X_i}{n} \\ S² &= \frac{1}{n-1}\sum_{i=1}^n (X_i - \bar{X})² \end{align*} 第一个问题要问的是，这些估计是无偏的吗？是的。无偏意味着如果我们重复进行许多次抽样过程，我们估计的期望值应该等于我们试图估计的真实值。我们将证明这一点对于$\bar{X}$。$S²$的证明在讲义中。 \begin{align*} E[\bar{X}] &= E[\sum_{i=1}^n \frac{X_i}{n}] = \frac{1}{n}E\left[\sum_{i=1}^n X_i\right] \\ &= \frac{1}{n}\sum_{i=1}^n E[X_i] = \frac{1}{n}\sum_{i=1}^n \mu = \frac{1}{n}n\mu = \mu \end{align*}
+我们假设我们观察到的数据是从同一潜在分布（$F$）中独立同分布（IID）的，具有真实的均值（$\mu$）和真实的方差（$\sigma²$）。由于我们无法与不丹的所有人交谈，我们必须依靠我们的样本来估计均值和方差。从我们的样本中，我们可以计算出样本均值（$\bar{X}$）和样本方差（$S²$）。这些是我们对真实均值和真实方差的最好猜测。 $$\begin{align*} \bar{X} &= \sum_{i=1}^n \frac{X_i}{n} \\ S² &= \frac{1}{n-1}\sum_{i=1}^n (X_i - \bar{X})² \end{align*}$$ 第一个问题要问的是，这些估计是无偏的吗？是的。无偏意味着如果我们重复进行许多次抽样过程，我们估计的期望值应该等于我们试图估计的真实值。我们将证明这一点对于$\bar{X}$。$S²$的证明在讲义中。 $$\begin{align*} E[\bar{X}] &= E[\sum_{i=1}^n \frac{X_i}{n}] = \frac{1}{n}E\left[\sum_{i=1}^n X_i\right] \\ &= \frac{1}{n}\sum_{i=1}^n E[X_i] = \frac{1}{n}\sum_{i=1}^n \mu = \frac{1}{n}n\mu = \mu \end{align*}$$
 
 样本均值的方程似乎与我们对期望的理解有关。同样可以说样本方差，除了方程分母中令人惊讶的$(n-1)$。为什么是$(n-1)$？那个分母是必要的，以确保$E[S²] = \sigma²$。
 
@@ -28,7 +28,7 @@
 
 ## 标准误差
 
-好的，你让我相信我们对均值和方差的估计是无偏的。但现在我想知道我的样本均值相对于真实均值可能会变化多少。 \begin{align*} \text{Var}(\bar{X}) &= \text{Var}(\sum_{i=1}^n \frac{X_i}{n}) = \left(\frac{1}{n}\right)² \text{Var}\left(\sum_{i=1}^n X_i\right) \\ &= \left(\frac{1}{n}\right)² \sum_{i=1}^n\text{Var}( X_i) =\left(\frac{1}{n}\right)² \sum_{i=1}^n \sigma² = \left(\frac{1}{n}\right)² n \sigma² = \frac{\sigma²}{n}\\ &\approx \frac{S²}{n} \\ \text{Std}(\bar{X}) &\approx \sqrt{\frac{S²}{n}} \end{align*}
+好的，你让我相信我们对均值和方差的估计是无偏的。但现在我想知道我的样本均值相对于真实均值可能会变化多少。 $$\begin{align*} \text{Var}(\bar{X}) &= \text{Var}(\sum_{i=1}^n \frac{X_i}{n}) = \left(\frac{1}{n}\right)² \text{Var}\left(\sum_{i=1}^n X_i\right) \\ &= \left(\frac{1}{n}\right)² \sum_{i=1}^n\text{Var}( X_i) =\left(\frac{1}{n}\right)² \sum_{i=1}^n \sigma² = \left(\frac{1}{n}\right)² n \sigma² = \frac{\sigma²}{n}\\ &\approx \frac{S²}{n} \\ \text{Std}(\bar{X}) &\approx \sqrt{\frac{S²}{n}} \end{align*}$$
 
 这个术语，Std($\bar{X}$)，有一个特殊的名称。它被称为标准误差，这是你在科学论文中报告均值估计的不确定性（以及如何获得误差条）的方式。太好了！现在我们可以为不丹人计算所有这些美好的统计数据。但等等！你从未告诉我如何计算 Std($S²$)。这是很难的，因为中心极限定理不适用于$S²$的计算。相反，我们需要一种更通用的技术。参见下一章：Bootstrapping
 

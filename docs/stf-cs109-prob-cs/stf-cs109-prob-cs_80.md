@@ -14,7 +14,7 @@
 
 设 $X$ 和 $Y$ 为离散随机变量
 
-\begin{align*} \text{TV}(X, Y) = \frac{1}{2} \sum_{i} |\P(X = i) - \P(Y = i)| \end{align*}
+$$\begin{align*} \text{TV}(X, Y) = \frac{1}{2} \sum_{i} |\P(X = i) - \P(Y = i)| \end{align*}$$
 
 ### 地球迁移距离
 
@@ -30,7 +30,7 @@
 
 设 $X$ 和 $Y$ 为离散随机变量
 
-\begin{align*} \text{KL}(X, Y) &= \sum_{x \in X} \text{ExcessSurprise}(x) \cdot P(X=x) \\ &= \sum_{x \in X} \Big[\text{Surprise}_X(x) - \text{Surprise}_Y(x)\Big] \cdot P(X=x) \\ &= \sum_{x \in X} \Big[\log_2\frac{1}{P(Y=x)} - \log_2 \frac{1}{P(X=x)}\Big] \cdot P(X=x) \\ &= \sum_{x \in X} - \log_2 P(Y=x) + \log_2 P(X=x) \cdot P(X=x) \\ &= \sum_{x \in X} \log_2 \frac{P(X=x)}{P(Y=x) } \cdot P(X=x) \\ \end{align*}
+$$\begin{align*} \text{KL}(X, Y) &= \sum_{x \in X} \text{ExcessSurprise}(x) \cdot P(X=x) \\ &= \sum_{x \in X} \Big[\text{Surprise}_X(x) - \text{Surprise}_Y(x)\Big] \cdot P(X=x) \\ &= \sum_{x \in X} \Big[\log_2\frac{1}{P(Y=x)} - \log_2 \frac{1}{P(X=x)}\Big] \cdot P(X=x) \\ &= \sum_{x \in X} - \log_2 P(Y=x) + \log_2 P(X=x) \cdot P(X=x) \\ &= \sum_{x \in X} \log_2 \frac{P(X=x)}{P(Y=x) } \cdot P(X=x) \\ \end{align*}$$
 
 这里是计算每年观察到的飓风概率质量函数与预测的泊松分布差异的示例代码
 

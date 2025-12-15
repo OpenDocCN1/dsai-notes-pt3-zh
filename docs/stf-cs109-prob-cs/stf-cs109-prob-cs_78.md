@@ -8,7 +8,7 @@
 
 **总期望定律**
 
-总期望定律为你提供了一种在计算 $\E[X|Y=y]$（其中 $Y$ 是另一个随机变量）更容易的情况下计算 $\E[X]$ 的方法：\begin{align*} \E[X] &= \sum_y \E[X|Y=y] \p(Y=y) \end{align*}
+总期望定律为你提供了一种在计算 $\E[X|Y=y]$（其中 $Y$ 是另一个随机变量）更容易的情况下计算 $\E[X]$ 的方法：$$\begin{align*} \E[X] &= \sum_y \E[X|Y=y] \p(Y=y) \end{align*}$$
 
 ## 分布式文件系统
 
@@ -22,7 +22,7 @@
 
 总期望定律为计算 $\E[T]$ 提供了一种直接的方法：
 
-\begin{align*} \E[T] &= \sum_l \E[T|L=l] \p(L=l)\\ &= 0.5 \cdot 0.3 + 0.2 \cdot 20.7 + 0.3 \cdot 96.7\\ &= 33.3 \text{ 秒} \end{align*}
+$$\begin{align*} \E[T] &= \sum_l \E[T|L=l] \p(L=l)\\ &= 0.5 \cdot 0.3 + 0.2 \cdot 20.7 + 0.3 \cdot 96.7\\ &= 33.3 \text{ 秒} \end{align*}$$
 
 ## 递归代码的玩具示例
 
@@ -41,10 +41,10 @@ def recurse():
 
 为了解决这个问题，我们需要使用总期望定律，将 $X$ 作为背景变量。
 
-\begin{align*} \E[Y] = &\sum_{i \in \{1,2,3\}} \E[Y|X=i] \P(X=i)\\ =&\E[Y|X=1] \P(X=1) \\& + \E[Y|X=2] \P(X=2) \\&+ \E[Y|X=3] \P(X=3) \end{align*} 我们知道对于 $x \in \{1,2,3\}$，概率 $\P(X=x) = \frac{1}{3}$。我们如何计算像 $\E[Y|X=2]$ 这样的值呢？嗯，那是在 $X=2$ 的世界里你的期望回报。在这种情况下，你将返回 5 + recurse()。这个期望是 $5 + \E[Y]$。将每个情况下的类似结果代入，我们可以继续我们的解决方案：\begin{align*} E[Y|X=1] &= 3\\ E[Y|X=2] &= 5 + \E[Y]\\ E[Y|X=3] &= 7 + \E[Y]\\ \end{align*} 现在我们可以将值代入总期望定律：\begin{align*} \E[Y] = &\sum_{i \in \{1,2,3\}} \E[Y|X=i] \P(X=i)\\ =&\E[Y|X=1] \P(X=1) \\& + \E[Y|X=2] \P(X=2) \\&+ \E[Y|X=3] \P(X=3) \\ =&3 \cdot 1/3 \\ &+ (5 + \E[Y]) \cdot 1/3\\ &+ (7 + \E[Y]) \cdot 1/3\\ = &(15 + 2\E[Y]) \cdot 1/3 \\ 1/3 \cdot \E[Y] = &5 \\ \E[Y] = &15 \end{align*}
+$$\begin{align*} \E[Y] = &\sum_{i \in \{1,2,3\}} \E[Y|X=i] \P(X=i)\\ =&\E[Y|X=1] \P(X=1) \\& + \E[Y|X=2] \P(X=2) \\&+ \E[Y|X=3] \P(X=3) \end{align*}$$ 我们知道对于 $x \in \{1,2,3\}$，概率 $\P(X=x) = \frac{1}{3}$。我们如何计算像 $\E[Y|X=2]$ 这样的值呢？嗯，那是在 $X=2$ 的世界里你的期望回报。在这种情况下，你将返回 5 + recurse()。这个期望是 $5 + \E[Y]$。将每个情况下的类似结果代入，我们可以继续我们的解决方案：$$\begin{align*} E[Y|X=1] &= 3\\ E[Y|X=2] &= 5 + \E[Y]\\ E[Y|X=3] &= 7 + \E[Y]\\ \end{align*}$$ 现在我们可以将值代入总期望定律：$$\begin{align*} \E[Y] = &\sum_{i \in \{1,2,3\}} \E[Y|X=i] \P(X=i)\\ =&\E[Y|X=1] \P(X=1) \\& + \E[Y|X=2] \P(X=2) \\&+ \E[Y|X=3] \P(X=3) \\ =&3 \cdot 1/3 \\ &+ (5 + \E[Y]) \cdot 1/3\\ &+ (7 + \E[Y]) \cdot 1/3\\ = &(15 + 2\E[Y]) \cdot 1/3 \\ 1/3 \cdot \E[Y] = &5 \\ \E[Y] = &15 \end{align*}$$
 
 ## 总期望定律的证明
 
 让我们来证明总期望定律。在这个证明中，我们将从 $\sum_y E[X|Y=y]P(Y=y)$ 开始，并展示它等于 $E[X]$。我们的第一步将是展开 $E[X|Y=y]$。证明的其余部分将只是代数运算：
 
-\begin{align*}\sum_y& E[X|Y=y]P(Y=y) \\ &= \sum_y\sum_x x P(X =x | Y = y) P(Y = y) \\ &= \sum_y\sum_x x P(X =x , Y = y)  \\ &= \sum_x\sum_y x P(X =x , Y = y)  \\ &= \sum_x x \sum_y  P(X =x , Y = y)  \\ &= \sum_x x P(X =x)  \\ &= E[X]\end{align*}
+$$\begin{align*}\sum_y& E[X|Y=y]P(Y=y) \\ &= \sum_y\sum_x x P(X =x | Y = y) P(Y = y) \\ &= \sum_y\sum_x x P(X =x , Y = y)  \\ &= \sum_x\sum_y x P(X =x , Y = y)  \\ &= \sum_x x \sum_y  P(X =x , Y = y)  \\ &= \sum_x x P(X =x)  \\ &= E[X]\end{align*}$$

@@ -68,7 +68,7 @@ obs_1 = {
 
 ### 推断能力
 
-我们的首要任务是编写代码，根据观察结果更新我们的 $A$ 的概率质量函数。首先，让我们考虑如何根据单个观察结果 $\text{obs}$（顺便说一句：形式上这是随机变量 $\text{Obs}$ 取值为 $\text{obs}$ 的事件）更新我们对视觉能力的信念。我们可以使用 随机变量的贝叶斯定理：\begin{align*} \P(A=a|\text{obs}) &= \frac{\P(\text{obs}|A=a)P(A=a)}{\P(\text{obs})}\end{align*} 这将在对视觉能力的每个赋值 $a$ 的 `for` 循环内部进行计算。我们如何计算贝叶斯定理表达式中每个项？我们已经有先验 $\p(A=a)$ 的值，我们可以使用全概率公式计算分母 $\p(\text{obs})$：\begin{align*} \P(\text{obs}) &= \sum_x \P(\text{obs}, A=x) && \href{ ../../part1/law_total/}{\text{LOTP}} \\ &= \sum_x P(\text{obs} | A=x)P(A=x)&&\text{链式法则} \end{align*} 注意到这个新的 $\p(\text{obs})$ 表达式中的项已经出现在贝叶斯定理方程的分子中。因此，在代码中我们将（1）为每个 $a$ 的值计算分子，将其存储为信念的值，（2）计算所有这些项的总和，（3）将每个信念值除以总和。执行步骤 2 和 3 的过程也被称为归一化：
+我们的首要任务是编写代码，根据观察结果更新我们的 $A$ 的概率质量函数。首先，让我们考虑如何根据单个观察结果 $\text{obs}$（顺便说一句：形式上这是随机变量 $\text{Obs}$ 取值为 $\text{obs}$ 的事件）更新我们对视觉能力的信念。我们可以使用 随机变量的贝叶斯定理：$$\begin{align*} \P(A=a|\text{obs}) &= \frac{\P(\text{obs}|A=a)P(A=a)}{\P(\text{obs})}\end{align*}$$ 这将在对视觉能力的每个赋值 $a$ 的 `for` 循环内部进行计算。我们如何计算贝叶斯定理表达式中每个项？我们已经有先验 $\p(A=a)$ 的值，我们可以使用全概率公式计算分母 $\p(\text{obs})$：$$\begin{align*} \P(\text{obs}) &= \sum_x \P(\text{obs}, A=x) && \href{ ../../part1/law_total/}{\text{LOTP}} \\ &= \sum_x P(\text{obs} | A=x)P(A=x)&&\text{链式法则} \end{align*}$$ 注意到这个新的 $\p(\text{obs})$ 表达式中的项已经出现在贝叶斯定理方程的分子中。因此，在代码中我们将（1）为每个 $a$ 的值计算分子，将其存储为信念的值，（2）计算所有这些项的总和，（3）将每个信念值除以总和。执行步骤 2 和 3 的过程也被称为归一化：
 
 ```py
 def update_belief(belief, obs):
@@ -128,13 +128,13 @@ calc_likelihood(a = 0.5, obs)
 
 **注意 1**：在计算似然项 $\p(\text{obs}|A=a)$ 时，我们不需要估计 $A$，因为它出现在条件式的右侧。在似然项中，我们被告知 *确切地* 了解一个人的视力有多好。他们的视力确实是 $a$。不要被 $a$ 是一个（非随机）变量的事实所迷惑。在计算似然函数时，这个变量将有一个数值。
 
-**注意 2**：变量 `obs` 代表一次单独的患者互动。它包含两部分：字体大小和一个布尔值，表示患者是否正确地收到了信件。然而，我们认为字体大小不是一个随机变量。相反，我们认为它是一个由计算机固定的常数。因此，$\p(\text{obs}|A=a)$ 可以简化为 $\p(\text{correct}|A=a)$。"correct" 是指随机变量 Correct 取 `True` 或 `False` 值的事件：\begin{align*} \p(&\text{obs}|A=a) \\ &= \p(\text{correct}, f|A=a) && \text{obs 是一个元组} \\ &= \p(\text{correct}|A=a) && f \text{ 是一个常数} \end{align*}
+**注意 2**：变量 `obs` 代表一次单独的患者互动。它包含两部分：字体大小和一个布尔值，表示患者是否正确地收到了信件。然而，我们认为字体大小不是一个随机变量。相反，我们认为它是一个由计算机固定的常数。因此，$\p(\text{obs}|A=a)$ 可以简化为 $\p(\text{correct}|A=a)$。"correct" 是指随机变量 Correct 取 `True` 或 `False` 值的事件：$$\begin{align*} \p(&\text{obs}|A=a) \\ &= \p(\text{correct}, f|A=a) && \text{obs 是一个元组} \\ &= \p(\text{correct}|A=a) && f \text{ 是一个常数} \end{align*}$$
 
 定义似然函数 $\p(\text{correct}|A=a)$ 涉及更多的医学和教育理论，而不是概率理论。你不需要为这门课程了解这些！但了解这些仍然很有趣，而且没有似然函数，我们不会有完整的代码。所以，让我们深入探讨。
 
-视力测试似然函数的一个非常实用的起点来自一个经典的教育模型，称为 "[项目反应理论](https://en.wikipedia.org/wiki/Item_response_theory)"，也称为 IRT。IRT *假设* 一个能力为 $a$ 的学生得到难度为 $d$ 的问题正确的概率是由一个容易计算的函数控制的：\begin{align*} \p(&\text{Correct} = \text{True}|a) \\ &= \text{sigmoid}(a-d) && d \text{ 是难度} \\ &= \frac{1}{1+e^{-(a-d)}} \\ \end{align*} 其中 $e$ 是 [自然对数底数](https://en.wikipedia.org/wiki/E_(mathematical_constant)) 常数，$\text{sigmoid}(x) = \frac{1}{1+e^{-x}}$。[Sigmoid 函数](https://en.wikipedia.org/wiki/Sigmoid_function) 是一个方便的函数，它接受任何实数值输入，并返回一个在 $[0, 1]$ 范围内的对应值。
+视力测试似然函数的一个非常实用的起点来自一个经典的教育模型，称为 "[项目反应理论](https://en.wikipedia.org/wiki/Item_response_theory)"，也称为 IRT。IRT *假设* 一个能力为 $a$ 的学生得到难度为 $d$ 的问题正确的概率是由一个容易计算的函数控制的：$$\begin{align*} \p(&\text{Correct} = \text{True}|a) \\ &= \text{sigmoid}(a-d) && d \text{ 是难度} \\ &= \frac{1}{1+e^{-(a-d)}} \\ \end{align*}$$ 其中 $e$ 是 [自然对数底数](https://en.wikipedia.org/wiki/E_(mathematical_constant)) 常数，$\text{sigmoid}(x) = \frac{1}{1+e^{-x}}$。[Sigmoid 函数](https://en.wikipedia.org/wiki/Sigmoid_function) 是一个方便的函数，它接受任何实数值输入，并返回一个在 $[0, 1]$ 范围内的对应值。
 
-这个 IRT 模型引入了一个新的常数：字母的难度$d$。正确响应给定字号的字母有多难？在考虑大字号比小字号更容易的情况下，建模难度的最简单方法是将字号为$f$的字母的难度定义为$d = 1-f$。将这个值代入：\begin{align*} \p(&\text{Correct} = \text{True}|a)\\ &= \text{sigmoid}(a-[1-f])\\ &= \text{sigmoid}(a-1+f)\\ &= \frac{1}{1+e^{-(a-1+f)}} \end{align*} 现在我们有一个完整、尽管简单化的似然函数！在代码中，它看起来会是这样：
+这个 IRT 模型引入了一个新的常数：字母的难度$d$。正确响应给定字号的字母有多难？在考虑大字号比小字号更容易的情况下，建模难度的最简单方法是将字号为$f$的字母的难度定义为$d = 1-f$。将这个值代入：$$\begin{align*} \p(&\text{Correct} = \text{True}|a)\\ &= \text{sigmoid}(a-[1-f])\\ &= \text{sigmoid}(a-1+f)\\ &= \frac{1}{1+e^{-(a-1+f)}} \end{align*}$$ 现在我们有一个完整、尽管简单化的似然函数！在代码中，它看起来会是这样：
 
 ```py
 def calc_likelihood(a, obs):

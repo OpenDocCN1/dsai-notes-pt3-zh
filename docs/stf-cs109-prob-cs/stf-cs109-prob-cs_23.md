@@ -24,4 +24,4 @@
 
 1.  选择剩余的 $12 - i$ 条边的位置。这些边可以连接到除了与我们的节点相连的 9 条边之外的任何 $k$ 个位置。
 
-因此答案是 \begin{align*} P(E) &= \frac{|E|}{|S|} \\ &= \frac{\binom{9}{i} \binom{k-9}{12-i}}{\binom k {12}}. \end{align*}
+因此答案是 $$\begin{align*} P(E) &= \frac{|E|}{|S|} \\ &= \frac{\binom{9}{i} \binom{k-9}{12-i}}{\binom k {12}}. \end{align*}$$

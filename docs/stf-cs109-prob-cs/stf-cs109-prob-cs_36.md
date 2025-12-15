@@ -22,7 +22,7 @@
 
 ***定义***：连续随机变量
 
-如果存在一个概率密度函数（PDF）$f(x)$，它接受实数值$x$，那么$X$是一个连续随机变量：$$ \begin{align*} &\P(a \leq X \leq b) = \int_a^b f(x) \d x \end{align*} $$ 以下性质也必须成立。这些性质保持了公理，即$\P(a \leq X \leq b)$是一个概率：$$ \begin{align*} &0 \leq \P(a \leq X \leq b) \leq 1 \\ &\P(-\infty < X < \infty) = 1 \end{align*} $$
+如果存在一个概率密度函数（PDF）$f(x)$，它接受实数值$x$，那么$X$是一个连续随机变量：$$ $$\begin{align*} &\P(a \leq X \leq b) = \int_a^b f(x) \d x \end{align*}$$ $$ 以下性质也必须成立。这些性质保持了公理，即$\P(a \leq X \leq b)$是一个概率：$$ $$\begin{align*} &0 \leq \P(a \leq X \leq b) \leq 1 \\ &\P(-\infty < X < \infty) = 1 \end{align*}$$ $$
 
 一个常见的误解是将$f(x)$视为一个概率。它实际上是所谓的概率密度。它表示概率/单位$X$。通常，这只有在我们对 PDF 进行积分或比较概率密度时才有意义。正如我们讨论概率密度时所提到的，一个连续随机变量取特定值（无限精度）的概率是 0。
 
@@ -34,18 +34,18 @@ $$ \P(X = a) = \int_a^a f(x) \d x = 0 $$
 
 拥有一个概率密度函数是很好的，但这意味着我们每次想要计算一个概率时都必须求解一个积分。为了避免这种不幸的命运，我们将使用一个称为累积分布函数（CDF）的标准。累积分布函数是一个函数，它接受一个数字并返回随机变量取值小于该数字的概率。它有一个令人愉快的特性，即如果我们有一个随机变量的累积分布函数，我们就不需要积分来回答概率问题！
 
-对于连续随机变量$X$，累积分布函数，记作$F(x)$，为：$$ \begin{align*} &F(x) = P(X \leq x) = \int_{-\infty}^{x} f(x)\d x \end{align*} $$
+对于连续随机变量$X$，累积分布函数，记作$F(x)$，为：$$ $$\begin{align*} &F(x) = P(X \leq x) = \int_{-\infty}^{x} f(x)\d x \end{align*}$$ $$
 
-为什么 CDF 是随机变量取值小于输入值而不是大于的概率？这是一个惯例问题。但这是一个有用的惯例。大多数概率问题都可以通过了解 CDF（并利用积分从$-\infty$到$\infty$的结果为 1 的事实）简单解决。以下是一些仅使用 CDF 回答概率问题的例子：\begin{align*} &\text{概率查询} && \text{解决方案} && \text{解释} \\ &\P(X < a) && F(a) && \text{这是 CDF 的定义}\\ &\P(X \leq a) && F(a) && \text{技巧问题。 }\P(X = a) = 0\\ &\P(X > a) && 1 - F(a) && \P(X < a) + \P(X > a) = 1 \\ &\P(a < X < b) && F(b) - F(a) && F(a) + \P(a < X < b) = F(b)\\ \end{align*}
+为什么 CDF 是随机变量取值小于输入值而不是大于的概率？这是一个惯例问题。但这是一个有用的惯例。大多数概率问题都可以通过了解 CDF（并利用积分从$-\infty$到$\infty$的结果为 1 的事实）简单解决。以下是一些仅使用 CDF 回答概率问题的例子：$$\begin{align*} &\text{概率查询} && \text{解决方案} && \text{解释} \\ &\P(X < a) && F(a) && \text{这是 CDF 的定义}\\ &\P(X \leq a) && F(a) && \text{技巧问题。 }\P(X = a) = 0\\ &\P(X > a) && 1 - F(a) && \P(X < a) + \P(X > a) = 1 \\ &\P(a < X < b) && F(b) - F(a) && F(a) + \P(a < X < b) = F(b)\\ \end{align*}$$
 
-连续分布也适用于离散随机变量，但在离散世界中 CDF 的效用较小，因为我们的离散随机变量没有“封闭形式”的 CDF 函数（例如，没有任何求和）：\begin{align*} F_X(a) = \sum_{i = 1}^a P(X = i) \end{align*}
+连续分布也适用于离散随机变量，但在离散世界中 CDF 的效用较小，因为我们的离散随机变量没有“封闭形式”的 CDF 函数（例如，没有任何求和）：$$\begin{align*} F_X(a) = \sum_{i = 1}^a P(X = i) \end{align*}$$
 
 ## 求解常数
 
-设$X$为一个具有 PDF 的连续随机变量：\begin{align*} f(x) = \begin{cases} C(4x - 2x²) &\text{当 } 0 < x < 2 \\ 0 & \text{否则} \end{cases} \end{align*} 在这个函数中，$C$是一个常数。$C$的值是多少？由于我们知道 PDF 必须加起来为 1：\begin{align*} &\int_0² C(4x - 2x²) \d x = 1 \\ &C\left(2x² - \frac{2x³}{3}\right)\bigg|_0² = 1 \\ &C\left(\left(8 - \frac{16}{3}\right) - 0 \right) = 1 \\ &C = \frac{3}{8} \end{align*} 现在我们知道了$C$，$\P(X > 1)$是多少？\begin{align*} \P(X > 1) &=\int_1^{\infty}f(x) \d x \\ &= \int_1² \frac{3}{8}(4x - 2x²) \d x \\ &= \frac{3}{8}\left(2x² - \frac{2x³}{3}\right)\bigg|_1² \\ &= \frac{3}{8}\left[\left(8 - \frac{16}{3}\right) - \left(2 - \frac{2}{3}\right)\right] = \frac{1}{2} \end{align*}
+设$X$为一个具有 PDF 的连续随机变量：$$\begin{align*} f(x) = \begin{cases} C(4x - 2x²) &\text{当 } 0 < x < 2 \\ 0 & \text{否则} \end{cases} \end{align*}$$ 在这个函数中，$C$是一个常数。$C$的值是多少？由于我们知道 PDF 必须加起来为 1：$$\begin{align*} &\int_0² C(4x - 2x²) \d x = 1 \\ &C\left(2x² - \frac{2x³}{3}\right)\bigg|_0² = 1 \\ &C\left(\left(8 - \frac{16}{3}\right) - 0 \right) = 1 \\ &C = \frac{3}{8} \end{align*}$$ 现在我们知道了$C$，$\P(X > 1)$是多少？$$\begin{align*} \P(X > 1) &=\int_1^{\infty}f(x) \d x \\ &= \int_1² \frac{3}{8}(4x - 2x²) \d x \\ &= \frac{3}{8}\left(2x² - \frac{2x³}{3}\right)\bigg|_1² \\ &= \frac{3}{8}\left[\left(8 - \frac{16}{3}\right) - \left(2 - \frac{2}{3}\right)\right] = \frac{1}{2} \end{align*}$$
 
 ## 连续变量的期望和方差
 
-对于连续随机变量$X$：\begin{align*} &E[X] = \int_{-\infty}^{\infty} x f(x) dx \\ &E[g(X)] = \int_{-\infty}^{\infty} g(x) f(x) dx \\ &E[X^n] = \int_{-\infty}^{\infty} x^n f(x) dx \end{align*}
+对于连续随机变量$X$：$$\begin{align*} &E[X] = \int_{-\infty}^{\infty} x f(x) dx \\ &E[g(X)] = \int_{-\infty}^{\infty} g(x) f(x) dx \\ &E[X^n] = \int_{-\infty}^{\infty} x^n f(x) dx \end{align*}$$
 
-对于连续和离散随机变量：\begin{align*} &E[aX + b] = aE[X] + b\\ &\text{Var}(X) = E[(X - \mu)²] = E[X²] - (E[X])² \\ &\text{Var}(aX + b) = a² \text{Var}(X) \end{align*}
+对于连续和离散随机变量：$$\begin{align*} &E[aX + b] = aE[X] + b\\ &\text{Var}(X) = E[(X - \mu)²] = E[X²] - (E[X])² \\ &\text{Var}(aX + b) = a² \text{Var}(X) \end{align*}$$

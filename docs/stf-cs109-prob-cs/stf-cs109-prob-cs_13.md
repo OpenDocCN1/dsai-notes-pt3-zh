@@ -14,11 +14,11 @@ $$ \p(E | F) = \p(E) $$
 
 ## 另一种定义
 
-通过使用称为链式法则的方程，可以推导出独立性的另一个定义，我们将在稍后学习，在两个事件独立的情况下。考虑两个独立事件$A$和$B$：\begin{align*} \P(A,B) &= \p(A) \cdot \p(B|A) && \href{ ../../part1/prob_and/}{\text{链式法则}} \\ &= \p(A) \cdot \p(B) && \text{独立性} \end{align*}
+通过使用称为链式法则的方程，可以推导出独立性的另一个定义，我们将在稍后学习，在两个事件独立的情况下。考虑两个独立事件$A$和$B$：$$\begin{align*} \P(A,B) &= \p(A) \cdot \p(B|A) && \href{ ../../part1/prob_and/}{\text{链式法则}} \\ &= \p(A) \cdot \p(B) && \text{独立性} \end{align*}$$
 
 ## 独立性是对称的
 
-这个定义是[对称的](https://en.wikipedia.org/wiki/Symmetric_relation)。如果$E$与$F$独立，那么$F$也与$E$独立。我们可以从被称为贝叶斯定理的法律开始证明$\p(F | E) = \p(F)$意味着$\p(E | F) = \p(E)$，我们将在稍后介绍：\begin{align*} \p(E | F) &= \frac{\p(F|E) \cdot \p(E)}{\p(F)} && \text{贝叶斯定理} \\ &= \frac{\p(F) \cdot \p(E)}{\p(F)} && \p(F | E) = \p(F) \\ &= \p(E) && \text{约简} \end{align*}
+这个定义是[对称的](https://en.wikipedia.org/wiki/Symmetric_relation)。如果$E$与$F$独立，那么$F$也与$E$独立。我们可以从被称为贝叶斯定理的法律开始证明$\p(F | E) = \p(F)$意味着$\p(E | F) = \p(E)$，我们将在稍后介绍：$$\begin{align*} \p(E | F) &= \frac{\p(F|E) \cdot \p(E)}{\p(F)} && \text{贝叶斯定理} \\ &= \frac{\p(F) \cdot \p(E)}{\p(F)} && \p(F | E) = \p(F) \\ &= \p(E) && \text{约简} \end{align*}$$
 
 ## 广义独立性
 
@@ -26,7 +26,7 @@ $$ \p(E | F) = \p(E) $$
 
 例如，考虑 5 次抛硬币得到 5 个正面的概率，其中我们假设每次抛硬币都是相互独立的。
 
-设$H_i$为第$i$次抛硬币得到正面的事件：\begin{align*} \p(H_1,&H_2,H_3,H_4,H_5) \\ &= \p(H_1) \cdot \p(H_2) \cdots \p(H_5) && \text{独立性} \\ &= \prod_{i=1}⁵ \p(H_i) && \text{乘积符号}\\ &= \prod_{i=1}⁵ \frac{1}{2} \\ &= \frac{1}{2}⁵ \\ &= 0.03125 \end{align*}
+设$H_i$为第$i$次抛硬币得到正面的事件：$$\begin{align*} \p(H_1,&H_2,H_3,H_4,H_5) \\ &= \p(H_1) \cdot \p(H_2) \cdots \p(H_5) && \text{独立性} \\ &= \prod_{i=1}⁵ \p(H_i) && \text{乘积符号}\\ &= \prod_{i=1}⁵ \frac{1}{2} \\ &= \frac{1}{2}⁵ \\ &= 0.03125 \end{align*}$$
 
 ## 如何建立独立性
 
@@ -38,11 +38,11 @@ $$ \p(E | F) = \p(E) $$
 
 在网络中，例如互联网，计算机可以发送信息。通常，在两台计算机之间有多个路径（由路由器介导），只要有一条路径是可用的，就可以发送信息。考虑以下具有 $n$ 个 ***独立*** 路由器的并行网络，每个路由器有 $p_i$ 的概率可以正常工作（其中 1 ≤ $𝑖$ ≤ $𝑛$）。设 $E$ 为从 $A$ 到 $B$ 存在一条可用路径的事件。$\p(E)$ 是多少？！![图片](img/59338671862dcf103a1c1819be4bfd4c.png)
 
-*一个简单的网络，连接了两台计算机，A 和 B。*设 $F_i$ 为路由器 $i$ 失效的事件。注意，问题指出路由器是独立的，因此我们假设事件 $F_i$ 之间都是独立的。 \begin{align*} \p(E) &= \p(\text{至少有一个路由器工作}) \\ &= 1 - \p(\text{所有路由器都失败}) \\ &= 1 - \p(F_1 \text{ 和 } F_2 \text{ 和 } \dots \text{ 和 } F_n) \\ &= 1 - \prod_{i=1}^n \p(F_i) && \text{事件 } F_i \text{ 的独立性}\\ &= 1 - \prod_{i=1}^n 1 - p_i \end{align*} 其中 $p_i$ 是路由器 $i$ 正常工作的概率。
+*一个简单的网络，连接了两台计算机，A 和 B。*设 $F_i$ 为路由器 $i$ 失效的事件。注意，问题指出路由器是独立的，因此我们假设事件 $F_i$ 之间都是独立的。 $$\begin{align*} \p(E) &= \p(\text{至少有一个路由器工作}) \\ &= 1 - \p(\text{所有路由器都失败}) \\ &= 1 - \p(F_1 \text{ 和 } F_2 \text{ 和 } \dots \text{ 和 } F_n) \\ &= 1 - \prod_{i=1}^n \p(F_i) && \text{事件 } F_i \text{ 的独立性}\\ &= 1 - \prod_{i=1}^n 1 - p_i \end{align*}$$ 其中 $p_i$ 是路由器 $i$ 正常工作的概率。
 
 ## 独立性与互补性
 
-给定独立事件 $A$ 和 $B$，我们可以证明 $A$ 和 $B^C$ 是独立的。形式上，我们想要证明：$\P( A B^C) = \P( A)\P(B^C)$。这需要从一条称为总概率定律的规则开始，我们将在稍后介绍。 \begin{align*} \P (AB^C ) &= \P (A) - \P (AB) && \href{ ../../part1/law_total/}{\text{LOTP}} \\ &= \P (A) - \P (A)\P (B) &&\text{独立性}\\ &= \P (A)[1 - \P (B)]&&\text{代数}\\ &= \P (A)\P(B^C)&&\href{ ../..//part1/probability/}{\text{恒等式 1}}\\ \end{align*}
+给定独立事件 $A$ 和 $B$，我们可以证明 $A$ 和 $B^C$ 是独立的。形式上，我们想要证明：$\P( A B^C) = \P( A)\P(B^C)$。这需要从一条称为总概率定律的规则开始，我们将在稍后介绍。 $$\begin{align*} \P (AB^C ) &= \P (A) - \P (AB) && \href{ ../../part1/law_total/}{\text{LOTP}} \\ &= \P (A) - \P (A)\P (B) &&\text{独立性}\\ &= \P (A)[1 - \P (B)]&&\text{代数}\\ &= \P (A)\P(B^C)&&\href{ ../..//part1/probability/}{\text{恒等式 1}}\\ \end{align*}$$
 
 ## 条件独立性
 

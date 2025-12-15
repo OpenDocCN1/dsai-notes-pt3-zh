@@ -94,7 +94,7 @@
 
 这使我们能够将二次表达式重写为：\[ \left[ (x_{t-1} - x_t) - \sigma² \Big[ \frac{\partial}{\partial x} \log \p(x_t) \Big] \right]² - \left( \sigma² \Big[ \frac{\partial}{\partial x} \log \p(x_t) \Big] \right)² \]
 
-将其代入。让 \( K \) 代表常数：\begin{align*} \log \p(x_{t-1} | x_t) &= \log \p(x_t | x_{t-1}) + \log \p(x_{t-1}) - \log \p(x_t) \\ &= -\frac{(x_t - x_{t-1})²}{2 \sigma²} + \Big(\log \p(x_t) + \Big[ \frac{\partial}{\partial x} \log \p(x_t) \Big] (x_{t-1} - x_t)\Big) - \log \p(x_t) + K \\ &= -\frac{(x_t - x_{t-1})²}{2 \sigma²} + \Big[ \frac{\partial}{\partial x} \log \p(x_t) \Big] (x_{t-1} - x_t)+ K \\ &= -\frac{1}{2 \sigma²} \left[ \left( x_{t-1} - x_t - \sigma² \Big[ \frac{\partial}{\partial x} \log \p(x_t) \Big] \right)² \right] + K \end{align*}
+将其代入。让 \( K \) 代表常数：$$\begin{align*} \log \p(x_{t-1} | x_t) &= \log \p(x_t | x_{t-1}) + \log \p(x_{t-1}) - \log \p(x_t) \\ &= -\frac{(x_t - x_{t-1})²}{2 \sigma²} + \Big(\log \p(x_t) + \Big[ \frac{\partial}{\partial x} \log \p(x_t) \Big] (x_{t-1} - x_t)\Big) - \log \p(x_t) + K \\ &= -\frac{(x_t - x_{t-1})²}{2 \sigma²} + \Big[ \frac{\partial}{\partial x} \log \p(x_t) \Big] (x_{t-1} - x_t)+ K \\ &= -\frac{1}{2 \sigma²} \left[ \left( x_{t-1} - x_t - \sigma² \Big[ \frac{\partial}{\partial x} \log \p(x_t) \Big] \right)² \right] + K \end{align*}$$
 
 **最终结果**：回想一下高斯概率密度函数的对数看起来是这样的：
 

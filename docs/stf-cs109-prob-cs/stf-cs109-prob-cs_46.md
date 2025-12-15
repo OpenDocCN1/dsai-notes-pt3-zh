@@ -32,15 +32,15 @@
 
 ### 估计 Lambda
 
-**请注意！**本节使用第五部分的概念。具体来说，最大后验**炎症先验**：基于数百万历史患者，医生们已经了解到真实细胞率的真实概率密度函数为：\begin{align*} f(\lambda) = K \cdot \lambda \cdot e ^{-\frac{\lambda}{2}} \end{align*} 其中 $K$ 是归一化常数，$\lambda$ 必须大于 0。
+**请注意！**本节使用第五部分的概念。具体来说，最大后验**炎症先验**：基于数百万历史患者，医生们已经了解到真实细胞率的真实概率密度函数为：$$\begin{align*} f(\lambda) = K \cdot \lambda \cdot e ^{-\frac{\lambda}{2}} \end{align*}$$ 其中 $K$ 是归一化常数，$\lambda$ 必须大于 0。
 
 一位医生取了一个样本并计数了 4 个细胞。给出 $\lambda$ 更新概率密度的方程。使用“炎症先验”作为 $\lambda$ 值的先验概率密度。你的概率密度可能包含一个常数项。
 
-令 $\theta$ 为真实率的随机变量。令 $X$ 为计数的随机变量 \begin{align*} f(\theta = \lambda | X = 4) &= \frac{P(X=4|\theta = \lambda) f(\theta = \lambda)}{P(X = 4)} \\ &= \frac{\frac{\lambda^{4} e^{-\lambda}}{4!} \cdot K \cdot \lambda \cdot e^{\lambda / 2}}{P(X = 4)} \\ &= \frac{K \cdot \lambda⁵ e^{-\frac{3}{2}\lambda}}{4! P(X=4)} \end{align*}
+令 $\theta$ 为真实率的随机变量。令 $X$ 为计数的随机变量 $$\begin{align*} f(\theta = \lambda | X = 4) &= \frac{P(X=4|\theta = \lambda) f(\theta = \lambda)}{P(X = 4)} \\ &= \frac{\frac{\lambda^{4} e^{-\lambda}}{4!} \cdot K \cdot \lambda \cdot e^{\lambda / 2}}{P(X = 4)} \\ &= \frac{K \cdot \lambda⁵ e^{-\frac{3}{2}\lambda}}{4! P(X=4)} \end{align*}$$
 
 一位医生取了一个样本并计数了 4 个细胞。$\lambda$ 的最大后验估计是多少？
 
-最大化前一部分计算出的参数的“后验”：\begin{align*} \argmax_\limits\lambda \frac{K \cdot \lambda⁵ e^{-\frac{3}{2}\lambda}}{4! P(X=4)} &= \argmax_\limits\lambda \lambda⁵ e^{-\frac{3}{2}\lambda} \\ \end{align*} 取对数（保持 argmax，并且更容易求导）：\begin{align*} &= \argmax_\limits\lambda \log \left(\lambda⁵ e^{-\frac{3}{2}\lambda} \right) \\ &= \argmax_\limits\lambda \left(5 \log \lambda -\frac{3}{2}\lambda\right) \end{align*} 对参数求导，并令其等于 0 \begin{align*} 0 &= \frac{\partial}{\partial \lambda} \left(5 \log \lambda -\frac{3}{2}\lambda\right) \\ 0 &= \frac{5}{\lambda} -\frac{3}{2} \\ \lambda &= \frac{10}{3} \end{align*}
+最大化前一部分计算出的参数的“后验”：$$\begin{align*} \argmax_\limits\lambda \frac{K \cdot \lambda⁵ e^{-\frac{3}{2}\lambda}}{4! P(X=4)} &= \argmax_\limits\lambda \lambda⁵ e^{-\frac{3}{2}\lambda} \\ \end{align*}$$ 取对数（保持 argmax，并且更容易求导）：$$\begin{align*} &= \argmax_\limits\lambda \log \left(\lambda⁵ e^{-\frac{3}{2}\lambda} \right) \\ &= \argmax_\limits\lambda \left(5 \log \lambda -\frac{3}{2}\lambda\right) \end{align*}$$ 对参数求导，并令其等于 0 $$\begin{align*} 0 &= \frac{\partial}{\partial \lambda} \left(5 \log \lambda -\frac{3}{2}\lambda\right) \\ 0 &= \frac{5}{\lambda} -\frac{3}{2} \\ \lambda &= \frac{10}{3} \end{align*}$$
 
 用文字解释一下前两部分中两个 lambda 估计之间的区别。
 
@@ -48,4 +48,4 @@
 
 病人在两天分别就诊。第一天医生计数 5 个细胞，第二天医生计数 4 个细胞。仅基于这个观察，并且将两天真实的比率视为独立，病人炎症好转的概率是多少（换句话说，他们的 $\lambda$ 是否减少）？
 
-设 $\theta_1$ 为第一天的 $\lambda$ 的随机变量，$\theta_2$ 为第二天的 $\lambda$ 的随机变量。 \begin{align*} f(\theta_1 = \lambda | X = 5) &= K_1 \cdot \lambda⁶ e^{-\frac{3}{2}\lambda} \\ f(\theta_2 = \lambda | X = 4) &= K_2 \cdot \lambda⁵ e^{-\frac{3}{2}\lambda} \end{align*} 问题是在问 $P(\theta_1 > \theta_2)$ 是多少？有几种方法可以精确计算这个值： \begin{align*} & \int_{\lambda_1=0}^\infty \int_{\lambda_2=0}^{\lambda_1} f(\theta_1 = \lambda_1, \theta_2 = \lambda_2) \\ &= \int_{\lambda_1=0}^\infty \int_{\lambda_2=0}^{\lambda_1} f(\theta_1 = \lambda_1) \cdot f(\theta_2 = \lambda_2) \\ &= \int_{\lambda_1=0}^\infty f(\theta_1 = \lambda_1) \int_{\lambda_2=0}^{\lambda_1} f(\theta_2 = \lambda_2) \\ &= \int_{\lambda_1=0}^\infty K_1 \cdot \lambda⁶ e^{-\frac{3}{2}\lambda} \int_{\lambda_2=0}^{\lambda_1} K_2 \cdot \lambda⁵ e^{-\frac{3}{2}\lambda} \end{align*}
+设 $\theta_1$ 为第一天的 $\lambda$ 的随机变量，$\theta_2$ 为第二天的 $\lambda$ 的随机变量。 $$\begin{align*} f(\theta_1 = \lambda | X = 5) &= K_1 \cdot \lambda⁶ e^{-\frac{3}{2}\lambda} \\ f(\theta_2 = \lambda | X = 4) &= K_2 \cdot \lambda⁵ e^{-\frac{3}{2}\lambda} \end{align*}$$ 问题是在问 $P(\theta_1 > \theta_2)$ 是多少？有几种方法可以精确计算这个值： $$\begin{align*} & \int_{\lambda_1=0}^\infty \int_{\lambda_2=0}^{\lambda_1} f(\theta_1 = \lambda_1, \theta_2 = \lambda_2) \\ &= \int_{\lambda_1=0}^\infty \int_{\lambda_2=0}^{\lambda_1} f(\theta_1 = \lambda_1) \cdot f(\theta_2 = \lambda_2) \\ &= \int_{\lambda_1=0}^\infty f(\theta_1 = \lambda_1) \int_{\lambda_2=0}^{\lambda_1} f(\theta_2 = \lambda_2) \\ &= \int_{\lambda_1=0}^\infty K_1 \cdot \lambda⁶ e^{-\frac{3}{2}\lambda} \int_{\lambda_2=0}^{\lambda_1} K_2 \cdot \lambda⁵ e^{-\frac{3}{2}\lambda} \end{align*}$$

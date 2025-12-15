@@ -30,7 +30,7 @@
 
 让 $X$ 是任何随机变量。量化 $X$ 的概率质量函数所代表的多少不确定性的一个非常优雅的方法是思考 $X$ 可能取的所有值，并对每个值计算如果 $X$ 确实取了那个值你会多么惊讶。如果你对这些惊讶值的加权求和，你会得到随机变量的预期惊讶值
 
-\begin{align*} &\text{不确定性}(X) \\ &= E[\text{惊讶}(X)] \\ &= \sum_x \text{惊讶}(x) \cdot P(X=x) \end{align*} 这就是核心思想！主要剩余的任务是定义我们所说的“事件惊讶”是什么。
+$$\begin{align*} &\text{不确定性}(X) \\ &= E[\text{惊讶}(X)] \\ &= \sum_x \text{惊讶}(x) \cdot P(X=x) \end{align*}$$ 这就是核心思想！主要剩余的任务是定义我们所说的“事件惊讶”是什么。
 
 ### 事件惊讶度衡量
 
@@ -66,7 +66,7 @@
 
 事件 E 的信息含量，也称为惊讶或自信息，是一个随着事件概率的降低而增加的函数。当概率接近 1 时，事件的惊讶值较低，但如果概率接近 0，事件发生的惊讶值较高。这种关系由以下函数描述：
 
-\begin{align*} \text{Surprise}(E) &= \log_2 \Big(\frac{1}{\p(E)} \Big) \end{align*} 这可以写成（以一种更令人困惑的方式）：\begin{align*} \text{Surprise}(E) &= \log_2 \Big(\frac{1}{\p(E)} \Big) \\ &= \log_2 \p(E)^{-1} \\ &= -\log_2 \p(E) \end{align*} 在事件惊讶的初始定义中，函数名 $I$ 被用作惊讶的简称。$I$ 代表“信息含量”或“自信息”，这是惊讶的另一种名称。
+$$\begin{align*} \text{Surprise}(E) &= \log_2 \Big(\frac{1}{\p(E)} \Big) \end{align*}$$ 这可以写成（以一种更令人困惑的方式）：$$\begin{align*} \text{Surprise}(E) &= \log_2 \Big(\frac{1}{\p(E)} \Big) \\ &= \log_2 \p(E)^{-1} \\ &= -\log_2 \p(E) \end{align*}$$ 在事件惊讶的初始定义中，函数名 $I$ 被用作惊讶的简称。$I$ 代表“信息含量”或“自信息”，这是惊讶的另一种名称。
 
 我们还可以讲述许多其他的故事，来说明为什么 $\log_2 \frac{1}{\p(E)}$ 是我们衡量惊讶程度的绝佳选择。信息理论的奠基人克劳德·香农选择了以 2 为底的对数，因为这可以使你用比特（如计算机中使用的 0 和 1 值）来表达你的惊讶程度。信息理论有许多应用，但最初是在他试图找到一种方法来最优地压缩基于文本的数据时发明的！
 
@@ -78,7 +78,7 @@
 
 让 $H$ 成为衡量我们对随机变量 $X$ 不确定性的度量。定义 $H$ 为观察 $X$ 分配的预期惊喜。$H(X) = E[\text{Surprise}(X)]$。使用无意识统计学家定律和事件惊喜的定义，我们可以展开 $H$ 的公式如下：
 
-$$ H(X) = \sum_{x \in X} \log_2 \Big(\frac{1}{\p(X=x)}\Big) \cdot \p(X=x) $$ 不确定度 ($H$) 也可以（以更令人困惑的方式）重写为：\begin{align*} \text{H}(X) &= \sum_{x \in X} \text{Surprise}(X=x) \cdot P(X=x) \\ &= \sum_{x \in X} \log_2 \frac{1}{P(X=x)} \cdot P(X=x) \\ &= \sum_{x \in X} \log_2 P(X=x) ^{-1}\cdot P(X=x) \\ &= \sum_{x \in X} - \log_2 P(X=x)\cdot P(X=x) \\ &= - \sum_{x \in X} \log_2 P(X=x)\cdot P(X=x) \\ &= - \sum_{x \in X} \log_2 P(X=x)\cdot P(X=x) \end{align*}
+$$ H(X) = \sum_{x \in X} \log_2 \Big(\frac{1}{\p(X=x)}\Big) \cdot \p(X=x) $$ 不确定度 ($H$) 也可以（以更令人困惑的方式）重写为：$$\begin{align*} \text{H}(X) &= \sum_{x \in X} \text{Surprise}(X=x) \cdot P(X=x) \\ &= \sum_{x \in X} \log_2 \frac{1}{P(X=x)} \cdot P(X=x) \\ &= \sum_{x \in X} \log_2 P(X=x) ^{-1}\cdot P(X=x) \\ &= \sum_{x \in X} - \log_2 P(X=x)\cdot P(X=x) \\ &= - \sum_{x \in X} \log_2 P(X=x)\cdot P(X=x) \\ &= - \sum_{x \in X} \log_2 P(X=x)\cdot P(X=x) \end{align*}$$
 
 这里是计算随机变量不确定度 $(H)$ 的代码，基于其概率质量函数：
 

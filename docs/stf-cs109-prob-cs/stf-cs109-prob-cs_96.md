@@ -10,7 +10,7 @@ $X \sim \text{Pareto}(\alpha)$
 
 帕累托分布由单个参数 $\alpha$ 定义，并具有概率密度函数
 
-\begin{align*} f(x) = \frac{\alpha}{x^{\alpha + 1}} \end{align*}
+$$\begin{align*} f(x) = \frac{\alpha}{x^{\alpha + 1}} \end{align*}$$
 
 你希望你的艺术作品中的 $\alpha$ 与你当地海滩的沙子中的 $\alpha$ 相匹配。你去了海滩，收集了 100 粒沙子并测量了它们的大小。将测量的半径称为 $x_1 , \dots, x_{100}$：
 

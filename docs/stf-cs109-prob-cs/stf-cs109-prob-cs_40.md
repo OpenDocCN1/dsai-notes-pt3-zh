@@ -18,7 +18,7 @@
 
 “中等”有不同的解释。接受的范围是 $n > 20$ 且 $p < 0.05$ 或 $n > 100$ 且 $p < 0.1$。
 
-假设你想要发送一个长度为 $n = 10⁴$ 的比特串，其中每个比特独立地被 $p = 10^{-6}$ 污染。消息到达时未损坏的概率是多少？你可以使用 $\lambda = np = 10⁴ \cdot 10^{-6} = 0.01$ 的泊松分布来解决这个问题。语义上，$\lambda = 0.01$ 意味着我们期望每串有 $0.01$ 个损坏的比特，假设比特是连续的。设 $X \sim Poi(0.01)$ 为损坏的比特数。使用泊松分布的概率质量函数：\begin{align*} P(X = 0) &= \frac{\lambda^i}{i!}e^{-\lambda}\\ &= \frac{0.01⁰}{0!}e^{-0.01}\\ &\sim 0.9900498 \end{align*} 我们也可以将 $X$ 模型化为二项分布，即 $X \sim Bin(10⁴, 10^{-6})$。这在计算机上计算是不可能的，但会得到相同的结果（直到百万分位）。
+假设你想要发送一个长度为 $n = 10⁴$ 的比特串，其中每个比特独立地被 $p = 10^{-6}$ 污染。消息到达时未损坏的概率是多少？你可以使用 $\lambda = np = 10⁴ \cdot 10^{-6} = 0.01$ 的泊松分布来解决这个问题。语义上，$\lambda = 0.01$ 意味着我们期望每串有 $0.01$ 个损坏的比特，假设比特是连续的。设 $X \sim Poi(0.01)$ 为损坏的比特数。使用泊松分布的概率质量函数：$$\begin{align*} P(X = 0) &= \frac{\lambda^i}{i!}e^{-\lambda}\\ &= \frac{0.01⁰}{0!}e^{-0.01}\\ &\sim 0.9900498 \end{align*}$$ 我们也可以将 $X$ 模型化为二项分布，即 $X \sim Bin(10⁴, 10^{-6})$。这在计算机上计算是不可能的，但会得到相同的结果（直到百万分位）。
 
 ## 正态近似
 
@@ -30,12 +30,12 @@
 
 你可以使用正态分布来近似二项分布 $X\sim \Bin(n,p)$。为此，定义一个正态分布 $Y \sim (E[X], Var(X))$。使用二项分布的期望和方差公式，$Y \sim (np, np(1-p))$。这种近似适用于大的 $n$ 和适中的 $p$。这会让你非常接近。然而，由于正态分布是连续的，而二项分布是离散的，我们必须使用连续性校正来离散化正态分布。
 
-![图片](img/0b323ca4eb5ce4c8a2992c6858cf4349.png) \begin{align*} P(X = k) \sim P\left(k - \frac{1}{2} < Y < k + \frac{1}{2}\right) = \Phi\left( \frac{k - np + 0.5}{\sqrt{np(1-p)}} \right) - \Phi\left( \frac{k - np - 0.5}{\sqrt{np(1-p)}} \right) \end{align*} 你应该习惯于决定使用哪种连续性校正。以下是一些离散概率问题及其连续性校正的例子：\begin{align*} &\text{离散（二项）概率问题} && \text{等效连续概率问题}\\ &P(X=6) && P(5.5 < X < 6.5) \\ &P(X\geq6) && P(X > 5.5) \\ &P(X > 6) && P(X > 6.5) \\ &P(X < 6) && P(X < 5.5) \\ &P(X \leq 6) && P(X < 6.5) \\ \end{align*}
+![图片](img/0b323ca4eb5ce4c8a2992c6858cf4349.png) $$\begin{align*} P(X = k) \sim P\left(k - \frac{1}{2} < Y < k + \frac{1}{2}\right) = \Phi\left( \frac{k - np + 0.5}{\sqrt{np(1-p)}} \right) - \Phi\left( \frac{k - np - 0.5}{\sqrt{np(1-p)}} \right) \end{align*}$$ 你应该习惯于决定使用哪种连续性校正。以下是一些离散概率问题及其连续性校正的例子：$$\begin{align*} &\text{离散（二项）概率问题} && \text{等效连续概率问题}\\ &P(X=6) && P(5.5 < X < 6.5) \\ &P(X\geq6) && P(X > 5.5) \\ &P(X > 6) && P(X > 6.5) \\ &P(X < 6) && P(X < 5.5) \\ &P(X \leq 6) && P(X < 6.5) \\ \end{align*}$$
 
 **示例**：100 位访问你网站的访客被给予一个新的设计。设 $X$ = 被给予新设计并在你网站上花费更多时间的人数。如果你的 CEO 认为新设计没有效果，那么当 $X \geq 65$ 时，他会支持新设计。$P(\text{CEO 支持改变}|\text{它没有效果})$ 是多少？
 
-$E[X] = np = 50$。$\Var(X) = np(1-p) = 25$。$\sigma = \sqrt{\Var(X)} = 5$。因此我们可以使用正态近似：$Y \sim \mathcal{N}(\mu = 50, \sigma² = 25)$。 \begin{align*} P(X \geq 65) &\approx P(Y > 64.5) = P\left(\frac{Y - 50}{5} > \frac{64.5 - 50}{5}\right) = 1 - \Phi(2.9) = 0.0019 \end{align*}
+$E[X] = np = 50$。$\Var(X) = np(1-p) = 25$。$\sigma = \sqrt{\Var(X)} = 5$。因此我们可以使用正态近似：$Y \sim \mathcal{N}(\mu = 50, \sigma² = 25)$。 $$\begin{align*} P(X \geq 65) &\approx P(Y > 64.5) = P\left(\frac{Y - 50}{5} > \frac{64.5 - 50}{5}\right) = 1 - \Phi(2.9) = 0.0019 \end{align*}$$
 
 **示例：** 斯坦福大学录取了 2480 名学生，每个学生有 68%的几率入学。设$X$ = # 将会入学的学生数。$X\sim \Bin(2480, 0.68)$。求$P(X > 1745)$？
 
-$E[X] = np = 1686.4$。$\var(X) = np(1-p) = 539.7$。$\sigma = \sqrt{\Var(X)} = 23.23$。因此我们可以使用正态近似：$Y \sim \mathcal{N}(\mu = 1686.4, \sigma² = 539.7)$。 \begin{align*} P(X > 1745) &\approx P(Y > 1745.5) \\ &\approx P\left(\frac{Y - 1686.4}{23.23} > \frac{1745.5 - 1686.4}{23.23}\right) \\ &\approx 1 - \Phi(2.54) = 0.0055 \end{align*}
+$E[X] = np = 1686.4$。$\var(X) = np(1-p) = 539.7$。$\sigma = \sqrt{\Var(X)} = 23.23$。因此我们可以使用正态近似：$Y \sim \mathcal{N}(\mu = 1686.4, \sigma² = 539.7)$。 $$\begin{align*} P(X > 1745) &\approx P(Y > 1745.5) \\ &\approx P\left(\frac{Y - 1686.4}{23.23} > \frac{1745.5 - 1686.4}{23.23}\right) \\ &\approx 1 - \Phi(2.54) = 0.0055 \end{align*}$$

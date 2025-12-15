@@ -22,9 +22,9 @@
 
 我们可以通过应用随机变量的条件概率定义开始：$\P( B = 1950 | N = \text{Gary} ) = \frac{\P(N = \text{Gary} , B = 1950)}{\P(N = \text{Gary})}$ 注意：贝叶斯定理是此类推理任务的一个更典型选择。然而，在这种情况下，由于计算$P(B = b, N=n)$比计算$P(N=n | B=b)$更容易，因此它是必要的。这就是为什么我们使用了条件概率的定义。这种方法留下一个需要计算的项：$\P(N = \text{Gary})$，我们可以通过边际化来计算：$\P( N = \text{Gary}) = \sum_{y \in \text{years}} P(B = y,N = \text{Gary}) \approx \sum\limits_{y \in \text{years}} \frac{\text{count}(y, \text{Gary})}{k}$
 
-将这些信息综合起来，我们得到：\begin{align*} \P( B = 1950 | N = \text{Gary} ) &= \frac{\P(N = \text{Gary} , B = 1950)}{\P(N = \text{Gary})} \\ &\approx \frac { \Big( \frac{\text{count}(1950, \text{Gary})} {k} \Big) } { \Big( \frac{ \sum\limits_{y \in \text{years}} \text{count}(y, \text{Gary})}{k} \Big) } \\ &\approx \frac { \text{count}(1950, \text{Gary}) } { \sum\limits_{y \in \text{years}} \text{count}(y, \text{Gary}) } \end{align*}
+将这些信息综合起来，我们得到：$$\begin{align*} \P( B = 1950 | N = \text{Gary} ) &= \frac{\P(N = \text{Gary} , B = 1950)}{\P(N = \text{Gary})} \\ &\approx \frac { \Big( \frac{\text{count}(1950, \text{Gary})} {k} \Big) } { \Big( \frac{ \sum\limits_{y \in \text{years}} \text{count}(y, \text{Gary})}{k} \Big) } \\ &\approx \frac { \text{count}(1950, \text{Gary}) } { \sum\limits_{y \in \text{years}} \text{count}(y, \text{Gary}) } \end{align*}$$
 
-更普遍地，对于任何名字，我们可以计算出生年份的条件的概率质量函数：\begin{align*} \P( B = b | N = n ) &\approx \frac { \text{count}(b, n) } { \sum\limits_{y \in \text{years}} \text{count}(y, n) } \end{align*}
+更普遍地，对于任何名字，我们可以计算出生年份的条件的概率质量函数：$$\begin{align*} \P( B = b | N = n ) &\approx \frac { \text{count}(b, n) } { \sum\limits_{y \in \text{years}} \text{count}(y, n) } \end{align*}$$
 
 ### 从出生年份到年龄
 
@@ -72,7 +72,7 @@
 
 现在，我们可以提出一些问题，例如，$X$在 0.01 附近 0.002 的概率是多少？
 
-\begin{align*} P(&0.008 < X < 0.012) \\ &= P(X < 0.012) - P(X < 0.008) \\ &= F_X(0.012) - F_X(0.008) \\ &= 0.966 - 0.013 \\ &= 0.953 \end{align*}
+$$\begin{align*} P(&0.008 < X < 0.012) \\ &= P(X < 0.012) - P(X < 0.008) \\ &= F_X(0.012) - F_X(0.008) \\ &= 0.966 - 0.013 \\ &= 0.953 \end{align*}$$
 
 从语义上讲，这导致了一个断言：在观察了 100 个在 1950 年出生的名字后，在整个数据集中，该名字有 10,000 个出生记录，有 95%的把握认为某人在 1950 年出生的概率是 0.010 $\pm$ 0.002。
 

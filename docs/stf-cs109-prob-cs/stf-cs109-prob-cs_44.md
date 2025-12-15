@@ -29,6 +29,6 @@ def coin_flip():
 
 设 $R$ 为函数的返回值。$R = 2^X$，这是 $X$ 的函数。使用无意识统计师定律 $$E[R] = \sum_{x} 2^x \cdot P(X=x)$$ 我们可以单独计算每个概率 $P(X=x)$。注意，前两次调用 count 总是返回 1。设 $H_i$ 为第 $i$ 次调用返回 1 的事件。设 $T_i$ 为第 $i$ 次调用返回 0 的事件。$X$ 不能小于 1，因为前两次调用 count 总是返回 1。$P(X=1) = P(T_3,T_4)$ \\ $P(X=2) = P(H_3,T_4) + P(T_3,H_4)$ \\ $P(X=3) = P(H_3, H_4)$
 
-在第三次调用计数时，$n = 1$。如果 $H_3$，则第四次调用时 $n=2$，循环运行两次。 \begin{align*} P(H_3,T_4) &= P(H_3) \cdot P(T_4|H_3) \\ &= \frac{1}{2} \cdot ( \frac{1}{2} + \frac{1}{4}) \end{align*} \begin{align*} P(H_3,H_4) &= P(H_3) \cdot P(H_4|H_3) \\ &= \frac{1}{2} \cdot \frac{1}{2} \end{align*}
+在第三次调用计数时，$n = 1$。如果 $H_3$，则第四次调用时 $n=2$，循环运行两次。 $$\begin{align*} P(H_3,T_4) &= P(H_3) \cdot P(T_4|H_3) \\ &= \frac{1}{2} \cdot ( \frac{1}{2} + \frac{1}{4}) \end{align*}$$ $$\begin{align*} P(H_3,H_4) &= P(H_3) \cdot P(H_4|H_3) \\ &= \frac{1}{2} \cdot \frac{1}{2} \end{align*}$$
 
-如果 $T_3$，则第四次调用时 $n=1$。 \begin{align*} P(T_3,H_4) &= P(T_3) \cdot P(H_4|T_3) \\ &= \frac{1}{2} \cdot \frac{1}{2} \end{align*} \begin{align*} P(T_3,T_4) &= P(T_3) \cdot P(T_4|T_3) \\ &= \frac{1}{2} \cdot \frac{1}{2} \end{align*} 将所有内容代入： \begin{align*} E[R] &= \sum_{x=1}³ 2^x \cdot P(X=x) \\ &= 2 \cdot \frac{1}{4} + 4\cdot \frac{5}{8} + 8\cdot \frac{1}{8}\\ &= 4 \end{align*}
+如果 $T_3$，则第四次调用时 $n=1$。 $$\begin{align*} P(T_3,H_4) &= P(T_3) \cdot P(H_4|T_3) \\ &= \frac{1}{2} \cdot \frac{1}{2} \end{align*}$$ $$\begin{align*} P(T_3,T_4) &= P(T_3) \cdot P(T_4|T_3) \\ &= \frac{1}{2} \cdot \frac{1}{2} \end{align*}$$ 将所有内容代入： $$\begin{align*} E[R] &= \sum_{x=1}³ 2^x \cdot P(X=x) \\ &= 2 \cdot \frac{1}{4} + 4\cdot \frac{5}{8} + 8\cdot \frac{1}{8}\\ &= 4 \end{align*}$$

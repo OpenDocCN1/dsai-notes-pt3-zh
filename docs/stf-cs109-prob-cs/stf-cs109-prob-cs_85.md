@@ -10,7 +10,7 @@
 
 一种对抗算法逆向工程的方法是在已经存在的数据集中添加一些随机元素。设
 
-\begin{align*} X_1, \dots, X_i \overset{\text{i.i.d}} \sim \text{Bern}(p) \end{align*}
+$$\begin{align*} X_1, \dots, X_i \overset{\text{i.i.d}} \sim \text{Bern}(p) \end{align*}$$
 
 代表一组真实的人类数据。考虑以下代码片段：
 
@@ -36,14 +36,14 @@ def calculateYi(Xi):
 
 现在考虑如果我们发布 calculateYi 函数，一个对样本均值感兴趣的研究者如何获取有用的数据？他们可以查看：
 
-\begin{align*} Z = \sum^{100}_{n=1} Y_i. \end{align*}
+$$\begin{align*} Z = \sum^{100}_{n=1} Y_i. \end{align*}$$
 
 其期望值为：
 
-\begin{align*} E[Z] = E\left[\sum^{100}_{n=1} Y_i\right] = \sum^{100}_{n=1} E[Y_i] = \sum^{100}_{n=1}\left(\frac{p}{2} + \frac{1}{4}\right) = 50p + 25 \end{align*}
+$$\begin{align*} E[Z] = E\left[\sum^{100}_{n=1} Y_i\right] = \sum^{100}_{n=1} E[Y_i] = \sum^{100}_{n=1}\left(\frac{p}{2} + \frac{1}{4}\right) = 50p + 25 \end{align*}$$
 
 然后为了揭示一个估计值，科学家可以这样做，
 
-\begin{align*} p \approx \frac{Z - 25}{50} \end{align*}
+$$\begin{align*} p \approx \frac{Z - 25}{50} \end{align*}$$
 
 然后继续进行更多研究！

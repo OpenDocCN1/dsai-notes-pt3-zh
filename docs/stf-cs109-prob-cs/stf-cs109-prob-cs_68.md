@@ -12,7 +12,7 @@
 
 ***证明：*** 求和期望
 
-设 $X$ 和 $Y$ 为任意两个随机变量：\begin{align*} \E&[X+Y] \\ &= \sum_{x} \sum_{y} (x + y) \cdot P(X=x, Y=y) && \text{LOST}\\ &= \sum_{x} \sum_{y} x \cdot P(X=x, Y=y) + y \cdot P(X=x, Y=y) && \text{分配律}\\ &= \sum_{x} \sum_{y} x \cdot P(X=x, Y=y) + \sum_{y} \sum_{x} y \cdot P(X=x, Y=y) && \text{重新排列求和}\\ &= \sum_{x} x \sum_{y} P(X=x, Y=y) + \sum_{y} y \sum_{x} P(X=x, Y=y) && \text{提取公因式}\\ &= \sum_{x} x \cdot P(X=x) + \sum_{y} y \cdot P(Y=y) && \text{边缘定义}\\ &= \E[X] + \E[Y] && \text{期望定义} \end{align*}
+设 $X$ 和 $Y$ 为任意两个随机变量：$$\begin{align*} \E&[X+Y] \\ &= \sum_{x} \sum_{y} (x + y) \cdot P(X=x, Y=y) && \text{LOST}\\ &= \sum_{x} \sum_{y} x \cdot P(X=x, Y=y) + y \cdot P(X=x, Y=y) && \text{分配律}\\ &= \sum_{x} \sum_{y} x \cdot P(X=x, Y=y) + \sum_{y} \sum_{x} y \cdot P(X=x, Y=y) && \text{重新排列求和}\\ &= \sum_{x} x \sum_{y} P(X=x, Y=y) + \sum_{y} y \sum_{x} P(X=x, Y=y) && \text{提取公因式}\\ &= \sum_{x} x \cdot P(X=x) + \sum_{y} y \cdot P(Y=y) && \text{边缘定义}\\ &= \E[X] + \E[Y] && \text{期望定义} \end{align*}$$
 
 在证明的任何地方，我们都不需要假设 $X$ 和 $Y$ 是独立的。在第二步中，联合概率最终出现在每个求和中，在两种情况下，一个求和最终对联合概率进行边缘化！
 
@@ -29,7 +29,7 @@
 
 #### 使用联合概率计算 \( E[X] \)：
 
-证明的一个关键洞察是，我们可以使用联合值来计算 $E[X]$。为此，我们将使用 边缘化：$$ P(X = x) = \sum_{y} P(X = x, Y = y) $$ 我们可以展开 $E[X]$，使其仅使用联合概率表中的值进行计算：\begin{align*} E[X] &= \sum_{x} x \cdot P(X = x) \\ &= \sum_{x} x \cdot \sum_{y} P(X = x, Y = y) && \text{边缘化 }X\\ &= \sum_{x} \sum_{y} x \cdot P(X = x, Y = y)&& \text{分配 }y\\ \end{align*}
+证明的一个关键洞察是，我们可以使用联合值来计算 $E[X]$。为此，我们将使用 边缘化：$$ P(X = x) = \sum_{y} P(X = x, Y = y) $$ 我们可以展开 $E[X]$，使其仅使用联合概率表中的值进行计算：$$\begin{align*} E[X] &= \sum_{x} x \cdot P(X = x) \\ &= \sum_{x} x \cdot \sum_{y} P(X = x, Y = y) && \text{边缘化 }X\\ &= \sum_{x} \sum_{y} x \cdot P(X = x, Y = y)&& \text{分配 }y\\ \end{align*}$$
 
 | \( x \) | \( y \) | \( P(X=x, Y=y) \) | \( x \cdot P(X=x, Y=y) \) |
 | --- | --- | --- | --- |
@@ -42,7 +42,7 @@ E[$X$] = 0.1 + 0.3 + 0.4 + 0.8 = 1.6
 
 #### 使用联合概率计算 \( E[Y] \)：
 
-同样，我们可以仅使用联合概率表中的值来计算 \( E[Y] \)：\begin{align*} E[Y] &= \sum_{y} y \cdot P(Y = y) \\ &= \sum_{x} y \cdot \sum_{x} P(X = x, Y = y) && \text{对 }Y\text{ 进行边缘化}\\ &= \sum_{x} \sum_{y} y \cdot P(X = x, Y = y)&& \text{分配 }x\\ \end{align*}
+同样，我们可以仅使用联合概率表中的值来计算 \( E[Y] \)：$$\begin{align*} E[Y] &= \sum_{y} y \cdot P(Y = y) \\ &= \sum_{x} y \cdot \sum_{x} P(X = x, Y = y) && \text{对 }Y\text{ 进行边缘化}\\ &= \sum_{x} \sum_{y} y \cdot P(X = x, Y = y)&& \text{分配 }x\\ \end{align*}$$
 
 | \( x \) | \( y \) | \( P(X=x, Y=y) \) | \( y \cdot P(X=x, Y=y) \) |
 | --- | --- | --- | --- |
@@ -55,7 +55,7 @@ E[$Y$] = 0.4 + 1.5 + 0.8 + 2.0 = 4.7
 
 #### 使用联合概率计算 \( E[X + Y] \):
 
-我们可以将 \( E[X + Y] \) 重写为上面计算 \( E[X] \) 和 \( E[Y] \) 所用项的总和：\begin{align*} E[X + Y] &= \sum_{x,y}(x + y) \cdot P(X = x, Y = y)\\ &= \sum_{x,y} x \cdot P(X = x, Y = y) + y\cdot P(X = x, Y = y) \end{align*}
+我们可以将 \( E[X + Y] \) 重写为上面计算 \( E[X] \) 和 \( E[Y] \) 所用项的总和：$$\begin{align*} E[X + Y] &= \sum_{x,y}(x + y) \cdot P(X = x, Y = y)\\ &= \sum_{x,y} x \cdot P(X = x, Y = y) + y\cdot P(X = x, Y = y) \end{align*}$$
 
 | \( x \) | \( y \) | \( P(x, y) \) | \( x \cdot P(x, y) \) | \( y \cdot P(x, y) \) | \( (x + y) \cdot P(x, y) \) |
 | --- | --- | --- | --- | --- |
@@ -66,7 +66,7 @@ E[$Y$] = 0.4 + 1.5 + 0.8 + 2.0 = 4.7
 
 *回忆一下，\( P(x, y) \) 是 \( P(X=x,Y=y) \) 的简写。*
 
-使用上述关于 \( E[X+Y] \) 的公式推导，其中涉及联合概率表中的值：\begin{align*} E[X + Y] = \sum_{x,y} x \cdot P(X = x, Y = y) + y\cdot P(X = x, Y = y) \end{align*} 带入数值：
+使用上述关于 \( E[X+Y] \) 的公式推导，其中涉及联合概率表中的值：$$\begin{align*} E[X + Y] = \sum_{x,y} x \cdot P(X = x, Y = y) + y\cdot P(X = x, Y = y) \end{align*}$$ 带入数值：
 
 E[$X+Y$] = 0.1 + 0.4 + 0.3 + 1.5 + 0.4 + 0.8 + 0.8 + 2.0 = 6.3
 

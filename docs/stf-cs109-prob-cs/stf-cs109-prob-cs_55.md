@@ -18,13 +18,13 @@
 
 ***定义：*** 带有离散随机变量的条件定义。
 
-\begin{align*} \P(X=x|Y=y)=\frac{P(X=x,Y=y)}{P(Y=y)} \end{align*}
+$$\begin{align*} \P(X=x|Y=y)=\frac{P(X=x,Y=y)}{P(Y=y)} \end{align*}$$
 
 ***定义：*** 带有离散随机变量的贝叶斯定理。
 
-\begin{align*} \P(X=x|Y=y)=\frac{P(Y=y|X=x)P(X=x)}{P(Y=y)} \end{align*}
+$$\begin{align*} \P(X=x|Y=y)=\frac{P(Y=y|X=x)P(X=x)}{P(Y=y)} \end{align*}$$
 
-在存在多个随机变量的情况下，使用缩写变得越来越有用！上述定义与以下符号相同，其中小写符号如$x$是事件$X=x$的缩写：\begin{align*} \P(x|y)=\frac{P(x,y)}{P(y)} \end{align*} 条件定义适用于任何事件，因此我们也可以使用累积分布函数（CDF）来写出离散情况下的条件：\begin{align*} \P(X \leq a | Y=y) &= \frac{\P(X \leq a, Y=y)}{\p(Y=y)} \\ &= \frac{\sum_{x\leq a} \P(X=x,Y=y)}{\P(Y=y)} \end{align*} 这里有一个巧妙的结果：这个最后项可以通过巧妙的手法重写。我们可以使求和扩展到整个分数：\begin{align*} \P(X \leq a | Y=y) &= \frac{\sum_{x\leq a} \P(X=x,Y=y)}{\P(Y=y)} \\ &= \sum_{x\leq a} \frac{\P(X=x,Y=y)}{\P(Y=y)} \\ &= \sum_{x\leq a} \P(X=x|Y=y) \end{align*}
+在存在多个随机变量的情况下，使用缩写变得越来越有用！上述定义与以下符号相同，其中小写符号如$x$是事件$X=x$的缩写：$$\begin{align*} \P(x|y)=\frac{P(x,y)}{P(y)} \end{align*}$$ 条件定义适用于任何事件，因此我们也可以使用累积分布函数（CDF）来写出离散情况下的条件：$$\begin{align*} \P(X \leq a | Y=y) &= \frac{\P(X \leq a, Y=y)}{\p(Y=y)} \\ &= \frac{\sum_{x\leq a} \P(X=x,Y=y)}{\P(Y=y)} \end{align*}$$ 这里有一个巧妙的结果：这个最后项可以通过巧妙的手法重写。我们可以使求和扩展到整个分数：$$\begin{align*} \P(X \leq a | Y=y) &= \frac{\sum_{x\leq a} \P(X=x,Y=y)}{\P(Y=y)} \\ &= \sum_{x\leq a} \frac{\P(X=x,Y=y)}{\P(Y=y)} \\ &= \sum_{x\leq a} \P(X=x|Y=y) \end{align*}$$
 
 实际上，将概率规则（如贝叶斯定理、全概率定律等）翻译成离散随机变量的语言变得非常直接：我们只需要回忆起，应用于随机变量的每个关系运算符定义了一个事件。
 
@@ -34,7 +34,7 @@
 
 ***定义：*** 混合离散和连续的贝叶斯定理。
 
-设 $X$ 为连续随机变量，设 $N$ 为离散随机变量。$X$ 给定 $N$ 和 $N$ 给定 $X$ 的条件概率分别是：\begin{align*} f(X=x|N=n) = \frac{\P(N=n|X=x)f(X=x)}{\p(N=n)} && \end{align*} \begin{align*} \p(N=n|X=x) = \frac{f(X=x|N=n)\p(N=n)}{f(X=x)} \end{align*}
+设 $X$ 为连续随机变量，设 $N$ 为离散随机变量。$X$ 给定 $N$ 和 $N$ 给定 $X$ 的条件概率分别是：$$\begin{align*} f(X=x|N=n) = \frac{\P(N=n|X=x)f(X=x)}{\p(N=n)} && \end{align*}$$ $$\begin{align*} \p(N=n|X=x) = \frac{f(X=x|N=n)\p(N=n)}{f(X=x)} \end{align*}$$
 
 这些方程可能看起来很复杂，因为它们混合了概率密度和概率。我们为什么相信它们是正确的？首先，注意当条件概率的左侧的随机变量是连续的时，我们使用密度，当它是离散的时，我们使用概率。这个结果可以通过观察得出：$$ \P(X = x) = f(X=x) \cdot \epsilon_x $$
 
@@ -42,9 +42,9 @@
 
 ![](img/6bf25d0d32f5a1861f02a3f4fa081248.png)
 
-如果 $\epsilon_x$ 的值被留在公式中，那么它就会成为一个问题。然而，如果我们能让它们相互抵消，我们就可以得到一个有效的方程。这是在单变量或多个连续随机变量的背景下推导概率规则的关键洞察。再次，设 $X$ 为连续随机变量，设 $N$ 为离散随机变量：\begin{align*} \p(N=n|X=x) &= \frac{P(X=x|N=n)\p(N=n)}{P(X=x)} &&\text{贝叶斯定理}\\ &= \frac{f(X=x|N=n) \cdot \epsilon_x \cdot \p(N=n)}{f(X=x) \cdot \epsilon_x} &&\P(X = x) = f(X=x) \cdot \epsilon_x \\ &= \frac{f(X=x|N=n) \cdot \p(N=n)}{f(X=x)} &&\text{消去 } \epsilon_x \\ \end{align*}
+如果 $\epsilon_x$ 的值被留在公式中，那么它就会成为一个问题。然而，如果我们能让它们相互抵消，我们就可以得到一个有效的方程。这是在单变量或多个连续随机变量的背景下推导概率规则的关键洞察。再次，设 $X$ 为连续随机变量，设 $N$ 为离散随机变量：$$\begin{align*} \p(N=n|X=x) &= \frac{P(X=x|N=n)\p(N=n)}{P(X=x)} &&\text{贝叶斯定理}\\ &= \frac{f(X=x|N=n) \cdot \epsilon_x \cdot \p(N=n)}{f(X=x) \cdot \epsilon_x} &&\P(X = x) = f(X=x) \cdot \epsilon_x \\ &= \frac{f(X=x|N=n) \cdot \p(N=n)}{f(X=x)} &&\text{消去 } \epsilon_x \\ \end{align*}$$
 
-这种策略不仅适用于贝叶斯定理。例如，当 $X$ 是连续的且 $N$ 是离散的时，这是全概率定律的一个版本：\begin{align*} f(X=x) &= \sum_{n \in N} f(X=x | N = n) \p(N = n) \end{align*}
+这种策略不仅适用于贝叶斯定理。例如，当 $X$ 是连续的且 $N$ 是离散的时，这是全概率定律的一个版本：$$\begin{align*} f(X=x) &= \sum_{n \in N} f(X=x | N = n) \p(N = n) \end{align*}$$
 
 ## 连续随机变量的概率规则
 
@@ -52,7 +52,7 @@
 
 ***定义：*** 连续随机变量的贝叶斯定理。
 
-设 $X$ 和 $Y$ 为连续随机变量。 \begin{align*} f(X=x|Y=y) = \frac{f(X=x,Y=y)}{f(Y=y)} \end{align*}
+设 $X$ 和 $Y$ 为连续随机变量。 $$\begin{align*} f(X=x|Y=y) = \frac{f(X=x,Y=y)}{f(Y=y)} \end{align*}$$
 
 ## 示例：连续变量的推理
 
@@ -66,4 +66,4 @@
 
 当 $G = 1$ 时，$X$ 服从正态分布 $N(μ = 160, σ² = 7²)$
 
-当 $G = 0$ 时，$X$ 服从正态分布 $N(μ = 165, σ² = 3²)$ \begin{align*} \p(G = 1 | X = 163) &= \frac{f(X = 163 | G = 1) \P(G = 1)}{f(X = 163)} && \text{贝叶斯定理} \end{align*} 如果我们能解这个方程，我们就会得到答案。$f(X = 163 | G = 1)$ 是什么？它是 $X$ 的 高斯概率密度函数，在点 $x = 163$ 处，$\mu=160, \sigma² = 7²$： \begin{align*} f(X = 163 | G = 1) &= \frac{1}{\sigma \sqrt{2 \pi}} e^{-\frac{1}{2}\Big(\frac{x-\mu}{\sigma}\Big)²} && \text{高斯概率密度函数} \\ &= \frac{1}{7 \sqrt{2 \pi}} e^{-\frac{1}{2}\Big(\frac{163-160}{7}\Big)²} && \text{在 $163$ 处的 $X$ 的概率密度函数} \end{align*} 接下来我们注意到 $\P(G = 0) = \P(G = 1) = \frac{1}{2}$。将所有这些放在一起，并使用全概率公式来计算分母，我们得到： \begin{align*} \p&(G = 1 | X = 163) \\ &= \frac{f(X = 163 | G = 1) \P(G = 1)}{f(X = 163)} \\ &= \frac{f(X = 163 | G = 1) \P(G = 1)}{f(X = 163 | G = 1) \P(G = 1) + f(X = 163 | G = 0) \P(G = 0)}\\ &= \frac{\frac{1}{7 \sqrt{2 \pi}} e^{-\frac{1}{2}\Big(\frac{163-160}{7}\Big)²} \cdot \frac{1}{2}}{\frac{1}{7 \sqrt{2 \pi}} e^{-\frac{1}{2}\Big(\frac{163-160}{7}\Big)²} \cdot \frac{1}{2} + \frac{1}{3 \sqrt{2 \pi}} e^{-\frac{1}{2}\Big(\frac{163-165}{3}\Big)²} \cdot \frac{1}{2}} \\ &= \frac {\frac{1}{7} e^{-\frac{1}{2}\Big(\frac{9}{49}\Big)} } {\frac{1}{7} e^{-\frac{1}{2}\Big(\frac{9}{49}\Big)} + \frac{1}{3} e^{-\frac{1}{2}\Big(\frac{4}{9}\Big)²} }\\ &\approx 0.328 \end{align*}
+当 $G = 0$ 时，$X$ 服从正态分布 $N(μ = 165, σ² = 3²)$ $$\begin{align*} \p(G = 1 | X = 163) &= \frac{f(X = 163 | G = 1) \P(G = 1)}{f(X = 163)} && \text{贝叶斯定理} \end{align*}$$ 如果我们能解这个方程，我们就会得到答案。$f(X = 163 | G = 1)$ 是什么？它是 $X$ 的 高斯概率密度函数，在点 $x = 163$ 处，$\mu=160, \sigma² = 7²$： $$\begin{align*} f(X = 163 | G = 1) &= \frac{1}{\sigma \sqrt{2 \pi}} e^{-\frac{1}{2}\Big(\frac{x-\mu}{\sigma}\Big)²} && \text{高斯概率密度函数} \\ &= \frac{1}{7 \sqrt{2 \pi}} e^{-\frac{1}{2}\Big(\frac{163-160}{7}\Big)²} && \text{在 $163$ 处的 $X$ 的概率密度函数} \end{align*}$$ 接下来我们注意到 $\P(G = 0) = \P(G = 1) = \frac{1}{2}$。将所有这些放在一起，并使用全概率公式来计算分母，我们得到： $$\begin{align*} \p&(G = 1 | X = 163) \\ &= \frac{f(X = 163 | G = 1) \P(G = 1)}{f(X = 163)} \\ &= \frac{f(X = 163 | G = 1) \P(G = 1)}{f(X = 163 | G = 1) \P(G = 1) + f(X = 163 | G = 0) \P(G = 0)}\\ &= \frac{\frac{1}{7 \sqrt{2 \pi}} e^{-\frac{1}{2}\Big(\frac{163-160}{7}\Big)²} \cdot \frac{1}{2}}{\frac{1}{7 \sqrt{2 \pi}} e^{-\frac{1}{2}\Big(\frac{163-160}{7}\Big)²} \cdot \frac{1}{2} + \frac{1}{3 \sqrt{2 \pi}} e^{-\frac{1}{2}\Big(\frac{163-165}{3}\Big)²} \cdot \frac{1}{2}} \\ &= \frac {\frac{1}{7} e^{-\frac{1}{2}\Big(\frac{9}{49}\Big)} } {\frac{1}{7} e^{-\frac{1}{2}\Big(\frac{9}{49}\Big)} + \frac{1}{3} e^{-\frac{1}{2}\Big(\frac{4}{9}\Big)²} }\\ &\approx 0.328 \end{align*}$$

@@ -22,7 +22,7 @@
 
 因此，抽样出的粒子是：[Uni = 1, Influenza = 0, Fever = 0, Tired = 0]。如果我们再次运行这个过程，我们会得到一个新的粒子（其似然由联合概率决定）。
 
-现在我们的策略很简单：我们将生成$N$个样本，其中$N$在数万（如果不是数百万）左右。然后我们可以通过计数来计算概率查询。令$N(\textbf{X} = \textbf{k})$表示随机变量$\textbf{X}$取值为$\textbf{k}$的粒子的数量。回想一下，粗体符号$\textbf{X}$表示$\textbf{X}$是一个包含一个或多个元素的向量。根据“频率主义”概率的定义：\begin{align*} P(\textbf{X} = \textbf{k}) = \frac{N(\textbf{X} = \textbf{k})}{N} \end{align*} 计数就是胜利！但是，条件概率怎么办呢？嗯，使用条件概率的定义，我们可以看到这仍然是一些相当直接的计数：\begin{align*} P(\textbf{X} = \textbf{a} | \textbf{Y} = \textbf{b}) = \frac{P(\textbf{X} = \textbf{a},\textbf{Y} = \textbf{b}) }{P(\textbf{Y} = \textbf{b})} = \frac {\frac{N(\textbf{X} = \textbf{a},\textbf{Y} = \textbf{b})}{N}} {\frac{N(\textbf{Y} = \textbf{b})}{N}} = \frac {N(\textbf{X} = \textbf{a},\textbf{Y} = \textbf{b})} {N(\textbf{Y} = \textbf{b})} \end{align*} 让我们花点时间来认识到这一点是非常棒的。基于分析概率（没有样本的数学）的通用推理即使在贝叶斯网络中也很困难（如果你不相信我，试着在完整疾病模型中计算基于一个人口统计和一个症状的流感条件概率）。然而，如果我们生成足够的样本，我们可以通过将样本减少到与条件一致（$\vec{Y} = \vec{b}$）的样本，然后计数其中有多少也与查询一致（$\vec{X} = \vec{a}$）来计算任何条件概率问题。以下是算法的伪代码：
+现在我们的策略很简单：我们将生成$N$个样本，其中$N$在数万（如果不是数百万）左右。然后我们可以通过计数来计算概率查询。令$N(\textbf{X} = \textbf{k})$表示随机变量$\textbf{X}$取值为$\textbf{k}$的粒子的数量。回想一下，粗体符号$\textbf{X}$表示$\textbf{X}$是一个包含一个或多个元素的向量。根据“频率主义”概率的定义：$$\begin{align*} P(\textbf{X} = \textbf{k}) = \frac{N(\textbf{X} = \textbf{k})}{N} \end{align*}$$ 计数就是胜利！但是，条件概率怎么办呢？嗯，使用条件概率的定义，我们可以看到这仍然是一些相当直接的计数：$$\begin{align*} P(\textbf{X} = \textbf{a} | \textbf{Y} = \textbf{b}) = \frac{P(\textbf{X} = \textbf{a},\textbf{Y} = \textbf{b}) }{P(\textbf{Y} = \textbf{b})} = \frac {\frac{N(\textbf{X} = \textbf{a},\textbf{Y} = \textbf{b})}{N}} {\frac{N(\textbf{Y} = \textbf{b})}{N}} = \frac {N(\textbf{X} = \textbf{a},\textbf{Y} = \textbf{b})} {N(\textbf{Y} = \textbf{b})} \end{align*}$$ 让我们花点时间来认识到这一点是非常棒的。基于分析概率（没有样本的数学）的通用推理即使在贝叶斯网络中也很困难（如果你不相信我，试着在完整疾病模型中计算基于一个人口统计和一个症状的流感条件概率）。然而，如果我们生成足够的样本，我们可以通过将样本减少到与条件一致（$\vec{Y} = \vec{b}$）的样本，然后计数其中有多少也与查询一致（$\vec{X} = \vec{a}$）来计算任何条件概率问题。以下是算法的伪代码：
 
 ```py
  N = 10000
@@ -39,7 +39,7 @@ def get_any_probability(query, condition):
 
 ## 在条件为罕见事件时的通用推理
 
-联合采样是一种利用计算能力的强大技术。但并非总是有效。事实上，当我们所条件的事件的概率足够低，以至于我们不太可能产生与该事件完全匹配的样本时，它就不起作用了。最简单的例子是连续随机变量。考虑简单的疾病模型。让我们将发热从二元变量改为连续变量。为此，我们只需要重新指定发热给定其父变量（流感）的似然性。假设似然性来自正态概率密度函数：\begin{align*} \text{如果流感 = 0，则发热} \sim N(\mu = 98.3, \sigma = 0.7)\\ \therefore f(\text{发热} = x) = \frac{1}{\sqrt{2 \pi \cdot 0.7}} e ^{-\frac{(x - 98.3)²}{2 \cdot 0.7}} \end{align*} \begin{align*} \text{如果流感 = 1，则发热} \sim N(\mu = 100.0, \sigma = 1.8) \\ \therefore f(\text{发热} = x) = \frac{1}{\sqrt{2 \pi \cdot 1.8}} e ^{-\frac{(x - 100.0)²}{2 \cdot 1.8}} \end{align*}
+联合采样是一种利用计算能力的强大技术。但并非总是有效。事实上，当我们所条件的事件的概率足够低，以至于我们不太可能产生与该事件完全匹配的样本时，它就不起作用了。最简单的例子是连续随机变量。考虑简单的疾病模型。让我们将发热从二元变量改为连续变量。为此，我们只需要重新指定发热给定其父变量（流感）的似然性。假设似然性来自正态概率密度函数：$$\begin{align*} \text{如果流感 = 0，则发热} \sim N(\mu = 98.3, \sigma = 0.7)\\ \therefore f(\text{发热} = x) = \frac{1}{\sqrt{2 \pi \cdot 0.7}} e ^{-\frac{(x - 98.3)²}{2 \cdot 0.7}} \end{align*}$$ $$\begin{align*} \text{如果流感 = 1，则发热} \sim N(\mu = 100.0, \sigma = 1.8) \\ \therefore f(\text{发热} = x) = \frac{1}{\sqrt{2 \pi \cdot 1.8}} e ^{-\frac{(x - 100.0)²}{2 \cdot 1.8}} \end{align*}$$
 
 采样（又称粒子）的过程仍然很简单。我们应用相同的流程，直到我们到达采样发热随机变量值（在上一节示例中是第 3 步）的步骤。如果我们为流感采样了 0，我们就从健康成人的正态分布中抽取发热值（$\mu = 98.3$）。如果我们为流感采样了 1，我们就从流感成人的正态分布中抽取发热值（$\mu = 100.0$）。问题出现在联合采样的“拒绝”阶段。
 
