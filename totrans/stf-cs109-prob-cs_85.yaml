@@ -1,0 +1,77 @@
+- en: Differential Privacy
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: 原文：[https://chrispiech.github.io/probabilityForComputerScientists/en/examples/differential_privacy/](https://chrispiech.github.io/probabilityForComputerScientists/en/examples/differential_privacy/)
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '* * *'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Recently, many organizations have released machine learning models trained on
+    massive datasets (GPT-3, YOLO, etc...). This is a great contribution to science
+    and streamlines modern AI research. However, publicizing these models allows for
+    the potential ``reverse engineering'' of models to uncover the training data for
+    the model. Specifically, an attacker can download a model, look at the parameter
+    values and then try to reconstruct the original training data. This is particularly
+    bad for models trained on sensetive data like health information. In this section
+    we are going to use randomness as a method to defend against algorithmic ``reverse
+    engineering.''
+  prefs: []
+  type: TYPE_NORMAL
+- en: Injecting Randomness
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: One way to combat algorithmic reverse engineering is to add some random element
+    to an already existing dataset. Let
+  prefs: []
+  type: TYPE_NORMAL
+- en: \begin{align*} X_1, \dots, X_i \overset{\text{i.i.d}} \sim \text{Bern}(p) \end{align*}
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'represent a set of real human data. Consider the following snippet of code:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Quite simply, an attacker can call the above for all 100 samples and uncover
+    all 100 data points. Instead, we can inject an element of randomness:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE1]'
+  prefs: []
+  type: TYPE_PRE
+- en: The attacker can in expectation call the new function 100 times and get the
+    correct values for 50 of them (but they wont know which 50).
+  prefs: []
+  type: TYPE_NORMAL
+- en: Recovering $p$
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: 'Now consider if we publish the function calculateYi, how could a researcher
+    who is interested in the mean of the samples get useful data? They can look at:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: \begin{align*} Z = \sum^{100}_{n=1} Y_i. \end{align*}
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Which has expectation:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: \begin{align*} E[Z] = E\left[\sum^{100}_{n=1} Y_i\right] = \sum^{100}_{n=1}
+    E[Y_i] = \sum^{100}_{n=1}\left(\frac{p}{2} + \frac{1}{4}\right) = 50p + 25 \end{align*}
+  prefs: []
+  type: TYPE_NORMAL
+- en: Then to uncover an estimate, the scientist can do,
+  prefs: []
+  type: TYPE_NORMAL
+- en: \begin{align*} p \approx \frac{Z - 25}{50} \end{align*}
+  prefs: []
+  type: TYPE_NORMAL
+- en: And proceed to conduct more research!
+  prefs: []
+  type: TYPE_NORMAL

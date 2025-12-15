@@ -1,0 +1,188 @@
+- en: Poisson Distribution
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: 原文：[https://chrispiech.github.io/probabilityForComputerScientists/en/part2/poisson/](https://chrispiech.github.io/probabilityForComputerScientists/en/part2/poisson/)
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '* * *'
+  prefs: []
+  type: TYPE_NORMAL
+- en: A Poisson random variable gives the probability of a given number of events
+    in a fixed interval of time (or space). It makes the Poisson assumption that events
+    occur with a known constant mean rate and independently of the time since the
+    last event.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Poisson Random Variable**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '| Notation: | $X \sim \Poi(\lambda)$ |'
+  prefs: []
+  type: TYPE_TB
+- en: '| Description: | Number of events in a fixed time frame if (a) the events occur
+    with a constant mean rate and (b) they occur independently of time since last
+    event. |'
+  prefs: []
+  type: TYPE_TB
+- en: '| Parameters: | $\lambda \in \mathbb{R}^{+}$, the constant average rate. |'
+  prefs: []
+  type: TYPE_TB
+- en: '| Support: | $x \in \{0, 1, \dots\}$ |'
+  prefs: []
+  type: TYPE_TB
+- en: '| PMF equation: | $$\p(X=x) = \frac{\lambda^xe^{-\lambda}}{x!}$$ |'
+  prefs: []
+  type: TYPE_TB
+- en: '| Expectation: | $\E[X] = \lambda$ |'
+  prefs: []
+  type: TYPE_TB
+- en: '| Variance: | $\var(X) = \lambda$ |'
+  prefs: []
+  type: TYPE_TB
+- en: '| PMF graph: |'
+  prefs: []
+  type: TYPE_TB
+- en: 'Parameter $\lambda$:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '<canvas id="poissonPmf" style="max-height: 400px"></canvas>'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Poisson Intuition
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: In this section we show the intuition behind the Poisson derivation. It is both
+    a great way to deeply understand the Poisson, as well as good practice with Binomial
+    distributions.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Let's work on the problem of predicting the chance of a given number of events
+    occurring in a fixed time interval — the next minute. For example, imagine you
+    are working on a ride sharing application and you care about the probability of
+    how many requests you get from a particular area. From historical data, you know
+    that the average requests per minute is $\lambda = 5$. What is the probability
+    of getting 1, 2, 3, etc requests in a minute?
+  prefs: []
+  type: TYPE_NORMAL
+- en: '*: We could approximate a solution to this problem by using a binomial distribution!
+    Lets say we split our minute into 60 seconds, and make each second an [indicator
+    Bernoulli](../../part2/bernoulli) variable — you either get a request or you don''t.
+    If you get a request in a second, the indicator is 1\. Otherwise it is 0\. Here
+    is a visualization of our 60 binary-indicators. In this example imagine we have
+    requests at 2.75 and 7.12 seconds. the corresponding indicator variables are blue
+    filled in boxes:*'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '*1 minute'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'The total number of requests received over the minute can be approximated as
+    the sum of the sixty indicator variables, which conveniently matches the description
+    of a [binomial](../../part2/binomial) — a sum of Bernoullis. Specifically define
+    $X$ to be the number of requests in a minute. $X$ is a binomial with $n=60$ trials.
+    What is the probability, $p$, of a success on a single trial? To make the expectation
+    of $X$ equal the observed historical average $\lambda =5$ we should choose $p$
+    so that $\lambda = \E[X]$. $$ \begin{align} \lambda &= \E[X] && \text{Expectation
+    matches historical average} \\ \lambda &= n \cdot p && \text{Expectation of a
+    Binomial is } n \cdot p \\ p &= \frac{\lambda}{n} && \text{Solving for $p$} \end{align}
+    $$ In this case since $\lambda=5$ and $n=60$, we should choose $p=5/60$ and state
+    that $X \sim \Bin(n=60, p=5/60)$. Now that we have a form for $X$ we can answer
+    probability questions about the number of requests by using the Binomial PMF:
+    $$\p(X = x) = {n \choose x} p^x (1-p)^{n-x}$$'
+  prefs: []
+  type: TYPE_NORMAL
+- en: So for example:$$\p(X=1) = {60 \choose 1} (5/60)^1 (55/60)^{60-1} \approx 0.0295$$
+    $$\p(X=2) = {60 \choose 2} (5/60)^2 (55/60)^{60-2} \approx 0.0790$$ $$\p(X=3)
+    = {60 \choose 3} (5/60)^3 (55/60)^{60-3} \approx 0.1389$$ Great! But don't forget
+    that this was an approximation. We didn't account for the fact that there can
+    be more than one event in a single second. One way to assuage this issue is to
+    divide our minute into more fine-grained intervals (the choice to split it into
+    60 seconds was rather arbitrary). Instead lets divide our minute into 600 deciseconds,
+    again with requests at 2.75 and 7.12 seconds:1 minute
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Now $n=600$, $p=5/600$ and $X \sim \Bin(n=600, p=6/600)$. We can repeat our
+    example calculations using this better approximation: $$\p(X=1) = {600 \choose
+    1} (5/600)^1 (595/60)^{600-1} \approx 0.0333$$ $$\p(X=2) = {600 \choose 2} (5/600)^2
+    (595/600)^{600-2} \approx 0.0837$$ $$\p(X=3) = {600 \choose 3} (5/600)^3 (595/600)^{600-3}
+    \approx 0.1402$$'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Choose any value of $n$, the number of buckets to divide our minute into:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: The larger $n$ is, the more accurate the approximation. So what happens when
+    $n$ is infinity? It becomes a Poisson!
+  prefs: []
+  type: TYPE_NORMAL
+- en: Poisson, a Binomial in the limit
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'Or if we really cared about making sure that we don''t get two events in the
+    same bucket, we can divide our minute into infinitely small buckets:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 1 minute
+  prefs: []
+  type: TYPE_NORMAL
+- en: '***Proof***: Derivation of the Poisson'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'What does the PMF of $X$ look like now that we have infinite divisions of our
+    minute? We can write the equation and think about it as $n$ goes to infinity.
+    Recall that $p$ still equals $\lambda/n$:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: $$ \P(X=x) = \lim_{n \rightarrow \infty} {n \choose x} (\lambda / n)^x(1-\lambda/n)^{n-x}
+    $$
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'While it may look intimidating, this expression simplifies nicely. This proof
+    uses a few special limit rules that we haven''t introduced in this book:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '$$ \begin{align} \P(X=x) &= \lim_{n \rightarrow \infty} {n \choose x} (\lambda
+    / n)^x(1-\lambda/n)^{n-x} && \text{Start: binomial in the limit}\\ &= \lim_{n
+    \rightarrow \infty} {n \choose x} \cdot \frac{\lambda^x}{n^x} \cdot \frac{(1-\lambda/n)^{n}}{(1-\lambda/n)^{x}}
+    && \text{Expanding the power terms} \\ &= \lim_{n \rightarrow \infty} \frac{n!}{(n-x)!x!}
+    \cdot \frac{\lambda^x}{n^x} \cdot \frac{(1-\lambda/n)^{n}}{(1-\lambda/n)^{x}}
+    && \text{Expanding the binomial term} \\ &= \lim_{n \rightarrow \infty} \frac{n!}{(n-x)!x!}
+    \cdot \frac{\lambda^x}{n^x} \cdot \frac{e^{-\lambda}}{(1-\lambda/n)^{x}} && \href{http://www.sosmath.com/calculus/sequence/specialim/specialim.html}{\text{Rule
+    }} \lim_{n \rightarrow \infty}(1-\lambda/n)^{n} = e^{-\lambda}\\ &= \lim_{n \rightarrow
+    \infty} \frac{n!}{(n-x)!x!} \cdot \frac{\lambda^x}{n^x} \cdot \frac{e^{-\lambda}}{1}
+    && \href{https://www.youtube.com/watch?v=x1WBTBtfvjM}{\text{Rule }} \lim_{n \rightarrow
+    \infty}\lambda/n= 0\\ &= \lim_{n \rightarrow \infty} \frac{n!}{(n-x)!} \cdot \frac{1}{x!}
+    \cdot \frac{\lambda^x}{n^x} \cdot \frac{e^{-\lambda}}{1} && \text{Splitting first
+    term}\\ &= \lim_{n \rightarrow \infty} \frac{n^x}{1} \cdot \frac{1}{x!} \cdot
+    \frac{\lambda^x}{n^x} \cdot \frac{e^{-\lambda}}{1} && \lim_{n \rightarrow \infty
+    }\frac{n!}{(n-x)!} = n^x\\ &= \lim_{n \rightarrow \infty} \frac{\lambda^x}{x!}
+    \cdot \frac{e^{-\lambda}}{1} && \text{Cancel }n^x\\ &= \frac{\lambda^x \cdot e^{-\lambda}}{x!}
+    && \text{Simplify}\\ \end{align} $$'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'That is a beautiful expression! Now we can calculate the real probability of
+    number of requests in a minute, if the historical average is $\lambda=5$:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: $$\p(X=1) = \frac{5^1 \cdot e^{-5}}{1!} = 0.03369$$ $$\p(X=2) = \frac{5^2 \cdot
+    e^{-5}}{2!}= 0.08422$$ $$\p(X=3) = \frac{5^3 \cdot e^{-5}}{3!} = 0.14037$$
+  prefs: []
+  type: TYPE_NORMAL
+- en: This is both more accurate and much easier to compute!
+  prefs: []
+  type: TYPE_NORMAL
+- en: Changing time frames
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Say you are given a rate over one unit of time, but you want to know the rate
+    in another unit of time. For example, you may be given the rate of hits to a website
+    per minute, but you want to know the probability over a 20 minute period. You
+    would just need to multiply this rate by 20 in order to go from the "per 1 minute
+    of time" rate to obtain the "per 20 minutes of time" rate.*
+  prefs: []
+  type: TYPE_NORMAL

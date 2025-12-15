@@ -1,0 +1,143 @@
+- en: Random Shuffles
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: 原文：[https://chrispiech.github.io/probabilityForComputerScientists/en/examples/random_shuffles/](https://chrispiech.github.io/probabilityForComputerScientists/en/examples/random_shuffles/)
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '* * *'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Here is a suprising claim. If you shuffle a standard deck of cards seven times,
+    with almost total certainty you can claim that the exact ordering of cards has
+    never been seen! Wow! Let''s explore. We can ask this question formally as: What
+    is the probability that in the $n$ shuffles seen since the start of time, yours
+    is unique?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Orderings of 52 Cards
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: 'Our adventure starts with a simple observation: there are **very** many ways
+    to order 52 cards. But exactly how many unique orderings of a standard deck are
+    there?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'There are 52! ways to order a standard deck of cards. Since each card is unique
+    (each card has a unique suit, value combination) then we can apply the rule for
+    [Permutations of Distinct Objects](../../part1/combinatorics/#perm_distinct):
+    \begin{align*} \text{Num. Unique Orderings} &= 52! \end{align*} That is a humongous
+    number. 52! equals 80658175170943878571660636856403766975289505440883277824000000000000.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: That is over $8 \cdot 10^{67}$. Recall it is estimated that there are around
+    $10^{82}$ atoms in the observable universe
+  prefs: []
+  type: TYPE_NORMAL
+- en: Number of Shuffles Ever Seen
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: Of course we don't know what the value of $n$ is — nobody has been counting
+    how many times humans have shuffled cards. We can come up with a reasonable overestimate.
+    Assume $k$ = 7 billion people have been shuffling cards once a second since cards
+    were invented. Playing cards may have been invented as far back as the Tang dynasty
+    in the 9th century. To the best of my knowledge the oldest set of 52 cards is
+    the [Topkapı deck](https://cards.old.no/1500-mamluk/) of cards in Istanbul around
+    the 15th century ad. That is about $s$ = 16,472,828,422 seconds ago. As such our
+    overestimate is $n = s \cdot k \approx 10^{20}$.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Next let''s calculate the probability that none of those $n$ historical shuffles
+    matches your particular ordering of 52 cards. There are two valid approaches:
+    using equally likely outcomes, and using independence.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Equally Likely Outcomes
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: 'One way to the probability that your ordering of 52 cards is unique in history
+    is to use [Equally Likely Outcomes](../../part1/equally_likely/). Consider the
+    sample space of all the possible ordering of all the cards ever dealt. Each outcome
+    in this set will have $n$ card decks each with their own ordering. As such the
+    size of the sample space is $|S| = (52!)^{n}$. Note that all outcomes in the sample
+    space are equally likely — we can convince ourselves of this by symmetry — no
+    ordering is more likely than any other. Out of that sample space we want to count
+    the number of outcomes where none of the orderings matches yours. There are $52!
+    - 1$ ways to order 52 cards that are not yours. We can construct the event space
+    by steps: for each of the $n$ shuffles in history select any one of those $52!
+    - 1$ orderings. Thus $|E| = (52!-1)^n$.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Let $U$ be the event that your particular ordering of 52 cards is unique \begin{align*}
+    \P(U) &= \frac{|E|}{|S|} && \text{Equally Likely Outcomes}\\ &= \frac{(52!-1)^n}{(52!)^n}
+    \\ &= \frac{(52!-1)^{10^{20}}}{(52!)^{10^{20}}} && n = 10^{20} \\ &= \Big(\frac{52!-1}{52!}\Big)
+    ^{10^{20}} \end{align*} In theory that is the correct answer, but those numbers
+    are so big, its not clear how to evaluate it, even when using a computer. One
+    good idea is to first compute the [log probability](../../part1/log_probabilities/):
+    \begin{align*} \log \P(U) &= \log \Big[\Big(\frac{52!-1}{52!}\Big) ^{10^{20}}\Big]
+    \\ &= 10^{20} \cdot \log \Big(\frac{52!-1}{52!}\Big) \\ &= 10^{20} \cdot \Big[
+    \log (52!-1) - \log(52!) \Big] \\ &= 10^{20} \cdot (-1.24 \times 10^{-68}) \\
+    &= -1.24 \times 10^{-48} \end{align*} Now if we undo the log (and use the fact
+    that $e^{-x}$ is very close to $1 - x$ for small values of $x$): \begin{align*}
+    \P(U) &= e^{-1.24 \times 10^{-48}} \\ &\approx 1 - 1.24 \times 10^{-48} \end{align*}'
+  prefs: []
+  type: TYPE_NORMAL
+- en: So the probability that your particular ordering is unique is very close to
+    $1$, and the probability that someone else got the same ordering, $1 - P(U)$,
+    is a number with 47 zeros after the decimal point. It is safe to say your ordering
+    is unique.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'In python, you can use a special library called decimal to compute very small
+    probabilities. Here is an example of how to compute $\log \frac{52!-1}{52!}$:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs: []
+  type: TYPE_PRE
+- en: We can also check our result using the [binomial approximation](https://en.wikipedia.org/wiki/Binomial_approximation).
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'For small values of $x$, the value $(1 - x)^n$ is very close to $1 - nx$, and
+    this gives us another way to compute $P(U)$: \begin{align*} \P(U) &= \frac{(52!-1)^n}{(52!)^n}
+    \\ &= \Big(1 - \frac{1}{52!}\Big)^{10^{20}} && n = 10^{20} \\ &\approx 1 - \frac{10^{20}}{52!}
+    \\ &\approx 1 - 1.24 \times 10^{-48} \end{align*}'
+  prefs: []
+  type: TYPE_NORMAL
+- en: This agrees with the result we got using python's decimal library.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Independence
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: Another approach is to define events $D_i$ that the $i$th card shuffle is different
+    than yours. Because we assume each shuffle is independent, then $P(U) = \prod_i
+    P(D_i)$. What is the probability of $(D_i)$? If you think of the sample space
+    of $D_i$, it is 52! ways of ordering a deck cards. The event space is the 52!
+    - 1 outcomes which are not your ordering.
+  prefs: []
+  type: TYPE_NORMAL
+- en: \begin{align*} \P(U) &= \prod_{i=1}^n \P(D_i) \\ \log \P(U) &= \sum_{i=1}^n
+    \log \P(D_i) \\ &= n \cdot \log \P(D_i) \\ &= 10^{20} \cdot \log \frac{52!-1}{52!}\\
+    &\approx 10^{20} \cdot -1.24 \times 10^{-68} \end{align*} Which is the same answer
+    we got with the other approach for $\log \P(U) $
+  prefs: []
+  type: TYPE_NORMAL
+- en: How Random is your Shuffle?
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: A final question we can look into. How do you get a truly random ordering of
+    cards? Dave Bayer and Persi Diaconis in 1992 worked through this problem and published
+    their results in the article [Trailing the Dovetail Shuffle to its Lair](https://www.projecteuclid.org/journals/annals-of-applied-probability/volume-2/issue-2/Trailing-the-Dovetail-Shuffle-to-its-Lair/10.1214/aoap/1177005705.full).
+    They showed that if you shuffle a deck of cards seven times using a [riffle shuffle](https://en.wikipedia.org/wiki/Shuffling)
+    also known as the dovetail shuffle, you are almost garunteed a random ordering
+    of cards. The methodology used paved the way for studying psuedo random numbers
+    produced by computers.
+  prefs: []
+  type: TYPE_NORMAL

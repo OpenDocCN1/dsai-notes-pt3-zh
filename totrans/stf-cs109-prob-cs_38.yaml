@@ -1,0 +1,94 @@
+- en: Exponential Distribution
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: 原文：[https://chrispiech.github.io/probabilityForComputerScientists/en/part2/exponential/](https://chrispiech.github.io/probabilityForComputerScientists/en/part2/exponential/)
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '* * *'
+  prefs: []
+  type: TYPE_NORMAL
+- en: An exponential distribution measures the **amount** of time until a next event
+    occurs. It assumes that the events occur via a poisson process. Note that this
+    is different from the Poisson Random Variable which measures number of events
+    in a fixed amount of time.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Exponential Random Variable**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '| Notation: | $X \sim \Exp(\lambda)$ |'
+  prefs: []
+  type: TYPE_TB
+- en: '| Description: | Time until next events if (a) the events occur with a constant
+    mean rate and (b) they occur independently of time since last event. |'
+  prefs: []
+  type: TYPE_TB
+- en: '| Parameters: | $\lambda \in \mathbb{R}^{+}$, the constant average rate. |'
+  prefs: []
+  type: TYPE_TB
+- en: '| Support: | $x \in \mathbb{R}^+$ |'
+  prefs: []
+  type: TYPE_TB
+- en: '| PDF equation: | $$f(x) = \lambda e^{-\lambda x}$$ |'
+  prefs: []
+  type: TYPE_TB
+- en: '| CDF equation: | $$F(x) = 1 - e^{-\lambda x}$$ |'
+  prefs: []
+  type: TYPE_TB
+- en: '| Expectation: | $\E[X] = 1/\lambda$ |'
+  prefs: []
+  type: TYPE_TB
+- en: '| Variance: | $\var(X) = 1/\lambda^2$ |'
+  prefs: []
+  type: TYPE_TB
+- en: '| PDF graph: |'
+  prefs: []
+  type: TYPE_TB
+- en: 'Parameter $\lambda$:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '<canvas id="exponentialPdf" style="max-height: 400px"></canvas>'
+  prefs: []
+  type: TYPE_NORMAL
+- en: An exponential distribution is a great example of a continuous distribution
+    where the [cumulative distribution function (CDF)](../../part2/continuous#cdf)
+    is much easier to work with as it allows you to answer probability questions without
+    using integrals.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Example:** Based on historical data from the USGS, earthquakes of magnitude
+    8.0+ happen in a certain location at a rate of 0.002 per year. Earthquakes are
+    known to occur via a poisson process. What is the probability of a major earthquake
+    in the next 4 years?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Let $Y$ be the years until the next major earthquake. Because $Y$ measures
+    time *until* the next event it fits the description of an exponential random variable:
+    $Y \sim \Exp(\lambda = 0.002)$. The question is asking, what is $\p(Y < 4)$? \begin{align*}
+    \p(Y < 4) &= F_Y(4) && \text{The CDF measures $\p(Y < y)$} \\ &= 1 - e^{- \lambda
+    \cdot y} && \text{The CDF of an Exp} \\ &= 1 - e^{- 0.002 \cdot 4} && \text{The
+    CDF of an Exp} \\ &\approx 0.008 \end{align*} Note that it is possible to answer
+    this question using the PDF, but it will require solving an integral.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Exponential is Memoryless
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'One way to gain intuition for what is meant by the "poisson process" is through
+    the proof that the exponential distribution is ["memoryless"](https://en.wikipedia.org/wiki/Memorylessness).
+    That means that the occurrence (or lack of occurrence) of events in the past does
+    not change our belief as to how long until the next occurrence. This can be stated
+    formally. If $X \sim \Exp(\lambda)$ then for an interval of time until the start
+    $s$, and a proceeding, query, interval of time $t$: $$\p(X > s + t | X > s) =
+    \p(X > t) $$ Which is something we can prove: \begin{align*} \p(X > s + t | X
+    > s) &= \frac{\p(X > s + t \and X > s)}{\p(X > s)} && \text{Def of conditional
+    prob.} \\ &= \frac{\p(X > s + t )}{\p(X > s)} && \text{Because $X>s+t$ implies
+    $X>s$} \\ &= \frac{1 - F_X(s + t )}{1 - F_X(s)} && \text{Def of CDF} \\ &= \frac{e^{-\lambda
+    (s + t)}}{e^{-\lambda s}} && \text{By CDF of Exp} \\ &= e^{-\lambda t} && \text{Simplify}
+    \\ &= 1 - F_X(t) && \text{By CDF of Exp} \\ &= \p(X > t) && \text{Def of CDF}
+    \\ \end{align*}'
+  prefs: []
+  type: TYPE_NORMAL

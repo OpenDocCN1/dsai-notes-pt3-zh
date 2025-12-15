@@ -1,0 +1,99 @@
+- en: Independence in Variables
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: 原文：[https://chrispiech.github.io/probabilityForComputerScientists/en/part3/independent_vars/](https://chrispiech.github.io/probabilityForComputerScientists/en/part3/independent_vars/)
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '* * *'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Discrete
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'Two discrete random variables $X$ and $Y$ are called independent if: \begin{align*}
+    \P(X=x,Y=y) = \P(X=x)\P(Y=y) \text{ for all } x,y \end{align*} Intuitively: knowing
+    the value of $X$ tells us nothing about the distribution of $Y$. If two variables
+    are not independent, they are called dependent. This is a similar conceptually
+    to independent events, but we are dealing with multiple *variables*. Make sure
+    to keep your events and variables distinct.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Continuous
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'Two continuous random variables $X$ and $Y$ are called independent if: \begin{align*}
+    \P(X\leq a, Y \leq b) = \P(X \leq a)\P(Y \leq b) \text{ for all } a,b \end{align*}
+    This can be stated equivalently using either the CDF or the PDF: \begin{align*}
+    F_{X,Y}(a,b) &= F_{X}(a)F_{Y}(b) \text{ for all } a,b \\ f(X=x,Y=y) &= f(X=x)f(Y=y)
+    \text{ for all } x,y \end{align*} More generally, if you can factor the joint
+    density function then your random variable are independent (or the joint probability
+    function for discrete random variables): \begin{align*} &f(X=x,Y=y) = h(x)g(y)
+    \\ &\P(X=x,Y=y) = h(x)g(y) \end{align*}'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Example: Showing Independence'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'Let $N$ be the # of requests to a web server/day and that $N \sim \Poi(\lambda)$.
+    Each request comes from a human with probability = $p$ or from a "bot" with probability
+    = $(1 – p)$. Define $X$ to be the # of requests from humans/day and $Y$ to be
+    the # of requests from bots/day. Show that the number of requests from humans,
+    $X$, is independent of the number of requests from bots, $Y$.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Since requests come in independently, the probability of $X$ conditioned on
+    knowing the number of requests is a Binomial. Specifically: \begin{align*} (X|N)
+    &\sim \Bin(N,p)\\ (Y|N) &\sim \Bin(N, 1-p) \end{align*} To get started we need
+    to first write an expression for the joint probability of $X$ and $Y$. To do so,
+    we use the chain rule: \begin{align*} \P(X=x,Y=y) = \P(X = x, Y=y|N = x+y)\P(N
+    = x+y) \end{align*} We can calculate each term in this expression. The first term
+    is the PMF of the binomial $X|N$ having $x$ "successes". The second term is the
+    probability that the Poisson $N$ takes on the value $x+y$ : \begin{align*} &\P(X
+    = x, Y=y|N = x+y) = { {x + y} \choose x}p^x(1-p)^y \\ &\P(N = x + y) = e^{-\lambda}\frac{\lambda^{x+y}}{(x+y)!}
+    \end{align*} Now we can put those together we have an expression for the joint:
+    \begin{align*} &\P(X = x, Y=y) = { {x + y} \choose x}p^x(1-p)^y e^{-\lambda}\frac{\lambda^{x+y}}{(x+y)!}
+    \end{align*} At this point we have derived the joint distribution over $X$ and
+    $Y$. In order to show that these two are independent, we need to be able to factor
+    the joint: \begin{align*} \P&(X = x, Y=y) \\ &= { {x + y} \choose x}p^x(1-p)^y
+    e^{-\lambda}\frac{\lambda^{x+y}}{(x+y)!} \\ &= \frac{(x+y)!}{x! \cdot y!} p^x(1-p)^y
+    e^{-\lambda}\frac{\lambda^{x+y}}{(x+y)!} \\ &= \frac{1}{x! \cdot y!} p^x(1-p)^y
+    e^{-\lambda}\lambda^{x+y} && \text{Cancel (x+y)!} \\ &= \frac{p^x \cdot \lambda^x}{x!}
+    \cdot \frac{(1-p)^y \cdot \lambda ^{y}}{y!} \cdot e^{-\lambda} && \text{Rearrange}
+    \\ \end{align*} Because the joint can be factored into a term that only has $x$
+    and a term that only has $y$, the random variables are independent.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Symmetry of Independence
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Independence is symmetric. That means that if random variables $X$ and $Y$ are
+    independent, $X$ is independent of $Y$ and $Y$ is independent of $X$. This claim
+    may seem meaningless but it can be very useful. Imagine a sequence of events $X_1,X_2,
+    \dots$. Let $A_i$ be the event that $X_i$ is a "record value" (eg it is larger
+    than all previous values). Is $A_{n+1}$ independent of $A_n$? It is easier to
+    answer that $A_n$ is independent of $A_{n+1}$. By symmetry of independence both
+    claims must be true.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Expectation of Products
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '***Lemma: Product of Expectation for Independent Random Variables***:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: If two random variables $X$ and $Y$ are independent, the expectation of their
+    product is the product of the individual expectations. \begin{align*} &E[X \cdot
+    Y] = E[X] \cdot E[Y] && \text{ if $X$ and $Y$ are independent}\\ &E[g(X)h(Y)]
+    = E[g(X)]E[h(Y)] && \text{ where $g$ and $h$ are functions} \end{align*} Note
+    that this assumes that $X$ and $Y$ are independent. Contrast this to the sum version
+    of this rule (expectation of sum of random variables, is the sum of individual
+    expectations) which does **not** require the random variables to be independent.
+  prefs: []
+  type: TYPE_NORMAL

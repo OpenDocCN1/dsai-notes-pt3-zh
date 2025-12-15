@@ -1,0 +1,166 @@
+- en: Random Variables
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: 原文：[https://chrispiech.github.io/probabilityForComputerScientists/en/part2/rvs/](https://chrispiech.github.io/probabilityForComputerScientists/en/part2/rvs/)
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '* * *'
+  prefs: []
+  type: TYPE_NORMAL
+- en: A Random Variable (RV) is a variable that probabilistically takes on a value
+    and they are one of the most important constructs in all of probability theory.
+    You can think of an RV as being like a variable in a programming language, and
+    in fact random variables are just as important to probability theory as variables
+    are to programming. Random Variables take on values, have types and have domains
+    over which they are applicable.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Random variables work with all of the foundational theory we have built up to
+    this point. We can define events that occur if the random variable takes on values
+    that satisfy a numerical test (eg does the variable equal 5, is the variable less
+    than 8).
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Lets look at a first example of a random variable. Say we flip three fair coins.
+    We can define a random variable Y to be the total number of “heads” on the three
+    coins. We can ask about the probability of Y taking on different values using
+    the following notation:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '| Let $Y$ be the number of heads on three coin flips |'
+  prefs: []
+  type: TYPE_TB
+- en: '| $\p(Y = 0)$ = 1/8 | (T, T, T) |'
+  prefs: []
+  type: TYPE_TB
+- en: '| $\p(Y = 1)$ = 3/8 | (H, T, T), (T, H, T), (T, T, H) |'
+  prefs: []
+  type: TYPE_TB
+- en: '| $\p(Y = 2)$ = 3/8 | (H, H, T), (H, T, H), (T, H, H) |'
+  prefs: []
+  type: TYPE_TB
+- en: '| $\p(Y = 3)$ = 1/8 | (H, H, H) |'
+  prefs: []
+  type: TYPE_TB
+- en: '| $\p(Y ≥ 4)$ = 0 |'
+  prefs: []
+  type: TYPE_TB
+- en: Even though we use the same notation for random variables and for events (both
+    use capital letters) they are distinct concepts. An event is a scenario, a random
+    variable is an object. The scenario where a random variable takes on a particular
+    value (or range of values) is an event. When possible, I will try and use letters
+    E,F,G for events and X,Y,Z for random variables.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Using random variables is a convenient notation technique that assists in decomposing
+    problems. There are many different types of random variables (indicator, binary,
+    choice, Bernoulli, etc). The two main families of random variable types are discrete
+    and continuous. Discrete random variables can only take on integer values. Continuous
+    random variables can take on decimal values. We are going to develop our intuitions
+    using discrete random variable and then introduce continuous.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Properties of random variables
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'There are many properties of a random variable some of which we will dive into
+    extensively. Here is a brief summary. Each random variable has:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '| Property | Notation Example | Description |'
+  prefs: []
+  type: TYPE_TB
+- en: '| --- | --- | --- |'
+  prefs: []
+  type: TYPE_TB
+- en: '| Meaning |  | A semantic description of the random variable |'
+  prefs: []
+  type: TYPE_TB
+- en: '| Symbol | $X$ | A letter used to denote the random variable |'
+  prefs: []
+  type: TYPE_TB
+- en: '| Support or Range | $\{0, 1, \dots, 3\}$ | the values the random variable
+    can take on |'
+  prefs: []
+  type: TYPE_TB
+- en: '| [Distribution Function](../../part2/pmf) (PMF or PDF) | $\P(X=x)$ | A function
+    which maps values the RV can take on to likelihood. |'
+  prefs: []
+  type: TYPE_TB
+- en: '| [Expectation](../../part2/expectation) | $\E[X]$ | A weighted average |'
+  prefs: []
+  type: TYPE_TB
+- en: '| [Variance](../../part2/variance) | $\var(X)$ | A measure of spread |'
+  prefs: []
+  type: TYPE_TB
+- en: '| [Standard Deviation](../../part2/variance/#standard_deviation) | $\std(X)$
+    | The square root of variance |'
+  prefs: []
+  type: TYPE_TB
+- en: '| Mode |  | The most likely value of the random variable |'
+  prefs: []
+  type: TYPE_TB
+- en: 'You should set a goal of deeply understanding what each of these properties
+    mean. There are many more properties than the ones in the table above: properties
+    like [entropy](https://en.wikipedia.org/wiki/Entropy_(information_theory)), [median](https://en.wikipedia.org/wiki/Median),
+    [skew](https://en.wikipedia.org/wiki/Skewness), [kurtosis](https://en.wikipedia.org/wiki/Kurtosis).'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Random variables vs Events
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'Random variables and events are two different concepts. An event is an outcome,
+    or a set of outcomes, to an experiment. A random variable is a more like an experiment
+    -- it will take on an outcome eventually. Probabilities are over events, so if
+    you want to talk about probability in the context of a random variable, you must
+    construct an event. You can make events by using any of the [Relational Operators](https://en.wikipedia.org/wiki/Relational_operator):
+    <, ≤, >, ≥, =, or ≠ (not equal to). This is analogous to coding where you can
+    use relational operators to create boolean expressions from numbers.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Lets continue our example of the random variable $Y$ which represents the number
+    of heads on three coin flips. Here are some events using the variable $Y$:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '| Event | Meaning | Probability Statement |'
+  prefs: []
+  type: TYPE_TB
+- en: '| --- | --- | --- |'
+  prefs: []
+  type: TYPE_TB
+- en: '| $Y= 1$ | $Y$ takes on the value 1 (there was one heads) | $\p(Y=1)$ |'
+  prefs: []
+  type: TYPE_TB
+- en: '| $Y< 2$ | $Y$ takes on 0 or 1 (note this $Y$ can''t be negative) | $\p(Y<2)$
+    |'
+  prefs: []
+  type: TYPE_TB
+- en: '| $X > Y$ | $X$ takes on a value greater than the value $Y$ takes on. | $\p(X>Y)$
+    |'
+  prefs: []
+  type: TYPE_TB
+- en: '| $Y= y$ | $Y$ takes on a value represented by non-random variable $y$ | $\p(Y
+    = y)$ |'
+  prefs: []
+  type: TYPE_TB
+- en: 'You will see many examples like this last one, $\p(Y=y)$, in this text book
+    as well as in scientific and math research papers. It allows us to talk about
+    the likelihood of $Y$ taking on a value, in general. For example, later in this
+    book we will derive that for three coin flips where $Y$ is the number of heads,
+    the probability of getting exactly $y$ heads is: $$ \begin{align} \P(Y = y) =
+    \frac{0.75}{y!(3-y)!} && \text{If } 0 \leq y \leq 3 \end{align} $$ This statement
+    above is a function which takes in a parameter $y$ as input and returns the numeric
+    probability $\P(Y=y)$ as output. This particular expression allows us to talk
+    about the probability that the number of heads is 0, 1, 2 or 3 all in one expression.
+    You can plug in any one of those values for $y$ to get the corresponding probability.
+    It is customary to use lower-case symbols for non-random values. The use of an
+    equals sign in the "event" can be confusing. For example what does this expression
+    say $\P(Y = 1) = 0.375$? It says that the probability that "$Y$ takes on the value
+    1" is 0.375\. For discrete random variables this function is called the "[probability
+    mass function](../../part2/pmf)" and it is the topic of our next chapter.'
+  prefs: []
+  type: TYPE_NORMAL

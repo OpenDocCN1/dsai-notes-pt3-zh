@@ -1,0 +1,77 @@
+- en: Algorithmic Art
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: 原文：[https://chrispiech.github.io/probabilityForComputerScientists/en/examples/algorithmic_art/](https://chrispiech.github.io/probabilityForComputerScientists/en/examples/algorithmic_art/)
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '* * *'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'We want to generate probabilistic artwork, efficiently. We are going to use
+    random variables to make a picture filled with non-overlapping circles:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: <canvas id="canvas" width="782" height="782"></canvas>
+  prefs: []
+  type: TYPE_NORMAL
+- en: <btn id="regenerateButton" onclick="draw()" class="btn btn-primary btn-lg">Regenerate</btn>
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'In our art, the circles are different sizes. Specifically, each circle''s **radius**
+    is drawn from a Pareto distribution (which is described below). The placement
+    algorithm is greedy: we sample 1000 circle sizes. Sort them by size, largest to
+    smallest. Loop over the circle sizes and place circles one by one.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: To place a circle on the canvas, we sample the location of the center of the
+    circle. Both the x and y coordinates are uniformly distributed over the dimensions
+    of the canvas. Once we have selected a prospective location we then check if there
+    would be a collision with a circle that has already been placed. If there is a
+    collision we keep trying new locations until you find one that has no collisions.
+  prefs: []
+  type: TYPE_NORMAL
+- en: The Pareto Distribution
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '**Pareto Random Variable**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '| Notation: | $X \sim \text{Pareto}(a)$ |'
+  prefs: []
+  type: TYPE_TB
+- en: '| Description: | A long tail distribution. Large values are rare and small
+    values are common. |'
+  prefs: []
+  type: TYPE_TB
+- en: '| Parameters: | $a \ge 1$, the shape parameter Note there are other optional
+    params. See [wikipedia](https://en.wikipedia.org/wiki/Pareto_distribution) |'
+  prefs: []
+  type: TYPE_TB
+- en: '| Support: | $x \in [0, 1]$ |'
+  prefs: []
+  type: TYPE_TB
+- en: '| PDF equation: | $$f(x) = \frac{1}{x^{a+1}}$$ |'
+  prefs: []
+  type: TYPE_TB
+- en: '| CDF equation: | $$F(x) = 1- \frac{1}{x^a}$$ |'
+  prefs: []
+  type: TYPE_TB
+- en: Sampling from a Pareto Distribution
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: 'How can we draw samples from a pareto? In python its simple: `stats.pareto.rvs(a)`
+    however in JavaScript, or other languages, it might not be made transparent. We
+    can use "inverse transform sampling". The simple idea is to choose a uniform random
+    variable in the range (0, 1) and then select the value $x$ assignment such that
+    $F(x)$ equals the randomly chosen value.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: \begin{aligned} y &= 1 - (\frac{1}{x})^\alpha \\ (\frac{1}{x})^\alpha &= 1 -
+    y \\ \frac{1}{x} &= (1-y)^{\frac{1}{\alpha}} \\ x &= \frac{1}{(1-y)^{\frac{1}{\alpha}}}
+    \end{aligned}
+  prefs: []
+  type: TYPE_NORMAL

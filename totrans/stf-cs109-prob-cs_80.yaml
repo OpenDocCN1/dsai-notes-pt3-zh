@@ -1,0 +1,77 @@
+- en: Distance Between Distributions
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: 原文：[https://chrispiech.github.io/probabilityForComputerScientists/en/part4/divergence/](https://chrispiech.github.io/probabilityForComputerScientists/en/part4/divergence/)
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '* * *'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Here is an important question! How can you quantify how different two distributions
+    are? In other words, if I have two Probability Mass Functions, can I calculate
+    a number that says how much they diverge from one another? Here are three reasonable
+    ways to quantify distance between distributions:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Total Variational Distance
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: Loop over all possible values and calculate the absolute difference in probability.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '***Definition:*** Total Variation Distance'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Let $X$ and $Y$ be discrete random variables
+  prefs: []
+  type: TYPE_NORMAL
+- en: \begin{align*} \text{TV}(X, Y) = \frac{1}{2} \sum_{i} |\P(X = i) - \P(Y = i)|
+    \end{align*}
+  prefs: []
+  type: TYPE_NORMAL
+- en: Earth Mover's Distance
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: Imagine one distribution is a lump of dirt. How much work would it take to make
+    it look just like the other? Also called the Wasserstein metric.
+  prefs: []
+  type: TYPE_NORMAL
+- en: This value is very meaningful, but it doesn't have a closed form equation. Instead
+    it is computed by solving a linear program. If the range of values that the random
+    variables can take on is of size $n$, the linear program has a run time of $O(n^3
+    \cdot \log n)$ which is very slow.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Kullback Leiber Divergence
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: Let $X$ and $Y$ be discrete random variables. Calculate the expected "excess
+    surprise" from using Y as your Probability Mass Function instead of X when the
+    actual Probability Mass Function is X.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '***Definition:*** Kullback Leiber Divergence'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Let $X$ and $Y$ be discrete random variables
+  prefs: []
+  type: TYPE_NORMAL
+- en: \begin{align*} \text{KL}(X, Y)  &= \sum_{x \in X} \text{ExcessSurprise}(x) \cdot
+    P(X=x) \\ &= \sum_{x \in X} \Big[\text{Surprise}_X(x) - \text{Surprise}_Y(x)\Big]
+    \cdot P(X=x) \\ &= \sum_{x \in X} \Big[\log_2\frac{1}{P(Y=x)} - \log_2 \frac{1}{P(X=x)}\Big]
+    \cdot P(X=x) \\ &= \sum_{x \in X} - \log_2 P(Y=x) + \log_2 P(X=x) \cdot P(X=x)
+    \\ &= \sum_{x \in X}  \log_2 \frac{P(X=x)}{P(Y=x) } \cdot P(X=x) \\ \end{align*}
+  prefs: []
+  type: TYPE_NORMAL
+- en: Here is example code for calculating how different an observed pmf of hurricanes
+    per year is from a predicted poisson distribution
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs: []
+  type: TYPE_PRE

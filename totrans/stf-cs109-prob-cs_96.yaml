@@ -1,0 +1,79 @@
+- en: MLE of a Pareto Distribution
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: 原文：[https://chrispiech.github.io/probabilityForComputerScientists/en/examples/mle_pareto/](https://chrispiech.github.io/probabilityForComputerScientists/en/examples/mle_pareto/)
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '* * *'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'You are creating artwork with different sized circles which follow a Pareto
+    distribution:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: $X \sim \text{Pareto}(\alpha)$
+  prefs: []
+  type: TYPE_NORMAL
+- en: A Pareto distribution is defined by a single parameter $\alpha$ and has PDF
+  prefs: []
+  type: TYPE_NORMAL
+- en: \begin{align*} f(x) = \frac{\alpha}{x^{\alpha + 1}} \end{align*}
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'You would like the alpha in your artwork to match that of sand in your local
+    beach. You go to the beachand collect 100 particles of sand and measure their
+    size. Call the measured radii $x_1 , \dots, x_{100}$:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs: []
+  type: TYPE_PRE
+- en: Derive a formula for the MLE estimate of $\alpha$ based on the data you have
+    collected.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Writing the Log Likelihood Function
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: 'The first major objective in MLE is to come up with a log likelihood expression
+    for our data. To do so we start by writing how likely our dataset looks, if we
+    are told the value of $\alpha$: \begin{aligned} L(\alpha) = f(x_1\dots x_n) =
+    \prod_{i=1}^n\frac{\alpha}{x_i^{\alpha+1}} \end{aligned}'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Optimization will be much easier if we instead try to optimize the log likelihood:
+    \begin{aligned} LL(\alpha) &= \log L(\alpha) = \log \prod_{i=1}^n\frac{\alpha}{x_i^{\alpha+1}}
+    \\ &= \sum_{i=1}^n \log \frac{\alpha}{x_i^{\alpha+1}} \\ &= \sum_{i=1}^n \log
+    \alpha - (\alpha +1)\log x_i \\ &= n \log \alpha - (\alpha +1) \sum_{i=1}^n\log
+    x_i \\ \end{aligned}'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Selecting $\alpha$
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: We are going to select $\alpha$ to be the value which maximizes the log likelihood.
+    To do so we are going to need the derivative of LL w.r.t. $\alpha$ \begin{aligned}
+    \frac{\partial LL(\alpha)}{\partial \alpha} &= \frac{\partial LL(\alpha)}{\partial
+    \alpha} \Big( n \log \alpha - (\alpha +1) \sum_{i=1}^n\log x_i \Big) \\ &= \frac{n}{\alpha}
+    - \sum_{i=1}^n\log x_i \end{aligned}
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'One way to optimize is to take the derivative and set it equal to zero: \begin{aligned}
+    0=\frac{n}{\alpha} - \sum_{i=1}^n\log x_i\\ \sum_{i=1}^n\log x_i = \frac{n}{\alpha}
+    \\ \alpha = \frac{n}{ \sum\limits_{i=1}^n\log x_i} \end{aligned}'
+  prefs: []
+  type: TYPE_NORMAL
+- en: At this point we have a formula that we can use to calculate $\alpha$! Wahoo
+  prefs: []
+  type: TYPE_NORMAL
+- en: Putting it into code
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '[PRE1]'
+  prefs: []
+  type: TYPE_PRE

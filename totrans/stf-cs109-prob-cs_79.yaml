@@ -1,0 +1,227 @@
+- en: Information Theory
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: 原文：[https://chrispiech.github.io/probabilityForComputerScientists/en/part4/information_theory/](https://chrispiech.github.io/probabilityForComputerScientists/en/part4/information_theory/)
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '* * *'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Information theory is an incredibly powerful perspective which plays a central
+    role in a ton of algorithms, including Decision Trees, the WordleBot, Adaptive
+    Tests, Optimal Poker Play and even ompression of data (like Huffman Encoding or
+    even Jpeg files)! The goal of this chapter is to balance showing off the awesome
+    power of Information Theory while also keeping things as straight forward as possible.
+    To that end, a great place to start is thinking about how you could write a bot
+    that can play the question answering game of, "Think of an Animal".
+  prefs: []
+  type: TYPE_NORMAL
+- en: Think of an Animal!
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: 'The game of "Think of an Animal" goes like this: The human is going to be thinking
+    of an animal. We assume that the distribution of how often they chose an animal
+    is known (based off how popular the animal is to four year olds):'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![](../Images/91bb0eadd036e735ef2ff4715e61d38f.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: 'The task of your algorithm is to select which question to ask next. Assume
+    you are given a bank of yes or no questions which include classics like:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Is it a pet?
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Does it live in the water?
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Are you thinking of a dog?
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Chosing a Best Question
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: How can we chose the best question to ask? Consider a simplified game with five
+    animals (Dog, Cat, Elephant, Bear and Monkey) and only two questions to chose
+    from "Is it a pet?" and "Is it a Dog?" For each question we can use the Law of
+    Total Probability to think through the probability the response will be "yes"
+    or "no". Even better! For each possible answer to each possible question, we can
+    think through the resulting probability mass function over animals if we were
+    to see that answer to that question:![](../Images/8fbc96ab585ae457f465b66d113afb2d.png)
+  prefs: []
+  type: TYPE_NORMAL
+- en: We are so close! If we could only quantify how much uncertainty the four resulting
+    probability mass functions have, we could simply chose the question that minimizes
+    our expected uncertainty as to what animal the person is thinking of. This quantification
+    of uncertainty is formally called "Entropy" and it is the key concept in Information
+    Theory.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Measure of Uncertainty from a High Level
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: Let $X$ be any random variable. A very elegant way to quantify how much uncertainty
+    the Probability Mass Function of $X$ represents is to think through all the values
+    that $X$ could take on and for each value calculate how surprised you would be
+    if it turned out that $X$ in fact took on that value. If you calculate a weighted
+    sum over these surprise values, you would get the expected Surprise of the random
+    variable
+  prefs: []
+  type: TYPE_NORMAL
+- en: \begin{align*} &\text{Uncertainty}(X) \\ &= E[\text{Surprise}(X)] \\ &= \sum_x
+    \text{Surprise}(x) \cdot P(X=x) \end{align*} That is the big idea! The main remaining
+    todo is to define what we mean by "Surprise" of an event.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Measure of Surprise of an Event
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: 'How should we quantify the degree to which we would be surprised if we were
+    told that $X$ took on the value $x$? There are many ways one could quantify Surprise,
+    all of which are based on the probability of the event $\P(X=x)$. Here are three
+    reasonble Surprise functions:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![](../Images/9d37874f5a804283775ee9fa0913bc22.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: 'All of these functions hit the following desiderata:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Low probability events are surprising
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: High probability events are not surprising
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Surprise is a monotonically decreasing function of probability
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: For many reasons, Information Theory defines Surprise using a variation of the
+    middle equation $$\text{Surprise}(E) = \log_2 \frac{1}{P(E)}$$
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Looking at the relationship between $P(E)$ and the value of $\text{Surprise}(E)$
+    we can observe some of those intuitive relationships:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '| Probability of Event $P(E)$ | Surprise of Event $\text{Surprise}(E) = \log_2
+    \frac{1}{P(E)}$ |'
+  prefs: []
+  type: TYPE_TB
+- en: '| 1/2 | 1 |'
+  prefs: []
+  type: TYPE_TB
+- en: '| 1/4 | 2 |'
+  prefs: []
+  type: TYPE_TB
+- en: '| 1/8 | 3 |'
+  prefs: []
+  type: TYPE_TB
+- en: '| 1/16 | 4 |'
+  prefs: []
+  type: TYPE_TB
+- en: '| 1/32 | 5 |'
+  prefs: []
+  type: TYPE_TB
+- en: '| 1/64 | 6 |'
+  prefs: []
+  type: TYPE_TB
+- en: '| 1/128 | 7 |'
+  prefs: []
+  type: TYPE_TB
+- en: If an event with probability $P(E) = 1/16$ were to occur we would be four times
+    as "Surprised" as if an event with $P(E) = 1/2$ were to occur. That feels nice!
+  prefs: []
+  type: TYPE_NORMAL
+- en: '***Definition:*** Surprise of an Event (Information Content)'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'The information content, also called the surprisal or self-information, of
+    an event E is a function which increases as the probability of an event decreases.
+    When the probability is close to 1, the surprisal of the event is low, but if
+    the probability is close to 0, the surprisal of the event occuring is high. This
+    relationship is described by the function:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '\begin{align*} \text{Surprise}(E) &= \log_2 \Big(\frac{1}{\p(E)} \Big) \end{align*}
+    This can be written (in a more confusing way) as: \begin{align*} \text{Surprise}(E)
+    &= \log_2 \Big(\frac{1}{\p(E)} \Big) \\ &= \log_2 \p(E)^{-1} \\ &= -\log_2 \p(E)
+    \end{align*} In the initial definition of Surprise of an Event, the function name
+    $I$ was used as shorthand for Surprise. $I$ stands for "Information Content" or
+    "Self Information", two other names for Surprise of an event.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: There are many other stories that we could tell for why $\log_2 \frac{1}{\p(E)}$
+    is a great choice for our measure of Surprise. Claude Shannon, the father of information
+    theory, chose the base 2 logarithm because it would allow you to express your
+    amount of surprise in bits (as in 0, 1 values used in a computer). Information
+    theory has many applications, but it was first invented when he was trying to
+    come up with a way to optimally compress text based data!
+  prefs: []
+  type: TYPE_NORMAL
+- en: Uncertainty of a Random Variable (Entropy)
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: Now that we have a formal definition of Surprise we can revisit the computation
+    of Uncertainty of a random variable.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '***Definition:*** Uncertainty of an Random Variable (Entropy)'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Let $H$ be our measure of how much uncertainty we have about a random variable
+    $X$. Define $H$ to be the expected surprise of observing the assignment to $X$.
+    $H(X) = E[\text{Surprise}(X)]$. Using the Law of Unconcious Statistician, and
+    the definition of Surprise of an event, we can expand out the formula for $H$
+    as:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '$$ H(X) = \sum_{x \in X} \log_2 \Big(\frac{1}{\p(X=x)}\Big) \cdot \p(X=x) $$
+    Uncertainty ($H$) can also be rewritten (in a more confusing way) as: \begin{align*}
+    \text{H}(X)  &= \sum_{x \in X} \text{Surprise}(X=x) \cdot P(X=x)  \\ &= \sum_{x
+    \in X} \log_2 \frac{1}{P(X=x)} \cdot P(X=x)  \\ &= \sum_{x \in X} \log_2 P(X=x)
+    ^{-1}\cdot P(X=x)  \\ &= \sum_{x \in X} - \log_2 P(X=x)\cdot P(X=x)  \\ &= - \sum_{x
+    \in X} \log_2 P(X=x)\cdot P(X=x)  \\ &= - \sum_{x \in X} \log_2 P(X=x)\cdot P(X=x) 
+    \end{align*}'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Here is code that calculates the Uncertainty $(H)$ of a random variable, based
+    on its probability mass function:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'We now have all the theoretical tools we need to select our best question in
+    the game of "Think of an Animal". For each possible resulting Probability Mass
+    Function, we can calculate the Uncertainty $(H)$ of that PMF:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![](../Images/506848f4ba8ebe3f99f2a685191f86c7.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: The question "Is it a pet?" has an expected uncertainty of 1.3\. The question
+    "Is it a Dog?" has an expected uncertainty of 1.7\. As such we would be less uncertain
+    about what animal our friend is thinking about, in expectation, if we were to
+    ask the question "Is it a pet?"
+  prefs: []
+  type: TYPE_NORMAL
+- en: This is one of many applications of Information Theory!
+  prefs: []
+  type: TYPE_NORMAL

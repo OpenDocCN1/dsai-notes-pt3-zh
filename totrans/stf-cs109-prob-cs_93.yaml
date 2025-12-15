@@ -1,0 +1,232 @@
+- en: Diffusion
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: 原文：[https://chrispiech.github.io/probabilityForComputerScientists/en/part5/diffusion/](https://chrispiech.github.io/probabilityForComputerScientists/en/part5/diffusion/)
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '* * *'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Diffusion Task
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '**Goal:** Create a model that can generate pictures of trees from the "tree
+    photo distribution"'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Data:** Many pictures of trees:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![](../Images/ff8c532f7a3b5af493e19b717f7fdb4f.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: Big Picture Idea
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: Supplement your dataset by iteratively adding gaussian noise to pixels, then
+    train a deep learning model to remove noise.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![](../Images/32579b0517aea74257820a35bcd3e2ff.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: A reasonable number of steps would be to add 10% noise each time step, so that
+    after 10 timesteps each pixel is fully noise.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'The key task is to train a deep neural network to predict the "denoised" value
+    of pixels:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![](../Images/c48e2dbd875bb051b8875c9bb63e4772.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: 'Loss: Mean squared error between the predicted pixels and the true color. Set
+    the parameters of your neural network to minimize loss. Then you have a model
+    which can remove 10% noise one step at a time. Start with random noise, then run
+    it through your denoising neural network 10 times.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Theory Behind Diffusion Models
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: 'The magic of diffusion models lies in the Gaussian noise process. Let’s break
+    it down:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '1\. Adding Noise: The Forward Process'
+  prefs:
+  - PREF_H4
+  type: TYPE_NORMAL
+- en: 'At each step \( t \), we add Gaussian noise to the pixel values: \[ x_{t+1}
+    = x_t + n_t \quad \text{where } n_t \sim N(0, \sigma^2). \] This gradually turns
+    the original image into pure noise.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '2\. Removing Noise: The Reverse Process'
+  prefs:
+  - PREF_H4
+  type: TYPE_NORMAL
+- en: 'To reverse this process, we need the conditional distribution \( x_{t-1} |
+    x_t \). Here’s the surprising part:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Critical Fact #1:** \( x_{t-1} | x_t \) is Gaussian with known variance'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'If the noise variance \( \sigma^2 \) is small enough, the distribution of \(
+    x_{t-1} | x_t \) can be approximated as: \[ x_{t-1} | x_t \sim N(\mu_{t-1}(x_t),
+    \sigma^2), \] where:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '\( \mu_{t-1}(x_t) \): The mean of the Gaussian, which depends on \( x_t \).'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '\( \sigma^2 \): The known variance of the noise.'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: This is great news! It means we only need to estimate the mean \( \mu_{t-1}(x_t)
+    \) to fully describe \( x_{t-1} | x_t \).
+  prefs: []
+  type: TYPE_NORMAL
+- en: 3\. Training the Neural Network
+  prefs:
+  - PREF_H4
+  type: TYPE_NORMAL
+- en: '**Critical Fact #2:** Standard regression is all you need!'
+  prefs: []
+  type: TYPE_NORMAL
+- en: To train the neural network, we need it to predict \( \mu_{t-1}(x_t) \), the
+    mean of the Gaussian. How do we measure the quality of the predictions?
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'The difference between the predicted Gaussian \( q_\theta(x_{t-1} | x_t) \)
+    (from the neural network) and the true Gaussian \( p(x_{t-1} | x_t) \) can be
+    measured by the **KL divergence**. Happily in this case: \[ \text{Minimizing KL
+    divergence } \Leftrightarrow \text{Minimizing mean squared error (MSE)}. \] This
+    is only true because the distributions are Gaussian. Thus, we can simply train
+    the neural network to minimize the MSE between its prediction of pixel values
+    ($\mu_{t-1}(x_t) $) and the true pixel values.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Once trained, the neural network can iteratively denoise an image, starting
+    with random noise, until it generates a clear, realistic image.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 4\. The Complete Diffusion Algorithm
+  prefs:
+  - PREF_H4
+  type: TYPE_NORMAL
+- en: 'Here’s the full workflow for a diffusion model:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Forward process:** Add Gaussian noise to turn images into pure noise.'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '**Reverse process:** Train a neural network to predict the mean \( \mu_{t-1}(x_t)
+    \) and remove noise step-by-step.'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '**Image generation:** Start with random noise and run the neural network in
+    reverse \( T \) times to generate a realistic image.'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: This elegant approach combines simple Gaussian noise with the power of deep
+    learning to generate stunning results!
+  prefs: []
+  type: TYPE_NORMAL
+- en: '* * *'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Proof Sketch of Critical Idea #1'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '**Claim:** \( x_{t-1} | x_t \) is approximately Gaussian when the noise variance
+    \( \sigma^2 \) is small enough.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'We start with Bayes'' theorem to express the conditional probability: \[ \p(x_{t-1}
+    | x_t) = \frac{ \p(x_t | x_{t-1}) \p(x_{t-1}) }{ \p(x_t) } \] We are going to
+    think about the log of this expression. This is because the log of a Gaussian
+    is a quadratic function, which will make our math easier. We can write: \[ \log
+    \p(x_{t-1} | x_t) = \log \p(x_t | x_{t-1}) + \log \p(x_{t-1}) - \log \p(x_t) \]
+    Let''s break down the terms in this expression.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Forward process likelihood:**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'From the forward process, \( x_t \) given \( x_{t-1} \) is Gaussian: \[ \p(x_t
+    | x_{t-1}) = \frac{1}{\sqrt{2 \pi \sigma^2}} \exp\left(-\frac{(x_t - x_{t-1})^2}{2
+    \sigma^2}\right). \] Taking the log, we get: \[ \log \p(x_t | x_{t-1}) = -\frac{(x_t
+    - x_{t-1})^2}{2 \sigma^2} + \text{constant} \] **Prior on \( x_{t-1} \):**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'The prior \( p(x_{t-1}) \) is the probability of \( x_{t-1} \) at the previous
+    step. This one is hard to know! What is the prior distribution of a pixel of a
+    tree? However we employ a really neat trick. Its log-density can be Taylor expanded
+    around \( x_t \), assuming \( x_{t-1} \) is close to \( x_t \): \[ \log \p(x_{t-1})
+    \approx \log \p(x_t) + \Big[ \frac{\partial}{\partial x} \log \p(x_t) \Big] (x_{t-1}
+    - x_t) \] **Completing the square:**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: There are two terms in the above expressions involving the difference between
+    $x_{t-1}$ and $x_t$. As a helpful step, we will complete the square for these
+    terms.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Complete the square for this sum of terms: \[ -\frac{(x_t - x_{t-1})^2}{2 \sigma^2}
+    + \Big[ \frac{\partial}{\partial x} \log \p(x_t) \Big] (x_{t-1} - x_t) \] First,
+    rewrite \( (x_t - x_{t-1})^2 \): \[ (x_t - x_{t-1})^2 = (x_{t-1} - x_t)^2 \] Allowing
+    us to rewrite our sum as: \[ -\frac{1}{2 \sigma^2} (x_{t-1} - x_t)^2 + \Big[ \frac{\partial}{\partial
+    x} \log \p(x_t) \Big] (x_{t-1} - x_t) \]'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Factor out \( -\frac{1}{2 \sigma^2} \) to make the quadratic term more explicit:
+    \[ -\frac{1}{2 \sigma^2} \left[ (x_{t-1} - x_t)^2 - 2 \sigma^2 \Big[ \frac{\partial}{\partial
+    x} \log \p(x_t) \Big] (x_{t-1} - x_t) \right] \]'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'The expression inside the brackets is a quadratic expression in \( (x_{t-1}
+    - x_t) \). Let’s complete the square for: \[ (x_{t-1} - x_t)^2 - 2 \sigma^2 \Big[
+    \frac{\partial}{\partial x} \log \p(x_t) \Big] (x_{t-1} - x_t) \]'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'This allows us to rewrite the quadratic expression as: \[ \left[ (x_{t-1} -
+    x_t) - \sigma^2 \Big[ \frac{\partial}{\partial x} \log \p(x_t) \Big] \right]^2
+    - \left( \sigma^2 \Big[ \frac{\partial}{\partial x} \log \p(x_t) \Big] \right)^2
+    \]'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Substitute this back. Let $K$ stand in for $\text{constant}$: \begin{align*}
+    \log \p(x_{t-1} | x_t) &= \log \p(x_t | x_{t-1}) + \log \p(x_{t-1}) - \log \p(x_t)
+    \\ &= -\frac{(x_t - x_{t-1})^2}{2 \sigma^2} + \Big(\log \p(x_t) + \Big[ \frac{\partial}{\partial
+    x} \log \p(x_t) \Big] (x_{t-1} - x_t)\Big) - \log \p(x_t) + K \\ &= -\frac{(x_t
+    - x_{t-1})^2}{2 \sigma^2} + \Big[ \frac{\partial}{\partial x} \log \p(x_t) \Big]
+    (x_{t-1} - x_t)+ K \\ &= -\frac{1}{2 \sigma^2} \left[ \left( x_{t-1} - x_t - \sigma^2
+    \Big[ \frac{\partial}{\partial x} \log \p(x_t) \Big] \right)^2 \right] + K \end{align*}'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Final Result:** Recall that the log of the gaussian PMF looks like this:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Let $X \sim N(\mu, \sigma^2)$. What is the log of the PMF of $X$? $$\log \P(X=x)
+    = -\frac{1}{2 \sigma^2} (x - \mu)^2 + K$$From the above, we see that \( x_{t-1}
+    | x_t \) is Gaussian. How do we know this? The distribution is identical, up to
+    additive factors, to the log-density of a Normal distribution. \[ x_{t-1} | x_t
+    \sim N\left( \mu_{t-1}, \sigma^2 \right), \] where: \[ \mu_{t-1} = x_t + \sigma^2\Big[
+    \frac{\partial}{\partial x} \log \p(x_t) \Big] \] The variance remains \( \sigma^2
+    \), which is fixed from the forward process.'
+  prefs: []
+  type: TYPE_NORMAL

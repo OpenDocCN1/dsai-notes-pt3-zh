@@ -1,0 +1,183 @@
+- en: Expectation of Sum Proof
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: 原文：[https://chrispiech.github.io/probabilityForComputerScientists/en/examples/expectation_of_sums/](https://chrispiech.github.io/probabilityForComputerScientists/en/examples/expectation_of_sums/)
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '* * *'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Now that we have learned about joint probabilities, we have all the tools we
+    need to prove one of the most useful properties of Expectation: the fact that
+    the expectation of a sum of random variables is equal to the sum of expectation
+    (even if the variables are not independent). In other words:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: For any two random variables $X$ and $Y$, $$ \E[X + Y] = \E[X] + \E[Y] $$
+  prefs: []
+  type: TYPE_NORMAL
+- en: The proof is going to use the Law of Unconcious statistician ([LOTUS](../../part2/expectation#lotus))
+    where the function is addition!
+  prefs: []
+  type: TYPE_NORMAL
+- en: '***Proof:*** Expectation of Sum'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Let $X$ and $Y$ be any two random variables: \begin{align*} \E&[X+Y] \\ &=
+    \sum_{x} \sum_{y} (x + y) \cdot P(X=x, Y=y) && LOTUS\\ &= \sum_{x} \sum_{y} x
+    \cdot P(X=x, Y=y) + y \cdot P(X=x, Y=y) && \text{Distribute}\\ &= \sum_{x} \sum_{y}
+    x \cdot P(X=x, Y=y) + \sum_{y} \sum_{x} y \cdot P(X=x, Y=y) && \text{Rearrange
+    Sums}\\ &= \sum_{x} x \sum_{y} P(X=x, Y=y) + \sum_{y} y \sum_{x} P(X=x, Y=y) &&
+    \text{Factor Out}\\ &= \sum_{x} x \cdot P(X=x) + \sum_{y} y \cdot P(Y=y) && \text{Def
+    of Marginal}\\ &= \E[X] + \E[Y] && \text{Def of Expectation} \end{align*}'
+  prefs: []
+  type: TYPE_NORMAL
+- en: At no point in the proof do we need to assume that $X$ and $Y$ are independent.
+    In the second step the joint probability ends up in each sum, and in both cases,
+    one of the sums ends up marginalizing over the joint probability!
+  prefs: []
+  type: TYPE_NORMAL
+- en: Demonstration of the Proof
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: Here is an example to show the idea behind the proof. This table shows the joint
+    probabilities $\P(X=x, Y=y)$ for two random variables \( X \) and \( Y \) that
+    are not independent. You will see how computing $E[X+Y]$ is the sum of terms that
+    are used in $E[X]$ and $E[Y]$.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  | $Y = 4$ | $Y = 5$ |'
+  prefs: []
+  type: TYPE_TB
+- en: '| $X = 1$ | 0.1 | 0.3 |'
+  prefs: []
+  type: TYPE_TB
+- en: '| $X = 2$ | 0.2 | 0.4 |'
+  prefs: []
+  type: TYPE_TB
+- en: 'Aside: These two random variables can each only take on two values. Having
+    only four values in the joint table will make it easier to gain intuition.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Computing \( E[X] \) using joint probabilities:'
+  prefs:
+  - PREF_H4
+  type: TYPE_NORMAL
+- en: 'A key insight from the proof is that we can compute $E[X]$ using values from
+    the joint. To do this we are going to use [marginalization](../../part3/marginalization):
+    $$ P(X = x) = \sum_{y} P(X = x, Y = y) $$ We can expand $E[X]$ so that it is calculated
+    only using values from the joint probability table: \begin{align*} E[X] &= \sum_{x}
+    x \cdot P(X = x) \\ &= \sum_{x} x \cdot \sum_{y} P(X = x, Y = y) && \text{Marginalization
+    of }X\\ &= \sum_{x} \sum_{y} x \cdot P(X = x, Y = y)&& \text{Distribute }y\\ \end{align*}'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '| \( x \) | \( y \) | \( P(X=x, Y=y) \) | \( x \cdot P(X=x, Y=y) \) |'
+  prefs: []
+  type: TYPE_TB
+- en: '| --- | --- | --- | --- |'
+  prefs: []
+  type: TYPE_TB
+- en: '| 1 | 4 | 0.1 | 1 × 0.1 = 0.1 |'
+  prefs: []
+  type: TYPE_TB
+- en: '| 1 | 5 | 0.3 | 1 × 0.3 = 0.3 |'
+  prefs: []
+  type: TYPE_TB
+- en: '| 2 | 4 | 0.2 | 2 × 0.2 = 0.4 |'
+  prefs: []
+  type: TYPE_TB
+- en: '| 2 | 5 | 0.4 | 2 × 0.4 = 0.8 |'
+  prefs: []
+  type: TYPE_TB
+- en: E[$X$] = 0.1 + 0.3 + 0.4 + 0.8 = 1.6
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Computing \( E[Y] \) using joint probabilities:'
+  prefs:
+  - PREF_H4
+  type: TYPE_NORMAL
+- en: 'Similarly, we can compute $E[Y]$ using only values from the joint: \begin{align*}
+    E[Y] &= \sum_{y} y \cdot P(Y = y) \\ &= \sum_{x} y \cdot \sum_{x} P(X = x, Y =
+    y) && \text{Marginalization of }Y\\ &= \sum_{x} \sum_{y} y \cdot P(X = x, Y =
+    y)&& \text{Distribute }x\\ \end{align*}'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '| \( x \) | \( y \) | \( P(X=x, Y=y) \) | \( y \cdot P(X=x, Y=y) \) |'
+  prefs: []
+  type: TYPE_TB
+- en: '| --- | --- | --- | --- |'
+  prefs: []
+  type: TYPE_TB
+- en: '| 1 | 4 | 0.1 | 4 × 0.1 = 0.4 |'
+  prefs: []
+  type: TYPE_TB
+- en: '| 1 | 5 | 0.3 | 5 × 0.3 = 1.5 |'
+  prefs: []
+  type: TYPE_TB
+- en: '| 2 | 4 | 0.2 | 4 × 0.2 = 0.8 |'
+  prefs: []
+  type: TYPE_TB
+- en: '| 2 | 5 | 0.4 | 5 × 0.4 = 2.0 |'
+  prefs: []
+  type: TYPE_TB
+- en: E[$Y$] = 0.4 + 1.5 + 0.8 + 2.0 = 4.7
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Computing \( E[X + Y] \) using joint probabilities:'
+  prefs:
+  - PREF_H4
+  type: TYPE_NORMAL
+- en: 'We can rewrite $E[X + Y]$ to be the sum of terms used in the calculations of
+    $E[X]$ and $E[Y]$ above: \begin{align*} E[X + Y] &= \sum_{x,y}(x + y) \cdot P(X
+    = x, Y = y)\\ &= \sum_{x,y} x \cdot P(X = x, Y = y) + y\cdot P(X = x, Y = y) \end{align*}'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '| \( x \) | \( y \) | \( P(x, y) \) | \( x \cdot P(x, y) \) | \( y \cdot P(x,
+    y) \) | \( (x + y) \cdot P(x, y) \) |'
+  prefs: []
+  type: TYPE_TB
+- en: '| --- | --- | --- | --- | --- | --- |'
+  prefs: []
+  type: TYPE_TB
+- en: '| 1 | 4 | 0.1 | 0.1 | 0.4 | 0.1 + 0.4 = 0.5 |'
+  prefs: []
+  type: TYPE_TB
+- en: '| 1 | 5 | 0.3 | 0.3 | 1.5 | 0.3 + 1.5 = 1.8 |'
+  prefs: []
+  type: TYPE_TB
+- en: '| 2 | 4 | 0.2 | 0.4 | 0.8 | 0.4 + 0.8 = 1.2 |'
+  prefs: []
+  type: TYPE_TB
+- en: '| 2 | 5 | 0.4 | 0.8 | 2.0 | 0.8 + 2.0 = 2.8 |'
+  prefs: []
+  type: TYPE_TB
+- en: '*Recall that $P(x, y)$ is shorthand for $P(X=x,Y=y)$.*'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Using the above derivation of the formula for $E[X+Y]$ in terms of values from
+    the joint probability table: \begin{align*} E[X + Y] = \sum_{x,y} x \cdot P(X
+    = x, Y = y) + y\cdot P(X = x, Y = y) \end{align*} Plugging in values:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: E[$X+Y$] = 0.1 + 0.4 + 0.3 + 1.5 + 0.4 + 0.8 + 0.8 + 2.0 = 6.3
+  prefs: []
+  type: TYPE_NORMAL
+- en: We can observe that each of these values showed up exactly once when calculating
+    $E[X]$ and $E[Y]$. This is why the proof works for any two random variables, even
+    if they are not independent.
+  prefs: []
+  type: TYPE_NORMAL
+- en: E[$X$] = 0.1 + 0.3 + 0.4 + 0.8 = 1.6
+  prefs: []
+  type: TYPE_NORMAL
+- en: E[$Y$] = 0.4 + 1.5 + 0.8 + 2.0 = 4.7
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Because they are summing the same values, it is no surprise that the sum of
+    the expectations is equal to the expectation of the sum: \( E[X + Y] = E[X] +
+    E[Y] = 1.6 + 4.7 = 6.3 \)'
+  prefs: []
+  type: TYPE_NORMAL

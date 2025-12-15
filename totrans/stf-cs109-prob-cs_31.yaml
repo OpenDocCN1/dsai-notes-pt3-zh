@@ -1,0 +1,135 @@
+- en: Bernoulli Distribution
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: 原文：[https://chrispiech.github.io/probabilityForComputerScientists/en/part2/bernoulli/](https://chrispiech.github.io/probabilityForComputerScientists/en/part2/bernoulli/)
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '* * *'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Parametric Random Variables
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: There are many classic and commonly-seen random variable abstractions that show
+    up in the world of probability. At this point in the class, you will learn about
+    several of the most significant parametric discrete distributions. When solving
+    problems, if you can recognize that a random variable fits one of these formats,
+    then you can use its pre-derived probability mass function (PMF), expectation,
+    variance, and other properties. Random variables of this sort are called **parametric**
+    random variables. If you can argue that a random variable falls under one of the
+    studied parametric types, you simply need to provide parameters. A good analogy
+    is a `class` in programming. Creating a parametric random variable is very similar
+    to calling a constructor with input parameters.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Bernoulli Random Variables
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: A Bernoulli random variable (also called a *boolean* or *indicator* random variable)
+    is the simplest kind of parametric random variable. It can take on two values,
+    1 and 0\. It takes on a 1 if an experiment with probability $p$ resulted in success
+    and a 0 otherwise. Some example uses include a coin flip, a random binary digit,
+    whether a disk drive crashed, and whether someone likes a Netflix movie. Here
+    $p$ is the parameter, but different instances of Bernoulli random variables might
+    have different values of $p$.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Here is a full description of the key properties of a Bernoulli random variable.
+    If $X$ is declared to be a Bernoulli random variable with parameter $p$, denoted
+    $X ∼ \Ber(p)$:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Bernoulli Random Variable**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '| Notation: | $X \sim \Ber(p)$ |'
+  prefs: []
+  type: TYPE_TB
+- en: '| Description: | A boolean variable that is 1 with probability $p$ |'
+  prefs: []
+  type: TYPE_TB
+- en: '| Parameters: | $p$, the probability that $X=1$. |'
+  prefs: []
+  type: TYPE_TB
+- en: '| Support: | $x$ is either 0 or 1 |'
+  prefs: []
+  type: TYPE_TB
+- en: '| PMF equation: | $\p(X=x) = \begin{cases} p && \text{if }x = 1\\ 1-p && \text{if
+    }x = 0 \end{cases}$ |'
+  prefs: []
+  type: TYPE_TB
+- en: '| PMF (smooth): | $\p(X=x) = p^x(1-p)^{1-x}$ |'
+  prefs: []
+  type: TYPE_TB
+- en: '| Expectation: | $\E[X] = p$ |'
+  prefs: []
+  type: TYPE_TB
+- en: '| Variance: | $\var(X) = p (1-p)$ |'
+  prefs: []
+  type: TYPE_TB
+- en: '| PMF graph: |'
+  prefs: []
+  type: TYPE_TB
+- en: 'Parameter $p$:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '<canvas id="bernoulliPmf" style="max-height: 400px"></canvas>'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Because Bernoulli distributed random variables are parametric, as soon as you
+    declare a random variable to be of type Bernoulli you automatically can know all
+    of these pre-derived properties! Some of these properties are straightforward
+    to prove for a Bernoulli. For example, you could have solved for expectation:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Proof**: Expectation of a Bernoulli. If $X$ is a Bernoulli with parameter
+    $p$, $X \sim \Ber(p)$:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: $$ \begin{align} \E[X] &= \sum_x x \cdot \p(X=x) && \text{Definition of expectation}
+    \\ &= 1 \cdot p + 0 \cdot (1-p) && X \text{ can take on values 0 and 1} \\ &=
+    p && \text{Remove the 0 term} \end{align} $$
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Proof**: Variance of a Bernoulli. If $X$ is a Bernoulli with parameter $p$,
+    $X \sim \Ber(p)$:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'To compute variance, first compute $E[X^2]$: $$ \begin{align} E[X^2] &= \sum_x
+    x^2 \cdot \p(X=x) &&\text{LOTUS}\\ &= 0^2 \cdot (1-p) + 1^2 \cdot p\\ &= p \end{align}
+    $$ $$ \begin{align} \var(X) &= E[X^2] - E[X]^2&& \text{Def of variance} \\ &=
+    p - p^2 && \text{Substitute }E[X^2]=p, E[X] = p \\ &= p (1-p) && \text{Factor
+    out }p \end{align}$$'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Indicator Random Variable
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '***Definition***: Indicator Random Variable'
+  prefs: []
+  type: TYPE_NORMAL
+- en: An indicator variable is a Bernoulli random variable which takes on the value
+    1 if an underlying event occurs, and 0 otherwise.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Indicator random variables are a convenient way to convert the "true/false"
+    outcome of an event into a number. That number may be easier to incoporate into
+    an equation. See the [binomial expectation derivation](../../part2/binomial#binomialExpectation)
+    for an example.
+  prefs: []
+  type: TYPE_NORMAL
+- en: A random variable $I$ is an indicator variable for an event $A$ if $I = 1$ when
+    $A$ occurs and $I = 0$ if $A$ does not occur. Indicator random variables are Bernoulli
+    random variables, with $p=\P(A)$. $I$ is a common choice of name for an indicator
+    random variable.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Here are some properties of indicator random variables: $\P(I=1)=\P(A)$ and
+    $\E[I]=\P(A)$.'
+  prefs: []
+  type: TYPE_NORMAL
