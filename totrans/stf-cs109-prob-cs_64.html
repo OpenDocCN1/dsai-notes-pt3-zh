@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+  "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Probability and Babies</title>
+<link href="../Styles/Style.css" type="text/css" rel="stylesheet"/>
+</head>
+<body>
+<h1>Probability and Babies</h1>
+<blockquote>原文：<a href="https://chrispiech.github.io/probabilityForComputerScientists/en/examples/prob_baby_delivery/">https://chrispiech.github.io/probabilityForComputerScientists/en/examples/prob_baby_delivery/</a></blockquote>
+
+            
+
+ 
+<center/>
+<hr/>
+
+<div class="alert alert-primary">
+	This demo used to be live. We now know that the delivery happened on Jan 23rd. Lets go back in time to Jan 1st and see what the probability looked like at that point.
+</div>
+
+<p>What is the probability that Laura gives birth today (given that she hasn't given birth up until today)?</p>
+
+<div class="input-group mb-3">
+  <div class="input-group-prepend">
+    <span class="input-group-text" onchange="todayDateChange()" id="todaysDateLabel" style="min-width: 120px">Today's Date</span>
+  </div>
+  <input type="text" class="form-control" aria-label="Username" aria-describedby="todaysDateLabel" disabled="disabled" id="todaysDateInput" value="1/Jan/2021"/>
+</div>
+
+<div class="input-group mb-3">
+  <div class="input-group-prepend">
+    <span class="input-group-text" id="dueDateLabel" style="min-width: 120px">Due Date</span>
+  </div>
+  <input type="text" class="form-control" placeholder="Due Date" aria-label="Username" aria-describedby="dueDateLabel" id="dueDateInput" disabled="disabled" value="18/Jan/2021"/>
+</div>
+
+<hr/>
+<p>
+Probability of delivery today: <b class="keyValue" id="prDeliveryToday"/><br/>
+Probability of delivery in next 7 days: <b id="prDeliveryWeek"/><br/>
+Current days past due date: <b id="daysPastDue"/> days<br/>
+Unconditioned probability mass before today: <b id="pastProbMass"/>
+</p>
+<p>
+How likely is delivery, in humans, relative to the due date? There have been millions of births which gives us a relatively good picture [<a href="#cite1">1</a>]. The length of human pregnancy varies by quite a lot! Have you heard that it is 9 months? That is a rough, point estimate. The mean duration of pregnancy is 278.6 days, and pregnancy length has a standard deviation (SD) of 12.5 days. This distribution is not normal, but roughly matches a "<a href="https://en.wikipedia.org/wiki/Skew_normal_distribution">skewed normal</a>". This is a general probability mass function for the first pregnancy collected from hundreds of thousands of women (this PMF is very similar across demographics, but changes based on whether the woman has given birth before):<br/></p>
+<p>
+<canvas id="unconditionalPMF" style="max-height: 400px"/>
+</p>
+
+
+<p>
+Of course, we have more information. Specifically, we know that Laura <b>hasn't</b> given birth up until today (we will update this example when that changes). We also know that babies which are over 14 days late are "<a href="https://en.wikipedia.org/wiki/Labor_induction">induced</a>" on day 14. How likely is delivery given that we haven't delivered up until today? Note that the y-axis is scalled differently:<br/>
+</p>
+<p>
+<canvas id="conditionalPMF" style="max-height: 400px"/>
+</p>
+
+<p>
+
+	Let's approach this problem formally using inference. First we introduce a random variable $D$ to represent the days after delivery that the baby is born. Note that $D$ can be negative if the baby is due before the due date. We can use Inference to update our belief in $D$ given our observation that we have not delivered yet:
+
+	$$
+	\begin{align}
+	\P(D = i | \text{No Baby Yet}) &amp;= \frac{\P(\text{No Baby Yet} | D = i) \P(D = i)}{\P(\text{No Baby Yet})} \\
+	\end{align}
+	$$
+</p>
+
+<p>$\P(\text{No Baby Yet} | D = i)$ is always either 1 or 0. Note that conditioning on $D=i$ means we are being told the actual date of delivery. If the delivery hasn't happened yet (eg today is before $i$) then the probability of No Baby Yet is 1. If the delivery has already happened (eg today is after $i$) then the probability of No Baby Yet is 0.</p>
+
+<p>$\P(D = i)$ is our prior belief (the probability of delivery dates based off historical data). $\P(\text{No Baby Yet})$ is the normalization constant. Instead of calculating it explicity, we can compute the numerators for each value of $i$. We can then normalize the distribution (compute the sum of the numerators, and divide every probability by this sum) in order to implicitly compute it. An equivalent (but more compute heavy) solution would be to expand $\P(\text{No Baby Yet})$ using the law of total probability:
+$$
+\P(\text{No Baby Yet}) = \sum_i \P(\text{No Baby Yet} | D = i) \P(D = i)
+$$
+
+</p>
+
+<p>How do we deal with the fact that babies are induced after $D = 14$? Well we can adjust our prior so that all of the probability for days 14 and on is shifted to day 14. This is equivalent to the following calculation:
+$$
+\P(D = 14) = \sum_{i \geq 14} \P(D = i)
+$$
+</p>
+
+<p/><pre class="language-python"><code>def update_belief_baby(prior, today = -19):
+	# pr_D[i] is P(D = i| No Baby Yet).
+	pr_D = {}
+	min_i = -50
+	max_i = 14
+	for i in range(min_i, max_i + 1):
+		 # P(NoBaby | D = i)
+		 likelihood = 0 if i &lt; today else 1
+		 pr_D[i] = likelihood * prior[i]
+	# implicitly computes the LOTP
+	normalize(pr_D)
+	return pr_D
+
+def normalize(unormalized_pmf):
+	total_sum = sum(unormalized_pmf.values())
+	normalized = {}
+	for key, value in unormalized_pmf.items():
+		normalized[key] = value / total_sum
+	return normalized
+</code></pre>
+
+<!-- <p>
+	Implementation notes: this calculation was performed by storing the PDF as a list of (day, probability) points. These values are sometimes called weighted samples, or "particles" and are the key component to a "<a href="https://en.wikipedia.org/wiki/Particle_filter">particle filtering</a>" approach. After we observe no-delivery, we set the probability of every point which has a day before today to be 0, and then re-normalize the remaining points (aka we "filter" the "particles"). This is convenient because the "posterior" belief doesn't follow a simple equation -- using particles means we never have to write that equation down in our code.
+	</p> -->
+
+<p>
+
+	</p><hr/>
+
+	<h3>Extension Problem</h3>
+
+	<p>Chris had two other good friends who had babies with the exact same due date (Really! This actually happened). What is the probability that all three babies are delivered on the exact same day?</p>
+
+<div class="bordered">
+
+	
+
+
+		<p>
+<!-- Probability of two couples on the same day: <b class="keyValue" id="prDeliveryToday"></b><br/> -->
+Probability of three couples on the same day: <b id="pr3SameDay"/><br/>
+</p>
+
+<p>How did we get that number? Let $p_i$ be the probability that one baby is delivered on day $i$ -- this number can be read off the probability mass function.  Let $D_i$ be the event that all three babies are delivered on day $i$. Note that the event $D_i$ is <a href="../../part1/prob_or/">mutually exclusive</a> with the event that all three babies are born on another day (So for example, $D_1$ is mutually exclusive with $D_2$, $D_3$ etc). Let $N=3$ be the event that all babies are born on the same day:
+
+	$$
+\begin{align}
+\p(N=3) &amp;= \sum_i \p(D_i) &amp;&amp; \text{Since days are mutually exclusive} \\
+&amp;= \sum_i p_i^3 &amp;&amp; \text{Since the three couples are independent} 
+\end{align}
+	$$
+
+</p></div>
+
+<hr/>
+
+
+<span id="cite1">[1]</span> <a href="https://www.sciencedirect.com/science/article/pii/S0029784400011315?casa_token=yV-QZInYkl8AAAAA:0U_Z2dT-r0y1etlX8hRG5ulyrjtzoVXRXIlvJkcSyXhtllUlkhWPNr5f3MJL0LMFzHZv5TwsN4Q">Predicting delivery date by ultrasound and last menstrual period in early gestation</a>
+
+
+<p>Acknowledgements: This problem was first posed to me by Chris Gregg.
+
+
+
+
+
+
+
+
+
+
+            <br/><br/>
+
+          </p>    
+</body>
+</html>

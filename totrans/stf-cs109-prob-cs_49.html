@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+  "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Algorithmic Art</title>
+<link href="../Styles/Style.css" type="text/css" rel="stylesheet"/>
+</head>
+<body>
+<h1>Algorithmic Art</h1>
+<blockquote>原文：<a href="https://chrispiech.github.io/probabilityForComputerScientists/en/examples/algorithmic_art/">https://chrispiech.github.io/probabilityForComputerScientists/en/examples/algorithmic_art/</a></blockquote>
+
+            
+ 
+<center/>
+<hr/>
+<p>
+We want to generate probabilistic artwork, efficiently. We are going to use random variables to make a picture filled with non-overlapping circles:
+</p>
+
+<p>
+<canvas id="canvas" width="782" height="782"/>
+
+</p><p>
+</p><center><btn id="regenerateButton" onclick="draw()" class="btn btn-primary btn-lg">Regenerate</btn></center>
+
+<p>
+In our art, the circles are different sizes. Specifically, each circle's <b>radius</b> is drawn from a Pareto distribution (which is described below). The placement algorithm is greedy: we sample 1000 circle sizes. Sort them by size, largest to smallest. Loop over the circle sizes and place circles one by one. 
+</p>
+<p>
+To place a circle on the canvas, we sample the location of the center of the circle. Both the x and y coordinates are uniformly distributed over the dimensions of the canvas. Once we have selected a prospective location we then check if there would be a collision with a circle that has already been placed. If there is a collision we keep trying new locations until you find one that has no collisions.
+</p>
+<h3>The Pareto Distribution</h3>
+
+<div class="bordered">
+    <p><b>Pareto Random Variable</b></p>
+    
+    
+    <table>
+    <tbody class="rvCardBody">
+        <tr>
+            <th style="width:150px">Notation:
+            </th><td>$X \sim \text{Pareto}(a)$</td>
+        </tr>
+        <tr>
+            <th>Description:
+            </th><td>A long tail distribution. Large values are rare and small values are common.</td>
+        </tr>
+        <tr>
+            <th>Parameters:
+    
+            </th><td>$a \ge 1$, the shape parameter <br/>
+                Note there are other optional params. See <a href="https://en.wikipedia.org/wiki/Pareto_distribution">wikipedia</a></td>
+        </tr>
+        
+        
+        <tr>
+            <th>Support:
+            </th><td>$x \in [0, 1]$</td>
+        </tr>
+        <tr>
+            <th>PDF equation:</th>
+            <td class="mathLeft">$$f(x) = \frac{1}{x^{a+1}}$$</td>
+        </tr>
+        <tr>
+            <th>CDF equation:</th>
+            <td class="mathLeft">$$F(x) = 1- \frac{1}{x^a}$$</td>
+        </tr>
+       
+    </tbody>
+    </table>
+
+</div>
+
+<h3>Sampling from a Pareto Distribution</h3>
+
+<p>How can we draw samples from a pareto? In python its simple: <code>stats.pareto.rvs(a)</code> however in JavaScript, or other languages, it might not be made transparent. We can use "inverse transform sampling". The simple idea is to choose a uniform random variable in the range (0, 1) and then select the value $x$ assignment such that $F(x)$ equals the randomly chosen value.</p>
+
+\begin{aligned}
+y &amp;= 1 - (\frac{1}{x})^\alpha \\
+(\frac{1}{x})^\alpha &amp;= 1 - y \\
+\frac{1}{x} &amp;= (1-y)^{\frac{1}{\alpha}} \\
+x &amp;= \frac{1}{(1-y)^{\frac{1}{\alpha}}}
+
+\end{aligned}
+
+
+
+
+
+
+
+
+
+
+            <br/><br/>
+
+              
+</body>
+</html>

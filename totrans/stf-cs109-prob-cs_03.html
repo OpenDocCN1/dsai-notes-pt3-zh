@@ -1,0 +1,597 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+  "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Random Variable Reference</title>
+<link href="../Styles/Style.css" type="text/css" rel="stylesheet"/>
+</head>
+<body>
+<h1>Random Variable Reference</h1>
+<blockquote>原文：<a href="https://chrispiech.github.io/probabilityForComputerScientists/en/intro/all_distributions/">https://chrispiech.github.io/probabilityForComputerScientists/en/intro/all_distributions/</a></blockquote>
+
+            
+ 
+<center/>
+<hr/>
+
+<h3>Discrete Random Variables</h3>
+<p>
+<!-- Template that renders a single random variable card -->
+
+</p><div class="bordered">
+<p><b>Bernoulli Random Variable</b></p>
+
+
+<table>
+	<tr>
+		<th style="width:150px">Notation:
+		</th><td>$X \sim \Ber(p)$</td>
+	</tr>
+	<tr>
+		<th>Description:
+		</th><td>A boolean variable that is 1 with probability $p$</td>
+	</tr>
+	<tr>
+		<th>Parameters:
+		</th><td>$p$, the probability that $X=1$.</td>
+	</tr>
+	
+	
+	<tr>
+		<th>Support:
+		</th><td>$x$ is either 0 or 1</td>
+	</tr>
+	<tr>
+		<th>PMF equation:</th>
+		<td>$\p(X=x) = 
+			\begin{cases}
+				p &amp;&amp; \text{if }x = 1\\
+				1-p &amp;&amp; \text{if }x = 0
+			\end{cases}$</td>
+	</tr>
+	<tr>
+		<th>PMF (smooth):</th>
+		<td>$\p(X=x) = p^x(1-p)^{1-x}$</td>
+	</tr>
+	<tr>
+		<th>Expectation:</th>
+		<td>$\E[X] = p$</td>
+	</tr>
+	<tr>
+		<th>Variance:</th>
+		<td>$\var(X) = p (1-p)$</td>
+	</tr>
+	<tr>
+		<th>PMF graph:</th>
+	</tr>
+</table>
+Parameter $p$: <input onchange="redrawBernoulliPmf()" type="number" class="form-control example-inline-input mb-3" id="bernoulliPmfP" min="0" max="1" value="0.80" step="0.05"/>
+<canvas id="bernoulliPmf" style="max-height: 400px"/>
+</div>
+
+
+
+<!-- put a page break in the PDF -->
+<div class="newpage-after"/>
+
+<p>
+<!-- Template that renders a single random variable card -->
+
+</p><div class="bordered">
+<p><b>Binomial Random Variable</b></p>
+
+
+<table>
+<tbody class="rvCardBody">
+	<tr>
+		<th style="width:150px">Notation:
+		</th><td>$X \sim \Bin(n, p)$</td>
+	</tr>
+	<tr>
+		<th>Description:
+		</th><td>Number of "successes" in $n$ identical, independent experiments each with probability of success $p$.</td>
+	</tr>
+	<tr>
+		<th>Parameters:
+
+		</th><td>$n \in \{0, 1, \dots\}$, the number of experiments.<br/>$p \in [0, 1]$, the probability that a single experiment gives a "success".</td>
+	</tr>
+	
+	
+	<tr>
+		<th>Support:
+		</th><td>$x \in \{0, 1, \dots, n\}$</td>
+	</tr>
+	<tr>
+		<th>PMF equation:</th>
+		<td class="mathLeft">$$\p(X=x) = {n \choose x}p^x(1-p)^{n-x}$$</td>
+	</tr>
+	<tr>
+		<th>Expectation:</th>
+		<td>$\E[X] = n \cdot p$</td>
+	</tr>
+	<tr>
+		<th>Variance:</th>
+		<td>$\var(X) = n \cdot p \cdot (1-p)$</td>
+	</tr>
+	<tr>
+		<th>PMF graph:</th>
+	</tr>
+</tbody>
+</table>
+<div class="d-flex">
+	<div class="mr-2">
+Parameter $n$: <input onchange="redrawBinomialPmf()" type="number" class="form-control example-inline-input mb-3" id="binomialPmfN" min="1" value="20" step="1"/>
+</div>
+<div>
+Parameter $p$: <input onchange="redrawBinomialPmf()" type="number" class="form-control example-inline-input mb-3" id="binomialPmfP" min="0" max="1" value="0.60" step="0.05"/>
+</div>
+</div>
+<canvas id="binomialPmf" style="max-height: 400px"/>
+</div>
+
+
+
+<!-- put a page break in the PDF -->
+<div class="newpage-after"/>
+
+<p>
+<!-- Template that renders a single random variable card -->
+
+</p><div class="bordered">
+<p><b>Poisson Random Variable</b></p>
+
+
+<table>
+<tbody class="rvCardBody">
+	<tr>
+		<th style="width:150px">Notation:
+		</th><td>$X \sim \Poi(\lambda)$</td>
+	</tr>
+	<tr>
+		<th>Description:
+		</th><td>Number of events in a fixed time frame if (a) the events occur with a constant mean rate and (b) they occur independently of time since last event.</td>
+	</tr>
+	<tr>
+		<th>Parameters:
+
+		</th><td>$\lambda \in \mathbb{R}^{+}$, the constant average rate.</td>
+	</tr>
+	
+	
+	<tr>
+		<th>Support:
+		</th><td>$x \in \{0, 1, \dots\}$</td>
+	</tr>
+	<tr>
+		<th>PMF equation:</th>
+		<td class="mathLeft">$$\p(X=x) = \frac{\lambda^xe^{-\lambda}}{x!}$$</td>
+	</tr>
+	<tr>
+		<th>Expectation:</th>
+		<td>$\E[X] = \lambda$</td>
+	</tr>
+	<tr>
+		<th>Variance:</th>
+		<td>$\var(X) = \lambda$</td>
+	</tr>
+	<tr>
+		<th>PMF graph:</th>
+	</tr>
+</tbody>
+</table>
+<div class="d-flex">
+	<div class="mr-2">
+Parameter $\lambda$: <input onchange="redrawPoissonPmf()" type="number" class="form-control example-inline-input mb-3" id="poissonPmfLambda" min="1" max="130" value="5" step="1"/>
+</div>
+</div>
+<canvas id="poissonPmf" style="max-height: 400px"/>
+</div>
+
+
+
+<!-- put a page break in the PDF -->
+<div class="newpage-after"/>
+
+<p>
+<!-- Template that renders a single random variable card -->
+
+</p><div class="bordered">
+<p><b>Geometric Random Variable</b></p>
+
+
+<table>
+<tbody class="rvCardBody">
+	<tr>
+		<th style="width:150px">Notation:
+		</th><td>$X \sim \Geo(p)$</td>
+	</tr>
+	<tr>
+		<th>Description:
+		</th><td>Number of experiments until a success. Assumes independent experiments each with probability of success $p$.</td>
+	</tr>
+	<tr>
+		<th>Parameters:
+
+		</th><td>$p \in [0, 1]$, the probability that a single experiment gives a "success".</td>
+	</tr>
+	
+	
+	<tr>
+		<th>Support:
+		</th><td>$x \in \{1, \dots, \infty\}$</td>
+	</tr>
+	<tr>
+		<th>PMF equation:</th>
+		<td class="mathLeft">$$\p(X=x) = (1-p)^{x-1} p$$</td>
+	</tr>
+	<tr>
+		<th>Expectation:</th>
+		<td>$\E[X] = \frac{1}{p}$</td>
+	</tr>
+	<tr>
+		<th>Variance:</th>
+		<td>$\var(X) = \frac{1-p}{p^2}$</td>
+	</tr>
+	<tr>
+		<th>PMF graph:</th>
+	</tr>
+</tbody>
+</table>
+<div class="d-flex">
+	
+<div>
+Parameter $p$: <input onchange="redrawGeometricPmf()" type="number" class="form-control example-inline-input mb-3" id="geometricPmfP" min="0" max="1" value="0.20" step="0.05"/>
+</div>
+</div>
+<canvas id="geometricPmf" style="max-height: 400px"/>
+</div>
+
+
+
+<!-- put a page break in the PDF -->
+<div class="newpage-after"/>
+
+<p>
+<!-- Template that renders a single random variable card -->
+
+</p><div class="bordered">
+<p><b>Negative Binomial Random Variable</b></p>
+
+
+<table>
+<tbody class="rvCardBody">
+	<tr>
+		<th style="width:150px">Notation:
+		</th><td>$X \sim \NegBin(r, p)$</td>
+	</tr>
+	<tr>
+		<th>Description:
+		</th><td>Number of experiments until $r$ successes. Assumes each experiment is independent with probability of success $p$.</td>
+	</tr>
+	<tr>
+		<th>Parameters:
+
+		</th><td>$r &gt; 0$, the number of success we are waiting for.<br/>$p \in [0, 1]$, the probability that a single experiment gives a "success".</td>
+	</tr>
+	
+	
+	<tr>
+		<th>Support:
+		</th><td>$x \in \{r, \dots, \infty\}$</td>
+	</tr>
+	<tr>
+		<th>PMF equation:</th>
+		<td class="mathLeft">$$\p(X=x) = {x - 1 \choose r - 1}p^r(1-p)^{x-r}$$</td>
+	</tr>
+	<tr>
+		<th>Expectation:</th>
+		<td>$\E[X] = \frac{r}{p}$</td>
+	</tr>
+	<tr>
+		<th>Variance:</th>
+		<td>$\var(X) = \frac{r \cdot (1-p)}{p^2}$</td>
+	</tr>
+	<tr>
+		<th>PMF graph:</th>
+	</tr>
+</tbody>
+</table>
+<div class="d-flex">
+	<div class="mr-2">
+Parameter $r$: <input onchange="redrawNegBinomialPmf()" type="number" class="form-control example-inline-input mb-3" id="negBinomialPmfR" min="1" value="3" step="1"/>
+</div>
+<div>
+Parameter $p$: <input onchange="redrawNegBinomialPmf()" type="number" class="form-control example-inline-input mb-3" id="negBinomialPmfP" min="0" max="1" value="0.20" step="0.05"/>
+</div>
+</div>
+<canvas id="negBinomialPmf" style="max-height: 400px"/>
+</div>
+
+
+
+<!-- put a page break in the PDF -->
+<div class="newpage-after"/>
+
+<h3>Continuous Random Variables</h3>
+
+<p>
+<!-- Template that renders a single random variable card -->
+
+</p><div class="bordered">
+<p><b>Uniform Random Variable</b></p>
+
+
+<table>
+<tbody class="rvCardBody">
+	<tr>
+		<th style="width:150px">Notation:
+		</th><td>$X \sim \Uni(\alpha, \beta)$</td>
+	</tr>
+	<tr>
+		<th>Description:
+		</th><td>A continuous random variable that takes on values, with equal likelihood, between $\alpha$ and $\beta$</td>
+	</tr>
+	<tr>
+		<th>Parameters:
+
+		</th><td>$\alpha \in \R$, the minimum value of the variable.<br/>$\beta \in \R$, $\beta &gt; \alpha$, the maximum value of the variable. </td>
+	</tr>
+	
+	
+	<tr>
+		<th>Support:
+		</th><td>$x \in [\alpha, \beta]$</td>
+	</tr>
+	<tr>
+		<th>PDF equation:</th>
+		<td class="mathLeft">$$f(x) = \begin{cases}
+\frac{1}{\beta - \alpha} &amp;&amp; \text{for }x \in [\alpha, \beta]\\
+0 &amp;&amp; \text{else}
+\end{cases}$$</td>
+	</tr>
+	<tr>
+		<th>CDF equation:</th>
+		<td class="mathLeft">$$F(x) = \begin{cases}
+\frac{x - \alpha}{\beta - \alpha} &amp;&amp; \text{for }x \in [\alpha, \beta]\\
+0 &amp;&amp; \text{for } x &lt; \alpha \\
+1 &amp;&amp; \text{for } x &gt; \beta
+\end{cases}$$</td>
+	</tr>
+	<tr>
+		<th>Expectation:</th>
+		<td>$\E[X] = \frac{1}{2}(\alpha + \beta)$</td>
+	</tr>
+	<tr>
+		<th>Variance:</th>
+		<td>$\var(X) = \frac{1}{12}(\beta - \alpha)^2$</td>
+	</tr>
+	<tr>
+		<th>PDF graph:</th>
+	</tr>
+</tbody>
+</table>
+
+<div class="d-flex">
+	<div class="mr-2">
+Parameter $\alpha$: <input onchange="redrawUniPdf()" type="number" class="form-control example-inline-input mb-3" id="uniA" value="0" step="0.05"/>
+</div>
+<div>
+Parameter $\beta$: <input onchange="redrawUniPdf()" type="number" class="form-control example-inline-input mb-3" id="uniB" value="1" step="0.05"/>
+</div>
+</div>
+
+<canvas id="uniPdf" style="max-height: 400px"/>
+</div>
+
+
+
+<!-- put a page break in the PDF -->
+<div class="newpage-after"/>
+
+<p>
+<!-- Template that renders a single random variable card -->
+
+</p><div class="bordered">
+<p><b>Exponential Random Variable</b></p>
+
+
+<table>
+<tbody class="rvCardBody">
+	<tr>
+		<th style="width:150px">Notation:
+		</th><td>$X \sim \Exp(\lambda)$</td>
+	</tr>
+	<tr>
+		<th>Description:
+		</th><td>Time until next events if (a) the events occur with a constant mean rate and (b) they occur independently of time since last event.</td>
+	</tr>
+	<tr>
+		<th>Parameters:
+
+		</th><td>$\lambda \in \mathbb{R}^{+}$, the constant average rate.</td>
+	</tr>
+	
+	
+	<tr>
+		<th>Support:
+		</th><td>$x \in \mathbb{R}^+$</td>
+	</tr>
+	<tr>
+		<th>PDF equation:</th>
+		<td class="mathLeft">$$f(x) = \lambda e^{-\lambda x}$$</td>
+	</tr>
+	<tr>
+		<th>CDF equation:</th>
+		<td class="mathLeft">$$F(x) = 1 - e^{-\lambda x}$$</td>
+	</tr>
+	<tr>
+		<th>Expectation:</th>
+		<td>$\E[X] = 1/\lambda$</td>
+	</tr>
+	<tr>
+		<th>Variance:</th>
+		<td>$\var(X) = 1/\lambda^2$</td>
+	</tr>
+	<tr>
+		<th>PDF graph:</th>
+	</tr>
+</tbody>
+</table>
+<div class="d-flex">
+	<div class="mr-2">
+Parameter $\lambda$: <input onchange="redrawExponentialPdf()" type="number" class="form-control example-inline-input mb-3" id="exponentialPdfLambda" min="1" max="130" value="5" step="1"/>
+</div>
+</div>
+<canvas id="exponentialPdf" style="max-height: 400px"/>
+</div>
+
+
+
+<!-- put a page break in the PDF -->
+<div class="newpage-after"/>
+
+<p>
+<!-- Template that renders a single random variable card -->
+
+</p><div class="bordered">
+<p><b>Normal (aka Gaussian) Random Variable</b></p>
+
+
+<table>
+<tbody class="rvCardBody">
+	<tr>
+		<th style="width:150px">Notation:
+		</th><td>$X \sim \N(\mu, \sigma^2)$</td>
+	</tr>
+	<tr>
+		<th>Description:
+		</th><td>A common, naturally occurring distribution.</td>
+	</tr>
+	<tr>
+		<th>Parameters:
+
+		</th><td>$\mu \in \mathbb{R}$, the mean.<br/>$\sigma^2 \in \mathbb{R}$, the variance.<br/></td>
+	</tr>
+	
+	
+	<tr>
+		<th>Support:
+		</th><td>$x \in \mathbb{R}$</td>
+	</tr>
+	<tr>
+		<th>PDF equation:</th>
+		<td class="mathLeft">$$f(x) = \frac{1}{\sigma \sqrt{2 \pi}} e^{-\frac{1}{2}\Big(\frac{x-\mu}{\sigma}\Big)^2}$$</td>
+	</tr>
+	<tr>
+		<th>CDF equation:</th>
+		<td class="mathLeft">$$\begin{align}
+		F(x) &amp;= \phi(\frac{x-\mu}{\sigma})
+		   &amp;&amp; \text{Where $\phi$ is the CDF of the standard normal}
+	\end{align}$$</td>
+	</tr>
+	<tr>
+		<th>Expectation:</th>
+		<td>$\E[X] = \mu$</td>
+	</tr>
+	<tr>
+		<th>Variance:</th>
+		<td>$\var(X) = \sigma^2$</td>
+	</tr>
+	<tr>
+		<th>PDF graph:</th>
+	</tr>
+</tbody>
+</table>
+<div class="d-flex">
+	<div class="mr-2">
+Parameter $\mu$: <input onchange="redrawNormalPdf()" type="number" class="form-control example-inline-input mb-3" id="normalPdfMu" value="5" step="1"/>
+	</div>
+	<div>
+Parameter $\sigma$: <input onchange="redrawNormalPdf()" type="number" class="form-control example-inline-input mb-3" id="normalPdfSigma" value="5" step="1"/>
+	</div>
+</div>
+<canvas id="normalPdf" style="max-height: 400px"/>
+</div>
+
+
+
+<!-- put a page break in the PDF -->
+<div class="newpage-after"/>
+
+<p>
+<!-- Template that renders a single random variable card -->
+
+</p><div class="bordered">
+<p><b>Beta Random Variable</b></p>
+
+
+<table>
+<tbody class="rvCardBody">
+	<tr>
+		<th style="width:150px">Notation:
+		</th><td>$X \sim \Beta(a, b)$</td>
+	</tr>
+	<tr>
+		<th>Description:
+		</th><td>A belief distribution over the value of a probability $p$ from a Binomial distribution after observing $a-1$ successes and $b-	1$ fails. </td>
+	</tr>
+	<tr>
+		<th>Parameters:
+
+		</th><td>$a &gt; 0$, the number successes + 1 <br/>
+		    $b &gt; 0$, the number of fails + 1</td>
+	</tr>
+	
+	
+	<tr>
+		<th>Support:
+		</th><td>$x \in [0, 1]$</td>
+	</tr>
+	<tr>
+		<th>PDF equation:</th>
+		<td class="mathLeft">$f(x) = B(a,b) \cdot x^{a-1} \cdot (1-x)^{b-1}$ where  $B(a,b) = \frac{\Gamma(a)\Gamma(b)}{\Gamma(a,b)}$</td>
+	</tr>
+	<tr>
+		<th>CDF equation:</th>
+		<td class="mathLeft">No closed form</td>
+	</tr>
+	<tr>
+		<th>Expectation:</th>
+		<td>$\E[X] = \frac{a}{a+b}$</td>
+	</tr>
+	<tr>
+		<th>Variance:</th>
+		<td>$\var(X) = \frac{ab}{(a+b)^2(a+b+1)}$</td>
+	</tr>
+	<tr>
+		<th>PDF graph:</th>
+	</tr>
+</tbody>
+</table>
+<div class="d-flex">
+	<div class="mr-2">
+Parameter $a$: <input onchange="redrawBetaPdf()" type="number" class="form-control example-inline-input mb-3" id="betaA" min="1" max="130" value="2" step="1"/>
+</div>
+<div class="mr-2">
+Parameter $b$: <input onchange="redrawBetaPdf()" type="number" class="form-control example-inline-input mb-3" id="betaB" min="1" max="130" value="4" step="1"/>
+</div>
+</div>
+<canvas id="betaPdf" style="max-height: 400px"/>
+</div>
+
+
+
+
+
+
+
+
+
+            <br/><br/>
+
+              
+</body>
+</html>

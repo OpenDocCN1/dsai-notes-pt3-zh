@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+  "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Grades are Not Normal</title>
+<link href="../Styles/Style.css" type="text/css" rel="stylesheet"/>
+</head>
+<body>
+<h1>Grades are Not Normal</h1>
+<blockquote>原文：<a href="https://chrispiech.github.io/probabilityForComputerScientists/en/examples/grades_not_normal/">https://chrispiech.github.io/probabilityForComputerScientists/en/examples/grades_not_normal/</a></blockquote>
+
+            
+ 
+<center/>
+<hr/>
+
+<p>Sometimes you just feel like squashing normals:
+</p><div class="bordered">
+<b>Logit Normal</b><br/>
+The logit normal is the continuous distribution that results from applying a special "squashing" function to a  Normally distributed random variable. The squashing function maps all values the normal could take on onto the range 0 to 1. If $X \sim \text{LogitNormal}(\mu, \sigma^2)$ it has:
+\begin{align*}
+    \text{PDF:}&amp;&amp; &amp;f_X(x) = \begin{cases}
+    \frac{1}{\sigma(\sqrt{2\pi})x(1 - x)}e^{-\frac{(\text{logit}(x) - \mu)^2}{2\sigma^2}} &amp; \text{if } 0 &lt; x &lt; 1\\
+    0 &amp; \text{otherwise}
+    \end{cases} \\
+    \text{CDF:} &amp;&amp; &amp;F_X(x) = \Phi\Big(\frac{\text{logit}(x) - \mu}{\sigma}\Big)\\
+    \text{Where:} &amp;&amp; &amp;\text{logit}(x) = \text{log}\Big(\frac{x}{1-x}\Big)
+\end{align*}
+</div>
+
+<p>A new theory shows that the Logit Normal better fits exam score distributions than the traditionally used Normal. Let's test it out! We have some set of exam scores for a test with min possible score 0 and max possible score 1, and we are trying to decide between two hypotheses:
+
+</p><p>$H_1$: our grade scores are distributed according to $X\sim \text{Normal}(\mu = 0.7, \sigma^2 = 0.2^2)$. <br/>
+$H_2$: our grade scores are distributed according to $X\sim \text{LogitNormal}(\mu = 1.0, \sigma^2 = 0.9^2)$.
+
+
+</p><center>
+	<img class="mainFigureLg" src="../Images/48bafc90b88684e611a1c26072d08c78.png" data-original-src="https://chrispiech.github.io/probabilityForComputerScientists/img/chapters/gradesNotNormal.png"/>
+</center>
+
+
+<p>Under the normal assumption, $H_1$, what is $P(0.9 &lt; X &lt; 1.0)$? Provide a numerical answer to two decimal places.
+</p><div class="bordered">
+	$$P(0.9 &lt; X &lt; 1.0) = \Phi\left(\frac{1.0 - 0.7}{0.2}\right) - \Phi\left(\frac{0.9 - 0.7}{0.2}\right) = \Phi(1.5) - \Phi(1.0) = 0.9332 - 0.8413 = 0.09$$
+</div>
+
+	
+
+<p>Under the logit-normal assumption, $H_2$, what is $P(0.9 &lt; X &lt; 1.0)$?
+
+</p><div class="bordered">
+		$$F_X(1.0) - F_X(0.9) = \Phi\Big(\frac{\text{logit}(1.0) - 1.0}{0.9}\Big) - \Phi\Big(\frac{\text{logit}(0.9) - 1.0}{0.9}\Big)$$
+
+Which we can solve for numerically:
+$$\Phi\Big(\frac{\text{logit}(1.0) - 1.0}{0.9}\Big) - \Phi\Big(\frac{\text{logit}(0.9) - 1.0}{0.9}\Big) = 1 - \Phi(1.33) 
+\approx 0.91$$
+	</div>
+
+<p>Under the normal assumption, $H_1$, what is the maximum value that $X$ can take on?
+
+	</p><div class="bordered">
+	$$\infty$$
+</div>
+
+<p>Before observing any test scores, you assume that (a) one of your two hypotheses is correct and (b) that initially, each hypothesis is equally likely to be correct, $P(H_1)=P(H_2)=\frac{1}{2}$. You then observe a single test score, $X = 0.9$. What is your updated probability that the Logit-Normal hypothesis is correct? 
+	</p><div class="bordered">
+	\begin{align*}
+P(H_2|X = 0.9) &amp;= \frac{f(X = 0.9|H_2)P(H_2)}{f(X = 0.9|H_2)P(H_2) + f(X = 0.9|H_1)P(H_1)}\\
+&amp;= \frac{f(X = 0.9|H_2)}{f(X = 0.9|H_2) + f(X = 0.9|H_1)}\\
+&amp;= \frac{\frac{1}{\sigma(\sqrt{2\pi})0.9*(1 - 0.9)}e^{-\frac{(\text{logit}(0.9) - 1.0)^2}{2*0.9^2}}}{\frac{1}{\sigma(\sqrt{2\pi})0.9*(1 - 0.9)}e^{-\frac{(\text{logit}(0.9) - 1.0)^2}{2*0.9^2}} + \frac{1}{0.2\sqrt{2\pi}}e^{-\frac{(0.9 - 0.7)^2}{2*0.2^2}}}
+\end{align*}
+</div>
+
+
+
+
+
+
+
+
+
+            <br/><br/>
+
+              
+</body>
+</html>

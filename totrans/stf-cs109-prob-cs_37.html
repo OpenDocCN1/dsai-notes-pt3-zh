@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+  "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Uniform Distribution</title>
+<link href="../Styles/Style.css" type="text/css" rel="stylesheet"/>
+</head>
+<body>
+<h1>Uniform Distribution</h1>
+<blockquote>原文：<a href="https://chrispiech.github.io/probabilityForComputerScientists/en/part2/uniform/">https://chrispiech.github.io/probabilityForComputerScientists/en/part2/uniform/</a></blockquote>
+
+            
+ 
+<center/>
+<hr/>
+
+
+<p>The most basic of all the continuous random variables is the uniform random variable, which is equally likely to take on any value in its range ($\alpha, \beta$). 
+
+$X$ is a <i>uniform random variable</i> ($X \sim \Uni(\alpha, \beta)$) if it has PDF:
+\begin{align*}
+    f(x) = \begin{cases} \frac{1}{\beta - \alpha} &amp;\text{when } \alpha \leq x \leq \beta \\ 
+0 &amp; \text{otherwise} \end{cases} 
+\end{align*}
+</p><p>
+Notice how the density $1/(\beta - \alpha$) is exactly the same regardless of the value for $x$. That makes the density uniform. So why is the PDF $1/(\beta - \alpha)$ and not 1? That is the constant that makes it such that the integral over all possible inputs evaluates to 1.</p>
+
+
+<p>
+<!-- Template that renders a single random variable card -->
+
+</p><div class="bordered">
+<p><b>Uniform Random Variable</b></p>
+
+
+<table>
+<tbody class="rvCardBody">
+	<tr>
+		<th style="width:150px">Notation:
+		</th><td>$X \sim \Uni(\alpha, \beta)$</td>
+	</tr>
+	<tr>
+		<th>Description:
+		</th><td>A continuous random variable that takes on values, with equal likelihood, between $\alpha$ and $\beta$</td>
+	</tr>
+	<tr>
+		<th>Parameters:
+
+		</th><td>$\alpha \in \R$, the minimum value of the variable.<br/>$\beta \in \R$, $\beta &gt; \alpha$, the maximum value of the variable. </td>
+	</tr>
+	
+	
+	<tr>
+		<th>Support:
+		</th><td>$x \in [\alpha, \beta]$</td>
+	</tr>
+	<tr>
+		<th>PDF equation:</th>
+		<td class="mathLeft">$$f(x) = \begin{cases}
+\frac{1}{\beta - \alpha} &amp;&amp; \text{for }x \in [\alpha, \beta]\\
+0 &amp;&amp; \text{else}
+\end{cases}$$</td>
+	</tr>
+	<tr>
+		<th>CDF equation:</th>
+		<td class="mathLeft">$$F(x) = \begin{cases}
+\frac{x - \alpha}{\beta - \alpha} &amp;&amp; \text{for }x \in [\alpha, \beta]\\
+0 &amp;&amp; \text{for } x &lt; \alpha \\
+1 &amp;&amp; \text{for } x &gt; \beta
+\end{cases}$$</td>
+	</tr>
+	<tr>
+		<th>Expectation:</th>
+		<td>$\E[X] = \frac{1}{2}(\alpha + \beta)$</td>
+	</tr>
+	<tr>
+		<th>Variance:</th>
+		<td>$\var(X) = \frac{1}{12}(\beta - \alpha)^2$</td>
+	</tr>
+	<tr>
+		<th>PDF graph:</th>
+	</tr>
+</tbody>
+</table>
+
+<div class="d-flex">
+	<div class="mr-2">
+Parameter $\alpha$: <input onchange="redrawUniPdf()" type="number" class="form-control example-inline-input mb-3" id="uniA" value="0" step="0.05"/>
+</div>
+<div>
+Parameter $\beta$: <input onchange="redrawUniPdf()" type="number" class="form-control example-inline-input mb-3" id="uniB" value="1" step="0.05"/>
+</div>
+</div>
+
+<canvas id="uniPdf" style="max-height: 400px"/>
+</div>
+
+
+
+<div class="purpleBox">
+<p><b>Example:</b> You are running to the bus stop. You don’t know exactly when the bus arrives. You believe all times between 2 and 2:30 are equally likely. You show up at 2:15pm. What is P(wait &lt; 5 minutes)?
+</p>
+
+Let $T$ be the time, in minutes after 2pm that the bus arrives. Because we think that all times are equally likely in this range, $T \sim \Uni(\alpha = 0, \beta = 30)$. The probability that you wait 5 minutes is equal to the probability that the bus shows up between 2:15 and 2:20. In other words $\p(15 &lt; T &lt; 20)$:
+\begin{align*}
+    \p(\text{Wait under 5 mins}) &amp;= \p(15 &lt; T &lt; 20) \\
+    &amp;= \int_{15}^{20} f_T(x) \partial x \\
+    &amp;= \int_{15}^{20} \frac{1}{\beta - \alpha} \partial x \\ \\
+    &amp;= \frac{1}{30} \partial x \\ \\
+    &amp;= \frac{x}{30}\bigg\rvert_{15}^{20} \\
+    &amp;= \frac{20}{30} - \frac{15}{30}  = \frac{5}{30}
+\end{align*}
+
+
+</div>
+
+<p>
+
+We can come up with a closed form for the probability that a uniform random variable $X$ is in the range $a$ to $b$, assuming that $\alpha \leq a \leq b \leq \beta$:
+\begin{align*}
+    \P(a \leq X \leq b) &amp;= \int_a^b f(x) \d x \\
+    &amp;= \int_a^b \frac{1}{\beta - \alpha} \d x \\
+    &amp;= \frac{ b - a }{ \beta - \alpha } 
+\end{align*}
+</p>
+
+
+
+
+
+
+
+
+
+            <br/><br/>
+
+              
+</body>
+</html>

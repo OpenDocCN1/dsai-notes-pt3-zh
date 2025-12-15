@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+  "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Gaussian Mixtures</title>
+<link href="../Styles/Style.css" type="text/css" rel="stylesheet"/>
+</head>
+<body>
+<h1>Gaussian Mixtures</h1>
+<blockquote>原文：<a href="https://chrispiech.github.io/probabilityForComputerScientists/en/examples/mixture_models/">https://chrispiech.github.io/probabilityForComputerScientists/en/examples/mixture_models/</a></blockquote>
+
+            
+ 
+<center/>
+<hr/>
+
+<!-- 
+  >>> from scipy import stats
+def sample():
+   t = stats.bernoulli.rvs(0.8)
+   if t ==1:
+      return stats.norm.rvs(6.8,0.7)
+   else:
+      return stats.norm.rvs(3.5,0.7)
+
+data = []
+for i in range(50):
+   s = sample()
+   n = round(s * 100)/100
+   data.append(n)
+-->
+
+
+<p/><div class="bordered">
+Data = [6.47, 5.82, 8.7, 4.76, 7.62, 6.95, 7.44, 6.73, 3.38, 5.89, 7.81, 6.93, 7.23, 6.25, 5.31, 7.71, 7.42, 5.81, 4.03, 7.09, 7.1, 7.62, 7.74, 6.19, 7.3, 7.37, 6.99, 2.97, 3.3, 7.08, 6.23, 3.67, 3.05, 6.67, 6.5, 6.08, 3.7, 6.76, 6.56, 3.61, 7.25, 7.34, 6.27, 6.54, 5.83, 6.44, 5.34, 7.7, 4.19, 7.34]
+</div>
+
+
+<div class="d-flex">
+  <div>
+Parameter $t$: <input onchange="redrawMixturePdf()" type="number" class="form-control example-inline-input" id="mixtureT" value="0.2" step=".1"/>
+  </div>
+  <div class="mr-2">
+Parameter $\mu_a$: <input onchange="redrawMixturePdf()" type="number" class="form-control example-inline-input " id="normalPdfMu1" value="3.5" step=".1"/>
+  </div>
+  <div>
+Parameter $\sigma_a$: <input onchange="redrawMixturePdf()" type="number" class="form-control example-inline-input" id="normalPdfSigma1" value="0.7" step=".1"/>
+  </div>
+  <div class="mr-2">
+Parameter $\mu_b$: <input onchange="redrawMixturePdf()" type="number" class="form-control example-inline-input " id="normalPdfMu2" value="6.8" step=".1"/>
+  </div>
+  <div>
+Parameter $\sigma_b$: <input onchange="redrawMixturePdf()" type="number" class="form-control example-inline-input" id="normalPdfSigma2" value="0.7" step=".1"/>
+  </div>
+
+</div>
+
+<canvas id="mixturePdf" style="max-height: 400px"/>
+
+<p>Likelihood: <span id="likelihood"/><br/>
+    Log Likelihood: <span style="color:blue" id="ll"/><br/>
+    Best Seen: <span style="color:blue" id="best"/> 
+
+</p><h3>What is a Gaussian Mixture?</h3>
+
+<p>A Gaussian Mixture describes a random variable whose PDF could come from one of two Gaussians (or more, but we will just use two in this demo). There is a certain probability the sample will come from the first gaussian, otherwise it comes from the second. It has five parameters: 4 to describe the two gaussians and one to describe the relative weighting of the two gaussians.
+
+</p><h4>Generative Code</h4>
+
+<p/><pre class="language-python"><code>from scipy import stats
+def sample():
+   # choose group membership
+   membership = stats.bernoulli.rvs(0.2)
+   if membership == 1:
+      # sample from gaussian 1
+      return stats.norm.rvs(3.5,0.7)
+   else:
+      # sample from gaussian 2
+      return stats.norm.rvs(6.8,0.7)</code></pre>
+
+
+<h4>Probability Density Function</h4>
+
+\begin{align*}
+f(X=x) = t \cdot f(A=x) + (1-t) \cdot f(B=x)
+\end{align*}
+$$\text{st}$$
+$$A \sim N(\mu_a, \sigma_a^2)$$
+$$B \sim N(\mu_b, \sigma_b^2)$$
+<p>Putting it all together, the PDF of a Gaussian Mixture is:</p>
+\begin{align*}
+f(x) = t \cdot 
+\Big(\frac{1}{\sqrt{2\pi}\sigma_a} e^{-\frac{1}{2}(\frac{x-\mu_a}{\sigma_a})^2}\Big)
+
++ (1-t) \cdot
+\Big(\frac{1}{\sqrt{2\pi}\sigma_b} e^{-\frac{1}{2}(\frac{x-\mu_b}{\sigma_b})^2}\Big)
+\end{align*}
+
+
+<h3>MLE for Gaussian Mixture</h3>
+
+<p>Special note: even though the generative story has a bernoulli (group membership) it is never observed. MLE maximizes the likelihood of the observed data.
+
+</p><p>Let $\vec{\theta} = [t, \mu_a,\mu_b,\sigma_a, \sigma_b]$ be the parameters. Because the math will get long I will use $\theta$ as notation in place of $\vec{\theta}$. Just keep in mind that it is a vector.
+
+</p><p>The MLE idea is to chose values of $\theta$ which maximize log likelihood. All optimization methods require us to calculate the partial derivatives of the thing we want to optimize (log likelihood) with respect to the values we can change (our parameters).
+
+
+</p><h4> Likelihood function</h4>
+
+\begin{align*}
+L(\theta) &amp;= \prod_i^n f(x_i | \theta) \\
+&amp;= \prod_i^n \Big[t \cdot 
+\Big(\frac{1}{\sqrt{2\pi}\sigma_a} e^{-\frac{1}{2}(\frac{x_i-\mu_a}{\sigma_a})^2}\Big)
++ (1-t) \cdot
+\Big(\frac{1}{\sqrt{2\pi}\sigma_b} e^{-\frac{1}{2}(\frac{x_i-\mu_b}{\sigma_b})^2}\Big)
+\Big]
+\end{align*}
+
+<h4> Log Likelihood function</h4>
+
+\begin{align*}
+LL(\theta) 
+&amp;= \log L(\theta) \\
+&amp;= \log \prod_i^n f(x_i | \theta) \\
+
+&amp;=  \sum_i^n \log f(x_i | \theta) \\
+
+\end{align*}
+<p>That is sufficient for now, but if you wanted to expand out the term you would get:
+  \begin{align*}
+LL(\theta)  &amp;= \sum_i^n \log  \Big[t \cdot 
+\Big(\frac{1}{\sqrt{2\pi}\sigma_a} e^{-\frac{1}{2}(\frac{x_i-\mu_a}{\sigma_a})^2}\Big)
++ (1-t) \cdot
+\Big(\frac{1}{\sqrt{2\pi}\sigma_b} e^{-\frac{1}{2}(\frac{x_i-\mu_b}{\sigma_b})^2}\Big)
+\Big] 
+\end{align*}
+
+
+</p><h4> Derivative of LL with respect to $\theta$</h4>
+
+
+
+<p>Here is an example of calculating a partial derivative with respect to one of the parameters, $\mu_a$. You would need a derivative like this for all parameters. 
+
+  </p><div class="alert alert-warning"><b>Caution:</b> When I first wrote this demo I thought it would be a simple derivative . It is not so simple because the log has a sum in it. As such the log term doesn't reduce. The log still serves to make the outer $\prod$ into a $\sum$. As such the $LL$ partial derivatives are solvable, but the proof uses quite a lot of chain rule. </div>
+
+   <div class="alert alert-primary"><b>Takeaway:</b> The main takeaway from this section (in case you want to skip the derivative proof) is that the resulting derivative is complex enough that we will want a way to compute argmax without having to set that derivative equal to zero and solving for $\mu_a$. Enter gradient descent!</div>
+
+<p>A good first step when doing a huge derivative of a log likelihood function is to think of the derivative for the log of likelihood of a single datapoint. This is the inner sum in the log likelihood expression:
+ $$
+  \frac{\d}{\d \mu_a} \log f(x_i|\theta) 
+  $$
+</p>
+
+<p> Before we start:  notice that $\mu_a$ does not show up in this term from $f(x_i|\theta) $:
+  $$(1-t) \cdot
+\Big(\frac{1}{\sqrt{2\pi}\sigma_b} e^{-\frac{1}{2}(\frac{x_i-\mu_b}{\sigma_b})^2}\Big) =K $$
+In the proof, when we encounter this term, we are going to think of it as a constant which we call $K$. Ok, lets go for it!
+
+\begin{align*}
+\frac{\d}{\d \mu_a} &amp; \log f(x_i|\theta) \\
+
+&amp;= \frac{1}{f(x_i|\theta)} \frac{\d}{\d \mu_a} f(x_i|\theta) &amp;&amp;\text{chain rule on }\log \\
+
+&amp;= \frac{1}{f(x_i|\theta)} \frac{\d}{\d \mu_a} \Big[t \cdot 
+\Big(\frac{1}{\sqrt{2\pi}\sigma_a} e^{-\frac{1}{2}(\frac{x_i-\mu_a}{\sigma_a})^2}\Big)
++ K\Big]  &amp;&amp;\text{substitute in }f(x_i|\theta)\\
+
+&amp;= \frac{1}{f(x_i|\theta)} \frac{\d}{\d \mu_a} \Big[t \cdot 
+\Big(\frac{1}{\sqrt{2\pi}\sigma_a} e^{-\frac{1}{2}(\frac{x_i-\mu_a}{\sigma_a})^2}\Big)\Big]  &amp;&amp;\frac{\d}{\d \mu_a} K = 0\\
+
+&amp;= \frac{t}{f(x_i|\theta) \sqrt{2\pi}\sigma_a} \cdot \frac{\d}{\d \mu_a} e^{-\frac{1}{2}(\frac{x_i-\mu_a}{\sigma_a})^2}  &amp;&amp;\text{pull out const}\\
+
+&amp;= \frac{t}{f(x_i|\theta) \sqrt{2\pi}\sigma_a} \cdot  e^{-\frac{1}{2}(\frac{x_i-\mu_a}{\sigma_a})^2} \cdot \frac{\d}{\d \mu_a} -\frac{1}{2}(\frac{x_i-\mu_a}{\sigma_a})^2&amp;&amp;\text{chain on }e^x \\
+
+&amp;= \frac{t}{f(x_i|\theta) \sqrt{2\pi}\sigma_a} \cdot  e^{-\frac{1}{2}(\frac{x_i-\mu_a}{\sigma_a})^2}  \cdot \Big[-(\frac{x_i-\mu_a}{\sigma_a}) \frac{\d}{\d \mu_a} (\frac{x_i-\mu_a}{\sigma_a})\Big]&amp;&amp;\text{chain on }x^2 \\
+
+&amp;= \frac{t}{f(x_i|\theta) \sqrt{2\pi}\sigma_a} \cdot  e^{-\frac{1}{2}(\frac{x_i-\mu_a}{\sigma_a})^2} \cdot \Big[ -(\frac{x_i-\mu_a}{\sigma_a}) \cdot \frac{-1}{\sigma_a}\Big] &amp;&amp;\text{final derivative} \\
+
+&amp;= \frac{t}{f(x_i|\theta) \sqrt{2\pi}\sigma_a^3} \cdot  e^{-\frac{1}{2}(\frac{x_i-\mu_a}{\sigma_a})^2} \cdot (x_i-\mu_a)   &amp;&amp;\text{simplify} \\
+\end{align*}
+
+</p><p>That was for a single data-point. For the full dataset:
+\begin{align*}
+\frac{\d LL(\theta)}{\d \mu_a} 
+&amp;=  \sum_i^n 
+\frac{\d}{\d \mu_a}  \log f(x_i|\theta)\\
+&amp;= \sum_i^n 
+\frac{t}{f(x_i|\theta) \sqrt{2\pi}\sigma_a^3} \cdot  e^{-\frac{1}{2}(\frac{x_i-\mu_a}{\sigma_a})^2} \cdot (x_i-\mu_a)
+\end{align*}
+
+</p><p>This process should be repeated for all five parameters! Now, how should we find a value of $\mu_a$, which, in the presence of the other settings to parameters, and the data, makes this derivative zero? Setting the derivative = 0 and solving for $\mu_a$ is not going to work.
+
+</p><h3>Use an Optimizer to Estimate Params</h3>
+
+
+<p>Once we have a $LL$ function and the derivative of $LL$ with respect to each parameter we are ready to compute argmax using an optimizer. In this case the best choice would probably be gradient ascent (or gradient descent with negative log likelihood).
+
+\begin{align*}
+\nabla_{\theta} LL(\theta)
+&amp;=\begin{bmatrix}
+\frac{\d LL(\theta)}{\d t}\\
+\frac{\d LL(\theta)}{\d \mu_a}\\
+\frac{\d LL(\theta)}{\d \mu_b}\\
+\frac{\d LL(\theta)}{\d \sigma_a}\\
+\frac{\d LL(\theta)}{\d \sigma_b}\\
+\end{bmatrix}
+\end{align*}
+
+<!-- <p>\begin{align*}
+\frac{\d}{\d \mu_a} LL(\theta) &= \sum_i^n  \frac{\d}{\d \mu_a} \log  \Big[t \cdot 
+\Big(\frac{1}{\sqrt{2\pi}\sigma_a} e^{-\frac{1}{2}(\frac{x_i-\mu_a}{\sigma_a})^2}\Big)
++ K] 
+
+\end{align*}</p> -->
+
+ <!--  <p>Notice how few terms actually contain $\mu_a$. Any term which does not have $\mu_a$ in it will have a zero derivative.
+<p>\begin{align*}
+\frac{\d LL(\vec{\theta})}{\d \mu_a} 
+&= \sum_i^n \frac{\d}{\d \mu_a}
+\Big[
+-\frac{1}{2}\Big(\frac{x_i-\mu_a}{\sigma_a}\Big)^2 
+\Big]\\
+&= \sum_i^n 2\Big(\frac{x_i-\mu_a}{\sigma_a}\Big)\frac{1}{\sigma_a}
+
+\end{align*}</p> -->
+
+
+
+
+
+
+
+
+
+
+
+
+            <br/><br/>
+
+          </p>    
+</body>
+</html>
