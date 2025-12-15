@@ -1,77 +1,121 @@
 - en: Distance Between Distributions
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 分布之间的距离
 - en: 原文：[https://chrispiech.github.io/probabilityForComputerScientists/en/part4/divergence/](https://chrispiech.github.io/probabilityForComputerScientists/en/part4/divergence/)
+  id: totrans-1
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 原文：[https://chrispiech.github.io/probabilityForComputerScientists/en/part4/divergence/](https://chrispiech.github.io/probabilityForComputerScientists/en/part4/divergence/)
 - en: '* * *'
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: '* * *'
 - en: 'Here is an important question! How can you quantify how different two distributions
     are? In other words, if I have two Probability Mass Functions, can I calculate
     a number that says how much they diverge from one another? Here are three reasonable
     ways to quantify distance between distributions:'
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: 这里有一个重要的问题！你如何量化两个分布之间的差异？换句话说，如果我有两个概率质量函数，我能计算出一个数字来表示它们彼此之间有多大的差异？这里有三种合理的方式来量化分布之间的距离：
 - en: Total Variational Distance
+  id: totrans-4
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 总变差距离
 - en: Loop over all possible values and calculate the absolute difference in probability.
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: 遍历所有可能的值并计算概率的绝对差异。
 - en: '***Definition:*** Total Variation Distance'
+  id: totrans-6
   prefs: []
   type: TYPE_NORMAL
+  zh: '***定义：*** 总变差距离'
 - en: Let $X$ and $Y$ be discrete random variables
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: 设 $X$ 和 $Y$ 为离散随机变量
 - en: \begin{align*} \text{TV}(X, Y) = \frac{1}{2} \sum_{i} |\P(X = i) - \P(Y = i)|
     \end{align*}
+  id: totrans-8
   prefs: []
   type: TYPE_NORMAL
+  zh: \begin{align*} \text{TV}(X, Y) = \frac{1}{2} \sum_{i} |\P(X = i) - \P(Y = i)|
+    \end{align*}
 - en: Earth Mover's Distance
+  id: totrans-9
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 地球迁移距离
 - en: Imagine one distribution is a lump of dirt. How much work would it take to make
     it look just like the other? Also called the Wasserstein metric.
+  id: totrans-10
   prefs: []
   type: TYPE_NORMAL
+  zh: 想象一个分布是一堆泥土。要让它看起来和另一个分布一样，需要做多少工作？也称为Wasserstein度量。
 - en: This value is very meaningful, but it doesn't have a closed form equation. Instead
     it is computed by solving a linear program. If the range of values that the random
     variables can take on is of size $n$, the linear program has a run time of $O(n^3
     \cdot \log n)$ which is very slow.
+  id: totrans-11
   prefs: []
   type: TYPE_NORMAL
+  zh: 这个值非常有意义，但它没有封闭形式的方程。相反，它通过求解线性规划来计算。如果随机变量可以取的值的范围大小为 $n$，线性规划的计算时间为 $O(n^3
+    \cdot \log n)$，这非常慢。
 - en: Kullback Leiber Divergence
+  id: totrans-12
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 库尔巴克-莱布勒散度
 - en: Let $X$ and $Y$ be discrete random variables. Calculate the expected "excess
     surprise" from using Y as your Probability Mass Function instead of X when the
     actual Probability Mass Function is X.
+  id: totrans-13
   prefs: []
   type: TYPE_NORMAL
+  zh: 设 $X$ 和 $Y$ 为离散随机变量。计算当实际概率质量函数为 $X$ 时，使用 $Y$ 作为概率质量函数带来的“额外惊喜”的期望值。
 - en: '***Definition:*** Kullback Leiber Divergence'
+  id: totrans-14
   prefs: []
   type: TYPE_NORMAL
+  zh: '***定义：*** 库尔巴克-莱布勒散度'
 - en: Let $X$ and $Y$ be discrete random variables
+  id: totrans-15
   prefs: []
   type: TYPE_NORMAL
+  zh: 设 $X$ 和 $Y$ 为离散随机变量
 - en: \begin{align*} \text{KL}(X, Y)  &= \sum_{x \in X} \text{ExcessSurprise}(x) \cdot
     P(X=x) \\ &= \sum_{x \in X} \Big[\text{Surprise}_X(x) - \text{Surprise}_Y(x)\Big]
     \cdot P(X=x) \\ &= \sum_{x \in X} \Big[\log_2\frac{1}{P(Y=x)} - \log_2 \frac{1}{P(X=x)}\Big]
     \cdot P(X=x) \\ &= \sum_{x \in X} - \log_2 P(Y=x) + \log_2 P(X=x) \cdot P(X=x)
     \\ &= \sum_{x \in X}  \log_2 \frac{P(X=x)}{P(Y=x) } \cdot P(X=x) \\ \end{align*}
+  id: totrans-16
   prefs: []
   type: TYPE_NORMAL
+  zh: \begin{align*} \text{KL}(X, Y) &= \sum_{x \in X} \text{ExcessSurprise}(x) \cdot
+    P(X=x) \\ &= \sum_{x \in X} \Big[\text{Surprise}_X(x) - \text{Surprise}_Y(x)\Big]
+    \cdot P(X=x) \\ &= \sum_{x \in X} \Big[\log_2\frac{1}{P(Y=x)} - \log_2 \frac{1}{P(X=x)}\Big]
+    \cdot P(X=x) \\ &= \sum_{x \in X} - \log_2 P(Y=x) + \log_2 P(X=x) \cdot P(X=x)
+    \\ &= \sum_{x \in X} \log_2 \frac{P(X=x)}{P(Y=x) } \cdot P(X=x) \\ \end{align*}
 - en: Here is example code for calculating how different an observed pmf of hurricanes
     per year is from a predicted poisson distribution
+  id: totrans-17
   prefs: []
   type: TYPE_NORMAL
+  zh: 这里是计算每年观察到的飓风概率质量函数与预测的泊松分布差异的示例代码
 - en: '[PRE0]'
+  id: totrans-18
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'

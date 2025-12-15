@@ -1,28 +1,40 @@
 - en: Marginalization
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 边缘化
 - en: 原文：[https://chrispiech.github.io/probabilityForComputerScientists/en/part3/marginalization/](https://chrispiech.github.io/probabilityForComputerScientists/en/part3/marginalization/)
+  id: totrans-1
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 原文：[https://chrispiech.github.io/probabilityForComputerScientists/en/part3/marginalization/](https://chrispiech.github.io/probabilityForComputerScientists/en/part3/marginalization/)
 - en: '* * *'
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: '* * *'
 - en: An important insight regarding probabilistic models with many random variables
     is that "the joint distribution is complete information." From the joint distribution
     you can compute all probability questions involving those random variables in
     the model. This chapter is an example of that insight.
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: 关于具有许多随机变量的概率模型的一个重要见解是，“联合分布是完整信息。”从联合分布中，你可以计算涉及模型中那些随机变量的所有概率问题。这一章就是那个见解的例子。
 - en: 'The central question of this chapter is: Given a joint distribution, how can
     you compute the probability of random variables on their own?'
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: 本章的核心问题是：给定一个联合分布，你如何计算随机变量单独的概率？
 - en: Marginalization From Two Random Variables
+  id: totrans-5
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 从两个随机变量进行边缘化
 - en: 'To start, consider two random variables $X$ and $Y$. If you are given the joint
     how can you compute $\p(X=x)$? Recall that if you have the joint you have a way
     to know the probability $\p(X=x,Y=y)$ for any value $x$ and $y$ . We already have
@@ -32,60 +44,98 @@
     Note that to apply the LOTP it must be the case that the different events $Y=i$
     must be mutually exclusvie and it must be the case that $\sum_y \p(Y=y) = 1$.
     Both are true.'
+  id: totrans-6
   prefs: []
   type: TYPE_NORMAL
+  zh: 首先，考虑两个随机变量 $X$ 和 $Y$。如果你给出了联合分布，你如何计算 $\p(X=x)$？回想一下，如果你有联合分布，你就有一种方法知道任何值
+    $x$ 和 $y$ 的概率 $\p(X=x,Y=y)$。我们已经有了从联合分布中计算 $\p(X=x)$ 的技术。我们可以使用[全概率公式](../../part1/law_total)（LOTP）！在这种情况下，事件
+    $Y = y$ 构成了“背景事件”：\begin{align*} P(X=x) &= \sum_y \p(X=x, Y=y) \\ \end{align*}
+    注意，要应用全概率公式，必须保证不同的事件 $Y=i$ 是互斥的，并且必须保证 $\sum_y \p(Y=y) = 1$。这两者都是正确的。
 - en: 'If we wanted $\p(Y=y)$ we could again use the Law of Total Probability, this
     time with $X$ taking on each of its possible values as the background events:
     \begin{align*} P(Y=y) &= \sum_x \p(X=x, Y=y) \\ \end{align*}'
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果我们想要 $\p(Y=y)$，我们还可以再次使用全概率公式，这次以 $X$ 的每个可能值作为背景事件：\begin{align*} P(Y=y) &=
+    \sum_x \p(X=x, Y=y) \\ \end{align*}
 - en: 'Example: Favorite Number'
+  id: totrans-8
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 示例：最爱数字
 - en: 'Consider the following joint distribution for $X$ and $Y$ where $X$ is a person''s
     favorite binary digit and $Y$ is their year at Stanford. Here is a real joint
     distribution form a past class:'
+  id: totrans-9
   prefs: []
   type: TYPE_NORMAL
+  zh: 考虑以下 $X$ 和 $Y$ 的联合分布，其中 $X$ 是一个人的最爱二进制数字，$Y$ 是他们在斯坦福大学的年份。这里是一个来自过去课程的真正联合分布：
 - en: '| Variable | Symbol | Type |'
+  id: totrans-10
   prefs: []
   type: TYPE_TB
+  zh: '| 变量 | 符号 | 类型 |'
 - en: '| Favorite Digit | $X$ | Discrete number {0, 1} |'
+  id: totrans-11
   prefs: []
   type: TYPE_TB
+  zh: '| 最爱数字 | $X$ | 离散数 {0, 1} |'
 - en: '| Year in School | $Y$ | Categorical {Frosh, Soph, Junior, Senior, 5+} |'
+  id: totrans-12
   prefs: []
   type: TYPE_TB
+  zh: '| 在校年份 | $Y$ | 分类别 {Frosh, Soph, Junior, Senior, 5+} |'
 - en: 'What is the probability that a student''s favorite digit is 0, $\p(X=0)$? We
     can use the LOTP to compute this probability: \begin{align*} \p(X=0) = &\sum_y
     \p(X=0, Y=y) \\ = &+ \p(X=0, Y=\text{Frosh}) \\ &+ \p(X=0, Y=\text{Soph}) \\ &+
     \p(X=0, Y=\text{Junior}) \\ &+ \p(X=0, Y=\text{Senior}) \\ &+ \p(X=0, Y=\text{5+})
     \\ = &0.01 + 0.05 + 0.04 + 0.03 + 0.02 \\ = &0.15 \end{align*}'
+  id: totrans-13
   prefs: []
   type: TYPE_NORMAL
+  zh: 学生最爱的数字是 0 的概率 $\p(X=0)$ 是多少？我们可以使用全概率公式来计算这个概率：\begin{align*} \p(X=0) = &\sum_y
+    \p(X=0, Y=y) \\ = &+ \p(X=0, Y=\text{Frosh}) \\ &+ \p(X=0, Y=\text{Soph}) \\ &+
+    \p(X=0, Y=\text{Junior}) \\ &+ \p(X=0, Y=\text{Senior}) \\ &+ \p(X=0, Y=\text{5+})
+    \\ = &0.01 + 0.05 + 0.04 + 0.03 + 0.02 \\ = &0.15 \end{align*}
 - en: Marginalization with More Variables
+  id: totrans-14
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 多变量边缘化
 - en: 'The idea of marginalization can be extended to joint distributions with more
     than two random variables. Consider having three random variables $X$, $Y$, and
     $Z$, we could marginalize out any of the variables: \begin{align*} P(X=x) &= \sum_{y,z}
     \p(X=x, Y=y, Z=z) \\ P(Y=y) &= \sum_{x,z} \p(X=x, Y=y, Z=z) \\ P(Z=z) &= \sum_{x,y}
     \p(X=x, Y=y, Z=z) \\ \end{align*}'
+  id: totrans-15
   prefs: []
   type: TYPE_NORMAL
+  zh: 边缘化的想法可以扩展到包含两个以上随机变量的联合分布。考虑有三个随机变量 $X$、$Y$ 和 $Z$，我们可以边缘化掉任何一个变量：\begin{align*}
+    P(X=x) &= \sum_{y,z} \p(X=x, Y=y, Z=z) \\ P(Y=y) &= \sum_{x,z} \p(X=x, Y=y, Z=z)
+    \\ P(Z=z) &= \sum_{x,y} \p(X=x, Y=y, Z=z) \\ \end{align*}
 - en: '***Notation:* Double Sum**'
+  id: totrans-16
   prefs: []
   type: TYPE_NORMAL
+  zh: '***符号：双重求和**'
 - en: 'In this case the double sum notation: $$\sum\limits_{y, z}$$ Also written equivalently
     as: $$\sum_y \sum_z$$ means that we are summing over all possible values of $y$
     and $z$. For example, if $Y$ is a random variable with 3 possible values and $Z$
     is a random variable with 4 possible values, then $\sum_{y, z}$ means that we
     are summing over all 12 possible combinations of $y$ and $z$.'
+  id: totrans-17
   prefs: []
   type: TYPE_NORMAL
+  zh: 在这种情况下，双重求和符号：$$\sum\limits_{y, z}$$ 也可以等价地写成：$$\sum_y \sum_z$$，这意味着我们在对所有可能的
+    $y$ 和 $z$ 的值进行求和。例如，如果 $Y$ 是一个有 3 个可能值的随机变量，而 $Z$ 是一个有 4 个可能值的随机变量，那么 $\sum_{y,
+    z}$ 就意味着我们在对所有 12 种可能的 $y$ 和 $z$ 的组合进行求和。
 - en: Here is an example in code. Assume we have a function `joint(x, y, z)` and that
     all $X$, $Y$ and $Z$ can take on values in the set $\{0, 1, 2, 3, 4\}$
+  id: totrans-18
   prefs: []
   type: TYPE_NORMAL
+  zh: 下面是一个代码示例。假设我们有一个函数 `joint(x, y, z)`，并且所有 $X$、$Y$ 和 $Z$ 都可以取集合 $\{0, 1, 2, 3,
+    4\}$ 中的值。

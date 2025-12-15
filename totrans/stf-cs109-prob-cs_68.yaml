@@ -1,30 +1,44 @@
 - en: Expectation of Sum Proof
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 求和期望证明
 - en: 原文：[https://chrispiech.github.io/probabilityForComputerScientists/en/examples/expectation_of_sums/](https://chrispiech.github.io/probabilityForComputerScientists/en/examples/expectation_of_sums/)
+  id: totrans-1
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 原文：[https://chrispiech.github.io/probabilityForComputerScientists/en/examples/expectation_of_sums/](https://chrispiech.github.io/probabilityForComputerScientists/en/examples/expectation_of_sums/)
 - en: '* * *'
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: '* * *'
 - en: 'Now that we have learned about joint probabilities, we have all the tools we
     need to prove one of the most useful properties of Expectation: the fact that
     the expectation of a sum of random variables is equal to the sum of expectation
     (even if the variables are not independent). In other words:'
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: 现在我们已经了解了联合概率，我们拥有了证明期望最有用属性之一所需的所有工具：即随机变量和的期望等于期望的和（即使变量不是独立的）。换句话说：
 - en: For any two random variables $X$ and $Y$, $$ \E[X + Y] = \E[X] + \E[Y] $$
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: 对于任意两个随机变量 $X$ 和 $Y$，$$ \E[X + Y] = \E[X] + \E[Y] $$
 - en: The proof is going to use the Law of Unconcious statistician ([LOTUS](../../part2/expectation#lotus))
     where the function is addition!
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: 证明将使用无意识统计学家定律 ([LOST](../../part2/expectation#lost))，其中函数是加法！
 - en: '***Proof:*** Expectation of Sum'
+  id: totrans-6
   prefs: []
   type: TYPE_NORMAL
+  zh: '***证明：*** 求和期望'
 - en: 'Let $X$ and $Y$ be any two random variables: \begin{align*} \E&[X+Y] \\ &=
     \sum_{x} \sum_{y} (x + y) \cdot P(X=x, Y=y) && LOTUS\\ &= \sum_{x} \sum_{y} x
     \cdot P(X=x, Y=y) + y \cdot P(X=x, Y=y) && \text{Distribute}\\ &= \sum_{x} \sum_{y}
@@ -32,152 +46,251 @@
     Sums}\\ &= \sum_{x} x \sum_{y} P(X=x, Y=y) + \sum_{y} y \sum_{x} P(X=x, Y=y) &&
     \text{Factor Out}\\ &= \sum_{x} x \cdot P(X=x) + \sum_{y} y \cdot P(Y=y) && \text{Def
     of Marginal}\\ &= \E[X] + \E[Y] && \text{Def of Expectation} \end{align*}'
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: 设 $X$ 和 $Y$ 为任意两个随机变量：\begin{align*} \E&[X+Y] \\ &= \sum_{x} \sum_{y} (x + y)
+    \cdot P(X=x, Y=y) && \text{LOST}\\ &= \sum_{x} \sum_{y} x \cdot P(X=x, Y=y) +
+    y \cdot P(X=x, Y=y) && \text{分配律}\\ &= \sum_{x} \sum_{y} x \cdot P(X=x, Y=y) +
+    \sum_{y} \sum_{x} y \cdot P(X=x, Y=y) && \text{重新排列求和}\\ &= \sum_{x} x \sum_{y}
+    P(X=x, Y=y) + \sum_{y} y \sum_{x} P(X=x, Y=y) && \text{提取公因式}\\ &= \sum_{x} x
+    \cdot P(X=x) + \sum_{y} y \cdot P(Y=y) && \text{边缘定义}\\ &= \E[X] + \E[Y] && \text{期望定义}
+    \end{align*}
 - en: At no point in the proof do we need to assume that $X$ and $Y$ are independent.
     In the second step the joint probability ends up in each sum, and in both cases,
     one of the sums ends up marginalizing over the joint probability!
+  id: totrans-8
   prefs: []
   type: TYPE_NORMAL
+  zh: 在证明的任何地方，我们都不需要假设 $X$ 和 $Y$ 是独立的。在第二步中，联合概率最终出现在每个求和中，在两种情况下，一个求和最终对联合概率进行边缘化！
 - en: Demonstration of the Proof
+  id: totrans-9
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 证明演示
 - en: Here is an example to show the idea behind the proof. This table shows the joint
     probabilities $\P(X=x, Y=y)$ for two random variables \( X \) and \( Y \) that
     are not independent. You will see how computing $E[X+Y]$ is the sum of terms that
     are used in $E[X]$ and $E[Y]$.
+  id: totrans-10
   prefs: []
   type: TYPE_NORMAL
+  zh: 下面是一个示例，以展示证明背后的思想。这个表格显示了两个随机变量 \( X \) 和 \( Y \) 的联合概率 $\P(X=x, Y=y)$，这两个随机变量不是独立的。您将看到如何计算
+    $E[X+Y]$ 是 $E[X]$ 和 $E[Y]$ 中使用的项的总和。
 - en: '|  | $Y = 4$ | $Y = 5$ |'
+  id: totrans-11
   prefs: []
   type: TYPE_TB
+  zh: '|  | $Y = 4$ | $Y = 5$ |'
 - en: '| $X = 1$ | 0.1 | 0.3 |'
+  id: totrans-12
   prefs: []
   type: TYPE_TB
+  zh: '| $X = 1$ | 0.1 | 0.3 |'
 - en: '| $X = 2$ | 0.2 | 0.4 |'
+  id: totrans-13
   prefs: []
   type: TYPE_TB
+  zh: '| $X = 2$ | 0.2 | 0.4 |'
 - en: 'Aside: These two random variables can each only take on two values. Having
     only four values in the joint table will make it easier to gain intuition.'
+  id: totrans-14
   prefs: []
   type: TYPE_NORMAL
+  zh: 旁白：这两个随机变量每个只能取两个值。联合表中只有四个值将使获得直觉更容易。
 - en: 'Computing \( E[X] \) using joint probabilities:'
+  id: totrans-15
   prefs:
   - PREF_H4
   type: TYPE_NORMAL
+  zh: 使用联合概率计算 \( E[X] \)：
 - en: 'A key insight from the proof is that we can compute $E[X]$ using values from
     the joint. To do this we are going to use [marginalization](../../part3/marginalization):
     $$ P(X = x) = \sum_{y} P(X = x, Y = y) $$ We can expand $E[X]$ so that it is calculated
     only using values from the joint probability table: \begin{align*} E[X] &= \sum_{x}
     x \cdot P(X = x) \\ &= \sum_{x} x \cdot \sum_{y} P(X = x, Y = y) && \text{Marginalization
     of }X\\ &= \sum_{x} \sum_{y} x \cdot P(X = x, Y = y)&& \text{Distribute }y\\ \end{align*}'
+  id: totrans-16
   prefs: []
   type: TYPE_NORMAL
+  zh: 证明的一个关键洞察是，我们可以使用联合值来计算 $E[X]$。为此，我们将使用 [边缘化](../../part3/marginalization)：$$
+    P(X = x) = \sum_{y} P(X = x, Y = y) $$ 我们可以展开 $E[X]$，使其仅使用联合概率表中的值进行计算：\begin{align*}
+    E[X] &= \sum_{x} x \cdot P(X = x) \\ &= \sum_{x} x \cdot \sum_{y} P(X = x, Y =
+    y) && \text{边缘化 }X\\ &= \sum_{x} \sum_{y} x \cdot P(X = x, Y = y)&& \text{分配 }y\\
+    \end{align*}
 - en: '| \( x \) | \( y \) | \( P(X=x, Y=y) \) | \( x \cdot P(X=x, Y=y) \) |'
+  id: totrans-17
   prefs: []
   type: TYPE_TB
+  zh: '| \( x \) | \( y \) | \( P(X=x, Y=y) \) | \( x \cdot P(X=x, Y=y) \) |'
 - en: '| --- | --- | --- | --- |'
+  id: totrans-18
   prefs: []
   type: TYPE_TB
+  zh: '| --- | --- | --- | --- |'
 - en: '| 1 | 4 | 0.1 | 1 × 0.1 = 0.1 |'
+  id: totrans-19
   prefs: []
   type: TYPE_TB
+  zh: '| 1 | 4 | 0.1 | 1 × 0.1 = 0.1 |'
 - en: '| 1 | 5 | 0.3 | 1 × 0.3 = 0.3 |'
+  id: totrans-20
   prefs: []
   type: TYPE_TB
+  zh: '| 1 | 5 | 0.3 | 1 × 0.3 = 0.3 |'
 - en: '| 2 | 4 | 0.2 | 2 × 0.2 = 0.4 |'
+  id: totrans-21
   prefs: []
   type: TYPE_TB
+  zh: '| 2 | 4 | 0.2 | 2 × 0.2 = 0.4 |'
 - en: '| 2 | 5 | 0.4 | 2 × 0.4 = 0.8 |'
+  id: totrans-22
   prefs: []
   type: TYPE_TB
+  zh: '| 2 | 5 | 0.4 | 2 × 0.4 = 0.8 |'
 - en: E[$X$] = 0.1 + 0.3 + 0.4 + 0.8 = 1.6
+  id: totrans-23
   prefs: []
   type: TYPE_NORMAL
+  zh: E[$X$] = 0.1 + 0.3 + 0.4 + 0.8 = 1.6
 - en: 'Computing \( E[Y] \) using joint probabilities:'
+  id: totrans-24
   prefs:
   - PREF_H4
   type: TYPE_NORMAL
+  zh: 使用联合概率计算 \( E[Y] \)：
 - en: 'Similarly, we can compute $E[Y]$ using only values from the joint: \begin{align*}
     E[Y] &= \sum_{y} y \cdot P(Y = y) \\ &= \sum_{x} y \cdot \sum_{x} P(X = x, Y =
     y) && \text{Marginalization of }Y\\ &= \sum_{x} \sum_{y} y \cdot P(X = x, Y =
     y)&& \text{Distribute }x\\ \end{align*}'
+  id: totrans-25
   prefs: []
   type: TYPE_NORMAL
+  zh: 同样，我们可以仅使用联合概率表中的值来计算 \( E[Y] \)：\begin{align*} E[Y] &= \sum_{y} y \cdot P(Y
+    = y) \\ &= \sum_{x} y \cdot \sum_{x} P(X = x, Y = y) && \text{对 }Y\text{ 进行边缘化}\\
+    &= \sum_{x} \sum_{y} y \cdot P(X = x, Y = y)&& \text{分配 }x\\ \end{align*}
 - en: '| \( x \) | \( y \) | \( P(X=x, Y=y) \) | \( y \cdot P(X=x, Y=y) \) |'
+  id: totrans-26
   prefs: []
   type: TYPE_TB
+  zh: '| \( x \) | \( y \) | \( P(X=x, Y=y) \) | \( y \cdot P(X=x, Y=y) \) |'
 - en: '| --- | --- | --- | --- |'
+  id: totrans-27
   prefs: []
   type: TYPE_TB
+  zh: '| --- | --- | --- | --- |'
 - en: '| 1 | 4 | 0.1 | 4 × 0.1 = 0.4 |'
+  id: totrans-28
   prefs: []
   type: TYPE_TB
+  zh: '| 1 | 4 | 0.1 | 4 × 0.1 = 0.4 |'
 - en: '| 1 | 5 | 0.3 | 5 × 0.3 = 1.5 |'
+  id: totrans-29
   prefs: []
   type: TYPE_TB
+  zh: '| 1 | 5 | 0.3 | 5 × 0.3 = 1.5 |'
 - en: '| 2 | 4 | 0.2 | 4 × 0.2 = 0.8 |'
+  id: totrans-30
   prefs: []
   type: TYPE_TB
+  zh: '| 2 | 4 | 0.2 | 4 × 0.2 = 0.8 |'
 - en: '| 2 | 5 | 0.4 | 5 × 0.4 = 2.0 |'
+  id: totrans-31
   prefs: []
   type: TYPE_TB
+  zh: '| 2 | 5 | 0.4 | 5 × 0.4 = 2.0 |'
 - en: E[$Y$] = 0.4 + 1.5 + 0.8 + 2.0 = 4.7
+  id: totrans-32
   prefs: []
   type: TYPE_NORMAL
+  zh: E[$Y$] = 0.4 + 1.5 + 0.8 + 2.0 = 4.7
 - en: 'Computing \( E[X + Y] \) using joint probabilities:'
+  id: totrans-33
   prefs:
   - PREF_H4
   type: TYPE_NORMAL
+  zh: '使用联合概率计算 \( E[X + Y] \):'
 - en: 'We can rewrite $E[X + Y]$ to be the sum of terms used in the calculations of
     $E[X]$ and $E[Y]$ above: \begin{align*} E[X + Y] &= \sum_{x,y}(x + y) \cdot P(X
     = x, Y = y)\\ &= \sum_{x,y} x \cdot P(X = x, Y = y) + y\cdot P(X = x, Y = y) \end{align*}'
+  id: totrans-34
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们可以将 \( E[X + Y] \) 重写为上面计算 \( E[X] \) 和 \( E[Y] \) 所用项的总和：\begin{align*} E[X
+    + Y] &= \sum_{x,y}(x + y) \cdot P(X = x, Y = y)\\ &= \sum_{x,y} x \cdot P(X =
+    x, Y = y) + y\cdot P(X = x, Y = y) \end{align*}
 - en: '| \( x \) | \( y \) | \( P(x, y) \) | \( x \cdot P(x, y) \) | \( y \cdot P(x,
     y) \) | \( (x + y) \cdot P(x, y) \) |'
+  id: totrans-35
   prefs: []
   type: TYPE_TB
+  zh: '| \( x \) | \( y \) | \( P(x, y) \) | \( x \cdot P(x, y) \) | \( y \cdot P(x,
+    y) \) | \( (x + y) \cdot P(x, y) \) |'
 - en: '| --- | --- | --- | --- | --- | --- |'
+  id: totrans-36
   prefs: []
   type: TYPE_TB
+  zh: '| --- | --- | --- | --- | --- |'
 - en: '| 1 | 4 | 0.1 | 0.1 | 0.4 | 0.1 + 0.4 = 0.5 |'
+  id: totrans-37
   prefs: []
   type: TYPE_TB
+  zh: '| 1 | 4 | 0.1 | 0.1 | 0.4 | 0.1 + 0.4 = 0.5 |'
 - en: '| 1 | 5 | 0.3 | 0.3 | 1.5 | 0.3 + 1.5 = 1.8 |'
+  id: totrans-38
   prefs: []
   type: TYPE_TB
+  zh: '| 1 | 5 | 0.3 | 0.3 | 1.5 | 0.3 + 1.5 = 1.8 |'
 - en: '| 2 | 4 | 0.2 | 0.4 | 0.8 | 0.4 + 0.8 = 1.2 |'
+  id: totrans-39
   prefs: []
   type: TYPE_TB
+  zh: '| 2 | 4 | 0.2 | 0.4 | 0.8 | 0.4 + 0.8 = 1.2 |'
 - en: '| 2 | 5 | 0.4 | 0.8 | 2.0 | 0.8 + 2.0 = 2.8 |'
+  id: totrans-40
   prefs: []
   type: TYPE_TB
+  zh: '| 2 | 5 | 0.4 | 0.8 | 2.0 | 0.8 + 2.0 = 2.8 |'
 - en: '*Recall that $P(x, y)$ is shorthand for $P(X=x,Y=y)$.*'
+  id: totrans-41
   prefs: []
   type: TYPE_NORMAL
+  zh: '*回忆一下，\( P(x, y) \) 是 \( P(X=x,Y=y) \) 的简写。*'
 - en: 'Using the above derivation of the formula for $E[X+Y]$ in terms of values from
     the joint probability table: \begin{align*} E[X + Y] = \sum_{x,y} x \cdot P(X
     = x, Y = y) + y\cdot P(X = x, Y = y) \end{align*} Plugging in values:'
+  id: totrans-42
   prefs: []
   type: TYPE_NORMAL
+  zh: 使用上述关于 \( E[X+Y] \) 的公式推导，其中涉及联合概率表中的值：\begin{align*} E[X + Y] = \sum_{x,y}
+    x \cdot P(X = x, Y = y) + y\cdot P(X = x, Y = y) \end{align*} 带入数值：
 - en: E[$X+Y$] = 0.1 + 0.4 + 0.3 + 1.5 + 0.4 + 0.8 + 0.8 + 2.0 = 6.3
+  id: totrans-43
   prefs: []
   type: TYPE_NORMAL
+  zh: E[$X+Y$] = 0.1 + 0.4 + 0.3 + 1.5 + 0.4 + 0.8 + 0.8 + 2.0 = 6.3
 - en: We can observe that each of these values showed up exactly once when calculating
     $E[X]$ and $E[Y]$. This is why the proof works for any two random variables, even
     if they are not independent.
+  id: totrans-44
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们可以观察到，当计算 \( E[X] \) 和 \( E[Y] \) 时，这些值恰好各出现一次。这就是为什么证明适用于任何两个随机变量，即使它们不是独立的。
 - en: E[$X$] = 0.1 + 0.3 + 0.4 + 0.8 = 1.6
+  id: totrans-45
   prefs: []
   type: TYPE_NORMAL
+  zh: E[$X$] = 0.1 + 0.3 + 0.4 + 0.8 = 1.6
 - en: E[$Y$] = 0.4 + 1.5 + 0.8 + 2.0 = 4.7
+  id: totrans-46
   prefs: []
   type: TYPE_NORMAL
+  zh: E[$Y$] = 0.4 + 1.5 + 0.8 + 2.0 = 4.7
 - en: 'Because they are summing the same values, it is no surprise that the sum of
     the expectations is equal to the expectation of the sum: \( E[X + Y] = E[X] +
     E[Y] = 1.6 + 4.7 = 6.3 \)'
+  id: totrans-47
   prefs: []
   type: TYPE_NORMAL
+  zh: 因为它们是相加相同的值，所以期望值的和等于期望的和：\( E[X + Y] = E[X] + E[Y] = 1.6 + 4.7 = 6.3 \)

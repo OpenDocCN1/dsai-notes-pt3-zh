@@ -1,21 +1,29 @@
 - en: Bootstrapping
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 自举法
 - en: 原文：[https://chrispiech.github.io/probabilityForComputerScientists/en/part4/bootstrapping/](https://chrispiech.github.io/probabilityForComputerScientists/en/part4/bootstrapping/)
+  id: totrans-1
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: '[原文链接](https://chrispiech.github.io/probabilityForComputerScientists/en/part4/bootstrapping/)'
 - en: '* * *'
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: '* * *'
 - en: The bootstrap is a newly invented statistical technique for both understanding
     distributions of statistics and for calculating $p$-values (a $p$-value is a the
     probability that a scientific claim is incorrect). It was invented here at Stanford
     in 1979 when mathematicians were just starting to understand how computers, and
     computer simulations, could be used to better understand probabilities.
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: 自举法是一种新发明的统计技术，用于理解统计量的分布和计算 $p$-值（$p$-值是一个科学主张错误的概率）。它是在 1979 年在这里斯坦福发明的，当时数学家们刚开始理解计算机和计算机模拟如何被用来更好地理解概率。
 - en: 'The first key insight is that: if we had access to the underlying distribution
     ($F$) then answering almost any question we might have as to how accurate our
     statistics are becomes straightforward. For example, in the previous section we
@@ -27,24 +35,35 @@
     distribution, $F$, you could simply repeat the experiment of drawing a sample
     of size $n$ from $F$, calculate the sample variance from our new sample and test
     what portion fell within a certain range.'
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: 第一个关键洞见是：如果我们能访问基础分布（$F$），那么回答我们可能提出的关于我们的统计量准确性的任何问题都变得简单直接。例如，在前一节中，我们给出了如何从大小为
+    $n$ 的样本中计算样本方差的公式。我们知道在期望中，我们的样本方差等于真实方差。但如果我们想知道真实方差在计算出的数值的某个范围内，这个概率是多少？这个问题可能听起来很枯燥，但它对于评估科学主张是至关重要的！如果你知道基础分布
+    $F$，你可以简单地重复从 $F$ 中抽取大小为 $n$ 的样本的实验，从我们的新样本中计算样本方差，并测试有多少部分落在某个范围内。
 - en: The next insight behind bootstrapping is that the best estimate that we can
     get for $F$ is from our sample itself! The simplest way to estimate $F$ (and the
     one we will use in this class) is to assume that the $P(X=k)$ is simply the fraction
     of times that $k$ showed up in the sample. Note that this defines the probability
     mass function of our estimate $\hat{F}$ of $F$.
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: 自举法的下一个洞见是，我们能从样本本身得到对 $F$ 的最佳估计！估计 $F$ 的最简单方法（我们将在本课程中使用的方法）是假设 $P(X=k)$ 就是
+    $k$ 在样本中出现的频率的分数。请注意，这定义了我们估计 $F$ 的概率质量函数 $\hat{F}$。
 - en: '[PRE0]'
+  id: totrans-6
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: Bootstrapping is a reasonable thing to do because the sample you have is the
     best and only information you have about what the underlying population distribution
     actually looks like. Moreover most samples will, if they're randomly chosen, look
     quite like the population they came from.
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: 自举法是合理的事情去做，因为你所拥有的样本是你关于基础总体分布实际看起来如何的最佳和唯一信息。此外，大多数样本如果它们是随机选择的，看起来会非常像它们所来自的总体。
 - en: To calculate $\text{Var}(S^2)$ we could calculate $S_i^2$ for each resample
     $i$ and after 10,000 iterations, we could calculate the sample variance of all
     the $S_i^2$s. You might be wondering why the resample is the same size as the
@@ -52,47 +71,64 @@
     that you are calculating could depend on the size of the sample (or the resample).
     To accurately estimate the distribution of the stat we must use resamples of the
     same size.
+  id: totrans-8
   prefs: []
   type: TYPE_NORMAL
+  zh: 要计算 $\text{Var}(S^2)$，我们可以为每个重采样 $i$ 计算 $S_i^2$，并在 10,000 次迭代后，我们可以计算所有 $S_i^2$
+    的样本方差。你可能想知道为什么重采样的大小与原始样本（$n$）相同。答案是，你所计算的统计量的变异性可能取决于样本的大小（或重采样的大小）。为了准确估计统计量的分布，我们必须使用相同大小的重采样。
 - en: The bootstrap has strong theoretic grantees, and is accepted by the scientific
     community. It breaks down when the underlying distribution has a ``long tail"
     or if the samples are not I.I.D.
+  id: totrans-9
   prefs: []
   type: TYPE_NORMAL
+  zh: 自举法有强大的理论保证，并被科学界接受。当基础分布有一个“长尾”或者样本不是独立同分布时，它就会失效。
 - en: Example of p-value calculation
+  id: totrans-10
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: $p$-值计算的例子
 - en: We are trying to figure out if people are happier in Bhutan or in Nepal. We
     sample $n_1 = 200$ individuals in Bhutan and $n_2 = 300$ individuals in Nepal
     and ask them to rate their happiness on a scale from 1 to 10\. We measure the
     sample means for the two samples and observe that people in Nepal are slightly
     happier--the difference between the Nepal sample mean and the Bhutan sample mean
     is 0.5 points on the happiness scale.
+  id: totrans-11
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们试图弄清楚人们在不丹还是尼泊尔更快乐。我们在不丹抽取了$n_1 = 200$个个体，在尼泊尔抽取了$n_2 = 300$个个体，并要求他们对他们的幸福感进行1到10的评分。我们测量了两个样本的样本均值，并观察到尼泊尔的人稍微快乐一些——尼泊尔样本均值与不丹样本均值在幸福感量表上的差异是0.5分。
 - en: If you want to make this claim scientific you should calculate a $p$-value.
     A p-value is the probability that, when the null hypothesis is true, the statistic
     measured would be equal to, or more extreme than, than the value you are reporting.
     The null hypothesis is the hypothesis that there is no relationship between two
     measured phenomena or no difference between two groups.
+  id: totrans-12
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果你想要使这个主张科学化，你应该计算一个$p$-值。$p$-值是指在零假设为真的情况下，测量的统计量等于或大于你所报告的值的概率。零假设是两个测量的现象之间没有关系或两组之间没有差异的假设。
 - en: 'In the case of comparing Nepal to Bhutan, the null hypothesis is that there
     is no difference between the distribution of happiness in Bhutan and Nepal. The
     null hypothesis argument is: there is no difference in the distribution of happiness
     between Nepal and Bhutan. When you drew samples, Nepal had a mean that 0.5 points
     larger than Bhutan by chance.'
+  id: totrans-13
   prefs: []
   type: TYPE_NORMAL
+  zh: 在比较尼泊尔和不丹的情况下，零假设是尼泊尔和不丹的幸福分布没有差异。零假设的论点是：尼泊尔和不丹的幸福分布没有差异。当你抽取样本时，尼泊尔的平均值偶然比不丹高0.5分。
 - en: We can use bootstrapping to calculate the p-value. First, we estimate the underlying
     distribution of the null hypothesis underlying distribution, by making a probability
     mass function from all of our samples from Nepal and all of our samples from Bhutan.
+  id: totrans-14
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们可以使用自助法来计算$p$-值。首先，我们通过从尼泊尔的全部样本和不丹的全部样本中制作一个概率质量函数来估计零假设的潜在分布。
 - en: '[PRE1]'
+  id: totrans-15
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: This is particularly nice because nowhere did we have to make an assumption
     about a parametric distribution that our samples came from (ie we never had to
     claim that happiness is gaussian). You might have heard of a t-test. That is another
@@ -100,5 +136,7 @@
     gaussian and that they both have the same variance. In the modern context where
     we have reasonable computer power, bootstrapping is a more correct and versatile
     tool.
+  id: totrans-16
   prefs: []
   type: TYPE_NORMAL
+  zh: 这尤其好，因为我们没有在任何地方对样本来自的参数分布做出假设（即我们从未声称幸福感是高斯分布）。你可能听说过t检验。这是计算$p$-值的另一种方法，但它假设两个样本都是高斯分布，并且它们都有相同的方差。在现在这个我们有合理计算能力的背景下，自助法是一个更正确、更通用的工具。

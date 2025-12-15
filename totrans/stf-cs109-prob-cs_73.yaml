@@ -1,88 +1,133 @@
 - en: Beta Distribution
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 贝塔分布
 - en: 原文：[https://chrispiech.github.io/probabilityForComputerScientists/en/part4/beta/](https://chrispiech.github.io/probabilityForComputerScientists/en/part4/beta/)
+  id: totrans-1
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 原文：[https://chrispiech.github.io/probabilityForComputerScientists/en/part4/beta/](https://chrispiech.github.io/probabilityForComputerScientists/en/part4/beta/)
 - en: '* * *'
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: '* * *'
 - en: The Beta distribution is the distribution most often used as the distribution
     of probabilities. In this section we are going to have a very meta discussion
     about how we represent probabilities. Until now probabilities have just been numbers
     in the range 0 to 1\. However, if we have uncertainty about our probability, it
     would make sense to represent our probabilities as random variables (and thus
     articulate the relative likelihood of our belief).
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: 贝塔分布是最常被用作概率分布的分布。在本节中，我们将非常元地讨论我们如何表示概率。到目前为止，概率只是0到1范围内的数字。然而，如果我们对我们的概率有不确定性，那么用随机变量来表示我们的概率（从而表达我们信念的相对可能性）是有意义的。
 - en: '**Beta Random Variable**'
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: '**贝塔随机变量**'
 - en: '| Notation: | $X \sim \Beta(a, b)$ |'
+  id: totrans-5
   prefs: []
   type: TYPE_TB
+  zh: '| 符号： | $X \sim \Beta(a, b)$ |'
 - en: '| Description: | A belief distribution over the value of a probability $p$
     from a Binomial distribution after observing $a-1$ successes and $b- 1$ fails.
     |'
+  id: totrans-6
   prefs: []
   type: TYPE_TB
+  zh: '| 描述： | 在观察到 $a-1$ 次成功和 $b-1$ 次失败后，对二项分布中概率 $p$ 的值的一个信念分布。|'
 - en: '| Parameters: | $a > 0$, the number successes + 1 $b > 0$, the number of fails
     + 1 |'
+  id: totrans-7
   prefs: []
   type: TYPE_TB
+  zh: '| 参数： | $a > 0$，成功次数加1 $b > 0$，失败次数加1 |'
 - en: '| Support: | $x \in [0, 1]$ |'
+  id: totrans-8
   prefs: []
   type: TYPE_TB
+  zh: '| 支持集： | $x \in [0, 1]$ |'
 - en: '| PDF equation: | $f(x) = B(a,b) \cdot x^{a-1} \cdot (1-x)^{b-1}$ where $B(a,b)
     = \frac{\Gamma(a)\Gamma(b)}{\Gamma(a,b)}$ |'
+  id: totrans-9
   prefs: []
   type: TYPE_TB
+  zh: '| PDF 方程： | $f(x) = B(a,b) \cdot x^{a-1} \cdot (1-x)^{b-1}$ 其中 $B(a,b) = \frac{\Gamma(a)\Gamma(b)}{\Gamma(a+b)}$
+    |'
 - en: '| CDF equation: | No closed form |'
+  id: totrans-10
   prefs: []
   type: TYPE_TB
+  zh: '| CDF 方程： | 没有封闭形式 |'
 - en: '| Expectation: | $\E[X] = \frac{a}{a+b}$ |'
+  id: totrans-11
   prefs: []
   type: TYPE_TB
+  zh: '| 期望： | $\E[X] = \frac{a}{a+b}$ |'
 - en: '| Variance: | $\var(X) = \frac{ab}{(a+b)^2(a+b+1)}$ |'
+  id: totrans-12
   prefs: []
   type: TYPE_TB
+  zh: '| 方差： | $\var(X) = \frac{ab}{(a+b)^2(a+b+1)}$ |'
 - en: '| PDF graph: |'
+  id: totrans-13
   prefs: []
   type: TYPE_TB
+  zh: '| PDF 图： |'
 - en: 'Parameter $a$: Parameter $b$:'
+  id: totrans-14
   prefs: []
   type: TYPE_NORMAL
+  zh: 参数 $a$：参数 $b$：
 - en: '<canvas id="betaPdf" style="max-height: 400px"></canvas>'
+  id: totrans-15
   prefs: []
   type: TYPE_NORMAL
+  zh: '<canvas id="betaPdf" style="max-height: 400px"></canvas>'
 - en: What is your Belief in $p$ After 9 Heads in 10 Flips?
+  id: totrans-16
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 在10次抛掷中观察到9次正面后，你对 $p$ 的信念是什么？
 - en: Imagine we have a coin and we would like to know its true probability of coming
     up heads, $p$. We flip the coin 10 times and observe 9 heads and 1 tail. What
     is your belief in $p$ based off this evidence? Using the definition of probability
     we could guess that $p\approx\frac{9}{10}$. That number is a very rough estimate,
     especially since it is only based off 10 coin flips. Moreover the "point-value"
     $\frac{9}{10}$ does not have the ability to articulate how uncertain it is.
+  id: totrans-17
   prefs: []
   type: TYPE_NORMAL
+  zh: 假设我们有一枚硬币，我们想知道它出现正面的真实概率 $p$。我们抛掷硬币10次，观察到9次正面和1次反面。基于这个证据，你对 $p$ 的信念是什么？根据概率的定义，我们可以猜测
+    $p\approx\frac{9}{10}$。这个数字是一个非常粗略的估计，特别是因为它只基于10次抛掷硬币。此外，“点值” $\frac{9}{10}$
+    没有能力表达它的不确定性。
 - en: Could we instead have a random variable for the true probability? Formally,
     let $X$ represent the true probability of the coin coming up heads. We don't use
     the symbol $P$ for random variables, so $X$ will have to do. If $X = 0.7$ then
     the probability of heads is 0.7\. $X$ must be a continuous random variable with
     support $[0, 1]$ since probabilities are continuous values which must be between
     0 and 1.
+  id: totrans-18
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们能否有一个随机变量来表示真实概率？形式上，让 $X$ 表示硬币出现正面的真实概率。我们不使用 $P$ 符号表示随机变量，所以 $X$ 将会使用。如果
+    $X = 0.7$，则正面的概率是 0.7。$X$ 必须是一个支持集为 $[0, 1]$ 的连续随机变量，因为概率是连续值，必须在0和1之间。
 - en: 'Before flipping the coin, we could say that our belief about the coin''s heads
     probability is uniform: $X \sim \Uni(0, 1)$. Let $H$ be a random variable for
     the number of heads and let $T$ be a random variable for the number of tails observed.
     What is $\P(X =x | H = 9, T = 1)$?'
+  id: totrans-19
   prefs: []
   type: TYPE_NORMAL
+  zh: 在抛掷硬币之前，我们可以说我们对硬币出现正面的概率的信念是均匀的：$X \sim \Uni(0, 1)$。设 $H$ 为观察到的正面次数的随机变量，设
+    $T$ 为观察到的反面次数的随机变量。$\P(X =x | H = 9, T = 1)$ 是多少？
 - en: 'That probability is hard to think about! However it is much easier to reason
     about the probability with the condition reveresed: $P(H = 9, T = 1 | X= x)$.
     This term asks the question: what is the probability of seeing 9 heads and 1 tail
@@ -90,8 +135,12 @@
     yourself that this probability is just a binomial probability mass function with
     $n=10$ experiements, and $p=x$ evaluated at $k=9$ heads: $$ P(H = 9, T = 1 | X=
     x) = {10 \choose 9}x^{9} (1-x)^{1} $$'
+  id: totrans-20
   prefs: []
   type: TYPE_NORMAL
+  zh: 这个概率很难想象！然而，用条件反转来推理概率要容易得多：$P(H = 9, T = 1 | X= x)$。这个术语提出了一个问题：在正面出现的真实概率为
+    $x$ 的情况下，10 次抛硬币中出现 9 个正面和 1 个反面的概率是多少？请你自己证明这个概率只是一个二项概率质量函数，其中 $n=10$ 次实验，$p=x$，在
+    $k=9$ 个正面处评估：$$ P(H = 9, T = 1 | X= x) = {10 \choose 9}x^{9} (1-x)^{1} $$
 - en: 'We are presented with a perfect context for [Bayes'' theorem with random variables](../../part3/inference/).
     We know a conditional probability in one direction and we would like to know it
     in the other: \begin{align*} f(&X = x|H =9, T=1) \\ &= \frac{P(H =9, T=1|X=x)
@@ -100,41 +149,64 @@
     {10 \choose 9} x^{9} (1-x)^{1} \cdot 1}{P(H =9, T=1)} && \text{Uniform PDF}\\
     &= \frac{ {10 \choose 9} }{P(H =9, T=1)} x^{9} (1-x)^{1} && \text{Constants to
     front}\\ &= K \cdot x^{9} (1-x)^{1} && \text{Rename constant}\\ \end{align*}'
+  id: totrans-21
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们遇到了一个完美的随机变量 [贝叶斯定理](../../part3/inference/) 的场景。我们知道一个方向上的条件概率，但我们想了解另一个方向：\begin{align*}
+    f(&X = x|H =9, T=1) \\ &= \frac{P(H =9, T=1|X=x) \cdot f(X=x)}{P(H =9, T=1)} &&
+    \text{贝叶斯定理}\\ &= \frac{ {10 \choose 9} x^{9} (1-x)^{1} \cdot f(X=x)}{P(H =9,
+    T=1)} && \text{二项概率质量函数}\\ &= \frac{ {10 \choose 9} x^{9} (1-x)^{1} \cdot 1}{P(H
+    =9, T=1)} && \text{均匀概率密度函数}\\ &= \frac{ {10 \choose 9} }{P(H =9, T=1)} x^{9}
+    (1-x)^{1} && \text{常数移到前面}\\ &= K \cdot x^{9} (1-x)^{1} && \text{重命名常数}\\ \end{align*}
 - en: 'Lets take a look at that function. For now we can let $K = 110$. Regardless
     of $K$ we will get the same shape, just scaled:'
+  id: totrans-22
   prefs: []
   type: TYPE_NORMAL
+  zh: 让我们来看看那个函数。目前我们可以让 $K = 110$。无论 $K$ 的值如何，我们都会得到相同的形状，只是进行了缩放：
 - en: '<canvas id="betaPdf9heads" style="max-height: 400px"></canvas>'
+  id: totrans-23
   prefs: []
   type: TYPE_NORMAL
+  zh: '<canvas id="betaPdf9heads" style="max-height: 400px"></canvas>'
 - en: 'What a beautiful image. It tells us relatively likelihood over the probability
     that is governing our coinflips. Here are a few observations from this chart:'
+  id: totrans-24
   prefs: []
   type: TYPE_NORMAL
+  zh: 这是一个多么美丽的图像。它告诉我们相对似然与控制我们抛硬币的概率之间的关系。以下是该图表的一些观察结果：
 - en: Even after only 10 coin flips we are very confident that the true probability
     is > 0.5
+  id: totrans-25
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 即使只有 10 次抛硬币，我们也非常有信心，真实概率大于 0.5。
 - en: It is almost 10 times more likely that $X=0.9$ as it is that $X=0.6$.
+  id: totrans-26
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: $X=0.9$ 发生的概率几乎是 $X=0.6$ 的 10 倍。
 - en: $f(X=1) = 0$, which makes sense. How could we have flipped that one tail if
     the probability of heads was 1?
+  id: totrans-27
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: $f(X=1) = 0$，这是有道理的。如果正面的概率是 1，我们怎么可能抛出那个一个反面呢？
 - en: '***Wait but why?***'
+  id: totrans-28
   prefs: []
   type: TYPE_NORMAL
+  zh: '***等等，为什么？***'
 - en: In the derivation above for $f(X = x|H =9, T=1)$ we made the claim that $P(H
     =9, T=1)$ is a constant. A lot of folks find that hard to believe. Why is that
     the case?
+  id: totrans-29
   prefs: []
   type: TYPE_NORMAL
+  zh: 在上述 $f(X = x|H =9, T=1)$ 的推导中，我们提出了 $P(H =9, T=1)$ 是一个常数的说法。很多人觉得这很难相信。为什么是这样呢？
 - en: 'It may be helpful to juxtapose $P(H =9, T=1)$ with $P(H =9, T=1 | X= x)$. The
     later says "what is the probability of 9 heads, given the true probability is
     $x$". The former says "what is the probability of 9 heads, under all possible
@@ -142,16 +214,25 @@
     law of total probability: \begin{align*} P(&H =9, T=1) \\ &= \int_{y=0}^{1} P(H
     =9, T=1 | X= y) f(X=y) \end{align*} That is a hard number to calculate, but it
     is in fact a constant with respect to $x$.'
+  id: totrans-30
   prefs: []
   type: TYPE_NORMAL
+  zh: 将 $P(H =9, T=1)$ 与 $P(H =9, T=1 | X= x)$ 并列起来可能会有所帮助。后者说的是“在真实概率为 $x$ 的情况下，9
+    个正面的概率是多少”。前者说的是“在所有可能的 $x$ 分配下，9 个正面的概率是多少”。如果你想要计算 $P(H =9, T=1)$，你可以使用全概率公式：\begin{align*}
+    P(&H =9, T=1) \\ &= \int_{y=0}^{1} P(H =9, T=1 | X= y) f(X=y) \end{align*} 这是一个很难计算的数字，但实际上它是一个与
+    $x$ 无关的常数。
 - en: Beta Derivation
+  id: totrans-31
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 贝塔推导
 - en: Let's generalize the derivation from the previous section, using $h$ for the
     number of observed heads and $t$ the number of observed tails.
+  id: totrans-32
   prefs: []
   type: TYPE_NORMAL
+  zh: 让我们使用 $h$ 表示观察到的正面数量，$t$ 表示观察到的反面数量，将上一节中的推导进行推广。
 - en: 'If we let $H =h $ be the event that we saw $h$ heads, and let $T=t$ be the
     event that we saw $t$ tails in $h+t$ coinflips. We want to calculate the probability
     density function $f(X=x|H=h,T=t)$. We can use the exact same series of steps,
@@ -160,43 +241,68 @@
     \choose h} x^h(1-x)^t}{P(H =h, T=t)} && \text{Binomial PMF, Uniform PDF}\\ &=
     \frac{ { {h+t} \choose h}}{P(H =h, T=t)}x^h(1-x)^t && \text{Moving terms around}\\
     &= \frac{1}{c} \cdot x^h(1-x)^t && \text{where } c = \int_0^1 x^h(1-x)^t dx \end{align*}'
+  id: totrans-33
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果我们让 $H =h $ 表示观察到 $h$ 个正面，让 $T=t$ 表示在 $h+t$ 次抛硬币中观察到 $t$ 个反面。我们想要计算概率密度函数
+    $f(X=x|H=h,T=t)$。我们可以使用完全相同的步骤序列，从贝叶斯定理开始：\begin{align*} f(&X = x|H =h, T=t) \\
+    &= \frac{P(H =h, T=t|X=x)f(X=x)}{P(H =h, T=t)} && \text{贝叶斯定理}\\ &= \frac{ { {h+t}
+    \choose h} x^h(1-x)^t}{P(H =h, T=t)} && \text{二项概率质量函数，均匀概率密度函数}\\ &= \frac{ {
+    {h+t} \choose h}}{P(H =h, T=t)}x^h(1-x)^t && \text{移项}\\ &= \frac{1}{c} \cdot
+    x^h(1-x)^t && \text{其中 } c = \int_0^1 x^h(1-x)^t dx \end{align*}
 - en: 'The equation that we arrived at when using a Bayesian approach to estimating
     our probability defines a probability density function and thus a random variable.
     The random variable is called a Beta distribution, and it is defined as follows:'
+  id: totrans-34
   prefs: []
   type: TYPE_NORMAL
+  zh: 当我们使用贝叶斯方法来估计概率时，得到的方程定义了一个概率密度函数，从而定义了一个随机变量。这个随机变量被称为贝塔分布，其定义如下：
 - en: 'The Probability Density Function (PDF) for $X \sim \Beta(a,b)$ is: \begin{align*}
     f(X=x) = \begin{cases} \frac{1}{B(a,b)}x^{a-1}(1-x)^{b-1} &\mbox{if } 0 < x <
     1 \\ 0 & \mbox{otherwise} \end{cases} &&\mbox{where } B(a,b) = \int_0^1x^{a-1}(1-x)^{b-1}dx
     \end{align*} A Beta distribution has $E[X] = \frac{a}{a + b}$ and $Var(X) = \frac{ab}{(a+b)^2(a+b+1)}$.
     All modern programming languages have a package for calculating Beta CDFs. You
     will not be expected to compute the CDF by hand in CS109.'
+  id: totrans-35
   prefs: []
   type: TYPE_NORMAL
+  zh: 对于 $X \sim \Beta(a,b)$ 的概率密度函数（PDF）如下：\begin{align*} f(X=x) = \begin{cases}
+    \frac{1}{B(a,b)}x^{a-1}(1-x)^{b-1} &\mbox{if } 0 < x < 1 \\ 0 & \mbox{otherwise}
+    \end{cases} &&\mbox{where } B(a,b) = \int_0^1x^{a-1}(1-x)^{b-1}dx \end{align*}贝塔分布的期望值
+    $E[X] = \frac{a}{a + b}$ 和方差 $Var(X) = \frac{ab}{(a+b)^2(a+b+1)}$。所有现代编程语言都有用于计算贝塔累积分布函数（CDF）的包。在
+    CS109 中，我们不会要求手动计算 CDF。
 - en: 'To model our estimate of the probability of a coin coming up heads: set $a
     = h + 1$ and $b = t + 1$. Beta is used as a random variable to represent a belief
     distribution of probabilities in contexts beyond estimating coin flips. For example
     perhaps a drug has been given to 6 patients, 4 of whom have been cured. We could
     express our belief in the probability that the drug can cure patients as $X \sim
     \Beta(a=5,b=3)$:'
+  id: totrans-36
   prefs: []
   type: TYPE_NORMAL
+  zh: 为了模拟我们对硬币出现正面的概率的估计：设 $a = h + 1$ 和 $b = t + 1$。贝塔分布被用作随机变量，以表示在估计抛硬币之外的概率信念分布。例如，也许一种药物已经给过
+    6 名患者，其中 4 名已被治愈。我们可以将我们对药物治愈患者概率的信念表达为 $X \sim \Beta(a=5,b=3)$：
 - en: '![](../Images/6cff8e11ff9c3aa8cfa1e67aa03dc06a.png)'
+  id: totrans-37
   prefs: []
   type: TYPE_IMG
+  zh: '![图片](../Images/6cff8e11ff9c3aa8cfa1e67aa03dc06a.png)'
 - en: Notice how the most likely belief for the probability of curing a patient, is
     $4/6$, the fraction of patients cured. This distribution shows that we hold a
     non-zero belief that the probability could be something other than $4/6$. It is
     unlikely that the probability is 0.01 or 0.09, but reasonably likely that it could
     be 0.5.
+  id: totrans-38
   prefs: []
   type: TYPE_NORMAL
+  zh: 注意，对于治愈患者的概率，最可能的信念是 $4/6$，即治愈患者的比例。这个分布表明，我们持有非零信念，认为概率可能不是 $4/6$。概率为 0.01
+    或 0.09 的可能性不大，但概率为 0.5 的可能性相当合理。
 - en: Beta as a Prior
+  id: totrans-39
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 贝塔分布作为先验
 - en: 'You can set $X \sim \Beta(a, b)$ as a prior to reflect how biased you think
     the coin is apriori to flipping it. This is a subjective judgment that represent
     $a+b- 2$ "imaginary" trials with $a-1$ heads and $b-1$ tails. If you then observe
@@ -205,8 +311,13 @@
     is the same as saying we haven''t seen any "imaginary" trials, so apriori we know
     nothing about the coin. Here is the proof for the distribution of $X$ when the
     prior was a Beta too:'
+  id: totrans-40
   prefs: []
   type: TYPE_NORMAL
+  zh: 你可以将 $X \sim \Beta(a, b)$ 设置为先验，以反映你认为在抛硬币之前硬币的偏差。这是一个主观判断，代表了 $a+b- 2$ 个“想象”试验，其中
+    $a-1$ 个正面和 $b-1$ 个反面。如果你观察到 $h + t$ 个实际试验，其中 $h$ 个正面，你可以更新你的信念。你的新信念将是，$X \sim
+    \Beta(a+h, b+t)$。使用先验 $\Beta(1,1) = \Uni(0, 1)$ 等同于说我们没有看到任何“想象”试验，因此先验地我们对硬币一无所知。这里是对先验也是贝塔分布时
+    $X$ 分布的证明：
 - en: 'If our prior belief is $X \sim \Beta(a, b)$, then our posterior is $\Beta(a+h,
     b+t)$: \begin{align*} f(&X = x|H =h, T=t) \\ &= \frac{P(H =h, T=t|X=x)f(X=x)}{P(H
     =h, T=t)} && \text{Bayes Theorem}\\ &= \frac{ { {h+t} \choose h} x^h(1-x)^t \cdot
@@ -214,24 +325,38 @@
     PDF}\\ &= K \cdot x^h(1-x)^t \cdot x^{a-1}(1-x)^{b-1} && \text{Combine Constants}\\
     &= K \cdot x^{a+h-1}(1-x)^{b+t-1} && \text{Combine Like Bases}\\ \end{align*}
     Which is the PDF of $\Beta(a+h, b+t)$'
+  id: totrans-41
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果我们的先验信念是 $X \sim \Beta(a, b)$，那么我们的后验是 $\Beta(a+h, b+t)$：\begin{align*} f(&X
+    = x|H =h, T=t) \\ &= \frac{P(H =h, T=t|X=x)f(X=x)}{P(H =h, T=t)} && \text{贝叶斯定理}\\
+    &= \frac{ { {h+t} \choose h} x^h(1-x)^t \cdot \frac{1}{c} \cdot x^{a-1}(1-x)^{b-1}
+    } {P(H =h, T=t)} && \text{Beta PMF, Uniform PDF}\\ &= K \cdot x^h(1-x)^t \cdot
+    x^{a-1}(1-x)^{b-1} && \text{Combine Constants}\\ &= K \cdot x^{a+h-1}(1-x)^{b+t-1}
+    && \text{Combine Like Bases}\\ \end{align*} 这就是 $\Beta(a+h, b+t)$ 的概率密度函数。
 - en: It is pretty convenient that if we have a Beta prior belief, then our posterior
     belief is also Beta. This makes Betas especially convenient to work with, in code
     and in proof, if there are many updates that you will make to your belief over
     time. This property where the type of distribution is the same before and after
     an observation is called a conjugate prior.
+  id: totrans-42
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果我们有一个贝塔先验信念，那么我们的后验信念也是贝塔，这非常方便。在代码和证明中，如果随着时间的推移你需要对信念进行多次更新，贝塔分布特别方便。这种在观察前后分布类型保持不变的性质被称为共轭先验。
 - en: 'Quick question: Are you allowed to just make up priors and imaginary trials?
     Some folks think that is fine (they are called Bayesians) and some folks think
     that you shouldn''t make up prior beliefs (they are called frequentists). In general,
     for small data it can make you much better at making predictions if you are able
     to come up with a good prior belief.'
+  id: totrans-43
   prefs: []
   type: TYPE_NORMAL
+  zh: 快速问题：你能否随意构造先验和想象中的试验？有些人认为这没问题（他们被称为贝叶斯主义者），有些人认为你不应该构造先验信念（他们被称为频率主义者）。一般来说，对于小数据集，如果你能够提出一个好的先验信念，这将使你更擅长做出预测。
 - en: 'Observation: There is a deep connection between the beta-prior and the uniform-prior
     (which we used initially). It turns out that $\Beta(1,1) = \Uni(0,1)$. Recall
     that $\Beta(1,1)$ means 0 imaginary heads and 0 imaginary tails.'
+  id: totrans-44
   prefs: []
   type: TYPE_NORMAL
+  zh: 观察：贝塔先验和均匀先验（我们最初使用的）之间有一个深刻的联系。结果是 $\Beta(1,1) = \Uni(0,1)$。回想一下，$\Beta(1,1)$
+    表示没有想象中的正面和没有想象中的反面。

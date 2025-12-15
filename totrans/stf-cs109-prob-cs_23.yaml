@@ -1,70 +1,101 @@
 - en: Counting Random Graphs
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 计算随机图
 - en: 原文：[https://chrispiech.github.io/probabilityForComputerScientists/en/examples/counting_graphs/](https://chrispiech.github.io/probabilityForComputerScientists/en/examples/counting_graphs/)
+  id: totrans-1
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 原文：[https://chrispiech.github.io/probabilityForComputerScientists/en/examples/counting_graphs/](https://chrispiech.github.io/probabilityForComputerScientists/en/examples/counting_graphs/)
 - en: '* * *'
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: '* * *'
 - en: 'In this example we are going to explore the density of randomly generated graphs
     (aka networks). This was a problem on the Stanford Midterm Fall 2022\. As an example
     to get us started, here are three different networks each with 10 nodes and 12
     random edges:'
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: 在这个例子中，我们将探索随机生成图的密度（也称为网络）。这是斯坦福大学2022年秋季期中考试中的一个问题。为了让我们开始，这里有三个不同的网络，每个网络都有10个节点和12条随机边：
 - en: '![](../Images/3d7ea840b7e071fcdfe0506378cdf91d.png)'
+  id: totrans-4
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/3d7ea840b7e071fcdfe0506378cdf91d.png)'
 - en: '**Count locations for edges**: First, lets establish how many locations there
     are for edges in a random network. Consider a network with 10 nodes. Count the
     number of possible locations for undirected edges. Recall that an undirected edge
     from node A to node B is not distinct from an edge from node B to node A. You
     can assume that an edge does not connect a node to itself.'
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: '**计算边的位置**：首先，让我们确定随机网络中边的位置数量。考虑一个具有10个节点的网络。计算无向边的可能位置数。回想一下，从节点A到节点B的无向边与从节点B到节点A的边是相同的。你可以假设边不会连接到自身。'
 - en: Each edge connects 2 nodes, and there are 10 possible options for each node,
     so the answer is $$ \binom{10}{2} = 45.$$
+  id: totrans-6
   prefs: []
   type: TYPE_NORMAL
+  zh: 每条边连接2个节点，每个节点有10种可能的选择，所以答案是 $$ \binom{10}{2} = 45.$$
 - en: '**Count ways to place edges**: Now lets add random edges to the network! Assume
     the same network (with 10 nodes) has 12 random edges. If each pair of nodes is
     equally likely to have an edge, how many unique ways could we chose the location
     of the 12 edges?'
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: '**计算放置边的方案**：现在让我们向网络中添加随机边！假设相同的网络（具有10个节点）有12条随机边。如果每对节点等可能地有一条边，我们有多少种独特的方式来选择12条边的位置？'
 - en: Let $k = \binom{10}{2}$ be the number of possible locations for an edge, and
     we have 12 distinct (undirected) edges, so there are $\binom k {12}$ ways to do
     place edges.
+  id: totrans-8
   prefs: []
   type: TYPE_NORMAL
+  zh: 令 $k = \binom{10}{2}$ 为边的可能位置数，我们有12条不同的（无向）边，所以有 $\binom k {12}$ 种放置边的方案。
 - en: '**Probability of node degree**: Now that we have a randomly generated graph,
     lets explore the degree of our nodes! In the same network with 10 nodes and 12
     edges, select a node uniformly at random. What is the probability that our node
     has exactly degree $i$? Note that $0 \leq i \leq 9$. Recall that there are only
     9 nodes to connect to from our chosen node, since there are 10 nodes in the graph.'
+  id: totrans-9
   prefs: []
   type: TYPE_NORMAL
+  zh: '**节点度数的概率**：现在我们有一个随机生成的图，让我们来探索节点的度数！在具有10个节点和12条边的相同网络中，随机选择一个节点。我们的节点恰好具有度数
+    $i$ 的概率是多少？注意 $0 \leq i \leq 9$。回想一下，由于图中只有10个节点，所以从我们选择的节点只能连接到9个节点。'
 - en: 'Let $E$ be the event that our node has exactly $i$ connections. We will first
     compute the distribution of $P(E)$ using $|E| / |S|$. The sample space is the
     set of ways to choose 12 edges, and the event space is the set of ways to do so
     such that we''ve chosen exactly $i$ of the edges incident to our current node
     (which has 9 possible edges incident to it). To construct the event space $E$
     we can consider a two step process:'
+  id: totrans-10
   prefs: []
   type: TYPE_NORMAL
+  zh: 令 $E$ 为我们的节点恰好有 $i$ 个连接的事件。我们将首先使用 $|E| / |S|$ 来计算 $P(E)$ 的分布。样本空间是选择12条边的方案集合，事件空间是选择边的方案集合，使得我们恰好选择了与当前节点（有9个可能连接的边）相连的
+    $i$ 条边。为了构建事件空间 $E$，我们可以考虑一个两步过程：
 - en: Select $i$ edges from the 9 possible edge locations connected to our node.
+  id: totrans-11
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 从与我们的节点相连的9个可能边位置中选择 $i$ 条边。
 - en: Select the location for the $12 - i$ remaining edges. The edges can go to any
     of the $k$ locations for edges except for the $9$ incident to our node.
+  id: totrans-12
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 选择剩余的 $12 - i$ 条边的位置。这些边可以连接到除了与我们的节点相连的9条边之外的任何 $k$ 个位置。
 - en: As such the answer is \begin{align*} P(E) &= \frac{|E|}{|S|} \\ &= \frac{\binom{9}{i}
     \binom{k-9}{12-i}}{\binom k {12}}. \end{align*}
+  id: totrans-13
   prefs: []
   type: TYPE_NORMAL
+  zh: 因此答案是 \begin{align*} P(E) &= \frac{|E|}{|S|} \\ &= \frac{\binom{9}{i} \binom{k-9}{12-i}}{\binom
+    k {12}}. \end{align*}

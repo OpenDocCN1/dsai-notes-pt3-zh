@@ -1,36 +1,54 @@
 - en: Probability and Babies
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 概率和婴儿
 - en: 原文：[https://chrispiech.github.io/probabilityForComputerScientists/en/examples/prob_baby_delivery/](https://chrispiech.github.io/probabilityForComputerScientists/en/examples/prob_baby_delivery/)
+  id: totrans-1
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 原文：[https://chrispiech.github.io/probabilityForComputerScientists/en/examples/prob_baby_delivery/](https://chrispiech.github.io/probabilityForComputerScientists/en/examples/prob_baby_delivery/)
 - en: '* * *'
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: '* * *'
 - en: This demo used to be live. We now know that the delivery happened on Jan 23rd.
     Lets go back in time to Jan 1st and see what the probability looked like at that
     point.
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: 这个演示曾经是实时的。我们现在知道，交付发生在1月23日。让我们回到1月1日，看看那时的概率是什么样的。
 - en: What is the probability that Laura gives birth today (given that she hasn't
     given birth up until today)?
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: 在劳拉今天分娩的概率（假设她今天之前还没有分娩）是多少？
 - en: Today's DateDue Date
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: 今天的日期预产期
 - en: '* * *'
+  id: totrans-6
   prefs: []
   type: TYPE_NORMAL
+  zh: '* * *'
 - en: 'Probability of delivery today: **Probability of delivery in next 7 days: **Current
     days past due date: **days'
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: 今天送达的概率：**未来7天内送达的概率：**逾期天数：**days
 - en: Unconditioned probability mass before today:******
+  id: totrans-8
   prefs: []
   type: TYPE_NORMAL
+  zh: 今天的无条件概率质量：******
 - en: '********How likely is delivery, in humans, relative to the due date? There
     have been millions of births which gives us a relatively good picture [[1](#cite1)].
     The length of human pregnancy varies by quite a lot! Have you heard that it is
@@ -40,36 +58,50 @@
     This is a general probability mass function for the first pregnancy collected
     from hundreds of thousands of women (this PMF is very similar across demographics,
     but changes based on whether the woman has given birth before):'
+  id: totrans-9
   prefs: []
   type: TYPE_NORMAL
+  zh: '********与预产期相比，人类分娩的可能性有多大？已经有数百万次分娩，这给我们提供了一个相对清晰的画面 [[1](#cite1)]。人类怀孕的长度差异很大！你听说过怀孕是9个月吗？这是一个粗略的点估计。怀孕的平均持续时间为278.6天，怀孕长度有一个标准差（SD）为12.5天。这个分布不是正态分布，但大致符合"[偏态正态分布](https://en.wikipedia.org/wiki/Skew_normal_distribution)"。这是从数十万女性收集的第一胎的一般概率质量函数（这个PMF在人口统计学上非常相似，但根据女性是否分娩过而变化）：'
 - en: '<canvas id="unconditionalPMF" style="max-height: 400px"></canvas>'
+  id: totrans-10
   prefs: []
   type: TYPE_NORMAL
+  zh: '<canvas id="unconditionalPMF" style="max-height: 400px"></canvas>'
 - en: 'Of course, we have more information. Specifically, we know that Laura **hasn''t**
     given birth up until today (we will update this example when that changes). We
     also know that babies which are over 14 days late are "[induced](https://en.wikipedia.org/wiki/Labor_induction)"
     on day 14\. How likely is delivery given that we haven''t delivered up until today?
     Note that the y-axis is scalled differently:'
+  id: totrans-11
   prefs: []
   type: TYPE_NORMAL
+  zh: 当然，我们还有更多信息。具体来说，我们知道劳拉**尚未**在今天之前分娩（当情况改变时，我们将更新这个例子）。我们还知道，超过14天晚期的婴儿会在第14天进行"[诱导](https://en.wikipedia.org/wiki/Labor_induction)"。如果我们今天还没有分娩，那么分娩的可能性有多大？请注意，y轴的刻度不同：
 - en: '<canvas id="conditionalPMF" style="max-height: 400px"></canvas>'
+  id: totrans-12
   prefs: []
   type: TYPE_NORMAL
+  zh: '<canvas id="conditionalPMF" style="max-height: 400px"></canvas>'
 - en: 'Let''s approach this problem formally using inference. First we introduce a
     random variable $D$ to represent the days after delivery that the baby is born.
     Note that $D$ can be negative if the baby is due before the due date. We can use
     Inference to update our belief in $D$ given our observation that we have not delivered
     yet: $$ \begin{align} \P(D = i | \text{No Baby Yet}) &= \frac{\P(\text{No Baby
     Yet} | D = i) \P(D = i)}{\P(\text{No Baby Yet})} \\ \end{align} $$'
+  id: totrans-13
   prefs: []
   type: TYPE_NORMAL
+  zh: 让我们用推理的形式来解决这个问题。首先，我们引入一个随机变量$D$来表示婴儿出生后的天数。注意，如果婴儿在预产期之前出生，$D$可以是负数。我们可以使用推理来更新我们对$D$的信念，基于我们尚未分娩的观察：$$
+    \begin{align} \P(D = i | \text{No Baby Yet}) &= \frac{\P(\text{No Baby Yet} |
+    D = i) \P(D = i)}{\P(\text{No Baby Yet})} \\ \end{align} $$
 - en: $\P(\text{No Baby Yet} | D = i)$ is always either 1 or 0\. Note that conditioning
     on $D=i$ means we are being told the actual date of delivery. If the delivery
     hasn't happened yet (eg today is before $i$) then the probability of No Baby Yet
     is 1\. If the delivery has already happened (eg today is after $i$) then the probability
     of No Baby Yet is 0.
+  id: totrans-14
   prefs: []
   type: TYPE_NORMAL
+  zh: $\P(\text{No Baby Yet} | D = i)$始终是1或0。注意，在$D=i$的条件下，我们被告知实际的分娩日期。如果分娩尚未发生（例如，今天是$i$之前），则“尚未分娩”的概率为1。如果分娩已经发生（例如，今天是$i$之后），则“尚未分娩”的概率为0。
 - en: '$\P(D = i)$ is our prior belief (the probability of delivery dates based off
     historical data). $\P(\text{No Baby Yet})$ is the normalization constant. Instead
     of calculating it explicity, we can compute the numerators for each value of $i$.
@@ -78,32 +110,50 @@
     (but more compute heavy) solution would be to expand $\P(\text{No Baby Yet})$
     using the law of total probability: $$ \P(\text{No Baby Yet}) = \sum_i \P(\text{No
     Baby Yet} | D = i) \P(D = i) $$'
+  id: totrans-15
   prefs: []
   type: TYPE_NORMAL
+  zh: $\P(D = i)$ 是我们的先验信念（基于历史数据的交货日期的概率）。$\P(\text{No Baby Yet})$ 是归一化常数。我们不必显式地计算它，而是可以计算每个
+    $i$ 值的分子。然后我们可以归一化分布（计算分子的总和，并将每个概率除以这个总和）以隐式地计算它。一个等效（但计算量更大的）解决方案是使用全概率公式展开
+    $\P(\text{No Baby Yet})$：$$ \P(\text{No Baby Yet}) = \sum_i \P(\text{No Baby Yet}
+    | D = i) \P(D = i) $$
 - en: 'How do we deal with the fact that babies are induced after $D = 14$? Well we
     can adjust our prior so that all of the probability for days 14 and on is shifted
     to day 14\. This is equivalent to the following calculation: $$ \P(D = 14) = \sum_{i
     \geq 14} \P(D = i) $$'
+  id: totrans-16
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们如何处理 $D = 14$ 后婴儿被催产的事实呢？我们可以调整我们的先验，使得所有14天及以后的概率都转移到第14天。这相当于以下计算：$$ \P(D
+    = 14) = \sum_{i \geq 14} \P(D = i) $$
 - en: '[PRE0]'
+  id: totrans-17
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: '* * *'
+  id: totrans-18
   prefs: []
   type: TYPE_NORMAL
+  zh: '* * *'
 - en: Extension Problem
+  id: totrans-19
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 扩展问题
 - en: Chris had two other good friends who had babies with the exact same due date
     (Really! This actually happened). What is the probability that all three babies
     are delivered on the exact same day?
+  id: totrans-20
   prefs: []
   type: TYPE_NORMAL
+  zh: 克里斯还有两个其他的好朋友，他们的婴儿与他的预产期完全相同（真的！这确实发生了）。三个婴儿都在同一天出生的概率是多少？
 - en: 'Probability of three couples on the same day:'
+  id: totrans-21
   prefs: []
   type: TYPE_NORMAL
+  zh: 三对夫妇在同一天的概率：
 - en: '**How did we get that number? Let $p_i$ be the probability that one baby is
     delivered on day $i$ -- this number can be read off the probability mass function.
     Let $D_i$ be the event that all three babies are delivered on day $i$. Note that
@@ -113,12 +163,21 @@
     same day: $$ \begin{align} \p(N=3) &= \sum_i \p(D_i) && \text{Since days are mutually
     exclusive} \\ &= \sum_i p_i^3 && \text{Since the three couples are independent}
     \end{align} $$**  *** * *'
+  id: totrans-22
   prefs: []
   type: TYPE_NORMAL
+  zh: '**我们是如何得到这个数字的？设 $p_i$ 为一个婴儿在 $i$ 天出生的概率——这个数字可以从概率质量函数中读出。设 $D_i$ 为三个婴儿都在
+    $i$ 天出生的事件。注意事件 $D_i$ 与三个婴儿在另一天出生的事件是[互斥的](../../part1/prob_or/)（例如，$D_1$ 与 $D_2$，$D_3$
+    等等是互斥的）。设 $N=3$ 为所有婴儿在同一天出生的事件：$$ \begin{align} \p(N=3) &= \sum_i \p(D_i) && \text{因为天数是互斥的}
+    \\ &= \sum_i p_i^3 && \text{因为三对夫妇是独立的} \end{align} $$**  *** * *'
 - en: '[1] [Predicting delivery date by ultrasound and last menstrual period in early
     gestation](https://www.sciencedirect.com/science/article/pii/S0029784400011315?casa_token=yV-QZInYkl8AAAAA:0U_Z2dT-r0y1etlX8hRG5ulyrjtzoVXRXIlvJkcSyXhtllUlkhWPNr5f3MJL0LMFzHZv5TwsN4Q)'
+  id: totrans-23
   prefs: []
   type: TYPE_NORMAL
+  zh: '[1] [通过超声波和末次月经预测早期妊娠的分娩日期](https://www.sciencedirect.com/science/article/pii/S0029784400011315?casa_token=yV-QZInYkl8AAAAA:0U_Z2dT-r0y1etlX8hRG5ulyrjtzoVXRXIlvJkcSyXhtllUlkhWPNr5f3MJL0LMFzHZv5TwsN4Q)'
 - en: 'Acknowledgements: This problem was first posed to me by Chris Gregg.**********'
+  id: totrans-24
   prefs: []
   type: TYPE_NORMAL
+  zh: 致谢：这个问题最初是由克里斯·格雷格提出给我的。**********

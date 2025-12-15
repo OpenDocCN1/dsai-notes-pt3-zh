@@ -1,14 +1,20 @@
 - en: Information Theory
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 信息论
 - en: 原文：[https://chrispiech.github.io/probabilityForComputerScientists/en/part4/information_theory/](https://chrispiech.github.io/probabilityForComputerScientists/en/part4/information_theory/)
+  id: totrans-1
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 原文：[https://chrispiech.github.io/probabilityForComputerScientists/en/part4/information_theory/](https://chrispiech.github.io/probabilityForComputerScientists/en/part4/information_theory/)
 - en: '* * *'
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: '* * *'
 - en: Information theory is an incredibly powerful perspective which plays a central
     role in a ton of algorithms, including Decision Trees, the WordleBot, Adaptive
     Tests, Optimal Poker Play and even ompression of data (like Huffman Encoding or
@@ -16,40 +22,58 @@
     power of Information Theory while also keeping things as straight forward as possible.
     To that end, a great place to start is thinking about how you could write a bot
     that can play the question answering game of, "Think of an Animal".
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: 信息论是一个极其强大的视角，在众多算法中扮演着核心角色，包括决策树、WordleBot、自适应测试、最佳扑克玩法甚至数据压缩（如霍夫曼编码或JPEG文件）！本章的目标是在展示信息论的强大功能的同时，尽可能保持内容的直接性。为此，一个很好的起点是思考如何编写一个能够玩“想一个动物”问答游戏的机器人。
 - en: Think of an Animal!
+  id: totrans-4
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 想一个动物！
 - en: 'The game of "Think of an Animal" goes like this: The human is going to be thinking
     of an animal. We assume that the distribution of how often they chose an animal
     is known (based off how popular the animal is to four year olds):'
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: “想一个动物”游戏是这样的：人类将要想一个动物。我们假设他们选择动物的概率分布是已知的（基于四岁孩子对动物的喜爱程度）：
 - en: '![](../Images/91bb0eadd036e735ef2ff4715e61d38f.png)'
+  id: totrans-6
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/91bb0eadd036e735ef2ff4715e61d38f.png)'
 - en: 'The task of your algorithm is to select which question to ask next. Assume
     you are given a bank of yes or no questions which include classics like:'
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: 你的算法任务是选择下一个要问的问题。假设你被提供了一个包含经典问题（如）的“是”或“否”问题库：
 - en: Is it a pet?
+  id: totrans-8
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 它是宠物吗？
 - en: Does it live in the water?
+  id: totrans-9
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 它住在水里吗？
 - en: Are you thinking of a dog?
+  id: totrans-10
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 你在想着狗吗？
 - en: Chosing a Best Question
+  id: totrans-11
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 选择最佳问题
 - en: How can we chose the best question to ask? Consider a simplified game with five
     animals (Dog, Cat, Elephant, Bear and Monkey) and only two questions to chose
     from "Is it a pet?" and "Is it a Dog?" For each question we can use the Law of
@@ -57,141 +81,209 @@
     or "no". Even better! For each possible answer to each possible question, we can
     think through the resulting probability mass function over animals if we were
     to see that answer to that question:![](../Images/8fbc96ab585ae457f465b66d113afb2d.png)
+  id: totrans-12
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们如何选择最佳问题来提问呢？考虑一个简化版的游戏，有五种动物（狗、猫、大象、熊和猴子），并且只有两个问题可供选择：“它是宠物吗？”和“它是狗吗？”对于每个问题，我们可以使用全概率公式来思考回答“是”或“否”的概率。甚至更好！对于每个可能的问题和每个可能的答案，如果我们看到那个问题的答案，我们可以思考由此产生的动物概率质量函数！![图片](../Images/8fbc96ab585ae457f465b66d113afb2d.png)
 - en: We are so close! If we could only quantify how much uncertainty the four resulting
     probability mass functions have, we could simply chose the question that minimizes
     our expected uncertainty as to what animal the person is thinking of. This quantification
     of uncertainty is formally called "Entropy" and it is the key concept in Information
     Theory.
+  id: totrans-13
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们已经非常接近了！如果我们能够量化四个结果概率质量函数的不确定性，我们就可以简单地选择一个最小化我们对人们所想动物预期不确定性的问题。这种不确定性的量化形式上称为“熵”，它是信息论中的关键概念。
 - en: Measure of Uncertainty from a High Level
+  id: totrans-14
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 从高层次衡量不确定性
 - en: Let $X$ be any random variable. A very elegant way to quantify how much uncertainty
     the Probability Mass Function of $X$ represents is to think through all the values
     that $X$ could take on and for each value calculate how surprised you would be
     if it turned out that $X$ in fact took on that value. If you calculate a weighted
     sum over these surprise values, you would get the expected Surprise of the random
     variable
+  id: totrans-15
   prefs: []
   type: TYPE_NORMAL
+  zh: 让 $X$ 是任何随机变量。量化 $X$ 的概率质量函数所代表的多少不确定性的一个非常优雅的方法是思考 $X$ 可能取的所有值，并对每个值计算如果 $X$
+    确实取了那个值你会多么惊讶。如果你对这些惊讶值的加权求和，你会得到随机变量的预期惊讶值
 - en: \begin{align*} &\text{Uncertainty}(X) \\ &= E[\text{Surprise}(X)] \\ &= \sum_x
     \text{Surprise}(x) \cdot P(X=x) \end{align*} That is the big idea! The main remaining
     todo is to define what we mean by "Surprise" of an event.
+  id: totrans-16
   prefs: []
   type: TYPE_NORMAL
+  zh: \begin{align*} &\text{不确定性}(X) \\ &= E[\text{惊讶}(X)] \\ &= \sum_x \text{惊讶}(x)
+    \cdot P(X=x) \end{align*} 这就是核心思想！主要剩余的任务是定义我们所说的“事件惊讶”是什么。
 - en: Measure of Surprise of an Event
+  id: totrans-17
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 事件惊讶度衡量
 - en: 'How should we quantify the degree to which we would be surprised if we were
     told that $X$ took on the value $x$? There are many ways one could quantify Surprise,
     all of which are based on the probability of the event $\P(X=x)$. Here are three
     reasonble Surprise functions:'
+  id: totrans-18
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果我们被告知 $X$ 取值 $x$，我们应该如何量化我们会感到的惊讶程度？有几种方法可以量化惊讶，所有这些方法都是基于事件 $\P(X=x)$ 的概率。以下是三种合理的惊讶函数：
 - en: '![](../Images/9d37874f5a804283775ee9fa0913bc22.png)'
+  id: totrans-19
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/9d37874f5a804283775ee9fa0913bc22.png)'
 - en: 'All of these functions hit the following desiderata:'
+  id: totrans-20
   prefs: []
   type: TYPE_NORMAL
+  zh: 所有这些函数都符合以下要求：
 - en: Low probability events are surprising
+  id: totrans-21
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 低概率事件令人惊讶
 - en: High probability events are not surprising
+  id: totrans-22
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 高概率事件并不令人惊讶
 - en: Surprise is a monotonically decreasing function of probability
+  id: totrans-23
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 惊讶是概率的单调递减函数
 - en: For many reasons, Information Theory defines Surprise using a variation of the
     middle equation $$\text{Surprise}(E) = \log_2 \frac{1}{P(E)}$$
+  id: totrans-24
   prefs: []
   type: TYPE_NORMAL
+  zh: 由于许多原因，信息理论使用中间方程的变体来定义惊讶：$$\text{Surprise}(E) = \log_2 \frac{1}{P(E)}$$
 - en: 'Looking at the relationship between $P(E)$ and the value of $\text{Surprise}(E)$
     we can observe some of those intuitive relationships:'
+  id: totrans-25
   prefs: []
   type: TYPE_NORMAL
+  zh: 观察事件 $P(E)$ 和 $\text{Surprise}(E)$ 的值之间的关系，我们可以观察到一些直观的关系：
 - en: '| Probability of Event $P(E)$ | Surprise of Event $\text{Surprise}(E) = \log_2
     \frac{1}{P(E)}$ |'
+  id: totrans-26
   prefs: []
   type: TYPE_TB
+  zh: '| 事件概率 $P(E)$ | 事件惊讶 $\text{Surprise}(E) = \log_2 \frac{1}{P(E)}$ |'
 - en: '| 1/2 | 1 |'
+  id: totrans-27
   prefs: []
   type: TYPE_TB
+  zh: '| 1/2 | 1 |'
 - en: '| 1/4 | 2 |'
+  id: totrans-28
   prefs: []
   type: TYPE_TB
+  zh: '| 1/4 | 2 |'
 - en: '| 1/8 | 3 |'
+  id: totrans-29
   prefs: []
   type: TYPE_TB
+  zh: '| 1/8 | 3 |'
 - en: '| 1/16 | 4 |'
+  id: totrans-30
   prefs: []
   type: TYPE_TB
+  zh: '| 1/16 | 4 |'
 - en: '| 1/32 | 5 |'
+  id: totrans-31
   prefs: []
   type: TYPE_TB
+  zh: '| 1/32 | 5 |'
 - en: '| 1/64 | 6 |'
+  id: totrans-32
   prefs: []
   type: TYPE_TB
+  zh: '| 1/64 | 6 |'
 - en: '| 1/128 | 7 |'
+  id: totrans-33
   prefs: []
   type: TYPE_TB
+  zh: '| 1/128 | 7 |'
 - en: If an event with probability $P(E) = 1/16$ were to occur we would be four times
     as "Surprised" as if an event with $P(E) = 1/2$ were to occur. That feels nice!
+  id: totrans-34
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果一个概率为 $P(E) = 1/16$ 的事件发生，我们将比一个概率为 $P(E) = 1/2$ 的事件发生时感到四倍的“惊讶”。这感觉很好！
 - en: '***Definition:*** Surprise of an Event (Information Content)'
+  id: totrans-35
   prefs: []
   type: TYPE_NORMAL
+  zh: '***定义：*** 事件的惊讶（信息含量）'
 - en: 'The information content, also called the surprisal or self-information, of
     an event E is a function which increases as the probability of an event decreases.
     When the probability is close to 1, the surprisal of the event is low, but if
     the probability is close to 0, the surprisal of the event occuring is high. This
     relationship is described by the function:'
+  id: totrans-36
   prefs: []
   type: TYPE_NORMAL
+  zh: 事件 E 的信息含量，也称为惊讶或自信息，是一个随着事件概率的降低而增加的函数。当概率接近 1 时，事件的惊讶值较低，但如果概率接近 0，事件发生的惊讶值较高。这种关系由以下函数描述：
 - en: '\begin{align*} \text{Surprise}(E) &= \log_2 \Big(\frac{1}{\p(E)} \Big) \end{align*}
     This can be written (in a more confusing way) as: \begin{align*} \text{Surprise}(E)
     &= \log_2 \Big(\frac{1}{\p(E)} \Big) \\ &= \log_2 \p(E)^{-1} \\ &= -\log_2 \p(E)
     \end{align*} In the initial definition of Surprise of an Event, the function name
     $I$ was used as shorthand for Surprise. $I$ stands for "Information Content" or
     "Self Information", two other names for Surprise of an event.'
+  id: totrans-37
   prefs: []
   type: TYPE_NORMAL
+  zh: \begin{align*} \text{Surprise}(E) &= \log_2 \Big(\frac{1}{\p(E)} \Big) \end{align*}
+    这可以写成（以一种更令人困惑的方式）：\begin{align*} \text{Surprise}(E) &= \log_2 \Big(\frac{1}{\p(E)}
+    \Big) \\ &= \log_2 \p(E)^{-1} \\ &= -\log_2 \p(E) \end{align*} 在事件惊讶的初始定义中，函数名
+    $I$ 被用作惊讶的简称。$I$ 代表“信息含量”或“自信息”，这是惊讶的另一种名称。
 - en: There are many other stories that we could tell for why $\log_2 \frac{1}{\p(E)}$
     is a great choice for our measure of Surprise. Claude Shannon, the father of information
     theory, chose the base 2 logarithm because it would allow you to express your
     amount of surprise in bits (as in 0, 1 values used in a computer). Information
     theory has many applications, but it was first invented when he was trying to
     come up with a way to optimally compress text based data!
+  id: totrans-38
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们还可以讲述许多其他的故事，来说明为什么 $\log_2 \frac{1}{\p(E)}$ 是我们衡量惊讶程度的绝佳选择。信息理论的奠基人克劳德·香农选择了以2为底的对数，因为这可以使你用比特（如计算机中使用的0和1值）来表达你的惊讶程度。信息理论有许多应用，但最初是在他试图找到一种方法来最优地压缩基于文本的数据时发明的！
 - en: Uncertainty of a Random Variable (Entropy)
+  id: totrans-39
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 随机变量的不确定性（熵）
 - en: Now that we have a formal definition of Surprise we can revisit the computation
     of Uncertainty of a random variable.
+  id: totrans-40
   prefs: []
   type: TYPE_NORMAL
+  zh: 现在我们已经有了惊讶的正式定义，我们可以重新审视随机变量不确定性的计算。
 - en: '***Definition:*** Uncertainty of an Random Variable (Entropy)'
+  id: totrans-41
   prefs: []
   type: TYPE_NORMAL
+  zh: '***定义：*** 随机变量的不确定性（熵）'
 - en: 'Let $H$ be our measure of how much uncertainty we have about a random variable
     $X$. Define $H$ to be the expected surprise of observing the assignment to $X$.
     $H(X) = E[\text{Surprise}(X)]$. Using the Law of Unconcious Statistician, and
     the definition of Surprise of an event, we can expand out the formula for $H$
     as:'
+  id: totrans-42
   prefs: []
   type: TYPE_NORMAL
+  zh: 让 $H$ 成为衡量我们对随机变量 $X$ 不确定性的度量。定义 $H$ 为观察 $X$ 分配的预期惊喜。$H(X) = E[\text{Surprise}(X)]$。使用无意识统计学家定律和事件惊喜的定义，我们可以展开
+    $H$ 的公式如下：
 - en: '$$ H(X) = \sum_{x \in X} \log_2 \Big(\frac{1}{\p(X=x)}\Big) \cdot \p(X=x) $$
     Uncertainty ($H$) can also be rewritten (in a more confusing way) as: \begin{align*}
     \text{H}(X)  &= \sum_{x \in X} \text{Surprise}(X=x) \cdot P(X=x)  \\ &= \sum_{x
@@ -199,29 +291,48 @@
     ^{-1}\cdot P(X=x)  \\ &= \sum_{x \in X} - \log_2 P(X=x)\cdot P(X=x)  \\ &= - \sum_{x
     \in X} \log_2 P(X=x)\cdot P(X=x)  \\ &= - \sum_{x \in X} \log_2 P(X=x)\cdot P(X=x) 
     \end{align*}'
+  id: totrans-43
   prefs: []
   type: TYPE_NORMAL
+  zh: $$ H(X) = \sum_{x \in X} \log_2 \Big(\frac{1}{\p(X=x)}\Big) \cdot \p(X=x) $$
+    不确定度 ($H$) 也可以（以更令人困惑的方式）重写为：\begin{align*} \text{H}(X) &= \sum_{x \in X} \text{Surprise}(X=x)
+    \cdot P(X=x) \\ &= \sum_{x \in X} \log_2 \frac{1}{P(X=x)} \cdot P(X=x) \\ &= \sum_{x
+    \in X} \log_2 P(X=x) ^{-1}\cdot P(X=x) \\ &= \sum_{x \in X} - \log_2 P(X=x)\cdot
+    P(X=x) \\ &= - \sum_{x \in X} \log_2 P(X=x)\cdot P(X=x) \\ &= - \sum_{x \in X}
+    \log_2 P(X=x)\cdot P(X=x) \end{align*}
 - en: 'Here is code that calculates the Uncertainty $(H)$ of a random variable, based
     on its probability mass function:'
+  id: totrans-44
   prefs: []
   type: TYPE_NORMAL
+  zh: 这里是计算随机变量不确定度 $(H)$ 的代码，基于其概率质量函数：
 - en: '[PRE0]'
+  id: totrans-45
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: 'We now have all the theoretical tools we need to select our best question in
     the game of "Think of an Animal". For each possible resulting Probability Mass
     Function, we can calculate the Uncertainty $(H)$ of that PMF:'
+  id: totrans-46
   prefs: []
   type: TYPE_NORMAL
+  zh: 现在我们已经拥有了在“想一个动物”游戏中选择最佳问题的所有理论工具。对于每个可能的概率质量函数，我们都可以计算该 PMF 的不确定度 $(H)$：
 - en: '![](../Images/506848f4ba8ebe3f99f2a685191f86c7.png)'
+  id: totrans-47
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/506848f4ba8ebe3f99f2a685191f86c7.png)'
 - en: The question "Is it a pet?" has an expected uncertainty of 1.3\. The question
     "Is it a Dog?" has an expected uncertainty of 1.7\. As such we would be less uncertain
     about what animal our friend is thinking about, in expectation, if we were to
     ask the question "Is it a pet?"
+  id: totrans-48
   prefs: []
   type: TYPE_NORMAL
+  zh: 问题“它是宠物吗？”的预期不确定度为 1.3。问题“它是狗吗？”的预期不确定度为 1.7。因此，如果我们问“它是宠物吗？”这个问题，我们预期对朋友所想的动物会更有信心。
 - en: This is one of many applications of Information Theory!
+  id: totrans-49
   prefs: []
   type: TYPE_NORMAL
+  zh: 这只是信息论众多应用之一！

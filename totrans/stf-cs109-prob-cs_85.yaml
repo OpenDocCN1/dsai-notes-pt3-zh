@@ -1,14 +1,20 @@
 - en: Differential Privacy
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 差分隐私
 - en: 原文：[https://chrispiech.github.io/probabilityForComputerScientists/en/examples/differential_privacy/](https://chrispiech.github.io/probabilityForComputerScientists/en/examples/differential_privacy/)
+  id: totrans-1
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 原文：[https://chrispiech.github.io/probabilityForComputerScientists/en/examples/differential_privacy/](https://chrispiech.github.io/probabilityForComputerScientists/en/examples/differential_privacy/)
 - en: '* * *'
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: '* * *'
 - en: Recently, many organizations have released machine learning models trained on
     massive datasets (GPT-3, YOLO, etc...). This is a great contribution to science
     and streamlines modern AI research. However, publicizing these models allows for
@@ -18,60 +24,95 @@
     bad for models trained on sensetive data like health information. In this section
     we are going to use randomness as a method to defend against algorithmic ``reverse
     engineering.''
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: 最近，许多组织已经发布了在大型数据集上训练的机器学习模型（GPT-3、YOLO等...）。这对科学是一个巨大的贡献，并简化了现代人工智能研究。然而，公布这些模型可能会允许对模型进行潜在的“逆向工程”，以揭示模型的训练数据。具体来说，攻击者可以下载一个模型，查看参数值，然后尝试重建原始训练数据。这对于在敏感数据（如健康信息）上训练的模型来说尤其糟糕。在本节中，我们将使用随机性作为防御算法“逆向工程”的方法。
 - en: Injecting Randomness
+  id: totrans-4
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 注入随机性
 - en: One way to combat algorithmic reverse engineering is to add some random element
     to an already existing dataset. Let
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: 一种对抗算法逆向工程的方法是在已经存在的数据集中添加一些随机元素。设
 - en: \begin{align*} X_1, \dots, X_i \overset{\text{i.i.d}} \sim \text{Bern}(p) \end{align*}
+  id: totrans-6
   prefs: []
   type: TYPE_NORMAL
+  zh: \begin{align*} X_1, \dots, X_i \overset{\text{i.i.d}} \sim \text{Bern}(p) \end{align*}
 - en: 'represent a set of real human data. Consider the following snippet of code:'
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: 代表一组真实的人类数据。考虑以下代码片段：
 - en: '[PRE0]'
+  id: totrans-8
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: 'Quite simply, an attacker can call the above for all 100 samples and uncover
     all 100 data points. Instead, we can inject an element of randomness:'
+  id: totrans-9
   prefs: []
   type: TYPE_NORMAL
+  zh: 简单来说，攻击者可以针对所有100个样本调用上述操作，揭示所有100个数据点。相反，我们可以注入一些随机性：
 - en: '[PRE1]'
+  id: totrans-10
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: The attacker can in expectation call the new function 100 times and get the
     correct values for 50 of them (but they wont know which 50).
+  id: totrans-11
   prefs: []
   type: TYPE_NORMAL
+  zh: 攻击者可以期望调用新函数100次，并得到其中50个的正确值（但他们不知道是哪50个）。
 - en: Recovering $p$
+  id: totrans-12
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 恢复 $p$
 - en: 'Now consider if we publish the function calculateYi, how could a researcher
     who is interested in the mean of the samples get useful data? They can look at:'
+  id: totrans-13
   prefs: []
   type: TYPE_NORMAL
+  zh: 现在考虑如果我们发布 calculateYi 函数，一个对样本均值感兴趣的研究者如何获取有用的数据？他们可以查看：
 - en: \begin{align*} Z = \sum^{100}_{n=1} Y_i. \end{align*}
+  id: totrans-14
   prefs: []
   type: TYPE_NORMAL
+  zh: \begin{align*} Z = \sum^{100}_{n=1} Y_i. \end{align*}
 - en: 'Which has expectation:'
+  id: totrans-15
   prefs: []
   type: TYPE_NORMAL
+  zh: 其期望值为：
 - en: \begin{align*} E[Z] = E\left[\sum^{100}_{n=1} Y_i\right] = \sum^{100}_{n=1}
     E[Y_i] = \sum^{100}_{n=1}\left(\frac{p}{2} + \frac{1}{4}\right) = 50p + 25 \end{align*}
+  id: totrans-16
   prefs: []
   type: TYPE_NORMAL
+  zh: \begin{align*} E[Z] = E\left[\sum^{100}_{n=1} Y_i\right] = \sum^{100}_{n=1}
+    E[Y_i] = \sum^{100}_{n=1}\left(\frac{p}{2} + \frac{1}{4}\right) = 50p + 25 \end{align*}
 - en: Then to uncover an estimate, the scientist can do,
+  id: totrans-17
   prefs: []
   type: TYPE_NORMAL
+  zh: 然后为了揭示一个估计值，科学家可以这样做，
 - en: \begin{align*} p \approx \frac{Z - 25}{50} \end{align*}
+  id: totrans-18
   prefs: []
   type: TYPE_NORMAL
+  zh: \begin{align*} p \approx \frac{Z - 25}{50} \end{align*}
 - en: And proceed to conduct more research!
+  id: totrans-19
   prefs: []
   type: TYPE_NORMAL
+  zh: 然后继续进行更多研究！

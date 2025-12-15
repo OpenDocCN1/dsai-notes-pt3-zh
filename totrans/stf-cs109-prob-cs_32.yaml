@@ -1,14 +1,20 @@
 - en: Binomial Distribution
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 二项分布
 - en: 原文：[https://chrispiech.github.io/probabilityForComputerScientists/en/part2/binomial/](https://chrispiech.github.io/probabilityForComputerScientists/en/part2/binomial/)
+  id: totrans-1
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 原文：[https://chrispiech.github.io/probabilityForComputerScientists/en/part2/binomial/](https://chrispiech.github.io/probabilityForComputerScientists/en/part2/binomial/)
 - en: '* * *'
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: '* * *'
 - en: In this section, we will discuss the binomial distribution. To start, imagine
     the following example. Consider $n$ independent trials of an experiment where
     each trial is a "success" with probability $p$. Let $X$ be the number of successes
@@ -17,100 +23,152 @@
     are called binomial random variables. If you can identify that a process fits
     this description, you can inherit many already proved properties such as the PMF
     formula, expectation, and variance!
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: 在本节中，我们将讨论二项分布。首先，想象以下例子。考虑一个实验的$n$次独立试验，其中每次试验成功的概率为$p$。设$X$为$n$次试验中的成功次数。这种情况在自然界中非常普遍，因此已经对这种现象进行了大量研究。像$X$这样的随机变量被称为二项随机变量。如果你能识别出某个过程符合这种描述，你就可以继承许多已经证明的性质，如PMF公式、期望和方差！
 - en: '![](../Images/bcfb0bdd21aa5f1a2934882efb3ff007.png)'
+  id: totrans-4
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/bcfb0bdd21aa5f1a2934882efb3ff007.png)'
 - en: 'Here are a few examples of binomial random variables:'
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: 这里有一些二项随机变量的例子：
 - en: of heads in $n$ coin flips
+  id: totrans-6
   prefs:
   - PREF_UL
   - PREF_H1
   type: TYPE_NORMAL
+  zh: $n$次抛硬币中正面的次数
 - en: of 1’s in randomly generated length $n$ bit string
+  id: totrans-7
   prefs:
   - PREF_UL
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 在随机生成的长度为$n$的位字符串中1的个数
 - en: of disk drives crashed in 1000 computer cluster, assuming disks crash independently
+  id: totrans-8
   prefs:
   - PREF_UL
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 在1000个计算机集群中磁盘崩溃的次数，假设磁盘崩溃是独立发生的
 - en: '**Binomial Random Variable**'
+  id: totrans-9
   prefs: []
   type: TYPE_NORMAL
+  zh: '**二项随机变量**'
 - en: '| Notation: | $X \sim \Bin(n, p)$ |'
+  id: totrans-10
   prefs: []
   type: TYPE_TB
+  zh: '| 符号： | $X \sim \Bin(n, p)$ |'
 - en: '| Description: | Number of "successes" in $n$ identical, independent experiments
     each with probability of success $p$. |'
+  id: totrans-11
   prefs: []
   type: TYPE_TB
+  zh: '| 描述： | 在$n$个相同、独立的实验中，每个实验成功的概率为$p$，成功的次数。 |'
 - en: '| Parameters: | $n \in \{0, 1, \dots\}$, the number of experiments. $p \in
     [0, 1]$, the probability that a single experiment gives a "success". |'
+  id: totrans-12
   prefs: []
   type: TYPE_TB
+  zh: '| 参数： | $n \in \{0, 1, \dots\}$，实验的数量。$p \in [0, 1]$，单个实验成功的概率。 |'
 - en: '| Support: | $x \in \{0, 1, \dots, n\}$ |'
+  id: totrans-13
   prefs: []
   type: TYPE_TB
+  zh: '| 支持集： | $x \in \{0, 1, \dots, n\}$ |'
 - en: '| PMF equation: | $$\p(X=x) = {n \choose x}p^x(1-p)^{n-x}$$ |'
+  id: totrans-14
   prefs: []
   type: TYPE_TB
+  zh: '| PMF 公式： | $$\p(X=x) = {n \choose x}p^x(1-p)^{n-x}$$ |'
 - en: '| Expectation: | $\E[X] = n \cdot p$ |'
+  id: totrans-15
   prefs: []
   type: TYPE_TB
+  zh: '| 期望： | $\E[X] = n \cdot p$ |'
 - en: '| Variance: | $\var(X) = n \cdot p \cdot (1-p)$ |'
+  id: totrans-16
   prefs: []
   type: TYPE_TB
+  zh: '| 方差： | $\var(X) = n \cdot p \cdot (1-p)$ |'
 - en: '| PMF graph: |'
+  id: totrans-17
   prefs: []
   type: TYPE_TB
+  zh: '| PMF 图： |'
 - en: 'Parameter $n$: Parameter $p$:'
+  id: totrans-18
   prefs: []
   type: TYPE_NORMAL
+  zh: 参数$n$：参数$p$：
 - en: '<canvas id="binomialPmf" style="max-height: 400px"></canvas>'
+  id: totrans-19
   prefs: []
   type: TYPE_NORMAL
+  zh: '<canvas id="binomialPmf" style="max-height: 400px"></canvas>'
 - en: 'One way to think of the binomial is as the sum of $n$ [Bernoulli](../../part2/bernoulli)
     variables. Say that $Y_i \sim \Ber(p)$ is an indicator Bernoulli random variable
     which is 1 if experiment $i$ is a success. Then if $X$ is the total number of
     successes in $n$ experiments, $X \sim \Bin(n, p)$: $$ X = \sum_{i=1}^n Y_i $$'
+  id: totrans-20
   prefs: []
   type: TYPE_NORMAL
+  zh: 考虑二项分布的一种方式是将其视为$n$个[伯努利](../../part2/bernoulli)变量的和。假设$Y_i \sim \Ber(p)$是一个指示伯努利随机变量，如果实验$i$成功则$Y_i$为1。那么如果$X$是$n$次实验中的总成功次数，$X
+    \sim \Bin(n, p)$：$$ X = \sum_{i=1}^n Y_i $$
 - en: Recall that the outcome of $Y_i$ will be 1 or 0, so one way to think of $X$
     is as the sum of those 1s and 0s.
+  id: totrans-21
   prefs: []
   type: TYPE_NORMAL
+  zh: 回想一下，$Y_i$的结果将是1或0，所以一种思考$X$的方式是将其视为这些1和0的总和。
 - en: Binomial PMF
+  id: totrans-22
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 二项概率质量函数
 - en: 'The most important property to know about a binomial is its [PMF function](../../part2/pmf):'
+  id: totrans-23
   prefs: []
   type: TYPE_NORMAL
+  zh: 关于二项分布，最重要的属性是它的[概率质量函数](../../part2/pmf)：
 - en: '![](../Images/9b91eb08b12423b9abf45dbd31db2255.png)'
+  id: totrans-24
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/9b91eb08b12423b9abf45dbd31db2255.png)'
 - en: 'Recall, we derived this formula in Part 1\. There is a complete example on
     the probability of $k$ heads in $n$ coin flips, where each flip is heads with
     probability $0.5$: [Many Coin Flips](../../examples/many_flips). To briefly review,
     if you think of each experiment as being distinct, then there are ${n \choose
     k}$ ways of permuting $k$ successes from $n$ experiments. For any of the mutually
     exclusive permutations, the probability of that permutation is $p^k \cdot (1-p)^{n-k}$.'
+  id: totrans-25
   prefs: []
   type: TYPE_NORMAL
+  zh: 回想一下，我们在第一部分推导了这个公式。有一个完整的例子是关于$n$次抛硬币中$k$次正面的概率，其中每次抛硬币正面朝上的概率为$0.5$：[多次抛硬币](../../examples/many_flips)。简要回顾一下，如果你认为每个实验都是独特的，那么从$n$次实验中排列$k$次成功的方案有${n
+    \choose k}$种。对于任何互斥的排列，该排列的概率是$p^k \cdot (1-p)^{n-k}$。
 - en: The name binomial comes from the term ${n \choose k}$ which is formally called
     the binomial coefficient.
+  id: totrans-26
   prefs: []
   type: TYPE_NORMAL
+  zh: 二项分布的名称来源于术语${n \choose k}$，它正式称为二项系数。
 - en: Expectation of Binomial
+  id: totrans-27
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 二项期望
 - en: 'There is an easy way to calculate the expectation of a binomial and a hard
     way. The easy way is to leverage the fact that a binomial is the sum of Bernoulli
     [indicator](../../part2/bernoulli#indicator) random variables. $X = \sum_{i=1}^{n}
@@ -125,55 +183,89 @@
     \p(X = i) && \text{Def of expectation} \\ &= \sum_{i=0}^n i \cdot {n \choose i}
     p^i(1-p)^{n-i} && \text{Sub in PMF} \\ & \cdots && \text{Many steps later} \\
     &= n \cdot p \end{align} $$'
+  id: totrans-28
   prefs: []
   type: TYPE_NORMAL
+  zh: 计算二项分布的期望值有简单和困难两种方法。简单的方法是利用二项分布是伯努利[指示](../../part2/bernoulli#indicator)随机变量的和这一事实。$X
+    = \sum_{i=1}^{n} Y_i$ 其中 $Y_1$ 是第 $i$ 次实验是否成功的指示器：$Y_i \sim \Ber(p)$。由于随机变量[期望值之和](../../part2/expectation)等于期望值的和，我们可以将每个伯努利的期望值相加，$\E[Y_i]
+    = p$：$$ \begin{align} \E[X] &= \E\Big[\sum_{i=1}^{n} Y_i\Big] && \text{因为 }X =
+    \sum_{i=1}^{n} Y_i \\ &= \sum_{i=1}^{n}\E[ Y_i] && \text{期望值的和} \\ &= \sum_{i=1}^{n}p
+    && \text{伯努利的期望值} \\ &= n \cdot p && \text{求和 $n$ 次} \end{align} $$ 困难的方法是使用期望值的定义：$$
+    \begin{align} \E[X] &= \sum_{i=0}^n i \cdot \p(X = i) && \text{期望值的定义} \\ &= \sum_{i=0}^n
+    i \cdot {n \choose i} p^i(1-p)^{n-i} && \text{代入概率质量函数} \\ & \cdots && \text{许多步骤之后}
+    \\ &= n \cdot p \end{align} $$
 - en: Binomial Distribution in Python
+  id: totrans-29
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: Python 中的二项分布
 - en: As you might expect, you can use binomial distributions in code. The standardized
     library for binomials is `scipy.stats.binom`.
+  id: totrans-30
   prefs: []
   type: TYPE_NORMAL
+  zh: 如你所料，你可以在代码中使用二项分布。二项分布的标准库是 `scipy.stats.binom`。
 - en: 'One of the most helpful methods that this package provides is a way to calculate
     the PMF. For example, say $X \sim \text{Bin}(n=5,p=0.6)$ and you want to find
     $\P(X=2)$ you could use the following code:'
+  id: totrans-31
   prefs: []
   type: TYPE_NORMAL
+  zh: 这个包提供的最有帮助的方法之一是计算概率质量函数。例如，假设 $X \sim \text{Bin}(n=5,p=0.6)$，你想找到 $\P(X=2)$，你可以使用以下代码：
 - en: '[PRE0]'
+  id: totrans-32
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: 'Console:'
+  id: totrans-33
   prefs: []
   type: TYPE_NORMAL
+  zh: 控制台：
 - en: '[PRE1]'
+  id: totrans-34
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: 'Another particularly helpful function is the ability to generate a random sample
     from a binomial. For example, say $X \sim \Bin(n=10, p = 0.3)$ represents the
     number of requests to a website. We can draw 100 samples from this distribution
     using the following code:'
+  id: totrans-35
   prefs: []
   type: TYPE_NORMAL
+  zh: 另一个特别有用的函数是生成二项分布的随机样本的能力。例如，假设 $X \sim \Bin(n=10, p = 0.3)$ 代表网站请求的数量。我们可以使用以下代码从这个分布中抽取100个样本：
 - en: '[PRE2]'
+  id: totrans-36
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: 'Console:'
+  id: totrans-37
   prefs: []
   type: TYPE_NORMAL
+  zh: 控制台：
 - en: '[PRE3]'
+  id: totrans-38
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: 'You might be wondering what a random sample is! A random sample is a randomly
     chosen assignment for our random variable. Above we have 100 such assignments.
     The probability that value $x$ is chosen is given by the PMF: $\p(X=x)$. You will
     notice that even though 8 is a possible assignment to the binomial above, in 100
     samples we never saw the value 8\. Why? Because $P(X=8) \approx 0.0014$. You would
     need to draw 1,000 samples before you would expect to see an 8.'
+  id: totrans-39
   prefs: []
   type: TYPE_NORMAL
+  zh: 你可能想知道什么是随机样本！随机样本是对我们的随机变量进行随机赋值。上面我们有100个这样的赋值。值 $x$ 被选中的概率由概率质量函数给出：$\p(X=x)$。你会注意到，尽管8是上述二项分布的一个可能的赋值，但在100个样本中我们从未看到过值8。为什么？因为
+    $P(X=8) \approx 0.0014$。你需要抽取1,000个样本，才可能期望看到8。
 - en: There are also functions for getting the mean, the variance, and more. You can
     read the scipy.stats.binom [documentation](https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.binom.html),
     especially the list of methods.
+  id: totrans-40
   prefs: []
   type: TYPE_NORMAL
+  zh: 此外，还有获取均值、方差等功能。你可以阅读 scipy.stats.binom [文档](https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.binom.html)，特别是方法列表。

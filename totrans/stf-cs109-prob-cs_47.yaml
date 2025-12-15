@@ -1,20 +1,30 @@
 - en: Grades are Not Normal
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 成绩并非正态分布
 - en: 原文：[https://chrispiech.github.io/probabilityForComputerScientists/en/examples/grades_not_normal/](https://chrispiech.github.io/probabilityForComputerScientists/en/examples/grades_not_normal/)
+  id: totrans-1
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 原文：[https://chrispiech.github.io/probabilityForComputerScientists/en/examples/grades_not_normal/](https://chrispiech.github.io/probabilityForComputerScientists/en/examples/grades_not_normal/)
 - en: '* * *'
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: '* * *'
 - en: 'Sometimes you just feel like squashing normals:'
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: 有时候你只是想压缩正态分布：
 - en: '**Logit Normal**'
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: '**对数正态**'
 - en: 'The logit normal is the continuous distribution that results from applying
     a special "squashing" function to a Normally distributed random variable. The
     squashing function maps all values the normal could take on onto the range 0 to
@@ -23,60 +33,101 @@
     - \mu)^2}{2\sigma^2}} & \text{if } 0 < x < 1\\ 0 & \text{otherwise} \end{cases}
     \\ \text{CDF:} && &F_X(x) = \Phi\Big(\frac{\text{logit}(x) - \mu}{\sigma}\Big)\\
     \text{Where:} && &\text{logit}(x) = \text{log}\Big(\frac{x}{1-x}\Big) \end{align*}'
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: 对数正态分布是通过对正态分布的随机变量应用一种特殊的“压缩”函数得到的连续分布。压缩函数将正态分布可以取的所有值映射到0到1的范围内。如果 $X \sim
+    \text{LogitNormal}(\mu, \sigma^2)$，它具有以下特性： \begin{align*} \text{PDF:}&& &f_X(x)
+    = \begin{cases} \frac{1}{\sigma(\sqrt{2\pi})x(1 - x)}e^{-\frac{(\text{logit}(x)
+    - \mu)^2}{2\sigma^2}} & \text{if } 0 < x < 1\\ 0 & \text{otherwise} \end{cases}
+    \\ \text{CDF:} && &F_X(x) = \Phi\Big(\frac{\text{logit}(x) - \mu}{\sigma}\Big)\\
+    \text{Where:} && &\text{logit}(x) = \text{log}\Big(\frac{x}{1-x}\Big) \end{align*}
 - en: 'A new theory shows that the Logit Normal better fits exam score distributions
     than the traditionally used Normal. Let''s test it out! We have some set of exam
     scores for a test with min possible score 0 and max possible score 1, and we are
     trying to decide between two hypotheses:'
+  id: totrans-6
   prefs: []
   type: TYPE_NORMAL
+  zh: 一种新的理论表明，对数正态分布比传统使用的正态分布更好地拟合考试成绩分布。让我们来测试一下！我们有一组考试分数，考试最低可能分数为0，最高可能分数为1，我们正在尝试在两个假设之间做出选择：
 - en: '$H_1$: our grade scores are distributed according to $X\sim \text{Normal}(\mu
     = 0.7, \sigma^2 = 0.2^2)$.'
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: $H_1$：我们的成绩分数服从 $X\sim \text{Normal}(\mu = 0.7, \sigma^2 = 0.2^2)$。
 - en: '$H_2$: our grade scores are distributed according to $X\sim \text{LogitNormal}(\mu
     = 1.0, \sigma^2 = 0.9^2)$.'
+  id: totrans-8
   prefs: []
   type: TYPE_NORMAL
+  zh: $H_2$：我们的成绩分数服从 $X\sim \text{LogitNormal}(\mu = 1.0, \sigma^2 = 0.9^2)$。
 - en: '![](../Images/48bafc90b88684e611a1c26072d08c78.png)'
+  id: totrans-9
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/48bafc90b88684e611a1c26072d08c78.png)'
 - en: Under the normal assumption, $H_1$, what is $P(0.9 < X < 1.0)$? Provide a numerical
     answer to two decimal places.
+  id: totrans-10
   prefs: []
   type: TYPE_NORMAL
+  zh: 在正常假设下，$H_1$，$P(0.9 < X < 1.0)$ 是多少？请提供两位小数的数值答案。
 - en: $$P(0.9 < X < 1.0) = \Phi\left(\frac{1.0 - 0.7}{0.2}\right) - \Phi\left(\frac{0.9
     - 0.7}{0.2}\right) = \Phi(1.5) - \Phi(1.0) = 0.9332 - 0.8413 = 0.09$$
+  id: totrans-11
   prefs: []
   type: TYPE_NORMAL
+  zh: $$P(0.9 < X < 1.0) = \Phi\left(\frac{1.0 - 0.7}{0.2}\right) - \Phi\left(\frac{0.9
+    - 0.7}{0.2}\right) = \Phi(1.5) - \Phi(1.0) = 0.9332 - 0.8413 = 0.09$$
 - en: Under the logit-normal assumption, $H_2$, what is $P(0.9 < X < 1.0)$?
+  id: totrans-12
   prefs: []
   type: TYPE_NORMAL
+  zh: 在对数正态假设下，$H_2$，$P(0.9 < X < 1.0)$ 是多少？
 - en: '$$F_X(1.0) - F_X(0.9) = \Phi\Big(\frac{\text{logit}(1.0) - 1.0}{0.9}\Big) -
     \Phi\Big(\frac{\text{logit}(0.9) - 1.0}{0.9}\Big)$$ Which we can solve for numerically:
     $$\Phi\Big(\frac{\text{logit}(1.0) - 1.0}{0.9}\Big) - \Phi\Big(\frac{\text{logit}(0.9)
     - 1.0}{0.9}\Big) = 1 - \Phi(1.33) \approx 0.91$$'
+  id: totrans-13
   prefs: []
   type: TYPE_NORMAL
+  zh: $$F_X(1.0) - F_X(0.9) = \Phi\Big(\frac{\text{logit}(1.0) - 1.0}{0.9}\Big) -
+    \Phi\Big(\frac{\text{logit}(0.9) - 1.0}{0.9}\Big)$$ 我们可以通过数值方法求解：$$\Phi\Big(\frac{\text{logit}(1.0)
+    - 1.0}{0.9}\Big) - \Phi\Big(\frac{\text{logit}(0.9) - 1.0}{0.9}\Big) = 1 - \Phi(1.33)
+    \approx 0.91$$
 - en: Under the normal assumption, $H_1$, what is the maximum value that $X$ can take
     on?
+  id: totrans-14
   prefs: []
   type: TYPE_NORMAL
+  zh: 在正常假设下，$H_1$，$X$ 可以取的最大值是多少？
 - en: $$\infty$$
+  id: totrans-15
   prefs: []
   type: TYPE_NORMAL
+  zh: $$\infty$$
 - en: Before observing any test scores, you assume that (a) one of your two hypotheses
     is correct and (b) that initially, each hypothesis is equally likely to be correct,
     $P(H_1)=P(H_2)=\frac{1}{2}$. You then observe a single test score, $X = 0.9$.
     What is your updated probability that the Logit-Normal hypothesis is correct?
+  id: totrans-16
   prefs: []
   type: TYPE_NORMAL
+  zh: 在观察任何考试分数之前，你假设（a）两个假设中的一个正确，并且（b）最初，每个假设被正确选择的概率相等，$P(H_1)=P(H_2)=\frac{1}{2}$。然后你观察到一个单独的考试分数，$X
+    = 0.9$。你对对数正态假设正确的更新概率是多少？
 - en: \begin{align*} P(H_2|X = 0.9) &= \frac{f(X = 0.9|H_2)P(H_2)}{f(X = 0.9|H_2)P(H_2)
     + f(X = 0.9|H_1)P(H_1)}\\ &= \frac{f(X = 0.9|H_2)}{f(X = 0.9|H_2) + f(X = 0.9|H_1)}\\
     &= \frac{\frac{1}{\sigma(\sqrt{2\pi})0.9*(1 - 0.9)}e^{-\frac{(\text{logit}(0.9)
     - 1.0)^2}{2*0.9^2}}}{\frac{1}{\sigma(\sqrt{2\pi})0.9*(1 - 0.9)}e^{-\frac{(\text{logit}(0.9)
     - 1.0)^2}{2*0.9^2}} + \frac{1}{0.2\sqrt{2\pi}}e^{-\frac{(0.9 - 0.7)^2}{2*0.2^2}}}
     \end{align*}
+  id: totrans-17
   prefs: []
   type: TYPE_NORMAL
+  zh: \begin{align*} P(H_2|X = 0.9) &= \frac{f(X = 0.9|H_2)P(H_2)}{f(X = 0.9|H_2)P(H_2)
+    + f(X = 0.9|H_1)P(H_1)}\\ &= \frac{f(X = 0.9|H_2)}{f(X = 0.9|H_2) + f(X = 0.9|H_1)}\\
+    &= \frac{\frac{1}{\sigma(\sqrt{2\pi})0.9*(1 - 0.9)}e^{-\frac{(\text{logit}(0.9)
+    - 1.0)^2}{2*0.9^2}}}{\frac{1}{\sigma(\sqrt{2\pi})0.9*(1 - 0.9)}e^{-\frac{(\text{logit}(0.9)
+    - 1.0)^2}{2*0.9^2}} + \frac{1}{0.2\sqrt{2\pi}}e^{-\frac{(0.9 - 0.7)^2}{2*0.2^2}}}
+    \end{align*}

@@ -1,14 +1,20 @@
 - en: General Inference
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 一般推理
 - en: 原文：[https://chrispiech.github.io/probabilityForComputerScientists/en/part3/computational_inference/](https://chrispiech.github.io/probabilityForComputerScientists/en/part3/computational_inference/)
+  id: totrans-1
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 原文：[https://chrispiech.github.io/probabilityForComputerScientists/en/part3/computational_inference/](https://chrispiech.github.io/probabilityForComputerScientists/en/part3/computational_inference/)
 - en: '* * *'
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: '* * *'
 - en: 'A Bayesian Network gives us a reasonable way to specify the joint probability
     of a network of many random variables. Before we celebrate, realize that we still
     don''t know how to use such a network to answer probability questions. There are
@@ -16,48 +22,67 @@
     ideas in probability for computer science: we can use sampling to solve inference
     questions on Bayesian networks. Sampling is frequently used in practice because
     it is relatively easy to understand and easy to implement.'
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: 贝叶斯网络为我们提供了一个合理的方式来指定许多随机变量网络的联合概率。在我们庆祝之前，意识到我们仍然不知道如何使用这样的网络来回答概率问题。有许多技术可以做到这一点。我将向您介绍计算机科学概率中的一个伟大想法：我们可以使用抽样来解决贝叶斯网络上的推理问题。抽样在实践中经常被使用，因为它相对容易理解且易于实现。
 - en: Rejection Sampling
+  id: totrans-4
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 拒绝抽样
 - en: As a warmup consider what it would take to sample an assignment to each of the
     random variables in our Bayes net. Such a sample is often called a "joint sample"
     or a "particle" (as in a particle of sand). To sample a particle, simply sample
     a value for each random variable one at a time based on the value of the random
     variable's parents. This means that if $X_i$ is a parent of $X_j$, you will have
     to sample a value for $X_i$ before you sample a value for $X_j$.
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: 作为热身，考虑一下如何从我们的贝叶斯网络中的每个随机变量中抽取一个赋值。这样的样本通常被称为“联合样本”或“粒子”（如沙粒）。要抽取一个粒子，只需根据随机变量的父变量值逐个为每个随机变量抽取一个值。这意味着如果
+    $X_i$ 是 $X_j$ 的父变量，你必须先为 $X_i$ 抽取一个值，然后再为 $X_j$ 抽取一个值。
 - en: 'Let''s work through an example of sampling a "particle" for the Simple Disease
     Model in the [Bayes Net section](../../part3/bayesian_networks/):'
+  id: totrans-6
   prefs: []
   type: TYPE_NORMAL
+  zh: 让我们通过一个例子来了解如何在[贝叶斯网络部分](../../part3/bayesian_networks/)中的简单疾病模型中抽样一个“粒子”：
 - en: 'Sample from $P(\text{Uni} = 1)$: Bern$(0.8)$. Sampled value for Uni is 1.'
+  id: totrans-7
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 从 $P(\text{Uni} = 1)$ 中抽样：伯努利分布$(0.8)$。Uni的抽样值为1。
 - en: 'Sample from $P(\text{Influenza} = 1 | \text{Uni} = 1)$: Bern$(0.2)$. Sampled
     value for Influenza is 0.'
+  id: totrans-8
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 从 $P(\text{Influenza} = 1 | \text{Uni} = 1)$ 中抽样：伯努利分布$(0.2)$。流感的抽样值为0。
 - en: 'Sample from $P(\text{Fever} = 1 | \text{Influenza} = 0)$: Bern$(0.05)$. Sampled
     value for Fever is 0.'
+  id: totrans-9
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 从 $P(\text{Fever} = 1 | \text{Influenza} = 0)$ 中抽样：伯努利分布$(0.05)$。发烧的抽样值为0。
 - en: 'Sample from $P(\text{Tired} = 1 | \text{Uni} = 1, \text{Influenza} = 0)$: Bern$(0.8)$.
     Sampled value for Tired is 0.'
+  id: totrans-10
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 从 $P(\text{Tired} = 1 | \text{Uni} = 1, \text{Influenza} = 0)$ 中抽样：伯努利分布$(0.8)$。疲劳的抽样值为0。
 - en: 'Thus the sampled particle is: [Uni = 1, Influenza = 0, Fever = 0, Tired = 0].
     If we were to run the process again we would get a new particle (with likelihood
     determined by the joint probability).'
+  id: totrans-11
   prefs: []
   type: TYPE_NORMAL
+  zh: 因此，抽样出的粒子是：[Uni = 1, Influenza = 0, Fever = 0, Tired = 0]。如果我们再次运行这个过程，我们会得到一个新的粒子（其似然由联合概率决定）。
 - en: 'Now our strategy is simple: we are going to generate $N$ samples where $N$
     is in the hundreds of thousands (if not millions). Then we can compute probability
     queries by counting. Let $N(\textbf{X} = \textbf{k})$ be notation for the number
@@ -80,11 +105,24 @@
     to the ones that are consistent with the condition ($\vec{Y} = \vec{b}$) and then
     counting how many of those are also consistent with the query ($\vec{X} = \vec{a}$).
     Here is the algorithm in pseudocode:'
+  id: totrans-12
   prefs: []
   type: TYPE_NORMAL
+  zh: 现在我们的策略很简单：我们将生成$N$个样本，其中$N$在数万（如果不是数百万）左右。然后我们可以通过计数来计算概率查询。令$N(\textbf{X}
+    = \textbf{k})$表示随机变量$\textbf{X}$取值为$\textbf{k}$的粒子的数量。回想一下，粗体符号$\textbf{X}$表示$\textbf{X}$是一个包含一个或多个元素的向量。根据“频率主义”概率的定义：\begin{align*}
+    P(\textbf{X} = \textbf{k}) = \frac{N(\textbf{X} = \textbf{k})}{N} \end{align*}
+    计数就是胜利！但是，条件概率怎么办呢？嗯，使用条件概率的定义，我们可以看到这仍然是一些相当直接的计数：\begin{align*} P(\textbf{X}
+    = \textbf{a} | \textbf{Y} = \textbf{b}) = \frac{P(\textbf{X} = \textbf{a},\textbf{Y}
+    = \textbf{b}) }{P(\textbf{Y} = \textbf{b})} = \frac {\frac{N(\textbf{X} = \textbf{a},\textbf{Y}
+    = \textbf{b})}{N}} {\frac{N(\textbf{Y} = \textbf{b})}{N}} = \frac {N(\textbf{X}
+    = \textbf{a},\textbf{Y} = \textbf{b})} {N(\textbf{Y} = \textbf{b})} \end{align*}
+    让我们花点时间来认识到这一点是非常棒的。基于分析概率（没有样本的数学）的通用推理即使在贝叶斯网络中也很困难（如果你不相信我，试着在完整疾病模型中计算基于一个人口统计和一个症状的流感条件概率）。然而，如果我们生成足够的样本，我们可以通过将样本减少到与条件一致（$\vec{Y}
+    = \vec{b}$）的样本，然后计数其中有多少也与查询一致（$\vec{X} = \vec{a}$）来计算任何条件概率问题。以下是算法的伪代码：
 - en: '[PRE0]'
+  id: totrans-13
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: This algorithm is sometimes called "Rejection Sampling" because it works by
     generating many particles from the joint distribution and rejecting the ones that
     are not consistent with the set of assignments we are conditioning on. Of course
@@ -93,12 +131,16 @@
     on is rare enough that it doesn't occur after millions of samples are generated,
     our algorithm will not work. The last line of our code will result in a divide
     by 0 error. See the next section for solutions!
+  id: totrans-14
   prefs: []
   type: TYPE_NORMAL
+  zh: 这个算法有时被称为“拒绝采样”，因为它通过从联合分布中生成许多粒子，并拒绝与我们所依赖的赋值集合不一致的粒子来工作。当然，这个算法是一个近似值，尽管在样本足够多的情况下，它通常是一个非常好的近似值。然而，在所依赖的事件足够罕见，以至于在生成数百万个样本之后都不会发生的情况下，我们的算法将不会工作。我们代码的最后一行将导致除以0的错误。请参阅下一节以获取解决方案！
 - en: General Inference when Conditioning on Rare Events
+  id: totrans-15
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 在条件为罕见事件时的通用推理
 - en: 'Joint Sampling is a powerful technique that takes advantage of computational
     power. But it doesn''t always work. In fact it doesn''t work any time that the
     probability of the event we are conditioning is rare enough that we are unlikely
@@ -112,8 +154,15 @@
     - 98.3)^2}{2 \cdot 0.7}} \end{align*} \begin{align*} \text{if Influenza = 1, then
     Fever} \sim N(\mu = 100.0, \sigma = 1.8) \\ \therefore f(\text{Fever} = x) = \frac{1}{\sqrt{2
     \pi \cdot 1.8}} e ^{-\frac{(x - 100.0)^2}{2 \cdot 1.8}} \end{align*}'
+  id: totrans-16
   prefs: []
   type: TYPE_NORMAL
+  zh: 联合采样是一种利用计算能力的强大技术。但并非总是有效。事实上，当我们所条件的事件的概率足够低，以至于我们不太可能产生与该事件完全匹配的样本时，它就不起作用了。最简单的例子是连续随机变量。考虑简单的疾病模型。让我们将发热从二元变量改为连续变量。为此，我们只需要重新指定发热给定其父变量（流感）的似然性。假设似然性来自正态概率密度函数：\begin{align*}
+    \text{如果流感 = 0，则发热} \sim N(\mu = 98.3, \sigma = 0.7)\\ \therefore f(\text{发热}
+    = x) = \frac{1}{\sqrt{2 \pi \cdot 0.7}} e ^{-\frac{(x - 98.3)^2}{2 \cdot 0.7}}
+    \end{align*} \begin{align*} \text{如果流感 = 1，则发热} \sim N(\mu = 100.0, \sigma = 1.8)
+    \\ \therefore f(\text{发热} = x) = \frac{1}{\sqrt{2 \pi \cdot 1.8}} e ^{-\frac{(x
+    - 100.0)^2}{2 \cdot 1.8}} \end{align*}
 - en: Drawing samples (aka particles) is still straightforward. We apply the same
     process until we get to the step where we sample a value for the Fever random
     variable (in the example from the previous section that was step 3). If we had
@@ -121,18 +170,25 @@
     adults (which has $\mu = 98.3$). If we had sampled a 1 for influenza we draw a
     value for fever from the normal for adults with the flu (which has $\mu = 100.0$).
     The problem comes in the "rejection" stage of joint sampling.
+  id: totrans-17
   prefs: []
   type: TYPE_NORMAL
+  zh: 采样（又称粒子）的过程仍然很简单。我们应用相同的流程，直到我们到达采样发热随机变量值（在上一节示例中是第3步）的步骤。如果我们为流感采样了0，我们就从健康成人的正态分布中抽取发热值（$\mu
+    = 98.3$）。如果我们为流感采样了1，我们就从流感成人的正态分布中抽取发热值（$\mu = 100.0$）。问题出现在联合采样的“拒绝”阶段。
 - en: When we sample values for fever we get numbers with infinite precision (eg 100.819238
     etc). If we condition on someone having a fever equal to 101 we would reject every
     single particle. Why? No particle will have exactly a fever of 101.
+  id: totrans-18
   prefs: []
   type: TYPE_NORMAL
+  zh: 当我们为发热采样时，我们得到具有无限精度的数字（例如100.819238等）。如果我们条件化某人的发热等于101，我们会拒绝每一个粒子。为什么？没有粒子的发热会正好是101。
 - en: There are several ways to deal with this problem. One especially easy solution
     is to be less strict when rejecting particles. We could round all fevers to whole
     numbers.
+  id: totrans-19
   prefs: []
   type: TYPE_NORMAL
+  zh: 有几种方法可以解决这个问题。一个特别简单的解决方案是在拒绝粒子时不要太严格。我们可以将所有发热值四舍五入到整数。
 - en: 'There is an algorithm called "Likelihood Weighting" which sometimes helps,
     but which we don''t cover in CS109\. Instead, in class we talked about a new algorithm
     called Markov Chain Monte Carlo (MCMC) that allowed us to sample from the "posterior"
@@ -142,18 +198,24 @@
     Gibbs Sampling, I wanted everyone to know that it exists and that it isn''t beyond
     your capabilities. If you need to use it, you can learn it given the knowledge
     you have now.'
+  id: totrans-20
   prefs: []
   type: TYPE_NORMAL
+  zh: 有一个名为“似然加权”的算法有时会帮助解决这个问题，但我们没有在CS109中介绍。相反，在课堂上我们讨论了一个新的算法，称为马尔可夫链蒙特卡洛（MCMC），它允许我们从“后验”概率中进行采样：在条件事件中固定变量后的随机变量的分布。我们讨论的MCMC版本称为Gibbs采样。虽然我不要求CS109的学生知道如何实现Gibbs采样，但我希望大家知道它的存在，并且它并不超出你的能力范围。如果你需要使用它，你可以根据你现在的知识来学习它。
 - en: 'MCMC does require more math than Joint Sampling. For every random variable
     you will need to specify how to calculate the likelihood of assignments given
     the variable''s: parents, children and parents of its children (a set of variables
     cozily called a "blanket"). Want to learn more? Take CS221 or CS228!'
+  id: totrans-21
   prefs: []
   type: TYPE_NORMAL
+  zh: MCMC比联合采样需要更多的数学知识。对于每一个随机变量，你将需要指定如何根据变量的：父变量、子变量以及子变量的父变量（一组变量，亲切地称为“毯子”）来计算赋值的似然性。想了解更多？请选修CS221或CS228！
 - en: Thoughts
+  id: totrans-22
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 思考
 - en: While there are slightly-more-powerful "general inference algorithms" that you
     will get to learn in the future, it is worth recognizing that at this point we
     have reached an important milestone in CS109\. You can take very complicated probability
@@ -165,5 +227,7 @@
     lives) for real human beings. That's some probability for computer scientists
     that is worth learning. What if we don't have an expert? Could we learn those
     probabilities from data? Jump to part 5 to answer that question.
+  id: totrans-23
   prefs: []
   type: TYPE_NORMAL
+  zh: 虽然未来你将学习到一些更强大的“通用推理算法”，但值得认识到，在这一点上，我们已经达到了CS109的重要里程碑。你可以处理非常复杂的概率模型（编码为贝叶斯网络），并且可以对它们进行通用推理查询。为了达到这个目标，我们通过预测疾病的实例进行了具体分析。虽然WebMD网站对家用用户来说很棒，但类似的概率模型正在全球成千上万的医院中使用。当你阅读这段内容时，通用推理正在被用于改善真实人类的医疗保健（有时甚至挽救生命）。这对计算机科学家来说是一些值得学习的概率。如果我们没有专家怎么办？我们能否从数据中学习这些概率？跳转到第5部分来回答这个问题。

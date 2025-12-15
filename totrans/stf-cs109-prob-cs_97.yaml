@@ -1,112 +1,177 @@
 - en: Gaussian Mixtures
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 高斯混合
 - en: 原文：[https://chrispiech.github.io/probabilityForComputerScientists/en/examples/mixture_models/](https://chrispiech.github.io/probabilityForComputerScientists/en/examples/mixture_models/)
+  id: totrans-1
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 原文：[https://chrispiech.github.io/probabilityForComputerScientists/en/examples/mixture_models/](https://chrispiech.github.io/probabilityForComputerScientists/en/examples/mixture_models/)
 - en: '* * *'
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: '* * *'
 - en: 'Data = [6.47, 5.82, 8.7, 4.76, 7.62, 6.95, 7.44, 6.73, 3.38, 5.89, 7.81, 6.93,
     7.23, 6.25, 5.31, 7.71, 7.42, 5.81, 4.03, 7.09, 7.1, 7.62, 7.74, 6.19, 7.3, 7.37,
     6.99, 2.97, 3.3, 7.08, 6.23, 3.67, 3.05, 6.67, 6.5, 6.08, 3.7, 6.76, 6.56, 3.61,
     7.25, 7.34, 6.27, 6.54, 5.83, 6.44, 5.34, 7.7, 4.19, 7.34]Parameter $t$: Parameter
     $\mu_a$: Parameter $\sigma_a$: Parameter $\mu_b$: Parameter $\sigma_b$:'
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: '数据 = [6.47, 5.82, 8.7, 4.76, 7.62, 6.95, 7.44, 6.73, 3.38, 5.89, 7.81, 6.93,
+    7.23, 6.25, 5.31, 7.71, 7.42, 5.81, 4.03, 7.09, 7.1, 7.62, 7.74, 6.19, 7.3, 7.37,
+    6.99, 2.97, 3.3, 7.08, 6.23, 3.67, 3.05, 6.67, 6.5, 6.08, 3.7, 6.76, 6.56, 3.61,
+    7.25, 7.34, 6.27, 6.54, 5.83, 6.44, 5.34, 7.7, 4.19, 7.34]参数 $t$: 参数 $\mu_a$:
+    参数 $\sigma_a$: 参数 $\mu_b$: 参数 $\sigma_b$:'
 - en: '<canvas id="mixturePdf" style="max-height: 400px">'
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: '<canvas id="mixturePdf" style="max-height: 400px">'
 - en: 'Likelihood: Log Likelihood: Best Seen:'
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: 似然：对数似然：最佳观察：
 - en: What is a Gaussian Mixture?
+  id: totrans-6
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 什么是高斯混合？
 - en: 'A Gaussian Mixture describes a random variable whose PDF could come from one
     of two Gaussians (or more, but we will just use two in this demo). There is a
     certain probability the sample will come from the first gaussian, otherwise it
     comes from the second. It has five parameters: 4 to describe the two gaussians
     and one to describe the relative weighting of the two gaussians.'
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: 高斯混合描述了一个随机变量，其概率密度函数可能来自两个高斯分布（或更多，但在这个演示中我们只使用两个）。样本来自第一个高斯分布的概率是确定的，否则来自第二个。它有五个参数：四个用于描述两个高斯分布，一个用于描述两个高斯分布的相对权重。
 - en: Generative Code
+  id: totrans-8
   prefs:
   - PREF_H4
   type: TYPE_NORMAL
+  zh: 生成代码
 - en: '[PRE0]'
+  id: totrans-9
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: Probability Density Function
+  id: totrans-10
   prefs:
   - PREF_H4
   type: TYPE_NORMAL
+  zh: 概率密度函数
 - en: \begin{align*} f(X=x) = t \cdot f(A=x) + (1-t) \cdot f(B=x) \end{align*} $\text{st}$
     $A \sim N(\mu_a, \sigma_a^2)$ $B \sim N(\mu_b, \sigma_b^2)$
+  id: totrans-11
   prefs: []
   type: TYPE_NORMAL
+  zh: \begin{align*} f(X=x) = t \cdot f(A=x) + (1-t) \cdot f(B=x) \end{align*} $\text{st}$
+    $A \sim N(\mu_a, \sigma_a^2)$ $B \sim N(\mu_b, \sigma_b^2)$
 - en: 'Putting it all together, the PDF of a Gaussian Mixture is:'
+  id: totrans-12
   prefs: []
   type: TYPE_NORMAL
+  zh: 将所有这些放在一起，高斯混合的概率密度函数（PDF）为：
 - en: \begin{align*} f(x) = t \cdot \Big(\frac{1}{\sqrt{2\pi}\sigma_a} e^{-\frac{1}{2}(\frac{x-\mu_a}{\sigma_a})^2}\Big)
     + (1-t) \cdot \Big(\frac{1}{\sqrt{2\pi}\sigma_b} e^{-\frac{1}{2}(\frac{x-\mu_b}{\sigma_b})^2}\Big)
     \end{align*}
+  id: totrans-13
   prefs: []
   type: TYPE_NORMAL
+  zh: \begin{align*} f(x) = t \cdot \Big(\frac{1}{\sqrt{2\pi}\sigma_a} e^{-\frac{1}{2}(\frac{x-\mu_a}{\sigma_a})^2}\Big)
+    + (1-t) \cdot \Big(\frac{1}{\sqrt{2\pi}\sigma_b} e^{-\frac{1}{2}(\frac{x-\mu_b}{\sigma_b})^2}\Big)
+    \end{align*}
 - en: MLE for Gaussian Mixture
+  id: totrans-14
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 高斯混合的最大似然估计
 - en: 'Special note: even though the generative story has a bernoulli (group membership)
     it is never observed. MLE maximizes the likelihood of the observed data.'
+  id: totrans-15
   prefs: []
   type: TYPE_NORMAL
+  zh: 特别说明：尽管生成故事有一个伯努利（组成员）属性，但它从未被观察到。MLE最大化的是观察数据的似然。
 - en: Let $\vec{\theta} = [t, \mu_a,\mu_b,\sigma_a, \sigma_b]$ be the parameters.
     Because the math will get long I will use $\theta$ as notation in place of $\vec{\theta}$.
     Just keep in mind that it is a vector.
+  id: totrans-16
   prefs: []
   type: TYPE_NORMAL
+  zh: 令 $\vec{\theta} = [t, \mu_a,\mu_b,\sigma_a, \sigma_b]$ 为参数。因为数学表达式会变得很长，我将使用
+    $\theta$ 作为符号来代替 $\vec{\theta}$。只需记住它是一个向量。
 - en: The MLE idea is to chose values of $\theta$ which maximize log likelihood. All
     optimization methods require us to calculate the partial derivatives of the thing
     we want to optimize (log likelihood) with respect to the values we can change
     (our parameters).
+  id: totrans-17
   prefs: []
   type: TYPE_NORMAL
+  zh: 最大似然估计（MLE）的想法是选择使对数似然最大的 $\theta$ 值。所有优化方法都需要我们计算我们想要优化的东西（对数似然）相对于我们可以改变的值（我们的参数）的偏导数。
 - en: Likelihood function
+  id: totrans-18
   prefs:
   - PREF_H4
   type: TYPE_NORMAL
+  zh: 似然函数
 - en: \begin{align*} L(\theta) &= \prod_i^n f(x_i | \theta) \\ &= \prod_i^n \Big[t
     \cdot \Big(\frac{1}{\sqrt{2\pi}\sigma_a} e^{-\frac{1}{2}(\frac{x_i-\mu_a}{\sigma_a})^2}\Big)
     + (1-t) \cdot \Big(\frac{1}{\sqrt{2\pi}\sigma_b} e^{-\frac{1}{2}(\frac{x_i-\mu_b}{\sigma_b})^2}\Big)
     \Big] \end{align*}
+  id: totrans-19
   prefs: []
   type: TYPE_NORMAL
+  zh: \begin{align*} L(\theta) &= \prod_i^n f(x_i | \theta) \\ &= \prod_i^n \Big[t
+    \cdot \Big(\frac{1}{\sqrt{2\pi}\sigma_a} e^{-\frac{1}{2}(\frac{x_i-\mu_a}{\sigma_a})^2}\Big)
+    + (1-t) \cdot \Big(\frac{1}{\sqrt{2\pi}\sigma_b} e^{-\frac{1}{2}(\frac{x_i-\mu_b}{\sigma_b})^2}\Big)
+    \Big] \end{align*}
 - en: Log Likelihood function
+  id: totrans-20
   prefs:
   - PREF_H4
   type: TYPE_NORMAL
+  zh: 对数似然函数
 - en: \begin{align*} LL(\theta) &= \log L(\theta) \\ &= \log \prod_i^n f(x_i | \theta)
     \\ &= \sum_i^n \log f(x_i | \theta) \\ \end{align*}
+  id: totrans-21
   prefs: []
   type: TYPE_NORMAL
+  zh: \begin{align*} LL(\theta) &= \log L(\theta) \\ &= \log \prod_i^n f(x_i | \theta)
+    \\ &= \sum_i^n \log f(x_i | \theta) \\ \end{align*}
 - en: 'That is sufficient for now, but if you wanted to expand out the term you would
     get: \begin{align*} LL(\theta) &= \sum_i^n \log \Big[t \cdot \Big(\frac{1}{\sqrt{2\pi}\sigma_a}
     e^{-\frac{1}{2}(\frac{x_i-\mu_a}{\sigma_a})^2}\Big) + (1-t) \cdot \Big(\frac{1}{\sqrt{2\pi}\sigma_b}
     e^{-\frac{1}{2}(\frac{x_i-\mu_b}{\sigma_b})^2}\Big) \Big] \end{align*}'
+  id: totrans-22
   prefs: []
   type: TYPE_NORMAL
+  zh: 现在已经足够了，但如果你想要扩展这个术语，你会得到：\begin{align*} LL(\theta) &= \sum_i^n \log \Big[t
+    \cdot \Big(\frac{1}{\sqrt{2\pi}\sigma_a} e^{-\frac{1}{2}(\frac{x_i-\mu_a}{\sigma_a})^2}\Big)
+    + (1-t) \cdot \Big(\frac{1}{\sqrt{2\pi}\sigma_b} e^{-\frac{1}{2}(\frac{x_i-\mu_b}{\sigma_b})^2}\Big)
+    \Big] \end{align*}
 - en: Derivative of LL with respect to $\theta$
+  id: totrans-23
   prefs:
   - PREF_H4
   type: TYPE_NORMAL
+  zh: 关于 $\theta$ 的 LL 的导数
 - en: Here is an example of calculating a partial derivative with respect to one of
     the parameters, $\mu_a$. You would need a derivative like this for all parameters.
+  id: totrans-24
   prefs: []
   type: TYPE_NORMAL
+  zh: 这里是一个计算关于参数之一 $\mu_a$ 的偏导数的例子。你需要为所有参数都找到这样的导数。
 - en: '**Caution:** When I first wrote this demo I thought it would be a simple derivative
     . It is not so simple because the log has a sum in it. As such the log term doesn''t
     reduce. The log still serves to make the outer $\prod$ into a $\sum$. As such
@@ -115,14 +180,21 @@
     the derivative proof) is that the resulting derivative is complex enough that
     we will want a way to compute argmax without having to set that derivative equal
     to zero and solving for $\mu_a$. Enter gradient descent!'
+  id: totrans-25
   prefs: []
   type: TYPE_NORMAL
+  zh: '**注意：**当我最初写这个演示时，我以为这只是一个简单的导数。它并不简单，因为对数中有一个和。因此，对数项不会减少。对数仍然用于将外层的 $\prod$
+    转换为 $\sum$。因此，$LL$ 的偏导数是可解的，但证明使用了相当多的链式法则。**要点：**本节的主要要点（如果你想跳过导数证明）是，得到的导数足够复杂，我们希望有一种方法来计算
+    argmax，而无需将那个导数设为零并求解 $\mu_a$。梯度下降法登场！'
 - en: 'A good first step when doing a huge derivative of a log likelihood function
     is to think of the derivative for the log of likelihood of a single datapoint.
     This is the inner sum in the log likelihood expression: $ \frac{\d}{\d \mu_a}
     \log f(x_i|\theta) $'
+  id: totrans-26
   prefs: []
   type: TYPE_NORMAL
+  zh: 在对对数似然函数进行大量求导时，一个好的第一步是考虑单个数据点的似然对数的导数。这是对数似然表达式中的内层求和：$ \frac{\d}{\d \mu_a}
+    \log f(x_i|\theta) $
 - en: 'Before we start: notice that $\mu_a$ does not show up in this term from $f(x_i|\theta)
     $: $(1-t) \cdot \Big(\frac{1}{\sqrt{2\pi}\sigma_b} e^{-\frac{1}{2}(\frac{x_i-\mu_b}{\sigma_b})^2}\Big)
     =K $ In the proof, when we encounter this term, we are going to think of it as
@@ -142,24 +214,51 @@
     \cdot \Big[ -(\frac{x_i-\mu_a}{\sigma_a}) \cdot \frac{-1}{\sigma_a}\Big] &&\text{final
     derivative} \\ &= \frac{t}{f(x_i|\theta) \sqrt{2\pi}\sigma_a^3} \cdot e^{-\frac{1}{2}(\frac{x_i-\mu_a}{\sigma_a})^2}
     \cdot (x_i-\mu_a) &&\text{simplify} \\ \end{align*}'
+  id: totrans-27
   prefs: []
   type: TYPE_NORMAL
+  zh: 在开始之前：请注意，$\mu_a$ 在 $f(x_i|\theta) $ 这个项中不出现：$(1-t) \cdot \Big(\frac{1}{\sqrt{2\pi}\sigma_b}
+    e^{-\frac{1}{2}(\frac{x_i-\mu_b}{\sigma_b})^2}\Big) =K $ 在证明中，当我们遇到这个项时，我们将把它视为一个常数，我们称之为
+    $K$。好的，让我们开始吧！ \begin{align*} \frac{\d}{\d \mu_a} & \log f(x_i|\theta) \\ &= \frac{1}{f(x_i|\theta)}
+    \frac{\d}{\d \mu_a} f(x_i|\theta) &&\text{链式法则在 }\log \\ &= \frac{1}{f(x_i|\theta)}
+    \frac{\d}{\d \mu_a} \Big[t \cdot \Big(\frac{1}{\sqrt{2\pi}\sigma_a} e^{-\frac{1}{2}(\frac{x_i-\mu_a}{\sigma_a})^2}\Big)
+    + K\Big] &&\text{代入 }f(x_i|\theta)\\ &= \frac{1}{f(x_i|\theta)} \frac{\d}{\d \mu_a}
+    \Big[t \cdot \Big(\frac{1}{\sqrt{2\pi}\sigma_a} e^{-\frac{1}{2}(\frac{x_i-\mu_a}{\sigma_a})^2}\Big)\Big]
+    &&\frac{\d}{\d \mu_a} K = 0\\ &= \frac{t}{f(x_i|\theta) \sqrt{2\pi}\sigma_a} \cdot
+    \frac{\d}{\d \mu_a} e^{-\frac{1}{2}(\frac{x_i-\mu_a}{\sigma_a})^2} &&\text{提取常数}\\
+    &= \frac{t}{f(x_i|\theta) \sqrt{2\pi}\sigma_a} \cdot e^{-\frac{1}{2}(\frac{x_i-\mu_a}{\sigma_a})^2}
+    \cdot \frac{\d}{\d \mu_a} -\frac{1}{2}(\frac{x_i-\mu_a}{\sigma_a})^2&&\text{对
+    }e^x \text{ 求链式}\\ &= \frac{t}{f(x_i|\theta) \sqrt{2\pi}\sigma_a} \cdot e^{-\frac{1}{2}(\frac{x_i-\mu_a}{\sigma_a})^2}
+    \cdot \Big[-(\frac{x_i-\mu_a}{\sigma_a}) \frac{\d}{\d \mu_a} (\frac{x_i-\mu_a}{\sigma_a})\Big]&&\text{对
+    }x^2 \text{ 求链式}\\ &= \frac{t}{f(x_i|\theta) \sqrt{2\pi}\sigma_a} \cdot e^{-\frac{1}{2}(\frac{x_i-\mu_a}{\sigma_a})^2}
+    \cdot \Big[ -(\frac{x_i-\mu_a}{\sigma_a}) \cdot \frac{-1}{\sigma_a}\Big] &&\text{最终导数}
+    \\ &= \frac{t}{f(x_i|\theta) \sqrt{2\pi}\sigma_a^3} \cdot e^{-\frac{1}{2}(\frac{x_i-\mu_a}{\sigma_a})^2}
+    \cdot (x_i-\mu_a) &&\text{简化} \\ \end{align*}
 - en: 'That was for a single data-point. For the full dataset: \begin{align*} \frac{\d
     LL(\theta)}{\d \mu_a} &= \sum_i^n \frac{\d}{\d \mu_a} \log f(x_i|\theta)\\ &=
     \sum_i^n \frac{t}{f(x_i|\theta) \sqrt{2\pi}\sigma_a^3} \cdot e^{-\frac{1}{2}(\frac{x_i-\mu_a}{\sigma_a})^2}
     \cdot (x_i-\mu_a) \end{align*}'
+  id: totrans-28
   prefs: []
   type: TYPE_NORMAL
+  zh: 那是针对单个数据点的。对于完整的数据集： \begin{align*} \frac{\d LL(\theta)}{\d \mu_a} &= \sum_i^n
+    \frac{\d}{\d \mu_a} \log f(x_i|\theta)\\ &= \sum_i^n \frac{t}{f(x_i|\theta) \sqrt{2\pi}\sigma_a^3}
+    \cdot e^{-\frac{1}{2}(\frac{x_i-\mu_a}{\sigma_a})^2} \cdot (x_i-\mu_a) \end{align*}
 - en: This process should be repeated for all five parameters! Now, how should we
     find a value of $\mu_a$, which, in the presence of the other settings to parameters,
     and the data, makes this derivative zero? Setting the derivative = 0 and solving
     for $\mu_a$ is not going to work.
+  id: totrans-29
   prefs: []
   type: TYPE_NORMAL
+  zh: 这个过程应该对所有五个参数重复进行！现在，我们应该如何找到一个 $\mu_a$ 的值，在存在其他参数设置和数据的情况下，使得这个导数为零？将导数设为 0
+    并求解 $\mu_a$ 是不会奏效的。
 - en: Use an Optimizer to Estimate Params
+  id: totrans-30
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 使用优化器估计参数
 - en: Once we have a $LL$ function and the derivative of $LL$ with respect to each
     parameter we are ready to compute argmax using an optimizer. In this case the
     best choice would probably be gradient ascent (or gradient descent with negative
@@ -167,8 +266,15 @@
     LL(\theta)}{\d t}\\ \frac{\d LL(\theta)}{\d \mu_a}\\ \frac{\d LL(\theta)}{\d \mu_b}\\
     \frac{\d LL(\theta)}{\d \sigma_a}\\ \frac{\d LL(\theta)}{\d \sigma_b}\\ \end{bmatrix}
     \end{align*}
+  id: totrans-31
   prefs: []
   type: TYPE_NORMAL
+  zh: 一旦我们有了 $LL$ 函数以及 $LL$ 对每个参数的导数，我们就可以使用优化器来计算 argmax。在这种情况下，最佳选择可能是梯度上升（或负对数似然梯度下降）。
+    \begin{align*} \nabla_{\theta} LL(\theta) &=\begin{bmatrix} \frac{\d LL(\theta)}{\d
+    t}\\ \frac{\d LL(\theta)}{\d \mu_a}\\ \frac{\d LL(\theta)}{\d \mu_b}\\ \frac{\d
+    LL(\theta)}{\d \sigma_a}\\ \frac{\d LL(\theta)}{\d \sigma_b}\\ \end{bmatrix} \end{align*}
 - en: </canvas>
+  id: totrans-32
   prefs: []
   type: TYPE_NORMAL
+  zh: </canvas>

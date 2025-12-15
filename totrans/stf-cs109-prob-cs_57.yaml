@@ -1,30 +1,44 @@
 - en: Independence in Variables
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 变量的独立性
 - en: 原文：[https://chrispiech.github.io/probabilityForComputerScientists/en/part3/independent_vars/](https://chrispiech.github.io/probabilityForComputerScientists/en/part3/independent_vars/)
+  id: totrans-1
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 原文：[https://chrispiech.github.io/probabilityForComputerScientists/en/part3/independent_vars/](https://chrispiech.github.io/probabilityForComputerScientists/en/part3/independent_vars/)
 - en: '* * *'
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: '* * *'
 - en: Discrete
+  id: totrans-3
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 离散型
 - en: 'Two discrete random variables $X$ and $Y$ are called independent if: \begin{align*}
     \P(X=x,Y=y) = \P(X=x)\P(Y=y) \text{ for all } x,y \end{align*} Intuitively: knowing
     the value of $X$ tells us nothing about the distribution of $Y$. If two variables
     are not independent, they are called dependent. This is a similar conceptually
     to independent events, but we are dealing with multiple *variables*. Make sure
     to keep your events and variables distinct.'
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: 两个离散随机变量 $X$ 和 $Y$ 被称为相互独立，如果：\begin{align*} \P(X=x,Y=y) = \P(X=x)\P(Y=y) \text{
+    对于所有 } x,y \end{align*} 直观地说：知道 $X$ 的值对我们了解 $Y$ 的分布没有任何帮助。如果两个变量不是独立的，它们被称为相关。这个概念在概念上与独立事件相似，但我们处理的是多个
+    *变量*。确保将事件和变量区分开来。
 - en: Continuous
+  id: totrans-5
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 连续型
 - en: 'Two continuous random variables $X$ and $Y$ are called independent if: \begin{align*}
     \P(X\leq a, Y \leq b) = \P(X \leq a)\P(Y \leq b) \text{ for all } a,b \end{align*}
     This can be stated equivalently using either the CDF or the PDF: \begin{align*}
@@ -33,19 +47,30 @@
     density function then your random variable are independent (or the joint probability
     function for discrete random variables): \begin{align*} &f(X=x,Y=y) = h(x)g(y)
     \\ &\P(X=x,Y=y) = h(x)g(y) \end{align*}'
+  id: totrans-6
   prefs: []
   type: TYPE_NORMAL
+  zh: 两个连续随机变量 $X$ 和 $Y$ 被称为相互独立，如果：\begin{align*} \P(X\leq a, Y \leq b) = \P(X \leq
+    a)\P(Y \leq b) \text{ 对于所有 } a,b \end{align*} 这可以使用累积分布函数（CDF）或概率密度函数（PDF）等价地陈述：\begin{align*}
+    F_{X,Y}(a,b) &= F_{X}(a)F_{Y}(b) \text{ 对于所有 } a,b \\ f(X=x,Y=y) &= f(X=x)f(Y=y)
+    \text{ 对于所有 } x,y \end{align*} 更一般地，如果你可以分解联合密度函数，那么你的随机变量是独立的（或者对于离散随机变量的联合概率函数）：\begin{align*}
+    &f(X=x,Y=y) = h(x)g(y) \\ &\P(X=x,Y=y) = h(x)g(y) \end{align*}
 - en: 'Example: Showing Independence'
+  id: totrans-7
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 示例：展示独立性
 - en: 'Let $N$ be the # of requests to a web server/day and that $N \sim \Poi(\lambda)$.
     Each request comes from a human with probability = $p$ or from a "bot" with probability
     = $(1 – p)$. Define $X$ to be the # of requests from humans/day and $Y$ to be
     the # of requests from bots/day. Show that the number of requests from humans,
     $X$, is independent of the number of requests from bots, $Y$.'
+  id: totrans-8
   prefs: []
   type: TYPE_NORMAL
+  zh: 设 $N$ 为每天对网络服务器的请求数，且 $N \sim \Poi(\lambda)$。每个请求以概率 $p$ 来自人类，以概率 $(1 – p)$
+    来自“机器人”。定义 $X$ 为每天来自人类的请求数，$Y$ 为每天来自机器人的请求数。证明来自人类的请求数 $X$ 与来自机器人的请求数 $Y$ 是独立的。
 - en: 'Since requests come in independently, the probability of $X$ conditioned on
     knowing the number of requests is a Binomial. Specifically: \begin{align*} (X|N)
     &\sim \Bin(N,p)\\ (Y|N) &\sim \Bin(N, 1-p) \end{align*} To get started we need
@@ -66,12 +91,29 @@
     \cdot \frac{(1-p)^y \cdot \lambda ^{y}}{y!} \cdot e^{-\lambda} && \text{Rearrange}
     \\ \end{align*} Because the joint can be factored into a term that only has $x$
     and a term that only has $y$, the random variables are independent.'
+  id: totrans-9
   prefs: []
   type: TYPE_NORMAL
+  zh: 由于请求是独立到达的，因此知道请求数量后 $X$ 的概率分布是一个二项分布。具体来说：\begin{align*} (X|N) &\sim \Bin(N,p)\\
+    (Y|N) &\sim \Bin(N, 1-p) \end{align*} 要开始，我们首先需要写出 $X$ 和 $Y$ 的联合概率的表达式。为了做到这一点，我们使用链式法则：\begin{align*}
+    \P(X=x,Y=y) = \P(X = x, Y=y|N = x+y)\P(N = x+y) \end{align*} 我们可以计算这个表达式中的每一项。第一项是二项分布
+    $X|N$ 的概率质量函数，其中 $x$ 个“成功”。第二项是泊松分布 $N$ 取值为 $x+y$ 的概率：\begin{align*} &\P(X = x,
+    Y=y|N = x+y) = { {x + y} \choose x}p^x(1-p)^y \\ &\P(N = x + y) = e^{-\lambda}\frac{\lambda^{x+y}}{(x+y)!}
+    \end{align*} 现在我们可以将这些放在一起，我们得到了联合概率的表达式：\begin{align*} &\P(X = x, Y=y) = { {x
+    + y} \choose x}p^x(1-p)^y e^{-\lambda}\frac{\lambda^{x+y}}{(x+y)!} \end{align*}
+    在这一点上，我们已经推导出 $X$ 和 $Y$ 的联合分布。为了证明这两个变量是独立的，我们需要能够分解联合概率：\begin{align*} \P&(X
+    = x, Y=y) \\ &= { {x + y} \choose x}p^x(1-p)^y e^{-\lambda}\frac{\lambda^{x+y}}{(x+y)!}
+    \\ &= \frac{(x+y)!}{x! \cdot y!} p^x(1-p)^y e^{-\lambda}\frac{\lambda^{x+y}}{(x+y)!}
+    \\ &= \frac{1}{x! \cdot y!} p^x(1-p)^y e^{-\lambda}\lambda^{x+y} && \text{消去 (x+y)!}
+    \\ &= \frac{p^x \cdot \lambda^x}{x!} \cdot \frac{(1-p)^y \cdot \lambda ^{y}}{y!}
+    \cdot e^{-\lambda} && \text{重新排列} \\ \end{align*} 因为联合概率可以分解为只包含 $x$ 的项和只包含 $y$
+    的项，所以随机变量是独立的。
 - en: Symmetry of Independence
+  id: totrans-10
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 独立性的对称性
 - en: Independence is symmetric. That means that if random variables $X$ and $Y$ are
     independent, $X$ is independent of $Y$ and $Y$ is independent of $X$. This claim
     may seem meaningless but it can be very useful. Imagine a sequence of events $X_1,X_2,
@@ -79,15 +121,23 @@
     than all previous values). Is $A_{n+1}$ independent of $A_n$? It is easier to
     answer that $A_n$ is independent of $A_{n+1}$. By symmetry of independence both
     claims must be true.
+  id: totrans-11
   prefs: []
   type: TYPE_NORMAL
+  zh: 独立性是对称的。这意味着如果随机变量 $X$ 和 $Y$ 是独立的，那么 $X$ 与 $Y$ 独立，$Y$ 与 $X$ 也独立。这个说法可能看似无意义，但它可能非常有用。想象一个事件序列
+    $X_1,X_2, \dots$。令 $A_i$ 为事件 $X_i$ 是一个“记录值”（例如，它比所有之前的值都要大）。$A_{n+1}$ 是否与 $A_n$
+    独立？回答 $A_n$ 与 $A_{n+1}$ 独立更容易。由于独立性的对称性，这两个说法都必须是正确的。
 - en: Expectation of Products
+  id: totrans-12
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 乘积的期望
 - en: '***Lemma: Product of Expectation for Independent Random Variables***:'
+  id: totrans-13
   prefs: []
   type: TYPE_NORMAL
+  zh: '**引理：独立随机变量的期望乘积**：'
 - en: If two random variables $X$ and $Y$ are independent, the expectation of their
     product is the product of the individual expectations. \begin{align*} &E[X \cdot
     Y] = E[X] \cdot E[Y] && \text{ if $X$ and $Y$ are independent}\\ &E[g(X)h(Y)]
@@ -95,5 +145,9 @@
     that this assumes that $X$ and $Y$ are independent. Contrast this to the sum version
     of this rule (expectation of sum of random variables, is the sum of individual
     expectations) which does **not** require the random variables to be independent.
+  id: totrans-14
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果两个随机变量 $X$ 和 $Y$ 是独立的，那么它们的乘积的期望是各自期望的乘积。 \begin{align*} &E[X \cdot Y] = E[X]
+    \cdot E[Y] && \text{如果 $X$ 和 $Y$ 是独立的}\\ &E[g(X)h(Y)] = E[g(X)]E[h(Y)] && \text{其中
+    $g$ 和 $h$ 是函数} \end{align*} 注意，这假设 $X$ 和 $Y$ 是独立的。与这个规则的求和版本（随机变量和的期望是各自期望的和）进行对比，后者**不需要**随机变量是独立的。

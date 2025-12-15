@@ -1,45 +1,64 @@
 - en: Random Shuffles
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 随机洗牌
 - en: 原文：[https://chrispiech.github.io/probabilityForComputerScientists/en/examples/random_shuffles/](https://chrispiech.github.io/probabilityForComputerScientists/en/examples/random_shuffles/)
+  id: totrans-1
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: '[原文链接](https://chrispiech.github.io/probabilityForComputerScientists/en/examples/random_shuffles/)'
 - en: '* * *'
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: '* * *'
 - en: 'Here is a suprising claim. If you shuffle a standard deck of cards seven times,
     with almost total certainty you can claim that the exact ordering of cards has
     never been seen! Wow! Let''s explore. We can ask this question formally as: What
     is the probability that in the $n$ shuffles seen since the start of time, yours
     is unique?'
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: 这里有一个令人惊讶的声明。如果你将一副标准牌洗七次，几乎可以肯定地说，牌的确切排序从未被见过！哇！让我们来探索一下。我们可以正式地提出这个问题：在从时间开始以来的$n$次洗牌中，你的排序是独一无二的概率是多少？
 - en: Orderings of 52 Cards
+  id: totrans-4
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 52张牌的排序
 - en: 'Our adventure starts with a simple observation: there are **very** many ways
     to order 52 cards. But exactly how many unique orderings of a standard deck are
     there?'
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们的冒险从一个简单的观察开始：有**非常**多的方式来排序52张牌。但标准牌组的确切独特排序有多少呢？
 - en: 'There are 52! ways to order a standard deck of cards. Since each card is unique
     (each card has a unique suit, value combination) then we can apply the rule for
     [Permutations of Distinct Objects](../../part1/combinatorics/#perm_distinct):
     \begin{align*} \text{Num. Unique Orderings} &= 52! \end{align*} That is a humongous
     number. 52! equals 80658175170943878571660636856403766975289505440883277824000000000000.'
+  id: totrans-6
   prefs: []
   type: TYPE_NORMAL
+  zh: 有$52!$种方式来排序一副标准牌。由于每张牌都是独一无二的（每张牌都有独特的花色和数值组合），因此我们可以应用[不同对象的排列规则](../../part1/combinatorics/#perm_distinct)：\begin{align*}
+    \text{Num. Unique Orderings} &= 52! \end{align*} 这是一个巨大的数字。$52!$等于80658175170943878571660636856403766975289505440883277824000000000000。
 - en: That is over $8 \cdot 10^{67}$. Recall it is estimated that there are around
     $10^{82}$ atoms in the observable universe
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: 那超过了$8 \cdot 10^{67}$。回想一下，据估计，可观测宇宙中有大约$10^{82}$个原子。
 - en: Number of Shuffles Ever Seen
+  id: totrans-8
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 已见洗牌次数
 - en: Of course we don't know what the value of $n$ is — nobody has been counting
     how many times humans have shuffled cards. We can come up with a reasonable overestimate.
     Assume $k$ = 7 billion people have been shuffling cards once a second since cards
@@ -48,17 +67,24 @@
     the [Topkapı deck](https://cards.old.no/1500-mamluk/) of cards in Istanbul around
     the 15th century ad. That is about $s$ = 16,472,828,422 seconds ago. As such our
     overestimate is $n = s \cdot k \approx 10^{20}$.
+  id: totrans-9
   prefs: []
   type: TYPE_NORMAL
+  zh: 当然，我们不知道$n$的值是多少——没有人计算过人类洗牌的次数。我们可以提出一个合理的过高估计。假设$k$ = 70亿人自从发明牌以来每秒洗一次牌。扑克牌可能最早在9世纪的唐朝被发明。据我所知，最古老的52张牌是伊斯坦布尔的[托普卡比牌组](https://cards.old.no/1500-mamluk/)，大约在公元15世纪。这样，我们的过高估计是$n
+    = s \cdot k \approx 10^{20}$。
 - en: 'Next let''s calculate the probability that none of those $n$ historical shuffles
     matches your particular ordering of 52 cards. There are two valid approaches:
     using equally likely outcomes, and using independence.'
+  id: totrans-10
   prefs: []
   type: TYPE_NORMAL
+  zh: 接下来，让我们计算那些$n$次历史洗牌中没有一次与你特定的52张牌排序相匹配的概率。有两种有效的方法：使用等可能结果和使用独立性。
 - en: Equally Likely Outcomes
+  id: totrans-11
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 等可能结果
 - en: 'One way to the probability that your ordering of 52 cards is unique in history
     is to use [Equally Likely Outcomes](../../part1/equally_likely/). Consider the
     sample space of all the possible ordering of all the cards ever dealt. Each outcome
@@ -70,8 +96,13 @@
     - 1$ ways to order 52 cards that are not yours. We can construct the event space
     by steps: for each of the $n$ shuffles in history select any one of those $52!
     - 1$ orderings. Thus $|E| = (52!-1)^n$.'
+  id: totrans-12
   prefs: []
   type: TYPE_NORMAL
+  zh: 一种计算你52张牌的排序在历史上独一无二概率的方法是使用[等可能结果](../../part1/equally_likely/). 考虑所有可能排序的所有已发牌的样本空间。这个集合中的每个结果都将有$n$个牌组，每个牌组都有自己的排序。因此，样本空间的大小是$|S|
+    = (52!)^{n}$。注意，样本空间中的所有结果都是等可能的——我们可以通过对称性来说服自己——没有任何排序比其他排序更有可能。从那个样本空间中，我们想要计算没有排序与你匹配的结果数量。有$52!
+    - 1$种方式来排序52张不是你的牌。我们可以通过步骤构建事件空间：对于历史上的每次$n$次洗牌，选择那些$52! - 1$种排序中的任意一种。因此，$|E|
+    = (52!-1)^n$。
 - en: 'Let $U$ be the event that your particular ordering of 52 cards is unique \begin{align*}
     \P(U) &= \frac{|E|}{|S|} && \text{Equally Likely Outcomes}\\ &= \frac{(52!-1)^n}{(52!)^n}
     \\ &= \frac{(52!-1)^{10^{20}}}{(52!)^{10^{20}}} && n = 10^{20} \\ &= \Big(\frac{52!-1}{52!}\Big)
@@ -84,54 +115,90 @@
     &= -1.24 \times 10^{-48} \end{align*} Now if we undo the log (and use the fact
     that $e^{-x}$ is very close to $1 - x$ for small values of $x$): \begin{align*}
     \P(U) &= e^{-1.24 \times 10^{-48}} \\ &\approx 1 - 1.24 \times 10^{-48} \end{align*}'
+  id: totrans-13
   prefs: []
   type: TYPE_NORMAL
+  zh: 设 $U$ 为你52张牌的特定排序是唯一的 \begin{align*} \P(U) &= \frac{|E|}{|S|} && \text{等可能的结果}\\
+    &= \frac{(52!-1)^n}{(52!)^n} \\ &= \frac{(52!-1)^{10^{20}}}{(52!)^{10^{20}}} &&
+    n = 10^{20} \\ &= \Big(\frac{52!-1}{52!}\Big) ^{10^{20}} \end{align*} 理论上这是正确的答案，但这些数字如此之大，以至于不清楚如何评估它，即使使用计算机。一个好主意是首先计算[对数概率](../../part1/log_probabilities/)：\begin{align*}
+    \log \P(U) &= \log \Big[\Big(\frac{52!-1}{52!}\Big) ^{10^{20}}\Big] \\ &= 10^{20}
+    \cdot \log \Big(\frac{52!-1}{52!}\Big) \\ &= 10^{20} \cdot \Big[ \log (52!-1)
+    - \log(52!) \Big] \\ &= 10^{20} \cdot (-1.24 \times 10^{-68}) \\ &= -1.24 \times
+    10^{-48} \end{align*} 现在如果我们取消对数（并使用 $e^{-x}$ 对于小的 $x$ 值非常接近 $1 - x$ 的这一事实）：\begin{align*}
+    \P(U) &= e^{-1.24 \times 10^{-48}} \\ &\approx 1 - 1.24 \times 10^{-48} \end{align*}
 - en: So the probability that your particular ordering is unique is very close to
     $1$, and the probability that someone else got the same ordering, $1 - P(U)$,
     is a number with 47 zeros after the decimal point. It is safe to say your ordering
     is unique.
+  id: totrans-14
   prefs: []
   type: TYPE_NORMAL
+  zh: 因此，你特定排序是唯一的概率非常接近于 $1$，而其他人得到相同排序的概率，$1 - P(U)$，是一个小数点后有47个零的数字。可以肯定地说，你的排序是唯一的。
 - en: 'In python, you can use a special library called decimal to compute very small
     probabilities. Here is an example of how to compute $\log \frac{52!-1}{52!}$:'
+  id: totrans-15
   prefs: []
   type: TYPE_NORMAL
+  zh: 在python中，你可以使用一个名为decimal的特殊库来计算非常小的概率。以下是如何计算 $\log \frac{52!-1}{52!}$ 的一个例子：
 - en: '[PRE0]'
+  id: totrans-16
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: We can also check our result using the [binomial approximation](https://en.wikipedia.org/wiki/Binomial_approximation).
+  id: totrans-17
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们还可以使用[二项式近似](https://en.wikipedia.org/wiki/Binomial_approximation)来检查我们的结果。
 - en: 'For small values of $x$, the value $(1 - x)^n$ is very close to $1 - nx$, and
     this gives us another way to compute $P(U)$: \begin{align*} \P(U) &= \frac{(52!-1)^n}{(52!)^n}
     \\ &= \Big(1 - \frac{1}{52!}\Big)^{10^{20}} && n = 10^{20} \\ &\approx 1 - \frac{10^{20}}{52!}
     \\ &\approx 1 - 1.24 \times 10^{-48} \end{align*}'
+  id: totrans-18
   prefs: []
   type: TYPE_NORMAL
+  zh: 对于小的 $x$ 值，$(1 - x)^n$ 的值非常接近于 $1 - nx$，这为我们计算 $P(U)$ 提供了另一种方法：\begin{align*}
+    \P(U) &= \frac{(52!-1)^n}{(52!)^n} \\ &= \Big(1 - \frac{1}{52!}\Big)^{10^{20}}
+    && n = 10^{20} \\ &\approx 1 - \frac{10^{20}}{52!} \\ &\approx 1 - 1.24 \times
+    10^{-48} \end{align*}
 - en: This agrees with the result we got using python's decimal library.
+  id: totrans-19
   prefs: []
   type: TYPE_NORMAL
+  zh: 这与使用python的decimal库得到的结果一致。
 - en: Independence
+  id: totrans-20
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 独立性
 - en: Another approach is to define events $D_i$ that the $i$th card shuffle is different
     than yours. Because we assume each shuffle is independent, then $P(U) = \prod_i
     P(D_i)$. What is the probability of $(D_i)$? If you think of the sample space
     of $D_i$, it is 52! ways of ordering a deck cards. The event space is the 52!
     - 1 outcomes which are not your ordering.
+  id: totrans-21
   prefs: []
   type: TYPE_NORMAL
+  zh: 另一种方法是定义事件 $D_i$，即第 $i$ 张牌的洗牌不同于你的。因为我们假设每次洗牌都是独立的，所以 $P(U) = \prod_i P(D_i)$。$(D_i)$
+    的概率是多少？如果你考虑 $D_i$ 的样本空间，它是以52!种方式排序一副牌。事件空间是除了你的排序之外的52! - 1种结果。
 - en: \begin{align*} \P(U) &= \prod_{i=1}^n \P(D_i) \\ \log \P(U) &= \sum_{i=1}^n
     \log \P(D_i) \\ &= n \cdot \log \P(D_i) \\ &= 10^{20} \cdot \log \frac{52!-1}{52!}\\
     &\approx 10^{20} \cdot -1.24 \times 10^{-68} \end{align*} Which is the same answer
     we got with the other approach for $\log \P(U) $
+  id: totrans-22
   prefs: []
   type: TYPE_NORMAL
+  zh: \begin{align*} \P(U) &= \prod_{i=1}^n \P(D_i) \\ \log \P(U) &= \sum_{i=1}^n
+    \log \P(D_i) \\ &= n \cdot \log \P(D_i) \\ &= 10^{20} \cdot \log \frac{52!-1}{52!}\\
+    &\approx 10^{20} \cdot -1.24 \times 10^{-68} \end{align*} 这与另一种方法得到 $\log \P(U)$
+    的答案相同
 - en: How Random is your Shuffle?
+  id: totrans-23
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 你的洗牌有多随机？
 - en: A final question we can look into. How do you get a truly random ordering of
     cards? Dave Bayer and Persi Diaconis in 1992 worked through this problem and published
     their results in the article [Trailing the Dovetail Shuffle to its Lair](https://www.projecteuclid.org/journals/annals-of-applied-probability/volume-2/issue-2/Trailing-the-Dovetail-Shuffle-to-its-Lair/10.1214/aoap/1177005705.full).
@@ -139,5 +206,9 @@
     also known as the dovetail shuffle, you are almost garunteed a random ordering
     of cards. The methodology used paved the way for studying psuedo random numbers
     produced by computers.
+  id: totrans-24
   prefs: []
   type: TYPE_NORMAL
+  zh: 一个我们可以探讨的最终问题。如何得到一张真正随机的牌序？1992年，Dave Bayer和Persi Diaconis研究了这个问题，并在文章[追踪 dovetail
+    shuffle 至其巢穴](https://www.projecteuclid.org/journals/annals-of-applied-probability/volume-2/issue-2/Trailing-the-Dovetail-Shuffle-to-its-Lair/10.1214/aoap/1177005705.full)中发表了他们的研究结果。他们展示了如果你使用[
+    riffle shuffle](https://en.wikipedia.org/wiki/Shuffling)（也称为 dovetail shuffle）的方式洗牌七次，几乎可以保证得到一张随机排序的牌。他们使用的方法为研究计算机产生的伪随机数铺平了道路。

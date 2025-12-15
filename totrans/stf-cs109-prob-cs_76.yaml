@@ -1,20 +1,28 @@
 - en: Sampling
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 抽样
 - en: 原文：[https://chrispiech.github.io/probabilityForComputerScientists/en/part4/samples/](https://chrispiech.github.io/probabilityForComputerScientists/en/part4/samples/)
+  id: totrans-1
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 原文：[https://chrispiech.github.io/probabilityForComputerScientists/en/part4/samples/](https://chrispiech.github.io/probabilityForComputerScientists/en/part4/samples/)
 - en: '* * *'
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: '* * *'
 - en: In this section we are going to talk about statistics calculated on samples
     from a population. We are then going to talk about probability claims that we
     can make with respect to the original population -- a central requirement for
     most scientific disciplines.
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: 在本节中，我们将讨论从总体中计算出的统计数据。然后，我们将讨论关于原始总体的概率声明——这是大多数科学学科的基本要求。
 - en: 'Let''s say you are the king of Bhutan and you want to know the average happiness
     of the people in your country. You can''t ask every single person, but you could
     ask a random subsample. In this next section we will consider principled claims
@@ -22,37 +30,54 @@
     and ask them about their happiness. Our data looks like this: ${72, 85, \dots,
     71}$. You can also think of it as a collection of $n$ = 200 I.I.D. (independent,
     identically distributed) random variables ${X_1, X_2, \dots, X_n}$.'
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: 假设你是不丹的国王，你想了解你国家人民的平均幸福感。你不能询问每一个人，但你可以询问一个随机子样本。在下一节中，我们将考虑基于子样本可以做出的原则性声明。假设我们随机抽取了200名不丹人，并询问他们的幸福感。我们的数据看起来像这样：${72,
+    85, \dots, 71}$。你也可以将其视为一个包含 $n$ = 200 个独立同分布（独立，同分布）的随机变量 ${X_1, X_2, \dots,
+    X_n}$ 的集合。
 - en: Understanding Samples
+  id: totrans-5
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 理解样本
 - en: 'The idea behind sampling is simple, but the details and the mathematical notation
     can be complicated. Here is a picture to show you all of the ideas involved:'
+  id: totrans-6
   prefs: []
   type: TYPE_NORMAL
+  zh: 抽样的理念很简单，但细节和数学符号可能很复杂。这里有一张图片来展示所有涉及的想法：
 - en: '![](../Images/43ffe820afd61a1b2606b9c1121ec8e0.png)'
+  id: totrans-7
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/43ffe820afd61a1b2606b9c1121ec8e0.png)'
 - en: The theory is that there is some large population (for example the 774,000 people
     who live in Bhutan). We collect a sample of $n$ people at random, where each person
     in the population is equally likely to be in our sample. From each person we record
     one number (for example their reported happiness). We are going to call the number
     from the ith person we sampled $X_i$. One way to visualize your samples ${X_1,
     X_2, \dots, X_n}$ is to make a histogram of their values.
+  id: totrans-8
   prefs: []
   type: TYPE_NORMAL
+  zh: 理论上，存在某个大型总体（例如居住在不丹的774,000人）。我们随机抽取了 $n$ 个人作为样本，其中总体中的每个人都有同等的机会被纳入我们的样本。我们从每个人那里记录一个数字（例如他们报告的幸福感）。我们将从第i个人那里抽取的数字称为
+    $X_i$。可视化你的样本 ${X_1, X_2, \dots, X_n}$ 的一种方法是为它们的值制作直方图。
 - en: We make the assumption that all of our $X_i$s are identically distributed. That
     means that we are assuming there is a single underlying distribution $F$ that
     we drew our samples from. Recall that a distribution for discrete random variables
     should define a probability mass function.
+  id: totrans-9
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们假设所有的 $X_i$ 都是同分布的。这意味着我们假设有一个单一的潜在分布 $F$，我们从其中抽取了样本。回想一下，离散随机变量的分布应该定义一个概率质量函数。
 - en: Estimating Mean and Variance from Samples
+  id: totrans-10
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 从样本中估计均值和方差
 - en: We assume that the data we look at are IID from the same underlying distribution
     ($F$) with a true mean ($\mu$) and a true variance ($\sigma^2$). Since we can't
     talk to everyone in Bhutan we have to rely on our sample to estimate the mean
@@ -67,23 +92,37 @@
     E[\bar{X}] &= E[\sum_{i=1}^n \frac{X_i}{n}] = \frac{1}{n}E\left[\sum_{i=1}^n X_i\right]
     \\ &= \frac{1}{n}\sum_{i=1}^n E[X_i] = \frac{1}{n}\sum_{i=1}^n \mu = \frac{1}{n}n\mu
     = \mu \end{align*}
+  id: totrans-11
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们假设我们观察到的数据是从同一潜在分布（$F$）中独立同分布（IID）的，具有真实的均值（$\mu$）和真实的方差（$\sigma^2$）。由于我们无法与不丹的所有人交谈，我们必须依靠我们的样本来估计均值和方差。从我们的样本中，我们可以计算出样本均值（$\bar{X}$）和样本方差（$S^2$）。这些是我们对真实均值和真实方差的最好猜测。
+    \begin{align*} \bar{X} &= \sum_{i=1}^n \frac{X_i}{n} \\ S^2 &= \frac{1}{n-1}\sum_{i=1}^n
+    (X_i - \bar{X})^2 \end{align*} 第一个问题要问的是，这些估计是无偏的吗？是的。无偏意味着如果我们重复进行许多次抽样过程，我们估计的期望值应该等于我们试图估计的真实值。我们将证明这一点对于$\bar{X}$。$S^2$的证明在讲义中。
+    \begin{align*} E[\bar{X}] &= E[\sum_{i=1}^n \frac{X_i}{n}] = \frac{1}{n}E\left[\sum_{i=1}^n
+    X_i\right] \\ &= \frac{1}{n}\sum_{i=1}^n E[X_i] = \frac{1}{n}\sum_{i=1}^n \mu
+    = \frac{1}{n}n\mu = \mu \end{align*}
 - en: The equation for sample mean seems related to our understanding of expectation.
     The same could be said about sample variance except for the surprising $(n-1)$
     in the denominator of the equation. Why $(n-1)$? That denominator is necessary
     to make sure that the $E[S^2] = \sigma^2$.
+  id: totrans-12
   prefs: []
   type: TYPE_NORMAL
+  zh: 样本均值的方程似乎与我们对期望的理解有关。同样可以说样本方差，除了方程分母中令人惊讶的$(n-1)$。为什么是$(n-1)$？那个分母是必要的，以确保$E[S^2]
+    = \sigma^2$。
 - en: The intuition behind the proof is that sample variance calculates the distance
     of each sample to the sample mean, **not** the true mean. The sample mean itself
     varies, and we can show that its variance is also related to the true variance.
+  id: totrans-13
   prefs: []
   type: TYPE_NORMAL
+  zh: 证明背后的直觉是样本方差计算每个样本与样本均值的距离，**而不是**真实均值。样本均值本身也在变化，我们可以证明它的方差也与真实方差有关。
 - en: Standard Error
+  id: totrans-14
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 标准误差
 - en: Ok, you convinced me that our estimates for mean and variance are not biased.
     But now I want to know how much my sample mean might vary relative to the true
     mean. \begin{align*} \text{Var}(\bar{X}) &= \text{Var}(\sum_{i=1}^n \frac{X_i}{n})
@@ -91,8 +130,14 @@
     \sum_{i=1}^n\text{Var}( X_i) =\left(\frac{1}{n}\right)^2 \sum_{i=1}^n \sigma^2
     = \left(\frac{1}{n}\right)^2 n \sigma^2 = \frac{\sigma^2}{n}\\ &\approx \frac{S^2}{n}
     \\ \text{Std}(\bar{X}) &\approx \sqrt{\frac{S^2}{n}} \end{align*}
+  id: totrans-15
   prefs: []
   type: TYPE_NORMAL
+  zh: 好的，你让我相信我们对均值和方差的估计是无偏的。但现在我想知道我的样本均值相对于真实均值可能会变化多少。 \begin{align*} \text{Var}(\bar{X})
+    &= \text{Var}(\sum_{i=1}^n \frac{X_i}{n}) = \left(\frac{1}{n}\right)^2 \text{Var}\left(\sum_{i=1}^n
+    X_i\right) \\ &= \left(\frac{1}{n}\right)^2 \sum_{i=1}^n\text{Var}( X_i) =\left(\frac{1}{n}\right)^2
+    \sum_{i=1}^n \sigma^2 = \left(\frac{1}{n}\right)^2 n \sigma^2 = \frac{\sigma^2}{n}\\
+    &\approx \frac{S^2}{n} \\ \text{Std}(\bar{X}) &\approx \sqrt{\frac{S^2}{n}} \end{align*}
 - en: 'That term, Std($\bar{X}$), has a special name. It is called the standard error
     and its how you report uncertainty of estimates of means in scientific papers
     (and how you get error bars). Great! Now we can compute all these wonderful statistics
@@ -100,13 +145,18 @@
     That is hard because the central limit theorem doesn''t apply to the computation
     of $S^2$. Instead we will need a more general technique. See the next chapter:
     [Bootstrapping](../../part4/bootstrapping/)'
+  id: totrans-16
   prefs: []
   type: TYPE_NORMAL
+  zh: 这个术语，Std($\bar{X}$)，有一个特殊的名称。它被称为标准误差，这是你在科学论文中报告均值估计的不确定性（以及如何获得误差条）的方式。太好了！现在我们可以为不丹人计算所有这些美好的统计数据。但等等！你从未告诉我如何计算Std($S^2$)。这是很难的，因为中心极限定理不适用于$S^2$的计算。相反，我们需要一种更通用的技术。参见下一章：[Bootstrapping](../../part4/bootstrapping/)
 - en: Let's say we calculate the our sample of happiness has $n$ = 200 people. The
     sample mean is $\bar{X} = 83$ (what is the unit here? happiness score?) and the
     sample variance is $S^2 = 450$. We can now calculate the standard error of our
     estimate of the mean to be 1.5\. When we report our results we will say that our
     estimate of the average happiness score in Bhutan is 83 $\pm$ 1.5\. Our estimate
     of the variance of happiness is 450 $\pm$ ?.
+  id: totrans-17
   prefs: []
   type: TYPE_NORMAL
+  zh: 假设我们计算的幸福样本有 $n$ = 200 人。样本均值是 $\bar{X} = 83$（这里的单位是什么？幸福分数？）样本方差是 $S^2 = 450$。现在我们可以计算出我们均值估计的标准误差为
+    1.5。当我们报告我们的结果时，我们将说我们对不丹平均幸福分数的估计是 83 $\pm$ 1.5。我们对幸福方差的估计是 450 $\pm$ ?。

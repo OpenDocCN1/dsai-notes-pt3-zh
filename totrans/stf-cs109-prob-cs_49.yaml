@@ -1,77 +1,119 @@
 - en: Algorithmic Art
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 算法艺术
 - en: 原文：[https://chrispiech.github.io/probabilityForComputerScientists/en/examples/algorithmic_art/](https://chrispiech.github.io/probabilityForComputerScientists/en/examples/algorithmic_art/)
+  id: totrans-1
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 原文：[https://chrispiech.github.io/probabilityForComputerScientists/en/examples/algorithmic_art/](https://chrispiech.github.io/probabilityForComputerScientists/en/examples/algorithmic_art/)
 - en: '* * *'
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: '* * *'
 - en: 'We want to generate probabilistic artwork, efficiently. We are going to use
     random variables to make a picture filled with non-overlapping circles:'
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们希望高效地生成概率艺术作品。我们将使用随机变量来制作一个充满非重叠圆的图片：
 - en: <canvas id="canvas" width="782" height="782"></canvas>
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: <canvas id="canvas" width="782" height="782"></canvas>
 - en: <btn id="regenerateButton" onclick="draw()" class="btn btn-primary btn-lg">Regenerate</btn>
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: <btn id="regenerateButton" onclick="draw()" class="btn btn-primary btn-lg">重新生成</btn>
 - en: 'In our art, the circles are different sizes. Specifically, each circle''s **radius**
     is drawn from a Pareto distribution (which is described below). The placement
     algorithm is greedy: we sample 1000 circle sizes. Sort them by size, largest to
     smallest. Loop over the circle sizes and place circles one by one.'
+  id: totrans-6
   prefs: []
   type: TYPE_NORMAL
+  zh: 在我们的艺术作品中，圆的大小各不相同。具体来说，每个圆的**半径**是从帕累托分布（以下将进行描述）中抽取的。放置算法是贪婪的：我们抽取1000个圆的大小。按大小排序，从大到小。然后逐个遍历圆的大小，并依次放置圆。
 - en: To place a circle on the canvas, we sample the location of the center of the
     circle. Both the x and y coordinates are uniformly distributed over the dimensions
     of the canvas. Once we have selected a prospective location we then check if there
     would be a collision with a circle that has already been placed. If there is a
     collision we keep trying new locations until you find one that has no collisions.
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: 要在画布上放置一个圆，我们抽取圆心的位置。x和y坐标在画布的尺寸内均匀分布。一旦我们选择了一个潜在的位置，我们就检查是否与已经放置的圆发生碰撞。如果有碰撞，我们会继续尝试新的位置，直到找到一个没有碰撞的位置。
 - en: The Pareto Distribution
+  id: totrans-8
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 帕累托分布
 - en: '**Pareto Random Variable**'
+  id: totrans-9
   prefs: []
   type: TYPE_NORMAL
+  zh: '**帕累托随机变量**'
 - en: '| Notation: | $X \sim \text{Pareto}(a)$ |'
+  id: totrans-10
   prefs: []
   type: TYPE_TB
+  zh: '| 符号： | $X \sim \text{Pareto}(a)$ |'
 - en: '| Description: | A long tail distribution. Large values are rare and small
     values are common. |'
+  id: totrans-11
   prefs: []
   type: TYPE_TB
+  zh: '| 描述： | 长尾分布。大值很少见，小值很常见。 |'
 - en: '| Parameters: | $a \ge 1$, the shape parameter Note there are other optional
     params. See [wikipedia](https://en.wikipedia.org/wiki/Pareto_distribution) |'
+  id: totrans-12
   prefs: []
   type: TYPE_TB
+  zh: '| 参数： | $a \ge 1$，形状参数 注意还有其他可选参数。请参阅 [维基百科](https://en.wikipedia.org/wiki/Pareto_distribution)
+    |'
 - en: '| Support: | $x \in [0, 1]$ |'
+  id: totrans-13
   prefs: []
   type: TYPE_TB
+  zh: '| 支持： | $x \in [0, 1]$ |'
 - en: '| PDF equation: | $$f(x) = \frac{1}{x^{a+1}}$$ |'
+  id: totrans-14
   prefs: []
   type: TYPE_TB
+  zh: '| PDF公式： | $$f(x) = \frac{1}{x^{a+1}}$$ |'
 - en: '| CDF equation: | $$F(x) = 1- \frac{1}{x^a}$$ |'
+  id: totrans-15
   prefs: []
   type: TYPE_TB
+  zh: '| CDF公式： | $$F(x) = 1- \frac{1}{x^a}$$ |'
 - en: Sampling from a Pareto Distribution
+  id: totrans-16
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 从帕累托分布中抽样
 - en: 'How can we draw samples from a pareto? In python its simple: `stats.pareto.rvs(a)`
     however in JavaScript, or other languages, it might not be made transparent. We
     can use "inverse transform sampling". The simple idea is to choose a uniform random
     variable in the range (0, 1) and then select the value $x$ assignment such that
     $F(x)$ equals the randomly chosen value.'
+  id: totrans-17
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们如何从帕累托分布中抽取样本？在Python中很简单：`stats.pareto.rvs(a)`，然而在JavaScript或其他语言中，可能不会那么透明。我们可以使用“逆变换抽样”。简单来说，就是选择一个在(0,
+    1)范围内的均匀随机变量，然后选择值$x$的赋值，使得$F(x)$等于随机选择的值。
 - en: \begin{aligned} y &= 1 - (\frac{1}{x})^\alpha \\ (\frac{1}{x})^\alpha &= 1 -
     y \\ \frac{1}{x} &= (1-y)^{\frac{1}{\alpha}} \\ x &= \frac{1}{(1-y)^{\frac{1}{\alpha}}}
     \end{aligned}
+  id: totrans-18
   prefs: []
   type: TYPE_NORMAL
+  zh: \begin{aligned} y &= 1 - (\frac{1}{x})^\alpha \\ (\frac{1}{x})^\alpha &= 1 -
+    y \\ \frac{1}{x} &= (1-y)^{\frac{1}{\alpha}} \\ x &= \frac{1}{(1-y)^{\frac{1}{\alpha}}}
+    \end{aligned}

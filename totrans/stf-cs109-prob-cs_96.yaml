@@ -1,79 +1,127 @@
 - en: MLE of a Pareto Distribution
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 帕累托分布的最大似然估计
 - en: 原文：[https://chrispiech.github.io/probabilityForComputerScientists/en/examples/mle_pareto/](https://chrispiech.github.io/probabilityForComputerScientists/en/examples/mle_pareto/)
+  id: totrans-1
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 原文：[https://chrispiech.github.io/probabilityForComputerScientists/en/examples/mle_pareto/](https://chrispiech.github.io/probabilityForComputerScientists/en/examples/mle_pareto/)
 - en: '* * *'
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: '* * *'
 - en: 'You are creating artwork with different sized circles which follow a Pareto
     distribution:'
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: 你正在创建不同大小的圆形艺术作品，这些圆形遵循帕累托分布：
 - en: $X \sim \text{Pareto}(\alpha)$
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: $X \sim \text{Pareto}(\alpha)$
 - en: A Pareto distribution is defined by a single parameter $\alpha$ and has PDF
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: 帕累托分布由单个参数 $\alpha$ 定义，并具有概率密度函数
 - en: \begin{align*} f(x) = \frac{\alpha}{x^{\alpha + 1}} \end{align*}
+  id: totrans-6
   prefs: []
   type: TYPE_NORMAL
+  zh: \begin{align*} f(x) = \frac{\alpha}{x^{\alpha + 1}} \end{align*}
 - en: 'You would like the alpha in your artwork to match that of sand in your local
     beach. You go to the beachand collect 100 particles of sand and measure their
     size. Call the measured radii $x_1 , \dots, x_{100}$:'
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: 你希望你的艺术作品中的 $\alpha$ 与你当地海滩的沙子中的 $\alpha$ 相匹配。你去了海滩，收集了100粒沙子并测量了它们的大小。将测量的半径称为
+    $x_1 , \dots, x_{100}$：
 - en: '[PRE0]'
+  id: totrans-8
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: Derive a formula for the MLE estimate of $\alpha$ based on the data you have
     collected.
+  id: totrans-9
   prefs: []
   type: TYPE_NORMAL
+  zh: 根据你收集的数据，推导出 $\alpha$ 的最大似然估计公式。
 - en: Writing the Log Likelihood Function
+  id: totrans-10
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 编写对数似然函数
 - en: 'The first major objective in MLE is to come up with a log likelihood expression
     for our data. To do so we start by writing how likely our dataset looks, if we
     are told the value of $\alpha$: \begin{aligned} L(\alpha) = f(x_1\dots x_n) =
     \prod_{i=1}^n\frac{\alpha}{x_i^{\alpha+1}} \end{aligned}'
+  id: totrans-11
   prefs: []
   type: TYPE_NORMAL
+  zh: 在最大似然估计（MLE）中，第一个主要目标是为我们数据构造一个对数似然表达式。为此，我们首先写出如果我们被告知 $\alpha$ 的值，我们的数据集看起来有多可能：\begin{aligned}
+    L(\alpha) = f(x_1\dots x_n) = \prod_{i=1}^n\frac{\alpha}{x_i^{\alpha+1}} \end{aligned}
 - en: 'Optimization will be much easier if we instead try to optimize the log likelihood:
     \begin{aligned} LL(\alpha) &= \log L(\alpha) = \log \prod_{i=1}^n\frac{\alpha}{x_i^{\alpha+1}}
     \\ &= \sum_{i=1}^n \log \frac{\alpha}{x_i^{\alpha+1}} \\ &= \sum_{i=1}^n \log
     \alpha - (\alpha +1)\log x_i \\ &= n \log \alpha - (\alpha +1) \sum_{i=1}^n\log
     x_i \\ \end{aligned}'
+  id: totrans-12
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果我们尝试优化对数似然，优化将变得容易得多：\begin{aligned} LL(\alpha) &= \log L(\alpha) = \log \prod_{i=1}^n\frac{\alpha}{x_i^{\alpha+1}}
+    \\ &= \sum_{i=1}^n \log \frac{\alpha}{x_i^{\alpha+1}} \\ &= \sum_{i=1}^n \log
+    \alpha - (\alpha +1)\log x_i \\ &= n \log \alpha - (\alpha +1) \sum_{i=1}^n\log
+    x_i \\ \end{aligned}
 - en: Selecting $\alpha$
+  id: totrans-13
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 选择 $\alpha$
 - en: We are going to select $\alpha$ to be the value which maximizes the log likelihood.
     To do so we are going to need the derivative of LL w.r.t. $\alpha$ \begin{aligned}
     \frac{\partial LL(\alpha)}{\partial \alpha} &= \frac{\partial LL(\alpha)}{\partial
     \alpha} \Big( n \log \alpha - (\alpha +1) \sum_{i=1}^n\log x_i \Big) \\ &= \frac{n}{\alpha}
     - \sum_{i=1}^n\log x_i \end{aligned}
+  id: totrans-14
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们将选择 $\alpha$ 以最大化对数似然。为此，我们需要 $\alpha$ 对 LL 的导数 \begin{aligned} \frac{\partial
+    LL(\alpha)}{\partial \alpha} &= \frac{\partial LL(\alpha)}{\partial \alpha} \Big(
+    n \log \alpha - (\alpha +1) \sum_{i=1}^n\log x_i \Big) \\ &= \frac{n}{\alpha}
+    - \sum_{i=1}^n\log x_i \end{aligned}
 - en: 'One way to optimize is to take the derivative and set it equal to zero: \begin{aligned}
     0=\frac{n}{\alpha} - \sum_{i=1}^n\log x_i\\ \sum_{i=1}^n\log x_i = \frac{n}{\alpha}
     \\ \alpha = \frac{n}{ \sum\limits_{i=1}^n\log x_i} \end{aligned}'
+  id: totrans-15
   prefs: []
   type: TYPE_NORMAL
+  zh: 一种优化方法是求导数并将其设为零：\begin{aligned} 0=\frac{n}{\alpha} - \sum_{i=1}^n\log x_i\\
+    \sum_{i=1}^n\log x_i = \frac{n}{\alpha} \\ \alpha = \frac{n}{ \sum\limits_{i=1}^n\log
+    x_i} \end{aligned}
 - en: At this point we have a formula that we can use to calculate $\alpha$! Wahoo
+  id: totrans-16
   prefs: []
   type: TYPE_NORMAL
+  zh: 到目前为止，我们有一个可以用来计算 $\alpha$ 的公式！哇哦
 - en: Putting it into code
+  id: totrans-17
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 将其放入代码
 - en: '[PRE1]'
+  id: totrans-18
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'

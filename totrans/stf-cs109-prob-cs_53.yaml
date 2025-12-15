@@ -1,14 +1,20 @@
 - en: Multinomial
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 多项分布
 - en: 原文：[https://chrispiech.github.io/probabilityForComputerScientists/en/part3/multinomial/](https://chrispiech.github.io/probabilityForComputerScientists/en/part3/multinomial/)
+  id: totrans-1
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 原文：[https://chrispiech.github.io/probabilityForComputerScientists/en/part3/multinomial/](https://chrispiech.github.io/probabilityForComputerScientists/en/part3/multinomial/)
 - en: '* * *'
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: '* * *'
 - en: 'The multinomial is an example of a *parametric* distribution for multiple random
     variables. The multinomial is a gentle introduction to joint distributions. It
     is a extension of the binomial. In both cases, you have $n$ independent experiments.
@@ -16,8 +22,11 @@
     can be more than two outcomes (multi). A great analogy for the multinomial is:
     we are going to roll an $m$ sided dice $n$ times. We care about reporting the
     number of outcomes of each side of your dice.'
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: 多项分布是多个随机变量的**参数**分布的一个例子。多项分布是对联合分布的温和介绍。它是二项分布的扩展。在这两种情况下，你都有 $n$ 个独立的实验。在二项分布中，每个结果都是一个“成功”或“不成功”。在多项分布中，可以有超过两个的结果（多）。多项分布的一个很好的类比是：我们将掷一个
+    $m$ 面的骰子 $n$ 次。我们关注的是报告骰子每个面的结果数量。
 - en: 'Here is the formal definition of the multinomial. Say you perform $n$ independent
     trials of an experiment where each trial results in one of $m$ outcomes, with
     respective probabilities: $p_1, p_2, \dots , p_m$ (constrained so that $\sum_i
@@ -27,68 +36,110 @@
     P(X_1=c_1,X_2 = c_2, \dots , X_m = c_m) &= { {n} \choose {c_1,c_2,\dots , c_m}
     }\cdot p_1^{c_1} \cdot p_2^{c_2}\dots p_m^{c_m} \\ &= { {n} \choose {c_1,c_2,\dots
     , c_m} }\cdot \prod_i p_i^{c_i} \end{align*}'
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: 这里是多项分布的正式定义。假设你进行 $n$ 次独立的实验，每次实验的结果是 $m$ 种可能结果中的一种，相应的概率为：$p_1, p_2, \dots
+    , p_m$（约束条件为 $\sum_i p_i = 1$）。定义 $X_i$ 为结果 $i$ 的试验次数。多项分布是一个封闭形式的函数，它回答了以下问题：有
+    $c_i$ 次试验的结果为 $i$ 的概率是多少。数学上：\begin{align*} P(X_1=c_1,X_2 = c_2, \dots , X_m =
+    c_m) &= { {n} \choose {c_1,c_2,\dots , c_m} }\cdot p_1^{c_1} \cdot p_2^{c_2}\dots
+    p_m^{c_m} \\ &= { {n} \choose {c_1,c_2,\dots , c_m} }\cdot \prod_i p_i^{c_i} \end{align*}
 - en: 'This is our first joint random variable model! We can express it in a card,
     much like we would for random variables:'
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: 这是我们第一个联合随机变量模型！我们可以用卡片来表示它，就像我们表示随机变量一样：
 - en: '**Multinomial Joint Distribution**'
+  id: totrans-6
   prefs: []
   type: TYPE_NORMAL
+  zh: '**多项联合分布**'
 - en: '| Description: | Number of outcomes of each possible outcome type in $n$ identical,
     independent experiments. Each experiment can result in one of $m$ different outcomes.
     |'
+  id: totrans-7
   prefs: []
   type: TYPE_TB
+  zh: '| 描述： | 在 $n$ 个相同、独立的实验中，每种可能结果类型的数量。每个实验可以导致 $m$ 种不同的结果。 |'
 - en: '| Parameters: | $p_1, \dots, p_m$ where each $p_i \in [0,1]$ is the probability
     of outcome type $i$ in one experiment. $n \in \{0, 1, \dots\}$, the number of
     experiments |'
+  id: totrans-8
   prefs: []
   type: TYPE_TB
+  zh: '| 参数： | $p_1, \dots, p_m$，其中每个 $p_i \in [0,1]$ 是一次实验中结果类型 $i$ 的概率。$n \in \{0,
+    1, \dots\}$，实验次数 |'
 - en: '| Support: | $c_i \in \{0, 1, \dots, n\}$, for each outcome $i$. It must be
     the case that $\sum_i c_i = n$ |'
+  id: totrans-9
   prefs: []
   type: TYPE_TB
+  zh: '| 支持度： | $c_i \in \{0, 1, \dots, n\}$，对于每个结果 $i$。必须满足 $\sum_i c_i = n$ |'
 - en: '| PMF equation: | \begin{align*} P(X_1=c_1,X_2 = c_2, \dots , X_m = c_m) =
     { {n} \choose {c_1,c_2,\dots , c_m} } \prod_i p_i^{c_i} \end{align*} |'
+  id: totrans-10
   prefs: []
   type: TYPE_TB
+  zh: '| 概率质量函数： | \begin{align*} P(X_1=c_1,X_2 = c_2, \dots , X_m = c_m) = { {n}
+    \choose {c_1,c_2,\dots , c_m} } \prod_i p_i^{c_i} \end{align*} |'
 - en: Examples
+  id: totrans-11
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 示例
 - en: '***Standard Dice Example:***'
+  id: totrans-12
   prefs: []
   type: TYPE_NORMAL
+  zh: '***标准骰子示例：***'
 - en: 'A 6-sided die is rolled 7 times. What is the probability that you roll: 1 one,
     1 two, 0 threes, 2 fours, 0 fives, 3 sixes (disregarding order). \begin{align*}
     \P(X_1=1,X_2 = 1&, X_3 = 0,X_4 = 2,X_5 = 0,X_6 = 3) \\&= \frac{7!}{2!3!}\left(\frac{1}{6}\right)^1\left(\frac{1}{6}\right)^1\left(\frac{1}{6}\right)^0\left(\frac{1}{6}\right)^2\left(\frac{1}{6}\right)^0\left(\frac{1}{6}\right)^3\\
     &=420\left(\frac{1}{6}\right)^7 \end{align*}***Weather Example:***'
+  id: totrans-13
   prefs: []
   type: TYPE_NORMAL
+  zh: 抛掷一个六面的骰子7次。你掷出1个一，1个二，0个三，2个四，0个五，3个六（不考虑顺序）的概率是多少？ \begin{align*} \P(X_1=1,X_2
+    = 1&, X_3 = 0,X_4 = 2,X_5 = 0,X_6 = 3) \\&= \frac{7!}{2!3!}\left(\frac{1}{6}\right)^1\left(\frac{1}{6}\right)^1\left(\frac{1}{6}\right)^0\left(\frac{1}{6}\right)^2\left(\frac{1}{6}\right)^0\left(\frac{1}{6}\right)^3\\
+    &=420\left(\frac{1}{6}\right)^7 \end{align*}***天气示例：***
 - en: Each day the weather in Bayeslandia can be {Sunny, Cloudy, Rainy} where $p_\text{sunny}
     = 0.7$, $p_\text{cloudy} = 0.2$ and $p_\text{rainy} = 0.1$. Assume each day is
     independent of one another. What is the probability that over the next 7 days
     we have 5 sunny days, 1 cloudy day and 1 rainy days? \begin{align*} \P(X_{\text{sunny}}=6,X_{\text{rainy}}
     = 1&, X_{\text{cloudy}} = 0) \\ &= \frac{7!}{5!1!1!} (0.7)^5 \cdot (0.2)^1 \cdot
     (0.1) ^1 \\ &\approx 0.14 \end{align*}
+  id: totrans-14
   prefs: []
   type: TYPE_NORMAL
+  zh: 在Bayeslandia，每天的天气可以是{晴天，多云，雨天}，其中 $p_\text{sunny} = 0.7$，$p_\text{cloudy} =
+    0.2$ 和 $p_\text{rainy} = 0.1$。假设每一天都是相互独立的。在接下来的7天里，我们有5个晴天，1个多云天和1个雨天，这个概率是多少？
+    \begin{align*} \P(X_{\text{sunny}}=6,X_{\text{rainy}} = 1&, X_{\text{cloudy}}
+    = 0) \\ &= \frac{7!}{5!1!1!} (0.7)^5 \cdot (0.2)^1 \cdot (0.1) ^1 \\ &\approx
+    0.14 \end{align*}
 - en: How does that compare to the probability that every day is sunny? \begin{align*}
     \P(X_{\text{sunny}}=7,X_{\text{rainy}} = 0&, X_{\text{cloudy}} = 0) \\ &= \frac{7!}{7!1!}
     (0.7)^7 \cdot (0.2)^0 \cdot (0.1) ^0 \\ &\approx 0.08 \end{align*}
+  id: totrans-15
   prefs: []
   type: TYPE_NORMAL
+  zh: 这与每天都是晴天的概率相比如何？ \begin{align*} \P(X_{\text{sunny}}=7,X_{\text{rainy}} = 0&,
+    X_{\text{cloudy}} = 0) \\ &= \frac{7!}{7!1!} (0.7)^7 \cdot (0.2)^0 \cdot (0.1)
+    ^0 \\ &\approx 0.08 \end{align*}
 - en: The multinomial is especially popular because of its use as a model of language.
     For a full example see the [Federalist Paper Authorship](../../examples/federalist)
     example.
+  id: totrans-16
   prefs: []
   type: TYPE_NORMAL
+  zh: 多项式分布因其作为语言模型的用途而特别受欢迎。有关完整示例，请参阅[联邦党人文集作者](../../examples/federalist)示例。
 - en: Deriving Joint Probability
+  id: totrans-17
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 推导联合概率
 - en: A way to deeper understand the multinomial is to derive the joint probability
     function for a particular multinomial. Consider the multinomial from the previous
     example. In that multinomial with $n = 7$ outcomes where each outcome can be one
@@ -96,27 +147,42 @@
     R stands for Rainy, and days are independent. $p_s = 0.7$, $p_c=0.2$, $p_r = 0.1$.
     We are going to derive the probability that out of the $n = 7$ days, 5 are sunny,
     1 is cloudy and 1 is rainy.
+  id: totrans-18
   prefs: []
   type: TYPE_NORMAL
+  zh: 深入理解多项式分布的一种方法是推导特定多项式的联合概率函数。考虑前一个例子中的多项式。在该多项式中，有 $n = 7$ 个结果，每个结果可以是三个值 $\{S,C,R\}$
+    之一，其中 S 代表晴天，C 代表多云，R 代表雨天，并且天数是独立的。$p_s = 0.7$，$p_c=0.2$，$p_r = 0.1$。我们将推导在 $n
+    = 7$ 天中，有5个晴天，1个多云天和1个雨天概率。
 - en: Like our derivation for the binomial, we are going to consider all of the possible
     weeks with 5 sunny days, 1 rainy day and 1 cloudy day.
+  id: totrans-19
   prefs: []
   type: TYPE_NORMAL
+  zh: 就像我们对二项式分布的推导一样，我们将考虑所有可能的包含5个晴天，1个雨天和1个多云天的周数。
 - en: '[PRE0]'
+  id: totrans-20
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: 'First, note that each outcome for assignments to the weeks are mutually exclusive.
     Then note that the probability of any one outcome will be $(p_S)^5 \cdot p_C \cdot
     p_R$. The number of unique weeks with the chosen count of outcomes can be derived
     using the rule for [Permutations with Indistinct Objects](../../part1/combinatorics/#perm_indisctinct).
     There are 7 objects, 5 are indistinct from one another. The number of distinct
     outcomes is: $${ {7} \choose {5,1,1} } = \frac{7!}{5!1!1!} = 7 \cdot 6 = 42$$'
+  id: totrans-21
   prefs: []
   type: TYPE_NORMAL
+  zh: 首先，请注意，分配给每周的结果是互斥的。然后请注意，任何一种结果发生的概率将是 $(p_S)^5 \cdot p_C \cdot p_R$。具有所选结果数量的独特周数可以通过使用[排列中无区别对象的规则](../../part1/combinatorics/#perm_indisctinct)来推导。有7个对象，其中5个彼此之间无区别。不同结果的数量是：$${
+    {7} \choose {5,1,1} } = \frac{7!}{5!1!1!} = 7 \cdot 6 = 42$$
 - en: 'Since the outcomes are mutually exclusive, we are going to be adding the probability
     of each case to itself $\frac{7!}{5!1!1!}$ times. Putting this all together we
     get the multinomial joint function for this particular case: \begin{align*} \P(X_{\text{sunny}}=5,X_{\text{rainy}}
     = 1&, X_{\text{cloudy}} = 1) \\ &= \frac{7!}{5!1!1!} (0.7)^5 \cdot (0.2)^1 \cdot
     (0.1) ^1 \\ &\approx 0.14 \end{align*}'
+  id: totrans-22
   prefs: []
   type: TYPE_NORMAL
+  zh: 由于结果互斥，我们将把每个案例的概率自身相加 $\frac{7!}{5!1!1!}$ 次。将所有这些放在一起，我们得到这个特定案例的多项式联合函数：\begin{align*}
+    \P(X_{\text{sunny}}=5,X_{\text{rainy}} = 1&, X_{\text{cloudy}} = 1) \\ &= \frac{7!}{5!1!1!}
+    (0.7)^5 \cdot (0.2)^1 \cdot (0.1) ^1 \\ &\approx 0.14 \end{align*}

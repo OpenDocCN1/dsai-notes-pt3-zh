@@ -1,132 +1,198 @@
 - en: Winning the Series
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 赢得系列赛
 - en: 原文：[https://chrispiech.github.io/probabilityForComputerScientists/en/examples/winning_series/](https://chrispiech.github.io/probabilityForComputerScientists/en/examples/winning_series/)
+  id: totrans-1
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 原文：[https://chrispiech.github.io/probabilityForComputerScientists/en/examples/winning_series/](https://chrispiech.github.io/probabilityForComputerScientists/en/examples/winning_series/)
 - en: '* * *'
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: '* * *'
 - en: The Golden State Warriors are the basketball team for the Bay Area. The Warriors
     are going to play the Bucks (another professional basketball team) in a best of
     7 series during the next NBA finals. They will win the series if you win at least
     4 games. What is the probability that the warriors win the series? Each game is
     independent. Each game, the warriors have a 0.55 probability of winning.
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: 金州勇士队是湾区篮球队。勇士队将在下一届NBA总决赛中与雄鹿队（另一支职业篮球队）进行一场最佳7场系列赛。如果你赢得至少4场比赛，他们将赢得系列赛。勇士队赢得系列赛的概率是多少？每场比赛都是独立的。每场比赛，勇士队赢得比赛的概率为0.55。
 - en: 'This problem is equivalent to: Flip a biased coin 7 times (with a $p=0.55$
     probability of getting a heads). What is the probability of at least 4 heads?'
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: 这个问题等同于：抛一个偏硬币7次（得到正面的概率为 $p=0.55$）。至少得到4个正面的概率是多少？
 - en: '![](../Images/4c039f8fb92833119a4593958faaebee.png)'
+  id: totrans-5
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/4c039f8fb92833119a4593958faaebee.png)'
 - en: '*Note*: without loss of generality you could imagine that the two teams always
     play all 7 games, regardless of the outcome. Technically they stop playing after
     one team has achieved 4 wins, because the outcomes of the games no longer impact
     who wins. However, you could imagine that they continue.'
+  id: totrans-6
   prefs: []
   type: TYPE_NORMAL
+  zh: '*注意*：不失一般性，你可以想象这两支球队总是打满7场比赛，无论结果如何。技术上，一旦有一支球队赢得4场胜利，比赛就会停止，因为比赛的结果不再影响谁获胜。然而，你可以想象他们继续比赛。'
 - en: What is the probability that the warriors win the series? Leave your answer
     to 3 decimal places
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: 勇士队赢得系列赛的概率是多少？请将你的答案保留到小数点后三位
 - en: 'A critical step is to define a random variable and to recognize it is a Binomial.
     Let $X$ be the number of games won. Since each game is independent, $X \sim \Bin(n=7,
     p =0.55)$. The question is asking: $\P(X \geq 4)$?'
+  id: totrans-8
   prefs: []
   type: TYPE_NORMAL
+  zh: 一个关键步骤是定义一个随机变量，并认识到它是一个二项分布。设 $X$ 为赢得的比赛数。由于每场比赛都是独立的，$X \sim \Bin(n=7, p =0.55)$。问题是询问：$\P(X
+    \geq 4)$？
 - en: 'To answer this question, first recognize that: \begin{aligned}\P(X \geq 4)
     = &\P(X = 4) + \P(X = 5) \\ &+ \P(X = 6) + \P(X = 7)\end{aligned} This is because
     the question is asking the probability of the "or" of each of the events on the
     right hand side of the equals sign. Since each of these events; $X=4$, $X=5$,
     etc are mutually exclusive, the probability of the "or" is simply the sum of the
     probabilities.'
+  id: totrans-9
   prefs: []
   type: TYPE_NORMAL
+  zh: 为了回答这个问题，首先认识到：\begin{aligned}\P(X \geq 4) = &\P(X = 4) + \P(X = 5) \\ &+ \P(X
+    = 6) + \P(X = 7)\end{aligned} 这是因为问题是在询问等号右侧每个事件的“或”的概率。由于这些事件；$X=4$，$X=5$，等等都是互斥的，所以“或”的概率就是这些概率的和。
 - en: \begin{aligned} \P(X \geq 4) &= \P(X = 4) + \P(X = 5) \\ &+ \P(X = 6) + \P(X
     = 7) \\ &= \sum_{i=4}^7 P(X = i) \end{aligned}
+  id: totrans-10
   prefs: []
   type: TYPE_NORMAL
+  zh: \begin{aligned} \P(X \geq 4) &= \P(X = 4) + \P(X = 5) \\ &+ \P(X = 6) + \P(X
+    = 7) \\ &= \sum_{i=4}^7 P(X = i) \end{aligned}
 - en: 'Each of these probabilities are PMF questions:'
+  id: totrans-11
   prefs: []
   type: TYPE_NORMAL
+  zh: 这些概率都是PMF问题：
 - en: \begin{aligned} \P(X \geq 4) &= \sum_{i=4}^7 P(X = i) \\ &= \sum_{i=4}^7 {n
     \choose i} p^i (1-p)^{n-i} \\ &= \sum_{i=4}^7 {7 \choose i} 0.55^i \cdot 0.45^{7-i}
     \end{aligned}
+  id: totrans-12
   prefs: []
   type: TYPE_NORMAL
+  zh: \begin{aligned} \P(X \geq 4) &= \sum_{i=4}^7 P(X = i) \\ &= \sum_{i=4}^7 {n
+    \choose i} p^i (1-p)^{n-i} \\ &= \sum_{i=4}^7 {7 \choose i} 0.55^i \cdot 0.45^{7-i}
+    \end{aligned}
 - en: 'Here is that equation graphically. It represents the sum of these columns in
     the PMF:'
+  id: totrans-13
   prefs: []
   type: TYPE_NORMAL
+  zh: 这里是那个方程的图形表示。它代表了PMF中这些列的和：
 - en: '![](../Images/b24f5628cbb5dda9e54ea4325f9aa5ff.png)'
+  id: totrans-14
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/b24f5628cbb5dda9e54ea4325f9aa5ff.png)'
 - en: 'At this point we have an equation that we can compute in order to find the
     answer. But how should we compute it? We could do it by hand! Or using a calculator.
     Or, we can use python, and specifically the scipy package:'
+  id: totrans-15
   prefs: []
   type: TYPE_NORMAL
+  zh: 到目前为止，我们有一个可以用来找到答案的方程。但我们应该如何计算它？我们可以手动计算！或者使用计算器。或者，我们可以使用Python，特别是scipy包：
 - en: '[PRE0]'
+  id: totrans-16
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: 'Which produces the correct answer:'
+  id: totrans-17
   prefs: []
   type: TYPE_NORMAL
+  zh: 这产生了正确的答案：
 - en: '`P(X >= 4) = 0.6082877968750001`'
+  id: totrans-18
   prefs: []
   type: TYPE_NORMAL
+  zh: '`P(X >= 4) = 0.6082877968750001`'
 - en: Buggy Solution
+  id: totrans-19
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 有缺陷的解决方案
 - en: A good reason to study this problem is because of this common misconception
     for how to compute $P(X \geq 4)$. It is worth understanding why it is wrong.
+  id: totrans-20
   prefs: []
   type: TYPE_NORMAL
+  zh: 研究这个问题的一个好原因是这种常见的误解，即如何计算 $P(X \geq 4)$。了解为什么它是错误的很有价值。
 - en: '**Incorrectly trying to recreate the binomial**'
+  id: totrans-21
   prefs: []
   type: TYPE_NORMAL
+  zh: '**错误地尝试重建二项分布**'
 - en: 'Similar to how we defined a binomial distribution PMF equation (see: [Many
     Coin Flips](../../part1/many_flips/)) we can construct outcomes of the seven game
     series where the warriors win.'
+  id: totrans-22
   prefs: []
   type: TYPE_NORMAL
+  zh: 类似于我们定义的二项分布概率质量函数方程（参见：[多次抛硬币](../../part1/many_flips/)），我们可以构建火箭队赢得七场系列赛的结果。
 - en: 'We are going to choose 4 slots where the Warriors win, and we don''t care about
     the rest. They could either be wins or losses. Out of 7 games, select 4 where
     the Warriors win. There are $7 \choose 4$ ways to do so. The probability of each
     particular selection of four games to win is $p^4$ because we need them to win
     those four games, and we don''t care about the rest. As such the probability is:'
+  id: totrans-23
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们将选择4个火箭队获胜的槽位，我们不在乎其余的。它们可以是胜利或失败。在7场比赛中，选择4场火箭队获胜的比赛。有 ${7 \choose 4}$ 种这样做的方式。每个特定选择四场比赛获胜的概率是
+    $p^4$，因为我们需要他们赢得这四场比赛，我们不在乎其余的。因此，概率是：
 - en: \begin{aligned} P(X \geq 4) = {7 \choose 4} p^4 \end{aligned}
+  id: totrans-24
   prefs: []
   type: TYPE_NORMAL
+  zh: \begin{aligned} P(X \geq 4) = {7 \choose 4} p^4 \end{aligned}
 - en: This idea seems good, but it doesn't work. First of all, we can recognize that
     there is a problem by considering the outcome if we set $p = 1.0$. In this case
     $P(X \geq 4) = {7 \choose 4} p^4 ={7 \choose 4} 1 ^4 = 35$. Clearly 35 is an invalid
     probability (which is much greater than 1). As such this can't be the right answer.
+  id: totrans-25
   prefs: []
   type: TYPE_NORMAL
+  zh: 这个想法看起来不错，但不起作用。首先，我们可以通过考虑将 $p = 1.0$ 的情况来识别问题。在这种情况下，$P(X \geq 4) = {7 \choose
+    4} p^4 = {7 \choose 4} 1^4 = 35$。显然，35不是一个有效的概率（这比1大得多）。因此，这不可能是对的答案。
 - en: 'But what is wrong with this approach? Lets enumerate the 35 different outcomes
     that they are considering. Let B = we don''t know who wins. Let W = the warriors
     win. Here each outcome is the assignment to each of the 7 games in the series:'
+  id: totrans-26
   prefs: []
   type: TYPE_NORMAL
+  zh: 但这种方法的错误在哪里呢？让我们列举他们考虑的35种不同结果。设B = 我们不知道谁会赢。设W = 火箭队获胜。这里每个结果是对系列赛中每场比赛的分配：
 - en: '[PRE1]'
+  id: totrans-27
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: 'It is in fact the case that the probability of any of these 35 outcomes is
     $p^4$. For example: (W, W, W, W, B, B, B). The warriors need to win the first
     4 independent games: $p^4$. Then there are three events where either team could
     win. The probability of "B", that either team could win, is 1\. That makes sense.
     Either the warriors win or the other team wins. As such our probability of any
     given outcome, aka row in the set of outcomes above, is: $p^4 \cdot 1 ^3 = p^4$'
+  id: totrans-28
   prefs: []
   type: TYPE_NORMAL
+  zh: 实际上，这35种结果中的任何一种的概率都是 $p^4$。例如：(W, W, W, W, B, B, B)。火箭队需要赢得前4场独立的比赛：$p^4$。然后有三个事件，任何一支球队都可能获胜。任意一支球队获胜的概率“B”是1。这很有道理。要么火箭队赢，要么另一支球队赢。因此，我们任何给定结果的概率，也就是上述结果集中的行，是：$p^4
+    \cdot 1^3 = p^4$
 - en: 'The bug here is that these outcomes are **not** mutually exclusive, yet the
     answer treats them as such. In the many coin flips example, we constructed outcomes
     in the format (T, T, T, H, H, T, H). These outcomes are in fact mutually exclusive.
@@ -134,11 +200,15 @@
     the other hand in the version where "B" stands for either team could win, the
     outcomes do have overlap. For example consider the two rows from the examples
     above:'
+  id: totrans-29
   prefs: []
   type: TYPE_NORMAL
+  zh: 这里的错误是，这些结果**不是**互斥的，但答案却将它们视为互斥。在多次抛硬币的例子中，我们构建了格式为（T, T, T, H, H, T, H）的结果。这些结果实际上是互斥的。不可能同时存在两个不同的结果列表。另一方面，在“B”代表任意一支球队都可能赢的版本中，结果确实有重叠。例如，考虑上面例子中的两行：
 - en: '[PRE2]'
+  id: totrans-30
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: These could both occur (and hence are not mutually exclusive). For example if
     the warriors win all 7 games! Or the warriors win all games except for games 1
     and 5\. Both events are satisfied. Because the events are not mutually exclusive,
@@ -147,5 +217,8 @@
     \geq 4) = {7 \choose 4} p^4$ implies. Instead you would need to use inclusion
     exclusion for the or of 35 events (yikes!). Alternatively see the answer we propose
     above.
+  id: totrans-31
   prefs: []
   type: TYPE_NORMAL
+  zh: 这些结果都可能发生（因此它们不是互斥的）。例如，如果火箭队赢得了所有7场比赛！或者火箭队赢得了除了第1场和第5场之外的所有比赛。这两个事件都满足。因为事件不是互斥的，如果我们想计算这些事件的“或”的概率，我们不能**仅仅**将每个事件的概率相加（这正是
+    $P(X \geq 4) = {7 \choose 4} p^4$ 所暗示的。相反，你需要使用包含排除法来计算35个事件的“或”。或者，参见我们上面提出的答案。

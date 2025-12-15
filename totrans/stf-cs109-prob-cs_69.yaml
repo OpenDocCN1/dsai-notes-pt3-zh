@@ -1,39 +1,55 @@
 - en: Bayesian Viral Load Test
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 贝叶斯病毒载量测试
 - en: 原文：[https://chrispiech.github.io/probabilityForComputerScientists/en/examples/bayesian_viral_load_test/](https://chrispiech.github.io/probabilityForComputerScientists/en/examples/bayesian_viral_load_test/)
+  id: totrans-1
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 原文：[https://chrispiech.github.io/probabilityForComputerScientists/en/examples/bayesian_viral_load_test/](https://chrispiech.github.io/probabilityForComputerScientists/en/examples/bayesian_viral_load_test/)
 - en: '* * *'
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: '* * *'
 - en: '*Question from Fall 2022 Stanford Midterm*'
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: '*2022年秋季斯坦福期中考试问题*'
 - en: We are going to build a Bayesian Viral Load Test which updates a belief distribution
     regarding a patient's viral load. Though viral load is continuous, in our test
     we represent it by discretizing the quantity into whole numbers between 0 and
     99, inclusive. The units of viral load are the number of viral instances per million
     samples.
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们将构建一个贝叶斯病毒载量测试，该测试更新关于患者病毒载量的信念分布。尽管病毒载量是连续的，但在我们的测试中，我们通过将数量离散化为0到99之间的整数来表示它，包括99。病毒载量的单位是每百万样本中的病毒实例数。
 - en: If a person has a viral load of 9 (in other words, 9 viruses out of every 1
     million samples) what is the probability that a random sample from the person
     is a virus?
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果一个人的病毒载量为9（换句话说，每1,000,000个样本中有9个病毒），那么从这个人随机抽取的样本是病毒的概率是多少？
 - en: $$\frac{9}{1,000,000}$$
+  id: totrans-6
   prefs: []
   type: TYPE_NORMAL
+  zh: $$\frac{9}{1,000,000}$$
 - en: We test 100,000 samples from one person for the virus. If the person's true
     viral load is 9, what is the probability that exactly 1 of our 100,000 samples
     is a virus? Use a computationally efficient approximation to compute your answer.
     Your approximation should respect that there is 0 probability of getting negative
     virus samples.
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们对一个患者进行100,000个样本的病毒测试。如果这个人的真实病毒载量为9，那么在我们的100,000个样本中恰好有1个是病毒的概率是多少？使用计算效率高的近似值来计算你的答案。你的近似值应该尊重得到负病毒样本的概率为0的事实。
 - en: Let's define a random variable $X$, the number of samples that are viral given
     the true viral load is 9\. The question is asking for $P(X = 1)$. We can think
     about this as a binomial process, where the number of trials $n$ is the number
@@ -43,19 +59,28 @@
     We find $\lambda = np = 100,000 \cdot 9/1,000,000 = 0.9$, so $X \sim$\Poi$(\lambda
     = 0.9)$. The last step is to use the PMF of the Poisson distribution. \[ P(X =
     1) = \frac{(0.9)^1 e^{-0.9}}{1!} \]
+  id: totrans-8
   prefs: []
   type: TYPE_NORMAL
+  zh: 让我们定义一个随机变量$X$，表示在真实病毒载量为9的情况下，病毒样本的数量。问题是询问$P(X = 1)$。我们可以将其视为一个二项过程，其中试验次数$n$是样本数量，概率$p$是样本为病毒的概率。\[
+    n = 100,000, p = \frac{9}{1,000,000} \] 注意到$n$非常小，$p$非常大，因此我们可以使用泊松近似来近似我们的答案。我们发现$\lambda
+    = np = 100,000 \cdot 9/1,000,000 = 0.9$，所以$X \sim \Poi(\lambda = 0.9)$。最后一步是使用泊松分布的PMF。
+    \[ P(X = 1) = \frac{(0.9)^1 e^{-0.9}}{1!} \]
 - en: Based on what we know about a patient (their symptoms and personal history)
     we have encoded a prior belief in a list `prior` where `prior[i]` is the probability
     that the viral load equals i. `prior` is of length 100 and has keys 0 through
     99.
+  id: totrans-9
   prefs: []
   type: TYPE_NORMAL
+  zh: 根据我们对患者（他们的症状和个人病史）的了解，我们在列表`prior`中编码了一个先验信念，其中`prior[i]`是病毒载量等于$i$的概率。`prior`的长度为100，键为0到99。
 - en: Write an equation for the updated probability that the true viral load is $i$
     given that we observe a count of 1 virus sample out of 100,000 tested. Recall
     that $0 \leq i \leq 99$. You may use approximations.
+  id: totrans-10
   prefs: []
   type: TYPE_NORMAL
+  zh: 给出一个方程，表示在观察到100,000个测试样本中有1个病毒样本的情况下，真实病毒载量是$i$的更新概率。记住$0 \leq i \leq 99$。你可以使用近似值。
 - en: 'We want to find \begin{equation} P(\text{viral load} = i | \text{observed count
     of} \frac{1}{100000}) \end{equation} We can apply Bayes Rule to get \begin{equation}\label{eq:bayes}
     = \frac{P(\text{observed count of} \frac{1}{100000} | \text{viral load} = i)P(\text{viral
@@ -77,5 +102,22 @@
     \] And finally, we can plug this in to get \[ \boxed{% \frac{ \frac{i}{10} e^{\frac{-i}{10}}
     \cdot \texttt{prior[i]}}{\sum_{j = 0}^{99} \frac{j}{10}e^{\frac{-j}{10}}\cdot
     \texttt{prior[j]}}% }. \]'
+  id: totrans-11
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们想要找到 \begin{equation} P(\text{病毒载量} = i | \text{观察到的计数} \frac{1}{100000})
+    \end{equation} 我们可以应用贝叶斯定理得到 \begin{equation}\label{eq:bayes} = \frac{P(\text{观察到的计数}
+    \frac{1}{100000} | \text{病毒载量} = i)P(\text{病毒载量} = i)}{P(\text{观察到的计数} \frac{1}{100000})}
+    \end{equation} 我们知道我们可以定义一个随机变量 $X \sim \text{观察到的计数 out of 100,000} | \text{病毒载量}
+    = i$，并且我们可以将 $X$ 模型化为一个二项分布的泊松近似，其中 $n = 100000$ 和 $p = \frac{i}{1000000}$，有 \[
+    \lambda = np = 100000 \cdot \frac{i}{1000000} = \frac{i}{10} \] 所以 $X$ 可以写成 \[
+    X \sim Poi(\lambda = \frac{i}{10}) \] 现在，我们可以将我们的贝叶斯定理方程重写为 \[ = \frac{P(X = 1)P(\text{病毒载量}
+    = i)}{P(\text{观察到的计数} \frac{1}{100000})} \] 现在，我们可以使用泊松概率质量函数和我们的给定 \texttt{先验}
+    来得到： \begin{equation} = \frac{\frac{\frac{i}{10}e^{\frac{-i}{10}}}{1!}\cdot \texttt{prior[i]}}{P(\text{观察到的计数}
+    \frac{1}{100000})} \end{equation} 现在，我们需要展开我们的分母。我们可以使用全概率公式来展开 \[ P(\text{观察到的计数}
+    \frac{1}{100000}) = \sum_{j = 0}^{99} P(\text{观察到的计数} \frac{1}{100000} | \text{病毒载量}
+    = i)P(\text{病毒载量} = i) \] 我们可以将其重写为 \[ = \sum_{j = 0}^{99} \frac{\frac{j}{10}e^{\frac{-j}{10}}}{1!}\cdot
+    \texttt{prior[j]} \] \[ = \sum_{j = 0}^{99} \frac{j}{10}e^{\frac{-j}{10}}\cdot
+    \texttt{prior[j]} \] 最后，我们可以将这个结果代入得到 \[ \boxed{% \frac{ \frac{i}{10} e^{\frac{-i}{10}}
+    \cdot \texttt{prior[i]}}{\sum_{j = 0}^{99} \frac{j}{10}e^{\frac{-j}{10}}\cdot
+    \texttt{prior[j]}}% }].

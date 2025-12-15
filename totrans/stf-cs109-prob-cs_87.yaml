@@ -1,37 +1,51 @@
 - en: Parameter Estimation
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 参数估计
 - en: 原文：[https://chrispiech.github.io/probabilityForComputerScientists/en/part5/parameter_estimation/](https://chrispiech.github.io/probabilityForComputerScientists/en/part5/parameter_estimation/)
+  id: totrans-1
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 原文：[https://chrispiech.github.io/probabilityForComputerScientists/en/part5/parameter_estimation/](https://chrispiech.github.io/probabilityForComputerScientists/en/part5/parameter_estimation/)
 - en: '* * *'
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: '* * *'
 - en: 'We have learned many different distributions for random variables and all of
     those distributions had parameters: the numbers that you provide as input when
     you define a random variable. So far when we were working with random variables,
     we either were explicitly told the values of the parameters, or, we could divine
     the values by understanding the process that was generating the random variables.'
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们已经学习了多种随机变量的分布，所有这些分布都有参数：当你定义随机变量时作为输入提供的数字。到目前为止，当我们处理随机变量时，要么明确告知参数的值，要么通过理解生成随机变量的过程来推断这些值。
 - en: What if we don't know the values of the parameters and we can't estimate them
     from our own expert knowledge? What if instead of knowing the random variables,
     we have a lot of examples of data generated with the same underlying distribution?
     In this chapter we are going to learn formal ways of estimating parameters from
     data.
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果我们不知道参数的值，也无法从自己的专业知识中估计它们，那会怎样？如果我们知道的不是随机变量，而是大量使用相同潜在分布生成的数据示例，那又会怎样？在本章中，我们将学习从数据中估计参数的正式方法。
 - en: 'These ideas are critical for artificial intelligence. Almost all modern machine
     learning algorithms work like this: (1) specify a probabilistic model that has
     parameters. (2) Learn the value of those parameters from data.'
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: 这些思想对于人工智能至关重要。几乎所有现代机器学习算法都是这样工作的：(1)指定一个具有参数的概率模型。(2)从数据中学习这些参数的值。
 - en: Parameters
+  id: totrans-6
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 参数
 - en: 'Before we dive into parameter estimation, first let''s revisit the concept
     of parameters. Given a model, the parameters are the numbers that yield the actual
     distribution. In the case of a Bernoulli random variable, the single parameter
@@ -39,35 +53,55 @@
     the $a$ and $b$ values that define the min and max value. Here is a list of random
     variables and the corresponding parameters. From now on, we are going to use the
     notation $\theta$ to be a vector of all the parameters:'
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: 在我们深入参数估计之前，首先让我们回顾一下参数的概念。给定一个模型，参数是产生实际分布的数字。在伯努利随机变量的情况下，单个参数是值 $p$。在均匀随机变量的情况下，参数是定义最小值和最大值的
+    $a$ 和 $b$ 值。以下是随机变量及其对应参数的列表。从现在开始，我们将使用符号 $\theta$ 来表示所有参数的向量：
 - en: '| Distribution | Parameters |'
+  id: totrans-8
   prefs: []
   type: TYPE_TB
+  zh: '| Distribution | Parameters |'
 - en: '| --- | --- |'
+  id: totrans-9
   prefs: []
   type: TYPE_TB
+  zh: '| --- | --- |'
 - en: '| Bernoulli($p$) | $\theta = p$ |'
+  id: totrans-10
   prefs: []
   type: TYPE_TB
+  zh: '| Bernoulli($p$) | $\theta = p$ |'
 - en: '| Poisson($\lambda$) | $\theta = \lambda$ |'
+  id: totrans-11
   prefs: []
   type: TYPE_TB
+  zh: '| Poisson($\lambda$) | $\theta = \lambda$ |'
 - en: '| Uniform($a, b$) | $\theta = [a, b]$ |'
+  id: totrans-12
   prefs: []
   type: TYPE_TB
+  zh: '| Uniform($a, b$) | $\theta = [a, b]$ |'
 - en: '| Normal($\mu, \sigma^2$) | $\theta = [\mu, \sigma^2]$ |'
+  id: totrans-13
   prefs: []
   type: TYPE_TB
+  zh: '| Normal($\mu, \sigma^2$) | $\theta = [\mu, \sigma^2]$ |'
 - en: In the real world often you don't know the "true" parameters, but you get to
     observe data. Next up, we will explore how we can use data to estimate the model
     parameters.
+  id: totrans-14
   prefs: []
   type: TYPE_NORMAL
+  zh: 在现实世界中，通常你不知道“真实”的参数，但你能够观察到数据。接下来，我们将探讨如何使用数据来估计模型参数。
 - en: 'It turns out there isn''t just one way to estimate the value of parameters.
     There are two main schools of thought: Maximum Likelihood Estimation (MLE) and
     Maximum A Posteriori (MAP). Both of these schools of thought assume that your
     data are independent and identically distributed (IID) samples: $X_1, X_2, \dots
     X_n$.'
+  id: totrans-15
   prefs: []
   type: TYPE_NORMAL
+  zh: 估计参数值的方法不止一种。主要有两种思想流派：最大似然估计（MLE）和最大后验估计（MAP）。这两种思想流派都假设你的数据是独立同分布（IID）的样本：$X_1,
+    X_2, \dots X_n$。

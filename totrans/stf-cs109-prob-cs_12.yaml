@@ -1,44 +1,64 @@
 - en: Conditional Probability
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 条件概率
 - en: 原文：[https://chrispiech.github.io/probabilityForComputerScientists/en/part1/cond_prob/](https://chrispiech.github.io/probabilityForComputerScientists/en/part1/cond_prob/)
+  id: totrans-1
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 原文：[https://chrispiech.github.io/probabilityForComputerScientists/en/part1/cond_prob/](https://chrispiech.github.io/probabilityForComputerScientists/en/part1/cond_prob/)
 - en: '* * *'
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: '* * *'
 - en: In English, a conditional probability states "what is the chance of an event
     $E$ happening given that I have already observed some other event $F$". It is
     a critical idea in machine learning and probability because it allows us to update
     our probabilities in the face of new evidence.
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: 在英语中，条件概率表示为“在已经观察到某些其他事件 F 的情况下，事件 E 发生的可能性是什么”。它是机器学习和概率中的一个关键概念，因为它允许我们在面对新证据时更新我们的概率。
 - en: When you condition on an event happening you are entering the universe where
     that event has taken place. Formally, once you condition on $F$ the only outcomes
     that are now possible are the ones which are consistent with $F$. In other words
     your [sample space](../../part1/probability) will now be reduced to $F$. As an
     aside, in the universe where $F$ has taken place, all rules of probability still
     hold!
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: 当你基于一个事件的发生进行条件化时，你进入了该事件已经发生的世界。正式地说，一旦你基于 $F$ 进行条件化，现在可能的结果只有与 $F$ 一致的结果。换句话说，你的[样本空间](../../part1/probability)现在将缩减为
+    $F$。顺便提一下，在事件 $F$ 发生的宇宙中，所有概率规则仍然适用！
 - en: '***Definition***: Conditional Probability.'
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: '***定义***：条件概率。'
 - en: 'The probability of E given that (aka conditioned on) event F already happened:
     $$ \p(E |F) = \frac{\p(E \and F)}{\p(F)} $$'
+  id: totrans-6
   prefs: []
   type: TYPE_NORMAL
+  zh: 在事件 F 已经发生的情况下（即基于事件 F 的条件），事件 E 发生的概率：$$ \p(E |F) = \frac{\p(E \and F)}{\p(F)}
+    $$
 - en: 'Let''s use a visualization to get an intuition for why the conditional probability
     formula is true. Again consider events $E$ and $F$ which have outcomes that are
     subsets of a sample space with 50 equally likely outcomes, each one drawn as a
     hexagon:'
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: 让我们通过一个可视化来理解为什么条件概率公式是正确的。再次考虑事件 $E$ 和 $F$，它们的可能结果都是样本空间中 50 个等可能结果的子集，每个结果都表示为一个六边形：
 - en: '![](../Images/82050e4cfbe2e913bbac8ea1c0db37bf.png)'
+  id: totrans-8
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/82050e4cfbe2e913bbac8ea1c0db37bf.png)'
 - en: 'Conditioning on $F$ means that we have entered the world where $F$ has happened
     (and $F$, which has 14 equally likely outcomes, has become our new sample space).
     Given that event $F$ has occurred, the conditional probability that event $E$
@@ -48,12 +68,19 @@
     \approx 0.21 $$ Even though the visual example (with equally likely outcome spaces)
     is useful for gaining intuition, conditional probability applies regardless of
     whether the sample space has equally likely outcomes!'
+  id: totrans-9
   prefs: []
   type: TYPE_NORMAL
+  zh: 基于事件 F 的条件意味着我们已经进入了事件 F 已经发生的世界（此时，F，它有 14 个等可能的结果，已成为我们的新样本空间）。在事件 F 发生的条件下，事件
+    E 发生的条件概率是 E 的结果中与 F 一致的部分。在这种情况下，我们可以直观地看到这些是 $E \and F$ 中的三个结果。因此，我们有：$$ \p(E
+    |F) = \frac{\p(E \and F)}{\p(F)} = \frac{3/50}{14/50} = \frac{3}{14} \approx 0.21
+    $$ 即使这个视觉示例（具有等可能结果空间）对于获得直觉很有用，但条件概率无论样本空间是否有等可能结果都适用！
 - en: Conditional Probability Example
+  id: totrans-10
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 条件概率示例
 - en: 'Let''s use a real world example to better understand conditional probability:
     movie recommendation. Imagine a streaming service like Netflix wants to figure
     out the probability that a user will watch a movie $E$ (for example, [Life is
@@ -66,13 +93,24 @@
     \approx \frac{\text{# people who watched movie $E$}}{\text{# people on Netflix}}
     \\ &= \frac{1,234,231}{50,923,123} \approx 0.02 \end{align} $$ In fact we can
     do this for many movies $E$:'
+  id: totrans-11
   prefs: []
   type: TYPE_NORMAL
+  zh: 让我们用一个现实世界的例子来更好地理解条件概率：电影推荐。想象一下，像Netflix这样的流媒体服务想要根据用户观看了一部不同的电影$F$（比如[Amélie](https://en.wikipedia.org/wiki/Am%C3%A9lie)）来计算用户观看电影$E$（例如，[Life
+    is Beautiful](https://en.wikipedia.org/wiki/Life_Is_Beautiful)）的概率。首先，让我们回答一个更简单的问题：用户观看电影Life
+    is Beautiful，$E$的概率是多少？我们可以使用概率的定义和一个电影观看数据集[[1](https://www.kaggle.com/netflix-inc/netflix-prize-data)]来解决这个问题：$$
+    \begin{align} \p(E) &= \lim_{n \rightarrow \infty} \frac{\text{count}(E)}{n} \approx
+    \frac{\text{# people who watched movie $E$}}{\text{# people on Netflix}} \\ &=
+    \frac{1,234,231}{50,923,123} \approx 0.02 \end{align} $$ 实际上，我们可以为许多电影$E$做同样的事情：
 - en: '![](../Images/9ade4fd7fd7856f7e919f42b7715142d.png)$\p(E) = 0.02$![](../Images/d67a1d5ba4b7418ff2faa90eee6a8648.png)$\p(E)
     = 0.01$![](../Images/14ff0749ad1abd069e230ebdda1014fb.png)$\p(E) = 0.05$![](../Images/543545fb8d904a56b4243380eaac15c1.png)$\p(E)
     = 0.09$![](../Images/e022443accb5860d2b0fe30df2f9dd60.png)$\p(E) = 0.03$'
+  id: totrans-12
   prefs: []
   type: TYPE_NORMAL
+  zh: '![](../Images/9ade4fd7fd7856f7e919f42b7715142d.png)$\p(E) = 0.02$![](../Images/d67a1d5ba4b7418ff2faa90eee6a8648.png)$\p(E)
+    = 0.01$![](../Images/14ff0749ad1abd069e230ebdda1014fb.png)$\p(E) = 0.05$![](../Images/543545fb8d904a56b4243380eaac15c1.png)$\p(E)
+    = 0.09$![](../Images/e022443accb5860d2b0fe30df2f9dd60.png)$\p(E) = 0.03$'
 - en: 'Now for a more interesting question. What is the probability that a user will
     watch the movie Life is Beautiful ($E$), given they watched Amelie ($F$)? We can
     use the definition of conditional probability. $$ \begin{align} \p(E|F) &= \frac{\p(E
@@ -83,55 +121,89 @@
     && \text{Simplifying} \end{align} $$ If we let $F$ be the event that someone watches
     the movie Amélie, we can now calculate $\p(E|F)$, the *conditional* probability
     that someone watches movie $E$:'
+  id: totrans-13
   prefs: []
   type: TYPE_NORMAL
+  zh: 现在来一个更有趣的问题。在已知用户观看了Amélie($F$)的情况下，用户观看电影Life is Beautiful($E$)的概率是多少？我们可以使用条件概率的定义。$$
+    \begin{align} \p(E|F) &= \frac{\p(E \and F)}{\p(F)} && \text{条件概率的定义}\\ &\approx
+    \frac{ (\text{# who watched $E \and F$}) / (\text{# of people on Netflix}) }{
+    (\text{# who watched movie $F$}) / (\text{# people on Netflix}) } && \text{概率的定义}
+    \\ &\approx \frac{\text{# of people who watched both $E \and F$}}{\text{# of people
+    who watched movie $F$}} && \text{简化} \end{align} $$ 如果我们让$F$表示某人观看电影Amélie的事件，我们现在可以计算$\p(E|F)$，即某人观看电影$E$的条件概率：
 - en: '![](../Images/9ade4fd7fd7856f7e919f42b7715142d.png)$\p(E|F) = 0.09$![](../Images/d67a1d5ba4b7418ff2faa90eee6a8648.png)$\p(E|F)
     = 0.03$![](../Images/14ff0749ad1abd069e230ebdda1014fb.png)$\p(E|F) = 0.05$![](../Images/543545fb8d904a56b4243380eaac15c1.png)$\p(E|F)
     = 0.02$![](../Images/e022443accb5860d2b0fe30df2f9dd60.png)$\p(E|F)$ = 1.00'
+  id: totrans-14
   prefs: []
   type: TYPE_NORMAL
+  zh: '![](../Images/9ade4fd7fd7856f7e919f42b7715142d.png)$\p(E|F) = 0.09$![](../Images/d67a1d5ba4b7418ff2faa90eee6a8648.png)$\p(E|F)
+    = 0.03$![](../Images/14ff0749ad1abd069e230ebdda1014fb.png)$\p(E|F) = 0.05$![](../Images/543545fb8d904a56b4243380eaac15c1.png)$\p(E|F)
+    = 0.02$![](../Images/e022443accb5860d2b0fe30df2f9dd60.png)$\p(E|F)$ = 1.00'
 - en: Why do some probabilities go up, some probabilities go down, and some probabilities
     are unchanged after we observe that the person has watched Amelie ($F$)? If you
     know someone watched Amelie, they are more likely to watch Life is Beautiful,
     and less likely to watch Star Wars. We have new information on the person!
+  id: totrans-15
   prefs: []
   type: TYPE_NORMAL
+  zh: 为什么在观察到某人观看了Amélie($F$)之后，有些概率上升，有些概率下降，而有些概率保持不变？如果你知道某人观看了Amélie，他们更有可能观看Life
+    is Beautiful，而不太可能观看Star Wars。我们对这个人的信息有了新的了解！
 - en: The Conditional Paradigm
+  id: totrans-16
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 条件范式
 - en: 'When you condition on an event you enter the universe where that event has
     taken place. In that new universe all the laws of probability still hold. Thus,
     as long as you condition consistently on the same event, every one of the tools
     we have learned still apply. Let’s look at a few of our old friends when we condition
     consistently on an event (in this case $G$):'
+  id: totrans-17
   prefs: []
   type: TYPE_NORMAL
+  zh: 当你基于一个事件进行条件化时，你进入了一个该事件已经发生的世界。在这个新的世界中，所有概率定律仍然适用。因此，只要你在同一事件上保持一致的条件化，我们所学到的每一个工具仍然适用。让我们看看当我们对事件进行一致的条件化时（在这种情况下是
+    $G$）的一些老朋友：
 - en: '| Name of Rule | Original Rule | Rule Conditioned on $G$ |'
+  id: totrans-18
   prefs: []
   type: TYPE_TB
+  zh: '| 规则名称 | 原始规则 | 基于 $G$ 的规则 |'
 - en: '| --- | --- | --- |'
+  id: totrans-19
   prefs: []
   type: TYPE_TB
+  zh: '| --- | --- | --- |'
 - en: '| Axiom of probability 1 | $0 ≤ \p(E) ≤ 1$ | $0 ≤ \p(E&#124;G) ≤ 1$ |'
+  id: totrans-20
   prefs: []
   type: TYPE_TB
+  zh: '| 概率公理 1 | $0 ≤ \p(E) ≤ 1$ | $0 ≤ \p(E|G) ≤ 1$ |'
 - en: '| Axiom of probability 2 | $\p(S) = 1$ | $\p(S &#124; G) = 1$ |'
+  id: totrans-21
   prefs: []
   type: TYPE_TB
+  zh: '| 概率公理 2 | $\p(S) = 1$ | $\p(S|G) = 1$ |'
 - en: '| Axiom of probability 3 | $\p(E \or F) = \p(E) + \p(F)$ for mutually exclusive
     events | $\p(E \or F &#124; G) = \p(E &#124; G) + \p(F &#124; G)$ for mutually
     exclusive events |'
+  id: totrans-22
   prefs: []
   type: TYPE_TB
+  zh: '| 概率公理 3 | 对于互斥事件，$\p(E \lor F) = \p(E) + \p(F)$ | 对于互斥事件，$\p(E \lor F|G) =
+    \p(E|G) + \p(F|G)$ |'
 - en: '| Identity 1 | $\p(E\c) = 1 - \p(E)$ | $\p(E\c &#124; G) = 1 - \p(E &#124;G)$
     |'
+  id: totrans-23
   prefs: []
   type: TYPE_TB
+  zh: '| Identity 1 | $\p(E^c) = 1 - \p(E)$ | $\p(E^c|G) = 1 - \p(E|G)$ |'
 - en: Conditioning on Multiple Events
+  id: totrans-24
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 基于多个事件的条件化
 - en: 'The conditional paradigm also applies to the definition of conditional probability!
     Again if we consistently condition on some event $G$ occurring, the rule still
     holds: $$ \p(E |F, G) = \frac{\p(E \and F | G)}{\p(F | G)} $$ The term $\p(E |
@@ -141,5 +213,9 @@
     still applies in the universe where $G$ has occurred. Do you think that $\p(E
     |F, G)$ should be equal to $\p(E |F)$? The answer is: sometimes yes and sometimes
     no.'
+  id: totrans-25
   prefs: []
   type: TYPE_NORMAL
+  zh: 条件范式也适用于条件概率的定义！再次，如果我们一致地基于某个事件 $G$ 的发生进行条件化，规则仍然适用：$$ \p(E|F, G) = \frac{\p(E
+    \land F| G)}{\p(F| G)} $$ 术语 $\p(E|F, G)$ 是对多个事件条件化的新符号。你应该将这个术语读作“在 F 和 G 都已发生的情况下，E
+    发生的概率”。这个方程表明，在 $G$ 发生的世界中，$E|F$ 的条件概率定义仍然适用。你认为 $\p(E|F, G)$ 应该等于 $\p(E|F)$ 吗？答案是：有时是，有时不是。

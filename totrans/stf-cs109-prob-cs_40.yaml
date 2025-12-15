@@ -1,42 +1,60 @@
 - en: Binomial Approximation
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 二项近似
 - en: 原文：[https://chrispiech.github.io/probabilityForComputerScientists/en/part2/binomial_approx/](https://chrispiech.github.io/probabilityForComputerScientists/en/part2/binomial_approx/)
+  id: totrans-1
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 原文：[https://chrispiech.github.io/probabilityForComputerScientists/en/part2/binomial_approx/](https://chrispiech.github.io/probabilityForComputerScientists/en/part2/binomial_approx/)
 - en: '* * *'
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: '* * *'
 - en: 'There are times when it is exceptionally hard to numerically calculate probabilities
     for a binomial distribution, especially when $n$ is large. For example, say $X
     \sim \text{Bin}(n = 10000, p = 0.5)$ and you want to calculate $\p(X > 5500)$.
     The correct formula is: \begin{align} \p(X > 55) &= \sum_{i = 5500}^{10000} \p(X=x)
     \\ &= \sum_{i = 5500}^{10000}{10000 \choose i}p^i(1-p)^{10000-i} \end{align}'
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: 有时候，数值计算二项分布的概率特别困难，尤其是当 $n$ 很大时。例如，假设 $X \sim \text{Bin}(n = 10000, p = 0.5)$，你想计算
+    $\p(X > 5500)$。正确的公式是：\begin{align} \p(X > 55) &= \sum_{i = 5500}^{10000} \p(X=x)
+    \\ &= \sum_{i = 5500}^{10000}{10000 \choose i}p^i(1-p)^{10000-i} \end{align}
 - en: That is a difficult value to calculate. Luckily there is an easier way. For
     deep reasons which we will cover in our section on "uncertainty theory" it turns
     out that a binomial distribution can be very well approximated by both Normal
     distributions and Poisson distributions if $n$ is large enough.
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: 这是一个难以计算的值。幸运的是，有一个更简单的方法。由于我们在“不确定性理论”部分将深入探讨的深层次原因，结果发现，当 $n$ 足够大时，二项分布可以很好地被正态分布和泊松分布近似。
 - en: Use the [Poisson approximation](#poi_approx) when $n$ is large (>20) and $p$
     is small (<0.05). A slight dependence between results of each experiment is ok
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: 当 $n$ 很大（>20）且 $p$ 很小（<0.05）时，使用[泊松近似](#poi_approx)。每个实验结果之间有轻微的依赖关系是可以接受的
 - en: 'Use the [Normal approximation](#norm_approx) when $n$ is large (>20), and $p$
     is mid-ranged. Specifically it''s considered an accurate approximation when the
     variance is greater then 10, in other words: $np(1-p)>10$. There are situations
     where either a Poisson or a Normal can be used to approximate a Binomial. In that
     situation go with the Normal!'
+  id: totrans-6
   prefs: []
   type: TYPE_NORMAL
+  zh: 当 $n$ 较大（>20）且 $p$ 处于中等范围时，使用[正态近似](#norm_approx)。具体来说，当方差大于10时，它被认为是一个准确的近似，换句话说：$np(1-p)>10$。在某些情况下，可以使用泊松分布或正态分布来近似二项分布。在这种情况下，选择正态分布！
 - en: Poisson Approximation
+  id: totrans-7
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 泊松近似
 - en: When defining the Poisson we proved that a Binomial in the limit as $n \rightarrow
     \infty$ and $p = \lambda/n$ is a Poisson. That same logic can be used to show
     that a Poisson is a great approximation for a Binomial when the Binomial has extreme
@@ -45,12 +63,19 @@
     the things we care about (PMF, expectation, variance) we no longer need to know
     $n$ and $p$. We only need to provide $\lambda$ which we call the rate. When approximating
     a Poisson with a Binomial, always choose $\lambda = n \cdot p$.
+  id: totrans-8
   prefs: []
   type: TYPE_NORMAL
+  zh: 当定义泊松分布时，我们证明了当 $n \rightarrow \infty$ 且 $p = \lambda/n$ 时，二项分布趋于泊松分布。同样的逻辑可以用来证明，当二项分布的
+    $n$ 和 $p$ 取极端值时，泊松分布是二项分布的一个很好的近似。泊松随机变量近似二项分布，其中 $n$ 很大，$p$ 很小，且 $\lambda = np$
+    是“中等”的。有趣的是，为了计算我们关心的事情（概率质量函数、期望、方差），我们不再需要知道 $n$ 和 $p$。我们只需要提供 $\lambda$，我们称之为速率。在用泊松分布近似二项分布时，总是选择
+    $\lambda = n \cdot p$。
 - en: There are different interpretations of "moderate". The accepted ranges are $n
     > 20$ and $p < 0.05$ or $n > 100$ and $p < 0.1$.
+  id: totrans-9
   prefs: []
   type: TYPE_NORMAL
+  zh: “中等”有不同的解释。接受的范围是 $n > 20$ 且 $p < 0.05$ 或 $n > 100$ 且 $p < 0.1$。
 - en: 'Let''s say you want to send a bit string of length $n = 10^4$ where each bit
     is independently corrupted with $p = 10^{-6}$. What is the probability that the
     message will arrive uncorrupted? You can solve this using a Poisson with $\lambda
@@ -61,36 +86,55 @@
     0.9900498 \end{align*} We could have also modelled X as a binomial such that $X
     \sim Bin(10^4, 10^{-6})$. That would have been impossible to calculate on a computer
     but would have resulted in the same number (up to the millionth decimal).'
+  id: totrans-10
   prefs: []
   type: TYPE_NORMAL
+  zh: 假设你想要发送一个长度为 $n = 10^4$ 的比特串，其中每个比特独立地被 $p = 10^{-6}$ 污染。消息到达时未损坏的概率是多少？你可以使用
+    $\lambda = np = 10^4 \cdot 10^{-6} = 0.01$ 的泊松分布来解决这个问题。语义上，$\lambda = 0.01$ 意味着我们期望每串有
+    $0.01$ 个损坏的比特，假设比特是连续的。设 $X \sim Poi(0.01)$ 为损坏的比特数。使用泊松分布的概率质量函数：\begin{align*}
+    P(X = 0) &= \frac{\lambda^i}{i!}e^{-\lambda}\\ &= \frac{0.01^0}{0!}e^{-0.01}\\
+    &\sim 0.9900498 \end{align*} 我们也可以将 $X$ 模型化为二项分布，即 $X \sim Bin(10^4, 10^{-6})$。这在计算机上计算是不可能的，但会得到相同的结果（直到百万分位）。
 - en: Normal Approximation
+  id: totrans-11
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 正态近似
 - en: 'For a Binomial where $n$ is large and $p$ is mid-ranged, a Normal can be used
     to approximate the Binomial. Let''s take a side by side view of a normal and a
     binomial:'
+  id: totrans-12
   prefs: []
   type: TYPE_NORMAL
+  zh: 对于 $n$ 很大且 $p$ 中等的二项分布，可以使用正态分布来近似二项分布。让我们对比一下正态分布和二项分布：
 - en: '![](../Images/faec876cfa92e7117bd1f3e8abdb8863.png)'
+  id: totrans-13
   prefs: []
   type: TYPE_IMG
+  zh: '![图片](../Images/faec876cfa92e7117bd1f3e8abdb8863.png)'
 - en: Lets say our binomial is a random variable $X \sim \text{Bin}(100, 0.5)$ and
     we want to calculate $P(X \geq 55)$. We could cheat by using the closest fit normal
     (in this case $Y \sim N(50, 25)$). How did we choose that particular Normal? Simply
     select one with a mean and variance that matches the Binomial expectation and
     variance. The binomial expectation is $np = 100 \cdot 0.5 = 50$. The Binomial
     variance is $np(1-p) = 100 \cdot 0.5 \cdot 0.5 = 25$.
+  id: totrans-14
   prefs: []
   type: TYPE_NORMAL
+  zh: 假设我们的二项分布是一个随机变量 $X \sim \text{Bin}(100, 0.5)$，我们想要计算 $P(X \geq 55)$。我们可以通过使用最接近的正态分布（在这种情况下
+    $Y \sim N(50, 25)$）来作弊。我们是如何选择那个特定的正态分布的？简单地说，选择一个均值和方差与二项分布期望和方差相匹配的正态分布。二项分布期望是
+    $np = 100 \cdot 0.5 = 50$。二项分布方差是 $np(1-p) = 100 \cdot 0.5 \cdot 0.5 = 25$。
 - en: You can use a Normal distribution to approximate a Binomial $X\sim \Bin(n,p)$.
     To do so define a normal $Y \sim (E[X], Var(X))$. Using the Binomial formulas
     for expectation and variance, $Y \sim (np, np(1-p))$. This approximation holds
     for large $n$ and moderate $p$. That gets you very close. However since a Normal
     is continuous and Binomial is discrete we have to use a continuity correction
     to discretize the Normal.
+  id: totrans-15
   prefs: []
   type: TYPE_NORMAL
+  zh: 你可以使用正态分布来近似二项分布 $X\sim \Bin(n,p)$。为此，定义一个正态分布 $Y \sim (E[X], Var(X))$。使用二项分布的期望和方差公式，$Y
+    \sim (np, np(1-p))$。这种近似适用于大的 $n$ 和适中的 $p$。这会让你非常接近。然而，由于正态分布是连续的，而二项分布是离散的，我们必须使用连续性校正来离散化正态分布。
 - en: '![](../Images/0b323ca4eb5ce4c8a2992c6858cf4349.png) \begin{align*} P(X = k)
     \sim P\left(k - \frac{1}{2} < Y < k + \frac{1}{2}\right) = \Phi\left( \frac{k
     - np + 0.5}{\sqrt{np(1-p)}} \right) - \Phi\left( \frac{k - np - 0.5}{\sqrt{np(1-p)}}
@@ -100,29 +144,53 @@
     \text{Equivalent continuous probability question}\\ &P(X=6) && P(5.5 < X < 6.5)
     \\ &P(X\geq6) && P(X > 5.5) \\ &P(X > 6) && P(X > 6.5) \\ &P(X < 6) && P(X < 5.5)
     \\ &P(X \leq 6) && P(X < 6.5) \\ \end{align*}'
+  id: totrans-16
   prefs: []
   type: TYPE_NORMAL
+  zh: '![图片](../Images/0b323ca4eb5ce4c8a2992c6858cf4349.png) \begin{align*} P(X =
+    k) \sim P\left(k - \frac{1}{2} < Y < k + \frac{1}{2}\right) = \Phi\left( \frac{k
+    - np + 0.5}{\sqrt{np(1-p)}} \right) - \Phi\left( \frac{k - np - 0.5}{\sqrt{np(1-p)}}
+    \right) \end{align*} 你应该习惯于决定使用哪种连续性校正。以下是一些离散概率问题及其连续性校正的例子：\begin{align*} &\text{离散（二项）概率问题}
+    && \text{等效连续概率问题}\\ &P(X=6) && P(5.5 < X < 6.5) \\ &P(X\geq6) && P(X > 5.5) \\
+    &P(X > 6) && P(X > 6.5) \\ &P(X < 6) && P(X < 5.5) \\ &P(X \leq 6) && P(X < 6.5)
+    \\ \end{align*}'
 - en: '**Example:** 100 visitors to your website are given a new design. Let $X$ =
     # of people who were given the new design and spend more time on your website.
     Your CEO will endorse the new design if $X \geq 65$. What is $P(\text{CEO endorses
     change}|\text{it has no effect})$?'
+  id: totrans-17
   prefs: []
   type: TYPE_NORMAL
+  zh: '**示例**：100位访问你网站的访客被给予一个新的设计。设 $X$ = 被给予新设计并在你网站上花费更多时间的人数。如果你的CEO认为新设计没有效果，那么当
+    $X \geq 65$ 时，他会支持新设计。$P(\text{CEO支持改变}|\text{它没有效果})$ 是多少？'
 - en: '$E[X] = np = 50$. $\Var(X) = np(1-p) = 25$. $\sigma = \sqrt{\Var(X)} = 5$.
     We can thus use a Normal approximation: $Y \sim \mathcal{N}(\mu = 50, \sigma^2
     = 25)$. \begin{align*} P(X \geq 65) &\approx P(Y > 64.5) = P\left(\frac{Y - 50}{5}
     > \frac{64.5 - 50}{5}\right) = 1 - \Phi(2.9) = 0.0019 \end{align*}'
+  id: totrans-18
   prefs: []
   type: TYPE_NORMAL
+  zh: $E[X] = np = 50$。$\Var(X) = np(1-p) = 25$。$\sigma = \sqrt{\Var(X)} = 5$。因此我们可以使用正态近似：$Y
+    \sim \mathcal{N}(\mu = 50, \sigma^2 = 25)$。 \begin{align*} P(X \geq 65) &\approx
+    P(Y > 64.5) = P\left(\frac{Y - 50}{5} > \frac{64.5 - 50}{5}\right) = 1 - \Phi(2.9)
+    = 0.0019 \end{align*}
 - en: '**Example:** Stanford accepts 2480 students and each student has a 68% chance
     of attending. Let $X$ = # students who will attend. $X\sim \Bin(2480, 0.68)$.
     What is $P(X > 1745)$?'
+  id: totrans-19
   prefs: []
   type: TYPE_NORMAL
+  zh: '**示例：** 斯坦福大学录取了2480名学生，每个学生有68%的几率入学。设$X$ = # 将会入学的学生数。$X\sim \Bin(2480, 0.68)$。求$P(X
+    > 1745)$？'
 - en: '$E[X] = np = 1686.4$. $\var(X) = np(1-p) = 539.7$. $\sigma = \sqrt{\Var(X)}
     = 23.23$. We can thus use a Normal approximation: $Y \sim \mathcal{N}(\mu = 1686.4,
     \sigma^2 = 539.7)$. \begin{align*} P(X > 1745) &\approx P(Y > 1745.5) \\ &\approx
     P\left(\frac{Y - 1686.4}{23.23} > \frac{1745.5 - 1686.4}{23.23}\right) \\ &\approx
     1 - \Phi(2.54) = 0.0055 \end{align*}'
+  id: totrans-20
   prefs: []
   type: TYPE_NORMAL
+  zh: $E[X] = np = 1686.4$。$\var(X) = np(1-p) = 539.7$。$\sigma = \sqrt{\Var(X)} =
+    23.23$。因此我们可以使用正态近似：$Y \sim \mathcal{N}(\mu = 1686.4, \sigma^2 = 539.7)$。 \begin{align*}
+    P(X > 1745) &\approx P(Y > 1745.5) \\ &\approx P\left(\frac{Y - 1686.4}{23.23}
+    > \frac{1745.5 - 1686.4}{23.23}\right) \\ &\approx 1 - \Phi(2.54) = 0.0055 \end{align*}

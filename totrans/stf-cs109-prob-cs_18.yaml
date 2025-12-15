@@ -1,29 +1,41 @@
 - en: Many Coin Flips
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 多次抛硬币
 - en: 原文：[https://chrispiech.github.io/probabilityForComputerScientists/en/part1/many_flips/](https://chrispiech.github.io/probabilityForComputerScientists/en/part1/many_flips/)
+  id: totrans-1
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 原文：[https://chrispiech.github.io/probabilityForComputerScientists/en/part1/many_flips/](https://chrispiech.github.io/probabilityForComputerScientists/en/part1/many_flips/)
 - en: '* * *'
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: '* * *'
 - en: In this section we are going to consider the number of heads on $n$ coin flips.
     This thought experiment is going to be a basis for much probability theory! It
     goes far beyond coin flips.
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: 在本节中，我们将考虑$n$次抛硬币时正面出现的次数。这个思想实验将成为大量概率理论的基础！它远远超出了抛硬币的范畴。
 - en: 'Say a coin comes up heads with probability $p$. Most coins are fair and as
     such come up heads with probability $p=0.5$. There are many events for which coin
     flips are a great analogy that have different values of $p$ so let''s leave $p$
     as a variable. You can try simulating flipping coins here. Note that `H` is short
     for Heads and `T` is short for Tails. We think of each coin as distinct:'
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: 假设一枚硬币正面出现的概率为$p$。大多数硬币是公平的，因此正面出现的概率为$p=0.5$。有许多事件，抛硬币是一个很好的类比，但$p$的值不同，所以让我们将$p$作为一个变量。你可以尝试在这里模拟抛硬币。请注意，`H`代表正面，`T`代表反面。我们认为每一枚硬币都是独特的：
 - en: '**Coin Flip Simulator**'
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: '**硬币抛掷模拟器**'
 - en: 'Number of flips $n$: Probability of heads $p$: Simulator results:`Total number
     of heads:`  [PRE0] H, H, H, H, H, H, H, H, H, H [PRE1] T, T, T, T, T, T, T, T,
     T, T [PRE2] H, H, H, H, T, T, T, T, T, T [PRE3] (H, H, H, H, T, T, T, T, T, T)
@@ -110,5 +122,69 @@
     T, H, H, H, H, T) (T, T, T, T, T, H, H, H, T, H) (T, T, T, T, T, H, H, T, H, H)
     (T, T, T, T, T, H, T, H, H, H) (T, T, T, T, T, T, H, H, H, H) [PRE4] T, H, T,
     T, H, T, T, H, H, T [PRE5]`'
+  id: totrans-6
   prefs: []
   type: TYPE_NORMAL
+  zh: '抛掷次数 $n$: 正面概率 $p$: 模拟器结果:`总正面次数:`  [PRE0] H, H, H, H, H, H, H, H, H, H [PRE1]
+    T, T, T, T, T, T, T, T, T, T [PRE2] H, H, H, H, T, T, T, T, T, T [PRE3] (H, H,
+    H, H, T, T, T, T, T, T) (H, H, H, T, H, T, T, T, T, T) (H, H, H, T, T, H, T, T,
+    T, T) (H, H, H, T, T, T, H, T, T, T) (H, H, H, T, T, T, T, H, T, T) (H, H, H,
+    T, T, T, T, T, H, T) (H, H, H, T, T, T, T, T, T, H) (H, H, T, H, H, T, T, T, T,
+    T) (H, H, T, H, T, H, T, T, T, T) (H, H, T, H, T, T, H, T, T, T) (H, H, T, H,
+    T, T, T, H, T, T) (H, H, T, H, T, T, T, T, H, T) (H, H, T, H, T, T, T, T, T, H)
+    (H, H, T, T, H, H, T, T, T, T) (H, H, T, T, H, T, H, T, T, T) (H, H, T, T, H,
+    T, T, H, T, T) (H, H, T, T, H, T, T, T, H, T) (H, H, T, T, H, T, T, T, T, H) (H,
+    H, T, T, T, H, H, T, T, T) (H, H, T, T, T, H, T, H, T, T) (H, H, T, T, T, H, T,
+    T, H, T) (H, H, T, T, T, H, T, T, T, H) (H, H, T, T, T, T, H, H, T, T) (H, H,
+    T, T, T, T, H, T, H, T) (H, H, T, T, T, T, H, T, T, H) (H, H, T, T, T, T, T, H,
+    H, T) (H, H, T, T, T, T, T, H, T, H) (H, H, T, T, T, T, T, T, H, H) (H, T, H,
+    H, H, T, T, T, T, T) (H, T, H, H, T, H, T, T, T, T) (H, T, H, H, T, T, H, T, T,
+    T) (H, T, H, H, T, T, T, H, T, T) (H, T, H, H, T, T, T, T, H, T) (H, T, H, H,
+    T, T, T, T, T, H) (H, T, H, T, H, H, T, T, T, T) (H, T, H, T, H, T, H, T, T, T)
+    (H, T, H, T, H, T, T, H, T, T) (H, T, H, T, H, T, T, T, H, T) (H, T, H, T, H,
+    T, T, T, T, H) (H, T, H, T, T, H, H, T, T, T) (H, T, H, T, T, H, T, H, T, T) (H,
+    T, H, T, T, H, T, T, H, T) (H, T, H, T, T, H, T, T, T, H) (H, T, H, T, T, T, H,
+    H, T, T) (H, T, H, T, T, T, H, T, H, T) (H, T, H, T, T, T, H, T, T, H) (H, T,
+    H, T, T, T, T, H, H, T) (H, T, H, T, T, T, T, H, T, H) (H, T, H, T, T, T, T, T,
+    H, H) (H, T, T, H, H, H, T, T, T, T) (H, T, T, H, H, T, H, T, T, T) (H, T, T,
+    H, H, T, T, H, T, T) (H, T, T, H, H, T, T, T, H, T) (H, T, T, H, H, T, T, T, T,
+    H) (H, T, T, H, T, H, H, T, T, T) (H, T, T, H, T, H, T, H, T, T) (H, T, T, H,
+    T, H, T, T, H, T) (H, T, T, H, T, H, T, T, T, H) (H, T, T, H, T, T, H, H, T, T)
+    (H, T, T, H, T, T, H, T, H, T) (H, T, T, H, T, T, H, T, T, H) (H, T, T, H, T,
+    T, T, H, H, T) (H, T, T, H, T, T, T, H, T, H) (H, T, T, H, T, T, T, T, H, H) (H,
+    T, T, T, H, H, H, T, T, T) (H, T, T, T, H, H, T, H, T, T) (H, T, T, T, H, H, T,
+    T, H, T) (H, T, T, T, H, H, T, T, T, H) (H, T, T, T, H, T, H, H, T, T) (H, T,
+    T, T, H, T, H, T, H, T) (H, T, T, T, H, T, H, T, T, H) (H, T, T, T, H, T, T, H,
+    H, T) (H, T, T, T, H, T, T, H, T, H) (H, T, T, T, H, T, T, T, H, H) (H, T, T,
+    T, T, H, H, H, T, T) (H, T, T, T, T, H, H, T, H, T) (H, T, T, T, T, H, H, T, T,
+    H) (H, T, T, T, T, H, T, H, H, T) (H, T, T, T, T, H, T, H, T, H) (H, T, T, T,
+    T, H, T, T, H, H) (H, T, T, T, T, T, H, H, H, T) (H, T, T, T, T, T, H, H, T, H)
+    (H, T, T, T, T, T, H, T, H, H) (H, T, T, T, T, T, T, H, H, H) (T, H, H, H, H,
+    T, T, T, T, T) (T, H, H, H, T, H, T, T, T, T) (T, H, H, H, T, T, H, T, T, T) (T,
+    H, H, H, T, T, T, H, T, T) (T, H, H, H, T, T, T, T, H, T) (T, H, H, H, T, T, T,
+    T, T, H) (T, H, H, T, H, H, T, T, T, T) (T, H, H, T, H, T, H, T, T, T) (T, H,
+    H, T, H, T, T, H, T, T) (T, H, H, T, H, T, T, T, H, T) (T, H, H, T, H, T, T, T,
+    T, H) (T, H, H, T, T, H, H, T, T, T) (T, H, H, T, T, H, T, H, T, T) (T, H, H,
+    T, T, H, T, T, H, T) (T, H, H, T, T, H, T, T, T, H) (T, H, H, T, T, T, H, H, T,
+    T) (T, H, H, T, T, T, H, T, H, T) (T, H, H, T, T, T, H, T, T, H) (T, H, H, T,
+    T, T, T, H, H, T) (T, H, H, T, T, T, T, H, T, H) (T, H, H, T, T, T, T, T, H, H)
+    (T, H, T, H, H, H, T, T, T, T) (T, H, T, H, H, T, H, T, T, T) (T, H, T, H, H,
+    T, T, H, T, T) (T, H, T, H, H, T, T, T, H, T) (T, H, T, H, H, T, T, T, T, H) (T,
+    H, T, H, T, H, H, T, T, T) (T, H, T, H, T, H, T, H, T, T) (T, H, T, H, T, H, T,
+    T, H, T) (T, H, T, H, T, H, T, T, T, H) (T, H, T, H, T, T, H, H, T, T) (T, H,
+    T, H, T, T, H, T, H, T) (T, H, T, H, T, T, H, T, T, H) (T, H, T, H, T, T, T, H,
+    H, T) (T, H, T, H, T, T, T, H, T, H) (T, H, T, H, T, T, T, T, H, H) (T, H, T,
+    T, H, H, H, T, T, T) (T, H, T, T, H, H, T, H, T, T) (T, H, T, T, H, H, T, T, H,
+    T) (T, H, T, T, H, H, T, T, T, H) (T, H, T, T, H, T, H, H, T, T) (T, H, T, T,
+    H, T, H, T, H, T) (T, H, T, T, H, T, H, T, T, H) (T, H, T, T, H, T, T, H, H, T)
+    (T, H, T, T, H, T, T, H, T, H) (T, H, T, T, H, T, T, T, H, H) (T, H, T, T, T,
+    H, H, H, T, T) (T, H, T, T, T, H, H, T, H, T) (T, H, T, T, T, H, H, T, T, H) (T,
+    H, T, T, T, H, T, H, H, T) (T, H, T, T, T, H, T, H, T, H) (T, H, T, T, T, H, T,
+    T, H, H) (T, H, T, T, T, T, H, H, H, T) (T, H, T, T, T, T, H, H, T, H) (T, H,
+    T, T, T, T, H, T, H, H) (T, H, T, T, T, T, T, H, H, H) (T, T, H, H, H, H, T, T,
+    T, T) (T, T, H, H, H, T, H, T, T, T) (T, T, H, H, H, T, T, H, T, T) (T, T, H,
+    H, H, T, T, T, H, T) (T, T, H, H, H, T, T, T, T, H) (T, T, H, H, T, H, H, T, T,
+    T) (T, T, H, H, T, H, T, H, T, T) (T, T, H, H, T, H, T, T, H, T) (T, T, H, H,
+    T, H, T, T, T, H) (T, T, H, H, T, T, H, H, T, T) (T, T, H, H, T, T, H, T, H, T)
+    (T, T, H, H, T, T, H, T, T, H) (T, T, H, H, T, T, T, H, H, T) (T, T, H, H, T,
+    T, T, H'

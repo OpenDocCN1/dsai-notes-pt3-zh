@@ -1,40 +1,58 @@
 - en: Name to Age
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 名字到年龄
 - en: 原文：[https://chrispiech.github.io/probabilityForComputerScientists/en/examples/name2age/](https://chrispiech.github.io/probabilityForComputerScientists/en/examples/name2age/)
+  id: totrans-1
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 原文：[https://chrispiech.github.io/probabilityForComputerScientists/en/examples/name2age/](https://chrispiech.github.io/probabilityForComputerScientists/en/examples/name2age/)
 - en: '* * *'
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: '***'
 - en: 'Because of shifting patterns in name popularity, a person''s name is a hint
     as to their age. The United States publishes a data which contains counts of how
     many US residents were born with a given name in a given year, based off Social
     Security applications. We can use inference to compute the reverse probability
     distribution: an updated belief in a person''s age, given their name. As a reminder,
     if I know the year someone was born, I can calculate their age within one year.'
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: 由于名字流行趋势的变化，一个人的名字可以暗示他们的年龄。美国发布了一份数据，其中包含了在特定年份出生并使用特定名字的美国居民数量，这些数据基于社会保障申请。我们可以使用推理来计算逆概率分布：根据他们的名字更新对一个人年龄的信念。提醒一下，如果我知道某人的出生年份，我可以在一年内计算出他们的年龄。
 - en: 'Query Name:'
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: 查询名字：
 - en: '<canvas id="babyNamePMF" style="max-height: 400px;display:none">'
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: '`<canvas id="babyNamePMF" style="max-height: 400px;display:none">`'
 - en: 'Records with name:'
+  id: totrans-6
   prefs: []
   type: TYPE_NORMAL
+  zh: 带有该名字的记录：
 - en: This demo is based on real data from US Social Security applications between
     1914 and 2014\. Thank you to [https://www.kaggle.com/kaggle/us-baby-names](https://www.kaggle.com/kaggle/us-baby-names)
     for compiling the data. [Download Data](../../../data/babyNames/count_map.json).
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: 这个演示基于1914年至2014年美国社会保障申请的真实数据。感谢[https://www.kaggle.com/kaggle/us-baby-names](https://www.kaggle.com/kaggle/us-baby-names)整理数据。[下载数据](../../../data/babyNames/count_map.json)。
 - en: Computation
+  id: totrans-8
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 计算
 - en: 'The US Social Security applications data provides you with a function: `count(year,
     name)` which returns the number of US citizens, born in a given year with a given
     name. You also have access to a list `names` which has each name ever given in
@@ -45,12 +63,17 @@
     Let $B$ be the year someone is born, and let $N$ be their name. We will use $k$
     to denote the number of entries in the dataset: $ P(B = b,N = n) \approx \frac{\text{count}(b,
     n)} {k} $'
+  id: totrans-9
   prefs: []
   type: TYPE_NORMAL
+  zh: 美国社会保障申请数据为你提供了一个函数：`count(year, name)`，该函数返回在特定年份出生并使用特定名字的美国公民数量。你还可以访问一个包含美国所有曾经使用过的名字的列表`names`和一个包含所有年份的列表`years`。这个函数隐式地给出了关于名字和出生年份的联合概率。名字和出生年份的联合分配的概率可以估计为具有该名字并在该年出生的人数与数据集中总人数的比例。设$B$为某人的出生年份，$N$为他们的名字。我们将使用$k$表示数据集中的条目数：$
+    P(B = b,N = n) \approx \frac{\text{count}(b, n)} {k} $
 - en: 'The question we would really like to answer is: what is your belief that a
     resident was born in 1950, given that their name is Gary?'
+  id: totrans-10
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们真正想回答的问题是：在知道居民的名字是Gary的情况下，你认为他们出生于1950年的信念是什么？
 - en: 'We can get started by applying the definition of conditional probability for
     random variables: \begin{align*} \P( B = 1950 | N = \text{Gary} ) = \frac{\P(N
     = \text{Gary} , B = 1950)}{\P(N = \text{Gary})} \end{align*} Note: Bayes'' Theorem
@@ -61,122 +84,193 @@
     \text{Gary})$ which we can compute using marginalization: \begin{align*} \P( N
     = \text{Gary}) &= \sum_{y \in \text{years}} P(B = y,N = \text{Gary})\\ &\approx
     \sum\limits_{y \in \text{years}} \frac{\text{count}(y, \text{Gary})}{k} \end{align*}'
+  id: totrans-11
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们可以通过应用随机变量的条件概率定义开始：$\P( B = 1950 | N = \text{Gary} ) = \frac{\P(N = \text{Gary}
+    , B = 1950)}{\P(N = \text{Gary})}$ 注意：贝叶斯定理是此类推理任务的一个更典型选择。然而，在这种情况下，由于计算$P(B
+    = b, N=n)$比计算$P(N=n | B=b)$更容易，因此它是必要的。这就是为什么我们使用了条件概率的定义。这种方法留下一个需要计算的项：$\P(N
+    = \text{Gary})$，我们可以通过边际化来计算：$\P( N = \text{Gary}) = \sum_{y \in \text{years}}
+    P(B = y,N = \text{Gary}) \approx \sum\limits_{y \in \text{years}} \frac{\text{count}(y,
+    \text{Gary})}{k}$
 - en: 'Putting this all together we have: \begin{align*} \P( B = 1950 | N = \text{Gary}
     ) &= \frac{\P(N = \text{Gary} , B = 1950)}{\P(N = \text{Gary})} \\ &\approx \frac
     { \Big( \frac{\text{count}(1950, \text{Gary})} {k} \Big) } { \Big( \frac{ \sum\limits_{y
     \in \text{years}} \text{count}(y, \text{Gary})}{k} \Big) } \\ &\approx \frac {
     \text{count}(1950, \text{Gary}) } { \sum\limits_{y \in \text{years}} \text{count}(y,
     \text{Gary}) } \end{align*}'
+  id: totrans-12
   prefs: []
   type: TYPE_NORMAL
+  zh: 将这些信息综合起来，我们得到：\begin{align*} \P( B = 1950 | N = \text{Gary} ) &= \frac{\P(N
+    = \text{Gary} , B = 1950)}{\P(N = \text{Gary})} \\ &\approx \frac { \Big( \frac{\text{count}(1950,
+    \text{Gary})} {k} \Big) } { \Big( \frac{ \sum\limits_{y \in \text{years}} \text{count}(y,
+    \text{Gary})}{k} \Big) } \\ &\approx \frac { \text{count}(1950, \text{Gary}) }
+    { \sum\limits_{y \in \text{years}} \text{count}(y, \text{Gary}) } \end{align*}
 - en: 'More generally, for any name, we can compute the conditional probability mass
     function over birth year $B$: \begin{align*} \P( B = b | N = n ) &\approx \frac
     { \text{count}(b, n) } { \sum\limits_{y \in \text{years}} \text{count}(y, n) }
     \end{align*}'
+  id: totrans-13
   prefs: []
   type: TYPE_NORMAL
+  zh: 更普遍地，对于任何名字，我们可以计算出生年份的条件的概率质量函数：\begin{align*} \P( B = b | N = n ) &\approx
+    \frac { \text{count}(b, n) } { \sum\limits_{y \in \text{years}} \text{count}(y,
+    n) } \end{align*}
 - en: From Birth Year to Age
+  id: totrans-14
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 从出生年份到年龄
 - en: Of course, if $B$ is the birth year of a person, their age, $A$ is approximately
     the current year minus $B$. This could be off by one if someone has a birth day
     later in the year, but we will ignore this small deviation for now. So for example,
     if we think that a person was born in 1988, since the current year is then their
     age is - 1988 =
+  id: totrans-15
   prefs: []
   type: TYPE_NORMAL
+  zh: 当然，如果$B$是一个人的出生年份，那么他们的年龄$A$大约是当前年份减去$B$。如果某人的生日在年底较晚，可能会相差一年，但我们现在忽略这个小的偏差。所以例如，如果我们认为一个人是在1988年出生的，那么当前年份就是他们的年龄
+    - 1988 =
 - en: Assumptions
+  id: totrans-16
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 假设
 - en: 'This problem makes many assumptions which are worth highlighting. In fact,
     any time we make generalizations (especially about demographics) based on sparse
     information we should tread lightly. Here are the assumptions that I can think
     of:'
+  id: totrans-17
   prefs: []
   type: TYPE_NORMAL
+  zh: 这个问题有很多假设，值得强调。事实上，每次我们根据稀少的信息进行概括（尤其是关于人口统计数据）时，我们都应该谨慎行事。以下是我能想到的假设：
 - en: This data only is accurate for names of people in the US. The probability of
     age given names could be very different in other countries.
+  id: totrans-18
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 这份数据仅适用于美国人的名字。在其他国家，根据名字给出的年龄概率可能会有很大差异。
 - en: The US census is not perfect. It does not capture all people who are resident
     in the US, and there are demographics which are underrepresented. This will also
     skew our results.
+  id: totrans-19
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 美国人口普查并不完美。它没有捕捉到所有居住在美国的人，而且有一些人口统计数据没有得到充分代表。这也会影响我们的结果。
 - en: Names that Give Away Your Age
+  id: totrans-20
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 揭示年龄的名字
 - en: Some names have certain years where they were exceptionally popular. These names
     provide quite a lot of information about birth year. Let's look at some of the
     names with the highest max probability.
+  id: totrans-21
   prefs: []
   type: TYPE_NORMAL
+  zh: 一些名字在特定年份特别流行，这些名字提供了关于出生年份的大量信息。让我们看看一些具有最高最大概率的名字。
 - en: '**Medium Popularity (>10,000 people with the name)**'
+  id: totrans-22
   prefs: []
   type: TYPE_NORMAL
+  zh: '**中等流行度（>10,000人使用该名字）**'
 - en: '| Name | Age with max prob | Prob of most likely age |'
+  id: totrans-23
   prefs: []
   type: TYPE_TB
+  zh: '| 姓名 | 最大概率年龄 | 最可能年龄的概率 |'
 - en: '| --- | --- | --- |'
+  id: totrans-24
   prefs: []
   type: TYPE_TB
+  zh: '| --- | --- | --- |'
 - en: '| Katina | 49 | 0.245 |'
+  id: totrans-25
   prefs: []
   type: TYPE_TB
+  zh: '| Katina | 49 | 0.245 |'
 - en: '| Marquita | 38 | 0.233 |'
+  id: totrans-26
   prefs: []
   type: TYPE_TB
+  zh: '| Marquita | 38 | 0.233 |'
 - en: '| Ashanti | 19 | 0.250 |'
+  id: totrans-27
   prefs: []
   type: TYPE_TB
+  zh: '| Ashanti | 19 | 0.250 |'
 - en: '| Miley | 13 | 0.250 |  |'
+  id: totrans-28
   prefs: []
   type: TYPE_TB
+  zh: '| Miley | 13 | 0.250 |  |'
 - en: '| Aria | 7 | 0.247 |'
+  id: totrans-29
   prefs: []
   type: TYPE_TB
+  zh: '| Aria | 7 | 0.247 |'
 - en: '**High Popularity (>100,000 people with the name)**'
+  id: totrans-30
   prefs: []
   type: TYPE_NORMAL
+  zh: '**高流行度（>100,000人使用该名字）**'
 - en: '| Name | Age with max prob | Prob of most likely age |'
+  id: totrans-31
   prefs: []
   type: TYPE_TB
+  zh: '| 姓名 | 最大概率年龄 | 最可能年龄的概率 |'
 - en: '| --- | --- | --- |'
+  id: totrans-32
   prefs: []
   type: TYPE_TB
+  zh: '| --- | --- | --- |'
 - en: '| Debbie | 62 | 0.104 |'
+  id: totrans-33
   prefs: []
   type: TYPE_TB
+  zh: '| Debbie | 62 | 0.104 |'
 - en: '| Whitney | 35 | 0.098 |'
+  id: totrans-34
   prefs: []
   type: TYPE_TB
+  zh: '| Whitney | 35 | 0.098 |'
 - en: '| Chelsea | 29 | 0.103 |'
+  id: totrans-35
   prefs: []
   type: TYPE_TB
+  zh: '| Chelsea | 29 | 0.103 |'
 - en: '| Aidan | 18 | 0.098 |'
+  id: totrans-36
   prefs: []
   type: TYPE_TB
+  zh: '| Aidan | 18 | 0.098 |'
 - en: '| Addison | 14 | 0.112 |'
+  id: totrans-37
   prefs: []
   type: TYPE_TB
+  zh: '| Addison | 14 | 0.112 |'
 - en: A search for "Katina 1972" brought up this interesting article about a baby
     named Katina in a 1972 [CBS Soap Opera](http://www.nancy.cc/2012/01/25/baby-name-katina/).
     Marquita's popularity was likely from a 1983 [toothpase add](https://www.youtube.com/watch?v=K2LcWa4G0W4).
     [Ashanti Douglas](https://en.wikipedia.org/wiki/Ashanti_(singer)) and [Miley Cirus](https://en.wikipedia.org/wiki/Miley_Cyrus)
     were popular singers in 2002 and 2008 respectively.
+  id: totrans-38
   prefs: []
   type: TYPE_NORMAL
+  zh: 搜索“Katina 1972”显示了一篇关于1972年一个名叫Katina的婴儿的有趣文章，这篇文章来自[CBS肥皂剧](http://www.nancy.cc/2012/01/25/baby-name-katina/)。[Marquita](https://www.youtube.com/watch?v=K2LcWa4G0W4)的流行可能源于1983年的一个[牙膏广告](https://www.youtube.com/watch?v=K2LcWa4G0W4)。[Ashanti
+    Douglas](https://en.wikipedia.org/wiki/Ashanti_(singer))和[Miley Cirus](https://en.wikipedia.org/wiki/Miley_Cyrus)分别在2002年和2008年成为了流行的歌手。
 - en: Futher Reading
+  id: totrans-39
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 进一步阅读
 - en: 'Some names don''t seem to have enough data to make good probability estimates.
     Can we quantify our uncertainty in such probability estimates? For example, if
     a name has only 10,000 entries in the database, of which only 100 were born in
@@ -186,25 +280,42 @@
     $X \sim \Beta(a=101, b=9901)$ reflecting that we have seen 100 people born in
     1950 and 9900 people who were not. We can plot that belief, zoomed into the range
     [0, 0.03]:'
+  id: totrans-40
   prefs: []
   type: TYPE_NORMAL
+  zh: 一些名字似乎没有足够的数据来做出良好的概率估计。我们能否量化这种概率估计的不确定性？例如，如果一个名字在数据库中只有10,000条记录，其中只有100人在1950年出生，我们对于1950年真实概率为$\frac{100}{10000}
+    = 0.01$的信心有多大？表达我们不确定性的方法之一是通过[贝塔分布](../../part4/beta)。在这种情况下，我们可以将我们对1950年概率的信念表示为$X
+    \sim \Beta(a=101, b=9901)$，这反映了我们看到了100个在1950年出生的人，以及9900个不是在1950年出生的人。我们可以绘制这种信念，并聚焦于范围[0,
+    0.03]：
 - en: '<canvas id="betaPdfnameBeta" style="max-height: 400px"></canvas>'
+  id: totrans-41
   prefs: []
   type: TYPE_NORMAL
+  zh: '<canvas id="betaPdfnameBeta" style="max-height: 400px"></canvas>'
 - en: We can now ask questions such as, what is the probability that $X$ is within
     0.002 of 0.01?
+  id: totrans-42
   prefs: []
   type: TYPE_NORMAL
+  zh: 现在，我们可以提出一些问题，例如，$X$在0.01附近0.002的概率是多少？
 - en: \begin{align*} P(&0.008 < X < 0.012) \\ &= P(X < 0.012) - P(X < 0.008) \\ &=
     F_X(0.012) - F_X(0.008) \\ &= 0.966 - 0.013 \\ &= 0.953 \end{align*}
+  id: totrans-43
   prefs: []
   type: TYPE_NORMAL
+  zh: \begin{align*} P(&0.008 < X < 0.012) \\ &= P(X < 0.012) - P(X < 0.008) \\ &=
+    F_X(0.012) - F_X(0.008) \\ &= 0.966 - 0.013 \\ &= 0.953 \end{align*}
 - en: Semantically this leads to the claim that, after observing 100 births with a
     name in 1950, out of 10,000 births with that name over the whole dataset, there
     is a 95% chance that the probability of someone being born in 1950 is 0.010 $\pm$
     0.002.
+  id: totrans-44
   prefs: []
   type: TYPE_NORMAL
+  zh: 从语义上讲，这导致了一个断言：在观察了100个在1950年出生的名字后，在整个数据集中，该名字有10,000个出生记录，有95%的把握认为某人在1950年出生的概率是0.010
+    $\pm$ 0.002。
 - en: </canvas>
+  id: totrans-45
   prefs: []
   type: TYPE_NORMAL
+  zh: </canvas>
