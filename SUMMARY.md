@@ -9,6 +9,7 @@
 +   [台湾大学林轩田机器学习笔记](docs/ntu-hsuantienlin-ml/README.md)
 +   [SciPyCon 2018 sklearn 教程](docs/scipycon-2018-sklearn-tut/README.md)
 +   [斯坦福 Stats60：21 世纪的统计思维](docs/stat21/README.md)
++   [斯坦福 CS109：计算机科学家的概率论](docs/stf-cs109-prob-cs/README.md)
 +   [斯坦福 CS224d 自然语言处理讲义 2017](docs/stf-cs224d-2017/README.md)
 +   [斯坦福 CS224n 自然语言处理笔记 2017](docs/stf-cs224n-2017/README.md)
 +   [斯坦福 CS231n 卷积神经网络中文讲义](docs/stf-cs231n/README.md)
