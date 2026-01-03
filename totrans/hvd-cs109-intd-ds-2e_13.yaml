@@ -1,19 +1,27 @@
 - en: 9  Data visualization principles
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 9 数据可视化原则
 - en: 原文：[https://rafalab.dfci.harvard.edu/dsbook-part-1/dataviz/dataviz-principles.html](https://rafalab.dfci.harvard.edu/dsbook-part-1/dataviz/dataviz-principles.html)
+  id: totrans-1
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: '[https://rafalab.dfci.harvard.edu/dsbook-part-1/dataviz/dataviz-principles.html](https://rafalab.dfci.harvard.edu/dsbook-part-1/dataviz/dataviz-principles.html)'
 - en: '[Data Visualization](../dataviz/intro-dataviz.html)'
+  id: totrans-2
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[数据可视化](../dataviz/intro-dataviz.html)'
 - en: '[9  Data visualization principles](../dataviz/dataviz-principles.html)'
+  id: totrans-3
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[9 数据可视化原则](../dataviz/dataviz-principles.html)'
 - en: In this chapter we aim to provide some general principles we can use as a guide
     for effective data visualization. Much of this section is based on a talk by Karl
     Broman[¹](#fn1) titled “Creating Effective Figures and Tables”[²](#fn2) and includes
@@ -23,8 +31,11 @@
     examples of plot styles we should avoid, explain how to improve them, and use
     these as motivation for a list of principles. We compare and contrast plots that
     follow these principles to those that don’t.
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: 本章的目标是提供一些通用原则，我们可以将其用作有效数据可视化的指南。本节的大部分内容基于Karl Broman[¹](#fn1)的演讲，标题为“创建有效的图表和表格”[²](#fn2)，其中包括一些使用Karl在GitHub存储库[³](#fn3)上提供的代码制作的图表，以及Peter
+    Aldhous数据可视化导论课程的课堂笔记[⁴](#fn4)。遵循Karl的方法，我们展示了我们应该避免的绘图风格的一些示例，解释了如何改进它们，并以此作为原则列表的动机。我们比较了遵循这些原则的图表和不遵循的图表。
 - en: The principles are mostly based on research related to how humans detect patterns
     and make visual comparisons. The preferred approaches are those that best fit
     the way our brains process visual information. When deciding on a visualization
@@ -35,74 +46,109 @@
     and optimize graphs to the audience. For example, an exploratory plot made for
     ourselves will be different than a chart intended to communicate a finding to
     a general audience.
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: 这些原则主要基于与人类检测模式和进行视觉比较相关的研究。首选的方法是那些最能符合我们大脑处理视觉信息的方式的方法。在决定可视化方法时，也要牢记我们的目标。我们可能是在比较可观察的数量、描述类别或数值的分布、比较两组数据或描述两个变量之间的关系。最后，我们想强调的是，根据受众调整和优化图表非常重要。例如，为我们自己制作的探索性图表将不同于旨在向普通受众传达发现的图表。
 - en: In this chapter we focus on the principles and do not show code (code can be
     viewed on GitHub[⁵](#fn5)). In [Chapter 10](dataviz-in-practice.html), we apply
     these principles in case study and do show code.
+  id: totrans-6
   prefs: []
   type: TYPE_NORMAL
+  zh: 在本章中，我们专注于原则，不展示代码（代码可以在GitHub上查看[⁵](#fn5)）。在第10章[dataviz-in-practice.html](dataviz-in-practice.html)中，我们将这些原则应用于案例研究，并展示了代码。
 - en: 9.1 Encoding data using visual cues
+  id: totrans-7
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 9.1 使用视觉线索编码数据
 - en: We start by describing some principles for encoding data. There are several
     visual cues at our disposal including position, aligned lengths, angles, area,
     brightness, and color hue.
+  id: totrans-8
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们首先描述一些用于编码数据的原则。我们有几个视觉线索可供选择，包括位置、对齐长度、角度、面积、亮度和颜色色调。
 - en: 'To illustrate how some of these visual cues compare, let’s suppose we want
     to report the results from two hypothetical polls regarding browser preference
     taken in 2000 and then 2015\. For each year, we are simply comparing five quantities
     – the five percentages. A widely used graphical representation of percentages,
     popularized by Microsoft Excel, is the pie chart:'
+  id: totrans-9
   prefs: []
   type: TYPE_NORMAL
+  zh: 为了说明这些视觉线索的一些比较，让我们假设我们想要报告关于浏览器偏好的两个假设性调查的结果，分别在2000年和2015年进行。对于每一年，我们只是比较五个数量——五个百分比。百分比的一个广泛使用的图形表示方法是饼图，由Microsoft
+    Excel普及：
 - en: '![](../Images/be3a25957cedb1dcc0c196aea45c8a34.png)'
+  id: totrans-10
   prefs: []
   type: TYPE_IMG
+  zh: '![图片](../Images/be3a25957cedb1dcc0c196aea45c8a34.png)'
 - en: 'Here we are representing quantities with both areas and angles, since both
     the angle and area of each pie slice are proportional to the quantity the slice
     represents. This turns out to be a sub-optimal choice since, as demonstrated by
     perception studies, humans are not good at precisely quantifying angles and are
     even worse when area is the only available visual cue. The donut chart is an example
     of a plot that uses only area:'
+  id: totrans-11
   prefs: []
   type: TYPE_NORMAL
+  zh: 在这里，我们使用面积和角度来表示数量，因为每个饼图的角和面积都与它所代表的数量成比例。事实证明，这是一个次优选择，因为，正如感知研究所示，人类在精确量化角度方面并不擅长，当面积是唯一的可用视觉线索时，情况更糟。饼图是仅使用面积的图表示例：
 - en: '![](../Images/2743e06f79dfcd18dd72de95d2f58df9.png)'
+  id: totrans-12
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/2743e06f79dfcd18dd72de95d2f58df9.png)'
 - en: To see how hard it is to quantify angles and area, note that the rankings and
     all the percentages in the plots above changed from 2000 to 2015\. Can you determine
     the actual percentages and rank the browsers’ popularity? Can you see how the
     percentages changed from 2000 to 2015? It is not easy to tell from the plot.
+  id: totrans-13
   prefs: []
   type: TYPE_NORMAL
+  zh: 要了解量化角度和面积有多困难，请注意，上述图表中的排名和所有百分比在2000年到2015年之间发生了变化。你能确定实际的百分比并对浏览器的流行度进行排名吗？你能看到百分比从2000年到2015年的变化吗？从图表中很难判断。
 - en: 'In this case, simply showing the numbers is not only clearer, but would also
     saves on printing costs if printing a paper copy:'
+  id: totrans-14
   prefs: []
   type: TYPE_NORMAL
+  zh: 在这种情况下，仅仅展示数字不仅更清晰，而且如果打印纸质副本，还能节省印刷成本：
 - en: '| Browser | 2000 | 2015 |'
+  id: totrans-15
   prefs: []
   type: TYPE_TB
+  zh: '| 浏览器 | 2000 | 2015 |'
 - en: '| --- | --- | --- |'
+  id: totrans-16
   prefs: []
   type: TYPE_TB
+  zh: '| --- | --- | --- |'
 - en: '| Opera | 3 | 2 |'
+  id: totrans-17
   prefs: []
   type: TYPE_TB
+  zh: '| Opera | 3 | 2 |'
 - en: '| Safari | 21 | 22 |'
+  id: totrans-18
   prefs: []
   type: TYPE_TB
+  zh: '| Safari | 21 | 22 |'
 - en: '| Firefox | 23 | 21 |'
+  id: totrans-19
   prefs: []
   type: TYPE_TB
+  zh: '| Firefox | 23 | 21 |'
 - en: '| Chrome | 26 | 29 |'
+  id: totrans-20
   prefs: []
   type: TYPE_TB
+  zh: '| Chrome | 26 | 29 |'
 - en: '| IE | 28 | 27 |'
+  id: totrans-21
   prefs: []
   type: TYPE_TB
+  zh: '| IE | 28 | 27 |'
 - en: The preferred way to plot these quantities is to use length and position as
     visual cues, since humans are much better at judging linear measures. The barplot
     uses this approach by using bars of length proportional to the quantities of interest.
@@ -110,116 +156,174 @@
     multiple of 10, we ease the visual burden of quantifying through the position
     of the top of the bars. Compare and contrast the information we can extract from
     the two figures.
+  id: totrans-22
   prefs: []
   type: TYPE_NORMAL
+  zh: 这些量的最佳绘制方式是使用长度和位置作为视觉线索，因为人类在判断线性度量方面要优越得多。条形图通过使用与感兴趣的数量成比例的条形长度来实现这一方法。通过在战略性地选择的位置添加水平线，在这种情况下，每10的倍数，我们减轻了通过条形顶部位置进行量化的视觉负担。比较和对比我们可以从两个图表中提取的信息。
 - en: '![](../Images/7367ba43a9d7b85b452bde1dfb8fc40c.png)'
+  id: totrans-23
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/7367ba43a9d7b85b452bde1dfb8fc40c.png)'
 - en: Notice how much easier it is to see the differences in the barplot. In fact,
     we can now determine the actual percentages by following a horizontal line to
     the x-axis.
+  id: totrans-24
   prefs: []
   type: TYPE_NORMAL
+  zh: 注意条形图中看到差异的难度有多大。实际上，我们现在可以通过跟随水平线到x轴来确定实际的百分比。
 - en: 'If for some reason you need to make a pie chart, label each pie slice with
     its respective percentage so viewers do not have to infer them from the angles
     or area:'
+  id: totrans-25
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果出于某种原因你需要制作饼图，为每个饼图切片标注其相应的百分比，以便观众不必从角度或面积中推断它们：
 - en: '![](../Images/fb2d678836da690e74c5331adeaed826.png)'
+  id: totrans-26
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/fb2d678836da690e74c5331adeaed826.png)'
 - en: In general, when displaying quantities, position and length are preferred over
     angles and/or area. Brightness and color are even harder to quantify than angles.
     But, as we will see later, they are sometimes useful when more than two dimensions
     must be displayed at once.
+  id: totrans-27
   prefs: []
   type: TYPE_NORMAL
+  zh: 通常，在显示数量时，位置和长度比角度和/或面积更受欢迎。亮度和颜色比角度更难以量化。但，正如我们稍后将会看到的，当必须同时显示超过两个维度时，它们有时是有用的。
 - en: 9.2 Know when to include 0
+  id: totrans-28
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 9.2 知道何时包含0
 - en: 'When using length as a visual cue, it is misinformative not to start the bars
     at 0\. This is because, by using length as a visual cue, say with a barplot, we
     are implying the length is proportional to the quantities being displayed. By
     avoiding 0, relatively small differences can be made to look much bigger than
     they actually are. This approach is often used by politicians or media organizations
     trying to exaggerate a difference. Below is an illustrative example[⁶](#fn6):'
+  id: totrans-29
   prefs: []
   type: TYPE_NORMAL
+  zh: 当使用长度作为视觉线索时，如果不从0开始，就会误导信息。这是因为，当我们使用长度作为视觉线索，比如条形图时，我们暗示长度与显示的数量成比例。通过避免0，相对较小的差异可以显得比实际上大得多。这种方法通常被政治家或媒体机构用来夸大差异。以下是一个说明性的例子[⁶](#fn6)：
 - en: '![](../Images/c66c317ac0618e1159bd68cc42df4e91.png)'
+  id: totrans-30
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/c66c317ac0618e1159bd68cc42df4e91.png)'
 - en: '(Source: Fox News, via Media Matters[⁷](#fn7).)'
+  id: totrans-31
   prefs: []
   type: TYPE_NORMAL
+  zh: (来源：Fox News，via Media Matters[⁷](#fn7)。)
 - en: 'From the plot above, it appears that apprehensions have almost tripled when,
     in fact, they have only increased by about 16%. Starting the graph at 0 illustrates
     this clearly:'
+  id: totrans-32
   prefs: []
   type: TYPE_NORMAL
+  zh: 从上面的图表来看，当实际上只增加了大约16%时，担忧几乎增加了三倍。从0开始绘制图表可以清楚地说明这一点：
 - en: '![](../Images/3edb535c6bb03f4447ee466b12e575ab.png)'
+  id: totrans-33
   prefs: []
   type: TYPE_IMG
+  zh: '![图片](../Images/3edb535c6bb03f4447ee466b12e575ab.png)'
 - en: 'Here is another example:'
+  id: totrans-34
   prefs: []
   type: TYPE_NORMAL
+  zh: 这里是另一个例子：
 - en: '![](../Images/275dd9e579ea55e1e32dd56f65081f62.png)'
+  id: totrans-35
   prefs: []
   type: TYPE_IMG
+  zh: '![图片](../Images/275dd9e579ea55e1e32dd56f65081f62.png)'
 - en: '(Source: Fox News, via Flowing Data[⁸](#fn8).)'
+  id: totrans-36
   prefs: []
   type: TYPE_NORMAL
+  zh: （来源：Fox News，via Flowing Data[⁸](#fn8)）
 - en: 'This plot makes a 13% increase look like a five fold change. Here is the appropriate
     plot:'
+  id: totrans-37
   prefs: []
   type: TYPE_NORMAL
+  zh: 这个图表使13%的增长看起来像是五倍的变化。以下是适当的图表：
 - en: '![](../Images/793b8c8ebc7c015c44cca6938c512855.png)'
+  id: totrans-38
   prefs: []
   type: TYPE_IMG
+  zh: '![图片](../Images/793b8c8ebc7c015c44cca6938c512855.png)'
 - en: 'Finally, here is an extreme example that makes a very small difference of under
     2% look like a 10-100 fold change:'
+  id: totrans-39
   prefs: []
   type: TYPE_NORMAL
+  zh: 最后，这是一个极端示例，将不到2%的微小差异看起来像是10-100倍的变化：
 - en: '![](../Images/ee703bb8a83ac0dca4394fd83e8c7848.png)'
+  id: totrans-40
   prefs: []
   type: TYPE_IMG
+  zh: '![图片](../Images/ee703bb8a83ac0dca4394fd83e8c7848.png)'
 - en: '(Source: Venezolana de Televisión via El Mundo[⁹](#fn9).)'
+  id: totrans-41
   prefs: []
   type: TYPE_NORMAL
+  zh: （来源：Venezolana de Televisión via El Mundo[⁹](#fn9)）
 - en: 'Here is the appropriate plot:'
+  id: totrans-42
   prefs: []
   type: TYPE_NORMAL
+  zh: 这里是适当的图表：
 - en: '![](../Images/37ee51e4b25b1ddd35f9e41884bf5058.png)'
+  id: totrans-43
   prefs: []
   type: TYPE_IMG
+  zh: '![图片](../Images/37ee51e4b25b1ddd35f9e41884bf5058.png)'
 - en: 'When using position rather than length, it is then not necessary to include
     0\. This is particularly the case when we want to compare differences between
     groups relative to the within-group variability. Here is an illustrative example
     showing country average life expectancy stratified across continents in 2012:'
+  id: totrans-44
   prefs: []
   type: TYPE_NORMAL
+  zh: 当使用位置而不是长度时，则不需要包含0。这尤其适用于我们想要比较组内差异相对于组内变异性的情况。以下是一个说明性示例，展示了2012年按大洲划分的国家平均预期寿命：
 - en: '![](../Images/a8593ed83881c83abcf13f4ccd058b8c.png)'
+  id: totrans-45
   prefs: []
   type: TYPE_IMG
+  zh: '![图片](../Images/a8593ed83881c83abcf13f4ccd058b8c.png)'
 - en: Note that in the plot on the left, which includes 0, the space between 0 and
     43 adds no information and makes it harder to compare the between and within group
     variability.
+  id: totrans-46
   prefs: []
   type: TYPE_NORMAL
+  zh: 注意，在左侧的图表中，它包括0，0和43之间的空间没有提供任何信息，并且使得比较组间和组内变异性更加困难。
 - en: 9.3 Do not distort quantities
+  id: totrans-47
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 9.3 不要扭曲数量
 - en: 'During President Barack Obama’s 2011 State of the Union Address, the following
     chart was used to compare the US GDP to the GDP of four competing nations:'
+  id: totrans-48
   prefs: []
   type: TYPE_NORMAL
+  zh: 在巴拉克·奥巴马总统2011年的国情咨文中，以下图表被用来比较美国GDP与四个竞争国家的GDP：
 - en: '![](../Images/fa4ac1cb89282d0b3a819af2313519a2.png)'
+  id: totrans-49
   prefs: []
   type: TYPE_IMG
+  zh: '![图片](../Images/fa4ac1cb89282d0b3a819af2313519a2.png)'
 - en: '(Source: The 2011 State of the Union Address[^(10)](#fn10))'
+  id: totrans-50
   prefs: []
   type: TYPE_NORMAL
+  zh: （来源：2011年国情咨文[^(10)](#fn10)）
 - en: 'Judging by the area of the circles, the US appears to have an economy over
     five times larger than China’s and over 30 times larger than France’s. However,
     if we look at the actual numbers, we see that this is not the case. The actual
@@ -228,23 +332,33 @@
     to the quantity, which implies that the proportion between the areas is squared:
     2.6 turns into 6.5 and 5.8 turns into 34.1\. Here is a comparison of the circles
     we get if we make the value proportional to the radius and to the area:'
+  id: totrans-51
   prefs: []
   type: TYPE_NORMAL
+  zh: 通过圆的面积来判断，美国似乎拥有比中国大五倍以上的经济，比法国大30倍以上。然而，如果我们看实际数字，我们会发现情况并非如此。实际的比率分别比中国和法国大2.6倍和5.8倍。这种扭曲的原因是半径而不是面积被用来与数量成比例，这意味着面积之间的比例是平方的：2.6变成了6.5，5.8变成了34.1。以下是我们将值与半径和面积成比例时得到的圆的比较：
 - en: '![](../Images/80e7767a2d69558036b12111372b79ed.png)'
+  id: totrans-52
   prefs: []
   type: TYPE_IMG
+  zh: '![图片](../Images/80e7767a2d69558036b12111372b79ed.png)'
 - en: 'Not surprisingly, **ggplot2** defaults to using area rather than radius. Of
     course, in this case, we really should not be using area at all since we can use
     position and length:'
+  id: totrans-53
   prefs: []
   type: TYPE_NORMAL
+  zh: 毫不奇怪，**ggplot2**默认使用面积而不是半径。当然，在这种情况下，我们实际上根本不应该使用面积，因为我们可以使用位置和长度：
 - en: '![](../Images/e4e10c9926c20466c1bd6e2de8124399.png)'
+  id: totrans-54
   prefs: []
   type: TYPE_IMG
+  zh: '![图片](../Images/e4e10c9926c20466c1bd6e2de8124399.png)'
 - en: 9.4 Order categories by a meaningful value
+  id: totrans-55
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 9.4 按有意义的值对类别进行排序
 - en: When one of the axes is used to show categories, as is done in barplots and
     boxplots, the default **ggplot2** behavior is to order the categories alphabetically
     when they are defined by character strings. If they are defined by factors, they
@@ -255,36 +369,52 @@
     barplots to ease the comparison. Specifically, instead of ordering the browsers
     separately in the two years, we ordered both years by the average value of 2000
     and 2015.
+  id: totrans-56
   prefs: []
   type: TYPE_NORMAL
+  zh: 当一个轴用于显示类别时，就像在条形图和箱线图中那样，**ggplot2**的默认行为是当它们由字符字符串定义时按字母顺序排列类别。如果它们由因子定义，则按因子水平排列。我们很少想使用字母顺序。相反，我们应该按一个有意义的数量排列。在所有上述情况下，条形图都是按显示的值排列的。例外的是比较浏览器的条形图。在这种情况下，我们保持条形图的顺序不变，以简化比较。具体来说，我们不是在两年中分别按浏览器排序，而是按2000年和2015年的平均值对两年进行排序。
 - en: 'To appreciate how the right order can help convey a message, suppose we want
     to create a plot to compare the murder rate across states. We are particularly
     interested in the most dangerous and safest states. Note the difference when we
     order alphabetically (the default) versus when we order by the actual rate:'
+  id: totrans-57
   prefs: []
   type: TYPE_NORMAL
+  zh: 要欣赏正确的顺序如何有助于传达信息，假设我们想要创建一个比较各州谋杀率的图表。我们特别感兴趣的是最危险和最安全的州。注意当我们按字母顺序（默认）排列时与按实际比率排列时的区别：
 - en: '![](../Images/f41b5afbd391294874b644a6b355e3f7.png)'
+  id: totrans-58
   prefs: []
   type: TYPE_IMG
+  zh: '![图片](../Images/f41b5afbd391294874b644a6b355e3f7.png)'
 - en: 'Here is an example showing boxplots of income distributions across regions.
     Here are the two versions plotted against each other:'
+  id: totrans-59
   prefs: []
   type: TYPE_NORMAL
+  zh: 这里有一个例子，展示了各地区收入分布的箱线图。以下是两个版本的对比：
 - en: '![](../Images/fc9ef4094ce741676fc989dc6277133d.png)'
+  id: totrans-60
   prefs: []
   type: TYPE_IMG
+  zh: '![图片](../Images/fc9ef4094ce741676fc989dc6277133d.png)'
 - en: The first orders the regions alphabetically, while the second orders them by
     the group’s median.
+  id: totrans-61
   prefs: []
   type: TYPE_NORMAL
+  zh: 第一条命令按字母顺序排列区域，而第二条命令按该组的中间值排列。
 - en: 9.5 Show the data
+  id: totrans-62
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 9.5 展示数据
 - en: We have focused on displaying single quantities across categories. We now shift
     our attention to displaying data, with a focus on comparing groups.
+  id: totrans-63
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们一直专注于在类别间显示单个数量。我们现在将注意力转向显示数据，重点是比较组。
 - en: 'To motivate the principle, “show the data”, we go back to our artificial example
     of describing heights to ET, an extraterrestrial. This time let’s assume ET is
     interested in the difference in heights between males and females. A commonly
@@ -292,11 +422,16 @@
     Microsoft Excel, is the dynamite plot, which shows the average and standard errors
     (standard errors are defined in a later chapter, but do not confuse them with
     the standard deviation of the data). The plot looks like this:'
+  id: totrans-64
   prefs: []
   type: TYPE_NORMAL
+  zh: 为了激励“展示数据”这一原则，我们回到我们描述身高给外星人ET的例子，这是一个外星人的例子。这次让我们假设ET对男性和女性身高差异感兴趣。用于比较组之间的一种常见图表，由Microsoft
+    Excel等软件普及，是炸药图，它显示了平均值和标准误差（标准误差将在下一章定义，但不要与数据的标准差混淆）。图表看起来是这样的：
 - en: '![](../Images/88bdec78c4a80f876d34ea6f35f9f6c8.png)'
+  id: totrans-65
   prefs: []
   type: TYPE_IMG
+  zh: '![图片](../Images/88bdec78c4a80f876d34ea6f35f9f6c8.png)'
 - en: 'The average of each group is represented by the top of each bar and the antennae
     extend out from the average to the average plus two standard errors. If all ET
     receives is this plot, he will have little information on what to expect if he
@@ -304,24 +439,32 @@
     are tiny humans measuring less than one foot? Are all males taller than the tallest
     females? Is there a range of heights? ET can’t answer these questions since we
     have provided almost no information on the height distribution.'
+  id: totrans-66
   prefs: []
   type: TYPE_NORMAL
+  zh: 每个组的平均值由每个条形的顶部表示，触角从平均值延伸到平均值加两个标准误差。如果ET收到的只是这个图表，他将几乎没有关于遇到一群男性和女性时可以期待什么的信息。条形达到0：这是否意味着有身高不到一英尺的小人？是否所有男性都比最高的女性高？是否存在身高范围？由于我们没有提供关于身高分布的几乎任何信息，ET无法回答这些问题。
 - en: 'This brings us the “show the data” principle. This simple **ggplot2** code
     already generates a more informative plot than the barplot by simply showing all
     the data points:'
+  id: totrans-67
   prefs: []
   type: TYPE_NORMAL
+  zh: 这就引出了“展示数据”原则。这段简单的**ggplot2**代码仅通过显示所有数据点就生成了一个比条形图更有信息的图表：
 - en: '![](../Images/c7f7ed788da0d3cf3f1b34584f22dd7b.png)'
+  id: totrans-68
   prefs: []
   type: TYPE_IMG
+  zh: '![图片](../Images/c7f7ed788da0d3cf3f1b34584f22dd7b.png)'
 - en: For example, this plot gives us an idea of the range of the data. However, this
     plot has limitations as well, since we can’t really see all the 238 and 812 points
     plotted for females and males, respectively, and many points are plotted on top
     of each other. As we have previously described, visualizing the distribution is
     much more informative. But before doing this, we point out two ways we can improve
     a plot showing all the points.
+  id: totrans-69
   prefs: []
   type: TYPE_NORMAL
+  zh: 例如，这个图表让我们对数据的范围有一个概念。然而，这个图表也有局限性，因为我们实际上看不到为女性和男性分别绘制的238和812个点，而且许多点都重叠在一起。正如我们之前所描述的，可视化分布更有信息量。但在这样做之前，我们指出两种可以改进显示所有点的图表的方法。
 - en: 'The first is to add *jitter*, which adds a small random shift to each point.
     In this case, adding horizontal jitter does not alter the interpretation, since
     the point heights do not change, but we minimize the number of points that fall
@@ -330,717 +473,1075 @@
     the points somewhat transparent. The more points fall on top of each other, the
     darker the plot, which also helps us get a sense of how the points are distributed.
     Here is the same plot with jitter and alpha blending:'
+  id: totrans-70
   prefs: []
   type: TYPE_NORMAL
+  zh: 第一个方法是添加*抖动*，这会给每个点添加一个小随机移动。在这种情况下，添加水平抖动不会改变解释，因为点的高度没有变化，但我们最小化了落在彼此之上的点的数量，因此更好地直观地了解数据的分布。第二个改进来自于使用*alpha混合*：使点变得半透明。更多的点落在彼此之上，图表就越暗，这也帮助我们了解点的分布。以下是添加抖动和alpha混合的相同图表：
 - en: '[PRE0]'
+  id: totrans-71
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: '*![](../Images/7db5830c13e88f55459df74096584743.png)*  *Now we start getting
     a sense that, on average, males are taller than females. We also note dark horizontal
     bands of points, demonstrating that many report values that are rounded to the
     nearest integer.*'
+  id: totrans-72
   prefs: []
   type: TYPE_NORMAL
+  zh: '*![](../Images/7db5830c13e88f55459df74096584743.png)*  *现在我们开始感觉到，平均而言，男性的身高比女性高。我们还注意到点的深色水平带，表明许多人报告的值是四舍五入到最接近的整数。*'
 - en: '*9.6 Ease comparisons*'
+  id: totrans-73
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '*9.6 便于比较*'
 - en: '*### 9.6.1 Use common axes'
+  id: totrans-74
   prefs: []
   type: TYPE_NORMAL
+  zh: '*### 9.6.1 使用公共坐标轴'
 - en: 'Since there are so many points, it is more effective to show distributions
     rather than individual points. We therefore show histograms for each group:'
+  id: totrans-75
   prefs: []
   type: TYPE_NORMAL
+  zh: 由于数据点很多，显示分布比显示单个点更有效。因此，我们为每个组显示直方图：
 - en: '![](../Images/a00f29a74aab4437a8e23457840d99c1.png)'
+  id: totrans-76
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/a00f29a74aab4437a8e23457840d99c1.png)'
 - en: 'However, from this plot it is not immediately obvious that males are, on average,
     taller than females. We have to look carefully to notice that the x-axis has a
     higher range of values in the male histogram. An important principle here is to
     **keep the axes the same** when comparing data across two plots. Below we see
     how the comparison becomes a little easier:'
+  id: totrans-77
   prefs: []
   type: TYPE_NORMAL
+  zh: 然而，从这个图表中并不立即明显看出男性平均身高比女性高。我们必须仔细观察才能注意到男性直方图的x轴有更高的值域。这里的一个重要原则是在比较两个图表中的数据时**保持坐标轴相同**。下面我们看看比较如何变得容易一些：
 - en: '![](../Images/f49ab3a6389a271959ea504f057d6105.png)'
+  id: totrans-78
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/f49ab3a6389a271959ea504f057d6105.png)'
 - en: 9.6.2 Aligning plots for comparisons
+  id: totrans-79
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 9.6.2 对齐图表以进行比较
 - en: 'In these histograms, the visual cue related to decreases or increases in height
     are shifts to the left or right, respectively: horizontal changes. Aligning the
     plots vertically helps us see this change when the axes are fixed:'
+  id: totrans-80
   prefs: []
   type: TYPE_NORMAL
+  zh: 在这些直方图中，与高度增加或减少相关的视觉线索分别是向左或向右的移动：水平变化。将图表垂直对齐有助于我们在坐标轴固定时看到这种变化：
 - en: '![](../Images/a1a8090caf417d5d8ded3015bad7f918.png)'
+  id: totrans-81
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/a1a8090caf417d5d8ded3015bad7f918.png)'
 - en: This plot makes it much easier to notice that men are, on average, taller.
+  id: totrans-82
   prefs: []
   type: TYPE_NORMAL
+  zh: 这个图表使得注意到男性平均身高更高变得容易得多。
 - en: 'If we want the more compact summary provided by boxplots, we then align them
     horizontally since, by default, boxplots move up and down with changes in height.
     Following our *show the data* principle, we then overlay all the data points:'
+  id: totrans-83
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果我们想要由箱线图提供的更紧凑的摘要，我们则将它们水平对齐，因为默认情况下，箱线图会随着高度的变化而上下移动。遵循我们的“展示数据”原则，我们随后将所有数据点叠加：
 - en: '![](../Images/9cfc16fbc19e6a1390f689536d677c85.png)'
+  id: totrans-84
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/9cfc16fbc19e6a1390f689536d677c85.png)'
 - en: 'Now contrast and compare these three plots, based on exactly the same data:'
+  id: totrans-85
   prefs: []
   type: TYPE_NORMAL
+  zh: 现在对比和比较这三个基于完全相同数据的图表：
 - en: '![](../Images/544f1e7ac3809561ae888e2bfdba365d.png)'
+  id: totrans-86
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/544f1e7ac3809561ae888e2bfdba365d.png)'
 - en: Notice how much more we learn from the two plots on the right. Barplots are
     useful for showing one number, but not very useful when we want to describe distributions.*
+  id: totrans-87
   prefs: []
   type: TYPE_NORMAL
+  zh: 注意从右侧的两个图表中我们学到了多少。条形图适用于显示一个数字，但当我们想要描述分布时并不十分有用.*
 - en: '*9.7 Log transformations*'
+  id: totrans-88
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '*9.7 对数变换*'
 - en: '*The combination of an incorrectly chosen barplot and a failure to use a transformation
     when one is merited can be particularly distorting. As an example, consider this
     barplot showing the average population sizes for each continent in 2015:'
+  id: totrans-89
   prefs: []
   type: TYPE_NORMAL
+  zh: '*错误选择条形图以及未能使用应有的变换可能会特别扭曲。例如，考虑以下2015年每个大洲平均人口规模的条形图：'
 - en: '![](../Images/f99c39874260de4ae36f908464ef44ae.png)'
+  id: totrans-90
   prefs: []
   type: TYPE_IMG
+  zh: '![图片](../Images/f99c39874260de4ae36f908464ef44ae.png)'
 - en: 'From this plot, one would conclude that countries in Asia are much more populous
     than in other continents. Following the *show the data* principle, we quickly
     notice that this is due to two very large countries, which we assume are India
     and China:'
+  id: totrans-91
   prefs: []
   type: TYPE_NORMAL
+  zh: 从这个图表中，人们可能会得出结论，亚洲国家的人口比其他大陆多得多。遵循*展示数据*的原则，我们很快就会注意到这是由于两个非常大的国家，我们假设是印度和中国：
 - en: '![](../Images/18fa9738ac1943b6fe31ad7beba53d2f.png)'
+  id: totrans-92
   prefs: []
   type: TYPE_IMG
+  zh: '![图片](../Images/18fa9738ac1943b6fe31ad7beba53d2f.png)'
 - en: Here, we focus on examples in which the log transformation improves data visualization
     of skewed data. Other common transformations to be aware of include the logistic
     transformation (`logit`), which is useful for interpreting fold changes in odds,
     and the square root transformation (`sqrt`), which is often applied to stabilize
     variance in count data.
+  id: totrans-93
   prefs: []
   type: TYPE_NORMAL
+  zh: 在这里，我们关注的是对数变换如何改善偏斜数据的可视化效果的例子。其他需要了解的常见变换包括对数变换（`logit`），它有助于解释概率变化的倍数，以及平方根变换（`sqrt`），通常应用于稳定计数数据的方差。
 - en: 9.7.1 Right-skewed distributions
+  id: totrans-94
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 9.7.1 右偏斜分布
 - en: 'Country population sizes provide a clear example of a *right-skewed* distribution:
     most countries have relatively small populations, while a few have extremely large
     ones. As shown in the box plot above, this imbalance causes most of the data points
     to be compressed into a small area of the plot, while a large portion of the plotting
     space is left empty. This makes it difficult to see meaningful differences among
     the majority of countries.'
+  id: totrans-95
   prefs: []
   type: TYPE_NORMAL
+  zh: 国家人口规模提供了一个清晰的例子，说明*右偏斜*分布：大多数国家人口相对较小，而少数国家人口极其庞大。如上图箱线图所示，这种不平衡导致大多数数据点被压缩到图表的一个小区域内，而大部分绘图空间则留空。这使得很难看到大多数国家之间的有意义差异。
 - en: In [Section 8.10](ggplot2.html#sec-scales), we saw how applying a log transformation
     improved the readability of a scatter plot by addressing this kind of skew. Similarly,
     applying a log transformation to population sizes here produces a much more informative
     visualization. Below, we compare the original barplot to a boxplot with a log-transformed
     y-axis to illustrate the improvement.
+  id: totrans-96
   prefs: []
   type: TYPE_NORMAL
+  zh: 在[第8.10节](ggplot2.html#sec-scales)中，我们看到了如何通过解决这种偏斜来应用对数变换，从而提高散点图的易读性。同样，将人口规模应用对数变换可以产生更丰富的可视化效果。下面，我们将原始条形图与具有对数变换y轴的箱线图进行比较，以说明改进。
 - en: '![](../Images/fdb9244c6c90f984e2b56597c32efd45.png)'
+  id: totrans-97
   prefs: []
   type: TYPE_IMG
+  zh: '![图片](../Images/fdb9244c6c90f984e2b56597c32efd45.png)'
 - en: With the new plot, we realize that countries in Africa actually have a larger
     median population size than those in Asia.
+  id: totrans-98
   prefs: []
   type: TYPE_NORMAL
+  zh: 使用新的图表，我们意识到非洲国家实际上具有比亚洲更大的中位人口规模。
 - en: 9.7.2 Ratios
+  id: totrans-99
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 9.7.2 比率
 - en: Ratios are commonly used in data analysis to compare two values. For example,
     we often report the relative risk of developing a disease, such as stating that
     the risk of disease is *three times higher* in smokers than in non-smokers.
+  id: totrans-100
   prefs: []
   type: TYPE_NORMAL
+  zh: 比率在数据分析中常用以比较两个值。例如，我们经常报告疾病的相对风险，例如指出吸烟者患病的风险比非吸烟者高*三倍*。
 - en: Conceptually, ratios are centered around 1, where a ratio of 1 indicates no
     difference between the two values. However, mathematically, ratios are not symmetric
     around 1\. For instance, if the ratio of \(A\) to \(B\) is \(3\), meaning \(A\)
     is three times larger than \(B\), the reverse ratio of \(B\) to \(A\) is \(1/3\).
     Notice that \(3\) and \(1/3\) are not equally distant from 1, which can make it
     difficult to visualize ratios in a way that fairly represents increases and decreases.
+  id: totrans-101
   prefs: []
   type: TYPE_NORMAL
+  zh: 从概念上讲，比率围绕1中心，比率值为1表示两个值之间没有差异。然而，从数学上讲，比率并不围绕1对称。例如，如果\(A\)与\(B\)的比率为3，意味着\(A\)是\(B\)的三倍大，那么反向比率\(B\)与\(A\)的比率为\(1/3\)。请注意，3和\(1/3\)与1的距离并不相等，这可能会使以公平方式表示增加和减少的比率可视化变得困难。
 - en: 'For this reason, it is common to use a log transformation when displaying ratios.
     This is because the logarithm of a ratio has a symmetric property:'
+  id: totrans-102
   prefs: []
   type: TYPE_NORMAL
+  zh: 因此，在显示比率时，通常使用对数变换。这是因为比率的对数具有对称性质：
 - en: \[ \log(A/B) = -\log(B/A) \]
+  id: totrans-103
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \log(A/B) = -\log(B/A) \]
 - en: This means that if \(A\) is three times larger than \(B\), the log ratio is
     equally distant from zero as when \(B\) is three times larger than \(A\), but
     in the opposite direction. This symmetry around zero makes differences easier
     to interpret visually.
+  id: totrans-104
   prefs: []
   type: TYPE_NORMAL
+  zh: 这意味着如果 \(A\) 是 \(B\) 的三倍大，对数比率与 \(B\) 是 \(A\) 的三倍大时距离零同样远，但方向相反。这种围绕零的对称性使得差异更容易从视觉上进行解释。
 - en: Below is a plot demonstrating the advantage of using a log scale for displaying
     ratios.
+  id: totrans-105
   prefs: []
   type: TYPE_NORMAL
+  zh: 下面是一个展示使用对数尺度显示比率的优点的图表。
 - en: '![](../Images/4c25ab154d931bda898526b77561f018.png)'
+  id: totrans-106
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/4c25ab154d931bda898526b77561f018.png)'
 - en: '*A common challenge when plotting log ratios is handling zeros in either the
     numerator or denominator, since \(\log(0)\) is undefined. Additionally, very small
     values can produce log ratios that approach positive or negative infinity, making
     the results unstable and difficult to interpret.'
+  id: totrans-107
   prefs: []
   type: TYPE_NORMAL
+  zh: '*在绘制对数比率时，一个常见的挑战是处理分子或分母中的零，因为 \(\log(0)\) 是未定义的。此外，非常小的值可以产生接近正无穷或负无穷的对数比率，使得结果不稳定且难以解释。'
 - en: 'A practical solution to address both issues is to apply a *continuity correction*,
     which involves adding a small constant to both the numerator and denominator.
     This prevents zeros and stabilizes extreme values. A commonly used constant is
     0.5, leading to the following adjusted log ratio:'
+  id: totrans-108
   prefs: []
   type: TYPE_NORMAL
+  zh: 解决这两个问题的实际方法是应用一个 *连续性校正*，这涉及到在分子和分母中添加一个小的常数。这防止了零的出现并稳定了极端值。常用的常数是 0.5，导致以下调整后的对数比率：
 - en: \[ \log\left( \frac{A + 0.5}{B + 0.5} \right) \]
+  id: totrans-109
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \log\left( \frac{A + 0.5}{B + 0.5} \right) \]
 - en: This simple adjustment helps ensure that log ratios remain finite and more interpretable,
     particularly when dealing with values close to 0\. Additionally, when \(A\) and
     \(B\) are large, it closely approximates the actual log ratio \(\log(A/B)\).**
+  id: totrans-110
   prefs: []
   type: TYPE_NORMAL
+  zh: 这个简单的调整有助于确保对数比率保持有限且更具可解释性，尤其是在处理接近 0 的值时。此外，当 \(A\) 和 \(B\) 都很大时，它接近实际的对数比率
+    \(\log(A/B)\)。**
 - en: '**9.8 Visual cues to be compared should be adjacent**'
+  id: totrans-111
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**9.8 要比较的视觉线索应相邻**'
 - en: '**For each continent, let’s compare income in 1970 versus 2010\. When comparing
     income data across regions between 1970 and 2010, we made a figure similar to
     the one below, but this time we investigate continents rather than regions.'
+  id: totrans-112
   prefs: []
   type: TYPE_NORMAL
+  zh: '**对于每个大陆，让我们比较 1970 年和 2010 年的收入。当比较 1970 年和 2010 年各地区之间的收入数据时，我们制作了一个类似于下面的图表，但这次我们研究的是大陆而不是地区。'
 - en: '![](../Images/a875ee627df7cfb86235b6031db765bd.png)'
+  id: totrans-113
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/a875ee627df7cfb86235b6031db765bd.png)'
 - en: 'The default in **ggplot2** is to order labels alphabetically so the labels
     with 1970 come before the labels with 2010, making the comparisons challenging
     because a continent’s distribution in 1970 is visually far from its distribution
     in 2010\. It is much easier to make the comparison between 1970 and 2010 for each
     continent when the boxplots for that continent are next to each other:'
+  id: totrans-114
   prefs: []
   type: TYPE_NORMAL
+  zh: '**ggplot2** 的默认设置是按字母顺序排列标签，因此带有 1970 的标签会排在带有 2010 的标签之前，这使得比较变得具有挑战性，因为一个大陆在
+    1970 年的分布与 2010 年的分布视觉上相差甚远。当每个大陆的箱线图相邻时，比较 1970 年和 2010 年的每个大陆就更容易了：'
 - en: '![](../Images/744b9667d4253784dd2dd19c29504afd.png)'
+  id: totrans-115
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/744b9667d4253784dd2dd19c29504afd.png)'
 - en: 'The comparison becomes even easier to make if we use color to denote the two
     things we want to compare:'
+  id: totrans-116
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果我们使用颜色来表示我们想要比较的两个事物，比较就会变得更加容易：
 - en: '![](../Images/d1332aab75683153d4144d7459f3c705.png)**'
+  id: totrans-117
   prefs: []
   type: TYPE_NORMAL
+  zh: '![](../Images/d1332aab75683153d4144d7459f3c705.png)**'
 - en: '**9.9 Think of the color blind**'
+  id: totrans-118
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**9.9 考虑色盲人士**'
 - en: '**About 10% of the population is color blind. Unfortunately, the default colors
     used in **ggplot2** are not optimal for this group. However, **ggplot2** does
     make it easy to change the color palette used in the plots. An example of how
     we can use a color blind friendly palette is described in the R cookbook[^(11)](#fn11):'
+  id: totrans-119
   prefs: []
   type: TYPE_NORMAL
+  zh: '**大约 10% 的人口有色盲。不幸的是，**ggplot2** 中使用的默认颜色对这个群体来说并不理想。然而，**ggplot2** 确实使得更改图表中使用的调色板变得容易。我们如何在
+    R cookbook[^(11)](#fn11) 中使用色盲友好调色板的例子描述如下：'
 - en: '[PRE1]'
+  id: totrans-120
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: '*Here are the colors'
+  id: totrans-121
   prefs: []
   type: TYPE_NORMAL
+  zh: '*以下是一些颜色'
 - en: '![](../Images/84aa3e949515c2179c8538849addb778.png)'
+  id: totrans-122
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/84aa3e949515c2179c8538849addb778.png)'
 - en: There are several resources that can help you select colors, for example tutorials
     on R-bloggers[^(12)](#fn12).***
+  id: totrans-123
   prefs: []
   type: TYPE_NORMAL
+  zh: 有几个资源可以帮助你选择颜色，例如 R-bloggers 上的教程[^(12)](#fn12)。***
 - en: '***9.10 Plots for two variables***'
+  id: totrans-124
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '***9.10 两个变量的图表***'
 - en: '***In general, you should use scatterplots to visualize the relationship between
     two variables. In every single instance in which we have examined the relationship
     between two variables, including total murders versus population size and life
     expectancy versus fertility rates, we have used scatterplots. This is the plot
     we generally recommend. However, there are some exceptions and we describe two
     alternative plots here: the *slope chart* and the *Bland-Altman plot*.'
+  id: totrans-125
   prefs: []
   type: TYPE_NORMAL
+  zh: '**一般来说，你应该使用散点图来可视化两个变量之间的关系。在我们考察的两个变量关系的每一个实例中，包括谋杀总数与人口规模以及预期寿命与生育率，我们都使用了散点图。这是我们通常推荐的图表。然而，也有一些例外，我们在这里描述两种替代图表：斜率图和Bland-Altman图**。'
 - en: 9.10.1 Slope charts
+  id: totrans-126
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 9.10.1 斜率图
 - en: One exception where another type of plot may be more informative is when you
     are comparing variables of the same type, but at different time points and for
     a relatively small number of comparisons. For example, comparing life expectancy
     between 2010 and 2015\. In this case, we might recommend a *slope chart*.
+  id: totrans-127
   prefs: []
   type: TYPE_NORMAL
+  zh: 有一个例外，在这种情况下，另一种类型的图表可能更有信息量，那就是当你比较同一类型的变量，但在不同时间点和相对较少的比较时。例如，比较2010年和2015年的预期寿命。在这种情况下，我们可能会推荐一个**斜率图**。
 - en: 'There is no geometry for slope charts in **ggplot2**, but we can construct
     one using `geom_line`. We need to do some tinkering to add labels. Below is an
     example comparing 2010 to 2015 for large western countries:'
+  id: totrans-128
   prefs: []
   type: TYPE_NORMAL
+  zh: 在**ggplot2**中没有斜率图的几何形状，但我们可以使用`geom_line`构建一个。我们需要做一些调整来添加标签。以下是一个比较2010年和2015年大型西方国家的例子：
 - en: '![](../Images/f43e0d666ea6139538c182bb2dabcbe0.png)'
+  id: totrans-129
   prefs: []
   type: TYPE_IMG
+  zh: '![图片](../Images/f43e0d666ea6139538c182bb2dabcbe0.png)'
 - en: 'An advantage of the slope chart is that it permits us to quickly get an idea
     of changes based on the slope of the lines. Although we are using angle as the
     visual cue, we also have position to determine the exact values. Comparing the
     improvements is a bit harder with a scatterplot:'
+  id: totrans-130
   prefs: []
   type: TYPE_NORMAL
+  zh: 斜率图的一个优点是它允许我们根据线的斜率快速了解变化。虽然我们使用角度作为视觉线索，但我们也有位置来确定确切值。与散点图相比，比较改进要困难一些：
 - en: '![](../Images/6f4cfe437ed4098beb624632fda3ce53.png)'
+  id: totrans-131
   prefs: []
   type: TYPE_IMG
+  zh: '![图片](../Images/6f4cfe437ed4098beb624632fda3ce53.png)'
 - en: In the scatterplot, we have followed the principle *use common axes* since we
     are comparing these before and after. However, if we have many points, slope charts
     stop being useful as it becomes hard to see all the lines.
+  id: totrans-132
   prefs: []
   type: TYPE_NORMAL
+  zh: 在散点图中，我们遵循了“使用公共坐标轴”的原则，因为我们是在比较这些前后情况。然而，如果我们有很多点，斜率图就不再有用，因为很难看到所有的线。
 - en: 9.10.2 Bland-Altman plot
+  id: totrans-133
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 9.10.2 Bland-Altman图
 - en: 'Since we are primarily interested in the difference, it makes sense to dedicate
     one of our axes to it. The Bland-Altman plot, also known as the Tukey mean-difference
     plot and the MA-plot, shows the difference versus the average:'
+  id: totrans-134
   prefs: []
   type: TYPE_NORMAL
+  zh: 由于我们主要对差异感兴趣，因此将一个坐标轴专门用于它是合理的。Bland-Altman图，也称为Tukey均值差异图和MA图，显示了差异与平均值的关系：
 - en: '![](../Images/4bfb783db109b688640ea54150aebce8.png)'
+  id: totrans-135
   prefs: []
   type: TYPE_IMG
+  zh: '![图片](../Images/4bfb783db109b688640ea54150aebce8.png)'
 - en: Here, by simply looking at the y-axis, we quickly see which countries have shown
     the most improvement. We also get an idea of the overall value from the x-axis.***
+  id: totrans-136
   prefs: []
   type: TYPE_NORMAL
+  zh: 在这里，通过简单地观察y轴，我们很快就能看到哪些国家取得了最大的改进。我们还可以从x轴中获得整体价值的想法。***
 - en: '***9.11 Encoding a third variable***'
+  id: totrans-137
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**9.11 编码第三个变量**'
 - en: '***An earlier scatterplot showed the relationship between infant survival and
     average income. Below is a version of this plot that encodes three additional
     variables: OPEC membership, region, and population.'
+  id: totrans-138
   prefs: []
   type: TYPE_NORMAL
+  zh: '**一个早期的散点图显示了婴儿生存率与平均收入之间的关系。下面是这个图表的版本，它编码了三个额外的变量：OPEC成员资格、地区和人口**。'
 - en: '![](../Images/e3a635ee5497a734ce03d403a7388fe4.png)'
+  id: totrans-139
   prefs: []
   type: TYPE_IMG
+  zh: '![图片](../Images/e3a635ee5497a734ce03d403a7388fe4.png)'
 - en: We encode categorical variables with color and shape. These shapes can be controlled
     with `shape` argument. Below are the shapes available for use in R. For the last
     five, the color goes inside.
+  id: totrans-140
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们用颜色和形状来编码分类变量。这些形状可以用`shape`参数来控制。以下是在R中可用的形状。对于最后五个，颜色在内部。
 - en: '![](../Images/f3a830a9189d1b1e90e2240a2aa41241.png)'
+  id: totrans-141
   prefs: []
   type: TYPE_IMG
+  zh: '![图片](../Images/f3a830a9189d1b1e90e2240a2aa41241.png)'
 - en: For continuous variables, we can use color, intensity, or size. We now show
     an example of how we do this with a case study.
+  id: totrans-142
   prefs: []
   type: TYPE_NORMAL
+  zh: 对于连续变量，我们可以使用颜色、强度或大小。现在我们通过一个案例研究来展示我们如何做到这一点。
 - en: 'When selecting colors to quantify a numeric variable, we choose between two
     options: sequential and diverging. Sequential colors are suited for data that
     goes from high to low. High values are clearly distinguished from low values.
     Here are some examples offered by the package `RColorBrewer`:'
+  id: totrans-143
   prefs: []
   type: TYPE_NORMAL
+  zh: 当选择颜色来量化一个数值变量时，我们有两种选择：顺序和发散。顺序颜色适合从高到低的数据。高值与低值可以清楚地区分。以下是`RColorBrewer`包提供的几个例子：
 - en: '![](../Images/bbd635157524e86ceb4c956bb7f6ff9a.png)'
+  id: totrans-144
   prefs: []
   type: TYPE_IMG
+  zh: '![图片](../Images/bbd635157524e86ceb4c956bb7f6ff9a.png)'
 - en: 'Diverging colors are used to represent values that diverge from a center. We
     put equal emphasis on both ends of the data range: higher than the center and
     lower than the center. An example of when we would use a divergent pattern would
     be if we were to show height in standard deviations away from the average. Here
     are some examples of divergent patterns:'
+  id: totrans-145
   prefs: []
   type: TYPE_NORMAL
+  zh: 发散颜色用于表示偏离中心的值。我们对数据范围的两端给予同等重视：高于中心值和低于中心值。我们可能会使用发散模式的一个例子是，如果我们想要展示离平均值的标差。以下是发散模式的几个例子：
 - en: '![](../Images/4cad864e2ae72fcb57058c42252cf9ac.png)***'
+  id: totrans-146
   prefs: []
   type: TYPE_NORMAL
+  zh: '![图片](../Images/4cad864e2ae72fcb57058c42252cf9ac.png)*'
 - en: '***9.12 Avoid pseudo-three-dimensional plots***'
+  id: totrans-147
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '***9.12 避免伪三维图表***'
 - en: '***The figure below, taken from the scientific literature[^(13)](#fn13), shows
     three variables: dose, drug type and survival. Although your screen/book page
     is flat and two-dimensional, the plot tries to imitate three dimensions and assigned
     a dimension to each variable.'
+  id: totrans-148
   prefs: []
   type: TYPE_NORMAL
+  zh: '***下面的图表，取自科学文献[^(13)](#fn13)，显示了三个变量：剂量、药物类型和生存。尽管你的屏幕/书页是平面的二维，但图表试图模仿三维，并为每个变量分配一个维度。***'
 - en: '![](../Images/22c24219e777371cb3401253ddc7b973.png)'
+  id: totrans-149
   prefs: []
   type: TYPE_IMG
+  zh: '![图片](../Images/22c24219e777371cb3401253ddc7b973.png)'
 - en: (Image courtesy of Karl Broman)
+  id: totrans-150
   prefs: []
   type: TYPE_NORMAL
+  zh: (图片由Karl Broman提供)
 - en: 'Humans are not good at seeing in three dimensions (which explains why it is
     hard to parallel park) and our limitation is even worse with regard to pseudo-three-dimensions.
     To see this, try to determine the values of the survival variable in the plot
     above. Can you tell when the purple ribbon intersects the red one? This is an
     example in which we can easily use color to represent the categorical variable
     instead of using a pseudo-3D:'
+  id: totrans-151
   prefs: []
   type: TYPE_NORMAL
+  zh: 人类在三维空间中的视觉能力有限（这也解释了为什么平行停车很难），我们对伪三维的限制更为严重。为了看到这一点，尝试确定上图生存变量的值。你能判断紫色带状与红色带状相交的时刻吗？这是一个我们可以轻松使用颜色来表示分类变量而不是使用伪3D的例子：
 - en: '![](../Images/440b35ed280fd85caa375542e4509fb6.png)'
+  id: totrans-152
   prefs: []
   type: TYPE_IMG
+  zh: '![图片](../Images/440b35ed280fd85caa375542e4509fb6.png)'
 - en: Notice how much easier it is to determine the survival values.
+  id: totrans-153
   prefs: []
   type: TYPE_NORMAL
+  zh: 注意确定生存值是如何变得容易多了。
 - en: 'Pseudo-3D is sometimes used completely gratuitously: plots are made to look
     3D even when the 3rd dimension does not represent a quantity. This only adds confusion
     and makes it harder to relay your message. Here are two examples:'
+  id: totrans-154
   prefs: []
   type: TYPE_NORMAL
+  zh: 伪三维有时被完全无用地使用：即使第三维度并不代表一个数量，图表也被制作成看起来是三维的。这只会增加混乱，并使得传达信息变得更加困难。以下有两个例子：
 - en: '![](../Images/840eac79746969db83f562576d26ee3c.png)'
+  id: totrans-155
   prefs: []
   type: TYPE_IMG
+  zh: '![图片](../Images/840eac79746969db83f562576d26ee3c.png)'
 - en: '![](../Images/1c59fb346eda6b1645d3adb7243a090d.png)'
+  id: totrans-156
   prefs: []
   type: TYPE_IMG
+  zh: '![图片](../Images/1c59fb346eda6b1645d3adb7243a090d.png)'
 - en: (Images courtesy of Karl Broman)***
+  id: totrans-157
   prefs: []
   type: TYPE_NORMAL
+  zh: (图片由Karl Broman提供)*
 - en: '***9.13 Avoid too many significant digits***'
+  id: totrans-158
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '***9.13 避免过多的有效数字***'
 - en: '***By default, statistical software like R returns many significant digits.
     The default behavior in R is to show 7 significant digits. That many digits often
     adds no information and the added visual clutter can make it hard for the viewer
     to understand the message. As an example, here are the per 10,000 disease rates,
     computed from totals and population in R, for California across the five decades:'
+  id: totrans-159
   prefs: []
   type: TYPE_NORMAL
+  zh: '***默认情况下，像R这样的统计软件会返回许多有效数字。R的默认行为是显示7位有效数字。那么多的数字通常不会增加信息，并且增加的视觉杂乱可能会让观看者难以理解信息。作为一个例子，以下是使用R从总数和人口中计算出的加利福尼亚在五个十年中的每10,000人疾病率：***'
 - en: '| state | year | Measles | Pertussis | Polio |'
+  id: totrans-160
   prefs: []
   type: TYPE_TB
+  zh: '| 州 | 年份 | 麻疹 | 百日咳 | 脊髓灰质炎 |'
 - en: '| --- | --- | --- | --- | --- |'
+  id: totrans-161
   prefs: []
   type: TYPE_TB
+  zh: '| --- | --- | --- | --- | --- |'
 - en: '| California | 1940 | 37.8826320 | 18.3397861 | 0.8266512 |'
+  id: totrans-162
   prefs: []
   type: TYPE_TB
+  zh: '| 加利福尼亚 | 1940 | 37.8826320 | 18.3397861 | 0.8266512 |'
 - en: '| California | 1950 | 13.9124205 | 4.7467350 | 1.9742639 |'
+  id: totrans-163
   prefs: []
   type: TYPE_TB
+  zh: '| 加利福尼亚 | 1950 | 13.9124205 | 4.7467350 | 1.9742639 |'
 - en: '| California | 1960 | 14.1386471 | NA | 0.2640419 |'
+  id: totrans-164
   prefs: []
   type: TYPE_TB
+  zh: '| 加利福尼亚 | 1960 | 14.1386471 | NA | 0.2640419 |'
 - en: '| California | 1970 | 0.9767889 | NA | NA |'
+  id: totrans-165
   prefs: []
   type: TYPE_TB
+  zh: '| 加利福尼亚 | 1970 | 0.9767889 | NA | NA |'
 - en: '| California | 1980 | 0.3743467 | 0.0515466 | NA |'
+  id: totrans-166
   prefs: []
   type: TYPE_TB
+  zh: '| 加利福尼亚 | 1980 | 0.3743467 | 0.0515466 | NA |'
 - en: 'We are reporting precision up to 0.00001 cases per 10,000, a very small value
     in the context of the changes that are occurring across the dates. In this case,
     one significant figures is enough and clearly makes the point that rates are decreasing:'
+  id: totrans-167
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们报告的精度高达每10,000个案例中的0.00001，在日期变化的大背景下，这是一个非常小的值。在这种情况下，一位有效数字就足够了，并且清楚地表明了比率正在下降：
 - en: '| state | year | Measles | Pertussis | Polio |'
+  id: totrans-168
   prefs: []
   type: TYPE_TB
+  zh: '| state | year | Measles | Pertussis | Polio |'
 - en: '| --- | --- | --- | --- | --- |'
+  id: totrans-169
   prefs: []
   type: TYPE_TB
+  zh: '| --- | --- | --- | --- | --- |'
 - en: '| California | 1940 | 37.9 | 18.3 | 0.8 |'
+  id: totrans-170
   prefs: []
   type: TYPE_TB
+  zh: '| 加利福尼亚 | 1940 | 37.9 | 18.3 | 0.8 |'
 - en: '| California | 1950 | 13.9 | 4.7 | 2.0 |'
+  id: totrans-171
   prefs: []
   type: TYPE_TB
+  zh: '| 加利福尼亚 | 1950 | 13.9 | 4.7 | 2.0 |'
 - en: '| California | 1960 | 14.1 | NA | 0.3 |'
+  id: totrans-172
   prefs: []
   type: TYPE_TB
+  zh: '| 加利福尼亚 | 1960 | 14.1 | NA | 0.3 |'
 - en: '| California | 1970 | 1.0 | NA | NA |'
+  id: totrans-173
   prefs: []
   type: TYPE_TB
+  zh: '| 加利福尼亚 | 1970 | 1.0 | NA | NA |'
 - en: '| California | 1980 | 0.4 | 0.1 | NA |'
+  id: totrans-174
   prefs: []
   type: TYPE_TB
+  zh: '| 加利福尼亚 | 1980 | 0.4 | 0.1 | NA |'
 - en: 'Useful ways to change the number of significant digits or to round numbers
     are `signif` and `round`. You can define the number of significant digits globally
     by setting options like this: `options(digits = 3)`.'
+  id: totrans-175
   prefs: []
   type: TYPE_NORMAL
+  zh: 改变有效数字数量或四舍五入数字的有用方法是 `signif` 和 `round`。你可以通过设置如下选项来全局定义有效数字的数量：`options(digits
+    = 3)`。
 - en: 'Another principle related to displaying tables is to place values being compared
     on columns rather than rows. Note that our table above is easier to read than
     this one:'
+  id: totrans-176
   prefs: []
   type: TYPE_NORMAL
+  zh: 与显示表格相关的另一个原则是将比较的值放在列而不是行上。注意，我们上面的表格比这个表格更容易阅读：
 - en: '| State | Disease | 1940 | 1950 | 1960 | 1970 | 1980 |'
+  id: totrans-177
   prefs: []
   type: TYPE_TB
+  zh: '| 州 | 疾病 | 1940 | 1950 | 1960 | 1970 | 1980 |'
 - en: '| --- | --- | --- | --- | --- | --- | --- |'
+  id: totrans-178
   prefs: []
   type: TYPE_TB
+  zh: '| --- | --- | --- | --- | --- | --- |'
 - en: '| California | Measles | 37.9 | 13.9 | 14.1 | 1 | 0.4 |'
+  id: totrans-179
   prefs: []
   type: TYPE_TB
+  zh: '| 加利福尼亚 | 麻疹 | 37.9 | 13.9 | 14.1 | 1 | 0.4 |'
 - en: '| California | Pertussis | 18.3 | 4.7 | NA | NA | 0.1 |'
+  id: totrans-180
   prefs: []
   type: TYPE_TB
+  zh: '| 加利福尼亚 | 百日咳 | 18.3 | 4.7 | NA | NA | 0.1 |'
 - en: '| California | Polio | 0.8 | 2.0 | 0.3 | NA | NA |***'
+  id: totrans-181
   prefs: []
   type: TYPE_NORMAL
+  zh: '| 加利福尼亚 | 麻疹 | 0.8 | 2.0 | 0.3 | NA | NA |***'
 - en: '***9.14 Know your audience***'
+  id: totrans-182
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '***9.14 了解你的受众***'
 - en: '***Graphs can be used 1) for our own exploratory data analysis, 2) to convey
     a message to experts, or 3) to help convey a message to a general audience. Make
     sure that the intended audience understands each element of the plot.'
+  id: totrans-183
   prefs: []
   type: TYPE_NORMAL
+  zh: '***图表可以用于1）我们自己的探索性数据分析，2）向专家传达信息，或3）帮助向普通受众传达信息。确保目标受众理解图表的每个元素。'
 - en: As a simple example, consider that for your own exploration it may be more useful
     to log-transform data and then plot it. However, for a general audience that is
     unfamiliar with converting logged values back to the original measurements, using
     a log-scale for the axis instead of log-transformed values will be much easier
     to digest.***
+  id: totrans-184
   prefs: []
   type: TYPE_NORMAL
+  zh: 作为简单的例子，考虑一下，对于你自己的探索，可能更有用将数据进行对数转换然后绘图。然而，对于不熟悉将日志值转换回原始测量的普通受众，使用轴的对数刻度而不是对数转换的值将更容易理解。***
 - en: '***9.15 Exercises***'
+  id: totrans-185
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '***9.15 练习***'
 - en: '***For these exercises, we will be using the vaccines data in the **dslabs**
     package:'
+  id: totrans-186
   prefs: []
   type: TYPE_NORMAL
+  zh: '***对于这些练习，我们将使用 **dslabs** 包中的疫苗数据：'
 - en: '[PRE2]'
+  id: totrans-187
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: '*1\. Pie charts are appropriate:'
+  id: totrans-188
   prefs: []
   type: TYPE_NORMAL
+  zh: '*1. 饼图是合适的：'
 - en: When we want to display percentages.
+  id: totrans-189
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 当我们想要显示百分比时。
 - en: When **ggplot2** is not available.
+  id: totrans-190
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 当 **ggplot2** 不可用。
 - en: When I am in a bakery.
+  id: totrans-191
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 当我在面包店时。
 - en: Never. Barplots and tables are always better.
+  id: totrans-192
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 永远不会。条形图和表格总是更好。
 - en: '2\. What is the problem with the plot below:'
+  id: totrans-193
   prefs: []
   type: TYPE_NORMAL
+  zh: 2. 下面的图表有什么问题：
 - en: '![](../Images/9215cd188b84dea06c2e253122921cd0.png)'
+  id: totrans-194
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/9215cd188b84dea06c2e253122921cd0.png)'
 - en: The values are wrong. The final vote was 306 to 232.
+  id: totrans-195
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 值是错误的。最终投票结果是306票对232票。
 - en: The axis does not start at 0\. Judging by the length, it appears Trump received
     3 times as many votes when, in fact, it was about 30% more.
+  id: totrans-196
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 轴没有从0开始。根据长度判断，似乎特朗普获得的选票是实际上的3倍，而实际上只是多了大约30%。
 - en: The colors should be the same.
+  id: totrans-197
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 颜色应该相同。
 - en: Percentages should be shown as a pie chart.
+  id: totrans-198
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 百分比应以饼图的形式显示。
 - en: '3\. Take a look at the following two plots. They show the same information:
     1928 rates of measles across the 50 states.'
+  id: totrans-199
   prefs: []
   type: TYPE_NORMAL
+  zh: 3. 查看以下两个图表。它们显示了相同的信息：1928年50个州的麻疹比率。
 - en: '![](../Images/78ca18ece1e2a4e82f98221b7f262ef8.png)'
+  id: totrans-200
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/78ca18ece1e2a4e82f98221b7f262ef8.png)'
 - en: Which plot is easier to read if you are interested in determining which are
     the best and worst states in terms of rates, and why?
+  id: totrans-201
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果你想确定哪些州在比率方面最好和最差，哪个图表更容易阅读？
 - en: They provide the same information, so they are both equally as good.
+  id: totrans-202
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 它们提供了相同的信息，所以它们都是同样好的。
 - en: The plot on the right is better because it orders the states alphabetically.
+  id: totrans-203
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 右侧的图表更好，因为它按字母顺序排列了各州。
 - en: The plot on the right is better because alphabetical order has nothing to do
     with the disease and by ordering according to actual rate, we quickly see the
     states with most and least rates.
+  id: totrans-204
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 右侧的图表更好，因为字母顺序与疾病无关，按实际比率排序后，我们可以快速看到谋杀率最高和最低的州。
 - en: Both plots should be a pie chart.
+  id: totrans-205
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 两个图表都应该是一个饼图。
 - en: 4\. To make the plot on the left, we have to reorder the levels of the states’
     variables.
+  id: totrans-206
   prefs: []
   type: TYPE_NORMAL
+  zh: 4. 要在左侧制作图表，我们必须重新排序状态变量的级别。
 - en: '[PRE3]'
+  id: totrans-207
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: '*Note what happens when we make a barplot:'
+  id: totrans-208
   prefs: []
   type: TYPE_NORMAL
+  zh: '*注意当我们制作条形图时会发生什么：'
 - en: '[PRE4]'
+  id: totrans-209
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE4]'
 - en: '*![](../Images/a7813e8e9e9cfb5619ea031a75673d8b.png)*  *Define these objects:'
+  id: totrans-210
   prefs: []
   type: TYPE_NORMAL
+  zh: '*![](../Images/a7813e8e9e9cfb5619ea031a75673d8b.png)*  *定义这些对象：'
 - en: '[PRE5]'
+  id: totrans-211
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE5]'
 - en: '*Redefine the `state` object so that the levels are re-ordered. Print the new
     object `state` and its levels so you can see that the vector is not re-ordered
     by the levels.'
+  id: totrans-212
   prefs: []
   type: TYPE_NORMAL
+  zh: '*重新定义`state`对象，以便按级别重新排序。打印新的`state`对象及其级别，以便您可以查看向量是否未按级别重新排序。'
 - en: 5\. Now with one line of code, define the `dat` table as done above, but change
     the use mutate to create a rate variable and re-order the state variable so that
     the levels are re-ordered by this variable. Then make a barplot using the code
     above, but for this new `dat`.
+  id: totrans-213
   prefs: []
   type: TYPE_NORMAL
+  zh: 5. 现在用一行代码定义`dat`表，如上所述，但将`mutate`的使用改为创建一个比率变量，并重新排序状态变量，以便按此变量重新排序级别。然后使用上面的代码制作条形图，但针对这个新的`dat`。
 - en: '6\. Say we are interested in comparing gun homicide rates across regions of
     the US. We see this plot:'
+  id: totrans-214
   prefs: []
   type: TYPE_NORMAL
+  zh: 6. 假设我们感兴趣的是比较美国各地区的枪支谋杀率。我们看到这个图表：
 - en: '[PRE6]'
+  id: totrans-215
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE6]'
 - en: '*![](../Images/8aa9c7e3a27b58fca09a10e389fef7be.png)*  *and decide to move
     to a state in the western region. What is the main problem with this interpretation?'
+  id: totrans-216
   prefs: []
   type: TYPE_NORMAL
+  zh: '*![](../Images/8aa9c7e3a27b58fca09a10e389fef7be.png)*  *并决定搬到西部地区的一个州。这种解释的主要问题是什么？'
 - en: The categories are ordered alphabetically.
+  id: totrans-217
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 类别按字母顺序排序。
 - en: The graph does not show standard errors.
+  id: totrans-218
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 图表没有显示标准误差。
 - en: It does not show all the data. We do not see the variability within a region
     and it’s possible that the safest states are not in the West.
+  id: totrans-219
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 它没有显示所有数据。我们看不到一个地区内的变异性，而且可能最安全的状态不在西部。
 - en: The Northeast has the lowest average.
+  id: totrans-220
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 东北部平均最低。
 - en: 7\. Make a boxplot of the murder rates defined as
+  id: totrans-221
   prefs: []
   type: TYPE_NORMAL
+  zh: 7. 制作谋杀率的箱形图，定义为
 - en: '[PRE7]'
+  id: totrans-222
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE7]'
 - en: '*by region, showing all the points and ordering the regions by their median
     rate.'
+  id: totrans-223
   prefs: []
   type: TYPE_NORMAL
+  zh: '*按地区显示所有点，并按中位数比率对地区进行排序。'
 - en: 8\. The plots below show three continuous variables.
+  id: totrans-224
   prefs: []
   type: TYPE_NORMAL
+  zh: 8. 下面的图表显示了三个连续变量。
 - en: '![](../Images/0f7417589bbad275c1dbb12a479417e0.png)'
+  id: totrans-225
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/0f7417589bbad275c1dbb12a479417e0.png)'
 - en: The line \(x=2\) appears to separate the points. But it is actually not the
     case, which we can see by plotting the data in a couple of two-dimensional points.
+  id: totrans-226
   prefs: []
   type: TYPE_NORMAL
+  zh: 看起来线 \(x=2\) 将点分开。但实际上并非如此，我们可以通过绘制几个二维点来看到这一点。
 - en: '![](../Images/1b0cf9c3a8b606d09ec5666fcf97150c.png)'
+  id: totrans-227
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/1b0cf9c3a8b606d09ec5666fcf97150c.png)'
 - en: Why is this happening?
+  id: totrans-228
   prefs: []
   type: TYPE_NORMAL
+  zh: 为什么会发生这种情况？
 - en: Humans are not good at reading pseudo-3D plots.
+  id: totrans-229
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 人类不擅长阅读伪3D图表。
 - en: There must be an error in the code.
+  id: totrans-230
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 代码中肯定有错误。
 - en: The colors confuse us.
+  id: totrans-231
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 颜色让我们困惑。
 - en: Scatterplots should not be used to compare two variables when we have access
     to 3.*********
+  id: totrans-232
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 当我们有3个变量可供比较时，不应使用散点图来比较两个变量。
 - en: '* * *'
+  id: totrans-233
   prefs: []
   type: TYPE_NORMAL
+  zh: '* * *'
 - en: '****1.  [http://kbroman.org/](http://kbroman.org/)[↩︎](#fnref1)'
+  id: totrans-234
   prefs: []
   type: TYPE_NORMAL
+  zh: '****1.  [http://kbroman.org/](http://kbroman.org/)[↩︎](#fnref1)'
 - en: '[https://www.biostat.wisc.edu/~kbroman/presentations/graphs2017.pdf](https://www.biostat.wisc.edu/~kbroman/presentations/graphs2017.pdf)[↩︎](#fnref2)'
+  id: totrans-235
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[https://www.biostat.wisc.edu/~kbroman/presentations/graphs2017.pdf](https://www.biostat.wisc.edu/~kbroman/presentations/graphs2017.pdf)[↩︎](#fnref2)'
 - en: '[https://github.com/kbroman/Talk_Graphs](https://github.com/kbroman/Talk_Graphs)[↩︎](#fnref3)'
+  id: totrans-236
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[https://github.com/kbroman/Talk_Graphs](https://github.com/kbroman/Talk_Graphs)[↩︎](#fnref3)'
 - en: '[https://www.peteraldhous.com/ucb/2014/dataviz/index.html](https://www.peteraldhous.com/ucb/2014/dataviz/index.html)[↩︎](#fnref4)'
+  id: totrans-237
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[https://www.peteraldhous.com/ucb/2014/dataviz/index.html](https://www.peteraldhous.com/ucb/2014/dataviz/index.html)[↩︎](#fnref4)'
 - en: '[https://github.com/rafalab/dsbook-part-1/blob/main/dataviz/dataviz-principles.qmd](https://github.com/rafalab/dsbook-part-1/blob/main/dataviz/dataviz-principles.qmd)[↩︎](#fnref5)'
+  id: totrans-238
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[https://github.com/rafalab/dsbook-part-1/blob/main/dataviz/dataviz-principles.qmd](https://github.com/rafalab/dsbook-part-1/blob/main/dataviz/dataviz-principles.qmd)[↩︎](#fnref5)'
 - en: '[https://www.peteraldhous.com/ucb/2014/dataviz/week2.html](https://www.peteraldhous.com/ucb/2014/dataviz/week2.html)[↩︎](#fnref6)'
+  id: totrans-239
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[https://www.peteraldhous.com/ucb/2014/dataviz/week2.html](https://www.peteraldhous.com/ucb/2014/dataviz/week2.html)[↩︎](#fnref6)'
 - en: '[http://mediamatters.org/blog/2013/04/05/fox-news-newest-dishonest-chart-immigration-enf/193507](http://mediamatters.org/blog/2013/04/05/fox-news-newest-dishonest-chart-immigration-enf/193507)[↩︎](#fnref7)'
+  id: totrans-240
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[http://mediamatters.org/blog/2013/04/05/fox-news-newest-dishonest-chart-immigration-enf/193507](http://mediamatters.org/blog/2013/04/05/fox-news-newest-dishonest-chart-immigration-enf/193507)[↩︎](#fnref7)'
 - en: '[http://flowingdata.com/2012/08/06/fox-news-continues-charting-excellence/](http://flowingdata.com/2012/08/06/fox-news-continues-charting-excellence/)[↩︎](#fnref8)'
+  id: totrans-241
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[http://flowingdata.com/2012/08/06/fox-news-continues-charting-excellence/](http://flowingdata.com/2012/08/06/fox-news-continues-charting-excellence/)[↩︎](#fnref8)'
 - en: '[https://www.elmundo.es/america/2013/04/15/venezuela/1366029653.html](https://www.elmundo.es/america/2013/04/15/venezuela/1366029653.html)[↩︎](#fnref9)'
+  id: totrans-242
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[https://www.elmundo.es/america/2013/04/15/venezuela/1366029653.html](https://www.elmundo.es/america/2013/04/15/venezuela/1366029653.html)[↩︎](#fnref9)'
 - en: '[https://www.youtube.com/watch?v=kl2g40GoRxg](https://www.youtube.com/watch?v=kl2g40GoRxg)[↩︎](#fnref10)'
+  id: totrans-243
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[https://www.youtube.com/watch?v=kl2g40GoRxg](https://www.youtube.com/watch?v=kl2g40GoRxg)[↩︎](#fnref10)'
 - en: '[http://www.cookbook-r.com/Graphs/Colors_(ggplot2)/#a-colorblind-friendly-palette](http://www.cookbook-r.com/Graphs/Colors_(ggplot2)/#a-colorblind-friendly-palette)[↩︎](#fnref11)'
+  id: totrans-244
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[http://www.cookbook-r.com/Graphs/Colors_(ggplot2)/#a-colorblind-friendly-palette](http://www.cookbook-r.com/Graphs/Colors_(ggplot2)/#a-colorblind-friendly-palette)[↩︎](#fnref11)'
 - en: '[https://www.r-bloggers.com/2013/10/creating-colorblind-friendly-figures/](https://www.r-bloggers.com/2013/10/creating-colorblind-friendly-figures/)[↩︎](#fnref12)'
+  id: totrans-245
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[https://www.r-bloggers.com/2013/10/creating-colorblind-friendly-figures/](https://www.r-bloggers.com/2013/10/creating-colorblind-friendly-figures/)[↩︎](#fnref12)'
 - en: '[https://projecteuclid.org/download/pdf_1/euclid.ss/1177010488](https://projecteuclid.org/download/pdf_1/euclid.ss/1177010488)[↩︎](#fnref13)****'
+  id: totrans-246
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[https://projecteuclid.org/download/pdf_1/euclid.ss/1177010488](https://projecteuclid.org/download/pdf_1/euclid.ss/1177010488)[↩︎](#fnref13)'

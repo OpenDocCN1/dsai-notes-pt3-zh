@@ -1,40 +1,58 @@
 - en: 11  Reshaping data
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 11  重塑数据
 - en: 原文：[https://rafalab.dfci.harvard.edu/dsbook-part-1/wrangling/reshaping-data.html](https://rafalab.dfci.harvard.edu/dsbook-part-1/wrangling/reshaping-data.html)
+  id: totrans-1
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 原文：[https://rafalab.dfci.harvard.edu/dsbook-part-1/wrangling/reshaping-data.html](https://rafalab.dfci.harvard.edu/dsbook-part-1/wrangling/reshaping-data.html)
 - en: '[Data Wrangling](../wrangling/intro-to-wrangling.html)'
+  id: totrans-2
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[数据处理](../wrangling/intro-to-wrangling.html)'
 - en: '[11  Reshaping data](../wrangling/reshaping-data.html)'
+  id: totrans-3
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[11  重塑数据](../wrangling/reshaping-data.html)'
 - en: As we have seen through the book, having data in *tidy* format is what makes
     the tidyverse flow. After the first step in the data analysis process, importing
     data, a common next step is to reshape the data into a form that facilitates the
     rest of the analysis. The **tidyr** package, part of **tidyverse**, includes several
     functions that are useful for tidying data.
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: 正如我们在书中所见，数据以*整洁*格式存在是tidyverse流畅运行的关键。在数据分析过程的第一步，即导入数据之后，一个常见的下一步是将数据重塑成便于后续分析的形式。**tidyr**包是**tidyverse**的一部分，它包含了一些对整理数据有用的函数。
 - en: We will use the fertility wide format dataset described in [Section 4.1](../R/tidyverse.html#sec-tidy-data)
     as an example in this section.
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: 在本节中，我们将使用[第4.1节](../R/tidyverse.html#sec-tidy-data)中描述的生育宽格式数据集作为示例。
 - en: '[PRE0]'
+  id: totrans-6
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: '*## 11.1 `pivot_longer`'
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: '*## 11.1 `pivot_longer`'
 - en: One of the most used functions in the **tidyr** package is `pivot_longer`, which
     is useful for converting wide data into tidy data.
+  id: totrans-8
   prefs: []
   type: TYPE_NORMAL
+  zh: 在**tidyr**包中最常用的函数之一是`pivot_longer`，它可以将宽数据转换为整洁数据。
 - en: As with most tidyverse functions, the `pivot_longer` function’s first argument
     is the data frame that will be converted. Here we want to reshape the `wide_data`
     dataset so that each row represents a fertility observation, which implies we
@@ -50,56 +68,84 @@
     containing observed values; these are the columns that will be *pivoted*. The
     default is to pivot all columns so, in most cases, we have to specify the columns.
     In our example we want columns `1960`, `1961` up to `2015`.
+  id: totrans-9
   prefs: []
   type: TYPE_NORMAL
+  zh: 与大多数tidyverse函数一样，`pivot_longer`函数的第一个参数是要转换的数据框。在这里，我们想要重塑`wide_data`数据集，使得每一行代表一个生育观察值，这意味着我们需要三个列来存储年份、国家和观察值。在其当前形式中，不同年份的数据位于不同的列中，年份值存储在列名中。通过`names_to`和`values_to`参数，我们将告诉`pivot_longer`我们想要分配给包含当前列名和观察值的列的列名。默认名称是`name`和`value`，这些通常是可用的选择。在这种情况下，这两个参数的更好选择可能是`year`和`fertility`。请注意，数据文件中没有任何地方告诉我们这是生育数据。相反，我们是从文件名中解读出来的。通过`cols`参数，第二个参数，我们指定包含观察值的列；这些是将会被旋转的列。默认情况下是旋转所有列，所以大多数情况下我们必须指定这些列。在我们的例子中，我们想要`1960`、`1961`直到`2015`的列。
 - en: 'The code to pivot the fertility data therefore looks like this:'
+  id: totrans-10
   prefs: []
   type: TYPE_NORMAL
+  zh: 因此，旋转生育数据的代码如下：
 - en: '[PRE1]'
+  id: totrans-11
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: '*We can see that the data have been converted to tidy format with columns `year`
     and `fertility`'
+  id: totrans-12
   prefs: []
   type: TYPE_NORMAL
+  zh: '*我们可以看到数据已经被转换为整洁格式，列有`year`和`fertility`'
 - en: '[PRE2]'
+  id: totrans-13
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: '*and that each year resulted in two rows since we have two countries and this
     column was not pivoted. A somewhat quicker way to write this code is to specify
     which column will **not** include in the pivot, rather than all the columns that
     will be pivoted:'
+  id: totrans-14
   prefs: []
   type: TYPE_NORMAL
+  zh: '*并且由于我们有两个国家，并且这一列没有被旋转，所以每年产生了两行。有一种更快的方式来编写这段代码，即指定哪些列**不会**包含在旋转中，而不是所有将要旋转的列：'
 - en: '[PRE3]'
+  id: totrans-15
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: '*The `new_tidy_data` object looks like the original `tidy_data` we defined
     this way'
+  id: totrans-16
   prefs: []
   type: TYPE_NORMAL
+  zh: '*`new_tidy_data`对象看起来与这样定义的原始`tidy_data`相同'
 - en: '[PRE4]'
+  id: totrans-17
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE4]'
 - en: '*with just one minor difference. Can you spot it? Look at the data type of
     the year column. The `pivot_longer` function assumes that column names are characters.
     So we need a bit more wrangling before we are ready to make a plot. We need to
     convert the year column to be numbers:'
+  id: totrans-18
   prefs: []
   type: TYPE_NORMAL
+  zh: '*只有一个细微的差别。你能发现吗？看看年份列的数据类型。`pivot_longer`函数假设列名是字符。因此，在我们准备好绘图之前，我们需要进行一些额外的处理。我们需要将年份列转换为数字：'
 - en: '[PRE5]'
+  id: totrans-19
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE5]'
 - en: '*Now that the data is tidy, we can use this relatively simple ggplot code:'
+  id: totrans-20
   prefs: []
   type: TYPE_NORMAL
+  zh: '*现在数据已经整洁，我们可以使用以下相对简单的ggplot代码：'
 - en: '[PRE6]*****'
+  id: totrans-21
   prefs: []
   type: TYPE_NORMAL
+  zh: '[PRE6]*****'
 - en: '***11.2 `pivot_wider`***'
+  id: totrans-22
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '***11.2 `pivot_wider`***'
 - en: '***As we will see in later examples, it is sometimes useful for data wrangling
     purposes to convert tidy data into wide data. We often use this as an intermediate
     step in tidying up data. The `pivot_wider` function is basically the inverse of
@@ -107,167 +153,251 @@
     pipe, we don’t show it. The `names_from` argument tells `pivot_wider` which variable
     will be used as the column names. The `values_from` argument specifies which variable
     to use to fill out the cells.'
+  id: totrans-23
   prefs: []
   type: TYPE_NORMAL
+  zh: '***正如我们将在后面的示例中看到的那样，有时为了数据整理的目的，将整洁数据转换为宽数据是有用的。我们经常将此用作整理数据的一个中间步骤。`pivot_wider`函数基本上是`pivot_longer`的逆函数。第一个参数是数据，但由于我们正在使用管道，所以我们没有显示它。`names_from`参数告诉`pivot_wider`哪个变量将被用作列名。`values_from`参数指定哪个变量用于填充单元格。*'
 - en: '[PRE7]'
+  id: totrans-24
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE7]'
 - en: '*Similar to `pivot_wider`, `names_from` and `values_from` default to `name`
     and `value`.****'
+  id: totrans-25
   prefs: []
   type: TYPE_NORMAL
+  zh: '*与`pivot_wider`类似，`names_from`和`values_from`默认为`name`和`value`。****'
 - en: '***11.3 Separating variables***'
+  id: totrans-26
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '***11.3 分离变量***'
 - en: '***The data wrangling shown above was simple compared to what is usually required.
     In our example spreadsheet files, we include an illustration that is slightly
     more complicated. It contains two variables: life expectancy and fertility. However,
     the way it is stored is not tidy and, as we will explain, not optimal.'
+  id: totrans-27
   prefs: []
   type: TYPE_NORMAL
+  zh: '***与通常所需的数据整理相比，上述数据整理很简单。在我们的示例电子表格文件中，我们包括了一个稍微复杂一些的示例。它包含两个变量：预期寿命和生育率。然而，它的存储方式并不整洁，而且，正如我们将解释的，也不是最优的。*'
 - en: '[PRE8]'
+  id: totrans-28
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE8]'
 - en: '*First, note that the data is in wide format. Second, notice that this table
     includes values for two variables, fertility and life expectancy, with the column
     name encoding which column represents which variable. Encoding information in
     the column names is not recommended but, unfortunately, it is quite common. We
     will put our wrangling skills to work to extract this information and store it
     in a tidy fashion.'
+  id: totrans-29
   prefs: []
   type: TYPE_NORMAL
+  zh: '*首先，请注意数据是宽格式。其次，请注意这个表格包含了两个变量的值，生育率和预期寿命，列名编码了哪一列代表哪个变量。在列名中编码信息是不推荐的，但不幸的是，这相当常见。我们将运用我们的整理技巧来提取这些信息，并以整洁的方式存储。'
 - en: 'We can start the data wrangling with the `pivot_longer` function, but we should
     no longer use the column name `year` for the new column since it also contains
     the variable type. We will call it `name`, the default, for now:'
+  id: totrans-30
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们可以使用`pivot_longer`函数开始数据整理，但不再使用`year`作为新列的列名，因为它还包含变量类型。我们暂时将其称为`name`：
 - en: '[PRE9]'
+  id: totrans-31
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE9]'
 - en: '*The result is not exactly what we refer to as tidy since each observation
     is associated with two, not one, rows. We want to have the values from the two
     variables, fertility and life expectancy, in two separate columns. The first challenge
     to achieve this is to separate the `name` column into the year and the variable
     type. Notice that the entries in this column separate the year from the variable
     name with an underscore:'
+  id: totrans-32
   prefs: []
   type: TYPE_NORMAL
+  zh: '*结果是并不完全符合我们所说的整洁，因为每个观测值都关联着两行，而不是一行。我们希望将两个变量，生育率和预期寿命的值，分别放在两个单独的列中。实现这一目标的首要挑战是将`name`列分割成年份和变量类型。请注意，这个列中的条目使用下划线将年份和变量名称分开：*'
 - en: '[PRE10]'
+  id: totrans-33
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE10]'
 - en: '*Encoding multiple variables in a column name is such a common problem that
     the **tidyr** package includes function to separate these columns into two or
     more. The `separate_wider_delim` function takes three arguments: the name of the
     column to be separated, the names to be used for the new columns, and the character
     that separates the variables. So, a first attempt at separating the variable name
     from the year might be:'
+  id: totrans-34
   prefs: []
   type: TYPE_NORMAL
+  zh: '*在列名中编码多个变量是一个如此常见的问题，以至于**tidyr**包包括将列分割成两个或更多列的函数。`separate_wider_delim`函数接受三个参数：要分割的列的名称、用于新列的名称以及分隔变量的字符。因此，将变量名称从年份中分离出来的第一次尝试可能是：'
 - en: '[PRE11]'
+  id: totrans-35
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE11]'
 - en: '*However, this line of code will give an error. This is because the life expectancy
     names have three strings separated by `_` and the fertility names have two. This
     is a common problem so the `separate_wider_delim` function has arguments `too_few`
     and `too_many` to handle these situations. We see in the help file that the option
     `too_many = merge` *will merge together any additional pieces*. The following
     line does what we want:'
+  id: totrans-36
   prefs: []
   type: TYPE_NORMAL
+  zh: '*然而，这一行代码将产生错误。这是因为预期寿命的名称由三个由下划线分隔的字符串组成，而生育率的名称有两个。这是一个常见问题，因此`separate_wider_delim`函数有`too_few`和`too_many`参数来处理这些情况。我们在帮助文件中看到，选项`too_many
+    = merge`*将合并任何额外的部分*。以下一行代码就是我们所需要的：'
 - en: '[PRE12]'
+  id: totrans-37
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE12]'
 - en: '*But we are not done yet. We need to create a column for each variable and
     change `year` to a number. As we learned, the `pivot_wider` function can do this:'
+  id: totrans-38
   prefs: []
   type: TYPE_NORMAL
+  zh: '*但我们还没有完成。我们需要为每个变量创建一个列，并将 `year` 转换为数字。正如我们所学的，`pivot_wider` 函数可以做到这一点：**'
 - en: '[PRE13]'
+  id: totrans-39
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE13]'
 - en: '*The data is now in tidy format with one row for each observation with three
     variables: year, fertility, and life expectancy.'
+  id: totrans-40
   prefs: []
   type: TYPE_NORMAL
+  zh: '*数据现在以整洁格式存在，每行有一个观测值，包含三个变量：年份、生育率和预期寿命。'
 - en: 'Three related function are `separate_wider_position`, `separate_wider_regex`,
     and `unite`. `separate_wider_position` takes a width instead of delimiter. `separate_wider_regex`,
     described in [Section 16.4.13](string-processing.html#sec-separate_regex), provides
     much more control over how we separate and what we keep. The `unite` function
     can be thought of as the inverse of the `separate` function: it combines two columns
     into one.*********'
+  id: totrans-41
   prefs: []
   type: TYPE_NORMAL
+  zh: 三个相关函数是 `separate_wider_position`、`separate_wider_regex` 和 `unite`。`separate_wider_position`
+    使用宽度而不是分隔符。`separate_wider_regex`，在[第16.4.13节](string-processing.html#sec-separate_regex)中描述，提供了更多控制我们如何分隔以及保留什么的选项。`unite`
+    函数可以看作是 `separate` 函数的逆操作：它将两列合并为一列。*********
 - en: '***11.4 Reshaping with data.table***'
+  id: totrans-42
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '***11.4 使用 data.table 重新塑形***'
 - en: '***In general, everything you can do with **tidyverse** can be done with **data.table**
     and base R which, although perhaps harder to read, it is often more flexible,
     faster, and more efficient. Here we show how the **data.table** approach to `pivot_longer`,
     `pivot_wider`, and `separate`. We will illustrate with the previously used this
     example:'
+  id: totrans-43
   prefs: []
   type: TYPE_NORMAL
+  zh: '***一般来说，你可以使用 **tidyverse** 做的所有事情都可以使用 **data.table** 和 base R 做到，尽管可能更难阅读，但它通常更灵活、更快、更高效。在这里，我们展示了如何使用
+    **data.table** 方法进行 `pivot_longer`、`pivot_wider` 和 `separate`。我们将使用之前使用的这个例子来说明：'
 - en: '[PRE14]'
+  id: totrans-44
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE14]'
 - en: '*### 11.4.1 `pivot_longer` is `melt`'
+  id: totrans-45
   prefs: []
   type: TYPE_NORMAL
+  zh: '*### 11.4.1 `pivot_longer` 是 `melt`'
 - en: If in **tidyverse** we write
+  id: totrans-46
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果在 **tidyverse** 中编写
 - en: '[PRE15]'
+  id: totrans-47
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE15]'
 - en: '*in **data.table** we use the `melt` function.'
+  id: totrans-48
   prefs: []
   type: TYPE_NORMAL
+  zh: '*在 **data.table** 中，我们使用 `melt` 函数。'
 - en: '[PRE16]*'
+  id: totrans-49
   prefs: []
   type: TYPE_NORMAL
+  zh: '[PRE16]*'
 - en: '**11.4.2 `pivot_wider` is `dcast`**'
+  id: totrans-50
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '**11.4.2 `pivot_wider` 是 `dcast`**'
 - en: '**If in **tidyverse** we write'
+  id: totrans-51
   prefs: []
   type: TYPE_NORMAL
+  zh: '**如果在 **tidyverse** 中编写**'
 - en: '[PRE17]'
+  id: totrans-52
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE17]'
 - en: '*in **data.table** we use the `dcast` function.'
+  id: totrans-53
   prefs: []
   type: TYPE_NORMAL
+  zh: '*在 **data.table** 中，我们使用 `dcast` 函数。'
 - en: '[PRE18]***'
+  id: totrans-54
   prefs: []
   type: TYPE_NORMAL
+  zh: '[PRE18]***'
 - en: '***11.4.3 Separating variables***'
+  id: totrans-55
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '***11.4.3 分离变量***'
 - en: '***We now illustrate with this previously used example:'
+  id: totrans-56
   prefs: []
   type: TYPE_NORMAL
+  zh: '***我们现在用之前使用的例子来说明：**'
 - en: '[PRE19]'
+  id: totrans-57
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE19]'
 - en: '*In **tidyverse** we wrangled using'
+  id: totrans-58
   prefs: []
   type: TYPE_NORMAL
+  zh: '*在 **tidyverse** 中，我们使用**'
 - en: '[PRE20]'
+  id: totrans-59
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE20]'
 - en: '*In **data.table** we can use the `tstrsplit` function:'
+  id: totrans-60
   prefs: []
   type: TYPE_NORMAL
+  zh: '*在 **data.table** 中，我们可以使用 `tstrsplit` 函数：'
 - en: '[PRE21]*********'
+  id: totrans-61
   prefs: []
   type: TYPE_NORMAL
+  zh: '[PRE21]*********'
 - en: '***11.5 The janitor package***'
+  id: totrans-62
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '***11.5 `janitor` 包***'
 - en: '***The **janitor** package includes function for some of the most common steps
     needed to wrangle data. These are particularly useful as these tasks that are
     often repetitive and time-consuming. Key features include functions for examining
@@ -275,135 +405,201 @@
     types. It also offers capabilities to generate frequency tables and perform cross
     tabulations with ease. The package is designed to work seamlessly with the **tidyverse**.
     Here we show four examples.'
+  id: totrans-63
   prefs: []
   type: TYPE_NORMAL
+  zh: '***`janitor` 包包括一些常见的数据整理步骤的函数。这些步骤通常是重复且耗时的。关键特性包括检查和清理列名、删除空或重复行以及转换数据类型的函数。它还提供了轻松生成频率表和执行交叉表的特性。该包旨在与
+    **tidyverse** 无缝工作。在这里，我们展示了四个示例。**'
 - en: 'Spreadsheets often use names that are not compatible with programming. The
     most common problem is column names with spaces. The `[clean_names()](https://sfirke.github.io/janitor/reference/clean_names.html)`
     function attempts to fix this and other common problems. By default it forces
     variable names to be lower case and with underscore instead of space. In this
     example we change the variable names of the object `dat` created in the previous
     section and then demonstrate how this function works:'
+  id: totrans-64
   prefs: []
   type: TYPE_NORMAL
+  zh: 电子表格通常使用与编程不兼容的名称。最常见的问题是带有空格的列名。`[clean_names()](https://sfirke.github.io/janitor/reference/clean_names.html)`
+    函数试图解决这个问题和其他常见问题。默认情况下，它强制变量名变为小写，并使用下划线代替空格。在这个例子中，我们更改了上一节中创建的 `dat` 对象的变量名，然后演示了这个函数的工作方式：
 - en: '[PRE22]'
+  id: totrans-65
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE22]'
 - en: '*Another very common challenging reality is that numeric matrices are saved
     in spreadsheets and include a column with characters defining the row names. To
     fix this we have to remove the first column, but only after assigning them as
     vector that we will use to define rownames after converting the data frame to
     a matrix. The function `column_to_rows` does these operations for us and all we
     have to do is specify which column contains the rownames:'
+  id: totrans-66
   prefs: []
   type: TYPE_NORMAL
+  zh: '*另一个非常常见的挑战现实是，数字矩阵保存在电子表格中，并包含一个包含行名的字符列。为了解决这个问题，我们必须删除第一列，但只有在将它们分配为我们将在将数据框转换为矩阵后用作rownames的向量之后才能这样做。`column_to_rows`函数为我们执行这些操作，我们只需要指定包含rownames的列：'
 - en: '[PRE23]'
+  id: totrans-67
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE23]'
 - en: '*Another common challenge is that spreadsheets include the column names as
     a first row. To quickly fix this we can `row_to_names`:'
+  id: totrans-68
   prefs: []
   type: TYPE_NORMAL
+  zh: '*另一个常见的挑战是电子表格将列名作为第一行。为了快速解决这个问题，我们可以使用`row_to_names`：'
 - en: '[PRE24]'
+  id: totrans-69
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE24]'
 - en: '*Our final example relates to finding duplicates. A very common error in the
     creation of spreadsheets is that rows are duplicated. The `get_dups` function
     finds and reports duplicate records. By default it considers all variables, but
     you can also specify which ones to use.'
+  id: totrans-70
   prefs: []
   type: TYPE_NORMAL
+  zh: '*我们的最后一个例子与查找重复项有关。在创建电子表格时，行重复是一个非常常见的错误。`get_dups`函数可以找到并报告重复记录。默认情况下，它考虑所有变量，但你也可以指定使用哪些变量。'
 - en: '[PRE25]******'
+  id: totrans-71
   prefs: []
   type: TYPE_NORMAL
+  zh: '[PRE25]******'
 - en: '***11.6 Exercises***'
+  id: totrans-72
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '***11.6 练习***'
 - en: '***1\. Run the following command to define the `co2_wide` object:'
+  id: totrans-73
   prefs: []
   type: TYPE_NORMAL
+  zh: '***1. 运行以下命令以定义`co2_wide`对象：'
 - en: '[PRE26]'
+  id: totrans-74
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE26]'
 - en: '*Use the `pivot_longer` function to wrangle this into a tidy dataset. Call
     the column with the CO2 measurements `co2` and call the month column `month`.
     Call the resulting object `co2_tidy`.'
+  id: totrans-75
   prefs: []
   type: TYPE_NORMAL
+  zh: '*使用`pivot_longer`函数将此整理成整洁数据集。将包含二氧化碳测量的列命名为`co2`，将月份列命名为`month`。将结果对象命名为`co2_tidy`。'
 - en: '2\. Plot CO2 versus month with a different curve for each year using this code:'
+  id: totrans-76
   prefs: []
   type: TYPE_NORMAL
+  zh: 2. 使用以下代码绘制二氧化碳与月份的关系图，每年使用不同的曲线：
 - en: '[PRE27]'
+  id: totrans-77
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE27]'
 - en: '*If the expected plot is not made, it is probably because `co2_tidy$month`
     is not numeric:'
+  id: totrans-78
   prefs: []
   type: TYPE_NORMAL
+  zh: '*如果预期的图表没有生成，可能是因为`co2_tidy$month`不是数字：'
 - en: '[PRE28]'
+  id: totrans-79
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE28]'
 - en: '*Rewrite your code to make sure the month column is numeric. Then make the
     plot.'
+  id: totrans-80
   prefs: []
   type: TYPE_NORMAL
+  zh: '*重写你的代码以确保月份列是数字的。然后绘制图表。'
 - en: 3\. What do we learn from this plot?
+  id: totrans-81
   prefs: []
   type: TYPE_NORMAL
+  zh: 3. 我们从这个图表中学到了什么？
 - en: CO2 measures increase monotonically from 1959 to 1997.
+  id: totrans-82
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 二氧化碳的测量值从1959年到1997年单调递增。
 - en: CO2 measures are higher in the summer and the yearly average increased from
     1959 to 1997.
+  id: totrans-83
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 二氧化碳的测量值在夏季较高，并且从1959年到1997年的年平均值有所增加。
 - en: CO2 measures appear constant and random variability explains the differences.
+  id: totrans-84
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 二氧化碳的测量值看起来是恒定的，随机变异性解释了差异。
 - en: CO2 measures do not have a seasonal trend.
+  id: totrans-85
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 二氧化碳的测量值没有季节性趋势。
 - en: '4\. Now load the `admissions` data set, which contains admission information
     for men and women across six majors and keep only the admitted percentage column:'
+  id: totrans-86
   prefs: []
   type: TYPE_NORMAL
+  zh: 4. 现在加载`admissions`数据集，该数据集包含六个专业中男性和女性的录取信息，并仅保留录取百分比列：
 - en: '[PRE29]'
+  id: totrans-87
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE29]'
 - en: '*If we think of an observation as a major, and that each observation has two
     variables (men admitted percentage and women admitted percentage) then this is
     not tidy. Use the `pivot_wider` function to wrangle into tidy shape: one row for
     each major.'
+  id: totrans-88
   prefs: []
   type: TYPE_NORMAL
+  zh: '*如果我们把一个观测值看作是一个专业，并且每个观测值有两个变量（男性录取百分比和女性录取百分比），那么这就不整洁。使用`pivot_wider`函数整理成整洁形状：每个专业一行。'
 - en: '5\. Now we will try a more advanced wrangling challenge. We want to wrangle
     the admissions data so that for each major we have 4 observations: `admitted_men`,
     `admitted_women`, `applicants_men` and `applicants_women`. The *trick* we perform
     here is actually quite common: first use `pivot_longer` to generate an intermediate
     data frame and then `pivot_wider` to obtain the tidy data we want. We will go
     step by step in this and the next two exercises.'
+  id: totrans-89
   prefs: []
   type: TYPE_NORMAL
+  zh: 5. 现在我们将尝试一个更高级的数据整理挑战。我们想要整理录取数据，以便对于每个专业，我们都有4个观测值：`admitted_men`、`admitted_women`、`applicants_men`和`applicants_women`。我们在这里执行的*技巧*实际上相当常见：首先使用`pivot_longer`生成一个中间数据框，然后使用`pivot_wider`获取我们想要的整洁数据。我们将逐步进行，并在接下来的两个练习中也是如此。
 - en: 'Use the `pivot_longer` function to create a `tmp` data frame with a column
     containing the type of observation: `admitted` or `applicants`. Call the new columns
     `name` and `value`.'
+  id: totrans-90
   prefs: []
   type: TYPE_NORMAL
+  zh: 使用`pivot_longer`函数创建一个包含观测类型列（`admitted`或`applicants`）的`tmp`数据框。将新列命名为`name`和`value`。
 - en: '6\. Now you have an object `tmp` with columns `major`, `gender`, `name` and
     `value`. Note that if you combine the `name` and `gender`, we get the column names
     we want: `admitted_men`, `admitted_women`, `applicants_men` and `applicants_women`.
     Use the function `unite` to create a new column called `column_name`.'
+  id: totrans-91
   prefs: []
   type: TYPE_NORMAL
+  zh: 6. 现在你有一个名为 `tmp` 的对象，包含 `major`、`gender`、`name` 和 `value` 列。注意，如果你将 `name`
+    和 `gender` 结合起来，我们就能得到我们想要的列名：`admitted_men`、`admitted_women`、`applicants_men`
+    和 `applicants_women`。使用 `unite` 函数创建一个名为 `column_name` 的新列。
 - en: 7\. Now use the `pivot_wider` function to generate the tidy data with four variables
     for each major.
+  id: totrans-92
   prefs: []
   type: TYPE_NORMAL
+  zh: 7. 现在用 `pivot_wider` 函数生成每个专业有四个变量的整洁数据。
 - en: 8\. Now use the pipe to write a line of code that turns `admissions` to the
     table produced in the previous exercise.********
+  id: totrans-93
   prefs: []
   type: TYPE_NORMAL
+  zh: 8. 现在用管道符写一行代码，将 `admissions` 转换为上一练习中产生的表格。********

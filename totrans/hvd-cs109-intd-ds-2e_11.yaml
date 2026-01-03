@@ -1,19 +1,27 @@
 - en: 7  Visualizing data distributions
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 7 可视化数据分布
 - en: 原文：[https://rafalab.dfci.harvard.edu/dsbook-part-1/dataviz/distributions.html](https://rafalab.dfci.harvard.edu/dsbook-part-1/dataviz/distributions.html)
+  id: totrans-1
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 原文：[https://rafalab.dfci.harvard.edu/dsbook-part-1/dataviz/distributions.html](https://rafalab.dfci.harvard.edu/dsbook-part-1/dataviz/distributions.html)
 - en: '[Data Visualization](../dataviz/intro-dataviz.html)'
+  id: totrans-2
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[数据可视化](../dataviz/intro-dataviz.html)'
 - en: '[7  Visualizing data distributions](../dataviz/distributions.html)'
+  id: totrans-3
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[7 可视化数据分布](../dataviz/distributions.html)'
 - en: Summarizing complex datasets is crucial in data analysis, allowing us to share
     insights drawn from the data more effectively. One common method is to use the
     *average* value to summarize a list of numbers. For instance, a high school’s
@@ -22,8 +30,11 @@
     the scores were 680 \(\pm\) 50, boiling down a full set of scores to just two
     numbers. But is this enough? Are we overlooking crucial information by relying
     solely on these summaries instead of the complete data?
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: 在数据分析中，总结复杂数据集至关重要，它使我们能够更有效地分享从数据中得出的见解。一种常见的方法是使用*平均值*来总结一系列数字。例如，一所高中的质量可能由标准化考试的平均分数来表示。有时，还会添加一个额外的值，即*标准差*。因此，一份报告可能会说分数是680
+    \(\pm\) 50，将一整套分数简化为两个数字。但这足够吗？我们是否通过仅仅依赖这些总结而不是完整的数据而忽略了关键信息？
 - en: Our first data visualization building block is learning to summarize lists of
     numbers or categories. More often than not, the best way to share or explore these
     summaries is through data visualization. The most basic statistical summary of
@@ -31,16 +42,22 @@
     as a distribution, there are several data visualization techniques to effectively
     relay this information. For this reason, it is important to have a deep understand
     of the concept of a distribution.
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们数据可视化构建块的第一步是学习总结数字或类别的列表。通常情况下，分享或探索这些总结的最佳方式是通过数据可视化。一组对象或数字的最基本的统计总结是其分布。一旦数据被总结为分布，就有几种数据可视化技术可以有效地传达这些信息。因此，深入了解分布的概念非常重要。
 - en: In this chapter, we discuss properties of a variety of distributions and how
     to visualize distributions using a motivating example of student heights.
+  id: totrans-6
   prefs: []
   type: TYPE_NORMAL
+  zh: 在本章中，我们讨论了各种分布的特性以及如何使用学生身高的激励示例来可视化分布。
 - en: 7.1 Variable types
+  id: totrans-7
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 7.1 变量类型
 - en: 'The two main variables types are *categorical* and *numeric*. Each can be divided
     into two other groups: categorical can be ordinal or not, whereas numerical variables
     can be discrete or continuous. When entry in a dataset represent a group rather
@@ -54,8 +71,10 @@
     heights, if measured with enough precision. For example, a pair of twins may be
     68.12 and 68.11 inches, respectively. Counts, such as population sizes, are discrete
     because they have to be round numbers.'
+  id: totrans-8
   prefs: []
   type: TYPE_NORMAL
+  zh: 两种主要的变量类型是*分类*和*数值*。每种类型都可以分为另外两组：分类可以是有序的或无序的，而数值变量可以是离散的或连续的。当数据集中的条目代表一个组而不是一个数字时，我们称这些数据为*分类数据*。两个简单的例子是性别（男或女）和美国地区（东北部、南部、北中部、西部）。一些分类数据即使不是数字本身也可以排序，例如辣度（温和、中等、辣）。在统计学中，有序分类数据被称为*有序数据*。数值数据的例子包括人口规模、谋杀率和身高。我们可以进一步将数值数据分为连续和离散。连续变量是可以取任何值的变量，例如身高，如果测量足够精确的话。例如，一对双胞胎的身高可能分别是68.12英寸和68.11英寸。计数，如人口规模，是离散的，因为它们必须是整数。
 - en: Keep in mind that discrete numeric data can be considered ordinal. Although
     this is technically true, we usually reserve the term ordinal data for variables
     belonging to a small number of different groups, with each group having many members.
@@ -65,75 +84,103 @@
     be considered ordinal, while the actual number of cigarettes would be considered
     a numerical variable. But, indeed, there are examples that can be considered both
     numerical and ordinal when it comes to visualizing data.
+  id: totrans-9
   prefs: []
   type: TYPE_NORMAL
+  zh: 请记住，离散数值数据可以被认为是有序的。虽然这在技术上是真的，但我们通常将有序数据术语保留给属于少数不同组别的变量，每组有多个成员。相比之下，当我们有许多组，每组案例很少时，我们通常将它们称为离散数值变量。因此，例如，一个人每天抽的香烟包数（四舍五入到最接近的包），将被认为是有序的，而实际抽的香烟数量将被认为是数值变量。但确实，在可视化数据时，有一些例子既可以被认为是数值的，也可以是有序的。
 - en: Here we focus on numeric variables because visualizing this data type is substantially
     more complex. However, we start by describing data visualization and summarization
     approaches for categorical data.
+  id: totrans-10
   prefs: []
   type: TYPE_NORMAL
+  zh: 在这里，我们专注于数值变量，因为可视化这种数据类型要复杂得多。然而，我们首先描述数据可视化和摘要方法，用于分类数据。
 - en: '7.2 Case study: describing student heights'
+  id: totrans-11
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 7.2 案例研究：描述学生身高
 - en: We introduce a new motivating problem. It is an artificial one, but it will
     help us illustrate the concepts needed to understand distributions.
+  id: totrans-12
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们介绍一个新的激励性问题。这是一个人为的问题，但它将帮助我们说明理解分布所需的概念。
 - en: 'Pretend that we have to describe the heights of our classmates to ET, an extraterrestrial
     that has never seen humans. As a first step, we need to collect data. To do this,
     we ask students to report their heights in inches. We ask them to provide sex
     information because we know there are two different height distributions by sex.
     We collect the data and save it in the `heights` data frame:'
+  id: totrans-13
   prefs: []
   type: TYPE_NORMAL
+  zh: 假设我们必须向ET描述我们同学的身高，ET是一个从未见过人类的地球外生物。作为第一步，我们需要收集数据。为此，我们要求学生报告他们的身高（英寸）。我们要求他们提供性别信息，因为我们知道存在两种不同的性别身高分布。我们收集数据并将其保存在`heights`数据框中：
 - en: '[PRE0]'
+  id: totrans-14
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: '*One way to convey the heights to ET is to simply send him this list of 1,050
     heights. But there are much more effective ways to convey this information, and
     understanding the concept of a distribution will be key. To simplify the explanation,
     we first focus on male heights. We examine the female height data in [Section
     7.6](#sec-student-height-cont).*'
+  id: totrans-15
   prefs: []
   type: TYPE_NORMAL
+  zh: '*一种向ET传达高度的方法就是简单地发送这份包含1,050个高度的列表。但还有更有效的方法来传达这些信息，而理解分布的概念将是关键。为了简化解释，我们首先关注男性身高。我们将在[第7.6节](#sec-student-height-cont)中检查女性身高数据。*'
 - en: '*7.3 Distributions*'
+  id: totrans-16
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '*7.3 分布*'
 - en: '*The most basic statistical summary of a list of objects or numbers is its
     *distribution*. The simplest way to think of a distribution is as a compact description
     of a list with many entries. This concept should not be new for readers of this
     book. For example, with categorical data, the distribution simply describes the
     proportion of each unique category. The sex represented in the heights dataset
     is:'
+  id: totrans-17
   prefs: []
   type: TYPE_NORMAL
+  zh: '*一个对象或数字列表的最基本的统计摘要就是其*分布*。将分布简单地视为对具有许多条目的列表的紧凑描述。这个概念对于本书的读者来说不应该陌生。例如，对于分类数据，分布简单地描述了每个唯一类别的比例。在身高数据集中表示的性别是：'
 - en: '[PRE1]'
+  id: totrans-18
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: 'This two-category *frequency table* is the simplest form of a distribution.
     We don’t really need to visualize it since one number describes everything we
     need to know: 23% are females and the rest are males. When there are more categories,
     then a simple barplot describes the distribution. Here is an example with US state
     regions:'
+  id: totrans-19
   prefs: []
   type: TYPE_NORMAL
+  zh: 这个双类别*频率表*是分布的最简单形式。我们实际上不需要可视化它，因为一个数字就描述了我们所需了解的一切：23%是女性，其余是男性。当有更多类别时，简单的条形图就可以描述分布。以下是一个关于美国州区域的例子：
 - en: '![](../Images/2724615519ce8dcccadc51756f398800.png)'
+  id: totrans-20
   prefs: []
   type: TYPE_IMG
+  zh: '![图片](../Images/2724615519ce8dcccadc51756f398800.png)'
 - en: This particular plot simply shows us four numbers, one for each category. We
     usually use barplots to display a few numbers. Although this particular plot does
     not provide much more insight than a frequency table itself, it is a first example
     of how we convert a vector into a plot that succinctly summarizes all the information
     in the vector. When the data is numerical, the task of displaying distributions
     is more challenging.
+  id: totrans-21
   prefs: []
   type: TYPE_NORMAL
+  zh: 这个特定的图表仅仅显示了四个数字，每个类别一个。我们通常使用条形图来显示几个数字。尽管这个特定的图表本身并不比频率表提供更多的洞察力，但它是我们如何将向量转换为简洁地总结向量中所有信息的图表的第一个例子。当数据是数值时，显示分布的任务更具挑战性。
 - en: 7.3.1 Histograms
+  id: totrans-22
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 7.3.1 直方图
 - en: Numerical data that are not categorical also have distributions. However, in
     general, when data is not categorical, reporting the frequency of each entry,
     as we did for categorical data, is not an effective summary since most entries
@@ -141,25 +188,33 @@
     height of 68 inches, only one student reported a height of `68.503937007874` inches
     and only one student reported a height `68.8976377952756` inches. We assume that
     they converted from 174 and 175 centimeters, respectively.
+  id: totrans-23
   prefs: []
   type: TYPE_NORMAL
+  zh: 非分类的数值数据也有分布。然而，通常情况下，当数据不是分类的时，报告每个条目的频率，就像我们对分类数据所做的那样，不是一个有效的总结，因为大多数条目是唯一的。例如，在我们的案例研究中，虽然有几个学生报告身高为68英寸，但只有一名学生报告身高为`68.503937007874`英寸，只有一名学生报告身高`68.8976377952756`英寸。我们假设他们分别从174厘米和175厘米转换而来。
 - en: 'Statistics textbooks teach us that a more useful way to define a distribution
     for numeric data is to define a function that reports the proportion of the data
     below \(a\) for all possible values of \(a\). This function is called the empirical
     cumulative distribution function (eCDF), it can be plotted, and it provides a
     full description of the distribution of our data. Here is the eCDF for male student
     heights:'
+  id: totrans-24
   prefs: []
   type: TYPE_NORMAL
+  zh: 统计学教材教导我们，定义数值数据的分布的一个更有用方法是定义一个函数，该函数报告所有可能的值 \(a\) 下数据的比例。这个函数被称为经验累积分布函数（eCDF），它可以绘制出来，并提供了我们数据分布的完整描述。以下是男性学生身高的eCDF：
 - en: '![](../Images/69064c59c262b0b4d7361927c9d85022.png)'
+  id: totrans-25
   prefs: []
   type: TYPE_IMG
+  zh: '![图片](../Images/69064c59c262b0b4d7361927c9d85022.png)'
 - en: 'However, summarizing data by plotting the eCDF is actually not very popular
     in practice. The main reason is that it does not easily convey characteristics
     of interest such as: at what value is the distribution centered? Is the distribution
     symmetric? What ranges contain 95% of the values?'
+  id: totrans-26
   prefs: []
   type: TYPE_NORMAL
+  zh: 然而，通过绘制经验累积分布函数（eCDF）来总结数据实际上在实践上并不常见。主要原因在于它并不能轻易传达感兴趣的特性，例如：分布的中心值是多少？分布是对称的吗？哪些范围包含95%的值？
 - en: '*Histograms* are much preferred because they greatly facilitate answering such
     questions. Histograms sacrifice just a bit of information to produce plots that
     are much easier to interpret. The simplest way to make a histogram is to divide
@@ -169,15 +224,22 @@
     the histogram for the height data splitting the range of values into one inch
     intervals: \((49.5, 50.5]\), \((50.5, 51.5]\), \((51.5,52.5]\), \((52.5,53.5]\),
     \(...\), \((82.5,83.5]\).'
+  id: totrans-27
   prefs: []
   type: TYPE_NORMAL
+  zh: '*直方图*更受欢迎，因为它们极大地简化了回答此类问题。直方图牺牲了一点点信息，以产生更容易解释的图表。制作直方图的最简单方法是将我们的数据范围划分为相同大小的非重叠区间。然后，对于每个区间，我们计算落在该区间内的值的数量。直方图将这些计数作为条形图绘制出来，条形的底部由区间定义。以下是按一英寸间隔分割值范围的身高直方图：\((49.5,
+    50.5]\)，\((50.5, 51.5]\)，\((51.5,52.5]\)，\((52.5,53.5]\)，\(...\)，\((82.5,83.5]\)。'
 - en: '![](../Images/3edab7bd565c897364579f09d1af1f38.png)'
+  id: totrans-28
   prefs: []
   type: TYPE_IMG
+  zh: '![图片](../Images/3edab7bd565c897364579f09d1af1f38.png)'
 - en: As you can see in the figure above, a histogram is similar to a barplot, but
     it differs in that the x-axis is numerical, not categorical.
+  id: totrans-29
   prefs: []
   type: TYPE_NORMAL
+  zh: 如上图所示，直方图类似于条形图，但不同之处在于x轴是数值的，而不是分类的。
 - en: If we send this plot to ET, he will immediately learn some important properties
     about our data. First, the range of the data is from 50 to 84 with the majority
     (more than 95%) between 63 and 75 inches. Second, the heights are close to symmetric
@@ -185,30 +247,42 @@
     of the proportion of the data in any interval. Therefore, the histogram above
     is not only easy to interpret, but also provides almost all the information contained
     in the raw list of 812 male heights with about 30 bins.
+  id: totrans-30
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果我们将这个图表发送给ET，他将会立即了解我们数据的一些重要属性。首先，数据范围从50到84，其中大多数（超过95%）在63到75英寸之间。其次，高度在69英寸左右对称。此外，通过累计计数，ET可以非常准确地获得任何区间内数据比例的良好近似。因此，上面的直方图不仅易于解释，而且提供了大约30个区间中包含在原始812名男性身高列表中的几乎所有信息。
 - en: What information do we lose? Note that all values in each interval are treated
     the same when computing bin heights. So, for example, the histogram does not distinguish
     between 64, 64.1, and 64.2 inches. Given that these differences are almost unnoticeable
     to the eye, the practical implications are negligible and we were able to summarize
     the data to just 23 numbers.
+  id: totrans-31
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们失去了哪些信息？请注意，在计算区间高度时，每个区间的所有值都被视为相同。因此，例如，直方图无法区分64英寸、64.1英寸和64.2英寸。鉴于这些差异几乎对眼睛不可见，实际影响可以忽略不计，我们能够将数据总结为仅仅23个数字。
 - en: We discuss how to code histograms in [Section 8.14](ggplot2.html#sec-other-geometries).
+  id: totrans-32
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们在[第8.14节](ggplot2.html#sec-other-geometries)中讨论了如何编码直方图。
 - en: 7.3.2 Smoothed density
+  id: totrans-33
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 7.3.2 平滑密度
 - en: '*Smooth density* plots relay the same information as a histogram but are aesthetically
     more appealing. Here is what a smooth density plot looks like for our male heights
     data:'
+  id: totrans-34
   prefs: []
   type: TYPE_NORMAL
+  zh: '*平滑密度*图传达了与直方图相同的信息，但外观更吸引人。以下是我们的男性身高数据的平滑密度图：'
 - en: '![](../Images/3f52966dcacb917f4295fc30b1932386.png)'
+  id: totrans-35
   prefs: []
   type: TYPE_IMG
+  zh: '![图片](../Images/3f52966dcacb917f4295fc30b1932386.png)'
 - en: In this plot, we no longer have sharp edges at the interval boundaries and many
     of the local peaks have been removed. Also, the scale of the y-axis changed from
     counts to *density*. To fully understand smooth densities, we have to understand
@@ -218,39 +292,55 @@
     values shown y-axis are chosen so that the area under the curve adds up to 1\.
     This implies that for any interval, the area under the curve for that interval
     gives us an approximation of how what proportion of the data is in the interval.
+  id: totrans-36
   prefs: []
   type: TYPE_NORMAL
+  zh: 在这个图表中，我们不再在区间边界处有尖锐的边缘，许多局部峰值已经被移除。此外，y轴的刻度从计数改为*密度*。为了完全理解平滑密度，我们必须了解*估计*，这是我们在高级数据科学教科书中讨论的一个主题。在这里，我们简单地描述它们为通过直方图柱状图的顶部绘制一条曲线，然后移除柱状图。y轴上显示的值被选择，使得曲线下的面积加起来为1。这表明，对于任何区间，曲线下该区间的面积为我们提供了数据在该区间内比例的一个近似。
 - en: 'An advantage of smooth densities over histograms for visualization purposes
     is that densities make it easier to compare two distributions. This is in large
     part because the jagged edges of the histogram add clutter. Here is an example
     comparing male and female heights:'
+  id: totrans-37
   prefs: []
   type: TYPE_NORMAL
+  zh: 与直方图相比，平滑密度在可视化方面的一个优点是，密度使得比较两个分布更容易。这在很大程度上是因为直方图的锯齿边缘增加了杂乱。以下是一个比较男性和女性身高的例子：
 - en: '![](../Images/b7ef3200b4c672b5b15e8cf68a78b6ef.png)'
+  id: totrans-38
   prefs: []
   type: TYPE_IMG
+  zh: '![图片](../Images/b7ef3200b4c672b5b15e8cf68a78b6ef.png)'
 - en: With the right argument, `ggplot` automatically shades the intersecting region
     with a different color. We will show examples of **ggplot2** code for densities
     in [Chapter 10](dataviz-in-practice.html) as well as [Section 8.14](ggplot2.html#sec-other-geometries).
+  id: totrans-39
   prefs: []
   type: TYPE_NORMAL
+  zh: 使用正确的参数，`ggplot`会自动用不同的颜色阴影相交的区域。我们将在[第10章](dataviz-in-practice.html)以及[第8.14节](ggplot2.html#sec-other-geometries)中展示用于密度的**ggplot2**代码示例。
 - en: 7.3.3 The normal distribution
+  id: totrans-40
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 7.3.3 正态分布
 - en: 'Histograms and density plots provide excellent summaries of a distribution.
     But can we summarize even further? We often see the average and standard deviation
     used as summary statistics: a two-number summary! To understand what these summaries
     are and why they are so widely used, we need to understand the normal distribution.'
+  id: totrans-41
   prefs: []
   type: TYPE_NORMAL
+  zh: 直方图和密度图提供了对分布的出色总结。但我们能否进一步总结？我们经常看到平均值和标准差被用作总结统计量：两个数字的总结！为了理解这些总结是什么以及为什么它们被广泛使用，我们需要了解正态分布。
 - en: 'The normal distribution, also known as the bell curve and as the Gaussian distribution.
     Here is what the normal distribution looks like:'
+  id: totrans-42
   prefs: []
   type: TYPE_NORMAL
+  zh: 正态分布，也称为钟形曲线和高斯分布。以下是正态分布的形状：
 - en: '![](../Images/07eaa07588d8dc3f660a69a2a37c8a2b.png)'
+  id: totrans-43
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/07eaa07588d8dc3f660a69a2a37c8a2b.png)'
 - en: The normal distribution is one of the most famous mathematical concepts in history.
     A reason for this is that the distribution of many datasets can be approximated
     with normal distributions. These include gambling winnings, heights, weights,
@@ -268,57 +358,85 @@
     is approximated by a normal distribution, all the information needed to describe
     the distribution can be encoded by just two numbers. We now define these values
     for an arbitrary list of numbers.
+  id: totrans-44
   prefs: []
   type: TYPE_NORMAL
+  zh: 正态分布是历史上最著名的数学概念之一。一个原因是许多数据集的分布可以用正态分布来近似。这包括赌博收益、身高、体重、血压、标准化测试分数和实验测量误差。统计教科书提供了为什么会出现这种情况的解释。但是，同一个分布如何近似具有完全不同值范围的多个数据集，例如身高和体重？正态分布的第二个重要特征是，它可以通过调整两个数字来适应不同的数据集，这两个数字被称为*平均值*或*均值*和*标准差*（SD）。正态分布是对称的，以我们所说的平均值为中心，大多数值（约95%）都在平均值的2个标准差范围内。上图显示了一个平均值为0，标准差为1的正态分布，通常被称为*标准正态分布*。请注意，仅需要两个数字来调整正态分布以适应数据集的事实意味着，如果我们的数据分布被正态分布近似，描述分布所需的所有信息都可以通过仅两个数字来编码。我们现在为任意的一组数字定义这些值。
 - en: 'Once we are convinced that our data, say it is stored in the vector `x`, has
     a distribution that is *approximately normal*, we can find the specific one that
     matches our data by matching the average and SD of the data to the average and
     SD of the normal distribution, respectively. For a list of numbers contained in
     a vector `x`:'
+  id: totrans-45
   prefs: []
   type: TYPE_NORMAL
+  zh: 一旦我们确信我们的数据，比如说存储在向量`x`中，具有*近似正态分布*，我们就可以通过将数据的平均值和标准差分别与正态分布的平均值和标准差相匹配来找到与我们的数据匹配的具体分布。对于一个包含在向量`x`中的数字列表：
 - en: '[PRE2]'
+  id: totrans-46
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: '*the average is defined as'
+  id: totrans-47
   prefs: []
   type: TYPE_NORMAL
+  zh: '*平均值定义为'
 - en: '[PRE3]'
+  id: totrans-48
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: '*and the SD is defined as'
+  id: totrans-49
   prefs: []
   type: TYPE_NORMAL
+  zh: '*标准差定义为'
 - en: '[PRE4]'
+  id: totrans-50
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE4]'
 - en: '*which can be interpreted as the average distance between values and their
     average.'
+  id: totrans-51
   prefs: []
   type: TYPE_NORMAL
+  zh: '*可以解释为值与其平均值之间的平均距离。'
 - en: 'The pre-built functions `mean` and `sd` (note that, for reasons explained in
     statistics textbooks,`sd` divides by `length(x)-1` rather than `length(x)`) can
     be used here:'
+  id: totrans-52
   prefs: []
   type: TYPE_NORMAL
+  zh: 预先构建的函数`mean`和`sd`（请注意，由于统计教科书中解释的原因，`sd`除以`length(x)-1`而不是`length(x)`）可以在这里使用：
 - en: '[PRE5]'
+  id: totrans-53
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE5]'
 - en: '*Here is a plot of our student height smooth density in blue and the normal
     distribution with mean = 69.3 and SD = 3.6 plotted as a black line:'
+  id: totrans-54
   prefs: []
   type: TYPE_NORMAL
+  zh: '*以下是我们的学生身高平滑密度图，以蓝色表示，以及平均值为69.3和标准差为3.6的正态分布，以黑色线条绘制：'
 - en: '![](../Images/0c5738838ff249fa5e6cb29c8df1e3ea.png)*****'
+  id: totrans-55
   prefs: []
   type: TYPE_NORMAL
+  zh: '![](../Images/0c5738838ff249fa5e6cb29c8df1e3ea.png)*****'
 - en: '***7.4 Boxplots***'
+  id: totrans-56
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '***7.4 箱线图***'
 - en: '***To understand boxplots we need to define some terms that are commonly used
     in exploratory data analysis.'
+  id: totrans-57
   prefs: []
   type: TYPE_NORMAL
+  zh: '***为了理解箱线图，我们需要定义一些在探索性数据分析中常用的术语。'
 - en: The *percentiles* are the values for which \(p = 0.01, 0.02, ..., 0.99\) of
     the data are less then or equal to that value, respectively. We call, for example,
     the case of \(p=0.10\) the 10th percentile, which gives us a number for which
@@ -326,102 +444,142 @@
     the *median*. Another special case that receives a name are the *quartiles*, which
     are obtained when setting \(p=0.25,0.50\), and \(0.75\), which are used by the
     boxplot.
+  id: totrans-58
   prefs: []
   type: TYPE_NORMAL
+  zh: '*百分位数*是数据中\(p = 0.01, 0.02, ..., 0.99\)的值，分别表示数据中小于或等于该值的百分比。例如，\(p=0.10\)的情况被称为第10个百分位数，它给出了10%的数据低于该数值。最著名的百分位数是第50个，也称为*中位数*。另一个被命名的特殊情况是*四分位数*，当设置\(p=0.25,0.50\)和\(0.75\)时获得，这些值在箱线图中使用。'
 - en: 'To motivate boxplots we will go back to the US murder data. Suppose we want
     to summarize the murder rate distribution. Using the data visualization technique
     we have learned, we can quickly see that the normal approximation does not apply
     here:'
+  id: totrans-59
   prefs: []
   type: TYPE_NORMAL
+  zh: 为了激发对箱形图的需求，我们将回到美国谋杀数据。假设我们想要总结谋杀率分布。使用我们学到的数据可视化技术，我们可以快速看到这里不适用正态近似：
 - en: '![](../Images/d0c5a7d639b74dd322fe31724c80dc16.png)'
+  id: totrans-60
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/d0c5a7d639b74dd322fe31724c80dc16.png)'
 - en: In this case, the histogram above or a smooth density plot would serve as a
     relatively succinct summary.
+  id: totrans-61
   prefs: []
   type: TYPE_NORMAL
+  zh: 在这种情况下，上面的直方图或平滑密度图可以作为一个相对简洁的总结。
 - en: Now suppose those used to receiving just two numbers as summaries ask us for
     a more compact numerical summary.
+  id: totrans-62
   prefs: []
   type: TYPE_NORMAL
+  zh: 现在假设那些习惯于只接收两个数字作为总结的人要求我们提供一个更紧凑的数值总结。
 - en: The *boxplot* provides a five-number summary composed of the range (the minimum
     and maximum) along with the *quartiles* (the 25th, 50th, and 75th percentiles).
     The R implementation of boxplots ignore *outliers* when computing the range and
     instead plot these as independent points. The help file provides a specific definition
     of outliers. The boxplot shows these numbers as a “box” with “whiskers”
+  id: totrans-63
   prefs: []
   type: TYPE_NORMAL
+  zh: '*箱形图*提供了一个由范围（最小值和最大值）以及*四分位数*（第25、50和75百分位数）组成的五数总结。R实现中的箱形图在计算范围时忽略*异常值*，并将这些值作为独立点绘制。帮助文件提供了异常值的特定定义。箱形图将这些数字显示为“箱”和“须须”。'
 - en: '![](../Images/3be51c9437a7f2f94aa6b9bec569a898.png)'
+  id: totrans-64
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/3be51c9437a7f2f94aa6b9bec569a898.png)'
 - en: with the box defined by the 25% and 75% percentile and the whiskers showing
     the range. The distance between the 25% and 75% percentile is called the *interquartile*
     range. The two points are outliers according to the R implementation. The median
     is shown with a horizontal line.
+  id: totrans-65
   prefs: []
   type: TYPE_NORMAL
+  zh: 由25%和75%分位数定义的箱形和显示范围的须须。25%和75%分位数之间的距离称为*四分位距*。根据R的实现，这两个点是异常值。中位数用水平线表示。
 - en: From just this simple plot, we know that the median is about 2.5, that the distribution
     is not symmetric, and that the range is 0 to 5 for the great majority of states
     with two exceptions.
+  id: totrans-66
   prefs: []
   type: TYPE_NORMAL
+  zh: 从这张简单的图表中，我们可以知道中位数大约是2.5，分布不是对称的，以及大多数州的范围是0到5，只有两个例外。
 - en: We discuss how to make boxplots in [Section 8.14](ggplot2.html#sec-other-geometries).***
+  id: totrans-67
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们在[第8.14节](ggplot2.html#sec-other-geometries)中讨论了如何制作箱形图。***
 - en: '***7.5 Stratification***'
+  id: totrans-68
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '***7.5 分层***'
 - en: '***In data analysis we often divide observations into groups based on the values
     of one or more variables associated with those observations. For example in the
     next section we divide the height values into groups based on a sex variable:
     females and males. We call this procedure *stratification* and refer to the resulting
     groups as *strata*.'
+  id: totrans-69
   prefs: []
   type: TYPE_NORMAL
+  zh: '***在数据分析中，我们通常根据与观察值相关的一个或多个变量的值将观察值分成组。例如，在下一节中，我们将身高值根据性别变量分成组：女性和男性。我们称此过程为*分层*，并将由此产生的组称为*层*。'
 - en: Stratification is common in data visualization because we are often interested
     in how the distributions of variables differ across different subgroups. We will
     see several examples throughout this part of the book, starting with the next
     section.***
+  id: totrans-70
   prefs: []
   type: TYPE_NORMAL
+  zh: 分层在数据可视化中很常见，因为我们通常对变量在不同子组中的分布差异感兴趣。在本书的这一部分，我们将看到几个例子，从下一节开始。***
 - en: '***7.6 Case study continued***'
+  id: totrans-71
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '***7.6 案例研究继续***'
 - en: '***If we are convinced that the male height data is well approximated with
     a normal distribution we can report back to ET a very succinct summary: male heights
     follow a normal distribution with an average of 69.3 inches and a SD of 3.6 inches.
     With this information, ET will have a good idea of what to expect when he meets
     our male students. However, to provide a complete picture we need to also provide
     a summary of the female heights.'
+  id: totrans-72
   prefs: []
   type: TYPE_NORMAL
+  zh: '***如果我们确信男性身高数据可以用正态分布很好地近似，我们可以向ET报告一个非常简洁的总结：男性身高遵循平均为69.3英寸，标准差为3.6英寸的正态分布。有了这些信息，ET将对他遇到我们的男性学生时可以期待什么有一个很好的了解。然而，为了提供一个完整的画面，我们还需要提供女性身高的总结。'
 - en: 'Boxplots are useful when we want to quickly compare two or more distributions.
     Here are the heights for men and women:'
+  id: totrans-73
   prefs: []
   type: TYPE_NORMAL
+  zh: 当我们想要快速比较两个或多个分布时，箱形图很有用。以下是男性和女性的身高：
 - en: '![](../Images/41d5c2fd481b52b9c2dcf1f8f5b4fa2f.png)'
+  id: totrans-74
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/41d5c2fd481b52b9c2dcf1f8f5b4fa2f.png)'
 - en: 'The plot immediately reveals that males are, on average, taller than females.
     The interquartile ranges appear to be similar. But does the normal approximation
     also work for the female height data collected by the survey? We expect that they
     will follow a normal distribution, just like males. However, exploratory plots
     reveal that the approximation is not as useful:'
+  id: totrans-75
   prefs: []
   type: TYPE_NORMAL
+  zh: 图表立即显示，男性平均身高高于女性。四分位数范围看起来相似。但是，正态近似也适用于调查收集的女性身高数据吗？我们预计它们将遵循正态分布，就像男性一样。然而，探索性图表显示，这种近似并不那么有用：
 - en: '![](../Images/16b764551bd385702ce083b920891bd4.png)'
+  id: totrans-76
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/16b764551bd385702ce083b920891bd4.png)'
 - en: 'We see something we did not see for the males: the density plot has a second
     “bump”. Also, the highest points tend to be taller than expected by the normal
     than expected heights for a normal distribution. When reporting back to ET, we
     might need to provide a histogram rather than just the average and standard deviation
     for the female heights.'
+  id: totrans-77
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们看到了在男性身上没有看到的事情：密度图有一个第二个“峰值”。而且，最高点往往比正态分布预期的要高。在向ET汇报时，我们可能需要提供一个直方图，而不仅仅是女性身高的平均值和标准差。
 - en: However, go back and read Tukey’s quote. We have noticed what we didn’t expect
     to see. If we look at other female height distributions, we do find that they
     are well approximated with a normal distribution. So why are our female students
@@ -431,83 +589,129 @@
     `FEMALE` was the default sex and some males entered their heights, but forgot
     to change the sex variable. In any case, data visualization has helped discover
     a potential flaw in our data.
+  id: totrans-78
   prefs: []
   type: TYPE_NORMAL
+  zh: 然而，回顾一下图克的话。我们已经注意到了我们没有预料到的事情。如果我们查看其他女性的身高分布，我们发现它们很好地被正态分布所近似。那么为什么我们的女学生不同？我们的班级是女性篮球队的必修课吗？是否有小部分女性声称自己的身高高于实际身高？另一个可能更合理的解释是，在学生用来输入身高的形式中，`FEMALE`是默认性别，一些男性输入了他们的身高，但忘记了更改性别变量。无论如何，数据可视化帮助我们发现了数据中可能存在的潜在缺陷。
 - en: 'Regarding the five smallest values, note that these values are:'
+  id: totrans-79
   prefs: []
   type: TYPE_NORMAL
+  zh: 关于前五个最小值，请注意，这些值是：
 - en: '[PRE6]'
+  id: totrans-80
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE6]'
 - en: '*Because these are reported heights, a possibility is that the student meant
     to enter `5''1"`, `5''2"`, `5''3"` or `5''5"`.****'
+  id: totrans-81
   prefs: []
   type: TYPE_NORMAL
+  zh: '*因为这些是报告的身高，一种可能是学生本意是想输入`5''1"`、`5''2"`、`5''3"`或`5''5"`。****'
 - en: '***7.7 Exercises***'
+  id: totrans-82
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '***7.7 练习***'
 - en: '***1\. Define variables containing the heights of males and females like this:'
+  id: totrans-83
   prefs: []
   type: TYPE_NORMAL
+  zh: '***1. 定义包含男性和女性身高的变量，如下所示：'
 - en: '[PRE7]'
+  id: totrans-84
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE7]'
 - en: '*How many measurements do we have for each?'
+  id: totrans-85
   prefs: []
   type: TYPE_NORMAL
+  zh: '*我们每个国家有多少个测量值？'
 - en: 2\. Suppose we can’t make a plot and want to compare the distributions side
     by side. We can’t just list all the numbers. Instead, we will look at the percentiles.
     Create a five row table showing `female_percentiles` and `male_percentiles` with
     the 10th, 30th, 50th, 70th, & 90th percentiles for each sex. Then create a data
     frame with these two as columns.
+  id: totrans-86
   prefs: []
   type: TYPE_NORMAL
+  zh: 2. 假设我们无法绘制图表，而想并排比较分布。我们不能只是列出所有数字。相反，我们将查看百分位数。创建一个五行的表格，显示`female_percentiles`和`male_percentiles`，包括每个性别的10th、30th、50th、70th和90th百分位数。然后创建一个数据框，将这两个作为列。
 - en: '3\. Study the following boxplots showing population sizes by country:'
+  id: totrans-87
   prefs: []
   type: TYPE_NORMAL
+  zh: 3. 研究以下按国家显示的人口规模的箱型图：
 - en: '![](../Images/172c4cb742c5b9de8f48b07f8ad390a2.png)'
+  id: totrans-88
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/172c4cb742c5b9de8f48b07f8ad390a2.png)'
 - en: Which continent has the country with the biggest population size?
+  id: totrans-89
   prefs: []
   type: TYPE_NORMAL
+  zh: 哪个洲的国家人口规模最大？
 - en: 4\. What continent has the largest median population size?
+  id: totrans-90
   prefs: []
   type: TYPE_NORMAL
+  zh: 4. 哪个洲的中位人口规模最大？
 - en: 5\. What is median population size for Africa to the nearest million?
+  id: totrans-91
   prefs: []
   type: TYPE_NORMAL
+  zh: 5. 非洲的中位人口规模是多少，四舍五入到百万？
 - en: 6\. What proportion of countries in Europe have populations below 14 million?
+  id: totrans-92
   prefs: []
   type: TYPE_NORMAL
+  zh: 6. 欧洲有多少比例的国家人口低于1400万？
 - en: '0.99'
+  id: totrans-93
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '0.99'
 - en: '0.75'
+  id: totrans-94
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '0.75'
 - en: '0.50'
+  id: totrans-95
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '0.50'
 - en: '0.25'
+  id: totrans-96
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '0.25'
 - en: 7\. If we use a log transformation, which continent shown above has the largest
     interquartile range?
+  id: totrans-97
   prefs: []
   type: TYPE_NORMAL
+  zh: 7. 如果我们使用对数变换，上面显示的哪个洲的四分位数范围最大？
 - en: '8\. Load the height data set and create a vector `x` with just the male heights:'
+  id: totrans-98
   prefs: []
   type: TYPE_NORMAL
+  zh: 8. 加载身高数据集，并创建一个只包含男性身高的向量`x`：
 - en: '[PRE8]'
+  id: totrans-99
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE8]'
 - en: '*What proportion of the data is between 69 and 72 inches (taller than 69, but
     shorter or equal to 72)? Hint: use a logical operator and `mean`.*****'
+  id: totrans-100
   prefs: []
   type: TYPE_NORMAL
+  zh: '*数据中在69英寸到72英寸（高于69英寸，但小于或等于72英寸）之间的比例是多少？提示：使用逻辑运算符和`mean`。*****'

@@ -1,33 +1,47 @@
 - en: 8  ggplot2
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 8  ggplot2
 - en: 原文：[https://rafalab.dfci.harvard.edu/dsbook-part-1/dataviz/ggplot2.html](https://rafalab.dfci.harvard.edu/dsbook-part-1/dataviz/ggplot2.html)
+  id: totrans-1
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 原文：[https://rafalab.dfci.harvard.edu/dsbook-part-1/dataviz/ggplot2.html](https://rafalab.dfci.harvard.edu/dsbook-part-1/dataviz/ggplot2.html)
 - en: '[Data Visualization](../dataviz/intro-dataviz.html)'
+  id: totrans-2
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[数据可视化](../dataviz/intro-dataviz.html)'
 - en: '[8  ggplot2](../dataviz/ggplot2.html)'
+  id: totrans-3
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[8  ggplot2](../dataviz/ggplot2.html)'
 - en: Exploratory data visualization is perhaps the greatest strength of R. One can
     quickly go from idea to data to plot with a unique balance of flexibility and
     ease. For example, Excel may be easier than R for some plots, but it is nowhere
     near as flexible. D3.js may be more flexible and powerful than R, but it takes
     much longer to generate a plot.
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: 探索性数据可视化可能是R的最大优势。人们可以快速从想法到数据再到图表，这种灵活性与易用性的独特平衡。例如，对于某些图表，Excel可能比R更易用，但它的灵活性远远不如R。D3.js可能比R更灵活和强大，但生成图表需要更长的时间。
 - en: Throughout the book, we will be creating plots using the **ggplot2**[¹](#fn1)
     package.
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: 在整本书中，我们将使用**ggplot2**[¹](#fn1)包来创建图表。
 - en: '[PRE0]'
+  id: totrans-6
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: '*Many other approaches are available for creating plots in R. In fact, the
     plotting capabilities that come with a basic installation of R are already quite
     powerful. There are also other packages for creating graphics such as **grid**
@@ -35,8 +49,10 @@
     into components in a way that permits beginners to create relatively complex and
     aesthetically pleasing plots using syntax that is intuitive and comparatively
     easy to remember.'
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: '*在R中创建图表的方法还有很多。实际上，R的基本安装就已经提供了相当强大的绘图功能。还有其他用于创建图形的包，如**grid**和**lattice**。我们选择在这本书中使用**ggplot2**，因为它将图表分解成组件，这种方式允许初学者使用直观且相对容易记忆的语法创建相对复杂且美观的图表。'
 - en: One reason **ggplot2** is generally more intuitive for beginners is that it
     uses a grammar of graphics[²](#fn2), the *gg* in **ggplot2**. This is analogous
     to the way learning grammar can help a beginner construct hundreds of different
@@ -44,67 +60,92 @@
     to memorize each specific sentence. Similarly, by learning a handful of **ggplot2**
     building blocks and its grammar, you will be able to create hundreds of different
     plots.
+  id: totrans-8
   prefs: []
   type: TYPE_NORMAL
+  zh: '**ggplot2**对初学者来说通常更直观的一个原因是它使用了图形语法[²](#fn2)，即**ggplot2**中的*gg*。这类似于学习语法可以帮助初学者通过学习少量动词、名词和形容词来构建成百上千种不同的句子，而不需要记住每个具体的句子。同样，通过学习少量**ggplot2**构建块及其语法，您将能够创建成百上千种不同的图表。'
 - en: Another reason **ggplot2** is easy for beginners is that its default behavior
     is carefully chosen to satisfy the great majority of cases and is visually pleasing.
     As a result, it is possible to create informative and elegant graphs with relatively
     simple and readable code.
+  id: totrans-9
   prefs: []
   type: TYPE_NORMAL
+  zh: '**ggplot2**对初学者来说容易的另一个原因是它的默认行为是精心选择的，以满足大多数情况，并且视觉效果令人愉悦。因此，可以使用相对简单且易于阅读的代码创建信息丰富且优雅的图表。'
 - en: One limitation is that **ggplot2** is designed to work exclusively with data
     tables in tidy format. However, a substantial percentage of datasets that beginners
     work with are in, or can be converted into, this format. An advantage of this
     approach is that, assuming that our data is tidy, **ggplot2** simplifies plotting
     code and the learning of grammar for a variety of plots.
+  id: totrans-10
   prefs: []
   type: TYPE_NORMAL
+  zh: 一个限制是**ggplot2**设计为仅与整洁格式的数据表一起工作。然而，初学者处理的大量数据集都在这种格式中，或者可以转换成这种格式。这种方法的一个优点是，假设我们的数据是整洁的，**ggplot2**简化了绘图代码和各种图表语法的学习。
 - en: To use **ggplot2** you will have to learn several functions and arguments. These
     are hard to memorize, so we highly recommend you have the ggplot2 cheat sheet
     handy. You can get a copy from Posit’s website[³](#fn3) or simply perform an internet
     search for “ggplot2 cheat sheet”.
+  id: totrans-11
   prefs: []
   type: TYPE_NORMAL
+  zh: 要使用**ggplot2**，您将不得不学习几个函数和参数。这些很难记住，所以我们强烈建议您手头备有ggplot2速查表。您可以从Posit的网站[³](#fn3)获取一份，或者简单地在网上搜索“ggplot2
+    cheat sheet”。
 - en: 8.1 The components of a graph
+  id: totrans-12
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 8.1 图表组成部分
 - en: 'We will construct a graph that summarizes the US murders dataset that looks
     like this:'
+  id: totrans-13
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们将构建一个图表，总结美国谋杀数据集，看起来像这样：
 - en: '![](../Images/f9836dd5abbd3c9ab678d6592c08ba56.png)'
+  id: totrans-14
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/f9836dd5abbd3c9ab678d6592c08ba56.png)'
 - en: We can clearly see how much states vary across population size and the total
     number of murders. Not surprisingly, we also see a clear relationship between
     murder totals and population size. A state falling on the dashed grey line has
     the same murder rate as the US average. The four geographic regions are denoted
     with color, which depicts how most southern states have murder rates above the
     average.
+  id: totrans-15
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们可以清楚地看到各州在人口规模和谋杀总数上的差异。不出所料，我们还看到谋杀总数与人口规模之间存在明显的关联。位于虚线灰色线上的州具有与美国平均相同的谋杀率。四个地理区域用颜色表示，这描绘了大多数南部州的谋杀率高于平均水平。
 - en: This data visualization shows us pretty much all the information in the data
     frame The code needed to make this plot is relatively simple. We will learn to
     create the plot part by part.
+  id: totrans-16
   prefs: []
   type: TYPE_NORMAL
+  zh: 这份数据可视化几乎展示了数据框中的所有信息。制作此图表所需的代码相对简单。我们将学习逐步创建图表。
 - en: 'The first step in learning **ggplot2** is to be able to break a graph apart
     into components. Let’s break down the plot above and introduce some of the **ggplot2**
     terminology. The main three components to note are:'
+  id: totrans-17
   prefs: []
   type: TYPE_NORMAL
+  zh: 学习**ggplot2**的第一步是能够将图表分解成组件。让我们分解上面的图表并介绍一些**ggplot2**术语。需要注意的主要三个组件是：
 - en: '**Data**: The US murders data frame is being summarized. We refer to this as
     the **data** component.'
+  id: totrans-18
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**数据**：正在汇总的US谋杀数据框。我们将其称为**数据**组件。'
 - en: '**Geometry**: The plot above is a scatterplot. This is referred to as the **geometry**
     component. Other possible geometries include barplot, histogram, smooth densities,
     qqplot, and boxplot. We will learn more about these in [Section 8.14](#sec-other-geometries).'
+  id: totrans-19
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**几何形状**：上面的图表是一个散点图。这被称为**几何**组件。其他可能的几何形状包括条形图、直方图、平滑密度、QQ图和箱线图。我们将在[第8.14节](#sec-other-geometries)中了解更多关于这些内容。'
 - en: '**Aesthetic mapping**: The plot uses several visual cues to represent the information
     provided by the dataset. The two most important cues in this plot are the point
     positions on the x-axis and y-axis, which represent population size and the total
@@ -113,250 +154,352 @@
     Color is another visual cue that we map to region. We refer to this as the **aesthetic
     mapping** component. How we define the mapping depends on what **geometry** we
     are using.'
+  id: totrans-20
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**美学映射**：该图表使用几个视觉线索来表示数据集提供的信息。在这个图表中，最重要的两个线索是x轴和y轴上的点位置，分别代表人口规模和谋杀总数。每个点代表一个不同的观察结果，我们将这些观察结果的数据映射到x和y刻度等视觉线索上。颜色是另一个映射到区域的视觉线索，我们将其称为**美学映射**组件。我们如何定义映射取决于我们正在使用的**几何形状**。'
 - en: 'We also note that:'
+  id: totrans-21
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们还注意到：
 - en: The points are labeled with the state abbreviations.
+  id: totrans-22
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 点被标记为州缩写。
 - en: The range of the x-axis and y-axis appears to be defined by the range of the
     data. They are both on log-scales.
+  id: totrans-23
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: x轴和y轴的范围似乎由数据的范围定义。它们都使用对数刻度。
 - en: There are labels, a title, a legend, and we use the style of The Economist magazine.
+  id: totrans-24
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 图表中包含标签、标题、图例，我们采用了《经济学人》杂志的风格。
 - en: 'The general approach in **ggplot2** is to construct the plot part by part by
     adding *layers* to a `ggplot` object, created by the `ggplot` function. Layers
     can define geometries, compute summary statistics, define what scales to use,
     or change styles. To add layers, we use the symbol `+`. In general, a line of
     code will look like this:'
+  id: totrans-25
   prefs: []
   type: TYPE_NORMAL
+  zh: '**ggplot2**的一般方法是逐步构建图表，通过向由`ggplot`函数创建的`ggplot`对象中添加*层*来实现。层可以定义几何形状、计算汇总统计量、定义要使用的刻度或更改样式。要添加层，我们使用符号`+`。一般来说，一行代码将看起来像这样：'
 - en: DATA |> `[ggplot()](https://ggplot2.tidyverse.org/reference/ggplot.html)` +
     LAYER 1 + LAYER 2 + … + LAYER N
+  id: totrans-26
   prefs:
   - PREF_BQ
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: DATA |> `[ggplot()](https://ggplot2.tidyverse.org/reference/ggplot.html)` +
+    LAYER 1 + LAYER 2 + … + LAYER N
 - en: We will now illustrate the basics of ggplot2 by dissecting how we construct
     the plot above.
+  id: totrans-27
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们现在将通过剖析如何构建上面的图表来展示ggplot2的基本原理。
 - en: 8.2 Initializing an object with data
+  id: totrans-28
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 8.2 使用数据初始化对象
 - en: 'We start by loading the relevant dataset which is in the **dslabs package**:'
+  id: totrans-29
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们首先加载相关的数据集，该数据集位于**dslabs包**中：
 - en: '[PRE1]'
+  id: totrans-30
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: '*The first step in creating a **ggplot2** graph is to define a `ggplot` object.
     Typically most or all the layers will be mapping variables from the same dataset,
     so we associate this object with the relevant data frame'
+  id: totrans-31
   prefs: []
   type: TYPE_NORMAL
+  zh: '*创建**ggplot2**图表的第一步是定义一个`ggplot`对象。通常，大多数或所有层都将映射来自同一数据集的变量，因此我们将此对象与相关数据框关联'
 - en: '[PRE2]'
+  id: totrans-32
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: '*or equivalently'
+  id: totrans-33
   prefs: []
   type: TYPE_NORMAL
+  zh: '*或者等价地'
 - en: '[PRE3]'
+  id: totrans-34
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: '*![](../Images/e7812f89241ae6a04feeede4939b2793.png)*  *Both these lines of
     code render a plot, in this case a blank slate since no geometry has been defined.
     The only style choice we see is a grey background, the default. We see a plot
     because an object was created and not assigned to a variable, it was automatically
     evaluated and printed. But we can assign our plot to an object in the usual way:'
+  id: totrans-35
   prefs: []
   type: TYPE_NORMAL
+  zh: '*![](../Images/e7812f89241ae6a04feeede4939b2793.png)*  *这两行代码都生成了一个图表，在这种情况下是一个空白画布，因为没有定义几何形状。我们看到的唯一样式选择是默认的灰色背景。我们看到一个图表，因为创建了一个对象而没有分配给变量，它被自动评估并打印出来。但我们可以像通常一样将我们的图表分配给一个对象：'
 - en: '[PRE4]'
+  id: totrans-36
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE4]'
 - en: '*To render the plot associated with this object, we simply print the object
     `p`. The following two lines of code each produce the same plot we see above:'
+  id: totrans-37
   prefs: []
   type: TYPE_NORMAL
+  zh: '*要渲染与此对象关联的图表，我们只需打印对象`p`。以下两行代码各自生成了我们上面看到的相同图表：'
 - en: '[PRE5]'
+  id: totrans-38
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE5]'
 - en: '*To summarize, `p` is a `ggplot` object with the `murders` data frame as its
     data component.*****'
+  id: totrans-39
   prefs: []
   type: TYPE_NORMAL
+  zh: '*总结来说，`p`是一个`ggplot`对象，其数据组件是`murders`数据框。*****'
 - en: '***8.3 Adding a geometry***'
+  id: totrans-40
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '***8.3 添加几何形状***'
 - en: '***A common first step is to let **ggplot2** know what geometry to use. We
     often add multiple geometries, but we at least need one. In our example, we want
     to make a scatterplot. Geometries are added using functions. Taking a quick look
     at the cheat sheet, we see that we should use the function `geom_point`.'
+  id: totrans-41
   prefs: []
   type: TYPE_NORMAL
+  zh: '***一个常见的第一步是让**ggplot2**知道要使用哪种几何形状。我们经常添加多个几何形状，但我们至少需要一个。在我们的例子中，我们想要制作一个散点图。几何形状是通过函数添加的。快速查看速查表，我们看到应该使用函数`geom_point`。'
 - en: '![](../Images/fdee9541f67108e08ec4ddd34c0adb61.png)'
+  id: totrans-42
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/fdee9541f67108e08ec4ddd34c0adb61.png)'
 - en: '![](../Images/aaab3f002321b5404c834bf126a54a0b.png)'
+  id: totrans-43
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/aaab3f002321b5404c834bf126a54a0b.png)'
 - en: (Image courtesy of Posit[⁴](#fn4). CC-BY-4.0 license[⁵](#fn5).)
+  id: totrans-44
   prefs: []
   type: TYPE_NORMAL
+  zh: (图片由Posit提供[⁴](#fn4)。CC-BY-4.0许可[⁵](#fn5)。)
 - en: 'Note that geometry function names follow the pattern: `geom_X` where X is the
     name of the geometry. Some examples include `geom_histogram`, `geom_boxplot`,
     and `geom_col`. We will discuss these further in [Section 8.14](#sec-other-geometries).'
+  id: totrans-45
   prefs: []
   type: TYPE_NORMAL
+  zh: 注意，几何函数名称遵循以下模式：`geom_X`，其中X是几何形状的名称。一些例子包括`geom_histogram`、`geom_boxplot`和`geom_col`。我们将在[第8.14节](#sec-other-geometries)中进一步讨论这些内容。
 - en: 'For `geom_point` to run properly we need to provide data and a mapping. We
     have already assigned the `murders` data table to the object `p`. Next we need
     to add the layer `geom_point` to define the geometry. To find out what mappings
     are expected by this function, we read the **Aesthetics** section of the `geom_point`
     help file:'
+  id: totrans-46
   prefs: []
   type: TYPE_NORMAL
+  zh: 为了使`geom_point`正常运行，我们需要提供数据和映射。我们已将`murders`数据表分配给对象`p`。接下来我们需要添加`geom_point`层来定义几何形状。要找出此函数期望的映射，我们阅读`geom_point`帮助文件的**美学**部分：
 - en: '**Aesthetics** geom_point() understands the following aesthetics (required
     aesthetics are in bold):'
+  id: totrans-47
   prefs:
   - PREF_BQ
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: '**美学** `geom_point()`理解以下美学（必需美学以粗体显示）：'
 - en: ''
+  id: totrans-48
   prefs:
   - PREF_BQ
   - PREF_BQ
   type: TYPE_NORMAL
 - en: '**x**'
+  id: totrans-49
   prefs:
   - PREF_BQ
   - PREF_BQ
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**x**'
 - en: ''
+  id: totrans-50
   prefs:
   - PREF_BQ
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: ''
+  id: totrans-51
   prefs:
   - PREF_BQ
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: '**y**'
+  id: totrans-52
   prefs:
   - PREF_BQ
   - PREF_BQ
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**y**'
 - en: ''
+  id: totrans-53
   prefs:
   - PREF_BQ
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: ''
+  id: totrans-54
   prefs:
   - PREF_BQ
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: alpha
+  id: totrans-55
   prefs:
   - PREF_BQ
   - PREF_BQ
   - PREF_UL
   type: TYPE_NORMAL
+  zh: alpha
 - en: ''
+  id: totrans-56
   prefs:
   - PREF_BQ
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: ''
+  id: totrans-57
   prefs:
   - PREF_BQ
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: colour
+  id: totrans-58
   prefs:
   - PREF_BQ
   - PREF_BQ
   - PREF_UL
   type: TYPE_NORMAL
+  zh: colour
 - en: 'We see that at least two arguments are required: `x` and `y`. Next we explain
     how to map values from the dataset to the plot.***'
+  id: totrans-59
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们看到至少需要两个参数：`x`和`y`。接下来我们将解释如何将数据集中的值映射到图表上。***
 - en: '***8.4 Aesthetic mappings***'
+  id: totrans-60
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '***8.4 美学映射***'
 - en: '****Aesthetic mappings* describe how properties of the data connect with features
     of the graph, such as distance along an axis, size, or color. The `aes` function
     connects data with what we see on the graph by defining aesthetic mappings and
     will be one of the functions you use most often when plotting. This example produces
     a scatterplot of total murders versus population in millions:'
+  id: totrans-61
   prefs: []
   type: TYPE_NORMAL
+  zh: '****美学映射*描述了数据属性如何与图表特征（如轴上的距离、大小或颜色）相关联。`aes`函数通过定义美学映射将数据与我们在图表上看到的内容连接起来，将是你在绘图时最常使用的函数之一。此示例生成了一个总谋杀数与百万人口之间的散点图：'
 - en: '[PRE6]'
+  id: totrans-62
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE6]'
 - en: '*![](../Images/727b943e6f1c51b8201736ea1fba19a6.png)*  *We didn’t use the `x`
     and `y` to define the arguments because the help file showed these are the first
     and second expected arguments.'
+  id: totrans-63
   prefs: []
   type: TYPE_NORMAL
+  zh: '*![](../Images/727b943e6f1c51b8201736ea1fba19a6.png)*  *我们没有使用`x`和`y`来定义参数，因为帮助文件显示这些是前两个预期的参数。'
 - en: 'The scale and labels are defined by default when adding this layer. Like **dplyr**
     functions, `aes` also uses the variable names from the data component: we can
     use `population` and `total` without having to call them as `murders$population`
     and `murders$total`. The behavior of recognizing the variables from the data component
     is specific to `aes`. With **ggplot2** functions other than `aes`, if you try
     to access the values of `population` or `total`, you receive an error.****'
+  id: totrans-64
   prefs: []
   type: TYPE_NORMAL
+  zh: 添加此层时，默认定义了刻度和标签。像 **dplyr** 函数一样，`aes` 也使用数据组件中的变量名：我们可以使用 `population` 和 `total`，而无需将它们作为
+    `murders$population` 和 `murders$total` 调用。从数据组件中识别变量的行为是 `aes` 特有的。对于 `ggplot2`
+    函数中的 `aes` 之外的函数，如果您尝试访问 `population` 或 `total` 的值，您将收到一个错误。***
 - en: '***8.5 Other layers***'
+  id: totrans-65
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '***8.5 其他层***'
 - en: '***To shape the plot into its final form, we continue to add layers. A second
     layer in the plot we wish to make involves adding a label to each point to identify
     the state. The `geom_label` and `geom_text` functions permit us to add text to
     the plot with and without a rectangle behind the text, respectively.'
+  id: totrans-66
   prefs: []
   type: TYPE_NORMAL
+  zh: '***为了将图形塑造成最终形式，我们继续添加层。我们希望在图形中添加的第二层涉及为每个点添加标签以标识州。`geom_label` 和 `geom_text`
+    函数允许我们分别带和不带文本后面的矩形将文本添加到图形中。***'
 - en: 'Because each point (each state in this case) has a label, we need an aesthetic
     mapping to make the connection between points and labels. By reading the help
     file, we learn that we supply the mapping between point and label through the
     `label` argument of `aes`. So the code looks like this:'
+  id: totrans-67
   prefs: []
   type: TYPE_NORMAL
+  zh: 因为每个点（在这种情况下是每个州）都有一个标签，我们需要一个美学映射来在点和标签之间建立联系。通过阅读帮助文件，我们了解到我们通过 `aes` 的 `label`
+    参数提供点与标签之间的映射。因此，代码看起来是这样的：
 - en: '[PRE7]'
+  id: totrans-68
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE7]'
 - en: '*![](../Images/1135c8ab7fa28b44089aa13be6be5bb0.png)*  *As an example of the
     unique behavior of `aes` related to variable names, note that if the added layer
     was `geom_text(aes(population/10^6, total), label = abb)`, we would result in
     an error since `abb` is now outside the call to `aes` and it is not object in
     out workspace, it is a variable name in the data component of the `ggplot` object.****'
+  id: totrans-69
   prefs: []
   type: TYPE_NORMAL
+  zh: '*![](../Images/1135c8ab7fa28b44089aa13be6be5bb0.png)*  *作为一个与变量名相关的 `aes` 独特行为的例子，请注意，如果添加的层是
+    `geom_text(aes(population/10^6, total), label = abb)`，由于 `abb` 现在不在 `aes` 的调用中，它不是我们工作区中的对象，而是
+    `ggplot` 对象数据组件中的变量名，我们将会得到一个错误。***'
 - en: '***8.6 Global aesthetic mappings***'
+  id: totrans-70
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '***8.6 全局美学映射***'
 - en: '***In the previous lines of code, we define the mapping `aes(population/10^6,
     total)` twice, once in each layer. We can avoid this by using a *global* aesthetic
     mapping. We can do this when we define the blank slate `ggplot` object. Remember
@@ -364,156 +507,234 @@
     mappings. If we define a mapping in `ggplot`, all the geometries that are added
     as layers will default to this mapping. So we can simply write the following code
     to produce the previous plot:'
+  id: totrans-71
   prefs: []
   type: TYPE_NORMAL
+  zh: 在之前的代码行中，我们定义了映射 `aes(population/10^6, total)` 两次，一次在每个层中。我们可以通过使用一个 *全局* 美学映射来避免这种情况。我们可以在定义空白画布
+    `ggplot` 对象时这样做。记住，`ggplot` 函数的 `mapping` 参数允许我们定义美学映射。如果我们定义了 `ggplot` 中的映射，所有添加为层的几何图形都将默认使用此映射。因此，我们可以简单地编写以下代码来生成之前的图形：
 - en: '[PRE8]'
+  id: totrans-72
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE8]'
 - en: '*Note that the mapping for `label` is only defined in `geom_text` because `geom_point`
     does not use this argument.'
+  id: totrans-73
   prefs: []
   type: TYPE_NORMAL
+  zh: '*请注意，`label` 的映射仅在 `geom_text` 中定义，因为 `geom_point` 不使用此参数。***'
 - en: 'If necessary, we can override the global mapping by defining a new mapping
     within each layer. These *local* definitions override the *global*. Here is an
     example:'
+  id: totrans-74
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果需要，我们可以在每个层中定义一个新的映射来覆盖全局映射。这些 *局部* 定义覆盖了 *全局*。以下是一个例子：
 - en: '[PRE9]'
+  id: totrans-75
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE9]'
 - en: '*![](../Images/55e973bb1aac36b48a8bd9c1ae5a0141.png)*  *Clearly, the second
     call to `geom_text` does not use `population` and `total`.*****'
+  id: totrans-76
   prefs: []
   type: TYPE_NORMAL
+  zh: '*![](../Images/55e973bb1aac36b48a8bd9c1ae5a0141.png)*  *显然，第二次调用 `geom_text`
+    没有使用 `population` 和 `total`。***'
 - en: '***8.7 Non-aesthetic arguments***'
+  id: totrans-77
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '***8.7 非美学参数***'
 - en: '***Each geometry function has arguments other than `aes` and `data`. They tend
     to be specific to the function and are not mapped to variables in the data. For
     example, in the plot we wish to make, the points are larger than the default size.
     As another example, to avoid putting the text on top of the point, we can use
     the `nudge_x` argument in `geom_text`. The code, with the arguments, looks like
     this:'
+  id: totrans-78
   prefs: []
   type: TYPE_NORMAL
+  zh: '***每个几何函数都有除 `aes` 和 `data` 之外的参数。它们通常是特定于函数的，并且不会映射到数据中的变量。例如，在我们希望制作的图形中，点的大小大于默认大小。作为另一个例子，为了避免将文本放在点上方，我们可以在
+    `geom_text` 中使用 `nudge_x` 参数。带有参数的代码如下：'
 - en: '[PRE10]'
+  id: totrans-79
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE10]'
 - en: '*![](../Images/1f9a4c25435073d295c98f9063342ca0.png)*  *In [Section 8.12](#sec-add-on-packages)
     we learn a better way of assuring we can see the points and the labels.****'
+  id: totrans-80
   prefs: []
   type: TYPE_NORMAL
+  zh: '*![](../Images/1f9a4c25435073d295c98f9063342ca0.png)*  *在[第8.12节](#sec-add-on-packages)中，我们学习了一种更好的方法来确保我们可以看到点和标签。****'
 - en: '***8.8 Categories as colors***'
+  id: totrans-81
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '***8.8 将类别作为颜色***'
 - en: '***For the final plot, we want each region to have a different color. Because
     this information comes from the data, it is a aesthetic mapping. For our example,
     we can map color to categories using the `color` mapping in the `geom_point` function
     as follows:'
+  id: totrans-82
   prefs: []
   type: TYPE_NORMAL
+  zh: '***对于最终的图形，我们希望每个区域都有不同的颜色。因为这种信息来自数据，所以它是一种美学映射。在我们的例子中，我们可以使用`geom_point`函数中的`color`映射将颜色映射到类别，如下所示：'
 - en: '[PRE11]'
+  id: totrans-83
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE11]'
 - en: '*![](../Images/2fe97ce4b0bf3cf74701709596519e22.png)*  *Note the `geom_point`
     automatically assigns a different color to each category and also adds a legend!
     Legends are usually desired, but to avoid adding a legend we can set the `geom_point`
     argument `show.legend = FALSE`.'
+  id: totrans-84
   prefs: []
   type: TYPE_NORMAL
+  zh: '*![](../Images/2fe97ce4b0bf3cf74701709596519e22.png)*  *注意`geom_point`自动为每个类别分配不同的颜色，并添加了图例！图例通常是想要的，但为了避免添加图例，我们可以设置`geom_point`参数`show.legend
+    = FALSE`。'
 - en: Note that `color` is also a non-aesthetic argument in several **ggplot2** functions,
     including `geom_point`. This argument is not used to map colors to categories,
     but to change the color of all the points. For example, if we wanted all the points
     to be blue we would change the layer to `geom_point(col = "blue", size = 3)`.
+  id: totrans-85
   prefs: []
   type: TYPE_NORMAL
+  zh: 注意，`color`也是**ggplot2**函数中的非美学参数，包括`geom_point`。此参数不是用来将颜色映射到类别，而是用来改变所有点的颜色。例如，如果我们想让所有点都是蓝色，我们会将层改为`geom_point(col
+    = "blue", size = 3)`。
 - en: '[PRE12]'
+  id: totrans-86
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE12]'
 - en: '*![](../Images/5ad26da2d8e759096d04a5daa2827356.png)*****'
+  id: totrans-87
   prefs: []
   type: TYPE_NORMAL
+  zh: '*![](../Images/5ad26da2d8e759096d04a5daa2827356.png)*****'
 - en: '***8.9 Updating ggplot objects***'
+  id: totrans-88
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '***8.9 更新ggplot对象***'
 - en: '***In **ggplot2** we build plots by parts. A useful feature of the package
     is that we can update existing `ggplot` objects by adding layers. For example,
     we can start by initializing an object with a dataset and a global aesthetic'
+  id: totrans-89
   prefs: []
   type: TYPE_NORMAL
+  zh: '***在**ggplot2**中，我们通过部分构建图形。该包的一个有用特性是我们可以通过添加层级来更新现有的`ggplot`对象。例如，我们可以通过使用数据集和全局美学初始化对象来开始。'
 - en: '[PRE13]'
+  id: totrans-90
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE13]'
 - en: '*and then start adding layers. For example, we start by adding the scatter
     plot'
+  id: totrans-91
   prefs: []
   type: TYPE_NORMAL
+  zh: '*然后开始添加层级。例如，我们首先添加散点图'
 - en: '[PRE14]'
+  id: totrans-92
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE14]'
 - en: '*and labels:'
+  id: totrans-93
   prefs: []
   type: TYPE_NORMAL
+  zh: '*以及标签：'
 - en: '[PRE15]'
+  id: totrans-94
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE15]'
 - en: '*In the next few sections, we will be building on objects created in previous
     sections using this approach. This facilitates improving plots as well as testing
     options. Note that we changed the `nudge_x` from 1.5 to 0.1 because in the next
     section we will apply a log transformation and a smaller value is more appropriate.******'
+  id: totrans-95
   prefs: []
   type: TYPE_NORMAL
+  zh: '*在接下来的几节中，我们将使用这种方法在前面几节创建的对象上构建。这有助于改进图形以及测试选项。注意，我们将`nudge_x`从1.5改为0.1，因为在下一节中我们将应用对数变换，较小的值更合适。******'
 - en: '***8.10 Scales***'
+  id: totrans-96
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '***8.10 刻度***'
 - en: '***One of the strengths of **ggplot2** is that the default behavior often is
     good enough to achieve our visualization goals. However, it also offers ways in
     which we can change these defaults. Many of these are changed through the `scales`
     functions.'
+  id: totrans-97
   prefs: []
   type: TYPE_NORMAL
+  zh: '*****ggplot2**的一个优势是默认行为通常足以实现我们的可视化目标。然而，它也提供了改变这些默认设置的方法。许多这些改变都是通过`scales`函数来实现的。'
 - en: 'Two examples, are the `scale_x_continuous` and `scale_y_continuous` functions
     which lets us make adjustments to the x-axis and y-axis, respectively. In the
     final plot we are trying to produce scales in log-scale and this can be achieved
     by assigning the argument `trans = "log10"` in these functions. However, because
     this operation is so common, **ggplot2** includes `scale_x_log10` and `scale_y_log10`
     functions. We can achieve the desired transformation by adding these layers:'
+  id: totrans-98
   prefs: []
   type: TYPE_NORMAL
+  zh: 两个例子是`scale_x_continuous`和`scale_y_continuous`函数，它们允许我们分别调整x轴和y轴。在最终的图形中，我们试图产生对数刻度的刻度，这可以通过在这些函数中分配参数`trans
+    = "log10"`来实现。然而，因为这个操作非常常见，**ggplot2**包括了`scale_x_log10`和`scale_y_log10`函数。我们可以通过添加这些层级来实现所需的变换：
 - en: '[PRE16]'
+  id: totrans-99
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE16]'
 - en: '*![](../Images/9693453a6ff454325e6b3521445851b5.png)*  *Be aware that **ggplot2**
     offers immense flexibility, particularly through the scales functions. We’ve introduced
     just one of the many available. In subsequent chapters of this book, we’ll provide
     examples as they become pertinent to our visualizations. However, to familiarize
     yourself with these functions, we recommend consulting the ggplot2 cheat sheet
     or conducting internet searches as specific needs arise.****'
+  id: totrans-100
   prefs: []
   type: TYPE_NORMAL
+  zh: '*![](../Images/9693453a6ff454325e6b3521445851b5.png)*  *请注意，**ggplot2** 提供了巨大的灵活性，尤其是在
+    scales 函数方面。我们只介绍了许多可用功能中的一个。在本书的后续章节中，我们将提供与我们的可视化相关的示例。然而，为了熟悉这些函数，我们建议您查阅 ggplot2
+    的速查表或根据具体需求进行网络搜索。'
 - en: '***8.11 Annotations***'
+  id: totrans-101
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '***8.11 注释***'
 - en: '***We often want to add annotations to figures that are not derived directly
     from the aesthetic mapping. Examples of annotation functions are `labs`, `annotate`,
     and `geom_abline`. The `labs` function permits adding a title, subtitle, caption,
     and other labels. Note these can also be defined individually using the functions
     such as `xlab`, `ylab` and `ggtitle`.'
+  id: totrans-102
   prefs: []
   type: TYPE_NORMAL
+  zh: '***我们经常想要向不是直接从美学映射派生的图表添加注释。注释函数的例子有 `labs`、`annotate` 和 `geom_abline`。`labs`
+    函数允许添加标题、副标题、字幕和其他标签。请注意，这些也可以使用 `xlab`、`ylab` 和 `ggtitle` 等函数单独定义。'
 - en: 'The `labs` function also allows another change needed for our desired plot:
     changing the legend title. Because the legend for the color mapping, this is achieved
     with the `color = "NEW_TITLE"` argument:'
+  id: totrans-103
   prefs: []
   type: TYPE_NORMAL
+  zh: '`labs` 函数还允许进行另一个对我们所需图表所需的更改：更改图例标题。因为这是颜色映射的图例，所以可以通过 `color = "NEW_TITLE"`
+    参数来实现：'
 - en: '[PRE17]'
+  id: totrans-104
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE17]'
 - en: '*![](../Images/b2233a6ee18e8b56e4e76dc7d0777ca1.png)*  *Our desired final plot
     includes a line that represents the average murder rate for the entire country.
     Once we determine the per million rate to be \(r\), the desired line is defined
@@ -521,513 +742,782 @@
     population in millions, respectively. In the log-scale this line turns into: \(\log(y)
     = \log(r) + \log(x)\), a line with slope 1 and intercept \(\log(r)\). We can compute
     `r` using:'
+  id: totrans-105
   prefs: []
   type: TYPE_NORMAL
+  zh: '*![](../Images/b2233a6ee18e8b56e4e76dc7d0777ca1.png)*  *我们期望的最终图表包括一条代表整个国家平均谋杀率的线。一旦我们确定每百万的比率是
+    \(r\)，所需的线由以下公式定义：\(y = r x\)，其中 \(y\) 和 \(x\) 是我们的坐标轴：总谋杀数和百万人口，分别。在对数尺度上，这条线变为：\(\log(y)
+    = \log(r) + \log(x)\)，这是一条斜率为 1，截距为 \(\log(r)\) 的线。我们可以使用以下方法计算 `r`：'
 - en: '[PRE18]'
+  id: totrans-106
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE18]'
 - en: '*To add a line we use the `geom_abline` function. The `ab` in the name reminds
     us we are supplying the intercept (`a`) and slope (`b`). The default line has
     slope 1 and intercept 0 so we only have to define the intercept. Note that the
     final plot has a dashed line type and is grey and these can be changed through
     the `lty` (line type) and `color` non aesthetic arguments. We add the layer like
     this:'
+  id: totrans-107
   prefs: []
   type: TYPE_NORMAL
+  zh: '*要添加一条线，我们使用 `geom_abline` 函数。名称中的 `ab` 让我们想起我们正在提供截距（`a`）和斜率（`b`）。默认线具有斜率
+    1 和截距 0，所以我们只需要定义截距。请注意，最终图表具有虚线类型和灰色，这些可以通过 `lty`（线型）和 `color` 非美学参数进行更改。我们添加层的方式如下：'
 - en: '[PRE19]'
+  id: totrans-108
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE19]'
 - en: '*![](../Images/4fd2cbac2db0b511d3c280257ffcc17b.png)*  *Note that `geom_abline`
     does not use any mappings from the data object, once we have the slope.'
+  id: totrans-109
   prefs: []
   type: TYPE_NORMAL
+  zh: '*![](../Images/4fd2cbac2db0b511d3c280257ffcc17b.png)*  *请注意，一旦我们有了斜率，`geom_abline`
+    函数不会使用数据对象中的任何映射。'
 - en: We are almost there! All we have to do is add optional changes to the style.******
+  id: totrans-110
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们几乎完成了！我们只需添加对样式的可选更改。
 - en: '***8.12 Add-on packages***'
+  id: totrans-111
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '***8.12 扩展包***'
 - en: '***The power of **ggplot2** is augmented further due to the availability of
     add-on packages. The remaining changes needed to put the finishing touches on
     our plot require the **ggthemes** and **ggrepel** packages.'
+  id: totrans-112
   prefs: []
   type: TYPE_NORMAL
+  zh: '***由于扩展包的可用性，**ggplot2** 的功能进一步增强。为了给我们的图表添加最后的修饰，我们需要 **ggthemes** 和 **ggrepel**
+    扩展包。'
 - en: 'The style of a **ggplot2** graph can be changed using the `theme` functions.
     Several themes are included as part of the **ggplot2** package. In fact, for most
     of the plots in this book, we use a function in the **dslabs** package that automatically
     sets a default theme:'
+  id: totrans-113
   prefs: []
   type: TYPE_NORMAL
+  zh: 可以使用 `theme` 函数更改 **ggplot2** 图表的风格。**ggplot2** 包包含几个主题。实际上，对于本书中的大多数图表，我们使用
+    **dslabs** 包中的一个函数来自动设置默认主题：
 - en: '[PRE20]'
+  id: totrans-114
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE20]'
 - en: '*Many other themes are added by the package **ggthemes**. Among those is the
     `theme_economist` theme that we use here. After installing the package, you can
     change the style by adding a layer like this:'
+  id: totrans-115
   prefs: []
   type: TYPE_NORMAL
+  zh: '*包 **ggthemes** 添加了许多其他主题。其中之一是我们在这里使用的 `theme_economist` 主题。安装包后，您可以通过添加类似这样的层来更改样式：'
 - en: '[PRE21]'
+  id: totrans-116
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE21]'
 - en: '*You can see how some of the other themes look by simply changing the function.
     For instance, you might try the `[theme_fivethirtyeight()](http://jrnold.github.io/ggthemes/reference/theme_fivethirtyeight.html)`
     theme instead.'
+  id: totrans-117
   prefs: []
   type: TYPE_NORMAL
+  zh: '*您可以通过简单地更改函数来查看其他主题的外观。例如，您可能会尝试 `[theme_fivethirtyeight()](http://jrnold.github.io/ggthemes/reference/theme_fivethirtyeight.html)`
+    主题。'
 - en: The final change is to better position of the labels to avoid crowding; currently,
     some of the labels fall on top of each other. The add-on package **ggrepel** includes
     a geometry that adds labels while ensuring that they don’t fall on top of each
     other. We simply change `geom_text` to `geom_text_repel`.*****
+  id: totrans-118
   prefs: []
   type: TYPE_NORMAL
+  zh: 最后的更改是为了更好地定位标签以避免拥挤；目前，一些标签重叠在一起。添加包 **ggrepel** 包含一个几何形状，在添加标签的同时确保它们不会重叠。我们只需将
+    `geom_text` 更改为 `geom_text_repel`。*****
 - en: '***8.13 Putting it all together***'
+  id: totrans-119
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '***8.13 整合所有内容***'
 - en: '***Now that we are done testing, we can write one line of code that produces
     our desired plot from scratch.'
+  id: totrans-120
   prefs: []
   type: TYPE_NORMAL
+  zh: '***现在我们已经完成了测试，我们可以写一行代码从头开始生成我们想要的图表。'
 - en: '[PRE22]'
+  id: totrans-121
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE22]'
 - en: '*![](../Images/5168f5e7cb9157f8cf04b21c3a778a9c.png)****'
+  id: totrans-122
   prefs: []
   type: TYPE_NORMAL
+  zh: '*![](../Images/5168f5e7cb9157f8cf04b21c3a778a9c.png)****'
 - en: '***8.14 Geometries***'
+  id: totrans-123
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '***8.14 几何形状***'
 - en: '***In our illustrative example we introduced the scatterplot geometry `geom_point`.
     However, **ggplot2** has many others and here we demonstrate how to generate plots
     related to distributions, specifically the plots shown [Chapter 7](distributions.html).'
+  id: totrans-124
   prefs: []
   type: TYPE_NORMAL
+  zh: '***在我们的示例中，我们介绍了散点图几何形状 `geom_point`。然而，**ggplot2** 有很多其他形状，在这里我们演示如何生成与分布相关的图表，特别是第7章中显示的图表。'
 - en: 8.14.1 Barplots
+  id: totrans-125
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 8.14.1 条形图
 - en: To generate a barplot we can use the `geom_bar` geometry. The default is to
     count the number of each category and draw a bar. Here is the plot for the regions
     of the US.
+  id: totrans-126
   prefs: []
   type: TYPE_NORMAL
+  zh: 要生成条形图，我们可以使用 `geom_bar` 几何形状。默认情况下，是计算每个类别的数量并绘制一个条形。以下是美国各地区的条形图。
 - en: '[PRE23]'
+  id: totrans-127
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE23]'
 - en: '*However, we often already have a table with the numbers we want to present
     as a barplot. Here is an example of such a table:'
+  id: totrans-128
   prefs: []
   type: TYPE_NORMAL
+  zh: '*然而，我们通常已经有一个包含我们想要展示为条形图数字的表格。以下是一个此类表格的例子：'
 - en: '[PRE24]'
+  id: totrans-129
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE24]'
 - en: '*In this case, we use `geom_col` instead of `geom_bar`:'
+  id: totrans-130
   prefs: []
   type: TYPE_NORMAL
+  zh: '*在这种情况下，我们使用 `geom_col` 而不是 `geom_bar`：'
 - en: '[PRE25]**'
+  id: totrans-131
   prefs: []
   type: TYPE_NORMAL
+  zh: '[PRE25]**'
 - en: '***8.14.2 Histograms***'
+  id: totrans-132
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '***8.14.2 直方图***'
 - en: '***To generate histograms we use `geom_histogram`. By looking at the help file
     for this function, we learn that the only required argument is `x`, the variable
     for which we will construct a histogram. We dropped the `x` because we know it
     is the first argument. The code looks like this:'
+  id: totrans-133
   prefs: []
   type: TYPE_NORMAL
+  zh: '***要生成直方图，我们使用 `geom_histogram`。通过查看该函数的帮助文件，我们了解到唯一必需的参数是 `x`，这是我们将要构建直方图的变量。我们省略了
+    `x`，因为我们知道它是第一个参数。代码看起来是这样的：'
 - en: '[PRE26]'
+  id: totrans-134
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE26]'
 - en: '*Note that we use the optional arguments `bandwidth = 1` to change the bin
     size to 1 inch. The default is to create 30 bins. We also use the optional arguments
     `fill = "blue"` and `col = "black"` to fill the bars with colors and use a different
     color to outline the bars.****'
+  id: totrans-135
   prefs: []
   type: TYPE_NORMAL
+  zh: '*请注意，我们使用可选参数 `bandwidth = 1` 来改变条形大小为1英寸。默认情况下，创建30个条形。我们还使用可选参数 `fill = "blue"`
+    和 `col = "black"` 来用颜色填充条形，并使用不同的颜色来勾勒条形。****'
 - en: '***8.14.3 Density plots***'
+  id: totrans-136
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '***8.14.3 密度图***'
 - en: '***To create a smooth density, we use the `geom_density`. To make a smooth
     density plot with the data previously shown as a histogram we can use this code:'
+  id: totrans-137
   prefs: []
   type: TYPE_NORMAL
+  zh: '***要创建平滑密度，我们使用 `geom_density`。要使用之前显示为直方图的数据创建平滑密度图，我们可以使用以下代码：'
 - en: '[PRE27]'
+  id: totrans-138
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE27]'
 - en: '*Note that we use the optional argument `fill` to change the color. To change
     the smoothness of the density, we use the `adjust` argument to multiply the default
     value by that `adjust`. For example, if we want the bandwidth to be twice as big
     we use:'
+  id: totrans-139
   prefs: []
   type: TYPE_NORMAL
+  zh: '*请注意，我们使用可选参数 `fill` 来改变颜色。为了改变密度的平滑度，我们使用 `adjust` 参数将默认值乘以该 `adjust`。例如，如果我们想带宽是两倍大，我们使用：'
 - en: '[PRE28]****'
+  id: totrans-140
   prefs: []
   type: TYPE_NORMAL
+  zh: '[PRE28]****'
 - en: '***8.14.4 Boxplots***'
+  id: totrans-141
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '***8.14.4 箱线图***'
 - en: '***The geometry for boxplot is `geom_boxplot`. As discussed, boxplots are useful
     for comparing distributions. For example, below are the previously shown heights
     for women, but compared to men. For this geometry, we need arguments `x` as the
     categories, and `y` as the values.'
+  id: totrans-142
   prefs: []
   type: TYPE_NORMAL
+  zh: '***箱线图的几何形状是 `geom_boxplot`。如前所述，箱线图用于比较分布。例如，下面是之前显示的女性身高，但与男性相比。对于这个几何形状，我们需要
+    `x` 作为类别，`y` 作为值。'
 - en: '[PRE29]***'
+  id: totrans-143
   prefs: []
   type: TYPE_NORMAL
+  zh: '[PRE29]***'
 - en: '***8.14.5 Images***'
+  id: totrans-144
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '***8.14.5 图片***'
 - en: '***Images were not needed for the concepts described in this chapter, but we
     will use images in [Section 10.9](dataviz-in-practice.html#sec-vaccines), so we
     introduce the two geometries used to plot images: **geom_tile** and **geom_raster**.
     They behave similarly; to see how they differ, please consult the help file. To
     create an image in **ggplot2** we need a data frame with the x and y coordinates
     as well as the values associated with each of these. Here is a data frame.'
+  id: totrans-145
   prefs: []
   type: TYPE_NORMAL
+  zh: '***本章中描述的概念不需要图像，但我们在 [第10.9节](dataviz-in-practice.html#sec-vaccines) 中将使用图像，因此我们介绍用于绘制图像的两个几何形状：**geom_tile**
+    和 **geom_raster**。它们的行为类似；要了解它们之间的区别，请查阅帮助文件。要在 **ggplot2** 中创建图像，我们需要一个包含 x 和
+    y 坐标以及与每个这些坐标相关联的值的数据框。下面是一个数据框。'
 - en: '[PRE30]'
+  id: totrans-146
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE30]'
 - en: '*Note that this is the tidy version of a matrix, `matrix(1:120, 12, 10)`. To
     plot the image we use the following code:'
+  id: totrans-147
   prefs: []
   type: TYPE_NORMAL
+  zh: '*注意，这是一个矩阵的整洁版本，`matrix(1:120, 12, 10)`。要绘制图像，我们使用以下代码：'
 - en: '[PRE31]'
+  id: totrans-148
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE31]'
 - en: '*With these images you will often want to change the color scale. This can
     be done through the `scale_fill_gradientn` layer.'
+  id: totrans-149
   prefs: []
   type: TYPE_NORMAL
+  zh: '*使用这些图像，你通常会想更改颜色范围。这可以通过 `scale_fill_gradientn` 层来完成。'
 - en: '[PRE32]'
+  id: totrans-150
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE32]'
 - en: '*![](../Images/c572c95ec17bdacf6633683d1d6918e6.png)*********'
+  id: totrans-151
   prefs: []
   type: TYPE_NORMAL
+  zh: '*![](../Images/c572c95ec17bdacf6633683d1d6918e6.png)*********'
 - en: '***8.15 Grids of plots***'
+  id: totrans-152
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '***8.15 绘图网格***'
 - en: '***There are often reasons to graph plots next to each other. The **gridExtra**
     package permits us to do that. Here are the graphs `p5` and `p6` created in the
     previous sections:'
+  id: totrans-153
   prefs: []
   type: TYPE_NORMAL
+  zh: '***通常，有理由将图形并排放置。**gridExtra** 包允许我们这样做。以下是上一节中创建的图形 `p5` 和 `p6`：'
 - en: '[PRE33]'
+  id: totrans-154
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE33]'
 - en: '*![](../Images/d1adb7c99d19b1f5e62c9421dd003a1b.png)****'
+  id: totrans-155
   prefs: []
   type: TYPE_NORMAL
+  zh: '*![](../Images/d1adb7c99d19b1f5e62c9421dd003a1b.png)****'
 - en: '***8.16 Exercises***'
+  id: totrans-156
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '***8.16 练习***'
 - en: '***Start by loading the **dplyr** and **ggplot2** library as well as the `murders`
     and `heights` data.'
+  id: totrans-157
   prefs: []
   type: TYPE_NORMAL
+  zh: '***首先，加载 **dplyr** 和 **ggplot2** 库以及 `murders` 和 `heights` 数据。'
 - en: '[PRE34]'
+  id: totrans-158
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE34]'
 - en: '*1\. With **ggplot2**, plots can be saved as objects. For example we can associate
     a dataset with a plot object like this'
+  id: totrans-159
   prefs: []
   type: TYPE_NORMAL
+  zh: '*1\. 使用 **ggplot2**，可以将图形保存为对象。例如，我们可以将数据集与图形对象关联起来，如下所示'
 - en: '[PRE35]'
+  id: totrans-160
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE35]'
 - en: '*Because `data` is the first argument we don’t need to spell it out'
+  id: totrans-161
   prefs: []
   type: TYPE_NORMAL
+  zh: '*因为 `data` 是第一个参数，所以我们不需要明确写出'
 - en: '[PRE36]'
+  id: totrans-162
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE36]'
 - en: '*and we can also use the pipe:'
+  id: totrans-163
   prefs: []
   type: TYPE_NORMAL
+  zh: '*我们也可以使用管道：'
 - en: '[PRE37]'
+  id: totrans-164
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE37]'
 - en: '*What is class of the object `p`?'
+  id: totrans-165
   prefs: []
   type: TYPE_NORMAL
+  zh: '*`p` 对象的类别是什么？'
 - en: 2\. Remember that to print an object you can use the command `print` or simply
     type the object. Print the object `p` defined in exercise one and describe what
     you see.
+  id: totrans-166
   prefs: []
   type: TYPE_NORMAL
+  zh: 2\. 记住，要打印一个对象，你可以使用 `print` 命令或简单地输入对象。打印在练习一中定义的对象 `p` 并描述你所看到的。
 - en: Nothing happens.
+  id: totrans-167
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 没有发生任何事情。
 - en: A blank slate plot.
+  id: totrans-168
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 一个空白画布图。
 - en: A scatterplot.
+  id: totrans-169
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 一个散点图。
 - en: A histogram.
+  id: totrans-170
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 一个直方图。
 - en: 3\. Using the pipe `|>`, create an object `p` but this time associated with
     the `heights` dataset instead of the `murders` dataset.
+  id: totrans-171
   prefs: []
   type: TYPE_NORMAL
+  zh: 3\. 使用管道 `|>` 创建一个对象 `p`，但这次与 `heights` 数据集相关联，而不是 `murders` 数据集。
 - en: 4\. What is the class of the object `p` you have just created?
+  id: totrans-172
   prefs: []
   type: TYPE_NORMAL
+  zh: 4\. 你刚刚创建的对象 `p` 的类别是什么？
 - en: '5\. Now we are going to add a layer and the corresponding aesthetic mappings.
     For the murders data we plotted total murders versus population sizes. Explore
     the `murders` data frame to remind yourself what are the names for these two variables
     and select the correct answer. **Hint**: Look at `[?murders](https://rdrr.io/pkg/dslabs/man/murders.html)`.'
+  id: totrans-173
   prefs: []
   type: TYPE_NORMAL
+  zh: 5\. 现在我们将添加一层，以及相应的美学映射。对于谋杀数据，我们绘制了总谋杀数与人口规模的关系。探索 `murders` 数据框，以提醒自己这两个变量的名称，并选择正确的答案。**提示**：查看
+    `[?murders](https://rdrr.io/pkg/dslabs/man/murders.html)`。
 - en: '`state` and `abb`.'
+  id: totrans-174
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '`state` 和 `abb`。'
 - en: '`total_murders` and `population_size`.'
+  id: totrans-175
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '`total_murders` 和 `population_size`。'
 - en: '`total` and `population`.'
+  id: totrans-176
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '`total` 和 `population`。'
 - en: '`murders` and `size`.'
+  id: totrans-177
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '`murders` 和 `size`。'
 - en: '6\. To create the scatterplot we add a layer with `geom_point`. The aesthetic
     mappings require us to define the x-axis and y-axis variables, respectively. So
     the code looks like this:'
+  id: totrans-178
   prefs: []
   type: TYPE_NORMAL
+  zh: 6\. 要创建散点图，我们添加一个 `geom_point` 层。美学映射要求我们定义 x 轴和 y 轴变量，所以代码看起来像这样：
 - en: '[PRE38]'
+  id: totrans-179
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE38]'
 - en: '*except we have to define the two variables `x` and `y`. Fill this out with
     the correct variable names.'
+  id: totrans-180
   prefs: []
   type: TYPE_NORMAL
+  zh: '*除了我们必须定义两个变量 `x` 和 `y`。用正确的变量名称填写。'
 - en: '7\. Note that if we don’t use argument names, we can obtain the same plot by
     making sure we enter the variable names in the right order like this:'
+  id: totrans-181
   prefs: []
   type: TYPE_NORMAL
+  zh: 7\. 注意，如果我们不使用参数名称，我们可以通过确保以正确的顺序输入变量名称来获得相同的图形，如下所示：
 - en: '[PRE39]'
+  id: totrans-182
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE39]'
 - en: '*Remake the plot but now with total in the x-axis and population in the y-axis.'
+  id: totrans-183
   prefs: []
   type: TYPE_NORMAL
+  zh: '*重新制作这个图，但现在以总谋杀数作为 x 轴，人口作为 y 轴。'
 - en: 8\. If instead of points we want to add text, we can use the `[geom_text()](https://ggplot2.tidyverse.org/reference/geom_text.html)`
     or `[geom_label()](https://ggplot2.tidyverse.org/reference/geom_text.html)` geometries.
     The following code
+  id: totrans-184
   prefs: []
   type: TYPE_NORMAL
+  zh: 8. 如果我们想添加文本而不是点，我们可以使用`[geom_text()](https://ggplot2.tidyverse.org/reference/geom_text.html)`或`[geom_label()](https://ggplot2.tidyverse.org/reference/geom_text.html)`几何形状。以下代码
 - en: '[PRE40]'
+  id: totrans-185
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE40]'
 - en: '*will give us the error message: `Error: geom_label requires the following
     missing aesthetics: label`'
+  id: totrans-186
   prefs: []
   type: TYPE_NORMAL
+  zh: '*将给出错误信息：“Error: geom_label requires the following missing aesthetics: label”*'
 - en: Why is this?
+  id: totrans-187
   prefs: []
   type: TYPE_NORMAL
+  zh: 为什么呢？
 - en: We need to map a character to each point through the label argument in aes.
+  id: totrans-188
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 我们需要通过`aes`中的标签参数将一个字符映射到每个点。
 - en: We need to let `geom_label` know what character to use in the plot.
+  id: totrans-189
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 我们需要让`geom_label`知道在图中使用哪个字符。
 - en: The `geom_label` geometry does not require x-axis and y-axis values.
+  id: totrans-190
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '`geom_label`几何形状不需要x轴和y轴值。'
 - en: '`geom_label` is not a ggplot2 command.'
+  id: totrans-191
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '`geom_label`不是一个ggplot2命令。'
 - en: 9\. Rewrite the code above to use abbreviation as the label through `aes`
+  id: totrans-192
   prefs: []
   type: TYPE_NORMAL
+  zh: 9. 将上面的代码重写为通过`aes`使用缩写作为标签。
 - en: 10\. Change the color of the labels to blue. How will we do this?
+  id: totrans-193
   prefs: []
   type: TYPE_NORMAL
+  zh: 10. 将标签的颜色更改为蓝色。我们将如何做到这一点？
 - en: Adding a column called `blue` to `murders`.
+  id: totrans-194
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 在`murders`中添加一个名为`blue`的列。
 - en: Because each label needs a different color, we map the colors through `aes`.
+  id: totrans-195
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 因为每个标签都需要不同的颜色，我们通过`aes`映射颜色。
 - en: Use the `color` argument in `ggplot`.
+  id: totrans-196
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 使用`ggplot`中的`color`参数。
 - en: Because we want all labels to be blue, we do not need to map colors, just use
     the color argument in `geom_label`.
+  id: totrans-197
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 因为我们希望所有标签都是蓝色，所以我们不需要映射颜色，只需在`geom_label`中使用颜色参数。
 - en: 11\. Rewrite the code above to make the labels blue.
+  id: totrans-198
   prefs: []
   type: TYPE_NORMAL
+  zh: 11. 将上面的代码重写为使标签为蓝色。
 - en: '12\. Now suppose we want to use color to represent the different regions. In
     this case which of the following is most appropriate:'
+  id: totrans-199
   prefs: []
   type: TYPE_NORMAL
+  zh: 12. 现在假设我们想用颜色来表示不同的区域。在这种情况下，以下哪个最合适：
 - en: Adding a column called `color` to `murders` with the color we want to use.
+  id: totrans-200
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 在`murders`中添加一个名为`color`的列，并添加我们想要使用的颜色。
 - en: Because each label needs a different color, we map the colors through the color
     argument of `aes` .
+  id: totrans-201
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 因为每个标签都需要不同的颜色，我们通过`aes`的颜色参数映射颜色。
 - en: Use the `color` argument in `ggplot`.
+  id: totrans-202
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 在`ggplot`中使用`color`参数。
 - en: Because we want all colors to be blue, we do not need to map colors, just use
     the color argument in `geom_label`.
+  id: totrans-203
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 因为我们希望所有颜色都是蓝色，所以我们不需要映射颜色，只需在`geom_label`中使用颜色参数。
 - en: 13\. Rewrite the code above to make the labels’ colors be determined by the
     state’s region.
+  id: totrans-204
   prefs: []
   type: TYPE_NORMAL
+  zh: 13. 将上面的代码重写为使标签的颜色由州的区域决定。
 - en: 14\. Now we are going to change the x-axis to a log scale to account for the
     fact the distribution of population is skewed. Let’s start by defining an object
     `p` holding the plot we have made up to now
+  id: totrans-205
   prefs: []
   type: TYPE_NORMAL
+  zh: 14. 现在我们将x轴改为对数尺度，以考虑到人口分布是偏斜的。让我们首先定义一个对象`p`，它包含我们到目前为止制作的图表。
 - en: '[PRE41]'
+  id: totrans-206
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE41]'
 - en: '*To change the y-axis to a log scale we learned about the `[scale_x_log10()](https://ggplot2.tidyverse.org/reference/scale_continuous.html)`
     function. Add this layer to the object `p` to change the scale and render the
     plot.'
+  id: totrans-207
   prefs: []
   type: TYPE_NORMAL
+  zh: '*要改变y轴为对数尺度，我们学习了`[scale_x_log10()](https://ggplot2.tidyverse.org/reference/scale_continuous.html)`函数。将此层添加到对象`p`中，以更改尺度并渲染图表。*'
 - en: 15\. Repeat the previous exercise but now change both axes to be in the log
     scale.
+  id: totrans-208
   prefs: []
   type: TYPE_NORMAL
+  zh: 15. 重复之前的练习，但现在将两个轴都改为对数尺度。
 - en: '16\. Now edit the code above to add the title “Gun murder data” to the plot.
     Hint: use the `ggtitle` function.'
+  id: totrans-209
   prefs: []
   type: TYPE_NORMAL
+  zh: 16. 现在编辑上面的代码，向图表添加标题“枪支谋杀数据”。提示：使用`ggtitle`函数。
 - en: 17\. Now we are going to use the `geom_histogram` function to make a histogram
     of the heights in the `height` data frame. When reading the documentation for
     this function we see that it requires just one mapping, the values to be used
     for the histogram. Make a histogram of all the plots.
+  id: totrans-210
   prefs: []
   type: TYPE_NORMAL
+  zh: 17. 现在我们将使用`geom_histogram`函数来制作`height`数据框中高度的直方图。当阅读该函数的文档时，我们看到它只需要一个映射，即用于直方图的值。制作所有图表的直方图。
 - en: What is the variable containing the heights?
+  id: totrans-211
   prefs: []
   type: TYPE_NORMAL
+  zh: 哪个变量包含高度？
 - en: '`sex`'
+  id: totrans-212
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '`sex`'
 - en: '`heights`'
+  id: totrans-213
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '`heights`'
 - en: '`height`'
+  id: totrans-214
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '`height`'
 - en: '`heights$height`'
+  id: totrans-215
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '`heights$height`'
 - en: 18\. Now create a ggplot object using the pipe to assign the heights data to
     a ggplot object. Assign `height` to the x values through the `aes` function.
+  id: totrans-216
   prefs: []
   type: TYPE_NORMAL
+  zh: 18. 现在创建一个ggplot对象，使用管道将高度数据分配给ggplot对象。通过`aes`函数将`height`分配给x值。
 - en: 19\. Now we are ready to add a layer to actually make the histogram. Use the
     object created in the previous exercise and the `geom_histogram` function to make
     the histogram.
+  id: totrans-217
   prefs: []
   type: TYPE_NORMAL
+  zh: 19. 现在我们准备添加一个层来实际制作直方图。使用之前练习中创建的对象和`geom_histogram`函数来制作直方图。
 - en: '20\. Note that when we run the code in the previous exercise we get the warning:
     `[stat_bin()](https://ggplot2.tidyverse.org/reference/geom_histogram.html)` using
     `bins = 30`. Pick better value with `binwidth`.'
+  id: totrans-218
   prefs: []
   type: TYPE_NORMAL
+  zh: 20. 注意，当我们运行上一个练习中的代码时，我们会得到警告：`[stat_bin()](https://ggplot2.tidyverse.org/reference/geom_histogram.html)`使用`bins
+    = 30`。使用`binwidth`选择更好的值。
 - en: Use the `binwidth` argument to change the histogram made in the previous exercise
     to use bins of size 1 inch.
+  id: totrans-219
   prefs: []
   type: TYPE_NORMAL
+  zh: 使用`binwidth`参数将上一个练习中制作的直方图更改为使用1英寸大小的bin。
 - en: 21\. Instead of a histogram, we are going to make a smooth density plot. In
     this case we will not make an object, but instead render the plot with one line
     of code. Change the geometry in the code previously used to make a smooth density
     instead of a histogram.
+  id: totrans-220
   prefs: []
   type: TYPE_NORMAL
+  zh: 21. 我们将不再使用直方图，而是制作一个平滑密度图。在这种情况下，我们不会创建一个对象，而是用一行代码来渲染图表。将之前用于制作直方图的几何形状更改为制作平滑密度。
 - en: 22\. Now we are going to make a density plot for males and females separately.
     We can do this using the `group` argument. We assign groups via the aesthetic
     mapping as each point needs to a group before making the calculations needed to
     estimate a density.
+  id: totrans-221
   prefs: []
   type: TYPE_NORMAL
+  zh: 22. 现在我们将分别为男性和女性制作密度图。我们可以使用`group`参数来完成这项工作。我们通过美学映射来分配组，因为每个点在执行估计密度的计算之前都需要属于一个组。
 - en: 23\. We can also assign groups through the `color` argument. This has the added
     benefit that it uses colors to distinguish the groups. Change the code above to
     use color.
+  id: totrans-222
   prefs: []
   type: TYPE_NORMAL
+  zh: 23. 我们也可以通过`color`参数来分配组。这个额外的优点是它使用颜色来区分组。将上面的代码更改为使用颜色。
 - en: '24\. We can also assign groups through the `fill` argument. This has the added
     benefit that it uses colors to distinguish the groups, like this:'
+  id: totrans-223
   prefs: []
   type: TYPE_NORMAL
+  zh: 24. 我们也可以通过`fill`参数来分配组。这个额外的优点是它使用颜色来区分组，如下所示：
 - en: '[PRE42]'
+  id: totrans-224
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE42]'
 - en: '*However, here the second density is drawn over the other. We can make the
     curves more visible by using alpha blending to add transparency. Set the alpha
     parameter to 0.2 in the `geom_density` function to make this change.************'
+  id: totrans-225
   prefs: []
   type: TYPE_NORMAL
+  zh: '*然而，在这里，第二密度是覆盖在其他密度之上的。我们可以通过使用alpha混合来增加透明度，使曲线更加明显。在`geom_density`函数中将alpha参数设置为0.2以实现这一变化。************'
 - en: '* * *'
+  id: totrans-226
   prefs: []
   type: TYPE_NORMAL
+  zh: '* * *'
 - en: '***1.  [https://ggplot2.tidyverse.org/](https://ggplot2.tidyverse.org/)[↩︎](#fnref1)'
+  id: totrans-227
   prefs: []
   type: TYPE_NORMAL
+  zh: '***1.  [ggplot2文档](https://ggplot2.tidyverse.org/)[↩︎](#fnref1)'
 - en: '[http://www.springer.com/us/book/9780387245447](http://www.springer.com/us/book/9780387245447)[↩︎](#fnref2)'
+  id: totrans-228
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[Springer出版社书籍](http://www.springer.com/us/book/9780387245447)[↩︎](#fnref2)'
 - en: '[https://posit.co/resources/cheatsheets/](https://posit.co/resources/cheatsheets/)[↩︎](#fnref3)'
+  id: totrans-229
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[数据可视化速查表](https://posit.co/resources/cheatsheets/)[↩︎](#fnref3)'
 - en: '[https://rstudio.github.io/cheatsheets/data-visualization.pdf](https://rstudio.github.io/cheatsheets/data-visualization.pdf)[↩︎](#fnref4)'
+  id: totrans-230
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[数据可视化速查表](https://rstudio.github.io/cheatsheets/data-visualization.pdf)[↩︎](#fnref4)'
 - en: '[https://github.com/rstudio/cheatsheets/blob/main/LICENSE](https://github.com/rstudio/cheatsheets/blob/main/LICENSE)[↩︎](#fnref5)****'
+  id: totrans-231
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[rstudio速查表许可](https://github.com/rstudio/cheatsheets/blob/main/LICENSE)[↩︎](#fnref5)****'
