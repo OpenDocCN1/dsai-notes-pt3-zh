@@ -11,6 +11,8 @@
 +   [fast.ai 数值线性代数讲义中文版 v2](docs/fastai-num-linalg-v2/README.md)
 +   [唐宇迪商品检测课程笔记](docs/goods-detect-tangyudi/README.md)
 +   [哈佛 CS249r：机器学习系统](docs/hav-cs249r-mlsys/README.md)
++   [哈佛 CS109 数据科学导论](docs/hvd-cs109-intd-ds/README.md)
++   [哈佛 CS109 数据科学导论第二版](docs/hvd-cs109-intd-ds-2e/README.md)
 +   [MIT 6.0001：Python 计算和编程入门第三版](docs/intr-comp-prog-py/README.md)
 +   [七月在线公开课笔记](docs/julyedu/README.md)
 +   [Karpathy GPT 教程笔记](docs/karpathy-gpt/README.md)
