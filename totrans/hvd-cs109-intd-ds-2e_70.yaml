@@ -145,22 +145,28 @@
   id: totrans-22
   prefs: []
   type: TYPE_NORMAL
+  zh: '**caret** 包还提供了一个为我们执行交叉验证的函数。这里我们提供一些示例，说明我们如何使用这个有用的包。我们首先使用 2 或 7 个示例来演示，在后面的章节中，我们将使用该包在更大的
+    MNIST 数据集上运行算法。'
 - en: The `train` function
   id: totrans-23
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '`train` 函数'
 - en: The R functions that fit machine algorithms are all slightly different. Functions
     such as `lm`, `glm`, `qda`, `lda`, `knn3`, `rpart` and `randomForest` use different
     syntax, have different argument names and produce objects of different types.
   id: totrans-24
   prefs: []
   type: TYPE_NORMAL
+  zh: R 中拟合机器算法的函数都略有不同。例如，`lm`、`glm`、`qda`、`lda`、`knn3`、`rpart` 和 `randomForest`
+    使用不同的语法，具有不同的参数名称，并生成不同类型的对象。
 - en: 'The **caret** `train` function lets us train different algorithms using similar
     syntax. So, for example, we can type the following to train three different models:'
   id: totrans-25
   prefs: []
   type: TYPE_NORMAL
+  zh: '**caret** 的 `train` 函数让我们可以使用类似的语法训练不同的算法。因此，例如，我们可以键入以下内容来训练三个不同的模型：'
 - en: '[PRE6]'
   id: totrans-26
   prefs: []
@@ -172,11 +178,14 @@
   id: totrans-27
   prefs: []
   type: TYPE_NORMAL
+  zh: '*正如我们在 [第 31.2.3 节](#sec-caret-cv) 中更详细地解释的那样，`train` 函数使用重采样方法为您选择参数，以估计 MSE，默认使用
+    bootstrap。'
 - en: '*The `predict` function*'
   id: totrans-28
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '*`predict` 函数*'
 - en: '*The predict function is one of the most useful tools in R for machine learning
     and statistical modeling in general. It takes a fitted model object and a data
     frame containing the features \(\mathbf{x}\) for which we want to make predictions,
@@ -184,10 +193,13 @@
   id: totrans-29
   prefs: []
   type: TYPE_NORMAL
+  zh: '*`predict` 函数是 R 中机器学习和统计建模中最有用的工具之一。它接受一个拟合的模型对象和一个包含我们想要进行预测的特征 \(\mathbf{x}\)
+    的数据框，然后返回相应的预测值。'
 - en: 'Here is an example with logistic regression:'
   id: totrans-30
   prefs: []
   type: TYPE_NORMAL
+  zh: 这里有一个逻辑回归的例子：
 - en: '[PRE7]'
   id: totrans-31
   prefs: []
@@ -197,17 +209,22 @@
   id: totrans-32
   prefs: []
   type: TYPE_NORMAL
+  zh: '*在这种情况下，该函数只是简单地计算'
 - en: \[ \hat{p}(\mathbf{x}) = g^{-1}\left(\hat{\beta}_0 + \hat{\beta}_1 x_1 + \hat{\beta}_2
     x_2 \right) \text{ with } g(p) = \log\frac{p}{1-p} \implies g^{-1}(\mu) = \frac{1}{1-e^{-\mu}}
     \]
   id: totrans-33
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \hat{p}(\mathbf{x}) = g^{-1}\left(\hat{\beta}_0 + \hat{\beta}_1 x_1 + \hat{\beta}_2
+    x_2 \right) \text{ with } g(p) = \log\frac{p}{1-p} \implies g^{-1}(\mu) = \frac{1}{1-e^{-\mu}}
+    \]
 - en: 'for the `x_1` and `x_2` in the test set `mnist_27$test`. With these estimates
     in place, we can make our predictions and compute our accuracy:'
   id: totrans-34
   prefs: []
   type: TYPE_NORMAL
+  zh: 对于测试集 `mnist_27$test` 中的 `x_1` 和 `x_2`，有了这些估计值，我们可以做出预测并计算我们的准确率：
 - en: '[PRE8]'
   id: totrans-35
   prefs: []
@@ -220,6 +237,7 @@
   id: totrans-36
   prefs: []
   type: TYPE_NORMAL
+  zh: '*然而，请注意，`predict` 并不总是返回相同类型的对象；这取决于它应用的对象类型。要了解具体细节，您需要查看特定于所使用的拟合对象类型的帮助文件。'
 - en: '`predict` is actually a special type of function in R called a *generic function*.
     Generic functions call other functions depending on what kind of object it receives.
     So if `predict` receives an object coming out of the `lm` function, it will call
@@ -230,6 +248,9 @@
   id: totrans-37
   prefs: []
   type: TYPE_NORMAL
+  zh: '`predict` 实际上是 R 中一种特殊类型的函数，称为 *泛型函数*。泛型函数根据接收到的对象类型调用其他函数。因此，如果 `predict`
+    接收到来自 `lm` 函数的对象，它将调用 `predict.lm`。如果它接收来自 `glm` 的对象，它将调用 `predict.glm`。如果拟合来自
+    `knn3`，它将调用 `predict.knn3`，依此类推。这些函数相似但不完全相同。您可以通过阅读帮助文件了解更多关于它们之间差异的信息：'
 - en: '[PRE9]'
   id: totrans-38
   prefs: []
@@ -240,16 +261,20 @@
   id: totrans-39
   prefs: []
   type: TYPE_NORMAL
+  zh: '*`predict` 函数有多个版本，许多机器学习算法定义了自己的 `predict` 函数。'
 - en: As with `train`, the **caret** packages unifies the use of `predict` with the
     function `predict.train`. This function takes the output of `train` and produces
     prediction of categories or estimates of \(p(\mathbf{x})\).
   id: totrans-40
   prefs: []
   type: TYPE_NORMAL
+  zh: 与 `train` 函数一样，**caret** 包统一了 `predict` 函数的使用，通过 `predict.train` 函数。此函数接受 `train`
+    函数的输出，并产生类别预测或 \(p(\mathbf{x})\) 的估计。
 - en: 'The code looks the same for all methods:'
   id: totrans-41
   prefs: []
   type: TYPE_NORMAL
+  zh: 所有方法的代码看起来都一样：
 - en: '[PRE10]'
   id: totrans-42
   prefs: []
@@ -260,15 +285,18 @@
   id: totrans-43
   prefs: []
   type: TYPE_NORMAL
+  zh: '*这使我们能够快速比较算法。例如，我们可以这样比较准确率：'
 - en: '[PRE11]*****'
   id: totrans-44
   prefs: []
   type: TYPE_NORMAL
+  zh: '[PRE11]*****'
 - en: '***Resampling***'
   id: totrans-45
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '***重采样***'
 - en: '***When an algorithm includes a tuning parameter, `train` automatically uses
     a resampling method to estimate MSE and decide among a few default candidate values.
     To find out what parameter or parameters are optimized, you can read the **caret**
@@ -1141,10 +1169,13 @@
   id: totrans-183
   prefs: []
   type: TYPE_NORMAL
+  zh: 15. 注意胎盘通常被称为子宫内膜，而且胎盘的数量只有六个。默认情况下，`rpart` 在分割节点之前需要20个观测值。因此，使用这些参数不可能有一个节点中胎盘占多数。重新运行上述分析，但这次允许`rpart`使用`control
+    = rpart.control(minsplit = 0)`参数来分割任何节点。准确性是否提高？再次查看混淆矩阵。
 - en: 16\. Plot the tree from the best fitting model obtained in exercise 13.
   id: totrans-184
   prefs: []
   type: TYPE_NORMAL
+  zh: 16. 绘制在练习13中获得的最佳拟合模型的树。
 - en: '17\. We can see that with just the genes selected by CART, we are able to predict
     the tissue type. Now let’s see if we can do even better with a random forest.
     Use the `train` function in the **caret** package and the `rf` method to train
@@ -1156,11 +1187,15 @@
   id: totrans-185
   prefs: []
   type: TYPE_NORMAL
+  zh: 17. 我们可以看到，仅使用CART选择的基因，我们就能预测组织类型。现在让我们看看是否可以使用随机森林做得更好。使用**caret**包中的`train`函数和`rf`方法来训练随机森林。尝试`mtry`的值，从至少`seq(50,
+    200, 25)`开始。哪个`mtry`值最大化了准确性？为了允许小的`nodesize`像我们在分类树中做的那样增长，使用以下参数：`nodesize =
+    1`。这将需要几秒钟的时间来运行。如果你想测试它，尝试使用更小的`ntree`值。将种子设置为1990。
 - en: 18\. Use the function `varImp` on the output of `train` and save it to an object
     called `imp`.
   id: totrans-186
   prefs: []
   type: TYPE_NORMAL
+  zh: 18. 在`train`的输出上使用`varImp`函数，并将其保存到名为`imp`的对象中。
 - en: '19\. The `rpart` model we ran in exercise 15 produced a tree that used just
     a few predictors. Extracting the predictor names is not straightforward, but can
     be done. If the output of the call to train was `fit_rpart`, we can extract the
@@ -1168,6 +1203,7 @@
   id: totrans-187
   prefs: []
   type: TYPE_NORMAL
+  zh: 19. 在练习15中运行的`rpart`模型产生了一个只使用了少数预测因子的树。提取预测因子名称并不直接，但可以做到。如果`train`调用的输出是`fit_rpart`，我们可以这样提取名称：
 - en: '[PRE50]'
   id: totrans-188
   prefs: []
@@ -1178,6 +1214,7 @@
   id: totrans-189
   prefs: []
   type: TYPE_NORMAL
+  zh: '*对于这些预测因子，随机森林调用中的变量重要性是什么？它们排名如何？'
 - en: 20\. Extract the top 50 predictors based on importance, take a subset of `x`
     with just these predictors and apply the function `heatmap` to see how these genes
     behave across the tissues. We will introduce the `heatmap` function in [Chapter
@@ -1185,6 +1222,7 @@
   id: totrans-190
   prefs: []
   type: TYPE_NORMAL
+  zh: 20. 根据重要性提取前50个预测因子，从`x`中提取只包含这些预测因子的子集，并应用`heatmap`函数来查看这些基因在组织中的行为。我们将在[第32章](clustering.html)中介绍`heatmap`函数。
 - en: '21\. In [Chapter 30](algorithms.html), for the 2 or 7 example, we compared
     the conditional probability \(p(\mathbf{x})\) given two predictors \(\mathbf{x}
     = (x_1, x_2)^\top\) to the fit \(\hat{p}(\mathbf{x})\) obtained with a machine
@@ -1194,6 +1232,9 @@
   id: totrans-191
   prefs: []
   type: TYPE_NORMAL
+  zh: 21. 在[第30章](algorithms.html)中，对于2或7的示例，我们通过绘制图像来比较给定两个预测因子 \(\mathbf{x} = (x_1,
+    x_2)^\top\) 的条件概率 \(p(\mathbf{x})\) 与使用机器学习算法得到的拟合 \(\hat{p}(\mathbf{x})\)。以下代码可以用来生成这些图像，并在
+    \(x_1\) 和 \(x_2\) 的函数值为 \(0.5\) 的点上绘制曲线：
 - en: '[PRE51]'
   id: totrans-192
   prefs: []
@@ -1203,6 +1244,7 @@
   id: totrans-193
   prefs: []
   type: TYPE_NORMAL
+  zh: '*我们可以这样看到2或7示例的真实条件概率：'
 - en: '[PRE52]'
   id: totrans-194
   prefs: []
@@ -1214,6 +1256,7 @@
   id: totrans-195
   prefs: []
   type: TYPE_NORMAL
+  zh: '*将kNN模型拟合并绘制估计的条件概率图。提示：使用`newdata = mnist_27$train`参数来获取网格点的预测结果。'
 - en: '22\. Notice that, in the plot made in exercise 21, the boundary is somewhat
     wiggly. This is because kNN, like the basic bin smoother, does not use a kernel.
     To improve this we could try loess. By reading through the available models part
@@ -1223,6 +1266,7 @@
   id: totrans-196
   prefs: []
   type: TYPE_NORMAL
+  zh: 22. 注意，在练习21中制作的图中，边界有些曲折。这是因为kNN，就像基本的二进制平滑器一样，不使用核。为了改进这一点，我们可以尝试使用loess。通过阅读**caret**手册中可用的模型部分，我们看到我们可以使用`gamLoess`方法。如果我们还没有安装，我们需要安装**gam**包。我们看到我们有两个参数需要优化：
 - en: '[PRE53]'
   id: totrans-197
   prefs: []
