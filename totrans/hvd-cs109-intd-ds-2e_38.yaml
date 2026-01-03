@@ -3,21 +3,25 @@
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 7  随机变量
 - en: 原文：[https://rafalab.dfci.harvard.edu/dsbook-part-2/prob/random-variables.html](https://rafalab.dfci.harvard.edu/dsbook-part-2/prob/random-variables.html)
   id: totrans-1
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 原文：[https://rafalab.dfci.harvard.edu/dsbook-part-2/prob/random-variables.html](https://rafalab.dfci.harvard.edu/dsbook-part-2/prob/random-variables.html)
 - en: '[Probability](../prob/intro-to-prob.html)'
   id: totrans-2
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[概率](../prob/intro-to-prob.html)'
 - en: '[7  Random Variables](../prob/random-variables.html)'
   id: totrans-3
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[7  随机变量](../prob/random-variables.html)'
 - en: To study uncertainty rigorously, we need mathematical tools that describe how
     data behave under randomness. *Statistical inference*, the topic of the next part
     of this book, builds on these tools to quantify uncertainty and make predictions.
@@ -26,11 +30,13 @@
   id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: 为了严格研究不确定性，我们需要描述数据在随机性下如何行为的数学工具。本书下一部分的主题**统计推断**，建立在这些工具之上，以量化不确定性并做出预测。在本章中，我们介绍了**随机变量**的概念，并通过简单的例子探讨其主要特性。
 - en: 7.1 Definition
   id: totrans-5
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 7.1 定义
 - en: Statistical inference begins with the concept of a *random variable*, a numerical
     quantity whose value depends on the outcome of a random process. Random variables
     connect probability theory to data analysis by giving us a way to describe uncertainty
@@ -40,6 +46,7 @@
   id: totrans-6
   prefs: []
   type: TYPE_NORMAL
+  zh: 统计推断始于**随机变量**的概念，这是一个数值量，其值取决于随机过程的输出。随机变量通过提供一种用数学方式描述不确定性的方法，将概率论与数据分析联系起来。一旦我们定义了一个随机变量，我们就可以研究其分布，计算其期望值和变异性，并利用它对未来或未观察到的结果做出基于概率的陈述。
 - en: In this chapter, we focus on cases in which the probability distribution of
     the random variable is completely known. These are idealized settings, such as
     games of chance, where probabilities are determined by the rules of the game rather
@@ -49,6 +56,7 @@
   id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: 在本章中，我们关注随机变量的概率分布完全已知的情况。这些是理想化的环境，例如机会游戏，其中概率是由游戏的规则而不是数据决定的。通过处理这些简单、受控的例子，我们可以理解概率、期望值、标准误差和抽样分布的数学基础。
 - en: In later chapters, we will turn to real-world data problems, where the underlying
     distributions are not known. In those cases, we use **statistical inference**
     to estimate or approximate these distributions from data. The probability concepts
@@ -56,21 +64,26 @@
   id: totrans-8
   prefs: []
   type: TYPE_NORMAL
+  zh: 在后面的章节中，我们将转向现实世界的数据问题，其中潜在分布是未知的。在这些情况下，我们使用**统计推断**来估计或近似这些分布。这里引入的概率概念为这些推断方法提供了理论基础。
 - en: 'To start, consider a simple discrete example. Suppose we draw one bead at random
     from an urn containing red and blue beads. Define the random variable:'
   id: totrans-9
   prefs: []
   type: TYPE_NORMAL
+  zh: 首先，考虑一个简单的离散例子。假设我们从包含红色和蓝色珠子的罐子中随机抽取一个珠子。定义随机变量：
 - en: \[ X = \begin{cases} 1 & \text{if the bead is blue},\\ 0 & \text{if the bead
     is red.} \end{cases} \]
   id: totrans-10
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ X = \begin{cases} 1 & \text{if the bead is blue},\\ 0 & \text{if the bead
+    is red.} \end{cases} \]
 - en: 'In R, we can simulate this process using the code we introduced in [Section
     5.3](discrete-probability.html#sec-monte-carlo):'
   id: totrans-11
   prefs: []
   type: TYPE_NORMAL
+  zh: 在R中，我们可以使用我们在[第5.3节](discrete-probability.html#sec-monte-carlo)中介绍的代码来模拟这个过程：
 - en: '[PRE0]'
   id: totrans-12
   prefs: []
@@ -84,12 +97,14 @@
   id: totrans-13
   prefs: []
   type: TYPE_NORMAL
+  zh: '*每次我们抽取一个珠子，\(X\)的值可能会改变，因为结果是随机的。在统计教科书中，这种只取0和1值的变量被称为**伯努利随机变量**。伯努利试验是许多统计模型的基础，因为许多结果，如成功/失败、是/否或正面/反面，都可以用这种方式表示。'
 - en: 'A classic example is the number of heads, call it \(S_n\), observed when tossing
     \(n\) fair coins. We can generate one observation of this random variable using
     a simulation:'
   id: totrans-14
   prefs: []
   type: TYPE_NORMAL
+  zh: 一个经典的例子是在抛掷\(n\)个公平硬币时观察到的正面数量，称为\(S_n\)。我们可以使用模拟生成这个随机变量的一个观测值：
 - en: '[PRE1]'
   id: totrans-15
   prefs: []
@@ -99,6 +114,7 @@
   id: totrans-16
   prefs: []
   type: TYPE_NORMAL
+  zh: '*我们将在后面的章节中使用这个例子。'
 - en: 'Not all random variables are discrete. Some can take on a continuum of values.
     For example, the height of a randomly selected person or the result of a physical
     measurement can be viewed as a *continuous random variable*. As an example, we
@@ -106,6 +122,7 @@
   id: totrans-17
   prefs: []
   type: TYPE_NORMAL
+  zh: 并非所有随机变量都是离散的。一些可以取连续的值。例如，随机选择的人的身高或物理测量的结果可以被视为 *连续随机变量*。例如，我们使用正态分布模拟这样的变量：
 - en: '[PRE2]'
   id: totrans-18
   prefs: []
@@ -118,6 +135,7 @@
   id: totrans-19
   prefs: []
   type: TYPE_NORMAL
+  zh: '*这里每个 `x` 的值代表从均值为 70、标准差为 3 的正态分布中抽取的随机变量的一个实现。重复模拟每次会产生略微不同的数字，反映了过程的固有随机性。'
 - en: These examples, discrete Bernoulli variables and a continuous normal variable,
     illustrate the main types of random variables we will study in this chapter. Understanding
     their behavior and summarizing their distributions are the key steps that lead
@@ -126,11 +144,13 @@
   id: totrans-20
   prefs: []
   type: TYPE_NORMAL
+  zh: 这些例子，离散的伯努利变量和一个连续的正态变量，说明了我们在本章中将研究的随机变量的主要类型。理解它们的行为和总结它们的分布是引导我们走向期望值、变异性和最终统计推断的关键步骤。***
 - en: '***7.2 Notation for random variables***'
   id: totrans-21
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '***7.2 随机变量的符号表示***'
 - en: '***In statistical notation, uppercase letters denote random variables, while
     lowercase letters represent observed values. Sometimes both appear together, as
     in \(X = x\), where \(X\) is random and \(x\) is a fixed value. For example, \(X\)
@@ -139,10 +159,13 @@
   id: totrans-22
   prefs: []
   type: TYPE_NORMAL
+  zh: '***在统计符号中，大写字母表示随机变量，而小写字母表示观察到的值。有时两者同时出现，例如 \(X = x\)，其中 \(X\) 是随机的，而 \(x\)
+    是一个固定值。例如，\(X\) 可能代表掷骰子显示的数字，而 \(x\) 是观察到的结果，1、2、3、4、5 或 6：'
 - en: \[ \mathrm{Pr}(X = x) = 1/6 \quad \text{for } x = 1, \dots, 6. \]
   id: totrans-23
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \mathrm{Pr}(X = x) = 1/6 \quad \text{for } x = 1, \dots, 6. \]
 - en: This notation is convenient because it lets us express probability statements
     compactly. It may seem odd at first, since \(X\) represents an outcome not yet
     observed, we can discuss the likelihood of its possible values, but not its realized
@@ -151,11 +174,14 @@
   id: totrans-24
   prefs: []
   type: TYPE_NORMAL
+  zh: 这种符号很方便，因为它让我们可以紧凑地表达概率陈述。一开始可能看起来有些奇怪，因为 \(X\) 代表尚未观察到的结果，我们可以讨论其可能值的可能性，但不能讨论其实现值。一旦收集到数据，我们就观察到
+    \(X\) 的一个实现，然后根据已经发生的情况推理可能发生的情况。***
 - en: '***7.3 The probability distribution of a random variable***'
   id: totrans-25
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '***7.3 随机变量的概率分布***'
 - en: '***The *probability distribution* of a random variable tells us how likely
     each possible outcome is. For example, if we toss \(n\) fair coins, we might ask
     for the probability of observing 40 or fewer heads. This is equivalent to asking
@@ -163,6 +189,8 @@
   id: totrans-26
   prefs: []
   type: TYPE_NORMAL
+  zh: '***随机变量的概率分布告诉我们每个可能结果的可能性。例如，如果我们掷 \(n\) 个公平的硬币，我们可能会询问观察到 40 个或更少头部的概率。这相当于询问
+    \(\mathrm{Pr}(S_n \leq 40)\)。'
 - en: If we can define a cumulative distribution function (CDF) \(F(a) = \mathrm{Pr}(S_n
     \leq a)\), we can answer any probability question involving \(S_n\), such as the
     probability of falling within an interval \((a, b]\). We call \(F\) the *distribution
@@ -170,11 +198,14 @@
   id: totrans-27
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果我们可以定义累积分布函数（CDF）\(F(a) = \mathrm{Pr}(S_n \leq a)\)，我们就可以回答任何涉及 \(S_n\) 的概率问题，例如落在区间
+    \((a, b]\) 内的概率。我们称 \(F\) 为随机变量的 *分布函数*。
 - en: 'We can approximate this distribution function by Monte Carlo simulation. For
     example, the following code simulates tossing 100 fair coins 100,000 times:'
   id: totrans-28
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们可以通过蒙特卡洛模拟来近似这个分布函数。例如，以下代码模拟了 100,000 次掷 100 个公平硬币：
 - en: '[PRE3]'
   id: totrans-29
   prefs: []
@@ -185,6 +216,7 @@
   id: totrans-30
   prefs: []
   type: TYPE_NORMAL
+  zh: '*然后我们可以通过计算小于或等于 `a` 的模拟值的比例来估计 \(\mathrm{Pr}(S_n \leq a)\)：'
 - en: '[PRE4]'
   id: totrans-31
   prefs: []
@@ -194,6 +226,7 @@
   id: totrans-32
   prefs: []
   type: TYPE_NORMAL
+  zh: '*例如，观察到 100 个硬币中有 40 个或更少头部的概率是：'
 - en: '[PRE5]'
   id: totrans-33
   prefs: []
@@ -204,10 +237,12 @@
   id: totrans-34
   prefs: []
   type: TYPE_NORMAL
+  zh: '*我们可以通过直方图可视化 \(S_n\) 的分布，并叠加相应的正态密度曲线以进行比较：'
 - en: '![](../Images/7395506fd4acb6a68061cf340bd6d8fd.png)'
   id: totrans-35
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/7395506fd4acb6a68061cf340bd6d8fd.png)'
 - en: We see that the distribution is approximately normal. A qqplot will confirm
     that the normal approximation provides an excellent fit. In the next chapter ([Section
     8.3](sampling-models-and-clt.html#sec-clt-prob)), we will learn the theory that
@@ -217,6 +252,7 @@
   id: totrans-36
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们看到分布近似为正态分布。QQ图将证实正态近似提供了非常好的拟合。在下一章（[第8.3节](sampling-models-and-clt.html#sec-clt-prob)）中，我们将学习解释为什么这种近似如此之好的理论。实际上，这个结果远远超出了抛硬币的范畴，它广泛适用于许多类型的随机变量的平均值和总和。
 - en: 'If the distribution is normal, it is fully characterized by its average and
     standard deviation. These two quantities have special names in probability theory:
     the *expected value* and the *standard error* of the random variable. We discuss
@@ -224,6 +260,7 @@
   id: totrans-37
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果分布是正态分布，它完全由其平均值和标准差来表征。这两个量在概率论中有特殊的名称：随机变量的*期望值*和*标准误*。我们将在下面讨论这些内容。
 - en: '*Statistical theory lets us derive the exact distribution of random variables
     defined as sums of independent draws from an urn. In our coin tossing example,
     the number of heads (successes), \(S_n\), follows a **binomial distribution**.
@@ -231,11 +268,13 @@
   id: totrans-38
   prefs: []
   type: TYPE_NORMAL
+  zh: '*统计理论使我们能够推导出作为从罐子中独立抽取的随机变量的和的随机变量的精确分布。在我们的抛硬币例子中，正面（成功）的数量 \(S_n\) 服从**二项分布**。因此，蒙特卡洛模拟仅用于说明。'
 - en: 'We can compute probabilities directly with `dbinom` or `pbinom`. For example,
     to find \(\mathrm{Pr}(S_n \leq 40)\):'
   id: totrans-39
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们可以直接使用 `dbinom` 或 `pbinom` 来计算概率。例如，要找到 \(\mathrm{Pr}(S_n \leq 40)\)：
 - en: '[PRE6]'
   id: totrans-40
   prefs: []
@@ -246,67 +285,82 @@
   id: totrans-41
   prefs: []
   type: TYPE_NORMAL
+  zh: '*我们也可以使用 `rbinom` 而不是 `replicate` 和 `sample` 来模拟正面数量：'
 - en: '[PRE7]********'
   id: totrans-42
   prefs: []
   type: TYPE_NORMAL
+  zh: '[PRE7]********'
 - en: '****7.4 The expected value and standard error****'
   id: totrans-43
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '****7.4 期望值和标准误**'
 - en: '****In statistics textbooks, the expected value of a random variable \(X\)
     is commonly denoted as \(\mu_X\) or \(\mathrm{E}[X]\), both meaning “the expected
     value of \(X\).”'
   id: totrans-44
   prefs: []
   type: TYPE_NORMAL
+  zh: '****在统计学教科书中，随机变量 \(X\) 的期望值通常表示为 \(\mu_X\) 或 \(\mathrm{E}[X]\)，两者都表示“\(X\)
+    的期望值”。**'
 - en: Intuitively, the expected value represents the long-run average outcome if the
     random process were repeated many times. The more repetitions, the closer the
     average of the observed values will be to \(\mathrm{E}[X]\).
   id: totrans-45
   prefs: []
   type: TYPE_NORMAL
+  zh: 直观地说，期望值代表如果随机过程重复多次，则长期平均结果。重复次数越多，观察值的平均值就越接近 \(\mathrm{E}[X]\)。
 - en: 'For a discrete random variable with possible outcomes \(x_1,\dots,x_n\), the
     expected value is defined as:'
   id: totrans-46
   prefs: []
   type: TYPE_NORMAL
+  zh: 对于具有可能结果 \(x_1,\dots,x_n\) 的离散随机变量，期望值定义为：
 - en: \[ \mathrm{E}[X] = \sum_{i=1}^n x_i ,\mathrm{Pr}(X = x_i) \]
   id: totrans-47
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \mathrm{E}[X] = \sum_{i=1}^n x_i ,\mathrm{Pr}(X = x_i) \]
 - en: 'For a continuous random variable with probability density function \(f(x)\)
     and range \((a, b)\), the sum becomes an integral:'
   id: totrans-48
   prefs: []
   type: TYPE_NORMAL
+  zh: 对于具有概率密度函数 \(f(x)\) 和范围 \((a, b)\) 的连续随机变量，求和变为积分：
 - en: \[ \mathrm{E}[X] = \int_a^b x f(x), dx \]
   id: totrans-49
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \mathrm{E}[X] = \int_a^b x f(x), dx \]
 - en: 'If all \(x_i\) have equal probability \(1/n\), as when drawing uniformly from
     an urn, the expected value reduces to the arithmetic mean:'
   id: totrans-50
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果所有 \(x_i\) 都具有相等的概率 \(1/n\)，例如从罐子中均匀抽取时，期望值就简化为算术平均值：
 - en: \[ \mathrm{E}[X] = \frac{1}{n}\sum_{i=1}^n x_i. \]
   id: totrans-51
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \mathrm{E}[X] = \frac{1}{n}\sum_{i=1}^n x_i. \]
 - en: For example, in a coin toss where \(X = 1\) for heads and \(0\) for tails,
   id: totrans-52
   prefs: []
   type: TYPE_NORMAL
+  zh: 例如，在抛硬币的情况下，\(X = 1\) 代表正面，\(0\) 代表反面，
 - en: \[ \mathrm{E}[X] = 1 \times \Pr(X=1) + 0 \times \Pr(X=0) = 1/2. \]
   id: totrans-53
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \mathrm{E}[X] = 1 \times \Pr(X=1) + 0 \times \Pr(X=0) = 1/2. \]
 - en: 'Although \(X\) only takes the values 0 or 1, its *expected value* of 0.5 represents
     the long-run proportion of heads if the experiment were repeated many times:'
   id: totrans-54
   prefs: []
   type: TYPE_NORMAL
+  zh: 虽然 \(X\) 只取0或1的值，但其*期望值*为0.5代表如果实验重复多次，则正面的长期比例：
 - en: '[PRE8]'
   id: totrans-55
   prefs: []
@@ -317,28 +371,35 @@
   id: totrans-56
   prefs: []
   type: TYPE_NORMAL
+  zh: '*标准误*（SE）描述了 \(X\) 与其期望值的典型偏差。它定义为：'
 - en: \[ \mathrm{SE}[X] = \sqrt{\sum_{i=1}^n (x_i - \mathrm{E}[X])^2 ,\mathrm{Pr}(X
     = x_i)}. \]
   id: totrans-57
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \mathrm{SE}[X] = \sqrt{\sum_{i=1}^n (x_i - \mathrm{E}[X])^2 ,\mathrm{Pr}(X
+    = x_i)}. \]
 - en: 'For a continuous random variable with density \(f(x)\), this becomes:'
   id: totrans-58
   prefs: []
   type: TYPE_NORMAL
+  zh: 对于具有密度函数 \(f(x)\) 的连续随机变量，这变为：
 - en: \[ \mathrm{SE}[X] = \sqrt{\int_a^b (x - \mathrm{E}[X])^2 f(x), dx}. \]
   id: totrans-59
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \mathrm{SE}[X] = \sqrt{\int_a^b (x - \mathrm{E}[X])^2 f(x), dx}. \]
 - en: '*Many textbooks introduce the *variance* before the standard error. The variance
     is simply the square of the standard error:'
   id: totrans-60
   prefs: []
   type: TYPE_NORMAL
+  zh: '*许多教科书在介绍*标准误*之前先介绍*方差*。方差是标准误的平方：'
 - en: \[ \mathrm{Var}[X] = \mathrm{SE}[X]^2. \]
   id: totrans-61
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \mathrm{Var}[X] = \mathrm{SE}[X]^2. \]
 - en: 'Variance is useful in derivations because it avoids square roots, but the standard
     error is easier to interpret, since it uses the same units as the data.*  *When
     all outcomes \(x_i\) are equally likely, the standard error reduces to the standard
@@ -346,25 +407,32 @@
   id: totrans-62
   prefs: []
   type: TYPE_NORMAL
+  zh: 方差在推导中很有用，因为它避免了平方根，但标准误更容易解释，因为它使用与数据相同的单位。*当所有结果 \(x_i\) 都等可能时，标准误简化为标准差：*
 - en: \[ \mathrm{SE}[X] = \sqrt{\frac{1}{n}\sum_{i=1}^n (x_i - \mathrm{E}[X])^2},
     \quad \mathrm{E}[X] = \frac{1}{n}\sum_{i=1}^n x_i. \]
   id: totrans-63
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \mathrm{SE}[X] = \sqrt{\frac{1}{n}\sum_{i=1}^n (x_i - \mathrm{E}[X])^2},
+    \quad \mathrm{E}[X] = \frac{1}{n}\sum_{i=1}^n x_i. \]
 - en: 'For a coin toss:'
   id: totrans-64
   prefs: []
   type: TYPE_NORMAL
+  zh: 对于抛硬币：
 - en: \[ \mathrm{SE}[X] = \sqrt{(1-0.5)^2 \times 0.5 + (0-0.5)^2 \times 0.5} = 0.5.
     \]
   id: totrans-65
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \mathrm{SE}[X] = \sqrt{(1-0.5)^2 \times 0.5 + (0-0.5)^2 \times 0.5} = 0.5.
+    \]
 - en: Thus, one coin has an expected value of 0.5 and a standard error of 0.5—reasonable,
     since the possible outcomes are 0 or 1.
   id: totrans-66
   prefs: []
   type: TYPE_NORMAL
+  zh: 因此，一枚硬币的期望值为 0.5，标准误也为 0.5——这是合理的，因为可能的结果是 0 或 1。
 - en: '*We use the Greek letters \(\mu\) and \(\sigma\) to denote the expected value
     and standard error, respectively. This convention reflects their connection to
     the *mean* (\(m\)) and *standard deviation* (\(s\)). However, we often prefer
@@ -374,40 +442,50 @@
   id: totrans-67
   prefs: []
   type: TYPE_NORMAL
+  zh: '*我们使用希腊字母 \(\mu\) 和 \(\sigma\) 分别表示期望值和标准误。这种约定反映了它们与 *均值* (\(m\)) 和 *标准差*
+    (\(s\)) 的联系。然而，我们通常更喜欢使用 \(\mathrm{E}[X]\) 和 \(\mathrm{SE}[X]\) 符号，因为它更清楚地推广到涉及随机变量之和或变换的数学表达式。********'
 - en: '*****7.5 Key properties of expectations and standard errors*****'
   id: totrans-68
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '*****7.5 期望值和标准误的关键性质*****'
 - en: '*****There are several mathematical properties of expectations and standard
     errors that we will use frequently when working with data.'
   id: totrans-69
   prefs: []
   type: TYPE_NORMAL
+  zh: '*****在处理数据时，我们将频繁使用期望值和标准误的几个数学性质。'
 - en: '1\. The expected value of the sum of random variables is the sum of each random
     variable’s expected value. We can write it like this:'
   id: totrans-70
   prefs: []
   type: TYPE_NORMAL
+  zh: 1. 随机变量之和的期望值是每个随机变量期望值的和。我们可以这样写：
 - en: \[ \mathrm{E}[X_1+X_2+\dots+X_n] = \mathrm{E}[X_1] + \mathrm{E}[X_2]+\dots+\mathrm{E}[X_n]
     \]
   id: totrans-71
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \mathrm{E}[X_1+X_2+\dots+X_n] = \mathrm{E}[X_1] + \mathrm{E}[X_2]+\dots+\mathrm{E}[X_n]
+    \]
 - en: 'If \(X\) represents independent draws from the urn, then they all have the
     same expected value. Let’s denote the expected value with \(\mu_X\) and rewrite
     the equation as:'
   id: totrans-72
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果 \(X\) 代表从罐子中独立抽取的样本，那么它们都具有相同的期望值。让我们用 \(\mu_X\) 表示期望值，并重新写下方程：
 - en: \[ \mathrm{E}[X_1+X_2+\dots+X_n]= n\mu_X \]
   id: totrans-73
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \mathrm{E}[X_1+X_2+\dots+X_n]= n\mu_X \]
 - en: which is another way of writing the result we show above for the sum of draws.
   id: totrans-74
   prefs: []
   type: TYPE_NORMAL
+  zh: 这是以另一种方式写出我们上面对于抽取之和的结果。
 - en: '2\. The expected value of a non-random constant times a random variable is
     the non-random constant times the expected value of a random variable. If we shift
     the random variable, the expected value shifts by that amount. This is easier
@@ -415,77 +493,95 @@
   id: totrans-75
   prefs: []
   type: TYPE_NORMAL
+  zh: 2. 非随机常数乘以随机变量的期望值等于非随机常数乘以随机变量的期望值。如果我们移动随机变量，期望值也会相应移动。用符号表示更容易解释：
 - en: \[ \mathrm{E}[aX+b] = a\times\mathrm{E}[X] + b \]
   id: totrans-76
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \mathrm{E}[aX+b] = a\times\mathrm{E}[X] + b \]
 - en: To understand why this is intuitive, consider changing units. If we change the
     units of a random variable, such as from dollars to cents, the expectation should
     change in the same way.
   id: totrans-77
   prefs: []
   type: TYPE_NORMAL
+  zh: 要理解为什么这是直观的，考虑改变单位。如果我们改变随机变量的单位，例如从美元到分，期望值应该以相同的方式改变。
 - en: 'A consequence of the above two facts is that the expected value of the average
     of independent draws from the same urn is the expected value of the urn, denoted
     as \(\mu_X\) again:'
   id: totrans-78
   prefs: []
   type: TYPE_NORMAL
+  zh: 上述两个事实的后果是，从同一罐子中独立抽取的平均值的期望值等于罐子的期望值，再次用 \(\mu_X\) 表示：
 - en: \[ \mathrm{E}[(X_1+X_2+\dots+X_n) / n]= \mathrm{E}[X_1+X_2+\dots+X_n] / n =
     n\mu_X/n = \mu_X \]
   id: totrans-79
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \mathrm{E}[(X_1+X_2+\dots+X_n) / n]= \mathrm{E}[X_1+X_2+\dots+X_n] / n =
+    n\mu_X/n = \mu_X \]
 - en: '3\. The variance of the sum of **independent** random variables is the sum
     of variances of each random variable:'
   id: totrans-80
   prefs: []
   type: TYPE_NORMAL
+  zh: 3. 独立随机变量之和的方差是每个随机变量方差的和：
 - en: '\[ \mathrm{Var}[X_1+X_2+\dots+X_n] =\mathrm{Var}[X_1] + \mathrm{Var}[X_2]+\dots+\mathrm{Var}[X_n]
     \] This implies that the following property for the standard error of the sum
     of **independent** random variables:'
   id: totrans-81
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \mathrm{Var}[X_1+X_2+\dots+X_n] =\mathrm{Var}[X_1] + \mathrm{Var}[X_2]+\dots+\mathrm{Var}[X_n]
+    \] 这意味着以下关于独立随机变量之和的标准误的性质：
 - en: \[ \mathrm{SE}[X_1+X_2+\dots+X_n] = \sqrt{\mathrm{SE}[X_1]^2 + \mathrm{SE}[X_2]^2+\dots+\mathrm{SE}[X_n]^2
     } \]
   id: totrans-82
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \mathrm{SE}[X_1+X_2+\dots+X_n] = \sqrt{\mathrm{SE}[X_1]^2 + \mathrm{SE}[X_2]^2+\dots+\mathrm{SE}[X_n]^2
+    } \]
 - en: Note that this particular property is not as intuitive as the previous three
     and more in depth explanations can be found in statistics textbooks.
   id: totrans-83
   prefs: []
   type: TYPE_NORMAL
+  zh: 注意，这个特定的属性不像前三个那样直观，更深入的解释可以在统计学教科书中找到。
 - en: '4\. The standard error of a non-random constant times a random variable is
     the non-random constant times the random variable’s standard error. As with the
     expectation:'
   id: totrans-84
   prefs: []
   type: TYPE_NORMAL
+  zh: 4\. 非随机常数乘以随机变量的标准误差是非随机常数乘以随机变量标准误差。就像期望一样：
 - en: \[ \mathrm{SE}[aX] = a \times \mathrm{SE}[X] \]
   id: totrans-85
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \mathrm{SE}[aX] = a \times \mathrm{SE}[X] \]
 - en: To see why this is intuitive, again think of units.
   id: totrans-86
   prefs: []
   type: TYPE_NORMAL
+  zh: 要理解为什么这是直观的，再次考虑单位。
 - en: 'If we shift the random variable by a constant the variability does not change.
     So it has not effect on the standard error:'
   id: totrans-87
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果我们通过一个常数移动随机变量，变异性不会改变。因此，它对标准误差没有影响：
 - en: \[ \mathrm{SE}[aX+b] = a \times \mathrm{SE}[X] \]
   id: totrans-88
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \mathrm{SE}[aX+b] = a \times \mathrm{SE}[X] \]
 - en: 'A consequence of 3 and 4 is that the standard error of the average of independent
     draws from the same urn is the standard deviation of the urn divided by the square
     root of \(n\) (the number of draws), call it \(\sigma_X\):'
   id: totrans-89
   prefs: []
   type: TYPE_NORMAL
+  zh: '3和4的后果是，从同一抽屉中独立抽取的平均值的标准误差是抽屉的标准差除以平方根\(n\)（抽取的数量），称之为\(\sigma_X\):'
 - en: \[ \begin{aligned} \mathrm{SE}[\bar{X}] = \mathrm{SE}[(X_1+X_2+\dots+X_n) /
     n] &= \mathrm{SE}[X_1+X_2+\dots+X_n]/n \\ &= \sqrt{\mathrm{SE}[X_1]^2+\mathrm{SE}[X_2]^2+\dots+\mathrm{SE}[X_n]^2}/n
     \\ &= \sqrt{\sigma_X^2+\sigma_X^2+\dots+\sigma_X^2}/n\\ &= \sqrt{n\sigma_X^2}/n\\
@@ -493,6 +589,10 @@
   id: totrans-90
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \begin{aligned} \mathrm{SE}[\bar{X}] = \mathrm{SE}[(X_1+X_2+\dots+X_n) /
+    n] &= \mathrm{SE}[X_1+X_2+\dots+X_n]/n \\ &= \sqrt{\mathrm{SE}[X_1]^2+\mathrm{SE}[X_2]^2+\dots+\mathrm{SE}[X_n]^2}/n
+    \\ &= \sqrt{\sigma_X^2+\sigma_X^2+\dots+\sigma_X^2}/n\\ &= \sqrt{n\sigma_X^2}/n\\
+    &= \sigma_X / \sqrt{n} \end{aligned} \]
 - en: '*The assumption of independence is important* *The given equation reveals crucial
     insights for practical scenarios. Specifically, it suggests that the standard
     error can be minimized by increasing the sample size, \(n\), and we can quantify
@@ -502,6 +602,8 @@
   id: totrans-91
   prefs: []
   type: TYPE_NORMAL
+  zh: '*独立性假设很重要* *给定的方程揭示了实际场景中的关键见解。具体来说，它表明可以通过增加样本大小\(n\)来最小化标准误差，我们可以量化这种减少。然而，这个原则只有在变量\(X_1,
+    X_2, ... X_n\)是独立的时才成立。如果它们不是，估计的标准误差可能会显著偏离。*'
 - en: 'In [Section 15.2](../linear-models/regression.html#sec-corr-coef), we introduce
     the concept of correlation, which quantifies the degree to which variables are
     interdependent. If the correlation coefficient among the \(X\) variables is \(\rho\),
@@ -509,11 +611,14 @@
   id: totrans-92
   prefs: []
   type: TYPE_NORMAL
+  zh: 在[第15.2节](../linear-models/regression.html#sec-corr-coef)中，我们介绍了相关性的概念，它量化了变量相互依赖的程度。如果\(X\)变量之间的相关系数是\(\rho\)，它们平均值的标准误差是：
 - en: \[ \mathrm{SE}\left[\bar{X}\right] = \sigma_X \sqrt{\frac{1 + (n-1) \rho}{n}}
     \]
   id: totrans-93
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \mathrm{SE}\left[\bar{X}\right] = \sigma_X \sqrt{\frac{1 + (n-1) \rho}{n}}
+    \]
 - en: The key observation here is that as \(\rho\) approaches its upper limit of 1,
     the standard error increases. Notably, in the situation where \(\rho = 1\), the
     standard error, \(\mathrm{SE}[\bar{X}]\), equals \(\sigma_X\), and it becomes
@@ -525,11 +630,14 @@
   id: totrans-94
   prefs: []
   type: TYPE_NORMAL
+  zh: 这里的关键观察是，随着\(\rho\)接近其上限1，标准误差增加。值得注意的是，在\(\rho = 1\)的情况下，标准误差\(\mathrm{SE}[\bar{X}]\)等于\(\sigma_X\)，并且它不受样本大小\(n\)的影响。*5\.
+    如果\(X\)是一个正态分布的随机变量，那么如果\(a\)和\(b\)是非随机常数，\(aX + b\)也是一个正态分布的随机变量。我们所做的只是通过乘以\(a\)来改变随机变量的单位，然后通过\(b\)来移动中心。******
 - en: '*****7.6 Law of Large Numbers*****'
   id: totrans-95
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '*****7.6 大数定律*****'
 - en: '*****An important implication of result 4 above is that the standard error
     of the average becomes smaller and smaller as \(n\) grows larger. When \(n\) is
     very large, then the standard error is practically 0 and the average of the draws
@@ -538,6 +646,7 @@
   id: totrans-96
   prefs: []
   type: TYPE_NORMAL
+  zh: '*****上述结果4的一个重要含义是，随着\(n\)的增大，平均值的标准误差越来越小。当\(n\)非常大时，标准误差实际上为0，抽取的平均值收敛到抽屉的平均值。这在统计学教科书中被称为大数定律或平均定律*****。'
 - en: '*Misinterpretation of the law of averages* *The law of averages is sometimes
     misinterpreted. For example, if you toss a coin 5 times and see a head each time,
     you might hear someone argue that the next toss is probably a tail because of
@@ -554,22 +663,29 @@
   id: totrans-97
   prefs: []
   type: TYPE_NORMAL
+  zh: '*平均数法则的误解* 平均数法则有时会被误解。例如，如果你掷硬币 5 次，每次都是正面，你可能会听到有人争论说下一次掷硬币很可能是反面，因为平均数法则：平均来说，我们应该看到
+    50% 的正面和 50% 的反面。一个类似的论点是，在看到连续五次出现黑色之后，轮盘赌上的红色“应该”出现。然而，这些事件是独立的，所以硬币落在正面的概率是
+    50%，无论之前 5 次的结果如何。同样的原则也适用于轮盘赌的结果。平均数法则只适用于抽取次数非常多的情况，而不是小样本。在掷一百万次之后，你肯定会看到大约
+    50% 的正面，无论前五次的结果如何。平均数法则的另一个有趣的误用是在体育比赛中，当电视体育解说员预测一名球员即将成功，因为他们连续几次失败时。'
 - en: '****7.7 Data distributions versus probability distributions****'
   id: totrans-98
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '****7.7 数据分布与概率分布****'
 - en: '****Before moving on, it is important to distinguish between the **distribution
     of a dataset** and a **probability distribution**.'
   id: totrans-99
   prefs: []
   type: TYPE_NORMAL
+  zh: '****在继续之前，区分**数据集的分布**和**概率分布**是很重要的。'
 - en: 'Any list of numbers \(x_1, \dots, x_n\), or any dataset, has a distribution
     that describes how the observed values are spread out. We can summarize it with
     simple statistics such as the mean and standard deviation:'
   id: totrans-100
   prefs: []
   type: TYPE_NORMAL
+  zh: 任何数字列表 \(x_1, \dots, x_n\) 或任何数据集，都有一个分布描述了观察到的值的分布情况。我们可以用简单的统计量，如平均值和标准差来总结它：
 - en: '[PRE9]'
   id: totrans-101
   prefs: []
@@ -581,6 +697,7 @@
   id: totrans-102
   prefs: []
   type: TYPE_NORMAL
+  zh: '*另一方面，**概率分布**是一个理论构造，它描述了随机变量的可能值及其可能性。它不依赖于数据。'
 - en: When \(X\) represents drawing a number at random from an urn, the list of numbers
     in the urn defines the possible outcomes, and their relative frequencies define
     the probability distribution of \(X\). The average and standard deviation of the
@@ -589,6 +706,7 @@
   id: totrans-103
   prefs: []
   type: TYPE_NORMAL
+  zh: 当 \(X\) 代表从罐子中随机抽取一个数字时，罐子中的数字列表定义了可能的结果，它们的相对频率定义了 \(X\) 的概率分布。罐子中数字的平均值和标准差对应于随机变量的**期望值**和**标准误**。
 - en: 'This connection can cause confusion: every list of numbers has a standard deviation,
     and every random variable has a standard error, but the standard error of a random
     variable is the *standard deviation of its probability distribution*, not of a
@@ -596,44 +714,55 @@
   id: totrans-104
   prefs: []
   type: TYPE_NORMAL
+  zh: 这种联系可能会导致混淆：每个数字列表都有一个标准差，每个随机变量都有一个标准误，但随机变量的标准误是其**概率分布的标准差**，而不是特定数据集的标准差。
 - en: '*****7.8 Exercises*****'
   id: totrans-105
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '*****7.8 练习*****'
 - en: '*****1\. In American Roulette, you can bet on black or red. There are 18 reds,
     18 blacks, and 2 greens (0 and 00). What are the chances that black comes out?'
   id: totrans-106
   prefs: []
   type: TYPE_NORMAL
+  zh: '*****1. 在美国轮盘赌中，你可以下注黑色或红色。有 18 个红色，18 个黑色和 2 个绿色（0 和 00）。黑色出现的概率是多少？'
 - en: 2\. The payout for winning on black is $1 dollar. This means that if you bet
     a dollar and it lands on black, you get $1, otherwise you lose $1\. Create a sampling
     model using `sample` to simulate the random variable \(X\) for your winnings.
   id: totrans-107
   prefs: []
   type: TYPE_NORMAL
+  zh: 2. 在黑色上赢的赔率是 1 美元。这意味着如果你下注 1 美元并且它落在黑色上，你将得到 1 美元，否则你将损失 1 美元。使用 `sample` 函数创建一个模拟随机变量
+    \(X\) 的抽样模型来模拟你的收益。
 - en: 3\. Compute the expected value of \(X\).
   id: totrans-108
   prefs: []
   type: TYPE_NORMAL
+  zh: 3. 计算随机变量 \(X\) 的期望值。
 - en: 4\. Compute the standard error of \(X\).
   id: totrans-109
   prefs: []
   type: TYPE_NORMAL
+  zh: 4. 计算随机变量 \(X\) 的标准误。
 - en: 5\. Now create a random variable \(S_n\) that is the sum of your winnings after
     betting on black n = 100 times. Simulate 100,000 outcomes of \(S_n\). Start your
     code by setting the seed to 1 with `set.seed(1)`.
   id: totrans-110
   prefs: []
   type: TYPE_NORMAL
+  zh: 5. 现在创建一个随机变量 \(S_n\)，它是你在黑色上投注 n = 100 次后的收益总和。模拟 \(S_n\) 的 100,000 个结果。开始你的代码时，使用
+    `set.seed(1)` 将种子设置为 1。
 - en: 6\. What is the expected value of \(S_n\)?
   id: totrans-111
   prefs: []
   type: TYPE_NORMAL
+  zh: 6. \(S_n\) 的期望值是多少？
 - en: 7\. What is the standard error of \(S_n\)?
   id: totrans-112
   prefs: []
   type: TYPE_NORMAL
+  zh: 7. \(S_n\) 的标准误是多少？
 - en: 8\. What is the probability that you end up winning money?
   id: totrans-113
   prefs: []

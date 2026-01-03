@@ -1,60 +1,88 @@
 - en: 25  Latent Factor Models
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 25  隐含因子模型
 - en: 原文：[https://rafalab.dfci.harvard.edu/dsbook-part-2/highdim/latent-factor-models.html](https://rafalab.dfci.harvard.edu/dsbook-part-2/highdim/latent-factor-models.html)
+  id: totrans-1
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 原文：[https://rafalab.dfci.harvard.edu/dsbook-part-2/highdim/latent-factor-models.html](https://rafalab.dfci.harvard.edu/dsbook-part-2/highdim/latent-factor-models.html)
 - en: '[High Dimensional Data](../highdim/intro-highdim.html)'
+  id: totrans-2
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[高维数据](../highdim/intro-highdim.html)'
 - en: '[25  Latent Factor Models](../highdim/latent-factor-models.html)'
+  id: totrans-3
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[25  隐含因子模型](../highdim/latent-factor-models.html)'
 - en: Many data problems involve large matrices with structure we cannot see directly.
     Latent factor models provide a powerful way to uncover this hidden structure.
     The key idea is that observed data often reflect the influence of a smaller number
     of unobserved (latent) features. These latent factors capture patterns such as
     groups of similar individuals, groups of similar items, or shared underlying attributes
     that drive the observed values.
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: 许多数据问题涉及我们无法直接看到结构的大型矩阵。隐含因子模型提供了一种强大的方法来揭示这种隐藏结构。关键思想是，观察到的数据通常反映了少量未观察（潜在）特征的影响。这些潜在因素捕捉到诸如相似个体群体、相似物品群体或驱动观察值共享的潜在属性的模式。
 - en: In the previous chapter, we introduced the model
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: 在上一章中，我们介绍了该模型
 - en: \[ Y_{ij} = \mu + \alpha_i + \beta_j + \varepsilon_{ij} \]
+  id: totrans-6
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ Y_{ij} = \mu + \alpha_i + \beta_j + \varepsilon_{ij} \]
 - en: to describe movie ratings. This model accounts for differences between users
     through \(\alpha_i\) and differences between movies through \(\beta_j\). However,
     it treats all movies and all users as unrelated beyond these simple averages.
     In practice, we know that groups of movies tend to be liked by the same kinds
     of users, and groups of users tend to give similar ratings to the same kinds of
     movies. This shared structure is not captured by user and movie effects alone.
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: 用于描述电影评分。此模型通过 \(\alpha_i\) 考虑用户之间的差异，通过 \(\beta_j\) 考虑电影之间的差异。然而，它将所有电影和所有用户视为在这些简单平均值之外无关。在实践中，我们知道电影群体往往受到相同类型用户的喜爱，用户群体也倾向于对相同类型的电影给出相似的评分。这种共享结构仅由用户和电影效应本身无法捕捉。
 - en: To see this, we compute residuals
+  id: totrans-8
   prefs: []
   type: TYPE_NORMAL
+  zh: 为了看到这一点，我们计算残差
 - en: \[ r_{ij} = y_{ij} - (\hat{\mu} + \hat{\alpha}_i + \hat{\beta}_j) \]
+  id: totrans-9
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ r_{ij} = y_{ij} - (\hat{\mu} + \hat{\alpha}_i + \hat{\beta}_j) \]
 - en: by fitting the model to the `train_set` dataset using the `fit_als` function,
     both defined in the previous chapter,
+  id: totrans-10
   prefs: []
   type: TYPE_NORMAL
+  zh: 通过使用上一章中定义的 `fit_als` 函数，将模型拟合到 `train_set` 数据集，
 - en: '[PRE0]'
+  id: totrans-11
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: '*and comparing the residuals for *The Godfather* with three other films:'
+  id: totrans-12
   prefs: []
   type: TYPE_NORMAL
+  zh: '*并与三部其他电影的残差进行比较：*'
 - en: '![](../Images/54fedcfaf899f0ba0839f06dae9800d6.png)'
+  id: totrans-13
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/54fedcfaf899f0ba0839f06dae9800d6.png)'
 - en: 'These correlations range from strongly positive to negative. Specifically the
     correlations between *The Godfather* and *The Godfather part II*, *Goodfellas*,
     and *Sleepless in Seattle* are 0.84, 0.49, and -0.42, respectively. Users who
@@ -63,48 +91,67 @@
     movies share latent characteristics: genre, tone, style, era, or audience appeal.
     Similarly, users have latent traits that make them prefer some types of movies
     over others.'
+  id: totrans-14
   prefs: []
   type: TYPE_NORMAL
+  zh: 这些相关性从强正相关到负相关不等。具体来说，*教父*与*教父续集*、*好家伙*和*西雅图未眠夜*的相关性分别为0.84、0.49和-0.42。喜欢*教父*的用户也倾向于喜欢*教父续集*和*好家伙*，但通常不喜欢*西雅图未眠夜*。这类关系是因为电影共享潜在特征：类型、风格、时代或受众吸引力。同样，用户也有潜在特质，使他们更倾向于某些类型的电影而不是其他类型的电影。
 - en: Latent factor models are designed to capture exactly this type of structure.
     Instead of estimating thousands of separate parameters, they represent users and
     movies in a lower-dimensional space defined by a small number of latent features.
     The winning team of the Netflix Prize competition relied heavily on this idea,
     using latent factor models to achieve an improvement in predictive accuracy.
+  id: totrans-15
   prefs: []
   type: TYPE_NORMAL
+  zh: 隐含因子模型旨在捕捉这种类型的结构。它们不是估计数千个单独的参数，而是通过少量潜在特征定义的低维空间来表示用户和电影。Netflix Prize 竞赛获胜团队在很大程度上依赖于这一想法，使用隐含因子模型提高了预测准确性。
 - en: Although recommendation systems are one of the most famous applications, latent
     factor models are widely used in other fields, such as genomics (to model hidden
     biological structure), text analysis (topics in documents), marketing (customer
     segmentation), and finance (risk factors underlying asset returns).
+  id: totrans-16
   prefs: []
   type: TYPE_NORMAL
+  zh: 尽管推荐系统是最著名的应用之一，但隐含因子模型在许多其他领域也有广泛的应用，例如基因组学（建模隐藏的生物结构）、文本分析（文档中的主题）、市场营销（客户细分）和金融（资产回报背后的风险因素）。
 - en: In this chapter, we introduce latent factor models in the context of recommendation
     systems, connect them to principal component analysis (PCA), and show how the
     singular value decomposition (SVD) provides a unifying mathematical foundation.
     We will build models that capture hidden structure in rating data and show how
     these models further improve prediction accuracy.
+  id: totrans-17
   prefs: []
   type: TYPE_NORMAL
+  zh: 在本章中，我们在推荐系统的背景下介绍潜在因素模型，将其与主成分分析（PCA）联系起来，并展示奇异值分解（SVD）如何提供一个统一的数学基础。我们将构建捕捉评分数据中隐藏结构的模型，并展示这些模型如何进一步提高预测精度。
 - en: 25.1 Factor analysis
+  id: totrans-18
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 25.1 因子分析
 - en: 'We start with a simple simulated example. Specifically, we simulate ratings
     \(Y_{ij}\) for six movies and 120 users. For simplicity we assume that these ratings
     have been adjusted for the movie and user effects, as described in [Chapter 24](regularization.html).
     We stored the results for 120 user and 6 movie effects in the object `y`:'
+  id: totrans-19
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们从一个简单的模拟例子开始。具体来说，我们模拟了六部电影和120个用户的评分 \(Y_{ij}\)。为了简单起见，我们假设这些评分已经根据第24章中描述的电影和用户效应进行了调整。我们将120个用户和6个电影效应的结果存储在对象
+    `y` 中：
 - en: '[PRE1]'
+  id: totrans-20
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: '*If we examine the correlation between movies based on user ratings, we notice
     a pattern:'
+  id: totrans-21
   prefs: []
   type: TYPE_NORMAL
+  zh: '*如果我们检查基于用户评分的电影之间的相关性，我们会注意到一个模式：'
 - en: '[PRE2]'
+  id: totrans-22
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: '*It appears that ratings are positively correlated within genres, for example,
     among mob movies or among romance movies, and negatively correlated across the
     two genres. In statistics, such patterns are often explained by factors: unobserved,
@@ -112,246 +159,381 @@
     observed variables. Under certain assumptions, which we will describe below, these
     latent factors can be estimated from the data and used to capture the underlying
     structure driving the correlations.'
+  id: totrans-23
   prefs: []
   type: TYPE_NORMAL
+  zh: '*似乎评分在类型内呈正相关，例如，在动作片或浪漫片中，而在两个类型之间呈负相关。在统计学中，这种模式通常由因素来解释：未观察到的或潜在的变量，这些变量解释了观察变量之间的相关性或关联。在一定的假设下，我们将在下面描述，这些潜在因素可以从数据中估计出来，并用于捕捉驱动相关性的潜在结构。'
 - en: 'One approach is to use our knowledge of movies genres to define a factor that
     distinguishes between mob and romance movies:'
+  id: totrans-24
   prefs: []
   type: TYPE_NORMAL
+  zh: 一种方法是利用我们对电影类型的了解来定义一个因素，以区分动作片和浪漫片：
 - en: '[PRE3]'
+  id: totrans-25
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: '*We code mob movies with `-1` and romance movies with `1`.'
+  id: totrans-26
   prefs: []
   type: TYPE_NORMAL
+  zh: '*我们将动作片编码为`-1`，将浪漫片编码为`1`。'
 - en: 'To quantify each user’s genre preferences, we fit a separate linear model for
     every user \(i\) (rows of `y`) by using `apply`:'
+  id: totrans-27
   prefs: []
   type: TYPE_NORMAL
+  zh: 为了量化每个用户的类型偏好，我们为每个用户 \(i\)（`y` 的行）拟合一个单独的线性模型，使用 `apply`：
 - en: '[PRE4]'
+  id: totrans-28
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE4]'
 - en: '*We include `-1` in the formula because the residuals were constructed to have
     mean 0, so no intercept is needed.'
+  id: totrans-29
   prefs: []
   type: TYPE_NORMAL
+  zh: '*我们在公式中包含`-1`，因为残差被构建为具有均值为0，因此不需要截距。'
 - en: Each call to `lm` returns an estimated coefficients representing the difference
     in average ratings between mob and romance movies. A positive value indicates
     a preference for mob movies, a negative value indicates a preference for romance
     movies, and values near 0 suggest no strong preference.
+  id: totrans-30
   prefs: []
   type: TYPE_NORMAL
+  zh: 每次调用`lm`都会返回一个估计系数，表示动作片和浪漫片之间的平均评分差异。正值表示偏好动作片，负值表示偏好浪漫片，而接近0的值表示没有强烈的偏好。
 - en: 'Collecting these across users gives us `p`, a vector with one entry per user.
     The histogram below shows users cluster into these three type:'
+  id: totrans-31
   prefs: []
   type: TYPE_NORMAL
+  zh: 将这些跨用户收集起来，我们得到 `p`，一个向量，每个用户有一个条目。下面的直方图显示用户聚类成这三种类型：
 - en: '[PRE5]'
+  id: totrans-32
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE5]'
 - en: '*![](../Images/6ceb784578732e97977ff6e29130ba05.png)*  *We now show that we
     can approximate each rating \(Y_{ij}\) using just the product of two vectors:
     one describing user preferences (\(p\)) and one describing movie characteristics
     (\(q\)). To work with matrix algebra, we convert the vectors into matrices and
     multiply them:'
+  id: totrans-33
   prefs: []
   type: TYPE_NORMAL
+  zh: '*![](../Images/6ceb784578732e97977ff6e29130ba05.png)*  *我们现在表明，我们可以仅使用两个向量的乘积来近似每个评分
+    \(Y_{ij}\)：一个描述用户偏好（\(p\)），另一个描述电影特征（\(q\)）。为了与矩阵代数一起工作，我们将向量转换为矩阵并相乘：'
 - en: '[PRE6]'
+  id: totrans-34
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE6]'
 - en: '*![](../Images/6b80c2e2be8bc2a0236f7ec88b812b68.png)*  *The points fall roughly
     along the diagonal, which means the model captures a good amount of structure
     in the data. However, there is still substantial unexplained variation. Even after
     removing the “mob vs. romance” effect, we still see correlation patterns:'
+  id: totrans-35
   prefs: []
   type: TYPE_NORMAL
+  zh: '*![](../Images/6b80c2e2be8bc2a0236f7ec88b812b68.png)*  *点大致沿着对角线分布，这意味着模型捕捉到了数据中相当多的结构。然而，仍然存在大量的未解释变异。即使在移除了“动作片与浪漫片”效应之后，我们仍然看到相关性模式：'
 - en: '[PRE7]'
+  id: totrans-36
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE7]'
 - en: '*Looking more closely, this structure appears to come from whether or not Al
     Pacino is in the movie. This suggests we can improve the model by adding a second
     latent factor, one that distinguishes Pacino films from non-Pacino films. We do
     this by adding a second column to `q`:'
+  id: totrans-37
   prefs: []
   type: TYPE_NORMAL
+  zh: '*仔细观察，这种结构似乎来自于阿尔·帕西诺是否出现在电影中。这表明我们可以通过添加一个第二个潜在因素来改进模型，这个因素可以区分帕西诺电影和非帕西诺电影。我们通过在
+    `q` 中添加第二个列来实现这一点：'
 - en: '[PRE8]'
+  id: totrans-38
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE8]'
 - en: '*Now each movie is described by *two latent factors*:'
+  id: totrans-39
   prefs: []
   type: TYPE_NORMAL
+  zh: '*现在每部电影都由*两个潜在因素*来描述：'
 - en: Mob vs. romance
+  id: totrans-40
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 暴力 vs. 浪漫
 - en: Al Pacino vs. not Al Pacino
+  id: totrans-41
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 阿尔·帕西诺 vs. 非阿尔·帕西诺
 - en: 'We then fit a model for each user to estimate their preference for each factor:'
+  id: totrans-42
   prefs: []
   type: TYPE_NORMAL
+  zh: 然后，我们为每个用户拟合一个模型来估计他们对每个因素的偏好：
 - en: '[PRE9]'
+  id: totrans-43
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE9]'
 - en: '*Because `q` now has two columns, `lm` returns two coefficients per user. The
     first captures mob/romance preference, and the second captures whether the user
     tends to like Al Pacino films.'
+  id: totrans-44
   prefs: []
   type: TYPE_NORMAL
+  zh: '*因为 `q` 现在有两组列，`lm` 为每个用户返回两个系数。第一个系数捕捉群体/浪漫偏好，第二个系数捕捉用户是否倾向于喜欢阿尔·帕西诺的电影。'
 - en: We use `t` (transpose) because `apply` stacks results as columns, but we want
     one user per row.
+  id: totrans-45
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们使用 `t`（转置）是因为 `apply` 将结果堆叠为列，但我们希望每行有一个用户。
 - en: 'With two factors, our predictions improve:'
+  id: totrans-46
   prefs: []
   type: TYPE_NORMAL
+  zh: 使用两个因素，我们的预测能力提高了：
 - en: '[PRE10]'
+  id: totrans-47
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE10]'
 - en: '*![](../Images/8b7c8f7398a1e5485512599167f47446.png)*  *And now, if we look
     at the residual correlation'
+  id: totrans-48
   prefs: []
   type: TYPE_NORMAL
+  zh: '*![](../Images/8b7c8f7398a1e5485512599167f47446.png)*  *现在，如果我们看看残差相关性'
 - en: '[PRE11]'
+  id: totrans-49
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE11]'
 - en: '*there is no clear pattern left. The two latent factors now explain the main
     structure in the data.'
+  id: totrans-50
   prefs: []
   type: TYPE_NORMAL
+  zh: '*现在没有明显的模式了。这两个潜在因素现在解释了数据中的主要结构。'
 - en: 'This approximation with two factors can be written as:'
+  id: totrans-51
   prefs: []
   type: TYPE_NORMAL
+  zh: 这个包含两个因素的近似可以写成：
 - en: \[ Y_{ij} \approx p_{i1}q_{j1} + p_{i2}q_{j2}, i = 1 \dots, I \mbox{ and } j
     = 1, \dots, J \] with \(I\) the number of users and \(J\) the number of movies.
+  id: totrans-52
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ Y_{ij} \approx p_{i1}q_{j1} + p_{i2}q_{j2}, i = 1 \dots, I \mbox{ 和 } j =
+    1, \dots, J \] 其中 \(I\) 是用户数量，\(J\) 是电影数量。
 - en: 'Using matrix representation we can rewrite the above question like this:'
+  id: totrans-53
   prefs: []
   type: TYPE_NORMAL
+  zh: 使用矩阵表示，我们可以将上述问题重写如下：
 - en: \[ \mathbf{Y} \approx \mathbf{P}\mathbf{Q}^\top \] with \(\mathbf{Y}\) an \(I\times
     J\) matrix with entries \(Y_{ij}\), \(\mathbf{P}\) a \(I\times K\) matrix with
     entries \(p_{ik}\), and \(\mathbf{Q}\) a \(J\times K\) matrix with entries \(q_{jk}\).
+  id: totrans-54
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \mathbf{Y} \approx \mathbf{P}\mathbf{Q}^\top \] 其中 \(\mathbf{Y}\) 是一个 \(I\times
+    J\) 矩阵，其条目为 \(Y_{ij}\)，\(\mathbf{P}\) 是一个 \(I\times K\) 矩阵，其条目为 \(p_{ik}\)，而 \(\mathbf{Q}\)
+    是一个 \(J\times K\) 矩阵，其条目为 \(q_{jk}\)。
 - en: This analysis provides insights into the process generating our data since \(\mathbf{P}\)
     contains user-specific parameters and \(\mathbf{Q}\) contains movie-specific parameters.
     The approach is often referred to as *matrix factorization* because the rating
     matrix has been *factorized* into two lower-dimensional, interpretable matrices.
+  id: totrans-55
   prefs: []
   type: TYPE_NORMAL
+  zh: 这种分析揭示了生成我们数据的过程的见解，因为 \(\mathbf{P}\) 包含用户特定的参数，而 \(\mathbf{Q}\) 包含电影特定的参数。这种方法通常被称为
+    *矩阵分解*，因为评分矩阵已经被 *分解* 成两个低维、可解释的矩阵。
 - en: Note that the apporach also provides compression since the \(120 \times 6 =
     720\) observations can be well approximated by a matrix multiplication of a \(120
     \times 2\) matrix \(\mathbf{P}\) and a \(6 \times 2\) matrix \(\mathbf{Q}\), a
     total of \(252\) parameters.
+  id: totrans-56
   prefs: []
   type: TYPE_NORMAL
+  zh: 注意，这种方法还提供了压缩，因为 \(120 \times 6 = 720\) 个观测值可以被一个 \(120 \times 2\) 矩阵 \(\mathbf{P}\)
+    和一个 \(6 \times 2\) 矩阵 \(\mathbf{Q}\) 的矩阵乘积很好地近似，总共 \(252\) 个参数。
 - en: In our example with simulated data, we deduced the factors \(\mathbf{q}_1\)
     and \(\mathbf{q}_2\) from the sample correlation and our knowledge of movies.
     These ended up working well. However, in general deducing factors is not this
     easy. Furthermore, factors that provide good approximation might be more complicated
     than containing just two values. For example, *The Godfather III* has a romantic
     subplot so we might not know what value to assign it in `q_1`.
+  id: totrans-57
   prefs: []
   type: TYPE_NORMAL
+  zh: 在我们使用模拟数据的例子中，我们从样本相关性和我们对电影的了解中推导出了因素 \(\mathbf{q}_1\) 和 \(\mathbf{q}_2\)。这些因素最终表现良好。然而，一般来说，推导因素并不那么简单。此外，提供良好近似的因素可能比只包含两个值更复杂。例如，*《教父
+    III》* 有一个浪漫副线，所以我们可能不知道在 `q_1` 中给它分配什么值。
 - en: 'So, can we estimate the factors? A challenge is that if \(\mathbf{P}\) is unknown,
     our model is no longer linear: we can’t use `lm` to estimate both \(\mathbf{P}\)
     and \(\mathbf{Q}\). In the next sections, we describe how PCA can be used to estimate
     \(\mathbf{P}\) and \(\mathbf{Q}\).'
+  id: totrans-58
   prefs: []
   type: TYPE_NORMAL
+  zh: 那么，我们能否估计这些因素？一个挑战是，如果 \(\mathbf{P}\) 是未知的，我们的模型就不再是线性的：我们无法使用 `lm` 来估计 \(\mathbf{P}\)
+    和 \(\mathbf{Q}\)。在下一节中，我们将描述如何使用 PCA 来估计 \(\mathbf{P}\) 和 \(\mathbf{Q}\)。
 - en: '*We used `apply` and `lm` to estimate `p`. But there is a faster way to compute
     these estimates using linear algebra.'
+  id: totrans-59
   prefs: []
   type: TYPE_NORMAL
+  zh: '*我们使用了 `apply` 和 `lm` 来估计 `p`。但有一种更快的方法来使用线性代数计算这些估计。'
 - en: 'The `lm` function works by minimizing the sum of squared residuals. In matrix
     form, this leads to the normal equations:'
+  id: totrans-60
   prefs: []
   type: TYPE_NORMAL
+  zh: '`lm` 函数通过最小化残差的平方和来工作。在矩阵形式中，这导致正则方程：'
 - en: \[ (\mathbf{q}^\top\mathbf{q}) \, \hat{\mathbf{p}}_i = \mathbf{q}^\top \mathbf{y}_i
     \]
+  id: totrans-61
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ (\mathbf{q}^\top\mathbf{q}) \, \hat{\mathbf{p}}_i = \mathbf{q}^\top \mathbf{y}_i
+    \]
 - en: where \(\mathbf{y}_i\) is the column vector representing the \(i\)-th row of
     `y` passed to the `apply` call.
+  id: totrans-62
   prefs: []
   type: TYPE_NORMAL
+  zh: 其中 \(\mathbf{y}_i\) 是表示传递给 `apply` 调用的 `y` 的第 \(i\) 行的列向量。
 - en: 'The key observation is that \(\mathbf{q}\) is the same for every user, so running
     `lm` repeatedly is wasteful: it recomputes the same matrix operations each time.
     Instead, we can solve the system once and apply it efficiently to all users by
     using matrix operations:'
+  id: totrans-63
   prefs: []
   type: TYPE_NORMAL
+  zh: 关键观察结果是 \(\mathbf{q}\) 对每个用户都是相同的，因此反复运行 `lm` 是浪费的：它每次都重新计算相同的矩阵运算。相反，我们可以通过使用矩阵运算一次求解系统，然后高效地将其应用于所有用户：
 - en: '[PRE12]'
+  id: totrans-64
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE12]'
 - en: '*This computes all \(\hat{\mathbf{p}}_i\) values at once, avoiding thousands
     of separate model fits.*************'
+  id: totrans-65
   prefs: []
   type: TYPE_NORMAL
+  zh: '*这同时计算所有 \(\hat{\mathbf{p}}_i\) 值，避免了数千个单独的模型拟合。*************'
 - en: '****25.2 Connection to PCA****'
+  id: totrans-66
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '****25.2 与 PCA 的联系****'
 - en: '****Notice that in [Section 23.5](dimension-reduction.html#sec-pca) we learned
     that if we perform PCA on a matrix \(\mathbf{Y}\), we obtain a transformation
     \(\mathbf{V}\) that permits us to rewrite:'
+  id: totrans-67
   prefs: []
   type: TYPE_NORMAL
+  zh: '****注意，在[第 23.5 节](dimension-reduction.html#sec-pca)中我们了解到，如果我们对矩阵 \(\mathbf{Y}\)
+    执行 PCA，我们得到一个变换 \(\mathbf{V}\)，它允许我们重新编写：* '
 - en: \[ \mathbf{Y} = \mathbf{Z} \mathbf{V}^\top \]
+  id: totrans-68
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \mathbf{Y} = \mathbf{Z} \mathbf{V}^\top \]
 - en: with \(\mathbf{Z}\) the matrix of principal components.
+  id: totrans-69
   prefs: []
   type: TYPE_NORMAL
+  zh: 其中 \(\mathbf{Z}\) 是主成分矩阵。
 - en: 'Let’s perform PCA on the \(\mathbf{Y}\) constructed in the previous section
     and examine the results:'
+  id: totrans-70
   prefs: []
   type: TYPE_NORMAL
+  zh: 让我们在前一部分构建的 \(\mathbf{Y}\) 上执行主成分分析（PCA）并检查结果：
 - en: '[PRE13]'
+  id: totrans-71
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE13]'
 - en: '*First, notice that the first two PCs explain over 85% of the variability:'
+  id: totrans-72
   prefs: []
   type: TYPE_NORMAL
+  zh: '*首先，请注意，前两个主成分解释了超过 85% 的变异性*：'
 - en: '[PRE14]'
+  id: totrans-73
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE14]'
 - en: '*Next, notice that the first column of \(\mathbf{V}\):'
+  id: totrans-74
   prefs: []
   type: TYPE_NORMAL
+  zh: '*接下来，请注意 \(\mathbf{V}\) 的第一列*：'
 - en: '[PRE15]'
+  id: totrans-75
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE15]'
 - en: '*is assigning positive values to the mob movies and negative values to the
     romance movies.'
+  id: totrans-76
   prefs: []
   type: TYPE_NORMAL
+  zh: '*将正值分配给动作电影，将负值分配给浪漫电影*。'
 - en: 'The second column:'
+  id: totrans-77
   prefs: []
   type: TYPE_NORMAL
+  zh: 第二列：
 - en: '[PRE16]'
+  id: totrans-78
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE16]'
 - en: '*is coding for Al Pacino movies.'
+  id: totrans-79
   prefs: []
   type: TYPE_NORMAL
+  zh: '*这是为阿尔·帕西诺的电影编码*。'
 - en: PCA is automatically discovering the structure we inferred using our knowledge
     of the movies. This is not a coincidence, there is a mathematical connection that
     explains why PCA aligns with these latent patterns.
+  id: totrans-80
   prefs: []
   type: TYPE_NORMAL
+  zh: PCA 自动发现了我们使用对电影的知识推断出的结构。这不是巧合，存在一个数学联系，解释了为什么 PCA 与这些潜在模式相一致。
 - en: 'To see this assume that the data \(\mathbf{Y}\) follows the model:'
+  id: totrans-81
   prefs: []
   type: TYPE_NORMAL
+  zh: 为了看到这一点，假设数据 \(\mathbf{Y}\) 遵循以下模型：
 - en: \[ Y_{ij} = \sum_{k=1}^K p_{ik}q_{jk} + \varepsilon_{ij}, i=1,\dots,I, \, j
     = 1,\dots J \mbox{ or } \mathbf{Y} = \mathbf{P}\mathbf{Q} ^\top + \boldsymbol{\varepsilon}
     \] with the constraint
+  id: totrans-82
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ Y_{ij} = \sum_{k=1}^K p_{ik}q_{jk} + \varepsilon_{ij}, i=1,\dots,I, \, j
+    = 1,\dots J \mbox{ 或 } \mathbf{Y} = \mathbf{P}\mathbf{Q} ^\top + \boldsymbol{\varepsilon}
+    \] 带有约束条件
 - en: \[ \mathbf{Q}^\top\mathbf{Q} = \mathbf{I} \]
+  id: totrans-83
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \mathbf{Q}^\top\mathbf{Q} = \mathbf{I} \]
 - en: '*To understand why we need this constraint, notice that without it the model
     is not uniquely defined, it is *unidentifiable*. For example, we can multiply
     any column of \(\mathbf{P}\) by a constant \(c > 0\) and divide the corresponding
@@ -364,119 +546,181 @@
     and ordered by the variance they explain. This explains why PCA naturally recovers
     interpretable patterns, such as genre preferences or actor-specific effects, without
     us explicitly coding them into the model.'
+  id: totrans-84
   prefs: []
   type: TYPE_NORMAL
+  zh: '*为了理解为什么我们需要这个约束条件，请注意，如果没有这个约束条件，模型不是唯一确定的，它是*不可识别的*。例如，我们可以将 \(\mathbf{P}\)
+    的任何列乘以一个常数 \(c > 0\)，并将 \(\mathbf{Q}\) 的相应列除以相同的常数，而 \(\mathbf{P}\mathbf{Q}^\top\)
+    的乘积保持不变。这个约束条件消除了缩放的不确定性，并确保了分解有明确的格式。*  *主成分的前 \(K\) 列和相关的旋转矩阵分别提供了 \(\mathbf{P}\)
+    和 \(\mathbf{Q}\) 的估计。换句话说，PCA 可以被视为一个潜在因子模型的特例，其中潜在因子被选择为正交的，并按它们解释的方差进行排序。这解释了为什么
+    PCA 可以自然地恢复可解释的模式，例如类型偏好或特定演员的影响，而无需我们将其显式地编码到模型中*。'
 - en: 'Another way to see this connection is through optimization. PCA can be formulated
     as the solution to a least squares problem: among all possible \(K\)-dimensional
     projections of the data, PCA finds the one that minimizes the reconstruction error,
     that is, the sum of squared differences between the original data \(\mathbf{Y}\)
     and its approximation \(\mathbf{P}\mathbf{Q}^\top\). In this sense, PCA provides
     the best rank-\(K\) approximation of \(\mathbf{Y}\) in the least squares sense.'
+  id: totrans-85
   prefs: []
   type: TYPE_NORMAL
+  zh: 另一种看到这种联系的方法是通过优化。主成分分析（PCA）可以表述为最小二乘问题的解：在所有可能的 \(K\) 维数据投影中，PCA 找到最小化重建误差的那个，即原始数据
+    \(\mathbf{Y}\) 和其近似 \(\mathbf{P}\mathbf{Q}^\top\) 之间平方差的和。从这个意义上讲，PCA 在最小二乘意义上提供了
+    \(\mathbf{Y}\) 的最佳 \(K\) 阶近似。
 - en: 'This dual interpretation, both as a factor model and as a least squares optimizer,
     highlights why PCA is such a powerful tool for uncovering hidden structure in
     high-dimensional data: it compresses the data efficiently while also providing
     factors that capture the dominant sources of variation.'
+  id: totrans-86
   prefs: []
   type: TYPE_NORMAL
+  zh: 这种双重解释，即作为因子模型和最小二乘优化器，突出了为什么 PCA 是揭示高维数据中隐藏结构如此强大的工具：它有效地压缩了数据，同时提供了捕捉主要变异来源的因子。
 - en: '*Even with the orthogonality constraint, the PCA solution is not completely
     unique.'
+  id: totrans-87
   prefs: []
   type: TYPE_NORMAL
+  zh: '*即使有正交约束，PCA 的解也不是完全唯一的。'
 - en: 'There remains a *sign indeterminacy*: we can flip the sign of any column in
     \(\mathbf{P}\) and the corresponding column in \(\mathbf{Q}\) (multiply one by
     \(-1\) and the other by \(-1\)) without changing the product \(\mathbf{P}\mathbf{Q}^\top\).'
+  id: totrans-88
   prefs: []
   type: TYPE_NORMAL
+  zh: 还存在一个*符号不确定性*：我们可以翻转 \(\mathbf{P}\) 中任何列和 \(\mathbf{Q}\) 中相应列的符号（一个乘以 \(-1\)，另一个也乘以
+    \(-1\)），而不会改变乘积 \(\mathbf{P}\mathbf{Q}^\top\)。
 - en: Thus, the factorization is identifiable only up to these sign changes.**********
+  id: totrans-89
   prefs: []
   type: TYPE_NORMAL
+  zh: 因此，因式分解只能识别到这些符号变化为止。**********
 - en: '*****25.3 Case study: recommendation systems*****'
+  id: totrans-90
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '*****25.3 案例研究：推荐系统*****'
 - en: '*****We now move back from the small simulated example to the real Movielens
     dataset. In the previous section, we used a toy setting to illustrate how latent
     factors can capture patterns such as “mob vs. romance” or “Al Pacino vs. not Al
     Pacino”. Here, we show that similar latent structure is present in the real movie
     ratings and that we can exploit it to further improve predictions.'
+  id: totrans-91
   prefs: []
   type: TYPE_NORMAL
+  zh: '*****我们现在从小的模拟示例回到真实的 Movielens 数据集。在上一节中，我们使用一个玩具设置来说明潜在因子如何捕捉“黑帮 vs. 爱情片”或“阿尔·帕西诺
+    vs. 非阿尔·帕西诺”等模式。在这里，我们展示真实的电影评分中也存在类似的潜在结构，并且我们可以利用它来进一步提高预测。'
 - en: 'Starting from the residuals of our regularized user + movie model (introduced
     in [Chapter 24](regularization.html)), we can examine how movie ratings correlate
     after accounting for overall averages and user and movie effects. Focusing on
     a small set of well-known titles, we compute the correlation matrix of these residuals:'
+  id: totrans-92
   prefs: []
   type: TYPE_NORMAL
+  zh: 从我们正则化的用户 + 电影模型（在第 24 章中介绍）的残差开始，我们可以检查在考虑整体平均值和用户及电影效应后，电影评分的相关性。我们关注一小部分知名标题，计算这些残差的相关矩阵：
 - en: '[PRE17]'
+  id: totrans-93
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE17]'
 - en: As in the simulated example, we see clear correlation patterns. For instance,
     *The Godfather*, *The Godfather Part II*, and *Goodfellas* share similar residuals,
     while romantic comedies show different behavior. This suggests that ratings are
     influenced by *latent characteristics* that group movies and users in meaningful
     ways.
+  id: totrans-94
   prefs: []
   type: TYPE_NORMAL
+  zh: 正如模拟示例中所示，我们看到了明显的相关性模式。例如，*教父*，*教父续集*和*好家伙*具有相似的残差，而浪漫喜剧则表现出不同的行为。这表明评分受到影响*潜在特征*，这些特征以有意义的方式将电影和用户分组。
 - en: A latent factor model for movie ratings
+  id: totrans-95
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 电影评分的潜在因子模型
 - en: This motivates extending our earlier model. We now incorporate latent factors
     that capture similarities between movies and users. This leads us to a simplified
     version of the approach used by the winning Netflix Prize team, which combined
     latent factor models with the regularization methods developed in [Chapter 24](regularization.html).
+  id: totrans-96
   prefs: []
   type: TYPE_NORMAL
+  zh: 这促使我们扩展早期的模型。我们现在纳入了捕捉电影和用户之间相似性的潜在因子。这使我们采用了获奖 Netflix 奖团队使用的方法的简化版本，该团队结合了潜在因子模型和在第
+    24 章中开发的正则化方法。
 - en: 'To account for interactions such as these, we use a latent factor model. Specifically,
     we extend the model from [Chapter 24](regularization.html) to include factors
     that capture similarities between movies:'
+  id: totrans-97
   prefs: []
   type: TYPE_NORMAL
+  zh: 为了考虑这些交互作用，我们使用一个潜在因子模型。具体来说，我们将模型从第 24 章扩展到包括捕捉电影之间相似性的因子：
 - en: \[ Y_{ij} = \mu + \alpha_i + \beta_j + \sum_{k=1}^K p_{ik}q_{jk} + \varepsilon_{ij}
     \]
+  id: totrans-98
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ Y_{ij} = \mu + \alpha_i + \beta_j + \sum_{k=1}^K p_{ik}q_{jk} + \varepsilon_{ij}
+    \]
 - en: Recall that, as explained in the previous chapter, we do not observe all \((i,j)\)
     combinations. Writing the data as an \(I \times J\) matrix \(\mathbf{Y}\), with
     \(I\) users and \(J\) movies, would produce many missing values.
+  id: totrans-99
   prefs: []
   type: TYPE_NORMAL
+  zh: 回想一下，正如前一章所解释的，我们并没有观察到所有 \((i,j)\) 组合。将数据表示为一个 \(I \times J\) 矩阵 \(\mathbf{Y}\)，其中
+    \(I\) 是用户，\(J\) 是电影，会产生许多缺失值。
 - en: However, the sum \(\sum_{k=1}^K p_{ik}q_{jk}\) can be expressed as the \(I \times
     J\) matrix product \(\mathbf{P}\mathbf{Q}^\top\), where \(\mathbf{P}\) is an \(I
     \times K\) matrix and \(\mathbf{Q}\) is a \(J \times K\) matrix. Estimating all
     parameters effectively fills in every cell of the \(I \times J\) matrix, giving
     predictions for all \((i,j)\) pairs.
+  id: totrans-100
   prefs: []
   type: TYPE_NORMAL
+  zh: 然而，求和 \(\sum_{k=1}^K p_{ik}q_{jk}\) 可以表示为 \(I \times J\) 矩阵乘积 \(\mathbf{P}\mathbf{Q}^\top\)，其中
+    \(\mathbf{P}\) 是一个 \(I \times K\) 矩阵，\(\mathbf{Q}\) 是一个 \(J \times K\) 矩阵。估计所有参数实际上是在
+    \(I \times J\) 矩阵的每个单元格中填充，为所有 \((i,j)\) 对提供预测。
 - en: 'So if this latent factor model is a good approximation, we don’t actually need
     to observe every user-movie rating to make predictions. Instead, we just need
     enough observed ratings to estimate the latent factor matrices \(\mathbf{P}\)
     (for users) and \(\mathbf{Q}\) (for movies). Once we have these matrices, we can
     predict any user-movie combination, even those not seen in the training data,
     simply by computing:'
+  id: totrans-101
   prefs: []
   type: TYPE_NORMAL
+  zh: 因此，如果这个潜在因子模型是一个好的近似，我们实际上不需要观察每个用户-电影评分来做出预测。相反，我们只需要足够的观察评分来估计潜在因子矩阵 \(\mathbf{P}\)（用于用户）和
+    \(\mathbf{Q}\)（用于电影）。一旦我们有了这些矩阵，我们就可以通过计算来预测任何用户-电影组合，即使这些组合在训练数据中没有出现过：
 - en: \[ \hat{y}_{ij} \approx \hat{\mu} + \hat{\alpha}_i + \hat{\beta}_j + \hat{p}_i^\top
     \hat{q}_j \]
+  id: totrans-102
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \hat{y}_{ij} \approx \hat{\mu} + \hat{\alpha}_i + \hat{\beta}_j + \hat{p}_i^\top
+    \hat{q}_j \]
 - en: Regularization
+  id: totrans-103
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 正则化
 - en: 'Given the large number of parameters and the sparsity of the data, especially
     for movies with few ratings, it is appropriate to use penalized least squares.
     We therefore minimize:'
+  id: totrans-104
   prefs: []
   type: TYPE_NORMAL
+  zh: 由于参数数量众多且数据稀疏，特别是对于评分较少的电影，使用惩罚最小二乘法是合适的。因此，我们最小化：
 - en: \[ \frac{1}{N} \sum_{i,j} \left[Y_{ij} - \left(\mu + \alpha_i + \beta_j + \sum_{k=1}^K
     p_{ik}q_{jk}\right)\right]^2 + \lambda_1 \left( \|\boldsymbol{\alpha}\|^2 + \|\boldsymbol{\beta}\|^2
     \right) + \lambda_2 \sum_{k=1}^K \left( \|\mathbf{p}_k\|^2+ \|\mathbf{q}_k\|^2
     \right) \]
+  id: totrans-105
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \frac{1}{N} \sum_{i,j} \left[Y_{ij} - \left(\mu + \alpha_i + \beta_j + \sum_{k=1}^K
+    p_{ik}q_{jk}\right)\right]^2 + \lambda_1 \left( \|\boldsymbol{\alpha}\|^2 + \|\boldsymbol{\beta}\|^2
+    \right) + \lambda_2 \sum_{k=1}^K \left( \|\mathbf{p}_k\|^2+ \|\mathbf{q}_k\|^2
+    \right) \]
 - en: Here, \(N\) is the number of observed ratings, \(I\) the number of users, and
     \(J\) the number of movies. The vectors \(\boldsymbol{\alpha}\) and \(\boldsymbol{\beta}\)
     are the user and movie effects, \(\boldsymbol{\alpha} = (\alpha_1,\dots,\alpha_I)^\top\)
@@ -484,21 +728,32 @@
     = (p_{1k}, \dots, p_{Ik})^\top\) and \(\mathbf{q}_k = (q_{1k}, \dots, q_{Jk})^\top\)
     are the \(k\)-th latent factor components. Recall that \(|\boldsymbol{\alpha}|^2\)
     denotes the sum of squares, \(\sum_{i=1}^I \alpha_i^2\).
+  id: totrans-106
   prefs: []
   type: TYPE_NORMAL
+  zh: 在这里，\(N\) 表示观察到的评分数量，\(I\) 表示用户数量，\(J\) 表示电影数量。向量 \(\boldsymbol{\alpha}\) 和
+    \(\boldsymbol{\beta}\) 分别是用户和电影效应，\(\boldsymbol{\alpha} = (\alpha_1,\dots,\alpha_I)^\top\)
+    和 \(\boldsymbol{\beta} = (\beta_1,\dots,\beta_J)^\top\)。向量 \(\mathbf{p}_k = (p_{1k},
+    \dots, p_{Ik})^\top\) 和 \(\mathbf{q}_k = (q_{1k}, \dots, q_{Jk})^\top\) 是第 \(k\)
+    个潜在因子成分。回想一下，\(|\boldsymbol{\alpha}|^2\) 表示平方和，\(\sum_{i=1}^I \alpha_i^2\)。
 - en: 'We use two penalties: \(\lambda_1\) for the linear effects (the \(\alpha\)s
     and \(\beta\)s), and \(\lambda_2\) for the latent factors. This lets us regularize
     the two components differently, reflecting their distinct roles in the model.'
+  id: totrans-107
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们使用两种惩罚：\(\lambda_1\) 用于线性效应（\(\alpha\) 和 \(\beta\)），\(\lambda_2\) 用于潜在因子。这使我们能够对两个组件进行不同的正则化，反映了它们在模型中的不同角色。
 - en: How do we estimate the parameters in this model? The challenge comes from the
     fact that both the \(p\)s and \(q\)s are unknown and appear multiplied together,
     making the model nonlinear in its parameters. In earlier sections, we highlighted
     the connection between factor analysis and principal component analysis (PCA),
     and showed that in settings with complete data, PCA can be used to estimate the
     latent factors of a factor analysis model.
+  id: totrans-108
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们如何估计这个模型中的参数？挑战来自于 \(p\) 和 \(q\) 都是未知的，并且它们以乘积的形式出现，使得模型在参数上是非线性的。在前面几节中，我们强调了因子分析与主成分分析（PCA）之间的联系，并展示了在完整数据的情况下，PCA
+    可以用来估计因子分析模型的潜在因子。
 - en: 'However, recommendation systems present a critical complication: the rating
     matrix is extremely sparse. Most users only rate a small subset of movies, so
     the data matrix has many missing entries. PCA and related approaches require a
@@ -506,8 +761,11 @@
     addition, while PCA provides least squares estimates, here we want to use *penalized
     least squares*, which allows us to regularize the parameters and avoid overfitting
     when the data for some users or movies are limited.'
+  id: totrans-109
   prefs: []
   type: TYPE_NORMAL
+  zh: 然而，推荐系统提出了一个关键复杂性：评分矩阵非常稀疏。大多数用户只对一小部分电影进行评分，因此数据矩阵有许多缺失项。PCA 和相关方法需要完全观察的矩阵，因此它们不能直接应用于此上下文。此外，虽然
+    PCA 提供了最小二乘估计，但在这里我们想使用 *惩罚最小二乘法*，这允许我们对参数进行正则化，并在某些用户或电影的数据有限时避免过拟合。
 - en: 'To address these challenges, we again turn to the *Alternating Least Squares
     (ALS)* algorithm described in [Section 24.1.7](regularization.html#sec-movie-effects).
     The key idea is to alternately estimate each column of \(\mathbf{P}\) and \(\mathbf{Q}\):
@@ -517,179 +775,273 @@
     latent factors are regularized separately. For these reasons, ALS has become one
     of the standard approaches for fitting latent factor models in recommendation
     systems, where sparsity makes direct application of PCA infeasible.'
+  id: totrans-110
   prefs: []
   type: TYPE_NORMAL
+  zh: 为了解决这些挑战，我们再次转向 [第24.1.7节](regularization.html#sec-movie-effects) 中描述的 *交替最小二乘法
+    (ALS)* 算法。关键思想是交替估计 \(\mathbf{P}\) 和 \(\mathbf{Q}\) 的每一列：固定所有列除了一个，使用惩罚最小二乘法求解那一列，然后切换到所有列。这种交替方法也自然地扩展到模型的惩罚版本，其中用户和电影效应以及潜在因子分别进行正则化。因此，ALS
+    已成为推荐系统中拟合潜在因子模型的标准方法之一，因为在推荐系统中，稀疏性使得直接应用 PCA 不可行。
 - en: 'The **dslabs** package provides the `fit_recommender_model` function, which
     implements a latent factor model with regularization:'
+  id: totrans-111
   prefs: []
   type: TYPE_NORMAL
+  zh: '**dslabs** 包提供了 `fit_recommender_model` 函数，该函数实现了一个带有正则化的潜在因子模型：'
 - en: '[PRE18]'
+  id: totrans-112
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE18]'
 - en: '*You can learn more about the function, including default parameter choices,
     by running `?fit_recommender_model` and examining the source code.'
+  id: totrans-113
   prefs: []
   type: TYPE_NORMAL
+  zh: '*您可以通过运行 `?fit_recommender_model` 并检查源代码来了解更多关于该函数的信息。*'
 - en: 'Once we have a fitted model, we can build predictions for the test set and
     compute the RMSE:'
+  id: totrans-114
   prefs: []
   type: TYPE_NORMAL
+  zh: 一旦我们有一个拟合的模型，我们就可以为测试集构建预测并计算 RMSE：
 - en: '[PRE19]'
+  id: totrans-115
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE19]'
 - en: '*This improves accuracy beyond the regularized user + movie effects model from
     [Chapter 24](regularization.html). It illustrates, in simplified form, how the
     Netflix Prize winners improved prediction: by combining regularization with a
     latent factor model that learns hidden structure in user–movie interactions.'
+  id: totrans-116
   prefs: []
   type: TYPE_NORMAL
+  zh: '*这提高了准确性，超过了 [第24章](regularization.html) 中的正则化用户 + 电影效应模型。它以简化的形式说明了 Netflix
+    奖获奖者如何改进预测：通过结合正则化与学习用户-电影交互中隐藏结构的潜在因子模型。*'
 - en: Importantly, this improvement is achieved without tuning the penalty terms \(\lambda_1\)
     and \(\lambda_2\), the number of latent factors \(K\), or other model settings
     discussed next.**
+  id: totrans-117
   prefs: []
   type: TYPE_NORMAL
+  zh: '**重要的是，这种改进是在没有调整惩罚项 \(\lambda_1\) 和 \(\lambda_2\)、潜在因子数量 \(K\) 或其他后续讨论的模型设置的情况下实现的。**'
 - en: '**Visualizing factors**'
+  id: totrans-118
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '**可视化因子**'
 - en: '**Examining the estimated movie factors \(\mathbf{q}_k\) reveals that they
     are interpretable.'
+  id: totrans-119
   prefs: []
   type: TYPE_NORMAL
+  zh: '**检查估计的电影因子 \(\mathbf{q}_k\) 可以发现它们是可解释的。**'
 - en: 'The estimates for these factors are contained in `fit$q`. Because some movies
     do not have enough ratings to stably estimate latent factors, the `fit_recommender_model`
     function excludes these movies from the estimation. We therefore obtain the estimated
     movie factors \(\mathbf{q}_k\) using:'
+  id: totrans-120
   prefs: []
   type: TYPE_NORMAL
+  zh: 这些因子的估计包含在 `fit$q` 中。由于一些电影没有足够的评分来稳定估计潜在因子，`fit_recommender_model` 函数将这些电影排除在估计之外。因此，我们使用以下方法获得估计的电影因子
+    \(\mathbf{q}_k\)：
 - en: '[PRE20]'
+  id: totrans-121
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE20]'
 - en: '*To make interpretation easier, we replace the row names (which are movie IDs)
     with movie titles:'
+  id: totrans-122
   prefs: []
   type: TYPE_NORMAL
+  zh: '*为了使解释更容易，我们用电影标题替换了行名（即电影ID）：*'
 - en: '[PRE21]'
+  id: totrans-123
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE21]'
 - en: '*Plotting the first two factors reveals several insights. First note that the
     six movies of our earlier example are highlighted in blue: we can see that these
     two factors start to explain the correlations we saw earlier, with mob films clustering
     together, romance films far from these, and the Al Pacino being somewhere in between:'
+  id: totrans-124
   prefs: []
   type: TYPE_NORMAL
+  zh: '*绘制前两个因子可以揭示几个见解。首先注意，我们早期示例中的六部电影用蓝色突出显示：我们可以看到这两个因子开始解释我们之前看到的关联，动作电影聚集在一起，爱情电影远离这些电影，而阿尔·帕西诺则位于中间某个位置：*'
 - en: '![](../Images/d1f46796cc607b7b0489d89a19f9b727.png)'
+  id: totrans-125
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/d1f46796cc607b7b0489d89a19f9b727.png)'
 - en: Looking at the movies with the most extreme factor values (red) provides a clear
     interpreation for the factors.
+  id: totrans-126
   prefs: []
   type: TYPE_NORMAL
+  zh: 观察具有最极端因子值（红色）的电影提供了对因子的明确解释。
 - en: The first factor separates iconic dark classics
+  id: totrans-127
   prefs: []
   type: TYPE_NORMAL
+  zh: 第一个因子区分标志性黑暗经典
 - en: '[PRE22]'
+  id: totrans-128
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE22]'
 - en: '*from Hollywood blockbusters'
+  id: totrans-129
   prefs: []
   type: TYPE_NORMAL
+  zh: '*来自好莱坞大片'
 - en: '[PRE23]'
+  id: totrans-130
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE23]'
 - en: '*The second factor separates weird cult movies'
+  id: totrans-131
   prefs: []
   type: TYPE_NORMAL
+  zh: '*第二个因子区分奇怪的文化电影'
 - en: '[PRE24]'
+  id: totrans-132
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE24]'
 - en: '*from big-budget epic historical and fantasy sagas'
+  id: totrans-133
   prefs: []
   type: TYPE_NORMAL
+  zh: '*来自大预算史诗历史和奇幻史诗'
 - en: '[PRE25]'
+  id: totrans-134
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE25]'
 - en: '*These results demonstrate that the latent factors capture meaningful distinctions
     in film genres and styles, showing how latent factor models can uncover interpretable
     structure from sparse rating data.********'
+  id: totrans-135
   prefs: []
   type: TYPE_NORMAL
+  zh: '*这些结果表明，潜在因子捕捉到了电影类型和风格中的有意义区别，展示了潜在因子模型如何从稀疏评分数据中揭示可解释的结构。********'
 - en: '***Practical considerations***'
+  id: totrans-136
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '***实际考虑***'
 - en: '***The `fit_recommender_model` function includes several adjustable parameters:'
+  id: totrans-137
   prefs: []
   type: TYPE_NORMAL
+  zh: '***`fit_recommender_model` 函数包括几个可调整的参数：'
 - en: 'Penalty terms: by default, \(\lambda_1 = 0.00005\) and \(\lambda_2 = 0.0001\).
     A grid search, as in [Section 24.3](regularization.html#sec-selecting-penalty-term),
     can identify better choices.'
+  id: totrans-138
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 惩罚项：默认情况下，\(\lambda_1 = 0.00005\) 和 \(\lambda_2 = 0.0001\)。与 [第 24.3 节](regularization.html#sec-selecting-penalty-term)
+    中的网格搜索一样，可以识别更好的选择。
 - en: 'Number of latent factors: the default is \(K = 8\), but this may not be optimal.
     If \(K\) is too small, the model may miss structure. If \(K\) is too large, the
     model risks overfitting and instability.'
+  id: totrans-139
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 潜在因子的数量：默认值是 \(K = 8\)，但这可能不是最优的。如果 \(K\) 太小，模型可能会错过结构。如果 \(K\) 太大，模型可能会过拟合且不稳定。
 - en: 'Minimum ratings per movie: the function only estimates latent factors for movies
     with at least 20 ratings. This helps avoid unstable estimates of the \(q\) vectors.
     However, 20 may be too high, or too low, depending on the dataset.'
+  id: totrans-140
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 每部电影的最小评分：该函数仅估计至少有 20 个评分的电影的潜在因子。这有助于避免 \(q\) 向量的不稳定估计。然而，20 可能太高或太低，这取决于数据集。
 - en: 'Convergence tolerance: the default stopping rule requires model improvement
     below `reltol`. Decreasing the tolerance will make results better, but increasing
     the tolerance often speeds up computation with little loss in accuracy.'
+  id: totrans-141
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 收敛容忍度：默认的停止规则要求模型改进低于 `reltol`。降低容忍度会使结果更好，但提高容忍度通常会加快计算速度，而精度损失很小。
 - en: Further improvements can be made by adding more predictors, such as rating timestamps
     or movie genres.
+  id: totrans-142
   prefs: []
   type: TYPE_NORMAL
+  zh: 通过添加更多预测因子，如评分时间戳或电影类型，可以进行进一步的改进。
 - en: Finally, the winning team’s breakthrough came from recognizing that missing
     ratings are informative. Users tend to avoid movies they expect to dislike, meaning
     that the absence of a rating is not random. By modeling this structure, they achieved
     state-of-the-art performance that ultimately led to victory.********
+  id: totrans-143
   prefs: []
   type: TYPE_NORMAL
+  zh: 最后，获胜团队的突破在于认识到缺失的评分是有信息的。用户倾向于避免他们预期会不喜欢的电影，这意味着评分的缺失不是随机的。通过建模这种结构，他们实现了最先进的性能，最终导致了胜利。********
 - en: '****25.4 Singular Value Decomposition****'
+  id: totrans-144
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '****25.4 奇异值分解****'
 - en: '****A related technique often used in latent factor analysis is the Singular
     Value Decomposition (SVD). It states any \(N \times p\) matrix can be written:'
+  id: totrans-145
   prefs: []
   type: TYPE_NORMAL
+  zh: '****在潜在因子分析中常用的一种相关技术是奇异值分解（SVD）。它表明任何 \(N \times p\) 矩阵都可以写成：'
 - en: \[ \mathbf{Y} = \mathbf{U}\mathbf{D}\mathbf{V}^\top \]
+  id: totrans-146
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \mathbf{Y} = \mathbf{U}\mathbf{D}\mathbf{V}^\top \]
 - en: 'where \(\mathbf{U}\) is an orthogonal \(N \times p\) matrix, \(\mathbf{V}\)
     an orthogonal \(p \times p\) matrix, and \(\mathbf{D}\) diagonal with \(d_{1,1}
     \geq d_{2,2} \geq \dots \geq d_{p,p}\). SVD is connected to PCA because \(\mathbf{V}\)
     provides the rotations for the principal components, while \(\mathbf{U}\mathbf{D}\)
     are the principal components themselves. Squaring the diagonal entries of \(\mathbf{D}\)
     gives the sums of squares:'
+  id: totrans-147
   prefs: []
   type: TYPE_NORMAL
+  zh: 其中 \(\mathbf{U}\) 是一个正交的 \(N \times p\) 矩阵，\(\mathbf{V}\) 是一个正交的 \(p \times
+    p\) 矩阵，而 \(\mathbf{D}\) 是对角线上的 \(d_{1,1} \geq d_{2,2} \geq \dots \geq d_{p,p}\)。SVD
+    与 PCA 相关联，因为 \(\mathbf{V}\) 提供了主成分的旋转，而 \(\mathbf{U}\mathbf{D}\) 本身就是主成分。对 \(\mathbf{D}\)
+    的对角线元素进行平方得到平方和：
 - en: \[ \mathbf{U}^\top \mathbf{D} \mathbf{U} = \mathbf{D}^2 \]
+  id: totrans-148
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \mathbf{U}^\top \mathbf{D} \mathbf{U} = \mathbf{D}^2 \]
 - en: 'In R, we can compute the SVD with `svd` and confirm its relationship to PCA:'
+  id: totrans-149
   prefs: []
   type: TYPE_NORMAL
+  zh: 在 R 中，我们可以使用 `svd` 来计算 SVD 并确认其与 PCA 的关系：
 - en: '[PRE26]'
+  id: totrans-150
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE26]'
 - en: '*As an optimization, note that `s$u %*% diag(s$d)` can be written more efficiently
     as:'
+  id: totrans-151
   prefs: []
   type: TYPE_NORMAL
+  zh: '*作为一个优化点，请注意 `s$u %*% diag(s$d)` 可以更高效地写成：'
 - en: '[PRE27]'
+  id: totrans-152
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE27]'
 - en: '*The Singular Value Decomposition is one of the most widely used tools in modern
     data analysis, appearing in fields as diverse as signal processing, genomics,
     image compression, natural language processing, collaborative filtering, and numerical
@@ -698,303 +1050,465 @@
     In fact, many of the most successful machine learning algorithms, including the
     latent factor methods used in the Netflix Prize, are built directly on top of
     it.******'
+  id: totrans-153
   prefs: []
   type: TYPE_NORMAL
+  zh: '*奇异值分解是现代数据分析中最广泛使用的工具之一，它出现在信号处理、基因组学、图像压缩、自然语言处理、协同过滤和数值优化等众多领域。每次我们想要降低维度、揭示隐藏结构或处理大型、噪声矩阵时，SVD
+    都提供了一个原则性的基础。事实上，许多最成功的机器学习算法，包括 Netflix Prize 中使用的潜在因素方法，都是直接建立在它之上的。******'
 - en: '****25.5 Exercises****'
+  id: totrans-154
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '****25.5 练习****'
 - en: '****1\. Examine the movie names in the extreme values of factors 3, 4, 5, 6,
     7, and 8\. Describe any interesting patterns you observe.'
+  id: totrans-155
   prefs: []
   type: TYPE_NORMAL
+  zh: '****1. 检查因素 3、4、5、6、7 和 8 的极端值中的电影名称。描述你观察到的任何有趣模式。'
 - en: 2\. Fit the recommender model with several values of
+  id: totrans-156
   prefs: []
   type: TYPE_NORMAL
+  zh: 2. 使用几个不同的值拟合推荐模型
 - en: '[PRE28]'
+  id: totrans-157
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE28]'
 - en: '*Which pair gives the lowest RMSE on a validation set? Briefly explain why
     too little or too much penalization can hurt performance.'
+  id: totrans-158
   prefs: []
   type: TYPE_NORMAL
+  zh: '*哪一对在验证集上给出了最低的 RMSE？简要解释为什么过少的或过多的惩罚会损害性能。'
 - en: 3\. Fit the model with \(K = 2, 4, 8, 16, 32\). Plot validation RMSE versus
     \(K\). At what point do gains level off? Based on the plot, what value of \(K\)
     would you recommend?
+  id: totrans-159
   prefs: []
   type: TYPE_NORMAL
+  zh: 3. 使用 \(K = 2, 4, 8, 16, 32\) 来拟合模型。绘制验证 RMSE 与 \(K\) 的关系图。在什么点上收益趋于平稳？根据图表，你推荐哪个
+    \(K\) 值？
 - en: 4\. Using your results from Exercises 2 and 3, perform a grid search over three
     values of each parameter, \(\lambda_1\), \(\lambda_2\), and \(K\), for a total
     of \(3 \times 3 \times 3 = 27\) combinations. Report the lowest RMSE.
+  id: totrans-160
   prefs: []
   type: TYPE_NORMAL
+  zh: 4. 使用练习 2 和 3 的结果，对每个参数 \(\lambda_1\)、\(\lambda_2\) 和 \(K\) 的三个值进行网格搜索，总共有 \(3
+    \times 3 \times 3 = 27\) 种组合。报告最低的 RMSE。
 - en: 5\. The default model estimates movie factors only for movies with at least
     20 ratings. Try thresholds of 5, 10, 20, and 50\. How does the RMSE change? Which
     threshold seems to balance stability and coverage best?
+  id: totrans-161
   prefs: []
   type: TYPE_NORMAL
+  zh: 5. 默认模型仅对至少有 20 个评分的电影估计电影因素。尝试阈值 5、10、20 和 50。RMSE 如何变化？哪个阈值似乎在稳定性和覆盖范围之间取得了最佳平衡？
 - en: 6\. Run the ALS algorithm with stopping rules `reltol = 10^-seq(1, 8, 0.5)`.
     Record the number of iterations taken and the final RMSE. Is the improvement from
     tighter convergence worth the additional computation?
+  id: totrans-162
   prefs: []
   type: TYPE_NORMAL
+  zh: 6. 使用 `reltol = 10^-seq(1, 8, 0.5)` 作为停止规则运行 ALS 算法。记录迭代的次数和最终的 RMSE。更紧密的收敛是否值得额外的计算？
 - en: In next exercises we use the singular value decomposition (SVD) to estimate
     latent factors in a school-performance example.
+  id: totrans-163
   prefs: []
   type: TYPE_NORMAL
+  zh: 在接下来的练习中，我们使用奇异值分解（SVD）来估计学校表现示例中的潜在因素。
 - en: 'We simulate grades for 100 students in 24 different courses, grouped into three
     subject areas: Math, Science, and Arts. The columns are individual courses (for
     example, Calculus, Linear Algebra, Physics, Chemistry, Music Theory, Painting),
     labeled `Math_1`, …, `Math_k`, `Science_1`, …, `Science_k`, and `Arts_1`, …, `Arts_k`.'
+  id: totrans-164
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们模拟了 100 名学生在 24 门不同课程中的成绩，这些课程分为三个学科领域：数学、科学和艺术。列表示单个课程（例如，微积分、线性代数、物理、化学、音乐理论、绘画），标记为
+    `Math_1` …, `Math_k`，`Science_1` …, `Science_k`，和 `Arts_1` …, `Arts_k`。
 - en: 'Each entry represents points above/below the overall average for that test:'
+  id: totrans-165
   prefs: []
   type: TYPE_NORMAL
+  zh: 每个条目代表该测试的整体平均分之上/之下：
 - en: 0 = average (C),
+  id: totrans-166
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 0 = 平均（C），
 - en: 25 = very high (A+),
+  id: totrans-167
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 25 = 非常高（A+），
 - en: −25 = very low (F).
+  id: totrans-168
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: −25 = 非常低（F）。
 - en: 'We assume the following model holds:'
+  id: totrans-169
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们假设以下模型成立：
 - en: '\[ Y_{ij} = \mu_{ij} + \varepsilon_{ij} \] with \(\mu_{ij}\) the expected grade
     for student \(i\) in class \(j\) and \(\varepsilon_{ij}\) random variation due
     to random chance in answering exam questions (guessing or dumb mistakes, for example).
     We assume the \(\varepsilon_{ij}\) are independent from each other. We will simulated
     data with:'
+  id: totrans-170
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ Y_{ij} = \mu_{ij} + \varepsilon_{ij} \] 其中 \(\mu_{ij}\) 是学生在班级 \(j\) 的预期成绩，\(\varepsilon_{ij}\)
+    是由于随机机会在回答考试问题（例如猜测或愚蠢的错误）而产生的随机变化。我们假设 \(\varepsilon_{ij}\) 之间相互独立。我们将使用以下方式模拟数据：
 - en: '[PRE29]'
+  id: totrans-171
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE29]'
 - en: '*We want to summarize these 24 test scores per student as simply as possible.
     Are students equally good in all subjects, or do we see patterns? Does being strong
     in one subject predict being strong in another? How can SVD help us see this structure?'
+  id: totrans-172
   prefs: []
   type: TYPE_NORMAL
+  zh: '*我们希望尽可能简单地总结每个学生的 24 个测试分数。学生在所有科目中是否表现相同，或者我们看到了哪些模式？在某一科目中表现良好是否预示着在另一科目中也表现良好？SVD
+    如何帮助我们看到这种结构？'
 - en: We will show that just three pairs of vectors can explain much of the variation
     in this \(100 \times 24\) matrix.
+  id: totrans-173
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们将展示只有三对向量可以解释这个 \(100 \times 24\) 矩阵的大部分变化。
 - en: 'First define a helper function to visualize matrices:'
+  id: totrans-174
   prefs: []
   type: TYPE_NORMAL
+  zh: 首先定义一个辅助函数来可视化矩阵：
 - en: '[PRE30]'
+  id: totrans-175
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE30]'
 - en: '*7\. Use `nice_image(y)` to visualize the 24 test scores for the 100 students.
     Which of the following best describes what you see?'
+  id: totrans-176
   prefs: []
   type: TYPE_NORMAL
+  zh: '*7. 使用 `nice_image(y)` 可视化 100 名学生的 24 个测试分数。以下哪个选项最能描述你所看到的内容？'
 - en: The test scores are all independent of each other.
+  id: totrans-177
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 测试分数彼此独立。
 - en: The strongest students appear at the top of the image, and the 24 tests seem
     to group into three subject blocks.
+  id: totrans-178
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 最强的学生出现在图像的顶部，24 个测试似乎分为三个科目块。
 - en: Students who are good at math are clearly bad at science.
+  id: totrans-179
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 数学好的学生显然在科学方面表现不佳。
 - en: Students who are good at math are clearly bad at the arts.
+  id: totrans-180
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 数学好的学生在艺术方面显然表现不佳。
 - en: '8\. Now look at the correlation matrix of the 24 tests:'
+  id: totrans-181
   prefs: []
   type: TYPE_NORMAL
+  zh: 8. 现在查看 24 个测试的相关矩阵：
 - en: '[PRE31]'
+  id: totrans-182
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE31]'
 - en: '*Which option best describes the correlation pattern?'
+  id: totrans-183
   prefs: []
   type: TYPE_NORMAL
+  zh: '*哪个选项最能描述相关性模式？'
 - en: The test scores are independent.
+  id: totrans-184
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 测试分数是独立的。
 - en: Math and Science are highly correlated, but Arts is not correlated with anything.
+  id: totrans-185
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 数学与科学高度相关，但艺术与任何事物都不相关。
 - en: Tests within the same subject are correlated, but there is no correlation between
     subjects.
+  id: totrans-186
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 同一科目内的测试是相关的，但科目之间没有相关性。
 - en: There is correlation among all tests, with stronger correlation within each
     subject and stronger correlation between Math and Science than between either
     and Arts.
+  id: totrans-187
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 所有测试之间都有相关性，每个科目内部的相关性更强，数学与科学之间的相关性比与艺术之间的相关性更强。
 - en: '9\. First compute the total sum of squares in `y`:'
+  id: totrans-188
   prefs: []
   type: TYPE_NORMAL
+  zh: 9. 首先计算 `y` 中的总平方和：
 - en: '[PRE32]'
+  id: totrans-189
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE32]'
 - en: '*Now compute the SVD'
+  id: totrans-190
   prefs: []
   type: TYPE_NORMAL
+  zh: '*现在计算 SVD'
 - en: \[ \mathbf{Y} = \mathbf{U}\mathbf{D}\mathbf{V}^\top. \]
+  id: totrans-191
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \mathbf{Y} = \mathbf{U}\mathbf{D}\mathbf{V}^\top. \]
 - en: 'Use the SVD to verify in R that:'
+  id: totrans-192
   prefs: []
   type: TYPE_NORMAL
+  zh: 使用 SVD 在 R 中验证：
 - en: The total sum of squares of all entries in \(\mathbf{Y}\mathbf{V} = \mathbf{U}\mathbf{D}\)
     is the same as in \(\mathbf{Y}\).
+  id: totrans-193
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: \(\mathbf{Y}\mathbf{V} = \mathbf{U}\mathbf{D}\) 中所有元素的平方和与 \(\mathbf{Y}\) 中的相同。
 - en: The sum of the squared singular values (the diagonal entries of \(\mathbf{D}\))
     is also equal to `tss_y`.
+  id: totrans-194
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 奇异值的平方和（\(\mathbf{D}\) 的对角线元素）也等于 `tss_y`。
 - en: 'Check these equalities in R and make sure you understand *why* they must hold
     (hint: \(\mathbf{V}\) is orthogonal and SVD preserves total sum of squares).'
+  id: totrans-195
   prefs: []
   type: TYPE_NORMAL
+  zh: 在 R 中检查这些等式，并确保你理解为什么它们必须成立（提示：\(\mathbf{V}\) 是正交的，SVD 保持总平方和）。
 - en: 10\. Let \(\mathbf{Z} = \mathbf{Y}\mathbf{V} = \mathbf{U}\mathbf{D}\).
+  id: totrans-196
   prefs: []
   type: TYPE_NORMAL
+  zh: 10. 令 \(\mathbf{Z} = \mathbf{Y}\mathbf{V} = \mathbf{U}\mathbf{D}\)。
 - en: Plot the square root of the sum of squares of each column of \(\mathbf{Y}\)
     versus the column index.
+  id: totrans-197
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 绘制 \(\mathbf{Y}\) 的每一列平方和的平方根与列索引的对比图。
 - en: On the same scale, plot the square root of the sum of squares of each column
     of the columns of \(\mathbf{Z}\).
+  id: totrans-198
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 在相同的尺度上，绘制 \(\mathbf{Z}\) 的每一列平方和的平方根。
 - en: Comment on what you see. Does the variation across columns become more concentrated
     in the first few columns of \(\mathbf{Z}\)?
+  id: totrans-199
   prefs: []
   type: TYPE_NORMAL
+  zh: 对你所看到的内容进行评论。列之间的变异性是否在 \(\mathbf{Z}\) 的前几列变得更加集中？
 - en: '11\. In exercise 10 you computed the column sums of squares of \(\mathbf{Z}
     = \mathbf{Y}\mathbf{V} = \mathbf{U}\mathbf{D}\) using `colSums`. However, we actually
     already know these numbers from the SVD:'
+  id: totrans-200
   prefs: []
   type: TYPE_NORMAL
+  zh: 11. 在练习 10 中，你使用了 `colSums` 计算了 \(\mathbf{Z} = \mathbf{Y}\mathbf{V} = \mathbf{U}\mathbf{D}\)
+    的列平方和。然而，我们实际上已经从 SVD 中知道了这些数字：
 - en: Show in R that the squared singular values \((d_{kk}^2)\) are equal to the column
     sums of squares of \(\mathbf{Z}\).
+  id: totrans-201
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 在 R 中展示，奇异值的平方 \((d_{kk}^2)\) 等于 \(\mathbf{Z}\) 的列平方和。
 - en: Confirm this numerically by plotting the square root of the column sums of squares
     of \(\mathbf{Z}\) versus the diagonal entries of \(\mathbf{D}\).
+  id: totrans-202
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 通过绘制 \(\mathbf{Z}\) 的列平方和的平方根与 \(\mathbf{D}\) 的对角线元素之间的对比来数值上确认这一点。
 - en: 12\. The columns of \(\mathbf{Z} = \mathbf{Y}\mathbf{V} = \mathbf{U}\mathbf{D}\)
     are the principal components (PCs) of \(\mathbf{Y}\). The diagonal of \(\mathbf{D}\)
     tells us how much variability each PC explains.
+  id: totrans-203
   prefs: []
   type: TYPE_NORMAL
+  zh: 12. \(\mathbf{Z} = \mathbf{Y}\mathbf{V} = \mathbf{U}\mathbf{D}\) 的列是 \(\mathbf{Y}\)
+    的主成分（PCs）。\(\mathbf{D}\) 的对角线告诉我们每个 PC 解释了多少变异性。
 - en: 'Compute the SVD and plot the percentage of variance explained by each PC:'
+  id: totrans-204
   prefs: []
   type: TYPE_NORMAL
+  zh: 计算每个 PC 解释的方差百分比：
 - en: '[PRE33]'
+  id: totrans-205
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE33]'
 - en: '*You should see that the first PC explains over 60% of the variability. Compare
     the first PC to each student’s average grade:'
+  id: totrans-206
   prefs: []
   type: TYPE_NORMAL
+  zh: '*你应该看到第一个 PC 解释了超过 60% 的变异性。将第一个 PC 与每个学生的平均成绩进行比较：'
 - en: '[PRE34]'
+  id: totrans-207
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE34]'
 - en: '*How would you interpret the first PC in plain language? (Remember the sign
     is arbitrary, so high PC1 can correspond to strong student or weak student, depending
     on sign.)'
+  id: totrans-208
   prefs: []
   type: TYPE_NORMAL
+  zh: '**你将如何用通俗易懂的语言解释第一个主成分？（记住符号是任意的，所以高 PC1 可以对应于优秀学生或差学生，取决于符号。）'
 - en: 13\. The SVD can be written as
+  id: totrans-209
   prefs: []
   type: TYPE_NORMAL
+  zh: 13. SVD 可以表示为
 - en: \[ \mathbf{Y} = \mathbf{u}_1 d_{1,1} \mathbf{v}_1^\top + \mathbf{u}_2 d_{2,2}
     \mathbf{v}_2^\top + \dots + \mathbf{u}_p d_{p,p} \mathbf{v}_p^\top, \]
+  id: totrans-210
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \mathbf{Y} = \mathbf{u}_1 d_{1,1} \mathbf{v}_1^\top + \mathbf{u}_2 d_{2,2}
+    \mathbf{v}_2^\top + \dots + \mathbf{u}_p d_{p,p} \mathbf{v}_p^\top, \]
 - en: where \(\mathbf{u}_k\) is the \(k\)-th column of \(\mathbf{U}\), \(d_{k,k}\)
     is the \(k\)-th diagonal entry of \(\mathbf{D}\), and \(\mathbf{v}_k\) is the
     \(k\)-th column of \(\mathbf{V}\).
+  id: totrans-211
   prefs: []
   type: TYPE_NORMAL
+  zh: 其中 \(\mathbf{u}_k\) 是 \(\mathbf{U}\) 的第 \(k\) 列，\(d_{k,k}\) 是 \(\mathbf{D}\)
+    的第 \(k\) 个对角线元素，\(\mathbf{v}_k\) 是 \(\mathbf{V}\) 的第 \(k\) 列。
 - en: 'Approximate all student grades \(\mu_{ij}\) using only the first term:'
+  id: totrans-212
   prefs: []
   type: TYPE_NORMAL
+  zh: 仅使用第一项来近似所有学生成绩 \(\mu_{ij}\)：
 - en: \[ \hat{\mu}_{ij} = \mathbf{u}_1 d_{1,1} \mathbf{v}_1^\top. \] Compute the residual
     matrix \(\mathbf{r} = \mathbf{y} - \mathbf{u}_1 d_{1,1} \mathbf{v}_1^\top\), and
     visualize the residuals and their correlations with `nice_image`. Do you still
     see subject-level correlation structure in the residuals?
+  id: totrans-213
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \hat{\mu}_{ij} = \mathbf{u}_1 d_{1,1} \mathbf{v}_1^\top. \] 计算残差矩阵 \(\mathbf{r}
+    = \mathbf{y} - \mathbf{u}_1 d_{1,1} \mathbf{v}_1^\top\)，并使用 `nice_image` 可视化残差及其与相关性的关系。你还在残差中看到科目级别的相关性结构吗？
 - en: '14\. Now approximate grades using the first two components:'
+  id: totrans-214
   prefs: []
   type: TYPE_NORMAL
+  zh: 14. 现在用前两个成分来近似成绩：
 - en: \[ \hat{\mu}_{ij} = \sum_{k=1}^2 \mathbf{u}_k d_{k,k} \mathbf{v}_k^\top. \]
+  id: totrans-215
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \hat{\mu}_{ij} = \sum_{k=1}^2 \mathbf{u}_k d_{k,k} \mathbf{v}_k^\top. \]
 - en: and repeat exploratory plots generated in exercise 13\. Has most of the correlation
     structure disappeared, or is there still visible within-subject pattern?
+  id: totrans-216
   prefs: []
   type: TYPE_NORMAL
+  zh: 并重复第 13 题中生成的探索性绘图。大部分的相关性结构已经消失，还是仍然存在个体内的模式？
 - en: '15\. Now repeat exercise 14 but using the first three components:'
+  id: totrans-217
   prefs: []
   type: TYPE_NORMAL
+  zh: 15. 现在重复第 14 题但使用前三个成分：
 - en: \[ \hat{\mu}_{ij} = \sum_{k=1}^3 \mathbf{u}_k d_{k,k} \mathbf{v}_k^\top. \]
+  id: totrans-218
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \hat{\mu}_{ij} = \sum_{k=1}^3 \mathbf{u}_k d_{k,k} \mathbf{v}_k^\top. \]
 - en: Is the correlation now essentially gone? How many factors does it seem we need
     to capture the main structure \(\mu_{ij}\) for these 24 courses?
+  id: totrans-219
   prefs: []
   type: TYPE_NORMAL
+  zh: 现在的相关性几乎消失了？为了捕捉这 24 门课程的主结构 \(\mu_{ij}\)，似乎我们需要多少个因子？
 - en: '16\. Finally, inspect the first three right singular vectors (the columns of
     \(\mathbf{V}\)):'
+  id: totrans-220
   prefs: []
   type: TYPE_NORMAL
+  zh: 16. 最后，检查前三个右奇异向量（\(\mathbf{V}\) 的列）：
 - en: '[PRE35]'
+  id: totrans-221
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE35]'
 - en: '*Each row corresponds to a course (for example, `Math_1`, `Science_3`, `Arts_5`),
     and each column corresponds to one factor (PC1, PC2, PC3). How would you interpret
     the first three columns of \(\mathbf{V}\)? Write a short interpretation for each
     of the three factors in plain language.'
+  id: totrans-222
   prefs: []
   type: TYPE_NORMAL
+  zh: '**每一行对应一门课程（例如，`Math_1`，`Science_3`，`Arts_5`），每一列对应一个因子（PC1，PC2，PC3）。你将如何解释
+    \(\mathbf{V}\) 的前三列？请用通俗易懂的语言为这三个因子各写一个简短的解释。'
 - en: '17\. Based on the patterns see in exercise 16, how would you interpret the
     values \(u_{i1}\), , \(u_{ip}\) for student \(i\):'
+  id: totrans-223
   prefs: []
   type: TYPE_NORMAL
+  zh: 17. 基于第 16 题中观察到的模式，你将如何解释学生 \(i\) 的值 \(u_{i1}\)，，\(u_{ip}\)：
 - en: Is one roughly quantifying *overall academic strength*?
+  id: totrans-224
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 是在粗略量化**整体学术能力**吗？
 - en: Is one quantifying how much better the student is at *STEM vs. Arts*?
+  id: totrans-225
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 是在量化学生**STEM与艺术**方面的进步程度吗？
 - en: Is another quantifying how much better at *Math vs. Science*?
+  id: totrans-226
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 是在量化学生**数学与科学**方面的进步程度吗？
 - en: Are some of them just random noise?*************
+  id: totrans-227
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 其中一些只是随机噪声吗？*************

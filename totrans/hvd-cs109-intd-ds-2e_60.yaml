@@ -1,338 +1,518 @@
 - en: 23  Dimension Reduction
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 23  降维
 - en: 原文：[https://rafalab.dfci.harvard.edu/dsbook-part-2/highdim/dimension-reduction.html](https://rafalab.dfci.harvard.edu/dsbook-part-2/highdim/dimension-reduction.html)
+  id: totrans-1
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 原文：[https://rafalab.dfci.harvard.edu/dsbook-part-2/highdim/dimension-reduction.html](https://rafalab.dfci.harvard.edu/dsbook-part-2/highdim/dimension-reduction.html)
 - en: '[High Dimensional Data](../highdim/intro-highdim.html)'
+  id: totrans-2
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[高维数据](../highdim/intro-highdim.html)'
 - en: '[23  Dimension Reduction](../highdim/dimension-reduction.html)'
+  id: totrans-3
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[23  降维](../highdim/dimension-reduction.html)'
 - en: High-dimensional data can make data analysis challenging, especially when it
     comes to visualization and pattern discovery. For example, in the MNIST dataset,
     each image is represented by 784 pixels. To explore the relationships between
     all pairs of pixels, we would need to examine over 300,000 scatterplots. This
     quickly becomes impractical.
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: 高维数据可以使数据分析变得具有挑战性，尤其是在可视化和模式发现方面。例如，在MNIST数据集中，每个图像由784个像素表示。为了探索所有像素对之间的关系，我们需要检查超过300,000个散点图。这很快变得不切实际。
 - en: In this chapter, we introduce a powerful set of techniques known collectively
     as *dimension reduction*. The core idea is to reduce the number of variables in
     a dataset while preserving important characteristics, such as the distances between
     observations. With fewer dimensions, visualization becomes more feasible, and
     patterns in the data become easier to detect.
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: 在本章中，我们介绍了一组被称为**降维**的强大技术。其核心思想是在保留重要特征，如观测之间的距离的同时，减少数据集中的变量数量。维度减少后，可视化变得更加可行，数据中的模式也更容易被发现。
 - en: The main technique we focus on is **Principal Component Analysis (PCA)**, a
     widely used method for unsupervised learning and exploratory data analysis. PCA
     is based on a mathematical tool called the *singular value decomposition (SVD)*,
     which has applications beyond dimension reduction as well.
+  id: totrans-6
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们主要关注的技术是**主成分分析（PCA**），这是一种广泛用于无监督学习和探索性数据分析的方法。PCA基于一个称为**奇异值分解（SVD**）的数学工具，它在降维之外也有应用。
 - en: We begin with a simple illustrative example to build intuition, then introduce
     the mathematical concepts needed to understand PCA. We conclude the chapter by
     applying PCA to two more complex, real-world datasets to demonstrate its practical
     value.
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们从一个简单的示例开始，以建立直观感受，然后介绍理解主成分分析（PCA）所需的数学概念。我们通过将PCA应用于两个更复杂、真实世界的数据集来展示其实际价值，以此结束本章。
 - en: '23.1 Motivation: preserving distance'
+  id: totrans-8
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 23.1 动机：保留距离
 - en: For illustrative purposes, we consider a simple example with twin heights. Some
     pairs are adults, the others are children. Here we simulate 100 two-dimensional
     points where each point a pair of twins. We use the `mvrnorm` function from the
     **MASS** package to simulate bivariate normal data.
+  id: totrans-9
   prefs: []
   type: TYPE_NORMAL
+  zh: 为了说明目的，我们考虑一个简单的双胞胎身高示例。一些对是成年人，其他的是儿童。在这里，我们模拟了100个二维点，每个点代表一对双胞胎。我们使用**MASS**包中的`mvrnorm`函数来模拟双变量正态数据。
 - en: '[PRE0]'
+  id: totrans-10
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: '*A scatterplot quickly reveals that the correlation is high and that there
     are two groups of twins, the adults (upper right points) and the children (lower
     left points):'
+  id: totrans-11
   prefs: []
   type: TYPE_NORMAL
+  zh: '**散点图迅速揭示出相关性很高，并且存在两组双胞胎，成年人（右上角的点）和儿童（左下角的点）：'
 - en: '![](../Images/d79db67721ae432f580d3c6df7bbf603.png)'
+  id: totrans-12
   prefs: []
   type: TYPE_IMG
+  zh: '![图片](../Images/d79db67721ae432f580d3c6df7bbf603.png)'
 - en: 'Our features are \(n\) two-dimensional points, the two heights. For illustrative
     purposes, we will pretend that visualizing two dimensions is too challenging and
     we want to explore the data through a histogram of a one-dimensional variable.
     We therefore want to **reduce the dimensions** from two to one, but still be able
     to understand important characteristics of the data, in particular that the observations
     cluster into two groups: adults and children.'
+  id: totrans-13
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们的特征是\(n\)个二维点，即两个身高。为了说明目的，我们将假设可视化二维过于困难，我们希望通过一维变量的直方图来探索数据。因此，我们希望**降低维度**从二维到一维，但仍然能够理解数据的重要特征，特别是观测会聚成两组：成年人和儿童。
 - en: 'To show that the ideas presented here are generally useful, we will standardize
     the data so that observations are in standard units rather than inches:'
+  id: totrans-14
   prefs: []
   type: TYPE_NORMAL
+  zh: 为了表明这里提出的思想具有普遍的实用性，我们将标准化数据，使观测值处于标准单位而不是英寸：
 - en: '[PRE1]'
+  id: totrans-15
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: '*In the scatterplot above, we also show the distance between observation 1
     and 2 (blue), and observation 1 and 51 (red). Note that the blue line is shorter,
     which implies that 1 and 2 are closer.'
+  id: totrans-16
   prefs: []
   type: TYPE_NORMAL
+  zh: '**在上面的散点图中，我们还显示了观测1和2之间的距离（蓝色），以及观测1和51之间的距离（红色）。注意，蓝色线较短，这意味着1和2更接近。'
 - en: 'We can compute these distances using `dist`:'
+  id: totrans-17
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们可以使用`dist`来计算这些距离：
 - en: '[PRE2]'
+  id: totrans-18
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: '*This distance is based on two dimensions and we need a distance approximation
     based on just one.'
+  id: totrans-19
   prefs: []
   type: TYPE_NORMAL
+  zh: '*这种距离基于两个维度，我们需要一个仅基于一个维度的距离近似。*'
 - en: If we look back at the height scatterplot above and imagine drawing a line between
     any pair of points, the length of that line represents the distance between the
     two points. Many of these lines tend to align along the diagonal direction, suggesting
     that most of the variation in the data is not purely horizontal or vertical but
     spread diagonally across both axes.
+  id: totrans-20
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果我们回顾上面的高度散点图，并想象在任意两点之间画一条线，这条线的长度就代表了这两点之间的距离。许多这些线倾向于沿着对角线方向对齐，这表明数据中的大部分变异性并不是纯粹的水平或垂直，而是在两个轴上呈对角线分布。
 - en: Now imagine we *rotate* the entire point cloud so that the variation that was
     previously along the diagonal is now aligned with the horizontal axis. In this
     rotated view, the largest differences between points would show up in the first
     (horizontal) dimension. This would make it easier to describe the data using just
     one variables, the one that captures the most meaningful variation.
+  id: totrans-21
   prefs: []
   type: TYPE_NORMAL
+  zh: 现在想象一下，我们将整个点云旋转，使得之前沿对角线的变异性现在与水平轴对齐。在这个旋转视图中，点之间的最大差异将出现在第一个（水平）维度上。这将使得仅使用一个变量来描述数据变得更容易，这个变量能够捕捉到最有意义的变异性。
 - en: In the next section, we introduce a mathematical approach that makes this intuition
     precise. It allows us to find a rotation of the data that preserves the distances
     between points while reorienting the axes to highlight the most important directions
     of variation. This is the foundation of an approach called *Principal Component
     Analysis (PCA)*, the most widely used technique for dimension reduction.***
+  id: totrans-22
   prefs: []
   type: TYPE_NORMAL
+  zh: 在下一节中，我们介绍了一种数学方法，使这种直觉变得精确。它允许我们找到一个旋转数据的方法，在重新定位轴以突出显示最重要的变化方向的同时，保持点之间的距离。这是称为*主成分分析（PCA）*的方法的基础，这是最广泛使用的降维技术。***
 - en: '***23.2 Rotations***'
+  id: totrans-23
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '***23.2 旋转***'
 - en: '***Any two-dimensional point \((x_1, x_2)^\top\) can be written as the base
     and height of a triangle with a hypotenuse going from \((0,0)^\top\) to \((x_1,
     x_2)^\top\):'
+  id: totrans-24
   prefs: []
   type: TYPE_NORMAL
+  zh: '***任何二维点 \((x_1, x_2)^\top\) 可以写成从 \((0,0)^\top\) 到 \((x_1, x_2)^\top\) 的斜边为底边和高的三角形的底边和高度：*'
 - en: \[ x_1 = r \cos\phi, \,\, x_2 = r \sin\phi \]
+  id: totrans-25
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ x_1 = r \cos\phi, \,\, x_2 = r \sin\phi \]
 - en: with \(r\) the length of the hypotenuse and \(\phi\) the angle between the hypotenuse
     and the x-axis.
+  id: totrans-26
   prefs: []
   type: TYPE_NORMAL
+  zh: 其中 \(r\) 是斜边的长度，\(\phi\) 是斜边与 x 轴之间的角度。
 - en: 'To *rotate* the point \((x_1, x_2)^\top\) around a circle with center \((0,0)^\top\)
     and radius \(r\) by an angle \(\theta\) we simply change the angle in the previous
     equation to \(\phi + \theta\):'
+  id: totrans-27
   prefs: []
   type: TYPE_NORMAL
+  zh: 要将点 \((x_1, x_2)^\top\) 围绕中心 \((0,0)^\top\) 和半径 \(r\) 的圆旋转一个角度 \(\theta\)，我们只需将前面方程中的角度改为
+    \(\phi + \theta\)：
 - en: \[ z_1 = r \cos(\phi+ \theta), \,\, z_2 = r \sin(\phi + \theta) \]
+  id: totrans-28
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ z_1 = r \cos(\phi+ \theta), \,\, z_2 = r \sin(\phi + \theta) \]
 - en: '![](../Images/75c0fb4fe96e135343783b81cdde941a.png)'
+  id: totrans-29
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/75c0fb4fe96e135343783b81cdde941a.png)'
 - en: 'We can use trigonometric identities to rewrite \((z_1, z_2)\) as follows:'
+  id: totrans-30
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们可以使用三角恒等式将 \((z_1, z_2)\) 重写如下：
 - en: \[ \begin{aligned} z_1 = r \cos(\phi + \theta) = r \cos \phi \cos\theta - r
     \sin\phi \sin\theta = x_1 \cos(\theta) - x_2 \sin(\theta)\\ z_2 = r \sin(\phi
     + \theta) = r \cos\phi \sin\theta + r \sin\phi \cos\theta = x_1 \sin(\theta) +
     x_2 \cos(\theta) \end{aligned} \]
+  id: totrans-31
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \begin{aligned} z_1 = r \cos(\phi + \theta) = r \cos \phi \cos\theta - r
+    \sin\phi \sin\theta = x_1 \cos(\theta) - x_2 \sin(\theta)\\ z_2 = r \sin(\phi
+    + \theta) = r \cos\phi \sin\theta + r \sin\phi \cos\theta = x_1 \sin(\theta) +
+    x_2 \cos(\theta) \end{aligned} \]
 - en: Now we can rotate each point in the dataset by simply applying the formula above
     to each pair \((x_{i1}, x_{i2})^\top\).
+  id: totrans-32
   prefs: []
   type: TYPE_NORMAL
+  zh: 现在，我们可以通过将上述公式应用于每个对 \((x_{i1}, x_{i2})^\top\) 来旋转数据集中的每个点。
 - en: 'Here is what the twin standardized heights look like after rotating each point
     by \(-45\) degrees:'
+  id: totrans-33
   prefs: []
   type: TYPE_NORMAL
+  zh: 在将每个点旋转 \(-45\) 度后，双标准高度看起来是这样的：
 - en: '![](../Images/432946441407f386a0e3d8f579332cbc.png)'
+  id: totrans-34
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/432946441407f386a0e3d8f579332cbc.png)'
 - en: Note that while the variability of \(x_1\) and \(x_2\) are similar, the variability
     of \(z_1\) is much larger than the variability of \(z_2\). Also, notice that the
     distances between points appear to be preserved. In the next sections, we show
     mathematically that this in fact the case.***
+  id: totrans-35
   prefs: []
   type: TYPE_NORMAL
+  zh: 注意，虽然 \(x_1\) 和 \(x_2\) 的变异性相似，但 \(z_1\) 的变异性远大于 \(z_2\) 的变异性。此外，请注意，点之间的距离似乎得到了保留。在下一节中，我们将从数学上证明这一点。***
 - en: '***23.3 Linear transformations***'
+  id: totrans-36
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '***23.3 线性变换***'
 - en: '***Any time a matrix \(\mathbf{X}\) is multiplied by another matrix \(\mathbf{A}\),
     we refer to the product \(\mathbf{Z} = \mathbf{X}\mathbf{A}\) as a linear transformation
     of \(\mathbf{X}\). Below, we show that the rotations described above are a linear
     transformation. To see this, note that for any row \(i\), the first entry was:'
+  id: totrans-37
   prefs: []
   type: TYPE_NORMAL
+  zh: '***每次矩阵 \(\mathbf{X}\) 与另一个矩阵 \(\mathbf{A}\) 相乘时，我们称乘积 \(\mathbf{Z} = \mathbf{X}\mathbf{A}\)
+    为 \(\mathbf{X}\) 的线性变换。下面，我们展示了上述旋转是线性变换。为了看到这一点，请注意，对于任何行 \(i\)，第一个条目是：'
 - en: \[ z_{i1} = a_{11} x_{i1} + a_{21} x_{i2} \]
+  id: totrans-38
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ z_{i1} = a_{11} x_{i1} + a_{21} x_{i2} \]
 - en: with \(a_{11} = \cos\theta\) and \(a_{21} = -\sin\theta\).
+  id: totrans-39
   prefs: []
   type: TYPE_NORMAL
+  zh: 其中 \(a_{11} = \cos\theta\) 和 \(a_{21} = -\sin\theta\).
 - en: 'The second entry was also a linear transformation:'
+  id: totrans-40
   prefs: []
   type: TYPE_NORMAL
+  zh: 第二个条目也是一个线性变换：
 - en: \[z_{i2} = a_{12} x_{i1} + a_{22} x_{i2}\]
+  id: totrans-41
   prefs: []
   type: TYPE_NORMAL
+  zh: \[z_{i2} = a_{12} x_{i1} + a_{22} x_{i2}\]
 - en: with \(a_{12} = \sin\theta\) and \(a_{22} = \cos\theta\).
+  id: totrans-42
   prefs: []
   type: TYPE_NORMAL
+  zh: 其中 \(a_{12} = \sin\theta\) 和 \(a_{22} = \cos\theta\).
 - en: 'We can write these equations using matrix notation:'
+  id: totrans-43
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们可以使用矩阵符号来编写这些方程：
 - en: \[ \begin{pmatrix} z_1\\z_2 \end{pmatrix} = \begin{pmatrix} a_{11}&a_{12}\\
     a_{21}&a_{22} \end{pmatrix}^\top \begin{pmatrix} x_1\\x_2 \end{pmatrix} \]
+  id: totrans-44
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \begin{pmatrix} z_1\\z_2 \end{pmatrix} = \begin{pmatrix} a_{11}&a_{12}\\
+    a_{21}&a_{22} \end{pmatrix}^\top \begin{pmatrix} x_1\\x_2 \end{pmatrix} \]
 - en: 'An advantage of using linear algebra is that we can write the transformation
     for the entire dataset by saving all observations in a \(N \times 2\) matrix:'
+  id: totrans-45
   prefs: []
   type: TYPE_NORMAL
+  zh: 使用线性代数的优点之一是我们可以通过将所有观测值保存在一个 \(N \times 2\) 矩阵中来为整个数据集编写转换：
 - en: \[ \mathbf{X} \equiv \begin{bmatrix} \mathbf{x}_1^\top\\ \vdots\\ \mathbf{x}_n^\top
     \end{bmatrix} = \begin{bmatrix} x_{11}&x_{12}\\ \vdots&\vdots\\ x_{n1}&x_{n2}
     \end{bmatrix} \]
+  id: totrans-46
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \mathbf{X} \equiv \begin{bmatrix} \mathbf{x}_1^\top\\ \vdots\\ \mathbf{x}_n^\top
+    \end{bmatrix} = \begin{bmatrix} x_{11}&x_{12}\\ \vdots&\vdots\\ x_{n1}&x_{n2}
+    \end{bmatrix} \]
 - en: 'We can then obtain the rotated values \(\mathbf{z}_i\) for each row \(i\) by
     applying a *linear transformation* of \(X\):'
+  id: totrans-47
   prefs: []
   type: TYPE_NORMAL
+  zh: 然后，我们可以通过应用 \(X\) 的 *线性变换* 来获得每个行 \(i\) 的旋转值 \(\mathbf{z}_i\)：
 - en: \[ \mathbf{Z} = \mathbf{X} \mathbf{A} \mbox{ with } \mathbf{A} = \, \begin{pmatrix}
     a_{11}&a_{12}\\ a_{21}&a_{22} \end{pmatrix} = \begin{pmatrix} \cos \theta&\sin
     \theta\\ -\sin \theta&\cos \theta \end{pmatrix} . \]
+  id: totrans-48
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \mathbf{Z} = \mathbf{X} \mathbf{A} \mbox{ with } \mathbf{A} = \, \begin{pmatrix}
+    a_{11}&a_{12}\\ a_{21}&a_{22} \end{pmatrix} = \begin{pmatrix} \cos \theta&\sin
+    \theta\\ -\sin \theta&\cos \theta \end{pmatrix} . \]
 - en: 'If we define:'
+  id: totrans-49
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果我们定义：
 - en: '[PRE3]'
+  id: totrans-50
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: '*We can write code implementing a rotation by any angle \(\theta\) using linear
     algebra:'
+  id: totrans-51
   prefs: []
   type: TYPE_NORMAL
+  zh: '*我们可以使用线性代数编写任何角度 \(\theta\) 的旋转代码：'
 - en: '[PRE4]'
+  id: totrans-52
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE4]'
 - en: '*The columns of \(\mathbf{A}\) are referred to as *directions* because if we
     draw a vector from \((0,0)\) to \((a_{1j}, a_{2j})\), it points in the direction
     of the line that will become the \(j\)-th dimension.'
+  id: totrans-53
   prefs: []
   type: TYPE_NORMAL
+  zh: '*\(\mathbf{A}\) 的列被称为 *方向*，因为如果我们从 \((0,0)\) 画一个向量到 \((a_{1j}, a_{2j})\)，它指向将成为第
+    \(j\) 维度的直线方向。'
 - en: Another advantage of linear algebra is that if we can find the inverse matrix
     of \(\mathbf{A}^{-1}\), we can convert \(\mathbf{Z}\) back to \(\mathbf{X}\),
     again using a linear transformation.
+  id: totrans-54
   prefs: []
   type: TYPE_NORMAL
+  zh: 线性代数的另一个优点是，如果我们能找到 \(\mathbf{A}^{-1}\) 的逆矩阵，我们可以通过线性变换将 \(\mathbf{Z}\) 转换回
+    \(\mathbf{X}\)，再次使用线性变换。
 - en: 'In this particular case, we can use trigonometry to show that:'
+  id: totrans-55
   prefs: []
   type: TYPE_NORMAL
+  zh: 在这个特定情况下，我们可以使用三角学来证明：
 - en: \[ \begin{aligned} x_{i1} = b_{11} z_{i1} + b_{21} z_{i2}\\ x_{i2} = b_{12}
     z_{i1} + b_{22} z_{i2} \end{aligned} \]
+  id: totrans-56
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \begin{aligned} x_{i1} = b_{11} z_{i1} + b_{21} z_{i2}\\ x_{i2} = b_{12}
+    z_{i1} + b_{22} z_{i2} \end{aligned} \]
 - en: with \(b_{21} = \cos\theta\), \(b_{21} = \sin\theta\), \(b_{12} = -\sin\theta\),
     and \(b_{22} = \cos\theta\).
+  id: totrans-57
   prefs: []
   type: TYPE_NORMAL
+  zh: 其中 \(b_{21} = \cos\theta\)，\(b_{21} = \sin\theta\)，\(b_{12} = -\sin\theta\)，和
+    \(b_{22} = \cos\theta\)。
 - en: 'This implies that:'
+  id: totrans-58
   prefs: []
   type: TYPE_NORMAL
+  zh: 这意味着：
 - en: \[ \mathbf{X} = \mathbf{Z} \begin{pmatrix} \cos \theta&-\sin \theta\\ \sin \theta&\cos
     \theta \end{pmatrix}. \]
+  id: totrans-59
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \mathbf{X} = \mathbf{Z} \begin{pmatrix} \cos \theta&-\sin \theta\\ \sin \theta&\cos
+    \theta \end{pmatrix}. \]
 - en: Note that the transformation used above is actually \(\mathbf{A}^\top\) which
     implies that
+  id: totrans-60
   prefs: []
   type: TYPE_NORMAL
+  zh: 注意，上面使用的转换实际上是 \(\mathbf{A}^\top\)，这意味着
 - en: \[ \mathbf{Z} \mathbf{A}^\top = \mathbf{X} \mathbf{A}\mathbf{A}^\top\ = \mathbf{X}
     \]
+  id: totrans-61
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \mathbf{Z} \mathbf{A}^\top = \mathbf{X} \mathbf{A}\mathbf{A}^\top\ = \mathbf{X}
+    \]
 - en: 'and therefore that, in this particular case, \(\mathbf{A}^\top\) is the inverse
     of \(\mathbf{A}\). This also implies that all the information in \(\mathbf{X}\)
     is included in the rotation \(\mathbf{Z}\), and it can be retrieved via a linear
     transformation. A consequence is that for any rotation the distances are preserved.
     Here is an example for a 30 degree rotation, although it works for any angle:'
+  id: totrans-62
   prefs: []
   type: TYPE_NORMAL
+  zh: 因此，在这个特定情况下，\(\mathbf{A}^\top\) 是 \(\mathbf{A}\) 的逆。这也意味着 \(\mathbf{X}\) 中的所有信息都包含在旋转
+    \(\mathbf{Z}\) 中，并且可以通过线性变换检索。一个结果是，对于任何旋转，距离都得到保留。以下是一个 30 度旋转的例子，尽管它适用于任何角度：
 - en: '[PRE5]'
+  id: totrans-63
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE5]'
 - en: '*The next section explains why this happens.******'
+  id: totrans-64
   prefs: []
   type: TYPE_NORMAL
+  zh: '*下一节将解释为什么会发生这种情况。******'
 - en: '***23.4 Orthogonal transformations***'
+  id: totrans-65
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '***23.4 正交变换***'
 - en: '***Recall that the distance between two points, say rows \(h\) and \(i\) of
     the transformation \(\mathbf{Z}\), can be written like this:'
+  id: totrans-66
   prefs: []
   type: TYPE_NORMAL
+  zh: '***回想一下，两点之间的距离，比如说变换 \(\mathbf{Z}\) 的行 \(h\) 和 \(i\)，可以写成这样：'
 - en: \[ \|\mathbf{z}_h - \mathbf{z}_i\| = (\mathbf{z}_h - \mathbf{z}_i)^\top(\mathbf{z}_h
     - \mathbf{z}_i) \]
+  id: totrans-67
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \|\mathbf{z}_h - \mathbf{z}_i\| = (\mathbf{z}_h - \mathbf{z}_i)^\top(\mathbf{z}_h
+    - \mathbf{z}_i) \]
 - en: with \(\mathbf{z}_h\) and \(\mathbf{z}_i\) the \(p \times 1\) column vectors
     stored in the \(h\)-th and \(i\)-th rows of \(\mathbf{X}\), respectively.
+  id: totrans-68
   prefs: []
   type: TYPE_NORMAL
+  zh: 其中，\(\mathbf{z}_h\) 和 \(\mathbf{z}_i\) 分别是存储在 \(\mathbf{X}\) 的第 \(h\) 行和第 \(i\)
+    行的 \(p \times 1\) 列向量。
 - en: '*Remember that we represent the rows of a matrix as column vectors. This explains
     why we use \(\mathbf{A}\) when showing the multiplication for the matrix \(\mathbf{Z}=\mathbf{X}\mathbf{A}\),
     but transpose the operation when showing the transformation for just one observation:
     \(\mathbf{z}_i = \mathbf{A}^\top\mathbf{x}_i\)*  *Using linear algebra, we can
     rewrite the quantity above as:'
+  id: totrans-69
   prefs: []
   type: TYPE_NORMAL
+  zh: '*记住，我们用列向量表示矩阵的行。这就是为什么在展示矩阵 \(\mathbf{Z}=\mathbf{X}\mathbf{A}\) 的乘法时使用 \(\mathbf{A}\)，但在展示单个观察值的变换时进行转置操作：\(\mathbf{z}_i
+    = \mathbf{A}^\top\mathbf{x}_i\)* 使用线性代数，我们可以将上述量重写为：'
 - en: \[ \|\mathbf{z}_h - \mathbf{z}_i\| = \|\mathbf{A}^\top \mathbf{x}_h - \mathbf{A}^\top\mathbf{x}_i\|^2
     = (\mathbf{x}_h - \mathbf{x}_i)^\top \mathbf{A} \mathbf{A}^\top (\mathbf{x}_h
     - \mathbf{x}_i) \]
+  id: totrans-70
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \|\mathbf{z}_h - \mathbf{z}_i\| = \|\mathbf{A}^\top \mathbf{x}_h - \mathbf{A}^\top\mathbf{x}_i\|^2
+    = (\mathbf{x}_h - \mathbf{x}_i)^\top \mathbf{A} \mathbf{A}^\top (\mathbf{x}_h
+    - \mathbf{x}_i) \]
 - en: Note that if \(\mathbf{A} \mathbf{A} ^\top= \mathbf{I}\), then the distance
     between the \(h\)th and \(i\)th rows is the same for the original and transformed
     data.
+  id: totrans-71
   prefs: []
   type: TYPE_NORMAL
+  zh: 注意，如果 \(\mathbf{A} \mathbf{A} ^\top= \mathbf{I}\)，则原始数据和转换数据中第 \(h\) 行和第 \(i\)
+    行之间的距离是相同的。
 - en: We refer to transformations with the property \(\mathbf{A} \mathbf{A}^\top =
     \mathbf{I}\) as *orthogonal transformations*. These are guaranteed to preserve
     the distance between any two points.
+  id: totrans-72
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们将具有性质 \(\mathbf{A} \mathbf{A}^\top = \mathbf{I}\) 的变换称为 *正交变换*。这些变换保证保持任意两点之间的距离。
 - en: 'We previously demonstrated our rotation has this property. We can confirm using
     R:'
+  id: totrans-73
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们之前已经证明了我们的旋转具有这种性质。我们可以使用 R 来确认：
 - en: '[PRE6]'
+  id: totrans-74
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE6]'
 - en: '*To understand where this name comes from, recall that in linear algebra two
     vectors, say **x** and **y**, are said to be *orthogonal* if'
+  id: totrans-75
   prefs: []
   type: TYPE_NORMAL
+  zh: '*要了解这个名称的由来，请回忆在线性代数中，如果两个向量，比如说 **x** 和 **y**，被称为 *正交*，那么'
 - en: \[ \mathbf{x}^\top \mathbf{y} = 0. \]
+  id: totrans-76
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \mathbf{x}^\top \mathbf{y} = 0. \]
 - en: If a matrix \(\mathbf{A}\) satisfies \(\mathbf{A}\mathbf{A}^\top = \mathbf{I}\),
     then each row of \(\mathbf{A}\) is orthogonal to every other row.
+  id: totrans-77
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果一个矩阵 \(\mathbf{A}\) 满足 \(\mathbf{A}\mathbf{A}^\top = \mathbf{I}\)，那么 \(\mathbf{A}\)
+    的每一行都与每一行正交。
 - en: '*The word *orthogonal* comes from the Greek *orthós*, meaning *straight* or
     *right*, and *gōnía*, meaning *angle*. In two and three dimensions, one can show
     that vectors with zero inner product meet at a right angle—that is, they are perpendicular.
@@ -340,160 +520,249 @@
     through the inner product rather than spatial intuition.*  *Notice that \(\mathbf{A}\)
     being orthogonal also guarantees that the total sum of squares (TSS) of \(\mathbf{X}\),
     defined as \[ \mbox{TSS} = \sum_{i=1}^n \sum_{j=1}^p x_{ij}^2 \]'
+  id: totrans-78
   prefs: []
   type: TYPE_NORMAL
+  zh: '*“正交”一词源于希腊语中的“orthós”，意为“直”或“正确”，以及“gōnía”，意为“角”。在二维和三维空间中，可以证明内积为零的向量在直角相交——即它们是垂直的。该术语被推广到更高维，其中“直角”是通过内积而不是空间直觉来定义的。*
+    注意，\(\mathbf{A}\) 是正交的也保证了 \(\mathbf{X}\) 的总平方和（TSS），定义为 \[ \mbox{TSS} = \sum_{i=1}^n
+    \sum_{j=1}^p x_{ij}^2 \]'
 - en: 'is equal to the total sum of squares of the rotation \(\mathbf{Z} = \mathbf{X}\mathbf{A}^\top\).
     To illustrate, observe that if we denote the rows of \(\mathbf{Z}\) as \(\mathbf{z}_1,
     \dots, \mathbf{z}_n\), then the sum of squares can be written as:'
+  id: totrans-79
   prefs: []
   type: TYPE_NORMAL
+  zh: 等于旋转 \(\mathbf{Z} = \mathbf{X}\mathbf{A}^\top\) 的总平方和。为了说明这一点，观察如果我们用 \(\mathbf{z}_1,
+    \dots, \mathbf{z}_n\) 表示 \(\mathbf{Z}\) 的行，那么平方和可以写成：
 - en: \[ \sum_{1=1}^n \|\mathbf{z}_i\|^2 = \sum_{i=1}^n \|\mathbf{A}^\top\mathbf{x}_i\|^2
     = \sum_{i=1}^n \mathbf{x}_i^\top \mathbf{A}\mathbf{A}^\top \mathbf{x}_i = \sum_{i=1}^n
     \mathbf{x}_i^\top\mathbf{x}_i = \sum_{i=1}^n\|\mathbf{x}_i\|^2 \]
+  id: totrans-80
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \sum_{1=1}^n \|\mathbf{z}_i\|^2 = \sum_{i=1}^n \|\mathbf{A}^\top\mathbf{x}_i\|^2
+    = \sum_{i=1}^n \mathbf{x}_i^\top \mathbf{A}\mathbf{A}^\top \mathbf{x}_i = \sum_{i=1}^n
+    \mathbf{x}_i^\top\mathbf{x}_i = \sum_{i=1}^n\|\mathbf{x}_i\|^2 \]
 - en: 'We can confirm using R:'
+  id: totrans-81
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们可以使用 R 来确认：
 - en: '[PRE7]'
+  id: totrans-82
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE7]'
 - en: '*This can be interpreted as a consequence of the fact that an orthogonal transformation
     guarantees that all the information is preserved.'
+  id: totrans-83
   prefs: []
   type: TYPE_NORMAL
+  zh: '*这可以解释为正交变换保证所有信息都得到保留的事实。'
 - en: 'However, although the total is preserved, the sum of squares for the individual
     columns changes. Here we compute the proportion of TSS attributed to each column,
     referred to as the *variance explained* or *variance captured* by each column,
     for \(\mathbf{X}\):'
+  id: totrans-84
   prefs: []
   type: TYPE_NORMAL
+  zh: 然而，尽管总和保持不变，但各个列的平方和发生了变化。在这里，我们计算了分配给每个列的 TSS 比例，称为 \(\mathbf{X}\) 的 *解释方差*
+    或 *捕获方差*：
 - en: '[PRE8]'
+  id: totrans-85
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE8]'
 - en: '*and \(\mathbf{Z}\):'
+  id: totrans-86
   prefs: []
   type: TYPE_NORMAL
+  zh: '*和 \(\mathbf{Z}\)：'
 - en: '[PRE9]'
+  id: totrans-87
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE9]'
 - en: '*In the next section, we describe how this last mathematical result can be
     useful.*********'
+  id: totrans-88
   prefs: []
   type: TYPE_NORMAL
+  zh: '*在下一节中，我们描述了如何利用这个最后的数学结果。*********'
 - en: '*****23.5 Principal Component Analysis (PCA)*****'
+  id: totrans-89
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '*****23.5 主成分分析 (PCA)*****'
 - en: '*****We have established that orthogonal transformations preserve both the
     distances between observations and the total sum of squares (TSS). However, while
     the TSS remains unchanged, the way it is distributed across the columns can vary
     depending on the transformation.'
+  id: totrans-90
   prefs: []
   type: TYPE_NORMAL
+  zh: '*****我们已经证明正交变换既保留了观测之间的距离，也保留了总平方和 (TSS)。然而，虽然 TSS 保持不变，但它在列之间的分布方式可能因变换而异。'
 - en: The main idea behind Principal Component Analysis (PCA) is to find an orthogonal
     transformation that concentrates as much of the variance as possible into the
     first few columns. This allows us to reduce the dimensionality of the problem
     by focusing only on those columns that capture most of the variation in the data.
+  id: totrans-91
   prefs: []
   type: TYPE_NORMAL
+  zh: 主成分分析 (PCA) 的主要思想是找到一个正交变换，尽可能地将方差集中在前几个列上。这允许我们通过仅关注那些捕获数据中大部分变化性的列来降低问题的维度。
 - en: 'In our example, we aim to find a rotation that maximizes the variance explained
     in the first column. The following code performs a grid search across rotations
     from –90 to 0 degrees to identify such a transformation:'
+  id: totrans-92
   prefs: []
   type: TYPE_NORMAL
+  zh: 在我们的例子中，我们旨在找到一个旋转，以最大化第一列的解释方差。以下代码在 -90 到 0 度的旋转范围内进行网格搜索，以识别这种变换：
 - en: '[PRE10]'
+  id: totrans-93
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE10]'
 - en: '*![](../Images/fb08c5e3ea8bb213778bc072e0083a98.png)*  *We find that a -45
     degree rotation appears to achieve the maximum, with over 98% of the total variability
     explained by the first dimension. We denote this rotation matrix with \(\mathbf{V}\):'
+  id: totrans-94
   prefs: []
   type: TYPE_NORMAL
+  zh: '*![](../Images/fb08c5e3ea8bb213778bc072e0083a98.png)*  *我们发现 -45 度的旋转似乎达到了最大值，第一维解释了超过
+    98% 的总可变性。我们用 \(\mathbf{V}\) 表示这个旋转矩阵：'
 - en: '[PRE11]'
+  id: totrans-95
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE11]'
 - en: '*We can rotate the entire dataset using:'
+  id: totrans-96
   prefs: []
   type: TYPE_NORMAL
+  zh: '*我们可以使用以下方法旋转整个数据集：'
 - en: \[ \mathbf{Z} = \mathbf{X}\mathbf{V} \]
+  id: totrans-97
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \mathbf{Z} = \mathbf{X}\mathbf{V} \]
 - en: '[PRE12]'
+  id: totrans-98
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE12]'
 - en: '*The following animation further illustrates how different rotations affect
     the variability explained by the dimensions of the rotated data:'
+  id: totrans-99
   prefs: []
   type: TYPE_NORMAL
+  zh: '*以下动画进一步说明了不同旋转如何影响旋转数据维度的可变性：'
 - en: '![](../Images/520fabd60913917cd2836f34c47dfbf5.png)'
+  id: totrans-100
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/520fabd60913917cd2836f34c47dfbf5.png)'
 - en: The first dimension of `z` is referred to as the *first principal component
     (PC)*. Because almost all the variation is explained by this first PC, the distance
     between rows in `x` can be very well approximated by the distance calculated with
     just `z[,1]`.
+  id: totrans-101
   prefs: []
   type: TYPE_NORMAL
+  zh: '`z` 的第一维被称为 *第一主成分 (PC)*。因为几乎所有变化都可以由这个第一主成分解释，所以 `x` 中行之间的距离可以用仅用 `z[,1]`
+    计算的距离很好地近似。'
 - en: '![](../Images/b209a539be9dde4eed49e6a351152ae1.png)'
+  id: totrans-102
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/b209a539be9dde4eed49e6a351152ae1.png)'
 - en: We also notice that the two groups, adults and children, can be clearly observed
     with the one number summary, better than with any of the two original dimensions.
+  id: totrans-103
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们还注意到，两组，成人和儿童，可以通过一个数字摘要清楚地观察到，比任何两个原始维度都要好。
 - en: '[PRE13]'
+  id: totrans-104
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE13]'
 - en: '*![](../Images/3ebf0e4b9f06dbace042fa0bba76dff5.png)*  *We can visualize these
     to see how the first component summarizes the data. In the plot below, red represents
     high values and blue negative values:'
+  id: totrans-105
   prefs: []
   type: TYPE_NORMAL
+  zh: '*![](../Images/3ebf0e4b9f06dbace042fa0bba76dff5.png)*  *我们可以可视化这些，以了解第一成分如何总结数据。在下面的图中，红色代表高值，蓝色代表负值：'
 - en: '![](../Images/f76f477f04f81e30b8a6308928394526.png)'
+  id: totrans-106
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/f76f477f04f81e30b8a6308928394526.png)'
 - en: This idea extends naturally to more than two dimensions. As in the two-dimensional
     case, we begin by finding a \(p \times 1\) vector \(\mathbf{v}_1\) with \(\|\mathbf{v}_1\|
     = 1\) that maximizes
+  id: totrans-107
   prefs: []
   type: TYPE_NORMAL
+  zh: 这个想法自然地扩展到超过两个维度。与二维情况一样，我们首先找到一个 \(p \times 1\) 的向量 \(\mathbf{v}_1\)，其 \(\|\mathbf{v}_1\|
+    = 1\)，并使它最大化
 - en: \[ |\mathbf{X}\mathbf{v}_1|. \]
+  id: totrans-108
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ |\mathbf{X}\mathbf{v}_1|. \]
 - en: The projection \(\mathbf{X}\mathbf{v}_1\) defines the first principal component
     (PC1); the direction \(\mathbf{v}_1\) captures the greatest possible variation
     in the data.
+  id: totrans-109
   prefs: []
   type: TYPE_NORMAL
+  zh: 投影 \(\mathbf{X}\mathbf{v}_1\) 定义了第一个主成分（PC1）；方向 \(\mathbf{v}_1\) 捕获了数据中可能的最大变化。
 - en: To define the second principal component, we search for another unit vector
     \(\mathbf{v}_2\) that is orthogonal to \(\mathbf{v}_1\) and maximizes
+  id: totrans-110
   prefs: []
   type: TYPE_NORMAL
+  zh: 为了定义第二个主成分，我们寻找另一个与 \(\mathbf{v}_1\) 正交的单位向量 \(\mathbf{v}_2\)，并最大化
 - en: \[ |\mathbf{X}\mathbf{v}_2|. \]
+  id: totrans-111
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ |\mathbf{X}\mathbf{v}_2|. \]
 - en: The projection \(\mathbf{X}\mathbf{v}_2\) is PC2, capturing the largest remaining
     variation after removing any variation explained by PC1.
+  id: totrans-112
   prefs: []
   type: TYPE_NORMAL
+  zh: 投影 \(\mathbf{X}\mathbf{v}_2\) 是 PC2，它捕捉了在移除由 PC1 解释的任何变化后的最大剩余变化。
 - en: 'This procedure continues: for each \(k\), \(\mathbf{v}_k\) is the unit vector,
     orthogonal to \(\mathbf{v}_1, \dots, \mathbf{v}_{k-1}\), that maximizes the variance
     of the projection \(\mathbf{X}\mathbf{v}_k\).'
+  id: totrans-113
   prefs: []
   type: TYPE_NORMAL
+  zh: 此过程继续：对于每个 \(k\)，\(\mathbf{v}_k\) 是一个单位向量，与 \(\mathbf{v}_1, \dots, \mathbf{v}_{k-1}\)
+    正交，并且最大化投影 \(\mathbf{X}\mathbf{v}_k\) 的方差。
 - en: 'Once all \(p\) directions have been found, we construct the full *rotation
     matrix* \(\mathbf{V}\) and the corresponding *principal component matrix* \(\mathbf{Z}\):'
+  id: totrans-114
   prefs: []
   type: TYPE_NORMAL
+  zh: 一旦找到所有 \(p\) 个方向，我们就构建完整的 *旋转矩阵* \(\mathbf{V}\) 和相应的 *主成分矩阵* \(\mathbf{Z}\)：
 - en: \[ \mathbf{V} = \begin{bmatrix} \mathbf{v}_1 & \dots & \mathbf{v}_p \end{bmatrix},
     \quad \mathbf{Z} = \mathbf{X}\mathbf{V} \]
+  id: totrans-115
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \mathbf{V} = \begin{bmatrix} \mathbf{v}_1 & \dots & \mathbf{v}_p \end{bmatrix},
+    \quad \mathbf{Z} = \mathbf{X}\mathbf{V} \]
 - en: Each column of \(\mathbf{Z}\) is a principal component, and the columns of \(\mathbf{V}\)
     define the new rotated coordinate system.
+  id: totrans-116
   prefs: []
   type: TYPE_NORMAL
+  zh: \(\mathbf{Z}\) 的每一列都是一个主成分，而 \(\mathbf{V}\) 的列定义了新的旋转坐标系。
 - en: The idea of distance preservation extends naturally to higher dimensions. For
     a matrix \(\mathbf{X}\) with \(p\) columns, the transformation \(\mathbf{Z} =
     \mathbf{X}\mathbf{V}\) preserves the pairwise distances between rows, while reorienting
@@ -501,16 +770,22 @@
     from largest to smallest. If the variance of the columns \(\mathbf{Z}_j\) for
     \(j > k\) is very small, those dimensions contribute little to the overall variation
     in the data and, by extension, to the distances between observations.
+  id: totrans-117
   prefs: []
   type: TYPE_NORMAL
+  zh: 距离保持的概念自然地扩展到高维空间。对于一个有 \(p\) 列的矩阵 \(\mathbf{X}\)，变换 \(\mathbf{Z} = \mathbf{X}\mathbf{V}\)
+    保持行之间的成对距离，同时重新定位数据，使得 \(\mathbf{Z}\) 的每一列所解释的方差按从大到小的顺序排列。如果 \(\mathbf{Z}_j\)
+    列的方差对于 \(j > k\) 非常小，那么这些维度对数据的整体变化以及观测之间的距离的贡献很小。
 - en: 'In such cases, we can approximate the original distances between rows using
     only the first \(k\) columns of \(\mathbf{Z}\). If \(k \ll p\), this yields a
     much lower-dimensional representation of the data that still retains the essential
     structure. This is the key advantage of PCA: it allows us to summarize high-dimensional
     data efficiently, making visualization, computation, and modeling more tractable
     without losing the main patterns in the data.'
+  id: totrans-118
   prefs: []
   type: TYPE_NORMAL
+  zh: 在这种情况下，我们可以仅使用 \(\mathbf{Z}\) 的前 \(k\) 列来近似原始行之间的距离。如果 \(k \ll p\)，这将得到一个维度更低的数据表示，同时仍然保留了数据的本质结构。这是主成分分析（PCA）的关键优势：它允许我们有效地总结高维数据，使得可视化、计算和建模变得更加容易，同时不丢失数据中的主要模式。
 - en: '*The solution to the PCA maximization problem is not unique. For example, \(\|\mathbf{X}
     \mathbf{v}\| = \|-\mathbf{X} \mathbf{v}\|\), so both \(\mathbf{v}\) and \(-\mathbf{v}\)
     produce the same principal component direction. Similarly, if we flip the sign
@@ -520,208 +795,314 @@
     means we are free to change the sign of any column in \(\mathbf{Z}\) and \(\mathbf{V}\)
     without affecting the PCA result.*  *In R, we can find the principal components
     of any matrix with the function `prcomp`:'
+  id: totrans-119
   prefs: []
   type: TYPE_NORMAL
+  zh: '*PCA 最大化问题的解不是唯一的。例如，\(\|\mathbf{X} \mathbf{v}\| = \|-\mathbf{X} \mathbf{v}\|\)，所以
+    \(\mathbf{v}\) 和 \(-\mathbf{v}\) 都产生相同的主成分方向。同样，如果我们翻转 \(\mathbf{Z}\)（主成分）中任何列的符号，只要我们也翻转
+    \(\mathbf{V}\)（旋转矩阵）中相应的列的符号，我们就可以保持等式 \(\mathbf{X} = \mathbf{Z} \mathbf{V}^\top\)
+    的相等性。这意味着我们可以自由地改变 \(\mathbf{Z}\) 和 \(\mathbf{V}\) 中任何列的符号，而不会影响 PCA 的结果。* 在 R
+    中，我们可以使用 `prcomp` 函数找到任何矩阵的主成分：'
 - en: '[PRE14]'
+  id: totrans-120
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE14]'
 - en: '*Keep in mind that default behavior is to center the columns of `x` before
     computing the PCs, an operation we don’t need in our example because our matrix
     is scaled.'
+  id: totrans-121
   prefs: []
   type: TYPE_NORMAL
+  zh: '*请注意，默认行为是在计算主成分之前将 `x` 的列居中，在我们的例子中我们不需要这个操作，因为我们的矩阵已经缩放。'
 - en: The object `pca` includes the rotated data \(Z\) in `pca$x` and the rotation
     \(\mathbf{V}\) in `pca$rotation`.
+  id: totrans-122
   prefs: []
   type: TYPE_NORMAL
+  zh: 对象 `pca` 包含旋转后的数据 \(Z\) 在 `pca$x` 中，以及旋转 \(\mathbf{V}\) 在 `pca$rotation` 中。
 - en: 'We can see that columns of the `pca$rotation` are indeed the rotation obtained
     with -45 (remember the sign is arbitrary):'
+  id: totrans-123
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们可以看到，`pca$rotation` 的列确实是获得 -45 度旋转的结果（记住符号是任意的）：
 - en: '[PRE15]'
+  id: totrans-124
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE15]'
 - en: '*The square root of the variation of each column is included in the `pca$sdev`
     component. This implies we can compute the variance explained by each PC using:'
+  id: totrans-125
   prefs: []
   type: TYPE_NORMAL
+  zh: '*每个列的变化量的平方根包含在 `pca$sdev` 组件中。这意味着我们可以使用以下方法计算每个主成分解释的方差：'
 - en: '[PRE16]'
+  id: totrans-126
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE16]'
 - en: '*The function `summary` performs this calculation for us:'
+  id: totrans-127
   prefs: []
   type: TYPE_NORMAL
+  zh: '*`summary` 函数执行此计算：'
 - en: '[PRE17]'
+  id: totrans-128
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE17]'
 - en: '*We also see that we can rotate `x` (\(\mathbf{X}\)) and `pca$x` (\(\mathbf{Z}\))
     as explained with the mathematical formulas above:'
+  id: totrans-129
   prefs: []
   type: TYPE_NORMAL
+  zh: '*我们还可以看到，我们可以像上面所解释的那样旋转 `x` (\(\mathbf{X}\)) 和 `pca$x` (\(\mathbf{Z}\))：'
 - en: '[PRE18]**************'
+  id: totrans-130
   prefs: []
   type: TYPE_NORMAL
+  zh: '[PRE18]**************'
 - en: '****23.6 Examples****'
+  id: totrans-131
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '****23.6 示例****'
 - en: '****### Iris example'
+  id: totrans-132
   prefs: []
   type: TYPE_NORMAL
+  zh: '****### 鸢尾花示例'
 - en: 'The `iris` dataset is a widely used example in data analysis courses. It contains
     four botanical measurements, sepal length, sepal width, petal length, and petal
     width, for flowers from three different species:'
+  id: totrans-133
   prefs: []
   type: TYPE_NORMAL
+  zh: '`iris` 数据集是数据分析课程中广泛使用的示例。它包含四个植物测量值，即花瓣长度、花瓣宽度、花萼长度和花萼宽度，来自三个不同物种的花：'
 - en: '[PRE19]'
+  id: totrans-134
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE19]'
 - en: '*If you inspect the species column using `iris$Species`, you’ll see that the
     observations are grouped by species.'
+  id: totrans-135
   prefs: []
   type: TYPE_NORMAL
+  zh: '*如果你使用 `iris$Species` 检查物种列，你会看到观察结果按物种分组。'
 - en: 'When we visualize the pairwise distances between observations, a clear pattern
     emerges: the data appears to cluster into three distinct groups, with one species
     standing out as more clearly separated from the other two. This structure is consistent
     with the known species labels:'
+  id: totrans-136
   prefs: []
   type: TYPE_NORMAL
+  zh: 当我们可视化观察之间的成对距离时，一个清晰的模式出现：数据似乎聚集成三个不同的组，其中一个物种与其他两个物种明显分离。这种结构与已知的物种标签一致：
 - en: '[PRE20]'
+  id: totrans-137
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE20]'
 - en: '*![](../Images/795d925e7fe75c06df1b34ba6b255196.png)*  *Our features matrix
     has four dimensions, but three are very correlated:'
+  id: totrans-138
   prefs: []
   type: TYPE_NORMAL
+  zh: '*![](../Images/795d925e7fe75c06df1b34ba6b255196.png)*  *我们的特征矩阵有四个维度，但其中三个维度高度相关：'
 - en: '[PRE21]'
+  id: totrans-139
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE21]'
 - en: '*If we apply PCA to the `iris` dataset, we expect that the first few principal
     components will capture most of the variation in the data. Because the original
     variables are highly correlated, PCA should allow us to approximate the distances
     between observations using just two dimensions, effectively compressing the data
     while preserving its structure.'
+  id: totrans-140
   prefs: []
   type: TYPE_NORMAL
+  zh: '*如果我们对 `iris` 数据集应用 PCA，我们预计前几个主成分将捕捉到数据中的大部分变化。由于原始变量高度相关，PCA 应该允许我们仅使用两个维度来近似观察之间的距离，从而有效地压缩数据同时保留其结构。'
 - en: 'We use the `summary` function to examine how much variance is explained by
     each principal component:'
+  id: totrans-141
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们使用 `summary` 函数来检查每个主成分解释了多少方差：
 - en: '[PRE22]'
+  id: totrans-142
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE22]'
 - en: '*The first two dimensions account for almost 98% of the variability. Thus,
     we should be able to approximate the distance very well with two dimensions. We
     confirm this by computing the distance with just the first two dimensions and
     comparing to the original:'
+  id: totrans-143
   prefs: []
   type: TYPE_NORMAL
+  zh: '*前两个维度解释了几乎 98% 的变异性。因此，我们应该能够用两个维度很好地近似距离。我们通过仅使用前两个维度计算距离并与原始数据进行比较来确认这一点：'
 - en: '[PRE23]'
+  id: totrans-144
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE23]'
 - en: '*![](../Images/59cdf2308845a0537d4b708a7ffae8a9.png)*  *A useful application
     of this result is that we can now visualize the distances between observations
     in a two-dimensional plot. In this plot, the distance between any pair of points
     approximates the actual distance between the corresponding observations in the
     original high-dimensional space.'
+  id: totrans-145
   prefs: []
   type: TYPE_NORMAL
+  zh: '*![](../Images/59cdf2308845a0537d4b708a7ffae8a9.png)*  *这个结果的一个有用应用是，我们现在可以在二维图中可视化观察之间的距离。在这个图中，任何一对点之间的距离近似于原始高维空间中相应观察之间的实际距离。'
 - en: '[PRE24]'
+  id: totrans-146
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE24]'
 - en: '*![](../Images/51f104f7f765747e523afe68b077074b.png)*  *We color the observations
     by their labels and notice that, with these two dimensions, we achieve almost
     perfect separation.'
+  id: totrans-147
   prefs: []
   type: TYPE_NORMAL
+  zh: '*![](../Images/51f104f7f765747e523afe68b077074b.png)*  *我们根据标签给观察结果着色，并注意到，使用这两个维度，我们几乎实现了完美的分离。'
 - en: 'Looking more closely at the resulting PCs and rotations:'
+  id: totrans-148
   prefs: []
   type: TYPE_NORMAL
+  zh: 更仔细地观察生成的主成分和旋转：
 - en: '![](../Images/86d9ad068608ebe2e7051e40bc1b724b.png)'
+  id: totrans-149
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/86d9ad068608ebe2e7051e40bc1b724b.png)'
 - en: we learn that the first PC is obtained by taking a weighted average of sepal
     length, petal length, and petal width (red in first column), and subtracting a
     quantity proportional to sepal width (blue in first column). The second PC is
     a weighted average of petal length and petal width, minus a weighted average of
     sepal length and sepal width.******
+  id: totrans-150
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们了解到第一个PC是通过取花萼长度、花瓣长度和花瓣宽度（第一列中的红色）的加权平均值，并减去与花萼宽度成比例的量（第一列中的蓝色）得到的。第二个PC是花瓣长度和花瓣宽度的加权平均值，减去花萼长度和花萼宽度的加权平均值。******
 - en: '***MNIST example***'
+  id: totrans-151
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '***MNIST示例***'
 - en: '***The written digits example has 784 features. Is there any room for data
     reduction? We will use PCA to answer this.'
+  id: totrans-152
   prefs: []
   type: TYPE_NORMAL
+  zh: '***手写数字示例有784个特征。是否有数据降维的空间？我们将使用PCA来回答这个问题。'
 - en: 'If not already loaded, let’s begin by loading the data:'
+  id: totrans-153
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果尚未加载，让我们先加载数据：
 - en: '[PRE25]'
+  id: totrans-154
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE25]'
 - en: '*Because the pixels are so small, we expect pixels close to each other on the
     grid to be correlated, meaning that dimension reduction should be possible.'
+  id: totrans-155
   prefs: []
   type: TYPE_NORMAL
+  zh: '*由于像素非常小，我们预计网格上彼此靠近的像素是相关的，这意味着可以进行降维。'
 - en: 'Let’s compute the PCs (this will take a few seconds as it is a rather large
     matrix) and examine the variance explained by each PC:'
+  id: totrans-156
   prefs: []
   type: TYPE_NORMAL
+  zh: 让我们计算主成分（PCs）（这需要几秒钟，因为这个矩阵相当大）并检查每个PC解释的方差：
 - en: '[PRE26]'
+  id: totrans-157
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE26]'
 - en: '*![](../Images/8e2977fdfe97603208dd9f859d032909.png)*  *We can see that the
     first few PCs already explain a large percent of the variability. Furthermore,
     simply by looking at the first two PCs we already see information about the labels.
     Here is a random sample of 500 digits:'
+  id: totrans-158
   prefs: []
   type: TYPE_NORMAL
+  zh: '*![图片](../Images/8e2977fdfe97603208dd9f859d032909.png)*  *我们可以看到前几个PC已经解释了大部分的变异性。此外，仅通过查看前两个PC，我们已看到有关标签的信息。这里是一个500个数字的随机样本：'
 - en: '![](../Images/f9b52f9cb048800c1f5d18ed216c3bf4.png)'
+  id: totrans-159
   prefs: []
   type: TYPE_IMG
+  zh: '![图片](../Images/f9b52f9cb048800c1f5d18ed216c3bf4.png)'
 - en: 'We can also *see* the rotation values on the 28 \(\times\) 28 grid to get an
     idea of how pixels are being weighted in the transformations that result in the
     PCs:'
+  id: totrans-160
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们还可以*看到*28 \(\times\) 28网格上的旋转值，以了解像素在导致PCs的变换中的加权情况：
 - en: '![](../Images/cc1088c5813dbbd2eeafd6b375c9c48e.png)'
+  id: totrans-161
   prefs: []
   type: TYPE_IMG
+  zh: '![图片](../Images/cc1088c5813dbbd2eeafd6b375c9c48e.png)'
 - en: 'We can clearly see that first PC appears to be separating the 1s (red) from
     the 0s (blue). We can vaguely discern digits, or parts of digits, in the other
     three PCs as well. By looking at the PCs stratified by digits, we get further
     insights. For example, we see that the second PC separates 4s, 7s, and 9s from
     the rest:'
+  id: totrans-162
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们可以清楚地看到第一个PC似乎将1（红色）和0（蓝色）分开。我们还可以在其他三个PC中模糊地辨认出数字或数字的部分。通过按数字分层查看PC，我们获得更深入的见解。例如，我们看到第二个PC将4、7和9与其他数字分开：
 - en: '![](../Images/63c031a1f719da25ffd97ec5870bbafd.png)'
+  id: totrans-163
   prefs: []
   type: TYPE_IMG
+  zh: '![图片](../Images/63c031a1f719da25ffd97ec5870bbafd.png)'
 - en: 'We can also confirm that the lower variance PCs appear related to unimportant
     variability, mainly smudges in the corners:'
+  id: totrans-164
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们还可以确认，具有较低方差的PCs似乎与不重要的变异性相关，主要是角落的污迹：
 - en: '![](../Images/8a1e1aeff3efddad096d1a97b8d011be.png)*********'
+  id: totrans-165
   prefs: []
   type: TYPE_NORMAL
+  zh: '![图片](../Images/8a1e1aeff3efddad096d1a97b8d011be.png)*********'
 - en: '****23.7 Exercises****'
+  id: totrans-166
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '****23.7练习****'
 - en: '****1\. We want to explore the `tissue_gene_expression` predictors by plotting
     them.'
+  id: totrans-167
   prefs: []
   type: TYPE_NORMAL
+  zh: '****1. 我们想通过绘图来探索`tissue_gene_expression`预测值。'
 - en: '[PRE27]'
+  id: totrans-168
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE27]'
 - en: '*We hope to get an idea of which observations are close to each other, but
     the predictors are 500-dimensional so plotting is difficult. Plot the first two
     principal components with color representing tissue type.'
+  id: totrans-169
   prefs: []
   type: TYPE_NORMAL
+  zh: '*我们希望了解哪些观察值彼此接近，但预测值是500维的，因此绘图很困难。用表示组织类型的颜色绘制前两个主成分。'
 - en: 2\. The predictors for each observation are measured on the same measurement
     device (a gene expression microarray) after an experimental procedure. A different
     device and procedure is used for each observation. This may introduce biases that
@@ -729,16 +1110,24 @@
     of this potential bias, for each observation, compute the average across all predictors
     and then plot this against the first PC with color representing tissue. Report
     the correlation.
+  id: totrans-170
   prefs: []
   type: TYPE_NORMAL
+  zh: 2. 每个观察值的预测值是在相同的测量设备（基因表达微阵列）上通过实验程序测量的。每个观察值使用不同的设备和程序。这可能会引入影响每个观察值所有预测值的偏差。为了探索这种潜在偏差的影响，对于每个观察值，计算所有预测者的平均值，然后将其与第一个PC用颜色表示的组织类型进行绘图。报告相关性。
 - en: 3\. We see an association with the first PC and the observation averages. Redo
     the PCA, but only after removing the center.
+  id: totrans-171
   prefs: []
   type: TYPE_NORMAL
+  zh: 3. 我们看到第一个PC与观察值平均值之间存在关联。重新进行PCA，但先去除中心。
 - en: 4\. For the first 10 PCs, make a boxplot showing the values for each tissue.
+  id: totrans-172
   prefs: []
   type: TYPE_NORMAL
+  zh: 4. 对于前10个PC，制作一个箱线图，显示每个组织的值。
 - en: '5\. Plot the percent variance explained by PC number. Hint: Use the `summary`
     function.*****'
+  id: totrans-173
   prefs: []
   type: TYPE_NORMAL
+  zh: 5. 绘制由PC编号解释的百分比方差。提示：使用`summary`函数。*****

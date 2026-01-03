@@ -1,154 +1,232 @@
 - en: 14  Bootstrap
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 14  自助法
 - en: 原文：[https://rafalab.dfci.harvard.edu/dsbook-part-2/inference/bootstrap.html](https://rafalab.dfci.harvard.edu/dsbook-part-2/inference/bootstrap.html)
+  id: totrans-1
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 原文：[https://rafalab.dfci.harvard.edu/dsbook-part-2/inference/bootstrap.html](https://rafalab.dfci.harvard.edu/dsbook-part-2/inference/bootstrap.html)
 - en: '[Statistical Inference](../inference/intro-inference.html)'
+  id: totrans-2
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[统计推断](../inference/intro-inference.html)'
 - en: '[14  Bootstrap](../inference/bootstrap.html)'
+  id: totrans-3
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[14  自助法](../inference/bootstrap.html)'
 - en: CLT provides a useful approach to building confidence intervals and performing
     hypothesis testing. However, it does not always apply. Here we provide a short
     introduction to an alternative approach to estimating the distribution of an estimate
     that does not rely on CLT.
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: CLT提供了一种构建置信区间和进行假设检验的有用方法。然而，它并不总是适用。在这里，我们提供了一个不依赖于CLT的估计分布的替代方法的简要介绍。
 - en: '14.1 Example: median income'
+  id: totrans-5
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 14.1 示例：中位数收入
 - en: 'Suppose the income distribution of your population is as follows:'
+  id: totrans-6
   prefs: []
   type: TYPE_NORMAL
+  zh: 假设你的人口收入分布如下：
 - en: '[PRE0]'
+  id: totrans-7
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: '*![](../Images/1f3bd8a7997031d5d498f4c62a641857.png)*  *The population median
     is:'
+  id: totrans-8
   prefs: []
   type: TYPE_NORMAL
+  zh: '*![](../Images/1f3bd8a7997031d5d498f4c62a641857.png)*  *总体中位数是：'
 - en: '[PRE1]'
+  id: totrans-9
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: '*Suppose we don’t have access to the entire population but want to estimate
     the population median, denoted by \(m\). We take a random sample of 100 observations
     and use the sample median, \(M\), as our estimate of \(m\):'
+  id: totrans-10
   prefs: []
   type: TYPE_NORMAL
+  zh: '*假设我们无法访问整个总体，但想估计总体中位数，记为\(m\)。我们随机抽取100个观测值，并使用样本中位数\(M\)作为\(m\)的估计：'
 - en: '[PRE2]'
+  id: totrans-11
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: '*The question now becomes: how can we assess the uncertainty in this estimate?
     In other words, how do we compute a standard error and construct a confidence
     interval for \(m\) based on our sample?'
+  id: totrans-12
   prefs: []
   type: TYPE_NORMAL
+  zh: '*现在的问题变成了：我们如何评估这个估计的不确定性？换句话说，我们如何根据我们的样本计算标准误差并构建\(m\)的置信区间？'
 - en: In the following sections, we introduce the *bootstrap*, a powerful resampling
     method that allows us to estimate variability and construct confidence intervals
     without relying on strong distributional assumptions.***
+  id: totrans-13
   prefs: []
   type: TYPE_NORMAL
+  zh: 在以下章节中，我们介绍了一种强大的重采样方法——**自助法**，它允许我们在不依赖强分布假设的情况下估计变异性并构建置信区间。
 - en: '***14.2 Confidence intervals for the median***'
+  id: totrans-14
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '***14.2 中位数置信区间***'
 - en: '***Can we construct a confidence interval? What is the distribution of \(M\)?'
+  id: totrans-15
   prefs: []
   type: TYPE_NORMAL
+  zh: '***我们能否构建一个置信区间？\(M\)的分布是什么？***'
 - en: Because we are simulating the data, we can use a Monte Carlo simulation to learn
     the actual distribution of \(M\).
+  id: totrans-16
   prefs: []
   type: TYPE_NORMAL
+  zh: 因为我们在模拟数据，我们可以使用蒙特卡洛模拟来了解\(M\)的实际分布。
 - en: '[PRE3]'
+  id: totrans-17
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: '*![](../Images/a5fe1eadf811710052782d7f3a89f08c.png)'
+  id: totrans-18
   prefs: []
   type: TYPE_NORMAL
+  zh: '*![](../Images/a5fe1eadf811710052782d7f3a89f08c.png)*'
 - en: If we know this distribution, we can construct a confidence interval. The problem
     here is that, as we have already described, in practice we do not have access
     to the distribution. In previous sections we have used CLT, but what we learned
     applies to averages and here we are interested in the median. We can see that
     the 95% confidence interval based on CLT
+  id: totrans-19
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果我们知道这个分布，我们可以构建一个置信区间。问题在于，正如我们之前所描述的，在实践中，我们无法访问这个分布。在之前的章节中，我们使用了CLT，但我们学到的东西适用于平均值，而这里我们感兴趣的是中位数。我们可以看到，基于CLT的95%置信区间
 - en: '[PRE4]'
+  id: totrans-20
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE4]'
 - en: '*is quite different from the confidence interval we would generate if we knew
     the actual distribution of \(M\):'
+  id: totrans-21
   prefs: []
   type: TYPE_NORMAL
+  zh: '*与我们已知\(M\)的实际分布所生成的置信区间**有很大不同**：'
 - en: '[PRE5]'
+  id: totrans-22
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE5]'
 - en: '*The bootstrap allows us to approximate a Monte Carlo simulation even when
     we do not have access to the full population distribution. The idea is straightforward:
     we treat the observed sample as if it were the population. From this sample, we
     draw new datasets of the same size, with replacement, and compute the statistic
     of interest, in this case, the median, for each resampled dataset. These resampled
     datasets are called bootstrap samples.'
+  id: totrans-23
   prefs: []
   type: TYPE_NORMAL
+  zh: '*自助法允许我们在无法访问完整总体分布的情况下近似蒙特卡洛模拟。其思路很简单：我们将观察到的样本视为总体。从这个样本中，我们抽取相同大小的新的数据集，进行有放回的抽取，并计算感兴趣的统计量，在这种情况下，是中位数，对于每个重新抽样的数据集。这些重新抽样的数据集被称为自助样本。'
 - en: In many practical situations, the distribution of the statistics computed from
     bootstrap samples provides a good approximation to the sampling distribution of
     the original statistic. This approximation allows us to estimate variability,
     compute standard errors, and construct confidence intervals without knowing the
     true underlying distribution.
+  id: totrans-24
   prefs: []
   type: TYPE_NORMAL
+  zh: 在许多实际情况下，从自助样本计算出的统计量的分布提供了对原始统计量抽样分布的良好近似。这种近似允许我们估计变异性，计算标准误差，并构建置信区间，而无需知道真实的潜在分布。
 - en: 'The following code demonstrates how to generate bootstrap samples and approximate
     the sampling distribution of the median:'
+  id: totrans-25
   prefs: []
   type: TYPE_NORMAL
+  zh: 以下代码演示了如何生成自助样本并近似中位数的抽样分布：
 - en: '[PRE6]'
+  id: totrans-26
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE6]'
 - en: '*Note a confidence interval constructed with the bootstrap is much closer to
     one constructed with the theoretical distribution:'
+  id: totrans-27
   prefs: []
   type: TYPE_NORMAL
+  zh: '*注意使用自助法构建的置信区间与使用理论分布构建的置信区间非常接近：'
 - en: '[PRE7]*******'
+  id: totrans-28
   prefs: []
   type: TYPE_NORMAL
+  zh: '[PRE7]*******'
 - en: '***14.3 Exercises***'
+  id: totrans-29
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '***14.3 练习***'
 - en: '***1\. Generate a random dataset like this:'
+  id: totrans-30
   prefs: []
   type: TYPE_NORMAL
+  zh: '***1. 生成一个类似这样的随机数据集：'
 - en: '[PRE8]'
+  id: totrans-31
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE8]'
 - en: '*Estimate the 75th quantile, which we know is:'
+  id: totrans-32
   prefs: []
   type: TYPE_NORMAL
+  zh: '*估计第75百分位数，我们知道它是：'
 - en: '[PRE9]'
+  id: totrans-33
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE9]'
 - en: '*with the sample quantile:'
+  id: totrans-34
   prefs: []
   type: TYPE_NORMAL
+  zh: '*使用样本分位数：'
 - en: '[PRE10]'
+  id: totrans-35
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE10]'
 - en: '*Run a Monte Carlo simulation to learn the expected value and standard error
     of this random variable.'
+  id: totrans-36
   prefs: []
   type: TYPE_NORMAL
+  zh: '*运行蒙特卡洛模拟以学习这个随机变量的期望值和标准误差。'
 - en: 2\. In practice, we can’t run a Monte Carlo simulation because we don’t know
     if `rnorm` is being used to simulate the data. Use the bootstrap to estimate the
     standard error using just the initial sample `y`. Use 10 bootstrap samples.
+  id: totrans-37
   prefs: []
   type: TYPE_NORMAL
+  zh: 2. 在实践中，我们无法运行蒙特卡洛模拟，因为我们不知道是否使用了`rnorm`来模拟数据。使用自助法仅使用初始样本`y`来估计标准误差。使用10个自助样本。
 - en: 3\. Redo exercise 2, but with 10,000 bootstrap samples.******
+  id: totrans-38
   prefs: []
   type: TYPE_NORMAL
+  zh: 3. 重新做练习2，但使用10,000个自助样本。******

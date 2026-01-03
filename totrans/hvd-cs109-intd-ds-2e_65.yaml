@@ -1,51 +1,70 @@
 - en: 26  Notation and Terminology
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 26 符号和术语
 - en: 原文：[https://rafalab.dfci.harvard.edu/dsbook-part-2/ml/notation-and-terminology.html](https://rafalab.dfci.harvard.edu/dsbook-part-2/ml/notation-and-terminology.html)
+  id: totrans-1
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 原文：[https://rafalab.dfci.harvard.edu/dsbook-part-2/ml/notation-and-terminology.html](https://rafalab.dfci.harvard.edu/dsbook-part-2/ml/notation-and-terminology.html)
 - en: '[Machine Learning](../ml/intro-ml.html)'
+  id: totrans-2
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[机器学习](../ml/intro-ml.html)'
 - en: '[26  Notation and Terminology](../ml/notation-and-terminology.html)'
+  id: totrans-3
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[26 符号和术语](../ml/notation-and-terminology.html)'
 - en: In [Section 21.2](../highdim/matrices-in-R.html#sec-mnist), we introduced the
     MNIST handwritten digits dataset. We now return to this dataset and use the task
     of recognizing handwritten digits as our running example for the next few chapters.
     Our goal in this section is not yet to develop a full algorithm, but to introduce
     the machine learning notation and terminology that we will rely on throughout
     this part of the book.
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: 在 [第 21.2 节](../highdim/matrices-in-R.html#sec-mnist) 中，我们介绍了 MNIST 手写数字数据集。我们现在回到这个数据集，并使用识别手写数字的任务作为我们接下来几章的运行示例。本节的目标还不是开发一个完整的算法，而是介绍我们将在这部分书中依赖的机器学习符号和术语。
 - en: 'Handwritten digit recognition is a classic machine learning problem. Decades
     ago, mail sorting in the post office required humans to read every zip code written
     on envelopes. Today, machines perform this task automatically: a computer reads
     the digitized image of the zip code, and a robot sorts the letter accordingly.'
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: 手写数字识别是一个经典的机器学习问题。几十年前，邮局分拣邮件需要人工阅读信封上写的每个邮政编码。今天，机器自动完成这项任务：计算机读取邮政编码的数字化图像，机器人据此分拣信件。
 - en: In the pages that follow, we will describe how to formalize this problem mathematically,
     define the objects we need to work with, and introduce the language used to describe
     inputs, outputs, features, predictions, and learning algorithms. This will set
     the foundation for the machine learning methods developed in later chapters.
+  id: totrans-6
   prefs: []
   type: TYPE_NORMAL
+  zh: 在接下来的页面中，我们将描述如何将这个问题形式化为数学问题，定义我们需要处理的对象，并介绍用于描述输入、输出、特征、预测和学习算法的语言。这将为本章后面开发的机器学习方法奠定基础。
 - en: 26.1 Terminology
+  id: totrans-7
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 26.1 术语
 - en: In machine learning, data comes in the form of the *outcome* we want to predict
     and the *features* that we will use to predict the outcome. We build algorithms
     that take feature values as input and returns a prediction for the outcome when
     we don’t know the outcome. The machine learning approach is to *train* an algorithm
     using a dataset for which we do know the outcome, and then apply this algorithm
     in the future to make a prediction when we don’t know the outcome.
+  id: totrans-8
   prefs: []
   type: TYPE_NORMAL
+  zh: 在机器学习中，数据以我们想要预测的 *结果* 和我们将用于预测结果的 *特征* 的形式出现。我们构建算法，当不知道结果时，以特征值作为输入并返回对结果的预测。机器学习方法是用我们知道结果的数据集来
+    *训练* 算法，然后在未来应用此算法来预测我们不知道结果的情况。
 - en: 'Prediction problems can be divided into categorical and continuous outcomes.
     Categorical outcomes can be any one of \(K\) classes. The number of classes can
     vary greatly across applications. For example, in the digit reader data, \(K=10\)
@@ -54,17 +73,25 @@
     Spam detection has two outcomes: spam or not spam. In this book, we denote the
     \(K\) categories with indexes \(k=1,\dots,K\). However, for binary data we will
     use \(k=0,1\) for mathematical conveniences that we demonstrate later.'
+  id: totrans-9
   prefs: []
   type: TYPE_NORMAL
+  zh: 预测问题可以分为分类和连续结果。分类结果可以是 \(K\) 个类别中的任何一个。类别的数量在应用中可能有很大的变化。例如，在数字识别数据中，\(K=10\)，类别是数字
+    0, 1, 2, 3, 4, 5, 6, 7, 8, 和 9。在语音识别中，结果是所有可能的单词或短语，这是我们试图检测的内容。垃圾邮件检测有两个结果：垃圾邮件或非垃圾邮件。在这本书中，我们用索引
+    \(k=1,\dots,K\) 表示 \(K\) 个类别。然而，对于二元数据，我们将使用 \(k=0,1\)，以便于我们稍后展示的数学便利。
 - en: 26.2 Notation
+  id: totrans-10
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 26.2 符号
 - en: We will use \(Y\) to denote the outcome and \(X_1, \dots, X_p\) to denote the
     features. These features are also sometimes referred to as *predictors* or *covariates*,
     and we will treat these terms as synonyms.
+  id: totrans-11
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们将用 \(Y\) 表示结果，用 \(X_1, \dots, X_p\) 表示特征。这些特征有时也被称为 *预测器* 或 *协变量*，我们将这些术语视为同义词。
 - en: The first step in building a machine learning algorithm is to clearly identify
     what the outcomes and features are. In [Section 21.2](../highdim/matrices-in-R.html#sec-mnist),
     we showed that each digitized image \(i\) is associated with a categorical outcome
@@ -72,116 +99,174 @@
     we often use boldface notation \(\mathbf{X}_i = (X_{i1}, \dots, X_{ip})^\top\)
     to represent the vector of predictors, following the notation introduced in [Section
     21.1](../highdim/matrices-in-R.html#sec-matrix-notation).
+  id: totrans-12
   prefs: []
   type: TYPE_NORMAL
+  zh: 构建机器学习算法的第一步是明确识别结果和特征。在[第 21.2 节](../highdim/matrices-in-R.html#sec-mnist)中，我们展示了每个数字化的图像
+    \(i\) 都与一个分类结果 \(Y_i\) 和一组特征 \(X_{i1}, \dots, X_{ip}\) 相关联，其中 \(p=784\)。为了方便起见，我们经常使用粗体符号
+    \(\mathbf{X}_i = (X_{i1}, \dots, X_{ip})^\top\) 来表示预测因子的向量，遵循[第 21.1 节](../highdim/matrices-in-R.html#sec-matrix-notation)中引入的符号。
 - en: When referring to an arbitrary set of features rather than a specific image,
     we drop the index \(i\) and simply use \(Y\) and \(\mathbf{X} = (X_1, \dots, X_p)\).
     We use uppercase to emphasize that these are random variables. Observed values
     are denoted in lowercase, such as \(Y=y\) and \(\mathbf{X} = \mathbf{x}\). In
     practice, when writing code, we typically always use lowercase.
+  id: totrans-13
   prefs: []
   type: TYPE_NORMAL
+  zh: 当提到一组任意的特征而不是一个特定的图像时，我们省略索引 \(i\)，并简单地使用 \(Y\) 和 \(\mathbf{X} = (X_1, \dots,
+    X_p)\)。我们使用大写字母来强调这些是随机变量。观测值用小写字母表示，例如 \(Y=y\) 和 \(\mathbf{X} = \mathbf{x}\)。在实践中，当编写代码时，我们通常总是使用小写字母。
 - en: To denote predictions, we use hats, just as we do for parameter estimates. For
     a specific observation \(i\) with predictors \(\mathbf{x}_i\), the prediction
     is written as \(\hat{y}_i\). For an arbitrary predictor vector \(\mathbf{x}\),
     we write the prediction as \(\hat{y}(\mathbf{x})\), emphasizing that the prediction
     is a function of the predictors.
+  id: totrans-14
   prefs: []
   type: TYPE_NORMAL
+  zh: 为了表示预测，我们使用帽子符号，就像我们用于参数估计一样。对于具有预测因子 \(\mathbf{x}_i\) 的特定观测 \(i\)，预测写作 \(\hat{y}_i\)。对于任意的预测因子向量
+    \(\mathbf{x}\)，我们写作预测 \(\hat{y}(\mathbf{x})\)，强调预测是预测因子的函数。
 - en: 26.3 The machine learning challenge
+  id: totrans-15
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 26.3 机器学习挑战
 - en: The machine learning task is to build an algorithm that predicts the outcome
     given any combination of features. At first glance, this might seem impossible,
     but we will start with very simple examples and gradually build toward more complex
     cases. We begin with one predictor, then extend to two predictors, and eventually
     tackle real-world challenges involving thousands of predictors.
+  id: totrans-16
   prefs: []
   type: TYPE_NORMAL
+  zh: 机器学习任务是要构建一个算法，根据任何特征的组合预测结果。乍一看，这似乎是不可能的，但我们将从非常简单的例子开始，逐步构建到更复杂的案例。我们从单个预测因子开始，然后扩展到两个预测因子，最终解决涉及数千个预测因子的现实世界挑战。
 - en: 'The general setup is as follows. We have a series of features and an unknown
     outcome we want to predict:'
+  id: totrans-17
   prefs: []
   type: TYPE_NORMAL
+  zh: 一般设置如下。我们有一系列特征和一个我们想要预测的未知结果：
 - en: '| outcome | feature 1 | feature 2 | feature 3 | \(\dots\) | feature p |'
+  id: totrans-18
   prefs: []
   type: TYPE_TB
+  zh: '| 结果 | 特征 1 | 特征 2 | 特征 3 | \(\dots\) | 特征 p |'
 - en: '| --- | --- | --- | --- | --- | --- |'
+  id: totrans-19
   prefs: []
   type: TYPE_TB
+  zh: '| --- | --- | --- | --- | --- | --- |'
 - en: '| ? | \(X_1\) | \(X_2\) | \(X_3\) | \(\dots\) | \(X_p\) |'
+  id: totrans-20
   prefs: []
   type: TYPE_TB
+  zh: '| ? | \(X_1\) | \(X_2\) | \(X_3\) | \(\dots\) | \(X_p\) |'
 - en: 'To build a model that predicts outcomes from observed features \(X_1=x_1, X_2=x_2,
     \dots, X_p=x_p\), we need a dataset where the outcomes are known:'
+  id: totrans-21
   prefs: []
   type: TYPE_NORMAL
+  zh: 要构建一个从观测特征 \(X_1=x_1, X_2=x_2, \dots, X_p=x_p\) 预测结果的模型，我们需要一个已知结果的数据库：
 - en: '| outcome | feature 1 | feature 2 | feature 3 | \(\dots\) | feature p |'
+  id: totrans-22
   prefs: []
   type: TYPE_TB
+  zh: '| 结果 | 特征 1 | 特征 2 | 特征 3 | \(\dots\) | 特征 p |'
 - en: '| --- | --- | --- | --- | --- | --- |'
+  id: totrans-23
   prefs: []
   type: TYPE_TB
+  zh: '| --- | --- | --- | --- | --- | --- |'
 - en: '| \(y_{1}\) | \(x_{1,1}\) | \(x_{1,2}\) | \(x_{1,3}\) | \(\dots\) | \(x_{1,p}\)
     |'
+  id: totrans-24
   prefs: []
   type: TYPE_TB
+  zh: '| \(y_{1}\) | \(x_{1,1}\) | \(x_{1,2}\) | \(x_{1,3}\) | \(\dots\) | \(x_{1,p}\)
+    |'
 - en: '| \(y_{2}\) | \(x_{2,1}\) | \(x_{2,2}\) | \(x_{2,3}\) | \(\dots\) | \(x_{2,p}\)
     |'
+  id: totrans-25
   prefs: []
   type: TYPE_TB
+  zh: '| \(y_{2}\) | \(x_{2,1}\) | \(x_{2,2}\) | \(x_{2,3}\) | \(\dots\) | \(x_{2,p}\)
+    |'
 - en: '| \(\vdots\) | \(\vdots\) | \(\vdots\) | \(\vdots\) | \(\ddots\) | \(\vdots\)
     |'
+  id: totrans-26
   prefs: []
   type: TYPE_TB
+  zh: '| \(\vdots\) | \(\vdots\) | \(\vdots\) | \(\vdots\) | \(\ddots\) | \(\vdots\)
+    |'
 - en: '| \(y_n\) | \(x_{n1}\) | \(x_{n2}\) | \(x_{n3}\) | \(\dots\) | \(x_{np}\) |'
+  id: totrans-27
   prefs: []
   type: TYPE_TB
+  zh: '| \(y_n\) | \(x_{n1}\) | \(x_{n2}\) | \(x_{n3}\) | \(\dots\) | \(x_{np}\) |'
 - en: When the outcome is continuous, we refer to the task as *prediction*. The model
     returns a function \(f\) that produces a prediction \(\hat{y}(\mathbf{x}) = f(x_1,
     x_2, \dots, x_p)\) for any feature vector. We call \(y\) the actual outcome. Predictions
     \(\hat{y}(\mathbf{x})\) are rarely exact, so we measure accuracy by the error,
     defined as \(y - \hat{y}(\mathbf{x})\).
+  id: totrans-28
   prefs: []
   type: TYPE_NORMAL
+  zh: 当结果为连续时，我们将该任务称为*预测*。模型返回一个函数 \(f\)，该函数为任何特征向量生成一个预测 \(\hat{y}(\mathbf{x}) =
+    f(x_1, x_2, \dots, x_p)\)。我们称 \(y\) 为实际结果。预测 \(\hat{y}(\mathbf{x})\) 很少是精确的，所以我们通过误差来衡量准确性，定义为
+    \(y - \hat{y}(\mathbf{x})\)。
 - en: When the outcome is categorical, the task is called *classification*. The model
     produces a **decision rule** that prescribes which of the \(K\) possible classes
     should be predicted.
+  id: totrans-29
   prefs: []
   type: TYPE_NORMAL
+  zh: 当结果为分类时，任务被称为*分类*。模型产生一个**决策规则**，规定应该预测 \(K\) 个可能类别中的哪一个。
 - en: 'Typically, a classification model outputs one score per class, denoted \(f_k(x_1,
     \dots, x_p)\) for class \(k\). To make a prediction at a predictor vector \(\mathbf{x}
     = (x_1,\dots,x_p)\), we select the class with the largest score:'
+  id: totrans-30
   prefs: []
   type: TYPE_NORMAL
+  zh: 通常，一个分类模型为每个类别输出一个分数，用 \(f_k(x_1, \dots, x_p)\) 表示类别 \(k\)。为了在预测变量向量 \(\mathbf{x}
+    = (x_1,\dots,x_p)\) 上进行预测，我们选择分数最大的类别：
 - en: \[ \hat{y}(\mathbf{x}) = \arg\max_{k \in {1,\dots,K}} f_k(\mathbf{x}). \]
+  id: totrans-31
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \hat{y}(\mathbf{x}) = \arg\max_{k \in {1,\dots,K}} f_k(\mathbf{x}). \]
 - en: 'In the binary case (\(K=2\)), this is often written using a cutoff: if \(f_1(x_1,\dots,x_p)
     > c\) we predict class 1, otherwise we predict class 2\. Here, predictions are
     simply *correct or incorrect* when compared to the true class.'
+  id: totrans-32
   prefs: []
   type: TYPE_NORMAL
+  zh: 在二元情况下（\(K=2\)），这通常使用一个截止值来表示：如果 \(f_1(x_1,\dots,x_p) > c\)，我们预测类别1，否则我们预测类别2。在这里，预测与真实类别相比，只是*正确或错误*。
 - en: It is worth noting that terminology varies across textbooks and courses. Sometimes
     prediction is used for both categorical and continuous outcomes. The term regression
     is also used for continuous outcomes, but here we avoid it to prevent confusion
     with linear regression. In most contexts, whether outcomes are categorical or
     continuous will be clear, so we will simply use prediction or classification as
     appropriate.
+  id: totrans-33
   prefs: []
   type: TYPE_NORMAL
+  zh: 值得注意的是，术语在教科书和课程中有所不同。有时预测用于分类和连续结果。回归一词也用于连续结果，但在这里我们避免使用它，以防止与线性回归混淆。在大多数情况下，结果是否为分类或连续将很清楚，因此我们将根据需要简单地使用预测或分类。
 - en: 26.4 Statistical vs. Machine Learning language
+  id: totrans-34
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 26.4 统计学与机器学习语言对比
 - en: 'Up to this point in the book, we have used terminology that comes from statistics:
     *models*, *estimators*, and *parameters*. As we transition to machine learning,
     we encounter a new vocabulary. Some of these new terms overlap with familiar statistical
     ideas, while others reflect differences in emphasis between the two fields. In
     this section, we clarify the terminology we will use throughout the machine learning
     chapters.'
+  id: totrans-35
   prefs: []
   type: TYPE_NORMAL
+  zh: 到本书的这一部分，我们使用的术语来自统计学：*模型*、*估计量*和*参数*。当我们过渡到机器学习时，我们会遇到新的词汇。其中一些新术语与熟悉的统计思想重叠，而另一些则反映了两个领域之间的重点差异。在本节中，我们明确了将在机器学习章节中使用的术语。
 - en: 'In statistics, a *model* refers to a mathematical description of how the data
     are generated,for example, a linear regression model with coefficients that represent
     the relationship between predictors and the outcome. In machine learning, the
@@ -189,8 +274,10 @@
     *model* is the fitted object that we use to make predictions. For instance, when
     we fit a logistic regression to predict a binary outcome, the resulting estimated
     regression function is what a machine learner would call the *model*.'
+  id: totrans-36
   prefs: []
   type: TYPE_NORMAL
+  zh: 在统计学中，*模型*指的是数据的数学生成描述，例如，具有代表预测变量与结果之间关系的系数的线性回归模型。在机器学习中，*模型*一词的使用方式类似，但更侧重于实用性：*模型*是我们用来进行预测的拟合对象。例如，当我们拟合逻辑回归来预测二元结果时，得到的估计回归函数就是机器学习者所说的*模型*。
 - en: A key difference arises with the word *algorithm*. In statistics, an algorithm
     is simply a computational routine used to compute an estimate. In machine learning,
     however, *algorithm* is often used more broadly. It can refer to the computational
@@ -200,15 +287,20 @@
     “the logistic regression algorithm” even though in statistics, a logistic regression
     is thought more of as a model rather than an algorithm. This dual use of the term
     is standard in the field, and we follow that convention here.
+  id: totrans-37
   prefs: []
   type: TYPE_NORMAL
+  zh: 关键的区别在于*算法*一词。在统计学中，算法只是用于计算估计值的计算程序。然而，在机器学习中，*算法*一词通常被更广泛地使用。它可以指用于拟合模型的计算过程，例如，用于估计逻辑回归中系数的迭代步骤，但它也通常指整体的预测策略本身。因此，在机器学习实践中，人们会谈论“逻辑回归算法”，尽管在统计学中，逻辑回归更多地被视为模型而不是算法。这种术语的双重使用在该领域是标准的，我们遵循这一惯例。
 - en: Finally, machine learning literature often uses *method*, *approach*, or *procedure*
     as general terms for any systematic way of mapping predictors to predictions.
     In earlier chapters, we introduced regression and logistic regression as statistical
     models. From the machine learning point of view, these are also *prediction methods*,
     functions we learn from data that can be applied to new cases.
+  id: totrans-38
   prefs: []
   type: TYPE_NORMAL
+  zh: 最后，机器学习文献通常使用 *方法*、*方法* 或 *程序* 作为将预测变量映射到预测的任何系统方法的通用术语。在早期章节中，我们介绍了回归和逻辑回归作为统计模型。从机器学习的角度来看，这些也是
+    *预测方法*，我们从数据中学习到的函数，可以应用于新案例。
 - en: 'Another important pair of terms is *supervised* versus *unsupervised* learning.
     In supervised learning, the goal is as described above: to predict an outcome
     we can observe in the training data. Regression and logistic regression fall into
@@ -218,75 +310,111 @@
     themselves. Clustering is the most common example of this. We will study supervised
     learning first because it connects most directly to prediction,our primary goal,
     before briefly describing unsupervised learning in the last chapter.'
+  id: totrans-39
   prefs: []
   type: TYPE_NORMAL
+  zh: 另一对重要的术语是 *监督学习* 与 *无监督学习*。在监督学习中，目标是如上所述：预测在训练数据中可以观察到的结果。回归和逻辑回归属于这一类，我们将在下一章讨论的大多数机器学习技术也将是监督方法。相比之下，在无监督学习中，没有结果变量；目标是揭示预测变量本身的结构。聚类是最常见的例子。我们将首先研究监督学习，因为它与我们的主要目标预测直接相关，然后在最后一章简要描述无监督学习。
 - en: 26.5 Exercises
+  id: totrans-40
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 26.5 练习
 - en: 1\. You are given a dataset containing pairs \((x_i, y_i)\), where \(x_i\) is
     a 2-dimensional feature vector describing the width and height of a handwritten
     digit image, and (y_i ) indicates whether the digit is a “0”.
+  id: totrans-41
   prefs: []
   type: TYPE_NORMAL
+  zh: 1. 你被给了一个包含对 \((x_i, y_i)\) 的数据集，其中 \(x_i\) 是一个描述手写数字图像宽度和高度的二维特征向量，而 \(y_i\)
+    表示数字是否是“0”。
 - en: 'Write the following objects using the notation introduced in this chapter:'
+  id: totrans-42
   prefs: []
   type: TYPE_NORMAL
+  zh: 使用本章引入的符号写出以下对象：
 - en: The set of observed features.
+  id: totrans-43
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 观察到的特征集。
 - en: The set of corresponding outcomes.
+  id: totrans-44
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 对应的输出集。
 - en: A prediction function that takes a new feature vector \(x\) and predicts whether
     it is a “0”.
+  id: totrans-45
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 一个预测函数，它接受一个新的特征向量 \(x\) 并预测它是否是“0”。
 - en: A decision rule defined by a threshold \(c\), written as a mathematical function.
+  id: totrans-46
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 由阈值 \(c\) 定义的决定规则，写成数学函数的形式。
 - en: 2\. Suppose we want to build an algorithm that predicts whether a digit image
     is a “4”. Let the image be summarized by a feature vector \(x\), and let the prediction
     function be \(\hat{f}(x)\), which returns a number between 0 and 1.
+  id: totrans-47
   prefs: []
   type: TYPE_NORMAL
+  zh: 2. 假设我们想要构建一个算法来预测一个数字图像是否是“4”。让图像由一个特征向量 \(x\) 总结，预测函数为 \(\hat{f}(x)\)，它返回一个介于0和1之间的数字。
 - en: Write a *decision rule* that uses a cutoff \(c\) to convert the prediction \(\hat{f}(x)\)
     into a class label \(\hat{y}(x) \in \{0,1\}\).
+  id: totrans-48
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 写出一个使用截止值 \(c\) 将预测 \(\hat{f}(x)\) 转换为类别标签 \(\hat{y}(x) \in \{0,1\}\) 的 *决策规则*。
 - en: Using the notation introduced in this chapter, write the *set of all decision
     rules* that can be created by varying the cutoff \(c\).
+  id: totrans-49
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 使用本章引入的符号，写出可以通过改变截止值 \(c\) 创建的所有 *决策规则* 集合。
 - en: Briefly explain in one or two sentences how changing the cutoff affects false
     positives and false negatives.
+  id: totrans-50
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 简要解释一句话或两句话，说明改变截止值如何影响假阳性和假阴性。
 - en: '3\. Let \(\hat{p}(x)\) be a model that estimates the probability that an image
     is a “1”. Consider the following decision rule with cutoff (c):'
+  id: totrans-51
   prefs: []
   type: TYPE_NORMAL
+  zh: 3. 设 \(\hat{p}(x)\) 是一个估计图像是“1”的概率的模型。考虑以下具有截止值（c）的决定规则：
 - en: \[ \hat{y}(x) = \begin{cases} 1 & \text{if } \hat{p}(x) > c \\ 0 & \text{otherwise.}
     \end{cases} \]
+  id: totrans-52
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \hat{y}(x) = \begin{cases} 1 & \text{if } \hat{p}(x) > c \\ 0 & \text{otherwise.}
+    \end{cases} \]
 - en: Write the 0–1 loss for a single observation ((x_i, y_i)).
+  id: totrans-53
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 写出一个单次观察（\(x_i, y_i\)）的 0-1 损失。
 - en: Write the average loss over a test set of size (m).
+  id: totrans-54
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 写出大小为（m）的测试集上的平均损失。
 - en: If \(c\) is increased, does the model predict “1” more often or less often?
     Explain briefly using the notation.
+  id: totrans-55
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 如果 \(c\) 增加，模型是否更频繁地预测“1”或更少？简要解释使用符号。

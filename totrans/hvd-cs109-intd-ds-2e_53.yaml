@@ -1,419 +1,623 @@
 - en: 18  Generalized Linear Models
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 18  广义线性模型
 - en: 原文：[https://rafalab.dfci.harvard.edu/dsbook-part-2/linear-models/glm.html](https://rafalab.dfci.harvard.edu/dsbook-part-2/linear-models/glm.html)
+  id: totrans-1
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 原文：[https://rafalab.dfci.harvard.edu/dsbook-part-2/linear-models/glm.html](https://rafalab.dfci.harvard.edu/dsbook-part-2/linear-models/glm.html)
 - en: '[Linear Models](../linear-models/intro-to-linear-models.html)'
+  id: totrans-2
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[线性模型](../linear-models/intro-to-linear-models.html)'
 - en: '[18  Generalized Linear Models](../linear-models/glm.html)'
+  id: totrans-3
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[18  广义线性模型](../linear-models/glm.html)'
 - en: The statistical models we have used so far assume that the outcome of interest
     is continuous. However, in many real applications the outcomes are binary, categorical,
     or counts. In these settings, we are often interested in how the outcome changes
     with one or more explanatory variables.
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们迄今为止使用的统计模型都假设感兴趣的结果是连续的。然而，在许多实际应用中，结果可能是二元的、分类的或计数的。在这些情况下，我们通常对结果如何随着一个或多个解释变量而变化感兴趣。
 - en: For example, we may want to study how the probability of developing coronary
     heart disease varies with age, systolic blood pressure, or other clinical measurements;
     how the chance of surviving the sinking of the Titanic depends on passenger characteristics;
     or how different insecticides influence the number of insects observed in agricultural
     field plots.
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: 例如，我们可能想要研究冠心病发病概率如何随年龄、收缩压或其他临床测量值变化；泰坦尼克号沉没事件中生存机会如何取决于乘客特征；或者不同杀虫剂如何影响农业田地观测到的昆虫数量。
 - en: Although these outcomes are no longer continuous, many of the ideas introduced
     in the linear model framework continue to apply. With a small adaptation, we can
     extend the mathematical approach used for linear models so that it can be applied
     in all of these situations, while also continuing to use the same modeling tools
     in R.
+  id: totrans-6
   prefs: []
   type: TYPE_NORMAL
+  zh: 虽然这些结果不再是连续的，但线性模型框架中引入的许多想法仍然适用。通过稍作调整，我们可以扩展用于线性模型的数学方法，使其适用于所有这些情况，同时继续在R中使用相同的建模工具。
 - en: These extended models are known as *generalized* linear models. To motivate
     them, we begin this chapter with association tests for two categorical variables.
     We then show how these tests arise naturally from logistic regression, our first
     example of a generalized linear model for binary outcomes. We conclude with examples
     that illustrate how the same framework can be applied across a range of contexts,
     including outcomes that are binary, or counts.
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: 这些扩展模型被称为*广义*线性模型。为了激发它们，我们以两个分类变量的关联性检验开始本章。然后我们展示这些检验如何自然地从逻辑回归中产生，这是我们的第一个二元结果广义线性模型示例。最后，我们通过例子说明相同的框架可以应用于各种情境，包括结果为二元或计数的情况。
 - en: 18.1 Association Tests
+  id: totrans-8
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 18.1 关联性检验
 - en: 'We start with the simplest case: assessing whether two categorical variables
     are associated. These methods were developed before GLMs, but they can be understood
     as special cases of logistic regression. Once we establish this connection, the
     general GLM framework will follow naturally.'
+  id: totrans-9
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们从最简单的情况开始：评估两个分类变量是否相关。这些方法在GLM之前就已经开发出来，但它们可以被理解为逻辑回归的特殊情况。一旦我们建立了这种联系，通用的GLM框架就会自然而然地出现。
 - en: 'Case study: Funding success rates'
+  id: totrans-10
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 案例研究：资助成功率
 - en: A 2014 PNAS paper[¹](#fn1) analyzed success rates from funding agencies in the
     Netherlands and concluded that their
+  id: totrans-11
   prefs: []
   type: TYPE_NORMAL
+  zh: 2014年PNAS论文[¹](#fn1)分析了荷兰资助机构的成功率，并得出结论，他们的
 - en: results reveal gender bias favoring male applicants over female applicants in
     the prioritization of their “quality of researcher” (but not “quality of proposal”)
     evaluations and success rates, as well as in the language use in instructional
     and evaluation materials.
+  id: totrans-12
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 结果揭示在“研究者质量”（但不是“提案质量”）评估和成功率以及教学和评估材料中的语言使用上存在性别偏见，有利于男性申请者而非女性申请者。
 - en: 'The main evidence supporting this conclusion is based on a comparison of the
     percentages which we can compute using the data presented in the paper:'
+  id: totrans-13
   prefs: []
   type: TYPE_NORMAL
+  zh: 支持这一结论的主要证据是基于百分比的比较，我们可以使用论文中提供的数据来计算这些百分比：
 - en: '[PRE0]'
+  id: totrans-14
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: '*But could this be due just to random variability? Here we learn how to perform
     inference for this type of data.'
+  id: totrans-15
   prefs: []
   type: TYPE_NORMAL
+  zh: '*但这仅仅是因为随机变异性吗？在这里，我们学习如何对这类数据进行推断。'
 - en: In [Section 18.1.3](#sec-chisq-test), we introduce association tests that permit
     us to answer this question. Before doing so, we present a historically important
     example that illustrates the need for such methods.*
+  id: totrans-16
   prefs: []
   type: TYPE_NORMAL
+  zh: 在[第18.1.3节](#sec-chisq-test)中，我们介绍了允许我们回答这个问题的关联性检验。在这样做之前，我们提供了一个具有历史意义的例子，说明了这种方法的必要性。
 - en: '*The Lady Tasting Tea*'
+  id: totrans-17
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '*《女士品茶》*'
 - en: '*The classic motivating example for association tests is the *Lady Tasting
     Tea* experiment designed by R. A. Fisher. A colleague at the Rothamsted Experimental
     Station claimed she could tell whether milk was poured into a cup before or after
     the tea. Fisher proposed a randomized test and derived the probability of each
     possible result under the assumption that she was simply guessing. This led to
     what is now known as *Fisher’s exact test*, based on the hypergeometric distribution.'
+  id: totrans-18
   prefs: []
   type: TYPE_NORMAL
+  zh: '*关联检验的经典激励例子是R.A.费舍尔设计的*女士品茶*实验。罗瑟姆斯特德实验站的同事声称她能判断牛奶是在倒入杯子之前还是之后倒入的。费舍尔提出了一种随机测试，并推导出在假设她只是在猜测的情况下，每种可能结果的概率。这导致了现在所知的基于超几何分布的*费舍尔精确检验*。'
 - en: 'As an example, suppose she correctly identified 3 out of 4 cups:'
+  id: totrans-19
   prefs: []
   type: TYPE_NORMAL
+  zh: 例如，假设她正确地识别出了4个杯子中的3个：
 - en: '[PRE1]'
+  id: totrans-20
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: '*To evaluate whether this provides evidence of real ability, we consider the
     *null hypothesis* that she is guessing. Because she knows there are four of each
     type, guessing corresponds to randomly drawing 4 cups from an urn containing 4
     *milk-first* and 4 *tea-first* cups.'
+  id: totrans-21
   prefs: []
   type: TYPE_NORMAL
+  zh: '*为了评估这是否提供了真实能力的证据，我们考虑她是在猜测的*零假设。因为她知道每种类型的杯子都有四个，猜测相当于从包含4个*先加牛奶*和4个*先加茶*的杯子中随机抽取4个杯子。'
 - en: 'The probability of correctly guessing \(k\) cups is given by the hypergeometric
     formula:'
+  id: totrans-22
   prefs: []
   type: TYPE_NORMAL
+  zh: 正确猜测\(k\)个杯子的概率由超几何公式给出：
 - en: \[ \frac{\binom{4}{k}\binom{4}{4-k}}{\binom{8}{4}}. \]
+  id: totrans-23
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \frac{\binom{4}{k}\binom{4}{4-k}}{\binom{8}{4}}. \]
 - en: 'The probability of getting 3 or more correct by chance is therefore : \[ \frac{\binom{4}{3}\binom{4}{1}}{\binom{8}{4}}
     + \frac{\binom{4}{4}\binom{4}{0}}{\binom{8}{4}} = \frac{16}{70} \approx 0.24.
     \] So correctly identifying 3 cups could easily occur by chance and is not compelling
     evidence of the claimed ability.'
+  id: totrans-24
   prefs: []
   type: TYPE_NORMAL
+  zh: 因此，偶然正确猜测3个或更多的概率是：\[ \frac{\binom{4}{3}\binom{4}{1}}{\binom{8}{4}} + \frac{\binom{4}{4}\binom{4}{0}}{\binom{8}{4}}
+    = \frac{16}{70} \approx 0.24. \] 因此，正确识别3个杯子可能很容易是偶然发生的，并不是所声称能力的有力证据。
 - en: 'This calculation is what *Fisher’s exact test* performs. In R we can type:'
+  id: totrans-25
   prefs: []
   type: TYPE_NORMAL
+  zh: 这个计算正是*费舍尔精确检验*所执行的。在R中，我们可以输入：
 - en: '[PRE2]'
+  id: totrans-26
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: '**Historical accounts suggest that the lady *did* perform well in the original
     demonstration. Fisher’s goal was not to confirm or refute her ability, but to
     illustrate how to design a fair experiment and evaluate evidence with probability.****'
+  id: totrans-27
   prefs: []
   type: TYPE_NORMAL
+  zh: '**历史记录表明，这位女士在原始演示中确实表现良好。费舍尔的目标不是确认或反驳她的能力，而是说明如何设计一个公平的实验，以及如何用概率评估证据。****'
 - en: '****Two-by-two tables and the Chi-square test****'
+  id: totrans-28
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '****二列联表和卡方检验****'
 - en: '****Notice that our funding example is analogous to the Lady Tasting Tea: under
     the null hypothesis, funding is assigned at random regardless of gender, just
     as in Fisher’s example cups are guessed at random regardless of when the milk
     was poured.'
+  id: totrans-29
   prefs: []
   type: TYPE_NORMAL
+  zh: '****注意，我们的资金分配例子与女士品茶类似：在零假设下，资金的分配是随机的，无论性别如何，正如费舍尔的例子中，杯子是随机猜测的，无论牛奶是在什么时候倒入的。'
 - en: However, in the Lady Tasting Tea example, we were able to use the hypergeometric
     distribution because the design *fixed* both the number of cups of each type and
     the number of selections for each category. In other words, the row totals and
     the column totals of `tab` were predetermined by the experiment.
+  id: totrans-30
   prefs: []
   type: TYPE_NORMAL
+  zh: 然而，在女士品茶例子中，我们能够使用超几何分布，因为设计*固定*了每种类型的杯子数量和每个类别的选择数量。换句话说，`tab`的行总数和列总数是由实验预先确定的。
 - en: In the funding example, and in most real-world data, this is not the case. Neither
     the number of funded applications nor the number of male and female applicants
     is fixed in advance; these totals arise from the data we observe. Because the
     row and column totals are not fixed, the hypergeometric model is no longer appropriate
     and rarely used in practice.
+  id: totrans-31
   prefs: []
   type: TYPE_NORMAL
+  zh: 在资金分配的例子中，以及大多数现实世界的数据中，情况并非如此。资助申请的数量以及男性和女性申请者的数量都不是预先固定的；这些总数是从我们观察到的数据中产生的。因为行和列的总数不是固定的，超几何模型就不再适用，也很少在实际中应用。
 - en: In such settings, we instead use the *Chi-squared test*, which provides a way
     to test for association between two categorical variables without requiring fixed
     margins. Let’s apply it to the funding rates example.
+  id: totrans-32
   prefs: []
   type: TYPE_NORMAL
+  zh: 在这种情况下，我们使用的是*卡方检验*，它提供了一种测试两个分类变量之间关联的方法，而不需要固定的边缘。让我们将其应用于资金率例子。
 - en: 'The first step in a Chi-squared test is to create the observed *two-by-two
     table*:'
+  id: totrans-33
   prefs: []
   type: TYPE_NORMAL
+  zh: 卡方检验的第一步是创建观察到的*二列联表*：
 - en: '[PRE3]'
+  id: totrans-34
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: '*We then estimate the overall funding rate which we will use to determine what
     we expect to see if successful funding was assigned independent of gender:'
+  id: totrans-35
   prefs: []
   type: TYPE_NORMAL
+  zh: '*然后我们估计整体资助率，我们将用它来确定如果成功资助独立于性别分配，我们会期望看到什么：'
 - en: '[PRE4]'
+  id: totrans-36
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE4]'
 - en: '*We use this to compute what we expect to see by chance:'
+  id: totrans-37
   prefs: []
   type: TYPE_NORMAL
+  zh: '*我们使用这个来计算我们期望偶然看到的结果：'
 - en: '[PRE5]'
+  id: totrans-38
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE5]'
 - en: '*We can see that more men than expected and fewer women than expected received
     funding:'
+  id: totrans-39
   prefs: []
   type: TYPE_NORMAL
+  zh: '*我们可以看到，比预期更多的男性获得了资助，而比预期更少的女性获得了资助：'
 - en: '[PRE6]'
+  id: totrans-40
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE6]'
 - en: '*However, under the null hypothesis these observations are random variables.
     The Chi-square statistic quantifies how much the observed tables deviates from
     the expected by:'
+  id: totrans-41
   prefs: []
   type: TYPE_NORMAL
+  zh: '*然而，在零假设下，这些观察值是随机变量。卡方统计量量化了观察表与期望表之间的差异，通过：'
 - en: Taking the difference between each observed and expected cell value.
+  id: totrans-42
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 计算每个观察值和期望值单元格值的差值。
 - en: Squaring this difference.
+  id: totrans-43
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 将这个差值平方。
 - en: Dividing each squared difference by the expected value.
+  id: totrans-44
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 将每个平方差值除以期望值。
 - en: Summing all these values together to get the final statistic.
+  id: totrans-45
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 将所有这些值相加得到最终统计量。
 - en: '[PRE7]'
+  id: totrans-46
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE7]'
 - en: '*We use this summary statistic because its sampling distribution can be approximated
     by a known parametric distribution: the Chi-square distribution.'
+  id: totrans-47
   prefs: []
   type: TYPE_NORMAL
+  zh: '*我们使用这个汇总统计量，因为它的抽样分布可以被一个已知的参数分布所近似：卡方分布。'
 - en: 'The R function `chisq.test` takes a two-by-two table and returns the results
     from the test:'
+  id: totrans-48
   prefs: []
   type: TYPE_NORMAL
+  zh: R函数`chisq.test`接受一个二乘二表，并返回测试结果：
 - en: '[PRE8]'
+  id: totrans-49
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE8]'
 - en: '*We see that the p-value is 0.045:'
+  id: totrans-50
   prefs: []
   type: TYPE_NORMAL
+  zh: '*我们看到p值是0.045：'
 - en: '[PRE9]'
+  id: totrans-51
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE9]'
 - en: '**By default, the `chisq.test` function applies a *continuity correction*.
     This correction subtracts 0.5 from the absolute deviation between observed and
     expected counts:'
+  id: totrans-52
   prefs: []
   type: TYPE_NORMAL
+  zh: '**默认情况下，`chisq.test`函数应用了一个*连续性校正*。这种校正从观察值和期望值之间的绝对偏差中减去0.5：'
 - en: '[PRE10]'
+  id: totrans-53
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE10]'
 - en: '*and this matches the default behavior of:'
+  id: totrans-54
   prefs: []
   type: TYPE_NORMAL
+  zh: '*这符合默认行为：'
 - en: '[PRE11]'
+  id: totrans-55
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE11]'
 - en: '*The reason for this adjustment is that the chi-square test is based on a *continuous*
     probability distribution, while the two-by-two table counts are *discrete*. When
     sample sizes are small, the difference between a continuous approximation and
     the discrete distribution can be noticeable. The continuity correction slightly
     reduces the test statistic to account for this mismatch, making the approximation
     more conservative (that is, less likely to produce small p-values by chance).'
+  id: totrans-56
   prefs: []
   type: TYPE_NORMAL
+  zh: '*这种调整的原因是，卡方检验基于一个*连续*概率分布，而二乘二表计数是*离散*的。当样本量较小时，连续近似和离散分布之间的差异可能是明显的。连续性校正稍微降低了测试统计量，以考虑到这种不匹配，使近似更加保守（也就是说，不太可能偶然产生小的p值）。'
 - en: We previously used the argument `correct = FALSE` to avoid this adjustment because,
     in moderate-to-large samples, the correction is not needed and can slightly reduce
     the test’s power.**************
+  id: totrans-57
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们之前使用`correct = FALSE`参数来避免这种调整，因为在中等到大样本中，这种调整不是必需的，并且可能会稍微降低测试的效力。**************
 - en: '*****Odds ratios*****'
+  id: totrans-58
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '*****优势比*****'
 - en: '*****The Chi-square test provides a p-value but it does not quantify the size
     of the effect. As discussed in [Chapter 13](../inference/hypothesis-testing.html),
     we generally prefer confidence intervals over p-values because they communicate
     effect size and uncertainty. So how do we quantify the effect here?'
+  id: totrans-59
   prefs: []
   type: TYPE_NORMAL
+  zh: '*****卡方检验提供了一个p值，但它并不量化效应的大小。如第13章[Chapter 13](../inference/hypothesis-testing.html)中讨论的，我们通常更喜欢置信区间而不是p值，因为它们传达了效应大小和不确定性。那么我们在这里如何量化效应呢？'
 - en: 'For two categorical groups, our data can be summarized in a two-by-two table:'
+  id: totrans-60
   prefs: []
   type: TYPE_NORMAL
+  zh: 对于两个分类组，我们的数据可以总结在一个二乘二表中：
 - en: '|  | Women | Men |'
+  id: totrans-61
   prefs: []
   type: TYPE_TB
+  zh: '|  | 女性 | 男性 |'
 - en: '| --- | --- | --- |'
+  id: totrans-62
   prefs: []
   type: TYPE_TB
+  zh: '| --- | --- | --- |'
 - en: '| Awarded | a | b |'
+  id: totrans-63
   prefs: []
   type: TYPE_TB
+  zh: '| 资助 | a | b |'
 - en: '| Not Awarded | c | d |'
+  id: totrans-64
   prefs: []
   type: TYPE_TB
+  zh: '| 未资助 | c | d |'
 - en: 'One option is to compare the difference in proportions:'
+  id: totrans-65
   prefs: []
   type: TYPE_NORMAL
+  zh: 一个选择是比较比例的差异：
 - en: \[ \frac{a}{a+c} - \frac{b}{b+d}. \]
+  id: totrans-66
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \frac{a}{a+c} - \frac{b}{b+d}. \]
 - en: However, differences in proportions are not directly comparable across baseline
     levels. For example, a change from 1% to 2% is just as large on the probability
     scale as a change from 49% to 50%, yet the practical interpretation is very different.
+  id: totrans-67
   prefs: []
   type: TYPE_NORMAL
+  zh: 然而，比例的差异在基线水平上并不直接可比。例如，从1%到2%的变化在概率尺度上与从49%到50%的变化一样大，但实际解释却非常不同。
 - en: 'For this reason, a more common way to quantify association in our context is
     the *odds ratio*:'
+  id: totrans-68
   prefs: []
   type: TYPE_NORMAL
+  zh: 因此，在我们这个环境中量化关联的更常见方式是*优势比*：
 - en: \[ \text{odds ratio} = \frac{a/c}{b/d} = \frac{ad}{bc} \] This quantity compares
     the odds of being funded for women to the odds of being funded for men.
+  id: totrans-69
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \text{优势比} = \frac{a/c}{b/d} = \frac{ad}{bc} \] 这个量度比较了女性获得资助的优势与男性获得资助的优势。
 - en: 'The *log* odds ratio is often used because it is symmetric around 0:'
+  id: totrans-70
   prefs: []
   type: TYPE_NORMAL
+  zh: '*对数*几率比经常被使用，因为它在 0 周围是对称的：'
 - en: \[ \log\left(\frac{ad}{bc}\right) = 0 \quad \text{when there is no difference
     between groups.} \]
+  id: totrans-71
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \log\left(\frac{ad}{bc}\right) = 0 \quad \text{当组间没有差异时。} \]
 - en: 'Moreover, the log odds ratio has a convenient approximate standard error:'
+  id: totrans-72
   prefs: []
   type: TYPE_NORMAL
+  zh: 此外，对数几率比有一个方便的近似标准误差：
 - en: \[ \mathrm{SE}\left[\log\left(\frac{ad}{bc}\right)\right] \approx\sqrt{\frac{1}{a}
     + \frac{1}{b} + \frac{1}{c} + \frac{1}{d}}. \]
+  id: totrans-73
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \mathrm{SE}\left[\log\left(\frac{ad}{bc}\right)\right] \approx\sqrt{\frac{1}{a}
+    + \frac{1}{b} + \frac{1}{c} + \frac{1}{d}}. \]
 - en: 'and can be shown to be asymptotically normal. This allows us to construct confidence
     intervals. A 95% confidence interval would be:'
+  id: totrans-74
   prefs: []
   type: TYPE_NORMAL
+  zh: 并且可以证明其渐近正态。这使我们能够构建置信区间。95% 的置信区间将是：
 - en: \[ \log\left(\frac{ad}{bc}\right) \pm 1.96 \sqrt{\frac{1}{a} + \frac{1}{b} +
     \frac{1}{c} + \frac{1}{d}} \] Once we construct a confidence interval for the
     log odds ratio, we can obtain a confidence interval for the odds ratio by exponentiating
     the two endpoints.
+  id: totrans-75
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \log\left(\frac{ad}{bc}\right) \pm 1.96 \sqrt{\frac{1}{a} + \frac{1}{b} +
+    \frac{1}{c} + \frac{1}{d}} \] 一旦我们构建了对数几率比的置信区间，我们可以通过对两个端点进行指数运算来获得几率比的置信区间。
 - en: 'Her we compute the odds ratio for our funding data and construct a 95% confidence
     interval:'
+  id: totrans-76
   prefs: []
   type: TYPE_NORMAL
+  zh: 在这里，我们计算我们的资助数据的几率比并构建一个 95% 的置信区间：
 - en: '[PRE12]'
+  id: totrans-77
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE12]'
 - en: '*This allows us to assess both the magnitude of the association and the uncertainty
     around it. The estimated odds ratio is less than 1, indicating that women have
     lower odds of being funded than men in this dataset. The 95% confidence interval
     does not include 1, which implies the p-value is less than 0.05.'
+  id: totrans-78
   prefs: []
   type: TYPE_NORMAL
+  zh: '*这使我们能够评估关联的幅度及其不确定性。估计的几率比小于 1，表明在这个数据集中，女性的获得资助的几率低于男性。95% 的置信区间不包括 1，这意味着
+    p 值小于 0.05。*'
 - en: '*The log odds ratio is not defined if any of the cells of the two-by-two table
     is 0\. This is because if \(a\), \(b\), \(c\), or \(d\) are 0, the \(\log(\frac{ad}{bc})\)
     is either the log of 0 or has a 0 in the denominator. For this situation, it is
     common practice to avoid 0s by adding 0.5 to each cell. This is referred to as
     the *Haldane-Anscombe correction* and has been shown, both in practice and theory,
     to work well.*******'
+  id: totrans-79
   prefs: []
   type: TYPE_NORMAL
+  zh: '*对数几率比在 2x2 表的任何单元格为 0 时未定义。这是因为如果 \(a\)、\(b\)、\(c\) 或 \(d\) 为 0，\(\log(\frac{ad}{bc})\)
+    要么是 0 的对数，要么分母中有 0。对于这种情况，通常的做法是通过向每个单元格加 0.5 来避免 0。这被称为 *Haldane-Anscombe 修正*，并且在实践和理论中都已证明其有效性。*******'
 - en: '*****18.2 Logistic regression*****'
+  id: totrans-80
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '*****18.2 逻辑回归*****'
 - en: '*****We now connect the association tests described above to the linear model
     framework introduced in [Chapter 17](treatment-effect-models.html). Once we make
     this connection, the same ideas extend naturally to more complex settings, including
     models with continuous predictors and multiple explanatory variables.'
+  id: totrans-81
   prefs: []
   type: TYPE_NORMAL
+  zh: '*****我们现在将上述关联测试与第 17 章（treatment-effect-models.html）中引入的线性模型框架联系起来。一旦我们建立这种联系，同样的想法可以自然地扩展到更复杂的设置，包括具有连续预测器和多个解释变量的模型。'
 - en: 'If we define \(Y_i\) to be 1 if applicant \(i\) was funded and 0 otherwise,
     and set \(x_i = 1\) for women and \(x_i = 0\) for men, we might be tempted to
     write a linear model:'
+  id: totrans-82
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果我们将 \(Y_i\) 定义为申请者 \(i\) 获得资助时为 1，否则为 0，并将 \(x_i = 1\) 设定为女性，\(x_i = 0\) 设定为男性，我们可能会倾向于编写一个线性模型：
 - en: \[ Y_i = \beta_0 + \beta_1 x_i + \varepsilon_i. \]
+  id: totrans-83
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ Y_i = \beta_0 + \beta_1 x_i + \varepsilon_i. \]
 - en: However, this model is not appropriate because the left-hand side only takes
     values 0 or 1, while the right-hand side can take any real value. In particular,
     the implied expected value
+  id: totrans-84
   prefs: []
   type: TYPE_NORMAL
+  zh: 然而，这个模型不合适，因为左侧只取 0 或 1 的值，而右侧可以取任何实数值。特别是，隐含的期望值
 - en: \[ \mathrm{E}[Y_i] = \Pr(Y_1=1) = \beta_0 + \beta_1 x_i \]
+  id: totrans-85
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \mathrm{E}[Y_i] = \Pr(Y_1=1) = \beta_0 + \beta_1 x_i \]
 - en: could be less than 0 or greater than 1, which is not possible for a probability.
+  id: totrans-86
   prefs: []
   type: TYPE_NORMAL
+  zh: 可能小于 0 或大于 1，这对于概率来说是不可能的。
 - en: If we instead model the log odds as a linear function of \(x_i\)
+  id: totrans-87
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果我们用 \(x_i\) 的线性函数来建模对数几率
 - en: \[ \log\left\{\frac{\Pr(Y_i=1)}{1 - \Pr(Y_i=1)}\right\}= \beta_0 + \beta_1 x_i.
     \]
+  id: totrans-88
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \log\left\{\frac{\Pr(Y_i=1)}{1 - \Pr(Y_i=1)}\right\}= \beta_0 + \beta_1 x_i.
+    \]
 - en: 'we get the following useful interpretation of the parameters:'
+  id: totrans-89
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们可以得到以下有用的参数解释：
 - en: \(e^{\beta_0}\) is the odds of funding for men,
+  id: totrans-90
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: \(e^{\beta_0}\) 是男性获得资助的几率，
 - en: \(e^{\beta_0} e^{\beta_1}\) is the odds of funding for women.
+  id: totrans-91
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: \(e^{\beta_0} e^{\beta_1}\) 是女性获得资助的几率。
 - en: \(e^{\beta_1}\) is the odds ratio comparing women to men.
+  id: totrans-92
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: \(e^{\beta_1}\) 是比较女性和男性的几率比。
 - en: The parameter \(\beta_1\) is thus the *log odds ratio*.
+  id: totrans-93
   prefs: []
   type: TYPE_NORMAL
+  zh: 因此，参数 \(\beta_1\) 是 *对数几率比*。
 - en: '*The name *logistic regression* comes from the fact that'
+  id: totrans-94
   prefs: []
   type: TYPE_NORMAL
+  zh: '*“逻辑回归”这个名字来源于这样一个事实，'
 - en: '\[ g(p) = \log\frac{p}{1-p} \] is called the *logistic function* or *logit
     transformation*.*  *Note that we can write the probability \(p_i = Pr(Y_i = 1)\)
     as a function of the paremeters \(\beta_0+\beta_1x_i\) for any \(x_i\) by using
     the inverse of the logit transformation:'
+  id: totrans-95
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ g(p) = \log\frac{p}{1-p} \] 被称为*逻辑函数*或*logit变换*。* 注意，我们可以通过使用logit变换的逆来将概率
+    \(p_i = Pr(Y_i = 1)\) 写成参数 \(\beta_0+\beta_1x_i\) 的函数，对于任何 \(x_i\)：
 - en: \[ \Pr(Y_i=1) = g^{-1}(g(p_i)) = g^{-1}\left(\beta_0+\beta_1x_i\right) = \frac{e^{\beta_0+\beta_1x_i}}{1
     + e^{\beta_0+\beta_1x_i}} = \frac{1}{1 + e^{-\beta_0-\beta_1x_i}} \]
+  id: totrans-96
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \Pr(Y_i=1) = g^{-1}(g(p_i)) = g^{-1}\left(\beta_0+\beta_1x_i\right) = \frac{e^{\beta_0+\beta_1x_i}}{1
+    + e^{\beta_0+\beta_1x_i}} = \frac{1}{1 + e^{-\beta_0-\beta_1x_i}} \]
 - en: Estimation
+  id: totrans-97
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 估计
 - en: Unlike linear regression, least squares is not optimal here because the variance
     of the outcome depends on its mean and the model for the expected value is nonlinear.
     Instead, the parameters are estimated using *maximum likelihood estimation* (MLE).
@@ -421,8 +625,10 @@
     data most probable according to the assumed statistical model. For logistic regression,
     this means finding the values of \(\beta_0\) and \(\beta_1\) that maximize the
     probability of observing the particular pattern of zeros and ones in the data.
+  id: totrans-98
   prefs: []
   type: TYPE_NORMAL
+  zh: 与线性回归不同，最小二乘法在这里不是最优的，因为结果的方差取决于其均值，而期望值的模型是非线性的。相反，参数是通过*最大似然估计*（MLE）来估计的。MLE的基本思想是选择使观察数据最可能符合假设的统计模型的参数值。对于逻辑回归，这意味着找到使数据中零和一的特定模式出现的概率最大化的\(\beta_0\)和\(\beta_1\)的值。
 - en: Our example analyzing a two-by-two table is a special case in which the estimates
     can be written directly as functions of the observed proportions. But in general,
     for logistic regression models, the estimates cannot be written in a simple closed-form
@@ -433,123 +639,186 @@
     can be computed from the curvature of the likelihood function near the maximum.
     This, in turn, permits the construction of confidence intervals and hypothesis
     tests.
+  id: totrans-99
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们分析两行两列表的例子是一个特殊情况，其中估计值可以直接写成观察比例的函数。但一般来说，对于逻辑回归模型，估计值不能写成简单的封闭形式表达式。相反，使用数值优化算法来找到最大化似然值的值。在标准条件下，中心极限定理的一个版本适用于这些估计值。这意味着对于大样本量，估计值近似正态分布，并且可以从似然函数在最大值附近的曲率计算其标准误差。这反过来又允许构建置信区间和假设检验。
 - en: Readers interested in a deeper and more general treatment of MLE and logistic
     regression can consult the Recommended Reading section, where we point to textbooks
     that develop the likelihood framework, the asymptotic results, and the numerical
     algorithms in more detail.
+  id: totrans-100
   prefs: []
   type: TYPE_NORMAL
+  zh: 对MLE和逻辑回归有更深入和更广泛了解的读者可以参考推荐阅读部分，其中我们指向那些更详细地发展似然框架、渐近结果和数值算法的教科书。
 - en: Fitting the model in R
+  id: totrans-101
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 在R中拟合模型
 - en: We can fit the logistic regression model in R using the `glm` function with
     `family = binomial`.
+  id: totrans-102
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们可以使用R中的`glm`函数，通过设置`family = binomial`来拟合逻辑回归模型。
 - en: Although we do not have individual-level records, we *do* have totals for each
     group. This is sufficient because the sum of the outcomes for men is a binomial
     random variable with \(N_0\) trials (the number of male applicants) and success
     probability \(p_0\), which satisfies
+  id: totrans-103
   prefs: []
   type: TYPE_NORMAL
+  zh: 尽管我们没有个体层面的记录，但我们*确实*有每个组的总数。这是足够的，因为男性的结果总和是一个具有\(N_0\)次试验（男性申请人的数量）和成功概率\(p_0\)的二项随机变量，它满足
 - en: \[ \log\left(\frac{p_0}{1-p_0}\right) = \beta_0. \]
+  id: totrans-104
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \log\left(\frac{p_0}{1-p_0}\right) = \beta_0. \]
 - en: Similarly, the sum of outcomes for women is binomial with \(N_1\) trials and
     success probability \(p_1\), where
+  id: totrans-105
   prefs: []
   type: TYPE_NORMAL
+  zh: 同样，女性的结果总和是二项分布，有\(N_1\)次试验和成功概率\(p_1\)，其中
 - en: \[ \log\left(\frac{p_1}{1-p_1}\right) = \beta_0 + \beta_1. \]
+  id: totrans-106
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \log\left(\frac{p_1}{1-p_1}\right) = \beta_0 + \beta_1. \]
 - en: 'The `glm` function can work directly with grouped counts by using a two-column
     matrix of successes and failures:'
+  id: totrans-107
   prefs: []
   type: TYPE_NORMAL
+  zh: '`glm`函数可以通过使用成功和失败的两列矩阵直接处理分组计数：'
 - en: '[PRE13]'
+  id: totrans-108
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE13]'
 - en: '*and encoding the group indicator:'
+  id: totrans-109
   prefs: []
   type: TYPE_NORMAL
+  zh: '*并编码组指示符：'
 - en: '[PRE14]'
+  id: totrans-110
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE14]'
 - en: '*We then fit the model with `glm`:'
+  id: totrans-111
   prefs: []
   type: TYPE_NORMAL
+  zh: '*然后我们使用`glm`拟合模型：'
 - en: '[PRE15]'
+  id: totrans-112
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE15]'
 - en: '*To obtain the estimated odds ratio, we exponentiate the coefficient:'
+  id: totrans-113
   prefs: []
   type: TYPE_NORMAL
+  zh: '*为了获得估计的比值比，我们对方程系数进行指数化：'
 - en: '[PRE16]'
+  id: totrans-114
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE16]'
 - en: '*This value represents the multiplicative change in the odds of being funded
     for women compared to men.'
+  id: totrans-115
   prefs: []
   type: TYPE_NORMAL
+  zh: '*这个值表示女性相对于男性的获得资助几率的乘性变化。'
 - en: 'A 95% confidence interval for this odds ratio is obtained by exponentiating
     the corresponding confidence interval for \(\beta_1\):'
+  id: totrans-116
   prefs: []
   type: TYPE_NORMAL
+  zh: 通过对 \(\beta_1\) 的对应置信区间进行指数化，可以得到这个比率的 95% 置信区间：
 - en: '[PRE17]'
+  id: totrans-117
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE17]'
 - en: '*This interval provides both an effect size and a measure of uncertainty.*****'
+  id: totrans-118
   prefs: []
   type: TYPE_NORMAL
+  zh: '*这个区间提供了效应大小和不确定性的度量。*****'
 - en: '***Relation to earlier methods***'
+  id: totrans-119
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '***与先前方法的关系***'
 - en: '***We can confirm that logistic regression yields the same odds ratio estimate
     as the simple two-by-two table (saved in `o`) calculation: and saved in `or` and
     `se`:'
+  id: totrans-120
   prefs: []
   type: TYPE_NORMAL
+  zh: '***我们可以确认，逻辑回归得到的比率估计值与简单二乘表（保存在 `o` 中）的计算结果相同：并保存在 `or` 和 `se` 中：'
 - en: '[PRE18]'
+  id: totrans-121
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE18]'
 - en: '**The p-values obtained from `chisq.test` and from logistic regression'
+  id: totrans-122
   prefs: []
   type: TYPE_NORMAL
+  zh: '**从 `chisq.test` 和逻辑回归得到 p 值'
 - en: '[PRE19]'
+  id: totrans-123
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE19]'
 - en: '*differ slightly because they are based on different approximations.************'
+  id: totrans-124
   prefs: []
   type: TYPE_NORMAL
+  zh: '*略有不同，因为它们基于不同的近似。************'
 - en: '*****18.3 Generalizing the model*****'
+  id: totrans-125
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '*****18.3 模型推广*****'
 - en: '*****At first glance, logistic regression may seem like an unnecessarily complicated
     way to obtain the same results we derived using the odds ratio and the standard
     error approximation. So why introduce this more general framework?'
+  id: totrans-126
   prefs: []
   type: TYPE_NORMAL
+  zh: '*****乍一看，逻辑回归可能看起来是一种不必要的复杂方法，用以获得我们使用比率及标准误差近似所得到的结果。那么为什么引入这个更通用的框架呢？'
 - en: The key advantage becomes clear when the explanatory variables are not just
     two categories. For example, returning to the question of coronary heart disease,
     age is a continuous variable. There is no simple way to form a two-by-two table
     for every possible age value. Similarly, if we wish to adjust for several explanatory
     variables simultaneously (as we did in [Chapter 17](treatment-effect-models.html)),
     we need a model-based approach rather than a table-based one.
+  id: totrans-127
   prefs: []
   type: TYPE_NORMAL
+  zh: 当解释变量不仅仅是两个类别时，关键优势变得明显。例如，回到冠心病的问题，年龄是一个连续变量。没有简单的方法为每个可能的年龄值形成二乘二表。同样，如果我们希望同时调整几个解释变量（如我们在第
+    17 章[治疗效应模型](treatment-effect-models.html)中所做的那样），我们需要一个基于模型的方法，而不是基于表的方法。
 - en: 'The general strategy is to assumes \(Y_i\) follow a known distribution, such
     as binomial or exponential, and model a *transformation* of the expected value
     of the outcome using a linear combination of predictors:'
+  id: totrans-128
   prefs: []
   type: TYPE_NORMAL
+  zh: 通用策略是假设 \(Y_i\) 遵循一个已知的分布，例如二项分布或指数分布，并使用预测因子的线性组合来建模结果的期望值的**转换**：
 - en: \[ g\left(\mathrm{E}[Y_i]\right) = \beta_0 + \sum_{j=1}^J \beta_j x_{ij} \]
+  id: totrans-129
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ g\left(\mathrm{E}[Y_i]\right) = \beta_0 + \sum_{j=1}^J \beta_j x_{ij} \]
 - en: 'Here \(x_{ij}\) is the value of the \(j\)-th explanatory variable for individual
     \(i\), and \(g(\cdot)\) is called the *link function*. For binary outcomes we
     used the logistic function because it maps probabilities (which must lie between
@@ -559,65 +828,102 @@
     = \log(\lambda)\). This link maps positive values (such as rates) to the real
     line and provides an interpretable multiplicative form: if \(\exp(\beta_1)= 1.10\),
     then a one-unit increase in \(x_{i1}\) corresponds to a 10% increase in the rate.'
+  id: totrans-130
   prefs: []
   type: TYPE_NORMAL
+  zh: 这里 \(x_{ij}\) 是个体 \(i\) 的第 \(j\) 个解释变量的值，而 \(g(\cdot)\) 被称为**连接函数**。对于二元结果，我们使用了逻辑函数，因为它将概率（必须在
+    0 和 1 之间）映射到所有实数。对于计数数据，我们通常使用泊松分布来建模，期望值 \(\mathrm{E}[Y_i]\) 可以超过 1，因此对数连接函数不适用。相反，通常使用**对数**连接函数：\(g(\lambda)
+    = \log(\lambda)\)。这个连接函数将正值（如比率）映射到实数轴，并提供了一个可解释的乘性形式：如果 \(\exp(\beta_1)= 1.10\)，那么
+    \(x_{i1}\) 的一个单位增加对应于比率的 10% 增加。
 - en: This framework is known as a **generalized linear model** (GLM). Logistic regression
     is one special case; Poisson regression is another.
+  id: totrans-131
   prefs: []
   type: TYPE_NORMAL
+  zh: 这个框架被称为**广义线性模型**（GLM）。逻辑回归是其一个特例；泊松回归是另一个。
 - en: 'Logistic regression example: Coronary heart disease'
+  id: totrans-132
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 逻辑回归示例：冠心病
 - en: 'The `SAheart` dataset contains observations from a retrospective sample of
     adult males in a high-risk region of South Africa:'
+  id: totrans-133
   prefs: []
   type: TYPE_NORMAL
+  zh: '`SAheart` 数据集包含来自南非高风险地区成年男性的回顾性样本观察结果：'
 - en: '[PRE20]'
+  id: totrans-134
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE20]'
 - en: '*If we compute the proportion of individuals with heart disease at each age
     and examine the log-odds, the relationship appears approximately linear:'
+  id: totrans-135
   prefs: []
   type: TYPE_NORMAL
+  zh: '*如果我们计算每个年龄层中心脏病患者的比例，并检查对数几率，关系看起来大约是线性的：'
 - en: '[PRE21]'
+  id: totrans-136
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE21]'
 - en: '*![](../Images/ce4e11cf9fef0d8a851627c1e5c13f92.png)*  *This suggests the logistic
     regression model:'
+  id: totrans-137
   prefs: []
   type: TYPE_NORMAL
+  zh: '*![](../Images/ce4e11cf9fef0d8a851627c1e5c13f92.png)*  *这表明逻辑回归模型：'
 - en: \[ \log\left\{\frac{\Pr(Y_i=1)}{1 - \Pr(Y_i=1)}\right\} = \beta_0 + \beta_1
     x_i \] with \(Y_i\) an indicator of coronary heart disease and \(x_i\) representing
     the age of individual \(i\). The estimate for \(\beta_1\) converts into an *odds
     ratio*. The quantity \(\exp(\beta_1)\) represents the multiplicative increase
     in the odds of heart disease for each one-year increase in age.
+  id: totrans-138
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \log\left\{\frac{\Pr(Y_i=1)}{1 - \Pr(Y_i=1)}\right\} = \beta_0 + \beta_1
+    x_i \] 其中 \(Y_i\) 是冠心病的一个指标，\(x_i\) 代表个体 \(i\) 的年龄。\(\beta_1\) 的估计值转换为 *优势比*。\(\exp(\beta_1)\)
+    表示年龄每增加一岁，心脏病优势增加的乘性因子。
 - en: 'Fitting can fit the model using:'
+  id: totrans-139
   prefs: []
   type: TYPE_NORMAL
+  zh: 拟合可以使用以下方法拟合模型：
 - en: '[PRE22]'
+  id: totrans-140
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE22]'
 - en: '*We can then use GLM theory to construct a 95% confidence interval for the
     odds ratio:'
+  id: totrans-141
   prefs: []
   type: TYPE_NORMAL
+  zh: '*然后我们可以使用广义线性模型（GLM）理论来构建一个95%置信区间的优势比：'
 - en: '[PRE23]'
+  id: totrans-142
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE23]'
 - en: '*We can also use the fitted model to compute predicted probabilities for specific
     ages:'
+  id: totrans-143
   prefs: []
   type: TYPE_NORMAL
+  zh: '*我们还可以使用拟合的模型来计算特定年龄的预测概率：'
 - en: '[PRE24]'
+  id: totrans-144
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE24]'
 - en: '*When `type = respsone` the `predict` function uses the inverse logistic transformation
     to convert \(\hat{\beta}_0 + \hat{\beta}_1 x_i\) to estimated probabilities.'
+  id: totrans-145
   prefs: []
   type: TYPE_NORMAL
+  zh: '*当`type = response`时，`predict`函数使用逆对数变换将\(\hat{\beta}_0 + \hat{\beta}_1 x_i\)转换为估计概率。'
 - en: Note that the `SAheart` dataset includes several additional explanatory variables
     that could plausibly relate to heart disease risk, such as tobacco use, cholesterol
     level, and family history. With the `glm` function, we can include these predictors
@@ -631,38 +937,56 @@
     critically. This includes exploratory data analysis, consideration of possible
     confounding variables, and assessment of model fit through diagnostic tools, rather
     than accepting the fitted model at face value.*****
+  id: totrans-146
   prefs: []
   type: TYPE_NORMAL
+  zh: 注意，`SAheart`数据集包括一些可能关联到心脏病风险的额外解释变量，例如吸烟、胆固醇水平和家族病史。使用`glm`函数，我们可以通过将它们添加到公式的右侧来简单地将这些预测变量包含在模型中。然而，在解释结果系数时我们必须谨慎。逻辑回归模型总是会返回参数估计、p值和置信区间，但这些数字只有在模型是数据生成机制的合理近似时才有意义。在许多生物医学环境中，没有保证预测变量与疾病对数优势之间关系线性的潜在生理理论。因此，应批判性地检查模型假设。这包括探索性数据分析、考虑可能的混杂变量，以及通过诊断工具评估模型拟合度，而不是简单地接受拟合模型。*****
 - en: '***Poisson regression example: Effectiveness of insect sprays***'
+  id: totrans-147
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '***泊松回归示例：昆虫喷雾的效果***'
 - en: '***The `InsectSprays`dataset records the number of insects found in agricultural
     field units after treatment with different sprays:'
+  id: totrans-148
   prefs: []
   type: TYPE_NORMAL
+  zh: '***`InsectSprays`数据集记录了使用不同喷雾处理后农业田地单位中发现的昆虫数量：'
 - en: '[PRE25]'
+  id: totrans-149
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE25]'
 - en: '*![](../Images/547b224c054f3e08e5ae076b675cb245.png)*  *Spray C appears most
     effective. We could compare mean insect counts across sprays:'
+  id: totrans-150
   prefs: []
   type: TYPE_NORMAL
+  zh: '*![](../Images/547b224c054f3e08e5ae076b675cb245.png)*  *喷雾C效果最为显著。我们可以比较不同喷雾的平均昆虫数量：'
 - en: '[PRE26]'
+  id: totrans-151
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE26]'
 - en: '*But how do we assess uncertainty? Can we construct confidence inteverals?
     Note that counts are small (often under 10), and the sample size per group is
     only 12, so normal approximations may be unreliable.'
+  id: totrans-152
   prefs: []
   type: TYPE_NORMAL
+  zh: '*但是，我们如何评估不确定性？我们能构建置信区间吗？请注意，计数很小（通常小于10），每组样本量仅为12，因此正态近似可能不可靠。'
 - en: 'A Poisson regression provides an alternative. First we choose C as the reference
     group and then we fit the model:'
+  id: totrans-153
   prefs: []
   type: TYPE_NORMAL
+  zh: 泊松回归提供了一个替代方案。首先，我们将C作为参照组，然后拟合模型：
 - en: '[PRE27]'
+  id: totrans-154
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE27]'
 - en: '*Here the parameters measure the log of the multiplicative change in the expected
     count relative to Spray C. If a spray has the same effectiveness as Spray C, its
     corresponding parameter estimate would be 0\. The estimated coefficients and their
@@ -670,325 +994,483 @@
     C, and these differences are too large to be explained by Poisson sampling variability
     alone. In other words, Spray C’s superior performance is unlikely to be due to
     chance.'
+  id: totrans-155
   prefs: []
   type: TYPE_NORMAL
+  zh: '*在这里，参数衡量的是相对于喷雾C的预期计数的乘性变化的对数。如果一个喷雾的效果与喷雾C相同，其相应的参数估计将是0。估计的系数及其置信区间表明，几种喷雾与喷雾C有显著差异，这些差异太大，不能仅用泊松抽样变异性来解释。换句话说，喷雾C的卓越性能不太可能是偶然的。'
 - en: The inference relies on asymptotic approximations similar to the CLT but often
     performs better than applying the CLT directly to means when counts are small.
+  id: totrans-156
   prefs: []
   type: TYPE_NORMAL
+  zh: 推理依赖于类似于中心极限定理的渐近近似，但通常在计数较小时比直接将中心极限定理应用于均值表现更好。
 - en: '*In this example, a simple comparison of group means would have also worked.
     The advantage of Poisson regression becomes more evident when the explanatory
     variable is continuous, e.g., modeling counts as a function of exposure time or
     concentration levels, where group-by-group averaging is not practical.*******'
+  id: totrans-157
   prefs: []
   type: TYPE_NORMAL
+  zh: '*在这个例子中，简单地比较组均值也会有效。当解释变量是连续的时，泊松回归的优势变得更加明显，例如，将计数建模为暴露时间或浓度水平的函数，在这种情况下，按组平均是不实际的。*******'
 - en: '****Beyond logistic and Poisson regression****'
+  id: totrans-158
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '****除了逻辑回归和泊松回归****'
 - en: '****Logistic and Poisson regression are the two most widely used GLMs because
     binary and count outcomes are common in scientific applications. However, the
     GLM framework is more general:'
+  id: totrans-159
   prefs: []
   type: TYPE_NORMAL
+  zh: '****逻辑回归和泊松回归是最广泛使用的广义线性模型，因为二进制和计数结果在科学应用中很常见。然而，广义线性模型框架更通用：'
 - en: '*Negative binomial regression* handles count data for which the variability
     is larger than what is predicted by the Poisson model.'
+  id: totrans-160
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '*负二项回归*处理变异性大于泊松模型预测的计数数据。'
 - en: '*Gamma regression* is useful for positive continuous outcomes such as reaction
     times or insurance claim sizes.'
+  id: totrans-161
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '*伽马回归*对正的连续结果很有用，例如反应时间或保险索赔规模。'
 - en: '*Quasi-likelihood GLMs* allow modeling of mean–variance relationships without
     fully specifying a distribution.'
+  id: totrans-162
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '*准似然广义线性模型*允许在不完全指定分布的情况下建模均值-方差关系。'
 - en: In practice, GLMs require careful model checking. Diagnostic plots and residual
     analysis are especially important here because, unlike ordinary least squares,
     we are explicitly assuming a particular outcome distribution.
+  id: totrans-163
   prefs: []
   type: TYPE_NORMAL
+  zh: 在实践中，广义线性模型需要仔细的模型检查。诊断图和残差分析在这里特别重要，因为我们明确假设了一个特定的结果分布，这与普通最小二乘法不同。
 - en: To go further, consult the recommended readings listed at the end of the chapter.
     They cover link functions, likelihood theory, diagnostics, and extensions in much
     greater detail.*********
+  id: totrans-164
   prefs: []
   type: TYPE_NORMAL
+  zh: 要进一步了解，请参阅章节末尾列出的推荐阅读。它们详细介绍了链接函数、似然理论、诊断和扩展。
 - en: '*****18.4 Large samples, small p-values*****'
+  id: totrans-165
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '*****18.4 大样本，小p值*****'
 - en: '*****As mentioned earlier, reporting only p-values is not always a useful way
     to report the results of data analysis. In scientific journals, some studies seem
     to overemphasize p-values. Some of these studies have large sample sizes and report
     impressively small p-values. Yet by looking closely at the results, we realize
     that the odds ratios are quite modest: barely bigger than 1\. In this case, the
     difference may not be *practically significant* or *scientifically significant*.'
+  id: totrans-166
   prefs: []
   type: TYPE_NORMAL
+  zh: '*****如前所述，仅报告p值并不总是报告数据分析结果的有用方式。在科学期刊中，一些研究似乎过分强调p值。其中一些研究样本量很大，并报告了令人印象深刻的非常小的p值。然而，通过仔细观察结果，我们发现优势比相当适度：略大于1。在这种情况下，差异可能不是*实际显著*或*科学显著*。'
 - en: 'Note that the relationship between odds ratio and p-value is not one-to-one;
     it depends on the sample size. Therefore, a very small p-value does not necessarily
     mean a very large odds ratio. Observe what happens to the p-value if we multiply
     our two-by-two table by 10, which does not change the odds ratio:'
+  id: totrans-167
   prefs: []
   type: TYPE_NORMAL
+  zh: 注意，优势比和p值之间的关系不是一对一的；它取决于样本大小。因此，一个非常小的p值并不一定意味着一个很大的优势比。观察如果我们将我们的二乘二表乘以10会发生什么，这不会改变优势比：
 - en: '[PRE28]*****'
+  id: totrans-168
   prefs: []
   type: TYPE_NORMAL
+  zh: '[PRE28]*****'
 - en: '*****18.5 Exercises*****'
+  id: totrans-169
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '*****18.5 练习*****'
 - en: '*****1\. A famous athlete boasts an impressive career, winning 70% of her 500
     career matches. Nevertheless, this athlete is criticized because in important
     events, such as the Olympics, she has a losing record of 8 wins and 9 losses.
     Perform a Chi-square test to determine if this losing record can be simply due
     to chance as opposed to not performing well under pressure.'
+  id: totrans-170
   prefs: []
   type: TYPE_NORMAL
+  zh: '*****1. 一位著名的运动员拥有令人印象深刻的职业生涯，赢得了她500场比赛中的70%。然而，这位运动员因在重要赛事中，如奥运会，有8胜9负的失利记录而受到批评。进行卡方检验以确定这种失利记录是否可以简单地归因于偶然，而不是在压力下表现不佳。'
 - en: 2\. Why did we use the Chi-square test instead of Fisher’s exact test in the
     previous exercise?
+  id: totrans-171
   prefs: []
   type: TYPE_NORMAL
+  zh: 2. 为什么我们在前面的练习中使用了卡方检验而不是费舍尔的精确检验？
 - en: It actually does not matter, since they give the exact same p-value.
+  id: totrans-172
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 实际上这并不重要，因为它们给出了完全相同的p值。
 - en: Fisher’s exact and the Chi-square are different names for the same test.
+  id: totrans-173
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 费舍尔的精确检验和卡方检验是同一测试的不同名称。
 - en: Because the sum of the rows and columns of the two-by-two table are not fixed
     so the hypergeometric distribution is not an appropriate assumption for the null
     hypothesis. For this reason, Fisher’s exact test is rarely applicable with observational
     data.
+  id: totrans-174
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 因为二维表的行和列之和不是固定的，所以超几何分布不是对零假设的适当假设。因此，Fisher精确检验很少适用于观察数据。
 - en: Because the Chi-square test runs faster.
+  id: totrans-175
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 因为卡方检验运行得更快。
 - en: 3\. Now compute the odds ratio of “losing under pressure” and use the approximation
     we learned to construct a 95% confidence interval. What do you say to those critiquing
     the athlete? Is the criticism fair?
+  id: totrans-176
   prefs: []
   type: TYPE_NORMAL
+  zh: 3. 现在计算“在压力下失败”的几率比，并使用我们学到的近似值构建95%置信区间。你对那些批评运动员的人有什么看法？这种批评公平吗？
 - en: 4\. Repeat exercise 3 but using the `glm` function. Compare the results.
+  id: totrans-177
   prefs: []
   type: TYPE_NORMAL
+  zh: 4. 重复练习3，但使用`glm`函数。比较结果。
 - en: 5\. Use the `research_funding_rates` data to estimate the log odds ratio and
     standard errors comparing women to men for each discipline. Compute a confidence
     interval for each discipline. Plot the log odds ratios and use error bars to denote
     95% confidence intervals
+  id: totrans-178
   prefs: []
   type: TYPE_NORMAL
+  zh: 5. 使用`research_funding_rates`数据估计每个学科中女性与男性的对数几率比和标准误差。为每个学科计算置信区间。绘制对数几率比，并使用误差线表示95%置信区间
 - en: 6\. Report all the disciplines for which one gender appears to be favored over
     the other.
+  id: totrans-179
   prefs: []
   type: TYPE_NORMAL
+  zh: 6. 报告所有似乎有一方性别比另一方更受青睐的学科。
 - en: 7\. Divide the log odds ratio estimates by their respective standard errors
     and generate a qqplot comparing these to a standard normal. Do any of the disciplines
     clearly deviate from what is expected by chance?
+  id: totrans-180
   prefs: []
   type: TYPE_NORMAL
+  zh: 7. 将对数几率比估计值除以其相应的标准误差，并生成一个与标准正态分布比较的qq图。是否有任何学科明显偏离了随机预期的结果？
 - en: '8\. During the 2016 US presidential election, then candidate Donald J. Trump
     used his twitter account as a way to communicate with potential voters. Todd Vaziri
     hypothesized that “Every non-hyperbolic tweet is from iPhone (his staff). Every
     hyperbolic tweet is from Android (from him).” We will test this hypothesis using
     association tests. The **dslabs** object `sentiment_counts` provides a table with
     the counts for several sentiments from each source (Android or iPhone):'
+  id: totrans-181
   prefs: []
   type: TYPE_NORMAL
+  zh: 8. 在2016年美国总统选举期间，当时的候选人唐纳德·J·特朗普使用他的推特账户作为与潜在选民沟通的方式。Todd Vaziri假设“每个非夸张的推文都来自iPhone（他的工作人员）。每个夸张的推文都来自Android（他本人）。”我们将使用关联检验来测试这个假设。**dslabs**对象`sentiment_counts`提供了一个表格，其中包含来自每个来源（Android或iPhone）的几个情感计数：
 - en: '[PRE29]'
+  id: totrans-182
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE29]'
 - en: '*Compute an odds ratio comparing Android to iPhone for each sentiment and add
     it to the table.'
+  id: totrans-183
   prefs: []
   type: TYPE_NORMAL
+  zh: '*计算每个情感与Android和iPhone相比的几率比，并将其添加到表中。'
 - en: 9\. Compute a 95% confidence interval for each odds ratio.
+  id: totrans-184
   prefs: []
   type: TYPE_NORMAL
+  zh: 9. 为每个几率比计算95%置信区间。
 - en: 10\. Generate a plot showing the estimated odds ratios along with their confidence
     intervals.
+  id: totrans-185
   prefs: []
   type: TYPE_NORMAL
+  zh: 10. 生成一个显示估计几率比及其置信区间的图表。
 - en: 11\. For each sentiment, test the null hypothesis that there is no difference
     between tweets from Android and iPhone and report the sentiments with p-values
     less than 0.05 and more likely to come from Android.
+  id: totrans-186
   prefs: []
   type: TYPE_NORMAL
+  zh: 11. 对于每个情感，测试没有差异的零假设，即来自Android和iPhone的推文之间没有差异，并报告p值小于0.05且更有可能来自Android的情感。
 - en: 12\. For each sentiment, find the words assigned to that sentiment, keep words
     that appear at least 25 times, compute the odd ratio for each, and show a barplot
     for those with odds ratio larger than 2 or smaller than 1/2.
+  id: totrans-187
   prefs: []
   type: TYPE_NORMAL
+  zh: 12. 对于每个情感，找出分配给该情感的单词，保留至少出现25次的单词，计算每个的几率比，并显示几率比大于2或小于1/2的条形图。
 - en: '13\. The `titanic_train` dataset in the **titanic** package has data for 891
     passangers that were on the Titanic:'
+  id: totrans-188
   prefs: []
   type: TYPE_NORMAL
+  zh: 13. **titanic**包中的`titanic_train`数据集包含891名乘客的数据，他们曾在泰坦尼克号上：
 - en: '[PRE30]'
+  id: totrans-189
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE30]'
 - en: '*In this dataset:'
+  id: totrans-190
   prefs: []
   type: TYPE_NORMAL
+  zh: '*在此数据集中：'
 - en: '`Survived` is a binary variable (`Yes` / `No`)'
+  id: totrans-191
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`Survived`是一个二元变量（`是` / `否`）'
 - en: '`Sex`, `Age`, and `Class` are explanatory variables'
+  id: totrans-192
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`性别`、`年龄`和`舱位`是解释变量'
 - en: Fit a logistic regression model with survival as the outcome and sex as the
     predictor.
+  id: totrans-193
   prefs: []
   type: TYPE_NORMAL
+  zh: 拟合一个以生存为结果、性别为预测因子的逻辑回归模型。
 - en: '[PRE31]'
+  id: totrans-194
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE31]'
 - en: '*1.  Interpret the sign of the coefficient for `Sex`.'
+  id: totrans-195
   prefs: []
   type: TYPE_NORMAL
+  zh: '*1.  解释`性别`系数的符号。'
 - en: Compute and interpret the *odds ratio*.
+  id: totrans-196
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 计算并解释*几率比*。
 - en: Construct a 95% confidence interval for the odds ratio.
+  id: totrans-197
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 为几率比构建95%置信区间。
 - en: '14\. Now fit a model with both `Sex` and `Class`:'
+  id: totrans-198
   prefs: []
   type: TYPE_NORMAL
+  zh: 14. 现在拟合一个同时包含`性别`和`舱位`的模型：
 - en: '[PRE32]'
+  id: totrans-199
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE32]'
 - en: '*1.  Which passenger class has the highest odds of survival, based on the estimates?'
+  id: totrans-200
   prefs: []
   type: TYPE_NORMAL
+  zh: '*1.  根据估计，哪个乘客舱的生存几率最高？'
 - en: How does the estimated effect of gender change after adjusting for class? Explain
     why.
+  id: totrans-201
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 在调整舱位后，性别估计的影响如何变化？解释原因。
 - en: '15\. Fit a model with an interaction term:'
+  id: totrans-202
   prefs: []
   type: TYPE_NORMAL
+  zh: 15\. 拟合一个包含交互项的模型：
 - en: '[PRE33]'
+  id: totrans-203
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE33]'
 - en: '*1.  Does the effect of gender vary by class?'
+  id: totrans-204
   prefs: []
   type: TYPE_NORMAL
+  zh: '*1.  性别效应是否随班级而变化？'
 - en: Use `exp(coef(fit_interaction))` to interpret interaction patterns in terms
     of odds ratios.
+  id: totrans-205
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 使用 `exp(coef(fit_interaction))` 来解释交互模式，以优势比的形式。
 - en: 16\. The `InsectSprays` dataset records insect counts for six spray types.
+  id: totrans-206
   prefs: []
   type: TYPE_NORMAL
+  zh: 16\. `InsectSprays` 数据集记录了六种喷雾类型的昆虫数量。
 - en: 'Recall the Poisson regression model:'
+  id: totrans-207
   prefs: []
   type: TYPE_NORMAL
+  zh: 回忆一下泊松回归模型：
 - en: '[PRE34]'
+  id: totrans-208
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE34]'
 - en: '*Fit a linear regression model to the log-transformed counts (we have to add
     0.5 because some counts are 0):'
+  id: totrans-209
   prefs: []
   type: TYPE_NORMAL
+  zh: '*将线性回归模型拟合到对数转换后的计数（我们必须添加 0.5，因为有些计数为 0）：'
 - en: '[PRE35]'
+  id: totrans-210
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE35]'
 - en: '*1.  Compare the estimated spray effects from `fit_glm` and `fit_lm`.'
+  id: totrans-211
   prefs: []
   type: TYPE_NORMAL
+  zh: '*1.  比较 `fit_glm` 和 `fit_lm` 估计的喷雾效应。'
 - en: Discuss the advantages of one model over the other.
+  id: totrans-212
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 讨论一个模型相对于另一个模型的优点。
 - en: '17\. In GLMs there is no separate error term \(\varepsilon\). However, we can
     still define *residuals* by comparing the observed outcome \(y_i\) to the fitted
     value \(\hat{y}_i\). However, unlike in standard linear regression, the variance
     of \(Y_i\) is not constant. For instance:'
+  id: totrans-213
   prefs: []
   type: TYPE_NORMAL
+  zh: 17\. 在 GLM 中没有单独的误差项 \(\varepsilon\)。然而，我们仍然可以通过比较观察到的结果 \(y_i\) 与拟合值 \(\hat{y}_i\)
+    来定义 *残差*。但是，与标准线性回归不同，\(Y_i\) 的方差不是常数。例如：
 - en: In logistic regression, \(\mathrm{Var}[Y_i] = p_i(1 - p_i)\), which depends
     on the fitted probability \(p_i=\Pr(Y_i=1)\).
+  id: totrans-214
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 在逻辑回归中，\(\mathrm{Var}[Y_i] = p_i(1 - p_i)\)，这取决于拟合的概率 \(p_i=\Pr(Y_i=1)\)。
 - en: In Poisson regression, \(\mathrm{Var}[Y_i]= \mathrm{E}[Y_i]\), so the standard
     error can be estimated with \(\sqrt{\hat{y}_i}\).
+  id: totrans-215
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 在泊松回归中，\(\mathrm{Var}[Y_i]= \mathrm{E}[Y_i]\)，因此标准误可以用 \(\sqrt{\hat{y}_i}\)
+    来估计。
 - en: 'Because the variability changes across observations, raw residuals \(y_i -
     \hat{y}_i\) are not directly comparable. *Pearson residuals* address this by dividing
     by an estimate of their standard deviation:'
+  id: totrans-216
   prefs: []
   type: TYPE_NORMAL
+  zh: 因为可变性在观测之间变化，所以原始残差 \(y_i - \hat{y}_i\) 不能直接比较。*皮尔逊残差* 通过除以它们标准差的估计来解决此问题：
 - en: \[ r_i = \frac{y_i - \hat{y}_i}{\sqrt{\widehat{\mathrm{Var}}(Y_i)}}. \]
+  id: totrans-217
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ r_i = \frac{y_i - \hat{y}_i}{\sqrt{\widehat{\mathrm{Var}}(Y_i)}}. \]
 - en: 'For a Poisson regression model with fitted mean \(\hat{\mu}_i = \exp(\hat{\beta}_0
     + \hat{\beta}_1 x_i)\), the Pearson residual is:'
+  id: totrans-218
   prefs: []
   type: TYPE_NORMAL
+  zh: 对于具有拟合均值 \(\hat{\mu}_i = \exp(\hat{\beta}_0 + \hat{\beta}_1 x_i)\) 的泊松回归模型，皮尔逊残差是：
 - en: \[ r_i = \frac{y_i - \hat{\mu}_i}{\sqrt{\hat{\mu}_i}}. \]
+  id: totrans-219
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ r_i = \frac{y_i - \hat{\mu}_i}{\sqrt{\hat{\mu}_i}}. \]
 - en: These residuals are scaled so that they are approximately centered at 0 with
     variance 1, which makes them useful for diagnostic plots.
+  id: totrans-220
   prefs: []
   type: TYPE_NORMAL
+  zh: 这些残差被缩放，使得它们大约集中在 0，方差为 1，这使得它们对诊断图很有用。
 - en: 'You can plot Pearson residuals in R using:'
+  id: totrans-221
   prefs: []
   type: TYPE_NORMAL
+  zh: 您可以使用以下方法在 R 中绘制皮尔逊残差：
 - en: '[PRE36]'
+  id: totrans-222
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE36]'
 - en: '*To compare this to fitting a linear model to log-transformed counts:'
+  id: totrans-223
   prefs: []
   type: TYPE_NORMAL
+  zh: '*为了将此与拟合对数转换后的计数线性模型进行比较：'
 - en: '[PRE37]'
+  id: totrans-224
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE37]'
 - en: '*1.  Which model appears to better describe the data?'
+  id: totrans-225
   prefs: []
   type: TYPE_NORMAL
+  zh: '*1.  哪个模型看起来更好地描述了数据？'
 - en: In what situations might the log-transform approach fail while Poisson regression
     still works?
+  id: totrans-226
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 在什么情况下对数转换方法可能失败，而泊松回归仍然有效？
 - en: '18\. Explain in your own words:'
+  id: totrans-227
   prefs: []
   type: TYPE_NORMAL
+  zh: 18\. 用你自己的话解释：
 - en: Why logistic and Poisson regression are useful when modeling binary or count
     data.
+  id: totrans-228
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 为什么在建模二元或计数数据时，逻辑回归和泊松回归是有用的。
 - en: Why it is not always appropriate to apply standard linear regression to these
     outcomes.
+  id: totrans-229
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 为什么不总是适合将这些标准线性回归应用于这些结果。
 - en: Why checking model assumptions (for example, plots, fit diagnostics) is critical
     when using GLMs.**************
+  id: totrans-230
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 为什么在使用 GLM 时检查模型假设（例如，绘图，拟合诊断）是至关重要的。**************
 - en: '* * *'
+  id: totrans-231
   prefs: []
   type: TYPE_NORMAL
+  zh: '* * *'
 - en: '****1.  http://www.pnas.org/content/112/40/12349.abstract[↩︎](#fnref1)****'
+  id: totrans-232
   prefs: []
   type: TYPE_NORMAL
+  zh: '****1.  http://www.pnas.org/content/112/40/12349.abstract[↩︎](#fnref1)****'

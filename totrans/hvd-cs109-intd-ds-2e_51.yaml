@@ -1,46 +1,64 @@
 - en: 16  The Linear Model Framework
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 16 线性模型框架
 - en: 原文：[https://rafalab.dfci.harvard.edu/dsbook-part-2/linear-models/linear-model-framework.html](https://rafalab.dfci.harvard.edu/dsbook-part-2/linear-models/linear-model-framework.html)
+  id: totrans-1
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 原文：[https://rafalab.dfci.harvard.edu/dsbook-part-2/linear-models/linear-model-framework.html](https://rafalab.dfci.harvard.edu/dsbook-part-2/linear-models/linear-model-framework.html)
 - en: '[Linear Models](../linear-models/intro-to-linear-models.html)'
+  id: totrans-2
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[线性模型](../linear-models/intro-to-linear-models.html)'
 - en: '[16  The Linear Model Framework](../linear-models/linear-model-framework.html)'
+  id: totrans-3
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[16 线性模型框架](../linear-models/linear-model-framework.html)'
 - en: We are now ready to understand the title of this part of the book, and specifically
     the connection between regression and *linear models*. In the previous chapter,
     we showed that if two variables follow a bivariate normal distribution, then the
     conditional expectation of one given the other lies on a straight line, the *regression
     line*. In that setting, the linear relationship was not an assumption, but a mathematical
     consequence of the probability model.
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们现在可以理解这本书这一部分标题的含义，特别是回归与**线性模型**之间的联系。在前一章中，我们展示了如果两个变量遵循二元正态分布，那么一个变量给定另一个变量的条件期望位于一条直线上，即**回归线**。在那个情况下，线性关系不是一个假设，而是概率模型的一个数学结果。
 - en: In practice, however, we often adopt the linear relationship as a modeling strategy,
     even when the underlying distributions are not exactly bivariate normal. To work
     with such models, we need a general mathematical approach for estimating the unknown
     coefficients. In this chapter, we introduce the *least squares estimator* (LSE),
     the standard method used to estimate these parameters. The LSE provides a unified
     way to fit linear models across a wide range of applications.
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: 然而，在实际应用中，我们通常将线性关系作为建模策略，即使基础分布并非完全的二元正态分布。为了处理这样的模型，我们需要一个通用的数学方法来估计未知系数。在本章中，我们介绍了**最小二乘估计器**（LSE），这是用来估计这些参数的标准方法。LSE
+    提供了一种统一的方式来拟合广泛应用中的线性模型。
 - en: 'We end the chapter presenting one example in which the linear model was historically
     motivated: *measurement error models*. This example is different from the height
     data we studied earlier, but the same linear model framework, the same least squares
     mathematics, and even the same R functions can be used to fit it. Later chapters
     will introduce additional examples in which linear models play a central role.'
+  id: totrans-6
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们在本章的最后通过一个例子展示了线性模型在历史上是如何被激发出来的：**测量误差模型**。这个例子与我们之前研究的高度数据不同，但相同的线性模型框架、相同的平方最小数学方法，甚至相同的
+    R 函数都可以用来拟合它。后面的章节将介绍更多线性模型扮演核心角色的例子。
 - en: 16.1 The linear model representation
+  id: totrans-7
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 16.1 线性模型表示
 - en: We note that *linear* here does not refer to lines exclusively, but rather to
     the fact that the conditional expectation is a linear combination of variables.
     In mathematics, when we multiply each variable by a constant and then add them
@@ -48,24 +66,37 @@
     \(3x - 4y + 5z\) is a linear combination of \(x\), \(y\), and \(z\). We can also
     add a constant so \(2 + 3x - 4y + 5z\) is also a linear combination of \(x\),
     \(y\), and \(z\).
+  id: totrans-8
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们注意到这里的**线性**并不特指直线，而是指条件期望是变量的线性组合。在数学中，当我们把每个变量乘以一个常数然后相加，我们说我们形成了变量的**线性组合**。例如，\(3x
+    - 4y + 5z\) 是 \(x\)、\(y\) 和 \(z\) 的线性组合。我们也可以添加一个常数，例如 \(2 + 3x - 4y + 5z\) 也是
+    \(x\)、\(y\) 和 \(z\) 的线性组合。
 - en: 'We previously described how if \(X\) and \(Y\) are bivariate normal, then if
     we look at only the pairs with \(X=x\), then \(Y \mid X=x\) follows a normal distribution
     with expected value \(\mu_Y + \rho \frac{x-\mu_X}{\sigma_X}\sigma_Y\), which is
     a linear function of \(x\). Note also that the standard deviation \(\sigma_Y \sqrt{1-\rho^2}\)
     does not depend on \(x\). This implies that we can write:'
+  id: totrans-9
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们之前描述了如果 \(X\) 和 \(Y\) 是二元正态分布，那么如果我们只观察 \(X=x\) 的那些对，那么 \(Y \mid X=x\) 就符合期望值为
+    \(\mu_Y + \rho \frac{x-\mu_X}{\sigma_X}\sigma_Y\) 的正态分布，这是一个 \(x\) 的线性函数。注意，标准差
+    \(\sigma_Y \sqrt{1-\rho^2}\) 也不依赖于 \(x\)。这意味着我们可以写出：
 - en: \[ Y = \beta_0 + \beta_1 x + \varepsilon \]
+  id: totrans-10
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ Y = \beta_0 + \beta_1 x + \varepsilon \]
 - en: 'and assume \(\varepsilon\) follows a normal distribution with expected value
     0 and fixed standard deviation, then \(Y\) has the same properties as the regression
     setup gave us: \(Y\) follows a normal distribution, the expected value is a linear
     function of \(x\), and the standard deviation does not depend on \(x\).'
+  id: totrans-11
   prefs: []
   type: TYPE_NORMAL
+  zh: 假设 \(\varepsilon\) 符合期望值为0和固定标准差的正态分布，那么 \(Y\) 就具有与回归设置给出的相同性质：\(Y\) 符合正态分布，期望值是
+    \(x\) 的线性函数，且标准差不依赖于 \(x\)。
 - en: '*In statistical textbooks, the \(\varepsilon\) terms are referred to as *errors*.
     Historically, this reflected the idea that deviations from the model were due
     to measurement inaccuracies. Today, the term is used more broadly: the \(\varepsilon\)s
@@ -78,27 +109,41 @@
     were to specify a linear model for Galton’s data, we would denote the \(N\) observed
     father heights with \(x_1, \dots, x_n\), then we model the \(N\) son heights we
     are trying to predict with:'
+  id: totrans-12
   prefs: []
   type: TYPE_NORMAL
+  zh: 在统计教科书中，\(\varepsilon\) 项被称为**误差**。从历史上看，这反映了这样一个观点，即模型偏离是由于测量不准确造成的。今天，这个术语的使用更加广泛：\(\varepsilon\)s
+    代表了模型中预测因子无法解释的所有结果变异性。这种变异性可能与错误无关。例如，如果某人的身高比根据其父母的身高预测的身高高出两英寸，那么这增加的两英寸不是错误；这只是自然变异。尽管在这个意义上，“误差”这个术语并不理想，但它仍然是标准术语，我们将用它来表示模型中的未解释变异性。*如果我们为盖尔顿的数据指定一个线性模型，我们将用
+    \(x_1, \dots, x_n\) 表示 \(N\) 个观察到的父亲身高，然后我们用以下方式来预测我们试图预测的 \(N\) 个儿子的身高：*
 - en: \[ Y_i = \beta_0 + \beta_1 x_i + \varepsilon_i, \, i=1,\dots,N. \]
+  id: totrans-13
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ Y_i = \beta_0 + \beta_1 x_i + \varepsilon_i, \, i=1,\dots,N. \]
 - en: Here \(x_i\) is the father’s height, which is fixed (not random) due to the
     conditioning, and \(Y_i\) is the random son’s height that we want to predict.
     We can further assume that the \(\varepsilon_i\) are independent from each other
     and all have the same standard deviation.
+  id: totrans-14
   prefs: []
   type: TYPE_NORMAL
+  zh: 在这里 \(x_i\) 是父亲的身高，由于条件限制，它是固定的（非随机的），而 \(Y_i\) 是我们想要预测的随机儿子身高。我们可以进一步假设 \(\varepsilon_i\)
+    之间相互独立，并且都具有相同的标准差。
 - en: In the linear model framework the \(x_i\) are refereed to as the *explanatory
     variables*, *covariates*, or *predictors*.
+  id: totrans-15
   prefs: []
   type: TYPE_NORMAL
+  zh: 在线性模型框架中，\(x_i\) 被称为**解释变量**、**协变量**或**预测变量**。
 - en: In the above model we know the \(x_i\), but to have a useful model for prediction,
     we need \(\beta_0\) and \(\beta_1\). We estimate these from the data. Once we
     do this, we can predict son’s heights for any father’s height \(x\). We show how
     to do this in the next section.
+  id: totrans-16
   prefs: []
   type: TYPE_NORMAL
+  zh: 在上述模型中，我们知道 \(x_i\)，但为了有一个有用的预测模型，我们需要 \(\beta_0\) 和 \(\beta_1\)。我们从数据中估计这些值。一旦我们这样做，我们就可以预测任何父亲身高
+    \(x\) 的儿子的身高。我们将在下一节中展示如何做到这一点。
 - en: 'Although this model is exactly the same one we derived earlier by assuming
     bivariate normal data, a somewhat nuanced difference is that, in the first approach,
     we assumed the data was bivariate normal and the linear model was derived, not
@@ -107,8 +152,11 @@
     Nevertheless, if your data is bivariate normal, the above linear model holds.
     If your data is not bivariate normal, then you will need to have other ways of
     justifying the model.'
+  id: totrans-17
   prefs: []
   type: TYPE_NORMAL
+  zh: 虽然这个模型与我们之前通过假设双变量正态数据推导出的模型完全相同，但有一点细微的差别是，在第一种方法中，我们假设数据是双变量正态的，而线性模型是通过推导而不是假设得出的。在实践中，线性模型只是被假设，而不一定假设正态性：\(\varepsilon\)s
+    的分布不一定被指定。尽管如此，如果你的数据是双变量正态的，上述线性模型仍然成立。如果你的数据不是双变量正态的，那么你需要有其他方法来证明模型的合理性。
 - en: 'One reason linear models are popular is that they are easily *interpretable*.
     In the case of Galton’s data, we can interpret the data like this: due to inherited
     genes, the son’s height prediction grows by \(\beta_1\) for each inch we increase
@@ -116,77 +164,115 @@
     of equal height, we need the term \(\varepsilon\), which explains the remaining
     variability. This remaining variability includes the mother’s genetic effect,
     environmental factors, and other biological randomness.'
+  id: totrans-18
   prefs: []
   type: TYPE_NORMAL
+  zh: 线性模型受欢迎的一个原因是它们易于**解释**。在盖尔顿的数据情况下，我们可以这样解释数据：由于遗传基因，父亲的身高每增加一英寸，儿子的身高预测值就增加
+    \(\beta_1\)。因为并非所有身高为 \(x\) 的儿子身高都相同，我们需要 \(\varepsilon\) 这个项来解释剩余的变异性。这种剩余的变异性包括母亲的遗传效应、环境因素以及其他生物学上的随机性。
 - en: 'Given how we wrote the model above, the intercept \(\beta_0\) is not very interpretable,
     as it is the predicted height of a son of a father with no height. To make the
     slope parameter more interpretable, we can rewrite the model slightly as:'
+  id: totrans-19
   prefs: []
   type: TYPE_NORMAL
+  zh: 根据我们上面写的模型，截距\(\beta_0\)的解释性不是很强，因为它代表了一个没有身高的父亲儿子的预测身高。为了使斜率参数更具解释性，我们可以稍微修改模型：
 - en: \[ Y_i = \beta_0 + \beta_1 (x_i - \bar{x}) + \varepsilon_i, \, i=1,\dots,N \]
+  id: totrans-20
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ Y_i = \beta_0 + \beta_1 (x_i - \bar{x}) + \varepsilon_i, \, i=1,\dots,N \]
 - en: with \(\bar{x} = 1/N \sum_{i=1}^N x_i\) the average of the \(x\). In this case,
     \(\beta_0\) represents the height when \(x_i = \bar{x}\), which is the height
     of the son of an average father.
+  id: totrans-21
   prefs: []
   type: TYPE_NORMAL
+  zh: 其中\(\bar{x} = 1/N \sum_{i=1}^N x_i\)是\(x\)的平均值。在这种情况下，\(\beta_0\)代表当\(x_i =
+    \bar{x}\)时的高度，即平均父亲儿子的高度。
 - en: Later, specifically in Chapters [17](treatment-effect-models.html) and [20](multivariable-regression.html),
     we will see how the linear model representation permits us to use the same mathematical
     frameworks in other contexts and to achieve more complicated goals than predicting
     one variable from another.*
+  id: totrans-22
   prefs: []
   type: TYPE_NORMAL
+  zh: 在后面的章节[17](treatment-effect-models.html)和[20](multivariable-regression.html)中，我们将看到线性模型表示如何使我们能够在其他上下文中使用相同的数学框架，并实现比从另一个变量预测一个变量更复杂的目标。
 - en: '*16.2 Least Squares Estimates*'
+  id: totrans-23
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '*16.2 最小二乘估计*'
 - en: '*For linear models to be useful, we have to estimate the unknown \(\beta\)s.
     The standard approach is to find the values that minimize the distance of the
     fitted model to the data. Specifically, we find the \(\beta\)s that minimize the
     least squares (LS) equation shown below. For Galton’s data, the LS equation looks
     like this:'
+  id: totrans-24
   prefs: []
   type: TYPE_NORMAL
+  zh: '*为了使线性模型有用，我们必须估计未知参数\(\beta\)。标准方法是找到使拟合模型与数据之间的距离最小的值。具体来说，我们找到使以下最小二乘（LS）方程最小的\(\beta\)值。对于Galton的数据，LS方程看起来是这样的：'
 - en: \[ RSS = \sum_{i=1}^n \left\{ y_i - \left(\beta_0 + \beta_1 x_i \right)\right\}^2
     \]
+  id: totrans-25
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ RSS = \sum_{i=1}^n \left\{ y_i - \left(\beta_0 + \beta_1 x_i \right)\right\}^2
+    \]
 - en: The quantity we try to minimize is called the residual sum of squares (RSS).
+  id: totrans-26
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们试图最小化的量被称为残差平方和（RSS）。
 - en: Once we find the values that minimize the RSS, we will call the values the least
     squares estimates (LSE) and denote them by placing a *hat* over the parameters.
     In our example we use \(\hat{\beta}_0\) and \(\hat{\beta}_1\).
+  id: totrans-27
   prefs: []
   type: TYPE_NORMAL
+  zh: 一旦我们找到使RSS最小化的值，我们将这些值称为最小二乘估计（LSE），并用参数上方放置的*帽子*来表示。在我们的例子中，我们使用\(\hat{\beta}_0\)和\(\hat{\beta}_1\)。
 - en: 'We will demonstrate how we find these values using the previously defined `galton`
     dataset:'
+  id: totrans-28
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们将演示如何使用先前定义的`galton`数据集来找到这些值：
 - en: '[PRE0]'
+  id: totrans-29
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: '*Let’s start by writing a function that computes the RSS for any pair of values
     \(\beta_0\) and \(\beta_1\).'
+  id: totrans-30
   prefs: []
   type: TYPE_NORMAL
+  zh: '*让我们先编写一个函数来计算任何一对值\(\beta_0\)和\(\beta_1\)的RSS。'
 - en: '[PRE1]'
+  id: totrans-31
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: '*So for any pair of values, we get an RSS. Here is a plot of the RSS as a function
     of \(\beta_1\), when we keep the \(\beta_0\) fixed at 25.'
+  id: totrans-32
   prefs: []
   type: TYPE_NORMAL
+  zh: '*因此，对于任何一对值，我们都会得到一个RSS。以下是RSS作为\(\beta_1\)函数的图表，当我们保持\(\beta_0\)固定在25时。'
 - en: '[PRE2]'
+  id: totrans-33
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: '*![](../Images/6a2b5abea08935ad589c71229b28a1c9.png)*  *We can see a clear
     minimum for \(\beta_1\) at around 0.65\. However, this minimum for \(\beta_1\)
     is for when \(\beta_0 = 25\), a value we arbitrarily picked. We don’t know if
     (25, 0.65) is the pair that minimizes the equation across all possible pairs.'
+  id: totrans-34
   prefs: []
   type: TYPE_NORMAL
+  zh: '*![](../Images/6a2b5abea08935ad589c71229b28a1c9.png)*  *我们可以看到\(\beta_1\)在约0.65处有一个明显的最小值。然而，这个\(\beta_1\)的最小值是在\(\beta_0
+    = 25\)时，这是我们任意选择的值。我们不知道(25, 0.65)是否是使所有可能对中的方程最小化的对。'
 - en: Trial and error is not going to work in this case. We could search for a minimum
     within a fine grid of \(\beta_0\) and \(\beta_1\) values, but this is unnecessarily
     time-consuming since we can use calculus. Specifically, we take the partial derivatives,
@@ -195,88 +281,130 @@
     in R that do these calculations for us. We will study these next. To learn the
     mathematics behind this, you can consult one of the books on linear models in
     the Recommended Reading section.****
+  id: totrans-35
   prefs: []
   type: TYPE_NORMAL
+  zh: 在这个情况下，试错法是行不通的。我们可以在\(\beta_0\)和\(\beta_1\)值的精细网格中搜索最小值，但这样做是不必要的，因为我们可以使用微积分。具体来说，我们取偏导数，将它们设为0，并求解\(\beta_0\)和\(\beta_1\)。当然，如果我们有很多参数，这些方程可能会相当复杂。但在R中，有一些函数会为我们做这些计算。我们将在下一节学习这些函数。要了解背后的数学，你可以查阅推荐阅读部分中关于线性模型的书籍。****
 - en: '****16.3 The `lm` function****'
+  id: totrans-36
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '****16.3 `lm`函数****'
 - en: '****In R, we can obtain the least squares estimates for a linear model using
     the `lm` function. To fit the model:'
+  id: totrans-37
   prefs: []
   type: TYPE_NORMAL
+  zh: '****在R中，我们可以使用`lm`函数获得线性模型的最小二乘估计。为了拟合模型：'
 - en: \[ Y_i = \beta_0 + \beta_1 x_i + \varepsilon_i \]
+  id: totrans-38
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ Y_i = \beta_0 + \beta_1 x_i + \varepsilon_i \]
 - en: 'with \(Y_i\) being the son’s height and \(x_i\) being the father’s height,
     we can use this code:'
+  id: totrans-39
   prefs: []
   type: TYPE_NORMAL
+  zh: 以\(Y_i\)代表儿子的身高，\(x_i\)代表父亲的身高，我们可以使用以下代码：
 - en: '[PRE3]'
+  id: totrans-40
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: '*The most common way we use `lm` is by using the character `~` to let `lm`
     know which is the variable we are predicting (left of `~`) and which we are using
     to predict (right of `~`). The intercept is added automatically to the model that
     will be fit.'
+  id: totrans-41
   prefs: []
   type: TYPE_NORMAL
+  zh: '*我们最常用的`lm`方法是使用字符`~`来让`lm`知道哪个是我们预测的变量（`~`的左边）以及我们用来预测的变量（`~`的右边）。截距会自动添加到将要拟合的模型中。'
 - en: 'The object `fit` includes information about the fit. We can use the function
     `summary` to extract a summary of this information:'
+  id: totrans-42
   prefs: []
   type: TYPE_NORMAL
+  zh: 对象`fit`包含了关于拟合的信息。我们可以使用`summary`函数来提取这些信息的摘要：
 - en: '[PRE4]'
+  id: totrans-43
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE4]'
 - en: '*To understand some of the terms included in this summary, we need to remember
     that the LSE are random variables. Mathematical statistics gives us some ideas
     of the distribution of these random variables.'
+  id: totrans-44
   prefs: []
   type: TYPE_NORMAL
+  zh: '*为了理解这个摘要中包含的一些术语，我们需要记住LSE是随机变量。数学统计学给我们一些关于这些随机变量分布的想法。'
 - en: In [Chapter 20](multivariable-regression.html), after describing a more complex
     case study, we gain further insights into the application of regression in R.
+  id: totrans-45
   prefs: []
   type: TYPE_NORMAL
+  zh: 在[第20章](multivariable-regression.html)中，在描述了一个更复杂的案例研究之后，我们进一步了解了回归在R中的应用。
 - en: LSE are random variables
+  id: totrans-46
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: LSE是随机变量
 - en: 'The LSE is derived from the data \(y_1,\dots,y_N\), which are a realization
     of random variables \(Y_1, \dots, Y_N\). This implies that our estimates are random
     variables. To see this, we can run a Monte Carlo simulation in which we assume
     the son and father height data defines a population, take a random sample of size
     \(N=50\), and compute the regression slope coefficient for each one:'
+  id: totrans-47
   prefs: []
   type: TYPE_NORMAL
+  zh: 最小二乘估计（LSE）是从数据\(y_1,\dots,y_N\)中导出的，这些数据是随机变量\(Y_1, \dots, Y_N\)的一个实现。这意味着我们的估计值是随机变量。为了看到这一点，我们可以运行一个蒙特卡洛模拟，其中我们假设儿子和父亲的身高数据定义了一个总体，随机抽取一个大小为\(N=50\)的样本，并计算每个样本的回归斜率系数：
 - en: '[PRE5]'
+  id: totrans-48
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE5]'
 - en: '*We can see the variability of the estimates by plotting their distributions:'
+  id: totrans-49
   prefs: []
   type: TYPE_NORMAL
+  zh: '*我们可以通过绘制它们的分布图来看到估计值的变异性：'
 - en: '![](../Images/958a4a964c6cd459a4258792c3e7227b.png)'
+  id: totrans-50
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/958a4a964c6cd459a4258792c3e7227b.png)'
 - en: 'The reason these look normal is because the central limit theorem applies here
     as well: for large enough \(N\), the least squares estimates will be approximately
     normal with expected value \(\beta_0\) and \(\beta_1\), respectively.'
+  id: totrans-51
   prefs: []
   type: TYPE_NORMAL
+  zh: 这些看起来是正态分布的原因是因为中心极限定理在这里同样适用：对于足够大的\(N\)，最小二乘估计将大约呈正态分布，其期望值分别为\(\beta_0\)和\(\beta_1\)。
 - en: 'The standard errors are a bit complicated to compute, but mathematical theory
     does allow us to compute them and they are included in the summary provided by
     the `lm` function. The function `summary` shows us the standard error estimates:'
+  id: totrans-52
   prefs: []
   type: TYPE_NORMAL
+  zh: 计算标准误差有点复杂，但数学理论确实允许我们计算它们，并且它们包含在`lm`函数提供的摘要中。`summary`函数显示了标准误差估计：
 - en: '[PRE6]'
+  id: totrans-53
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE6]'
 - en: '*You can see that the standard errors estimates reported above are close to
     the standard errors from the simulation:'
+  id: totrans-54
   prefs: []
   type: TYPE_NORMAL
+  zh: '*你可以看到上面报告的标准误差估计与模拟中的标准误差非常接近：'
 - en: '[PRE7]'
+  id: totrans-55
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE7]'
 - en: '*The `summary` function also reports t-statistics (`t value`) and p-values
     (`Pr(>|t|)`). The t-statistic is not actually based on the central limit theorem,
     but rather on the assumption that the \(\varepsilon\)s follow a normal distribution.
@@ -286,69 +414,104 @@
     degrees of freedom, with \(p\) the number of parameters in our model. In our example
     \(p=2\), and the two p-values are obtained from testing the null hypothesis that
     \(\beta_0 = 0\) and \(\beta_1=0\), respectively.'
+  id: totrans-56
   prefs: []
   type: TYPE_NORMAL
+  zh: '*`summary`函数还报告了t统计量（`t value`）和p值（`Pr(>|t|)`）。t统计量实际上并不是基于中心极限定理，而是基于\(\varepsilon\)s服从正态分布的假设。在这个假设下，数学理论告诉我们，LSE除以其标准误差，\(\hat{\beta}_0
+    / \widehat{\mathrm{SE}}[\hat{\beta}_0]\)和\(\hat{\beta}_1 / \widehat{\mathrm{SE}}[\hat{\beta}_1]\)，将遵循具有\(N-p\)自由度的t分布，其中\(p\)是我们模型中的参数数量。在我们的例子中\(p=2\)，两个p值分别来自于检验\(\beta_0
+    = 0\)和\(\beta_1=0\)的零假设。'
 - en: 'Remember that, as we described in [Section 10.2.3](../inference/models.html#sec-t-dist),
     for large enough \(N\), the CLT works and the t-distribution becomes almost the
     same as the normal distribution. Also, notice that we can construct confidence
     intervals using the `confint` function:'
+  id: totrans-57
   prefs: []
   type: TYPE_NORMAL
+  zh: 记住，正如我们在[第10.2.3节](../inference/models.html#sec-t-dist)中描述的，对于足够大的 \(N\)，中心极限定理（CLT）是有效的，t
+    分布几乎与正态分布相同。此外，请注意，我们可以使用 `confint` 函数构建置信区间：
 - en: '[PRE8]'
+  id: totrans-58
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE8]'
 - en: '*Although we do not show examples in this book, hypothesis testing with regression
     models is commonly used in epidemiology and economics to make statements such
     as “the effect of A on B was statistically significant after adjusting for X,
     Y, and Z”. However, several assumptions have to hold for these statements to be
     true.****'
+  id: totrans-59
   prefs: []
   type: TYPE_NORMAL
+  zh: '*尽管我们在这本书中没有展示示例，但回归模型的假设检验在流行病学和经济学中很常见，用于做出诸如“在调整 X、Y 和 Z 后，A 对 B 的影响在统计上显著”的陈述。然而，为了使这些陈述成立，必须满足几个假设。****'
 - en: '***Predicted values are random variables***'
+  id: totrans-60
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '***预测值是随机变量***'
 - en: '***Once we fit our model, we can obtain a prediction of \(Y\) by plugging the
     estimates into the regression model. For example, if the father’s height is \(x\),
     then our prediction \(\hat{y}\) for the son’s height will be:'
+  id: totrans-61
   prefs: []
   type: TYPE_NORMAL
+  zh: '***一旦我们拟合了模型，我们可以通过将估计值代入回归模型来获得 \(Y\) 的预测值。例如，如果父亲的身高是 \(x\)，那么我们对儿子身高的预测
+    \(\hat{y}\) 将会是：'
 - en: \[\hat{y} = \hat{\beta}_0 + \hat{\beta}_1 x\]
+  id: totrans-62
   prefs: []
   type: TYPE_NORMAL
+  zh: \[\hat{y} = \hat{\beta}_0 + \hat{\beta}_1 x\]
 - en: When we plot \(\hat{y}\) versus \(x\), we see the regression line.
+  id: totrans-63
   prefs: []
   type: TYPE_NORMAL
+  zh: 当我们绘制 \(\hat{y}\) 与 \(x\) 的关系图时，我们看到回归线。
 - en: 'Keep in mind that the prediction \(\hat{y}\) is also a random variable and
     mathematical theory tells us what the standard errors are. If we assume the errors
     are normal, or have a large enough sample size, we can use theory to construct
     confidence intervals as well. In fact, the **ggplot2** layer `geom_smooth(method
     = "lm")` surrounds the regession line using these confidence intervals:'
+  id: totrans-64
   prefs: []
   type: TYPE_NORMAL
+  zh: 请记住，预测值 \(\hat{y}\) 也是一个随机变量，数学理论告诉我们标准误差是什么。如果我们假设误差是正态分布的，或者样本量足够大，我们可以使用理论来构建置信区间。事实上，**ggplot2**
+    层的 `geom_smooth(method = "lm")` 使用这些置信区间包围回归线：
 - en: '[PRE9]'
+  id: totrans-65
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE9]'
 - en: '*![](../Images/2e761bfe40c162f3684286ce8a1f390f.png)*  *The R function `predict`
     takes an `lm` object as input and returns the prediction. If requested, the standard
     errors and other information from which we can construct confidence intervals
     is provided:'
+  id: totrans-66
   prefs: []
   type: TYPE_NORMAL
+  zh: '*![](../Images/2e761bfe40c162f3684286ce8a1f390f.png)*  *R 函数 `predict` 接收一个
+    `lm` 对象作为输入并返回预测值。如果需要，它还会提供构建置信区间所需的标准误差和其他信息：'
 - en: '[PRE10]**********'
+  id: totrans-67
   prefs: []
   type: TYPE_NORMAL
+  zh: '[PRE10]**********'
 - en: '****16.4 Model diagnostics****'
+  id: totrans-68
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '****16.4 模型诊断****'
 - en: '****When we assume a linear model, rather than derive it from theory, all interpretations
     depend on how well the model represents the data. The `lm` function will fit the
     model and produce coefficient estimates, standard errors, and p-values even if
     the model is misspecified. Interpreting such results without verifying assumptions
     can lead to misleading conclusions.'
+  id: totrans-69
   prefs: []
   type: TYPE_NORMAL
+  zh: '****当我们假设线性模型而不是从理论推导它时，所有解释都取决于模型如何代表数据。即使模型指定不当，`lm` 函数也会拟合模型并产生系数估计、标准误差和
+    p 值。在没有验证假设的情况下解释这些结果可能导致误导性的结论。'
 - en: For this reason, checking model assumptions is a **critical requirement** in
     statistical modeling. Diagnostic plots provide visual tools to assess whether
     the model captures the main structure in the data, whether residuals behave as
@@ -357,131 +520,188 @@
     justification for the assumed model—such as when the data-generating process is
     unknown or complex. In these cases, diagnostics are our main defense against drawing
     incorrect or overconfident conclusions.
+  id: totrans-70
   prefs: []
   type: TYPE_NORMAL
+  zh: 因此，检查模型假设是统计建模中的**关键要求**。诊断图提供了视觉工具来评估模型是否捕捉了数据的主要结构，残差是否表现如预期，以及潜在的异常值或影响点是否扭曲了拟合。当没有强有力的理论依据支持假设模型时，这些检查尤为重要——例如，当数据生成过程未知或复杂时。在这些情况下，诊断是我们对抗得出错误或过度自信结论的主要防御手段。
 - en: 'Visually inspecting residuals, defined as the difference between observed values
     and predicted values:'
+  id: totrans-71
   prefs: []
   type: TYPE_NORMAL
+  zh: 通过视觉检查残差，定义为观测值与预测值之间的差异：
 - en: '\[ r = y - \hat{y} = y- \left(\hat{\beta}_0 - \hat{\beta}_1 x_i\right), \]
     and summaries of the residuals, is a powerful way to diagnose if the model is
     useful. Note that the residuals can be thought of estimates of the errors since:'
+  id: totrans-72
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ r = y - \hat{y} = y- \left(\hat{\beta}_0 - \hat{\beta}_1 x_i\right), \] 以及残差的摘要，是诊断模型是否有效的一种强大方式。请注意，残差可以被视为误差的估计，因为：
 - en: \[ \varepsilon = Y - \left(\beta_0 + \beta_1 x_i \right). \] In fact residuals
     are often denoted as \(\hat{\varepsilon}\). This motivates several *diagnostic*
     plots. Because we observe \(r\), but don’t observe \(\varepsilon\), we based the
     plots on the residuals.
+  id: totrans-73
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \varepsilon = Y - \left(\beta_0 + \beta_1 x_i \right). \] 实际上，残差通常表示为 \(\hat{\varepsilon}\)。这促使我们进行几个
+    *诊断* 图表。因为我们观察到 \(r\)，但无法观察到 \(\varepsilon\)，所以我们基于残差来构建图表。
 - en: Because the errors are assumed not to depend on the expected value of \(Y\),
     a plot of \(r\) versus the fitted values \(\hat{y}\) should show no relationship.
+  id: totrans-74
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 由于假设误差不依赖于 \(Y\) 的期望值，\(r\) 与拟合值 \(\hat{y}\) 的关系图应该没有关联。
 - en: In cases in which we assume the errors follow a normal distribution, a qqplot
     of standardized \(r\) should fall on a line when plotted against theoretical quantiles.
+  id: totrans-75
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 在我们假设误差遵循正态分布的情况下，当标准化 \(r\) 与理论分位数绘制时，qqplot 应该落在一条直线上。
 - en: Because we assume the standard deviation of the errors is constant, if we plot
     the absolute value of the residuals, it should appear constant.
+  id: totrans-76
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 由于我们假设误差的标准差是恒定的，如果我们绘制残差的绝对值，它应该看起来是恒定的。
 - en: We prefer plots rather than summaries based on, for example, correlation because,
     as noted in [Section 15.2.2](regression.html#sec-ascombe), correlation is not
     always the best summary of association. The function `plot` applied to an `lm`
     object automatically plots these.
+  id: totrans-77
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们更倾向于图表而不是基于例如相关性的总结，因为，如[第15.2.2节](regression.html#sec-ascombe)所述，相关性并不总是关联性的最佳总结。将
+    `plot` 函数应用于 `lm` 对象会自动绘制这些图表。
 - en: '[PRE11]'
+  id: totrans-78
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE11]'
 - en: '*![](../Images/0c32658af2f1b07541b79d8f38b7a0d0.png)*  *This function can produce
     six different plots, and the argument `which` let’s you specify which you want
     to see. You can learn more by reading the `plot.lm` help file. However, some of
     the plots are based on more advanced concepts beyond the scope of this book. To
     learn more, we recommend an advanced book on regression analysis included in the
     Recommended Reading section.'
+  id: totrans-79
   prefs: []
   type: TYPE_NORMAL
+  zh: '*![](../Images/0c32658af2f1b07541b79d8f38b7a0d0.png)*  *此函数可以生成六种不同的图表，`which`
+    参数允许你指定要查看的图表。你可以通过阅读 `plot.lm` 帮助文件来了解更多信息。然而，一些图表基于更高级的概念，超出了本书的范围。要了解更多信息，我们建议阅读推荐阅读部分中包含的关于回归分析的进阶书籍。'
 - en: In Chapters [17](treatment-effect-models.html) and [20](multivariable-regression.html),
     we introduce data analysis challenges in which we may decide to not include certain
     variables in the model. In these cases, an important diagnostic test is to checks
     if the residuals are related to variables not included in the model.*****
+  id: totrans-80
   prefs: []
   type: TYPE_NORMAL
+  zh: '在第 [17](treatment-effect-models.html) 章和第 [20](multivariable-regression.html)
+    章中，我们介绍了数据分析挑战，在这些挑战中，我们可能决定不在模型中包含某些变量。在这些情况下，一个重要的诊断测试是检查残差是否与模型中未包含的变量相关。***** '
 - en: '****16.5 Measurement error models****'
+  id: totrans-81
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '****16.5 测量误差模型****'
 - en: '****Historically, writing linear models in the form \(Y = \beta_0 + \beta_1
     x + \varepsilon\) originated in contexts where the \(\varepsilon\) term represented
     *measurement error*. Early scientists used least squares to estimate physical
     constants from repeated measurements affected by instrument noise. Later, Galton
     and Pearson extended this framework to study relationships between variables,
     such as the height example we examined earlier.'
+  id: totrans-82
   prefs: []
   type: TYPE_NORMAL
+  zh: '****历史上，将线性模型写成 \(Y = \beta_0 + \beta_1 x + \varepsilon\) 的形式起源于 \(\varepsilon\)
+    项代表 *测量误差* 的上下文。早期科学家使用最小二乘法从受仪器噪声影响的重复测量中估计物理常数。后来，高尔顿和皮尔逊扩展了这一框架来研究变量之间的关系，例如我们之前考察的高度示例。'
 - en: 'In this section, we briefly present a setting where the measurement-error interpretation
     is appropriate and show that we can fit the corresponding model using the same
     mathematics and the same R function. This illustrates one of the key advantages
     of the linear model framework: a single set of tools applies across many seemingly
     different situations.'
+  id: totrans-83
   prefs: []
   type: TYPE_NORMAL
+  zh: 在本节中，我们简要介绍了一个适合测量误差解释的设置，并展示我们可以使用相同的数学方法和相同的 R 函数来拟合相应的模型。这说明了线性模型框架的一个关键优势：一套工具可以应用于许多看似不同的情况。
 - en: 'Example: modeling a falling object'
+  id: totrans-84
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 示例：建模下落物体
 - en: 'To understand these models, imagine you are Galileo in the 16th century trying
     to describe the velocity of a falling object. An assistant climbs the Tower of
     Pisa and drops a ball, while several other assistants record the position at different
     times. Let’s simulate some data using the equations we currently know and adding
     some measurement error. The **dslabs** function `rfalling_object` generates these
     simulations:'
+  id: totrans-85
   prefs: []
   type: TYPE_NORMAL
+  zh: 要理解这些模型，想象一下你是16世纪的伽利略，试图描述一个下落物体的速度。一个助手爬上比萨斜塔并扔下一个球，而其他几个助手在不同时间记录位置。让我们使用我们目前所知的方程模拟一些数据，并添加一些测量误差。`dslabs`函数`rfalling_object`生成这些模拟：
 - en: '[PRE12]'
+  id: totrans-86
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE12]'
 - en: '*The assistants hand the data to Galileo, and this is what he sees:'
+  id: totrans-87
   prefs: []
   type: TYPE_NORMAL
+  zh: '*助手将数据交给伽利略，这就是他看到的情况：'
 - en: '![](../Images/3c22a39efef48861c4d6c082ef3eb1a6.png)'
+  id: totrans-88
   prefs: []
   type: TYPE_IMG
+  zh: '![图表](../Images/3c22a39efef48861c4d6c082ef3eb1a6.png)'
 - en: 'Galileo does not know the exact equation, but by looking at the plot above,
     he deduces that the position should follow a parabola, which we can write like
     this:'
+  id: totrans-89
   prefs: []
   type: TYPE_NORMAL
+  zh: 伽利略不知道确切的方程，但通过观察上面的图表，他推断出位置应该遵循抛物线，我们可以写成这样：
 - en: \[ f(x) = \beta_0 + \beta_1 x + \beta_2 x^2 \]
+  id: totrans-90
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ f(x) = \beta_0 + \beta_1 x + \beta_2 x^2 \]
 - en: 'The data does not fall exactly on a parabola. Galileo knows this is due to
     measurement error. His helpers make mistakes when measuring the distance. To account
     for this, he models the data with:'
+  id: totrans-91
   prefs: []
   type: TYPE_NORMAL
+  zh: 数据并不完全落在抛物线上。伽利略知道这是由于测量误差造成的。他的助手在测量距离时犯了错误。为了解决这个问题，他用以下模型来模拟数据：
 - en: \[ Y_i = \beta_0 + \beta_1 x_i + \beta_2 x_i^2 + \varepsilon_i, i=1,\dots,n
     \]
+  id: totrans-92
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ Y_i = \beta_0 + \beta_1 x_i + \beta_2 x_i^2 + \varepsilon_i, i=1,\dots,n
+    \]
 - en: 'with \(Y_i\) representing distance in meters, \(x_i\) representing time in
     seconds, and \(\varepsilon_i\) accounting for measurement error. The measurement
     error is assumed to be random, independent from each other, and having the same
     distribution for each \(i\). We also assume that there is no bias, which means
     the expected value of the error terms is 0: \(\mathrm{E}[\varepsilon] = 0\).'
+  id: totrans-93
   prefs: []
   type: TYPE_NORMAL
+  zh: 其中\(Y_i\)代表米，\(x_i\)代表秒，\(\varepsilon_i\)代表测量误差。假设测量误差是随机的，彼此独立，并且对于每个\(i\)具有相同的分布。我们还假设没有偏差，这意味着误差项的期望值为0：\(\mathrm{E}[\varepsilon]
+    = 0\)。
 - en: Note that this is a linear model because it is a linear combination of known
     quantities (\(x\) and \(x^2\) are known) and unknown parameters (the \(\beta\)s
     are unknown parameters to Galileo). Unlike our previous examples, here \(x\) is
     a fixed quantity; we are not conditioning.
+  id: totrans-94
   prefs: []
   type: TYPE_NORMAL
+  zh: 注意，这是一个线性模型，因为它是由已知量（\(x\)和\(x^2\)是已知的）和未知参数（\(\beta\)是伽利略不知道的参数）的线性组合。与我们的前几个例子不同，这里\(x\)是一个固定量；我们不是在条件化。
 - en: '*Small discrepancies between a model’s predictions and observations are often
     attributed to measurement error, as in our example. In many cases, this is a useful
     and practical approximation. However, such differences can also reveal limitations
@@ -493,102 +713,154 @@
     While assuming measurement error is often reasonable, it is crucial to recognize
     when discrepancies signal model limitations. The diagnostic plots discussed in
     [Section 16.4](#sec-diagnostic-plots) can help assess such limitations.**'
+  id: totrans-95
   prefs: []
   type: TYPE_NORMAL
+  zh: '*模型预测与观察之间的微小差异通常归因于测量误差，就像我们的例子中那样。在许多情况下，这是一个有用且实用的近似。然而，这种差异也可能揭示模型本身的局限性。伽利略关于重力的实验显示了他预测的均匀加速度的微小偏差，这主要是由于空气阻力而不是测量错误。同样，牛顿的万有引力定律准确地描述了行星运动，但水星轨道中的微小差异，一度被认为是观测误差，最终导致了爱因斯坦的广义相对论。虽然假设测量误差通常是合理的，但认识到差异信号模型局限性是至关重要的。第16.4节中讨论的诊断图可以帮助评估这种局限性。**'
 - en: '**Estimating parameters with least squares**'
+  id: totrans-96
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '**使用最小二乘法估计参数**'
 - en: '**To pose a new physical theory and start making predictions about other falling
     objects, Galileo needs actual numbers, rather than unknown parameters. Using LSE
     seems like a reasonable approach. How do we find the LSE?'
+  id: totrans-97
   prefs: []
   type: TYPE_NORMAL
+  zh: '**为了提出一个新的物理理论并开始预测其他下落物体的行为，伽利略需要实际的数字，而不是未知参数。使用最小二乘法似乎是一个合理的途径。我们如何找到最小二乘法？'
 - en: 'LSE calculations do not require the errors to be approximately normal. The
     `lm` function will find the \(\beta\)s that will minimize the residual sum of
     squares:'
+  id: totrans-98
   prefs: []
   type: TYPE_NORMAL
+  zh: 最小二乘法计算不需要误差近似为正态分布。`lm`函数将找到\(\beta\)，以最小化残差平方和：
 - en: '[PRE13]'
+  id: totrans-99
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE13]'
 - en: '*Let’s check if the estimated parabola fits the data. The **broom** function
     `augment` allows us to do this easily:'
+  id: totrans-100
   prefs: []
   type: TYPE_NORMAL
+  zh: '*让我们检查估计的抛物线是否适合数据。**broom**函数`augment`使我们能够轻松地做到这一点：'
 - en: '[PRE14]'
+  id: totrans-101
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE14]'
 - en: '*![](../Images/07c5e764e9dbfdc3c71dc9cb52dfc611.png)*  *The residuals confirm
     that the normal approximation for the errors is reasonable:'
+  id: totrans-102
   prefs: []
   type: TYPE_NORMAL
+  zh: '*![](../Images/07c5e764e9dbfdc3c71dc9cb52dfc611.png)*  *残差证实了误差的正态近似是合理的：'
 - en: '[PRE15]'
+  id: totrans-103
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE15]'
 - en: '*![](../Images/cde093027594c0e697596d1e72b2f23f.png)*  *Thanks to my high school
     physics teacher, I know that the equation for the trajectory of a falling object
     is:'
+  id: totrans-104
   prefs: []
   type: TYPE_NORMAL
+  zh: '*![](../Images/cde093027594c0e697596d1e72b2f23f.png)*  *感谢我的高中物理老师，我知道下落物体的轨迹方程是：'
 - en: \[ d(t) = h_0 + v_0 t - 0.5 \times 9.8 \, t^2 \]
+  id: totrans-105
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ d(t) = h_0 + v_0 t - 0.5 \times 9.8 \, t^2 \]
 - en: with \(h_0\) and \(v_0\) the starting height and velocity, respectively. The
     data we simulated above followed this equation, adding measurement error to simulate
     `n` observations for dropping the ball \((v_0=0)\) from the tower of Pisa \((h_0=55.86)\).
+  id: totrans-106
   prefs: []
   type: TYPE_NORMAL
+  zh: 其中\(h_0\)和\(v_0\)分别是起始高度和速度。我们上面模拟的数据遵循这个方程，添加测量误差以模拟从比萨斜塔（\(h_0=55.86\)）掉落球体（\(v_0=0\)）的\(n\)个观测值。
 - en: 'These are consistent with the parameter estimates:'
+  id: totrans-107
   prefs: []
   type: TYPE_NORMAL
+  zh: 这些与参数估计一致：
 - en: '[PRE16]'
+  id: totrans-108
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE16]'
 - en: '*The Tower of Pisa height is within the confidence interval for \(\beta_0\),
     the initial velocity 0 is in the confidence interval for \(\beta_1\) (note the
     p-value is larger than 0.05), and the acceleration constant is in a confidence
     interval for \(-2 \times \beta_2\).**********'
+  id: totrans-109
   prefs: []
   type: TYPE_NORMAL
+  zh: '*比萨斜塔的高度在\(\beta_0\)的置信区间内，初始速度0在\(\beta_1\)的置信区间内（注意p值大于0.05），加速度常数在\(-2 \times
+    \beta_2\)的置信区间内。**********'
 - en: '****16.6 Exercises****'
+  id: totrans-110
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '****16.6 练习****'
 - en: '****1\. The `co2` dataset is a time series object of 468 CO2 observations,
     monthly from 1959 to 1997\. Plot CO2 levels for the first 12 months and notice
     it seems to follow a sine wave with a frequency of 1 cycle per year. This means
     that a measurement error model that might work is'
+  id: totrans-111
   prefs: []
   type: TYPE_NORMAL
+  zh: '****1\. `co2`数据集是一个包含468个CO2观测值的时间序列对象，从1959年到1997年每月一次。绘制前12个月的CO2水平，并注意它似乎遵循每年1个周期的正弦波。这意味着可能工作的测量误差模型是'
 - en: \[ y_i = \mu + A \sin(2\pi \,t_i / 12 + \phi) + \varepsilon_i \] with \(t_i\)
     the month number for observation \(i\). Is this a linear model for the parameters
     \(mu\), \(A\) and \(\phi\)?
+  id: totrans-112
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ y_i = \mu + A \sin(2\pi \,t_i / 12 + \phi) + \varepsilon_i \] 其中\(t_i\)是观测\(i\)的月份编号。这是参数\(\mu\)、\(A\)和\(\phi\)的线性模型吗？
 - en: '2\. Using trigonometry, we can show that we can rewrite this model as:'
+  id: totrans-113
   prefs: []
   type: TYPE_NORMAL
+  zh: 2\. 使用三角学，我们可以证明我们可以将此模型重写为：
 - en: \[ y_i = \beta_0 + \beta_1 \sin(2\pi t_i/12) + \beta_2 \cos(2\pi t_i/12) + \varepsilon_i
     \]
+  id: totrans-114
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ y_i = \beta_0 + \beta_1 \sin(2\pi t_i/12) + \beta_2 \cos(2\pi t_i/12) + \varepsilon_i
+    \]
 - en: Is this a linear model?
+  id: totrans-115
   prefs: []
   type: TYPE_NORMAL
+  zh: 这是一个线性模型吗？
 - en: 3\. Find least square estimates for the \(\beta\)s using `lm`. Show a plot of
     \(y_i\) versus \(t_i\) with a curve on the same plot showing \(\hat{y}_i\) versus
     \(t_i\).
+  id: totrans-116
   prefs: []
   type: TYPE_NORMAL
+  zh: 3\. 使用`lm`找到\(\beta\)的最小二乘估计。展示\(y_i\)与\(t_i\)的对比图，并在同一图上显示\(\hat{y}_i\)与\(t_i\)的曲线。
 - en: 4\. Now fit a measurement error model to the entire `co2` dataset that includes
     a trend term that is a parabola as well as the sine wave model.
+  id: totrans-117
   prefs: []
   type: TYPE_NORMAL
+  zh: 4\. 现在将测量误差模型拟合到包含趋势项的整个`co2`数据集，该趋势项是一个抛物线以及正弦波模型。
 - en: 5\. Run diagnostic plots for the fitted model and describe the results.
+  id: totrans-118
   prefs: []
   type: TYPE_NORMAL
+  zh: 5\. 对拟合模型运行诊断图并描述结果。
 - en: 9\. Fit a regression model to each of the datasets in the Anscombe quartet and
     examine the diagnostic plots.****
+  id: totrans-119
   prefs: []
   type: TYPE_NORMAL
+  zh: 9\. 将回归模型拟合到Anscombe四重奏中的每个数据集，并检查诊断图。****

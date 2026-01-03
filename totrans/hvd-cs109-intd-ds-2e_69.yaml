@@ -1,27 +1,37 @@
 - en: 30  Supervised Learning Methods
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 30  监督学习方法
 - en: 原文：[https://rafalab.dfci.harvard.edu/dsbook-part-2/ml/algorithms.html](https://rafalab.dfci.harvard.edu/dsbook-part-2/ml/algorithms.html)
+  id: totrans-1
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 原文：[https://rafalab.dfci.harvard.edu/dsbook-part-2/ml/algorithms.html](https://rafalab.dfci.harvard.edu/dsbook-part-2/ml/algorithms.html)
 - en: '[Machine Learning](../ml/intro-ml.html)'
+  id: totrans-2
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[机器学习](../ml/intro-ml.html)'
 - en: '[30  Supervised Learning Methods](../ml/algorithms.html)'
+  id: totrans-3
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[30  监督学习方法](../ml/algorithms.html)'
 - en: Machine learning includes a vast collection of algorithms, well over a hundred
     commonly used methods, each with its own strengths, assumptions, and tuning parameters.
     In this chapter, we introduce a small but representative set of algorithms that
     illustrate the major ideas behind supervised learning. Rather than aiming for
     exhaustive coverage, our goal is to build intuition for *how* different approaches
     learn from data and *why* they make different kinds of predictions.
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: 机器学习包括大量算法，超过一百种常用的方法，每种方法都有其独特的优势、假设和调整参数。在本章中，我们介绍了一小部分但具有代表性的算法，这些算法展示了监督学习背后的主要思想。我们的目标不是全面覆盖，而是建立对不同方法如何从数据中学习以及为什么它们会做出不同预测的直觉。
 - en: To keep the examples concrete and accessible, we use the two-predictor digit
     dataset introduced in [Section 28.3.1](conditionals-and-smoothing.html#sec-two-or-seven)
     as our running example. This dataset is small enough to visualize, yet rich enough
@@ -30,14 +40,20 @@
     show how to implement these ideas efficiently using the **caret** package, which
     provides a unified interface for fitting and tuning many different machine learning
     methods.
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: 为了使示例具体且易于理解，我们使用[第28.3.1节](conditionals-and-smoothing.html#sec-two-or-seven)中引入的两个预测者数字数据集作为我们的示例。这个数据集足够小以进行可视化，同时足够丰富以揭示真实算法的行为。所有代码示例都依赖于**dslabs**包中的函数。稍后，在[第31章](ml-in-practice.html)中，我们将展示如何使用提供统一接口进行拟合和调整许多不同机器学习方法的**caret**包来有效地实现这些想法。
 - en: '[PRE0]'
+  id: totrans-6
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: '*## 30.1 Linear and logistic regression'
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: '*## 30.1 线性和逻辑回归'
 - en: We introduced linear regression and logistic regression in the Linear Models
     part of the book as tools for quantifying associations between variables. However,
     these models can also be viewed as *prediction algorithms*. Once we estimate their
@@ -45,158 +61,240 @@
     \(\mathbf{x}\) simply by evaluating the fitted model at that point. This predictive
     perspective places linear and logistic regression squarely within the family of
     supervised learning methods.
+  id: totrans-8
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们在书的线性模型部分介绍了线性回归和逻辑回归作为量化变量之间关联的工具。然而，这些模型也可以被视为**预测算法**。一旦我们从训练数据中估计了它们的参数，我们就可以通过评估拟合模型在该点来对新预测变量值
+    \(\mathbf{x}\) 进行预测。这种预测视角将线性回归和逻辑回归明确地纳入监督学习方法的范畴中。
 - en: Linear regression
+  id: totrans-9
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 线性回归
 - en: Linear regression can be considered a supervised learning method for continuous
     outcomes. Given a numeric outcome \(Y\) and predictors \(\mathbf{X} = (X_1,\dots,X_p)^\top\),
     we model the conditional expectation as
+  id: totrans-10
   prefs: []
   type: TYPE_NORMAL
+  zh: 线性回归可以被视为用于连续结果的监督学习方法。给定一个数值结果 \(Y\) 和预测变量 \(\mathbf{X} = (X_1,\dots,X_p)^\top\)，我们建模条件期望如下：
 - en: \[ \mathrm{E}[Y \mid \mathbf{X} = \mathbf{x}] = \beta_0 + \sum_{j=1}^p \beta_j
     x_j, \] a linear function of the predictors. Linear regression provides a simple,
     interpretable baseline, and many supervised learning algorithms can be viewed
     as extensions or modifications of this idea.
+  id: totrans-11
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \mathrm{E}[Y \mid \mathbf{X} = \mathbf{x}] = \beta_0 + \sum_{j=1}^p \beta_j
+    x_j, \] 这是一个预测变量的线性函数。线性回归提供了一个简单、可解释的基线，许多监督学习算法可以被视为这一想法的扩展或修改。
 - en: However, linear regression is not appropriate when the outcome is categorical.
     In [Section 28.3.1](conditionals-and-smoothing.html#sec-two-or-seven), we introduced
     *logistic regression* as a method designed specifically for modeling class probabilities
     in binary classification problems.
+  id: totrans-12
   prefs: []
   type: TYPE_NORMAL
+  zh: 然而，当结果为分类时，线性回归是不合适的。在[第28.3.1节](conditionals-and-smoothing.html#sec-two-or-seven)中，我们介绍了**逻辑回归**作为一种专门为建模二元分类问题中的类别概率而设计的方法。
 - en: Logistic regression
+  id: totrans-13
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 逻辑回归
 - en: 'For two classes presented in [Section 28.3.1](conditionals-and-smoothing.html#sec-two-or-seven),
     we can model the probability of class 1 using the logistic function:'
+  id: totrans-14
   prefs: []
   type: TYPE_NORMAL
+  zh: 对于[第28.3.1节](conditionals-and-smoothing.html#sec-two-or-seven)中提到的两类，我们可以使用逻辑函数来建模类别1的概率：
 - en: \[ \log\frac{p(\mathbf{x})}{1 - p(\mathbf{x})} = \beta_0 + \beta_1 x_1 + \beta_2
     x_2, \,\, p(\mathbf{x}) = \Pr(Y = 1 \mid X_1 = x_1, X_2 = x_2), \]
+  id: totrans-15
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \log\frac{p(\mathbf{x})}{1 - p(\mathbf{x})} = \beta_0 + \beta_1 x_1 + \beta_2
+    x_2, \,\, p(\mathbf{x}) = \Pr(Y = 1 \mid X_1 = x_1, X_2 = x_2), \]
 - en: which estimates the probability that an observation belongs to class 1\. This
     is the binary logistic regression model.
+  id: totrans-16
   prefs: []
   type: TYPE_NORMAL
+  zh: 这估计了观察属于类别 1 的概率。这是二元逻辑回归模型。
 - en: 'For more than two classes (\(K > 2\)), logistic regression can be extended
     in two common ways: *one-versus-rest* (OvR) and *multinomial logistic regression*.'
+  id: totrans-17
   prefs: []
   type: TYPE_NORMAL
+  zh: 对于超过两个类别 (\(K > 2\))，逻辑回归可以通过两种常见方式扩展：*一对多* (OvR) 和 *多项式逻辑回归*。
 - en: 'In the one-versus-rest approach, we fit \(K\) separate binary logistic regression
     models. For each class \(k\), we model:'
+  id: totrans-18
   prefs: []
   type: TYPE_NORMAL
+  zh: 在一对多方法中，我们拟合 \(K\) 个独立的二元逻辑回归模型。对于每个类别 \(k\)，我们建模：
 - en: \[ \log\frac{q_k(\mathbf{x})}{1 - q_k(\mathbf{x})} = \beta_{k,0} + \sum_{j=1}^p
     \beta_{k,j} x_j, \qquad k = 1,\dots,K. \]
+  id: totrans-19
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \log\frac{q_k(\mathbf{x})}{1 - q_k(\mathbf{x})} = \beta_{k,0} + \sum_{j=1}^p
+    \beta_{k,j} x_j, \qquad k = 1,\dots,K. \]
 - en: Here, \(q_k(\mathbf{x})\) estimates the probability that an observation belongs
     to class \(k\) *versus the rest*, but these quantities are not guaranteed to sum
     to 1, nor to be mutually consistent.
+  id: totrans-20
   prefs: []
   type: TYPE_NORMAL
+  zh: 在这里，\(q_k(\mathbf{x})\) 估计观察属于类别 \(k\) *相对于其他类别* 的概率，但这些量不一定总和为 1，也不一定相互一致。
 - en: After fitting all \(K\) models, the predicted class for a new observation \(\mathbf{x}\)
     is
+  id: totrans-21
   prefs: []
   type: TYPE_NORMAL
+  zh: 在拟合所有 \(K\) 个模型后，对于新的观察 \(\mathbf{x}\) 的预测类别是
 - en: \[ \hat{y}(\mathbf{x}) = \arg\max_k q_k(\mathbf{x}). \]
+  id: totrans-22
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \hat{y}(\mathbf{x}) = \arg\max_k q_k(\mathbf{x}). \]
 - en: OvR is simple but does not produce a coherent probability distribution.
+  id: totrans-23
   prefs: []
   type: TYPE_NORMAL
+  zh: OvR 简单，但不产生连贯的概率分布。
 - en: 'The multinomial approach resolves this inconsistency by modeling all class
     probabilities jointly. We select one class, say class \(K\), as a reference and
     fit:'
+  id: totrans-24
   prefs: []
   type: TYPE_NORMAL
+  zh: 多项式方法通过联合建模所有类别概率来解决这个问题的不一致性。我们选择一个类别，例如类别 \(K\)，作为参考，并拟合：
 - en: \[ \log\frac{p_k(\mathbf{x})}{p_K(\mathbf{x})} = \beta_{k,0} + \sum_{j=1}^p
     \beta_{k,j} x_j, \qquad k = 1,\dots,K-1. \]
+  id: totrans-25
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \log\frac{p_k(\mathbf{x})}{p_K(\mathbf{x})} = \beta_{k,0} + \sum_{j=1}^p
+    \beta_{k,j} x_j, \qquad k = 1,\dots,K-1. \]
 - en: Let
+  id: totrans-26
   prefs: []
   type: TYPE_NORMAL
+  zh: 让
 - en: \[ \eta_k(\mathbf{x}) = \beta_{k,0} + \sum_{j=1}^p \beta_{k,j} x_j, \qquad \eta_K(\mathbf{x})
     = 0. \]
+  id: totrans-27
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \eta_k(\mathbf{x}) = \beta_{k,0} + \sum_{j=1}^p \beta_{k,j} x_j, \qquad \eta_K(\mathbf{x})
+    = 0. \]
 - en: 'The class probabilities are computed using the *softmax* function:'
+  id: totrans-28
   prefs: []
   type: TYPE_NORMAL
+  zh: 类别概率是通过 *softmax* 函数计算的：
 - en: \[ p_k(\mathbf{x}) = \frac{\exp(\eta_k(\mathbf{x}))} {\sum_{j=1}^K \exp(\eta_j(\mathbf{x}))},
     \qquad k=1,\dots,K. \]
+  id: totrans-29
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ p_k(\mathbf{x}) = \frac{\exp(\eta_k(\mathbf{x}))} {\sum_{j=1}^K \exp(\eta_j(\mathbf{x}))},
+    \qquad k=1,\dots,K. \]
 - en: These probabilities automatically satisfy
+  id: totrans-30
   prefs: []
   type: TYPE_NORMAL
+  zh: 这些概率自动满足
 - en: \[ \sum_{k=1}^K p_k(\mathbf{x}) = 1. \]
+  id: totrans-31
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \sum_{k=1}^K p_k(\mathbf{x}) = 1. \]
 - en: The predicted class is
+  id: totrans-32
   prefs: []
   type: TYPE_NORMAL
+  zh: 预测的类别是
 - en: \[ \hat{y}(\mathbf{x}) = \arg\max_k p_k(\mathbf{x}). \]
+  id: totrans-33
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \hat{y}(\mathbf{x}) = \arg\max_k p_k(\mathbf{x}). \]
 - en: Multinomial logistic regression is generally preferred because it produces coherent
     probabilities that sum to 1 and jointly models the relationships among classes.
     The one-versus-rest approach is computationally simpler, especially when \(K\)
     is large, and often yields similar *class predictions*, even if the corresponding
     probability estimates differ.
+  id: totrans-34
   prefs: []
   type: TYPE_NORMAL
+  zh: 多项式逻辑回归通常更受欢迎，因为它产生总和为 1 的连贯概率，并联合建模类别之间的关系。一对多方法在 \(K\) 较大时计算上更简单，并且通常产生相似的
+    *类别预测*，即使相应的概率估计不同。
 - en: 'In [Chapter 28](conditionals-and-smoothing.html), we saw that logistic regression
     was not flexible enough to approximate \(p(\mathbf{x})\) well for the two-digit
     example: its accuracy was only 0.775\. In the next sections, we introduce algorithms
     that improve on this by providing the needed flexibility, each using a different
     approach to estimating the conditional class probabilities.'
+  id: totrans-35
   prefs: []
   type: TYPE_NORMAL
+  zh: 在 [第 28 章](conditionals-and-smoothing.html) 中，我们看到了逻辑回归在近似 \(p(\mathbf{x})\)
+    方面不够灵活，对于两位数的例子来说，其准确率仅为 0.775。在接下来的几节中，我们将介绍一些算法，通过提供所需的灵活性来改进这一点，每个算法都使用不同的方法来估计条件类别概率。
 - en: 30.2 k-nearest neighbors
+  id: totrans-36
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 30.2 k-最近邻
 - en: We introduced the kNN algorithm in [Section 29.1](resampling-methods.html#sec-knn-cv-intro).
     In [Section 29.8](resampling-methods.html#sec-mse-estimates), we noted that \(k=65\)
     provided the highest estimated accuracy. Using \(k=65\), we obtain an accuracy
     0.825, an improvement over regression. A plot of the estimated conditional probability
     shows that the kNN estimate is flexible enough and does indeed capture the shape
     of the true conditional probability.
+  id: totrans-37
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们在[第29.1节](resampling-methods.html#sec-knn-cv-intro)中介绍了kNN算法。在[第29.8节](resampling-methods.html#sec-mse-estimates)中，我们指出
+    \(k=65\) 提供了最高的估计准确率。使用 \(k=65\)，我们获得准确率0.825，超过了回归。估计条件概率的图表明，kNN估计足够灵活，确实捕捉到了真实条件概率的形状。
 - en: '![](../Images/1d92cf57448cf94228ee76329e5d7437.png)'
+  id: totrans-38
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/1d92cf57448cf94228ee76329e5d7437.png)'
 - en: '*You are ready to do exercises 1 - 13.*'
+  id: totrans-39
   prefs: []
   type: TYPE_NORMAL
+  zh: '*你准备好做练习1 - 13了。*'
 - en: '*30.3 Probabilistic classification models*'
+  id: totrans-40
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '*30.3 概率分类模型*'
 - en: '*We have described how, when using squared loss, the conditional expectation
     provides the best approach to developing a decision rule. In a binary case, the
     smallest true error we can achieve is determined by Bayes’ rule, which is a decision
     rule based on the true conditional probability:'
+  id: totrans-41
   prefs: []
   type: TYPE_NORMAL
+  zh: '*我们已经描述了当使用平方损失时，条件期望提供了制定决策规则的最佳方法。在二元情况下，我们可以达到的最小真实错误是由贝叶斯定理决定的，这是一个基于真实条件概率的决策规则：*'
 - en: \[ p(\mathbf{x}) = \mathrm{Pr}(Y = 1 \mid \mathbf{X}=\mathbf{x}) \]
+  id: totrans-42
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ p(\mathbf{x}) = \mathrm{Pr}(Y = 1 \mid \mathbf{X}=\mathbf{x}) \]
 - en: We have described several approaches to estimating \(p(\mathbf{x})\). In all
     these approaches, we estimate the conditional probability directly and do not
     consider the distribution of the predictors. In machine learning, these are referred
     to as *discriminative* approaches.
+  id: totrans-43
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们已经描述了几种估计 \(p(\mathbf{x})\) 的方法。在这些方法中，我们直接估计条件概率，不考虑预测因子的分布。在机器学习中，这些被称为*判别性*方法。
 - en: However, Bayes’ theorem tells us that knowing the distribution of the predictors
     \(\mathbf{X}\) may be useful. Methods that model the joint distribution of \(Y\)
     and \(\mathbf{X}\) are often referred to as *generative models* (we model how
@@ -204,27 +302,41 @@
     the most general generative model, Naive Bayes, and then proceed to describe two
     specific cases, quadratic discriminant analysis (QDA) and linear discriminant
     analysis (LDA).
+  id: totrans-44
   prefs: []
   type: TYPE_NORMAL
+  zh: 然而，贝叶斯定理告诉我们，了解预测因子 \(\mathbf{X}\) 的分布可能是有用的。建模 \(Y\) 和 \(\mathbf{X}\) 联合分布的方法通常被称为*生成模型*（我们建模整个数据，\(\mathbf{X}\)
+    和 \(Y\) 的生成方式）。我们首先描述最一般的生成模型，朴素贝叶斯，然后继续描述两个具体案例，二次判别分析（QDA）和线性判别分析（LDA）。
 - en: Naive Bayes
+  id: totrans-45
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 朴素贝叶斯
 - en: 'Recall that Bayes rule tells us that we can rewrite \(p(\mathbf{x})\) as follows:'
+  id: totrans-46
   prefs: []
   type: TYPE_NORMAL
+  zh: 回想一下，贝叶斯定理告诉我们我们可以将 \(p(\mathbf{x})\) 重新写为以下形式：
 - en: \[ p(\mathbf{x}) = \mathrm{Pr}(Y = 1|\mathbf{X}=\mathbf{x}) = \frac{f_{\mathbf{X}|Y
     = 1}(\mathbf{x}) \mathrm{Pr}(Y = 1)} { f_{\mathbf{X}|Y = 0}(\mathbf{x})\mathrm{Pr}(Y
     = 0) + f_{\mathbf{X}|Y = 1}(\mathbf{x})\mathrm{Pr}(Y = 1) } \]
+  id: totrans-47
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ p(\mathbf{x}) = \mathrm{Pr}(Y = 1|\mathbf{X}=\mathbf{x}) = \frac{f_{\mathbf{X}|Y
+    = 1}(\mathbf{x}) \mathrm{Pr}(Y = 1)} { f_{\mathbf{X}|Y = 0}(\mathbf{x})\mathrm{Pr}(Y
+    = 0) + f_{\mathbf{X}|Y = 1}(\mathbf{x})\mathrm{Pr}(Y = 1) } \]
 - en: with \(f_{\mathbf{X}|Y = 1}\) and \(f_{\mathbf{X}|Y = 0}\) representing the
     distribution functions of the predictor \(\mathbf{X}\) for the two classes \(Y
     = 1\) and \(Y = 0\). The formula implies that if we can estimate these conditional
     distributions, we can develop a powerful decision rule. However, this is a big
     *if*.
+  id: totrans-48
   prefs: []
   type: TYPE_NORMAL
+  zh: 其中 \(f_{\mathbf{X}|Y = 1}\) 和 \(f_{\mathbf{X}|Y = 0}\) 分别代表预测因子 \(\mathbf{X}\)
+    在两个类别 \(Y = 1\) 和 \(Y = 0\) 下的分布函数。该公式意味着如果我们能够估计这些条件分布，我们就可以制定一个强大的决策规则。然而，这是一个很大的“如果”。
 - en: As we go forward, we will encounter examples in which \(\mathbf{X}\) has many
     dimensions and we do not have much information about the distribution. In these
     cases, Naive Bayes will be practically impossible to implement. However, there
@@ -232,172 +344,261 @@
     2) and many categories in which generative models can be quite powerful. We describe
     two specific examples and use our previously described case studies to illustrate
     them.
+  id: totrans-49
   prefs: []
   type: TYPE_NORMAL
+  zh: 随着我们继续前进，我们将遇到 \(\mathbf{X}\) 具有许多维度而我们对其分布知之甚少的情况。在这些情况下，朴素贝叶斯将实际上无法实现。然而，也有一些情况，我们只有少数几个预测因子（不超过2个）和许多类别，在这些情况下，生成模型可以非常强大。我们描述了两个具体的例子，并使用我们之前描述的案例研究来展示它们。
 - en: 'Let’s start with a very simple and uninteresting, yet illustrative, case: the
     example related to predicting sex from height.'
+  id: totrans-50
   prefs: []
   type: TYPE_NORMAL
+  zh: 让我们从一个非常简单且无趣，但具有说明性的案例开始：与预测身高相关的例子。
 - en: '[PRE1]'
+  id: totrans-51
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: '*In this case, the Naive Bayes approach is particularly appropriate because
     we know that the normal distribution is a good approximation for the conditional
     distributions of height given sex for both classes \(Y = 1\) (female) and \(Y
     = 0\) (male). This implies that we can approximate the conditional distributions
     \(f_{X|Y = 1}\) and \(f_{X|Y = 0}\) by simply estimating averages and standard
     deviations from the data:'
+  id: totrans-52
   prefs: []
   type: TYPE_NORMAL
+  zh: '*在这种情况下，朴素贝叶斯方法特别合适，因为我们知道正态分布是性别对身高条件分布的良好近似，对于两个类别 \(Y = 1\)（女性）和 \(Y = 0\)（男性）。这意味着我们可以通过简单地从数据中估计平均值和标准差来近似条件分布
+    \(f_{X|Y = 1}\) 和 \(f_{X|Y = 0}\)：'
 - en: '[PRE2]'
+  id: totrans-53
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: '*The prevalence, which we will denote with \(\pi = \mathrm{Pr}(Y = 1)\), can
     be estimated from the data with:'
+  id: totrans-54
   prefs: []
   type: TYPE_NORMAL
+  zh: '*发病率，我们将用 \(\pi = \mathrm{Pr}(Y = 1)\) 表示，可以从数据中估计出来：'
 - en: '[PRE3]'
+  id: totrans-55
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: '*Now we can use our estimates of average and standard deviation to get an actual
     rule:'
+  id: totrans-56
   prefs: []
   type: TYPE_NORMAL
+  zh: '*现在我们可以使用我们对平均值和标准差的估计来得到一个实际的规则：'
 - en: '[PRE4]'
+  id: totrans-57
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE4]'
 - en: '*Our Naive Bayes estimate \(\hat{p}(x)\) looks a lot like a logistic regression
     estimate:'
+  id: totrans-58
   prefs: []
   type: TYPE_NORMAL
+  zh: '*我们的朴素贝叶斯估计 \(\hat{p}(x)\) 与逻辑回归估计非常相似：'
 - en: '![](../Images/6a4ca2a641c1b5412807c0842fd1dd73.png)'
+  id: totrans-59
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/6a4ca2a641c1b5412807c0842fd1dd73.png)'
 - en: In fact, we can show that the Naive Bayes approach is similar to the logistic
     regression prediction mathematically. However, we leave the demonstration to a
     more advanced text, such as the Elements of Statistical Learning[¹](#fn1). We
     can see that they are similar empirically by comparing the two resulting curves.****
+  id: totrans-60
   prefs: []
   type: TYPE_NORMAL
+  zh: 事实上，我们可以证明朴素贝叶斯方法在数学上与逻辑回归预测相似。然而，我们将证明留给更高级的文本，如《统计学习基础》[¹](#fn1)。我们可以通过比较两个结果曲线来经验性地看到它们是相似的。****
 - en: '***Controlling prevalence***'
+  id: totrans-61
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '***控制发病率***'
 - en: '***One useful feature of the Naive Bayes approach is that it includes a parameter
     to account for differences in prevalence. Using our sample, we estimated \(f_{X|Y
     = 1}\), \(f_{X|Y = 0}\) and \(\pi\). If we use hats to denote the estimates, we
     can write \(\hat{p}(x)\) as:'
+  id: totrans-62
   prefs: []
   type: TYPE_NORMAL
+  zh: '***朴素贝叶斯方法的一个有用特性是它包含一个参数来考虑发病率的不同。使用我们的样本，我们估计了 \(f_{X|Y = 1}\)，\(f_{X|Y =
+    0}\) 和 \(\pi\)。如果我们用帽子表示估计值，我们可以将 \(\hat{p}(x)\) 写作：'
 - en: \[ \hat{p}(x)= \frac{\hat{f}_{X|Y = 1}(x) \hat{\pi}} { \hat{f}_{X|Y = 0}(x)(1-\hat{\pi})
     + \hat{f}_{X|Y = 1}(x)\hat{\pi} } \]
+  id: totrans-63
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \hat{p}(x)= \frac{\hat{f}_{X|Y = 1}(x) \hat{\pi}} { \hat{f}_{X|Y = 0}(x)(1-\hat{\pi})
+    + \hat{f}_{X|Y = 1}(x)\hat{\pi} } \]
 - en: 'As we discussed earlier, our sample has a much lower prevalence, 0.24, than
     the general population. So if we use the rule \(\hat{p}(x) > 0.5\) to predict
     females, our accuracy will be affected due to the low sensitivity:'
+  id: totrans-64
   prefs: []
   type: TYPE_NORMAL
+  zh: 如我们之前讨论的，我们的样本发病率远低于一般人群，仅为 0.24。因此，如果我们使用规则 \(\hat{p}(x) > 0.5\) 来预测女性，我们的准确率将因低敏感性而受到影响：
 - en: '[PRE5]'
+  id: totrans-65
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE5]'
 - en: '*Again, this is because the algorithm gives more weight to specificity to account
     for the low prevalence:'
+  id: totrans-66
   prefs: []
   type: TYPE_NORMAL
+  zh: '*再次强调，这是因为算法更重视特异性以应对低发病率：'
 - en: '[PRE6]'
+  id: totrans-67
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE6]'
 - en: '*This is mainly due to the fact that \(\hat{\pi}\) is substantially less than
     0.5, so we tend to predict `Male` more often. It makes sense for a machine learning
     algorithm to do this in our sample because we do have a higher percentage of males.
     But if we were to extrapolate this to a general population, our overall accuracy
     would be affected by the low sensitivity.'
+  id: totrans-68
   prefs: []
   type: TYPE_NORMAL
+  zh: '*这主要是因为 \(\hat{\pi}\) 大大低于 0.5，所以我们更倾向于预测 `男性`。在我们的样本中，这样做是有道理的，因为我们确实有较高的男性比例。但如果我们将这一结果外推到一般人群，我们的整体准确率将受到低敏感性的影响。'
 - en: 'The Naive Bayes approach gives us a direct way to correct this since we can
     simply force \(\hat{\pi}\) to be whatever value we want it to be. So to balance
     specificity and sensitivity, instead of changing the cutoff in the decision rule,
     we could simply change \(\hat{\pi}\) to 0.5 like this:'
+  id: totrans-69
   prefs: []
   type: TYPE_NORMAL
+  zh: 朴素贝叶斯方法为我们提供了一种直接纠正这一问题的方法，因为我们只需简单地将 \(\hat{\pi}\) 设置为我们想要的任何值。因此，为了平衡特异性和敏感性，我们不必改变决策规则中的截止值，而可以简单地像这样将
+    \(\hat{\pi}\) 设置为 0.5：
 - en: '[PRE7]'
+  id: totrans-70
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE7]'
 - en: '*Note the difference in sensitivity with a better balance:'
+  id: totrans-71
   prefs: []
   type: TYPE_NORMAL
+  zh: '*注意敏感性的差异，平衡得更好：'
 - en: '[PRE8]'
+  id: totrans-72
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE8]'
 - en: '*The new rule also gives us a very intuitive cutoff between 66-67, which is
     about the middle of the female and male average heights:'
+  id: totrans-73
   prefs: []
   type: TYPE_NORMAL
+  zh: '*新的规则还给我们提供了一个非常直观的 66-67 之间的截止值，这大约是女性和男性平均身高的中间值：'
 - en: '![](../Images/aa9de535752640fecff553fe0e64995c.png)*******'
+  id: totrans-74
   prefs: []
   type: TYPE_NORMAL
+  zh: '![](../Images/aa9de535752640fecff553fe0e64995c.png)*******'
 - en: '***Quadratic discriminant analysis***'
+  id: totrans-75
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '***二次判别分析***'
 - en: '***Quadratic Discriminant Analysis (QDA) is a version of Naive Bayes in which
     we assume that the distributions \(f_{\mathbf{X}|Y = 1}(x)\) and \(f_{\mathbf{X}|Y
     = 0}(\mathbf{x})\) are multivariate normal. The simple example we described in
     the previous section is actually QDA. Let’s now look at a slightly more complicated
     case: the 2 or 7 example.'
+  id: totrans-76
   prefs: []
   type: TYPE_NORMAL
+  zh: '***二次判别分析（QDA）是朴素贝叶斯的一种版本，其中我们假设分布 \(f_{\mathbf{X}|Y = 1}(x)\) 和 \(f_{\mathbf{X}|Y
+    = 0}(\mathbf{x})\) 是多元正态分布。我们在上一节中描述的简单例子实际上是QDA。现在让我们看看一个稍微复杂一些的情况：2或7的例子。'
 - en: 'In this example, we have two predictors so we assume each one is bivariate
     normal. This implies that we need to estimate two averages, two standard deviations,
     and a correlation for each case \(Y = 1\) and \(Y = 0\). Once we have these, we
     can approximate the distributions \(f_{X_1,X_2|Y = 1}\) and \(f_{X_1, X_2|Y =
     0}\). We can easily estimate parameters from the data and with these estimates
     in place, all we need are the prevalence \(\hat{\pi}\) to compute:'
+  id: totrans-77
   prefs: []
   type: TYPE_NORMAL
+  zh: 在这个例子中，我们有两个预测变量，所以我们假设每个都是二元正态分布。这意味着我们需要为每个案例 \(Y = 1\) 和 \(Y = 0\) 估计两个平均值、两个标准差和一个相关系数。一旦我们有了这些，我们就可以近似分布
+    \(f_{X_1,X_2|Y = 1}\) 和 \(f_{X_1, X_2|Y = 0}\)。我们可以轻松地从数据中估计参数，并且有了这些估计，我们只需要
+    prevalence \(\hat{\pi}\) 来计算：
 - en: \[ \hat{p}(\mathbf{x})= \frac{\hat{f}_{\mathbf{X}|Y = 1}(\mathbf{x}) \hat{\pi}}
     { \hat{f}_{\mathbf{X}|Y = 0}(x)(1-\hat{\pi}) + \hat{f}_{\mathbf{X}|Y = 1}(\mathbf{x})\hat{\pi}
     } \]
+  id: totrans-78
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \hat{p}(\mathbf{x})= \frac{\hat{f}_{\mathbf{X}|Y = 1}(\mathbf{x}) \hat{\pi}}
+    { \hat{f}_{\mathbf{X}|Y = 0}(x)(1-\hat{\pi}) + \hat{f}_{\mathbf{X}|Y = 1}(\mathbf{x})\hat{\pi}
+    } \]
 - en: 'Note that the densities \(f\) are bivariate normal distributions. Here we provide
     a visual way of showing the approach. We plot the data and use contour plots to
     give an idea of what the two estimated normal densities look like (we show the
     curve representing a region that includes 95% of the points):'
+  id: totrans-79
   prefs: []
   type: TYPE_NORMAL
+  zh: 注意，密度 \(f\) 是二元正态分布。这里我们提供了一种直观的方法来展示这种方法。我们绘制数据并使用等高线图来给出两个估计的正态密度看起来是什么样的（我们显示代表包含95%点的区域的曲线）：
 - en: '![](../Images/4e91fc33c7a33d2d59b45085fe08aa6d.png)'
+  id: totrans-80
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/4e91fc33c7a33d2d59b45085fe08aa6d.png)'
 - en: 'We can fit QDA using the `qda` function the **MASS** package:'
+  id: totrans-81
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们可以使用**MASS**包中的`qda`函数来拟合QDA：
 - en: '[PRE9]'
+  id: totrans-82
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE9]'
 - en: '*We see that we obtain relatively good accuracy:'
+  id: totrans-83
   prefs: []
   type: TYPE_NORMAL
+  zh: '*我们发现我们获得了相对较好的准确率：'
 - en: '[PRE10]'
+  id: totrans-84
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE10]'
 - en: '*The conditional probability looks relatively good, although it does not fit
     as well as the kernel smoothers:'
+  id: totrans-85
   prefs: []
   type: TYPE_NORMAL
+  zh: '*条件概率看起来相对较好，尽管它不如核平滑器拟合得那么好：'
 - en: '![](../Images/a1fc89f1fab8d29f8a87a849167fb1da.png)'
+  id: totrans-86
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/a1fc89f1fab8d29f8a87a849167fb1da.png)'
 - en: 'One reason QDA does not work as well as the kernel methods is because the assumption
     of normality does not quite hold. Although for the 2s it seems reasonable, for
     the 7s it does seem to be off. Notice the slight curvature in the points for the
     7s:'
+  id: totrans-87
   prefs: []
   type: TYPE_NORMAL
+  zh: QDA不如核方法表现好的一个原因是正态性的假设并不完全成立。尽管对于2s来说似乎是合理的，但对于7s来说似乎并不准确。注意7s点的轻微曲率：
 - en: '![](../Images/4def7edf9fadc8fabcb1b2e84ef174c8.png)'
+  id: totrans-88
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/4def7edf9fadc8fabcb1b2e84ef174c8.png)'
 - en: QDA can work ok here, but it becomes harder to use as the number of predictors
     increases. Here we have 2 predictors and had to compute 4 means, 4 SDs, and 2
     correlations. Notice that if we have 10 predictors, we need to estimate 45 correlations
@@ -405,176 +606,267 @@
     to estimate is \(p(p-1)/2\) for each class, which gets big fast. Once the number
     of parameters approaches the size of our data, the method becomes impractical
     due to overfitting.*****
+  id: totrans-89
   prefs: []
   type: TYPE_NORMAL
+  zh: QDA在这里可以工作得很好，但随着预测变量数量的增加，它变得难以使用。这里我们有2个预测变量，不得不计算4个均值、4个标准差和2个相关系数。请注意，如果我们有10个预测变量，我们需要为每个类别估计45个相关系数。一般来说，我们需要估计的相关系数的数量是每个类别的
+    \(p(p-1)/2\)，这会很快变得很大。一旦参数的数量接近数据的大小，由于过拟合，该方法变得不切实际。*****
 - en: '***Linear discriminant analysis***'
+  id: totrans-90
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '***线性判别分析***'
 - en: '***A relatively simple solution to QDA’s problem of having too many parameters
     is to assume that the correlation structure is the same for all classes, which
     reduces the number of parameters we need to estimate. In this case, the the distributions
     looks like this:'
+  id: totrans-91
   prefs: []
   type: TYPE_NORMAL
+  zh: '***为了解决QDA参数过多的问题，一个相对简单的解决方案是假设所有类别的相关结构相同，这减少了我们需要估计的参数数量。在这种情况下，分布看起来是这样的：'
 - en: '![](../Images/1b83864540679bec403fee035f5aa6c2.png)'
+  id: totrans-92
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/1b83864540679bec403fee035f5aa6c2.png)'
 - en: 'We can fit LDA using the **MASS** `lda` function:'
+  id: totrans-93
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们可以使用**MASS**包的`lda`函数来拟合LDA：
 - en: '[PRE11]'
+  id: totrans-94
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE11]'
 - en: '*Now the size of the ellipses as well as the angles are the same. This is because
     they are assumed to have the same standard deviations and correlations. Although
     this added constraint lowers the number of parameters, the rigidity lowers our
     accuracy to:'
+  id: totrans-95
   prefs: []
   type: TYPE_NORMAL
+  zh: '*现在椭圆的大小以及角度都是相同的。这是因为它们被假定为具有相同的标准差和相关性。尽管这个附加约束降低了参数的数量，但刚性降低了我们的准确性：*'
 - en: '[PRE12]'
+  id: totrans-96
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE12]'
 - en: '*When we force this assumption, we can show mathematically that the boundary
     is a line, just as with logistic regression. For this reason, we call the method
     *linear* discriminant analysis (LDA). Similarly, for QDA, we can show that the
     boundary must be a quadratic function.'
+  id: totrans-97
   prefs: []
   type: TYPE_NORMAL
+  zh: '*当我们强制这个假设时，我们可以从数学上证明边界是一条线，就像逻辑回归一样。因此，我们称这种方法为 *线性* 判别分析（LDA）。同样，对于QDA，我们可以证明边界必须是一个二次函数。*'
 - en: '![](../Images/9a00b85104c61ddb27327ac505fe772f.png)'
+  id: totrans-98
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/9a00b85104c61ddb27327ac505fe772f.png)'
 - en: Although LDA often works well for simple datasets, in the case, the lack of
     flexibility does not permit us to capture the non-linearity in the true conditional
     probability function.*****
+  id: totrans-99
   prefs: []
   type: TYPE_NORMAL
+  zh: 尽管LDA对于简单的数据集通常表现良好，但在这种情况下，缺乏灵活性不允许我们捕捉真实条件概率函数中的非线性。
 - en: '***Extension to multiple classes***'
+  id: totrans-100
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '**扩展到多个类别**'
 - en: '***The ideas introduced above for the two-class case extend naturally to situations
     with more than two classes. For \(K\) classes, Bayes’ rule gives'
+  id: totrans-101
   prefs: []
   type: TYPE_NORMAL
+  zh: '**上述双类情况中引入的思想可以自然地扩展到多于两个类别的情形。对于 \(K\) 个类别，贝叶斯定理给出**'
 - en: \[ p_k(\mathbf{x}) = \Pr(Y = k \mid \mathbf{X} = \mathbf{x}) = \frac{f_{\mathbf{X}\mid
     Y=k}(\mathbf{x}),\Pr(Y=k)}{ \sum_{l=1}^K f_{\mathbf{X}\mid Y=l}(\mathbf{x})\Pr(Y=l)
     }, \qquad k = 1,\dots,K. \]
+  id: totrans-102
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ p_k(\mathbf{x}) = \Pr(Y = k \mid \mathbf{X} = \mathbf{x}) = \frac{f_{\mathbf{X}\mid
+    Y=k}(\mathbf{x}),\Pr(Y=k)}{ \sum_{l=1}^K f_{\mathbf{X}\mid Y=l}(\mathbf{x})\Pr(Y=l)
+    }, \qquad k = 1,\dots,K. \]
 - en: 'To construct a classifier, we simply estimate the quantities in this expression
     from the training data. For Naive Bayes, LDA, or QDA:'
+  id: totrans-103
   prefs: []
   type: TYPE_NORMAL
+  zh: '**构建分类器**，我们只需从训练数据中估计这个表达式中的量。对于朴素贝叶斯、LDA或QDA：'
 - en: we estimate the class-conditional densities \(f_{\mathbf{X}\mid Y=k}(\mathbf{x})\)
     using the assumed model (independence for Naive Bayes, a normal distribution with
     shared covariance for LDA, or a normal distribution with class-specific covariances
     for QDA), and
+  id: totrans-104
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 我们使用假设的模型（朴素贝叶斯中的独立性，LDA中的共享协方差的正态分布，或QDA中的类别特定协方差的正态分布）来估计类条件密度 \(f_{\mathbf{X}\mid
+    Y=k}(\mathbf{x})\)，
 - en: we estimate the class proportions \(\Pr(Y = k)\) with the empirical prevalence
     \(\hat{\pi}_k = \frac{1}{n}\sum_{i=1}^n \mathbf{1}(y_i = k)\).
+  id: totrans-105
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 我们使用经验频率 \(\hat{\pi}_k = \frac{1}{n}\sum_{i=1}^n \mathbf{1}(y_i = k)\) 来估计类比例
+    \(\Pr(Y = k)\)。
 - en: Once these components are estimated, we compute \(\hat{p}_k(\mathbf{x})\) for
     all \(k\), and assign \(\mathbf{x}\) to the class with the largest posterior probability.
+  id: totrans-106
   prefs: []
   type: TYPE_NORMAL
+  zh: 一旦这些成分被估计，我们计算所有 \(k\) 的 \(\hat{p}_k(\mathbf{x})\)，并将 \(\mathbf{x}\) 分配给后验概率最大的类别。
 - en: This generalization requires no new ideas beyond the two-class case, the only
     difference is that we repeat the same estimation for all \(K\) classes.***
+  id: totrans-107
   prefs: []
   type: TYPE_NORMAL
+  zh: 这种泛化不需要超出双类情况的新想法，唯一的区别是我们为所有 \(K\) 个类别重复相同的估计。***
 - en: '***Connection to distance***'
+  id: totrans-108
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '**与距离的关系**'
 - en: '***In LDA and QDA, we model each class as coming from a multivariate normal
     distribution estimated from the *training data*. When we classify a new observation
     \(\mathbf{x}\), the algorithm computes, for each class \(k\), we compute'
+  id: totrans-109
   prefs: []
   type: TYPE_NORMAL
+  zh: '**在LDA和QDA中，我们假设每个类别都来自从 *训练数据* 中估计的多变量正态分布。当我们对一个新观测 \(\mathbf{x}\) 进行分类时，算法为每个类别
+    \(k\) 计算：**'
 - en: \[ f_{\mathbf{X}\mid Y=k}(\mathbf{x}),\Pr(Y=k) \]
+  id: totrans-110
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ f_{\mathbf{X}\mid Y=k}(\mathbf{x}),\Pr(Y=k) \]
 - en: and predicts the class with the largest value.
+  id: totrans-111
   prefs: []
   type: TYPE_NORMAL
+  zh: 并预测具有最大值的类别。
 - en: 'So understanding how the normal density behaves helps explain why LDA and QDA
     behave like distance-based classifiers. For simplisity we consider the case in
     which classes are balanced: \(\Pr(Y=k) = 1/K\) for all \(k\):'
+  id: totrans-112
   prefs: []
   type: TYPE_NORMAL
+  zh: 因此，理解正态密度如何变化有助于解释为什么LDA和QDA表现得像基于距离的分类器。为了简化，我们考虑类别平衡的情况：\(\Pr(Y=k) = 1/K\)
+    对于所有 \(k\)：
 - en: Let’s first examine the one-dimensional normal density and
+  id: totrans-113
   prefs: []
   type: TYPE_NORMAL
+  zh: 让我们先考察一维正态密度和
 - en: \[ f(x) = \frac{1}{\sqrt{2\pi}\sigma} \exp\left\{-\frac{1}{2}\left(\frac{x-\mu}{\sigma}\right)^2\right\}.
     \]
+  id: totrans-114
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ f(x) = \frac{1}{\sqrt{2\pi}\sigma} \exp\left\{-\frac{1}{2}\left(\frac{x-\mu}{\sigma}\right)^2\right\}.
+    \]
 - en: 'If we ignore the multiplicative constant \(1/(\sqrt{2\pi}\sigma)\) and take
     the logarithm, we get:'
+  id: totrans-115
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果我们忽略乘法常数 \(1/(\sqrt{2\pi}\sigma)\) 并取对数，我们得到：
 - en: \[ \log f(x) \propto -\frac{1}{2}\left(\frac{x-\mu}{\sigma}\right)^2 \]
+  id: totrans-116
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \log f(x) \propto -\frac{1}{2}\left(\frac{x-\mu}{\sigma}\right)^2 \]
 - en: 'The key point is:'
+  id: totrans-117
   prefs: []
   type: TYPE_NORMAL
+  zh: 关键点是：
 - en: \[ \log f(x) \text{ decreases as } (x-\mu)^2 \text{ increases.} \]
+  id: totrans-118
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \log f(x) \text{ 随着 } (x-\mu)^2 \text{ 的增加而减少。} \]
 - en: In other words, the class with the highest density is simply the class whose
     mean is closest to (x) (after scaling by \(\sigma\), the within-class standard
     deviation).
+  id: totrans-119
   prefs: []
   type: TYPE_NORMAL
+  zh: 换句话说，密度最高的类就是均值最接近（x）的类（在 \(\sigma\)，即类内标准差缩放后）。
 - en: 'For multivariate Gaussian classes, the same idea holds but with a more general
     notion of distance. The log density becomes:'
+  id: totrans-120
   prefs: []
   type: TYPE_NORMAL
+  zh: 对于多元高斯类，同样的想法适用，但涉及更一般的距离概念。对数密度变为：
 - en: \[ \log f(\mathbf{x}) \propto (\mathbf{x} - \boldsymbol{\mu})^\top\Sigma^{-1}(\mathbf{x}
     - \boldsymbol{\mu}), \]
+  id: totrans-121
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \log f(\mathbf{x}) \propto (\mathbf{x} - \boldsymbol{\mu})^\top\Sigma^{-1}(\mathbf{x}
+    - \boldsymbol{\mu}), \]
 - en: which is negative of the *Mahalanobis distance* squared.
+  id: totrans-122
   prefs: []
   type: TYPE_NORMAL
+  zh: 这是对马氏距离平方的负值。
 - en: In LDA, all classes use the same covariance \(\Sigma\). So each class scores
     \(\mathbf{x}\) by its (scaled) squared distance to the class mean.
+  id: totrans-123
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 在LDA中，所有类使用相同的协方差 \(\Sigma\)。因此，每个类通过其（缩放后的）平方距离到类均值来给 \(\mathbf{x}\) 打分。
 - en: In QDA, each class has its own covariance, so each class uses a different distance
     metric.
+  id: totrans-124
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 在QDA中，每个类都有自己的协方差，因此每个类使用不同的距离度量。
 - en: 'Thus, LDA and QDA can both be viewed as distance-based classifiers: a new observation
     is assigned to the class whose Gaussian model places it *closest* in this Mahalanobis
     sense.'
+  id: totrans-125
   prefs: []
   type: TYPE_NORMAL
+  zh: 因此，LDA和QDA都可以被视为基于距离的分类器：一个新观测值被分配给其高斯模型在马氏距离上最接近的类。
 - en: '*You are now ready to do exercises 14–17.*****'
+  id: totrans-126
   prefs: []
   type: TYPE_NORMAL
+  zh: '*你现在可以开始做14-17题练习了*****。'
 - en: '*****30.4 Classification and regression trees (CART)*****'
+  id: totrans-127
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '*****30.4 分类和回归树（CART）*****'
 - en: '*****Classification and regression trees (CART) provide a flexible, intuitive
     approach to prediction by repeatedly splitting the predictor space into smaller
     and more homogeneous regions. Instead of fitting a single global model, CART builds
     a tree-shaped set of decision rules that adapt to complex patterns in the data.
     In this section we motivate the idea and provide some details on how it is implemented.'
+  id: totrans-128
   prefs: []
   type: TYPE_NORMAL
+  zh: '*****分类和回归树（CART）通过反复将预测空间分割成更小、更均匀的区域，提供了一种灵活、直观的预测方法。CART不是拟合一个全局模型，而是构建一个树形决策规则集，以适应数据中的复杂模式。在本节中，我们将阐述这一想法，并提供一些关于其实现的细节。'
 - en: The curse of dimensionality
+  id: totrans-129
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 维度灾难
 - en: We described how methods such as LDA and QDA are not meant to be used with many
     predictors \(p\) because the number of parameters that we need to estimate becomes
     too large. For example, with the digits example \(p = 784\), we would have over
@@ -584,230 +876,340 @@
     used due to what is referred to as the *curse of dimensionality*. The *dimension*
     here refers to the fact that when we have \(p\) predictors, the distance between
     two observations is computed in \(p\)-dimensional space.
+  id: totrans-130
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们描述了为什么LDA和QDA等方法不适用于许多预测因子 \(p\)，因为我们需要估计的参数数量变得过大。例如，在数字示例中 \(p = 784\)，我们会有超过600,000个参数使用LDA，而对于QDA，这个数字会乘以类的数量。核方法，如kNN或局部回归，没有模型参数需要估计。然而，由于所谓的“维度灾难”，当使用多个预测因子时，它们也面临挑战。这里的“维度”指的是当我们有
+    \(p\) 个预测因子时，两个观测值之间的距离是在 \(p\) 维空间中计算的。
 - en: A useful way of understanding the curse of dimensionality is by considering
     how large we have to make a span/neighborhood/window to include a given percentage
     of the data. Remember that with larger neighborhoods, our methods lose flexibility,
     and to be flexible we need to keep the neighborhoods small.
+  id: totrans-131
   prefs: []
   type: TYPE_NORMAL
+  zh: 理解维度灾难的一个有用方法是考虑为了包含给定百分比的样本，我们需要将跨度/邻域/窗口做得有多大。记住，随着邻域的增大，我们的方法会失去灵活性，而为了保持灵活性，我们需要保持邻域较小。
 - en: 'To see how this becomes an issue for higher dimensions, suppose we have one
     continuous predictor with equally spaced points in the [0,1] interval and we want
     to create windows that include 1/10th of data. Then it’s easy to see that our
     windows have to be of size 0.1:'
+  id: totrans-132
   prefs: []
   type: TYPE_NORMAL
+  zh: 为了看到这如何成为高维问题，假设我们有一个在[0,1]区间内等间距的连续预测因子，我们想要创建包含1/10th数据的窗口。那么很容易看出我们的窗口大小必须是0.1：
 - en: '![](../Images/5351f63855bfd62d82549546605b32f5.png)'
+  id: totrans-133
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/5351f63855bfd62d82549546605b32f5.png)'
 - en: 'Now for two predictors, if we decide to keep the neighborhood just as small,
     10% for each dimension, we include only 1 point. If we want to include 10% of
     the data, then we need to increase the size of each side of the square to \(\sqrt{.10}
     \approx .316\):'
+  id: totrans-134
   prefs: []
   type: TYPE_NORMAL
+  zh: 现在对于两个预测因子，如果我们决定保持邻域大小不变，每个维度10%，我们只包含1个点。如果我们想包含10%的数据，那么我们需要将正方形的每一边的长度增加到\(\sqrt{.10}
+    \approx .316\)：
 - en: '![](../Images/b09903b1b56a70a01e4b1bfc24f2222c.png)'
+  id: totrans-135
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/b09903b1b56a70a01e4b1bfc24f2222c.png)'
 - en: Using the same logic, if we want to include 10% of the data in a three-dimensional
     space, then the side of each cube is \(\sqrt[3]{.10} \approx 0.464\). In general,
     to include 10% of the data in a case with \(p\) dimensions, we need an interval
     with each side of size \(\sqrt[p]{.10}\) of the total. This proportion gets close
     to 1 quickly, and if the proportion is 1 it means we include all the data and
     are no longer smoothing.
+  id: totrans-136
   prefs: []
   type: TYPE_NORMAL
+  zh: 使用相同的逻辑，如果我们想在三维空间中包含10%的数据，那么每个立方体的边长是\(\sqrt[3]{.10} \approx 0.464\)。一般来说，为了在\(p\)维的情况下包含10%的数据，我们需要一个边长为\(\sqrt[p]{.10}\)的区间，这是总体的10%。这个比例很快就会接近1，如果比例是1，这意味着我们包含了所有数据，并且不再进行平滑处理。
 - en: '![](../Images/d41a2c52be32507c6201a4cbdfda086c.png)'
+  id: totrans-137
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/d41a2c52be32507c6201a4cbdfda086c.png)'
 - en: By the time we reach 100 predictors, the neighborhood is no longer very local,
     as each side covers almost the entire dataset.
+  id: totrans-138
   prefs: []
   type: TYPE_NORMAL
+  zh: 当我们达到100个预测因子时，邻域就不再非常局部了，因为每一侧几乎覆盖了整个数据集。
 - en: Here we look at a set of elegant and versatile methods that adapt to higher
     dimensions and also allow these regions to take more complex shapes while still
     producing models that are interpretable. These are very popular, well-known and
     studied methods. We will concentrate on regression and decision trees and their
     extension to random forests.
+  id: totrans-139
   prefs: []
   type: TYPE_NORMAL
+  zh: 在这里，我们探讨一系列优雅且多功能的算法，这些算法适用于高维空间，并允许这些区域采取更复杂的形状，同时仍然产生可解释的模型。这些方法非常流行，广为人知，并且得到了广泛的研究。我们将专注于回归和决策树，以及它们在随机森林中的扩展。
 - en: CART motivation
+  id: totrans-140
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: CART动机
 - en: 'To motivate this section, we will use a new dataset that includes the breakdown
     of the composition of olive oil into 8 fatty acids:'
+  id: totrans-141
   prefs: []
   type: TYPE_NORMAL
+  zh: 为了激励本节，我们将使用一个新的数据集，该数据集包括橄榄油成分分解为8种脂肪酸的详细情况：
 - en: '[PRE13]'
+  id: totrans-142
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE13]'
 - en: '*For illustrative purposes, we will try to predict the region using the fatty
     acid composition values as predictors.'
+  id: totrans-143
   prefs: []
   type: TYPE_NORMAL
+  zh: '*为了说明目的，我们将尝试使用脂肪酸成分值作为预测因子来预测区域。'
 - en: '[PRE14]'
+  id: totrans-144
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE14]'
 - en: '*We remove the `area` column because we won’t use it as a predictor.'
+  id: totrans-145
   prefs: []
   type: TYPE_NORMAL
+  zh: '*我们移除了`area`列，因为我们不会将其用作预测因子。'
 - en: '[PRE15]'
+  id: totrans-146
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE15]'
 - en: '*Using kNN, we can achieve a test set accuracy of 0.97\. However, a bit of
     data exploration reveals that we should be able to do even better. For example,
     if we look at the distribution of each predictor stratified by region we see that
     eicosenoic is only present in Southern Italy and that linoleic separates Northern
     Italy from Sardinia.'
+  id: totrans-147
   prefs: []
   type: TYPE_NORMAL
+  zh: '*使用kNN，我们可以达到测试集准确率0.97。然而，一些数据探索揭示，我们应该能够做得更好。例如，如果我们按地区对每个预测因子的分布进行分层，我们会看到eicosenoic仅在意大利南部存在，而linoleic将北意大利与撒丁岛分开。'
 - en: '![](../Images/2dea0bef97c1ee4213bb489cece739ec.png)'
+  id: totrans-148
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/2dea0bef97c1ee4213bb489cece739ec.png)'
 - en: This implies that we should be able to build an algorithm that predicts perfectly!
     We can see this clearly by plotting the values for eicosenoic and linoleic.
+  id: totrans-149
   prefs: []
   type: TYPE_NORMAL
+  zh: 这意味着我们应该能够构建一个完美预测的算法！我们可以通过绘制eicosenoic和linoleic的值来清楚地看到这一点。
 - en: '![](../Images/8352a336f5ff15c9e65aee2926a3bb1c.png)'
+  id: totrans-150
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/8352a336f5ff15c9e65aee2926a3bb1c.png)'
 - en: In [Section 22.4](../highdim/linear-algebra.html#sec-predictor-space), we defined
     *predictor spaces*, which in this case consists of eight-dimensional points with
     values between 0 and 100\. In the plot above, we show the space defined by the
     two predictors eicosenoic and linoleic, and, by eye, we can construct a prediction
     rule that partitions the predictor space so that each partition contains only
     outcomes of a one category.
+  id: totrans-151
   prefs: []
   type: TYPE_NORMAL
+  zh: 在[第22.4节](../highdim/linear-algebra.html#sec-predictor-space)中，我们定义了*预测空间*，在这种情况下，它由八个维度上的点组成，这些点的值在0到100之间。在上面的图中，我们展示了由两个预测因子eicosenoic和linoleic定义的空间，并且通过目测，我们可以构建一个预测规则，将预测空间划分为每个部分只包含一个类别的结果。
 - en: 'This in turn can be used to define an algorithm with perfect accuracy. Specifically,
     we define the following decision rule: if eicosenoic is larger than 0.065, predict
     Southern Italy. If not, then if linoleic is larger than \(10.535\), predict Sardinia,
     and if lower, predict Northern Italy. We can draw this decision tree as follows:'
+  id: totrans-152
   prefs: []
   type: TYPE_NORMAL
+  zh: 这反过来可以用来定义一个具有完美准确性的算法。具体来说，我们定义以下决策规则：如果eicosenoic大于0.065，预测南意大利。如果不是，那么如果linoleic大于\(10.535\)，预测撒丁岛，如果更低，预测北意大利。我们可以如下绘制这个决策树：
 - en: '![](../Images/2c137024263ac7e3cfbbafaa9d7c879e.png)'
+  id: totrans-153
   prefs: []
   type: TYPE_IMG
+  zh: '![图片](../Images/2c137024263ac7e3cfbbafaa9d7c879e.png)'
 - en: 'Decision trees like this are often used in practice. For example, to decide
     on a person’s risk of poor outcome after having a heart attack, doctors use the
     following:'
+  id: totrans-154
   prefs: []
   type: TYPE_NORMAL
+  zh: 这种决策树在实践中的应用很常见。例如，为了决定心脏病发作后一个人的不良结果风险，医生会使用以下方法：
 - en: '![](../Images/5fad50a5d9f801b5e7ef7314a74ba72e.png)'
+  id: totrans-155
   prefs: []
   type: TYPE_IMG
+  zh: '![图片](../Images/5fad50a5d9f801b5e7ef7314a74ba72e.png)'
 - en: '(Source: Walton 2010 Informal Logic, Vol. 30, No. 2, pp. 159-184[²](#fn2).)'
+  id: totrans-156
   prefs: []
   type: TYPE_NORMAL
+  zh: (来源：Walton 2010 非正式逻辑，第 30 卷，第 2 期，第 159-184 页[²](#fn2)。)
 - en: A tree is basically a flow chart of yes or no questions. The general idea of
     the methods we are describing is to define an algorithm that uses data to create
     these trees with predictions at the ends, referred to as *nodes*. Regression and
     decision trees operate by predicting an outcome variable \(y\) by partitioning
     the predictors.***
+  id: totrans-157
   prefs: []
   type: TYPE_NORMAL
+  zh: 树形图本质上是一个是或否的问题流程图。我们描述的方法的总体思路是定义一个算法，使用数据来创建这些带有预测结果的树，这些结果被称为*节点*。回归树和决策树通过通过划分预测变量来预测结果变量
+    \(y\)。
 - en: '***Regression trees***'
+  id: totrans-158
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '***回归树***'
 - en: '***When using trees, and the outcome is continuous, we call the approach a
     *regression* tree. To introduce regression trees, we will use the 2008 poll data
     used in @ec-smoothing to describe the basic idea of how we build these algorithms.
     As with other machine learning algorithms, we will try to estimate the conditional
     expectation \(f(x) = \mathrm{E}(Y | X = x)\) with \(Y\) the poll margin and \(x\)
     the day.'
+  id: totrans-159
   prefs: []
   type: TYPE_NORMAL
+  zh: '***当使用树形图，并且结果为连续时，我们称这种方法为*回归*树。为了介绍回归树，我们将使用 2008 年的民意调查数据，这些数据在 @ec-smoothing
+    中使用，来描述我们构建这些算法的基本思想。与其他机器学习算法一样，我们将尝试估计条件期望 \(f(x) = \mathrm{E}(Y | X = x)\)，其中
+    \(Y\) 是投票差额，\(x\) 是日期。'
 - en: '![](../Images/fe610d7bdd5d0c77557f00db3c776bfa.png)'
+  id: totrans-160
   prefs: []
   type: TYPE_IMG
+  zh: '![图片](../Images/fe610d7bdd5d0c77557f00db3c776bfa.png)'
 - en: 'The general idea here is to build a decision tree and, at the end of each *node*,
     obtain a predictor \(\hat{y}\). A mathematical way to describe this is: we are
     partitioning the predictor space into \(J\) non-overlapping regions, \(R_1, R_2,
     \ldots, R_J\), and then for any predictor \(x\) that falls within region \(R_j\),
     estimate \(f(x)\) with the average of the training observations \(y_i\) for which
     the associated predictor \(x_i\) is also in \(R_j\).'
+  id: totrans-161
   prefs: []
   type: TYPE_NORMAL
+  zh: 这里的基本思路是构建一个决策树，并在每个 *节点* 的末尾获得一个预测变量 \(\hat{y}\)。用数学方式描述就是：我们将预测空间划分为 \(J\)
+    个非重叠区域，\(R_1, R_2, \ldots, R_J\)，然后对于任何位于区域 \(R_j\) 内的预测变量 \(x\)，我们使用与相关预测变量 \(x_i\)
+    也在 \(R_j\) 内的训练观察值 \(y_i\) 的平均值来估计 \(f(x)\)。
 - en: But how do we decide on the partition \(R_1, R_2, \ldots, R_J\) and how do we
     choose \(J\)? Here is where the algorithm gets a bit complicated.
+  id: totrans-162
   prefs: []
   type: TYPE_NORMAL
+  zh: 但我们如何决定分区 \(R_1, R_2, \ldots, R_J\) 以及如何选择 \(J\)？这正是算法变得复杂的地方。
 - en: Regression trees create partitions recursively. We start the algorithm with
     one partition, the entire predictor space. In our simple first example, this space
     is the interval [-155, 1]. But after the first step, we will have two partitions.
     After the second step, we will split one of these partitions into two and will
     have three partitions, then four, and so on. Later we describe how we pick the
     partition, and when to stop.
+  id: totrans-163
   prefs: []
   type: TYPE_NORMAL
+  zh: 回归树递归地创建分区。我们以一个分区开始算法，即整个预测空间。在我们简单的第一个例子中，这个空间是区间 [-155, 1]。但在第一步之后，我们将有两个分区。第二步后，我们将其中一个分区分成两个，并将有三个分区，然后是四个，以此类推。稍后我们将描述如何选择分区以及何时停止。
 - en: 'For each existing partition, we find a predictor \(j\) and value \(s\) that
     define two new partitions, which we will call \(R_1(j,s)\) and \(R_2(j,s)\), that
     split our observations in the current partition by asking if \(x_j\) is bigger
     than \(s\):'
+  id: totrans-164
   prefs: []
   type: TYPE_NORMAL
+  zh: 对于每个现有的分区，我们找到一个预测变量 \(j\) 和值 \(s\)，定义两个新的分区，我们将它们称为 \(R_1(j,s)\) 和 \(R_2(j,s)\)，通过询问
+    \(x_j\) 是否大于 \(s\) 来分割当前分区：
 - en: \[ R_1(j,s) = \{\mathbf{x} \mid x_j < s\} \mbox{ and } R_2(j,s) = \{\mathbf{x}
     \mid x_j \geq s\} \]
+  id: totrans-165
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ R_1(j,s) = \{\mathbf{x} \mid x_j < s\} \mbox{ 和 } R_2(j,s) = \{\mathbf{x}
+    \mid x_j \geq s\} \]
 - en: In our current example, we only have one predictor, so we will always choose
     \(j = 1\), but in general this will not be the case. Now after we define the new
     partitions \(R_1\) and \(R_2\), and we decide to stop the partitioning, we compute
     predictors by taking the average of all the observations \(y\) for which the associated
     \(\mathbf{x}\) is in \(R_1\) or \(R_2\). We refer to these two as \(\hat{y}_{R_1}\)
     and \(\hat{y}_{R_2}\) respectively.
+  id: totrans-166
   prefs: []
   type: TYPE_NORMAL
+  zh: 在我们当前的例子中，我们只有一个预测变量，所以我们总是选择 \(j = 1\)，但在一般情况下，情况并非如此。现在，在我们定义了新的分区 \(R_1\)
+    和 \(R_2\) 并决定停止分区后，我们将通过取所有相关 \(\mathbf{x}\) 在 \(R_1\) 或 \(R_2\) 中的观察值 \(y\) 的平均值来计算预测变量。我们分别将这些称为
+    \(\hat{y}_{R_1}\) 和 \(\hat{y}_{R_2}\)。
 - en: 'But how do we pick \(j\) and \(s\)? Basically we find the pair that minimizes
     the residual sum of squares (RSS):'
+  id: totrans-167
   prefs: []
   type: TYPE_NORMAL
+  zh: 但我们如何选择 \(j\) 和 \(s\) 呢？基本上，我们要找到使残差平方和（RSS）最小的那一对：
 - en: \[ \sum_{i:\, x_i \in R_1(j,s)} (y_i - \hat{y}_{R_1})^2 + \sum_{i:\, x_i \in
     R_2(j,s)} (y_i - \hat{y}_{R_2})^2 \]
+  id: totrans-168
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \sum_{i:\, x_i \in R_1(j,s)} (y_i - \hat{y}_{R_1})^2 + \sum_{i:\, x_i \in
+    R_2(j,s)} (y_i - \hat{y}_{R_2})^2 \]
 - en: This is then applied recursively to the new regions \(R_1\) and \(R_2\). We
     describe how we stop later, but once we are done partitioning the predictor space
     into regions, in each region a prediction is made using the observations in that
     region.
+  id: totrans-169
   prefs: []
   type: TYPE_NORMAL
+  zh: 然后将此递归应用于新的区域 \(R_1\) 和 \(R_2\)。我们稍后会描述如何停止，但一旦我们将预测空间分割成区域，在每个区域中，我们使用该区域的观测值进行预测。
 - en: Let’s take a look at what this algorithm does on the 2008 presidential election
     poll data. We will use the `rpart` function in the **rpart** package.
+  id: totrans-170
   prefs: []
   type: TYPE_NORMAL
+  zh: 让我们看看这个算法在2008年总统选举民意调查数据上的表现。我们将使用 **rpart** 包中的 `rpart` 函数。
 - en: '[PRE16]'
+  id: totrans-171
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE16]'
 - en: '*In this case, there is only one predictor. Thus we do not have to decide which
     predictor \(j\) to split by, we simply have to decide what value \(s\) we use
     to split. We can visually see where the splits were made:'
+  id: totrans-172
   prefs: []
   type: TYPE_NORMAL
+  zh: '*在这种情况下，只有一个预测器。因此我们不需要决定通过哪个预测器 \(j\) 进行分割，我们只需要决定使用什么值 \(s\) 进行分割。我们可以直观地看到分割的位置：'
 - en: '[PRE17]'
+  id: totrans-173
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE17]'
 - en: '*![](../Images/652222a5d06ca6cfa0b114e773240a2b.png)*  *The first split is
     made on day 39.5\. One of those regions is then split at day 86.5\. The two resulting
     new partitions are split on days 49.5 and 117.5, respectively, and so on. We end
     up with 8 partitions.'
+  id: totrans-174
   prefs: []
   type: TYPE_NORMAL
+  zh: '*![](../Images/652222a5d06ca6cfa0b114e773240a2b.png)*  *第一次分割发生在第39.5天。然后其中一个区域在第86.5天被分割。这两个新的分区分别在第49.5天和第117.5天进行分割，以此类推。我们最终得到8个分区。'
 - en: 'You can also see the partitions bu typing:'
+  id: totrans-175
   prefs: []
   type: TYPE_NORMAL
+  zh: 您也可以通过输入以下命令来查看分区：
 - en: '[PRE18]'
+  id: totrans-176
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE18]'
 - en: '*The final estimate \(\hat{f}(x)\) looks like this:'
+  id: totrans-177
   prefs: []
   type: TYPE_NORMAL
+  zh: '*最终的估计 \(\hat{f}(x)\) 看起来是这样的：'
 - en: '[PRE19]'
+  id: totrans-178
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE19]'
 - en: '*![](../Images/9873565e9597347e1c19d9f9949997e4.png)*  *Note that the algorithm
     stopped partitioning at 8 nodes. This decision is based on a measure called the
     complexity parameter (cp). Every time the data is split into two new partitions,
@@ -817,105 +1219,153 @@
     is the value itself. To prevent such overfitting, the algorithm requires that
     each new split reduce the RSS by at least a factor of cp. Larger values of cp
     therefore stop the algorithm earlier, leading to fewer nodes.'
+  id: totrans-179
   prefs: []
   type: TYPE_NORMAL
+  zh: '*![](../Images/9873565e9597347e1c19d9f9949997e4.png)*  *请注意，算法在8个节点处停止了分区。这个决定是基于一个称为复杂度参数（cp）的度量。每次数据被分成两个新的分区时，训练集的RSS都会减少，因为模型获得了适应数据的灵活性。如果继续分割直到每个观测值都孤立在自己的分区中，RSS最终会达到0，因为单个值的平均值就是该值本身。为了防止这种过度拟合，算法要求每个新的分割至少减少RSS的cp倍。因此，较大的cp值会提前停止算法，导致节点数量减少。'
 - en: 'However, cp is not the only factor that controls partitioning. Another important
     parameter is the minimum number of observations required in a node before it can
     be split, set by the minsplit argument in rpart (default: 20). In addition, rpart
     allows users to specify the minimum number of observations allowed in a terminal
     node (leaf), controlled by the `minbucket` argument. By default, `minbucket =
     round(minsplit / 3)`.'
+  id: totrans-180
   prefs: []
   type: TYPE_NORMAL
+  zh: 然而，cp 不是控制分割的唯一因素。另一个重要的参数是在节点可以分割之前所需的最小观测数，由rpart中的minsplit参数设置（默认：20）。此外，rpart允许用户指定终端节点（叶子）中允许的最小观测数，由
+    `minbucket` 参数控制。默认情况下，`minbucket = round(minsplit / 3)`。
 - en: 'As expected, if we set `cp = 0` and `minsplit = 2`, then our prediction is
     as flexible as possible and our predictor is our original data:'
+  id: totrans-181
   prefs: []
   type: TYPE_NORMAL
+  zh: 如预期的那样，如果我们设置 `cp = 0` 和 `minsplit = 2`，那么我们的预测将尽可能灵活，我们的预测器就是我们的原始数据：
 - en: '![](../Images/77bc6f728324735d92efd7774ca11811.png)'
+  id: totrans-182
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/77bc6f728324735d92efd7774ca11811.png)'
 - en: Intuitively we know that this is not a good approach as it will generally result
     in over-training. These `cp`, `minsplit`, and `minbucket` parameters can be used
     to control the variability of the final predictors. The larger these values are
     the more data is averaged to compute a predictor and thus reduce variability.
     The drawback is that it restricts flexibility.
+  id: totrans-183
   prefs: []
   type: TYPE_NORMAL
+  zh: 直观上我们知道这不是一个好的方法，因为它通常会导致过度训练。这些 `cp`、`minsplit` 和 `minbucket` 参数可以用来控制最终预测器的变异性。这些值越大，用于计算预测器的数据平均就越多，从而减少变异性。缺点是它限制了灵活性。
 - en: 'So how do we pick these parameters? We can use cross validation, just like
     with any tuning parameter. Here is the resulting tree when we use cross validation
     to choose cp:'
+  id: totrans-184
   prefs: []
   type: TYPE_NORMAL
+  zh: 那么，我们如何选择这些参数呢？我们可以使用交叉验证，就像任何调整参数一样。以下是使用交叉验证选择cp值的结果树：
 - en: '![](../Images/bf61ee220d6491443a8db4a6b03913e6.png)'
+  id: totrans-185
   prefs: []
   type: TYPE_IMG
+  zh: '![图片](../Images/bf61ee220d6491443a8db4a6b03913e6.png)'
 - en: 'Note that if we already have a tree and want to apply a higher cp value, we
     can use the `prune` function. We call this *pruning* a tree because we are snipping
     off partitions that do not meet a `cp` criterion. Here is an example where we
     create a tree that used a `cp = 0` and then we prune it back:'
+  id: totrans-186
   prefs: []
   type: TYPE_NORMAL
+  zh: 注意，如果我们已经有一个树并且想要应用更高的cp值，我们可以使用`prune`函数。我们称这种操作为*剪枝*，因为我们正在剪掉不符合`cp`标准的分区。以下是一个例子，我们创建了一个使用`cp
+    = 0`的树，然后将其剪枝回来：
 - en: '[PRE20]*******'
+  id: totrans-187
   prefs: []
   type: TYPE_NORMAL
+  zh: '[PRE20]*******'
 - en: '***Classification (decision) trees***'
+  id: totrans-188
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '**分类（决策）树**'
 - en: '***Classification trees, or decision trees, are used in prediction problems
     where the outcome is categorical. We use the same partitioning principle with
     some differences to account for the fact that we are now working with a categorical
     outcome.'
+  id: totrans-189
   prefs: []
   type: TYPE_NORMAL
+  zh: '**分类树，或决策树，用于预测问题，其中结果为分类。我们使用相同的分区原则，但有一些不同，以解释我们现在处理的是分类结果**。'
 - en: The first difference is that we form predictions by calculating which class
     is the most common among the training set observations within the partition, rather
     than taking the average in each partition (as we can’t take the average of categories).
+  id: totrans-190
   prefs: []
   type: TYPE_NORMAL
+  zh: 第一个不同之处在于，我们通过计算分区中训练集观测值中最常见的类别来形成预测，而不是在每个分区中取平均值（因为我们不能对类别取平均值）。
 - en: The second is that we can no longer use RSS to choose the partition. While we
     could use the naive approach of looking for partitions that minimize training
     error, better performing approaches use more sophisticated metrics. Two of the
     more popular ones are the *Gini Index* and *Entropy*.
+  id: totrans-191
   prefs: []
   type: TYPE_NORMAL
+  zh: 第二个限制是我们不能再使用RSS来选择分区。虽然我们可以使用寻找最小化训练错误的朴素方法来寻找分区，但更好的方法使用更复杂的指标。其中两个更受欢迎的指标是*基尼指数*和*熵*。
 - en: 'In a perfect scenario, the outcomes in each of our partitions are all of the
     same category since this will permit perfect accuracy. The *Gini Index* is going
     to be 0 in this scenario, and become larger the more we deviate from this scenario.
     To define the Gini Index, we define \(\hat{p}_{j,k}\) as the proportion of observations
     in partition \(j\) that are of class \(k\). The Gini Index is defined as:'
+  id: totrans-192
   prefs: []
   type: TYPE_NORMAL
+  zh: 在一个完美的场景中，我们每个分区中的结果都属于同一类别，因为这将允许达到完美的准确性。在这种情况下，*基尼指数*将为0，并且随着我们偏离这个场景的程度增加而变大。为了定义基尼指数，我们定义
+    \(\hat{p}_{j,k}\) 为分区 \(j\) 中属于类别 \(k\) 的观测值的比例。基尼指数定义为：
 - en: \[ \mbox{Gini}(j) = \sum_{k = 1}^K \hat{p}_{j,k}(1-\hat{p}_{j,k}) \]
+  id: totrans-193
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \mbox{Gini}(j) = \sum_{k = 1}^K \hat{p}_{j,k}(1-\hat{p}_{j,k}) \]
 - en: If you study the formula carefully, you will see that it is in fact 0 in the
     perfect scenario described above.
+  id: totrans-194
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果你仔细研究这个公式，你会看到在上述描述的完美场景中，它实际上为0。
 - en: '*Entropy* is a related quantity, defined as:'
+  id: totrans-195
   prefs: []
   type: TYPE_NORMAL
+  zh: '*熵*是一个相关的量，定义为：'
 - en: \[ \mbox{entropy}(j) = -\sum_{k = 1}^K \hat{p}_{j,k}\log(\hat{p}_{j,k}), \mbox{
     with } 0 \times \log(0) \mbox{ defined as }0 \]
+  id: totrans-196
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \mbox{entropy}(j) = -\sum_{k = 1}^K \hat{p}_{j,k}\log(\hat{p}_{j,k}), \mbox{
+    with } 0 \times \log(0) \mbox{ defined as }0 \]
 - en: If we use a classification tree on the 2 or 7 example, we achieve an accuracy
     of 0.81 which is better than regression, but is not as good as what we achieved
     with kernel methods.
+  id: totrans-197
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果我们在2或7的例子上使用分类树，我们达到了0.81的准确率，这比回归更好，但不如我们使用核方法达到的好。
 - en: 'The plot of the estimated conditional probability shows us the limitations
     of classification trees:'
+  id: totrans-198
   prefs: []
   type: TYPE_NORMAL
+  zh: 估计条件概率的图示向我们展示了分类树的限制：
 - en: '![](../Images/a21f84423ddcbe640b62088b31193241.png)'
+  id: totrans-199
   prefs: []
   type: TYPE_IMG
+  zh: '![图片](../Images/a21f84423ddcbe640b62088b31193241.png)'
 - en: Note that with decision trees, it is difficult to make the boundaries smooth
     since each partition creates a discontinuity.
+  id: totrans-200
   prefs: []
   type: TYPE_NORMAL
+  zh: 注意，在使用决策树时，由于每个分区都会产生不连续性，因此很难使边界平滑。
 - en: Classification trees have certain advantages that make them very useful. They
     are highly interpretable, even more so than linear models. They are also easy
     to visualize (if small enough). Finally, they can model human decision processes
@@ -925,19 +1375,27 @@
     in terms of accuracy, it is rarely the best performing method since it is not
     very flexible and is highly unstable to changes in training data. Random forests,
     explained next, improve on several of these shortcomings.********
+  id: totrans-201
   prefs: []
   type: TYPE_NORMAL
+  zh: 分类树具有某些优势，使它们非常有用。它们高度可解释，甚至比线性模型更可解释。它们也容易可视化（如果足够小）。最后，它们可以模拟人类决策过程，并且不需要为分类变量使用虚拟预测器。另一方面，通过递归划分的方法很容易过拟合，因此比线性回归或
+    kNN 更难训练。此外，在准确性方面，它很少是表现最好的方法，因为它不太灵活，并且对训练数据的变化高度不稳定。接下来解释的随机森林改进了这些不足之处。
 - en: '****30.5 Random forests****'
+  id: totrans-202
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '****30.5 随机森林****'
 - en: '****Random forests are a **very popular** machine learning approach that addresses
     the shortcomings of decision trees using a clever idea. The goal is to improve
     prediction performance and reduce instability by *averaging* multiple decision
     trees: a *forest* of trees constructed with *randomness*. It has two features
     that help accomplish this.'
+  id: totrans-203
   prefs: []
   type: TYPE_NORMAL
+  zh: '****随机森林是一种 **非常流行** 的机器学习方法，它通过一个巧妙的思想来解决决策树的不足。目标是通过对多个决策树进行 **平均** 来提高预测性能和减少不稳定性：一个由
+    **随机性** 构建的 *森林*。它有两个有助于实现这一目标的特点。'
 - en: 'The first step is *bootstrap aggregation* or *bagging*. The general idea is
     to generate many predictors, each using regression or classification trees, and
     then forming a final prediction based on the average prediction of all these trees.
@@ -945,74 +1403,111 @@
     induce randomness. These two features combined explain the name: the bootstrap
     makes the individual trees **randomly** different, and the combination of trees
     is the **forest**. The specific steps are as follows.'
+  id: totrans-204
   prefs: []
   type: TYPE_NORMAL
+  zh: 第一步是 **自助聚集** 或 **袋装法**。一般思路是生成许多预测器，每个预测器使用回归或分类树，然后根据所有这些树的平均预测形成最终预测。为了确保单个树不相同，我们使用自助法来引入随机性。这两个特点结合起来解释了名称：自助法使单个树
+    **随机** 不同，而树的组合就是 **森林**。具体步骤如下。
 - en: 1\. Build \(B\) decision trees using the training set. We refer to the fitted
     models as \(T_1, T_2, \dots, T_B\).
+  id: totrans-205
   prefs: []
   type: TYPE_NORMAL
+  zh: 1. 使用训练集构建 \(B\) 个决策树。我们将拟合的模型称为 \(T_1, T_2, \dots, T_B\)。
 - en: 2\. For every observation in the test set, form a prediction \(\hat{y}_j\) using
     tree \(T_j\).
+  id: totrans-206
   prefs: []
   type: TYPE_NORMAL
+  zh: 2. 对于测试集中的每个观测值，使用树 \(T_j\) 形成预测 \(\hat{y}_j\)。
 - en: 3\. For continuous outcomes, form a final prediction with the average \(\hat{y}
     = \frac{1}{B} \sum_{j = 1}^B \hat{y}_j\). For categorical data classification,
     predict \(\hat{y}\) with majority vote (most frequent class among \(\hat{y}_1,
     \dots, \hat{y}_B\)).
+  id: totrans-207
   prefs: []
   type: TYPE_NORMAL
+  zh: 3. 对于连续结果，使用平均 \(\hat{y} = \frac{1}{B} \sum_{j = 1}^B \hat{y}_j\) 形成最终预测。对于分类数据分类，使用多数投票（\(\hat{y}_1,
+    \dots, \hat{y}_B\) 中最频繁的类别）来预测 \(\hat{y}\)。
 - en: 'So how do we get different decision trees from a single training set? For this,
     we use randomness in two ways which we explain in the steps below. Let \(N\) be
     the number of observations in the training set. To create \(T_j, \, j = 1,\ldots,B\)
     from the training set we do the following:'
+  id: totrans-208
   prefs: []
   type: TYPE_NORMAL
+  zh: 那么，我们如何从一个单个训练集中得到不同的决策树？为此，我们使用两种方式来引入随机性，以下步骤中会进行解释。设 \(N\) 为训练集中的观测数。为了从训练集中创建
+    \(T_j, \, j = 1,\ldots,B\)，我们执行以下操作：
 - en: 1\. Create a bootstrap training set by sampling \(N\) observations from the
     training set **with replacement**. This is the first way to induce randomness.
+  id: totrans-209
   prefs: []
   type: TYPE_NORMAL
+  zh: 1. 通过从训练集中有放回地抽取 \(N\) 个观测值来创建一个自助训练集。这是引入随机性的第一种方式。
 - en: 2\. A large number of features is typical in machine learning challenges. Often,
     many features can be informative but including them all in the model may result
     in overfitting. The second way random forests induce randomness is by randomly
     selecting features to be included in the building of each tree. A different random
     subset is selected for each tree. This reduces correlation between trees in the
     forest, thereby improving prediction accuracy.
+  id: totrans-210
   prefs: []
   type: TYPE_NORMAL
+  zh: 2. 在机器学习挑战中，通常有许多特征。通常，许多特征可能是有信息的，但将它们全部包含在模型中可能会导致过拟合。随机森林引入随机性的第二种方式是通过随机选择要包含在每个树构建中的特征。每个树选择一个不同的随机子集。这减少了森林中树之间的相关性，从而提高了预测精度。
 - en: 'To illustrate how the first steps can result in smoother estimates, we will
     fit a random forest to the 2008 polls data. We will use the `randomForest` function
     in the **randomForest** package:'
+  id: totrans-211
   prefs: []
   type: TYPE_NORMAL
+  zh: 为了说明第一步如何导致更平滑的估计，我们将对2008年的民意调查数据进行随机森林拟合。我们将使用**randomForest**包中的`randomForest`函数：
 - en: '[PRE21]'
+  id: totrans-212
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE21]'
 - en: '*Note that if we apply the function `plot` to the resulting object, we see
     how the error rate of our algorithm changes as we add trees:'
+  id: totrans-213
   prefs: []
   type: TYPE_NORMAL
+  zh: '*注意，如果我们将`plot`函数应用于结果对象，我们可以看到随着我们添加树，我们算法的错误率如何变化：'
 - en: '[PRE22]'
+  id: totrans-214
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE22]'
 - en: '*![](../Images/453fde1d6f26e20d73aa52319c9a184d.png)'
+  id: totrans-215
   prefs: []
   type: TYPE_NORMAL
+  zh: '*![](../Images/453fde1d6f26e20d73aa52319c9a184d.png)'
 - en: In this case, the accuracy improves as we add more trees until we have used
     about 300 trees after which accuracy stabilizes.
+  id: totrans-216
   prefs: []
   type: TYPE_NORMAL
+  zh: 在这种情况下，随着我们添加更多的树，准确率提高，直到我们使用了大约300棵树之后，准确率稳定下来。
 - en: The resulting estimate for this random forest, obtained with
+  id: totrans-217
   prefs: []
   type: TYPE_NORMAL
+  zh: 使用这种方法得到的随机森林估计结果，如上所示：
 - en: '[PRE23]'
+  id: totrans-218
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE23]'
 - en: '*is shown with the red curve below:'
+  id: totrans-219
   prefs: []
   type: TYPE_NORMAL
+  zh: '*如以下红色曲线所示：'
 - en: '![](../Images/39da57d9cea71225dcd2fb38fcb320c9.png)'
+  id: totrans-220
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/39da57d9cea71225dcd2fb38fcb320c9.png)'
 - en: Notice that the random forest estimate is much smoother than what we achieved
     with the regression tree in the previous section. This is possible because the
     average of many step functions can be smooth. We can see this by visually examining
@@ -1020,21 +1515,31 @@
     each of the bootstrap samples for several values of \(b\) and for each one we
     see the tree that is fitted in grey, the previous trees that were fitted in lighter
     grey, and the result of averaging all the trees estimated up to that point.
+  id: totrans-221
   prefs: []
   type: TYPE_NORMAL
+  zh: 注意，随机森林的估计比我们在上一节中使用的回归树要平滑得多。这是因为许多阶梯函数的平均值可以是平滑的。我们可以通过观察随着我们添加更多树时估计如何变化来看到这一点。在下面的图中，你可以看到每个\(b\)值的多个自助样本，对于每一个，我们看到用灰色拟合的树，用较浅灰色拟合的前面的树，以及到那个点为止所有估计的树的平均值。
 - en: '![](../Images/4ee992eec5fce5e5afb7b68912fe08fa.png)'
+  id: totrans-222
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/4ee992eec5fce5e5afb7b68912fe08fa.png)'
 - en: '[PRE24]'
+  id: totrans-223
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE24]'
 - en: '*The accuracy for the random forest fit for our 2 or 7 example is 0.825\. Here
     is what the conditional probabilities look like:'
+  id: totrans-224
   prefs: []
   type: TYPE_NORMAL
+  zh: '*对于我们的2或7个示例，随机森林拟合的准确率为0.825。以下是条件概率的图示：'
 - en: '![](../Images/e37e0d6bb4c88236adf1c4ca0c24d99c.png)'
+  id: totrans-225
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/e37e0d6bb4c88236adf1c4ca0c24d99c.png)'
 - en: 'Visualizing the estimate shows that, although we obtain high accuracy, it appears
     that there is room for improvement by making the estimate smoother. This could
     be achieved by changing the parameter that controls the minimum number of data
@@ -1042,15 +1547,21 @@
     estimate will be. If we use a node size of 65, the number of neighbors we used
     with kNN, we get an accuracy of 0.815\. The selected model improves accuracy and
     provides a smoother estimate:'
+  id: totrans-226
   prefs: []
   type: TYPE_NORMAL
+  zh: 可视化估计显示，尽管我们获得了高精度，但似乎通过使估计更平滑，仍有改进的空间。这可以通过改变控制树节点中数据点最小数量的参数来实现。这个最小值越大，最终的估计就越平滑。如果我们使用65个节点的节点大小，使用kNN时使用的邻居数量，我们得到0.815的准确率。所选模型提高了准确率，并提供了更平滑的估计：
 - en: '![](../Images/850536baff55a28b26a868b89935acac.png)'
+  id: totrans-227
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/850536baff55a28b26a868b89935acac.png)'
 - en: Variable importance
+  id: totrans-228
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 变量重要性
 - en: Random forest performs better than trees in all the examples we have considered.
     However, a disadvantage of random forests is that we lose interpretability. An
     approach that helps with interpretability is to examine *variable importance*.
@@ -1061,338 +1572,508 @@
     The **caret** package includes the function `varImp` that extracts variable importance
     from any model in which the calculation is implemented. We give an example on
     how we use variable importance in the next section.********
+  id: totrans-229
   prefs: []
   type: TYPE_NORMAL
+  zh: 随机森林在所有我们考虑的例子中都优于树。然而，随机森林的一个缺点是我们失去了可解释性。有助于提高可解释性的方法之一是检查*变量重要性*。为了定义*变量重要性*，我们计算预测器在单个树中使用的频率。你可以在高级机器学习书中了解更多关于*变量重要性*的信息[³](#fn3)。**randomForest**包包括一个名为`importance`的函数，可以从拟合的随机森林模型中提取变量重要性。**caret**包包括一个名为`varImp`的函数，可以从任何实现了计算的模型中提取变量重要性。我们将在下一节中给出如何使用变量重要性的示例。********
 - en: '****30.6 Exercises****'
+  id: totrans-230
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '****30.6 练习****'
 - en: '****1\. Create a dataset using the following code:'
+  id: totrans-231
   prefs: []
   type: TYPE_NORMAL
+  zh: '****1. 使用以下代码创建数据集：'
 - en: '[PRE25]'
+  id: totrans-232
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE25]'
 - en: '*Use the **caret** package to partition into a test and training set of equal
     size. Train a linear model and report the RMSE. Repeat this exercise 100 times
     and make a histogram of the RMSEs and report the average and standard deviation.
     Hint: adapt the code shown earlier like this:'
+  id: totrans-233
   prefs: []
   type: TYPE_NORMAL
+  zh: '*使用**caret**包将数据集划分为大小相等的测试集和训练集。训练一个线性模型并报告RMSE。重复此练习100次，并绘制RMSE的直方图，报告平均值和标准差。提示：像这样修改前面显示的代码：'
 - en: '[PRE26]'
+  id: totrans-234
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE26]'
 - en: '*and put it inside a call to `replicate`.'
+  id: totrans-235
   prefs: []
   type: TYPE_NORMAL
+  zh: '*将其放入对`replicate`的调用中。'
 - en: '2\. Now we will repeat the above but using larger datasets. Repeat exercise
     1 but for datasets with `n <- c(100, 500, 1000, 5000, 10000)`. Save the average
     and standard deviation of RMSE from the 100 repetitions. Hint: use the `sapply`
     or `map` functions.'
+  id: totrans-236
   prefs: []
   type: TYPE_NORMAL
+  zh: 2. 现在我们将重复上述操作，但使用更大的数据集。重复练习1，但对于`n <- c(100, 500, 1000, 5000, 10000)`的数据集。保存100次重复的RMSE平均值和标准差。提示：使用`sapply`或`map`函数。
 - en: 3\. Describe what you observe with the RMSE as the size of the dataset becomes
     larger.
+  id: totrans-237
   prefs: []
   type: TYPE_NORMAL
+  zh: 3. 描述随着数据集大小的增加，RMSE的观察结果。
 - en: On average, the RMSE does not change much as `n` gets larger, while the variability
     of RMSE does decrease.
+  id: totrans-238
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 平均而言，随着`n`的增大，RMSE变化不大，而RMSE的变异性确实在减小。
 - en: 'Because of the law of large numbers, the RMSE decreases: more data, more precise
     estimates.'
+  id: totrans-239
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 由于大数定律，RMSE减小：数据越多，估计越精确。
 - en: '`n = 10000` is not sufficiently large. To see a decrease in RMSE, we need to
     make it larger.'
+  id: totrans-240
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '`n = 10000`不够大。为了看到RMSE的下降，我们需要将其做得更大。'
 - en: The RMSE is not a random variable.
+  id: totrans-241
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: RMSE不是一个随机变量。
 - en: '4\. Now repeat exercise 1, but this time make the correlation between `x` and
     `y` larger by changing `Sigma` like this:'
+  id: totrans-242
   prefs: []
   type: TYPE_NORMAL
+  zh: 4. 现在重复练习1，但这次通过改变`Sigma`来使`x`和`y`之间的相关性更大：
 - en: '[PRE27]'
+  id: totrans-243
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE27]'
 - en: '*Repeat the exercise and note what happens to the RMSE now.'
+  id: totrans-244
   prefs: []
   type: TYPE_NORMAL
+  zh: '*重复练习并注意RMSE现在发生了什么。'
 - en: '5\. Which of the following best explains why the RMSE in exercise 4 is so much
     lower than exercise 1:'
+  id: totrans-245
   prefs: []
   type: TYPE_NORMAL
+  zh: 5. 以下哪个选项最好地解释了为什么练习4中的RMSE比练习1低得多：
 - en: It is just luck. If we do it again, it will be larger.
+  id: totrans-246
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 这只是运气。如果我们再试一次，它可能会更大。
 - en: The Central Limit Theorem tells us the RMSE is normal.
+  id: totrans-247
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 中心极限定理告诉我们RMSE是正态分布的。
 - en: When we increase the correlation between `x` and `y`, `x` has more predictive
     power and thus provides a better estimate of `y`. This correlation has a much
     bigger effect on RMSE than `n`. Large `n` simply provide us more precise estimates
     of the linear model coefficients.
+  id: totrans-248
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 当我们增加`x`和`y`之间的相关性时，`x`具有更强的预测能力，从而提供了对`y`的更好估计。这种相关性对RMSE的影响比`n`大得多。大的`n`只是为我们提供了更精确的线性模型系数估计。
 - en: These are both examples of regression, so the RMSE has to be the same.
+  id: totrans-249
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 这两个都是回归的例子，所以RMSE必须相同。
 - en: '6\. Create a dataset using the following code:'
+  id: totrans-250
   prefs: []
   type: TYPE_NORMAL
+  zh: 6. 使用以下代码创建数据集：
 - en: '[PRE28]'
+  id: totrans-251
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE28]'
 - en: '*Note that `y` is correlated with both `x_1` and `x_2`, but the two predictors
     are independent of each other.'
+  id: totrans-252
   prefs: []
   type: TYPE_NORMAL
+  zh: '*请注意，`y`与`x_1`和`x_2`都相关，但两个预测因子彼此独立。'
 - en: '[PRE29]'
+  id: totrans-253
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE29]'
 - en: '*Use the **caret** package to partition into a test and training set of equal
     size. Compare the RMSE when using just `x_1`, just `x_2`, and both `x_1` and `x_2`.
     Train a linear model and report the RMSE.'
+  id: totrans-254
   prefs: []
   type: TYPE_NORMAL
+  zh: '*使用**caret**包将数据集划分为大小相等的测试集和训练集。比较仅使用`x_1`、仅使用`x_2`以及同时使用`x_1`和`x_2`时的RMSE。训练一个线性模型并报告RMSE。'
 - en: '7\. Repeat exercise 6 but now create an example in which `x_1` and `x_2` are
     highly correlated:'
+  id: totrans-255
   prefs: []
   type: TYPE_NORMAL
+  zh: 7. 重复练习6，但现在创建一个`x_1`和`x_2`高度相关的例子：
 - en: '[PRE30]'
+  id: totrans-256
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE30]'
 - en: '*Use the **caret** package to partition into a test and training set of equal
     size. Compare the RMSE when using just `x_1`, just `x_2`, and both `x_1` and `x_2`
     Train a linear model and report the RMSE.'
+  id: totrans-257
   prefs: []
   type: TYPE_NORMAL
+  zh: '*使用**caret**包将数据集划分为大小相等的测试集和训练集。比较仅使用`x_1`、仅使用`x_2`以及同时使用`x_1`和`x_2`时的RMSE。训练一个线性模型并报告RMSE。'
 - en: '8\. Compare the results in 6 and 7 and choose the statement you agree with:'
+  id: totrans-258
   prefs: []
   type: TYPE_NORMAL
+  zh: 8. 比较第6和第7的结果，并选择你同意的陈述：
 - en: Adding extra predictors can improve RMSE substantially, but not when they are
     highly correlated with another predictor.
+  id: totrans-259
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 添加额外的预测因子可以显著提高RMSE，但不是当它们与另一个预测因子高度相关时。
 - en: Adding extra predictors improves predictions equally in both exercises.
+  id: totrans-260
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 添加额外的预测因子在两个练习中都能同样提高预测。
 - en: Adding extra predictors results in over fitting.
+  id: totrans-261
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 添加额外的预测因子会导致过拟合。
 - en: Unless we include all predictors, we have no predicting power.
+  id: totrans-262
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 除非我们包含所有预测因子，否则我们没有预测能力。
 - en: '9\. Define the following dataset:'
+  id: totrans-263
   prefs: []
   type: TYPE_NORMAL
+  zh: 9. 定义以下数据集：
 - en: '[PRE31]'
+  id: totrans-264
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE31]'
 - en: '*Note that we have defined a variable `x` that is predictive of a binary outcome
     `y`.'
+  id: totrans-265
   prefs: []
   type: TYPE_NORMAL
+  zh: '*请注意，我们已定义了一个变量`x`，它可以预测二元结果`y`。'
 - en: '[PRE32]'
+  id: totrans-266
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE32]'
 - en: '*Fit a linear regression model by treating (Y) as a continuous outcome, then
     classify observations by predicting class 1 whenever the fitted value exceeds
     0.5\. Next, fit a logistic regression model to the same data and compare the classification
     accuracy of these two approaches.'
+  id: totrans-267
   prefs: []
   type: TYPE_NORMAL
+  zh: 通过将(Y)视为连续结果来拟合线性回归模型，然后通过预测值超过0.5时将观测值分类为1，来拟合一个逻辑回归模型。接下来，对相同的数据拟合逻辑回归模型，并比较这两种方法的分类准确率。
 - en: 10\. Repeat the simulation from exercise 9 100 times and compare the average
     accuracy for each method and notice they give practically the same answer.
+  id: totrans-268
   prefs: []
   type: TYPE_NORMAL
+  zh: 10. 将练习9的模拟重复100次，并比较每种方法的平均准确率，注意它们给出几乎相同的答案。
 - en: '11\. Generate 25 different datasets changing the difference between the two
     class: `delta <- seq(0, 3, len = 25)`. Plot accuracy versus `delta`.'
+  id: totrans-269
   prefs: []
   type: TYPE_NORMAL
+  zh: 11. 生成25个不同的数据集，改变两个类别之间的差异：`delta <- seq(0, 3, len = 25)`。绘制准确率与`delta`的关系图。
 - en: '12\. The **dslabs** package contains an example dataset similar to `mnist_27`
     but that also includes 1\. You can load it and explore it like this:'
+  id: totrans-270
   prefs: []
   type: TYPE_NORMAL
+  zh: 12. **dslabs**包包含一个类似于`mnist_27`的示例数据集，但也包括1。您可以加载并探索它如下：
 - en: '[PRE33]'
+  id: totrans-271
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE33]'
 - en: '*Fit QDA using the `qda` function in the **MASS** package then create a confusion
     matrix for predictions on the test. Which of the following best describes the
     confusion matrix:'
+  id: totrans-272
   prefs: []
   type: TYPE_NORMAL
+  zh: 使用**MASS**包中的`qda`函数拟合QDA，然后为测试预测创建混淆矩阵。以下哪项最能描述混淆矩阵：
 - en: It is a two-by-two table.
+  id: totrans-273
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 它是一个二乘二的表格。
 - en: Because we have three classes, it is a two-by-three table.
+  id: totrans-274
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 因为我们有三个类别，所以它是一个二乘三的表格。
 - en: Because we have three classes, it is a three-by-three table.
+  id: totrans-275
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 因为我们有三个类别，所以它是一个三乘三的表格。
 - en: Confusion matrices only make sense when the outcomes are binary.
+  id: totrans-276
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 混淆矩阵仅在结果为二元时才有意义。
 - en: '13\. The `byClass` component returned by the `confusionMatrix` object provides
     sensitivity and specificity for each class. Because these terms only make sense
     when data is binary, each row represents sensitivity and specificity when a particular
     class is 1 (positives) and the other two are considered 0s (negatives). Based
     on the values returned by `confusionMatrix`, which of the following is the most
     common mistake:'
+  id: totrans-277
   prefs: []
   type: TYPE_NORMAL
+  zh: 13. `confusionMatrix`对象返回的`byClass`组件为每个类别提供敏感性和特异性。因为这些术语仅在数据为二元时才有意义，所以每一行表示当特定类别为1（阳性）而其他两个被视为0（阴性）时的敏感性和特异性。根据`confusionMatrix`返回的值，以下哪项是最常见的错误：
 - en: Calling 1s either a 2 or 7.
+  id: totrans-278
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 将1s称为2或7。
 - en: Calling 2s either a 1 or 7.
+  id: totrans-279
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 将2s称为1或7。
 - en: Calling 7s either a 1 or 2.
+  id: totrans-280
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 将7s称为1或2。
 - en: All mistakes are equally common.
+  id: totrans-281
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 所有错误都同样常见。
 - en: '14\. To visualize the QDA decision boundary, start by creating a dense grid
     of points covering the \((x_1, x_2)\) space:'
+  id: totrans-282
   prefs: []
   type: TYPE_NORMAL
+  zh: 14. 要可视化QDA决策边界，首先创建一个密集的点网格，覆盖\((x_1, x_2)\)空间：
 - en: '[PRE34]'
+  id: totrans-283
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE34]'
 - en: '*Use your fitted QDA model to compute predicted probabilities on this grid
     by using `predict(qda_fit, newdata = new_x)`. This will give you \(\hat{p}(x_1,
     x_2)\) for each point in the grid.'
+  id: totrans-284
   prefs: []
   type: TYPE_NORMAL
+  zh: 使用拟合的QDA模型通过`predict(qda_fit, newdata = new_x)`计算网格上的预测概率。这将给出网格中每个点的\(\hat{p}(x_1,
+    x_2)\)。
 - en: Finally, plot the grid and color each point depending on whether \(\hat{p}(x_1,
     x_2) > 0.5\) (predict class 1) or \(\hat{p}(x_1, x_2) \le 0.5\) (predict class
     0). The resulting picture shows the decision region determined by QDA.
+  id: totrans-285
   prefs: []
   type: TYPE_NORMAL
+  zh: 最后，绘制网格，并根据\(\hat{p}(x_1, x_2) > 0.5\)（预测类别1）或\(\hat{p}(x_1, x_2) \le 0.5\)（预测类别0）来为每个点着色。生成的图像显示了由QDA确定的决策区域。
 - en: '15\. Repeat exercise 14 but for LDA. Which of the following explains why LDA
     has worse accuracy:'
+  id: totrans-286
   prefs: []
   type: TYPE_NORMAL
+  zh: 15. 重复练习14，但对于LDA。以下哪项解释了为什么LDA的准确率较差：
 - en: LDA separates the space with lines making it too rigid.
+  id: totrans-287
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: LDA通过线分隔空间，使其过于僵化。
 - en: LDA divides the space into two and there are three classes.
+  id: totrans-288
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: LDA将空间分为两部分，有三种类别。
 - en: LDA is very similar to QDA the difference is due to chance.
+  id: totrans-289
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: LDA与QDA非常相似，差异是由于偶然性。
 - en: LDA can’t be used with more than one class.
+  id: totrans-290
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: LDA不能用于超过一个类别。
 - en: 16\. Now repeat exercise 12 for kNN with \(k=31\) and compute and compare the
     overall accuracy for all three methods.
+  id: totrans-291
   prefs: []
   type: TYPE_NORMAL
+  zh: 16. 现在重复练习12，对于kNN使用\(k=31\)，并计算和比较三种方法的总体准确率。
 - en: 17\. To understand how a simple method like kNN can outperform a model that
     explicitly tries to emulate Bayes’ rule, explore the conditional distributions
     of `x_1` and `x_2` to see if the normal approximation holds. Generative models
     can be very powerful, but only when we are able to successfully approximate the
     joint distribution of predictors conditioned on each class.
+  id: totrans-292
   prefs: []
   type: TYPE_NORMAL
+  zh: 17. 要了解为什么像kNN这样的简单方法可以优于明确尝试模拟贝叶斯规则的模型，探索`x_1`和`x_2`的条件分布，以查看正态近似是否成立。生成模型可以非常强大，但只有当我们能够成功近似每个类别的预测变量的联合分布时。
 - en: 18\. Earlier we used logistic regression to predict sex from height. Use kNN
     to do the same. Use the code described in this chapter to select the \(F_1\) measure
     and plot it against \(k\). Compare to the \(F_1\) of about 0.6 we obtained with
     regression.
+  id: totrans-293
   prefs: []
   type: TYPE_NORMAL
+  zh: 18. 之前我们使用逻辑回归从身高预测性别。使用 kNN 来做同样的事情。使用本章中描述的代码选择 \(F_1\) 测量值，并将其与 \(k\) 进行比较。与使用回归获得的约
+    0.6 的 \(F_1\) 值进行比较。
 - en: '19\. Create a simple dataset where the outcome grows 0.75 units on average
     for every increase in a predictor:'
+  id: totrans-294
   prefs: []
   type: TYPE_NORMAL
+  zh: 19. 创建一个简单的数据集，其中结果在预测变量每增加一个单位时平均增长 0.75 个单位。
 - en: '[PRE35]'
+  id: totrans-295
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE35]'
 - en: '*Use `rpart` to fit a regression tree and save the result to `fit`.'
+  id: totrans-296
   prefs: []
   type: TYPE_NORMAL
+  zh: '*使用 `rpart` 拟合回归树并将结果保存到 `fit` 中。'
 - en: 20\. Plot the final tree so that you can see where the partitions occurred.
+  id: totrans-297
   prefs: []
   type: TYPE_NORMAL
+  zh: 20. 绘制最终的树，以便可以看到分区发生的位置。
 - en: 21\. Make a scatterplot of `y` versus `x` along with the predicted values based
     on the fit.
+  id: totrans-298
   prefs: []
   type: TYPE_NORMAL
+  zh: 21. 绘制 `y` 与 `x` 的散点图，并展示基于拟合的预测值。
 - en: 22\. Now train a random forest instead of a regression tree using `randomForest`
     from the **randomForest** package, and remake the scatterplot with the prediction
     line.
+  id: totrans-299
   prefs: []
   type: TYPE_NORMAL
+  zh: 22. 现在使用来自 **randomForest** 包的 `randomForest` 函数来训练一个随机森林而不是回归树，并重新绘制带有预测线的散点图。
 - en: 23\. Use the function `plot` to see if the random forest has converged or if
     we need more trees.
+  id: totrans-300
   prefs: []
   type: TYPE_NORMAL
+  zh: 23. 使用 `plot` 函数查看随机森林是否收敛，或者是否需要更多的树。
 - en: 24\. It seems that the default values for the random forest result in an estimate
     that is too flexible (not smooth). Re-run the random forest but this time with
     `nodesize` set at 50 and `maxnodes` set at 25\. Remake the plot.
+  id: totrans-301
   prefs: []
   type: TYPE_NORMAL
+  zh: 24. 默认的随机森林参数导致估计结果过于灵活（不平滑）。重新运行随机森林，但这次将 `nodesize` 设置为 50，将 `maxnodes` 设置为
+    25。重新绘制图表。
 - en: '25\. This **dslabs** dataset includes the `tissue_gene_expression` with a matrix
     `x`:'
+  id: totrans-302
   prefs: []
   type: TYPE_NORMAL
+  zh: 25. 这个 **dslabs** 数据集包括 `tissue_gene_expression`，其中有一个矩阵 `x`：
 - en: '[PRE36]'
+  id: totrans-303
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE36]'
 - en: '*with the gene expression measured on 500 genes for 189 biological samples
     representing seven different tissues. The tissue type is stored in `tissue_gene_expression$y`.'
+  id: totrans-304
   prefs: []
   type: TYPE_NORMAL
+  zh: '*使用在 189 个生物样本上测量的 500 个基因的表达来表示七个不同的组织。组织类型存储在 `tissue_gene_expression$y`
+    中。'
 - en: '[PRE37]'
+  id: totrans-305
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE37]'
 - en: '*Fit a random forest using the `randomForest` function in the package **randomForest**.
     Then use the `varImp` function to see which are the top 10 most predictive genes.
     Make a histogram of the reported importance to get an idea of the distribution
     of the importance values.*****************'
+  id: totrans-306
   prefs: []
   type: TYPE_NORMAL
+  zh: '*使用包 **randomForest** 中的 `randomForest` 函数拟合随机森林。然后使用 `varImp` 函数查看哪些是前 10
+    个最具预测性的基因。绘制报告的重要性直方图，以了解重要性值的分布。*****************'
 - en: '* * *'
+  id: totrans-307
   prefs: []
   type: TYPE_NORMAL
+  zh: '* * *'
 - en: '****1.  https://web.stanford.edu/~hastie/Papers/ESLII.pdf[↩︎](#fnref1)'
+  id: totrans-308
   prefs: []
   type: TYPE_NORMAL
+  zh: '****1.  https://web.stanford.edu/~hastie/Papers/ESLII.pdf[↩︎](#fnref1)'
 - en: https://papers.ssrn.com/sol3/Delivery.cfm/SSRN_ID1759289_code1486039.pdf?abstractid
     = 1759289&mirid = 1&type = 2[↩︎](#fnref2)
+  id: totrans-309
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: https://papers.ssrn.com/sol3/Delivery.cfm/SSRN_ID1759289_code1486039.pdf?abstractid
+    = 1759289&mirid = 1&type = 2[↩︎](#fnref2)
 - en: https://web.stanford.edu/~hastie/Papers/ESLII.pdf[↩︎](#fnref3)*****
+  id: totrans-310
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: https://web.stanford.edu/~hastie/Papers/ESLII.pdf[↩︎](#fnref3)*****

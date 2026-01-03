@@ -1,34 +1,46 @@
 - en: 24  Regularization
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 24  正则化
 - en: 原文：[https://rafalab.dfci.harvard.edu/dsbook-part-2/highdim/regularization.html](https://rafalab.dfci.harvard.edu/dsbook-part-2/highdim/regularization.html)
+  id: totrans-1
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 原文：[https://rafalab.dfci.harvard.edu/dsbook-part-2/highdim/regularization.html](https://rafalab.dfci.harvard.edu/dsbook-part-2/highdim/regularization.html)
 - en: '[High Dimensional Data](../highdim/intro-highdim.html)'
+  id: totrans-2
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[高维数据](../highdim/intro-highdim.html)'
 - en: '[24  Regularization](../highdim/regularization.html)'
+  id: totrans-3
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[24  正则化](../highdim/regularization.html)'
 - en: Statistical models are meant to capture meaningful structure in data. However,
     when a model includes many parameters, or when some parameters are informed by
     only a small number of observations, the fitted values can become unstable. In
     these situations, the least squares estimates may be much larger than the underlying
     true effects. This phenomenon is a form of overfitting, and it can lead to misleading
     interpretations.
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: 统计模型旨在捕捉数据中的有意义结构。然而，当模型包含许多参数，或者当某些参数仅由少量观测值提供信息时，拟合值可能会变得不稳定。在这些情况下，最小二乘估计值可能远大于潜在的真实效应。这种现象是一种过拟合形式，可能会导致误导性的解释。
 - en: The issue becomes particularly apparent when we use fitted models to make predictions
     for new data, not used during model fitting. A model that overfits will often
     produce estimates that vary too much from sample to sample. In the next part of
     this book, we describe overfitting in more detail and introduce tools for diagnosing
     and preventing it.
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: 当我们使用拟合模型对新数据进行预测时，这些数据在模型拟合过程中并未使用，此时问题变得尤为明显。一个过拟合的模型通常会生成样本间差异过大的估计值。在本书的下一部分，我们将更详细地描述过拟合，并介绍诊断和防止过拟合的工具。
 - en: Regularization provides one of the most effective general strategies for reducing
     overfitting. The idea is to modify the fitting procedure so that large parameter
     estimates are penalized. In practice, this is done by adding a penalty term to
@@ -36,20 +48,26 @@
     extreme estimates, especially when they are supported by limited data. The result
     is a more stable model with parameter estimates that are smaller in magnitude
     and more reliable for use beyond the training data.
+  id: totrans-6
   prefs: []
   type: TYPE_NORMAL
+  zh: 正则化提供了减少过拟合的最有效通用策略之一。其思路是修改拟合过程，使得大的参数估计值受到惩罚。在实践中，这是通过向我们要最小化的量添加一个惩罚项来实现的，例如平方误差之和。惩罚项会阻止极端估计，尤其是在它们仅由有限数据支持时。结果是得到一个更稳定的模型，其参数估计值在幅度上更小，并且对于训练数据之外的用途更加可靠。
 - en: In this chapter, we introduce regularization in the context of a recommendation
     system for movie ratings. We start with user and movie specific effects and observe
     how least squares can produce unrealistic estimates, particularly for movies with
     very few ratings. Regularization helps by shrinking these unstable estimates toward
     zero. In the next chapter, we build on this idea and show how it can be extended
     through latent factor models, which form the basis of modern recommendation systems.
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: 在本章中，我们以电影评分推荐系统为背景介绍正则化。我们从用户和电影特定效应开始，观察最小二乘如何产生不切实际的估计，特别是对于评分非常少的电影。正则化通过将这些不稳定的估计值缩小到零来帮助解决这个问题。在下一章中，我们将在此基础上构建，并展示如何通过潜在因子模型扩展这一思想，这些模型是现代推荐系统的基础。
 - en: '24.1 Case study: recommendation systems'
+  id: totrans-8
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 24.1 案例研究：推荐系统
 - en: Recommendation systems, such as the one used by Amazon, operate by analyzing
     the ratings that customers give to various products. These ratings form a large
     dataset. The system uses this data to predict how likely a specific user is to
@@ -59,159 +77,231 @@
     will like based on the ratings provided by them and other customers for various
     items. This approach helps in personalizing recommendations to suit individual
     preferences.
+  id: totrans-9
   prefs: []
   type: TYPE_NORMAL
+  zh: 推荐系统，如亚马逊所使用的，通过分析客户对各种产品的评分来运行。这些评分形成了一个大型数据集。系统使用这些数据来预测特定用户对特定产品给予好评的可能性。例如，如果系统预测用户可能会给某本书或小工具一个高评分，它就会向用户推荐该商品。本质上，系统试图根据用户和其他客户对各种商品的评分来猜测用户可能会喜欢的商品。这种方法有助于根据个人偏好个性化推荐。
 - en: During its initial years of operation, Netflix used a 5-star recommendation
     system. One star suggested the user would dislike the movie, whereas five stars
     suggested the user would love it. Here, we provide the basics of how these recommendations
     are made, motivated by some of the approaches taken by the winners of the *Netflix
     challenges*.
+  id: totrans-10
   prefs: []
   type: TYPE_NORMAL
+  zh: 在其运营的最初几年，Netflix使用了一个5星推荐系统。一颗星表示用户不喜欢这部电影，而五颗星则表示用户非常喜欢它。在这里，我们提供这些推荐是如何做出的基本原理，这受到了*Netflix挑战*获胜者采取的一些方法的启发。
 - en: 'In October 2006, Netflix offered a challenge to the data science community:
     improve our recommendation algorithm by 10% and win a million dollars. In September
     2009, the winners were announced[¹](#fn1). In this chapter we will demonstrate
     how regularization was an important part of the winning team’s strategy[²](#fn2)[³](#fn3).'
+  id: totrans-11
   prefs: []
   type: TYPE_NORMAL
+  zh: 2006年10月，Netflix向数据科学界提出了一个挑战：将我们的推荐算法提高10%，赢得10万美元。2009年9月，获胜者揭晓[¹](#fn1)。在本章中，我们将展示正则化是如何成为获胜团队策略的重要组成部分[²](#fn2)[³](#fn3)。
 - en: Movielens data
+  id: totrans-12
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: Movielens数据
 - en: 'The Netflix data is not publicly available, but the GroupLens research lab[⁴](#fn4)
     generated their own database with over 20 million ratings for over 27,000 movies
     by more than 138,000 users. We make a small subset of this data available via
     the **dslabs** package:'
+  id: totrans-13
   prefs: []
   type: TYPE_NORMAL
+  zh: Netflix数据不是公开可用的，但GroupLens研究实验室[⁴](#fn4)使用超过138,000个用户对27,000多部电影进行的超过2000万次评分生成了自己的数据库。我们通过**dslabs**包提供这些数据的一个小子集：
 - en: '[PRE0]'
+  id: totrans-14
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: '*Each row represents a rating given by one user to one movie.'
+  id: totrans-15
   prefs: []
   type: TYPE_NORMAL
+  zh: '*每一行代表一个用户对一部电影给出的评分。'
 - en: Because we are working with a relatively large dataset, we will convert the
     data frame to a `data.table` object to take advantage of more efficient data wrangling.
+  id: totrans-16
   prefs: []
   type: TYPE_NORMAL
+  zh: 由于我们正在处理一个相对较大的数据集，我们将数据框转换为`data.table`对象，以利用更高效的数据处理。
 - en: '[PRE1]'
+  id: totrans-17
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: '*We can see the number of unique users that provided ratings and how many unique
     movies were rated:'
+  id: totrans-18
   prefs: []
   type: TYPE_NORMAL
+  zh: '*我们可以看到提供了评分的唯一用户数量以及被评分的唯一电影数量：'
 - en: '[PRE2]'
+  id: totrans-19
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: '*If we multiply those two numbers, we get a figure exceeding 5 million, yet
     our dataset contains only about 100,000 rows. This tells us that not every user
     rated every movie. In fact, the median number of movies rated per user is 71\.
     We can think of the data as a very large matrix, with users as rows and movies
     as columns, filled with many missing entries. The goal of a movie recommendation
     system is to accurately predict those missing values.***'
+  id: totrans-20
   prefs: []
   type: TYPE_NORMAL
+  zh: '*如果我们把这两个数字相乘，得到的数字超过500万，但我们的数据集只有大约10万行。这告诉我们，并非每个用户都对每部电影进行了评分。事实上，每个用户平均评分的电影数量是71部。我们可以将数据视为一个非常大的矩阵，其中用户是行，电影是列，其中包含许多缺失项。电影推荐系统的目标是准确预测这些缺失值。***'
 - en: '***Data exploration***'
+  id: totrans-21
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '***数据探索***'
 - en: '***Let’s look at some of the general properties of the data to better understand
     the challenges by examing histograms of the number of ratings given to movies,
     and the number of ratings given by users:'
+  id: totrans-22
   prefs: []
   type: TYPE_NORMAL
+  zh: '***让我们来看看数据的一些一般特性，以便通过检查电影评分数量和用户评分数量的直方图来更好地了解挑战：'
 - en: '[PRE3]'
+  id: totrans-23
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: '*![](../Images/a83ed5856e2a815eca5f713cd1deaf7e.png)*  *The first thing we
     notice is that some movies receive far more ratings than others. Most movies are
     rated only a handful of times, while a small number accumulate hundreds of ratings.
     This pattern is not surprising. Popular, widely released films tend to be watched
     and rated by many users, while niche or independent films attract much smaller
     audiences.'
+  id: totrans-24
   prefs: []
   type: TYPE_NORMAL
+  zh: '*![](../Images/a83ed5856e2a815eca5f713cd1deaf7e.png)*  *我们首先注意到，一些电影的评分远多于其他电影。大多数电影只被评分几次，而少数电影则积累了数百次评分。这种模式并不令人惊讶。流行的、广泛发行的电影往往被许多用户观看和评分，而小众或独立电影则吸引着更小的观众群体。'
 - en: We also see variation among users, although the disparity is less extreme. Some
     users rate only a few about 10 movies, while others rate dozens or even hundreds.
+  id: totrans-25
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们还看到用户之间存在差异，尽管这种差异并不极端。一些用户只对大约10部电影进行评分，而其他人则对数十部甚至数百部电影进行评分。
 - en: These imbalances will be important as we build models, because estimates based
     on very few observations are inherently less reliable.****
+  id: totrans-26
   prefs: []
   type: TYPE_NORMAL
+  zh: 这些不平衡在我们构建模型时将非常重要，因为基于非常少观察的估计本身就不太可靠。****
 - en: '***Preparing the data***'
+  id: totrans-27
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '***准备数据***'
 - en: '***Before we can fit models or make predictions, we need to shape the data
     into a form suitable for analysis. Our goal is to develop an algorithm using historical
     ratings and then evaluate how well it predicts ratings not used for training.'
+  id: totrans-28
   prefs: []
   type: TYPE_NORMAL
+  zh: '***在我们可以拟合模型或做出预测之前，我们需要将数据塑造成适合分析的形式。我们的目标是开发一个使用历史评分的算法，然后评估它对未用于训练的评分的预测效果有多好。'
 - en: 'We begin by focusing on users who have provided enough information for us to
     learn from their behavior. In this case, we keep only users with at least 100
     ratings:'
+  id: totrans-29
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们首先关注那些为我们提供了足够信息以便从他们的行为中学习到的用户。在这种情况下，我们只保留至少有100个评分的用户：
 - en: '[PRE4]'
+  id: totrans-30
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE4]'
 - en: '*For convenience, we convert both `userId` and `movieId` to character strings.
     This will let us use them as names in vectors later. We also keep only the columns
     relevant to this analysis to keep printed output manageable:'
+  id: totrans-31
   prefs: []
   type: TYPE_NORMAL
+  zh: 为了方便起见，我们将`userId`和`movieId`都转换为字符字符串。这样我们就可以在向量中使用它们作为名称。我们还只保留与这次分析相关的列，以保持打印输出的可管理性：
 - en: '[PRE5]'
+  id: totrans-32
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE5]'
 - en: '**Movie titles are not guaranteed to be unique. For example, this dataset contains
     three distinct movies titled *King Kong*. We therefore keep `movieId` as the unique
     identifier and retain `title` only for interpretation and visualization.*  *To
     evaluate our model, we split the data into two parts:'
+  id: totrans-33
   prefs: []
   type: TYPE_NORMAL
+  zh: '**电影标题不一定唯一。例如，这个数据集中包含三部不同的电影，标题都是《金刚》。因此，我们保留`movieId`作为唯一标识符，只保留`title`用于解释和可视化**。为了评估我们的模型，我们将数据分为两部分：'
 - en: a *training set*, used to estimate the parameters
+  id: totrans-34
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 一个**训练集**，用于估计参数
 - en: a *test set*, used only to assess prediction accuracy
+  id: totrans-35
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 一个**测试集**，仅用于评估预测准确性
 - en: 'We create the split at the user level, assigning 80% of each user’s ratings
     to the training set and 20% to the test set:'
+  id: totrans-36
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们在用户级别创建分割，将每个用户的80%的评分分配给训练集，20%分配给测试集：
 - en: '[PRE6]'
+  id: totrans-37
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE6]'
 - en: '*We then construct the two datasets:'
+  id: totrans-38
   prefs: []
   type: TYPE_NORMAL
+  zh: '**然后我们构建两个数据集**：'
 - en: '[PRE7]'
+  id: totrans-39
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE7]'
 - en: '*Since the model cannot make predictions for movies it has never seen, we remove
     from the test set any movies that do not appear in the training set:'
+  id: totrans-40
   prefs: []
   type: TYPE_NORMAL
+  zh: '**由于模型无法对它从未见过的电影做出预测，我们从测试集中移除了不在训练集中的任何电影**：'
 - en: '[PRE8]'
+  id: totrans-41
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE8]'
 - en: '*This gives us a consistent training and testing framework that we will use
     throughout the chapter.*********'
+  id: totrans-42
   prefs: []
   type: TYPE_NORMAL
+  zh: '**这为我们提供了一个一致的训练和测试框架，我们将在本章中一直使用**。*********'
 - en: '****Loss function****'
+  id: totrans-43
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '**损失函数**'
 - en: '****To describe our models and their estimates, we use the array representation
     introduced in [Section 17.6](../linear-models/treatment-effect-models.html#sec-anova).
     We denote the rating given by user \(i\) to movie \(j\) as \(y_{ij}\).'
+  id: totrans-44
   prefs: []
   type: TYPE_NORMAL
+  zh: '**为了描述我们的模型及其估计，我们使用在[第17.6节](../linear-models/treatment-effect-models.html#sec-anova)中引入的数组表示法。我们用\(y_{ij}\)表示用户\(i\)对电影\(j\)给出的评分**。'
 - en: '*Although the notation \(y_{ij}\) suggests a full \(I \times J\) matrix of
     ratings, in practice we do not observe most of these values. If there are \(I\)
     users and \(J\) movies, the complete rating matrix would contain \(I \times J\)
@@ -219,820 +309,1246 @@
     much smaller because most users rate only a small subset of all movies. In what
     follows, a summation written as \(\sum_{i,j}\) is understood to run over the \(N\)
     observed pairs \((i,j)\), not over all possible combinations.'
+  id: totrans-45
   prefs: []
   type: TYPE_NORMAL
+  zh: '**虽然符号\(y_{ij}\)暗示了一个完整的\(I \times J\)评分矩阵，但在实践中，我们并没有观察到这些值中的大多数。如果有\(I\)个用户和\(J\)部电影，完整的评分矩阵将包含\(I
+    \times J\)个条目。然而，观察到的评分数量，我们用\(N\)表示，要小得多，因为大多数用户只对所有电影中的一小部分进行评分。以下，一个写成\(\sum_{i,j}\)的求和是理解在\(N\)个观察到的对\((i,j)\)上运行，而不是在所有可能的组合上运行**。'
 - en: 'Note that we store the data in a `data.table` rather than a matrix, since the
     full matrix representation would be almost entirely `NA`s.*  *The Netflix challenge
     defined the winning entry as the one that minimized the root mean squared error
     (RMSE) on a test set. If \(y_{ij}\) is the observed rating in the test set and
     \(\hat{y}_{ij}\) is the corresponding prediction made using only the training
     set, the RMSE is:'
+  id: totrans-46
   prefs: []
   type: TYPE_NORMAL
+  zh: '**注意，我们以`data.table`而不是矩阵的形式存储数据，因为完整的矩阵表示几乎完全是`NA`**。*Netflix挑战定义了获胜的条目为在测试集上最小化均方根误差（RMSE）的条目。如果\(y_{ij}\)是测试集中的观察评分，\(\hat{y}_{ij}\)是仅使用训练集做出的相应预测，则RMSE为**：'
 - en: \[ \mbox{RMSE} = \sqrt{\frac{1}{N} \sum_{i,j} (y_{ij} - \hat{y}_{ij})^2} \]
+  id: totrans-47
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \mbox{RMSE} = \sqrt{\frac{1}{N} \sum_{i,j} (y_{ij} - \hat{y}_{ij})^2} \]
 - en: Here, \(N\) is the number of ratings in the test set and the sum runs over those
     ratings.
+  id: totrans-48
   prefs: []
   type: TYPE_NORMAL
+  zh: 在这里，\(N\)是测试集中的评分数量，求和是针对这些评分进行的。
 - en: 'We can interpret RMSE in the same units as the ratings themselves. It behaves
     much like a standard deviation: it represents the typical size of the error in
     our predictions. A value greater than 1 means that, on average, our predicted
     rating is off by more than one star, which is undesirable.'
+  id: totrans-49
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们可以将RMSE解释为与评分相同的单位。它的行为很像标准差：它代表我们预测中的典型误差大小。大于1的值意味着，平均而言，我们的预测评分偏离了一个以上的星级，这是不希望的。
 - en: 'To make it easy to compute RMSE for any vector of residuals, we define:'
+  id: totrans-50
   prefs: []
   type: TYPE_NORMAL
+  zh: 为了方便计算任何残差向量的RMSE，我们定义：
 - en: '[PRE9]'
+  id: totrans-51
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE9]'
 - en: '**We discuss the mean squared error more formally in [Chapter 29](../ml/resampling-methods.html).*******'
+  id: totrans-52
   prefs: []
   type: TYPE_NORMAL
+  zh: '**我们在[第 29 章](../ml/resampling-methods.html)更正式地讨论了均方误差**。'
 - en: '*****The simplest model*****'
+  id: totrans-53
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '*****最简单的模型*****'
 - en: '*****We begin with the simplest possible recommendation system. Suppose we
     ignore all information about users and movies and predict the same rating for
     every user–movie pair. In this setting, the only question is: what single number
     should we use?'
+  id: totrans-54
   prefs: []
   type: TYPE_NORMAL
+  zh: '*****我们开始于最简单的推荐系统。假设我们忽略所有关于用户和电影的信息，并为每个用户-电影对预测相同的评分。在这种情况下，唯一的问题是：我们应该使用哪个单一数字？'
 - en: 'We can answer this using a model. Assume that all ratings come from the same
     underlying value \(\mu\), with random variation accounting for the differences
     we observe:'
+  id: totrans-55
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们可以使用一个模型来回答这个问题。假设所有评分都来自相同的潜在值 \(\mu\)，随机变化解释了我们观察到的差异：
 - en: \[ Y_{ij} = \mu + \varepsilon_{ij} \]
+  id: totrans-56
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ Y_{ij} = \mu + \varepsilon_{ij} \]
 - en: Here \(\varepsilon_{ij}\) represents independent errors with mean 0, and \(\mu\)
     is the true average rating across all users and movies.
+  id: totrans-57
   prefs: []
   type: TYPE_NORMAL
+  zh: 这里 \(\varepsilon_{ij}\) 代表具有均值为 0 的独立误差，而 \(\mu\) 是所有用户和电影的真实平均评分。
 - en: 'The value of \(\mu\) that minimizes the RMSE is the least squares estimate,
     which in this case is simply the average of all ratings in the training set:'
+  id: totrans-58
   prefs: []
   type: TYPE_NORMAL
+  zh: 使 RMSE 最小的 \(\mu\) 值是最小二乘估计，在这种情况下，它只是训练集中所有评分的平均值：
 - en: '[PRE10]'
+  id: totrans-59
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE10]'
 - en: '*If we predict every rating in the test set with this single value, the resulting
     RMSE is:'
+  id: totrans-60
   prefs: []
   type: TYPE_NORMAL
+  zh: '*如果我们用这个单一值预测测试集中的每个评分，得到的 RMSE 是：'
 - en: '[PRE11]'
+  id: totrans-61
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE11]'
 - en: '*Mathematically, this choice is optimal for this model. Any other number leads
     to a larger RMSE. For example:'
+  id: totrans-62
   prefs: []
   type: TYPE_NORMAL
+  zh: '*从数学上讲，这个选择对这个模型是最优的。任何其他数字都会导致更大的 RMSE。例如：'
 - en: '[PRE12]'
+  id: totrans-63
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE12]'
 - en: '*This simple approach provides a useful baseline. However, it falls well short
     of the performance needed to win the Netflix challenge, which required an RMSE
     of about 0.857 to claim the one million dollar prize. We should be able to do
     better by incorporating more structure into the model.********'
+  id: totrans-64
   prefs: []
   type: TYPE_NORMAL
+  zh: '*这种简单的方法提供了一个有用的基线。然而，它远远达不到赢得 Netflix 挑战赛所需的性能，该挑战要求 RMSE 大约为 0.857 才能赢得一百万美元的奖金。我们应该通过将更多结构纳入模型来做得更好**。'
 - en: '*****User effects*****'
+  id: totrans-65
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '*****用户效应*****'
 - en: '*****A natural question is whether all users rate movies in the same way. Some
     users tend to give very high ratings, while others rarely give more than three
     stars. To see this, we compute the average rating for each user:'
+  id: totrans-66
   prefs: []
   type: TYPE_NORMAL
+  zh: '*****一个自然的问题是所有用户是否都以相同的方式评分电影。一些用户倾向于给出非常高的评分，而其他人很少给出超过三个星级的评分。为了看到这一点，我们计算每个用户的平均评分：'
 - en: '[PRE13]'
+  id: totrans-67
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE13]'
 - en: '*![](../Images/9594a219d6d9fbaa027d7fb32b8b540d.png)*  *The histogram shows
     substantial variation. This suggests that some of the differences between ratings
     can be explained simply by how generous or harsh the user is, regardless of which
     movie is being rated.'
+  id: totrans-68
   prefs: []
   type: TYPE_NORMAL
+  zh: '*![](../Images/9594a219d6d9fbaa027d7fb32b8b540d.png)*  *直方图显示了显著的变化。这表明，评分之间的某些差异可以通过用户对评分的慷慨程度或严格程度来解释，而不管被评分的电影是什么。'
 - en: 'To account for this, we extend our model to include a user-specific effect
     \(\alpha_i\):'
+  id: totrans-69
   prefs: []
   type: TYPE_NORMAL
+  zh: 为了解决这个问题，我们将我们的模型扩展到包括用户特定的效应 \(\alpha_i\)：
 - en: \[ Y_{ij} = \mu + \alpha_i + \varepsilon_{ij} \]
+  id: totrans-70
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ Y_{ij} = \mu + \alpha_i + \varepsilon_{ij} \]
 - en: Here, \(\mu\) represents the overall average rating, and \(\alpha_i\) captures
     how much user \(i\) tends to deviate from that average. Statistics textbooks typically
     refer to the \(\alpha_i\) as treatment effects. In the Netflix prize literature,
     they are often called *bias terms*.
+  id: totrans-71
   prefs: []
   type: TYPE_NORMAL
+  zh: 在这里，\(\mu\) 代表整体平均评分，而 \(\alpha_i\) 捕捉用户 \(i\) 偏离该平均程度的大小。统计学教科书通常将 \(\alpha_i\)
+    称为处理效应。在 Netflix 奖项文献中，它们通常被称为 *偏差项*。
 - en: 'This is a linear model so we can fit the model using `[lm()](https://rdrr.io/r/stats/lm.html)`:'
+  id: totrans-72
   prefs: []
   type: TYPE_NORMAL
+  zh: 这是一个线性模型，因此我们可以使用 `[lm()](https://rdrr.io/r/stats/lm.html)` 来拟合模型：
 - en: '[PRE14]'
+  id: totrans-73
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE14]'
 - en: '*However, in this dataset, the number of user effect parameters is:'
+  id: totrans-74
   prefs: []
   type: TYPE_NORMAL
+  zh: '*然而，在这个数据集中，用户效应参数的数量是：'
 - en: '[PRE15]'
+  id: totrans-75
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE15]'
 - en: '*We therefore need hundreds of dummy variables, which makes fitting the model
     computationally inefficient.'
+  id: totrans-76
   prefs: []
   type: TYPE_NORMAL
+  zh: '*因此，我们需要数百个虚拟变量，这使得拟合模型在计算上效率低下。'
 - en: 'Fortunately, for this model we can derive the least squares estimate directly.
     The estimate \(\hat{\alpha}_i\) is simply the average of \(y_{ij} - \hat{\mu}\)
     for user \(i\):'
+  id: totrans-77
   prefs: []
   type: TYPE_NORMAL
+  zh: 幸运的是，对于这个模型，我们可以直接推导出最小二乘估计。估计 \(\hat{\alpha}_i\) 简单地是用户 \(i\) 的 \(y_{ij} -
+    \hat{\mu}\) 的平均值：
 - en: '[PRE16]'
+  id: totrans-78
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE16]'
 - en: '*We store these values in a named vector, which lets us look up each user’s
     effect easily:'
+  id: totrans-79
   prefs: []
   type: TYPE_NORMAL
+  zh: '*我们将这些值存储在一个命名向量中，这使得我们可以轻松地查找每个用户的效应**：'
 - en: '[PRE17]'
+  id: totrans-80
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE17]'
 - en: '*From this point forward, we use `a` to represent the vector of user effect
     estimates \(\hat{\alpha}_i\), and later we will use `b` for the movie effect estimates.
     In the code, we drop the hat notation for convenience, but in the mathematical
     expressions we will continue to write \(\hat{\alpha}_i\) and \(\hat{\beta}_j\)
     to make clear that these are estimates.'
+  id: totrans-81
   prefs: []
   type: TYPE_NORMAL
+  zh: '*从这一点开始，我们使用`a`来表示用户效果估计向量\(\hat{\alpha}_i\)，稍后我们将使用`b`来表示电影效果估计。在代码中，为了方便，我们省略了帽子符号，但在数学表达式中，我们将继续写\(\hat{\alpha}_i\)和\(\hat{\beta}_j\)以明确这些是估计值。*'
 - en: 'With the \(\hat{\alpha}\)s estimates in place, we predict a rating using:'
+  id: totrans-82
   prefs: []
   type: TYPE_NORMAL
+  zh: 在\(\hat{\alpha}\)的估计到位后，我们使用以下方法预测评分：
 - en: \[ \hat{y}_{ij} = \hat{\mu} + \hat{\alpha}_i \]
+  id: totrans-83
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \hat{y}_{ij} = \hat{\mu} + \hat{\alpha}_i \]
 - en: 'Since ratings are always between 0.5 and 5, we define a helper function to
     enforce this constraint:'
+  id: totrans-84
   prefs: []
   type: TYPE_NORMAL
+  zh: 由于评分总是在0.5到5之间，我们定义一个辅助函数来强制执行此约束：
 - en: '[PRE18]'
+  id: totrans-85
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE18]'
 - en: '*We obtain predictions for the test set using the estimates obtained on the
     training set and then evaluate the RMSE:'
+  id: totrans-86
   prefs: []
   type: TYPE_NORMAL
+  zh: '*我们使用在训练集上获得的估计值来预测测试集，然后评估RMSE：*'
 - en: '[PRE19]'
+  id: totrans-87
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE19]'
 - en: '*The RMSE decreases, which confirms that user effects improve our predictions.
     But users are not the only source of variation. Some movies are simply better
     liked than others. We address this next.************'
+  id: totrans-88
   prefs: []
   type: TYPE_NORMAL
+  zh: '*RMSE下降，这证实了用户效果提高了我们的预测。但用户并不是唯一的变量来源。有些电影比其他电影更受欢迎。我们接下来解决这个问题。************'
 - en: '****Movie effects****'
+  id: totrans-89
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '****电影效果****'
 - en: '****Users differ in how they rate movies, but movies themselves also vary in
     how they are received. Some movies are widely liked, while others consistently
     receive low ratings. To capture this source of variation, we extend our model
     by adding a movie-specific effect \(\beta_j\):'
+  id: totrans-90
   prefs: []
   type: TYPE_NORMAL
+  zh: '****用户在评分电影方面存在差异，但电影本身在接收方面也存在差异。有些电影广受欢迎，而有些电影则始终收到低评分。为了捕捉这种变量来源，我们通过添加一个特定于电影的效应\(\beta_j\)来扩展我们的模型：*'
 - en: \[ Y_{ij} = \mu + \alpha_i + \beta_j + \varepsilon_{ij} \]
+  id: totrans-91
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ Y_{ij} = \mu + \alpha_i + \beta_j + \varepsilon_{ij} \]
 - en: Here, \(\beta_j\) represents how much movie \(j\) tends to deviate from the
     overall average rating \(\mu\), after accounting for user tendencies.
+  id: totrans-92
   prefs: []
   type: TYPE_NORMAL
+  zh: 这里，\(\beta_j\)表示电影\(j\)在考虑用户倾向后，偏离整体平均评分\(\mu\)的程度。
 - en: 'In principle, we could estimate all user and movie effects at once using least
     squares:'
+  id: totrans-93
   prefs: []
   type: TYPE_NORMAL
+  zh: 在原则上，我们可以使用最小二乘法一次性估计所有用户和电影效果：
 - en: '[PRE20]'
+  id: totrans-94
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE20]'
 - en: '*However, this requires creating thousands of indicator variables, one for
     each user and one for each movie. The resulting design matrix is large and sparse,
     making `[lm()](https://rdrr.io/r/stats/lm.html)` inefficient for this purpose.'
+  id: totrans-95
   prefs: []
   type: TYPE_NORMAL
+  zh: '*然而，这需要创建数千个指示变量，每个用户和一个电影。结果的设计矩阵很大且稀疏，使得`[lm()](https://rdrr.io/r/stats/lm.html)`对于这个目的效率低下。*'
 - en: 'Instead, we use an *Alternating Least Squares (ALS)* algorithm. This is an
     iterative method that relies on two facts:'
+  id: totrans-96
   prefs: []
   type: TYPE_NORMAL
+  zh: 相反，我们使用一个*交替最小二乘法（ALS）*算法。这是一个依赖于两个事实的迭代方法：
 - en: If \(\mu\) and the \(\alpha_i\) are known, the least squares estimate of \(\beta_j\)
     is the average of \(y_{ij} - \mu - \alpha_i\) over users who rated movie \(j\).
+  id: totrans-97
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 如果\(\mu\)和\(\alpha_i\)是已知的，\(\beta_j\)的最小二乘估计是用户评分电影\(j\)上\(y_{ij} - \mu - \alpha_i\)的平均值。
 - en: If \(\mu\) and the \(\beta_j\) are known, the least squares estimate of \(\alpha_i\)
     is the average of \(y_{ij} - \mu - \beta_j\) over movies rated by user \(i\).
+  id: totrans-98
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 如果\(\mu\)和\(\beta_j\)是已知的，\(\alpha_i\)的最小二乘估计是用户\(i\)评分的电影上\(y_{ij} - \mu -
+    \beta_j\)的平均值。
 - en: By alternating these updates, the estimates converge to the least squares solution.
+  id: totrans-99
   prefs: []
   type: TYPE_NORMAL
+  zh: 通过交替这些更新，估计值收敛到最小二乘解。
 - en: '[PRE21]'
+  id: totrans-100
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE21]'
 - en: '*We then extract the user and movie effects into a named vector:'
+  id: totrans-101
   prefs: []
   type: TYPE_NORMAL
+  zh: '*然后我们将用户和电影效果提取到一个命名向量中：*'
 - en: '[PRE22]'
+  id: totrans-102
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE22]'
 - en: '*With both user and movie effects in place, our predictions are:'
+  id: totrans-103
   prefs: []
   type: TYPE_NORMAL
+  zh: '*当用户和电影效果都到位时，我们的预测为：*'
 - en: \[ \hat{y}_{ij} = \hat{\mu} + \hat{\alpha}_i + \hat{\beta}_j \]
+  id: totrans-104
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \hat{y}_{ij} = \hat{\mu} + \hat{\alpha}_i + \hat{\beta}_j \]
 - en: 'The resulting RMSE for the predictions on the test set is:'
+  id: totrans-105
   prefs: []
   type: TYPE_NORMAL
+  zh: 测试集预测的RMSE结果为：
 - en: '[PRE23]'
+  id: totrans-106
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE23]'
 - en: '*This further reduces the error, confirming that including both user and movie
     effects improves predictive accuracy. However, these estimates can still be unstable,
     especially for movies with only a few ratings.********'
+  id: totrans-107
   prefs: []
   type: TYPE_NORMAL
+  zh: '*这进一步减少了误差，证实了包括用户和电影效果可以提高预测准确性。然而，这些估计仍然可能不稳定，特别是对于只有少数评分的电影。********'
 - en: '****Overfitting****'
+  id: totrans-108
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '****过度拟合****'
 - en: '****If we examine the movies with the largest estimated movie effects \(\hat{\beta}_j\),
     we find that they are all obscure films with only a single rating:'
+  id: totrans-109
   prefs: []
   type: TYPE_NORMAL
+  zh: '****如果我们检查具有最大估计电影效果\(\hat{\beta}_j\)的电影，我们会发现它们都是冷门电影，只有单一评分：*'
 - en: '[PRE24]'
+  id: totrans-110
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE24]'
 - en: '*Do we really believe these are the best movies in the database? None of these
     supposedly top-rated movies appears in the test set. To investigate further, let
     us examine all movies with estimated effects \(\hat{\beta}_j \ge 2\):'
+  id: totrans-111
   prefs: []
   type: TYPE_NORMAL
+  zh: '*我们真的相信这些是数据库中最好的电影吗？这些所谓的顶级评分电影都没有出现在测试集中。为了进一步调查，让我们检查所有估计效应 \(\hat{\beta}_j
+    \ge 2\) 的电影：'
 - en: '[PRE25]'
+  id: totrans-112
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE25]'
 - en: '*All 16 of these movies were rated at most twice:'
+  id: totrans-113
   prefs: []
   type: TYPE_NORMAL
+  zh: '*这 16 部电影中所有电影的评分最多只有两次：'
 - en: '[PRE26]'
+  id: totrans-114
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE26]'
 - en: '*And every prediction we made for these movies in the test set was an overestimate:'
+  id: totrans-115
   prefs: []
   type: TYPE_NORMAL
+  zh: '*我们在测试集中对这些电影的每一个预测都是一个高估：'
 - en: '[PRE27]'
+  id: totrans-116
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE27]'
 - en: '*This is a clear example of *overfitting*. A movie rated only once or twice
     can receive a very large positive (or negative) estimate simply by chance. The
     fewer observations that support an estimate, the more variable it becomes. These
     unstable estimates lead to large prediction errors, which in turn increase the
     RMSE.'
+  id: totrans-117
   prefs: []
   type: TYPE_NORMAL
+  zh: '*这是一个明显的 *过拟合* 例子。仅被评分一次或两次的电影可以通过偶然的机会获得非常大的正（或负）估计。支持的观察结果越少，估计的变异性就越大。这些不稳定的估计导致预测误差很大，进而增加了
+    RMSE。'
 - en: Earlier in the book, when we faced uncertainty, we relied on standard errors
     or confidence intervals to communicate it. But when making predictions, we do
     not get to present a range. We must choose a single number, even if the estimate
     is unreliable.
+  id: totrans-118
   prefs: []
   type: TYPE_NORMAL
+  zh: 在本书的早期，当我们面临不确定性时，我们依赖于标准误差或置信区间来传达它。但在进行预测时，我们无法提供一个范围。我们必须选择一个单一的数字，即使估计是不可靠的。
 - en: This is where *regularization* becomes essential. Regularization shrinks extreme
     estimates toward zero when they are based on small samples, producing more stable
     and reliable predictions. In the next section, we introduce penalized least squares,
     a principled way to achieve this shrinkage.********
+  id: totrans-119
   prefs: []
   type: TYPE_NORMAL
+  zh: 这就是 *正则化* 变得至关重要的地方。正则化在基于小样本时将极端估计缩小到零，从而产生更稳定和可靠的预测。在下一节中，我们将介绍惩罚最小二乘法，这是一种实现这种缩放的原则性方法。********
 - en: '****24.2 Penalized least squares****'
+  id: totrans-120
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '****24.2 惩罚最小二乘法****'
 - en: '****In the previous section, we saw that the largest movie effect estimates
     came from movies with only one or two ratings. These estimates are unstable, and
     the resulting predictions can be highly inaccurate. This is a classic example
     of *overfitting*, in which estimates become too large because they rely on too
     little data.'
+  id: totrans-121
   prefs: []
   type: TYPE_NORMAL
+  zh: '****在前一节中，我们看到了最大的电影效应估计来自只有一两个评分的电影。这些估计是不稳定的，由此产生的预测可能非常不准确。这是一个经典的 *过拟合*
+    例子，其中估计变得过大，因为它们依赖于太少的样本数据。'
 - en: A common way to address overfitting in linear models is to add a *penalty* that
     shrinks large coefficients toward zero. This approach is known as *penalized least
     squares*, or *ridge regression* when the penalty is quadratic.
+  id: totrans-122
   prefs: []
   type: TYPE_NORMAL
+  zh: 在线性模型中解决过拟合的一个常见方法是添加一个将大系数缩小到零的 *惩罚*。这种方法被称为 *惩罚最小二乘法*，当惩罚是二次的时，也称为 *岭回归*。
 - en: A general formulation
+  id: totrans-123
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 一个通用的公式
 - en: 'To describe the idea in a more familiar setting, we temporarily switch from
     the matrix notation \(y_{ij}\) used in the recommendation problem to a standard
     linear model with outcome \(y_i\) and covariates \(x_{i1}, \dots, x_{ip}\):'
+  id: totrans-124
   prefs: []
   type: TYPE_NORMAL
+  zh: 为了在一个更熟悉的环境中描述这个想法，我们暂时从推荐问题中使用的矩阵符号 \(y_{ij}\) 切换到具有结果 \(y_i\) 和协变量 \(x_{i1},
+    \dots, x_{ip}\) 的标准线性模型：
 - en: \[ Y_i = \beta_0 + \sum_{j=1}^p x_{ij}\beta_j + \varepsilon_i, \quad i = 1,
     \dots, N \]
+  id: totrans-125
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ Y_i = \beta_0 + \sum_{j=1}^p x_{ij}\beta_j + \varepsilon_i, \quad i = 1,
+    \dots, N \]
 - en: 'If \(p\) is large, ordinary least squares can overfit. Penalized least squares
     addresses this by minimizing:'
+  id: totrans-126
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果 \(p\) 很大，普通最小二乘法可能会过拟合。惩罚最小二乘法通过最小化来解决此问题：
 - en: \[ \frac{1}{N}\sum_{i=1}^N \left[ y_i - \left(\beta_0 + \sum_{j=1}^p x_{ij}\beta_j\right)\right]^2
     + \lambda \sum_{j=1}^p \beta_j^2 \]
+  id: totrans-127
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \frac{1}{N}\sum_{i=1}^N \left[ y_i - \left(\beta_0 + \sum_{j=1}^p x_{ij}\beta_j\right)\right]^2
+    + \lambda \sum_{j=1}^p \beta_j^2 \]
 - en: The first term is the usual mean squared error. The second term discourages
     large coefficients, with the tuning parameter \(\lambda\) controlling how strongly
     we penalize them. The intercept \(\beta_0\) is typically not penalized as usually
     know the data is not centered at 0.
+  id: totrans-128
   prefs: []
   type: TYPE_NORMAL
+  zh: 第一个项是通常的均方误差。第二个项通过调整参数 \(\lambda\) 控制我们如何强烈地惩罚它们，来阻止大系数。截距 \(\beta_0\) 通常不受惩罚，因为我们通常知道数据不是以
+    0 为中心的。
 - en: 'This approach is known as *ridge regression*. The `MASS` package in R provides
     the `lm.ridge` function to fit the model using penalized least squares:'
+  id: totrans-129
   prefs: []
   type: TYPE_NORMAL
+  zh: 这种方法被称为 *岭回归*。R 中的 `MASS` 包提供了 `lm.ridge` 函数，用于使用惩罚最小二乘法拟合模型：
 - en: '[PRE28]'
+  id: totrans-130
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE28]'
 - en: '*However, this function is not efficient for models with thousands of indicator
     variables, as in our movie rating application. In the sections below we use penalized
     least squares but to find the estimates we implement the ALS algorithm described
     in [Section 24.1.7](#sec-movie-effects).'
+  id: totrans-131
   prefs: []
   type: TYPE_NORMAL
+  zh: '*然而，这个函数对于有数千个指示变量的模型效率不高，就像我们在电影评分应用中那样。在下面的章节中，我们使用受罚最小二乘法，但为了找到估计值，我们实现了
+    [第 24.1.7 节](#sec-movie-effects) 中描述的 ALS 算法。*'
 - en: '*You may notice that some definitions of penalized least squares include the
     residual sum of squares (RSS) without dividing by \(N\), while others divide by
     \(N\) to form the mean squared error (MSE). Both formulations are mathematically
     valid, and they lead to the same minimizer if \(\lambda\) is scaled appropriately.'
+  id: totrans-132
   prefs: []
   type: TYPE_NORMAL
+  zh: '*你可能注意到，一些受罚最小二乘的定义包括未除以 \(N\) 的残差平方和（RSS），而另一些则除以 \(N\) 以形成均方误差（MSE）。两种公式在数学上是有效的，并且如果
+    \(\lambda\) 被适当缩放，它们会导致相同的极小化值。*'
 - en: However, dividing by \(N\) has an important practical advantage. It makes the
     scale of the first term less dependent of the dataset size, so the same value
     of \(\lambda\) has a similar interpretation across datasets of different sizes.
     The `lm.ridge` function in the MASS package uses this convention, and we follow
     it here for consistency.**
+  id: totrans-133
   prefs: []
   type: TYPE_NORMAL
+  zh: 然而，除以 \(N\) 有一个重要的实际优势。它使得第一项的规模对数据集大小不那么依赖，因此相同的 \(\lambda\) 值在不同的数据集大小中具有类似的解释。MASS
+    包中的 `lm.ridge` 函数使用这个约定，我们在这里遵循它以保持一致性。**
 - en: '**Applying penalization to movie effects**'
+  id: totrans-134
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '**对电影效应应用罚则**'
 - en: '**Returning to our setting, we want to shrink movie effects \(\beta_j\) toward
     zero, especially when they are based on only a few ratings. Instead of minimizing:'
+  id: totrans-135
   prefs: []
   type: TYPE_NORMAL
+  zh: '**回到我们的设置，我们希望将电影效应 \(\beta_j\) 收缩到零，尤其是当它们只基于少量评分时。我们不是最小化：**'
 - en: \[ \sum_{i,j} \left[y_{ij} - (\mu + \alpha_i + \beta_j) \right]^2, \]
+  id: totrans-136
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \sum_{i,j} \left[y_{ij} - (\mu + \alpha_i + \beta_j) \right]^2, \]
 - en: 'we minimize the penalized version:'
+  id: totrans-137
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们最小化受罚版本：
 - en: \[ \frac{1}{N}\sum_{i,j} \left[y_{ij} - (\mu + \alpha_i + \beta_j) \right]^2
     + \lambda \left( \sum_i \alpha_i^2 + \sum_j \beta_j^2\right) \]
+  id: totrans-138
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \frac{1}{N}\sum_{i,j} \left[y_{ij} - (\mu + \alpha_i + \beta_j) \right]^2
+    + \lambda \left( \sum_i \alpha_i^2 + \sum_j \beta_j^2\right) \]
 - en: 'For this model, we can derive a closed form solution for the \(\alpha_i\)s
     that minimizes the penalized sum of square if \(\mu\) and the \(\beta_j\)s are
     known:'
+  id: totrans-139
   prefs: []
   type: TYPE_NORMAL
+  zh: 对于这个模型，如果我们知道 \(\mu\) 和 \(\beta_j\)，我们可以推导出一个闭式解，以最小化受罚的平方和：
 - en: \[ \hat{\alpha}_i(\lambda) = \frac{1}{n_i + N\lambda} \sum_{j=1}^{n_i} \left(y_{ij}
     - \mu - \beta_j\right) \] where \(n_i\) is the number of ratings for user \(i\)
     and \(N\) is the total number of ratings.
+  id: totrans-140
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \hat{\alpha}_i(\lambda) = \frac{1}{n_i + N\lambda} \sum_{j=1}^{n_i} \left(y_{ij}
+    - \mu - \beta_j\right) \] 其中 \(n_i\) 是用户 \(i\) 的评分数量，\(N\) 是总的评分数量。
 - en: 'Similarly we can derive a solution for the \(\beta_j\)s if \(\mu\) and the
     \(\alpha_i\) are known:'
+  id: totrans-141
   prefs: []
   type: TYPE_NORMAL
+  zh: 类似地，如果我们知道 \(\mu\) 和 \(\alpha_i\)，我们可以推导出 \(\beta_j\) 的解：
 - en: \[ \hat{\beta}_j(\lambda) = \frac{1}{n_j + N\lambda} \sum_{i=1}^{n_j} \left(y_{ij}
     - \mu - \alpha_i\right) \]
+  id: totrans-142
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \hat{\beta}_j(\lambda) = \frac{1}{n_j + N\lambda} \sum_{i=1}^{n_j} \left(y_{ij}
+    - \mu - \alpha_i\right) \]
 - en: where \(n_j\) is the number of ratings for movie \(j\).
+  id: totrans-143
   prefs: []
   type: TYPE_NORMAL
+  zh: 其中 \(n_j\) 是电影 \(j\) 的评分数量。
 - en: The effect of the penalty is clear. If \(n_j\) is large, \(n_j + N\lambda \approx
     n_j\), shrinkage is minimal, and \(\hat{\beta}_j(\lambda)\) essentially becomes
     an average. If \(n_j\) is small, the estimate is pulled strongly toward 0\. The
     larger the \(\lambda\) the larger the pull.**
+  id: totrans-144
   prefs: []
   type: TYPE_NORMAL
+  zh: 罚款的效果是明显的。如果 \(n_j\) 很大，\(n_j + N\lambda \approx n_j\)，收缩最小，\(\hat{\beta}_j(\lambda)\)
+    实质上成为一个平均值。如果 \(n_j\) 很小，估计值会被强烈地拉向 0。\(\lambda\) 越大，拉力越大。**
 - en: '**Estimating parameters via ALS**'
+  id: totrans-145
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '**通过 ALS 估计参数**'
 - en: '**Because `lm.ridge` is inefficient for our setting, we have thousands of indicator
     variables and a very sparse design, we instead apply the same Alternating Least
     Squares (ALS) strategy introduced earlier. The key difference is that we now replace
     the movie-effect update with its penalized version, which shrinks estimates more
     strongly when a movie has only a few ratings.'
+  id: totrans-146
   prefs: []
   type: TYPE_NORMAL
+  zh: '**由于 `lm.ridge` 在我们的设置中效率不高，我们有数千个指示变量和一个非常稀疏的设计，所以我们改用之前介绍过的相同交替最小二乘（ALS）策略。关键的区别在于，我们现在用受罚版本替换电影效应更新，当电影只有少量评分时，这种更新会更强地收缩估计值。**'
 - en: For convenience, we define an auxiliary function `fit_als` that takes a value
     of `lambda` and returns a copy of `train_set` with the egularized estimates of
     the user and movie effects. This function is specific to our movie rating example.
     It assumes that `train_set` is available in the environment.
+  id: totrans-147
   prefs: []
   type: TYPE_NORMAL
+  zh: 为了方便起见，我们定义了一个辅助函数 `fit_als`，它接受一个 `lambda` 值并返回一个包含用户和电影效果的正规化估计值的 `train_set`
+    的副本。这个函数专门针对我们的电影评分示例。它假设 `train_set` 在环境中可用。
 - en: '[PRE29]'
+  id: totrans-148
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE29]'
 - en: '*This implementation alternates between updating the penalized estimates for
     the user effects `a` and movie effects `b` until the updates become smaller than
     `tol` or we reach `max_iter`. The final result is a regularized movie effect for
     each movie:'
+  id: totrans-149
   prefs: []
   type: TYPE_NORMAL
+  zh: '*这种实现交替更新用户效果 `a` 和电影效果 `b` 的惩罚估计，直到更新小于 `tol` 或我们达到 `max_iter`。最终结果是每个电影的正规化电影效果：'
 - en: '[PRE30]'
+  id: totrans-150
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE30]'
 - en: '*Note that in this example we use \(\lambda = 0.0001\). In [Section 24.3](#sec-selecting-penalty-term),
     we describe a data-driven approach for choosing \(\lambda\) that optimizes predictive
     accuracy.****'
+  id: totrans-151
   prefs: []
   type: TYPE_NORMAL
+  zh: '*注意，在这个例子中我们使用 \(\lambda = 0.0001\)。在 [第24.3节](#sec-selecting-penalty-term)
+    中，我们描述了一种数据驱动的方法来选择 \(\lambda\)，以优化预测精度。****'
 - en: '****How shrinkage behaves****'
+  id: totrans-152
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '****收缩行为****'
 - en: '****We can compare the penalized estimates to the unpenalized ones by plotting
     them against each other:'
+  id: totrans-153
   prefs: []
   type: TYPE_NORMAL
+  zh: '****我们可以通过将它们相互绘制来比较惩罚估计和未惩罚估计：'
 - en: '![](../Images/b4853b8ee10aa9e488133c659585be30.png)'
+  id: totrans-154
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/b4853b8ee10aa9e488133c659585be30.png)'
 - en: 'We note that movies with few ratings are heavily shrunk: the regularized versions
     are closer to 0 than the original. Movies with many ratings remain mostly unchanged:
     the points are close to the identity line.****'
+  id: totrans-155
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们注意到评分较少的电影被大幅缩小：正则化版本比原始版本更接近于0。评分较多的电影基本保持不变：点接近于身份线。
 - en: '****Improved results****'
+  id: totrans-156
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '****改进的结果****'
 - en: '****Let us look at the top 5 movies under the penalized model:'
+  id: totrans-157
   prefs: []
   type: TYPE_NORMAL
+  zh: '****让我们看看在惩罚模型下的前5部电影：'
 - en: '[PRE31]'
+  id: totrans-158
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE31]'
 - en: '*These are far more plausible than the previous list of one-rating obscure
     films.'
+  id: totrans-159
   prefs: []
   type: TYPE_NORMAL
+  zh: '*这些比之前的一评级电影列表更有说服力。'
 - en: 'Finally, we evaluate the RMSE:'
+  id: totrans-160
   prefs: []
   type: TYPE_NORMAL
+  zh: 最后，我们评估了RMSE：
 - en: '[PRE32]'
+  id: totrans-161
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE32]'
 - en: '*The RMSE improves, confirming that regularization stabilizes estimates and
     reduces over**********'
+  id: totrans-162
   prefs: []
   type: TYPE_NORMAL
+  zh: '*RMSE有所提高，证实了正则化稳定了估计并减少了过度**********'
 - en: '****24.3 Selecting the penalty term****'
+  id: totrans-163
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '****24.3 选择惩罚项****'
 - en: '****The regularization parameter \(\lambda\) controls how strongly we shrink
     the movie effects. If \(\lambda\) is too small, we do not reduce overfitting.
     If it is too large, we shrink too much and lose useful signal.'
+  id: totrans-164
   prefs: []
   type: TYPE_NORMAL
+  zh: '****正则化参数 \(\lambda\) 控制我们缩小电影效果的程度。如果 \(\lambda\) 太小，我们不会减少过度拟合。如果它太大，我们会缩小太多，从而失去有用的信号。'
 - en: 'In [Chapter 29](../ml/resampling-methods.html), we introduce formal methods
     for choosing tuning parameters. Here, we take a simple approach for illustrative
     purposes: we compute the RMSE for a range of \(\lambda\) values and pick the one
     that gives the best performance on our test set.'
+  id: totrans-165
   prefs: []
   type: TYPE_NORMAL
+  zh: 在 [第29章](../ml/resampling-methods.html) 中，我们介绍了选择调整参数的正式方法。在这里，为了说明目的，我们采取了一种简单的方法：我们计算了一系列
+    \(\lambda\) 值的RMSE，并选择在测试集上表现最好的一个。
 - en: 'We consider 100 values between 0 and 0.0002:'
+  id: totrans-166
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们考虑了0到0.0002之间的100个值：
 - en: '[PRE33]'
+  id: totrans-167
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE33]'
 - en: '*We then plot RMSE as a function of \(\lambda\):'
+  id: totrans-168
   prefs: []
   type: TYPE_NORMAL
+  zh: '*然后我们将RMSE作为 \(\lambda\) 的函数绘制出来：'
 - en: '[PRE34]'
+  id: totrans-169
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE34]'
 - en: '*![](../Images/d082f0488897214a50173afb35e3e27e.png)*  *We see a clear minimum.
     The optimal value is:'
+  id: totrans-170
   prefs: []
   type: TYPE_NORMAL
+  zh: '*![](../Images/d082f0488897214a50173afb35e3e27e.png)*  *我们看到一个明显的最小值。最佳值是：'
 - en: '[PRE35]'
+  id: totrans-171
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE35]'
 - en: '*We now refit the model using this value:'
+  id: totrans-172
   prefs: []
   type: TYPE_NORMAL
+  zh: '*我们现在使用这个值重新拟合模型：'
 - en: '[PRE36]'
+  id: totrans-173
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE36]'
 - en: '*and compute the final RMSE:'
+  id: totrans-174
   prefs: []
   type: TYPE_NORMAL
+  zh: '*并计算最终的RMSE：'
 - en: '[PRE37]'
+  id: totrans-175
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE37]'
 - en: '*This result confirms that regularization improves our predictive accuracy.
     The following table compares this RMSE to the values obtained from the earlier
     models.'
+  id: totrans-176
   prefs: []
   type: TYPE_NORMAL
+  zh: '*这个结果证实了正则化提高了我们的预测精度。下表比较了这一RMSE与早期模型获得的值。'
 - en: '| model | RMSE |'
+  id: totrans-177
   prefs: []
   type: TYPE_TB
+  zh: '| 模型 | RMSE |'
 - en: '| --- | --- |'
+  id: totrans-178
   prefs: []
   type: TYPE_TB
+  zh: '| --- | --- |'
 - en: '| Just the mean | 1.040 |'
+  id: totrans-179
   prefs: []
   type: TYPE_TB
+  zh: '| 仅平均值 | 1.040 |'
 - en: '| User effect | 0.949 |'
+  id: totrans-180
   prefs: []
   type: TYPE_TB
+  zh: '| 用户效果 | 0.949 |'
 - en: '| User + movie effect | 0.882 |'
+  id: totrans-181
   prefs: []
   type: TYPE_TB
+  zh: '| 用户 + 电影效果 | 0.882 |'
 - en: '| Regularized | 0.863 |*********'
+  id: totrans-182
   prefs: []
   type: TYPE_NORMAL
+  zh: '| 正规化 | 0.863 |*********'
 - en: '****24.4 Exercises****'
+  id: totrans-183
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '****24.4 练习****'
 - en: '****For exercises 1-8 we will use the following simulation: An education expert
     is advocating for smaller schools. The expert bases this recommendation on the
     fact that among the best performing schools, many are small. Let’s simulate a
     dataset for 1000 schools. First, let’s simulate the number of students in each
     school.'
+  id: totrans-184
   prefs: []
   type: TYPE_NORMAL
+  zh: '****对于练习1-8，我们将使用以下模拟：一位教育专家正在倡导建立较小的学校。这位专家的推荐基于这样一个事实：在表现最好的学校中，许多都是小规模的。让我们为1000所学校模拟一个数据集。首先，让我们模拟每所学校的学生人数。'
 - en: '[PRE38]'
+  id: totrans-185
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE38]'
 - en: '*Now let’s assign a *true* quality for each school completely independent from
     size. This is the parameter we want to estimate and it represent the score an
     average student in that school would get in an aptitude test. We simulate this
     value like this:'
+  id: totrans-186
   prefs: []
   type: TYPE_NORMAL
+  zh: '*现在让我们为每所学校分配一个*真实*的质量，这个质量完全独立于规模。这是我们想要估计的参数，它代表了该校平均学生在能力测试中会得到的分数。我们模拟这个值如下：'
 - en: '[PRE39]'
+  id: totrans-187
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE39]'
 - en: '*Now let’s construct a dataset:'
+  id: totrans-188
   prefs: []
   type: TYPE_NORMAL
+  zh: '*现在让我们构建一个数据集：'
 - en: '[PRE40]'
+  id: totrans-189
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE40]'
 - en: '*We can see that the top 10 schools are:'
+  id: totrans-190
   prefs: []
   type: TYPE_NORMAL
+  zh: '*我们可以看到，前10所学校是：'
 - en: '[PRE41]'
+  id: totrans-191
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE41]'
 - en: '*Now let’s have the students in the school take a test. There is variability
     across students in each school so we will as well as random variability in test
     taking so we will simulate the test scores as normally distributed with the average
     determined by the school quality and standard deviations of 30 percentage points:'
+  id: totrans-192
   prefs: []
   type: TYPE_NORMAL
+  zh: '*现在让该校的学生参加考试。每个学校的学生之间存在差异，因此考试分数也会有随机性，所以我们将模拟考试分数，使其呈正态分布，平均成绩由学校质量决定，标准差为30个百分比点：'
 - en: '[PRE42]'
+  id: totrans-193
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE42]'
 - en: '*1\. What are the top schools based on the average score? Show just the ID,
     size, and the average score.'
+  id: totrans-194
   prefs: []
   type: TYPE_NORMAL
+  zh: '*1. 根据平均分数，哪些是顶尖学校？只显示ID、规模和平均分数。'
 - en: 2\. Compare the median school size to the median school size of the top 10 schools
     based on the score.
+  id: totrans-195
   prefs: []
   type: TYPE_NORMAL
+  zh: 2. 将中等学校规模与基于分数的前10所学校的平均学校规模进行比较。
 - en: 3\. According to this test, it appears small schools are better than large schools.
     Five out of the top 10 schools have 100 or fewer students. But how can this be?
     We constructed the simulation so that quality and size are independent. Repeat
     the exercise for the worst 10 schools.
+  id: totrans-196
   prefs: []
   type: TYPE_NORMAL
+  zh: 3. 根据这次测试，看起来小学校比大学校好。前10所学校中有5所学生人数在100人或以下。但这怎么可能呢？我们构建的模拟使得质量和规模是独立的。重复进行最差的10所学校的练习。
 - en: '4\. The same is true for the worst schools: they are small as well. Plot the
     average score versus school size to see what’s going on. Highlight the top 10
     schools based on the *true* quality. Use the log scale transform for the size.'
+  id: totrans-197
   prefs: []
   type: TYPE_NORMAL
+  zh: 4. 对于最差的学校也是如此：它们也很小。绘制平均分数与学校规模的关系图，看看发生了什么。突出显示基于*真实*质量的前10所学校。使用对数尺度转换规模。
 - en: 5\. We can see that the standard error of the score has larger variability when
     the school is smaller. This is a basic statistical reality we learned in the probability
     and inference sections.
+  id: totrans-198
   prefs: []
   type: TYPE_NORMAL
+  zh: 5. 我们可以看到，当学校规模较小时，分数的标准误差变异性更大。这是我们学习概率和推理部分的基本统计现实。
 - en: 'Let’s use regularization to pick the best schools. Remember regularization
     *shrinks* deviations from the average towards 0\. So to apply regularization here,
     we first need to center the value we want to shrink. Let’s call it `theta`:'
+  id: totrans-199
   prefs: []
   type: TYPE_NORMAL
+  zh: 让我们使用正则化来挑选最好的学校。记住，正则化会将偏离平均值的差异缩小到0。因此，为了应用正则化，我们首先需要将我们要缩小的值居中。让我们称它为`theta`：
 - en: '[PRE43]'
+  id: totrans-200
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE43]'
 - en: '*Use the closed form solution for the penalized least square estimates shown
     in this chapter to show that we can find the regularized estimate multiplying
     `theta` by `size/(size + 1000*lambda)`. The try `lambda = 0.05` and examine the
     top 10 schools based on this regularized estimate.'
+  id: totrans-201
   prefs: []
   type: TYPE_NORMAL
+  zh: '*使用本章中显示的惩罚最小二乘估计的封闭形式解来证明我们可以通过将`theta`乘以`size/(size + 1000*lambda)`来找到正则化估计。尝试`lambda
+    = 0.05`并检查基于此正则化估计的前10所学校。'
 - en: '6\. Notice that this improves our results a bit: the number of small schools
     that are incorrectly highly ranked decreases. But is there a better `lambda`?
     Find the `lambda` that minimizes the RMSE = \(1/100 \sum_{i=1}^{100} (\mbox{school
     quality} - \mbox{estimate})^2\).'
+  id: totrans-202
   prefs: []
   type: TYPE_NORMAL
+  zh: 6. 注意这略微提高了我们的结果：错误地高度排名的小学校数量减少了。但是，是否有更好的`lambda`？找到使RMSE = \(1/100 \sum_{i=1}^{100}
+    (\mbox{school quality} - \mbox{estimate})^2\)最小化的`lambda`。
 - en: 7\. Rank the schools based on the average obtained with the best $. Note that
     no small school is incorrectly included.
+  id: totrans-203
   prefs: []
   type: TYPE_NORMAL
+  zh: 7. 根据最佳平均成绩对学校进行排名。请注意，没有小学校被错误地包含在内。
 - en: 8\. A common mistake to make when using regularization is shrinking values towards
     0 that are not centered around 0\. For example, if we don’t subtract the overall
     average before shrinking, we actually do not improve the results. Confirm this
     by re-running the code from exercises 5, 6, and 7 but without removing the overall
     mean.
+  id: totrans-204
   prefs: []
   type: TYPE_NORMAL
+  zh: 8. 使用正则化时常见的错误是将不围绕0的值缩小到0。例如，如果我们不先减去整体平均值，实际上并没有改善结果。通过重新运行练习5、6和7中的代码来确认这一点，但不移除整体平均值。
 - en: The remaining exercises use the `movielens` data. Note that not all of them
     require regularization to solve, some focus on data exploration or model building
     using other ideas introduced in this chapter.
+  id: totrans-205
   prefs: []
   type: TYPE_NORMAL
+  zh: 剩余的练习使用`movielens`数据。请注意，并非所有这些练习都需要正则化来解决，一些练习侧重于数据探索或使用本章中介绍的其他想法构建模型。
 - en: '9\. In the example worked out in this chapter we removed users with less than
     100 ratings. Redo the analysis without filtering these out. Implement an analysis
     that penalizes for both user and movie effects:'
+  id: totrans-206
   prefs: []
   type: TYPE_NORMAL
+  zh: 9. 在本章中给出的示例中，我们移除了评分少于100的用户。现在重新进行分析，不要过滤掉这些用户。实现一个同时惩罚用户和电影效果的分析：
 - en: \[ \frac{1}{N}\sum_{i,j} \left[y_{ij} - (\mu + \alpha_i + \beta_j) \right]^2
     + \lambda \left( \sum_i \alpha_i^2 + \sum_j \beta_j^2\right). \]
+  id: totrans-207
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \frac{1}{N}\sum_{i,j} \left[y_{ij} - (\mu + \alpha_i + \beta_j) \right]^2
+    + \lambda \left( \sum_i \alpha_i^2 + \sum_j \beta_j^2\right). \]
 - en: Note that you will have to edit the function `fit_als`.
+  id: totrans-208
   prefs: []
   type: TYPE_NORMAL
+  zh: 注意，您将不得不编辑`fit_als`函数。
 - en: '10\. Repeat Exercise 9, but now use a model with *two* separate penalty terms:'
+  id: totrans-209
   prefs: []
   type: TYPE_NORMAL
+  zh: 10. 重复练习9，但现在使用具有*两个*单独惩罚项的模型：
 - en: \[ \frac{1}{N}\sum_{i,j} \left[y_{ij} - (\mu + \alpha_i + \beta_j)\right]^2
     + \lambda_1 \sum_i \alpha_i^2 + \lambda_2 \sum_j \beta_j^2. \]
+  id: totrans-210
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \frac{1}{N}\sum_{i,j} \left[y_{ij} - (\mu + \alpha_i + \beta_j)\right]^2
+    + \lambda_1 \sum_i \alpha_i^2 + \lambda_2 \sum_j \beta_j^2. \]
 - en: Here, \(\lambda_1\) controls the amount of shrinkage applied to the user effects
     \(\alpha_i\), and \(\lambda_2\) controls the shrinkage applied to the movie effects
     \(\beta_j\).
+  id: totrans-211
   prefs: []
   type: TYPE_NORMAL
+  zh: 在这里，\(\lambda_1\)控制应用于用户效果\(\alpha_i\)的收缩量，而\(\lambda_2\)控制应用于电影效果\(\beta_j\)的收缩量。
 - en: To optimize both tuning parameters, perform a *grid search* over a reasonable
     range of \((\lambda_1, \lambda_2)\) pairs and select the combination that minimizes
     the RMSE on the test set.
+  id: totrans-212
   prefs: []
   type: TYPE_NORMAL
+  zh: 为了优化两个调整参数，在合理的\((\lambda_1, \lambda_2)\)对范围内进行网格搜索，并选择在测试集上最小化RMSE的组合。
 - en: We recommend lowering the `tol` argument in your ALS implementation while developing
     your solution, as this will speed up the computation during the grid search.
+  id: totrans-213
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们建议在开发解决方案时降低你的ALS实现中的`tol`参数，因为这将在网格搜索期间加快计算速度。
 - en: '11\. Use the `movielens` dataset to explore how ratings vary across three key
     factors: * Number of ratings * Release year * Genre'
+  id: totrans-214
   prefs: []
   type: TYPE_NORMAL
+  zh: 11. 使用`movielens`数据集来探索评分如何随三个关键因素变化：*评分数量*上映年份*类型
 - en: 'Perform the following:'
+  id: totrans-215
   prefs: []
   type: TYPE_NORMAL
+  zh: 执行以下操作：
 - en: Compute the number of ratings per movie and plot it against the movie’s release
     year. Use a square-root transform for the counts.
+  id: totrans-216
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 计算每部电影的评分数量，并将其与电影的上映年份进行比较。对计数使用平方根转换。
 - en: Keep only movies released in 1993 or later. Among these, compute *ratings per
     year since release*. Report the 25 movies with the highest ratings-per-year and
     their average rating.
+  id: totrans-217
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 只保留1993年或之后上映的电影。在这些电影中，计算自上映以来的*每年评分数量*。报告评分数量最高的25部电影及其平均评分。
 - en: Stratify these same movies by ratings per year (e.g. 20 bins or quantiles) and
     compute the average rating in each stratum.
+  id: totrans-218
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 按每年评分数量（例如，20个区间或分位数）对这些相同的电影进行分层，并计算每个分层的平均评分。
 - en: Make a plot of average rating vs. ratings-per-year.
+  id: totrans-219
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 绘制平均评分与每年评分数量的关系图。
 - en: '12\. The `movielens` data also includes a timestamp. * Convert the timestamp
     to a date (hint: use `[lubridate::as_datetime](https://lubridate.tidyverse.org/reference/as_date.html)`).
     * Compute the average rating per week (hint: use `round_date` and `group_by`).
     Plot time on the x-axis and weekly average rating on the y-axis. * Interpret the
     trend. Does a time effect seem plausible?'
+  id: totrans-220
   prefs: []
   type: TYPE_NORMAL
+  zh: 12. `movielens`数据还包括一个时间戳。*将时间戳转换为日期（提示：使用[lubridate::as_datetime](https://lubridate.tidyverse.org/reference/as_date.html)）。*
+    计算每周的平均评分（提示：使用`round_date`和`group_by`）。在x轴上绘制时间，在y轴上绘制每周平均评分。* 解释趋势。时间效应看起来合理吗？
 - en: 13\. The `movielens` data also includes a `genres`. * Treat each *unique combination*
     in `genres` as a category. * Compute the average rating and its standard error
     for each. * Make an error bar plot.
+  id: totrans-221
   prefs: []
   type: TYPE_NORMAL
+  zh: 13. `movielens`数据还包括一个`genres`。*将`genres`中的每个*唯一组合*视为一个类别。*计算每个类别的平均评分及其标准误差。*制作误差条形图。
 - en: 14\. Based on your exploration in exercise 12, which of the following models
     seems most appropriate?
+  id: totrans-222
   prefs: []
   type: TYPE_NORMAL
+  zh: 14. 根据你在练习12中的探索，以下哪个模型看起来最合适？
 - en: \(Y_{ij} = \mu + \alpha_i + \beta_j + t_{ij} + \varepsilon_{ij}\)
+  id: totrans-223
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: \(Y_{ij} = \mu + \alpha_i + \beta_j + t_{ij} + \varepsilon_{ij}\)
 - en: \(Y_{ij} = \mu + \alpha_i + \beta_j + \gamma , t_{ij} + \varepsilon_{ij}\)
+  id: totrans-224
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: \(Y_{ij} = \mu + \alpha_i + \beta_j + \gamma , t_{ij} + \varepsilon_{ij}\)
 - en: \(Y_{ij} = \mu + \alpha_i + \beta_j + \gamma , t_{ij} + \delta_{g(j)} + \varepsilon_{ij}\)
+  id: totrans-225
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: \(Y_{ij} = \mu + \alpha_i + \beta_j + \gamma , t_{ij} + \delta_{g(j)} + \varepsilon_{ij}\)
 - en: \(Y_{ij} = \mu + \alpha_i + \beta_j + f(t_{ij}) + \delta_{g(j)} + \varepsilon_{ij}\)
+  id: totrans-226
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: \(Y_{ij} = \mu + \alpha_i + \beta_j + f(t_{ij}) + \delta_{g(j)} + \varepsilon_{ij}\)
 - en: where \(g(j)\) is the genre category for movie \(j\) and \(f(t)\) is a smooth
     function of \(t\).
+  id: totrans-227
   prefs: []
   type: TYPE_NORMAL
+  zh: 其中 \(g(j)\) 是电影 \(j\) 的类型类别，\(f(t)\) 是 \(t\) 的平滑函数。
 - en: '15\. Using what you learned above, fit at least one model that improves upon
     the best model presented in this chapter: the user + movie effects model (with
     regularization)'
+  id: totrans-228
   prefs: []
   type: TYPE_NORMAL
+  zh: 15. 使用你上面学到的知识，至少拟合一个比本章中展示的最佳模型（用户+电影效果模型，带有正则化）改进的模型：
 - en: 'You may (optionally) include:'
+  id: totrans-229
   prefs: []
   type: TYPE_NORMAL
+  zh: 你可以选择（可选）包括：
 - en: a genre effect
+  id: totrans-230
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: a. 类型效应
 - en: a time effect
+  id: totrans-231
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: a. 时间效应
 - en: ratings-per-year as a movie-level covariate
+  id: totrans-232
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 年度评分作为电影级别的协变量
 - en: or anything else you discovered
+  id: totrans-233
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 或者你发现的任何其他内容
 - en: Evaluate your model on a held-out test set using RMSE.
+  id: totrans-234
   prefs: []
   type: TYPE_NORMAL
+  zh: 使用RMSE评估你的模型在保留的测试集上的表现。
 - en: Compare your results to the RMSE values reported earlier in the chapter.
+  id: totrans-235
   prefs: []
   type: TYPE_NORMAL
+  zh: 将你的结果与本章前面报告的RMSE值进行比较。
 - en: 'Reflect briefly on:'
+  id: totrans-236
   prefs: []
   type: TYPE_NORMAL
+  zh: 简短地反思以下内容：
 - en: Which variables helped most?
+  id: totrans-237
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 哪些变量帮助最大？
 - en: Did any add noise rather than signal?
+  id: totrans-238
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 是否有任何添加了噪声而不是信号？
 - en: How much improvement did you achieve?**********
+  id: totrans-239
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 你取得了多少改进？**********
 - en: '* * *'
+  id: totrans-240
   prefs: []
   type: TYPE_NORMAL
+  zh: '* * *'
 - en: '****1.  http://bits.blogs.nytimes.com/2009/09/21/netflix-awards-1-million-prize-and-starts-a-new-contest/[↩︎](#fnref1)'
+  id: totrans-241
   prefs: []
   type: TYPE_NORMAL
+  zh: '****1.  http://bits.blogs.nytimes.com/2009/09/21/netflix-awards-1-million-prize-and-starts-a-new-contest/[↩︎](#fnref1)'
 - en: http://blog.echen.me/2011/10/24/winning-the-netflix-prize-a-summary/[↩︎](#fnref2)
+  id: totrans-242
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: http://blog.echen.me/2011/10/24/winning-the-netflix-prize-a-summary/[↩︎](#fnref2)
 - en: https://www2.seas.gwu.edu/~simhaweb/champalg/cf/papers/KorenBellKor2009.pdf[↩︎](#fnref3)
+  id: totrans-243
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: https://www2.seas.gwu.edu/~simhaweb/champalg/cf/papers/KorenBellKor2009.pdf[↩︎](#fnref3)
 - en: https://grouplens.org/[↩︎](#fnref4)****
+  id: totrans-244
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: https://grouplens.org/[↩︎](#fnref4)****

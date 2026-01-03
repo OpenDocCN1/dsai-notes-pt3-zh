@@ -1,11 +1,15 @@
 - en: Statistical Inference
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 统计推断
 - en: 原文：[https://rafalab.dfci.harvard.edu/dsbook-part-2/inference/intro-inference.html](https://rafalab.dfci.harvard.edu/dsbook-part-2/inference/intro-inference.html)
+  id: totrans-1
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 原文：[https://rafalab.dfci.harvard.edu/dsbook-part-2/inference/intro-inference.html](https://rafalab.dfci.harvard.edu/dsbook-part-2/inference/intro-inference.html)
 - en: Statistical Inference is the branch of statistics dedicated to distinguishing
     patterns arising from signal versus those arising from chance. It is a broad topic
     and, in this section, we review the basics using polls as a motivating example.
@@ -14,8 +18,10 @@
     using election forecasting as a case study. Readers already familiar with statisical
     inference theory and interested in the case study you can focus on [12  Hierarchical
     Models](hierarchical-models.html).
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: 统计推断是统计学的一个分支，致力于区分由信号产生的模式和由偶然产生的模式。这是一个广泛的话题，在本节中，我们使用民意调查作为激励示例来回顾基础知识。为了说明这些概念，我们用蒙特卡洛模拟和R代码补充数学公式。我们通过使用选举预测作为案例研究来展示这些概念的实际价值。对于已经熟悉统计推断理论并对案例研究感兴趣的读者，可以专注于[12 分层模型](hierarchical-models.html)。
 - en: 'The day before the 2008 presidential election, Nate Silver’s FiveThirtyEight
     stated that “Barack Obama appears poised for a decisive electoral victory”. They
     went further and predicted that Obama would win the election with 349 electoral
@@ -29,39 +35,53 @@
     was giving Obama a 90% chance of winning despite many of the experts thinking
     the final results would be closer. Political commentator Joe Scarborough said
     during his show[¹](#fn1):'
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: 在2008年总统大选的前一天，内特·西尔弗的FiveThirtyEight网站表示，“巴拉克·奥巴马似乎准备着赢得决定性的选举胜利”。他们更进一步预测，奥巴马将以349票对189票的选举人票数获胜，以及以6.1%的得票率赢得普选票。FiveThirtyEight还附上了概率声明，声称奥巴马有91%的胜选机会。预测非常准确，因为最终结果中，奥巴马以365票对173票赢得了选举人团，以及以7.2%的差距赢得了普选票。他们在2008年的表现使FiveThirtyEight引起了政治评论员和电视名人的注意。四年后，在2012年总统大选的前一周，尽管许多专家认为最终结果会更加接近，FiveThirtyEight的内特·西尔弗仍然给奥巴马90%的胜选机会。政治评论员乔·斯卡伯勒在他的节目中[¹](#fn1)说：
 - en: Anybody that thinks that this race is anything but a toss-up right now is such
     an ideologue … they’re jokes.
+  id: totrans-4
   prefs:
   - PREF_BQ
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 任何认为这场选举现在不是势均力敌的人都是如此意识形态化的……他们只是在开玩笑。
 - en: 'To which Nate Silver responded via Twitter:'
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: 内特·西尔弗通过推特做出了回应：
 - en: If you think it’s a toss-up, let’s bet. If Obama wins, you donate $1,000 to
     the American Red Cross. If Romney wins, I do. Deal?
+  id: totrans-6
   prefs:
   - PREF_BQ
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 如果你认为这是一场势均力敌的比赛，那我们就来赌一把。如果奥巴马获胜，你就向美国红十字会捐赠1000美元。如果罗姆尼获胜，我就捐。怎么样？
 - en: Obama won the election.
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: 奥巴马赢得了选举。
 - en: In 2016, Silver was not as certain and gave Hillary Clinton only a 71% of winning.
     In contrast, many other forecasters were almost certain she would win. She lost.
     But 71% is still more than 50%, so was Mr. Silver wrong? And what does probability
     mean in this context anyway?
+  id: totrans-8
   prefs: []
   type: TYPE_NORMAL
+  zh: 在2016年，西尔弗并不那么确定，只给了希拉里·克林顿71%的胜选机会。相比之下，许多其他预测者几乎确信她会获胜。但她输了。但71%仍然多于50%，那么西尔弗先生是不是错了？而且在这个背景下概率到底意味着什么？
 - en: In this part of the book, we show how the probability concepts from the previous
     part can be applied to develop statistical methods that make polls effective tools
     for understanding public opinion. Although in the United States the popular vote
     does not determine the presidential outcome, we use it as a simple and illustrative
     example to introduce the core ideas of statistical inference.
+  id: totrans-9
   prefs: []
   type: TYPE_NORMAL
+  zh: 在本书的这一部分，我们展示了如何将前一部分的概率概念应用于开发统计方法，使民意调查成为理解公众舆论的有效工具。尽管在美国，普选票并不决定总统选举结果，但我们将其作为一个简单且具有说明性的例子来介绍统计推断的核心思想。
 - en: We begin by learning how to define estimates and margins of error for the popular
     vote and how these lead naturally to confidence intervals. We then extend this
     framework by aggregating data from multiple pollsters to examine the limitations
@@ -69,18 +89,26 @@
     about the likelihood of a candidate winning, we introduce Bayesian modeling, and
     finally, we combine these ideas through hierarchical models to build a simplified
     version of the FiveThirtyEight election model and apply it to the 2016 election.
+  id: totrans-10
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们首先学习如何定义流行票数的估计值和误差范围，以及这些如何自然地导致置信区间。然后，我们通过聚合多个民调机构的数据来扩展这个框架，以检验传统模型的局限性并探索改进方法。为了解释关于候选人获胜可能性的概率性陈述，我们引入了贝叶斯建模，最后，我们通过层次模型将这些想法结合起来，构建了一个简化的FiveThirtyEight选举模型，并将其应用于2016年选举。
 - en: 'We conclude with two widely taught topics that, while not required for the
     case study, are central to statistical practice: statistical power and p-values.
     The part ends with a brief introduction to the bootstrap, an inferential method
     we will revisit in the machine learning part.'
+  id: totrans-11
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们以两个广泛教授的主题作为总结，虽然它们不是案例研究的必需内容，但对于统计实践至关重要：统计功效和p值。本部分以对自助法的简要介绍结束，这是一种我们将在机器学习部分重新探讨的推断方法。
 - en: '* * *'
+  id: totrans-12
   prefs: []
   type: TYPE_NORMAL
+  zh: '* * *'
 - en: https://www.youtube.com/watch?v=TbKkjm-gheY[↩︎](#fnref1)
+  id: totrans-13
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: https://www.youtube.com/watch?v=TbKkjm-gheY[↩︎](#fnref1)

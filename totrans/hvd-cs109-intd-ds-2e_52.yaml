@@ -1,25 +1,35 @@
 - en: 17  Treatment Effect Models
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 17 治疗效果模型
 - en: 原文：[https://rafalab.dfci.harvard.edu/dsbook-part-2/linear-models/treatment-effect-models.html](https://rafalab.dfci.harvard.edu/dsbook-part-2/linear-models/treatment-effect-models.html)
+  id: totrans-1
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 原文：[https://rafalab.dfci.harvard.edu/dsbook-part-2/linear-models/treatment-effect-models.html](https://rafalab.dfci.harvard.edu/dsbook-part-2/linear-models/treatment-effect-models.html)
 - en: '[Linear Models](../linear-models/intro-to-linear-models.html)'
+  id: totrans-2
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[线性模型](../linear-models/intro-to-linear-models.html)'
 - en: '[17  Treatment Effect Models](../linear-models/treatment-effect-models.html)'
+  id: totrans-3
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[17 治疗效果模型](../linear-models/treatment-effect-models.html)'
 - en: Up to now, we have worked with linear models to describe relationships between
     continuous variables. We motivated these models using the assumption of multivariate
     normality and showed how the conditional expectation takes a linear form. This
     covers many common applications of regression.
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: 到目前为止，我们使用线性模型来描述连续变量之间的关系。我们通过假设多元正态性来激发这些模型，并展示了条件期望如何呈现线性形式。这涵盖了回归的许多常见应用。
 - en: However, linear models are not limited to describing natural variation among
     continuous measurements. One of the most important uses of linear models is to
     quantify the effect of an intervention or treatment. This framework originated
@@ -30,8 +40,10 @@
     health, education, and the social sciences. Modern A/B tests used by internet
     companies to evaluate website changes or product features also follow this treatment
     effect framework.
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: 然而，线性模型并不仅限于描述连续测量中的自然变异。线性模型最重要的用途之一是量化干预或治疗的效果。这一框架起源于农业，研究人员比较了接受不同肥料或种植策略的田地上的作物产量。结果变量是产量，而治疗是肥料。现在，相同的数学思想构成了分析医学、经济学、公共卫生、教育和社会科学中随机对照试验的基础。互联网公司使用的现代A/B测试，用于评估网站更改或产品特性，也遵循这一治疗效果框架。
 - en: The key idea is that a treatment defines groups, and we use linear models to
     estimate the difference in outcomes across these groups. In randomized experiments,
     the comparison is straightforward because randomization helps ensure that the
@@ -40,122 +52,178 @@
     itself. For example, if we want to estimate the effect of a diet high in fruits
     and vegetables on blood pressure, we must adjust for factors such as age, sex,
     or smoking status.
+  id: totrans-6
   prefs: []
   type: TYPE_NORMAL
+  zh: 关键思想是治疗定义了组别，我们使用线性模型来估计这些组别之间结果差异。在随机实验中，比较是直接的，因为随机化有助于确保组别具有可比性。在观察性研究中，目标相同，但分析人员必须考虑由于治疗本身之外的原因导致的组间差异。例如，如果我们想估计富含水果和蔬菜的饮食对血压的影响，我们必须调整年龄、性别或吸烟状况等因素。
 - en: '17.1 Case study: high-fat diet and mouse weight'
+  id: totrans-7
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 17.1 案例研究：高脂肪饮食和鼠标体重
 - en: 'In this chapter, we consider an experiment designed to test for the effects
     of a high-fat diet on mouse physiology. Mice were randomly selected and divided
     into two groups: one group receiving a high-fat diet, considered the *treatment*,
     while the other group served as the control and received the usual *chow* diet.
     The data is included in the **dslabs** package:'
+  id: totrans-8
   prefs: []
   type: TYPE_NORMAL
+  zh: 在本章中，我们考虑了一个旨在测试高脂肪饮食对小鼠生理影响的实验。小鼠被随机选择并分为两组：一组接受高脂肪饮食，被视为*治疗*，而另一组作为对照组，接受常规*饲料*。数据包含在**dslabs**包中：
 - en: '[PRE0]'
+  id: totrans-9
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: '*A boxplot shows that the high fat diet mice are, on average, heavier.'
+  id: totrans-10
   prefs: []
   type: TYPE_NORMAL
+  zh: '*箱线图显示，高脂肪饮食的小鼠平均体重较重。'
 - en: '[PRE1]'
+  id: totrans-11
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: '*![](../Images/d683e1dcc12e93235c8c0607134c88c8.png)*  *However, given that
     we divided the mice randomly, is it possible that the observed difference is simply
     due to chance?'
+  id: totrans-12
   prefs: []
   type: TYPE_NORMAL
+  zh: '*![](../Images/d683e1dcc12e93235c8c0607134c88c8.png)*  *然而，鉴于我们是随机划分小鼠的，观察到的差异是否仅仅是由于偶然？'
 - en: Before making the connection to linear models, in the next section we perform
     statistical inference on the difference of these means, using the approach described
     in [Chapter 13](../inference/hypothesis-testing.html).**
+  id: totrans-13
   prefs: []
   type: TYPE_NORMAL
+  zh: 在将线性模型联系起来之前，在下一节中，我们使用第13章中描述的方法对这两个均值的差异进行统计分析。**
 - en: '**17.2 Comparing group means**'
+  id: totrans-14
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**17.2 比较组均值**'
 - en: '**The sample averages for the two groups, high-fat and chow diets, are different:'
+  id: totrans-15
   prefs: []
   type: TYPE_NORMAL
+  zh: '**两组样本平均值，高脂肪饮食和常规饲料，是不同的：'
 - en: '[PRE2]'
+  id: totrans-16
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: '*However, this is a random sample of mice, and the assignment to the diet group
     is also done randomly. So is this difference due to chance? We will use hypothesis
     testing, first described in [Chapter 13](../inference/hypothesis-testing.html),
     to answer this question.'
+  id: totrans-17
   prefs: []
   type: TYPE_NORMAL
+  zh: 然而，这是一个随机抽取的小鼠样本，分配到饮食组也是随机进行的。那么这种差异是由于偶然吗？我们将使用假设检验来回答这个问题，假设检验首先在[第13章](../inference/hypothesis-testing.html)中描述。
 - en: Let \(\mu_1\) and \(\sigma_1\) represent the weight average and standard deviation,
     respectively, that we would observe if the entire population of mice were on the
     high-fat diet. Define \(\mu_0\) and \(\sigma_0\) similarly, but for the chow diet.
     Define \(N_1\) and \(N_0\) as the sample sizes, and \(\bar{X}_1\) and \(\bar{X}_0\)
     the sample averages, for the for the high-fat and chow diets, respectively.
+  id: totrans-18
   prefs: []
   type: TYPE_NORMAL
+  zh: 让\(\mu_1\)和\(\sigma_1\)分别代表如果整个小鼠群体都处于高脂肪饮食下，我们会观察到的平均体重和标准差。类似地，定义\(\mu_0\)和\(\sigma_0\)，但针对的是谷物饮食。定义\(N_1\)和\(N_0\)为样本大小，\(\bar{X}_1\)和\(\bar{X}_0\)分别为高脂肪和谷物饮食的样本平均值。
 - en: Since the data comes from a random sample, the central limit theorem tells us
     that, if the sample is large enough, the distribution of the difference in averages
     \(\bar{X}_1 - \bar{X}_0\) can be approximated by a standard normal distribution,
     with expected value \(\mu_1-\mu_0\) and standard error \(\sqrt{\frac{\sigma_1^2}{N_1}
     + \frac{\sigma_0^2}{N_0}}\).
+  id: totrans-19
   prefs: []
   type: TYPE_NORMAL
+  zh: 由于数据来自随机样本，中心极限定理告诉我们，如果样本足够大，平均差值\(\bar{X}_1 - \bar{X}_0\)的分布可以被近似为一个标准正态分布，期望值为\(\mu_1-\mu_0\)，标准误差为\(\sqrt{\frac{\sigma_1^2}{N_1}
+    + \frac{\sigma_0^2}{N_0}}\)。
 - en: If we define the null hypothesis as the high-fat diet having no effect, or \(\mu_1
     - \mu_0 = 0\), this implies that
+  id: totrans-20
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果我们将零假设定义为高脂肪饮食没有效果，即\(\mu_1 - \mu_0 = 0\)，这意味着
 - en: \[ \frac{\bar{X}_1 - \bar{X}_0}{\sqrt{\frac{\sigma_1^2}{N_1} + \frac{\sigma_0^2}{N_0}}}
     \]
+  id: totrans-21
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \frac{\bar{X}_1 - \bar{X}_0}{\sqrt{\frac{\sigma_1^2}{N_1} + \frac{\sigma_0^2}{N_0}}}
+    \]
 - en: has expected value 0 and standard error 1 and therefore approximately follows
     a standard normal distribution.
+  id: totrans-22
   prefs: []
   type: TYPE_NORMAL
+  zh: 具有期望值0和标准误差1，因此近似服从标准正态分布。
 - en: Note that we can’t compute this quantity in practice because the \(\sigma_1\)
     and \(\sigma_0\) are unknown. However, if we estimate them with the sample standard
     deviations, denote them \(s_1\) and \(s_0\) for the high-fat and chow diets, respectively,
     the central limit theorem still holds and tells us that
+  id: totrans-23
   prefs: []
   type: TYPE_NORMAL
+  zh: 注意，我们实际上无法计算这个量，因为\(\sigma_1\)和\(\sigma_0\)是未知的。然而，如果我们用样本标准差来估计它们，分别用\(s_1\)和\(s_0\)表示高脂肪和谷物饮食，中心极限定理仍然成立，并告诉我们
 - en: \[ t = \frac{\bar{X}_1 - \bar{X}_0}{\sqrt{\frac{s_1^2}{N_1} + \frac{s_0^2}{N_0}}}
     \]
+  id: totrans-24
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ t = \frac{\bar{X}_1 - \bar{X}_0}{\sqrt{\frac{s_1^2}{N_1} + \frac{s_0^2}{N_0}}}
+    \]
 - en: 'follows a standard normal distribution when the null hypothesis is true. This
     implies that we can easily compute the probability of observing a value as large
     as the one we obtained:'
+  id: totrans-25
   prefs: []
   type: TYPE_NORMAL
+  zh: 当零假设为真时，服从标准正态分布。这意味着我们可以轻松地计算观察到与我们获得值一样大的值的概率：
 - en: '[PRE3]'
+  id: totrans-26
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: '*We can also used the R function to perform the calculation in one line:'
+  id: totrans-27
   prefs: []
   type: TYPE_NORMAL
+  zh: '*我们也可以使用R函数在一行内完成计算：'
 - en: '[PRE4]'
+  id: totrans-28
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE4]'
 - en: '*Here \(t\) is well over 3, so we don’t really need to compute the p-value
     `1-pnorm(t_stat)` as we know it will be very small.'
+  id: totrans-29
   prefs: []
   type: TYPE_NORMAL
+  zh: '*在这里，t值远远超过3，所以我们实际上不需要计算p值`1-pnorm(t_stat)`，因为我们知道它将会非常小。'
 - en: Note that when \(N_0\) and \(N_1\) are not large enough, the CLT does not apply.
     However, as we explained in [Section 10.2.3](../inference/models.html#sec-t-dist),
     if the outcome data, in this case weight, follows an approximately normal distribution,
     then the \(t\), defined above, follows a t-distribution with \(N_1+N_2-2\) degrees
     of freedom. So the calculation of the p-value is the same except that we use `pt`
     instead of `pnorm`. Specifically, we use `1-pt(t_stat, with(stats, n[2]+n[1]-2))`.
+  id: totrans-30
   prefs: []
   type: TYPE_NORMAL
+  zh: 注意，当\(N_0\)和\(N_1\)不够大时，中心极限定理不适用。然而，正如我们在[第10.2.3节](../inference/models.html#sec-t-dist)中解释的，如果结果数据（在这种情况下是体重）近似服从正态分布，那么上面定义的\(t\)服从自由度为\(N_1+N_2-2\)的t分布。因此，p值的计算方法相同，只是我们使用`pt`而不是`pnorm`。具体来说，我们使用`1-pt(t_stat,
+    with(stats, n[2]+n[1]-2))`。
 - en: Differences in means are commonly examined in the scientific studies. As a result
     this *t-statistic* is one of the most widely reported summaries. When used to
     determine if an observed difference is *statistically significant*, we refer to
     the procedure as “performing a *t test*”.
+  id: totrans-31
   prefs: []
   type: TYPE_NORMAL
+  zh: 在科学研究中，通常检查均值差异。因此，*t统计量*是最广泛报道的总结之一。当用来确定观察到的差异是否具有*统计学意义*时，我们称这个过程为“执行*t检验*”。
 - en: '*In the computation above, we calculated the probability of observing a \(t\)
     value as large as the one obtained. However, when our interest includes deviations
     in both directions, for example, either an increase or a decrease in weight—we
@@ -163,67 +231,101 @@
     one observed, regardless of sign. In that case, we use the absolute value of \(t\)
     and double the one-sided probability: `2*(1 - pnorm(abs(t_stat))` or `2*(1-pt(abs(t_stat),
     with(stats, n[2]+n[1]-2)))`.******'
+  id: totrans-32
   prefs: []
   type: TYPE_NORMAL
+  zh: '*在上面的计算中，我们计算了观察到与所获得 \(t\) 值一样大的概率。然而，当我们的兴趣包括两个方向上的偏差时，例如，体重的增加或减少——我们必须考虑获得与观察到的
+    \(t\) 值一样极端的值的概率，无论符号如何。在这种情况下，我们使用 \(t\) 的绝对值并加倍单侧概率：`2*(1 - pnorm(abs(t_stat)))`
+    或 `2*(1-pt(abs(t_stat), with(stats, n[2]+n[1]-2)))`。******'
 - en: '****17.3 One factor design****'
+  id: totrans-33
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '****17.3 单因素设计****'
 - en: '****Although the t-test is useful for cases in which we compare two treatments,
     it is common to have other variables affect our outcomes. Linear models permit
     hypothesis testing in these more general situations. We start the description
     of the use of linear models for estimating treatment effects by demonstrating
     how they can be used to perform t-tests.'
+  id: totrans-34
   prefs: []
   type: TYPE_NORMAL
+  zh: '****尽管 t 检验在比较两种治疗方法时很有用，但通常会有其他变量影响我们的结果。线性模型允许在这些更一般的情况下进行假设检验。我们通过演示如何使用线性模型进行
+    t 检验来开始描述使用线性模型估计治疗效果的方法。'
 - en: 'If we assume that the weight distributions for mice on both chow and high-fat
     diets are normally distributed, we can write the following linear model to represent
     the data:'
+  id: totrans-35
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果我们假设标准饮食和高脂肪饮食中老鼠的体重分布都是正态分布的，我们可以写出以下线性模型来表示数据：
 - en: \[ Y_i = \beta_0 + \beta_1 x_i + \varepsilon_i \]
+  id: totrans-36
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ Y_i = \beta_0 + \beta_1 x_i + \varepsilon_i \]
 - en: with \(x_i = 1\), if the \(i\)-th mice was fed the high-fat diet, and 0 otherwise,
     and the errors \(\varepsilon_i\) independent and again assume normally distributed
     with expected value 0 and standard deviation \(\sigma\).
+  id: totrans-37
   prefs: []
   type: TYPE_NORMAL
+  zh: 当 \(x_i = 1\) 时，如果第 \(i\) 只老鼠被喂食高脂肪饮食，否则为 0，并且误差 \(\varepsilon_i\) 独立，并再次假设它们服从正态分布，期望值为
+    0，标准差为 \(\sigma\)。
 - en: Note that this mathematical formula looks exactly like the model we wrote out
     for the father-son heights. However, the fact that \(x_i\) is now 0 or 1 rather
     than a continuous variable, allows us to use it in this different context. In
     particular, notice that now \(\beta_0\) represents the population average weight
     of the mice on the chow diet and \(\beta_0 + \beta_1\) represents the population
     average for the weight of the mice on the high-fat diet.
+  id: totrans-38
   prefs: []
   type: TYPE_NORMAL
+  zh: 注意，这个数学公式看起来与我们为父子身高所写出的模型完全一样。然而，\(x_i\) 现在是 0 或 1 而不是连续变量，这使得我们能够在这个不同的环境中使用它。特别是，请注意现在
+    \(\beta_0\) 代表了啮齿动物在标准饮食中的平均体重，而 \(\beta_0 + \beta_1\) 代表了啮齿动物在高脂肪饮食中的平均体重。
 - en: A nice feature of this model is that \(\beta_1\) represents the *treatment effect*
     of receiving the high-fat diet. The null hypothesis that the high-fat diet has
     no effect can be quantified as \(\beta_1 = 0\). We estimate \(\beta_1\) and then
     ask whether it is plausible for the true value to be zero.
+  id: totrans-39
   prefs: []
   type: TYPE_NORMAL
+  zh: 这个模型的一个优点是 \(\beta_1\) 代表了接受高脂肪饮食的 *治疗效果*。高脂肪饮食没有效果的零假设可以量化为 \(\beta_1 = 0\)。我们估计
+    \(\beta_1\)，然后询问真实值是否可能为零。
 - en: 'So how do we estimate \(\beta_1\) and compute this probability? A powerful
     characteristic of linear models is that we can estimate the \(\beta\)s and their
     standard errors with the same LSE machinery:'
+  id: totrans-40
   prefs: []
   type: TYPE_NORMAL
+  zh: 那么，我们如何估计 \(\beta_1\) 并计算这个概率？线性模型的一个强大特性是我们可以使用相同的 LSE 机制来估计 \(\beta\) 及其标准误差：
 - en: '[PRE5]'
+  id: totrans-41
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE5]'
 - en: '*Because `diet` is a factor with two entries, the `lm` function knows to fit
     the linear model above with an \(x_i\), an indicator variable. The `summary` function
     shows us the resulting estimate, standard error, and p-value:'
+  id: totrans-42
   prefs: []
   type: TYPE_NORMAL
+  zh: '*因为 `diet` 是一个有两个条目的因子，`lm` 函数知道要使用 \(x_i\)，一个指示变量来拟合上面的线性模型。`summary` 函数显示给我们结果估计、标准误差和
+    p 值：'
 - en: '[PRE6]'
+  id: totrans-43
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE6]'
 - en: '*If we look at the `diethf` row, the `t value` computed here is the estimate
     divided by its estimated standard error: \(\hat{\beta}_1 / \widehat{\mathrm{SE}}[\hat{\beta}_1]\).
     The `Pr(>|t|)` is the p-value when testing the null hypothesis that \(\beta_1=0\).'
+  id: totrans-44
   prefs: []
   type: TYPE_NORMAL
+  zh: '*如果我们查看 `diethf` 行，这里计算出的 `t 值` 是估计值除以其估计的标准误差：\(\hat{\beta}_1 / \widehat{\mathrm{SE}}[\hat{\beta}_1]\)。`Pr(>|t|)`
+    是在检验 \(\beta_1=0\) 的零假设时的 p 值。'
 - en: In the case of the simple one-factor model, we can show that this statistic
     is almost equivalent to the t-statistics `t_stat` computed in the previous section.
     Intuitively, it makes sense, as both \(\hat{\beta}_1\) and the numerator of the
@@ -233,8 +335,10 @@
     Note that, although we don’t demonstrate it with R here, we can redefine the linear
     model to have different standard errors for each group. Also note that you can
     set `var.equal = TRUE` the `t.test` function and get exactly the same result.
+  id: totrans-45
   prefs: []
   type: TYPE_NORMAL
+  zh: 在简单单因素模型的情况下，我们可以证明这个统计量几乎等同于上一节中计算的t统计量`t_stat`。直观上看，这是有道理的，因为\(\hat{\beta}_1\)和t检验的分子都是处理效果的估计。唯一的细微差别是线性模型并不假设每个群体的标准差不同。相反，两个群体共享\(\mathrm{SD}[\varepsilon]\)作为标准差。请注意，尽管我们在这里没有用R来证明，但我们可以将线性模型重新定义为每个组有不同的标准误差。另外，请注意，您可以将`t.test`函数中的`var.equal`设置为`TRUE`，以获得完全相同的结果。
 - en: '*In the linear model description provided here, we assumed \(\varepsilon\)
     follows a normal distribution. This assumption permits us to show that the statistics
     formed by dividing estimates by their estimated standard errors follows a t-distribution,
@@ -244,166 +348,250 @@
     is large enough, then the central limit theorem applies and we can obtain p-values
     and confidence intervals even without the normal distribution assumption for the
     errors.*******'
+  id: totrans-46
   prefs: []
   type: TYPE_NORMAL
+  zh: '*在本节提供的线性模型描述中，我们假设\(\varepsilon\)遵循正态分布。这个假设允许我们证明由估计值除以其估计标准误差形成的统计量遵循t分布，这反过来又允许我们估计p值或置信区间。然而，请注意，我们不需要这个假设来计算最小二乘估计的期望值和标准误差。此外，如果观察数足够多，那么中心极限定理适用，我们可以在不假设误差为正态分布的情况下获得p值和置信区间。'
 - en: '*****17.4 Two factor designs*****'
+  id: totrans-47
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '*****17.4 双因素设计*****'
 - en: '*****We are now ready to describe a major advantage of the linear model approach
     over directly comparing averages.'
+  id: totrans-48
   prefs: []
   type: TYPE_NORMAL
+  zh: '*****我们现在可以描述线性模型方法相对于直接比较平均值的重大优势。'
 - en: 'Note that this experiment included male and female mice, and male mice are
     known to be heavier. This explains why the residuals depend on the sex variable:'
+  id: totrans-49
   prefs: []
   type: TYPE_NORMAL
+  zh: 注意，这个实验包括了雄性和雌性小鼠，并且已知雄性小鼠更重。这解释了为什么残差依赖于性别变量：
 - en: '[PRE7]'
+  id: totrans-50
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE7]'
 - en: '*![](../Images/f3cae82d08eb4da6ec98491d59fbee70.png)*  *This misspecification
     can have real implications; for instance, if more male mice received the high-fat
     diet, then this could explain the increase. Conversely, if fewer received it,
     we might underestimate the diet effect. Sex could be a confounder, indicating
     that our model can certainly be improved.'
+  id: totrans-51
   prefs: []
   type: TYPE_NORMAL
+  zh: '*![](../Images/f3cae82d08eb4da6ec98491d59fbee70.png)*  *这种误设可能具有实际影响；例如，如果接受高脂肪饮食的雄性小鼠更多，那么这可以解释这种增加。相反，如果接受较少，我们可能会低估饮食效果。性别可能是一个混杂因素，表明我们的模型肯定可以改进。'
 - en: 'From examining the data:'
+  id: totrans-52
   prefs: []
   type: TYPE_NORMAL
+  zh: 'From examining the data:'
 - en: '[PRE8]'
+  id: totrans-53
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE8]'
 - en: '*![](../Images/153dd963a79a07204f9e9c4a29dc73f4.png)*  *we see that the diet
     effect is observed for both sexes and that males are heavier than females. Although
     not nearly as obvious, it also appears the diet effect is stronger in males.'
+  id: totrans-54
   prefs: []
   type: TYPE_NORMAL
+  zh: '*![](../Images/153dd963a79a07204f9e9c4a29dc73f4.png)*  *我们看到饮食效果在两种性别中都存在，并且雄性比雌性重。尽管并不那么明显，饮食效果在雄性中似乎也更强烈。'
 - en: 'A linear model that permits a different expected value for the following four
     groups, 1) female on chow diet, 2) females on high-fat diet, 3) male on chow diet,
     and 4) males on high-fat diet, can be written like this:'
+  id: totrans-55
   prefs: []
   type: TYPE_NORMAL
+  zh: 一个允许以下四个组有不同的期望值的线性模型，1) 雌性啄食饲料，2) 雌性高脂肪饮食，3) 雄性啄食饲料，和4) 雄性高脂肪饮食，可以写成这样：
 - en: \[ Y_i = \beta_1 x_{i1} + \beta_2 x_{i2} + \beta_3 x_{i3} + \beta_4 x_{i4} +
     \varepsilon_i \]
+  id: totrans-56
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ Y_i = \beta_1 x_{i1} + \beta_2 x_{i2} + \beta_3 x_{i3} + \beta_4 x_{i4} +
+    \varepsilon_i \]
 - en: with \(x_{i1},\dots,x_{i4}\) indicator variables for each of the four groups.
     With this representation we allow the diet effect to be different for males and
     females.
+  id: totrans-57
   prefs: []
   type: TYPE_NORMAL
+  zh: 其中\(x_{i1},\dots,x_{i4}\)是四个组中的每个组的指示变量。通过这种表示，我们允许饮食效果在雄性和雌性中不同。
 - en: However, in the original representation, none of the \(\beta\) parameters directly
     correspond to the treatment effect of interest (the effect of the high-fat diet).
     A useful feature of linear models is that we can reparameterize the model so that
     the fitted means remain the same, but the coefficients have interpretations aligned
     with the scientific question.
+  id: totrans-58
   prefs: []
   type: TYPE_NORMAL
+  zh: 然而，在原始表示中，没有一个 \(\beta\) 参数直接对应于感兴趣的待遇效应（高脂肪饮食的效果）。线性模型的一个有用特性是我们可以重新参数化模型，使得拟合的均值保持不变，但系数的解释与科学问题相一致。
 - en: For example, consider the model
+  id: totrans-59
   prefs: []
   type: TYPE_NORMAL
+  zh: 例如，考虑以下模型
 - en: \[ Y_i = \beta_0 + \beta_1 \, x_{i1} + \beta_2 \, x_{i2} + \beta_3 \,x_{i1}
     x_{i2} + \varepsilon_i\,, \]
+  id: totrans-60
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ Y_i = \beta_0 + \beta_1 \, x_{i1} + \beta_2 \, x_{i2} + \beta_3 \,x_{i1}
+    x_{i2} + \varepsilon_i\,, \]
 - en: where
+  id: totrans-61
   prefs: []
   type: TYPE_NORMAL
+  zh: 其中
 - en: \(x_{i1} = 1\) if mouse \(i\) received the high-fat diet and \(0\) otherwise
+  id: totrans-62
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: \(x_{i1} = 1\) 如果老鼠 \(i\) 接受了高脂肪饮食，否则为 \(0\)
 - en: \(x_{i2} = 1\) if mouse \(i\) is male and \(0\) if female
+  id: totrans-63
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: \(x_{i2} = 1\) 如果老鼠 \(i\) 是雄性，如果是雌性则为 \(0\)
 - en: 'Then we interpret the parameters as follows:'
+  id: totrans-64
   prefs: []
   type: TYPE_NORMAL
+  zh: 然后，我们按照以下方式解释参数：
 - en: \(\beta_0\) is the baseline average weight of females on the chow diet
+  id: totrans-65
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: \(\beta_0\) 是雌性在普通饮食中的基线平均体重
 - en: \(\beta_1\) is the diet effect for females
+  id: totrans-66
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: \(\beta_1\) 是雌性的饮食效应
 - en: \(\beta_2\) is the average difference between males and females under the chow
     diet
+  id: totrans-67
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: \(\beta_2\) 是在普通饮食下雄性和雌性之间的平均差异
 - en: \(\beta_3\) is the difference in the diet effect between males and females,
     often called an *interaction* effect
+  id: totrans-68
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: \(\beta_3\) 是雄性和雌性之间饮食效应的差异，通常称为 *交互* 效应
 - en: 'To see why this works let’s examine plug in the four options for \(x_{1i}\)
     and \(x_{2i}\) to the linearm combination above and see what we get:'
+  id: totrans-69
   prefs: []
   type: TYPE_NORMAL
+  zh: 为了了解为什么这有效，让我们将 \(x_{1i}\) 和 \(x_{2i}\) 的四种选项插入到上面的线性组合中，看看我们会得到什么：
 - en: \[ \begin{aligned} \mbox{female on chow diet} \implies x_{1i} = 0, \,x_{2i}
     = 0 \implies \mathrm{E}[Y_i] &= \beta_0 \\ \mbox{female on high fat diet} \implies
     x_{1i} = 1, \,x_{2i} = 0 \implies \mathrm{E}[Y_i] &= \beta_0 + \beta_1\\ \mbox{male
     on chow diet} \implies x_{1i} = 0, \,x_{2i} = 1 \implies \mathrm{E}[Y_i] &= \beta_0
     + \beta_2\\ \mbox{male on chow diet} \implies x_{1i} = 1, \,x_{2i} = 1 \implies
     \mathrm{E}[Y_i] &= \beta_0 +\beta_1 + \beta_2\\ \end{aligned} \]
+  id: totrans-70
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \begin{aligned} \mbox{雌性在普通饮食中} \implies x_{1i} = 0, \,x_{2i} = 0 \implies
+    \mathrm{E}[Y_i] &= \beta_0 \\ \mbox{雌性在高脂肪饮食中} \implies x_{1i} = 1, \,x_{2i} =
+    0 \implies \mathrm{E}[Y_i] &= \beta_0 + \beta_1\\ \mbox{雄性在普通饮食中} \implies x_{1i}
+    = 0, \,x_{2i} = 1 \implies \mathrm{E}[Y_i] &= \beta_0 + \beta_2\\ \mbox{雄性在普通饮食中}
+    \implies x_{1i} = 1, \,x_{2i} = 1 \implies \mathrm{E}[Y_i] &= \beta_0 +\beta_1
+    + \beta_2\\ \end{aligned} \]
 - en: This parameterization does not change the predicted values. It simply changes
     how we interpret the coefficients so that each corresponds to a meaningful comparison.
+  id: totrans-71
   prefs: []
   type: TYPE_NORMAL
+  zh: 这种参数化不会改变预测值。它只是改变了我们对系数的解释方式，以便每个系数都对应一个有意义的比较。
 - en: Statistical textbooks describe several other ways in which the model can be
     rewritten to obtain other types of interpretations. For example, we might want
     \(\beta_2\) to represent the overall diet effect (the average between female and
     male effect) rather than the diet effect on females. This is achieved by defining
     what *contrasts* we are interested in.
+  id: totrans-72
   prefs: []
   type: TYPE_NORMAL
+  zh: 统计教材描述了其他几种重写模型的方法，以获得其他类型的解释。例如，我们可能希望 \(\beta_2\) 代表整体饮食效应（雌性和雄性效应的平均值），而不是对雌性的饮食效应。这是通过定义我们感兴趣的
+    *对比* 来实现的。
 - en: 'In R, we can specify the linear model above using the following:'
+  id: totrans-73
   prefs: []
   type: TYPE_NORMAL
+  zh: 在 R 中，我们可以使用以下方式指定上述线性模型：
 - en: '[PRE9]'
+  id: totrans-74
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE9]'
 - en: '*Here, the `*` denotes *factor crossing*, not multiplication: `diet*sex` is
     shorthand for `diet+sex+diet:sex`, to include diet, sex, and the diet/ sex interaction,
     respecitvely, in the model.'
+  id: totrans-75
   prefs: []
   type: TYPE_NORMAL
+  zh: '*在这里，`*` 表示 *因子交叉*，而不是乘法：`diet*sex` 是 `diet+sex+diet:sex` 的简写，表示在模型中分别包含饮食、性别和饮食/性别的交互作用。'
 - en: '[PRE10]'
+  id: totrans-76
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE10]'
 - en: '*Note that the male effect is larger that the diet effect, and the diet effect
     is statistically significant for both sexes, with diet affecting males more by
     between 1 and 4.5 grams.'
+  id: totrans-77
   prefs: []
   type: TYPE_NORMAL
+  zh: '*请注意，雄性效应大于饮食效应，饮食效应对两种性别都具有统计学意义，饮食对雄性的影响在 1 到 4.5 克之间。'
 - en: 'A common approach applied when more than one factor is thought to affect the
     measurement is to simply include an additive effect for each factor, like this:'
+  id: totrans-78
   prefs: []
   type: TYPE_NORMAL
+  zh: 当认为多个因素会影响测量时，常用的方法是为每个因素简单地包含一个加性效应，如下所示：
 - en: \[ Y_i = \beta_0 + \beta_1 x_{i1} + \beta_2 x_{i2} + \varepsilon_i \]
+  id: totrans-79
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ Y_i = \beta_0 + \beta_1 x_{i1} + \beta_2 x_{i2} + \varepsilon_i \]
 - en: 'In this model, the \(\beta_1\) is a general diet effect that applies regardless
     of sex. In R, we use the following code, employing a `+` instead of `*`:'
+  id: totrans-80
   prefs: []
   type: TYPE_NORMAL
+  zh: 在此模型中，\(\beta_1\) 是一个通用的饮食效应，无论性别如何都适用。在 R 中，我们使用以下代码，使用 `+` 而不是 `*`：
 - en: '[PRE11]'
+  id: totrans-81
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE11]'
 - en: '*Note that this model does not account for the difference in diet effect between
     males and females. Diagnostic plots would reveal this deficiency by showing that
     the residuals are biased: they are, on average, negative for females on the diet
     and positive for males on the diet, rather than being centered around 0.'
+  id: totrans-82
   prefs: []
   type: TYPE_NORMAL
+  zh: '*请注意，此模型没有考虑男性和女性之间饮食效应的差异。诊断图将揭示这一缺陷，通过显示残差是有偏的：对于饮食的女性，平均而言是负的，而对于饮食的男性，平均而言是正的，而不是围绕0中心。'
 - en: '[PRE12]'
+  id: totrans-83
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE12]'
 - en: '*![](../Images/5f41efe2d72ad32c09f8f4bef2886fd8.png)*  *Scientific studies,
     particularly within epidemiology and social sciences, frequently omit interaction
     terms from models due to the high number of variables. Adding interactions necessitates
@@ -414,59 +602,84 @@
     effects, models excluding interactions are simpler to interpret, as parameters
     are typically viewed as the extent to which the outcome increases with the assigned
     treatment.'
+  id: totrans-84
   prefs: []
   type: TYPE_NORMAL
+  zh: '*![](../Images/5f41efe2d72ad32c09f8f4bef2886fd8.png)*  *科学研究表明，尤其是在流行病学和社会科学领域，由于变量数量众多，经常从模型中省略交互项。添加交互项需要众多参数，在极端情况下可能会阻止模型拟合。然而，省略交互项隐含地假设它们为0，这可能导致无法很好地描述数据的模型，因此不适合使用。相反，当我们能够捍卫没有交互效应的假设时，排除交互项的模型更容易解释，因为参数通常被视为结果随着分配的治疗程度增加的幅度。'
 - en: '*Linear models are highly flexible and applicable in many contexts. For example,
     we can include many more factors than just 2\. We have only just scratched the
     surface of how linear models can be used to estimate treatment effects. We highly
     recommend learning more about this by exploring linear model textbooks and R manuals
     that cover the use of functions such as `lm`, `contrasts`, and `model.matrix`.************'
+  id: totrans-85
   prefs: []
   type: TYPE_NORMAL
+  zh: '*线性模型在许多场景中都非常灵活且适用。例如，我们不仅可以包含超过两个的因素。我们仅仅只是触及了线性模型在估计治疗效果方面的应用表面。我们强烈建议通过探索涵盖`lm`、`contrasts`和`model.matrix`等函数的线性模型教科书和R手册来了解更多关于这方面的知识。************'
 - en: '*****17.5 Contrasts*****'
+  id: totrans-86
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '*****17.5 对比*****'
 - en: '*****In the examples we have examined, each treatment had only two groups:
     diet had chow/high-fat, and sex had female/male. However, variables of interest
     often have more than one level. For example, we might have tested a third diet
     on the mice. In statistics textbooks, these variables are referred to as a *factor*,
     and the groups in each factor are called its *levels*.'
+  id: totrans-87
   prefs: []
   type: TYPE_NORMAL
+  zh: '*****在我们在例子中检查的例子中，每种治疗只有两组：饮食有chow/高脂肪，性别有女性/男性。然而，感兴趣的变量通常有多个水平。例如，我们可能在老鼠身上测试了第三种饮食。在统计学教科书中，这些变量被称为*因素*，每个因素中的组被称为其*水平*。'
 - en: 'When a factor is included in the formula, the default behavior for `lm` is
     to define the intercept term as the expected value for the first level, and the
     other coefficient are to represent the difference, or *contrast*, between the
     other levels and first. We can see when we estimate the sex effect with `lm` like
     this:'
+  id: totrans-88
   prefs: []
   type: TYPE_NORMAL
+  zh: 当一个因素被包含在公式中时，`lm`的默认行为是将截距项定义为第一水平的期望值，其他系数则表示与其他水平与第一水平之间的差异，或称为*对比*。我们可以通过以下方式使用`lm`来估计性别效应：
 - en: '[PRE13]'
+  id: totrans-89
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE13]'
 - en: '*To recover the expected mean for males, we can simply add the two coefficients:'
+  id: totrans-90
   prefs: []
   type: TYPE_NORMAL
+  zh: '*为了恢复男性的期望均值，我们可以简单地添加两个系数：'
 - en: '[PRE14]'
+  id: totrans-91
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE14]'
 - en: '*The package **emmeans** simplifies the calculation and also calculates standard
     errors:'
+  id: totrans-92
   prefs: []
   type: TYPE_NORMAL
+  zh: '*`emmeans`包简化了计算，并计算标准误差：'
 - en: '[PRE15]'
+  id: totrans-93
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE15]'
 - en: '*Now, what if we really didn’t want to define a reference level? What if we
     wanted a parameter to represent the difference from each group to the overall
     mean? Can we write a model like this:'
+  id: totrans-94
   prefs: []
   type: TYPE_NORMAL
+  zh: '*现在，如果我们真的不想定义参考水平怎么办？如果我们想有一个参数来表示每个组与总体均值之间的差异怎么办？我们能写出一个这样的模型吗：'
 - en: \[ Y_i = \beta_0 + \beta_1 x_{i1} + \beta_2 x_{i2} + \varepsilon_i \] with \(x_{i1}
     = 1\), if observation \(i\) is female and 0 otherwise, and \(x_{i2}=1\), if observation
     \(i\) is male and 0 otherwise?
+  id: totrans-95
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ Y_i = \beta_0 + \beta_1 x_{i1} + \beta_2 x_{i2} + \varepsilon_i \] 其中 \(x_{i1}
+    = 1\)，如果观察 \(i\) 是女性否则为0，\(x_{i2}=1\)，如果观察 \(i\) 是男性否则为0？
 - en: Unfortunately, this representation has a problem. Note that the mean for females
     and males are represented by \(\beta_0 + \beta_1\) and \(\beta_0 + \beta_2\),
     respectively. This is a problem because the expected value for each group is just
@@ -476,133 +689,205 @@
     estimate. When this happens we say the model, or parameters, are *unidentifiable*.
     The default behavior in R solves this problem by requiring \(\beta_1 = 0\), forcing
     \(\beta_0 = \mu_m\), which permits us to solve the system of equations.
+  id: totrans-96
   prefs: []
   type: TYPE_NORMAL
+  zh: 不幸的是，这种表示有问题。注意，女性和男性的均值分别用 \(\beta_0 + \beta_1\) 和 \(\beta_0 + \beta_2\) 表示。这是一个问题，因为每个组的期望值只是一个数字，比如说
+    \(\mu_f\) 和 \(\mu_m\)，而 \(\beta_0 + \beta_1 = \mu_f\) 和 \(\beta_0 +\beta_2 = \mu_m\)
+    有无限多种方式（三个未知数，两个方程）。这意味着我们无法获得唯一的平方最小估计。当这种情况发生时，我们说模型或参数是不可识别的。R 的默认行为通过要求 \(\beta_1
+    = 0\) 来解决这个问题，迫使 \(\beta_0 = \mu_m\)，这允许我们解这个方程组。
 - en: 'Keep in mind that this is not the only constraint that permits estimation of
     the parameters. Any linear constraint will do as it adds a third equation to our
     system. A widely used constraint is to require \(\beta_1 + \beta_2 = 0\). To achieve
     this in R, we can use the argument `contrasts` in the following way:'
+  id: totrans-97
   prefs: []
   type: TYPE_NORMAL
+  zh: 请记住，这并不是允许估计参数的唯一约束。任何线性约束都可以，因为它为我们系统添加了第三个方程。广泛使用的约束是要求 \(\beta_1 + \beta_2
+    = 0\)。在 R 中，我们可以使用以下方式使用 `contrasts` 参数来实现这一点：
 - en: '[PRE16]'
+  id: totrans-98
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE16]'
 - en: '*We see that the intercept is now larger, reflecting the overall mean rather
     than just the mean for females. The other coefficient, \(\beta_1\), represents
     the contrast between females and the overall mean in our model. The coefficient
     for males is not shown because it is redundant: \(\beta_1= -\beta_2\).'
+  id: totrans-99
   prefs: []
   type: TYPE_NORMAL
+  zh: '*我们看到截距现在更大，反映了整体均值而不是仅女性的均值。另一个系数，\(\beta_1\)，代表模型中女性与整体均值之间的对比。男性的系数没有显示，因为它冗余：\(\beta_1=
+    -\beta_2\).'
 - en: 'If we want to see all the estimates, the **emmeans** package also makes the
     calculations for us:'
+  id: totrans-100
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果我们想查看所有估计值，**emmeans** 包也为我们进行了计算：
 - en: '[PRE17]'
+  id: totrans-101
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE17]'
 - en: '*The use of this alternative constraint is more practical when a factor has
     more than one level, and choosing a baseline becomes less convenient. Furthermore,
     we might be more interested in the variance of the coefficients rather than the
     contrasts between groups and the reference level.'
+  id: totrans-102
   prefs: []
   type: TYPE_NORMAL
+  zh: '*当因素有多个水平时，使用这种替代约束更为实用，选择基线变得不那么方便。此外，我们可能对系数的方差比对组间和参考水平之间的对比更感兴趣。'
 - en: 'As an example, consider that the mice in our dataset are actually from several
     generations:'
+  id: totrans-103
   prefs: []
   type: TYPE_NORMAL
+  zh: 作为例子，考虑我们的数据集中的老鼠实际上来自几个代：
 - en: '[PRE18]'
+  id: totrans-104
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE18]'
 - en: '*To estimate the variability due to the different generations, a convenient
     model is:'
+  id: totrans-105
   prefs: []
   type: TYPE_NORMAL
+  zh: '*为了估计不同代际引起的可变性，一个方便的模型是：'
 - en: \[ Y_i = \beta_0 + \sum_{j=1}^J \beta_j x_{ij} + \varepsilon_i \]
+  id: totrans-106
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ Y_i = \beta_0 + \sum_{j=1}^J \beta_j x_{ij} + \varepsilon_i \]
 - en: 'with \(x_{ij}\) indicator variables: \(x_{ij}=1\) if mouse \(i\) is in level
     \(j\) and 0 otherwise, \(J\) representing the number of levels, in our example
     5 generations, and the level effects constrained with'
+  id: totrans-107
   prefs: []
   type: TYPE_NORMAL
+  zh: 使用 \(x_{ij}\) 指示变量：\(x_{ij}=1\) 如果老鼠 \(i\) 在水平 \(j\) 上，否则为 0，\(J\) 代表水平数量，在我们的例子中是
+    5 代，并且使用以下方式对水平效应进行约束：
 - en: \[ \frac{1}{J} \sum_{j=1}^J \beta_j = 0 \implies \sum_{j=1}^J \beta_j = 0. \]
+  id: totrans-108
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \frac{1}{J} \sum_{j=1}^J \beta_j = 0 \implies \sum_{j=1}^J \beta_j = 0. \]
 - en: 'This constraint makes the model identifiable and also allows us to quantify
     the variability due to generations with:'
+  id: totrans-109
   prefs: []
   type: TYPE_NORMAL
+  zh: 这个约束使得模型可识别，同时也允许我们量化由于代际差异引起的可变性：
 - en: \[ \sigma^2_{\text{gen}} \equiv \frac{1}{J}\sum_{j=1}^J \beta_j^2 \]
+  id: totrans-110
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \sigma^2_{\text{gen}} \equiv \frac{1}{J}\sum_{j=1}^J \beta_j^2 \]
 - en: 'We can see the estimated coefficients using the following:'
+  id: totrans-111
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们可以使用以下方法查看估计的系数：
 - en: '[PRE19]'
+  id: totrans-112
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE19]'
 - en: '*In the next section, we briefly describe a technique useful to study the variability
     associated with this factor.************'
+  id: totrans-113
   prefs: []
   type: TYPE_NORMAL
+  zh: '*在下一节中，我们将简要描述一种用于研究与该因素相关的可变性的有用技术。************'
 - en: '****17.6 Analysis of variance (ANOVA)****'
+  id: totrans-114
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '****17.6 方差分析（ANOVA）****'
 - en: '****When a factor has more than one level, it is common to want to determine
     if there is significant variability across the levels rather than specific difference
     between any given pair of levels. Analysis of variance (ANOVA) provides tools
     to do this.'
+  id: totrans-115
   prefs: []
   type: TYPE_NORMAL
+  zh: '****当因素有多个水平时，通常希望确定是否存在水平间的显著可变性，而不是任何给定水平对的特定差异。方差分析（ANOVA）提供了进行这种分析的工具。'
 - en: 'ANOVA provides an estimate of \(\sigma^2_{\text{gen}}\) and a statistical test
     for the null hypothesis that the factor contributes no variability: \(\sigma^2_{\text{gen}}
     =0\).'
+  id: totrans-116
   prefs: []
   type: TYPE_NORMAL
+  zh: ANOVA（方差分析）提供了对\(\sigma^2_{\text{gen}}\)的估计，并对原假设进行统计检验，即该因素不贡献任何变异性：\(\sigma^2_{\text{gen}}
+    =0\)。
 - en: 'Once a linear model is fit using one or more factors, the `aov` function can
     be used to perform ANOVA. Specifically, the estimate of the factor variability
     is computed along with a statistic that can be used for hypothesis testing:'
+  id: totrans-117
   prefs: []
   type: TYPE_NORMAL
+  zh: 一旦使用一个或多个因素拟合了线性模型，就可以使用`aov`函数进行方差分析。具体来说，计算因素变异性估计的同时，还会计算一个可用于假设检验的统计量：
 - en: '[PRE20]'
+  id: totrans-118
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE20]'
 - en: '*Keep in mind that if given a model formula, `aov` will fit the model:'
+  id: totrans-119
   prefs: []
   type: TYPE_NORMAL
+  zh: '*记住，如果给出一个模型公式，`aov`将拟合该模型：'
 - en: '[PRE21]'
+  id: totrans-120
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE21]'
 - en: '*We do not need to specify the constraint because ANOVA needs to constrain
     the sum to be 0 for the results to be interpretable.'
+  id: totrans-121
   prefs: []
   type: TYPE_NORMAL
+  zh: '*我们不需要指定约束条件，因为ANOVA需要将总和约束为0，以便结果可解释。'
 - en: This analysis indicates that the effect of generation is not statistically significant.
+  id: totrans-122
   prefs: []
   type: TYPE_NORMAL
+  zh: 这项分析表明，代际效应在统计上并不显著。
 - en: '*We do not include many details, for example, on how the summary statistics
     and p-values shown by `aov` are defined and motivated. There are several books
     dedicated to the analysis of variance, and textbooks on linear models often include
     chapters on this topic. Those interested in learning more about these topics can
     consult one of the textbooks listed in the Recommended Reading section.*  *###
     Multiple factors'
+  id: totrans-123
   prefs: []
   type: TYPE_NORMAL
+  zh: '*我们不包括许多细节，例如，关于`aov`显示的汇总统计量和p值的定义和动机。有几本书专门讨论方差分析，线性模型的教科书通常包括关于这个主题的章节。对学习这些主题感兴趣的人可以查阅推荐阅读部分列出的教科书。*  *###
+    多个因素'
 - en: ANOVA was developed to analyze agricultural data, which typically included several
     factors such as fertilizers, blocks of lands, and plant breeds.
+  id: totrans-124
   prefs: []
   type: TYPE_NORMAL
+  zh: 方差分析最初是为了分析农业数据而开发的，这些数据通常包括几个因素，如肥料、地块和植物品种。
 - en: 'Note that we can perform ANOVA with multiple factors:'
+  id: totrans-125
   prefs: []
   type: TYPE_NORMAL
+  zh: 注意，我们可以对多个因素进行方差分析：
 - en: '[PRE22]'
+  id: totrans-126
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE22]'
 - en: '*This analysis suggests that sex is the biggest source of variability, which
     is consistent with previously made exploratory plots.'
+  id: totrans-127
   prefs: []
   type: TYPE_NORMAL
+  zh: '*这项分析表明，性别是最大的变异性来源，这与之前做出的探索性绘图一致。'
 - en: '*One of the key aspects of ANOVA (Analysis of Variance) is its ability to decompose
     the total variance in the data, represented by \(\sum_{i=1}^N y_i^2\), into individual
     contributions attributable to each factor in the study. However, for the mathematical
@@ -610,48 +895,72 @@
     This means that for every level of any given factor, there must be an equal representation
     of the levels of all other factors. In our study involving mice, the design is
     unbalanced, requiring a cautious approach in the interpretation of the ANOVA results.**'
+  id: totrans-128
   prefs: []
   type: TYPE_NORMAL
+  zh: '*方差分析（ANOVA）的一个关键方面是其将数据中的总方差分解为每个因素在研究中的个别贡献的能力，这由\(\sum_{i=1}^N y_i^2\)表示。然而，为了使方差分析的数学基础有效，实验设计必须是平衡的。这意味着对于任何给定因素的每个水平，都必须有其他所有因素水平的相等代表性。在我们的涉及老鼠的研究中，设计是不平衡的，因此在解释方差分析结果时需要谨慎。**'
 - en: '**Array representation**'
+  id: totrans-129
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '**数组表示**'
 - en: '**When the model includes more than one factor, writing down linear models
     can become cumbersome. For example, in our two factor model, we would have to
     include indicator variables for both factors:'
+  id: totrans-130
   prefs: []
   type: TYPE_NORMAL
+  zh: '**当模型包括多个因素时，写下线性模型可能会变得繁琐。例如，在我们的二因素模型中，我们必须包括两个因素的指示变量：**'
 - en: \[ Y_i = \beta_0 + \sum_{j=1}^J \beta_j x_{i,j} + \sum_{k=1}^K \beta_{J+k} x_{i,J+k}
     + \varepsilon_i \mbox{ with }\sum_{j=1}^J \beta_j=0 \mbox{ and } \sum_{k=1}^K
     \beta_{J+k} = 0, \]
+  id: totrans-131
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ Y_i = \beta_0 + \sum_{j=1}^J \beta_j x_{i,j} + \sum_{k=1}^K \beta_{J+k} x_{i,J+k}
+    + \varepsilon_i \mbox{ with }\sum_{j=1}^J \beta_j=0 \mbox{ and } \sum_{k=1}^K
+    \beta_{J+k} = 0, \]
 - en: the \(x_{i,1},\dots,x_{i,J}\) indicator functions for the \(J\) levels in the
     first factor and \(x_{i,J+1},\dots,x_{i,J+K}\) indicator functions for the \(K\)
     levels in the second factor.
+  id: totrans-132
   prefs: []
   type: TYPE_NORMAL
+  zh: 第一因素中\(J\)个水平的\(x_{i,1},\dots,x_{i,J}\)指示函数和第二因素中\(K\)个水平的\(x_{i,J+1},\dots,x_{i,J+K}\)指示函数。
 - en: 'An alternative approach widely used in ANOVA to avoid indicator variables,
     is to save the data in an array, using different Greek letters to denote factors
     and indices to denote levels:'
+  id: totrans-133
   prefs: []
   type: TYPE_NORMAL
+  zh: 在方差分析中广泛使用的一种替代方法，以避免指示变量，是将数据保存在一个数组中，使用不同的希腊字母表示因素，用索引表示水平：
 - en: \[ Y_{ijk} = \mu + \alpha_j + \beta_k + \varepsilon_{ijk}, \mbox{ with } i =
     1,\dots,I, \, j = 1,\dots,J, \mbox{ and } k= 1,\dots,K \]
+  id: totrans-134
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ Y_{ijk} = \mu + \alpha_j + \beta_k + \varepsilon_{ijk}, \mbox{ with } i =
+    1,\dots,I, \, j = 1,\dots,J, \mbox{ and } k= 1,\dots,K \]
 - en: 'with \(\mu\) the overall mean, \(\alpha_j\) the effect of level \(j\) in the
     first factor, and \(\beta_k\) the effect of level \(k\) in the second factor.
     The constraint can now be written as:'
+  id: totrans-135
   prefs: []
   type: TYPE_NORMAL
+  zh: 以 \(\mu\) 表示总体均值，\(\alpha_j\) 表示第一个因素中 \(j\) 级别的效应，\(\beta_k\) 表示第二个因素中 \(k\)
+    级别的效应。约束条件现在可以写成如下形式：
 - en: \[ \sum_{j=1}^J \alpha_j = 0 \text{ and } \sum_{k=1}^K \beta_k = 0 \]
+  id: totrans-136
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \sum_{j=1}^J \alpha_j = 0 \text{ 和 } \sum_{k=1}^K \beta_k = 0 \]
 - en: This array notation naturally leads to estimating effects by computing means
     across dimensions of the array.
+  id: totrans-137
   prefs: []
   type: TYPE_NORMAL
+  zh: 这种数组表示法自然导致通过计算数组维度的平均值来估计效应。
 - en: Note that, here, we are implicitly assuming a *balanced design*, meaning that
     for every combination of factor levels \(j\) and \(k\) we observe the same number
     of replicates indexed by \(i\). For example, if the factors are sex and diet,
@@ -660,60 +969,86 @@
     each cell of the design has the same sample size. This ensures that the group
     means are well defined and that the model parameters can be estimated directly
     using simple averages.
+  id: totrans-138
   prefs: []
   type: TYPE_NORMAL
+  zh: 注意，在这里，我们隐含地假设了一个 *平衡设计*，这意味着对于每一个因素级别 \(j\) 和 \(k\) 的组合，我们观察到的重复次数 \(i\) 是相同的。例如，如果因素是性别和饮食，平衡设计将包括每个性别-饮食组合中相同数量的老鼠。在这种情况下，对于每个三元组
+    \((i,j,k)\) 都有一个值 \(Y_{ijk}\)，并且设计中的每个单元格具有相同的样本量。这确保了组均值定义良好，并且可以使用简单平均值直接估计模型参数。
 - en: If the design is *unbalanced*, meaning that some level combinations have more
     observations than others, we can still write the model in the same form but the
     number of replicates becomes \(I_{jk}\), varying across level pairs. In that case,
     some of the convenient interpretations of ANOVA summaries no longer hold directly,
     because the cell means contribute unequally to the estimates.*********
+  id: totrans-139
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果设计是 *不平衡的*，即某些级别组合的观察值多于其他组合，我们仍然可以用相同的形式写出模型，但重复次数 \(I_{jk}\) 会根据级别对变化。在这种情况下，一些方便的
+    ANOVA 总结解释不再直接适用，因为单元格均值对估计的贡献不平等。*********
 - en: '*****17.7 Exercises*****'
+  id: totrans-140
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '*****17.7 练习*****'
 - en: '*****1\. Once you fit a model, the estimate of the standard error \(\sigma\)
     can be obtained as follows:'
+  id: totrans-141
   prefs: []
   type: TYPE_NORMAL
+  zh: '*****1\. 一旦拟合了模型，标准误差 \(\sigma\) 的估计值可以按以下方式获得：'
 - en: '[PRE23]'
+  id: totrans-142
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE23]'
 - en: '*Compute the estimate of \(\sigma\) using both the model that includes only
     diet and a model that accounts for sex. Are the estimates the same? If not, why
     not?'
+  id: totrans-143
   prefs: []
   type: TYPE_NORMAL
+  zh: '*使用只包括饮食和考虑性别的模型来计算 \(\sigma\) 的估计值。这些估计值是否相同？如果不相同，原因是什么？'
 - en: '2\. One of the assumption of the linear model fit by `lm` is that the standard
     deviation of the errors \(\varepsilon_i\) is equal for all \(i\). This implies
     that it does not depend on the expected value. Group the mice by their weight
     like this:'
+  id: totrans-144
   prefs: []
   type: TYPE_NORMAL
+  zh: 2\. `lm` 拟合线性模型的一个假设是，误差 \(\varepsilon_i\) 的标准差对所有 \(i\) 是相同的。这意味着它不依赖于期望值。像这样按老鼠的重量分组：
 - en: '[PRE24]'
+  id: totrans-145
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE24]'
 - en: '*Compute the average and standard deviation of `body_weight` for groups with
     more than 10 observations and use data exploration to verify if this assumption
     holds.'
+  id: totrans-146
   prefs: []
   type: TYPE_NORMAL
+  zh: '*计算具有超过 10 个观察值的组的 `body_weight` 的平均值和标准差，并使用数据探索来验证此假设是否成立。'
 - en: 3\. The dataset also includes a variable indicating which litter the mice came
     from. Create a boxplot showing weights by litter. Use faceting to make separate
     plots for each diet and sex combination.
+  id: totrans-147
   prefs: []
   type: TYPE_NORMAL
+  zh: 3\. 数据集还包括一个变量，表示老鼠来自哪个窝。创建一个按窝展示重量的箱线图。使用分面图来为每个饮食和性别组合创建单独的图表。
 - en: 4\. Use a linear model to test for a litter effect, taking into account sex
     and diet. Use ANOVA to compare the variability explained by litter with that of
     other factors.
+  id: totrans-148
   prefs: []
   type: TYPE_NORMAL
+  zh: 4\. 使用线性模型测试窝效应，同时考虑性别和饮食。使用 ANOVA 比较窝解释的变异性与其他因素的变异性。
 - en: '5\. The `mice_weights` data includes two other outcomes: bone density and percent
     fat. Create a boxplot illustrating bone density by sex and diet. Compare what
     the visualizations reveal about the diet effect by sex.'
+  id: totrans-149
   prefs: []
   type: TYPE_NORMAL
+  zh: 5\. `mice_weights` 数据还包括两个其他结果：骨密度和脂肪百分比。创建一个箱线图，按性别和饮食展示骨密度。比较可视化揭示的饮食效应与性别之间的关系。
 - en: '6\. Fit a linear model and conduct a separate test for the diet effect on bone
     density for each sex. Note that the diet effect is statistically significant for
     females but not for males. Then fit the model to the entire dataset that includes
@@ -721,122 +1056,184 @@
     the interaction effect is not. Explain how this can happen. Hint: To fit a model
     to the entire dataset with a separate effect for males and females, you can use
     the formula `~ sex + diet:sex`'
+  id: totrans-150
   prefs: []
   type: TYPE_NORMAL
+  zh: 6\. 拟合线性模型并对每个性别进行单独的饮食效应对骨密度的测试。注意，饮食效应对女性具有统计学意义，但对男性没有。然后将模型拟合到包含饮食、性别及其交互作用的整个数据集。注意，饮食效应是显著的，但交互效应不是。解释这种情况是如何发生的。提示：要拟合包含男性和女性单独效应的整个数据集的模型，可以使用公式
+    `~ sex + diet:sex`
 - en: '7\. In [Chapter 10](../inference/models.html), we talked about pollster bias
     and used visualization to motivate the presence of such bias. Here we will give
     it a more rigorous treatment. We will consider two pollsters that conducted daily
     polls. We will look at national polls for the month before the election:'
+  id: totrans-151
   prefs: []
   type: TYPE_NORMAL
+  zh: 7\. 在 [第10章](../inference/models.html) 中，我们讨论了调查员偏差并使用可视化来激发这种偏差的存在。在这里，我们将对其进行更严格的处理。我们将考虑进行了每日调查的两个调查员。我们将查看选举前一个月的全国调查：
 - en: '[PRE25]'
+  id: totrans-152
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE25]'
 - en: '*We want to answer the question: is there a pollster bias? Make a plot showing
     the spreads for each pollster.'
+  id: totrans-153
   prefs: []
   type: TYPE_NORMAL
+  zh: '*我们想要回答的问题是：是否存在调查员偏差？绘制每个调查员的分布图。'
 - en: 8\. The data does seem to suggest there is a difference. However, these data
     are subject to variability. Perhaps the differences we observe are due to chance.
+  id: totrans-154
   prefs: []
   type: TYPE_NORMAL
+  zh: 8\. 数据似乎确实表明存在差异。然而，这些数据受到变异性影响。也许我们观察到的差异是由于偶然性造成的。
 - en: 'The urn model theory says nothing about pollster effect. Under the urn model,
     both pollsters have the same expected value: the election day difference, that
     we call \(\mu\).'
+  id: totrans-155
   prefs: []
   type: TYPE_NORMAL
+  zh: 灶模型理论没有提及调查员效应。在灶模型下，两位调查员都有相同的期望值：选举日差异，我们称之为 \(\mu\)。
 - en: 'To answer the question “is there an urn model?” we will model the observed
     data \(Y_{ij}\) in the following way:'
+  id: totrans-156
   prefs: []
   type: TYPE_NORMAL
+  zh: 要回答“是否存在灶模型？”的问题，我们将以以下方式对观察到的数据 \(Y_{ij}\) 进行建模：
 - en: \[ Y_{ij} = \mu + b_i + \varepsilon_{ij} \]
+  id: totrans-157
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ Y_{ij} = \mu + b_i + \varepsilon_{ij} \]
 - en: with \(i=1,2\) indexing the two pollsters, \(b_i\) the bias for pollster \(i\),
     and \(\varepsilon_{ij}\) poll to poll chance variability. We assume the \(\varepsilon\)
     are independent from each other, have expected value \(0\), and standard deviation
     \(\sigma_i\) regardless of \(j\).
+  id: totrans-158
   prefs: []
   type: TYPE_NORMAL
+  zh: 其中 \(i=1,2\) 表示两位调查员，\(b_i\) 是调查员 \(i\) 的偏差，\(\varepsilon_{ij}\) 是调查之间的随机变化。我们假设
+    \(\varepsilon\) 之间相互独立，期望值为 \(0\)，标准差为 \(\sigma_i\)，无论 \(j\) 如何。
 - en: Which of the following best represents our question?
+  id: totrans-159
   prefs: []
   type: TYPE_NORMAL
+  zh: 以下哪个选项最能代表我们的问题？
 - en: Is \(\varepsilon_{ij}\) = 0?
+  id: totrans-160
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: \(\varepsilon_{ij}\) 是否等于 0？
 - en: How close are the \(Y_{ij}\) to \(\mu\)?
+  id: totrans-161
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: \(Y_{ij}\) 与 \(\mu\) 的接近程度如何？
 - en: Is \(b_1 \neq b_2\)?
+  id: totrans-162
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: \(b_1 \neq b_2\) 吗？
 - en: Are \(b_1 = 0\) and \(b_2 = 0\) ?
+  id: totrans-163
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: \(b_1 = 0\) 和 \(b_2 = 0\) 吗？
 - en: 9\. On the right side of this model, only \(\varepsilon_{ij}\) is a random variable;
     the other two are constants. What is the expected value of \(Y_{1,j}\)?
+  id: totrans-164
   prefs: []
   type: TYPE_NORMAL
+  zh: 9\. 在此模型的右侧，只有 \(\varepsilon_{ij}\) 是随机变量；其他两个是常数。\(Y_{1,j}\) 的期望值是多少？
 - en: '10\. Suppose we define \(\bar{Y}_1\) as the average of poll results from the
     first poll, \(Y_{1,1},\dots,Y_{1,N_1}\), where \(N_1\) is the number of polls
     conducted by the first pollster:'
+  id: totrans-165
   prefs: []
   type: TYPE_NORMAL
+  zh: 10\. 假设我们将 \(\bar{Y}_1\) 定义为第一个调查员进行的调查结果的平均值，\(Y_{1,1},\dots,Y_{1,N_1}\)，其中
+    \(N_1\) 是第一个调查员进行的调查数量：
 - en: '[PRE26]'
+  id: totrans-166
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE26]'
 - en: '*What is the expected values \(\bar{Y}_1\)?'
+  id: totrans-167
   prefs: []
   type: TYPE_NORMAL
+  zh: '*\(\bar{Y}_1\) 的期望值是多少？'
 - en: 11\. What is the standard error of \(\bar{Y}_1\) ?
+  id: totrans-168
   prefs: []
   type: TYPE_NORMAL
+  zh: 11\. \(\bar{Y}_1\) 的标准误差是多少？
 - en: 12\. Suppose we define \(\bar{Y}_2\) as the average of poll results from the
     second poll, \(Y_{2,1},\dots,Y_{2,N_2}\), where \(N_2\) is the number of polls
     conducted by the second pollster. What is the expected value \(\bar{Y}_2\)?
+  id: totrans-169
   prefs: []
   type: TYPE_NORMAL
+  zh: 12\. 假设我们将 \(\bar{Y}_2\) 定义为第二个调查员进行的调查结果的平均值，\(Y_{2,1},\dots,Y_{2,N_2}\)，其中
+    \(N_2\) 是第二个调查员进行的调查数量。\(\bar{Y}_2\) 的期望值是多少？
 - en: 13\. What is the standard error of \(\bar{Y}_2\) ?
+  id: totrans-170
   prefs: []
   type: TYPE_NORMAL
+  zh: 13\. \(\bar{Y}_2\) 的标准误差是多少？
 - en: 14\. Using what we learned by answering the questions above, what is the expected
     value of \(\bar{Y}_{2} - \bar{Y}_1\)?
+  id: totrans-171
   prefs: []
   type: TYPE_NORMAL
+  zh: 14\. 通过回答上述问题所学的知识，\(\bar{Y}_{2} - \bar{Y}_1\) 的期望值是多少？
 - en: 15\. Using what we learned by answering the questions above, what is the standard
     error of \(\bar{Y}_{2} - \bar{Y}_1\)?
+  id: totrans-172
   prefs: []
   type: TYPE_NORMAL
+  zh: 15\. 通过回答上述问题所学的知识，\(\bar{Y}_{2} - \bar{Y}_1\) 的标准误差是多少？
 - en: 16\. The answer to the question above depends on \(\sigma_1\) and \(\sigma_2\),
     which we don’t know. We learned that we can estimate these with the sample standard
     deviation. Write code that computes these two estimates.
+  id: totrans-173
   prefs: []
   type: TYPE_NORMAL
+  zh: 16. 上述问题的答案取决于 \(\sigma_1\) 和 \(\sigma_2\)，这些我们不知道。我们了解到我们可以用样本标准差来估计这些值。编写代码来计算这两个估计值。
 - en: 17\. What does the CLT tell us about the distribution of \(\bar{Y}_2 - \bar{Y}_1\)?
+  id: totrans-174
   prefs: []
   type: TYPE_NORMAL
+  zh: 17. CLT 告诉我们关于 \(\bar{Y}_2 - \bar{Y}_1\) 分布的什么信息？
 - en: Nothing because this is not the average of a sample.
+  id: totrans-175
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 没有因为这不是样本的平均值。
 - en: Because the \(Y_{ij}\) are approximately normal, so are the averages.
+  id: totrans-176
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 因为 \(Y_{ij}\) 大约服从正态分布，所以平均值也服从正态分布。
 - en: Note that \(\bar{Y}_2\) and \(\bar{Y}_1\) are sample averages, so if we assume
     \(N_2\) and \(N_1\) are large enough, each is approximately normal. The difference
     of normally distributed variables is also normally distributed.
+  id: totrans-177
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 注意到 \(\bar{Y}_2\) 和 \(\bar{Y}_1\) 是样本平均值，所以如果我们假设 \(N_2\) 和 \(N_1\) 足够大，每个都是近似正态分布的。正态分布变量的差也是正态分布的。
 - en: The data are not 0 or 1, so CLT does not apply.
+  id: totrans-178
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 数据不是 0 或 1，所以中心极限定理不适用。
 - en: '18\. We have constructed a random variable that has an expected value of \(b_2
     - b_1\), representing the difference in pollster bias. If our model holds, then
     this random variable has an approximately normal distribution, and we know its
@@ -844,34 +1241,53 @@
     we can plug the sample standard deviations we computed above. We began by asking:
     is \(b_2 - b_1\) different from 0? Using all the information we have gathered
     above, construct a 95% confidence interval for the difference \(b_2 - b_1\).'
+  id: totrans-179
   prefs: []
   type: TYPE_NORMAL
+  zh: 18. 我们构造了一个期望值为 \(b_2 - b_1\) 的随机变量，表示民意调查偏差的差异。如果我们的模型成立，那么这个随机变量将具有近似正态分布，并且我们知道其标准误差。标准误差取决于
+    \(\sigma_1\) 和 \(\sigma_2\)，但我们可以插入我们上面计算出的样本标准差。我们最初的问题是：\(b_2 - b_1\) 是否与 0
+    不同？使用我们上面收集到的所有信息，构建 \(b_2 - b_1\) 差异的 95% 置信区间。
 - en: 19\. The confidence interval tells us there is relatively strong pollster effect
     resulting in a difference of about 5%. Random variability does not seem to explain
     it. We can compute a p-value to relay the fact that chance does not explain it.
     What is the p-value?
+  id: totrans-180
   prefs: []
   type: TYPE_NORMAL
+  zh: 19. 置信区间告诉我们存在相对较强的民意调查员效应，导致差异约为 5%。随机变异性似乎不能解释这一点。我们可以计算一个 p 值来传达事实，即偶然性不能解释这一点。p
+    值是多少？
 - en: '20\. The statistic formed by dividing our estimate of \(b_2-b_1\) by its estimated
     standard error is the t-statistic:'
+  id: totrans-181
   prefs: []
   type: TYPE_NORMAL
+  zh: 20. 将 \(b_2-b_1\) 的估计值除以其估计的标准误差得到的统计量是 t 统计量：
 - en: \[ \frac{\bar{Y}_2 - \bar{Y}_1}{\sqrt{s_2^2/N_2 + s_1^2/N_1}} \]
+  id: totrans-182
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \frac{\bar{Y}_2 - \bar{Y}_1}{\sqrt{s_2^2/N_2 + s_1^2/N_1}} \]
 - en: Now notice that we have more than two pollsters. We can also test for pollster
     effect using all pollsters, not just two. The idea is to compare the variability
     across polls to variability within polls.
+  id: totrans-183
   prefs: []
   type: TYPE_NORMAL
+  zh: 现在请注意，我们不止有两个民意调查员。我们还可以使用所有民意调查员来测试民意调查员效应，而不仅仅是两个。想法是比较调查之间的变异性与调查内部的变异性。
 - en: 'For this exercise, create a new table:'
+  id: totrans-184
   prefs: []
   type: TYPE_NORMAL
+  zh: 对于这个练习，创建一个新的表格：
 - en: '[PRE27]'
+  id: totrans-185
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE27]'
 - en: '*Compute the average and standard deviation for each pollster and examine the
     variability across the averages. Compare this to the variability within the pollsters,
     summarized by the standard deviation.**********'
+  id: totrans-186
   prefs: []
   type: TYPE_NORMAL
+  zh: '*计算每个民意调查员的平均值和标准差，并检查平均值之间的变异性。将其与民意调查员内部的标准差总结的变异性进行比较。**********'

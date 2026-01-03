@@ -1,19 +1,27 @@
 - en: 28  Conditional Expectations and Smoothing
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 28 条件期望与平滑
 - en: 原文：[https://rafalab.dfci.harvard.edu/dsbook-part-2/ml/conditionals-and-smoothing.html](https://rafalab.dfci.harvard.edu/dsbook-part-2/ml/conditionals-and-smoothing.html)
+  id: totrans-1
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 原文：[https://rafalab.dfci.harvard.edu/dsbook-part-2/ml/conditionals-and-smoothing.html](https://rafalab.dfci.harvard.edu/dsbook-part-2/ml/conditionals-and-smoothing.html)
 - en: '[Machine Learning](../ml/intro-ml.html)'
+  id: totrans-2
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[机器学习](../ml/intro-ml.html)'
 - en: '[28  Conditional Expectations and Smoothing](../ml/conditionals-and-smoothing.html)'
+  id: totrans-3
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[28 条件期望与平滑](../ml/conditionals-and-smoothing.html)'
 - en: In machine learning applications, we rarely can predict outcomes perfectly.
     Spam filters miss obvious junk mail, Siri mishears words, and sometimes your bank
     incorrectly flags a legitimate purchase as fraud. The main reason these mistakes
@@ -23,8 +31,10 @@
     must produce identical outputs. So whenever the same predictor values occur with
     different outcomes, as in the previous chapter, where both males and females can
     be exactly the same height, no algorithm can be correct for all such cases.
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: 在机器学习应用中，我们很少能够完美地预测结果。垃圾邮件过滤器错过了明显的垃圾邮件，Siri 误听了单词，有时你的银行错误地将合法购买标记为欺诈。这些错误发生的主要原因通常是*完美预测往往是不可能的*。在大多数真实数据集中，我们发现一些观察值组具有相同的预测值但有不同的结果。因为预测规则是一个函数，相同的输入必须产生相同的输出。所以当相同的预测值与不同的结果同时出现时，就像前一章中提到的，男性和女性的身高可以完全相同，没有任何算法可以适用于所有这些情况。
 - en: But this does not mean we can’t build useful algorithms, ones far better than
     guessing and often better than human experts. To do this optimally, we use the
     probabilistic framework introduced in [Section 15.3](../linear-models/regression.html#sec-conditional-expectation).
@@ -32,14 +42,20 @@
     predictor values share the *same underlying probability* of belonging to each
     class. For categorical outcomes, this leads naturally to modeling quantities such
     as
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: 但这并不意味着我们不能构建有用的算法，这些算法比猜测要好得多，有时甚至比人类专家还要好。为了做到这一点，我们使用在[第15.3节](../linear-models/regression.html#sec-conditional-expectation)中引入的概率框架。即使个别结果不同，我们也假设具有相同预测值的观察值属于每个类别的*相同潜在概率*。对于分类结果，这自然导致对诸如
 - en: \[ \Pr(Y=1 \mid X=x), \]
+  id: totrans-6
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \Pr(Y=1 \mid X=x), \]
 - en: which summarize the best possible predictions we can hope to make.
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: 这总结了我们可以希望做出的最佳预测。
 - en: This brings us to the concept of *smoothing*. In practice, these conditional
     probabilities are unknown and must be estimated from noisy data. Smoothing, also
     known as *curve fitting* or *low-pass filtering*, is a general technique for uncovering
@@ -51,70 +67,105 @@
     learning algorithms. In fact, many of the most widely used machine learning algorithms
     can be viewed, either directly or indirectly, as smoothing procedures, which is
     why smoothing is a foundational concept in this field.
+  id: totrans-8
   prefs: []
   type: TYPE_NORMAL
+  zh: 这引出了*平滑*的概念。在实践中，这些条件概率是未知的，必须从噪声数据中估计。平滑，也称为*曲线拟合*或*低通滤波*，是一种在趋势的确切形状未知时揭示潜在趋势的通用技术。其思想是，虽然预测变量和结果之间的真实关系变化平滑，但数据本身包括随机波动。平滑方法利用这种平滑性来估计潜在模式，为我们依赖的机器学习算法提供稳定且可解释的近似，例如
+    \(\Pr(Y=1 \mid X=x)\)。事实上，许多最广泛使用的机器学习算法可以直接或间接地被视为平滑过程，这就是为什么平滑是这个领域的基础概念。
 - en: 28.1 Conditional probabilities and expectations
+  id: totrans-9
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 28.1 条件概率与期望
 - en: 'We use the notation \((X_1 = x_1,\dots,X_p=x_p)\) to represent the fact that
     we have observed values \(x_1,\dots,x_p\) for covariates \(X_1, \dots, X_p\).
     This does not imply that the outcome \(Y\) will take a specific value. Instead,
     it implies a specific probability. In particular, we denote the *conditional probabilities*
     for each class \(k\) with:'
+  id: totrans-10
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们使用符号 \((X_1 = x_1,\dots,X_p=x_p)\) 来表示我们已观察到协变量 \(X_1, \dots, X_p\) 的值 \(x_1,\dots,x_p\)。这并不暗示结果
+    \(Y\) 将取特定的值。相反，它暗示了一个特定的概率。特别是，我们用以下方式表示每个类别 \(k\) 的*条件概率*：
 - en: \[ \mathrm{Pr}(Y=k \mid X_1 = x_1,\dots,X_p=x_p), \, \mbox{for}\,k=1,\dots,K.
     \]
+  id: totrans-11
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \mathrm{Pr}(Y=k \mid X_1 = x_1,\dots,X_p=x_p), \, \mbox{for}\,k=1,\dots,K.
+    \]
 - en: 'To avoid writing out all the predictors, we will use bold letters like this:
     \(\mathbf{X} \equiv (X_1,\dots,X_p)^\top\) and \(\mathbf{x} \equiv (x_1,\dots,x_p)^\top\).
     We will also use the following notation for the conditional probability of being
     class \(k\):'
+  id: totrans-12
   prefs: []
   type: TYPE_NORMAL
+  zh: 为了避免写出所有的预测器，我们将使用粗体字母，例如：\(\mathbf{X} \equiv (X_1,\dots,X_p)^\top\) 和 \(\mathbf{x}
+    \equiv (x_1,\dots,x_p)^\top\)。我们还将使用以下符号表示属于类别 \(k\) 的条件概率：
 - en: \[ p_k(\mathbf{x}) = \mathrm{Pr}(Y=k \mid \mathbf{X}=\mathbf{x}), \, \mbox{for}\,
     k=1,\dots,K. \] Notice that the \(p_k(\mathbf{x})\) have to add up to 1 for each
     \(\mathbf{x}\), so once we know \(K-1\), we know all \(K\).
+  id: totrans-13
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ p_k(\mathbf{x}) = \mathrm{Pr}(Y=k \mid \mathbf{X}=\mathbf{x}), \, \mbox{for}\,
+    k=1,\dots,K. \] 注意到 \(p_k(\mathbf{x})\) 必须对于每个 \(\mathbf{x}\) 相加等于 1，所以一旦我们知道
+    \(K-1\)，我们就知道所有 \(K\)。
 - en: When the outcome is binary, we only need to know 1, so we drop the \(k\) and
     use the notation \(p(\mathbf{x}) = \mathrm{Pr}(Y=1 \mid \mathbf{X}=\mathbf{x})\).
+  id: totrans-14
   prefs: []
   type: TYPE_NORMAL
+  zh: 当结果为二元时，我们只需要知道 1，所以我们省略 \(k\) 并使用符号 \(p(\mathbf{x}) = \mathrm{Pr}(Y=1 \mid
+    \mathbf{X}=\mathbf{x})\)。
 - en: '*Do not be confused by the fact that we use the letter \(p\) for two different
     things: the conditional probability \(p(\mathbf{x})\) and the number of predictors
     \(p\).*  *These probabilities guide the construction of an algorithm that makes
     the best prediction: for any given \(\mathbf{x}\), we will predict the class \(k\)
     with the largest probability among \(p_1(\mathbf{x}), p_2(\mathbf{x}), \dots p_K(\mathbf{x})\).
     In mathematical notation, we write it like this:'
+  id: totrans-15
   prefs: []
   type: TYPE_NORMAL
+  zh: '**不要被我们用字母 \(p\) 表示两件不同的事情所困惑：条件概率 \(p(\mathbf{x})\) 和预测器的数量 \(p\)。** 这些概率指导着构建一个做出最佳预测的算法：对于任何给定的
+    \(\mathbf{x}\)，我们将预测在 \(p_1(\mathbf{x}), p_2(\mathbf{x}), \dots p_K(\mathbf{x})\)
+    中概率最大的类别 \(k\)。用数学符号表示，我们写成这样：'
 - en: \[\hat{y}(\mathbf{x}) = \max_k p_k(\mathbf{x})\]
+  id: totrans-16
   prefs: []
   type: TYPE_NORMAL
+  zh: \[\hat{y}(\mathbf{x}) = \max_k p_k(\mathbf{x})\]
 - en: In machine learning, we refer to this as *Bayes’ Rule*. But this is a theoretical
     rule since, in practice, we don’t know \(p_k(\mathbf{x}), k=1,\dots,K\). In fact,
     estimating these conditional probabilities can be thought of as the main challenge
     of machine learning. The better our probability estimates \(\hat{p}_k(\mathbf{x})\),
     the better our predictor.
+  id: totrans-17
   prefs: []
   type: TYPE_NORMAL
+  zh: 在机器学习中，我们称之为**贝叶斯定理**。但这是一个理论规则，因为在实践中，我们不知道 \(p_k(\mathbf{x}), k=1,\dots,K\)。实际上，估计这些条件概率可以被认为是机器学习的主要挑战。我们的概率估计
+    \(\hat{p}_k(\mathbf{x})\) 越好，我们的预测器就越准确。
 - en: 'So how well we predict depends on two things: 1) how close are the \(\max_k
     p_k(\mathbf{x})\) to 1 or 0 (perfect certainty) and 2) how close our estimates
     \(\hat{p}_k(\mathbf{x})\) are to \(p_k(\mathbf{x})\). We can’t do anything about
     the first restriction as it is determined by the nature of the problem, so our
     energy goes into finding ways to best estimate conditional probabilities.'
+  id: totrans-18
   prefs: []
   type: TYPE_NORMAL
+  zh: 因此，我们的预测能力取决于两个因素：1) \(\max_k p_k(\mathbf{x})\) 与 1 或 0（完美确定性）的距离有多近，2) 我们的估计
+    \(\hat{p}_k(\mathbf{x})\) 与 \(p_k(\mathbf{x})\) 的距离有多近。我们无法改变第一个限制，因为它由问题的本质决定，所以我们把精力投入到寻找最佳估计条件概率的方法上。
 - en: The first restriction does imply that we have limits as to how well even the
     best possible algorithm can perform. You should get used to the idea that while
     in some challenges we will be able to achieve almost perfect accuracy, with digit
     readers for example, in others, our success is restricted by the randomness of
     the process, such as medical diagnosis from biometric data.
+  id: totrans-19
   prefs: []
   type: TYPE_NORMAL
+  zh: 第一个限制确实意味着我们对于最佳算法的性能有极限。你应该习惯这样的想法：在某些挑战中，例如使用数字阅读器，我们几乎可以达到完美的准确性，但在其他情况下，我们的成功受到过程随机性的限制，比如从生物特征数据中进行医疗诊断。
 - en: Keep in mind that defining our prediction by maximizing the probability is not
     always optimal in practice and depends on the context. As discussed in [Chapter
     27](evaluation-metrics.html), sensitivity and specificity may differ in importance.
@@ -125,59 +176,90 @@
     plane example, we may ground the plane anytime the probability of malfunction
     is lower than 1 in a million as opposed to the default 1/2 used when error types
     are equally undesired.
+  id: totrans-20
   prefs: []
   type: TYPE_NORMAL
+  zh: 请记住，通过最大化概率来定义我们的预测在实践上并不总是最优的，这取决于上下文。正如在第 27 章[评估指标](evaluation-metrics.html)中讨论的那样，敏感度和特异性可能在不同情况下具有不同的重要性。但即使在这些情况下，只要我们有一个关于
+    \(p_k(x), k=1,\dots,K\) 的良好估计，就足以构建最优的预测模型，因为我们可以在任何我们希望的情况下控制特异性和敏感度之间的平衡。例如，我们可以简单地改变用于预测一个结果或另一个结果的截止值。在平面示例中，我们可以在故障概率低于一百万分之一时接地飞机，而不是在错误类型同样不受欢迎时使用的默认值
+    1/2。
 - en: For binary data, you can think of the probability \(\mathrm{Pr}(Y=1 \mid \mathbf{X}=\mathbf{x})\)
     as the proportion of 1s in the stratum of the population for which \(\mathbf{X}=\mathbf{x}\).
     Many of the algorithms we will learn can be applied to both categorical and continuous
     data due to the connection between *conditional probabilities* and *conditional
     expectations*.
+  id: totrans-21
   prefs: []
   type: TYPE_NORMAL
+  zh: 对于二元数据，你可以将概率 \(\mathrm{Pr}(Y=1 \mid \mathbf{X}=\mathbf{x})\) 视为总体中 \(\mathbf{X}=\mathbf{x}\)
+    层次中 1 的比例。我们将学习的许多算法都可以应用于分类和连续数据，这得益于条件概率和条件期望之间的联系。
 - en: 'Because the expectation is the average of values \(y_1,\dots,y_n\) in the population,
     in the case in which the \(y\)s are 0 or 1, the expectation is equivalent to the
     probability of randomly picking a one since the average is simply the proportion
     of ones:'
+  id: totrans-22
   prefs: []
   type: TYPE_NORMAL
+  zh: 因为期望值是总体中值 \(y_1,\dots,y_n\) 的平均值，在 \(y\) 值为 0 或 1 的情况下，期望值等同于随机抽取一个 1 的概率，因为平均值仅仅是
+    1 的比例：
 - en: \[ \mathrm{E}[Y \mid \mathbf{X}=\mathbf{x}]=\mathrm{Pr}(Y=1 \mid \mathbf{X}=\mathbf{x}).
     \]
+  id: totrans-23
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \mathrm{E}[Y \mid \mathbf{X}=\mathbf{x}]=\mathrm{Pr}(Y=1 \mid \mathbf{X}=\mathbf{x}).
+    \]
 - en: This implies that the conditional probability is a conditional expectation.
     As a result, we often only use the expectation to denote both the conditional
     probability and conditional expectation.
+  id: totrans-24
   prefs: []
   type: TYPE_NORMAL
+  zh: 这意味着条件概率是条件期望。因此，我们通常只使用期望来表示条件概率和条件期望。
 - en: Just like with categorical outcomes, in most applications the same observed
     predictors do not guarantee the same continuous outcomes. Instead, we assume that
     the outcome follows the same conditional distribution. We will now explain why
     we use the conditional expectation to define our predictors.*
+  id: totrans-25
   prefs: []
   type: TYPE_NORMAL
+  zh: 就像分类结果一样，在大多数应用中，相同的观察预测因子并不保证相同的连续结果。相反，我们假设结果遵循相同的条件分布。现在我们将解释为什么我们使用条件期望来定义我们的预测因子。
 - en: '*28.2 Conditional expectations minimize squared loss function*'
+  id: totrans-26
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '*28.2 条件期望最小化平方损失函数*'
 - en: '*Why do we care about the conditional expectation in machine learning? This
     is because the expected value has an attractive mathematical property: it minimizes
     the MSE. Specifically, of all possible predictions \(\hat{Y}\),'
+  id: totrans-27
   prefs: []
   type: TYPE_NORMAL
+  zh: '*我们为什么在机器学习中关心条件期望？这是因为期望值具有一个吸引人的数学特性：它最小化均方误差（MSE）。具体来说，在所有可能的预测 \(\hat{Y}\)
+    中，'
 - en: \[ \hat{Y} = \mathrm{E}[Y \mid \mathbf{X}=\mathbf{x}] \, \mbox{ minimizes }
     \, \mathrm{E}[ (\hat{Y} - Y)^2 \mid \mathbf{X}=\mathbf{x}] \]
+  id: totrans-28
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \hat{Y} = \mathrm{E}[Y \mid \mathbf{X}=\mathbf{x}] \, \mbox{ minimizes }
+    \, \mathrm{E}[ (\hat{Y} - Y)^2 \mid \mathbf{X}=\mathbf{x}] \]
 - en: 'Due to this property, a succinct description of the main task of machine learning
     is that we use data to estimate:'
+  id: totrans-29
   prefs: []
   type: TYPE_NORMAL
+  zh: 由于这一特性，机器学习的主要任务可以简洁地描述为：我们使用数据来估计：
 - en: \[ f(\mathbf{x}) \equiv \mathrm{E}[Y \mid \mathbf{X}=\mathbf{x} ] \]
+  id: totrans-30
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ f(\mathbf{x}) \equiv \mathrm{E}[Y \mid \mathbf{X}=\mathbf{x} ] \]
 - en: for any set of features \(\mathbf{x} = (x_1, \dots, x_p)^\top\).
+  id: totrans-31
   prefs: []
   type: TYPE_NORMAL
+  zh: 对于任何一组特征 \(\mathbf{x} = (x_1, \dots, x_p)^\top\)。
 - en: 'This is easier said than done, since this function can take any shape and \(p\)
     can be very large. Consider a case in which we only have one predictor \(x\).
     The expectation \(\mathrm{E}[Y \mid X=x]\) can be any function of \(x\): a line,
@@ -185,8 +267,12 @@
     when we consider instances with large \(p\), in which case \(f(\mathbf{x})\) is
     a function of a multidimensional vector \(\mathbf{x}\). For example, in our digit
     reader example \(p = 784\)!'
+  id: totrans-32
   prefs: []
   type: TYPE_NORMAL
+  zh: 这比说起来容易，因为这个函数可以采取任何形状，而 \(p\) 可能非常大。考虑一个我们只有一个预测变量 \(x\) 的情况。期望 \(\mathrm{E}[Y
+    \mid X=x]\) 可以是 \(x\) 的任何函数：一条线，一个抛物线，一个正弦波，一个阶梯函数，任何东西。当我们考虑具有大 \(p\) 的实例时，事情变得更加复杂，在这种情况下，\(f(\mathbf{x})\)
+    是一个多维向量 \(\mathbf{x}\) 的函数。例如，在我们的数字识别器示例中 \(p = 784\)！
 - en: The main way in which competing machine learning algorithms differ is in their
     approach to estimating this conditional expectation. Because we must estimate
     such a flexible and potentially high-dimensional function from noisy, finite data,
@@ -197,34 +283,49 @@
     points and produce stable estimates even when exact predictor values are rarely
     repeated. This brings us to the concept of *smoothing*, one of the most fundamental
     tools in machine learning, underpinning many of the algorithms we will study next.*
+  id: totrans-33
   prefs: []
   type: TYPE_NORMAL
+  zh: 竞争的机器学习算法之间的主要区别在于它们估计这种条件期望的方法。因为我们必须从噪声的、有限的数据中估计这样一个灵活且可能高维的函数，我们需要策略来提取底层信号，而不会被随机性所淹没。一个常见且强大的想法是假设尽管数据本身可能看起来分散，但*真实*函数
+    \(f(\mathbf{x})\) 随着 \(\mathbf{x}\) 的变化而平滑变化。这个假设允许我们从附近的点借用力量，即使在精确预测值很少重复的情况下也能产生稳定的估计。这把我们带到了*平滑*的概念，这是机器学习中最基本工具之一，支撑着我们将要研究的许多算法。*
 - en: '*28.3 Smoothing*'
+  id: totrans-34
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '*28.3 平滑*'
 - en: '*Smoothing is a core idea in machine learning and statistical modeling: when
     data are noisy, we often assume that the underlying trend changes gradually rather
     than jumping erratically from point to point. The goal of smoothing is to recover
     this hidden structure from the data.'
+  id: totrans-35
   prefs: []
   type: TYPE_NORMAL
+  zh: '*平滑是机器学习和统计建模中的一个核心思想：当数据有噪声时，我们通常假设潜在的趋势是逐渐变化的，而不是从一点跳到另一点。平滑的目标是从数据中恢复这种隐藏的结构。*'
 - en: 'To motivate the idea, consider the plot below: the noise obscures the trend,
     but it does not destroy it, our task is to uncover the trend from the noisy data.'
+  id: totrans-36
   prefs: []
   type: TYPE_NORMAL
+  zh: 为了激发这个想法，请考虑下面的图表：噪声掩盖了趋势，但并没有破坏它，我们的任务是揭示从噪声数据中的趋势。
 - en: '![](../Images/6ec3b70fbf42148d36324cc476b68b20.png)'
+  id: totrans-37
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/6ec3b70fbf42148d36324cc476b68b20.png)'
 - en: In the next sections, we explore how smoothing techniques accomplish this, starting
     with a simple case study that illustrates the challenges and the intuition behind
     the methods.
+  id: totrans-38
   prefs: []
   type: TYPE_NORMAL
+  zh: 在接下来的章节中，我们将探讨平滑技术是如何实现这一点的，从一个简单的案例研究开始，该研究说明了方法背后的挑战和直觉。
 - en: 'Example: Is it a 2 or a 7?'
+  id: totrans-39
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 示例：这是一个2还是7？
 - en: To motivate the need for smoothing and make the connection with machine learning,
     we will construct a simplified version of the MNIST dataset with just two classes
     for the outcome and two predictors. Specifically, we define the challenge as building
@@ -232,106 +333,163 @@
     dark pixels in the upper left quadrant (\(X_1\)) and the lower right quadrant
     (\(X_2\)). We also selected a random sample of 1,000 digits divided into training
     and test sets. Both sets are almost evenly distributed with 2s and 7s.
+  id: totrans-40
   prefs: []
   type: TYPE_NORMAL
+  zh: 为了激发平滑的需求并与机器学习建立联系，我们将构建MNIST数据集的简化版本，其中结果有两个类别，预测变量也有两个。具体来说，我们将挑战定义为构建一个算法，该算法可以从左上象限（\(X_1\)）和右下象限（\(X_2\)）中暗像素的比例确定一个数字是2还是7。我们还选择了一个包含1,000个数字的随机样本，分为训练集和测试集。这两个集合几乎均匀地分布着2和7。
 - en: 'The **dslabs** package includes this example in the object `mnist_27`. In the
     training set, we have 800 observations and in the test set we have 200\. Each
     observation has:'
+  id: totrans-41
   prefs: []
   type: TYPE_NORMAL
+  zh: '**dslabs** 包含了这个例子在对象 `mnist_27` 中。在训练集中，我们有800个观察值，在测试集中我们有200个观察值。每个观察值都有：'
 - en: an outcome \(y_i\), indicating whether the digit is a 2 or a 7, and
+  id: totrans-42
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 一个结果 \(y_i\)，指示数字是2还是7，以及
 - en: a feature vector \(\mathbf{x}_i = (x_{i,1}, x_{i,2})^\top\), a point in two-dimensional
     space extracted from the image.
+  id: totrans-43
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 一个特征向量 \(\mathbf{x}_i = (x_{i,1}, x_{i,2})^\top\)，这是从图像中提取出的二维空间中的一个点。
 - en: So the datasets consists of pairs \((\mathbf{x}_i, y_i)\), where each \(\mathbf{x}_i\)
     is a 2D feature and each \(y_i\) is the corresponding digit label.
+  id: totrans-44
   prefs: []
   type: TYPE_NORMAL
+  zh: 因此，数据集由成对的 \((\mathbf{x}_i, y_i)\) 组成，其中每个 \(\mathbf{x}_i\) 是一个二维特征，每个 \(y_i\)
+    是相应的数字标签。
 - en: 'To illustrate how to interpret \(X_1\) and \(X_2\), we include four example
     images. On the left are the original images of the two digits with the largest
     and smallest values for \(X_1\) and on the right we have the images corresponding
     to the largest and smallest values of \(X_2\):'
+  id: totrans-45
   prefs: []
   type: TYPE_NORMAL
+  zh: 为了说明如何解释 \(X_1\) 和 \(X_2\)，我们包括四个示例图像。左边是两个数字中 \(X_1\) 最大和最小值的原始图像，右边是对应于 \(X_2\)
+    最大和最小值的图像：
 - en: '![](../Images/db73922d01387b79ee0c55c081a21601.png)'
+  id: totrans-46
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/db73922d01387b79ee0c55c081a21601.png)'
 - en: 'Here is a plot of the observed \(X_2\) versus observed \(X_1\) with color determining
     if \(y\) is 2 (red) or 7 (blue):'
+  id: totrans-47
   prefs: []
   type: TYPE_NORMAL
+  zh: 下面是观察到的 \(X_2\) 与观察到的 \(X_1\) 的关系图，颜色表示 \(y\) 是2（红色）还是7（蓝色）：
 - en: '[PRE0]'
+  id: totrans-48
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: '*![](../Images/45f15e2e364ffc9d17a96ec244778985.png)*  *We can immediately
     see some patterns. For example, if \(x_1\) is large (there was a lot of ink in
     the upper-left part of the image), then the digit is probably a 7\. Also, for
     smaller values of \(x_1\), the 2s appear to be in the mid range values of \(x_2\).'
+  id: totrans-49
   prefs: []
   type: TYPE_NORMAL
+  zh: '*![](../Images/45f15e2e364ffc9d17a96ec244778985.png)*  *我们可以立即看到一些模式。例如，如果
+    \(x_1\) 很大（图像的左上角有大量的墨水），那么这个数字很可能是7。另外，对于 \(x_1\) 较小的值，2似乎出现在 \(x_2\) 的中间值范围内。'
 - en: We can start getting a sense for why these predictors are useful, but also why
     the problem will be somewhat challenging.
+  id: totrans-50
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们可以开始了解为什么这些预测因子是有用的，但同时也为什么这个问题将具有一定的挑战性。
 - en: 'We haven’t really learned any algorithms yet, so let’s try building an algorithm
     using a GLM. The model is simply:'
+  id: totrans-51
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们还没有真正学习任何算法，所以让我们尝试使用GLM构建一个算法。模型很简单：
 - en: \[ \log\frac{p(\mathbf{x})}{1-p(\mathbf{x})} = \beta_0 + \beta_1 x_1 + \beta_2
     x_2 \]
+  id: totrans-52
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \log\frac{p(\mathbf{x})}{1-p(\mathbf{x})} = \beta_0 + \beta_1 x_1 + \beta_2
+    x_2 \]
 - en: We fit can fit this model to obtain an estimate \(\hat{p}(\mathbf{x})\) by using
     the `glm` function. We define a decision rule by predicting \(\hat{y}(\mathbf{x})=1\)
     if \(\hat{p}(\mathbf{x})>0.5\) and 0 otherwise.
+  id: totrans-53
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们可以使用`glm`函数来拟合此模型，从而获得一个估计 \(\hat{p}(\mathbf{x})\)。我们通过预测 \(\hat{y}(\mathbf{x})=1\)
+    如果 \(\hat{p}(\mathbf{x})>0.5\)，否则为0来定义一个决策规则。
 - en: If we do this, we get an accuracy of 0.775, well above 50%. Not bad for our
     first try. But can we do better?
+  id: totrans-54
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果我们这样做，我们得到的准确率为0.775，远高于50%。对于我们第一次尝试来说，还不错。但我们能做得更好吗？
 - en: Because we constructed the `mnist_27` example and we had at our disposal 60,000
     digits in just the MNIST dataset, we used this to build the *true* conditional
     distribution \(p(\mathbf{x})\). Keep in mind that in practice we don’t have access
     to the true conditional distribution. We include it in this educational example
     because it permits the comparison of \(\hat{p}(\mathbf{x})\) to the true \(p(\mathbf{x})\).
     This comparison teaches us the limitations of different algorithms.
+  id: totrans-55
   prefs: []
   type: TYPE_NORMAL
+  zh: 因为我们已经构建了`mnist_27`示例，并且我们仅使用MNIST数据集就拥有了60,000个数字，所以我们利用这些数据来构建**真实**的条件分布
+    \(p(\mathbf{x})\)。请记住，在实践中，我们无法访问真实的条件分布。我们将其包含在这个教育示例中，因为它允许我们将 \(\hat{p}(\mathbf{x})\)
+    与真实的 \(p(\mathbf{x})\) 进行比较。这种比较教会了我们不同算法的局限性。
 - en: 'We have stored the true \(p(\mathbf{x})\) in the `mnist_27` and can plot it
     as an image. We draw a curve that separates values of \(\mathbf{x}\) for which
     \(p(\mathbf{x}) > 0.5\) and those for which \(p(\mathbf{x}) < 0.5\):'
+  id: totrans-56
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们已经将真实的 \(p(\mathbf{x})\) 存储在`mnist_27`中，可以将其作为图像绘制。我们绘制一条曲线，将 \(p(\mathbf{x})
+    > 0.5\) 的 \(\mathbf{x}\) 值与 \(p(\mathbf{x}) < 0.5\) 的 \(\mathbf{x}\) 值分开：
 - en: '![](../Images/2877590c71ff929da2167887ad18e5e3.png)'
+  id: totrans-57
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/2877590c71ff929da2167887ad18e5e3.png)'
 - en: 'To start understanding the limitations of regression, first note that, beacuse
     \(p(\mathbf{x}) = 0.5 \iff \log p(\mathbf{x})/(1-p(\mathbf{x})) = 0\), with GLM
     \(\hat{p}(\mathbf{x})\), the boundary defined by \(p(\mathbf{x}) = 0.5\) must
     satisfiy:'
+  id: totrans-58
   prefs: []
   type: TYPE_NORMAL
+  zh: 要开始理解回归的局限性，首先要注意，因为 \(p(\mathbf{x}) = 0.5 \iff \log p(\mathbf{x})/(1-p(\mathbf{x}))
+    = 0\)，使用GLM \(\hat{p}(\mathbf{x})\)，由 \(p(\mathbf{x}) = 0.5\) 定义的边界必须满足：
 - en: \[ \hat{\beta}_0 + \hat{\beta}_1 x_1 + \hat{\beta}_2 x_2 = 0 \implies x_2 =
     -\hat{\beta}_0/\hat{\beta}_2 -\hat{\beta}_1/\hat{\beta}_2 x_1 \]
+  id: totrans-59
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \hat{\beta}_0 + \hat{\beta}_1 x_1 + \hat{\beta}_2 x_2 = 0 \implies x_2 =
+    -\hat{\beta}_0/\hat{\beta}_2 -\hat{\beta}_1/\hat{\beta}_2 x_1 \]
 - en: which implies \(x_2\) must be a linear function of \(x_1\).
+  id: totrans-60
   prefs: []
   type: TYPE_NORMAL
+  zh: 这意味着 \(x_2\) 必须是 \(x_1\) 的线性函数。
 - en: 'This suggests that our GLM approach has no chance of capturing the non-linear
     nature of the true \(p(\mathbf{x})\). Below is a visual representation of \(\hat{p}(\mathbf{x})\)
     which clearly shows how it fails to capture the shape of \(p(\mathbf{x})\):'
+  id: totrans-61
   prefs: []
   type: TYPE_NORMAL
+  zh: '**这表明我们的 GLM 方法没有机会捕捉到真实 \(p(\mathbf{x})\) 的非线性性质。以下是 \(\hat{p}(\mathbf{x})\)
+    的可视化表示，它清楚地显示了它如何未能捕捉到 \(p(\mathbf{x})\) 的形状：**'
 - en: '![](../Images/61f66ecf3f4ede9221869ac31ef88de2.png)'
+  id: totrans-62
   prefs: []
   type: TYPE_IMG
+  zh: '![图片](../Images/61f66ecf3f4ede9221869ac31ef88de2.png)'
 - en: 'We need something more flexible: a method that permits estimates with shapes
     other than a plane. Smoothing techniques permit this flexibility. We will start
     by describing nearest neighbor and kernel approaches. To understand why we cover
@@ -339,52 +497,76 @@
     useful in machine learning because conditional expectations/probabilities can
     be thought of as *trends* of unknown shapes that we need to estimate in the presence
     of uncertainty.**'
+  id: totrans-63
   prefs: []
   type: TYPE_NORMAL
+  zh: '**我们需要更灵活的东西：一种允许估计形状不是平面的方法。平滑技术允许这种灵活性。我们将首先描述最近邻和核方法。为了理解为什么我们要涵盖这个主题，请记住，平滑技术背后的概念在机器学习中非常有用，因为条件期望/概率可以被视为未知形状的**
+    **趋势** **，我们需要在存在不确定性的情况下估计它。**'
 - en: '**28.4 Local Smoothing Methods**'
+  id: totrans-64
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**28.4 局部平滑方法**'
 - en: '**To explain the main ideas behind smoothing concepts, we will focus first
     on a problem with just one predictor. We pick an example with a clear trend that
     is not linear:the 2008 US popular vote poll margin between Barack Obama and John
     McCain.'
+  id: totrans-65
   prefs: []
   type: TYPE_NORMAL
+  zh: '**为了解释平滑概念背后的主要思想，我们首先关注一个只有一个预测因子的问题。我们选择一个具有明显趋势但非线性的例子：2008年美国总统选举中奥巴马和麦凯恩之间的民调差距。**'
 - en: '[PRE1]'
+  id: totrans-66
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: '*![](../Images/479d1cbf716d71f6cb543eec9fb47a3e.png)*  *Later we will learn
     how to extend smoothing ideas to higher dimensions.'
+  id: totrans-67
   prefs: []
   type: TYPE_NORMAL
+  zh: '**![图片](../Images/479d1cbf716d71f6cb543eec9fb47a3e.png)**  **稍后我们将学习如何将平滑思想扩展到更高维度。**'
 - en: For the purposes of the popular vote example, do not think of it as a forecasting
     problem. Instead, we are simply interested in learning the shape of the trend
     once we have all the data.
+  id: totrans-68
   prefs: []
   type: TYPE_NORMAL
+  zh: 在民调示例中，不要将其视为预测问题。相反，我们只是对学习趋势的形状感兴趣，一旦我们有了所有数据。
 - en: 'We assume that for any given day \(x\), there is a true preference among the
     electorate \(f(x)\), but due to the uncertainty introduced by the polling, each
     data point comes with an error \(\varepsilon\). A mathematical model for the observed
     poll margin is:'
+  id: totrans-69
   prefs: []
   type: TYPE_NORMAL
+  zh: '**我们假设对于任何给定的一天 \(x\)，选民中存在一个真实的偏好 \(f(x)\)，但由于民调引入的不确定性，每个数据点都伴随着一个误差 \(\varepsilon\)。观察到的民调差距的数学模型是：**'
 - en: \[ Y_i = f(x_i) + \varepsilon_i \]
+  id: totrans-70
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ Y_i = f(x_i) + \varepsilon_i \]
 - en: To think of this as a machine learning problem, consider that we want to predict
     \(Y\) given a day \(x\). We are interested in finding the true trend \(f(x) =
     \mathrm{E}[Y \mid X=x]\), but since we don’t know this conditional expectation,
     we have to estimate it.
+  id: totrans-71
   prefs: []
   type: TYPE_NORMAL
+  zh: '**将这个问题视为一个机器学习问题，考虑我们想要根据一天 \(x\) 预测 \(Y\)。我们感兴趣的是找到真实趋势 \(f(x) = \mathrm{E}[Y
+    \mid X=x]\)，但由于我们不知道这个条件期望，我们必须估计它。**'
 - en: 'Let’s start by using regression, since it is the only method we have learned
     up to now for this type of data. Below is estimate we obtain:'
+  id: totrans-72
   prefs: []
   type: TYPE_NORMAL
+  zh: '**让我们首先使用回归，因为这是我们迄今为止学到的唯一适用于此类数据的方法。以下是我们的估计：**'
 - en: '![](../Images/c9784dcc56df03f05fa10b75fc70ab5d.png)'
+  id: totrans-73
   prefs: []
   type: TYPE_IMG
+  zh: '![图片](../Images/c9784dcc56df03f05fa10b75fc70ab5d.png)'
 - en: The fitted regression line does not appear to describe the trend very well.
     For example, on September 4 (day -62), the Republican Convention was held and
     the data suggest that it gave John McCain a boost in the polls. However, the regression
@@ -392,111 +574,169 @@
     we note that points above the fitted line (blue) and those below (red) are not
     evenly distributed across days. We therefore need an alternative, more flexible
     approach.
+  id: totrans-74
   prefs: []
   type: TYPE_NORMAL
+  zh: '**拟合的回归线似乎并不能很好地描述趋势。例如，在9月4日（第-62天），共和党全国代表大会举行，数据表明这给了约翰·麦凯恩在民调中的提升。然而，回归线并没有捕捉到这种潜在的趋势。为了更清楚地看到**
+    **拟合不足** **，我们注意到位于拟合线（蓝色）上方的点以及位于下方的点（红色）在每天并不是均匀分布的。因此，我们需要一个替代的、更灵活的方法。**'
 - en: Next we describe smoothing techniques that can overcome this limitation.
+  id: totrans-75
   prefs: []
   type: TYPE_NORMAL
+  zh: '**接下来，我们将描述可以克服这种局限性的平滑技术。**'
 - en: Bin smoothing
+  id: totrans-76
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '**箱式平滑**'
 - en: The general idea of bin smoothing is to group data points into strata in which
     the value of \(f(x)\) can be assumed to be constant. We can make this assumption
     when we think \(f(x)\) changes slowly and, as a result, \(f(x)\) is almost constant
     in small windows of \(x\).
+  id: totrans-77
   prefs: []
   type: TYPE_NORMAL
+  zh: '**箱式平滑的一般思想是将数据点分组到层中，其中 \(f(x)\) 的值可以假设是恒定的。当我们认为 \(f(x)\) 变化缓慢，并且因此 \(f(x)\)
+    在 \(x\) 的小窗口中几乎恒定时，我们可以做出这个假设。**'
 - en: For the `poll_200`8 data, the smoothness assumption means believing that public
     opinion does not shift dramatically from one day to the next. For example, we
     might assume that support remains roughly constant over the span of a week. With
     this assumption in place, several consecutive days share approximately the same
     expected value, giving us multiple observations that help us estimate the underlying
     trend at that point.
+  id: totrans-78
   prefs: []
   type: TYPE_NORMAL
+  zh: 对于 `poll_2008` 数据，平滑假设意味着相信公众舆论不会在一天之内发生剧烈变化。例如，我们可能会假设支持在一周内大致保持恒定。有了这个假设，连续几天的大约相同的预期值会给我们提供多个观察结果，帮助我们估计该点的潜在趋势。
 - en: 'If we fix a day to be in the center of our week, call it \(x_0\), then for
     any other day \(x\) such that \(|x - x_0| \leq h\), with \(h = 3.5\), we assume
     \(f(x)\) is a constant \(f(x) = \mu\). This assumption implies that:'
+  id: totrans-79
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果我们将一周中的某一天设为中心，称之为 \(x_0\)，那么对于任何其他满足 \(|x - x_0| \leq h\) 的日子 \(x\)，其中 \(h
+    = 3.5\)，我们假设 \(f(x)\) 是一个常数 \(f(x) = \mu\)。这个假设意味着：
 - en: \[ E[Y_i | X_i = x_i ] \approx \mu \mbox{ if } |x_i - x_0| \leq 3.5 \]
+  id: totrans-80
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ E[Y_i | X_i = x_i ] \approx \mu \mbox{ if } |x_i - x_0| \leq 3.5 \]
 - en: In smoothing, we refer to \(h\) as the *bandwidth*. The interval of points satisfying
     \(|x_i - x_0| \le h\) is called the *window size* or *span*.
+  id: totrans-81
   prefs: []
   type: TYPE_NORMAL
+  zh: 在平滑过程中，我们将 \(h\) 称为 *带宽*。满足 \(|x_i - x_0| \le h\) 的点的区间称为 *窗口大小* 或 *跨度*。
 - en: '*The terms *bandwidth*, *kernel radius*, *window size*, and *span* are sometimes
     used interchangeably, but their precise meaning depends on the convention. With
     the definition above, the window size is **twice the bandwidth**.'
+  id: totrans-82
   prefs: []
   type: TYPE_NORMAL
+  zh: '*术语 *带宽*、*核半径*、*窗口大小* 和 *跨度* 有时可以互换使用，但它们的精确含义取决于惯例。根据上述定义，窗口大小是 *带宽的两倍*。'
 - en: 'Some R functions, such as `[ksmooth()](https://rdrr.io/r/stats/ksmooth.html)`,
     use the **full window size** as the bandwidth. Under that convention, a bandwidth
     of 7 corresponds to \(h = 3.5\) in our notation.*  *This assumption implies that
     a good estimate for \(f(x_0)\) is the average of the \(y_i\) values in the window.
     If we define \(A_0\) as the set of indexes \(i\) such that \(|x_i - x_0| \leq
     3.5\) and \(N_0\) as the number of indexes in \(A_0\), then our estimate is:'
+  id: totrans-83
   prefs: []
   type: TYPE_NORMAL
+  zh: 一些 R 函数，如 `[ksmooth()](https://rdrr.io/r/stats/ksmooth.html)`，使用 *完整窗口大小* 作为带宽。按照这个惯例，带宽为
+    7 对应于我们记法中的 \(h = 3.5\)。*这个假设意味着 \(f(x_0)\) 的良好估计是窗口中 \(y_i\) 值的平均值。如果我们定义 \(A_0\)
+    为满足 \(|x_i - x_0| \leq 3.5\) 的索引 \(i\) 的集合，并且 \(N_0\) 为 \(A_0\) 中的索引数量，那么我们的估计是：
 - en: \[ \hat{f}(x_0) = \frac{1}{N_0} \sum_{i \in A_0} y_i \]
+  id: totrans-84
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \hat{f}(x_0) = \frac{1}{N_0} \sum_{i \in A_0} y_i \]
 - en: We make this calculation with each value of \(x\) as the center.
+  id: totrans-85
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们用 \(x\) 的每个值作为中心进行这个计算。
 - en: 'In the poll example, for each day, we would compute the average of the values
     within a week with that day in the center. Here are two examples: \(x_0 = -125\)
     and \(x_0 = -55\). The blue segment represents the resulting average.'
+  id: totrans-86
   prefs: []
   type: TYPE_NORMAL
+  zh: 在民意调查的例子中，对于每一天，我们会计算以那天为中心的一周内数值的平均值。这里有两个例子：\(x_0 = -125\) 和 \(x_0 = -55\)。蓝色部分代表结果平均值。
 - en: '![](../Images/3eec40a97a7d5d2aa5745ba9df17796d.png)'
+  id: totrans-87
   prefs: []
   type: TYPE_IMG
+  zh: '![图片](../Images/3eec40a97a7d5d2aa5745ba9df17796d.png)'
 - en: 'By computing this mean for every point, we form an estimate of the underlying
     curve \(f(x)\). Below we show the procedure happening as we move from the -155
     up to 0\. At each value of \(x_0\), we keep the estimate \(\hat{f}(x_0)\) and
     move on to the next point:'
+  id: totrans-88
   prefs: []
   type: TYPE_NORMAL
+  zh: 通过计算每个点的这个平均值，我们形成对潜在曲线 \(f(x)\) 的估计。以下是我们从 -155 移动到 0 的过程。在 \(x_0\) 的每个值上，我们保持估计
+    \(\hat{f}(x_0)\) 并移动到下一个点：
 - en: '![](../Images/5e5bd90c2ab031d3ae1483e2bbfb0522.png)'
+  id: totrans-89
   prefs: []
   type: TYPE_IMG
+  zh: '![图片](../Images/5e5bd90c2ab031d3ae1483e2bbfb0522.png)'
 - en: 'The final code and resulting estimate look like this:'
+  id: totrans-90
   prefs: []
   type: TYPE_NORMAL
+  zh: 最终的代码和估计结果如下所示：
 - en: '[PRE2]'
+  id: totrans-91
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: '*![](../Images/c1951778a2f44b12178ad8b4bc931557.png)**'
+  id: totrans-92
   prefs: []
   type: TYPE_NORMAL
+  zh: '*![图片](../Images/c1951778a2f44b12178ad8b4bc931557.png)*'
 - en: '**Kernel smoothers**'
+  id: totrans-93
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '**核平滑器**'
 - en: '**The bin smother’s estimate can look quite wiggly. One reason is that as the
     window slides, points abruptly enter or leave the bin, causing jumps in the average.
     We can reduce these discontinuities with a *kernel smoother*. A kernel smoother
     assigns a *weight* to each data point according to its distance from the target
     location \(x_0\), then forms a weighted average.'
+  id: totrans-94
   prefs: []
   type: TYPE_NORMAL
+  zh: '**“箱子灭火器”的估计看起来可能相当曲折。一个原因是，当窗口滑动时，点会突然进入或离开箱子，导致平均值的跳跃。我们可以通过一个 *核平滑器* 来减少这些不连续性。核平滑器根据数据点与目标位置
+    \(x_0\) 的距离分配一个 *权重*，然后形成一个加权平均值**。'
 - en: Formally, let \(K\) be a nonnegative kernel function and let \(h>0\) be a *bandwidth*.
     Define weights
+  id: totrans-95
   prefs: []
   type: TYPE_NORMAL
+  zh: 形式上，设 \(K\) 为一个非负核函数，设 \(h>0\) 为 *带宽*。定义权重
 - en: \[ w_{x_0}(x_i) = K\!\left(\frac{x_i - x_0}{h}\right), \]
+  id: totrans-96
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ w_{x_0}(x_i) = K\!\left(\frac{x_i - x_0}{h}\right), \]
 - en: and estimate the trend at \(x_0\) with
+  id: totrans-97
   prefs: []
   type: TYPE_NORMAL
+  zh: 并用此估计 \(x_0\) 处的趋势
 - en: \[ \hat{f}(x_0) \;=\; \frac{\sum_{i=1}^N w_{x_0}(x_i)\,y_i}{\sum_{i=1}^N w_{x_0}(x_i)}.
     \]
+  id: totrans-98
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \hat{f}(x_0) \;=\; \frac{\sum_{i=1}^N w_{x_0}(x_i)\,y_i}{\sum_{i=1}^N w_{x_0}(x_i)}.
+    \]
 - en: The bin smoother is a special case with the *boxcar* (or *uniform*) kernel \(K(u)
     = 1\) if \(|u| \leq 1\) and 0 otherwise, which corresponds to assigning weight
     1 inside the window and 0 outside. This is why, in the code above, we used `kernel
@@ -504,38 +744,58 @@
     and exit, we can use a smooth kernel that gives more weight to points near \(x_0\)
     and rapidly decays for distant points. The option `kernel = "normal"` in `ksmooth`
     does exactly this by using the standard normal density for \(K\).
+  id: totrans-99
   prefs: []
   type: TYPE_NORMAL
+  zh: 箱平滑器是一个特殊情况，具有 *箱形*（或 *均匀*）核 \(K(u) = 1\) 如果 \(|u| \leq 1\) 否则为 0，这对应于在窗口内分配权重
+    1，在窗口外分配权重 0。这就是为什么在上面的代码中，我们使用 `ksmooth` 时的 `kernel = "box"`。为了减少由于点突然进入和退出而产生的波动，我们可以使用一个平滑核，该核对
+    \(x_0\) 附近的点给予更多权重，并对远离 \(x_0\) 的点快速衰减。`ksmooth` 中的 `kernel = "normal"` 选项正是通过使用标准正态密度
+    \(K\) 来做到这一点。
 - en: Below we visualize the box and normal kernels for \(x_0 = -125\) and \(h = 3.5\),
     showing how the boxcar kernel weighs all in-bin points equally, while the normal
     kernel downweights points near the edges.
+  id: totrans-100
   prefs: []
   type: TYPE_NORMAL
+  zh: 在下面，我们可视化 \(x_0 = -125\) 和 \(h = 3.5\) 时的箱形核和正态核，展示了箱形核如何使所有箱内点等权重，而正态核则降低边缘附近点的权重。
 - en: '![](../Images/d55958ab3383647ebd96b9fa750a31ec.png)'
+  id: totrans-101
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/d55958ab3383647ebd96b9fa750a31ec.png)'
 - en: 'The final code and resulting plot for the normal kernel look like this:'
+  id: totrans-102
   prefs: []
   type: TYPE_NORMAL
+  zh: 正态核的最终代码和结果图看起来像这样：
 - en: '[PRE3]'
+  id: totrans-103
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: '*![](../Images/16ae8a3d47bcdc00c79a358d81feba2b.png)*  *Notice that this version
     looks smoother.'
+  id: totrans-104
   prefs: []
   type: TYPE_NORMAL
+  zh: '*![](../Images/16ae8a3d47bcdc00c79a358d81feba2b.png)*  *注意这个版本看起来更平滑。'
 - en: There are several functions in R that implement bin smoothers. One example is
     `ksmooth`, shown above. In practice, however, we typically prefer methods that
     use slightly more complex models than fitting a constant. The final result above,
     for example, is still somewhat wiggly in parts we don’t expect it to be (between
     -125 and -75, for example). Methods such as `loess`, which we explain next, improve
     on this.***
+  id: totrans-105
   prefs: []
   type: TYPE_NORMAL
+  zh: R中有几个函数实现了箱平滑器。一个例子是上面显示的 `ksmooth`。然而，在实践中，我们通常更喜欢使用比拟合常数稍微复杂一些的模型的方法。例如，上面的最终结果在预期不会出现波动的部分仍然有些许波动（例如在
+    -125 和 -75 之间）。我们接下来要解释的 `loess` 方法可以改进这一点。
 - en: '***Local weighted regression (loess)***'
+  id: totrans-106
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '***局部加权回归（loess）***'
 - en: '***A limitation of the bin smoother approach just described is that we need
     small windows for the approximately constant assumptions to hold. As a result,
     we end up with a small number of data points to average and obtain imprecise estimates
@@ -544,167 +804,257 @@
     referred to as Taylor’s theorem, which tells us that if you look closely enough
     at any smooth function \(f(x)\), it will look like a line. To see why this makes
     sense, consider the curved edges gardeners make using straight-edged spades:'
+  id: totrans-107
   prefs: []
   type: TYPE_NORMAL
+  zh: '***所描述的箱平滑器方法的一个局限性是，我们需要小窗口来保持近似常数的假设。因此，我们最终得到的数据点数量很少，得到的 \(\hat{f}(x)\)
+    估计值不够精确。在这里，我们描述如何通过 *局部加权回归*（loess）来考虑更大的窗口大小。为此，我们将使用一个称为泰勒定理的数学结果，它告诉我们，如果你足够仔细地观察任何光滑函数
+    \(f(x)\)，它将看起来像一条线。为了理解这一点，考虑园艺师用直边铲子做的弯曲边缘：'
 - en: '![](../Images/76e52cc56f14fb599fc3d1399379a142.png)'
+  id: totrans-108
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/76e52cc56f14fb599fc3d1399379a142.png)'
 - en: (“Downing Street garden path edge”[¹](#fn1) by Flickr user Number 10[²](#fn2).
     CC-BY 2.0 license[³](#fn3).)
+  id: totrans-109
   prefs: []
   type: TYPE_NORMAL
+  zh: （由 Flickr 用户 Number 10 拍摄的“Downing Street garden path edge”[¹](#fn1)。CC-BY 2.0
+    许可证[²](#fn2)。）
 - en: 'Instead of assuming the function is approximately constant in a window, we
     assume the function is locally linear. We can consider larger window sizes with
     the linear assumption than with a constant. Instead of the one-week window, we
     consider a larger one in which the trend is approximately linear. We start with
     a three-week window and later consider and evaluate other options:'
+  id: totrans-110
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们不是假设函数在窗口内近似为常数，而是假设函数是局部线性的。与常数假设相比，我们可以考虑更大的窗口大小。我们不再考虑一周的窗口，而是考虑一个趋势近似线性的更大窗口。我们从一个三周的窗口开始，后来考虑并评估其他选项：
 - en: \[ E[Y_i | X_i = x_i ] = \beta_0 + \beta_1 (x_i-x_0) \mbox{ if } |x_i - x_0|
     \leq 10.5 \]
+  id: totrans-111
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ E[Y_i | X_i = x_i ] = \beta_0 + \beta_1 (x_i-x_0) \mbox{ if } |x_i - x_0|
+    \leq 10.5 \]
 - en: 'For every point \(x_0\), loess defines a window and fits a line within that
     window. Here is an example showing the fits for \(x_0=-125\) and \(x_0 = -55\):'
+  id: totrans-112
   prefs: []
   type: TYPE_NORMAL
+  zh: 对于每个点 \(x_0\)，loess 定义一个窗口并在该窗口内拟合一条线。以下是一个示例，展示了 \(x_0=-125\) 和 \(x_0 = -55\)
+    的拟合情况：
 - en: '![](../Images/b47b32f84f20661c3855b82d81746a31.png)'
+  id: totrans-113
   prefs: []
   type: TYPE_IMG
+  zh: '![图片](../Images/b47b32f84f20661c3855b82d81746a31.png)'
 - en: 'The fitted value at \(x_0\) becomes our estimate \(\hat{f}(x_0)\). Below we
     show the procedure happening as we move from the -155 up to 0:'
+  id: totrans-114
   prefs: []
   type: TYPE_NORMAL
+  zh: 在 \(x_0\) 处的拟合值成为我们的估计 \(\hat{f}(x_0)\)。以下是我们从 -155 移动到 0 的过程中发生的步骤：
 - en: '![](../Images/09c4c124aa896921d49f71788cb926f9.png)'
+  id: totrans-115
   prefs: []
   type: TYPE_IMG
+  zh: '![图片](../Images/09c4c124aa896921d49f71788cb926f9.png)'
 - en: 'The final result is a smoother fit than the bin smoother since we use larger
     sample sizes to estimate our local parameters:'
+  id: totrans-116
   prefs: []
   type: TYPE_NORMAL
+  zh: 由于我们使用更大的样本量来估计局部参数，最终结果比箱式平滑器更平滑：
 - en: '[PRE4]'
+  id: totrans-117
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE4]'
 - en: '*![](../Images/2ec01304497f3976b3ee028a18eb2e5d.png)*  *Different spans give
     us different estimates. We can see how different window sizes lead to different
     estimates:'
+  id: totrans-118
   prefs: []
   type: TYPE_NORMAL
+  zh: '*![图片](../Images/2ec01304497f3976b3ee028a18eb2e5d.png)*  *不同的跨度给出了不同的估计。我们可以看到不同的窗口大小如何导致不同的估计：'
 - en: '![](../Images/9a700672e88fda0dbfb73dc7c8d7ff9c.png)'
+  id: totrans-119
   prefs: []
   type: TYPE_IMG
+  zh: '![图片](../Images/9a700672e88fda0dbfb73dc7c8d7ff9c.png)'
 - en: 'Here are the final estimates:'
+  id: totrans-120
   prefs: []
   type: TYPE_NORMAL
+  zh: 这里是最终的估计：
 - en: '![](../Images/2da66dffdfcc866f211292d056f38fc3.png)'
+  id: totrans-121
   prefs: []
   type: TYPE_IMG
+  zh: '![图片](../Images/2da66dffdfcc866f211292d056f38fc3.png)'
 - en: There are three other differences between `loess` and the typical bin smoother.
+  id: totrans-122
   prefs: []
   type: TYPE_NORMAL
+  zh: '`loess` 与典型的箱式平滑器之间有三个其他的不同点。'
 - en: 1\. Rather than keeping the bin size the same, `loess` keeps the number of points
     used in the local fit the same. This number is controlled via the `span` argument,
     which expects a proportion. For example, if `N` is the number of data points and
     `span=0.5`, then for a given \(x\), `loess` will use the `0.5*N` closest points
     to \(x\) for the fit.
+  id: totrans-123
   prefs: []
   type: TYPE_NORMAL
+  zh: 1. 与保持箱式大小相同不同，`loess` 保持局部拟合中使用的点数相同。这个数字通过 `span` 参数来控制，它期望一个比例。例如，如果 `N`
+    是数据点的数量，且 `span=0.5`，那么对于给定的 \(x\)，`loess` 将使用 \(0.5*N\) 个最接近 \(x\) 的点来进行拟合。
 - en: '2\. When fitting a line locally, `loess` uses a *weighted* approach. Basically,
     instead of minimizing the residual sun of squares, we minimize a weighted version:'
+  id: totrans-124
   prefs: []
   type: TYPE_NORMAL
+  zh: 2. 当局部拟合直线时，`loess` 使用一个 *加权* 方法。基本上，我们不是最小化残差平方和，而是最小化一个加权的版本：
 - en: \[ \sum_{i=1}^N w_0(x_i) \left[y_i - \left\{\beta_0 + \beta_1 (x_i-x_0)\right\}\right]^2
     \]
+  id: totrans-125
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \sum_{i=1}^N w_0(x_i) \left[y_i - \left\{\beta_0 + \beta_1 (x_i-x_0)\right\}\right]^2
+    \]
 - en: '3\. Instead of the Gaussian kernel, loess uses a function called the Tukey
     tri-weight:'
+  id: totrans-126
   prefs: []
   type: TYPE_NORMAL
+  zh: 3. 与高斯核函数不同，loess 使用一个称为 Tukey 三重权重的函数：
 - en: \[ K(u)= \left( 1 - |u|^3\right)^3 \mbox{ if } |u| \leq 1 \mbox{ and } K(u)
     = 0 \mbox{ if } |u| > 1 \]
+  id: totrans-127
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ K(u)= \left( 1 - |u|^3\right)^3 \mbox{ if } |u| \leq 1 \mbox{ and } K(u)
+    = 0 \mbox{ if } |u| > 1 \]
 - en: 'To define the weights, we denote \(2h\) as the window size and define \(w_0(x_i)\)
     as above: \(w_0(x_i) = K\left(\frac{x_i - x_0}{h}\right)\).'
+  id: totrans-128
   prefs: []
   type: TYPE_NORMAL
+  zh: 为了定义权重，我们表示 \(2h\) 为窗口大小，并定义 \(w_0(x_i)\) 如上所示：\(w_0(x_i) = K\left(\frac{x_i
+    - x_0}{h}\right)\)。
 - en: 'This kernel differs from the Gaussian kernel in that more points get values
     closer to the max:'
+  id: totrans-129
   prefs: []
   type: TYPE_NORMAL
+  zh: 这个核函数与高斯核函数的不同之处在于，更多的点会得到接近最大值的值：
 - en: '![](../Images/1a52077efd9c3c0eaeb47a6e594023b6.png)'
+  id: totrans-130
   prefs: []
   type: TYPE_IMG
+  zh: '![图片](../Images/1a52077efd9c3c0eaeb47a6e594023b6.png)'
 - en: 4\. `loess` has the option of fitting the local model *robustly*. An iterative
     algorithm is implemented in which, after fitting a model in one iteration, outliers
     are detected and down-weighted for the next iteration. To use this option, we
     use the argument `family="symmetric"`.
+  id: totrans-131
   prefs: []
   type: TYPE_NORMAL
+  zh: 4. `loess` 有一个选项可以 *稳健地* 拟合局部模型。实现了一个迭代算法，在该算法中，在每次迭代中拟合一个模型后，会检测异常值并将它们在下次迭代中降权。要使用此选项，我们使用参数
+    `family="symmetric"`。
 - en: '`loess` can also fit local parabolas instead of lines. Taylor’s theorem also
     tells us that if you look at any mathematical function closely enough, it looks
     like a parabola. The theorem also states that you don’t have to look as closely
     when approximating with parabolas as you do when approximating with lines. This
     means we can make our windows even larger and fit parabolas instead of lines.'
+  id: totrans-132
   prefs: []
   type: TYPE_NORMAL
+  zh: '`loess` 也可以拟合局部抛物线而不是直线。泰勒定理也告诉我们，如果你足够仔细地观察任何数学函数，它看起来就像一个抛物线。该定理还指出，在用抛物线近似时，你不需要像用直线近似时那样仔细观察。这意味着我们可以使窗口更大，并拟合抛物线而不是直线。'
 - en: \[ E[Y_i | X_i = x_i ] = \beta_0 + \beta_1 (x_i-x_0) + \beta_2 (x_i-x_0)^2 \mbox{
     if } |x_i - x_0| \leq h \]
+  id: totrans-133
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ E[Y_i | X_i = x_i ] = \beta_0 + \beta_1 (x_i-x_0) + \beta_2 (x_i-x_0)^2 \mbox{
+    if } |x_i - x_0| \leq h \]
 - en: 'You may have noticed that when we showed the code for using loess, we set `degree
     = 1`. This tells loess to fit polynomials of degree 1, a fancy name for lines.
     If you read the help page for loess, you will see that the argument `degree` defaults
     to 2\. By default, loess fits parabolas not lines. Here is a comparison of the
     fitting lines (red dashed) and fitting parabolas (orange solid):'
+  id: totrans-134
   prefs: []
   type: TYPE_NORMAL
+  zh: 你可能已经注意到，当我们展示使用loess的代码时，我们设置了`degree = 1`。这告诉loess拟合一阶多项式，也就是线的花哨名称。如果你阅读loess的帮助页面，你会看到参数`degree`默认为2。默认情况下，loess拟合抛物线而不是线。以下是拟合线（红色虚线）和拟合抛物线（橙色实线）的比较：
 - en: '[PRE5]'
+  id: totrans-135
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE5]'
 - en: '*![](../Images/4ea5fc0f23c8e9c0c5f38c0a20906041.png)*  *The `degree = 2` gives
     us more wiggly results. In general, we actually prefer `degree = 1` as it is less
     prone to this kind of noise.*****'
+  id: totrans-136
   prefs: []
   type: TYPE_NORMAL
+  zh: '*![](../Images/4ea5fc0f23c8e9c0c5f38c0a20906041.png)*  *`degree = 2`给我们带来了更多波动的结果。一般来说，我们实际上更喜欢`degree
+    = 1`，因为它不太容易受到这种噪声的影响。*****'
 - en: '****Beware of default smoothing parameters****'
+  id: totrans-137
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '****注意默认平滑参数****'
 - en: '****The `geom_smooth` function in the **ggplot2** package supports a variety
     of smoothing methods. By default, it uses loess or a related method called Generalized
     Additive Model, the latter if any window of data exceeds 1000 observations. We
     can request that loess is used using the `method` function:'
+  id: totrans-138
   prefs: []
   type: TYPE_NORMAL
+  zh: '****`ggplot2`包中的`geom_smooth`函数支持多种平滑方法。默认情况下，它使用loess或相关方法，即广义加性模型，如果任何数据窗口超过1000个观测值时使用后者。我们可以通过`method`函数请求使用loess：'
 - en: '[PRE6]'
+  id: totrans-139
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE6]'
 - en: '*![](../Images/d0602050c455106cbf394a3df6133e46.png)*  *But be careful with
     default parameters as they are rarely optimal. However, you can conveniently change.
     For example, with `loess` you can use the following code:'
+  id: totrans-140
   prefs: []
   type: TYPE_NORMAL
+  zh: '*![](../Images/d0602050c455106cbf394a3df6133e46.png)*  *但是要注意默认参数，因为它们很少是最优的。然而，你可以方便地更改。例如，使用`loess`你可以使用以下代码：'
 - en: '[PRE7]'
+  id: totrans-141
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE7]'
 - en: '*![](../Images/04c85b9ee60fb9d2671ef1a8319b8451.png)*********'
+  id: totrans-142
   prefs: []
   type: TYPE_NORMAL
+  zh: '*![](../Images/04c85b9ee60fb9d2671ef1a8319b8451.png)*********'
 - en: '****28.5 Connecting smoothing to machine learning****'
+  id: totrans-143
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '****28.5 将平滑与机器学习联系起来****'
 - en: '****To see how smoothing relates to machine learning with a concrete example,
     consider again the example from [Section 28.3.1](#sec-two-or-seven). If we define
     the outcome \(Y = 1\) for digits that are seven and \(Y=0\) for digits that are
     2, then we are interested in estimating the conditional probability:'
+  id: totrans-144
   prefs: []
   type: TYPE_NORMAL
+  zh: '****为了具体了解平滑如何与机器学习相关，再次考虑[第28.3.1节](#sec-two-or-seven)中的例子。如果我们定义结果\(Y = 1\)为数字7，\(Y=0\)为数字2，那么我们感兴趣的估计条件概率是：'
 - en: \[ p(\mathbf{x}) = \mathrm{Pr}(Y=1 \mid X_1=x_1 , X_2 = x_2). \]
+  id: totrans-145
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ p(\mathbf{x}) = \mathrm{Pr}(Y=1 \mid X_1=x_1 , X_2 = x_2). \]
 - en: with \(x_1\) and \(x_2\) the two predictors defined in [Section 28.3.1](#sec-two-or-seven).
     In this example, the 0s and 1s we observe are “noisy” because for some regions
     the probabilities \(p(\mathbf{x})\) are not that close to 0 or 1\. We therefore
@@ -714,84 +1064,128 @@
     smoothing approaches provide an improvement. In [Section 29.1](resampling-methods.html#sec-knn-cv-intro),
     we describe a popular machine learning algorithm, k-nearest neighbors, which is
     based on the concept of smoothing.****
+  id: totrans-146
   prefs: []
   type: TYPE_NORMAL
+  zh: 使用\(x_1\)和\(x_2\)作为在[第28.3.1节](#sec-two-or-seven)中定义的两个预测因子。在这个例子中，我们观察到的0和1是“噪声”，因为对于某些区域，概率\(p(\mathbf{x})\)并不接近0或1。因此，我们需要估计\(p(\mathbf{x})\)。平滑是完成这一目标的另一种方法。在[第28.3.1节](#sec-two-or-seven)中，我们看到线性回归不足以捕捉\(p(\mathbf{x})\)的非线性性质，因此平滑方法提供了改进。在[第29.1节](resampling-methods.html#sec-knn-cv-intro)中，我们描述了一种流行的机器学习算法，即k最近邻算法，它基于平滑的概念。
 - en: '****28.6 Exercises****'
+  id: totrans-147
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '****28.6 练习****'
 - en: '****1\. Compute conditional probabilities for being Male for the `heights`
     dataset. Round the heights to the closest inch. Plot the estimated conditional
     probability \(P(x) = \mathrm{Pr}(\mbox{Male} | \mbox{height}=x)\) for each \(x\).'
+  id: totrans-148
   prefs: []
   type: TYPE_NORMAL
+  zh: '****1. 为`heights`数据集计算男性条件的概率。将身高四舍五入到最接近的英寸。为每个\(x\)绘制估计的条件概率 \(P(x) = \mathrm{Pr}(\mbox{Male}
+    | \mbox{height}=x)\)。'
 - en: '2\. In the plot we just made, we see high variability for low values of height.
     This is because we have few data points in these strata. This time use the `quantile`
     function for quantiles \(0.1,0.2,\dots,0.9\) and the `cut` function to assure
     each group has the same number of points. Hint: For any numeric vector `x`, you
     can create groups based on quantiles as we demonstrate below.'
+  id: totrans-149
   prefs: []
   type: TYPE_NORMAL
+  zh: 2. 在我们刚刚制作的图中，我们看到身高低值时存在高变异性。这是因为在这些层中我们的数据点很少。这次使用`quantile`函数来计算分位数 \(0.1,0.2,\dots,0.9\)
+    和`cut`函数来确保每个组有相同数量的点。提示：对于任何数值向量`x`，你可以根据以下示例创建基于分位数的组。
 - en: '[PRE8]'
+  id: totrans-150
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE8]'
 - en: '*3\. Generate data from a bivariate normal distribution using the **MASS**
     package like this:'
+  id: totrans-151
   prefs: []
   type: TYPE_NORMAL
+  zh: '*3. 使用**MASS**包生成来自双变量正态分布的数据，如下所示：'
 - en: '[PRE9]'
+  id: totrans-152
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE9]'
 - en: '*You can make a quick plot of the data using `plot(dat)`. Use an approach similar
     to the previous exercise to estimate the conditional expectations and make a plot.'
+  id: totrans-153
   prefs: []
   type: TYPE_NORMAL
+  zh: '*你可以使用`plot(dat)`快速绘制数据。使用与上一个练习类似的方法来估计条件期望并绘制图形。'
 - en: 4\. The **dslabs** package provides the following dataset with mortality counts
     for Puerto Rico for 2015-2018.
+  id: totrans-154
   prefs: []
   type: TYPE_NORMAL
+  zh: 4. **dslabs**包提供了以下数据集，其中包含2015-2018年波多黎各的死亡计数。
 - en: '[PRE10]'
+  id: totrans-155
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE10]'
 - en: '*Remove data from before May 2018, then use the `loess` function to obtain
     a smooth estimate of the expected number of deaths as a function of date. Plot
     this resulting smooth function. Make the span about two months long.'
+  id: totrans-156
   prefs: []
   type: TYPE_NORMAL
+  zh: '*从2018年5月之前的数据中移除，然后使用`loess`函数获取预期死亡人数作为日期函数的平滑估计。绘制这个结果平滑函数。使跨度大约为两个月。'
 - en: 5\. Plot the smooth estimates against day of the year, all on the same plot
     but with different colors.
+  id: totrans-157
   prefs: []
   type: TYPE_NORMAL
+  zh: 5. 将平滑估计值与一年中的天数绘制在同一张图上，但使用不同的颜色。
 - en: 6\. Suppose we want to predict 2s and 7s in our `mnist_27` dataset with just
     the second covariate. Can we do this? On first inspection it appears the data
     does not have much predictive power. In fact, if we fit a regular logistic regression,
     the coefficient for `x_2` is not significant!
+  id: totrans-158
   prefs: []
   type: TYPE_NORMAL
+  zh: 6. 假设我们只想使用第二个协变量来预测`mnist_27`数据集中的2s和7s。我们能这样做吗？初步观察似乎数据没有多少预测能力。实际上，如果我们拟合一个常规逻辑回归，`x_2`的系数并不显著！
 - en: '[PRE11]'
+  id: totrans-159
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE11]'
 - en: '*Plotting a scatterplot here is not useful since `y` is binary:'
+  id: totrans-160
   prefs: []
   type: TYPE_NORMAL
+  zh: '*在这里绘制散点图没有用，因为`y`是二元的：'
 - en: '[PRE12]'
+  id: totrans-161
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE12]'
 - en: '*Fit a loess line to the data above and plot the results. Notice that there
     is predictive power, except the conditional probability is not linear.*********'
+  id: totrans-162
   prefs: []
   type: TYPE_NORMAL
+  zh: '*将一个局部加权回归线拟合到上面的数据，并绘制结果。注意，这里存在预测能力，但条件概率不是线性的。*********'
 - en: '* * *'
+  id: totrans-163
   prefs: []
   type: TYPE_NORMAL
+  zh: '* * *'
 - en: '****1.  https://www.flickr.com/photos/49707497@N06/7361631644[↩︎](#fnref1)'
+  id: totrans-164
   prefs: []
   type: TYPE_NORMAL
+  zh: '****1.  https://www.flickr.com/photos/49707497@N06/7361631644[↩︎](#fnref1)'
 - en: https://www.flickr.com/photos/number10gov/[↩︎](#fnref2)
+  id: totrans-165
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: https://www.flickr.com/photos/number10gov/[↩︎](#fnref2)
 - en: https://creativecommons.org/licenses/by/2.0/[↩︎](#fnref3)****
+  id: totrans-166
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: https://creativecommons.org/licenses/by/2.0/[↩︎](#fnref3)****

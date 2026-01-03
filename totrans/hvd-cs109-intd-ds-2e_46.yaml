@@ -1,43 +1,60 @@
 - en: 13  Hypothesis Testing
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 13  假设检验
 - en: 原文：[https://rafalab.dfci.harvard.edu/dsbook-part-2/inference/hypothesis-testing.html](https://rafalab.dfci.harvard.edu/dsbook-part-2/inference/hypothesis-testing.html)
+  id: totrans-1
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 原文：[https://rafalab.dfci.harvard.edu/dsbook-part-2/inference/hypothesis-testing.html](https://rafalab.dfci.harvard.edu/dsbook-part-2/inference/hypothesis-testing.html)
 - en: '[Statistical Inference](../inference/intro-inference.html)'
+  id: totrans-2
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[统计推断](../inference/intro-inference.html)'
 - en: '[13  Hypothesis Testing](../inference/hypothesis-testing.html)'
+  id: totrans-3
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[13  假设检验](../inference/hypothesis-testing.html)'
 - en: In scientific studies, you’ll often see phrases like “the results are statistically
     significant”. This points to a technique called hypothesis testing, where we use
     *p-values*, a type of probability, to test our initial assumption or hypothesis.
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: 在科学研究中，你经常会看到“结果具有统计学意义”这样的短语。这指向一种称为假设检验的技术，我们使用*p 值*，一种概率类型，来测试我们的初始假设或假设。
 - en: In hypothesis testing, rather than providing an estimate of the parameter we’re
     studying, we provide a probability that serves as evidence supporting or contradicting
     a specific hypothesis. The hypothesis usually involves whether a parameter is
     different from a predetermined value (often 0).
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: 在假设检验中，我们不是提供我们正在研究的参数的估计值，而是提供一个作为支持或反驳特定假设的证据的概率。这个假设通常涉及参数是否与一个预定的值不同（通常是
+    0）。
 - en: 'Hypothesis testing is used when you can phrase your research question in terms
     of whether a parameter differs from this predetermined value. It’s applied in
     various fields, asking questions such as: Does a medication extend the lives of
     cancer patients? Does an increase in gun sales correlate with more gun violence?
     Does class size affect test scores?'
+  id: totrans-6
   prefs: []
   type: TYPE_NORMAL
+  zh: 当你可以将你的研究问题表述为参数是否与这个预定的值不同时，就会使用假设检验。它在各个领域都有应用，提出的问题例如：药物是否可以延长癌症患者的寿命？枪支销售的增加是否与更多的枪支暴力相关？班级规模是否会影响考试成绩？
 - en: 'Take, for instance, the previously used example with colored beads. We might
     not be concerned about the exact proportion of blue beads, but instead ask: Are
     there more blue beads than red ones? This could be rephrased as asking if the
     proportion of blue beads is more than 0.5.'
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: 以之前使用的彩色珠子为例。我们可能不关心蓝色珠子的确切比例，而是询问：蓝色珠子是否比红色珠子多？这可以重新表述为询问蓝色珠子的比例是否大于 0.5。
 - en: The initial hypothesis that the parameter equals the predetermined value is
     called the *null hypothesis*. It’s popular because it allows us to focus on the
     data’s properties under this null scenario. Once data is collected, we estimate
@@ -45,63 +62,97 @@
     being as extreme as observed if the null hypothesis is true. If the p-value is
     small, it indicates the null hypothesis is unlikely, providing evidence against
     it.
+  id: totrans-8
   prefs: []
   type: TYPE_NORMAL
+  zh: 将参数等于预定值的初始假设称为*零假设*。它很受欢迎，因为它允许我们关注在零假设情景下数据的属性。一旦收集到数据，我们就估计参数并计算 p 值，即如果零假设为真，估计值达到观察到的极端情况的概率。如果
+    p 值很小，这表明零假设不太可能，提供了反对它的证据。
 - en: We will see more examples of hypothesis testing in [Chapter 17](../linear-models/treatment-effect-models.html).
+  id: totrans-9
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们将在[第 17 章](../linear-models/treatment-effect-models.html)中看到更多关于假设检验的例子。
 - en: 13.1 p-values
+  id: totrans-10
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 13.1 p 值
 - en: Suppose we take a random sample of \(N=100\) and we observe \(52\) blue beads,
     which gives us \(\bar{X} = 0.52\). This seems to be pointing to there being more
     blue than red beads since 0.52 is larger than 0.5\. However, we know there is
     chance involved in this process and we could get a 52 even when the actual proability
     is 0.5\. We call the assumption that the probability is 0.5, \(\pi = 0.5\), a
     *null hypothesis*. The null hypothesis is the skeptic’s hypothesis.
+  id: totrans-11
   prefs: []
   type: TYPE_NORMAL
+  zh: 假设我们随机抽取一个样本 \(N=100\)，观察到 \(52\) 个蓝色珠子，这给我们带来了 \(\bar{X} = 0.52\)。这似乎表明蓝色珠子比红色珠子多，因为
+    0.52 大于 0.5。然而，我们知道这个过程中存在偶然性，即使实际概率是 0.5，我们也有可能得到 52 个。我们将概率为 0.5 的假设，即 \(\pi
+    = 0.5\)，称为*零假设*。零假设是怀疑者的假设。
 - en: '*We use \(\pi\) to represent the probability of drawing a blue bead, instead
     of \(p\) as in previous sections, to avoid confusion between the parameter \(p\)
     and the p in p-value.*  *We have observed a random variable \(\bar{X} = 0.52\),
     and the p-value is the answer to the question: How likely is it to see a value
     this large, when the null hypothesis is true? If the p-value is small enough,
     we *reject the null hypothesis* and say that the results are *statistically significant*.'
+  id: totrans-12
   prefs: []
   type: TYPE_NORMAL
+  zh: '*我们使用 \(\pi\) 来表示抽到蓝色珠子的概率，而不是像前几节中那样使用 \(p\)，以避免参数 \(p\) 和 p 值中的 p 之间的混淆。*
+    我们观察到随机变量 \(\bar{X} = 0.52\)，p 值是回答以下问题的答案：当零假设为真时，看到如此大的值的可能性有多大？如果 p 值足够小，我们
+    *拒绝零假设* 并说结果是 *统计显著的*。'
 - en: '*The p-value of 0.05 as a threshold for statistical significance is conventionally
     used in many areas of research. A cutoff of 0.01 is also used to define *highly
     significance*. The choice of 0.05 is somewhat arbitrary and was popularized by
     the British statistician Ronald Fisher in the 1920s. We do not recommend using
     these cutoff without justification and recommend avoiding the phrase *statistically
     significant*.*  *To obtain a p-value for our example, we write:'
+  id: totrans-13
   prefs: []
   type: TYPE_NORMAL
+  zh: '*统计显著性阈值为 0.05 的 p 值在许多研究领域中被传统使用。0.01 的截止值也用于定义 *高度显著性*。0.05 的选择是有些任意的，并在
+    20 世纪 20 年代由英国统计学家罗纳德·费希尔普及。我们不推荐在没有理由的情况下使用这些截止值，并建议避免使用“统计显著”这一短语。* 要获得我们例子的
+    p 值，我们写出：'
 - en: \[\mathrm{Pr}(\mid \bar{X} - 0.5 \mid > 0.02 ) \]
+  id: totrans-14
   prefs: []
   type: TYPE_NORMAL
+  zh: \[\mathrm{Pr}(\mid \bar{X} - 0.5 \mid > 0.02 ) \]
 - en: 'assuming the \(\pi=0.5\). Under the null hypothesis we know that:'
+  id: totrans-15
   prefs: []
   type: TYPE_NORMAL
+  zh: 假设 \(\pi=0.5\)。在零假设下，我们知道：
 - en: \[ \sqrt{N}\frac{\bar{X} - 0.5}{\sqrt{0.5(1-0.5)}} \]
+  id: totrans-16
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \sqrt{N}\frac{\bar{X} - 0.5}{\sqrt{0.5(1-0.5)}} \]
 - en: is standard normal. We, therefore, can compute the probability above, which
     is the p-value.
+  id: totrans-17
   prefs: []
   type: TYPE_NORMAL
+  zh: 是标准正态分布。因此，我们可以计算上述概率，即 p 值。
 - en: \[\mathrm{Pr}\left(\sqrt{N}\frac{\mid \bar{X} - 0.5\mid}{\sqrt{0.5(1-0.5)}}
     > \sqrt{N} \frac{0.02}{ \sqrt{0.5(1-0.5)}}\right)\]
+  id: totrans-18
   prefs: []
   type: TYPE_NORMAL
+  zh: \[\mathrm{Pr}\left(\sqrt{N}\frac{\mid \bar{X} - 0.5\mid}{\sqrt{0.5(1-0.5)}}
+    > \sqrt{N} \frac{0.02}{ \sqrt{0.5(1-0.5)}}\right)\]
 - en: '[PRE0]'
+  id: totrans-19
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: '*In this case, there is actually a large chance of seeing 52 or larger under
     the null hypothesis.'
+  id: totrans-20
   prefs: []
   type: TYPE_NORMAL
+  zh: '*在这种情况下，实际上在零假设下看到 52 或更大的可能性很大。'
 - en: Keep in mind that there is a close connection between p-values and confidence
     intervals. In our example, if a 95% confidence interval does not include 0.5,
     we know that the p-value must be smaller than 0.05\. In general, we can show mathematically
@@ -109,137 +160,205 @@
     hypothesis value, the null hypothesis is rejected with a p-value as small or smaller
     than \(\alpha\). So *statistical significance* can be determined from confidence
     intervals.
+  id: totrans-21
   prefs: []
   type: TYPE_NORMAL
+  zh: 请记住，p 值和置信区间之间有密切的联系。在我们的例子中，如果一个 95% 的置信区间不包括 0.5，我们知道 p 值必须小于 0.05。一般来说，我们可以从数学上证明，如果一个
+    \((1-\alpha)\times 100\)% 的置信区间不包含零假设值，那么零假设将被拒绝，p 值将小于或等于 \(\alpha\)。因此，*统计显著性*可以通过置信区间来确定。
 - en: To learn more about p-values, you can consult any statistics textbook. However,
     in general, we prefer reporting confidence intervals over p-values because it
     gives us an idea of the size of the estimate. If we just report the p-value, we
     provide no information about the significance of the finding in the context of
     the problem. For this reason, we recommend avoiding p-values whenever you can
     compute a confidence interval.***
+  id: totrans-22
   prefs: []
   type: TYPE_NORMAL
+  zh: 要了解更多关于 p 值的信息，您可以查阅任何统计学教科书。然而，一般来说，我们更喜欢报告置信区间而不是 p 值，因为它可以给我们一个关于估计大小的概念。如果我们只报告
+    p 值，我们就没有提供关于发现显著性的任何信息。因此，我们建议在可能的情况下避免使用 p 值。***
 - en: '***13.2 Power***'
+  id: totrans-23
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '***13.2 力量（Power）***'
 - en: '***Pollsters are not successful at providing correct confidence intervals,
     but rather at predicting who will win. When we took a 25 bead sample size, the
     confidence interval for the spread:'
+  id: totrans-24
   prefs: []
   type: TYPE_NORMAL
+  zh: '**民意调查员在提供正确的置信区间方面并不成功，而是擅长预测谁会获胜。当我们取了一个25个珠子的样本大小时，置信区间的范围：**'
 - en: '[PRE1]'
+  id: totrans-25
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: '*included 0\. If this were a poll and we were forced to make a declaration,
     we would have to say it was a “toss-up”.'
+  id: totrans-26
   prefs: []
   type: TYPE_NORMAL
+  zh: '*包括 0。如果这是一个民意调查，并且我们被迫做出声明，我们不得不说是“平局”。'
 - en: One problem with our poll results is that, given the sample size and the value
     of \(\pi\), we would have to sacrifice the probability of an incorrect call to
     create an interval that does not include 0.
+  id: totrans-27
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们民意调查结果的一个问题是，考虑到样本大小和 \(\pi\) 的值，我们不得不牺牲错误判断的概率来创建一个不包括 0 的区间。
 - en: This does not mean that the election is close. It only means that we have a
     small sample size. In statistical textbooks, this is called lack of *power*. In
     the context of polls, *power* is the probability of detecting spreads different
     from 0.
+  id: totrans-28
   prefs: []
   type: TYPE_NORMAL
+  zh: 这并不意味着选举结果接近。这只意味着我们的样本量很小。在统计学教科书中，这被称为缺乏*效力*。在调查的背景下，*效力*是检测到与0不同的差异的概率。
 - en: By increasing our sample size, we lower our standard error, and thus, have a
     much better chance of detecting the direction of the spread.
+  id: totrans-29
   prefs: []
   type: TYPE_NORMAL
+  zh: 通过增加我们的样本量，我们降低了标准误差，因此有更大的机会检测到差异的方向。
 - en: Statistical textbooks provide much more detail on hypothesis testing, including
     formal definitions of p-values, statistical power, and related concepts. The Recommended
     Reading section lists texts that cover these topics in depth for readers interested
     in exploring them further.****
+  id: totrans-30
   prefs: []
   type: TYPE_NORMAL
+  zh: 统计学教科书提供了关于假设检验的更多细节，包括p值、统计效力及相关概念的正式定义。推荐阅读部分列出了涵盖这些主题的深度文本，供有兴趣进一步探索的读者参考。
 - en: '****13.3 Exercises****'
+  id: totrans-31
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '****13.3 练习****'
 - en: '****1\. Generate a sample of size \(N=1000\) from an urn model with 50% blue
     beads:'
+  id: totrans-32
   prefs: []
   type: TYPE_NORMAL
+  zh: '****1. 从一个包含50%蓝色珠子的urn模型中生成大小为\(N=1000\)的样本：'
 - en: '[PRE2]'
+  id: totrans-33
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: '*then, compute a p-value if \(\pi=0.5\). Repeat this 10,000 times and report
     how often the p-value is lower than 0.05? How often is it lower than 0.01?'
+  id: totrans-34
   prefs: []
   type: TYPE_NORMAL
+  zh: '**然后，如果\(\pi=0.5\)，计算一个p值。重复此操作10,000次，并报告p值低于0.05的频率？它低于0.01的频率是多少？**'
 - en: 2\. Make a histogram of the p-values you generated in exercise 1.
+  id: totrans-35
   prefs: []
   type: TYPE_NORMAL
+  zh: 2. 绘制你在练习1中生成的p值的直方图。
 - en: The p-values are all 0.05.
+  id: totrans-36
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: p值都是0.05。
 - en: The p-values are normally distributed; CLT seems to hold.
+  id: totrans-37
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: p值是正态分布的；中心极限定理似乎成立。
 - en: The p-values are uniformly distributed.
+  id: totrans-38
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: p值是均匀分布的。
 - en: The p-values are all less than 0.05.
+  id: totrans-39
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: p值都小于0.05。
 - en: 3\. Demonstrate mathematically why we see the histogram observed in Exercise
     2.
+  id: totrans-40
   prefs: []
   type: TYPE_NORMAL
+  zh: 3. 用数学方法证明为什么我们在练习2中观察到直方图。
 - en: 'Hint: To compute a p-value, we first calculate a test statistic \(Z\). By the
     Central Limit Theorem (CLT), \(Z\) approximately follows a standard normal distribution
     under the null hypothesis.'
+  id: totrans-41
   prefs: []
   type: TYPE_NORMAL
+  zh: 提示：为了计算p值，我们首先计算一个测试统计量\(Z\)。根据中心极限定理（CLT），在零假设下，\(Z\)近似服从标准正态分布。
 - en: 'The p-value is then computed as:'
+  id: totrans-42
   prefs: []
   type: TYPE_NORMAL
+  zh: 然后计算p值：
 - en: \[ p = 2\{1 - \Phi(|z|)\}, \]
+  id: totrans-43
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ p = 2\{1 - \Phi(|z|)\}, \]
 - en: where \(z\) is the observed value of \(Z\) and \(\Phi(z)\) is the cumulative
     distribution function (CDF) of the standard normal distribution (`pnorm(z)` in
     R).
+  id: totrans-44
   prefs: []
   type: TYPE_NORMAL
+  zh: 其中\(z\)是\(Z\)的观测值，\(\Phi(z)\)是标准正态分布的累积分布函数（CDF）（在R中为`pnorm(z)`）。
 - en: 'To understand the distribution of the p-values, consider the probability that
     a randomly generated p-value is less than or equal to some threshold \(a\) between
     0 and 1:'
+  id: totrans-45
   prefs: []
   type: TYPE_NORMAL
+  zh: 为了理解p值的分布，考虑一个随机生成的p值小于或等于某个介于0和1之间的阈值\(a\)的概率：
 - en: \[ \Pr(p \leq a) = \Pr\big( 2\{1 - \Phi(|Z|)\} \leq a \big). \]
+  id: totrans-46
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \Pr(p \leq a) = \Pr\big( 2\{1 - \Phi(|Z|)\} \leq a \big). \]
 - en: Remember, if \(\Pr(p \leq a) = a\) for all \(a\) in \([0,1]\), then \(p\) follows
     a *uniform distribution*. Show that this relationship holds when \(Z\) is standard
     normal.
+  id: totrans-47
   prefs: []
   type: TYPE_NORMAL
+  zh: 记住，如果\(\Pr(p \leq a) = a\)对所有\(a\)在\([0,1]\)范围内成立，那么\(p\)遵循*均匀分布*。证明当\(Z\)是标准正态分布时，这种关系成立。
 - en: '4\. Generate a sample of size \(N=1000\) from an urn model with 52% blue beads:'
+  id: totrans-48
   prefs: []
   type: TYPE_NORMAL
+  zh: 4. 从一个包含52%蓝色珠子的urn模型中生成大小为\(N=1000\)的样本：
 - en: '[PRE3]'
+  id: totrans-49
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: '*Compute a p-value to test if \(\pi=0.5\). Repeat this 10,000 times and report
     how often the p-value is larger than 0.05? Note that you are computing 1 - power.'
+  id: totrans-50
   prefs: []
   type: TYPE_NORMAL
+  zh: '**计算一个p值来检验\(\pi=0.5\)。重复此操作10,000次，并报告p值大于0.05的频率？请注意，你正在计算1 - 力量。**'
 - en: '5\. Repeat exercise for but for the following values:'
+  id: totrans-51
   prefs: []
   type: TYPE_NORMAL
+  zh: 5. 对以下值重复练习：
 - en: '[PRE4]'
+  id: totrans-52
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE4]'
 - en: '*Plot power as a function of \(N\) with a different color curve for each value
     of `pi0`.*******'
+  id: totrans-53
   prefs: []
   type: TYPE_NORMAL
+  zh: '**将效力作为\(N\)的函数绘制，每个`pi0`值用不同颜色的曲线表示**。'
