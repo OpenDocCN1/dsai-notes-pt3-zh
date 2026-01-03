@@ -1,17 +1,23 @@
 - en: Chapter 12 Summary Statistics
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 第12章 概率统计摘要
 - en: 原文：[https://rafalab.dfci.harvard.edu/dsbook/summary-statistics.html](https://rafalab.dfci.harvard.edu/dsbook/summary-statistics.html)
+  id: totrans-1
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 原文：[https://rafalab.dfci.harvard.edu/dsbook/summary-statistics.html](https://rafalab.dfci.harvard.edu/dsbook/summary-statistics.html)
 - en: 'We start by describing a simple yet powerful data analysis technique: constructing
     data summaries. Although the approach does not require mathematical models or
     probability, the motivation for summaries we construct will later help us understand
     both these topics.'
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们首先描述一种简单而强大的数据分析技术：构建数据摘要。虽然这种方法不需要数学模型或概率，但我们构建摘要的动机将有助于我们理解这两个主题。
 - en: 'Numerical data is often summarized with the *average* value. For example, the
     quality of a high school is sometimes summarized with one number: the average
     score on a standardized test. Occasionally, a second number is reported: the *standard
@@ -21,33 +27,43 @@
     important piece of information that we are missing by only looking at this summary
     rather than the entire list? Here we answer these questions and motivate several
     useful summary statistics, including the average and standard deviation.'
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: 数值数据通常用*平均值*来概括。例如，一所高中的质量有时用一个数字来概括：标准化测试的平均分数。偶尔，还会报告第二个数字：*标准差*。例如，你可能会看到一份报告说分数是680分加减50分，（50是标准差）。这份报告只用两个数字就概括了整个分数向量。这是否合适？通过只看这个摘要而不是整个列表，我们是否遗漏了任何重要的信息？在这里，我们将回答这些问题，并激发几个有用的摘要统计量，包括平均值和标准差。
 - en: 12.1 Variable types
+  id: totrans-4
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 12.1 变量类型
 - en: 'We will be working with two types of variables: categorical and numeric. Each
     can be divided into two other groups: categorical can be ordinal or not, whereas
     numerical variables can be discrete or continuous.'
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们将处理两种类型的变量：分类和数值。每种类型都可以分为另外两组：分类可以是有序的或不有序，而数值变量可以是离散的或连续的。
 - en: When each entry in a vector comes from one of a small number of groups, we refer
     to the data as *categorical data*. Two simple examples are sex (male or female)
     and US regions (Northeast, South, North Central, West). Some categorical data
     can be ordered even if they are not numbers, such as spiciness (mild, medium,
     hot). In statistics textbooks, ordered categorical data are referred to as *ordinal*
     data.
+  id: totrans-6
   prefs: []
   type: TYPE_NORMAL
+  zh: 当向量的每个条目都来自少数几个组中的一个时，我们称这些数据为*分类数据*。两个简单的例子是性别（男或女）和美国地区（东北部、南部、北中部、西部）。即使这些数据不是数字，一些分类数据也可以排序，例如辣度（温和、中等、辣）。在统计学教科书中，有序分类数据被称为*有序数据*。
 - en: Examples of numerical data are population sizes, murder rates, and heights.
     Some numerical data can be treated as ordered categorical. We can further divide
     numerical data into continuous and discrete. Continuous variables are those that
     can take any value, such as heights, if measured with enough precision. For example,
     a pair of twins may be 68.12 and 68.11 inches, respectively. Counts, such as number
     of gun murders per year, are discrete because they have to be round numbers.
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: 数值数据的例子包括人口规模、谋杀率和身高。一些数值数据可以被视为有序分类。我们可以进一步将数值数据分为连续和离散。连续变量是可以取任何值的变量，例如身高，如果测量足够精确的话。例如，一对双胞胎的身高可能分别是68.12英寸和68.11英寸。计数，如每年枪支谋杀的数量，是离散的，因为它们必须是整数。
 - en: Keep in mind that discrete numeric data can be considered ordinal. Although
     this is technically true, we usually reserve the term ordinal data for variables
     belonging to a small number of different groups, with each group having many members.
@@ -57,83 +73,120 @@
     be considered ordinal, while the actual number of cigarettes would be considered
     a numerical variable. But, indeed, there are examples that can be considered both
     numerical and ordinal.
+  id: totrans-8
   prefs: []
   type: TYPE_NORMAL
+  zh: 请记住，离散数值数据可以被认为是有序的。虽然这在技术上是真的，但我们通常将有序数据这个术语保留给属于少数几个不同组别的变量，每个组别都有许多成员。相比之下，当我们有多个组别，每个组别中的案例很少时，我们通常将它们称为离散数值变量。因此，例如，一个人每天抽的香烟包数，四舍五入到最接近的包，将被认为是有序的，而实际抽的香烟数量将被认为是数值变量。但确实存在既可以被认为是数值也可以被认为是有序的例子。
 - en: 12.2 Distributions
+  id: totrans-9
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 12.2 分布
 - en: 'The most basic statistical summary of a list of objects or numbers is its *distribution*.
     The simplest way to think of a distribution is as a compact description of a list
     with many entries. This concept should not be new for readers of this book. For
     example, with categorical data, the distribution simply describes the proportion
     of each unique category. Here is an example with US state regions:'
+  id: totrans-10
   prefs: []
   type: TYPE_NORMAL
+  zh: 一组对象或数字的最基本的统计总结是其 *分布*。思考分布的最简单方式是将其视为一个具有许多条目的列表的紧凑描述。这个概念对于本书的读者来说不应该陌生。例如，对于分类数据，分布只是描述每个唯一类别的比例。这里有一个关于美国州地区的例子：
 - en: '[PRE0]'
+  id: totrans-11
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: When the data is numerical, the task of constructing a summary based on the
     distribution is more challenging. We introduce an artificial, yet illustrative,
     motivating problem that will help us introduce the concepts needed to understand
     distributions.
+  id: totrans-12
   prefs: []
   type: TYPE_NORMAL
+  zh: 当数据是数值时，基于分布构建总结的任务更具挑战性。我们引入一个人工的、但具有说明性的、激励性的问题，这将帮助我们介绍理解分布所需的概念。
 - en: '12.2.1 Case study: describing student heights'
+  id: totrans-13
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 12.2.1 案例研究：描述学生身高
 - en: 'Pretend that we have to describe the heights of our classmates to ET, an extraterrestrial
     that has never seen humans. As a first step, we need to collect data. To do this,
     we ask students to report their heights in inches. We ask them to provide sex
     information because we know there are two different distributions by sex. We collect
     the data and save it in the `heights` data frame:'
+  id: totrans-14
   prefs: []
   type: TYPE_NORMAL
+  zh: 假设我们必须向 ET（一个从未见过人类的地球外生物）描述我们同学的身高。作为第一步，我们需要收集数据。为此，我们要求学生报告他们的身高（以英寸为单位）。我们要求他们提供性别信息，因为我们知道存在两种不同的性别分布。我们收集数据并将其保存在
+    `heights` 数据框中：
 - en: '[PRE1]'
+  id: totrans-15
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: One way to convey the heights to ET is to simply send him this list of 1050
     heights. But there are much more effective ways to convey this information, and
     understanding the concept of a distribution will help. To simplify the explanation,
     we first focus on male heights. We examine the female height data in Section [12.7.1](summary-statistics.html#summaries-student-height-cont).
+  id: totrans-16
   prefs: []
   type: TYPE_NORMAL
+  zh: 向 ET 传达身高的一种方法就是简单地发送这个包含 1050 个身高的列表。但还有更有效的方法来传达这些信息，理解分布的概念将有所帮助。为了简化解释，我们首先关注男性身高。我们将在第
+    [12.7.1](summary-statistics.html#summaries-student-height-cont) 节中检查女性身高数据。
 - en: It turns out that, in some cases, the average and the standard deviation are
     pretty much all we need to understand the data. We will learn data visualization
     techniques that will help us determine when this two number summary is appropriate.
     These same techniques will serve as an alternative for when two numbers are not
     enough.
+  id: totrans-17
   prefs: []
   type: TYPE_NORMAL
+  zh: 结果表明，在某些情况下，平均值和标准差几乎是我们理解数据所需的所有。我们将学习数据可视化技术，这将帮助我们确定何时这两个数字的总结是合适的。这些相同的技巧将在两个数字不足以描述数据时作为替代方案。
 - en: 12.2.2 Empirical cumulative distribution functions
+  id: totrans-18
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 12.2.2 经验累积分布函数
 - en: Numerical data that are not categorical also have distributions. In general,
     when data is not categorical, reporting the frequency of each entry is not an
     effective summary since most entries are unique. In our case study, while several
     students reported a height of 68 inches, only one student reported a height of
     `68.503937007874` inches and only one student reported a height `68.8976377952756`
     inches. We assume that they converted from 174 and 175 centimeters, respectively.
+  id: totrans-19
   prefs: []
   type: TYPE_NORMAL
+  zh: 非分类的数值数据也有分布。一般来说，当数据不是分类的，报告每个条目的频率不是一个有效的总结，因为大多数条目是唯一的。在我们的案例研究中，虽然有几个学生报告身高为
+    68 英寸，但只有一个学生报告身高为 `68.503937007874` 英寸，只有一个学生报告身高 `68.8976377952756` 英寸。我们假设他们分别从
+    174 厘米和 175 厘米转换而来。
 - en: 'Statistics textbooks teach us that a more useful way to define a distribution
     for numeric data is to define a function that reports the proportion of the data
     entries \(x\) that are below \(a\), for all possible values of \(a\). This function
     is called the empirical cumulative distribution function (eCDF) and often denoted
     with \(F\):'
+  id: totrans-20
   prefs: []
   type: TYPE_NORMAL
+  zh: 统计学教材告诉我们，对于数值数据，定义一个分布的更有用方法是定义一个函数，该函数报告所有可能的值 \(a\) 下数据条目 \(x\) 的比例。这个函数被称为经验累积分布函数（eCDF），通常用
+    \(F\) 表示：
 - en: \[ F(a) = \mbox{Proportion of data points that are less than or equal to }a\]
+  id: totrans-21
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ F(a) = \mbox{小于或等于 }a\mbox{ 的数据点的比例} \]
 - en: 'Here is a plot of \(F\) for the male height data:'
+  id: totrans-22
   prefs: []
   type: TYPE_NORMAL
+  zh: 这里是男性身高数据的 \(F\) 图：
 - en: '![](../Images/885b70e68604df0cd328e165f0b6f06b.png)'
+  id: totrans-23
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/885b70e68604df0cd328e165f0b6f06b.png)'
 - en: Similar to what the frequency table does for categorical data, the eCDF defines
     the distribution for numerical data. From the plot, we can see that 16% of the
     values are below 65, since \(F(66)=\) 0.164, or that 84% of the values are below
@@ -142,17 +195,24 @@
     This means that if we send this plot above to ET, he will have all the information
     needed to reconstruct the entire list. Paraphrasing the expression “a picture
     is worth a thousand words”, in this case, a picture is as informative as 812 numbers.
+  id: totrans-24
   prefs: []
   type: TYPE_NORMAL
+  zh: 类似于频率表对分类数据的作用，经验累积分布函数（eCDF）定义了数值数据的分布。从图中我们可以看出，16%的值低于65，因为 \(F(66)=\) 0.164，或者84%的值低于72，因为
+    \(F(72)=\) 0.841，依此类推。实际上，我们可以通过计算 \(F(b) - F(a)\) 来报告任何两个高度（例如 \(a\) 和 \(b\)）之间的值的比例。这意味着如果我们把这个图发送给ET，他将拥有重建整个列表所需的所有信息。用“一图胜千言”这句话来比喻，在这种情况下，一张图的信息量相当于812个数字。
 - en: 'Note: the reason we add the word *empirical* is because, as we will see in
     [13.10.1](probability.html#cdf-intro), the cumulative distribution function (CDF)
     can be defined mathematically, meaning without any data.'
+  id: totrans-25
   prefs: []
   type: TYPE_NORMAL
+  zh: 注意：我们添加“经验”这个词的原因是，正如我们将在[13.10.1](probability.html#cdf-intro)中看到的那样，累积分布函数（CDF）可以在没有数据的情况下从数学上定义。
 - en: 12.2.3 Histograms
+  id: totrans-26
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 12.2.3 直方图
 - en: 'Although the eCDF concept is widely discussed in statistics textbooks, the
     summary plot is actually not very popular in practice. The main reason is that
     it does not easily convey characteristics of interest such as: at what value is
@@ -160,23 +220,32 @@
     95% of the values? Histograms are much preferred because they greatly facilitate
     answering such questions. Histograms sacrifice just a bit of information to produce
     summaries that are much easier to interpret.'
+  id: totrans-27
   prefs: []
   type: TYPE_NORMAL
+  zh: 尽管经验累积分布函数（eCDF）的概念在统计学教科书中广泛讨论，但总结图在实践中的应用实际上并不普遍。主要原因在于它不容易传达感兴趣的特性，例如：分布以什么值为中心？分布是对称的吗？哪些范围包含95%的值？直方图更受欢迎，因为它们极大地简化了回答这类问题的过程。直方图牺牲了一点点信息，以产生更容易解释的总结。
 - en: 'The simplest way to make a histogram is to divide the span of our data into
     non-overlapping bins of the same size. Then, for each bin, we count the number
     of values that fall in that interval. The histogram plots these counts as bars
     with the base of the bar defined by the intervals. Here is the histogram for the
     height data splitting the range of values into one inch intervals: \((49.5, 50.5],(50.5,
     51.5],(51.5,52.5],(52.5,53.5],...,(82.5,83.5]\)'
+  id: totrans-28
   prefs: []
   type: TYPE_NORMAL
+  zh: 制作直方图最简单的方法是将我们的数据范围划分为相同大小的非重叠箱。然后，对于每个箱，我们计算落在该区间内的值的数量。直方图将这些计数作为条形绘制，条形的底部由区间定义。以下是按一英寸间隔分割值范围的身高数据直方图：\((49.5,
+    50.5],(50.5, 51.5],(51.5,52.5],(52.5,53.5],...,(82.5,83.5]\)
 - en: '![](../Images/6387a10d9f361a5a91f5013ea28c9f22.png)'
+  id: totrans-29
   prefs: []
   type: TYPE_IMG
+  zh: '![图片](../Images/6387a10d9f361a5a91f5013ea28c9f22.png)'
 - en: As you can see in the figure above, a histogram is similar to a barplot, but
     it differs in that the x-axis is numerical, not categorical.
+  id: totrans-30
   prefs: []
   type: TYPE_NORMAL
+  zh: 如上图所示，直方图类似于条形图，但不同之处在于x轴是数值的，而不是分类的。
 - en: If we send this plot to ET, he will immediately learn some important properties
     about our data. First, the range of the data is from 50 to 84 with the majority
     (more than 95%) between 63 and 75 inches. Second, the heights are close to symmetric
@@ -184,36 +253,50 @@
     of the proportion of the data in any interval. Therefore, the histogram above
     is not only easy to interpret, but also provides almost all the information contained
     in the raw list of 812 heights with about 30 bin counts.
+  id: totrans-31
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果我们把这张图发送给ET，他将会立即了解我们数据的一些重要特性。首先，数据范围从50到84，其中大多数（超过95%）在63到75英寸之间。其次，高度在69英寸左右对称。此外，通过累计计数，ET可以非常准确地获得任何区间的数据比例。因此，上面的直方图不仅易于解释，而且提供了大约30个箱计数中包含的几乎所有原始812个高度列表的信息。
 - en: What information do we lose? Note that all values in each interval are treated
     the same when computing bin heights. So, for example, the histogram does not distinguish
     between 64, 64.1, and 64.2 inches. Given that these differences are almost unnoticeable
     to the eye, the practical implications are negligible and we were able to summarize
     the data to just 23 numbers.
+  id: totrans-32
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们失去了哪些信息？请注意，在计算箱高度时，每个区间内的所有值都被同等对待。所以，例如，直方图无法区分64、64.1和64.2英寸。鉴于这些差异几乎对肉眼不可见，其实际影响可以忽略不计，我们能够将数据总结为仅仅23个数字。
 - en: 12.2.4 Smoothed density
+  id: totrans-33
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 12.2.4 平滑密度
 - en: 'Smooth density plots are similar to histograms, but the data is not divided
     into bins. Here is what a smooth density plot looks like for our heights data:'
+  id: totrans-34
   prefs: []
   type: TYPE_NORMAL
+  zh: 平滑密度图与直方图类似，但数据并没有被分成箱子。以下是我们高度数据的平滑密度图：
 - en: '![](../Images/41b618be480afb7d24e224003945548c.png)'
+  id: totrans-35
   prefs: []
   type: TYPE_IMG
+  zh: '![图片](../Images/41b618be480afb7d24e224003945548c.png)'
 - en: In this plot, we no longer have sharp edges at the interval boundaries and many
     of the local peaks have been removed. Also, the scale of the y-axis changed from
     counts to *density*.
+  id: totrans-36
   prefs: []
   type: TYPE_NORMAL
+  zh: 在这个图中，我们不再在区间边界有尖锐的边缘，许多局部峰值也被移除了。此外，y轴的刻度从计数变成了*密度*。
 - en: To understand the smooth densities, we have to understand *estimates*, a topic
     we don’t cover until later. However, we provide a heuristic explanation to help
     you understand the basics.
+  id: totrans-37
   prefs: []
   type: TYPE_NORMAL
+  zh: 要理解平滑密度，我们必须理解*估计*，这是一个我们稍后才会涉及的话题。然而，我们提供了一个启发式解释来帮助你理解基础知识。
 - en: The main new concept you must understand is that we assume that our list of
     observed values is a subset of a much larger list of unobserved values. In the
     case of heights, you can imagine that our list of 812 male students comes from
@@ -222,57 +305,81 @@
     This list of values has a distribution, like any list of values, and this larger
     distribution is really what we want to report to ET since it is much more general.
     Unfortunately, we don’t get to see it.
+  id: totrans-38
   prefs: []
   type: TYPE_NORMAL
+  zh: 你必须理解的主要新概念是我们假设我们的观察值列表是一个更大的未观察值列表的子集。在身高的例子中，你可以想象我们的812名男学生的列表来自一个假设的列表，其中包含所有男性学生的身高，这些身高都被非常精确地测量过。假设有100万个这样的测量值。这个值列表有一个分布，就像任何值列表一样，而这个更大的分布正是我们想要报告给ET的，因为它更加通用。不幸的是，我们看不到它。
 - en: 'However, we make an assumption that helps us perhaps approximate it. If we
     had 1,000,000 values, measured very precisely, we could make a histogram with
     very, very small bins. The assumption is that if we show this, the height of consecutive
     bins will be similar. This is what we mean by smooth: we don’t have big jumps
     in the heights of consecutive bins. Below we have a hypothetical histogram with
     bins of size 1:'
+  id: totrans-39
   prefs: []
   type: TYPE_NORMAL
+  zh: 然而，我们做出一个假设，这或许能帮助我们近似它。如果我们有100万个非常精确测量的值，我们可以制作一个非常非常小的箱子的直方图。这个假设是，如果我们展示这个，连续箱子的高度将会相似。这就是我们所说的平滑：连续箱子的高度没有大的跳跃。下面是一个假设的箱子大小为1的直方图：
 - en: '![](../Images/bbb2fb1ebb8bc8cd9c70fc9c15186a48.png)'
+  id: totrans-40
   prefs: []
   type: TYPE_IMG
+  zh: '![图片](../Images/bbb2fb1ebb8bc8cd9c70fc9c15186a48.png)'
 - en: 'The smaller we make the bins, the smoother the histogram gets. Here are the
     histograms with bin width of 1, 0.5, and 0.1:'
+  id: totrans-41
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们使箱子越小，直方图就越平滑。以下是箱子宽度为1、0.5和0.1的直方图：
 - en: '![](../Images/ecd972e51e615a955340e28cdf76030f.png)'
+  id: totrans-42
   prefs: []
   type: TYPE_IMG
+  zh: '![图片](../Images/ecd972e51e615a955340e28cdf76030f.png)'
 - en: 'The smooth density is basically the curve that goes through the top of the
     histogram bars when the bins are very, very small. To make the curve not depend
     on the hypothetical size of the hypothetical list, we compute the curve on frequencies
     rather than counts:'
+  id: totrans-43
   prefs: []
   type: TYPE_NORMAL
+  zh: 平滑密度基本上是在箱子非常非常小的时候通过直方图条形顶部的曲线。为了使曲线不依赖于假设列表的假设大小，我们计算基于频率而不是计数的曲线：
 - en: '![](../Images/f4eeb0249c91b2c17c866f3f672871a7.png)'
+  id: totrans-44
   prefs: []
   type: TYPE_IMG
+  zh: '![图片](../Images/f4eeb0249c91b2c17c866f3f672871a7.png)'
 - en: Now, back to reality. We don’t have millions of measurements. Instead, we have
     812 and we can’t make a histogram with very small bins.
+  id: totrans-45
   prefs: []
   type: TYPE_NORMAL
+  zh: 现在，回到现实中。我们没有数百万的测量值。相反，我们有812个，我们无法制作一个具有非常小箱子的直方图。
 - en: 'We therefore make a histogram, using bin sizes appropriate for our data and
     computing frequencies rather than counts, and we draw a smooth curve that goes
     through the tops of the histogram bars. The following plots demonstrate the steps
     that lead to a smooth density:'
+  id: totrans-46
   prefs: []
   type: TYPE_NORMAL
+  zh: 因此，我们制作一个直方图，使用适合我们数据大小的箱子，并计算频率而不是计数，然后我们画一条通过直方图条形顶部曲线的平滑曲线。以下图示演示了导致平滑密度的步骤：
 - en: '![](../Images/0e2d89eb152588012131ba89712500b5.png)'
+  id: totrans-47
   prefs: []
   type: TYPE_IMG
+  zh: '![图片](../Images/0e2d89eb152588012131ba89712500b5.png)'
 - en: 'However, remember that *smooth* is a relative term. We can actually control
     the *smoothness* of the curve that defines the smooth density through an option
     in the function that computes the smooth density curve. Here are two examples
     using different degrees of smoothness on the same histogram:'
+  id: totrans-48
   prefs: []
   type: TYPE_NORMAL
+  zh: 然而，记住*平滑*是一个相对术语。我们实际上可以通过计算平滑密度曲线的函数中的选项来控制定义平滑密度的曲线的*平滑度*。以下是使用相同直方图上不同平滑度度的两个示例：
 - en: '![](../Images/e81aa1956020ea2b4925f1802c82f076.png)'
+  id: totrans-49
   prefs: []
   type: TYPE_IMG
+  zh: '![图片](../Images/e81aa1956020ea2b4925f1802c82f076.png)'
 - en: We need to make this choice with care as the resulting summary can change our
     interpretation of the data. We should select a degree of smoothness that we can
     defend as being representative of the underlying data. In the case of height,
@@ -281,12 +388,16 @@
     be more similar to the proportion that is 71 than to the proportion that is 78
     or 65\. This implies that the curve should be pretty smooth; that is, the curve
     should look more like the example on the right than on the left.
+  id: totrans-50
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们需要谨慎地做出这个选择，因为产生的总结可能会改变我们对数据的解释。我们应该选择一个我们可以为其辩护的平滑度，使其能够代表潜在数据。在身高的例子中，我们确实有理由相信具有相似身高的人的比例应该是相同的。例如，72英寸的比例应该比71英寸的比例更接近，而不是比78英寸或65英寸的比例更接近。这意味着曲线应该相当平滑；也就是说，曲线看起来应该更像右边的例子，而不是左边的例子。
 - en: While the histogram is an assumption-free summary, the smoothed density is based
     on some assumptions.
+  id: totrans-51
   prefs: []
   type: TYPE_NORMAL
+  zh: 虽然直方图是一个无假设的总结，但平滑密度是基于一些假设的。
 - en: 'Note that interpreting the y-axis of a smooth density plot is not straightforward.
     It is scaled so that the area under the density curve adds up to 1\. If you imagine
     we form a bin with a base 1 unit in length, the y-axis value tells us the proportion
@@ -294,349 +405,527 @@
     size intervals, the best way to determine the proportion of data in that interval
     is by computing the proportion of the total area contained in that interval. For
     example, here are the proportion of values between 65 and 68:'
+  id: totrans-52
   prefs: []
   type: TYPE_NORMAL
+  zh: 注意，解释平滑密度图的y轴并不简单。它是按比例缩放的，使得密度曲线下的面积总和为1。如果你想象我们形成一个底边长度为1单位的箱，y轴的值告诉我们该箱中值的比例。然而，这只适用于大小为1的箱。对于其他大小区间，确定该区间内数据比例的最佳方法是通过计算该区间内包含的总面积的比例。例如，这里是在65英寸到68英寸之间的值比例：
 - en: '![](../Images/e138b10ef117bfa2c12a518b937df010.png)'
+  id: totrans-53
   prefs: []
   type: TYPE_IMG
+  zh: '![图片](../Images/e138b10ef117bfa2c12a518b937df010.png)'
 - en: The proportion of this area is about 0.3, meaning that about 30% of male heights
     are between 65 and 68 inches.
+  id: totrans-54
   prefs: []
   type: TYPE_NORMAL
+  zh: 这个区域的面积比例大约是0.3，这意味着大约30%的男性身高在65英寸到68英寸之间。
 - en: 'By understanding this, we are ready to use the smooth density as a summary.
     For this dataset, we would feel quite comfortable with the smoothness assumption,
     and therefore with sharing this aesthetically pleasing figure with ET, which he
     could use to understand our male heights data:'
+  id: totrans-55
   prefs: []
   type: TYPE_NORMAL
+  zh: 通过理解这一点，我们准备好将平滑密度作为总结。对于这个数据集，我们会非常舒适地接受平滑性假设，因此可以与ET分享这个美观的图表，他可以用它来理解我们的男性身高数据：
 - en: '![](../Images/6349527ef8c20b4e7b2b78c506281fa3.png)'
+  id: totrans-56
   prefs: []
   type: TYPE_IMG
+  zh: '![图片](../Images/6349527ef8c20b4e7b2b78c506281fa3.png)'
 - en: 12.3 Exercises
+  id: totrans-57
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 12.3 练习
 - en: '1\. In the `murders` dataset, the region is a categorical variable and the
     following is its distribution:'
+  id: totrans-58
   prefs: []
   type: TYPE_NORMAL
+  zh: 1. 在`murders`数据集中，地区是一个分类变量，以下是其分布：
 - en: '![](../Images/c0ea76e697a9aca61b7cb288f9a08e31.png)'
+  id: totrans-59
   prefs: []
   type: TYPE_IMG
+  zh: '![图片](../Images/c0ea76e697a9aca61b7cb288f9a08e31.png)'
 - en: To the closest 5%, what proportion of the states are in the North Central region?
+  id: totrans-60
   prefs: []
   type: TYPE_NORMAL
+  zh: 将比例四舍五入到最接近的5%，有多少个州位于北中部地区？
 - en: '2\. Which of the following is true:'
+  id: totrans-61
   prefs: []
   type: TYPE_NORMAL
+  zh: 2. 以下哪个是正确的：
 - en: The graph above is a histogram.
+  id: totrans-62
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 上面的图表是一个直方图。
 - en: The graph above shows only four numbers with a bar plot.
+  id: totrans-63
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 上面的图表只显示了四个数字的条形图。
 - en: Categories are not numbers, so it does not make sense to graph the distribution.
+  id: totrans-64
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 类别不是数字，所以绘制分布没有意义。
 - en: The colors, not the height of the bars, describe the distribution.
+  id: totrans-65
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 颜色，而不是柱状图的高度，描述了分布。
 - en: '3\. The plot below shows the eCDF for male heights:'
+  id: totrans-66
   prefs: []
   type: TYPE_NORMAL
+  zh: 3. 下面的图显示了男性身高的eCDF：
 - en: '![](../Images/b5133e33f6f3dfa62c52595b70f3356f.png)'
+  id: totrans-67
   prefs: []
   type: TYPE_IMG
+  zh: '![图片](../Images/b5133e33f6f3dfa62c52595b70f3356f.png)'
 - en: Based on the plot, what percentage of males are shorter than 75 inches?
+  id: totrans-68
   prefs: []
   type: TYPE_NORMAL
+  zh: 根据图表，有多少百分比的女性身高低于75英寸？
 - en: 100%
+  id: totrans-69
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 100%
 - en: 95%
+  id: totrans-70
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 95%
 - en: 80%
+  id: totrans-71
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 80%
 - en: 72 inches
+  id: totrans-72
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 72英寸
 - en: 4\. To the closest inch, what height `m` has the property that 1/2 of the male
     students are taller than `m` and 1/2 are shorter?
+  id: totrans-73
   prefs: []
   type: TYPE_NORMAL
+  zh: 4. 将高度`m`四舍五入到最接近的英寸，具有这样的性质：一半的男性学生身高高于`m`，另一半低于`m`？
 - en: 61 inches
+  id: totrans-74
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 61英寸
 - en: 64 inches
+  id: totrans-75
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 64英寸
 - en: 69 inches
+  id: totrans-76
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 69英寸
 - en: 74 inches
+  id: totrans-77
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 74英寸
 - en: '5\. Here is an eCDF of the murder rates across states:'
+  id: totrans-78
   prefs: []
   type: TYPE_NORMAL
+  zh: 5. 下面是各州谋杀率的经验累积分布函数（eCDF）：
 - en: '![](../Images/aff769d7fbb182ddb8e1e5020c77d200.png)'
+  id: totrans-79
   prefs: []
   type: TYPE_IMG
+  zh: '![图片](../Images/aff769d7fbb182ddb8e1e5020c77d200.png)'
 - en: Knowing that there are 51 states (counting DC) and based on this plot, how many
     states have murder rates larger than 10 per 100,000 people?
+  id: totrans-80
   prefs: []
   type: TYPE_NORMAL
+  zh: 知道有51个州（包括华盛顿特区）以及根据这个图表，有多少个州的谋杀率超过每10万人10起？
 - en: '1'
+  id: totrans-81
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '1'
 - en: '5'
+  id: totrans-82
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '5'
 - en: '10'
+  id: totrans-83
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '10'
 - en: '50'
+  id: totrans-84
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '50'
 - en: '6\. Based on the eCDF above, which of the following statements are true:'
+  id: totrans-85
   prefs: []
   type: TYPE_NORMAL
+  zh: 6. 根据上面的经验累积分布函数（eCDF），以下哪个陈述是正确的：
 - en: About half the states have murder rates above 7 per 100,000 and the other half
     below.
+  id: totrans-86
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 大约一半的州的谋杀率高于每10万人7起，另一半低于。
 - en: Most states have murder rates below 2 per 100,000.
+  id: totrans-87
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 大多数州的谋杀率低于每10万人2起。
 - en: All the states have murder rates above 2 per 100,000.
+  id: totrans-88
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 所有州的谋杀率都高于每10万人2起。
 - en: With the exception of 4 states, the murder rates are below 5 per 100,000.
+  id: totrans-89
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 除了4个州外，谋杀率都低于每10万人5起。
 - en: '7\. Below is a histogram of male heights in our `heights` dataset:'
+  id: totrans-90
   prefs: []
   type: TYPE_NORMAL
+  zh: 7. 下面是我们`heights`数据集中男性身高的直方图：
 - en: '![](../Images/f22b93f8909379778a85edce88916c86.png)'
+  id: totrans-91
   prefs: []
   type: TYPE_IMG
+  zh: '![图片](../Images/f22b93f8909379778a85edce88916c86.png)'
 - en: Based on this plot, how many males are between 63.5 and 65.5?
+  id: totrans-92
   prefs: []
   type: TYPE_NORMAL
+  zh: 根据这个图表，有多少男性在63.5到65.5岁之间？
 - en: '10'
+  id: totrans-93
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '10'
 - en: '24'
+  id: totrans-94
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '24'
 - en: '34'
+  id: totrans-95
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '34'
 - en: '100'
+  id: totrans-96
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '100'
 - en: 8\. About what **percentage** are shorter than 60 inches?
+  id: totrans-97
   prefs: []
   type: TYPE_NORMAL
+  zh: 8. 大约有多少比例的长度小于60英寸？
 - en: 1%
+  id: totrans-98
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 1%
 - en: 10%
+  id: totrans-99
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 10%
 - en: 25%
+  id: totrans-100
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 25%
 - en: 50%
+  id: totrans-101
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 50%
 - en: 9\. Based on the density plot below, about what proportion of US states have
     populations larger than 10 million?
+  id: totrans-102
   prefs: []
   type: TYPE_NORMAL
+  zh: 9. 根据下面的密度图，大约有多少比例的美国州人口超过1000万？
 - en: '![](../Images/a8ffd0e4ac584cfec883c1a25e9dfa19.png)'
+  id: totrans-103
   prefs: []
   type: TYPE_IMG
+  zh: '![图片](../Images/a8ffd0e4ac584cfec883c1a25e9dfa19.png)'
 - en: '0.02'
+  id: totrans-104
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '0.02'
 - en: '0.15'
+  id: totrans-105
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '0.15'
 - en: '0.50'
+  id: totrans-106
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '0.50'
 - en: '0.55'
+  id: totrans-107
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '0.55'
 - en: 10\. Below are three density plots. Is it possible that they are from the same
     dataset?
+  id: totrans-108
   prefs: []
   type: TYPE_NORMAL
+  zh: 10. 下面是三个密度图。它们可能是来自同一个数据集的吗？
 - en: '![](../Images/d0a442c201a4a83cf45c1b5a6bdf603a.png)'
+  id: totrans-109
   prefs: []
   type: TYPE_IMG
+  zh: '![图片](../Images/d0a442c201a4a83cf45c1b5a6bdf603a.png)'
 - en: 'Which of the following statements is true:'
+  id: totrans-110
   prefs: []
   type: TYPE_NORMAL
+  zh: 以下哪个陈述是正确的：
 - en: It is impossible that they are from the same dataset.
+  id: totrans-111
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 它们不可能来自同一个数据集。
 - en: They are from the same dataset, but the plots are different due to code errors.
+  id: totrans-112
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 它们来自同一个数据集，但由于代码错误，图表不同。
 - en: They are the same dataset, but the first and second plot undersmooth and the
     third oversmooths.
+  id: totrans-113
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 它们是同一个数据集，但第一个和第二个图表下平滑，第三个上平滑。
 - en: They are the same dataset, but the first is not in the log scale, the second
     undersmooths, and the third oversmooths.
+  id: totrans-114
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 它们是同一个数据集，但第一个不在对数尺度上，第二个下平滑，第三个上平滑。
 - en: 12.4 The normal distribution
+  id: totrans-115
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 12.4 正态分布
 - en: 'Histograms and density plots provide excellent summaries of a distribution.
     But can we summarize even further? We often see the average and standard deviation
     used as summary statistics: a two-number summary! To understand what these summaries
     are and why they are so widely used, we need to understand the normal distribution.'
+  id: totrans-116
   prefs: []
   type: TYPE_NORMAL
+  zh: 直方图和密度图提供了对分布的优秀总结。但我们能否进一步总结？我们经常看到平均值和标准差被用作总结统计量：一个双数总结！为了理解这些总结是什么以及为什么它们被广泛使用，我们需要了解正态分布。
 - en: The normal distribution, also known as the bell curve and as the Gaussian distribution,
     is one of the most famous mathematical concepts in history. A reason for this
     is that approximately normal distributions occur in many situations, including
     gambling winnings, heights, weights, blood pressure, standardized test scores,
     and experimental measurement errors. There are explanations for this, but we describe
     these later. Here we focus on how the normal distribution helps us summarize data.
+  id: totrans-117
   prefs: []
   type: TYPE_NORMAL
+  zh: 正态分布，也称为钟形曲线和高斯分布，是历史上最著名的数学概念之一。一个原因是大约正常的分布出现在许多情况下，包括赌博收益、身高、体重、血压、标准化考试成绩和实验测量误差。对此有解释，但我们稍后描述。这里我们关注正态分布如何帮助我们总结数据。
 - en: 'Rather than using data, the normal distribution is defined with a mathematical
     formula. For any interval \((a,b)\), the proportion of values in that interval
     can be computed using this formula:'
+  id: totrans-118
   prefs: []
   type: TYPE_NORMAL
+  zh: 而不是使用数据，正态分布是通过数学公式定义的。对于任何区间 \((a,b)\)，该区间内值的比例可以使用此公式计算：
 - en: \[\mbox{Pr}(a < x \leq b) = \int_a^b \frac{1}{\sqrt{2\pi}s} e^{-\frac{1}{2}\left(
     \frac{x-m}{s} \right)^2} \, dx\]
+  id: totrans-119
   prefs: []
   type: TYPE_NORMAL
+  zh: \[\mbox{Pr}(a < x \leq b) = \int_a^b \frac{1}{\sqrt{2\pi}s} e^{-\frac{1}{2}\left(
+    \frac{x-m}{s} \right)^2} \, dx\]
 - en: 'You don’t need to memorize or understand the details of the formula. But note
     that it is completely defined by just two parameters: \(m\) and \(s\). The rest
     of the symbols in the formula represent the interval ends, \(a\) and \(b\), and
     known mathematical constants \(\pi\) and \(e\). These two parameters, \(m\) and
     \(s\), are referred to as the *average* (also called the *mean*) and the *standard
     deviation* (SD) of the distribution, respectively.'
+  id: totrans-120
   prefs: []
   type: TYPE_NORMAL
+  zh: 您不需要记住或理解公式的细节。但请注意，它完全由两个参数定义：\(m\) 和 \(s\)。公式中的其余符号代表区间的端点 \(a\) 和 \(b\)，以及已知的数学常数
+    \(\pi\) 和 \(e\)。这两个参数，\(m\) 和 \(s\)，分别被称为分布的 *平均*（也称为 *均值*）和 *标准差*（SD）。
 - en: 'The distribution is symmetric, centered at the average, and most values (about
     95%) are within 2 SDs from the average. Here is what the normal distribution looks
     like when the average is 0 and the SD is 1:'
+  id: totrans-121
   prefs: []
   type: TYPE_NORMAL
+  zh: 分布是对称的，以平均值为中心，大部分值（大约95%）都在平均值加减2个标准差范围内。当平均值是0，标准差是1时，正态分布看起来是这样的：
 - en: '![](../Images/f0ed26c26c378037b3bf61287f0ff2dc.png)'
+  id: totrans-122
   prefs: []
   type: TYPE_IMG
+  zh: '![图片](../Images/f0ed26c26c378037b3bf61287f0ff2dc.png)'
 - en: 'The fact that the distribution is defined by just two parameters implies that
     if a dataset is approximated by a normal distribution, all the information needed
     to describe the distribution can be encoded in just two numbers: the average and
     the standard deviation. We now define these values for an arbitrary list of numbers.'
+  id: totrans-123
   prefs: []
   type: TYPE_NORMAL
+  zh: 事实是，分布仅由两个参数定义，这意味着如果一个数据集被近似为正态分布，描述分布所需的所有信息都可以编码在两个数字中：平均值和标准差。我们现在为任意的一组数字定义这些值。
 - en: 'For a list of numbers contained in a vector `x`, the average is defined as:'
+  id: totrans-124
   prefs: []
   type: TYPE_NORMAL
+  zh: 对于包含在向量 `x` 中的数字列表，平均值定义为：
 - en: '[PRE2]'
+  id: totrans-125
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: 'and the SD is defined as:'
+  id: totrans-126
   prefs: []
   type: TYPE_NORMAL
+  zh: 标准差定义为：
 - en: '[PRE3]'
+  id: totrans-127
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: which can be interpreted as the average distance between values and their average.
+  id: totrans-128
   prefs: []
   type: TYPE_NORMAL
+  zh: 这可以解释为值与它们平均值之间的平均距离。
 - en: 'Let’s compute the values for the height for males which we will store in the
     object \(x\):'
+  id: totrans-129
   prefs: []
   type: TYPE_NORMAL
+  zh: 让我们计算男性的身高值，我们将这些值存储在对象 \(x\) 中：
 - en: '[PRE4]'
+  id: totrans-130
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE4]'
 - en: 'The pre-built functions `mean` and `sd` can be used here:'
+  id: totrans-131
   prefs: []
   type: TYPE_NORMAL
+  zh: 可以使用预定义的函数 `mean` 和 `sd`：
 - en: '[PRE5]'
+  id: totrans-132
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE5]'
 - en: 'Advacned note: for reasons explained in statistics textbooks, `sd` divides
     by `length(x)-1` rather than `length(x)`. So `sd(x)` and `sqrt(sum((x-mu)^2) /
     length(x))` are when `length(x)` is large, these two are practically equal.'
+  id: totrans-133
   prefs: []
   type: TYPE_NORMAL
+  zh: 高级笔记：根据统计教材中解释的原因，`sd` 是除以 `length(x)-1` 而不是 `length(x)`。因此，当 `length(x)` 较大时，`sd(x)`
+    和 `sqrt(sum((x-mu)^2) / length(x))` 这两个实际上是相等的。
 - en: 'Here is a plot of the smooth density and the normal distribution with mean
     = 69.3 and SD = 3.6 plotted as a black line with our student height smooth density
     in blue:'
+  id: totrans-134
   prefs: []
   type: TYPE_NORMAL
+  zh: 这里是一个以黑色线条表示平均值 = 69.3 和标准差 = 3.6 的平滑密度和正态分布的图，我们的学生身高平滑密度用蓝色表示：
 - en: '![](../Images/4621f978b157d9f831749f4573cd2e71.png)'
+  id: totrans-135
   prefs: []
   type: TYPE_IMG
+  zh: '![图片](../Images/4621f978b157d9f831749f4573cd2e71.png)'
 - en: The normal distribution does appear to be quite a good approximation here. We
     now will see how well this approximation works at predicting the proportion of
     values within intervals.
+  id: totrans-136
   prefs: []
   type: TYPE_NORMAL
+  zh: 正态分布在这里似乎是一个相当好的近似。我们现在将看到这个近似在预测区间内值的比例方面表现如何。
 - en: 12.4.1 Standard units
+  id: totrans-137
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 12.4.1 标准单位
 - en: For data that is approximately normally distributed, it is convenient to think
     in terms of *standard units*. The standard unit of a value tells us how many standard
     deviations away from the average it is. Specifically, for a value `x` from a vector
     `X`, we define the value of `x` in standard units as `z = (x - m)/s` with `m`
     and `s` the average and standard deviation of `X`, respectively. Why is this convenient?
+  id: totrans-138
   prefs: []
   type: TYPE_NORMAL
+  zh: 对于近似正态分布的数据，用标准单位来思考是方便的。一个值的标准化单位告诉我们它离平均值有多少个标准差。具体来说，对于来自向量 `X` 的值 `x`，我们定义
+    `x` 的标准化值为 `z = (x - m)/s`，其中 `m` 和 `s` 分别是 `X` 的平均值和标准差。为什么这是方便的？
 - en: First look back at the formula for the normal distribution and note that what
     is being exponentiated is \(-z^2/2\) with \(z\) equivalent to \(x\) in standard
     units. Because the maximum of \(e^{-z^2/2}\) is when \(z=0\), this explains why
@@ -647,62 +936,94 @@
     of the smallest (\(z \approx -2\)), or an extremely rare occurrence (\(z > 3\)
     or \(z < -3\)). Remember that it does not matter what the original units are,
     these rules apply to any data that is approximately normal.
+  id: totrans-139
   prefs: []
   type: TYPE_NORMAL
+  zh: 首先回顾一下正态分布的公式，并注意正在指数化的部分是 \(-z^2/2\)，其中 \(z\) 等同于标准单位下的 \(x\)。因为 \(e^{-z^2/2}\)
+    的最大值出现在 \(z=0\) 时，这解释了为什么分布的最大值出现在平均值处。这也解释了对称性，因为 \(- z^2/2\) 在0处是对称的。其次，注意如果我们把正态分布的数据转换成标准单位，我们可以快速知道，例如，一个人是否大约是平均值（\(z=0\)），是否是最大的一个（\(z
+    \approx 2\)），是否是最小的一个（\(z \approx -2\)），或者是一个极其罕见的事件（\(z > 3\) 或 \(z < -3\)）。记住，原始单位是什么并不重要，这些规则适用于任何近似正态的数据。
 - en: 'In R, we can obtain standard units using the function `scale`:'
+  id: totrans-140
   prefs: []
   type: TYPE_NORMAL
+  zh: 在 R 中，我们可以使用 `scale` 函数获得标准单位：
 - en: '[PRE6]'
+  id: totrans-141
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE6]'
 - en: 'Now to see how many men are within 2 SDs from the average, we simply type:'
+  id: totrans-142
   prefs: []
   type: TYPE_NORMAL
+  zh: 现在要查看有多少男性在平均值加减2个标准差范围内，我们只需输入：
 - en: '[PRE7]'
+  id: totrans-143
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE7]'
 - en: The proportion is about 95%, which is what the normal distribution predicts!
     To further confirm that, in fact, the approximation is a good one, we can use
     quantile-quantile plots.
+  id: totrans-144
   prefs: []
   type: TYPE_NORMAL
+  zh: 比例大约是95%，这正是正态分布所预测的！为了进一步确认实际上近似是好的，我们可以使用分位数-分位数图。
 - en: 12.4.2 Quantile-quantile plots
+  id: totrans-145
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 12.4.2 分位数-分位数图
 - en: A systematic way to assess how well the normal distribution fits the data is
     to check if the observed and predicted proportions match. In general, this is
     the approach of the quantile-quantile plot (QQ-plot).
+  id: totrans-146
   prefs: []
   type: TYPE_NORMAL
+  zh: 评估正态分布如何很好地拟合数据的一种系统方法是检查观察到的和预测的比例是否匹配。通常，这是分位数-分位数图（QQ-图）的方法。
 - en: 'First let’s define the theoretical quantiles for the normal distribution. In
     statistics books we use the symbol \(\Phi(x)\) to define the function that gives
     us the proportion of a standard normal distributed data that are smaller than
     \(x\). So, for example, \(\Phi(-1.96) = 0.025\) and \(\Phi(1.96) = 0.975\). In
     R, we can evaluate \(\Phi\) using the `pnorm` function:'
+  id: totrans-147
   prefs: []
   type: TYPE_NORMAL
+  zh: 首先，让我们定义正态分布的理论分位数。在统计学书籍中，我们使用符号 \(\Phi(x)\) 来定义一个函数，该函数给出小于 \(x\) 的标准正态分布数据的比例。例如，\(\Phi(-1.96)
+    = 0.025\) 和 \(\Phi(1.96) = 0.975\)。在R中，我们可以使用 `pnorm` 函数评估 \(\Phi\)：
 - en: '[PRE8]'
+  id: totrans-148
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE8]'
 - en: The inverse function \(\Phi^{-1}(x)\) gives us the *theoretical quantiles* for
     the normal distribution. So, for example, \(\Phi^{-1}(0.975) = 1.96\). In R, we
     can evaluate the inverse of \(\Phi\) using the `qnorm` function.
+  id: totrans-149
   prefs: []
   type: TYPE_NORMAL
+  zh: 逆函数 \(\Phi^{-1}(x)\) 给出了正态分布的*理论分位数*。例如，\(\Phi^{-1}(0.975) = 1.96\)。在R中，我们可以使用`qnorm`函数评估\(\Phi\)的逆。
 - en: '[PRE9]'
+  id: totrans-150
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE9]'
 - en: Note that these calculations are for the standard normal distribution by default
     (mean = 0, standard deviation = 1), but we can also define these for any normal
     distribution. We can do this using the `mean` and `sd` arguments in the `pnorm`
     and `qnorm` function. For example, we can use `qnorm` to determine quantiles of
     a distribution with a specific average and standard deviation
+  id: totrans-151
   prefs: []
   type: TYPE_NORMAL
+  zh: 注意，这些计算默认是针对标准正态分布（均值 = 0，标准差 = 1）进行的，但我们可以为任何正态分布定义这些。我们可以使用 `pnorm` 和 `qnorm`
+    函数中的 `mean` 和 `sd` 参数来完成此操作。例如，我们可以使用 `qnorm` 确定具有特定平均值和标准差的分布的分位数。
 - en: '[PRE10]'
+  id: totrans-152
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE10]'
 - en: For the normal distribution, all the calculations related to quantiles are done
     without data, thus the name *theoretical quantiles*. But quantiles can be defined
     for any distribution, including an empirical one. So if we have data in a vector
@@ -711,178 +1032,265 @@
     can define `q` as the value for which `mean(x <= q) = p`. Notice that not all
     \(p\) have a \(q\) for which the proportion is exactly \(p\). There are several
     ways of defining the best \(q\) as discussed in the help for the `quantile` function.
+  id: totrans-153
   prefs: []
   type: TYPE_NORMAL
+  zh: 对于正态分布，所有与分位数相关的计算都是在没有数据的情况下完成的，因此称为*理论分位数*。但是，可以为任何分布定义分位数，包括经验分布。因此，如果我们有一个向量
+    \(x\) 中的数据，我们可以定义与任何比例 \(p\) 相关的分位数 \(q\)，即 \(q\) 是使得小于 \(q\) 的值的比例等于 \(p\) 的
+    \(q\)。使用R代码，我们可以定义 `q` 为使得 `mean(x <= q) = p` 的值。请注意，并非所有的 \(p\) 都有一个使得比例正好等于
+    \(p\) 的 \(q\)。有关如何定义最佳 \(q\) 的几种方法，请参阅 `quantile` 函数的帮助文档。
 - en: 'To give a quick example, for the male heights data, we have that:'
+  id: totrans-154
   prefs: []
   type: TYPE_NORMAL
+  zh: 为了快速举例，对于男性身高数据，我们有：
 - en: '[PRE11]'
+  id: totrans-155
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE11]'
 - en: So about 50% are shorter or equal to 69 inches. This implies that if \(p=0.50\)
     then \(q=69.5\).
+  id: totrans-156
   prefs: []
   type: TYPE_NORMAL
+  zh: 因此，大约50%的人身高短于或等于69英寸。这意味着如果 \(p=0.50\)，则 \(q=69.5\)。
 - en: 'The idea of a QQ-plot is that if your data is well approximated by normal distribution
     then the quantiles of your data should be similar to the quantiles of a normal
     distribution. To construct a QQ-plot, we do the following:'
+  id: totrans-157
   prefs: []
   type: TYPE_NORMAL
+  zh: QQ-图的想法是，如果你的数据很好地被正态分布近似，那么你的数据的分位数应该与正态分布的分位数相似。为了构建QQ-图，我们执行以下操作：
 - en: Define a vector of \(m\) proportions \(p_1, p_2, \dots, p_m\).
+  id: totrans-158
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 定义一个比例向量 \(p_1, p_2, \dots, p_m\)。
 - en: Define a vector of quantiles \(q_1, \dots, q_m\) for your data for the proportions
     \(p_1, \dots, p_m\). We refer to these as the *sample quantiles*.
+  id: totrans-159
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 定义一个比例 \(p_1, \dots, p_m\) 的分位数向量 \(q_1, \dots, q_m\)，用于你的数据。我们称这些为*样本分位数*。
 - en: Define a vector of theoretical quantiles for the proportions \(p_1, \dots, p_m\)
     for a normal distribution with the same average and standard deviation as the
     data.
+  id: totrans-160
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 定义一个比例 \(p_1, \dots, p_m\) 的理论分位数向量，对于具有与数据相同平均值和标准差的正态分布。
 - en: Plot the sample quantiles versus the theoretical quantiles.
+  id: totrans-161
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 绘制样本分位数与理论分位数的关系图。
 - en: Let’s construct a QQ-plot using R code. Start by defining the vector of proportions.
+  id: totrans-162
   prefs: []
   type: TYPE_NORMAL
+  zh: 让我们使用R代码构建一个QQ-图。首先定义比例向量。
 - en: '[PRE12]'
+  id: totrans-163
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE12]'
 - en: 'To obtain the quantiles from the data, we can use the `quantile` function like
     this:'
+  id: totrans-164
   prefs: []
   type: TYPE_NORMAL
+  zh: 要从数据中获得分位数，我们可以使用`quantile`函数，如下所示：
 - en: '[PRE13]'
+  id: totrans-165
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE13]'
 - en: 'To obtain the theoretical normal distribution quantiles with the corresponding
     average and SD, we use the `qnorm` function:'
+  id: totrans-166
   prefs: []
   type: TYPE_NORMAL
+  zh: 要获得具有相应平均值和标准差的正态分布分位数，我们使用`qnorm`函数：
 - en: '[PRE14]'
+  id: totrans-167
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE14]'
 - en: 'To see if they match or not, we plot them against each other and draw the identity
     line:'
+  id: totrans-168
   prefs: []
   type: TYPE_NORMAL
+  zh: 为了查看它们是否匹配，我们将它们相互绘制并绘制等价线：
 - en: '[PRE15]'
+  id: totrans-169
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE15]'
 - en: '![](../Images/4e6becf5daa96eb7b779929307b51dee.png)'
+  id: totrans-170
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/4e6becf5daa96eb7b779929307b51dee.png)'
 - en: 'Notice that this code becomes much cleaner if we use standard units:'
+  id: totrans-171
   prefs: []
   type: TYPE_NORMAL
+  zh: 注意，如果我们使用标准单位，这段代码会变得更加简洁：
 - en: '[PRE16]'
+  id: totrans-172
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE16]'
 - en: 'The above code is included to help describe QQ-plots. However, in practice
     it is easier to use **ggplot2** code:'
+  id: totrans-173
   prefs: []
   type: TYPE_NORMAL
+  zh: 上述代码包含其中是为了帮助描述QQ图。然而，在实践中，使用**ggplot2**代码更简单：
 - en: '[PRE17]'
+  id: totrans-174
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE17]'
 - en: While for the illustration above we used 20 quantiles, the default from the
     `geom_qq` function is to use as many quantiles as data points.
+  id: totrans-175
   prefs: []
   type: TYPE_NORMAL
+  zh: 而对于上面的示例，我们使用了20个分位数，`geom_qq`函数的默认做法是使用与数据点一样多的分位数。
 - en: Note that although here we used qqplots to compare an observed distribution
     to the mathamatically defeinde normal distribution, QQ-plots can be used to compare
     any two distributions.
+  id: totrans-176
   prefs: []
   type: TYPE_NORMAL
+  zh: 注意，尽管在这里我们使用了QQ图来比较观察到的分布与数学上定义的正态分布，但QQ图可以用来比较任何两个分布。
 - en: 12.5 Percentiles
+  id: totrans-177
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 12.5 百分位数
 - en: Before we move on, let’s define some terms that are commonly used in exploratory
     data analysis.
+  id: totrans-178
   prefs: []
   type: TYPE_NORMAL
+  zh: 在我们继续之前，让我们定义一些在探索性数据分析中常用的一些术语。
 - en: '*Percentiles* are special cases of *quantiles* that are commonly used. The
     percentiles are the quantiles you obtain when setting the \(p\) at \(0.01, 0.02,
     ..., 0.99\). We call, for example, the case of \(p=0.25\) the 25th percentile,
     which gives us a number for which 25% of the data is below. The most famous percentile
     is the 50th, also known as the *median*.'
+  id: totrans-179
   prefs: []
   type: TYPE_NORMAL
+  zh: '*百分位数*是*分位数*的特殊情况，通常被广泛使用。百分位数是在将\(p\)设置为\(0.01, 0.02, ..., 0.99\)时获得的分位数。例如，当\(p=0.25\)时，我们称之为25百分位数，它给出了一个数值，表示25%的数据低于这个数值。最著名的百分位数是50百分位数，也称为*中位数*。'
 - en: For the normal distribution the *median* and average are the same, but this
     is generally not the case.
+  id: totrans-180
   prefs: []
   type: TYPE_NORMAL
+  zh: 对于正态分布，*中位数*和平均值是相同的，但通常并非如此。
 - en: Another special case that receives a name are the *quartiles*, which are obtained
     when setting \(p=0.25,0.50\), and \(0.75\).
+  id: totrans-181
   prefs: []
   type: TYPE_NORMAL
+  zh: 另一个获得名称的特殊情况是*四分位数*，当将\(p\)设置为\(0.25, 0.50\)和\(0.75\)时获得。
 - en: 12.6 Boxplots
+  id: totrans-182
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 12.6 箱线图
 - en: 'To introduce boxplots we will use a dataset of US murders by state. Suppose
     we want to summarize the murder rate distribution. Using the techniques we have
     learned, we can quickly see that the normal approximation does not apply here:'
+  id: totrans-183
   prefs: []
   type: TYPE_NORMAL
+  zh: 为了介绍箱线图，我们将使用美国各州谋杀数据的集合。假设我们想要总结谋杀率分布。使用我们学到的技术，我们可以快速看到正态近似在这里不适用：
 - en: '![](../Images/2817d97f0e234abbf5aa221f7cd8d833.png)'
+  id: totrans-184
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/2817d97f0e234abbf5aa221f7cd8d833.png)'
 - en: In this case, the histogram above or a smooth density plot would serve as a
     relatively succinct summary.
+  id: totrans-185
   prefs: []
   type: TYPE_NORMAL
+  zh: 在这种情况下，上面的直方图或平滑密度图可以作为一个相对简洁的摘要。
 - en: Now suppose those used to receiving just two numbers as summaries ask us for
     a more compact numerical summary.
+  id: totrans-186
   prefs: []
   type: TYPE_NORMAL
+  zh: 现在假设那些习惯于只接收两个数字作为总结的人要求我们提供一个更紧凑的数值摘要。
 - en: 'The boxplot provides a five-number summary composed of the range along with
     the quartiles (the 25th, 50th, and 75th percentiles). The boxplot often ignore
     *outliers* when computing the range and instead plot these as independent points.
     We provide a detailed explanation of outliers later. Finally, he suggested we
     plot these numbers as a “box” with “whiskers” like this:'
+  id: totrans-187
   prefs: []
   type: TYPE_NORMAL
+  zh: 箱线图提供了一个由范围以及四分位数（25分位数、50分位数和75分位数）组成的五数摘要。箱线图在计算范围时通常忽略*异常值*，并将这些值作为独立点进行绘制。我们将在稍后提供异常值的详细解释。最后，他建议我们将这些数值绘制成“箱”状，并带有“胡须”的形状，如下所示：
 - en: '![](../Images/c4132db9cd8b920980c3cf7926779d41.png)'
+  id: totrans-188
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/c4132db9cd8b920980c3cf7926779d41.png)'
 - en: with the box defined by the 25% and 75% percentile and the whiskers showing
     the range. The distance between these two is called the *interquartile* range.
     The two points are considered outliers by the default R function we used. The
     median is shown with a horizontal line. Today, we call these *boxplots*.
+  id: totrans-189
   prefs: []
   type: TYPE_NORMAL
+  zh: 箱线图由25%和75%百分位数定义的箱以及显示范围的胡须组成。这两个值之间的距离称为*四分位距*。默认情况下，我们使用的R函数将这两个点视为异常值。中位数用水平线表示。今天，我们称之为*箱线图*。
 - en: From just this simple plot, we know that the median is about 2.5, that the distribution
     is not symmetric, and that the range is 0 to 5 for the great majority of states
     with two exceptions.
+  id: totrans-190
   prefs: []
   type: TYPE_NORMAL
+  zh: 从这张简单的图中，我们可以知道中位数大约是2.5，分布不是对称的，以及对于大多数州来说，范围是0到5，只有两个例外。
 - en: 12.7 Stratification
+  id: totrans-191
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 12.7 分层
 - en: 'In data analysis we often divide observations into groups based on the values
     of one or more variables associated with those observations. For example in the
     next section we divide the height values into groups based on a sex variable:
     females and males. We call this procedure *stratification* and refer to the resulting
     groups as *strata*.'
+  id: totrans-192
   prefs: []
   type: TYPE_NORMAL
+  zh: 在数据分析中，我们通常根据与这些观察相关的变量值将观察结果分为一组或多组。例如，在下一节中，我们将身高值根据性别变量分为两组：女性和男性。我们称这种程序为*分层*，并将由此产生的组称为*层*。
 - en: Stratification is common in data visualization because we are often interested
     in how the distribution of variables differs across different subgroups. We will
     see several examples throughout this part of the book.
+  id: totrans-193
   prefs: []
   type: TYPE_NORMAL
+  zh: 分层在数据可视化中很常见，因为我们通常对变量在不同子组中的分布差异感兴趣。我们将在本书的这一部分看到几个例子。
 - en: '12.7.1 Case study: describing student heights (continued)'
+  id: totrans-194
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 12.7.1 案例研究：描述学生身高（继续）
 - en: 'Using the histogram, density plots, and QQ-plots, we have become convinced
     that the male height data is well approximated with a normal distribution. In
     this case, we report back to ET a very succinct summary: male heights follow a
@@ -890,33 +1298,45 @@
     this information, ET will have a good idea of what to expect when he meets our
     male students. However, to provide a complete picture we need to also provide
     a summary of the female heights.'
+  id: totrans-195
   prefs: []
   type: TYPE_NORMAL
+  zh: 使用直方图、密度图和QQ图，我们确信男性身高数据可以用正态分布很好地近似。在这种情况下，我们向ET报告一个非常简洁的总结：男性身高遵循平均值为69.3英寸，标准差为3.6英寸的正态分布。有了这些信息，ET将对他遇到我们的男性学生有一个很好的预期。然而，为了提供一个完整的画面，我们还需要提供女性身高的总结。
 - en: 'We learned that boxplots are useful when we want to quickly compare two or
     more distributions. Here are the heights for men and women:'
+  id: totrans-196
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们了解到，当我们想要快速比较两个或多个分布时，箱线图很有用。以下是男性和女性的身高：
 - en: '![](../Images/0daf1dafc83b03b635c0ade8cb180d1d.png)'
+  id: totrans-197
   prefs: []
   type: TYPE_IMG
+  zh: '![图片](../Images/0daf1dafc83b03b635c0ade8cb180d1d.png)'
 - en: 'The plot immediately reveals that males are, on average, taller than females.
     The standard deviations appear to be similar. But does the normal approximation
     also work for the female height data collected by the survey? We expect that they
     will follow a normal distribution, just like males. However, exploratory plots
     reveal that the approximation is not as useful:'
+  id: totrans-198
   prefs: []
   type: TYPE_NORMAL
+  zh: 图表立即显示，男性平均身高高于女性。标准差看起来很相似。但是，正态近似也适用于调查收集的女性身高数据吗？我们预计它们将遵循正态分布，就像男性一样。然而，探索性图表显示，这种近似并不那么有用：
 - en: '![](../Images/5650ce7719ea339a8f561a9622266d07.png)'
+  id: totrans-199
   prefs: []
   type: TYPE_IMG
+  zh: '![图片](../Images/5650ce7719ea339a8f561a9622266d07.png)'
 - en: 'We see something we did not see for the males: the density plot has a second
     *bump*. Also, the QQ-plot shows that the highest points tend to be taller than
     expected by the normal distribution. Finally, we also see five points in the QQ-plot
     that suggest shorter than expected heights for a normal distribution. When reporting
     back to ET, we might need to provide a histogram rather than just the average
     and standard deviation for the female heights.'
+  id: totrans-200
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们看到了我们没有看到的情况：密度图有一个第二个*峰值*。此外，QQ图显示，最高的点往往比正态分布预期的要高。最后，我们还在QQ图中看到了五个点，这些点表明对于正态分布来说，身高比预期的要短。在向ET报告时，我们可能需要提供一个直方图，而不仅仅是女性身高的平均值和标准差。
 - en: We have noticed what we didn’t expect to see. If we look at other female height
     distributions, we do find that they are well approximated with a normal distribution.
     So why are our female students different? Is our class a requirement for the female
@@ -925,205 +1345,301 @@
     to enter their heights, `FEMALE` was the default sex and some males entered their
     heights, but forgot to change the sex variable. In any case, data visualization
     has helped discover a potential flaw in our data.
+  id: totrans-201
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们注意到了我们没有预料到的情况。如果我们查看其他女性的身高分布，我们发现它们可以用正态分布很好地近似。那么，为什么我们的女学生与众不同呢？我们的班级是女性篮球队的必修课吗？是否有少数女性声称自己比实际身高高？另一个，可能更合理的解释是，在学生用来输入他们身高的表格中，`FEMALE`是默认性别，一些男性输入了他们的身高，但忘记了更改性别变量。无论如何，数据可视化帮助我们发现了数据中可能存在的缺陷。
 - en: 'Regarding the five smallest values, note that these values are:'
+  id: totrans-202
   prefs: []
   type: TYPE_NORMAL
+  zh: 关于五个最小值，请注意，这些值是：
 - en: '[PRE18]'
+  id: totrans-203
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE18]'
 - en: Because these are reported heights, a possibility is that the student meant
     to enter `5'1"`, `5'2"`, `5'3"` or `5'5"`.
+  id: totrans-204
   prefs: []
   type: TYPE_NORMAL
+  zh: 由于这些是报告的身高，一个可能性是学生本意是想输入`5'1"`、`5'2"`、`5'3"`或`5'5"`。
 - en: 12.8 Exercises
+  id: totrans-205
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 12.8 练习
 - en: '1\. Define variables containing the heights of males and females like this:'
+  id: totrans-206
   prefs: []
   type: TYPE_NORMAL
+  zh: 1. 定义包含男性和女性身高的变量，如下所示：
 - en: '[PRE19]'
+  id: totrans-207
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE19]'
 - en: How many measurements do we have for each?
+  id: totrans-208
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们对每个测量有多少个数据？
 - en: 2\. Suppose we can’t make a plot and want to compare the distributions side
     by side. We can’t just list all the numbers. Instead, we will look at the percentiles.
     Create a five row table showing `female_percentiles` and `male_percentiles` with
     the 10th, 30th, 50th, 70th, & 90th percentiles for each sex. Then create a data
     frame with these two as columns.
+  id: totrans-209
   prefs: []
   type: TYPE_NORMAL
+  zh: 2. 假设我们无法绘制图表，而想并排比较分布。我们无法只是列出所有数字。相反，我们将查看百分位数。创建一个包含`female_percentiles`和`male_percentiles`的五行表，显示每个性别的第10、30、50、70和90个百分位数。然后创建一个包含这两个作为列的数据框。
 - en: '3\. Study the following boxplots showing population sizes by country:'
+  id: totrans-210
   prefs: []
   type: TYPE_NORMAL
+  zh: 3. 研究以下按国家划分的人口规模的箱线图：
 - en: '![](../Images/32d9a35442e5c7bb7fa0b440d5c27614.png)'
+  id: totrans-211
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/32d9a35442e5c7bb7fa0b440d5c27614.png)'
 - en: Which continent has the country with the biggest population size?
+  id: totrans-212
   prefs: []
   type: TYPE_NORMAL
+  zh: 哪个大陆拥有人口最多的国家？
 - en: 4\. What continent has the largest median population size?
+  id: totrans-213
   prefs: []
   type: TYPE_NORMAL
+  zh: 4. 哪个大陆的中位人口数量最大？
 - en: 5\. What is median population size for Africa to the nearest million?
+  id: totrans-214
   prefs: []
   type: TYPE_NORMAL
+  zh: 5. 非洲的中位人口规模是多少，四舍五入到百万？
 - en: 6\. What proportion of countries in Europe have populations below 14 million?
+  id: totrans-215
   prefs: []
   type: TYPE_NORMAL
+  zh: 6. 欧洲有多少比例的国家人口低于1400万？
 - en: '0.99'
+  id: totrans-216
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '0.99'
 - en: '0.75'
+  id: totrans-217
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '0.75'
 - en: '0.50'
+  id: totrans-218
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '0.50'
 - en: '0.25'
+  id: totrans-219
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '0.25'
 - en: 7\. If we use a log transformation, which continent shown above has the largest
     interquartile range?
+  id: totrans-220
   prefs: []
   type: TYPE_NORMAL
+  zh: 7. 如果我们使用对数变换，上面显示的哪个大陆的样本四分位距最大？
 - en: '8\. Load the height data set and create a vector `x` with just the male heights:'
+  id: totrans-221
   prefs: []
   type: TYPE_NORMAL
+  zh: 8. 加载身高数据集，并创建一个只包含男性身高的向量`x`：
 - en: '[PRE20]'
+  id: totrans-222
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE20]'
 - en: 'What proportion of the data is between 69 and 72 inches (taller than 69, but
     shorter or equal to 72)? Hint: use a logical operator and `mean`.'
+  id: totrans-223
   prefs: []
   type: TYPE_NORMAL
+  zh: 数据中有多少比例在69到72英寸之间（高于69英寸，但不超过或等于72英寸）？提示：使用逻辑运算符和`mean`。
 - en: '9\. Suppose all you know about the data is the average and the standard deviation.
     Use the normal approximation to estimate the proportion you just calculated. Hint:
     start by computing the average and standard deviation. Then use the `pnorm` function
     to predict the proportions.'
+  id: totrans-224
   prefs: []
   type: TYPE_NORMAL
+  zh: 9. 假设你只知道数据的平均值和标准差。使用正态近似来估计你刚刚计算的比例。提示：首先计算平均值和标准差。然后使用`pnorm`函数来预测比例。
 - en: 10\. Notice that the approximation calculated in question nine is very close
     to the exact calculation in the first question. Now perform the same task for
     more extreme values. Compare the exact calculation and the normal approximation
     for the interval (79,81]. How many times bigger is the actual proportion than
     the approximation?
+  id: totrans-225
   prefs: []
   type: TYPE_NORMAL
+  zh: 10. 注意到第九个问题中计算的近似值非常接近第一个问题中精确计算的值。现在对更极端的值执行相同的任务。比较区间（79,81]的精确计算和正态近似。实际比例比近似值大多少倍？
 - en: '11\. Approximate the distribution of adult men in the world as normally distributed
     with an average of 69 inches and a standard deviation of 3 inches. Using this
     approximation, estimate the proportion of adult men that are 7 feet tall or taller,
     referred to as *seven footers*. Hint: use the `pnorm` function.'
+  id: totrans-226
   prefs: []
   type: TYPE_NORMAL
+  zh: 11. 将世界上成年男性的分布近似为平均值为69英寸，标准差为3英寸的正态分布。使用这个近似值，估计成年男性中身高为7英尺或更高的比例，称为*七英尺高*。提示：使用`pnorm`函数。
 - en: 12\. There are about 1 billion men between the ages of 18 and 40 in the world.
     Use your answer to the previous question to estimate how many of these men (18-40
     year olds) are seven feet tall or taller in the world?
+  id: totrans-227
   prefs: []
   type: TYPE_NORMAL
+  zh: 12. 在世界上，大约有10亿名18至40岁的男性。使用你之前问题的答案来估计世界上有多少名这些男性（18-40岁）的身高为7英尺或更高？
 - en: 13\. There are about 10 National Basketball Association (NBA) players that are
     7 feet tall or higher. Using the answer to the previous two questions, what proportion
     of the world’s 18-to-40-year-old *seven footers* are in the NBA?
+  id: totrans-228
   prefs: []
   type: TYPE_NORMAL
+  zh: 13. 大约有10名国家篮球协会（NBA）球员身高为7英尺或更高。使用前两个问题的答案，世界上18至40岁的*7英尺高*人群中有多少比例在NBA？
 - en: '14\. Repeat the calculations performed in the previous question for Lebron
     James’ height: 6 feet 8 inches. There are about 150 players that are at least
     that tall.'
+  id: totrans-229
   prefs: []
   type: TYPE_NORMAL
+  zh: 14. 对勒布朗·詹姆斯的身高（6英尺8英寸）重复之前问题的计算：大约有150名球员的身高至少是这个高度。
 - en: '15\. In answering the previous questions, we found that it is not at all rare
     for a seven footer to become an NBA player. What would be a fair critique of our
     calculations:'
+  id: totrans-230
   prefs: []
   type: TYPE_NORMAL
+  zh: 15. 在回答前一个问题中，我们发现7英尺高的人成为NBA球员并不罕见。对我们计算的一个公平批评是什么：
 - en: Practice and talent are what make a great basketball player, not height.
+  id: totrans-231
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 练习和天赋是成为一名伟大篮球运动员的关键，而不是身高。
 - en: The normal approximation is not appropriate for heights.
+  id: totrans-232
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 正态近似对于身高来说并不合适。
 - en: As seen in question 10, the normal approximation tends to underestimate the
     extreme values. It’s possible that there are more seven footers than we predicted.
+  id: totrans-233
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 如第10题所示，正态近似往往低估极端值。可能七英尺高的人比我们预测的多。
 - en: As seen in question 10, the normal approximation tends to overestimate the extreme
     values. It’s possible that there are fewer seven footers than we predicted.
+  id: totrans-234
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 如第10题所示，正态近似往往高估极端值。可能七英尺高的人比我们预测的少。
 - en: 12.9 Robust summaries
+  id: totrans-235
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 12.9 稳健的总结
 - en: 12.9.1 Outliers
+  id: totrans-236
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 12.9.1 异常值
 - en: We previously described how boxplots show *outliers*, but we did not provide
     a precise definition. Here we discuss outliers, approaches that can help detect
     them, and summaries that take into account their presence.
+  id: totrans-237
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们之前描述了箱线图如何显示*异常值*，但我们没有提供一个精确的定义。在这里，我们讨论异常值、有助于检测它们的途径以及考虑它们存在的总结。
 - en: Outliers are very common in real-world data anlysis. Data recording can be complex
     and it is common to observe data points generated in error. For example, an old
     monitoring device may read out nonsensical measurements before completely failing.
     Human error is also a source of outliers, in particular when data entry is done
     manually. An individual, for instance, may mistakenly enter their height in centimeters
     instead of inches or put the decimal in the wrong place.
+  id: totrans-238
   prefs: []
   type: TYPE_NORMAL
+  zh: 在现实世界的数据分析中，异常值非常常见。数据记录可能很复杂，观察到的数据点可能是在错误中产生的。例如，一个旧的监控设备在完全失效之前可能会读出无意义的测量值。人为错误也是异常值的一个来源，尤其是在手动输入数据时。例如，一个人可能会错误地将他们的身高以厘米为单位输入而不是英寸，或者将小数点放在错误的位置。
 - en: How do we distinguish an outlier from measurements that were too big or too
     small simply due to expected variability? This is not always an easy question
     to answer, but we try to provide some guidance. Let’s begin with a simple case.
+  id: totrans-239
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们如何区分异常值和仅由于预期变异性而太大或太小的测量值？这并不总是容易回答的问题，但我们会尝试提供一些指导。让我们从一个简单的案例开始。
 - en: 'Suppose a colleague is charged with collecting demography data for a group
     of males. The data report height in feet and are stored in the object:'
+  id: totrans-240
   prefs: []
   type: TYPE_NORMAL
+  zh: 假设一位同事负责收集一组男性的人口统计数据。数据报告身高以英尺为单位，并存储在对象中：
 - en: '[PRE21]'
+  id: totrans-241
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE21]'
 - en: Our colleague uses the fact that heights are usually well approximated by a
     normal distribution and summarizes the data with average and standard deviation
+  id: totrans-242
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们的同事利用了身高通常很好地符合正态分布的事实，并用平均值和标准差总结了数据
 - en: '[PRE22]'
+  id: totrans-243
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE22]'
 - en: 'and writes a report on the interesting fact that this group of males is much
     taller than usual. The average height is over six feet tall! Using your data analysis
     skills, however, you notice something else that is unexpected: the standard deviation
     is over 7 feet. Adding and subtracting two standard deviations, you note that
     95% of this population will have heights between -9.489, 21.697 feet, which does
     not make sense. A quick plot reveals the problem:'
+  id: totrans-244
   prefs: []
   type: TYPE_NORMAL
+  zh: 并且写了一份关于这个男性群体比平常高得多的有趣事实的报告。平均身高超过六英尺！然而，使用你的数据分析技能，你却注意到一些意想不到的事情：标准差超过七英尺。加减两个标准差，你会发现95%的这部分人群的身高将在-9.489至21.697英尺之间，这显然是不合逻辑的。一个快速的图表揭示了问题：
 - en: '[PRE23]'
+  id: totrans-245
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE23]'
 - en: '![](../Images/e0cb2c19d52937a7709aa29c8e6a0deb.png)'
+  id: totrans-246
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/e0cb2c19d52937a7709aa29c8e6a0deb.png)'
 - en: There appears to be at least one value that is nonsensical, since we know that
     a height of 180 feet is impossible. The boxplot detects this point as an outlier.
+  id: totrans-247
   prefs: []
   type: TYPE_NORMAL
+  zh: 看起来至少有一个值是不合逻辑的，因为我们知道180英尺的身高是不可能的。箱线图将这个点检测为异常值。
 - en: 12.9.2 Median
+  id: totrans-248
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 12.9.2 中位数
 - en: 'When we have an outlier like this, the average can become very large. Mathematically,
     we can make the average as large as we want by simply changing one number: with
     500 data points, we can increase the average by any amount \(\Delta\) by adding
@@ -1131,24 +1647,37 @@
     which half the values are smaller and the other half are bigger, is robust to
     such outliers. No matter how large we make the largest point, the median remains
     the same.'
+  id: totrans-249
   prefs: []
   type: TYPE_NORMAL
+  zh: 当我们遇到这样的异常值时，平均值可能会变得非常大。从数学上讲，我们可以通过简单地改变一个数字来使平均值变得任意大：在500个数据点中，我们可以通过向一个数字添加
+    \(\Delta \times\) 500 来增加任何数量的 \(\Delta\)。中位数，定义为一半的值比它小，另一半的值比它大，对这样的异常值具有稳健性。无论我们如何使最大点变得很大，中位数都保持不变。
 - en: 'With this data the median is:'
+  id: totrans-250
   prefs: []
   type: TYPE_NORMAL
+  zh: 使用这些数据，中位数是：
 - en: '[PRE24]'
+  id: totrans-251
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE24]'
 - en: which is about 5 feet and 9 inches.
+  id: totrans-252
   prefs: []
   type: TYPE_NORMAL
+  zh: 大约是五英尺九英寸。
 - en: The median is what boxplots display as a horizontal line.
+  id: totrans-253
   prefs: []
   type: TYPE_NORMAL
+  zh: 中位数是箱线图显示为水平线的值。
 - en: 12.9.3 The inter quartile range (IQR)
+  id: totrans-254
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 12.9.3 四分位距（IQR）
 - en: 'The box in boxplots is defined by the first and third quartile. These are meant
     to provide an idea of the variability in the data: 50% of the data is within this
     range. The difference between the 3rd and 1st quartile (or 75th and 25th percentiles)
@@ -1158,71 +1687,107 @@
     the standard deviation of the data had an outlier not been present. We can see
     that this works well in our example since we get a standard deviation estimate
     of:'
+  id: totrans-255
   prefs: []
   type: TYPE_NORMAL
+  zh: 箱线图中的箱子由第一和第三四分位数定义。这些是为了提供数据变异性的概念：50%的数据落在这个范围内。第三四分位数和第一四分位数（或75百分位数和25百分位数）之间的差异被称为四分位距（IQR）。与中位数一样，这个量对异常值具有稳健性，因为大值不会影响它。我们可以做一些数学计算来看到，对于正态分布的数据，IQR
+    / 1.349近似于没有异常值时的数据标准差。我们可以看到，在我们的例子中，我们得到的标准差估计值为：
 - en: '[PRE25]'
+  id: totrans-256
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE25]'
 - en: which is about 3 inches.
+  id: totrans-257
   prefs: []
   type: TYPE_NORMAL
+  zh: 这大约是3英寸。
 - en: 12.9.4 Tukey’s definition of an outlier
+  id: totrans-258
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 12.9.4 图基对异常值的定义
 - en: 'In R, points falling outside the whiskers of the boxplot are referred to as
     *outliers*. This definition of outlier was introduced by John Tukey. The top whisker
     ends at the 75th percentile plus 1.5 \(\times\) IQR. Similarly the bottom whisker
     ends at the 25th percentile minus 1.5\(\times\) IQR. If we define the first and
     third quartiles as \(Q_1\) and \(Q_3\), respectively, then an outlier is anything
     outside the range:'
+  id: totrans-259
   prefs: []
   type: TYPE_NORMAL
+  zh: 在R中，落在箱线图胡须外的点被称为*异常值*。这种异常值的定义是由约翰·图基（John Tukey）提出的。上胡须的末端在75百分位数加上1.5 \(\times\)
+    IQR处。同样，下胡须的末端在25百分位数减去1.5\(\times\) IQR处。如果我们定义第一和第三四分位数分别为\(Q_1\)和\(Q_3\)，那么异常值是指任何超出以下范围的值：
 - en: \[[Q_1 - 1.5 \times (Q_3 - Q1), Q_3 + 1.5 \times (Q_3 - Q1)].\]
+  id: totrans-260
   prefs: []
   type: TYPE_NORMAL
+  zh: \[[Q_1 - 1.5 \times (Q_3 - Q1), Q_3 + 1.5 \times (Q_3 - Q1)].\]
 - en: 'When the data is normally distributed, the standard units of these values are:'
+  id: totrans-261
   prefs: []
   type: TYPE_NORMAL
+  zh: 当数据呈正态分布时，这些值的标准单位是：
 - en: '[PRE26]'
+  id: totrans-262
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE26]'
 - en: Using the `pnorm` function, we see that 99.3% of the data falls in this interval.
+  id: totrans-263
   prefs: []
   type: TYPE_NORMAL
+  zh: 使用`pnorm`函数，我们可以看到99.3%的数据落在这个区间内。
 - en: 'Keep in mind that this is not such an extreme event: if we have 1,000 data
     points that are normally distributed, we expect to see about 7 outside of this
     range. But these would not be outliers since we expect to see them under the typical
     variation.'
+  id: totrans-264
   prefs: []
   type: TYPE_NORMAL
+  zh: 请记住，这并不是一个如此极端的事件：如果我们有1000个正态分布的数据点，我们预计大约有7个超出这个范围。但它们不会被视为异常值，因为我们预计在典型变异下会看到它们。
 - en: If we want an outlier to be rarer, we can increase the 1.5 to a larger number.
     Tukey also used 3 and called these *far out* outliers. With a normal distribution,
     100% of the data falls in this interval. This translates into about 2 in a million
     chance of being outside the range. In the `geom_boxplot` function, this can be
     controlled by the `outlier.size` argument, which defaults to 1.5.
+  id: totrans-265
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果我们想让异常值更罕见，可以将1.5增加到更大的数字。图基（Tukey）也使用了3，并将这些称为*远端*异常值。在正态分布中，100%的数据都落在这个区间内。这相当于大约有2百万分之一的概率超出这个范围。在`geom_boxplot`函数中，这可以通过`outlier.size`参数来控制，默认值为1.5。
 - en: 'The 180 inches measurement is well beyond the range of the height data:'
+  id: totrans-266
   prefs: []
   type: TYPE_NORMAL
+  zh: 180英寸的测量值远远超出了身高数据的范围：
 - en: '[PRE27]'
+  id: totrans-267
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE27]'
 - en: 'If we take this value out, we can see that the data is in fact normally distributed
     as expected:'
+  id: totrans-268
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果我们去掉这个值，我们可以看到数据实际上如预期的那样呈正态分布：
 - en: '[PRE28]'
+  id: totrans-269
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE28]'
 - en: '![](../Images/ae6bb84b3807010eafe9d4c61d465eaa.png)'
+  id: totrans-270
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/ae6bb84b3807010eafe9d4c61d465eaa.png)'
 - en: 12.9.5 Median absolute deviation
+  id: totrans-271
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 12.9.5 中位数绝对偏差
 - en: 'Another way to robustly estimate the standard deviation in the presence of
     outliers is to use the median absolute deviation (MAD). To compute the MAD, we
     first compute the median, and then for each value we compute the distance between
@@ -1230,153 +1795,237 @@
     For technical reasons not discussed here, this quantity needs to be multiplied
     by 1.4826 to assure it approximates the actual standard deviation. The `mad` function
     already incorporates this correction. For the height data, we get a MAD of:'
+  id: totrans-272
   prefs: []
   type: TYPE_NORMAL
+  zh: 另一种在存在异常值的情况下稳健地估计标准差的方法是使用中位数绝对偏差（MAD）。为了计算MAD，我们首先计算中位数，然后对每个值计算它与中位数之间的距离。MAD定义为这些距离的中位数。由于一些未在此讨论的技术原因，这个量需要乘以1.4826，以确保它近似于实际的标准差。`mad`函数已经包含了这一修正。对于身高数据，我们得到的MAD为：
 - en: '[PRE29]'
+  id: totrans-273
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE29]'
 - en: which is about 3 inches.
+  id: totrans-274
   prefs: []
   type: TYPE_NORMAL
+  zh: 这大约是3英寸。
 - en: 12.10 Exercises
+  id: totrans-275
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 12.10 练习
 - en: 'We are going to use the **HistData** package. If it is not installed you can
     install it like this:'
+  id: totrans-276
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们将使用 **HistData** 包。如果尚未安装，你可以像这样安装它：
 - en: '[PRE30]'
+  id: totrans-277
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE30]'
 - en: Load the height data set and create a vector `x` with just the male heights
     used in Galton’s data on the heights of parents and their children from his historic
     research on heredity.
+  id: totrans-278
   prefs: []
   type: TYPE_NORMAL
+  zh: 加载高度数据集，并创建一个向量 `x`，其中只包含加尔顿在其关于遗传的历史研究中使用的男性身高。
 - en: '[PRE31]'
+  id: totrans-279
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE31]'
 - en: 1\. Compute the average and median of these data.
+  id: totrans-280
   prefs: []
   type: TYPE_NORMAL
+  zh: 1. 计算这些数据的平均值和中位数。
 - en: 2\. Compute the median and median absolute deviation of these data.
+  id: totrans-281
   prefs: []
   type: TYPE_NORMAL
+  zh: 2. 计算这些数据的平均值和中值绝对偏差。
 - en: '3\. Now suppose Galton made a mistake when entering the first value and forgot
     to use the decimal point. You can imitate this error by typing:'
+  id: totrans-282
   prefs: []
   type: TYPE_NORMAL
+  zh: 3. 现在假设加尔顿在输入第一个值时犯了一个错误，并且忘记使用小数点。你可以通过输入以下内容来模仿这个错误：
 - en: '[PRE32]'
+  id: totrans-283
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE32]'
 - en: How many inches does the average grow after this mistake?
+  id: totrans-284
   prefs: []
   type: TYPE_NORMAL
+  zh: 在这个错误之后，平均高度增长了多少英寸？
 - en: 4\. How many inches does the SD grow after this mistake?
+  id: totrans-285
   prefs: []
   type: TYPE_NORMAL
+  zh: 4. 在这个错误之后，SD增长了多少英寸？
 - en: 5\. How many inches does the median grow after this mistake?
+  id: totrans-286
   prefs: []
   type: TYPE_NORMAL
+  zh: 5. 在这个错误之后，中值增长了多少英寸？
 - en: 6\. How many inches does the MAD grow after this mistake?
+  id: totrans-287
   prefs: []
   type: TYPE_NORMAL
+  zh: 6. 在这个错误之后，MAD增长了多少英寸？
 - en: 7\. How could you use exploratory data analysis to detect that an error was
     made?
+  id: totrans-288
   prefs: []
   type: TYPE_NORMAL
+  zh: 7. 你如何使用探索性数据分析来检测出错误？
 - en: Since it is only one value out of many, we will not be able to detect this.
+  id: totrans-289
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 由于这只是一个众多值中的一个，我们将无法检测到这一点。
 - en: We would see an obvious shift in the distribution.
+  id: totrans-290
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 我们会看到分布的明显偏移。
 - en: A boxplot, histogram, or qq-plot would reveal a clear outlier.
+  id: totrans-291
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 箱线图、直方图或QQ图将揭示一个明显的异常值。
 - en: A scatterplot would show high levels of measurement error.
+  id: totrans-292
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 散点图将显示高水平的测量误差。
 - en: 8\. How much can the average accidentally grow with mistakes like this? Write
     a function called `error_avg` that takes a value `k` and returns the average of
     the vector `x` after the first entry changed to `k`. Show the results for `k=10000`
     and `k=-10000`.
+  id: totrans-293
   prefs: []
   type: TYPE_NORMAL
+  zh: 8. 在这种错误下，平均值可能会意外增长多少？编写一个名为 `error_avg` 的函数，该函数接受一个值 `k` 并返回将向量 `x` 的第一个条目更改为
+    `k` 后的平均值。显示 `k=10000` 和 `k=-10000` 的结果。
 - en: '12.10.1 Case study: self-reported student heights'
+  id: totrans-294
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 12.10.1 案例研究：自我报告的学生身高
 - en: 'The heights we have been looking at are not the original heights reported by
     students. The original reported heights are also included in the **dslabs** package
     and can be loaded like this:'
+  id: totrans-295
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们一直在看的高度不是学生报告的原高度。原始报告的高度也包含在 **dslabs** 包中，可以像这样加载：
 - en: '[PRE33]'
+  id: totrans-296
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE33]'
 - en: 'Height is a character vector so we create a new column with the numeric version:'
+  id: totrans-297
   prefs: []
   type: TYPE_NORMAL
+  zh: 高度是一个字符向量，因此我们创建了一个新的列，包含数字版本：
 - en: '[PRE34]'
+  id: totrans-298
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE34]'
 - en: 'Note that we get a warning about NAs. This is because some of the self reported
     heights were not numbers. We can see why we get these:'
+  id: totrans-299
   prefs: []
   type: TYPE_NORMAL
+  zh: 注意，我们得到了关于 NAs 的警告。这是因为一些自我报告的高度不是数字。我们可以看到为什么会有这些：
 - en: '[PRE35]'
+  id: totrans-300
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE35]'
 - en: 'Some students self-reported their heights using feet and inches rather than
     just inches. Others used centimeters and others were just trolling. For now we
     will remove these entries:'
+  id: totrans-301
   prefs: []
   type: TYPE_NORMAL
+  zh: 一些学生使用英尺和英寸而不是仅使用英寸来自我报告他们的身高。其他人使用厘米，还有一些人只是在恶作剧。目前，我们将删除这些条目：
 - en: '[PRE36]'
+  id: totrans-302
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE36]'
 - en: 'If we compute the average and standard deviation, we notice that we obtain
     strange results. The average and standard deviation are different from the median
     and MAD:'
+  id: totrans-303
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果我们计算平均值和标准差，我们会注意到我们得到了奇怪的结果。平均值和标准差与中值和MAD不同：
 - en: '[PRE37]'
+  id: totrans-304
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE37]'
 - en: 'This suggests that we have outliers, which is confirmed by creating a boxplot:'
+  id: totrans-305
   prefs: []
   type: TYPE_NORMAL
+  zh: 这表明我们存在异常值，通过创建箱线图可以确认：
 - en: '![](../Images/f6e1f37224c4286efd0445738bb8daa3.png)'
+  id: totrans-306
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/f6e1f37224c4286efd0445738bb8daa3.png)'
 - en: 'We can see some rather extreme values. To see what these values are, we can
     quickly look at the largest values using the `arrange` function:'
+  id: totrans-307
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们可以看到一些相当极端的值。为了查看这些值是什么，我们可以快速查看使用 `arrange` 函数的最大值：
 - en: '[PRE38]'
+  id: totrans-308
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE38]'
 - en: The first seven entries look like strange errors. However, the next few look
     like they were entered as centimeters instead of inches. Since 184 cm is equivalent
     to six feet tall, we suspect that 184 was actually meant to be 72 inches.
+  id: totrans-309
   prefs: []
   type: TYPE_NORMAL
+  zh: 前七个条目看起来像是奇怪的错误。然而，接下来的几个条目看起来像是被输入为厘米而不是英寸。由于184厘米相当于六英尺高，我们怀疑184实际上应该是72英寸。
 - en: 'We can review all the nonsensical answers by looking at the data considered
     to be *far out* by Tukey:'
+  id: totrans-310
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们可以通过查看Tukey认为的 *离群值* 的数据来回顾所有这些荒谬的答案：
 - en: '[PRE39]'
+  id: totrans-311
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE39]'
 - en: 'Examining these heights carefully, we see two common mistakes: entries in centimeters,
     which turn out to be too large, and entries of the form `x.y` with `x` and `y`
     representing feet and inches, respectively, which turn out to be too small. Some
     of the even smaller values, such as 1.6, could be entries in meters.'
+  id: totrans-312
   prefs: []
   type: TYPE_NORMAL
+  zh: 仔细检查这些高度，我们发现存在两个常见的错误：以厘米为单位的条目，结果发现太大，以及形式为 `x.y` 的条目，其中 `x` 和 `y` 分别代表英尺和英寸，结果发现太小。一些甚至更小的值，例如
+    1.6，可能是以米为单位的条目。

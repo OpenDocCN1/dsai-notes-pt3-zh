@@ -1,11 +1,15 @@
 - en: Chapter 17 Regression
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 第17章 回归
 - en: 原文：[https://rafalab.dfci.harvard.edu/dsbook/regression.html](https://rafalab.dfci.harvard.edu/dsbook/regression.html)
+  id: totrans-1
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 原文：[https://rafalab.dfci.harvard.edu/dsbook/regression.html](https://rafalab.dfci.harvard.edu/dsbook/regression.html)
 - en: Up to this point, this book has focused mainly on single variables. However,
     in data science applications, it is very common to be interested in the relationship
     between two or more variables. For instance, in Chapter [18](linear-models.html#linear-models)
@@ -14,8 +18,10 @@
     budget. Before delving into this more complex example, we introduce necessary
     concepts needed to understand regression using a simpler illustration. We actually
     use the dataset from which regression was born.
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: 到目前为止，这本书主要关注单一变量。然而，在数据科学应用中，我们通常对两个或更多变量之间的关系感兴趣。例如，在第[18](linear-models.html#linear-models)章中，我们将使用一种数据驱动的方法来研究球员统计数据与成功之间的关系，以指导构建一个预算有限的棒球队。在深入探讨这个更复杂的例子之前，我们通过一个更简单的示例介绍理解回归所需的概念。实际上，我们使用了回归起源的数据集。
 - en: 'The example is from genetics. Francis Galton[^(60)](#fn60) studied the variation
     and heredity of human traits. Among many other traits, Galton collected and studied
     height data from families to try to understand heredity. While doing this, he
@@ -26,62 +32,90 @@
     we predict a child’s height based on the parents’ height? The technique he developed
     to answer this question, regression, can also be applied to our baseball question.
     Regression can be applied in many other circumstances as well.'
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: 这个例子来自遗传学。弗朗西斯·高尔顿[^(60)](#fn60)研究了人类特征的变化和遗传。在许多其他特征中，高尔顿收集并研究了家庭的高度数据，试图理解遗传。在这个过程中，他发展了相关性和回归的概念，以及与遵循正态分布的数据对之间的联系。当然，在收集这些数据的时候，我们对遗传学的了解与今天相比非常有限。高尔顿试图回答的一个非常具体的问题是：我们能够多好地根据父母的身高预测孩子的身高？他用来回答这个问题的技术，即回归，也可以应用于我们的棒球问题。回归还可以应用于许多其他情境。
 - en: '**Historical note**: Galton made important contributions to statistics and
     genetics, but he was also one of the first proponents of eugenics, a scientifically
     flawed philosophical movement favored by many biologists of Galton’s time but
     with horrific historical consequences. You can read more about it here: [https://pged.org/history-eugenics-and-genetics/](https://pged.org/history-eugenics-and-genetics/).'
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: '**历史注释**：高尔顿对统计学和遗传学做出了重要贡献，但他也是优生学的早期支持者之一，这是一种科学上存在缺陷的哲学运动，当时许多高尔顿时代的生物学家都支持它，但带来了可怕的历史后果。你可以在这里了解更多信息：[https://pged.org/history-eugenics-and-genetics/](https://pged.org/history-eugenics-and-genetics/).'
 - en: '17.1 Case study: is height hereditary?'
+  id: totrans-5
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 17.1 案例研究：身高是否遗传？
 - en: 'We have access to Galton’s family height data through the **HistData** package.
     This data contains heights on several dozen families: mothers, fathers, daughters,
     and sons. To imitate Galton’s analysis, we will create a dataset with the heights
     of fathers and a randomly selected son of each family:'
+  id: totrans-6
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们可以通过**HistData**包访问高尔顿家族身高数据。这些数据包含几十个家庭的高度：母亲、父亲、女儿和儿子。为了模仿高尔顿的分析，我们将创建一个包含父亲身高和每个家庭随机选择的儿子身高的数据集：
 - en: '[PRE0]'
+  id: totrans-7
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: In the exercises, we will look at other relationships including mothers and
     daughters.
+  id: totrans-8
   prefs: []
   type: TYPE_NORMAL
+  zh: 在练习中，我们将查看其他关系，包括母亲和女儿。
 - en: 'Suppose we were asked to summarize the father and son data. Since both distributions
     are well approximated by the normal distribution, we could use the two averages
     and two standard deviations as summaries:'
+  id: totrans-9
   prefs: []
   type: TYPE_NORMAL
+  zh: 假设我们被要求总结父亲和儿子的数据。由于这两个分布都很好地被正态分布所近似，我们可以使用两个平均值和两个标准差作为总结：
 - en: '[PRE1]'
+  id: totrans-10
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: 'However, this summary fails to describe an important characteristic of the
     data: the trend that the taller the father, the taller the son.'
+  id: totrans-11
   prefs: []
   type: TYPE_NORMAL
+  zh: 然而，这个总结未能描述数据的一个重要特征：父亲越高，儿子也越高。
 - en: '[PRE2]'
+  id: totrans-12
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: '![](../Images/5fec11eb08ca35d1965166e5bb2d7a78.png)'
+  id: totrans-13
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/5fec11eb08ca35d1965166e5bb2d7a78.png)'
 - en: We will learn that the correlation coefficient is an informative summary of
     how two variables move together and then see how this can be used to predict one
     variable using the other.
+  id: totrans-14
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们将了解到相关系数是两个变量如何一起移动的有信息量的总结，然后我们将看到如何使用另一个变量来预测一个变量。
 - en: 17.2 The correlation coefficient
+  id: totrans-15
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 17.2 相关系数
 - en: 'The correlation coefficient is defined for a list of pairs \((x_1, y_1), \dots,
     (x_n,y_n)\) as the average of the product of the standardized values:'
+  id: totrans-16
   prefs: []
   type: TYPE_NORMAL
+  zh: 相关系数定义为一系列成对数值 \((x_1, y_1), \dots, (x_n,y_n)\) 的标准化值乘积的平均值：
 - en: '\[ \rho = \frac{1}{n} \sum_{i=1}^n \left( \frac{x_i-\mu_x}{\sigma_x} \right)\left(
     \frac{y_i-\mu_y}{\sigma_y} \right) \] with \(\mu_x, \mu_y\) the averages of \(x_1,\dots,
     x_n\) and \(y_1, \dots, y_n\), respectively, and \(\sigma_x, \sigma_y\) the standard
@@ -89,11 +123,18 @@
     denote the correlation. The Greek letter for \(r\), \(\rho\), because it is the
     first letter of regression. Soon we learn about the connection between correlation
     and regression. We can represent the formula above with R code using:'
+  id: totrans-17
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \rho = \frac{1}{n} \sum_{i=1}^n \left( \frac{x_i-\mu_x}{\sigma_x} \right)\left(
+    \frac{y_i-\mu_y}{\sigma_y} \right) \] 其中 \(\mu_x, \mu_y\) 分别是 \(x_1,\dots, x_n\)
+    和 \(y_1, \dots, y_n\) 的平均值，\(\sigma_x, \sigma_y\) 是标准差。希腊字母 \(\rho\) 在统计学书籍中常用作相关性的表示。希腊字母
+    \(\rho\) 是回归的第一个字母。我们很快就会了解到相关性和回归之间的联系。我们可以使用 R 代码表示上面的公式：
 - en: '[PRE3]'
+  id: totrans-18
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: To understand why this equation does in fact summarize how two variables move
     together, consider the \(i\)-th entry of \(x\) is \(\left( \frac{x_i-\mu_x}{\sigma_x}
     \right)\) SDs away from the average. Similarly, the \(y_i\) that is paired with
@@ -106,145 +147,221 @@
     then we are averaging mostly positive products ( \(+ \times +\) and \(- \times
     -\)) and we get a positive correlation. If they vary in opposite directions, we
     get a negative correlation.
+  id: totrans-19
   prefs: []
   type: TYPE_NORMAL
+  zh: 要理解这个方程实际上是如何总结两个变量如何一起变化的，考虑 \(x\) 的第 \(i\) 个值是 \(\left( \frac{x_i-\mu_x}{\sigma_x}
+    \right)\) 个标准差（SD）远离平均值。同样，与 \(x_i\) 配对的 \(y_i\)，是 \(\left( \frac{y_i-\mu_y}{\sigma_y}
+    \right)\) 个标准差远离平均值 \(y\)。如果 \(x\) 和 \(y\) 没有关系，那么 \(\left( \frac{x_i-\mu_x}{\sigma_x}
+    \right)\left( \frac{y_i-\mu_y}{\sigma_y} \right)\) 的乘积将正（ \(+ \times +\) 和 \(-
+    \times -\) ）和负（ \(+ \times -\) 和 \(- \times +\））一样多，平均起来大约是 0。这种相关性是平均值，因此无关变量将有
+    0 相关性。如果相反，数量一起变化，那么我们主要平均的是正的乘积（ \(+ \times +\) 和 \(- \times -\）），我们得到正的相关性。如果它们以相反的方向变化，我们得到负的相关性。
 - en: 'The correlation coefficient is always between -1 and 1\. We can show this mathematically:
     consider that we can’t have higher correlation than when we compare a list to
     itself (perfect correlation) and in this case the correlation is:'
+  id: totrans-20
   prefs: []
   type: TYPE_NORMAL
+  zh: 相关系数总是在 -1 和 1 之间。我们可以用数学方法证明这一点：考虑我们无法比将一个列表与其自身比较（完美相关性）有更高的相关性，在这种情况下，相关性是：
 - en: \[ \rho = \frac{1}{n} \sum_{i=1}^n \left( \frac{x_i-\mu_x}{\sigma_x} \right)^2
     = \frac{1}{\sigma_x^2} \frac{1}{n} \sum_{i=1}^n \left( x_i-\mu_x \right)^2 = \frac{1}{\sigma_x^2}
     \sigma^2_x = 1 \]
+  id: totrans-21
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \rho = \frac{1}{n} \sum_{i=1}^n \left( \frac{x_i-\mu_x}{\sigma_x} \right)^2
+    = \frac{1}{\sigma_x^2} \frac{1}{n} \sum_{i=1}^n \left( x_i-\mu_x \right)^2 = \frac{1}{\sigma_x^2}
+    \sigma^2_x = 1 \]
 - en: A similar derivation, but with \(x\) and its exact opposite, proves the correlation
     has to be bigger or equal to -1.
+  id: totrans-22
   prefs: []
   type: TYPE_NORMAL
+  zh: 类似的推导，但用 \(x\) 和它的确切相反数，证明了相关性必须大于或等于 -1。
 - en: 'For other pairs, the correlation is in between -1 and 1\. The correlation between
     father and son’s heights is about 0.5:'
+  id: totrans-23
   prefs: []
   type: TYPE_NORMAL
+  zh: 对于其他成对数值，相关性在 -1 和 1 之间。父亲和儿子身高的相关性约为 0.5：
 - en: '[PRE4]'
+  id: totrans-24
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE4]'
 - en: 'To see what data looks like for different values of \(\rho\), here are six
     examples of pairs with correlations ranging from -0.9 to 0.99:'
+  id: totrans-25
   prefs: []
   type: TYPE_NORMAL
+  zh: 要看到不同 \(\rho\) 值的数据看起来是什么样子，这里有六个成对数值的例子，其相关性从 -0.9 到 0.99：
 - en: '![](../Images/27347fed9dab43c36628d916d89e6a43.png)'
+  id: totrans-26
   prefs: []
   type: TYPE_IMG
+  zh: '![图片](../Images/27347fed9dab43c36628d916d89e6a43.png)'
 - en: 17.2.1 Sample correlation is a random variable
+  id: totrans-27
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 17.2.1 样本相关性是随机变量
 - en: Before we continue connecting correlation to regression, let’s remind ourselves
     about random variability.
+  id: totrans-28
   prefs: []
   type: TYPE_NORMAL
+  zh: 在我们继续将相关性连接到回归之前，让我们提醒自己关于随机变异性。
 - en: In most data science applications, we observe data that includes random variation.
     For example, in many cases, we do not observe data for the entire population of
     interest but rather for a random sample. As with the average and standard deviation,
     the *sample correlation* is the most commonly used estimate of the population
     correlation. This implies that the correlation we compute and use as a summary
     is a random variable.
+  id: totrans-29
   prefs: []
   type: TYPE_NORMAL
+  zh: 在大多数数据科学应用中，我们观察到包含随机变化的数据。例如，在许多情况下，我们不是观察整个感兴趣人群的数据，而是观察一个随机样本。与平均值和标准差一样，*样本相关性*是人口相关性的最常用估计。这意味着我们计算并用作总结的相关性是一个随机变量。
 - en: 'By way of illustration, let’s assume that the 179 pairs of fathers and sons
     is our entire population. A less fortunate geneticist can only afford measurements
     from a random sample of 25 pairs. The sample correlation can be computed with:'
+  id: totrans-30
   prefs: []
   type: TYPE_NORMAL
+  zh: 为了说明这一点，让我们假设179对父亲和儿子的数据是我们的整个群体。一个不太幸运的遗传学家只能负担得起25对随机样本的测量。样本相关性可以通过以下方式计算：
 - en: '[PRE5]'
+  id: totrans-31
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE5]'
 - en: '`R` is a random variable. We can run a Monte Carlo simulation to see its distribution:'
+  id: totrans-32
   prefs: []
   type: TYPE_NORMAL
+  zh: '`R` 是一个随机变量。我们可以运行蒙特卡洛模拟来查看其分布：'
 - en: '[PRE6]'
+  id: totrans-33
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE6]'
 - en: '![](../Images/90e114fe5ba730e80480b917c6584784.png)'
+  id: totrans-34
   prefs: []
   type: TYPE_IMG
+  zh: '![图片](../Images/90e114fe5ba730e80480b917c6584784.png)'
 - en: 'We see that the expected value of `R` is the population correlation:'
+  id: totrans-35
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们看到 `R` 的期望值是人口相关性：
 - en: '[PRE7]'
+  id: totrans-36
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE7]'
 - en: 'and that it has a relatively high standard error relative to the range of values
     `R` can take:'
+  id: totrans-37
   prefs: []
   type: TYPE_NORMAL
+  zh: 并且它相对于 `R` 可以取的值范围的标准误差相对较高：
 - en: '[PRE8]'
+  id: totrans-38
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE8]'
 - en: So, when interpreting correlations, remember that correlations derived from
     samples are estimates containing uncertainty.
+  id: totrans-39
   prefs: []
   type: TYPE_NORMAL
+  zh: 因此，在解释相关性时，请记住，从样本中得出的相关性是包含不确定性的估计。
 - en: Also, note that because the sample correlation is an average of independent
     draws, the central limit actually applies. Therefore, for large enough \(N\),
     the distribution of `R` is approximately normal with expected value \(\rho\).
     The standard deviation, which is somewhat complex to derive, is \(\sqrt{\frac{1-r^2}{N-2}}\).
+  id: totrans-40
   prefs: []
   type: TYPE_NORMAL
+  zh: 此外，请注意，由于样本相关性是独立抽取的平均值，中心极限定理实际上适用。因此，对于足够大的 \(N\)，`R` 的分布大约是正态分布，期望值为 \(\rho\)。标准差，其推导有些复杂，是
+    \(\sqrt{\frac{1-r^2}{N-2}}\)。
 - en: 'In our example, \(N=25\) does not seem to be large enough to make the approximation
     a good one:'
+  id: totrans-41
   prefs: []
   type: TYPE_NORMAL
+  zh: 在我们的例子中，\(N=25\)似乎不足以使近似值很好：
 - en: '[PRE9]'
+  id: totrans-42
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE9]'
 - en: '![](../Images/c147facb988e6a21c3d6bf6030b11b10.png)'
+  id: totrans-43
   prefs: []
   type: TYPE_IMG
+  zh: '![图片](../Images/c147facb988e6a21c3d6bf6030b11b10.png)'
 - en: If you increase \(N\), you will see the distribution converging to normal.
+  id: totrans-44
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果你增加 \(N\)，你会看到分布收敛到正态分布。
 - en: 17.2.2 Correlation is not always a useful summary
+  id: totrans-45
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 17.2.2 相关性并不总是有用的总结
 - en: 'Correlation is not always a good summary of the relationship between two variables.
     The following four artificial datasets, referred to as Anscombe’s quartet, famously
     illustrate this point. All these pairs have a correlation of 0.82:'
+  id: totrans-46
   prefs: []
   type: TYPE_NORMAL
+  zh: 相关性并不总是两个变量之间关系的良好总结。以下四个被称为安斯康姆四重奏的人工数据集，著名地说明了这一点。所有这些对的相关性都是0.82：
 - en: '[PRE10]'
+  id: totrans-47
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE10]'
 - en: '![](../Images/0f4d4b8226c67279a51e993b96cf10e9.png)'
+  id: totrans-48
   prefs: []
   type: TYPE_IMG
+  zh: '![图片](../Images/0f4d4b8226c67279a51e993b96cf10e9.png)'
 - en: Correlation is only meaningful in a particular context. To help us understand
     when it is that correlation is meaningful as a summary statistic, we will return
     to the example of predicting a son’s height using his father’s height. This will
     help motivate and define linear regression. We start by demonstrating how correlation
     can be useful for prediction.
+  id: totrans-49
   prefs: []
   type: TYPE_NORMAL
+  zh: 相关性仅在特定上下文中才有意义。为了帮助我们理解相关性何时作为总结统计量是有意义的，我们将回到使用父亲的高度预测儿子身高的例子。这将有助于激发和定义线性回归。我们首先演示相关性如何对预测有用。
 - en: 17.3 Conditional expectations
+  id: totrans-50
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 17.3 条件期望
 - en: Suppose we are asked to guess the height of a randomly selected son and we don’t
     know his father’s height. Because the distribution of sons’ heights is approximately
     normal, we know the average height, 69.2, is the value with the highest proportion
     and would be the prediction with the highest chance of minimizing the error. But
     what if we are told that the father is taller than average, say 72 inches tall,
     do we still guess 69.2 for the son?
+  id: totrans-51
   prefs: []
   type: TYPE_NORMAL
+  zh: 假设我们被要求猜测随机选择的一个儿子的身高，而我们不知道他父亲的高度。因为儿子的身高分布大约是正态分布，我们知道平均身高，69.2，是比例最高的值，将是预测以最高概率最小化误差的值。但如果我们被告知父亲比平均水平高，比如说72英寸高，我们还会猜测69.2作为儿子的身高吗？
 - en: It turns out that if we were able to collect data from a very large number of
     fathers that are 72 inches, the distribution of their sons’ heights would be normally
     distributed. This implies that the average of the distribution computed on this
     subset would be our best prediction.
+  id: totrans-52
   prefs: []
   type: TYPE_NORMAL
+  zh: 结果表明，如果我们能够收集到大量身高为72英寸的父亲的样本数据，他们的儿子的身高分布将是正态分布。这意味着在这个子集上计算的分布的平均值将是我们最好的预测。
 - en: In general, we call this approach *conditioning*. The general idea is that we
     stratify a population into groups and compute summaries in each group. To provide
     a mathematical description of conditioning, consider we have a population of pairs
@@ -260,24 +377,37 @@
     to as the *conditional expectation*. In our example, the conditional expectation
     is the average height of all sons in England with fathers that are 72 inches.
     The statistical notation for the conditional expectation is
+  id: totrans-53
   prefs: []
   type: TYPE_NORMAL
+  zh: 通常，我们称这种方法为**条件化**。一般思路是将总体分层为组，并在每组中计算汇总。为了提供条件化的数学描述，考虑我们有一个由值对 \((x_1,y_1),\dots,(x_n,y_n)\)
+    组成的总体，例如英格兰所有父亲和儿子的身高。在上一章中，我们了解到，如果你取一个随机对 \((X,Y)\)，\(Y\) 的期望值和最佳预测是 \(\mbox{E}(Y)
+    = \mu_y\)，总体平均 \(1/n\sum_{i=1}^n y_i\)。然而，我们不再对总体感兴趣，而是只对具有特定 \(x_i\) 值的总体子集感兴趣，在我们的例子中是72英寸。这个总体子集也是一个总体，因此我们学到的相同的原则和属性同样适用。子总体中的
+    \(y_i\) 有一个分布，称为**条件分布**，这个分布有一个期望值，称为**条件期望**。在我们的例子中，条件期望是所有身高为72英寸的父亲在英国的儿子们的平均身高。条件期望的统计符号是
 - en: \[ \mbox{E}(Y \mid X = x) \]
+  id: totrans-54
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \mbox{E}(Y \mid X = x) \]
 - en: with \(x\) representing the fixed value that defines that subset, for example
     72 inches. Similarly, we denote the standard deviation of the strata with
+  id: totrans-55
   prefs: []
   type: TYPE_NORMAL
+  zh: 其中 \(x\) 代表定义该子集的固定值，例如72英寸。类似地，我们用
 - en: \[ \mbox{SD}(Y \mid X = x) = \sqrt{\mbox{Var}(Y \mid X = x)} \]
+  id: totrans-56
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \mbox{SD}(Y \mid X = x) = \sqrt{\mbox{Var}(Y \mid X = x)} \]
 - en: Because the conditional expectation \(E(Y\mid X=x)\) is the best predictor for
     the random variable \(Y\) for an individual in the strata defined by \(X=x\),
     many data science challenges reduce to estimating this quantity. The conditional
     standard deviation quantifies the precision of the prediction.
+  id: totrans-57
   prefs: []
   type: TYPE_NORMAL
+  zh: 因为条件期望 \(E(Y\mid X=x)\) 是在由 \(X=x\) 定义的层中对于随机变量 \(Y\) 的个体的最佳预测，许多数据科学挑战都归结为估计这个量。条件标准差量化了预测的精度。
 - en: 'In the example we have been considering, we are interested in computing the
     average son height *conditioned* on the father being 72 inches tall. We want to
     estimate \(E(Y|X=72)\) using the sample collected by Galton. We previously learned
@@ -285,28 +415,40 @@
     average. However, a challenge when using this approach to estimating conditional
     expectations is that for continuous data we don’t have many data points matching
     exactly one value in our sample. For example, we have only:'
+  id: totrans-58
   prefs: []
   type: TYPE_NORMAL
+  zh: 在我们一直在考虑的例子中，我们感兴趣的是在父亲身高为72英寸的条件下计算平均儿子身高。我们希望使用高尔顿收集的样本来估计 \(E(Y|X=72)\)。我们之前了解到，样本平均是估计总体平均的首选方法。然而，使用这种方法估计条件期望的挑战在于，对于连续数据，我们没有许多数据点与样本中的确切值完全匹配。例如，我们只有：
 - en: '[PRE11]'
+  id: totrans-59
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE11]'
 - en: 'fathers that are exactly 72-inches. If we change the number to 72.5, we get
     even fewer data points:'
+  id: totrans-60
   prefs: []
   type: TYPE_NORMAL
+  zh: 精确身高为72英寸的父亲。如果我们把数字改为72.5，我们得到的数据点就更少了：
 - en: '[PRE12]'
+  id: totrans-61
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE12]'
 - en: 'A practical way to improve these estimates of the conditional expectations,
     is to define strata of with similar values of \(x\). In our example, we can round
     father heights to the nearest inch and assume that they are all 72 inches. If
     we do this, we end up with the following prediction for the son of a father that
     is 72 inches tall:'
+  id: totrans-62
   prefs: []
   type: TYPE_NORMAL
+  zh: 提高这些条件期望估计的一个实用方法是定义具有相似\(x\)值的层。在我们的例子中，我们可以将父亲身高四舍五入到最接近的英寸，并假设它们都是72英寸。如果我们这样做，我们最终会得到以下预测，即一个72英寸高父亲的儿子：
 - en: '[PRE13]'
+  id: totrans-63
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE13]'
 - en: Note that a 72-inch father is taller than average – specifically, (72.0 - 69.1)/2.5
     = 1.1 standard deviations taller than the average father. Our prediction 70.5
     is also taller than average, but only 0.49 standard deviations larger than the
@@ -314,162 +456,237 @@
     height. We notice that the reduction in how many SDs taller is about 0.5, which
     happens to be the correlation. As we will see in a later section, this is not
     a coincidence.
+  id: totrans-64
   prefs: []
   type: TYPE_NORMAL
+  zh: 注意，一个72英寸的父亲比平均水平要高——具体来说，(72.0 - 69.1)/2.5 = 1.1个标准差高于平均水平。我们的预测70.5也高于平均水平，但仅比平均水平儿子高0.49个标准差。72英寸父亲的儿子们*回归*到了平均身高。我们注意到身高增加的SD减少大约是0.5，这恰好是相关系数。正如我们将在后面的章节中看到的，这并非巧合。
 - en: 'If we want to make a prediction of any height, not just 72, we could apply
     the same approach to each strata. Stratification followed by boxplots lets us
     see the distribution of each group:'
+  id: totrans-65
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果我们想要预测任何身高，而不仅仅是72英寸，我们可以将相同的方法应用于每个层。分层后跟随箱线图让我们看到每个组的分布：
 - en: '[PRE14]'
+  id: totrans-66
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE14]'
 - en: '![](../Images/047e6fe49a5dfbe90622e22d8a0d7b8b.png)'
+  id: totrans-67
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/047e6fe49a5dfbe90622e22d8a0d7b8b.png)'
 - en: 'Not surprisingly, the centers of the groups are increasing with height. Furthermore,
     these centers appear to follow a linear relationship. Below we plot the averages
     of each group. If we take into account that these averages are random variables
     with standard errors, the data is consistent with these points following a straight
     line:'
+  id: totrans-68
   prefs: []
   type: TYPE_NORMAL
+  zh: 并不令人惊讶，这些群体的中心随着身高的增加而增加。此外，这些中心似乎遵循线性关系。以下我们绘制了每个群体的平均值。如果我们考虑到这些平均值是具有标准误的随机变量，数据与这些点遵循直线是一致的：
 - en: '![](../Images/e4a898fdcfdf5a58c84bb05a37956a79.png)'
+  id: totrans-69
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/e4a898fdcfdf5a58c84bb05a37956a79.png)'
 - en: The fact that these conditional averages follow a line is not a coincidence.
     In the next section, we explain that the line these averages follow is what we
     call the *regression line*, which improves the precision of our estimates. However,
     it is not always appropriate to estimate conditional expectations with the regression
     line so we also describe Galton’s theoretical justification for using the regression
     line.
+  id: totrans-70
   prefs: []
   type: TYPE_NORMAL
+  zh: 这些条件平均值遵循一条线的事实并非巧合。在下一节中，我们解释了这些平均值遵循的线就是我们所说的*回归线*，它提高了我们估计的精度。然而，并不是总是适合用回归线来估计条件期望，所以我们还描述了高尔顿使用回归线的理论依据。
 - en: 17.4 The regression line
+  id: totrans-71
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 17.4 回归线
 - en: 'If we are predicting a random variable \(Y\) knowing the value of another \(X=x\)
     using a regression line, then we predict that for every standard deviation, \(\sigma_X\),
     that \(x\) increases above the average \(\mu_X\), \(Y\) increase \(\rho\) standard
     deviations \(\sigma_Y\) above the average \(\mu_Y\) with \(\rho\) the correlation
     between \(X\) and \(Y\). The formula for the regression is therefore:'
+  id: totrans-72
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果我们使用回归线预测一个随机变量\(Y\)的值，已知另一个\(X=x\)的值，那么我们预测对于每个标准差\(\sigma_X\)，\(x\)相对于平均\(\mu_X\)增加，\(Y\)相对于平均\(\mu_Y\)增加\(\rho\)个标准差\(\sigma_Y\)，其中\(\rho\)是\(X\)和\(Y\)之间的相关性。因此，回归的公式如下：
 - en: \[ \left( \frac{Y-\mu_Y}{\sigma_Y} \right) = \rho \left( \frac{x-\mu_X}{\sigma_X}
     \right) \]
+  id: totrans-73
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \left( \frac{Y-\mu_Y}{\sigma_Y} \right) = \rho \left( \frac{x-\mu_X}{\sigma_X}
+    \right) \]
 - en: 'We can rewrite it like this:'
+  id: totrans-74
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们可以将其重写为：
 - en: \[ Y = \mu_Y + \rho \left( \frac{x-\mu_X}{\sigma_X} \right) \sigma_Y \]
+  id: totrans-75
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ Y = \mu_Y + \rho \left( \frac{x-\mu_X}{\sigma_X} \right) \sigma_Y \]
 - en: If there is perfect correlation, the regression line predicts an increase that
     is the same number of SDs. If there is 0 correlation, then we don’t use \(x\)
     at all for the prediction and simply predict the average \(\mu_Y\). For values
     between 0 and 1, the prediction is somewhere in between. If the correlation is
     negative, we predict a reduction instead of an increase.
+  id: totrans-76
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果存在完美的相关性，回归线预测的增加量与SD的数量相同。如果存在0相关性，那么我们根本不使用\(x\)进行预测，而是简单地预测平均值\(\mu_Y\)。对于介于0和1之间的值，预测介于两者之间。如果相关性为负，我们预测减少而不是增加。
 - en: 'Note that if the correlation is positive and lower than 1, our prediction is
     closer, in standard units, to the average height than the value used to predict,
     \(x\), is to the average of the \(x\)s. This is why we call it *regression*: the
     son regresses to the average height. In fact, the title of Galton’s paper was:
     *Regression toward mediocrity in hereditary stature*. To add regression lines
     to plots, we will need the above formula in the form:'
+  id: totrans-77
   prefs: []
   type: TYPE_NORMAL
+  zh: 注意，如果相关性为正且小于 1，我们的预测在标准单位上比用于预测的值 \(x\) 更接近平均值。这就是我们称之为**回归**的原因：儿子回归到平均身高。实际上，高尔顿论文的标题是：*遗传身高的回归到中等水平*。为了将回归线添加到图中，我们需要上述公式以以下形式：
 - en: \[ y= b + mx \mbox{ with slope } m = \rho \frac{\sigma_y}{\sigma_x} \mbox{ and
     intercept } b=\mu_y - m \mu_x \]
+  id: totrans-78
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ y= b + mx \mbox{ 其中斜率 } m = \rho \frac{\sigma_y}{\sigma_x} \mbox{ 和截距 } b=\mu_y
+    - m \mu_x \]
 - en: 'Here we add the regression line to the original data:'
+  id: totrans-79
   prefs: []
   type: TYPE_NORMAL
+  zh: 在这里，我们将回归线添加到原始数据上：
 - en: '[PRE15]'
+  id: totrans-80
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE15]'
 - en: '![](../Images/074c8015cfc06dc991cf40facc49e5f0.png)'
+  id: totrans-81
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/074c8015cfc06dc991cf40facc49e5f0.png)'
 - en: 'The regression formula implies that if we first standardize the variables,
     that is subtract the average and divide by the standard deviation, then the regression
     line has intercept 0 and slope equal to the correlation \(\rho\). You can make
     same plot, but using standard units like this:'
+  id: totrans-82
   prefs: []
   type: TYPE_NORMAL
+  zh: 回归公式意味着如果我们首先对变量进行标准化，即减去平均值并除以标准差，那么回归线具有截距 0 和斜率等于相关性 \(\rho\)。你可以绘制相同的图，但使用这样的标准单位：
 - en: '[PRE16]'
+  id: totrans-83
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE16]'
 - en: 17.4.1 Regression improves precision
+  id: totrans-84
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 17.4.1 回归提高精度
 - en: 'Let’s compare the two approaches to prediction that we have presented:'
+  id: totrans-85
   prefs: []
   type: TYPE_NORMAL
+  zh: 让我们比较我们提出的两种预测方法：
 - en: Round fathers’ heights to closest inch, stratify, and then take the average.
+  id: totrans-86
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 将父亲的身高四舍五入到最接近的英寸，分层，然后取平均值。
 - en: Compute the regression line and use it to predict.
+  id: totrans-87
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 计算回归线并使用它进行预测。
 - en: 'We use a Monte Carlo simulation sampling \(N=50\) families:'
+  id: totrans-88
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们使用蒙特卡洛模拟抽样 \(N=50\) 个家庭：
 - en: '[PRE17]'
+  id: totrans-89
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE17]'
 - en: 'Although the expected value of these two random variables is about the same:'
+  id: totrans-90
   prefs: []
   type: TYPE_NORMAL
+  zh: 尽管这两个随机变量的期望值大致相同：
 - en: '[PRE18]'
+  id: totrans-91
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE18]'
 - en: 'The standard error for the regression prediction is substantially smaller:'
+  id: totrans-92
   prefs: []
   type: TYPE_NORMAL
+  zh: 回归预测的标准误差显著较小：
 - en: '[PRE19]'
+  id: totrans-93
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE19]'
 - en: 'The regression line is therefore much more stable than the conditional mean.
     There is an intuitive reason for this. The conditional average is computed on
     a relatively small subset: the fathers that are about 72 inches tall. In fact,
     in some of the permutations we have no data, which is why we use `na.rm=TRUE`.
     The regression always uses all the data.'
+  id: totrans-94
   prefs: []
   type: TYPE_NORMAL
+  zh: 因此，回归线比条件均值更加稳定。这有一个直观的原因。条件平均是在相对较小的子集上计算的：大约 72 英寸高的父亲们。实际上，在一些排列中我们没有数据，这就是为什么我们使用
+    `na.rm=TRUE`。回归总是使用所有数据。
 - en: So why not always use the regression for prediction? Because it is not always
     appropriate. For example, Anscombe provided cases for which the data does not
     have a linear relationship. So are we justified in using the regression line to
     predict? Galton answered this in the positive for height data. The justification,
     which we include in the next section, is somewhat more advanced than the rest
     of the chapter.
+  id: totrans-95
   prefs: []
   type: TYPE_NORMAL
+  zh: 那为什么我们总是使用回归进行预测呢？因为并不总是合适。例如，安斯康姆提供了数据没有线性关系的案例。那么我们使用回归线进行预测是否合理呢？高尔顿对身高数据给出了肯定的回答。这种合理性，我们将在下一节中介绍，比本章其他部分更为复杂。
 - en: 17.4.2 Bivariate normal distribution (advanced)
+  id: totrans-96
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 17.4.2 双变量正态分布（高级）
 - en: Correlation and the regression slope are a widely used summary statistic, but
     they are often misused or misinterpreted. Anscombe’s examples provide over-simplified
     cases of dataset in which summarizing with correlation would be a mistake. But
     there are many more real-life examples.
+  id: totrans-97
   prefs: []
   type: TYPE_NORMAL
+  zh: 相关系数和回归斜率是广泛使用的汇总统计量，但它们经常被误用或误解。安斯康姆的例子提供了过度简化的数据集案例，其中使用相关性进行汇总将是错误的。但还有更多现实生活中的例子。
 - en: The main way we motivate the use of correlation involves what is called the
     *bivariate normal distribution*.
+  id: totrans-98
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们主要通过所谓的**双变量正态分布**来激励使用相关系数。
 - en: When a pair of random variables is approximated by the bivariate normal distribution,
     scatterplots look like ovals. As we saw in Section [17.2](regression.html#corr-coef),
     they can be thin (high correlation) or circle-shaped (no correlation).
+  id: totrans-99
   prefs: []
   type: TYPE_NORMAL
+  zh: 当一对随机变量近似于双变量正态分布时，散点图看起来像椭圆形。正如我们在第 [17.2](regression.html#corr-coef) 节中看到的，它们可以是细长的（高相关性）或圆形的（无相关性）。
 - en: 'A more technical way to define the bivariate normal distribution is the following:
     if \(X\) is a normally distributed random variable, \(Y\) is also a normally distributed
     random variable, and the conditional distribution of \(Y\) for any \(X=x\) is
@@ -477,152 +694,231 @@
     or more variables have the property that each pair is bivariate normal, we say
     the variables follow a *multivariate* normal distribution or that they are *jointly
     normal*.'
+  id: totrans-100
   prefs: []
   type: TYPE_NORMAL
+  zh: 定义二元正态分布的一个更技术的方法如下：如果 \(X\) 是一个正态分布的随机变量，\(Y\) 也是一个正态分布的随机变量，并且对于任何 \(X=x\)
+    的 \(Y\) 的条件分布近似正态，那么这对变量近似为二元正态。当三个或更多变量具有每对变量都是二元正态的性质时，我们说这些变量遵循**多元**正态分布，或者它们是**联合正态**的。
 - en: or simply that the variables are *jointly normal*
+  id: totrans-101
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 或者简单地说，变量是**联合正态**的。
 - en: 'If we think the height data is well approximated by the bivariate normal distribution,
     then we should see the normal approximation hold for each strata. Here we stratify
     the son heights by the standardized father heights and see that the assumption
     appears to hold:'
+  id: totrans-102
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果我们认为身高数据很好地被二元正态分布近似，那么我们应该看到每个层级的正态近似都成立。在这里，我们按标准化的父亲身高分层儿子身高，并看到假设似乎成立：
 - en: '[PRE20]'
+  id: totrans-103
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE20]'
 - en: '![](../Images/26293e6e62fc31fda1137b467b344cc3.png)'
+  id: totrans-104
   prefs: []
   type: TYPE_IMG
+  zh: '![图片](../Images/26293e6e62fc31fda1137b467b344cc3.png)'
 - en: 'Now we come back to defining correlation. Galton used mathematical statistics
     to demonstrate that, when two variables follow a bivariate normal distribution,
     computing the regression line is equivalent to computing conditional expectations.
     We don’t show the derivation here, but we can show that under this assumption,
     for any given value of \(x\), the expected value of the \(Y\) in pairs for which
     \(X=x\) is:'
+  id: totrans-105
   prefs: []
   type: TYPE_NORMAL
+  zh: 现在我们回到定义相关性的问题。高尔顿使用数学统计学证明了，当两个变量遵循二元正态分布时，计算回归线等同于计算条件期望。这里我们不展示推导过程，但我们可以表明，在这个假设下，对于任何给定的
+    \(x\) 值，\(X=x\) 的 \(Y\) 对的期望值是：
 - en: \[ \mbox{E}(Y | X=x) = \mu_Y + \rho \frac{X-\mu_X}{\sigma_X}\sigma_Y \]
+  id: totrans-106
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \mbox{E}(Y | X=x) = \mu_Y + \rho \frac{X-\mu_X}{\sigma_X}\sigma_Y \]
 - en: 'This is the regression line, with slope \[\rho \frac{\sigma_Y}{\sigma_X}\]
     and intercept \(\mu_y - m\mu_X\). It is equivalent to the regression equation
     we showed earlier which can be written like this:'
+  id: totrans-107
   prefs: []
   type: TYPE_NORMAL
+  zh: 这是回归线，斜率为 \[\rho \frac{\sigma_Y}{\sigma_X}\]，截距为 \(\mu_y - m\mu_X\)。它等同于我们之前展示的回归方程，可以写成这样：
 - en: \[ \frac{\mbox{E}(Y \mid X=x) - \mu_Y}{\sigma_Y} = \rho \frac{x-\mu_X}{\sigma_X}
     \]
+  id: totrans-108
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \frac{\mbox{E}(Y \mid X=x) - \mu_Y}{\sigma_Y} = \rho \frac{x-\mu_X}{\sigma_X}
+    \]
 - en: This implies that, if our data is approximately bivariate, the regression line
     gives the conditional probability. Therefore, we can obtain a much more stable
     estimate of the conditional expectation by finding the regression line and using
     it to predict.
+  id: totrans-109
   prefs: []
   type: TYPE_NORMAL
+  zh: 这意味着，如果我们的数据近似二元，回归线给出了条件概率。因此，我们可以通过找到回归线并使用它来预测，从而获得条件期望的一个更稳定的估计。
 - en: In summary, if our data is approximately bivariate, then the conditional expectation,
     the best prediction of \(Y\) given we know the value of \(X\), is given by the
     regression line.
+  id: totrans-110
   prefs: []
   type: TYPE_NORMAL
+  zh: 总结来说，如果我们的数据近似二元，那么在已知 \(X\) 的值的情况下，\(Y\) 的条件期望，即 \(Y\) 的最佳预测，由回归线给出。
 - en: 17.4.3 Variance explained
+  id: totrans-111
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 17.4.3 解释的方差
 - en: 'The bivariate normal theory also tells us that the standard deviation of the
     *conditional* distribution described above is:'
+  id: totrans-112
   prefs: []
   type: TYPE_NORMAL
+  zh: 二元正态理论还告诉我们，上述**条件**分布的标准差是：
 - en: \[ \mbox{SD}(Y \mid X=x ) = \sigma_Y \sqrt{1-\rho^2} \]
+  id: totrans-113
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \mbox{SD}(Y \mid X=x ) = \sigma_Y \sqrt{1-\rho^2} \]
 - en: To see why this is intuitive, notice that without conditioning, \(\mbox{SD}(Y)
     = \sigma_Y\), we are looking at the variability of all the sons. But once we condition,
     we are only looking at the variability of the sons with a tall, 72-inch, father.
     This group will all tend to be somewhat tall so the standard deviation is reduced.
+  id: totrans-114
   prefs: []
   type: TYPE_NORMAL
+  zh: 要理解为什么这是直观的，请注意，在没有条件的情况下，\(\mbox{SD}(Y) = \sigma_Y\)，我们正在观察所有儿子的变异性。但一旦我们进行条件化，我们只观察身高为
+    72 英寸、父亲身高为高的儿子的变异性。这个群体都会倾向于稍微高一些，因此标准差会降低。
 - en: Specifically, it is reduced to \(\sqrt{1-\rho^2} = \sqrt{1 - 0.25}\) = 0.87
     of what it was originally. We could say that father heights “explain” 13% of the
     variability observed in son heights.
+  id: totrans-115
   prefs: []
   type: TYPE_NORMAL
+  zh: 具体来说，它减少到 \(\sqrt{1-\rho^2} = \sqrt{1 - 0.25}\) = 0.87 原始值。我们可以说父亲身高“解释”了儿子身高观察到的
+    13% 的变异性。
 - en: The statement “\(X\) explains such and such percent of the variability” is commonly
     used in academic papers. In this case, this percent actually refers to the variance
     (the SD squared). So if the data is bivariate normal, the variance is reduced
     by \(1-\rho^2\), so we say that \(X\) explains \(1- (1-\rho^2)=\rho^2\) (the correlation
     squared) of the variance.
+  id: totrans-116
   prefs: []
   type: TYPE_NORMAL
+  zh: 学术论文中常用“\(X\) 解释了这样的百分比的变化”这样的说法。在这种情况下，这个百分比实际上指的是方差（标准差的平方）。所以如果数据是双变量正态的，方差会减少
+    \(1-\rho^2\)，所以我们说 \(X\) 解释了 \(1- (1-\rho^2)=\rho^2\)（相关系数的平方）的方差。
 - en: But it is important to remember that the “variance explained” statement only
     makes sense when the data is approximated by a bivariate normal distribution.
+  id: totrans-117
   prefs: []
   type: TYPE_NORMAL
+  zh: 但重要的是要记住，“解释的方差”这个说法只有在数据被双变量正态分布近似时才有意义。
 - en: '17.4.4 Warning: there are two regression lines'
+  id: totrans-118
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 17.4.4 警告：存在两条回归线
 - en: 'We computed a regression line to predict the son’s height from father’s height.
     We used these calculations:'
+  id: totrans-119
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们计算了一条回归线来预测儿子的身高从父亲身高。我们使用了以下计算：
 - en: '[PRE21]'
+  id: totrans-120
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE21]'
 - en: which gives us the function \(\mbox{E}(Y\mid X=x) =\) 37.3 + 0.46 \(x\).
+  id: totrans-121
   prefs: []
   type: TYPE_NORMAL
+  zh: 这给出了函数 \(\mbox{E}(Y\mid X=x) =\) 37.3 + 0.46 \(x\)。
 - en: 'What if we want to predict the father’s height based on the son’s? It is important
     to know that this is not determined by computing the inverse function: \(x = \{
     \mbox{E}(Y\mid X=x) -\) 37.3 \(\} /\) 0.5.'
+  id: totrans-122
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果我们想根据儿子的身高预测父亲的身高呢？重要的是要知道这并不是通过计算逆函数来确定的：\(x = \{ \mbox{E}(Y\mid X=x) -\)
+    37.3 \(\} /\) 0.5。
 - en: 'We need to compute \(\mbox{E}(X \mid Y=y)\). Since the data is approximately
     bivariate normal, the theory described above tells us that this conditional expectation
     will follow a line with slope and intercept:'
+  id: totrans-123
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们需要计算 \(\mbox{E}(X \mid Y=y)\)。由于数据大约是双变量正态的，上述理论告诉我们这个条件期望将遵循一个具有斜率和截距的直线：
 - en: '[PRE22]'
+  id: totrans-124
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE22]'
 - en: 'So we get \(\mbox{E}(X \mid Y=y) =\) 40.9 + 0.41y. Again we see regression
     to the average: the prediction for the father is closer to the father average
     than the son heights \(y\) is to the son average.'
+  id: totrans-125
   prefs: []
   type: TYPE_NORMAL
+  zh: 因此我们得到 \(\mbox{E}(X \mid Y=y) =\) 40.9 + 0.41y。再次我们看到回归到平均值：对父亲的预测比儿子的高度 \(y\)
+    对儿子平均值的接近。
 - en: 'Here is a plot showing the two regression lines, with blue for the predicting
     son heights with father heights and red for predicting father heights with son
     heights:'
+  id: totrans-126
   prefs: []
   type: TYPE_NORMAL
+  zh: 这里是一个显示两条回归线的图表，蓝色用于预测儿子身高与父亲身高，红色用于预测父亲身高与儿子身高：
 - en: '[PRE23]'
+  id: totrans-127
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE23]'
 - en: '![](../Images/ea121f88ef72bb36fd8b8b70634c0133.png)'
+  id: totrans-128
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/ea121f88ef72bb36fd8b8b70634c0133.png)'
 - en: 17.5 Exercises
+  id: totrans-129
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 17.5 练习
 - en: 1\. Load the `GaltonFamilies` data from the **HistData**. The children in each
     family are listed by gender and then by height. Create a dataset called `galton_heights`
     by picking a male and female at random.
+  id: totrans-130
   prefs: []
   type: TYPE_NORMAL
+  zh: 1. 从 **HistData** 加载 `GaltonFamilies` 数据。每个家庭的孩子按性别和身高顺序列出。通过随机选择一个男性和一个女性来创建一个名为
+    `galton_heights` 的数据集。
 - en: 2\. Make a scatterplot for heights between mothers and daughters, mothers and
     sons, fathers and daughters, and fathers and sons.
+  id: totrans-131
   prefs: []
   type: TYPE_NORMAL
+  zh: 2. 为母亲与女儿、母亲与儿子、父亲与女儿和父亲与儿子之间的身高制作散点图。
 - en: 3\. Compute the correlation in heights between mothers and daughters, mothers
     and sons, fathers and daughters, and fathers and sons.
+  id: totrans-132
   prefs: []
   type: TYPE_NORMAL
+  zh: 3. 计算母亲与女儿、母亲与儿子、父亲与女儿和父亲与儿子之间身高的相关性。
 - en: '* * *'
+  id: totrans-133
   prefs: []
   type: TYPE_NORMAL
+  zh: '* * *'
 - en: '[https://en.wikipedia.org/wiki/Francis_Galton](https://en.wikipedia.org/wiki/Francis_Galton)[↩︎](regression.html#fnref60)'
+  id: totrans-134
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[https://zh.wikipedia.org/wiki/弗朗西斯·高尔顿](https://zh.wikipedia.org/wiki/弗朗西斯·高尔顿)[↩︎](regression.html#fnref60)'

@@ -1,11 +1,15 @@
 - en: Chapter 14 Random variables
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 第 14 章 随机变量
 - en: 原文：[https://rafalab.dfci.harvard.edu/dsbook/random-variables.html](https://rafalab.dfci.harvard.edu/dsbook/random-variables.html)
+  id: totrans-1
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 原文：[https://rafalab.dfci.harvard.edu/dsbook/random-variables.html](https://rafalab.dfci.harvard.edu/dsbook/random-variables.html)
 - en: 'In data science, we often deal with data that is affected by chance in some
     way: the data comes from a random sample, the data is affected by measurement
     error, or the data measures some outcome that is random in nature. Being able
@@ -13,8 +17,10 @@
     jobs of a data analyst. Statistical inference offers a framework, as well as several
     practical tools, for doing this. The first step is to learn how to mathematically
     describe random variables.'
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: 在数据科学中，我们经常处理受某种方式影响的数据：数据来自随机样本，数据受到测量误差的影响，或者数据衡量的是一些本质上随机的结果。能够量化随机性引入的不确定性是数据分析师最重要的工作之一。统计推断提供了一个框架，以及一些实用的工具，用于完成这项工作。第一步是学习如何用数学方法描述随机变量。
 - en: In this chapter, we introduce random variables and their properties starting
     with their application to games of chance. We then describe some of the events
     surrounding the financial crisis of 2007-2008[^(47)](#fn47) using probability
@@ -27,34 +33,50 @@
     many more defaults than were expected, which led to a price crash of these securities.
     As a consequence, banks lost so much money that they needed government bailouts
     to avoid closing down completely.
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: 在本章中，我们从随机变量及其应用开始介绍随机变量和它们的性质，这些应用包括机会游戏。然后我们使用概率论描述了 2007-2008 年金融危机周围的一些事件[^(47)](#fn47)。这次金融危机部分原因是金融机构低估了某些证券[^(48)](#fn48)的风险。具体来说，抵押贷款支持证券（MBS）和担保债务凭证（CDO）的风险被严重低估。这些资产以假设大多数房主会按时支付月供的价格出售，而这种情况不发生的概率被计算为很低。多种因素的结合导致违约数量远超预期，这导致了这些证券价格的暴跌。因此，银行损失了大量资金，以至于他们需要政府救助以避免完全关闭。
 - en: 14.1 Random variables
+  id: totrans-4
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 14.1 随机变量
 - en: 'Random variables are numeric outcomes resulting from random processes. We can
     easily generate random variables using some of the simple examples we have shown.
     For example, define `X` to be 1 if a bead is blue and red otherwise:'
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: 随机变量是随机过程产生的数值结果。我们可以使用我们展示的一些简单示例轻松生成随机变量。例如，定义 `X` 为蓝色珠子时为 1，否则为红色：
 - en: '[PRE0]'
+  id: totrans-6
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: 'Here `X` is a random variable: every time we select a new bead the outcome
     changes randomly. See below:'
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: 在这里 `X` 是一个随机变量：每次我们选择一个新的珠子时，结果都会随机变化。见下文：
 - en: '[PRE1]'
+  id: totrans-8
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: Sometimes it’s 1 and sometimes it’s 0.
+  id: totrans-9
   prefs: []
   type: TYPE_NORMAL
+  zh: 有时它是 1，有时它是 0。
 - en: 14.2 Sampling models
+  id: totrans-10
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 14.2 抽样模型
 - en: 'Many data generation procedures, those that produce the data we study, can
     be modeled quite well as draws from an urn. For instance, we can model the process
     of polling likely voters as drawing 0s (Republicans) and 1s (Democrats) from an
@@ -70,8 +92,11 @@
     science. Casino games offer a plethora of examples of real-world situations in
     which sampling models are used to answer specific questions. We will therefore
     start with such examples.'
+  id: totrans-11
   prefs: []
   type: TYPE_NORMAL
+  zh: 许多数据生成过程，即我们研究的数据，可以很好地模拟为从罐子中抽取。例如，我们可以将调查可能选民的过程模拟为从包含所有可能选民 0 和 1 代码的罐子中抽取
+    0（共和党人）和 1（民主党人）。在流行病学研究中，我们通常假设我们研究的研究对象是感兴趣人群的随机样本。与特定结果相关的数据可以模拟为从包含感兴趣人群全部结果的罐子中抽取的随机样本。同样，在实验研究中，我们通常假设我们正在研究的研究个体，例如蠕虫、苍蝇或老鼠，是从更大的群体中随机抽取的。随机实验也可以通过从分配给个体的方式抽取来模拟：在分配时，你随机抽取你的组。因此，抽样模型在数据科学中无处不在。赌场游戏提供了大量使用抽样模型来回答具体问题的现实世界例子的例子。因此，我们将从这些例子开始。
 - en: Suppose a very small casino hires you to consult on whether they should set
     up roulette wheels. To keep the example simple, we will assume that 1,000 people
     will play and that the only game you can play on the roulette wheel is to bet
@@ -79,89 +104,133 @@
     or lose. They want a range of values and, in particular, they want to know what’s
     the chance of losing money. If this probability is too high, they will pass on
     installing roulette wheels.
+  id: totrans-12
   prefs: []
   type: TYPE_NORMAL
+  zh: 假设一家非常小的赌场雇佣你来咨询他们是否应该设置轮盘赌。为了使例子简单，我们将假设有 1,000 人将参与游戏，而你可以在轮盘赌上进行的唯一游戏是下注红或黑。赌场希望你能预测他们将会赚多少钱或亏损多少。他们希望得到一个数值范围，特别是，他们想知道亏损的概率。如果这个概率太高，他们将放弃安装轮盘赌。
 - en: 'We are going to define a random variable \(S\) that will represent the casino’s
     total winnings. Let’s start by constructing the urn. A roulette wheel has 18 red
     pockets, 18 black pockets and 2 green ones. So playing a color in one game of
     roulette is equivalent to drawing from this urn:'
+  id: totrans-13
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们将定义一个随机变量 \(S\)，它将代表赌场的总赢利。让我们先构建这个罐子。一个轮盘赌有 18 个红色口袋，18 个黑色口袋和 2 个绿色口袋。因此，在轮盘赌的一局中玩一个颜色相当于从这个罐子中抽取：
 - en: '[PRE2]'
+  id: totrans-14
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: 'The 1,000 outcomes from 1,000 people playing are independent draws from this
     urn. If red comes up, the gambler wins and the casino loses a dollar, so we draw
     a -$1\. Otherwise, the casino wins a dollar and we draw a $1\. To construct our
     random variable \(S\), we can use this code:'
+  id: totrans-15
   prefs: []
   type: TYPE_NORMAL
+  zh: 1,000 人的 1,000 个结果是从这个罐子中独立抽取的。如果出现红色，赌徒赢，赌场损失一美元，所以我们抽取一个 -$1。否则，赌场赢一美元，我们抽取一个
+    $1。为了构建我们的随机变量 \(S\)，我们可以使用以下代码：
 - en: '[PRE3]'
+  id: totrans-16
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: 'Because we know the proportions of 1s and -1s, we can generate the draws with
     one line of code, without defining `color`:'
+  id: totrans-17
   prefs: []
   type: TYPE_NORMAL
+  zh: 因为我们知道 1 和 -1 的比例，我们可以用一行代码生成抽取，而不需要定义 `color`：
 - en: '[PRE4]'
+  id: totrans-18
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE4]'
 - en: 'We call this a **sampling model** since we are modeling the random behavior
     of roulette with the sampling of draws from an urn. The total winnings \(S\) is
     simply the sum of these 1,000 independent draws:'
+  id: totrans-19
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们称这为**抽样模型**，因为我们通过从罐子中抽取样本来模拟轮盘赌的随机行为。总赢利 \(S\) 简单地是这些 1,000 个独立抽取的总和：
 - en: '[PRE5]'
+  id: totrans-20
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE5]'
 - en: 14.3 The probability distribution of a random variable
+  id: totrans-21
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 14.3 随机变量的概率分布
 - en: If you run the code above, you see that \(S\) changes every time. This is, of
     course, because \(S\) is a **random variable**. The probability distribution of
     a random variable tells us the probability of the observed value falling at any
     given interval. So, for example, if we want to know the probability that we lose
     money, we are asking the probability that \(S\) is in the interval \(S<0\).
+  id: totrans-22
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果你运行上面的代码，你会看到 \(S\) 每次都会变化。这当然是，因为 \(S\) 是一个 **随机变量**。随机变量的概率分布告诉我们观察到的值落在任何给定区间的概率。所以，例如，如果我们想知道我们输钱的概率，我们是在询问
+    \(S\) 是否在区间 \(S<0\) 内。
 - en: Note that if we can define a cumulative distribution function \(F(a) = \mbox{Pr}(S\leq
     a)\), then we will be able to answer any question related to the probability of
     events defined by our random variable \(S\), including the event \(S<0\). We call
     this \(F\) the random variable’s *distribution function*.
+  id: totrans-23
   prefs: []
   type: TYPE_NORMAL
+  zh: 注意，如果我们能定义一个累积分布函数 \(F(a) = \mbox{Pr}(S\leq a)\)，那么我们将能够回答与我们的随机变量 \(S\) 定义的任何事件相关的任何问题，包括事件
+    \(S<0\)。我们称这个 \(F\) 为随机变量的 *分布函数*。
 - en: 'We can estimate the distribution function for the random variable \(S\) by
     using a Monte Carlo simulation to generate many realizations of the random variable.
     With this code, we run the experiment of having 1,000 people play roulette, over
     and over, specifically \(B = 10,000\) times:'
+  id: totrans-24
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们可以通过使用蒙特卡洛模拟生成随机变量的许多实现来估计随机变量 \(S\) 的分布函数。使用此代码，我们重复进行有 1,000 人玩轮盘赌的实验，具体
+    \(B = 10,000\) 次：
 - en: '[PRE6]'
+  id: totrans-25
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE6]'
 - en: 'Now we can ask the following: in our simulations, how often did we get sums
     less than or equal to `a`?'
+  id: totrans-26
   prefs: []
   type: TYPE_NORMAL
+  zh: 现在我们可以问以下问题：在我们的模拟中，我们得到总和小于或等于 `a` 的频率是多少？
 - en: '[PRE7]'
+  id: totrans-27
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE7]'
 - en: 'This will be a very good approximation of \(F(a)\) and we can easily answer
     the casino’s question: how likely is it that we will lose money? We can see it
     is quite low:'
+  id: totrans-28
   prefs: []
   type: TYPE_NORMAL
+  zh: 这将是一个非常好的 \(F(a)\) 的近似，我们可以轻松回答赌场的提问：我们输钱的概率有多大？我们可以看到这个概率相当低：
 - en: '[PRE8]'
+  id: totrans-29
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE8]'
 - en: 'We can visualize the distribution of \(S\) by creating a histogram showing
     the probability \(F(b)-F(a)\) for several intervals \((a,b]\):'
+  id: totrans-30
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们可以通过创建一个显示几个区间 \((a,b]\) 的概率 \(F(b)-F(a)\) 的直方图来可视化 \(S\) 的分布：
 - en: '![](../Images/82ea83cf9a1787597ec9024a9b7077e7.png)'
+  id: totrans-31
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/82ea83cf9a1787597ec9024a9b7077e7.png)'
 - en: We see that the distribution appears to be approximately normal. A qq-plot will
     confirm that the normal approximation is close to a perfect approximation for
     this distribution. If, in fact, the distribution is normal, then all we need to
@@ -169,53 +238,79 @@
     have the original values from which the distribution is created, we can easily
     compute these with `mean(S)` and `sd(S)`. The blue curve you see added to the
     histogram above is a normal density with this average and standard deviation.
+  id: totrans-32
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们可以看到，分布看起来大约是正态的。QQ图将证实，对于这个分布，正态近似接近完美的近似。如果实际上分布是正态的，那么我们只需要定义分布的平均值和标准差。因为我们有创建分布的原始值，我们可以很容易地使用
+    `mean(S)` 和 `sd(S)` 计算这些值。你看到添加到上面的直方图中的蓝色曲线是这个平均值和标准差的正态密度曲线。
 - en: This average and this standard deviation have special names. They are referred
     to as the *expected value* and *standard error* of the random variable \(S\).
     We will say more about these in the next section.
+  id: totrans-33
   prefs: []
   type: TYPE_NORMAL
+  zh: 这个平均值和标准差有特殊名称。它们被称为随机变量 \(S\) 的 *期望值* 和 *标准误*。我们将在下一节中详细介绍这些内容。
 - en: Statistical theory provides a way to derive the distribution of random variables
     defined as independent random draws from an urn. Specifically, in our example
     above, we can show that \((S+n)/2\) follows a binomial distribution. We therefore
     do not need to run for Monte Carlo simulations to know the probability distribution
     of \(S\). We did this for illustrative purposes.
+  id: totrans-34
   prefs: []
   type: TYPE_NORMAL
+  zh: 统计理论提供了一种方法，从作为从罐子中独立随机抽取的随机变量推导出其分布。具体来说，在我们上面的例子中，我们可以证明 \((S+n)/2\) 符合二项分布。因此，我们不需要运行蒙特卡洛模拟来了解
+    \(S\) 的概率分布。我们这样做是为了说明目的。
 - en: 'We can use the function `dbinom` and `pbinom` to compute the probabilities
     exactly. For example, to compute \(\mbox{Pr}(S < 0)\) we note that:'
+  id: totrans-35
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们可以使用 `dbinom` 和 `pbinom` 函数精确地计算概率。例如，要计算 \(\mbox{Pr}(S < 0)\)，我们注意到：
 - en: \[\mbox{Pr}(S < 0) = \mbox{Pr}((S+n)/2 < (0+n)/2)\]
+  id: totrans-36
   prefs: []
   type: TYPE_NORMAL
+  zh: \[\mbox{Pr}(S < 0) = \mbox{Pr}((S+n)/2 < (0+n)/2)\]
 - en: and we can use the `pbinom` to compute \[\mbox{Pr}(S \leq 0)\]
+  id: totrans-37
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们可以使用 `pbinom` 来计算 \[\mbox{Pr}(S \leq 0)\]
 - en: '[PRE9]'
+  id: totrans-38
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE9]'
 - en: 'Because this is a discrete probability function, to get \(\mbox{Pr}(S < 0)\)
     rather than \(\mbox{Pr}(S \leq 0)\), we write:'
+  id: totrans-39
   prefs: []
   type: TYPE_NORMAL
+  zh: 因为这是一个离散概率函数，为了得到 \(\mbox{Pr}(S < 0)\) 而不是 \(\mbox{Pr}(S \leq 0)\)，我们写：
 - en: '[PRE10]'
+  id: totrans-40
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE10]'
 - en: For the details of the binomial distribution, you can consult any basic probability
     book or even Wikipedia[^(49)](#fn49).
+  id: totrans-41
   prefs: []
   type: TYPE_NORMAL
+  zh: 关于二项分布的详细信息，您可以查阅任何基本的概率书籍，甚至可以参考维基百科[^(49)](#fn49)。
 - en: 'Here we do not cover these details. Instead, we will discuss an incredibly
     useful approximation provided by mathematical theory that applies generally to
     sums and averages of draws from any urn: the Central Limit Theorem (CLT).'
+  id: totrans-42
   prefs: []
   type: TYPE_NORMAL
+  zh: 在这里，我们不涉及这些细节。相反，我们将讨论数学理论提供的一个极其有用的近似，它适用于从任何抽屉中抽取的任何总和和平均值：中心极限定理（CLT）。
 - en: 14.4 Distributions versus probability distributions
+  id: totrans-43
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 14.4 分布与概率分布的比较
 - en: 'Before we continue, let’s make an important distinction and connection between
     the distribution of a list of numbers and a probability distribution. In the visualization
     chapter, we described how any list of numbers \(x_1,\dots,x_n\) has a distribution.
@@ -224,36 +319,52 @@
     are useful summaries when the distribution is approximately normal, we define
     the average and standard deviation. These are defined with a straightforward operation
     of the vector containing the list of numbers `x`:'
+  id: totrans-44
   prefs: []
   type: TYPE_NORMAL
+  zh: 在我们继续之前，让我们在数字列表的分布和概率分布之间做出一个重要的区分和联系。在可视化章节中，我们描述了任何数字列表 \(x_1,\dots,x_n\)
+    都有一个分布。定义非常直接。我们定义 \(F(a)\) 为一个函数，它告诉我们列表中有多少比例小于或等于 \(a\)。因为它们在分布近似正态时非常有用，所以我们定义了平均值和标准差。这些是通过包含数字列表
+    `x` 的向量进行简单操作来定义的：
 - en: '[PRE11]'
+  id: totrans-45
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE11]'
 - en: 'A random variable \(X\) has a distribution function. To define this, we do
     not need a list of numbers. It is a theoretical concept. In this case, we define
     the distribution as the \(F(a)\) that answers the question: what is the probability
     that \(X\) is less than or equal to \(a\)? There is no list of numbers.'
+  id: totrans-46
   prefs: []
   type: TYPE_NORMAL
+  zh: 随机变量 \(X\) 具有分布函数。为了定义这个概念，我们不需要一个数字列表。这是一个理论概念。在这种情况下，我们定义分布为 \(F(a)\)，它回答的问题是：\(X\)
+    小于或等于 \(a\) 的概率是多少？没有数字列表。
 - en: 'However, if \(X\) is defined by drawing from an urn with numbers in it, then
     there is a list: the list of numbers inside the urn. In this case, the distribution
     of that list is the probability distribution of \(X\) and the average and standard
     deviation of that list are the expected value and standard error of the random
     variable.'
+  id: totrans-47
   prefs: []
   type: TYPE_NORMAL
+  zh: 然而，如果 \(X\) 是通过从包含数字的抽屉中抽取来定义的，那么就有一个列表：抽屉内数字的列表。在这种情况下，这个列表的分布是 \(X\) 的概率分布，而这个列表的平均值和标准差是随机变量的期望值和标准误差。
 - en: Another way to think about it that does not involve an urn is to run a Monte
     Carlo simulation and generate a very large list of outcomes of \(X\). These outcomes
     are a list of numbers. The distribution of this list will be a very good approximation
     of the probability distribution of \(X\). The longer the list, the better the
     approximation. The average and standard deviation of this list will approximate
     the expected value and standard error of the random variable.
+  id: totrans-48
   prefs: []
   type: TYPE_NORMAL
+  zh: 另一种不涉及抽屉的方法是运行蒙特卡洛模拟并生成一个包含 \(X\) 的非常长的结果列表。这些结果是一个数字列表。这个列表的分布将很好地近似 \(X\)
+    的概率分布。列表越长，近似越好。这个列表的平均值和标准差将近似随机变量的期望值和标准误差。
 - en: 14.5 Notation for random variables
+  id: totrans-49
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 14.5 随机变量的符号表示
 - en: In statistical textbooks, upper case letters are used to denote random variables
     and we follow this convention here. Lower case letters are used for observed values.
     You will see some notation that includes both. For example, you will see events
@@ -267,78 +378,115 @@
     it to be, what values are probable, but not what it is. But once we have data,
     we do see a realization of \(X\). So data scientists talk of what could have been
     after we see what actually happened.
+  id: totrans-50
   prefs: []
   type: TYPE_NORMAL
+  zh: 在统计学教科书中，大写字母用于表示随机变量，我们在这里遵循这一惯例。小写字母用于表示观察到的值。你会看到一些包含两者的符号。例如，你会看到事件定义为 \(X
+    \leq x\)。在这里，\(X\) 是一个随机变量，使其成为一个随机事件，而 \(x\) 是一个任意值，不是随机的。所以，例如，\(X\) 可能代表掷骰子的点数，而
+    \(x\) 将代表我们看到的实际值1、2、3、4、5或6。因此，在这种情况下，\(X=x\) 的概率是1/6，无论观察到的值 \(x\) 如何。这种符号有点奇怪，因为当我们询问关于概率的问题时，\(X\)
+    不是一个观察到的量。相反，它是一个我们将在未来看到的随机量。我们可以谈论我们期望它是什么，可能有哪些值，但不能谈论它是什么。但一旦我们有数据，我们确实看到了
+    \(X\) 的一个实现。因此，数据科学家谈论的是在看到实际发生的事情之后可能发生的事情。
 - en: 14.6 The expected value and standard error
+  id: totrans-51
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 14.6 期望值和标准误差
 - en: We have described sampling models for draws. We will now go over the mathematical
     theory that lets us approximate the probability distributions for the sum of draws.
     Once we do this, we will be able to help the casino predict how much money they
     will make. The same approach we use for the sum of draws will be useful for describing
     the distribution of averages and proportion which we will need to understand how
     polls work.
+  id: totrans-52
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们已经描述了抽取模型的采样。现在我们将探讨数学理论，它使我们能够近似抽取总和的概率分布。一旦我们这样做，我们就能帮助赌场预测他们将赚多少钱。我们用于抽取总和的方法将有助于描述平均值和比例的分布，这是我们理解民意调查如何运作所必需的。
 - en: 'The first important concept to learn is the *expected value*. In statistics
     books, it is common to use letter \(\mbox{E}\) like this:'
+  id: totrans-53
   prefs: []
   type: TYPE_NORMAL
+  zh: 需要学习的第一重要概念是*期望值*。在统计学书籍中，通常使用字母 \(\mbox{E}\) 如此表示：
 - en: \[\mbox{E}[X]\]
+  id: totrans-54
   prefs: []
   type: TYPE_NORMAL
+  zh: \[\mbox{E}[X]\]
 - en: to denote the expected value of the random variable \(X\).
+  id: totrans-55
   prefs: []
   type: TYPE_NORMAL
+  zh: 表示随机变量 \(X\) 的期望值。
 - en: A random variable will vary around its expected value in a way that if you take
     the average of many, many draws, the average of the draws will approximate the
     expected value, getting closer and closer the more draws you take.
+  id: totrans-56
   prefs: []
   type: TYPE_NORMAL
+  zh: 一个随机变量会围绕其期望值变化，如果你取很多很多次抽取的平均值，抽取的平均值将接近期望值，抽取次数越多，越接近。
 - en: 'Theoretical statistics provides techniques that facilitate the calculation
     of expected values in different circumstances. For example, a useful formula tells
     us that the *expected value of a random variable defined by one draw is the average
     of the numbers in the urn*. In the urn used to model betting on red in roulette,
     we have 20 one dollars and 18 negative one dollars. The expected value is thus:'
+  id: totrans-57
   prefs: []
   type: TYPE_NORMAL
+  zh: 理论统计学提供了在不同情况下计算期望值的技巧。例如，一个有用的公式告诉我们，*由一次抽取定义的随机变量的期望值是罐子中数字的平均值*。在用于模拟轮盘赌下注红色的罐子中，我们有20个一美元和18个负一美元。因此，期望值是：
 - en: \[ \mbox{E}[X] = (20 + -18)/38 \]
+  id: totrans-58
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \mbox{E}[X] = (20 + -18)/38 \]
 - en: 'which is about 5 cents. It is a bit counterintuitive to say that \(X\) varies
     around 0.05, when the only values it takes is 1 and -1\. One way to make sense
     of the expected value in this context is by realizing that if we play the game
     over and over, the casino wins, on average, 5 cents per game. A Monte Carlo simulation
     confirms this:'
+  id: totrans-59
   prefs: []
   type: TYPE_NORMAL
+  zh: 大约5分。当 \(X\) 只能取1和-1这两个值时，说 \(X\) 围绕0.05变化，这有点反直觉。一种理解这个期望值的方法是意识到，如果我们反复玩这个游戏，赌场平均每局赢5分。蒙特卡洛模拟证实了这一点：
 - en: '[PRE12]'
+  id: totrans-60
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE12]'
 - en: 'In general, if the urn has two possible outcomes, say \(a\) and \(b\), with
     proportions \(p\) and \(1-p\) respectively, the average is:'
+  id: totrans-61
   prefs: []
   type: TYPE_NORMAL
+  zh: 一般而言，如果罐子有两种可能的结果，比如说 \(a\) 和 \(b\)，比例分别为 \(p\) 和 \(1-p\)，平均值为：
 - en: \[\mbox{E}[X] = ap + b(1-p)\]
+  id: totrans-62
   prefs: []
   type: TYPE_NORMAL
+  zh: \[\mbox{E}[X] = ap + b(1-p)\]
 - en: To see this, notice that if there are \(n\) beads in the urn, then we have \(np\)
     \(a\)s and \(n(1-p)\) \(b\)s and because the average is the sum, \(n\times a \times
     p + n\times b \times (1-p)\), divided by the total \(n\), we get that the average
     is \(ap + b(1-p)\).
+  id: totrans-63
   prefs: []
   type: TYPE_NORMAL
+  zh: 要看到这一点，注意如果罐子里有\(n\)个珠子，那么我们有\(np\)个\(a\)和\(n(1-p)\)个\(b\)，因为平均数是总和，\(n \times
+    a \times p + n \times b \times (1-p)\)，除以总数\(n\)，我们得到平均数是\(ap + b(1-p)\)。
 - en: 'Now the reason we define the expected value is because this mathematical definition
     turns out to be useful for approximating the probability distributions of sum,
     which then is useful for describing the distribution of averages and proportions.
     The first useful fact is that the *expected value of the sum of the draws* is:'
+  id: totrans-64
   prefs: []
   type: TYPE_NORMAL
+  zh: 现在我们定义期望值的原因是，这个数学定义最终被证明对于近似总和的概率分布是有用的，这对于描述平均值和比例的分布也是有用的。第一个有用的事实是，**抽取总和的期望值**是：
 - en: \[ \mbox{}\mbox{number of draws } \times \mbox{ average of the numbers in the
     urn} \]
+  id: totrans-65
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \text{抽取次数} \times \text{罐子中数字的平均值} \]
 - en: 'So if 1,000 people play roulette, the casino expects to win, on average, about
     1,000 \(\times\) $0.05 = $50\. But this is an expected value. How different can
     one observation be from the expected value? The casino really needs to know this.
@@ -346,127 +494,192 @@
     not install roulette wheels. Statistical theory once again answers this question.
     The *standard error* (SE) gives us an idea of the size of the variation around
     the expected value. In statistics books, it’s common to use:'
+  id: totrans-66
   prefs: []
   type: TYPE_NORMAL
+  zh: 所以如果1,000人玩轮盘赌，赌场平均期望赢得1,000 \(\times\) $0.05 = $50。但这只是一个期望值。一个观察值与期望值可以有多大的不同？赌场真正需要知道这个。可能性的范围是多少？如果负数太可能，他们就不会安装轮盘赌轮。统计理论再次回答了这个问题。**标准误差**（SE）给我们一个关于期望值周围变化大小的概念。在统计学书籍中，通常使用：
 - en: \[\mbox{SE}[X]\]
+  id: totrans-67
   prefs: []
   type: TYPE_NORMAL
+  zh: \[\text{SE}[X]\]
 - en: to denote the standard error of a random variable.
+  id: totrans-68
   prefs: []
   type: TYPE_NORMAL
+  zh: 来表示随机变量的标准误差。
 - en: '**If our draws are independent**, then the *standard error of the sum* is given
     by the equation:'
+  id: totrans-69
   prefs: []
   type: TYPE_NORMAL
+  zh: '**如果我们抽取的样本是独立的**，那么**总和的标准误差**由以下公式给出：'
 - en: \[ \sqrt{\mbox{number of draws }} \times \mbox{ standard deviation of the numbers
     in the urn} \]
+  id: totrans-70
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \sqrt{\text{抽取次数}} \times \text{罐子中数字的标准差} \]
 - en: 'Using the definition of standard deviation, we can derive, with a bit of math,
     that if an urn contains two values \(a\) and \(b\) with proportions \(p\) and
     \((1-p)\), respectively, the standard deviation is:'
+  id: totrans-71
   prefs: []
   type: TYPE_NORMAL
+  zh: 使用标准差的定义，我们可以通过一些数学推导得出，如果一个罐子包含两个值\(a\)和\(b\)，比例分别为\(p\)和\((1-p)\)，那么标准差是：
 - en: \[\mid b - a \mid \sqrt{p(1-p)}.\]
+  id: totrans-72
   prefs: []
   type: TYPE_NORMAL
+  zh: \[\mid b - a \mid \sqrt{p(1-p)}.\]
 - en: 'So in our roulette example, the standard deviation of the values inside the
     urn is: \(\mid 1 - (-1) \mid \sqrt{10/19 \times 9/19}\) or:'
+  id: totrans-73
   prefs: []
   type: TYPE_NORMAL
+  zh: 所以在我们的轮盘赌例子中，罐子内数值的标准差是：\(\mid 1 - (-1) \mid \sqrt{10/19 \times 9/19}\) 或者：
 - en: '[PRE13]'
+  id: totrans-74
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE13]'
 - en: The standard error tells us the typical difference between a random variable
     and its expectation. Since one draw is obviously the sum of just one draw, we
     can use the formula above to calculate that the random variable defined by one
     draw has an expected value of 0.05 and a standard error of about 1\. This makes
     sense since we either get 1 or -1, with 1 slightly favored over -1.
+  id: totrans-75
   prefs: []
   type: TYPE_NORMAL
+  zh: 标准误差告诉我们随机变量与其期望值之间的典型差异。由于一次抽取显然是仅一次抽取的总和，我们可以使用上述公式来计算由一次抽取定义的随机变量的期望值为0.05，标准误差约为1。这是有道理的，因为我们要么得到1，要么得到-1，其中1略优于-1。
 - en: 'Using the formula above, the sum of 1,000 people playing has standard error
     of about $32:'
+  id: totrans-76
   prefs: []
   type: TYPE_NORMAL
+  zh: 使用上述公式，1,000人玩游戏的总和标准误差约为$32：
 - en: '[PRE14]'
+  id: totrans-77
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE14]'
 - en: 'As a result, when 1,000 people bet on red, the casino is expected to win $50
     with a standard error of $32\. It therefore seems like a safe bet. But we still
     haven’t answered the question: how likely is it to lose money? Here the CLT will
     help.'
+  id: totrans-78
   prefs: []
   type: TYPE_NORMAL
+  zh: 因此，当1,000人下注红色时，赌场预计会赢得$50，标准误差为$32。因此这似乎是一个安全的赌注。但我们还没有回答这个问题：输钱的可能性有多大？在这里，中心极限定理（CLT）将有所帮助。
 - en: '**Advanced note**: Before continuing we should point out that exact probability
     calculations for the casino winnings can be performed with the binomial distribution.
     However, here we focus on the CLT, which can be generally applied to sums of random
     variables in a way that the binomial distribution can’t.'
+  id: totrans-79
   prefs: []
   type: TYPE_NORMAL
+  zh: '**高级笔记**：在继续之前，我们应该指出，使用二项分布可以精确计算赌场赢利的概率。然而，在这里我们关注的是中心极限定理（CLT），它可以一般地应用于随机变量的总和，这是二项分布所不能做到的。'
 - en: 14.6.1 Population SD versus the sample SD
+  id: totrans-80
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 14.6.1 总体标准差与样本标准差
 - en: 'The standard deviation of a list `x` (below we use heights as an example) is
     defined as the square root of the average of the squared differences:'
+  id: totrans-81
   prefs: []
   type: TYPE_NORMAL
+  zh: 列表 `x`（以下我们以身高为例）的标准差定义为平方差的平均值的开方：
 - en: '[PRE15]'
+  id: totrans-82
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE15]'
 - en: 'Using mathematical notation we write:'
+  id: totrans-83
   prefs: []
   type: TYPE_NORMAL
+  zh: 使用数学符号，我们写成：
 - en: \[ \mu = \frac{1}{n} \sum_{i=1}^n x_i \\ \sigma = \sqrt{\frac{1}{n} \sum_{i=1}^n
     (x_i - \mu)^2} \]
+  id: totrans-84
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \mu = \frac{1}{n} \sum_{i=1}^n x_i \\ \sigma = \sqrt{\frac{1}{n} \sum_{i=1}^n
+    (x_i - \mu)^2} \]
 - en: 'However, be aware that the `sd` function returns a slightly different result:'
+  id: totrans-85
   prefs: []
   type: TYPE_NORMAL
+  zh: 然而，请注意，`sd` 函数返回的结果略有不同：
 - en: '[PRE16]'
+  id: totrans-86
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE16]'
 - en: This is because the `sd` function R does not return the `sd` of the list, but
     rather uses a formula that estimates standard deviations of a population from
     a random sample \(X_1, \dots, X_N\) which, for reasons not discussed here, divide
     the sum of squares by the \(N-1\).
+  id: totrans-87
   prefs: []
   type: TYPE_NORMAL
+  zh: 这是因为 R 中的 `sd` 函数不返回列表的 `sd`，而是使用一个公式来估计从随机样本 \(X_1, \dots, X_N\) 中得到的总体标准差，其中，由于未在此讨论的原因，将平方和除以
+    \(N-1\)。
 - en: \[ \bar{X} = \frac{1}{N} \sum_{i=1}^N X_i, \,\,\,\, s = \sqrt{\frac{1}{N-1}
     \sum_{i=1}^N (X_i - \bar{X})^2} \]
+  id: totrans-88
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \bar{X} = \frac{1}{N} \sum_{i=1}^N X_i, \,\,\,\, s = \sqrt{\frac{1}{N-1}
+    \sum_{i=1}^N (X_i - \bar{X})^2} \]
 - en: 'You can see that this is the case by typing:'
+  id: totrans-89
   prefs: []
   type: TYPE_NORMAL
+  zh: 你可以通过输入以下内容来查看这是否成立：
 - en: '[PRE17]'
+  id: totrans-90
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE17]'
 - en: 'For all the theory discussed here, you need to compute the actual standard
     deviation as defined:'
+  id: totrans-91
   prefs: []
   type: TYPE_NORMAL
+  zh: 对于这里讨论的所有理论，你需要计算实际的标准差，其定义如下：
 - en: '[PRE18]'
+  id: totrans-92
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE18]'
 - en: So be careful when using the `sd` function in R. However, keep in mind that
     throughout the book we sometimes use the `sd` function when we really want the
     actual SD. This is because when the list size is big, these two are practically
     equivalent since \(\sqrt{(N-1)/N} \approx 1\).
+  id: totrans-93
   prefs: []
   type: TYPE_NORMAL
+  zh: 因此，在使用 R 中的 `sd` 函数时要小心。然而，请注意，在整个书中，我们有时使用 `sd` 函数，其实我们真正想要的是实际的 SD。这是因为当列表大小很大时，这两个值实际上几乎是等效的，因为
+    \(\sqrt{(N-1)/N} \approx 1\)。
 - en: 14.7 Central Limit Theorem
+  id: totrans-94
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 14.7 中心极限定理
 - en: The Central Limit Theorem (CLT) tells us that when the number of draws, also
     called the *sample size*, is large, the probability distribution of the sum of
     the independent draws is approximately normal. Because sampling models are used
     for so many data generation processes, the CLT is considered one of the most important
     mathematical insights in history.
+  id: totrans-95
   prefs: []
   type: TYPE_NORMAL
+  zh: 中心极限定理（CLT）告诉我们，当抽取次数（也称为样本大小）很大时，独立抽取的总和的概率分布近似为正态分布。由于采样模型被用于许多数据生成过程，CLT
+    被认为是历史上最重要的数学洞察之一。
 - en: Previously, we discussed that if we know that the distribution of a list of
     numbers is approximated by the normal distribution, all we need to describe the
     list are the average and standard deviation. We also know that the same applies
@@ -474,52 +687,78 @@
     that is approximated with the normal distribution, then all we need to describe
     the probability distribution are the average and standard deviation, referred
     to as the expected value and standard error.
+  id: totrans-96
   prefs: []
   type: TYPE_NORMAL
+  zh: 之前，我们讨论过，如果我们知道数字列表的分布近似为正态分布，我们只需要描述列表的平均值和标准差。我们还知道，这同样适用于概率分布。如果一个随机变量的概率分布近似为正态分布，那么我们只需要描述概率分布的平均值和标准差，即期望值和标准误差。
 - en: 'We previously ran this Monte Carlo simulation:'
+  id: totrans-97
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们之前运行了这个蒙特卡洛模拟：
 - en: '[PRE19]'
+  id: totrans-98
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE19]'
 - en: 'The Central Limit Theorem (CLT) tells us that the sum \(S\) is approximated
     by a normal distribution. Using the formulas above, we know that the expected
     value and standard error are:'
+  id: totrans-99
   prefs: []
   type: TYPE_NORMAL
+  zh: 中心极限定理（CLT）告诉我们，总和 \(S\) 近似为正态分布。使用上述公式，我们知道期望值和标准误差是：
 - en: '[PRE20]'
+  id: totrans-100
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE20]'
 - en: 'The theoretical values above match those obtained with the Monte Carlo simulation:'
+  id: totrans-101
   prefs: []
   type: TYPE_NORMAL
+  zh: 理论值与蒙特卡洛模拟得到的结果相匹配：
 - en: '[PRE21]'
+  id: totrans-102
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE21]'
 - en: 'Using the CLT, we can skip the Monte Carlo simulation and instead compute the
     probability of the casino losing money using this approximation:'
+  id: totrans-103
   prefs: []
   type: TYPE_NORMAL
+  zh: 使用中心极限定理（CLT），我们可以跳过蒙特卡洛模拟，而是使用这个近似值来计算赌场亏损的概率：
 - en: '[PRE22]'
+  id: totrans-104
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE22]'
 - en: 'which is also in very good agreement with our Monte Carlo result:'
+  id: totrans-105
   prefs: []
   type: TYPE_NORMAL
+  zh: 这也与我们的蒙特卡洛结果非常一致：
 - en: '[PRE23]'
+  id: totrans-106
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE23]'
 - en: 14.7.1 How large is large in the Central Limit Theorem?
+  id: totrans-107
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 14.7.1 中心极限定理中的“大”有多大？
 - en: The CLT works when the number of draws is large. But large is a relative term.
     In many circumstances as few as 30 draws is enough to make the CLT useful. In
     some specific instances, as few as 10 is enough. However, these should not be
     considered general rules. Note, for example, that when the probability of success
     is very small, we need much larger sample sizes.
+  id: totrans-108
   prefs: []
   type: TYPE_NORMAL
+  zh: CLT 在抽取次数较多时有效。但“多”是一个相对概念。在许多情况下，只需30次抽取就足以使CLT变得有用。在某些特定情况下，10次就足够了。然而，这些不应被视为一般规则。例如，当成功的概率非常小的时候，我们需要更大的样本量。
 - en: By way of illustration, let’s consider the lottery. In the lottery, the chances
     of winning are less than 1 in a million. Thousands of people play so the number
     of draws is very large. Yet the number of winners, the sum of the draws, range
@@ -527,120 +766,180 @@
     so the CLT does not apply, even with the very large sample size. This is generally
     true when the probability of a success is very low. In these cases, the Poisson
     distribution is more appropriate.
+  id: totrans-109
   prefs: []
   type: TYPE_NORMAL
+  zh: 为了说明这一点，让我们考虑彩票。在彩票中，中奖的概率小于百万分之一。成千上万的人参与，因此抽取次数非常多。然而，中奖次数，即抽取的总和，在0到4之间。这个总和显然不能很好地用正态分布来近似，因此CLT不适用，即使样本量非常大。当成功的概率非常低时，通常是这样的。在这些情况下，泊松分布更为合适。
 - en: You can examine the properties of the Poisson distribution using `dpois` and
     `ppois`. You can generate random variables following this distribution with `rpois`.
     However, we do not cover the theory here. You can learn about the Poisson distribution
     in any probability textbook and even Wikipedia[^(50)](#fn50)
+  id: totrans-110
   prefs: []
   type: TYPE_NORMAL
+  zh: 您可以使用 `dpois` 和 `ppois` 来检验泊松分布的性质。您可以使用 `rpois` 生成遵循此分布的随机变量。然而，我们在此不涉及理论。您可以在任何概率教科书中了解泊松分布，甚至可以在维基百科[^(50)](#fn50)上找到相关信息。
 - en: 14.8 Statistical properties of averages
+  id: totrans-111
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 14.8 平均值的统计性质
 - en: There are several useful mathematical results that we used above and often employ
     when working with data. We list them below.
+  id: totrans-112
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们在上面使用了几种有用的数学结果，这些结果在处理数据时经常被使用。我们将在下面列出它们。
 - en: '1\. The expected value of the sum of random variables is the sum of each random
     variable’s expected value. We can write it like this:'
+  id: totrans-113
   prefs: []
   type: TYPE_NORMAL
+  zh: 1. 随机变量之和的期望值是每个随机变量期望值的总和。我们可以这样写：
 - en: \[ \mbox{E}[X_1+X_2+\dots+X_n] = \mbox{E}[X_1] + \mbox{E}[X_2]+\dots+\mbox{E}[X_n]
     \]
+  id: totrans-114
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \mbox{E}[X_1+X_2+\dots+X_n] = \mbox{E}[X_1] + \mbox{E}[X_2]+\dots+\mbox{E}[X_n]
+    \]
 - en: 'If the \(X\) are independent draws from the urn, then they all have the same
     expected value. Let’s call it \(\mu\) and thus:'
+  id: totrans-115
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果 \(X\) 是从抽屉中独立抽取的，那么它们都具有相同的期望值。我们可以称之为 \(\mu\)，因此：
 - en: \[ \mbox{E}[X_1+X_2+\dots+X_n]= n\mu \]
+  id: totrans-116
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \mbox{E}[X_1+X_2+\dots+X_n]= n\mu \]
 - en: which is another way of writing the result we show above for the sum of draws.
+  id: totrans-117
   prefs: []
   type: TYPE_NORMAL
+  zh: 这是以另一种方式写出我们上面对于抽取总和所展示的结果。
 - en: '2\. The expected value of a non-random constant times a random variable is
     the non-random constant times the expected value of a random variable. This is
     easier to explain with symbols:'
+  id: totrans-118
   prefs: []
   type: TYPE_NORMAL
+  zh: 2. 非随机常数乘以随机变量的期望值是非随机常数乘以随机变量的期望值。我们可以用符号来解释这一点：
 - en: \[ \mbox{E}[aX] = a\times\mbox{E}[X] \]
+  id: totrans-119
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \mbox{E}[aX] = a\times\mbox{E}[X] \]
 - en: 'To see why this is intuitive, consider change of units. If we change the units
     of a random variable, say from dollars to cents, the expectation should change
     in the same way. A consequence of the above two facts is that the expected value
     of the average of independent draws from the same urn is the expected value of
     the urn, call it \(\mu\) again:'
+  id: totrans-120
   prefs: []
   type: TYPE_NORMAL
+  zh: 为了理解这一点，考虑单位的变化。如果我们改变随机变量的单位，比如从美元变为分，期望值应该以相同的方式改变。上述两个事实的后果是，从同一抽屉中独立抽取的平均值的期望值是抽屉的期望值，我们再次称之为
+    \(\mu\)：
 - en: \[ \mbox{E}[(X_1+X_2+\dots+X_n) / n]= \mbox{E}[X_1+X_2+\dots+X_n] / n = n\mu/n
     = \mu \]
+  id: totrans-121
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \mbox{E}[(X_1+X_2+\dots+X_n) / n]= \mbox{E}[X_1+X_2+\dots+X_n] / n = n\mu/n
+    = \mu \]
 - en: '3\. The square of the standard error of the sum of **independent** random variables
     is the sum of the square of the standard error of each random variable. This one
     is easier to understand in math form:'
+  id: totrans-122
   prefs: []
   type: TYPE_NORMAL
+  zh: 3. 独立随机变量之和的标准误差的平方是每个随机变量标准误差平方的总和。这一点在数学形式上更容易理解：
 - en: \[ \mbox{SE}[X_1+X_2+\dots+X_n] = \sqrt{\mbox{SE}[X_1]^2 + \mbox{SE}[X_2]^2+\dots+\mbox{SE}[X_n]^2
     } \]
+  id: totrans-123
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \mbox{SE}[X_1+X_2+\dots+X_n] = \sqrt{\mbox{SE}[X_1]^2 + \mbox{SE}[X_2]^2+\dots+\mbox{SE}[X_n]^2
+    } \]
 - en: The square of the standard error is referred to as the *variance* in statistical
     textbooks. Note that this particular property is not as intuitive as the previous
     three and more in depth explanations can be found in statistics textbooks.
+  id: totrans-124
   prefs: []
   type: TYPE_NORMAL
+  zh: 标准误差的平方在统计教材中被称为 *方差*。请注意，这个特定的属性不像前三个那样直观，更深入的解释可以在统计教材中找到。
 - en: '4\. The standard error of a non-random constant times a random variable is
     the non-random constant times the random variable’s standard error. As with the
     expectation: \[ \mbox{SE}[aX] = a \times \mbox{SE}[X] \]'
+  id: totrans-125
   prefs: []
   type: TYPE_NORMAL
+  zh: 4. 非随机常数乘以随机变量的标准误差等于非随机常数乘以随机变量的标准误差。与期望值类似：\[ \mbox{SE}[aX] = a \times \mbox{SE}[X]
+    \]
 - en: To see why this is intuitive, again think of units.
+  id: totrans-126
   prefs: []
   type: TYPE_NORMAL
+  zh: 要了解为什么这是直观的，再次考虑单位。
 - en: 'A consequence of 3 and 4 is that the standard error of the average of independent
     draws from the same urn is the standard deviation of the urn divided by the square
     root of \(n\) (the number of draws), call it \(\sigma\):'
+  id: totrans-127
   prefs: []
   type: TYPE_NORMAL
+  zh: '3 和 4 的一个结果是，从同一抽屉中独立抽取的平均值的标准误差等于抽屉标准差除以 \(n\)（抽取次数）的平方根，称之为 \(\sigma\):'
 - en: \[ \begin{aligned} \mbox{SE}[(X_1+X_2+\dots+X_n) / n] &= \mbox{SE}[X_1+X_2+\dots+X_n]/n
     \\ &= \sqrt{\mbox{SE}[X_1]^2+\mbox{SE}[X_2]^2+\dots+\mbox{SE}[X_n]^2}/n \\ &=
     \sqrt{\sigma^2+\sigma^2+\dots+\sigma^2}/n\\ &= \sqrt{n\sigma^2}/n\\ &= \sigma
     / \sqrt{n} \end{aligned} \]
+  id: totrans-128
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \begin{aligned} \mbox{SE}[(X_1+X_2+\dots+X_n) / n] &= \mbox{SE}[X_1+X_2+\dots+X_n]/n
+    \\ &= \sqrt{\mbox{SE}[X_1]^2+\mbox{SE}[X_2]^2+\dots+\mbox{SE}[X_n]^2}/n \\ &=
+    \sqrt{\sigma^2+\sigma^2+\dots+\sigma^2}/n\\ &= \sqrt{n\sigma^2}/n\\ &= \sigma
+    / \sqrt{n} \end{aligned} \]
 - en: 5\. If \(X\) is a normally distributed random variable, then if \(a\) and \(b\)
     are non-random constants, \(aX + b\) is also a normally distributed random variable.
     All we are doing is changing the units of the random variable by multiplying by
     \(a\), then shifting the center by \(b\).
+  id: totrans-129
   prefs: []
   type: TYPE_NORMAL
+  zh: 5. 如果 \(X\) 是正态分布的随机变量，那么如果 \(a\) 和 \(b\) 是非随机常数，\(aX + b\) 也是一个正态分布的随机变量。我们只是在通过乘以
+    \(a\) 改变随机变量的单位，然后通过 \(b\) 平移中心。
 - en: Note that statistical textbooks use the Greek letters \(\mu\) and \(\sigma\)
     to denote the expected value and standard error, respectively. This is because
     \(\mu\) is the Greek letter for \(m\), the first letter of *mean*, which is another
     term used for expected value. Similarly, \(\sigma\) is the Greek letter for \(s\),
     the first letter of standard error.
+  id: totrans-130
   prefs: []
   type: TYPE_NORMAL
+  zh: 注意到统计教材使用希腊字母 \(\mu\) 和 \(\sigma\) 分别表示期望值和标准误差。这是因为 \(\mu\) 是希腊字母 \(m\)，即“均值”的第一个字母，而“均值”是期望值的另一个术语。同样，\(\sigma\)
+    是希腊字母 \(s\)，即标准误差的第一个字母。
 - en: 14.9 Law of large numbers
+  id: totrans-131
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 14.9 大数定律
 - en: An important implication of the final result is that the standard error of the
     average becomes smaller and smaller as \(n\) grows larger. When \(n\) is very
     large, then the standard error is practically 0 and the average of the draws converges
     to the average of the urn. This is known in statistical textbooks as the law of
     large numbers or the law of averages.
+  id: totrans-132
   prefs: []
   type: TYPE_NORMAL
+  zh: 最终结果的一个重要含义是，随着 \(n\) 的增大，平均数的标准误差变得越来越小。当 \(n\) 非常大时，标准误差实际上为 0，抽取的平均值收敛到抽屉的平均值。这在统计教材中被称为大数定律或平均数定律。
 - en: 14.9.1 Misinterpreting law of averages
+  id: totrans-133
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 14.9.1 对平均数定律的误解
 - en: 'The law of averages is sometimes misinterpreted. For example, if you toss a
     coin 5 times and see a head each time, you might hear someone argue that the next
     toss is probably a tail because of the law of averages: on average we should see
@@ -651,131 +950,197 @@
     applies only when the number of draws is very large and not in small samples.
     After a million tosses, you will definitely see about 50% heads regardless of
     the outcome of the first five tosses.'
+  id: totrans-134
   prefs: []
   type: TYPE_NORMAL
+  zh: 平均数定律有时会被误解。例如，如果你掷硬币 5 次，每次都是正面，你可能会听到有人争论说下一次掷出的可能是反面，因为平均数定律：平均来看，我们应该看到
+    50% 的正面和 50% 的反面。一个类似的论点可能是说，在看到黑色连续出现 5 次之后，轮盘赌的红色“应该”出现。这些事件是独立的，所以硬币落地正面的概率是
+    50%，无论前 5 次的结果如何。轮盘赌的结果也是如此。平均数定律只适用于抽取次数非常大时，不适用于小样本。在掷一百万次之后，你肯定会看到大约 50% 的正面，无论前五次的结果如何。
 - en: Another funny misuse of the law of averages is in sports when TV sportscasters
     predict a player is about to succeed because they have failed a few times in a
     row.
+  id: totrans-135
   prefs: []
   type: TYPE_NORMAL
+  zh: 平均数定律的另一个有趣的误用发生在体育比赛中，当电视体育解说员预测一名球员即将成功，因为他们看到该球员连续几次失败。
 - en: 14.10 Exercises
+  id: totrans-136
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 14.10 练习
 - en: 1\. In American Roulette you can also bet on green. There are 18 reds, 18 blacks
     and 2 greens (0 and 00). What are the chances the green comes out?
+  id: totrans-137
   prefs: []
   type: TYPE_NORMAL
+  zh: 1. 在美式轮盘赌中，你也可以下注绿色。有18个红色，18个黑色和2个绿色（0和00）。绿色出现的概率是多少？
 - en: '2\. The payout for winning on green is $17 dollars. This means that if you
     bet a dollar and it lands on green, you get $17\. Create a sampling model using
     sample to simulate the random variable \(X\) for your winnings. Hint: see the
     example below for how it should look like when betting on red.'
+  id: totrans-138
   prefs: []
   type: TYPE_NORMAL
+  zh: 2. 在绿色上赢的赔率是17美元。这意味着如果你下注1美元，并且它落在绿色上，你将得到17美元。使用sample函数创建一个采样模型来模拟你的收益随机变量\(X\)。提示：请参考下面的示例，了解下注红色时的样子。
 - en: '[PRE24]'
+  id: totrans-139
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE24]'
 - en: 3\. Compute the expected value of \(X\).
+  id: totrans-140
   prefs: []
   type: TYPE_NORMAL
+  zh: 3. 计算随机变量\(X\)的期望值。
 - en: 4\. Compute the standard error of \(X\).
+  id: totrans-141
   prefs: []
   type: TYPE_NORMAL
+  zh: 4. 计算随机变量\(X\)的标准误差。
 - en: '5\. Now create a random variable \(S\) that is the sum of your winnings after
     betting on green 1000 times. Hint: change the argument `size` and `replace` in
     your answer to question 2\. Start your code by setting the seed to 1 with `set.seed(1)`.'
+  id: totrans-142
   prefs: []
   type: TYPE_NORMAL
+  zh: 5. 现在创建一个随机变量\(S\)，它是你在下注绿色1000次后的总收益。提示：在回答第2题时，更改`size`和`replace`参数。开始你的代码时，使用`set.seed(1)`设置随机种子为1。
 - en: 6\. What is the expected value of \(S\)?
+  id: totrans-143
   prefs: []
   type: TYPE_NORMAL
+  zh: 6. \(S\)的期望值是多少？
 - en: 7\. What is the standard error of \(S\)?
+  id: totrans-144
   prefs: []
   type: TYPE_NORMAL
+  zh: 7. \(S\)的标准误差是多少？
 - en: '8\. What is the probability that you end up winning money? Hint: use the CLT.'
+  id: totrans-145
   prefs: []
   type: TYPE_NORMAL
+  zh: 8. 你最终赢钱的概率是多少？提示：使用CLT。
 - en: 9\. Create a Monte Carlo simulation that generates 1,000 outcomes of \(S\).
     Compute the average and standard deviation of the resulting list to confirm the
     results of 6 and 7\. Start your code by setting the seed to 1 with `set.seed(1)`.
+  id: totrans-146
   prefs: []
   type: TYPE_NORMAL
+  zh: 9. 创建一个蒙特卡洛模拟，生成1,000个\(S\)的结果。计算结果的平均值和标准差，以确认第6和第7题的结果。开始你的代码时，使用`set.seed(1)`设置随机种子为1。
 - en: 10\. Now check your answer to 8 using the Monte Carlo result.
+  id: totrans-147
   prefs: []
   type: TYPE_NORMAL
+  zh: 10. 现在使用蒙特卡洛结果检查第8题的答案。
 - en: 11\. The Monte Carlo result and the CLT approximation are close, but not that
     close. What could account for this?
+  id: totrans-148
   prefs: []
   type: TYPE_NORMAL
+  zh: 11. 蒙特卡洛结果和中心极限定理（CLT）近似值相近，但并不那么接近。这可能是由于什么原因？
 - en: 1,000 simulations is not enough. If we do more, they match.
+  id: totrans-149
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 1,000次模拟不够。如果我们做更多，它们会匹配。
 - en: The CLT does not work as well when the probability of success is small. In this
     case, it was 1/19\. If we make the number of roulette plays bigger, they will
     match better.
+  id: totrans-150
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 当成功的概率较小时，CLT的效果并不好。在这种情况下，成功概率是1/19。如果我们增加轮盘赌的次数，它们将更接近。
 - en: The difference is within rounding error.
+  id: totrans-151
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 差异在舍入误差范围内。
 - en: The CLT only works for averages.
+  id: totrans-152
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: CLT只适用于平均值。
 - en: 12\. Now create a random variable \(Y\) that is your average winnings per bet
     after playing off your winnings after betting on green 1,000 times.
+  id: totrans-153
   prefs: []
   type: TYPE_NORMAL
+  zh: 12. 现在创建一个随机变量\(Y\)，它是你在下注绿色1,000次后的平均收益。
 - en: 13\. What is the expected value of \(Y\)?
+  id: totrans-154
   prefs: []
   type: TYPE_NORMAL
+  zh: 13. \(Y\)的期望值是多少？
 - en: 14\. What is the standard error of \(Y\)?
+  id: totrans-155
   prefs: []
   type: TYPE_NORMAL
+  zh: 14. \(Y\)的标准误差是多少？
 - en: '15\. What is the probability that you end up with winnings per game that are
     positive? Hint: use the CLT.'
+  id: totrans-156
   prefs: []
   type: TYPE_NORMAL
+  zh: 15. 你最终赢得每场比赛的收益为正的概率是多少？提示：使用CLT。
 - en: 16\. Create a Monte Carlo simulation that generates 2,500 outcomes of \(Y\).
     Compute the average and standard deviation of the resulting list to confirm the
     results of 6 and 7\. Start your code by setting the seed to 1 with `set.seed(1)`.
+  id: totrans-157
   prefs: []
   type: TYPE_NORMAL
+  zh: 16. 创建一个蒙特卡洛模拟，生成2,500个\(Y\)的结果。计算结果的平均值和标准差，以确认第6和第7题的结果。开始你的代码时，使用`set.seed(1)`设置随机种子为1。
 - en: 17\. Now check your answer to 8 using the Monte Carlo result.
+  id: totrans-158
   prefs: []
   type: TYPE_NORMAL
+  zh: 17. 现在使用蒙特卡洛结果检查第8题的答案。
 - en: 18\. The Monte Carlo result and the CLT approximation are now much closer. What
     could account for this?
+  id: totrans-159
   prefs: []
   type: TYPE_NORMAL
+  zh: 18. 蒙特卡洛结果和CLT近似值现在非常接近。这可能是由于什么原因？
 - en: We are now computing averages instead of sums.
+  id: totrans-160
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 我们现在正在计算平均值而不是总和。
 - en: 2,500 Monte Carlo simulations is not better than 1,000.
+  id: totrans-161
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 2,500次蒙特卡洛模拟并不比1,000次更好。
 - en: The CLT works better when the sample size is larger. We increased from 1,000
     to 2,500.
+  id: totrans-162
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 当样本量较大时，CLT的效果更好。我们从1,000增加到2,500。
 - en: It is not closer. The difference is within rounding error.
+  id: totrans-163
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 它们并没有更接近。差异在舍入误差范围内。
 - en: '14.11 Case study: The Big Short'
+  id: totrans-164
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 14.11 案例研究：大空头
 - en: 14.11.1 Interest rates explained with chance model
+  id: totrans-165
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 14.11.1 使用概率模型解释利率
 - en: More complex versions of the sampling models we have discussed are also used
     by banks to decide interest rates. Suppose you run a small bank that has a history
     of identifying potential homeowners that can be trusted to make payments. In fact,
@@ -788,51 +1153,76 @@
     costs. You can also make a profit, but if you set the interest rates too high,
     your clients will go to another bank. We use all these facts and some probability
     theory to decide what interest rate you should charge.
+  id: totrans-166
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们讨论过的抽样模型的更复杂版本也被银行用来决定利率。假设你经营一家小银行，有历史记录表明你可以信任某些潜在房主按时还款。事实上，从历史数据来看，在特定的一年里，只有2%的客户违约，这意味着他们没有偿还你借给他们的钱。然而，你知道2%的客户可能会违约，但你不知道是哪些客户。然而，通过向每个人收取一点点额外的利息，你可以弥补由于这2%而造成的损失，并覆盖你的运营成本。你还可以盈利，但如果利率设置得太高，你的客户会去其他银行。我们使用所有这些事实和一些概率理论来决定你应该收取的利率。
 - en: 'Suppose your bank will give out 1,000 loans for $180,000 this year. Also, after
     adding up all costs, suppose your bank loses $200,000 per foreclosure. For simplicity,
     we assume this includes all operational costs. A sampling model for this scenario
     can be coded like this:'
+  id: totrans-167
   prefs: []
   type: TYPE_NORMAL
+  zh: 假设你的银行今年将发放1,000笔贷款，总额为180,000美元。此外，在加上所有成本后，假设你的银行每笔房屋查封损失200,000美元。为了简化，我们假设这包括所有运营成本。这个场景的抽样模型可以这样编码：
 - en: '[PRE25]'
+  id: totrans-168
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE25]'
 - en: Note that the total loss defined by the final sum is a random variable. Every
     time you run the above code, you get a different answer. We can easily construct
     a Monte Carlo simulation to get an idea of the distribution of this random variable.
+  id: totrans-169
   prefs: []
   type: TYPE_NORMAL
+  zh: 注意，由最终总和定义的总损失是一个随机变量。每次运行上述代码，你都会得到不同的答案。我们可以轻松构建一个蒙特卡洛模拟来了解这个随机变量的分布。
 - en: '[PRE26]'
+  id: totrans-170
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE26]'
 - en: 'We don’t really need a Monte Carlo simulation though. Using what we have learned,
     the CLT tells us that because our losses are a sum of independent draws, its distribution
     is approximately normal with expected value and standard errors given by:'
+  id: totrans-171
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们实际上并不需要蒙特卡洛模拟。利用我们所学的知识，中心极限定理告诉我们，因为我们的损失是独立抽取的总和，其分布大约是正态分布，期望值和标准误差如下：
 - en: '[PRE27]'
+  id: totrans-172
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE27]'
 - en: 'We can now set an interest rate to guarantee that, on average, we break even.
     Basically, we need to add a quantity \(x\) to each loan, which in this case are
     represented by draws, so that the expected value is 0\. If we define \(l\) to
     be the loss per foreclosure, we need:'
+  id: totrans-173
   prefs: []
   type: TYPE_NORMAL
+  zh: 现在，我们可以设定一个利率，以保证平均来说我们能收支平衡。基本上，我们需要向每笔贷款添加一个数量 \(x\)，在这种情况下代表抽取，使得期望值为0。如果我们定义
+    \(l\) 为每笔房屋查封的损失，我们需要：
 - en: \[ lp + x(1-p) = 0 \]
+  id: totrans-174
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ lp + x(1-p) = 0 \]
 - en: which implies \(x\) is
+  id: totrans-175
   prefs: []
   type: TYPE_NORMAL
+  zh: 这意味着 \(x\) 是
 - en: '[PRE28]'
+  id: totrans-176
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE28]'
 - en: or an interest rate of 0.023.
+  id: totrans-177
   prefs: []
   type: TYPE_NORMAL
+  zh: 或者0.023的利率。
 - en: 'However, we still have a problem. Although this interest rate guarantees that
     on average we break even, there is a 50% chance that we lose money. If our bank
     loses money, we have to close it down. We therefore need to pick an interest rate
@@ -841,36 +1231,53 @@
     some risks. So let’s say that we want our chances of losing money to be 1 in 100,
     what does the \(x\) quantity need to be now? This one is a bit harder. We want
     the sum \(S\) to have:'
+  id: totrans-178
   prefs: []
   type: TYPE_NORMAL
+  zh: 然而，我们仍然存在问题。尽管这个利率保证了平均来说我们能收支平衡，但仍有50%的几率我们会亏损。如果我们的银行亏损，我们就必须关闭它。因此，我们需要选择一个不太可能发生这种情况的利率。同时，如果利率过高，我们的客户会去其他银行，所以我们必须愿意承担一些风险。所以，让我们假设我们希望亏损的概率是1比100，那么现在的
+    \(x\) 数量需要是多少？这个问题有点难。我们希望总和 \(S\) 具有：
 - en: \[\mbox{Pr}(S<0) = 0.01\]
+  id: totrans-179
   prefs: []
   type: TYPE_NORMAL
+  zh: \[\mbox{Pr}(S<0) = 0.01\]
 - en: We know that \(S\) is approximately normal. The expected value of \(S\) is
+  id: totrans-180
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们知道 \(S\) 大约是正态分布的。\(S\) 的期望值是
 - en: \[\mbox{E}[S] = \{ lp + x(1-p)\}n\]
+  id: totrans-181
   prefs: []
   type: TYPE_NORMAL
+  zh: \[\mbox{E}[S] = \{ lp + x(1-p)\}n\]
 - en: with \(n\) the number of draws, which in this case represents loans. The standard
     error is
+  id: totrans-182
   prefs: []
   type: TYPE_NORMAL
+  zh: 其中 \(n\) 是抽取次数，在这个例子中代表贷款。标准误差是
 - en: \[\mbox{SD}[S] = |x-l| \sqrt{np(1-p)}.\]
+  id: totrans-183
   prefs: []
   type: TYPE_NORMAL
+  zh: \[\mbox{SD}[S] = |x-l| \sqrt{np(1-p)}.\]
 - en: Because \(x\) is positive and \(l\) negative \(|x-l|=x-l\). Note that these
     are just an application of the formulas shown earlier, but using more compact
     symbols.
+  id: totrans-184
   prefs: []
   type: TYPE_NORMAL
+  zh: 因为\(x\)是正的，而\(l\)是负的，所以\(|x-l|=x-l\)。注意，这些只是前面展示公式的应用，但使用了更紧凑的符号。
 - en: 'Now we are going to use a mathematical “trick” that is very common in statistics.
     We add and subtract the same quantities to both sides of the event \(S<0\) so
     that the probability does not change and we end up with a standard normal random
     variable on the left, which will then permit us to write down an equation with
     only \(x\) as an unknown. This “trick” is as follows:'
+  id: totrans-185
   prefs: []
   type: TYPE_NORMAL
+  zh: 现在我们将使用在统计学中非常常见的数学“技巧”。我们在事件\(S<0\)的等式两边加上并减去相同的量，这样概率不会改变，并且我们最终在左边得到一个标准正态随机变量，这将允许我们写下一个只有\(x\)作为未知数的方程。这个“技巧”如下：
 - en: 'If \(\mbox{Pr}(S<0) = 0.01\) then \[ \mbox{Pr}\left(\frac{S - \mbox{E}[S]}{\mbox{SE}[S]}
     < \frac{ - \mbox{E}[S]}{\mbox{SE}[S]}\right) \] And remember \(\mbox{E}[S]\) and
     \(\mbox{SE}[S]\) are the expected value and standard error of \(S\), respectively.
@@ -878,101 +1285,158 @@
     this because now the term on the left is a standard normal random variable, which
     we will rename \(Z\). Now we fill in the blanks with the actual formula for expected
     value and standard error:'
+  id: totrans-186
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果\(\mbox{Pr}(S<0) = 0.01\)，那么 \[ \mbox{Pr}\left(\frac{S - \mbox{E}[S]}{\mbox{SE}[S]}
+    < \frac{ - \mbox{E}[S]}{\mbox{SE}[S]}\right) \] 并且记住\(\mbox{E}[S]\)和\(\mbox{SE}[S]\)分别是\(S\)的期望值和标准误差。我们上面所做的一切只是在等式两边加上并除以相同的量。我们这样做是因为现在左边的项是一个标准正态随机变量，我们将它重新命名为\(Z\)。现在我们用期望值和标准误差的实际公式来填充空白：
 - en: \[ \mbox{Pr}\left(Z < \frac{- \{ lp + x(1-p)\}n}{(x-l) \sqrt{np(1-p)}}\right)
     = 0.01 \]
+  id: totrans-187
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \mbox{Pr}\left(Z < \frac{- \{ lp + x(1-p)\}n}{(x-l) \sqrt{np(1-p)}}\right)
+    = 0.01 \]
 - en: It may look complicated, but remember that \(l\), \(p\) and \(n\) are all known
     amounts, so eventually we will replace them with numbers.
+  id: totrans-188
   prefs: []
   type: TYPE_NORMAL
+  zh: 它可能看起来很复杂，但记住\(l\)、\(p\)和\(n\)都是已知的量，所以最终我们将用数字替换它们。
 - en: 'Now because the Z is a normal random with expected value 0 and standard error
     1, it means that the quantity on the right side of the < sign must be equal to:'
+  id: totrans-189
   prefs: []
   type: TYPE_NORMAL
+  zh: 现在因为Z是一个期望值为0、标准误差为1的正态随机变量，这意味着小于<符号右侧的量必须等于：
 - en: '[PRE29]'
+  id: totrans-190
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE29]'
 - en: 'for the equation to hold true. Remember that \(z=\)`qnorm(0.01)` gives us the
     value of \(z\) for which:'
+  id: totrans-191
   prefs: []
   type: TYPE_NORMAL
+  zh: 'for the equation to hold true. Remember that \(z=\)`qnorm(0.01)` gives us the
+    value of \(z\) for which:'
 - en: \[ \mbox{Pr}(Z \leq z) = 0.01 \]
+  id: totrans-192
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \mbox{Pr}(Z \leq z) = 0.01 \]
 - en: So this means that the right side of the complicated equation must be \(z\)=`qnorm(0.01)`.
+  id: totrans-193
   prefs: []
   type: TYPE_NORMAL
+  zh: 所以这意味着复杂方程的右侧必须是\(z\)=`qnorm(0.01)`。
 - en: \[ \frac{- \{ lp + x(1-p)\}n} {(x-l) \sqrt{n p (1-p)}} = z \]
+  id: totrans-194
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \frac{- \{ lp + x(1-p)\}n} {(x-l) \sqrt{n p (1-p)}} = z \]
 - en: 'The trick works because we end up with an expression containing \(x\) that
     we know has to be equal to a known quantity \(z\). Solving for \(x\) is now simply
     algebra:'
+  id: totrans-195
   prefs: []
   type: TYPE_NORMAL
+  zh: 这个技巧之所以有效，是因为我们最终得到一个包含\(x\)的表达式，我们知道它必须等于一个已知的量\(z\)。求解\(x\)现在只是一个代数运算：
 - en: \[ x = - l \frac{ np - z \sqrt{np(1-p)}}{n(1-p) + z \sqrt{np(1-p)}}\]
+  id: totrans-196
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ x = - l \frac{ np - z \sqrt{np(1-p)}}{n(1-p) + z \sqrt{np(1-p)}}\]
 - en: 'which is:'
+  id: totrans-197
   prefs: []
   type: TYPE_NORMAL
+  zh: 'which is:'
 - en: '[PRE30]'
+  id: totrans-198
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE30]'
 - en: 'Our interest rate now goes up to 0.035\. This is still a very competitive interest
     rate. By choosing this interest rate, we now have an expected profit per loan
     of:'
+  id: totrans-199
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们现在的利率上升到0.035。这仍然是一个非常具有竞争力的利率。通过选择这个利率，我们现在每笔贷款的预期利润为：
 - en: '[PRE31]'
+  id: totrans-200
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE31]'
 - en: 'which is a total expected profit of about:'
+  id: totrans-201
   prefs: []
   type: TYPE_NORMAL
+  zh: 'which is a total expected profit of about:'
 - en: '[PRE32]'
+  id: totrans-202
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE32]'
 - en: dollars!
+  id: totrans-203
   prefs: []
   type: TYPE_NORMAL
+  zh: 美元！
 - en: 'We can run a Monte Carlo simulation to double check our theoretical approximations:'
+  id: totrans-204
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们可以进行蒙特卡洛模拟来双重检查我们的理论近似：
 - en: '[PRE33]'
+  id: totrans-205
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE33]'
 - en: 14.11.2 The Big Short
+  id: totrans-206
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 14.11.2 大空头
 - en: One of your employees points out that since the bank is making 2,124 dollars
     per loan, the bank should give out more loans! Why just \(n\)? You explain that
     finding those \(n\) clients was hard. You need a group that is predictable and
     that keeps the chances of defaults low. He then points out that even if the probability
     of default is higher, as long as our expected value is positive, you can minimize
     your chances of losses by increasing \(n\) and relying on the law of large numbers.
+  id: totrans-207
   prefs: []
   type: TYPE_NORMAL
+  zh: 你们其中一位员工指出，由于银行每笔贷款能赚2,124美元，银行应该发放更多的贷款！为什么只是\(n\)？你解释说找到那些\(n\)个客户很困难。你需要一个可预测的群体，并且保持违约的可能性低。然后他指出，即使违约的可能性更高，只要我们的期望值是正的，通过增加\(n\)并依赖大数定律，你可以最小化损失的可能性。
 - en: 'He claims that even if the default rate is twice as high, say 4%, if we set
     the rate just a bit higher than this value:'
+  id: totrans-208
   prefs: []
   type: TYPE_NORMAL
+  zh: 他声称，即使违约率是两倍，比如说4%，如果我们把利率设定得略高于这个值：
 - en: '[PRE34]'
+  id: totrans-209
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE34]'
 - en: 'we will profit. At 5%, we are guaranteed a positive expected value of:'
+  id: totrans-210
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们将获利。在5%的情况下，我们保证有正的预期值：
 - en: '[PRE35]'
+  id: totrans-211
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE35]'
 - en: 'and can minimize our chances of losing money by simply increasing \(n\) since:'
+  id: totrans-212
   prefs: []
   type: TYPE_NORMAL
+  zh: 通过简单地增加 \(n\) 来最小化我们损失的机会，因为：
 - en: '\[ \mbox{Pr}(S < 0) = \mbox{Pr}\left(Z < - \frac{\mbox{E}[S]}{\mbox{SE}[S]}\right)
     \] with \(Z\) a standard normal random variable as shown earlier. If we define
     \(\mu\) and \(\sigma\) to be the expected value and standard deviation of the
@@ -980,45 +1444,70 @@
     \(\mbox{E}[S]= n\mu\) and \(\mbox{SE}[S]= \sqrt{n}\sigma\). So if we define \(z\)=`qnorm(0.01)`,
     we have: \[ - \frac{n\mu}{\sqrt{n}\sigma} = - \frac{\sqrt{n}\mu}{\sigma} = z \]
     which implies that if we let:'
+  id: totrans-213
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \mbox{Pr}(S < 0) = \mbox{Pr}\left(Z < - \frac{\mbox{E}[S]}{\mbox{SE}[S]}\right)
+    \] 其中 \(Z\) 是前面展示的标准正态随机变量。如果我们定义 \(\mu\) 和 \(\sigma\) 分别为罐子的期望值和标准差（即单笔贷款），使用上述公式，我们有：\(\mbox{E}[S]=
+    n\mu\) 和 \(\mbox{SE}[S]= \sqrt{n}\sigma\)。因此，如果我们定义 \(z\)=`qnorm(0.01)`，我们就有：\[
+    - \frac{n\mu}{\sqrt{n}\sigma} = - \frac{\sqrt{n}\mu}{\sigma} = z \] 这意味着如果我们让：
 - en: '\[ n \geq z^2 \sigma^2 / \mu^2 \] we are guaranteed to have a probability of
     less than 0.01\. The implication is that, as long as \(\mu\) is positive, we can
     find an \(n\) that minimizes the probability of a loss. This is a form of the
     law of large numbers: when \(n\) is large, our average earnings per loan converges
     to the expected earning \(\mu\).'
+  id: totrans-214
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ n \geq z^2 \sigma^2 / \mu^2 \] 我们可以保证概率小于0.01。这意味着，只要 \(\mu\) 是正的，我们可以找到一个
+    \(n\) 来最小化损失的概率。这是大数法则的一种形式：当 \(n\) 很大时，我们每笔贷款的平均收益会收敛到期望收益 \(\mu\)。
 - en: 'With \(x\) fixed, now we can ask what \(n\) do we need for the probability
     to be 0.01? In our example, if we give out:'
+  id: totrans-215
   prefs: []
   type: TYPE_NORMAL
+  zh: 当 \(x\) 固定时，现在我们可以问，为了使概率为0.01，我们需要多少 \(n\)？在我们的例子中，如果我们发放：
 - en: '[PRE36]'
+  id: totrans-216
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE36]'
 - en: loans, the probability of losing is about 0.01 and we are expected to earn a
     total of
+  id: totrans-217
   prefs: []
   type: TYPE_NORMAL
+  zh: ，损失的概率大约是0.01，我们预计总共会赚得
 - en: '[PRE37]'
+  id: totrans-218
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE37]'
 - en: 'dollars! We can confirm this with a Monte Carlo simulation:'
+  id: totrans-219
   prefs: []
   type: TYPE_NORMAL
+  zh: 美元！我们可以通过蒙特卡洛模拟来证实这一点：
 - en: '[PRE38]'
+  id: totrans-220
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE38]'
 - en: This seems like a no brainer. As a result, your colleague decides to leave your
     bank and start his own high-risk mortgage company. A few months later, your colleague’s
     bank has gone bankrupt. A book is written and eventually a movie is made relating
     the mistake your friend, and many others, made. What happened?
+  id: totrans-221
   prefs: []
   type: TYPE_NORMAL
+  zh: 这看起来是一个显而易见的选择。因此，你的同事决定离开你的银行，开始他自己的高风险抵押贷款公司。几个月后，你的同事的银行破产了。一本书被写出来，最终一部电影被制作出来，讲述了你的朋友以及许多其他人犯的错误。发生了什么？
 - en: 'Your colleague’s scheme was mainly based on this mathematical formula: \[ \mbox{SE}[(X_1+X_2+\dots+X_n)
     / n] = \sigma / \sqrt{n} \]'
+  id: totrans-222
   prefs: []
   type: TYPE_NORMAL
+  zh: 你的同事的方案主要基于这个数学公式：\[ \mbox{SE}[(X_1+X_2+\dots+X_n) / n] = \sigma / \sqrt{n}
+    \]
 - en: 'By making \(n\) large, we minimize the standard error of our per-loan profit.
     However, for this rule to hold, the \(X\)s must be independent draws: one person
     defaulting must be independent of others defaulting. Note that in the case of
@@ -1026,116 +1515,178 @@
     are not independent, we get a standard error that is \(\sqrt{n}\) times bigger:
     \[ \mbox{SE}[(X_1+X_1+\dots+X_1) / n] = \mbox{SE}[n X_1 / n] = \sigma > \sigma
     / \sqrt{n} \]'
+  id: totrans-223
   prefs: []
   type: TYPE_NORMAL
+  zh: 通过使 \(n\) 变大，我们最小化了每笔贷款利润的标准误差。然而，为了使这个规则成立，\(X\) 必须是独立的抽取：一个人的违约必须与其他人的违约独立。请注意，在反复平均**相同**事件的情况下，这是一个事件不独立的极端例子，我们得到的标准误差是
+    \(\sqrt{n}\) 倍更大：\[ \mbox{SE}[(X_1+X_1+\dots+X_1) / n] = \mbox{SE}[n X_1 / n]
+    = \sigma > \sigma / \sqrt{n} \]
 - en: To construct a more realistic simulation than the original one your colleague
     ran, let’s assume there is a global event that affects everybody with high-risk
     mortgages and changes their probability. We will assume that with 50-50 chance,
     all the probabilities go up or down slightly to somewhere between 0.03 and 0.05\.
     But it happens to everybody at once, not just one person. These draws are no longer
     independent.
+  id: totrans-224
   prefs: []
   type: TYPE_NORMAL
+  zh: 为了构建一个比你的同事运行的原版更现实的模拟，让我们假设有一个全球事件影响了所有高风险抵押贷款的持有者，并改变了他们的概率。我们将假设有50-50的机会，所有概率都会略微上升或下降，介于0.03和0.05之间。但这是同时发生在每个人身上，而不仅仅是某一个人。这些抽取不再是独立的。
 - en: '[PRE39]'
+  id: totrans-225
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE39]'
 - en: 'Note that our expected profit is still large:'
+  id: totrans-226
   prefs: []
   type: TYPE_NORMAL
+  zh: 注意，我们的预期利润仍然很大：
 - en: '[PRE40]'
+  id: totrans-227
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE40]'
 - en: 'However, the probability of the bank having negative earnings shoots up to:'
+  id: totrans-228
   prefs: []
   type: TYPE_NORMAL
+  zh: 然而，银行出现负收益的概率急剧上升到：
 - en: '[PRE41]'
+  id: totrans-229
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE41]'
 - en: 'Even scarier is that the probability of losing more than 10 million dollars
     is:'
+  id: totrans-230
   prefs: []
   type: TYPE_NORMAL
+  zh: 更令人恐惧的是，损失超过1000万美元的概率是：
 - en: '[PRE42]'
+  id: totrans-231
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE42]'
 - en: 'To understand how this happens look at the distribution:'
+  id: totrans-232
   prefs: []
   type: TYPE_NORMAL
+  zh: 要了解这是如何发生的，请看分布：
 - en: '[PRE43]'
+  id: totrans-233
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE43]'
 - en: '![](../Images/792cabb85dd8b6795e5b311ad975006a.png)'
+  id: totrans-234
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/792cabb85dd8b6795e5b311ad975006a.png)'
 - en: The theory completely breaks down and the random variable has much more variability
     than expected. The financial meltdown of 2007 was due, among other things, to
     financial “experts” assuming independence when there was none.
+  id: totrans-235
   prefs: []
   type: TYPE_NORMAL
+  zh: 理论完全崩溃，随机变量的变异性远大于预期。2007年的金融危机，除了其他原因外，还因为金融“专家”在没有任何独立性假设的情况下做出了假设。
 - en: 14.12 Exercises
+  id: totrans-236
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 14.12 练习
 - en: '1\. Create a random variable \(S\) with the earnings of your bank if you give
     out 10,000 loans, the default rate is 0.3, and you lose $200,000 in each foreclosure.
     Hint: use the code we showed in the previous section, but change the parameters.'
+  id: totrans-237
   prefs: []
   type: TYPE_NORMAL
+  zh: 1. 创建一个随机变量 \(S\)，假设你发放10,000笔贷款，违约率为0.3，每次抵押品赎回你损失200,000美元。提示：使用我们在上一节中展示的代码，但更改参数。
 - en: 2\. Run a Monte Carlo simulation with 10,000 outcomes for \(S\). Make a histogram
     of the results.
+  id: totrans-238
   prefs: []
   type: TYPE_NORMAL
+  zh: 2. 对 \(S\) 进行10,000次结果的蒙特卡洛模拟。制作结果直方图。
 - en: 3\. What is the expected value of \(S\)?
+  id: totrans-239
   prefs: []
   type: TYPE_NORMAL
+  zh: 3. \(S\) 的期望值是多少？
 - en: 4\. What is the standard error of \(S\)?
+  id: totrans-240
   prefs: []
   type: TYPE_NORMAL
+  zh: 4. \(S\) 的标准误差是多少？
 - en: 5\. Suppose we give out loans for $180,000\. What should the interest rate be
     so that our expected value is 0?
+  id: totrans-241
   prefs: []
   type: TYPE_NORMAL
+  zh: 5. 假设我们发放180,000美元的贷款。为了使我们的期望值为0，利率应该是多少？
 - en: 6\. (Harder) What should the interest rate be so that the chance of losing money
     is 1 in 20? In math notation, what should the interest rate be so that \(\mbox{Pr}(S<0)
     = 0.05\) ?
+  id: totrans-242
   prefs: []
   type: TYPE_NORMAL
+  zh: 6. （较难）为了使亏损的概率为20分之一，利率应该是多少？用数学符号表示，为了使 \(\mbox{Pr}(S<0) = 0.05\) ，利率应该是多少？
 - en: 7\. If the bank wants to minimize the probabilities of losing money, which of
     the following does **not** make interest rates go up?
+  id: totrans-243
   prefs: []
   type: TYPE_NORMAL
+  zh: 7. 如果银行想要最小化亏损的概率，以下哪项**不会**使利率上升？
 - en: A smaller pool of loans.
+  id: totrans-244
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 较小的贷款池。
 - en: A larger probability of default.
+  id: totrans-245
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 更大的违约概率。
 - en: A smaller required probability of losing money.
+  id: totrans-246
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 较小的预期亏损概率。
 - en: The number of Monte Carlo simulations.
+  id: totrans-247
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 蒙特卡洛模拟的次数。
 - en: '* * *'
+  id: totrans-248
   prefs: []
   type: TYPE_NORMAL
+  zh: '* * *'
 - en: '[https://en.wikipedia.org/w/index.php?title=Financial_crisis_of_2007%E2%80%932008](https://en.wikipedia.org/w/index.php?title=Financial_crisis_of_2007%E2%80%932008)[↩︎](random-variables.html#fnref47)'
+  id: totrans-249
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[2007-2008年金融危机](https://en.wikipedia.org/w/index.php?title=Financial_crisis_of_2007%E2%80%932008)[↩︎](random-variables.html#fnref47)'
 - en: '[https://en.wikipedia.org/w/index.php?title=Security_(finance)](https://en.wikipedia.org/w/index.php?title=Security_(finance))[↩︎](random-variables.html#fnref48)'
+  id: totrans-250
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[证券](https://en.wikipedia.org/w/index.php?title=Security_(finance))[↩︎](random-variables.html#fnref48)'
 - en: '[https://en.wikipedia.org/w/index.php?title=Binomial_distribution](https://en.wikipedia.org/w/index.php?title=Binomial_distribution)[↩︎](random-variables.html#fnref49)'
+  id: totrans-251
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[二项分布](https://en.wikipedia.org/w/index.php?title=Binomial_distribution)[↩︎](random-variables.html#fnref49)'
 - en: '[https://en.wikipedia.org/w/index.php?title=Poisson_distribution](https://en.wikipedia.org/w/index.php?title=Poisson_distribution)[↩︎](random-variables.html#fnref50)'
+  id: totrans-252
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[泊松分布](https://en.wikipedia.org/w/index.php?title=Poisson_distribution)[↩︎](random-variables.html#fnref50)'

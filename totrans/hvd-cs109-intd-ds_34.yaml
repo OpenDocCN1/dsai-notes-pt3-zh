@@ -1,33 +1,49 @@
 - en: Chapter 23 Web scraping
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 第 23 章 网络爬虫
 - en: 原文：[https://rafalab.dfci.harvard.edu/dsbook/web-scraping.html](https://rafalab.dfci.harvard.edu/dsbook/web-scraping.html)
+  id: totrans-1
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 原文：[https://rafalab.dfci.harvard.edu/dsbook/web-scraping.html](https://rafalab.dfci.harvard.edu/dsbook/web-scraping.html)
 - en: 'The data we need to answer a question is not always in a spreadsheet ready
     for us to read. For example, the US murders dataset we used in the R Basics chapter
     originally comes from this Wikipedia page:'
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们需要回答问题的数据并不总是以供我们阅读的电子表格形式存在。例如，我们在 R 基础章节中使用的美国谋杀数据集最初来源于这个维基百科页面：
 - en: '[PRE0]'
+  id: totrans-3
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: 'You can see the data table when you visit the webpage:'
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: 当你访问网页时，你可以看到数据表：
 - en: '![](../Images/00c1455ad3f577012e1ae0977d995850.png)'
+  id: totrans-5
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/00c1455ad3f577012e1ae0977d995850.png)'
 - en: (Web page courtesy of Wikipedia[^(76)](#fn76). CC-BY-SA-3.0 license[^(77)](#fn77).
     Screenshot of part of the page.)
+  id: totrans-6
   prefs: []
   type: TYPE_NORMAL
+  zh: （网页由维基百科提供[^(76)](#fn76)。CC-BY-SA-3.0 许可证[^(77)](#fn77)。页面部分截图。）
 - en: Unfortunately, there is no link to a data file. To make the data frame that
     is loaded when we type `data(murders)`, we had to do some *web scraping*.
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: 不幸的是，没有数据文件的链接。为了在输入 `data(murders)` 时加载数据框，我们不得不进行一些 *网络爬虫*。
 - en: '*Web scraping*, or *web harvesting*, is the term we use to describe the process
     of extracting data from a website. The reason we can do this is because the information
     used by a browser to render webpages is received as a text file from a server.
@@ -35,80 +51,117 @@
     a way to show the html source code for a page, each one different. On Chrome,
     you can use Control-U on a PC and command+alt+U on a Mac. You will see something
     like this:'
+  id: totrans-8
   prefs: []
   type: TYPE_NORMAL
+  zh: '*网络爬虫* 或 *网络采集* 是我们用来描述从网站中提取数据的过程的术语。我们可以这样做的原因是浏览器用来渲染网页的信息是以文本文件的形式从服务器接收的。这些文本是用超文本标记语言（HTML）编写的代码。每个浏览器都有一种显示页面
+    HTML 源代码的方式，每种方式都不同。在 Chrome 中，你可以在 PC 上使用 Control-U，在 Mac 上使用 command+alt+U。你会看到类似这样的内容：'
 - en: '![](../Images/cf72e8414d22ad2377e7616c9a98df7e.png)'
+  id: totrans-9
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/cf72e8414d22ad2377e7616c9a98df7e.png)'
 - en: 23.1 HTML
+  id: totrans-10
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 23.1 HTML
 - en: 'Because this code is accessible, we can download the HTML file, import it into
     R, and then write programs to extract the information we need from the page. However,
     once we look at HTML code, this might seem like a daunting task. But we will show
     you some convenient tools to facilitate the process. To get an idea of how it
     works, here are a few lines of code from the Wikipedia page that provides the
     US murders data:'
+  id: totrans-11
   prefs: []
   type: TYPE_NORMAL
+  zh: 因为这段代码是可访问的，我们可以下载 HTML 文件，将其导入 R，然后编写程序从页面中提取所需的信息。然而，一旦我们查看 HTML 代码，这可能会显得像是一项艰巨的任务。但我们将向您展示一些方便的工具来简化这个过程。为了了解它是如何工作的，以下是提供美国谋杀数据的维基百科页面中的一段代码：
 - en: '[PRE1]'
+  id: totrans-12
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: You can actually see the data, except data values are surrounded by html code
     such as `<td>`. We can also see a pattern of how it is stored. If you know HTML,
     you can write programs that leverage knowledge of these patterns to extract what
     we want. We also take advantage of a language widely used to make webpages look
     “pretty” called Cascading Style Sheets (CSS). We say more about this in Section
     [23.3](web-scraping.html#css-selectors).
+  id: totrans-13
   prefs: []
   type: TYPE_NORMAL
+  zh: 你实际上可以看到数据，但数据值被如 `<td>` 这样的 HTML 代码包围。我们还可以看到它存储的模式。如果你了解 HTML，你可以编写利用这些模式提取我们所需信息的程序。我们还利用了一种广泛用于使网页看起来“美观”的语言，称为层叠样式表（CSS）。我们将在第
+    [23.3](web-scraping.html#css-selectors) 节中详细介绍这一点。
 - en: Although we provide tools that make it possible to scrape data without knowing
     HTML, as a data scientist it is quite useful to learn some HTML and CSS. Not only
     does this improve your scraping skills, but it might come in handy if you are
     creating a webpage to showcase your work. There are plenty of online courses and
     tutorials for learning these. Two examples are Codeacademy[^(78)](#fn78) and W3schools[^(79)](#fn79).
+  id: totrans-14
   prefs: []
   type: TYPE_NORMAL
+  zh: 尽管我们提供了无需了解 HTML 就能抓取数据的工具，但对于数据科学家来说，学习一些 HTML 和 CSS 非常有用。这不仅提高了你的抓取技能，而且如果你正在创建一个展示你工作的网页，这可能会派上用场。有许多在线课程和教程可以学习这些内容。两个例子是
+    Codeacademy[^(78)](#fn78) 和 W3schools[^(79)](#fn79)。
 - en: 23.2 The rvest package
+  id: totrans-15
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 23.2 rvest 包
 - en: 'The **tidyverse** provides a web harvesting package called **rvest**. The first
     step using this package is to import the webpage into R. The package makes this
     quite simple:'
+  id: totrans-16
   prefs: []
   type: TYPE_NORMAL
+  zh: '**tidyverse** 提供了一个名为 **rvest** 的网络采集包。使用此包的第一步是将网页导入 R。该包使这一过程变得非常简单：'
 - en: '[PRE2]'
+  id: totrans-17
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: 'Note that the entire Murders in the US Wikipedia webpage is now contained in
     `h`. The class of this object is:'
+  id: totrans-18
   prefs: []
   type: TYPE_NORMAL
+  zh: 注意，美国谋杀维基百科网页的整个内容现在都包含在 `h` 中。这个对象的类是：
 - en: '[PRE3]'
+  id: totrans-19
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: The **rvest** package is actually more general; it handles XML documents. XML
     is a general markup language (that’s what the ML stands for) that can be used
     to represent any kind of data. HTML is a specific type of XML specifically developed
     for representing webpages. Here we focus on HTML documents.
+  id: totrans-20
   prefs: []
   type: TYPE_NORMAL
+  zh: '**rvest** 包实际上更通用；它处理XML文档。XML是一种通用标记语言（ML代表的就是这个），可以用来表示任何类型的数据。HTML是XML的一种特定类型，专门开发用于表示网页。在这里，我们专注于HTML文档。'
 - en: 'Now, how do we extract the table from the object `h`? If we print `h`, we don’t
     really see much:'
+  id: totrans-21
   prefs: []
   type: TYPE_NORMAL
+  zh: 现在，我们如何从对象 `h` 中提取表格？如果我们打印 `h`，我们实际上看不到太多：
 - en: '[PRE4]'
+  id: totrans-22
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE4]'
 - en: 'We can see all the code that defines the downloaded webpage using the `html_text`
     function like this:'
+  id: totrans-23
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们可以使用 `html_text` 函数查看定义下载网页的所有代码，如下所示：
 - en: '[PRE5]'
+  id: totrans-24
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE5]'
 - en: 'We don’t show the output here because it includes thousands of characters,
     but if we look at it, we can see the data we are after are stored in an HTML table:
     you can see this in this line of the HTML code above `<table class="wikitable
@@ -117,48 +170,74 @@
     functions to extract nodes of an HTML document: `html_nodes` extracts all nodes
     of different types and `html_node` extracts the first one. To extract the tables
     from the html code we use:'
+  id: totrans-25
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们在这里不显示输出，因为它包含数千个字符，但如果我们查看它，我们可以看到我们想要的数据存储在一个HTML表格中：你可以在上面的HTML代码的这一行中看到
+    `<table class="wikitable sortable">`。HTML文档的不同部分，通常在 `<` 和 `>` 之间用消息定义，被称为*节点*。**rvest**
+    包包括用于提取HTML文档节点的函数：`html_nodes` 提取所有不同类型的节点，`html_node` 提取第一个。要从HTML代码中提取表格，我们使用：
 - en: '[PRE6]'
+  id: totrans-26
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE6]'
 - en: 'Now, instead of the entire webpage, we just have the html code for the tables
     in the page:'
+  id: totrans-27
   prefs: []
   type: TYPE_NORMAL
+  zh: 现在，我们不再有整个网页，我们只有页面中表格的HTML代码：
 - en: '[PRE7]'
+  id: totrans-28
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE7]'
 - en: 'The table we are interested is the first one:'
+  id: totrans-29
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们感兴趣的表格是第一个：
 - en: '[PRE8]'
+  id: totrans-30
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE8]'
 - en: 'This is clearly not a tidy dataset, not even a data frame. In the code above,
     you can definitely see a pattern and writing code to extract just the data is
     very doable. In fact, **rvest** includes a function just for converting HTML tables
     into data frames:'
+  id: totrans-31
   prefs: []
   type: TYPE_NORMAL
+  zh: 这显然不是一个整洁的数据集，甚至不是一个数据框。在上面的代码中，你可以肯定地看到一个模式，编写代码来提取数据是完全可行的。事实上，**rvest** 包包括一个专门用于将HTML表格转换为数据框的函数：
 - en: '[PRE9]'
+  id: totrans-32
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE9]'
 - en: 'We are now much closer to having a usable data table:'
+  id: totrans-33
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们现在离拥有一个可用的数据表格更近了：
 - en: '[PRE10]'
+  id: totrans-34
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE10]'
 - en: We still have some wrangling to do. For example, we need to remove the commas
     and turn characters into numbers. Before continuing with this, we will learn a
     more general approach to extracting information from web sites.
+  id: totrans-35
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们仍然需要进行一些处理。例如，我们需要删除逗号并将字符转换为数字。在继续进行之前，我们将学习一种更通用的从网站提取信息的方法。
 - en: 23.3 CSS selectors
+  id: totrans-36
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 23.3 CSS选择器
 - en: The default look of a webpage made with the most basic HTML is quite unattractive.
     The aesthetically pleasing pages we see today are made using CSS to define the
     look and style of webpages. The fact that all pages for a company have the same
@@ -169,8 +248,11 @@
     from the margin. CSS does this by leveraging patterns used to define these elements,
     referred to as *selectors*. An example of such a pattern, which we used above,
     is `table`, but there are many, many more.
+  id: totrans-37
   prefs: []
   type: TYPE_NORMAL
+  zh: 使用最基本HTML制作的网页默认外观相当不吸引人。我们今天看到的令人愉悦的页面是使用CSS来定义网页的外观和样式制作的。公司所有页面都有相同风格的事实通常源于它们使用相同的CSS文件来定义样式。这些CSS文件的一般工作方式是定义网页的每个元素将如何显示。例如，标题、标题、项目符号列表、表格和链接，每个都接收自己的样式，包括字体、颜色、大小和与边距的距离。CSS通过利用定义这些元素的模式来实现这一点，这些模式被称为*选择器*。上面我们使用的这样一个模式的例子是
+    `table`，但还有很多很多。
 - en: If we want to grab data from a webpage and we happen to know a selector that
     is unique to the part of the page containing this data, we can use the `html_nodes`
     function. However, knowing which selector can be quite complicated. In fact, the
@@ -178,8 +260,10 @@
     For some of the more advanced ones, it seems almost impossible to find the nodes
     that define a particular piece of data. However, selector gadgets actually make
     this possible.
+  id: totrans-38
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果我们想从网页中抓取数据，并且恰好知道包含这些数据的页面部分具有独特的选择器，我们可以使用 `html_nodes` 函数。然而，知道哪个选择器可能相当复杂。实际上，随着网页变得越来越复杂，网页的复杂性也在增加。对于一些更高级的网页，似乎几乎不可能找到定义特定数据的节点。然而，选择器工具实际上使这成为可能。
 - en: SelectorGadget[^(80)](#fn80) is piece of software that allows you to interactively
     determine what CSS selector you need to extract specific components from the webpage.
     If you plan on scraping data other than tables from html pages, we highly recommend
@@ -188,12 +272,19 @@
     you the selector you need to extract these parts. There are various demos of how
     to do this including **rvest** author Hadley Wickham’s vignette[^(81)](#fn81)
     and other tutorials based on the vignette[^(82)](#fn82) [^(83)](#fn83).
+  id: totrans-39
   prefs: []
   type: TYPE_NORMAL
+  zh: SelectorGadget[^(80)](#fn80) 是一款软件，允许你交互式地确定从网页中提取特定组件所需的 CSS 选择器。如果你计划从 HTML
+    页面中抓取除表格之外的数据，我们强烈建议你安装它。有一个 Chrome 扩展程序，允许你打开这个工具，然后，当你点击页面时，它会突出显示部分内容并显示你需要提取这些部分的选择器。包括
+    **rvest** 作者 Hadley Wickham 的示例[^(81)](#fn81) 和基于示例的其他教程[^(82)](#fn82) [^(83)](#fn83)
+    在内，都有各种如何做到这一点的演示。
 - en: 23.4 JSON
+  id: totrans-40
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 23.4 JSON
 - en: 'Sharing data on the internet has become more and more common. Unfortunately,
     providers use different formats, which makes it harder for data scientists to
     wrangle data into R. Yet there are some standards that are also becoming more
@@ -201,192 +292,288 @@
     Notation or JSON. Because this format is very general, it is nothing like a spreadsheet.
     This JSON file looks more like the code you use to define a list. Here is an example
     of information stored in a JSON format:'
+  id: totrans-41
   prefs: []
   type: TYPE_NORMAL
+  zh: 在互联网上共享数据变得越来越普遍。不幸的是，提供者使用不同的格式，这使得数据科学家将数据整理到 R 中变得更加困难。然而，也有一些标准正在变得越来越普遍。目前，一个被广泛采用的标准是
+    JavaScript 对象表示法或 JSON。因为这个格式非常通用，它不像电子表格。这个 JSON 文件看起来更像是你用来定义列表的代码。以下是一个存储在
+    JSON 格式中的信息示例：
 - en: '[PRE11]'
+  id: totrans-42
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE11]'
 - en: 'The file above actually represents a data frame. To read it, we can use the
     function `fromJSON` from the **jsonlite** package. Note that JSON files are often
     made available via the internet. Several organizations provide a JSON API or a
     web service that you can connect directly to and obtain data. Here is an example
     providing information Nobel prize winners:'
+  id: totrans-43
   prefs: []
   type: TYPE_NORMAL
+  zh: 上面的文件实际上代表一个数据框。为了读取它，我们可以使用 **jsonlite** 包中的 `fromJSON` 函数。请注意，JSON 文件通常通过互联网提供。几个组织提供
+    JSON API 或网络服务，你可以直接连接并获取数据。以下是一个提供诺贝尔奖获得者信息的示例：
 - en: '[PRE12]'
+  id: totrans-44
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE12]'
 - en: 'This downloads a list. The first argument is a table with information about
     Nobel prize winners:'
+  id: totrans-45
   prefs: []
   type: TYPE_NORMAL
+  zh: 这将下载一个列表。第一个参数是一个包含诺贝尔奖获得者信息的表格：
 - en: '[PRE13]'
+  id: totrans-46
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE13]'
 - en: You can learn much more by examining tutorials and help files from the **jsonlite**
     package. This package is intended for relatively simple tasks such as converting
     data into tables. For more flexibility, we recommend `rjson`.
+  id: totrans-47
   prefs: []
   type: TYPE_NORMAL
+  zh: 你可以通过检查 **jsonlite** 包的教程和帮助文件来学习更多。这个包旨在处理相对简单的任务，例如将数据转换为表格。为了获得更多灵活性，我们推荐使用
+    `rjson`。
 - en: 23.5 Exercises
+  id: totrans-48
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 23.5 练习
 - en: '1\. Visit the following web page: [https://web.archive.org/web/20181024132313/http://www.stevetheump.com/Payrolls.htm](https://web.archive.org/web/20181024132313/http://www.stevetheump.com/Payrolls.htm)'
+  id: totrans-49
   prefs: []
   type: TYPE_NORMAL
+  zh: 1. 访问以下网页：[https://web.archive.org/web/20181024132313/http://www.stevetheump.com/Payrolls.htm](https://web.archive.org/web/20181024132313/http://www.stevetheump.com/Payrolls.htm)
 - en: Notice there are several tables. Say we are interested in comparing the payrolls
     of teams across the years. The next few exercises take us through the steps needed
     to do this.
+  id: totrans-50
   prefs: []
   type: TYPE_NORMAL
+  zh: 注意有几个表格。假设我们感兴趣的是比较不同年份的团队工资。接下来的几个练习将引导我们完成这一步骤。
 - en: Start by applying what you learned to read in the website into an object called
     `h`.
+  id: totrans-51
   prefs: []
   type: TYPE_NORMAL
+  zh: 首先，将你学到的知识应用到将网站内容读入一个名为 `h` 的对象中。
 - en: '2\. Note that, although not very useful, we can actually see the content of
     the page by typing:'
+  id: totrans-52
   prefs: []
   type: TYPE_NORMAL
+  zh: 2. 注意，尽管不是很实用，我们实际上可以通过输入以下内容来查看页面内容：
 - en: '[PRE14]'
+  id: totrans-53
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE14]'
 - en: The next step is to extract the tables. For this, we can use the `html_nodes`
     function. We learned that tables in html are associated with the `table` node.
     Use the `html_nodes` function and the `table` node to extract the first table.
     Store it in an object `nodes`.
+  id: totrans-54
   prefs: []
   type: TYPE_NORMAL
+  zh: 下一步是提取表格。为此，我们可以使用`html_nodes`函数。我们了解到HTML中的表格与`table`节点相关联。使用`html_nodes`函数和`table`节点来提取第一个表格。将其存储在对象`nodes`中。
 - en: '3\. The `html_nodes` function returns a list of objects of class `xml_node`.
     We can see the content of each one using, for example, the `html_text` function.
     You can see the content for an arbitrarily picked component like this:'
+  id: totrans-55
   prefs: []
   type: TYPE_NORMAL
+  zh: 3. `html_nodes`函数返回一个类为`xml_node`的对象列表。我们可以使用例如`html_text`函数查看每个对象的内容。你可以这样查看任意选择的组件的内容：
 - en: '[PRE15]'
+  id: totrans-56
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE15]'
 - en: If the content of this object is an html table, we can use the `html_table`
     function to convert it to a data frame. Use the `html_table` function to convert
     the 8th entry of `nodes` into a table.
+  id: totrans-57
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果这个对象的内容是HTML表格，我们可以使用`html_table`函数将其转换为数据框。使用`html_table`函数将`nodes`的第八个条目转换为表格。
 - en: '4\. Repeat the above for the first 4 components of `nodes`. Which of the following
     are payroll tables:'
+  id: totrans-58
   prefs: []
   type: TYPE_NORMAL
+  zh: 4. 对`nodes`的前四个组件重复上述操作。以下哪些是工资表：
 - en: All of them.
+  id: totrans-59
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 所有这些。
 - en: '1'
+  id: totrans-60
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '1'
 - en: '2'
+  id: totrans-61
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '2'
 - en: 2-4
+  id: totrans-62
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 2-4
 - en: '5\. Repeat the above for the first **last** 3 components of `nodes`. Which
     of the following is true:'
+  id: totrans-63
   prefs: []
   type: TYPE_NORMAL
+  zh: 5. 对`nodes`的前**最后**三个组件重复上述操作。以下哪个是正确的：
 - en: The last entry in `nodes` shows the average across all teams through time, not
     payroll per team.
+  id: totrans-64
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '`nodes`中的最后一个条目显示了所有球队随时间推移的平均值，而不是每个球队的工资。'
 - en: All three are payroll per team tables.
+  id: totrans-65
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 所有这三个都是每个球队的工资表。
 - en: All three are like the first entry, not a payroll table.
+  id: totrans-66
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 所有这三个都像第一个条目一样，不是工资表。
 - en: All of the above.
+  id: totrans-67
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 所有上述内容。
 - en: 6\. We have learned that the first and last entries of `nodes` are not payroll
     tables. Redefine `nodes` so that these two are removed.
+  id: totrans-68
   prefs: []
   type: TYPE_NORMAL
+  zh: 6. 我们已经了解到`nodes`的第一个和最后一个条目不是工资表。重新定义`nodes`，以便删除这两个条目。
 - en: 7\. We saw in the previous analysis that the first table node is not actually
     a table. This happens sometimes in html because tables are used to make text look
     a certain way, as opposed to storing numeric values. Remove the first component
     and then use `sapply` and `html_table` to convert each node in `nodes` into a
     table. Note that in this case, `sapply` will return a list of tables. You can
     also use `lapply` to assure that a list is applied.
+  id: totrans-69
   prefs: []
   type: TYPE_NORMAL
+  zh: 7. 在前面的分析中，我们看到第一个表格节点实际上不是一个表格。在HTML中，这种情况有时会发生，因为表格被用来使文本看起来有特定的样子，而不是存储数值。删除第一个组件，然后使用`sapply`和`html_table`将`nodes`中的每个节点转换为表格。请注意，在这种情况下，`sapply`将返回一个表格列表。你也可以使用`lapply`来确保列表被应用。
 - en: 8\. Look through the resulting tables. Are they all the same? Could we just
     join them with `bind_rows`?
+  id: totrans-70
   prefs: []
   type: TYPE_NORMAL
+  zh: 8. 查看生成的表格。它们是否都相同？我们是否可以使用`bind_rows`将它们直接合并？
 - en: 9\. Create two tables, call them `tab_1` and `tab_2` using entries 10 and 19.
+  id: totrans-71
   prefs: []
   type: TYPE_NORMAL
+  zh: 9. 使用条目10和19创建两个表格，分别命名为`tab_1`和`tab_2`。
 - en: 10\. Use a `full_join` function to combine these two tables. Before you do this
     you will have to fix the missing header problem. You will also need to make the
     names match.
+  id: totrans-72
   prefs: []
   type: TYPE_NORMAL
+  zh: 10. 使用`full_join`函数合并这两个表格。在这样做之前，你必须解决缺失标题的问题。你还需要使名称匹配。
 - en: 11\. After joining the tables, you see several NAs. This is because some teams
     are in one table and not the other. Use the `anti_join` function to get a better
     idea of why this is happening.
+  id: totrans-73
   prefs: []
   type: TYPE_NORMAL
+  zh: 11. 在合并表格后，你会看到几个NA值。这是因为一些队伍在一个表格中，而在另一个表格中则没有。使用`anti_join`函数来更好地了解这是为什么。
 - en: '12\. We see see that one of the problems is that Yankees are listed as both
     *N.Y. Yankees* and *NY Yankees*. In the next section, we will learn efficient
     approaches to fixing problems like this. Here we can do it “by hand” as follows:'
+  id: totrans-74
   prefs: []
   type: TYPE_NORMAL
+  zh: 12. 我们可以看到，其中一个问题是洋基队被列为*N.Y. Yankees*和*NY Yankees*。在下一节中，我们将学习解决此类问题的有效方法。在这里，我们可以手动这样做：
 - en: '[PRE16]'
+  id: totrans-75
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE16]'
 - en: Now join the tables and show only Oakland and the Yankees and the payroll columns.
+  id: totrans-76
   prefs: []
   type: TYPE_NORMAL
+  zh: 现在合并表格，只显示奥克兰和洋基队以及工资列。
 - en: '13\. Advanced: extract the titles of the movies that won Best Picture from
     this website: [https://m.imdb.com/chart/bestpicture/](https://m.imdb.com/chart/bestpicture/)'
+  id: totrans-77
   prefs: []
   type: TYPE_NORMAL
+  zh: 13. 高级：从以下网站提取获得最佳影片的电影标题：[https://m.imdb.com/chart/bestpicture/](https://m.imdb.com/chart/bestpicture/)
 - en: '* * *'
+  id: totrans-78
   prefs: []
   type: TYPE_NORMAL
+  zh: '* * *'
 - en: '[https://en.wikipedia.org/w/index.php?title=Gun_violence_in_the_United_States_by_state&direction=prev&oldid=810166167](https://en.wikipedia.org/w/index.php?title=Gun_violence_in_the_United_States_by_state&direction=prev&oldid=810166167)[↩︎](web-scraping.html#fnref76)'
+  id: totrans-79
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[https://en.wikipedia.org/w/index.php?title=Gun_violence_in_the_United_States_by_state&direction=prev&oldid=810166167](https://en.wikipedia.org/w/index.php?title=Gun_violence_in_the_United_States_by_state&direction=prev&oldid=810166167)[↩︎](web-scraping.html#fnref76)'
 - en: '[https://en.wikipedia.org/wiki/Wikipedia:Text_of_Creative_Commons_Attribution-ShareAlike_3.0_Unported_License](https://en.wikipedia.org/wiki/Wikipedia:Text_of_Creative_Commons_Attribution-ShareAlike_3.0_Unported_License)[↩︎](web-scraping.html#fnref77)'
+  id: totrans-80
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[https://en.wikipedia.org/wiki/Wikipedia:Text_of_Creative_Commons_Attribution-ShareAlike_3.0_Unported_License](https://en.wikipedia.org/wiki/Wikipedia:Text_of_Creative_Commons_Attribution-ShareAlike_3.0_Unported_License)[↩︎](web-scraping.html#fnref77)'
 - en: '[https://www.codecademy.com/learn/learn-html](https://www.codecademy.com/learn/learn-html)[↩︎](web-scraping.html#fnref78)'
+  id: totrans-81
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[https://www.codecademy.com/learn/learn-html](https://www.codecademy.com/learn/learn-html)[↩︎](web-scraping.html#fnref78)'
 - en: '[https://www.w3schools.com/](https://www.w3schools.com/)[↩︎](web-scraping.html#fnref79)'
+  id: totrans-82
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[https://www.w3schools.com/](https://www.w3schools.com/)[↩︎](web-scraping.html#fnref79)'
 - en: '[http://selectorgadget.com/](http://selectorgadget.com/)[↩︎](web-scraping.html#fnref80)'
+  id: totrans-83
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[http://selectorgadget.com/](http://selectorgadget.com/)[↩︎](web-scraping.html#fnref80)'
 - en: '[https://cran.r-project.org/web/packages/rvest/vignettes/selectorgadget.html](https://cran.r-project.org/web/packages/rvest/vignettes/selectorgadget.html)[↩︎](web-scraping.html#fnref81)'
+  id: totrans-84
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[https://cran.r-project.org/web/packages/rvest/vignettes/selectorgadget.html](https://cran.r-project.org/web/packages/rvest/vignettes/selectorgadget.html)[↩︎](web-scraping.html#fnref81)'
 - en: '[https://stat4701.github.io/edav/2015/04/02/rvest_tutorial/](https://stat4701.github.io/edav/2015/04/02/rvest_tutorial/)[↩︎](web-scraping.html#fnref82)'
+  id: totrans-85
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[https://stat4701.github.io/edav/2015/04/02/rvest_tutorial/](https://stat4701.github.io/edav/2015/04/02/rvest_tutorial/)[↩︎](web-scraping.html#fnref82)'
 - en: '[https://www.analyticsvidhya.com/blog/2017/03/beginners-guide-on-web-scraping-in-r-using-rvest-with-hands-on-knowledge/](https://www.analyticsvidhya.com/blog/2017/03/beginners-guide-on-web-scraping-in-r-using-rvest-with-hands-on-knowledge/)[↩︎](web-scraping.html#fnref83)'
+  id: totrans-86
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[https://www.analyticsvidhya.com/blog/2017/03/beginners-guide-on-web-scraping-in-r-using-rvest-with-hands-on-knowledge/](https://www.analyticsvidhya.com/blog/2017/03/beginners-guide-on-web-scraping-in-r-using-rvest-with-hands-on-knowledge/)[↩︎](web-scraping.html#fnref83)'

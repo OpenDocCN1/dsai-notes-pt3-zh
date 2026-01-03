@@ -1,11 +1,15 @@
 - en: Chapter 5 Importing data
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 第5章 导入数据
 - en: 原文：[https://rafalab.dfci.harvard.edu/dsbook/importing-data.html](https://rafalab.dfci.harvard.edu/dsbook/importing-data.html)
+  id: totrans-1
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 原文：[https://rafalab.dfci.harvard.edu/dsbook/importing-data.html](https://rafalab.dfci.harvard.edu/dsbook/importing-data.html)
 - en: We have been using data sets already stored as R objects. A data scientist will
     rarely have such luck and will have to import data into R from either a file,
     a database, or other sources. Currently, one of the most common ways of storing
@@ -14,18 +18,25 @@
     When saving such a table to a computer file, one needs a way to define when a
     new row or column ends and the other begins. This in turn defines the cells in
     which single values are stored.
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们一直在使用已经存储为R对象的数 据 集合。数据科学家很少有这样的运气，他们必须将数据从文件、数据库或其他来源导入到R中。目前，存储和共享数据以供分析最常见的方式是通过电子表格。电子表格以行和列存储数据。它基本上是数据框的文件版本。当将此类表格保存到计算机文件时，需要一种方法来定义何时一行或一列结束，何时开始。这反过来又定义了存储单个值的单元格。
 - en: 'When creating spreadsheets with text files, like the ones created with a simple
     text editor, a new row is defined with return and columns are separated with some
     predefined special character. The most common characters are comma (`,`), semicolon
     (`;`), space ( ), and tab (a preset number of spaces or `\t`). Here is an example
     of what a comma separated file looks like if we open it with a basic text editor:'
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: 当使用文本文件创建电子表格时，例如使用简单的文本编辑器创建的文件，新行由回车定义，列由一些预定义的特殊字符分隔。最常用的字符是逗号（`,`）、分号（`;`）、空格（
+    ）和制表符（一个预设数量的空格或`\t`）。以下是一个逗号分隔文件的基本文本编辑器打开时的示例：
 - en: '![](../Images/885aaed1f16b6e35b69a850b0fd2cdfe.png)'
+  id: totrans-4
   prefs: []
   type: TYPE_IMG
+  zh: '![图片](../Images/885aaed1f16b6e35b69a850b0fd2cdfe.png)'
 - en: The first row contains column names rather than data. We call this a *header*,
     and when we read-in data from a spreadsheet it is important to know if the file
     has a header or not. Most reading functions assume there is a header. To know
@@ -33,15 +44,20 @@
     This can be done with a text editor or with RStudio. In RStudio, we can do this
     by either opening the file in the editor or navigating to the file location, double
     clicking on the file, and hitting *View File*.
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: 第一行包含列名而不是数据。我们称之为*标题*，当我们从电子表格中读取数据时，了解文件是否有标题很重要。大多数读取函数都假设有标题。要确定文件是否有标题，在尝试读取文件之前查看文件很有帮助。这可以通过文本编辑器或RStudio来完成。在RStudio中，我们可以通过在编辑器中打开文件或导航到文件位置，双击文件，然后点击*查看文件*来实现。
 - en: However, not all spreadsheet files are in a text format. Google Sheets, which
     are rendered on a browser, are an example. Another example is the proprietary
     format used by Microsoft Excel. These can’t be viewed with a text editor. Despite
     this, due to the widespread use of Microsoft Excel software, this format is widely
     used.
+  id: totrans-6
   prefs: []
   type: TYPE_NORMAL
+  zh: 然而，并非所有电子表格文件都是文本格式。在浏览器上渲染的Google Sheets就是一个例子。另一个例子是Microsoft Excel使用的专有格式。这些不能用文本编辑器查看。尽管如此，由于Microsoft
+    Excel软件的广泛使用，这种格式被广泛使用。
 - en: We start this chapter by describing the difference between text (ASCII), Unicode,
     and binary files and how this affects how we import them. We then explain the
     concepts of file paths and working directories, which are essential to understand
@@ -50,12 +66,16 @@
     we provide some recommendations on how to store and organize data in files. More
     complex challenges such as extracting data from web pages or PDF documents are
     left for the Data Wrangling part of the book.
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们从描述文本（ASCII）、Unicode和二进制文件之间的区别以及这如何影响我们导入它们的方式开始本章。然后我们解释文件路径和工作目录的概念，这些是理解如何有效地导入数据所必需的。然后我们介绍**readr**和**readxl**包以及可用于将电子表格导入R的函数。最后，我们提供了一些关于如何在文件中存储和组织数据的建议。更复杂的问题，如从网页或PDF文档中提取数据，留待本书的数据整理部分。
 - en: 5.1 Paths and the working directory
+  id: totrans-8
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 5.1 路径和工作目录
 - en: The first step when importing data from a spreadsheet is to locate the file
     containing the data. Although we do not recommend it, you can use an approach
     similar to what you do to open files in Microsoft Excel by clicking on the RStudio
@@ -64,393 +84,597 @@
     approach. The keys and concepts we need to learn to do this are described in detail
     in the Productivity Tools part of this book. Here we provide an overview of the
     very basics.
+  id: totrans-9
   prefs: []
   type: TYPE_NORMAL
+  zh: 从电子表格导入数据的第一步是找到包含数据的文件。尽管我们不推荐这样做，但你也可以使用类似于在 Microsoft Excel 中打开文件的方法，通过点击
+    RStudio 的“文件”菜单，然后点击“导入数据集”，接着通过文件夹直到找到文件。我们希望能够编写代码而不是使用点击操作。为了完成这项工作，我们需要学习的关键概念在本书的“生产力工具”部分有详细描述。在这里，我们提供了一些基本概念的概述。
 - en: The main challenge in this first step is that we need to let the R functions
     doing the importing know where to look for the file containing the data. The simplest
     way to do this is to have a copy of the file in the folder in which the importing
     functions look by default. Once we do this, all we have to supply to the importing
     function is the filename.
+  id: totrans-10
   prefs: []
   type: TYPE_NORMAL
+  zh: 在这个第一步的主要挑战是我们需要让执行导入的 R 函数知道数据文件所在的位置。最简单的方法是将文件复制到导入函数默认查找的文件夹中。一旦这样做，我们只需要提供给导入函数文件名即可。
 - en: A spreadsheet containing the US murders data is included as part of the **dslabs**
     package. Finding this file is not straightforward, but the following lines of
     code copy the file to the folder in which R looks in by default. We explain how
     these lines work below.
+  id: totrans-11
   prefs: []
   type: TYPE_NORMAL
+  zh: 包含美国谋杀数据的电子表格作为 **dslabs** 包的一部分被包含在内。找到这个文件并不直接，但下面的代码行将文件复制到 R 默认查找的文件夹中。我们将在下面解释这些代码行是如何工作的。
 - en: '[PRE0]'
+  id: totrans-12
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: This code does not read the data into R, it just copies a file. But once the
     file is copied, we can import the data with a simple line of code. Here we use
     the `read_csv` function from the **readr** package, which is part of the tidyverse.
+  id: totrans-13
   prefs: []
   type: TYPE_NORMAL
+  zh: 这段代码并没有将数据读入 R，它只是复制了一个文件。但是一旦文件被复制，我们就可以用一行简单的代码导入数据。在这里，我们使用了来自 **readr**
+    包的 `read_csv` 函数，它是 tidyverse 的一部分。
 - en: '[PRE1]'
+  id: totrans-14
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: The data is imported and stored in `dat`. The rest of this section defines some
     important concepts and provides an overview of how we write code that tells R
     how to find the files we want to import. Chapter [38](unix.html#unix) provides
     more details on this topic.
+  id: totrans-15
   prefs: []
   type: TYPE_NORMAL
+  zh: 数据被导入并存储在 `dat` 中。本节的其余部分定义了一些重要概念，并概述了如何编写代码来告诉 R 如何找到我们想要导入的文件。第 [38](unix.html#unix)
+    章提供了更多关于这个主题的详细信息。
 - en: 5.1.1 The filesystem
+  id: totrans-16
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 5.1.1 文件系统
 - en: 'You can think of your computer’s filesystem as a series of nested folders,
     each containing other folders and files. Data scientists refer to folders as *directories*.
     We refer to the folder that contains all other folders as the *root directory*.
     We refer to the directory in which we are currently located as the *working directory*.
     The working directory therefore changes as you move through folders: think of
     it as your current location.'
+  id: totrans-17
   prefs: []
   type: TYPE_NORMAL
+  zh: 你可以将你的计算机文件系统想象成一系列嵌套的文件夹，每个文件夹都包含其他文件夹和文件。数据科学家将文件夹称为*目录*。我们将包含所有其他文件夹的文件夹称为*根目录*。我们将我们当前所在的目录称为*工作目录*。因此，随着你通过文件夹移动，工作目录会发生变化：可以将其视为你的当前位置。
 - en: 5.1.2 Relative and full paths
+  id: totrans-18
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 5.1.2 相对路径和完整路径
 - en: The *path* of a file is a list of directory names that can be thought of as
     instructions on what folders to click on, and in what order, to find the file.
     If these instructions are for finding the file from the root directory we refer
     to it as the *full path*. If the instructions are for finding the file starting
     in the working directory we refer to it as a *relative path*. Section [38.3](unix.html#filesystem)
     provides more details on this topic.
+  id: totrans-19
   prefs: []
   type: TYPE_NORMAL
+  zh: 文件的*路径*是一系列目录名，可以将其视为点击文件夹的指令，以及找到文件的顺序。如果这些指令是从根目录开始查找文件，我们将其称为*完整路径*。如果指令是从工作目录开始查找文件，我们将其称为*相对路径*。第
+    [38.3](unix.html#filesystem) 节提供了更多关于这个主题的详细信息。
 - en: 'To see an example of a full path on your system type the following:'
+  id: totrans-20
   prefs: []
   type: TYPE_NORMAL
+  zh: 要查看你系统上的完整路径示例，请输入以下内容：
 - en: '[PRE2]'
+  id: totrans-21
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: The strings separated by slashes are the directory names. The first slash represents
     the root directory and we know this is a full path because it starts with a slash.
     If the first directory name appears without a slash in front, then the path is
     assumed to be relative. We can use the function `list.files` to see examples of
     relative paths.
+  id: totrans-22
   prefs: []
   type: TYPE_NORMAL
+  zh: 由斜杠分隔的字符串是目录名。第一个斜杠代表根目录，我们知道这是一个完整路径，因为它以斜杠开头。如果第一个目录名前面没有斜杠，那么路径被认为是相对的。我们可以使用
+    `list.files` 函数来查看相对路径的示例。
 - en: '[PRE3]'
+  id: totrans-23
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: These relative paths give us the location of the files or directories if we
     start in the directory with the full path. For example, the full path to the `help`
     directory in the example above is `/Library/Frameworks/R.framework/Versions/3.5/Resources/library/dslabs/help`.
+  id: totrans-24
   prefs: []
   type: TYPE_NORMAL
+  zh: 这些相对路径给出了如果我们从包含完整路径的目录开始时，文件或目录的位置。例如，上面示例中 `help` 目录的完整路径是 `/Library/Frameworks/R.framework/Versions/3.5/Resources/library/dslabs/help`。
 - en: '**Note**: You will probably not make much use of the `system.file` function
     in your day-to-day data analysis work. We introduce it in this section because
     it facilitates the sharing of spreadsheets by including them in the **dslabs**
     package. You will rarely have the luxury of data being included in packages you
     already have installed. However, you will frequently need to navigate full and
     relative paths and import spreadsheet formatted data.'
+  id: totrans-25
   prefs: []
   type: TYPE_NORMAL
+  zh: '**注意**：你可能在日常数据分析工作中不会太多地使用 `system.file` 函数。我们在这个部分介绍它，因为它通过将它们包含在 **dslabs**
+    包中，方便了电子表格的共享。你很少会有数据包含在你已经安装的包中的奢侈。然而，你将经常需要导航完整和相对路径，并导入电子表格格式的数据。'
 - en: 5.1.3 The working directory
+  id: totrans-26
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 5.1.3 工作目录
 - en: We highly recommend only writing relative paths in your code. The reason is
     that full paths are unique to your computer and you want your code to be portable.
     You can get the full path of your working directory without writing out explicitly
     by using the `getwd` function.
+  id: totrans-27
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们强烈建议在你的代码中只写相对路径。原因是完整路径对于你的计算机是唯一的，你希望你的代码是可移植的。你可以使用 `getwd` 函数获取工作目录的完整路径，而不需要明确写出。
 - en: '[PRE4]'
+  id: totrans-28
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE4]'
 - en: If you need to change your working directory, you can use the function `setwd`
     or you can change it through RStudio by clicking on “Session”.
+  id: totrans-29
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果你需要更改你的工作目录，你可以使用 `setwd` 函数，或者你可以通过在 RStudio 中点击“会话”来更改它。
 - en: 5.1.4 Generating path names
+  id: totrans-30
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 5.1.4 生成路径名
 - en: 'Another example of obtaining a full path without writing out explicitly was
     given above when we created the object `fullpath` like this:'
+  id: totrans-31
   prefs: []
   type: TYPE_NORMAL
+  zh: 上面给出的另一个获取完整路径而不明确写出的例子是在我们创建对象 `fullpath` 时：
 - en: '[PRE5]'
+  id: totrans-32
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE5]'
 - en: 'The function `system.file` provides the full path of the folder containing
     all the files and directories relevant to the package specified by the `package`
     argument. By exploring the directories in `dir` we find that the `extdata` contains
     the file we want:'
+  id: totrans-33
   prefs: []
   type: TYPE_NORMAL
+  zh: '`system.file` 函数提供了包含所有相关文件和目录的文件夹的完整路径，这些文件和目录由 `package` 参数指定的包指定。通过在 `dir`
+    中探索目录，我们发现 `extdata` 包含我们想要的文件：'
 - en: '[PRE6]'
+  id: totrans-34
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE6]'
 - en: 'The `system.file` function permits us to provide a subdirectory as a first
     argument, so we can obtain the fullpath of the `extdata` directory like this:'
+  id: totrans-35
   prefs: []
   type: TYPE_NORMAL
+  zh: '`system.file` 函数允许我们提供一个子目录作为第一个参数，因此我们可以这样获取 `extdata` 目录的完整路径：'
 - en: '[PRE7]'
+  id: totrans-36
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE7]'
 - en: The function `file.path` is used to combine directory names to produce the full
     path of the file we want to import.
+  id: totrans-37
   prefs: []
   type: TYPE_NORMAL
+  zh: '`file.path` 函数用于组合目录名，以生成我们想要导入的文件的完整路径。'
 - en: '[PRE8]'
+  id: totrans-38
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE8]'
 - en: 5.1.5 Copying files using paths
+  id: totrans-39
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 5.1.5 使用路径复制文件
 - en: The final line of code we used to copy the file into our home directory used
+  id: totrans-40
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们用来将文件复制到我们主目录中的最后一行代码使用了
 - en: 'the function `file.copy`. This function takes two arguments: the file to copy
     and the name to give it in the new directory.'
+  id: totrans-41
   prefs: []
   type: TYPE_NORMAL
+  zh: '`file.copy` 函数。这个函数接受两个参数：要复制的文件和在新目录中给它取的名字。'
 - en: '[PRE9]'
+  id: totrans-42
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE9]'
 - en: If a file is copied successfully, the `file.copy` function returns `TRUE`. Note
     that we are giving the file the same name, `murders.csv`, but we could have named
     it anything. Also note that by not starting the string with a slash, R assumes
     this is a relative path and copies the file to the working directory.
+  id: totrans-43
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果文件复制成功，`file.copy` 函数返回 `TRUE`。注意，我们给文件取了相同的名字，`murders.csv`，但我们也可以给它取任何名字。另外，注意如果不以斜杠开头，R
+    会假设这是一个相对路径，并将文件复制到工作目录。
 - en: 'You should be able to see the file in your working directory and can check
     by using:'
+  id: totrans-44
   prefs: []
   type: TYPE_NORMAL
+  zh: 你应该能在你的工作目录中看到这个文件，并且可以通过以下方式进行检查：
 - en: '[PRE10]'
+  id: totrans-45
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE10]'
 - en: 5.2 The readr and readxl packages
+  id: totrans-46
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 5.2 readr 和 readxl 包
 - en: 'In this section we introduce the main tidyverse data importing functions. We
     will use the `murders.csv` file provided by the **dslabs** package as an example.
     To simplify the illustration we will copy the file to our working directory using
     the following code:'
+  id: totrans-47
   prefs: []
   type: TYPE_NORMAL
+  zh: 在本节中，我们介绍主要的tidyverse数据导入函数。我们将使用**dslabs**包提供的`murders.csv`文件作为示例。为了简化说明，我们将使用以下代码将文件复制到我们的工作目录：
 - en: '[PRE11]'
+  id: totrans-48
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE11]'
 - en: 5.2.1 readr
+  id: totrans-49
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 5.2.1 readr
 - en: 'The **readr** library includes functions for reading data stored in text file
     spreadsheets into R. **readr** is part of the **tidyverse** package, or you can
     load it directly:'
+  id: totrans-50
   prefs: []
   type: TYPE_NORMAL
+  zh: '**readr**库包括将存储在文本文件电子表格中的数据读取到R中的函数。**readr**是**tidyverse**包的一部分，或者您可以直接加载它：'
 - en: '[PRE12]'
+  id: totrans-51
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE12]'
 - en: 'The following functions are available to read-in spreadsheets:'
+  id: totrans-52
   prefs: []
   type: TYPE_NORMAL
+  zh: 以下函数可用于读取电子表格：
 - en: '| Function | Format | Typical suffix |'
+  id: totrans-53
   prefs: []
   type: TYPE_TB
+  zh: '| 函数 | 格式 | 常见后缀 |'
 - en: '| --- | --- | --- |'
+  id: totrans-54
   prefs: []
   type: TYPE_TB
+  zh: '| --- | --- | --- |'
 - en: '| read_table | white space separated values | txt |'
+  id: totrans-55
   prefs: []
   type: TYPE_TB
+  zh: '| read_table | 空格分隔值 | txt |'
 - en: '| read_csv | comma separated values | csv |'
+  id: totrans-56
   prefs: []
   type: TYPE_TB
+  zh: '| read_csv | 逗号分隔值 | csv |'
 - en: '| read_csv2 | semicolon separated values | csv |'
+  id: totrans-57
   prefs: []
   type: TYPE_TB
+  zh: '| read_csv2 | 分号分隔值 | csv |'
 - en: '| read_tsv | tab delimited separated values | tsv |'
+  id: totrans-58
   prefs: []
   type: TYPE_TB
+  zh: '| read_tsv | 制表符分隔值 | tsv |'
 - en: '| read_delim | general text file format, must define delimiter | txt |'
+  id: totrans-59
   prefs: []
   type: TYPE_TB
+  zh: '| read_delim | 通用文本文件格式，必须定义分隔符 | txt |'
 - en: 'Although the suffix usually tells us what type of file it is, there is no guarantee
     that these always match. We can open the file to take a look or use the function
     `read_lines` to look at a few lines:'
+  id: totrans-60
   prefs: []
   type: TYPE_NORMAL
+  zh: 尽管后缀通常告诉我们文件类型，但并不能保证这些总是匹配。我们可以打开文件查看，或者使用`read_lines`函数查看几行：
 - en: '[PRE13]'
+  id: totrans-61
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE13]'
 - en: 'This also shows that there is a header. Now we are ready to read-in the data
     into R. From the .csv suffix and the peek at the file, we know to use `read_csv`:'
+  id: totrans-62
   prefs: []
   type: TYPE_NORMAL
+  zh: 这也表明存在标题。现在我们已准备好将数据读入R。从.csv后缀和文件预览中，我们知道应该使用`read_csv`：
 - en: '[PRE14]'
+  id: totrans-63
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE14]'
 - en: 'Note that we receive a message letting us know what data types were used for
     each column. Also note that `dat` is a `tibble`, not just a data frame. This is
     because `read_csv` is a **tidyverse** parser. We can confirm that the data has
     in fact been read-in with:'
+  id: totrans-64
   prefs: []
   type: TYPE_NORMAL
+  zh: 注意，我们会收到一条消息，告知我们每列使用了哪些数据类型。还要注意，`dat`是一个`tibble`，而不仅仅是一个数据框。这是因为`read_csv`是一个**tidyverse**解析器。我们可以通过以下方式确认数据确实已被读取：
 - en: '[PRE15]'
+  id: totrans-65
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE15]'
 - en: 'Finally, note that we can also use the full path for the file:'
+  id: totrans-66
   prefs: []
   type: TYPE_NORMAL
+  zh: 最后，请注意，我们也可以使用文件的完整路径：
 - en: '[PRE16]'
+  id: totrans-67
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE16]'
 - en: 5.2.2 readxl
+  id: totrans-68
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 5.2.2 readxl
 - en: You can load the **readxl** package using
+  id: totrans-69
   prefs: []
   type: TYPE_NORMAL
+  zh: 您可以使用以下方式加载**readxl**包：
 - en: '[PRE17]'
+  id: totrans-70
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE17]'
 - en: 'The package provides functions to read-in Microsoft Excel formats:'
+  id: totrans-71
   prefs: []
   type: TYPE_NORMAL
+  zh: 该包提供了读取Microsoft Excel格式的函数：
 - en: '| Function | Format | Typical suffix |'
+  id: totrans-72
   prefs: []
   type: TYPE_TB
+  zh: '| 函数 | 格式 | 常见后缀 |'
 - en: '| --- | --- | --- |'
+  id: totrans-73
   prefs: []
   type: TYPE_TB
+  zh: '| --- | --- | --- |'
 - en: '| read_excel | auto detect the format | xls, xlsx |'
+  id: totrans-74
   prefs: []
   type: TYPE_TB
+  zh: '| read_excel | 自动检测格式 | xls, xlsx |'
 - en: '| read_xls | original format | xls |'
+  id: totrans-75
   prefs: []
   type: TYPE_TB
+  zh: '| read_xls | 原始格式 | xls |'
 - en: '| read_xlsx | new format | xlsx |'
+  id: totrans-76
   prefs: []
   type: TYPE_TB
+  zh: '| read_xlsx | 新格式 | xlsx |'
 - en: The Microsoft Excel formats permit you to have more than one spreadsheet in
     one file. These are referred to as *sheets*. The functions listed above read the
     first sheet by default, but we can also read the others. The `excel_sheets` function
     gives us the names of all the sheets in an Excel file. These names can then be
     passed to the `sheet` argument in the three functions above to read sheets other
     than the first.
+  id: totrans-77
   prefs: []
   type: TYPE_NORMAL
+  zh: Microsoft Excel格式允许您在一个文件中拥有多个工作表。这些被称为*工作表*。上面列出的函数默认读取第一个工作表，但我们也可以读取其他工作表。`excel_sheets`函数给出了Excel文件中所有工作表的名称。然后，可以将这些名称传递给上面三个函数中的`sheet`参数，以读取除第一个工作表之外的工作表。
 - en: 5.3 Exercises
+  id: totrans-78
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 5.3 练习
 - en: '1\. Use the `read_csv` function to read each of the files that the following
     code saves in the `files` object:'
+  id: totrans-79
   prefs: []
   type: TYPE_NORMAL
+  zh: 1. 使用`read_csv`函数读取以下代码在`files`对象中保存的每个文件：
 - en: '[PRE18]'
+  id: totrans-80
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE18]'
 - en: 2\. Note that the last one, the `olive` file, gives us a warning. This is because
     the first line of the file is missing the header for the first column.
+  id: totrans-81
   prefs: []
   type: TYPE_NORMAL
+  zh: 2. 注意，最后一个文件`olive`给出了警告。这是因为文件的第一个列标题缺失。
 - en: Read the help file for `read_csv` to figure out how to read in the file without
     reading this header. If you skip the header, you should not get this warning.
     Save the result to an object called `dat`.
+  id: totrans-82
   prefs: []
   type: TYPE_NORMAL
+  zh: 读取`read_csv`的帮助文件以了解如何在不读取此标题的情况下读取文件。如果您跳过标题，则不应收到此警告。将结果保存到名为`dat`的对象中。
 - en: '3\. A problem with the previous approach is that we don’t know what the columns
     represent. Type:'
+  id: totrans-83
   prefs: []
   type: TYPE_NORMAL
+  zh: 3. 前一种方法的问题是我们不知道列代表什么。输入：
 - en: '[PRE19]'
+  id: totrans-84
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE19]'
 - en: to see that the names are not informative.
+  id: totrans-85
   prefs: []
   type: TYPE_NORMAL
+  zh: 以查看名称是否具有信息性。
 - en: Use the `readLines` function to read in just the first line (we later learn
     how to extract values from the output).
+  id: totrans-86
   prefs: []
   type: TYPE_NORMAL
+  zh: 使用`readLines`函数读取第一行（我们稍后会学习如何从输出中提取值）。
 - en: 5.4 Downloading files
+  id: totrans-87
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 5.4 文件下载
 - en: 'Another common place for data to reside is on the internet. When these data
     are in files, we can download them and then import them or even read them directly
     from the web. For example, we note that because our **dslabs** package is on GitHub,
     the file we downloaded with the package has a url:'
+  id: totrans-88
   prefs: []
   type: TYPE_NORMAL
+  zh: 数据通常还存在于互联网上。当这些数据以文件形式存在时，我们可以下载它们，然后导入或甚至直接从网络读取。例如，我们注意到，因为我们的 **dslabs**
+    包位于 GitHub 上，所以与该包一起下载的文件有一个 URL：
 - en: '[PRE20]'
+  id: totrans-89
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE20]'
 - en: 'The `read_csv` file can read these files directly:'
+  id: totrans-90
   prefs: []
   type: TYPE_NORMAL
+  zh: '`read_csv` 文件可以直接读取这些文件：'
 - en: '[PRE21]'
+  id: totrans-91
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE21]'
 - en: 'If you want to have a local copy of the file, you can use the `download.file`
     function:'
+  id: totrans-92
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果你想要文件的本地副本，你可以使用 `download.file` 函数：
 - en: '[PRE22]'
+  id: totrans-93
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE22]'
 - en: This will download the file and save it on your system with the name `murders.csv`.
     You can use any name here, not necessarily `murders.csv`. Note that when using
     `download.file` you should be careful as **it will overwrite existing files without
     warning**.
+  id: totrans-94
   prefs: []
   type: TYPE_NORMAL
+  zh: 这将下载文件并将其保存在你的系统上，文件名为 `murders.csv`。这里可以使用任何名称，不一定是 `murders.csv`。注意，当使用 `download.file`
+    时，你应该小心，因为它**会无警告地覆盖现有文件**。
 - en: 'Two functions that are sometimes useful when downloading data from the internet
     are `tempdir` and `tempfile`. The first creates a directory with a random name
     that is very likely to be unique. Similarly, `tempfile` creates a character string,
     not a file, that is likely to be a unique filename. So you can run a command like
     this which erases the temporary file once it imports the data:'
+  id: totrans-95
   prefs: []
   type: TYPE_NORMAL
+  zh: 在从互联网下载数据时，有时有用的两个函数是 `tempdir` 和 `tempfile`。第一个创建一个具有随机名称的目录，这个名称很可能独一无二。同样，`tempfile`
+    创建一个字符字符串，而不是文件，这个字符串很可能是一个独一无二的文件名。因此，你可以运行如下命令，一旦导入数据就会删除临时文件：
 - en: '[PRE23]'
+  id: totrans-96
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE23]'
 - en: 5.5 R-base importing functions
+  id: totrans-97
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 5.5 R-base 导入函数
 - en: 'R-base also provides import functions. These have similar names to those in
     the **tidyverse**, for example `read.table`, `read.csv` and `read.delim`. You
     can obtain an data frame like `dat` using:'
+  id: totrans-98
   prefs: []
   type: TYPE_NORMAL
+  zh: R-base 还提供了导入函数。这些函数的名称与 **tidyverse** 中的函数类似，例如 `read.table`、`read.csv` 和 `read.delim`。你可以使用以下方法获取一个类似
+    `dat` 的数据框：
 - en: '[PRE24]'
+  id: totrans-99
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE24]'
 - en: 'An often useful R-base importing function is `scan`, as it provides much flexibility.
     When reading in spreadsheets many things can go wrong. The file might have a multiline
     header, be missing cells, or it might use an unexpected encoding[^(13)](#fn13).
     We recommend you read this post about common issues found here: [https://www.joelonsoftware.com/2003/10/08/the-absolute-minimum-every-software-developer-absolutely-positively-must-know-about-unicode-and-character-sets-no-excuses/](https://www.joelonsoftware.com/2003/10/08/the-absolute-minimum-every-software-developer-absolutely-positively-must-know-about-unicode-and-character-sets-no-excuses/).'
+  id: totrans-100
   prefs: []
   type: TYPE_NORMAL
+  zh: 一个经常有用的 R-base 导入函数是 `scan`，因为它提供了很多灵活性。在读取电子表格时，可能会出现很多问题。文件可能有多行标题，可能缺少单元格，或者它可能使用意外的编码[^(13)](#fn13)。我们建议你阅读这篇关于在此处发现的常见问题的帖子：[https://www.joelonsoftware.com/2003/10/08/the-absolute-minimum-every-software-developer-absolutely-positively-must-know-about-unicode-and-character-sets-no-excuses/](https://www.joelonsoftware.com/2003/10/08/the-absolute-minimum-every-software-developer-absolutely-positively-must-know-about-unicode-and-character-sets-no-excuses/)。
 - en: 'With experience you will learn how to deal with different challenges. Carefully
     reading the help files for the functions discussed here will be useful. With scan
     you can read-in each cell of a file. Here is an example:'
+  id: totrans-101
   prefs: []
   type: TYPE_NORMAL
+  zh: 通过经验，你会学会如何处理不同的挑战。仔细阅读此处讨论的函数的帮助文件将很有用。使用 `scan`，你可以读取文件的每个单元格。以下是一个示例：
 - en: '[PRE25]'
+  id: totrans-102
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE25]'
 - en: Note that the tidyverse provides `read_lines`, a similarly useful function.
+  id: totrans-103
   prefs: []
   type: TYPE_NORMAL
+  zh: 注意，tidyverse 提供了 `read_lines`，这是一个同样有用的函数。
 - en: 5.6 Text versus binary files
+  id: totrans-104
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 5.6 文本文件与二进制文件
 - en: 'For data science purposes, files can generally be classified into two categories:
     text files (also known as ASCII files) and binary files. You have already worked
     with text files. All your R scripts are text files and so are the R markdown files
@@ -465,33 +689,45 @@
     These are binary files. Excel files are actually compressed folders with several
     text files inside. But the main distinction here is that text files can be easily
     examined.'
+  id: totrans-105
   prefs: []
   type: TYPE_NORMAL
+  zh: 对于数据科学的目的，文件通常可以分为两大类：文本文件（也称为ASCII文件）和二进制文件。你已经处理过文本文件。你所有的R脚本都是文本文件，用于创建这本书的R
+    markdown文件也是文本文件。你读取的csv表格也是文本文件。这些文件的一个大优点是我们可以很容易地“查看”它们，而无需购买任何特殊软件或遵循复杂的说明。任何文本编辑器都可以用来检查文本文件，包括免费编辑器，如RStudio、记事本、textEdit、vi、emacs、nano和pico。为了验证这一点，尝试使用“打开文件”RStudio工具打开一个csv文件。你应该能够在你的编辑器中看到内容。然而，如果你尝试打开，比如说，一个Excel
+    xls文件、jpg或png文件，你将无法立即看到任何有用的内容。这些都是二进制文件。Excel文件实际上是包含几个文本文件的压缩文件夹。但这里的主要区别是文本文件可以很容易地检查。
 - en: Although R includes tools for reading widely used binary files, such as xls
     files, in general you will want to find data sets stored in text files. Similarly,
     when sharing data you want to make it available as text files as long as storage
     is not an issue (binary files are much more efficient at saving space on your
     disk). In general, plain-text formats make it easier to share data since commercial
     software is not required for working with the data.
+  id: totrans-106
   prefs: []
   type: TYPE_NORMAL
+  zh: 虽然R包括读取广泛使用的二进制文件（如xls文件）的工具，但通常你将想要找到存储在文本文件中的数据集。同样，当共享数据时，你希望将其作为文本文件提供，只要存储不是问题（二进制文件在节省磁盘空间方面要高效得多）。一般来说，纯文本格式使得共享数据更容易，因为不需要商业软件来处理数据。
 - en: Extracting data from a spreadsheet stored as a text file is perhaps the easiest
     way to bring data from a file to an R session. Unfortunately, spreadsheets are
     not always available and the fact that you can look at text files does not necessarily
     imply that extracting data from them will be straightforward. In the Data Wrangling
     part of the book we learn to extract data from more complex text files such as
     html files.
+  id: totrans-107
   prefs: []
   type: TYPE_NORMAL
+  zh: 从存储为文本文件的电子表格中提取数据可能是将数据从文件带到R会话的最简单方法。不幸的是，电子表格并不总是可用，而且能够查看文本文件并不意味着从它们中提取数据将会简单。在本书的数据整理部分，我们学习了如何从更复杂的文本文件中提取数据，例如html文件。
 - en: 5.7 Unicode versus ASCII
+  id: totrans-108
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 5.7 Unicode与ASCII的比较
 - en: 'A pitfall in data science is assuming a file is an ASCII text file when, in
     fact, it is something else that can look a lot like an ASCII text file: a Unicode
     text file.'
+  id: totrans-109
   prefs: []
   type: TYPE_NORMAL
+  zh: 数据科学中的一个陷阱是假设一个文件是ASCII文本文件，而实际上它可能是其他看起来很像ASCII文本文件的东西：Unicode文本文件。
 - en: 'To understand the difference between these, remember that everything on a computer
     needs to eventually be converted to 0s and 1s. ASCII is an *encoding* that maps
     characters to numbers. ASCII uses 7 bits (0s and 1s) which results in \(2^7 =
@@ -501,19 +737,26 @@
     using more than 7 bits, was defined: Unicode. When using Unicode, one can chose
     between 8, 16, and 32 bits abbreviated UTF-8, UTF-16, and UTF-32 respectively.
     RStudio actually defaults to UTF-8 encoding.'
+  id: totrans-110
   prefs: []
   type: TYPE_NORMAL
+  zh: 要理解这两者之间的区别，请记住，计算机上的所有内容最终都需要被转换成0s和1s。ASCII是一种**编码**，将字符映射到数字。ASCII使用7位（0s和1s），这导致了\(2^7
+    = 128\)个独特的项目，足以编码英语键盘上的所有字符。然而，其他语言使用ASCII编码中未包含的字符。例如，墨西哥的é字符就不是由ASCII编码的。因此，定义了一种新的编码，使用超过7位：Unicode。当使用Unicode时，可以选择8位、16位和32位，分别简称为UTF-8、UTF-16和UTF-32。RStudio实际上默认使用UTF-8编码。
 - en: 'Although we do not go into the details of how to deal with the different encodings
     here, it is important that you know these different encodings exist so that you
     can better diagnose a problem if you encounter it. One way problems manifest themselves
     is when you see “weird looking” characters you were not expecting. This StackOverflow
     discussion is an example: [https://stackoverflow.com/questions/18789330/r-on-windows-character-encoding-hell](https://stackoverflow.com/questions/18789330/r-on-windows-character-encoding-hell).'
+  id: totrans-111
   prefs: []
   type: TYPE_NORMAL
+  zh: 虽然我们在这里不详细介绍如何处理不同的编码，但了解这些不同的编码存在是很重要的，这样你就可以在遇到问题时更好地诊断问题。问题的一种表现方式是当你看到你未预期的“奇怪”字符时。这个StackOverflow讨论就是一个例子：[https://stackoverflow.com/questions/18789330/r-on-windows-character-encoding-hell](https://stackoverflow.com/questions/18789330/r-on-windows-character-encoding-hell)。
 - en: 5.8 Organizing data with spreadsheets
+  id: totrans-112
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 5.8 使用电子表格组织数据
 - en: Although this book focuses almost exclusively on data analysis, data management
     is also an important part of data science. As explained in the introduction, we
     do not cover this topic. However, quite often data analysts needs to collect data,
@@ -526,91 +769,130 @@
     this format. Instead, we recommend Google Sheets as a free software tool. Below
     we summarize the recommendations made in paper by Karl Broman and Kara Woo[^(14)](#fn14).
     Please read the paper for important details.
+  id: totrans-113
   prefs: []
   type: TYPE_NORMAL
+  zh: 虽然这本书几乎完全专注于数据分析，但数据管理也是数据科学的一个重要部分。正如引言中所述，我们不涉及这个主题。然而，数据分析师经常需要以最方便存储在电子表格中的方式收集数据，或者与他人一起收集数据。虽然我们强烈反对手动填写电子表格，但我们建议尽可能自动化这个过程，有时你不得不这样做。因此，在本节中，我们提供了一些关于如何在电子表格中组织数据的建议。尽管有一些R包可以读取Microsoft
+    Excel电子表格，但我们通常想避免这种格式。相反，我们推荐使用Google Sheets作为免费的软件工具。以下是我们总结了Karl Broman和Kara
+    Woo在论文中提出的建议[^(14)](#fn14)。请阅读这篇论文以获取重要细节。
 - en: '**Be Consistent** - Before you commence entering data, have a plan. Once you
     have a plan, be consistent and stick to it.'
+  id: totrans-114
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**保持一致** - 在开始输入数据之前，制定一个计划。一旦有了计划，就要保持一致并坚持下去。'
 - en: '**Choose Good Names for Things** - You want the names you pick for objects,
     files, and directories to be memorable, easy to spell, and descriptive. This is
     actually a hard balance to achieve and it does require time and thought. One important
     rule to follow is **do not use spaces**, use underscores `_` or dashes instead
     `-`. Also, avoid symbols; stick to letters and numbers.'
+  id: totrans-115
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**为事物选择好的名称** - 你选择的物体、文件和目录的名称应该是容易记忆的、容易拼写的，并且具有描述性。实际上，这是一个很难达到的平衡，确实需要时间和思考。一个重要的规则是**不要使用空格**，使用下划线
+    `_` 或破折号 `-` 代替。此外，避免使用符号；坚持使用字母和数字。'
 - en: '**Write Dates as YYYY-MM-DD** - To avoid confusion, we strongly recommend using
     this global ISO 8601 standard.'
+  id: totrans-116
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**按YYYY-MM-DD格式写日期** - 为了避免混淆，我们强烈建议使用这个全球ISO 8601标准。'
 - en: '**No Empty Cells** - Fill in all cells and use some common code for missing
     data.'
+  id: totrans-117
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**不要留空单元格** - 填充所有单元格，并使用一些常见的代码来处理缺失数据。'
 - en: '**Put Just One Thing in a Cell** - It is better to add columns to store the
     extra information rather than having more than one piece of information in one
     cell.'
+  id: totrans-118
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**一个单元格只放一件事情** - 比起在一个单元格中放置多于一条信息，更好的做法是添加列来存储额外的信息。'
 - en: '**Make It a Rectangle** - The spreadsheet should be a rectangle.'
+  id: totrans-119
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**使其成为矩形** - 电子表格应该是矩形的。'
 - en: '**Create a Data Dictionary** - If you need to explain things, such as what
     the columns are or what the labels used for categorical variables are, do this
     in a separate file.'
+  id: totrans-120
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**创建数据字典** - 如果你需要解释一些事情，比如列的含义或者分类变量的标签是什么，请在一个单独的文件中这样做。'
 - en: '**No Calculations in the Raw Data Files** - Excel permits you to perform calculations.
     Do not make this part of your spreadsheet. Code for calculations should be in
     a script.'
+  id: totrans-121
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**在原始数据文件中不要进行计算** - Excel允许你进行计算。不要将这部分包含在你的电子表格中。计算代码应该在脚本中。'
 - en: '**Do Not Use Font Color or Highlighting as Data** - Most import functions are
     not able to import this information. Encode this information as a variable instead.'
+  id: totrans-122
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**不要使用字体颜色或高亮显示作为数据** - 大多数重要功能都无法导入这种信息。将此信息编码为变量代替。'
 - en: '**Make Backups** - Make regular backups of your data.'
+  id: totrans-123
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**备份** - 定期备份你的数据。'
 - en: '**Use Data Validation to Avoid Errors** - Leverage the tools in your spreadsheet
     software so that the process is as error-free and repetitive-stress-injury-free
     as possible.'
+  id: totrans-124
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**使用数据验证来避免错误** - 利用电子表格软件中的工具，使过程尽可能无错误且无重复性伤害。'
 - en: '**Save the Data as Text Files** - Save files for sharing in comma or tab delimited
     format.'
+  id: totrans-125
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**将数据保存为文本文件** - 以逗号或制表符分隔的格式保存文件以便分享。'
 - en: 5.9 Exercises
+  id: totrans-126
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 5.9 练习
 - en: 1\. Pick a measurement you can take on a regular basis. For example, your daily
     weight or how long it takes you to run 5 miles. Keep a spreadsheet that includes
     the date, the hour, the measurement, and any other informative variable you think
     is worth keeping. Do this for 2 weeks. Then make a plot.
+  id: totrans-127
   prefs: []
   type: TYPE_NORMAL
+  zh: 1. 选择你可以定期进行测量的一个指标。例如，你的每日体重或跑5英里所需的时间。制作一个包含日期、小时、测量值以及你认为值得保留的任何其他信息的电子表格。这样做两周。然后绘制图表。
 - en: '* * *'
+  id: totrans-128
   prefs: []
   type: TYPE_NORMAL
+  zh: '* * *'
 - en: '[https://en.wikipedia.org/wiki/Character_encoding](https://en.wikipedia.org/wiki/Character_encoding)[↩︎](importing-data.html#fnref13)'
+  id: totrans-129
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[https://en.wikipedia.org/wiki/Character_encoding](https://en.wikipedia.org/wiki/Character_encoding)[↩︎](importing-data.html#fnref13)'
 - en: '[https://www.tandfonline.com/doi/abs/10.1080/00031305.2017.1375989](https://www.tandfonline.com/doi/abs/10.1080/00031305.2017.1375989)[↩︎](importing-data.html#fnref14)'
+  id: totrans-130
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[https://www.tandfonline.com/doi/abs/10.1080/00031305.2017.1375989](https://www.tandfonline.com/doi/abs/10.1080/00031305.2017.1375989)[↩︎](importing-data.html#fnref14)'

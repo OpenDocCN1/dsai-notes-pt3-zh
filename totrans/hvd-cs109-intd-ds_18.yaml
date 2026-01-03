@@ -1,11 +1,15 @@
 - en: Chapter 10 Data visualization in practice
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 第10章 实践中的数据可视化
 - en: 原文：[https://rafalab.dfci.harvard.edu/dsbook/gapminder.html](https://rafalab.dfci.harvard.edu/dsbook/gapminder.html)
+  id: totrans-1
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: '[https://rafalab.dfci.harvard.edu/dsbook/gapminder.html](https://rafalab.dfci.harvard.edu/dsbook/gapminder.html)'
 - en: In this chapter, we will demonstrate how relatively simple **ggplot2** code
     can create insightful and aesthetically pleasing plots. As motivation we will
     create plots that help us better understand trends in world health and economics.
@@ -14,128 +18,188 @@
     study, we will describe relevant general data visualization principles and learn
     concepts such as *faceting*, *time series plots*, *transformations*, and *ridge
     plots*.
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: 在本章中，我们将展示相对简单的**ggplot2**代码如何创建有洞察力和美观的图表。作为动机，我们将创建帮助我们更好地理解世界健康和经济趋势的图表。我们将实施在第[8](ggplot2.html#ggplot2)章和[9.8](dataviz-distributions.html#other-geometries)章学到的内容，并学习如何增强代码以完善图表。在我们进行案例研究的过程中，我们将描述相关的通用数据可视化原则，并学习诸如*分面*、*时间序列图*、*转换*和*脊线图*等概念。
 - en: '10.1 Case study: new insights on poverty'
+  id: totrans-3
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 10.1 案例研究：关于贫困的新见解
 - en: 'Hans Rosling[^(26)](#fn26) was the co-founder of the Gapminder Foundation[^(27)](#fn27),
     an organization dedicated to educating the public by using data to dispel common
     myths about the so-called developing world. The organization uses data to show
     how actual trends in health and economics contradict the narratives that emanate
     from sensationalist media coverage of catastrophes, tragedies, and other unfortunate
     events. As stated in the Gapminder Foundation’s website:'
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: 汉斯·罗斯林[^(26)](#fn26)是Gapminder Foundation[^(27)](#fn27)的联合创始人，该组织致力于通过使用数据来消除关于所谓发展中世界的常见神话来教育公众。该组织使用数据来展示实际的健康和经济趋势如何与来自灾难、悲剧和其他不幸事件的耸人听闻的媒体报道中的叙述相矛盾。正如Gapminder
+    Foundation网站所述：
 - en: 'Journalists and lobbyists tell dramatic stories. That’s their job. They tell
     stories about extraordinary events and unusual people. The piles of dramatic stories
     pile up in peoples’ minds into an over-dramatic worldview and strong negative
     stress feelings: “The world is getting worse!”, “It’s we vs. them!”, “Other people
     are strange!”, “The population just keeps growing!” and “Nobody cares!”'
+  id: totrans-5
   prefs:
   - PREF_BQ
   - PREF_BQ
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 记者和游说者讲述戏剧性的故事。这是他们的工作。他们讲述关于非凡事件和非凡人物的故事。这些戏剧性故事的堆积在人们心中形成了一个过于戏剧化的世界观和强烈的负面压力感：“世界正在变得更糟！”、“是我们对抗他们！”、“其他人很奇怪！”、“人口一直在增长！”以及“没有人关心！”
 - en: 'Hans Rosling conveyed actual data-based trends in a dramatic way of his own,
     using effective data visualization. This section is based on two talks that exemplify
     this approach to education: [New Insights on Poverty][^(28)](#fn28) and The Best
     Stats You’ve Ever Seen[^(29)](#fn29). Specifically, in this section, we use data
     to attempt to answer the following two questions:'
+  id: totrans-6
   prefs: []
   type: TYPE_NORMAL
+  zh: 汉斯·罗斯林以他独特而戏剧性的方式传达了基于实际数据的趋势，运用了有效的数据可视化。本节基于两个体现这种教育方法的演讲：[关于贫困的新见解][^(28)](#fn28)
+    和《你见过的最佳统计数据》[^(29)](#fn29)。具体来说，在本节中，我们使用数据尝试回答以下两个问题：
 - en: Is it a fair characterization of today’s world to say it is divided into western
     rich nations and the developing world in Africa, Asia, and Latin America?
+  id: totrans-7
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 将当今世界划分为西方富裕国家和非洲、亚洲和拉丁美洲的发展中世界是否是一个公平的描述？
 - en: Has income inequality across countries worsened during the last 40 years?
+  id: totrans-8
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 在过去40年里，国家间的收入不平等是否恶化了？
 - en: 'To answer these questions, we will be using the `gapminder` dataset provided
     in **dslabs**. This dataset was created using a number of spreadsheets available
     from the Gapminder Foundation. You can access the table like this:'
+  id: totrans-9
   prefs: []
   type: TYPE_NORMAL
+  zh: 为了回答这些问题，我们将使用**dslabs**提供的`gapminder`数据集。这个数据集是使用来自Gapminder Foundation的多个电子表格创建的。你可以这样访问表格：
 - en: '[PRE0]'
+  id: totrans-10
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: 10.1.1 Hans Rosling’s quiz
+  id: totrans-11
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 10.1.1 汉斯·罗斯林测验
 - en: As done in the *New Insights on Poverty* video, we start by testing our knowledge
     regarding differences in child mortality across different countries. For each
     of the six pairs of countries below, which country do you think had the highest
     child mortality rates in 2015? Which pairs do you think are most similar?
+  id: totrans-12
   prefs: []
   type: TYPE_NORMAL
+  zh: 正如*关于贫困的新见解*视频中所示，我们首先测试我们对不同国家儿童死亡率差异的知识。对于下面六个国家对的每一个，你认为哪个国家在2015年的儿童死亡率最高？你认为哪一对最相似？
 - en: Sri Lanka or Turkey
+  id: totrans-13
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 斯里兰卡或土耳其
 - en: Poland or South Korea
+  id: totrans-14
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 波兰或韩国
 - en: Malaysia or Russia
+  id: totrans-15
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 马来西亚或俄罗斯
 - en: Pakistan or Vietnam
+  id: totrans-16
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 巴基斯坦或越南
 - en: Thailand or South Africa
+  id: totrans-17
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 泰国或南非
 - en: 'When answering these questions without data, the non-European countries are
     typically picked as having higher child mortality rates: Sri Lanka over Turkey,
     South Korea over Poland, and Malaysia over Russia. It is also common to assume
     that countries considered to be part of the developing world: Pakistan, Vietnam,
     Thailand, and South Africa, have similarly high mortality rates.'
+  id: totrans-18
   prefs: []
   type: TYPE_NORMAL
+  zh: 在没有数据的情况下回答这些问题时，通常会选择非欧洲国家具有更高的儿童死亡率：斯里兰卡高于土耳其，韩国高于波兰，马来西亚高于俄罗斯。也普遍认为，被认为是发展中国家的一部分的国家：巴基斯坦、越南、泰国和南非，具有类似的死亡率。
 - en: 'To answer these questions **with data**, we can use **dplyr**. For example,
     for the first comparison we see that:'
+  id: totrans-19
   prefs: []
   type: TYPE_NORMAL
+  zh: 要用数据来回答这些问题，我们可以使用 **dplyr**。例如，对于第一次比较，我们看到：
 - en: '[PRE1]'
+  id: totrans-20
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: Turkey has the higher infant mortality rate.
+  id: totrans-21
   prefs: []
   type: TYPE_NORMAL
+  zh: 土耳其的婴儿死亡率更高。
 - en: 'We can use this code on all comparisons and find the following:'
+  id: totrans-22
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们可以在所有比较中使用此代码，并找到以下结果：
 - en: '[PRE2]'
+  id: totrans-23
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: '| country | infant mortality | country | infant mortality |'
+  id: totrans-24
   prefs: []
   type: TYPE_TB
+  zh: '| 国家 | 婴儿死亡率 | 国家 | 婴儿死亡率 |'
 - en: '| --- | --- | --- | --- |'
+  id: totrans-25
   prefs: []
   type: TYPE_TB
+  zh: '| --- | --- | --- | ---'
 - en: '| Sri Lanka | 8.4 | Turkey | 11.6 |'
+  id: totrans-26
   prefs: []
   type: TYPE_TB
+  zh: '| 斯里兰卡 | 8.4 | 土耳其 | 11.6 |'
 - en: '| Poland | 4.5 | South Korea | 2.9 |'
+  id: totrans-27
   prefs: []
   type: TYPE_TB
+  zh: '| 波兰 | 4.5 | 韩国丨2.9 |'
 - en: '| Malaysia | 6.0 | Russia | 8.2 |'
+  id: totrans-28
   prefs: []
   type: TYPE_TB
+  zh: '| 马来西亚 | 6.0 | 俄罗斯 | 8.2 |'
 - en: '| Pakistan | 65.8 | Vietnam | 17.3 |'
+  id: totrans-29
   prefs: []
   type: TYPE_TB
+  zh: '| 巴基斯坦 | 65.8 | 越南 | 17.3 |'
 - en: '| Thailand | 10.5 | South Africa | 33.6 |'
+  id: totrans-30
   prefs: []
   type: TYPE_TB
+  zh: '| 泰国 | 10.5 | 南非 | 33.6 |'
 - en: 'We see that the European countries on this list have higher child mortality
     rates: Poland has a higher rate than South Korea, and Russia has a higher rate
     than Malaysia. We also see that Pakistan has a much higher rate than Vietnam,
@@ -144,106 +208,157 @@
     less than 2.5 out of 5, worse than what they would have obtained had they guessed
     randomly. This implies that more than ignorant, we are misinformed. In this chapter
     we see how data visualization helps inform us.'
+  id: totrans-31
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们可以看到，这份名单上的欧洲国家儿童死亡率较高：波兰的比率高于韩国，俄罗斯的比率高于马来西亚。我们还看到，巴基斯坦的比率远高于越南，南非的比率远高于泰国。结果发现，当汉斯·罗斯林向受过教育的人群发放这个测验时，平均得分不到2.5分（满分5分），比他们随机猜测的结果还要差。这表明，我们不仅无知，而且信息不准确。在本章中，我们将看到数据可视化如何帮助我们获取信息。
 - en: 10.2 Scatterplots
+  id: totrans-32
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 10.2 散点图
 - en: 'The reason for this stems from the preconceived notion that the world is divided
     into two groups: the western world (Western Europe and North America), characterized
     by long life spans and small families, versus the developing world (Africa, Asia,
     and Latin America) characterized by short life spans and large families. But do
     the data support this dichotomous view?'
+  id: totrans-33
   prefs: []
   type: TYPE_NORMAL
+  zh: 这种情况的原因源于先入为主的观念，即世界分为两组：西方世界（西欧和北美），以长寿和小家庭为特征，而发展中国家（非洲、亚洲和拉丁美洲）则以短寿和大家庭为特征。但是，数据是否支持这种二分法观点？
 - en: The necessary data to answer this question is also available in our `gapminder`
     table. Using our newly learned data visualization skills, we will be able to tackle
     this challenge.
+  id: totrans-34
   prefs: []
   type: TYPE_NORMAL
+  zh: 回答这个问题的必要数据也存在于我们的 `gapminder` 表中。利用我们新学到的数据可视化技能，我们将能够应对这个挑战。
 - en: In order to analyze this world view, our first plot is a scatterplot of life
     expectancy versus fertility rates (average number of children per woman). We start
     by looking at data from about 50 years ago, when perhaps this view was first cemented
     in our minds.
+  id: totrans-35
   prefs: []
   type: TYPE_NORMAL
+  zh: 为了分析这种世界观，我们的第一个图表是预期寿命与生育率（每名女性的平均孩子数）的散点图。我们首先查看大约50年前的数据，那时这种观点可能首次在我们脑海中根深蒂固。
 - en: '[PRE3]'
+  id: totrans-36
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: '![](../Images/acb05e17ecb899dee94eb2dffc2d3299.png)'
+  id: totrans-37
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/acb05e17ecb899dee94eb2dffc2d3299.png)'
 - en: 'Most points fall into two distinct categories:'
+  id: totrans-38
   prefs: []
   type: TYPE_NORMAL
+  zh: 大多数点都落在了两个截然不同的类别中：
 - en: Life expectancy around 70 years and 3 or fewer children per family.
+  id: totrans-39
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 家庭平均预期寿命约为70岁，且孩子数不超过3个。
 - en: Life expectancy lower than 65 years and more than 5 children per family.
+  id: totrans-40
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 家庭平均预期寿命低于65岁，且孩子数超过5个。
 - en: To confirm that indeed these countries are from the regions we expect, we can
     use color to represent continent.
+  id: totrans-41
   prefs: []
   type: TYPE_NORMAL
+  zh: 为了确认这些国家确实来自我们预期的地区，我们可以用颜色来代表大洲。
 - en: '[PRE4]'
+  id: totrans-42
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE4]'
 - en: '![](../Images/811497d0ebb04e5cd1e54faf6d761a28.png)'
+  id: totrans-43
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/811497d0ebb04e5cd1e54faf6d761a28.png)'
 - en: In 1962, “the West versus developing world” view was grounded in some reality.
     Is this still the case 50 years later?
+  id: totrans-44
   prefs: []
   type: TYPE_NORMAL
+  zh: 1962年，“西方与发展中国家”的观点基于一些现实。50年后，这种情况是否仍然如此？
 - en: 10.3 Faceting
+  id: totrans-45
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 10.3 分面
 - en: 'We could easily plot the 2012 data in the same way we did for 1962\. To make
     comparisons, however, side by side plots are preferable. In **ggplot2**, we can
     achieve this by *faceting* variables: we stratify the data by some variable and
     make the same plot for each strata.'
+  id: totrans-46
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们可以像为 1962 年做的那样轻松地绘制 2012 年的数据。然而，为了进行比较，并排图表更可取。在 **ggplot2** 中，我们可以通过 *分面*
+    变量来实现这一点：通过某些变量对数据进行分层，并为每个层制作相同的图表。
 - en: 'To achieve faceting, we add a layer with the function `facet_grid`, which automatically
     separates the plots. This function lets you facet by up to two variables using
     columns to represent one variable and rows to represent the other. The function
     expects the row and column variables to be separated by a `~`. Here is an example
     of a scatterplot with `facet_grid` added as the last layer:'
+  id: totrans-47
   prefs: []
   type: TYPE_NORMAL
+  zh: 要实现分面，我们添加一个带有 `facet_grid` 函数的层，该函数自动分离图表。这个函数允许你通过列表示一个变量和行表示另一个变量，最多使用两个变量进行分面。该函数期望行和列变量由一个
+    `~` 分隔。以下是一个添加了 `facet_grid` 作为最后一层的散点图示例：
 - en: '[PRE5]'
+  id: totrans-48
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE5]'
 - en: '![](../Images/849d5adf4fdcb660c5d2ff71d9bde70e.png)'
+  id: totrans-49
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/849d5adf4fdcb660c5d2ff71d9bde70e.png)'
 - en: 'We see a plot for each continent/year pair. However, this is just an example
     and more than what we want, which is simply to compare 1962 and 2012\. In this
     case, there is just one variable and we use `.` to let facet know that we are
     not using one of the variables:'
+  id: totrans-50
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们可以看到每个大陆/年份对的图表。然而，这只是一个示例，比我们想要的要多，我们想要的只是比较 1962 年和 2012 年。在这种情况下，只有一个变量，我们使用
+    `.` 来让分面知道我们不是使用其中一个变量：
 - en: '[PRE6]'
+  id: totrans-51
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE6]'
 - en: '![](../Images/5b79801106925612c6d046f42c605d98.png)'
+  id: totrans-52
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/5b79801106925612c6d046f42c605d98.png)'
 - en: This plot clearly shows that the majority of countries have moved from the *developing
     world* cluster to the *western world* one. In 2012, the western versus developing
     world view no longer makes sense. This is particularly clear when comparing Europe
     to Asia, the latter of which includes several countries that have made great improvements.
+  id: totrans-53
   prefs: []
   type: TYPE_NORMAL
+  zh: 这个图表清楚地表明，大多数国家已经从 *发展中国家* 群体移动到 *西方国家* 群体。到 2012 年，西方与发展中国家之间的观点已经不再适用。当比较欧洲和亚洲时，这一点尤其明显，后者包括几个取得了巨大进步的国家。
 - en: 10.3.1 `facet_wrap`
+  id: totrans-54
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 10.3.1 `facet_wrap`
 - en: 'To explore how this transformation happened through the years, we can make
     the plot for several years. For example, we can add 1970, 1980, 1990, and 2000\.
     If we do this, we will not want all the plots on the same row, the default behavior
@@ -251,22 +366,33 @@
     will want to use multiple rows and columns. The function `facet_wrap` permits
     us to do this by automatically wrapping the series of plots so that each display
     has viewable dimensions:'
+  id: totrans-55
   prefs: []
   type: TYPE_NORMAL
+  zh: 要探索这种变化是如何逐年发生的，我们可以为几年制作图表。例如，我们可以添加 1970 年、1980 年、1990 年和 2000 年。如果我们这样做，我们不会希望所有图表都在同一行，这是
+    `facet_grid` 的默认行为，因为它们会变得太薄而无法显示数据。相反，我们将希望使用多行和多列。`facet_wrap` 函数允许我们通过自动包裹一系列图表来实现这一点，以便每个显示都有可查看的维度：
 - en: '[PRE7]'
+  id: totrans-56
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE7]'
 - en: '![](../Images/0665a8b344aade1ef7012ea81674a3bc.png)'
+  id: totrans-57
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/0665a8b344aade1ef7012ea81674a3bc.png)'
 - en: This plot clearly shows how most Asian countries have improved at a much faster
     rate than European ones.
+  id: totrans-58
   prefs: []
   type: TYPE_NORMAL
+  zh: 这个图表清楚地显示了大多数亚洲国家比欧洲国家改善得更快。
 - en: 10.3.2 Fixed scales for better comparisons
+  id: totrans-59
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 10.3.2 为更好的比较固定刻度
 - en: 'The default choice of the range of the axes is important. When not using `facet`,
     this range is determined by the data shown in the plot. When using `facet`, this
     range is determined by the data shown in all plots and therefore kept fixed across
@@ -274,127 +400,187 @@
     plot, we can see that life expectancy has increased and the fertility has decreased
     across most countries. We see this because the cloud of points moves. This is
     not the case if we adjust the scales:'
+  id: totrans-60
   prefs: []
   type: TYPE_NORMAL
+  zh: 轴范围的默认选择非常重要。当不使用 `facet` 时，这个范围由图表中显示的数据决定。当使用 `facet` 时，这个范围由所有图表中显示的数据决定，因此在整个图表中保持固定。这使得跨图表的比较变得容易得多。例如，在上面的图表中，我们可以看到大多数国家的预期寿命有所增加，而生育率有所下降。我们之所以能看到这一点，是因为点云发生了移动。如果我们调整刻度，情况就不同了：
 - en: '[PRE8]'
+  id: totrans-61
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE8]'
 - en: '![](../Images/9cd29b748f8207bb2da83752b41f3f5b.png)'
+  id: totrans-62
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/9cd29b748f8207bb2da83752b41f3f5b.png)'
 - en: In the plot above, we have to pay special attention to the range to notice that
     the plot on the right has a larger life expectancy.
+  id: totrans-63
   prefs: []
   type: TYPE_NORMAL
+  zh: 在上面的图表中，我们必须特别注意范围，才能注意到右侧的图表有更长的预期寿命。
 - en: 10.4 Time series plots
+  id: totrans-64
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 10.4 时间序列图表
 - en: The visualizations above effectively illustrate that data no longer supports
     the western versus developing world view. Once we see these plots, new questions
     emerge. For example, which countries are improving more and which ones less? Was
     the improvement constant during the last 50 years or was it more accelerated during
     certain periods? For a closer look that may help answer these questions, we introduce
     *time series plots*.
+  id: totrans-65
   prefs: []
   type: TYPE_NORMAL
+  zh: 上述可视化有效地说明了数据不再支持西方与发达国家之间的观点。一旦我们看到这些图表，新的问题就会浮现。例如，哪些国家改善得更多，哪些国家改善得更少？在过去50年中改善是持续的，还是在某些时期加速了？为了更仔细地观察这些问题，我们引入了*时间序列图*。
 - en: 'Time series plots have time in the x-axis and an outcome or measurement of
     interest on the y-axis. For example, here is a trend plot of United States fertility
     rates:'
+  id: totrans-66
   prefs: []
   type: TYPE_NORMAL
+  zh: 时间序列图在x轴上有时间，在y轴上有感兴趣的结果或测量值。例如，这里是美国生育率的趋势图：
 - en: '[PRE9]'
+  id: totrans-67
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE9]'
 - en: '![](../Images/0f8c632ec5bc7efe78f7e8f879323bb6.png)'
+  id: totrans-68
   prefs: []
   type: TYPE_IMG
+  zh: '![图片](../Images/0f8c632ec5bc7efe78f7e8f879323bb6.png)'
 - en: We see that the trend is not linear at all. Instead there is sharp drop during
     the 1960s and 1970s to below 2\. Then the trend comes back to 2 and stabilizes
     during the 1990s.
+  id: totrans-69
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们可以看到，趋势根本不是线性的。相反，在20世纪60年代和70年代期间有一个急剧的下降，低于2。然后趋势在20世纪90年代回到2并稳定下来。
 - en: When the points are regularly and densely spaced, as they are here, we create
     curves by joining the points with lines, to convey that these data are from a
     single series, here a country. To do this, we use the `geom_line` function instead
     of `geom_point`.
+  id: totrans-70
   prefs: []
   type: TYPE_NORMAL
+  zh: 当点均匀且密集地分布时，就像这里一样，我们通过用线连接点来创建曲线，以传达这些数据来自一个单一系列，这里是一个国家。为此，我们使用`geom_line`函数而不是`geom_point`。
 - en: '[PRE10]'
+  id: totrans-71
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE10]'
 - en: '![](../Images/fbcd7528162f4a71b99ae4c7828f4ad0.png)'
+  id: totrans-72
   prefs: []
   type: TYPE_IMG
+  zh: '![图片](../Images/fbcd7528162f4a71b99ae4c7828f4ad0.png)'
 - en: 'This is particularly helpful when we look at two countries. If we subset the
     data to include two countries, one from Europe and one from Asia, then adapt the
     code above:'
+  id: totrans-73
   prefs: []
   type: TYPE_NORMAL
+  zh: 当我们观察两个国家时，这一点尤其有用。如果我们对数据进行子集化，包括一个来自欧洲和一个来自亚洲的国家，然后调整上面的代码：
 - en: '[PRE11]'
+  id: totrans-74
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE11]'
 - en: '![](../Images/18eeb689997a8cffc529cc2e025279c7.png)'
+  id: totrans-75
   prefs: []
   type: TYPE_IMG
+  zh: '![图片](../Images/18eeb689997a8cffc529cc2e025279c7.png)'
 - en: 'Unfortunately, this is **not** the plot that we want. Rather than a line for
     each country, the points for both countries are joined. This is actually expected
     since we have not told `ggplot` anything about wanting two separate lines. To
     let `ggplot` know that there are two curves that need to be made separately, we
     assign each point to a `group`, one for each country:'
+  id: totrans-76
   prefs: []
   type: TYPE_NORMAL
+  zh: 不幸的是，这不是我们想要的图表。不是每个国家都有一条线，而是两个国家的点都被连接起来。这实际上是预期的，因为我们没有告诉`ggplot`我们想要两条分开的线。为了让`ggplot`知道需要制作两条分别的曲线，我们将每个点分配到一个`group`中，每个国家一个：
 - en: '[PRE12]'
+  id: totrans-77
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE12]'
 - en: '![](../Images/554bca2c1d6bc7e92f336daf29721f50.png)'
+  id: totrans-78
   prefs: []
   type: TYPE_IMG
+  zh: '![图片](../Images/554bca2c1d6bc7e92f336daf29721f50.png)'
 - en: 'But which line goes with which country? We can assign colors to make this distinction.
     A useful side-effect of using the `color` argument to assign different colors
     to the different countries is that the data is automatically grouped:'
+  id: totrans-79
   prefs: []
   type: TYPE_NORMAL
+  zh: 但哪条线对应哪个国家呢？我们可以用颜色来区分。使用`color`参数为不同的国家分配不同颜色的一个有用副作用是数据会自动分组：
 - en: '[PRE13]'
+  id: totrans-80
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE13]'
 - en: '![](../Images/90b583a2cce8b795cd80d740ca24e0d5.png)'
+  id: totrans-81
   prefs: []
   type: TYPE_IMG
+  zh: '![图片](../Images/90b583a2cce8b795cd80d740ca24e0d5.png)'
 - en: The plot clearly shows how South Korea’s fertility rate dropped drastically
     during the 1960s and 1970s, and by 1990 had a similar rate to that of Germany.
+  id: totrans-82
   prefs: []
   type: TYPE_NORMAL
+  zh: 该图清楚地显示了韩国的生育率在20世纪60年代和70年代急剧下降，到1990年与德国的生育率相似。
 - en: 10.4.1 Labels instead of legends
+  id: totrans-83
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 10.4.1 使用标签而不是图例
 - en: 'For trend plots we recommend labeling the lines rather than using legends since
     the viewer can quickly see which line is which country. This suggestion actually
     applies to most plots: labeling is usually preferred over legends.'
+  id: totrans-84
   prefs: []
   type: TYPE_NORMAL
+  zh: 对于趋势图，我们建议标注线条而不是使用图例，因为观众可以快速看到哪条线代表哪个国家。这个建议实际上适用于大多数图表：标注通常比图例更受欢迎。
 - en: 'We demonstrate how we can do this using the `geomtextpath` package. We define
     a data table with the label locations and then use a second mapping just for these
     labels:'
+  id: totrans-85
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们演示了如何使用`geomtextpath`包来做这件事。我们定义一个包含标签位置的表格数据，然后使用第二个映射仅用于这些标签：
 - en: '[PRE14]'
+  id: totrans-86
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE14]'
 - en: '![](../Images/6d0822113258637232069fb2096c8561.png)'
+  id: totrans-87
   prefs: []
   type: TYPE_IMG
+  zh: '![图片](../Images/6d0822113258637232069fb2096c8561.png)'
 - en: The plot clearly shows how an improvement in life expectancy followed the drops
     in fertility rates. In 1960, Germans lived 15 years longer than South Koreans,
     although by 2010 the gap is completely closed. It exemplifies the improvement
     that many non-western countries have achieved in the last 40 years.
+  id: totrans-88
   prefs: []
   type: TYPE_NORMAL
+  zh: 这个图表清楚地显示了预期寿命的提高是如何随着生育率的下降而发生的。在1960年，德国人的预期寿命比韩国人长15年，尽管到2010年这个差距已经完全消失。它展示了在过去40年里许多非西方国家所取得的进步。
 - en: 10.5 Data transformations
+  id: totrans-89
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 10.5 数据变换
 - en: We now shift our attention to the second question related to the commonly held
     notion that wealth distribution across the world has become worse during the last
     decades. When general audiences are asked if poor countries have become poorer
@@ -402,8 +588,10 @@
     histograms, smooth densities, and boxplots, we will be able to understand if this
     is in fact the case. First we learn how transformations can sometimes help provide
     more informative summaries and plots.
+  id: totrans-90
   prefs: []
   type: TYPE_NORMAL
+  zh: 现在，我们将注意力转向与普遍认为的过去几十年全球财富分配变得更差这一观点相关的第二个问题。当向普通观众询问贫穷国家是否变得更穷，富裕国家是否变得更富时，大多数人回答是。通过使用分层、直方图、平滑密度和箱线图，我们将能够理解这是否确实如此。首先，我们学习变换如何有时有助于提供更丰富的总结和图表。
 - en: 'The `gapminder` data table includes a column with the countries’ gross domestic
     product (GDP). GDP measures the market value of goods and services produced by
     a country in a year. The GDP per person is often used as a rough summary of a
@@ -411,79 +599,116 @@
     measure *dollars per day*. Using current US dollars as a unit, a person surviving
     on an income of less than $2 a day is defined to be living in *absolute poverty*.
     We add this variable to the data table:'
+  id: totrans-91
   prefs: []
   type: TYPE_NORMAL
+  zh: '`gapminder` 数据表包括一个包含各国国内生产总值（GDP）的列。GDP衡量一个国家在一年内生产的商品和服务的市场价值。人均GDP通常被用作一个国家财富的粗略总结。在这里，我们将这个数量除以365，以获得更易理解的度量——*每日美元*。使用当前的美元作为单位，如果一个人的日收入低于2美元，则被定义为生活在*绝对贫困*中。我们将这个变量添加到数据表中：'
 - en: '[PRE15]'
+  id: totrans-92
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE15]'
 - en: The GDP values are adjusted for inflation and represent current US dollars,
     so these values are meant to be comparable across the years. Of course, these
     are country averages and within each country there is much variability. All the
     graphs and insights described below relate to country averages and not to individuals.
+  id: totrans-93
   prefs: []
   type: TYPE_NORMAL
+  zh: GDP值已根据通货膨胀进行调整，并代表当前的美元，因此这些值旨在跨年进行比较。当然，这些是国家的平均值，并且每个国家内部存在很大的变异性。下面描述的所有图表和洞察都关系到国家平均值，而不是个人。
 - en: 10.5.1 Log transformation
+  id: totrans-94
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 10.5.1 对数变换
 - en: 'Here is a histogram of per day incomes from 1970:'
+  id: totrans-95
   prefs: []
   type: TYPE_NORMAL
+  zh: 下面是1970年每日收入的直方图：
 - en: '[PRE16]'
+  id: totrans-96
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE16]'
 - en: '![](../Images/da4c1134d5158d414b91cf422f41f101.png)'
+  id: totrans-97
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/da4c1134d5158d414b91cf422f41f101.png)'
 - en: We use the `color = "black"` argument to draw a boundary and clearly distinguish
     the bins.
+  id: totrans-98
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们使用`color = "black"`参数来绘制边界，并清楚地区分各个区间。
 - en: In this plot, we see that for the majority of countries, averages are below
     $10 a day. However, the majority of the x-axis is dedicated to the 35 countries
     with averages above $10\. So the plot is not very informative about countries
     with values below $10 a day.
+  id: totrans-99
   prefs: []
   type: TYPE_NORMAL
+  zh: 在这个图表中，我们看到对于大多数国家，平均值低于每天10美元。然而，x轴的大部分都用于表示平均每天收入超过10美元的35个国家。因此，这个图表对于每天收入低于10美元的国家来说并不很有信息量。
 - en: 'It might be more informative to quickly be able to see how many countries have
     average daily incomes of about $1 (extremely poor), $2 (very poor), $4 (poor),
     $8 (middle), $16 (well off), $32 (rich), $64 (very rich) per day. These changes
     are multiplicative and log transformations convert multiplicative changes into
     additive ones: when using base 2, a doubling of a value turns into an increase
     by 1.'
+  id: totrans-100
   prefs: []
   type: TYPE_NORMAL
+  zh: 可能更直观的是，能够快速看到大约有多少国家的平均每日收入约为1美元（极端贫困）、2美元（非常贫困）、4美元（贫困）、8美元（中等）、16美元（富裕）、32美元（富有）、64美元（非常富有）。这些变化是乘法的，对数变换将乘法变化转换为加法变化：当使用2作为底数时，一个值的翻倍变成了增加1。
 - en: 'Here is the distribution if we apply a log base 2 transform:'
+  id: totrans-101
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果我们对数据进行以2为底的对数变换，这就是其分布情况：
 - en: '[PRE17]'
+  id: totrans-102
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE17]'
 - en: '![](../Images/d6bb0065d46fef0ecaa6b4176d29255d.png)'
+  id: totrans-103
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/d6bb0065d46fef0ecaa6b4176d29255d.png)'
 - en: In a way this provides a *close-up* of the mid to lower income countries.
+  id: totrans-104
   prefs: []
   type: TYPE_NORMAL
+  zh: 从某种意义上说，这为中等和低收入国家提供了一个*近距离*的观察。
 - en: 10.5.2 Which base?
+  id: totrans-105
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 10.5.2 哪个底数？
 - en: In the case above, we used base 2 in the log transformations. Other common choices
     are base \(\mathrm{e}\) (the natural log) and base 10.
+  id: totrans-106
   prefs: []
   type: TYPE_NORMAL
+  zh: 在上述情况中，我们在对数变换中使用了2作为底数。其他常见的选项是以 \(\mathrm{e}\)（自然对数）为底和以10为底。
 - en: In general, we do not recommend using the natural log for data exploration and
     visualization. This is because while \(2^2, 2^3, 2^4, \dots\) or \(10^2, 10^3,
     \dots\) are easy to compute in our heads, the same is not true for \(\mathrm{e}^2,
     \mathrm{e}^3, \dots\), so the scale is not intuitive or easy to interpret.
+  id: totrans-107
   prefs: []
   type: TYPE_NORMAL
+  zh: 通常，我们不推荐在数据探索和可视化中使用自然对数。这是因为虽然\(2^2, 2^3, 2^4, \dots\)或\(10^2, 10^3, \dots\)在我们的头脑中很容易计算，但\(\mathrm{e}^2,
+    \mathrm{e}^3, \dots\)并不容易计算，因此刻度不直观或难以解释。
 - en: In the dollars per day example, we used base 2 instead of base 10 because the
     resulting range is easier to interpret. The range of the values being plotted
     is 0.327, 48.885.
+  id: totrans-108
   prefs: []
   type: TYPE_NORMAL
+  zh: 在每天美元的例子中，我们使用2为底而不是10为底，因为结果的范围更容易解释。正在绘制的值的范围是0.327，48.885。
 - en: 'In base 10, this turns into a range that includes very few integers: just 0
     and 1. With base two, our range includes -2, -1, 0, 1, 2, 3, 4, and 5\. It is
     easier to compute \(2^x\) and \(10^x\) when \(x\) is an integer and between -10
@@ -491,138 +716,202 @@
     of a limited range is that choosing the binwidth is more challenging. With log
     base 2, we know that a binwidth of 1 will translate to a bin with range \(x\)
     to \(2x\).'
+  id: totrans-109
   prefs: []
   type: TYPE_NORMAL
+  zh: 在十进制中，这变成了一个包含非常少数整数的范围：只有0和1。在二进制中，我们的范围包括-2，-1，0，1，2，3，4和5。当x是介于-10和10之间的整数时，计算\(2^x\)和\(10^x\)更容易，所以我们更倾向于使用较小的整数。有限范围的另一个后果是选择箱宽更具挑战性。以2为底的对数，我们知道箱宽为1将转换为范围在\(x\)到\(2x\)之间的箱。
 - en: 'For an example in which base 10 makes more sense, consider population sizes.
     A log base 10 is preferable since the range for these is:'
+  id: totrans-110
   prefs: []
   type: TYPE_NORMAL
+  zh: 对于一个更适合使用十进制的例子，考虑人口规模。以10为底的对数是首选，因为这些的范围是：
 - en: '[PRE18]'
+  id: totrans-111
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE18]'
 - en: 'Here is the histogram of the transformed values:'
+  id: totrans-112
   prefs: []
   type: TYPE_NORMAL
+  zh: 这里是变换值的直方图：
 - en: '[PRE19]'
+  id: totrans-113
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE19]'
 - en: '![](../Images/add21d76b27dbb9a1b85c1a2729aca74.png)'
+  id: totrans-114
   prefs: []
   type: TYPE_IMG
+  zh: '![图片](../Images/add21d76b27dbb9a1b85c1a2729aca74.png)'
 - en: In the above, we quickly see that country populations range between ten thousand
     and ten billion.
+  id: totrans-115
   prefs: []
   type: TYPE_NORMAL
+  zh: 在上面，我们可以很快地看到国家人口介于十万和一百亿之间。
 - en: 10.5.3 Transform the values or the scale?
+  id: totrans-116
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 10.5.3 转换值或刻度？
 - en: 'There are two ways we can use log transformations in plots. We can log the
     values before plotting them or use log scales in the axes. Both approaches are
     useful and have different strengths. If we log the data, we can more easily interpret
     intermediate values in the scale. For example, if we see:'
+  id: totrans-117
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们可以在图表中使用两种方法来使用对数变换。我们可以在绘图之前对数据进行对数变换，或者在坐标轴上使用对数刻度。这两种方法都很有用，并且具有不同的优势。如果我们对数据进行对数变换，我们可以更容易地解释刻度中的中间值。例如，如果我们看到：
 - en: '`----1----x----2--------3----`'
+  id: totrans-118
   prefs: []
   type: TYPE_NORMAL
+  zh: '`----1----x----2--------3----`'
 - en: 'for log transformed data, we know that the value of \(x\) is about 1.5\. If
     the scales are logged:'
+  id: totrans-119
   prefs: []
   type: TYPE_NORMAL
+  zh: 对于对数变换后的数据，我们知道\(x\)的值大约是1.5。如果刻度是已对数的：
 - en: '`----10---x---100------1000---`'
+  id: totrans-120
   prefs: []
   type: TYPE_NORMAL
+  zh: '`----10---x---100------1000---`'
 - en: then, to determine `x`, we need to compute \(10^{1.5}\), which is not easy to
     do in our heads. The advantage of using logged scales is that we see the original
     values on the axes. However, the advantage of showing logged scales is that the
     original values are displayed in the plot, which are easier to interpret. For
     example, we would see “32 dollars a day” instead of “5 log base 2 dollars a day”.
+  id: totrans-121
   prefs: []
   type: TYPE_NORMAL
+  zh: 然后，为了确定`x`，我们需要计算\(10^{1.5}\)，这在我们的头脑中并不容易。使用对数刻度的优点是我们在轴上看到原始值。然而，显示对数刻度的优点是原始值在图中显示，这更容易解释。例如，我们会看到“每天32美元”而不是“每天5个以2为底的对数美元”。
 - en: 'As we learned earlier, if we want to scale the axis with logs, we can use the
     `scale_x_continuous` function. Instead of logging the values first, we apply this
     layer:'
+  id: totrans-122
   prefs: []
   type: TYPE_NORMAL
+  zh: 如我们之前所学的，如果我们想要用对数来缩放轴，我们可以使用`scale_x_continuous`函数。我们不是先对值进行对数变换，而是应用这个层：
 - en: '[PRE20]'
+  id: totrans-123
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE20]'
 - en: '![](../Images/42ba5332a2cdfea28b4ed5ec5506d2e0.png)'
+  id: totrans-124
   prefs: []
   type: TYPE_IMG
+  zh: '![图片](../Images/42ba5332a2cdfea28b4ed5ec5506d2e0.png)'
 - en: 'Note that the log base 10 transformation has its own function: `scale_x_log10()`,
     but currently base 2 does not, although we could easily define our own.'
+  id: totrans-125
   prefs: []
   type: TYPE_NORMAL
+  zh: 注意，10为底的对数变换有自己的函数：`scale_x_log10()`，但目前2为底没有，尽管我们可以轻松地定义自己的。
 - en: There are other transformations available through the `trans` argument. As we
     learn later on, the square root (`sqrt`) transformation is useful when considering
     counts. The logistic transformation (`logit`) is useful when plotting proportions
     between 0 and 1\. The `reverse` transformation is useful when we want smaller
     values to be on the right or on top.
+  id: totrans-126
   prefs: []
   type: TYPE_NORMAL
+  zh: 通过`trans`参数还有其他可用的变换。正如我们稍后将要学习的，平方根（`sqrt`）变换在考虑计数时很有用。逻辑变换（`logit`）在绘制0到1之间的比例时很有用。`reverse`变换在我们想要较小的值在右边或顶部时很有用。
 - en: 10.6 Visualizing multimodal distributions
+  id: totrans-127
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 10.6 可视化多模态分布
 - en: 'In the histogram above we see two *bumps*: one at about 4 and another at about
     32\. In statistics these bumps are sometimes referred to as *modes*. The mode
     of a distribution is the value with the highest frequency. The mode of the normal
     distribution is the average. When a distribution, like the one above, doesn’t
     monotonically decrease from the mode, we call the locations where it goes up and
     down again *local modes* and say that the distribution has *multiple modes*.'
+  id: totrans-128
   prefs: []
   type: TYPE_NORMAL
+  zh: 在上面的直方图中，我们看到两个*峰值*：一个在大约4，另一个在大约32。在统计学中，这些峰值有时被称为*峰值*。分布的峰值是频率最高的值。正态分布的峰值是平均值。当一个分布，如上面的分布，不是从峰值单调递减时，我们称它再次上升和下降的位置为*局部峰值*，并说该分布有*多个峰值*。
 - en: 'The histogram above suggests that the 1970 country income distribution has
     two modes: one at about 2 dollars per day (1 in the log 2 scale) and another at
     about 32 dollars per day (5 in the log 2 scale). This *bimodality* is consistent
     with a dichotomous world made up of countries with average incomes less than $8
     (3 in the log 2 scale) a day and countries above that.'
+  id: totrans-129
   prefs: []
   type: TYPE_NORMAL
+  zh: 上面的直方图表明，1970年国家收入分布有两个峰值：一个在大约每天2美元（对数2刻度中的1），另一个在大约每天32美元（对数2刻度中的5）。这种*双峰性*与由平均每天收入低于8美元（对数2刻度中的3）的国家和收入高于该水平的国家组成的二分世界是一致的。
 - en: 10.7 Comparing multiple distributions with boxplots and ridge plots
+  id: totrans-130
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 10.7 使用箱线图和脊线图比较多个分布
 - en: A histogram showed us that the 1970 income distribution values show a dichotomy.
     However, the histogram does not show us if the two groups of countries are *west*
     versus the *developing* world.
+  id: totrans-131
   prefs: []
   type: TYPE_NORMAL
+  zh: 直方图显示，1970年的收入分布值显示出二分性。然而，直方图并没有显示两组国家是*西方*与*发展中国家*的对立。
 - en: Let’s start by quickly examining the data by region. We reorder the regions
     by the median value and use a log scale.
+  id: totrans-132
   prefs: []
   type: TYPE_NORMAL
+  zh: 让我们从快速检查按地区划分的数据开始。我们按中位数重新排序地区，并使用对数刻度。
 - en: '[PRE21]'
+  id: totrans-133
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE21]'
 - en: '![](../Images/fcc8af23d7d4032b5dc109ccf12a12f4.png)'
+  id: totrans-134
   prefs: []
   type: TYPE_IMG
+  zh: '![图片](../Images/fcc8af23d7d4032b5dc109ccf12a12f4.png)'
 - en: 'We can already see that there is indeed a “west versus the rest” dichotomy:
     we see two clear groups, with the rich group composed of North America, Northern
     and Western Europe, New Zealand and Australia. We define groups based on this
     observation:'
+  id: totrans-135
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们已经可以看到确实存在“西方与其它”的二分性：我们看到两个明显的组，富裕组由北美、北欧和西欧、新西兰和澳大利亚组成。我们根据这个观察结果定义组：
 - en: '[PRE22]'
+  id: totrans-136
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE22]'
 - en: 'We turn this `group` variable into a factor to control the order of the levels:'
+  id: totrans-137
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们将这个`group`变量转换为一个因子，以控制级别的顺序：
 - en: '[PRE23]'
+  id: totrans-138
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE23]'
 - en: In the next section we demonstrate how to visualize and compare distributions
     across groups.
+  id: totrans-139
   prefs: []
   type: TYPE_NORMAL
+  zh: 在下一节中，我们将展示如何可视化和比较不同组之间的分布。
 - en: 10.7.1 Boxplots
+  id: totrans-140
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 10.7.1 箱线图
 - en: The exploratory data analysis above has revealed two characteristics about average
     income distribution in 1970\. Using a histogram, we found a bimodal distribution
     with the modes relating to poor and rich countries. We now want to compare the
@@ -634,40 +923,59 @@
     = element_text(angle = 90, hjust = 1))` to turn the group labels vertical, since
     they do not fit if we show them horizontally, and remove the axis label to make
     space.
+  id: totrans-141
   prefs: []
   type: TYPE_NORMAL
+  zh: 上述探索性数据分析揭示了1970年人均收入分布的两个特点。使用直方图，我们发现了一个双峰分布，其峰值与贫穷国家和富裕国家相关。我们现在想要比较这五个组之间的分布，以确认“西方与其它”的二分性。每个类别中的点数足够多，以至于一个总结图可能是有用的。我们可以生成五个直方图或五个密度图，但将所有视觉总结放在一个图中可能更实用。因此，我们首先将箱线图并排放置。请注意，我们添加了层`theme(axis.text.x
+    = element_text(angle = 90, hjust = 1))`来使组标签垂直，因为如果水平显示它们则不合适，并移除了轴标签以留出空间。
 - en: '[PRE24]'
+  id: totrans-142
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE24]'
 - en: '![](../Images/a52b6221e2c8a9156867ea87c7c18210.png)'
+  id: totrans-143
   prefs: []
   type: TYPE_IMG
+  zh: '![图片](../Images/a52b6221e2c8a9156867ea87c7c18210.png)'
 - en: Boxplots have the limitation that by summarizing the data into five numbers,
     we might miss important characteristics of the data. One way to avoid this is
     by showing the data.
+  id: totrans-144
   prefs: []
   type: TYPE_NORMAL
+  zh: 箱线图有一个局限性，即通过将数据总结为五个数字，我们可能会错过数据的重要特征。避免这种情况的一种方法是通过显示数据。
 - en: '[PRE25]'
+  id: totrans-145
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE25]'
 - en: '![](../Images/5ce7b47fe1b8a730d7b817ad5f36fd1f.png)'
+  id: totrans-146
   prefs: []
   type: TYPE_IMG
+  zh: '![图片](../Images/5ce7b47fe1b8a730d7b817ad5f36fd1f.png)'
 - en: 10.7.2 Ridge plots
+  id: totrans-147
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 10.7.2 脊线图
 - en: 'Showing each individual point does not always reveal important characteristics
     of the distribution. Although not the case here, when the number of data points
     is so large that there is over-plotting, showing the data can be counterproductive.
     Boxplots help with this by providing a five-number summary, but this has limitations
     too. For example, boxplots will not permit us to discover bimodal distributions.
     To see this, note that the two plots below are summarizing the same dataset:'
+  id: totrans-148
   prefs: []
   type: TYPE_NORMAL
+  zh: 显示每个单独的点并不总是能揭示分布的重要特征。尽管这里不是这种情况，当数据点的数量非常大以至于有重叠时，显示数据可能会适得其反。箱线图通过提供五数总结来帮助解决这个问题，但这也有局限性。例如，箱线图不会允许我们发现双峰分布。为了看到这一点，请注意下面的两个图是在总结相同的数据集：
 - en: '![](../Images/6eac7447ea318b4a4db078c57c16d734.png)'
+  id: totrans-149
   prefs: []
   type: TYPE_IMG
+  zh: '![图片](../Images/6eac7447ea318b4a4db078c57c16d734.png)'
 - en: In cases in which we are concerned that the boxplot summary is too simplistic,
     we can show stacked smooth densities or histograms. We refer to these as *ridge
     plots*. Because we are used to visualizing densities with values in the x-axis,
@@ -675,315 +983,472 @@
     it is convenient to overlay them. The package **ggridges** provides a convenient
     function for doing this. Here is the income data shown above with boxplots but
     with a *ridge plot*.
+  id: totrans-150
   prefs: []
   type: TYPE_NORMAL
+  zh: 在我们担心箱线图总结过于简单的情况下，我们可以展示堆叠的平滑密度或直方图。我们把这些称为*脊图*。因为我们习惯于用x轴上的值来可视化密度，所以我们垂直堆叠它们。此外，由于这种方法需要更多的空间，叠加它们很方便。**ggridges**包提供了一个方便的函数来做这件事。下面是上面展示的收入数据，带有箱线图，但使用了*脊图*。
 - en: '[PRE26]'
+  id: totrans-151
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE26]'
 - en: '![](../Images/6e95e02d67b66bdf967128e1105b6b9d.png)'
+  id: totrans-152
   prefs: []
   type: TYPE_IMG
+  zh: '![图片](../Images/6e95e02d67b66bdf967128e1105b6b9d.png)'
 - en: Note that we have to invert the `x` and `y` used for the boxplot. A useful `geom_density_ridges`
     parameter is `scale`, which lets you determine the amount of overlap, with `scale
     = 1` meaning no overlap and larger values resulting in more overlap.
+  id: totrans-153
   prefs: []
   type: TYPE_NORMAL
+  zh: 注意，我们必须反转用于箱线图的`x`和`y`。一个有用的`geom_density_ridges`参数是`scale`，它允许你确定重叠的程度，其中`scale
+    = 1`表示没有重叠，更大的值会导致更多的重叠。
 - en: 'If the number of data points is small enough, we can add them to the ridge
     plot using the following code:'
+  id: totrans-154
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果数据点的数量足够少，我们可以使用以下代码将它们添加到脊图中：
 - en: '[PRE27]'
+  id: totrans-155
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE27]'
 - en: '![](../Images/9878a65e099866c933f37bddf334f158.png)'
+  id: totrans-156
   prefs: []
   type: TYPE_IMG
+  zh: '![图片](../Images/9878a65e099866c933f37bddf334f158.png)'
 - en: By default, the height of the points is jittered and should not be interpreted
     in any way. To show data points, but without using jitter we can use the following
     code to add what is referred to as a *rug representation* of the data.
+  id: totrans-157
   prefs: []
   type: TYPE_NORMAL
+  zh: 默认情况下，点的长度是抖动的，不应以任何方式解释。为了显示数据点，但又不使用抖动，我们可以使用以下代码来添加所谓的数据的*毛刷表示*。
 - en: '[PRE28]'
+  id: totrans-158
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE28]'
 - en: '![](../Images/0cedaa53f42219e85171495faa92f887.png)'
+  id: totrans-159
   prefs: []
   type: TYPE_IMG
+  zh: '![图片](../Images/0cedaa53f42219e85171495faa92f887.png)'
 - en: '10.7.3 Example: 1970 versus 2010 income distributions'
+  id: totrans-160
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 10.7.3 示例：1970年与2010年的收入分布
 - en: 'Data exploration clearly shows that in 1970 there was a “west versus the rest”
     dichotomy. But does this dichotomy persist? Let’s use `facet_grid` see how the
     distributions have changed. To start, we will focus on two groups: the west and
     the rest. We make four histograms.'
+  id: totrans-161
   prefs: []
   type: TYPE_NORMAL
+  zh: 数据探索清楚地显示，1970年存在“西方与其它”的二分法。但这种二分法持续存在吗？让我们使用`facet_grid`来看看分布是如何变化的。首先，我们将关注两组：西方和其它。我们制作四个直方图。
 - en: '[PRE29]'
+  id: totrans-162
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE29]'
 - en: '![](../Images/158242e39beb6a925a4ae7f93741f36c.png)'
+  id: totrans-163
   prefs: []
   type: TYPE_IMG
+  zh: '![图片](../Images/158242e39beb6a925a4ae7f93741f36c.png)'
 - en: 'Before we interpret the findings of this plot, we notice that there are more
     countries represented in the 2010 histograms than in 1970: the total counts are
     larger. One reason for this is that several countries were founded after 1970\.
     For example, the Soviet Union divided into several countries during the 1990s.
     Another reason is that data was available for more countries in 2010.'
+  id: totrans-164
   prefs: []
   type: TYPE_NORMAL
+  zh: 在我们解释这个图的发现之前，我们注意到2010年的直方图中代表的国家比1970年多：总计数更大。一个原因是几个国家在1970年之后成立。例如，苏联在20世纪90年代分裂成几个国家。另一个原因是2010年有更多国家的数据可用。
 - en: 'We remake the plots using only countries with data available for both years.
     In the data wrangling part of this book, we will learn **tidyverse** tools that
     permit us to write efficient code for this, but here we can use simple code using
     the `intersect` function:'
+  id: totrans-165
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们只使用在两年都有数据的国家的数据重新制作这些图。在这本书的数据处理部分，我们将学习**tidyverse**工具，这些工具允许我们编写高效的代码来完成这项工作，但在这里我们可以使用简单的代码，使用`intersect`函数：
 - en: '[PRE30]'
+  id: totrans-166
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE30]'
 - en: These 108 account for 86% of the world population, so this subset should be
     representative.
+  id: totrans-167
   prefs: []
   type: TYPE_NORMAL
+  zh: 这108个国家占世界人口的86%，所以这个子集应该是具有代表性的。
 - en: 'Let’s remake the plot, but only for this subset by simply adding `country %in%
     country_list` to the `filter` function:'
+  id: totrans-168
   prefs: []
   type: TYPE_NORMAL
+  zh: 让我们重新制作这张图表，但只针对这个子集，只需在`filter`函数中简单添加`country %in% country_list`：
 - en: '![](../Images/c9e22cfd8d6d4f1dea53b9d1cf611ec8.png)'
+  id: totrans-169
   prefs: []
   type: TYPE_IMG
+  zh: '![图片](../Images/c9e22cfd8d6d4f1dea53b9d1cf611ec8.png)'
 - en: We now see that the rich countries have become a bit richer, but percentage-wise,
     the poor countries appear to have improved more. In particular, we see that the
     proportion of *developing* countries earning more than $16 a day increased substantially.
+  id: totrans-170
   prefs: []
   type: TYPE_NORMAL
+  zh: 现在，我们看到富裕国家变得更富裕了，但从百分比来看，贫穷国家似乎改善得更多。特别是，我们看到每天收入超过16美元的发展中国家比例显著增加。
 - en: To see which specific regions improved the most, we can remake the boxplots
     we made above, but now adding the year 2010 and then using facet to compare the
     two years.
+  id: totrans-171
   prefs: []
   type: TYPE_NORMAL
+  zh: 要看到哪些具体地区改善最多，我们可以重新制作上面的箱线图，但现在添加2010年，然后使用分面比较两年。
 - en: '[PRE31]'
+  id: totrans-172
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE31]'
 - en: '![](../Images/16f576b01264d0a92ead8f94656e7bf6.png)'
+  id: totrans-173
   prefs: []
   type: TYPE_IMG
+  zh: '![图片](../Images/16f576b01264d0a92ead8f94656e7bf6.png)'
 - en: Here, we pause to introduce another powerful **ggplot2** feature. Because we
     want to compare each region before and after, it would be convenient to have the
     1970 boxplot next to the 2010 boxplot for each region. In general, comparisons
     are easier when data are plotted next to each other.
+  id: totrans-174
   prefs: []
   type: TYPE_NORMAL
+  zh: 在这里，我们暂停一下，介绍另一个强大的**ggplot2**功能。因为我们想比较每个地区的前后情况，所以对于每个地区的1970年箱线图和2010年箱线图并排显示将非常方便。一般来说，当数据并排绘制时，比较更容易。
 - en: So instead of faceting, we keep the data from each year together and ask to
     color (or fill) them depending on the year. Note that groups are automatically
     separated by year and each pair of boxplots drawn next to each other. Because
     year is a number, we turn it into a factor since **ggplot2** automatically assigns
     a color to each category of a factor. Note that we have to convert the year columns
     from numeric to factor.
+  id: totrans-175
   prefs: []
   type: TYPE_NORMAL
+  zh: 因此，我们不是使用分面，而是将每年的数据保持在一起，并要求根据年份着色（或填充）。请注意，组别会自动按年份分开，并且每对箱线图都会并排绘制。因为年份是数字，所以我们将其转换为因子，因为**ggplot2**会自动为因子的每个类别分配一种颜色。请注意，我们必须将年份列从数值转换为因子。
 - en: '[PRE32]'
+  id: totrans-176
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE32]'
 - en: '![](../Images/af0a8f9cf73b3ba01a5a6d050ae8e268.png)'
+  id: totrans-177
   prefs: []
   type: TYPE_IMG
+  zh: '![图片](../Images/af0a8f9cf73b3ba01a5a6d050ae8e268.png)'
 - en: 'Finally, we point out that if what we are most interested in is comparing before
     and after values, it might make more sense to plot the percentage increases. We
     are still not ready to learn to code this, but here is what the plot would look
     like:'
+  id: totrans-178
   prefs: []
   type: TYPE_NORMAL
+  zh: 最后，我们指出，如果我们最感兴趣的是比较前后值，那么绘制百分比增长可能更有意义。我们还没有准备好学习如何编写这段代码，但以下是图表可能的样子：
 - en: '![](../Images/82f3c313f99a1c49487d8443a337546b.png)'
+  id: totrans-179
   prefs: []
   type: TYPE_IMG
+  zh: '![图片](../Images/82f3c313f99a1c49487d8443a337546b.png)'
 - en: The previous data exploration suggested that the income gap between rich and
     poor countries has narrowed considerably during the last 40 years. We used a series
     of histograms and boxplots to see this. We suggest a succinct way to convey this
     message with just one plot.
+  id: totrans-180
   prefs: []
   type: TYPE_NORMAL
+  zh: 前面的数据探索表明，在过去40年里，富裕国家和贫穷国家之间的收入差距已经显著缩小。我们使用一系列直方图和箱线图来观察这一点。我们建议用一张图表简洁地传达这一信息。
 - en: 'Let’s start by noting that density plots for income distribution in 1970 and
     2010 deliver the message that the gap is closing:'
+  id: totrans-181
   prefs: []
   type: TYPE_NORMAL
+  zh: 让我们先注意，1970年和2010年的收入分布密度图传达了差距正在缩小的信息：
 - en: '[PRE33]'
+  id: totrans-182
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE33]'
 - en: '![](../Images/9c26c15312eec8604798ad5c8ae5347c.png)'
+  id: totrans-183
   prefs: []
   type: TYPE_IMG
+  zh: '![图片](../Images/9c26c15312eec8604798ad5c8ae5347c.png)'
 - en: 'In the 1970 plot, we see two clear modes: poor and rich countries. In 2010,
     it appears that some of the poor countries have shifted towards the right, closing
     the gap.'
+  id: totrans-184
   prefs: []
   type: TYPE_NORMAL
+  zh: 在1970年的图表中，我们看到两个明显的模式：贫穷国家和富裕国家。到2010年，似乎一些贫穷国家已经向右移动，缩小了差距。
 - en: The next message we need to convey is that the reason for this change in distribution
     is that several poor countries became richer, rather than some rich countries
     becoming poorer. To do this, we can assign a color to the groups we identified
     during data exploration.
+  id: totrans-185
   prefs: []
   type: TYPE_NORMAL
+  zh: 下一条我们需要传达的信息是，这种分布变化的原因是几个贫穷国家变得更富裕，而不是一些富裕国家变得更贫穷。为此，我们可以在数据探索期间确定的组别上分配一种颜色。
 - en: 'However, we first need to learn how to make these smooth densities in a way
     that preserves information on the number of countries in each group. To understand
     why we need this, note the discrepancy in the size of each group:'
+  id: totrans-186
   prefs: []
   type: TYPE_NORMAL
+  zh: 然而，我们首先需要学习如何以保留每个组别中国家数量信息的方式制作这些平滑密度图。为了理解为什么我们需要这样做，请注意每个组别大小的差异：
 - en: '| Developing | West |'
+  id: totrans-187
   prefs: []
   type: TYPE_TB
+  zh: '| 发展中 | 西方 |'
 - en: '| --- | --- |'
+  id: totrans-188
   prefs: []
   type: TYPE_TB
+  zh: '| --- | --- |'
 - en: '| 87 | 21 |'
+  id: totrans-189
   prefs: []
   type: TYPE_TB
+  zh: '| 87 | 21 |'
 - en: 'But when we overlay two densities, the default is to have the area represented
     by each distribution add up to 1, regardless of the size of each group:'
+  id: totrans-190
   prefs: []
   type: TYPE_NORMAL
+  zh: 但是，当我们叠加两个密度时，默认情况下，每个分布表示的面积加起来为 1，无论每个组的大小如何：
 - en: '[PRE34]'
+  id: totrans-191
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE34]'
 - en: '![](../Images/892a1f0a0e32472ba3c46193c1985e7a.png)'
+  id: totrans-192
   prefs: []
   type: TYPE_IMG
+  zh: '![图片](../Images/892a1f0a0e32472ba3c46193c1985e7a.png)'
 - en: This makes it appear as if there are the same number of countries in each group.
     To change this, we will need to learn to access computed variables with `geom_density`
     function.
+  id: totrans-193
   prefs: []
   type: TYPE_NORMAL
+  zh: 这使得看起来每个组中都有相同数量的国家。要改变这一点，我们需要学习如何使用 `geom_density` 函数访问计算变量。
 - en: 10.7.4 Accessing computed variables
+  id: totrans-194
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 10.7.4 访问计算变量
 - en: To have the areas of these densities be proportional to the size of the groups,
     we can simply multiply the y-axis values by the size of the group. From the `geom_density`
     help file, we see that the functions compute a variable called `count` that does
     exactly this. We want this variable to be on the y-axis rather than the density.
+  id: totrans-195
   prefs: []
   type: TYPE_NORMAL
+  zh: 要使这些密度的面积与组的大小成比例，我们可以简单地乘以 y 轴的值和组的大小。从 `geom_density` 帮助文件中，我们看到这些函数计算一个名为
+    `count` 的变量，它正好做这件事。我们希望这个变量在 y 轴上而不是密度上。
 - en: 'In **ggplot2**, we access these variables by surrounding the name with two
     dots. We will therefore use the following mapping:'
+  id: totrans-196
   prefs: []
   type: TYPE_NORMAL
+  zh: 在 **ggplot2** 中，我们通过在变量名周围使用两个点来访问这些变量。因此，我们将使用以下映射：
 - en: '[PRE35]'
+  id: totrans-197
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE35]'
 - en: We can now create the desired plot by simply changing the mapping in the previous
     code chunk. We will also expand the limits of the x-axis.
+  id: totrans-198
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们现在可以通过简单地更改之前代码块中的映射来创建所需的图表。我们还将扩展 x 轴的极限。
 - en: '[PRE36]'
+  id: totrans-199
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE36]'
 - en: '![](../Images/a621cf5fb70b0454e615e1cd0e43af6e.png)'
+  id: totrans-200
   prefs: []
   type: TYPE_IMG
+  zh: '![图片](../Images/a621cf5fb70b0454e615e1cd0e43af6e.png)'
 - en: If we want the densities to be smoother, we use the `bw` argument so that the
     same bandwidth is used in each density. We selected 0.75 after trying out several
     values.
+  id: totrans-201
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果我们想让密度更平滑，我们可以使用 `bw` 参数，这样每个密度的带宽都是相同的。我们在尝试了几个值之后选择了 0.75。
 - en: '[PRE37]'
+  id: totrans-202
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE37]'
 - en: '![](../Images/20ba574ea4e4813ca1cdb7871805b25e.png)'
+  id: totrans-203
   prefs: []
   type: TYPE_IMG
+  zh: '![图片](../Images/20ba574ea4e4813ca1cdb7871805b25e.png)'
 - en: This plot now shows what is happening very clearly. The developing world distribution
     is changing. A third mode appears consisting of the countries that most narrowed
     the gap.
+  id: totrans-204
   prefs: []
   type: TYPE_NORMAL
+  zh: 这个图表现在非常清楚地显示了正在发生的事情。发展中国家的分布正在变化。出现了一个新的模式，由那些差距缩小最多的国家组成。
 - en: 'To visualize if any of the groups defined above are driving this we can quickly
     make a ridge plot:'
+  id: totrans-205
   prefs: []
   type: TYPE_NORMAL
+  zh: 为了可视化是否上述定义的任何组在推动这一点，我们可以快速制作一个脊状图：
 - en: '[PRE38]'
+  id: totrans-206
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE38]'
 - en: '![](../Images/47495f3932986a2af1dd086b64a507d0.png)'
+  id: totrans-207
   prefs: []
   type: TYPE_IMG
+  zh: '![图片](../Images/47495f3932986a2af1dd086b64a507d0.png)'
 - en: 'Another way to achieve this is by stacking the densities on top of each other:'
+  id: totrans-208
   prefs: []
   type: TYPE_NORMAL
+  zh: 另一种实现方式是将密度堆叠在彼此之上：
 - en: '[PRE39]'
+  id: totrans-209
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE39]'
 - en: '![](../Images/95cb08bd59c487c424866a4455e42a73.png)'
+  id: totrans-210
   prefs: []
   type: TYPE_IMG
+  zh: '![图片](../Images/95cb08bd59c487c424866a4455e42a73.png)'
 - en: Here we can clearly see how the distributions for East Asia, Latin America,
     and others shift markedly to the right. While Sub-Saharan Africa remains stagnant.
+  id: totrans-211
   prefs: []
   type: TYPE_NORMAL
+  zh: 在这里，我们可以清楚地看到东亚、拉丁美洲和其他地区的分布如何明显向右移动。而撒哈拉以南非洲保持停滞。
 - en: Notice that we order the levels of the group so that the West’s density is plotted
     first, then Sub-Saharan Africa. Having the two extremes plotted first allows us
     to see the remaining bimodality better.
+  id: totrans-212
   prefs: []
   type: TYPE_NORMAL
+  zh: 注意我们按照组的级别排序，以便首先绘制西部的密度，然后是撒哈拉以南非洲。首先绘制两个极端值允许我们更好地看到剩余的双峰性。
 - en: 10.7.5 Weighted densities
+  id: totrans-213
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 10.7.5 加权密度
 - en: 'As a final point, we note that these distributions weigh every country the
     same. So if most of the population is improving, but living in a very large country,
     such as China, we might not appreciate this. We can actually weight the smooth
     densities using the `weight` mapping argument. The plot then looks like this:'
+  id: totrans-214
   prefs: []
   type: TYPE_NORMAL
+  zh: 最后一点，我们注意到这些分布对每个国家都给予相同的权重。所以，如果大多数人口正在改善，但居住在一个非常大的国家，例如中国，我们可能不会重视这一点。实际上，我们可以使用
+    `weight` 映射参数来加权平滑密度。然后图表看起来是这样的：
 - en: '![](../Images/224a08a4949701349f26f31e0937e33d.png)'
+  id: totrans-215
   prefs: []
   type: TYPE_IMG
+  zh: '![图片](../Images/224a08a4949701349f26f31e0937e33d.png)'
 - en: This particular figure shows very clearly how the income distribution gap is
     closing with most of the poor remaining in Sub-Saharan Africa.
+  id: totrans-216
   prefs: []
   type: TYPE_NORMAL
+  zh: 这个特定的图表非常清楚地显示了收入分配差距是如何随着大多数穷人仍然留在撒哈拉以南非洲而缩小的。
 - en: 10.8 The ecological fallacy and importance of showing the data
+  id: totrans-217
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 10.8 生态谬误和展示数据的重要性
 - en: Throughout this section, we have been comparing regions of the world. We have
     seen that, on average, some regions do better than others. In this section, we
     focus on describing the importance of variability within the groups when examining
     the relationship between a country’s infant mortality rates and average income.
+  id: totrans-218
   prefs: []
   type: TYPE_NORMAL
+  zh: 在本节中，我们一直在比较世界各地的地区。我们看到了，平均而言，一些地区比其他地区做得更好。在本节中，我们专注于描述在考察一个国家的婴儿死亡率与平均收入之间的关系时，组内变异性的重要性。
 - en: 'We define a few more regions and compare the averages across regions:'
+  id: totrans-219
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们定义了更多地区，并比较了这些地区的平均值：
 - en: '![](../Images/59c7752ee06cbbb7104b52baee6d2d2a.png)'
+  id: totrans-220
   prefs: []
   type: TYPE_IMG
+  zh: '![图表](../Images/59c7752ee06cbbb7104b52baee6d2d2a.png)'
 - en: The relationship between these two variables is almost perfectly linear and
     the graph shows a dramatic difference. While in the West less than 0.5% of infants
     die, in Sub-Saharan Africa the rate is higher than 6%!
+  id: totrans-221
   prefs: []
   type: TYPE_NORMAL
+  zh: 这两个变量之间的关系几乎是完美的线性关系，图表显示了巨大的差异。在西方，婴儿死亡率不到0.5%，而在撒哈拉以南非洲，这个比率超过6%！
 - en: Note that the plot uses a new transformation, the logistic transformation.
+  id: totrans-222
   prefs: []
   type: TYPE_NORMAL
+  zh: 注意，这个图表使用了一种新的变换，即逻辑变换。
 - en: 10.8.1 Logistic transformation
+  id: totrans-223
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 10.8.1 逻辑变换
 - en: 'The logistic or logit transformation for a proportion or rate \(p\) is defined
     as:'
+  id: totrans-224
   prefs: []
   type: TYPE_NORMAL
+  zh: 比例或比率 \(p\) 的逻辑或logit变换定义为：
 - en: \[f(p) = \log \left( \frac{p}{1-p} \right)\]
+  id: totrans-225
   prefs: []
   type: TYPE_NORMAL
+  zh: \[f(p) = \log \left( \frac{p}{1-p} \right)\]
 - en: When \(p\) is a proportion or probability, the quantity that is being logged,
     \(p/(1-p)\), is called the *odds*. In this case \(p\) is the proportion of infants
     that survived. The odds tell us how many more infants are expected to survive
     than to die. The log transformation makes this symmetric. If the rates are the
     same, then the log odds is 0\. Fold increases or decreases turn into positive
     and negative increments, respectively.
+  id: totrans-226
   prefs: []
   type: TYPE_NORMAL
+  zh: 当 \(p\) 是比例或概率时，被取对数的量 \(p/(1-p)\) 被称为*几率*。在这种情况下，\(p\) 是婴儿的存活比例。几率告诉我们预期存活婴儿比死亡婴儿多多少。对数变换使这个量对称。如果比率相同，那么对数几率是0。增加或减少的折叠变成正负增量。
 - en: This scale is useful when we want to highlight differences near 0 or 1\. For
     survival rates this is important because a survival rate of 90% is unacceptable,
     while a survival of 99% is relatively good. We would much prefer a survival rate
@@ -991,51 +1456,73 @@
     does this. Note that 99.9/0.1 is about 10 times bigger than 99/1 which is about
     10 times larger than 90/10\. By using the log, these fold changes turn into constant
     increases.
+  id: totrans-227
   prefs: []
   type: TYPE_NORMAL
+  zh: 这个比例对于当我们想强调接近0或1的差异时很有用。对于生存率来说，这很重要，因为90%的生存率是不可接受的，而99%的生存率相对较好。我们更希望生存率接近99.9%。我们希望我们的比例能够突出这些差异，而logit就是这样做的。注意，99.9/0.1大约是99/1的10倍，而99/1大约是90/10的10倍。通过使用对数，这些折叠变化变成了恒定的增加。
 - en: 10.8.2 Show the data
+  id: totrans-228
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 10.8.2 展示数据
 - en: Now, back to our plot. Based on the plot above, do we conclude that a country
     with a low income is destined to have low survival rate? Do we conclude that survival
     rates in Sub-Saharan Africa are all lower than in Southern Asia, which in turn
     are lower than in the Pacific Islands, and so on?
+  id: totrans-229
   prefs: []
   type: TYPE_NORMAL
+  zh: 现在，回到我们的图表。基于上面的图表，我们是否得出结论：一个低收入国家注定会有低生存率？我们是否得出结论：撒哈拉以南非洲的生存率普遍低于南亚，而南亚又低于太平洋岛屿，如此等等？
 - en: 'Jumping to this conclusion based on a plot showing averages is referred to
     as the *ecological fallacy*. The almost perfect relationship between survival
     rates and income is only observed for the averages at the region level. Once we
     show all the data, we see a somewhat more complicated story:'
+  id: totrans-230
   prefs: []
   type: TYPE_NORMAL
+  zh: 仅根据显示平均值的图表就得出这个结论被称为*生态谬误*。生存率和收入之间几乎完美的关系仅在地区层面的平均值中观察到。一旦我们展示了所有数据，我们就会看到一个更为复杂的故事：
 - en: '![](../Images/8ef36385d88aee206933cc615683db6b.png)'
+  id: totrans-231
   prefs: []
   type: TYPE_IMG
+  zh: '![图表](../Images/8ef36385d88aee206933cc615683db6b.png)'
 - en: Specifically, we see that there is a large amount of variability. We see that
     countries from the same regions can be quite different and that countries with
     the same income can have different survival rates. For example, while on average
     Sub-Saharan Africa had the worse health and economic outcomes, there is wide variability
     within that group. Mauritius and Botswana are doing better than Angola and Sierra
     Leone, with Mauritius comparable to Western countries.
+  id: totrans-232
   prefs: []
   type: TYPE_NORMAL
+  zh: 具体来说，我们看到有很大的变异性。我们看到来自同一地区的国家可以相当不同，而且收入相同的国家可能有不同的生存率。例如，尽管撒哈拉以南非洲的平均健康状况和经济成果较差，但该群体内部存在很大的变异性。毛里求斯和博茨瓦纳的表现优于安哥拉和塞拉利昂，毛里求斯的表现与西方国家相当。
 - en: '* * *'
+  id: totrans-233
   prefs: []
   type: TYPE_NORMAL
+  zh: '* * *'
 - en: '[https://en.wikipedia.org/wiki/Hans_Rosling](https://en.wikipedia.org/wiki/Hans_Rosling)[↩︎](gapminder.html#fnref26)'
+  id: totrans-234
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[Hans Rosling维基百科页面](https://en.wikipedia.org/wiki/Hans_Rosling)[↩︎](gapminder.html#fnref26)'
 - en: '[http://www.gapminder.org/](http://www.gapminder.org/)[↩︎](gapminder.html#fnref27)'
+  id: totrans-235
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[Gapminder官方网站](http://www.gapminder.org/)[↩︎](gapminder.html#fnref27)'
 - en: '[https://www.ted.com/talks/hans_rosling_reveals_new_insights_on_poverty?language=en](https://www.ted.com/talks/hans_rosling_reveals_new_insights_on_poverty?language=en)[↩︎](gapminder.html#fnref28)'
+  id: totrans-236
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[Hans Rosling揭示关于贫困的新见解](https://www.ted.com/talks/hans_rosling_reveals_new_insights_on_poverty?language=en)[↩︎](gapminder.html#fnref28)'
 - en: '[https://www.ted.com/talks/hans_rosling_shows_the_best_stats_you_ve_ever_seen](https://www.ted.com/talks/hans_rosling_shows_the_best_stats_you_ve_ever_seen)[↩︎](gapminder.html#fnref29)'
+  id: totrans-237
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[Hans Rosling展示你见过的最好统计数据](https://www.ted.com/talks/hans_rosling_shows_the_best_stats_you_ve_ever_seen)[↩︎](gapminder.html#fnref29)'

@@ -1,11 +1,15 @@
 - en: Chapter 27 Introduction to machine learning
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 第27章 机器学习简介
 - en: 原文：[https://rafalab.dfci.harvard.edu/dsbook/introduction-to-machine-learning.html](https://rafalab.dfci.harvard.edu/dsbook/introduction-to-machine-learning.html)
+  id: totrans-1
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 原文：[https://rafalab.dfci.harvard.edu/dsbook/introduction-to-machine-learning.html](https://rafalab.dfci.harvard.edu/dsbook/introduction-to-machine-learning.html)
 - en: 'Perhaps the most popular data science methodologies come from the field of
     *machine learning*. Machine learning success stories include the handwritten zip
     code readers implemented by the postal service, speech recognition technology
@@ -16,35 +20,49 @@
     playing machines, implemented decision making based on programmable rules derived
     from theory or first principles, in machine learning decisions are based on algorithms
     **built with data**.'
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: 可能最流行的数据科学方法来自**机器学习**领域。机器学习的成功案例包括邮政服务实现的印刷体邮政编码读取器，苹果的Siri语音识别技术，电影推荐系统，垃圾邮件和恶意软件检测器，房价预测器和自动驾驶汽车。尽管今天人工智能和机器学习经常被互换使用，但我们做出以下区分：虽然最初的人工智能算法，如用于下棋机器的算法，基于从理论或第一性原理推导出的可编程规则实现的决策，但在机器学习中，决策是基于**用数据构建**的算法。
 - en: 27.1 Notation
+  id: totrans-3
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 27.1 符号表示
 - en: 'In machine learning, data comes in the form of:'
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: 在机器学习中，数据以以下形式出现：
 - en: the *outcome* we want to predict and
+  id: totrans-5
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 我们想要预测的**结果**
 - en: the *features* that we will use to predict the outcome
+  id: totrans-6
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 我们将使用的**特征**来预测结果
 - en: We want to build an algorithm that takes feature values as input and returns
     a prediction for the outcome when we don’t know the outcome. The machine learning
     approach is to *train* an algorithm using a dataset for which we do know the outcome,
     and then apply this algorithm in the future to make a prediction when we don’t
     know the outcome.
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们希望构建一个算法，该算法以特征值作为输入，并在我们不知道结果时返回对结果的预测。机器学习方法是通过使用我们知道结果的数据集来**训练**算法，然后在未来应用此算法来预测我们不知道结果的情况。
 - en: Here we will use \(Y\) to denote the outcome and \(X_1, \dots, X_p\) to denote
     features. Note that features are sometimes referred to as predictors or covariates.
     We consider all these to be synonyms.
+  id: totrans-8
   prefs: []
   type: TYPE_NORMAL
+  zh: 在这里，我们将使用 \(Y\) 来表示结果，\(X_1, \dots, X_p\) 来表示特征。请注意，特征有时被称为预测器或协变量。我们把这些都视为同义词。
 - en: 'Prediction problems can be divided into categorical and continuous outcomes.
     For categorical outcomes, \(Y\) can be any one of \(K\) classes. The number of
     classes can vary greatly across applications. For example, in the digit reader
@@ -53,47 +71,77 @@
     trying to detect. Spam detection has two outcomes: spam or not spam. In this book,
     we denote the \(K\) categories with indexes \(k=1,\dots,K\). However, for binary
     data we will use \(k=0,1\) for mathematical conveniences that we demonstrate later.'
+  id: totrans-9
   prefs: []
   type: TYPE_NORMAL
+  zh: 预测问题可以分为分类和连续结果。对于分类结果，\(Y\) 可以是 \(K\) 个类别中的任何一个。类别的数量在应用中可能会有很大差异。例如，在数字读取数据中，\(K=10\)，类别是数字
+    0, 1, 2, 3, 4, 5, 6, 7, 8, 和 9。在语音识别中，结果是所有可能的单词或短语，我们试图检测。垃圾邮件检测有两个结果：垃圾邮件或非垃圾邮件。在这本书中，我们用索引
+    \(k=1,\dots,K\) 表示 \(K\) 个类别。然而，对于二元数据，我们将使用 \(k=0,1\)，以方便我们稍后展示的数学运算。
 - en: 'The general setup is as follows. We have a series of features and an unknown
     outcome we want to predict:'
+  id: totrans-10
   prefs: []
   type: TYPE_NORMAL
+  zh: 一般设置如下。我们有一系列特征和一个我们想要预测的未知结果：
 - en: '| outcome | feature 1 | feature 2 | feature 3 | feature 4 | feature 5 |'
+  id: totrans-11
   prefs: []
   type: TYPE_TB
+  zh: '| outcome | feature 1 | feature 2 | feature 3 | feature 4 | feature 5 |'
 - en: '| --- | --- | --- | --- | --- | --- |'
+  id: totrans-12
   prefs: []
   type: TYPE_TB
+  zh: '| --- | --- | --- | --- | --- | --- |'
 - en: '| ? | \(X_1\) | \(X_2\) | \(X_3\) | \(X_4\) | \(X_5\) |'
+  id: totrans-13
   prefs: []
   type: TYPE_TB
+  zh: '| ? | \(X_1\) | \(X_2\) | \(X_3\) | \(X_4\) | \(X_5\) |'
 - en: 'To *build a model* that provides a prediction for any set of observed values
     \(X_1=x_1, X_2=x_2, \dots X_5=x_5\), we collect data for which we know the outcome:'
+  id: totrans-14
   prefs: []
   type: TYPE_NORMAL
+  zh: 为了**构建一个模型**，该模型可以对任何一组观察到的值（\(X_1=x_1, X_2=x_2, \dots X_5=x_5\)）进行预测，我们收集那些我们知道结果的数据：
 - en: '| outcome | feature 1 | feature 2 | feature 3 | feature 4 | feature 5 |'
+  id: totrans-15
   prefs: []
   type: TYPE_TB
+  zh: '| outcome | feature 1 | feature 2 | feature 3 | feature 4 | feature 5 |'
 - en: '| --- | --- | --- | --- | --- | --- |'
+  id: totrans-16
   prefs: []
   type: TYPE_TB
+  zh: '| --- | --- | --- | --- | --- | --- |'
 - en: '| \(y_{1}\) | \(x_{1,1}\) | \(x_{1,2}\) | \(x_{1,3}\) | \(x_{1,4}\) | \(x_{1,5}\)
     |'
+  id: totrans-17
   prefs: []
   type: TYPE_TB
+  zh: '| \(y_{1}\) | \(x_{1,1}\) | \(x_{1,2}\) | \(x_{1,3}\) | \(x_{1,4}\) | \(x_{1,5}\)
+    |'
 - en: '| \(y_{2}\) | \(x_{2,1}\) | \(x_{2,2}\) | \(x_{2,3}\) | \(x_{2,4}\) | \(x_{2,5}\)
     |'
+  id: totrans-18
   prefs: []
   type: TYPE_TB
+  zh: '| \(y_{2}\) | \(x_{2,1}\) | \(x_{2,2}\) | \(x_{2,3}\) | \(x_{2,4}\) | \(x_{2,5}\)
+    |'
 - en: '| \(\vdots\) | \(\vdots\) | \(\vdots\) | \(\vdots\) | \(\vdots\) | \(\vdots\)
     |'
+  id: totrans-19
   prefs: []
   type: TYPE_TB
+  zh: '| \(\vdots\) | \(\vdots\) | \(\vdots\) | \(\vdots\) | \(\vdots\) | \(\vdots\)
+    |'
 - en: '| \(y_n\) | \(x_{n,1}\) | \(x_{n,2}\) | \(x_{n,3}\) | \(x_{n,4}\) | \(x_{n,5}\)
     |'
+  id: totrans-20
   prefs: []
   type: TYPE_TB
+  zh: '| \(y_n\) | \(x_{n,1}\) | \(x_{n,2}\) | \(x_{n,3}\) | \(x_{n,4}\) | \(x_{n,5}\)
+    |'
 - en: 'When the output is continuous we refer to the machine learning task as *prediction*,
     and the main output of the model is a function \(f\) that automatically produces
     a prediction, denoted with \(\hat{y}\), for any set of predictors: \(\hat{y} =
@@ -103,8 +151,13 @@
     \(\hat{y}\) will not be either exactly right or wrong, but instead we will determine
     an *error* defined as the difference between the prediction and the actual outcome
     \(y - \hat{y}\).'
+  id: totrans-21
   prefs: []
   type: TYPE_NORMAL
+  zh: 当输出是连续的时，我们将机器学习任务称为*预测*，模型的主要输出是一个函数 \(f\)，它可以自动为任何一组预测变量生成预测，表示为 \(\hat{y}\)：\(\hat{y}
+    = f(x_1, x_2, \dots, x_p)\)。我们使用术语*实际结果*来表示我们最终观察到的结果。因此，我们希望预测 \(\hat{y}\) 尽可能地匹配实际结果
+    \(y\)。因为我们的结果是连续的，我们的预测 \(\hat{y}\) 不会完全正确或错误，而是我们将确定一个*误差*，定义为预测与实际结果 \(y - \hat{y}\)
+    之间的差异。
 - en: 'When the outcome is categorical, we refer to the machine learning task as *classification*,
     and the main output of the model will be a *decision rule* which prescribes which
     of the \(K\) classes we should predict. In this scenario, most models provide
@@ -113,51 +166,73 @@
     rules looks like this: if \(f_1(x_1, x_2, \dots, x_p) > C\), predict category
     1, if not the other category, with \(C\) a predetermined cutoff. Because the outcomes
     are categorical, our predictions will be either right or wrong.'
+  id: totrans-22
   prefs: []
   type: TYPE_NORMAL
+  zh: 当结果为分类时，我们将机器学习任务称为*分类*，模型的主要输出将是一个*决策规则*，它规定了我们应该预测哪个 \(K\) 类。在这种情况下，大多数模型为每个类
+    \(k\) 提供了预测函数 \(f_k(x_1, x_2, \dots, x_p)\)，用于做出这个决定。当数据是二进制时，典型的决策规则如下：如果 \(f_1(x_1,
+    x_2, \dots, x_p) > C\)，则预测类别 1，否则预测其他类别，其中 \(C\) 是一个预定的截止值。因为结果是分类的，我们的预测要么正确要么错误。
 - en: Notice that these terms vary among courses, text books, and other publications.
     Often *prediction* is used for both categorical and continuous outcomes, and the
     term *regression* can be used for the continuous case. Here we avoid using *regression*
     to avoid confusion with our previous use of the term *linear regression*. In most
     cases it will be clear if our outcomes are categorical or continuous, so we will
     avoid using these terms when possible.
+  id: totrans-23
   prefs: []
   type: TYPE_NORMAL
+  zh: 注意，这些术语在不同的课程、教科书和其他出版物中有所不同。通常，*预测*一词用于分类和连续结果，而*回归*一词可以用于连续情况。在这里，我们避免使用*回归*，以避免与之前对术语*线性回归*的使用混淆。在大多数情况下，我们的结果是否为分类或连续的将很清楚，因此我们将在可能的情况下避免使用这些术语。
 - en: 27.2 An example
+  id: totrans-24
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 27.2 一个例子
 - en: 'Let’s consider the zip code reader example. The first step in handling mail
     received in the post office is sorting letters by zip code:'
+  id: totrans-25
   prefs: []
   type: TYPE_NORMAL
+  zh: 让我们考虑邮编阅读器的例子。在邮局处理收到的邮件的第一步是按照邮编对信件进行分类：
 - en: '![](../Images/0f69b2b0c89728d966a4eedf02369739.png)'
+  id: totrans-26
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/0f69b2b0c89728d966a4eedf02369739.png)'
 - en: Originally, humans had to sort these by hand. To do this, they had to read the
     zip codes on each letter. Today, thanks to machine learning algorithms, a computer
     can read zip codes and then a robot sorts the letters. In this part of the book,
     we will learn how to build algorithms that can read a digit.
+  id: totrans-27
   prefs: []
   type: TYPE_NORMAL
+  zh: 最初，人类必须手动对这些信件进行分类。为此，他们必须阅读每封信上的邮编。如今，多亏了机器学习算法，电脑可以读取邮编，然后机器人对这些信件进行分类。在本部分书中，我们将学习如何构建能够读取数字的算法。
 - en: The first step in building an algorithm is to understand what are the outcomes
     and features. Below are three images of written digits. These have already been
     read by a human and assigned an outcome \(Y\). These are considered known and
     serve as the training set.
+  id: totrans-28
   prefs: []
   type: TYPE_NORMAL
+  zh: 构建算法的第一步是理解结果和特征。以下是三个手写数字的图像。这些数字已经被人类阅读并分配了一个结果 \(Y\)。这些被认为是已知的，并作为训练集。
 - en: '![](../Images/22ba93e01cc5fa74905369d732ebca61.png)'
+  id: totrans-29
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/22ba93e01cc5fa74905369d732ebca61.png)'
 - en: 'The images are converted into \(28 \times 28 = 784\) pixels and, for each pixel,
     we obtain a grey scale intensity between 0 (white) and 255 (black), which we consider
     continuous for now. The following plot shows the individual features for each
     image:'
+  id: totrans-30
   prefs: []
   type: TYPE_NORMAL
+  zh: 这些图像被转换为\(28 \times 28 = 784\)像素，并且对于每个像素，我们获得一个介于0（白色）和255（黑色）之间的灰度强度，我们目前将其视为连续的。以下图表显示了每个图像的单独特征：
 - en: '![](../Images/035bf3dd9950bc9d8ebe0337fa4c3610.png)'
+  id: totrans-31
   prefs: []
   type: TYPE_IMG
+  zh: '![图片](../Images/035bf3dd9950bc9d8ebe0337fa4c3610.png)'
 - en: For each digitized image \(i\), we have a categorical outcome \(Y_i\) which
     can be one of 10 values (\(0,1,2,3,4,5,6,7,8,9\)), and features \(X_{i,1}, \dots,
     X_{i,784}\). We use bold face \(\mathbf{X}_i = (X_{i,1}, \dots, X_{i,784})\) to
@@ -167,8 +242,13 @@
     We use upper case variables because, in general, we think of the predictors as
     random variables. We use lower case, for example \(\mathbf{X} = \mathbf{x}\),
     to denote observed values. When we code we stick to lower case.
+  id: totrans-32
   prefs: []
   type: TYPE_NORMAL
+  zh: 对于每个数字化的图像\(i\)，我们有一个分类结果\(Y_i\)，它可以取10个值中的任何一个（\(0,1,2,3,4,5,6,7,8,9\)），以及特征\(X_{i,1},
+    \dots, X_{i,784}\)。我们使用粗体\(\mathbf{X}_i = (X_{i,1}, \dots, X_{i,784})\)来区分预测因子的向量与单个预测因子。当我们提到数据集中的任意一组特征而不是特定图像时，我们省略索引\(i\)，并使用\(Y\)和\(\mathbf{X}
+    = (X_{1}, \dots, X_{784})\)。我们使用大写变量，因为通常我们将预测因子视为随机变量。我们使用小写，例如\(\mathbf{X} =
+    \mathbf{x}\)，来表示观察到的值。当我们编码时，我们坚持使用小写。
 - en: The machine learning task is to build an algorithm that returns a prediction
     for any of the possible values of the features. Here, we will learn several approaches
     to building these algorithms. Although at this point it might seem impossible
@@ -177,115 +257,171 @@
     simple example with just one predictor and then move on to a slightly more realistic
     example with two predictors. Once we understand these, we will attack real-world
     machine learning challenges involving many predictors.
+  id: totrans-33
   prefs: []
   type: TYPE_NORMAL
+  zh: 机器学习任务是构建一个算法，该算法可以对特征的任何可能值进行预测。在这里，我们将学习构建这些算法的几种方法。尽管到目前为止这可能看起来不可能实现，但我们将从简单的例子开始，逐步积累知识，直到我们能够应对更复杂的例子。事实上，我们从一个只有一个预测因子的人为简单例子开始，然后转向一个稍微更现实的例子，有两个预测因子。一旦我们理解了这些，我们将应对涉及许多预测因子的现实世界机器学习挑战。
 - en: 27.3 Exercises
+  id: totrans-34
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 27.3 练习
 - en: '1\. For each of the following, determine if the outcome is continuous or categorical:'
+  id: totrans-35
   prefs: []
   type: TYPE_NORMAL
+  zh: 1. 对于以下每个，确定结果是否为连续或分类：
 - en: Digit reader
+  id: totrans-36
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 数字阅读器
 - en: Movie recommendations
+  id: totrans-37
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 电影推荐
 - en: Spam filter
+  id: totrans-38
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 垃圾邮件过滤器
 - en: Hospitalizations
+  id: totrans-39
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 医院住院
 - en: Siri (speech recognition)
+  id: totrans-40
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: Siri（语音识别）
 - en: 2\. How many features are available to us for prediction in the digits dataset?
+  id: totrans-41
   prefs: []
   type: TYPE_NORMAL
+  zh: 2. 在数字数据集中，我们有多少个特征可用于预测？
 - en: '3\. In the digit reader example, the outcomes are stored here:'
+  id: totrans-42
   prefs: []
   type: TYPE_NORMAL
+  zh: 3. 在数字阅读器示例中，结果存储在这里：
 - en: '[PRE0]'
+  id: totrans-43
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: Do the following operations have a practical meaning?
+  id: totrans-44
   prefs: []
   type: TYPE_NORMAL
+  zh: 这些操作有实际意义吗？
 - en: '[PRE1]'
+  id: totrans-45
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: 'Pick the best answer:'
+  id: totrans-46
   prefs: []
   type: TYPE_NORMAL
+  zh: 选择最佳答案：
 - en: Yes, because \(9 + 2 = 11\) and \(9 > 2\).
+  id: totrans-47
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 是的，因为\(9 + 2 = 11\)且\(9 > 2\)。
 - en: No, because `y` is not a numeric vector.
+  id: totrans-48
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 不，因为`y`不是一个数值向量。
 - en: No, because 11 is not a digit. It’s two digits.
+  id: totrans-49
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 不，因为11不是一个数字。它是两个数字。
 - en: No, because these are labels representing a category not a number. A `9` represents
     a class not the number 9.
+  id: totrans-50
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 不，因为这些是表示类别而不是数字的标签。一个`9`代表一个类别，而不是数字9。
 - en: 27.4 Evaluation metrics
+  id: totrans-51
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 27.4 评估指标
 - en: Before we start describing approaches to optimize the way we build algorithms,
     we first need to define what we mean when we say one approach is better than another.
     In this section, we focus on describing ways in which machine learning algorithms
     are evaluated. Specifically, we need to quantify what we mean by “better”.
+  id: totrans-52
   prefs: []
   type: TYPE_NORMAL
+  zh: 在我们开始描述优化算法构建方式的方法之前，我们首先需要定义当我们说一种方法比另一种方法更好时，我们指的是什么。在本节中，我们专注于描述评估机器学习算法的方式。具体来说，我们需要量化我们所说的“更好”的含义。
 - en: 'For our first introduction to machine learning concepts, we will start with
     a boring and simple example: how to predict sex using height. As we explain machine
     learning step by step, this example will let us set down the first building block.
     Soon enough, we will be attacking more interesting challenges. We use the **caret**
     package, which has several useful functions for building and assessing machine
     learning methods and we introduce in more detail in Section [30](caret.html#caret).'
+  id: totrans-53
   prefs: []
   type: TYPE_NORMAL
+  zh: 对于我们对机器学习概念的第一次介绍，我们将从一个无聊且简单的例子开始：如何使用身高预测性别。随着我们逐步解释机器学习，这个例子将帮助我们奠定第一个基础。不久，我们将面对更有趣的挑战。我们使用**caret**包，它包含几个用于构建和评估机器学习方法的实用函数，我们将在第[30](caret.html#caret)节中详细介绍。
 - en: '[PRE2]'
+  id: totrans-54
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: 'For a first example, we use the height data in dslabs:'
+  id: totrans-55
   prefs: []
   type: TYPE_NORMAL
+  zh: 对于第一个例子，我们使用dslabs中的身高数据：
 - en: '[PRE3]'
+  id: totrans-56
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: We start by defining the outcome and predictors.
+  id: totrans-57
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们首先定义结果和预测因子。
 - en: '[PRE4]'
+  id: totrans-58
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE4]'
 - en: In this case, we have only one predictor, height, and `y` is clearly a categorical
     outcome since observed values are either `Male` or `Female`. We know that we will
     not be able to predict \(Y\) very accurately based on \(X\) because male and female
     average heights are not that different relative to within group variability. But
     can we do better than guessing? To answer this question, we need a quantitative
     definition of better.
+  id: totrans-59
   prefs: []
   type: TYPE_NORMAL
+  zh: 在这种情况下，我们只有一个预测因子，即身高，而`y`显然是一个分类结果，因为观察到的值要么是`Male`要么是`Female`。我们知道，基于`X`我们无法非常准确地预测\(Y\)，因为男性和女性的平均身高相对于组内变异性并不那么不同。但我们能否做得比猜测更好？为了回答这个问题，我们需要一个更好的量化定义。
 - en: 27.4.1 Training and test sets
+  id: totrans-60
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 27.4.1 训练集和测试集
 - en: 'Ultimately, a machine learning algorithm is evaluated on how it performs in
     the real world with completely new datasets. However, when developing an algorithm,
     we usually have a dataset for which we know the outcomes, as we do with the heights:
@@ -296,91 +432,135 @@
     We refer to the group for which we know the outcome, and use to develop the algorithm,
     as the *training* set. We refer to the group for which we pretend we don’t know
     the outcome as the *test* set.'
+  id: totrans-61
   prefs: []
   type: TYPE_NORMAL
+  zh: 最终，机器学习算法的评估标准是它在现实世界中使用全新的数据集时的表现。然而，在开发算法时，我们通常有一个已知结果的数据集，就像我们对身高那样：我们知道数据集中每个学生的性别。因此，为了模拟最终的评估过程，我们通常将数据分成两部分，并假装我们不知道其中一部分的结果。我们停止假装不知道结果以评估算法，但仅在构建完算法之后。我们将知道结果并用于开发算法的那组称为*训练集*。我们将假装不知道结果的那组称为*测试集*。
 - en: 'A standard way of generating the training and test sets is by randomly splitting
     the data. The **caret** package includes the function `createDataPartition` that
     helps us generates indexes for randomly splitting the data into training and test
     sets:'
+  id: totrans-62
   prefs: []
   type: TYPE_NORMAL
+  zh: 生成训练集和测试集的标准方法是通过随机分割数据。**caret**包包括一个名为`createDataPartition`的函数，它帮助我们生成随机分割数据为训练集和测试集的索引：
 - en: '[PRE5]'
+  id: totrans-63
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE5]'
 - en: 'The argument `times` is used to define how many random samples of indexes to
     return, the argument `p` is used to define what proportion of the data is represented
     by the index, and the argument `list` is used to decide if we want the indexes
     returned as a list or not. We can use the result of the `createDataPartition`
     function call to define the training and test sets like this:'
+  id: totrans-64
   prefs: []
   type: TYPE_NORMAL
+  zh: 参数`times`用于定义返回多少个随机索引样本，参数`p`用于定义索引代表的数据比例，参数`list`用于决定是否将索引作为列表返回。我们可以使用`createDataPartition`函数调用的结果来定义训练集和测试集，如下所示：
 - en: '[PRE6]'
+  id: totrans-65
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE6]'
 - en: We will now develop an algorithm using **only** the training set. Once we are
     done developing the algorithm, we will *freeze* it and evaluate it using the test
     set. The simplest way to evaluate the algorithm when the outcomes are categorical
     is by simply reporting the proportion of cases that were correctly predicted **in
     the test set**. This metric is usually referred to as *overall accuracy*.
+  id: totrans-66
   prefs: []
   type: TYPE_NORMAL
+  zh: 现在，我们将仅使用训练集开发一个算法。一旦我们完成算法的开发，我们将将其*冻结*并使用测试集进行评估。当结果为分类时，评估算法的最简单方法就是简单地报告在测试集中正确预测的案例比例。这个指标通常被称为*总体准确率*。
 - en: 27.4.2 Overall accuracy
+  id: totrans-67
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 27.4.2 总体准确率
 - en: To demonstrate the use of overall accuracy, we will build two competing algorithms
     and compare them.
+  id: totrans-68
   prefs: []
   type: TYPE_NORMAL
+  zh: 为了展示总体准确率的使用，我们将构建两个相互竞争的算法并比较它们。
 - en: 'Let’s start by developing the simplest possible machine algorithm: guessing
     the outcome.'
+  id: totrans-69
   prefs: []
   type: TYPE_NORMAL
+  zh: 让我们从开发最简单的机器算法开始：猜测结果。
 - en: '[PRE7]'
+  id: totrans-70
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE7]'
 - en: Note that we are completely ignoring the predictor and simply guessing the sex.
+  id: totrans-71
   prefs: []
   type: TYPE_NORMAL
+  zh: 注意，我们完全忽略了预测因子，只是简单地猜测性别。
 - en: 'In machine learning applications, it is useful to use factors to represent
     the categorical outcomes because R functions developed for machine learning, such
     as those in the **caret** package, require or recommend that categorical outcomes
     be coded as factors. So convert `y_hat` to factors using the `factor` function:'
+  id: totrans-72
   prefs: []
   type: TYPE_NORMAL
+  zh: 在机器学习应用中，使用因素来表示分类结果是有用的，因为为机器学习开发的R函数，如**caret**包中的函数，要求或建议将分类结果编码为因素。因此，使用`factor`函数将`y_hat`转换为因素：
 - en: '[PRE8]'
+  id: totrans-73
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE8]'
 - en: 'The *overall accuracy* is simply defined as the overall proportion that is
     predicted correctly:'
+  id: totrans-74
   prefs: []
   type: TYPE_NORMAL
+  zh: '*总体准确率*简单地定义为预测正确的总体比例：'
 - en: '[PRE9]'
+  id: totrans-75
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE9]'
 - en: Not surprisingly, our accuracy is about 50%. We are guessing!
+  id: totrans-76
   prefs: []
   type: TYPE_NORMAL
+  zh: 并不奇怪，我们的准确率大约是50%。我们只是在猜测！
 - en: 'Can we do better? Exploratory data analysis suggests we can because, on average,
     males are slightly taller than females:'
+  id: totrans-77
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们能做得更好吗？探索性数据分析表明我们可以，因为平均而言，男性的身高略高于女性：
 - en: '[PRE10]'
+  id: totrans-78
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE10]'
 - en: 'But how do we make use of this insight? Let’s try another simple approach:
     predict `Male` if height is within two standard deviations from the average male:'
+  id: totrans-79
   prefs: []
   type: TYPE_NORMAL
+  zh: 但我们如何利用这个洞察力呢？让我们尝试另一种简单的方法：如果身高在平均男性身高两个标准差范围内，则预测为`男性`：
 - en: '[PRE11]'
+  id: totrans-80
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE11]'
 - en: 'The accuracy goes up from 0.50 to about 0.80:'
+  id: totrans-81
   prefs: []
   type: TYPE_NORMAL
+  zh: 准确率从0.50上升到大约0.80：
 - en: '[PRE12]'
+  id: totrans-82
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE12]'
 - en: 'But can we do even better? In the example above, we used a cutoff of 62, but
     we can examine the accuracy obtained for other cutoffs and then pick the value
     that provides the best results. But remember, **it is important that we optimize
@@ -388,82 +568,122 @@
     Although for this simplistic example it is not much of a problem, later we will
     learn that evaluating an algorithm on the training set can lead to *overfitting*,
     which often results in dangerously over-optimistic assessments.'
+  id: totrans-83
   prefs: []
   type: TYPE_NORMAL
+  zh: 但我们能做得更好吗？在上面的例子中，我们使用了62的截止点，但我们可以检查其他截止点的准确率，然后选择提供最佳结果的价值。但请记住，**我们使用训练集来优化截止点是非常重要的**：测试集仅用于评估。尽管对于这个简单的例子来说这不是一个大问题，但稍后我们将了解到在训练集上评估算法可能导致*过拟合*，这通常会导致危险的高估。
 - en: 'Here we examine the accuracy of 10 different cutoffs and pick the one yielding
     the best result:'
+  id: totrans-84
   prefs: []
   type: TYPE_NORMAL
+  zh: 在这里，我们检查了10个不同的截止点，并选择了产生最佳结果的一个：
 - en: '[PRE13]'
+  id: totrans-85
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE13]'
 - en: 'We can make a plot showing the accuracy obtained on the training set for males
     and females:'
+  id: totrans-86
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们可以绘制一个图，显示在训练集上获得的男性和女性的准确率：
 - en: '![](../Images/cdca82784d1ee1496176512bb675407d.png)'
+  id: totrans-87
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/cdca82784d1ee1496176512bb675407d.png)'
 - en: 'We see that the maximum value is:'
+  id: totrans-88
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们看到最大值是：
 - en: '[PRE14]'
+  id: totrans-89
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE14]'
 - en: 'which is much higher than 0.5\. The cutoff resulting in this accuracy is:'
+  id: totrans-90
   prefs: []
   type: TYPE_NORMAL
+  zh: 这个值远高于0.5。导致这种准确率的截止点是：
 - en: '[PRE15]'
+  id: totrans-91
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE15]'
 - en: 'We can now test this cutoff on our test set to make sure our accuracy is not
     overly optimistic:'
+  id: totrans-92
   prefs: []
   type: TYPE_NORMAL
+  zh: 现在，我们可以将这个截止点测试在我们的测试集上，以确保我们的准确率不是过于乐观：
 - en: '[PRE16]'
+  id: totrans-93
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE16]'
 - en: We see that it is a bit lower than the accuracy observed for the training set,
     but it is still better than guessing. And by testing on a dataset that we did
     not train on, we know our result is not due to cherry-picking a good result.
+  id: totrans-94
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们看到它略低于训练集观察到的准确率，但仍然比猜测要好。并且通过在一个我们没有训练过的数据集上进行测试，我们知道我们的结果不是由于挑选了一个好结果。
 - en: 27.4.3 The confusion matrix
+  id: totrans-95
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 27.4.3 混淆矩阵
 - en: The prediction rule we developed in the previous section predicts `Male` if
     the student is taller than 64 inches. Given that the average female is about 64
     inches, this prediction rule seems wrong. What happened? If a student is the height
     of the average female, shouldn’t we predict `Female`?
+  id: totrans-96
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们在上一节中开发的预测规则是，如果学生的身高超过64英寸，则预测为`男性`。鉴于平均女性的身高约为64英寸，这个预测规则似乎是不正确的。发生了什么？如果一个学生的身高与平均女性相同，我们不应该预测为`女性`吗？
 - en: 'Generally speaking, overall accuracy can be a deceptive measure. To see this,
     we will start by constructing what is referred to as the *confusion matrix*, which
     basically tabulates each combination of prediction and actual value. We can do
     this in R using the function `table`:'
+  id: totrans-97
   prefs: []
   type: TYPE_NORMAL
+  zh: 一般而言，总体准确率可能是一个误导性的指标。为了说明这一点，我们将首先构建所谓的*混淆矩阵*，它基本上是预测值和实际值每种组合的表格。我们可以在R中使用`table`函数来完成这项工作：
 - en: '[PRE17]'
+  id: totrans-98
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE17]'
 - en: 'If we study this table closely, it reveals a problem. If we compute the accuracy
     separately for each sex, we get:'
+  id: totrans-99
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果我们仔细研究这个表格，它会揭示一个问题。如果我们分别对每个性别计算准确率，我们得到：
 - en: '[PRE18]'
+  id: totrans-100
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE18]'
 - en: 'There is an imbalance in the accuracy for males and females: too many females
     are predicted to be male. We are calling almost half of the females male! How
     can our overall accuracy be so high then? This is because the *prevalence* of
     males in this dataset is high. These heights were collected from three data sciences
     courses, two of which had more males enrolled:'
+  id: totrans-101
   prefs: []
   type: TYPE_NORMAL
+  zh: 男女的准确率存在不平衡：预测的太多女性被判定为男性。我们甚至将几乎一半的女性判定为男性！那么我们的总体准确率怎么会这么高呢？这是因为这个数据集中男性的**流行度**很高。这些身高数据是从三个数据科学课程中收集的，其中两个课程男性报名人数较多：
 - en: '[PRE19]'
+  id: totrans-102
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE19]'
 - en: So when computing overall accuracy, the high percentage of mistakes made for
     females is outweighed by the gains in correct calls for men. **This can actually
     be a big problem in machine learning.** If your training data is biased in some
@@ -471,25 +691,33 @@
     we used a test set does not matter because it is also derived from the original
     biased dataset. This is one of the reasons we look at metrics other than overall
     accuracy when evaluating a machine learning algorithm.
+  id: totrans-103
   prefs: []
   type: TYPE_NORMAL
+  zh: 因此，在计算总体准确率时，对女性犯的错误的高比例被对男性正确预测的收益所抵消。**这实际上可能是机器学习中的一个重大问题**。如果你的训练数据存在某种偏差，你很可能会开发出同样存在偏差的算法。我们使用了测试集的事实并不重要，因为它也是从原始有偏差的数据集中派生出来的。这就是我们在评估机器学习算法时，除了总体准确率之外还要查看其他指标的原因之一。
 - en: There are several metrics that we can use to evaluate an algorithm in a way
     that prevalence does not cloud our assessment, and these can all be derived from
     the confusion matrix. A general improvement to using overall accuracy is to study
     *sensitivity* and *specificity* separately.
+  id: totrans-104
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们可以使用几个指标来评估算法，这样流行度就不会影响我们的评估，而这些都可以从混淆矩阵中推导出来。使用总体准确率的一般改进是分别研究**灵敏度**和**特异性**。
 - en: 27.4.4 Sensitivity and specificity
+  id: totrans-105
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 27.4.4 灵敏度和特异性
 - en: To define sensitivity and specificity, we need a binary outcome. When the outcomes
     are categorical, we can define these terms for a specific category. In the digits
     example, we can ask for the specificity in the case of correctly predicting 2
     as opposed to some other digit. Once we specify a category of interest, then we
     can talk about positive outcomes, \(Y=1\), and negative outcomes, \(Y=0\).
+  id: totrans-106
   prefs: []
   type: TYPE_NORMAL
+  zh: 要定义灵敏度和特异性，我们需要一个二元结果。当结果为分类时，我们可以为特定类别定义这些术语。在数字示例中，我们可以询问在正确预测2而不是其他数字的情况下，特异性是多少。一旦我们指定了一个感兴趣的类别，我们就可以讨论阳性结果，\(Y=1\)，和阴性结果，\(Y=0\)。
 - en: 'In general, *sensitivity* is defined as the ability of an algorithm to predict
     a positive outcome when the actual outcome is positive: \(\hat{Y}=1\) when \(Y=1\).
     Because an algorithm that calls everything positive (\(\hat{Y}=1\) no matter what)
@@ -497,45 +725,68 @@
     For this reason, we also examine *specificity*, which is generally defined as
     the ability of an algorithm to not predict a positive \(\hat{Y}=0\) when the actual
     outcome is not a positive \(Y=0\). We can summarize in the following way:'
+  id: totrans-107
   prefs: []
   type: TYPE_NORMAL
+  zh: 通常，**灵敏度**被定义为算法在实际结果为阳性时预测阳性结果的能力：当 \(Y=1\) 时，\(\hat{Y}=1\)。因为一个将所有内容都判定为阳性的算法（无论什么情况都\(\hat{Y}=1\)）具有完美的灵敏度，这个指标本身不足以判断算法。因此，我们也检查**特异性**，这通常被定义为算法在实际情况不是阳性
+    \(Y=0\) 时不预测阳性 \(\hat{Y}=0\) 的能力。我们可以以下述方式总结：
 - en: 'High sensitivity: \(Y=1 \implies \hat{Y}=1\)'
+  id: totrans-108
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 高灵敏度：\(Y=1 \implies \hat{Y}=1\)
 - en: 'High specificity: \(Y=0 \implies \hat{Y} = 0\)'
+  id: totrans-109
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 高特异性：\(Y=0 \implies \hat{Y} = 0\)
 - en: 'Although the above is often considered the definition of specificity, another
     way to think of specificity is by the proportion of positive calls that are actually
     positive:'
+  id: totrans-110
   prefs: []
   type: TYPE_NORMAL
+  zh: 虽然上述内容通常被认为是特异性的定义，但另一种思考特异性的方式是，通过实际为阳性的预测比例：
 - en: 'High specificity: \(\hat{Y}=1 \implies Y=1\).'
+  id: totrans-111
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 高特异性：\(\hat{Y}=1 \implies Y=1\).
 - en: 'To provide precise definitions, we name the four entries of the confusion matrix:'
+  id: totrans-112
   prefs: []
   type: TYPE_NORMAL
+  zh: 为了提供精确的定义，我们命名混淆矩阵的四个条目：
 - en: '|  | Actually Positive | Actually Negative |'
+  id: totrans-113
   prefs: []
   type: TYPE_TB
+  zh: '|  | 实际为阳性 | 实际为阴性 |'
 - en: '| --- | --- | --- |'
+  id: totrans-114
   prefs: []
   type: TYPE_TB
+  zh: '| --- | --- | --- |'
 - en: '| Predicted positive | True positives (TP) | False positives (FP) |'
+  id: totrans-115
   prefs: []
   type: TYPE_TB
+  zh: '| 预测为阳性 | 真阳性 (TP) | 假阳性 (FP) |'
 - en: '| Predicted negative | False negatives (FN) | True negatives (TN) |'
+  id: totrans-116
   prefs: []
   type: TYPE_TB
+  zh: '| 预测为阴性 | 假阴性 (FN) | 真阴性 (TN) |'
 - en: Sensitivity is typically quantified by \(TP/(TP+FN)\), the proportion of actual
     positives (the first column = \(TP+FN\)) that are called positives (\(TP\)). This
     quantity is referred to as the *true positive rate* (TPR) or *recall*.
+  id: totrans-117
   prefs: []
   type: TYPE_NORMAL
+  zh: 敏感性通常通过 \(TP/(TP+FN)\) 来量化，这是实际正例（第一列 = \(TP+FN\)）被标记为正例（\(TP\)）的比例。这个量被称为*真正阳性率（TPR）*或*回收率*。
 - en: Specificity is defined as \(TN/(TN+FP)\) or the proportion of negatives (the
     second column = \(FP+TN\)) that are called negatives (\(TN\)). This quantity is
     also called the true negative rate (TNR). There is another way of quantifying
@@ -544,31 +795,49 @@
     is referred to as *positive predictive value (PPV)* and also as *precision*. Note
     that, unlike TPR and TNR, precision depends on prevalence since higher prevalence
     implies you can get higher precision even when guessing.
+  id: totrans-118
   prefs: []
   type: TYPE_NORMAL
+  zh: 特异性定义为 \(TN/(TN+FP)\) 或负例的比例（第二列 = \(FP+TN\)）被标记为负例（\(TN\)）。这个量也被称为真正的负例率（TNR）。还有另一种量化特异性的方法，即
+    \(TP/(TP+FP)\) 或被标记为正例（第一行或 \(TP+FP\)）的实际比例是正例（\(TP\)）。这个量被称为*阳性预测值（PPV）*，也称为*精确度*。请注意，与TPR和TNR不同，精确度取决于发病率，因为较高的发病率意味着即使猜测也能获得更高的精确度。
 - en: The multiple names can be confusing, so we include a table to help us remember
     the terms. The table includes a column that shows the definition if we think of
     the proportions as probabilities.
+  id: totrans-119
   prefs: []
   type: TYPE_NORMAL
+  zh: 多个名称可能会令人困惑，因此我们包括一个表格来帮助我们记住这些术语。该表格包括一个列，如果我们把比例看作概率，它将显示定义。
 - en: '| Measure of | Name 1 | Name 2 | Definition | Probability representation |'
+  id: totrans-120
   prefs: []
   type: TYPE_TB
+  zh: '| 测量指标 | 名称1 | 名称2 | 定义 | 概率表示 |'
 - en: '| --- | --- | --- | --- | --- |'
+  id: totrans-121
   prefs: []
   type: TYPE_TB
+  zh: '| --- | --- | --- | --- | --- |'
 - en: '| sensitivity | TPR | Recall | \(\frac{\mbox{TP}}{\mbox{TP} + \mbox{FN}}\)
     | \(\mbox{Pr}(\hat{Y}=1 \mid Y=1)\) |'
+  id: totrans-122
   prefs: []
   type: TYPE_TB
+  zh: '| 敏感性 | TPR | 回收率 | \(\frac{\mbox{TP}}{\mbox{TP} + \mbox{FN}}\) | \(\mbox{Pr}(\hat{Y}=1
+    \mid Y=1)\) |'
 - en: '| specificity | TNR | 1-FPR | \(\frac{\mbox{TN}}{\mbox{TN}+\mbox{FP}}\) | \(\mbox{Pr}(\hat{Y}=0
     \mid Y=0)\) |'
+  id: totrans-123
   prefs: []
   type: TYPE_TB
+  zh: '| 特异性 | TNR | 1-FPR | \(\frac{\mbox{TN}}{\mbox{TN}+\mbox{FP}}\) | \(\mbox{Pr}(\hat{Y}=0
+    \mid Y=0)\) |'
 - en: '| specificity | PPV | Precision | \(\frac{\mbox{TP}}{\mbox{TP}+\mbox{FP}}\)
     | \(\mbox{Pr}(Y=1 \mid \hat{Y}=1)\) |'
+  id: totrans-124
   prefs: []
   type: TYPE_TB
+  zh: '| 特异性 | PPV | 精确度 | \(\frac{\mbox{TP}}{\mbox{TP}+\mbox{FP}}\) | \(\mbox{Pr}(Y=1
+    \mid \hat{Y}=1)\) |'
 - en: Here TPR is True Positive Rate, FPR is False Positive Rate, and PPV is Positive
     Predictive Value. The **caret** function `confusionMatrix` computes all these
     metrics for us once we define what category “positive” is. The function expects
@@ -576,17 +845,26 @@
     In our example, `Female` is the first level because it comes before `Male` alphabetically.
     If you type this into R you will see several metrics including accuracy, sensitivity,
     specificity, and PPV.
+  id: totrans-125
   prefs: []
   type: TYPE_NORMAL
+  zh: 在这里，TPR代表真正阳性率，FPR代表假阳性率，PPV代表阳性预测值。**caret**函数`confusionMatrix`在我们定义“正例”类别后，会为我们计算所有这些指标。该函数期望输入因子，第一级被视为正例或
+    \(Y=1\)。在我们的例子中，`Female`是第一级，因为它在字母顺序上排在`Male`之前。如果你在R中输入这些内容，你会看到包括准确率、敏感性、特异性和PPV在内的多个指标。
 - en: '[PRE20]'
+  id: totrans-126
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE20]'
 - en: 'You can acceess these directly, for example, like this:'
+  id: totrans-127
   prefs: []
   type: TYPE_NORMAL
+  zh: 你可以直接访问这些指标，例如，像这样：
 - en: '[PRE21]'
+  id: totrans-128
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE21]'
 - en: 'We can see that the high overall accuracy is possible despite relatively low
     sensitivity. As we hinted at above, the reason this happens is because of the
     low prevalence (0.23): the proportion of females is low. Because prevalence is
@@ -595,12 +873,16 @@
     This is an example of why it is important to examine sensitivity and specificity
     and not just accuracy. Before applying this algorithm to general datasets, we
     need to ask ourselves if prevalence will be the same.'
+  id: totrans-129
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们可以看到，尽管敏感性相对较低，但仍然可能实现较高的整体准确率。正如我们上面所暗示的，这种情况发生的原因是由于低发病率（0.23）：女性的比例较低。由于发病率低，未能将实际女性预测为女性（低敏感性）并不会像未能将实际男性预测为男性（低特异性）那样大幅降低准确率。这是一个为什么检查敏感性、特异性而不仅仅是准确率很重要的例子。在将此算法应用于通用数据集之前，我们需要问自己发病率是否相同。
 - en: 27.4.5 Balanced accuracy and \(F_1\) score
+  id: totrans-130
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 27.4.5 平衡准确率和 \(F_1\) 分数
 - en: 'Although we usually recommend studying both specificity and sensitivity, very
     often it is useful to have a one-number summary, for example for optimization
     purposes. One metric that is preferred over overall accuracy is the average of
@@ -608,23 +890,35 @@
     and sensitivity are rates, it is more appropriate to compute the *harmonic* average.
     In fact, the *\(F_1\)-score*, a widely used one-number summary, is the harmonic
     average of precision and recall:'
+  id: totrans-131
   prefs: []
   type: TYPE_NORMAL
+  zh: 虽然我们通常建议研究特异性和敏感性，但非常经常，有一个单一数字的总结是有用的，例如用于优化目的。一个比整体准确率更受青睐的指标是特异性和敏感性的平均值，被称为
+    *平衡准确率*。因为特异性和敏感性是比率，所以计算 *调和* 平均更合适。事实上，*\(F_1\)-分数*，一个广泛使用的单一数字总结，是精确率和召回率的调和平均：
 - en: \[ \frac{1}{\frac{1}{2}\left(\frac{1}{\mbox{recall}} + \frac{1}{\mbox{precision}}\right)
     } \]
+  id: totrans-132
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \frac{1}{\frac{1}{2}\left(\frac{1}{\mbox{召回率}} + \frac{1}{\mbox{精确率}}\right)
+    } \]
 - en: 'Because it is easier to write, you often see this harmonic average rewritten
     as:'
+  id: totrans-133
   prefs: []
   type: TYPE_NORMAL
+  zh: 因为写起来更简单，所以你经常看到这种调和平均被重写为：
 - en: \[ 2 \times \frac{\mbox{precision} \cdot \mbox{recall}} {\mbox{precision} +
     \mbox{recall}} \]
+  id: totrans-134
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ 2 \times \frac{\mbox{精确率} \cdot \mbox{召回率}} {\mbox{精确率} + \mbox{召回率}} \]
 - en: when defining \(F_1\).
+  id: totrans-135
   prefs: []
   type: TYPE_NORMAL
+  zh: 当定义 \(F_1\) 时。
 - en: 'Remember that, depending on the context, some types of errors are more costly
     than others. For example, in the case of plane safety, it is much more important
     to maximize sensitivity over specificity: failing to predict a plane will malfunction
@@ -634,57 +928,89 @@
     The \(F_1\)-score can be adapted to weigh specificity and sensitivity differently.
     To do this, we define \(\beta\) to represent how much more important sensitivity
     is compared to specificity and consider a weighted harmonic average:'
+  id: totrans-136
   prefs: []
   type: TYPE_NORMAL
+  zh: 记住，根据上下文的不同，某些类型的错误可能比其他类型的错误代价更高。例如，在飞机安全的情况下，最大化敏感性比最大化特异性更为重要：未能预测飞机在坠毁前会出故障是一个代价更高的错误，比在飞机实际上处于完美状态时将其停飞要昂贵得多。在死刑刑事案件中，情况正好相反，因为假阳性可能导致无辜的人被处决。\(F_1\)
+    分数可以调整以不同方式权衡特异性和敏感性。为此，我们定义 \(\beta\) 来表示敏感性相对于特异性的重要性，并考虑一个加权调和平均：
 - en: \[ \frac{1}{\frac{\beta^2}{1+\beta^2}\frac{1}{\mbox{recall}} + \frac{1}{1+\beta^2}\frac{1}{\mbox{precision}}
     } \]
+  id: totrans-137
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \frac{1}{\frac{\beta^2}{1+\beta^2}\frac{1}{\mbox{召回率}} + \frac{1}{1+\beta^2}\frac{1}{\mbox{精确率}}
+    } \]
 - en: The `F_meas` function in the **caret** package computes this summary with `beta`
     defaulting to 1.
+  id: totrans-138
   prefs: []
   type: TYPE_NORMAL
+  zh: '**caret** 包中的 `F_meas` 函数使用默认的 \(\beta\) 值为 1 来计算这个总结。'
 - en: 'Let’s rebuild our prediction algorithm, but this time maximizing the F-score
     instead of overall accuracy:'
+  id: totrans-139
   prefs: []
   type: TYPE_NORMAL
+  zh: 让我们重新构建我们的预测算法，但这次是最大化 F 分数而不是整体准确率：
 - en: '[PRE22]'
+  id: totrans-140
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE22]'
 - en: 'As before, we can plot these \(F_1\) measures versus the cutoffs:'
+  id: totrans-141
   prefs: []
   type: TYPE_NORMAL
+  zh: 和之前一样，我们可以绘制这些 \(F_1\) 测量值与截止值的关系图：
 - en: '![](../Images/ed3a23ca216486f5bfc5b0b4afb7bffb.png)'
+  id: totrans-142
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/ed3a23ca216486f5bfc5b0b4afb7bffb.png)'
 - en: 'We see that it is maximized at \(F_1\) value of:'
+  id: totrans-143
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们看到它在 \(F_1\) 值为：
 - en: '[PRE23]'
+  id: totrans-144
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE23]'
 - en: 'This maximum is achieved when we use the following cutoff:'
+  id: totrans-145
   prefs: []
   type: TYPE_NORMAL
+  zh: 这个最大值是在我们使用以下截止值时达到的：
 - en: '[PRE24]'
+  id: totrans-146
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE24]'
 - en: 'A cutoff of 66 makes more sense than 64\. Furthermore, it balances the specificity
     and sensitivity of our confusion matrix:'
+  id: totrans-147
   prefs: []
   type: TYPE_NORMAL
+  zh: 66 的截止值比 64 更有意义。此外，它平衡了我们的混淆矩阵的特异性和敏感性：
 - en: '[PRE25]'
+  id: totrans-148
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE25]'
 - en: We now see that we do much better than guessing, that both sensitivity and specificity
     are relatively high, and that we have built our first machine learning algorithm.
     It takes height as a predictor and predicts female if you are 65 inches or shorter.
+  id: totrans-149
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们现在看到，我们的表现比猜测要好得多，特异性和敏感性都相对较高，我们已经构建了我们的第一个机器学习算法。它以身高作为预测因子，如果你是 65 英寸或更矮，它就会预测你是女性。
 - en: 27.4.6 Prevalence matters in practice
+  id: totrans-150
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 27.4.6 实践中，普遍性很重要
 - en: 'A machine learning algorithm with very high sensitivity and specificity may
     not be useful in practice when prevalence is close to either 0 or 1\. To see this,
     consider the case of a doctor that specializes in a rare disease and is interested
@@ -696,162 +1022,238 @@
     \(\mbox{Pr}(\hat{Y}=1)\). The doctor is neither concerned nor impressed and explains
     that what is important is the precision of the test: \(\mbox{Pr}(Y=1 | \hat{Y}=1)\).
     Using Bayes theorem, we can connect the two measures:'
+  id: totrans-151
   prefs: []
   type: TYPE_NORMAL
+  zh: 当患病率接近0或1时，具有非常高的敏感性和特异性的机器学习算法在实践上可能没有用处。为了看到这一点，考虑一位专门从事罕见疾病且对开发预测患病算法感兴趣的医生。医生与你分享数据，然后你开发了一个具有非常高敏感性的算法。你解释说这意味着如果患者有病，算法很可能预测正确。你还告诉医生，你也很担心，因为根据你分析的数据集，一半的患者有病：\(\mbox{Pr}(\hat{Y}=1)\)。医生既不担心也不印象深刻，并解释说重要的是测试的精确度：\(\mbox{Pr}(Y=1
+    | \hat{Y}=1)\)。使用贝叶斯定理，我们可以将这两个度量联系起来：
 - en: \[ \mbox{Pr}(Y = 1\mid \hat{Y}=1) = \mbox{Pr}(\hat{Y}=1 \mid Y=1) \frac{\mbox{Pr}(Y=1)}{\mbox{Pr}(\hat{Y}=1)}\]
+  id: totrans-152
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \mbox{Pr}(Y = 1\mid \hat{Y}=1) = \mbox{Pr}(\hat{Y}=1 \mid Y=1) \frac{\mbox{Pr}(Y=1)}{\mbox{Pr}(\hat{Y}=1)}\]
 - en: The doctor knows that the prevalence of the disease is 5 in 1,000, which implies
     that \(\mbox{Pr}(Y=1) \, / \,\mbox{Pr}(\hat{Y}=1) = 1/100\) and therefore the
     precision of your algorithm is less than 0.01\. The doctor does not have much
     use for your algorithm.
+  id: totrans-153
   prefs: []
   type: TYPE_NORMAL
+  zh: 医生知道该疾病的患病率是每1000人中有5人，这意味着\(\mbox{Pr}(Y=1) \, / \,\mbox{Pr}(\hat{Y}=1) = 1/100\)，因此你算法的精确度小于0.01。医生对你的算法没有太多用处。
 - en: 27.4.7 ROC and precision-recall curves
+  id: totrans-154
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 27.4.7 ROC和精确度-召回率曲线
 - en: 'When comparing the two methods (guessing versus using a height cutoff), we
     looked at accuracy and \(F_1\). The second method clearly outperformed the first.
     However, while we considered several cutoffs for the second method, for the first
     we only considered one approach: guessing with equal probability. Note that guessing
     `Male` with higher probability would give us higher accuracy due to the bias in
     the sample:'
+  id: totrans-155
   prefs: []
   type: TYPE_NORMAL
+  zh: 当比较这两种方法（猜测与使用身高截止值）时，我们考虑了准确性和\(F_1\)。第二种方法明显优于第一种。然而，尽管我们考虑了第二种方法的几个截止值，对于第一种方法，我们只考虑了一种方法：以相等的概率进行猜测。请注意，以更高的概率猜测“男性”会由于样本中的偏差而提高准确性：
 - en: '[PRE26]'
+  id: totrans-156
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE26]'
 - en: But, as described above, this would come at the cost of lower sensitivity. The
     curves we describe in this section will help us see this.
+  id: totrans-157
   prefs: []
   type: TYPE_NORMAL
+  zh: 但是，如上所述，这将以降低敏感性为代价。本节中描述的曲线将帮助我们看到这一点。
 - en: Remember that for each of these parameters, we can get a different sensitivity
     and specificity. For this reason, a very common approach to evaluating methods
     is to compare them graphically by plotting both.
+  id: totrans-158
   prefs: []
   type: TYPE_NORMAL
+  zh: 记住，对于这些参数中的每一个，我们都可以得到不同的敏感性和特异性。因此，评估方法的一个非常常见的方法是通过绘制两者来图形化比较。
 - en: A widely used plot that does this is the *receiver operating characteristic*
     (ROC) curve. If you are wondering where this name comes from, you can consult
     the ROC Wikipedia page[^(94)](#fn94).
+  id: totrans-159
   prefs: []
   type: TYPE_NORMAL
+  zh: 做这件事的一个广泛使用的图是*接收者操作特征*（ROC）曲线。如果你想知道这个名字的由来，你可以查阅ROC的维基百科页面[^(94)](#fn94)。
 - en: 'The ROC curve plots sensitivity (TPR) versus 1 - specificity or the false positive
     rate (FPR). Here we compute the TPR and FPR needed for different probabilities
     of guessing male:'
+  id: totrans-160
   prefs: []
   type: TYPE_NORMAL
+  zh: ROC曲线绘制的是敏感性（TPR）与1 - 特异性或假阳性率（FPR）的对比。在这里，我们计算了不同猜测男性概率所需的TPR和FPR：
 - en: '[PRE27]'
+  id: totrans-161
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE27]'
 - en: 'We can use similar code to compute these values for our our second approach.
     By plotting both curves together, we are able to compare sensitivity for different
     values of specificity:'
+  id: totrans-162
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们可以使用类似的代码来计算我们第二种方法中的这些值。通过将两条曲线一起绘制，我们能够比较不同特异性值下的敏感性：
 - en: '![](../Images/91e8cc4e57e6d2ef696ff800758f9d5a.png)'
+  id: totrans-163
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/91e8cc4e57e6d2ef696ff800758f9d5a.png)'
 - en: We can see that we obtain higher sensitivity with this approach for all values
     of specificity, which implies it is in fact a better method. Note that ROC curves
     for guessing always fall on the identiy line. Also note that when making ROC curves,
     it is often nice to add the cutoff associated with each point.
+  id: totrans-164
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们可以看到，对于所有特异性值，这种方法都能获得更高的敏感性，这意味着实际上它是一个更好的方法。请注意，猜测的ROC曲线总是落在身份线上。此外，请注意，在制作ROC曲线时，通常最好添加与每个点相关的截止值。
 - en: The packages **pROC** and **plotROC** are useful for generating these plots.
+  id: totrans-165
   prefs: []
   type: TYPE_NORMAL
+  zh: '**pROC** 和 **plotROC** 这些包对于生成这些图很有用。'
 - en: 'ROC curves have one weakness and it is that neither of the measures plotted
     depends on prevalence. In cases in which prevalence matters, we may instead make
     a precision-recall plot. The idea is similar, but we instead plot precision against
     recall:'
+  id: totrans-166
   prefs: []
   type: TYPE_NORMAL
+  zh: ROC 曲线有一个弱点，那就是图中绘制的两个指标都不依赖于患病率。在患病率很重要的情况下，我们可能相反地制作一个精确度召回率图。想法是相似的，但我们相反地绘制精确度对召回率的图：
 - en: '![](../Images/afc90d3dd1aa78d6f0f6717dd2d8e0e6.png)'
+  id: totrans-167
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/afc90d3dd1aa78d6f0f6717dd2d8e0e6.png)'
 - en: From this plot we immediately see that the precision of guessing is not high.
     This is because the prevalence is low. We also see that if we change positives
     to mean Male instead of Female, the ROC curve remains the same, but the precision
     recall plot changes.
+  id: totrans-168
   prefs: []
   type: TYPE_NORMAL
+  zh: 从这个图中我们可以立即看出，猜测的精确度并不高。这是因为患病率低。我们还看到，如果我们把阳性改为表示男性而不是女性，ROC 曲线保持不变，但精确度召回率图发生了变化。
 - en: 27.4.8 The loss function
+  id: totrans-169
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 27.4.8 损失函数
 - en: Up to now we have described evaluation metrics that apply exclusively to categorical
     data. Specifically, for binary outcomes, we have described how sensitivity, specificity,
     accuracy, and \(F_1\) can be used as quantification. However, these metrics are
     not useful for continuous outcomes. In this section, we describe how the general
     approach to defining “best” in machine learning is to define a *loss function*,
     which can be applied to both categorical and continuous data.
+  id: totrans-170
   prefs: []
   type: TYPE_NORMAL
+  zh: 到目前为止，我们已描述了仅适用于分类数据的评估指标。具体来说，对于二元结果，我们已描述了如何使用灵敏度、特异性、准确率和 \(F_1\) 作为量化指标。然而，这些指标对于连续结果来说并不适用。在本节中，我们描述了在机器学习中定义“最佳”的一般方法，即定义一个
+    *损失函数*，该函数可以应用于分类数据和连续数据。
 - en: 'The most commonly used loss function is the squared loss function. If \(\hat{y}\)
     is our predictor and \(y\) is the observed outcome, the squared loss function
     is simply:'
+  id: totrans-171
   prefs: []
   type: TYPE_NORMAL
+  zh: 最常用的损失函数是平方损失函数。如果 \(\hat{y}\) 是我们的预测器，\(y\) 是观察到的结果，则平方损失函数简单地为：
 - en: \[ (\hat{y} - y)^2 \]
+  id: totrans-172
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ (\hat{y} - y)^2 \]
 - en: 'Because we often have a test set with many observations, say \(N\), we use
     the mean squared error (MSE):'
+  id: totrans-173
   prefs: []
   type: TYPE_NORMAL
+  zh: 由于我们通常有一个包含许多观察值的测试集，比如说 \(N\)，我们使用均方误差（MSE）：
 - en: \[ \mbox{MSE} = \frac{1}{N} \mbox{RSS} = \frac{1}{N}\sum_{i=1}^N (\hat{y}_i
     - y_i)^2 \]
+  id: totrans-174
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \mbox{MSE} = \frac{1}{N} \mbox{RSS} = \frac{1}{N}\sum_{i=1}^N (\hat{y}_i
+    - y_i)^2 \]
 - en: In practice, we often report the root mean squared error (RMSE), which is \(\sqrt{\mbox{MSE}}\),
     because it is in the same units as the outcomes. But doing the math is often easier
     with the MSE and it is therefore more commonly used in textbooks, since these
     usually describe theoretical properties of algorithms.
+  id: totrans-175
   prefs: []
   type: TYPE_NORMAL
+  zh: 在实践中，我们经常报告均方根误差（RMSE），它是 \(\sqrt{\mbox{MSE}}\)，因为它与结果处于相同的单位。但进行数学运算通常更容易使用
+    MSE，因此它在教科书中更常用，因为这些通常描述算法的理论特性。
 - en: If the outcomes are binary, both RMSE and MSE are equivalent to one minus accuracy,
     since \((\hat{y} - y)^2\) is 0 if the prediction was correct and 1 otherwise.
     In general, our goal is to build an algorithm that minimizes the loss so it is
     as close to 0 as possible.
+  id: totrans-176
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果结果是二元的，RMSE 和 MSE 都等于 1 减去准确率，因为如果预测正确，\((\hat{y} - y)^2\) 为 0，否则为 1。一般来说，我们的目标是构建一个算法，使其损失最小化，尽可能接近
+    0。
 - en: 'Because our data is usually a random sample, we can think of the MSE as a random
     variable and the observed MSE can be thought of as an estimate of the expected
     MSE, which in mathematical notation we write like this:'
+  id: totrans-177
   prefs: []
   type: TYPE_NORMAL
+  zh: 由于我们的数据通常是随机样本，我们可以将 MSE 视为一个随机变量，观察到的 MSE 可以被视为期望 MSE 的估计，在数学符号中我们这样写：
 - en: \[ \mbox{E}\left\{ \frac{1}{N}\sum_{i=1}^N (\hat{Y}_i - Y_i)^2 \right\} \]
+  id: totrans-178
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \mbox{E}\left\{ \frac{1}{N}\sum_{i=1}^N (\hat{Y}_i - Y_i)^2 \right\} \]
 - en: 'This is a theoretical concept because in practice we only have one dataset
     to work with. But in theory, we think of having a very large number of random
     samples (call it \(B\)), apply our algorithm to each, obtain an MSE for each random
     sample, and think of the expected MSE as:'
+  id: totrans-179
   prefs: []
   type: TYPE_NORMAL
+  zh: 这是一个理论概念，因为在实践中我们只有一个数据集可以工作。但在理论上，我们考虑拥有一个非常大的随机样本数量（称之为 \(B\)），将我们的算法应用于每个样本，为每个随机样本获得均方误差（MSE），并将期望的
+    MSE 视为：
 - en: \[ \frac{1}{B} \sum_{b=1}^B \frac{1}{N}\sum_{i=1}^N \left(\hat{y}_i^b - y_i^b\right)^2
     \]
+  id: totrans-180
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \frac{1}{B} \sum_{b=1}^B \frac{1}{N}\sum_{i=1}^N \left(\hat{y}_i^b - y_i^b\right)^2
+    \]
 - en: with \(y_{i}^b\) denoting the \(i\)th observation in the \(b\)th random sample
     and \(\hat{y}_i^b\) the resulting prediction obtained from applying the exact
     same algorithm to the \(b\)th random sample. Again, in practice we only observe
     one random sample, so the expected MSE is only theoretical. However, in Chapter
     [29](cross-validation.html#cross-validation) we describe an approach to estimating
     the MSE that tries to mimic this theoretical quantity.
+  id: totrans-181
   prefs: []
   type: TYPE_NORMAL
+  zh: 其中 \( y_{i}^b \) 表示第 \( b \) 个随机样本中的第 \( i \) 个观测值，\(\hat{y}_i^b\) 是将完全相同的算法应用于第
+    \( b \) 个随机样本所得到的预测结果。再次强调，在实践中，我们只能观察到单个随机样本，因此期望均方误差（MSE）仅是理论上的。然而，在第 [29](cross-validation.html#cross-validation)
+    章节中，我们描述了一种尝试模拟这个理论量的估计 MSE 的方法。
 - en: Note that there are loss functions other than the squared loss. For example,
     the *Mean Absolute Error* uses absolute values, \(|\hat{Y}_i - Y_i|\) instead
     of squaring the errors \((\hat{Y}_i - Y_i)^2\). However, in this book we focus
     on minimizing square loss since it is the most widely used.
+  id: totrans-182
   prefs: []
   type: TYPE_NORMAL
+  zh: 注意，除了平方损失之外，还有其他损失函数。例如，*平均绝对误差* 使用绝对值，\( |\hat{Y}_i - Y_i| \) 而不是平方误差 \((\hat{Y}_i
+    - Y_i)^2\)。然而，在这本书中，我们专注于最小化平方损失，因为它是最广泛使用的。
 - en: 27.5 Exercises
+  id: totrans-183
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 27.5 练习
 - en: 'The `reported_height` and `height` datasets were collected from three classes
     taught in the Departments of Computer Science and Biostatistics, as well as remotely
     through the Extension School. The biostatistics class was taught in 2016 along
@@ -861,34 +1263,55 @@
     online students filled the survey during the next few days, after the lecture
     was posted online. We can use this insight to define a variable, call it `type`,
     to denote the type of student: `inclass` or `online`:'
+  id: totrans-184
   prefs: []
   type: TYPE_NORMAL
+  zh: '`reported_height` 和 `height` 数据集是从计算机科学和生物统计学系的三个班级收集的，以及通过远程教育学校收集的。生物统计学课程于
+    2016 年授课，同时提供由远程教育学校提供的在线版本。在 2016-01-25 上午 8:15 的某次讲座中，讲师要求学生填写性别和身高问卷，该问卷构成了
+    `reported_height` 数据集。在线学生是在讲座发布在线后的几天内填写调查问卷的。我们可以利用这个洞察力定义一个变量，称之为 `type`，以表示学生的类型：`inclass`
+    或 `online`：'
 - en: '[PRE28]'
+  id: totrans-185
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE28]'
 - en: 1\. Show summary statistics that indicate that the `type` is predictive of sex.
+  id: totrans-186
   prefs: []
   type: TYPE_NORMAL
+  zh: 1. 展示表明 `type` 是性别预测因素的总结统计量。
 - en: 2\. Instead of using height to predict sex, use the `type` variable.
+  id: totrans-187
   prefs: []
   type: TYPE_NORMAL
+  zh: 2. 不要使用身高来预测性别，而使用 `type` 变量。
 - en: 3\. Show the confusion matrix.
+  id: totrans-188
   prefs: []
   type: TYPE_NORMAL
+  zh: 3. 展示混淆矩阵。
 - en: 4\. Use the `confusionMatrix` function in the **caret** package to report accuracy.
+  id: totrans-189
   prefs: []
   type: TYPE_NORMAL
+  zh: 4. 使用 **caret** 包中的 `confusionMatrix` 函数来报告准确率。
 - en: 5\. Now use the `sensitivity` and `specificity` functions to report specificity
     and sensitivity.
+  id: totrans-190
   prefs: []
   type: TYPE_NORMAL
+  zh: 5. 现在使用 `sensitivity` 和 `specificity` 函数来报告特异性和灵敏度。
 - en: 6\. What is the prevalence (% of females) in the `dat` dataset defined above?
+  id: totrans-191
   prefs: []
   type: TYPE_NORMAL
+  zh: 6. 上文定义的 `dat` 数据集中女性（百分比）的流行率是多少？
 - en: 27.6 Conditional probabilities and expectations
+  id: totrans-192
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 27.6 条件概率和期望
 - en: 'In machine learning applications, we rarely can predict outcomes perfectly.
     For example, spam detectors often miss emails that are clearly spam, Siri often
     misunderstands the words we are saying, and your bank at times thinks your card
@@ -902,8 +1325,11 @@
     for all these cases. We saw a simple example of this in the previous section:
     for any given height \(x\), you will have both males and females that are \(x\)
     inches tall.'
+  id: totrans-193
   prefs: []
   type: TYPE_NORMAL
+  zh: 在机器学习应用中，我们很少能够完美地预测结果。例如，垃圾邮件过滤器经常会错过显然是垃圾邮件的电子邮件，Siri 经常会误解我们所说的词语，有时你的银行会错误地认为你的卡被盗了，而实际上并没有。无法构建完美算法的最常见原因是这是不可能的。为了理解这一点，请注意，大多数数据集都会包括具有所有预测因子相同观察值的观测组，但结果不同。因为我们的预测规则是函数，相同的输入（预测因子）意味着相同的输出（预测）。因此，对于同一个预测因子在不同个体观测中与不同结果相关联的挑战，不可能对所有这些情况做出正确预测。我们在上一节中看到了一个简单的例子：对于任何给定的高度
+    \(x\)，你都会有身高为 \(x\) 英寸的男性和女性。
 - en: However, none of this means that we can’t build useful algorithms that are much
     better than guessing, and in some cases better than expert opinions. To achieve
     this in an optimal way, we make use of probabilistic representations of the problem
@@ -912,53 +1338,79 @@
     same, but we can assume that they all have the same probability of this class
     or that class. We will write this idea out mathematically for the case of categorical
     data.
+  id: totrans-194
   prefs: []
   type: TYPE_NORMAL
+  zh: 然而，这并不意味着我们不能构建比猜测更好的有用算法，在某些情况下甚至比专家意见更好。为了以最佳方式实现这一点，我们利用基于第 [17.3](regression.html#conditional-expectation)
+    节中提出的思想的问题的概率表示。对于具有相同预测器观察值的观测值可能并不完全相同，但我们可以假设它们都具有相同的此类或此类概率。我们将用数学方式表达这一想法，针对分类数据。
 - en: 27.6.1 Conditional probabilities
+  id: totrans-195
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 27.6.1 条件概率
 - en: 'We use the notation \((X_1 = x_1,\dots,X_p=x_p)\) to represent the fact that
     we have observed values \(x_1,\dots,x_p\) for covariates \(X_1, \dots, X_p\).
     This does not imply that the outcome \(Y\) will take a specific value. Instead,
     it implies a specific probability. In particular, we denote the *conditional probabilities*
     for each class \(k\):'
+  id: totrans-196
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们使用符号 \((X_1 = x_1,\dots,X_p=x_p)\) 来表示我们已观察到协变量 \(X_1, \dots, X_p\) 的值 \(x_1,\dots,x_p\)。这并不暗示结果
+    \(Y\) 将取特定值。相反，它暗示了一个特定的概率。特别是，我们表示每个类别 \(k\) 的*条件概率*：
 - en: \[ \mbox{Pr}(Y=k \mid X_1 = x_1,\dots,X_p=x_p), \, \mbox{for}\,k=1,\dots,K \]
+  id: totrans-197
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \mbox{Pr}(Y=k \mid X_1 = x_1,\dots,X_p=x_p), \, \mbox{for}\,k=1,\dots,K \]
 - en: 'To avoid writing out all the predictors, we will use the bold letters like
     this: \(\mathbf{X} \equiv (X_1,\dots,X_p)\) and \(\mathbf{x} \equiv (x_1,\dots,x_p)\).
     We will also use the following notation for the conditional probability of being
     class \(k\):'
+  id: totrans-198
   prefs: []
   type: TYPE_NORMAL
+  zh: 为了避免写出所有的预测器，我们将使用这样的粗体字母：\(\mathbf{X} \equiv (X_1,\dots,X_p)\) 和 \(\mathbf{x}
+    \equiv (x_1,\dots,x_p)\)。我们还将使用以下符号表示属于类别 \(k\) 的条件概率：
 - en: \[ p_k(\mathbf{x}) = \mbox{Pr}(Y=k \mid \mathbf{X}=\mathbf{x}), \, \mbox{for}\,
     k=1,\dots,K \]
+  id: totrans-199
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ p_k(\mathbf{x}) = \mbox{Pr}(Y=k \mid \mathbf{X}=\mathbf{x}), \, \mbox{for}\,
+    k=1,\dots,K \]
 - en: 'Note: We will be using the \(p(x)\) notation to represent conditional probabilities
     as functions of the predictors. Do not confuse it with the \(p\) that represents
     the number of predictors.'
+  id: totrans-200
   prefs: []
   type: TYPE_NORMAL
+  zh: 注意：我们将使用 \(p(x)\) 符号来表示条件概率作为预测器的函数。不要将其与表示预测器数量的 \(p\) 混淆。
 - en: 'These probabilities guide the construction of an algorithm that makes the best
     prediction: for any given \(\mathbf{x}\), we will predict the class \(k\) with
     the largest probability among \(p_1(x), p_2(x), \dots p_K(x)\). In mathematical
     notation, we write it like this: \(\hat{Y} = \max_k p_k(\mathbf{x})\).'
+  id: totrans-201
   prefs: []
   type: TYPE_NORMAL
+  zh: 这些概率指导构建一个最佳预测的算法：对于任何给定的 \(\mathbf{x}\)，我们将预测概率最大的类别 \(k\)，在 \(p_1(x), p_2(x),
+    \dots p_K(x)\) 中。用数学符号表示，我们写成这样：\(\hat{Y} = \max_k p_k(\mathbf{x})\)。
 - en: 'In machine learning, we refer to this as *Bayes’ Rule*. But keep in mind that
     this is a theoretical rule since in practice we don’t know \(p_k(\mathbf{x}),
     k=1,\dots,K\). In fact, estimating these conditional probabilities can be thought
     of as the main challenge of machine learning. The better our probability estimates
     \(\hat{p}_k(\mathbf{x})\), the better our predictor:'
+  id: totrans-202
   prefs: []
   type: TYPE_NORMAL
+  zh: 在机器学习中，我们将其称为*贝叶斯定理*。但请记住，这是一个理论规则，因为在实践中我们不知道 \(p_k(\mathbf{x}), k=1,\dots,K\)。事实上，估计这些条件概率可以被认为是机器学习的主要挑战。我们的概率估计
+    \(\hat{p}_k(\mathbf{x})\) 越好，我们的预测器就越好：
 - en: \[\hat{Y} = \max_k \hat{p}_k(\mathbf{x})\]
+  id: totrans-203
   prefs: []
   type: TYPE_NORMAL
+  zh: \[\hat{Y} = \max_k \hat{p}_k(\mathbf{x})\]
 - en: 'So what we will predict depends on two things: 1) how close are the \(\max_k
     p_k(\mathbf{x})\) to 1 or 0 (perfect certainty) and 2) how close our estimates
     \(\hat{p}_k(\mathbf{x})\) are to \(p_k(\mathbf{x})\). We can’t do anything about
@@ -969,8 +1421,11 @@
     some challenges we will be able to achieve almost perfect accuracy, with digit
     readers for example, in others our success is restricted by the randomness of
     the process, with movie recommendations for example.'
+  id: totrans-204
   prefs: []
   type: TYPE_NORMAL
+  zh: 因此，我们将预测的依据有两点：1) \(\max_k p_k(\mathbf{x})\) 与 1 或 0（绝对确定性）的距离有多近，2) 我们的估计 \(\hat{p}_k(\mathbf{x})\)
+    与 \(p_k(\mathbf{x})\) 的距离有多近。我们无法改变第一个限制，因为它由问题的性质决定，所以我们把精力放在寻找最佳估计条件概率的方法上。第一个限制确实意味着我们对于最佳算法的性能有极限。你应该习惯这样的想法，即在某些挑战中，我们可能会实现几乎完美的准确性，例如在数字阅读器的情况下，而在其他情况下，我们的成功受到过程随机性的限制，例如在电影推荐的情况下。
 - en: Before we continue, it is important to remember that defining our prediction
     by maximizing the probability is not always optimal in practice and depends on
     the context. As discussed above, sensitivity and specificity may differ in importance.
@@ -981,59 +1436,90 @@
     plane example, we may ground the plane anytime the probability of malfunction
     is higher than 1 in a million as opposed to the default 1/2 used when error types
     are equally undesired.
+  id: totrans-205
   prefs: []
   type: TYPE_NORMAL
+  zh: 在我们继续之前，重要的是要记住，通过最大化概率来定义我们的预测在实践上并不总是最优的，并且取决于上下文。如上所述，敏感性和特异性可能在不同情况下具有不同的重要性。但即使在这些情况下，只要我们有一个好的
+    \(p_k(x), k=1,\dots,K\) 的估计，就足以为我们构建最优预测模型，因为我们可以在任何我们希望的情况下控制特异性和敏感性的平衡。例如，我们可以简单地改变用于预测一个结果或另一个结果的截止值。在平面示例中，我们可以在故障概率高于一百万分之一时停止飞机，而不是在错误类型同样不受欢迎时使用的默认值
+    1/2。
 - en: 27.6.2 Conditional expectations
+  id: totrans-206
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 27.6.2 条件期望
 - en: For binary data, you can think of the probability \(\mbox{Pr}(Y=1 \mid \mathbf{X}=\mathbf{x})\)
     as the proportion of 1s in the stratum of the population for which \(\mathbf{X}=\mathbf{x}\).
     Many of the algorithms we will learn can be applied to both categorical and continuous
     data due to the connection between *conditional probabilities* and *conditional
     expectations*.
+  id: totrans-207
   prefs: []
   type: TYPE_NORMAL
+  zh: 对于二进制数据，你可以将概率 \(\mbox{Pr}(Y=1 \mid \mathbf{X}=\mathbf{x})\) 视为在 \(\mathbf{X}=\mathbf{x}\)
+    的群体层中 1 的比例。由于 *条件概率* 和 *条件期望* 之间的联系，我们将会学习的许多算法都可以应用于分类数据和连续数据。
 - en: 'Because the expectation is the average of values \(y_1,\dots,y_n\) in the population,
     in the case in which the \(y\)s are 0 or 1, the expectation is equivalent to the
     probability of randomly picking a one since the average is simply the proportion
     of ones:'
+  id: totrans-208
   prefs: []
   type: TYPE_NORMAL
+  zh: 因为期望是群体中 \(y_1,\dots,y_n\) 值的平均值，在 \(y\) 值为 0 或 1 的情况下，期望等同于随机抽取一个 1 的概率，因为平均值仅仅是
+    1 的比例：
 - en: \[ \mbox{E}(Y \mid \mathbf{X}=\mathbf{x})=\mbox{Pr}(Y=1 \mid \mathbf{X}=\mathbf{x}).
     \]
+  id: totrans-209
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \mbox{E}(Y \mid \mathbf{X}=\mathbf{x})=\mbox{Pr}(Y=1 \mid \mathbf{X}=\mathbf{x}).
+    \]
 - en: As a result, we often only use the expectation to denote both the conditional
     probability and conditional expectation.
+  id: totrans-210
   prefs: []
   type: TYPE_NORMAL
+  zh: 因此，我们通常只使用期望来表示条件概率和条件期望。
 - en: Just like with categorical outcomes, in most applications the same observed
     predictors do not guarantee the same continuous outcomes. Instead, we assume that
     the outcome follows the same conditional distribution. We will now explain why
     we use the conditional expectation to define our predictors.
+  id: totrans-211
   prefs: []
   type: TYPE_NORMAL
+  zh: 就像分类结果一样，在大多数应用中，相同的观察预测因子并不保证相同的连续结果。相反，我们假设结果遵循相同的条件分布。现在我们将解释为什么我们使用条件期望来定义我们的预测因子。
 - en: 27.6.3 Conditional expectation minimizes squared loss function
+  id: totrans-212
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 27.6.3 条件期望最小化平方损失函数
 - en: 'Why do we care about the conditional expectation in machine learning? This
     is because the expected value has an attractive mathematical property: it minimizes
     the MSE. Specifically, of all possible predictions \(\hat{Y}\),'
+  id: totrans-213
   prefs: []
   type: TYPE_NORMAL
+  zh: 为什么我们在机器学习中关心条件期望？这是因为期望值具有一个吸引人的数学属性：它最小化均方误差（MSE）。具体来说，在所有可能的预测 \(\hat{Y}\)
+    中，
 - en: \[ \hat{Y} = \mbox{E}(Y \mid \mathbf{X}=\mathbf{x}) \, \mbox{ minimizes } \,
     \mbox{E}\{ (\hat{Y} - Y)^2 \mid \mathbf{X}=\mathbf{x} \} \]
+  id: totrans-214
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \hat{Y} = \mbox{E}(Y \mid \mathbf{X}=\mathbf{x}) \, \mbox{ minimizes } \,
+    \mbox{E}\{ (\hat{Y} - Y)^2 \mid \mathbf{X}=\mathbf{x} \} \]
 - en: 'Due to this property, a succinct description of the main task of machine learning
     is that we use data to estimate:'
+  id: totrans-215
   prefs: []
   type: TYPE_NORMAL
+  zh: 由于这个特性，机器学习主要任务的简洁描述是，我们使用数据来估计：
 - en: \[ f(\mathbf{x}) \equiv \mbox{E}( Y \mid \mathbf{X}=\mathbf{x} ) \]
+  id: totrans-216
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ f(\mathbf{x}) \equiv \mbox{E}( Y \mid \mathbf{X}=\mathbf{x} ) \]
 - en: 'for any set of features \(\mathbf{x} = (x_1, \dots, x_p)\). Of course this
     is easier said than done, since this function can take any shape and \(p\) can
     be very large. Consider a case in which we only have one predictor \(x\). The
@@ -1043,42 +1529,63 @@
     a function of a multidimensional vector \(\mathbf{x}\). For example, in our digit
     reader example \(p = 784\)! **The main way in which competing machine learning
     algorithms differ is in their approach to estimating this expectation.**'
+  id: totrans-217
   prefs: []
   type: TYPE_NORMAL
+  zh: 对于任何特征集 \(\mathbf{x} = (x_1, \dots, x_p)\)。当然，说起来容易做起来难，因为这个函数可以采取任何形状，而\(p\)可能非常大。考虑一个只有一个预测因子\(x\)的情况。期望
+    \(\mbox{E}\{ Y \mid X=x \}\) 可以是\(x\)的任何函数：一条线，一个抛物线，一个正弦波，一个阶梯函数，任何东西。当我们考虑具有大\(p\)的实例时，事情变得更加复杂，在这种情况下，\(f(\mathbf{x})\)是多维向量\(\mathbf{x}\)的函数。例如，在我们的数字阅读器例子中，\(p
+    = 784\)！**竞争机器学习算法之间的主要区别在于它们估计这个期望的方法。**
 - en: 27.7 Exercises
+  id: totrans-218
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 27.7 练习
 - en: 1\. Compute conditional probabilities for being Male for the `heights` dataset.
     Round the heights to the closest inch. Plot the estimated conditional probability
     \(P(x) = \mbox{Pr}(\mbox{Male} | \mbox{height}=x)\) for each \(x\).
+  id: totrans-219
   prefs: []
   type: TYPE_NORMAL
+  zh: 1. 计算`heights`数据集中为男性的条件概率。将身高四舍五入到最接近的英寸。为每个\(x\)绘制估计的条件概率 \(P(x) = \mbox{Pr}(\mbox{Male}
+    | \mbox{height}=x)\)。
 - en: '2\. In the plot we just made, we see high variability for low values of height.
     This is because we have few data points in these strata. This time use the `quantile`
     function for quantiles \(0.1,0.2,\dots,0.9\) and the `cut` function to assure
     each group has the same number of points. Hint: for any numeric vector `x`, you
     can create groups based on quantiles like this:'
+  id: totrans-220
   prefs: []
   type: TYPE_NORMAL
+  zh: 2. 在我们刚刚制作的图表中，我们可以看到身高较低时的变异性较高。这是因为在这些层中我们的数据点很少。这次使用`quantile`函数来计算分位数 \(0.1,0.2,\dots,0.9\)，并使用`cut`函数确保每个组有相同数量的点。提示：对于任何数值向量`x`，你可以根据分位数创建组，如下所示：
 - en: '[PRE29]'
+  id: totrans-221
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE29]'
 - en: '3\. Generate data from a bivariate normal distribution using the **MASS** package
     like this:'
+  id: totrans-222
   prefs: []
   type: TYPE_NORMAL
+  zh: 3. 使用**MASS**包生成来自双变量正态分布的数据，如下所示：
 - en: '[PRE30]'
+  id: totrans-223
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE30]'
 - en: You can make a quick plot of the data using `plot(dat)`. Use an approach similar
     to the previous exercise to estimate the conditional expectations and make a plot.
+  id: totrans-224
   prefs: []
   type: TYPE_NORMAL
+  zh: 你可以使用`plot(dat)`快速绘制数据。使用与上一个练习类似的方法来估计条件期望并绘制图表。
 - en: '27.8 Case study: is it a 2 or a 7?'
+  id: totrans-225
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 27.8 案例研究：这是一个2还是7？
 - en: 'In the simple example above, we only had one predictor. We actually do not
     consider these machine learning challenges, which are characterized by cases with
     many predictors. Let’s go back to the digits example in which we had 784 predictors.
@@ -1088,67 +1595,104 @@
     are not quite ready to build algorithms with 784 predictors, so we will extract
     two simple predictors from the 784: the proportion of dark pixels that are in
     the upper left quadrant (\(X_1\)) and the lower right quadrant (\(X_2\)).'
+  id: totrans-226
   prefs: []
   type: TYPE_NORMAL
+  zh: 在上面的简单例子中，我们只有一个预测因子。实际上，我们不考虑这些具有许多预测因子的机器学习挑战。让我们回到我们之前有784个预测因子的数字例子。为了说明目的，我们将首先将这个问题简化为具有两个预测因子和两个类别的形式。具体来说，我们将挑战定义为构建一个算法，该算法可以从预测因子中确定一个数字是2还是7。我们还没有准备好构建具有784个预测因子的算法，因此我们将从784个中提取两个简单的预测因子：位于左上象限的暗像素比例（\(X_1\)）和位于右下象限的暗像素比例（\(X_2\)）。
 - en: 'We then select a random sample of 1,000 digits, 500 in the training set and
     500 in the test set. We provide this dataset in the `dslabs` package:'
+  id: totrans-227
   prefs: []
   type: TYPE_NORMAL
+  zh: 然后，我们选择一个包含1,000个数字的随机样本，其中训练集有500个，测试集有500个。我们在`dslabs`包中提供这个数据集。
 - en: '[PRE31]'
+  id: totrans-228
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE31]'
 - en: 'We can explore the data by plotting the two predictors and using colors to
     denote the labels:'
+  id: totrans-229
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们可以通过绘制两个预测因子并使用颜色表示标签来探索数据。
 - en: '[PRE32]'
+  id: totrans-230
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE32]'
 - en: '![](../Images/04bd8ad0c02f807bcc0b29870378c3bf.png)'
+  id: totrans-231
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/04bd8ad0c02f807bcc0b29870378c3bf.png)'
 - en: We can immediately see some patterns. For example, if \(X_1\) (the upper left
     panel) is very large, then the digit is probably a 7\. Also, for smaller values
     of \(X_1\), the 2s appear to be in the mid range values of \(X_2\).
+  id: totrans-232
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们可以立即看到一些模式。例如，如果 \(X_1\)（左上角面板）非常大，那么这个数字可能是一个7。另外，对于较小的 \(X_1\) 值，2看起来似乎位于
+    \(X_2\) 的中间值范围内。
 - en: 'To illustrate how to interpret \(X_1\) and \(X_2\), we include four example
     images. On the left are the original images of the two digits with the largest
     and smallest values for \(X_1\) and on the right we have the images corresponding
     to the largest and smallest values of \(X_2\):'
+  id: totrans-233
   prefs: []
   type: TYPE_NORMAL
+  zh: 为了说明如何解释 \(X_1\) 和 \(X_2\)，我们包含了四个示例图像。在左边是两个数字的原图像，其中 \(X_1\) 的值最大和最小，而在右边我们有与
+    \(X_2\) 的最大和最小值相对应的图像：
 - en: '![](../Images/4017d9caffb9c854f8bf7484051a17c9.png)'
+  id: totrans-234
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/4017d9caffb9c854f8bf7484051a17c9.png)'
 - en: We can start getting a sense for why these predictors are useful, but also why
     the problem will be somewhat challenging.
+  id: totrans-235
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们可以开始了解为什么这些预测因子是有用的，同时也了解为什么这个问题将会有些挑战性。
 - en: 'We haven’t really learned any algorithms yet, so let’s try building an algorithm
     using regression. The model is simply:'
+  id: totrans-236
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们还没有真正学习任何算法，所以让我们尝试使用回归构建一个算法。模型很简单：
 - en: \[ p(x_1, x_2) = \mbox{Pr}(Y=1 \mid X_1=x_1 , X_2 = x_2) = \beta_0 + \beta_1
     x_1 + \beta_2 x_2 \]
+  id: totrans-237
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ p(x_1, x_2) = \mbox{Pr}(Y=1 \mid X_1=x_1 , X_2 = x_2) = \beta_0 + \beta_1
+    x_1 + \beta_2 x_2 \]
 - en: 'We fit it like this:'
+  id: totrans-238
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们是这样拟合的：
 - en: '[PRE33]'
+  id: totrans-239
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE33]'
 - en: 'We can now build a decision rule based on the estimate of \(\hat{p}(x_1, x_2)\):'
+  id: totrans-240
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们现在可以根据 \(\hat{p}(x_1, x_2)\) 的估计值建立一个决策规则：
 - en: '[PRE34]'
+  id: totrans-241
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE34]'
 - en: We get an accuracy well above 50%. Not bad for our first try. But can we do
     better?
+  id: totrans-242
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们得到了超过50%的准确率。对于第一次尝试来说，这已经很不错了。但我们能做得更好吗？
 - en: 'Because we constructed the `mnist_27` example and we had at our disposal 60,000
     digits in just the MNIST dataset, we used this to build the *true* conditional
     distribution \(p(x_1, x_2)\). Keep in mind that this is something we don’t have
@@ -1159,26 +1703,43 @@
     using the **ggplot2** function `geom_raster()`. We choose better colors and use
     the `stat_contour` function to draw a curve that separates pairs \((x_1,x_2)\)
     for which \(p(x_1,x_2) > 0.5\) and pairs for which \(p(x_1,x_2) < 0.5\):'
+  id: totrans-243
   prefs: []
   type: TYPE_NORMAL
+  zh: 因为我们在 `mnist_27` 示例中构建了它，并且我们手头上有 MNIST 数据集中的 60,000 个数字，所以我们使用了这些来构建 *真实* 条件分布
+    \(p(x_1, x_2)\)。记住，这在实践中是我们无法获得的，但我们将其包含在这个示例中，因为它允许我们将 \(\hat{p}(x_1, x_2)\)
+    与真实 \(p(x_1, x_2)\) 进行比较。这种比较教会了我们不同算法的限制。让我们在这里做一下。我们已经将真实的 \(p(x_1,x_2)\) 存储在
+    `mnist_27` 对象中，并可以使用 **ggplot2** 函数 `geom_raster()` 绘制图像。我们选择了更好的颜色，并使用 `stat_contour`
+    函数绘制一条曲线，将 \(p(x_1,x_2) > 0.5\) 的对和 \(p(x_1,x_2) < 0.5\) 的对分开：
 - en: '[PRE35]'
+  id: totrans-244
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE35]'
 - en: '![](../Images/0220f91ffa06dba2f9ffed71c6e32c1e.png)'
+  id: totrans-245
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/0220f91ffa06dba2f9ffed71c6e32c1e.png)'
 - en: 'Above you see a plot of the true \(p(x_1, x_2)\). To start understanding the
     limitations of regression here, first note that with regression \(\hat{p}(x_1,x_2)\)
     has to be a plane, and as a result the boundary defined by the decision rule is
     given by: \(\hat{p}(x_1,x_2) = 0.5\), which implies the boundary can’t be anything
     other than a straight line:'
+  id: totrans-246
   prefs: []
   type: TYPE_NORMAL
+  zh: 在上面你可以看到真实 \(p(x_1, x_2)\) 的图。为了开始理解回归在这里的限制，首先要注意的是，由于回归，\(\hat{p}(x_1,x_2)\)
+    必须是一个平面，因此决策规则定义的边界由以下公式给出：\(\hat{p}(x_1,x_2) = 0.5\)，这意味着边界不能是任何其他东西，而只能是一条直线：
 - en: \[ \hat{\beta}_0 + \hat{\beta}_1 x_1 + \hat{\beta}_2 x_2 = 0.5 \implies \hat{\beta}_0
     + \hat{\beta}_1 x_1 + \hat{\beta}_2 x_2 = 0.5 \implies x_2 = (0.5-\hat{\beta}_0)/\hat{\beta}_2
     -\hat{\beta}_1/\hat{\beta}_2 x_1 \]
+  id: totrans-247
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \hat{\beta}_0 + \hat{\beta}_1 x_1 + \hat{\beta}_2 x_2 = 0.5 \implies \hat{\beta}_0
+    + \hat{\beta}_1 x_1 + \hat{\beta}_2 x_2 = 0.5 \implies x_2 = (0.5-\hat{\beta}_0)/\hat{\beta}_2
+    -\hat{\beta}_1/\hat{\beta}_2 x_1 \]
 - en: Note that for this boundary, \(x_2\) is a linear function of \(x_1\). This implies
     that our regression approach has no chance of capturing the non-linear nature
     of the true \(p(x_1,x_2)\). Below is a visual representation of \(\hat{p}(x_1,
@@ -1186,29 +1747,45 @@
     estimates to be between 0 and 1\. We can see where the mistakes were made by also
     showing the data and the boundary. They mainly come from low values \(x_1\) that
     have either high or low value of \(x_2\). Regression can’t catch this.
+  id: totrans-248
   prefs: []
   type: TYPE_NORMAL
+  zh: 注意，对于这个边界，\(x_2\) 是 \(x_1\) 的线性函数。这意味着我们的回归方法没有机会捕捉到真实 \(p(x_1,x_2)\) 的非线性本质。下面是
+    \(\hat{p}(x_1, x_2)\) 的可视化表示。我们使用了来自 **scales** 包的 `squish` 函数来限制估计值在 0 和 1 之间。通过同时显示数据和边界，我们可以看到错误发生在哪里。它们主要来自
+    \(x_1\) 的低值，这些低值要么 \(x_2\) 的值很高，要么 \(x_2\) 的值很低。回归无法捕捉到这一点。
 - en: '[PRE36]'
+  id: totrans-249
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE36]'
 - en: '![](../Images/97a0fe53630dd37535d316328698e686.png)'
+  id: totrans-250
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/97a0fe53630dd37535d316328698e686.png)'
 - en: 'We need something more flexible: a method that permits estimates with shapes
     other than a plane.'
+  id: totrans-251
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们需要更灵活的东西：一种允许估计形状不是平面的方法。
 - en: We are going to learn a few new algorithms based on different ideas and concepts.
     But what they all have in common is that they permit more flexible approaches.
     We will start by describing nearest neighbor and kernel approaches. To introduce
     the concepts behinds these approaches, we will again start with a simple one-dimensional
     example and describe the concept of *smoothing*.
+  id: totrans-252
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们将要学习一些基于不同想法和概念的新算法。但它们共同的特点是允许更灵活的方法。我们将从描述最近邻和核方法开始。为了介绍这些方法背后的概念，我们再次从一个简单的一维例子开始，并描述*平滑*的概念。
 - en: '* * *'
+  id: totrans-253
   prefs: []
   type: TYPE_NORMAL
+  zh: '* * *'
 - en: '[https://en.wikipedia.org/wiki/Receiver_operating_characteristic](https://en.wikipedia.org/wiki/Receiver_operating_characteristic)[↩︎](introduction-to-machine-learning.html#fnref94)'
+  id: totrans-254
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[https://en.wikipedia.org/wiki/Receiver_operating_characteristic](https://en.wikipedia.org/wiki/Receiver_operating_characteristic)[↩︎](introduction-to-machine-learning.html#fnref94)'

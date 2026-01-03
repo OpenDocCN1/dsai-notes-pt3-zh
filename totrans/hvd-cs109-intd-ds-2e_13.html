@@ -1,0 +1,811 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+  "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>9  Data visualization principles</title>
+<link href="../Styles/Style.css" type="text/css" rel="stylesheet"/>
+</head>
+<body>
+<h1>9  Data visualization principles</h1>
+<blockquote>原文：<a href="https://rafalab.dfci.harvard.edu/dsbook-part-1/dataviz/dataviz-principles.html">https://rafalab.dfci.harvard.edu/dsbook-part-1/dataviz/dataviz-principles.html</a></blockquote><header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../dataviz/intro-dataviz.html">Data Visualization</a></li><li class="breadcrumb-item"><a href="../dataviz/dataviz-principles.html"><span class="chapter-number">9</span>  <span class="chapter-title">Data visualization principles</span></a></li></ol></nav><div class="quarto-title">
+
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header><p>In this chapter we aim to provide some general principles we can use as a guide for effective data visualization. Much of this section is based on a talk by Karl Broman<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> titled “Creating Effective Figures and Tables”<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> and includes some of the figures which were made with code that Karl makes available on his GitHub repository<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>, as well as class notes from Peter Aldhous’ Introduction to Data Visualization course<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a>. Following Karl’s approach, we show some examples of plot styles we should avoid, explain how to improve them, and use these as motivation for a list of principles. We compare and contrast plots that follow these principles to those that don’t.</p>
+<p>The principles are mostly based on research related to how humans detect patterns and make visual comparisons. The preferred approaches are those that best fit the way our brains process visual information. When deciding on a visualization approach, it is also important to keep our goal in mind. We may be comparing a viewable number of quantities, describing distributions for categories or numeric values, comparing the data from two groups, or describing the relationship between two variables. As a final note, we want to emphasize that it is important to adapt and optimize graphs to the audience. For example, an exploratory plot made for ourselves will be different than a chart intended to communicate a finding to a general audience.</p>
+<p>In this chapter we focus on the principles and do not show code (code can be viewed on GitHub<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a>). In <a href="dataviz-in-practice.html" class="quarto-xref"><span>Chapter 10</span></a>, we apply these principles in case study and do show code.</p>
+<section id="encoding-data-using-visual-cues" class="level2" data-number="9.1"><h2 data-number="9.1" class="anchored" data-anchor-id="encoding-data-using-visual-cues">
+<span class="header-section-number">9.1</span> Encoding data using visual cues</h2>
+<p>We start by describing some principles for encoding data. There are several visual cues at our disposal including position, aligned lengths, angles, area, brightness, and color hue.</p>
+<p>To illustrate how some of these visual cues compare, let’s suppose we want to report the results from two hypothetical polls regarding browser preference taken in 2000 and then 2015. For each year, we are simply comparing five quantities – the five percentages. A widely used graphical representation of percentages, popularized by Microsoft Excel, is the pie chart:</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="../Images/be3a25957cedb1dcc0c196aea45c8a34.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:70.0%" data-original-src="https://rafalab.dfci.harvard.edu/dsbook-part-1/dataviz/dataviz-principles_files/figure-html/piechart-1.png"/></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Here we are representing quantities with both areas and angles, since both the angle and area of each pie slice are proportional to the quantity the slice represents. This turns out to be a sub-optimal choice since, as demonstrated by perception studies, humans are not good at precisely quantifying angles and are even worse when area is the only available visual cue. The donut chart is an example of a plot that uses only area:</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="../Images/2743e06f79dfcd18dd72de95d2f58df9.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:70.0%" data-original-src="https://rafalab.dfci.harvard.edu/dsbook-part-1/dataviz/dataviz-principles_files/figure-html/donutchart-1.png"/></p>
+</figure>
+</div>
+</div>
+</div>
+<p>To see how hard it is to quantify angles and area, note that the rankings and all the percentages in the plots above changed from 2000 to 2015. Can you determine the actual percentages and rank the browsers’ popularity? Can you see how the percentages changed from 2000 to 2015? It is not easy to tell from the plot.</p>
+<p>In this case, simply showing the numbers is not only clearer, but would also saves on printing costs if printing a paper copy:</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<table class="table table-striped caption-top table-sm small" data-quarto-postprocess="true">
+<thead><tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">Browser</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">2000</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">2015</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Opera</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Safari</td>
+<td style="text-align: right;">21</td>
+<td style="text-align: right;">22</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Firefox</td>
+<td style="text-align: right;">23</td>
+<td style="text-align: right;">21</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Chrome</td>
+<td style="text-align: right;">26</td>
+<td style="text-align: right;">29</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">IE</td>
+<td style="text-align: right;">28</td>
+<td style="text-align: right;">27</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>The preferred way to plot these quantities is to use length and position as visual cues, since humans are much better at judging linear measures. The barplot uses this approach by using bars of length proportional to the quantities of interest. By adding horizontal lines at strategically chosen values, in this case at every multiple of 10, we ease the visual burden of quantifying through the position of the top of the bars. Compare and contrast the information we can extract from the two figures.</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="../Images/7367ba43a9d7b85b452bde1dfb8fc40c.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:100.0%" data-original-src="https://rafalab.dfci.harvard.edu/dsbook-part-1/dataviz/dataviz-principles_files/figure-html/two-barplots-1.png"/></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Notice how much easier it is to see the differences in the barplot. In fact, we can now determine the actual percentages by following a horizontal line to the x-axis.</p>
+<p>If for some reason you need to make a pie chart, label each pie slice with its respective percentage so viewers do not have to infer them from the angles or area:</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="../Images/fb2d678836da690e74c5331adeaed826.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:70.0%" data-original-src="https://rafalab.dfci.harvard.edu/dsbook-part-1/dataviz/dataviz-principles_files/figure-html/excel-barplot-1.png"/></p>
+</figure>
+</div>
+</div>
+</div>
+<p>In general, when displaying quantities, position and length are preferred over angles and/or area. Brightness and color are even harder to quantify than angles. But, as we will see later, they are sometimes useful when more than two dimensions must be displayed at once.</p>
+</section><section id="know-when-to-include-0" class="level2" data-number="9.2"><h2 data-number="9.2" class="anchored" data-anchor-id="know-when-to-include-0">
+<span class="header-section-number">9.2</span> Know when to include 0</h2>
+<p>When using length as a visual cue, it is misinformative not to start the bars at 0. This is because, by using length as a visual cue, say with a barplot, we are implying the length is proportional to the quantities being displayed. By avoiding 0, relatively small differences can be made to look much bigger than they actually are. This approach is often used by politicians or media organizations trying to exaggerate a difference. Below is an illustrative example<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a>:</p>
+<p><img src="../Images/c66c317ac0618e1159bd68cc42df4e91.png" class="img-fluid" data-original-src="https://rafalab.dfci.harvard.edu/dsbook-part-1/dataviz/img/class2_8.jpg"/></p>
+<p>(Source: Fox News, via Media Matters<a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a>.)</p>
+<p>From the plot above, it appears that apprehensions have almost tripled when, in fact, they have only increased by about 16%. Starting the graph at 0 illustrates this clearly:</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="../Images/3edb535c6bb03f4447ee466b12e575ab.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:70.0%" data-original-src="https://rafalab.dfci.harvard.edu/dsbook-part-1/dataviz/dataviz-principles_files/figure-html/barplot-from-zero-1-1.png"/></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Here is another example:</p>
+<!--http://i2.wp.com/flowingdata.com/wp-content/uploads/2012/08/Bush-cuts.png-->
+<p><img src="../Images/275dd9e579ea55e1e32dd56f65081f62.png" class="img-fluid" data-original-src="https://rafalab.dfci.harvard.edu/dsbook-part-1/dataviz/img/Bush-cuts.png"/></p>
+<p>(Source: Fox News, via Flowing Data<a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a>.)</p>
+<p>This plot makes a 13% increase look like a five fold change. Here is the appropriate plot:</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="../Images/793b8c8ebc7c015c44cca6938c512855.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:70.0%" data-original-src="https://rafalab.dfci.harvard.edu/dsbook-part-1/dataviz/dataviz-principles_files/figure-html/barplot-from-zero-2-1.png"/></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Finally, here is an extreme example that makes a very small difference of under 2% look like a 10-100 fold change:</p>
+<!-- http://i2.wp.com/flowingdata.com/wp-content/uploads/2012/08/Bush-cuts.png-->
+<p><img src="../Images/ee703bb8a83ac0dca4394fd83e8c7848.png" class="img-fluid" data-original-src="https://rafalab.dfci.harvard.edu/dsbook-part-1/dataviz/img/venezuela-election.png"/></p>
+<p>(Source: Venezolana de Televisión via El Mundo<a href="#fn9" class="footnote-ref" id="fnref9" role="doc-noteref"><sup>9</sup></a>.)</p>
+<p>Here is the appropriate plot:</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="../Images/37ee51e4b25b1ddd35f9e41884bf5058.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:70.0%" data-original-src="https://rafalab.dfci.harvard.edu/dsbook-part-1/dataviz/dataviz-principles_files/figure-html/barplot-from-zero-3-1.png"/></p>
+</figure>
+</div>
+</div>
+</div>
+<p>When using position rather than length, it is then not necessary to include 0. This is particularly the case when we want to compare differences between groups relative to the within-group variability. Here is an illustrative example showing country average life expectancy stratified across continents in 2012:</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="../Images/a8593ed83881c83abcf13f4ccd058b8c.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:100.0%" data-original-src="https://rafalab.dfci.harvard.edu/dsbook-part-1/dataviz/dataviz-principles_files/figure-html/points-plot-not-from-zero-1.png"/></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Note that in the plot on the left, which includes 0, the space between 0 and 43 adds no information and makes it harder to compare the between and within group variability.</p>
+</section><section id="do-not-distort-quantities" class="level2" data-number="9.3"><h2 data-number="9.3" class="anchored" data-anchor-id="do-not-distort-quantities">
+<span class="header-section-number">9.3</span> Do not distort quantities</h2>
+<p>During President Barack Obama’s 2011 State of the Union Address, the following chart was used to compare the US GDP to the GDP of four competing nations:</p>
+<!--idea from http://paldhous.github.io/ucb/2016/img/class2_30.jpg-->
+<!--screen shot my own from state of the union-->
+<p><img src="../Images/fa4ac1cb89282d0b3a819af2313519a2.png" class="img-fluid" data-original-src="https://rafalab.dfci.harvard.edu/dsbook-part-1/dataviz/img/state-of-the-union.png"/></p>
+<p>(Source: The 2011 State of the Union Address<a href="#fn10" class="footnote-ref" id="fnref10" role="doc-noteref"><sup>10</sup></a>)</p>
+<p>Judging by the area of the circles, the US appears to have an economy over five times larger than China’s and over 30 times larger than France’s. However, if we look at the actual numbers, we see that this is not the case. The actual ratios are 2.6 and 5.8 times bigger than China and France, respectively. The reason for this distortion is that the radius, rather than the area, was made to be proportional to the quantity, which implies that the proportion between the areas is squared: 2.6 turns into 6.5 and 5.8 turns into 34.1. Here is a comparison of the circles we get if we make the value proportional to the radius and to the area:</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="../Images/80e7767a2d69558036b12111372b79ed.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:70.0%" data-original-src="https://rafalab.dfci.harvard.edu/dsbook-part-1/dataviz/dataviz-principles_files/figure-html/area-not-radius-1.png"/></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Not surprisingly, <strong>ggplot2</strong> defaults to using area rather than radius. Of course, in this case, we really should not be using area at all since we can use position and length:</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="../Images/e4e10c9926c20466c1bd6e2de8124399.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:70.0%" data-original-src="https://rafalab.dfci.harvard.edu/dsbook-part-1/dataviz/dataviz-principles_files/figure-html/barplot-better-than-area-1.png"/></p>
+</figure>
+</div>
+</div>
+</div>
+</section><section id="order-categories-by-a-meaningful-value" class="level2" data-number="9.4"><h2 data-number="9.4" class="anchored" data-anchor-id="order-categories-by-a-meaningful-value">
+<span class="header-section-number">9.4</span> Order categories by a meaningful value</h2>
+<p>When one of the axes is used to show categories, as is done in barplots and boxplots, the default <strong>ggplot2</strong> behavior is to order the categories alphabetically when they are defined by character strings. If they are defined by factors, they are ordered by the factor levels. We rarely want to use alphabetical order. Instead, we should order by a meaningful quantity. In all the cases above, the barplots were ordered by the values being displayed. The exception was the graph showing barplots comparing browsers. In this case, we kept the order the same across the barplots to ease the comparison. Specifically, instead of ordering the browsers separately in the two years, we ordered both years by the average value of 2000 and 2015.</p>
+<p>To appreciate how the right order can help convey a message, suppose we want to create a plot to compare the murder rate across states. We are particularly interested in the most dangerous and safest states. Note the difference when we order alphabetically (the default) versus when we order by the actual rate:</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="../Images/f41b5afbd391294874b644a6b355e3f7.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:70.0%" data-original-src="https://rafalab.dfci.harvard.edu/dsbook-part-1/dataviz/dataviz-principles_files/figure-html/do-not-order-alphabetically-1.png"/></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Here is an example showing boxplots of income distributions across regions. Here are the two versions plotted against each other:</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="../Images/fc9ef4094ce741676fc989dc6277133d.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:100.0%" data-original-src="https://rafalab.dfci.harvard.edu/dsbook-part-1/dataviz/dataviz-principles_files/figure-html/reorder-boxplot-example-1.png"/></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The first orders the regions alphabetically, while the second orders them by the group’s median.</p>
+</section><section id="show-the-data" class="level2" data-number="9.5"><h2 data-number="9.5" class="anchored" data-anchor-id="show-the-data">
+<span class="header-section-number">9.5</span> Show the data</h2>
+<p>We have focused on displaying single quantities across categories. We now shift our attention to displaying data, with a focus on comparing groups.</p>
+<p>To motivate the principle, “show the data”, we go back to our artificial example of describing heights to ET, an extraterrestrial. This time let’s assume ET is interested in the difference in heights between males and females. A commonly seen plot used for comparisons between groups, popularized by software such as Microsoft Excel, is the dynamite plot, which shows the average and standard errors (standard errors are defined in a later chapter, but do not confuse them with the standard deviation of the data). The plot looks like this:</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="../Images/88bdec78c4a80f876d34ea6f35f9f6c8.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:70.0%" data-original-src="https://rafalab.dfci.harvard.edu/dsbook-part-1/dataviz/dataviz-principles_files/figure-html/show-data-1-1.png"/></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The average of each group is represented by the top of each bar and the antennae extend out from the average to the average plus two standard errors. If all ET receives is this plot, he will have little information on what to expect if he meets a group of human males and females. The bars go to 0: does this mean there are tiny humans measuring less than one foot? Are all males taller than the tallest females? Is there a range of heights? ET can’t answer these questions since we have provided almost no information on the height distribution.</p>
+<p>This brings us the “show the data” principle. This simple <strong>ggplot2</strong> code already generates a more informative plot than the barplot by simply showing all the data points:</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="../Images/c7f7ed788da0d3cf3f1b34584f22dd7b.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:70.0%" data-original-src="https://rafalab.dfci.harvard.edu/dsbook-part-1/dataviz/dataviz-principles_files/figure-html/show-data-2-1.png"/></p>
+</figure>
+</div>
+</div>
+</div>
+<p>For example, this plot gives us an idea of the range of the data. However, this plot has limitations as well, since we can’t really see all the 238 and 812 points plotted for females and males, respectively, and many points are plotted on top of each other. As we have previously described, visualizing the distribution is much more informative. But before doing this, we point out two ways we can improve a plot showing all the points.</p>
+<p>The first is to add <em>jitter</em>, which adds a small random shift to each point. In this case, adding horizontal jitter does not alter the interpretation, since the point heights do not change, but we minimize the number of points that fall on top of each other and, therefore, get a better visual sense of how the data is distributed. A second improvement comes from using <em>alpha blending</em>: making the points somewhat transparent. The more points fall on top of each other, the darker the plot, which also helps us get a sense of how the points are distributed. Here is the same plot with jitter and alpha blending:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">heights</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu">ggplot</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span><span class="va">sex</span>, <span class="va">height</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">geom_jitter</span><span class="op">(</span>width <span class="op">=</span> <span class="fl">0.05</span>, alpha <span class="op">=</span> <span class="fl">0.2</span><span class="op">)</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"/></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="../Images/7db5830c13e88f55459df74096584743.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:70.0%" data-original-src="https://rafalab.dfci.harvard.edu/dsbook-part-1/dataviz/dataviz-principles_files/figure-html/show-points-with-jitter-1.png"/></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Now we start getting a sense that, on average, males are taller than females. We also note dark horizontal bands of points, demonstrating that many report values that are rounded to the nearest integer.</p>
+</section><section id="ease-comparisons" class="level2" data-number="9.6"><h2 data-number="9.6" class="anchored" data-anchor-id="ease-comparisons">
+<span class="header-section-number">9.6</span> Ease comparisons</h2>
+<section id="use-common-axes" class="level3" data-number="9.6.1"><h3 data-number="9.6.1" class="anchored" data-anchor-id="use-common-axes">
+<span class="header-section-number">9.6.1</span> Use common axes</h3>
+<p>Since there are so many points, it is more effective to show distributions rather than individual points. We therefore show histograms for each group:</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="../Images/a00f29a74aab4437a8e23457840d99c1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:70.0%" data-original-src="https://rafalab.dfci.harvard.edu/dsbook-part-1/dataviz/dataviz-principles_files/figure-html/common-axes-histograms-wrong-1.png"/></p>
+</figure>
+</div>
+</div>
+</div>
+<p>However, from this plot it is not immediately obvious that males are, on average, taller than females. We have to look carefully to notice that the x-axis has a higher range of values in the male histogram. An important principle here is to <strong>keep the axes the same</strong> when comparing data across two plots. Below we see how the comparison becomes a little easier:</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="../Images/f49ab3a6389a271959ea504f057d6105.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:70.0%" data-original-src="https://rafalab.dfci.harvard.edu/dsbook-part-1/dataviz/dataviz-principles_files/figure-html/common-axes-histograms-right-1.png"/></p>
+</figure>
+</div>
+</div>
+</div>
+</section><section id="aligning-plots-for-comparisons" class="level3" data-number="9.6.2"><h3 data-number="9.6.2" class="anchored" data-anchor-id="aligning-plots-for-comparisons">
+<span class="header-section-number">9.6.2</span> Aligning plots for comparisons</h3>
+<p>In these histograms, the visual cue related to decreases or increases in height are shifts to the left or right, respectively: horizontal changes. Aligning the plots vertically helps us see this change when the axes are fixed:</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="../Images/a1a8090caf417d5d8ded3015bad7f918.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:70.0%" data-original-src="https://rafalab.dfci.harvard.edu/dsbook-part-1/dataviz/dataviz-principles_files/figure-html/common-axes-histograms-right-2-1.png"/></p>
+</figure>
+</div>
+</div>
+</div>
+<p>This plot makes it much easier to notice that men are, on average, taller.</p>
+<p>If we want the more compact summary provided by boxplots, we then align them horizontally since, by default, boxplots move up and down with changes in height. Following our <em>show the data</em> principle, we then overlay all the data points:</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="../Images/9cfc16fbc19e6a1390f689536d677c85.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:70.0%" data-original-src="https://rafalab.dfci.harvard.edu/dsbook-part-1/dataviz/dataviz-principles_files/figure-html/boxplot-with-points-with-jitter-1.png"/></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Now contrast and compare these three plots, based on exactly the same data:</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="../Images/544f1e7ac3809561ae888e2bfdba365d.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:100.0%" data-original-src="https://rafalab.dfci.harvard.edu/dsbook-part-1/dataviz/dataviz-principles_files/figure-html/show-the-data-comparison-1.png"/></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Notice how much more we learn from the two plots on the right. Barplots are useful for showing one number, but not very useful when we want to describe distributions.</p>
+</section></section><section id="sec-log-transform" class="level2" data-number="9.7"><h2 data-number="9.7" class="anchored" data-anchor-id="sec-log-transform">
+<span class="header-section-number">9.7</span> Log transformations</h2>
+<p>The combination of an incorrectly chosen barplot and a failure to use a transformation when one is merited can be particularly distorting. As an example, consider this barplot showing the average population sizes for each continent in 2015:</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="../Images/f99c39874260de4ae36f908464ef44ae.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:70.0%" data-original-src="https://rafalab.dfci.harvard.edu/dsbook-part-1/dataviz/dataviz-principles_files/figure-html/no-transformations-wrong-use-of-barplot-1.png"/></p>
+</figure>
+</div>
+</div>
+</div>
+<p>From this plot, one would conclude that countries in Asia are much more populous than in other continents. Following the <em>show the data</em> principle, we quickly notice that this is due to two very large countries, which we assume are India and China:</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="../Images/18fa9738ac1943b6fe31ad7beba53d2f.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:70.0%" data-original-src="https://rafalab.dfci.harvard.edu/dsbook-part-1/dataviz/dataviz-principles_files/figure-html/no-transformation-1.png"/></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Here, we focus on examples in which the log transformation improves data visualization of skewed data. Other common transformations to be aware of include the logistic transformation (<code>logit</code>), which is useful for interpreting fold changes in odds, and the square root transformation (<code>sqrt</code>), which is often applied to stabilize variance in count data.</p>
+<section id="right-skewed-distributions" class="level3" data-number="9.7.1"><h3 data-number="9.7.1" class="anchored" data-anchor-id="right-skewed-distributions">
+<span class="header-section-number">9.7.1</span> Right-skewed distributions</h3>
+<p>Country population sizes provide a clear example of a <em>right-skewed</em> distribution: most countries have relatively small populations, while a few have extremely large ones. As shown in the box plot above, this imbalance causes most of the data points to be compressed into a small area of the plot, while a large portion of the plotting space is left empty. This makes it difficult to see meaningful differences among the majority of countries.</p>
+<p>In <a href="ggplot2.html#sec-scales" class="quarto-xref"><span>Section 8.10</span></a>, we saw how applying a log transformation improved the readability of a scatter plot by addressing this kind of skew. Similarly, applying a log transformation to population sizes here produces a much more informative visualization. Below, we compare the original barplot to a boxplot with a log-transformed y-axis to illustrate the improvement.</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="../Images/fdb9244c6c90f984e2b56597c32efd45.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:100.0%" data-original-src="https://rafalab.dfci.harvard.edu/dsbook-part-1/dataviz/dataviz-principles_files/figure-html/correct-transformation-1.png"/></p>
+</figure>
+</div>
+</div>
+</div>
+<p>With the new plot, we realize that countries in Africa actually have a larger median population size than those in Asia.</p>
+</section><section id="ratios" class="level3" data-number="9.7.2"><h3 data-number="9.7.2" class="anchored" data-anchor-id="ratios">
+<span class="header-section-number">9.7.2</span> Ratios</h3>
+<p>Ratios are commonly used in data analysis to compare two values. For example, we often report the relative risk of developing a disease, such as stating that the risk of disease is <em>three times higher</em> in smokers than in non-smokers.</p>
+<p>Conceptually, ratios are centered around 1, where a ratio of 1 indicates no difference between the two values. However, mathematically, ratios are not symmetric around 1. For instance, if the ratio of <span class="math inline">\(A\)</span> to <span class="math inline">\(B\)</span> is <span class="math inline">\(3\)</span>, meaning <span class="math inline">\(A\)</span> is three times larger than <span class="math inline">\(B\)</span>, the reverse ratio of <span class="math inline">\(B\)</span> to <span class="math inline">\(A\)</span> is <span class="math inline">\(1/3\)</span>. Notice that <span class="math inline">\(3\)</span> and <span class="math inline">\(1/3\)</span> are not equally distant from 1, which can make it difficult to visualize ratios in a way that fairly represents increases and decreases.</p>
+<p>For this reason, it is common to use a log transformation when displaying ratios. This is because the logarithm of a ratio has a symmetric property:</p>
+<p><span class="math display">\[
+\log(A/B) = -\log(B/A)
+\]</span><br/>
+This means that if <span class="math inline">\(A\)</span> is three times larger than <span class="math inline">\(B\)</span>, the log ratio is equally distant from zero as when <span class="math inline">\(B\)</span> is three times larger than <span class="math inline">\(A\)</span>, but in the opposite direction. This symmetry around zero makes differences easier to interpret visually.</p>
+<p>Below is a plot demonstrating the advantage of using a log scale for displaying ratios.</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="../Images/4c25ab154d931bda898526b77561f018.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:70.0%" data-original-src="https://rafalab.dfci.harvard.edu/dsbook-part-1/dataviz/dataviz-principles_files/figure-html/log-ratio-better-1.png"/></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="callout callout-style-simple callout-note">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"/>
+</div>
+<div class="callout-body-container">
+<p>A common challenge when plotting log ratios is handling zeros in either the numerator or denominator, since <span class="math inline">\(\log(0)\)</span> is undefined. Additionally, very small values can produce log ratios that approach positive or negative infinity, making the results unstable and difficult to interpret.</p>
+<p>A practical solution to address both issues is to apply a <em>continuity correction</em>, which involves adding a small constant to both the numerator and denominator. This prevents zeros and stabilizes extreme values. A commonly used constant is 0.5, leading to the following adjusted log ratio:</p>
+<p><span class="math display">\[
+\log\left( \frac{A + 0.5}{B + 0.5} \right)
+\]</span></p>
+<p>This simple adjustment helps ensure that log ratios remain finite and more interpretable, particularly when dealing with values close to 0. Additionally, when <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> are large, it closely approximates the actual log ratio <span class="math inline">\(\log(A/B)\)</span>.</p>
+</div>
+</div>
+</div>
+</section></section><section id="visual-cues-to-be-compared-should-be-adjacent" class="level2" data-number="9.8"><h2 data-number="9.8" class="anchored" data-anchor-id="visual-cues-to-be-compared-should-be-adjacent">
+<span class="header-section-number">9.8</span> Visual cues to be compared should be adjacent</h2>
+<p>For each continent, let’s compare income in 1970 versus 2010. When comparing income data across regions between 1970 and 2010, we made a figure similar to the one below, but this time we investigate continents rather than regions.</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="../Images/a875ee627df7cfb86235b6031db765bd.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:70.0%" data-original-src="https://rafalab.dfci.harvard.edu/dsbook-part-1/dataviz/dataviz-principles_files/figure-html/boxplots-not-adjacent-1.png"/></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The default in <strong>ggplot2</strong> is to order labels alphabetically so the labels with 1970 come before the labels with 2010, making the comparisons challenging because a continent’s distribution in 1970 is visually far from its distribution in 2010. It is much easier to make the comparison between 1970 and 2010 for each continent when the boxplots for that continent are next to each other:</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="../Images/744b9667d4253784dd2dd19c29504afd.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:70.0%" data-original-src="https://rafalab.dfci.harvard.edu/dsbook-part-1/dataviz/dataviz-principles_files/figure-html/boxplot-adjacent-comps-1.png"/></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The comparison becomes even easier to make if we use color to denote the two things we want to compare:</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="../Images/d1332aab75683153d4144d7459f3c705.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:70.0%" data-original-src="https://rafalab.dfci.harvard.edu/dsbook-part-1/dataviz/dataviz-principles_files/figure-html/boxplot-adjacent-comps-with-color-1.png"/></p>
+</figure>
+</div>
+</div>
+</div>
+</section><section id="think-of-the-color-blind" class="level2" data-number="9.9"><h2 data-number="9.9" class="anchored" data-anchor-id="think-of-the-color-blind">
+<span class="header-section-number">9.9</span> Think of the color blind</h2>
+<p>About 10% of the population is color blind. Unfortunately, the default colors used in <strong>ggplot2</strong> are not optimal for this group. However, <strong>ggplot2</strong> does make it easy to change the color palette used in the plots. An example of how we can use a color blind friendly palette is described in the R cookbook<a href="#fn11" class="footnote-ref" id="fnref11" role="doc-noteref"><sup>11</sup></a>:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">color_blind_friendly_cols</span> <span class="op">&lt;-</span> </span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"#999999"</span>, <span class="st">"#E69F00"</span>, <span class="st">"#56B4E9"</span>, <span class="st">"#009E73"</span>, </span>
+<span>    <span class="st">"#F0E442"</span>, <span class="st">"#0072B2"</span>, <span class="st">"#D55E00"</span>, <span class="st">"#CC79A7"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"/></button></pre></div>
+</div>
+<p>Here are the colors</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="../Images/84aa3e949515c2179c8538849addb778.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:70.0%" data-original-src="https://rafalab.dfci.harvard.edu/dsbook-part-1/dataviz/dataviz-principles_files/figure-html/color-blind-friendly-colors-1.png"/></p>
+</figure>
+</div>
+</div>
+</div>
+<p>There are several resources that can help you select colors, for example tutorials on R-bloggers<a href="#fn12" class="footnote-ref" id="fnref12" role="doc-noteref"><sup>12</sup></a>.</p>
+</section><section id="plots-for-two-variables" class="level2" data-number="9.10"><h2 data-number="9.10" class="anchored" data-anchor-id="plots-for-two-variables">
+<span class="header-section-number">9.10</span> Plots for two variables</h2>
+<p>In general, you should use scatterplots to visualize the relationship between two variables. In every single instance in which we have examined the relationship between two variables, including total murders versus population size and life expectancy versus fertility rates, we have used scatterplots. This is the plot we generally recommend. However, there are some exceptions and we describe two alternative plots here: the <em>slope chart</em> and the <em>Bland-Altman plot</em>.</p>
+<section id="slope-charts" class="level3" data-number="9.10.1"><h3 data-number="9.10.1" class="anchored" data-anchor-id="slope-charts">
+<span class="header-section-number">9.10.1</span> Slope charts</h3>
+<p>One exception where another type of plot may be more informative is when you are comparing variables of the same type, but at different time points and for a relatively small number of comparisons. For example, comparing life expectancy between 2010 and 2015. In this case, we might recommend a <em>slope chart</em>.</p>
+<p>There is no geometry for slope charts in <strong>ggplot2</strong>, but we can construct one using <code>geom_line</code>. We need to do some tinkering to add labels. Below is an example comparing 2010 to 2015 for large western countries:</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="../Images/f43e0d666ea6139538c182bb2dabcbe0.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:70.0%" data-original-src="https://rafalab.dfci.harvard.edu/dsbook-part-1/dataviz/dataviz-principles_files/figure-html/slope-plot-1.png"/></p>
+</figure>
+</div>
+</div>
+</div>
+<p>An advantage of the slope chart is that it permits us to quickly get an idea of changes based on the slope of the lines. Although we are using angle as the visual cue, we also have position to determine the exact values. Comparing the improvements is a bit harder with a scatterplot:</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="../Images/6f4cfe437ed4098beb624632fda3ce53.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:70.0%" data-original-src="https://rafalab.dfci.harvard.edu/dsbook-part-1/dataviz/dataviz-principles_files/figure-html/scatter-plot-instead-of-slope-1.png"/></p>
+</figure>
+</div>
+</div>
+</div>
+<p>In the scatterplot, we have followed the principle <em>use common axes</em> since we are comparing these before and after. However, if we have many points, slope charts stop being useful as it becomes hard to see all the lines.</p>
+</section><section id="bland-altman-plot" class="level3" data-number="9.10.2"><h3 data-number="9.10.2" class="anchored" data-anchor-id="bland-altman-plot">
+<span class="header-section-number">9.10.2</span> Bland-Altman plot</h3>
+<p>Since we are primarily interested in the difference, it makes sense to dedicate one of our axes to it. The Bland-Altman plot, also known as the Tukey mean-difference plot and the MA-plot, shows the difference versus the average:</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="../Images/4bfb783db109b688640ea54150aebce8.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:70.0%" data-original-src="https://rafalab.dfci.harvard.edu/dsbook-part-1/dataviz/dataviz-principles_files/figure-html/bland-altman-1.png"/></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Here, by simply looking at the y-axis, we quickly see which countries have shown the most improvement. We also get an idea of the overall value from the x-axis.</p>
+</section></section><section id="encoding-a-third-variable" class="level2" data-number="9.11"><h2 data-number="9.11" class="anchored" data-anchor-id="encoding-a-third-variable">
+<span class="header-section-number">9.11</span> Encoding a third variable</h2>
+<p>An earlier scatterplot showed the relationship between infant survival and average income. Below is a version of this plot that encodes three additional variables: OPEC membership, region, and population.</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="../Images/e3a635ee5497a734ce03d403a7388fe4.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:70.0%" data-original-src="https://rafalab.dfci.harvard.edu/dsbook-part-1/dataviz/dataviz-principles_files/figure-html/encoding-third-variable-1.png"/></p>
+</figure>
+</div>
+</div>
+</div>
+<p>We encode categorical variables with color and shape. These shapes can be controlled with <code>shape</code> argument. Below are the shapes available for use in R. For the last five, the color goes inside.</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="../Images/f3a830a9189d1b1e90e2240a2aa41241.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:70.0%" data-original-src="https://rafalab.dfci.harvard.edu/dsbook-part-1/dataviz/dataviz-principles_files/figure-html/available-shapes-1.png"/></p>
+</figure>
+</div>
+</div>
+</div>
+<p>For continuous variables, we can use color, intensity, or size. We now show an example of how we do this with a case study.</p>
+<p>When selecting colors to quantify a numeric variable, we choose between two options: sequential and diverging. Sequential colors are suited for data that goes from high to low. High values are clearly distinguished from low values. Here are some examples offered by the package <code>RColorBrewer</code>:</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="../Images/bbd635157524e86ceb4c956bb7f6ff9a.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:70.0%" data-original-src="https://rafalab.dfci.harvard.edu/dsbook-part-1/dataviz/dataviz-principles_files/figure-html/r-color-brewer-seq-1.png"/></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Diverging colors are used to represent values that diverge from a center. We put equal emphasis on both ends of the data range: higher than the center and lower than the center. An example of when we would use a divergent pattern would be if we were to show height in standard deviations away from the average. Here are some examples of divergent patterns:</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="../Images/4cad864e2ae72fcb57058c42252cf9ac.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:70.0%" data-original-src="https://rafalab.dfci.harvard.edu/dsbook-part-1/dataviz/dataviz-principles_files/figure-html/r-color-brewer-div-1.png"/></p>
+</figure>
+</div>
+</div>
+</div>
+</section><section id="avoid-pseudo-three-dimensional-plots" class="level2" data-number="9.12"><h2 data-number="9.12" class="anchored" data-anchor-id="avoid-pseudo-three-dimensional-plots">
+<span class="header-section-number">9.12</span> Avoid pseudo-three-dimensional plots</h2>
+<p>The figure below, taken from the scientific literature<a href="#fn13" class="footnote-ref" id="fnref13" role="doc-noteref"><sup>13</sup></a>, shows three variables: dose, drug type and survival. Although your screen/book page is flat and two-dimensional, the plot tries to imitate three dimensions and assigned a dimension to each variable.</p>
+<!-- https://raw.githubusercontent.com/kbroman/Talk_Graphs/master/Figs/fig8b.png-->
+<p><img src="../Images/22c24219e777371cb3401253ddc7b973.png" class="img-fluid" data-original-src="https://rafalab.dfci.harvard.edu/dsbook-part-1/dataviz/img/fig8b.png"/></p>
+<p>(Image courtesy of Karl Broman)</p>
+<p>Humans are not good at seeing in three dimensions (which explains why it is hard to parallel park) and our limitation is even worse with regard to pseudo-three-dimensions. To see this, try to determine the values of the survival variable in the plot above. Can you tell when the purple ribbon intersects the red one? This is an example in which we can easily use color to represent the categorical variable instead of using a pseudo-3D:</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="../Images/440b35ed280fd85caa375542e4509fb6.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:70.0%" data-original-src="https://rafalab.dfci.harvard.edu/dsbook-part-1/dataviz/dataviz-principles_files/figure-html/colors-for-different-lines-1.png"/></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Notice how much easier it is to determine the survival values.</p>
+<p>Pseudo-3D is sometimes used completely gratuitously: plots are made to look 3D even when the 3rd dimension does not represent a quantity. This only adds confusion and makes it harder to relay your message. Here are two examples:</p>
+<div class="quarto-layout-panel" data-layout-ncol="2">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<p><img src="../Images/840eac79746969db83f562576d26ee3c.png" class="img-fluid" data-out.width="35%" data-original-src="https://rafalab.dfci.harvard.edu/dsbook-part-1/dataviz/img/fig1e.png"/></p>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<p><img src="../Images/1c59fb346eda6b1645d3adb7243a090d.png" class="img-fluid" data-out.width="35%" data-original-src="https://rafalab.dfci.harvard.edu/dsbook-part-1/dataviz/img/fig2d.png"/></p>
+</div>
+</div>
+</div>
+<p>(Images courtesy of Karl Broman)</p>
+</section><section id="avoid-too-many-significant-digits" class="level2" data-number="9.13"><h2 data-number="9.13" class="anchored" data-anchor-id="avoid-too-many-significant-digits">
+<span class="header-section-number">9.13</span> Avoid too many significant digits</h2>
+<p>By default, statistical software like R returns many significant digits. The default behavior in R is to show 7 significant digits. That many digits often adds no information and the added visual clutter can make it hard for the viewer to understand the message. As an example, here are the per 10,000 disease rates, computed from totals and population in R, for California across the five decades:</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<table class="table table-striped caption-top table-sm small" data-quarto-postprocess="true">
+<thead><tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">state</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">year</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Measles</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Pertussis</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Polio</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">California</td>
+<td style="text-align: right;">1940</td>
+<td style="text-align: right;">37.8826320</td>
+<td style="text-align: right;">18.3397861</td>
+<td style="text-align: right;">0.8266512</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">California</td>
+<td style="text-align: right;">1950</td>
+<td style="text-align: right;">13.9124205</td>
+<td style="text-align: right;">4.7467350</td>
+<td style="text-align: right;">1.9742639</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">California</td>
+<td style="text-align: right;">1960</td>
+<td style="text-align: right;">14.1386471</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0.2640419</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">California</td>
+<td style="text-align: right;">1970</td>
+<td style="text-align: right;">0.9767889</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">California</td>
+<td style="text-align: right;">1980</td>
+<td style="text-align: right;">0.3743467</td>
+<td style="text-align: right;">0.0515466</td>
+<td style="text-align: right;">NA</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>We are reporting precision up to 0.00001 cases per 10,000, a very small value in the context of the changes that are occurring across the dates. In this case, one significant figures is enough and clearly makes the point that rates are decreasing:</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<table class="table table-striped caption-top table-sm small" data-quarto-postprocess="true">
+<thead><tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">state</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">year</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Measles</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Pertussis</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Polio</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">California</td>
+<td style="text-align: right;">1940</td>
+<td style="text-align: right;">37.9</td>
+<td style="text-align: right;">18.3</td>
+<td style="text-align: right;">0.8</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">California</td>
+<td style="text-align: right;">1950</td>
+<td style="text-align: right;">13.9</td>
+<td style="text-align: right;">4.7</td>
+<td style="text-align: right;">2.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">California</td>
+<td style="text-align: right;">1960</td>
+<td style="text-align: right;">14.1</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0.3</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">California</td>
+<td style="text-align: right;">1970</td>
+<td style="text-align: right;">1.0</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">California</td>
+<td style="text-align: right;">1980</td>
+<td style="text-align: right;">0.4</td>
+<td style="text-align: right;">0.1</td>
+<td style="text-align: right;">NA</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>Useful ways to change the number of significant digits or to round numbers are <code>signif</code> and <code>round</code>. You can define the number of significant digits globally by setting options like this: <code>options(digits = 3)</code>.</p>
+<p>Another principle related to displaying tables is to place values being compared on columns rather than rows. Note that our table above is easier to read than this one:</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<table class="table table-striped caption-top table-sm small" data-quarto-postprocess="true">
+<thead><tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">State</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Disease</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">1940</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">1950</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">1960</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">1970</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">1980</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">California</td>
+<td style="text-align: left;">Measles</td>
+<td style="text-align: right;">37.9</td>
+<td style="text-align: right;">13.9</td>
+<td style="text-align: right;">14.1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.4</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">California</td>
+<td style="text-align: left;">Pertussis</td>
+<td style="text-align: right;">18.3</td>
+<td style="text-align: right;">4.7</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0.1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">California</td>
+<td style="text-align: left;">Polio</td>
+<td style="text-align: right;">0.8</td>
+<td style="text-align: right;">2.0</td>
+<td style="text-align: right;">0.3</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section><section id="know-your-audience" class="level2" data-number="9.14"><h2 data-number="9.14" class="anchored" data-anchor-id="know-your-audience">
+<span class="header-section-number">9.14</span> Know your audience</h2>
+<p>Graphs can be used 1) for our own exploratory data analysis, 2) to convey a message to experts, or 3) to help convey a message to a general audience. Make sure that the intended audience understands each element of the plot.</p>
+<p>As a simple example, consider that for your own exploration it may be more useful to log-transform data and then plot it. However, for a general audience that is unfamiliar with converting logged values back to the original measurements, using a log-scale for the axis instead of log-transformed values will be much easier to digest.</p>
+</section><section id="exercises" class="level2" data-number="9.15"><h2 data-number="9.15" class="anchored" data-anchor-id="exercises">
+<span class="header-section-number">9.15</span> Exercises</h2>
+<p>For these exercises, we will be using the vaccines data in the <strong>dslabs</strong> package:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">dslabs</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"/></button></pre></div>
+</div>
+<p>1. Pie charts are appropriate:</p>
+<ol type="a">
+<li>When we want to display percentages.</li>
+<li>When <strong>ggplot2</strong> is not available.</li>
+<li>When I am in a bakery.</li>
+<li>Never. Barplots and tables are always better.</li>
+</ol>
+<p>2. What is the problem with the plot below:</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="../Images/9215cd188b84dea06c2e253122921cd0.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:70.0%" data-original-src="https://rafalab.dfci.harvard.edu/dsbook-part-1/dataviz/dataviz-principles_files/figure-html/baplot-not-from-zero-exercises-1.png"/></p>
+</figure>
+</div>
+</div>
+</div>
+<ol type="a">
+<li>The values are wrong. The final vote was 306 to 232.</li>
+<li>The axis does not start at 0. Judging by the length, it appears Trump received 3 times as many votes when, in fact, it was about 30% more.</li>
+<li>The colors should be the same.</li>
+<li>Percentages should be shown as a pie chart.</li>
+</ol>
+<p>3. Take a look at the following two plots. They show the same information: 1928 rates of measles across the 50 states.</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="../Images/78ca18ece1e2a4e82f98221b7f262ef8.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:70.0%" data-original-src="https://rafalab.dfci.harvard.edu/dsbook-part-1/dataviz/dataviz-principles_files/figure-html/measels-exercise-1.png"/></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Which plot is easier to read if you are interested in determining which are the best and worst states in terms of rates, and why?</p>
+<ol type="a">
+<li>They provide the same information, so they are both equally as good.</li>
+<li>The plot on the right is better because it orders the states alphabetically.</li>
+<li>The plot on the right is better because alphabetical order has nothing to do with the disease and by ordering according to actual rate, we quickly see the states with most and least rates.</li>
+<li>Both plots should be a pie chart.</li>
+</ol>
+<p>4. To make the plot on the left, we have to reorder the levels of the states’ variables.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="va">us_contagious_diseases</span> <span class="op">|&gt;</span>  </span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">year</span> <span class="op">==</span> <span class="fl">1967</span> <span class="op">&amp;</span> <span class="va">disease</span><span class="op">==</span><span class="st">"Measles"</span> <span class="op">&amp;</span> <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">population</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">mutate</span><span class="op">(</span>rate <span class="op">=</span> <span class="va">count</span> <span class="op">/</span> <span class="va">population</span> <span class="op">*</span> <span class="fl">10000</span> <span class="op">*</span> <span class="fl">52</span> <span class="op">/</span> <span class="va">weeks_reporting</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"/></button></pre></div>
+</div>
+<p>Note what happens when we make a barplot:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">dat</span> <span class="op">|&gt;</span> <span class="fu">ggplot</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span><span class="va">state</span>, <span class="va">rate</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">geom_col</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">coord_flip</span><span class="op">(</span><span class="op">)</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"/></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="../Images/a7813e8e9e9cfb5619ea031a75673d8b.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:70.0%" data-original-src="https://rafalab.dfci.harvard.edu/dsbook-part-1/dataviz/dataviz-principles_files/figure-html/barplot-plot-exercise-example-1.png"/></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Define these objects:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">state</span> <span class="op">&lt;-</span> <span class="va">dat</span><span class="op">$</span><span class="va">state</span></span>
+<span><span class="va">rate</span> <span class="op">&lt;-</span> <span class="va">dat</span><span class="op">$</span><span class="va">count</span><span class="op">/</span><span class="va">dat</span><span class="op">$</span><span class="va">population</span><span class="op">*</span><span class="fl">10000</span><span class="op">*</span><span class="fl">52</span><span class="op">/</span><span class="va">dat</span><span class="op">$</span><span class="va">weeks_reporting</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"/></button></pre></div>
+</div>
+<p>Redefine the <code>state</code> object so that the levels are re-ordered. Print the new object <code>state</code> and its levels so you can see that the vector is not re-ordered by the levels.</p>
+<p>5. Now with one line of code, define the <code>dat</code> table as done above, but change the use mutate to create a rate variable and re-order the state variable so that the levels are re-ordered by this variable. Then make a barplot using the code above, but for this new <code>dat</code>.</p>
+<p>6. Say we are interested in comparing gun homicide rates across regions of the US. We see this plot:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">dslabs</span><span class="op">)</span></span>
+<span><span class="va">murders</span> <span class="op">|&gt;</span> <span class="fu">mutate</span><span class="op">(</span>rate <span class="op">=</span> <span class="va">total</span><span class="op">/</span><span class="va">population</span><span class="op">*</span><span class="fl">100000</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span><span class="fu">group_by</span><span class="op">(</span><span class="va">region</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span><span class="fu">summarize</span><span class="op">(</span>avg <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">rate</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span><span class="fu">mutate</span><span class="op">(</span>region <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">region</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span><span class="fu">ggplot</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span><span class="va">region</span>, <span class="va">avg</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span><span class="fu">geom_col</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
+<span><span class="fu">ylab</span><span class="op">(</span><span class="st">"Murder Rate Average"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"/></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="../Images/8aa9c7e3a27b58fca09a10e389fef7be.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:70.0%" data-original-src="https://rafalab.dfci.harvard.edu/dsbook-part-1/dataviz/dataviz-principles_files/figure-html/us-murders-barplot-1.png"/></p>
+</figure>
+</div>
+</div>
+</div>
+<p>and decide to move to a state in the western region. What is the main problem with this interpretation?</p>
+<ol type="a">
+<li>The categories are ordered alphabetically.</li>
+<li>The graph does not show standard errors.</li>
+<li>It does not show all the data. We do not see the variability within a region and it’s possible that the safest states are not in the West.</li>
+<li>The Northeast has the lowest average.</li>
+</ol>
+<p>7. Make a boxplot of the murder rates defined as</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">murders</span> <span class="op">|&gt;</span> <span class="fu">mutate</span><span class="op">(</span>rate <span class="op">=</span> <span class="va">total</span><span class="op">/</span><span class="va">population</span><span class="op">*</span><span class="fl">100000</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"/></button></pre></div>
+</div>
+<p>by region, showing all the points and ordering the regions by their median rate.</p>
+<p>8. The plots below show three continuous variables.</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="../Images/0f7417589bbad275c1dbb12a479417e0.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:70.0%" data-original-src="https://rafalab.dfci.harvard.edu/dsbook-part-1/dataviz/dataviz-principles_files/figure-html/pseudo-3d-exercise-1.png"/></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The line <span class="math inline">\(x=2\)</span> appears to separate the points. But it is actually not the case, which we can see by plotting the data in a couple of two-dimensional points.</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="../Images/1b0cf9c3a8b606d09ec5666fcf97150c.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:70.0%" data-original-src="https://rafalab.dfci.harvard.edu/dsbook-part-1/dataviz/dataviz-principles_files/figure-html/pseud-3d-exercise-2-1.png"/></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Why is this happening?</p>
+<ol type="a">
+<li>Humans are not good at reading pseudo-3D plots.</li>
+<li>There must be an error in the code.</li>
+<li>The colors confuse us.</li>
+<li>Scatterplots should not be used to compare two variables when we have access to 3.</li>
+</ol>
+
+
+</section><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><hr/>
+<ol>
+<li id="fn1"><p><a href="http://kbroman.org/" class="uri">http://kbroman.org/</a><a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p><a href="https://www.biostat.wisc.edu/~kbroman/presentations/graphs2017.pdf" class="uri">https://www.biostat.wisc.edu/~kbroman/presentations/graphs2017.pdf</a><a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p><a href="https://github.com/kbroman/Talk_Graphs" class="uri">https://github.com/kbroman/Talk_Graphs</a><a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p><a href="https://www.peteraldhous.com/ucb/2014/dataviz/index.html" class="uri">https://www.peteraldhous.com/ucb/2014/dataviz/index.html</a><a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5"><p><a href="https://github.com/rafalab/dsbook-part-1/blob/main/dataviz/dataviz-principles.qmd" class="uri">https://github.com/rafalab/dsbook-part-1/blob/main/dataviz/dataviz-principles.qmd</a><a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn6"><p><a href="https://www.peteraldhous.com/ucb/2014/dataviz/week2.html" class="uri">https://www.peteraldhous.com/ucb/2014/dataviz/week2.html</a><a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn7"><p><a href="http://mediamatters.org/blog/2013/04/05/fox-news-newest-dishonest-chart-immigration-enf/193507" class="uri">http://mediamatters.org/blog/2013/04/05/fox-news-newest-dishonest-chart-immigration-enf/193507</a><a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn8"><p><a href="http://flowingdata.com/2012/08/06/fox-news-continues-charting-excellence/" class="uri">http://flowingdata.com/2012/08/06/fox-news-continues-charting-excellence/</a><a href="#fnref8" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn9"><p><a href="https://www.elmundo.es/america/2013/04/15/venezuela/1366029653.html" class="uri">https://www.elmundo.es/america/2013/04/15/venezuela/1366029653.html</a><a href="#fnref9" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn10"><p><a href="https://www.youtube.com/watch?v=kl2g40GoRxg" class="uri">https://www.youtube.com/watch?v=kl2g40GoRxg</a><a href="#fnref10" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn11"><p><a href="http://www.cookbook-r.com/Graphs/Colors_(ggplot2)/#a-colorblind-friendly-palette" class="uri">http://www.cookbook-r.com/Graphs/Colors_(ggplot2)/#a-colorblind-friendly-palette</a><a href="#fnref11" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn12"><p><a href="https://www.r-bloggers.com/2013/10/creating-colorblind-friendly-figures/" class="uri">https://www.r-bloggers.com/2013/10/creating-colorblind-friendly-figures/</a><a href="#fnref12" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn13"><p><a href="https://projecteuclid.org/download/pdf_1/euclid.ss/1177010488" class="uri">https://projecteuclid.org/download/pdf_1/euclid.ss/1177010488</a><a href="#fnref13" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol></section>    
+</body>
+</html>

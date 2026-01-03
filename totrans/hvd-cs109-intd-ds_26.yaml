@@ -1,16 +1,22 @@
 - en: Chapter 16 Statistical models
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 第16章 统计模型
 - en: 原文：[https://rafalab.dfci.harvard.edu/dsbook/models.html](https://rafalab.dfci.harvard.edu/dsbook/models.html)
+  id: totrans-1
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 原文：[https://rafalab.dfci.harvard.edu/dsbook/models.html](https://rafalab.dfci.harvard.edu/dsbook/models.html)
 - en: “All models are wrong, but some are useful.” –George E. P. Box
+  id: totrans-2
   prefs:
   - PREF_BQ
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: “所有模型都是错误的，但有些是有用的。” ——乔治·E·P·博克斯
 - en: 'The day before the 2008 presidential election, Nate Silver’s FiveThirtyEight
     stated that “Barack Obama appears poised for a decisive electoral victory”. They
     went further and predicted that Obama would win the election with 349 electoral
@@ -24,29 +30,40 @@
     was giving Obama a 90% chance of winning despite many of the experts thinking
     the final results would be closer. Political commentator Joe Scarborough said
     during his show[^(55)](#fn55):'
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: 在2008年总统选举的前一天，Nate Silver的FiveThirtyEight网站预测“巴拉克·奥巴马似乎将获得决定性的选举胜利”。他们更进一步，预测奥巴马将以349票对189票的选举人票数获胜，以6.1%的得票率赢得普选票。FiveThirtyEight还附上了概率声明，声称奥巴马有91%的胜选机会。预测非常准确，因为最终结果中，奥巴马以365票对173票赢得了选举人团，以7.2%的得票率赢得了普选票。他们在2008年的表现使FiveThirtyEight引起了政治评论家和电视名人的注意。四年后，在2012年总统选举的前一周，尽管许多专家认为最终结果将更接近，但FiveThirtyEight的Nate
+    Silver仍然给奥巴马90%的胜选机会。政治评论员乔·斯卡伯勒在他的节目中[^(55)](#fn55)说：
 - en: Anybody that thinks that this race is anything but a toss-up right now is such
     an ideologue … they’re jokes.
+  id: totrans-4
   prefs:
   - PREF_BQ
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 任何认为这场选举现在不是一场势均力敌的比赛的人都是如此意识形态化……他们只是玩笑。
 - en: 'To which Nate Silver responded via Twitter:'
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: Nate Silver通过推特回应：
 - en: If you think it’s a toss-up, let’s bet. If Obama wins, you donate $1,000 to
     the American Red Cross. If Romney wins, I do. Deal?
+  id: totrans-6
   prefs:
   - PREF_BQ
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 如果你认为这是一场势均力敌的比赛，那我们就打赌吧。如果奥巴马赢了，你向美国红十字会捐赠1000美元。如果罗姆尼赢了，我就捐。成交？
 - en: In 2016, Silver was not as certain and gave Hillary Clinton only a 71% of winning.
     In contrast, most other forecasters were almost certain she would win. She lost.
     But 71% is still more than 50%, so was Mr. Silver wrong? And what does probability
     mean in this context anyway? Are dice being tossed somewhere?
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: 在2016年，Silver并不那么确定，只给了希拉里·克林顿71%的胜选机会。相比之下，大多数其他预测者几乎确信她会获胜。但她输了。但71%仍然多于50%，那么Silver先生错了吗？在这个背景下，概率又意味着什么呢？骰子在某个地方被掷了吗？
 - en: In this chapter we will demonstrate how *poll aggregators*, such as FiveThirtyEight,
     collected and combined data reported by different experts to produce improved
     predictions. We will introduce ideas behind the *statistical models*, also known
@@ -56,12 +73,16 @@
     We start with relatively simple models, realizing that the actual data science
     exercise of forecasting elections involves rather complex ones, which we introduce
     towards the end of the chapter in Section [16.8](models.html#election-forecasting).
+  id: totrans-8
   prefs: []
   type: TYPE_NORMAL
+  zh: 在本章中，我们将展示像FiveThirtyEight这样的民意调查聚合器是如何收集和合并不同专家报告的数据，以产生改进的预测的。我们将介绍民意调查聚合器用来提高选举预测能力超越单个民调能力的**统计模型**（也称为**概率模型**）背后的思想。在本章中，我们基于我们在第[15](inference.html#inference)章学到的统计推断概念来激发这些模型，我们从相对简单的模型开始，意识到实际的数据科学练习中的选举预测涉及相当复杂的模型，我们将在本章的[16.8](models.html#election-forecasting)节末介绍这些模型。
 - en: 16.1 Poll aggregators
+  id: totrans-9
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 16.1 民意调查聚合器
 - en: As we described earlier, a few weeks before the 2012 election Nate Silver was
     giving Obama a 90% chance of winning. How was Mr. Silver so confident? We will
     use a Monte Carlo simulation to illustrate the insight Mr. Silver had and others
@@ -69,83 +90,121 @@
     election. We mimic sample sizes from actual polls and construct and report 95%
     confidence intervals for each of the 12 polls. We save the results from this simulation
     in a data frame and add a poll ID column.
+  id: totrans-10
   prefs: []
   type: TYPE_NORMAL
+  zh: 正如我们之前所描述的，在2012年选举前几周，Nate Silver给奥巴马90%的获胜机会。Silver先生是如何如此自信的呢？我们将使用蒙特卡洛模拟来展示Silver先生所拥有的洞察力，而其他人却忽略了。为此，我们生成选举前一周进行的12个调查的结果。我们模仿实际调查的样本量，并为每个12个调查构建并报告95%置信区间。我们将这个模拟的结果保存在一个数据框中，并添加一个调查ID列。
 - en: '[PRE0]'
+  id: totrans-11
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: 'Here is a visualization showing the intervals the pollsters would have reported
     for the difference between Obama and Romney:'
+  id: totrans-12
   prefs: []
   type: TYPE_NORMAL
+  zh: 这里有一个可视化展示民意调查员会报告的奥巴马和罗姆尼之间的差异区间：
 - en: '![](../Images/5dd6bffe87f945e61f6b8112c5c03a66.png)'
+  id: totrans-13
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/5dd6bffe87f945e61f6b8112c5c03a66.png)'
 - en: 'Not surprisingly, all 12 polls report confidence intervals that include the
     election night result (dashed line). However, all 12 polls also include 0 (solid
     black line) as well. Therefore, if asked individually for a prediction, the pollsters
     would have to say: it’s a toss-up. Below we describe a key insight they are missing.'
+  id: totrans-14
   prefs: []
   type: TYPE_NORMAL
+  zh: 并不出奇，所有12个调查报告的置信区间都包括选举夜的结果（虚线）。然而，所有12个调查也包括0（实线）。因此，如果单独询问预测，民意调查员们必须说：这是一个平局。以下我们将描述他们遗漏的一个关键洞察。
 - en: Poll aggregators, such as Nate Silver, realized that by combining the results
     of different polls you could greatly improve precision. By doing this, we are
     effectively conducting a poll with a huge sample size. We can therefore report
     a smaller 95% confidence interval and a more precise prediction.
+  id: totrans-15
   prefs: []
   type: TYPE_NORMAL
+  zh: 民意调查聚合器，如Nate Silver，意识到通过结合不同调查的结果，可以大大提高精度。通过这样做，我们实际上进行了一个具有巨大样本量的调查。因此，我们可以报告一个更小的95%置信区间和更精确的预测。
 - en: 'Although as aggregators we do not have access to the raw poll data, we can
     use mathematics to reconstruct what we would have obtained had we made one large
     poll with:'
+  id: totrans-16
   prefs: []
   type: TYPE_NORMAL
+  zh: 尽管作为聚合器我们没有访问原始调查数据，但我们可以使用数学来重建如果我们进行了一次大型调查将会得到的结果：
 - en: '[PRE1]'
+  id: totrans-17
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: 'participants. Basically, we construct an estimate of the spread, let’s call
     it \(d\), with a weighted average in the following way:'
+  id: totrans-18
   prefs: []
   type: TYPE_NORMAL
+  zh: 参与者。基本上，我们通过以下方式使用加权平均来构建一个关于差异范围的估计，我们可以称之为 \(d\)：
 - en: '[PRE2]'
+  id: totrans-19
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: Once we have an estimate of \(d\), we can construct an estimate for the proportion
     voting for Obama, which we can then use to estimate the standard error. Once we
     do this, we see that our margin of error is 0.018.
+  id: totrans-20
   prefs: []
   type: TYPE_NORMAL
+  zh: 一旦我们有了 \(d\) 的估计，我们就可以构建一个关于奥巴马得票比例的估计，然后我们可以使用它来估计标准误差。一旦我们这样做，我们看到我们的误差范围是0.018。
 - en: Thus, we can predict that the spread will be 3.1 plus or minus 1.8, which not
     only includes the actual result we eventually observed on election night, but
     is quite far from including 0\. Once we combine the 12 polls, we become quite
     certain that Obama will win the popular vote.
+  id: totrans-21
   prefs: []
   type: TYPE_NORMAL
+  zh: 因此，我们可以预测差异将是3.1加上或减去1.8，这不仅包括我们在选举夜最终观察到的实际结果，而且离包括0相当远。一旦我们结合了12个调查，我们就非常确信奥巴马将赢得普选票。
 - en: '![](../Images/92a96d60e638e63ebf0dc10038a9dd3b.png)'
+  id: totrans-22
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/92a96d60e638e63ebf0dc10038a9dd3b.png)'
 - en: Of course, this was just a simulation to illustrate the idea. The actual data
     science exercise of forecasting elections is much more complicated and it involves
     modeling. Below we explain how pollsters fit multilevel models to the data and
     use this to forecast election results. In the 2008 and 2012 US presidential elections,
     Nate Silver used this approach to make an almost perfect prediction and silence
     the pundits.
+  id: totrans-23
   prefs: []
   type: TYPE_NORMAL
+  zh: 当然，这只是一个模拟，用以说明这个想法。实际的预测选举的数据科学练习要复杂得多，它涉及到建模。以下我们解释民意调查员如何将多层次模型拟合到数据中，并使用它来预测选举结果。在2008年和2012年美国总统选举中，Nate
+    Silver使用这种方法做出了几乎完美的预测，并使评论员们哑口无言。
 - en: 'Since the 2008 elections, other organizations have started their own election
     forecasting group that, like Nate Silver’s, aggregates polling data and uses statistical
     models to make predictions. In 2016, forecasters underestimated Trump’s chances
     of winning greatly. The day before the election the *New York Times* reported[^(56)](#fn56)
     the following probabilities for Hillary Clinton winning the presidency:'
+  id: totrans-24
   prefs: []
   type: TYPE_NORMAL
+  zh: 自 2008 年选举以来，其他组织也开始建立自己的选举预测小组，这些小组与 Nate Silver 的类似，它们汇总民意调查数据并使用统计模型进行预测。在
+    2016 年，预测者大大低估了特朗普获胜的机会。在大选前一天，*《纽约时报》* 报道了以下关于希拉里·克林顿赢得总统职位的概率[^(56)](#fn56)：
 - en: '|  | NYT | 538 | HuffPost | PW | PEC | DK | Cook | Roth |'
+  id: totrans-25
   prefs: []
   type: TYPE_TB
+  zh: '|  | NYT | 538 | HuffPost | PW | PEC | DK | Cook | Roth |'
 - en: '| --- | --- | --- | --- | --- | --- | --- | --- | --- |'
+  id: totrans-26
   prefs: []
   type: TYPE_TB
+  zh: '| --- | --- | --- | --- | --- | --- | --- | --- | --- |'
 - en: '| Win Prob | 85% | 71% | 98% | 89% | >99% | 92% | Lean Dem | Lean Dem |'
+  id: totrans-27
   prefs: []
   type: TYPE_TB
+  zh: '| 胜率 | 85% | 71% | 98% | 89% | >99% | 92% | 倾向民主党 | 倾向民主党 |'
 - en: For example, the Princeton Election Consortium (PEC) gave Trump less than 1%
     chance of winning, while the Huffington Post gave him a 2% chance. In contrast,
     FiveThirtyEight had Trump’s probability of winning at 29%, higher than tossing
@@ -153,120 +212,186 @@
     published an article titled *Trump Is Just A Normal Polling Error Behind Clinton*[^(57)](#fn57).
     By understanding statistical models and how these forecasters use them, we will
     start to understand how this happened.
+  id: totrans-28
   prefs: []
   type: TYPE_NORMAL
+  zh: 例如，普林斯顿选举联盟（PEC）给特朗普的获胜机会不到 1%，而 Huffington Post 给他 2% 的机会。相比之下，FiveThirtyEight
+    将特朗普获胜的概率定为 29%，这比掷两个硬币得到两个正面还要高。事实上，在大选前四天，FiveThirtyEight 发布了一篇题为 *特朗普只是克林顿的正常民意调查误差背后*[^(57)](#fn57)
+    的文章。通过理解统计模型以及这些预测者如何使用它们，我们将开始了解这是如何发生的。
 - en: 'Although not nearly as interesting as predicting the electoral college, for
     illustrative purposes we will start by looking at predictions for the popular
     vote. FiveThirtyEight predicted a 3.6% advantage for Clinton[^(58)](#fn58), included
     the actual result of 2.1% (48.2% to 46.1%) in their interval, and was much more
     confident about Clinton winning the election, giving her an 81.4% chance. Their
     prediction was summarized with a chart like this:'
+  id: totrans-29
   prefs: []
   type: TYPE_NORMAL
+  zh: 虽然预测选举人团并不像预测普选那样有趣，但为了说明目的，我们将首先查看对普选的预测。FiveThirtyEight 预测克林顿领先 3.6%[^(58)](#fn58)，将实际结果
+    2.1%（48.2% 对 46.1%）包含在其区间内，并且对克林顿赢得选举非常有信心，给她 81.4% 的胜算。他们的预测用如下图表总结：
 - en: '![](../Images/cb59ddaa690af053944cce5092b237b2.png)'
+  id: totrans-30
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/cb59ddaa690af053944cce5092b237b2.png)'
 - en: The colored areas represent values with an 80% chance of including the actual
     result, according to the FiveThirtyEight model.
+  id: totrans-31
   prefs: []
   type: TYPE_NORMAL
+  zh: 彩色区域代表根据 FiveThirtyEight 模型，有 80% 的概率包含实际结果。
 - en: We introduce actual data from the 2016 US presidential election to show how
     models are motivated and built to produce these predictions. To understand the
     “81.4% chance” statement we need to describe Bayesian statistics, which we do
     in Sections [16.4](models.html#bayesian-statistics) and [16.8.1](models.html#bayesian-approach).
+  id: totrans-32
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们引入 2016 年美国总统选举的实际数据，以展示模型是如何被激发和构建来产生这些预测的。为了理解“81.4% 的机会”这一说法，我们需要描述贝叶斯统计，我们在第
+    [16.4](models.html#bayesian-statistics) 和 [16.8.1](models.html#bayesian-approach)
+    节中进行了描述。
 - en: 16.1.1 Poll data
+  id: totrans-33
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 16.1.1 民意调查数据
 - en: 'We use public polling data organized by FiveThirtyEight for the 2016 presidential
     election. The data is included as part of the **dslabs** package:'
+  id: totrans-34
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们使用由 FiveThirtyEight 组织的 2016 年总统选举的公共民意调查数据。这些数据包含在 **dslabs** 包中：
 - en: '[PRE3]'
+  id: totrans-35
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: 'The table includes results for national polls, as well as state polls, taken
     during the year prior to the election. For this first example, we will filter
     the data to include national polls conducted during the week before the election.
     We also remove polls that FiveThirtyEight has determined not to be reliable and
     graded with a “B” or less. Some polls have not been graded and we include those:'
+  id: totrans-36
   prefs: []
   type: TYPE_NORMAL
+  zh: 该表格包括在大选前一年内进行的全国性民意调查以及州级民意调查的结果。对于这个第一个例子，我们将过滤数据以包括在大选前一周进行的全国性民意调查。我们还移除了
+    FiveThirtyEight 确定不可靠并给予“B”或以下评分的民意调查。一些民意调查没有评分，我们包括那些：
 - en: '[PRE4]'
+  id: totrans-37
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE4]'
 - en: 'We add a spread estimate:'
+  id: totrans-38
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们添加了一个差值估计：
 - en: '[PRE5]'
+  id: totrans-39
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE5]'
 - en: For this example, we will assume that there are only two parties and call \(p\)
     the proportion voting for Clinton and \(1-p\) the proportion voting for Trump.
     We are interested in the spread \(2p-1\). Let’s call the spread \(d\) (for difference).
+  id: totrans-40
   prefs: []
   type: TYPE_NORMAL
+  zh: 对于这个例子，我们将假设只有两个政党，并将 \(p\) 称为支持克林顿的投票比例，\(1-p\) 称为支持特朗普的投票比例。我们感兴趣的是差值 \(2p-1\)。我们可以将差值称为
+    \(d\)（差异）。
 - en: 'We have 49 estimates of the spread. The theory we learned tells us that these
     estimates are a random variable with a probability distribution that is approximately
     normal. The expected value is the election night spread \(d\) and the standard
     error is \(2\sqrt{p (1 - p) / N}\). Assuming the urn model we described earlier
     is a good one, we can use this information to construct a confidence interval
     based on the aggregated data. The estimated spread is:'
+  id: totrans-41
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们有49个关于扩散的估计值。我们学过的理论告诉我们，这些估计值是一个随机变量，其概率分布近似为正态分布。期望值是选举之夜的扩散 \(d\)，标准误差是
+    \(2\sqrt{p (1 - p) / N}\)。假设我们之前描述的urn模型是一个好的模型，我们可以使用这些信息来根据汇总数据构建一个置信区间。估计的扩散是：
 - en: '[PRE6]'
+  id: totrans-42
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE6]'
 - en: 'and the standard error is:'
+  id: totrans-43
   prefs: []
   type: TYPE_NORMAL
+  zh: 标准误差是：
 - en: '[PRE7]'
+  id: totrans-44
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE7]'
 - en: So we report a spread of 1.43% with a margin of error of 0.66%. On election
     night, we discover that the actual percentage was 2.1%, which is outside a 95%
     confidence interval. What happened?
+  id: totrans-45
   prefs: []
   type: TYPE_NORMAL
+  zh: 因此，我们报告的扩散率为1.43%，误差范围为0.66%。在选举之夜，我们发现实际百分比是2.1%，这超出了95%的置信区间。发生了什么？
 - en: 'A histogram of the reported spreads shows a problem:'
+  id: totrans-46
   prefs: []
   type: TYPE_NORMAL
+  zh: 报告的扩散率的直方图显示了一个问题：
 - en: '[PRE8]'
+  id: totrans-47
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE8]'
 - en: '![](../Images/e8f465faa9ff7ea39c89113bdca26c45.png)'
+  id: totrans-48
   prefs: []
   type: TYPE_IMG
+  zh: '![图片](../Images/e8f465faa9ff7ea39c89113bdca26c45.png)'
 - en: The data does not appear to be normally distributed and the standard error appears
     to be larger than 0.007\. The theory is not quite working here.
+  id: totrans-49
   prefs: []
   type: TYPE_NORMAL
+  zh: 数据似乎不是正态分布的，标准误差似乎大于0.007。理论在这里并不完全适用。
 - en: 16.1.2 Pollster bias
+  id: totrans-50
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 16.1.2 民意调查员偏差
 - en: 'Notice that various pollsters are involved and some are taking several polls
     a week:'
+  id: totrans-51
   prefs: []
   type: TYPE_NORMAL
+  zh: 注意到涉及到的各种民意调查员，有些人每周进行几次民意调查：
 - en: '[PRE9]'
+  id: totrans-52
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE9]'
 - en: 'Let’s visualize the data for the pollsters that are regularly polling:'
+  id: totrans-53
   prefs: []
   type: TYPE_NORMAL
+  zh: 让我们可视化那些定期进行民意调查的民意调查员的数据：
 - en: '![](../Images/09ef9405b33008c801460326570d1cf2.png)'
+  id: totrans-54
   prefs: []
   type: TYPE_IMG
+  zh: '![图片](../Images/09ef9405b33008c801460326570d1cf2.png)'
 - en: 'This plot reveals an unexpected result. First, consider that the standard error
     predicted by theory for each poll:'
+  id: totrans-55
   prefs: []
   type: TYPE_NORMAL
+  zh: 这个图揭示了一个意外的结果。首先，考虑理论预测的每个民意调查的标准误差：
 - en: '[PRE10]'
+  id: totrans-56
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE10]'
 - en: is between 0.018 and 0.033, which agrees with the within poll variation we see.
     However, there appears to be differences *across the polls*. Note, for example,
     how the USC Dornsife/LA Times pollster is predicting a 4% win for Trump, while
@@ -274,54 +399,82 @@
     nothing about different pollsters producing polls with different expected values.
     All the polls should have the same expected value. FiveThirtyEight refers to these
     differences as “house effects”. We also call them *pollster bias*.
+  id: totrans-57
   prefs: []
   type: TYPE_NORMAL
+  zh: 它在0.018和0.033之间，这与我们在民意调查内部看到的变异一致。然而，似乎存在**跨民意调查**的差异。注意，例如，USC Dornsife/LA
+    Times民意调查员预测特朗普将赢得4%，而Ipsos预测克林顿的胜利将超过5%。我们学过的理论对不同的民意调查员产生具有不同期望值的民意调查没有任何说明。所有民意调查都应该有相同的期望值。FiveThirtyEight将这些差异称为“house
+    effects”。我们也将它们称为**民意调查员偏差**。
 - en: In the following section, rather than use the urn model theory, we are instead
     going to develop a data-driven model.
+  id: totrans-58
   prefs: []
   type: TYPE_NORMAL
+  zh: 在下一节中，我们不是使用urn模型理论，而是将开发一个数据驱动模型。
 - en: 16.2 Data-driven models
+  id: totrans-59
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 16.2 数据驱动模型
 - en: 'For each pollster, let’s collect their last reported result before the election:'
+  id: totrans-60
   prefs: []
   type: TYPE_NORMAL
+  zh: 对于每个民意调查员，让我们收集他们在选举前的最后报告结果：
 - en: '[PRE11]'
+  id: totrans-61
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE11]'
 - en: 'Here is a histogram of the data for these 15 pollsters:'
+  id: totrans-62
   prefs: []
   type: TYPE_NORMAL
+  zh: 这里是这些15个民意调查员的数据直方图：
 - en: '[PRE12]'
+  id: totrans-63
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE12]'
 - en: '![](../Images/95426d4775555bf3e74b0417f606ca6d.png)'
+  id: totrans-64
   prefs: []
   type: TYPE_IMG
+  zh: '![图片](../Images/95426d4775555bf3e74b0417f606ca6d.png)'
 - en: In the previous section, we saw that using the urn model theory to combine these
     results might not be appropriate due to the pollster effect. Instead, we will
     model this spread data directly.
+  id: totrans-65
   prefs: []
   type: TYPE_NORMAL
+  zh: 在前一节中，我们看到了由于民意调查员效应，使用urn模型理论来合并这些结果可能不合适。相反，我们将直接对这种扩散数据进行建模。
 - en: The new model can also be thought of as an urn model, although the connection
     is not as direct. Rather than 0s (Republicans) and 1s (Democrats), our urn now
     contains poll results from all possible pollsters. We *assume* that the expected
     value of our urn is the actual spread \(d=2p-1\).
+  id: totrans-66
   prefs: []
   type: TYPE_NORMAL
+  zh: 新模型也可以被视为一个urn模型，尽管这种联系并不直接。而不是0s（共和党）和1s（民主党），我们的urn现在包含来自所有可能民意调查员的民意调查结果。我们**假设**urn的期望值是实际的扩散
+    \(d=2p-1\)。
 - en: Because instead of 0s and 1s, our urn contains continuous numbers between -1
     and 1, the standard deviation of the urn is no longer \(\sqrt{p(1-p)}\). Rather
     than voter sampling variability, the standard error now includes the pollster-to-pollster
     variability. Our new urn also includes the sampling variability from the polling.
     Regardless, this standard deviation is now an unknown parameter. In statistics
     textbooks, the Greek symbol \(\sigma\) is used to represent this parameter.
+  id: totrans-67
   prefs: []
   type: TYPE_NORMAL
+  zh: 因为我们的抽屉包含的是介于 -1 和 1 之间的连续数字，而不是 0 和 1，所以抽屉的标准差不再是 \(\sqrt{p(1-p)}\)。而不是选民抽样变异性，标准误差现在包括调查员之间的变异性。我们的新抽屉也包括调查的抽样变异性。无论如何，这个标准差现在是一个未知参数。在统计学教科书中，希腊字母
+    \(\sigma\) 用于表示这个参数。
 - en: 'In summary, we have two unknown parameters: the expected value \(d\) and the
     standard deviation \(\sigma\).'
+  id: totrans-68
   prefs: []
   type: TYPE_NORMAL
+  zh: 总结来说，我们有两个未知参数：期望值 \(d\) 和标准差 \(\sigma\)。
 - en: Our task is to estimate \(d\). Because we model the observed values \(X_1,\dots
     X_N\) as a random sample from the urn, the CLT might still work in this situation
     because it is an average of independent random variables. For a large enough sample
@@ -329,91 +482,135 @@
     approximately normal with expected value \(\mu\) and standard error \(\sigma/\sqrt{N}\).
     If we are willing to consider \(N=15\) large enough, we can use this to construct
     confidence intervals.
+  id: totrans-69
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们的任务是估计 \(d\)。因为我们把观察到的值 \(X_1,\dots X_N\) 模型化为来自抽屉的随机样本，所以 CLT 在这种情况下可能仍然适用，因为它是一系列独立随机变量的平均值。对于足够大的样本量
+    \(N\)，样本平均值 \(\bar{X}\) 的概率分布近似为正态分布，期望值为 \(\mu\)，标准误差为 \(\sigma/\sqrt{N}\)。如果我们愿意认为
+    \(N=15\) 足够大，我们可以使用这一点来构建置信区间。
 - en: A problem is that we don’t know \(\sigma\). But theory tells us that we can
     estimate the urn model \(\sigma\) with the *sample standard deviation* defined
     as \(s = \sqrt{ \sum_{i=1}^N (X_i - \bar{X})^2 / (N-1)}\).
+  id: totrans-70
   prefs: []
   type: TYPE_NORMAL
+  zh: 一个问题是，我们不知道 \(\sigma\)。但理论告诉我们，我们可以用定义为 \(s = \sqrt{ \sum_{i=1}^N (X_i - \bar{X})^2
+    / (N-1)}\) 的样本标准差来估计抽屉模型 \(\sigma\)。
 - en: Unlike for the population standard deviation definition, we now divide by \(N-1\).
     This makes \(s\) a better estimate of \(\sigma\). There is a mathematical explanation
     for this, which is explained in most statistics textbooks, but we don’t cover
     it here.
+  id: totrans-71
   prefs: []
   type: TYPE_NORMAL
+  zh: 与总体标准差定义不同，我们现在除以 \(N-1\)。这使得 \(s\) 成为 \(\sigma\) 的更好估计。这有一个数学解释，这在大多数统计学教科书中都有解释，但在这里我们不涉及。
 - en: 'The `sd` function in R computes the sample standard deviation:'
+  id: totrans-72
   prefs: []
   type: TYPE_NORMAL
+  zh: R 中的 `sd` 函数计算样本标准差：
 - en: '[PRE13]'
+  id: totrans-73
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE13]'
 - en: 'We are now ready to form a new confidence interval based on our new data-driven
     model:'
+  id: totrans-74
   prefs: []
   type: TYPE_NORMAL
+  zh: 现在我们已经准备好根据我们的新数据驱动模型形成一个新的置信区间：
 - en: '[PRE14]'
+  id: totrans-75
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE14]'
 - en: Our confidence interval is wider now since it incorporates the pollster variability.
     It does include the election night result of 2.1%. Also, note that it was small
     enough not to include 0, which means we were confident Clinton would win the popular
     vote.
+  id: totrans-76
   prefs: []
   type: TYPE_NORMAL
+  zh: 由于它包含了民意调查者的变异性，我们的置信区间现在更宽了。它确实包括了选举之夜的 2.1% 的结果。此外，请注意，它足够小，以至于不包括 0，这意味着我们相信克林顿会赢得普选票。
 - en: Are we now ready to declare a probability of Clinton winning the popular vote?
     Not yet. In our model \(d\) is a fixed parameter so we can’t talk about probabilities.
     To provide probabilities, we will need to learn about Bayesian statistics.
+  id: totrans-77
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们现在是否准备好宣布克林顿赢得普选票的概率？还不行。在我们的模型中 \(d\) 是一个固定参数，所以我们不能谈论概率。为了提供概率，我们需要了解贝叶斯统计。
 - en: 16.3 Exercises
+  id: totrans-78
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 16.3 练习
 - en: We have been using urn models to motivate the use of probability models. Most
     data science applications are not related to data obtained from urns. More common
     are data that come from individuals. The reason probability plays a role here
     is because the data come from a random sample. The random sample is taken from
     a population and the urn serves as an analogy for the population.
+  id: totrans-79
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们一直使用抽屉模型来激发使用概率模型的应用。大多数数据科学应用与来自抽屉的数据无关。更常见的是来自个人的数据。概率在这里发挥作用的原因是因为数据来自随机样本。随机样本是从总体中抽取的，抽屉作为总体的类比。
 - en: Let’s revisit the heights dataset. Suppose we consider the males in our course
     the population.
+  id: totrans-80
   prefs: []
   type: TYPE_NORMAL
+  zh: 让我们回顾一下身高数据集。假设我们认为我们课程中的男性是总体。
 - en: '[PRE15]'
+  id: totrans-81
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE15]'
 - en: 1\. Mathematically speaking, `x` is our population. Using the urn analogy, we
     have an urn with the values of `x` in it. What are the average and standard deviation
     of our population?
+  id: totrans-82
   prefs: []
   type: TYPE_NORMAL
+  zh: 1. 从数学上讲，`x` 是我们的总体。使用抽屉类比，我们有一个包含 `x` 值的抽屉。我们总体的平均值和标准差是多少？
 - en: 2\. Call the population average computed above \(\mu\) and the standard deviation
     \(\sigma\). Now take a sample of size 50, with replacement, and construct an estimate
     for \(\mu\) and \(\sigma\).
+  id: totrans-83
   prefs: []
   type: TYPE_NORMAL
+  zh: 2. 将上面计算出的总体平均值称为 \(\mu\)，标准差称为 \(\sigma\)。现在取一个大小为 50 的样本，进行替换，并构建对 \(\mu\)
+    和 \(\sigma\) 的估计。
 - en: 3\. What does the theory tell us about the sample average \(\bar{X}\) and how
     it is related to \(\mu\)?
+  id: totrans-84
   prefs: []
   type: TYPE_NORMAL
+  zh: 3. 理论告诉我们样本平均值 \(\bar{X}\) 与 \(\mu\) 之间的关系是什么？
 - en: It is practically identical to \(\mu\).
+  id: totrans-85
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 这实际上与 \(\mu\) 完全相同。
 - en: It is a random variable with expected value \(\mu\) and standard error \(\sigma/\sqrt{N}\).
+  id: totrans-86
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 它是一个具有期望值 \(\mu\) 和标准误 \(\sigma/\sqrt{N}\) 的随机变量。
 - en: It is a random variable with expected value \(\mu\) and standard error \(\sigma\).
+  id: totrans-87
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 它是一个具有期望值 \(\mu\) 和标准误 \(\sigma\) 的随机变量。
 - en: Contains no information.
+  id: totrans-88
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 不包含任何信息。
 - en: 4\. So how is this useful? We are going to use an oversimplified yet illustrative
     example. Suppose we want to know the average height of our male students, but
     we only get to measure 50 of the 708\. We will use \(\bar{X}\) as our estimate.
@@ -421,130 +618,197 @@
     \(\bar{X}-\mu\) is \(\sigma/\sqrt{N}\). We want to compute this, but we don’t
     know \(\sigma\). Based on what is described in this section, show your estimate
     of \(\sigma\).
+  id: totrans-89
   prefs: []
   type: TYPE_NORMAL
+  zh: 4. 这有什么用呢？我们将使用一个过于简化但具有说明性的例子。假设我们想知道我们男性学生的平均身高，但我们只能测量 708 人中的 50 人。我们将使用
+    \(\bar{X}\) 作为我们的估计。我们知道从练习 3 的答案中，我们的误差标准估计 \(\bar{X}-\mu\) 是 \(\sigma/\sqrt{N}\)。我们想计算这个值，但我们不知道
+    \(\sigma\)。根据本节中描述的内容，展示你对 \(\sigma\) 的估计。
 - en: 5\. Now that we have an estimate of \(\sigma\), let’s call our estimate \(s\).
     Construct a 95% confidence interval for \(\mu\).
+  id: totrans-90
   prefs: []
   type: TYPE_NORMAL
+  zh: 5. 现在我们已经得到了 \(\sigma\) 的估计，让我们称我们的估计为 \(s\)。构建一个 95% 的置信区间来估计 \(\mu\)。
 - en: 6\. Now run a Monte Carlo simulation in which you compute 10,000 confidence
     intervals as you have just done. What proportion of these intervals include \(\mu\)?
+  id: totrans-91
   prefs: []
   type: TYPE_NORMAL
+  zh: 6. 现在运行一个蒙特卡洛模拟，在其中你将计算 10,000 个置信区间，就像你刚刚做的那样。这些区间中有多少比例包含 \(\mu\)？
 - en: 7\. In this section, we talked about pollster bias. We used visualization to
     motivate the presence of such bias. Here we will give it a more rigorous treatment.
     We will consider two pollsters that conducted daily polls. We will look at national
     polls for the month before the election.
+  id: totrans-92
   prefs: []
   type: TYPE_NORMAL
+  zh: 7. 在本节中，我们讨论了民意调查偏差。我们使用可视化来激发这种偏差的存在。在这里，我们将对其进行更严谨的处理。我们将考虑两个进行每日民调的民意调查机构。我们将查看选举前一个月的全国民调。
 - en: '[PRE16]'
+  id: totrans-93
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE16]'
 - en: 'We want to answer the question: is there a poll bias? Make a plot showing the
     spreads for each poll.'
+  id: totrans-94
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们想回答的问题是：是否存在民意调查偏差？制作一个显示每个民调范围的图表。
 - en: 8\. The data does seem to suggest there is a difference. However, these data
     are subject to variability. Perhaps the differences we observe are due to chance.
+  id: totrans-95
   prefs: []
   type: TYPE_NORMAL
+  zh: 8. 数据似乎确实表明存在差异。然而，这些数据受到变异性影响。也许我们观察到的差异是由于偶然性造成的。
 - en: 'The urn model theory says nothing about pollster effect. Under the urn model,
     both pollsters have the same expected value: the election day difference, that
     we call \(d\).'
+  id: totrans-96
   prefs: []
   type: TYPE_NORMAL
+  zh: 砝码模型理论没有关于民意调查效应的说明。在砝码模型下，两个民意调查机构都有相同的期望值：选举日的差异，我们称之为 \(d\)。
 - en: 'To answer the question “is there an urn model?”, we will model the observed
     data \(Y_{i,j}\) in the following way:'
+  id: totrans-97
   prefs: []
   type: TYPE_NORMAL
+  zh: 为了回答“是否存在砝码模型？”这个问题，我们将以下方式对观察到的数据 \(Y_{i,j}\) 进行建模：
 - en: \[ Y_{i,j} = d + b_i + \varepsilon_{i,j} \]
+  id: totrans-98
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ Y_{i,j} = d + b_i + \varepsilon_{i,j} \]
 - en: with \(i=1,2\) indexing the two pollsters, \(b_i\) the bias for pollster \(i\)
     and \(\varepsilon_ij\) poll to poll chance variability. We assume the \(\varepsilon\)
     are independent from each other, have expected value \(0\) and standard deviation
     \(\sigma_i\) regardless of \(j\).
+  id: totrans-99
   prefs: []
   type: TYPE_NORMAL
+  zh: 其中 \(i=1,2\) 表示两个民意调查机构，\(b_i\) 是民意调查机构 \(i\) 的偏差，\(\varepsilon_{ij}\) 是民调之间的随机变化。我们假设
+    \(\varepsilon\) 之间相互独立，期望值为 0，标准差为 \(\sigma_i\)，无论 \(j\) 如何。
 - en: Which of the following best represents our question?
+  id: totrans-100
   prefs: []
   type: TYPE_NORMAL
+  zh: 以下哪个选项最能代表我们的问题？
 - en: Is \(\varepsilon_{i,j}\) = 0?
+  id: totrans-101
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: \(\varepsilon_{i,j}\) 是否等于 0？
 - en: How close are the \(Y_{i,j}\) to \(d\)?
+  id: totrans-102
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: \(Y_{i,j}\) 与 \(d\) 的接近程度如何？
 - en: Is \(b_1 \neq b_2\)?
+  id: totrans-103
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: \(b_1 \neq b_2\) 吗？
 - en: Are \(b_1 = 0\) and \(b_2 = 0\) ?
+  id: totrans-104
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: \(b_1 = 0\) 和 \(b_2 = 0\) 吗？
 - en: 9\. In the right side of this model only \(\varepsilon_{i,j}\) is a random variable.
     The other two are constants. What is the expected value of \(Y_{1,j}\)?
+  id: totrans-105
   prefs: []
   type: TYPE_NORMAL
+  zh: 9. 在这个模型的右侧，只有 \(\varepsilon_{i,j}\) 是一个随机变量。其他两个是常数。\(Y_{1,j}\) 的期望值是多少？
 - en: '10\. Suppose we define \(\bar{Y}_1\) as the average of poll results from the
     first poll, \(Y_{1,1},\dots,Y_{1,N_1}\) with \(N_1\) the number of polls conducted
     by the first pollster:'
+  id: totrans-106
   prefs: []
   type: TYPE_NORMAL
+  zh: 10. 假设我们定义 \(\bar{Y}_1\) 为第一个民意调查机构从 \(Y_{1,1},\dots,Y_{1,N_1}\) 得到的民调结果的平均值，其中
+    \(N_1\) 是第一个民意调查机构进行的民调数量：
 - en: '[PRE17]'
+  id: totrans-107
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE17]'
 - en: What is the expected values \(\bar{Y}_1\)?
+  id: totrans-108
   prefs: []
   type: TYPE_NORMAL
+  zh: \(\bar{Y}_1\) 的期望值是多少？
 - en: 11\. What is the standard error of \(\bar{Y}_1\) ?
+  id: totrans-109
   prefs: []
   type: TYPE_NORMAL
+  zh: 11. \(\bar{Y}_1\) 的标准误差是多少？
 - en: 12\. Suppose we define \(\bar{Y}_2\) as the average of poll results from the
     first poll, \(Y_{2,1},\dots,Y_{2,N_2}\) with \(N_2\) the number of polls conducted
     by the first pollster. What is the expected value \(\bar{Y}_2\)?
+  id: totrans-110
   prefs: []
   type: TYPE_NORMAL
+  zh: 12. 假设我们定义 \(\bar{Y}_2\) 为第一个民意调查者的调查结果的平均值，\(Y_{2,1},\dots,Y_{2,N_2}\)，其中 \(N_2\)
+    是第一个民意调查者进行的调查数量。\(\bar{Y}_2\) 的期望值是多少？
 - en: 13\. What is the standard error of \(\bar{Y}_2\) ?
+  id: totrans-111
   prefs: []
   type: TYPE_NORMAL
+  zh: 13. \(\bar{Y}_2\) 的标准误差是多少？
 - en: 14\. Using what we learned by answering the questions above, what is the expected
     value of \(\bar{Y}_{2} - \bar{Y}_1\)?
+  id: totrans-112
   prefs: []
   type: TYPE_NORMAL
+  zh: 14. 使用我们通过回答上述问题所学的知识，\(\bar{Y}_{2} - \bar{Y}_1\) 的期望值是多少？
 - en: 15\. Using what we learned by answering the questions above, what is the standard
     error of \(\bar{Y}_{2} - \bar{Y}_1\)?
+  id: totrans-113
   prefs: []
   type: TYPE_NORMAL
+  zh: 15. 使用我们通过回答上述问题所学的知识，\(\bar{Y}_{2} - \bar{Y}_1\) 的标准误差是多少？
 - en: 16\. The answer to the question above depends on \(\sigma_1\) and \(\sigma_2\),
     which we don’t know. We learned that we can estimate these with the sample standard
     deviation. Write code that computes these two estimates.
+  id: totrans-114
   prefs: []
   type: TYPE_NORMAL
+  zh: 16. 上述问题的答案取决于 \(\sigma_1\) 和 \(\sigma_2\)，这是我们不知道的。我们了解到我们可以用样本标准差来估计这些值。编写代码来计算这两个估计值。
 - en: 17\. What does the CLT tell us about the distribution of \(\bar{Y}_2 - \bar{Y}_1\)?
+  id: totrans-115
   prefs: []
   type: TYPE_NORMAL
+  zh: 17. 中心极限定理告诉我们 \(\bar{Y}_2 - \bar{Y}_1\) 的分布是什么？
 - en: Nothing because this is not the average of a sample.
+  id: totrans-116
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 没有期望值，因为这不是样本的平均值。
 - en: Because the \(Y_{ij}\) are approximately normal, so are the averages.
+  id: totrans-117
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 因为 \(Y_{ij}\) 大约是正态分布的，所以平均值也是正态分布的。
 - en: Note that \(\bar{Y}_2\) and \(\bar{Y}_1\) are sample averages, so if we assume
     \(N_2\) and \(N_1\) are large enough, each is approximately normal. The difference
     of normals is also normal.
+  id: totrans-118
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 注意到 \(\bar{Y}_2\) 和 \(\bar{Y}_1\) 是样本平均值，所以如果我们假设 \(N_2\) 和 \(N_1\) 足够大，每个都是近似正态的。正态分布的差异也是正态的。
 - en: The data are not 0 or 1, so CLT does not apply.
+  id: totrans-119
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 数据不是 0 或 1，因此中心极限定理不适用。
 - en: '18\. We have constructed a random variable that has expected value \(b_2 -
     b_1\), the pollster bias difference. If our model holds, then this random variable
     has an approximately normal distribution and we know its standard error. The standard
@@ -552,21 +816,32 @@
     deviations we computed above. We started off by asking: is \(b_2 - b_1\) different
     from 0? Use all the information we have learned above to construct a 95% confidence
     interval for the difference \(b_2\) and \(b_1\).'
+  id: totrans-120
   prefs: []
   type: TYPE_NORMAL
+  zh: 18. 我们构建了一个具有期望值 \(b_2 - b_1\) 的随机变量，这是民意调查者的偏差差异。如果我们的模型成立，那么这个随机变量具有近似正态分布，并且我们知道其标准误差。标准误差取决于
+    \(\sigma_1\) 和 \(\sigma_2\)，但我们可以插入我们上面计算的样本标准差。我们最初的问题是：\(b_2 - b_1\) 是否与 0 不同？使用我们上面所学到的所有信息来构建
+    \(b_2\) 和 \(b_1\) 差异的 95% 置信区间。
 - en: 19\. The confidence interval tells us there is relatively strong pollster effect
     resulting in a difference of about 5%. Random variability does not seem to explain
     it. We can compute a p-value to relay the fact that chance does not explain it.
     What is the p-value?
+  id: totrans-121
   prefs: []
   type: TYPE_NORMAL
+  zh: 19. 置信区间告诉我们存在相对较强的民意调查者效应，导致差异约为 5%。随机变异性似乎无法解释这一点。我们可以计算一个 p 值来传达事实，即偶然性无法解释这一点。p
+    值是多少？
 - en: '20\. The statistic formed by dividing our estimate of \(b_2-b_1\) by its estimated
     standard error:'
+  id: totrans-122
   prefs: []
   type: TYPE_NORMAL
+  zh: 20. 由我们的 \(b_2-b_1\) 估计值除以其估计标准误差所形成的统计量：
 - en: \[ \frac{\bar{Y}_2 - \bar{Y}_1}{\sqrt{s_2^2/N_2 + s_1^2/N_1}} \]
+  id: totrans-123
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \frac{\bar{Y}_2 - \bar{Y}_1}{\sqrt{s_2^2/N_2 + s_1^2/N_1}} \]
 - en: 'is called the t-statistic. Now notice that we have more than two pollsters.
     We can also test for pollster effect using all pollsters, not just two. The idea
     is to compare the variability across polls to variability within polls. We can
@@ -574,155 +849,234 @@
     The area of statistics that does this is called Analysis of Variance or ANOVA.
     We do not cover it here, but ANOVA provides a very useful set of tools to answer
     questions such as: is there a pollster effect?'
+  id: totrans-124
   prefs: []
   type: TYPE_NORMAL
+  zh: 被称为 t 统计量。现在请注意，我们不止有两个民意调查者。我们还可以使用所有民意调查者来测试民意调查者效应，而不仅仅是两个。想法是比较调查之间的变异性与调查内部的变异性。我们实际上可以构建统计量来测试效应并近似它们的分布。做这件事的统计学领域被称为方差分析或
+    ANOVA。我们在这里不涉及它，但 ANOVA 提供了一套非常有用的工具来回答诸如：是否存在民意调查者效应等问题。
 - en: 'For this exercise, create a new table:'
+  id: totrans-125
   prefs: []
   type: TYPE_NORMAL
+  zh: 对于这个练习，创建一个新的表格：
 - en: '[PRE18]'
+  id: totrans-126
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE18]'
 - en: Compute the average and standard deviation for each pollster and examine the
     variability across the averages and how it compares to the variability within
     the pollsters, summarized by the standard deviation.
+  id: totrans-127
   prefs: []
   type: TYPE_NORMAL
+  zh: 计算每个民意调查员的平均值和标准差，并检查平均值之间的变异性以及它与民意调查员内部变异性的比较，后者由标准差总结。
 - en: 16.4 Bayesian statistics
+  id: totrans-128
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 16.4 贝叶斯统计
 - en: What does it mean when an election forecaster tells us that a given candidate
     has a 90% chance of winning? In the context of the urn model, this would be equivalent
     to stating that the probability \(p>0.5\) is 90%. However, as we discussed earlier,
     in the urn model \(p\) is a fixed parameter and it does not make sense to talk
     about probability. With Bayesian statistics, we model \(p\) as random variable
     and thus a statement such as “90% chance of winning” is consistent with the approach.
+  id: totrans-129
   prefs: []
   type: TYPE_NORMAL
+  zh: 当选举预测者告诉我们某个候选人胜选的概率为90%时，这意味着什么？在抽屉模型中，这相当于说概率 \(p>0.5\) 为90%。然而，正如我们之前讨论的，在抽屉模型中
+    \(p\) 是一个固定参数，谈论概率是没有意义的。在贝叶斯统计中，我们将 \(p\) 模型化为随机变量，因此“胜选概率为90%”的表述与这种方法是一致的。
 - en: Forecasters also use models to describe variability at different levels. For
     example, sampling variability, pollster to pollster variability, day to day variability,
     and election to election variability. One of the most successful approaches used
     for this are hierarchical models, which can be explained in the context of Bayesian
     statistics.
+  id: totrans-130
   prefs: []
   type: TYPE_NORMAL
+  zh: 预测者还使用模型来描述不同层面的变异性。例如，抽样变异性、民意调查员之间的变异性、日日变异性以及选举之间的变异性。用于此目的的最成功的方法之一是层次模型，这可以在贝叶斯统计的背景下进行解释。
 - en: 'In this chapter we briefly describe Bayesian statistics. For an in-depth treatment
     of this topic we recommend one of the following textbooks:'
+  id: totrans-131
   prefs: []
   type: TYPE_NORMAL
+  zh: 在本章中，我们简要介绍了贝叶斯统计。对于这个主题的深入探讨，我们推荐以下教材之一：
 - en: Berger JO (1985). Statistical Decision Theory and Bayesian Analysis, 2nd edition.
     Springer-Verlag.
+  id: totrans-132
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: Berger JO (1985). 统计决策理论与贝叶斯分析，第2版。Springer-Verlag。
 - en: 'Lee PM (1989). Bayesian Statistics: An Introduction. Oxford.'
+  id: totrans-133
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: Lee PM (1989). 贝叶斯统计：导论。牛津。
 - en: 16.4.1 Bayes theorem
+  id: totrans-134
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 16.4.1 贝叶斯定理
 - en: 'We start by describing Bayes theorem. We do this using a hypothetical cystic
     fibrosis test as an example. Suppose a test for cystic fibrosis has an accuracy
     of 99%. We will use the following notation:'
+  id: totrans-135
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们首先描述贝叶斯定理。我们以一个假设的囊性纤维化测试为例进行说明。假设囊性纤维化测试的准确率为99%。我们将使用以下符号：
 - en: \[ \mbox{Prob}(+ \mid D=1)=0.99, \mbox{Prob}(- \mid D=0)=0.99 \]
+  id: totrans-136
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \mbox{Prob}(+ \mid D=1)=0.99, \mbox{Prob}(- \mid D=0)=0.99 \]
 - en: with \(+\) meaning a positive test and \(D\) representing if you actually have
     the disease (1) or not (0).
+  id: totrans-137
   prefs: []
   type: TYPE_NORMAL
+  zh: 其中“+”表示阳性测试，“D”代表你是否真的患病（1）或不是（0）。
 - en: 'Suppose we select a random person and they test positive. What is the probability
     that they have the disease? We write this as \(\mbox{Prob}(D=1 \mid +)?\) The
     cystic fibrosis rate is 1 in 3,900 which implies that \(\mbox{Prob}(D=1)=0.00025\).
     To answer this question, we will use Bayes theorem, which in general tells us
     that:'
+  id: totrans-138
   prefs: []
   type: TYPE_NORMAL
+  zh: 假设我们随机选择一个人，他们测试结果为阳性。他们患病的概率是多少？我们将其表示为 \(\mbox{Prob}(D=1 \mid +)\)。囊性纤维化发病率是每3900人中就有1人，这意味着
+    \(\mbox{Prob}(D=1)=0.00025\)。为了回答这个问题，我们将使用贝叶斯定理，它通常告诉我们：
 - en: \[ \mbox{Pr}(A \mid B) = \frac{\mbox{Pr}(B \mid A)\mbox{Pr}(A)}{\mbox{Pr}(B)}
     \]
+  id: totrans-139
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \mbox{Pr}(A \mid B) = \frac{\mbox{Pr}(B \mid A)\mbox{Pr}(A)}{\mbox{Pr}(B)}
+    \]
 - en: 'This equation applied to our problem becomes:'
+  id: totrans-140
   prefs: []
   type: TYPE_NORMAL
+  zh: 将此方程应用于我们的问题变为：
 - en: \[ \begin{aligned} \mbox{Pr}(D=1 \mid +) & = \frac{ P(+ \mid D=1) \cdot P(D=1)}
     {\mbox{Pr}(+)} \\ & = \frac{\mbox{Pr}(+ \mid D=1)\cdot P(D=1)} {\mbox{Pr}(+ \mid
     D=1) \cdot P(D=1) + \mbox{Pr}(+ \mid D=0) \mbox{Pr}( D=0)} \end{aligned} \]
+  id: totrans-141
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \begin{aligned} \mbox{Pr}(D=1 \mid +) & = \frac{ P(+ \mid D=1) \cdot P(D=1)}
+    {\mbox{Pr}(+)} \\ & = \frac{\mbox{Pr}(+ \mid D=1)\cdot P(D=1)} {\mbox{Pr}(+ \mid
+    D=1) \cdot P(D=1) + \mbox{Pr}(+ \mid D=0) \mbox{Pr}( D=0)} \end{aligned} \]
 - en: 'Plugging in the numbers we get:'
+  id: totrans-142
   prefs: []
   type: TYPE_NORMAL
+  zh: 将数值代入后得到：
 - en: \[ \frac{0.99 \cdot 0.00025}{0.99 \cdot 0.00025 + 0.01 \cdot (.99975)} = 0.02
     \]
+  id: totrans-143
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \frac{0.99 \cdot 0.00025}{0.99 \cdot 0.00025 + 0.01 \cdot (.99975)} = 0.02
+    \]
 - en: This says that despite the test having 0.99 accuracy, the probability of having
     the disease given a positive test is only 0.02\. This may appear counter-intuitive
     to some, but the reason this is the case is because we have to factor in the very
     rare probability that a person, chosen at random, has the disease. To illustrate
     this, we run a Monte Carlo simulation.
+  id: totrans-144
   prefs: []
   type: TYPE_NORMAL
+  zh: 这意味着尽管测试的准确率为0.99，但在测试结果为阳性时，患病概率仅为0.02。这可能会让一些人感到反直觉，但这种情况发生的原因是因为我们必须考虑一个随机选择的人患病的非常罕见的概率。为了说明这一点，我们运行了一个蒙特卡洛模拟。
 - en: 16.5 Bayes theorem simulation
+  id: totrans-145
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 16.5 贝叶斯定理模拟
 - en: The following simulation is meant to help you visualize Bayes theorem. We start
     by randomly selecting 100,000 people from a population in which the disease in
     question has a 1 in 4,000 prevalence.
+  id: totrans-146
   prefs: []
   type: TYPE_NORMAL
+  zh: 以下模拟旨在帮助您可视化贝叶斯定理。我们首先从一个人群中随机选择100,000人，这个人群中的疾病患病率是1/4,000。
 - en: '[PRE19]'
+  id: totrans-147
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE19]'
 - en: 'Note that there are very few people with the disease:'
+  id: totrans-148
   prefs: []
   type: TYPE_NORMAL
+  zh: 注意，患病的很少见：
 - en: '[PRE20]'
+  id: totrans-149
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE20]'
 - en: 'Also, there are many without the disease, which makes it more probable that
     we will see some false positives given that the test is not perfect. Now each
     person gets the test, which is correct 99% of the time:'
+  id: totrans-150
   prefs: []
   type: TYPE_NORMAL
+  zh: 此外，还有许多没有疾病的人，这使得在测试并不完美的情况下，我们更有可能看到一些假阳性。现在每个人都会接受测试，这个测试有99%的正确率：
 - en: '[PRE21]'
+  id: totrans-151
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE21]'
 - en: 'Because there are so many more controls than cases, even with a low false positive
     rate we get more controls than cases in the group that tested positive:'
+  id: totrans-152
   prefs: []
   type: TYPE_NORMAL
+  zh: 因为对照组比病例组多得多，即使假阳性率很低，我们也会在测试结果为阳性的组中得到比病例组更多的对照组：
 - en: '[PRE22]'
+  id: totrans-153
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE22]'
 - en: From this table, we see that the proportion of positive tests that have the
     disease is 23 out of 988\. We can run this over and over again to see that, in
     fact, the probability converges to about 0.022.
+  id: totrans-154
   prefs: []
   type: TYPE_NORMAL
+  zh: 从这个表中，我们看到阳性测试中有疾病的比例是988人中的23人。我们可以反复运行这个程序，以看到，实际上，概率收敛到大约0.022。
 - en: 16.5.1 Bayes in practice
+  id: totrans-155
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 16.5.1 贝叶斯实践
 - en: 'José Iglesias is a professional baseball player. In April 2013, when he was
     starting his career, he was performing rather well:'
+  id: totrans-156
   prefs: []
   type: TYPE_NORMAL
+  zh: 何塞·伊格莱西亚斯是一名职业棒球运动员。2013年4月，当他刚开始他的职业生涯时，他表现相当出色：
 - en: '| Month | At Bats | H | AVG |'
+  id: totrans-157
   prefs: []
   type: TYPE_TB
+  zh: '| 月份 | 击球次数 | H | AVG |'
 - en: '| --- | --- | --- | --- |'
+  id: totrans-158
   prefs: []
   type: TYPE_TB
+  zh: '| --- | --- | --- | --- |'
 - en: '| April | 20 | 9 | .450 |'
+  id: totrans-159
   prefs: []
   type: TYPE_TB
+  zh: '| 四月 | 20 | 9 | .450 |'
 - en: The batting average (`AVG`) statistic is one way of measuring success. Roughly
     speaking, it tells us the success rate when batting. An `AVG` of .450 means José
     has been successful 45% of the times he has batted (`At Bats`) which is rather
@@ -731,77 +1085,111 @@
     way hierarchical models are powerful, we will try to predict José’s batting average
     at the end of the season. Note that in a typical season, players have about 500
     at bats.
+  id: totrans-160
   prefs: []
   type: TYPE_NORMAL
+  zh: 打击率（AVG）统计是衡量成功的一种方式。大致来说，它告诉我们击球时的成功率。AVG为.450意味着何塞在击球（击球次数）的45%时是成功的，这在历史上是比较高的。记住，自从泰德·威廉姆斯在1941年做到这一点以来，没有人完成过一个赛季的AVG达到或超过.400！为了说明层次模型的力量，我们将尝试预测何塞在赛季结束时的打击率。请注意，在一个典型的赛季中，球员大约有500次击球。
 - en: 'With the techniques we have learned up to now, referred to as *frequentist
     techniques*, the best we can do is provide a confidence interval. We can think
     of outcomes from hitting as a binomial with a success rate of \(p\). So if the
     success rate is indeed .450, the standard error of just 20 at bats is:'
+  id: totrans-161
   prefs: []
   type: TYPE_NORMAL
+  zh: 使用我们迄今为止学到的技术，称为*频率派技术*，我们所能做的最好的就是提供一个置信区间。我们可以将击球的结果视为一个成功率为\(p\)的二项分布。所以如果成功率确实是.450，那么只有20次击球的样本标准误差是：
 - en: \[ \sqrt{\frac{.450 (1-.450)}{20}}=.111 \]
+  id: totrans-162
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \sqrt{\frac{.450 (1-.450)}{20}}=.111 \]
 - en: This means that our confidence interval is \(.450 - .222\) to \(.450 + .222\)
     or \(.228\) to \(.672\).
+  id: totrans-163
   prefs: []
   type: TYPE_NORMAL
+  zh: 这意味着我们的置信区间是\(.450 - .222\)到\(.450 + .222\)，即\(.228\)到\(.672\)。
 - en: This prediction has two problems. First, it is very large, so not very useful.
     Second, it is centered at .450, which implies that our best guess is that this
     new player will break Ted Williams’ record.
+  id: totrans-164
   prefs: []
   type: TYPE_NORMAL
+  zh: 这个预测有两个问题。首先，它非常大，所以不太有用。其次，它以.450为中心，这意味着我们最好的猜测是这位新球员将打破泰德·威廉姆斯的记录。
 - en: If you follow baseball, this last statement will seem wrong and this is because
     you are implicitly using a hierarchical model that factors in information from
     years of following baseball. Here we show how we can quantify this intuition.
+  id: totrans-165
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果你关注棒球，这个最后的陈述看起来是错误的，这是因为你隐含地使用了一个考虑了多年关注棒球信息的层次模型。在这里，我们展示了我们如何量化这种直觉。
 - en: 'First, let’s explore the distribution of batting averages for all players with
     more than 500 at bats during the previous three seasons:'
+  id: totrans-166
   prefs: []
   type: TYPE_NORMAL
+  zh: 首先，让我们探索在过去三个赛季中，所有超过500次击球的球员的打击率分布：
 - en: '![](../Images/e21e321e4c89cb389efa1947fa7a935d.png)'
+  id: totrans-167
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/e21e321e4c89cb389efa1947fa7a935d.png)'
 - en: The average player had an `AVG` of .275 and the standard deviation of the population
     of players was 0.027\. So we can see already that .450 would be quite an anomaly
     since it is over six standard deviations away from the mean.
+  id: totrans-168
   prefs: []
   type: TYPE_NORMAL
+  zh: 平均球员的AVG为.275，球员群体的标准差为0.027。所以我们可以看到，.450将是一个非常异常的值，因为它比平均值高出六个标准差。
 - en: So is José lucky or is he the best batter seen in the last 50 years? Perhaps
     it’s a combination of both luck and talent. But how much of each? If we become
     convinced that he is lucky, we should trade him to a team that trusts the .450
     observation and is maybe overestimating his potential.
+  id: totrans-169
   prefs: []
   type: TYPE_NORMAL
+  zh: 那么，何塞是幸运的，还是他是过去 50 年里见过的最佳击球手？或许这是运气和天赋的结合。但各占多少呢？如果我们确信他是幸运的，我们应该将他交易到一个信任
+    .450 观察结果并且可能高估他潜力的球队。
 - en: 16.6 Hierarchical models
+  id: totrans-170
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 16.6 层次化模型
 - en: The hierarchical model provides a mathematical description of how we came to
     see the observation of .450\. First, we pick a player at random with an intrinsic
     ability summarized by, for example, \(p\). Then we see 20 random outcomes with
     success probability \(p\).
+  id: totrans-171
   prefs: []
   type: TYPE_NORMAL
+  zh: 层次化模型为我们如何得出 .450 的观察结果提供了一个数学描述。首先，我们随机选择一位球员，其内在能力可以用例如 \(p\) 来概括。然后我们观察到
+    20 次随机结果，成功概率为 \(p\)。
 - en: We use a model to represent two levels of variability in our data. First, each
     player is assigned a natural ability to hit. We will use the symbol \(p\) to represent
     this ability. You can think of \(p\) as the batting average you would converge
     to if this particular player batted over and over again.
+  id: totrans-172
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们使用一个模型来表示数据中的两个层次的变化。首先，每位球员都被分配了一个击球的天赋。我们将使用符号 \(p\) 来表示这种能力。你可以将 \(p\)
+    视为如果这位特定球员不断击球，他将达到的击球率。
 - en: Based on the plots we showed earlier, we assume that \(p\) has a normal distribution.
     With expected value .270 and standard error 0.027.
+  id: totrans-173
   prefs: []
   type: TYPE_NORMAL
+  zh: 基于我们之前展示的图表，我们假设 \(p\) 服从正态分布。期望值为 .270，标准误差为 0.027。
 - en: Now the second level of variability has to do with luck when batting. Regardless
     of how good the player is, sometimes you have bad luck and sometimes you have
     good luck. At each at bat, this player has a probability of success \(p\). If
     we add up these successes and failures, then the CLT tells us that the observed
     average, call it \(Y\), has a normal distribution with expected value \(p\) and
     standard error \(\sqrt{p(1-p)/N}\) with \(N\) the number of at bats.
+  id: totrans-174
   prefs: []
   type: TYPE_NORMAL
+  zh: 现在的第二层次变化与击球时的运气有关。无论球员多么出色，有时会遇到坏运气，有时会遇到好运气。在每次击球时，这位球员有成功概率 \(p\)。如果我们把这些成功和失败加起来，CLT
+    告诉我们观察到的平均数，称之为 \(Y\)，具有期望值 \(p\) 和标准误差 \(\sqrt{p(1-p)/N}\)，其中 \(N\) 是击球次数。
 - en: 'Statistical textbooks will write the model like this: \[ \begin{aligned} p
     &\sim N(\mu, \tau^2) \\ Y \mid p &\sim N(p, \sigma^2) \end{aligned} \] Here the
     \(\sim\) symbol tells us the random variable on the left of the symbol follows
@@ -816,44 +1204,71 @@
     distribution* and the second the *sampling distribution*. The data analysis we
     have conducted here suggests that we set \(\mu = .270\), \(\tau = 0.027\), and
     \(\sigma^2 = p(1-p)/N\).'
+  id: totrans-175
   prefs: []
   type: TYPE_NORMAL
+  zh: 统计教材中会这样描述模型：\[ \begin{aligned} p &\sim N(\mu, \tau^2) \\ Y \mid p &\sim N(p,
+    \sigma^2) \end{aligned} \] 这里 \(\sim\) 符号告诉我们符号左侧的随机变量遵循右侧的分布，而 \(N(a,b^2)\) 表示均值为
+    \(a\)，标准差为 \(b\) 的正态分布。\(\mid\) 读作 *基于条件*，意味着我们将符号右侧的随机变量视为已知。我们将该模型称为层次化模型，因为我们需要知道
+    \(p\)，第一层，才能对 \(Y\)，第二层进行建模。在我们的例子中，第一层描述了将天赋分配给球员时的随机性，第二层描述了在确定了天赋参数后，这位特定球员的表现的随机性。在贝叶斯框架中，第一层被称为
+    *先验分布*，第二层被称为 *抽样分布*。我们在这里进行的数据分析表明，我们应该将 \(\mu = .270\)，\(\tau = 0.027\)，和 \(\sigma^2
+    = p(1-p)/N\) 设置为参数。
 - en: 'Now, let’s use this model for José’s data. Suppose we want to predict his innate
     ability in the form of his *true* batting average \(p\). This would be the hierarchical
     model for our data:'
+  id: totrans-176
   prefs: []
   type: TYPE_NORMAL
+  zh: 现在，让我们使用这个模型来分析何塞的数据。假设我们想要以他的 *真实* 击球率 \(p\) 的形式预测他的内在能力。这将是我们数据的层次化模型：
 - en: \[ \begin{aligned} p &\sim N(.275, .027^2) \\ Y \mid p &\sim N(p, .111^2) \end{aligned}
     \]
+  id: totrans-177
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \begin{aligned} p &\sim N(.275, .027^2) \\ Y \mid p &\sim N(p, .111^2) \end{aligned}
+    \]
 - en: 'We now are ready to compute a posterior distribution to summarize our prediction
     of \(p\). The continuous version of Bayes’ rule can be used here to derive the
     *posterior probability function*, which is the distribution of \(p\) assuming
     we observe \(Y=y\). In our case, we can show that when we fix \(Y=y\), \(p\) follows
     a normal distribution with expected value:'
+  id: totrans-178
   prefs: []
   type: TYPE_NORMAL
+  zh: 现在我们准备计算后验分布来总结我们对 \(p\) 的预测。贝叶斯规则的连续版本可以用来推导 *后验概率函数*，这是在观察到 \(Y=y\) 时 \(p\)
+    的分布。在我们的案例中，我们可以证明当 \(Y=y\) 固定时，\(p\) 遵循一个期望值为：
 - en: \[ \begin{aligned} \mbox{E}(p \mid Y=y) &= B \mu + (1-B) y\\ &= \mu + (1-B)(y-\mu)\\
     \mbox{with } B &= \frac{\sigma^2}{\sigma^2+\tau^2} \end{aligned} \]
+  id: totrans-179
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \begin{aligned} \mbox{E}(p \mid Y=y) &= B \mu + (1-B) y\\ &= \mu + (1-B)(y-\mu)\\
+    \mbox{with } B &= \frac{\sigma^2}{\sigma^2+\tau^2} \end{aligned} \]
 - en: 'This is a weighted average of the population average \(\mu\) and the observed
     data \(y\). The weight depends on the SD of the population \(\tau\) and the SD
     of our observed data \(\sigma\). This weighted average is sometimes referred to
     as *shrinking* because it *shrinks* estimates towards a prior mean. In the case
     of José Iglesias, we have:'
+  id: totrans-180
   prefs: []
   type: TYPE_NORMAL
+  zh: 这是对总体平均数 \(\mu\) 和观察到的数据 \(y\) 的加权平均。权重取决于总体标准差 \(\tau\) 和我们观察到的数据标准差 \(\sigma\)。这种加权平均有时被称为
+    *收缩*，因为它会将估计值 *收缩* 到先验均值。在何塞·伊格莱西亚斯的案例中，我们有：
 - en: \[ \begin{aligned} \mbox{E}(p \mid Y=.450) &= B \times .275 + (1 - B) \times
     .450 \\ &= .275 + (1 - B)(.450 - .275) \\ B &=\frac{.111^2}{.111^2 + .027^2} =
     0.944\\ \mbox{E}(p \mid Y=450) &\approx .285 \end{aligned} \]
+  id: totrans-181
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \begin{aligned} \mbox{E}(p \mid Y=.450) &= B \times .275 + (1 - B) \times
+    .450 \\ &= .275 + (1 - B)(.450 - .275) \\ B &=\frac{.111^2}{.111^2 + .027^2} =
+    0.944\\ \mbox{E}(p \mid Y=450) &\approx .285 \end{aligned} \]
 - en: 'We do not show the derivation here, but the standard error can be shown to
     be:'
+  id: totrans-182
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们在此处不展示推导过程，但标准误差可以表示为：
 - en: '\[ \mbox{SE}(p\mid y)^2 = \frac{1}{1/\sigma^2+1/\tau^2} = \frac{1}{1/.111^2
     + 1/.027^2} = 0.00069 \] and the standard deviation is therefore \(0.026\). So
     we started with a frequentist 95% confidence interval that ignored data from other
@@ -864,51 +1279,80 @@
     what is called a 95% *credible interval* by reporting a region, centered at the
     mean, with a 95% chance of occurring. In our case, this turns out to be: .285
     \(\pm\) 0.052.'
+  id: totrans-183
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \mbox{SE}(p\mid y)^2 = \frac{1}{1/\sigma^2+1/\tau^2} = \frac{1}{1/.111^2
+    + 1/.027^2} = 0.00069 \] 因此标准差为 \(0.026\)。因此，我们开始时使用了一个频率主义者95%置信区间，该区间忽略了其他球员的数据，仅总结了何塞的数据：.450
+    \(\pm\) 0.220。然后我们使用贝叶斯方法，结合了其他球员和其他年份的数据，以获得后验概率。这实际上被称为经验贝叶斯方法，因为我们使用了数据来构建先验。从后验中，我们可以通过报告一个以平均值为中心的区域，该区域有95%的概率发生，来报告所谓的95%
+    *可信区间*。在我们的案例中，这实际上是：.285 \(\pm\) 0.052。
 - en: 'The Bayesian credible interval suggests that if another team is impressed by
     the .450 observation, we should consider trading José as we are predicting he
     will be just slightly above average. Interestingly, the Red Sox traded José to
     the Detroit Tigers in July. Here are the José Iglesias batting averages for the
     next five months:'
+  id: totrans-184
   prefs: []
   type: TYPE_NORMAL
+  zh: 贝叶斯可信区间表明，如果另一支球队对.450的观察印象深刻，我们应该考虑交易何塞，因为我们预测他将会略高于平均水平。有趣的是，红袜队在七月将何塞交易到了底特律老虎队。以下是何塞·伊格莱西亚斯接下来五个月的击球平均数：
 - en: '| Month | At Bat | Hits | AVG |'
+  id: totrans-185
   prefs: []
   type: TYPE_TB
+  zh: '| 月份 | 打击数 | 击球数 | AVG |'
 - en: '| --- | --- | --- | --- |'
+  id: totrans-186
   prefs: []
   type: TYPE_TB
+  zh: '| --- | --- | --- | --- |'
 - en: '| April | 20 | 9 | .450 |'
+  id: totrans-187
   prefs: []
   type: TYPE_TB
+  zh: '| 四月 | 20 | 9 | .450 |'
 - en: '| May | 26 | 11 | .423 |'
+  id: totrans-188
   prefs: []
   type: TYPE_TB
+  zh: '| 五月 | 26 | 11 | .423 |'
 - en: '| June | 86 | 34 | .395 |'
+  id: totrans-189
   prefs: []
   type: TYPE_TB
+  zh: '| 六月 | 86 | 34 | .395 |'
 - en: '| July | 83 | 17 | .205 |'
+  id: totrans-190
   prefs: []
   type: TYPE_TB
+  zh: '| 七月 | 83 | 17 | .205 |'
 - en: '| August | 85 | 25 | .294 |'
+  id: totrans-191
   prefs: []
   type: TYPE_TB
+  zh: '| 八月 | 85 | 25 | .294 |'
 - en: '| September | 50 | 10 | .200 |'
+  id: totrans-192
   prefs: []
   type: TYPE_TB
+  zh: '| 九月 | 50 | 10 | .200 |'
 - en: '| Total w/o April | 330 | 97 | .293 |'
+  id: totrans-193
   prefs: []
   type: TYPE_TB
+  zh: '| 总计（不含四月） | 330 | 97 | .293 |'
 - en: Although both intervals included the final batting average, the Bayesian credible
     interval provided a much more precise prediction. In particular, it predicted
     that he would not be as good during the remainder of the season.
+  id: totrans-194
   prefs: []
   type: TYPE_NORMAL
+  zh: 虽然两个区间都包含了最终的击球平均数，但贝叶斯可信区间提供了更精确的预测。特别是，它预测他在赛季剩余的时间里不会表现得那么好。
 - en: 16.7 Exercises
+  id: totrans-195
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 16.7 练习
 - en: 1\. In 1999, in England, Sally Clark[^(59)](#fn59) was found guilty of the murder
     of two of her sons. Both infants were found dead in the morning, one in 1996 and
     another in 1998\. In both cases, she claimed the cause of death was sudden infant
@@ -918,173 +1362,252 @@
     million. He arrived at this figure by finding that the rate of SIDS was 1 in 8,500
     and then calculating that the chance of two SIDS cases was 8,500 \(\times\) 8,500
     \(\approx\) 73 million. Which of the following do you agree with?
+  id: totrans-196
   prefs: []
   type: TYPE_NORMAL
+  zh: 1\. 1999年，在英国，莎莉·克拉克[^(59)](#fn59)被判定犯有杀害她两个儿子的罪行。两个婴儿都在早上被发现死亡，一个在1996年，另一个在1998年。在两种情况下，她声称死亡原因是婴儿猝死综合症（SIDS）。在两个婴儿身上都没有发现身体伤害的证据，因此对她不利的证据主要是罗伊·梅多爵士教授的证词，他作证说两个婴儿死于SIDS的可能性是7300万分之一。他是通过发现SIDS的比率是8500分之一，然后计算出两个SIDS病例的可能性是8500
+    \(\times\) 8500 \(\approx\) 7300万。以下哪个是你同意的？
 - en: 'Sir Meadow assumed that the probability of the second son being affected by
     SIDS was independent of the first son being affected, thereby ignoring possible
     genetic causes. If genetics plays a role then: \(\mbox{Pr}(\mbox{second case of
     SIDS} \mid \mbox{first case of SIDS}) < \mbox{P}r(\mbox{first case of SIDS})\).'
+  id: totrans-197
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 梅多爵士假设第二个儿子受到婴儿猝死综合症（SIDS）影响的可能性与第一个儿子受到影响的可能性是独立的，因此忽略了可能的遗传原因。如果遗传起作用，那么：\(\mbox{Pr}(\mbox{second
+    case of SIDS} \mid \mbox{first case of SIDS}) < \mbox{Pr}(\mbox{first case of
+    SIDS})\).
 - en: 'Nothing. The multiplication rule always applies in this way: \(\mbox{Pr}(A
     \mbox{ and } B) =\mbox{Pr}(A)\mbox{Pr}(B)\)'
+  id: totrans-198
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 无。乘法法则总是以这种方式适用：\(\mbox{Pr}(A \mbox{ and } B) =\mbox{Pr}(A)\mbox{Pr}(B)\)
 - en: Sir Meadow is an expert and we should trust his calculations.
+  id: totrans-199
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 梅多爵士是一位专家，我们应该相信他的计算。
 - en: Numbers don’t lie.
+  id: totrans-200
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 数字不会说谎。
 - en: 2\. Let’s assume that there is in fact a genetic component to SIDS and the probability
     of \(\mbox{Pr}(\mbox{second case of SIDS} \mid \mbox{first case of SIDS}) = 1/100\),
     is much higher than 1 in 8,500\. What is the probability of both of her sons dying
     of SIDS?
+  id: totrans-201
   prefs: []
   type: TYPE_NORMAL
+  zh: 2\. 假设SIDS确实有一个遗传成分，\(\mbox{Pr}(\mbox{second case of SIDS} \mid \mbox{first
+    case of SIDS}) = 1/100\)，这个概率比8500分之一要高得多。她两个儿子死于SIDS的概率是多少？
 - en: 3\. Many press reports stated that the expert claimed the probability of Sally
     Clark being innocent as 1 in 73 million. Perhaps the jury and judge also interpreted
     the testimony this way. This probability can be written as the probability of
     *a mother is a son-murdering psychopath* given that *two of her children are found
     dead with no evidence of physical harm*. According to Bayes’ rule, what is this?
+  id: totrans-202
   prefs: []
   type: TYPE_NORMAL
+  zh: 3\. 许多新闻报道称，专家声称莎莉·克拉克无罪的概率是7300万分之一。也许陪审团和法官也是这样解读证词的。这个概率可以写成在“两个孩子被发现死亡且没有身体伤害的证据”的条件下，“她是一个弑子心理变态的母亲”的概率。根据贝叶斯定理，这是什么？
 - en: '4\. Assume that the chance of a son-murdering psychopath finding a way to kill
     her children, without leaving evidence of physical harm, is:'
+  id: totrans-203
   prefs: []
   type: TYPE_NORMAL
+  zh: 4\. 假设一个弑子心理变态者找到一种方法杀害她的孩子，而不留下身体伤害的证据的可能性是：
 - en: \[ \mbox{Pr}(A \mid B) = 0.50 \]
+  id: totrans-204
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \mbox{Pr}(A \mid B) = 0.50 \]
 - en: with A = two of her children are found dead with no evidence of physical harm
     and B = a mother is a son-murdering psychopath = 0.50\. Assume that the rate of
     son-murdering psychopaths mothers is 1 in 1,000,000\. According to Bayes’ theorem,
     what is the probability of \(\mbox{Pr}(B \mid A)\) ?
+  id: totrans-205
   prefs: []
   type: TYPE_NORMAL
+  zh: 其中A = 她的两个孩子被发现死亡且没有身体伤害的证据，B = 她是一个弑子心理变态的母亲 = 0.50。假设弑子心理变态母亲的比率是100万分之一。根据贝叶斯定理，\(\mbox{Pr}(B
+    \mid A)\) 的概率是多少？
 - en: 5/. After Sally Clark was found guilty, the Royal Statistical Society issued
     a statement saying that there was “no statistical basis” for the expert’s claim.
     They expressed concern at the “misuse of statistics in the courts”. Eventually,
     Sally Clark was acquitted in June 2003\. What did the expert miss?
+  id: totrans-206
   prefs: []
   type: TYPE_NORMAL
+  zh: 5/. 在莎莉·克拉克被判定有罪后，皇家统计学会发表声明称，专家的论断“没有统计依据”。他们表达了对“法庭上统计数据的误用”的担忧。最终，莎莉·克拉克于2003年6月被宣判无罪。专家错过了什么？
 - en: He made an arithmetic error.
+  id: totrans-207
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 他犯了一个算术错误。
 - en: He made two mistakes. First, he misused the multiplication rule and did not
     take into account how rare it is for a mother to murder her children. After using
     Bayes’ rule, we found a probability closer to 0.5 than 1 in 73 million.
+  id: totrans-208
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 他犯了两个错误。首先，他误用了乘法法则，并且没有考虑到母亲杀害孩子的罕见性。在使用贝叶斯定理后，我们发现概率接近0.5，而不是7300万分之一。
 - en: He mixed up the numerator and denominator of Bayes’ rule.
+  id: totrans-209
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 他把贝叶斯定理的分子和分母搞混了。
 - en: He did not use R.
+  id: totrans-210
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 他没有使用R。
 - en: '6\. Florida is one of the most closely watched states in the U.S. election
     because it has many electoral votes, and the election is generally close, and
     Florida tends to be a swing state that can vote either way. Create the following
     table with the polls taken during the last two weeks:'
+  id: totrans-211
   prefs: []
   type: TYPE_NORMAL
+  zh: 6. 佛罗里达是美国选举中最受关注的几个州之一，因为它拥有许多选举人票，选举通常很接近，佛罗里达往往是一个摇摆州，可以投给任何一方。创建以下表格，其中包含过去两周进行的民调：
 - en: '[PRE23]'
+  id: totrans-212
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE23]'
 - en: Take the average spread of these polls. The CLT tells us this average is approximately
     normal. Calculate an average and provide an estimate of the standard error. Save
     your results in an object called `results`.
+  id: totrans-213
   prefs: []
   type: TYPE_NORMAL
+  zh: 取这些民调的平均扩散。CLT告诉我们这个平均值大约是正态分布的。计算平均值并提供标准误的估计。将你的结果保存在一个名为`results`的对象中。
 - en: 7\. Now assume a Bayesian model that sets the prior distribution for Florida’s
     election night spread \(d\) to be Normal with expected value \(\mu\) and standard
     deviation \(\tau\). What are the interpretations of \(\mu\) and \(\tau\)?
+  id: totrans-214
   prefs: []
   type: TYPE_NORMAL
+  zh: 7. 现在假设一个贝叶斯模型，将佛罗里达选举夜扩散\(d\)的先验分布设置为正态分布，期望值为\(\mu\)，标准差为\(\tau\)。\(\mu\)和\(\tau\)的解释是什么？
 - en: \(\mu\) and \(\tau\) are arbitrary numbers that let us make probability statements
     about \(d\).
+  id: totrans-215
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: \(\mu\)和\(\tau\)是任意数字，让我们可以对\(d\)做出概率陈述。
 - en: \(\mu\) and \(\tau\) summarize what we would predict for Florida before seeing
     any polls. Based on past elections, we would set \(\mu\) close to 0 because both
     Republicans and Democrats have won, and \(\tau\) at about \(0.02\), because these
     elections tend to be close.
+  id: totrans-216
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: \(\mu\)和\(\tau\)总结了在看到任何民调之前我们会对佛罗里达做出什么预测。根据过去的选举，我们会将\(\mu\)设得接近0，因为共和党和民主党都曾获胜，而\(\tau\)设为大约\(0.02\)，因为这些选举往往很接近。
 - en: \(\mu\) and \(\tau\) summarize what we want to be true. We therefore set \(\mu\)
     at \(0.10\) and \(\tau\) at \(0.01\).
+  id: totrans-217
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: \(\mu\)和\(\tau\)总结了我们所希望为真的情况。因此，我们将\(\mu\)设为\(0.10\)，将\(\tau\)设为\(0.01\)。
 - en: The choice of prior has no effect on Bayesian analysis.
+  id: totrans-218
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 先验的选择对贝叶斯分析没有影响。
 - en: 8\. The CLT tells us that our estimate of the spread \(\hat{d}\) has normal
     distribution with expected value \(d\) and standard deviation \(\sigma\) calculated
     in problem 6\. Use the formulas we showed for the posterior distribution to calculate
     the expected value of the posterior distribution if we set \(\mu = 0\) and \(\tau
     = 0.01\).
+  id: totrans-219
   prefs: []
   type: TYPE_NORMAL
+  zh: 8. CLT告诉我们，我们对扩散的估计\(\hat{d}\)具有正态分布，期望值为\(d\)，标准差为问题6中计算出的\(\sigma\)。使用我们展示的后验分布公式，如果我们设置\(\mu
+    = 0\)和\(\tau = 0.01\)，来计算后验分布的期望值。
 - en: 9\. Now compute the standard deviation of the posterior distribution.
+  id: totrans-220
   prefs: []
   type: TYPE_NORMAL
+  zh: 9. 现在计算后验分布的标准差。
 - en: 10\. Using the fact that the posterior distribution is normal, create an interval
     that has a 95% probability of occurring centered at the posterior expected value.
     Note that we call these credible intervals.
+  id: totrans-221
   prefs: []
   type: TYPE_NORMAL
+  zh: 10. 利用后验分布是正态的这一事实，创建一个以后验期望值为中心的95%概率发生区间的区间。注意，我们称这些为可信区间。
 - en: 11\. According to this analysis, what was the probability that Trump wins Florida?
+  id: totrans-222
   prefs: []
   type: TYPE_NORMAL
+  zh: 11. 根据这一分析，特朗普赢得佛罗里达的概率是多少？
 - en: 12\. Now use `sapply` function to change the prior variance from `seq(0.05,
     0.05, len = 100)` and observe how the probability changes by making a plot.
+  id: totrans-223
   prefs: []
   type: TYPE_NORMAL
+  zh: 12. 现在用`sapply`函数将先验方差从`seq(0.05, 0.05, len = 100)`改变，并通过绘制图表来观察概率如何变化。
 - en: '16.8 Case study: election forecasting'
+  id: totrans-224
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 16.8 案例研究：选举预测
 - en: 'In a previous section, we generated these data tables:'
+  id: totrans-225
   prefs: []
   type: TYPE_NORMAL
+  zh: 在前面的章节中，我们生成了这些数据表：
 - en: '[PRE24]'
+  id: totrans-226
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE24]'
 - en: Below, we will use these for our forecasting.
+  id: totrans-227
   prefs: []
   type: TYPE_NORMAL
+  zh: 下面，我们将使用这些来进行预测。
 - en: 16.8.1 Bayesian approach
+  id: totrans-228
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 16.8.1 贝叶斯方法
 - en: Pollsters tend to make probabilistic statements about the results of the election.
     For example, “The chance that Obama wins the electoral college is 91%” is a probabilistic
     statement about a parameter which in previous sections we have denoted with \(d\).
     We showed that for the 2016 election, FiveThirtyEight gave Clinton an 81.4% chance
     of winning the popular vote. To do this, they used the Bayesian approach we described.
+  id: totrans-229
   prefs: []
   type: TYPE_NORMAL
+  zh: 民调员倾向于对选举结果做出概率陈述。例如，“奥巴马赢得选举人票的机会是91%”是对一个参数的概率陈述，在前面几节中我们用\(d\)表示这个参数。我们展示了在2016年选举中，FiveThirtyEight给克林顿赢得了81.4%的普选票的机会。为了做到这一点，他们使用了我们描述的贝叶斯方法。
 - en: 'We assume a hierarchical model similar to what we did to predict the performance
     of a baseball player. Statistical textbooks will write the model like this:'
+  id: totrans-230
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们假设一个类似于我们预测棒球运动员表现的分层模型。统计教材会这样写模型：
 - en: \[ \begin{aligned} d &\sim N(\mu, \tau^2) \mbox{ describes our best guess had
     we not seen any polling data}\\ \bar{X} \mid d &\sim N(d, \sigma^2) \mbox{ describes
     randomness due to sampling and the pollster effect} \end{aligned} \]
+  id: totrans-231
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \begin{aligned} d &\sim N(\mu, \tau^2) \mbox{描述了在没有看到任何民调数据时的最佳猜测}\\ \bar{X}
+    \mid d &\sim N(d, \sigma^2) \mbox{描述了由于抽样和民意调查者效应引起的随机性} \end{aligned} \]
 - en: For our best guess, we note that before any poll data is available, we can use
     data sources other than polling data. A popular approach is to use what pollsters
     call *fundamentals*, which are based on properties about the current economy that
@@ -1094,38 +1617,58 @@
     standard deviation, we will use recent historical data that shows the winner of
     the popular vote has an average spread of about 3.5%. Therefore, we set \(\tau
     = 0.035\).
+  id: totrans-232
   prefs: []
   type: TYPE_NORMAL
+  zh: 对于我们的最佳猜测，我们注意到在没有任何民调数据可用之前，我们可以使用除了民调数据之外的数据来源。一种流行的方法是使用民意调查者所说的“基础”，这些是基于历史上似乎对现任政党有利的或不利的经济特性的。我们在这里不会使用这些。相反，我们将使用
+    \(\mu = 0\)，这被解释为一个不提供任何关于谁将获胜的信息的模型。对于标准差，我们将使用最近的历史数据，该数据显示普选票获胜者的平均分布约为3.5%。因此，我们设置
+    \(\tau = 0.035\)。
 - en: 'Now we can use the formulas for the posterior distribution for the parameter
     \(d\): the probability of \(d>0\) given the observed poll data:'
+  id: totrans-233
   prefs: []
   type: TYPE_NORMAL
+  zh: 现在我们可以使用参数 \(d\) 的后验分布公式：给定观察到的民调数据的 \(d>0\) 的概率：
 - en: '[PRE25]'
+  id: totrans-234
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE25]'
 - en: 'To make a probability statement, we use the fact that the posterior distribution
     is also normal. And we have a credible interval of:'
+  id: totrans-235
   prefs: []
   type: TYPE_NORMAL
+  zh: 为了做出概率陈述，我们使用后验分布也是正态分布的事实。我们有一个可信区间为：
 - en: '[PRE26]'
+  id: totrans-236
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE26]'
 - en: 'The posterior probability \(\mbox{Pr}(d>0 \mid \bar{X})\) can be computed like
     this:'
+  id: totrans-237
   prefs: []
   type: TYPE_NORMAL
+  zh: 后验概率 \(\mbox{Pr}(d>0 \mid \bar{X})\) 可以这样计算：
 - en: '[PRE27]'
+  id: totrans-238
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE27]'
 - en: This says we are 100% sure Clinton will win the popular vote, which seems too
     overconfident. Also, it is not in agreement with FiveThirtyEight’s 81.4%. What
     explains this difference?
+  id: totrans-239
   prefs: []
   type: TYPE_NORMAL
+  zh: 这意味着我们100%确信克林顿将赢得普选票，这似乎过于自信。而且，这与FiveThirtyEight的81.4%不符。这其中的差异是什么解释？
 - en: 16.8.2 The general bias
+  id: totrans-240
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 16.8.2 一般偏差
 - en: 'After elections are over, one can look at the difference between pollster predictions
     and actual result. An important observation that our model does not take into
     account is that it is common to see a general bias that affects many pollsters
@@ -1135,86 +1678,129 @@
     by 1%, then in the next election there is no bias, then in the following one Republicans
     are favored by 3%, and so on. In 2016, the polls were biased in favor of the Democrats
     by 1-2%.'
+  id: totrans-241
   prefs: []
   type: TYPE_NORMAL
+  zh: 选举结束后，人们可以查看民意调查预测和实际结果之间的差异。我们的模型没有考虑的一个重要观察结果是，通常存在一种影响许多民意调查者的普遍偏差，使得观察到的数据相关。对此没有很好的解释，但我们确实在历史数据中观察到这一点：在一次选举中，民调的平均结果使民主党领先2%，然后在下一次选举中，他们使共和党领先1%，然后在下一次选举中没有偏差，然后在下一次选举中，共和党领先3%，以此类推。在2016年，民调使民主党领先1-2%。
 - en: Although we know this bias term affects our polls, we have no way of knowing
     what this bias is until election night. So we can’t correct our polls accordingly.
     What we can do is include a term in our model that accounts for this variability.
+  id: totrans-242
   prefs: []
   type: TYPE_NORMAL
+  zh: 虽然我们知道这个偏差项会影响我们的民调，但我们无法知道这个偏差是什么，直到选举之夜。因此，我们无法相应地纠正我们的民调。我们能做的是在我们的模型中包含一个考虑这种变异性的项。
 - en: 16.8.3 Mathematical representations of models
+  id: totrans-243
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 16.8.3 模型的数学表示
 - en: 'Suppose we are collecting data from one pollster and we assume there is no
     general bias. The pollster collects several polls with a sample size of \(N\),
     so we observe several measurements of the spread \(X_1, \dots, X_J\). The theory
     tells us that these random variables have expected value \(d\) and standard error
     \(2 \sqrt{p(1-p)/N}\). Let’s start by using the following model to describe the
     observed variability:'
+  id: totrans-244
   prefs: []
   type: TYPE_NORMAL
+  zh: 假设我们正在收集一个民意调查者的数据，并且我们假设没有普遍偏差。民意调查者收集了几个样本量为 \(N\) 的民调，因此我们观察到了几个关于分布的测量值
+    \(X_1, \dots, X_J\)。理论告诉我们，这些随机变量的期望值为 \(d\)，标准误差为 \(2 \sqrt{p(1-p)/N}\)。让我们首先使用以下模型来描述观察到的变异性：
 - en: '\[ X_j = d + \varepsilon_j. \] We use the index \(j\) to represent the different
     polls and we define \(\varepsilon_j\) to be a random variable that explains the
     poll-to-poll variability introduced by sampling error. To do this, we assume its
     average is 0 and standard error is \(2 \sqrt{p(1-p)/N}\). If \(d\) is \(0.021\)
     and the sample size for these polls is 2,000, we can simulate \(J=6\) data points
     from this model like this:'
+  id: totrans-245
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ X_j = d + \varepsilon_j. \] 我们使用索引 \(j\) 来表示不同的调查，并定义 \(\varepsilon_j\) 为一个随机变量，它解释了由抽样误差引入的调查到调查的变化。为此，我们假设其平均值为0，标准误差为
+    \(2 \sqrt{p(1-p)/N}\)。如果 \(d\) 为 \(0.021\)，并且这些调查的样本量为2,000，我们可以从这个模型中模拟 \(J=6\)
+    个数据点，如下所示：
 - en: '[PRE28]'
+  id: totrans-246
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE28]'
 - en: 'Now suppose we have \(J=6\) data points from \(I=5\) different pollsters. To
     represent this we now need two indexes, one for pollster and one for the polls
     each pollster takes. We use \(X_{ij}\) with \(i\) representing the pollster and
     \(j\) representing the \(j\)-th poll from that pollster. If we apply the same
     model, we write:'
+  id: totrans-247
   prefs: []
   type: TYPE_NORMAL
+  zh: 现在假设我们有 \(J=6\) 个来自 \(I=5\) 个不同调查员的数据点。为了表示这一点，我们现在需要两个索引，一个用于调查员，一个用于每个调查员进行的调查。我们使用
+    \(X_{ij}\) ，其中 \(i\) 代表调查员，\(j\) 代表该调查员进行的第 \(j\) 次调查。如果我们应用相同的模型，我们写成：
 - en: \[ X_{i,j} = d + \varepsilon_{i,j} \]
+  id: totrans-248
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ X_{i,j} = d + \varepsilon_{i,j} \]
 - en: 'To simulate data, we now have to loop through the pollsters:'
+  id: totrans-249
   prefs: []
   type: TYPE_NORMAL
+  zh: 为了模拟数据，我们现在必须遍历调查员：
 - en: '[PRE29]'
+  id: totrans-250
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE29]'
 - en: 'The simulated data does not really seem to capture the features of the actual
     data:'
+  id: totrans-251
   prefs: []
   type: TYPE_NORMAL
+  zh: 模拟数据并没有真正捕捉到实际数据的特征：
 - en: '![](../Images/049c1bbfa000b94a9991c4a968d2c1f3.png)'
+  id: totrans-252
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/049c1bbfa000b94a9991c4a968d2c1f3.png)'
 - en: 'The model above does not account for pollster-to-pollster variability. To fix
     this, we add a new term for the pollster effect. We will use \(h_i\) to represent
     the house effect of the \(i\)-th pollster. The model is now augmented to:'
+  id: totrans-253
   prefs: []
   type: TYPE_NORMAL
+  zh: 上述模型没有考虑到调查员之间的变化。为了解决这个问题，我们添加了一个新的项来表示调查员效应。我们将使用 \(h_i\) 来表示第 \(i\) 个调查员的house效应。模型现在扩展为：
 - en: \[ X_{i,j} = d + h_i + \varepsilon_{i,j} \]
+  id: totrans-254
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ X_{i,j} = d + h_i + \varepsilon_{i,j} \]
 - en: 'To simulate data from a specific pollster, we now need to draw an \(h_i\) and
     then add the \(\varepsilon\)s. Here is how we would do it for one specific pollster.
     We assume \(\sigma_h\) is 0.025:'
+  id: totrans-255
   prefs: []
   type: TYPE_NORMAL
+  zh: 为了模拟来自特定调查员的数据，我们现在需要抽取一个 \(h_i\) 并然后添加 \(\varepsilon\)。以下是一个特定调查员的示例。我们假设 \(\sigma_h\)
+    为 0.025：
 - en: '[PRE30]'
+  id: totrans-256
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE30]'
 - en: 'The simulated data now looks more like the actual data:'
+  id: totrans-257
   prefs: []
   type: TYPE_NORMAL
+  zh: 模拟数据现在看起来更像是实际数据：
 - en: '![](../Images/4dbca187ba8980031bd7d5ecffe67660.png)'
+  id: totrans-258
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/4dbca187ba8980031bd7d5ecffe67660.png)'
 - en: Note that \(h_i\) is common to all the observed spreads from a specific pollster.
     Different pollsters have a different \(h_i\), which explains why we can see the
     groups of points shift up and down from pollster to pollster.
+  id: totrans-259
   prefs: []
   type: TYPE_NORMAL
+  zh: 注意，\(h_i\) 对所有来自特定调查员的观察到的扩散是通用的。不同的调查员有不同的 \(h_i\)，这解释了为什么我们可以看到点群在调查员之间上下移动。
 - en: 'Now, in the model above, we assume the average house effect is 0\. We think
     that for every pollster biased in favor of our party, there is another one in
     favor of the other and assume the standard deviation is \(\sigma_h\). But historically
@@ -1225,15 +1811,21 @@
     value. If we did this, we would see a difference with a standard deviation of
     between 2-3%. To incorporate this into the model, we can add another term to account
     for this variability: \[ X_{i,j} = d + b + h_i + \varepsilon_{i,j}. \]'
+  id: totrans-260
   prefs: []
   type: TYPE_NORMAL
+  zh: 现在，在上面的模型中，我们假设平均house效应为0。我们认为，对于每个偏向我们党派的调查员，都有一个偏向另一方的调查员，并假设标准差为 \(\sigma_h\)。但历史上我们看到每次选举都有一个影响所有调查的一般偏差。我们可以用2016年的数据观察到这一点，但如果我们收集历史数据，我们会看到调查的平均值比上述模型预测的要低。为了将这一点纳入模型，我们可以添加另一个项来表示这种变化：\[
+    X_{i,j} = d + b + h_i + \varepsilon_{i,j}. \]
 - en: Here \(b\) is a random variable that accounts for the election-to-election variability.
     This random variable changes from election to election, but for any given election,
     it is the same for all pollsters and polls within on election. This is why it
     does not have indexes. This implies that all the random variables \(X_{i,j}\)
     for an election year are correlated since they all have \(b\) in common.
+  id: totrans-261
   prefs: []
   type: TYPE_NORMAL
+  zh: 在这里，\(b\) 是一个随机变量，它解释了选举之间的变异性。这个随机变量从一次选举到下一次选举都会变化，但对于任何给定的选举，它对所有民意调查和该选举内的所有民意调查都是相同的。这就是为什么它没有索引。这意味着对于选举年份的任何随机变量
+    \(X_{i,j}\) 都是相关的，因为它们都有 \(b\) 这个共同点。
 - en: One way to interpret \(b\) is as the difference between the average of all polls
     from all pollsters and the actual result of the election. Because we don’t know
     the actual result until after the election, we can’t estimate \(b\) until after
@@ -1241,54 +1833,79 @@
     the distribution of these values. Based on this approach we assume that, across
     election years, \(b\) has expected value 0 and the standard error is about \(\sigma_b
     = 0.025\).
+  id: totrans-262
   prefs: []
   type: TYPE_NORMAL
+  zh: 解释 \(b\) 的方法之一是将其视为所有民意调查的平均值与选举实际结果之间的差异。由于我们不知道实际结果直到选举之后，我们只能在选举之后估计 \(b\)。然而，我们可以从之前的选举中估计
+    \(b\) 并研究这些值的分布。基于这种方法，我们假设，在选举年份中，\(b\) 的期望值为 0，标准误差约为 \(\sigma_b = 0.025\)。
 - en: 'An implication of adding this term to the model is that the standard deviation
     for \(X_{i,j}\) is actually higher than what we earlier called \(\sigma\), which
     combines the pollster variability and the sample in variability, and was estimated
     with:'
+  id: totrans-263
   prefs: []
   type: TYPE_NORMAL
+  zh: 将此项添加到模型中的含义是，\(X_{i,j}\) 的标准差实际上比我们之前所说的 \(\sigma\) 更高，\(\sigma\) 结合了民意调查的变异性以及样本的变异性，并且是用以下方式估计的：
 - en: '[PRE31]'
+  id: totrans-264
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE31]'
 - en: This estimate does not include the variability introduced by \(b\). Note that
     because
+  id: totrans-265
   prefs: []
   type: TYPE_NORMAL
+  zh: 这个估计不包括由 \(b\) 引入的变异性。请注意，因为
 - en: \[ \bar{X} = d + b + \frac{1}{N}\sum_{i=1}^N X_i, \]
+  id: totrans-266
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \bar{X} = d + b + \frac{1}{N}\sum_{i=1}^N X_i, \]
 - en: 'the standard deviation of \(\bar{X}\) is:'
+  id: totrans-267
   prefs: []
   type: TYPE_NORMAL
+  zh: \(\bar{X}\) 的标准差为：
 - en: '\[ \sqrt{\sigma^2/N + \sigma_b^2}. \] Since the same \(b\) is in every measurement,
     the average does not reduce the variability introduced by the \(b\) term. This
     is an important point: it does not matter how many polls you take, this bias does
     not get reduced.'
+  id: totrans-268
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \sqrt{\sigma^2/N + \sigma_b^2}. \] 由于相同的 \(b\) 出现在每个测量中，平均值并不能减少 \(b\) 项引入的变异性。这是一个重要的观点：无论你进行多少次民意调查，这种偏差都不会减少。
 - en: 'If we redo the Bayesian calculation taking this variability into account, we
     get a result much closer to FiveThirtyEight’s:'
+  id: totrans-269
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果我们重新进行贝叶斯计算，并考虑这种变异性，我们将得到一个与FiveThirtyEight的结果非常接近的结果：
 - en: '[PRE32]'
+  id: totrans-270
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE32]'
 - en: 16.8.4 Predicting the electoral college
+  id: totrans-271
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 16.8.4 预测选举人团
 - en: Up to now we have focused on the popular vote. But in the United States, elections
     are not decided by the popular vote but rather by what is known as the electoral
     college. Each state gets a number of electoral votes that depends, in a somewhat
     complex way, on the population size of the state. Here are the top 5 states ranked
     by electoral votes in 2016.
+  id: totrans-272
   prefs: []
   type: TYPE_NORMAL
+  zh: 到目前为止，我们一直关注的是普选票。但在美国，选举并不是由普选票决定的，而是由所谓的选举人团决定的。每个州根据该州的人口规模以某种复杂的方式获得一定数量的选举人票。以下是2016年按选举人票排名前五的州。
 - en: '[PRE33]'
+  id: totrans-273
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE33]'
 - en: With some minor exceptions we don’t discuss, the electoral votes are won all
     or nothing. For example, if you win California by just 1 vote, you still get all
     55 of its electoral votes. This means that by winning a few big states by a large
@@ -1297,51 +1914,75 @@
     2016\. The idea behind this is to avoid a few large states having the power to
     dominate the presidential election. Nonetheless, many people in the US consider
     the electoral college unfair and would like to see it abolished.
+  id: totrans-274
   prefs: []
   type: TYPE_NORMAL
+  zh: 除了我们未讨论的一些小例外，选举人票要么全部赢得，要么全部失去。例如，如果你在加利福尼亚州仅以1票的微弱优势获胜，你仍然会得到其全部55张选举人票。这意味着通过以较大优势赢得几个大州，但以较小优势输掉许多小州，你可以赢得普选票，却输掉选举人团。这发生在1876年、1888年、2000年和2016年。背后的想法是避免几个大州拥有主导总统选举的力量。尽管如此，许多美国人认为选举人团是不公平的，并希望看到它被废除。
 - en: We are now ready to predict the electoral college result for 2016\. We start
     by aggregating results from a poll taken during the last week before the election.
     We use the `grepl`, which finds strings in character vectors, to remove polls
     that are not for entire states.
+  id: totrans-275
   prefs: []
   type: TYPE_NORMAL
+  zh: 现在，我们准备预测2016年的选举人团结果。我们首先汇总选举前最后一周进行的民调结果。我们使用 `grepl`，它在字符向量中查找字符串，以移除不是针对整个州的民调。
 - en: '[PRE34]'
+  id: totrans-276
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE34]'
 - en: 'Here are the five closest races according to the polls:'
+  id: totrans-277
   prefs: []
   type: TYPE_NORMAL
+  zh: 根据民调，以下是五场最接近的比赛：
 - en: '[PRE35]'
+  id: totrans-278
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE35]'
 - en: 'We now introduce the command `left_join` that will let us easily add the number
     of electoral votes for each state from the dataset `us_electoral_votes_2016`.
     We will describe this function in detail in the Wrangling chapter. Here, we simply
     say that the function combines the two datasets so that the information from the
     second argument is added to the information in the first:'
+  id: totrans-279
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们现在介绍命令 `left_join`，它将使我们能够轻松地将每个州的选举人票数从数据集 `us_electoral_votes_2016` 中添加进来。我们将在“整理”章节中详细描述这个函数。在这里，我们只是简单地说，该函数将两个数据集合并，以便第二个参数的信息添加到第一个参数的信息中：
 - en: '[PRE36]'
+  id: totrans-280
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE36]'
 - en: 'Notice that some states have no polls because the winner is pretty much known:'
+  id: totrans-281
   prefs: []
   type: TYPE_NORMAL
+  zh: 注意，一些州没有民调，因为获胜者几乎已经确定：
 - en: '[PRE37]'
+  id: totrans-282
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE37]'
 - en: No polls were conducted in DC, Rhode Island, Alaska, and Wyoming because Democrats
     are sure to win in the first two and Republicans in the last two.
+  id: totrans-283
   prefs: []
   type: TYPE_NORMAL
+  zh: 在哥伦比亚特区、罗德岛、阿拉斯加和怀俄明州没有进行民调，因为民主党在头两个州必胜，而共和党在最后两个州必胜。
 - en: 'Because we can’t estimate the standard deviation for states with just one poll,
     we will estimate it as the median of the standard deviations estimated for states
     with more than one poll:'
+  id: totrans-284
   prefs: []
   type: TYPE_NORMAL
+  zh: 由于我们无法估计只有一个民调的州的方差，我们将它估计为拥有多个民调的州的方差的中间值：
 - en: '[PRE38]'
+  id: totrans-285
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE38]'
 - en: 'To make probabilistic arguments, we will use a Monte Carlo simulation. For
     each state, we apply the Bayesian approach to generate an election day \(d\).
     We could construct the priors for each state based on recent history. However,
@@ -1351,33 +1992,48 @@
     of 2% or \(\tau=0.02\). For now, we will assume, incorrectly, that the poll results
     from each state are independent. The code for the Bayesian calculation under these
     assumptions looks like this:'
+  id: totrans-286
   prefs: []
   type: TYPE_NORMAL
+  zh: 为了进行概率论证，我们将使用蒙特卡洛模拟。对于每个州，我们应用贝叶斯方法来生成一个选举日 \(d\)。我们可以根据最近的历史为每个州构建先验。然而，为了简化，我们为每个州分配一个先验，假设我们对将要发生的事情一无所知。由于从选举年到选举年，一个特定州的选举结果变化不大，我们将分配一个2%或
+    \(\tau=0.02\) 的标准差。目前，我们将错误地假设每个州的民调结果是独立的。在这些假设下，贝叶斯计算的代码如下：
 - en: '[PRE39]'
+  id: totrans-287
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE39]'
 - en: 'The estimates based on posterior do move the estimates towards 0, although
     the states with many polls are influenced less. This is expected as the more poll
     data we collect, the more we trust those results:'
+  id: totrans-288
   prefs: []
   type: TYPE_NORMAL
+  zh: 基于后验的估计确实将估计值推向了0，尽管拥有许多民调的州的受影响较小。这是预期的，因为收集到的民调数据越多，我们越信任这些结果：
 - en: '![](../Images/08ef0a201ffdf4f99090fee5c45c230e.png)'
+  id: totrans-289
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/08ef0a201ffdf4f99090fee5c45c230e.png)'
 - en: 'Now we repeat this 10,000 times and generate an outcome from the posterior.
     In each iteration, we keep track of the total number of electoral votes for Clinton.
     Remember that Trump gets 270 minus the votes for Clinton. Also note that the reason
     we add 7 in the code is to account for Rhode Island and D.C.:'
+  id: totrans-290
   prefs: []
   type: TYPE_NORMAL
+  zh: 现在，我们重复10,000次，并从后验中生成一个结果。在每次迭代中，我们跟踪克林顿的总选举人票数。记住，特朗普得到的是270减去克林顿的票数。另外，代码中加7的原因是为了考虑到罗德岛和哥伦比亚特区：
 - en: '[PRE40]'
+  id: totrans-291
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE40]'
 - en: This model gives Clinton over 99% chance of winning. A similar prediction was
     made by the Princeton Election Consortium. We now know it was quite off. What
     happened?
+  id: totrans-292
   prefs: []
   type: TYPE_NORMAL
+  zh: 这个模型给克林顿超过99%的获胜机会。普林斯顿选举联盟也做出了类似的预测。我们现在知道这个预测相当不准确。发生了什么？
 - en: 'The model above ignores the general bias and assumes the results from different
     states are independent. After the election, we realized that the general bias
     in 2016 was not that big: it was between 1 and 2%. But because the election was
@@ -1389,178 +2045,269 @@
     way, reported a closer result. We can simulate the results now with a bias term.
     For the state level, the general bias can be larger so we set it at \(\sigma_b
     = 0.03\):'
+  id: totrans-293
   prefs: []
   type: TYPE_NORMAL
+  zh: '上面的模型忽略了总体偏差并假设不同州的结果是独立的。选举之后，我们意识到2016年的总体偏差并不大：它在1%到2%之间。但是，由于几个大州的选举非常接近，并且这些州有大量的民调，忽视总体偏差的调查员大大低估了标准误差。使用我们引入的符号，他们假设标准误差是
+    \(\sqrt{\sigma^2/N}\)，对于大的N来说，这比更准确的估计 \(\sqrt{\sigma^2/N + \sigma_b^2}\) 要小得多。FiveThirtyEight以一种相当复杂的方式模拟了总体偏差，并报告了一个更接近的结果。我们现在可以用偏差项来模拟结果。对于州级，总体偏差可能更大，所以我们将其设置为
+    \(\sigma_b = 0.03\):'
 - en: '[PRE41]'
+  id: totrans-294
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE41]'
 - en: This gives us a much more sensible estimate. Looking at the outcomes of the
     simulation, we see how the bias term adds variability to the final results.
+  id: totrans-295
   prefs: []
   type: TYPE_NORMAL
+  zh: 这给我们提供了一个更合理的估计。查看模拟的结果，我们看到偏差项是如何给最终结果增加可变性的。
 - en: '![](../Images/2decf0c04386469e242facdcb551cbea.png)'
+  id: totrans-296
   prefs: []
   type: TYPE_IMG
+  zh: '![图片](../Images/2decf0c04386469e242facdcb551cbea.png)'
 - en: FiveThirtyEight includes many other features we do not include here. One is
     that they model variability with distributions that have high probabilities for
     extreme events compared to the normal. One way we could do this is by changing
     the distribution used in the simulation from a normal distribution to a t-distribution.
     FiveThirtyEight predicted a probability of 71%.
+  id: totrans-297
   prefs: []
   type: TYPE_NORMAL
+  zh: FiveThirtyEight包括许多我们没有在这里包括的其他特征。其中一个是他们使用具有相对于正态分布高极端事件概率的分布来模拟可变性。我们可以通过将模拟中使用的分布从正态分布更改为t分布来实现这一点。FiveThirtyEight预测了71%的概率。
 - en: 16.8.5 Forecasting
+  id: totrans-298
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 16.8.5 预测
 - en: 'Forecasters like to make predictions well before the election. The predictions
     are adapted as new polls come out. However, an important question forecasters
     must ask is: how informative are polls taken several weeks before the election
     about the actual election? Here we study the variability of poll results across
     time.'
+  id: totrans-299
   prefs: []
   type: TYPE_NORMAL
+  zh: 预测师喜欢在选举前很久就做出预测。随着新民调的发布，预测会相应调整。然而，预测师必须问的一个重要问题是：选举前几周进行的民调对实际选举有多大的信息量？在这里，我们研究民调结果随时间的变化。
 - en: 'To make sure the variability we observe is not due to pollster effects, let’s
     study data from one pollster:'
+  id: totrans-300
   prefs: []
   type: TYPE_NORMAL
+  zh: 为了确保我们观察到的可变性不是由于调查员效应造成的，让我们研究一位调查员的数据：
 - en: '[PRE42]'
+  id: totrans-301
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE42]'
 - en: 'Since there is no pollster effect, then perhaps the theoretical standard error
     matches the data-derived standard deviation. We compute both here:'
+  id: totrans-302
   prefs: []
   type: TYPE_NORMAL
+  zh: 由于没有调查员效应，因此理论标准误差可能与数据得出的标准差相匹配。我们在这里计算了两者：
 - en: '[PRE43]'
+  id: totrans-303
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE43]'
 - en: 'But the empirical standard deviation is higher than the highest possible theoretical
     estimate. Furthermore, the spread data does not look normal as the theory would
     predict:'
+  id: totrans-304
   prefs: []
   type: TYPE_NORMAL
+  zh: 但经验标准差高于可能的理论估计的最高值。此外，扩散数据看起来并不像理论所预测的那样呈正态分布：
 - en: '![](../Images/2648a6bdb6f2ee4fa3624f59adf7dfe1.png)'
+  id: totrans-305
   prefs: []
   type: TYPE_IMG
+  zh: '![图片](../Images/2648a6bdb6f2ee4fa3624f59adf7dfe1.png)'
 - en: 'The models we have described include pollster-to-pollster variability and sampling
     error. But this plot is for one pollster and the variability we see is certainly
     not explained by sampling error. Where is the extra variability coming from? The
     following plots make a strong case that it comes from time fluctuations not accounted
     for by the theory that assumes \(p\) is fixed:'
+  id: totrans-306
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们所描述的模型包括调查员之间的可变性和抽样误差。但这个图是针对一位调查员的，我们看到的可变性肯定不是由抽样误差解释的。额外的可变性是从哪里来的？以下图表强烈表明，它来自理论假设
+    \(p\) 是固定值时未考虑的时间波动：
 - en: '[PRE44]'
+  id: totrans-307
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE44]'
 - en: '![](../Images/17120ddefaa198e5ddc1b8b1c10304bd.png)'
+  id: totrans-308
   prefs: []
   type: TYPE_IMG
+  zh: '![图片](../Images/17120ddefaa198e5ddc1b8b1c10304bd.png)'
 - en: 'Some of the peaks and valleys we see coincide with events such as the party
     conventions, which tend to give the candidate a boost. We can see the peaks and
     valleys are consistent across several pollsters:'
+  id: totrans-309
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们看到的一些峰值和谷值与党派大会等事件相吻合，这些事件往往会给候选人带来提升。我们可以看到峰值和谷值在几位调查员之间是一致的：
 - en: '[PRE45]'
+  id: totrans-310
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE45]'
 - en: '![](../Images/913ef406b35a111e7059791de1c91810.png)'
+  id: totrans-311
   prefs: []
   type: TYPE_IMG
+  zh: '![图片](../Images/913ef406b35a111e7059791de1c91810.png)'
 - en: 'This implies that, if we are going to forecast, our model must include a term
     to accounts for the time effect. We need to write a model including a bias term
     for time:'
+  id: totrans-312
   prefs: []
   type: TYPE_NORMAL
+  zh: 这意味着，如果我们打算进行预测，我们的模型必须包括一个考虑时间效应的项。我们需要编写一个包括时间偏差项的模型：
 - en: \[ Y_{i,j,t} = d + b + h_j + b_t + \varepsilon_{i,j,t} \]
+  id: totrans-313
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ Y_{i,j,t} = d + b + h_j + b_t + \varepsilon_{i,j,t} \]
 - en: The standard deviation of \(b_t\) would depend on \(t\) since the closer we
     get to election day, the closer to 0 this bias term should be.
+  id: totrans-314
   prefs: []
   type: TYPE_NORMAL
+  zh: \(b_t\) 的标准差将取决于 \(t\)，因为随着我们越来越接近选举日，这个偏差项应该越来越接近 0。
 - en: 'Pollsters also try to estimate trends from these data and incorporate these
     into their predictions. We can model the time trend with a function \(f(t)\) and
     rewrite the model like this: The blue lines in the plots above:'
+  id: totrans-315
   prefs: []
   type: TYPE_NORMAL
+  zh: 民意调查员还试图从这些数据中估计趋势，并将这些趋势纳入他们的预测中。我们可以用函数 \(f(t)\) 来模拟时间趋势，并将模型重写如下：上图中的蓝色线条：
 - en: \[ Y_{i,j,t} = d + b + h_j + b_t + f(t) + \varepsilon_{i,jt,} \]
+  id: totrans-316
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ Y_{i,j,t} = d + b + h_j + b_t + f(t) + \varepsilon_{i,jt,} \]
 - en: 'We usually see the estimated \(f(t)\) not for the difference, but for the actual
     percentages for each candidate like this:'
+  id: totrans-317
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们通常看到估计的 \(f(t)\) 不是差异，而是每个候选人的实际百分比，如下所示：
 - en: '![](../Images/18224296e9e4a331a7a7d3da4af34168.png)'
+  id: totrans-318
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/18224296e9e4a331a7a7d3da4af34168.png)'
 - en: Once a model like the one above is selected, we can use historical and present
     data to estimate all the necessary parameters to make predictions. There is a
     variety of methods for estimating trends \(f(t)\) which we discuss in the Machine
     Learning part.
+  id: totrans-319
   prefs: []
   type: TYPE_NORMAL
+  zh: 一旦选择了像上面的模型，我们可以使用历史和现有数据来估计所有必要的参数以进行预测。有各种估计趋势 \(f(t)\) 的方法，我们将在机器学习部分讨论。
 - en: 16.9 Exercises
+  id: totrans-320
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 16.9 练习
 - en: '1\. Create this table:'
+  id: totrans-321
   prefs: []
   type: TYPE_NORMAL
+  zh: 1. 创建此表格：
 - en: '[PRE46]'
+  id: totrans-322
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE46]'
 - en: Now for each poll use the CLT to create a 95% confidence interval for the spread
     reported by each poll. Call the resulting object cis with columns lower and upper
     for the limits of the confidence intervals. Use the `select` function to keep
     the columns `state, startdate, end date, pollster, grade, spread, lower, upper`.
+  id: totrans-323
   prefs: []
   type: TYPE_NORMAL
+  zh: 现在，对于每个民意调查，使用 CLT 为每个民意调查报告的范围创建一个 95% 的置信区间。将结果对象命名为 `cis`，包含置信区间的下限和上限的列。使用
+    `select` 函数保留 `state, startdate, end date, pollster, grade, spread, lower, upper`
+    列。
 - en: '2\. You can add the final result to the `cis` table you just created using
     the `right_join` function like this:'
+  id: totrans-324
   prefs: []
   type: TYPE_NORMAL
+  zh: 2. 您可以使用 `right_join` 函数将最终结果添加到您刚刚创建的 `cis` 表格中，如下所示：
 - en: '[PRE47]'
+  id: totrans-325
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE47]'
 - en: Now determine how often the 95% confidence interval includes the actual result.
+  id: totrans-326
   prefs: []
   type: TYPE_NORMAL
+  zh: 现在确定 95% 置信区间包含实际结果有多频繁。
 - en: '3\. Repeat this, but show the proportion of hits for each pollster. Show only
     pollsters with more than 5 polls and order them from best to worst. Show the number
     of polls conducted by each pollster and the FiveThirtyEight grade of each pollster.
     Hint: use `n=n(), grade = grade[1]` in the call to summarize.'
+  id: totrans-327
   prefs: []
   type: TYPE_NORMAL
+  zh: 3. 重复此操作，但显示每个民意调查员的命中比例。仅显示拥有超过 5 个民意调查的民意调查员，并按从好到坏排序。显示每个民意调查员进行的民意调查数量以及每个民意调查员的
+    FiveThirtyEight 等级。提示：在调用 summarize 时使用 `n=n(), grade = grade[1]`。
 - en: 4\. Repeat exercise 3, but instead of pollster, stratify by state. Note that
     here we can’t show grades.
+  id: totrans-328
   prefs: []
   type: TYPE_NORMAL
+  zh: 4. 重复练习 3，但按州而不是民意调查员进行分层。请注意，在这里我们无法显示等级。
 - en: 5\. Make a barplot based on the result of exercise 4\. Use `coord_flip`.
+  id: totrans-329
   prefs: []
   type: TYPE_NORMAL
+  zh: 5. 基于练习 4 的结果制作一个条形图。使用 `coord_flip`。
 - en: '6\. Add two columns to the `cis` table by computing, for each poll, the difference
     between the predicted spread and the actual spread, and define a column `hit`
     that is true if the signs are the same. Hint: use the function `sign`. Call the
     object `resids`.'
+  id: totrans-330
   prefs: []
   type: TYPE_NORMAL
+  zh: 6. 通过计算每个民意调查预测范围与实际范围的差异，向 `cis` 表格中添加两列，并定义一个名为 `hit` 的列，如果符号相同则为真。提示：使用 `sign`
+    函数。将对象命名为 `resids`。
 - en: 7\. Create a plot like in exercise 5, but for the proportion of times the sign
     of the spread agreed.
+  id: totrans-331
   prefs: []
   type: TYPE_NORMAL
+  zh: 7. 创建一个类似于练习 5 的图表，但用于表示趋势符号一致的次数比例。
 - en: 8\. In exercise 7, we see that for most states the polls had it right 100% of
     the time. For only 9 states did the polls miss more than 25% of the time. In particular,
     notice that in Wisconsin every single poll got it wrong. In Pennsylvania and Michigan
     more than 90% of the polls had the signs wrong. Make a histogram of the errors.
     What is the median of these errors?
+  id: totrans-332
   prefs: []
   type: TYPE_NORMAL
+  zh: 8. 在练习 7 中，我们看到对于大多数州，民意调查在 100% 的时间里都是正确的。只有 9 个州的民意调查有超过 25% 的时间出错。特别是，请注意在威斯康星州，每个民意调查都错了。在宾夕法尼亚州和密歇根州，超过
+    90% 的民意调查的符号是错误的。制作一个误差的直方图。这些误差的中位数是多少？
 - en: 9\. We see that at the state level, the median error was 3% in favor of Clinton.
     The distribution is not centered at 0, but at 0.03\. This is the general bias
     we described in the section above. Create a boxplot to see if the bias was general
     to all states or it affected some states differently. Use `filter(grade %in% c("A+","A","A-","B+")
     | is.na(grade)))` to only include pollsters with high grades.
+  id: totrans-333
   prefs: []
   type: TYPE_NORMAL
+  zh: 9. 我们看到在州一级，平均误差为3%，有利于克林顿。分布不是以0为中心，而是在0.03。这是我们上面描述的一般偏差。创建一个箱线图来查看这种偏差是否对所有州都普遍存在，或者它是否影响了某些州的差异。使用`filter(grade
+    %in% c("A+","A","A-","B+") | is.na(grade)))`仅包括评分高的民意调查者。
 - en: '10\. Some of these states only have a few polls. Repeat exercise 9, but only
     include states with 5 good polls or more. Hint: use `group_by`, `filter` then
     `ungroup`. You will see that the West (Washington, New Mexico, California) underestimated
@@ -1570,79 +2317,120 @@
     may now be modeling correlation between similar states and estimating this correlation
     from historical data. To learn more about this, you can learn about random effects
     and mixed models.'
+  id: totrans-334
   prefs: []
   type: TYPE_NORMAL
+  zh: 10. 其中一些州只有少数几个民意调查。重复练习9，但只包括有5个或更多良好民意调查的州。提示：使用 `group_by`，`filter` 然后取消
+    `ungroup`。你会发现西部（华盛顿、新墨西哥州、加利福尼亚州）低估了希拉里的表现，而中西部（密歇根州、宾夕法尼亚州、威斯康星州、俄亥俄州、密苏里州）高估了它。在我们的模拟中，我们没有模拟这种行为，因为我们添加了普遍偏差，而不是地区偏差。请注意，一些民意调查者现在可能正在模拟类似州之间的相关性，并从历史数据中估计这种相关性。要了解更多关于这方面的信息，你可以学习随机效应和混合模型。
 - en: 16.10 The t-distribution
+  id: totrans-335
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 16.10 t 分布
 - en: Above we made use of the CLT with a sample size of 15\. Because we are estimating
     a second parameters \(\sigma\), further variability is introduced into our confidence
     interval which results in intervals that are too small. For very large sample
     sizes this extra variability is negligible, but, in general, for values smaller
     than 30 we need to be cautious about using the CLT.
+  id: totrans-336
   prefs: []
   type: TYPE_NORMAL
+  zh: 在上面，我们使用了样本大小为15的 CLT。因为我们正在估计第二个参数 \(\sigma\)，这引入了更多的变异性，导致置信区间过小。对于非常大的样本大小，这种额外的变异性可以忽略不计，但一般来说，对于小于30的值，我们需要谨慎使用
+    CLT。
 - en: However, if the data in the urn is known to follow a normal distribution, then
     we actually have mathematical theory that tells us how much bigger we need to
     make the intervals to account for the estimation of \(\sigma\). Using this theory,
     we can construct confidence intervals for any \(N\). But again, this works only
     if **the data in the urn is known to follow a normal distribution**. So for the
     0, 1 data of our previous urn model, this theory definitely does not apply.
+  id: totrans-337
   prefs: []
   type: TYPE_NORMAL
+  zh: 然而，如果已知抽屉中的数据遵循正态分布，那么我们实际上有数学理论告诉我们需要将区间扩大多少来考虑 \(\sigma\) 的估计。使用这种理论，我们可以为任何
+    \(N\) 构造置信区间。但同样，这仅在 **抽屉中的数据已知遵循正态分布** 时才有效。因此，对于我们之前抽屉模型的0，1数据，这个理论肯定不适用。
 - en: The statistic on which confidence intervals for \(d\) are based is
+  id: totrans-338
   prefs: []
   type: TYPE_NORMAL
+  zh: 基于置信区间 \(d\) 的统计量是
 - en: \[ Z = \frac{\bar{X} - d}{\sigma/\sqrt{N}} \]
+  id: totrans-339
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ Z = \frac{\bar{X} - d}{\sigma/\sqrt{N}} \]
 - en: 'CLT tells us that Z is approximately normally distributed with expected value
     0 and standard error 1\. But in practice we don’t know \(\sigma\) so we use:'
+  id: totrans-340
   prefs: []
   type: TYPE_NORMAL
+  zh: CLT 告诉我们 Z 大约服从正态分布，期望值为0，标准误差为1。但在实践中，我们不知道 \(\sigma\)，所以我们使用：
 - en: '\[ t = \frac{\bar{X} - d}{s/\sqrt{N}} \] This is referred to a *t-statistic*.
     By substituting \(\sigma\) with \(s\) we introduce some variability. The theory
     tells us that \(t\) follows a *student t-distribution* with \(N-1\) *degrees of
     freedom*. The degrees of freedom is a parameter that controls the variability
     via fatter tails:'
+  id: totrans-341
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ t = \frac{\bar{X} - d}{s/\sqrt{N}} \] 这被称为 *t 统计量*。通过将 \(\sigma\) 替换为 \(s\)，我们引入了一些变异性。理论告诉我们
+    \(t\) 遵循具有 \(N-1\) 个 *自由度* 的 *学生 t 分布*。自由度是一个参数，通过更宽的尾部来控制变异性：
 - en: '![](../Images/23bd2748fd6b99ee3e7d5997380ad665.png)'
+  id: totrans-342
   prefs: []
   type: TYPE_IMG
+  zh: '![图片](../Images/23bd2748fd6b99ee3e7d5997380ad665.png)'
 - en: If we are willing to assume the pollster effect data is normally distributed,
     based on the sample data \(X_1, \dots, X_N\),
+  id: totrans-343
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果我们愿意假设民意调查者的效应数据是正态分布的，基于样本数据 \(X_1, \dots, X_N\)，
 - en: '[PRE48]'
+  id: totrans-344
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE48]'
 - en: '![](../Images/a167cbef290df08ce7e65aefe3e43257.png) then \(t\) follows a t-distribution
     with \(N-1\) degrees of freedom. So perhaps a better confidence interval for \(d\)
     is:'
+  id: totrans-345
   prefs: []
   type: TYPE_NORMAL
+  zh: '![图片](../Images/a167cbef290df08ce7e65aefe3e43257.png) 则 \(t\) 遵循具有 \(N-1\)
+    个自由度的 t 分布。因此，对于 \(d\) 的置信区间来说，可能更好的是：'
 - en: '[PRE49]'
+  id: totrans-346
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE49]'
 - en: A bit larger than the one using normal is
+  id: totrans-347
   prefs: []
   type: TYPE_NORMAL
+  zh: 比使用正态分布的大一点
 - en: '[PRE50]'
+  id: totrans-348
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE50]'
 - en: is bigger than
+  id: totrans-349
   prefs: []
   type: TYPE_NORMAL
+  zh: 大于
 - en: '[PRE51]'
+  id: totrans-350
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE51]'
 - en: Using the t-distribution and the t-statistic is the basis for *t-tests*, widely
     used approach for computing p-values. To learn more about t-tests, you can consult
     any statistics textbook.
+  id: totrans-351
   prefs: []
   type: TYPE_NORMAL
+  zh: 使用t分布和t统计量是**t检验**的基础，**t检验**是一种广泛用于计算p值的常用方法。要了解更多关于t检验的信息，您可以查阅任何统计学教材。
 - en: The t-distribution can also be used to model errors in bigger deviations that
     are more likely than with the normal distribution, as seen in the densities we
     previously saw. Fivethirtyeight uses the t-distribution to generate errors that
@@ -1650,31 +2438,47 @@
     the average of six polls was 7% in favor of Clinton with a standard deviation
     of 1%, but Trump won by 0.7%. Even after taking into account the overall bias,
     this 7.7% residual is more in line with t-distributed data than the normal distribution.
+  id: totrans-352
   prefs: []
   type: TYPE_NORMAL
+  zh: t分布还可以用来模拟比正态分布更可能出现的较大偏差的错误，正如我们在之前看到的密度图中所见。Fivethirtyeight使用t分布来生成更准确地模拟选举数据中偏差的错误。例如，在威斯康星州，六个民调的平均值为克林顿领先7%，标准差为1%，但特朗普以0.7%的微弱优势获胜。即使考虑到整体偏差，这个7.7%的残差与t分布数据比正态分布数据更吻合。
 - en: '[PRE52]'
+  id: totrans-353
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE52]'
 - en: '* * *'
+  id: totrans-354
   prefs: []
   type: TYPE_NORMAL
+  zh: '* * *'
 - en: '[https://www.youtube.com/watch?v=TbKkjm-gheY](https://www.youtube.com/watch?v=TbKkjm-gheY)[↩︎](models.html#fnref55)'
+  id: totrans-355
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[https://www.youtube.com/watch?v=TbKkjm-gheY](https://www.youtube.com/watch?v=TbKkjm-gheY)[↩︎](models.html#fnref55)'
 - en: '[https://www.nytimes.com/interactive/2016/upshot/presidential-polls-forecast.html](https://www.nytimes.com/interactive/2016/upshot/presidential-polls-forecast.html)[↩︎](models.html#fnref56)'
+  id: totrans-356
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[https://www.nytimes.com/interactive/2016/upshot/presidential-polls-forecast.html](https://www.nytimes.com/interactive/2016/upshot/presidential-polls-forecast.html)[↩︎](models.html#fnref56)'
 - en: '[https://fivethirtyeight.com/features/trump-is-just-a-normal-polling-error-behind-clinton/](https://fivethirtyeight.com/features/trump-is-just-a-normal-polling-error-behind-clinton/)[↩︎](models.html#fnref57)'
+  id: totrans-357
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[https://fivethirtyeight.com/features/trump-is-just-a-normal-polling-error-behind-clinton/](https://fivethirtyeight.com/features/trump-is-just-a-normal-polling-error-behind-clinton/)[↩︎](models.html#fnref57)'
 - en: '[https://projects.fivethirtyeight.com/2016-election-forecast/](https://projects.fivethirtyeight.com/2016-election-forecast/)[↩︎](models.html#fnref58)'
+  id: totrans-358
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[https://projects.fivethirtyeight.com/2016-election-forecast/](https://projects.fivethirtyeight.com/2016-election-forecast/)[↩︎](models.html#fnref58)'
 - en: '[https://en.wikipedia.org/wiki/Sally_Clark](https://en.wikipedia.org/wiki/Sally_Clark)[↩︎](models.html#fnref59)'
+  id: totrans-359
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[https://en.wikipedia.org/wiki/Sally_Clark](https://en.wikipedia.org/wiki/Sally_Clark)[↩︎](models.html#fnref59)'

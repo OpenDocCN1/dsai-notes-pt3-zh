@@ -1,11 +1,15 @@
 - en: Chapter 6 data.table
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 第6章 data.table
 - en: 原文：[https://rafalab.dfci.harvard.edu/dsbook/data.html](https://rafalab.dfci.harvard.edu/dsbook/data.html)
+  id: totrans-1
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 原文：[https://rafalab.dfci.harvard.edu/dsbook/data.html](https://rafalab.dfci.harvard.edu/dsbook/data.html)
 - en: In this book, we use tidyverse packages to illustrate because beginners find
     the code readable and this permits us to focus on data analysis and statistical
     concepts. However, there are other approaches to wrangling and analyzing data
@@ -13,378 +17,588 @@
     package, for example, is one of the most popular and we therefore provide a very
     quick introduction in this chapter . There are several online resources, including
     this introduction[^(15)](#fn15) for those wanting to learn more.
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: 在这本书中，我们使用tidyverse包来展示，因为初学者发现代码易于阅读，这使我们能够专注于数据分析与统计概念。然而，在R中处理和分析数据还有其他方法，它们更快，更擅长处理大型对象。例如，**data.table**包是最受欢迎的之一，因此我们在本章中提供了一个非常快速的介绍。对于那些想要了解更多的人来说，有几个在线资源，包括这个介绍[^(15)](#fn15)。
 - en: 6.1 Manipulating data tables
+  id: totrans-3
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 6.1 操作数据表
 - en: '`data.table` is a separate package that needs to be installed. Once installed,
     we then need to load it:'
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: '`data.table`是一个独立的包，需要安装。一旦安装，我们然后需要加载它：'
 - en: '[PRE0]'
+  id: totrans-5
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: 'We will provide example code showing the **data.table** approaches to **dplyr**’s
     `mutate`, `filter`, `select`, `group_by`, and `summarize` shown in Chapter [4](tidyverse.html#tidyverse).
     As in that chapter, we will use the `murders` dataset:'
+  id: totrans-6
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们将提供示例代码，展示**data.table**对第[4](tidyverse.html#tidyverse)章中展示的**dplyr**的`mutate`、`filter`、`select`、`group_by`和`summarize`方法的处理。与该章节一样，我们将使用`murders`数据集：
 - en: 'The first step when using **data.table** is to convert the data frame into
     a `data.table` object using the `setDT` function:'
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: 使用**data.table**的第一步是将数据框转换为`data.table`对象，使用`setDT`函数：
 - en: '[PRE1]'
+  id: totrans-8
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: Without this initial step, most of the approaches shown below will not work.
+  id: totrans-9
   prefs: []
   type: TYPE_NORMAL
+  zh: 没有这个初始步骤，下面展示的大多数方法将不会工作。
 - en: 6.1.1 Selecting
+  id: totrans-10
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 6.1.1 选择
 - en: 'Selecting with **data.table** is done in a similar way to subsetting matrices.
     While with **dplyr** we write:'
+  id: totrans-11
   prefs: []
   type: TYPE_NORMAL
+  zh: 使用**data.table**进行选择的方式与子集矩阵类似。当使用**dplyr**时，我们这样写：
 - en: '[PRE2]'
+  id: totrans-12
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: 'In **data.table**, we use notation similar to what is used with matrices:'
+  id: totrans-13
   prefs: []
   type: TYPE_NORMAL
+  zh: 在**data.table**中，我们使用与矩阵中使用的类似记法：
 - en: '[PRE3]'
+  id: totrans-14
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: 'We can also use the `.()` **data.table** notation to alert R that variables
     inside the parenthesis are column names, not objects in the R environment. So
     the above can also be written like this:'
+  id: totrans-15
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们还可以使用`.()` **data.table**记法来提醒R，括号内的变量是列名，而不是R环境中的对象。因此，上述内容也可以这样写：
 - en: '[PRE4]'
+  id: totrans-16
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE4]'
 - en: 6.1.2 Adding a column or changing columns
+  id: totrans-17
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 6.1.2 添加列或更改列
 - en: 'We learned to use the **dplyr** `mutate` function with this example:'
+  id: totrans-18
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们通过这个例子学习了如何使用**dplyr**的`mutate`函数：
 - en: '[PRE5]'
+  id: totrans-19
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE5]'
 - en: '**data.table** uses an approach that avoids a new assignment (update by reference).
     This can help with large datasets that take up most of your computer’s memory.
     The **data.table** :=` function permits us to do this:'
+  id: totrans-20
   prefs: []
   type: TYPE_NORMAL
+  zh: '**data.table**采用一种避免新赋值（通过引用更新）的方法。这有助于处理占用你电脑大部分内存的大型数据集。**data.table** :=`函数使我们能够这样做：'
 - en: '[PRE6]'
+  id: totrans-21
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE6]'
 - en: This adds a new column, `rate`, to the table. Notice that, as in **dplyr**,
     we used `total` and `population` without quotes.
+  id: totrans-22
   prefs: []
   type: TYPE_NORMAL
+  zh: 这向表中添加了一个新的列，`rate`。注意，与**dplyr**一样，我们使用了`total`和`population`而没有引号。
 - en: 'We can see that the new column is added:'
+  id: totrans-23
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们可以看到新列已被添加：
 - en: '[PRE7]'
+  id: totrans-24
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE7]'
 - en: 'To define new multiple columns, we can use the `:=` function with multiple
     arguments:'
+  id: totrans-25
   prefs: []
   type: TYPE_NORMAL
+  zh: 要定义新的多个列，我们可以使用带有多个参数的`:=`函数：
 - en: '[PRE8]'
+  id: totrans-26
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE8]'
 - en: '6.1.3 Technical detail: reference versus copy'
+  id: totrans-27
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 6.1.3 技术细节：引用与复制
 - en: 'The **data.table** package is designed to avoid wasting memory. So if you make
     a copy of a table, like this:'
+  id: totrans-28
   prefs: []
   type: TYPE_NORMAL
+  zh: '**data.table**包旨在避免浪费内存。因此，如果你复制了一个表，如下所示：'
 - en: '[PRE9]'
+  id: totrans-29
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE9]'
 - en: '`y` is actually referencing `x`, it is not an new opject: it’s just another
     name for `x`. Until you change `y`, a new object will not be made. However, the
     `:=` function changes *by reference* so if you change `x`, a new object is not
     made and `y` continues to be just another name for `x`:'
+  id: totrans-30
   prefs: []
   type: TYPE_NORMAL
+  zh: '`y`实际上引用了`x`，它不是一个新对象：它只是`x`的另一个名称。直到你更改`y`，不会创建新对象。然而，`:=`函数通过引用进行更改，所以如果你更改`x`，不会创建新对象，`y`继续只是`x`的另一个名称：'
 - en: '[PRE10]'
+  id: totrans-31
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE10]'
 - en: 'You can also change `x` like this:'
+  id: totrans-32
   prefs: []
   type: TYPE_NORMAL
+  zh: 你也可以这样更改`x`：
 - en: '[PRE11]'
+  id: totrans-33
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE11]'
 - en: 'To avoid this, you can use the `copy` function which forces the creation of
     an actual copy:'
+  id: totrans-34
   prefs: []
   type: TYPE_NORMAL
+  zh: 为了避免这种情况，你可以使用`copy`函数，该函数强制创建一个实际的副本：
 - en: '[PRE12]'
+  id: totrans-35
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE12]'
 - en: 6.1.4 Subsetting
+  id: totrans-36
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 6.1.4 子集
 - en: 'With **dplyr**, we filtered like this:'
+  id: totrans-37
   prefs: []
   type: TYPE_NORMAL
+  zh: 使用**dplyr**，我们这样过滤：
 - en: '[PRE13]'
+  id: totrans-38
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE13]'
 - en: 'With **data.table**, we again use an approach similar to subsetting matrices,
     except **data.table** knows that `rate` refers to a column name and not an object
     in the R environment:'
+  id: totrans-39
   prefs: []
   type: TYPE_NORMAL
+  zh: 使用 **data.table**，我们再次使用与子集矩阵类似的方法，但 **data.table** 知道 `rate` 指的是列名，而不是 R 环境中的对象：
 - en: '[PRE14]'
+  id: totrans-40
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE14]'
 - en: Notice that we can combine the filter and select into one succint command. Here
     are the state names and rates for those with rates below 0.7.
+  id: totrans-41
   prefs: []
   type: TYPE_NORMAL
+  zh: 注意，我们可以将筛选和选择合并为一个简洁的命令。以下是那些比率低于 0.7 的州的名字和比率。
 - en: '[PRE15]'
+  id: totrans-42
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE15]'
 - en: 'Compare to the **dplyr** approach:'
+  id: totrans-43
   prefs: []
   type: TYPE_NORMAL
+  zh: 与 **dplyr** 方法比较：
 - en: '[PRE16]'
+  id: totrans-44
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE16]'
 - en: 6.2 Exercises
+  id: totrans-45
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 6.2 练习
 - en: '1\. Load the **data.table** package and the murders dataset and convert it
     to `data.table` object:'
+  id: totrans-46
   prefs: []
   type: TYPE_NORMAL
+  zh: 1. 加载 **data.table** 包和谋杀数据集，并将其转换为 `data.table` 对象：
 - en: '[PRE17]'
+  id: totrans-47
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE17]'
 - en: 'Remember you can add columns like this:'
+  id: totrans-48
   prefs: []
   type: TYPE_NORMAL
+  zh: 记住，你可以这样添加列：
 - en: '[PRE18]'
+  id: totrans-49
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE18]'
 - en: Add a murders column named `rate` with the per 100,000 murder rate as in the
     example code above.
+  id: totrans-50
   prefs: []
   type: TYPE_NORMAL
+  zh: 添加一个名为 `rate` 的谋杀率列，其每 10 万人的谋杀率如上面的示例代码所示。
 - en: 2\. Add a column `rank` containing the rank, from highest to lowest murder rate.
+  id: totrans-51
   prefs: []
   type: TYPE_NORMAL
+  zh: 2. 添加一个包含排名的列 `rank`，从最高到最低的谋杀率。
 - en: '3\. If we want to only show the states and population sizes, we can use:'
+  id: totrans-52
   prefs: []
   type: TYPE_NORMAL
+  zh: 3. 如果我们只想显示州和人口规模，我们可以使用：
 - en: '[PRE19]'
+  id: totrans-53
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE19]'
 - en: Show the state names and abbreviations in `murders`.
+  id: totrans-54
   prefs: []
   type: TYPE_NORMAL
+  zh: 在 `murders` 中显示州名和缩写。
 - en: '4\. You can show just the New York row like this:'
+  id: totrans-55
   prefs: []
   type: TYPE_NORMAL
+  zh: 4. 你可以这样显示纽约的行：
 - en: '[PRE20]'
+  id: totrans-56
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE20]'
 - en: You can use other logical vectors to filter rows.
+  id: totrans-57
   prefs: []
   type: TYPE_NORMAL
+  zh: 你可以使用其他逻辑向量进行筛选。
 - en: Show the top 5 states with the highest murder rates. After we add murder rate
     and rank, do not change the murders dataset, just show the result. Remember that
     you can filter based on the `rank` column.
+  id: totrans-58
   prefs: []
   type: TYPE_NORMAL
+  zh: 显示谋杀率最高的前 5 个州。在我们添加谋杀率和排名后，不要更改谋杀数据集，只显示结果。记住，你可以根据 `rank` 列进行筛选。
 - en: '5\. We can remove rows using the `!=` operator. For example, to remove Florida,
     we would do this:'
+  id: totrans-59
   prefs: []
   type: TYPE_NORMAL
+  zh: 5. 我们可以使用 `!=` 运算符来删除行。例如，要删除佛罗里达州，我们会这样做：
 - en: '[PRE21]'
+  id: totrans-60
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE21]'
 - en: Create a new data frame called `no_south` that removes states from the South
     region. How many states are in this category? You can use the function `nrow`
     for this.
+  id: totrans-61
   prefs: []
   type: TYPE_NORMAL
+  zh: 创建一个新的数据框 `no_south`，移除南部地区的州。这个类别中有多少个州？你可以使用 `nrow` 函数来做这件事。
 - en: '6\. We can also use `%in%` to filter. You can therefore see the data from New
     York and Texas as follows:'
+  id: totrans-62
   prefs: []
   type: TYPE_NORMAL
+  zh: 6. 我们还可以使用 `%in%` 进行筛选。因此，你可以这样查看纽约和德克萨斯州的数据：
 - en: '[PRE22]'
+  id: totrans-63
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE22]'
 - en: Create a new data frame called `murders_nw` with only the states from the Northeast
     and the West. How many states are in this category?
+  id: totrans-64
   prefs: []
   type: TYPE_NORMAL
+  zh: 创建一个新的数据框 `murders_nw`，只包含东北部和西部的州。这个类别中有多少个州？
 - en: 7\. Suppose you want to live in the Northeast or West **and** want the murder
     rate to be less than 1\. We want to see the data for the states satisfying these
     options. Note that you can use logical operators with `filter`. Here is an example
     in which we filter to keep only small states in the Northeast region.
+  id: totrans-65
   prefs: []
   type: TYPE_NORMAL
+  zh: 7. 假设你想要住在东北部或西部 **并且** 谋杀率要低于 1。我们想查看满足这些条件的州的数据。注意，你可以使用逻辑运算符与 `filter` 一起使用。这里有一个例子，我们筛选出东北地区的中小州。
 - en: '[PRE23]'
+  id: totrans-66
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE23]'
 - en: 'Make sure `murders` has been defined with `rate` and `rank` and still has all
     states. Create a table called `my_states` that contains rows for states satisfying
     both the conditions: they are in the Northeast or West and the murder rate is
     less than 1\. Show only the state name, the rate, and the rank.'
+  id: totrans-67
   prefs: []
   type: TYPE_NORMAL
+  zh: 确保谋杀数据集已经定义了 `rate` 和 `rank`，并且仍然包含所有州。创建一个名为 `my_states` 的表格，其中包含满足以下两个条件的行：它们位于东北部或西部，谋杀率低于
+    1。只显示州名、率和排名。
 - en: 6.3 Summarizing data
+  id: totrans-68
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 6.3 汇总数据
 - en: 'As an example, we will use the `heights` dataset:'
+  id: totrans-69
   prefs: []
   type: TYPE_NORMAL
+  zh: 作为例子，我们将使用 `heights` 数据集：
 - en: '[PRE24]'
+  id: totrans-70
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE24]'
 - en: 'In **data.table**, we can call functions inside `.()` and they will be applied
     to rows. So the equivalent of:'
+  id: totrans-71
   prefs: []
   type: TYPE_NORMAL
+  zh: 在 **data.table** 中，我们可以在 `.()` 内部调用函数，并且它们将应用于行。所以相当于：
 - en: '[PRE25]'
+  id: totrans-72
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE25]'
 - en: 'in **dplyr** is the following:'
+  id: totrans-73
   prefs: []
   type: TYPE_NORMAL
+  zh: 在 **dplyr** 中如下所示：
 - en: '[PRE26]'
+  id: totrans-74
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE26]'
 - en: 'Note that this permits a compact way of subsetting and then summarizing. Instead
     of:'
+  id: totrans-75
   prefs: []
   type: TYPE_NORMAL
+  zh: 注意，这允许一种紧凑的子集和汇总方式。而不是：
 - en: '[PRE27]'
+  id: totrans-76
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE27]'
 - en: 'we can write:'
+  id: totrans-77
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们可以写成：
 - en: '[PRE28]'
+  id: totrans-78
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE28]'
 - en: 6.3.1 Multiple summaries
+  id: totrans-79
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 6.3.1 多个汇总
 - en: 'In chapter [4](tidyverse.html#tidyverse), we defined the function:'
+  id: totrans-80
   prefs: []
   type: TYPE_NORMAL
+  zh: 在第 [4](tidyverse.html#tidyverse) 章，我们定义了函数：
 - en: '[PRE29]'
+  id: totrans-81
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE29]'
 - en: 'Similar to **dplyr**, we can call this function within `.()` to obtain the
     three number summary:'
+  id: totrans-82
   prefs: []
   type: TYPE_NORMAL
+  zh: 与 **dplyr** 类似，我们可以在 `.()` 内部调用此函数以获得三个数字摘要：
 - en: '[PRE30]'
+  id: totrans-83
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE30]'
 - en: 6.3.2 Group then summarize
+  id: totrans-84
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 6.3.2 分组后汇总
 - en: 'The `group_by` followed by `summarize` in **dplyr** is performed in one line
     in **data.table**. We simply add the `by` argument to split the data into groups
     based on the values in categorical variable:'
+  id: totrans-85
   prefs: []
   type: TYPE_NORMAL
+  zh: '**data.table** 中的 `group_by` 后跟 `summarize` 与 **dplyr** 中的单行执行相同。我们只需将 `by`
+    参数添加到根据分类变量的值拆分数据：'
 - en: '[PRE31]'
+  id: totrans-86
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE31]'
 - en: 6.4 Sorting data frames
+  id: totrans-87
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 6.4 排序数据框
 - en: 'We can order rows using the same approach we use for filter. Here are the states
     ordered by murder rate:'
+  id: totrans-88
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们可以使用与过滤相同的方法来排序行。以下是按谋杀率排序的状态：
 - en: '[PRE32]'
+  id: totrans-89
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE32]'
 - en: 'N To sort the table in descending order, we can order by the negative of `population`
     or use the `decreasing` argument:'
+  id: totrans-90
   prefs: []
   type: TYPE_NORMAL
+  zh: N 要按降序排序表格，我们可以按`population`的负值排序或使用`decreasing`参数：
 - en: '[PRE33]'
+  id: totrans-91
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE33]'
 - en: 6.4.1 Nested sorting
+  id: totrans-92
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 6.4.1 嵌套排序
 - en: Similarly, we can perform nested ordering by including more than one variable
     in order
+  id: totrans-93
   prefs: []
   type: TYPE_NORMAL
+  zh: 同样，我们可以通过包含多个变量来执行嵌套排序
 - en: '[PRE34]'
+  id: totrans-94
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE34]'
 - en: '``'
+  id: totrans-95
   prefs: []
   type: TYPE_NORMAL
+  zh: '``'
 - en: 6.5 Exercises
+  id: totrans-96
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 6.5 练习
 - en: For these exercises, we will be using the **NHANES** data.
+  id: totrans-97
   prefs: []
   type: TYPE_NORMAL
+  zh: 对于这些练习，我们将使用**NHANES**数据。
 - en: '[PRE35]'
+  id: totrans-98
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE35]'
 - en: 1\. We will provide some basic facts about blood pressure. First let’s select
     a group to set the standard. We will use 20-to-29-year-old females. `AgeDecade`
     is a categorical variable with these ages. Note that the category is coded like
     ” 20-29”, with a space in front! Use the **data.table** package to compute the
     average and standard deviation of systolic blood pressure as saved in the `BPSysAve`
     variable. Save it to a variable called `ref`.
+  id: totrans-99
   prefs: []
   type: TYPE_NORMAL
+  zh: 1. 我们将提供一些关于血压的基本事实。首先，让我们选择一个组来设定标准。我们将使用20至29岁的女性。`AgeDecade`是一个具有这些年龄的类别变量。注意，类别编码为“20-29”，前面有一个空格！使用**data.table**包计算存储在`BPSysAve`变量中的平均收缩压和标准差。将其保存到名为`ref`的变量中。
 - en: 2\. Report the min and max values for the same group.
+  id: totrans-100
   prefs: []
   type: TYPE_NORMAL
+  zh: 2. 报告同一组的最大和最小值。
 - en: 3\. Compute the average and standard deviation for females, but for each age
     group separately rather than a selected decade as in question 1\. Note that the
     age groups are defined by `AgeDecade`.
+  id: totrans-101
   prefs: []
   type: TYPE_NORMAL
+  zh: 3. 计算女性的平均和标准差，但针对每个年龄组分别计算，而不是像问题1中那样选择一个十年为一个组。注意，年龄组由`AgeDecade`定义。
 - en: 4\. Repeat exercise 3 for males.
+  id: totrans-102
   prefs: []
   type: TYPE_NORMAL
+  zh: 4. 为男性重复练习3。
 - en: 5\. For males between the ages of 40-49, compare systolic blood pressure across
     race as reported in the `Race1` variable. Order the resulting table from lowest
     to highest average systolic blood pressure.
+  id: totrans-103
   prefs: []
   type: TYPE_NORMAL
+  zh: 5. 对于40-49岁的男性，比较在`Race1`变量中报告的种族间的收缩压。将结果表按最低到最高的平均收缩压排序。
 - en: '* * *'
+  id: totrans-104
   prefs: []
   type: TYPE_NORMAL
+  zh: '* * *'
 - en: '[https://cran.r-project.org/web/packages/data.table/vignettes/datatable-intro.html](https://cran.r-project.org/web/packages/data.table/vignettes/datatable-intro.html)[↩︎](data.html#fnref15)'
+  id: totrans-105
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[https://cran.r-project.org/web/packages/data.table/vignettes/datatable-intro.html](https://cran.r-project.org/web/packages/data.table/vignettes/datatable-intro.html)[↩︎](data.html#fnref15)'

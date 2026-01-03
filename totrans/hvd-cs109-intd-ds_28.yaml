@@ -1,19 +1,25 @@
 - en: Chapter 18 Linear models
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 第18章 线性模型
 - en: 原文：[https://rafalab.dfci.harvard.edu/dsbook/linear-models.html](https://rafalab.dfci.harvard.edu/dsbook/linear-models.html)
+  id: totrans-1
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 原文：[https://rafalab.dfci.harvard.edu/dsbook/linear-models.html](https://rafalab.dfci.harvard.edu/dsbook/linear-models.html)
 - en: Since Galton’s original development, regression has become one of the most widely
     used tools in data science. One reason has to do with the fact that regression
     permits us to find relationships between two variables taking into account the
     effects of other variables that affect both. This has been particularly popular
     in fields where randomized experiments are hard to run, such as economics and
     epidemiology.
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: 自从高尔顿最初的发展以来，回归已成为数据科学中最广泛使用的工具之一。一个原因与回归允许我们找到两个变量之间关系的事实有关，同时考虑到影响这两个变量的其他变量的影响。这在随机实验难以进行的领域尤其受欢迎，如经济学和流行病学。
 - en: When we are not able to randomly assign each individual to a treatment or control
     group, confounding is particularly prevalent. For example, consider estimating
     the effect of eating fast foods on life expectancy using data collected from a
@@ -23,24 +29,32 @@
     So how do we account for confounding in practice? In this chapter we learn how
     linear models can help with such situations and can be used to describe how one
     or more variables affect an outcome variable.
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: 当我们无法随机将每个人分配到治疗组或对照组时，混杂因素尤为普遍。例如，考虑使用从某个司法管辖区随机抽取的人群数据来估计食用快餐对预期寿命的影响。快餐消费者更有可能吸烟、饮酒，并且收入较低。因此，一个简单的回归模型可能会导致对快餐负面健康影响的过度估计。那么我们在实践中如何解释混杂因素呢？在本章中，我们将学习线性模型如何帮助处理这种情况，并可以用来描述一个或多个变量如何影响结果变量。
 - en: '18.1 Case study: Moneyball'
+  id: totrans-4
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 18.1 案例研究：点球成金
 - en: '*Moneyball: The Art of Winning an Unfair Game* is a book by Michael Lewis about
     the Oakland Athletics (A’s) baseball team and its general manager, the person
     tasked with building the team, Billy Beane.'
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: 《*点球成金：不公平游戏的胜利艺术*》是迈克尔·刘易斯关于奥克兰运动家队（A's）及其总经理，负责组建球队的比利·比恩的一本书。
 - en: Traditionally, baseball teams use *scouts* to help them decide what players
     to hire. These scouts evaluate players by observing them perform. Scouts tend
     to favor athletic players with observable physical abilities. For this reason,
     scouts tend to agree on who the best players are and, as a result, these players
     tend to be in high demand. This in turn drives up their salaries.
+  id: totrans-6
   prefs: []
   type: TYPE_NORMAL
+  zh: 传统的棒球队使用*球探*来帮助他们决定聘请哪些球员。球探通过观察球员的表现来评估球员。球探倾向于青睐具有可观察的身体能力的运动员型球员。因此，球探倾向于同意谁是最佳球员，结果，这些球员往往需求旺盛。这反过来又推高了他们的薪水。
 - en: From 1989 to 1991, the A’s had one of the highest payrolls in baseball. They
     were able to buy the best players and, during that time, they were one of the
     best teams. However, in 1995 the A’s team owner changed and the new management
@@ -52,21 +66,29 @@
     players that data predicted would help the team win. Today, this strategy has
     been adapted by most baseball teams. As we will see, regression plays a large
     role in this approach.
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: 从1989年到1991年，运动家队拥有棒球界最高的薪资。他们能够购买最好的球员，在那段时间里，他们是最好的球队之一。然而，到了1995年，运动家队的所有者发生了变化，新管理层大幅削减了预算，使得当时的总经理桑迪·阿尔德森拥有了棒球界最低的薪资。他再也负担不起最抢手的球员。阿尔德森开始使用统计方法来寻找市场中的低效之处。阿尔德森是比利·比恩的导师，比恩在1998年接替了他的位置，并完全接受了数据科学，而不是像球探那样，作为寻找低成本球员的方法，这些球员的数据预测将有助于球队获胜。如今，这种策略已被大多数棒球队采用。正如我们将看到的，回归在这一方法中扮演了重要角色。
 - en: 'As motivation for this chapter, we will pretend it is 2002 and try to build
     a baseball team with a limited budget, just like the A’s had to do. To appreciate
     what you are up against, note that in 2002 the Yankees’ payroll of $125,928,583
     more than tripled the Oakland A’s $39,679,746:'
+  id: totrans-8
   prefs: []
   type: TYPE_NORMAL
+  zh: 为了本章的动机，我们将假装是2002年，并尝试用有限的预算组建一支棒球队，就像运动家队当时所做的那样。为了理解你所面临的挑战，请注意，在2002年，洋基队的薪资1,259,285,833美元是奥克兰运动家队39,679,746美元的三倍多：
 - en: '![](../Images/0ef1ed834b7e0f0fdfb6fe9c0b48236e.png)'
+  id: totrans-9
   prefs: []
   type: TYPE_IMG
+  zh: '![图片](../Images/0ef1ed834b7e0f0fdfb6fe9c0b48236e.png)'
 - en: 18.1.1 Sabermetrics
+  id: totrans-10
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 18.1.1 Sabermetrics
 - en: Statistics have been used in baseball since its beginnings. The dataset we will
     be using, included in the **Lahman** library, goes back to the 19th century. For
     example, a summary statistics we will describe soon, the *batting average*, has
@@ -77,8 +99,10 @@
     were widely used in baseball, data analysis per se was not. These statistics were
     arbitrarily decided on without much thought as to whether they actually predicted
     anything or were related to helping a team win.
+  id: totrans-11
   prefs: []
   type: TYPE_NORMAL
+  zh: 统计学自棒球诞生以来就被使用。我们将使用的数据库，包含在**Lahman**库中，可以追溯到19世纪。例如，我们很快将要描述的总结统计量，*打击率*，几十年来一直被用来总结击球手的成功。其他统计数据[^(61)](#fn61)如本垒打（HR）、跑垒得分（RBI）和盗垒（SB）在报纸体育版的游戏摘要中都有报道，高数值的球员会得到奖励。尽管像这样的总结统计数据在棒球中得到了广泛应用，但数据分析本身并没有。这些统计数据是任意决定的，没有充分考虑它们是否真的预测了任何事情，或者是否与帮助球队获胜有关。
 - en: This changed with Bill James[^(62)](#fn62). In the late 1970s, this aspiring
     writer and baseball fan started publishing articles describing more in-depth analysis
     of baseball data. He named the approach of using data to predict what outcomes
@@ -86,8 +110,11 @@
     made sabermetrics the center of his baseball operation, Bill James’ work was mostly
     ignored by the baseball world. Currently, sabermetrics popularity is no longer
     limited to just baseball; other sports have started to use this approach as well.
+  id: totrans-12
   prefs: []
   type: TYPE_NORMAL
+  zh: 这种情况随着比尔·詹姆斯[^(62)](#fn62)的出现而改变。在20世纪70年代末，这位有抱负的作家和棒球爱好者开始发表文章，描述对棒球数据的更深入分析。他将使用数据来预测哪些结果最能预测一支球队是否会获胜的方法命名为
+    *sabermetrics*[^(63)](#fn63)。直到比利·比恩将sabermetrics作为其棒球运营的核心，比尔·詹姆斯的工作在棒球界基本上被忽视。目前，sabermetrics的流行度已不再仅限于棒球；其他运动也开始采用这种方法。
 - en: 'In this chapter, to simplify the exercise, we will focus on scoring runs and
     ignore the two other important aspects of the game: pitching and fielding. We
     will see how regression analysis can help develop strategies to build a competitive
@@ -95,18 +122,24 @@
     separate data analyses. In the first, we determine which recorded player-specific
     statistics predict runs. In the second, we examine if players were undervalued
     based on what our first analysis predicts.'
+  id: totrans-13
   prefs: []
   type: TYPE_NORMAL
+  zh: 在本章中，为了简化练习，我们将专注于得分，而忽略游戏中的另外两个重要方面：投球和防守。我们将看到回归分析如何帮助制定策略，以在预算有限的情况下构建一支具有竞争力的棒球队。这种方法可以分为两个独立的数据分析。在第一个分析中，我们确定哪些记录的球员特定统计数据可以预测得分。在第二个分析中，我们检查根据第一个分析预测的结果，球员是否被低估。
 - en: 18.1.2 Baseball basics
+  id: totrans-14
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 18.1.2 Baseball basics
 - en: To see how regression will help us find undervalued players, we actually don’t
     need to understand all the details about the game of baseball, which has over
     100 rules. Here, we distill the sport to the basic knowledge one needs to know
     how to effectively attack the data science problem.
+  id: totrans-15
   prefs: []
   type: TYPE_NORMAL
+  zh: 要了解回归分析如何帮助我们找到被低估的球员，我们实际上不需要了解棒球游戏的所有细节，该游戏有超过100条规则。在这里，我们将运动简化为需要了解的基本知识，以便有效地解决数据科学问题。
 - en: 'The goal of a baseball game is to score more runs (points) than the other team.
     Each team has 9 batters that have an opportunity to hit a ball with a bat in a
     predetermined order. After the 9th batter has had their turn, the first batter
@@ -117,8 +150,10 @@
     doesn’t (success) and can run around the bases, and potentially score a run (reach
     all 4 bases). Each team gets nine tries, referred to as *innings*, to score runs
     and each inning ends after three outs (three failures).'
+  id: totrans-16
   prefs: []
   type: TYPE_NORMAL
+  zh: 棒球比赛的目标是比对方得分更多（得分）。每个队有9名击球手，他们有机会用棒击球，顺序是预先确定的。当第9名击球手完成他们的回合后，第一个击球手再次击球，然后是第二个，以此类推。每次击球手有机会击球，我们称之为击球机会（PA）。在每次PA中，对方队的*投手*投球，击球手尝试击球。PA以二元结果结束：击球手要么做出一个*出局*（失败）并返回板凳，要么不做出局（成功）并可以在垒上跑动，并可能得分（到达所有4个垒）。每个队有九次尝试得分的机会，这被称为*局*，每局在三次出局（三次失败）后结束。
 - en: 'Here is a video showing a success: [https://www.youtube.com/watch?v=HL-XjMCPfio](https://www.youtube.com/watch?v=HL-XjMCPfio).
     And here is one showing a failure: [https://www.youtube.com/watch?v=NeloljCx-1g](https://www.youtube.com/watch?v=NeloljCx-1g).
     In these videos, we see how luck is involved in the process. When at bat, the
@@ -128,66 +163,93 @@
     it, resulting in an out. In contrast, sometimes the batter hits the ball softly,
     but it lands just in the right place. The fact that there is chance involved hints
     at why probability models will be involved.'
+  id: totrans-17
   prefs: []
   type: TYPE_NORMAL
+  zh: 这里有一个展示成功的视频：[https://www.youtube.com/watch?v=HL-XjMCPfio](https://www.youtube.com/watch?v=HL-XjMCPfio)。还有一个展示失败的视频：[https://www.youtube.com/watch?v=NeloljCx-1g](https://www.youtube.com/watch?v=NeloljCx-1g)。在这些视频中，我们看到运气在过程中是如何起作用的。当击球时，击球手希望把球击得很远。如果击球手击得足够远，那就是全垒打，这是最好的结果，因为击球手至少能得一分。但有时，由于偶然，击球手把球击得很远，但防守者接住了它，结果出局。相反，有时击球手把球击得很轻，但它恰好落在了正确的位置。运气涉及的事实暗示了为什么概率模型会涉及其中。
 - en: Now there are several ways to succeed. Understanding this distinction will be
     important for our analysis. When the batter hits the ball, the batter wants to
     pass as many *bases* as possible. There are four bases with the fourth one called
     *home plate*. Home plate is where batters start by trying to hit, so the bases
     form a cycle.
+  id: totrans-18
   prefs: []
   type: TYPE_NORMAL
+  zh: 现在成功的方式有几种。理解这种区别对于我们分析来说很重要。当击球手击中球时，击球手希望尽可能多地通过*垒*。这里有四个垒，第四个被称为*本垒*。本垒是击球手开始尝试击球的地方，因此垒形成了一个循环。
 - en: '![](../Images/8dc4d698e3eaf44748b912a889261cb0.png) (Courtesy of Cburnett[^(64)](#fn64).
     CC BY-SA 3.0 license[^(65)](#fn65).)'
+  id: totrans-19
   prefs: []
   type: TYPE_IMG
+  zh: '![图片](../Images/8dc4d698e3eaf44748b912a889261cb0.png)（由Cburnett[^(64)](#fn64)提供。CC
+    BY-SA 3.0许可[^(65)](#fn65)。）'
 - en: A batter who *goes around the bases* and arrives home, scores a run.
+  id: totrans-20
   prefs: []
   type: TYPE_NORMAL
+  zh: 一个绕过垒并回到家的击球手得一分。
 - en: 'We are simplifying a bit, but there are five ways a batter can succeed, that
     is, not make an out:'
+  id: totrans-21
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们简化了一些，但击球手有五种成功的方式，也就是说，不做出出局：
 - en: Bases on balls (BB) - the pitcher fails to throw the ball through a predefined
     area considered to be hittable (the strikezone), so the batter is permitted to
     go to first base.
+  id: totrans-22
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 保送 (BB) - 投手未能将球投过被认为可击的区域（击球区），因此击球手被允许走到一垒。
 - en: Single - Batter hits the ball and gets to first base.
+  id: totrans-23
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 单打 - 击球手击中球并到达一垒。
 - en: Double (2B) - Batter hits the ball and gets to second base.
+  id: totrans-24
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 双垒打 (2B) - 击球手击中球并到达二垒。
 - en: Triple (3B) - Batter hits the ball and gets to third base.
+  id: totrans-25
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 三垒打 (3B) - 击球手击中球并到达三垒。
 - en: Home Run (HR) - Batter hits the ball and goes all the way home and scores a
     run.
+  id: totrans-26
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 全垒打 (HR) - 击球手击中球并一直跑回家得分。
 - en: 'Here is an example of a HR: [https://www.youtube.com/watch?v=xYxSZJ9GZ-w](https://www.youtube.com/watch?v=xYxSZJ9GZ-w).
     If a batter gets to a base, the batter still has a chance of getting home and
     scoring a run if the next batter hits successfully. While the batter is *on base*,
     the batter can also try to steal a base (SB). If a batter runs fast enough, the
     batter can try to go from one base to the next without the other team tagging
     the runner. [Here] is an example of a stolen base: [https://www.youtube.com/watch?v=JSE5kfxkzfk](https://www.youtube.com/watch?v=JSE5kfxkzfk).'
+  id: totrans-27
   prefs: []
   type: TYPE_NORMAL
+  zh: 这里是一个本垒打的例子：[https://www.youtube.com/watch?v=xYxSZJ9GZ-w](https://www.youtube.com/watch?v=xYxSZJ9GZ-w)。如果一个击球手到达垒包，如果下一个击球手击球成功，那么击球手仍然有机会跑回家得分。当击球手在**垒上**时，击球手还可以尝试盗垒（SB）。如果一个击球手跑得足够快，他可以尝试在不被对方球队触球的情况下从一垒跑到下一垒。[这里]是一个盗垒的例子：[https://www.youtube.com/watch?v=JSE5kfxkzfk](https://www.youtube.com/watch?v=JSE5kfxkzfk)。
 - en: All these events are kept track of during the season and are available to us
     through the **Lahman** package. Now we will start discussing how data analysis
     can help us decide how to use these statistics to evaluate players.
+  id: totrans-28
   prefs: []
   type: TYPE_NORMAL
+  zh: 所有这些事件都在赛季期间被记录下来，并且可以通过**Lahman**包供我们使用。现在我们将开始讨论数据分析如何帮助我们决定如何使用这些统计数据来评估球员。
 - en: 18.1.3 No awards for BB
+  id: totrans-29
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 18.1.3 对BB没有奖项
 - en: Historically, the *batting average* has been considered the most important offensive
     statistic. To define this average, we define a *hit* (H) and an *at bat* (AB).
     Singles, doubles, triples, and home runs are hits. The fifth way to be successful,
@@ -196,12 +258,16 @@
     main measure of a success rate. Today this success rate ranges from 20% to 38%.
     We refer to the batting average in thousands so, for example, if your success
     rate is 28%, we call it *batting 280*.
+  id: totrans-30
   prefs: []
   type: TYPE_NORMAL
+  zh: 从历史上看，**击球率**被认为是最重要的进攻统计数据。为了定义这个平均数，我们定义了一个**安打**（H）和一个**击球**（AB）。单打、双打、三打和本垒打都是安打。第五种成功方式，BB，不是安打。AB是你得到安打或出局次数的数量；BB被排除在外。击球率仅仅是H/AB，被认为是成功率的衡量标准。今天这个成功率在20%到38%之间。我们用千分比来表示击球率，例如，如果你的成功率是28%，我们称之为**击球280**。
 - en: '![](../Images/f6f7fedb47a8f4aa3fe27163b5bc5bb3.png) (Picture courtesy of Keith
     Allison[^(66)](#fn66). CC BY-SA 2.0 license[^(67)](#fn67).)'
+  id: totrans-31
   prefs: []
   type: TYPE_IMG
+  zh: '![图片由Keith Allison提供[^(66)](#fn66)。CC BY-SA 2.0许可[^(67)](#fn67)。](../Images/f6f7fedb47a8f4aa3fe27163b5bc5bb3.png)'
 - en: One of Bill James’ first important insights is that the batting average ignores
     BB, but a BB is a success. He proposed we use the *on base percentage* (OBP) instead
     of batting average. He defined OBP as (H+BB)/(AB+BB) which is simply the proportion
@@ -215,12 +281,16 @@
     high totals of SB also made more outs as they did not always succeed. Does a player
     with high SB total help produce runs? Can we use data science to determine if
     it’s better to pay for players with high BB or SB?
+  id: totrans-32
   prefs: []
   type: TYPE_NORMAL
+  zh: 比尔·詹姆斯的第一个重要洞察之一是，击球率忽略了BB，但BB是一种成功。他提议我们使用**上垒率**（OBP）而不是击球率。他定义OBP为（H+BB）/（AB+BB），这仅仅是未导致出局击球的击球次数比例，是一个非常直观的度量。他指出，如果一个球员比平均水平获得更多的BB，但击球率不高，那么这个球员可能不会被认可。但这个球员不是在帮助产生得分吗？没有奖项授予BB最多的球员。然而，坏习惯很难改掉，棒球并没有立即将OBP作为重要的统计数据。相反，总盗垒数被认为很重要，并且授予了盗垒最多的球员奖项[^(68)](#fn68)。但那些总盗垒数高的球员也犯了更多的出局，因为他们并不总是成功。一个总盗垒数高的球员是否有助于产生得分？我们能否使用数据科学来确定是否应该为BB或SB高的球员付费？
 - en: 18.1.4 Base on balls or stolen bases?
+  id: totrans-33
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 18.1.4 保送或盗垒？
 - en: One of the challenges in this analysis is that it is not obvious how to determine
     if a player produces runs because so much depends on his teammates. We do keep
     track of the number of runs scored by a player. However, remember that if a player
@@ -228,124 +298,187 @@
     But these runs don’t necessarily happen if we hire player X but not his HR hitting
     teammate. However, we can examine team-level statistics. How do teams with many
     SB compare to teams with few? How about BB? We have data! Let’s examine some.
+  id: totrans-34
   prefs: []
   type: TYPE_NORMAL
+  zh: 在这个分析中，一个挑战是并不明显如何确定一名球员是否产出得分，因为这很大程度上取决于他的队友。我们确实记录了球员得分的数量。然而，记住如果一名球员X在击出很多全垒打的球员之前击球，球员X将得分很多。但如果我们雇佣球员X而不雇佣他的全垒打击球队友，这些得分并不一定会发生。然而，我们可以考察团队层面的统计数据。拥有很多盗垒的球队与拥有很少盗垒的球队相比如何？BB呢？我们有数据！让我们来考察一些。
 - en: 'Let’s start with an obvious one: HRs. Do teams that hit more home runs score
     more runs? We examine data from 1962, the first year all teams played 162 games
     (like today) instead of 154, to 2001, the year before the year for which we will
     construct a team. The visualization of choice when exploring the relationship
     between two variables, such as HRs and wins, is a scatterplot:'
+  id: totrans-35
   prefs: []
   type: TYPE_NORMAL
+  zh: 让我们从显而易见的一个开始：全垒打数。击出更多全垒打的球队得分更多吗？我们考察了从1962年（所有球队首次进行162场比赛，就像今天一样，而不是154场）到2001年的数据，这一年我们将构建一支球队。在探索两个变量之间的关系时，例如全垒打数和胜利数，散点图是首选的可视化方式：
 - en: '[PRE0]'
+  id: totrans-36
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: '![](../Images/31ab46a45fa55554e57e6874dfe053e1.png)'
+  id: totrans-37
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/31ab46a45fa55554e57e6874dfe053e1.png)'
 - en: 'The plot shows a strong association: teams with more HRs tend to score more
     runs. Now let’s examine the relationship between stolen bases and runs:'
+  id: totrans-38
   prefs: []
   type: TYPE_NORMAL
+  zh: 图表显示了一个强烈的关联：全垒打数更多的球队往往得分更多。现在让我们考察盗垒数和得分之间的关系：
 - en: '[PRE1]'
+  id: totrans-39
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: '![](../Images/88bf204546e5815908967b8a9ecf0394.png)'
+  id: totrans-40
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/88bf204546e5815908967b8a9ecf0394.png)'
 - en: 'Here the relationship is not as clear. Finally, let’s examine the relationship
     between BB and runs:'
+  id: totrans-41
   prefs: []
   type: TYPE_NORMAL
+  zh: 这里关系并不那么明显。最后，让我们考察BB和得分之间的关系：
 - en: '[PRE2]'
+  id: totrans-42
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: '![](../Images/fc78b3e7291dc2ae2ad95a13c3fc32ac.png)'
+  id: totrans-43
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/fc78b3e7291dc2ae2ad95a13c3fc32ac.png)'
 - en: Here again we see a clear association. But does this mean that increasing a
     team’s BBs **causes** an increase in runs? One of the most important lessons you
     learn in this book is that **association is not causation.**
+  id: totrans-44
   prefs: []
   type: TYPE_NORMAL
+  zh: 这里我们又看到了一个明显的关联。但这是否意味着增加一个球队的BB数**导致**得分增加？在这本书中你学到的最重要的教训之一是**关联并不等同于因果关系**。
 - en: 'In fact, it looks like BBs and HRs are also associated:'
+  id: totrans-45
   prefs: []
   type: TYPE_NORMAL
+  zh: 实际上，看起来BB和HR也是相关的：
 - en: '[PRE3]'
+  id: totrans-46
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: '![](../Images/da070b5ec298c7756e8282075c8d248e.png)'
+  id: totrans-47
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/da070b5ec298c7756e8282075c8d248e.png)'
 - en: We know that HRs cause runs because, as the name “home run” implies, when a
     player hits a HR they are guaranteed at least one run. Could it be that HRs also
     cause BB and this makes it appear as if BB cause runs? When this happens we say
     there is *confounding*, an important concept we will learn more about throughout
     this chapter.
+  id: totrans-48
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们知道全垒打会导致得分，因为正如“全垒打”这个名字所暗示的，当一名球员击出全垒打时，他们至少能保证得到一分。这可能是因为全垒打也会导致BB，这使得BB看起来像导致得分的原因？当这种情况发生时，我们称之为**混杂**，这是我们将在本章中了解更多的重要概念。
 - en: Linear regression will help us parse all this out and quantify the associations.
     This will then help us determine what players to recruit. Specifically, we will
     try to predict things like how many more runs will a team score if we increase
     the number of BBs, but keep the HRs fixed? Regression will help us answer questions
     like this one.
+  id: totrans-49
   prefs: []
   type: TYPE_NORMAL
+  zh: 线性回归将帮助我们解析所有这些，并量化关联。这将帮助我们确定要招募哪些球员。具体来说，我们将尝试预测如果我们增加BB的数量，但保持HR不变，球队将多得分多少？回归将帮助我们回答这样的问题。
 - en: 18.1.5 Regression applied to baseball statistics
+  id: totrans-50
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 18.1.5 将回归应用于棒球统计数据
 - en: Can we use regression with these data? First, notice that the HR and Run data
     appear to be bivariate normal. We save the plot into the object `p` as we will
     use it again later.
+  id: totrans-51
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们可以使用回归分析这些数据吗？首先，注意HR和得分数据看起来是双变量正态分布的。我们将这个图表保存到对象`p`中，因为我们稍后会再次使用它。
 - en: '[PRE4]'
+  id: totrans-52
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE4]'
 - en: '![](../Images/caeff824c1417a376deb31d52e9c9c34.png)'
+  id: totrans-53
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/caeff824c1417a376deb31d52e9c9c34.png)'
 - en: 'The qq-plots confirm that the normal approximation is useful here:'
+  id: totrans-54
   prefs: []
   type: TYPE_NORMAL
+  zh: qq图证实了正态近似在这里是有用的：
 - en: '[PRE5]'
+  id: totrans-55
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE5]'
 - en: '![](../Images/e0f151f96c90be8b48bcfb10e564ecd6.png)'
+  id: totrans-56
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/e0f151f96c90be8b48bcfb10e564ecd6.png)'
 - en: 'Now we are ready to use linear regression to predict the number of runs a team
     will score if we know how many home runs the team hits. All we need to do is compute
     the five summary statistics:'
+  id: totrans-57
   prefs: []
   type: TYPE_NORMAL
+  zh: 现在我们已经准备好使用线性回归来预测如果知道一支球队击出的全垒打数，该球队将得分多少。我们只需要计算五个总结统计量：
 - en: '[PRE6]'
+  id: totrans-58
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE6]'
 - en: 'and use the formulas given above to create the regression lines:'
+  id: totrans-59
   prefs: []
   type: TYPE_NORMAL
+  zh: 并使用上面给出的公式来创建回归线：
 - en: '[PRE7]'
+  id: totrans-60
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE7]'
 - en: '![](../Images/50887b189442ad076514663ca32288a5.png)'
+  id: totrans-61
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/50887b189442ad076514663ca32288a5.png)'
 - en: 'Soon we will learn R functions, such as `lm`, that make fitting regression
     lines much easier. Another example is the **ggplot2** function `geom_smooth` which
     computes and adds a regression line to plot along with confidence intervals, which
     we also learn about later. We use the argument `method = "lm"` which stands for
     *linear model*, the title of an upcoming section. So we can simplify the code
     above like this:'
+  id: totrans-62
   prefs: []
   type: TYPE_NORMAL
+  zh: 很快我们将学习R函数，如`lm`，这些函数使拟合回归线变得容易得多。另一个例子是**ggplot2**函数`geom_smooth`，它计算并添加回归线到图中，并附带置信区间，我们稍后也会学习。我们使用`method
+    = "lm"`参数，它代表*线性模型*，这是即将到来的章节的标题。因此，我们可以将上面的代码简化如下：
 - en: '[PRE8]'
+  id: totrans-63
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE8]'
 - en: '![](../Images/24658d1f31e11613af48975493d29975.png)'
+  id: totrans-64
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/24658d1f31e11613af48975493d29975.png)'
 - en: In the example above, the slope is 1.859\. So this tells us that teams that
     hit 1 more HR per game than the average team, score 1.859 more runs per game than
     the average team. Given that the most common final score is a difference of a
@@ -353,173 +486,259 @@
     hitters are very expensive. Because we are working on a budget, we will need to
     find some other way to increase wins. So in the next section we move our attention
     to BB.
+  id: totrans-65
   prefs: []
   type: TYPE_NORMAL
+  zh: 在上面的例子中，斜率是1.859。这告诉我们，那些每场比赛比平均球队多打一个全垒打的球队，每场比赛比平均球队多得1.859分。鉴于最常见的最终得分是相差一分，这肯定会导致胜利的大幅增加。不出所料，全垒打投手非常昂贵。因为我们正在预算限制下工作，我们需要找到其他方法来增加胜利。所以，在下一节中，我们将注意力转向三振。
 - en: 18.2 Confounding
+  id: totrans-66
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 18.2 混杂
 - en: 'Previously, we noted a strong relationship between Runs and BB. If we find
     the regression line for predicting runs from bases on balls, we a get slope of:'
+  id: totrans-67
   prefs: []
   type: TYPE_NORMAL
+  zh: 之前，我们注意到跑垒得分（Runs）和三振（BB）之间存在强烈的关联。如果我们找到从三振球数预测跑垒得分的回归线，我们得到的斜率是：
 - en: '[PRE9]'
+  id: totrans-68
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE9]'
 - en: So does this mean that if we go and hire low salary players with many BB, and
     who therefore increase the number of walks per game by 2, our team will score
     1.5 more runs per game?
+  id: totrans-69
   prefs: []
   type: TYPE_NORMAL
+  zh: 那么，这意味着如果我们去雇佣低薪但有很多三振的球员，并且因此每场比赛增加两次三振，我们的球队每场比赛将多得1.5分吗？
 - en: We are again reminded that association is not causation. The data does provide
     strong evidence that a team with two more BB per game than the average team, scores
     1.5 runs per game. But this does not mean that BB are the cause.
+  id: totrans-70
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们再次被提醒，关联并不等同于因果关系。数据确实提供了强有力的证据，表明一支每场比赛比平均球队多出两个三振球的球队，每场比赛能多得1.5分。但这并不意味着三振是原因。
 - en: 'Note that if we compute the regression line slope for singles we get:'
+  id: totrans-71
   prefs: []
   type: TYPE_NORMAL
+  zh: 注意，如果我们计算单打的回归线斜率，我们会得到：
 - en: '[PRE10]'
+  id: totrans-72
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE10]'
 - en: which is a lower value than what we obtain for BB.
+  id: totrans-73
   prefs: []
   type: TYPE_NORMAL
+  zh: 这比我们得到的三振斜率要低。
 - en: 'Also, notice that a single gets you to first base just like a BB. Those that
     know about baseball will tell you that with a single, runners on base have a better
     chance of scoring than with a BB. So how can BB be more predictive of runs? The
     reason this happen is because of confounding. Here we show the correlation between
     HR, BB, and singles:'
+  id: totrans-74
   prefs: []
   type: TYPE_NORMAL
+  zh: 注意，一个单打（single）也能让你到达一垒，就像三振一样。那些了解棒球的人会告诉你，与三振相比，有跑垒者的球队更有可能得分。那么三振如何能更好地预测得分呢？这种情况发生的原因是混杂。这里我们展示了全垒打（HR）、三振和单打之间的相关性：
 - en: '[PRE11]'
+  id: totrans-75
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE11]'
 - en: It turns out that pitchers, afraid of HRs, will sometimes avoid throwing strikes
     to HR hitters. As a result, HR hitters tend to have more BBs and a team with many
     HRs will also have more BBs. Although it may appear that BBs cause runs, it is
     actually the HRs that cause most of these runs. We say that BBs are *confounded*
     with HRs. Nonetheless, could it be that BBs still help? To find out, we somehow
     have to adjust for the HR effect. Regression can help with this as well.
+  id: totrans-76
   prefs: []
   type: TYPE_NORMAL
+  zh: 结果表明，投手害怕全垒打，有时会避免向全垒打投手投球。因此，全垒打投手往往有更多的三振，而拥有许多全垒打的球队也会有更多的三振。尽管看起来三振会导致得分，但实际上是全垒打导致了这些得分的大部分。我们说三振与全垒打是*混杂的*。尽管如此，三振是否仍然有帮助？为了找出答案，我们必须要调整全垒打的影响。回归分析也能帮助做到这一点。
 - en: 18.2.1 Understanding confounding through stratification
+  id: totrans-77
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 18.2.1 通过分层理解混杂
 - en: 'A first approach is to keep HRs fixed at a certain value and then examine the
     relationship between BB and runs. As we did when we stratified fathers by rounding
     to the closest inch, here we can stratify HR per game to the closest ten. We filter
     out the strata with few points to avoid highly variable estimates:'
+  id: totrans-78
   prefs: []
   type: TYPE_NORMAL
+  zh: 一种方法是保持全垒打在某个固定值，然后检查三振和得分之间的关系。就像我们按最接近的英寸分层父亲一样，这里我们可以按每场比赛最接近的十个全垒打分层。我们过滤掉点数很少的层次，以避免高度可变的估计：
 - en: '[PRE12]'
+  id: totrans-79
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE12]'
 - en: 'and then make a scatterplot for each strata:'
+  id: totrans-80
   prefs: []
   type: TYPE_NORMAL
+  zh: 然后为每个层次制作散点图：
 - en: '[PRE13]'
+  id: totrans-81
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE13]'
 - en: '![](../Images/19233ccb5e66a4dce055aa7029b1faf4.png)'
+  id: totrans-82
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/19233ccb5e66a4dce055aa7029b1faf4.png)'
 - en: 'Remember that the regression slope for predicting runs with BB was 0.7\. Once
     we stratify by HR, these slopes are substantially reduced:'
+  id: totrans-83
   prefs: []
   type: TYPE_NORMAL
+  zh: 记住，用 BB 预测运行的回归斜率为 0.7。一旦我们按 HR 分层，这些斜率就会显著降低：
 - en: '[PRE14]'
+  id: totrans-84
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE14]'
 - en: The slopes are reduced, but they are not 0, which indicates that BBs are helpful
     for producing runs, just not as much as previously thought. In fact, the values
     above are closer to the slope we obtained from singles, 0.45, which is more consistent
     with our intuition. Since both singles and BB get us to first base, they should
     have about the same predictive power.
+  id: totrans-85
   prefs: []
   type: TYPE_NORMAL
+  zh: 斜率降低，但它们不是 0，这表明 BBs 对产生运行是有帮助的，只是没有之前认为的那么多。事实上，上面的值更接近我们从单打中获得的斜率，0.45，这与我们的直觉更一致。由于单打和
+    BB 都能让我们到达一垒，它们应该具有大约相同的预测能力。
 - en: 'Although our understanding of the application tells us that HR cause BB but
     not the other way around, we can still check if stratifying by BB makes the effect
     of BB go down. To do this, we use the same code except that we swap HR and BBs
     to get this plot:'
+  id: totrans-86
   prefs: []
   type: TYPE_NORMAL
+  zh: 虽然我们对应用的理解告诉我们，HR 导致 BB，而不是反过来，但我们仍然可以检查按 BB 分层是否会使 BB 的效果降低。为此，我们使用相同的代码，只是将
+    HR 和 BBs 交换以获得此图：
 - en: '[PRE15]'
+  id: totrans-87
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE15]'
 - en: '![](../Images/375bf78afde6244e68912da0302461ad.png)'
+  id: totrans-88
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/375bf78afde6244e68912da0302461ad.png)'
 - en: 'In this case, the slopes do not change much from the original:'
+  id: totrans-89
   prefs: []
   type: TYPE_NORMAL
+  zh: 在这种情况下，斜率与原始值变化不大：
 - en: '[PRE16]'
+  id: totrans-90
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE16]'
 - en: They are reduced a bit, which is consistent with the fact that BB do in fact
     cause some runs.
+  id: totrans-91
   prefs: []
   type: TYPE_NORMAL
+  zh: 它们略有降低，这与 BB 实际上确实导致了一些运行的事实一致。
 - en: '[PRE17]'
+  id: totrans-92
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE17]'
 - en: Regardless, it seems that if we stratify by HR, we have bivariate distributions
     for runs versus BB. Similarly, if we stratify by BB, we have approximate bivariate
     normal distributions for HR versus runs.
+  id: totrans-93
   prefs: []
   type: TYPE_NORMAL
+  zh: 不论如何，如果我们按 HR 分层，我们就有运行与 BB 的双变量分布。同样，如果我们按 BB 分层，我们就有 HR 与运行的大致双变量正态分布。
 - en: 18.2.2 multivariable regression
+  id: totrans-94
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 18.2.2 多元回归
 - en: 'It is somewhat complex to be computing regression lines for each strata. We
     are essentially fitting models like this:'
+  id: totrans-95
   prefs: []
   type: TYPE_NORMAL
+  zh: 计算每个层的回归线有些复杂。我们实际上是在拟合这样的模型：
 - en: \[ \mbox{E}[R \mid BB = x_1, \, HR = x_2] = \beta_0 + \beta_1(x_2) x_1 + \beta_2(x_1)
     x_2 \]
+  id: totrans-96
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \mbox{E}[R \mid BB = x_1, \, HR = x_2] = \beta_0 + \beta_1(x_2) x_1 + \beta_2(x_1)
+    x_2 \]
 - en: with the slopes for \(x_1\) changing for different values of \(x_2\) and vice
     versa. But is there an easier approach?
+  id: totrans-97
   prefs: []
   type: TYPE_NORMAL
+  zh: 其中 \(x_1\) 的斜率随 \(x_2\) 的不同值而变化，反之亦然。但有没有更简单的方法？
 - en: 'If we take random variability into account, the slopes in the strata don’t
     appear to change much. If these slopes are in fact the same, this implies that
     \(\beta_1(x_2)\) and \(\beta_2(x_1)\) are constants. This in turn implies that
     the expectation of runs conditioned on HR and BB can be written like this:'
+  id: totrans-98
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果我们考虑随机变异性，层中的斜率似乎没有太大变化。如果这些斜率实际上相同，这表明 \(\beta_1(x_2)\) 和 \(\beta_2(x_1)\)
+    是常数。这反过来又意味着，在 HR 和 BB 的条件下，运行期望可以写成这样：
 - en: \[ \mbox{E}[R \mid BB = x_1, \, HR = x_2] = \beta_0 + \beta_1 x_1 + \beta_2
     x_2 \]
+  id: totrans-99
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \mbox{E}[R \mid BB = x_1, \, HR = x_2] = \beta_0 + \beta_1 x_1 + \beta_2
+    x_2 \]
 - en: This model suggests that if the number of HR is fixed at \(x_2\), we observe
     a linear relationship between runs and BB with an intercept of \(\beta_0 + \beta_2
     x_2\). Our exploratory data analysis suggested this. The model also suggests that
     as the number of HR grows, the intercept growth is linear as well and determined
     by \(\beta_1 x_1\).
+  id: totrans-100
   prefs: []
   type: TYPE_NORMAL
+  zh: 此模型表明，如果 HR 的数量固定为 \(x_2\)，我们观察到运行与 BB 之间存在线性关系，截距为 \(\beta_0 + \beta_2 x_2\)。我们的探索性数据分析也提出了这一点。该模型还表明，随着
+    HR 数量的增加，截距的增长也是线性的，并由 \(\beta_1 x_1\) 决定。
 - en: In this analysis, referred to as *multivariable regression*, you will often
     hear people say that the BB slope \(\beta_1\) is *adjusted* for the HR effect.
     If the model is correct then confounding has been accounted for. But how do we
     estimate \(\beta_1\) and \(\beta_2\) from the data? For this, we learn about linear
     models and least squares estimates.
+  id: totrans-101
   prefs: []
   type: TYPE_NORMAL
+  zh: 在这项分析中，被称为 *多元回归*，你经常会听到人们说 BB 斜率 \(\beta_1\) 是 *调整* 过的 HR 影响。如果模型是正确的，那么混杂因素已经被考虑在内。但我们如何从数据中估计
+    \(\beta_1\) 和 \(\beta_2\)？为此，我们学习了线性模型和最小二乘估计。
 - en: 18.3 Least squares estimates
+  id: totrans-102
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 18.3 最小二乘估计
 - en: We have described how if data is bivariate normal then the conditional expectations
     follow the regression line. The fact that the conditional expectation is a line
     is not an extra assumption but rather a derived result. However, in practice it
     is common to explicitly write down a model that describes the relationship between
     two or more variables using a *linear model*.
+  id: totrans-103
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们已经描述了如果数据是双变量正态的，条件期望将遵循回归线。条件期望是线性的这一事实不是一个额外的假设，而是一个推导结果。然而，在实践中，通常明确写出描述两个或更多变量之间关系的模型，使用的是
+    *线性模型*。
 - en: We note that “linear” here does not refer to lines exclusively, but rather to
     the fact that the conditional expectation is a linear combination of known quantities.
     In mathematics, when we multiply each variable by a constant and then add them
@@ -527,31 +746,47 @@
     \(3x - 4y + 5z\) is a linear combination of \(x\), \(y\), and \(z\). We can also
     add a constant so \(2 + 3x - 4y + 5z\) is also linear combination of \(x\), \(y\),
     and \(z\).
+  id: totrans-104
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们注意到，“线性”在这里并不特指直线，而是指条件期望是已知量的线性组合。在数学中，当我们把每个变量乘以一个常数然后相加时，我们说我们形成了变量的线性组合。例如，\(3x
+    - 4y + 5z\) 是 \(x\)、\(y\) 和 \(z\) 的线性组合。我们也可以添加一个常数，所以 \(2 + 3x - 4y + 5z\) 也是
+    \(x\)、\(y\) 和 \(z\) 的线性组合。
 - en: 'So \(\beta_0 + \beta_1 x_1 + \beta_2 x_2\), is a linear combination of \(x_1\)
     and \(x_2\). The simplest linear model is a constant \(\beta_0\); the second simplest
     is a line \(\beta_0 + \beta_1 x\). If we were to specify a linear model for Galton’s
     data, we would denote the \(N\) observed father heights with \(x_1, \dots, x_n\),
     then we model the \(N\) son heights we are trying to predict with:'
+  id: totrans-105
   prefs: []
   type: TYPE_NORMAL
+  zh: 因此，\(\beta_0 + \beta_1 x_1 + \beta_2 x_2\) 是 \(x_1\) 和 \(x_2\) 的线性组合。最简单的线性模型是一个常数
+    \(\beta_0\)；第二简单的模型是一条直线 \(\beta_0 + \beta_1 x\)。如果我们为高尔顿的数据指定一个线性模型，我们将用 \(x_1,
+    \dots, x_n\) 表示 \(N\) 个观察到的父亲身高，然后我们用以下方式来模拟我们试图预测的 \(N\) 个儿子身高：
 - en: \[ Y_i = \beta_0 + \beta_1 x_i + \varepsilon_i, \, i=1,\dots,N. \]
+  id: totrans-106
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ Y_i = \beta_0 + \beta_1 x_i + \varepsilon_i, \, i=1,\dots,N. \]
 - en: Here \(x_i\) is the father’s height, which is fixed (not random) due to the
     conditioning, and \(Y_i\) is the random son’s height that we want to predict.
     We further assume that \(\varepsilon_i\) are independent from each other, have
     expected value 0 and the standard deviation, call it \(\sigma\), does not depend
     on \(i\).
+  id: totrans-107
   prefs: []
   type: TYPE_NORMAL
+  zh: 在这里，\(x_i\) 是父亲的高度，由于条件限制，它是固定的（不是随机的），而 \(Y_i\) 是我们想要预测的随机儿子的高度。我们进一步假设 \(\varepsilon_i\)
+    之间相互独立，期望值为 0，标准差，称为 \(\sigma\)，不依赖于 \(i\)。
 - en: In the above model, we know the \(x_i\), but to have a useful model for prediction,
     we need \(\beta_0\) and \(\beta_1\). We estimate these from the data. Once we
     do this, we can predict son’s heights for any father’s height \(x\). We show how
     to do this in the next section.
+  id: totrans-108
   prefs: []
   type: TYPE_NORMAL
+  zh: 在上述模型中，我们知道 \(x_i\)，但要有一个有用的预测模型，我们需要 \(\beta_0\) 和 \(\beta_1\)。我们从数据中估计这些值。一旦我们这样做，我们就可以预测任何父亲身高
+    \(x\) 的儿子的身高。我们将在下一节中展示如何进行预测。
 - en: 'Note that if we further assume that the \(\varepsilon\) is normally distributed,
     then this model is exactly the same one we derived earlier by assuming bivariate
     normal data. A somewhat nuanced difference is that in the first approach we assumed
@@ -560,12 +795,17 @@
     the distribution of the \(\varepsilon\)s is not specified. Nevertheless, if your
     data is bivariate normal, the above linear model holds. If your data is not bivariate
     normal, then you will need to have other ways of justifying the model.'
+  id: totrans-109
   prefs: []
   type: TYPE_NORMAL
+  zh: 注意，如果我们进一步假设 \(\varepsilon\) 是正态分布的，那么这个模型与我们之前通过假设双变量正态数据所推导出的模型完全相同。一个细微的区别是，在第一种方法中，我们假设数据是双变量正态的，并且线性模型是推导出来的，而不是假设的。在实践中，线性模型只是假设，而不一定假设正态性：\(\varepsilon\)
+    的分布没有指定。尽管如此，如果你的数据是双变量正态的，上述线性模型仍然成立。如果你的数据不是双变量正态的，那么你需要有其他方法来证明模型的合理性。
 - en: 18.3.1 Interpreting linear models
+  id: totrans-110
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 18.3.1 解释线性模型
 - en: 'One reason linear models are popular is that they are interpretable. In the
     case of Galton’s data, we can interpret the data like this: due to inherited genes,
     the son’s height prediction grows by \(\beta_1\) for each inch we increase the
@@ -573,69 +813,105 @@
     equal height, we need the term \(\varepsilon\), which explains the remaining variability.
     This remaining variability includes the mother’s genetic effect, environmental
     factors, and other biological randomness.'
+  id: totrans-111
   prefs: []
   type: TYPE_NORMAL
+  zh: 线性模型受欢迎的一个原因是它们是可解释的。在高尔顿数据的情况下，我们可以这样解释数据：由于遗传基因，儿子的身高预测随着父亲身高 \(x\) 每增加一英寸而增加
+    \(\beta_1\)。由于不是所有身高为 \(x\) 的儿子都有相同的高度，我们需要 \(\varepsilon\) 这个项来解释剩余的变异性。这个剩余的变异性包括母亲的遗传效应、环境因素以及其他生物学上的随机性。
 - en: 'Given how we wrote the model above, the intercept \(\beta_0\) is not very interpretable
     as it is the predicted height of a son with a father with no height. Due to regression
     to the mean, the prediction will usually be a bit larger than 0\. To make the
     slope parameter more interpretable, we can rewrite the model slightly as:'
+  id: totrans-112
   prefs: []
   type: TYPE_NORMAL
+  zh: 根据我们上面写的模型，截距 \(\beta_0\) 并不是很容易解释，因为它代表了一个父亲身高为 0 的儿子的预测身高。由于回归到平均值，预测通常会比
+    0 略大。为了使斜率参数更易解释，我们可以稍微修改模型如下：
 - en: \[ Y_i = \beta_0 + \beta_1 (x_i - \bar{x}) + \varepsilon_i, \, i=1,\dots,N \]
+  id: totrans-113
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ Y_i = \beta_0 + \beta_1 (x_i - \bar{x}) + \varepsilon_i, \, i=1,\dots,N \]
 - en: with \(\bar{x} = 1/N \sum_{i=1}^N x_i\) the average of the \(x\). In this case
     \(\beta_0\) represents the height when \(x_i = \bar{x}\), which is the height
     of the son of an average father.
+  id: totrans-114
   prefs: []
   type: TYPE_NORMAL
+  zh: 其中 \(\bar{x} = 1/N \sum_{i=1}^N x_i\) 是 \(x\) 的平均值。在这种情况下，\(\beta_0\) 代表当 \(x_i
+    = \bar{x}\) 时的身高，即平均父亲的儿子的身高。
 - en: 18.3.2 Least Squares Estimates (LSE)
+  id: totrans-115
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 18.3.2 最小二乘估计（LSE）
 - en: 'For linear models to be useful, we have to estimate the unknown \(\beta\)s.
     The standard approach in science is to find the values that minimize the distance
     of the fitted model to the data. The following is called the least squares (LS)
     equation and we will see it often in this chapter. For Galton’s data, we would
     write:'
+  id: totrans-116
   prefs: []
   type: TYPE_NORMAL
+  zh: 为了使线性模型有用，我们必须估计未知的 \(\beta\) 值。在科学中，标准的做法是找到使拟合模型与数据之间的距离最小化的值。以下称为最小二乘（LS）方程，我们将在本章中经常看到它。对于高尔顿的数据，我们会写成：
 - en: \[ RSS = \sum_{i=1}^n \left\{ y_i - \left(\beta_0 + \beta_1 x_i \right)\right\}^2
     \]
+  id: totrans-117
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ RSS = \sum_{i=1}^n \left\{ y_i - \left(\beta_0 + \beta_1 x_i \right)\right\}^2
+    \]
 - en: 'This quantity is called the residual sum of squares (RSS). Once we find the
     values that minimize the RSS, we will call the values the least squares estimates
     (LSE) and denote them with \(\hat{\beta}_0\) and \(\hat{\beta}_1\). Let’s demonstrate
     this with the previously defined dataset:'
+  id: totrans-118
   prefs: []
   type: TYPE_NORMAL
+  zh: 这个量被称为残差平方和（RSS）。一旦我们找到使 RSS 最小的值，我们将这些值称为最小二乘估计（LSE），并用 \(\hat{\beta}_0\) 和
+    \(\hat{\beta}_1\) 表示。让我们用之前定义的数据集来演示这一点：
 - en: '[PRE18]'
+  id: totrans-119
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE18]'
 - en: Let’s write a function that computes the RSS for any pair of values \(\beta_0\)
     and \(\beta_1\).
+  id: totrans-120
   prefs: []
   type: TYPE_NORMAL
+  zh: 让我们编写一个函数，用于计算任何一对值 \(\beta_0\) 和 \(\beta_1\) 的 RSS。
 - en: '[PRE19]'
+  id: totrans-121
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE19]'
 - en: So for any pair of values, we get an RSS. Here is a plot of the RSS as a function
     of \(\beta_1\) when we keep the \(\beta_0\) fixed at 25.
+  id: totrans-122
   prefs: []
   type: TYPE_NORMAL
+  zh: 因此，对于任何一对值，我们都会得到一个 RSS。以下是一个当我们将 \(\beta_0\) 固定在 25 时，RSS 作为 \(\beta_1\) 函数的图表。
 - en: '[PRE20]'
+  id: totrans-123
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE20]'
 - en: '![](../Images/22b814caacab79e2d6bae93299ce8aa9.png)'
+  id: totrans-124
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/22b814caacab79e2d6bae93299ce8aa9.png)'
 - en: We can see a clear minimum for \(\beta_1\) at around 0.65\. However, this minimum
     for \(\beta_1\) is for when \(\beta_0 = 25\), a value we arbitrarily picked. We
     don’t know if (25, 0.65) is the pair that minimizes the equation across all possible
     pairs.
+  id: totrans-125
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们可以看到 \(\beta_1\) 在大约 0.65 处有一个明显的最小值。然而，这个 \(\beta_1\) 的最小值是在 \(\beta_0 =
+    25\) 时得到的，这是一个我们任意选择的值。我们不知道 (25, 0.65) 是否是使所有可能对中方程最小化的那一对。
 - en: 'Trial and error is not going to work in this case. We could search for a minimum
     within a fine grid of \(\beta_0\) and \(\beta_1\) values, but this is unnecessarily
     time-consuming since we can use calculus: take the partial derivatives, set them
@@ -643,82 +919,121 @@
     these equations can get rather complex. But there are functions in R that do these
     calculations for us. We will learn these next. To learn the mathematics behind
     this, you can consult a book on linear models.'
+  id: totrans-126
   prefs: []
   type: TYPE_NORMAL
+  zh: 在这个情况下，试错法是行不通的。我们可以在 \(\beta_0\) 和 \(\beta_1\) 值的精细网格中搜索最小值，但这是不必要的耗时，因为我们可以使用微积分：求偏导数，将它们设为
+    0 并求解 \(\beta_1\) 和 \(\beta_2\)。当然，如果我们有很多参数，这些方程可能会相当复杂。但在 R 中有函数可以为我们做这些计算。我们将在下一节学习这些函数。要了解背后的数学，你可以查阅线性模型方面的书籍。
 - en: 18.3.3 The `lm` function
+  id: totrans-127
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 18.3.3 `lm` 函数
 - en: 'In R, we can obtain the least squares estimates using the `lm` function. To
     fit the model:'
+  id: totrans-128
   prefs: []
   type: TYPE_NORMAL
+  zh: 在R中，我们可以使用`lm`函数来获得最小二乘估计。要拟合模型：
 - en: \[ Y_i = \beta_0 + \beta_1 x_i + \varepsilon_i \]
+  id: totrans-129
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ Y_i = \beta_0 + \beta_1 x_i + \varepsilon_i \]
 - en: with \(Y_i\) the son’s height and \(x_i\) the father’s height, we can use this
     code to obtain the least squares estimates.
+  id: totrans-130
   prefs: []
   type: TYPE_NORMAL
+  zh: 以\(Y_i\)代表儿子的身高和\(x_i\)代表父亲的身高，我们可以使用这段代码来获得最小二乘估计。
 - en: '[PRE21]'
+  id: totrans-131
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE21]'
 - en: The most common way we use `lm` is by using the character `~` to let `lm` know
     which is the variable we are predicting (left of `~`) and which we are using to
     predict (right of `~`). The intercept is added automatically to the model that
     will be fit.
+  id: totrans-132
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们最常用的`lm`方法是通过使用字符`~`来让`lm`知道我们预测的是哪个变量（`~`的左边）以及我们使用什么来预测（`~`的右边）。截距会自动添加到将要拟合的模型中。
 - en: 'The object `fit` includes more information about the fit. We can use the function
     `summary` to extract more of this information (not shown):'
+  id: totrans-133
   prefs: []
   type: TYPE_NORMAL
+  zh: 对象`fit`包含了更多关于拟合的信息。我们可以使用`summary`函数来提取更多信息（未显示）：
 - en: '[PRE22]'
+  id: totrans-134
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE22]'
 - en: To understand some of the information included in this summary we need to remember
     that the LSE are random variables. Mathematical statistics gives us some ideas
     of the distribution of these random variables
+  id: totrans-135
   prefs: []
   type: TYPE_NORMAL
+  zh: 要理解这个摘要中包含的一些信息，我们需要记住LSE是随机变量。数学统计学给我们一些关于这些随机变量分布的想法
 - en: 18.3.4 LSE are random variables
+  id: totrans-136
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 18.3.4 LSE是随机变量
 - en: 'The LSE is derived from the data \(y_1,\dots,y_N\), which are a realization
     of random variables \(Y_1, \dots, Y_N\). This implies that our estimates are random
     variables. To see this, we can run a Monte Carlo simulation in which we assume
     the son and father height data defines a population, take a random sample of size
     \(N=50\), and compute the regression slope coefficient for each one:'
+  id: totrans-137
   prefs: []
   type: TYPE_NORMAL
+  zh: LSE是从数据\(y_1,\dots,y_N\)中导出的，这些数据是随机变量\(Y_1, \dots, Y_N\)的一个实现。这意味着我们的估计是随机变量。为了看到这一点，我们可以运行一个蒙特卡洛模拟，其中我们假设儿子和父亲的身高数据定义了一个总体，随机抽取一个大小为\(N=50\)的样本，并计算每个样本的回归斜率系数：
 - en: '[PRE23]'
+  id: totrans-138
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE23]'
 - en: 'We can see the variability of the estimates by plotting their distributions:'
+  id: totrans-139
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们可以通过绘制它们的分布来看到估计值的变异性：
 - en: '![](../Images/c3481ab42cee1f594313601629ac1e49.png)'
+  id: totrans-140
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/c3481ab42cee1f594313601629ac1e49.png)'
 - en: 'The reason these look normal is because the central limit theorem applies here
     as well: for large enough \(N\), the least squares estimates will be approximately
     normal with expected value \(\beta_0\) and \(\beta_1\), respectively. The standard
     errors are a bit complicated to compute, but mathematical theory does allow us
     to compute them and they are included in the summary provided by the `lm` function.
     Here it is for one of our simulated data sets:'
+  id: totrans-141
   prefs: []
   type: TYPE_NORMAL
+  zh: 这些看起来是正态分布的原因是因为中心极限定理也适用于这里：对于足够大的\(N\)，最小二乘估计将大约服从正态分布，期望值分别为\(\beta_0\)和\(\beta_1\)。标准误差的计算稍微复杂一些，但数学理论确实允许我们计算它们，并且它们包含在`lm`函数提供的摘要中。以下是我们模拟数据集中的一个例子：
 - en: '[PRE24]'
+  id: totrans-142
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE24]'
 - en: 'You can see that the standard errors estimates reported by the `summary` are
     close to the standard errors from the simulation:'
+  id: totrans-143
   prefs: []
   type: TYPE_NORMAL
+  zh: 你可以看到`summary`报告的标准误差估计与模拟得到的标准误差非常接近：
 - en: '[PRE25]'
+  id: totrans-144
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE25]'
 - en: The `summary` function also reports t-statistics (`t value`) and p-values (`Pr(>|t|)`).
     The t-statistic is not actually based on the central limit theorem but rather
     on the assumption that the \(\varepsilon\)s follow a normal distribution. Under
@@ -728,141 +1043,209 @@
     of freedom, with \(p\) the number of parameters in our model. In the case of height
     \(p=2\), the two p-values are testing the null hypothesis that \(\beta_0 = 0\)
     and \(\beta_1=0\), respectively.
+  id: totrans-145
   prefs: []
   type: TYPE_NORMAL
+  zh: '`summary`函数还会报告t统计量（`t value`）和p值（`Pr(>|t|)`）。t统计量实际上并不是基于中心极限定理，而是基于假设\(\varepsilon\)s服从正态分布。在这个假设下，数学理论告诉我们，LSE除以其标准误差，\(\hat{\beta}_0
+    / \hat{\mbox{SE}}(\hat{\beta}_0 )\)和\(\hat{\beta}_1 / \hat{\mbox{SE}}(\hat{\beta}_1
+    )\)，服从自由度为\(N-p\)的t分布，其中\(p\)是我们模型中参数的数量。在身高的情况下，\(p=2\)，两个p值分别检验\(\beta_0 = 0\)和\(\beta_1=0\)的零假设。'
 - en: Remember that, as we described in Section [16.10](models.html#t-dist) for large
     enough \(N\), the CLT works and the t-distribution becomes almost the same as
     the normal distribution. Also, notice that we can construct confidence intervals,
     but we will soon learn about **broom**, an add-on package that makes this easy.
+  id: totrans-146
   prefs: []
   type: TYPE_NORMAL
+  zh: 记住，正如我们在第[16.10](models.html#t-dist)节中描述的，对于足够大的 \(N\)，中心极限定理（CLT）是有效的，t分布几乎与正态分布相同。此外，请注意，我们可以构建置信区间，但我们很快就会了解到**broom**，这是一个使这一过程变得简单的附加包。
 - en: Although we do not show examples in this book, hypothesis testing with regression
     models is commonly used in epidemiology and economics to make statements such
     as “the effect of A on B was statistically significant after adjusting for X,
     Y, and Z”. However, several assumptions have to hold for these statements to be
     true.
+  id: totrans-147
   prefs: []
   type: TYPE_NORMAL
+  zh: 尽管我们在这本书中没有展示示例，但在流行病学和经济学中，使用回归模型进行假设检验是常见的，例如“在调整X、Y和Z之后，A对B的影响在统计上是显著的”。然而，为了使这些陈述成立，必须满足几个假设。
 - en: 18.3.5 Predicted values are random variables
+  id: totrans-148
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 18.3.5 预测值是随机变量
 - en: 'Once we fit our model, we can obtain prediction of \(Y\) by plugging in the
     estimates into the regression model. For example, if the father’s height is \(x\),
     then our prediction \(\hat{Y}\) for the son’s height will be:'
+  id: totrans-149
   prefs: []
   type: TYPE_NORMAL
+  zh: 一旦我们拟合了模型，我们就可以通过将估计值代入回归模型来获得 \(Y\) 的预测。例如，如果父亲的身高是 \(x\)，那么我们对儿子身高的预测 \(\hat{Y}\)
+    将会是：
 - en: \[\hat{Y} = \hat{\beta}_0 + \hat{\beta}_1 x\]
+  id: totrans-150
   prefs: []
   type: TYPE_NORMAL
+  zh: \[\hat{Y} = \hat{\beta}_0 + \hat{\beta}_1 x\]
 - en: When we plot \(\hat{Y}\) versus \(x\), we see the regression line.
+  id: totrans-151
   prefs: []
   type: TYPE_NORMAL
+  zh: 当我们绘制 \(\hat{Y}\) 与 \(x\) 的关系图时，我们看到回归线。
 - en: 'Keep in mind that the prediction \(\hat{Y}\) is also a random variable and
     mathematical theory tells us what the standard errors are. If we assume the errors
     are normal, or have a large enough sample size, we can use theory to construct
     confidence intervals as well. In fact, the **ggplot2** layer `geom_smooth(method
     = "lm")` that we previously used plots \(\hat{Y}\) and surrounds it by confidence
     intervals:'
+  id: totrans-152
   prefs: []
   type: TYPE_NORMAL
+  zh: 请记住，预测 \(\hat{Y}\) 也是一个随机变量，数学理论告诉我们标准误差是多少。如果我们假设误差是正态分布的，或者样本量足够大，我们也可以使用理论来构建置信区间。事实上，我们之前使用的**ggplot2**层
+    `geom_smooth(method = "lm")` 绘制了 \(\hat{Y}\) 并用置信区间包围它：
 - en: '[PRE26]'
+  id: totrans-153
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE26]'
 - en: '![](../Images/86d75725da1a78a1377c3c10c2ad06bb.png)'
+  id: totrans-154
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/86d75725da1a78a1377c3c10c2ad06bb.png)'
 - en: 'The R function `predict` takes an `lm` object as input and returns the prediction.
     If requested, the standard errors and other information from which we can construct
     confidence intervals is provided:'
+  id: totrans-155
   prefs: []
   type: TYPE_NORMAL
+  zh: R函数 `predict` 以 `lm` 对象为输入并返回预测。如果需要，它还提供了构建置信区间所需的标准误差和其他信息：
 - en: '[PRE27]'
+  id: totrans-156
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE27]'
 - en: 18.4 Exercises
+  id: totrans-157
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 18.4 练习
 - en: We have shown how BB and singles have similar predictive power for scoring runs.
     Another way to compare the usefulness of these baseball metrics is by assessing
     how stable they are across the years. Since we have to pick players based on their
     previous performances, we will prefer metrics that are more stable. In these exercises,
     we will compare the stability of singles and BBs.
+  id: totrans-158
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们已经展示了BB和单打在得分预测方面具有相似的预测能力。另一种比较这些棒球指标有用性的方法是评估它们在多年间的稳定性。由于我们必须根据球员之前的成绩来挑选球员，因此我们将更喜欢更稳定的指标。在这些练习中，我们将比较单打和BB的稳定性。
 - en: 1\. Before we get started, we want to generate two tables. One for 2002 and
     another for the average of 1999-2001 seasons. We want to define per plate appearance
     statistics. Here is how we create the 2017 table. Keeping only players with more
     than 100 plate appearances.
+  id: totrans-159
   prefs: []
   type: TYPE_NORMAL
+  zh: 1\. 在我们开始之前，我们想要生成两个表格。一个是2002年的表格，另一个是1999-2001赛季平均值的表格。我们想要定义每局出场的统计数据。以下是如何创建2017年表格的方法。仅保留每局出场次数超过100次的球员。
 - en: '[PRE28]'
+  id: totrans-160
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE28]'
 - en: Now compute a similar table but with rates computed over 1999-2001.
+  id: totrans-161
   prefs: []
   type: TYPE_NORMAL
+  zh: 现在计算一个类似的表格，但使用1999-2001年的数据进行计算。
 - en: '2\. You can use the `inner_join` function to combine the 2001 data and averages
     in the same table:'
+  id: totrans-162
   prefs: []
   type: TYPE_NORMAL
+  zh: 2\. 您可以使用 `inner_join` 函数将2001年的数据和平均值合并到同一张表中：
 - en: '[PRE29]'
+  id: totrans-163
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE29]'
 - en: Compute the correlation between 2002 and the previous seasons for singles and
     BB.
+  id: totrans-164
   prefs: []
   type: TYPE_NORMAL
+  zh: 计算单打和BB在2002年与之前赛季之间的相关性。
 - en: 3\. Note that the correlation is higher for BB. To quickly get an idea of the
     uncertainty associated with this correlation estimate, we will fit a linear model
     and compute confidence intervals for the slope coefficient. However, first make
     scatterplots to confirm that fitting a linear model is appropriate.
+  id: totrans-165
   prefs: []
   type: TYPE_NORMAL
+  zh: 3\. 注意，BB的相关性更高。为了快速了解与这个相关性估计相关的不确定性，我们将拟合一个线性模型并计算斜率系数的置信区间。然而，首先绘制散点图以确认拟合线性模型是合适的。
 - en: 4\. Now fit a linear model for each metric and use the `confint` function to
     compare the estimates.
+  id: totrans-166
   prefs: []
   type: TYPE_NORMAL
+  zh: 4. 现在为每个指标拟合一个线性模型，并使用 `confint` 函数来比较估计值。
 - en: 18.5 Linear regression in the tidyverse
+  id: totrans-167
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 18.5 在 tidyverse 中的线性回归
 - en: 'To see how we use the `lm` function in a more complex analysis, let’s go back
     to the baseball example. In a previous example, we estimated regression lines
     to predict runs for BB in different HR strata. We first constructed a data frame
     similar to this:'
+  id: totrans-168
   prefs: []
   type: TYPE_NORMAL
+  zh: 为了看到我们如何在更复杂的分析中使用 `lm` 函数，让我们回到棒球示例。在先前的例子中，我们估计了回归线来预测不同 HR 层级的 BB 的得分。我们首先构建了一个类似以下的数据框：
 - en: '[PRE30]'
+  id: totrans-169
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE30]'
 - en: 'Since we didn’t know the `lm` function, to compute the regression line in each
     strata, we used the formula directly like this:'
+  id: totrans-170
   prefs: []
   type: TYPE_NORMAL
+  zh: 由于我们不知道 `lm` 函数，为了在每个层级的斜率上计算回归线，我们直接使用公式如下：
 - en: '[PRE31]'
+  id: totrans-171
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE31]'
 - en: We argued that the slopes are similar and that the differences were perhaps
     due to random variation. To provide a more rigorous defense of the slopes being
     the same, which led to our multivariable model, we could compute confidence intervals
     for each slope. We have not learned the formula for this, but the `lm` function
     provides enough information to construct them.
+  id: totrans-172
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们认为斜率相似，差异可能是由于随机变化。为了更严格地证明斜率相同，这导致了我们的多变量模型，我们可以为每个斜率计算置信区间。我们还没有学习这个公式，但
+    `lm` 函数提供了足够的信息来构建它们。
 - en: 'First, note that if we try to use the `lm` function to get the estimated slope
     like this:'
+  id: totrans-173
   prefs: []
   type: TYPE_NORMAL
+  zh: 首先，请注意，如果我们尝试使用 `lm` 函数以这种方式获取估计斜率：
 - en: '[PRE32]'
+  id: totrans-174
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE32]'
 - en: we don’t get the result we want. The `lm` function ignores the `group_by`. This
     is expected because `lm` is not part of the **tidyverse** and does not know how
     to handle the outcome of a grouped tibble.
+  id: totrans-175
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们没有得到我们想要的结果。`lm` 函数忽略了 `group_by`。这是预期的，因为 `lm` 不是 **tidyverse** 的一部分，也不知道如何处理分组后的
+    tibble 的结果。
 - en: 'The **tidyverse** functions know how to interpret grouped tibbles. Furthermore,
     to facilitate stringing commands through the pipe `|>`, **tidyverse** functions
     consistently return data frames, since this assures that the output of a function
@@ -870,213 +1253,324 @@
     tibbles nor do they return data frames. The `lm` function is an example. However,
     we can write a function that uses `lm` to compute and return the wanted summaries
     in a data frame and then use the `summarize` function:'
+  id: totrans-176
   prefs: []
   type: TYPE_NORMAL
+  zh: '**tidyverse** 函数知道如何解释分组后的 tibbles。此外，为了便于通过管道 `|>` 连接命令，**tidyverse** 函数始终返回数据框，因为这确保了函数的输出可以被另一个函数作为输入。但是，大多数
+    R 函数都不识别分组后的 tibbles，也不会返回数据框。`lm` 函数就是一个例子。然而，我们可以编写一个函数，使用 `lm` 来计算并返回所需的总览信息，然后使用
+    `summarize` 函数：'
 - en: '[PRE33]'
+  id: totrans-177
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE33]'
 - en: 'Here is an example in which we return both estimated parameters:'
+  id: totrans-178
   prefs: []
   type: TYPE_NORMAL
+  zh: 这里有一个例子，其中我们返回了估计参数：
 - en: '[PRE34]'
+  id: totrans-179
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE34]'
 - en: If you think this is all a bit too complicated, you are not alone. To simplify
     things, we introduce the **broom** package which was designed to facilitate the
     use of model fitting functions, such as `lm`, with the **tidyverse**.
+  id: totrans-180
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果你认为这有点复杂，你并不孤单。为了简化问题，我们引入了 **broom** 包，该包旨在简化使用模型拟合函数（如 `lm`）与 **tidyverse**
+    的使用。
 - en: 18.5.1 The broom package
+  id: totrans-181
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 18.5.1 broom 包
 - en: Our original task was to provide an estimate and confidence interval for the
     slope estimates of each strata. The **broom** package will make this quite easy.
+  id: totrans-182
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们最初的任务是为每个层级的斜率估计提供估计值和置信区间。**broom** 包将使这变得相当简单。
 - en: 'The **broom** package has three main functions, all of which extract information
     from the object returned by `lm` and return it in a **tidyverse** friendly data
     frame. These functions are `tidy`, `glance`, and `augment`. The `tidy` function
     returns estimates and related information as a data frame:'
+  id: totrans-183
   prefs: []
   type: TYPE_NORMAL
+  zh: '**broom** 包有三个主要函数，所有这些函数都从 `lm` 返回的对象中提取信息，并以 **tidyverse** 友好的数据框形式返回。这些函数是
+    `tidy`、`glance` 和 `augment`。`tidy` 函数将估计和相关信息作为数据框返回：'
 - en: '[PRE35]'
+  id: totrans-184
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE35]'
 - en: 'We can add other important summaries, such as confidence intervals:'
+  id: totrans-185
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们可以添加其他重要的总览信息，例如置信区间：
 - en: '[PRE36]'
+  id: totrans-186
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE36]'
 - en: 'Because the outcome is a data frame, we can immediately use it with `summarize`
     to string together the commands that produce the table we are after. Because a
     data frame is returned, we can filter and select the rows and columns we want,
     which facilitates working with **ggplot2**:'
+  id: totrans-187
   prefs: []
   type: TYPE_NORMAL
+  zh: 因为结果是数据框，我们可以立即使用它与 `summarize` 连接命令，生成我们想要的结果表。因为返回的是数据框，我们可以过滤和选择我们想要的行和列，这有助于使用
+    **ggplot2**：
 - en: '[PRE37]'
+  id: totrans-188
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE37]'
 - en: '![](../Images/c1ed2665538e30e8cba6fce736305a94.png)'
+  id: totrans-189
   prefs: []
   type: TYPE_IMG
+  zh: '![图片](../Images/c1ed2665538e30e8cba6fce736305a94.png)'
 - en: Now we return to discussing our original task of determining if slopes changed.
     The plot we just made, using `summarize` and `tidy`, shows that the confidence
     intervals overlap, which provides a nice visual confirmation that our assumption
     that the slope does not change is safe.
+  id: totrans-190
   prefs: []
   type: TYPE_NORMAL
+  zh: 现在我们回到讨论我们的原始任务，即确定斜率是否发生变化。我们刚刚制作的图表，使用`summarize`和`tidy`，显示置信区间重叠，这提供了一个很好的视觉确认，即我们的假设斜率没有变化是安全的。
 - en: 'The other functions provided by **broom**, `glance`, and `augment`, relate
     to model-specific and observation-specific outcomes, respectively. Here, we can
     see the model fit summaries `glance` returns:'
+  id: totrans-191
   prefs: []
   type: TYPE_NORMAL
+  zh: '**broom**提供的其他函数，`glance`和`augment`，分别与模型特定的和观察特定的结果相关。在这里，我们可以看到`glance`返回的模型拟合摘要：'
 - en: '[PRE38]'
+  id: totrans-192
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE38]'
 - en: You can learn more about these summaries in any regression text book.
+  id: totrans-193
   prefs: []
   type: TYPE_NORMAL
+  zh: 你可以在任何回归教科书中了解更多关于这些总结的信息。
 - en: We will see an example of `augment` in the next section.
+  id: totrans-194
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们将在下一节中看到一个`augment`的例子。
 - en: 18.6 Exercises
+  id: totrans-195
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 18.6 练习
 - en: '1\. In a previous section, we computed the correlation between mothers and
     daughters, mothers and sons, fathers and daughters, and fathers and sons, and
     noticed that the highest correlation is between fathers and sons and the lowest
     is between mothers and sons. We can compute these correlations using:'
+  id: totrans-196
   prefs: []
   type: TYPE_NORMAL
+  zh: 1. 在前面的章节中，我们计算了母亲和女儿、母亲和儿子、父亲和女儿以及父亲和儿子的相关性，并注意到最高的相关性在父亲和儿子之间，最低的是在母亲和儿子之间。我们可以使用以下方法计算这些相关性：
 - en: '[PRE39]'
+  id: totrans-197
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE39]'
 - en: Are these differences statistically significant? To answer this, we will compute
     the slopes of the regression line along with their standard errors. Start by using
     `lm` and the **broom** package to compute the slopes LSE and the standard errors.
+  id: totrans-198
   prefs: []
   type: TYPE_NORMAL
+  zh: 这些差异在统计上是否显著？为了回答这个问题，我们将计算回归线的斜率及其标准误差。首先使用`lm`和**broom**包来计算斜率LSE和标准误差。
 - en: 2\. Repeat the exercise above, but compute a confidence interval as well.
+  id: totrans-199
   prefs: []
   type: TYPE_NORMAL
+  zh: 2. 重复上述练习，但也要计算置信区间。
 - en: 3\. Plot the confidence intervals and notice that they overlap, which implies
     that the data is consistent with the inheritance of height being independent of
     sex.
+  id: totrans-200
   prefs: []
   type: TYPE_NORMAL
+  zh: 3. 绘制置信区间，并注意它们重叠，这意味着数据与身高遗传独立于性别的假设一致。
 - en: '4\. Because we are selecting children at random, we can actually do something
     like a permutation test here. Repeat the computation of correlations 100 times
     taking a different sample each time. Hint: use similar code to what we used with
     simulations.'
+  id: totrans-201
   prefs: []
   type: TYPE_NORMAL
+  zh: 4. 因为我们是随机选择孩子，所以我们实际上可以做一些类似排列检验的事情。重复计算相关性100次，每次取不同的样本。提示：使用与模拟中使用的类似代码。
 - en: 5\. Fit a linear regression model to obtain the effects of BB and HR on Runs
     (at the team level) in 1971\. Use the `tidy` function in the **broom** package
     to obtain the results in a data frame.
+  id: totrans-202
   prefs: []
   type: TYPE_NORMAL
+  zh: 5. 使用线性回归模型拟合1971年BB和HR对跑动次数（在团队层面）的影响。使用**broom**包中的`tidy`函数将结果放入数据框中。
 - en: 6\. Now let’s repeat the above for each year since 1962 and make a plot. Use
     `summarize` and the **broom** package to fit this model for every year since 1962.
+  id: totrans-203
   prefs: []
   type: TYPE_NORMAL
+  zh: 6. 现在让我们从1962年以来每年重复上述操作，并绘制一个图表。使用`summarize`和**broom**包来为自1962年以来每年的数据拟合此模型。
 - en: 7\. Use the results of the previous exercise to plot the estimated effects of
     BB on runs.
+  id: totrans-204
   prefs: []
   type: TYPE_NORMAL
+  zh: 7. 使用前一个练习的结果来绘制BB对跑动次数的估计效应。
 - en: '8\. **Advanced**. Write a function that takes R, HR, and BB as arguments and
     fits two linear models: `R ~ BB` and `R~BB+HR`. Then use the `summary` function
     to obtain the `BB` for both models for each year since 1962\. Then plot these
     against each other as a function of time.'
+  id: totrans-205
   prefs: []
   type: TYPE_NORMAL
+  zh: 8. **高级**。编写一个函数，该函数接受R、HR和BB作为参数，并拟合两个线性模型：`R ~ BB`和`R~BB+HR`。然后使用`summary`函数获取自1962年以来每年两个模型的`BB`。然后将这些数据作为时间函数绘制出来。
 - en: '18.7 Case study: Moneyball (continued)'
+  id: totrans-206
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 18.7 案例研究：金钱球（续）
 - en: 'In trying to answer how well BBs predict runs, data exploration led us to a
     model:'
+  id: totrans-207
   prefs: []
   type: TYPE_NORMAL
+  zh: 在尝试回答BB如何预测跑动次数的问题时，数据探索引导我们到一个模型：
 - en: \[ \mbox{E}[R \mid BB = x_1, HR = x_2] = \beta_0 + \beta_1 x_1 + \beta_2 x_2
     \]
+  id: totrans-208
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \mbox{E}[R \mid BB = x_1, HR = x_2] = \beta_0 + \beta_1 x_1 + \beta_2 x_2
+    \]
 - en: 'Here, the data is approximately normal and conditional distributions were also
     normal. Thus, we are justified in using a linear model:'
+  id: totrans-209
   prefs: []
   type: TYPE_NORMAL
+  zh: 在这里，数据近似正态分布，条件分布也是正态的。因此，我们使用线性模型是合理的：
 - en: \[ Y_i = \beta_0 + \beta_1 x_{i,1} + \beta_2 x_{i,2} + \varepsilon_i \]
+  id: totrans-210
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ Y_i = \beta_0 + \beta_1 x_{i,1} + \beta_2 x_{i,2} + \varepsilon_i \]
 - en: 'with \(Y_i\) runs per game for team \(i\), \(x_{i,1}\) walks per game, and
     \(x_{i,2}\). To use `lm` here, we need to let the function know we have two predictor
     variables. So we use the `+` symbol as follows:'
+  id: totrans-211
   prefs: []
   type: TYPE_NORMAL
+  zh: 其中\(Y_i\)是队伍\(i\)每场比赛的跑动次数，\(x_{i,1}\)是每场比赛的步行次数，\(x_{i,2}\)。要在这里使用`lm`，我们需要让函数知道我们有两个预测变量。所以我们使用以下`+`符号：
 - en: '[PRE40]'
+  id: totrans-212
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE40]'
 - en: 'We can use `tidy` to see a nice summary:'
+  id: totrans-213
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们可以使用`tidy`查看一个很好的总结：
 - en: '[PRE41]'
+  id: totrans-214
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE41]'
 - en: When we fit the model with only one variable, the estimated slopes were 0.743
     and 1.859 for BB and HR, respectively. Note that when fitting the multivariable
     model both go down, with the BB effect decreasing much more.
+  id: totrans-215
   prefs: []
   type: TYPE_NORMAL
+  zh: 当我们只使用一个变量拟合模型时，估计的斜率分别是BB的0.743和HR的1.859。注意，当拟合多变量模型时，这两个斜率都下降了，其中BB的影响下降得更多。
 - en: Now we want to construct a metric to pick players, we need to consider singles,
     doubles, and triples as well. Can we build a model that predicts runs based on
     all these outcomes?
+  id: totrans-216
   prefs: []
   type: TYPE_NORMAL
+  zh: 现在我们想要构建一个挑选球员的指标，我们需要考虑单打、双打和三垒打。我们能否构建一个基于所有这些结果的预测得分的模型？
 - en: 'We now are going to take somewhat of a “leap of faith” and assume that these
     five variables are jointly normal. This means that if we pick any one of them,
     and hold the other four fixed, the relationship with the outcome is linear and
     the slope does not depend on the four values held constant. If this is true, then
     a linear model for our data is:'
+  id: totrans-217
   prefs: []
   type: TYPE_NORMAL
+  zh: 现在，我们将采取一种“信仰跳跃”，并假设这五个变量是联合正态分布的。这意味着如果我们选择其中的任何一个，并保持其他四个不变，那么与结果的关系是线性的，斜率不依赖于保持不变的四个值。如果这是真的，那么我们数据的线性模型如下：
 - en: \[ Y_i = \beta_0 + \beta_1 x_{i,1} + \beta_2 x_{i,2} + \beta_3 x_{i,3}+ \beta_4
     x_{i,4} + \beta_5 x_{i,5} + \varepsilon_i \]
+  id: totrans-218
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ Y_i = \beta_0 + \beta_1 x_{i,1} + \beta_2 x_{i,2} + \beta_3 x_{i,3}+ \beta_4
+    x_{i,4} + \beta_5 x_{i,5} + \varepsilon_i \]
 - en: with \(x_{i,1}, x_{i,2}, x_{i,3}, x_{i,4}, x_{i,5}\) representing BB, singles,
     doubles, triples, and HR respectively.
+  id: totrans-219
   prefs: []
   type: TYPE_NORMAL
+  zh: 其中 \(x_{i,1}, x_{i,2}, x_{i,3}, x_{i,4}, x_{i,5}\) 分别代表BB、单打、双打、三垒打和HR。
 - en: 'Using `lm`, we can quickly find the LSE for the parameters using:'
+  id: totrans-220
   prefs: []
   type: TYPE_NORMAL
+  zh: 使用`lm`，我们可以快速找到参数的LSE，使用以下方法：
 - en: '[PRE42]'
+  id: totrans-221
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE42]'
 - en: 'Note we fit the model to data up until 2001, the year before we will construct
     our team. We can see the coefficients using `tidy`:'
+  id: totrans-222
   prefs: []
   type: TYPE_NORMAL
+  zh: 注意我们拟合的模型是直到2001年的数据，这是我们构建团队的前一年。我们可以使用`tidy`查看系数：
 - en: '[PRE43]'
+  id: totrans-223
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE43]'
 - en: 'To see how well our metric actually predicts runs, we can predict the number
     of runs for each team in 2002 using the function `predict`, then make a plot:'
+  id: totrans-224
   prefs: []
   type: TYPE_NORMAL
+  zh: 为了了解我们的指标实际上如何预测得分，我们可以使用`predict`函数预测2002年每个团队的得分，然后绘制一个图表：
 - en: '[PRE44]'
+  id: totrans-225
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE44]'
 - en: '![](../Images/85fa3561507ae58a9e901bf33fc007ee.png)'
+  id: totrans-226
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/85fa3561507ae58a9e901bf33fc007ee.png)'
 - en: Our model does quite a good job as demonstrated by the fact that points from
     the observed versus predicted plot fall close to the identity line.
+  id: totrans-227
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们的模式表现相当不错，正如观察到的点与预测图中的点接近于身份线的事实所证明的那样。
 - en: 'So instead of using batting average, or just number of HR, as a measure of
     picking players, we can use our fitted model to form a metric that relates more
     directly to run production. Specifically, to define a metric for player A, we
@@ -1084,8 +1578,12 @@
     model to predict how many runs this team would produce. The formula would look
     like this: -2.758 + 0.37 \(\times\) BB + 0.517 \(\times\) singles + 0.775 \(\times\)
     doubles + 1.239 \(\times\) triples + 1.442 \(\times\) HR.'
+  id: totrans-228
   prefs: []
   type: TYPE_NORMAL
+  zh: 因此，我们不再使用击球率或仅仅使用本垒打次数作为挑选球员的衡量标准，我们可以使用我们的拟合模型来形成一个与得分生产更直接相关的指标。具体来说，为了定义球员A的指标，我们想象一个由与球员A相似的球员组成的团队，并使用我们的拟合回归模型来预测这个团队将产生多少得分。公式看起来像这样：-2.758
+    + 0.37 \(\times\) BB + 0.517 \(\times\) 单打 + 0.775 \(\times\) 双打 + 1.239 \(\times\)
+    三垒打 + 1.442 \(\times\) 本垒打。
 - en: To define a player-specific metric, we have a bit more work to do. A challenge
     here is that we derived the metric for teams, based on team-level summary statistics.
     For example, the HR value that is entered into the equation is HR per game for
@@ -1094,51 +1592,75 @@
     part of the game and gets fewer opportunities than average, it is still considered
     a game played. For players, a rate that takes into account opportunities is the
     per-plate-appearance rate.
+  id: totrans-229
   prefs: []
   type: TYPE_NORMAL
+  zh: 为了定义一个特定球员的指标，我们还有更多的工作要做。这里的挑战在于，我们是基于团队层面的汇总统计数据推导出团队的指标的。例如，方程中输入的HR值是整个团队的每场比赛的HR。如果我们计算球员的每场比赛的HR，由于总得分是由9名击球手累积的，所以会低得多。此外，如果球员只打了一部分比赛并且得到的击球机会少于平均水平，仍然被视为一场比赛。对于球员来说，考虑机会的速率是每局比赛的球员击球次数。
 - en: 'To make the per-game team rate comparable to the per-plate-appearance player
     rate, we compute the average number of team plate appearances per game:'
+  id: totrans-230
   prefs: []
   type: TYPE_NORMAL
+  zh: 为了使每场比赛的团队评分与每局比赛的球员评分相当，我们计算每场比赛的平均团队击球次数：
 - en: '[PRE45]'
+  id: totrans-231
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE45]'
 - en: 'We compute the per-plate-appearance rates for players available in 2002 on
     data from 1997-2001\. To avoid small sample artifacts, we filter players with
     less than 200 plate appearances per year. Here is the entire calculation in one
     line:'
+  id: totrans-232
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们计算了2002年可用球员在1997-2001年数据中的每局出场率。为了避免小样本效应，我们过滤了每年少于200次击球次数的球员。以下是整个计算的单一行：
 - en: '[PRE46]'
+  id: totrans-233
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE46]'
 - en: 'The player-specific predicted runs computed here can be interpreted as the
     number of runs we predict a team will score if all batters are exactly like that
     player. The distribution shows that there is wide variability across players:'
+  id: totrans-234
   prefs: []
   type: TYPE_NORMAL
+  zh: 在这里计算出的球员特定预测跑分可以解释为我们预测一个球队如果所有击球手都像该球员一样，将会得多少分。分布显示，球员之间的差异很大：
 - en: '[PRE47]'
+  id: totrans-235
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE47]'
 - en: '![](../Images/e2b5822059485892f862fdaf6468136d.png)'
+  id: totrans-236
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/e2b5822059485892f862fdaf6468136d.png)'
 - en: 18.7.1 Adding salary and position information
+  id: totrans-237
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 18.7.1 添加薪资和职位信息
 - en: To actually build the team, we will need to know their salaries as well as their
     defensive position. For this, we use the `righ_join` function to combine the `players`
     data frame we just created with the player information data frame included in
     some of the other Lahman data tables.
+  id: totrans-238
   prefs: []
   type: TYPE_NORMAL
+  zh: 为了真正组建球队，我们需要知道他们的薪资以及他们的防守位置。为此，我们使用 `righ_join` 函数将我们刚刚创建的 `players` 数据框与包含在其他Lahman数据表中的球员信息数据框结合起来。
 - en: 'Start by adding the 2002 salary of each player:'
+  id: totrans-239
   prefs: []
   type: TYPE_NORMAL
+  zh: 首先添加每个球员的2002年薪资：
 - en: '[PRE48]'
+  id: totrans-240
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE48]'
 - en: 'Next, we add their defensive position. This is a somewhat complicated task
     because players play more than one position each year. The **Lahman** package
     table `Appearances` tells how many games each player played in each position,
@@ -1151,413 +1673,634 @@
     outfielder, a generalization of three positions: left field (LF), center field
     (CF), and right field (RF). We also remove pitchers since they don’t bat in the
     league in which the A’s play.'
+  id: totrans-241
   prefs: []
   type: TYPE_NORMAL
+  zh: 接下来，我们添加他们的防守位置。这是一个相对复杂的工作，因为球员每年会打多个位置。**Lahman** 包的 `Appearances` 表格告诉我们每个球员在每个位置上打了多少场比赛，因此我们可以使用
+    `which.max` 在每一行中选择最常打的位置。我们使用 `apply` 来做这件事。然而，由于一些球员被交易，他们在表格中出现了不止一次，所以我们首先将他们在不同球队中的出场次数相加。在这里，我们使用
+    `top_n` 函数选择球员最常打的位置。为了确保我们只选择一个位置，在出现平局的情况下，我们选择结果数据框的第一行。我们还移除了代表外场的 `OF` 位置，这是三个位置（左外场（LF）、中外场（CF）和右外场（RF））的泛称。我们还移除了投手，因为他们不在A队所在的联赛中击球。
 - en: '[PRE49]'
+  id: totrans-242
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE49]'
 - en: 'Finally, we add their first and last name:'
+  id: totrans-243
   prefs: []
   type: TYPE_NORMAL
+  zh: 最后，我们添加他们的名字：
 - en: '[PRE50]'
+  id: totrans-244
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE50]'
 - en: 'If you are a baseball fan, you will recognize the top 10 players:'
+  id: totrans-245
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果你是一个棒球迷，你会认出前10名球员：
 - en: '[PRE51]'
+  id: totrans-246
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE51]'
 - en: 18.7.2 Picking nine players
+  id: totrans-247
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 18.7.2 选择九名球员
 - en: 'On average, players with a higher metric have higher salaries:'
+  id: totrans-248
   prefs: []
   type: TYPE_NORMAL
+  zh: 平均而言，具有更高指标的球员薪资更高：
 - en: '[PRE52]'
+  id: totrans-249
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE52]'
 - en: '![](../Images/e89ca6bd64acb65abccd65c4d334a143.png)'
+  id: totrans-250
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/e89ca6bd64acb65abccd65c4d334a143.png)'
 - en: 'We can search for good deals by looking at players who produce many more runs
     than others with similar salaries. We can use this table to decide what players
     to pick and keep our total salary below the 40 million dollars Billy Beane had
     to work with. This can be done using what computer scientists call linear programming.
     This is not something we teach, but here are the position players selected with
     this approach:'
+  id: totrans-251
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们可以通过查看那些比其他类似薪资的球员产生更多跑分的球员来寻找好的交易。我们可以使用这张表格来决定选择哪些球员，并确保我们的总薪资低于比利·比恩必须处理的4000万美元。这可以通过计算机科学家所说的线性规划来完成。这不是我们教授的内容，但以下是使用这种方法选择的内场球员：
 - en: '| nameFirst | nameLast | POS | salary | R_hat |'
+  id: totrans-252
   prefs: []
   type: TYPE_TB
+  zh: '| nameFirst | nameLast | POS | salary | R_hat |'
 - en: '| --- | --- | --- | --- | --- |'
+  id: totrans-253
   prefs: []
   type: TYPE_TB
+  zh: '| --- | --- | --- | --- | --- |'
 - en: '| Todd | Helton | 1B | 5000000 | 7.76 |'
+  id: totrans-254
   prefs: []
   type: TYPE_TB
+  zh: '| Todd | Helton | 1B | 5000000 | 7.76 |'
 - en: '| Mike | Piazza | C | 10571429 | 7.34 |'
+  id: totrans-255
   prefs: []
   type: TYPE_TB
+  zh: '| Mike | Piazza | C | 10571429 | 7.34 |'
 - en: '| Edgar | Martinez | DH | 7086668 | 7.26 |'
+  id: totrans-256
   prefs: []
   type: TYPE_TB
+  zh: '| Edgar | Martinez | DH | 7086668 | 7.26 |'
 - en: '| Jim | Edmonds | CF | 7333333 | 6.55 |'
+  id: totrans-257
   prefs: []
   type: TYPE_TB
+  zh: '| Jim | Edmonds | CF | 7333333 | 6.55 |'
 - en: '| Jeff | Kent | 2B | 6000000 | 6.39 |'
+  id: totrans-258
   prefs: []
   type: TYPE_TB
+  zh: '| Jeff | Kent | 2B | 6000000 | 6.39 |'
 - en: '| Phil | Nevin | 3B | 2600000 | 6.16 |'
+  id: totrans-259
   prefs: []
   type: TYPE_TB
+  zh: '| Phil | Nevin | 3B | 2600000 | 6.16 |'
 - en: '| Matt | Stairs | RF | 500000 | 6.06 |'
+  id: totrans-260
   prefs: []
   type: TYPE_TB
+  zh: '| Matt | Stairs | RF | 500000 | 6.06 |'
 - en: '| Henry | Rodriguez | LF | 300000 | 5.94 |'
+  id: totrans-261
   prefs: []
   type: TYPE_TB
+  zh: '| Henry | Rodriguez | LF | 300000 | 5.94 |'
 - en: '| John | Valentin | SS | 550000 | 5.28 |'
+  id: totrans-262
   prefs: []
   type: TYPE_TB
+  zh: '| John | Valentin | SS | 550000 | 5.28 |'
 - en: We see that all these players have above average BB and most have above average
     HR rates, while the same is not true for singles. Here is a table with statistics
     standardized across players so that, for example, above average HR hitters have
     values above 0.
+  id: totrans-263
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们看到，所有这些球员的BB率都高于平均水平，而大多数球员的HR率也高于平均水平，但单打的情况并非如此。以下是一个表格，其中统计了所有球员的标准化数据，例如，平均以上的HR打击者具有大于0的值。
 - en: '| nameLast | BB | singles | doubles | triples | HR | AVG | R_hat |'
+  id: totrans-264
   prefs: []
   type: TYPE_TB
+  zh: '| nameLast | BB | singles | doubles | triples | HR | AVG | R_hat |'
 - en: '| --- | --- | --- | --- | --- | --- | --- | --- |'
+  id: totrans-265
   prefs: []
   type: TYPE_TB
+  zh: '| --- | --- | --- | --- | --- | --- | --- | --- |'
 - en: '| Helton | 0.909 | -0.215 | 2.649 | -0.311 | 1.522 | 2.670 | 2.542 |'
+  id: totrans-266
   prefs: []
   type: TYPE_TB
+  zh: '| 赫尔顿 | 0.909 | -0.215 | 2.649 | -0.311 | 1.522 | 2.670 | 2.542 |'
 - en: '| Piazza | 0.328 | 0.423 | 0.204 | -1.418 | 1.825 | 2.199 | 2.093 |'
+  id: totrans-267
   prefs: []
   type: TYPE_TB
+  zh: '| 皮亚扎 | 0.328 | 0.423 | 0.204 | -1.418 | 1.825 | 2.199 | 2.093 |'
 - en: '| Martinez | 2.135 | -0.005 | 1.265 | -1.224 | 0.808 | 2.203 | 2.004 |'
+  id: totrans-268
   prefs: []
   type: TYPE_TB
+  zh: '| 马丁内斯 | 2.135 | -0.005 | 1.265 | -1.224 | 0.808 | 2.203 | 2.004 |'
 - en: '| Edmonds | 1.071 | -0.558 | 0.791 | -1.152 | 0.973 | 0.854 | 1.259 |'
+  id: totrans-269
   prefs: []
   type: TYPE_TB
+  zh: '| 爱德蒙兹 | 1.071 | -0.558 | 0.791 | -1.152 | 0.973 | 0.854 | 1.259 |'
 - en: '| Kent | 0.232 | -0.732 | 2.011 | 0.448 | 0.766 | 0.787 | 1.093 |'
+  id: totrans-270
   prefs: []
   type: TYPE_TB
+  zh: '| 肯特 | 0.232 | -0.732 | 2.011 | 0.448 | 0.766 | 0.787 | 1.093 |'
 - en: '| Nevin | 0.307 | -0.905 | 0.479 | -1.191 | 1.193 | 0.105 | 0.850 |'
+  id: totrans-271
   prefs: []
   type: TYPE_TB
+  zh: '| 内文 | 0.307 | -0.905 | 0.479 | -1.191 | 1.193 | 0.105 | 0.850 |'
 - en: '| Stairs | 1.100 | -1.513 | -0.046 | -1.129 | 1.121 | -0.561 | 0.742 |'
+  id: totrans-272
   prefs: []
   type: TYPE_TB
+  zh: '| 斯泰尔斯 | 1.100 | -1.513 | -0.046 | -1.129 | 1.121 | -0.561 | 0.742 |'
 - en: '| Rodriguez | 0.201 | -1.596 | 0.332 | -0.782 | 1.320 | -0.672 | 0.613 |'
+  id: totrans-273
   prefs: []
   type: TYPE_TB
+  zh: '| 罗德里格斯 | 0.201 | -1.596 | 0.332 | -0.782 | 1.320 | -0.672 | 0.613 |'
 - en: '| Valentin | 0.180 | -0.929 | 1.794 | -0.435 | -0.045 | -0.472 | -0.088 |'
+  id: totrans-274
   prefs: []
   type: TYPE_TB
+  zh: '| 瓦伦蒂尼 | 0.180 | -0.929 | 1.794 | -0.435 | -0.045 | -0.472 | -0.088 |'
 - en: 18.8 The regression fallacy
+  id: totrans-275
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 18.8 回归谬误
 - en: 'Wikipedia defines the *sophomore slump* as:'
+  id: totrans-276
   prefs: []
   type: TYPE_NORMAL
+  zh: 维基百科将**大二生滑坡**定义为：
 - en: A sophomore slump or sophomore jinx or sophomore jitters refers to an instance
     in which a second, or sophomore, effort fails to live up to the standards of the
     first effort. It is commonly used to refer to the apathy of students (second year
     of high school, college or university), the performance of athletes (second season
     of play), singers/bands (second album), television shows (second seasons) and
     movies (sequels/prequels).
+  id: totrans-277
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 大二生滑坡或大二生诅咒或大二生紧张是指第二次努力（或大二生）未能达到第一次努力标准的情况。这个词通常用来指代学生（高中、大学或大学的第二年）、运动员（第二个赛季）、歌手/乐队（第二张专辑）、电视节目（第二季）和电影（续集/前传）的表现。
 - en: In Major League Baseball, the rookie of the year (ROY) award is given to the
     first-year player who is judged to have performed the best. The *sophmore slump*
     phrase is used to describe the observation that ROY award winners don’t do as
     well during their second year. For example, this Fox Sports article[^(69)](#fn69)
     asks “Will MLB’s tremendous rookie class of 2015 suffer a sophomore slump?”.
+  id: totrans-278
   prefs: []
   type: TYPE_NORMAL
+  zh: 在美国职业棒球大联盟中，年度最佳新秀（ROY）奖项授予第一年表现最佳的球员。**大二生滑坡**这个短语用来描述年度最佳新秀在第二年表现不佳的观察结果。例如，这篇Fox
+    Sports文章[^(69)](#fn69)提出了“MLB 2015年令人惊叹的新秀班是否将遭遇大二生滑坡？”的问题。
 - en: 'Does the data confirm the existence of a sophomore slump? Let’s take a look.
     Examining the data for batting average, we see that this observation holds true
     for the top performing ROYs:'
+  id: totrans-279
   prefs: []
   type: TYPE_NORMAL
+  zh: 是否数据证实了存在大二生滑坡？让我们看一下击球率的统计数据。我们发现，对于表现最好的年度最佳新秀（ROY）来说，这一观察结果是正确的：
 - en: '| nameFirst | nameLast | rookie_year | rookie | sophomore |'
+  id: totrans-280
   prefs: []
   type: TYPE_TB
+  zh: '| nameFirst | nameLast | rookie_year | rookie | sophomore |'
 - en: '| --- | --- | --- | --- | --- |'
+  id: totrans-281
   prefs: []
   type: TYPE_TB
+  zh: '| --- | --- | --- | --- | --- |'
 - en: '| Willie | McCovey | 1959 | 0.354 | 0.238 |'
+  id: totrans-282
   prefs: []
   type: TYPE_TB
+  zh: '| 威利 | 麦考维 | 1959 | 0.354 | 0.238 |'
 - en: '| Ichiro | Suzuki | 2001 | 0.350 | 0.321 |'
+  id: totrans-283
   prefs: []
   type: TYPE_TB
+  zh: '| 伊查鲁 | 鈴木 | 2001 | 0.350 | 0.321 |'
 - en: '| Al | Bumbry | 1973 | 0.337 | 0.233 |'
+  id: totrans-284
   prefs: []
   type: TYPE_TB
+  zh: '| 阿尔 | 巴姆布里 | 1973 | 0.337 | 0.233 |'
 - en: '| Fred | Lynn | 1975 | 0.331 | 0.314 |'
+  id: totrans-285
   prefs: []
   type: TYPE_TB
+  zh: '| 弗雷德 | 莱恩 | 1975 | 0.331 | 0.314 |'
 - en: '| Albert | Pujols | 2001 | 0.329 | 0.314 |'
+  id: totrans-286
   prefs: []
   type: TYPE_TB
+  zh: '| 阿尔伯特 | 普乌约斯 | 2001 | 0.329 | 0.314 |'
 - en: In fact, the proportion of players that have a lower batting average their sophomore
     year is 0.698.
+  id: totrans-287
   prefs: []
   type: TYPE_NORMAL
+  zh: 事实上，二年级时击球率低于平均值的球员比例是0.698。
 - en: So is it “jitters” or “jinx”? To answer this question, let’s turn our attention
     to all players that played the 2013 and 2014 seasons and batted more than 130
     times (minimum to win Rookie of the Year).
+  id: totrans-288
   prefs: []
   type: TYPE_NORMAL
+  zh: 所以是“紧张”还是“诅咒”？为了回答这个问题，让我们将注意力转向所有在2013年和2014赛季中出场超过130次（最低标准以赢得年度最佳新秀）的球员。
 - en: 'The same pattern arises when we look at the top performers: batting averages
     go down for most of the top performers.'
+  id: totrans-289
   prefs: []
   type: TYPE_NORMAL
+  zh: 当我们观察顶尖表现者时，同样的模式出现：大多数顶尖表现者的击球率下降。
 - en: '| nameFirst | nameLast | 2013 | 2014 |'
+  id: totrans-290
   prefs: []
   type: TYPE_TB
+  zh: '| nameFirst | nameLast | 2013 | 2014 |'
 - en: '| --- | --- | --- | --- |'
+  id: totrans-291
   prefs: []
   type: TYPE_TB
+  zh: '| --- | --- | --- | --- |'
 - en: '| Miguel | Cabrera | 0.348 | 0.313 |'
+  id: totrans-292
   prefs: []
   type: TYPE_TB
+  zh: '| 米格尔 | 卡布瑞拉 | 0.348 | 0.313 |'
 - en: '| Hanley | Ramirez | 0.345 | 0.283 |'
+  id: totrans-293
   prefs: []
   type: TYPE_TB
+  zh: '| 汉利 | 拉米雷斯 | 0.345 | 0.283 |'
 - en: '| Michael | Cuddyer | 0.331 | 0.332 |'
+  id: totrans-294
   prefs: []
   type: TYPE_TB
+  zh: '| 迈克尔 | 卡迪耶 | 0.331 | 0.332 |'
 - en: '| Scooter | Gennett | 0.324 | 0.289 |'
+  id: totrans-295
   prefs: []
   type: TYPE_TB
+  zh: '| Scooter | Gennett | 0.324 | 0.289 |'
 - en: '| Joe | Mauer | 0.324 | 0.277 |'
+  id: totrans-296
   prefs: []
   type: TYPE_TB
+  zh: '| Joe | Mauer | 0.324 | 0.277 |'
 - en: 'But these are not rookies! Also, look at what happens to the worst performers
     of 2013:'
+  id: totrans-297
   prefs: []
   type: TYPE_NORMAL
+  zh: 但这些人不是新手！而且，看看2013年最差表现者的表现发生了什么变化：
 - en: '| nameFirst | nameLast | 2013 | 2014 |'
+  id: totrans-298
   prefs: []
   type: TYPE_TB
+  zh: '| nameFirst | nameLast | 2013 | 2014 |'
 - en: '| --- | --- | --- | --- |'
+  id: totrans-299
   prefs: []
   type: TYPE_TB
+  zh: '| --- | --- | --- | --- |'
 - en: '| Danny | Espinosa | 0.158 | 0.219 |'
+  id: totrans-300
   prefs: []
   type: TYPE_TB
+  zh: '| Danny | Espinosa | 0.158 | 0.219 |'
 - en: '| Dan | Uggla | 0.179 | 0.149 |'
+  id: totrans-301
   prefs: []
   type: TYPE_TB
+  zh: '| Dan | Uggla | 0.179 | 0.149 |'
 - en: '| Jeff | Mathis | 0.181 | 0.200 |'
+  id: totrans-302
   prefs: []
   type: TYPE_TB
+  zh: '| Jeff | Mathis | 0.181 | 0.200 |'
 - en: '| B. J. | Upton | 0.184 | 0.208 |'
+  id: totrans-303
   prefs: []
   type: TYPE_TB
+  zh: '| B. J. | Upton | 0.184 | 0.208 |'
 - en: '| Adam | Rosales | 0.190 | 0.262 |'
+  id: totrans-304
   prefs: []
   type: TYPE_TB
+  zh: '| Adam | Rosales | 0.190 | 0.262 |'
 - en: 'Their batting averages mostly go up! Is this some sort of reverse sophomore
     slump? It is not. There is no such thing as the sophomore slump. This is all explained
     with a simple statistical fact: the correlation for performance in two separate
     years is high, but not perfect:'
+  id: totrans-305
   prefs: []
   type: TYPE_NORMAL
+  zh: 他们的击球率大多有所上升！这是否是一种反向的二年级生滑坡？不是的。根本不存在二年级生滑坡这回事。这一切都可以用一个简单的统计事实来解释：两年表现的相关性很高，但并不完美：
 - en: '![](../Images/2923bb3aec59160ec23ddae616a26592.png)'
+  id: totrans-306
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/2923bb3aec59160ec23ddae616a26592.png)'
 - en: 'The correlation is 0.46 and the data look very much like a bivariate normal
     distribution, which means we predict a 2014 batting average \(Y\) for any given
     player that had a 2013 batting average \(X\) with:'
+  id: totrans-307
   prefs: []
   type: TYPE_NORMAL
+  zh: 相关系数为 0.46，数据看起来非常像双变量正态分布，这意味着我们可以预测任何给定球员在 2013 年击球率 \(X\) 为 \(Y\) 的 2014
+    年击球率：
 - en: \[ \frac{Y - .255}{.032} = 0.46 \left( \frac{X - .261}{.023}\right) \]
+  id: totrans-308
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \frac{Y - .255}{.032} = 0.46 \left( \frac{X - .261}{.023}\right) \]
 - en: Because the correlation is not perfect, regression tells us that, on average,
     expect high performers from 2013 to do a bit worse in 2014\. It’s not a jinx;
     it’s just due to chance. The ROY are selected from the top values of \(X\) so
     it is expected that \(Y\) will regress to the mean.
+  id: totrans-309
   prefs: []
   type: TYPE_NORMAL
+  zh: 由于相关性不是完美的，回归分析告诉我们，平均而言，2013 年的高表现者2014 年的表现可能会略有下降。这并不是什么诅咒；这只是由于偶然。最佳新秀（ROY）是从
+    \(X\) 的最高值中选出的，因此预计 \(Y\) 将回归到平均值。
 - en: 18.9 Measurement error models
+  id: totrans-310
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 18.9 测量误差模型
 - en: Up to now, all our linear regression examples have been applied to two or more
     random variables. We assume the pairs are bivariate normal and use this to motivate
     a linear model. This approach covers most real-life examples of linear regression.
     The other major application comes from measurement errors models. In these applications,
     it is common to have a non-random covariate, such as time, and randomness is introduced
     from measurement error rather than sampling or natural variability.
+  id: totrans-311
   prefs: []
   type: TYPE_NORMAL
+  zh: 到目前为止，我们所有的线性回归示例都应用于两个或多个随机变量。我们假设这些对是双变量正态分布，并以此来说明线性模型。这种方法涵盖了线性回归在现实生活中的大多数例子。另一个主要应用来自测量误差模型。在这些应用中，通常会有一个非随机协变量，例如时间，而随机性是从测量误差而不是抽样或自然变异性中引入的。
 - en: 'To understand these models, imagine you are Galileo in the 16th century trying
     to describe the velocity of a falling object. An assistant climbs the Tower of
     Pisa and drops a ball, while several other assistants record the position at different
     times. Let’s simulate some data using the equations we know today and adding some
     measurement error. The **dslabs** function `rfalling_object` generates these simulations:'
+  id: totrans-312
   prefs: []
   type: TYPE_NORMAL
+  zh: 要理解这些模型，想象一下你是16世纪的伽利略，试图描述落体物体的速度。一个助手爬上比萨斜塔并扔下一个球，而几个其他助手记录不同时间的位置。让我们使用我们今天所知道的方程式和一些测量误差来模拟一些数据。`rfalling_object`
+    函数生成这些模拟：
 - en: '[PRE53]'
+  id: totrans-313
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE53]'
 - en: 'The assistants hand the data to Galileo and this is what he sees:'
+  id: totrans-314
   prefs: []
   type: TYPE_NORMAL
+  zh: 助手将数据交给伽利略，这就是他看到的情况：
 - en: '[PRE54]'
+  id: totrans-315
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE54]'
 - en: '![](../Images/eccb6f1cfb24ddd39bef21af604a8519.png)'
+  id: totrans-316
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/eccb6f1cfb24ddd39bef21af604a8519.png)'
 - en: 'Galileo does not know the exact equation, but by looking at the plot above,
     he deduces that the position should follow a parabola, which we can write like
     this:'
+  id: totrans-317
   prefs: []
   type: TYPE_NORMAL
+  zh: 伽利略不知道确切的方程式，但通过观察上面的图表，他推断出位置应该遵循抛物线，我们可以写成这样：
 - en: \[ f(x) = \beta_0 + \beta_1 x + \beta_2 x^2\]
+  id: totrans-318
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ f(x) = \beta_0 + \beta_1 x + \beta_2 x^2\]
 - en: 'The data does not fall exactly on a parabola. Galileo knows this is due to
     measurement error. His helpers make mistakes when measuring the distance. To account
     for this, he models the data with:'
+  id: totrans-319
   prefs: []
   type: TYPE_NORMAL
+  zh: 数据并不完全落在抛物线上。伽利略知道这是由于测量误差造成的。他的助手在测量距离时犯了错误。为了解决这个问题，他用以下模型来模拟数据：
 - en: \[ Y_i = \beta_0 + \beta_1 x_i + \beta_2 x_i^2 + \varepsilon_i, i=1,\dots,n
     \]
+  id: totrans-320
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ Y_i = \beta_0 + \beta_1 x_i + \beta_2 x_i^2 + \varepsilon_i, i=1,\dots,n
+    \]
 - en: with \(Y_i\) representing distance in meters, \(x_i\) representing time in seconds,
     and \(\varepsilon\) accounting for measurement error. The measurement error is
     assumed to be random, independent from each other, and having the same distribution
     for each \(i\). We also assume that there is no bias, which means the expected
     value \(\mbox{E}[\varepsilon] = 0\).
+  id: totrans-321
   prefs: []
   type: TYPE_NORMAL
+  zh: 其中 \(Y_i\) 代表米数，\(x_i\) 代表秒数，\(\varepsilon\) 考虑测量误差。假设测量误差是随机的，彼此独立，并且对于每个 \(i\)
+    都有相同的分布。我们还假设没有偏差，这意味着期望值 \(\mbox{E}[\varepsilon] = 0\)。
 - en: Note that this is a linear model because it is a linear combination of known
     quantities (\(x\) and \(x^2\) are known) and unknown parameters (the \(\beta\)s
     are unknown parameters to Galileo). Unlike our previous examples, here \(x\) is
     a fixed quantity; we are not conditioning.
+  id: totrans-322
   prefs: []
   type: TYPE_NORMAL
+  zh: 注意，这是一个线性模型，因为它是由已知量（\(x\) 和 \(x^2\) 是已知量）和未知参数（伽利略的 \(\beta\) 是未知参数）的线性组合。与我们的前几个例子不同，这里
+    \(x\) 是一个固定量；我们不是在条件化。
 - en: To pose a new physical theory and start making predictions about other falling
     objects, Galileo needs actual numbers, rather than unknown parameters. Using LSE
     seems like a reasonable approach. How do we find the LSE?
+  id: totrans-323
   prefs: []
   type: TYPE_NORMAL
+  zh: 为了提出一个新的物理理论并开始对其他下落物体进行预测，伽利略需要实际数字，而不是未知参数。使用最小二乘法（LSE）似乎是一个合理的途径。我们如何找到LSE？
 - en: 'LSE calculations do not require the errors to be approximately normal. The
     `lm` function will find the \(\beta\) s that will minimize the residual sum of
     squares:'
+  id: totrans-324
   prefs: []
   type: TYPE_NORMAL
+  zh: LSE计算不需要误差近似为正态分布。`lm` 函数将找到使残差平方和最小的 \(\beta\) 值：
 - en: '[PRE55]'
+  id: totrans-325
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE55]'
 - en: 'Let’s check if the estimated parabola fits the data. The **broom** function
     `augment` lets us do this easily:'
+  id: totrans-326
   prefs: []
   type: TYPE_NORMAL
+  zh: 让我们检查估计的抛物线是否适合数据。**broom** 函数 `augment` 让我们轻松地做到这一点：
 - en: '[PRE56]'
+  id: totrans-327
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE56]'
 - en: '![](../Images/f6b29d5c69bf1923a18c72314e2449ab.png)'
+  id: totrans-328
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/f6b29d5c69bf1923a18c72314e2449ab.png)'
 - en: 'Thanks to my high school physics teacher, I know that the equation for the
     trajectory of a falling object is:'
+  id: totrans-329
   prefs: []
   type: TYPE_NORMAL
+  zh: 多亏了我的高中物理老师，我知道下落物体的轨迹方程是：
 - en: \[d = h_0 + v_0 t - 0.5 \times 9.8 t^2\]
+  id: totrans-330
   prefs: []
   type: TYPE_NORMAL
+  zh: \[d = h_0 + v_0 t - 0.5 \times 9.8 t^2\]
 - en: with \(h_0\) and \(v_0\) the starting height and velocity, respectively. The
     data we simulated above followed this equation and added measurement error to
     simulate `n` observations for dropping the ball \((v_0=0)\) from the tower of
     Pisa \((h_0=55.86)\).
+  id: totrans-331
   prefs: []
   type: TYPE_NORMAL
+  zh: 其中 \(h_0\) 和 \(v_0\) 分别是起始高度和速度。我们上面模拟的数据遵循这个方程，并添加测量误差来模拟从比萨斜塔（\(h_0=55.86\)）下落的球（\(v_0=0\)）的
+    \(n\) 个观测值。
 - en: 'These are consistent with the parameter estimates:'
+  id: totrans-332
   prefs: []
   type: TYPE_NORMAL
+  zh: 这些与参数估计是一致的：
 - en: '[PRE57]'
+  id: totrans-333
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE57]'
 - en: The Tower of Pisa height is within the confidence interval for \(\beta_0\),
     the initial velocity 0 is in the confidence interval for \(\beta_1\) (note the
     p-value is larger than 0.05), and the acceleration constant is in a confidence
     interval for \(-2 \times \beta_2\).
+  id: totrans-334
   prefs: []
   type: TYPE_NORMAL
+  zh: 比萨斜塔的高度在 \(\beta_0\) 的置信区间内，初始速度 0 在 \(\beta_1\) 的置信区间内（注意 p 值大于 0.05），加速度常数在
+    \(-2 \times \beta_2\) 的置信区间内。
 - en: 18.10 Exercises
+  id: totrans-335
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 18.10 练习
 - en: 'Since the 1980s, sabermetricians have used a summary statistic different from
     batting average to evaluate players. They realized walks were important and that
     doubles, triples, and HRs, should be weighed more than singles. As a result, they
     proposed the following metric:'
+  id: totrans-336
   prefs: []
   type: TYPE_NORMAL
+  zh: 自1980年代以来，统计学家们使用了一个不同于打击率的总结统计指标来评估球员。他们意识到步行很重要，并且双打、三打和本垒打应该比单打更重要。因此，他们提出了以下指标：
 - en: \[ \frac{\mbox{BB}}{\mbox{PA}} + \frac{\mbox{Singles} + 2 \mbox{Doubles} + 3
     \mbox{Triples} + 4\mbox{HR}}{\mbox{AB}} \]
+  id: totrans-337
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \frac{\mbox{BB}}{\mbox{PA}} + \frac{\mbox{Singles} + 2 \mbox{Doubles} + 3
+    \mbox{Triples} + 4\mbox{HR}}{\mbox{AB}} \]
 - en: They called this on-base-percentage plus slugging percentage (OPS). Although
     the sabermetricians probably did not use regression, here we show how this metric
     is close to what one gets with regression.
+  id: totrans-338
   prefs: []
   type: TYPE_NORMAL
+  zh: 他们称之为上垒率加长打率（OPS）。尽管统计学家可能没有使用回归，但在这里我们展示了这个指标如何接近使用回归得到的结果。
 - en: 1\. Compute the OPS for each team in the 2001 season. Then plot Runs per game
     versus OPS.
+  id: totrans-339
   prefs: []
   type: TYPE_NORMAL
+  zh: 1. 计算2001赛季每支球队的OPS。然后绘制每场比赛的得分与OPS的关系图。
 - en: 2\. For every year since 1962, compute the correlation between runs per game
     and OPS; then plot these correlations as a function of year.
+  id: totrans-340
   prefs: []
   type: TYPE_NORMAL
+  zh: 2. 从1962年以来，每年计算每场比赛得分与OPS之间的相关性；然后以年份为函数绘制这些相关性。
 - en: '3\. Note that we can rewrite OPS as a weighted average of BBs, singles, doubles,
     triples, and HRs. We know that the weights for doubles, triples, and HRs are 2,
     3, and 4 times that of singles. But what about BB? What is the weight for BB relative
     to singles? Hint: the weight for BB relative to singles will be a function of
     AB and PA.'
+  id: totrans-341
   prefs: []
   type: TYPE_NORMAL
+  zh: 3. 注意，我们可以将OPS重写为BB、单打、双打、三打和本垒打的加权平均值。我们知道双打、三打和本垒打的权重分别是单打的两倍、三倍和四倍。那么BB的权重是多少？BB相对于单打的权重是什么？提示：BB相对于单打的权重将是AB和PA的函数。
 - en: 4\. Note that the weight for BB, \(\frac{\mbox{AB}}{\mbox{PA}}\), will change
     from team to team. To see how variable it is, compute and plot this quantity for
     each team for each year since 1962\. Then plot it again, but instead of computing
     it for every team, compute and plot the ratio for the entire year. Then, once
     you are convinced that there is not much of a time or team trend, report the overall
     average.
+  id: totrans-342
   prefs: []
   type: TYPE_NORMAL
+  zh: 4. 注意，BB（步行率）的权重\(\frac{\mbox{AB}}{\mbox{PA}}\)会因球队而异。为了了解其变化程度，计算并绘制自1962年以来每个球队每年的这个量，然后再次绘制，但不是为每个球队计算，而是计算并绘制整个年份的比率。然后，一旦你确信没有太多时间或球队趋势，报告整体平均值。
 - en: '5\. So now we know that the formula for OPS is proportional to \(0.91 \times
     \mbox{BB} + \mbox{singles} + 2 \times \mbox{doubles} + 3 \times \mbox{triples}
     + 4 \times \mbox{HR}\). Let’s see how these coefficients compare to those obtained
     with regression. Fit a regression model to the data after 1962, as done earlier:
     using per game statistics for each year for each team. After fitting this model,
     report the coefficients as weights relative to the coefficient for singles.'
+  id: totrans-343
   prefs: []
   type: TYPE_NORMAL
+  zh: 5. 因此，现在我们知道OPS的公式与\(0.91 \times \mbox{BB} + \mbox{singles} + 2 \times \mbox{doubles}
+    + 3 \times \mbox{triples} + 4 \times \mbox{HR}\)成比例。让我们看看这些系数与回归得到的系数如何比较。拟合1962年后的数据回归模型，就像之前做的那样：使用每个球队每年每场比赛的统计数据。拟合此模型后，报告系数作为相对于单打系数的权重。
 - en: 6\. We see that our linear regression model coefficients follow the same general
     trend as those used by OPS, but with slightly less weight for metrics other than
     singles. For each team in years after 1962, compute the OPS, the predicted runs
     with the regression model and compute the correlation between the two as well
     as the correlation with runs per game.
+  id: totrans-344
   prefs: []
   type: TYPE_NORMAL
+  zh: 6. 我们看到我们的线性回归模型系数与OPS所使用的趋势相同，但除了单打之外的其他指标权重略低。对于1962年之后的每个球队，计算OPS、回归模型预测的得分，并计算这两个指标之间的相关性以及与每场比赛得分的相关性。
 - en: '7\. We see that using the regression approach predicts runs slightly better
     than OPS, but not that much. However, note that we have been computing OPS and
     predicting runs for teams when these measures are used to evaluate players. Let’s
@@ -1565,48 +2308,72 @@
     level. For the 1962 season and after, compute the OPS and the predicted runs from
     our model for each player and plot them. Use the PA per game correction we used
     in the previous chapter:'
+  id: totrans-345
   prefs: []
   type: TYPE_NORMAL
+  zh: 7. 我们看到使用回归方法预测得分略优于OPS，但差距不大。然而，请注意，当我们使用这些指标来评估球员时，我们已经计算了球队的OPS和得分预测。让我们展示OPS在球员层面与回归得到的指标非常相似。对于1962赛季及以后，计算每个球员的OPS和模型预测的得分，并绘制它们。使用我们在上一章中使用的每场比赛PA修正值：
 - en: 8\. What players have show the largest difference between their rank by predicted
     runs and OPS?
+  id: totrans-346
   prefs: []
   type: TYPE_NORMAL
+  zh: 8. 哪些球员在预测得分和OPS排名之间显示出最大的差异？
 - en: '* * *'
+  id: totrans-347
   prefs: []
   type: TYPE_NORMAL
+  zh: '* * *'
 - en: '[http://mlb.mlb.com/stats/league_leaders.jsp](http://mlb.mlb.com/stats/league_leaders.jsp)[↩︎](linear-models.html#fnref61)'
+  id: totrans-348
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[http://mlb.mlb.com/stats/league_leaders.jsp](http://mlb.mlb.com/stats/league_leaders.jsp)[↩︎](linear-models.html#fnref61)'
 - en: '[https://en.wikipedia.org/wiki/Bill_James](https://en.wikipedia.org/wiki/Bill_James)[↩︎](linear-models.html#fnref62)'
+  id: totrans-349
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[https://en.wikipedia.org/wiki/Bill_James](https://en.wikipedia.org/wiki/Bill_James)[↩︎](linear-models.html#fnref62)'
 - en: '[https://en.wikipedia.org/wiki/Sabermetrics](https://en.wikipedia.org/wiki/Sabermetrics)[↩︎](linear-models.html#fnref63)'
+  id: totrans-350
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[https://en.wikipedia.org/wiki/Sabermetrics](https://en.wikipedia.org/wiki/Sabermetrics)[↩︎](linear-models.html#fnref63)'
 - en: '[https://en.wikipedia.org/wiki/User:Cburnett](https://en.wikipedia.org/wiki/User:Cburnett)[↩︎](linear-models.html#fnref64)'
+  id: totrans-351
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[https://en.wikipedia.org/wiki/User:Cburnett](https://en.wikipedia.org/wiki/User:Cburnett)[↩︎](linear-models.html#fnref64)'
 - en: '[https://creativecommons.org/licenses/by-sa/3.0/deed.en](https://creativecommons.org/licenses/by-sa/3.0/deed.en)[↩︎](linear-models.html#fnref65)'
+  id: totrans-352
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[https://creativecommons.org/licenses/by-sa/3.0/deed.en](https://creativecommons.org/licenses/by-sa/3.0/deed.en)[↩︎](linear-models.html#fnref65)'
 - en: '[https://www.flickr.com/people/27003603@N00](https://www.flickr.com/people/27003603@N00)[↩︎](linear-models.html#fnref66)'
+  id: totrans-353
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[https://www.flickr.com/people/27003603@N00](https://www.flickr.com/people/27003603@N00)[↩︎](linear-models.html#fnref66)'
 - en: '[https://creativecommons.org/licenses/by-sa/2.0](https://creativecommons.org/licenses/by-sa/2.0)[↩︎](linear-models.html#fnref67)'
+  id: totrans-354
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[https://creativecommons.org/licenses/by-sa/2.0](https://creativecommons.org/licenses/by-sa/2.0)[↩︎](linear-models.html#fnref67)'
 - en: '[http://www.baseball-almanac.com/awards/lou_brock_award.shtml](http://www.baseball-almanac.com/awards/lou_brock_award.shtml)[↩︎](linear-models.html#fnref68)'
+  id: totrans-355
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[http://www.baseball-almanac.com/awards/lou_brock_award.shtml](http://www.baseball-almanac.com/awards/lou_brock_award.shtml)[↩︎](linear-models.html#fnref68)'
 - en: '[http://www.foxsports.com/mlb/story/kris-bryant-carlos-correa-rookies-of-year-award-matt-duffy-francisco-lindor-kang-sano-120715](http://www.foxsports.com/mlb/story/kris-bryant-carlos-correa-rookies-of-year-award-matt-duffy-francisco-lindor-kang-sano-120715)[↩︎](linear-models.html#fnref69)'
+  id: totrans-356
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[http://www.foxsports.com/mlb/story/kris-bryant-carlos-correa-rookies-of-year-award-matt-duffy-francisco-lindor-kang-sano-120715](http://www.foxsports.com/mlb/story/kris-bryant-carlos-correa-rookies-of-year-award-matt-duffy-francisco-lindor-kang-sano-120715)[↩︎](linear-models.html#fnref69)'

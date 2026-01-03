@@ -1,11 +1,15 @@
 - en: Chapter 26 Text mining
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 第26章 文本挖掘
 - en: 原文：[https://rafalab.dfci.harvard.edu/dsbook/text-mining.html](https://rafalab.dfci.harvard.edu/dsbook/text-mining.html)
+  id: totrans-1
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 原文：[https://rafalab.dfci.harvard.edu/dsbook/text-mining.html](https://rafalab.dfci.harvard.edu/dsbook/text-mining.html)
 - en: With the exception of labels used to represent categorical data, we have focused
     on numerical data. But in many applications, data starts as text. Well-known examples
     are spam filtering, cyber-crime prevention, counter-terrorism and sentiment analysis.
@@ -13,12 +17,16 @@
     extract insights from these data. In this section, we learn how to generate useful
     numerical summaries from text data to which we can apply some of the powerful
     data visualization and analysis techniques we have learned.
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: 除了用于表示分类数据的标签外，我们主要关注数值数据。但在许多应用中，数据最初是以文本形式出现的。众所周知的例子包括垃圾邮件过滤、网络犯罪预防、反恐和情感分析。在这些所有情况下，原始数据都是由自由文本组成的。我们的任务是从中提取见解。在本节中，我们学习如何从文本数据中生成有用的数值摘要，然后我们可以应用我们已学到的某些强大的数据可视化和分析技术。
 - en: '26.1 Case study: Trump tweets'
+  id: totrans-3
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 26.1 案例研究：特朗普的推文
 - en: During the 2016 US presidential election, then candidate Donald J. Trump used
     his twitter account as a way to communicate with potential voters. On August 6,
     2016, Todd Vaziri tweeted[^(90)](#fn90) about Trump that “Every non-hyperbolic
@@ -27,172 +35,264 @@
     if data supported this assertion. Here, we go through David’s analysis to learn
     some of the basics of text mining. To learn more about text mining in R, we recommend
     the Text Mining with R book[^(92)](#fn92) by Julia Silge and David Robinson.
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: 在2016年美国总统选举期间，当时的候选人唐纳德·J·特朗普利用他的推特账号与潜在选民进行沟通。2016年8月6日，托德·瓦齐里（Todd Vaziri）关于特朗普发了一条推文[^(90)](#fn90)，称“每个非夸张的推文都来自iPhone（他的工作人员）。每个夸张的推文都来自Android（他本人）。”数据科学家大卫·罗宾逊（David
+    Robinson）进行了一项分析[^(91)](#fn91)，以确定数据是否支持这一说法。在这里，我们回顾大卫的分析，以了解文本挖掘的一些基础知识。要了解更多关于R中的文本挖掘，我们推荐茱莉亚·西尔吉（Julia
+    Silge）和大卫·罗宾逊（David Robinson）合著的《Text Mining with R》一书[^(92)](#fn92)。
 - en: 'We will use the following libraries:'
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们将使用以下库：
 - en: '[PRE0]'
+  id: totrans-6
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: 'In general, we can extract data directly from Twitter using the **rtweet**
     package. However, in this case, a group has already compiled data for us and made
     it available at [http://www.trumptwitterarchive.com](http://www.trumptwitterarchive.com).
     We can get the data from their JSON API using a script like this:'
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: 通常，我们可以使用**rtweet**包直接从Twitter中提取数据。然而，在这种情况下，一个小组已经为我们编译了数据，并在[http://www.trumptwitterarchive.com](http://www.trumptwitterarchive.com)上提供。我们可以使用如下脚本从他们的JSON
+    API中获取数据：
 - en: '[PRE1]'
+  id: totrans-8
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: 'For convenience, we include the result of the code above in the **dslabs**
     package:'
+  id: totrans-9
   prefs: []
   type: TYPE_NORMAL
+  zh: 为了方便，我们将上述代码的结果包含在**dslabs**包中：
 - en: '[PRE2]'
+  id: totrans-10
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: You can see the data frame with information about the tweets by typing
+  id: totrans-11
   prefs: []
   type: TYPE_NORMAL
+  zh: 您可以通过输入以下命令来查看有关推文的信息：
 - en: '[PRE3]'
+  id: totrans-12
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: 'with the following variables included:'
+  id: totrans-13
   prefs: []
   type: TYPE_NORMAL
+  zh: 包含以下变量：
 - en: '[PRE4]'
+  id: totrans-14
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE4]'
 - en: 'The help file `?trump_tweets` provides details on what each variable represents.
     The tweets are represented by the `text` variable:'
+  id: totrans-15
   prefs: []
   type: TYPE_NORMAL
+  zh: 帮助文件`?trump_tweets`提供了每个变量代表的详细信息。推文由`text`变量表示：
 - en: '[PRE5]'
+  id: totrans-16
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE5]'
 - en: 'and the source variable tells us which device was used to compose and upload
     each tweet:'
+  id: totrans-17
   prefs: []
   type: TYPE_NORMAL
+  zh: 以及源变量告诉我们每个推文是用哪个设备编写和上传的：
 - en: '[PRE6]'
+  id: totrans-18
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE6]'
 - en: We are interested in what happened during the campaign, so for this analysis
     we will focus on what was tweeted between the day Trump announced his campaign
     and election day. We define the following table containing just the tweets from
     that time period. Note that we use `extract` to remove the `Twitter for` part
     of the source and filter out retweets.
+  id: totrans-19
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们对竞选期间发生的事情感兴趣，因此在这个分析中，我们将关注特朗普宣布竞选到选举日之间的推文。我们定义以下表格，仅包含该时间段内的推文。请注意，我们使用`extract`来删除源中的`Twitter
+    for`部分，并过滤掉转发推文。
 - en: '[PRE7]'
+  id: totrans-20
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE7]'
 - en: 'We can now use data visualization to explore the possibility that two different
     groups were tweeting from these devices. For each tweet, we will extract the hour,
     East Coast time (EST), it was tweeted and then compute the proportion of tweets
     tweeted at each hour for each device:'
+  id: totrans-21
   prefs: []
   type: TYPE_NORMAL
+  zh: 现在，我们可以使用数据可视化来探索两个不同的群体是否可能使用这些设备进行推文。对于每条推文，我们将提取推文的时辰，东部时间（EST），然后计算每个设备在每个时辰推文的占比：
 - en: '[PRE8]'
+  id: totrans-22
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE8]'
 - en: '![](../Images/92468109c8f162b7fa1ed2ed881aaa75.png)'
+  id: totrans-23
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/92468109c8f162b7fa1ed2ed881aaa75.png)'
 - en: We notice a big peak for the Android in the early hours of the morning, between
     6 and 8 AM. There seems to be a clear difference in these patterns. We will therefore
     assume that two different entities are using these two devices.
+  id: totrans-24
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们注意到，在早上6点到8点之间，安卓的峰值很大。这些模式似乎存在明显差异。因此，我们将假设两个不同的实体正在使用这两个设备。
 - en: We will now study how the tweets differ when we compare Android to iPhone. To
     do this, we introduce the **tidytext** package.
+  id: totrans-25
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们现在将研究当我们比较安卓和iPhone时，推文有何不同。为此，我们引入了**tidytext**包。
 - en: 26.2 Text as data
+  id: totrans-26
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 26.2 文本作为数据
 - en: The **tidytext** package helps us convert free form text into a tidy table.
     Having the data in this format greatly facilitates data visualization and the
     use of statistical techniques.
+  id: totrans-27
   prefs: []
   type: TYPE_NORMAL
+  zh: '**tidytext**包帮助我们将自由文本转换为整洁的表格。以这种格式拥有数据极大地促进了数据可视化和统计技术的应用。'
 - en: '[PRE9]'
+  id: totrans-28
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE9]'
 - en: 'The main function needed to achieve this is `unnest_tokens`. A *token* refers
     to a unit that we are considering to be a data point. The most common *token*
     will be words, but they can also be single characters, ngrams, sentences, lines,
     or a pattern defined by a regex. The functions will take a vector of strings and
     extract the tokens so that each one gets a row in the new table. Here is a simple
     example:'
+  id: totrans-29
   prefs: []
   type: TYPE_NORMAL
+  zh: 实现这一目标所需的主要功能是`unnest_tokens`。*token*指的是我们考虑作为数据点的单元。最常见的*token*将是单词，但它们也可以是单个字符、ngrams、句子、行或由正则表达式定义的模式。这些函数将接受一个字符串向量并提取token，以便每个token在新表中都有一行。以下是一个简单的例子：
 - en: '[PRE10]'
+  id: totrans-30
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE10]'
 - en: 'Now let’s look at an example from the tweets. We will look at tweet number
     3008 because it will later permit us to illustrate a couple of points:'
+  id: totrans-31
   prefs: []
   type: TYPE_NORMAL
+  zh: 现在让我们看看推文中的一个例子。我们将查看推文编号3008，因为它将允许我们说明几个要点：
 - en: '[PRE11]'
+  id: totrans-32
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE11]'
 - en: 'Note that the function tries to convert tokens into words. A minor adjustment
     is to remove the links to pictures:'
+  id: totrans-33
   prefs: []
   type: TYPE_NORMAL
+  zh: 注意，该函数试图将token转换为单词。一个小的调整是移除图片链接：
 - en: '[PRE12]'
+  id: totrans-34
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE12]'
 - en: Now we are now ready to extract the words for all our tweets.
+  id: totrans-35
   prefs: []
   type: TYPE_NORMAL
+  zh: 现在我们已经准备好提取所有推文的单词。
 - en: '[PRE13]'
+  id: totrans-36
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE13]'
 - en: 'And we can now answer questions such as “what are the most commonly used words?”:'
+  id: totrans-37
   prefs: []
   type: TYPE_NORMAL
+  zh: 现在，我们可以回答诸如“最常用的单词是什么？”等问题：
 - en: '[PRE14]'
+  id: totrans-38
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE14]'
 - en: 'It is not surprising that these are the top words. The top words are not informative.
     The *tidytext* package has a database of these commonly used words, referred to
     as *stop words*, in text mining:'
+  id: totrans-39
   prefs: []
   type: TYPE_NORMAL
+  zh: 这些是顶级单词并不令人惊讶。顶级单词并不具有信息性。*tidytext*包有一个常用单词的数据库，称为*停用词*，用于文本挖掘：
 - en: '[PRE15]'
+  id: totrans-40
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE15]'
 - en: 'If we filter out rows representing stop words with `filter(!word %in% stop_words$word)`:'
+  id: totrans-41
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果我们使用`filter(!word %in% stop_words$word)`过滤掉表示停用词的行：
 - en: '[PRE16]'
+  id: totrans-42
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE16]'
 - en: 'we end up with a much more informative set of top 10 tweeted words:'
+  id: totrans-43
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们最终得到一组更丰富的推文前10位常用单词：
 - en: '[PRE17]'
+  id: totrans-44
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE17]'
 - en: 'Some exploration of the resulting words (not shown here) reveals a couple of
     unwanted characteristics in our tokens. First, some of our tokens are just numbers
     (years, for example). We want to remove these and we can find them using the regex
     `^\d+$`. Second, some of our tokens come from a quote and they start with `''`.
     We want to remove the `''` when it is at the start of a word so we will just `str_replace`.
     We add these two lines to the code above to generate our final table:'
+  id: totrans-45
   prefs: []
   type: TYPE_NORMAL
+  zh: 对生成的单词进行一些探索（此处未显示）揭示了我们的token中存在一些不受欢迎的特性。首先，我们的一些token只是数字（例如年份）。我们希望删除这些，我们可以使用正则表达式`^\d+$`找到它们。其次，我们的一些token来自引号，并以`'`开头。我们希望在单词开头时删除`'`，所以我们只需使用`str_replace`。我们将这两行代码添加到上面的代码中，以生成我们的最终表格：
 - en: '[PRE18]'
+  id: totrans-46
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE18]'
 - en: Now that we have all our words in a table, along with information about what
     device was used to compose the tweet they came from, we can start exploring which
     words are more common when comparing Android to iPhone.
+  id: totrans-47
   prefs: []
   type: TYPE_NORMAL
+  zh: 现在我们已经将所有单词放入表中，并附带有关用于撰写推文的设备的信息，我们可以开始探索在比较安卓和iPhone时哪些单词更常见。
 - en: For each word, we want to know if it is more likely to come from an Android
     tweet or an iPhone tweet. Odds ratio are a summary statistic useful for quantifying
     these differences. .For each device and a given word, let’s call it `y`, we compute
@@ -200,30 +300,46 @@
     and compute the ratio of those odds. Here we will have many proportions that are
     0, so we use the 0.5 correction. You can learn more about odds ratio in an statistics
     or epidemiology textbook.
+  id: totrans-48
   prefs: []
   type: TYPE_NORMAL
+  zh: 对于每个单词，我们想知道它更有可能来自安卓推文还是iPhone推文。优势比是用于量化这些差异的汇总统计量。对于每个设备和给定的单词，我们可以将其称为`y`，我们计算`y`和不是`y`的单词比例之间的比率，并计算这些比率的比率。在这里，我们将有许多比例为0的比例，因此我们使用0.5校正。你可以在统计学或流行病学教科书中了解更多关于优势比的信息。
 - en: '[PRE19]'
+  id: totrans-49
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE19]'
 - en: Here are the highest odds ratios for Android
+  id: totrans-50
   prefs: []
   type: TYPE_NORMAL
+  zh: 这里是安卓的最高优势比
 - en: '[PRE20]'
+  id: totrans-51
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE20]'
 - en: 'and the top for iPhone:'
+  id: totrans-52
   prefs: []
   type: TYPE_NORMAL
+  zh: 以及iPhone的前十名：
 - en: '[PRE21]'
+  id: totrans-53
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE21]'
 - en: 'Given that several of these words are overall low frequency words, we can impose
     a filter based on the total frequency like this:'
+  id: totrans-54
   prefs: []
   type: TYPE_NORMAL
+  zh: 由于这些单词中有几个是整体低频词，我们可以根据总频率设置一个过滤器，如下所示：
 - en: '[PRE22]'
+  id: totrans-55
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE22]'
 - en: We already see somewhat of a pattern in the types of words that are being tweeted
     more from one device versus the other. However, we are not interested in specific
     words but rather in the tone. Vaziri’s assertion is that the Android tweets are
@@ -231,65 +347,97 @@
     to extract from words as it relies on interpreting phrases. However, words can
     be associated to more basic sentiment such as anger, fear, joy, and surprise.
     In the next section, we demonstrate basic sentiment analysis.
+  id: totrans-56
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们已经看到，从一种设备比另一种设备更多地推特的单词类型中，存在某种模式。然而，我们感兴趣的并不是具体的单词，而是语气。Vaziri的断言是，Android的推文更加夸张。那么我们如何用数据来检查这一点呢？*夸张*是一种难以从单词中提取的情感，因为它依赖于对短语的解释。然而，单词可以与更基本情感相关联，如愤怒、恐惧、喜悦和惊讶。在下一节中，我们将展示基本情感分析。
 - en: 26.3 Sentiment analysis
+  id: totrans-57
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 26.3 情感分析
 - en: In sentiment analysis, we assign a word to one or more “sentiments”. Although
     this approach will miss context-dependent sentiments, such as sarcasm, when performed
     on large numbers of words, summaries can provide insights.
+  id: totrans-58
   prefs: []
   type: TYPE_NORMAL
+  zh: 在情感分析中，我们将一个词分配给一个或多个“情感”。尽管这种方法会错过依赖于上下文的变化的情感，如讽刺，但在处理大量单词时，总结可以提供洞察。
 - en: The first step in sentiment analysis is to assign a sentiment to each word.
     As we demonstrate, the **tidytext** package includes several maps or lexicons.
     We will also be using the **textdata** package.
+  id: totrans-59
   prefs: []
   type: TYPE_NORMAL
+  zh: 情感分析的第一步是为每个单词分配一个情感。正如我们所展示的，**tidytext**包包括几个映射或词典。我们还将使用**textdata**包。
 - en: '[PRE23]'
+  id: totrans-60
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE23]'
 - en: 'The `bing` lexicon divides words into `positive` and `negative` sentiments.
     We can see this using the *tidytext* function `get_sentiments`:'
+  id: totrans-61
   prefs: []
   type: TYPE_NORMAL
+  zh: '`bing`词典将单词分为`积极`和`消极`情感。我们可以使用*tidytext*函数`get_sentiments`来查看这一点：'
 - en: '[PRE24]'
+  id: totrans-62
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE24]'
 - en: 'The `AFINN` lexicon assigns a score between -5 and 5, with -5 the most negative
     and 5 the most positive. Note that this lexicon needs to be downloaded the first
     time you call the function `get_sentiment`:'
+  id: totrans-63
   prefs: []
   type: TYPE_NORMAL
+  zh: '`AFINN`词典将分数分配在-5到5之间，其中-5表示最消极，5表示最积极。请注意，此词典在第一次调用`get_sentiment`函数时需要下载：'
 - en: '[PRE25]'
+  id: totrans-64
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE25]'
 - en: The `loughran` and `nrc` lexicons provide several different sentiments. Note
     that these also have to be downloaded the first time you use them.
+  id: totrans-65
   prefs: []
   type: TYPE_NORMAL
+  zh: '`loughran`和`nrc`词典提供了几种不同的情感。请注意，这些在第一次使用时也需要下载。'
 - en: '[PRE26]'
+  id: totrans-66
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE26]'
 - en: '[PRE27]'
+  id: totrans-67
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE27]'
 - en: 'For our analysis, we are interested in exploring the different sentiments of
     each tweet so we will use the `nrc` lexicon:'
+  id: totrans-68
   prefs: []
   type: TYPE_NORMAL
+  zh: 对于我们的分析，我们感兴趣的是探索每条推文的不同情感，因此我们将使用`nrc`词典：
 - en: '[PRE28]'
+  id: totrans-69
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE28]'
 - en: 'We can combine the words and sentiments using `inner_join`, which will only
     keep words associated with a sentiment. Here are 10 random words extracted from
     the tweets:'
+  id: totrans-70
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们可以使用`inner_join`将单词和情感结合起来，这将只保留与情感相关的单词。以下是来自推文的10个随机单词：
 - en: '[PRE29]'
+  id: totrans-71
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE29]'
 - en: 'Now we are ready to perform a quantitative analysis comparing Android and iPhone
     by comparing the sentiments of the tweets posted from each device. Here we could
     perform a tweet-by-tweet analysis, assigning a sentiment to each tweet. However,
@@ -297,136 +445,210 @@
     to it, one for each word appearing in the lexicon. For illustrative purposes,
     we will perform a much simpler analysis: we will count and compare the frequencies
     of each sentiment appearing in each device.'
+  id: totrans-72
   prefs: []
   type: TYPE_NORMAL
+  zh: 现在我们准备通过比较从每个设备发布的推文的情感来进行Android和iPhone的定量分析。在这里，我们可以进行逐条推文的分析，为每条推文分配一个情感。然而，这将具有挑战性，因为每条推文都将附有多个情感，每个情感对应于词典中出现的每个单词。为了说明目的，我们将进行一个更简单的分析：我们将计算并比较每个设备中出现的每种情感的频率。
 - en: '[PRE30]'
+  id: totrans-73
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE30]'
 - en: 'For each sentiment, we can compute the odds of being in the device: proportion
     of words with sentiment versus proportion of words without, and then compute the
     odds ratio comparing the two devices.'
+  id: totrans-74
   prefs: []
   type: TYPE_NORMAL
+  zh: 对于每种情感，我们可以计算其在设备中的概率：具有情感的单词比例与没有情感的单词比例，然后计算两个设备之间的优势比。
 - en: '[PRE31]'
+  id: totrans-75
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE31]'
 - en: 'So we do see some differences and the order is interesting: the largest three
     sentiments are disgust, anger, and negative! But are these differences just due
     to chance? How does this compare if we are just assigning sentiments at random?
     To answer this question we can compute, for each sentiment, an odds ratio and
     a confidence interval. We will add the two values we need to form a two-by-two
     table and the odds ratio:'
+  id: totrans-76
   prefs: []
   type: TYPE_NORMAL
+  zh: 因此，我们确实看到了一些差异，并且顺序很有趣：最大的三种情感是厌恶、愤怒和负面！但这些差异仅仅是由于偶然吗？如果我们只是随机分配情感，这会是什么样的比较？为了回答这个问题，我们可以为每种情感计算一个优势比和置信区间。我们将添加形成二维表的两个值和优势比：
 - en: '[PRE32]'
+  id: totrans-77
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE32]'
 - en: 'A graphical visualization shows some sentiments that are clearly overrepresented:'
+  id: totrans-78
   prefs: []
   type: TYPE_NORMAL
+  zh: 图形可视化显示了一些明显过度表示的情感：
 - en: '[PRE33]'
+  id: totrans-79
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE33]'
 - en: '![](../Images/aae0c58bc3def999a6d10176878985a3.png)'
+  id: totrans-80
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/aae0c58bc3def999a6d10176878985a3.png)'
 - en: We see that the disgust, anger, negative, sadness, and fear sentiments are associated
     with the Android in a way that is hard to explain by chance alone. Words not associated
     to a sentiment were strongly associated with the iPhone source, which is in agreement
     with the original claim about hyperbolic tweets.
+  id: totrans-81
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们看到，厌恶、愤怒、负面、悲伤和恐惧情感与 Android 的关联难以仅用偶然来解释。与原始关于夸张推文的声明一致，与情感不相关的单词与 iPhone
+    源有很强的关联。
 - en: 'If we are interested in exploring which specific words are driving these differences,
     we can refer back to our `android_iphone_or` object:'
+  id: totrans-82
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果我们想探索是哪些具体的单词导致了这些差异，我们可以参考我们的`android_iphone_or`对象：
 - en: '[PRE34]'
+  id: totrans-83
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE34]'
 - en: 'and we can make a graph:'
+  id: totrans-84
   prefs: []
   type: TYPE_NORMAL
+  zh: 然后，我们可以绘制一个图表：
 - en: '[PRE35]'
+  id: totrans-85
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE35]'
 - en: '![](../Images/0f2f72b5e5680e819153d7e49391d191.png)'
+  id: totrans-86
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/0f2f72b5e5680e819153d7e49391d191.png)'
 - en: This is just a simple example of the many analyses one can perform with tidytext.
     To learn more, we again recommend the Tidy Text Mining book[^(93)](#fn93).
+  id: totrans-87
   prefs: []
   type: TYPE_NORMAL
+  zh: 这只是使用 tidytext 可以执行的多项分析中的一个简单例子。要了解更多信息，我们再次推荐 Tidy Text Mining 书籍[^(93)](#fn93)。
 - en: 26.4 Exercises
+  id: totrans-88
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 26.4 练习
 - en: Project Gutenberg is a digital archive of public domain books. The R package
     **gutenbergr** facilitates the importation of these texts into R.
+  id: totrans-89
   prefs: []
   type: TYPE_NORMAL
+  zh: Project Gutenberg 是公共领域书籍的数字档案。R 包 **gutenbergr** 便于将这些文本导入 R。
 - en: 'You can install and load by typing:'
+  id: totrans-90
   prefs: []
   type: TYPE_NORMAL
+  zh: 您可以通过输入以下命令进行安装和加载：
 - en: '[PRE36]'
+  id: totrans-91
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE36]'
 - en: 'You can see the books that are available like this:'
+  id: totrans-92
   prefs: []
   type: TYPE_NORMAL
+  zh: 您可以看到可用的书籍如下：
 - en: '[PRE37]'
+  id: totrans-93
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE37]'
 - en: 1\. Use `str_detect` to find the ID of the novel *Pride and Prejudice*.
+  id: totrans-94
   prefs: []
   type: TYPE_NORMAL
+  zh: 1. 使用 `str_detect` 查找小说《傲慢与偏见》的 ID。
 - en: 2\. We notice that there are several versions. The `gutenberg_works()` function
     filters this table to remove replicates and include only English language works.
     Read the help file and use this function to find the ID for *Pride and Prejudice*.
+  id: totrans-95
   prefs: []
   type: TYPE_NORMAL
+  zh: 2. 我们注意到有几个版本。`gutenberg_works()` 函数过滤这个表以删除重复项并仅包括英语作品。阅读帮助文件并使用此函数查找《傲慢与偏见》的
+    ID。
 - en: 3\. Use the `gutenberg_download` function to download the text for Pride and
     Prejudice. Save it to an object called `book`.
+  id: totrans-96
   prefs: []
   type: TYPE_NORMAL
+  zh: 3. 使用 `gutenberg_download` 函数下载《傲慢与偏见》的文本。将其保存到名为 `book` 的对象中。
 - en: 4\. Use the **tidytext** package to create a tidy table with all the words in
     the text. Save the table in an object called `words`
+  id: totrans-97
   prefs: []
   type: TYPE_NORMAL
+  zh: 4. 使用 **tidytext** 包创建一个包含文本中所有单词的整洁表。将表保存到名为 `words` 的对象中
 - en: 5\. We will later make a plot of sentiment versus location in the book. For
     this, it will be useful to add a column with the word number to the table.
+  id: totrans-98
   prefs: []
   type: TYPE_NORMAL
+  zh: 5. 我们将在稍后绘制情感与书中位置的关系图。为此，向表中添加一个包含单词数量的列将很有用。
 - en: '6\. Remove the stop words and numbers from the `words` object. Hint: use the
     `anti_join`.'
+  id: totrans-99
   prefs: []
   type: TYPE_NORMAL
+  zh: 6. 从 `words` 对象中删除停用词和数字。提示：使用 `anti_join`。
 - en: 7\. Now use the `AFINN` lexicon to assign a sentiment value to each word.
+  id: totrans-100
   prefs: []
   type: TYPE_NORMAL
+  zh: 7. 现在使用 `AFINN` 词典为每个单词分配情感值。
 - en: 8\. Make a plot of sentiment score versus location in the book and add a smoother.
+  id: totrans-101
   prefs: []
   type: TYPE_NORMAL
+  zh: 8. 绘制情感得分与书中位置的关系图，并添加一个平滑器。
 - en: 9\. Assume there are 300 words per page. Convert the locations to pages and
     then compute the average sentiment in each page. Plot that average score by page.
     Add a smoother that appears to go through data.
+  id: totrans-102
   prefs: []
   type: TYPE_NORMAL
+  zh: 9. 假设有每页 300 个单词。将位置转换为页码，然后计算每页的平均情感。绘制按页的平均得分。添加一个看起来穿过数据的平滑器。
 - en: '* * *'
+  id: totrans-103
   prefs: []
   type: TYPE_NORMAL
+  zh: '* * *'
 - en: '[https://twitter.com/tvaziri/status/762005541388378112/photo/1](https://twitter.com/tvaziri/status/762005541388378112/photo/1)[↩︎](text-mining.html#fnref90)'
+  id: totrans-104
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[https://twitter.com/tvaziri/status/762005541388378112/photo/1](https://twitter.com/tvaziri/status/762005541388378112/photo/1)[↩︎](text-mining.html#fnref90)'
 - en: '[http://varianceexplained.org/r/trump-tweets/](http://varianceexplained.org/r/trump-tweets/)[↩︎](text-mining.html#fnref91)'
+  id: totrans-105
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[http://varianceexplained.org/r/trump-tweets/](http://varianceexplained.org/r/trump-tweets/)[↩︎](text-mining.html#fnref91)'
 - en: '[https://www.tidytextmining.com/](https://www.tidytextmining.com/)[↩︎](text-mining.html#fnref92)'
+  id: totrans-106
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[https://www.tidytextmining.com/](https://www.tidytextmining.com/)[↩︎](text-mining.html#fnref92)'
 - en: '[https://www.tidytextmining.com/](https://www.tidytextmining.com/)[↩︎](text-mining.html#fnref93)'
+  id: totrans-107
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[https://www.tidytextmining.com/](https://www.tidytextmining.com/)[↩︎](text-mining.html#fnref93)'
