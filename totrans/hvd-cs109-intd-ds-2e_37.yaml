@@ -1,19 +1,27 @@
 - en: 6  Continuous Probability
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 6 连续概率
 - en: 原文：[https://rafalab.dfci.harvard.edu/dsbook-part-2/prob/continuous-probability.html](https://rafalab.dfci.harvard.edu/dsbook-part-2/prob/continuous-probability.html)
+  id: totrans-1
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 原文：[https://rafalab.dfci.harvard.edu/dsbook-part-2/prob/continuous-probability.html](https://rafalab.dfci.harvard.edu/dsbook-part-2/prob/continuous-probability.html)
 - en: '[Probability](../prob/intro-to-prob.html)'
+  id: totrans-2
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[概率](../prob/intro-to-prob.html)'
 - en: '[6  Continuous Probability](../prob/continuous-probability.html)'
+  id: totrans-3
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[6 连续概率](../prob/continuous-probability.html)'
 - en: 'In [Section 1.3](../summaries/distributions.html#sec-ecdf-intro), we discussed
     why it is not practical to assign a frequency to every possible continuous outcome,
     such as an exact height, since there are infinitely many possible values. The
@@ -21,78 +29,116 @@
     individual value has probability zero. Instead, we describe their behavior through
     probability density functions, which let us compute probabilities for intervals
     of values rather than single points.'
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: 在[第1.3节](../summaries/distributions.html#sec-ecdf-intro)中，我们讨论了为什么给每个可能的连续结果（如精确身高）分配频率是不切实际的，因为可能存在无限多个值。同样的想法也适用于在连续尺度上取值的随机结果：每个单独的值概率为零。相反，我们通过概率密度函数来描述它们的行为，这使我们能够计算值区间的概率而不是单个点的概率。
 - en: In this chapter, we introduce the mathematical framework for continuous probability
     distributions and present several useful approximations that frequently appear
     in data analysis.
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: 在本章中，我们介绍了连续概率分布的数学框架，并展示了在数据分析中经常出现的一些有用的近似。
 - en: 6.1 Cumulative distribution functions
+  id: totrans-6
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 6.1 累积分布函数
 - en: 'We return to our example using the heights of adult male students:'
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们回到使用成年男性学生身高的例子：
 - en: '[PRE0]'
+  id: totrans-8
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: '*We previously defined the empirical cumulative distribution function (eCDF)
     as'
+  id: totrans-9
   prefs: []
   type: TYPE_NORMAL
+  zh: '*我们之前定义了经验累积分布函数（eCDF）为'
 - en: '[PRE1]'
+  id: totrans-10
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: '*which, for any value `a`, gives the proportion of values in the list `x` that
     are less than or equal to `a`.'
+  id: totrans-11
   prefs: []
   type: TYPE_NORMAL
+  zh: '*对于任何值`a`，给出列表`x`中小于或等于`a`的值的比例。'
 - en: 'To connect the eCDF to probability, imagine randomly selecting one of the male
     students. What is the chance that he is taller than 70.5 inches? Because each
     student is equally likely to be chosen, this probability is simply the proportion
     of students taller than 70.5 inches. Using the eCDF, we can compute it as:'
+  id: totrans-12
   prefs: []
   type: TYPE_NORMAL
+  zh: 要将经验累积分布函数（eCDF）与概率联系起来，想象随机选择一名男性学生。他身高超过70.5英寸的概率是多少？因为每个学生被选中的可能性相同，所以这个概率就是身高超过70.5英寸的学生比例。使用eCDF，我们可以这样计算它：
 - en: '[PRE2]'
+  id: totrans-13
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: '*The cumulative distribution function (CDF) is the theoretical counterpart
     of the eCDF. Rather than relying on observed data, it assigns probabilities to
     ranges of values for a random outcome \(X\). Specifically, the CDF gives, for
     any number \(a\), the probability that \(X\) is less than or equal to \(a\):'
+  id: totrans-14
   prefs: []
   type: TYPE_NORMAL
+  zh: '*累积分布函数（CDF）是eCDF的理论对应物。它不是依赖于观察数据，而是为随机结果\(X\)的值范围分配概率。具体来说，CDF为任何数\(a\)给出了\(X\)小于或等于\(a\)的概率：'
 - en: \[ F(a) = \Pr(X \leq a) \]
+  id: totrans-15
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ F(a) = \Pr(X \leq a) \]
 - en: 'Once the CDF is defined, we can compute the probability that \(X\) falls within
     any interval. For example, the probability that a student’s height is between
     \(a\) and \(b\) is:'
+  id: totrans-16
   prefs: []
   type: TYPE_NORMAL
+  zh: 一旦定义了CDF，我们就可以计算\(X\)落在任何区间内的概率。例如，一个学生身高在\(a\)和\(b\)之间的概率是：
 - en: \[ \Pr(a < X \leq b) = F(b) - F(a) \]
+  id: totrans-17
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \Pr(a < X \leq b) = F(b) - F(a) \]
 - en: Because we can determine the probability of any event from the CDF, it fully
     defines the probability distribution of a continuous outcome.***
+  id: totrans-18
   prefs: []
   type: TYPE_NORMAL
+  zh: 因为我们可以从累积分布函数（CDF）中确定任何事件的概率，它完全定义了连续结果的概率分布。***
 - en: '***6.2 Probability density function***'
+  id: totrans-19
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '***6.2 概率密度函数***'
 - en: '***For most continuous distributions, we can describe the cumulative distribution
     function (CDF) in terms of another function, \(f(x)\), such that'
+  id: totrans-20
   prefs: []
   type: TYPE_NORMAL
+  zh: '***对于大多数连续分布，我们可以用另一个函数\(f(x)\)来描述累积分布函数（CDF），使得'
 - en: \[ F(b) - F(a) = \int_a^b f(x)\,dx \]
+  id: totrans-21
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ F(b) - F(a) = \int_a^b f(x)\,dx \]
 - en: This function \(f(x)\) is called the *probability density function* (PDF).
+  id: totrans-22
   prefs: []
   type: TYPE_NORMAL
+  zh: 这个函数\(f(x)\)被称为*概率密度函数*（PDF）。
 - en: The PDF plays a role similar to the relative frequency distribution for discrete
     data. The key difference is that for a continuous variable, individual values
     have probability zero, so instead of assigning probability to specific outcomes,
@@ -101,115 +147,167 @@
     is given by the area under the curve between \(a\) and \(b\). Thus, the shape
     of the PDF shows where values are more or less likely to occur, with wider or
     higher regions corresponding to ranges that contain more probability mass.
+  id: totrans-23
   prefs: []
   type: TYPE_NORMAL
+  zh: PDF 在离散数据中的角色类似于相对频率分布。关键区别在于，对于连续变量，单个值具有零概率，因此不是将概率分配给特定的结果，而是 PDF 显示了概率如何在
+    \(x\) 的可能值范围内分布。变量落在某个区间（例如 \([a,b]\)）内的概率由曲线在 \(a\) 和 \(b\) 之间的面积给出。因此，PDF 的形状显示了值更可能或不太可能出现的区域，较宽或较高的区域对应于包含更多概率质量的范围。
 - en: 'To build intuition for why we use a continuous function and an integral to
     describe probabilities, consider a situation where an outcome can be measured
     with very high precision. In this case, we can think of the relative frequency
     as being proportional to the height of the bars in the plot below:'
+  id: totrans-24
   prefs: []
   type: TYPE_NORMAL
+  zh: 为了理解为什么我们使用连续函数和积分来描述概率，考虑一个结果可以非常精确测量的情况。在这种情况下，我们可以将相对频率视为与下面图表中柱子的高度成比例：
 - en: '![](../Images/7f897e4d82979eb0ff06c263043d32db.png)'
+  id: totrans-25
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/7f897e4d82979eb0ff06c263043d32db.png)'
 - en: The probability of the outcome falling within an interval, for example, \(x
     \in [0.5, 1.5]\), can be approximated by adding the heights of the bars within
     that range and dividing by the total height of all bars. As the measurement becomes
     more precise and the bar widths become narrower, this sum approaches the area
     under the curve of the continuous function \(f(x)\).
+  id: totrans-26
   prefs: []
   type: TYPE_NORMAL
+  zh: 结果落在某个区间内的概率，例如 \(x \in [0.5, 1.5]\)，可以通过计算该范围内柱子的高度之和，并除以所有柱子的总高度来近似。随着测量的精度提高和柱宽变窄，这个总和趋近于连续函数
+    \(f(x)\) 曲线下的面积。
 - en: 'In the limit where the bar widths shrink to zero, the sum and the integral
     are identical: the probability of \(x\) falling in an interval is exactly the
     area under \(f(x)\) over that interval. To make this work, we define \(f(x)\)
     so that the total area under the curve equals 1:'
+  id: totrans-27
   prefs: []
   type: TYPE_NORMAL
+  zh: 在柱宽缩小到零的极限情况下，总和与积分是相同的：\(x\) 落在某个区间的概率正好等于 \(f(x)\) 在该区间下的面积。为了使这一点成立，我们定义
+    \(f(x)\) 使得曲线下的总面积等于 1：
 - en: \[ \int_{-\infty}^{\infty} f(x) \, dx = 1 \]
+  id: totrans-28
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \int_{-\infty}^{\infty} f(x) \, dx = 1 \]
 - en: This ensures that \(f(x)\) represents a valid PDF.
+  id: totrans-29
   prefs: []
   type: TYPE_NORMAL
+  zh: 这确保了 \(f(x)\) 代表一个有效的 PDF。
 - en: An important example of a PDF is the normal distribution, introduced in [Section
     2.1](../summaries/numerical-summaries.html#sec-normal-distribution). Its probability
     density function is
+  id: totrans-30
   prefs: []
   type: TYPE_NORMAL
+  zh: PDF 的重要例子是正态分布，它在 [第 2.1 节](../summaries/numerical-summaries.html#sec-normal-distribution)
+    中介绍。它的概率密度函数是
 - en: \[ f(x) = \frac{1}{\sqrt{2\pi}\,\sigma} \exp\left(-\frac{1}{2}\left(\frac{x
     - \mu}{\sigma}\right)^2\right) \]
+  id: totrans-31
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ f(x) = \frac{1}{\sqrt{2\pi}\,\sigma} \exp\left(-\frac{1}{2}\left(\frac{x
+    - \mu}{\sigma}\right)^2\right) \]
 - en: 'and as we previous saw has a bell shaped centered at \(\mu\) and 95% of the
     area with \(2\sigma\) from \(\mu\):'
+  id: totrans-32
   prefs: []
   type: TYPE_NORMAL
+  zh: 正如我们之前所看到的，它有一个以 \(\mu\) 为中心的钟形曲线，95% 的面积在 \(\mu\) 的 \(2\sigma\) 范围内：
 - en: '![](../Images/f37c0ca8684a7bb00aedc27f5b614069.png)'
+  id: totrans-33
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/f37c0ca8684a7bb00aedc27f5b614069.png)'
 - en: In R, this function this PDF is given by `dnorm` and the corresponding CDF by
     `pnorm`.
+  id: totrans-34
   prefs: []
   type: TYPE_NORMAL
+  zh: 在 R 中，这个函数的 PDF 由 `dnorm` 提供，相应的 CDF 由 `pnorm` 提供。
 - en: A random outcome is said to be *normally distributed* with mean `m` and standard
     deviation `s` if its CDF is defined by
+  id: totrans-35
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果一个随机结果被说成是以均值 `m` 和标准差 `s` 正态分布，那么它的 CDF 是通过以下方式定义的：
 - en: '[PRE3]'
+  id: totrans-36
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: '*This is particularly useful in practice. If we are willing to assume that
     a variable, such as height follows a normal distribution, we can answer probability
     questions without needing the full dataset. For example, to find the probability
     that a randomly selected student is taller than 70.5 inches, we only need the
     sample mean and standard deviation:'
+  id: totrans-37
   prefs: []
   type: TYPE_NORMAL
+  zh: '*这在实践中特别有用。如果我们愿意假设一个变量，例如身高，遵循正态分布，我们可以在不需要完整数据集的情况下回答概率问题。例如，要找到随机选择的学生身高超过
+    70.5 英寸的概率，我们只需要样本均值和标准差：'
 - en: '[PRE4]'
+  id: totrans-38
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE4]'
 - en: '*Good — your existing **“Theoretical distributions as approximations”** section
     is clear and conceptually sound, but it overlaps heavily with what you already
     explain in **“The normal distribution”** (particularly where you discuss approximating
     discrete data with a continuous normal curve).*****'
+  id: totrans-39
   prefs: []
   type: TYPE_NORMAL
+  zh: '*很好——你现有的“理论分布作为近似”部分清晰且概念上合理，但它与你在“正态分布”中已经解释的内容重叠严重（尤其是在你讨论使用连续正态曲线近似离散数据的地方）。*****'
 - en: '***6.3 Theoretical distributions as practical models***'
+  id: totrans-40
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**6.3 理论分布作为实际模型**'
 - en: '***Theoretical distributions, such as the normal distribution, are defined
     mathematically rather than derived directly from data. In practice, we use them
     to *approximate* the behavior of real data that arise from complex or unknown
     processes. Almost all datasets we analyze consist of discrete observations, yet
     many of these quantities, such as height, weight, or blood pressure, are better
     understood as measurements of underlying continuous variables.'
+  id: totrans-41
   prefs: []
   type: TYPE_NORMAL
+  zh: '**理论分布，如正态分布，是数学上定义的，而不是直接从数据中推导出来的。在实践中，我们使用它们来*近似*来自复杂或未知过程的实际数据的行为。我们分析的几乎所有的数据集都由离散观测值组成，但许多这些量，如身高、体重或血压，更好地理解为潜在连续变量的测量。**'
 - en: For example, our height data appear discrete because values are typically rounded
     to the nearest inch. A few individuals report more precise metric measurements,
     while most round to whole inches. It is therefore more realistic to think of height
     as a continuous variable whose apparent discreteness comes from rounding.
+  id: totrans-42
   prefs: []
   type: TYPE_NORMAL
+  zh: 例如，我们的身高数据看起来是离散的，因为数值通常会被四舍五入到最接近的英寸。少数人报告了更精确的公制测量值，而大多数人则四舍五入到整数英寸。因此，将身高视为一个连续变量，其明显的离散性来自四舍五入，这更为现实。
 - en: When using a continuous distribution such as the normal, we no longer assign
     probabilities to individual points, each exact value has probability zero, but
     rather to *intervals*. In [Chapter 2](../summaries/numerical-summaries.html) we
     showed how this theoretical distributions can approximate.
+  id: totrans-43
   prefs: []
   type: TYPE_NORMAL
+  zh: 当使用正态分布等连续分布时，我们不再为单个点分配概率，每个确切值都有零概率，而是为*区间*分配概率。在[第2章](../summaries/numerical-summaries.html)中，我们展示了如何近似这些理论分布。
 - en: The key idea is that theoretical distributions serve as *useful approximation*.
     They provide smooth mathematical descriptions that let us compute probabilities
     and reason about uncertainty. Even though real measurements are discrete, the
     continuous approximations that apply, such as the normal distribution, allow us
     to work with data analytically and build models that generalize well beyond a
     specific dataset.***
+  id: totrans-44
   prefs: []
   type: TYPE_NORMAL
+  zh: 关键思想是理论分布作为*有用的近似*。它们提供了平滑的数学描述，使我们能够计算概率并推理不确定性。尽管实际测量是离散的，但适用的连续近似，如正态分布，使我们能够从分析数据并构建泛化能力强的模型。
 - en: '***6.4 Monte Carlo simulations***'
+  id: totrans-45
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**6.4 蒙特卡洛模拟**'
 - en: '***Simulation is a powerful way to understand randomness, approximate probabilities,
     and explore how theoretical models behave in practice. Many of the probability
     models used in data analysis are continuous distributions, which describe outcomes
@@ -219,199 +317,289 @@
     from nearly any probability distribution. In this section, we illustrate Monte
     Carlo techniques using continuous distributions, starting with the normal distribution
     and extending to other commonly used models.'
+  id: totrans-46
   prefs: []
   type: TYPE_NORMAL
+  zh: '**模拟**是一种强大的理解随机性、近似概率以及探索理论模型在实际中如何表现的方法。在数据分析中使用的许多概率模型都是连续分布，它们描述了可以取任何值的范围内的结果。在R中，所有从连续分布生成模拟数据的随机数生成函数，都以字母`r`开头。这些函数构成了一个一致的家族，使我们能够从几乎任何概率分布中进行模拟。在本节中，我们将使用连续分布来展示蒙特卡洛技术，从正态分布开始，扩展到其他常用模型。'
 - en: Normal distribution
+  id: totrans-47
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 正态分布
 - en: R provides the `rnorm` function to generate normally distributed outcomes. It
     takes three arguments, sample size, mean (default 0), and standard deviation (default
     1), and produces random numbers that follow a normal distribution.
+  id: totrans-48
   prefs: []
   type: TYPE_NORMAL
+  zh: R提供了`rnorm`函数来生成正态分布的结果。它接受三个参数，样本大小、均值（默认为0）和标准差（默认为1），并产生遵循正态分布的随机数。
 - en: 'Here is an example of how we could generate data that resemble our reported
     heights:'
+  id: totrans-49
   prefs: []
   type: TYPE_NORMAL
+  zh: 这里是一个我们可以生成类似于我们报告的身高数据的例子：
 - en: '[PRE5]'
+  id: totrans-50
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE5]'
 - en: '*Not surprisingly, the distribution of the simulated heights looks normal:'
+  id: totrans-51
   prefs: []
   type: TYPE_NORMAL
+  zh: '*不出所料，模拟的身高分布看起来是正态的：'
 - en: '![](../Images/b73f375b585602fcd54066f095f17b37.png)'
+  id: totrans-52
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/b73f375b585602fcd54066f095f17b37.png)'
 - en: This is one of the most useful functions in R because it lets us generate data
     that mimic natural variation and explore what outcomes might occur by chance through
     Monte Carlo simulations.*
+  id: totrans-53
   prefs: []
   type: TYPE_NORMAL
+  zh: 这是R中最有用的函数之一，因为它允许我们生成模拟自然变异的数据，并通过蒙特卡洛模拟探索可能偶然发生的后果。
 - en: '*Example: extreme values*'
+  id: totrans-54
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '*示例：极值*'
 - en: '*How rare is it to find a seven-footer among 800 men? Suppose we repeatedly
     sample 800 male students at random and record the tallest in each group. What
     does the distribution of these tallest height look like? The following Monte Carlo
     simulation helps us find out:'
+  id: totrans-55
   prefs: []
   type: TYPE_NORMAL
+  zh: '*在800人中找到一个七英尺高的人有多罕见？假设我们反复随机抽取800名男性学生并记录每组中最高的学生。这些最高身高分布看起来像什么？以下蒙特卡洛模拟帮助我们找出答案：'
 - en: '[PRE6]'
+  id: totrans-56
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE6]'
 - en: '*Having a seven-footer is quite rare:'
+  id: totrans-57
   prefs: []
   type: TYPE_NORMAL
+  zh: '*拥有七英尺高的人相当罕见：'
 - en: '[PRE7]'
+  id: totrans-58
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE7]'
 - en: '*Here is the resulting distribution of the tallest person’s height:'
+  id: totrans-59
   prefs: []
   type: TYPE_NORMAL
+  zh: '*以下是最高身高的人的身高分布：'
 - en: '![](../Images/30482d00fc8656da8166839598e5961d.png)'
+  id: totrans-60
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/30482d00fc8656da8166839598e5961d.png)'
 - en: Although deriving this distribution analytically is possible, it is not straightforward.
     Once derived, it provides a faster way to evaluate probabilities than simulation.
     However, when analytic derivations are too complex or infeasible, Monte Carlo
     simulation offers a practical alternative. By repeatedly generating random samples,
     we can approximate the distribution of almost any statistic and obtain reliable
     estimates even when theoretical results are unavailable.***
+  id: totrans-61
   prefs: []
   type: TYPE_NORMAL
+  zh: 虽然从理论上推导这个分布是可能的，但并不简单。一旦推导出来，它提供了一种比模拟更快的方法来评估概率。然而，当解析推导过于复杂或不可行时，蒙特卡洛模拟提供了一个实用的替代方案。通过反复生成随机样本，我们可以近似几乎任何统计量的分布，并在理论结果不可用的情况下获得可靠的估计。***
 - en: '***Other continuous distributions***'
+  id: totrans-62
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '***其他连续分布***'
 - en: '***The normal distribution is not the only useful theoretical model. Other
     continuous distributions that often appear in data analysis include the Student’s
     *t*, chi-square, exponential, gamma, and beta distributions. Their corresponding
     shorthand names in R are `t`, `chisq`, `exp`, `gamma`, and `beta`.'
+  id: totrans-63
   prefs: []
   type: TYPE_NORMAL
+  zh: '***正态分布并非唯一有用的理论模型。在数据分析中经常出现的其他连续分布包括学生`t`分布、卡方分布、指数分布、伽马分布和贝塔分布。它们在R中的简称分别是`t`、`chisq`、`exp`、`gamma`和`beta`。'
 - en: Each of these distributions has an associated `r` function, such as `rt`, `rchisq`,
     `rexp`, `rgamma`, and `rbeta`, that allows you to generate random samples for
     simulation. This consistency makes it easy to apply Monte Carlo methods to a wide
     variety of data-generating processes.******
+  id: totrans-64
   prefs: []
   type: TYPE_NORMAL
+  zh: 这些分布中的每一个都有一个相关的`r`函数，例如`rt`、`rchisq`、`rexp`、`rgamma`和`rbeta`，允许你为模拟生成随机样本。这种一致性使得将蒙特卡洛方法应用于各种数据生成过程变得容易。
 - en: '***6.5 Calculating densities, probabilities, and quantiles***'
+  id: totrans-65
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '***6.5 计算密度、概率和分位数***'
 - en: '***Beyond simulation, R provides companion functions to evaluate and summarize
     continuous distributions. Each distribution in base R follows a simple naming
     convention:'
+  id: totrans-66
   prefs: []
   type: TYPE_NORMAL
+  zh: '***除了模拟之外，R还提供了评估和总结连续分布的伴随函数。基础R中的每个分布都遵循一个简单的命名约定：'
 - en: '`d` - density function'
+  id: totrans-67
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`d` - 密度函数'
 - en: '`p` - cumulative distribution function (CDF)'
+  id: totrans-68
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`p` - 累积分布函数 (CDF)'
 - en: '`q` - quantile function'
+  id: totrans-69
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`q` - 分位数函数'
 - en: '`r` - random number generation'
+  id: totrans-70
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`r` - 随机数生成'
 - en: For example, the Student’s *t* distribution uses `dt`, `pt`, `qt`, and `rt`.
     Base R includes the most common continuous distributions, normal, *t*, chi-square,
     exponential, gamma, and beta, but many additional distributions are available
     in specialized packages such as **extraDistr** and **actuar**. While there are
     dozens of continuous distributions in use, the ones provided by base R cover the
     majority of applications encountered in practice.***
+  id: totrans-71
   prefs: []
   type: TYPE_NORMAL
+  zh: 例如，学生`t`分布使用`dt`、`pt`、`qt`和`rt`。基础R包括最常见的连续分布，如正态分布、`t`分布、卡方分布、指数分布、伽马分布和贝塔分布，但许多额外的分布可以在专门的包如**extraDistr**和**actuar**中找到。尽管有数十种连续分布被使用，但基础R提供的分布涵盖了实践中遇到的大多数应用。
 - en: '***6.6 Exercises***'
+  id: totrans-72
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '***6.6 练习***'
 - en: '***1\. Assume the distribution of female heights is approximated by a normal
     distribution with a mean of 64 inches and a standard deviation of 3 inches. If
     we pick a female at random, what is the probability that she is 5 feet or shorter?'
+  id: totrans-73
   prefs: []
   type: TYPE_NORMAL
+  zh: '***1. 假设女性身高的分布近似为均值为64英寸，标准差为3英寸的正态分布。如果我们随机选择一个女性，她身高5英尺或更矮的概率是多少？'
 - en: 2\. Assume the distribution of female heights is approximated by a normal distribution
     with a mean of 64 inches and a standard deviation of 3 inches. If we pick a female
     at random, what is the probability that she is 6 feet or taller?
+  id: totrans-74
   prefs: []
   type: TYPE_NORMAL
+  zh: 2. 假设女性身高的分布近似为均值为64英寸，标准差为3英寸的正态分布。如果我们随机选择一个女性，她身高6英尺或更高的概率是多少？
 - en: 3\. Assume the distribution of female heights is approximated by a normal distribution
     with a mean of 64 inches and a standard deviation of 3 inches. If we pick a female
     at random, what is the probability that she is between 61 and 67 inches?
+  id: totrans-75
   prefs: []
   type: TYPE_NORMAL
+  zh: 3. 假设女性身高的分布近似为均值为64英寸，标准差为3英寸的正态分布。如果我们随机选择一个女性，她身高在61到67英寸之间的概率是多少？
 - en: 4\. Repeat the exercise above, but convert everything to centimeters. That is,
     multiply every height, including the standard deviation, by 2.54\. What is the
     answer now?
+  id: totrans-76
   prefs: []
   type: TYPE_NORMAL
+  zh: 4. 重复上述练习，但将所有内容转换为厘米。也就是说，将包括标准差在内的每个身高乘以2.54。现在答案是什么？
 - en: 5\. Notice that the answer to the question does not change when you change units.
     This makes sense since the standard deviations from the average for an entry in
     a list are not affected by what units we use. In fact, if you look closely, you
     notice that 61 and 67 are both 1 SD away from the average. Compute the probability
     that a randomly picked, normally distributed random variable is within 1 SD from
     the average.
+  id: totrans-77
   prefs: []
   type: TYPE_NORMAL
+  zh: 5. 注意，当你改变单位时，问题的答案不会改变。这很有道理，因为列表中一个条目与平均值的偏差不受我们使用的单位影响。实际上，如果你仔细观察，你会发现61和67都是离平均值1个标准差。计算一个随机选择的、正态分布的随机变量在平均值1个标准差内的概率。
 - en: '6\. To understand the mathematical rationale that explains why the answers
     to exercises 3, 4, and 5, suppose we have a random variable \(X\) with average
     \(\mu\) and standard error \(\sigma\) and that we ask what is the probability
     of \(X\) being smaller or equal to \(a\). The probability is:'
+  id: totrans-78
   prefs: []
   type: TYPE_NORMAL
+  zh: 6. 为了理解解释练习3、4和5答案的数学原理，假设我们有一个随机变量 \(X\)，其平均值为 \(\mu\)，标准误差为 \(\sigma\)，并且我们询问
+    \(X\) 小于或等于 \(a\) 的概率。这个概率是：
 - en: '\[ \mathrm{Pr}(X \leq a) \] Remember that, by definition, \(a\) is \((a - \mu)/\sigma\)
     standard deviations \(s\) away from the average \(\mu\). Now we subtract \(\mu\)
     to both sides and then divide both sides by \(\sigma\):'
+  id: totrans-79
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \mathrm{Pr}(X \leq a) \] 请记住，根据定义，\(a\) 是 \((a - \mu)/\sigma\) 标准差 \(s\)
+    离平均值 \(\mu\) 的距离。现在我们从两边减去 \(\mu\)，然后将两边都除以 \(\sigma\)：
 - en: \[ \mathrm{Pr}\left(\frac{X-\mu}{\sigma} \leq \frac{a-\mu}{\sigma} \right) \]
+  id: totrans-80
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \mathrm{Pr}\left(\frac{X-\mu}{\sigma} \leq \frac{a-\mu}{\sigma} \right) \]
 - en: 'The quantity on the left is a standard normal random variable. It has an average
     of 0 and a standard error of 1\. We will call it \(Z\):'
+  id: totrans-81
   prefs: []
   type: TYPE_NORMAL
+  zh: 左边的量是一个标准正态随机变量。它具有平均值为0，标准误差为1。我们将它称为 \(Z\)：
 - en: \[ \mathrm{Pr}\left(Z \leq \frac{a-\mu}{\sigma} \right) \]
+  id: totrans-82
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \mathrm{Pr}\left(Z \leq \frac{a-\mu}{\sigma} \right) \]
 - en: So, no matter the units, the probability of \(X\leq a\) is the same as the probability
     of a standard normal variable being less than \((a - \mu)/s\).
+  id: totrans-83
   prefs: []
   type: TYPE_NORMAL
+  zh: 所以，无论单位如何，\(X\leq a\) 的概率与标准正态变量小于 \((a - \mu)/s\) 的概率相同。
 - en: If `m` is the average and `s` the standard error, which of the following R code
     would give us the right answer in every situation?
+  id: totrans-84
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果 `m` 是平均值，`s` 是标准误差，以下哪个R代码会在每种情况下给出正确答案？
 - en: '`mean(X <= a)`'
+  id: totrans-85
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '`mean(X <= a)`'
 - en: '`pnorm((a - m)/s)`'
+  id: totrans-86
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '`pnorm((a - m)/s)`'
 - en: '`pnorm((a - m)/s, m, s)`'
+  id: totrans-87
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '`pnorm((a - m)/s, m, s)`'
 - en: '`pnorm(a)`'
+  id: totrans-88
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '`pnorm(a)`'
 - en: '7\. Imagine the distribution of male adults is approximately normal with an
     expected value of 69 and a standard deviation of 3\. How tall is the male in the
     99th percentile? Hint: use `qnorm`.'
+  id: totrans-89
   prefs: []
   type: TYPE_NORMAL
+  zh: 7. 想象男性成年人的分布大约是正态分布，期望值为69，标准差为3。第99百分位的男性身高是多少？提示：使用 `qnorm`。
 - en: 8\. IQ scores are approximately normally distributed, with a mean of 100 and
     a standard deviation of 15\. Suppose we want to know what the distribution of
     the highest IQ would look like across all high school graduating classes if 10,000
@@ -419,5 +607,8 @@
     `B = 1000`, where each iteration generates 10,000 IQ scores and records the highest
     value. Then, create a histogram to visualize the distribution of the maximum IQ
     in the district.***
+  id: totrans-90
   prefs: []
   type: TYPE_NORMAL
+  zh: 8. 智商分数大约呈正态分布，均值为100，标准差为15。假设我们想知道在一个学区内每年出生10,000人的情况下，所有高中毕业班中最高智商的分布情况。使用
+    `B = 1000` 运行蒙特卡洛模拟，其中每个迭代生成10,000个智商分数并记录最高值。然后，创建一个直方图来可视化该地区最高智商的分布。

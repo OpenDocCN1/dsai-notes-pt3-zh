@@ -1,19 +1,27 @@
 - en: 18  Organizing with Unix
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 18  使用Unix组织
 - en: 原文：[https://rafalab.dfci.harvard.edu/dsbook-part-1/productivity/unix.html](https://rafalab.dfci.harvard.edu/dsbook-part-1/productivity/unix.html)
+  id: totrans-1
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 原文：[https://rafalab.dfci.harvard.edu/dsbook-part-1/productivity/unix.html](https://rafalab.dfci.harvard.edu/dsbook-part-1/productivity/unix.html)
 - en: '[Productivity Tools](../productivity/intro-productivity.html)'
+  id: totrans-2
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[生产力工具](../productivity/intro-productivity.html)'
 - en: '[18  Organizing with Unix](../productivity/unix.html)'
+  id: totrans-3
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[18  使用Unix组织](../productivity/unix.html)'
 - en: 'Unix is the operating system of choice in data science. We will introduce you
     to the Unix way of thinking using an example: how to keep a data analysis project
     organized. We will learn some of the most commonly used commands along the way.
@@ -21,168 +29,240 @@
     especially when you find yourself using the mouse or performing a repetitive task
     often. In those cases, there is probably a more efficient way to do it in Unix.
     Here are some basic courses to get you started:'
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: Unix是数据科学中首选的操作系统。我们将通过一个示例向您介绍Unix的思维方式：如何组织数据分析项目。我们将学习一些最常用的命令。然而，我们不会深入探讨高级细节。我们强烈鼓励您进一步学习，尤其是在您发现自己经常使用鼠标或执行重复性任务时。在这些情况下，Unix中可能有一种更有效的方法来完成它。以下是一些基本的课程，以帮助您入门：
 - en: “Learn the Command Line” through codecademy[¹](#fn1)
+  id: totrans-5
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: “学习命令行”通过codecademy[¹](#fn1)
 - en: '“LinuxFoundationX: Introduction to Linux” through edX[²](#fn2)'
+  id: totrans-6
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '“LinuxFoundationX: Linux入门”通过edX[²](#fn2)'
 - en: “The Unix Workbench” through coursera[³](#fn3)
+  id: totrans-7
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: “Unix工作台”通过coursera[³](#fn3)
 - en: There are many reference books[⁴](#fn4) as well. Bite Size Linux[⁵](#fn5) and
     Bite Size Command Line[⁶](#fn6) are two particularly clear, succinct, and complete
     examples.
+  id: totrans-8
   prefs: []
   type: TYPE_NORMAL
+  zh: 此外，还有很多参考书籍[⁴](#fn4)。Bite Size Linux[⁵](#fn5) 和 Bite Size Command Line[⁶](#fn6)
+    是两个特别清晰、简洁且完整的示例。
 - en: When searching for Unix resources, keep in mind that other terms used to describe
     what we will learn here are *Linux*, *the shell*, and *the command line*. Basically,
     what we are learning is a series of commands and a way of thinking that facilitates
     the organization of files without using the mouse.
+  id: totrans-9
   prefs: []
   type: TYPE_NORMAL
+  zh: 在搜索Unix资源时，请记住，我们在这里将要学习的其他术语还有 *Linux*、*shell* 和 *命令行*。基本上，我们学习的是一系列命令和一种思维方式，它有助于在不使用鼠标的情况下组织文件。
 - en: To serve as motivation, we are going to start constructing a directory using
     Unix tools and RStudio.
+  id: totrans-10
   prefs: []
   type: TYPE_NORMAL
+  zh: 为了提供动力，我们将开始使用Unix工具和RStudio构建目录。
 - en: 18.1 Naming convention
+  id: totrans-11
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 18.1 命名约定
 - en: Before you start organizing projects with Unix you want to pick a name convention
     that you will use to systematically name your files and directories. This will
     help you find files and know what is in them.
+  id: totrans-12
   prefs: []
   type: TYPE_NORMAL
+  zh: 在您开始使用Unix组织项目之前，您想要选择一个命名约定，这将用于系统地命名您的文件和目录。这将帮助您找到文件并了解它们的内容。
 - en: 'In general you want to name your files in a way that is related to their contents
     and specifies how they relate to other files. The Smithsonian Data Management
     Best Practices[⁷](#fn7) has “five precepts of file naming and organization” and
     they are:'
+  id: totrans-13
   prefs: []
   type: TYPE_NORMAL
+  zh: 通常，你希望以与文件内容相关的方式命名文件，并指定它们与其他文件的关系。史密森尼数据管理最佳实践[⁷](#fn7) 提出了“文件命名和组织五原则”，它们是：
 - en: Have a distinctive, human-readable name that gives an indication of the content.
+  id: totrans-14
   prefs:
   - PREF_BQ
   - PREF_BQ
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 使用一个独特、易于人类阅读的名称，并给出内容的指示。
 - en: Follow a consistent pattern that is machine-friendly.
+  id: totrans-15
   prefs:
   - PREF_BQ
   - PREF_BQ
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 遵循一致的、对机器友好的模式。
 - en: Organize files into directories (when necessary) that follow a consistent pattern.
+  id: totrans-16
   prefs:
   - PREF_BQ
   - PREF_BQ
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 将文件组织到遵循一致模式的目录中（如有必要）。
 - en: Avoid repetition of semantic elements among file and directory names.
+  id: totrans-17
   prefs:
   - PREF_BQ
   - PREF_BQ
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 避免在文件和目录名称中重复语义元素。
 - en: Have a file extension that matches the file format (no changing extensions!)
+  id: totrans-18
   prefs:
   - PREF_BQ
   - PREF_BQ
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 文件扩展名与文件格式匹配（不要更改扩展名！）
 - en: For specific recommendations we highly recommend you follow The Tidyverse Style
     Guide[⁸](#fn8).
+  id: totrans-19
   prefs: []
   type: TYPE_NORMAL
+  zh: 对于具体的建议，我们强烈建议您遵循Tidyverse风格指南[⁸](#fn8)。
 - en: 18.2 The terminal
+  id: totrans-20
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 18.2 终端
 - en: Instead of clicking, dragging, and dropping to organize our files and folders,
     we will be typing Unix commands into the terminal. The way we do this is similar
     to how we type commands into the R console, but instead of generating plots and
     statistical summaries, we will be organizing files on our system.
+  id: totrans-21
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们将不再通过点击、拖动和放下来组织我们的文件和文件夹，而是将Unix命令输入到终端中。我们这样做的方式类似于我们在R控制台中输入命令，但不同的是，我们将不会生成图表和统计摘要，而是将组织系统中的文件。
 - en: 'The terminal is integrated into Mac and Linux systems, but Windows users will
     have to install an *emulator*. Once you have a terminal open, you can start typing
     commands. You should see a blinking cursor at the spot where what you type will
     show up. This position is called the *command line*. Once you type something and
     hit enter on Windows or return on the Mac, Unix will try to execute this command.
     If you want to try out an example, type this command:'
+  id: totrans-22
   prefs: []
   type: TYPE_NORMAL
+  zh: 终端集成在 Mac 和 Linux 系统中，但 Windows 用户将必须安装一个 *模拟器*。一旦打开终端，您就可以开始输入命令。您应该看到一个闪烁的光标，它将显示您输入的内容的位置。这个位置被称为*命令行*。一旦您输入一些内容并在
+    Windows 上按回车或在 Mac 上按 return，Unix 将尝试执行此命令。如果您想尝试一个示例，请输入以下命令：
 - en: '[PRE0]'
+  id: totrans-23
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: The command `echo` is similar to `cat` in R. Executing this line should print
     out `hello world`, then return back to the command line.
+  id: totrans-24
   prefs: []
   type: TYPE_NORMAL
+  zh: 命令 `echo` 与 R 中的 `cat` 类似。执行此行应打印出 `hello world`，然后返回到命令行。
 - en: Notice that you can’t use the mouse to move around in the terminal. You have
     to use the keyboard. To go back to a command you previously typed, you can use
     the up arrow.
+  id: totrans-25
   prefs: []
   type: TYPE_NORMAL
+  zh: 注意，您不能在终端中使用鼠标移动。您必须使用键盘。要返回之前输入的命令，您可以按上箭头键。
 - en: Note that above we included a chunk of code showing Unix commands in the same
     way we have previously shown R commands. We will make sure to distinguish when
     the command is meant for R and when it is meant for Unix.
+  id: totrans-26
   prefs: []
   type: TYPE_NORMAL
+  zh: 注意，上面我们以与之前展示 R 命令相同的方式展示了 Unix 命令的代码块。我们将确保在命令针对 R 和 Unix 时进行区分。
 - en: 18.3 The filesystem
+  id: totrans-27
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 18.3 文件系统
 - en: We refer to all the files, folders, and programs on your computer as *the filesystem*.
     Keep in mind that folders and programs are also files, but this is a technicality
     we rarely think about and ignore in this book. We will focus on files and folders
     for now and discuss programs, or *executables*, in a later section.
+  id: totrans-28
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们将您电脑上的所有文件、文件夹和程序统称为*文件系统*。请记住，文件夹和程序也是文件，但这是一种我们很少考虑且在此书中忽略的技术细节。我们现在将专注于文件和文件夹，并在稍后的章节中讨论程序，或称为*可执行文件*。
 - en: 18.3.1 Directories and subdirectories
+  id: totrans-29
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 18.3.1 目录和子目录
 - en: The first concept you need to grasp to become a Unix user is how your filesystem
     is organized. You should think of it as a series of nested folders, each containing
     files, folders, and executables.
+  id: totrans-30
   prefs: []
   type: TYPE_NORMAL
+  zh: 要成为 Unix 用户，您需要掌握的第一个概念是您的文件系统是如何组织的。您应该将其视为一系列嵌套的文件夹，每个文件夹都包含文件、文件夹和可执行文件。
 - en: 'Here is a visual representation of the structure we are describing:'
+  id: totrans-31
   prefs: []
   type: TYPE_NORMAL
+  zh: 这里是我们所描述的结构的一个视觉表示：
 - en: '![](../Images/a1d665f5ad428033af352589928ee871.png)'
+  id: totrans-32
   prefs: []
   type: TYPE_IMG
+  zh: '![图片](../Images/a1d665f5ad428033af352589928ee871.png)'
 - en: 'In Unix, we refer to folders as *directories*. Directories that are inside
     other directories are often referred to as *subdirectories*. So, for example,
     in the figure above, the directory *docs* has two subdirectories: *reports* and
     *resumes*, and *docs* is a subdirectory of *home*.'
+  id: totrans-33
   prefs: []
   type: TYPE_NORMAL
+  zh: 在 Unix 中，我们将文件夹称为*目录*。位于其他目录内的目录通常被称为*子目录*。例如，在上面的图中，目录 *docs* 有两个子目录：*reports*
+    和 *resumes*，而 *docs* 是 *home* 的子目录。
 - en: 18.3.2 The home directory
+  id: totrans-34
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 18.3.2 家目录
 - en: 'The *home* directory is where all your stuff is kept, as opposed to the system
     files that come with your computer, which are kept elsewhere. In the figure above,
     the directory called *home* represents your home directory, but that is rarely
     the name used. On your system, the name of your home directory is likely the same
     as your username on that system. Below are an example on Windows and Mac showing
     a home directory, in this case, named *rafa*:'
+  id: totrans-35
   prefs: []
   type: TYPE_NORMAL
+  zh: '*家*目录是您所有东西的存放地，与随电脑一起提供的系统文件不同，这些文件存放在其他地方。在上面的图中，名为 *home* 的目录代表您的家目录，但这个名字很少被使用。在您的系统中，您的家目录的名称可能和该系统上的用户名相同。以下是在
+    Windows 和 Mac 上显示家目录的示例，在这种情况下，名为 *rafa*：'
 - en: '![](../Images/2e2826a2d89175ff69ae8797fafae4b7.png)'
+  id: totrans-36
   prefs: []
   type: TYPE_IMG
+  zh: '![图片](../Images/2e2826a2d89175ff69ae8797fafae4b7.png)'
 - en: '![](../Images/fd0317cebc86c9e0a3d7ab371ac5006e.png)'
+  id: totrans-37
   prefs: []
   type: TYPE_IMG
+  zh: '![图片](../Images/fd0317cebc86c9e0a3d7ab371ac5006e.png)'
 - en: 'Now, look back at the figure showing a filesystem. Suppose you are using a
     point-and-click system and you want to remove the file *cv.tex*. Imagine that
     on your screen you can see the *home* directory. To erase this file, you would
@@ -190,58 +270,83 @@
     *cv.tex* to the trash. Here you are experiencing the hierarchical nature of the
     system: *cv.tex* is a file inside the *resumes* directory, which is a subdirectory
     inside the *docs* directory, which is a subdirectory of the *home* directory.'
+  id: totrans-38
   prefs: []
   type: TYPE_NORMAL
+  zh: 现在，回顾一下显示文件系统的图。假设你正在使用一个点选系统，并且你想删除文件*cv.tex*。想象一下，在你的屏幕上你可以看到*home*目录。为了删除这个文件，你需要双击*home*目录，然后是*docs*，然后是*resumes*，最后将*cv.tex*拖到垃圾桶。在这里，你正在体验系统的层次结构：*cv.tex*是*resumes*目录中的一个文件，而*resumes*目录是*docs*目录的子目录，*docs*目录又是*home*目录的子目录。
 - en: 'Now suppose you can’t see your home directory on your screen. You would somehow
     need to make it appear on your screen. One way to do this is to navigate from
     what is called the *root* directory all the way to your home directory. Any filesystem
     will have what is called a *root* directory, which is the directory that contains
     all directories. The *home* directory shown in the figure above will usually be
     two or more levels from the root. On Windows, you will have a structure like this:'
+  id: totrans-39
   prefs: []
   type: TYPE_NORMAL
+  zh: 现在假设你屏幕上看不到你的主目录。你需要以某种方式让它出现在屏幕上。一种方法是从所谓的*root*目录导航到你的主目录。任何文件系统都会有一个所谓的*root*目录，它是包含所有目录的目录。上图所示的*home*目录通常位于root目录的二级或更多级。在Windows上，你将有一个类似的结构：
 - en: '![](../Images/5d9815c46ec9ac0d70e14c93c8a83e5e.png)'
+  id: totrans-40
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/5d9815c46ec9ac0d70e14c93c8a83e5e.png)'
 - en: 'while on the Mac, it will be like this:'
+  id: totrans-41
   prefs: []
   type: TYPE_NORMAL
+  zh: 在Mac上，情况将如下所示：
 - en: '![](../Images/844e64c6ac56c64f141b52c81bcb3899.png)'
+  id: totrans-42
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/844e64c6ac56c64f141b52c81bcb3899.png)'
 - en: '*On Windows, the typical R installation will make your *Documents* directory
     your home directory in R. This will likely be different from your home directory
     in Git Bash. Generally, when we discuss home directories, we refer to the Unix
     home directory which for Windows, in this book, is the Git Bash Unix directory.*'
+  id: totrans-43
   prefs: []
   type: TYPE_NORMAL
+  zh: '*在Windows上，典型的R安装将使你的*Documents*目录成为R中的主目录。这可能与Git Bash中的主目录不同。通常，当我们讨论主目录时，我们指的是Unix主目录，在本书中对于Windows来说，是Git
+    Bash的Unix目录*。'
 - en: '*18.3.3 Working directory*'
+  id: totrans-44
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '*18.3.3 工作目录*'
 - en: '*The concept of a *current location* is part of the point-and-click experience:
     at any given moment we are *in a folder* and see the content of that folder. As
     you search for a file, as we did above, you are experiencing the concept of a
     current location: once you double click on a directory, you change locations and
     are now *in that folder*, as opposed to the folder you were in before.'
+  id: totrans-45
   prefs: []
   type: TYPE_NORMAL
+  zh: '*“当前位置”的概念是点选体验的一部分：在任何给定时刻，我们都在一个文件夹中，并看到该文件夹的内容。当你搜索文件时，就像我们上面做的那样，你正在体验“当前位置”的概念：一旦你双击一个目录，你改变了位置，现在你就在那个文件夹中，而不是你之前所在的文件夹中*。'
 - en: In Unix, we don’t have the same visual cues, but the concept of a *current location*
     is indispensable. We refer to this as the *working directory*. Each terminal window
     you have open has a working directory associated with it.
+  id: totrans-46
   prefs: []
   type: TYPE_NORMAL
+  zh: 在Unix中，我们没有相同的视觉提示，但“当前位置”的概念是必不可少的。我们称这个为*工作目录*。你打开的每个终端窗口都有一个与之关联的工作目录。
 - en: 'How do we know what is our working directory? To answer this, we learn our
     next Unix command: `pwd`, which stands for *print working directory*. This command
     returns the working directory.'
+  id: totrans-47
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们如何知道我们的工作目录是什么？为了回答这个问题，我们学习我们的下一个Unix命令：`pwd`，它代表*打印工作目录*。这个命令返回工作目录。
 - en: 'Open a terminal and type:'
+  id: totrans-48
   prefs: []
   type: TYPE_NORMAL
+  zh: 打开一个终端并输入：
 - en: '[PRE1]'
+  id: totrans-49
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: We do not show the result of running this command because it will be quite different
     on your system compared to others. If you open a terminal and type `pwd` as your
     first command, you should see something like `/Users/yourusername` on a Mac or
@@ -249,31 +354,44 @@
     by calling `pwd` represents your working directory. When we first open a terminal,
     it will start in our home directory so in this case the working directory is the
     home directory.
+  id: totrans-50
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们不展示运行此命令的结果，因为它在你的系统上与其他系统相比可能会有很大差异。如果你打开一个终端并输入`pwd`作为你的第一个命令，你应该在Mac上看到类似`/Users/yourusername`的内容，或者在Windows上看到类似`/c/Users/yourusername`的内容。`pwd`命令返回的字符串代表你的工作目录。当我们第一次打开终端时，它将启动在我们的主目录中，因此在这种情况下，工作目录是主目录。
 - en: 'Notice that the forward slashes `/` in the strings above separate directories.
     So, for example, the location `/c/Users/rafa` implies that our working directory
     is called `rafa` and it is a subdirectory of `Users`, which is a subdirectory
     of `c`, which is a subdirectory of the root directory. The root directory is therefore
     represented by just a forward slash: `/`.*'
+  id: totrans-51
   prefs: []
   type: TYPE_NORMAL
+  zh: 注意到上述字符串中的正斜杠 `/` 用于分隔目录。例如，位置 `/c/Users/rafa` 表示我们的工作目录名为 `rafa`，它是 `Users`
+    的子目录，而 `Users` 又是 `c` 的子目录，`c` 是根目录的子目录。因此，根目录仅用一个正斜杠 `/` 表示：`/`.*
 - en: '*18.3.4 Paths*'
+  id: totrans-52
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '*18.3.4 路径*'
 - en: '*We refer to the string returned by `pwd` as the *full path* of the working
     directory. The name comes from the fact that this string spells out the *path*
     you need to follow to get to the directory in question from the root directory.
     Every directory has a full path. Later, we will about *relative paths*, which
     tell us how to get to a directory from the working directory.'
+  id: totrans-53
   prefs: []
   type: TYPE_NORMAL
+  zh: '*我们称 `pwd` 返回的字符串为工作目录的 *完整路径*。这个名字来源于这个字符串表示了从根目录到达指定目录所需的 *路径*。每个目录都有一个完整路径。稍后，我们将介绍
+    *相对路径*，它告诉我们如何从工作目录到达某个目录。'
 - en: In Unix, we use the shorthand `~` as a nickname for your home directory. So,
     for example, if `docs` is a directory in your home directory, the full path for
     *docs* can be written like this `~/docs`.
+  id: totrans-54
   prefs: []
   type: TYPE_NORMAL
+  zh: 在 Unix 中，我们使用缩写 `~` 作为你的主目录的昵称。例如，如果 `docs` 是你主目录中的一个目录，那么 *docs* 的完整路径可以写成这样
+    `~/docs`。
 - en: Most terminals will show the path to your working directory right on the command
     line. If you are using default settings and open a terminal on the Mac, you will
     see that right at the command line you have something like `computername:~ username`
@@ -281,124 +399,189 @@
     directory `~`. The same is true for the Git Bash terminal where you will see something
     like `username@computername MINGW64 ~`, with the working directory at the end.
     When we change directories, we will see this change on both Macs and Windows.*
+  id: totrans-55
   prefs: []
   type: TYPE_NORMAL
+  zh: 大多数终端会在命令行上直接显示工作目录的路径。如果你使用默认设置并在 Mac 上打开终端，你将看到命令行上显示类似 `computername:~ username`
+    的内容，其中 `~` 代表你的工作目录，在这个例子中是主目录 `~`。Git Bash 终端也是如此，你将看到类似 `username@computername
+    MINGW64 ~` 的内容，工作目录位于末尾。当我们更改目录时，无论是在 Mac 还是 Windows 上，我们都会看到这种变化。
 - en: '*18.4 Unix commands*'
+  id: totrans-56
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '*18.4 Unix 命令*'
 - en: '*We will now learn a series of Unix commands that will permit us to prepare
     a directory for a data science project. We also provide examples of commands that,
     if you type into your terminal, will return an error. This is because we are assuming
     the filesystem in the earlier diagram. Your filesystem is different. In the next
     section, we will provide examples that you can type in.'
+  id: totrans-57
   prefs: []
   type: TYPE_NORMAL
+  zh: '*现在，我们将学习一系列 Unix 命令，这将使我们能够为数据科学项目准备目录。我们还提供了如果你在终端输入将返回错误的命令示例。这是因为我们假设的是早期图中的文件系统。你的文件系统是不同的。在下一节中，我们将提供你可以输入的示例。*'
 - en: '18.4.1 `ls`: Listing directory content'
+  id: totrans-58
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 18.4.1 `ls`：列出目录内容
 - en: In a point-and-click system, we know what is in a directory because we see it.
     In the terminal, we do not see the icons. Instead, we use the command `ls` to
     list the directory content.
+  id: totrans-59
   prefs: []
   type: TYPE_NORMAL
+  zh: 在点对点系统中，我们知道目录中有什么，因为我们能看到它。在终端中，我们看不到图标。相反，我们使用 `ls` 命令来列出目录内容。
 - en: 'To see the content of your home directory, open a terminal and type:'
+  id: totrans-60
   prefs: []
   type: TYPE_NORMAL
+  zh: 要查看你的主目录内容，打开终端并输入：
 - en: '[PRE2]'
+  id: totrans-61
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: We will see more examples soon.
+  id: totrans-62
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们很快将看到更多示例。
 - en: '18.4.2 `mkdir` and `rmdir`: make and remove a directory'
+  id: totrans-63
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 18.4.2 `mkdir` 和 `rmdir`：创建和删除目录
 - en: When we are preparing for a data science project, we will need to create directories.
     In Unix, we can do this with the command `mkdir`, which stands for *make directory*.
+  id: totrans-64
   prefs: []
   type: TYPE_NORMAL
+  zh: 当我们准备数据科学项目时，我们需要创建目录。在 Unix 中，我们可以使用 `mkdir` 命令来完成此操作，该命令代表 *创建目录*。
 - en: Because you will soon be working on several projects, we highly recommend creating
     a directory called *projects* in your home directory.
+  id: totrans-65
   prefs: []
   type: TYPE_NORMAL
+  zh: 由于你很快将参与多个项目，我们强烈建议在你的主目录中创建一个名为 *projects* 的目录。
 - en: 'You can try this particular example on your system. Open a terminal and type:'
+  id: totrans-66
   prefs: []
   type: TYPE_NORMAL
+  zh: 你可以在你的系统上尝试这个特定的示例。打开终端并输入：
 - en: '[PRE3]'
+  id: totrans-67
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: 'If you do this correctly, nothing will happen: no news is good news. If the
     directory already exists, you will get an error message and the existing directory
     will remain untouched.'
+  id: totrans-68
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果你正确执行，将不会有任何操作：没有消息就是好消息。如果目录已存在，你将收到错误消息，现有目录将保持不变。
 - en: 'To confirm that you created the directory, you can list the contents of the
     current working directory:'
+  id: totrans-69
   prefs: []
   type: TYPE_NORMAL
+  zh: 要确认你已创建目录，你可以列出当前工作目录的内容：
 - en: '[PRE4]'
+  id: totrans-70
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE4]'
 - en: You should see the directory we just created listed. Perhaps you can also see
     many other directories that were already on your computer.
+  id: totrans-71
   prefs: []
   type: TYPE_NORMAL
+  zh: 您应该能看到我们刚刚创建的目录被列出。也许您还可以看到许多已经在您计算机上的其他目录。
 - en: 'For illustrative purposes, let’s make a few more directories. You can list
     more than one directory name like this:'
+  id: totrans-72
   prefs: []
   type: TYPE_NORMAL
+  zh: 为了说明目的，让我们再创建几个目录。您可以使用这种方式列出多个目录名：
 - en: '[PRE5]'
+  id: totrans-73
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE5]'
 - en: 'You can check to see if the three directories were created:'
+  id: totrans-74
   prefs: []
   type: TYPE_NORMAL
+  zh: 您可以检查是否创建了三个目录：
 - en: '[PRE6]'
+  id: totrans-75
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE6]'
 - en: If you made a mistake and need to remove the directory, you can use the command
     `rmdir` to remove it.
+  id: totrans-76
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果您犯了一个错误并需要删除目录，您可以使用 `rmdir` 命令来删除它。
 - en: '[PRE7]'
+  id: totrans-77
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE7]'
 - en: This will remove the directory as long as it is empty. If it is not empty, you
     will get an error message and the directory will remain untouched. To remove directories
     that are not empty, we will learn about the command `rm` later.
+  id: totrans-78
   prefs: []
   type: TYPE_NORMAL
+  zh: 这将删除目录，只要它是空的。如果它不为空，您将收到错误消息，并且目录将保持不变。要删除非空目录，我们将在稍后学习 `rm` 命令。
 - en: '18.4.3 `cd`: navigating the filesystem by changing directories'
+  id: totrans-79
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 18.4.3 `cd`：通过更改目录在文件系统中导航
 - en: Next we want to create directories inside directories that we have already created.
     We also want to avoid pointing and clicking our way through the filesystem. We
     explain how to do this in Unix, using the command line.
+  id: totrans-80
   prefs: []
   type: TYPE_NORMAL
+  zh: 接下来，我们想在已创建的目录内创建目录。我们还想避免通过指向和点击在文件系统中导航。我们将在 Unix 中解释如何使用命令行来完成此操作。
 - en: 'Suppose we open a terminal and our working directory is our home directory.
     We want to change our working directory to `projects`. We do this using the `cd`
     command, which stands for *change directory*:'
+  id: totrans-81
   prefs: []
   type: TYPE_NORMAL
+  zh: 假设我们打开一个终端，并且我们的工作目录是主目录。我们想要将工作目录更改为 `projects`。我们使用 `cd` 命令来完成此操作，该命令代表 *更改目录*：
 - en: '[PRE8]'
+  id: totrans-82
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE8]'
 - en: 'To check that the working directory changed, we can use a command we previously
     learned to see our location:'
+  id: totrans-83
   prefs: []
   type: TYPE_NORMAL
+  zh: 要检查工作目录是否已更改，我们可以使用我们之前学过的命令来查看我们的位置：
 - en: '[PRE9]'
+  id: totrans-84
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE9]'
 - en: Our working directory should now be `~/projects`. Note that on your computer
     the home directory `~` will be spelled out to something like `/c/Users/yourusername`.
+  id: totrans-85
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们的工作目录现在应该是 `~/projects`。请注意，在您的计算机上，主目录 `~` 将展开为类似 `/c/Users/yourusername`
+    的路径。
 - en: '*In Unix you can auto-complete by hitting tab. This means that we can type
     `cd d` then hit tab. Unix will either auto-complete if `docs` is the only directory/file
     starting with `d` or show you the options. Try it out! Using Unix without auto-complete
@@ -408,338 +591,526 @@
     start with `/` or `~`, Unix will assume you are typing a relative path, meaning
     that it will look for the directory in your current working directory. So something
     like this will give you an error:'
+  id: totrans-86
   prefs: []
   type: TYPE_NORMAL
+  zh: 在 Unix 中，您可以通过按 Tab 键来自动完成。这意味着我们可以输入 `cd d` 然后按 Tab 键。Unix 会自动完成，如果 `docs`
+    是以 `d` 开头的唯一目录/文件，或者显示选项。试试看！在不使用自动完成的情况下使用 Unix 可能会让人难以忍受。*当使用 `cd` 时，我们可以输入完整的路径，它将以
+    `/` 或 `~` 开头，或者输入一个 *相对路径*。在上面的例子中，我们输入了 `cd projects`，我们使用了一个相对路径。如果您输入的路径不以
+    `/` 或 `~` 开头，Unix 会假设您输入的是一个相对路径，这意味着它会根据您当前的工作目录查找目录。所以类似以下的内容会给出错误信息：
 - en: '[PRE10]'
+  id: totrans-87
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE10]'
 - en: because there is no `Users` directory in your working directory.
+  id: totrans-88
   prefs: []
   type: TYPE_NORMAL
+  zh: 因为在您的工作目录中没有 `Users` 目录。
 - en: 'Now suppose we want to move back to the directory in which `projects` is a
     subdirectory, referred to as the *parent directory*. We could use the full path
     of the parent directory, but Unix provides a shortcut for this: the parent directory
     of the working directory is represented with two dots: `..` so to move back we
     simply type:'
+  id: totrans-89
   prefs: []
   type: TYPE_NORMAL
+  zh: 现在假设我们想要回到 `projects` 是子目录的目录，即所谓的 *父目录*。我们可以使用父目录的完整路径，但 Unix 提供了一个快捷方式：工作目录的父目录用两个点
+    `..` 表示，所以为了返回，我们只需输入：
 - en: '[PRE11]'
+  id: totrans-90
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE11]'
 - en: You should now be back in your home directory which you can confirm using `pwd`.
+  id: totrans-91
   prefs: []
   type: TYPE_NORMAL
+  zh: 现在，您应该已经回到了主目录，您可以使用 `pwd` 命令来确认。
 - en: 'Because we can use full paths with `cd`, the following command:'
+  id: totrans-92
   prefs: []
   type: TYPE_NORMAL
+  zh: 由于我们可以使用带有 `cd` 的完整路径，以下命令：
 - en: '[PRE12]'
+  id: totrans-93
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE12]'
 - en: will always take us back to the home directory, no matter where we are in the
     filesystem.
+  id: totrans-94
   prefs: []
   type: TYPE_NORMAL
+  zh: 无论我们在文件系统中的位置如何，都会带我们回到主目录。
 - en: The working directory also has a nickname, which is a single `.` so if you type
+  id: totrans-95
   prefs: []
   type: TYPE_NORMAL
+  zh: 工作目录还有一个别名，即单个 `.`，所以如果您输入
 - en: '[PRE13]'
+  id: totrans-96
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE13]'
 - en: you will not move. Although this particular use of `.` is not useful, this nickname
     does come in handy sometimes. The reasons are not relevant for this section, but
     you should still be aware of this fact.
+  id: totrans-97
   prefs: []
   type: TYPE_NORMAL
+  zh: 您将不会移动。尽管这种特定用途的`.`并不实用，但这个昵称有时确实很有用。原因与这一节无关，但您仍然应该了解这个事实。
 - en: In summary, we have learned that when using `cd` we either stay put, move to
     a new directory using the desired directory name, or move back to the parent directory
     using `..`.
+  id: totrans-98
   prefs: []
   type: TYPE_NORMAL
+  zh: 总结来说，我们了解到在使用`cd`时，我们要么保持原位，要么使用所需的目录名移动到新目录，或者使用`..`移动到父目录。
 - en: 'When typing directory names, we can concatenate directories with the forward-slashes.
     So if we want a command that takes us to the `projects` directory no matter where
     we are in the filesystem, we can type:'
+  id: totrans-99
   prefs: []
   type: TYPE_NORMAL
+  zh: 在输入目录名时，我们可以使用正斜杠连接目录。所以如果我们想无论在文件系统的哪个位置都能到达`projects`目录，我们可以输入：
 - en: '[PRE14]'
+  id: totrans-100
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE14]'
 - en: which is equivalent to writing the entire path out. For example, in Windows
     we would write something like
+  id: totrans-101
   prefs: []
   type: TYPE_NORMAL
+  zh: 这与写出整个路径是等价的。例如，在Windows中，我们会写类似
 - en: '[PRE15]'
+  id: totrans-102
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE15]'
 - en: The last two commands are equivalent and in both cases we are typing the full
     path.
+  id: totrans-103
   prefs: []
   type: TYPE_NORMAL
+  zh: 最后两个命令是等价的，在两种情况下我们都在输入完整路径。
 - en: 'We can also concatenate directory names for relative paths. For instance, if
     we want to move back to the parent directory of the parent directory of the working
     directory, we can type:'
+  id: totrans-104
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们也可以连接目录名来表示相对路径。例如，如果我们想回到工作目录的父目录的父目录，我们可以输入：
 - en: '[PRE16]'
+  id: totrans-105
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE16]'
 - en: 'Here are a couple of final tips related to the `cd` command. First, you can
     go back to whatever directory you just left by typing:'
+  id: totrans-106
   prefs: []
   type: TYPE_NORMAL
+  zh: 这里有一些与`cd`命令相关的最终提示。首先，您可以通过输入以下内容返回到您刚刚离开的目录：
 - en: '[PRE17]'
+  id: totrans-107
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE17]'
 - en: This can be useful if you type a very long path and then realize you want to
     go back to where you were, and that too has a very long path.
+  id: totrans-108
   prefs: []
   type: TYPE_NORMAL
+  zh: 这在您输入一个非常长的路径然后意识到您想回到之前的位置，而且那个位置也有一个非常长的路径时非常有用。
 - en: 'Second, if you just type:'
+  id: totrans-109
   prefs: []
   type: TYPE_NORMAL
+  zh: 第二，如果您只输入：
 - en: '[PRE18]'
+  id: totrans-110
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE18]'
 - en: you will be returned to your home directory.*
+  id: totrans-111
   prefs: []
   type: TYPE_NORMAL
+  zh: 您将被返回到您的家目录。*
 - en: '*18.4.4 Examples*'
+  id: totrans-112
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '*18.4.4 示例*'
 - en: '*Let’s explore some examples of using `cd`. To help visualize, we will show
     the graphical representation of our filesystem vertically:'
+  id: totrans-113
   prefs: []
   type: TYPE_NORMAL
+  zh: '*让我们探索一些使用`cd`命令的例子。为了帮助可视化，我们将垂直显示我们的文件系统的图形表示：*'
 - en: '![](../Images/bedeb24f7c735dd9fedcf2c52524c625.png)'
+  id: totrans-114
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/bedeb24f7c735dd9fedcf2c52524c625.png)'
 - en: Suppose our working directory is `~/projects` and we want to move to `figs`
     in `project-1`.
+  id: totrans-115
   prefs: []
   type: TYPE_NORMAL
+  zh: 假设我们的工作目录是`~/projects`，我们想移动到`project-1`中的`figs`目录。
 - en: 'Here it is convenient to use relative paths:'
+  id: totrans-116
   prefs: []
   type: TYPE_NORMAL
+  zh: 在这种情况下，使用相对路径会更方便：
 - en: '[PRE19]'
+  id: totrans-117
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE19]'
 - en: Now suppose our working directory is `~/projects` and we want to move to `reports`
     in `docs`, how can we do this?
+  id: totrans-118
   prefs: []
   type: TYPE_NORMAL
+  zh: 现在假设我们的工作目录是`~/projects`，我们想移动到`docs`中的`reports`目录，我们该如何做？
 - en: 'One way is to use relative paths:'
+  id: totrans-119
   prefs: []
   type: TYPE_NORMAL
+  zh: 一种方法是通过相对路径：
 - en: '[PRE20]'
+  id: totrans-120
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE20]'
 - en: 'Another is to use the full path:'
+  id: totrans-121
   prefs: []
   type: TYPE_NORMAL
+  zh: 另一种方法是使用完整路径：
 - en: '[PRE21]'
+  id: totrans-122
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE21]'
 - en: If you are trying this out on your system, remember to use auto-complete.
+  id: totrans-123
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果您在自己的系统上尝试这个操作，请记住使用自动完成功能。
 - en: Let’s examine one more example. Suppose we are in `~/projects/project-1/figs`
     and want to change to `~/projects/project-2`. Again, there are two ways.
+  id: totrans-124
   prefs: []
   type: TYPE_NORMAL
+  zh: 让我们再考察一个例子。假设我们位于`~/projects/project-1/figs`，并想切换到`~/projects/project-2`。同样有两种方法。
 - en: 'With relative paths:'
+  id: totrans-125
   prefs: []
   type: TYPE_NORMAL
+  zh: 使用相对路径：
 - en: '[PRE22]'
+  id: totrans-126
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE22]'
 - en: 'and with full paths:'
+  id: totrans-127
   prefs: []
   type: TYPE_NORMAL
+  zh: 和使用完整路径：
 - en: '[PRE23]**'
+  id: totrans-128
   prefs: []
   type: TYPE_NORMAL
+  zh: '[PRE23]**'
 - en: '**18.5 More Unix commands**'
+  id: totrans-129
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**18.5 更多Unix命令**'
 - en: '**### 18.5.1 `mv`: moving files'
+  id: totrans-130
   prefs: []
   type: TYPE_NORMAL
+  zh: '**### 18.5.1 `mv`: 移动文件**'
 - en: In a point-and-click system, we move files from one directory to another by
     dragging and dropping. In Unix, we use the `mv` command.
+  id: totrans-131
   prefs: []
   type: TYPE_NORMAL
+  zh: 在点按和点击系统中，我们通过拖放将文件从一个目录移动到另一个目录。在Unix中，我们使用`mv`命令。
 - en: '*`mv` will not ask “are you sure?” if your move results in overwriting a file.*  *Now
     that you know how to use full and relative paths, using `mv` is relatively straightforward.
     The general form is:'
+  id: totrans-132
   prefs: []
   type: TYPE_NORMAL
+  zh: '*`mv`命令在移动导致覆盖文件时不会询问“您确定吗？”*  *现在您已经知道如何使用完整和相对路径，使用`mv`命令相对简单。一般形式如下：*'
 - en: '[PRE24]'
+  id: totrans-133
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE24]'
 - en: 'For example, if we want to move the file `cv.tex` from `resumes` to `reports`,
     you could use the full paths like this:'
+  id: totrans-134
   prefs: []
   type: TYPE_NORMAL
+  zh: 例如，如果我们想把文件`cv.tex`从`resumes`移动到`reports`，您可以使用完整的路径，如下所示：
 - en: '[PRE25]'
+  id: totrans-135
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE25]'
 - en: 'You can also use relative paths. You could do this:'
+  id: totrans-136
   prefs: []
   type: TYPE_NORMAL
+  zh: 您也可以使用相对路径。您可以这样做：
 - en: '[PRE26]'
+  id: totrans-137
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE26]'
 - en: 'or this:'
+  id: totrans-138
   prefs: []
   type: TYPE_NORMAL
+  zh: 或者这样：
 - en: '[PRE27]'
+  id: totrans-139
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE27]'
 - en: Notice that in the last one we used the working directory shortcut `.` to give
     a relative path as the destination directory.
+  id: totrans-140
   prefs: []
   type: TYPE_NORMAL
+  zh: 注意到最后一个例子中，我们使用了工作目录快捷方式`.`来提供一个相对路径作为目标目录。
 - en: 'We can also use `mv` to change the name of a file. To do this, instead of the
     second argument being the destination directory, it also includes a filename.
     So, for example, to change the name from `cv.tex` to `resume.tex`, we simply type:'
+  id: totrans-141
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们还可以使用 `mv` 来更改文件名。为此，第二个参数不再是目标目录，它还包括一个文件名。例如，要将文件名从 `cv.tex` 更改为 `resume.tex`，我们只需输入：
 - en: '[PRE28]'
+  id: totrans-142
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE28]'
 - en: 'We can also combine the move and a rename. For example:'
+  id: totrans-143
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们还可以将移动和重命名结合起来。例如：
 - en: '[PRE29]'
+  id: totrans-144
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE29]'
 - en: 'And we can move entire directories. To move the `resumes` directory into `reports`,
     we do as follows:'
+  id: totrans-145
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们还可以移动整个目录。要将 `resumes` 目录移动到 `reports`，我们按照以下步骤操作：
 - en: '[PRE30]'
+  id: totrans-146
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE30]'
 - en: It is important to add the last `/` to make it clear you do not want to rename
     the `resumes` directory to `reports`, but rather move it into the `reports` directory.*
+  id: totrans-147
   prefs: []
   type: TYPE_NORMAL
+  zh: 重要的一点是添加最后的 `/`，以明确你不想重命名 `resumes` 目录为 `reports`，而是将其移动到 `reports` 目录中。
 - en: '*18.5.2 `cp`: copying files*'
+  id: totrans-148
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '*18.5.2 `cp`：复制文件*'
 - en: '*The command `cp` behaves similar to `mv` except instead of moving, we copy
     the file, meaning that the original file stays untouched.'
+  id: totrans-149
   prefs: []
   type: TYPE_NORMAL
+  zh: '*`cp` 命令的行为类似于 `mv`，除了不移动文件，而是复制文件，这意味着原始文件保持不变。'
 - en: 'So in all the `mv` examples above, you can switch `mv` to `cp` and they will
     copy instead of move with one exception: we can’t copy entire directories without
     learning about arguments, which we do later.*'
+  id: totrans-150
   prefs: []
   type: TYPE_NORMAL
+  zh: 所以在上述所有的 `mv` 示例中，你可以将 `mv` 替换为 `cp`，它们将执行复制操作而不是移动操作，只有一个例外：在不了解参数的情况下，我们无法复制整个目录，这一点我们稍后会学习。*
 - en: '*18.5.3 `rm`: removing files*'
+  id: totrans-151
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '*18.5.3 `rm`：删除文件*'
 - en: '*In point-and-click systems, we remove files by dragging and dropping them
     into the trash or using a special click on the mouse. In Unix, we use the `rm`
     command.'
+  id: totrans-152
   prefs: []
   type: TYPE_NORMAL
+  zh: '*在点按式系统中，我们通过将文件拖放到垃圾桶或使用鼠标的特殊点击来删除文件。在 Unix 中，我们使用 `rm` 命令。'
 - en: '*Unlike throwing files into the trash, `rm` is permanent. Be careful!*  *The
     general way it works is as follows:'
+  id: totrans-153
   prefs: []
   type: TYPE_NORMAL
+  zh: '*与将文件拖入垃圾桶不同，`rm` 是永久删除。请务必小心！*  *它的一般工作方式如下：'
 - en: '[PRE31]'
+  id: totrans-154
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE31]'
 - en: 'You can actually list files as well like this:'
+  id: totrans-155
   prefs: []
   type: TYPE_NORMAL
+  zh: 你实际上也可以这样列出文件：
 - en: '[PRE32]'
+  id: totrans-156
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE32]'
 - en: You can use full or relative paths. To remove non-empty directories, you will
     have to learn about arguments, which we do later.**
+  id: totrans-157
   prefs: []
   type: TYPE_NORMAL
+  zh: 你可以使用完整路径或相对路径。要删除非空目录，你将需要学习参数，这一点我们稍后会学习。**
 - en: '**18.5.4 `less`: looking at a file**'
+  id: totrans-158
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '**18.5.4 `less`：查看文件**'
 - en: '**Often you want to quickly look at the content of a file. If this file is
     a text file, the quickest way to do is by using the command `less`. To look a
     the file `cv.tex`, you do this:'
+  id: totrans-159
   prefs: []
   type: TYPE_NORMAL
+  zh: '**通常你想要快速查看文件的内容。如果这个文件是文本文件，最快的方式是使用 `less` 命令。要查看 `cv.tex` 文件，你可以这样做：'
 - en: '[PRE33]'
+  id: totrans-160
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE33]'
 - en: To exit the viewer, you type `q`. If the files are long, you can use the arrow
     keys to move up and down. There are many other keyboard commands you can use within
     `less` to, for example, search or jump pages.
+  id: totrans-161
   prefs: []
   type: TYPE_NORMAL
+  zh: 要退出查看器，你输入 `q`。如果文件很长，你可以使用箭头键上下移动。在 `less` 中，你可以使用许多其他键盘命令，例如搜索或跳转页面。
 - en: If you are wondering why the command is called `less`, it is because the original
     was called `more`, as in “show me more of this file”. The second version was called
     `less` because of the saying “less is more”.****
+  id: totrans-162
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果你想知道为什么命令叫做 `less`，那是因为原始命令叫做 `more`，就像“显示这个文件的更多内容”。第二个版本被叫做 `less` 是因为“少即是多”的说法。****
 - en: '***18.6 Case study: Preparing for a project***'
+  id: totrans-163
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '***18.6 案例研究：为项目做准备***'
 - en: '***We are now ready to prepare a directory for a project. We will use the US
     murders project[⁹](#fn9) as an example.'
+  id: totrans-164
   prefs: []
   type: TYPE_NORMAL
+  zh: '***我们现在已经准备好为项目创建一个目录。我们将以美国谋杀案项目[⁹](#fn9) 为例。'
 - en: 'You should start by creating a directory where you will keep all your projects.
     We recommend a directory called *projects* in your home directory. To do this
     you would type:'
+  id: totrans-165
   prefs: []
   type: TYPE_NORMAL
+  zh: 你应该首先创建一个目录，用于存放你所有的项目。我们建议在主目录中创建一个名为 *projects* 的目录。为此，你需要输入：
 - en: '[PRE34]'
+  id: totrans-166
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE34]'
 - en: Our project relates to gun violence murders so we will call the directory for
     our project `murders`. It will be a subdirectory in our projects directories.
     In the `murders` directory, we will create two subdirectories to hold the raw
     data and intermediate data. We will call these `data` and `rda`, respectively.
+  id: totrans-167
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们的项目与枪支暴力谋杀案相关，因此我们将我们的项目目录命名为 `murders`。它将成为我们项目目录的子目录。在 `murders` 目录中，我们将创建两个子目录来存储原始数据和中间数据。我们将分别称之为
+    `data` 和 `rda`。
 - en: 'Open a terminal and make sure you are in the home directory:'
+  id: totrans-168
   prefs: []
   type: TYPE_NORMAL
+  zh: 打开一个终端并确保你处于主目录：
 - en: '[PRE35]'
+  id: totrans-169
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE35]'
 - en: 'Now run the following commands to create the directory structure we want. At
     the end, we use `ls` and `pwd` to confirm we have generated the correct directories
     in the correct working directory:'
+  id: totrans-170
   prefs: []
   type: TYPE_NORMAL
+  zh: 现在运行以下命令来创建我们想要的目录结构。最后，我们使用 `ls` 和 `pwd` 来确认我们已在正确的当前工作目录中生成了正确的目录：
 - en: '[PRE36]'
+  id: totrans-171
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE36]'
 - en: Note that the full path of our `murders` dataset is `~/projects/murders`.
+  id: totrans-172
   prefs: []
   type: TYPE_NORMAL
+  zh: 注意，我们的 `murders` 数据集的完整路径是 `~/projects/murders`。
 - en: 'So if we open a new terminal and want to navigate into that directory we type:'
+  id: totrans-173
   prefs: []
   type: TYPE_NORMAL
+  zh: 因此，如果我们打开一个新的终端并想要进入那个目录，我们输入：
 - en: '[PRE37]'
+  id: totrans-174
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE37]'
 - en: In [Section 20.3](reproducible-projects.html#sec-organizing) we will describe
     how we can use RStudio to organize a data analysis project, once these directories
     have been created.***
+  id: totrans-175
   prefs: []
   type: TYPE_NORMAL
+  zh: 在 [第 20.3 节](reproducible-projects.html#sec-organizing) 中，我们将描述如何使用 RStudio
+    组织数据分析项目，一旦创建了这些目录。
 - en: '***18.7 Advanced Unix***'
+  id: totrans-176
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '***18.7 高级 Unix***'
 - en: '***Most Unix implementations include a large number of powerful tools and utilities.
     We have just learned the very basics here. We recommend that you use Unix as your
     main file management tool. It will take time to become comfortable with it, but
@@ -747,46 +1118,68 @@
     on the internet. In this section, we superficially cover slightly more advanced
     topics. The main purpose of the section is to make you aware of what is available
     rather than explain everything in detail.'
+  id: totrans-177
   prefs: []
   type: TYPE_NORMAL
+  zh: '***大多数 Unix 实现都包含大量强大的工具和实用程序。我们在这里只学习了最基本的内容。我们建议您将 Unix 作为您的主要文件管理工具。熟悉它需要时间，但当你努力适应时，你会发现自己在通过在互联网上查找解决方案的过程中学习。在本节中，我们简要地覆盖了一些更高级的主题。本节的主要目的是让您了解有哪些可用选项，而不是详细解释所有内容。***'
 - en: 18.7.1 Arguments
+  id: totrans-178
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 18.7.1 参数
 - en: 'Most Unix commands can be run with arguments. Arguments are typically defined
     by using a dash `-` or two dashes `--` (depending on the command) followed by
     a letter or a word. An example of an argument is the `-r` behind `rm`. The `r`
     stands for recursive, and the result is that files and directories are removed
     recursively, which means that if you type:'
+  id: totrans-179
   prefs: []
   type: TYPE_NORMAL
+  zh: 大多数 Unix 命令都可以带参数运行。参数通常通过使用一个短横线 `-` 或两个短横线 `--`（取决于命令）后跟一个字母或单词来定义。`rm` 命令后面的
+    `-r` 就是一个参数的例子。`r` 代表递归，结果是文件和目录将被递归删除，这意味着如果你输入：
 - en: '[PRE38]'
+  id: totrans-180
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE38]'
 - en: all files, subdirectories, files in subdirectories, subdirectories in subdirectories,
     and so on, will be removed. This is equivalent to throwing a folder in the trash,
     except you can’t recover it. Once you remove it, it is deleted for good. Often,
     when you are removing directories, you will encounter files that are protected.
     In such cases, you can use the argument `-f` which stands for `force`.
+  id: totrans-181
   prefs: []
   type: TYPE_NORMAL
+  zh: 所有文件、子目录、子目录中的文件、子目录中的子目录等都将被删除。这相当于将文件夹放入垃圾桶，但你无法恢复它。一旦删除，它将永久删除。通常，当你删除目录时，你会遇到受保护的文件。在这种情况下，你可以使用代表
+    `force` 的参数 `-f`。
 - en: 'You can also combine arguments. For instance, to remove a directory regardless
     of protected files, you type:'
+  id: totrans-182
   prefs: []
   type: TYPE_NORMAL
+  zh: 你也可以组合参数。例如，要删除目录而不考虑受保护的文件，你输入：
 - en: '[PRE39]'
+  id: totrans-183
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE39]'
 - en: Remember that once you remove there is no going back, so use this command very
     carefully.
+  id: totrans-184
   prefs: []
   type: TYPE_NORMAL
+  zh: 请记住，一旦删除，就无法恢复，所以请非常小心地使用此命令。
 - en: 'A command that is often called with argument is `ls`. Here are some examples:'
+  id: totrans-185
   prefs: []
   type: TYPE_NORMAL
+  zh: 常常需要带参数的命令是 `ls`。以下是一些示例：
 - en: '[PRE40]'
+  id: totrans-186
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE40]'
 - en: The `a` stands for all. This argument makes `ls` show you all files in the directory,
     including hidden files. In Unix, all files starting with a `.` are hidden. Many
     applications create hidden directories to store important information without
@@ -794,94 +1187,147 @@
     in [Chapter 19](git.html)). Once you initialize a directory as a git directory
     with `git init`, a hidden directory called `.git` is created. Another hidden file
     is the `.gitignore` file.
+  id: totrans-187
   prefs: []
   type: TYPE_NORMAL
+  zh: '`a` 代表所有。这个参数使得 `ls` 命令显示目录中的所有文件，包括隐藏文件。在 Unix 中，以 `.` 开头的文件都是隐藏的。许多应用程序创建隐藏目录来存储重要信息，而不会干扰你的工作。例如
+    `git`（我们将在第 19 章中深入探讨[Chapter 19](git.html)）。一旦你使用 `git init` 将目录初始化为 git 目录，就会创建一个名为
+    `.git` 的隐藏目录。另一个隐藏文件是 `.gitignore` 文件。'
 - en: 'Another example of using an argument is:'
+  id: totrans-188
   prefs: []
   type: TYPE_NORMAL
+  zh: 使用参数的另一个例子是：
 - en: '[PRE41]'
+  id: totrans-189
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE41]'
 - en: The `l` stands for long and the result is that more information about the files
     is shown.
+  id: totrans-190
   prefs: []
   type: TYPE_NORMAL
+  zh: '`l` 代表长格式，结果是会显示更多关于文件的信息。'
 - en: 'It is often useful to see files in chronological order. For that we use:'
+  id: totrans-191
   prefs: []
   type: TYPE_NORMAL
+  zh: 有时按时间顺序查看文件很有用。为此，我们使用：
 - en: '[PRE42]'
+  id: totrans-192
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE42]'
 - en: 'and to reverse the order of how files are shown you can use:'
+  id: totrans-193
   prefs: []
   type: TYPE_NORMAL
+  zh: 要反转文件显示的顺序，可以使用：
 - en: '[PRE43]'
+  id: totrans-194
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE43]'
 - en: 'We can combine all these arguments to show more information for all files in
     reverse chronological order:'
+  id: totrans-195
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们可以将所有这些参数组合起来，以逆时间顺序显示所有文件的信息：
 - en: '[PRE44]'
+  id: totrans-196
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE44]'
 - en: Each command has a different set of arguments. In the next section, we learn
     how to find out what they each do.
+  id: totrans-197
   prefs: []
   type: TYPE_NORMAL
+  zh: 每个命令都有不同的参数集。在下一节中，我们将学习如何找出每个参数的作用。
 - en: 18.7.2 Getting help
+  id: totrans-198
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 18.7.2 获取帮助
 - en: 'As you may have noticed, Unix uses an extreme version of abbreviations. This
     makes it very efficient, but hard to guess how to call commands. To make up for
     this weakness, Unix includes complete help files or *man pages* (man is short
     for manual). In most systems, you can type `man` followed by the command name
     to get help. So for `ls`, we would type:'
+  id: totrans-199
   prefs: []
   type: TYPE_NORMAL
+  zh: 如你所注意到的，Unix 使用了极端的缩写。这使得它非常高效，但很难猜测如何调用命令。为了弥补这一弱点，Unix 包含了完整的帮助文件或 *man 页面*（man
+    是 manual 的缩写）。在大多数系统中，你可以输入 `man` 后跟命令名称来获取帮助。所以对于 `ls`，我们会输入以下内容：
 - en: '[PRE45]'
+  id: totrans-200
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE45]'
 - en: 'This command is not available in some of the compact implementations of Unix,
     such as Git Bash. An alternative way to get help that works on Git Bash is to
     type the command followed by `--help`. So for `ls`, it would be as follows:'
+  id: totrans-201
   prefs: []
   type: TYPE_NORMAL
+  zh: 这个命令在某些 Unix 的紧凑实现中不可用，例如 Git Bash。在 Git Bash 中获取帮助的替代方法是输入命令后跟 `--help`。对于
+    `ls` 命令，操作如下：
 - en: '[PRE46]'
+  id: totrans-202
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE46]'
 - en: 18.7.3 Pipes
+  id: totrans-203
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 18.7.3 管道
 - en: 'The help pages are typically long and if you type the commands above to see
     the help, it scrolls all the way to the end. It would be useful if we could save
     the help to a file and then use `less` to see it. The `pipe`, written like this
     `|`, does something similar. It *pipes* the results of a command to the command
     after the `pipe`. This is similar to the pipe `|>` that we use in R. To get more
     help we thus can type:'
+  id: totrans-204
   prefs: []
   type: TYPE_NORMAL
+  zh: 帮助页面通常很长，如果你输入上述命令查看帮助，它会滚动到最后一页。如果我们能将帮助保存到文件中，然后使用 `less` 查看，那就很有用了。管道符号 `|`
+    就有类似的功能。它将一个命令的结果传递到管道后面的命令。这类似于我们在 R 中使用的管道 `|>`。因此，为了获取更多帮助，我们可以输入以下内容：
 - en: '[PRE47]'
+  id: totrans-205
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE47]'
 - en: 'or in Git Bash:'
+  id: totrans-206
   prefs: []
   type: TYPE_NORMAL
+  zh: 或者在 Git Bash 中：
 - en: '[PRE48]'
+  id: totrans-207
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE48]'
 - en: 'This is also useful when listing files with many files. We can type:'
+  id: totrans-208
   prefs: []
   type: TYPE_NORMAL
+  zh: 当列出具有许多文件的目录时，这也很有用。我们可以输入以下内容：
 - en: '[PRE49]'
+  id: totrans-209
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE49]'
 - en: 18.7.4 Wild cards
+  id: totrans-210
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 18.7.4 通配符
 - en: 'Some of the most powerful aspects of Unix are the *wild cards*. Suppose we
     want to remove all the temporary html files produced while trouble shooting for
     a project. Imagine there are dozens of files. It would be quite painful to remove
@@ -889,162 +1335,252 @@
     files that end in `.html`. To do this we type *wild card*: `*`. As discussed in
     the data wrangling part of this book, this character means any number of any combination
     of characters. Specifically, to list all html files, we would type:'
+  id: totrans-211
   prefs: []
   type: TYPE_NORMAL
+  zh: Unix 最强大的功能之一是 *通配符*。假设我们想要删除在项目故障排除过程中产生的所有临时 html 文件。想象一下有几十个文件。逐个删除它们会很痛苦。在
+    Unix 中，我们实际上可以编写一个表达式，表示所有以 `.html` 结尾的文件。为此，我们输入通配符：`*`。正如本书数据处理部分所讨论的，这个字符表示任何数量的任何组合的字符。具体来说，要列出所有
+    html 文件，我们会输入以下内容：
 - en: '[PRE50]'
+  id: totrans-212
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE50]'
 - en: 'To remove all html files in a directory, we would type:'
+  id: totrans-213
   prefs: []
   type: TYPE_NORMAL
+  zh: 要删除目录中的所有 html 文件，我们会输入以下内容：
 - en: '[PRE51]'
+  id: totrans-214
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE51]'
 - en: '*The other useful wild card is the `?` symbol. This means any single character.
     So if all the files we want to erase have the form `file-001.html` with the numbers
     going from 1 to 999, we can type:'
+  id: totrans-215
   prefs: []
   type: TYPE_NORMAL
+  zh: '*另一个有用的通配符是 `?` 符号。这意味着任何单个字符。所以如果我们想要删除的所有文件都符合 `file-001.html` 的形式，数字从 1
+    到 999，我们可以输入以下内容：'
 - en: '[PRE52]'
+  id: totrans-216
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE52]'
 - en: This will only remove files with that format.
+  id: totrans-217
   prefs: []
   type: TYPE_NORMAL
+  zh: 这将只会删除具有该格式的文件。
 - en: 'We can combine wild cards. For example, to remove all files with the form `file-001`
     up to `file-999` regardless of suffix, we can type:'
+  id: totrans-218
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们可以将通配符组合起来。例如，要删除所有形式为 `file-001` 到 `file-999` 的文件，无论后缀如何，我们可以输入以下内容：
 - en: '[PRE53]'
+  id: totrans-219
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE53]'
 - en: '*Combining rm with the `*` wild card can be dangerous. There are combinations
     of these commands that will erase your entire filesystem without asking “are you
     sure?”. So make sure you understand how it works before using this wild card with
     the `rm` command. We recommend always checking what files will match the wild
     card first by using the `ls` command.**'
+  id: totrans-220
   prefs: []
   type: TYPE_NORMAL
+  zh: '*将 `rm` 与 `*` 通配符结合使用可能很危险。这些命令的组合可能会在未询问“你确定吗？”的情况下删除你的整个文件系统。所以在使用这个通配符与
+    `rm` 命令之前，请确保你理解它是如何工作的。我们建议在使用这个通配符之前，首先使用 `ls` 命令检查哪些文件会匹配通配符。**'
 - en: '**18.7.5 Environment variables**'
+  id: totrans-221
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '**18.7.5 环境变量**'
 - en: '**Unix has settings that affect your command line *environment*. These are
     called environment variables. The home directory is one of them. We can actually
     change some of these. In Unix, variables are distinguished from other entities
     by adding a `$` in front. The home directory is stored in `$HOME`.'
+  id: totrans-222
   prefs: []
   type: TYPE_NORMAL
+  zh: '**Unix 有一些影响你的命令行 *环境* 的设置。这些被称为环境变量。主目录就是其中之一。我们实际上可以更改其中的一些。在 Unix 中，变量通过在前面添加
+    `$` 来与其他实体区分开来。主目录存储在 `$HOME` 中。**'
 - en: 'Earlier we saw that `echo` is the Unix command for print. So we can see our
     home directory by typing:'
+  id: totrans-223
   prefs: []
   type: TYPE_NORMAL
+  zh: 之前我们看到 `echo` 是 Unix 的打印命令。因此，我们可以通过输入以下内容来查看我们的主目录：
 - en: '[PRE54]'
+  id: totrans-224
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE54]'
 - en: 'You can see them all by typing:'
+  id: totrans-225
   prefs: []
   type: TYPE_NORMAL
+  zh: 你可以通过输入以下内容来查看它们：
 - en: '[PRE55]'
+  id: totrans-226
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE55]'
 - en: You can change some of these environment variables. But their names vary across
     different *shells*. We describe shells in the next section.**
+  id: totrans-227
   prefs: []
   type: TYPE_NORMAL
+  zh: 你可以更改其中的一些环境变量。但它们的名称在不同的 *shell* 中会有所不同。我们将在下一节中描述 shell。**
 - en: '**18.7.6 Shells**'
+  id: totrans-228
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '**18.7.6 Shell**'
 - en: '**Much of what we use in this chapter is part of what is called the *Unix shell*.
     There are actually different shells, but the differences are almost unnoticeable.
     They are also important, although we do not cover those here. You can see what
     shell you are using by typing:'
+  id: totrans-229
   prefs: []
   type: TYPE_NORMAL
+  zh: '**本章中我们使用的大部分内容是所谓的 *Unix shell* 的一部分。实际上存在不同的 shell，但它们的区别几乎不明显。它们也很重要，尽管我们在这里没有涉及。你可以通过输入以下命令来查看你正在使用的
+    shell：'
 - en: '[PRE56]'
+  id: totrans-230
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE56]'
 - en: The most common one is `bash`.
+  id: totrans-231
   prefs: []
   type: TYPE_NORMAL
+  zh: 最常见的是 `bash`。
 - en: 'Once you know the shell, you can change environmental variables. In Bash Shell,
     we do it using `export variable value`. To change the path, described in more
     detail soon, you would type:'
+  id: totrans-232
   prefs: []
   type: TYPE_NORMAL
+  zh: 一旦你知道了 shell，你就可以更改环境变量。在 Bash Shell 中，我们使用 `export variable value` 来做这件事。要更改路径，将在稍后更详细地描述，你会输入：
 - en: '[PRE57]'
+  id: totrans-233
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE57]'
 - en: '*Don’t actually run this command though!*  *There is a program that is run
     before each terminal starts where you can edit variables so they change whenever
     you call the terminal. This changes in different implementations, but if using
     bash, you can create a file called `.bashrc`, `.bash_profile`,`.bash_login`, or
     `.profile`. You might already have one.***'
+  id: totrans-234
   prefs: []
   type: TYPE_NORMAL
+  zh: '*不过，实际上不要运行这个命令!*  *在每次终端启动之前，有一个程序可以编辑变量，这样每次调用终端时它们都会改变。这在不同实现中会有所不同，但如果你使用
+    bash，你可以创建一个名为 `.bashrc`、`.bash_profile`、`.bash_login` 或 `.profile` 的文件。你可能已经有了这样一个文件。***'
 - en: '***18.7.7 Executables***'
+  id: totrans-235
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '***18.7.7 可执行文件***'
 - en: '***In Unix, all programs are files. They are called executables. So `ls`, `mv`
     and `git` are all files. But where are these program files? You can find out using
     the command `which`:'
+  id: totrans-236
   prefs: []
   type: TYPE_NORMAL
+  zh: '***在 Unix 中，所有程序都是文件。它们被称为可执行文件。所以 `ls`、`mv` 和 `git` 都是文件。但这些程序文件在哪里？你可以使用
+    `which` 命令来找出：'
 - en: '[PRE58]'
+  id: totrans-237
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE58]'
 - en: '*That directory is probably full of program files. The directory `/usr/bin`
     usually holds many program files. If you type:'
+  id: totrans-238
   prefs: []
   type: TYPE_NORMAL
+  zh: '*那个目录可能充满了程序文件。通常，`/usr/bin` 目录会存放许多程序文件。如果你输入：'
 - en: '[PRE59]'
+  id: totrans-239
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE59]'
 - en: in your terminal, you will see several executable files.
+  id: totrans-240
   prefs: []
   type: TYPE_NORMAL
+  zh: 在你的终端中，你会看到几个可执行文件。
 - en: There are other directories that usually hold program files. The Application
     directory in the Mac or Program Files directory in Windows are examples.
+  id: totrans-241
   prefs: []
   type: TYPE_NORMAL
+  zh: 通常还有其他目录会存放程序文件。例如，Mac 中的应用程序目录或 Windows 中的程序文件目录。
 - en: 'When you type `ls`, Unix knows to run a program which is an executable that
     is stored in some other directory. So how does Unix know where to find it? This
     information is included in the environmental variable `$PATH`. If you type:'
+  id: totrans-242
   prefs: []
   type: TYPE_NORMAL
+  zh: 当你输入 `ls` 时，Unix 会知道运行一个存储在其他目录中的可执行程序。那么 Unix 是如何知道在哪里找到它的呢？这个信息包含在环境变量 `$PATH`
+    中。如果你输入：
 - en: '[PRE60]'
+  id: totrans-243
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE60]'
 - en: you will see a list of directories separated by `:`. The directory `/usr/bin`
     is probably one of the first ones on the list.
+  id: totrans-244
   prefs: []
   type: TYPE_NORMAL
+  zh: 你会看到一个由 `:` 分隔的目录列表。`/usr/bin` 目录可能是列表中的第一个。
 - en: 'Unix looks for program files in those directories in that order. Although we
     don’t teach it here, you can actually create executables yourself. However, if
     you put it in your working directory and this directory is not on the path, you
     can’t run it just by typing the command. You get around this by typing the full
     path. So if your command is called my-ls, you can type:'
+  id: totrans-245
   prefs: []
   type: TYPE_NORMAL
+  zh: Unix 会按照这个顺序在这些目录中查找程序文件。虽然我们在这里不教授它，但你实际上可以自己创建可执行文件。然而，如果你将它放在你的工作目录中，而这个目录不在路径上，你只能通过输入完整路径来运行它。你可以通过输入完整路径来解决这个问题。所以如果你的命令叫做
+    my-ls，你可以输入：
 - en: '[PRE61]'
+  id: totrans-246
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE61]'
 - en: Once you have mastered the basics of Unix, you should consider learning to write
     your own executables as they can help alleviate repetitive work.****
+  id: totrans-247
   prefs: []
   type: TYPE_NORMAL
+  zh: 一旦你掌握了 Unix 的基础知识，你应该考虑学习编写自己的可执行文件，因为它们可以帮助减轻重复性工作。****
 - en: '****18.7.8 Permissions and file types****'
+  id: totrans-248
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '****18.7.8 权限和文件类型****'
 - en: '****If you type:'
+  id: totrans-249
   prefs: []
   type: TYPE_NORMAL
+  zh: '****如果你输入：'
 - en: '[PRE62]'
+  id: totrans-250
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE62]'
 - en: 'At the beginning, you will see a series of symbols like this `-rw-r--r--`.
     This string indicates the type of file: regular file `-`, directory `d`, or executable
     `x`. This string also indicates the permission of the file: is it readable? writable?
@@ -1052,104 +1588,156 @@
     system edit the file? Can other users execute if the file is executable? This
     is more advanced than what we cover here, but you can learn much more in a Unix
     reference book.****'
+  id: totrans-251
   prefs: []
   type: TYPE_NORMAL
+  zh: 在开始时，你会看到一系列这样的符号 `-rw-r--r--`。这个字符串表示文件的类型：普通文件 `-`、目录 `d` 或可执行文件 `x`。这个字符串还表示文件的权限：它是可读的？可写的？可执行的？系统上的其他用户可以读取文件吗？可以编辑文件吗？如果文件是可执行的，其他用户可以执行吗？这比我们在这里讨论的内容更高级，但你可以在
+    Unix 参考书中学习到更多。****
 - en: '****18.7.9 Commands you should learn****'
+  id: totrans-252
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '**18.7.9 应该学习的命令**'
 - en: '****There are many commands that we do not teach in this book, but we want
     to make you aware of them and what they do. They are:'
+  id: totrans-253
   prefs: []
   type: TYPE_NORMAL
+  zh: '**有许多命令我们没有在这本书中介绍，但我们想让您了解它们以及它们的功能。它们包括：**'
 - en: 'open/start - On the Mac, `open filename` tries to figure out the right application
     of the filename and open it with that application. This is a very useful command.
     On Git Bash, you can try `start filename`. Try opening an `R` or `Rmd` file with
     `open` or `start`: it should open them with RStudio.'
+  id: totrans-254
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: open/start - 在Mac上，`open filename`会尝试确定正确的文件名应用程序，并使用该应用程序打开它。这是一个非常有用的命令。在Git
+    Bash中，您可以尝试`start filename`。尝试使用`open`或`start`打开一个`R`或`Rmd`文件：它应该使用RStudio打开它们。
 - en: nano - Opens a bare-bones text editor.
+  id: totrans-255
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: nano - 打开一个简单的文本编辑器。
 - en: tar - Archives files and subdirectories of a directory into one file.
+  id: totrans-256
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: tar - 将目录中的文件和子目录存档到一个文件中。
 - en: ssh - Connects to another computer.
+  id: totrans-257
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: ssh - 连接到另一台计算机。
 - en: find - Finds files by filename on your system.
+  id: totrans-258
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: find - 在您的系统中通过文件名查找文件。
 - en: grep - Searches for patterns in a file.
+  id: totrans-259
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`grep` - 在文件中搜索模式。'
 - en: awk/sed - These are two very powerful commands that permit you to find specific
     strings in files and change them.
+  id: totrans-260
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: awk/sed - 这两个命令非常强大，允许您在文件中查找特定的字符串并更改它们。
 - en: ln - Creates a symbolic link. We do not recommend its use, but you should be
     familiar with it.****
+  id: totrans-261
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: ln - 创建符号链接。我们不推荐使用它，但您应该熟悉它。****
 - en: '****18.7.10 File manipulation in R****'
+  id: totrans-262
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '**18.7.10 R中的文件操作**'
 - en: '****We can also perform file management from within R. The key functions to
     learn about can be seen by looking at the help file for `[?files](https://rdrr.io/r/base/files.html)`[^(10)](#fn10).
     Another useful function is `unlink`.'
+  id: totrans-263
   prefs: []
   type: TYPE_NORMAL
+  zh: '**我们还可以在R中执行文件管理。要了解的关键函数可以通过查看`[?files](https://rdrr.io/r/base/files.html)`[^(10)](#fn10)的帮助文件来查看。另一个有用的函数是`unlink`。**'
 - en: Although not generally recommended, you can run Unix commands in R using `system`.*******
+  id: totrans-264
   prefs: []
   type: TYPE_NORMAL
+  zh: 虽然通常不推荐，但您可以使用`system`在R中运行Unix命令。*******
 - en: '* * *'
+  id: totrans-265
   prefs: []
   type: TYPE_NORMAL
+  zh: '* * *'
 - en: '*****1.  [https://www.codecademy.com/learn/learn-the-command-line](https://www.codecademy.com/learn/learn-the-command-line)[↩︎](#fnref1)'
+  id: totrans-266
   prefs: []
   type: TYPE_NORMAL
+  zh: '*****1.  [https://www.codecademy.com/learn/learn-the-command-line](https://www.codecademy.com/learn/learn-the-command-line)[↩︎](#fnref1)'
 - en: '[https://www.edx.org/course/introduction-linux-linuxfoundationx-lfs101x-1](https://www.edx.org/course/introduction-linux-linuxfoundationx-lfs101x-1)[↩︎](#fnref2)'
+  id: totrans-267
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[https://www.edx.org/course/introduction-linux-linuxfoundationx-lfs101x-1](https://www.edx.org/course/introduction-linux-linuxfoundationx-lfs101x-1)[↩︎](#fnref2)'
 - en: '[https://www.coursera.org/learn/unix](https://www.coursera.org/learn/unix)[↩︎](#fnref3)'
+  id: totrans-268
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[https://www.coursera.org/learn/unix](https://www.coursera.org/learn/unix)[↩︎](#fnref3)'
 - en: '[https://www.quora.com/Which-are-the-best-Unix-Linux-reference-books](https://www.quora.com/Which-are-the-best-Unix-Linux-reference-books)[↩︎](#fnref4)'
+  id: totrans-269
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[https://www.quora.com/Which-are-the-best-Unix-Linux-reference-books](https://www.quora.com/Which-are-the-best-Unix-Linux-reference-books)[↩︎](#fnref4)'
 - en: '[https://gumroad.com/l/bite-size-linux](https://gumroad.com/l/bite-size-linux)[↩︎](#fnref5)'
+  id: totrans-270
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[https://gumroad.com/l/bite-size-linux](https://gumroad.com/l/bite-size-linux)[↩︎](#fnref5)'
 - en: '[https://jvns.ca/blog/2018/08/05/new-zine--bite-size-command-line/](https://jvns.ca/blog/2018/08/05/new-zine--bite-size-command-line/)[↩︎](#fnref6)'
+  id: totrans-271
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[https://jvns.ca/blog/2018/08/05/new-zine--bite-size-command-line/](https://jvns.ca/blog/2018/08/05/new-zine--bite-size-command-line/)[↩︎](#fnref6)'
 - en: '[https://library.si.edu/sites/default/files/tutorial/pdf/filenamingorganizing20180227.pdf](https://library.si.edu/sites/default/files/tutorial/pdf/filenamingorganizing20180227.pdf)[↩︎](#fnref7)'
+  id: totrans-272
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[https://library.si.edu/sites/default/files/tutorial/pdf/filenamingorganizing20180227.pdf](https://library.si.edu/sites/default/files/tutorial/pdf/filenamingorganizing20180227.pdf)[↩︎](#fnref7)'
 - en: '[https://style.tidyverse.org/](https://style.tidyverse.org/)[↩︎](#fnref8)'
+  id: totrans-273
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[https://style.tidyverse.org/](https://style.tidyverse.org/)[↩︎](#fnref8)'
 - en: '[https://github.com/rairizarry/murders](https://github.com/rairizarry/murders)[↩︎](#fnref9)'
+  id: totrans-274
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[https://github.com/rairizarry/murders](https://github.com/rairizarry/murders)[↩︎](#fnref9)'
 - en: '[https://rdrr.io/r/base/files.html](https://rdrr.io/r/base/files.html)[↩︎](#fnref10)*****'
+  id: totrans-275
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[https://rdrr.io/r/base/files.html](https://rdrr.io/r/base/files.html)[↩︎](#fnref10)*****'

@@ -1,69 +1,98 @@
 - en: 3  Comparing Groups
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 3  比较组
 - en: 原文：[https://rafalab.dfci.harvard.edu/dsbook-part-2/summaries/comparing-groups.html](https://rafalab.dfci.harvard.edu/dsbook-part-2/summaries/comparing-groups.html)
+  id: totrans-1
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 原文：[https://rafalab.dfci.harvard.edu/dsbook-part-2/summaries/comparing-groups.html](https://rafalab.dfci.harvard.edu/dsbook-part-2/summaries/comparing-groups.html)
 - en: '[Summary Statistics](../summaries/intro-summaries.html)'
+  id: totrans-2
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[汇总统计](../summaries/intro-summaries.html)'
 - en: '[3  Comparing Groups](../summaries/comparing-groups.html)'
+  id: totrans-3
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[3  比较组](../summaries/comparing-groups.html)'
 - en: 'So far, we have focused on summarizing the distribution of a single variable,
     describing its center, spread, and shape. In practice, however, one of the most
     common goals of data analysis is **comparison**: we want to know how one group
     differs from another, how a treatment compares to a control, or how outcomes vary
     across conditions. Comparing groups is often the first step toward uncovering
     relationships and understanding sources of variation.'
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: 到目前为止，我们一直专注于总结单个变量的分布，描述其中心、离散度和形状。然而，在实践中，数据分析的最常见目标之一是**比较**：我们想知道一个组与另一个组有何不同，治疗与对照如何比较，或者结果在不同条件下如何变化。比较组通常是揭示关系和理解变异来源的第一步。
 - en: The tools we developed for describing distributions, histograms, boxplots, and
     numerical summaries such as the mean and median, extend naturally to comparisons.
     By examining these summaries **within subgroups** or by comparing **quantiles
     across distributions**, we can reveal patterns that a single summary might conceal.
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们为描述分布开发的工具，如直方图、箱线图和数值摘要（如均值和中位数），自然地扩展到比较。通过检查这些摘要**在子组内**或通过比较**分布之间的分位数**，我们可以揭示单个摘要可能隐藏的模式。
 - en: 'In this chapter, we explore two key techniques for comparing distributions:'
+  id: totrans-6
   prefs: []
   type: TYPE_NORMAL
+  zh: 在本章中，我们探讨了比较分布的两个关键技术：
 - en: '**Quantile–quantile**, which provide a systematic way to compare the shapes
     of two distributions, including how observed data differ from theoretical models
     such as the normal distribution.'
+  id: totrans-7
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**分位数-分位数**，提供了一种系统地比较两个分布形状的方法，包括观察数据与理论模型（如正态分布）的差异。'
 - en: '**Stratification**, which involves dividing data into meaningful subgroups
     and examining each distribution separately.'
+  id: totrans-8
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**分层**，涉及将数据划分为有意义的子组并分别检查每个分布。'
 - en: Together, these methods complete our descriptive toolkit, bridging the transition
     from exploring single variables to analyzing relationships between variables.
+  id: totrans-9
   prefs: []
   type: TYPE_NORMAL
+  zh: 这些方法共同构成了我们的描述性工具集，连接了从探索单个变量到分析变量之间关系的过渡。
 - en: 3.1 Quantile-quantile plots
+  id: totrans-10
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 3.1 分位数-分位数图
 - en: A systematic way to compare two distributions is to compare their cumulative
     distribution functions (CDFs). A practical way to do this is through their *quantiles*.
+  id: totrans-11
   prefs: []
   type: TYPE_NORMAL
+  zh: 比较两个分布的系统方法是比较它们的累积分布函数（CDF）。一种实际的方法是通过它们的*分位数*。
 - en: For a proportion \(0 \leq p \leq 1\), the *\(p\)-th quantile* of a distribution
     \(F(x)\) is the value \(q\) such that \(F(q) = p\), or \(q = F^{-1}(p)\). For
     example, \(p = 0\) gives the minimum, \(p = 0.5\) gives the median, and \(p =
     1\) gives the maximum.
+  id: totrans-12
   prefs: []
   type: TYPE_NORMAL
+  zh: 对于一个比例 \(0 \leq p \leq 1\)，分布 \(F(x)\) 的*第 \(p\) 个分位数*是值 \(q\)，使得 \(F(q) = p\)，或者
+    \(q = F^{-1}(p)\)。例如，\(p = 0\) 给出最小值，\(p = 0.5\) 给出中位数，\(p = 1\) 给出最大值。
 - en: The notation \(Q(p) = F^{-1}(p)\) or equivalently \(q_p = F^{-1}(p)\) is commonly
     used in textbooks to denote the \(p\)-th quantile of a distribution.
+  id: totrans-13
   prefs: []
   type: TYPE_NORMAL
+  zh: 符号 \(Q(p) = F^{-1}(p)\) 或等价地 \(q_p = F^{-1}(p)\) 常用于教科书，以表示分布的第 \(p\) 个分位数。
 - en: A *quantile–quantile plot (qqplot)* provides a visual way to compare two distributions,
     say \(F_1(x)\) and \(F_2(x)\), by plotting the quantiles of one distribution against
     the corresponding quantiles of the other. Specifically, if we define \[ Q_1(p_i)
@@ -74,36 +103,56 @@
     \(n\) is the sample size of the smaller dataset. Subtracting \(0.5\) prevents
     evaluating quantiles at \(p = 0\) or \(p = 1\), which for some theoretical distributions,
     such as the normal, would correspond to \(-\infty\) or \(+\infty\).
+  id: totrans-14
   prefs: []
   type: TYPE_NORMAL
+  zh: '*分位数-分位数图（qqplot）*提供了一种可视化的方法来比较两个分布，例如 \(F_1(x)\) 和 \(F_2(x)\)，通过绘制一个分布的分位数与另一个分布的对应分位数进行比较。具体来说，如果我们定义
+    \[ Q_1(p_i) = F_1^{-1}(p_i) \quad \text{和} \quad Q_2(p_i) = F_2^{-1}(p_i) \] 对于一组概率
+    \(p_1, \dots, p_m\)，那么 QQ 图是通过绘制对 \[ \{Q_1(p_i),\, Q_2(p_i)\}, \quad i = 1, \dots,
+    m. \] 的对来创建的。这些概率的常见选择是 \[ p_i = \frac{i - 0.5}{n}, \quad i = 1, \dots, n, \]
+    其中 \(n\) 是较小数据集的样本大小。减去 \(0.5\) 防止在 \(p = 0\) 或 \(p = 1\) 时评估分位数，对于某些理论分布，如正态分布，这会对应于
+    \(-\infty\) 或 \(+\infty\)。'
 - en: The most common use of qqplots is to assess whether two distributions, \(F_1(x)\)
     and \(F_2(x)\), are similar. If the points in the qqplot fall approximately along
     the identity line, it suggests that the two distributions have a similar shape.
+  id: totrans-15
   prefs: []
   type: TYPE_NORMAL
+  zh: QQ 图最常见的使用是评估两个分布 \(F_1(x)\) 和 \(F_2(x)\) 是否相似。如果 QQ 图中的点大致沿身份线分布，这表明两个分布具有相似的形状。
 - en: Example
+  id: totrans-16
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 示例
 - en: 'Up to now we have only examined the distribution of heights for males. We expect
     that the distribution for females to be similar except for 2-3 inch shift due
     to males being taller than females, on average. A qqplot confirms this:'
+  id: totrans-17
   prefs: []
   type: TYPE_NORMAL
+  zh: 到目前为止，我们只考察了男性的身高分布。我们预计女性的分布将与男性相似，但平均身高差异会导致 2-3 英寸的偏移。QQ 图确认了这一点：
 - en: '[PRE0]'
+  id: totrans-18
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: '*![](../Images/69cfaf931a3cc6bdea455c55837fa9c0.png)*  *We see that in the
     middle of the plot the points are on the identiy line, confirming the distirbutiosn
     are similar except for the shift. However, for the smaller and larger quantiles
     we see a deviation from the line. We come back to this observation in [Section
     3.3](#sec-stratification).*'
+  id: totrans-19
   prefs: []
   type: TYPE_NORMAL
+  zh: '*![](../Images/69cfaf931a3cc6bdea455c55837fa9c0.png)*  *我们看到在图的中部，点位于身份线上，确认了分布相似，除了偏移。然而，对于较小的和较大的分位数，我们看到偏离了线。我们将在[第
+    3.3 节](#sec-stratification)中回到这个观察。*'
 - en: '*Percentiles*'
+  id: totrans-20
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '*百分位数*'
 - en: '**Percentiles* are special cases of *quantiles* that are commonly used. The
     percentiles are the quantiles you obtain when setting the \(p\) at \(0.01, 0.02,
     ..., 0.99\). For example, we refer to the case of \(p = 0.25\) as the 25th percentile,
@@ -111,125 +160,190 @@
     is the 50th, also known as the *median*. Another special case that receives a
     name are the *quartiles*, which are obtained when setting \(p = 0.25,0.50\), and
     \(0.75\).*'
+  id: totrans-21
   prefs: []
   type: TYPE_NORMAL
+  zh: '**百分位数**是**分位数**的特殊情况，通常被使用。百分位数是在将 \(p\) 设置为 \(0.01, 0.02, ..., 0.99\) 时获得的分位数。例如，我们将
+    \(p = 0.25\) 的情况称为第 25 个百分位数，表示低于此值的 25% 的数据。最著名的百分位数是第 50 个，也称为**中位数**。另一个获得名称的特殊情况是**四分位数**，当将
+    \(p\) 设置为 \(0.25,0.50\) 和 \(0.75\) 时获得。*'
 - en: '*3.2 Assessing normality with QQ plots*'
+  id: totrans-22
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '*3.2 使用 QQ 图评估正态性*'
 - en: '*A common use of qqplots is to assess whether data follow a normal distribution.'
+  id: totrans-23
   prefs: []
   type: TYPE_NORMAL
+  zh: '*QQ 图的常见用途是评估数据是否遵循正态分布。'
 - en: 'The cumulative distribution function (CDF) of the standard normal is written
     as \(\Phi(x)\), giving the probability that a normal random variable is less than
     \(x\). For example, \(\Phi(-1.96) = 0.025\) and \(\Phi(1.96) = 0.975\). In R,
     this is computed with `pnorm`:'
+  id: totrans-24
   prefs: []
   type: TYPE_NORMAL
+  zh: 标准正态分布的累积分布函数（CDF）表示为 \(\Phi(x)\)，表示一个正态随机变量小于 \(x\) 的概率。例如，\(\Phi(-1.96) =
+    0.025\) 和 \(\Phi(1.96) = 0.975\)。在 R 中，这可以通过 `pnorm` 函数计算：
 - en: '[PRE1]'
+  id: totrans-25
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: '*The inverse of \(\Phi\), denoted \(\Phi^{-1}(p)\), provides the **theoretical
     quantiles**. For instance, \(\Phi^{-1}(0.975) = 1.96\) which we compute with `qnorm`:'
+  id: totrans-26
   prefs: []
   type: TYPE_NORMAL
+  zh: '**\(\Phi\) 的逆，表示为 \(\Phi^{-1}(p)\)，提供了**理论分位数**。例如，\(\Phi^{-1}(0.975) = 1.96\)，我们可以通过
+    `qnorm` 计算得到：'
 - en: '[PRE2]'
+  id: totrans-27
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: '*By default, `pnorm` and `qnorm` assume the **standard normal** distribution
     (mean 0, SD 1). You can specify different parameters with the `mean` and `sd`
     arguments:'
+  id: totrans-28
   prefs: []
   type: TYPE_NORMAL
+  zh: '*默认情况下，`pnorm` 和 `qnorm` 假设为**标准正态分布**（均值 0，标准差 1）。您可以使用 `mean` 和 `sd` 参数指定不同的参数：'
 - en: '[PRE3]'
+  id: totrans-29
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: '*For observed data, we can compute sample quantiles using the `quantile` function.
     For example, here are the quartiles of male heights:'
+  id: totrans-30
   prefs: []
   type: TYPE_NORMAL
+  zh: '*对于观察数据，我们可以使用 `quantile` 函数计算样本分位数。例如，以下是男性身高的四分位数：'
 - en: '[PRE4]'
+  id: totrans-31
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE4]'
 - en: '*To check whether these data are approximately normal, we can construct a QQ
     plot following these steps:'
+  id: totrans-32
   prefs: []
   type: TYPE_NORMAL
+  zh: '*为了检查这些数据是否近似正态分布，我们可以按照以下步骤构建 QQ 图：'
 - en: Define a vector of proportions \(p_1, \dots, p_m\).
+  id: totrans-33
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 定义一个比例向量 \(p_1, \dots, p_m\)。
 - en: Compute sample quantiles from the data.
+  id: totrans-34
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 从数据中计算样本分位数。
 - en: Compute theoretical quantiles from a normal distribution with the same mean
     and SD as the data.
+  id: totrans-35
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 从具有与数据相同均值和标准差的正态分布中计算理论分位数。
 - en: Plot the two sets of quantiles against each other.
+  id: totrans-36
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 将两组分位数相互绘制。
 - en: 'Example:'
+  id: totrans-37
   prefs: []
   type: TYPE_NORMAL
+  zh: 示例：
 - en: '[PRE5]'
+  id: totrans-38
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE5]'
 - en: '*![](../Images/075f73da751c892a7b2e54745a7c062c.png)*  *Because the points
     fall close to the identity line, we conclude that the normal distribution provides
     a good approximation for this dataset.'
+  id: totrans-39
   prefs: []
   type: TYPE_NORMAL
+  zh: '*![](../Images/075f73da751c892a7b2e54745a7c062c.png)*  *因为点接近身份线，我们得出结论，正态分布为这个数据集提供了一个很好的近似。'
 - en: 'The code becomes simpler if we standardize the data first:'
+  id: totrans-40
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果我们首先标准化数据，代码就会变得简单：
 - en: '[PRE6]'
+  id: totrans-41
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE6]'
 - en: '*R provides built-in functions for generating qqplots that compare observed
     data to a normal distribution:'
+  id: totrans-42
   prefs: []
   type: TYPE_NORMAL
+  zh: '*R 提供了生成与正态分布比较的 q-q 图的内置函数：'
 - en: '[PRE7]'
+  id: totrans-43
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE7]'
 - en: '*These functions use the average and standard deviation of the data `x` to
     define the theoretical normal distribution used for the x-axis values. In other
     words, the plotted line represents what we would expect if the data were normally
     distributed with the same mean and spread as the observed sample.'
+  id: totrans-44
   prefs: []
   type: TYPE_NORMAL
+  zh: '*这些函数使用数据 `x` 的平均值和标准差来定义用于 x 轴值的理论正态分布。换句话说，绘制的线代表如果数据具有与观察样本相同的均值和扩散的正态分布，我们会期望看到的情况。'
 - en: 'And equivalently with **ggplot2**:'
+  id: totrans-45
   prefs: []
   type: TYPE_NORMAL
+  zh: 并且与 **ggplot2** 相当：
 - en: '[PRE8]'
+  id: totrans-46
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE8]'
 - en: '**By default, both `qqnorm` and `geom_qq` use all \(n\) quantiles, with \(p_i
     = (i - 0.5)/n\). Because of this default behavior, large datasets can produce
     thousands of overlapping points that appear as a solid line. In such cases, it’s
     better to compute and plot a smaller, representative set of quantiles manually
     rather than relying on the defaults in `qqplot` or `qqnorm`.**********'
+  id: totrans-47
   prefs: []
   type: TYPE_NORMAL
+  zh: '**默认情况下，`qqnorm` 和 `geom_qq` 都使用所有 \(n\) 分位数，其中 \(p_i = (i - 0.5)/n\)。由于这种默认行为，大数据集可以产生数千个重叠的点，看起来像一条实线。在这种情况下，手动计算并绘制一个较小的、具有代表性的分位数集，而不是依赖于
+    `qqplot` 或 `qqnorm` 中的默认设置，会更好。**********'
 - en: '****3.3 Stratification****'
+  id: totrans-48
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '****3.3 分层****'
 - en: '****In data analysis, we often divide observations into groups based on the
     values of one or more variables associated with those observations. For example,
     we can divide the height values into groups based on a sex variable: females and
     males. We call this procedure *stratification* and refer to the resulting groups
     as *strata*.'
+  id: totrans-49
   prefs: []
   type: TYPE_NORMAL
+  zh: '****在数据分析中，我们通常根据与这些观察值相关的一个或多个变量的值将观察值分成组。例如，我们可以根据性别变量将身高值分成组：女性和男性。我们称这种程序为*分层*，并将结果组称为*层*。'
 - en: Stratification is common in data visualization because we are often interested
     in how the distribution of variables differs across different subgroups.
+  id: totrans-50
   prefs: []
   type: TYPE_NORMAL
+  zh: 层次化在数据可视化中很常见，因为我们通常对变量在不同子组中的分布差异感兴趣。
 - en: 'Using the histogram, density plots, and qqplots, we have become convinced that
     the male height data is well approximated with a normal distribution. In this
     case, we report back to ET a very succinct summary: male heights follow a normal
@@ -237,34 +351,47 @@
     information, ET will have a good idea of what to expect when he meets our male
     students. However, to provide a complete picture we need to also provide a summary
     of the female heights.'
+  id: totrans-51
   prefs: []
   type: TYPE_NORMAL
+  zh: 使用直方图、密度图和 q-q 图，我们已经确信男性身高数据很好地近似于正态分布。在这种情况下，我们向 ET 提供一个非常简洁的总结：男性身高遵循平均值为
+    69.3 英寸，标准差为 3.6 英寸的正态分布。有了这些信息，ET 将对当他遇到我们的男性学生时可以期待什么有一个很好的了解。然而，为了提供一个完整的图景，我们还需要提供女性身高的总结。
 - en: 'We learned that boxplots are useful when we want to quickly compare two or
     more distributions. Here are the heights for females and males:'
+  id: totrans-52
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们了解到，当我们想要快速比较两个或多个分布时，箱线图很有用。以下是女性和男性的身高：
 - en: '[PRE9]'
+  id: totrans-53
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE9]'
 - en: '*![](../Images/cff227cc0046180a2422d4dfba688bb2.png)*  *The plot immediately
     reveals that males are, on average, taller than females. The standard deviations
     appear to be similar. But does the normal approximation also work for the female
     height data collected by the survey? We expect that they will follow a normal
     distribution, just like males. However, exploratory plots reveal that the approximation
     is not as useful:'
+  id: totrans-54
   prefs: []
   type: TYPE_NORMAL
+  zh: '*![](../Images/cff227cc0046180a2422d4dfba688bb2.png)*  *该图立即显示，男性平均身高高于女性。标准差似乎相似。但是，正态近似也适用于调查收集的女性身高数据吗？我们预计它们将遵循正态分布，就像男性一样。然而，探索性绘图显示，这种近似并不那么有用：'
 - en: '![](../Images/332b29d837e75b80b75554783795d04c.png)'
+  id: totrans-55
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/332b29d837e75b80b75554783795d04c.png)'
 - en: 'We see something we did not see for the males: the density plot has a second
     *bump*. Also, the qqplot shows that the highest points tend to be taller than
     expected by the normal distribution. Finally, we also see five points in the qqplot
     that suggest shorter than expected heights for a normal distribution. When reporting
     back to ET, we might need to provide a histogram rather than just the average
     and standard deviation for the female heights.'
+  id: totrans-56
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们看到了对于男性没有看到的东西：密度图有一个第二个*峰值*。此外，qqplot显示最高点往往比正态分布预期的要高。最后，我们还在qqplot中看到了五个点，表明对于正态分布来说，高度比预期的要短。在向ET汇报时，我们可能需要提供一个直方图，而不仅仅是女性身高的平均值和标准差。
 - en: We have noticed what we didn’t expect to see. If we look at other female height
     distributions, we do find that they are well approximated with a normal distribution.
     So why are our female students different? Is our class a requirement for the female
@@ -273,81 +400,125 @@
     to enter their heights, `Female` was the default sex and some males entered their
     heights, but forgot to change the sex variable. In any case, data visualization
     has helped discover a potential flaw in our data.
+  id: totrans-57
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们注意到了我们没有预料到看到的事情。如果我们查看其他女性身高分布，我们发现它们很好地被正态分布所近似。那么为什么我们的女学生不同？我们的班级是女性篮球队的必修课吗？是否有小部分女性声称比实际身高更高？另一个，可能更可能的解释是，在学生用来输入他们身高的表格中，`Female`是默认性别，一些男性输入了他们的身高，但忘记了更改性别变量。无论如何，数据可视化帮助我们发现了数据中可能存在的潜在缺陷。
 - en: 'Regarding the five smallest values, note that these are:'
+  id: totrans-58
   prefs: []
   type: TYPE_NORMAL
+  zh: 关于前五个最小值，请注意这些是：
 - en: '[PRE10]'
+  id: totrans-59
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE10]'
 - en: '*Because these are reported heights, a possibility is that the student meant
     to enter `5''1"`, `5''2"`, `5''3"` or `5''5"`.******'
+  id: totrans-60
   prefs: []
   type: TYPE_NORMAL
+  zh: '*因为这些是报告的高度，一种可能是学生本意是想输入`5''1"`、`5''2"`、`5''3"`或`5''5"`。******'
 - en: '****3.4 Exercises****'
+  id: totrans-61
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '****3.4 练习****'
 - en: '****1\. Study the following boxplots showing population sizes by country:'
+  id: totrans-62
   prefs: []
   type: TYPE_NORMAL
+  zh: '****1. 研究以下按国家显示的人口规模的箱线图：'
 - en: '![](../Images/6484e87bcac7d57c9429ee02b7df33a0.png)'
+  id: totrans-63
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/6484e87bcac7d57c9429ee02b7df33a0.png)'
 - en: Which continent has the country with the biggest population size?
+  id: totrans-64
   prefs: []
   type: TYPE_NORMAL
+  zh: 哪个大洲的国家人口规模最大？
 - en: 2\. Which continent has the largest median population size?
+  id: totrans-65
   prefs: []
   type: TYPE_NORMAL
+  zh: 2. 哪个大洲的中位人口数量最大？
 - en: 3\. What is median population size for Africa to the nearest million?
+  id: totrans-66
   prefs: []
   type: TYPE_NORMAL
+  zh: 3. 非洲的中位人口数量是多少，四舍五入到最近的百万？
 - en: 4\. What proportion of countries in Europe have populations below 14 million?
+  id: totrans-67
   prefs: []
   type: TYPE_NORMAL
+  zh: 4. 欧洲有多少比例的国家人口低于1400万？
 - en: '0.99'
+  id: totrans-68
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '0.99'
 - en: '0.75'
+  id: totrans-69
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '0.75'
 - en: '0.50'
+  id: totrans-70
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '0.50'
 - en: '0.25'
+  id: totrans-71
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '0.25'
 - en: 5\. If we use a log transformation, which continent shown above has the largest
     interquartile range?
+  id: totrans-72
   prefs: []
   type: TYPE_NORMAL
+  zh: 5. 如果我们使用对数变换，上面哪个大洲的样本四分位距最大？
 - en: '6\. Define variables containing the heights of males and females as follows:'
+  id: totrans-73
   prefs: []
   type: TYPE_NORMAL
+  zh: 6. 定义包含男性和女性身高的变量如下：
 - en: '[PRE11]'
+  id: totrans-74
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE11]'
 - en: '*How many measurements do we have for each?'
+  id: totrans-75
   prefs: []
   type: TYPE_NORMAL
+  zh: '*我们有多少个测量值？'
 - en: 7\. Suppose we can’t make a plot and want to compare the distributions side
     by side. We can’t just list all the numbers. Instead, we will look at the percentiles.
     Create a five row table showing `female_percentiles` and `male_percentiles` with
     the 10th, 30th, 50th, 70th, & 90th percentiles for each sex. Then create a data
     frame with these two as columns.
+  id: totrans-76
   prefs: []
   type: TYPE_NORMAL
+  zh: 7. 假设我们无法绘制图表，而想并排比较分布。我们不能只是列出所有数字。相反，我们将查看百分位数。创建一个包含`female_percentiles`和`male_percentiles`的五行表格，显示每个性别的第10、30、50、70和90百分位数。然后创建一个包含这两个作为列的数据框。
 - en: 8\. Use a qqplot to demonstrate that murder rates
+  id: totrans-77
   prefs: []
   type: TYPE_NORMAL
+  zh: 8. 使用qqplot来证明谋杀率
 - en: Remove DC, then generate qqplot to see if the rate follow a normal distribution
     within each of the four region.*****
+  id: totrans-78
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 移除哥伦比亚特区，然后生成qqplot以查看四个区域中的比率是否遵循正态分布。*****

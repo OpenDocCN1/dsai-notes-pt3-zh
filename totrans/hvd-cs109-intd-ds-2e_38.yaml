@@ -1,16 +1,20 @@
 - en: 7  Random Variables
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
 - en: 原文：[https://rafalab.dfci.harvard.edu/dsbook-part-2/prob/random-variables.html](https://rafalab.dfci.harvard.edu/dsbook-part-2/prob/random-variables.html)
+  id: totrans-1
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
 - en: '[Probability](../prob/intro-to-prob.html)'
+  id: totrans-2
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
 - en: '[7  Random Variables](../prob/random-variables.html)'
+  id: totrans-3
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
@@ -19,9 +23,11 @@
     of this book, builds on these tools to quantify uncertainty and make predictions.
     In this chapter, we introduce the concept of *random variables* and explore their
     main properties through simple examples.
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
 - en: 7.1 Definition
+  id: totrans-5
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
@@ -31,6 +37,7 @@
     mathematically. Once we define a random variable, we can study its distribution,
     compute its expected value and variability, and use it to make probability-based
     statements about future or unseen outcomes.
+  id: totrans-6
   prefs: []
   type: TYPE_NORMAL
 - en: In this chapter, we focus on cases in which the probability distribution of
@@ -39,60 +46,76 @@
     than by data. Working with these simple, controlled examples allows us to understand
     the mathematical foundations of probability, expected values, standard errors,
     and sampling distributions.
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
 - en: In later chapters, we will turn to real-world data problems, where the underlying
     distributions are not known. In those cases, we use **statistical inference**
     to estimate or approximate these distributions from data. The probability concepts
     introduced here provide the theoretical foundation for those inferential methods.
+  id: totrans-8
   prefs: []
   type: TYPE_NORMAL
 - en: 'To start, consider a simple discrete example. Suppose we draw one bead at random
     from an urn containing red and blue beads. Define the random variable:'
+  id: totrans-9
   prefs: []
   type: TYPE_NORMAL
 - en: \[ X = \begin{cases} 1 & \text{if the bead is blue},\\ 0 & \text{if the bead
     is red.} \end{cases} \]
+  id: totrans-10
   prefs: []
   type: TYPE_NORMAL
 - en: 'In R, we can simulate this process using the code we introduced in [Section
     5.3](discrete-probability.html#sec-monte-carlo):'
+  id: totrans-11
   prefs: []
   type: TYPE_NORMAL
 - en: '[PRE0]'
+  id: totrans-12
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: '*Each time we draw a bead, the value of \(X\) may change because the outcome
     is random. A variable like this, which takes only the values 0 and 1, is called
     a *Bernoulli random variable* in statistical textbooks. Bernoulli trials are the
     building blocks for many statistical models, since many outcomes, such as success/failure,
     yes/no, or heads/tails, can be represented this way.'
+  id: totrans-13
   prefs: []
   type: TYPE_NORMAL
 - en: 'A classic example is the number of heads, call it \(S_n\), observed when tossing
     \(n\) fair coins. We can generate one observation of this random variable using
     a simulation:'
+  id: totrans-14
   prefs: []
   type: TYPE_NORMAL
 - en: '[PRE1]'
+  id: totrans-15
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: '*We will use this example in later sections.'
+  id: totrans-16
   prefs: []
   type: TYPE_NORMAL
 - en: 'Not all random variables are discrete. Some can take on a continuum of values.
     For example, the height of a randomly selected person or the result of a physical
     measurement can be viewed as a *continuous random variable*. As an example, we
     simulate such a variable using the normal distribution:'
+  id: totrans-17
   prefs: []
   type: TYPE_NORMAL
 - en: '[PRE2]'
+  id: totrans-18
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: '*Here each value of `x` represents one realization of a random variable drawn
     from a normal distribution with mean 70 and standard deviation 3\. Repeating the
     simulation produces slightly different numbers each time, reflecting the inherent
     randomness of the process.'
+  id: totrans-19
   prefs: []
   type: TYPE_NORMAL
 - en: These examples, discrete Bernoulli variables and a continuous normal variable,
@@ -100,9 +123,11 @@
     their behavior and summarizing their distributions are the key steps that lead
     us toward the ideas of expected value, variability, and, ultimately, statistical
     inference.***
+  id: totrans-20
   prefs: []
   type: TYPE_NORMAL
 - en: '***7.2 Notation for random variables***'
+  id: totrans-21
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
@@ -111,9 +136,11 @@
     in \(X = x\), where \(X\) is random and \(x\) is a fixed value. For example, \(X\)
     might represent the number shown on a die roll, and \(x\) an observed outcome,
     1, 2, 3, 4, 5, or 6:'
+  id: totrans-22
   prefs: []
   type: TYPE_NORMAL
 - en: \[ \mathrm{Pr}(X = x) = 1/6 \quad \text{for } x = 1, \dots, 6. \]
+  id: totrans-23
   prefs: []
   type: TYPE_NORMAL
 - en: This notation is convenient because it lets us express probability statements
@@ -121,9 +148,11 @@
     observed, we can discuss the likelihood of its possible values, but not its realized
     value. Once data are collected, we observe one realization of \(X\), and then
     reason about what *could* have occurred, given what *did* occur.***
+  id: totrans-24
   prefs: []
   type: TYPE_NORMAL
 - en: '***7.3 The probability distribution of a random variable***'
+  id: totrans-25
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
@@ -131,39 +160,52 @@
     each possible outcome is. For example, if we toss \(n\) fair coins, we might ask
     for the probability of observing 40 or fewer heads. This is equivalent to asking
     for \(\mathrm{Pr}(S_n \leq 40)\).'
+  id: totrans-26
   prefs: []
   type: TYPE_NORMAL
 - en: If we can define a cumulative distribution function (CDF) \(F(a) = \mathrm{Pr}(S_n
     \leq a)\), we can answer any probability question involving \(S_n\), such as the
     probability of falling within an interval \((a, b]\). We call \(F\) the *distribution
     function* of the random variable.
+  id: totrans-27
   prefs: []
   type: TYPE_NORMAL
 - en: 'We can approximate this distribution function by Monte Carlo simulation. For
     example, the following code simulates tossing 100 fair coins 100,000 times:'
+  id: totrans-28
   prefs: []
   type: TYPE_NORMAL
 - en: '[PRE3]'
+  id: totrans-29
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: '*We can then estimate \(\mathrm{Pr}(S_n \leq a)\) by computing the proportion
     of simulated values less than or equal to `a`:'
+  id: totrans-30
   prefs: []
   type: TYPE_NORMAL
 - en: '[PRE4]'
+  id: totrans-31
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE4]'
 - en: '*For instance, the probability of observing 40 or fewer heads out of 100 is:'
+  id: totrans-32
   prefs: []
   type: TYPE_NORMAL
 - en: '[PRE5]'
+  id: totrans-33
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE5]'
 - en: '*We can visualize the distribution of \(S_n\) with a histogram, overlaying
     the corresponding normal density curve for comparison:'
+  id: totrans-34
   prefs: []
   type: TYPE_NORMAL
 - en: '![](../Images/7395506fd4acb6a68061cf340bd6d8fd.png)'
+  id: totrans-35
   prefs: []
   type: TYPE_IMG
 - en: We see that the distribution is approximately normal. A qqplot will confirm
@@ -172,122 +214,155 @@
     explains why this approximation works so well. In fact, this result extends far
     beyond coin flips, it applies broadly to averages and sums of many kinds of random
     variables.
+  id: totrans-36
   prefs: []
   type: TYPE_NORMAL
 - en: 'If the distribution is normal, it is fully characterized by its average and
     standard deviation. These two quantities have special names in probability theory:
     the *expected value* and the *standard error* of the random variable. We discuss
     these next.'
+  id: totrans-37
   prefs: []
   type: TYPE_NORMAL
 - en: '*Statistical theory lets us derive the exact distribution of random variables
     defined as sums of independent draws from an urn. In our coin tossing example,
     the number of heads (successes), \(S_n\), follows a **binomial distribution**.
     Thus, Monte Carlo simulations were used only for illustration.'
+  id: totrans-38
   prefs: []
   type: TYPE_NORMAL
 - en: 'We can compute probabilities directly with `dbinom` or `pbinom`. For example,
     to find \(\mathrm{Pr}(S_n \leq 40)\):'
+  id: totrans-39
   prefs: []
   type: TYPE_NORMAL
 - en: '[PRE6]'
+  id: totrans-40
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE6]'
 - en: '*We can also simnulate the number of heads using a `rbinom` instead of `replicate`
     and `sample`:'
+  id: totrans-41
   prefs: []
   type: TYPE_NORMAL
 - en: '[PRE7]********'
+  id: totrans-42
   prefs: []
   type: TYPE_NORMAL
 - en: '****7.4 The expected value and standard error****'
+  id: totrans-43
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
 - en: '****In statistics textbooks, the expected value of a random variable \(X\)
     is commonly denoted as \(\mu_X\) or \(\mathrm{E}[X]\), both meaning “the expected
     value of \(X\).”'
+  id: totrans-44
   prefs: []
   type: TYPE_NORMAL
 - en: Intuitively, the expected value represents the long-run average outcome if the
     random process were repeated many times. The more repetitions, the closer the
     average of the observed values will be to \(\mathrm{E}[X]\).
+  id: totrans-45
   prefs: []
   type: TYPE_NORMAL
 - en: 'For a discrete random variable with possible outcomes \(x_1,\dots,x_n\), the
     expected value is defined as:'
+  id: totrans-46
   prefs: []
   type: TYPE_NORMAL
 - en: \[ \mathrm{E}[X] = \sum_{i=1}^n x_i ,\mathrm{Pr}(X = x_i) \]
+  id: totrans-47
   prefs: []
   type: TYPE_NORMAL
 - en: 'For a continuous random variable with probability density function \(f(x)\)
     and range \((a, b)\), the sum becomes an integral:'
+  id: totrans-48
   prefs: []
   type: TYPE_NORMAL
 - en: \[ \mathrm{E}[X] = \int_a^b x f(x), dx \]
+  id: totrans-49
   prefs: []
   type: TYPE_NORMAL
 - en: 'If all \(x_i\) have equal probability \(1/n\), as when drawing uniformly from
     an urn, the expected value reduces to the arithmetic mean:'
+  id: totrans-50
   prefs: []
   type: TYPE_NORMAL
 - en: \[ \mathrm{E}[X] = \frac{1}{n}\sum_{i=1}^n x_i. \]
+  id: totrans-51
   prefs: []
   type: TYPE_NORMAL
 - en: For example, in a coin toss where \(X = 1\) for heads and \(0\) for tails,
+  id: totrans-52
   prefs: []
   type: TYPE_NORMAL
 - en: \[ \mathrm{E}[X] = 1 \times \Pr(X=1) + 0 \times \Pr(X=0) = 1/2. \]
+  id: totrans-53
   prefs: []
   type: TYPE_NORMAL
 - en: 'Although \(X\) only takes the values 0 or 1, its *expected value* of 0.5 represents
     the long-run proportion of heads if the experiment were repeated many times:'
+  id: totrans-54
   prefs: []
   type: TYPE_NORMAL
 - en: '[PRE8]'
+  id: totrans-55
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE8]'
 - en: '*The *standard error* (SE) describes the typical deviation of \(X\) from its
     expected value. It is defined as:'
+  id: totrans-56
   prefs: []
   type: TYPE_NORMAL
 - en: \[ \mathrm{SE}[X] = \sqrt{\sum_{i=1}^n (x_i - \mathrm{E}[X])^2 ,\mathrm{Pr}(X
     = x_i)}. \]
+  id: totrans-57
   prefs: []
   type: TYPE_NORMAL
 - en: 'For a continuous random variable with density \(f(x)\), this becomes:'
+  id: totrans-58
   prefs: []
   type: TYPE_NORMAL
 - en: \[ \mathrm{SE}[X] = \sqrt{\int_a^b (x - \mathrm{E}[X])^2 f(x), dx}. \]
+  id: totrans-59
   prefs: []
   type: TYPE_NORMAL
 - en: '*Many textbooks introduce the *variance* before the standard error. The variance
     is simply the square of the standard error:'
+  id: totrans-60
   prefs: []
   type: TYPE_NORMAL
 - en: \[ \mathrm{Var}[X] = \mathrm{SE}[X]^2. \]
+  id: totrans-61
   prefs: []
   type: TYPE_NORMAL
 - en: 'Variance is useful in derivations because it avoids square roots, but the standard
     error is easier to interpret, since it uses the same units as the data.*  *When
     all outcomes \(x_i\) are equally likely, the standard error reduces to the standard
     deviation:'
+  id: totrans-62
   prefs: []
   type: TYPE_NORMAL
 - en: \[ \mathrm{SE}[X] = \sqrt{\frac{1}{n}\sum_{i=1}^n (x_i - \mathrm{E}[X])^2},
     \quad \mathrm{E}[X] = \frac{1}{n}\sum_{i=1}^n x_i. \]
+  id: totrans-63
   prefs: []
   type: TYPE_NORMAL
 - en: 'For a coin toss:'
+  id: totrans-64
   prefs: []
   type: TYPE_NORMAL
 - en: \[ \mathrm{SE}[X] = \sqrt{(1-0.5)^2 \times 0.5 + (0-0.5)^2 \times 0.5} = 0.5.
     \]
+  id: totrans-65
   prefs: []
   type: TYPE_NORMAL
 - en: Thus, one coin has an expected value of 0.5 and a standard error of 0.5—reasonable,
     since the possible outcomes are 0 or 1.
+  id: totrans-66
   prefs: []
   type: TYPE_NORMAL
 - en: '*We use the Greek letters \(\mu\) and \(\sigma\) to denote the expected value
@@ -296,102 +371,126 @@
     \(\mathrm{E}[X]\) and \(\mathrm{SE}[X]\) notation because it generalizes more
     clearly to mathematical expressions involving sums or transformations of random
     variables.*******'
+  id: totrans-67
   prefs: []
   type: TYPE_NORMAL
 - en: '*****7.5 Key properties of expectations and standard errors*****'
+  id: totrans-68
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
 - en: '*****There are several mathematical properties of expectations and standard
     errors that we will use frequently when working with data.'
+  id: totrans-69
   prefs: []
   type: TYPE_NORMAL
 - en: '1\. The expected value of the sum of random variables is the sum of each random
     variable’s expected value. We can write it like this:'
+  id: totrans-70
   prefs: []
   type: TYPE_NORMAL
 - en: \[ \mathrm{E}[X_1+X_2+\dots+X_n] = \mathrm{E}[X_1] + \mathrm{E}[X_2]+\dots+\mathrm{E}[X_n]
     \]
+  id: totrans-71
   prefs: []
   type: TYPE_NORMAL
 - en: 'If \(X\) represents independent draws from the urn, then they all have the
     same expected value. Let’s denote the expected value with \(\mu_X\) and rewrite
     the equation as:'
+  id: totrans-72
   prefs: []
   type: TYPE_NORMAL
 - en: \[ \mathrm{E}[X_1+X_2+\dots+X_n]= n\mu_X \]
+  id: totrans-73
   prefs: []
   type: TYPE_NORMAL
 - en: which is another way of writing the result we show above for the sum of draws.
+  id: totrans-74
   prefs: []
   type: TYPE_NORMAL
 - en: '2\. The expected value of a non-random constant times a random variable is
     the non-random constant times the expected value of a random variable. If we shift
     the random variable, the expected value shifts by that amount. This is easier
     to explain with symbols:'
+  id: totrans-75
   prefs: []
   type: TYPE_NORMAL
 - en: \[ \mathrm{E}[aX+b] = a\times\mathrm{E}[X] + b \]
+  id: totrans-76
   prefs: []
   type: TYPE_NORMAL
 - en: To understand why this is intuitive, consider changing units. If we change the
     units of a random variable, such as from dollars to cents, the expectation should
     change in the same way.
+  id: totrans-77
   prefs: []
   type: TYPE_NORMAL
 - en: 'A consequence of the above two facts is that the expected value of the average
     of independent draws from the same urn is the expected value of the urn, denoted
     as \(\mu_X\) again:'
+  id: totrans-78
   prefs: []
   type: TYPE_NORMAL
 - en: \[ \mathrm{E}[(X_1+X_2+\dots+X_n) / n]= \mathrm{E}[X_1+X_2+\dots+X_n] / n =
     n\mu_X/n = \mu_X \]
+  id: totrans-79
   prefs: []
   type: TYPE_NORMAL
 - en: '3\. The variance of the sum of **independent** random variables is the sum
     of variances of each random variable:'
+  id: totrans-80
   prefs: []
   type: TYPE_NORMAL
 - en: '\[ \mathrm{Var}[X_1+X_2+\dots+X_n] =\mathrm{Var}[X_1] + \mathrm{Var}[X_2]+\dots+\mathrm{Var}[X_n]
     \] This implies that the following property for the standard error of the sum
     of **independent** random variables:'
+  id: totrans-81
   prefs: []
   type: TYPE_NORMAL
 - en: \[ \mathrm{SE}[X_1+X_2+\dots+X_n] = \sqrt{\mathrm{SE}[X_1]^2 + \mathrm{SE}[X_2]^2+\dots+\mathrm{SE}[X_n]^2
     } \]
+  id: totrans-82
   prefs: []
   type: TYPE_NORMAL
 - en: Note that this particular property is not as intuitive as the previous three
     and more in depth explanations can be found in statistics textbooks.
+  id: totrans-83
   prefs: []
   type: TYPE_NORMAL
 - en: '4\. The standard error of a non-random constant times a random variable is
     the non-random constant times the random variable’s standard error. As with the
     expectation:'
+  id: totrans-84
   prefs: []
   type: TYPE_NORMAL
 - en: \[ \mathrm{SE}[aX] = a \times \mathrm{SE}[X] \]
+  id: totrans-85
   prefs: []
   type: TYPE_NORMAL
 - en: To see why this is intuitive, again think of units.
+  id: totrans-86
   prefs: []
   type: TYPE_NORMAL
 - en: 'If we shift the random variable by a constant the variability does not change.
     So it has not effect on the standard error:'
+  id: totrans-87
   prefs: []
   type: TYPE_NORMAL
 - en: \[ \mathrm{SE}[aX+b] = a \times \mathrm{SE}[X] \]
+  id: totrans-88
   prefs: []
   type: TYPE_NORMAL
 - en: 'A consequence of 3 and 4 is that the standard error of the average of independent
     draws from the same urn is the standard deviation of the urn divided by the square
     root of \(n\) (the number of draws), call it \(\sigma_X\):'
+  id: totrans-89
   prefs: []
   type: TYPE_NORMAL
 - en: \[ \begin{aligned} \mathrm{SE}[\bar{X}] = \mathrm{SE}[(X_1+X_2+\dots+X_n) /
     n] &= \mathrm{SE}[X_1+X_2+\dots+X_n]/n \\ &= \sqrt{\mathrm{SE}[X_1]^2+\mathrm{SE}[X_2]^2+\dots+\mathrm{SE}[X_n]^2}/n
     \\ &= \sqrt{\sigma_X^2+\sigma_X^2+\dots+\sigma_X^2}/n\\ &= \sqrt{n\sigma_X^2}/n\\
     &= \sigma_X / \sqrt{n} \end{aligned} \]
+  id: totrans-90
   prefs: []
   type: TYPE_NORMAL
 - en: '*The assumption of independence is important* *The given equation reveals crucial
@@ -400,16 +499,19 @@
     this reduction. However, this principle holds true only when the variables \(X_1,
     X_2, ... X_n\) are independent. If they are not, the estimated standard error
     can be significantly off.'
+  id: totrans-91
   prefs: []
   type: TYPE_NORMAL
 - en: 'In [Section 15.2](../linear-models/regression.html#sec-corr-coef), we introduce
     the concept of correlation, which quantifies the degree to which variables are
     interdependent. If the correlation coefficient among the \(X\) variables is \(\rho\),
     the standard error of their average is:'
+  id: totrans-92
   prefs: []
   type: TYPE_NORMAL
 - en: \[ \mathrm{SE}\left[\bar{X}\right] = \sigma_X \sqrt{\frac{1 + (n-1) \rho}{n}}
     \]
+  id: totrans-93
   prefs: []
   type: TYPE_NORMAL
 - en: The key observation here is that as \(\rho\) approaches its upper limit of 1,
@@ -420,9 +522,11 @@
     is also a normally distributed random variable. All we are doing is changing the
     units of the random variable by multiplying by \(a\), then shifting the center
     by \(b\).******
+  id: totrans-94
   prefs: []
   type: TYPE_NORMAL
 - en: '*****7.6 Law of Large Numbers*****'
+  id: totrans-95
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
@@ -431,6 +535,7 @@
     very large, then the standard error is practically 0 and the average of the draws
     converges to the average of the urn. This is known in statistical textbooks as
     the law of large numbers or the law of averages.'
+  id: totrans-96
   prefs: []
   type: TYPE_NORMAL
 - en: '*Misinterpretation of the law of averages* *The law of averages is sometimes
@@ -446,27 +551,34 @@
     Another funny misuse of the law of averages is in sports when TV sportscasters
     predict a player is about to succeed because they have failed a few times in a
     row.******'
+  id: totrans-97
   prefs: []
   type: TYPE_NORMAL
 - en: '****7.7 Data distributions versus probability distributions****'
+  id: totrans-98
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
 - en: '****Before moving on, it is important to distinguish between the **distribution
     of a dataset** and a **probability distribution**.'
+  id: totrans-99
   prefs: []
   type: TYPE_NORMAL
 - en: 'Any list of numbers \(x_1, \dots, x_n\), or any dataset, has a distribution
     that describes how the observed values are spread out. We can summarize it with
     simple statistics such as the mean and standard deviation:'
+  id: totrans-100
   prefs: []
   type: TYPE_NORMAL
 - en: '[PRE9]'
+  id: totrans-101
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE9]'
 - en: '*A **probability distribution**, on the other hand, is a theoretical construct
     that describes the possible values of a random variable and their likelihoods.
     It does not depend on data.'
+  id: totrans-102
   prefs: []
   type: TYPE_NORMAL
 - en: When \(X\) represents drawing a number at random from an urn, the list of numbers
@@ -474,74 +586,104 @@
     the probability distribution of \(X\). The average and standard deviation of the
     numbers in the urn correspond to the **expected value** and **standard error**
     of the random variable.
+  id: totrans-103
   prefs: []
   type: TYPE_NORMAL
 - en: 'This connection can cause confusion: every list of numbers has a standard deviation,
     and every random variable has a standard error, but the standard error of a random
     variable is the *standard deviation of its probability distribution*, not of a
     particular dataset.*****'
+  id: totrans-104
   prefs: []
   type: TYPE_NORMAL
 - en: '*****7.8 Exercises*****'
+  id: totrans-105
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
 - en: '*****1\. In American Roulette, you can bet on black or red. There are 18 reds,
     18 blacks, and 2 greens (0 and 00). What are the chances that black comes out?'
+  id: totrans-106
   prefs: []
   type: TYPE_NORMAL
 - en: 2\. The payout for winning on black is $1 dollar. This means that if you bet
     a dollar and it lands on black, you get $1, otherwise you lose $1\. Create a sampling
     model using `sample` to simulate the random variable \(X\) for your winnings.
+  id: totrans-107
   prefs: []
   type: TYPE_NORMAL
 - en: 3\. Compute the expected value of \(X\).
+  id: totrans-108
   prefs: []
   type: TYPE_NORMAL
 - en: 4\. Compute the standard error of \(X\).
+  id: totrans-109
   prefs: []
   type: TYPE_NORMAL
 - en: 5\. Now create a random variable \(S_n\) that is the sum of your winnings after
     betting on black n = 100 times. Simulate 100,000 outcomes of \(S_n\). Start your
     code by setting the seed to 1 with `set.seed(1)`.
+  id: totrans-110
   prefs: []
   type: TYPE_NORMAL
 - en: 6\. What is the expected value of \(S_n\)?
+  id: totrans-111
   prefs: []
   type: TYPE_NORMAL
 - en: 7\. What is the standard error of \(S_n\)?
+  id: totrans-112
   prefs: []
   type: TYPE_NORMAL
 - en: 8\. What is the probability that you end up winning money?
+  id: totrans-113
   prefs: []
   type: TYPE_NORMAL
+  zh: 8. 你最终赢钱的概率是多少？
 - en: 10\. In American Roulette, you can also bet on green. There are 18 reds, 18
     blacks, and 2 greens (0 and 00). What are the chances the green comes out?
+  id: totrans-114
   prefs: []
   type: TYPE_NORMAL
+  zh: 10. 在美国轮盘赌中，你也可以投注绿色。有 18 个红色，18 个黑色和 2 个绿色（0 和 00）。绿色出现的几率是多少？
 - en: 11\. The payout for winning on green is $17 dollars. This means that if you
     bet a dollar and it lands on green, you get $17, otherwise you lose $1\. Create
     a sampling model using `sample` to simulate the random variable \(X\) for your
     winnings.
+  id: totrans-115
   prefs: []
   type: TYPE_NORMAL
+  zh: 11. 赢得绿色的赔付是 17 美元。这意味着如果你下注 1 美元并且它落在绿色上，你将得到 17 美元，否则你将损失 1 美元。使用 `sample`
+    函数创建一个采样模型来模拟你的收益随机变量 \(X\)。
 - en: 12\. Compute the expected value of \(X\).
+  id: totrans-116
   prefs: []
   type: TYPE_NORMAL
+  zh: 12. 计算随机变量 \(X\) 的期望值。
 - en: 13\. Compute the standard error of \(X\).
+  id: totrans-117
   prefs: []
   type: TYPE_NORMAL
+  zh: 13. 计算随机变量 \(X\) 的标准误差。
 - en: 14\. Now create a random variable \(S_n\) that is the sum of your winnings after
     betting on green n = 100 times. Simulate 100,000 outcomes of \(S_n\). Start your
     code by setting the seed to 1 with `set.seed(1)`.
+  id: totrans-118
   prefs: []
   type: TYPE_NORMAL
+  zh: 14. 现在创建一个随机变量 \(S_n\)，它是你在绿色上投注 n = 100 次后的总收益。模拟 \(S_n\) 的 100,000 个结果。开始你的代码时，使用
+    `set.seed(1)` 将种子设置为 1。
 - en: 15\. What is the expected value of \(S_n\)?
+  id: totrans-119
   prefs: []
   type: TYPE_NORMAL
+  zh: 15. \(S_n\) 的期望值是什么？
 - en: 16\. What is the standard error of \(S_n\)?
+  id: totrans-120
   prefs: []
   type: TYPE_NORMAL
+  zh: 16. \(S_n\) 的标准误差是什么？
 - en: 17\. What is the probability that you end up winning money?*****
+  id: totrans-121
   prefs: []
   type: TYPE_NORMAL
+  zh: 17. 你最终赢钱的概率是多少？*****

@@ -1,19 +1,27 @@
 - en: 13  Parsing dates and times
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 13  解析日期和时间
 - en: 原文：[https://rafalab.dfci.harvard.edu/dsbook-part-1/wrangling/dates-and-times.html](https://rafalab.dfci.harvard.edu/dsbook-part-1/wrangling/dates-and-times.html)
+  id: totrans-1
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 原文：[https://rafalab.dfci.harvard.edu/dsbook-part-1/wrangling/dates-and-times.html](https://rafalab.dfci.harvard.edu/dsbook-part-1/wrangling/dates-and-times.html)
 - en: '[Data Wrangling](../wrangling/intro-to-wrangling.html)'
+  id: totrans-2
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[数据整理](../wrangling/intro-to-wrangling.html)'
 - en: '[13  Parsing dates and times](../wrangling/dates-and-times.html)'
+  id: totrans-3
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[13  解析日期和时间](../wrangling/dates-and-times.html)'
 - en: 'We have described three main types of vectors: numeric, character, and logical.
     When analyzing data, we often encounter variables that are dates. Although we
     can represent a date with a string, for example `November 2, 2017`, once we pick
@@ -21,255 +29,398 @@
     be converted to numbers by calculating the number of days since the epoch. In
     R and Unix, the epoch is defined as January 1, 1970\. So, for example, January
     2, 1970 is day 1, December 31, 1969 is day -1, and November 2, 2017, is day 17,204.'
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们已经描述了三种主要的向量类型：数值、字符和逻辑。在分析数据时，我们经常遇到日期变量。虽然我们可以用字符串表示日期，例如`2017年11月2日`，但一旦我们选择一个参考日，计算机程序员称之为*纪元*，它们就可以通过计算自纪元以来的天数来转换为数字。在R和Unix中，纪元被定义为1970年1月1日。因此，例如，1970年1月2日是第1天，1969年12月31日是第-1天，2017年11月2日是第17,204天。
 - en: Now how should we represent dates and times when analyzing data in R? We could
     just use days since the epoch, but then it is almost impossible to interpret.
     If I tell you it’s November 2, 2017, you know what this means immediately. If
     I tell you it’s day 17,204, you will be quite confused. Similar problems arise
     with times and even more complications can appear due to time zones. For this
     reason, R defines a data type just for dates and times.
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: 现在我们如何在R中分析数据时表示日期和时间呢？我们本可以使用自纪元以来的天数，但那样几乎无法解释。如果我告诉你今天是2017年11月2日，你会立刻知道这意味着什么。如果我告诉你今天是第17,204天，你将会非常困惑。类似的问题也出现在时间上，甚至由于时区的原因可能会出现更多复杂的情况。因此，R定义了一种专门用于日期和时间的数据类型。
 - en: 13.1 The date data type
+  id: totrans-6
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 13.1 日期数据类型
 - en: 'We can see an example of the data type R uses for data here:'
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们可以在这里看到R用于数据的示例数据类型：
 - en: '[PRE0]'
+  id: totrans-8
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: '*The dates look like strings, but they are not:'
+  id: totrans-9
   prefs: []
   type: TYPE_NORMAL
+  zh: '*日期看起来像字符串，但它们不是：'
 - en: '[PRE1]'
+  id: totrans-10
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: '*Look at what happens when we convert them to numbers:'
+  id: totrans-11
   prefs: []
   type: TYPE_NORMAL
+  zh: '*看看当我们将它们转换为数字时会发生什么：'
 - en: '[PRE2]'
+  id: totrans-12
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: '*It turns them into days since the epoch. The `as.Date` function can convert
     a character into a date. So to see that the epoch is day 0 we can type'
+  id: totrans-13
   prefs: []
   type: TYPE_NORMAL
+  zh: '*它们将它们转换为自纪元以来的天数。`as.Date`函数可以将字符转换为日期。因此，为了看到纪元是第0天，我们可以输入'
 - en: '[PRE3]'
+  id: totrans-14
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: '*Plotting functions, such as those in ggplot, are aware of the date format.
     This means that, for example, a scatterplot can use the numeric representation
     to decide on the position of the point, but include the string in the labels:'
+  id: totrans-15
   prefs: []
   type: TYPE_NORMAL
+  zh: '*绘图函数，如ggplot中的函数，了解日期格式。这意味着，例如，散点图可以使用数值表示来决定点的位置，但在标签中包含字符串：'
 - en: '[PRE4]'
+  id: totrans-16
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE4]'
 - en: '*![](../Images/4ba78583565a53cee24781d862265b26.png)*  *Note in particular
     that the month names are displayed, a very convenient feature.*****'
+  id: totrans-17
   prefs: []
   type: TYPE_NORMAL
+  zh: '*![](../Images/4ba78583565a53cee24781d862265b26.png)*  *特别注意的是，月份名称被显示出来，这是一个非常方便的功能。*****'
 - en: '***13.2 The lubridate package***'
+  id: totrans-18
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '***13.2 lubridate包***'
 - en: '***The **lubridate** package provides tools to work with date and times.'
+  id: totrans-19
   prefs: []
   type: TYPE_NORMAL
+  zh: '***`lubridate`包提供了处理日期和时间的工具。'
 - en: '[PRE5]'
+  id: totrans-20
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE5]'
 - en: '*We will take a random sample of dates to show some of the useful things one
     can do:'
+  id: totrans-21
   prefs: []
   type: TYPE_NORMAL
+  zh: '*我们将随机抽取一些日期样本来展示一些可以做的有用事情：'
 - en: '[PRE6]'
+  id: totrans-22
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE6]'
 - en: '*The functions `year`, `month` and `day` extract those values:'
+  id: totrans-23
   prefs: []
   type: TYPE_NORMAL
+  zh: '*`year`、`month`和`day`函数提取这些值：'
 - en: '[PRE7]'
+  id: totrans-24
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE7]'
 - en: '*We can also extract the month labels:'
+  id: totrans-25
   prefs: []
   type: TYPE_NORMAL
+  zh: '*我们还可以提取月份标签：'
 - en: '[PRE8]'
+  id: totrans-26
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE8]'
 - en: '*[PRE9]'
+  id: totrans-27
   prefs: []
   type: TYPE_NORMAL
+  zh: '*[PRE9]'
 - en: Another useful set of functions are the *parsers* that convert strings into
     dates. The function `ymd` assumes the dates are in the format YYYY-MM-DD and tries
     to parse as well as possible.
+  id: totrans-28
   prefs: []
   type: TYPE_NORMAL
+  zh: 另一组有用的函数是*解析器*，它们将字符串转换为日期。`ymd`函数假设日期格式为YYYY-MM-DD，并尽可能地进行解析。
 - en: '[PRE10]'
+  id: totrans-29
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE10]'
 - en: '*A further complication comes from the fact that dates often come in different
     formats in which the order of year, month, and day are different. The preferred
     format is to show year (with all four digits), month (two digits), and then day,
     or what is called the ISO 8601\. Specifically we use YYYY-MM-DD so that if we
     order the string, it will be ordered by date. You can see the function `ymd` returns
     them in this format.'
+  id: totrans-30
   prefs: []
   type: TYPE_NORMAL
+  zh: '*进一步复杂化的是，日期通常以不同的格式出现，其中年、月、日的顺序不同。首选的格式是显示年份（四位数字），然后是月份（两位数字），最后是日期，或者称为ISO
+    8601格式。具体来说，我们使用YYYY-MM-DD格式，这样如果对字符串进行排序，它将按日期排序。您可以看到`ymd`函数以这种格式返回它们。'
 - en: But, what if you encounter dates such as “09/01/02”? This could be September
     1, 2002 or January 2, 2009 or January 9, 2002\. In these cases, examining the
     entire vector of dates will help you determine what format it is by process of
     elimination. Once you know, you can use the many parses provided by **lubridate**.
+  id: totrans-31
   prefs: []
   type: TYPE_NORMAL
+  zh: 但是，如果你遇到像“09/01/02”这样的日期怎么办？这可能是指2002年9月1日、2009年1月2日或2002年1月9日。在这些情况下，通过排除法检查整个日期向量将帮助你确定它的格式。一旦你知道了，你就可以使用
+    **lubridate** 提供的许多解析器。
 - en: 'For example, if the string is:'
+  id: totrans-32
   prefs: []
   type: TYPE_NORMAL
+  zh: 例如，如果字符串是：
 - en: '[PRE11]'
+  id: totrans-33
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE11]'
 - en: '*The `ymd` function assumes the first entry is the year, the second is the
     month, and the third is the day, so it converts it to:'
+  id: totrans-34
   prefs: []
   type: TYPE_NORMAL
+  zh: '*`ymd` 函数假设第一个条目是年份，第二个是月份，第三个是日期，因此它将其转换为：'
 - en: '[PRE12]'
+  id: totrans-35
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE12]'
 - en: '*The `mdy` function assumes the first entry is the month, then the day, then
     the year:'
+  id: totrans-36
   prefs: []
   type: TYPE_NORMAL
+  zh: '*`mdy` 函数假设第一个条目是月份，然后是日期，最后是年份：'
 - en: '[PRE13]'
+  id: totrans-37
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE13]'
 - en: '*The *lubridate* package provides a function for every possibility. Here is
     the other common one:'
+  id: totrans-38
   prefs: []
   type: TYPE_NORMAL
+  zh: '***lubridate** 包为每个可能性都提供了一个函数。这里还有另一个常见的例子：'
 - en: '[PRE14]'
+  id: totrans-39
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE14]'
 - en: '*The **lubridate** package is also useful for dealing with times. In base R,
     you can get the current time typing `[Sys.time()](https://rdrr.io/r/base/Sys.time.html)`.
     The **lubridate** package provides a slightly more advanced function, `now`, that
     permits you to define the time zone:'
+  id: totrans-40
   prefs: []
   type: TYPE_NORMAL
+  zh: '***lubridate** 包在处理时间方面也非常有用。在基础 R 中，你可以通过输入 `[Sys.time()](https://rdrr.io/r/base/Sys.time.html)`
+    来获取当前时间。**lubridate** 包提供了一个稍微高级一点的函数 `now`，允许你定义时区：'
 - en: '[PRE15]'
+  id: totrans-41
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE15]'
 - en: '*You can see all the available time zones with `[OlsonNames()](https://rdrr.io/r/base/timezones.html)`
     function.'
+  id: totrans-42
   prefs: []
   type: TYPE_NORMAL
+  zh: '*你可以使用 `[OlsonNames()](https://rdrr.io/r/base/timezones.html)` 函数查看所有可用的时区。'
 - en: 'We can also extract hours, minutes, and seconds:'
+  id: totrans-43
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们还可以提取小时、分钟和秒：
 - en: '[PRE16]'
+  id: totrans-44
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE16]'
 - en: '*The package also includes a function to parse strings into times as well as
     parsers for time objects that include dates:'
+  id: totrans-45
   prefs: []
   type: TYPE_NORMAL
+  zh: '*该包还包括将字符串解析为时间的函数以及解析包含日期的时间对象的解析器：'
 - en: '[PRE17]'
+  id: totrans-46
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE17]'
 - en: '*This package has many other useful functions. We describe two of these here
     that we find particularly useful.'
+  id: totrans-47
   prefs: []
   type: TYPE_NORMAL
+  zh: '*这个包还有许多其他有用的函数。我们在这里描述了其中两个我们认为特别有用的函数。'
 - en: 'The `make_date` function can be used to quickly create a date object. It can
     take up to seven arguments: year, month, day, hour, minute, seconds, and time
     zone defaulting to the epoch values on UTC time. To create an date object representing,
     for example, July 6, 2019 we write:'
+  id: totrans-48
   prefs: []
   type: TYPE_NORMAL
+  zh: '`make_date` 函数可以用来快速创建日期对象。它可以接受最多七个参数：年、月、日、小时、分钟、秒和时区，默认为UTC时间的纪元值。例如，要创建代表2019年7月6日的日期对象，我们写：'
 - en: '[PRE18]'
+  id: totrans-49
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE18]'
 - en: '*To make a vector of January 1 for the 80s we write:'
+  id: totrans-50
   prefs: []
   type: TYPE_NORMAL
+  zh: '*要创建一个80年代1月1日的向量，我们写：'
 - en: '[PRE19]'
+  id: totrans-51
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE19]'
 - en: '*Another very useful function is `round_date`. It can be used to *round* dates
     to nearest year, quarter, month, week, day, hour, minutes, or seconds. So if we
     want to group all the polls by week of the year we can do the following:'
+  id: totrans-52
   prefs: []
   type: TYPE_NORMAL
+  zh: '*另一个非常有用的函数是 `round_date`。它可以用来将日期四舍五入到最近的年份、季度、月份、星期、天、小时、分钟或秒。所以如果我们想按年份的星期分组所有民意调查，我们可以这样做：'
 - en: '[PRE20]'
+  id: totrans-53
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE20]'
 - en: '*![](../Images/25c5525e90208284a95fbf5f3f66ceb2.png)*  *Finally, you should
     be aware the there are useful function for computing operations on time such a
     `difftime`, `time_length`, and `interval`.******************'
+  id: totrans-54
   prefs: []
   type: TYPE_NORMAL
+  zh: '*![](../Images/25c5525e90208284a95fbf5f3f66ceb2.png)*  *最后，你应该知道还有一些有用的函数用于计算时间操作，例如
+    `difftime`、`time_length` 和 `interval`。******************'
 - en: '***13.3 Dates and times with data.table***'
+  id: totrans-55
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '***13.3 使用 data.table 处理日期和时间***'
 - en: '***The **data.table** package includes some of the same functionality as **lubridate**.
     For example, it includes the `month`, and `year` functions that are the same as
     those in **lubridate**. The equilvalent of **lubridate**’s `day` is `mday`:'
+  id: totrans-56
   prefs: []
   type: TYPE_NORMAL
+  zh: '*****data.table** 包包含与 **lubridate** 相同的一些功能。例如，它包括与 **lubridate** 中相同的 `month`
+    和 `year` 函数。**lubridate** 的 `day` 等价于 `mday`：'
 - en: '[PRE21]'
+  id: totrans-57
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE21]'
 - en: '*Other similar functions included in **data.table** are `second`, `minute`,
     `hour`, `yday`, `wday`, `week`, `isoweek` and `quarter`.'
+  id: totrans-58
   prefs: []
   type: TYPE_NORMAL
+  zh: '***data.table** 包中还包括其他类似的功能，例如 `second`、`minute`、`hour`、`yday`、`wday`、`week`、`isoweek`
+    和 `quarter`。'
 - en: 'The package also includes the classes `IDate` and `ITime`, which store dates
     and times more efficiently that `lubridate` and base R. This convenient for large
     files with date stamps. You can convert dates in the usual R format: using `as.IDate`
     and `as.ITime`. You can see this by using the `object.size` function:'
+  id: totrans-59
   prefs: []
   type: TYPE_NORMAL
+  zh: 该包还包括 `IDate` 和 `ITime` 类，它们比 `lubridate` 和基础 R 更有效地存储日期和时间。这对于具有日期戳的大文件来说很方便。你可以使用
+    `as.IDate` 和 `as.ITime` 将日期转换为常规 R 格式。你可以通过使用 `object.size` 函数来查看这一点：
 - en: '[PRE22]****'
+  id: totrans-60
   prefs: []
   type: TYPE_NORMAL
+  zh: '[PRE22]****'
 - en: '***13.4 Exercises***'
+  id: totrans-61
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '***13.4 练习***'
 - en: '***For these exercises we will use the following dataset:'
+  id: totrans-62
   prefs: []
   type: TYPE_NORMAL
+  zh: '***对于这些练习，我们将使用以下数据集：'
 - en: '[PRE23]'
+  id: totrans-63
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE23]'
 - en: '*1\. We want to make a plot of death counts versus date. Confirm that the `date`
     variable are in fact dates and not strings.'
+  id: totrans-64
   prefs: []
   type: TYPE_NORMAL
+  zh: '*1. 我们想绘制死亡人数与日期的图表。确认`date`变量实际上是日期而不是字符串。'
 - en: 2\. Plot deaths versus date.
+  id: totrans-65
   prefs: []
   type: TYPE_NORMAL
+  zh: 2. 绘制死亡人数与日期的图表。
 - en: 3\. What time period is represented in these data?
+  id: totrans-66
   prefs: []
   type: TYPE_NORMAL
+  zh: 3. 这些数据代表了哪个时间段？
 - en: 4\. Note that after May 31, 2018, the deaths are all 0\. The data is probably
     not entered yet. We also see a drop off starting around May 1\. Redefine `dat`
     to exclude observations taken on or after May 1, 2018\. Then, remake the plot.
+  id: totrans-67
   prefs: []
   type: TYPE_NORMAL
+  zh: 4. 注意到2018年5月31日之后，死亡人数都是0。数据可能尚未输入。我们还看到大约从5月1日开始有所下降。重新定义`dat`以排除2018年5月1日或之后的观测数据。然后，重新绘制图表。
 - en: 5\. Repeat the plot but use the day of the year on the x-axis instead of date.
+  id: totrans-68
   prefs: []
   type: TYPE_NORMAL
+  zh: 5. 重复绘制图表，但使用年份中的天数作为x轴，而不是日期。
 - en: 6\. Compute the deaths per day by month.
+  id: totrans-69
   prefs: []
   type: TYPE_NORMAL
+  zh: 6. 计算每月的每日死亡人数。
 - en: 7\. Show the deaths per days for July and for September. What do you notice?
+  id: totrans-70
   prefs: []
   type: TYPE_NORMAL
+  zh: 7. 显示7月和9月的每日死亡人数。你注意到了什么？
 - en: 8\. Compute deaths per week and make a plot.****
+  id: totrans-71
   prefs: []
   type: TYPE_NORMAL
+  zh: 8. 计算每周的死亡人数并绘制图表。

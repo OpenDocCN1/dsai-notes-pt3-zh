@@ -1,50 +1,76 @@
 - en: 12  Joining tables
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 12 连接表
 - en: 原文：[https://rafalab.dfci.harvard.edu/dsbook-part-1/wrangling/joining-tables.html](https://rafalab.dfci.harvard.edu/dsbook-part-1/wrangling/joining-tables.html)
+  id: totrans-1
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 原文：[https://rafalab.dfci.harvard.edu/dsbook-part-1/wrangling/joining-tables.html](https://rafalab.dfci.harvard.edu/dsbook-part-1/wrangling/joining-tables.html)
 - en: '[Data Wrangling](../wrangling/intro-to-wrangling.html)'
+  id: totrans-2
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[数据整理](../wrangling/intro-to-wrangling.html)'
 - en: '[12  Joining tables](../wrangling/joining-tables.html)'
+  id: totrans-3
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[12 连接表](../wrangling/joining-tables.html)'
 - en: The information we need for a given analysis may not be just in one table. Here
     we use a simple examples to illustrate the general challenge of combining tables.
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: 对于一个特定的分析，所需的信息可能不仅仅在一个表中。在这里，我们用一个简单的例子来说明合并表的一般挑战。
 - en: 'Suppose we want to explore the relationship between population size for US
     states and electoral votes. We have the population size in this table:'
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: 假设我们想探索美国各州人口规模与选举人票数之间的关系。我们在这个表中找到了人口规模：
 - en: '[PRE0]'
+  id: totrans-6
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: '*and electoral votes in this one:'
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: '*以及在这个表中：'
 - en: '[PRE1]'
+  id: totrans-8
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: '*Just concatenating these two tables together will not work since the order
     of the states is not the same.'
+  id: totrans-9
   prefs: []
   type: TYPE_NORMAL
+  zh: '*仅仅将这两个表连接起来是不行的，因为各州的顺序并不相同。'
 - en: '[PRE2]'
+  id: totrans-10
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: '*The *join* functions, described below, are designed to handle this challenge.'
+  id: totrans-11
   prefs: []
   type: TYPE_NORMAL
+  zh: '*下面描述的*连接*函数旨在处理这个挑战。'
 - en: 12.1 Joins
+  id: totrans-12
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 12.1 连接
 - en: 'The *join* functions in the **dplyr** package make sure that the tables are
     combined so that matching rows are together. If you know SQL, you will see that
     the approach and syntax is very similar. The general idea is that one needs to
@@ -52,357 +78,553 @@
     table with the combined information is returned. Notice what happens if we join
     the two tables above by state using `left_join` (we will remove the `others` column
     and rename `electoral_votes` so that the tables fit on the page):'
+  id: totrans-13
   prefs: []
   type: TYPE_NORMAL
+  zh: '**dplyr**包中的*连接*函数确保表被合并，使得匹配的行在一起。如果你了解SQL，你会看到这种方法和语法非常相似。一般思路是，需要确定一个或多个列，这些列将用于匹配两个表。然后返回一个新的包含合并信息的表。注意，如果我们使用`left_join`通过州来连接上面的两个表会发生什么（我们将移除`others`列，并将`electoral_votes`重命名，以便表格适合页面）：'
 - en: '[PRE3]'
+  id: totrans-14
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: '*The data has been successfully joined and we can now, for example, make a
     plot to explore the relationship:'
+  id: totrans-15
   prefs: []
   type: TYPE_NORMAL
+  zh: '*数据已成功连接，现在我们可以，例如，绘制一个图来探索关系：'
 - en: '![](../Images/413c1c80618e8f84d70d41e2aeb94198.png)'
+  id: totrans-16
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/413c1c80618e8f84d70d41e2aeb94198.png)'
 - en: We see the relationship is close to linear with about 2 electoral votes for
     every million persons, but with very small states getting higher ratios.
+  id: totrans-17
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们看到关系接近线性，每百万人口大约有2张选举人票，但小州的比率更高。
 - en: 'In practice, it is not always the case that each row in one table has a matching
     row in the other. For this reason, we have several versions of join. To illustrate
     this challenge, we will take subsets of the tables above. We create the tables
     `tab1` and `tab2` so that they have some states in common but not all:'
+  id: totrans-18
   prefs: []
   type: TYPE_NORMAL
+  zh: 在实践中，并不是每个表中的每一行都一定在另一个表中有一个匹配的行。因此，我们有了几种不同的连接方式。为了说明这个挑战，我们将从上面的表中取子集。我们创建了`tab1`和`tab2`这两个表，它们有一些共同的状态，但并非全部：
 - en: '[PRE4]'
+  id: totrans-19
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE4]'
 - en: '*We will use these two tables as examples in the next sections.'
+  id: totrans-20
   prefs: []
   type: TYPE_NORMAL
+  zh: '*我们将在下一节中使用这两个表作为例子。'
 - en: 12.1.1 Left join
+  id: totrans-21
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 12.1.1 左连接
 - en: Suppose we want a table like `tab_1`, but adding electoral votes to whatever
     states we have available. For this, we use `left_join` with `tab_1` as the first
     argument. We specify which column to use to match with the `by` argument.
+  id: totrans-22
   prefs: []
   type: TYPE_NORMAL
+  zh: 假设我们想要一个类似于`tab_1`的表，但添加我们可用的任何州的选举人票数。为此，我们使用`left_join`，并将`tab_1`作为第一个参数。我们通过`by`参数指定要匹配的列。
 - en: '[PRE5]'
+  id: totrans-23
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE5]'
 - en: '*Note that `NA`s are added to the two states not appearing in `tab_2`. Also,
     notice that this function, as well as all the other joins, can receive the first
     arguments through the pipe:'
+  id: totrans-24
   prefs: []
   type: TYPE_NORMAL
+  zh: '*注意，`NA`s被添加到`tab_2`中未出现的两个州。此外，请注意，这个函数以及所有其他连接函数都可以通过管道接收第一个参数：'
 - en: '[PRE6]*'
+  id: totrans-25
   prefs: []
   type: TYPE_NORMAL
+  zh: '[PRE6]*'
 - en: '**12.1.2 Right join**'
+  id: totrans-26
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '**12.1.2 右连接**'
 - en: '**If instead of a table with the same rows as first table, we want one with
     the same rows as second table, we can use `right_join`:'
+  id: totrans-27
   prefs: []
   type: TYPE_NORMAL
+  zh: '**如果我们想要一个与第二个表具有相同行的表，而不是与第一个表具有相同行的表，我们可以使用`right_join`：'
 - en: '[PRE7]'
+  id: totrans-28
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE7]'
 - en: '*Now the NAs are in the column coming from `tab_1`.***'
+  id: totrans-29
   prefs: []
   type: TYPE_NORMAL
+  zh: '*现在NAs出现在来自`tab_1`的列中。'
 - en: '***12.1.3 Inner join***'
+  id: totrans-30
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '***12.1.3 内连接***'
 - en: '***If we want to keep only the rows that have information in both tables, we
     use `inner_join`. You can think of this as an intersection:'
+  id: totrans-31
   prefs: []
   type: TYPE_NORMAL
+  zh: '***如果我们只想保留两个表中都有信息的行，我们使用`inner_join`。你可以将其视为一个交集：'
 - en: '[PRE8]***'
+  id: totrans-32
   prefs: []
   type: TYPE_NORMAL
+  zh: '[PRE8]***'
 - en: '***12.1.4 Full join***'
+  id: totrans-33
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '***12.1.4 全连接***'
 - en: '***If we want to keep all the rows and fill the missing parts with NAs, we
     can use `full_join`. You can think of this as a union:'
+  id: totrans-34
   prefs: []
   type: TYPE_NORMAL
+  zh: '***如果我们想保留所有行并用 NAs 填充缺失部分，我们可以使用 `full_join`。你可以将其视为一个并集：'
 - en: '[PRE9]***'
+  id: totrans-35
   prefs: []
   type: TYPE_NORMAL
+  zh: '[PRE9]***'
 - en: '***12.1.5 Semi join***'
+  id: totrans-36
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '***12.1.5 半连接***'
 - en: '***The `semi_join` function lets us keep the part of first table for which
     we have information in the second. It does not add the columns of the second:'
+  id: totrans-37
   prefs: []
   type: TYPE_NORMAL
+  zh: '***`semi_join` 函数允许我们保留第一表中在第二表中具有信息的部分。它不会添加第二表的列：'
 - en: '[PRE10]***'
+  id: totrans-38
   prefs: []
   type: TYPE_NORMAL
+  zh: '[PRE10]***'
 - en: '***12.1.6 Anti join***'
+  id: totrans-39
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '***12.1.6 反连接***'
 - en: '***The function `anti_join` is the opposite of `semi_join`. It keeps the elements
     of the first table for which there is no information in the second:'
+  id: totrans-40
   prefs: []
   type: TYPE_NORMAL
+  zh: '***函数 `anti_join` 是 `semi_join` 的对立面。它保留第一表中在第二表中没有信息的元素：'
 - en: '[PRE11]'
+  id: totrans-41
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE11]'
 - en: '*The following diagram summarizes the above joins:'
+  id: totrans-42
   prefs: []
   type: TYPE_NORMAL
+  zh: '*以下图表总结了上述连接：'
 - en: '![](../Images/94c8ed8bde6f5237a076fdbf145135f6.png)'
+  id: totrans-43
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/94c8ed8bde6f5237a076fdbf145135f6.png)'
 - en: (Image courtesy of RStudio[¹](#fn1). CC-BY-4.0 license[²](#fn2). Cropped from
     original.)******
+  id: totrans-44
   prefs: []
   type: TYPE_NORMAL
+  zh: (Image courtesy of RStudio[¹](#fn1). CC-BY-4.0 license[²](#fn2). Cropped from
+    original.)******
 - en: '***12.2 Binding***'
+  id: totrans-45
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '***12.2 绑定***'
 - en: '***Although we have yet to use it in this book, another common way in which
     datasets are combined is by *binding* them. Unlike the join function, the binding
     functions do not try to match by a variable, but instead simply combine datasets.
     If the datasets don’t match by the appropriate dimensions, one obtains an error.'
+  id: totrans-46
   prefs: []
   type: TYPE_NORMAL
+  zh: '***尽管我们在这本书中还没有使用它，但另一种常见的将数据集合并的方式是通过 *绑定*。与连接函数不同，绑定函数不尝试通过变量进行匹配，而是简单地合并数据集。如果数据集在适当的维度上不匹配，则会得到一个错误。'
 - en: 12.2.1 Binding columns
+  id: totrans-47
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 12.2.1 绑定列
 - en: The **dplyr** function *bind_cols* binds two objects by making them columns
     in a tibble. For example, we quickly want to make a data frame consisting of numbers
     we can use
+  id: totrans-48
   prefs: []
   type: TYPE_NORMAL
+  zh: '`dplyr` 函数 *bind_cols* 通过将它们作为 tibble 的列来绑定两个对象。例如，我们很快就想创建一个由我们可以使用的数字组成的数据框'
 - en: '[PRE12]'
+  id: totrans-49
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE12]'
 - en: '*This function requires that we assign names to the columns. Here we chose
     `a` and `b`.'
+  id: totrans-50
   prefs: []
   type: TYPE_NORMAL
+  zh: '*此函数要求我们为列分配名称。这里我们选择了 `a` 和 `b`。'
 - en: Note that there is an R-base function `cbind` with the exact same functionality.
     An important difference is that `cbind` can create different types of objects,
     while `bind_cols` always produces a data frame.
+  id: totrans-51
   prefs: []
   type: TYPE_NORMAL
+  zh: 注意，存在一个具有完全相同功能性的 R-base 函数 `cbind`。一个重要的区别是 `cbind` 可以创建不同类型的对象，而 `bind_cols`
+    总是产生一个数据框。
 - en: '`bind_cols` can also bind two different data frames. For example, here we break
     up the `tab` data frame and then bind them back together:'
+  id: totrans-52
   prefs: []
   type: TYPE_NORMAL
+  zh: '`bind_cols` 也可以绑定两个不同的数据框。例如，这里我们拆分了 `tab` 数据框，然后将其重新绑定在一起：'
 - en: '[PRE13]*'
+  id: totrans-53
   prefs: []
   type: TYPE_NORMAL
+  zh: '[PRE13]*'
 - en: '**12.2.2 Binding by rows**'
+  id: totrans-54
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '**12.2.2 按行绑定**'
 - en: '**The `bind_rows` function is similar to `bind_cols`, but binds rows instead
     of columns:'
+  id: totrans-55
   prefs: []
   type: TYPE_NORMAL
+  zh: '**`bind_rows` 函数与 `bind_cols` 类似，但绑定的是行而不是列：'
 - en: '[PRE14]'
+  id: totrans-56
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE14]'
 - en: '*This is based on an R-base function `rbind`.******'
+  id: totrans-57
   prefs: []
   type: TYPE_NORMAL
+  zh: '*这是基于 R-base 函数 `rbind`。******'
 - en: '***12.3 Set operators***'
+  id: totrans-58
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '***12.3 集合运算符***'
 - en: '***Another set of commands useful for combining datasets are the set operators.
     When applied to vectors, these behave as their names suggest. Examples are `intersect`,
     `union`, `setdiff`, and `setequal`. However, if the **tidyverse**, or more specifically
     **dplyr**, is loaded, these functions can be used on data frames as opposed to
     just on vectors.'
+  id: totrans-59
   prefs: []
   type: TYPE_NORMAL
+  zh: '***另一组用于合并数据集的命令是集合运算符。当应用于向量时，这些运算符的行为正如其名。例如，有 `intersect`、`union`、`setdiff`
+    和 `setequal`。然而，如果加载了 **tidyverse**，或者更具体地说 **dplyr**，则这些函数可以用于数据框，而不仅仅是向量。'
 - en: 12.3.1 Intersect
+  id: totrans-60
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 12.3.1 交集
 - en: 'You can take intersections of vectors of any type, such as numeric:'
+  id: totrans-61
   prefs: []
   type: TYPE_NORMAL
+  zh: 你可以对任何类型的向量进行交集，例如数值：
 - en: '[PRE15]'
+  id: totrans-62
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE15]'
 - en: '*or characters:'
+  id: totrans-63
   prefs: []
   type: TYPE_NORMAL
+  zh: '*或者字符：'
 - en: '[PRE16]'
+  id: totrans-64
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE16]'
 - en: '*The **dplyr** package includes an `intersect` function that can be applied
     to tables with the same column names. This function returns the rows in common
     between two tables. To make sure we use the **dplyr** version of `intersect` rather
     than the base R version, we can use `[dplyr::intersect](https://generics.r-lib.org/reference/setops.html)`
     like this:'
+  id: totrans-65
   prefs: []
   type: TYPE_NORMAL
+  zh: '*`dplyr` 包含一个 `intersect` 函数，可以应用于具有相同列名的表。此函数返回两个表之间的公共行。为了确保我们使用 `dplyr`
+    版本的 `intersect` 而不是基础 R 版本，我们可以使用 `[dplyr::intersect](https://generics.r-lib.org/reference/setops.html)`
+    如此：'
 - en: '[PRE17]**'
+  id: totrans-66
   prefs: []
   type: TYPE_NORMAL
+  zh: '[PRE17]**'
 - en: '***12.3.2 Union***'
+  id: totrans-67
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '***12.3.2 并集***'
 - en: '***Similarly *union* takes the union of vectors. For example:'
+  id: totrans-68
   prefs: []
   type: TYPE_NORMAL
+  zh: '***同样，*并集* 取向量的并集。例如：'
 - en: '[PRE18]'
+  id: totrans-69
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE18]'
 - en: '*The **dplyr** package includes a version of `union` that combines all the
     rows of two tables with the same column names.'
+  id: totrans-70
   prefs: []
   type: TYPE_NORMAL
+  zh: '*`dplyr` 包含了一个 `union` 版本，它可以结合两个具有相同列名的表的全部行。'
 - en: '[PRE19]****'
+  id: totrans-71
   prefs: []
   type: TYPE_NORMAL
+  zh: '[PRE19]****'
 - en: '***12.3.3 `setdiff`***'
+  id: totrans-72
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '***12.3.3 `setdiff`***'
 - en: '***The set difference between a first and second argument can be obtained with
     `setdiff`. Unlike `intersect` and `union`, this function is not symmetric:'
+  id: totrans-73
   prefs: []
   type: TYPE_NORMAL
+  zh: '***通过 `setdiff` 可以获得第一个和第二个参数的集合差。与 `intersect` 和 `union` 不同，此函数不是对称的：'
 - en: '[PRE20]'
+  id: totrans-74
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE20]'
 - en: '*As with the functions shown above, **dplyr** has a version for data frames:'
+  id: totrans-75
   prefs: []
   type: TYPE_NORMAL
+  zh: '*与上面显示的函数类似，**dplyr** 也有针对数据框的版本：'
 - en: '[PRE21]****'
+  id: totrans-76
   prefs: []
   type: TYPE_NORMAL
+  zh: '[PRE21]****'
 - en: '***12.3.4 `setequal`***'
+  id: totrans-77
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '***12.3.4 `setequal`***'
 - en: '***Finally, the function `setequal` tells us if two sets are the same, regardless
     of order. So notice that:'
+  id: totrans-78
   prefs: []
   type: TYPE_NORMAL
+  zh: '***最后，函数 `setequal` 告诉我们两个集合是否相同，无论顺序如何。所以请注意：'
 - en: '[PRE22]'
+  id: totrans-79
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE22]'
 - en: '*but:'
+  id: totrans-80
   prefs: []
   type: TYPE_NORMAL
+  zh: '*但：'
 - en: '[PRE23]'
+  id: totrans-81
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE23]'
 - en: '*The **dplyr** version checks whether data frames are equal, regardless of
     order of rows *or* columns:'
+  id: totrans-82
   prefs: []
   type: TYPE_NORMAL
+  zh: '*`dplyr` 版本检查数据框是否相等，无论行或列的顺序*：'
 - en: '[PRE24]********'
+  id: totrans-83
   prefs: []
   type: TYPE_NORMAL
+  zh: '[PRE24]********'
 - en: '***12.4 Joining with data.table***'
+  id: totrans-84
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '***12.4 使用 data.table 进行连接***'
 - en: '***The **data.table** package includes `merge`, a very efficient function for
     joining tables.'
+  id: totrans-85
   prefs: []
   type: TYPE_NORMAL
+  zh: '***`data.table` 包包括 `merge`，这是一个用于连接表的非常高效的函数。'
 - en: 'In **tidyverse** we joined two tables with `left_join`:'
+  id: totrans-86
   prefs: []
   type: TYPE_NORMAL
+  zh: 在 **tidyverse** 中，我们使用 `left_join` 将两个表连接起来：
 - en: '[PRE25]'
+  id: totrans-87
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE25]'
 - en: '*In **data.table** the `merge` functions works similarly:'
+  id: totrans-88
   prefs: []
   type: TYPE_NORMAL
+  zh: '*在 **data.table** 中，`merge` 函数的工作方式类似：'
 - en: '[PRE26]'
+  id: totrans-89
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE26]'
 - en: '*Instead of defining different functions for the different type of joins, `merge`
     uses the the logical arguments `all` (full join), `all.x` (left join), and `all.y`
     (right join).*****'
+  id: totrans-90
   prefs: []
   type: TYPE_NORMAL
+  zh: '*`merge` 不为不同类型的连接定义不同的函数，而是使用逻辑参数 `all`（全连接）、`all.x`（左连接）和 `all.y`（右连接）。*****'
 - en: '***12.5 Exercises***'
+  id: totrans-91
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '***12.5 练习***'
 - en: '***1\. Install and load the **Lahman** library. This database includes data
     related to baseball teams. It includes summary statistics about how the players
     performed on offense and defense for several years. It also includes personal
     information about the players.'
+  id: totrans-92
   prefs: []
   type: TYPE_NORMAL
+  zh: '***1. 安装并加载 **Lahman** 库。这个数据库包括与棒球队相关的数据。它包括关于球员在进攻和防守方面多年表现的总结统计数据。它还包括球员的个人资料。'
 - en: 'The `Batting` data frame contains the offensive statistics for all players
     for many years. You can see, for example, the top 10 hitters by running this code:'
+  id: totrans-93
   prefs: []
   type: TYPE_NORMAL
+  zh: '`Batting` 数据框包含了许多年所有球员的进攻统计数据。例如，你可以通过运行以下代码看到前 10 名击球手：'
 - en: '[PRE27]'
+  id: totrans-94
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE27]'
 - en: '*But who are these players? We see an ID, but not the names. The player names
     are in this table'
+  id: totrans-95
   prefs: []
   type: TYPE_NORMAL
+  zh: '*但这些人是谁？我们看到一个 ID，但没有名字。球员的名字在这个表中'
 - en: '[PRE28]'
+  id: totrans-96
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE28]'
 - en: '*We can see column names `nameFirst` and `nameLast`. Use the `left_join` function
     to create a table of the top home run hitters. The table should have `playerID`,
     first name, last name, and number of home runs (HR). Rewrite the object `top`
     with this new table.'
+  id: totrans-97
   prefs: []
   type: TYPE_NORMAL
+  zh: '*我们可以看到列名 `nameFirst` 和 `nameLast`。使用 `left_join` 函数创建一个顶级全垒打手的表格。该表应包含 `playerID`、名字、姓氏和全垒打次数（HR）。用这个新表重写
+    `top` 对象。'
 - en: 2\. Now use the `Salaries` data frame to add each player’s salary to the table
     you created in exercise 1\. Note that salaries are different every year so make
     sure to filter for the year 2016, then use `right_join`. This time show first
     name, last name, team, HR, and salary.
+  id: totrans-98
   prefs: []
   type: TYPE_NORMAL
+  zh: 2. 现在使用 `Salaries` 数据框将每位球员的薪水添加到你在练习 1 中创建的表中。注意，薪水每年都不同，所以请确保筛选出 2016 年的数据，然后使用
+    `right_join`。这次显示姓名、姓氏、球队、HR 和薪水。
 - en: '3\. In a previous exercise, we created a tidy version of the `co2` dataset:'
+  id: totrans-99
   prefs: []
   type: TYPE_NORMAL
+  zh: 3. 在之前的练习中，我们创建了 `co2` 数据集的整洁版本：
 - en: '[PRE29]'
+  id: totrans-100
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE29]'
 - en: '*We want to see if the monthly trend is changing, so we are going to remove
     the year effects and then plot the results. We will first compute the year averages.
     Use the `group_by` and `summarize` to compute the average co2 for each year. Save
     in an object called `yearly_avg`.'
+  id: totrans-101
   prefs: []
   type: TYPE_NORMAL
+  zh: '*我们想看看月度趋势是否在变化，所以我们将移除年份效应，然后绘制结果。我们首先计算每年的平均值。使用 `group_by` 和 `summarize`
+    计算每年的平均 CO2。将结果保存在名为 `yearly_avg` 的对象中。'
 - en: '4\. Now use the `left_join` function to add the yearly average to the `co2_wide`
     dataset. Then compute the residuals: observed co2 measure - yearly average.'
+  id: totrans-102
   prefs: []
   type: TYPE_NORMAL
+  zh: 4. 现在使用 `left_join` 函数将年度平均值添加到 `co2_wide` 数据集中。然后计算残差：观察到的 CO2 测量值 - 年度平均值。
 - en: 5\. Make a plot of the seasonal trends by year but only after removing the year
     effect.******
+  id: totrans-103
   prefs: []
   type: TYPE_NORMAL
+  zh: 5. 在移除年份效应后，绘制季节性趋势的图表。******
 - en: '* * *'
+  id: totrans-104
   prefs: []
   type: TYPE_NORMAL
+  zh: '* * *'
 - en: '***1.  [https://github.com/rstudio/cheatsheets](https://github.com/rstudio/cheatsheets)[↩︎](#fnref1)'
+  id: totrans-105
   prefs: []
   type: TYPE_NORMAL
+  zh: '***1.  [https://github.com/rstudio/cheatsheets](https://github.com/rstudio/cheatsheets)[↩︎](#fnref1)'
 - en: '[https://github.com/rstudio/cheatsheets/blob/master/LICENSE](https://github.com/rstudio/cheatsheets/blob/master/LICENSE)[↩︎](#fnref2)******'
+  id: totrans-106
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[https://github.com/rstudio/cheatsheets/blob/master/LICENSE](https://github.com/rstudio/cheatsheets/blob/master/LICENSE)[↩︎](#fnref2)******'

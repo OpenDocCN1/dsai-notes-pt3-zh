@@ -1,289 +1,440 @@
 - en: 14  Locales
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 14  区域设置
 - en: 原文：[https://rafalab.dfci.harvard.edu/dsbook-part-1/wrangling/locales.html](https://rafalab.dfci.harvard.edu/dsbook-part-1/wrangling/locales.html)
+  id: totrans-1
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 原文：[https://rafalab.dfci.harvard.edu/dsbook-part-1/wrangling/locales.html](https://rafalab.dfci.harvard.edu/dsbook-part-1/wrangling/locales.html)
 - en: '[Data Wrangling](../wrangling/intro-to-wrangling.html)'
+  id: totrans-2
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[数据处理](../wrangling/intro-to-wrangling.html)'
 - en: '[14  Locales](../wrangling/locales.html)'
+  id: totrans-3
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[14  区域设置](../wrangling/locales.html)'
 - en: Computer settings change depending on language and location, and being unaware
     of this possibility can make certain data wrangling challenges difficult to overcome.
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: 计算机设置根据语言和位置而变化，对此可能性的不了解可能会使某些数据处理挑战难以克服。
 - en: 'The purpose of *locales* is to group together common settings that can affect:'
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: '*区域设置的目的在于将可能影响以下方面的常见设置组合在一起：*'
 - en: Month and day names, which are necessary for interpreting dates.
+  id: totrans-6
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 月份和日期名称，对于解释日期是必要的。
 - en: The standard date format, also necessary for interpreting dates.
+  id: totrans-7
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 标准日期格式，对于解释日期也是必要的。
 - en: The default time zone, essential for interpreting date-times.
+  id: totrans-8
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 默认时区，对于解释日期时间至关重要。
 - en: Character encoding, vital for reading non-ASCII characters.
+  id: totrans-9
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 字符编码，对于读取非ASCII字符至关重要。
 - en: The symbols for decimals and number groupings, important for interpreting numerical
     values.
+  id: totrans-10
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 小数点和数字分组符号，对于解释数值非常重要。
 - en: In R, a *locale* refers to a suite of settings that dictate how the system should
     behave with respect to cultural conventions. These settings affect the way data
     is formatted and presented, encompassing details such as date formatting, currency
     symbols, decimal separators, and other related aspects.
+  id: totrans-11
   prefs: []
   type: TYPE_NORMAL
+  zh: 在R中，*区域设置*指的是一组设置，这些设置决定了系统如何根据文化惯例行事。这些设置影响数据的格式化和展示方式，包括日期格式、货币符号、小数分隔符和其他相关方面。
 - en: Locales in R affect several areas, including how character vectors are sorted,
     and date, number, and currency formatting. Additionally, errors, warnings, and
     other messages might be translated into languages other than English based on
     the locale.
+  id: totrans-12
   prefs: []
   type: TYPE_NORMAL
+  zh: R中的区域设置影响多个领域，包括字符向量的排序方式，以及日期、数字和货币格式。此外，错误、警告和其他消息可能会根据区域设置翻译成除英语以外的语言。
 - en: 14.1 Locales in R
+  id: totrans-13
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 14.1 R中的区域设置
 - en: 'To access the current locale settings in R, you can use the `[Sys.getlocale()](https://rdrr.io/r/base/locales.html)`
     function:'
+  id: totrans-14
   prefs: []
   type: TYPE_NORMAL
+  zh: 要访问R中的当前区域设置，您可以使用 `[Sys.getlocale()](https://rdrr.io/r/base/locales.html)`
+    函数：
 - en: '[PRE0]'
+  id: totrans-15
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: '*To set a specific locale, use the `[Sys.setlocale()](https://rdrr.io/r/base/locales.html)`
     function. For example, to set the locale to US English:'
+  id: totrans-16
   prefs: []
   type: TYPE_NORMAL
+  zh: '*要设置特定的区域设置，请使用 `[Sys.setlocale()](https://rdrr.io/r/base/locales.html)` 函数。例如，要将区域设置为美国英语：*'
 - en: '[PRE1]'
+  id: totrans-17
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: '*The exact string to use for setting the locale (like “en_US.UTF-8”) can depend
     on your operating system and its configuration.'
+  id: totrans-18
   prefs: []
   type: TYPE_NORMAL
+  zh: '*用于设置区域设置的精确字符串（如“en_US.UTF-8”）可能取决于您的操作系统及其配置。'
 - en: The `LC_ALL` used in the above code refers to all locale categories. R, like
     many systems, breaks down the locale into categories, each responsible for different
     aspects listed below.
+  id: totrans-19
   prefs: []
   type: TYPE_NORMAL
+  zh: 上面的代码中使用的 `LC_ALL` 指的是所有区域设置类别。R，像许多系统一样，将区域设置分解为类别，每个类别负责以下列出的不同方面。
 - en: '`LC_COLLATE`: for string collation'
+  id: totrans-20
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`LC_COLLATE`: 用于字符串排序'
 - en: '`LC_TIME`: date and time formatting'
+  id: totrans-21
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`LC_TIME`: 日期和时间格式化'
 - en: '`LC_MONETARY`: currency formatting.'
+  id: totrans-22
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`LC_MONETARY`: 货币格式化。'
 - en: '`LC_MESSAGES`: system message translations.'
+  id: totrans-23
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`LC_MESSAGES`: 系统消息翻译。'
 - en: '`LC_NUMERIC`: number formatting.'
+  id: totrans-24
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`LC_NUMERIC`: 数字格式化。'
 - en: You can set the locale for each category individually if you don’t want to change
     everything with `LC_ALL`.
+  id: totrans-25
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果您不想通过 `LC_ALL` 改变所有内容，您可以单独为每个类别设置区域设置。
 - en: '*We have shown tools to control locales. These settings are important because
     they affect how your data looks and behaves. However, not all of these settings
     are available on every computer; their availability depends on what kind of computer
     you have and how it’s set up.'
+  id: totrans-26
   prefs: []
   type: TYPE_NORMAL
+  zh: '*我们已经展示了控制区域设置的工具。这些设置很重要，因为它们会影响您数据的外观和行为。然而，并非所有计算机都提供这些设置；它们的可用性取决于您拥有的计算机类型及其配置。'
 - en: Changing these settings, especially `LC_NUMERIC`, can lead to unexpected problems
     when you’re working with numbers in R. For example, if you’re used to using a
     period as a decimal point, but your locale uses a comma, this disparity can create
     issues when importing data.
+  id: totrans-27
   prefs: []
   type: TYPE_NORMAL
+  zh: 改变这些设置，尤其是 `LC_NUMERIC`，当您在R中处理数字时可能会导致意外问题。例如，如果您习惯于使用点作为小数点，但您的区域设置使用逗号，这种差异在导入数据时可能会引起问题。
 - en: It is important to remember that these locale settings only last as long as
     one R session. If you change them while you’re working, they will revert to the
     default settings when you close R and open it again.***
+  id: totrans-28
   prefs: []
   type: TYPE_NORMAL
+  zh: 重要的一点是要记住，这些区域设置只持续一个 R 会话。如果你在操作时更改它们，当你关闭 R 并再次打开时，它们将恢复到默认设置。***
 - en: '***14.2 The `locale` function***'
+  id: totrans-29
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '***14.2 `locale` 函数***'
 - en: '***The **readr** package includes a `[locale()](https://readr.tidyverse.org/reference/locale.html)`
     function that can be used to learn or change the current locale from within R:'
+  id: totrans-30
   prefs: []
   type: TYPE_NORMAL
+  zh: '***`readr` 包包含一个 `[locale()](https://readr.tidyverse.org/reference/locale.html)`
+    函数，可以在 R 中使用它来学习或更改当前的区域设置：'
 - en: '[PRE2]'
+  id: totrans-31
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: '*You can see all the locales available on your system by typing:'
+  id: totrans-32
   prefs: []
   type: TYPE_NORMAL
+  zh: '*您可以通过输入以下内容来查看系统上可用的所有区域设置：'
 - en: '[PRE3]'
+  id: totrans-33
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: '*Here is what you obtain if you change the dates locale to Spanish:'
+  id: totrans-34
   prefs: []
   type: TYPE_NORMAL
+  zh: '*这里是你将日期区域设置改为西班牙语时得到的结果：'
 - en: '[PRE4]*****'
+  id: totrans-35
   prefs: []
   type: TYPE_NORMAL
+  zh: '[PRE4]*****'
 - en: '****14.3 Example: wrangling a Spanish dataset****'
+  id: totrans-36
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '****14.3 示例：处理西班牙语数据集****'
 - en: '****In [Section 6.3.2](../R/importing-data.html#sec-reader), we noted that
     reading the file:'
+  id: totrans-37
   prefs: []
   type: TYPE_NORMAL
+  zh: '****在 [第 6.3.2 节](../R/importing-data.html#sec-reader) 中，我们提到读取文件：'
 - en: '[PRE5]'
+  id: totrans-38
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE5]'
 - en: '*had a encoding different than UTF-8, the default. We used `guess_encoding`
     to determine the correct one:'
+  id: totrans-39
   prefs: []
   type: TYPE_NORMAL
+  zh: '*具有与默认的 UTF-8 编码不同的编码。我们使用了 `guess_encoding` 来确定正确的编码：'
 - en: '[PRE6]'
+  id: totrans-40
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE6]'
 - en: '*and used the `locale` function to change this and read in this encoding instead:'
+  id: totrans-41
   prefs: []
   type: TYPE_NORMAL
+  zh: '*并使用 `locale` 函数来更改这一点，并读取此编码：'
 - en: '[PRE7]'
+  id: totrans-42
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE7]'
 - en: '*This file provides homework assignment scores for seven students. The columns
     represent the student name, their date of birth, the time they submitted their
     assignment, and the score they obtained, respectively. You can see the entire
     file using `read_lines`:'
+  id: totrans-43
   prefs: []
   type: TYPE_NORMAL
+  zh: '*此文件提供了七个学生的家庭作业分数。列代表学生姓名、他们的出生日期、提交作业的时间以及他们获得的分数。您可以使用 `read_lines` 查看整个文件：'
 - en: '[PRE8]'
+  id: totrans-44
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE8]'
 - en: '*As an illustrative example, we will write code to compute the students age
     and check if they turned in their assignment by the deadline of September 21,
     2023, before midnight.'
+  id: totrans-45
   prefs: []
   type: TYPE_NORMAL
+  zh: '*作为一个说明性的例子，我们将编写代码来计算学生的年龄并检查他们是否在 2023 年 9 月 21 日午夜之前提交了作业：'
 - en: 'We can read in the file with correct encoding like this:'
+  id: totrans-46
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们可以用正确的编码读取文件，如下所示：
 - en: '[PRE9]'
+  id: totrans-47
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE9]'
 - en: '*However, notice that the last column, which is supposed to contain exam scores
     between 0 and 100, shows numbers larger than 800:'
+  id: totrans-48
   prefs: []
   type: TYPE_NORMAL
+  zh: '*然而，请注意，最后一列，本应包含 0 到 100 之间的考试分数，显示的数字大于 800：'
 - en: '[PRE10]'
+  id: totrans-49
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE10]'
 - en: '*This happens because the scores in the file use the European decimal point,
     which confuses `read_csv`.'
+  id: totrans-50
   prefs: []
   type: TYPE_NORMAL
+  zh: '*这是因为文件中的分数使用的是欧洲的十进制点，这会混淆 `read_csv`。'
 - en: 'To address this issue, we can also change the encoding to use European decimals,
     which fixes the problem:'
+  id: totrans-51
   prefs: []
   type: TYPE_NORMAL
+  zh: 为了解决这个问题，我们也可以将编码更改为使用欧洲十进制，这可以修复问题：
 - en: '[PRE11]'
+  id: totrans-52
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE11]'
 - en: '*Now, to compute the student ages, let’s try changing the submission times
     to date format:'
+  id: totrans-53
   prefs: []
   type: TYPE_NORMAL
+  zh: '*现在，为了计算学生年龄，让我们尝试将提交时间更改为日期格式：'
 - en: '[PRE12]'
+  id: totrans-54
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE12]'
 - en: '*Nothing gets converted correctly. This is because the dates are in Spanish.
     We can change the locale to use Spanish as the language for dates:'
+  id: totrans-55
   prefs: []
   type: TYPE_NORMAL
+  zh: '*没有任何内容被正确转换。这是因为日期是西班牙语。我们可以将区域设置更改为使用西班牙语作为日期的语言：'
 - en: '[PRE13]'
+  id: totrans-56
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE13]'
 - en: '*We can also reread the file using the correct locales:'
+  id: totrans-57
   prefs: []
   type: TYPE_NORMAL
+  zh: '*我们也可以使用正确的区域设置重新读取文件：'
 - en: '[PRE14]'
+  id: totrans-58
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE14]'
 - en: '*Computing the students’ ages is now straightforward:'
+  id: totrans-59
   prefs: []
   type: TYPE_NORMAL
+  zh: '*计算学生的年龄现在变得简单：'
 - en: '[PRE15]'
+  id: totrans-60
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE15]'
 - en: '*Finally, let’s check which students turned in their homework past the deadline
     of September 22:'
+  id: totrans-61
   prefs: []
   type: TYPE_NORMAL
+  zh: '*最后，让我们检查哪些学生在 9 月 22 日的截止日期之后提交了他们的作业：'
 - en: '[PRE16]'
+  id: totrans-62
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE16]'
 - en: '*We see that two students where late. However, with times we have to be particularly
     careful as some functions default to the UTC timezone:'
+  id: totrans-63
   prefs: []
   type: TYPE_NORMAL
+  zh: '*我们看到有两个学生迟交了。然而，由于时间，我们必须特别小心，因为一些函数默认使用 UTC 时区：'
 - en: '[PRE17]'
+  id: totrans-64
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE17]'
 - en: '*If we change to the timezone to Eastern Standard Time (EST), we see no one
     was late:'
+  id: totrans-65
   prefs: []
   type: TYPE_NORMAL
+  zh: '*如果我们将其更改为东部标准时间（EST），我们看到没有人迟交：'
 - en: '[PRE18]*****************'
+  id: totrans-66
   prefs: []
   type: TYPE_NORMAL
+  zh: '[PRE18]*****************'
 - en: '****14.4 Exercises****'
+  id: totrans-67
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '****14.4 练习****'
 - en: '****1\. Load the **lubridate** package and set the locale to French for this
     exercise.'
+  id: totrans-68
   prefs: []
   type: TYPE_NORMAL
+  zh: '****1\. 加载 **lubridate** 包并将区域设置为此练习的法国。'
 - en: '2\. Create a numeric vector containing the following numbers: 12345.67, 9876.54,
     3456.78, and 5432.10.'
+  id: totrans-69
   prefs: []
   type: TYPE_NORMAL
+  zh: 2\. 创建一个包含以下数字的数值向量：12345.67, 9876.54, 3456.78, 和 5432.10。
 - en: 3\. Use the `[format()](https://rdrr.io/r/base/format.html)` function to format
     the numeric vector as currency, displaying the values in Euros. Ensure that the
     decimal point is represented correctly according to the French locale. Print the
     formatted currency values.
+  id: totrans-70
   prefs: []
   type: TYPE_NORMAL
+  zh: 3\. 使用 `[format()](https://rdrr.io/r/base/format.html)` 函数将数值向量格式化为货币，显示以欧元表示的值。确保根据法国区域设置正确表示小数点。打印格式化的货币值。
 - en: '4\. Create a date vector with three dates: July 14, 1789, January 1, 1803,
     and July 5, 1962\. Use the `[format()](https://rdrr.io/r/base/format.html)` function
     to format the date vector in the “dd Month yyyy” format, where “Month” should
     be displayed in the French language. Ensure that the month names are correctly
     translated according to the French locale. Print the formatted date values.'
+  id: totrans-71
   prefs: []
   type: TYPE_NORMAL
+  zh: 4. 创建一个包含三个日期的日期向量：1789年7月14日、1803年1月1日和1962年7月5日。使用 `[format()](https://rdrr.io/r/base/format.html)`
+    函数将日期向量格式化为“dd 月 yyyy”格式，其中“月”应使用法语显示。确保月份名称根据法语地区正确翻译。打印格式化后的日期值。
 - en: 5\. Reset the locale to the default setting (e.g., “C” or “en_US.UTF-8”) to
     revert to the standard formatting.
+  id: totrans-72
   prefs: []
   type: TYPE_NORMAL
+  zh: 5. 将地区重置为默认设置（例如，“C”或“en_US.UTF-8”），以恢复标准格式。
 - en: 6\. Repeat steps 2-4 for the numeric vector, and steps 5-7 for the date vector
     to observe the standard formatting.****
+  id: totrans-73
   prefs: []
   type: TYPE_NORMAL
+  zh: 6. 对数值向量重复步骤2-4，对日期向量重复步骤5-7，以观察标准格式。****

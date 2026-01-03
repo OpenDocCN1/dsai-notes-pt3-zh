@@ -1,37 +1,51 @@
 - en: 5  Discrete Probability
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 5  离散概率
 - en: 原文：[https://rafalab.dfci.harvard.edu/dsbook-part-2/prob/discrete-probability.html](https://rafalab.dfci.harvard.edu/dsbook-part-2/prob/discrete-probability.html)
+  id: totrans-1
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 原文：[https://rafalab.dfci.harvard.edu/dsbook-part-2/prob/discrete-probability.html](https://rafalab.dfci.harvard.edu/dsbook-part-2/prob/discrete-probability.html)
 - en: '[Probability](../prob/intro-to-prob.html)'
+  id: totrans-2
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[概率](../prob/intro-to-prob.html)'
 - en: '[5  Discrete Probability](../prob/discrete-probability.html)'
+  id: totrans-3
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[5  离散概率](../prob/discrete-probability.html)'
 - en: We begin by covering some basic principles related to categorical data. The
     specific area of probability which deals with categorical data is referred to
     as *discrete probability*. Understanding this topic, will help us comprehend the
     probability theory we will later introduce for numeric and continuous data, which
     is much more common in data analysis. Since discrete probability is invaluable
     in card games, we will use these as illustrative examples.
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们首先介绍一些与分类数据相关的基本原则。处理分类数据的特定概率领域被称为*离散概率*。理解这个主题将帮助我们理解我们稍后将要介绍的用于数值和连续数据的概率理论，这在数据分析中更为常见。由于离散概率在纸牌游戏中非常有价值，我们将使用这些作为说明性例子。
 - en: 5.1 Relative frequency
+  id: totrans-5
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 5.1 相对频率
 - en: The term *probability* is used in everyday language. Yet answering questions
     about probability is often hard, if not impossible. In this section, we discuss
     a mathematical definition of *probability* that allows us to give precise answers
     to certain questions.
+  id: totrans-6
   prefs: []
   type: TYPE_NORMAL
+  zh: “概率”这个词在日常语言中被广泛使用。然而，回答关于概率的问题往往是困难的，甚至是不可能的。在本节中，我们讨论了*概率*的数学定义，它允许我们给出对某些问题的精确答案。
 - en: For example, if I have 2 red beads and 3 blue beads inside an urn[¹](#fn1) (most
     probability books use this archaic term, so we do too) and I pick one at random,
     what is the probability of picking a red one? Our intuition tells us that the
@@ -39,19 +53,25 @@
     five possible outcomes, of which two satisfy the condition necessary for the event
     “pick a red bead”. Since each of the five outcomes has an equal chance of occurring,
     we conclude that the probability is .4 for red and .6 for blue.
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: 例如，如果我在一个瓮里[¹](#fn1)里有2个红珠子和3个蓝珠子（大多数概率书籍都使用这个古老的术语，所以我们也不例外）并且随机抽取一个，抽取到红珠子的概率是多少？我们的直觉告诉我们答案是2/5或40%。可以通过指出有五种可能的结果，其中两种满足“抽取红珠子”这一事件的必要条件来给出一个精确的定义。由于这五种结果发生的概率是相等的，我们得出结论，红珠子的概率是0.4，蓝珠子的概率是0.6。
 - en: A more intuitive way to think about the probability of an event is as the long-run
     proportion of times the event occurs when an experiment is repeated independently
     and under identical conditions, an infinite number of times. This interpretation
     naturally leads to one of the most powerful techniques in data science, Monte
     Carlo simulations, which we will explore later in this chapter.
+  id: totrans-8
   prefs: []
   type: TYPE_NORMAL
+  zh: 考虑事件概率的一个更直观的方法是将它视为在独立且在相同条件下重复实验时，事件发生的长期比例，实验次数无限。这种解释自然地引出了数据科学中最强大的技术之一，蒙特卡洛模拟，我们将在本章后面探讨。
 - en: 5.2 Probability distributions
+  id: totrans-9
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 5.2 概率分布
 - en: 'Probability distributions are the foundation of most statistical models. They
     describe how likely different outcomes are, providing a mathematical summary of
     uncertainty. Every model we use in data analysis, from simple polling examples
@@ -60,104 +80,151 @@
     become more complex and abstract. For discrete cases, however, the idea is quite
     intuitive: each possible outcome, or category, is assigned a probability based
     on its relative frequency.'
+  id: totrans-10
   prefs: []
   type: TYPE_NORMAL
+  zh: 概率分布是大多数统计模型的基础。它们描述了不同结果的可能性，提供了不确定性的数学总结。我们在数据分析中使用的每个模型，从简单的民意调查例子到复杂的多变量模型，都是建立在关于潜在概率分布的假设之上的。当我们转向连续和多维设置时，这些分布变得更加复杂和抽象。然而，对于离散情况，这个想法是非常直观的：每个可能的结果或类别都根据其相对频率分配一个概率。
 - en: If we know the relative frequency of the different categories, defining a distribution
     for categorical outcomes is relatively straightforward. We simply assign a probability
     to each category. In cases analogous to beads in an urn, for each bead type, their
     proportion defines the distribution.
+  id: totrans-11
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果我们知道不同类别的相对频率，定义分类结果的分布相对简单。我们只需为每个类别分配一个概率。在类似于瓮中珠子的例子中，对于每种珠子类型，它们的比例定义了分布。
 - en: 'For example, if we are randomly calling likely voters from a population that
     is 44% Democrat, 44% Republican, 10% Undecided, and 2% Green Party, these proportions
     define the probability for each group in any given call. The probability distribution
     for each call is defined by four numbers: Pr(calling a Republican) = 0.44, Pr(calling
     a Democrat) = 0.44, Pr(callin an Undecided) = 10%, and Pr(calling a Green) = 0.02.'
+  id: totrans-12
   prefs: []
   type: TYPE_NORMAL
+  zh: 例如，如果我们从由44%民主党人、44%共和党人、10%未决定和2%绿党人组成的群体中随机抽取可能投票者，这些比例定义了任何给定电话中每个群体的概率。每个电话的概率分布由四个数字定义：Pr(打电话给共和党人)
+    = 0.44，Pr(打电话给民主党人) = 0.44，Pr(打电话给未决定者) = 10%，以及 Pr(打电话给绿党人) = 0.02。
 - en: 5.3 Monte Carlo
+  id: totrans-13
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 5.3 蒙特卡洛
 - en: 'Computers provide a way to actually perform the simple random long-run experiment
     described above: pick a bead at random from a bag that contains three blue beads
     and two red ones. Random number generators permit us to mimic the process of picking
     at random.'
+  id: totrans-14
   prefs: []
   type: TYPE_NORMAL
+  zh: 计算机提供了一种实际执行上述简单随机长期实验的方法：从包含三个蓝色珠子和两个红色珠子的袋子中随机选择一个珠子。随机数生成器允许我们模拟随机选择的过程。
 - en: 'An example is the `sample` function in R. We demonstrate its use in the code
     below. First, we use the function `rep` to generate the urn:'
+  id: totrans-15
   prefs: []
   type: TYPE_NORMAL
+  zh: 一个例子是R中的 `sample` 函数。我们将在下面的代码中演示其用法。首先，我们使用 `rep` 函数生成一个罐子：
 - en: '[PRE0]'
+  id: totrans-16
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: '*and then use `sample` to pick a bead at random:'
+  id: totrans-17
   prefs: []
   type: TYPE_NORMAL
+  zh: '*然后使用 `sample` 随机选择一个珠子：*'
 - en: '[PRE1]'
+  id: totrans-18
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: '*This line of code produces a single random outcome. We want to repeat this
     experiment an infinite number of times, but it is impossible to repeat indefinitely.
     Instead, we repeat the experiment a large enough number of times to make the results
     *practically equivalent* to repeating indefinitely. This is an example of a *Monte
     Carlo* simulation.'
+  id: totrans-19
   prefs: []
   type: TYPE_NORMAL
+  zh: '*这一行代码产生一个随机结果。我们希望无限次重复这个实验，但这是不可能的。相反，我们重复实验足够多次，以使结果在实际上等同于无限次重复。这是一个 *蒙特卡洛*
+    模拟的例子。*'
 - en: Much of what mathematical and theoretical statisticians study, topics that we
     do not cover in this book, relates to providing rigorous definitions of “practically
     equivalent”. Additionally, they explore how close a large number of experiments
     brings us to what happens in the limit. Later in this chapter, we provide a practical
     approach to determining what is “large enough”.
+  id: totrans-20
   prefs: []
   type: TYPE_NORMAL
+  zh: 数学统计学家和理论统计学家研究的大部分内容，即本书中未涉及的主题，都与提供“实际上等效”的严格定义有关。此外，他们探索大量实验如何接近极限情况。在本章的后面部分，我们将提供一个确定“足够大”的实用方法。
 - en: 'To perform our first Monte Carlo simulation, we use the `replicate` function,
     which allows us to repeat the same task any number of times. Here, we repeat the
     random event 10,000 times:'
+  id: totrans-21
   prefs: []
   type: TYPE_NORMAL
+  zh: 要执行我们的第一次蒙特卡洛模拟，我们使用 `replicate` 函数，它允许我们重复相同的任务任意次数。在这里，我们重复随机事件10,000次：
 - en: '[PRE2]'
+  id: totrans-22
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: '**Here we use the `replicate` function for educational purposes, but there
     is a faster way to generate this simulation using:'
+  id: totrans-23
   prefs: []
   type: TYPE_NORMAL
+  zh: '**这里我们使用 `replicate` 函数是为了教育目的，但有一个更快的方法来生成这个模拟：*'
 - en: '[PRE3]'
+  id: totrans-24
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: '*which we explain in the following section.**  **We can now verify if our definition
     actually is in agreement with this Monte Carlo simulation approximation. We use
     `table` to count the outcomes and and `prop.table` gives us the proportions:'
+  id: totrans-25
   prefs: []
   type: TYPE_NORMAL
+  zh: '*我们将在下一节中解释。** 我们现在可以验证我们的定义是否与这个蒙特卡洛模拟近似相一致。我们使用 `table` 来计数结果，而 `prop.table`
+    给出比例：*'
 - en: '[PRE4]'
+  id: totrans-26
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE4]'
 - en: '*The numbers above represent the estimated probabilities obtained by this Monte
     Carlo simulation. Statistical theory tells us that as \(B\) gets larger, the estimates
     get closer to 3/5=.6 and 2/5=.4.'
+  id: totrans-27
   prefs: []
   type: TYPE_NORMAL
+  zh: '*上述数字代表通过此蒙特卡洛模拟获得的估计概率。统计学理论告诉我们，随着 \(B\) 的增大，估计值将越来越接近 3/5=0.6 和 2/5=0.4。*'
 - en: This is a simple and not very useful example, since we can easily compute the
     probabilities mathematically. Monte Carlo simulations are useful when it is hard,
     or impossible, to compute the exact probabilities mathematically. Before delving
     into more complex examples, we use simple ones to demonstrate the computing tools
     available in R.
+  id: totrans-28
   prefs: []
   type: TYPE_NORMAL
+  zh: 这是一个简单且不太有用的例子，因为我们可以很容易地从数学上计算概率。蒙特卡洛模拟在难以或无法从数学上计算精确概率时很有用。在深入研究更复杂的例子之前，我们使用简单的例子来展示R中可用的计算工具。
 - en: Setting the random seed
+  id: totrans-29
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 设置随机种子
 - en: 'Before we continue, we will briefly explain the following important line of
     code:'
+  id: totrans-30
   prefs: []
   type: TYPE_NORMAL
+  zh: 在我们继续之前，我们将简要解释以下重要的一行代码：
 - en: '[PRE5]'
+  id: totrans-31
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE5]'
 - en: '*Throughout this book, we use random number generators. This implies that many
     of the results presented can potentially change by chance, indicating that a static
     version of the book may show a different result than what you obtain when following
@@ -167,80 +234,122 @@
     Above we set it to 1986\. We want to avoid using the same seed every time and
     we used a popular way to pick the seed which is year - month - day. For example,
     we chose 1986 on December 20, 2018: \(2018 - 12 - 20 = 1986\).'
+  id: totrans-32
   prefs: []
   type: TYPE_NORMAL
+  zh: '*在这本书的整个过程中，我们使用随机数生成器。这意味着所呈现的许多结果可能会因偶然性而改变，表明静态版本的书籍可能显示的结果与您按照代码执行时获得的结果不同。实际上，这是完全可以接受的，因为结果是随机的，并且会因偶然性而改变。然而，如果您想确保每次运行的结果都一致，您可以设置
+    R 的随机数生成种子为一个特定的数字。在上文中，我们将其设置为 1986。我们不想每次都使用相同的种子，所以我们使用了一种流行的选择种子方法，即年份 - 月份
+    - 日期。例如，我们在 2018 年 12 月 20 日选择了 1986：\(2018 - 12 - 20 = 1986\)。'
 - en: 'You can learn more about setting the seed by looking at the documentation:'
+  id: totrans-33
   prefs: []
   type: TYPE_NORMAL
+  zh: 您可以通过查看文档来了解更多关于设置随机数种子（seed）的信息：
 - en: '[PRE6]'
+  id: totrans-34
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE6]'
 - en: '*In the exercises, we may ask you to set the seed to assure that the results
     you obtain are exactly what we expect them to be.**'
+  id: totrans-35
   prefs: []
   type: TYPE_NORMAL
+  zh: '*在练习中，我们可能会要求您设置种子以确保您获得的结果与我们期望的完全一致。**'
 - en: '**With and without replacement**'
+  id: totrans-36
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '**有放回和无放回**'
 - en: '**The function `sample` has an argument that allows us to pick more than one
     element from the urn. However, by default, this selection occurs *without replacement*:
     after a bead is selected, it is not returned to the bag. Notice what happens when
     we ask to randomly select five beads:'
+  id: totrans-37
   prefs: []
   type: TYPE_NORMAL
+  zh: '**函数 `sample` 有一个参数允许我们从罐中选取多个元素。然而，默认情况下，这种选择是无放回的：选中珠子后不会放回袋中。注意当我们随机选择五颗珠子时会发生什么：'
 - en: '[PRE7]'
+  id: totrans-38
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE7]'
 - en: '*This results in rearrangements that consistently comprise three blue and two
     red beads. If we ask that six beads be selected, we get an error.'
+  id: totrans-39
   prefs: []
   type: TYPE_NORMAL
+  zh: '*这导致的结果是一直由三个蓝色珠子和两个红色珠子组成的排列。如果我们要求选择六颗珠子，我们会得到一个错误。'
 - en: 'However, the `sample` function can be used directly, without the use of `replicate`,
     to repeat the same experiment of picking 1 out of the 5 beads, continually, under
     the same conditions. To do this, we sample *with replacement*: return the bead
     back to the urn after selecting it. We can tell `sample` to do this by changing
     the `replace` argument, which defaults to `FALSE`, to `replace = TRUE`:'
+  id: totrans-40
   prefs: []
   type: TYPE_NORMAL
+  zh: 然而，`sample` 函数可以直接使用，无需使用 `replicate`，在相同条件下不断重复抽取 1 个 5 颗珠子的相同实验。为此，我们以放回的方式抽样：在选中珠子后将其放回罐中。我们可以通过更改
+    `replace` 参数来告诉 `sample` 做这件事，该参数默认为 `FALSE`，将其更改为 `replace = TRUE`：
 - en: '[PRE8]*********'
+  id: totrans-41
   prefs: []
   type: TYPE_NORMAL
+  zh: '[PRE8]*********'
 - en: '****5.4 Combinations and permutations****'
+  id: totrans-42
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '****5.4 组合与排列****'
 - en: '****Most university-level statistics courses begin with combinatorics, which
     provides the foundation for many probability calculations. These techniques let
     us count the number of outcomes that satisfy a condition, typically by computing
     the number of *permutations* (when order matters) or *combinations* (when order
     does not matter).'
+  id: totrans-43
   prefs: []
   type: TYPE_NORMAL
+  zh: '****大多数大学水平的统计学课程都是从组合数学开始的，这为许多概率计算提供了基础。这些技术让我们能够计算满足某个条件的结果数量，通常是通过计算 *排列*（当顺序重要时）或
+    *组合*（当顺序不重要时）的数量。'
 - en: 'To make these ideas concrete, let’s consider a familiar setting: card games.
     Suppose we want to understand the probability of drawing specific hands from a
     deck. This example helps demonstrate how combinatorics works and how we can use
     R to perform these calculations.'
+  id: totrans-44
   prefs: []
   type: TYPE_NORMAL
+  zh: 为了使这些想法具体化，让我们考虑一个熟悉的场景：纸牌游戏。假设我们想要了解从一副牌中抽取特定手牌的概率。这个例子有助于展示组合数学是如何工作的，以及我们如何使用
+    R 来执行这些计算。
 - en: 'First, let’s build a deck of cards:'
+  id: totrans-45
   prefs: []
   type: TYPE_NORMAL
+  zh: 首先，让我们构建一副牌：
 - en: '[PRE9]'
+  id: totrans-46
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE9]'
 - en: '*If we draw one card at random, the probability of getting a King is 1/13:'
+  id: totrans-47
   prefs: []
   type: TYPE_NORMAL
+  zh: '*如果我们随机抽取一张牌，抽到国王的概率是 1/13：'
 - en: '[PRE10]'
+  id: totrans-48
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE10]'
 - en: '*Because the deck includes all possible outcomes, this calculation gives the
     exact probability. Since `mean` converts logical values to 0s and 1s, the result
     represents the fraction of Kings in the deck, four out of fifty-two cards, which
     corresponds exactly to the theoretical probability of \(1/13\).'
+  id: totrans-49
   prefs: []
   type: TYPE_NORMAL
+  zh: '*因为牌组包括了所有可能的结果，这个计算给出了确切的概率。由于 `mean` 将逻辑值转换为 0s 和 1s，结果表示了牌组中国王的比例，即四张牌中的五十二张，这正好对应于理论概率
+    \(1/13\)。'
 - en: 'Now let’s introduce two key functions: `[permutations()](https://rdrr.io/pkg/gtools/man/combinations.html)`
     and `[combinations()](https://rdrr.io/pkg/gtools/man/combinations.html)` from
     the **gtools** package. These functions let us enumerate all possible ways to
@@ -252,62 +361,92 @@
     on these principles to compute exact probabilities. For readers interested in
     the mathematical foundations, the Recommended Reading section lists probability
     textbooks that explore permutations and combinations in greater detail.'
+  id: totrans-50
   prefs: []
   type: TYPE_NORMAL
+  zh: 现在让我们介绍两个关键函数：`[permutations()](https://rdrr.io/pkg/gtools/man/combinations.html)`和`[combinations()](https://rdrr.io/pkg/gtools/man/combinations.html)`，这两个函数来自**gtools**包。这些函数允许我们根据顺序是否重要（`permutations`）或不重要（`combinations`）来枚举从列表中选择物品的所有可能方式。这样的计算在概率论中是基本的，因为它们允许我们在复杂的环境中计算可能结果的数量，例如确定抽取特定扑克牌手或按特定顺序排列牌的几率。纸牌游戏、彩票以及许多其他概率问题都依赖于这些原则来计算精确的概率。对于对数学基础感兴趣的读者，推荐阅读部分列出了探索排列和组合的详细概率教科书的书籍。
 - en: 'Here is a simple example enumerating all the permutations of three items taken
     two at a time:'
+  id: totrans-51
   prefs: []
   type: TYPE_NORMAL
+  zh: 这里是一个简单的例子，列举了从三个物品中每次取两个的所有排列：
 - en: '[PRE11]'
+  id: totrans-52
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE11]'
 - en: '*This lists all ordered pairs from the numbers 1, 2, and 3\. Notice that (1,2)
     and (2,1) are treated as distinct. If order does not matter, we use `[combinations()](https://rdrr.io/pkg/gtools/man/combinations.html)`:'
+  id: totrans-53
   prefs: []
   type: TYPE_NORMAL
+  zh: '*这列出了从数字1、2和3的所有有序对。请注意，(1,2)和(2,1)被视为不同的。如果顺序不重要，我们使用`[combinations()](https://rdrr.io/pkg/gtools/man/combinations.html)`：'
 - en: '[PRE12]'
+  id: totrans-54
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE12]'
 - en: '*Now (1,2) and (2,1) are treated as the same outcome.'
+  id: totrans-55
   prefs: []
   type: TYPE_NORMAL
+  zh: '*现在(1,2)和(2,1)被视为相同的结果。'
 - en: 'Let’s use these tools to compute the probability of a *Natural 21* in Blackjack,
     which occurs when a player’s first two cards are an Ace and a face card (Jack,
     Queen, King, or Ten). Since order does not matter, we use `[combinations()](https://rdrr.io/pkg/gtools/man/combinations.html)`:'
+  id: totrans-56
   prefs: []
   type: TYPE_NORMAL
+  zh: 让我们使用这些工具来计算21点游戏中“自然21”的概率，这发生在玩家的前两张牌是一张A和一张面牌（杰克、皇后、国王或10）。由于顺序不重要，我们使用`[combinations()](https://rdrr.io/pkg/gtools/man/combinations.html)`：
 - en: '[PRE13]'
+  id: totrans-57
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE13]'
 - en: '*### Monte Carlo approach'
+  id: totrans-58
   prefs: []
   type: TYPE_NORMAL
+  zh: '*### 蒙特卡洛方法'
 - en: We can obtain the same result through simulation. Instead of enumerating all
     combinations, we repeatedly draw two cards from the deck and check whether we
     have a Natural 21\. This is a Monte Carlo approximation to the same probability.
+  id: totrans-59
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们可以通过模拟获得相同的结果。我们不是枚举所有组合，而是反复从牌堆中抽取两张牌，并检查我们是否得到了一个“自然21”。这是对相同概率的蒙特卡洛近似。
 - en: '[PRE14]'
+  id: totrans-60
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE14]'
 - en: '*Both approaches yield nearly the same result. The combinatoric functions give
     the exact probability, while the Monte Carlo simulation provides an approximation
     that converges to the same value as the number of repetitions increases.**********'
+  id: totrans-61
   prefs: []
   type: TYPE_NORMAL
+  zh: '*两种方法得到的结果几乎相同。组合函数给出精确的概率，而蒙特卡洛模拟提供了一个近似值，随着重复次数的增加，该近似值收敛到相同的值。**********'
 - en: '****5.5 Examples****'
+  id: totrans-62
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '****5.5 示例****'
 - en: '****In this section, we describe two discrete probability popular examples:
     the Monty Hall problem and the birthday problem. We use R to help illustrate the
     mathematical concepts.'
+  id: totrans-63
   prefs: []
   type: TYPE_NORMAL
+  zh: '****在本节中，我们描述了两个离散概率的流行例子：蒙提·霍尔问题和生日问题。我们使用R来帮助说明数学概念。'
 - en: Monty Hall problem
+  id: totrans-64
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 蒙提·霍尔问题
 - en: In the 1970s, there was a game show called “Let’s Make a Deal,” with Monty Hall
     as the host. At some point in the game, contestants were asked to pick one of
     three doors. Behind one door, there was a prize, while the other doors had a goat
@@ -316,8 +455,10 @@
     one of the two remaining doors and reveal to the contestant that there was no
     prize behind that door. Then, he would ask, “Do you want to switch doors?” What
     would you do?
+  id: totrans-65
   prefs: []
   type: TYPE_NORMAL
+  zh: 在20世纪70年代，有一个名为“让我们来交易”的游戏节目，由蒙提·霍尔担任主持人。在游戏的某个环节，参赛者被要求从三个门中选择一个。其中一个门后面有奖品，而其他两个门后面有山羊，以表明参赛者已经输了。参赛者选择一个门后，在揭示所选门后面是否有奖品之前，蒙提·霍尔会打开剩下的两个门中的一个，并向参赛者展示那个门后面没有奖品。然后，他会问，“你想换门吗？”你会怎么做？
 - en: We can use probability to demonstrate that if you stick with the original door
     choice, your chances of winning a prize remain 1 in 3\. However, if you switch
     to the other door, your chances of winning double to 2 in 3! This might seem counterintuitive.
@@ -326,11 +467,15 @@
     or read one on Wikipedia[³](#fn3). Below, we use a Monte Carlo simulation to see
     which strategy is better. Note that this code is written longer than it should
     be for pedagogical purposes.
+  id: totrans-66
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们可以使用概率来证明，如果你坚持原始的门选择，你赢得奖品的几率仍然是1/3。然而，如果你切换到另一扇门，你赢得奖品的几率翻倍到2/3！这可能会让人感觉反直觉。许多人错误地认为两种机会都是1/2，因为你是在两个选项之间进行选择。你可以在可汗学院[²](#fn2)上观看详细的数学解释，或者在维基百科[³](#fn3)上阅读。下面，我们使用蒙特卡洛模拟来查看哪种策略更好。请注意，为了教学目的，这段代码写得比应有的要长。
 - en: '[PRE15]'
+  id: totrans-67
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE15]'
 - en: '*As we examine the code, we notice that the lines starting with `my_pick` and
     `show` do not affect the final outcome when we stick with our original choice.
     This confirms that our winning probability in that case is 1 in 3, as expected.
@@ -340,65 +485,95 @@
     the remaining unopened door. Thus, unless our initial choice was correct, which
     happens only one-third of the time, we win by switching, which occurs two-thirds
     of the time.*'
+  id: totrans-68
   prefs: []
   type: TYPE_NORMAL
+  zh: '*当我们检查代码时，我们注意到以`my_pick`和`show`开头的行在我们坚持原始选择时不会影响最终结果。这证实了在这种情况下我们的获胜概率是预期的1/3。当我们切换时，蒙特卡洛模拟验证了2/3的概率。这说明了为什么切换可以提高我们的机会：`show`行移除了一个肯定不是赢家的门，有效地将其概率转移到了剩余未开启的门上。因此，除非我们的初始选择是正确的，这种情况只发生三分之一的几率，我们通过切换获胜，这种情况发生三分之二的几率。*'
 - en: '*Birthday problem*'
+  id: totrans-69
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '*生日问题*'
 - en: '*Suppose you are in a classroom with 50 people. If we assume this is a randomly
     selected group, what is the chance that at least two people have the same birthday?
     Although it is somewhat advanced, we can deduce this mathematically. We will do
     that later. Here, we use a Monte Carlo simulation. For simplicity, we assume nobody
     was born on February 29, which doesn’t significantly change the answer.'
+  id: totrans-70
   prefs: []
   type: TYPE_NORMAL
+  zh: '*假设你在一个有50人的教室里。如果我们假设这是一个随机选择的群体，那么至少有两个人有相同生日的几率是多少？虽然这有些高级，我们可以通过数学方法推断出来。我们稍后会做。这里，我们使用蒙特卡洛模拟。为了简单起见，我们假设没有人出生在2月29日，这不会显著改变答案。'
 - en: 'First, note that birthdays can be represented as numbers between 1 and 365,
     so a sample of 50 birthdays can be obtained as follows:'
+  id: totrans-71
   prefs: []
   type: TYPE_NORMAL
+  zh: 首先，请注意，生日可以用1到365之间的数字来表示，因此50个生日的样本可以如下获得：
 - en: '[PRE16]'
+  id: totrans-72
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE16]'
 - en: '*To check if there are at least two people with the same birthday in this particular
     set of 50 people, we can use the `duplicated` function, which returns `TRUE` whenever
     an element of a vector is a duplicate:'
+  id: totrans-73
   prefs: []
   type: TYPE_NORMAL
+  zh: '*为了检查这50个人中是否至少有两个人有相同的生日，我们可以使用`duplicated`函数，该函数在向量的元素是重复项时返回`TRUE`：'
 - en: '[PRE17]'
+  id: totrans-74
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE17]'
 - en: '*In this case, we see that it did happen; there were at least two people who
     had the same birthday.'
+  id: totrans-75
   prefs: []
   type: TYPE_NORMAL
+  zh: '*在这种情况下，我们看到确实发生了这种情况；至少有两个人在同一天出生。'
 - en: 'To estimate the probability of a shared birthday in the group, we repeat this
     experiment by repeatedly sampling sets of 50 birthdays:'
+  id: totrans-76
   prefs: []
   type: TYPE_NORMAL
+  zh: 为了估计这个群体中共享生日的概率，我们通过重复采样50个生日的集合来重复这个实验：
 - en: '[PRE18]'
+  id: totrans-77
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE18]'
 - en: '*People tend to underestimate these probabilities so let’s say we want to use
     this knowledge to make bet with friends about the likelihood of two people sharing
     the same birthday in a group. At what group size do the chances become greater
     than 50%? Greater than 75%?'
+  id: totrans-78
   prefs: []
   type: TYPE_NORMAL
+  zh: '*人们往往低估这些概率，所以让我们说我们想利用这个知识来和朋友打赌，一群人中两个人共享生日的可能性。在什么群体规模下，几率会超过50%？超过75%？'
 - en: 'Let’s create a look-up table. We can quickly create a function to compute this
     for any group size:'
+  id: totrans-79
   prefs: []
   type: TYPE_NORMAL
+  zh: 让我们创建一个查找表。我们可以快速创建一个函数来计算任何群体大小：
 - en: '[PRE19]'
+  id: totrans-80
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE19]'
 - en: '*We can now make a plot of the estimated probabilities of two people having
     the same birthday in a group of size \(n\):'
+  id: totrans-81
   prefs: []
   type: TYPE_NORMAL
+  zh: '*现在我们可以绘制一个图表，显示在大小为\(n\)的群体中两个人有相同生日的估计概率：'
 - en: '[PRE20]'
+  id: totrans-82
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE20]'
 - en: '*![](../Images/7e766e6c9b09d15e740b140881da4d63.png)*  *Now let’s compute the
     exact probabilities rather than relying on Monte Carlo approximations. Using math
     gives the precise answer and is much faster since we don’t need to simulate experiments.
@@ -407,29 +582,42 @@
     By the multiplication rule, person 1 can have any birthday, person 2 must choose
     from the remaining 364 out of 365 days, and so on, giving the probability that
     all \(n\) birthdays are unique as:'
+  id: totrans-83
   prefs: []
   type: TYPE_NORMAL
+  zh: '*![](../Images/7e766e6c9b09d15e740b140881da4d63.png)*  *现在让我们计算确切的概率，而不是依赖于蒙特卡洛近似。使用数学给出精确答案，并且由于我们不需要模拟实验，所以速度更快。我们应用一个常见的概率技巧：不是寻找至少有两个人共享生日的概率，而是计算没有人共享生日的概率。根据乘法规则，第一个人可以拥有任何生日，第二个人必须从剩余的365天中的364天中选择，以此类推，所有\(n\)个生日都是独特的概率为：'
 - en: \[ 1 \times \frac{364}{365}\times\frac{363}{365} \dots \frac{365-n + 1}{365}
     \]
+  id: totrans-84
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ 1 \times \frac{364}{365}\times\frac{363}{365} \dots \frac{365-n + 1}{365}
+    \]
 - en: 'We can write a function that does this for any number and plot this as a red
     curve:'
+  id: totrans-85
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们可以编写一个函数来对任何数字进行此操作，并将其作为红色曲线绘制出来：
 - en: '[PRE21]'
+  id: totrans-86
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE21]'
 - en: '*![](../Images/7dbd0cc5942fdd27e215ea576a8dae1f.png)*  *This plot shows that
     the Monte Carlo simulation provided a very good estimate of the exact probability.
     Had we not been able to compute the exact probabilities, we could still accurately
     estimate them.***********'
+  id: totrans-87
   prefs: []
   type: TYPE_NORMAL
+  zh: '*![](../Images/7dbd0cc5942fdd27e215ea576a8dae1f.png)*  *这个图显示蒙特卡洛模拟提供了非常准确的概率估计。如果我们无法计算确切的概率，我们仍然可以准确地估计它们。***********'
 - en: '****5.6 Infinity in practice****'
+  id: totrans-88
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '****5.6 实际中的无穷大****'
 - en: '****The theory described here requires repeating experiments over and over
     indefinitely. In practice, we can’t do this. In the examples above, we used \(B=10,000\)
     Monte Carlo experiments, yielding accurate estimates. The larger this number,
@@ -437,118 +625,174 @@
     your computer can’t tell the difference. However, in more complex calculations,
     10,000 may not be nearly enough. Moreover, for some calculations, 10,000 experiments
     might not be computationally feasible.'
+  id: totrans-89
   prefs: []
   type: TYPE_NORMAL
+  zh: '****这里描述的理论需要无限次重复实验。在实践中，我们无法做到这一点。在上面的例子中，我们使用了\(B=10,000\)次蒙特卡洛实验，得到了准确的估计。这个数字越大，估计就越准确，直到近似如此之好，以至于你的电脑无法分辨出差异。然而，在更复杂的计算中，10,000可能远远不够。此外，对于某些计算，10,000次实验可能从计算上不可行。****'
 - en: Althought in this case we know the exact probability is 0.5686997, in practical
     scenarios, we won’t know what the answer is beforehand, so we won’t know if our
     Monte Carlo estimate is accurate. We know that the larger the \(B\), the better
     the approximation. But how large do we need it to be? This is actually a challenging
     question, and answering it often requires advanced theoretical statistics training.
+  id: totrans-90
   prefs: []
   type: TYPE_NORMAL
+  zh: 虽然在这种情况下我们知道确切的概率是0.5686997，但在实际场景中，我们事先不知道答案，因此也不知道我们的蒙特卡洛估计是否准确。我们知道\(B\)越大，近似越好。但我们需要多大呢？这实际上是一个具有挑战性的问题，回答它通常需要高级理论统计学培训。
 - en: One practical approach is to check for the stability of the estimate. The following
     example illustrates the birthday problem for a group of 25 people.
+  id: totrans-91
   prefs: []
   type: TYPE_NORMAL
+  zh: 一种实际的方法是检查估计的稳定性。以下例子说明了25人小组的生日问题。
 - en: '[PRE22]'
+  id: totrans-92
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE22]'
 - en: '*![](../Images/7e66aadb5a5e20c4b2146bb63d773888.png)*  *In this plot, we can
     see that the values start to stabilize at around 1,000.*****'
+  id: totrans-93
   prefs: []
   type: TYPE_NORMAL
+  zh: '*![](../Images/7e66aadb5a5e20c4b2146bb63d773888.png)*  *在这个图中，我们可以看到值在大约1,000时开始稳定下来。*****'
 - en: '****5.7 Exercises****'
+  id: totrans-94
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '****5.7 练习****'
 - en: '****1\. A box contains 3 cyan balls, 5 magenta balls, and 7 yellow balls. One
     ball is drawn at random. Write a Monte Carlo simulation to estimate and confirm
     the probability that the ball drawn is cyan.'
+  id: totrans-95
   prefs: []
   type: TYPE_NORMAL
+  zh: '****1. 一个盒子里有3个青色球，5个品红色球和7个黄色球。随机抽取一个球。编写蒙特卡洛模拟来估计并确认抽到青色球的概率。****'
 - en: 2\. Do the same for the probability that the ball will not be cyan?
+  id: totrans-96
   prefs: []
   type: TYPE_NORMAL
+  zh: 2. 对于球不是青色的概率，也进行同样的操作？
 - en: 3\. Instead of taking just one draw, consider taking two draws. You take the
     second draw without returning the first draw to the box. We call this sampling
     **without** replacement. Write a Monte Carlo simulation to estimate and confirm
     the probability of the first draw being cyan and the second draw not being cyan?
+  id: totrans-97
   prefs: []
   type: TYPE_NORMAL
+  zh: 3. 而不是只抽取一次，考虑抽取两次。第二次抽取时不将第一次抽取的球放回盒子中。我们称这种抽样为**不替换**。编写蒙特卡洛模拟来估计并确认第一次抽取是青色而第二次不是青色的概率？
 - en: 4\. Now repeat the experiment, but this time, after taking the first draw and
     recording the color, return it to the box and shake the box. We call this sampling
     **with** replacement. Write a Monte Carlo simulation to estimate and confirm the
     probability of the first draw being cyan and the second draw not being cyan?
+  id: totrans-98
   prefs: []
   type: TYPE_NORMAL
+  zh: 4. 现在重复这个实验，但这次，在第一次抽取并记录颜色后，将其放回盒子中并摇动盒子。我们称这种抽样为**带替换**的抽样。编写一个蒙特卡洛模拟来估计和验证第一次抽取是青色而第二次抽取不是青色的概率？
 - en: 5\. Let’s say you’ve drawn 5 balls from the box, with replacement, and all have
     been yellow. What is the probability that the next one will be yellow?
+  id: totrans-99
   prefs: []
   type: TYPE_NORMAL
+  zh: 5. 假设你已经从盒子中抽取了5个球，并且都是黄色的。下一个球也是黄色的概率是多少？
 - en: 6\. If you roll a 6-sided die six times, write a Monte Carlo simulation to estimate
     and confirm the probability of not seeing a 6?
+  id: totrans-100
   prefs: []
   type: TYPE_NORMAL
+  zh: 6. 如果你掷一个六面的骰子六次，编写一个蒙特卡洛模拟来估计和验证没有看到6的概率？
 - en: 7\. Two teams, let’s say the Celtics and the Cavaliers, are playing a seven
     game series. The Cavaliers are a better team and have a 60% chance of winning
     each game. What is the probability that the Celtics will win **at least** one
     game?
+  id: totrans-101
   prefs: []
   type: TYPE_NORMAL
+  zh: 7. 两支球队，比如说凯尔特人队和骑士队，正在进行一场七场系列赛。骑士队是一支更强的球队，每场比赛获胜的概率为60%。凯尔特人队赢得至少一场比赛的概率是多少？
 - en: '8\. Create a Monte Carlo simulation to confirm your answer to the previous
     problem. Use `B <- 10000` simulations. Hint: use the following code to generate
     the results of the first four games:'
+  id: totrans-102
   prefs: []
   type: TYPE_NORMAL
+  zh: 8. 创建一个蒙特卡洛模拟来验证上一个问题的答案。使用 `B <- 10000` 次模拟。提示：使用以下代码生成前四场比赛的结果：
 - en: '[PRE23]'
+  id: totrans-103
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE23]'
 - en: '*The Celtics must win one of these 4 games.'
+  id: totrans-104
   prefs: []
   type: TYPE_NORMAL
+  zh: '*凯尔特人队必须赢得这4场比赛中的至少一场。'
 - en: 9\. Two teams, say the Cavaliers and the Warriors, are playing a seven game
     championship series. The first to win four games, therefore, wins the series.
     The teams are equally good so they each have a 50-50 chance of winning each game.
     If the Cavaliers lose the first game, what is the probability that they win the
     series?
+  id: totrans-105
   prefs: []
   type: TYPE_NORMAL
+  zh: 9. 两支球队，比如说骑士队和勇士队，正在进行一场七场冠军系列赛。因此，首先赢得四场比赛的队伍将赢得系列赛。两支球队实力相当，因此每场比赛获胜的概率都是50-50。如果骑士队输掉了第一场比赛，那么他们赢得系列赛的概率是多少？
 - en: 10\. Confirm the results of the previous question with a Monte Carlo simulation.
+  id: totrans-106
   prefs: []
   type: TYPE_NORMAL
+  zh: 10. 使用蒙特卡洛模拟验证上一个问题的结果。
 - en: '11\. Two teams, \(A\) and \(B\), are playing a seven game series. Team \(A\)
     is better than team \(B\) and has a \(p>0.5\) chance of winning each game. Given
     a value \(p\), the probability of winning the series for the underdog team \(B\)
     can be computed with the following function based on a Monte Carlo simulation:'
+  id: totrans-107
   prefs: []
   type: TYPE_NORMAL
+  zh: 11. 两支球队，\(A\) 和 \(B\)，正在进行一场七场系列赛。球队 \(A\) 比球队 \(B\) 更强，每场比赛获胜的概率为 \(p>0.5\)。给定一个值
+    \(p\)，劣势球队 \(B\) 赢得系列赛的概率可以使用以下基于蒙特卡洛模拟的函数计算：
 - en: '[PRE24]'
+  id: totrans-108
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE24]'
 - en: '*Use the function `sapply` to compute the probability, call it `ws`, of winning
     for `p <- seq(0.5, 0.95, 0.025)`. Then plot the result.'
+  id: totrans-109
   prefs: []
   type: TYPE_NORMAL
+  zh: '*使用函数 `sapply` 计算概率，称为 `ws`，对于 `p <- seq(0.5, 0.95, 0.025)`。然后绘制结果。'
 - en: '12\. Repeat the exercise above, but now keep the probability fixed at `p <-
     0.75` and compute the probability for different series lengths: best of 1 game,
     best of 3 games, best of 5 games, and so on. Specifically, `ns <- seq(1, 25, 2)`.
     Hint: use the function below.'
+  id: totrans-110
   prefs: []
   type: TYPE_NORMAL
+  zh: 12. 重复上述练习，但现在将概率固定在 `p <- 0.75`，并计算不同系列长度的概率：1局最佳，3局最佳，5局最佳，等等。具体来说，`ns <-
+    seq(1, 25, 2)`。提示：使用以下函数。
 - en: '[PRE25]******'
+  id: totrans-111
   prefs: []
   type: TYPE_NORMAL
+  zh: '[PRE25]******'
 - en: '* * *'
+  id: totrans-112
   prefs: []
   type: TYPE_NORMAL
+  zh: '* * *'
 - en: '****1.  https://en.wikipedia.org/wiki/Urn_problem[↩︎](#fnref1)'
+  id: totrans-113
   prefs: []
   type: TYPE_NORMAL
+  zh: '****1.  https://en.wikipedia.org/wiki/Urn_problem[↩︎](#fnref1)'
 - en: https://www.khanacademy.org/math/precalculus/prob-comb/dependent-events-precalc/v/monty-hall-problem[↩︎](#fnref2)
+  id: totrans-114
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: https://www.khanacademy.org/math/precalculus/prob-comb/dependent-events-precalc/v/monty-hall-problem[↩︎](#fnref2)
 - en: https://en.wikipedia.org/wiki/Monty_Hall_problem[↩︎](#fnref3)****
+  id: totrans-115
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: https://en.wikipedia.org/wiki/Monty_Hall_problem[↩︎](#fnref3)****
