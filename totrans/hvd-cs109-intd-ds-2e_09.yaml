@@ -1,0 +1,310 @@
+- en: 6  Importing data
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: 原文：[https://rafalab.dfci.harvard.edu/dsbook-part-1/R/importing-data.html](https://rafalab.dfci.harvard.edu/dsbook-part-1/R/importing-data.html)
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '[R](../R/intro-to-R.html)'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[6  Importing data](../R/importing-data.html)'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: 'We have been using datasets already stored as R objects. In data analysis work
+    we rarely have such luck and will have to import data into R from either a file,
+    a database, or another source. Currently, one of the most common ways of storing
+    and sharing data for analysis is through electronic spreadsheets. A spreadsheet
+    stores data in rows and columns. It is basically a file version of a data frame.
+    When saving such a table to a computer file, one needs a way to define when a
+    new row or column ends and the other begins. This in turn defines the cells in
+    which single values are stored. Here is an example of what a comma separated file
+    looks like if we open it with a basic text editor:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![](../Images/10046f68ee348e3bae932db68f945136.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: In this chapter, we outline how to load data from a file into R. First, it’s
+    crucial to identify the file’s location; thus, we touch on file paths and working
+    directories (detailed in [Chapter 18](../productivity/unix.html)). Next, we delve
+    into file types (text or binary) and encodings (like ASCII and Unicode), both
+    essential for data import. We then introduce popular functions for data importing,
+    referred to as *parsers*. Lastly, we offer tips on how to store data in spreadsheets.
+    Advanced topics like extracting data from websites or PDFs will be discussed in
+    the book’s Data Wrangling section.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 6.1 Navigating and managing the filesystem
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: The first step when importing data from a spreadsheet is to locate the file
+    containing the data. Although we do not recommend it, you can use an approach
+    similar to what you do to open files in Microsoft Excel by clicking on the RStudio
+    “File” menu, clicking “Import Dataset”, then clicking through folders until you
+    find the file. However, we write code rather than use the point-and-click approach.
+    The key concepts we need to learn to do this are described in detail in [Chapter
+    18](../productivity/unix.html). Here we provide an overview of the very basics.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 6.1.1 The filesystem
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: 'You can think of your computer’s filesystem as a series of nested folders,
+    each containing other folders and files. We refer to folders as *directories*.
+    We refer to the folder that contains all other folders as the *root directory*.
+    We refer to the directory in which we are currently located as the *working directory*.
+    The working directory therefore changes as you move through folders: think of
+    it as your current location.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 6.1.2 Relative and full paths
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: The *path* of a file is a list of directory names that can be thought of as
+    instructions on what folders to click on, and in what order, to find the file.
+    If these instructions are for finding the file from the root directory, we refer
+    to it as the *full path*. If the instructions are for finding the file starting
+    in the working directory, we refer to it as a *relative path*. [Section 18.3](../productivity/unix.html#sec-filesystem)
+    provides more details on this topic.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'To see an example of a full path on your system type the following:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*Note that the output will be different across different computers. The `system.file`
+    function finds the full path to the files that were added to your system when
+    you installed the **dslabs** package. The strings separated by slashes are the
+    directory names. The first slash represents the root directory and we know this
+    is a full path because it starts with a slash.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'We can use the function `list.files` to show the names of files and directories
+    in any directory. For example, here are the files in the **dslabs** package directory:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE1]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*Note that these do not start with slash which implies they are *relative paths*.
+    These relative paths give us the location of the files or directories if the path
+    stored in `dir` is our working directory.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '*You will not make much use of the `system.file` function in your day-to-day
+    data analysis work. We introduce it in this section because it facilitates the
+    sharing of spreadsheets that can be used to practice. The spreadsheets are in
+    the `extdata` directory.***'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '***6.1.3 The working directory***'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '***We highly recommend only using relative paths in your code. The reason is
+    that full paths are unique to your computer and you want your code to be portable.
+    If you want to know the full path of your working directory using the `getwd`
+    function. If you need to change your working directory, you can use the function
+    `setwd` or you can change it through RStudio by clicking on “Session”.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: When starting a project, choose a directory to store all related files and set
+    it as your working directory for analysis. This practice ensures that when you
+    use relative paths in functions that import files, R will automatically search
+    for the files in the working directory. For more details on organizing projects
+    in RStudio, see [Chapter 20](../productivity/reproducible-projects.html).***
+  prefs: []
+  type: TYPE_NORMAL
+- en: '***6.1.4 Generating path names***'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '***The `file.path` function combines characters to form a complete path, ensuring
+    compatibility with the respective operating system. Linux and Mac use forward
+    slashes `/`, while Windows uses backslashes `\`, to separate directories. This
+    function is useful because often you want to define paths using a variable. Here
+    is an example that constructs the full path for a spreadsheet containing the murders
+    data. Here the variable `dir` contains the full path for the **dslabs** package
+    and `extdata/murders.csv` is the relative path of the spreadsheet if `dir` is
+    considered the working directory.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE2]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*You can copy the file with full path `file_path` to your working directory
+    using the function `file.copy`:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE3]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*If the file is copied successfully, this function will return `TRUE`. Note
+    that we used the same filename for the destination file, but we can give it whatever
+    name we want. If a file with that name already exists in your destination directory,
+    the copy will be unsuccessful. You can change this behavior with the `overwrite`
+    argument.*****'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '****6.2 File types****'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '****For most data analysis applications, files can generally be classified
+    into two categories: text files and binary files. In this section we describe
+    the most widely used format for both these types and the best way to identify
+    them. In the last subsection we describe the importance of knowing the file encoding.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '*For this and the following section we assume you have copied the `murders.csv`
+    file into your working directory. You can use the code at the end of the previous
+    section to do this.*  *### 6.2.1 Text files'
+  prefs: []
+  type: TYPE_NORMAL
+- en: You have already worked with text files. All your R scripts and Quarto files,
+    for example, are text files and so are the Quarto files used to create this book.
+    The `murders.csv` file mentioned above is also text files. One big advantage of
+    these files is that we can easily “look” at them without having to purchase any
+    kind of special software or follow complicated instructions. Any text editor can
+    be used to examine a text file, including freely available editors such as RStudio
+    or nano. To see this, try opening a csv file using the “Open file” RStudio tool.
+    You should be able to see the content right on your editor.
+  prefs: []
+  type: TYPE_NORMAL
+- en: When text files are used to store a spreadsheet, line breaks are used to separate
+    rows and a predefined character, referred to as the *delimiter*, is used to separate
+    columns within a row. The most common delimiters are comma (`,`), semicolon (`;`),
+    space (``), and tab (a preset number of spaces or `\t`). Slightly different approaches
+    are used to read these files into R, so we need to know what delimiter was used.
+    In some cases, the delimiter can be inferred from file suffix. For example, files
+    ending in `csv` or `tsv` are expected to be comma and tab delimited, respectively.
+    However, it is harder to infer the delimiter for files ending in `txt`. As a result
+    we recommend looking at the file rather than inferring from the suffix. You can
+    look at any number of lines from within R using the `readLines` function:``
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE4] [readLines](https://rdrr.io/r/base/readLines.html)("murders.csv", n
+    = 3) #> [1] "state,abb,region,population,total" #> [2] "Alabama,AL,South,4779736,135"  #>
+    [3] "Alaska,AK,West,710231,19" [PRE5]`'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`*6.2.2 Binary files*`'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '``*Opening image files such as jpg or png in a text editor or using `readLines`
+    in R will not show comprehensible content because these are *binary* files. Unlike
+    text files, which are designed for human readability and have standardized conventions,
+    binary files can adopt numerous formats specific to their data type. While R’s
+    `readBin` function can process any binary file, interpreting the output necessitates
+    a thorough understanding of the file’s structure. This intricate topic isn’t covered
+    in this book. Instead, we concentrate on the prevalent binary formats for spreadsheets:
+    Microsoft Excel’s xls and xlsx.*``'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`*6.2.3 Encoding*`'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '[PRE6] fn <- "calificaciones.csv" [file.copy](https://rdrr.io/r/base/files.html)([file.path](https://rdrr.io/r/base/file.path.html)([system.file](https://rdrr.io/r/base/system.file.html)("extdata",
+    package = "dslabs"), fn), fn) #> [1] TRUE [readLines](https://rdrr.io/r/base/readLines.html)(fn,
+    n = 1) #> [1] "\"nombre\",\"f.n.\",\"estampa\",\"puntuaci\xf3n\"" [PRE7]`*****'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '***`**6.3 Parsers**`***'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '***[PRE8] dat <- [read.csv](https://rdrr.io/r/utils/read.table.html)("murders.csv")
+    [PRE9] x <- [scan](https://rdrr.io/r/base/scan.html)("murders.csv", sep = ",",
+    what = "c") x[1:10] #>  [1] "state"      "abb"        "region"     "population"
+    "total"  #>  [6] "Alabama"    "AL"         "South"      "4779736"    "135" [PRE10]
+    [library](https://rdrr.io/r/base/library.html)([readr](https://readr.tidyverse.org))
+    [PRE11] dat <- [read_csv](https://readr.tidyverse.org/reference/read_delim.html)("murders.csv")
+    #> Rows: 51 Columns: 5 #> ── Column specification ────────────────────────────────────────────────
+    #> Delimiter: "," #> chr (3): state, abb, region #> dbl (2): population, total
+    #>  #> ℹ Use `spec()` to retrieve the full column specification for this data.
+    #> ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
+    [PRE12] [guess_encoding](https://readr.tidyverse.org/reference/encoding.html)("murders.csv")
+    #> # A tibble: 1 × 2 #>   encoding confidence #>   <chr>         <dbl> #> 1 ASCII             1
+    [PRE13] [guess_encoding](https://readr.tidyverse.org/reference/encoding.html)("calificaciones.csv")
+    #> # A tibble: 3 × 2 #>   encoding   confidence #>   <chr>           <dbl> #>
+    1 ISO-8859-1       0.92 #> 2 ISO-8859-2       0.72 #> 3 ISO-8859-9       0.53
+    [PRE14] dat <- [read_csv](https://readr.tidyverse.org/reference/read_delim.html)("calificaciones.csv",
+    show_col_types = FALSE,  locale = [locale](https://readr.tidyverse.org/reference/locale.html)(encoding
+    = "ISO-8859-1")) [PRE15] [names](https://rdrr.io/r/base/names.html)(dat) #> [1]
+    "nombre"     "f.n."       "estampa"    "puntuación" [PRE16] [library](https://rdrr.io/r/base/library.html)([readxl](https://readxl.tidyverse.org))
+    [PRE17] [library](https://rdrr.io/r/base/library.html)([data.table](https://r-datatable.com))
+    dat <- [fread](https://rdatatable.gitlab.io/data.table/reference/fread.html)("murders.csv")
+    [PRE18] url <- [paste0](https://rdrr.io/r/base/paste.html)("https://raw.githubusercontent.com/",  "rafalab/dslabs/master/inst/extdata/murders.csv")
+    [PRE19] dat <- [read.csv](https://rdrr.io/r/utils/read.table.html)(url) [PRE20]
+    [download.file](https://rdrr.io/r/utils/download.file.html)(url, "murders.csv")
+    [PRE21] tmp_filename <- [tempfile](https://rdrr.io/r/base/tempfile.html)() [download.file](https://rdrr.io/r/utils/download.file.html)(url,
+    tmp_filename) dat <- [read_csv](https://readr.tidyverse.org/reference/read_delim.html)(tmp_filename)
+    [file.remove](https://rdrr.io/r/base/files.html)(tmp_filename) [PRE22]`***'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '*`****6.4 Organizing data with spreadsheets****`*'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '*``****Although this book focuses almost exclusively on data analysis, data
+    management is also an important part of data science operations. As explained
+    in the introduction, we do not cover this topic. However, quite often data analysts
+    need to collect data, or work with others collecting data, in a way that is most
+    conveniently stored in a spreadsheet. Although filling out a spreadsheet by hand
+    is a practice we highly discourage, and we instead recommend the process be automatized
+    as much as possible, sometimes you just have to do it. Therefore, in this section,
+    we provide recommendations on how to organize data in a spreadsheet. Although
+    there are R packages designed to read Microsoft Excel spreadsheets, we generally
+    want to avoid this format. Instead, we recommend Google Sheets as a free software
+    tool. Below we summarize the recommendations made in paper by Karl Broman and
+    Kara Woo[¹](#fn1). Please read the paper for important details.    *   **Be Consistent**
+    - Before you commence entering data, have a plan. Once you have a plan, be consistent
+    and stick to it. *   **Choose Good Names for Things** - You want the names you
+    pick for objects, files, and directories to be memorable, easy to spell, and descriptive.
+    This is actually a hard balance to achieve and it does require time and thought.
+    One important rule to follow is **do not use spaces**, use underscores `_` or
+    dashes instead `-`. Also, avoid symbols; stick to letters and numbers. *   **Write
+    Dates as YYYY-MM-DD** - To avoid confusion, we strongly recommend using this global
+    ISO 8601 standard. *   **No Empty Cells** - Fill in all cells and use some common
+    code for missing data. *   **Put Just One Thing in a Cell** - It is better to
+    add columns to store the extra information rather than having more than one piece
+    of information in one cell. *   **Make It a Rectangle** - The spreadsheet should
+    be a rectangle. *   **Create a Data Dictionary** - If you need to explain things,
+    such as what the columns are or what the labels used for categorical variables
+    are, do this in a separate file. *   **No Calculations in the Raw Data Files**
+    - Excel permits you to perform calculations. Do not make this part of your spreadsheet.
+    Code for calculations should be in a script. *   **Do Not Use Font Color or Highlighting
+    as Data** - Most import functions are not able to import this information. Encode
+    this information as a variable instead. *   **Make Backups** - Make regular backups
+    of your data. *   **Use Data Validation to Avoid Errors** - Leverage the tools
+    in your spreadsheet software so that the process is as error-free and repetitive-stress-injury-free
+    as possible. *   **Save the Data as Text Files** - Save files for sharing in comma
+    or tab delimited format.****``*'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '*`****6.5 Exercises****`*'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '*[PRE23] path <- [system.file](https://rdrr.io/r/base/system.file.html)("extdata",
+    package = "dslabs") files <- [list.files](https://rdrr.io/r/base/list.files.html)(path)
+    files [PRE24] [names](https://rdrr.io/r/base/names.html)(dat) [PRE25]`*'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '* * *'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '*`****1.  [https://www.tandfonline.com/doi/abs/10.1080/00031305.2017.1375989](https://www.tandfonline.com/doi/abs/10.1080/00031305.2017.1375989)[↩︎](#fnref1)****`*'
+  prefs: []
+  type: TYPE_NORMAL

@@ -1,0 +1,289 @@
+- en: 14  Locales
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: 原文：[https://rafalab.dfci.harvard.edu/dsbook-part-1/wrangling/locales.html](https://rafalab.dfci.harvard.edu/dsbook-part-1/wrangling/locales.html)
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '[Data Wrangling](../wrangling/intro-to-wrangling.html)'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[14  Locales](../wrangling/locales.html)'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: Computer settings change depending on language and location, and being unaware
+    of this possibility can make certain data wrangling challenges difficult to overcome.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'The purpose of *locales* is to group together common settings that can affect:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Month and day names, which are necessary for interpreting dates.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: The standard date format, also necessary for interpreting dates.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: The default time zone, essential for interpreting date-times.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: Character encoding, vital for reading non-ASCII characters.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: The symbols for decimals and number groupings, important for interpreting numerical
+    values.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: In R, a *locale* refers to a suite of settings that dictate how the system should
+    behave with respect to cultural conventions. These settings affect the way data
+    is formatted and presented, encompassing details such as date formatting, currency
+    symbols, decimal separators, and other related aspects.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Locales in R affect several areas, including how character vectors are sorted,
+    and date, number, and currency formatting. Additionally, errors, warnings, and
+    other messages might be translated into languages other than English based on
+    the locale.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 14.1 Locales in R
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'To access the current locale settings in R, you can use the `[Sys.getlocale()](https://rdrr.io/r/base/locales.html)`
+    function:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*To set a specific locale, use the `[Sys.setlocale()](https://rdrr.io/r/base/locales.html)`
+    function. For example, to set the locale to US English:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE1]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*The exact string to use for setting the locale (like “en_US.UTF-8”) can depend
+    on your operating system and its configuration.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: The `LC_ALL` used in the above code refers to all locale categories. R, like
+    many systems, breaks down the locale into categories, each responsible for different
+    aspects listed below.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`LC_COLLATE`: for string collation'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`LC_TIME`: date and time formatting'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`LC_MONETARY`: currency formatting.'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`LC_MESSAGES`: system message translations.'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`LC_NUMERIC`: number formatting.'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: You can set the locale for each category individually if you don’t want to change
+    everything with `LC_ALL`.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '*We have shown tools to control locales. These settings are important because
+    they affect how your data looks and behaves. However, not all of these settings
+    are available on every computer; their availability depends on what kind of computer
+    you have and how it’s set up.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Changing these settings, especially `LC_NUMERIC`, can lead to unexpected problems
+    when you’re working with numbers in R. For example, if you’re used to using a
+    period as a decimal point, but your locale uses a comma, this disparity can create
+    issues when importing data.
+  prefs: []
+  type: TYPE_NORMAL
+- en: It is important to remember that these locale settings only last as long as
+    one R session. If you change them while you’re working, they will revert to the
+    default settings when you close R and open it again.***
+  prefs: []
+  type: TYPE_NORMAL
+- en: '***14.2 The `locale` function***'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '***The **readr** package includes a `[locale()](https://readr.tidyverse.org/reference/locale.html)`
+    function that can be used to learn or change the current locale from within R:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE2]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*You can see all the locales available on your system by typing:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE3]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*Here is what you obtain if you change the dates locale to Spanish:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE4]*****'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '****14.3 Example: wrangling a Spanish dataset****'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '****In [Section 6.3.2](../R/importing-data.html#sec-reader), we noted that
+    reading the file:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE5]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*had a encoding different than UTF-8, the default. We used `guess_encoding`
+    to determine the correct one:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE6]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*and used the `locale` function to change this and read in this encoding instead:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE7]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*This file provides homework assignment scores for seven students. The columns
+    represent the student name, their date of birth, the time they submitted their
+    assignment, and the score they obtained, respectively. You can see the entire
+    file using `read_lines`:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE8]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*As an illustrative example, we will write code to compute the students age
+    and check if they turned in their assignment by the deadline of September 21,
+    2023, before midnight.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'We can read in the file with correct encoding like this:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE9]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*However, notice that the last column, which is supposed to contain exam scores
+    between 0 and 100, shows numbers larger than 800:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE10]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*This happens because the scores in the file use the European decimal point,
+    which confuses `read_csv`.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'To address this issue, we can also change the encoding to use European decimals,
+    which fixes the problem:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE11]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*Now, to compute the student ages, let’s try changing the submission times
+    to date format:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE12]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*Nothing gets converted correctly. This is because the dates are in Spanish.
+    We can change the locale to use Spanish as the language for dates:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE13]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*We can also reread the file using the correct locales:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE14]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*Computing the students’ ages is now straightforward:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE15]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*Finally, let’s check which students turned in their homework past the deadline
+    of September 22:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE16]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*We see that two students where late. However, with times we have to be particularly
+    careful as some functions default to the UTC timezone:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE17]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*If we change to the timezone to Eastern Standard Time (EST), we see no one
+    was late:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE18]*****************'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '****14.4 Exercises****'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '****1\. Load the **lubridate** package and set the locale to French for this
+    exercise.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '2\. Create a numeric vector containing the following numbers: 12345.67, 9876.54,
+    3456.78, and 5432.10.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 3\. Use the `[format()](https://rdrr.io/r/base/format.html)` function to format
+    the numeric vector as currency, displaying the values in Euros. Ensure that the
+    decimal point is represented correctly according to the French locale. Print the
+    formatted currency values.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '4\. Create a date vector with three dates: July 14, 1789, January 1, 1803,
+    and July 5, 1962\. Use the `[format()](https://rdrr.io/r/base/format.html)` function
+    to format the date vector in the “dd Month yyyy” format, where “Month” should
+    be displayed in the French language. Ensure that the month names are correctly
+    translated according to the French locale. Print the formatted date values.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 5\. Reset the locale to the default setting (e.g., “C” or “en_US.UTF-8”) to
+    revert to the standard formatting.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 6\. Repeat steps 2-4 for the numeric vector, and steps 5-7 for the date vector
+    to observe the standard formatting.****
+  prefs: []
+  type: TYPE_NORMAL

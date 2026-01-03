@@ -1,0 +1,1398 @@
+- en: 30  Supervised Learning Methods
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: 原文：[https://rafalab.dfci.harvard.edu/dsbook-part-2/ml/algorithms.html](https://rafalab.dfci.harvard.edu/dsbook-part-2/ml/algorithms.html)
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '[Machine Learning](../ml/intro-ml.html)'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[30  Supervised Learning Methods](../ml/algorithms.html)'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: Machine learning includes a vast collection of algorithms, well over a hundred
+    commonly used methods, each with its own strengths, assumptions, and tuning parameters.
+    In this chapter, we introduce a small but representative set of algorithms that
+    illustrate the major ideas behind supervised learning. Rather than aiming for
+    exhaustive coverage, our goal is to build intuition for *how* different approaches
+    learn from data and *why* they make different kinds of predictions.
+  prefs: []
+  type: TYPE_NORMAL
+- en: To keep the examples concrete and accessible, we use the two-predictor digit
+    dataset introduced in [Section 28.3.1](conditionals-and-smoothing.html#sec-two-or-seven)
+    as our running example. This dataset is small enough to visualize, yet rich enough
+    to reveal the behavior of real algorithms. All code examples rely on functions
+    from the **dslabs** package. Later, in [Chapter 31](ml-in-practice.html), we will
+    show how to implement these ideas efficiently using the **caret** package, which
+    provides a unified interface for fitting and tuning many different machine learning
+    methods.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*## 30.1 Linear and logistic regression'
+  prefs: []
+  type: TYPE_NORMAL
+- en: We introduced linear regression and logistic regression in the Linear Models
+    part of the book as tools for quantifying associations between variables. However,
+    these models can also be viewed as *prediction algorithms*. Once we estimate their
+    parameters from training data, we can make predictions for any new predictor value
+    \(\mathbf{x}\) simply by evaluating the fitted model at that point. This predictive
+    perspective places linear and logistic regression squarely within the family of
+    supervised learning methods.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Linear regression
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: Linear regression can be considered a supervised learning method for continuous
+    outcomes. Given a numeric outcome \(Y\) and predictors \(\mathbf{X} = (X_1,\dots,X_p)^\top\),
+    we model the conditional expectation as
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[ \mathrm{E}[Y \mid \mathbf{X} = \mathbf{x}] = \beta_0 + \sum_{j=1}^p \beta_j
+    x_j, \] a linear function of the predictors. Linear regression provides a simple,
+    interpretable baseline, and many supervised learning algorithms can be viewed
+    as extensions or modifications of this idea.
+  prefs: []
+  type: TYPE_NORMAL
+- en: However, linear regression is not appropriate when the outcome is categorical.
+    In [Section 28.3.1](conditionals-and-smoothing.html#sec-two-or-seven), we introduced
+    *logistic regression* as a method designed specifically for modeling class probabilities
+    in binary classification problems.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Logistic regression
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: 'For two classes presented in [Section 28.3.1](conditionals-and-smoothing.html#sec-two-or-seven),
+    we can model the probability of class 1 using the logistic function:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[ \log\frac{p(\mathbf{x})}{1 - p(\mathbf{x})} = \beta_0 + \beta_1 x_1 + \beta_2
+    x_2, \,\, p(\mathbf{x}) = \Pr(Y = 1 \mid X_1 = x_1, X_2 = x_2), \]
+  prefs: []
+  type: TYPE_NORMAL
+- en: which estimates the probability that an observation belongs to class 1\. This
+    is the binary logistic regression model.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'For more than two classes (\(K > 2\)), logistic regression can be extended
+    in two common ways: *one-versus-rest* (OvR) and *multinomial logistic regression*.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'In the one-versus-rest approach, we fit \(K\) separate binary logistic regression
+    models. For each class \(k\), we model:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[ \log\frac{q_k(\mathbf{x})}{1 - q_k(\mathbf{x})} = \beta_{k,0} + \sum_{j=1}^p
+    \beta_{k,j} x_j, \qquad k = 1,\dots,K. \]
+  prefs: []
+  type: TYPE_NORMAL
+- en: Here, \(q_k(\mathbf{x})\) estimates the probability that an observation belongs
+    to class \(k\) *versus the rest*, but these quantities are not guaranteed to sum
+    to 1, nor to be mutually consistent.
+  prefs: []
+  type: TYPE_NORMAL
+- en: After fitting all \(K\) models, the predicted class for a new observation \(\mathbf{x}\)
+    is
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[ \hat{y}(\mathbf{x}) = \arg\max_k q_k(\mathbf{x}). \]
+  prefs: []
+  type: TYPE_NORMAL
+- en: OvR is simple but does not produce a coherent probability distribution.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'The multinomial approach resolves this inconsistency by modeling all class
+    probabilities jointly. We select one class, say class \(K\), as a reference and
+    fit:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[ \log\frac{p_k(\mathbf{x})}{p_K(\mathbf{x})} = \beta_{k,0} + \sum_{j=1}^p
+    \beta_{k,j} x_j, \qquad k = 1,\dots,K-1. \]
+  prefs: []
+  type: TYPE_NORMAL
+- en: Let
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[ \eta_k(\mathbf{x}) = \beta_{k,0} + \sum_{j=1}^p \beta_{k,j} x_j, \qquad \eta_K(\mathbf{x})
+    = 0. \]
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'The class probabilities are computed using the *softmax* function:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[ p_k(\mathbf{x}) = \frac{\exp(\eta_k(\mathbf{x}))} {\sum_{j=1}^K \exp(\eta_j(\mathbf{x}))},
+    \qquad k=1,\dots,K. \]
+  prefs: []
+  type: TYPE_NORMAL
+- en: These probabilities automatically satisfy
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[ \sum_{k=1}^K p_k(\mathbf{x}) = 1. \]
+  prefs: []
+  type: TYPE_NORMAL
+- en: The predicted class is
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[ \hat{y}(\mathbf{x}) = \arg\max_k p_k(\mathbf{x}). \]
+  prefs: []
+  type: TYPE_NORMAL
+- en: Multinomial logistic regression is generally preferred because it produces coherent
+    probabilities that sum to 1 and jointly models the relationships among classes.
+    The one-versus-rest approach is computationally simpler, especially when \(K\)
+    is large, and often yields similar *class predictions*, even if the corresponding
+    probability estimates differ.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'In [Chapter 28](conditionals-and-smoothing.html), we saw that logistic regression
+    was not flexible enough to approximate \(p(\mathbf{x})\) well for the two-digit
+    example: its accuracy was only 0.775\. In the next sections, we introduce algorithms
+    that improve on this by providing the needed flexibility, each using a different
+    approach to estimating the conditional class probabilities.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 30.2 k-nearest neighbors
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: We introduced the kNN algorithm in [Section 29.1](resampling-methods.html#sec-knn-cv-intro).
+    In [Section 29.8](resampling-methods.html#sec-mse-estimates), we noted that \(k=65\)
+    provided the highest estimated accuracy. Using \(k=65\), we obtain an accuracy
+    0.825, an improvement over regression. A plot of the estimated conditional probability
+    shows that the kNN estimate is flexible enough and does indeed capture the shape
+    of the true conditional probability.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![](../Images/1d92cf57448cf94228ee76329e5d7437.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: '*You are ready to do exercises 1 - 13.*'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '*30.3 Probabilistic classification models*'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '*We have described how, when using squared loss, the conditional expectation
+    provides the best approach to developing a decision rule. In a binary case, the
+    smallest true error we can achieve is determined by Bayes’ rule, which is a decision
+    rule based on the true conditional probability:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[ p(\mathbf{x}) = \mathrm{Pr}(Y = 1 \mid \mathbf{X}=\mathbf{x}) \]
+  prefs: []
+  type: TYPE_NORMAL
+- en: We have described several approaches to estimating \(p(\mathbf{x})\). In all
+    these approaches, we estimate the conditional probability directly and do not
+    consider the distribution of the predictors. In machine learning, these are referred
+    to as *discriminative* approaches.
+  prefs: []
+  type: TYPE_NORMAL
+- en: However, Bayes’ theorem tells us that knowing the distribution of the predictors
+    \(\mathbf{X}\) may be useful. Methods that model the joint distribution of \(Y\)
+    and \(\mathbf{X}\) are often referred to as *generative models* (we model how
+    the entire data, \(\mathbf{X}\) and \(Y\), are generated). We start by describing
+    the most general generative model, Naive Bayes, and then proceed to describe two
+    specific cases, quadratic discriminant analysis (QDA) and linear discriminant
+    analysis (LDA).
+  prefs: []
+  type: TYPE_NORMAL
+- en: Naive Bayes
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: 'Recall that Bayes rule tells us that we can rewrite \(p(\mathbf{x})\) as follows:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[ p(\mathbf{x}) = \mathrm{Pr}(Y = 1|\mathbf{X}=\mathbf{x}) = \frac{f_{\mathbf{X}|Y
+    = 1}(\mathbf{x}) \mathrm{Pr}(Y = 1)} { f_{\mathbf{X}|Y = 0}(\mathbf{x})\mathrm{Pr}(Y
+    = 0) + f_{\mathbf{X}|Y = 1}(\mathbf{x})\mathrm{Pr}(Y = 1) } \]
+  prefs: []
+  type: TYPE_NORMAL
+- en: with \(f_{\mathbf{X}|Y = 1}\) and \(f_{\mathbf{X}|Y = 0}\) representing the
+    distribution functions of the predictor \(\mathbf{X}\) for the two classes \(Y
+    = 1\) and \(Y = 0\). The formula implies that if we can estimate these conditional
+    distributions, we can develop a powerful decision rule. However, this is a big
+    *if*.
+  prefs: []
+  type: TYPE_NORMAL
+- en: As we go forward, we will encounter examples in which \(\mathbf{X}\) has many
+    dimensions and we do not have much information about the distribution. In these
+    cases, Naive Bayes will be practically impossible to implement. However, there
+    are instances in which we have a small number of predictors (not much more than
+    2) and many categories in which generative models can be quite powerful. We describe
+    two specific examples and use our previously described case studies to illustrate
+    them.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Let’s start with a very simple and uninteresting, yet illustrative, case: the
+    example related to predicting sex from height.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE1]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*In this case, the Naive Bayes approach is particularly appropriate because
+    we know that the normal distribution is a good approximation for the conditional
+    distributions of height given sex for both classes \(Y = 1\) (female) and \(Y
+    = 0\) (male). This implies that we can approximate the conditional distributions
+    \(f_{X|Y = 1}\) and \(f_{X|Y = 0}\) by simply estimating averages and standard
+    deviations from the data:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE2]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*The prevalence, which we will denote with \(\pi = \mathrm{Pr}(Y = 1)\), can
+    be estimated from the data with:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE3]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*Now we can use our estimates of average and standard deviation to get an actual
+    rule:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE4]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*Our Naive Bayes estimate \(\hat{p}(x)\) looks a lot like a logistic regression
+    estimate:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![](../Images/6a4ca2a641c1b5412807c0842fd1dd73.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: In fact, we can show that the Naive Bayes approach is similar to the logistic
+    regression prediction mathematically. However, we leave the demonstration to a
+    more advanced text, such as the Elements of Statistical Learning[¹](#fn1). We
+    can see that they are similar empirically by comparing the two resulting curves.****
+  prefs: []
+  type: TYPE_NORMAL
+- en: '***Controlling prevalence***'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '***One useful feature of the Naive Bayes approach is that it includes a parameter
+    to account for differences in prevalence. Using our sample, we estimated \(f_{X|Y
+    = 1}\), \(f_{X|Y = 0}\) and \(\pi\). If we use hats to denote the estimates, we
+    can write \(\hat{p}(x)\) as:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[ \hat{p}(x)= \frac{\hat{f}_{X|Y = 1}(x) \hat{\pi}} { \hat{f}_{X|Y = 0}(x)(1-\hat{\pi})
+    + \hat{f}_{X|Y = 1}(x)\hat{\pi} } \]
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'As we discussed earlier, our sample has a much lower prevalence, 0.24, than
+    the general population. So if we use the rule \(\hat{p}(x) > 0.5\) to predict
+    females, our accuracy will be affected due to the low sensitivity:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE5]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*Again, this is because the algorithm gives more weight to specificity to account
+    for the low prevalence:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE6]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*This is mainly due to the fact that \(\hat{\pi}\) is substantially less than
+    0.5, so we tend to predict `Male` more often. It makes sense for a machine learning
+    algorithm to do this in our sample because we do have a higher percentage of males.
+    But if we were to extrapolate this to a general population, our overall accuracy
+    would be affected by the low sensitivity.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'The Naive Bayes approach gives us a direct way to correct this since we can
+    simply force \(\hat{\pi}\) to be whatever value we want it to be. So to balance
+    specificity and sensitivity, instead of changing the cutoff in the decision rule,
+    we could simply change \(\hat{\pi}\) to 0.5 like this:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE7]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*Note the difference in sensitivity with a better balance:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE8]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*The new rule also gives us a very intuitive cutoff between 66-67, which is
+    about the middle of the female and male average heights:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![](../Images/aa9de535752640fecff553fe0e64995c.png)*******'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '***Quadratic discriminant analysis***'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '***Quadratic Discriminant Analysis (QDA) is a version of Naive Bayes in which
+    we assume that the distributions \(f_{\mathbf{X}|Y = 1}(x)\) and \(f_{\mathbf{X}|Y
+    = 0}(\mathbf{x})\) are multivariate normal. The simple example we described in
+    the previous section is actually QDA. Let’s now look at a slightly more complicated
+    case: the 2 or 7 example.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'In this example, we have two predictors so we assume each one is bivariate
+    normal. This implies that we need to estimate two averages, two standard deviations,
+    and a correlation for each case \(Y = 1\) and \(Y = 0\). Once we have these, we
+    can approximate the distributions \(f_{X_1,X_2|Y = 1}\) and \(f_{X_1, X_2|Y =
+    0}\). We can easily estimate parameters from the data and with these estimates
+    in place, all we need are the prevalence \(\hat{\pi}\) to compute:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[ \hat{p}(\mathbf{x})= \frac{\hat{f}_{\mathbf{X}|Y = 1}(\mathbf{x}) \hat{\pi}}
+    { \hat{f}_{\mathbf{X}|Y = 0}(x)(1-\hat{\pi}) + \hat{f}_{\mathbf{X}|Y = 1}(\mathbf{x})\hat{\pi}
+    } \]
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Note that the densities \(f\) are bivariate normal distributions. Here we provide
+    a visual way of showing the approach. We plot the data and use contour plots to
+    give an idea of what the two estimated normal densities look like (we show the
+    curve representing a region that includes 95% of the points):'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![](../Images/4e91fc33c7a33d2d59b45085fe08aa6d.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: 'We can fit QDA using the `qda` function the **MASS** package:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE9]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*We see that we obtain relatively good accuracy:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE10]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*The conditional probability looks relatively good, although it does not fit
+    as well as the kernel smoothers:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![](../Images/a1fc89f1fab8d29f8a87a849167fb1da.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: 'One reason QDA does not work as well as the kernel methods is because the assumption
+    of normality does not quite hold. Although for the 2s it seems reasonable, for
+    the 7s it does seem to be off. Notice the slight curvature in the points for the
+    7s:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![](../Images/4def7edf9fadc8fabcb1b2e84ef174c8.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: QDA can work ok here, but it becomes harder to use as the number of predictors
+    increases. Here we have 2 predictors and had to compute 4 means, 4 SDs, and 2
+    correlations. Notice that if we have 10 predictors, we need to estimate 45 correlations
+    for each class. In general, the formula for the number of correlations we have
+    to estimate is \(p(p-1)/2\) for each class, which gets big fast. Once the number
+    of parameters approaches the size of our data, the method becomes impractical
+    due to overfitting.*****
+  prefs: []
+  type: TYPE_NORMAL
+- en: '***Linear discriminant analysis***'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '***A relatively simple solution to QDA’s problem of having too many parameters
+    is to assume that the correlation structure is the same for all classes, which
+    reduces the number of parameters we need to estimate. In this case, the the distributions
+    looks like this:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![](../Images/1b83864540679bec403fee035f5aa6c2.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: 'We can fit LDA using the **MASS** `lda` function:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE11]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*Now the size of the ellipses as well as the angles are the same. This is because
+    they are assumed to have the same standard deviations and correlations. Although
+    this added constraint lowers the number of parameters, the rigidity lowers our
+    accuracy to:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE12]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*When we force this assumption, we can show mathematically that the boundary
+    is a line, just as with logistic regression. For this reason, we call the method
+    *linear* discriminant analysis (LDA). Similarly, for QDA, we can show that the
+    boundary must be a quadratic function.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![](../Images/9a00b85104c61ddb27327ac505fe772f.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: Although LDA often works well for simple datasets, in the case, the lack of
+    flexibility does not permit us to capture the non-linearity in the true conditional
+    probability function.*****
+  prefs: []
+  type: TYPE_NORMAL
+- en: '***Extension to multiple classes***'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '***The ideas introduced above for the two-class case extend naturally to situations
+    with more than two classes. For \(K\) classes, Bayes’ rule gives'
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[ p_k(\mathbf{x}) = \Pr(Y = k \mid \mathbf{X} = \mathbf{x}) = \frac{f_{\mathbf{X}\mid
+    Y=k}(\mathbf{x}),\Pr(Y=k)}{ \sum_{l=1}^K f_{\mathbf{X}\mid Y=l}(\mathbf{x})\Pr(Y=l)
+    }, \qquad k = 1,\dots,K. \]
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'To construct a classifier, we simply estimate the quantities in this expression
+    from the training data. For Naive Bayes, LDA, or QDA:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: we estimate the class-conditional densities \(f_{\mathbf{X}\mid Y=k}(\mathbf{x})\)
+    using the assumed model (independence for Naive Bayes, a normal distribution with
+    shared covariance for LDA, or a normal distribution with class-specific covariances
+    for QDA), and
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: we estimate the class proportions \(\Pr(Y = k)\) with the empirical prevalence
+    \(\hat{\pi}_k = \frac{1}{n}\sum_{i=1}^n \mathbf{1}(y_i = k)\).
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Once these components are estimated, we compute \(\hat{p}_k(\mathbf{x})\) for
+    all \(k\), and assign \(\mathbf{x}\) to the class with the largest posterior probability.
+  prefs: []
+  type: TYPE_NORMAL
+- en: This generalization requires no new ideas beyond the two-class case, the only
+    difference is that we repeat the same estimation for all \(K\) classes.***
+  prefs: []
+  type: TYPE_NORMAL
+- en: '***Connection to distance***'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '***In LDA and QDA, we model each class as coming from a multivariate normal
+    distribution estimated from the *training data*. When we classify a new observation
+    \(\mathbf{x}\), the algorithm computes, for each class \(k\), we compute'
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[ f_{\mathbf{X}\mid Y=k}(\mathbf{x}),\Pr(Y=k) \]
+  prefs: []
+  type: TYPE_NORMAL
+- en: and predicts the class with the largest value.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'So understanding how the normal density behaves helps explain why LDA and QDA
+    behave like distance-based classifiers. For simplisity we consider the case in
+    which classes are balanced: \(\Pr(Y=k) = 1/K\) for all \(k\):'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Let’s first examine the one-dimensional normal density and
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[ f(x) = \frac{1}{\sqrt{2\pi}\sigma} \exp\left\{-\frac{1}{2}\left(\frac{x-\mu}{\sigma}\right)^2\right\}.
+    \]
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'If we ignore the multiplicative constant \(1/(\sqrt{2\pi}\sigma)\) and take
+    the logarithm, we get:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[ \log f(x) \propto -\frac{1}{2}\left(\frac{x-\mu}{\sigma}\right)^2 \]
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'The key point is:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[ \log f(x) \text{ decreases as } (x-\mu)^2 \text{ increases.} \]
+  prefs: []
+  type: TYPE_NORMAL
+- en: In other words, the class with the highest density is simply the class whose
+    mean is closest to (x) (after scaling by \(\sigma\), the within-class standard
+    deviation).
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'For multivariate Gaussian classes, the same idea holds but with a more general
+    notion of distance. The log density becomes:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[ \log f(\mathbf{x}) \propto (\mathbf{x} - \boldsymbol{\mu})^\top\Sigma^{-1}(\mathbf{x}
+    - \boldsymbol{\mu}), \]
+  prefs: []
+  type: TYPE_NORMAL
+- en: which is negative of the *Mahalanobis distance* squared.
+  prefs: []
+  type: TYPE_NORMAL
+- en: In LDA, all classes use the same covariance \(\Sigma\). So each class scores
+    \(\mathbf{x}\) by its (scaled) squared distance to the class mean.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: In QDA, each class has its own covariance, so each class uses a different distance
+    metric.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 'Thus, LDA and QDA can both be viewed as distance-based classifiers: a new observation
+    is assigned to the class whose Gaussian model places it *closest* in this Mahalanobis
+    sense.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '*You are now ready to do exercises 14–17.*****'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '*****30.4 Classification and regression trees (CART)*****'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '*****Classification and regression trees (CART) provide a flexible, intuitive
+    approach to prediction by repeatedly splitting the predictor space into smaller
+    and more homogeneous regions. Instead of fitting a single global model, CART builds
+    a tree-shaped set of decision rules that adapt to complex patterns in the data.
+    In this section we motivate the idea and provide some details on how it is implemented.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: The curse of dimensionality
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: We described how methods such as LDA and QDA are not meant to be used with many
+    predictors \(p\) because the number of parameters that we need to estimate becomes
+    too large. For example, with the digits example \(p = 784\), we would have over
+    600,000 parameters with LDA, and we would multiply that by the number of classes
+    for QDA. Kernel methods, such as kNN or local regression, do not have model parameters
+    to estimate. However, they also face a challenge when multiple predictors are
+    used due to what is referred to as the *curse of dimensionality*. The *dimension*
+    here refers to the fact that when we have \(p\) predictors, the distance between
+    two observations is computed in \(p\)-dimensional space.
+  prefs: []
+  type: TYPE_NORMAL
+- en: A useful way of understanding the curse of dimensionality is by considering
+    how large we have to make a span/neighborhood/window to include a given percentage
+    of the data. Remember that with larger neighborhoods, our methods lose flexibility,
+    and to be flexible we need to keep the neighborhoods small.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'To see how this becomes an issue for higher dimensions, suppose we have one
+    continuous predictor with equally spaced points in the [0,1] interval and we want
+    to create windows that include 1/10th of data. Then it’s easy to see that our
+    windows have to be of size 0.1:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![](../Images/5351f63855bfd62d82549546605b32f5.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: 'Now for two predictors, if we decide to keep the neighborhood just as small,
+    10% for each dimension, we include only 1 point. If we want to include 10% of
+    the data, then we need to increase the size of each side of the square to \(\sqrt{.10}
+    \approx .316\):'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![](../Images/b09903b1b56a70a01e4b1bfc24f2222c.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: Using the same logic, if we want to include 10% of the data in a three-dimensional
+    space, then the side of each cube is \(\sqrt[3]{.10} \approx 0.464\). In general,
+    to include 10% of the data in a case with \(p\) dimensions, we need an interval
+    with each side of size \(\sqrt[p]{.10}\) of the total. This proportion gets close
+    to 1 quickly, and if the proportion is 1 it means we include all the data and
+    are no longer smoothing.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![](../Images/d41a2c52be32507c6201a4cbdfda086c.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: By the time we reach 100 predictors, the neighborhood is no longer very local,
+    as each side covers almost the entire dataset.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Here we look at a set of elegant and versatile methods that adapt to higher
+    dimensions and also allow these regions to take more complex shapes while still
+    producing models that are interpretable. These are very popular, well-known and
+    studied methods. We will concentrate on regression and decision trees and their
+    extension to random forests.
+  prefs: []
+  type: TYPE_NORMAL
+- en: CART motivation
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: 'To motivate this section, we will use a new dataset that includes the breakdown
+    of the composition of olive oil into 8 fatty acids:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE13]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*For illustrative purposes, we will try to predict the region using the fatty
+    acid composition values as predictors.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE14]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*We remove the `area` column because we won’t use it as a predictor.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE15]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*Using kNN, we can achieve a test set accuracy of 0.97\. However, a bit of
+    data exploration reveals that we should be able to do even better. For example,
+    if we look at the distribution of each predictor stratified by region we see that
+    eicosenoic is only present in Southern Italy and that linoleic separates Northern
+    Italy from Sardinia.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![](../Images/2dea0bef97c1ee4213bb489cece739ec.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: This implies that we should be able to build an algorithm that predicts perfectly!
+    We can see this clearly by plotting the values for eicosenoic and linoleic.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![](../Images/8352a336f5ff15c9e65aee2926a3bb1c.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: In [Section 22.4](../highdim/linear-algebra.html#sec-predictor-space), we defined
+    *predictor spaces*, which in this case consists of eight-dimensional points with
+    values between 0 and 100\. In the plot above, we show the space defined by the
+    two predictors eicosenoic and linoleic, and, by eye, we can construct a prediction
+    rule that partitions the predictor space so that each partition contains only
+    outcomes of a one category.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'This in turn can be used to define an algorithm with perfect accuracy. Specifically,
+    we define the following decision rule: if eicosenoic is larger than 0.065, predict
+    Southern Italy. If not, then if linoleic is larger than \(10.535\), predict Sardinia,
+    and if lower, predict Northern Italy. We can draw this decision tree as follows:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![](../Images/2c137024263ac7e3cfbbafaa9d7c879e.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: 'Decision trees like this are often used in practice. For example, to decide
+    on a person’s risk of poor outcome after having a heart attack, doctors use the
+    following:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![](../Images/5fad50a5d9f801b5e7ef7314a74ba72e.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: '(Source: Walton 2010 Informal Logic, Vol. 30, No. 2, pp. 159-184[²](#fn2).)'
+  prefs: []
+  type: TYPE_NORMAL
+- en: A tree is basically a flow chart of yes or no questions. The general idea of
+    the methods we are describing is to define an algorithm that uses data to create
+    these trees with predictions at the ends, referred to as *nodes*. Regression and
+    decision trees operate by predicting an outcome variable \(y\) by partitioning
+    the predictors.***
+  prefs: []
+  type: TYPE_NORMAL
+- en: '***Regression trees***'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '***When using trees, and the outcome is continuous, we call the approach a
+    *regression* tree. To introduce regression trees, we will use the 2008 poll data
+    used in @ec-smoothing to describe the basic idea of how we build these algorithms.
+    As with other machine learning algorithms, we will try to estimate the conditional
+    expectation \(f(x) = \mathrm{E}(Y | X = x)\) with \(Y\) the poll margin and \(x\)
+    the day.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![](../Images/fe610d7bdd5d0c77557f00db3c776bfa.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: 'The general idea here is to build a decision tree and, at the end of each *node*,
+    obtain a predictor \(\hat{y}\). A mathematical way to describe this is: we are
+    partitioning the predictor space into \(J\) non-overlapping regions, \(R_1, R_2,
+    \ldots, R_J\), and then for any predictor \(x\) that falls within region \(R_j\),
+    estimate \(f(x)\) with the average of the training observations \(y_i\) for which
+    the associated predictor \(x_i\) is also in \(R_j\).'
+  prefs: []
+  type: TYPE_NORMAL
+- en: But how do we decide on the partition \(R_1, R_2, \ldots, R_J\) and how do we
+    choose \(J\)? Here is where the algorithm gets a bit complicated.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Regression trees create partitions recursively. We start the algorithm with
+    one partition, the entire predictor space. In our simple first example, this space
+    is the interval [-155, 1]. But after the first step, we will have two partitions.
+    After the second step, we will split one of these partitions into two and will
+    have three partitions, then four, and so on. Later we describe how we pick the
+    partition, and when to stop.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'For each existing partition, we find a predictor \(j\) and value \(s\) that
+    define two new partitions, which we will call \(R_1(j,s)\) and \(R_2(j,s)\), that
+    split our observations in the current partition by asking if \(x_j\) is bigger
+    than \(s\):'
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[ R_1(j,s) = \{\mathbf{x} \mid x_j < s\} \mbox{ and } R_2(j,s) = \{\mathbf{x}
+    \mid x_j \geq s\} \]
+  prefs: []
+  type: TYPE_NORMAL
+- en: In our current example, we only have one predictor, so we will always choose
+    \(j = 1\), but in general this will not be the case. Now after we define the new
+    partitions \(R_1\) and \(R_2\), and we decide to stop the partitioning, we compute
+    predictors by taking the average of all the observations \(y\) for which the associated
+    \(\mathbf{x}\) is in \(R_1\) or \(R_2\). We refer to these two as \(\hat{y}_{R_1}\)
+    and \(\hat{y}_{R_2}\) respectively.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'But how do we pick \(j\) and \(s\)? Basically we find the pair that minimizes
+    the residual sum of squares (RSS):'
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[ \sum_{i:\, x_i \in R_1(j,s)} (y_i - \hat{y}_{R_1})^2 + \sum_{i:\, x_i \in
+    R_2(j,s)} (y_i - \hat{y}_{R_2})^2 \]
+  prefs: []
+  type: TYPE_NORMAL
+- en: This is then applied recursively to the new regions \(R_1\) and \(R_2\). We
+    describe how we stop later, but once we are done partitioning the predictor space
+    into regions, in each region a prediction is made using the observations in that
+    region.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Let’s take a look at what this algorithm does on the 2008 presidential election
+    poll data. We will use the `rpart` function in the **rpart** package.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE16]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*In this case, there is only one predictor. Thus we do not have to decide which
+    predictor \(j\) to split by, we simply have to decide what value \(s\) we use
+    to split. We can visually see where the splits were made:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE17]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*![](../Images/652222a5d06ca6cfa0b114e773240a2b.png)*  *The first split is
+    made on day 39.5\. One of those regions is then split at day 86.5\. The two resulting
+    new partitions are split on days 49.5 and 117.5, respectively, and so on. We end
+    up with 8 partitions.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'You can also see the partitions bu typing:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE18]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*The final estimate \(\hat{f}(x)\) looks like this:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE19]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*![](../Images/9873565e9597347e1c19d9f9949997e4.png)*  *Note that the algorithm
+    stopped partitioning at 8 nodes. This decision is based on a measure called the
+    complexity parameter (cp). Every time the data is split into two new partitions,
+    the training set RSS decreases because the model gains flexibility to adapt to
+    the data. If splitting continued until every observation was isolated in its own
+    partition, the RSS would eventually reach 0, since the average of a single value
+    is the value itself. To prevent such overfitting, the algorithm requires that
+    each new split reduce the RSS by at least a factor of cp. Larger values of cp
+    therefore stop the algorithm earlier, leading to fewer nodes.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'However, cp is not the only factor that controls partitioning. Another important
+    parameter is the minimum number of observations required in a node before it can
+    be split, set by the minsplit argument in rpart (default: 20). In addition, rpart
+    allows users to specify the minimum number of observations allowed in a terminal
+    node (leaf), controlled by the `minbucket` argument. By default, `minbucket =
+    round(minsplit / 3)`.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'As expected, if we set `cp = 0` and `minsplit = 2`, then our prediction is
+    as flexible as possible and our predictor is our original data:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![](../Images/77bc6f728324735d92efd7774ca11811.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: Intuitively we know that this is not a good approach as it will generally result
+    in over-training. These `cp`, `minsplit`, and `minbucket` parameters can be used
+    to control the variability of the final predictors. The larger these values are
+    the more data is averaged to compute a predictor and thus reduce variability.
+    The drawback is that it restricts flexibility.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'So how do we pick these parameters? We can use cross validation, just like
+    with any tuning parameter. Here is the resulting tree when we use cross validation
+    to choose cp:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![](../Images/bf61ee220d6491443a8db4a6b03913e6.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: 'Note that if we already have a tree and want to apply a higher cp value, we
+    can use the `prune` function. We call this *pruning* a tree because we are snipping
+    off partitions that do not meet a `cp` criterion. Here is an example where we
+    create a tree that used a `cp = 0` and then we prune it back:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE20]*******'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '***Classification (decision) trees***'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '***Classification trees, or decision trees, are used in prediction problems
+    where the outcome is categorical. We use the same partitioning principle with
+    some differences to account for the fact that we are now working with a categorical
+    outcome.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: The first difference is that we form predictions by calculating which class
+    is the most common among the training set observations within the partition, rather
+    than taking the average in each partition (as we can’t take the average of categories).
+  prefs: []
+  type: TYPE_NORMAL
+- en: The second is that we can no longer use RSS to choose the partition. While we
+    could use the naive approach of looking for partitions that minimize training
+    error, better performing approaches use more sophisticated metrics. Two of the
+    more popular ones are the *Gini Index* and *Entropy*.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'In a perfect scenario, the outcomes in each of our partitions are all of the
+    same category since this will permit perfect accuracy. The *Gini Index* is going
+    to be 0 in this scenario, and become larger the more we deviate from this scenario.
+    To define the Gini Index, we define \(\hat{p}_{j,k}\) as the proportion of observations
+    in partition \(j\) that are of class \(k\). The Gini Index is defined as:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[ \mbox{Gini}(j) = \sum_{k = 1}^K \hat{p}_{j,k}(1-\hat{p}_{j,k}) \]
+  prefs: []
+  type: TYPE_NORMAL
+- en: If you study the formula carefully, you will see that it is in fact 0 in the
+    perfect scenario described above.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '*Entropy* is a related quantity, defined as:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[ \mbox{entropy}(j) = -\sum_{k = 1}^K \hat{p}_{j,k}\log(\hat{p}_{j,k}), \mbox{
+    with } 0 \times \log(0) \mbox{ defined as }0 \]
+  prefs: []
+  type: TYPE_NORMAL
+- en: If we use a classification tree on the 2 or 7 example, we achieve an accuracy
+    of 0.81 which is better than regression, but is not as good as what we achieved
+    with kernel methods.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'The plot of the estimated conditional probability shows us the limitations
+    of classification trees:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![](../Images/a21f84423ddcbe640b62088b31193241.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: Note that with decision trees, it is difficult to make the boundaries smooth
+    since each partition creates a discontinuity.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Classification trees have certain advantages that make them very useful. They
+    are highly interpretable, even more so than linear models. They are also easy
+    to visualize (if small enough). Finally, they can model human decision processes
+    and don’t require use of dummy predictors for categorical variables. On the other
+    hand, the approach via recursive partitioning can easily over-train and is therefore
+    a bit harder to train than, for example, linear regression or kNN. Furthermore,
+    in terms of accuracy, it is rarely the best performing method since it is not
+    very flexible and is highly unstable to changes in training data. Random forests,
+    explained next, improve on several of these shortcomings.********
+  prefs: []
+  type: TYPE_NORMAL
+- en: '****30.5 Random forests****'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '****Random forests are a **very popular** machine learning approach that addresses
+    the shortcomings of decision trees using a clever idea. The goal is to improve
+    prediction performance and reduce instability by *averaging* multiple decision
+    trees: a *forest* of trees constructed with *randomness*. It has two features
+    that help accomplish this.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'The first step is *bootstrap aggregation* or *bagging*. The general idea is
+    to generate many predictors, each using regression or classification trees, and
+    then forming a final prediction based on the average prediction of all these trees.
+    To assure that the individual trees are not the same, we use the bootstrap to
+    induce randomness. These two features combined explain the name: the bootstrap
+    makes the individual trees **randomly** different, and the combination of trees
+    is the **forest**. The specific steps are as follows.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 1\. Build \(B\) decision trees using the training set. We refer to the fitted
+    models as \(T_1, T_2, \dots, T_B\).
+  prefs: []
+  type: TYPE_NORMAL
+- en: 2\. For every observation in the test set, form a prediction \(\hat{y}_j\) using
+    tree \(T_j\).
+  prefs: []
+  type: TYPE_NORMAL
+- en: 3\. For continuous outcomes, form a final prediction with the average \(\hat{y}
+    = \frac{1}{B} \sum_{j = 1}^B \hat{y}_j\). For categorical data classification,
+    predict \(\hat{y}\) with majority vote (most frequent class among \(\hat{y}_1,
+    \dots, \hat{y}_B\)).
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'So how do we get different decision trees from a single training set? For this,
+    we use randomness in two ways which we explain in the steps below. Let \(N\) be
+    the number of observations in the training set. To create \(T_j, \, j = 1,\ldots,B\)
+    from the training set we do the following:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 1\. Create a bootstrap training set by sampling \(N\) observations from the
+    training set **with replacement**. This is the first way to induce randomness.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 2\. A large number of features is typical in machine learning challenges. Often,
+    many features can be informative but including them all in the model may result
+    in overfitting. The second way random forests induce randomness is by randomly
+    selecting features to be included in the building of each tree. A different random
+    subset is selected for each tree. This reduces correlation between trees in the
+    forest, thereby improving prediction accuracy.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'To illustrate how the first steps can result in smoother estimates, we will
+    fit a random forest to the 2008 polls data. We will use the `randomForest` function
+    in the **randomForest** package:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE21]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*Note that if we apply the function `plot` to the resulting object, we see
+    how the error rate of our algorithm changes as we add trees:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE22]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*![](../Images/453fde1d6f26e20d73aa52319c9a184d.png)'
+  prefs: []
+  type: TYPE_NORMAL
+- en: In this case, the accuracy improves as we add more trees until we have used
+    about 300 trees after which accuracy stabilizes.
+  prefs: []
+  type: TYPE_NORMAL
+- en: The resulting estimate for this random forest, obtained with
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE23]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*is shown with the red curve below:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![](../Images/39da57d9cea71225dcd2fb38fcb320c9.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: Notice that the random forest estimate is much smoother than what we achieved
+    with the regression tree in the previous section. This is possible because the
+    average of many step functions can be smooth. We can see this by visually examining
+    how the estimate changes as we add more trees. In the following figure, you see
+    each of the bootstrap samples for several values of \(b\) and for each one we
+    see the tree that is fitted in grey, the previous trees that were fitted in lighter
+    grey, and the result of averaging all the trees estimated up to that point.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![](../Images/4ee992eec5fce5e5afb7b68912fe08fa.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: '[PRE24]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*The accuracy for the random forest fit for our 2 or 7 example is 0.825\. Here
+    is what the conditional probabilities look like:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![](../Images/e37e0d6bb4c88236adf1c4ca0c24d99c.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: 'Visualizing the estimate shows that, although we obtain high accuracy, it appears
+    that there is room for improvement by making the estimate smoother. This could
+    be achieved by changing the parameter that controls the minimum number of data
+    points in the nodes of the tree. The larger this minimum, the smoother the final
+    estimate will be. If we use a node size of 65, the number of neighbors we used
+    with kNN, we get an accuracy of 0.815\. The selected model improves accuracy and
+    provides a smoother estimate:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![](../Images/850536baff55a28b26a868b89935acac.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: Variable importance
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: Random forest performs better than trees in all the examples we have considered.
+    However, a disadvantage of random forests is that we lose interpretability. An
+    approach that helps with interpretability is to examine *variable importance*.
+    To define *variable importance*, we count how often a predictor is used in the
+    individual trees. You can learn more about *variable importance* in an advanced
+    machine learning book[³](#fn3). The **randomForest** package includes the function
+    `importance` to extracts variable importance from a fitted random forest model.
+    The **caret** package includes the function `varImp` that extracts variable importance
+    from any model in which the calculation is implemented. We give an example on
+    how we use variable importance in the next section.********
+  prefs: []
+  type: TYPE_NORMAL
+- en: '****30.6 Exercises****'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '****1\. Create a dataset using the following code:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE25]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*Use the **caret** package to partition into a test and training set of equal
+    size. Train a linear model and report the RMSE. Repeat this exercise 100 times
+    and make a histogram of the RMSEs and report the average and standard deviation.
+    Hint: adapt the code shown earlier like this:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE26]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*and put it inside a call to `replicate`.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '2\. Now we will repeat the above but using larger datasets. Repeat exercise
+    1 but for datasets with `n <- c(100, 500, 1000, 5000, 10000)`. Save the average
+    and standard deviation of RMSE from the 100 repetitions. Hint: use the `sapply`
+    or `map` functions.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 3\. Describe what you observe with the RMSE as the size of the dataset becomes
+    larger.
+  prefs: []
+  type: TYPE_NORMAL
+- en: On average, the RMSE does not change much as `n` gets larger, while the variability
+    of RMSE does decrease.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: 'Because of the law of large numbers, the RMSE decreases: more data, more precise
+    estimates.'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '`n = 10000` is not sufficiently large. To see a decrease in RMSE, we need to
+    make it larger.'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: The RMSE is not a random variable.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '4\. Now repeat exercise 1, but this time make the correlation between `x` and
+    `y` larger by changing `Sigma` like this:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE27]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*Repeat the exercise and note what happens to the RMSE now.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '5\. Which of the following best explains why the RMSE in exercise 4 is so much
+    lower than exercise 1:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: It is just luck. If we do it again, it will be larger.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: The Central Limit Theorem tells us the RMSE is normal.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: When we increase the correlation between `x` and `y`, `x` has more predictive
+    power and thus provides a better estimate of `y`. This correlation has a much
+    bigger effect on RMSE than `n`. Large `n` simply provide us more precise estimates
+    of the linear model coefficients.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: These are both examples of regression, so the RMSE has to be the same.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '6\. Create a dataset using the following code:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE28]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*Note that `y` is correlated with both `x_1` and `x_2`, but the two predictors
+    are independent of each other.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE29]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*Use the **caret** package to partition into a test and training set of equal
+    size. Compare the RMSE when using just `x_1`, just `x_2`, and both `x_1` and `x_2`.
+    Train a linear model and report the RMSE.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '7\. Repeat exercise 6 but now create an example in which `x_1` and `x_2` are
+    highly correlated:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE30]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*Use the **caret** package to partition into a test and training set of equal
+    size. Compare the RMSE when using just `x_1`, just `x_2`, and both `x_1` and `x_2`
+    Train a linear model and report the RMSE.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '8\. Compare the results in 6 and 7 and choose the statement you agree with:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Adding extra predictors can improve RMSE substantially, but not when they are
+    highly correlated with another predictor.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: Adding extra predictors improves predictions equally in both exercises.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: Adding extra predictors results in over fitting.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: Unless we include all predictors, we have no predicting power.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '9\. Define the following dataset:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE31]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*Note that we have defined a variable `x` that is predictive of a binary outcome
+    `y`.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE32]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*Fit a linear regression model by treating (Y) as a continuous outcome, then
+    classify observations by predicting class 1 whenever the fitted value exceeds
+    0.5\. Next, fit a logistic regression model to the same data and compare the classification
+    accuracy of these two approaches.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 10\. Repeat the simulation from exercise 9 100 times and compare the average
+    accuracy for each method and notice they give practically the same answer.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '11\. Generate 25 different datasets changing the difference between the two
+    class: `delta <- seq(0, 3, len = 25)`. Plot accuracy versus `delta`.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '12\. The **dslabs** package contains an example dataset similar to `mnist_27`
+    but that also includes 1\. You can load it and explore it like this:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE33]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*Fit QDA using the `qda` function in the **MASS** package then create a confusion
+    matrix for predictions on the test. Which of the following best describes the
+    confusion matrix:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: It is a two-by-two table.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: Because we have three classes, it is a two-by-three table.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: Because we have three classes, it is a three-by-three table.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: Confusion matrices only make sense when the outcomes are binary.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '13\. The `byClass` component returned by the `confusionMatrix` object provides
+    sensitivity and specificity for each class. Because these terms only make sense
+    when data is binary, each row represents sensitivity and specificity when a particular
+    class is 1 (positives) and the other two are considered 0s (negatives). Based
+    on the values returned by `confusionMatrix`, which of the following is the most
+    common mistake:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Calling 1s either a 2 or 7.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: Calling 2s either a 1 or 7.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: Calling 7s either a 1 or 2.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: All mistakes are equally common.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '14\. To visualize the QDA decision boundary, start by creating a dense grid
+    of points covering the \((x_1, x_2)\) space:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE34]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*Use your fitted QDA model to compute predicted probabilities on this grid
+    by using `predict(qda_fit, newdata = new_x)`. This will give you \(\hat{p}(x_1,
+    x_2)\) for each point in the grid.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Finally, plot the grid and color each point depending on whether \(\hat{p}(x_1,
+    x_2) > 0.5\) (predict class 1) or \(\hat{p}(x_1, x_2) \le 0.5\) (predict class
+    0). The resulting picture shows the decision region determined by QDA.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '15\. Repeat exercise 14 but for LDA. Which of the following explains why LDA
+    has worse accuracy:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: LDA separates the space with lines making it too rigid.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: LDA divides the space into two and there are three classes.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: LDA is very similar to QDA the difference is due to chance.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: LDA can’t be used with more than one class.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: 16\. Now repeat exercise 12 for kNN with \(k=31\) and compute and compare the
+    overall accuracy for all three methods.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 17\. To understand how a simple method like kNN can outperform a model that
+    explicitly tries to emulate Bayes’ rule, explore the conditional distributions
+    of `x_1` and `x_2` to see if the normal approximation holds. Generative models
+    can be very powerful, but only when we are able to successfully approximate the
+    joint distribution of predictors conditioned on each class.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 18\. Earlier we used logistic regression to predict sex from height. Use kNN
+    to do the same. Use the code described in this chapter to select the \(F_1\) measure
+    and plot it against \(k\). Compare to the \(F_1\) of about 0.6 we obtained with
+    regression.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '19\. Create a simple dataset where the outcome grows 0.75 units on average
+    for every increase in a predictor:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE35]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*Use `rpart` to fit a regression tree and save the result to `fit`.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 20\. Plot the final tree so that you can see where the partitions occurred.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 21\. Make a scatterplot of `y` versus `x` along with the predicted values based
+    on the fit.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 22\. Now train a random forest instead of a regression tree using `randomForest`
+    from the **randomForest** package, and remake the scatterplot with the prediction
+    line.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 23\. Use the function `plot` to see if the random forest has converged or if
+    we need more trees.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 24\. It seems that the default values for the random forest result in an estimate
+    that is too flexible (not smooth). Re-run the random forest but this time with
+    `nodesize` set at 50 and `maxnodes` set at 25\. Remake the plot.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '25\. This **dslabs** dataset includes the `tissue_gene_expression` with a matrix
+    `x`:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE36]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*with the gene expression measured on 500 genes for 189 biological samples
+    representing seven different tissues. The tissue type is stored in `tissue_gene_expression$y`.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE37]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*Fit a random forest using the `randomForest` function in the package **randomForest**.
+    Then use the `varImp` function to see which are the top 10 most predictive genes.
+    Make a histogram of the reported importance to get an idea of the distribution
+    of the importance values.*****************'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '* * *'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '****1.  https://web.stanford.edu/~hastie/Papers/ESLII.pdf[↩︎](#fnref1)'
+  prefs: []
+  type: TYPE_NORMAL
+- en: https://papers.ssrn.com/sol3/Delivery.cfm/SSRN_ID1759289_code1486039.pdf?abstractid
+    = 1759289&mirid = 1&type = 2[↩︎](#fnref2)
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: https://web.stanford.edu/~hastie/Papers/ESLII.pdf[↩︎](#fnref3)*****
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL

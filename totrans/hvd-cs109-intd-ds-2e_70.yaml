@@ -1,0 +1,944 @@
+- en: 31  Building Machine Learning Models
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: 原文：[https://rafalab.dfci.harvard.edu/dsbook-part-2/ml/ml-in-practice.html](https://rafalab.dfci.harvard.edu/dsbook-part-2/ml/ml-in-practice.html)
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '[Machine Learning](../ml/intro-ml.html)'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[31  Building Machine Learning Models](../ml/ml-in-practice.html)'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: Building machine learning models requires more than understanding the underlying
+    mathematics. The theory helps us avoid conceptual mistakes and choose appropriate
+    methods, but turning these ideas into effective, real-world models involves additional
+    practical considerations. We must decide how to preprocess and transform features,
+    incorporate contextual knowledge to select relevant predictors, manage computational
+    constraints, tune and compare algorithms, and often combine multiple models through
+    techniques such as ensembling to boost predictive performance.
+  prefs: []
+  type: TYPE_NORMAL
+- en: In this chapter, we bring these pieces together by walking through a complete
+    case study using the MNIST handwritten-digit dataset, illustrating how the conceptual
+    tools developed in earlier chapters translate into a practical machine learning
+    workflow.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '31.1 Case study: handwritten digit recognition'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'We will use the MNIST dataset was introduced in [Section 21.2](../highdim/matrices-in-R.html#sec-mnist).
+    We can load this data using the following **dslabs** package function:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*The dataset includes two components, a training set and a test set:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE1]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*Each of these components includes a matrix with features in the columns:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE2]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*and vector with the classes as integers:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE3]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*Because we want this example to run on a laptop and in less than one hour,
+    we will consider a subset of the dataset. We will sample 10,000 random rows from
+    the training set and 1,000 random rows from the test set:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE4]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*But you are welcommed to try the ideas on the entire dataset.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'When fitting models to large datasets, we recommend using matrices instead
+    of data frames, as matrix operations tend to be faster. In the **caret** package,
+    predictor matrices must have column names to track features accurately during
+    prediction on the test set. If the matrices lack column names, you can assign
+    names based on their position:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE5]*****'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '***31.2 The caret package***'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '***We have already learned about several machine learning algorithms. Many
+    of these algorithms are implemented in R. However, they are distributed via different
+    packages, developed by different authors, and often use different syntax. The
+    **caret** package tries to consolidate these differences and provide consistency.
+    It currently includes over 200 different methods which are summarized in the **caret**
+    package manual[¹](#fn1). Keep in mind that **caret** does not include the packages
+    needed to run each possible algorithm. To apply a machine learning method through
+    **caret** you still need to install the library that implement the method. The
+    required packages for each method are described in the package manual.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: The **caret** package also provides a function that performs cross validation
+    for us. Here we provide some examples showing how we use this helpful package.
+    We will first use the 2 or 7 example to illustrate and, in later sections, we
+    use the package to run algorithms on the larger MNIST dataset.
+  prefs: []
+  type: TYPE_NORMAL
+- en: The `train` function
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: The R functions that fit machine algorithms are all slightly different. Functions
+    such as `lm`, `glm`, `qda`, `lda`, `knn3`, `rpart` and `randomForest` use different
+    syntax, have different argument names and produce objects of different types.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'The **caret** `train` function lets us train different algorithms using similar
+    syntax. So, for example, we can type the following to train three different models:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE6]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*As we explain in more detail in [Section 31.2.3](#sec-caret-cv), the `train`
+    function selects parameters for you using a resampling method to estimate the
+    MSE, with bootstrap as the default.*'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '*The `predict` function*'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '*The predict function is one of the most useful tools in R for machine learning
+    and statistical modeling in general. It takes a fitted model object and a data
+    frame containing the features \(\mathbf{x}\) for which we want to make predictions,
+    then returns the corresponding predicted values.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Here is an example with logistic regression:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE7]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*In this case, the function is simply computing'
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[ \hat{p}(\mathbf{x}) = g^{-1}\left(\hat{\beta}_0 + \hat{\beta}_1 x_1 + \hat{\beta}_2
+    x_2 \right) \text{ with } g(p) = \log\frac{p}{1-p} \implies g^{-1}(\mu) = \frac{1}{1-e^{-\mu}}
+    \]
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'for the `x_1` and `x_2` in the test set `mnist_27$test`. With these estimates
+    in place, we can make our predictions and compute our accuracy:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE8]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*However, note that `predict` does not always return objects of the same type;
+    it depends on what type of object it is applied to. To learn about the specifics,
+    you need to look at the help file specific for the type of fit object that is
+    being used.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`predict` is actually a special type of function in R called a *generic function*.
+    Generic functions call other functions depending on what kind of object it receives.
+    So if `predict` receives an object coming out of the `lm` function, it will call
+    `predict.lm`. If it receives an object coming out of `glm`, it calls `predict.glm`.
+    If the fit is from `knn3`, it calls `predict.knn3`, and so on. These functions
+    are similar but not exactly. You can learn more about the differences by reading
+    the help files:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE9]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*There are many other versions of `predict` and many machine learning algorithms
+    define their own `predict` function.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: As with `train`, the **caret** packages unifies the use of `predict` with the
+    function `predict.train`. This function takes the output of `train` and produces
+    prediction of categories or estimates of \(p(\mathbf{x})\).
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'The code looks the same for all methods:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE10]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*This permits us to quickly compare the algorithms. For example, we can compare
+    the accuracy like this:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE11]*****'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '***Resampling***'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '***When an algorithm includes a tuning parameter, `train` automatically uses
+    a resampling method to estimate MSE and decide among a few default candidate values.
+    To find out what parameter or parameters are optimized, you can read the **caret**
+    manual[²](#fn2) or study the output of:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE12]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*To obtain all the details of how **caret** implements kNN you can use:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE13]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*If we run it with default values:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE14]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*you can quickly see the results of the cross validation using the `ggplot`
+    function. The argument `highlight` highlights the max:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE15]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*![](../Images/dbcbb2b3b48881e8c09dc33c6a04459d.png)*  *By default, the resampling
+    is performed by taking 25 bootstrap samples, each comprised of 25% of the observations.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: For the `knn` method, the default is to try \(k=5,7,9\). We change this using
+    the `tuneGrid` argument. The grid of values must be supplied by a data frame with
+    the parameter names as specified in the `modelLookup` output.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Here we present an example where we try out 38 values between 1 and 75\. To
+    do this with **caret**, we need to define a column named `k`, so we use this:
+    `data.frame(k = seq(11, 105, 2))`. Note that when running this code, we are fitting
+    38 versions of kNN to 25 bootstrapped samples. Since we are fitting \(38 \times
+    25 = 950\) kNN models, running this code will take several seconds.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE16]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*![](../Images/7f714224b7cbe9315e50b5fb6ceaf5ee.png)*  **Resampling methods
+    involve random sampling steps, so repeated runs of the same code can produce different
+    outcomes. To ensure that your results can be reproduced exactly, always set the
+    random seed at the start of the analysis, as we did at the beginning of this chapter.*  *To
+    access the parameter that maximized the accuracy, you can use this:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE17]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*and the best performing model like this:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE18]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*The function `predict` will use this best performing model. Here is the accuracy
+    of the best model when applied to the test set, which we have not yet used because
+    the cross validation was done on the training set:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE19]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*Bootstrapping is not always the best approach to resampling (see [Section
+    31.5](#sec-knn-in-practice), for an example). If we want to change our resampling
+    method, we can use the `trainControl` function. For example, the code below runs
+    10-fold cross validation. This means we have 10 samples using 90% of the observations
+    to train in each sample. We accomplish this using the following code:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE20]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**The `results` component of the `train` output includes several summary statistics
+    related to the variability of the cross validation estimates:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE21]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*You can learn many more details about the **caret** package, from the manual[³](#fn3).******************'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '*****31.3 Preprocessing*****'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '*****We often transform predictors before running the machine algorithm. We
+    also remove predictors that are clearly not useful. We call these steps *preprocessing*.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Examples of preprocessing include standardizing the predictors, taking the log
+    transform of some predictors, removing predictors that are highly correlated with
+    others, and removing predictors with very few non-unique values or close to zero
+    variation.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'For example, we can run the `nearZeroVar` function from the **caret** package
+    to see that several features do not vary much from observation to observation.
+    We can see that there is a large number of features with close to 0 variability:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE22]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*![](../Images/4bdff4256010dca8944dfe28e6f4037b.png)*  *This is expected because
+    there are parts of the image that rarely contain writing (dark pixels).'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'The **caret** packages includes a function that recommends features to be removed
+    due to *near zero variance*:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE23]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*We can see the columns recommended for removal are the near the edges:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE24]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*![](../Images/cb94ae40377774c4a3a9706da36d072c.png)*  *So we end up removing
+    `length(nzv)` = 532 predictors.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: The **caret** package features the `preProcess` function, which allows users
+    to establish a predefined set of preprocessing operations based on a training
+    set. This function is designed to apply these operations to new datasets without
+    recalculating anything on the validation set, ensuring that all preprocessing
+    steps are consistent and derived solely from the training data.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Below is an example demonstrating how to remove predictors with near-zero variance
+    and then center the remaining predictors:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE25]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*Additionally, the `train` function in caret includes a `preProcess` argument
+    that allows users to specify which preprocessing steps to apply automatically
+    during model training. We will explore this functionality further in the context
+    of a k-Nearest Neighbors model in [Section 31.5](#sec-knn-in-practice).*********'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '****31.4 Parallelization****'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '****During cross-validation or bootstrapping, the process of fitting models
+    to different samples or using varying parameters can be performed independently.
+    Imagine you are fitting 100 models; if you had access to 100 computers, you could
+    theoretically speed up the process by a factor of 100 by fitting each model on
+    a separate computer and then aggregating the results. In reality, most modern
+    computers, including many personal computers, are equipped with multiple processors
+    that allow for such parallel execution. This method, known as parallelization,
+    leverages these multiple processors to conduct several computational tasks simultaneously,
+    significantly accelerating the model training process. By distributing the workload
+    across different processors, parallelization makes it feasible to manage large
+    datasets and complex modeling procedures efficiently.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'The **caret** package is designed to take advantage of parallel processing,
+    but you need to explicitly tell R to run tasks in parallel. To do this, we use
+    the **doParallel** package:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE26]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*If you do use parallelization, once you are finished fitting your models,
+    make sure to let R know you are done with the following lines of code:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE27]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**When parallelizing tasks across multiple processors, it is important to consider
+    the risk of running out of memory. Each processor might require a copy of the
+    data or substantial portions of it, which can multiply overall memory demands.
+    This is especially challenging if the data or models are large.*******'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '*****31.5 k-nearest neighbors*****'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '*****In Section [Section 29.1](resampling-methods.html#sec-knn-cv-intro), we
+    introduced the k-nearest neighbors (kNN) algorithm and described its intuition
+    and mathematical formulation. Here, we focus on the practical aspects of applying
+    kNN to real data. We will explore how to train and test kNN models in R, select
+    an appropriate value of k, and evaluate performance using cross-validation and
+    tuning techniques.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '*Before starting this section, note that the first two calls to the `train`
+    function in the code below can take several hours to run. This is a common challenge
+    when training machine learning algorithms since we have to run the algorithm for
+    each cross validation split and each set of tuning parameters being considered.
+    In the next section, we will provide some suggestions on how to predict the duration
+    of the process and ways to reduce.*  *### Limitations of Bootstrapping for kNN'
+  prefs: []
+  type: TYPE_NORMAL
+- en: As we will see soon, the optimal \(k\) for the MNIST data is between 1 and 7\.
+    For small values of \(k\), bootstrapping can be problematic for estimating MSE
+    for a k-Nearest Neighbors (kNN). This is because bootstrapping involves sampling
+    with replacement from the original dataset which implies the closest neighbor
+    will often appear twice but considered two independent observations by kNN. This
+    is a unrealistic scenario that can distort the estimate MSE when, for example,
+    \(k=3\). We therefore use cross-validation to estimate our MSE.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Optimizing \(k\)
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: The first step is to optimize for \(k\).
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE28]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*Once we optimize our algorithm, the `predict` function defaults to using the
+    best performing algorithm fit with the entire training data:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE29]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*We achieve relatively high accuracy:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE30]**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '***Dimension reduction with PCA***'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '***An alternative to removing low‐variance columns directly is to reduce the
+    dimension of the feature matrix using Principal Component Analysis (PCA). For
+    this dataset, a large fraction of the total variability in the predictors can
+    be captured using only a small number of principal components (PCs).'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'As an example, suppose we want to retain the smallest number of PCs that explain
+    at least 90% of the variability:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE31]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*We can now re-run our algorithm using only these 87 transformed features:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE32]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*A critical point when using PCA for prediction is that the PCA transformation
+    must be learned only from the training set. If we use the validation or test set
+    to compute principal components, or even to compute the means used for centering,
+    we inadvertently leak information from those sets into the training process, leading
+    to overtraining.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'To avoid this, we compute the necessary centering and rotation matrices on
+    the training set:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE33]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*The resulting accuracy is similar to what we obtained with the full feature
+    set, but using only 87 dimensions:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE34]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*In this example, we used the value of \(k\) optimized for the raw data, not
+    the PCA-transformed data. To obtain an unbiased MSE estimate when using PCA, we
+    must recompute the PCA inside each cross-validation split and apply the resulting
+    transformation to the corresponding validation fold.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Fortunately, the **caret** package can automate this. The `train` function includes
+    PCA as one of its available preprocessing steps. We can request PCA with a fixed
+    number of components using
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`preProcOptions = list(pcaComp = p)`'
+  prefs: []
+  type: TYPE_NORMAL
+- en: or ask caret to pick the number of components that explain a fixed fraction
+    of variability, such as 90%, using
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`preProcOptions = list(thresh = 0.9)`.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Here is how we modify our earlier code to let caret perform PCA during preprocessing:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE35]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*This raises a natural question: why did we choose 0.9? Could another threshold
+    lead to better performance?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: One limitation of this approach is that caret does **not** automatically optimize
+    the number of PCs. To tune this quantity directly, just like we tune parameters
+    such as \(k\), we would need to define our own model interface. The caret manual[⁴](#fn4)
+    describes how to build custom models that allow full optimization of the PCA dimension.**************
+  prefs: []
+  type: TYPE_NORMAL
+- en: '****31.6 Random Forest****'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '****With the random forest algorithm several parameters can be optimized, but
+    the main one is `mtry`, the number of predictors that are randomly selected for
+    each tree. This is also the only tuning parameter that the **caret** function
+    `train` permits when using the default implementation from the **randomForest**
+    package.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE36]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*Now that we have optimized our algorithm, we are ready to fit our final model:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE37]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*As with kNN, we also achieve high accuracy:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE38]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*By optimizing some of the other algorithm parameters, we can achieve even
+    higher accuracy.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Testing and improving computation time
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: 'The default method for estimating accuracy used by the `train` function is
+    to test prediction on 25 bootstrap samples. This can result in long compute times.
+    For example, if we are considering several values, say 10, of the tuning parameters,
+    we will fit the algorithm 250 times. We can use the `system.time` function to
+    estimate how long it takes to run the algorithm once:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE39]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*and use this to estimate the total time for the 250 iterations. In this case
+    it will be several hours.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: One way to reduce run time is to use k-fold cross validation with a smaller
+    number of test sets. A popular choice is leaving out 5 test sets with 20% of the
+    data. To use this we set the `trControl` argument in train to `trainControl(method
+    = "cv", number = 5, p = .8)`.
+  prefs: []
+  type: TYPE_NORMAL
+- en: For random forest, we can also speed up the training step by running less trees
+    per fit. After running the algorithm once, we can use the `plot` function to see
+    how the error rate changes as the number of trees grows.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Here we can see that error rate stabilizes after about 200 trees:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE40]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*![](../Images/a174dc0673d92642c2676fb34be527d5.png)*  *We can use this finding
+    to speed up the cross validation procedure. Specifically, because the default
+    is 500, by adding the argument `ntree = 200` to the call to `train` above, the
+    procedure will finish 2.5 times faster.**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Variable importance**'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '**We described variable importance in [Section 30.5.1](algorithms.html#sec-variable-importance).
+    The following function computes the importance of each feature:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE41]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*We can see which features are being used most by plotting an image:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE42]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*![](../Images/86d369848a13b2715debfff80c0fe776.png)***********'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '****31.7 Diagnostics****'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '****An important part of data analysis is visualizing results to determine
+    why we are failing. How we do this depends on the application. Below we show the
+    images of digits for which we made an incorrect prediction. Here are some errors
+    for the random forest:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![](../Images/f6f52e06a5fa5122308e9c562ee96129.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: By examining errors like this, we often find specific weaknesses to algorithms
+    or parameter choices and can try to correct them.****
+  prefs: []
+  type: TYPE_NORMAL
+- en: '****31.8 Ensembles****'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '****The idea of an ensemble is similar to the idea of combining data from different
+    pollsters to obtain a better estimate of the true support for each candidate.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: In machine learning, one can usually greatly improve the final results by combining
+    the results of different algorithms.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Here is a simple example where we compute new class probabilities by taking
+    the average of random forest and kNN. We can see that the accuracy improves:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE43]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*We have just built an ensemble with just two algorithms. By combing more similarly
+    performing, but uncorrelated, algorithms we can improve accuracy further.*****'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '****31.9 Exercises****'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '****1\. Create a simple dataset where the outcome grows 0.75 units on average
+    for every increase in a predictor:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE44]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*In the exercises in [Chapter 30](algorithms.html) we saw that changing `maxnodes`
+    or `nodesize` in the `randomForest` function improved our estimate in this dataset.
+    Let’s use the `train` function to help us pick these values. From the **caret**
+    manual we see that we can’t tune the `maxnodes` parameter or the `nodesize` argument
+    with `randomForest`, so we will use the **Rborist** package and tune the `minNode`
+    argument. Use the `train` function to try values `minNode <- seq(5, 250, 25)`.
+    See which value minimizes the estimated RMSE.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 2\. Make a scatterplot of `x` and `y` and add the prediction from the best fitted
+    model in exercise 1.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '3\. This **dslabs** `tissue_gene_expression` dataset includes a matrix `x`:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE45]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*with the gene expression measured on 500 genes for 189 biological samples
+    representing seven different tissues. The tissue type is stored in `y`:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE46]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*Split the data in training and test sets, then use kNN to predict tissue type
+    and see what accuracy you obtain. Try it for \(k = 1, 3, \dots, 11\).'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 4\. We are going to apply LDA and QDA to the `tissue_gene_expression` dataset.
+    We will start with simple examples based on this dataset and then develop a realistic
+    example.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Create a dataset with just the classes `cerebellum` and `hippocampus` (two parts
+    of the brain) and a predictor matrix with 10 randomly selected columns.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE47]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*Estimate the accuracy of LDA.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 5\. In this case, LDA fits two 10-dimensional normal distributions. Look at
+    the fitted model by looking at the `finalModel` component of the result of train.
+    Notice there is a component called `means` that includes the estimate `means`
+    of both distributions. Plot the mean vectors against each other and determine
+    which predictors (genes) appear to be driving the algorithm.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 6\. Repeat exercises 4 with QDA. Does it have a higher accuracy than LDA?
+  prefs: []
+  type: TYPE_NORMAL
+- en: 7\. Are the same predictors (genes) driving the algorithm? Make a plot as in
+    exercise 5.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '8\. One thing we see in the previous plot is that the value of predictors correlate
+    in both groups: some predictors are low in both groups while others are high in
+    both groups. The mean value of each predictor, `colMeans(x)`, is not informative
+    or useful for prediction and often, for interpretation purposes, it is useful
+    to center or scale each column. This can be achieved with the `preProcessing`
+    argument in `train`. Re-run LDA with `preProcessing = "scale"`. Note that accuracy
+    does not change but see how it is easier to identify the predictors that differ
+    more between groups in the plot made in exercise 5.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 9\. In the previous exercises, we saw that both approaches worked well. Plot
+    the predictor values for the two genes with the largest differences between the
+    two groups in a scatterplot to see how they appear to follow a bivariate distribution
+    as assumed by the LDA and QDA approaches. Color the points by the outcome.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '10\. Now we are going to increase the complexity of the challenge slightly:
+    we will consider all the tissue types.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE48]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*What accuracy do you get with LDA?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 11\. We see that the results are slightly worse. Use the `confusionMatrix` function
+    to learn what type of errors we are making.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 12\. Plot an image of the centers of the seven 10-dimensional normal distributions
+    used by the LDA model fit in exercise 10.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 13\. Use the `rpart` function to fit a classification tree to the `tissue_gene_expression`
+    dataset including all genes, that is redefine
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE49]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*Use the `train` function to estimate the accuracy. Try out `cp` values of
+    `seq(0, 0.05, 0.01)`. Plot the accuracy to report the results of the best model.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 14\. Study the confusion matrix for the best fitting classification tree. What
+    do you observe happening for placenta?
+  prefs: []
+  type: TYPE_NORMAL
+- en: 15\. Notice that placentas are called endometrium more often than placenta.
+    Note also that the number of placentas is just six, and that, by default, `rpart`
+    requires 20 observations before splitting a node. Thus it is not possible with
+    these parameters to have a node in which placentas are the majority. Rerun the
+    above analysis, but this time permit `rpart` to split any node by using the argument
+    `control = rpart.control(minsplit = 0)`. Does the accuracy increase? Look at the
+    confusion matrix again.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 16\. Plot the tree from the best fitting model obtained in exercise 13.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '17\. We can see that with just the genes selected by CART, we are able to predict
+    the tissue type. Now let’s see if we can do even better with a random forest.
+    Use the `train` function in the **caret** package and the `rf` method to train
+    a random forest. Try out values of `mtry` ranging from, at least, `seq(50, 200,
+    25)`. What `mtry` value maximizes accuracy? To permit small `nodesize` to grow
+    as we did with the classification trees, use the following argument: `nodesize
+    = 1`. This will take several seconds to run. If you want to test it out, try using
+    smaller values with `ntree`. Set the seed to 1990.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 18\. Use the function `varImp` on the output of `train` and save it to an object
+    called `imp`.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '19\. The `rpart` model we ran in exercise 15 produced a tree that used just
+    a few predictors. Extracting the predictor names is not straightforward, but can
+    be done. If the output of the call to train was `fit_rpart`, we can extract the
+    names like this:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE50]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*What is the variable importance in the random forest call for these predictors?
+    Where do they rank?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 20\. Extract the top 50 predictors based on importance, take a subset of `x`
+    with just these predictors and apply the function `heatmap` to see how these genes
+    behave across the tissues. We will introduce the `heatmap` function in [Chapter
+    32](clustering.html).
+  prefs: []
+  type: TYPE_NORMAL
+- en: '21\. In [Chapter 30](algorithms.html), for the 2 or 7 example, we compared
+    the conditional probability \(p(\mathbf{x})\) given two predictors \(\mathbf{x}
+    = (x_1, x_2)^\top\) to the fit \(\hat{p}(\mathbf{x})\) obtained with a machine
+    learning algorithm by making image plots. The following code can be used to make
+    these images and include a curve at the values of \(x_1\) and \(x_2\) for which
+    the function is \(0.5\):'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE51]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*We can see the true conditional probability for the 2 or 7 example like this:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE52]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*Fit a kNN model and make this plot for the estimated conditional probability.
+    Hint: Use the argument `newdata = mnist_27$train` to obtain predictions for a
+    grid points.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '22\. Notice that, in the plot made in exercise 21, the boundary is somewhat
+    wiggly. This is because kNN, like the basic bin smoother, does not use a kernel.
+    To improve this we could try loess. By reading through the available models part
+    of the **caret** manual, we see that we can use the `gamLoess` method. We need
+    to install the **gam** package, if we have not done so already. We see that we
+    have two parameters to optimize:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE53]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*Use resampling to pick a span between 0.15 and 0.75\. Keep `degree = 1`. What
+    span is select?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 23\. Show an image plot of the estimate \(\hat{p}(x,y)\) resulting from the
+    model fit in exercise 22\. How does the accuracy compare to that of kNN? Comment
+    on the difference between the estimate obtained with kNN.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 24\. Use the `mnist_27` training set to fit a variety of models available through
+    the **caret** package. Your goal is simply to *try many different algorithms*
+    and compare their performance, even if we have not explained them yet.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Here is a vector of model names you can try:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE54]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*Fit each model using `[train()](https://rdrr.io/pkg/caret/man/train.html)`
+    with default tuning parameters and store the fitted model objects in a list. You
+    may need to install additional packages depending on which models you try, and
+    some models will produce warnings—that’s expected.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 25\. Now that you have all the trained models in a list, use `sapply` or `map`
+    to create a matrix of predictions for the test set. You should end up with a matrix
+    with `length(mnist_27$test$y)` rows and `length(models)` columns.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 26\. Compute accuracy for each model on the test set.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 27\. Build an ensemble prediction by majority vote and compute the accuracy
+    of the ensemble.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 28\. Earlier we computed the accuracy of each method on the training set and
+    noticed they varied. Which individual methods do better than the ensemble?
+  prefs: []
+  type: TYPE_NORMAL
+- en: 29\. It is tempting to remove the methods that do not perform well and re-do
+    the ensemble. The problem with this approach is that we are using the test data
+    to make a decision. However, we could use the accuracy estimates obtained from
+    cross validation with the training data. Obtain these estimates and save them
+    in an object.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 30\. Now let’s only consider the methods with an estimated accuracy of 0.8 when
+    constructing the ensemble. What is the accuracy of the ensemble now?
+  prefs: []
+  type: TYPE_NORMAL
+- en: '31\. Note that if two machine algorithms methods predict the same exact outcome,
+    ensembling them will not change the prediction. For each pair of algorithms compare
+    the percent of observations for which they make the same prediction. Use this
+    to define a function and then use the `heatmap` function to visualize the results.
+    Hint: use the `method = "binary"` argument in the `dist` function.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '32\. Note that each method can also produce an estimated conditional probability.
+    Instead of majority vote, we can take the average of these estimated conditional
+    probabilities. For most methods, we can the use the `type = "prob"` in the train
+    function. Note that some of the methods require you to use the argument `trControl=trainControl(classProbs=TRUE)`
+    when calling train. Also, these methods do not work if classes have numbers as
+    names. Hint: change the levels like this:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE55]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*33\. In this chapter, we illustrated a couple of machine learning algorithms
+    on a subset of the MNIST dataset. Try fitting a model to the entire dataset.****************'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '* * *'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '****1.  https://topepo.github.io/caret/available-models.html[↩︎](#fnref1)'
+  prefs: []
+  type: TYPE_NORMAL
+- en: http://topepo.github.io/caret/available-models.html[↩︎](#fnref2)
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: https://topepo.github.io/caret/available-models.html[↩︎](#fnref3)
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[https://topepo.github.io/caret/using-your-own-model-in-train.html](https://topepo.github.io/caret/using-your-own-model-in-train.html)[↩︎](#fnref4)****'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL

@@ -1,0 +1,549 @@
+- en: '32  Unsupervised Learning: Clustering'
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: 原文：[https://rafalab.dfci.harvard.edu/dsbook-part-2/ml/clustering.html](https://rafalab.dfci.harvard.edu/dsbook-part-2/ml/clustering.html)
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '[Machine Learning](../ml/intro-ml.html)'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[32  Unsupervised Learning: Clustering](../ml/clustering.html)'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: 'The algorithms we have studied so far represent the most widely used branch
+    of machine learning: supervised learning. In supervised learning, the training
+    data include both predictors and outcomes, and the goal is to learn a function
+    that predicts the outcome for new observations. Much of the mathematical and practical
+    framework developed in previous chapters was aimed at understanding, evaluating,
+    and building these supervised prediction models.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'However, supervised learning is only one part of what is broadly referred to
+    as machine learning. A second major branch is *unsupervised learning*, in which
+    the outcomes (labels) are not provided. The goal is no longer prediction, but
+    rather to uncover structure in the data: identify groups, detect patterns, or
+    reveal lower-dimensional representations. This family of techniques is extremely
+    important in practice and includes many methods not covered in this book. Here,
+    we provide a brief introduction and refer readers to the recommended texts for
+    a deeper study.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Unsupervised learning encompasses a wide variety of approaches, but one of
+    the most common is *clustering*: the task of grouping observations with similar
+    features. Clustering can be challenging in settings like height-based sex prediction
+    or the two-versus-seven digit example, because the groups naturally overlap. But
+    in many scientific and applied domains, such as genomics, marketing, image analysis,
+    and recommender systems, nsupervised methods can uncover meaningful patterns that
+    would otherwise remain hidden.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'In this chapter, we focus on two classic clustering algorithms, each illustrating
+    a very different strategy:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Hierarchical clustering**, which groups observations based on recursively
+    merging the closest pairs.'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**k-means clustering**, which partitions the data by iteratively refining cluster
+    centers.'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: These two methods are foundational as many advanced unsupervised learning techniques
+    build on the same ideas.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 32.1 Examples
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: To make the concepts concrete, we study two real examples. These examples illustrate
+    how unsupervised learning can uncover latent structure in real data, even when
+    no outcome labels are available.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Movie ratings
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: 'Our first example is based on movie ratings. Here we quickly construct a matrix
+    `movies` that has ratings for the 50 movies with the most ratings among users
+    with at least 100 ratings:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*Notice that if we compute distances directly from the original ratings, movies
+    with generally high ratings will tend to be close to each other, as will movies
+    with generally low ratings. However, this is not what we are actually interested
+    in. Instead, we want to capture how ratings correlate *across users* for the 263
+    different users. To achieve this, we center the ratings for each movie by removing
+    the movie effect:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE1]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*As described in [Chapter 24](../highdim/regularization.html), many of the
+    entries are missing because not every user rates every movie, so we use the argument
+    `na.rm = TRUE`. With the centered data, we can now cluster movies based on their
+    rating patterns.**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Gene expression measurements**'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '**Our second example uses the `tissue_gene_expression` dataset from **dslabs**.
+    This dataset contains gene-expression measurements for 189 tissue samples. The
+    predictors, stored in the component `x`, form a matrix with 500 columns, one for
+    each gene, so each row represents the expression profile of a single tissue sample.
+    The outcome labels, saved in the component `y`, indicate which of seven tissue
+    types each sample comes from.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Although clustering is typically applied when labels are *unknown*, this dataset
+    is pedagogically useful because we *do* know the true tissue types. This lets
+    us examine how well the clusters we find reflect the underlying biological structure:
+    different tissues have distinct patterns of gene expression, even though all cells
+    share the same genome. Different genes play different functional roles in different
+    tissues, and these patterns should be detectable through clustering. From a biological
+    perspective, all these tissues share the same genome, every cell contains the
+    same DNA. What makes tissues different is which genes are turned on or off, and
+    by how much. These tissue-specific expression patterns reflect the distinct functions
+    of each cell type. Because of this, we expect that tissue samples with similar
+    biological roles will show similar gene-expression profiles.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Before clustering, we create a centered version of the gene-expression matrix
+    by subtracting each gene’s mean expression level. This ensures we focus on *relative
+    differences* in gene expression rather than absolute magnitude:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE2]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*When we later explore `genex`, even without giving the algorithm the tissue
+    labels, we should see structure emerge: samples from the same tissue tend to cluster
+    together because they share characteristic expression patterns.***'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '***32.2 Hierarchical clustering***'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '***The first clustering algorithm we describe is *hierarchical cluster*. As
+    with many clustering algorithms, the first step is to compute distances between
+    each pair of observation. We do this for the `movies` matrix as an example:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE3]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*The `dist` function automatically accounts for missing values and standardizes
+    the distance measurements, ensuring that the computed distance between two movies
+    does not depend on the number of ratings available.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: With the distance between each pair of movies computed, we need an algorithm
+    to define groups, based on these distances. Hierarchical clustering starts by
+    defining each observation as a separate group, then the two closest groups are
+    joined into new groups. We then continue joining the closest groups into new groups
+    iteratively until there is just one group including all the observations.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'The `hclust` function implements this algorithm and takes a distance as input:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE4]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*We can see the resulting groups using a *dendrogram*. The function `plot`
+    applied to an `hclust` object creates a dendrogram:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE5]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*![](../Images/884c49d7033d9b437a9b3a2c8eb0991a.png)*  *This graph gives us
+    an approximation between the distance between any two movies. To find this distance,
+    we find the first location, from top to bottom, where these movies split into
+    two different groups. The height of this location is the distance between these
+    two groups. So, for example, the distance between the three *Star Wars* movies
+    is 8 or less, while the distance between *Raiders of the Lost of Ark* and *Silence
+    of the Lambs* is about 17.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'To generate actual groups, we can do one of two things: 1) decide on a minimum
+    distance needed for observations to be in the same group or 2) decide on the number
+    of groups you want and then find the minimum distance that achieves this.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'The function `cutree` can be applied to the output of `hclust` to perform either
+    of these two operations and generate groups. The argument `k` can be used to provide
+    the number of groups and, alternatively, the argument `h` can be used to denote
+    the minium distance between members of a group. Here is how we ask for 10 groups
+    to be formed:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE6]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*Note that the clustering provides some insights into types of movies. Group
+    2 appears to be critically acclaimed movies:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE7]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*And Group 9 appears to be *nerd* movies:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE8]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*We can change the size of the group by either making `k` larger or `h` smaller.*********'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '***32.3 Heatmaps***'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '***A powerful visual tool for revealing clusters or patterns in high-dimensional
+    data is the *heatmap*. Heatmaps are especially useful when *both* the observations
+    and the predictors can form meaningful groups. Gene-expression datasets are a
+    prime example: not only can tissue samples cluster by biological type, but genes
+    themselves often cluster into functional groups that are co-expressed.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'The basic idea is straightforward: we create an image of the data matrix using
+    color to represent each value, and we reorder both rows and columns according
+    to the results of a clustering algorithm. This reordering places similar samples
+    and similar genes next to each other, making structure in the data much easier
+    to see.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: We illustrate this approach below using the `tissue_gene_expression` dataset
+    from **dslabs**.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE9]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*Note that we have performed two clusterings: we clustered samples (`h_1`)
+    and genes (`h_2`).'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Now we can use the results of this clustering to order the rows and columns:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE10]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*The `heatmap` function that does all this for us:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE11]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*Note we do not show the results of the two lines of code above because there
+    are too many features for the plot to be useful. We will therefore filter some
+    columns and remake the plots.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'If only a few features are different between clusters, including all the features
+    can add enough noise that making cluster detection challenging. A simple approach
+    to avoid this is to assume low variability features are not informative and include
+    only high variability features. For example, in the movie example, users with
+    low variance in their ratings are not really distinguishing movies: all the movies
+    seem about the same to them. Similary, in the gene expression example, genes that
+    don’t vary across samples are less likely to be informative of biologically meaningful
+    patterns.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Here we show how to restrict the heatmap to only the most variable genes, which
+    often reveal the strongest biological patterns. We first compute the standard
+    deviation for each gene, select the top 25 most variable genes, and then plot
+    a heatmap using a more suitable divergent color palette:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE12]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*![](../Images/314f3c221b1b06b49b32e10278faaaa8.png)*  *We see clear patterns
+    in the heatmap: observations cluster into groups that largely correspond to tissue
+    type, and genes also form clusters that reflect biologically meaningful structure.
+    For example, genes such as SV2B, GPM6B, LRP4, and DOCK4 cluster together because
+    they are all associated with neuronal function.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Note there are several other heatmap functions in R. A popular example is the
+    `heatmap.2` in the **gplots** package.*******
+  prefs: []
+  type: TYPE_NORMAL
+- en: '***32.4 k-means***'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '***The second clustering algorithm we describe is *k-means*.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'The k-means algorithm requires us to predefine \(k\), the number of clusters
+    we want to create. Once \(k\) is set, the algorithm proceeds iteratively:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '*Initialization:* Define \(k\) centers (chosen at random).'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '*Assignment step:* Each observation is assigned to the cluster with the closest
+    center.'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '*Update step:* The centers are redefined by taking the mean of the observations
+    in each cluster. These new centers are called *centroids*.'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '*Iteration:* Steps 2 and 3 are repeated until the centers stabilize (converge).'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: 'We can run k-means to see if it can discover the different tissues:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE13]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*The cluster assignments are stored in the `cluster` component:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE14]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*Because the initial centers are chosen at random (which is why we use`set.seed`),
+    the resulting clusters can vary. To improve stability, we can repeat the process
+    multiple times with different random starting points and keep the best result.
+    The number of random starts is set with the `nstart` argument:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE15]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*Because we have true tissue labels for this dataset, we can evaluate how well
+    the clusters produced by k-means align with the known biological groups. The simplest
+    approach is to examine a contingency table and assess how *pure* each cluster
+    is, that is, whether most of its samples come from a single tissue type:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE16]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*The results show that k-means does a reasonably good job at recovering the
+    tissue structure. For example, clusters 1, 3, 4, 5, and 7 correspond largely to
+    cerebellum, liver, endometrium, kidney, and placenta, respectively. All hippocampus
+    samples fall into cluster 6, although five cerebellum samples are incorrectly
+    included there. Cluster 2 captures almost all colon samples, with only one kidney
+    sample misassigned.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: In the next section, we discuss formal ways to summarize this agreement with
+    a single number, such as *purity* and other commonly used clustering evaluation
+    metrics.*******
+  prefs: []
+  type: TYPE_NORMAL
+- en: '***32.5 Evaluating Clusters with Class Labels***'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '***In supervised learning, we evaluate performance with quantities such as
+    accuracy, sensitivity, and RMSE. Clustering presents a different challenge: because
+    the method is unsupervised, the algorithm never sees the true outcomes and has
+    no explicit notion of “correct” labels. However, in many real data settings we
+    *do* have ground-truth labels available for evaluation purposes—for example, tissue
+    type in gene-expression studies. In these situations, we can meaningfully ask:
+    How well do the clusters recovered by the algorithm align with the known classes?
+    This kind of external evaluation is common in benchmarking studies that compare
+    clustering methods for a given scientific or applied context.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'A convenient first step is to visualize cluster quality using a contingency
+    table (or confusion matrix), as we did above with `table`. Here, rows represent
+    clusters and columns represent true classes. After optionally reordering rows
+    or columns to make the structure easier to interpret:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE17]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*a “pure” cluster appears as a row with one dominant entry and all remaining
+    entries relatively small. This indicates that observations assigned to that cluster
+    overwhelmingly share the same true label.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: If we want to summarize this agreement with a single number, the most widely
+    used measure is *cluster purity*.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Cluster purity
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: 'Suppose we have:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: true class labels \(Y_i \in {1,\dots,J}\) for each observation \(i=1\dots N\),
+    and
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: a clustering algorithm that assigns each observation \(i\) to one of \(K\) clusters
+    \(C_1,\dots,C_K\).
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 'For each cluster \(C_k\), we look at the distribution of true labels inside
+    that cluster and find the most common label. The *purity* of cluster \(k\) is
+    the proportion of observations in \(C_k\) that belong to this majority class.
+    The overall purity is defined as:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[ \text{Purity} = \frac{1}{N} \sum_{k=1}^K \max_j | C_k \cap L_j | \]
+  prefs: []
+  type: TYPE_NORMAL
+- en: where \(L_j\) is the set of observations in class \(j\) and \(|C_k \cap L_j|\)
+    is the number of observations in both \(C_k\) and \(L_j\).
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Purity is easy to interpret: a purity of 1 means that every cluster consists
+    of observations from just one class; a purity of 0.6 means that, on average, 60%
+    of the points in each cluster come from its dominant class and 40% are “mixed
+    in” from other classes.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'We can compute the purity for our gene expression example and note that it
+    is very close to 1:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE18]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*Other measures: ARI and NMI*'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '*Purity is simple and intuitive, but it does not correct for chance and can
+    be biased toward having many small clusters. In more formal evaluations, especially
+    in the machine learning literature, two other measures are common:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Adjusted Rand Index (ARI)**: compares the clustering to the true labels and
+    adjusts for agreement that would occur by chance. It ranges from 0 (random assignment)
+    to 1 (perfect match).'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Normalized Mutual Information (NMI)**: uses ideas from information theory
+    to measure how much knowing the cluster label reduces uncertainty about the true
+    label. It also typically ranges between 0 and 1, with higher values indicating
+    better alignment.'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: In practice, purity and the corresponding contingency table are often the first
+    tools used to understand how clusters relate to known classes, with ARI and NMI
+    providing more formal, chance-corrected summaries when needed.*****
+  prefs: []
+  type: TYPE_NORMAL
+- en: '***32.6 Exercises***'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '***1\. Compute the pairwise distance between users in the `movies` dataset
+    using a standard distance (e.g., Euclidean). You will get an error because some
+    user pairs have no movies rated in common, producing rows or columns with all
+    NAs. To diagnose this, create a matrix `in_common` where entry \((i, j)\) is the
+    number of movies that users \(i\) and \(j\) both rated. *Hint:* use `[is.na()](https://rdrr.io/r/base/NA.html)`
+    together with `[crossprod()](https://rdrr.io/r/base/crossprod.html)`.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '2\. Create a reduced version of the `movies` matrix containing only users who
+    share at least one commonly rated movie with every other user in the subset. Center
+    each user’s ratings by subtracting their mean, compute a distance matrix, and
+    run hierarchical clustering (`hclust`). Inspect the resulting dendrogram: Do you
+    observe any structure? Do any groups of users cluster together?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 3\. Use `cutree` with `k = 7` or equivalently `cutree` with `h = 14` to obtain
+    7 clusters. Create a table showing how many users fall into each of the 7 clusters.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 4\. For the largest and second-largest clusters, examine the users’ favorite
+    movies (e.g., movies with highest average ratings). Describe the types of movie
+    watchers in each group. Do the clusters correspond to clear preference patterns
+    (e.g., action fans, romance fans, etc.)?
+  prefs: []
+  type: TYPE_NORMAL
+- en: 5\. Perform hierarchical clustering on the gene-expression matrix `genex` and
+    label the dendrogram leaves using the tissue types. Two cerebellum samples (`29`
+    and `30`) and two kidney (`38` and `39`) samples cluster with liver, verify this
+    in your plot.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '6\. The results in Exercise 5 differ from the k-means clustering obtained with:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE19]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*Examine the cluster centers in `km$centers`. Plot the gene-expression profile
+    of a cerebellum sample (e.g., `"cerebellum_29"`) against each of the seven centers
+    to see which center it most resembles:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE20]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*Repeat for `"cerebellum_30"`, `"kidney_38"`, `"kidney_39"`, `"liver_13"`,
+    and `"liver_14"`, and also compare these samples directly to one another. Use
+    these comparisons to propose possible explanations for the mismatches observed
+    in Exercise 5.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '7\. Cluster a subset of MNIST digits into **10** clusters:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE21]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*Compare cluster assignments to true labels using `[table()](https://rdrr.io/r/base/table.html)`.
+    Compute the cluter purity of the resulting clustering. How well does k-means do
+    when asked to find 10 digit clusters?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 8\. Examine the cluster centers as images. For example, note that the center
+    for the cluster most associated with “3” may be a mixture of “3” and “5”. Comment
+    on what you observe.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 9\. Rerun k-means with 25 clusters to allow the algorithm to represent multiple
+    handwriting styles for the same digit. Inspect both the contingency table, the
+    cluster purity, and the cluster-center images. Comment on whether the results
+    improve and what you learn about the variety of ways people write the digits.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 10\. As discussed in [Section 32.5](#sec-purity), purity generally increases
+    with the number of clusters. Repeat Exercise 9 for `k` in `seq(10, 100, 10)`.
+    Compute purity for each value of `k` and make a plot of purity versus number of
+    clusters. Comment on when increases in purity seem meaningful and when they appear
+    to be due only to chance.******
+  prefs: []
+  type: TYPE_NORMAL

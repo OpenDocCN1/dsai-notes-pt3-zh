@@ -1,0 +1,1038 @@
+- en: 24  Regularization
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: 原文：[https://rafalab.dfci.harvard.edu/dsbook-part-2/highdim/regularization.html](https://rafalab.dfci.harvard.edu/dsbook-part-2/highdim/regularization.html)
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '[High Dimensional Data](../highdim/intro-highdim.html)'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[24  Regularization](../highdim/regularization.html)'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: Statistical models are meant to capture meaningful structure in data. However,
+    when a model includes many parameters, or when some parameters are informed by
+    only a small number of observations, the fitted values can become unstable. In
+    these situations, the least squares estimates may be much larger than the underlying
+    true effects. This phenomenon is a form of overfitting, and it can lead to misleading
+    interpretations.
+  prefs: []
+  type: TYPE_NORMAL
+- en: The issue becomes particularly apparent when we use fitted models to make predictions
+    for new data, not used during model fitting. A model that overfits will often
+    produce estimates that vary too much from sample to sample. In the next part of
+    this book, we describe overfitting in more detail and introduce tools for diagnosing
+    and preventing it.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Regularization provides one of the most effective general strategies for reducing
+    overfitting. The idea is to modify the fitting procedure so that large parameter
+    estimates are penalized. In practice, this is done by adding a penalty term to
+    the quantity we minimize, such as the sum of squared errors. The penalty discourages
+    extreme estimates, especially when they are supported by limited data. The result
+    is a more stable model with parameter estimates that are smaller in magnitude
+    and more reliable for use beyond the training data.
+  prefs: []
+  type: TYPE_NORMAL
+- en: In this chapter, we introduce regularization in the context of a recommendation
+    system for movie ratings. We start with user and movie specific effects and observe
+    how least squares can produce unrealistic estimates, particularly for movies with
+    very few ratings. Regularization helps by shrinking these unstable estimates toward
+    zero. In the next chapter, we build on this idea and show how it can be extended
+    through latent factor models, which form the basis of modern recommendation systems.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '24.1 Case study: recommendation systems'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Recommendation systems, such as the one used by Amazon, operate by analyzing
+    the ratings that customers give to various products. These ratings form a large
+    dataset. The system uses this data to predict how likely a specific user is to
+    favorably rate a particular product. For example, if the system predicts that
+    a user is likely to give a high rating to a certain book or gadget, it will recommend
+    that item to them. In essence, the system tries to guess which products a user
+    will like based on the ratings provided by them and other customers for various
+    items. This approach helps in personalizing recommendations to suit individual
+    preferences.
+  prefs: []
+  type: TYPE_NORMAL
+- en: During its initial years of operation, Netflix used a 5-star recommendation
+    system. One star suggested the user would dislike the movie, whereas five stars
+    suggested the user would love it. Here, we provide the basics of how these recommendations
+    are made, motivated by some of the approaches taken by the winners of the *Netflix
+    challenges*.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'In October 2006, Netflix offered a challenge to the data science community:
+    improve our recommendation algorithm by 10% and win a million dollars. In September
+    2009, the winners were announced[¹](#fn1). In this chapter we will demonstrate
+    how regularization was an important part of the winning team’s strategy[²](#fn2)[³](#fn3).'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Movielens data
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: 'The Netflix data is not publicly available, but the GroupLens research lab[⁴](#fn4)
+    generated their own database with over 20 million ratings for over 27,000 movies
+    by more than 138,000 users. We make a small subset of this data available via
+    the **dslabs** package:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*Each row represents a rating given by one user to one movie.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Because we are working with a relatively large dataset, we will convert the
+    data frame to a `data.table` object to take advantage of more efficient data wrangling.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE1]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*We can see the number of unique users that provided ratings and how many unique
+    movies were rated:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE2]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*If we multiply those two numbers, we get a figure exceeding 5 million, yet
+    our dataset contains only about 100,000 rows. This tells us that not every user
+    rated every movie. In fact, the median number of movies rated per user is 71\.
+    We can think of the data as a very large matrix, with users as rows and movies
+    as columns, filled with many missing entries. The goal of a movie recommendation
+    system is to accurately predict those missing values.***'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '***Data exploration***'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '***Let’s look at some of the general properties of the data to better understand
+    the challenges by examing histograms of the number of ratings given to movies,
+    and the number of ratings given by users:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE3]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*![](../Images/a83ed5856e2a815eca5f713cd1deaf7e.png)*  *The first thing we
+    notice is that some movies receive far more ratings than others. Most movies are
+    rated only a handful of times, while a small number accumulate hundreds of ratings.
+    This pattern is not surprising. Popular, widely released films tend to be watched
+    and rated by many users, while niche or independent films attract much smaller
+    audiences.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: We also see variation among users, although the disparity is less extreme. Some
+    users rate only a few about 10 movies, while others rate dozens or even hundreds.
+  prefs: []
+  type: TYPE_NORMAL
+- en: These imbalances will be important as we build models, because estimates based
+    on very few observations are inherently less reliable.****
+  prefs: []
+  type: TYPE_NORMAL
+- en: '***Preparing the data***'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '***Before we can fit models or make predictions, we need to shape the data
+    into a form suitable for analysis. Our goal is to develop an algorithm using historical
+    ratings and then evaluate how well it predicts ratings not used for training.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'We begin by focusing on users who have provided enough information for us to
+    learn from their behavior. In this case, we keep only users with at least 100
+    ratings:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE4]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*For convenience, we convert both `userId` and `movieId` to character strings.
+    This will let us use them as names in vectors later. We also keep only the columns
+    relevant to this analysis to keep printed output manageable:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE5]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**Movie titles are not guaranteed to be unique. For example, this dataset contains
+    three distinct movies titled *King Kong*. We therefore keep `movieId` as the unique
+    identifier and retain `title` only for interpretation and visualization.*  *To
+    evaluate our model, we split the data into two parts:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: a *training set*, used to estimate the parameters
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: a *test set*, used only to assess prediction accuracy
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 'We create the split at the user level, assigning 80% of each user’s ratings
+    to the training set and 20% to the test set:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE6]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*We then construct the two datasets:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE7]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*Since the model cannot make predictions for movies it has never seen, we remove
+    from the test set any movies that do not appear in the training set:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE8]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*This gives us a consistent training and testing framework that we will use
+    throughout the chapter.*********'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '****Loss function****'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '****To describe our models and their estimates, we use the array representation
+    introduced in [Section 17.6](../linear-models/treatment-effect-models.html#sec-anova).
+    We denote the rating given by user \(i\) to movie \(j\) as \(y_{ij}\).'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '*Although the notation \(y_{ij}\) suggests a full \(I \times J\) matrix of
+    ratings, in practice we do not observe most of these values. If there are \(I\)
+    users and \(J\) movies, the complete rating matrix would contain \(I \times J\)
+    entries. However, the number of observed ratings, which we denote by \(N\), is
+    much smaller because most users rate only a small subset of all movies. In what
+    follows, a summation written as \(\sum_{i,j}\) is understood to run over the \(N\)
+    observed pairs \((i,j)\), not over all possible combinations.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Note that we store the data in a `data.table` rather than a matrix, since the
+    full matrix representation would be almost entirely `NA`s.*  *The Netflix challenge
+    defined the winning entry as the one that minimized the root mean squared error
+    (RMSE) on a test set. If \(y_{ij}\) is the observed rating in the test set and
+    \(\hat{y}_{ij}\) is the corresponding prediction made using only the training
+    set, the RMSE is:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[ \mbox{RMSE} = \sqrt{\frac{1}{N} \sum_{i,j} (y_{ij} - \hat{y}_{ij})^2} \]
+  prefs: []
+  type: TYPE_NORMAL
+- en: Here, \(N\) is the number of ratings in the test set and the sum runs over those
+    ratings.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'We can interpret RMSE in the same units as the ratings themselves. It behaves
+    much like a standard deviation: it represents the typical size of the error in
+    our predictions. A value greater than 1 means that, on average, our predicted
+    rating is off by more than one star, which is undesirable.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'To make it easy to compute RMSE for any vector of residuals, we define:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE9]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**We discuss the mean squared error more formally in [Chapter 29](../ml/resampling-methods.html).*******'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '*****The simplest model*****'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '*****We begin with the simplest possible recommendation system. Suppose we
+    ignore all information about users and movies and predict the same rating for
+    every user–movie pair. In this setting, the only question is: what single number
+    should we use?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'We can answer this using a model. Assume that all ratings come from the same
+    underlying value \(\mu\), with random variation accounting for the differences
+    we observe:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[ Y_{ij} = \mu + \varepsilon_{ij} \]
+  prefs: []
+  type: TYPE_NORMAL
+- en: Here \(\varepsilon_{ij}\) represents independent errors with mean 0, and \(\mu\)
+    is the true average rating across all users and movies.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'The value of \(\mu\) that minimizes the RMSE is the least squares estimate,
+    which in this case is simply the average of all ratings in the training set:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE10]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*If we predict every rating in the test set with this single value, the resulting
+    RMSE is:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE11]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*Mathematically, this choice is optimal for this model. Any other number leads
+    to a larger RMSE. For example:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE12]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*This simple approach provides a useful baseline. However, it falls well short
+    of the performance needed to win the Netflix challenge, which required an RMSE
+    of about 0.857 to claim the one million dollar prize. We should be able to do
+    better by incorporating more structure into the model.********'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '*****User effects*****'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '*****A natural question is whether all users rate movies in the same way. Some
+    users tend to give very high ratings, while others rarely give more than three
+    stars. To see this, we compute the average rating for each user:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE13]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*![](../Images/9594a219d6d9fbaa027d7fb32b8b540d.png)*  *The histogram shows
+    substantial variation. This suggests that some of the differences between ratings
+    can be explained simply by how generous or harsh the user is, regardless of which
+    movie is being rated.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'To account for this, we extend our model to include a user-specific effect
+    \(\alpha_i\):'
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[ Y_{ij} = \mu + \alpha_i + \varepsilon_{ij} \]
+  prefs: []
+  type: TYPE_NORMAL
+- en: Here, \(\mu\) represents the overall average rating, and \(\alpha_i\) captures
+    how much user \(i\) tends to deviate from that average. Statistics textbooks typically
+    refer to the \(\alpha_i\) as treatment effects. In the Netflix prize literature,
+    they are often called *bias terms*.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'This is a linear model so we can fit the model using `[lm()](https://rdrr.io/r/stats/lm.html)`:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE14]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*However, in this dataset, the number of user effect parameters is:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE15]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*We therefore need hundreds of dummy variables, which makes fitting the model
+    computationally inefficient.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Fortunately, for this model we can derive the least squares estimate directly.
+    The estimate \(\hat{\alpha}_i\) is simply the average of \(y_{ij} - \hat{\mu}\)
+    for user \(i\):'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE16]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*We store these values in a named vector, which lets us look up each user’s
+    effect easily:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE17]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*From this point forward, we use `a` to represent the vector of user effect
+    estimates \(\hat{\alpha}_i\), and later we will use `b` for the movie effect estimates.
+    In the code, we drop the hat notation for convenience, but in the mathematical
+    expressions we will continue to write \(\hat{\alpha}_i\) and \(\hat{\beta}_j\)
+    to make clear that these are estimates.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'With the \(\hat{\alpha}\)s estimates in place, we predict a rating using:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[ \hat{y}_{ij} = \hat{\mu} + \hat{\alpha}_i \]
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Since ratings are always between 0.5 and 5, we define a helper function to
+    enforce this constraint:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE18]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*We obtain predictions for the test set using the estimates obtained on the
+    training set and then evaluate the RMSE:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE19]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*The RMSE decreases, which confirms that user effects improve our predictions.
+    But users are not the only source of variation. Some movies are simply better
+    liked than others. We address this next.************'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '****Movie effects****'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '****Users differ in how they rate movies, but movies themselves also vary in
+    how they are received. Some movies are widely liked, while others consistently
+    receive low ratings. To capture this source of variation, we extend our model
+    by adding a movie-specific effect \(\beta_j\):'
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[ Y_{ij} = \mu + \alpha_i + \beta_j + \varepsilon_{ij} \]
+  prefs: []
+  type: TYPE_NORMAL
+- en: Here, \(\beta_j\) represents how much movie \(j\) tends to deviate from the
+    overall average rating \(\mu\), after accounting for user tendencies.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'In principle, we could estimate all user and movie effects at once using least
+    squares:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE20]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*However, this requires creating thousands of indicator variables, one for
+    each user and one for each movie. The resulting design matrix is large and sparse,
+    making `[lm()](https://rdrr.io/r/stats/lm.html)` inefficient for this purpose.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Instead, we use an *Alternating Least Squares (ALS)* algorithm. This is an
+    iterative method that relies on two facts:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: If \(\mu\) and the \(\alpha_i\) are known, the least squares estimate of \(\beta_j\)
+    is the average of \(y_{ij} - \mu - \alpha_i\) over users who rated movie \(j\).
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: If \(\mu\) and the \(\beta_j\) are known, the least squares estimate of \(\alpha_i\)
+    is the average of \(y_{ij} - \mu - \beta_j\) over movies rated by user \(i\).
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: By alternating these updates, the estimates converge to the least squares solution.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE21]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*We then extract the user and movie effects into a named vector:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE22]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*With both user and movie effects in place, our predictions are:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[ \hat{y}_{ij} = \hat{\mu} + \hat{\alpha}_i + \hat{\beta}_j \]
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'The resulting RMSE for the predictions on the test set is:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE23]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*This further reduces the error, confirming that including both user and movie
+    effects improves predictive accuracy. However, these estimates can still be unstable,
+    especially for movies with only a few ratings.********'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '****Overfitting****'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '****If we examine the movies with the largest estimated movie effects \(\hat{\beta}_j\),
+    we find that they are all obscure films with only a single rating:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE24]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*Do we really believe these are the best movies in the database? None of these
+    supposedly top-rated movies appears in the test set. To investigate further, let
+    us examine all movies with estimated effects \(\hat{\beta}_j \ge 2\):'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE25]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*All 16 of these movies were rated at most twice:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE26]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*And every prediction we made for these movies in the test set was an overestimate:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE27]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*This is a clear example of *overfitting*. A movie rated only once or twice
+    can receive a very large positive (or negative) estimate simply by chance. The
+    fewer observations that support an estimate, the more variable it becomes. These
+    unstable estimates lead to large prediction errors, which in turn increase the
+    RMSE.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Earlier in the book, when we faced uncertainty, we relied on standard errors
+    or confidence intervals to communicate it. But when making predictions, we do
+    not get to present a range. We must choose a single number, even if the estimate
+    is unreliable.
+  prefs: []
+  type: TYPE_NORMAL
+- en: This is where *regularization* becomes essential. Regularization shrinks extreme
+    estimates toward zero when they are based on small samples, producing more stable
+    and reliable predictions. In the next section, we introduce penalized least squares,
+    a principled way to achieve this shrinkage.********
+  prefs: []
+  type: TYPE_NORMAL
+- en: '****24.2 Penalized least squares****'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '****In the previous section, we saw that the largest movie effect estimates
+    came from movies with only one or two ratings. These estimates are unstable, and
+    the resulting predictions can be highly inaccurate. This is a classic example
+    of *overfitting*, in which estimates become too large because they rely on too
+    little data.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: A common way to address overfitting in linear models is to add a *penalty* that
+    shrinks large coefficients toward zero. This approach is known as *penalized least
+    squares*, or *ridge regression* when the penalty is quadratic.
+  prefs: []
+  type: TYPE_NORMAL
+- en: A general formulation
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: 'To describe the idea in a more familiar setting, we temporarily switch from
+    the matrix notation \(y_{ij}\) used in the recommendation problem to a standard
+    linear model with outcome \(y_i\) and covariates \(x_{i1}, \dots, x_{ip}\):'
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[ Y_i = \beta_0 + \sum_{j=1}^p x_{ij}\beta_j + \varepsilon_i, \quad i = 1,
+    \dots, N \]
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'If \(p\) is large, ordinary least squares can overfit. Penalized least squares
+    addresses this by minimizing:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[ \frac{1}{N}\sum_{i=1}^N \left[ y_i - \left(\beta_0 + \sum_{j=1}^p x_{ij}\beta_j\right)\right]^2
+    + \lambda \sum_{j=1}^p \beta_j^2 \]
+  prefs: []
+  type: TYPE_NORMAL
+- en: The first term is the usual mean squared error. The second term discourages
+    large coefficients, with the tuning parameter \(\lambda\) controlling how strongly
+    we penalize them. The intercept \(\beta_0\) is typically not penalized as usually
+    know the data is not centered at 0.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'This approach is known as *ridge regression*. The `MASS` package in R provides
+    the `lm.ridge` function to fit the model using penalized least squares:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE28]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*However, this function is not efficient for models with thousands of indicator
+    variables, as in our movie rating application. In the sections below we use penalized
+    least squares but to find the estimates we implement the ALS algorithm described
+    in [Section 24.1.7](#sec-movie-effects).'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '*You may notice that some definitions of penalized least squares include the
+    residual sum of squares (RSS) without dividing by \(N\), while others divide by
+    \(N\) to form the mean squared error (MSE). Both formulations are mathematically
+    valid, and they lead to the same minimizer if \(\lambda\) is scaled appropriately.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: However, dividing by \(N\) has an important practical advantage. It makes the
+    scale of the first term less dependent of the dataset size, so the same value
+    of \(\lambda\) has a similar interpretation across datasets of different sizes.
+    The `lm.ridge` function in the MASS package uses this convention, and we follow
+    it here for consistency.**
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Applying penalization to movie effects**'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '**Returning to our setting, we want to shrink movie effects \(\beta_j\) toward
+    zero, especially when they are based on only a few ratings. Instead of minimizing:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[ \sum_{i,j} \left[y_{ij} - (\mu + \alpha_i + \beta_j) \right]^2, \]
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'we minimize the penalized version:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[ \frac{1}{N}\sum_{i,j} \left[y_{ij} - (\mu + \alpha_i + \beta_j) \right]^2
+    + \lambda \left( \sum_i \alpha_i^2 + \sum_j \beta_j^2\right) \]
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'For this model, we can derive a closed form solution for the \(\alpha_i\)s
+    that minimizes the penalized sum of square if \(\mu\) and the \(\beta_j\)s are
+    known:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[ \hat{\alpha}_i(\lambda) = \frac{1}{n_i + N\lambda} \sum_{j=1}^{n_i} \left(y_{ij}
+    - \mu - \beta_j\right) \] where \(n_i\) is the number of ratings for user \(i\)
+    and \(N\) is the total number of ratings.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Similarly we can derive a solution for the \(\beta_j\)s if \(\mu\) and the
+    \(\alpha_i\) are known:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[ \hat{\beta}_j(\lambda) = \frac{1}{n_j + N\lambda} \sum_{i=1}^{n_j} \left(y_{ij}
+    - \mu - \alpha_i\right) \]
+  prefs: []
+  type: TYPE_NORMAL
+- en: where \(n_j\) is the number of ratings for movie \(j\).
+  prefs: []
+  type: TYPE_NORMAL
+- en: The effect of the penalty is clear. If \(n_j\) is large, \(n_j + N\lambda \approx
+    n_j\), shrinkage is minimal, and \(\hat{\beta}_j(\lambda)\) essentially becomes
+    an average. If \(n_j\) is small, the estimate is pulled strongly toward 0\. The
+    larger the \(\lambda\) the larger the pull.**
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Estimating parameters via ALS**'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '**Because `lm.ridge` is inefficient for our setting, we have thousands of indicator
+    variables and a very sparse design, we instead apply the same Alternating Least
+    Squares (ALS) strategy introduced earlier. The key difference is that we now replace
+    the movie-effect update with its penalized version, which shrinks estimates more
+    strongly when a movie has only a few ratings.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: For convenience, we define an auxiliary function `fit_als` that takes a value
+    of `lambda` and returns a copy of `train_set` with the egularized estimates of
+    the user and movie effects. This function is specific to our movie rating example.
+    It assumes that `train_set` is available in the environment.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE29]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*This implementation alternates between updating the penalized estimates for
+    the user effects `a` and movie effects `b` until the updates become smaller than
+    `tol` or we reach `max_iter`. The final result is a regularized movie effect for
+    each movie:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE30]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*Note that in this example we use \(\lambda = 0.0001\). In [Section 24.3](#sec-selecting-penalty-term),
+    we describe a data-driven approach for choosing \(\lambda\) that optimizes predictive
+    accuracy.****'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '****How shrinkage behaves****'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '****We can compare the penalized estimates to the unpenalized ones by plotting
+    them against each other:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![](../Images/b4853b8ee10aa9e488133c659585be30.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: 'We note that movies with few ratings are heavily shrunk: the regularized versions
+    are closer to 0 than the original. Movies with many ratings remain mostly unchanged:
+    the points are close to the identity line.****'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '****Improved results****'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '****Let us look at the top 5 movies under the penalized model:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE31]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*These are far more plausible than the previous list of one-rating obscure
+    films.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Finally, we evaluate the RMSE:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE32]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*The RMSE improves, confirming that regularization stabilizes estimates and
+    reduces over**********'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '****24.3 Selecting the penalty term****'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '****The regularization parameter \(\lambda\) controls how strongly we shrink
+    the movie effects. If \(\lambda\) is too small, we do not reduce overfitting.
+    If it is too large, we shrink too much and lose useful signal.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'In [Chapter 29](../ml/resampling-methods.html), we introduce formal methods
+    for choosing tuning parameters. Here, we take a simple approach for illustrative
+    purposes: we compute the RMSE for a range of \(\lambda\) values and pick the one
+    that gives the best performance on our test set.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'We consider 100 values between 0 and 0.0002:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE33]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*We then plot RMSE as a function of \(\lambda\):'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE34]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*![](../Images/d082f0488897214a50173afb35e3e27e.png)*  *We see a clear minimum.
+    The optimal value is:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE35]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*We now refit the model using this value:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE36]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*and compute the final RMSE:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE37]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*This result confirms that regularization improves our predictive accuracy.
+    The following table compares this RMSE to the values obtained from the earlier
+    models.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '| model | RMSE |'
+  prefs: []
+  type: TYPE_TB
+- en: '| --- | --- |'
+  prefs: []
+  type: TYPE_TB
+- en: '| Just the mean | 1.040 |'
+  prefs: []
+  type: TYPE_TB
+- en: '| User effect | 0.949 |'
+  prefs: []
+  type: TYPE_TB
+- en: '| User + movie effect | 0.882 |'
+  prefs: []
+  type: TYPE_TB
+- en: '| Regularized | 0.863 |*********'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '****24.4 Exercises****'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '****For exercises 1-8 we will use the following simulation: An education expert
+    is advocating for smaller schools. The expert bases this recommendation on the
+    fact that among the best performing schools, many are small. Let’s simulate a
+    dataset for 1000 schools. First, let’s simulate the number of students in each
+    school.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE38]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*Now let’s assign a *true* quality for each school completely independent from
+    size. This is the parameter we want to estimate and it represent the score an
+    average student in that school would get in an aptitude test. We simulate this
+    value like this:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE39]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*Now let’s construct a dataset:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE40]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*We can see that the top 10 schools are:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE41]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*Now let’s have the students in the school take a test. There is variability
+    across students in each school so we will as well as random variability in test
+    taking so we will simulate the test scores as normally distributed with the average
+    determined by the school quality and standard deviations of 30 percentage points:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE42]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*1\. What are the top schools based on the average score? Show just the ID,
+    size, and the average score.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 2\. Compare the median school size to the median school size of the top 10 schools
+    based on the score.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 3\. According to this test, it appears small schools are better than large schools.
+    Five out of the top 10 schools have 100 or fewer students. But how can this be?
+    We constructed the simulation so that quality and size are independent. Repeat
+    the exercise for the worst 10 schools.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '4\. The same is true for the worst schools: they are small as well. Plot the
+    average score versus school size to see what’s going on. Highlight the top 10
+    schools based on the *true* quality. Use the log scale transform for the size.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 5\. We can see that the standard error of the score has larger variability when
+    the school is smaller. This is a basic statistical reality we learned in the probability
+    and inference sections.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Let’s use regularization to pick the best schools. Remember regularization
+    *shrinks* deviations from the average towards 0\. So to apply regularization here,
+    we first need to center the value we want to shrink. Let’s call it `theta`:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE43]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*Use the closed form solution for the penalized least square estimates shown
+    in this chapter to show that we can find the regularized estimate multiplying
+    `theta` by `size/(size + 1000*lambda)`. The try `lambda = 0.05` and examine the
+    top 10 schools based on this regularized estimate.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '6\. Notice that this improves our results a bit: the number of small schools
+    that are incorrectly highly ranked decreases. But is there a better `lambda`?
+    Find the `lambda` that minimizes the RMSE = \(1/100 \sum_{i=1}^{100} (\mbox{school
+    quality} - \mbox{estimate})^2\).'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 7\. Rank the schools based on the average obtained with the best $. Note that
+    no small school is incorrectly included.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 8\. A common mistake to make when using regularization is shrinking values towards
+    0 that are not centered around 0\. For example, if we don’t subtract the overall
+    average before shrinking, we actually do not improve the results. Confirm this
+    by re-running the code from exercises 5, 6, and 7 but without removing the overall
+    mean.
+  prefs: []
+  type: TYPE_NORMAL
+- en: The remaining exercises use the `movielens` data. Note that not all of them
+    require regularization to solve, some focus on data exploration or model building
+    using other ideas introduced in this chapter.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '9\. In the example worked out in this chapter we removed users with less than
+    100 ratings. Redo the analysis without filtering these out. Implement an analysis
+    that penalizes for both user and movie effects:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[ \frac{1}{N}\sum_{i,j} \left[y_{ij} - (\mu + \alpha_i + \beta_j) \right]^2
+    + \lambda \left( \sum_i \alpha_i^2 + \sum_j \beta_j^2\right). \]
+  prefs: []
+  type: TYPE_NORMAL
+- en: Note that you will have to edit the function `fit_als`.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '10\. Repeat Exercise 9, but now use a model with *two* separate penalty terms:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[ \frac{1}{N}\sum_{i,j} \left[y_{ij} - (\mu + \alpha_i + \beta_j)\right]^2
+    + \lambda_1 \sum_i \alpha_i^2 + \lambda_2 \sum_j \beta_j^2. \]
+  prefs: []
+  type: TYPE_NORMAL
+- en: Here, \(\lambda_1\) controls the amount of shrinkage applied to the user effects
+    \(\alpha_i\), and \(\lambda_2\) controls the shrinkage applied to the movie effects
+    \(\beta_j\).
+  prefs: []
+  type: TYPE_NORMAL
+- en: To optimize both tuning parameters, perform a *grid search* over a reasonable
+    range of \((\lambda_1, \lambda_2)\) pairs and select the combination that minimizes
+    the RMSE on the test set.
+  prefs: []
+  type: TYPE_NORMAL
+- en: We recommend lowering the `tol` argument in your ALS implementation while developing
+    your solution, as this will speed up the computation during the grid search.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '11\. Use the `movielens` dataset to explore how ratings vary across three key
+    factors: * Number of ratings * Release year * Genre'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Perform the following:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Compute the number of ratings per movie and plot it against the movie’s release
+    year. Use a square-root transform for the counts.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Keep only movies released in 1993 or later. Among these, compute *ratings per
+    year since release*. Report the 25 movies with the highest ratings-per-year and
+    their average rating.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Stratify these same movies by ratings per year (e.g. 20 bins or quantiles) and
+    compute the average rating in each stratum.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Make a plot of average rating vs. ratings-per-year.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '12\. The `movielens` data also includes a timestamp. * Convert the timestamp
+    to a date (hint: use `[lubridate::as_datetime](https://lubridate.tidyverse.org/reference/as_date.html)`).
+    * Compute the average rating per week (hint: use `round_date` and `group_by`).
+    Plot time on the x-axis and weekly average rating on the y-axis. * Interpret the
+    trend. Does a time effect seem plausible?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 13\. The `movielens` data also includes a `genres`. * Treat each *unique combination*
+    in `genres` as a category. * Compute the average rating and its standard error
+    for each. * Make an error bar plot.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 14\. Based on your exploration in exercise 12, which of the following models
+    seems most appropriate?
+  prefs: []
+  type: TYPE_NORMAL
+- en: \(Y_{ij} = \mu + \alpha_i + \beta_j + t_{ij} + \varepsilon_{ij}\)
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: \(Y_{ij} = \mu + \alpha_i + \beta_j + \gamma , t_{ij} + \varepsilon_{ij}\)
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: \(Y_{ij} = \mu + \alpha_i + \beta_j + \gamma , t_{ij} + \delta_{g(j)} + \varepsilon_{ij}\)
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: \(Y_{ij} = \mu + \alpha_i + \beta_j + f(t_{ij}) + \delta_{g(j)} + \varepsilon_{ij}\)
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: where \(g(j)\) is the genre category for movie \(j\) and \(f(t)\) is a smooth
+    function of \(t\).
+  prefs: []
+  type: TYPE_NORMAL
+- en: '15\. Using what you learned above, fit at least one model that improves upon
+    the best model presented in this chapter: the user + movie effects model (with
+    regularization)'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'You may (optionally) include:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: a genre effect
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: a time effect
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: ratings-per-year as a movie-level covariate
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: or anything else you discovered
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Evaluate your model on a held-out test set using RMSE.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Compare your results to the RMSE values reported earlier in the chapter.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Reflect briefly on:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Which variables helped most?
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Did any add noise rather than signal?
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: How much improvement did you achieve?**********
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '* * *'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '****1.  http://bits.blogs.nytimes.com/2009/09/21/netflix-awards-1-million-prize-and-starts-a-new-contest/[↩︎](#fnref1)'
+  prefs: []
+  type: TYPE_NORMAL
+- en: http://blog.echen.me/2011/10/24/winning-the-netflix-prize-a-summary/[↩︎](#fnref2)
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: https://www2.seas.gwu.edu/~simhaweb/champalg/cf/papers/KorenBellKor2009.pdf[↩︎](#fnref3)
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: https://grouplens.org/[↩︎](#fnref4)****
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL

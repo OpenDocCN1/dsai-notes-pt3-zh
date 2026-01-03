@@ -1,0 +1,754 @@
+- en: 12  Hierarchical Models
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: 原文：[https://rafalab.dfci.harvard.edu/dsbook-part-2/inference/hierarchical-models.html](https://rafalab.dfci.harvard.edu/dsbook-part-2/inference/hierarchical-models.html)
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '[Statistical Inference](../inference/intro-inference.html)'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[12  Hierarchical Models](../inference/hierarchical-models.html)'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: Hierarchical models are useful for quantifying different levels of variability
+    or uncertainty. One can use them using a Bayesian or Frequentist framework. However,
+    because in the Frequentist framework they often extend a model with a fixed parameter
+    by assuming the parameter is actually random, the model description includes two
+    distributions that look like the prior and a sampling distribution used in the
+    Bayesian framework. This makes the resulting summaries very similar or even equal
+    to what is obtained with a Bayesian context. A key difference between the Bayesian
+    and the Frequentist hierarchical model approach is that, in the latter, we use
+    data to construct priors rather than treat priors as a quantification of prior
+    expert knowledge. In this section, we illustrate the use of hierarchical models
+    by describing a simplified version of the approach used by FiveThirtyEight to
+    forecast the 2016 election.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '12.1 Case study: election forecasting'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'After the 2008 elections, several organizations besides FiveThirtyEight launched
+    their own election forecasting teams that aggregated polling data and used statistical
+    models to make predictions. However, in 2016, many forecasters greatly underestimated
+    Trump’s chances of winning. The day before the election, the *New York Times*
+    reported[¹](#fn1) the following probabilities for Hillary Clinton winning the
+    presidency:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  | NYT | 538 | HuffPost | PW | PEC | DK | Cook | Roth |'
+  prefs: []
+  type: TYPE_TB
+- en: '| --- | --- | --- | --- | --- | --- | --- | --- | --- |'
+  prefs: []
+  type: TYPE_TB
+- en: '| Win Prob | 85% | 71% | 98% | 89% | >99% | 92% | Lean Dem | Lean Dem |'
+  prefs: []
+  type: TYPE_TB
+- en: Note that the Princeton Election Consortium (PEC) gave Trump less than 1% chance
+    of winning, while the Huffington Post gave him a 2% chance. In contrast, FiveThirtyEight
+    had Trump’s probability of winning at 29%, substantially higher than the others.
+    In fact, four days before the election, FiveThirtyEight published an article titled
+    *Trump Is Just A Normal Polling Error Behind Clinton*[²](#fn2).
+  prefs: []
+  type: TYPE_NORMAL
+- en: So why did FiveThirtyEight’s model fair so much better than others? How could
+    PEC and Huffington Post get it so wrong if they were using the same data? In this
+    chapter, we describe how FiveThirtyEight used a hierarchical model to correctly
+    account for key sources of variability and outperform all other forecasters. For
+    illustrative purposes, we will continue examining our popular vote example. In
+    the final section, we will describe the more complex approach used to forecast
+    the electoral college result.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 12.2 Systematic polling error
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: In the previous chapter, we computed the posterior probability of Hillary Clinton
+    winning the popular vote with a standard Bayesian analysis and found it to be
+    very close to 100%. However, FiveThirtyEight gave her a 81.4% chance[³](#fn3).
+    What explains this difference? Below, we describe the *systemic polling error*,
+    another source of variability, included in the FiveThirtyEight model, that accounts
+    for the difference.
+  prefs: []
+  type: TYPE_NORMAL
+- en: After elections are over, one can look at the difference between the polling
+    averages and the actual results. An important observation, that our initial models
+    did not take into account, is that it is common to see a systemic polling error
+    that affects most pollsters in the same way. Statisticians refer to this as a
+    *bias*. The cause of this bias is unclear, but historical data shows it fluctuates.
+    In one election, polls may favor Democrats by 2%, the next Republicans by 1%,
+    then show no bias, and later favor Republicans by 3%. In 2016, polls favored Democrats
+    by 1-2%.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Although we know this systematic polling error affects our polls, we have no
+    way of knowing what this bias is until election night. So we can’t correct our
+    polls accordingly. What we can do is include a term in our model that accounts
+    for the variability.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 12.3 Mathematical representations of the hierarchical model
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'Suppose we are collecting data from one pollster and we assume there is no
+    systematic error. The pollster collects several polls with a sample size of \(N\),
+    so we observe several measurements of the spread \(Y_1, \dots, Y_J\). Suppose
+    the real proportion for Hillary is \(p\) and the spread is \(\theta\). The urn
+    model theory tells us that these random variables are approximately normally distributed,
+    with expected value \(\theta\) and standard error \(2 \sqrt{p(1-p)/N}\):'
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[ Y_j \sim \mbox{N}\left(\theta, \, 2\sqrt{p(1-p)/N}\right) \]
+  prefs: []
+  type: TYPE_NORMAL
+- en: We use \(j\) as an index to label polls, so that the \(j\)th poll corresponds
+    to the results reported by the \(j\)th poll.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Below is a simulation for six polls assuming the spread is 2.1 and \(N\) is
+    2,000:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*Now, suppose we have \(J=6\) polls from each of \(I=5\) different pollsters.
+    For simplicity, let’s say all polls had the same sample size \(N\). The urn model
+    tell us the distribution is the same for all pollsters, so to simulate data, we
+    use the same model for each:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE1]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*As expected, the simulated data does not really seem to capture the features
+    of the actual data because it does not account for pollster-to-pollster variability:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![](../Images/f0711dc48ccdab5196a346311e05c16e.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: 'To fix this, we need to represent the two levels of variability and we need
+    two indexes, one for pollster and one for the polls each pollster takes. We use
+    \(Y_{ij}\) with \(i\) representing the pollster and \(j\) representing the \(j\)th
+    poll from that pollster. The model is now augmented to include pollster effects
+    \(h_i\), referred to as *house effects* by FiveThirtyEight, with standard deviation
+    \(\sigma_h\):'
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[ \begin{aligned} h_i &\sim \mbox{N}\left(0, \sigma_h\right)\\ Y_{ij} \mid
+    h_i &\sim \mbox{N}\left(\theta + h_i, \, 2\sqrt{p(1-p)/N}\right) \end{aligned}
+    \]
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'To simulate data from a specific pollster, we first need to draw an \(h_i\),
+    and then generate individual poll data after adding this effect. In the simulation
+    below we assume \(\sigma_h\) is 0.025 and generate the \(h\) using `rnorm`:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE2]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*The simulated data now looks more like the observed data:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![](../Images/54672972b1e3cb71b846f4f2862f0436.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: Note that \(h_i\) is common to all the observed spreads from pollster \(i\).
+    Different pollsters have a different \(h_i\), which explains why we can see the
+    groups of points shift up and down from pollster to pollster.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Now, in the model above, we assume the average house effect is 0: we generate
+    it with `rnorm(I, 0, 0.025)`. We think that for every pollster biased in favor
+    of one party, there is another one in favor of the other in way that the error
+    *averages out* when computing the average across all polls. In this case the polling
+    average is *unbiased*. However, as mentioned above, systematic polling error is
+    observed when we study past elections.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: We can’t observe this bias with just the 2016 data, but if we collect historical
+    data, we see that the average of polls miss the actual result by more than what
+    is prediced by models like the one above. We don’t show the data here, but if
+    we took the average of polls for each past election and compare it to the actual
+    election night result, we would observe difference with a standard deviation of
+    between 2-4%.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Although we can’t observe the bias, we can define a model that accounts for
+    its variability. We do this by adding another level to the model as follows:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '\[ \begin{aligned} b &\sim \mbox{N}\left(0, \sigma_b\right)\\ h_j \mid \, b
+    &\sim \mbox{N}\left(b, \sigma_h\right)\\ Y_{ij} | \, h_j, b &\sim \mbox{N}\left(\theta
+    + h_j, \, 2\sqrt{p(1-p)/N}\right) \end{aligned} \] This model captures three distinct
+    sources of variability:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Systematic error across elections**, represented by the random variable \(b\),
+    with variability quantified by \(\sigma_b\).'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '**Pollster-to-pollster variability**, often called the *house effect*, quantified
+    by \(\sigma_h\).'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '**Sampling variability within each poll** which arises from the random sampling
+    of voters and is given by \(2\sqrt{p(1-p)/N}\), where \(p = (\theta + 1)/2\).'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: Failing to include a term like \(b\), the election-level bias, led many forecasters
+    to be overly confident in their predictions. The key point is that \(b\) changes
+    from one election to another but remains constant across all pollsters and polls
+    *within* a single election. Because \(b\) has no index, we cannot estimate \(\sigma_b\)
+    using data from only one election. Furthermore, this shared \(b\) implies that
+    all random variables \(Y_{ij}\) within the same election are correlated, since
+    they are influenced by the same underlying election-level bias.***
+  prefs: []
+  type: TYPE_NORMAL
+- en: '***12.4 Computing a posterior probability***'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '***Now, let’s fit a model like the above to data. We will use `one_poll_per_pollster`
+    data defined in [Chapter 10](models.html):'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE3]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*Here, we have just one poll per pollster, so we will drop the \(j\) index
+    and represent the data as before with \(Y_1, \dots, Y_I\). As a reminder, we have
+    data from $I=$20 pollsters. Based on the model assumptions described above, we
+    can mathematically show that the average \(\bar{Y}\)'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE4]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*has expected value \(\theta\); thus, in the long run, it provides an unbiased
+    estimate of the outcome of interest. But how precise is this estimate? Can we
+    use the observed sample standard deviation to construct an estimate of the standard
+    error of \(\bar{Y}\)?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'It turns out that, because the \(Y_i\) are correlated, estimating the standard
+    error is more complex than what we have described up to now. Specifically, we
+    can show that the standard error can be estimated with:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE5]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*As mentioned earlier, estimating \(\sigma_b\) requires data from past elections.
+    However, collecting this data is a complex process and beyond the scope of this
+    book. To provide a practical example, we set \(\sigma_b\) to 3%.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'We can now redo the Bayesian calculation to account for this additional variability.
+    This adjustment yields a result that closely aligns with FiveThirtyEight’s estimates:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE6]******'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '***12.5 Predicting the electoral college***'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '***Up to now, we have focused on the popular vote. However, in the United States,
+    elections are not decided by the popular vote but rather by what is known as the
+    *electoral college*. Each state gets a number of electoral votes that depends,
+    in a somewhat complex way, on the population size of the state. In 2016 California,
+    the largest state, had 55 electoral votes, while the smallest seven states and
+    the District of Columbia had 3.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: With the exception of two states, Maine and Nebraska, electoral votes in U.S.
+    presidential elections are awarded on a winner-takes-all basis. This means that
+    if a candidate wins the popular vote in a state by even a single vote, they receive
+    all of that state’s electoral votes. For example, winning California in 2016 by
+    just one vote would secure all 55 of its electoral votes.
+  prefs: []
+  type: TYPE_NORMAL
+- en: This system can lead to scenarios where a candidate wins the national popular
+    vote but loses the electoral college, as was the case in 1876, 1888, 2000, and
+    2016.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '*The electoral college was designed to balance the influence of populous states
+    and protect the interests of smaller ones in presidential elections. As a federation,
+    the U.S. included states wary of losing power to larger states. During the Constitutional
+    Convention of 1787, smaller states negotiated this system to ensure their voices
+    remained significant, receiving electors based on their senators and representatives.
+    This compromise helped secure their place in the union.*  *### Organizing the
+    data'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'We are now ready to predict the electoral college result for 2016\. We start
+    by creating a data frame with the electoral votes for each state:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE7]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*We then aggregate results from polls taken during the last weeks before the
+    election and include only those taken on registered and likely voters. We define
+    `spread` as the estimated difference in proportion:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE8]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*If a pollster ran more than one poll in this period, we keep only the latest.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE9]**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '***Weighted averages***'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '***Instead of simply averaging polls, FiveThirtyEight assigns weights to pollsters
+    based on a letter grade, stored in the `grade` column. This grade reflects the
+    pollster’s past accuracy and reliability. We generate a table with grades and
+    weights for future use:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE10]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**FiveThirtyEight considers various factors when determining the weight of
+    each poll, including the proximity to election day. However, for simplicity, this
+    analysis focuses solely on pollster grades.*  *Higher-graded pollsters are assigned
+    more weight in the model, giving their results greater influence, while lower-graded
+    or less reliable pollsters contribute less. This is achieved mathematically through
+    a weighted average:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[ \bar{Y}_w = \frac{\sum_{i=1}^N w_i Y_i}{\sum_{i=1}^N w_i} \]
+  prefs: []
+  type: TYPE_NORMAL
+- en: where \(Y_i\) represents the result from pollster \(i\), \(w_i\) is the weight
+    assigned to pollster \(i\),
+  prefs: []
+  type: TYPE_NORMAL
+- en: and \(N\) is the total number of pollsters. We add the \(w\) substript to \(\bar{Y}_w\)
+    to denote it is a weighted aveage.
+  prefs: []
+  type: TYPE_NORMAL
+- en: To understand this intuitively, think of the weights as fractions of a full
+    data point. For example, if the maximum weight is 1, a pollster with a weight
+    of \(0.5\) contributes half as much as a fully trusted pollster, while a weight
+    of \(0.25\) can be interpreted as contributing a quarter of a poll.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'We use a similar equation to estimate the standard deviation:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[ s_w = \sqrt{\frac{\sum_{i=1}^N w_i (Y_i - \bar{Y}_w)}{\frac{N-1}{N}\sum_{i=1}^N
+    w_i}} \]
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'We can use the formula learned in [Section 7.4](../prob/random-variables.html#sec-mean-var-eqs)
+    to derive the standard error for our weighted estimate:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[ \mathrm{SE}[\bar{Y}_w] = \frac{\sigma_h}{\sqrt{N_{\mbox{eff}}}} \mbox{ with
+    } N_{\mbox{eff}} = \frac{\left(\sum_{i=1}^N w_i\right)^2}{\sum_{i=1}^N w_i^2}
+    \]
+  prefs: []
+  type: TYPE_NORMAL
+- en: Because it occupies the same position in the equation for the sample average,
+    \(N_{\mbox{eff}}\) is referred to as the *effective* sample size. Note that it
+    is equal to \(N\) when all the weights are 1 and gets smaller the closer weights
+    get to 0.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'We now use these equations to compute the weighted averages:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE11]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*We assume the pollster or *house effect* standard deviation \(\sigma_h\) is
+    the same across states and take the median of those based on an effective sample
+    size larger or equal to 5:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE12]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**In the Linear Models section of the book, we explore a more statistically
+    rigorous method for estimating standard deviations.*  *Next we use the command
+    `left_join` to combine the `results` data frame containing the electoral votes
+    for each state and the `polls` data frame containing the summary statistics:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE13]********'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '*****Constructing priors*****'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '*****To make probabilistic arguments, we will use a Bayesian model. To do this
+    we need means and standard deviations for the prior distribution of each state.
+    We will assume a normal distribution for the prior and use 2012 election results
+    to construct priors means. Specifically we compute the difference between Democrat
+    (Obama) and Republican (Romney) candidates:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE14]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*As done for the popular vote prior, we assign a prior standard deviation of
+    5% or \(\tau=0.05\).'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE15]******'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '*****Computing posterior distributions*****'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '*****With the prior distribution established, we can calculate the posterior
+    distributions for each state. In some states, the outcome is considered highly
+    predictable, with one party (Republican or Democrat) almost certain to win. As
+    a result, there are no polls conducted in these states. In such cases, the posterior
+    distribution remains the same as the prior distribution.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE16]*****'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '****Monte Carlo simulation****'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '****We then use Monte Carlo to generate 50,000 election day results \(\theta\)
+    for each state. For each iteration, we examine \(\theta\) for each iteration.
+    If \(\theta<0\) Trump receives all the electoral votes for that state in that
+    iteration. We assume that the poll results from each state are independent.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE17]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*This model gives Trump less than a 1% chance of winning, similar to the prediction
+    made by the Princeton Election Consortium. We now know it was quite off. What
+    happened?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: The model above ignores the possibility of a systematic polling error and, incorrectly,
+    assumes the results from different states are independent. To correct this, we
+    assume that the systematic error term has a standard deviation of 3%. For each
+    iteration we generate systematic error at random and add it to result for all
+    states.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE18]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*This gives Trump almost a 25% change of winning, which turned out to be a
+    much more sensible estimate, and closer to the prediction made by FiveThirtyEight
+    of 29%.******'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '****Regional correlation****'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '****Polling faced significant criticism after the 2016 election for “getting
+    it wrong”. However, the polling average actually predicted the final result with
+    notable accuracy, as is typically the case.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![](../Images/ce81325d302e9585840bc4f9fca6373c.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: In fact, the polling average got the sign of the difference wrong in only five
+    out of the 50 states.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE19]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*However, notice that the errors were all in the same direction, suggesting
+    a systematic polling error. However, the scatter plot reveals several points above
+    the identity line, indicating deviations from the assumption of uniform bias across
+    all states. A closer inspection shows that the bias varies by geographical region,
+    with some areas experiencing stronger effects than others. This pattern is further
+    confirmed by plotting the differences across regions directly:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![](../Images/d247cd2571dc6108cd68ee99f1e71a2b.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: Advanced forecasting models, like FiveThirtyEight’s, recognize that systematic
+    polling errors often vary by region. To reflect this in a model, we can group
+    states into regions and introduce a regional error term. Since states within the
+    same region share this error, it creates correlation between their outcomes.*****
+  prefs: []
+  type: TYPE_NORMAL
+- en: '****Final results****'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '****More sophisticated models also account for variability by using distributions
+    that allow for more extreme events than a normal distribution. For example, a
+    t-distribution with small number of degrees of freedom can capture these rare
+    but impactful outcomes.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: By incorporating these adjustments,regional errors and heavy-tailed distributions—our
+    model produces a probability for Trump similar to FiveThirtyEight’s reported 29%.
+    Simulations reveal that factoring in regional polling errors and correlations
+    increases the overall variability in the results.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![](../Images/cb4992e0bf56a60dd6824e7e40c93f7e.png)********'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '****12.6 Forecasting****'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '****Forecasters aim to predict election outcomes well before election day,
+    updating their projections as new polls are released. However, a key question
+    remains: How informative are polls conducted weeks before the election about the
+    final outcome? To address this, we examine how poll results vary over time and
+    how this variability affects forecasting accuracy.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'To make sure the variability we observe is not due to pollster effects, let’s
+    study data from one pollster:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE20]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*Since there is no pollster effect, then perhaps the theoretical standard error
+    matches the data-derived standard deviation. But the empirical standard deviation
+    is higher than the highest possible theoretical estimate:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE21]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*Furthermore, the spread data does not look normal as the theory would predict:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![](../Images/66a81e4fece283a72b3f18c5d4b3c326.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: 'The models we have described include pollster-to-pollster variability and sampling
+    error. But this plot is for one pollster and the variability we see is certainly
+    not explained by sampling error. Where is the extra variability coming from? The
+    following plots make a strong case that it comes from time fluctuations not accounted
+    for by the theory that assumes \(p\) is fixed:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![](../Images/a0b81384cd81ea24ad92205eb8d49d2e.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: Some of the peaks and valleys in the data align with major events such as party
+    conventions, which typically give candidates a temporary boost. If we generate
+    the same plot for other pollsters, we find that these patterns are consistent
+    across several of them. This suggests that any forecasting model should include
+    a term to account for time effects. The variability of this term would itself
+    depend on time, since as election day approaches, its standard deviation should
+    decrease and approach zero.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Pollsters atry to estimate trends from these data and incorporate them into
+    their predictions. We can model the time trend with a *smooth function* and then
+    use this to improve predictions. There is a variety of methods for estimating
+    trends which we discuss in [Section 28.3](../ml/conditionals-and-smoothing.html#sec-smoothing)
+    in the Machine Learning part of the book.******
+  prefs: []
+  type: TYPE_NORMAL
+- en: '****12.7 Exercises****'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '****1\. Create this table:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE22]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*Now, for each poll, use the CLT to create a 95% confidence interval for the
+    spread reported by each poll. Call the resulting object cis with columns lower
+    and upper for the limits of the confidence intervals. Use the `select` function
+    to keep the columns `state, startdate, enddate, pollster, grade, spread, lower,
+    upper`.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '2\. You can add the final result to the `cis` table you just created using
+    the `left_join` function like this:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE23]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*Now, determine how often the 95% confidence interval includes the election
+    night result stored in `actual_spread`.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '3\. Repeat this, but show the proportion of hits for each pollster. Consider
+    only pollsters with more than 5 polls and order them from best to worst. Show
+    the number of polls conducted by each pollster and the FiveThirtyEight grade of
+    each pollster. Hint: Use `n=n(), grade = grade[1]` in the call to summarize.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 4\. Repeat exercise 3, but instead of pollster, stratify by state. Note that
+    here we can’t show grades.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 5\. Make a barplot based on the result of exercise 4\. Use `coord_flip`.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '6\. Add two columns to the `cis` table by computing, for each poll, the difference
+    between the predicted spread and the actual spread, and define a column `hit`
+    that is true if the signs are the same. Call the object `resids`. Hint: Use the
+    function `sign`.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 7\. Create a plot like in exercise 5, but for the proportion of times the sign
+    of the spread agreed with the election night result.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 8\. In exercise 7, we see that for most states the polls had it right 100% of
+    the time. For only 9 states did the polls miss more than 25% of the time. In particular,
+    notice that in Wisconsin every single poll got it wrong. In Pennsylvania and Michigan,
+    more than 90% of the polls had the signs wrong. Make a histogram of the errors.
+    What is the median of these errors?
+  prefs: []
+  type: TYPE_NORMAL
+- en: 9\. We see that at the state level, the median error was 3% in favor of Clinton.
+    The distribution is not centered at 0, but at 0.03\. This is related to the *general
+    bias* described in [Section 12.2](#sec-general-bias). Create a boxplot to see
+    if the bias was general to all states or it affected some states differently.
+    Use `filter(grade %in% c("A+","A","A-","B+") | is.na(grade)))` to only include
+    pollsters with high grades.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 10\. In April 2013, José Iglesias, a professional baseball player was starting
+    his career. He was performing exceptionally well, with an excellent *batting average*
+    (AVG) of .450\. The batting average statistic is one way of measuring success.
+    Roughly speaking, it tells us the success rate when batting. José had 9 successes
+    out of 20 tries. An AVG of .450 means José has been successful 45% of the times
+    he has batted, which is rather high historically speaking. In fact, no one has
+    finished a season with an `AVG` of .400 or more since Ted Williams did it in 1941!
+    We want to predict José’s batting average at the end of the season after players
+    have had about 500 tries or *at bats*. With the frequentist techniques, we have
+    no choice but to predict that his AVG will be .450 at the end of the season. Compute
+    a confidence interval for the success rate.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 12\. Despite the frequentist prediction of \(.450\), not a single baseball enthusiast
+    would make this prediction. Why is this? One reason is that they know the estimate
+    has much uncertainty. However, the main reason is that they are implicitly using
+    a hierarchical model that factors in information from years of following baseball.
+    Use the following code to explore the distribution of batting averages in the
+    three seasons prior to 2013, and describe what this tells us.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE24]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*13\. So is José lucky or is he the best batter seen in the last 50 years?
+    Perhaps it’s a combination of both luck and talent. But how much of each? If we
+    become convinced that he is lucky, we should trade him to a team that trusts the
+    .450 observation and is maybe overestimating his potential. The hierarchical model
+    provides a mathematical description of how we came to see the observation of .450\.
+    First, we pick a player at random with an intrinsic ability summarized by, for
+    example, \(\theta\). Then, we see 20 random outcomes with success probability
+    \(\theta\). What model would you use for the first level of your hierarchical
+    model?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 14\. Describe the second level of the hierarchical model.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 15\. Apply the hierarchical model to José’s data. Suppose we want to predict
+    his innate ability in the form of his *true* batting average \(\theta\). Write
+    down the distributions of the hierarchical model.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 16\. We now are ready to compute a the distribution of \(\theta\) conditioned
+    on the observed data \(\bar{Y}\). Compute the expected value of \(\theta\) given
+    the current average \(\bar{Y}\), and provide an intuitive explanation for the
+    mathematical formula.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '17\. We started with a frequentist 95% confidence interval that ignored data
+    from other players and summarized just José’s data: .450 \(\pm\) 0.220\. Construct
+    a credible interval for \(\theta\) based on the hierarchical model.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '18\. The credible interval suggests that if another team is impressed by the
+    .450 observation, we should consider trading José, as we are predicting he will
+    be just slightly above average. Interestingly, the Red Sox traded José to the
+    Detroit Tigers in July. Here are José Iglesias’ batting averages for the next
+    five months:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '| Month | At Bat | Hits | AVG |'
+  prefs: []
+  type: TYPE_TB
+- en: '| --- | --- | --- | --- |'
+  prefs: []
+  type: TYPE_TB
+- en: '| April | 20 | 9 | .450 |'
+  prefs: []
+  type: TYPE_TB
+- en: '| May | 26 | 11 | .423 |'
+  prefs: []
+  type: TYPE_TB
+- en: '| June | 86 | 34 | .395 |'
+  prefs: []
+  type: TYPE_TB
+- en: '| July | 83 | 17 | .205 |'
+  prefs: []
+  type: TYPE_TB
+- en: '| August | 85 | 25 | .294 |'
+  prefs: []
+  type: TYPE_TB
+- en: '| September | 50 | 10 | .200 |'
+  prefs: []
+  type: TYPE_TB
+- en: '| Total w/o April | 330 | 97 | .293 |'
+  prefs: []
+  type: TYPE_TB
+- en: Which of the two approaches provided a better prediction?*******
+  prefs: []
+  type: TYPE_NORMAL
+- en: '* * *'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '****1.  https://www.nytimes.com/interactive/2016/upshot/presidential-polls-forecast.html[↩︎](#fnref1)'
+  prefs: []
+  type: TYPE_NORMAL
+- en: https://fivethirtyeight.com/features/trump-is-just-a-normal-polling-error-behind-clinton/[↩︎](#fnref2)
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: https://projects.fivethirtyeight.com/2016-election-forecast/[↩︎](#fnref3)****
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL

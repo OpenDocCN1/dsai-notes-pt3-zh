@@ -1,0 +1,1546 @@
+- en: 16  String processing
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: 原文：[https://rafalab.dfci.harvard.edu/dsbook-part-1/wrangling/string-processing.html](https://rafalab.dfci.harvard.edu/dsbook-part-1/wrangling/string-processing.html)
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '[Data Wrangling](../wrangling/intro-to-wrangling.html)'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[16  String processing](../wrangling/string-processing.html)'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: One of the most common data wrangling challenges involves extracting numeric
+    data contained in character strings and converting them into the numeric representations
+    required to make plots, compute summaries, or fit models in R. Also common is
+    processing unorganized text into meaningful variable names or categorical variables.
+    Many of the string processing challenges a data scientist faces are unique and
+    often unexpected. It is therefore quite ambitious to write a comprehensive section
+    on this topic. Here we use a series of case studies that help us demonstrate how
+    string processing is a necessary step for many data wrangling challenges. Specifically,
+    we describe the process of converting the original, *raw* data from which we extracted
+    the `murders`, `heights`, and `research_funding_rates` examples into the data
+    frames we have studied in this book.
+  prefs: []
+  type: TYPE_NORMAL
+- en: By going over these case studies, we will cover some of the most common tasks
+    in string processing including extracting numbers from strings, removing unwanted
+    characters from text, finding and replacing characters, extracting specific parts
+    of strings, converting free form text to more uniform formats, and splitting strings
+    into multiple values.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Base R includes functions to perform many of these tasks. The **stringi** package
+    adds significant functionality over what is available in base R, especially for
+    complex and diverse text processing needs. The **stringr** package provides consistent,
+    simple, and user friendly wrappers around the **stringi** package. For example,
+    in **stringr**, all the string processing functions start with `str_`. This means
+    that if you type `str_` and hit tab, R will auto-complete and show all the available
+    functions. As a result, we don’t necessarily have to memorize all the function
+    names. Another advantage is that in the functions in this package the string being
+    processed is always the first argument, which means we can more easily use the
+    pipe. Therefore, we will start by describing how to use the functions in the **stringr**
+    package.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Most of the examples will come from the second case study which deals with self-reported
+    heights by students, and most of the chapter is dedicated to learning regular
+    expressions (regex) and functions in the **stringr** package.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 16.1 The stringr package
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*In general, string processing tasks can be divided into **detecting**, **locating**,
+    **extracting**, or **replacing** patterns in strings. We will see several examples.
+    The table below includes the functions available to you in the **stringr** package.
+    We split them by task. We also include the base R equivalent when available.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'All these functions take a character vector as first argument. Also, for each
+    function, operations are vectorized: the operation gets applied to each string
+    in the vector.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Finally, we mention *groups* in this table. These will be explained in [Section
+    16.4.9](#sec-groups).
+  prefs: []
+  type: TYPE_NORMAL
+- en: '| stringr | Task | Description | Base R |'
+  prefs: []
+  type: TYPE_TB
+- en: '| --- | --- | --- | --- |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `str_detect` | Detect | Is the pattern in the string? | `grepl` |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `str_which` | Detect | Returns the index of entries that contain the pattern.
+    | `grep` |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `str_subset` | Detect | Returns the subset of strings that contain the pattern.
+    | `grep` with `value = TRUE` |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `str_locate` | Locate | Returns positions of first occurrence of the pattern
+    in a string. | `regexpr` |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `str_locate_all` | Locate | Returns position of all occurrences of the pattern
+    in a string. | `gregexpr` |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `str_view` | Locate | Show the first part of the string that matches the
+    pattern. |  |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `str_view_all` | Locate | Show all the parts of the string that match the
+    pattern. |  |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `str_extract` | Extract | Extract the first part of the string that matches
+    the pattern. |  |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `str_extract_all` | Extract | Extract all parts of the string that match
+    the pattern. |  |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `str_match` | Extract | Extract first part of the string that matches the
+    pattern and the groups defined by the pattern. |  |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `str_match_all` | Extract | Extract all parts of the string that match the
+    pattern and the groups defined by the pattern. |  |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `str_sub` | Extract | Extract a substring. | `substring` |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `str_split` | Extract | Split a string into a list with parts separated by
+    a pattern. | `strsplit` |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `str_split_fixed` | Extract | Split a string into a matrix with a fixed number
+    of parts separated by a pattern. | `strsplit` with `fixed = TRUE` |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `str_count` | Describe | Count number of times a pattern appears in a string.
+    |  |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `str_length` | Describe | Number of character in string. | `nchar` |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `str_replace` | Replace | Replace first part of a string matching a pattern
+    with another. |  |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `str_replace_all` | Replace | Replace all parts of a string matching a pattern
+    with another. | `gsub` |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `str_to_upper` | Replace | Change all characters to upper case. | `toupper`
+    |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `str_to_lower` | Replace | Change all characters to lower case. | `tolower`
+    |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `str_to_title` | Replace | Change first character of each word to upper and
+    rest to lower case. |  |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `str_replace_na` | Replace | Replace all `NA`s with a new value. |  |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `str_trim` | Replace | Remove white space from start and end of string. |  |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `str_c` | Manipulate | Join multiple strings. | `paste0` |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `str_conv` | Manipulate | Change the encoding of the string. |  |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `str_sort` | Manipulate | Sort the vector in alphabetical order. | `sort`
+    |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `str_order` | Manipulate | Provide index needed to order the vector in alphabetical
+    order. | `order` |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `str_trunc` | Manipulate | Truncate a string to a fixed size. |  |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `str_pad` | Manipulate | Add white space to string to make it a fixed size.
+    |  |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `str_dup` | Manipulate | Repeat a string. | `rep` then `paste` |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `str_wrap` | Manipulate | Wrap things into formatted paragraphs. |  |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `str_interp` | Manipulate | String interpolation. | `sprintf` |*'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '*16.2 Case study 1: self-reported heights*'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '*The **dslabs** package includes the raw data from which the heights dataset
+    was obtained. You can load it like this:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE1]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*These heights were obtained using a web form in which students were asked
+    to enter their heights. They could enter anything, but the instructions asked
+    for *height in inches*, a number. We compiled 1,095 submissions, but unfortunately
+    the column vector with the reported heights had several non-numeric entries and
+    as a result became a character vector:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE2]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*If we try to parse it into numbers, we get a warning:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE3]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*Although most values appear to be height in inches as requested we do end
+    up with many `NA`s:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE4]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*Here are some of the entries that are not successfully converted:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE5]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*We immediately see what is happening. Some of the students did not report
+    their heights in inches as requested. We could discard these data and continue.
+    However, many of the entries follow patterns that, in principle, we can easily
+    convert to inches. For example, in the output above, we see various cases that
+    use the format `x''y"` or `x''y''''` with `x` and `y` representing feet and inches,
+    respectively. Each one of these cases can be read and converted to inches by a
+    human, for example `5''4"` is `5*12 + 4 = 64`. So we could fix all the problematic
+    entries *by hand*. However, humans are prone to making mistakes, so an automated
+    approach is preferable. Also, because we plan on continuing to collect data, it
+    will be convenient to write code that automatically corrects entries entered in
+    error.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: A first step in this type of task is to survey the problematic entries and try
+    to define specific patterns followed by a large groups of entries. The larger
+    these groups, the more entries we can fix with a single programmatic approach.
+    We want to find patterns that can be accurately described with a rule, such as
+    “a digit, followed by a feet symbol, followed by one or two digits, followed by
+    an inches symbol”.
+  prefs: []
+  type: TYPE_NORMAL
+- en: To look for such patterns, it helps to remove the entries that are consistent
+    with being in inches and to view only the problematic entries. We thus write a
+    function to automatically do this. We keep entries that either result in `NA`s
+    when applying `as.numeric` or are outside a range of plausible heights. We permit
+    a range that covers about 99.9999% of the adult population. We also use `suppressWarnings`
+    to avoid the warning message we know `as.numeric` will gives us.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'We apply this function and find the number of problematic entries:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE6]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*We can now view all the cases by simply printing them. If we do, we see that
+    three patterns can be used to define three large groups within these exceptions.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '1\. A pattern of the form `x''y` or `x'' y''''` or `x''y"` with `x` and `y`
+    representing feet and inches, respectively. Here are ten examples:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE7]'
+  prefs: []
+  type: TYPE_PRE
+- en: '2\. A pattern of the form `x.y` or `x,y` with `x` feet and `y` inches. Here
+    are ten examples:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE8]'
+  prefs: []
+  type: TYPE_PRE
+- en: '3\. Entries that were reported in centimeters rather than inches. Here are
+    ten examples:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE9]'
+  prefs: []
+  type: TYPE_PRE
+- en: Once we see these large groups following specific patterns, we can develop a
+    plan of attack.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Convert entries fitting the first two patterns into one standardized one.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: Leverage the standardization to extract the feet and inches and convert to inches.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: Define a procedure for identifying entries that are in centimeters and convert
+    them to inches.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: Check again to see what entries were not fixed and see if we can tweak our approach
+    to be more comprehensive.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: At the end, we hope to have a script that makes web-based data collection methods
+    robust to the most common user mistakes.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Remember that there is rarely just one way to perform these tasks. Here we pick
+    one that helps us teach several useful techniques. But surely there is a more
+    efficient way of performing the task.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'To achieve our goal, we will use a technique that enables us to accurately
+    detect patterns and extract the parts we want: *regular expressions* (regex).
+    But first, we quickly describe how to *escape* the function of certain characters
+    so that they can be included in strings.*******'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '***16.3 Escaping***'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '***To define strings in R, we can use either double quotes or single quotes:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE10]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*Make sure you choose the correct single quote, as opposed to the back quote
+    `` ` ``.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Now, what happens if the string we want to define includes double quotes? For
+    example, if we want to write 10 inches like this `10"`? In this case you can’t
+    use:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE11]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*because this is just the string `10` followed by a double quote. If you type
+    this into R, you get an error because you failed to close the double quote. To
+    avoid this, we can use the single quotes:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE12]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*If we print out `s` we see that the double quotes are *escaped* with the backslash
+    `\`.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE13]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*In fact, escaping with the backslash provides a way to define the string while
+    still using the double quotes to define strings:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE14]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*In R, the function `cat` lets us see what the string actually looks like:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE15]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*Now, what if we want our string to be 5 feet written like this `5''`? In this
+    case, we can use the double quotes or escape the single quote'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE16]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*So we’ve learned how to write 5 feet and 10 inches separately, but what if
+    we want to write them together to represent *5 feet and 10 inches* like this `5''10"`?
+    In this case, neither the single nor double quotes will work since `''5''10"''`
+    closes the string after 5 and this `"5''10""` closes the string after 10\. Keep
+    in mind that if we type one of the above code snippets into R, it will get stuck
+    waiting for you to close the open quote and you will have to exit the execution
+    with the *esc* button.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'To achieve the desired result we need to escape both quotes with the backslash
+    `\`. You can escape either character that can be confused with a closing quote.
+    These are the two options:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE17]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*Escaping characters is something we often have to use when processing strings.
+    Another characters that often needs escaping is the backslash character itself.
+    We can do this with `\\`. When using regular expression, the topic of the next
+    section, we often have to escape the *special characters* used in this approach.***********'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '***16.4 Regular expressions***'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '***A regular expression (regex) is a way to describe specific patterns of characters
+    of text. They can be used to determine if a given string matches the pattern.
+    A set of rules has been defined to do this efficiently and precisely and here
+    we show some examples. We can learn more about these rules by reading a detailed
+    tutorials[¹](#fn1) [²](#fn2). The RStudio cheat sheet for **stringr** and regular
+    expression[³](#fn3) is also very useful.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: The patterns supplied to the **stringr** functions can be a regex rather than
+    a standard string. We will learn how this works through a series of examples.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Throughout this section you will see that we create strings to test out our
+    regex. To do this, we define patterns that we know should match and also patterns
+    that we know should not. We will call them `yes` and `no`, respectively. This
+    permits us to check for the two types of errors: failing to match and incorrectly
+    matching.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 16.4.1 Strings are a regex
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: Technically any string is a regex, perhaps the simplest example is a single
+    character. So the comma `,` used in the next code example is a simple example
+    of searching with regex.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE18]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*Above, we noted that an entry included a `cm`. This is also a simple example
+    of a regex. We can show all the entries that used `cm` like this:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE19]*'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**16.4.2 Special characters**'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '**Now let’s consider a slightly more complicated example. Which of the following
+    strings contain the pattern `cm` or `inches`?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE20]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*We can do this with two searches:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE21]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*However, we don’t need to do this. The main feature that distinguishes the
+    regex *language* from plain strings is that we can use special characters. These
+    are characters with a meaning. We start by introducing `|` which means *or*. So
+    if we want to know if either `cm` or `inches` appears in the strings, we can use
+    the regex `cm|inches`:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE22]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*and obtain the correct answer.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Another special character that will be useful for identifying feet and inches
+    values is `\d` which means any digit: 0, 1, 2, 3, 4, 5, 6, 7, 8, 9\. The backslash
+    is used to distinguish it from the character `d`. In R, we have to *escape* the
+    backslash `\` so we actually have to use `\\d` to represent digits. Here is an
+    example:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE23]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*We take this opportunity to introduce the `str_view` function, which is helpful
+    for troubleshooting as it shows us all matches for each string that has matches.
+    Each match is surrounded by the characters `<` and `>`. Below, we see that `5`
+    has one match and `5''10` has three matches.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE24]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*![](../Images/59e3dbb35b5312e164ac5dde18d86313.png)'
+  prefs: []
+  type: TYPE_NORMAL
+- en: To view all strings, even if there wasn’t a match, we can use the `match = NA`
+    parameter.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE25]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*![](../Images/36b7d4075996ee08ec472590036b5d32.png)'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Another useful special character is `\w` which stands for *word character* and
+    it matches any letter, number, or underscore.
+  prefs: []
+  type: TYPE_NORMAL
+- en: There are many other special characters. We will learn some others below, but
+    you can see most or all of them in the cheat sheet[⁴](#fn4) mentioned earlier.********
+  prefs: []
+  type: TYPE_NORMAL
+- en: '***16.4.3 Character classes***'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '***Character classes are used to define a series of characters that can be
+    matched. We define character classes with square brackets `[]`. So, for example,
+    if we want the pattern to match only if we have a `5` or a `6`, we use the regex
+    `[56]`:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE26]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*![](../Images/49599a73970727879e030f1745adada3.png)'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Suppose we want to match values between 4 and 7\. A common way to define character
+    classes is with ranges. So, for example, `[0-9]` is equivalent to `\\d`. The pattern
+    we want is therefore `[4-7]`.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE27]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*However, it is important to know that in regex everything is a character;
+    there are no numbers. So `4` is the character `4` not the number four. Notice,
+    for example, that `[1-20]` does **not** mean 1 through 20, it means the characters
+    1 through 2 or the character 0\. So `[1-20]` simply means the character class
+    composed of 0, 1, and 2.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Keep in mind that characters do have an order and the digits do follow the numeric
+    order. So `0` comes before `1` which comes before `2` and so on. For the same
+    reason, we can define lower case letters as `[a-z]`, upper case letters as `[A-Z]`,
+    and `[a-zA-z]` as both.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Notice that `\w` is equivalent to `[a-zA-Z0-9_]`.*****
+  prefs: []
+  type: TYPE_NORMAL
+- en: '***16.4.4 Anchors***'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '***What if we want a match when we have exactly 1 digit? This will be useful
+    in our case study since feet are never more than 1 digit so a restriction will
+    help us. One way to do this with regex is by using *anchors*, which let us define
+    patterns that must start or end at a specific place. The two most common anchors
+    are `^` and `$` which represent the beginning and end of a string, respectively.
+    So the pattern `^\\d$` is read as “start of the string followed by one digit followed
+    by end of string”.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'This pattern now only detects the strings with exactly one digit:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE28]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*![](../Images/5ca6920fea0aac4495fc24547d9518ba.png)'
+  prefs: []
+  type: TYPE_NORMAL
+- en: The `1` does not match because it does not start with the digit but rather with
+    a space, which is not easy to see.****
+  prefs: []
+  type: TYPE_NORMAL
+- en: '***16.4.5 Bounded quantifiers***'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '***For the inches part, we can have one or two digits. This can be specified
+    in regex with *quantifiers*. This is done by following the pattern with curly
+    brackets containing the number of times the previous entry can be repeated. We
+    call the *bounded* because the numbers in the quantifier are limited by the numbers
+    in the curly brackets. Later we learn about *unbounded quantifiers*.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'We use an example to illustrate. The pattern for one or two digits is:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE29]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*![](../Images/c31afb946fad37ba886534e18261deaa.png)'
+  prefs: []
+  type: TYPE_NORMAL
+- en: In this case, `123` does **not** match, but `12` does. To look for our feet
+    and inches pattern, we can add the symbols for feet `'` and inches `"` after the
+    digits.
+  prefs: []
+  type: TYPE_NORMAL
+- en: With what we have learned, we can now construct an example for the pattern `x'y"`
+    with `x` feet and `y` inches.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE30]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*The pattern is now getting complex, but you can look at it carefully and break
+    it down:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`^` = start of the string'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`[4-7]` = one digit, either 4,5,6 or 7'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`''` = feet symbol'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`\\d{1,2}` = one or two digits'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`\"` = inches symbol'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`$` = end of the string'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 'Let’s test it out:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE31]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*For now, we are permitting the inches to be 12 or larger. We will add a restriction
+    later as the regex for this is a bit more complex than we are ready to show.******'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '***16.4.6 White space***'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '***Another problem we have is spaces. For example, our pattern does not match
+    `5'' 4"` because there is a space between `''` and `4` which our pattern does
+    not permit. Spaces are characters and R does not ignore them:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE32]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*In regex, `\s` represents white space. To find patterns like `5'' 4`, we can
+    change our pattern to:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE33]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*However, this will not match the patterns with no space. So do we need more
+    than one regex pattern? It turns out we can use a quantifier for this as well.*****'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '***16.4.7 Unbounded quantifiers: `*`, `?`, `+`***'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '***We want the pattern to permit spaces but not require them. Even if there
+    are several spaces, like in this example `5'' 4`, we still want it to match. There
+    is a quantifier for exactly this purpose. In regex, the character `*` means zero
+    or more instances of the previous character. Here is an example:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE34]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*The above matches the first string which has zero 1s and all the strings with
+    one or more 1s. We can then improve our pattern by adding the `*` after the space
+    character `\s`.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'There are two other similar quantifiers. For none or once, we can use `?`,
+    and for one or more, we can use `+`. You can see how they differ with this example:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE35]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*We will actually use all three in our reported heights example, but we will
+    see these in a later section.*****'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '***16.4.8 Not***'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '***To specify patterns that we do **not** want to detect, we can use the `^`
+    symbol but only **inside** square brackets. Remember that outside the square bracket
+    `^` means the start of the string. So, for example, if we want to detect digits
+    that are preceded by anything except a letter we can do the following:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE36]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*Another way to generate a pattern that searches for *everything except* is
+    to use the upper case of the special character. For example `\\D` means anything
+    other than a digit, `\\S` means anything except a space, and so on.****'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '***16.4.9 Groups***'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '****Groups* are a powerful aspect of regex that permits the extraction of values.
+    Groups are defined using parentheses. They don’t affect the pattern matching per
+    se. Instead, it permits tools to identify specific parts of the pattern so we
+    can extract them.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: We want to change heights written like `5.6` to `5'6`.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'To avoid changing patterns such as `70.2`, we will require that the first digit
+    be between 4 and 7 `[4-7]` and that the second be none or more digits `\\d*`.
+    Let’s start by defining a simple pattern that matches this:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE37]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*We want to extract the digits so we can then form the new version using a
+    period. These are our two groups, so we encapsulate them with parentheses:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE38]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*We encapsulate the part of the pattern that matches the parts we want to keep
+    for later use. Adding groups does not affect the detection, since it only signals
+    that we want to save what is captured by the groups. Note that both patterns return
+    the same result when using `str_detect`:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE39]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*Once we define groups, we can use the function `str_match` to extract the
+    values these groups define:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE40]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*Notice that the second and third columns contain feet and inches, respectively.
+    The first column is the part of the string matching the pattern. If no match occurred,
+    we see an `NA`.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Now we can understand the difference between the functions `str_extract` and
+    `str_match`. `str_extract` extracts only strings that match a pattern, not the
+    values defined by groups:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE41]*******'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '***16.4.10 Search and replace***'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '***Earlier we defined the object `problems` containing the strings that do
+    not appear to be in inches. We can see that not too many of our problematic strings
+    match the pattern:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE42]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*To see why this is, we show some examples that expose why we don’t have more
+    matches:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE43]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*![](../Images/fd8e9cf8b253ebe1ea15ce2f98d658d4.png)'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'An initial problem we see immediately is that some students wrote out the words
+    “feet” and “inches”. We can see the entries that did this with the `str_subset`
+    function:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE44]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*We also see that some entries used two single quotes `''''` instead of a double
+    quote `"`.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE45]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*To correct this, we can replace the different ways of representing inches
+    and feet with a uniform symbol. We will use `''` for feet, whereas for inches
+    we will simply not use a symbol since some entries were of the form `x''y`. Now,
+    if we no longer use the inches symbol, we have to change our pattern accordingly:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE46]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*If we do this replacement before the matching, we get many more matches:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE47]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*However, we still have many cases to go.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Note that in the code above, we leveraged the **stringr** consistency and used
+    the pipe.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'For now, we improve our pattern by adding `\\s*` in front of and after the
+    feet symbol `''` to permit space between the feet symbol and the numbers. Now
+    we match a few more entries:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE48]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*We might be tempted to avoid doing this by removing all the spaces with `str_replace_all`.
+    However, when doing such an operation we need to make sure that it does not have
+    unintended effects. In our reported heights examples, this will be a problem because
+    some entries are of the form `x y` with space separating the feet from the inches.
+    If we remove all spaces, we will incorrectly turn `x y` into `xy` which implies
+    that a `6 1` would become `61` inches instead of `73` inches.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: The second large type of problematic entries were of the form `x.y`, `x,y` and
+    `x y`. We want to change all these to our common format `x'y`. But we can’t just
+    do a search and replace because we would change values such as `70.5` into `70'5`.
+    Our strategy will therefore be to search for a very specific pattern that assures
+    us feet and inches are being provided and then, for those that match, replace
+    appropriately.**********
+  prefs: []
+  type: TYPE_NORMAL
+- en: '***16.4.11 Search and replace using groups***'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '***Another powerful aspect of groups is that you can refer to the extracted
+    values in a regex when searching and replacing.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'The regex special character for the `i`-th group is `\\i`. So `\\1` is the
+    value extracted from the first group, `\\2` the value from the second and so on.
+    As a simple example, note that the following code will replace a comma with period,
+    but only if it is after a digit between 4 and 7, and followed by zero or more
+    digits:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE49]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*We can use this to convert cases in our reported heights.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: We are now ready to define a pattern that helps us convert all the `x.y`, `x,y`
+    and `x y` to our preferred format. We need to adapt `pattern_with_groups` to be
+    a bit more flexible and capture all the cases.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE50]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*Let’s break this one down:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`^` = start of the string'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`[4-7]` = one digit representing feet, either 4, 5, 6, or 7'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`\\s*` = none or more white space'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`[,\\.\\s+]` = feet and inches are separated by either `,`, `.` or at least
+    one space'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`\\s*` = none or more white space'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`\\d*` = none or more digits representing inches'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`$` = end of the string'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 'We can see that it appears to be working:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE51]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*and will be able to perform the search and replace:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE52]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*Again, we will deal with the inches-larger-than-twelve challenge later.*******'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '***16.4.12 Lookarounds***'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '***Lookarounds provide a way to ask for one or more conditions to be satisfied
+    without moving the search forward or matching it. For example, you might want
+    to check for multiple conditions and if they are matched, then return the pattern
+    or part of the pattern that matched.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'There are four types of lookarounds: lookahead `(?=pattern)`, lookbehind `(?<=pattern)`,
+    negative lookahead `(?!pattern)`, and negative lookbehind `(?<!pattern)`.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: The conventional example checking password that must satisfy several conditions
+    such as 1) 8-16 word characters, 2) starts with a letter, and 3) has at least
+    one digit. You can concatenate lookarounds to check for multiple conditions. For
+    our example we can write
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE53]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*A simpler example is changing all `superman` to `supergirl` without changing
+    all the men to girl. We could use a lookaround like this:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE54]****'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '***16.4.13 Separating variables***'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '***In [Section 11.3](reshaping-data.html#sec-separate) we introduced functions
+    that can split columns into new ones. The `separate_wider_regex` uses regex instead
+    of delimiters to separate variables in data frames. It uses an approach similar
+    to regex groups and turns each of groups into a new column.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Suppose we have data frame like this:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE55]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*Note that using `separate_wider_delim` won’t work here because the delimiter
+    can varies across entries. With `separate_wider_regex` we can define flexible
+    patterns that are matched to define each column.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE56]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*By not naming the second and fourth entries of `patterns` we tell the function
+    not to keep the values that match that pattern.********'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '***16.5 Trimming***'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '***In general, spaces at the start or end of the string are uninformative.
+    These can be particularly deceptive because sometimes they can be hard to see:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE57]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*This is a general enough problem that there is a function dedicated to removing
+    them: `str_trim`.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE58]****'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '***16.6 Case conversion***'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '***Notice that regex is case sensitive. Often we want to match a word regardless
+    of case. One approach to doing this is to first change everything to lower case
+    and then proceeding ignoring case. As an example, note that one of the entries
+    writes out numbers as words `Five foot eight inches`. Although not efficient,
+    we could add 13 extra `str_replace` calls to convert `zero` to `0`, `one` to `1`,
+    and so on. To avoid having to write two separate operations for `Zero` and `zero`,
+    `One` and `one`, etc., we can use the `str_to_lower` function to make all works
+    lower case first:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE59]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*Other related functions are `str_to_upper` and `str_to_title`. We are now
+    ready to define a procedure that converts all the problematic cases to inches.****'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '***16.7 Case study 1 continued: Putting it all together***'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '***We are now ready to put it all together and wrangle our reported heights
+    data to try to recover as many heights as possible. The code is complex, but we
+    will break it down into parts.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Let’s see how many problematic entries we can recover with the approaches we
+    covered in [Section 16.4](#sec-regex). We will first define a function that detects
+    entries that are not reported as inches or centimeters:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE60]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*We can see how many entries are not inches or centimeters:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE61]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*Let’s see how many feet`''`inches format we can recover applying the finding
+    from [Section 16.4](#sec-regex). Specifically we replace feet/foot/ft with `''`,
+    we remove the word inches and its abbreviations, then rewrite similar patterns
+    into the desired feet`''`inches pattern. Once this is done we see what proportion
+    don’t fit the desired pattern'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE62]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*We see that a substantial proportion has not yet been fixed. Trial and error
+    is a common approach to finding the regex pattern that satisfies all desired conditions.
+    We can examine the remaining cases to try to decipher if new patterns we can use
+    to fix them:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE63]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*We noticed that two students added `cm` and some entries have space at the
+    end so we write incorporate this into our cleanup stage. We also notice that at
+    least one entry wrote out numbers such as `Five foot eight inches`. We can use
+    the `[words()](https://rdrr.io/pkg/english/man/words.html)` function in the **english**
+    package to change these to actual numbers. In preparation for our final product,
+    we define a function that cleans up previously noticed problems and these new
+    ones:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE64]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*Many also notice that students measuring exactly 5 or 6 feet did not enter
+    any inches, for example `6''`, and our pattern requires that inches be included,
+    and that some entries are in meters and some of these use European decimals, for
+    example `1.6` and `1,70`. So we create a function that add these corrections to
+    those already identified as needed to reformat the entry as feet`''`inches:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE65]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*Now we are ready to wrangle our reported heights dataset. The strategy is
+    as follows:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 1\. We start by defining a variable to keep a copy of the original entry, we
+    then clean up and covert the `height` entry using the functions described above.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 2\. We then use the `separate_wider_regex_` function to extract feet and inches
+    when the entry matches our feet`'`inches format.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 3\. We use a lookaround to make sure that entries that have numbers with no
+    `'` following them don’t match and return an `NA`.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 4. Once this is done, we convert the feet and inches into inches.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 5. Finally, we decide if the entries are in inches, centimeters, or meters and
+    convert appropriately.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE66]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*We see that we fix all but 44 entries. You can see that these are mostly un-fixable:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE67]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*You can review the ones we did fix by typing:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE68]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*A final observation is that if we look at the shortest students in our course:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE69]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*We see heights of 50, 51, 52, and so on. These short heights are rare and
+    it is likely that the students actually meant 5’0, 5’1, 5’2 and so on. Because
+    we are not completely sure, we will leave them as reported. The object new_heights
+    contains our final solution for this case study.*************'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '***16.8 Case study 2: extracting tables from a PDF***'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '***One of the datasets provided in **dslabs** shows scientific funding rates
+    by gender in the Netherlands:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE70]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*The data comes from a paper published in the Proceedings of the National Academy
+    of Science (PNAS)[⁵](#fn5), a widely read scientific journal. However, the data
+    is not provided in a spreadsheet; it is in a table in a PDF document. Here is
+    a screenshot of the table:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![](../Images/3e9490a8ec8840e3b9e3f8cf22a83eeb.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: '(Source: Romy van der Lee and Naomi Ellemers, PNAS 2015 112 (40) 12349-12353[⁶](#fn6).)'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'We could extract the numbers by hand, but this could lead to human error. Instead,
+    we can try to wrangle the data using R. We start by downloading the pdf document,
+    then importing into R:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE71]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**The `mode = "wb"` argument is only necessary if using Microsoft Windows.
+    On MacOs or Linux the default `mode = "w"` works. To understand this difference
+    please refer to the `download.file` help file.*  *If we examine the object text,
+    we notice that it is a character vector with an entry for each page. So we keep
+    the page we want:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE72]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*The steps above can actually be skipped because we include this raw data in
+    the **dslabs** package as well.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Examining the object `raw_data_research_funding_rates` we see that it is a
+    long string and each line on the page, including the table rows, are separated
+    by the symbol for newline: `\n`. A first step in converting this into a data frame
+    is to store rows separately in a way that will make them easy to access. For this
+    we use the `str_split` function:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE73]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**On MacOS or Linux you can simply use `\n` as the separator. Microsoft Windows
+    and macOS (which is based on Unix) use different conventions for line endings
+    in text files and a result `raw_data_research_funding_rates` has more `\n` when
+    using Windows.*  *Because we start off with just one string, we end up with a
+    list with just one entry.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE74]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*By examining `tab` we see that the information for the column names is the
+    third and fourth entries:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE75]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*The first of these rows looks like this:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE76]'
+  prefs: []
+  type: TYPE_PRE
+- en: We want to create one vector with one name for each column. Using some of the
+    functions we have just learned, we do this.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Let’s start with `the_names_1`, shown above. We want to remove the leading space
+    and anything following the comma. We use regex for the latter. Then we can obtain
+    the elements by splitting strings separated by space. We want to split only when
+    there are 2 or more spaces to avoid splitting `Success rates`. So we use the regex
+    `\\s{2,}`
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE77]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*Now we will look at `the_names_2`:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE78]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Here we want to trim the leading space and then split by space as we did for
+    the first line:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE79]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*We can then join these to generate one name for each column:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE80]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*Now we are ready to get the actual data. By examining the `tab` object, we
+    notice that the information is in lines 6 through 14\. We can use `str_split`
+    again to achieve our goal:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE81]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*We can see that the objects are identical:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE82]***************'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '****16.9 Renaming levels****'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '****Another common operation involving strings is renaming the levels of of
+    a categorical variables. Let’s say you have really long names for your levels.
+    If you will be displaying them in plots, you might want to use shorter versions
+    of these names. For example, in character vectors with country names, you might
+    want to change “United States of America” to “USA” and “United Kingdom” to UK,
+    and so on.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Rather than changing each entry, a more efficient approach is to change the
+    levels.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Here is an example that shows how to rename countries with long names:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE83]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*Suppose we want to show life expectancy time series by country for the Caribbean.
+    If we make this plot'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE84]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*![](../Images/efabee861dc07fe5d8b3732c7b70d2f1.png)*  *we see that the legend
+    takes up much of the plot because we have four countries with names longer than
+    12 characters. We can rename these levels using the `case_when` function:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE85]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*![](../Images/210fe4581933d24767caaa51f5ef4228.png)*  *We can instead use
+    the `fct_recode` function in the **forcats** package:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE86]*******'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '****16.10 Exercises****'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '****1\. Complete all lessons and exercises in the RegexOne[⁷](#fn7) online
+    interactive tutorial.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '2\. In the `extdata` directory of the **dslabs** package, you will find a PDF
+    file containing daily mortality data for Puerto Rico from Jan 1, 2015 to May 31,
+    2018\. You can find the file like this:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE87]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*Find and open the file or open it directly from RStudio. On a Mac, you can
+    type:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE88]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*and on Windows, you can type:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE89]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*Which of the following best describes this file:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: It is a table. Extracting the data will be easy.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: It is a report written in prose. Extracting the data will be impossible.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: It is a report combining graphs and tables. Extracting the data seems possible.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: It shows graphs of the data. Extracting the data will be difficult.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '3\. We are going to create a tidy dataset with each row representing one observation.
+    The variables in this dataset will be year, month, day, and deaths. Start by installing
+    and loading the **pdftools** package:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE90]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*Now read-in `fn` using the `pdf_text` function and store the results in an
+    object called `txt`. Which of the following best describes what you see in `txt`?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: A table with the mortality data.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: A character string of length 12\. Each entry represents the text in each page.
+    The mortality data is in there somewhere.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: A character string with one entry containing all the information in the PDF
+    file.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: An html document.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: 4\. Extract the ninth page of the PDF file from the object `txt`, then use the
+    `str_split` from the **stringr** package so that you have each line in a different
+    entry. Call this string vector `s`. Then look at the result and choose the one
+    that best describes what you see.
+  prefs: []
+  type: TYPE_NORMAL
+- en: It is an empty string.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: I can see the figure shown in page 1.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: It is a tidy table.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: I can see the table! But there is a bunch of other stuff we need to get rid
+    of.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: 5\. What kind of object is `s` and how many entries does it have?
+  prefs: []
+  type: TYPE_NORMAL
+- en: 6\. We see that the output is a list with one component. Redefine `s` to be
+    the first entry of the list. What kind of object is `s` and how many entries does
+    it have?
+  prefs: []
+  type: TYPE_NORMAL
+- en: '7\. When inspecting the string we obtained above, we see a common problem:
+    white space before and after the other characters. Trimming is a common first
+    step in string processing. These extra spaces will eventually make splitting the
+    strings hard so we start by removing them. We learned about the command `str_trim`
+    that removes spaces at the start or end of the strings. Use this function to trim
+    `s`.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '8\. We want to extract the numbers from the strings stored in `s`. However,
+    there are many non-numeric characters that will get in the way. We can remove
+    these, but before doing this we want to preserve the string with the column header,
+    which includes the month abbreviation. Use the `str_which` function to find the
+    rows with a header. Save these results to `header_index`. Hint: find the first
+    string that matches the pattern `2015` using the `str_which` function.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '9\. Now we are going to define two objects: `month` will store the month and
+    `header` will store the column names. Identify which row contains the header of
+    the table. Save the content of the row into an object called `header`, then use
+    `str_split` to help define the two objects we need. Hints: the separator here
+    is one or more spaces. Also, consider using the `simplify` argument.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 10\. Notice that towards the end of the page you see a *totals* row followed
+    by rows with other summary statistics. Create an object called `tail_index` with
+    the index of the *totals* entry.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '11\. Because our PDF page includes graphs with numbers, some of our rows have
+    just one number (from the y-axis of the plot). Use the `str_count` function to
+    create an object `n` with the number of numbers in each each row. Hint: you can
+    write a regex for number like this `\\d+`.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 12\. We are now ready to remove entries from rows that we know we don’t need.
+    The entry `header_index` and everything before it should be removed. Entries for
+    which `n` is 1 should also be removed, and the entry `tail_index` and everything
+    that comes after it should be removed as well.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '13\. Now we are ready to remove all the non-numeric entries. Do this using
+    regex and the `str_remove_all` function. Hint: remember that in regex, using the
+    upper case version of a special character usually means the opposite. So `\\D`
+    means “not a digit”. Remember you also want to keep spaces.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '14\. To convert the strings into a table, use the `str_split_fixed` function.
+    Convert `s` into a data matrix with just the day and death count data. Hints:
+    note that the separator is one or more spaces. Make the argument `n` a value that
+    limits the number of columns to the values in the 4 columns and the last column
+    captures all the extra stuff. Then keep only the first four columns.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '15\. Now you are almost ready to finish. Add column names to the matrix, including
+    one called `day`. Also, add a column with the month. Call the resulting object
+    `dat`. Finally, make sure the day is an integer not a character. Hint: use only
+    the first five columns.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 16\. Now finish it up by tidying `tab` with the `pivot_longer` function.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 17\. Make a plot of deaths versus day with color to denote year. Exclude 2018
+    since we do not have data for the entire year.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '18\. Now that we have wrangled this data step-by-step, put it all together
+    in one R chunk, using the pipe as much as possible. Hint: first define the indexes,
+    then write one line of code that does all the string processing.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '19\. Advanced: let’s return to the MLB Payroll example from the web scraping
+    section. Use what you have learned in the web scraping and string processing chapters
+    to extract the payroll for the New York Yankees, Boston Red Sox, and Oakland A’s
+    and plot them as a function of time.********'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '* * *'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '****1.  [https://www.regular-expressions.info/tutorial.html](https://www.regular-expressions.info/tutorial.html)[↩︎](#fnref1)'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[http://r4ds.had.co.nz/strings.html#matching-patterns-with-regular-expressions](http://r4ds.had.co.nz/strings.html#matching-patterns-with-regular-expressions)[↩︎](#fnref2)'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[https://rstudio.github.io/cheatsheets/strings.pdf](https://rstudio.github.io/cheatsheets/strings.pdf)[↩︎](#fnref3)'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[https://rstudio.github.io/cheatsheets/strings.pdf](https://rstudio.github.io/cheatsheets/strings.pdf)[↩︎](#fnref4)'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[http://www.pnas.org/content/112/40/12349.abstract](http://www.pnas.org/content/112/40/12349.abstract)[↩︎](#fnref5)'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[http://www.pnas.org/content/112/40/12349](http://www.pnas.org/content/112/40/12349)[↩︎](#fnref6)'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[https://regexone.com/](https://regexone.com/)[↩︎](#fnref7)****'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL

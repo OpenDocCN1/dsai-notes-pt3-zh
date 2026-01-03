@@ -1,0 +1,1155 @@
+- en: 18  Organizing with Unix
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: 原文：[https://rafalab.dfci.harvard.edu/dsbook-part-1/productivity/unix.html](https://rafalab.dfci.harvard.edu/dsbook-part-1/productivity/unix.html)
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '[Productivity Tools](../productivity/intro-productivity.html)'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[18  Organizing with Unix](../productivity/unix.html)'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: 'Unix is the operating system of choice in data science. We will introduce you
+    to the Unix way of thinking using an example: how to keep a data analysis project
+    organized. We will learn some of the most commonly used commands along the way.
+    However, we won’t go into advanced details. We highly encourage you to learn more,
+    especially when you find yourself using the mouse or performing a repetitive task
+    often. In those cases, there is probably a more efficient way to do it in Unix.
+    Here are some basic courses to get you started:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: “Learn the Command Line” through codecademy[¹](#fn1)
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '“LinuxFoundationX: Introduction to Linux” through edX[²](#fn2)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: “The Unix Workbench” through coursera[³](#fn3)
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: There are many reference books[⁴](#fn4) as well. Bite Size Linux[⁵](#fn5) and
+    Bite Size Command Line[⁶](#fn6) are two particularly clear, succinct, and complete
+    examples.
+  prefs: []
+  type: TYPE_NORMAL
+- en: When searching for Unix resources, keep in mind that other terms used to describe
+    what we will learn here are *Linux*, *the shell*, and *the command line*. Basically,
+    what we are learning is a series of commands and a way of thinking that facilitates
+    the organization of files without using the mouse.
+  prefs: []
+  type: TYPE_NORMAL
+- en: To serve as motivation, we are going to start constructing a directory using
+    Unix tools and RStudio.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 18.1 Naming convention
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Before you start organizing projects with Unix you want to pick a name convention
+    that you will use to systematically name your files and directories. This will
+    help you find files and know what is in them.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'In general you want to name your files in a way that is related to their contents
+    and specifies how they relate to other files. The Smithsonian Data Management
+    Best Practices[⁷](#fn7) has “five precepts of file naming and organization” and
+    they are:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Have a distinctive, human-readable name that gives an indication of the content.
+  prefs:
+  - PREF_BQ
+  - PREF_BQ
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Follow a consistent pattern that is machine-friendly.
+  prefs:
+  - PREF_BQ
+  - PREF_BQ
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Organize files into directories (when necessary) that follow a consistent pattern.
+  prefs:
+  - PREF_BQ
+  - PREF_BQ
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Avoid repetition of semantic elements among file and directory names.
+  prefs:
+  - PREF_BQ
+  - PREF_BQ
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Have a file extension that matches the file format (no changing extensions!)
+  prefs:
+  - PREF_BQ
+  - PREF_BQ
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: For specific recommendations we highly recommend you follow The Tidyverse Style
+    Guide[⁸](#fn8).
+  prefs: []
+  type: TYPE_NORMAL
+- en: 18.2 The terminal
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Instead of clicking, dragging, and dropping to organize our files and folders,
+    we will be typing Unix commands into the terminal. The way we do this is similar
+    to how we type commands into the R console, but instead of generating plots and
+    statistical summaries, we will be organizing files on our system.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'The terminal is integrated into Mac and Linux systems, but Windows users will
+    have to install an *emulator*. Once you have a terminal open, you can start typing
+    commands. You should see a blinking cursor at the spot where what you type will
+    show up. This position is called the *command line*. Once you type something and
+    hit enter on Windows or return on the Mac, Unix will try to execute this command.
+    If you want to try out an example, type this command:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs: []
+  type: TYPE_PRE
+- en: The command `echo` is similar to `cat` in R. Executing this line should print
+    out `hello world`, then return back to the command line.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Notice that you can’t use the mouse to move around in the terminal. You have
+    to use the keyboard. To go back to a command you previously typed, you can use
+    the up arrow.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Note that above we included a chunk of code showing Unix commands in the same
+    way we have previously shown R commands. We will make sure to distinguish when
+    the command is meant for R and when it is meant for Unix.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 18.3 The filesystem
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: We refer to all the files, folders, and programs on your computer as *the filesystem*.
+    Keep in mind that folders and programs are also files, but this is a technicality
+    we rarely think about and ignore in this book. We will focus on files and folders
+    for now and discuss programs, or *executables*, in a later section.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 18.3.1 Directories and subdirectories
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: The first concept you need to grasp to become a Unix user is how your filesystem
+    is organized. You should think of it as a series of nested folders, each containing
+    files, folders, and executables.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Here is a visual representation of the structure we are describing:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![](../Images/a1d665f5ad428033af352589928ee871.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: 'In Unix, we refer to folders as *directories*. Directories that are inside
+    other directories are often referred to as *subdirectories*. So, for example,
+    in the figure above, the directory *docs* has two subdirectories: *reports* and
+    *resumes*, and *docs* is a subdirectory of *home*.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 18.3.2 The home directory
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: 'The *home* directory is where all your stuff is kept, as opposed to the system
+    files that come with your computer, which are kept elsewhere. In the figure above,
+    the directory called *home* represents your home directory, but that is rarely
+    the name used. On your system, the name of your home directory is likely the same
+    as your username on that system. Below are an example on Windows and Mac showing
+    a home directory, in this case, named *rafa*:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![](../Images/2e2826a2d89175ff69ae8797fafae4b7.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: '![](../Images/fd0317cebc86c9e0a3d7ab371ac5006e.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: 'Now, look back at the figure showing a filesystem. Suppose you are using a
+    point-and-click system and you want to remove the file *cv.tex*. Imagine that
+    on your screen you can see the *home* directory. To erase this file, you would
+    double click on the *home* directory, then *docs*, then *resumes*, and then drag
+    *cv.tex* to the trash. Here you are experiencing the hierarchical nature of the
+    system: *cv.tex* is a file inside the *resumes* directory, which is a subdirectory
+    inside the *docs* directory, which is a subdirectory of the *home* directory.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Now suppose you can’t see your home directory on your screen. You would somehow
+    need to make it appear on your screen. One way to do this is to navigate from
+    what is called the *root* directory all the way to your home directory. Any filesystem
+    will have what is called a *root* directory, which is the directory that contains
+    all directories. The *home* directory shown in the figure above will usually be
+    two or more levels from the root. On Windows, you will have a structure like this:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![](../Images/5d9815c46ec9ac0d70e14c93c8a83e5e.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: 'while on the Mac, it will be like this:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![](../Images/844e64c6ac56c64f141b52c81bcb3899.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: '*On Windows, the typical R installation will make your *Documents* directory
+    your home directory in R. This will likely be different from your home directory
+    in Git Bash. Generally, when we discuss home directories, we refer to the Unix
+    home directory which for Windows, in this book, is the Git Bash Unix directory.*'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '*18.3.3 Working directory*'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '*The concept of a *current location* is part of the point-and-click experience:
+    at any given moment we are *in a folder* and see the content of that folder. As
+    you search for a file, as we did above, you are experiencing the concept of a
+    current location: once you double click on a directory, you change locations and
+    are now *in that folder*, as opposed to the folder you were in before.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: In Unix, we don’t have the same visual cues, but the concept of a *current location*
+    is indispensable. We refer to this as the *working directory*. Each terminal window
+    you have open has a working directory associated with it.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'How do we know what is our working directory? To answer this, we learn our
+    next Unix command: `pwd`, which stands for *print working directory*. This command
+    returns the working directory.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Open a terminal and type:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE1]'
+  prefs: []
+  type: TYPE_PRE
+- en: We do not show the result of running this command because it will be quite different
+    on your system compared to others. If you open a terminal and type `pwd` as your
+    first command, you should see something like `/Users/yourusername` on a Mac or
+    something like `/c/Users/yourusername` on Windows. The character string returned
+    by calling `pwd` represents your working directory. When we first open a terminal,
+    it will start in our home directory so in this case the working directory is the
+    home directory.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Notice that the forward slashes `/` in the strings above separate directories.
+    So, for example, the location `/c/Users/rafa` implies that our working directory
+    is called `rafa` and it is a subdirectory of `Users`, which is a subdirectory
+    of `c`, which is a subdirectory of the root directory. The root directory is therefore
+    represented by just a forward slash: `/`.*'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '*18.3.4 Paths*'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '*We refer to the string returned by `pwd` as the *full path* of the working
+    directory. The name comes from the fact that this string spells out the *path*
+    you need to follow to get to the directory in question from the root directory.
+    Every directory has a full path. Later, we will about *relative paths*, which
+    tell us how to get to a directory from the working directory.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: In Unix, we use the shorthand `~` as a nickname for your home directory. So,
+    for example, if `docs` is a directory in your home directory, the full path for
+    *docs* can be written like this `~/docs`.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Most terminals will show the path to your working directory right on the command
+    line. If you are using default settings and open a terminal on the Mac, you will
+    see that right at the command line you have something like `computername:~ username`
+    with `~` representing your working directory, which in this example is the home
+    directory `~`. The same is true for the Git Bash terminal where you will see something
+    like `username@computername MINGW64 ~`, with the working directory at the end.
+    When we change directories, we will see this change on both Macs and Windows.*
+  prefs: []
+  type: TYPE_NORMAL
+- en: '*18.4 Unix commands*'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '*We will now learn a series of Unix commands that will permit us to prepare
+    a directory for a data science project. We also provide examples of commands that,
+    if you type into your terminal, will return an error. This is because we are assuming
+    the filesystem in the earlier diagram. Your filesystem is different. In the next
+    section, we will provide examples that you can type in.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '18.4.1 `ls`: Listing directory content'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: In a point-and-click system, we know what is in a directory because we see it.
+    In the terminal, we do not see the icons. Instead, we use the command `ls` to
+    list the directory content.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'To see the content of your home directory, open a terminal and type:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE2]'
+  prefs: []
+  type: TYPE_PRE
+- en: We will see more examples soon.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '18.4.2 `mkdir` and `rmdir`: make and remove a directory'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: When we are preparing for a data science project, we will need to create directories.
+    In Unix, we can do this with the command `mkdir`, which stands for *make directory*.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Because you will soon be working on several projects, we highly recommend creating
+    a directory called *projects* in your home directory.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'You can try this particular example on your system. Open a terminal and type:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE3]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'If you do this correctly, nothing will happen: no news is good news. If the
+    directory already exists, you will get an error message and the existing directory
+    will remain untouched.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'To confirm that you created the directory, you can list the contents of the
+    current working directory:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE4]'
+  prefs: []
+  type: TYPE_PRE
+- en: You should see the directory we just created listed. Perhaps you can also see
+    many other directories that were already on your computer.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'For illustrative purposes, let’s make a few more directories. You can list
+    more than one directory name like this:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE5]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'You can check to see if the three directories were created:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE6]'
+  prefs: []
+  type: TYPE_PRE
+- en: If you made a mistake and need to remove the directory, you can use the command
+    `rmdir` to remove it.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE7]'
+  prefs: []
+  type: TYPE_PRE
+- en: This will remove the directory as long as it is empty. If it is not empty, you
+    will get an error message and the directory will remain untouched. To remove directories
+    that are not empty, we will learn about the command `rm` later.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '18.4.3 `cd`: navigating the filesystem by changing directories'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: Next we want to create directories inside directories that we have already created.
+    We also want to avoid pointing and clicking our way through the filesystem. We
+    explain how to do this in Unix, using the command line.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Suppose we open a terminal and our working directory is our home directory.
+    We want to change our working directory to `projects`. We do this using the `cd`
+    command, which stands for *change directory*:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE8]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'To check that the working directory changed, we can use a command we previously
+    learned to see our location:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE9]'
+  prefs: []
+  type: TYPE_PRE
+- en: Our working directory should now be `~/projects`. Note that on your computer
+    the home directory `~` will be spelled out to something like `/c/Users/yourusername`.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '*In Unix you can auto-complete by hitting tab. This means that we can type
+    `cd d` then hit tab. Unix will either auto-complete if `docs` is the only directory/file
+    starting with `d` or show you the options. Try it out! Using Unix without auto-complete
+    can make it unbearable.*  *When using `cd`, we can either type a full path, which
+    will start with `/` or `~`, or a *relative path*. In the example above, in which
+    we typed `cd projects`, we used a relative path. If the path you type does not
+    start with `/` or `~`, Unix will assume you are typing a relative path, meaning
+    that it will look for the directory in your current working directory. So something
+    like this will give you an error:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE10]'
+  prefs: []
+  type: TYPE_PRE
+- en: because there is no `Users` directory in your working directory.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Now suppose we want to move back to the directory in which `projects` is a
+    subdirectory, referred to as the *parent directory*. We could use the full path
+    of the parent directory, but Unix provides a shortcut for this: the parent directory
+    of the working directory is represented with two dots: `..` so to move back we
+    simply type:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE11]'
+  prefs: []
+  type: TYPE_PRE
+- en: You should now be back in your home directory which you can confirm using `pwd`.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Because we can use full paths with `cd`, the following command:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE12]'
+  prefs: []
+  type: TYPE_PRE
+- en: will always take us back to the home directory, no matter where we are in the
+    filesystem.
+  prefs: []
+  type: TYPE_NORMAL
+- en: The working directory also has a nickname, which is a single `.` so if you type
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE13]'
+  prefs: []
+  type: TYPE_PRE
+- en: you will not move. Although this particular use of `.` is not useful, this nickname
+    does come in handy sometimes. The reasons are not relevant for this section, but
+    you should still be aware of this fact.
+  prefs: []
+  type: TYPE_NORMAL
+- en: In summary, we have learned that when using `cd` we either stay put, move to
+    a new directory using the desired directory name, or move back to the parent directory
+    using `..`.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'When typing directory names, we can concatenate directories with the forward-slashes.
+    So if we want a command that takes us to the `projects` directory no matter where
+    we are in the filesystem, we can type:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE14]'
+  prefs: []
+  type: TYPE_PRE
+- en: which is equivalent to writing the entire path out. For example, in Windows
+    we would write something like
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE15]'
+  prefs: []
+  type: TYPE_PRE
+- en: The last two commands are equivalent and in both cases we are typing the full
+    path.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'We can also concatenate directory names for relative paths. For instance, if
+    we want to move back to the parent directory of the parent directory of the working
+    directory, we can type:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE16]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Here are a couple of final tips related to the `cd` command. First, you can
+    go back to whatever directory you just left by typing:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE17]'
+  prefs: []
+  type: TYPE_PRE
+- en: This can be useful if you type a very long path and then realize you want to
+    go back to where you were, and that too has a very long path.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Second, if you just type:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE18]'
+  prefs: []
+  type: TYPE_PRE
+- en: you will be returned to your home directory.*
+  prefs: []
+  type: TYPE_NORMAL
+- en: '*18.4.4 Examples*'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '*Let’s explore some examples of using `cd`. To help visualize, we will show
+    the graphical representation of our filesystem vertically:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![](../Images/bedeb24f7c735dd9fedcf2c52524c625.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: Suppose our working directory is `~/projects` and we want to move to `figs`
+    in `project-1`.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Here it is convenient to use relative paths:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE19]'
+  prefs: []
+  type: TYPE_PRE
+- en: Now suppose our working directory is `~/projects` and we want to move to `reports`
+    in `docs`, how can we do this?
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'One way is to use relative paths:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE20]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Another is to use the full path:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE21]'
+  prefs: []
+  type: TYPE_PRE
+- en: If you are trying this out on your system, remember to use auto-complete.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Let’s examine one more example. Suppose we are in `~/projects/project-1/figs`
+    and want to change to `~/projects/project-2`. Again, there are two ways.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'With relative paths:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE22]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'and with full paths:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE23]**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**18.5 More Unix commands**'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '**### 18.5.1 `mv`: moving files'
+  prefs: []
+  type: TYPE_NORMAL
+- en: In a point-and-click system, we move files from one directory to another by
+    dragging and dropping. In Unix, we use the `mv` command.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '*`mv` will not ask “are you sure?” if your move results in overwriting a file.*  *Now
+    that you know how to use full and relative paths, using `mv` is relatively straightforward.
+    The general form is:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE24]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'For example, if we want to move the file `cv.tex` from `resumes` to `reports`,
+    you could use the full paths like this:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE25]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'You can also use relative paths. You could do this:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE26]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'or this:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE27]'
+  prefs: []
+  type: TYPE_PRE
+- en: Notice that in the last one we used the working directory shortcut `.` to give
+    a relative path as the destination directory.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'We can also use `mv` to change the name of a file. To do this, instead of the
+    second argument being the destination directory, it also includes a filename.
+    So, for example, to change the name from `cv.tex` to `resume.tex`, we simply type:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE28]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'We can also combine the move and a rename. For example:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE29]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'And we can move entire directories. To move the `resumes` directory into `reports`,
+    we do as follows:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE30]'
+  prefs: []
+  type: TYPE_PRE
+- en: It is important to add the last `/` to make it clear you do not want to rename
+    the `resumes` directory to `reports`, but rather move it into the `reports` directory.*
+  prefs: []
+  type: TYPE_NORMAL
+- en: '*18.5.2 `cp`: copying files*'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '*The command `cp` behaves similar to `mv` except instead of moving, we copy
+    the file, meaning that the original file stays untouched.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'So in all the `mv` examples above, you can switch `mv` to `cp` and they will
+    copy instead of move with one exception: we can’t copy entire directories without
+    learning about arguments, which we do later.*'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '*18.5.3 `rm`: removing files*'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '*In point-and-click systems, we remove files by dragging and dropping them
+    into the trash or using a special click on the mouse. In Unix, we use the `rm`
+    command.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '*Unlike throwing files into the trash, `rm` is permanent. Be careful!*  *The
+    general way it works is as follows:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE31]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'You can actually list files as well like this:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE32]'
+  prefs: []
+  type: TYPE_PRE
+- en: You can use full or relative paths. To remove non-empty directories, you will
+    have to learn about arguments, which we do later.**
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**18.5.4 `less`: looking at a file**'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '**Often you want to quickly look at the content of a file. If this file is
+    a text file, the quickest way to do is by using the command `less`. To look a
+    the file `cv.tex`, you do this:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE33]'
+  prefs: []
+  type: TYPE_PRE
+- en: To exit the viewer, you type `q`. If the files are long, you can use the arrow
+    keys to move up and down. There are many other keyboard commands you can use within
+    `less` to, for example, search or jump pages.
+  prefs: []
+  type: TYPE_NORMAL
+- en: If you are wondering why the command is called `less`, it is because the original
+    was called `more`, as in “show me more of this file”. The second version was called
+    `less` because of the saying “less is more”.****
+  prefs: []
+  type: TYPE_NORMAL
+- en: '***18.6 Case study: Preparing for a project***'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '***We are now ready to prepare a directory for a project. We will use the US
+    murders project[⁹](#fn9) as an example.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'You should start by creating a directory where you will keep all your projects.
+    We recommend a directory called *projects* in your home directory. To do this
+    you would type:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE34]'
+  prefs: []
+  type: TYPE_PRE
+- en: Our project relates to gun violence murders so we will call the directory for
+    our project `murders`. It will be a subdirectory in our projects directories.
+    In the `murders` directory, we will create two subdirectories to hold the raw
+    data and intermediate data. We will call these `data` and `rda`, respectively.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Open a terminal and make sure you are in the home directory:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE35]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Now run the following commands to create the directory structure we want. At
+    the end, we use `ls` and `pwd` to confirm we have generated the correct directories
+    in the correct working directory:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE36]'
+  prefs: []
+  type: TYPE_PRE
+- en: Note that the full path of our `murders` dataset is `~/projects/murders`.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'So if we open a new terminal and want to navigate into that directory we type:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE37]'
+  prefs: []
+  type: TYPE_PRE
+- en: In [Section 20.3](reproducible-projects.html#sec-organizing) we will describe
+    how we can use RStudio to organize a data analysis project, once these directories
+    have been created.***
+  prefs: []
+  type: TYPE_NORMAL
+- en: '***18.7 Advanced Unix***'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '***Most Unix implementations include a large number of powerful tools and utilities.
+    We have just learned the very basics here. We recommend that you use Unix as your
+    main file management tool. It will take time to become comfortable with it, but
+    as you struggle, you will find yourself learning just by looking up solutions
+    on the internet. In this section, we superficially cover slightly more advanced
+    topics. The main purpose of the section is to make you aware of what is available
+    rather than explain everything in detail.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 18.7.1 Arguments
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: 'Most Unix commands can be run with arguments. Arguments are typically defined
+    by using a dash `-` or two dashes `--` (depending on the command) followed by
+    a letter or a word. An example of an argument is the `-r` behind `rm`. The `r`
+    stands for recursive, and the result is that files and directories are removed
+    recursively, which means that if you type:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE38]'
+  prefs: []
+  type: TYPE_PRE
+- en: all files, subdirectories, files in subdirectories, subdirectories in subdirectories,
+    and so on, will be removed. This is equivalent to throwing a folder in the trash,
+    except you can’t recover it. Once you remove it, it is deleted for good. Often,
+    when you are removing directories, you will encounter files that are protected.
+    In such cases, you can use the argument `-f` which stands for `force`.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'You can also combine arguments. For instance, to remove a directory regardless
+    of protected files, you type:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE39]'
+  prefs: []
+  type: TYPE_PRE
+- en: Remember that once you remove there is no going back, so use this command very
+    carefully.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'A command that is often called with argument is `ls`. Here are some examples:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE40]'
+  prefs: []
+  type: TYPE_PRE
+- en: The `a` stands for all. This argument makes `ls` show you all files in the directory,
+    including hidden files. In Unix, all files starting with a `.` are hidden. Many
+    applications create hidden directories to store important information without
+    getting in the way of your work. An example is `git` (which we cover in depth
+    in [Chapter 19](git.html)). Once you initialize a directory as a git directory
+    with `git init`, a hidden directory called `.git` is created. Another hidden file
+    is the `.gitignore` file.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Another example of using an argument is:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE41]'
+  prefs: []
+  type: TYPE_PRE
+- en: The `l` stands for long and the result is that more information about the files
+    is shown.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'It is often useful to see files in chronological order. For that we use:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE42]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'and to reverse the order of how files are shown you can use:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE43]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'We can combine all these arguments to show more information for all files in
+    reverse chronological order:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE44]'
+  prefs: []
+  type: TYPE_PRE
+- en: Each command has a different set of arguments. In the next section, we learn
+    how to find out what they each do.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 18.7.2 Getting help
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: 'As you may have noticed, Unix uses an extreme version of abbreviations. This
+    makes it very efficient, but hard to guess how to call commands. To make up for
+    this weakness, Unix includes complete help files or *man pages* (man is short
+    for manual). In most systems, you can type `man` followed by the command name
+    to get help. So for `ls`, we would type:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE45]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'This command is not available in some of the compact implementations of Unix,
+    such as Git Bash. An alternative way to get help that works on Git Bash is to
+    type the command followed by `--help`. So for `ls`, it would be as follows:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE46]'
+  prefs: []
+  type: TYPE_PRE
+- en: 18.7.3 Pipes
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: 'The help pages are typically long and if you type the commands above to see
+    the help, it scrolls all the way to the end. It would be useful if we could save
+    the help to a file and then use `less` to see it. The `pipe`, written like this
+    `|`, does something similar. It *pipes* the results of a command to the command
+    after the `pipe`. This is similar to the pipe `|>` that we use in R. To get more
+    help we thus can type:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE47]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'or in Git Bash:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE48]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'This is also useful when listing files with many files. We can type:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE49]'
+  prefs: []
+  type: TYPE_PRE
+- en: 18.7.4 Wild cards
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: 'Some of the most powerful aspects of Unix are the *wild cards*. Suppose we
+    want to remove all the temporary html files produced while trouble shooting for
+    a project. Imagine there are dozens of files. It would be quite painful to remove
+    them one by one. In Unix, we can actually write an expression that means all the
+    files that end in `.html`. To do this we type *wild card*: `*`. As discussed in
+    the data wrangling part of this book, this character means any number of any combination
+    of characters. Specifically, to list all html files, we would type:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE50]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'To remove all html files in a directory, we would type:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE51]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*The other useful wild card is the `?` symbol. This means any single character.
+    So if all the files we want to erase have the form `file-001.html` with the numbers
+    going from 1 to 999, we can type:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE52]'
+  prefs: []
+  type: TYPE_PRE
+- en: This will only remove files with that format.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'We can combine wild cards. For example, to remove all files with the form `file-001`
+    up to `file-999` regardless of suffix, we can type:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE53]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*Combining rm with the `*` wild card can be dangerous. There are combinations
+    of these commands that will erase your entire filesystem without asking “are you
+    sure?”. So make sure you understand how it works before using this wild card with
+    the `rm` command. We recommend always checking what files will match the wild
+    card first by using the `ls` command.**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**18.7.5 Environment variables**'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '**Unix has settings that affect your command line *environment*. These are
+    called environment variables. The home directory is one of them. We can actually
+    change some of these. In Unix, variables are distinguished from other entities
+    by adding a `$` in front. The home directory is stored in `$HOME`.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Earlier we saw that `echo` is the Unix command for print. So we can see our
+    home directory by typing:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE54]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'You can see them all by typing:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE55]'
+  prefs: []
+  type: TYPE_PRE
+- en: You can change some of these environment variables. But their names vary across
+    different *shells*. We describe shells in the next section.**
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**18.7.6 Shells**'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '**Much of what we use in this chapter is part of what is called the *Unix shell*.
+    There are actually different shells, but the differences are almost unnoticeable.
+    They are also important, although we do not cover those here. You can see what
+    shell you are using by typing:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE56]'
+  prefs: []
+  type: TYPE_PRE
+- en: The most common one is `bash`.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Once you know the shell, you can change environmental variables. In Bash Shell,
+    we do it using `export variable value`. To change the path, described in more
+    detail soon, you would type:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE57]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*Don’t actually run this command though!*  *There is a program that is run
+    before each terminal starts where you can edit variables so they change whenever
+    you call the terminal. This changes in different implementations, but if using
+    bash, you can create a file called `.bashrc`, `.bash_profile`,`.bash_login`, or
+    `.profile`. You might already have one.***'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '***18.7.7 Executables***'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '***In Unix, all programs are files. They are called executables. So `ls`, `mv`
+    and `git` are all files. But where are these program files? You can find out using
+    the command `which`:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE58]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*That directory is probably full of program files. The directory `/usr/bin`
+    usually holds many program files. If you type:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE59]'
+  prefs: []
+  type: TYPE_PRE
+- en: in your terminal, you will see several executable files.
+  prefs: []
+  type: TYPE_NORMAL
+- en: There are other directories that usually hold program files. The Application
+    directory in the Mac or Program Files directory in Windows are examples.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'When you type `ls`, Unix knows to run a program which is an executable that
+    is stored in some other directory. So how does Unix know where to find it? This
+    information is included in the environmental variable `$PATH`. If you type:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE60]'
+  prefs: []
+  type: TYPE_PRE
+- en: you will see a list of directories separated by `:`. The directory `/usr/bin`
+    is probably one of the first ones on the list.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Unix looks for program files in those directories in that order. Although we
+    don’t teach it here, you can actually create executables yourself. However, if
+    you put it in your working directory and this directory is not on the path, you
+    can’t run it just by typing the command. You get around this by typing the full
+    path. So if your command is called my-ls, you can type:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE61]'
+  prefs: []
+  type: TYPE_PRE
+- en: Once you have mastered the basics of Unix, you should consider learning to write
+    your own executables as they can help alleviate repetitive work.****
+  prefs: []
+  type: TYPE_NORMAL
+- en: '****18.7.8 Permissions and file types****'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '****If you type:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE62]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'At the beginning, you will see a series of symbols like this `-rw-r--r--`.
+    This string indicates the type of file: regular file `-`, directory `d`, or executable
+    `x`. This string also indicates the permission of the file: is it readable? writable?
+    executable? Can other users on the system read the file? Can other users on the
+    system edit the file? Can other users execute if the file is executable? This
+    is more advanced than what we cover here, but you can learn much more in a Unix
+    reference book.****'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '****18.7.9 Commands you should learn****'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '****There are many commands that we do not teach in this book, but we want
+    to make you aware of them and what they do. They are:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'open/start - On the Mac, `open filename` tries to figure out the right application
+    of the filename and open it with that application. This is a very useful command.
+    On Git Bash, you can try `start filename`. Try opening an `R` or `Rmd` file with
+    `open` or `start`: it should open them with RStudio.'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: nano - Opens a bare-bones text editor.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: tar - Archives files and subdirectories of a directory into one file.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: ssh - Connects to another computer.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: find - Finds files by filename on your system.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: grep - Searches for patterns in a file.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: awk/sed - These are two very powerful commands that permit you to find specific
+    strings in files and change them.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: ln - Creates a symbolic link. We do not recommend its use, but you should be
+    familiar with it.****
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '****18.7.10 File manipulation in R****'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '****We can also perform file management from within R. The key functions to
+    learn about can be seen by looking at the help file for `[?files](https://rdrr.io/r/base/files.html)`[^(10)](#fn10).
+    Another useful function is `unlink`.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Although not generally recommended, you can run Unix commands in R using `system`.*******
+  prefs: []
+  type: TYPE_NORMAL
+- en: '* * *'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '*****1.  [https://www.codecademy.com/learn/learn-the-command-line](https://www.codecademy.com/learn/learn-the-command-line)[↩︎](#fnref1)'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[https://www.edx.org/course/introduction-linux-linuxfoundationx-lfs101x-1](https://www.edx.org/course/introduction-linux-linuxfoundationx-lfs101x-1)[↩︎](#fnref2)'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[https://www.coursera.org/learn/unix](https://www.coursera.org/learn/unix)[↩︎](#fnref3)'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[https://www.quora.com/Which-are-the-best-Unix-Linux-reference-books](https://www.quora.com/Which-are-the-best-Unix-Linux-reference-books)[↩︎](#fnref4)'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[https://gumroad.com/l/bite-size-linux](https://gumroad.com/l/bite-size-linux)[↩︎](#fnref5)'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[https://jvns.ca/blog/2018/08/05/new-zine--bite-size-command-line/](https://jvns.ca/blog/2018/08/05/new-zine--bite-size-command-line/)[↩︎](#fnref6)'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[https://library.si.edu/sites/default/files/tutorial/pdf/filenamingorganizing20180227.pdf](https://library.si.edu/sites/default/files/tutorial/pdf/filenamingorganizing20180227.pdf)[↩︎](#fnref7)'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[https://style.tidyverse.org/](https://style.tidyverse.org/)[↩︎](#fnref8)'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[https://github.com/rairizarry/murders](https://github.com/rairizarry/murders)[↩︎](#fnref9)'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[https://rdrr.io/r/base/files.html](https://rdrr.io/r/base/files.html)[↩︎](#fnref10)*****'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL

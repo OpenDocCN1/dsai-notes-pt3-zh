@@ -1,0 +1,832 @@
+- en: 21  Working with Matrices in R
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: 原文：[https://rafalab.dfci.harvard.edu/dsbook-part-2/highdim/matrices-in-R.html](https://rafalab.dfci.harvard.edu/dsbook-part-2/highdim/matrices-in-R.html)
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '[High Dimensional Data](../highdim/intro-highdim.html)'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[21  Working with Matrices in R](../highdim/matrices-in-R.html)'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: When the number of variables associated with each observation is large and they
+    can all be represented as numbers, it is often more convenient to store the data
+    in a matrix and perform the analysis using linear algebra operations, rather than
+    storing the data in a data frame and using **tidyverse** or **data.table** functions.
+    Matrix operations form the computational foundation for many applications of linear
+    algebra in data analysis.
+  prefs: []
+  type: TYPE_NORMAL
+- en: In fact, many of the most widely used machine learning algorithms, including
+    linear regression, principal component analysis, neural networks, and deep learning,
+    are built around linear algebra concepts, and their implementations rely heavily
+    on efficient matrix operations. Becoming fluent in creating, manipulating, and
+    interpreting matrices in R will make it easier to understand and implement these
+    methods in practice.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Although we introduce the mathematical framework of linear algebra in the next
+    chapter, the examples we use there rely on being able to work with matrices in
+    R. Therefore, before diving into the mathematical concepts, we begin here with
+    the tools needed to create and operate on matrices in R.
+  prefs: []
+  type: TYPE_NORMAL
+- en: In [Section 21.5](#sec-motivating-tasks), at the end of the chapter, we present
+    motivating examples and specific practical tasks that commonly arise in machine
+    learning workflows, such as centering and scaling variables, computing distances,
+    and applying linear transformations. These tasks can be completed efficiently
+    using matrix operations, and the skills you develop in the earlier sections of
+    the chapter will help you solve them. If you would like to understand the motivation
+    for learning the matrix operations introduced in the previous sections, you may
+    find it helpful to read [Section 21.5](#sec-motivating-tasks) first.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 21.1 Notation
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: A matrix is a two-dimensional object defined by its number of rows and columns.
+    In data analysis, it is common to organize data so that each row represents an
+    observation and each column represents a variable measured on those observations.
+    This structure allows us to perform computations across observations or variables
+    using matrix operations, which are both efficient and conceptually aligned with
+    the linear algebra techniques introduced in the next chapters.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Note that matrices are a special case of `array`s, which can have more than
+    two dimensions. For the concepts and applications covered in this book, matrices
+    are sufficient. However, arrays are useful in more advanced settings, such as
+    tensor-based computations, where data often have three or more dimensions.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '*In machine learning, variables are often called *features*, while in statistics,
+    they are often called *covariates*. Regardless of the terminology, when working
+    with matrices, features are typically represented by the columns of the matrix,
+    each column corresponds to one variable measured across all observations.*  *In
+    mathematical notation, matrices are usually represented with bold uppercase letters:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[ \mathbf{X} = \begin{bmatrix} x_{11}&x_{12}&\dots & x_{1p}\\ x_{21}&x_{22}&\dots
+    & x_{2p}\\ \vdots & \vdots & \ddots & \vdots\\ x_{n1}&x_{n2}&\dots&x_{np}\\ \end{bmatrix}
+    \]
+  prefs: []
+  type: TYPE_NORMAL
+- en: with \(x_{ij}\) representing the \(j\)-th variable for the \(i\)-th observation.
+    The matrix is said to have dimensions \(n \times p\), meaning it has \(n\) rows
+    and \(p\) columns.
+  prefs: []
+  type: TYPE_NORMAL
+- en: We denote vectors with lower case bold letters and represent them as one column
+    matrices, often referred to as *column vectors*. R follows this convention when
+    converting a vector to a matrix. For example `as.matrix(1:n)` will have dimensions
+    `n` `1`.
+  prefs: []
+  type: TYPE_NORMAL
+- en: However, *column vectors* should not be confused with the columns of the matrix.
+    They have this name simply because they have one column.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Mathematical descriptions of machine learning often make reference to vectors
+    representing the \(p\) variables:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[ \mathbf{x} = \begin{bmatrix} x_1\\\ x_2\\\ \vdots\\\ x_p \end{bmatrix} \]
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'To distinguish between variables associated with the observations \(i=1,\dots,n\),
+    we add an index:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[ \mathbf{x}_i = \begin{bmatrix} x_{i1}\\ x_{i2}\\ \vdots\\ x_{ip} \end{bmatrix}
+    \]
+  prefs: []
+  type: TYPE_NORMAL
+- en: '*Bold lower case letters are also commonly used to represent matrix columns
+    rather than rows. This can be confusing because \(\mathbf{x}_1\) can represent
+    either the first row or the first column of \(\mathbf{X}\). One way to distinguish
+    is to use notation similar to computer code. Specifically, using the colon \(:\)
+    to represent *all*. So \(\mathbf{X}_{1,:}\) represents the first row and \(\mathbf{X}_{:,1}\)
+    is the first column. Another approach is to distinguish by the letter used to
+    index, with \(i\) used for rows and \(j\) used for columns. So \(\mathbf{x}_i\)
+    is the \(i\)th row and \(\mathbf{x}_j\) is the \(j\)th column. With this approach,
+    it is important to clarify which dimension, row or column is being represented.
+    Further confusion can arise because, as aforementioned, it is common to represent
+    all vectors, including the rows of a matrix, as one-column matrices.**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**21.2 Case study: MNIST**'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '**The first step in handling mail received in the post office is to sort letters
+    by zip code:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![](../Images/52c4d01c83baa6ac7efc5549a14e849c.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: In the Machine Learning part of this book, we will describe how we can build
+    computer algorithms to read handwritten digits, which robots then use to sort
+    the letters. To do this, we first need to collect data, which in this case is
+    a high-dimensional dataset and best stored in a matrix.
+  prefs: []
+  type: TYPE_NORMAL
+- en: The MNIST dataset was generated by digitizing thousands of handwritten digits,
+    already read and annotated by humans[¹](#fn1). Below are three images of written
+    digits.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![](../Images/8bfa2b8d38c5b06baae6aa11473181a9.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: 'The images are converted into \(28 \times 28 = 784\) pixels and, for each pixel,
+    we obtain a grey scale intensity between 0 (white) and 255 (black). The following
+    plot shows the individual variables for each image:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![](../Images/4b66f033b0f8ca3bf6631f22545adb3e.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: Each digitized image, indexed by \(i\), is represented by 784 numerical variables
+    corresponding to pixel intensities, along with a categorical outcome, or label,
+    specifying the digit (\(0\)-\(9\)) depicted in the image.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Let’s load the data using the **dslabs** package:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*The pixel intensities are saved in a matrix:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE1]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*The labels associated with each image are included in a vector:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE2]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*To simplify the code below, we will rename these `x` and `y` respectively:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE3]*****'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '****21.3 Matrix Operations in R****'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '****Before we define and work through the tasks designed to teach matrix operations,
+    we begin by reviewing some basic matrix functionality in R.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Creating a matrix
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: Scalars, vectors, and matrices are the basic building blocks of linear algebra.
+    We have already encountered vectors in earlier chapters, and in R, scalars are
+    represented as vectors of length 1\. We now extend this understanding to matrices,
+    starting with how to create them in R.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'We can create a matrix using the `matrix` function. The first argument is a
+    vector containing the elements that will fill up the matrix. The second and third
+    arguments determine the number of row and columns, respectively. So a typical
+    way to create a matrix is to first obtain a vector of numbers containing the elements
+    of the matrix and feeding it to the `matrix` function. For example, to create
+    a \(100 \times 2\) matrix of normally distributed random variables, we write:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE4]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*Note that by default the matrix is filled in column by column:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE5]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*To fill the matrix row by row, we can use the `byrow` argument:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE6]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*The function `as.vector` converts a matrix back into a vector:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE7]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**If the product of columns and rows does not match the length of the vector
+    provided in the first argument, `matrix` recycles values. If the length of the
+    vector is a sub-multiple or multiple of the number of rows, this happens **without
+    warning**:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE8]*  **The function `[as.matrix()](https://rdrr.io/r/base/matrix.html)`
+    attempts to coerce its input into a matrix:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE9]******'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '****Dimensions of a matrix****'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '****The dimension of a matrix is an important characteristic needed to assure
+    that certain linear algebra operations can be performed. The dimension is a two-number
+    summary defined as the number of rows \(\times\) the number of columns.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'The `nrow` function tells us how many rows that matrix has. Here is the number
+    of rows `x` previously defined to store the MNIST training data:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE10]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*The function `ncol` tells us how many columns:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE11]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*We learn that our dataset contains 60,000 observations (images) and 784 variables
+    (pixels).'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'The `dim` function returns the rows and columns:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE12]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*Now we can confirm that R follows the convention of defining vectors of length
+    \(n\) as \(n\times 1\) matrices or *column vectors*:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE13]*******'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '****Subsetting****'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '****To extract a specific entry from a matrix, for example the 300th row of
+    the 100th column, we write:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE14]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*We can extract subsets of the matrices by using vectors of indexes. For example,
+    we can extract the first 100 pixels from the first 300 observations like this:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE15]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*To extract an entire row or subset of rows, we leave the column dimension
+    blank. So the following code returns all the pixels for the first 300 observations:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE16]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*Similarly, we can subset any number of columns by keeping the first dimension
+    blank. Here is the code to extract the first 100 pixels:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE17]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**If we subset just one row or just one column, the resulting object is no
+    longer a matrix. For example notice what happens here:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE18]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*To avoid this, we can use the `drop` argument:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE19]**********'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '*****The transpose*****'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '*****A common operation when working with matrices is the *transpose*. We use
+    the transpose to understand several concepts described in the next several sections.
+    This operation simply converts the rows of a matrix into columns. We use the symbols
+    \(\top\) or \(''\) next to the bold upper case letter to denote the transpose:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[ \text{if } \, \mathbf{X} = \begin{bmatrix} x_{11}&\dots & x_{1p} \\ x_{21}&\dots
+    & x_{2p} \\ \vdots & \ddots & \vdots & \\ x_{n1}&\dots & x_{np} \end{bmatrix}
+    \text{ then }\, \mathbf{X}^\top = \begin{bmatrix} x_{11}&x_{21}&\dots & x_{n1}
+    \\ \vdots & \vdots & \ddots & \vdots \\ x_{1p}&x_{2p}&\dots & x_{np} \end{bmatrix}
+    \]
+  prefs: []
+  type: TYPE_NORMAL
+- en: In R we compute the transpose using the function `t`
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE20]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*One use of the transpose is that we can write the matrix \(\mathbf{X}\) as
+    rows of the column vectors representing the variables for each individual observation
+    in the following way:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[ \mathbf{X} = \begin{bmatrix} \mathbf{x}_1^\top\\ \mathbf{x}_2^\top\\ \vdots\\
+    \mathbf{x}_n^\top \end{bmatrix} \]******
+  prefs: []
+  type: TYPE_NORMAL
+- en: '*****Row and column summaries*****'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '*****A common operation with matrices is to apply the same function to each
+    row or to each column. For example, we may want to compute row averages and standard
+    deviations. The `apply` function lets you do this. The first argument is the matrix,
+    the second is the dimension, 1 for rows, 2 for columns, and the third is the function
+    to be applied.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'So, for example, to compute the averages and standard deviations of each row,
+    we write:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE21]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*To compute these for the columns, we simply change the 1 to a 2:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE22]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*Because these operations are so common, special functions are available to
+    perform them. So, for example, the functions `rowMeans` computes the average of
+    each row:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE23]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*and the function `rowSds` from the **matrixStats** packages computes the standard
+    deviations for each row:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE24]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*The functions `colMeans` and `colSds` provide the version for columns.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: For other fast implementations of common operation take a look at what is availabe
+    in the **matrixStats** package.*********
+  prefs: []
+  type: TYPE_NORMAL
+- en: '****Conditional filtering****'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '****One of the advantages of matrices operations over **tidyverse** operations
+    is that we can easily select columns based on summaries of the columns.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Note that logical filters can be used to subset matrices in a similar way in
+    which they can be used to subset vectors. Here is a simple example subsetting
+    columns with logicals:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE25]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*This implies that we can select rows with conditional expression. In the following
+    example we remove all observations containing at least one `NA`:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE26]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*This being a common operation, we have a **matrixStats** function to do it
+    faster:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE27]******'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '****Indexing with matrices****'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '****An operation that facilitates efficient coding is that we can change entries
+    of a matrix based on conditionals applied to that same matrix. Here is a simple
+    example:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE28]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*A useful application of this approach is that we can change all the `NA` entries
+    of a matrix to something else:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE29]*********'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '****21.4 Vectorization for matrices****'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '****Vectorization is one of the main reasons R is so efficient for numerical
+    computation with data. Many operations that would otherwise require explicit loops
+    can instead be applied directly to entire matrices or vectors, making the code
+    both faster and easier to read.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Matrix–vector operations
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: 'A common example of matrix vectorization is centering rows: subtracting the
+    mean of each row from its corresponding entries. Although this can be done with
+    the `[scale()](https://rdrr.io/r/base/scale.html)` function'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE30]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*R’s vectorization rules make it possible to achieve this more directly and
+    efficiently. We use row centering as an example, but this approach applies broadly
+    to many operations discussed throughout this chapter.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'In R, if we subtract a vector `a` from a matrix `x`: `x-a`, the first element
+    of `a` is subtracted from the first row, the second element from the second row,
+    and so on. Mathematically, this operation can be written as:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[ \begin{bmatrix} X_{11}&\dots & X_{1p} \\ X_{21}&\dots & X_{2p} \\ \vdots
+    & \ddots & \vdots \\ X_{n1}&\dots & X_{np} \end{bmatrix} - \begin{bmatrix} a_1\\
+    a_2\\ \vdots \\ a_n \end{bmatrix} = \begin{bmatrix} X_{11}-a_1&\dots & X_{1p}-a_1\\
+    X_{21}-a_2&\dots & X_{2p}-a_2\\ \vdots & \ddots & \vdots\\ X_{n1}-a_n&\dots &
+    X_{np}-a_n \end{bmatrix} \]
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'This means we can center each row of `x` with this single line of code:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE31]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*The same vectorization applies to other arithmetic operations, such as division.
+    For example, we can both center and scale the rows with:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE32]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*This is equivalent to `scale(x)`, but done explicitly to show the underlying
+    vectorized operations.***'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '***The `sweep` function***'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '***If we instead want to scale the columns, the following code will not work
+    as expected because subtraction is applied row-wise:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE33]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*One workaround is to transpose the matrix, apply the operation, and transpose
+    back:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE34]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*This works, but it’s cumbersome and inefficient for large matrices due to
+    repeated transpositions.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: The `sweep` function provides a clearer and more general solution for performing
+    vectorized operations on matrices. It is similar to `apply`, but designed specifically
+    for array-like data and elementwise arithmetic.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'When used with a matrix `x`, `sweep` takes three main arguments:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`MARGIN` - which dimension to operate over (`1` for rows, `2` for columns)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`STATS` - the vector of values to *sweep out* (e.g., means or standard deviations)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`FUN` - the operation to apply (default is subtraction `"-"`)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 'For example, to subtract each column’s mean we write:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE35]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*This centers each column so that its average is zero. Because R allows omitting
+    argument names when defaults are clear, a concise and common shorthand is:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE36]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*Similarly, to center rows we write:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE37]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*(Though note that `x - rowMeans(x)` is typically faster for this specific
+    operation.)'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'To scale rather than center, simply change the operation:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE38]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*The `sweep` function also generalizes beyond matrices, it can handle arrays
+    with more than two dimensions and statistics vectors (`STATS`) of matching dimension.*********'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '***Matrix-matrix operations***'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '***In R, if you add, subtract, multiple or divide two matrices, the operation
+    is done element-wise. For example, if two matrices are stored in `x` and `y`,
+    then `x*y` does not result in matrix multiplication as defined in [Section 22.1](linear-algebra.html#sec-matrix-mult).
+    Instead, the entry in row \(i\) and column \(j\) of this product is the product
+    of the entry in row \(i\) and column \(j\) of `x` and `y`, respectively.*******'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '****21.5 Motivating tasks****'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '****To motivate the use of matrices in R, we will pose six tasks that illustrate
+    how matrix operations can help with data exploration of the handwritten digits
+    dataset. Each task highlights a basic matrix operation that is commonly used in
+    R. By seeing how these operations can be implemented with fast and simple code,
+    you will gain hands-on experience with the kinds of computations that arise frequently
+    in high-dimensional data analysis. The primary goal of these tasks is to help
+    you learn how matrix operations work in practice.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Visualize the original image
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: 'The pixel intensities are provided as rows in a matrix. Using what we learned
+    in [Section 21.3.1](#sec-creating-a-matrix), we can convert each row into a \(28
+    \times 28\) matrix that we can visualize as an image. As an example, we will use
+    the third observation. From the label, we know this is a:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE39]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*The third row of the matrix `x[3,]` contains the 784 pixel intensities. If
+    we assume these were entered in order, we can convert them back to a \(28 \times
+    28\) matrix using:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE40]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*To visualize the data, we can use `image` in the following way:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE41]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*However, because the y-axis in `image` goes bottom to top and `x` stores pixels
+    top to bottom the code above shows shows a flipped image. To flip it back we can
+    use:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE42]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*![](../Images/e0ea9c432457f578b5e84b182b8ff147.png)****'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '***Do some digits require more ink to write than others?***'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '***Let’s study the distribution of the total pixel darkness and how it varies
+    by digits.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'We can use what we learned in [Section 21.3.5](#sec-row-col-summaries) to computed
+    this average for each pixel and the display the values for each digit using a
+    boxplot:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE43]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*![](../Images/04b79ce3241f7f178f372f21c505e916.png)*  *From this plot we see
+    that, not surprisingly, 1s use less ink than other digits.****'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '***Are some pixels uninformative?***'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '***We now examine the variation of each pixel across digits to identify and
+    remove those that provide little information for classification. Pixels that show
+    little variation across images do not help distinguish between digits and can
+    safely be excluded. In many cases, removing uninformative features not only simplifies
+    the analysis but also reduces the dataset’s size substantially, improving computational
+    speed.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Using what we learned in Sections [21.3.5](#sec-row-col-summaries) and [21.3.6](#sec-conditional-filtering),
+    we can efficiently compute and filter out such columns. To quantify each pixel’s
+    variability, we calculate its standard deviation across all images using the `colSds`
+    function from the **matrixStats** package:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE44]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*A quick look at the distribution of these values shows that some pixels have
+    very low entry to entry variability:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE45]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*![](../Images/ae2f4139eb9408614ba34b1dcf94de2b.png)*  *This makes sense since
+    we don’t write in some parts of the box. Here is the variance plotted by location
+    after using what we learned in [Section 21.3.1](#sec-creating-a-matrix) to creat
+    a \(28 \times 28\) matrix:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE46]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*![](../Images/603f55282784651f921ac283071fb1b6.png)*  *We see that there is
+    little variation in the corners.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: We could remove features that have no variation since these can’t help us predict.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'So if we wanted to remove uninformative predictors from our matrix, we could
+    write this one line of code:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE47]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*Only the columns for which the standard deviation is above 60 are kept, which
+    removes over half the predictors.*******'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '***Can we remove smudges?***'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '***We will first look at the distribution of all pixel values.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE48]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*![](../Images/ae1b84eb0e681f79e7a08f6d1bdda0ba.png)*  *This shows a clear
+    dichotomy which is explained as parts of the image with ink and parts without.
+    If we think that values below, say, 50 are smudges, we can quickly make them zero
+    using what we learned in [Section 21.3.7](#sec-indexing-matrices):'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE49]****'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '***Binarize the data***'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '***The histogram above seems to suggest that this data is mostly binary. A
+    pixel either has ink or does not. Applying what we learned in [Section 21.3.7](#sec-indexing-matrices),
+    we can binarize the data using just matrix operations:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE50]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*We can also convert to a matrix of logicals and then coerce to numbers using
+    what we learned in [Section 21.4](#sec-vectorization-for-matrices):'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE51]****'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '***Standardize the digits***'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '***Finally, we will scale each column to have the same average and standard
+    deviation.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Using what we learned in [Section 21.4](#sec-vectorization-for-matrices) implies
+    that we can scale each row of a matrix as follows:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE52]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*And for the columns we can combine two calls to `sweep`:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE53]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*Note we can use this to standardize rows as well by replacing `2` with `1`
+    and use `rowMeans` and `rowSds`.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Finally, note that equivalent functionality can often be achieved with:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE54]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*This version can be faster for large matrices, though it’s less explicit about
+    what’s happening.**********'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '****21.6 Exercises****'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '****1\. Create a 100 by 10 matrix of randomly generated normal numbers. Put
+    the result in `x`.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 2\. Apply the three R functions that give you the dimension of `x`, the number
+    of rows of `x`, and the number of columns of `x`, respectively.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 3\. Add the scalar 1 to row 1, the scalar 2 to row 2, and so on, to the matrix
+    `x`.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '4\. Add the scalar 1 to column 1, the scalar 2 to column 2, and so on, to the
+    matrix `x`. Hint: Use `sweep` with `FUN = "+"`.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 5\. Compute the average of each row of `x`.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 6\. Compute the average of each column of `x`.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '7\. For each digit in the MNIST training data, compute the proportion of pixels
+    that are in a *grey area*, defined as values between 50 and 205\. Make a boxplot
+    by digit class. Hint: Use logical operators and `rowMeans`.****'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '* * *'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '****1.  http://yann.lecun.com/exdb/mnist/[↩︎](#fnref1)****'
+  prefs: []
+  type: TYPE_NORMAL

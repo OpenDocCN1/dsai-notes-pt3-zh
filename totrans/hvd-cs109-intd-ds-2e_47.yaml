@@ -1,0 +1,154 @@
+- en: 14  Bootstrap
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: 原文：[https://rafalab.dfci.harvard.edu/dsbook-part-2/inference/bootstrap.html](https://rafalab.dfci.harvard.edu/dsbook-part-2/inference/bootstrap.html)
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '[Statistical Inference](../inference/intro-inference.html)'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[14  Bootstrap](../inference/bootstrap.html)'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: CLT provides a useful approach to building confidence intervals and performing
+    hypothesis testing. However, it does not always apply. Here we provide a short
+    introduction to an alternative approach to estimating the distribution of an estimate
+    that does not rely on CLT.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '14.1 Example: median income'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'Suppose the income distribution of your population is as follows:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*![](../Images/1f3bd8a7997031d5d498f4c62a641857.png)*  *The population median
+    is:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE1]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*Suppose we don’t have access to the entire population but want to estimate
+    the population median, denoted by \(m\). We take a random sample of 100 observations
+    and use the sample median, \(M\), as our estimate of \(m\):'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE2]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*The question now becomes: how can we assess the uncertainty in this estimate?
+    In other words, how do we compute a standard error and construct a confidence
+    interval for \(m\) based on our sample?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: In the following sections, we introduce the *bootstrap*, a powerful resampling
+    method that allows us to estimate variability and construct confidence intervals
+    without relying on strong distributional assumptions.***
+  prefs: []
+  type: TYPE_NORMAL
+- en: '***14.2 Confidence intervals for the median***'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '***Can we construct a confidence interval? What is the distribution of \(M\)?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Because we are simulating the data, we can use a Monte Carlo simulation to learn
+    the actual distribution of \(M\).
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE3]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*![](../Images/a5fe1eadf811710052782d7f3a89f08c.png)'
+  prefs: []
+  type: TYPE_NORMAL
+- en: If we know this distribution, we can construct a confidence interval. The problem
+    here is that, as we have already described, in practice we do not have access
+    to the distribution. In previous sections we have used CLT, but what we learned
+    applies to averages and here we are interested in the median. We can see that
+    the 95% confidence interval based on CLT
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE4]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*is quite different from the confidence interval we would generate if we knew
+    the actual distribution of \(M\):'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE5]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*The bootstrap allows us to approximate a Monte Carlo simulation even when
+    we do not have access to the full population distribution. The idea is straightforward:
+    we treat the observed sample as if it were the population. From this sample, we
+    draw new datasets of the same size, with replacement, and compute the statistic
+    of interest, in this case, the median, for each resampled dataset. These resampled
+    datasets are called bootstrap samples.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: In many practical situations, the distribution of the statistics computed from
+    bootstrap samples provides a good approximation to the sampling distribution of
+    the original statistic. This approximation allows us to estimate variability,
+    compute standard errors, and construct confidence intervals without knowing the
+    true underlying distribution.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'The following code demonstrates how to generate bootstrap samples and approximate
+    the sampling distribution of the median:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE6]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*Note a confidence interval constructed with the bootstrap is much closer to
+    one constructed with the theoretical distribution:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE7]*******'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '***14.3 Exercises***'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '***1\. Generate a random dataset like this:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE8]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*Estimate the 75th quantile, which we know is:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE9]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*with the sample quantile:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE10]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*Run a Monte Carlo simulation to learn the expected value and standard error
+    of this random variable.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 2\. In practice, we can’t run a Monte Carlo simulation because we don’t know
+    if `rnorm` is being used to simulate the data. Use the bootstrap to estimate the
+    standard error using just the initial sample `y`. Use 10 bootstrap samples.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 3\. Redo exercise 2, but with 10,000 bootstrap samples.******
+  prefs: []
+  type: TYPE_NORMAL

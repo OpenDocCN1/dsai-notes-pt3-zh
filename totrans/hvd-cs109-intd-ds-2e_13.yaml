@@ -1,0 +1,1046 @@
+- en: 9  Data visualization principles
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: 原文：[https://rafalab.dfci.harvard.edu/dsbook-part-1/dataviz/dataviz-principles.html](https://rafalab.dfci.harvard.edu/dsbook-part-1/dataviz/dataviz-principles.html)
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '[Data Visualization](../dataviz/intro-dataviz.html)'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[9  Data visualization principles](../dataviz/dataviz-principles.html)'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: In this chapter we aim to provide some general principles we can use as a guide
+    for effective data visualization. Much of this section is based on a talk by Karl
+    Broman[¹](#fn1) titled “Creating Effective Figures and Tables”[²](#fn2) and includes
+    some of the figures which were made with code that Karl makes available on his
+    GitHub repository[³](#fn3), as well as class notes from Peter Aldhous’ Introduction
+    to Data Visualization course[⁴](#fn4). Following Karl’s approach, we show some
+    examples of plot styles we should avoid, explain how to improve them, and use
+    these as motivation for a list of principles. We compare and contrast plots that
+    follow these principles to those that don’t.
+  prefs: []
+  type: TYPE_NORMAL
+- en: The principles are mostly based on research related to how humans detect patterns
+    and make visual comparisons. The preferred approaches are those that best fit
+    the way our brains process visual information. When deciding on a visualization
+    approach, it is also important to keep our goal in mind. We may be comparing a
+    viewable number of quantities, describing distributions for categories or numeric
+    values, comparing the data from two groups, or describing the relationship between
+    two variables. As a final note, we want to emphasize that it is important to adapt
+    and optimize graphs to the audience. For example, an exploratory plot made for
+    ourselves will be different than a chart intended to communicate a finding to
+    a general audience.
+  prefs: []
+  type: TYPE_NORMAL
+- en: In this chapter we focus on the principles and do not show code (code can be
+    viewed on GitHub[⁵](#fn5)). In [Chapter 10](dataviz-in-practice.html), we apply
+    these principles in case study and do show code.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 9.1 Encoding data using visual cues
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: We start by describing some principles for encoding data. There are several
+    visual cues at our disposal including position, aligned lengths, angles, area,
+    brightness, and color hue.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'To illustrate how some of these visual cues compare, let’s suppose we want
+    to report the results from two hypothetical polls regarding browser preference
+    taken in 2000 and then 2015\. For each year, we are simply comparing five quantities
+    – the five percentages. A widely used graphical representation of percentages,
+    popularized by Microsoft Excel, is the pie chart:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![](../Images/be3a25957cedb1dcc0c196aea45c8a34.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: 'Here we are representing quantities with both areas and angles, since both
+    the angle and area of each pie slice are proportional to the quantity the slice
+    represents. This turns out to be a sub-optimal choice since, as demonstrated by
+    perception studies, humans are not good at precisely quantifying angles and are
+    even worse when area is the only available visual cue. The donut chart is an example
+    of a plot that uses only area:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![](../Images/2743e06f79dfcd18dd72de95d2f58df9.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: To see how hard it is to quantify angles and area, note that the rankings and
+    all the percentages in the plots above changed from 2000 to 2015\. Can you determine
+    the actual percentages and rank the browsers’ popularity? Can you see how the
+    percentages changed from 2000 to 2015? It is not easy to tell from the plot.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'In this case, simply showing the numbers is not only clearer, but would also
+    saves on printing costs if printing a paper copy:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '| Browser | 2000 | 2015 |'
+  prefs: []
+  type: TYPE_TB
+- en: '| --- | --- | --- |'
+  prefs: []
+  type: TYPE_TB
+- en: '| Opera | 3 | 2 |'
+  prefs: []
+  type: TYPE_TB
+- en: '| Safari | 21 | 22 |'
+  prefs: []
+  type: TYPE_TB
+- en: '| Firefox | 23 | 21 |'
+  prefs: []
+  type: TYPE_TB
+- en: '| Chrome | 26 | 29 |'
+  prefs: []
+  type: TYPE_TB
+- en: '| IE | 28 | 27 |'
+  prefs: []
+  type: TYPE_TB
+- en: The preferred way to plot these quantities is to use length and position as
+    visual cues, since humans are much better at judging linear measures. The barplot
+    uses this approach by using bars of length proportional to the quantities of interest.
+    By adding horizontal lines at strategically chosen values, in this case at every
+    multiple of 10, we ease the visual burden of quantifying through the position
+    of the top of the bars. Compare and contrast the information we can extract from
+    the two figures.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![](../Images/7367ba43a9d7b85b452bde1dfb8fc40c.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: Notice how much easier it is to see the differences in the barplot. In fact,
+    we can now determine the actual percentages by following a horizontal line to
+    the x-axis.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'If for some reason you need to make a pie chart, label each pie slice with
+    its respective percentage so viewers do not have to infer them from the angles
+    or area:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![](../Images/fb2d678836da690e74c5331adeaed826.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: In general, when displaying quantities, position and length are preferred over
+    angles and/or area. Brightness and color are even harder to quantify than angles.
+    But, as we will see later, they are sometimes useful when more than two dimensions
+    must be displayed at once.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 9.2 Know when to include 0
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'When using length as a visual cue, it is misinformative not to start the bars
+    at 0\. This is because, by using length as a visual cue, say with a barplot, we
+    are implying the length is proportional to the quantities being displayed. By
+    avoiding 0, relatively small differences can be made to look much bigger than
+    they actually are. This approach is often used by politicians or media organizations
+    trying to exaggerate a difference. Below is an illustrative example[⁶](#fn6):'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![](../Images/c66c317ac0618e1159bd68cc42df4e91.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: '(Source: Fox News, via Media Matters[⁷](#fn7).)'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'From the plot above, it appears that apprehensions have almost tripled when,
+    in fact, they have only increased by about 16%. Starting the graph at 0 illustrates
+    this clearly:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![](../Images/3edb535c6bb03f4447ee466b12e575ab.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: 'Here is another example:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![](../Images/275dd9e579ea55e1e32dd56f65081f62.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: '(Source: Fox News, via Flowing Data[⁸](#fn8).)'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'This plot makes a 13% increase look like a five fold change. Here is the appropriate
+    plot:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![](../Images/793b8c8ebc7c015c44cca6938c512855.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: 'Finally, here is an extreme example that makes a very small difference of under
+    2% look like a 10-100 fold change:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![](../Images/ee703bb8a83ac0dca4394fd83e8c7848.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: '(Source: Venezolana de Televisión via El Mundo[⁹](#fn9).)'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Here is the appropriate plot:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![](../Images/37ee51e4b25b1ddd35f9e41884bf5058.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: 'When using position rather than length, it is then not necessary to include
+    0\. This is particularly the case when we want to compare differences between
+    groups relative to the within-group variability. Here is an illustrative example
+    showing country average life expectancy stratified across continents in 2012:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![](../Images/a8593ed83881c83abcf13f4ccd058b8c.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: Note that in the plot on the left, which includes 0, the space between 0 and
+    43 adds no information and makes it harder to compare the between and within group
+    variability.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 9.3 Do not distort quantities
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'During President Barack Obama’s 2011 State of the Union Address, the following
+    chart was used to compare the US GDP to the GDP of four competing nations:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![](../Images/fa4ac1cb89282d0b3a819af2313519a2.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: '(Source: The 2011 State of the Union Address[^(10)](#fn10))'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Judging by the area of the circles, the US appears to have an economy over
+    five times larger than China’s and over 30 times larger than France’s. However,
+    if we look at the actual numbers, we see that this is not the case. The actual
+    ratios are 2.6 and 5.8 times bigger than China and France, respectively. The reason
+    for this distortion is that the radius, rather than the area, was made to be proportional
+    to the quantity, which implies that the proportion between the areas is squared:
+    2.6 turns into 6.5 and 5.8 turns into 34.1\. Here is a comparison of the circles
+    we get if we make the value proportional to the radius and to the area:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![](../Images/80e7767a2d69558036b12111372b79ed.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: 'Not surprisingly, **ggplot2** defaults to using area rather than radius. Of
+    course, in this case, we really should not be using area at all since we can use
+    position and length:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![](../Images/e4e10c9926c20466c1bd6e2de8124399.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: 9.4 Order categories by a meaningful value
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: When one of the axes is used to show categories, as is done in barplots and
+    boxplots, the default **ggplot2** behavior is to order the categories alphabetically
+    when they are defined by character strings. If they are defined by factors, they
+    are ordered by the factor levels. We rarely want to use alphabetical order. Instead,
+    we should order by a meaningful quantity. In all the cases above, the barplots
+    were ordered by the values being displayed. The exception was the graph showing
+    barplots comparing browsers. In this case, we kept the order the same across the
+    barplots to ease the comparison. Specifically, instead of ordering the browsers
+    separately in the two years, we ordered both years by the average value of 2000
+    and 2015.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'To appreciate how the right order can help convey a message, suppose we want
+    to create a plot to compare the murder rate across states. We are particularly
+    interested in the most dangerous and safest states. Note the difference when we
+    order alphabetically (the default) versus when we order by the actual rate:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![](../Images/f41b5afbd391294874b644a6b355e3f7.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: 'Here is an example showing boxplots of income distributions across regions.
+    Here are the two versions plotted against each other:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![](../Images/fc9ef4094ce741676fc989dc6277133d.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: The first orders the regions alphabetically, while the second orders them by
+    the group’s median.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 9.5 Show the data
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: We have focused on displaying single quantities across categories. We now shift
+    our attention to displaying data, with a focus on comparing groups.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'To motivate the principle, “show the data”, we go back to our artificial example
+    of describing heights to ET, an extraterrestrial. This time let’s assume ET is
+    interested in the difference in heights between males and females. A commonly
+    seen plot used for comparisons between groups, popularized by software such as
+    Microsoft Excel, is the dynamite plot, which shows the average and standard errors
+    (standard errors are defined in a later chapter, but do not confuse them with
+    the standard deviation of the data). The plot looks like this:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![](../Images/88bdec78c4a80f876d34ea6f35f9f6c8.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: 'The average of each group is represented by the top of each bar and the antennae
+    extend out from the average to the average plus two standard errors. If all ET
+    receives is this plot, he will have little information on what to expect if he
+    meets a group of human males and females. The bars go to 0: does this mean there
+    are tiny humans measuring less than one foot? Are all males taller than the tallest
+    females? Is there a range of heights? ET can’t answer these questions since we
+    have provided almost no information on the height distribution.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'This brings us the “show the data” principle. This simple **ggplot2** code
+    already generates a more informative plot than the barplot by simply showing all
+    the data points:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![](../Images/c7f7ed788da0d3cf3f1b34584f22dd7b.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: For example, this plot gives us an idea of the range of the data. However, this
+    plot has limitations as well, since we can’t really see all the 238 and 812 points
+    plotted for females and males, respectively, and many points are plotted on top
+    of each other. As we have previously described, visualizing the distribution is
+    much more informative. But before doing this, we point out two ways we can improve
+    a plot showing all the points.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'The first is to add *jitter*, which adds a small random shift to each point.
+    In this case, adding horizontal jitter does not alter the interpretation, since
+    the point heights do not change, but we minimize the number of points that fall
+    on top of each other and, therefore, get a better visual sense of how the data
+    is distributed. A second improvement comes from using *alpha blending*: making
+    the points somewhat transparent. The more points fall on top of each other, the
+    darker the plot, which also helps us get a sense of how the points are distributed.
+    Here is the same plot with jitter and alpha blending:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*![](../Images/7db5830c13e88f55459df74096584743.png)*  *Now we start getting
+    a sense that, on average, males are taller than females. We also note dark horizontal
+    bands of points, demonstrating that many report values that are rounded to the
+    nearest integer.*'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '*9.6 Ease comparisons*'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '*### 9.6.1 Use common axes'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Since there are so many points, it is more effective to show distributions
+    rather than individual points. We therefore show histograms for each group:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![](../Images/a00f29a74aab4437a8e23457840d99c1.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: 'However, from this plot it is not immediately obvious that males are, on average,
+    taller than females. We have to look carefully to notice that the x-axis has a
+    higher range of values in the male histogram. An important principle here is to
+    **keep the axes the same** when comparing data across two plots. Below we see
+    how the comparison becomes a little easier:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![](../Images/f49ab3a6389a271959ea504f057d6105.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: 9.6.2 Aligning plots for comparisons
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: 'In these histograms, the visual cue related to decreases or increases in height
+    are shifts to the left or right, respectively: horizontal changes. Aligning the
+    plots vertically helps us see this change when the axes are fixed:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![](../Images/a1a8090caf417d5d8ded3015bad7f918.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: This plot makes it much easier to notice that men are, on average, taller.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'If we want the more compact summary provided by boxplots, we then align them
+    horizontally since, by default, boxplots move up and down with changes in height.
+    Following our *show the data* principle, we then overlay all the data points:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![](../Images/9cfc16fbc19e6a1390f689536d677c85.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: 'Now contrast and compare these three plots, based on exactly the same data:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![](../Images/544f1e7ac3809561ae888e2bfdba365d.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: Notice how much more we learn from the two plots on the right. Barplots are
+    useful for showing one number, but not very useful when we want to describe distributions.*
+  prefs: []
+  type: TYPE_NORMAL
+- en: '*9.7 Log transformations*'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '*The combination of an incorrectly chosen barplot and a failure to use a transformation
+    when one is merited can be particularly distorting. As an example, consider this
+    barplot showing the average population sizes for each continent in 2015:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![](../Images/f99c39874260de4ae36f908464ef44ae.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: 'From this plot, one would conclude that countries in Asia are much more populous
+    than in other continents. Following the *show the data* principle, we quickly
+    notice that this is due to two very large countries, which we assume are India
+    and China:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![](../Images/18fa9738ac1943b6fe31ad7beba53d2f.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: Here, we focus on examples in which the log transformation improves data visualization
+    of skewed data. Other common transformations to be aware of include the logistic
+    transformation (`logit`), which is useful for interpreting fold changes in odds,
+    and the square root transformation (`sqrt`), which is often applied to stabilize
+    variance in count data.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 9.7.1 Right-skewed distributions
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: 'Country population sizes provide a clear example of a *right-skewed* distribution:
+    most countries have relatively small populations, while a few have extremely large
+    ones. As shown in the box plot above, this imbalance causes most of the data points
+    to be compressed into a small area of the plot, while a large portion of the plotting
+    space is left empty. This makes it difficult to see meaningful differences among
+    the majority of countries.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: In [Section 8.10](ggplot2.html#sec-scales), we saw how applying a log transformation
+    improved the readability of a scatter plot by addressing this kind of skew. Similarly,
+    applying a log transformation to population sizes here produces a much more informative
+    visualization. Below, we compare the original barplot to a boxplot with a log-transformed
+    y-axis to illustrate the improvement.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![](../Images/fdb9244c6c90f984e2b56597c32efd45.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: With the new plot, we realize that countries in Africa actually have a larger
+    median population size than those in Asia.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 9.7.2 Ratios
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: Ratios are commonly used in data analysis to compare two values. For example,
+    we often report the relative risk of developing a disease, such as stating that
+    the risk of disease is *three times higher* in smokers than in non-smokers.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Conceptually, ratios are centered around 1, where a ratio of 1 indicates no
+    difference between the two values. However, mathematically, ratios are not symmetric
+    around 1\. For instance, if the ratio of \(A\) to \(B\) is \(3\), meaning \(A\)
+    is three times larger than \(B\), the reverse ratio of \(B\) to \(A\) is \(1/3\).
+    Notice that \(3\) and \(1/3\) are not equally distant from 1, which can make it
+    difficult to visualize ratios in a way that fairly represents increases and decreases.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'For this reason, it is common to use a log transformation when displaying ratios.
+    This is because the logarithm of a ratio has a symmetric property:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[ \log(A/B) = -\log(B/A) \]
+  prefs: []
+  type: TYPE_NORMAL
+- en: This means that if \(A\) is three times larger than \(B\), the log ratio is
+    equally distant from zero as when \(B\) is three times larger than \(A\), but
+    in the opposite direction. This symmetry around zero makes differences easier
+    to interpret visually.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Below is a plot demonstrating the advantage of using a log scale for displaying
+    ratios.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![](../Images/4c25ab154d931bda898526b77561f018.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: '*A common challenge when plotting log ratios is handling zeros in either the
+    numerator or denominator, since \(\log(0)\) is undefined. Additionally, very small
+    values can produce log ratios that approach positive or negative infinity, making
+    the results unstable and difficult to interpret.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'A practical solution to address both issues is to apply a *continuity correction*,
+    which involves adding a small constant to both the numerator and denominator.
+    This prevents zeros and stabilizes extreme values. A commonly used constant is
+    0.5, leading to the following adjusted log ratio:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[ \log\left( \frac{A + 0.5}{B + 0.5} \right) \]
+  prefs: []
+  type: TYPE_NORMAL
+- en: This simple adjustment helps ensure that log ratios remain finite and more interpretable,
+    particularly when dealing with values close to 0\. Additionally, when \(A\) and
+    \(B\) are large, it closely approximates the actual log ratio \(\log(A/B)\).**
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**9.8 Visual cues to be compared should be adjacent**'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '**For each continent, let’s compare income in 1970 versus 2010\. When comparing
+    income data across regions between 1970 and 2010, we made a figure similar to
+    the one below, but this time we investigate continents rather than regions.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![](../Images/a875ee627df7cfb86235b6031db765bd.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: 'The default in **ggplot2** is to order labels alphabetically so the labels
+    with 1970 come before the labels with 2010, making the comparisons challenging
+    because a continent’s distribution in 1970 is visually far from its distribution
+    in 2010\. It is much easier to make the comparison between 1970 and 2010 for each
+    continent when the boxplots for that continent are next to each other:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![](../Images/744b9667d4253784dd2dd19c29504afd.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: 'The comparison becomes even easier to make if we use color to denote the two
+    things we want to compare:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![](../Images/d1332aab75683153d4144d7459f3c705.png)**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**9.9 Think of the color blind**'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '**About 10% of the population is color blind. Unfortunately, the default colors
+    used in **ggplot2** are not optimal for this group. However, **ggplot2** does
+    make it easy to change the color palette used in the plots. An example of how
+    we can use a color blind friendly palette is described in the R cookbook[^(11)](#fn11):'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE1]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*Here are the colors'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![](../Images/84aa3e949515c2179c8538849addb778.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: There are several resources that can help you select colors, for example tutorials
+    on R-bloggers[^(12)](#fn12).***
+  prefs: []
+  type: TYPE_NORMAL
+- en: '***9.10 Plots for two variables***'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '***In general, you should use scatterplots to visualize the relationship between
+    two variables. In every single instance in which we have examined the relationship
+    between two variables, including total murders versus population size and life
+    expectancy versus fertility rates, we have used scatterplots. This is the plot
+    we generally recommend. However, there are some exceptions and we describe two
+    alternative plots here: the *slope chart* and the *Bland-Altman plot*.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 9.10.1 Slope charts
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: One exception where another type of plot may be more informative is when you
+    are comparing variables of the same type, but at different time points and for
+    a relatively small number of comparisons. For example, comparing life expectancy
+    between 2010 and 2015\. In this case, we might recommend a *slope chart*.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'There is no geometry for slope charts in **ggplot2**, but we can construct
+    one using `geom_line`. We need to do some tinkering to add labels. Below is an
+    example comparing 2010 to 2015 for large western countries:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![](../Images/f43e0d666ea6139538c182bb2dabcbe0.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: 'An advantage of the slope chart is that it permits us to quickly get an idea
+    of changes based on the slope of the lines. Although we are using angle as the
+    visual cue, we also have position to determine the exact values. Comparing the
+    improvements is a bit harder with a scatterplot:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![](../Images/6f4cfe437ed4098beb624632fda3ce53.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: In the scatterplot, we have followed the principle *use common axes* since we
+    are comparing these before and after. However, if we have many points, slope charts
+    stop being useful as it becomes hard to see all the lines.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 9.10.2 Bland-Altman plot
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: 'Since we are primarily interested in the difference, it makes sense to dedicate
+    one of our axes to it. The Bland-Altman plot, also known as the Tukey mean-difference
+    plot and the MA-plot, shows the difference versus the average:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![](../Images/4bfb783db109b688640ea54150aebce8.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: Here, by simply looking at the y-axis, we quickly see which countries have shown
+    the most improvement. We also get an idea of the overall value from the x-axis.***
+  prefs: []
+  type: TYPE_NORMAL
+- en: '***9.11 Encoding a third variable***'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '***An earlier scatterplot showed the relationship between infant survival and
+    average income. Below is a version of this plot that encodes three additional
+    variables: OPEC membership, region, and population.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![](../Images/e3a635ee5497a734ce03d403a7388fe4.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: We encode categorical variables with color and shape. These shapes can be controlled
+    with `shape` argument. Below are the shapes available for use in R. For the last
+    five, the color goes inside.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![](../Images/f3a830a9189d1b1e90e2240a2aa41241.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: For continuous variables, we can use color, intensity, or size. We now show
+    an example of how we do this with a case study.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'When selecting colors to quantify a numeric variable, we choose between two
+    options: sequential and diverging. Sequential colors are suited for data that
+    goes from high to low. High values are clearly distinguished from low values.
+    Here are some examples offered by the package `RColorBrewer`:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![](../Images/bbd635157524e86ceb4c956bb7f6ff9a.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: 'Diverging colors are used to represent values that diverge from a center. We
+    put equal emphasis on both ends of the data range: higher than the center and
+    lower than the center. An example of when we would use a divergent pattern would
+    be if we were to show height in standard deviations away from the average. Here
+    are some examples of divergent patterns:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![](../Images/4cad864e2ae72fcb57058c42252cf9ac.png)***'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '***9.12 Avoid pseudo-three-dimensional plots***'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '***The figure below, taken from the scientific literature[^(13)](#fn13), shows
+    three variables: dose, drug type and survival. Although your screen/book page
+    is flat and two-dimensional, the plot tries to imitate three dimensions and assigned
+    a dimension to each variable.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![](../Images/22c24219e777371cb3401253ddc7b973.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: (Image courtesy of Karl Broman)
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Humans are not good at seeing in three dimensions (which explains why it is
+    hard to parallel park) and our limitation is even worse with regard to pseudo-three-dimensions.
+    To see this, try to determine the values of the survival variable in the plot
+    above. Can you tell when the purple ribbon intersects the red one? This is an
+    example in which we can easily use color to represent the categorical variable
+    instead of using a pseudo-3D:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![](../Images/440b35ed280fd85caa375542e4509fb6.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: Notice how much easier it is to determine the survival values.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Pseudo-3D is sometimes used completely gratuitously: plots are made to look
+    3D even when the 3rd dimension does not represent a quantity. This only adds confusion
+    and makes it harder to relay your message. Here are two examples:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![](../Images/840eac79746969db83f562576d26ee3c.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: '![](../Images/1c59fb346eda6b1645d3adb7243a090d.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: (Images courtesy of Karl Broman)***
+  prefs: []
+  type: TYPE_NORMAL
+- en: '***9.13 Avoid too many significant digits***'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '***By default, statistical software like R returns many significant digits.
+    The default behavior in R is to show 7 significant digits. That many digits often
+    adds no information and the added visual clutter can make it hard for the viewer
+    to understand the message. As an example, here are the per 10,000 disease rates,
+    computed from totals and population in R, for California across the five decades:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '| state | year | Measles | Pertussis | Polio |'
+  prefs: []
+  type: TYPE_TB
+- en: '| --- | --- | --- | --- | --- |'
+  prefs: []
+  type: TYPE_TB
+- en: '| California | 1940 | 37.8826320 | 18.3397861 | 0.8266512 |'
+  prefs: []
+  type: TYPE_TB
+- en: '| California | 1950 | 13.9124205 | 4.7467350 | 1.9742639 |'
+  prefs: []
+  type: TYPE_TB
+- en: '| California | 1960 | 14.1386471 | NA | 0.2640419 |'
+  prefs: []
+  type: TYPE_TB
+- en: '| California | 1970 | 0.9767889 | NA | NA |'
+  prefs: []
+  type: TYPE_TB
+- en: '| California | 1980 | 0.3743467 | 0.0515466 | NA |'
+  prefs: []
+  type: TYPE_TB
+- en: 'We are reporting precision up to 0.00001 cases per 10,000, a very small value
+    in the context of the changes that are occurring across the dates. In this case,
+    one significant figures is enough and clearly makes the point that rates are decreasing:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '| state | year | Measles | Pertussis | Polio |'
+  prefs: []
+  type: TYPE_TB
+- en: '| --- | --- | --- | --- | --- |'
+  prefs: []
+  type: TYPE_TB
+- en: '| California | 1940 | 37.9 | 18.3 | 0.8 |'
+  prefs: []
+  type: TYPE_TB
+- en: '| California | 1950 | 13.9 | 4.7 | 2.0 |'
+  prefs: []
+  type: TYPE_TB
+- en: '| California | 1960 | 14.1 | NA | 0.3 |'
+  prefs: []
+  type: TYPE_TB
+- en: '| California | 1970 | 1.0 | NA | NA |'
+  prefs: []
+  type: TYPE_TB
+- en: '| California | 1980 | 0.4 | 0.1 | NA |'
+  prefs: []
+  type: TYPE_TB
+- en: 'Useful ways to change the number of significant digits or to round numbers
+    are `signif` and `round`. You can define the number of significant digits globally
+    by setting options like this: `options(digits = 3)`.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Another principle related to displaying tables is to place values being compared
+    on columns rather than rows. Note that our table above is easier to read than
+    this one:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '| State | Disease | 1940 | 1950 | 1960 | 1970 | 1980 |'
+  prefs: []
+  type: TYPE_TB
+- en: '| --- | --- | --- | --- | --- | --- | --- |'
+  prefs: []
+  type: TYPE_TB
+- en: '| California | Measles | 37.9 | 13.9 | 14.1 | 1 | 0.4 |'
+  prefs: []
+  type: TYPE_TB
+- en: '| California | Pertussis | 18.3 | 4.7 | NA | NA | 0.1 |'
+  prefs: []
+  type: TYPE_TB
+- en: '| California | Polio | 0.8 | 2.0 | 0.3 | NA | NA |***'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '***9.14 Know your audience***'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '***Graphs can be used 1) for our own exploratory data analysis, 2) to convey
+    a message to experts, or 3) to help convey a message to a general audience. Make
+    sure that the intended audience understands each element of the plot.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: As a simple example, consider that for your own exploration it may be more useful
+    to log-transform data and then plot it. However, for a general audience that is
+    unfamiliar with converting logged values back to the original measurements, using
+    a log-scale for the axis instead of log-transformed values will be much easier
+    to digest.***
+  prefs: []
+  type: TYPE_NORMAL
+- en: '***9.15 Exercises***'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '***For these exercises, we will be using the vaccines data in the **dslabs**
+    package:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE2]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*1\. Pie charts are appropriate:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: When we want to display percentages.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: When **ggplot2** is not available.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: When I am in a bakery.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: Never. Barplots and tables are always better.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '2\. What is the problem with the plot below:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![](../Images/9215cd188b84dea06c2e253122921cd0.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: The values are wrong. The final vote was 306 to 232.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: The axis does not start at 0\. Judging by the length, it appears Trump received
+    3 times as many votes when, in fact, it was about 30% more.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: The colors should be the same.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: Percentages should be shown as a pie chart.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '3\. Take a look at the following two plots. They show the same information:
+    1928 rates of measles across the 50 states.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![](../Images/78ca18ece1e2a4e82f98221b7f262ef8.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: Which plot is easier to read if you are interested in determining which are
+    the best and worst states in terms of rates, and why?
+  prefs: []
+  type: TYPE_NORMAL
+- en: They provide the same information, so they are both equally as good.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: The plot on the right is better because it orders the states alphabetically.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: The plot on the right is better because alphabetical order has nothing to do
+    with the disease and by ordering according to actual rate, we quickly see the
+    states with most and least rates.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: Both plots should be a pie chart.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: 4\. To make the plot on the left, we have to reorder the levels of the states’
+    variables.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE3]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*Note what happens when we make a barplot:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE4]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*![](../Images/a7813e8e9e9cfb5619ea031a75673d8b.png)*  *Define these objects:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE5]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*Redefine the `state` object so that the levels are re-ordered. Print the new
+    object `state` and its levels so you can see that the vector is not re-ordered
+    by the levels.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 5\. Now with one line of code, define the `dat` table as done above, but change
+    the use mutate to create a rate variable and re-order the state variable so that
+    the levels are re-ordered by this variable. Then make a barplot using the code
+    above, but for this new `dat`.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '6\. Say we are interested in comparing gun homicide rates across regions of
+    the US. We see this plot:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE6]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*![](../Images/8aa9c7e3a27b58fca09a10e389fef7be.png)*  *and decide to move
+    to a state in the western region. What is the main problem with this interpretation?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: The categories are ordered alphabetically.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: The graph does not show standard errors.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: It does not show all the data. We do not see the variability within a region
+    and it’s possible that the safest states are not in the West.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: The Northeast has the lowest average.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: 7\. Make a boxplot of the murder rates defined as
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE7]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*by region, showing all the points and ordering the regions by their median
+    rate.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 8\. The plots below show three continuous variables.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![](../Images/0f7417589bbad275c1dbb12a479417e0.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: The line \(x=2\) appears to separate the points. But it is actually not the
+    case, which we can see by plotting the data in a couple of two-dimensional points.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![](../Images/1b0cf9c3a8b606d09ec5666fcf97150c.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: Why is this happening?
+  prefs: []
+  type: TYPE_NORMAL
+- en: Humans are not good at reading pseudo-3D plots.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: There must be an error in the code.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: The colors confuse us.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: Scatterplots should not be used to compare two variables when we have access
+    to 3.*********
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '* * *'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '****1.  [http://kbroman.org/](http://kbroman.org/)[↩︎](#fnref1)'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[https://www.biostat.wisc.edu/~kbroman/presentations/graphs2017.pdf](https://www.biostat.wisc.edu/~kbroman/presentations/graphs2017.pdf)[↩︎](#fnref2)'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[https://github.com/kbroman/Talk_Graphs](https://github.com/kbroman/Talk_Graphs)[↩︎](#fnref3)'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[https://www.peteraldhous.com/ucb/2014/dataviz/index.html](https://www.peteraldhous.com/ucb/2014/dataviz/index.html)[↩︎](#fnref4)'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[https://github.com/rafalab/dsbook-part-1/blob/main/dataviz/dataviz-principles.qmd](https://github.com/rafalab/dsbook-part-1/blob/main/dataviz/dataviz-principles.qmd)[↩︎](#fnref5)'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[https://www.peteraldhous.com/ucb/2014/dataviz/week2.html](https://www.peteraldhous.com/ucb/2014/dataviz/week2.html)[↩︎](#fnref6)'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[http://mediamatters.org/blog/2013/04/05/fox-news-newest-dishonest-chart-immigration-enf/193507](http://mediamatters.org/blog/2013/04/05/fox-news-newest-dishonest-chart-immigration-enf/193507)[↩︎](#fnref7)'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[http://flowingdata.com/2012/08/06/fox-news-continues-charting-excellence/](http://flowingdata.com/2012/08/06/fox-news-continues-charting-excellence/)[↩︎](#fnref8)'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[https://www.elmundo.es/america/2013/04/15/venezuela/1366029653.html](https://www.elmundo.es/america/2013/04/15/venezuela/1366029653.html)[↩︎](#fnref9)'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[https://www.youtube.com/watch?v=kl2g40GoRxg](https://www.youtube.com/watch?v=kl2g40GoRxg)[↩︎](#fnref10)'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[http://www.cookbook-r.com/Graphs/Colors_(ggplot2)/#a-colorblind-friendly-palette](http://www.cookbook-r.com/Graphs/Colors_(ggplot2)/#a-colorblind-friendly-palette)[↩︎](#fnref11)'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[https://www.r-bloggers.com/2013/10/creating-colorblind-friendly-figures/](https://www.r-bloggers.com/2013/10/creating-colorblind-friendly-figures/)[↩︎](#fnref12)'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[https://projecteuclid.org/download/pdf_1/euclid.ss/1177010488](https://projecteuclid.org/download/pdf_1/euclid.ss/1177010488)[↩︎](#fnref13)****'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL

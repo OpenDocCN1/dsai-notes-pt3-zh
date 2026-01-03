@@ -3,11 +3,13 @@
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 第28章 平滑
 - en: 原文：[https://rafalab.dfci.harvard.edu/dsbook/smoothing.html](https://rafalab.dfci.harvard.edu/dsbook/smoothing.html)
   id: totrans-1
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 原文：[https://rafalab.dfci.harvard.edu/dsbook/smoothing.html](https://rafalab.dfci.harvard.edu/dsbook/smoothing.html)
 - en: 'Before continuing learning about machine learning algorithms, we introduce
     the important concept of *smoothing*. Smoothing is a very powerful technique used
     all across data analysis. Other names given to this technique are *curve fitting*
@@ -19,15 +21,18 @@
   id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: 在继续学习机器学习算法之前，我们介绍一个重要的概念：*平滑*。平滑是一种在数据分析中被广泛使用的非常强大的技术。这种技术还有其他名称，如*曲线拟合*和*低通滤波*。它旨在检测在趋势形状未知的情况下，存在噪声数据中的趋势。*平滑*这个名字来源于这样一个事实，即为了完成这一壮举，我们假设趋势是*平滑的*，就像一个平滑的表面。相比之下，噪声，或趋势的偏差，是不规则地摇摆不定的：
 - en: '![](../Images/39e8b7bc7718b33d6786b6d27ef1a1e0.png)'
   id: totrans-3
   prefs: []
   type: TYPE_IMG
+  zh: '![图片](../Images/39e8b7bc7718b33d6786b6d27ef1a1e0.png)'
 - en: Part of what we explain in this section are the assumptions that permit us to
     extract the trend from the noise.
   id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们在本节中解释的部分是我们用来从噪声中提取趋势的假设。
 - en: To understand why we cover this topic, remember that the concepts behind smoothing
     techniques are extremely useful in machine learning because conditional expectations/probabilities
     can be thought of as *trends* of unknown shapes that we need to estimate in the
@@ -35,12 +40,14 @@
   id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: 要理解为什么我们要介绍这个主题，请记住，平滑技术背后的概念在机器学习中非常有用，因为条件期望/概率可以被视为我们需要在存在不确定性的情况下估计的未知形状的趋势。
 - en: To explain these concepts, we will focus first on a problem with just one predictor.
     Specifically, we try to estimate the time trend in the 2008 US popular vote poll
     margin (difference between Obama and McCain).
   id: totrans-6
   prefs: []
   type: TYPE_NORMAL
+  zh: 为了解释这些概念，我们首先关注一个只有一个预测因子的问题。具体来说，我们试图估计2008年美国流行投票差额（奥巴马和麦凯恩之间的差异）的时间趋势。
 - en: '[PRE0]'
   id: totrans-7
   prefs: []
@@ -50,12 +57,14 @@
   id: totrans-8
   prefs: []
   type: TYPE_IMG
+  zh: '![图片](../Images/33c753cc76e5495db280338fe5afd9ce.png)'
 - en: For the purposes of this example, do not think of it as a forecasting problem.
     Instead, we are simply interested in learning the shape of the trend *after* the
     election is over.
   id: totrans-9
   prefs: []
   type: TYPE_NORMAL
+  zh: 对于这个例子，不要把它看作是一个预测问题。相反，我们只是对选举结束后趋势的形状感兴趣。
 - en: 'We assume that for any given day \(x\), there is a true preference among the
     electorate \(f(x)\), but due to the uncertainty introduced by the polling, each
     data point comes with an error \(\varepsilon\). A mathematical model for the observed
@@ -63,10 +72,13 @@
   id: totrans-10
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们假设对于任何给定的一天 \(x\)，选民中存在一个真实的偏好 \(f(x)\)，但由于民意调查引入的不确定性，每个数据点都伴随着一个误差 \(\varepsilon\)。观察到的投票差额
+    \(Y_i\) 的数学模型是：
 - en: \[ Y_i = f(x_i) + \varepsilon_i \]
   id: totrans-11
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ Y_i = f(x_i) + \varepsilon_i \]
 - en: To think of this as a machine learning problem, consider that we want to predict
     \(Y\) given a day \(x\). If we knew the conditional expectation \(f(x) = \mbox{E}(Y
     \mid X=x)\), we would use it. But since we don’t know this conditional expectation,
@@ -75,6 +87,8 @@
   id: totrans-12
   prefs: []
   type: TYPE_NORMAL
+  zh: 要将这个问题视为一个机器学习问题，考虑一下我们想要根据一天 \(x\) 预测 \(Y\)。如果我们知道条件期望 \(f(x) = \mbox{E}(Y
+    \mid X=x)\)，我们会使用它。但由于我们不知道这个条件期望，我们必须估计它。让我们使用回归，因为这是我们迄今为止学到的唯一方法。
 - en: '[PRE1]'
   id: totrans-13
   prefs: []
@@ -84,6 +98,7 @@
   id: totrans-14
   prefs: []
   type: TYPE_IMG
+  zh: '![图片](../Images/b86b677a5e00ed50e6453bd37a154533.png)'
 - en: The line we see does not appear to describe the trend very well. For example,
     on September 4 (day -62), the Republican Convention was held and the data suggest
     that it gave John McCain a boost in the polls. However, the regression line does
@@ -93,11 +108,13 @@
   id: totrans-15
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们看到的线似乎并不能很好地描述趋势。例如，在9月4日（第-62天），共和党全国代表大会举行，数据表明这给了约翰·麦凯恩在民调中的提升。然而，回归线并没有捕捉到这种潜在的趋势。为了更清楚地看到*拟合不足*，我们注意到高于拟合线（蓝色）和低于拟合线（红色）的点在每天并不是均匀分布的。因此，我们需要一个更灵活的替代方法。
 - en: 28.1 Bin smoothing
   id: totrans-16
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 28.1 离散平滑
 - en: The general idea of smoothing is to group data points into strata in which the
     value of \(f(x)\) can be assumed to be constant. We can make this assumption because
     we think \(f(x)\) changes slowly and, as a result, \(f(x)\) is almost constant

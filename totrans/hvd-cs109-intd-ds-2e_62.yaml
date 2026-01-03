@@ -1,0 +1,1000 @@
+- en: 25  Latent Factor Models
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: 原文：[https://rafalab.dfci.harvard.edu/dsbook-part-2/highdim/latent-factor-models.html](https://rafalab.dfci.harvard.edu/dsbook-part-2/highdim/latent-factor-models.html)
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '[High Dimensional Data](../highdim/intro-highdim.html)'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[25  Latent Factor Models](../highdim/latent-factor-models.html)'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: Many data problems involve large matrices with structure we cannot see directly.
+    Latent factor models provide a powerful way to uncover this hidden structure.
+    The key idea is that observed data often reflect the influence of a smaller number
+    of unobserved (latent) features. These latent factors capture patterns such as
+    groups of similar individuals, groups of similar items, or shared underlying attributes
+    that drive the observed values.
+  prefs: []
+  type: TYPE_NORMAL
+- en: In the previous chapter, we introduced the model
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[ Y_{ij} = \mu + \alpha_i + \beta_j + \varepsilon_{ij} \]
+  prefs: []
+  type: TYPE_NORMAL
+- en: to describe movie ratings. This model accounts for differences between users
+    through \(\alpha_i\) and differences between movies through \(\beta_j\). However,
+    it treats all movies and all users as unrelated beyond these simple averages.
+    In practice, we know that groups of movies tend to be liked by the same kinds
+    of users, and groups of users tend to give similar ratings to the same kinds of
+    movies. This shared structure is not captured by user and movie effects alone.
+  prefs: []
+  type: TYPE_NORMAL
+- en: To see this, we compute residuals
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[ r_{ij} = y_{ij} - (\hat{\mu} + \hat{\alpha}_i + \hat{\beta}_j) \]
+  prefs: []
+  type: TYPE_NORMAL
+- en: by fitting the model to the `train_set` dataset using the `fit_als` function,
+    both defined in the previous chapter,
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*and comparing the residuals for *The Godfather* with three other films:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![](../Images/54fedcfaf899f0ba0839f06dae9800d6.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: 'These correlations range from strongly positive to negative. Specifically the
+    correlations between *The Godfather* and *The Godfather part II*, *Goodfellas*,
+    and *Sleepless in Seattle* are 0.84, 0.49, and -0.42, respectively. Users who
+    love *The Godfather* also tend to like *The Godfather Part II* and *Goodfellas*,
+    but often dislike *Sleepless in Seattle*. These kinds of relationships are because
+    movies share latent characteristics: genre, tone, style, era, or audience appeal.
+    Similarly, users have latent traits that make them prefer some types of movies
+    over others.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Latent factor models are designed to capture exactly this type of structure.
+    Instead of estimating thousands of separate parameters, they represent users and
+    movies in a lower-dimensional space defined by a small number of latent features.
+    The winning team of the Netflix Prize competition relied heavily on this idea,
+    using latent factor models to achieve an improvement in predictive accuracy.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Although recommendation systems are one of the most famous applications, latent
+    factor models are widely used in other fields, such as genomics (to model hidden
+    biological structure), text analysis (topics in documents), marketing (customer
+    segmentation), and finance (risk factors underlying asset returns).
+  prefs: []
+  type: TYPE_NORMAL
+- en: In this chapter, we introduce latent factor models in the context of recommendation
+    systems, connect them to principal component analysis (PCA), and show how the
+    singular value decomposition (SVD) provides a unifying mathematical foundation.
+    We will build models that capture hidden structure in rating data and show how
+    these models further improve prediction accuracy.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 25.1 Factor analysis
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'We start with a simple simulated example. Specifically, we simulate ratings
+    \(Y_{ij}\) for six movies and 120 users. For simplicity we assume that these ratings
+    have been adjusted for the movie and user effects, as described in [Chapter 24](regularization.html).
+    We stored the results for 120 user and 6 movie effects in the object `y`:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE1]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*If we examine the correlation between movies based on user ratings, we notice
+    a pattern:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE2]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*It appears that ratings are positively correlated within genres, for example,
+    among mob movies or among romance movies, and negatively correlated across the
+    two genres. In statistics, such patterns are often explained by factors: unobserved,
+    or latent, variables that account for the correlations or associations among the
+    observed variables. Under certain assumptions, which we will describe below, these
+    latent factors can be estimated from the data and used to capture the underlying
+    structure driving the correlations.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'One approach is to use our knowledge of movies genres to define a factor that
+    distinguishes between mob and romance movies:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE3]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*We code mob movies with `-1` and romance movies with `1`.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'To quantify each user’s genre preferences, we fit a separate linear model for
+    every user \(i\) (rows of `y`) by using `apply`:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE4]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*We include `-1` in the formula because the residuals were constructed to have
+    mean 0, so no intercept is needed.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Each call to `lm` returns an estimated coefficients representing the difference
+    in average ratings between mob and romance movies. A positive value indicates
+    a preference for mob movies, a negative value indicates a preference for romance
+    movies, and values near 0 suggest no strong preference.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Collecting these across users gives us `p`, a vector with one entry per user.
+    The histogram below shows users cluster into these three type:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE5]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*![](../Images/6ceb784578732e97977ff6e29130ba05.png)*  *We now show that we
+    can approximate each rating \(Y_{ij}\) using just the product of two vectors:
+    one describing user preferences (\(p\)) and one describing movie characteristics
+    (\(q\)). To work with matrix algebra, we convert the vectors into matrices and
+    multiply them:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE6]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*![](../Images/6b80c2e2be8bc2a0236f7ec88b812b68.png)*  *The points fall roughly
+    along the diagonal, which means the model captures a good amount of structure
+    in the data. However, there is still substantial unexplained variation. Even after
+    removing the “mob vs. romance” effect, we still see correlation patterns:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE7]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*Looking more closely, this structure appears to come from whether or not Al
+    Pacino is in the movie. This suggests we can improve the model by adding a second
+    latent factor, one that distinguishes Pacino films from non-Pacino films. We do
+    this by adding a second column to `q`:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE8]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*Now each movie is described by *two latent factors*:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Mob vs. romance
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: Al Pacino vs. not Al Pacino
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: 'We then fit a model for each user to estimate their preference for each factor:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE9]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*Because `q` now has two columns, `lm` returns two coefficients per user. The
+    first captures mob/romance preference, and the second captures whether the user
+    tends to like Al Pacino films.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: We use `t` (transpose) because `apply` stacks results as columns, but we want
+    one user per row.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'With two factors, our predictions improve:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE10]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*![](../Images/8b7c8f7398a1e5485512599167f47446.png)*  *And now, if we look
+    at the residual correlation'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE11]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*there is no clear pattern left. The two latent factors now explain the main
+    structure in the data.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'This approximation with two factors can be written as:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[ Y_{ij} \approx p_{i1}q_{j1} + p_{i2}q_{j2}, i = 1 \dots, I \mbox{ and } j
+    = 1, \dots, J \] with \(I\) the number of users and \(J\) the number of movies.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Using matrix representation we can rewrite the above question like this:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[ \mathbf{Y} \approx \mathbf{P}\mathbf{Q}^\top \] with \(\mathbf{Y}\) an \(I\times
+    J\) matrix with entries \(Y_{ij}\), \(\mathbf{P}\) a \(I\times K\) matrix with
+    entries \(p_{ik}\), and \(\mathbf{Q}\) a \(J\times K\) matrix with entries \(q_{jk}\).
+  prefs: []
+  type: TYPE_NORMAL
+- en: This analysis provides insights into the process generating our data since \(\mathbf{P}\)
+    contains user-specific parameters and \(\mathbf{Q}\) contains movie-specific parameters.
+    The approach is often referred to as *matrix factorization* because the rating
+    matrix has been *factorized* into two lower-dimensional, interpretable matrices.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Note that the apporach also provides compression since the \(120 \times 6 =
+    720\) observations can be well approximated by a matrix multiplication of a \(120
+    \times 2\) matrix \(\mathbf{P}\) and a \(6 \times 2\) matrix \(\mathbf{Q}\), a
+    total of \(252\) parameters.
+  prefs: []
+  type: TYPE_NORMAL
+- en: In our example with simulated data, we deduced the factors \(\mathbf{q}_1\)
+    and \(\mathbf{q}_2\) from the sample correlation and our knowledge of movies.
+    These ended up working well. However, in general deducing factors is not this
+    easy. Furthermore, factors that provide good approximation might be more complicated
+    than containing just two values. For example, *The Godfather III* has a romantic
+    subplot so we might not know what value to assign it in `q_1`.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'So, can we estimate the factors? A challenge is that if \(\mathbf{P}\) is unknown,
+    our model is no longer linear: we can’t use `lm` to estimate both \(\mathbf{P}\)
+    and \(\mathbf{Q}\). In the next sections, we describe how PCA can be used to estimate
+    \(\mathbf{P}\) and \(\mathbf{Q}\).'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '*We used `apply` and `lm` to estimate `p`. But there is a faster way to compute
+    these estimates using linear algebra.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'The `lm` function works by minimizing the sum of squared residuals. In matrix
+    form, this leads to the normal equations:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[ (\mathbf{q}^\top\mathbf{q}) \, \hat{\mathbf{p}}_i = \mathbf{q}^\top \mathbf{y}_i
+    \]
+  prefs: []
+  type: TYPE_NORMAL
+- en: where \(\mathbf{y}_i\) is the column vector representing the \(i\)-th row of
+    `y` passed to the `apply` call.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'The key observation is that \(\mathbf{q}\) is the same for every user, so running
+    `lm` repeatedly is wasteful: it recomputes the same matrix operations each time.
+    Instead, we can solve the system once and apply it efficiently to all users by
+    using matrix operations:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE12]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*This computes all \(\hat{\mathbf{p}}_i\) values at once, avoiding thousands
+    of separate model fits.*************'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '****25.2 Connection to PCA****'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '****Notice that in [Section 23.5](dimension-reduction.html#sec-pca) we learned
+    that if we perform PCA on a matrix \(\mathbf{Y}\), we obtain a transformation
+    \(\mathbf{V}\) that permits us to rewrite:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[ \mathbf{Y} = \mathbf{Z} \mathbf{V}^\top \]
+  prefs: []
+  type: TYPE_NORMAL
+- en: with \(\mathbf{Z}\) the matrix of principal components.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Let’s perform PCA on the \(\mathbf{Y}\) constructed in the previous section
+    and examine the results:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE13]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*First, notice that the first two PCs explain over 85% of the variability:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE14]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*Next, notice that the first column of \(\mathbf{V}\):'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE15]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*is assigning positive values to the mob movies and negative values to the
+    romance movies.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'The second column:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE16]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*is coding for Al Pacino movies.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: PCA is automatically discovering the structure we inferred using our knowledge
+    of the movies. This is not a coincidence, there is a mathematical connection that
+    explains why PCA aligns with these latent patterns.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'To see this assume that the data \(\mathbf{Y}\) follows the model:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[ Y_{ij} = \sum_{k=1}^K p_{ik}q_{jk} + \varepsilon_{ij}, i=1,\dots,I, \, j
+    = 1,\dots J \mbox{ or } \mathbf{Y} = \mathbf{P}\mathbf{Q} ^\top + \boldsymbol{\varepsilon}
+    \] with the constraint
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[ \mathbf{Q}^\top\mathbf{Q} = \mathbf{I} \]
+  prefs: []
+  type: TYPE_NORMAL
+- en: '*To understand why we need this constraint, notice that without it the model
+    is not uniquely defined, it is *unidentifiable*. For example, we can multiply
+    any column of \(\mathbf{P}\) by a constant \(c > 0\) and divide the corresponding
+    column of \(\mathbf{Q}\) by the same constant, and the product \(\mathbf{P}\mathbf{Q}^\top\)
+    remains unchanged. This constraint removes the scaling ambiguity and ensures that
+    the factorization has a well-defined form.*  *The first \(K\) columns of the principal
+    components and the associated rotation matrix provide estimates of \(\mathbf{P}\)
+    and \(\mathbf{Q}\), respectively. In other words, PCA can be viewed as a special
+    case of latent factor modeling where the latent factors are chosen to be orthogonal
+    and ordered by the variance they explain. This explains why PCA naturally recovers
+    interpretable patterns, such as genre preferences or actor-specific effects, without
+    us explicitly coding them into the model.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Another way to see this connection is through optimization. PCA can be formulated
+    as the solution to a least squares problem: among all possible \(K\)-dimensional
+    projections of the data, PCA finds the one that minimizes the reconstruction error,
+    that is, the sum of squared differences between the original data \(\mathbf{Y}\)
+    and its approximation \(\mathbf{P}\mathbf{Q}^\top\). In this sense, PCA provides
+    the best rank-\(K\) approximation of \(\mathbf{Y}\) in the least squares sense.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'This dual interpretation, both as a factor model and as a least squares optimizer,
+    highlights why PCA is such a powerful tool for uncovering hidden structure in
+    high-dimensional data: it compresses the data efficiently while also providing
+    factors that capture the dominant sources of variation.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '*Even with the orthogonality constraint, the PCA solution is not completely
+    unique.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'There remains a *sign indeterminacy*: we can flip the sign of any column in
+    \(\mathbf{P}\) and the corresponding column in \(\mathbf{Q}\) (multiply one by
+    \(-1\) and the other by \(-1\)) without changing the product \(\mathbf{P}\mathbf{Q}^\top\).'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Thus, the factorization is identifiable only up to these sign changes.**********
+  prefs: []
+  type: TYPE_NORMAL
+- en: '*****25.3 Case study: recommendation systems*****'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '*****We now move back from the small simulated example to the real Movielens
+    dataset. In the previous section, we used a toy setting to illustrate how latent
+    factors can capture patterns such as “mob vs. romance” or “Al Pacino vs. not Al
+    Pacino”. Here, we show that similar latent structure is present in the real movie
+    ratings and that we can exploit it to further improve predictions.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Starting from the residuals of our regularized user + movie model (introduced
+    in [Chapter 24](regularization.html)), we can examine how movie ratings correlate
+    after accounting for overall averages and user and movie effects. Focusing on
+    a small set of well-known titles, we compute the correlation matrix of these residuals:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE17]'
+  prefs: []
+  type: TYPE_PRE
+- en: As in the simulated example, we see clear correlation patterns. For instance,
+    *The Godfather*, *The Godfather Part II*, and *Goodfellas* share similar residuals,
+    while romantic comedies show different behavior. This suggests that ratings are
+    influenced by *latent characteristics* that group movies and users in meaningful
+    ways.
+  prefs: []
+  type: TYPE_NORMAL
+- en: A latent factor model for movie ratings
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: This motivates extending our earlier model. We now incorporate latent factors
+    that capture similarities between movies and users. This leads us to a simplified
+    version of the approach used by the winning Netflix Prize team, which combined
+    latent factor models with the regularization methods developed in [Chapter 24](regularization.html).
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'To account for interactions such as these, we use a latent factor model. Specifically,
+    we extend the model from [Chapter 24](regularization.html) to include factors
+    that capture similarities between movies:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[ Y_{ij} = \mu + \alpha_i + \beta_j + \sum_{k=1}^K p_{ik}q_{jk} + \varepsilon_{ij}
+    \]
+  prefs: []
+  type: TYPE_NORMAL
+- en: Recall that, as explained in the previous chapter, we do not observe all \((i,j)\)
+    combinations. Writing the data as an \(I \times J\) matrix \(\mathbf{Y}\), with
+    \(I\) users and \(J\) movies, would produce many missing values.
+  prefs: []
+  type: TYPE_NORMAL
+- en: However, the sum \(\sum_{k=1}^K p_{ik}q_{jk}\) can be expressed as the \(I \times
+    J\) matrix product \(\mathbf{P}\mathbf{Q}^\top\), where \(\mathbf{P}\) is an \(I
+    \times K\) matrix and \(\mathbf{Q}\) is a \(J \times K\) matrix. Estimating all
+    parameters effectively fills in every cell of the \(I \times J\) matrix, giving
+    predictions for all \((i,j)\) pairs.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'So if this latent factor model is a good approximation, we don’t actually need
+    to observe every user-movie rating to make predictions. Instead, we just need
+    enough observed ratings to estimate the latent factor matrices \(\mathbf{P}\)
+    (for users) and \(\mathbf{Q}\) (for movies). Once we have these matrices, we can
+    predict any user-movie combination, even those not seen in the training data,
+    simply by computing:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[ \hat{y}_{ij} \approx \hat{\mu} + \hat{\alpha}_i + \hat{\beta}_j + \hat{p}_i^\top
+    \hat{q}_j \]
+  prefs: []
+  type: TYPE_NORMAL
+- en: Regularization
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: 'Given the large number of parameters and the sparsity of the data, especially
+    for movies with few ratings, it is appropriate to use penalized least squares.
+    We therefore minimize:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[ \frac{1}{N} \sum_{i,j} \left[Y_{ij} - \left(\mu + \alpha_i + \beta_j + \sum_{k=1}^K
+    p_{ik}q_{jk}\right)\right]^2 + \lambda_1 \left( \|\boldsymbol{\alpha}\|^2 + \|\boldsymbol{\beta}\|^2
+    \right) + \lambda_2 \sum_{k=1}^K \left( \|\mathbf{p}_k\|^2+ \|\mathbf{q}_k\|^2
+    \right) \]
+  prefs: []
+  type: TYPE_NORMAL
+- en: Here, \(N\) is the number of observed ratings, \(I\) the number of users, and
+    \(J\) the number of movies. The vectors \(\boldsymbol{\alpha}\) and \(\boldsymbol{\beta}\)
+    are the user and movie effects, \(\boldsymbol{\alpha} = (\alpha_1,\dots,\alpha_I)^\top\)
+    and \(\boldsymbol{\beta} = (\beta_1,\dots,\beta_J)^\top\). The vectors \(\mathbf{p}_k
+    = (p_{1k}, \dots, p_{Ik})^\top\) and \(\mathbf{q}_k = (q_{1k}, \dots, q_{Jk})^\top\)
+    are the \(k\)-th latent factor components. Recall that \(|\boldsymbol{\alpha}|^2\)
+    denotes the sum of squares, \(\sum_{i=1}^I \alpha_i^2\).
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'We use two penalties: \(\lambda_1\) for the linear effects (the \(\alpha\)s
+    and \(\beta\)s), and \(\lambda_2\) for the latent factors. This lets us regularize
+    the two components differently, reflecting their distinct roles in the model.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: How do we estimate the parameters in this model? The challenge comes from the
+    fact that both the \(p\)s and \(q\)s are unknown and appear multiplied together,
+    making the model nonlinear in its parameters. In earlier sections, we highlighted
+    the connection between factor analysis and principal component analysis (PCA),
+    and showed that in settings with complete data, PCA can be used to estimate the
+    latent factors of a factor analysis model.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'However, recommendation systems present a critical complication: the rating
+    matrix is extremely sparse. Most users only rate a small subset of movies, so
+    the data matrix has many missing entries. PCA and related approaches require a
+    fully observed matrix, so they cannot be applied directly in this context. In
+    addition, while PCA provides least squares estimates, here we want to use *penalized
+    least squares*, which allows us to regularize the parameters and avoid overfitting
+    when the data for some users or movies are limited.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'To address these challenges, we again turn to the *Alternating Least Squares
+    (ALS)* algorithm described in [Section 24.1.7](regularization.html#sec-movie-effects).
+    The key idea is to alternately estimate each column of \(\mathbf{P}\) and \(\mathbf{Q}\):
+    fix all columns except one, and solve for that one column using penalized least
+    squares, then switch across all columns. This alternating approach also extends
+    naturally to penalized versions of the model, where user and movie effects and
+    latent factors are regularized separately. For these reasons, ALS has become one
+    of the standard approaches for fitting latent factor models in recommendation
+    systems, where sparsity makes direct application of PCA infeasible.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'The **dslabs** package provides the `fit_recommender_model` function, which
+    implements a latent factor model with regularization:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE18]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*You can learn more about the function, including default parameter choices,
+    by running `?fit_recommender_model` and examining the source code.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Once we have a fitted model, we can build predictions for the test set and
+    compute the RMSE:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE19]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*This improves accuracy beyond the regularized user + movie effects model from
+    [Chapter 24](regularization.html). It illustrates, in simplified form, how the
+    Netflix Prize winners improved prediction: by combining regularization with a
+    latent factor model that learns hidden structure in user–movie interactions.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Importantly, this improvement is achieved without tuning the penalty terms \(\lambda_1\)
+    and \(\lambda_2\), the number of latent factors \(K\), or other model settings
+    discussed next.**
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Visualizing factors**'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '**Examining the estimated movie factors \(\mathbf{q}_k\) reveals that they
+    are interpretable.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'The estimates for these factors are contained in `fit$q`. Because some movies
+    do not have enough ratings to stably estimate latent factors, the `fit_recommender_model`
+    function excludes these movies from the estimation. We therefore obtain the estimated
+    movie factors \(\mathbf{q}_k\) using:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE20]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*To make interpretation easier, we replace the row names (which are movie IDs)
+    with movie titles:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE21]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*Plotting the first two factors reveals several insights. First note that the
+    six movies of our earlier example are highlighted in blue: we can see that these
+    two factors start to explain the correlations we saw earlier, with mob films clustering
+    together, romance films far from these, and the Al Pacino being somewhere in between:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![](../Images/d1f46796cc607b7b0489d89a19f9b727.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: Looking at the movies with the most extreme factor values (red) provides a clear
+    interpreation for the factors.
+  prefs: []
+  type: TYPE_NORMAL
+- en: The first factor separates iconic dark classics
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE22]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*from Hollywood blockbusters'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE23]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*The second factor separates weird cult movies'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE24]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*from big-budget epic historical and fantasy sagas'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE25]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*These results demonstrate that the latent factors capture meaningful distinctions
+    in film genres and styles, showing how latent factor models can uncover interpretable
+    structure from sparse rating data.********'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '***Practical considerations***'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '***The `fit_recommender_model` function includes several adjustable parameters:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Penalty terms: by default, \(\lambda_1 = 0.00005\) and \(\lambda_2 = 0.0001\).
+    A grid search, as in [Section 24.3](regularization.html#sec-selecting-penalty-term),
+    can identify better choices.'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 'Number of latent factors: the default is \(K = 8\), but this may not be optimal.
+    If \(K\) is too small, the model may miss structure. If \(K\) is too large, the
+    model risks overfitting and instability.'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 'Minimum ratings per movie: the function only estimates latent factors for movies
+    with at least 20 ratings. This helps avoid unstable estimates of the \(q\) vectors.
+    However, 20 may be too high, or too low, depending on the dataset.'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 'Convergence tolerance: the default stopping rule requires model improvement
+    below `reltol`. Decreasing the tolerance will make results better, but increasing
+    the tolerance often speeds up computation with little loss in accuracy.'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Further improvements can be made by adding more predictors, such as rating timestamps
+    or movie genres.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Finally, the winning team’s breakthrough came from recognizing that missing
+    ratings are informative. Users tend to avoid movies they expect to dislike, meaning
+    that the absence of a rating is not random. By modeling this structure, they achieved
+    state-of-the-art performance that ultimately led to victory.********
+  prefs: []
+  type: TYPE_NORMAL
+- en: '****25.4 Singular Value Decomposition****'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '****A related technique often used in latent factor analysis is the Singular
+    Value Decomposition (SVD). It states any \(N \times p\) matrix can be written:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[ \mathbf{Y} = \mathbf{U}\mathbf{D}\mathbf{V}^\top \]
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'where \(\mathbf{U}\) is an orthogonal \(N \times p\) matrix, \(\mathbf{V}\)
+    an orthogonal \(p \times p\) matrix, and \(\mathbf{D}\) diagonal with \(d_{1,1}
+    \geq d_{2,2} \geq \dots \geq d_{p,p}\). SVD is connected to PCA because \(\mathbf{V}\)
+    provides the rotations for the principal components, while \(\mathbf{U}\mathbf{D}\)
+    are the principal components themselves. Squaring the diagonal entries of \(\mathbf{D}\)
+    gives the sums of squares:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[ \mathbf{U}^\top \mathbf{D} \mathbf{U} = \mathbf{D}^2 \]
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'In R, we can compute the SVD with `svd` and confirm its relationship to PCA:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE26]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*As an optimization, note that `s$u %*% diag(s$d)` can be written more efficiently
+    as:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE27]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*The Singular Value Decomposition is one of the most widely used tools in modern
+    data analysis, appearing in fields as diverse as signal processing, genomics,
+    image compression, natural language processing, collaborative filtering, and numerical
+    optimization. Any time we want to reduce dimensionality, uncover hidden structure,
+    or work with large, noisy matrices, the SVD provides a principled foundation.
+    In fact, many of the most successful machine learning algorithms, including the
+    latent factor methods used in the Netflix Prize, are built directly on top of
+    it.******'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '****25.5 Exercises****'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '****1\. Examine the movie names in the extreme values of factors 3, 4, 5, 6,
+    7, and 8\. Describe any interesting patterns you observe.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 2\. Fit the recommender model with several values of
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE28]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*Which pair gives the lowest RMSE on a validation set? Briefly explain why
+    too little or too much penalization can hurt performance.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 3\. Fit the model with \(K = 2, 4, 8, 16, 32\). Plot validation RMSE versus
+    \(K\). At what point do gains level off? Based on the plot, what value of \(K\)
+    would you recommend?
+  prefs: []
+  type: TYPE_NORMAL
+- en: 4\. Using your results from Exercises 2 and 3, perform a grid search over three
+    values of each parameter, \(\lambda_1\), \(\lambda_2\), and \(K\), for a total
+    of \(3 \times 3 \times 3 = 27\) combinations. Report the lowest RMSE.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 5\. The default model estimates movie factors only for movies with at least
+    20 ratings. Try thresholds of 5, 10, 20, and 50\. How does the RMSE change? Which
+    threshold seems to balance stability and coverage best?
+  prefs: []
+  type: TYPE_NORMAL
+- en: 6\. Run the ALS algorithm with stopping rules `reltol = 10^-seq(1, 8, 0.5)`.
+    Record the number of iterations taken and the final RMSE. Is the improvement from
+    tighter convergence worth the additional computation?
+  prefs: []
+  type: TYPE_NORMAL
+- en: In next exercises we use the singular value decomposition (SVD) to estimate
+    latent factors in a school-performance example.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'We simulate grades for 100 students in 24 different courses, grouped into three
+    subject areas: Math, Science, and Arts. The columns are individual courses (for
+    example, Calculus, Linear Algebra, Physics, Chemistry, Music Theory, Painting),
+    labeled `Math_1`, …, `Math_k`, `Science_1`, …, `Science_k`, and `Arts_1`, …, `Arts_k`.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Each entry represents points above/below the overall average for that test:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 0 = average (C),
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 25 = very high (A+),
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: −25 = very low (F).
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 'We assume the following model holds:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '\[ Y_{ij} = \mu_{ij} + \varepsilon_{ij} \] with \(\mu_{ij}\) the expected grade
+    for student \(i\) in class \(j\) and \(\varepsilon_{ij}\) random variation due
+    to random chance in answering exam questions (guessing or dumb mistakes, for example).
+    We assume the \(\varepsilon_{ij}\) are independent from each other. We will simulated
+    data with:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE29]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*We want to summarize these 24 test scores per student as simply as possible.
+    Are students equally good in all subjects, or do we see patterns? Does being strong
+    in one subject predict being strong in another? How can SVD help us see this structure?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: We will show that just three pairs of vectors can explain much of the variation
+    in this \(100 \times 24\) matrix.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'First define a helper function to visualize matrices:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE30]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*7\. Use `nice_image(y)` to visualize the 24 test scores for the 100 students.
+    Which of the following best describes what you see?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: The test scores are all independent of each other.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: The strongest students appear at the top of the image, and the 24 tests seem
+    to group into three subject blocks.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: Students who are good at math are clearly bad at science.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: Students who are good at math are clearly bad at the arts.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '8\. Now look at the correlation matrix of the 24 tests:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE31]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*Which option best describes the correlation pattern?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: The test scores are independent.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: Math and Science are highly correlated, but Arts is not correlated with anything.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: Tests within the same subject are correlated, but there is no correlation between
+    subjects.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: There is correlation among all tests, with stronger correlation within each
+    subject and stronger correlation between Math and Science than between either
+    and Arts.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '9\. First compute the total sum of squares in `y`:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE32]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*Now compute the SVD'
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[ \mathbf{Y} = \mathbf{U}\mathbf{D}\mathbf{V}^\top. \]
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Use the SVD to verify in R that:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: The total sum of squares of all entries in \(\mathbf{Y}\mathbf{V} = \mathbf{U}\mathbf{D}\)
+    is the same as in \(\mathbf{Y}\).
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: The sum of the squared singular values (the diagonal entries of \(\mathbf{D}\))
+    is also equal to `tss_y`.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 'Check these equalities in R and make sure you understand *why* they must hold
+    (hint: \(\mathbf{V}\) is orthogonal and SVD preserves total sum of squares).'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 10\. Let \(\mathbf{Z} = \mathbf{Y}\mathbf{V} = \mathbf{U}\mathbf{D}\).
+  prefs: []
+  type: TYPE_NORMAL
+- en: Plot the square root of the sum of squares of each column of \(\mathbf{Y}\)
+    versus the column index.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: On the same scale, plot the square root of the sum of squares of each column
+    of the columns of \(\mathbf{Z}\).
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Comment on what you see. Does the variation across columns become more concentrated
+    in the first few columns of \(\mathbf{Z}\)?
+  prefs: []
+  type: TYPE_NORMAL
+- en: '11\. In exercise 10 you computed the column sums of squares of \(\mathbf{Z}
+    = \mathbf{Y}\mathbf{V} = \mathbf{U}\mathbf{D}\) using `colSums`. However, we actually
+    already know these numbers from the SVD:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Show in R that the squared singular values \((d_{kk}^2)\) are equal to the column
+    sums of squares of \(\mathbf{Z}\).
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Confirm this numerically by plotting the square root of the column sums of squares
+    of \(\mathbf{Z}\) versus the diagonal entries of \(\mathbf{D}\).
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 12\. The columns of \(\mathbf{Z} = \mathbf{Y}\mathbf{V} = \mathbf{U}\mathbf{D}\)
+    are the principal components (PCs) of \(\mathbf{Y}\). The diagonal of \(\mathbf{D}\)
+    tells us how much variability each PC explains.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Compute the SVD and plot the percentage of variance explained by each PC:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE33]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*You should see that the first PC explains over 60% of the variability. Compare
+    the first PC to each student’s average grade:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE34]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*How would you interpret the first PC in plain language? (Remember the sign
+    is arbitrary, so high PC1 can correspond to strong student or weak student, depending
+    on sign.)'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 13\. The SVD can be written as
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[ \mathbf{Y} = \mathbf{u}_1 d_{1,1} \mathbf{v}_1^\top + \mathbf{u}_2 d_{2,2}
+    \mathbf{v}_2^\top + \dots + \mathbf{u}_p d_{p,p} \mathbf{v}_p^\top, \]
+  prefs: []
+  type: TYPE_NORMAL
+- en: where \(\mathbf{u}_k\) is the \(k\)-th column of \(\mathbf{U}\), \(d_{k,k}\)
+    is the \(k\)-th diagonal entry of \(\mathbf{D}\), and \(\mathbf{v}_k\) is the
+    \(k\)-th column of \(\mathbf{V}\).
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Approximate all student grades \(\mu_{ij}\) using only the first term:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[ \hat{\mu}_{ij} = \mathbf{u}_1 d_{1,1} \mathbf{v}_1^\top. \] Compute the residual
+    matrix \(\mathbf{r} = \mathbf{y} - \mathbf{u}_1 d_{1,1} \mathbf{v}_1^\top\), and
+    visualize the residuals and their correlations with `nice_image`. Do you still
+    see subject-level correlation structure in the residuals?
+  prefs: []
+  type: TYPE_NORMAL
+- en: '14\. Now approximate grades using the first two components:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[ \hat{\mu}_{ij} = \sum_{k=1}^2 \mathbf{u}_k d_{k,k} \mathbf{v}_k^\top. \]
+  prefs: []
+  type: TYPE_NORMAL
+- en: and repeat exploratory plots generated in exercise 13\. Has most of the correlation
+    structure disappeared, or is there still visible within-subject pattern?
+  prefs: []
+  type: TYPE_NORMAL
+- en: '15\. Now repeat exercise 14 but using the first three components:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[ \hat{\mu}_{ij} = \sum_{k=1}^3 \mathbf{u}_k d_{k,k} \mathbf{v}_k^\top. \]
+  prefs: []
+  type: TYPE_NORMAL
+- en: Is the correlation now essentially gone? How many factors does it seem we need
+    to capture the main structure \(\mu_{ij}\) for these 24 courses?
+  prefs: []
+  type: TYPE_NORMAL
+- en: '16\. Finally, inspect the first three right singular vectors (the columns of
+    \(\mathbf{V}\)):'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE35]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*Each row corresponds to a course (for example, `Math_1`, `Science_3`, `Arts_5`),
+    and each column corresponds to one factor (PC1, PC2, PC3). How would you interpret
+    the first three columns of \(\mathbf{V}\)? Write a short interpretation for each
+    of the three factors in plain language.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '17\. Based on the patterns see in exercise 16, how would you interpret the
+    values \(u_{i1}\), , \(u_{ip}\) for student \(i\):'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Is one roughly quantifying *overall academic strength*?
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Is one quantifying how much better the student is at *STEM vs. Arts*?
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Is another quantifying how much better at *Math vs. Science*?
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Are some of them just random noise?*************
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL

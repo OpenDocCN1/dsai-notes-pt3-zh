@@ -1,0 +1,571 @@
+- en: 19  Association Is Not Causation
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: 原文：[https://rafalab.dfci.harvard.edu/dsbook-part-2/linear-models/association-not-causation.html](https://rafalab.dfci.harvard.edu/dsbook-part-2/linear-models/association-not-causation.html)
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '[Linear Models](../linear-models/intro-to-linear-models.html)'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[19  Association Is Not Causation](../linear-models/association-not-causation.html)'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: 'Throughout this part of the book, we have focused on methods for quantifying
+    *associations* between variables, how changes in one variable relate to changes
+    in another. Linear models, correlation coefficients, and hypothesis tests all
+    provide formal ways to describe and assess these relationships. It is tempting
+    to interpret such results as evidence of cause and effect, especially when the
+    findings seem intuitive or align with our expectations. However, this is a critical
+    mistake: *association is not causation*.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Statistical tools can reveal patterns, but they cannot, on their own, establish
+    why those patterns exist. Determining causation requires more than observing an
+    empirical relationship. At a minimum, several conditions must be satisfied:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '*Empirical association:* A relationship must exist between the variables of
+    interest.'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '*Temporal priority:* The cause must occur before the effect.'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '*Dose-response relationship:* Changes in the *dose* of the cause should result
+    in changes of the effect.'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '*Plausibility:* There must be a credible mechanism explaining how the cause
+    could produce the effect.'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '*Elimination of alternative explanations:* Other potential causes, such as
+    confounding factors, must be considered and ruled out.'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: A major focus of this chapter is *confounding*, one of the most common and deceptive
+    reasons why two variables may appear related even when no causal connection exists.
+    We also discuss several other scenarios that can produce misleading associations,
+    highlighting the importance of careful interpretation.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Finally, we note that randomized controlled experiments, where subjects are
+    assigned to treatments at random, provide the most reliable way to infer causation
+    from data, as randomization minimizes alternative explanations. Yet, most analyses
+    in science, medicine, and the social sciences rely on *observational* or *real-world*
+    data, where randomization is not possible and causal inference must rely on assumptions
+    that are often difficult or impossible to verify. Understanding these limitations
+    is essential for responsible data analysis.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 19.1 Spurious correlation
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: The following comical example underscores the concept that correlation is not
+    causation. It shows a very strong correlation between divorce rates and margarine
+    consumption.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![](../Images/fc8d1e314dd181dd2ef2a03170446306.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: Does this mean that margarine consumption causes divorces? Or do divorces cause
+    people to eat more margarine? Of course not. This is just an example of what we
+    call a *spurious correlation*.
+  prefs: []
+  type: TYPE_NORMAL
+- en: You can see many more absurd examples on the Spurious Correlations website[¹](#fn1).
+  prefs: []
+  type: TYPE_NORMAL
+- en: The cases presented on the website are all instances of what is generally called
+    *data dredging*, *data fishing*, or *data snooping*. It’s basically a form of
+    what in the US they call *cherry picking*. An example of data dredging would be
+    if you look through many results produced by a random process and pick the one
+    that shows a relationship that supports a theory you want to defend.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'A Monte Carlo simulation can be used to show how data dredging can result in
+    finding high correlations among uncorrelated variables. We will save the results
+    of our simulation into a tibble:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*Note we created groups and for each we generated a pair of independent vectors,
+    \(X\) and \(Y\), with 25 observations each. Because we constructed the simulation,
+    we know that \(X\) and \(Y\) are not correlated.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Next, we compute the correlation between `X` and `Y` for each group and look
+    for the max:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE1]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*We see a maximum correlation of 0.81\. If you just plot the data from the
+    group achieving this correlation, it shows a convincing plot that \(X\) and \(Y\)
+    are in fact correlated:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE2]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*![](../Images/f51ed488ad887be723d81f49d219e3a8.png)*  *Remember that the correlation
+    summary is a random variable. Here is the distribution generated by the Monte
+    Carlo simulation:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE3]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*![](../Images/83f4291d50ab918bfe149bdab69526e0.png)*  *It’s simply a mathematical
+    fact that if we observe 1,000,000 random correlations that are expected to be
+    0, but have a standard error of 0.2, the largest one will be close to 1.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'If we performed regression on this group and interpreted the p-value, we would
+    incorrectly claim this was a statistically significant relation:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE4]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*This practice, known as p-hacking, is widely discussed because it may undermine
+    the reliability of scientific findings. Since journals often favor statistically
+    significant results over null findings, researchers have an incentive to highlight
+    significance. In fields such as epidemiology and the social sciences, for instance,
+    an analyst might explore associations between an outcome and many exposures, but
+    only report the one with a small p-value. Similarly, they might try several model
+    specifications to adjust for confounding and select the one that gives the strongest
+    result. In experimental settings, a study could be repeated multiple times, with
+    only the “successful” run reported. Such practices are not always intentional
+    misconduct; they often stem from limited statistical understanding or wishful
+    thinking. More advanced statistics courses cover methods for adjusting analyses
+    to account for these multiple comparisons.*****'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '***19.2 Outliers***'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '***Suppose we measure two independent outcomes, \(X\) and \(Y\), and standardize
+    each set of measurements. Now imagine we make a mistake and forget to standardize
+    just one value, say, entry 23\. We can illustrate this situation by simulating
+    such data as follows:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE5]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*The data look like this:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE6]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*![](../Images/f9a27f8f7b5aa555d9c6bade872ad6b6.png)*  *Not surprisingly, the
+    correlation is very high:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE7]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*But this is driven by the one outlier. If we remove this outlier, the correlation
+    is greatly reduced to almost 0, which is what it should be:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE8]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*There is an alternative to the sample correlation for estimating the population
+    correlation that is robust to outliers. It is called *Spearman correlation*. The
+    idea is simple: compute the correlation on the ranks of the values. Here is a
+    plot of the ranks plotted against each other:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE9]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*![](../Images/d229b1110b0b179afc3cc6905c7fff02.png)*  *The outlier is no longer
+    associated with a very large value, and the correlation decreases significantly:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE10]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*Spearman correlation can also be calculated like this:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE11]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**While the Spearman correlation is much less affected by outliers, this robustness
+    comes at a cost. Because it relies on the ranks rather than the actual values,
+    it is less sensitive to subtle linear relationships between variables. As a result,
+    when a true correlation exists but is modest, the Spearman estimate may be closer
+    to zero than the Pearson correlation. In practice, Pearson correlation is more
+    efficient for detecting real linear associations in data with no outliers, while
+    Spearman correlation is preferred when outliers or non-linear monotonic relationships
+    are a concern.*  *In the recommended reading section, we include references on
+    estimation techniques that are robust to outliers and applicable to a wide range
+    of situations.***********'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '****19.3 Reversing cause and effect****'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '****Another way association is confused with causation is when the cause and
+    effect are reversed. An example of this is claiming that tutoring makes students
+    perform worse because they test lower than peers that are not tutored. In this
+    case, the tutoring is not causing the low test scores, but the other way around.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'A form of this claim actually made it into an op-ed in the New York Times titled
+    Parental Involvement Is Overrated[²](#fn2). Consider this quote from the article:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: When we examined whether regular help with homework had a positive impact on
+    children’s academic performance, we were quite startled by what we found. Regardless
+    of a family’s social class, racial or ethnic background, or a child’s grade level,
+    consistent homework help almost never improved test scores or grades… Even more
+    surprising to us was that when parents regularly helped with homework, kids usually
+    performed worse.
+  prefs:
+  - PREF_BQ
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: A very likely possibility is that the children needing regular parental help,
+    receive this help because they don’t perform well in school.
+  prefs: []
+  type: TYPE_NORMAL
+- en: We can illustrate cause-effect reversal by fitting the regression
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[ X = \beta_0 + \beta_1 y + \varepsilon \]
+  prefs: []
+  type: TYPE_NORMAL
+- en: to the father–son height data, where \(X\) and \(y\) represents father and son
+    heights, respectively. Interpreting \(\beta_1\) causally here would be backwards,
+    as it would imply that sons’ heights determine fathers’ heights. Using the previously
+    defined `galton` dataset, we do in fact obtain a statistically significant slope,
+    demonstrating that statistical significance does not imply causation or the correct
+    direction of effect.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE12]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*The model fits the data very well and the estimates, standard errors, and
+    p-values all correctly show that there is an association between son and father
+    heights. However, if we look only at its mathematical formulation, it could easily
+    be misinterpreted as implying that a son’s height causes his father’s height.
+    From our knowledge of genetics and biology, we know the direction of influence
+    is the opposite. The statistical model itself is not at fault and we did not make
+    coding mistakes. What is misleading here is the interpretation, not the model
+    or computation.*****'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '****19.4 Confounders****'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '****Confounders are perhaps the most common reason that leads to associations
+    being misinterpreted.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: If \(X\) and \(Y\) are correlated, we call \(Z\) a *confounder* if it, or some
+    factor associated with it, is a cause of both \(X\) and \(Y\), thereby creating
+    a spurious association between them unless we properly account for \(Z\).
+  prefs: []
+  type: TYPE_NORMAL
+- en: Incorrect interpretation due to confounders is ubiquitous in the lay press and
+    they are often hard to detect. Here, we present a widely used example related
+    to college admissions.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Example: UC Berkeley admissions'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: 'Admission data from six U.C. Berkeley majors, from 1973, showed that more men
+    were being admitted than women: 44% men were admitted compared to 30% women[³](#fn3).
+    We can load the data and compute a statistical test, which clearly rejects the
+    hypothesis that gender and admission are independent:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE13]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*But closer inspection shows a paradoxical result. Here are the percent admissions
+    by major:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE14]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*For five of the six majors, the differences are small, with major A favoring
+    women. More importantly, these differences are all much smaller than the 14.2-point
+    difference in favor of men observed when looking at the overall totals.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: The paradox is that analyzing the totals suggests a dependence between admission
+    and gender, but when the data is grouped by major, this dependence seems to disappear.
+    What’s going on? This actually can happen if an uncounted confounder is driving
+    most of the variability.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Discovering confounders, and understanding how they can lead to misleading conclusions,
+    often requires exploratory data analysis and critical thinking. Looking at the
+    table above, we notice substantial variability in admission rates across majors.
+    Could this be influencing the overall results? To investigate, we add a *selectivity*
+    column, the overall admission rate within each major, to the admissions table.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE15]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*Next, we examine how the number of applicants relates to major selectivity.
+    If selectivity is a confounder, patterns may differ by gender across majors with
+    varying selectivity.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE16]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*![](../Images/b3292ebaa2fb64cd85dd5ad9cf58dd80.png)*  *We can see the key
+    issue right away: women are submitting far fewer applications to the less selective
+    majors (A and B). So department selectivity is a confounder that influenced both
+    gender (different application patterns) and admission outcome.****'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '***Stratifying***'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '***The first hint that something was off in the interpretation of the overall
+    admission rates came from stratifying by major. Stratifying by a known or potential
+    confounder is a powerful technique for examining the relationship between two
+    other variables. In exploratory data analysis, stratification can help us detect
+    how a confounder might be distorting the analysis and can offer ideas for how
+    to adjust for it.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Here is an example in which we plot admissions stratified by major and show
+    that women tend to apply to the more selective majors:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE17]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*![](../Images/2784bc5e7767a31f8a5cf5b76e281176.png)*  *We see that, major
+    by major, there is not much difference in admission rates between genders. However,
+    the large number of men applying to Major B, which admits over 60% of applicants,
+    causes the confusion in the overall comparison. This plot suggests that a more
+    sophisticated analysis adjusting for major is needed. We will learn how to perform
+    such an analysis in the next chapter, in [Chapter 20](multivariable-regression.html).****'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '***Simpson’s paradox***'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '***The case we have just covered is an example of Simpson’s paradox. It is
+    called a paradox because we see the sign of the correlation flip when comparing
+    the entire publication to specific strata. As an illustrative example, suppose
+    you have three random variables \(X\), \(Y\), and \(Z\), and we observe realizations
+    of these. Here is a plot of simulated observations for \(X\) and \(Y\) along with
+    the sample correlation:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![](../Images/d02d4acc6694c6fb93cd069f95bad5cf.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: 'You can see that \(X\) and \(Y\) are negatively correlated. However, once we
+    stratify by \(Z\) (shown in different colors below), another pattern emerges:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![](../Images/c692ed6915554f1bf1596760d4c5bd37.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: It is really \(Z\) that is negatively correlated with \(X\). If we stratify
+    by \(Z\), the \(X\) and \(Y\) are actually positively correlated, as seen in the
+    plot above.*******
+  prefs: []
+  type: TYPE_NORMAL
+- en: '****19.5 Other Sources of Bias****'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '****We discussed confounding and reverse causation, but there are many other
+    mechanisms that can create associations that are not causal. For example, **collider
+    bias** occurs when we condition on a variable influenced by two or more other
+    variables, inadvertently inducing a false relationship between them. A classic
+    example is the negative association sometimes observed between academic ability
+    and athletic skill among students at elite colleges. In the general population,
+    these traits may be independent, but both increase the likelihood of admission.
+    Conditioning on admission, our collider, can create a spurious negative correlation:
+    among admitted students, those who are less athletic may have higher academic
+    ability, and vice versa. A similar effect can occur in hospitals, where two unrelated
+    health conditions, such as diabetes and heart disease, may appear negatively associated
+    among patients simply because both increase the likelihood of hospitalization.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Selection bias** is another common source of spurious association. It arises
+    when the process determining who or what enters a dataset depends on factors related
+    to both the exposure/treatement and the outcome. For example, comparing mortality
+    rates between two hospitals might suggest that Hospital A provides worse care
+    than Hospital B. However, if Hospital A is a major trauma center treating more
+    severely ill patients, while Hospital B handles mostly routine cases, the comparison
+    is misleading. The difference reflects who is admitted, not differences in quality
+    of care.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Measurement bias** (or *misclassification*) occurs when variables are measured
+    with error, especially when those errors differ across groups. Consider a study
+    on smoking and lung cancer: if some participants underreport smoking due to stigma,
+    smokers may be misclassified as nonsmokers. If this underreporting occurs equally
+    across groups, the bias is *nondifferential* and tends to weaken the observed
+    association. If it differs between groups, say, lung cancer patients are more
+    likely to admit to smoking, the bias is *differential* and may exaggerate or even
+    reverse the association.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Readers interested in exploring these sources of bias in greater depth—including
+    how they are represented in causal diagrams, will find recommended references
+    in the *Recommended Reading* section. These works provide clear explanations and
+    practical guidance for recognizing and avoiding such biases in real data.****
+  prefs: []
+  type: TYPE_NORMAL
+- en: '****19.6 Exercises****'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '****For the next set of exercises, we examine the data from a 2014 PNAS paper[⁴](#fn4)
+    that analyzed success rates from funding agencies in the Netherlands and concluded:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Our results reveal gender bias favoring male applicants over female applicants
+    in the prioritization of their “quality of researcher” (but not “quality of proposal”)
+    evaluations and success rates, as well as in the language used in instructional
+    and evaluation materials.
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: 'A response[⁵](#fn5) was published a few months later titled *No evidence that
+    gender contributes to personal research funding success in The Netherlands: A
+    reaction to Van der Lee and Ellemers* which concluded:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: However, the overall gender effect borders on statistical significance, despite
+    the large sample. Moreover, their conclusion could be a prime example of Simpson’s
+    paradox; if a higher percentage of women apply for grants in more competitive
+    scientific disciplines (i.e., with low application success rates for both men
+    and women), then an analysis across all disciplines could incorrectly show “evidence”
+    of gender inequality.
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: Who is correct here, the original paper or the response? Below, you will examine
+    the data and come to your own conclusion.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '1\. The primary evidence for the conclusion of the original paper relies on
+    a comparison of the percentages. Table S1 in the paper includes the information
+    we need:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE18]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*Construct the two-by-two table used for the conclusion about differences in
+    awards by gender.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 2\. Compute the difference in percentage from the two-by-two table.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 3\. In the previous exercise, we noticed that the success rate is lower for
+    women. But is it significant? Compute a p-value using a Chi-square test.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '4\. We see that the p-value is about 0.05\. So there appears to be some evidence
+    of an association. But can we infer causation here? Is gender bias causing this
+    observed difference? The response to the original paper claims that what we see
+    here is similar to the UC Berkeley admissions example. Specifically, they state
+    that this “could be a prime example of Simpson’s paradox; if a higher percentage
+    of women apply for grants in more competitive scientific disciplines, then an
+    analysis across all disciplines could incorrectly show ‘evidence’ of gender inequality.”
+    To settle this dispute, create a dataset with number of applications, awards,
+    and success rate for each gender. Re-order the disciplines by their overall success
+    rate. Hint: use the `reorder` function to re-order the disciplines in a first
+    step, then use `pivot_longer`, `separate`, and `pivot_wider` to create the desired
+    table.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 5\. To check if this is a case of Simpson’s paradox, plot the success rates
+    versus disciplines, which have been ordered by overall success, with colors to
+    denote the genders and size to denote the number of applications.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 6\. We definitely do not see the same level of confounding as in the UC Berkeley
+    example. It is hard to say that there is a clear confounder here. However, we
+    do see that, based on the observed rates, some fields may favor men and others
+    may favor women. We also see that the two fields with the largest difference favoring
+    men are also the fields with the most applications. But, unlike the UC Berkeley
+    example, women are not more likely to apply for the harder subjects. Is it possible
+    some of the selection committees are biased and others are not?
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'To answer this question we start by checking if any of the differences seen
+    above are statistically significant. Remember that even when there is no bias,
+    we will see differences due to random variability in the review process as well
+    as random variability across candidates. Perform a Chi-square test for each discipline.
+    Hint: define a function that receives the total of a two-by-two table and returns
+    a data frame with the p-value. Use the 0.5 correction. Then use the `summarize`
+    function.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '7\. In the medical sciences, there appears to be a statistically significant
+    difference, but could this be a spurious correlation? We performed 9 tests. Reporting
+    only the one case with a p-value less than 0.05 might be considered an example
+    of cherry picking. Repeat the exercise above, but instead of a p-value, compute
+    a log odds ratio divided by their standard error. Then use qq-plot to see how
+    much these log odds ratios deviate from the normal distribution we would expect:
+    a standard normal distribution.*****'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '* * *'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '****1.  http://tylervigen.com/spurious-correlations[↩︎](#fnref1)'
+  prefs: []
+  type: TYPE_NORMAL
+- en: https://opinionator.blogs.nytimes.com/2014/04/12/parental-involvement-is-overrated[↩︎](#fnref2)
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: https://pubmed.ncbi.nlm.nih.gov/17835295/[↩︎](#fnref3)
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: http://www.pnas.org/content/112/40/12349.abstract[↩︎](#fnref4)
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: http://www.pnas.org/content/112/51/E7036.extract[↩︎](#fnref5)****
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL

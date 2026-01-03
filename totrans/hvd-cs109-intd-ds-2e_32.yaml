@@ -1,0 +1,353 @@
+- en: 3  Comparing Groups
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: 原文：[https://rafalab.dfci.harvard.edu/dsbook-part-2/summaries/comparing-groups.html](https://rafalab.dfci.harvard.edu/dsbook-part-2/summaries/comparing-groups.html)
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '[Summary Statistics](../summaries/intro-summaries.html)'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[3  Comparing Groups](../summaries/comparing-groups.html)'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: 'So far, we have focused on summarizing the distribution of a single variable,
+    describing its center, spread, and shape. In practice, however, one of the most
+    common goals of data analysis is **comparison**: we want to know how one group
+    differs from another, how a treatment compares to a control, or how outcomes vary
+    across conditions. Comparing groups is often the first step toward uncovering
+    relationships and understanding sources of variation.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: The tools we developed for describing distributions, histograms, boxplots, and
+    numerical summaries such as the mean and median, extend naturally to comparisons.
+    By examining these summaries **within subgroups** or by comparing **quantiles
+    across distributions**, we can reveal patterns that a single summary might conceal.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'In this chapter, we explore two key techniques for comparing distributions:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Quantile–quantile**, which provide a systematic way to compare the shapes
+    of two distributions, including how observed data differ from theoretical models
+    such as the normal distribution.'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Stratification**, which involves dividing data into meaningful subgroups
+    and examining each distribution separately.'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Together, these methods complete our descriptive toolkit, bridging the transition
+    from exploring single variables to analyzing relationships between variables.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 3.1 Quantile-quantile plots
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: A systematic way to compare two distributions is to compare their cumulative
+    distribution functions (CDFs). A practical way to do this is through their *quantiles*.
+  prefs: []
+  type: TYPE_NORMAL
+- en: For a proportion \(0 \leq p \leq 1\), the *\(p\)-th quantile* of a distribution
+    \(F(x)\) is the value \(q\) such that \(F(q) = p\), or \(q = F^{-1}(p)\). For
+    example, \(p = 0\) gives the minimum, \(p = 0.5\) gives the median, and \(p =
+    1\) gives the maximum.
+  prefs: []
+  type: TYPE_NORMAL
+- en: The notation \(Q(p) = F^{-1}(p)\) or equivalently \(q_p = F^{-1}(p)\) is commonly
+    used in textbooks to denote the \(p\)-th quantile of a distribution.
+  prefs: []
+  type: TYPE_NORMAL
+- en: A *quantile–quantile plot (qqplot)* provides a visual way to compare two distributions,
+    say \(F_1(x)\) and \(F_2(x)\), by plotting the quantiles of one distribution against
+    the corresponding quantiles of the other. Specifically, if we define \[ Q_1(p_i)
+    = F_1^{-1}(p_i) \quad \text{and} \quad Q_2(p_i) = F_2^{-1}(p_i) \] for a set of
+    probabilities \(p_1, \dots, p_m\), then the qqplot is created by plotting the
+    pairs \[ \{Q_1(p_i),\, Q_2(p_i)\}, \quad i = 1, \dots, m. \] A common choice for
+    these probabilities is \[ p_i = \frac{i - 0.5}{n}, \quad i = 1, \dots, n, \] where
+    \(n\) is the sample size of the smaller dataset. Subtracting \(0.5\) prevents
+    evaluating quantiles at \(p = 0\) or \(p = 1\), which for some theoretical distributions,
+    such as the normal, would correspond to \(-\infty\) or \(+\infty\).
+  prefs: []
+  type: TYPE_NORMAL
+- en: The most common use of qqplots is to assess whether two distributions, \(F_1(x)\)
+    and \(F_2(x)\), are similar. If the points in the qqplot fall approximately along
+    the identity line, it suggests that the two distributions have a similar shape.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Example
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: 'Up to now we have only examined the distribution of heights for males. We expect
+    that the distribution for females to be similar except for 2-3 inch shift due
+    to males being taller than females, on average. A qqplot confirms this:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*![](../Images/69cfaf931a3cc6bdea455c55837fa9c0.png)*  *We see that in the
+    middle of the plot the points are on the identiy line, confirming the distirbutiosn
+    are similar except for the shift. However, for the smaller and larger quantiles
+    we see a deviation from the line. We come back to this observation in [Section
+    3.3](#sec-stratification).*'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '*Percentiles*'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '**Percentiles* are special cases of *quantiles* that are commonly used. The
+    percentiles are the quantiles you obtain when setting the \(p\) at \(0.01, 0.02,
+    ..., 0.99\). For example, we refer to the case of \(p = 0.25\) as the 25th percentile,
+    representing a value below which 25% of the data falls. The most famous percentile
+    is the 50th, also known as the *median*. Another special case that receives a
+    name are the *quartiles*, which are obtained when setting \(p = 0.25,0.50\), and
+    \(0.75\).*'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '*3.2 Assessing normality with QQ plots*'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '*A common use of qqplots is to assess whether data follow a normal distribution.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'The cumulative distribution function (CDF) of the standard normal is written
+    as \(\Phi(x)\), giving the probability that a normal random variable is less than
+    \(x\). For example, \(\Phi(-1.96) = 0.025\) and \(\Phi(1.96) = 0.975\). In R,
+    this is computed with `pnorm`:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE1]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*The inverse of \(\Phi\), denoted \(\Phi^{-1}(p)\), provides the **theoretical
+    quantiles**. For instance, \(\Phi^{-1}(0.975) = 1.96\) which we compute with `qnorm`:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE2]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*By default, `pnorm` and `qnorm` assume the **standard normal** distribution
+    (mean 0, SD 1). You can specify different parameters with the `mean` and `sd`
+    arguments:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE3]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*For observed data, we can compute sample quantiles using the `quantile` function.
+    For example, here are the quartiles of male heights:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE4]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*To check whether these data are approximately normal, we can construct a QQ
+    plot following these steps:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Define a vector of proportions \(p_1, \dots, p_m\).
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: Compute sample quantiles from the data.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: Compute theoretical quantiles from a normal distribution with the same mean
+    and SD as the data.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: Plot the two sets of quantiles against each other.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: 'Example:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE5]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*![](../Images/075f73da751c892a7b2e54745a7c062c.png)*  *Because the points
+    fall close to the identity line, we conclude that the normal distribution provides
+    a good approximation for this dataset.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'The code becomes simpler if we standardize the data first:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE6]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*R provides built-in functions for generating qqplots that compare observed
+    data to a normal distribution:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE7]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*These functions use the average and standard deviation of the data `x` to
+    define the theoretical normal distribution used for the x-axis values. In other
+    words, the plotted line represents what we would expect if the data were normally
+    distributed with the same mean and spread as the observed sample.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'And equivalently with **ggplot2**:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE8]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**By default, both `qqnorm` and `geom_qq` use all \(n\) quantiles, with \(p_i
+    = (i - 0.5)/n\). Because of this default behavior, large datasets can produce
+    thousands of overlapping points that appear as a solid line. In such cases, it’s
+    better to compute and plot a smaller, representative set of quantiles manually
+    rather than relying on the defaults in `qqplot` or `qqnorm`.**********'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '****3.3 Stratification****'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '****In data analysis, we often divide observations into groups based on the
+    values of one or more variables associated with those observations. For example,
+    we can divide the height values into groups based on a sex variable: females and
+    males. We call this procedure *stratification* and refer to the resulting groups
+    as *strata*.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Stratification is common in data visualization because we are often interested
+    in how the distribution of variables differs across different subgroups.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Using the histogram, density plots, and qqplots, we have become convinced that
+    the male height data is well approximated with a normal distribution. In this
+    case, we report back to ET a very succinct summary: male heights follow a normal
+    distribution with an average of 69.3 inches and a SD of 3.6 inches. With this
+    information, ET will have a good idea of what to expect when he meets our male
+    students. However, to provide a complete picture we need to also provide a summary
+    of the female heights.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'We learned that boxplots are useful when we want to quickly compare two or
+    more distributions. Here are the heights for females and males:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE9]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*![](../Images/cff227cc0046180a2422d4dfba688bb2.png)*  *The plot immediately
+    reveals that males are, on average, taller than females. The standard deviations
+    appear to be similar. But does the normal approximation also work for the female
+    height data collected by the survey? We expect that they will follow a normal
+    distribution, just like males. However, exploratory plots reveal that the approximation
+    is not as useful:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![](../Images/332b29d837e75b80b75554783795d04c.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: 'We see something we did not see for the males: the density plot has a second
+    *bump*. Also, the qqplot shows that the highest points tend to be taller than
+    expected by the normal distribution. Finally, we also see five points in the qqplot
+    that suggest shorter than expected heights for a normal distribution. When reporting
+    back to ET, we might need to provide a histogram rather than just the average
+    and standard deviation for the female heights.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: We have noticed what we didn’t expect to see. If we look at other female height
+    distributions, we do find that they are well approximated with a normal distribution.
+    So why are our female students different? Is our class a requirement for the female
+    basketball team? Are small proportions of females claiming to be taller than they
+    are? Another, perhaps more likely, explanation is that in the form students used
+    to enter their heights, `Female` was the default sex and some males entered their
+    heights, but forgot to change the sex variable. In any case, data visualization
+    has helped discover a potential flaw in our data.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Regarding the five smallest values, note that these are:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE10]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*Because these are reported heights, a possibility is that the student meant
+    to enter `5''1"`, `5''2"`, `5''3"` or `5''5"`.******'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '****3.4 Exercises****'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '****1\. Study the following boxplots showing population sizes by country:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![](../Images/6484e87bcac7d57c9429ee02b7df33a0.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: Which continent has the country with the biggest population size?
+  prefs: []
+  type: TYPE_NORMAL
+- en: 2\. Which continent has the largest median population size?
+  prefs: []
+  type: TYPE_NORMAL
+- en: 3\. What is median population size for Africa to the nearest million?
+  prefs: []
+  type: TYPE_NORMAL
+- en: 4\. What proportion of countries in Europe have populations below 14 million?
+  prefs: []
+  type: TYPE_NORMAL
+- en: '0.99'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '0.75'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '0.50'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '0.25'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: 5\. If we use a log transformation, which continent shown above has the largest
+    interquartile range?
+  prefs: []
+  type: TYPE_NORMAL
+- en: '6\. Define variables containing the heights of males and females as follows:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE11]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*How many measurements do we have for each?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 7\. Suppose we can’t make a plot and want to compare the distributions side
+    by side. We can’t just list all the numbers. Instead, we will look at the percentiles.
+    Create a five row table showing `female_percentiles` and `male_percentiles` with
+    the 10th, 30th, 50th, 70th, & 90th percentiles for each sex. Then create a data
+    frame with these two as columns.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 8\. Use a qqplot to demonstrate that murder rates
+  prefs: []
+  type: TYPE_NORMAL
+- en: Remove DC, then generate qqplot to see if the rate follow a normal distribution
+    within each of the four region.*****
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
