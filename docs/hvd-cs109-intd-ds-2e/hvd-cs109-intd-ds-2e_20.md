@@ -74,7 +74,7 @@ title="List of U.S. states and territories by population">Population</a><br />
 
 ### 15.1.2 rvest 包
 
-*tidyverse** 提供了一个名为 **rvest** 的网络抓取包。使用此包的第一步是将网页导入 R。该包使这一过程变得非常简单：
+tidyverse** 提供了一个名为 **rvest** 的网络抓取包。使用此包的第一步是将网页导入 R。该包使这一过程变得非常简单：
 
 ```r
 library(tidyverse
@@ -145,19 +145,19 @@ head(tab)
 #> # ℹ 1 more row
 ```
 
-我们仍然需要进行一些整理。例如，我们需要删除逗号并将字符转换为数字。在继续之前，我们将学习一种更通用的从网站提取信息的方法。********
+我们仍然需要进行一些整理。例如，我们需要删除逗号并将字符转换为数字。在继续之前，我们将学习一种更通用的从网站提取信息的方法。
 
-### ***15.1.3 CSS 选择器***
+### 15.1.3 CSS 选择器
 
-**使用最基本 HTML 制作的网页默认外观相当不吸引人。我们今天看到的令人愉悦的页面是使用 CSS 来定义网页的外观和样式制作的。公司所有页面都有相同风格的事实通常是由于它们使用相同的 CSS 文件来定义样式。这些 CSS 文件的一般工作方式是定义网页每个元素的外观。例如，标题、标题、项目符号列表、表格和链接等，每个元素都拥有自己的样式，包括字体、颜色、大小和与边距的距离。CSS 通过利用定义这些元素的模式来实现这一点，这些模式被称为 *选择器*。上面我们使用的这样一个模式示例是 `table`，但还有许多许多其他的模式。***
+使用最基本 HTML 制作的网页默认外观相当不吸引人。我们今天看到的令人愉悦的页面是使用 CSS 来定义网页的外观和样式制作的。公司所有页面都有相同风格的事实通常是由于它们使用相同的 CSS 文件来定义样式。这些 CSS 文件的一般工作方式是定义网页每个元素的外观。例如，标题、标题、项目符号列表、表格和链接等，每个元素都拥有自己的样式，包括字体、颜色、大小和与边距的距离。CSS 通过利用定义这些元素的模式来实现这一点，这些模式被称为 *选择器*。上面我们使用的这样一个模式示例是 `table`，但还有许多许多其他的模式。
 
 如果我们想从网页中抓取数据，并且恰好知道包含这些数据的页面部分所特有的选择器，我们可以使用 `html_nodes` 函数。然而，知道哪个选择器可能相当复杂。实际上，随着网页变得越来越复杂，网页的复杂性也在不断增加。对于一些更高级的网页，似乎几乎不可能找到定义特定数据的节点。然而，选择器工具实际上使这成为可能。
 
 SelectorGadget⁵ 是一款软件，允许你交互式地确定你需要从网页中提取特定组件的 CSS 选择器。如果你计划从 HTML 页面中抓取除表格以外的数据，我们强烈建议你安装它。有一个可用的 Chrome 扩展程序，允许你开启这个工具，然后当你点击页面时，它会突出显示部分内容并显示你需要提取这些部分的选择器。包括 **rvest** 作者 Hadley Wickham 的示例⁶ 和基于示例的其他教程⁷ 在内，有许多演示如何进行这项操作。
 
-## ***15.2 JSON***
+## 15.2 JSON
 
-**在互联网上共享数据变得越来越普遍。不幸的是，提供者使用不同的格式，这使得数据分析师将数据整理到 R 中变得更加困难。然而，也有一些标准正在变得越来越普遍。目前，一个被广泛采用的格式是 JavaScript 对象表示法或 JSON。因为这个格式非常通用，它不像电子表格。这个 JSON 文件看起来更像是你用来定义列表的代码。以下是一个存储在 JSON 格式的信息示例：***
+在互联网上共享数据变得越来越普遍。不幸的是，提供者使用不同的格式，这使得数据分析师将数据整理到 R 中变得更加困难。然而，也有一些标准正在变得越来越普遍。目前，一个被广泛采用的格式是 JavaScript 对象表示法或 JSON。因为这个格式非常通用，它不像电子表格。这个 JSON 文件看起来更像是你用来定义列表的代码。以下是一个存储在 JSON 格式的信息示例：
 
 ```r
 #> [
@@ -207,11 +207,11 @@ nobel$prizes |>
 #> 1 645     Pablo  Neruda
 ```
 
-您可以通过检查 **jsonlite** 包的教程和帮助文件来了解更多信息。此包旨在处理相对简单的任务，例如将数据转换为表格。为了获得更多灵活性，我们推荐使用 **rjson** 包。*****
+您可以通过检查 **jsonlite** 包的教程和帮助文件来了解更多信息。此包旨在处理相对简单的任务，例如将数据转换为表格。为了获得更多灵活性，我们推荐使用 **rjson** 包。
 
-## ***15.3 数据 API***
+## 15.3 数据 API
 
-**应用程序编程接口（API）是一套规则和协议，允许不同的软件实体之间进行通信。它定义了软件组件在请求和交换信息时应使用的方法和数据格式。API 在实现当今软件如此互联和多功能性方面发挥着至关重要的作用。
+应用程序编程接口（API）是一套规则和协议，允许不同的软件实体之间进行通信。它定义了软件组件在请求和交换信息时应使用的方法和数据格式。API 在实现当今软件如此互联和多功能性方面发挥着至关重要的作用。
 
 ### 15.3.1 API 类型和概念
 
@@ -299,11 +299,11 @@ tab <- request(url) |>
  fromJSON(flatten = TRUE)
 ```
 
-在处理 API 时，检查 API 的文档以了解速率限制、所需头信息或认证方法是非常重要的。`httr2` 包提供了处理这些要求的工具，例如设置头信息或认证参数。**********
+在处理 API 时，检查 API 的文档以了解速率限制、所需头信息或认证方法是非常重要的。`httr2` 包提供了处理这些要求的工具，例如设置头信息或认证参数。
 
-## ***15.4 练习***
+## 15.4 练习
 
-**1. 访问以下网页：[`web.archive.org/web/20181024132313/http://www.stevetheump.com/Payrolls.htm`](https://web.archive.org/web/20181024132313/http://www.stevetheump.com/Payrolls.htm)
+1. 访问以下网页：[`web.archive.org/web/20181024132313/http://www.stevetheump.com/Payrolls.htm`](https://web.archive.org/web/20181024132313/http://www.stevetheump.com/Payrolls.htm)
 
 注意有几个表格。假设我们感兴趣的是比较跨年度的团队薪资。接下来的几个练习将引导我们完成这一步骤。
 
@@ -366,11 +366,11 @@ tab_1 <- tab_1 |>
 
 现在将表格连接起来，只显示奥克兰和洋基队以及工资列。
 
-13. 高级：从 IMDB¹⁰中提取获得最佳影片奖的电影的标题。******
+13. 高级：从 IMDB¹⁰中提取获得最佳影片奖的电影的标题。
 
 * * *
 
-**1. [`en.wikipedia.org/w/index.php?title=Gun_violence_in_the_United_States_by_state&direction=prev&oldid=810166167`](https://en.wikipedia.org/w/index.php?title=Gun_violence_in_the_United_States_by_state&direction=prev&oldid=810166167)↩︎
+1. [`en.wikipedia.org/w/index.php?title=Gun_violence_in_the_United_States_by_state&direction=prev&oldid=810166167`](https://en.wikipedia.org/w/index.php?title=Gun_violence_in_the_United_States_by_state&direction=prev&oldid=810166167)↩︎
 
 1.  [`en.wikipedia.org/wiki/Wikipedia:Text_of_Creative_Commons_Attribution-ShareAlike_3.0_Unported_License`](https://en.wikipedia.org/wiki/Wikipedia:Text_of_Creative_Commons_Attribution-ShareAlike_3.0_Unported_License)↩︎
 
@@ -388,4 +388,4 @@ tab_1 <- tab_1 |>
 
 1.  [`dev.socrata.com/docs/queries/`](https://dev.socrata.com/docs/queries/)↩︎
 
-1.  [`m.imdb.com/chart/bestpicture/`](https://m.imdb.com/chart/bestpicture/)↩︎***
+1.  [`m.imdb.com/chart/bestpicture/`](https://m.imdb.com/chart/bestpicture/)↩︎

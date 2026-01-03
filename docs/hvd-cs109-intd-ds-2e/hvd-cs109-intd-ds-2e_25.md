@@ -139,7 +139,7 @@ git branch
 如果你看到分支名称不是`main`，但希望它是`main`，可以使用以下命令重命名：
 
 ```r
-git branch -M main*
+git branch -M main
 ```
 
 `-M`代表移动。请注意，这与更改分支不同，它是重命名当前分支。* *要将本地仓库与其在 GitHub 上的对应仓库链接起来，你需要 GitHub 仓库的 URL。要找到这个 URL，请访问仓库的网页。点击绿色的*代码*按钮以快速复制 URL，在我们的例子中是`https://github.com/rairizarry/homework-0.git`。
@@ -435,4 +435,4 @@ git clone https://github.com/rairizarry/murders.git
 
 1.  [`happygitwithr.com/https-pat`](https://happygitwithr.com/https-pat)↩︎
 
-1.  [`git-scm.com/docs/gitignore`](https://git-scm.com/docs/gitignore)↩︎***
+1.  [`git-scm.com/docs/gitignore`](https://git-scm.com/docs/gitignore)↩︎

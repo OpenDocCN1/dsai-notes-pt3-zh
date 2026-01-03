@@ -46,17 +46,17 @@ murders_dt, [c("state", "region")]
 
 ```r
 murders_dt[, .(state, region)] 
-```**
+```
 
-### ***5.1.2 添加或转换变量***
+### 5.1.2 添加或转换变量
 
-**我们通过这个例子学习了如何使用 **dplyr** 的 `mutate` 函数：
+我们通过这个例子学习了如何使用 **dplyr** 的 `mutate` 函数：
 
 ```r
 murders <- mutate(murders, rate = total / population * 100000)
 ```
 
-**data.table** 使用一种避免新赋值（通过引用更新）的方法。这可以帮助处理占用你电脑大部分内存的大数据集。**data.table** 的 `:=` 函数允许我们这样做：
+data.table** 使用一种避免新赋值（通过引用更新）的方法。这可以帮助处理占用你电脑大部分内存的大数据集。**data.table** 的 `:=` 函数允许我们这样做：
 
 ```r
 murders_dt[, rate := total / population * 100000]
@@ -68,11 +68,11 @@ murders_dt[, rate := total / population * 100000]
 
 ```r
 murders_dt, ":="(rate = total / population * 100000, rank = [rank(population))]
-```*****
+```
 
-### ***5.1.3 引用与复制***
+### 5.1.3 引用与复制
 
-****data.table** 包旨在避免浪费内存。所以如果你复制了一个表格，就像这样：
+data.table** 包旨在避免浪费内存。所以如果你复制了一个表格，就像这样：
 
 ```r
 x <- data.table(a = 1)
@@ -133,11 +133,11 @@ y
 #>        a
 #>    <num>
 #> 1:     2
-```*********
+```
 
-### ***5.1.4 行级子集***
+### 5.1.4 行级子集
 
-**使用 **dplyr**，我们这样过滤：
+使用 **dplyr**，我们这样过滤：
 
 ```r
 filter(murders, rate <= 0.7)
@@ -168,11 +168,11 @@ murders_dt[rate <= 0.7, .(state, rate)]
 murders |> filter(rate <= 0.7) |> select(state, rate)
 ```
 
-*您已准备好做练习 1-7。**********
+您已准备好做练习 1-7。
 
-## ****5.2 总结数据****
+## 5.2 总结数据
 
-***作为一个例子，我们将使用 `heights` 数据集：
+作为一个例子，我们将使用 `heights` 数据集：
 
 ```r
 heights_dt <- as.data.table(heights)
@@ -219,11 +219,11 @@ median_min_max <- function(x){
 
 ```r
 heights_dt[, .(median_min_max(height))]
-```*
+```
 
-### **5.2.2 分组后总结**
+### 5.2.2 分组后总结
 
-*在 **dplyr** 中的 `group_by` 后跟 `summarize` 在 **data.table** 中一行完成。我们只需添加 `by` 参数，根据分类变量的值将数据拆分为组：
+在 **dplyr** 中的 `group_by` 后跟 `summarize` 在 **data.table** 中一行完成。我们只需添加 `by` 参数，根据分类变量的值将数据拆分为组：
 
 ```r
 heights_dt, .(avg = [mean(height), sd = sd(height)), by = sex]
@@ -231,11 +231,11 @@ heights_dt, .(avg = [mean(height), sd = sd(height)), by = sex]
 #>    <fctr> <num> <num>
 #> 1:   Male  69.3  3.61
 #> 2: Female  64.9  3.76
-```***********
+```
 
-## ****5.3 排序****
+## 5.3 排序
 
-***我们可以使用与过滤相同的方法对行进行排序。以下是按谋杀率排序的州：
+我们可以使用与过滤相同的方法对行进行排序。以下是按谋杀率排序的州：
 
 ```r
 murders_dt[order(population)]
@@ -253,11 +253,11 @@ murders_dt[order(population, decreasing = TRUE)]
 murders_dt[order(region, rate)] 
 ```
 
-*您已准备好做练习 8-12。**********
+您已准备好做练习 8-12。
 
-## *****5.4 练习*****
+## 5.4 练习
 
-****1. 加载 **data.table** 包和 `murders` 数据集，并将其转换为 `data.table` 对象：
+1. 加载 **data.table** 包和 `murders` 数据集，并将其转换为 `data.table` 对象：
 
 ```r
 library(data.table)
@@ -331,8 +331,8 @@ library(NHANES)
 
 11. 为男性重复第 10 题的练习。
 
-12. 对于 40-49 岁的男性，比较在`Race1`变量中报告的种族间收缩压。将结果表按最低到最高的平均收缩压排序。*************
+12. 对于 40-49 岁的男性，比较在`Race1`变量中报告的种族间收缩压。将结果表按最低到最高的平均收缩压排序。
 
 * * *
 
-***1.  [`cran.r-project.org/web/packages/data.table/vignettes/datatable-intro.html`](https://cran.r-project.org/web/packages/data.table/vignettes/datatable-intro.html)↩︎****
+1.  [`cran.r-project.org/web/packages/data.table/vignettes/datatable-intro.html`](https://cran.r-project.org/web/packages/data.table/vignettes/datatable-intro.html)↩︎

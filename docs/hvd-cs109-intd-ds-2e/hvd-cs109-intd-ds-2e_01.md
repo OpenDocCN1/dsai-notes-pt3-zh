@@ -10,7 +10,7 @@
 
 这是**《数据科学导论》**中**《使用 R 进行数据整理和可视化》**部分的网站。
 
-*《通过案例研究学习统计和预测算法》**部分的网站[在此](http://rafalab.dfci.harvard.edu/dsbook-part-2/)¹。
+《通过案例研究学习统计和预测算法》**部分的网站[在此](http://rafalab.dfci.harvard.edu/dsbook-part-2/)¹。
 
 我们在 Twitter 上发布与本书相关的公告。如需更新，请关注[@rafalab](https://twitter.com/rafalab)²。
 

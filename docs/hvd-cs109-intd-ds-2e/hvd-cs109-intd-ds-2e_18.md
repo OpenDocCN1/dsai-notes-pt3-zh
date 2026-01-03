@@ -51,11 +51,11 @@ polls_us_election_2016 |> filter(pollster == "Ipsos" & state == "U.S.") |>
  geom_line()
 ```
 
-![](img/4ba78583565a53cee24781d862265b26.png)*  *特别注意的是，月份名称被显示出来，这是一个非常方便的功能。*****
+![](img/4ba78583565a53cee24781d862265b26.png)*  *特别注意的是，月份名称被显示出来，这是一个非常方便的功能。
 
-## ***13.2 lubridate 包***
+## 13.2 lubridate 包
 
-**`lubridate`包提供了处理日期和时间的工具。
+`lubridate`包提供了处理日期和时间的工具。
 
 ```r
 library(lubridate
@@ -131,14 +131,14 @@ mdy(x)
 #> [1] "2002-09-01"
 ```
 
-**lubridate** 包为每个可能性都提供了一个函数。这里还有另一个常见的例子：
+lubridate** 包为每个可能性都提供了一个函数。这里还有另一个常见的例子：
 
 ```r
 dmy(x)
 #> [1] "2002-01-09"
 ```
 
-**lubridate** 包在处理时间方面也非常有用。在基础 R 中，你可以通过输入 `Sys.time()` 来获取当前时间。**lubridate** 包提供了一个稍微高级一点的函数 `now`，允许你定义时区：
+lubridate** 包在处理时间方面也非常有用。在基础 R 中，你可以通过输入 `Sys.time()` 来获取当前时间。**lubridate** 包提供了一个稍微高级一点的函数 `now`，允许你定义时区：
 
 ```r
 now()
@@ -199,11 +199,11 @@ polls_us_election_2016 |>
  geom_point()
 ```
 
-![](img/25c5525e90208284a95fbf5f3f66ceb2.png)*  *最后，你应该知道还有一些有用的函数用于计算时间操作，例如 `difftime`、`time_length` 和 `interval`。******************
+![](img/25c5525e90208284a95fbf5f3f66ceb2.png)*  *最后，你应该知道还有一些有用的函数用于计算时间操作，例如 `difftime`、`time_length` 和 `interval`。
 
-## ***13.3 使用 data.table 处理日期和时间***
+## 13.3 使用 data.table 处理日期和时间
 
-****data.table** 包包含与 **lubridate** 相同的一些功能。例如，它包括与 **lubridate** 中相同的 `month` 和 `year` 函数。**lubridate** 的 `day` 等价于 `mday`：
+data.table** 包包含与 **lubridate** 相同的一些功能。例如，它包括与 **lubridate** 中相同的 `month` 和 `year` 函数。**lubridate** 的 `day` 等价于 `mday`：
 
 ```r
 library(data.table)
@@ -214,7 +214,7 @@ mday(st)
 #> [1] 4
 ```
 
-**data.table** 包中还包括其他类似的功能，例如 `second`、`minute`、`hour`、`yday`、`wday`、`week`、`isoweek` 和 `quarter`。
+data.table** 包中还包括其他类似的功能，例如 `second`、`minute`、`hour`、`yday`、`wday`、`week`、`isoweek` 和 `quarter`。
 
 该包还包括 `IDate` 和 `ITime` 类，它们比 `lubridate` 和基础 R 更有效地存储日期和时间。这对于具有日期戳的大文件来说很方便。你可以使用 `as.IDate` 和 `as.ITime` 将日期转换为常规 R 格式。你可以通过使用 `object.size` 函数来查看这一点：
 
@@ -223,11 +223,11 @@ object.size(polls_us_election_2016$startdate)
 #> 33936 bytes
 object.size](https://rdrr.io/r/utils/object.size.html)([as.IDate(polls_us_election_2016$startdate))
 #> 17168 bytes
-```****
+```
 
-## ***13.4 练习***
+## 13.4 练习
 
-**对于这些练习，我们将使用以下数据集：
+对于这些练习，我们将使用以下数据集：
 
 ```r
 library(dslabs)

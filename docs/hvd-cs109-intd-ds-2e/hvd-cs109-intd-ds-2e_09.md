@@ -45,17 +45,17 @@ list.files(dir)
 
 请注意，这些路径不以斜杠开头，这意味着它们是 *相对路径*。这些相对路径给出了如果 `dir` 中存储的路径是我们的工作目录，文件或目录的位置。
 
-在日常数据分析工作中，你不太可能用到 `system.file` 函数。我们在这个部分介绍它，因为它便于共享用于练习的电子表格。这些电子表格位于 `extdata` 目录中。***
+在日常数据分析工作中，你不太可能用到 `system.file` 函数。我们在这个部分介绍它，因为它便于共享用于练习的电子表格。这些电子表格位于 `extdata` 目录中。
 
-### ***6.1.3 工作目录***
+### 6.1.3 工作目录
 
-**我们强烈建议在代码中只使用相对路径。原因是完整路径对于你的计算机是唯一的，你希望代码是可移植的。如果你想使用 `getwd` 函数知道工作目录的完整路径。如果你需要更改工作目录，你可以使用 `setwd` 函数，或者你可以通过点击 RStudio 上的“会话”来更改它。***
+我们强烈建议在代码中只使用相对路径。原因是完整路径对于你的计算机是唯一的，你希望代码是可移植的。如果你想使用 `getwd` 函数知道工作目录的完整路径。如果你需要更改工作目录，你可以使用 `setwd` 函数，或者你可以通过点击 RStudio 上的“会话”来更改它。
 
 在开始一个项目时，选择一个目录来存储所有相关文件，并将其设置为分析的工作目录。这种做法确保当你使用相对路径在导入文件的函数中时，R 会自动在当前工作目录中搜索文件。有关在 RStudio 中组织项目的更多详细信息，请参阅第二十章。
 
-### ***6.1.4 生成路径名***
+### 6.1.4 生成路径名
 
-**`file.path` 函数将字符组合成完整的路径，确保与各自的操作系统兼容。Linux 和 Mac 使用正斜杠 `/`，而 Windows 使用反斜杠 `\` 来分隔目录。这个函数很有用，因为通常你希望使用变量来定义路径。以下是一个示例，它构建了一个包含谋杀数据的电子表格的完整路径。在这里，变量 `dir` 包含 **dslabs** 包的完整路径，而 `extdata/murders.csv` 是电子表格的相对路径，如果 `dir` 被视为工作目录的话。***
+`file.path` 函数将字符组合成完整的路径，确保与各自的操作系统兼容。Linux 和 Mac 使用正斜杠 `/`，而 Windows 使用反斜杠 `\` 来分隔目录。这个函数很有用，因为通常你希望使用变量来定义路径。以下是一个示例，它构建了一个包含谋杀数据的电子表格的完整路径。在这里，变量 `dir` 包含 **dslabs** 包的完整路径，而 `extdata/murders.csv` 是电子表格的相对路径，如果 `dir` 被视为工作目录的话。
 
 ```r
 dir <- [system.file(package = "dslabs")
@@ -69,11 +69,11 @@ file.copy(file_path, "murders.csv")
 #> [1] TRUE
 ```
 
-如果文件复制成功，此函数将返回`TRUE`。请注意，我们使用了相同的文件名作为目标文件，但我们可以给它任何我们想要的名称。如果目标目录中已存在同名文件，复制将失败。您可以使用`overwrite`参数更改此行为。*****
+如果文件复制成功，此函数将返回`TRUE`。请注意，我们使用了相同的文件名作为目标文件，但我们可以给它任何我们想要的名称。如果目标目录中已存在同名文件，复制将失败。您可以使用`overwrite`参数更改此行为。
 
-## ****6.2 文件类型****
+## 6.2 文件类型
 
-***对于大多数数据分析应用，文件通常可以分为两大类：文本文件和二进制文件。在本节中，我们描述了这两种类型最广泛使用的格式以及识别它们最佳的方法。在最后一小节中，我们描述了了解文件编码的重要性。
+对于大多数数据分析应用，文件通常可以分为两大类：文本文件和二进制文件。在本节中，我们描述了这两种类型最广泛使用的格式以及识别它们最佳的方法。在最后一小节中，我们描述了了解文件编码的重要性。
 
 对于本节以及以下章节，我们假设您已将`murders.csv`文件复制到您的当前工作目录中。您可以使用上一节末尾的代码来完成此操作。*  *### 6.2.1 文本文件
 
@@ -89,20 +89,20 @@ PRE4] [readLines("murders.csv", n = 3) #> [1] "state,abb,region,population,total
 
 ### `*6.2.3 编码*`
 
-PRE6] fn <- "calificaciones.csv" [file.copy(file.path(system.file("extdata", package = "dslabs"), fn), fn) #> 1] TRUE [readLines(fn, n = 1) #> [1] "\"nombre\",\"f.n.\",\"estampa\",\"puntuaci\xf3n\"" ```r   *In the following section, we’ll introduce several helpful import functions, some of which allow you to specify the file encoding.**````*****
+PRE6] fn <- "calificaciones.csv" [file.copy(file.path(system.file("extdata", package = "dslabs"), fn), fn) #> 1] TRUE [readLines(fn, n = 1) #> [1] "\"nombre\",\"f.n.\",\"estampa\",\"puntuaci\xf3n\"" ```r   *In the following section, we’ll introduce several helpful import functions, some of which allow you to specify the file encoding.**````
 
-## ***`**6.3 解析器**`***
+## `6.3 解析器**`
 
-**PRE8] dat <- read.csv("murders.csv") PRE9] x <- scan("murders.csv", sep = ",", what = "c") x1:10] #>  1] "state"      "abb"        "region"     "population" "total"  #>  [6] "Alabama"    "AL"         "South"      "4779736"    "135" ```r*   ### **6.3.2 readr**   **The **readr** package includes parsers, for reading text file spreadsheets into R. **readr** is part of the **tidyverse**, but you can load it directly using:    ``` [library(readr("murders.csv") #> Rows: 51 Columns: 5 #> ── Column specification ──────────────────────────────────────────────── #> Delimiter: "," #> chr (3): state, abb, region #> dbl (2): population, total #>  #> ℹ Use `spec()` to retrieve the full column specification for this data. #> ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message. PRE12] [guess_encoding("murders.csv") #> # A tibble: 1 × 2 #>   encoding confidence #>   <chr>         <dbl> #> 1 ASCII             1 PRE13] [guess_encoding("calificaciones.csv") #> # A tibble: 3 × 2 #>   encoding   confidence #>   <chr>           <dbl> #> 1 ISO-8859-1       0.92 #> 2 ISO-8859-2       0.72 #> 3 ISO-8859-9       0.53 PRE14] dat <- [read_csv("calificaciones.csv", show_col_types = FALSE,  locale = locale(encoding = "ISO-8859-1")) PRE15] [names(dat) #> 1] "nombre"     "f.n."       "estampa"    "puntuación" ```r*******   ### ***6.3.3 readxl***   ***The **readxl** package provides functions to read-in Microsoft Excel formats.    ``` [library(readxl(tmp_filename) [file.remove(tmp_filename) ```r*********````***
+PRE8] dat <- read.csv("murders.csv") PRE9] x <- scan("murders.csv", sep = ",", what = "c") x1:10] #>  1] "state"      "abb"        "region"     "population" "total"  #>  [6] "Alabama"    "AL"         "South"      "4779736"    "135" ```r*   ### 6.3.2 readr   **The **readr** package includes parsers, for reading text file spreadsheets into R. **readr** is part of the **tidyverse**, but you can load it directly using:    ``` [library(readr("murders.csv") #> Rows: 51 Columns: 5 #> ── Column specification ──────────────────────────────────────────────── #> Delimiter: "," #> chr (3): state, abb, region #> dbl (2): population, total #>  #> ℹ Use `spec()` to retrieve the full column specification for this data. #> ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message. PRE12] [guess_encoding("murders.csv") #> # A tibble: 1 × 2 #>   encoding confidence #>   <chr>         <dbl> #> 1 ASCII             1 PRE13] [guess_encoding("calificaciones.csv") #> # A tibble: 3 × 2 #>   encoding   confidence #>   <chr>           <dbl> #> 1 ISO-8859-1       0.92 #> 2 ISO-8859-2       0.72 #> 3 ISO-8859-9       0.53 PRE14] dat <- [read_csv("calificaciones.csv", show_col_types = FALSE,  locale = locale(encoding = "ISO-8859-1")) PRE15] [names(dat) #> 1] "nombre"     "f.n."       "estampa"    "puntuación" ```r*******   ### 6.3.3 readxl   ***The **readxl** package provides functions to read-in Microsoft Excel formats.    ``` [library(readxl(tmp_filename) [file.remove(tmp_filename) ```r*********````
 
-## *`****6.4 使用电子表格组织数据****`*
+## `6.4 使用电子表格组织数据****`
 
-``****尽管这本书几乎完全专注于数据分析，数据管理也是数据科学操作的重要部分。正如引言中所述，我们不涉及这个主题。然而，数据分析师经常需要以最方便存储在电子表格中的方式收集数据，或者与他人一起收集数据。虽然我们强烈反对手动填写电子表格，并建议尽可能自动化这个过程，但有时你不得不这样做。因此，在本节中，我们提供有关如何在电子表格中组织数据的建议。尽管有 R 包可以读取 Microsoft Excel 电子表格，但我们通常想避免这种格式。相反，我们推荐使用 Google Sheets 作为免费软件工具。以下是我们总结了 Karl Broman 和 Kara Woo 在论文中提出的建议¹。请阅读论文以获取重要细节。    *   **保持一致** - 在开始输入数据之前，制定一个计划。一旦有了计划，就要保持一致并坚持下去。*   **为事物选择好的名称** - 你选择的物体、文件和目录的名称应该是容易记住的、容易拼写的，并且具有描述性。实际上，这是一个很难达到的平衡，确实需要时间和思考。一个重要的规则是**不要使用空格**，使用下划线 `_` 或破折号 `-` 代替。此外，避免使用符号；坚持使用字母和数字。*   **将日期写成 YYYY-MM-DD 格式** - 为了避免混淆，我们强烈建议使用这个全球 ISO 8601 标准。*   **不要有空单元格** - 填充所有单元格，并使用一些常见的代码来表示缺失数据。*   **一个单元格只放一件事情** - 添加列来存储额外信息比一个单元格中放多个信息更好。*   **使其成为矩形** - 电子表格应该是矩形的。*   **创建数据字典** - 如果需要解释事物，例如列是什么，或用于分类变量的标签是什么，请在单独的文件中这样做。*   **在原始数据文件中不要进行计算** - Excel 允许你进行计算。不要将这部分包含在你的电子表格中。计算代码应在脚本中。*   **不要使用字体颜色或突出显示作为数据** - 大多数重要功能都无法导入此信息。将此信息编码为变量。*   **备份** - 定期备份你的数据。*   **使用数据验证来避免错误** - 利用电子表格软件中的工具，使过程尽可能无错误和重复性压力伤害。*   **将数据保存为文本文件** - 以逗号分隔或制表符分隔的格式保存用于共享的文件。****``*
+``****尽管这本书几乎完全专注于数据分析，数据管理也是数据科学操作的重要部分。正如引言中所述，我们不涉及这个主题。然而，数据分析师经常需要以最方便存储在电子表格中的方式收集数据，或者与他人一起收集数据。虽然我们强烈反对手动填写电子表格，并建议尽可能自动化这个过程，但有时你不得不这样做。因此，在本节中，我们提供有关如何在电子表格中组织数据的建议。尽管有 R 包可以读取 Microsoft Excel 电子表格，但我们通常想避免这种格式。相反，我们推荐使用 Google Sheets 作为免费软件工具。以下是我们总结了 Karl Broman 和 Kara Woo 在论文中提出的建议¹。请阅读论文以获取重要细节。    *   **保持一致** - 在开始输入数据之前，制定一个计划。一旦有了计划，就要保持一致并坚持下去。*   **为事物选择好的名称** - 你选择的物体、文件和目录的名称应该是容易记住的、容易拼写的，并且具有描述性。实际上，这是一个很难达到的平衡，确实需要时间和思考。一个重要的规则是**不要使用空格**，使用下划线 `_` 或破折号 `-` 代替。此外，避免使用符号；坚持使用字母和数字。*   **将日期写成 YYYY-MM-DD 格式** - 为了避免混淆，我们强烈建议使用这个全球 ISO 8601 标准。*   **不要有空单元格** - 填充所有单元格，并使用一些常见的代码来表示缺失数据。*   **一个单元格只放一件事情** - 添加列来存储额外信息比一个单元格中放多个信息更好。*   **使其成为矩形** - 电子表格应该是矩形的。*   **创建数据字典** - 如果需要解释事物，例如列是什么，或用于分类变量的标签是什么，请在单独的文件中这样做。*   **在原始数据文件中不要进行计算** - Excel 允许你进行计算。不要将这部分包含在你的电子表格中。计算代码应在脚本中。*   **不要使用字体颜色或突出显示作为数据** - 大多数重要功能都无法导入此信息。将此信息编码为变量。*   **备份** - 定期备份你的数据。*   **使用数据验证来避免错误** - 利用电子表格软件中的工具，使过程尽可能无错误和重复性压力伤害。*   **将数据保存为文本文件** - 以逗号分隔或制表符分隔的格式保存用于共享的文件。****``
 
-## *``****6.5 练习****``*
+## ``6.5 练习****``
 
-PRE23] 路径 <- [system.file("extdata", package = "dslabs") 文件列表 <- list.files(路径) 文件 PRE24] [names(dat) ```r   *to see that the names are not informative.    Use the `readLines` function to read in just the first line.    4\. Pick a measurement you can take on a regular basis. For example, your daily weight or how long it takes you to run 5 miles. Keep a spreadsheet that includes the date, the hour, the measurement, and any other informative variable you think is worth keeping. Do this for 2 weeks. Then make a plot.******````*
+PRE23] 路径 <- [system.file("extdata", package = "dslabs") 文件列表 <- list.files(路径) 文件 PRE24] [names(dat) ```r   *to see that the names are not informative.    Use the `readLines` function to read in just the first line.    4\. Pick a measurement you can take on a regular basis. For example, your daily weight or how long it takes you to run 5 miles. Keep a spreadsheet that includes the date, the hour, the measurement, and any other informative variable you think is worth keeping. Do this for 2 weeks. Then make a plot.******````
 
 * * *
 
-`****1.  [`www.tandfonline.com/doi/abs/10.1080/00031305.2017.1375989`](https://www.tandfonline.com/doi/abs/10.1080/00031305.2017.1375989)↩︎****`*
+`****1.  [`www.tandfonline.com/doi/abs/10.1080/00031305.2017.1375989`](https://www.tandfonline.com/doi/abs/10.1080/00031305.2017.1375989)↩︎****`

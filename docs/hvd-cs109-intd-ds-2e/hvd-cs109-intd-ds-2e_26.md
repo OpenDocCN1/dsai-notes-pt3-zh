@@ -134,22 +134,22 @@ plot(1)
 1+1
 
 ```r
-```***
+```
 
-### ***20.2.3 全局执行选项***
+### 20.2.3 全局执行选项
 
-**如果你想要全局应用一个选项，可以在标题下的`execute`部分包含它。例如，在标题中添加以下行可以使代码默认不显示：
+如果你想要全局应用一个选项，可以在标题下的`execute`部分包含它。例如，在标题中添加以下行可以使代码默认不显示：
 
 ```r
 execute:
   echo: false
 ```
 
-我们在这里不会详细说明，但随着你对 R Markdown 的熟悉，你将了解设置编译过程全局选项的优势。***
+我们在这里不会详细说明，但随着你对 R Markdown 的熟悉，你将了解设置编译过程全局选项的优势。
 
-### ***20.2.4 knitR***
+### 20.2.4 knitR
 
-**我们使用**knitR**包来编译 Quarto 或 R markdown 文档。用于编译的具体函数是`knit`函数，它接受一个文件名作为输入。RStudio 提供了一个按钮，使得编译文档变得更加容易。对于下面的截图，我们已经编辑了文档，以生成关于枪支谋杀的报告。你可以在 GitHub 上看到这个文件⁴。现在你可以点击`Render`按钮：
+我们使用**knitR**包来编译 Quarto 或 R markdown 文档。用于编译的具体函数是`knit`函数，它接受一个文件名作为输入。RStudio 提供了一个按钮，使得编译文档变得更加容易。对于下面的截图，我们已经编辑了文档，以生成关于枪支谋杀的报告。你可以在 GitHub 上看到这个文件⁴。现在你可以点击`Render`按钮：
 
 ![](img/9053036f3c0286fd855c2c2abc5495f5.png)
 
@@ -161,21 +161,21 @@ execute:
 
 ![](img/f2d145df3ec1acfefb0bf6af3a307091.png)
 
-这是一种方便的分享报告的方式。***
+这是一种方便的分享报告的方式。
 
-### ***20.2.5 学习更多***
+### 20.2.5 学习更多
 
-**R markdown 有很多其他用途。我们强烈建议你在撰写 R 报告的过程中继续学习，以获得更多经验。互联网上有许多免费资源，包括：
+R markdown 有很多其他用途。我们强烈建议你在撰写 R 报告的过程中继续学习，以获得更多经验。互联网上有许多免费资源，包括：
 
 +   The Quarto Guide⁵
 
 +   Hello, Quarto tutorial⁶
 
-+   Dynamic Documents with R and knitr textbook⁷***
++   Dynamic Documents with R and knitr textbook⁷
 
-## ***20.3 组织数据科学项目***
+## 20.3 组织数据科学项目
 
-**在本节中，我们将所有内容整合在一起，创建美国谋杀案项目，并在 GitHub 上分享。
+在本节中，我们将所有内容整合在一起，创建美国谋杀案项目，并在 GitHub 上分享。
 
 ### 20.3.1 在 Unix 中创建目录
 
@@ -189,7 +189,7 @@ cd murders
 mkdir data rdas 
 ```
 
-### *20.3.2 创建 RStudio 项目*
+### 20.3.2 创建 RStudio 项目
 
 在下一节中，我们将创建一个 RStudio 项目。在 RStudio 中，我们转到 *文件*，然后选择 *新建项目…*，当给出选项时，我们选择 *现有目录*。然后我们写下上面创建的 `murders` 目录的完整路径。
 
@@ -203,11 +203,11 @@ mkdir data rdas
 
 请记住，当我们在这个项目中时，我们的默认工作目录将是 `~/projects/murders`。你可以通过在 R 会话中输入 `getwd()` 来确认这一点。这很重要，因为它将帮助我们组织代码，当我们需要编写文件路径时。
 
-在数据分析项目中，尽量始终使用相对路径。这些路径应相对于默认工作目录。使用完整路径的问题，包括使用家目录 `~` 作为路径的一部分，是代码可能无法在其他文件系统上工作，因为目录结构将不同。**
+在数据分析项目中，尽量始终使用相对路径。这些路径应相对于默认工作目录。使用完整路径的问题，包括使用家目录 `~` 作为路径的一部分，是代码可能无法在其他文件系统上工作，因为目录结构将不同。
 
-### **20.3.3 编辑 R 脚本**
+### 20.3.3 编辑 R 脚本
 
-*现在让我们编写一个脚本，将文件下载到数据目录中。我们将把这个文件命名为 `download-data.R`。
+现在让我们编写一个脚本，将文件下载到数据目录中。我们将把这个文件命名为 `download-data.R`。
 
 此文件的将包含以下内容：
 
@@ -232,11 +232,11 @@ murders <- murders |> mutate(region = factor(region),
 save(murders, file = "rdas/murders.rda")
 ```
 
-再次注意，我们只使用相对路径。****
+再次注意，我们只使用相对路径。
 
-### ****20.3.4 保存处理后的数据****
+### 20.3.4 保存处理后的数据
 
-***在这个文件中，我们介绍了一个我们之前没有见过的 R 命令：`save`。R 中的 `save` 命令将对象保存到称为 *rda 文件* 的东西中：*rda* 是 R 数据的缩写。我们建议在保存 R 对象的文件上使用 `.rda` 后缀。你会看到 `.RData` 也被使用了。
+在这个文件中，我们介绍了一个我们之前没有见过的 R 命令：`save`。R 中的 `save` 命令将对象保存到称为 *rda 文件* 的东西中：*rda* 是 R 数据的缩写。我们建议在保存 R 对象的文件上使用 `.rda` 后缀。你会看到 `.RData` 也被使用了。
 
 如果您运行上面的代码，处理后的数据对象将被保存在`rda`目录中的一个文件中。然后您可以使用`load`来恢复对象。尽管这里不是这种情况，但这种方法通常很实用，因为生成我们用于最终分析和图表的数据对象可能是一个复杂且耗时的过程。因此，我们只运行此过程一次并保存文件。但我们仍然希望能够从原始数据生成整个分析。
 
@@ -250,11 +250,11 @@ saveRDS(murders, file = "rdas/murders.rda")
 
 ```r
 dat <- readRDS("rdas/murders.rda")
-```*****
+```
 
-### ****20.3.5 主要分析文件****
+### 20.3.5 主要分析文件
 
-***现在我们准备好编写分析文件了。让我们称它为`analysis.R`。内容应该是以下内容：
+现在我们准备好编写分析文件了。让我们称它为`analysis.R`。内容应该是以下内容：
 
 ```r
 library(tidyverse
@@ -265,11 +265,11 @@ load("rdas/murders.rda")
  coord_flip()
 ```
 
-如果您运行此分析，您将看到它生成一个图表。*****
+如果您运行此分析，您将看到它生成一个图表。
 
-### ****20.3.6 其他目录****
+### 20.3.6 其他目录
 
-***现在假设我们想要保存生成的图表以用于报告或演示。我们可以使用**ggplot**命令`ggsave`来完成此操作。但我们应该把图表放在哪里？我们应该有系统地组织，所以我们将把图表保存到名为`figs`的目录中。首先，在终端中输入以下内容来创建一个目录：
+现在假设我们想要保存生成的图表以用于报告或演示。我们可以使用**ggplot**命令`ggsave`来完成此操作。但我们应该把图表放在哪里？我们应该有系统地组织，所以我们将把图表保存到名为`figs`的目录中。首先，在终端中输入以下内容来创建一个目录：
 
 ```r
 mkdir figs
@@ -281,11 +281,11 @@ mkdir figs
 ggsave("figs/barplot.png")
 ```
 
-到您的 R 脚本中。如果您现在运行脚本，一个 png 文件将被保存到`figs`目录中。如果我们想要将此文件复制到我们正在开发演示的其他目录中，我们可以通过在终端中使用`cp`命令来避免使用鼠标。******
+到您的 R 脚本中。如果您现在运行脚本，一个 png 文件将被保存到`figs`目录中。如果我们想要将此文件复制到我们正在开发演示的其他目录中，我们可以通过在终端中使用`cp`命令来避免使用鼠标。
 
-### ****20.3.7 README 文件****
+### 20.3.7 README 文件
 
-***您现在在单个目录中拥有一个自包含的分析。最后的建议是创建一个`README.txt`文件，描述每个文件的功能，以便其他人阅读您的代码时受益，包括您未来的自己。这不会是一个脚本，而只是一些笔记。在 RStudio 中打开新文件时提供的选项之一是文本文件。您可以将类似以下内容保存到文本文件中：
+您现在在单个目录中拥有一个自包含的分析。最后的建议是创建一个`README.txt`文件，描述每个文件的功能，以便其他人阅读您的代码时受益，包括您未来的自己。这不会是一个脚本，而只是一些笔记。在 RStudio 中打开新文件时提供的选项之一是文本文件。您可以将类似以下内容保存到文本文件中：
 
 ```r
 We analyze US gun murder data collected by the FBI.
@@ -296,11 +296,11 @@ wrangle-data.R - Creates a derived dataset and saves as R object in rdas
 directory
 
 analysis.R - A plot is generated and saved in the figs directory.
-```****
+```
 
-### ****20.3.8 初始化 Git 目录****
+### 20.3.8 初始化 Git 目录
 
-***在第 19.6 节中，我们演示了如何初始化 Git 目录并将其连接到 GitHub 上的上游仓库，该仓库我们已经在该节中创建。
+在第 19.6 节中，我们演示了如何初始化 Git 目录并将其连接到 GitHub 上的上游仓库，该仓库我们已经在该节中创建。
 
 我们可以在 Unix 终端中这样做：
 
@@ -311,11 +311,11 @@ git add README.txt
 git commit -m "First commit. Adding README.txt file just to get started"
 git remote add origin `https://github.com/rairizarry/murders.git`
 git push -u origin remote
-```****
+```
 
-### ****20.3.9 使用 RStudio 添加、提交和推送文件****
+### 20.3.9 使用 RStudio 添加、提交和推送文件
 
-***我们可以继续添加和提交每个文件，但使用 RStudio 可能更容易。为此，通过打开 Rproj 文件来启动项目。应该会出现 git 图标，您可以使用这些图标添加、提交和推送。
+我们可以继续添加和提交每个文件，但使用 RStudio 可能更容易。为此，通过打开 Rproj 文件来启动项目。应该会出现 git 图标，您可以使用这些图标添加、提交和推送。
 
 ![](img/4b2d4107435ae243a71c38ac3117e1c1.png)
 
@@ -327,11 +327,11 @@ git push -u origin remote
 
 ```r
 git clone https://github.com/rairizarry/murders.git
-```*******
+```
 
 * * *
 
-***1.  Knuth, Donald Ervin. “Literate programming.” The computer journal 27.2 (1984): 97-111\. [`academic.oup.com/comjnl/article/27/2/97/343244`](https://academic.oup.com/comjnl/article/27/2/97/343244)↩︎
+1.  Knuth, Donald Ervin. “Literate programming.” The computer journal 27.2 (1984): 97-111\. [`academic.oup.com/comjnl/article/27/2/97/343244`](https://academic.oup.com/comjnl/article/27/2/97/343244)↩︎
 
 1.  [`www.markdowntutorial.com/`](https://www.markdowntutorial.com/)↩︎
 
@@ -345,4 +345,4 @@ git clone https://github.com/rairizarry/murders.git
 
 1.  [`duhi23.github.io/Analisis-de-datos/Yihue.pdf`](https://duhi23.github.io/Analisis-de-datos/Yihue.pdf)↩︎
 
-1.  [`github.com/rairizarry/murders`](https://github.com/rairizarry/murders)↩︎****
+1.  [`github.com/rairizarry/murders`](https://github.com/rairizarry/murders)↩︎

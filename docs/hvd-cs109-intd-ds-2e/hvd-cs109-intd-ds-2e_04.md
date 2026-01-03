@@ -35,9 +35,9 @@ R 的其他吸引人的特性包括：
 #> [1] 2.96
 ```
 
-**请注意，在这本书中，灰色框用于显示在 R 控制台中输入的 R 代码。符号`#>`用于表示 R 控制台输出的内容。***
+请注意，在这本书中，灰色框用于显示在 R 控制台中输入的 R 代码。符号`#>`用于表示 R 控制台输出的内容。
 
-## *1.3 脚本*
+## 1.3 脚本
 
 R 相对于点选分析软件的一个巨大优势是您可以保存您的作品为脚本。您可以使用文本编辑器编辑和保存这些脚本。本书中的材料是使用交互式*集成开发环境*（IDE）RStudio 开发的⁵。RStudio 包括一个具有许多 R 特定功能的编辑器、一个用于执行代码的控制台以及其他有用的面板，包括一个用于显示图形的面板。
 
@@ -47,9 +47,9 @@ R 相对于点选分析软件的一个巨大优势是您可以保存您的作品
 
 所有用于生成这本书的 R 脚本都可以在 GitHub⁶ 上找到。
 
-## *1.4 RStudio*
+## 1.4 RStudio
 
-RStudio 将成为我们数据科学项目的起点。它不仅为我们提供了一个编辑器来创建和编辑我们的脚本，还提供了许多其他有用的工具。在本节中，我们将介绍一些基础知识。*
+RStudio 将成为我们数据科学项目的起点。它不仅为我们提供了一个编辑器来创建和编辑我们的脚本，还提供了许多其他有用的工具。在本节中，我们将介绍一些基础知识。
 
 ### 1.4.1 面板
 
@@ -103,9 +103,9 @@ RStudio 将成为我们数据科学项目的起点。它不仅为我们提供了
 
 作为例子，我们展示如何进行我们 **强烈推荐** 的更改。这是将 *退出时保存工作空间到 .RData* 改为 *从不*，并取消选中 *启动时将 .RData 恢复到工作空间*。默认情况下，当你退出 R 时，会将你创建的所有对象保存到一个名为 .RData 的文件中。这样做是为了当你重新在同一文件夹中启动会话时，它会加载这些对象。我们发现这会导致混淆，尤其是当我们与同事共享代码并假设他们有这个 .RData 文件时。要更改这些选项，让你的 *常规* 设置看起来像这样：
 
-![图片](img/399d171bba56dd71643175db27352dd8.png)*
+![图片](img/399d171bba56dd71643175db27352dd8.png)
 
-## *1.5 安装 R 包*
+## 1.5 安装 R 包
 
 R 的新安装提供的功能只是可能功能的一小部分。实际上，我们将您第一次安装后获得的内容称为 *基础 R*。额外的功能来自开发者的附加组件。目前 CRAN 上有数百个这样的附加组件，还有许多通过其他存储库如 GitHub 分享。然而，由于并非所有人都需要所有可用功能，R 通过 *包* 提供不同的组件。R 使您能够非常容易地从 R 内部安装包。例如，要安装我们用于共享与本书相关的数据集和代码的 **dslabs** 包，您将输入：
 
@@ -139,11 +139,11 @@ install.packages(c("tidyverse", "dslabs"))
 
 ```r
 installed.packages()
-```****
+```
 
 * * *
 
-**1. [`pdfs.semanticscholar.org/9b48/46f192aa37ca122cfabb1ed1b59866d8bfda.pdf`](https://pdfs.semanticscholar.org/9b48/46f192aa37ca122cfabb1ed1b59866d8bfda.pdf)↩︎
+1. [`pdfs.semanticscholar.org/9b48/46f192aa37ca122cfabb1ed1b59866d8bfda.pdf`](https://pdfs.semanticscholar.org/9b48/46f192aa37ca122cfabb1ed1b59866d8bfda.pdf)↩︎
 
 1.  [`opensource.org/history`](https://opensource.org/history)↩︎
 
@@ -153,4 +153,4 @@ installed.packages()
 
 1.  [`posit.co//`](https://posit.co//)↩︎
 
-1.  [`github.com/rafalab/dsbook-part-1`](https://github.com/rafalab/dsbook-part-1)↩︎***
+1.  [`github.com/rafalab/dsbook-part-1`](https://github.com/rafalab/dsbook-part-1)↩︎

@@ -54,7 +54,7 @@ identical(results_us_election_2016$state, murders$state)
 
 ## 12.1 连接
 
-*dplyr**包中的*连接*函数确保表被合并，使得匹配的行在一起。如果你了解 SQL，你会看到这种方法和语法非常相似。一般思路是，需要确定一个或多个列，这些列将用于匹配两个表。然后返回一个新的包含合并信息的表。注意，如果我们使用`left_join`通过州来连接上面的两个表会发生什么（我们将移除`others`列，并将`electoral_votes`重命名，以便表格适合页面）：
+dplyr**包中的*连接*函数确保表被合并，使得匹配的行在一起。如果你了解 SQL，你会看到这种方法和语法非常相似。一般思路是，需要确定一个或多个列，这些列将用于匹配两个表。然后返回一个新的包含合并信息的表。注意，如果我们使用`left_join`通过州来连接上面的两个表会发生什么（我们将移除`others`列，并将`electoral_votes`重命名，以便表格适合页面）：
 
 ```r
 tab <- left_join(murders, results_us_election_2016, by = "state") |>
@@ -113,11 +113,11 @@ left_join(tab_1, tab_2, by = "state")
 
 ```r
 tab_1 |> left_join(tab_2, by = "state")
-```*
+```
 
-### **12.1.2 右连接**
+### 12.1.2 右连接
 
-*如果我们想要一个与第二个表具有相同行的表，而不是与第一个表具有相同行的表，我们可以使用`right_join`：
+如果我们想要一个与第二个表具有相同行的表，而不是与第一个表具有相同行的表，我们可以使用`right_join`：
 
 ```r
 tab_1 |> right_join(tab_2, by = "state")
@@ -132,9 +132,9 @@ tab_1 |> right_join(tab_2, by = "state")
 
 现在 NAs 出现在来自`tab_1`的列中。
 
-### ***12.1.3 内连接***
+### 12.1.3 内连接
 
-**如果我们只想保留两个表中都有信息的行，我们使用`inner_join`。你可以将其视为一个交集：
+如果我们只想保留两个表中都有信息的行，我们使用`inner_join`。你可以将其视为一个交集：
 
 ```r
 inner_join(tab_1, tab_2, by = "state")
@@ -143,11 +143,11 @@ inner_join(tab_1, tab_2, by = "state")
 #> 2     Alaska     710231  3
 #> 3    Arizona    6392017 11
 #> 4 California   37253956 55
-```***
+```
 
-### ***12.1.4 全连接***
+### 12.1.4 全连接
 
-**如果我们想保留所有行并用 NAs 填充缺失部分，我们可以使用 `full_join`。你可以将其视为一个并集：
+如果我们想保留所有行并用 NAs 填充缺失部分，我们可以使用 `full_join`。你可以将其视为一个并集：
 
 ```r
 full_join(tab_1, tab_2, by = "state")
@@ -160,11 +160,11 @@ full_join(tab_1, tab_2, by = "state")
 #> 6    Colorado    5029196 NA
 #> 7 Connecticut         NA  7
 #> 8    Delaware         NA  3
-```***
+```
 
-### ***12.1.5 半连接***
+### 12.1.5 半连接
 
-**`semi_join` 函数允许我们保留第一表中在第二表中具有信息的部分。它不会添加第二表的列：
+`semi_join` 函数允许我们保留第一表中在第二表中具有信息的部分。它不会添加第二表的列：
 
 ```r
 semi_join(tab_1, tab_2, by = "state")
@@ -173,11 +173,11 @@ semi_join(tab_1, tab_2, by = "state")
 #> 2     Alaska     710231
 #> 3    Arizona    6392017
 #> 4 California   37253956
-```***
+```
 
-### ***12.1.6 反连接***
+### 12.1.6 反连接
 
-**函数 `anti_join` 是 `semi_join` 的对立面。它保留第一表中在第二表中没有信息的元素：
+函数 `anti_join` 是 `semi_join` 的对立面。它保留第一表中在第二表中没有信息的元素：
 
 ```r
 anti_join(tab_1, tab_2, by = "state")
@@ -190,11 +190,11 @@ anti_join(tab_1, tab_2, by = "state")
 
 ![](img/94c8ed8bde6f5237a076fdbf145135f6.png)
 
-(Image courtesy of RStudio¹. CC-BY-4.0 license². Cropped from original.)******
+(Image courtesy of RStudio¹. CC-BY-4.0 license². Cropped from original.)
 
-## ***12.2 绑定***
+## 12.2 绑定
 
-**尽管我们在这本书中还没有使用它，但另一种常见的将数据集合并的方式是通过 *绑定*。与连接函数不同，绑定函数不尝试通过变量进行匹配，而是简单地合并数据集。如果数据集在适当的维度上不匹配，则会得到一个错误。
+尽管我们在这本书中还没有使用它，但另一种常见的将数据集合并的方式是通过 *绑定*。与连接函数不同，绑定函数不尝试通过变量进行匹配，而是简单地合并数据集。如果数据集在适当的维度上不匹配，则会得到一个错误。
 
 ### 12.2.1 绑定列
 
@@ -229,11 +229,11 @@ head(new_tab)
 #> 4   Arkansas  AR  South    2915918    93  6    33.7  60.6
 #> 5 California  CA   West   37253956  1257 55    61.7  31.6
 #> 6   Colorado  CO   West    5029196    65  9    48.2  43.3
-```*
+```
 
-### **12.2.2 按行绑定**
+### 12.2.2 按行绑定
 
-*`bind_rows` 函数与 `bind_cols` 类似，但绑定的是行而不是列：
+`bind_rows` 函数与 `bind_cols` 类似，但绑定的是行而不是列：
 
 ```r
 tab_1 <- tab[1:2,]
@@ -251,11 +251,11 @@ bind_rows(tab_1, tab_2)
 #> 4     1.17
 ```
 
-这是基于 R-base 函数 `rbind`。******
+这是基于 R-base 函数 `rbind`。
 
-## ***12.3 集合运算符***
+## 12.3 集合运算符
 
-**另一组用于合并数据集的命令是集合运算符。当应用于向量时，这些运算符的行为正如其名。例如，有 `intersect`、`union`、`setdiff` 和 `setequal`。然而，如果加载了 **tidyverse**，或者更具体地说 **dplyr**，则这些函数可以用于数据框，而不仅仅是向量。
+另一组用于合并数据集的命令是集合运算符。当应用于向量时，这些运算符的行为正如其名。例如，有 `intersect`、`union`、`setdiff` 和 `setequal`。然而，如果加载了 **tidyverse**，或者更具体地说 **dplyr**，则这些函数可以用于数据框，而不仅仅是向量。
 
 ### 12.3.1 交集
 
@@ -287,11 +287,11 @@ dplyr::intersect(tab_1, tab_2)
 #> 1    0.670
 #> 2    1.165
 #> 3    0.279
-```**
+```
 
-### ***12.3.2 并集***
+### 12.3.2 并集
 
-**同样，*并集* 取向量的并集。例如：
+同样，*并集* 取向量的并集。例如：
 
 ```r
 union(1:10, 6:15)
@@ -322,11 +322,11 @@ dplyr::union(tab_1, tab_2)
 #> 5 1.965    0.279
 #> 6 1.383    1.040
 #> 7 1.389    0.128
-```****
+```
 
-### ***12.3.3 `setdiff`***
+### 12.3.3 `setdiff`
 
-**通过 `setdiff` 可以获得第一个和第二个参数的集合差。与 `intersect` 和 `union` 不同，此函数不是对称的：
+通过 `setdiff` 可以获得第一个和第二个参数的集合差。与 `intersect` 和 `union` 不同，此函数不是对称的：
 
 ```r
 setdiff(1:10, 6:15)
@@ -347,11 +347,11 @@ dplyr::setdiff(tab_1, tab_2)
 #>   mcmullin
 #> 1        0
 #> 2        0
-```****
+```
 
-### ***12.3.4 `setequal`***
+### 12.3.4 `setequal`
 
-**最后，函数 `setequal` 告诉我们两个集合是否相同，无论顺序如何。所以请注意：
+最后，函数 `setequal` 告诉我们两个集合是否相同，无论顺序如何。所以请注意：
 
 ```r
 setequal(1:5, 1:6)
@@ -370,11 +370,11 @@ setequal(1:5, 5:1)
 ```r
 dplyr::setequal(tab_1, tab_2)
 #> [1] FALSE
-```********
+```
 
-## ***12.4 使用 data.table 进行连接***
+## 12.4 使用 data.table 进行连接
 
-**`data.table` 包包括 `merge`，这是一个用于连接表的非常高效的函数。
+`data.table` 包包括 `merge`，这是一个用于连接表的非常高效的函数。
 
 在 **tidyverse** 中，我们使用 `left_join` 将两个表连接起来：
 
@@ -389,11 +389,11 @@ library(data.table)
 tab <- merge(murders, results_us_election_2016, by = "state", all.x = TRUE)
 ```
 
-`merge` 不为不同类型的连接定义不同的函数，而是使用逻辑参数 `all`（全连接）、`all.x`（左连接）和 `all.y`（右连接）。*****
+`merge` 不为不同类型的连接定义不同的函数，而是使用逻辑参数 `all`（全连接）、`all.x`（左连接）和 `all.y`（右连接）。
 
-## ***12.5 练习***
+## 12.5 练习
 
-**1. 安装并加载 **Lahman** 库。这个数据库包括与棒球队相关的数据。它包括关于球员在进攻和防守方面多年表现的总结统计数据。它还包括球员的个人资料。
+1. 安装并加载 **Lahman** 库。这个数据库包括与棒球队相关的数据。它包括关于球员在进攻和防守方面多年表现的总结统计数据。它还包括球员的个人资料。
 
 `Batting` 数据框包含了许多年所有球员的进攻统计数据。例如，你可以通过运行以下代码看到前 10 名击球手：
 
@@ -430,10 +430,10 @@ co2_wide <- data.frame(matrix(co2, ncol = 12, byrow = TRUE)) |>
 
 4. 现在使用 `left_join` 函数将年度平均值添加到 `co2_wide` 数据集中。然后计算残差：观察到的 CO2 测量值 - 年度平均值。
 
-5. 在移除年份效应后，绘制季节性趋势的图表。******
+5. 在移除年份效应后，绘制季节性趋势的图表。
 
 * * *
 
-**1.  [`github.com/rstudio/cheatsheets`](https://github.com/rstudio/cheatsheets)↩︎
+1.  [`github.com/rstudio/cheatsheets`](https://github.com/rstudio/cheatsheets)↩︎
 
-1.  [`github.com/rstudio/cheatsheets/blob/master/LICENSE`](https://github.com/rstudio/cheatsheets/blob/master/LICENSE)↩︎******
+1.  [`github.com/rstudio/cheatsheets/blob/master/LICENSE`](https://github.com/rstudio/cheatsheets/blob/master/LICENSE)↩︎

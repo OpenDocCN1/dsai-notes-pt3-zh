@@ -90,11 +90,11 @@ campaign_tweets |>
 
 ![](img/ba69ef5c5502b699a56ff30386dfa7df.png)*  *我们注意到在早上 6 点到 8 点之间，Android 设备有一个很大的峰值。这些模式似乎存在明显的差异。因此，我们将假设两个不同的实体正在使用这两款设备。
 
-现在，我们将研究当我们将 Android 与 iPhone 进行比较时，推文的文本如何不同。为此，我们引入了**tidytext**包。*******
+现在，我们将研究当我们将 Android 与 iPhone 进行比较时，推文的文本如何不同。为此，我们引入了**tidytext**包。
 
-## ***17.2 文本作为数据***
+## 17.2 文本作为数据
 
-**`tidytext`包帮助我们将自由形式的文本转换为整洁的表格。以这种格式存储数据极大地促进了数据可视化和统计技术的应用。
+`tidytext`包帮助我们将自由形式的文本转换为整洁的表格。以这种格式存储数据极大地促进了数据可视化和统计技术的应用。
 
 实现这一目标所需的主要功能是`unnest_tokens`。*token*指的是我们考虑作为数据点的单元。最常见的*token*将是单词，但它们也可以是单个字符、n-grams、句子、行或由正则表达式定义的模式。该函数将接受一个字符串向量，并提取 token，以便每个 token 在新表格中占一行。以下是一个简单的例子：
 
@@ -246,7 +246,7 @@ android_vs_iphone <- tweet_words |>
  ratio = p_a / p_i)
 ```
 
-*对于总出现至少 100 次的单词，以下是 Android 的最高百分比差异**
+对于总出现至少 100 次的单词，以下是 Android 的最高百分比差异
 
 ```r
 android_vs_iphone |> filter(Android + iPhone >= 100) |> arrange(desc(ratio))
@@ -261,7 +261,7 @@ android_vs_iphone |> filter(Android + iPhone >= 100) |> arrange(desc(ratio))
 #> # ℹ 25 more rows
 ```
 
-*以及 iPhone 的前几名**：
+以及 iPhone 的前几名**：
 
 ```r
 android_vs_iphone |> filter(Android + iPhone >= 100) |>  arrange(ratio)
@@ -276,27 +276,27 @@ android_vs_iphone |> filter(Android + iPhone >= 100) |>  arrange(ratio)
 #> # ℹ 25 more rows
 ```
 
-*我们已经看到，在一种设备上比另一种设备上更多地被推特的单词类型中存在某种模式。然而，我们感兴趣的并不是具体的单词，而是语气**。Vaziri 的断言是，Android 的推文更加夸张。那么我们如何用数据来检查这一点呢？**夸张**是一种难以从单词中提取的情感，因为它依赖于对短语的解释。然而，单词可以与更基本的情感相关联，如愤怒、恐惧、喜悦和惊讶。在下一节中，我们将展示基本的情感分析。***************
+我们已经看到，在一种设备上比另一种设备上更多地被推特的单词类型中存在某种模式。然而，我们感兴趣的并不是具体的单词，而是语气**。Vaziri 的断言是，Android 的推文更加夸张。那么我们如何用数据来检查这一点呢？**夸张**是一种难以从单词中提取的情感，因为它依赖于对短语的解释。然而，单词可以与更基本的情感相关联，如愤怒、恐惧、喜悦和惊讶。在下一节中，我们将展示基本的情感分析。
 
-## **17.3 情感分析**
+## 17.3 情感分析
 
-*在情感分析中，我们将一个词分配给一个或多个“情感”**。尽管这种方法可能会错过依赖于上下文情感，如讽刺，但在处理大量单词时，总结可以提供洞察。
+在情感分析中，我们将一个词分配给一个或多个“情感”**。尽管这种方法可能会错过依赖于上下文情感，如讽刺，但在处理大量单词时，总结可以提供洞察。
 
-*情感分析的第一步是为每个词分配一个情感**。正如我们所展示的，**tidytext**包包含几个映射或词典。**textdata**包包含这些词典中的几个。
+情感分析的第一步是为每个词分配一个情感**。正如我们所展示的，**tidytext**包包含几个映射或词典。**textdata**包包含这些词典中的几个。
 
-*`bing`词典将单词分为`正面`和`负面`情感。我们可以使用*tidytext*函数`get_sentiments`查看这一点**：
+`bing`词典将单词分为`正面`和`负面`情感。我们可以使用*tidytext*函数`get_sentiments`查看这一点**：
 
 ```r
 get_sentiments("bing")
 ```
 
-*`AFINN`词典将单词分配给介于-5 和 5 之间的分数，其中-5 是最负面的，5 是最正面的**。请注意，此词典在第一次调用`get_sentiment`函数时需要下载：
+`AFINN`词典将单词分配给介于-5 和 5 之间的分数，其中-5 是最负面的，5 是最正面的**。请注意，此词典在第一次调用`get_sentiment`函数时需要下载：
 
 ```r
 get_sentiments("afinn")
 ```
 
-*`nrc`词典提供几种不同的情感。请注意，这也需要在第一次使用时下载**。
+`nrc`词典提供几种不同的情感。请注意，这也需要在第一次使用时下载**。
 
 ```r
 get_sentiments](https://juliasilge.github.io/tidytext/reference/get_sentiments.html)("nrc") |> [count(sentiment)
@@ -311,13 +311,13 @@ get_sentiments](https://juliasilge.github.io/tidytext/reference/get_sentiments.h
 #> # ℹ 5 more rows
 ```
 
-*对于我们的分析，我们感兴趣的是探索每条推文的不同情感，因此我们将使用`nrc`词典**：
+对于我们的分析，我们感兴趣的是探索每条推文的不同情感，因此我们将使用`nrc`词典**：
 
 ```r
 nrc <- get_sentiments](https://juliasilge.github.io/tidytext/reference/get_sentiments.html)("nrc") |> [select(word, sentiment)
 ```
 
-*我们可以使用`inner_join`将单词和情感结合起来，这将仅保留与情感相关的单词。以下是来自推文的 5 个随机单词**：
+我们可以使用`inner_join`将单词和情感结合起来，这将仅保留与情感相关的单词。以下是来自推文的 5 个随机单词**：
 
 ```r
 tweet_words |> inner_join(nrc, by = "word", relationship = "many-to-many") |> 
@@ -333,7 +333,7 @@ tweet_words |> inner_join(nrc, by = "word", relationship = "many-to-many") |>
 #> 5 iPhone  change   fear
 ```
 
-*`relationship = "many-to-many"`被添加以解决`left_join`检测到的“意外的多对多关系”警告**。然而，在这个上下文中，这种行为实际上是预期的，因为许多单词与多个情感相关联。**现在我们准备通过比较来自每个设备的推文的情感来执行定量分析。在这里，我们可以进行逐条推文的分析，为每条推文分配一个情感。然而，这将具有挑战性，因为每条推文都将与几个情感相关联，每个词在词典中都有一个。为了说明目的，我们将执行一个更简单的分析：我们将计算并比较每个设备中出现的每个情感的出现频率**。
+`relationship = "many-to-many"`被添加以解决`left_join`检测到的“意外的多对多关系”警告**。然而，在这个上下文中，这种行为实际上是预期的，因为许多单词与多个情感相关联。**现在我们准备通过比较来自每个设备的推文的情感来执行定量分析。在这里，我们可以进行逐条推文的分析，为每条推文分配一个情感。然而，这将具有挑战性，因为每条推文都将与几个情感相关联，每个词在词典中都有一个。为了说明目的，我们将执行一个更简单的分析：我们将计算并比较每个设备中出现的每个情感的出现频率**。
 
 ```r
 sentiment_counts <- tweet_words |>
@@ -343,7 +343,7 @@ sentiment_counts <- tweet_words |>
  mutate(sentiment = replace_na(sentiment, replace = "none"))
 ```
 
-*对于每个情感，我们分别计算其在 Android 和 iPhone 的总回复中的比例，并推导出这些比例的比率（Android 比例除以 iPhone 比例）**。
+对于每个情感，我们分别计算其在 Android 和 iPhone 的总回复中的比例，并推导出这些比例的比率（Android 比例除以 iPhone 比例）**。
 
 ```r
 sentiment_counts <- sentiment_counts |>
@@ -367,11 +367,11 @@ sentiment_counts
 
 ![](img/b64e5236617874fbb7fcbb29cd70d720.png)
 
-这只是 tidytext 可以执行的多项分析中的一个简单示例。要了解更多信息，我们再次推荐阅读《tidytext 挖掘》一书⁵。***********
+这只是 tidytext 可以执行的多项分析中的一个简单示例。要了解更多信息，我们再次推荐阅读《tidytext 挖掘》一书⁵。
 
-## ****17.4 练习****
+## 17.4 练习
 
-***Project Gutenberg 是一个公共领域书籍的数字档案。R 包**gutenbergr**简化了这些文本导入 R 的过程。
+Project Gutenberg 是一个公共领域书籍的数字档案。R 包**gutenbergr**简化了这些文本导入 R 的过程。
 
 您可以通过输入以下命令进行安装和加载：
 
@@ -406,7 +406,7 @@ gutenberg_metadata
 
 * * *
 
-***1. [`twitter.com/tvaziri/status/762005541388378112/photo/1`](https://twitter.com/tvaziri/status/762005541388378112/photo/1)↩︎
+1. [`twitter.com/tvaziri/status/762005541388378112/photo/1`](https://twitter.com/tvaziri/status/762005541388378112/photo/1)↩︎
 
 1.  [`varianceexplained.org/r/trump-tweets/`](http://varianceexplained.org/r/trump-tweets/)↩︎
 
@@ -414,4 +414,4 @@ gutenberg_metadata
 
 1.  [`www.thetrumparchive.com/`](https://www.thetrumparchive.com/)↩︎
 
-1.  [`www.tidytextmining.com/`](https://www.tidytextmining.com/)↩︎****
+1.  [`www.tidytextmining.com/`](https://www.tidytextmining.com/)↩︎

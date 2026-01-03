@@ -75,11 +75,11 @@ new_tidy_data <- wide_data |>
 new_tidy_data |> 
  ggplot(aes(year, fertility, color = country)) + 
  geom_point()
-```*****
+```
 
-## ***11.2 `pivot_wider`***
+## 11.2 `pivot_wider`
 
-**正如我们将在后面的示例中看到的那样，有时为了数据整理的目的，将整洁数据转换为宽数据是有用的。我们经常将此用作整理数据的一个中间步骤。`pivot_wider`函数基本上是`pivot_longer`的逆函数。第一个参数是数据，但由于我们正在使用管道，所以我们没有显示它。`names_from`参数告诉`pivot_wider`哪个变量将被用作列名。`values_from`参数指定哪个变量用于填充单元格。*
+正如我们将在后面的示例中看到的那样，有时为了数据整理的目的，将整洁数据转换为宽数据是有用的。我们经常将此用作整理数据的一个中间步骤。`pivot_wider`函数基本上是`pivot_longer`的逆函数。第一个参数是数据，但由于我们正在使用管道，所以我们没有显示它。`names_from`参数告诉`pivot_wider`哪个变量将被用作列名。`values_from`参数指定哪个变量用于填充单元格。
 
 ```r
 new_wide_data <- new_tidy_data |> 
@@ -92,11 +92,11 @@ select(new_wide_data, country, `1960`:`1967`)
 #> 2 South Korea   6.16   5.99   5.79   5.57   5.36   5.16   4.99   4.85
 ```
 
-与`pivot_wider`类似，`names_from`和`values_from`默认为`name`和`value`。****
+与`pivot_wider`类似，`names_from`和`values_from`默认为`name`和`value`。
 
-## ***11.3 分离变量***
+## 11.3 分离变量
 
-**与通常所需的数据整理相比，上述数据整理很简单。在我们的示例电子表格文件中，我们包括了一个稍微复杂一些的示例。它包含两个变量：预期寿命和生育率。然而，它的存储方式并不整洁，而且，正如我们将解释的，也不是最优的。*
+与通常所需的数据整理相比，上述数据整理很简单。在我们的示例电子表格文件中，我们包括了一个稍微复杂一些的示例。它包含两个变量：预期寿命和生育率。然而，它的存储方式并不整洁，而且，正如我们将解释的，也不是最优的。
 
 ```r
 path <- system.file("extdata", package = "dslabs")
@@ -130,7 +130,7 @@ head(dat)
 #> # ℹ 1 more row
 ```
 
-结果是并不完全符合我们所说的整洁，因为每个观测值都关联着两行，而不是一行。我们希望将两个变量，生育率和预期寿命的值，分别放在两个单独的列中。实现这一目标的首要挑战是将`name`列分割成年份和变量类型。请注意，这个列中的条目使用下划线将年份和变量名称分开：*
+结果是并不完全符合我们所说的整洁，因为每个观测值都关联着两行，而不是一行。我们希望将两个变量，生育率和预期寿命的值，分别放在两个单独的列中。实现这一目标的首要挑战是将`name`列分割成年份和变量类型。请注意，这个列中的条目使用下划线将年份和变量名称分开：
 
 ```r
 dat$name[1:5]
@@ -162,7 +162,7 @@ dat |> separate_wider_delim(name, delim = "_",
 #> # ℹ 219 more rows
 ```
 
-但我们还没有完成。我们需要为每个变量创建一个列，并将 `year` 转换为数字。正如我们所学的，`pivot_wider` 函数可以做到这一点：**
+但我们还没有完成。我们需要为每个变量创建一个列，并将 `year` 转换为数字。正如我们所学的，`pivot_wider` 函数可以做到这一点：
 
 ```r
 dat <- dat |> 
@@ -185,11 +185,11 @@ dat <- dat |>
 
 数据现在以整洁格式存在，每行有一个观测值，包含三个变量：年份、生育率和预期寿命。
 
-三个相关函数是 `separate_wider_position`、`separate_wider_regex` 和 `unite`。`separate_wider_position` 使用宽度而不是分隔符。`separate_wider_regex`，在第 16.4.13 节中描述，提供了更多控制我们如何分隔以及保留什么的选项。`unite` 函数可以看作是 `separate` 函数的逆操作：它将两列合并为一列。*********
+三个相关函数是 `separate_wider_position`、`separate_wider_regex` 和 `unite`。`separate_wider_position` 使用宽度而不是分隔符。`separate_wider_regex`，在第 16.4.13 节中描述，提供了更多控制我们如何分隔以及保留什么的选项。`unite` 函数可以看作是 `separate` 函数的逆操作：它将两列合并为一列。
 
-## ***11.4 使用 data.table 重新塑形***
+## 11.4 使用 data.table 重新塑形
 
-**一般来说，你可以使用 **tidyverse** 做的所有事情都可以使用 **data.table** 和 base R 做到，尽管可能更难阅读，但它通常更灵活、更快、更高效。在这里，我们展示了如何使用 **data.table** 方法进行 `pivot_longer`、`pivot_wider` 和 `separate`。我们将使用之前使用的这个例子来说明：
+一般来说，你可以使用 **tidyverse** 做的所有事情都可以使用 **data.table** 和 base R 做到，尽管可能更难阅读，但它通常更灵活、更快、更高效。在这里，我们展示了如何使用 **data.table** 方法进行 `pivot_longer`、`pivot_wider` 和 `separate`。我们将使用之前使用的这个例子来说明：
 
 ```r
 path <- system.file("extdata", package = "dslabs")
@@ -215,11 +215,11 @@ dt_new_tidy_data  <- melt(dt_wide_data,
  measure.vars = 2:ncol(dt_wide_data), 
  variable.name = "year", 
  value.name = "fertility")
-```*
+```
 
-### **11.4.2 `pivot_wider` 是 `dcast`**
+### 11.4.2 `pivot_wider` 是 `dcast`
 
-*如果在 **tidyverse** 中编写**
+如果在 **tidyverse** 中编写
 
 ```r
 new_wide_data <- new_tidy_data |> 
@@ -231,11 +231,11 @@ new_wide_data <- new_tidy_data |>
 ```r
 dt_new_wide_data <- dcast(dt_new_tidy_data, formula = ... ~ year,
  value.var = "fertility")
-```***
+```
 
-### ***11.4.3 分离变量***
+### 11.4.3 分离变量
 
-**我们现在用之前使用的例子来说明：**
+我们现在用之前使用的例子来说明：
 
 ```r
 path <- system.file("extdata", package = "dslabs")
@@ -243,7 +243,7 @@ filename <- "life-expectancy-and-fertility-two-countries-example.csv"
 filename <-  file.path(path, filename)
 ```
 
-在 **tidyverse** 中，我们使用**
+在 **tidyverse** 中，我们使用
 
 ```r
 raw_dat <- read_csv(filename)
@@ -266,11 +266,11 @@ dat_long, [c("year", "name", "name2") :=
 dat_long[is.na(name2), name2 := ""]
 dat_long, name := [paste(name, name2, sep = "_")][, name2 := NULL]
 dat_wide <- dcast(dat_long, country + year ~ name, value.var = "value")
-```*********
+```
 
-## ***11.5 `janitor` 包***
+## 11.5 `janitor` 包
 
-**`janitor` 包包括一些常见的数据整理步骤的函数。这些步骤通常是重复且耗时的。关键特性包括检查和清理列名、删除空或重复行以及转换数据类型的函数。它还提供了轻松生成频率表和执行交叉表的特性。该包旨在与 **tidyverse** 无缝工作。在这里，我们展示了四个示例。**
+`janitor` 包包括一些常见的数据整理步骤的函数。这些步骤通常是重复且耗时的。关键特性包括检查和清理列名、删除空或重复行以及转换数据类型的函数。它还提供了轻松生成频率表和执行交叉表的特性。该包旨在与 **tidyverse** 无缝工作。在这里，我们展示了四个示例。
 
 电子表格通常使用与编程不兼容的名称。最常见的问题是带有空格的列名。`clean_names()` 函数试图解决这个问题和其他常见问题。默认情况下，它强制变量名变为小写，并使用下划线代替空格。在这个例子中，我们更改了上一节中创建的 `dat` 对象的变量名，然后演示了这个函数的工作方式：
 
@@ -312,11 +312,11 @@ get_dupes(x)
 #>     state abb region population total dupe_count
 #> 1 Alabama  AL  South    4779736   135          2
 #> 2 Alabama  AL  South    4779736   135          2
-```******
+```
 
-## ***11.6 练习***
+## 11.6 练习
 
-**1. 运行以下命令以定义`co2_wide`对象：
+1. 运行以下命令以定义`co2_wide`对象：
 
 ```r
 co2_wide <- data.frame(matrix(co2, ncol = 12, byrow = TRUE)) |> 
@@ -367,4 +367,4 @@ dat <- admissions |> select(-applicants)
 
 7. 现在用 `pivot_wider` 函数生成每个专业有四个变量的整洁数据。
 
-8. 现在用管道符写一行代码，将 `admissions` 转换为上一练习中产生的表格。********
+8. 现在用管道符写一行代码，将 `admissions` 转换为上一练习中产生的表格。
