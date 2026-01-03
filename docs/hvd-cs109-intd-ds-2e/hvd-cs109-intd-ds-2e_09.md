@@ -26,13 +26,22 @@
 
 要在你的系统中查看完整路径的示例，请输入以下内容：
 
-[PRE0]
+```r
+[system.file(package = "dslabs")
+#> 1] "/Library/Frameworks/R.framework/Versions/4.5-arm64/Resources/library/dslabs"
+```
 
 请注意，输出将在不同的计算机上有所不同。`system.file` 函数找到在安装 **dslabs** 包时添加到系统中的文件的完整路径。由斜杠分隔的字符串是目录名称。第一个斜杠代表根目录，我们知道这是一个完整路径，因为它以斜杠开头。
 
 我们可以使用 `list.files` 函数来显示任何目录中的文件和目录名称。例如，以下是 **dslabs** 包目录中的文件：
 
-[PRE1]
+```r
+dir <- [system.file(package = "dslabs")
+list.files(dir)
+#>  1] "data"        "DESCRIPTION" "extdata"     "help" 
+#>  [5] "html"        "INDEX"       "Meta"        "NAMESPACE" 
+#>  [9] "R"           "script"
+```
 
 请注意，这些路径不以斜杠开头，这意味着它们是 *相对路径*。这些相对路径给出了如果 `dir` 中存储的路径是我们的工作目录，文件或目录的位置。
 
@@ -48,11 +57,17 @@
 
 **`file.path` 函数将字符组合成完整的路径，确保与各自的操作系统兼容。Linux 和 Mac 使用正斜杠 `/`，而 Windows 使用反斜杠 `\` 来分隔目录。这个函数很有用，因为通常你希望使用变量来定义路径。以下是一个示例，它构建了一个包含谋杀数据的电子表格的完整路径。在这里，变量 `dir` 包含 **dslabs** 包的完整路径，而 `extdata/murders.csv` 是电子表格的相对路径，如果 `dir` 被视为工作目录的话。***
 
-[PRE2]
+```r
+dir <- [system.file(package = "dslabs")
+file_path <- file.path(dir, "extdata/murders.csv")
+```
 
 您可以使用`file.copy`函数将包含完整路径的`file_path`文件复制到您的当前工作目录中：
 
-[PRE3]
+```r
+file.copy(file_path, "murders.csv")
+#> [1] TRUE
+```
 
 如果文件复制成功，此函数将返回`TRUE`。请注意，我们使用了相同的文件名作为目标文件，但我们可以给它任何我们想要的名称。如果目标目录中已存在同名文件，复制将失败。您可以使用`overwrite`参数更改此行为。*****
 
@@ -66,7 +81,7 @@
 
 当使用文本文件存储电子表格时，行断行符用于分隔行，而一个预定义的字符，称为*分隔符*，用于在行内分隔列。最常见的分隔符是逗号（`,`）、分号（`;`）、空格（``）和制表符（预设的空格数或`\t`）。将这些文件读入 R 时，使用的方法略有不同，因此我们需要知道使用了哪种分隔符。在某些情况下，分隔符可以从文件后缀推断出来。例如，以`csv`结尾的文件预期是逗号分隔的，而以`tsv`结尾的文件预期是制表符分隔的。然而，对于以`txt`结尾的文件，推断分隔符会更困难。因此，我们建议查看文件而不是从后缀推断。您可以使用`readLines`函数在 R 中查看文件中的任意行数：``
 
-PRE4] [readLines("murders.csv", n = 3) #> [1] "state,abb,region,population,total" #> [2] "Alabama,AL,South,4779736,135"  #> [3] "Alaska,AK,West,710231,19" [PRE5]`
+PRE4] [readLines("murders.csv", n = 3) #> [1] "state,abb,region,population,total" #> [2] "Alabama,AL,South,4779736,135"  #> [3] "Alaska,AK,West,710231,19" ```r   *This immediately reveals that the file is indeed comma delimited. It also reveals that the file has a header: the first row contains column names rather than data. This is also important to know. Most parsers assume the file starts with a header, but not all files have one.* ````
 
 ### `*6.2.2 二进制文件*`
 
@@ -74,11 +89,11 @@ PRE4] [readLines("murders.csv", n = 3) #> [1] "state,abb,region,population,total
 
 ### `*6.2.3 编码*`
 
-PRE6] fn <- "calificaciones.csv" [file.copy(file.path(system.file("extdata", package = "dslabs"), fn), fn) #> 1] TRUE [readLines(fn, n = 1) #> [1] "\"nombre\",\"f.n.\",\"estampa\",\"puntuaci\xf3n\"" [PRE7]`*****
+PRE6] fn <- "calificaciones.csv" [file.copy(file.path(system.file("extdata", package = "dslabs"), fn), fn) #> 1] TRUE [readLines(fn, n = 1) #> [1] "\"nombre\",\"f.n.\",\"estampa\",\"puntuaci\xf3n\"" ```r   *In the following section, we’ll introduce several helpful import functions, some of which allow you to specify the file encoding.**````*****
 
 ## ***`**6.3 解析器**`***
 
-**PRE8] dat <- read.csv("murders.csv") PRE9] x <- scan("murders.csv", sep = ",", what = "c") x1:10] #>  1] "state"      "abb"        "region"     "population" "total"  #>  [6] "Alabama"    "AL"         "South"      "4779736"    "135" [PRE10] [library(readr("murders.csv") #> Rows: 51 Columns: 5 #> ── Column specification ──────────────────────────────────────────────── #> Delimiter: "," #> chr (3): state, abb, region #> dbl (2): population, total #>  #> ℹ Use `spec()` to retrieve the full column specification for this data. #> ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message. PRE12] [guess_encoding("murders.csv") #> # A tibble: 1 × 2 #>   encoding confidence #>   <chr>         <dbl> #> 1 ASCII             1 PRE13] [guess_encoding("calificaciones.csv") #> # A tibble: 3 × 2 #>   encoding   confidence #>   <chr>           <dbl> #> 1 ISO-8859-1       0.92 #> 2 ISO-8859-2       0.72 #> 3 ISO-8859-9       0.53 PRE14] dat <- [read_csv("calificaciones.csv", show_col_types = FALSE,  locale = locale(encoding = "ISO-8859-1")) PRE15] [names(dat) #> 1] "nombre"     "f.n."       "estampa"    "puntuación" [PRE16] [library(readxl(tmp_filename) [file.remove(tmp_filename) [PRE22]`***
+**PRE8] dat <- read.csv("murders.csv") PRE9] x <- scan("murders.csv", sep = ",", what = "c") x1:10] #>  1] "state"      "abb"        "region"     "population" "total"  #>  [6] "Alabama"    "AL"         "South"      "4779736"    "135" ```r*   ### **6.3.2 readr**   **The **readr** package includes parsers, for reading text file spreadsheets into R. **readr** is part of the **tidyverse**, but you can load it directly using:    ``` [library(readr("murders.csv") #> Rows: 51 Columns: 5 #> ── Column specification ──────────────────────────────────────────────── #> Delimiter: "," #> chr (3): state, abb, region #> dbl (2): population, total #>  #> ℹ Use `spec()` to retrieve the full column specification for this data. #> ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message. PRE12] [guess_encoding("murders.csv") #> # A tibble: 1 × 2 #>   encoding confidence #>   <chr>         <dbl> #> 1 ASCII             1 PRE13] [guess_encoding("calificaciones.csv") #> # A tibble: 3 × 2 #>   encoding   confidence #>   <chr>           <dbl> #> 1 ISO-8859-1       0.92 #> 2 ISO-8859-2       0.72 #> 3 ISO-8859-9       0.53 PRE14] dat <- [read_csv("calificaciones.csv", show_col_types = FALSE,  locale = locale(encoding = "ISO-8859-1")) PRE15] [names(dat) #> 1] "nombre"     "f.n."       "estampa"    "puntuación" ```r*******   ### ***6.3.3 readxl***   ***The **readxl** package provides functions to read-in Microsoft Excel formats.    ``` [library(readxl(tmp_filename) [file.remove(tmp_filename) ```r*********````***
 
 ## *`****6.4 使用电子表格组织数据****`*
 
@@ -86,7 +101,7 @@ PRE6] fn <- "calificaciones.csv" [file.copy(file.path(system.file("extdata", pac
 
 ## *``****6.5 练习****``*
 
-PRE23] 路径 <- [system.file("extdata", package = "dslabs") 文件列表 <- list.files(路径) 文件 PRE24] [names(dat) [PRE25]`*
+PRE23] 路径 <- [system.file("extdata", package = "dslabs") 文件列表 <- list.files(路径) 文件 PRE24] [names(dat) ```r   *to see that the names are not informative.    Use the `readLines` function to read in just the first line.    4\. Pick a measurement you can take on a regular basis. For example, your daily weight or how long it takes you to run 5 miles. Keep a spreadsheet that includes the date, the hour, the measurement, and any other informative variable you think is worth keeping. Do this for 2 weeks. Then make a plot.******````*
 
 * * *
 
