@@ -1,0 +1,787 @@
+- en: '32  Unsupervised Learning: Clustering'
+  id: totrans-0
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+  zh: 32 无监督学习：聚类
+- en: 原文：[https://rafalab.dfci.harvard.edu/dsbook-part-2/ml/clustering.html](https://rafalab.dfci.harvard.edu/dsbook-part-2/ml/clustering.html)
+  id: totrans-1
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+  zh: 原文：[https://rafalab.dfci.harvard.edu/dsbook-part-2/ml/clustering.html](https://rafalab.dfci.harvard.edu/dsbook-part-2/ml/clustering.html)
+- en: '[Machine Learning](../ml/intro-ml.html)'
+  id: totrans-2
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+  zh: '[机器学习](../ml/intro-ml.html)'
+- en: '[32  Unsupervised Learning: Clustering](../ml/clustering.html)'
+  id: totrans-3
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+  zh: '[32 无监督学习：聚类](../ml/clustering.html)'
+- en: 'The algorithms we have studied so far represent the most widely used branch
+    of machine learning: supervised learning. In supervised learning, the training
+    data include both predictors and outcomes, and the goal is to learn a function
+    that predicts the outcome for new observations. Much of the mathematical and practical
+    framework developed in previous chapters was aimed at understanding, evaluating,
+    and building these supervised prediction models.'
+  id: totrans-4
+  prefs: []
+  type: TYPE_NORMAL
+  zh: 我们迄今为止研究过的算法代表了机器学习中最广泛使用的分支：监督学习。在监督学习中，训练数据包括预测因子和结果，目标是学习一个函数，该函数可以预测新观测的结果。前几章中开发的许多数学和实用框架旨在理解、评估和构建这些监督预测模型。
+- en: 'However, supervised learning is only one part of what is broadly referred to
+    as machine learning. A second major branch is *unsupervised learning*, in which
+    the outcomes (labels) are not provided. The goal is no longer prediction, but
+    rather to uncover structure in the data: identify groups, detect patterns, or
+    reveal lower-dimensional representations. This family of techniques is extremely
+    important in practice and includes many methods not covered in this book. Here,
+    we provide a brief introduction and refer readers to the recommended texts for
+    a deeper study.'
+  id: totrans-5
+  prefs: []
+  type: TYPE_NORMAL
+  zh: 然而，监督学习只是广泛称为机器学习的一部分。第二个主要分支是 *无监督学习*，其中不提供结果（标签）。目标不再是预测，而是揭示数据中的结构：识别组、检测模式或揭示低维表示。这一系列技术在实践中非常重要，包括本书中未涉及到的许多方法。在这里，我们提供了一个简要介绍，并建议读者参考推荐文本进行深入研究。
+- en: 'Unsupervised learning encompasses a wide variety of approaches, but one of
+    the most common is *clustering*: the task of grouping observations with similar
+    features. Clustering can be challenging in settings like height-based sex prediction
+    or the two-versus-seven digit example, because the groups naturally overlap. But
+    in many scientific and applied domains, such as genomics, marketing, image analysis,
+    and recommender systems, nsupervised methods can uncover meaningful patterns that
+    would otherwise remain hidden.'
+  id: totrans-6
+  prefs: []
+  type: TYPE_NORMAL
+  zh: 无监督学习包含了许多不同的方法，但其中最常见的一种是 *聚类*：将具有相似特征的观测分组。在基于身高的性别预测或二对七位数的例子中，聚类可能会很具挑战性，因为组自然重叠。但在许多科学和应用领域，如基因组学、市场营销、图像分析和推荐系统，无监督方法可以揭示其他情况下可能隐藏的有意义模式。
+- en: 'In this chapter, we focus on two classic clustering algorithms, each illustrating
+    a very different strategy:'
+  id: totrans-7
+  prefs: []
+  type: TYPE_NORMAL
+  zh: 在本章中，我们重点关注两种经典的聚类算法，每个算法都展示了非常不同的策略：
+- en: '**Hierarchical clustering**, which groups observations based on recursively
+    merging the closest pairs.'
+  id: totrans-8
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+  zh: '**层次聚类**，通过递归合并最近的成对观测来分组。'
+- en: '**k-means clustering**, which partitions the data by iteratively refining cluster
+    centers.'
+  id: totrans-9
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+  zh: '**k-means聚类**，通过迭代优化聚类中心来划分数据。'
+- en: These two methods are foundational as many advanced unsupervised learning techniques
+    build on the same ideas.
+  id: totrans-10
+  prefs: []
+  type: TYPE_NORMAL
+  zh: 这两种方法都是基础性的，因为许多高级无监督学习方法都建立在相同的思想之上。
+- en: 32.1 Examples
+  id: totrans-11
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+  zh: 32.1 例子
+- en: To make the concepts concrete, we study two real examples. These examples illustrate
+    how unsupervised learning can uncover latent structure in real data, even when
+    no outcome labels are available.
+  id: totrans-12
+  prefs: []
+  type: TYPE_NORMAL
+  zh: 为了使概念具体化，我们研究了两个真实例子。这些例子说明了无监督学习如何在没有结果标签的情况下，揭示真实数据中的潜在结构。
+- en: Movie ratings
+  id: totrans-13
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+  zh: 电影评分
+- en: 'Our first example is based on movie ratings. Here we quickly construct a matrix
+    `movies` that has ratings for the 50 movies with the most ratings among users
+    with at least 100 ratings:'
+  id: totrans-14
+  prefs: []
+  type: TYPE_NORMAL
+  zh: 我们的第一个例子是基于电影评分。在这里，我们快速构建了一个矩阵 `movies`，它包含了至少有100个评分的用户中评分最高的50部电影：
+- en: '[PRE0]'
+  id: totrans-15
+  prefs: []
+  type: TYPE_PRE
+  zh: '[PRE0]'
+- en: '*Notice that if we compute distances directly from the original ratings, movies
+    with generally high ratings will tend to be close to each other, as will movies
+    with generally low ratings. However, this is not what we are actually interested
+    in. Instead, we want to capture how ratings correlate *across users* for the 263
+    different users. To achieve this, we center the ratings for each movie by removing
+    the movie effect:'
+  id: totrans-16
+  prefs: []
+  type: TYPE_NORMAL
+  zh: '*请注意，如果我们直接从原始评分中计算距离，评分普遍较高的电影往往会彼此靠近，评分普遍较低的电影也是如此。然而，这并不是我们真正感兴趣的。相反，我们想要捕捉263位不同用户之间的评分相关性。为了实现这一点，我们通过去除电影效应来对每部电影的评分进行中心化：**'
+- en: '[PRE1]'
+  id: totrans-17
+  prefs: []
+  type: TYPE_PRE
+  zh: '[PRE1]'
+- en: '*As described in [Chapter 24](../highdim/regularization.html), many of the
+    entries are missing because not every user rates every movie, so we use the argument
+    `na.rm = TRUE`. With the centered data, we can now cluster movies based on their
+    rating patterns.**'
+  id: totrans-18
+  prefs: []
+  type: TYPE_NORMAL
+  zh: '*如[第24章](../highdim/regularization.html)所述，由于并非每个用户都对每部电影进行评分，因此许多条目缺失，所以我们使用参数`na.rm
+    = TRUE`。有了中心化数据，我们现在可以根据电影的评分模式对电影进行聚类。**'
+- en: '**Gene expression measurements**'
+  id: totrans-19
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+  zh: '**基因表达测量**'
+- en: '**Our second example uses the `tissue_gene_expression` dataset from **dslabs**.
+    This dataset contains gene-expression measurements for 189 tissue samples. The
+    predictors, stored in the component `x`, form a matrix with 500 columns, one for
+    each gene, so each row represents the expression profile of a single tissue sample.
+    The outcome labels, saved in the component `y`, indicate which of seven tissue
+    types each sample comes from.'
+  id: totrans-20
+  prefs: []
+  type: TYPE_NORMAL
+  zh: '**我们的第二个例子使用了来自**dslabs**的`tissue_gene_expression`数据集。该数据集包含189个组织样本的基因表达测量值。预测变量存储在组件`x`中，形成一个具有500列的矩阵，每列代表一个基因，因此每一行代表单个组织样本的表达谱。结果标签存储在组件`y`中，指示每个样本来自七个组织类型中的哪一个。'
+- en: 'Although clustering is typically applied when labels are *unknown*, this dataset
+    is pedagogically useful because we *do* know the true tissue types. This lets
+    us examine how well the clusters we find reflect the underlying biological structure:
+    different tissues have distinct patterns of gene expression, even though all cells
+    share the same genome. Different genes play different functional roles in different
+    tissues, and these patterns should be detectable through clustering. From a biological
+    perspective, all these tissues share the same genome, every cell contains the
+    same DNA. What makes tissues different is which genes are turned on or off, and
+    by how much. These tissue-specific expression patterns reflect the distinct functions
+    of each cell type. Because of this, we expect that tissue samples with similar
+    biological roles will show similar gene-expression profiles.'
+  id: totrans-21
+  prefs: []
+  type: TYPE_NORMAL
+  zh: 尽管聚类通常在标签未知时应用，但这个数据集在教学中很有用，因为我们确实知道真实的组织类型。这让我们可以检查我们找到的聚类是否很好地反映了潜在的生物结构：不同的组织具有不同的基因表达模式，尽管所有细胞都共享相同的基因组。不同的基因在不同的组织中扮演不同的功能角色，这些模式应该可以通过聚类检测到。从生物学的角度来看，所有这些组织都共享相同的基因组，每个细胞都包含相同的DNA。使组织不同的是哪些基因被开启或关闭，以及开启或关闭的程度。这些组织特异性的表达模式反映了每种细胞类型的独特功能。因此，我们预计具有相似生物学角色的组织样本将显示出相似的基因表达谱。
+- en: 'Before clustering, we create a centered version of the gene-expression matrix
+    by subtracting each gene’s mean expression level. This ensures we focus on *relative
+    differences* in gene expression rather than absolute magnitude:'
+  id: totrans-22
+  prefs: []
+  type: TYPE_NORMAL
+  zh: 在聚类之前，我们通过减去每个基因的平均表达水平来创建基因表达矩阵的中心化版本。这确保我们关注基因表达的*相对差异*而不是绝对大小：
+- en: '[PRE2]'
+  id: totrans-23
+  prefs: []
+  type: TYPE_PRE
+  zh: '[PRE2]'
+- en: '*When we later explore `genex`, even without giving the algorithm the tissue
+    labels, we should see structure emerge: samples from the same tissue tend to cluster
+    together because they share characteristic expression patterns.***'
+  id: totrans-24
+  prefs: []
+  type: TYPE_NORMAL
+  zh: '*当我们后来探索`genex`时，即使没有给出算法的组织标签，我们也应该看到结构的出现：来自同一组织的样本往往聚集在一起，因为它们共享特征的表达模式。***'
+- en: '***32.2 Hierarchical clustering***'
+  id: totrans-25
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+  zh: '***32.2 层次聚类***'
+- en: '***The first clustering algorithm we describe is *hierarchical cluster*. As
+    with many clustering algorithms, the first step is to compute distances between
+    each pair of observation. We do this for the `movies` matrix as an example:'
+  id: totrans-26
+  prefs: []
+  type: TYPE_NORMAL
+  zh: '***我们首先描述的聚类算法是*层次聚类*。与许多聚类算法一样，第一步是计算每对观测之间的距离。我们以`movies`矩阵为例进行此操作：**'
+- en: '[PRE3]'
+  id: totrans-27
+  prefs: []
+  type: TYPE_PRE
+  zh: '[PRE3]'
+- en: '*The `dist` function automatically accounts for missing values and standardizes
+    the distance measurements, ensuring that the computed distance between two movies
+    does not depend on the number of ratings available.'
+  id: totrans-28
+  prefs: []
+  type: TYPE_NORMAL
+  zh: '*`dist`函数自动处理缺失值并标准化距离测量，确保计算的两个电影之间的距离不依赖于可用的评分数量。**'
+- en: With the distance between each pair of movies computed, we need an algorithm
+    to define groups, based on these distances. Hierarchical clustering starts by
+    defining each observation as a separate group, then the two closest groups are
+    joined into new groups. We then continue joining the closest groups into new groups
+    iteratively until there is just one group including all the observations.
+  id: totrans-29
+  prefs: []
+  type: TYPE_NORMAL
+  zh: 在计算了每对电影之间的距离后，我们需要一个算法来定义基于这些距离的组。层次聚类首先将每个观测值定义为一个单独的组，然后最近的两个组被合并成新的组。然后我们继续迭代地将最近的组合并成新的组，直到只剩下一个包含所有观测值的组。
+- en: 'The `hclust` function implements this algorithm and takes a distance as input:'
+  id: totrans-30
+  prefs: []
+  type: TYPE_NORMAL
+  zh: '`hclust`函数实现了这个算法，并接受距离作为输入：'
+- en: '[PRE4]'
+  id: totrans-31
+  prefs: []
+  type: TYPE_PRE
+  zh: '[PRE4]'
+- en: '*We can see the resulting groups using a *dendrogram*. The function `plot`
+    applied to an `hclust` object creates a dendrogram:'
+  id: totrans-32
+  prefs: []
+  type: TYPE_NORMAL
+  zh: '*我们可以使用树状图来查看生成的组。将`plot`函数应用于`hclust`对象会创建一个树状图：'
+- en: '[PRE5]'
+  id: totrans-33
+  prefs: []
+  type: TYPE_PRE
+  zh: '[PRE5]'
+- en: '*![](../Images/884c49d7033d9b437a9b3a2c8eb0991a.png)*  *This graph gives us
+    an approximation between the distance between any two movies. To find this distance,
+    we find the first location, from top to bottom, where these movies split into
+    two different groups. The height of this location is the distance between these
+    two groups. So, for example, the distance between the three *Star Wars* movies
+    is 8 or less, while the distance between *Raiders of the Lost of Ark* and *Silence
+    of the Lambs* is about 17.'
+  id: totrans-34
+  prefs: []
+  type: TYPE_NORMAL
+  zh: '*![](../Images/884c49d7033d9b437a9b3a2c8eb0991a.png)*  *这个图给出了任意两部电影之间的距离近似。为了找到这个距离，我们找到从上到下这些电影首次分成两个不同组的位置。这个位置的高度是这两个组之间的距离。例如，三部《星球大战》电影之间的距离是8或更少，而《失落文明的探险者》和《沉默的羔羊》之间的距离大约是17。'
+- en: 'To generate actual groups, we can do one of two things: 1) decide on a minimum
+    distance needed for observations to be in the same group or 2) decide on the number
+    of groups you want and then find the minimum distance that achieves this.'
+  id: totrans-35
+  prefs: []
+  type: TYPE_NORMAL
+  zh: 为了生成实际的组，我们可以做两件事之一：1）决定观测值在同一个组中所需的最小距离，或者2）决定你想要的组数，然后找到实现这一目标的最小距离。
+- en: 'The function `cutree` can be applied to the output of `hclust` to perform either
+    of these two operations and generate groups. The argument `k` can be used to provide
+    the number of groups and, alternatively, the argument `h` can be used to denote
+    the minium distance between members of a group. Here is how we ask for 10 groups
+    to be formed:'
+  id: totrans-36
+  prefs: []
+  type: TYPE_NORMAL
+  zh: 函数`cutree`可以应用于`hclust`的输出，以执行这两个操作之一并生成组。参数`k`可以用来指定组数，或者，参数`h`可以用来表示组内成员之间的最小距离。以下是请求形成10个组的方法：
+- en: '[PRE6]'
+  id: totrans-37
+  prefs: []
+  type: TYPE_PRE
+  zh: '[PRE6]'
+- en: '*Note that the clustering provides some insights into types of movies. Group
+    2 appears to be critically acclaimed movies:'
+  id: totrans-38
+  prefs: []
+  type: TYPE_NORMAL
+  zh: '*请注意，聚类提供了一些关于电影类型的见解。第2组看起来像是备受赞誉的电影：'
+- en: '[PRE7]'
+  id: totrans-39
+  prefs: []
+  type: TYPE_PRE
+  zh: '[PRE7]'
+- en: '*And Group 9 appears to be *nerd* movies:'
+  id: totrans-40
+  prefs: []
+  type: TYPE_NORMAL
+  zh: '*并且第9组看起来像是*极客*电影：'
+- en: '[PRE8]'
+  id: totrans-41
+  prefs: []
+  type: TYPE_PRE
+  zh: '[PRE8]'
+- en: '*We can change the size of the group by either making `k` larger or `h` smaller.*********'
+  id: totrans-42
+  prefs: []
+  type: TYPE_NORMAL
+  zh: '*我们可以通过使`k`更大或`h`更小来改变组的大小。*********'
+- en: '***32.3 Heatmaps***'
+  id: totrans-43
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+  zh: '***32.3 热图***'
+- en: '***A powerful visual tool for revealing clusters or patterns in high-dimensional
+    data is the *heatmap*. Heatmaps are especially useful when *both* the observations
+    and the predictors can form meaningful groups. Gene-expression datasets are a
+    prime example: not only can tissue samples cluster by biological type, but genes
+    themselves often cluster into functional groups that are co-expressed.'
+  id: totrans-44
+  prefs: []
+  type: TYPE_NORMAL
+  zh: '***热图是揭示高维数据中簇或模式的有力视觉工具。热图在观测值和预测变量都可以形成有意义的组时特别有用。基因表达数据集是一个很好的例子：不仅组织样本可以根据生物类型进行聚类，基因本身也经常聚集成功能组，这些组是共表达的。'
+- en: 'The basic idea is straightforward: we create an image of the data matrix using
+    color to represent each value, and we reorder both rows and columns according
+    to the results of a clustering algorithm. This reordering places similar samples
+    and similar genes next to each other, making structure in the data much easier
+    to see.'
+  id: totrans-45
+  prefs: []
+  type: TYPE_NORMAL
+  zh: 基本思想很简单：我们使用颜色来表示数据矩阵中的每个值，创建数据矩阵的图像，并根据聚类算法的结果重新排序行和列。这种重新排序将相似的样本和基因放在一起，使得数据中的结构更容易看到。
+- en: We illustrate this approach below using the `tissue_gene_expression` dataset
+    from **dslabs**.
+  id: totrans-46
+  prefs: []
+  type: TYPE_NORMAL
+  zh: 我们使用来自**dslabs**的`tissue_gene_expression`数据集来说明这种方法。
+- en: '[PRE9]'
+  id: totrans-47
+  prefs: []
+  type: TYPE_PRE
+  zh: '[PRE9]'
+- en: '*Note that we have performed two clusterings: we clustered samples (`h_1`)
+    and genes (`h_2`).'
+  id: totrans-48
+  prefs: []
+  type: TYPE_NORMAL
+  zh: '*请注意，我们进行了两次聚类：我们对样本（`h_1`）和基因（`h_2`）进行了聚类。'
+- en: 'Now we can use the results of this clustering to order the rows and columns:'
+  id: totrans-49
+  prefs: []
+  type: TYPE_NORMAL
+  zh: 现在，我们可以使用这个聚类的结果来排序行和列：
+- en: '[PRE10]'
+  id: totrans-50
+  prefs: []
+  type: TYPE_PRE
+  zh: '[PRE10]'
+- en: '*The `heatmap` function that does all this for us:'
+  id: totrans-51
+  prefs: []
+  type: TYPE_NORMAL
+  zh: '*执行所有这些操作的`heatmap`函数：'
+- en: '[PRE11]'
+  id: totrans-52
+  prefs: []
+  type: TYPE_PRE
+  zh: '[PRE11]'
+- en: '*Note we do not show the results of the two lines of code above because there
+    are too many features for the plot to be useful. We will therefore filter some
+    columns and remake the plots.'
+  id: totrans-53
+  prefs: []
+  type: TYPE_NORMAL
+  zh: '*注意我们没有展示上面两行代码的结果，因为特征太多，绘图将没有意义。因此，我们将过滤一些列并重新绘制图表。'
+- en: 'If only a few features are different between clusters, including all the features
+    can add enough noise that making cluster detection challenging. A simple approach
+    to avoid this is to assume low variability features are not informative and include
+    only high variability features. For example, in the movie example, users with
+    low variance in their ratings are not really distinguishing movies: all the movies
+    seem about the same to them. Similary, in the gene expression example, genes that
+    don’t vary across samples are less likely to be informative of biologically meaningful
+    patterns.'
+  id: totrans-54
+  prefs: []
+  type: TYPE_NORMAL
+  zh: 如果聚类之间只有少数特征不同，包括所有特征可能会添加足够的噪声，使得聚类检测变得困难。一个简单的避免方法是假设低变异性特征不是信息性的，只包括高变异性特征。例如，在电影示例中，评分变异性低的用户实际上并没有真正区分电影：对他们来说，所有电影看起来都差不多。同样，在基因表达示例中，在样本之间没有变化的基因不太可能提供生物上有意义的模式信息。
+- en: 'Here we show how to restrict the heatmap to only the most variable genes, which
+    often reveal the strongest biological patterns. We first compute the standard
+    deviation for each gene, select the top 25 most variable genes, and then plot
+    a heatmap using a more suitable divergent color palette:'
+  id: totrans-55
+  prefs: []
+  type: TYPE_NORMAL
+  zh: 在这里，我们展示了如何将热图限制在仅显示最易变的基因上，这些基因通常揭示了最强的生物模式。我们首先计算每个基因的标准差，选择前 25 个最易变的基因，然后使用更合适的发散颜色方案绘制热图：
+- en: '[PRE12]'
+  id: totrans-56
+  prefs: []
+  type: TYPE_PRE
+  zh: '[PRE12]'
+- en: '*![](../Images/314f3c221b1b06b49b32e10278faaaa8.png)*  *We see clear patterns
+    in the heatmap: observations cluster into groups that largely correspond to tissue
+    type, and genes also form clusters that reflect biologically meaningful structure.
+    For example, genes such as SV2B, GPM6B, LRP4, and DOCK4 cluster together because
+    they are all associated with neuronal function.'
+  id: totrans-57
+  prefs: []
+  type: TYPE_NORMAL
+  zh: '*![](../Images/314f3c221b1b06b49b32e10278faaaa8.png)*  *我们在热图中看到了清晰的模式：观测值聚集成组，这些组在很大程度上对应于组织类型，基因也形成聚类，反映了生物上有意义的结构。例如，SV2B、GPM6B、LRP4
+    和 DOCK4 等基因聚集在一起，因为它们都与神经元功能有关。'
+- en: Note there are several other heatmap functions in R. A popular example is the
+    `heatmap.2` in the **gplots** package.*******
+  id: totrans-58
+  prefs: []
+  type: TYPE_NORMAL
+  zh: 注意 R 中有几个其他的热图函数。一个流行的例子是 **gplots** 包中的 `heatmap.2`。
+- en: '***32.4 k-means***'
+  id: totrans-59
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+  zh: '***32.4 k-means***'
+- en: '***The second clustering algorithm we describe is *k-means*.'
+  id: totrans-60
+  prefs: []
+  type: TYPE_NORMAL
+  zh: '***我们描述的第二种聚类算法是 *k-means*。'
+- en: 'The k-means algorithm requires us to predefine \(k\), the number of clusters
+    we want to create. Once \(k\) is set, the algorithm proceeds iteratively:'
+  id: totrans-61
+  prefs: []
+  type: TYPE_NORMAL
+  zh: k-means 算法要求我们预先定义 \(k\)，即我们想要创建的聚类数量。一旦 \(k\) 被设置，算法就会迭代进行：
+- en: '*Initialization:* Define \(k\) centers (chosen at random).'
+  id: totrans-62
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+  zh: '*初始化:* 定义 \(k\) 个中心（随机选择）。'
+- en: '*Assignment step:* Each observation is assigned to the cluster with the closest
+    center.'
+  id: totrans-63
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+  zh: '*分配步骤:* 每个观测值被分配到最近的中心所在的聚类。'
+- en: '*Update step:* The centers are redefined by taking the mean of the observations
+    in each cluster. These new centers are called *centroids*.'
+  id: totrans-64
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+  zh: '*更新步骤:* 通过取每个聚类中观测值的平均值来重新定义中心。这些新的中心被称为 *质心*。'
+- en: '*Iteration:* Steps 2 and 3 are repeated until the centers stabilize (converge).'
+  id: totrans-65
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+  zh: '*迭代:* 步骤 2 和 3 重复进行，直到中心稳定（收敛）。'
+- en: 'We can run k-means to see if it can discover the different tissues:'
+  id: totrans-66
+  prefs: []
+  type: TYPE_NORMAL
+  zh: 我们可以运行 k-means 来看看它是否可以发现不同的组织：
+- en: '[PRE13]'
+  id: totrans-67
+  prefs: []
+  type: TYPE_PRE
+  zh: '[PRE13]'
+- en: '*The cluster assignments are stored in the `cluster` component:'
+  id: totrans-68
+  prefs: []
+  type: TYPE_NORMAL
+  zh: '*聚类分配存储在 `cluster` 组件中：'
+- en: '[PRE14]'
+  id: totrans-69
+  prefs: []
+  type: TYPE_PRE
+  zh: '[PRE14]'
+- en: '*Because the initial centers are chosen at random (which is why we use`set.seed`),
+    the resulting clusters can vary. To improve stability, we can repeat the process
+    multiple times with different random starting points and keep the best result.
+    The number of random starts is set with the `nstart` argument:'
+  id: totrans-70
+  prefs: []
+  type: TYPE_NORMAL
+  zh: '*由于初始中心是随机选择的（这就是为什么我们使用 `set.seed`），生成的聚类可能会有所不同。为了提高稳定性，我们可以多次重复这个过程，使用不同的随机起始点，并保留最佳结果。随机起始点的数量由
+    `nstart` 参数设置：'
+- en: '[PRE15]'
+  id: totrans-71
+  prefs: []
+  type: TYPE_PRE
+  zh: '[PRE15]'
+- en: '*Because we have true tissue labels for this dataset, we can evaluate how well
+    the clusters produced by k-means align with the known biological groups. The simplest
+    approach is to examine a contingency table and assess how *pure* each cluster
+    is, that is, whether most of its samples come from a single tissue type:'
+  id: totrans-72
+  prefs: []
+  type: TYPE_NORMAL
+  zh: '*由于我们这个数据集有真实的组织标签，我们可以评估 k-means 生成的聚类与已知生物组之间的匹配程度。最简单的方法是检查列联表，并评估每个聚类的*纯度*，即大多数样本是否来自单一的组织类型：'
+- en: '[PRE16]'
+  id: totrans-73
+  prefs: []
+  type: TYPE_PRE
+  zh: '[PRE16]'
+- en: '*The results show that k-means does a reasonably good job at recovering the
+    tissue structure. For example, clusters 1, 3, 4, 5, and 7 correspond largely to
+    cerebellum, liver, endometrium, kidney, and placenta, respectively. All hippocampus
+    samples fall into cluster 6, although five cerebellum samples are incorrectly
+    included there. Cluster 2 captures almost all colon samples, with only one kidney
+    sample misassigned.'
+  id: totrans-74
+  prefs: []
+  type: TYPE_NORMAL
+  zh: '*结果显示，k-means 在恢复组织结构方面做得相当不错。例如，簇 1、3、4、5 和 7 分别大致对应于小脑、肝脏、子宫内膜、肾脏和胎盘。所有海马样本都落入簇
+    6，尽管有五个小脑样本被错误地包含在内。簇 2 几乎捕获了所有结肠样本，只有一个肾脏样本分配错误。'
+- en: In the next section, we discuss formal ways to summarize this agreement with
+    a single number, such as *purity* and other commonly used clustering evaluation
+    metrics.*******
+  id: totrans-75
+  prefs: []
+  type: TYPE_NORMAL
+  zh: 在下一节中，我们将讨论使用单个数字来总结这种协议的正式方法，例如 *纯度* 和其他常用的聚类评估指标。
+- en: '***32.5 Evaluating Clusters with Class Labels***'
+  id: totrans-76
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+  zh: '***32.5 使用类别标签评估簇***'
+- en: '***In supervised learning, we evaluate performance with quantities such as
+    accuracy, sensitivity, and RMSE. Clustering presents a different challenge: because
+    the method is unsupervised, the algorithm never sees the true outcomes and has
+    no explicit notion of “correct” labels. However, in many real data settings we
+    *do* have ground-truth labels available for evaluation purposes—for example, tissue
+    type in gene-expression studies. In these situations, we can meaningfully ask:
+    How well do the clusters recovered by the algorithm align with the known classes?
+    This kind of external evaluation is common in benchmarking studies that compare
+    clustering methods for a given scientific or applied context.'
+  id: totrans-77
+  prefs: []
+  type: TYPE_NORMAL
+  zh: 在监督学习中，我们使用准确率、敏感度和 RMSE 等量来评估性能。聚类提出了不同的挑战：因为该方法是无监督的，算法从未看到真正的结果，也没有“正确”标签的明确概念。然而，在许多实际数据设置中，我们
+    *确实* 有用于评估目的的地面实况标签——例如，基因表达研究中的组织类型。在这些情况下，我们可以有意义地询问：算法恢复的簇与已知类别之间的匹配程度如何？这种外部评估在比较给定科学或应用背景下的聚类方法的基准测试研究中很常见。
+- en: 'A convenient first step is to visualize cluster quality using a contingency
+    table (or confusion matrix), as we did above with `table`. Here, rows represent
+    clusters and columns represent true classes. After optionally reordering rows
+    or columns to make the structure easier to interpret:'
+  id: totrans-78
+  prefs: []
+  type: TYPE_NORMAL
+  zh: 一个方便的第一步是使用列联表（或混淆矩阵）可视化簇质量，就像我们上面用 `table` 做的那样。在这里，行代表簇，列代表真实类别。在可选地重新排序行或列以使结构更容易理解之后：
+- en: '[PRE17]'
+  id: totrans-79
+  prefs: []
+  type: TYPE_PRE
+  zh: '[PRE17]'
+- en: '*a “pure” cluster appears as a row with one dominant entry and all remaining
+    entries relatively small. This indicates that observations assigned to that cluster
+    overwhelmingly share the same true label.'
+  id: totrans-80
+  prefs: []
+  type: TYPE_NORMAL
+  zh: '*一个“纯”簇看起来像一行只有一个主导条目，其余条目相对较小。这表明分配给该簇的观测几乎共享相同的真实标签。'
+- en: If we want to summarize this agreement with a single number, the most widely
+    used measure is *cluster purity*.
+  id: totrans-81
+  prefs: []
+  type: TYPE_NORMAL
+  zh: 如果我们想用一个数字来总结这种协议，最广泛使用的度量是 *簇纯度*。
+- en: Cluster purity
+  id: totrans-82
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+  zh: 簇纯度
+- en: 'Suppose we have:'
+  id: totrans-83
+  prefs: []
+  type: TYPE_NORMAL
+  zh: 假设我们有：
+- en: true class labels \(Y_i \in {1,\dots,J}\) for each observation \(i=1\dots N\),
+    and
+  id: totrans-84
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+  zh: 每个观测 \(i=1\dots N\) 的真实类别标签 \(Y_i \in {1,\dots,J}\)，以及
+- en: a clustering algorithm that assigns each observation \(i\) to one of \(K\) clusters
+    \(C_1,\dots,C_K\).
+  id: totrans-85
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+  zh: 一种将每个观测 \(i\) 分配到 \(K\) 个簇 \(C_1,\dots,C_K\) 之一的聚类算法。
+- en: 'For each cluster \(C_k\), we look at the distribution of true labels inside
+    that cluster and find the most common label. The *purity* of cluster \(k\) is
+    the proportion of observations in \(C_k\) that belong to this majority class.
+    The overall purity is defined as:'
+  id: totrans-86
+  prefs: []
+  type: TYPE_NORMAL
+  zh: 对于每个簇 \(C_k\)，我们查看该簇内真实标签的分布，并找到最常见的标签。簇 \(k\) 的 *纯度* 是属于这个多数类别的观测在 \(C_k\)
+    中的比例。整体纯度定义为：
+- en: \[ \text{Purity} = \frac{1}{N} \sum_{k=1}^K \max_j | C_k \cap L_j | \]
+  id: totrans-87
+  prefs: []
+  type: TYPE_NORMAL
+  zh: \[ \text{Purity} = \frac{1}{N} \sum_{k=1}^K \max_j | C_k \cap L_j | \]
+- en: where \(L_j\) is the set of observations in class \(j\) and \(|C_k \cap L_j|\)
+    is the number of observations in both \(C_k\) and \(L_j\).
+  id: totrans-88
+  prefs: []
+  type: TYPE_NORMAL
+  zh: 其中 \(L_j\) 是类别 \(j\) 的观测集合，且 \(|C_k \cap L_j|\) 是 \(C_k\) 和 \(L_j\) 中观测的数量。
+- en: 'Purity is easy to interpret: a purity of 1 means that every cluster consists
+    of observations from just one class; a purity of 0.6 means that, on average, 60%
+    of the points in each cluster come from its dominant class and 40% are “mixed
+    in” from other classes.'
+  id: totrans-89
+  prefs: []
+  type: TYPE_NORMAL
+  zh: 纯度很容易理解：纯度为 1 表示每个簇仅由一个类别的观测组成；纯度为 0.6 表示，平均而言，每个簇中的 60% 的点来自其主导类别，40% 是从其他类别“混合”进来的。
+- en: 'We can compute the purity for our gene expression example and note that it
+    is very close to 1:'
+  id: totrans-90
+  prefs: []
+  type: TYPE_NORMAL
+  zh: 我们可以计算我们的基因表达示例的纯度，并注意到它非常接近 1：
+- en: '[PRE18]'
+  id: totrans-91
+  prefs: []
+  type: TYPE_PRE
+  zh: '[PRE18]'
+- en: '*Other measures: ARI and NMI*'
+  id: totrans-92
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+  zh: '*其他指标：ARI和NMI*'
+- en: '*Purity is simple and intuitive, but it does not correct for chance and can
+    be biased toward having many small clusters. In more formal evaluations, especially
+    in the machine learning literature, two other measures are common:'
+  id: totrans-93
+  prefs: []
+  type: TYPE_NORMAL
+  zh: '*纯度简单直观，但它没有校正机会，并且可能偏向于有许多小聚类。在更正式的评估中，特别是在机器学习文献中，还有两个其他指标是常见的：'
+- en: '**Adjusted Rand Index (ARI)**: compares the clustering to the true labels and
+    adjusts for agreement that would occur by chance. It ranges from 0 (random assignment)
+    to 1 (perfect match).'
+  id: totrans-94
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+  zh: '**调整兰德指数（ARI）**：将聚类与真实标签进行比较，并调整由机会产生的协议。它从0（随机分配）到1（完美匹配）。'
+- en: '**Normalized Mutual Information (NMI)**: uses ideas from information theory
+    to measure how much knowing the cluster label reduces uncertainty about the true
+    label. It also typically ranges between 0 and 1, with higher values indicating
+    better alignment.'
+  id: totrans-95
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+  zh: '**归一化互信息（NMI）**：使用信息论中的思想来衡量知道聚类标签可以减少对真实标签的不确定性。它通常在0到1之间，值越高表示对齐越好。'
+- en: In practice, purity and the corresponding contingency table are often the first
+    tools used to understand how clusters relate to known classes, with ARI and NMI
+    providing more formal, chance-corrected summaries when needed.*****
+  id: totrans-96
+  prefs: []
+  type: TYPE_NORMAL
+  zh: 在实践中，纯度和相应的列联表通常是首先用来理解聚类如何与已知类别相关联的工具，当需要时，ARI和NMI提供更正式、校正机会的总结。*****
+- en: '***32.6 Exercises***'
+  id: totrans-97
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+  zh: '***32.6 练习题***'
+- en: '***1\. Compute the pairwise distance between users in the `movies` dataset
+    using a standard distance (e.g., Euclidean). You will get an error because some
+    user pairs have no movies rated in common, producing rows or columns with all
+    NAs. To diagnose this, create a matrix `in_common` where entry \((i, j)\) is the
+    number of movies that users \(i\) and \(j\) both rated. *Hint:* use `[is.na()](https://rdrr.io/r/base/NA.html)`
+    together with `[crossprod()](https://rdrr.io/r/base/crossprod.html)`.'
+  id: totrans-98
+  prefs: []
+  type: TYPE_NORMAL
+  zh: '***1. 使用标准距离（例如，欧几里得距离）计算`movies`数据集中用户之间的成对距离。你会得到一个错误，因为某些用户对没有共同评价的电影，产生所有值为NAs的行或列。为了诊断这个问题，创建一个矩阵`in_common`，其中条目\((i,
+    j)\)是用户\(i\)和\(j\)共同评价的电影数量。*提示:* 使用`[is.na()](https://rdrr.io/r/base/NA.html)`与`[crossprod()](https://rdrr.io/r/base/crossprod.html)`一起使用。'
+- en: '2\. Create a reduced version of the `movies` matrix containing only users who
+    share at least one commonly rated movie with every other user in the subset. Center
+    each user’s ratings by subtracting their mean, compute a distance matrix, and
+    run hierarchical clustering (`hclust`). Inspect the resulting dendrogram: Do you
+    observe any structure? Do any groups of users cluster together?'
+  id: totrans-99
+  prefs: []
+  type: TYPE_NORMAL
+  zh: 2. 创建一个`movies`矩阵的简化版本，其中只包含与子集内每个其他用户至少共享一部共同评价电影的用户。通过减去他们的平均值来对每个用户的评分进行中心化，计算距离矩阵，并运行层次聚类（`hclust`）。检查生成的树状图：你是否观察到任何结构？是否有用户组聚在一起？
+- en: 3\. Use `cutree` with `k = 7` or equivalently `cutree` with `h = 14` to obtain
+    7 clusters. Create a table showing how many users fall into each of the 7 clusters.
+  id: totrans-100
+  prefs: []
+  type: TYPE_NORMAL
+  zh: 3. 使用`cutree`与`k = 7`或等价的`cutree`与`h = 14`来获得7个聚类。创建一个表格，显示有多少用户属于这7个聚类中的每一个。
+- en: 4\. For the largest and second-largest clusters, examine the users’ favorite
+    movies (e.g., movies with highest average ratings). Describe the types of movie
+    watchers in each group. Do the clusters correspond to clear preference patterns
+    (e.g., action fans, romance fans, etc.)?
+  id: totrans-101
+  prefs: []
+  type: TYPE_NORMAL
+  zh: 4. 对于最大和第二大聚类，检查用户的喜爱电影（例如，平均评分最高的电影）。描述每个组中的电影观看者的类型。这些聚类是否对应于明显的偏好模式（例如，动作爱好者、浪漫爱好者等）？
+- en: 5\. Perform hierarchical clustering on the gene-expression matrix `genex` and
+    label the dendrogram leaves using the tissue types. Two cerebellum samples (`29`
+    and `30`) and two kidney (`38` and `39`) samples cluster with liver, verify this
+    in your plot.
+  id: totrans-102
+  prefs: []
+  type: TYPE_NORMAL
+  zh: 5. 对基因表达矩阵`genex`进行层次聚类，并使用组织类型标记树状图叶子。两个小脑样本（`29`和`30`）和两个肾脏样本（`38`和`39`）与肝脏聚类在一起，请在你的图中验证这一点。
+- en: '6\. The results in Exercise 5 differ from the k-means clustering obtained with:'
+  id: totrans-103
+  prefs: []
+  type: TYPE_NORMAL
+  zh: 6. 练习5的结果与使用以下方法获得的k-means聚类结果不同：
+- en: '[PRE19]'
+  id: totrans-104
+  prefs: []
+  type: TYPE_PRE
+  zh: '[PRE19]'
+- en: '*Examine the cluster centers in `km$centers`. Plot the gene-expression profile
+    of a cerebellum sample (e.g., `"cerebellum_29"`) against each of the seven centers
+    to see which center it most resembles:'
+  id: totrans-105
+  prefs: []
+  type: TYPE_NORMAL
+  zh: '*检查`km$centers`中的聚类中心。将小脑样本（例如，“cerebellum_29”）的基因表达轮廓与每个七个中心进行比较，以查看它最相似的中心：'
+- en: '[PRE20]'
+  id: totrans-106
+  prefs: []
+  type: TYPE_PRE
+  zh: '[PRE20]'
+- en: '*Repeat for `"cerebellum_30"`, `"kidney_38"`, `"kidney_39"`, `"liver_13"`,
+    and `"liver_14"`, and also compare these samples directly to one another. Use
+    these comparisons to propose possible explanations for the mismatches observed
+    in Exercise 5.'
+  id: totrans-107
+  prefs: []
+  type: TYPE_NORMAL
+  zh: '*对于 `"cerebellum_30"`、`"kidney_38"`、`"kidney_39"`、`"liver_13"` 和 `"liver_14"`
+    重复上述操作，并将这些样本直接进行比较。使用这些比较来提出对练习 5 中观察到的不匹配的可能解释。'
+- en: '7\. Cluster a subset of MNIST digits into **10** clusters:'
+  id: totrans-108
+  prefs: []
+  type: TYPE_NORMAL
+  zh: 7. 将 MNIST 数字的一个子集聚类成**10**个簇：
+- en: '[PRE21]'
+  id: totrans-109
+  prefs: []
+  type: TYPE_PRE
+  zh: '[PRE21]'
+- en: '*Compare cluster assignments to true labels using `[table()](https://rdrr.io/r/base/table.html)`.
+    Compute the cluter purity of the resulting clustering. How well does k-means do
+    when asked to find 10 digit clusters?'
+  id: totrans-110
+  prefs: []
+  type: TYPE_NORMAL
+  zh: '*使用 `[table()](https://rdrr.io/r/base/table.html)` 比较簇分配与真实标签。计算所得聚类的簇纯度。当要求找到
+    10 个数字簇时，k-means 算法表现如何？'
+- en: 8\. Examine the cluster centers as images. For example, note that the center
+    for the cluster most associated with “3” may be a mixture of “3” and “5”. Comment
+    on what you observe.
+  id: totrans-111
+  prefs: []
+  type: TYPE_NORMAL
+  zh: 8. 以图像的形式检查簇中心。例如，注意与“3”最相关的簇中心可能是“3”和“5”的混合。评论你的观察结果。
+- en: 9\. Rerun k-means with 25 clusters to allow the algorithm to represent multiple
+    handwriting styles for the same digit. Inspect both the contingency table, the
+    cluster purity, and the cluster-center images. Comment on whether the results
+    improve and what you learn about the variety of ways people write the digits.
+  id: totrans-112
+  prefs: []
+  type: TYPE_NORMAL
+  zh: 9. 重新运行 k-means 算法，使用 25 个簇，以便算法能够表示同一数字的多种书写风格。检查列联表、簇纯度和簇中心图像。评论结果是否有所改进，以及你从人们书写数字的多样性中学到了什么。
+- en: 10\. As discussed in [Section 32.5](#sec-purity), purity generally increases
+    with the number of clusters. Repeat Exercise 9 for `k` in `seq(10, 100, 10)`.
+    Compute purity for each value of `k` and make a plot of purity versus number of
+    clusters. Comment on when increases in purity seem meaningful and when they appear
+    to be due only to chance.******
+  id: totrans-113
+  prefs: []
+  type: TYPE_NORMAL
+  zh: 10. 如 [第 32.5 节](#sec-purity) 所述，纯度通常随着簇数的增加而增加。对于 `k` 在 `seq(10, 100, 10)`
+    范围内重复练习 9。计算每个 `k` 值的纯度，并绘制纯度与簇数的关系图。评论在什么情况下纯度的增加似乎有意义，以及它们似乎仅由于偶然性而出现的情况。******

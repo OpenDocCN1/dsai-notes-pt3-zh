@@ -1,8 +1,10 @@
 - en: Chapter 31 Examples of algorithms
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
 - en: 原文：[https://rafalab.dfci.harvard.edu/dsbook/examples-of-algorithms.html](https://rafalab.dfci.harvard.edu/dsbook/examples-of-algorithms.html)
+  id: totrans-1
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
@@ -10,12 +12,16 @@
     spanning rather different approaches. Throughout the chapter we will be using
     the two predictor digits data introduced in Section [27.8](introduction-to-machine-learning.html#two-or-seven)
     to demonstrate how the algorithms work.
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
 - en: '[PRE0]'
+  id: totrans-3
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: 31.1 Linear regression
+  id: totrans-4
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
@@ -26,60 +32,83 @@
     you can’t beat it with a more complex approach, you probably want to stick to
     linear regression. To quickly make the connection between regression and machine
     learning, we will reformulate Galton’s study with heights, a continuous outcome.'
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
 - en: '[PRE1]'
+  id: totrans-6
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: 'Suppose you are tasked with building a machine learning algorithm that predicts
     the son’s height \(Y\) using the father’s height \(X\). Let’s generate testing
     and training sets:'
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
 - en: '[PRE2]'
+  id: totrans-8
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: In this case, if we were just ignoring the father’s height and guessing the
     son’s height, we would guess the average height of sons.
+  id: totrans-9
   prefs: []
   type: TYPE_NORMAL
 - en: '[PRE3]'
+  id: totrans-10
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: 'Our root mean squared error is:'
+  id: totrans-11
   prefs: []
   type: TYPE_NORMAL
 - en: '[PRE4]'
+  id: totrans-12
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE4]'
 - en: 'Can we do better? In the regression chapter, we learned that if the pair \((X,Y)\)
     follow a bivariate normal distribution, the conditional expectation (what we want
     to estimate) is equivalent to the regression line:'
+  id: totrans-13
   prefs: []
   type: TYPE_NORMAL
 - en: \[ f(x) = \mbox{E}( Y \mid X= x ) = \beta_0 + \beta_1 x \]
+  id: totrans-14
   prefs: []
   type: TYPE_NORMAL
 - en: 'In Section [18.3](linear-models.html#lse) we introduced least squares as a
     method for estimating the slope \(\beta_0\) and intercept \(\beta_1\):'
+  id: totrans-15
   prefs: []
   type: TYPE_NORMAL
 - en: '[PRE5]'
+  id: totrans-16
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE5]'
 - en: 'This gives us an estimate of the conditional expectation:'
+  id: totrans-17
   prefs: []
   type: TYPE_NORMAL
 - en: \[ \hat{f}(x) = 35 + 0.5 x \]
+  id: totrans-18
   prefs: []
   type: TYPE_NORMAL
 - en: We can see that this does indeed provide an improvement over our guessing approach.
+  id: totrans-19
   prefs: []
   type: TYPE_NORMAL
 - en: '[PRE6]'
+  id: totrans-20
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE6]'
 - en: 31.1.1 The `predict` function
+  id: totrans-21
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
@@ -87,17 +116,23 @@
     function takes a fitted object from functions such as `lm` or `glm` (we learn
     about `glm` soon) and a data frame with the new predictors for which to predict.
     So in our current example, we would use `predict` like this:'
+  id: totrans-22
   prefs: []
   type: TYPE_NORMAL
 - en: '[PRE7]'
+  id: totrans-23
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE7]'
 - en: 'Using `predict`, we can get the same results as we did previously:'
+  id: totrans-24
   prefs: []
   type: TYPE_NORMAL
 - en: '[PRE8]'
+  id: totrans-25
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE8]'
 - en: '`predict` does not always return objects of the same types; it depends on what
     type of object is sent to it. To learn about the specifics, you need to look at
     the help file specific for the type of fit object that is being used. The `predict`
@@ -107,85 +142,110 @@
     If it receives an object coming out of `glm`, it calls `predict.glm`. These two
     functions are similar but different. You can learn more about the differences
     by reading the help files:'
+  id: totrans-26
   prefs: []
   type: TYPE_NORMAL
 - en: '[PRE9]'
+  id: totrans-27
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE9]'
 - en: There are many other versions of `predict` and many machine learning algorithms
     have a `predict` function.
+  id: totrans-28
   prefs: []
   type: TYPE_NORMAL
 - en: 31.2 Exercises
+  id: totrans-29
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
 - en: 1\. Create a dataset using the following code.
+  id: totrans-30
   prefs: []
   type: TYPE_NORMAL
 - en: '[PRE10]'
+  id: totrans-31
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE10]'
 - en: 'Use the **caret** package to partition into a test and training set of equal
     size. Train a linear model and report the RMSE. Repeat this exercise 100 times
     and make a histogram of the RMSEs and report the average and standard deviation.
     Hint: adapt the code shown earlier like this:'
+  id: totrans-32
   prefs: []
   type: TYPE_NORMAL
 - en: '[PRE11]'
+  id: totrans-33
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE11]'
 - en: and put it inside a call to `replicate`.
+  id: totrans-34
   prefs: []
   type: TYPE_NORMAL
 - en: '2\. Now we will repeat the above but using larger datasets. Repeat exercise
     1 but for datasets with `n <- c(100, 500, 1000, 5000, 10000)`. Save the average
     and standard deviation of RMSE from the 100 repetitions. Hint: use the `sapply`
     or `map` functions.'
+  id: totrans-35
   prefs: []
   type: TYPE_NORMAL
 - en: 3\. Describe what you observe with the RMSE as the size of the dataset becomes
     larger.
+  id: totrans-36
   prefs: []
   type: TYPE_NORMAL
 - en: On average, the RMSE does not change much as `n` gets larger, while the variability
     of RMSE does decrease.
+  id: totrans-37
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
 - en: 'Because of the law of large numbers, the RMSE decreases: more data, more precise
     estimates.'
+  id: totrans-38
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
 - en: '`n = 10000` is not sufficiently large. To see a decrease in RMSE, we need to
     make it larger.'
+  id: totrans-39
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
 - en: The RMSE is not a random variable.
+  id: totrans-40
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
 - en: '4\. Now repeat exercise 1, but this time make the correlation between `x` and
     `y` larger by changing `Sigma` like this:'
+  id: totrans-41
   prefs: []
   type: TYPE_NORMAL
 - en: '[PRE12]'
+  id: totrans-42
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE12]'
 - en: Repeat the exercise and note what happens to the RMSE now.
+  id: totrans-43
   prefs: []
   type: TYPE_NORMAL
 - en: 5\. Which of the following best explains why the RMSE in exercise 4 is so much
     lower than exercise 1.
+  id: totrans-44
   prefs: []
   type: TYPE_NORMAL
 - en: It is just luck. If we do it again, it will be larger.
+  id: totrans-45
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
 - en: The Central Limit Theorem tells us the RMSE is normal.
+  id: totrans-46
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
@@ -193,64 +253,83 @@
     power and thus provides a better estimate of `y`. This correlation has a much
     bigger effect on RMSE than `n`. Large `n` simply provide us more precise estimates
     of the linear model coefficients.
+  id: totrans-47
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
 - en: These are both examples of regression, so the RMSE has to be the same.
+  id: totrans-48
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
 - en: '6\. Create a dataset using the following code:'
+  id: totrans-49
   prefs: []
   type: TYPE_NORMAL
 - en: '[PRE13]'
+  id: totrans-50
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE13]'
 - en: Note that `y` is correlated with both `x_1` and `x_2`, but the two predictors
     are independent of each other.
+  id: totrans-51
   prefs: []
   type: TYPE_NORMAL
 - en: '[PRE14]'
+  id: totrans-52
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE14]'
 - en: Use the **caret** package to partition into a test and training set of equal
     size. Compare the RMSE when using just `x_1`, just `x_2`, and both `x_1` and `x_2`.
     Train a linear model and report the RMSE.
+  id: totrans-53
   prefs: []
   type: TYPE_NORMAL
 - en: '7\. Repeat exercise 6 but now create an example in which `x_1` and `x_2` are
     highly correlated:'
+  id: totrans-54
   prefs: []
   type: TYPE_NORMAL
 - en: '[PRE15]'
+  id: totrans-55
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE15]'
 - en: Use the **caret** package to partition into a test and training set of equal
     size. Compare the RMSE when using just `x_1`, just `x_2`, and both `x_1` and `x_2`
     Train a linear model and report the RMSE.
+  id: totrans-56
   prefs: []
   type: TYPE_NORMAL
 - en: '8\. Compare the results in 6 and 7 and choose the statement you agree with:'
+  id: totrans-57
   prefs: []
   type: TYPE_NORMAL
 - en: Adding extra predictors can improve RMSE substantially, but not when they are
     highly correlated with another predictor.
+  id: totrans-58
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
 - en: Adding extra predictors improves predictions equally in both exercises.
+  id: totrans-59
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
 - en: Adding extra predictors results in over fitting.
+  id: totrans-60
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
 - en: Unless we include all predictors, we have no predicting power.
+  id: totrans-61
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
 - en: 31.3 Logistic regression
+  id: totrans-62
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
@@ -261,94 +340,125 @@
     regression* as a solution. Logistic regression is a specific case of a set of
     *generalized linear models*. To illustrate logistic regression, we will apply
     it to our previous predicting sex example defined in Section [27.4.1](introduction-to-machine-learning.html#training-test).
+  id: totrans-63
   prefs: []
   type: TYPE_NORMAL
 - en: 'If we define the outcome \(Y\) as 1 for females and 0 for males, and \(X\)
     as the height, we are interested in the conditional probability:'
+  id: totrans-64
   prefs: []
   type: TYPE_NORMAL
 - en: \[ \mbox{Pr}( Y = 1 \mid X = x) \]
+  id: totrans-65
   prefs: []
   type: TYPE_NORMAL
 - en: 'As an example, let’s provide a prediction for a student that is 66 inches tall.
     What is the conditional probability of being female if you are 66 inches tall?
     In our dataset, we can estimate this by rounding to the nearest inch and computing:'
+  id: totrans-66
   prefs: []
   type: TYPE_NORMAL
 - en: '[PRE16]'
+  id: totrans-67
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE16]'
 - en: 'To construct a prediction algorithm, we want to estimate the proportion of
     the population that is female for any given height \(X=x\), which we write as
     the conditional probability described above: \(\mbox{Pr}( Y = 1 | X=x)\). Let’s
     see what this looks like for several values of \(x\) (we will remove strata of
     \(x\) with few data points):'
+  id: totrans-68
   prefs: []
   type: TYPE_NORMAL
 - en: '[PRE17]'
+  id: totrans-69
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE17]'
 - en: '![](../Images/40292e5adda14ac3838e3f23ce738035.png)'
+  id: totrans-70
   prefs: []
   type: TYPE_IMG
 - en: 'Since the results from the plot above look close to linear, and it is the only
     approach we currently know, we will try regression. We assume that:'
+  id: totrans-71
   prefs: []
   type: TYPE_NORMAL
 - en: \[p(x) = \mbox{Pr}( Y = 1 | X=x) = \beta_0 + \beta_1 x\]
+  id: totrans-72
   prefs: []
   type: TYPE_NORMAL
 - en: 'Note: because \(p_0(x) = 1 - p_1(x)\), we will only estimate \(p_1(x)\) and
     drop the \(_1\) index.'
+  id: totrans-73
   prefs: []
   type: TYPE_NORMAL
 - en: If we convert the factors to 0s and 1s, we can estimate \(\beta_0\) and \(\beta_1\)
     with least squares.
+  id: totrans-74
   prefs: []
   type: TYPE_NORMAL
 - en: '[PRE18]'
+  id: totrans-75
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE18]'
 - en: 'Once we have estimates \(\hat{\beta}_0\) and \(\hat{\beta}_1\), we can obtain
     an actual prediction. Our estimate of the conditional probability \(p(x)\) is:'
+  id: totrans-76
   prefs: []
   type: TYPE_NORMAL
 - en: \[ \hat{p}(x) = \hat{\beta}_0+ \hat{\beta}_1 x \]
+  id: totrans-77
   prefs: []
   type: TYPE_NORMAL
 - en: 'To form a prediction, we define a *decision rule*: predict female if \(\hat{p}(x)
     > 0.5\). We can compare our predictions to the outcomes using:'
+  id: totrans-78
   prefs: []
   type: TYPE_NORMAL
 - en: '[PRE19]'
+  id: totrans-79
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE19]'
 - en: We see this method does substantially better than guessing.
+  id: totrans-80
   prefs: []
   type: TYPE_NORMAL
 - en: 31.3.1 Generalized linear models
+  id: totrans-81
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
 - en: The function \(\beta_0 + \beta_1 x\) can take any value including negatives
     and values larger than 1\. In fact, the estimate \(\hat{p}(x)\) computed in the
     linear regression section does indeed become negative.
+  id: totrans-82
   prefs: []
   type: TYPE_NORMAL
 - en: '[PRE20]'
+  id: totrans-83
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE20]'
 - en: '![](../Images/bc6c30d89886729823f1e4fcbaa4db4a.png)'
+  id: totrans-84
   prefs: []
   type: TYPE_IMG
 - en: 'The range is:'
+  id: totrans-85
   prefs: []
   type: TYPE_NORMAL
 - en: '[PRE21]'
+  id: totrans-86
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE21]'
 - en: 'But we are estimating a probability: \(\mbox{Pr}( Y = 1 \mid X = x)\) which
     is constrained between 0 and 1.'
+  id: totrans-87
   prefs: []
   type: TYPE_NORMAL
 - en: 'The idea of generalized linear models (GLM) is to 1) define a distribution
@@ -358,9 +468,11 @@
     of linear regression that assures that the estimate of \(\mbox{Pr}( Y = 1 \mid
     X = x)\) is between 0 and 1\. This approach makes use of the *logistic* transformation
     defined as:'
+  id: totrans-88
   prefs: []
   type: TYPE_NORMAL
 - en: \[ g(p) = \log \frac{p}{1-p}.\]
+  id: totrans-89
   prefs: []
   type: TYPE_NORMAL
 - en: 'This logistic transformation converts probability to log odds. As discussed
@@ -369,72 +481,95 @@
     1 to 1, thus the odds are 1\. If \(p=0.75\), the odds are 3 to 1\. A nice characteristic
     of this transformation is that it converts probabilities to be symmetric around
     0\. Here is a plot of \(g(p)\) versus \(p\):'
+  id: totrans-90
   prefs: []
   type: TYPE_NORMAL
 - en: '![](../Images/448903725784c71d8f2e11a3a4300af0.png)'
+  id: totrans-91
   prefs: []
   type: TYPE_IMG
 - en: 'With *logistic regression*, we model the conditional probability directly with:'
+  id: totrans-92
   prefs: []
   type: TYPE_NORMAL
 - en: \[ g\left\{ \mbox{Pr}(Y = 1 \mid X=x) \right\} = \beta_0 + \beta_1 x \]
+  id: totrans-93
   prefs: []
   type: TYPE_NORMAL
 - en: With this model, we can no longer use least squares. Instead we compute the
     *maximum likelihood estimate* (MLE). You can learn more about this concept in
     a statistical theory textbook[^(102)](#fn102).
+  id: totrans-94
   prefs: []
   type: TYPE_NORMAL
 - en: 'In R, we can fit the logistic regression model with the function `glm`: generalized
     linear models. This function is more general than logistic regression so we need
     to specify the model we want through the `family` parameter:'
+  id: totrans-95
   prefs: []
   type: TYPE_NORMAL
 - en: '[PRE22]'
+  id: totrans-96
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE22]'
 - en: 'We can obtain prediction using the predict function:'
+  id: totrans-97
   prefs: []
   type: TYPE_NORMAL
 - en: '[PRE23]'
+  id: totrans-98
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE23]'
 - en: When using `predict` with a `glm` object, we have to specify that we want `type="response"`
     if we want the conditional probabilities, since the default is to return the logistic
     transformed values.
+  id: totrans-99
   prefs: []
   type: TYPE_NORMAL
 - en: 'This model fits the data slightly better than the line:'
+  id: totrans-100
   prefs: []
   type: TYPE_NORMAL
 - en: '![](../Images/20a6e0e3d2cd20634cd695d88a1f5fe8.png)'
+  id: totrans-101
   prefs: []
   type: TYPE_IMG
 - en: 'Because we have an estimate \(\hat{p}(x)\), we can obtain predictions:'
+  id: totrans-102
   prefs: []
   type: TYPE_NORMAL
 - en: '[PRE24]'
+  id: totrans-103
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE24]'
 - en: 'The resulting predictions are similar. This is because the two estimates of
     \(p(x)\) are larger than 1/2 in about the same region of x:'
+  id: totrans-104
   prefs: []
   type: TYPE_NORMAL
 - en: '![](../Images/57e8f88458a4bd25314d3d7f80f56b52.png)'
+  id: totrans-105
   prefs: []
   type: TYPE_IMG
 - en: 'Both linear and logistic regressions provide an estimate for the conditional
     expectation:'
+  id: totrans-106
   prefs: []
   type: TYPE_NORMAL
 - en: '\[ \mbox{E}(Y \mid X=x) \] which in the case of binary data is equivalent to
     the conditional probability:'
+  id: totrans-107
   prefs: []
   type: TYPE_NORMAL
 - en: \[ \mbox{Pr}(Y = 1 \mid X = x) \]
+  id: totrans-108
   prefs: []
   type: TYPE_NORMAL
 - en: 31.3.2 Logistic regression with more than one predictor
+  id: totrans-109
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
@@ -443,36 +578,46 @@
     case, we are interested in estimating a conditional probability that depends on
     two variables. The standard logistic regression model in this case will assume
     that
+  id: totrans-110
   prefs: []
   type: TYPE_NORMAL
 - en: '\[ g\{p(x_1, x_2)\}= g\{\mbox{Pr}(Y=1 \mid X_1=x_1 , X_2 = x_2)\} = \beta_0
     + \beta_1 x_1 + \beta_2 x_2 \] with \(g(p) = \log \frac{p}{1-p}\) the logistic
     function described in the previous section. To fit the model we use the following
     code:'
+  id: totrans-111
   prefs: []
   type: TYPE_NORMAL
 - en: '[PRE25]'
+  id: totrans-112
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE25]'
 - en: 'Comparing to the results we obtained in Section [27.8](introduction-to-machine-learning.html#two-or-seven),
     we see that logistic regression performs similarly to regression. This is not
     surprising, given that the estimate of \(\hat{p}(x_1, x_2)\) looks similar as
     well:'
+  id: totrans-113
   prefs: []
   type: TYPE_NORMAL
 - en: '[PRE26]'
+  id: totrans-114
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE26]'
 - en: '![](../Images/1369ced180b8cb88aa1e21a08396071c.png)'
+  id: totrans-115
   prefs: []
   type: TYPE_IMG
 - en: Just like regression, the decision rule is a line, a fact that can be corroborated
     mathematically since
+  id: totrans-116
   prefs: []
   type: TYPE_NORMAL
 - en: \[ g^{-1}(\hat{\beta}_0 + \hat{\beta}_1 x_1 + \hat{\beta}_2 x_2) = 0.5 \implies
     \hat{\beta}_0 + \hat{\beta}_1 x_1 + \hat{\beta}_2 x_2 = g(0.5) = 0 \implies x_2
     = -\hat{\beta}_0/\hat{\beta}_2 -\hat{\beta}_1/\hat{\beta}_2 x_1 \]
+  id: totrans-117
   prefs: []
   type: TYPE_NORMAL
 - en: Thus \(x_2\) is a linear function of \(x_1\). This implies that, just like regression,
@@ -482,37 +627,49 @@
     flexible enough to be useful for most machine learning challenges. The new techniques
     we learn are essentially approaches to estimating the conditional probability
     in a way that is more flexible.
+  id: totrans-118
   prefs: []
   type: TYPE_NORMAL
 - en: 31.4 Exercises
+  id: totrans-119
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
 - en: '1\. Define the following dataset:'
+  id: totrans-120
   prefs: []
   type: TYPE_NORMAL
 - en: '[PRE27]'
+  id: totrans-121
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE27]'
 - en: Note that we have defined a variable `x` that is predictive of a binary outcome
     `y`.
+  id: totrans-122
   prefs: []
   type: TYPE_NORMAL
 - en: '[PRE28]'
+  id: totrans-123
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE28]'
 - en: Compare the accuracy of linear regression and logistic regression.
+  id: totrans-124
   prefs: []
   type: TYPE_NORMAL
 - en: 2\. Repeat the simulation from exercise 1 100 times and compare the average
     accuracy for each method and notice they give practically the same answer.
+  id: totrans-125
   prefs: []
   type: TYPE_NORMAL
 - en: '3\. Generate 25 different datasets changing the difference between the two
     class: `delta <- seq(0, 3, len = 25)`. Plot accuracy versus `delta`.'
+  id: totrans-126
   prefs: []
   type: TYPE_NORMAL
 - en: 31.5 k-nearest neighbors
+  id: totrans-127
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
@@ -521,34 +678,48 @@
     Here we quickly review how we fit a kNN model using the **caret** package. In
     Section [30.2](caret.html#caret-cv) we introduced the following code to fit a
     kNN model:'
+  id: totrans-128
   prefs: []
   type: TYPE_NORMAL
 - en: '[PRE29]'
+  id: totrans-129
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE29]'
 - en: 'We saw that the parameter that maximized the estimated accuracy was:'
+  id: totrans-130
   prefs: []
   type: TYPE_NORMAL
 - en: '[PRE30]'
+  id: totrans-131
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE30]'
 - en: 'This model improves the accuracy over regression and logistic regression:'
+  id: totrans-132
   prefs: []
   type: TYPE_NORMAL
 - en: '[PRE31]'
+  id: totrans-133
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE31]'
 - en: A plot of the estimated conditional probability shows that the kNN estimate
     is flexible enough and does indeed capture the shape of the true conditional probability.
+  id: totrans-134
   prefs: []
   type: TYPE_NORMAL
 - en: '[PRE32]'
+  id: totrans-135
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE32]'
 - en: '![](../Images/f0638a721dad49c32d363ef858bb383e.png)'
+  id: totrans-136
   prefs: []
   type: TYPE_IMG
 - en: 31.6 Exercises
+  id: totrans-137
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
@@ -556,32 +727,44 @@
     to do the same. Use the code described in this chapter to select the \(F_1\) measure
     and plot it against \(k\). Compare to the \(F_1\) of about 0.6 we obtained with
     regression.
+  id: totrans-138
   prefs: []
   type: TYPE_NORMAL
 - en: '2\. Load the following dataset:'
+  id: totrans-139
   prefs: []
   type: TYPE_NORMAL
 - en: '[PRE33]'
+  id: totrans-140
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE33]'
 - en: 'This dataset includes a matrix `x`:'
+  id: totrans-141
   prefs: []
   type: TYPE_NORMAL
 - en: '[PRE34]'
+  id: totrans-142
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE34]'
 - en: 'with the gene expression measured on 500 genes for 189 biological samples representing
     seven different tissues. The tissue type is stored in `y`:'
+  id: totrans-143
   prefs: []
   type: TYPE_NORMAL
 - en: '[PRE35]'
+  id: totrans-144
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE35]'
 - en: Split the data in training and test sets, then use kNN to predict tissue type
     and see what accuracy you obtain. Try it for \(k = 1, 3, \dots, 11\).
+  id: totrans-145
   prefs: []
   type: TYPE_NORMAL
 - en: 31.7 Generative models
+  id: totrans-146
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
@@ -589,15 +772,18 @@
     provide the best approach to developing a decision rule. In a binary case, the
     smallest true error we can achieve is determined by Bayes’ rule, which is a decision
     rule based on the true conditional probability:'
+  id: totrans-147
   prefs: []
   type: TYPE_NORMAL
 - en: \[ p(\mathbf{x}) = \mbox{Pr}(Y=1 \mid \mathbf{X}=\mathbf{x}) \]
+  id: totrans-148
   prefs: []
   type: TYPE_NORMAL
 - en: We have described several approaches to estimating \(p(\mathbf{x})\). In all
     these approaches, we estimate the conditional probability directly and do not
     consider the distribution of the predictors. In machine learning, these are referred
     to as *discriminative* approaches.
+  id: totrans-149
   prefs: []
   type: TYPE_NORMAL
 - en: However, Bayes’ theorem tells us that knowing the distribution of the predictors
@@ -607,19 +793,23 @@
     general generative model, Naive Bayes, and then proceed to describe two specific
     cases, quadratic discriminant analysis (QDA) and linear discriminant analysis
     (LDA).
+  id: totrans-150
   prefs: []
   type: TYPE_NORMAL
 - en: 31.7.1 Naive Bayes
+  id: totrans-151
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
 - en: 'Recall that Bayes rule tells us that we can rewrite \(p(\mathbf{x})\) like
     this:'
+  id: totrans-152
   prefs: []
   type: TYPE_NORMAL
 - en: \[ p(\mathbf{x}) = \mbox{Pr}(Y=1|\mathbf{X}=\mathbf{x}) = \frac{f_{\mathbf{X}|Y=1}(\mathbf{x})
     \mbox{Pr}(Y=1)} { f_{\mathbf{X}|Y=0}(\mathbf{x})\mbox{Pr}(Y=0) + f_{\mathbf{X}|Y=1}(\mathbf{x})\mbox{Pr}(Y=1)
     } \]
+  id: totrans-153
   prefs: []
   type: TYPE_NORMAL
 - en: with \(f_{\mathbf{X}|Y=1}\) and \(f_{\mathbf{X}|Y=0}\) representing the distribution
@@ -633,54 +823,71 @@
     than 2) and many categories in which generative models can be quite powerful.
     We describe two specific examples and use our previously described case studies
     to illustrate them.
+  id: totrans-154
   prefs: []
   type: TYPE_NORMAL
 - en: 'Let’s start with a very simple and uninteresting, yet illustrative, case: the
     example related to predicting sex from height.'
+  id: totrans-155
   prefs: []
   type: TYPE_NORMAL
 - en: '[PRE36]'
+  id: totrans-156
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE36]'
 - en: 'In this case, the Naive Bayes approach is particularly appropriate because
     we know that the normal distribution is a good approximation for the conditional
     distributions of height given sex for both classes \(Y=1\) (female) and \(Y=0\)
     (male). This implies that we can approximate the conditional distributions \(f_{X|Y=1}\)
     and \(f_{X|Y=0}\) by simply estimating averages and standard deviations from the
     data:'
+  id: totrans-157
   prefs: []
   type: TYPE_NORMAL
 - en: '[PRE37]'
+  id: totrans-158
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE37]'
 - en: 'The prevalence, which we will denote with \(\pi = \mbox{Pr}(Y=1)\), can be
     estimated from the data with:'
+  id: totrans-159
   prefs: []
   type: TYPE_NORMAL
 - en: '[PRE38]'
+  id: totrans-160
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE38]'
 - en: 'Now we can use our estimates of average and standard deviation to get an actual
     rule:'
+  id: totrans-161
   prefs: []
   type: TYPE_NORMAL
 - en: '[PRE39]'
+  id: totrans-162
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE39]'
 - en: 'Our Naive Bayes estimate \(\hat{p}(x)\) looks a lot like our logistic regression
     estimate:'
+  id: totrans-163
   prefs: []
   type: TYPE_NORMAL
 - en: '![](../Images/c9bcaf8559b2483153d928d3ae106d25.png)'
+  id: totrans-164
   prefs: []
   type: TYPE_IMG
 - en: In fact, we can show that the Naive Bayes approach is similar to the logistic
     regression prediction mathematically. However, we leave the demonstration to a
     more advanced text, such as the Elements of Statistical Learning[^(103)](#fn103).
     We can see that they are similar empirically by comparing the two resulting curves.
+  id: totrans-165
   prefs: []
   type: TYPE_NORMAL
 - en: 31.7.2 Controlling prevalence
+  id: totrans-166
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
@@ -688,60 +895,80 @@
     to account for differences in prevalence. Using our sample, we estimated \(f_{X|Y=1}\),
     \(f_{X|Y=0}\) and \(\pi\). If we use hats to denote the estimates, we can write
     \(\hat{p}(x)\) as:'
+  id: totrans-167
   prefs: []
   type: TYPE_NORMAL
 - en: \[ \hat{p}(x)= \frac{\hat{f}_{X|Y=1}(x) \hat{\pi}} { \hat{f}_{X|Y=0}(x)(1-\hat{\pi})
     + \hat{f}_{X|Y=1}(x)\hat{\pi} } \]
+  id: totrans-168
   prefs: []
   type: TYPE_NORMAL
 - en: 'As we discussed earlier, our sample has a much lower prevalence, 0.21, than
     the general population. So if we use the rule \(\hat{p}(x)>0.5\) to predict females,
     our accuracy will be affected due to the low sensitivity:'
+  id: totrans-169
   prefs: []
   type: TYPE_NORMAL
 - en: '[PRE40]'
+  id: totrans-170
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE40]'
 - en: 'Again, this is because the algorithm gives more weight to specificity to account
     for the low prevalence:'
+  id: totrans-171
   prefs: []
   type: TYPE_NORMAL
 - en: '[PRE41]'
+  id: totrans-172
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE41]'
 - en: This is due mainly to the fact that \(\hat{\pi}\) is substantially less than
     0.5, so we tend to predict `Male` more often. It makes sense for a machine learning
     algorithm to do this in our sample because we do have a higher percentage of males.
     But if we were to extrapolate this to a general population, our overall accuracy
     would be affected by the low sensitivity.
+  id: totrans-173
   prefs: []
   type: TYPE_NORMAL
 - en: 'The Naive Bayes approach gives us a direct way to correct this since we can
     simply force \(\hat{\pi}\) to be whatever value we want it to be. So to balance
     specificity and sensitivity, instead of changing the cutoff in the decision rule,
     we could simply change \(\hat{\pi}\) to 0.5 like this:'
+  id: totrans-174
   prefs: []
   type: TYPE_NORMAL
 - en: '[PRE42]'
+  id: totrans-175
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE42]'
 - en: 'Note the difference in sensitivity with a better balance:'
+  id: totrans-176
   prefs: []
   type: TYPE_NORMAL
 - en: '[PRE43]'
+  id: totrans-177
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE43]'
 - en: 'The new rule also gives us a very intuitive cutoff between 66-67, which is
     about the middle of the female and male average heights:'
+  id: totrans-178
   prefs: []
   type: TYPE_NORMAL
 - en: '[PRE44]'
+  id: totrans-179
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE44]'
 - en: '![](../Images/122622dfc1ad439fd27e42b6c4eede77.png)'
+  id: totrans-180
   prefs: []
   type: TYPE_IMG
 - en: 31.7.3 Quadratic discriminant analysis
+  id: totrans-181
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
@@ -750,65 +977,88 @@
     are multivariate normal. The simple example we described in the previous section
     is actually QDA. Let’s now look at a slightly more complicated case: the 2 or
     7 example.'
+  id: totrans-182
   prefs: []
   type: TYPE_NORMAL
 - en: '[PRE45]'
+  id: totrans-183
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE45]'
 - en: 'In this case, we have two predictors so we assume each one is bivariate normal.
     This implies that we need to estimate two averages, two standard deviations, and
     a correlation for each case \(Y=1\) and \(Y=0\). Once we have these, we can approximate
     the distributions \(f_{X_1,X_2|Y=1}\) and \(f_{X_1, X_2|Y=0}\). We can easily
     estimate parameters from the data:'
+  id: totrans-184
   prefs: []
   type: TYPE_NORMAL
 - en: '[PRE46]'
+  id: totrans-185
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE46]'
 - en: 'Here we provide a visual way of showing the approach. We plot the data and
     use contour plots to give an idea of what the two estimated normal densities look
     like (we show the curve representing a region that includes 95% of the points):'
+  id: totrans-186
   prefs: []
   type: TYPE_NORMAL
 - en: '[PRE47]'
+  id: totrans-187
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE47]'
 - en: '![](../Images/9c4c5115142ff99a1bdfaa5bc4fca27c.png)'
+  id: totrans-188
   prefs: []
   type: TYPE_IMG
 - en: This defines the following estimate of \(f(x_1, x_2)\).
+  id: totrans-189
   prefs: []
   type: TYPE_NORMAL
 - en: 'We can use the `train` function from the **caret** package to fit the model
     and obtain predictors:'
+  id: totrans-190
   prefs: []
   type: TYPE_NORMAL
 - en: '[PRE48]'
+  id: totrans-191
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE48]'
 - en: 'We see that we obtain relatively good accuracy:'
+  id: totrans-192
   prefs: []
   type: TYPE_NORMAL
 - en: '[PRE49]'
+  id: totrans-193
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE49]'
 - en: 'The estimated conditional probability looks relatively good, although it does
     not fit as well as the kernel smoothers:'
+  id: totrans-194
   prefs: []
   type: TYPE_NORMAL
 - en: '![](../Images/f471eaa817e6c5c00645845d867284e4.png)'
+  id: totrans-195
   prefs: []
   type: TYPE_IMG
 - en: 'One reason QDA does not work as well as the kernel methods is perhaps because
     the assumption of normality does not quite hold. Although for the 2s it seems
     reasonable, for the 7s it does seem to be off. Notice the slight curvature in
     the points for the 7s:'
+  id: totrans-196
   prefs: []
   type: TYPE_NORMAL
 - en: '[PRE50]'
+  id: totrans-197
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE50]'
 - en: '![](../Images/e624040b991e1dc06978a6d1e4e94fba.png)'
+  id: totrans-198
   prefs: []
   type: TYPE_IMG
 - en: QDA can work well here, but it becomes harder to use as the number of predictors
@@ -818,182 +1068,244 @@
     With 10, we have 45 correlations for each class. In general, the formula is \(K\times
     p(p-1)/2\), which gets big fast. Once the number of parameters approaches the
     size of our data, the method becomes impractical due to overfitting.
+  id: totrans-199
   prefs: []
   type: TYPE_NORMAL
 - en: 31.7.4 Linear discriminant analysis
+  id: totrans-200
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
 - en: A relatively simple solution to the problem of having too many parameters is
     to assume that the correlation structure is the same for all classes, which reduces
     the number of parameters we need to estimate.
+  id: totrans-201
   prefs: []
   type: TYPE_NORMAL
 - en: 'In this case, we would compute just one pair of standard deviations and one
     correlation, and the distributions looks like this:'
+  id: totrans-202
   prefs: []
   type: TYPE_NORMAL
 - en: '![](../Images/4432b6cafb4360f02aa2a97ded98a002.png)'
+  id: totrans-203
   prefs: []
   type: TYPE_IMG
 - en: Now the size of the ellipses as well as the angle are the same. This is because
     they have the same standard deviations and correlations.
+  id: totrans-204
   prefs: []
   type: TYPE_NORMAL
 - en: 'We can fit the LDA model using **caret**:'
+  id: totrans-205
   prefs: []
   type: TYPE_NORMAL
 - en: '[PRE51]'
+  id: totrans-206
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE51]'
 - en: When we force this assumption, we can show mathematically that the boundary
     is a line, just as with logistic regression. For this reason, we call the method
     *linear* discriminant analysis (LDA). Similarly, for QDA, we can show that the
     boundary must be a quadratic function.
+  id: totrans-207
   prefs: []
   type: TYPE_NORMAL
 - en: '[PRE52]'
+  id: totrans-208
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE52]'
 - en: '![](../Images/f8918564f6154609b043701e014b1cfb.png)'
+  id: totrans-209
   prefs: []
   type: TYPE_IMG
 - en: In the case of LDA, the lack of flexibility does not permit us to capture the
     non-linearity in the true conditional probability function.
+  id: totrans-210
   prefs: []
   type: TYPE_NORMAL
 - en: 31.7.5 Connection to distance
+  id: totrans-211
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
 - en: 'The normal density is:'
+  id: totrans-212
   prefs: []
   type: TYPE_NORMAL
 - en: \[ p(x) = \frac{1}{\sqrt{2\pi} \sigma} \exp\left\{ - \frac{(x-\mu)^2}{\sigma^2}\right\}
     \]
+  id: totrans-213
   prefs: []
   type: TYPE_NORMAL
 - en: 'If we remove the constant \(1/(\sqrt{2\pi} \sigma)\) and then take the log,
     we get:'
+  id: totrans-214
   prefs: []
   type: TYPE_NORMAL
 - en: \[ - \frac{(x-\mu)^2}{\sigma^2} \]
+  id: totrans-215
   prefs: []
   type: TYPE_NORMAL
 - en: which is the negative of a distance squared scaled by the standard deviation.
     For higher dimensions, the same is true except the scaling is more complex and
     involves correlations.
+  id: totrans-216
   prefs: []
   type: TYPE_NORMAL
 - en: '31.8 Case study: more than three classes'
+  id: totrans-217
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
 - en: 'We can generate an example with three categories like this:'
+  id: totrans-218
   prefs: []
   type: TYPE_NORMAL
 - en: '[PRE53]'
+  id: totrans-219
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE53]'
 - en: 'Here is the training data:'
+  id: totrans-220
   prefs: []
   type: TYPE_NORMAL
 - en: '[PRE54]'
+  id: totrans-221
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE54]'
 - en: '![](../Images/35013320ff4c4418623e6a12e20d8c21.png)'
+  id: totrans-222
   prefs: []
   type: TYPE_IMG
 - en: 'We can use the **caret** package to train the QDA model:'
+  id: totrans-223
   prefs: []
   type: TYPE_NORMAL
 - en: '[PRE55]'
+  id: totrans-224
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE55]'
 - en: 'Now we estimate three conditional probabilities (although they have to add
     to 1):'
+  id: totrans-225
   prefs: []
   type: TYPE_NORMAL
 - en: '[PRE56]'
+  id: totrans-226
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE56]'
 - en: 'Our predictions are one of the three classes:'
+  id: totrans-227
   prefs: []
   type: TYPE_NORMAL
 - en: '[PRE57]'
+  id: totrans-228
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE57]'
 - en: 'The confusion matrix is therefore a 3 by 3 table:'
+  id: totrans-229
   prefs: []
   type: TYPE_NORMAL
 - en: '[PRE58]'
+  id: totrans-230
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE58]'
 - en: The accuracy is 0.749
+  id: totrans-231
   prefs: []
   type: TYPE_NORMAL
 - en: 'Note that for sensitivity and specificity, we have a pair of values for **each**
     class. To define these terms, we need a binary outcome. We therefore have three
     columns: one for each class as the positives and the other two as the negatives.'
+  id: totrans-232
   prefs: []
   type: TYPE_NORMAL
 - en: 'To visualize what parts of the region are called 1, 2, and 7 we now need three
     colors:'
+  id: totrans-233
   prefs: []
   type: TYPE_NORMAL
 - en: '![](../Images/40182e1f6d89c2f602de8ebe515a050d.png)'
+  id: totrans-234
   prefs: []
   type: TYPE_IMG
 - en: 'The accuracy for LDA, 0.629, is much worse because the model is more rigid.
     This is what the decision rule looks like:'
+  id: totrans-235
   prefs: []
   type: TYPE_NORMAL
 - en: '![](../Images/26eaebadb31474ec43b1727275dd9cec.png)'
+  id: totrans-236
   prefs: []
   type: TYPE_IMG
 - en: The results for kNN
+  id: totrans-237
   prefs: []
   type: TYPE_NORMAL
 - en: '[PRE59]'
+  id: totrans-238
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE59]'
 - en: 'are much better with an accuracy of 0.749\. The decision rule looks like this:'
+  id: totrans-239
   prefs: []
   type: TYPE_NORMAL
 - en: '![](../Images/e37fc5eb543b5762799c2f9654b0ce74.png)'
+  id: totrans-240
   prefs: []
   type: TYPE_IMG
 - en: Note that one of the limitations of generative models here is due to the lack
     of fit of the normal assumption, in particular for class 1.
+  id: totrans-241
   prefs: []
   type: TYPE_NORMAL
 - en: '[PRE60]'
+  id: totrans-242
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE60]'
 - en: '![](../Images/be8c7ab91445e6d8f47edded96224758.png)'
+  id: totrans-243
   prefs: []
   type: TYPE_IMG
 - en: Generative models can be very powerful, but only when we are able to successfully
     approximate the joint distribution of predictors conditioned on each class.
+  id: totrans-244
   prefs: []
   type: TYPE_NORMAL
 - en: 31.9 Exercises
+  id: totrans-245
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
 - en: We are going to apply LDA and QDA to the `tissue_gene_expression` dataset. We
     will start with simple examples based on this dataset and then develop a realistic
     example.
+  id: totrans-246
   prefs: []
   type: TYPE_NORMAL
 - en: 1\. Create a dataset with just the classes “cerebellum” and “hippocampus” (two
     parts of the brain) and a predictor matrix with 10 randomly selected columns.
+  id: totrans-247
   prefs: []
   type: TYPE_NORMAL
 - en: '[PRE61]'
+  id: totrans-248
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE61]'
 - en: Use the `train` function to estimate the accuracy of LDA.
+  id: totrans-249
   prefs: []
   type: TYPE_NORMAL
 - en: 2\. In this case, LDA fits two 10-dimensional normal distributions. Look at
@@ -1001,13 +1313,16 @@
     Notice there is a component called `means` that includes the estimate `means`
     of both distributions. Plot the mean vectors against each other and determine
     which predictors (genes) appear to be driving the algorithm.
+  id: totrans-250
   prefs: []
   type: TYPE_NORMAL
 - en: 3\. Repeat exercises 1 with QDA. Does it have a higher accuracy than LDA?
+  id: totrans-251
   prefs: []
   type: TYPE_NORMAL
 - en: 4\. Are the same predictors (genes) driving the algorithm? Make a plot as in
     exercise 2.
+  id: totrans-252
   prefs: []
   type: TYPE_NORMAL
 - en: '5\. One thing we see in the previous plot is that the value of predictors correlate
@@ -1018,36 +1333,46 @@
     in `train`. Re-run LDA with `preProcessing = "scale"`. Note that accuracy does
     not change but see how it is easier to identify the predictors that differ more
     between groups in the plot made in exercise 4.'
+  id: totrans-253
   prefs: []
   type: TYPE_NORMAL
 - en: 6\. In the previous exercises we saw that both approaches worked well. Plot
     the predictor values for the two genes with the largest differences between the
     two groups in a scatterplot to see how they appear to follow a bivariate distribution
     as assumed by the LDA and QDA approaches. Color the points by the outcome.
+  id: totrans-254
   prefs: []
   type: TYPE_NORMAL
 - en: '7\. Now we are going to increase the complexity of the challenge slightly:
     we will consider all the tissue types.'
+  id: totrans-255
   prefs: []
   type: TYPE_NORMAL
 - en: '[PRE62]'
+  id: totrans-256
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE62]'
 - en: What accuracy do you get with LDA?
+  id: totrans-257
   prefs: []
   type: TYPE_NORMAL
 - en: 8\. We see that the results are slightly worse. Use the `confusionMatrix` function
     to learn what type of errors we are making.
+  id: totrans-258
   prefs: []
   type: TYPE_NORMAL
 - en: 9\. Plot an image of the centers of the seven 10-dimensional normal distributions.
+  id: totrans-259
   prefs: []
   type: TYPE_NORMAL
 - en: 31.10 Classification and regression trees (CART)
+  id: totrans-260
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
 - en: 31.10.1 The curse of dimensionality
+  id: totrans-261
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
@@ -1060,28 +1385,34 @@
     used due to what is referred to as the *curse of dimensionality*. The *dimension*
     here refers to the fact that when we have \(p\) predictors, the distance between
     two observations is computed in \(p\)-dimensional space.
+  id: totrans-262
   prefs: []
   type: TYPE_NORMAL
 - en: A useful way of understanding the curse of dimensionality is by considering
     how large we have to make a span/neighborhood/window to include a given percentage
     of the data. Remember that with larger neighborhoods, our methods lose flexibility.
+  id: totrans-263
   prefs: []
   type: TYPE_NORMAL
 - en: 'For example, suppose we have one continuous predictor with equally spaced points
     in the [0,1] interval and we want to create windows that include 1/10th of data.
     Then it’s easy to see that our windows have to be of size 0.1:'
+  id: totrans-264
   prefs: []
   type: TYPE_NORMAL
 - en: '![](../Images/ab4f18ed27df1e416551df0f2e748914.png)'
+  id: totrans-265
   prefs: []
   type: TYPE_IMG
 - en: 'Now, for two predictors, if we decide to keep the neighborhood just as small,
     10% for each dimension, we include only 1 point. If we want to include 10% of
     the data, then we need to increase the size of each side of the square to \(\sqrt{.10}
     \approx .316\):'
+  id: totrans-266
   prefs: []
   type: TYPE_NORMAL
 - en: '![](../Images/916c082353a6178f151a015a214d60f7.png)'
+  id: totrans-267
   prefs: []
   type: TYPE_IMG
 - en: Using the same logic, if we want to include 10% of the data in a three-dimensional
@@ -1090,16 +1421,21 @@
     with each side of size \(\sqrt[p]{.10}\) of the total. This proportion gets close
     to 1 quickly, and if the proportion is 1 it means we include all the data and
     are no longer smoothing.
+  id: totrans-268
   prefs: []
   type: TYPE_NORMAL
 - en: '[PRE63]'
+  id: totrans-269
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE63]'
 - en: '![](../Images/f1f979ca6788de7e9abbb347d3ee3958.png)'
+  id: totrans-270
   prefs: []
   type: TYPE_IMG
 - en: By the time we reach 100 predictors, the neighborhood is no longer very local,
     as each side covers almost the entire dataset.
+  id: totrans-271
   prefs: []
   type: TYPE_NORMAL
 - en: Here we look at a set of elegant and versatile methods that adapt to higher
@@ -1107,39 +1443,54 @@
     producing models that are interpretable. These are very popular, well-known and
     studied methods. We will concentrate on regression and decision trees and their
     extension to random forests.
+  id: totrans-272
   prefs: []
   type: TYPE_NORMAL
 - en: 31.10.2 CART motivation
+  id: totrans-273
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
 - en: 'To motivate this section, we will use a new dataset that includes the breakdown
     of the composition of olive oil into 8 fatty acids:'
+  id: totrans-274
   prefs: []
   type: TYPE_NORMAL
 - en: '[PRE64]'
+  id: totrans-275
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE64]'
 - en: For illustrative purposes, we will try to predict the region using the fatty
     acid composition values as predictors.
+  id: totrans-276
   prefs: []
   type: TYPE_NORMAL
 - en: '[PRE65]'
+  id: totrans-277
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE65]'
 - en: We remove the `area` column because we won’t use it as a predictor.
+  id: totrans-278
   prefs: []
   type: TYPE_NORMAL
 - en: '[PRE66]'
+  id: totrans-279
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE66]'
 - en: 'Let’s very quickly try to predict the region using kNN:'
+  id: totrans-280
   prefs: []
   type: TYPE_NORMAL
 - en: '[PRE67]'
+  id: totrans-281
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE67]'
 - en: '![](../Images/7d78040add2afdd273015b07dfe5a62d.png)'
+  id: totrans-282
   prefs: []
   type: TYPE_IMG
 - en: We see that using just one neighbor, we can predict relatively well. However,
@@ -1147,16 +1498,20 @@
     example, if we look at the distribution of each predictor stratified by region
     we see that eicosenoic is only present in Southern Italy and that linoleic separates
     Northern Italy from Sardinia.
+  id: totrans-283
   prefs: []
   type: TYPE_NORMAL
 - en: '![](../Images/67e10170bf6e9e450413627651538e1a.png)'
+  id: totrans-284
   prefs: []
   type: TYPE_IMG
 - en: This implies that we should be able to build an algorithm that predicts perfectly!
     We can see this clearly by plotting the values for eicosenoic and linoleic.
+  id: totrans-285
   prefs: []
   type: TYPE_NORMAL
 - en: '![](../Images/7e6d45b09045143d148220964a6d7cb5.png)'
+  id: totrans-286
   prefs: []
   type: TYPE_IMG
 - en: 'In Section [33.3.4](large-datasets.html#predictor-space) we define predictor
@@ -1169,20 +1524,25 @@
     0.065, predict Southern Italy. If not, then if linoleic is larger than \(10.535\),
     predict Sardinia, and if lower, predict Northern Italy. We can draw this decision
     tree like this:'
+  id: totrans-287
   prefs: []
   type: TYPE_NORMAL
 - en: '![](../Images/8785c2e72ddb11a48ea8334d5dd3ccb5.png)'
+  id: totrans-288
   prefs: []
   type: TYPE_IMG
 - en: 'Decision trees like this are often used in practice. For example, to decide
     on a person’s risk of poor outcome after having a heart attack, doctors use the
     following:'
+  id: totrans-289
   prefs: []
   type: TYPE_NORMAL
 - en: '![](../Images/1943bbb506865b7569bab12251040fc0.png)'
+  id: totrans-290
   prefs: []
   type: TYPE_IMG
 - en: '(Source: Walton 2010 Informal Logic, Vol. 30, No. 2, pp. 159-184[^(104)](#fn104).)'
+  id: totrans-291
   prefs: []
   type: TYPE_NORMAL
 - en: A tree is basically a flow chart of yes or no questions. The general idea of
@@ -1190,9 +1550,11 @@
     these trees with predictions at the ends, referred to as *nodes*. Regression and
     decision trees operate by predicting an outcome variable \(Y\) by partitioning
     the predictors.
+  id: totrans-292
   prefs: []
   type: TYPE_NORMAL
 - en: 31.10.3 Regression trees
+  id: totrans-293
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
@@ -1201,12 +1563,16 @@
     describe the basic idea of how we build these algorithms. As with other machine
     learning algorithms, we will try to estimate the conditional expectation \(f(x)
     = \mbox{E}(Y | X = x)\) with \(Y\) the poll margin and \(x\) the day.
+  id: totrans-294
   prefs: []
   type: TYPE_NORMAL
 - en: '[PRE68]'
+  id: totrans-295
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE68]'
 - en: '![](../Images/94c24d6ec528fecd89e04ab2915a167e.png)'
+  id: totrans-296
   prefs: []
   type: TYPE_IMG
 - en: The general idea here is to build a decision tree and, at the end of each *node*,
@@ -1215,10 +1581,12 @@
     \(R_1, R_2, \ldots, R_J\), and then for any predictor \(x\) that falls within
     region \(R_j\), estimate \(f(x)\) with the average of the training observations
     \(y_i\) for which the associated predictor \(x_i\) is also in \(R_j\).
+  id: totrans-297
   prefs: []
   type: TYPE_NORMAL
 - en: But how do we decide on the partition \(R_1, R_2, \ldots, R_J\) and how do we
     choose \(J\)? Here is where the algorithm gets a bit complicated.
+  id: totrans-298
   prefs: []
   type: TYPE_NORMAL
 - en: Regression trees create partitions recursively. We start the algorithm with
@@ -1227,16 +1595,19 @@
     After the second step we will split one of these partitions into two and will
     have three partitions, then four, then five, and so on. We describe how we pick
     the partition to further partition, and when to stop, later.
+  id: totrans-299
   prefs: []
   type: TYPE_NORMAL
 - en: 'Once we select a partition \(\mathbf{x}\) to split in order to create the new
     partitions, we find a predictor \(j\) and value \(s\) that define two new partitions,
     which we will call \(R_1(j,s)\) and \(R_2(j,s)\), that split our observations
     in the current partition by asking if \(x_j\) is bigger than \(s\):'
+  id: totrans-300
   prefs: []
   type: TYPE_NORMAL
 - en: \[ R_1(j,s) = \{\mathbf{x} \mid x_j < s\} \mbox{ and } R_2(j,s) = \{\mathbf{x}
     \mid x_j \geq s\} \]
+  id: totrans-301
   prefs: []
   type: TYPE_NORMAL
 - en: In our current example we only have one predictor, so we will always choose
@@ -1245,51 +1616,66 @@
     predictors by taking the average of all the observations \(y\) for which the associated
     \(\mathbf{x}\) is in \(R_1\) and \(R_2\). We refer to these two as \(\hat{y}_{R_1}\)
     and \(\hat{y}_{R_2}\) respectively.
+  id: totrans-302
   prefs: []
   type: TYPE_NORMAL
 - en: 'But how do we pick \(j\) and \(s\)? Basically we find the pair that minimizes
     the residual sum of squares (RSS): \[ \sum_{i:\, x_i \in R_1(j,s)} (y_i - \hat{y}_{R_1})^2
     + \sum_{i:\, x_i \in R_2(j,s)} (y_i - \hat{y}_{R_2})^2 \]'
+  id: totrans-303
   prefs: []
   type: TYPE_NORMAL
 - en: This is then applied recursively to the new regions \(R_1\) and \(R_2\). We
     describe how we stop later, but once we are done partitioning the predictor space
     into regions, in each region a prediction is made using the observations in that
     region.
+  id: totrans-304
   prefs: []
   type: TYPE_NORMAL
 - en: Let’s take a look at what this algorithm does on the 2008 presidential election
     poll data. We will use the `rpart` function in the **rpart** package.
+  id: totrans-305
   prefs: []
   type: TYPE_NORMAL
 - en: '[PRE69]'
+  id: totrans-306
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE69]'
 - en: 'Here, there is only one predictor. Thus we do not have to decide which predictor
     \(j\) to split by, we simply have to decide what value \(s\) we use to split.
     We can visually see where the splits were made:'
+  id: totrans-307
   prefs: []
   type: TYPE_NORMAL
 - en: '[PRE70]'
+  id: totrans-308
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE70]'
 - en: '![](../Images/4818fbf0cb6b4e7aff8375ec549f8785.png)'
+  id: totrans-309
   prefs: []
   type: TYPE_IMG
 - en: 'The first split is made on day 39.5\. One of those regions is then split at
     day 86.5\. The two resulting new partitions are split on days 49.5 and 117.5,
     respectively, and so on. We end up with 8 partitions. The final estimate \(\hat{f}(x)\)
     looks like this:'
+  id: totrans-310
   prefs: []
   type: TYPE_NORMAL
 - en: '[PRE71]'
+  id: totrans-311
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE71]'
 - en: '![](../Images/8547edb8ffc1e0773da92bbc27ce34af.png)'
+  id: totrans-312
   prefs: []
   type: TYPE_IMG
 - en: Note that the algorithm stopped partitioning at 8\. Now we explain how this
     decision is made.
+  id: totrans-313
   prefs: []
   type: TYPE_NORMAL
 - en: First we need to define the term *complexity parameter* (cp). Every time we
@@ -1302,6 +1688,7 @@
     (cp). The RSS must improve by a factor of cp for the new partition to be added.
     Large values of cp will therefore force the algorithm to stop earlier which results
     in fewer nodes.
+  id: totrans-314
   prefs: []
   type: TYPE_NORMAL
 - en: However, cp is not the only parameter used to decide if we should partition
@@ -1310,16 +1697,21 @@
     used in the `rpart` function is `minsplit` and the default is 20\. The `rpart`
     implementation of regression trees also permits users to determine a minimum number
     of observations in each node. The argument is `minbucket` and defaults to `round(minsplit/3)`.
+  id: totrans-315
   prefs: []
   type: TYPE_NORMAL
 - en: 'As expected, if we set `cp = 0` and `minsplit = 2`, then our prediction is
     as flexible as possible and our predictor is our original data:'
+  id: totrans-316
   prefs: []
   type: TYPE_NORMAL
 - en: '[PRE72]'
+  id: totrans-317
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE72]'
 - en: '![](../Images/6d54e7fea60f4729f805b2468b09891c.png)'
+  id: totrans-318
   prefs: []
   type: TYPE_IMG
 - en: Intuitively we know that this is not a good approach as it will generally result
@@ -1327,64 +1719,84 @@
     be used to control the variability of the final predictors. The larger these values
     are the more data is averaged to compute a predictor and thus reduce variability.
     The drawback is that it restricts flexibility.
+  id: totrans-319
   prefs: []
   type: TYPE_NORMAL
 - en: So how do we pick these parameters? We can use cross validation, described in
     Chapter [29](cross-validation.html#cross-validation), just like with any tuning
     parameter. Here is an example of using cross validation to choose cp.
+  id: totrans-320
   prefs: []
   type: TYPE_NORMAL
 - en: '[PRE73]'
+  id: totrans-321
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE73]'
 - en: '![](../Images/2114ea31d662b308e70ceeb16ed2d00d.png)'
+  id: totrans-322
   prefs: []
   type: TYPE_IMG
 - en: 'To see the resulting tree, we access the `finalModel` and plot it:'
+  id: totrans-323
   prefs: []
   type: TYPE_NORMAL
 - en: '[PRE74]'
+  id: totrans-324
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE74]'
 - en: '![](../Images/7e966931d92b96cbfa45423550eefea3.png)'
+  id: totrans-325
   prefs: []
   type: TYPE_IMG
 - en: 'And because we only have one predictor, we can actually plot \(\hat{f}(x)\):'
+  id: totrans-326
   prefs: []
   type: TYPE_NORMAL
 - en: '[PRE75]'
+  id: totrans-327
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE75]'
 - en: '![](../Images/932c1151576267b5dd7c30de3487695e.png)'
+  id: totrans-328
   prefs: []
   type: TYPE_IMG
 - en: 'Note that if we already have a tree and want to apply a higher cp value, we
     can use the `prune` function. We call this *pruning* a tree because we are snipping
     off partitions that do not meet a `cp` criterion. We previously created a tree
     that used a `cp = 0` and saved it to `fit`. We can prune it like this:'
+  id: totrans-329
   prefs: []
   type: TYPE_NORMAL
 - en: '[PRE76]'
+  id: totrans-330
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE76]'
 - en: 31.10.4 Classification (decision) trees
+  id: totrans-331
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
 - en: Classification trees, or decision trees, are used in prediction problems where
     the outcome is categorical. We use the same partitioning principle with some differences
     to account for the fact that we are now working with a categorical outcome.
+  id: totrans-332
   prefs: []
   type: TYPE_NORMAL
 - en: The first difference is that we form predictions by calculating which class
     is the most common among the training set observations within the partition, rather
     than taking the average in each partition (as we can’t take the average of categories).
+  id: totrans-333
   prefs: []
   type: TYPE_NORMAL
 - en: The second is that we can no longer use RSS to choose the partition. While we
     could use the naive approach of looking for partitions that minimize training
     error, better performing approaches use more sophisticated metrics. Two of the
     more popular ones are the *Gini Index* and *Entropy*.
+  id: totrans-334
   prefs: []
   type: TYPE_NORMAL
 - en: In a perfect scenario, the outcomes in each of our partitions are all of the
@@ -1392,49 +1804,64 @@
     to be 0 in this scenario, and become larger the more we deviate from this scenario.
     To define the Gini Index, we define \(\hat{p}_{j,k}\) as the proportion of observations
     in partition \(j\) that are of class \(k\). The Gini Index is defined as
+  id: totrans-335
   prefs: []
   type: TYPE_NORMAL
 - en: \[ \mbox{Gini}(j) = \sum_{k=1}^K \hat{p}_{j,k}(1-\hat{p}_{j,k}) \]
+  id: totrans-336
   prefs: []
   type: TYPE_NORMAL
 - en: If you study the formula carefully you will see that it is in fact 0 in the
     perfect scenario described above.
+  id: totrans-337
   prefs: []
   type: TYPE_NORMAL
 - en: '*Entropy* is a very similar quantity, defined as'
+  id: totrans-338
   prefs: []
   type: TYPE_NORMAL
 - en: \[ \mbox{entropy}(j) = -\sum_{k=1}^K \hat{p}_{j,k}\log(\hat{p}_{j,k}), \mbox{
     with } 0 \times \log(0) \mbox{ defined as }0 \]
+  id: totrans-339
   prefs: []
   type: TYPE_NORMAL
 - en: 'Let us look at how a classification tree performs on the digits example we
     examined before by using this code to run the algorithm and plot the resulting
     accuracy:'
+  id: totrans-340
   prefs: []
   type: TYPE_NORMAL
 - en: '[PRE77]'
+  id: totrans-341
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE77]'
 - en: '![](../Images/75b03f311e981a9c874a7eb066d091eb.png)'
+  id: totrans-342
   prefs: []
   type: TYPE_IMG
 - en: 'The accuracy achieved by this approach is better than what we got with regression,
     but is not as good as what we achieved with kernel methods:'
+  id: totrans-343
   prefs: []
   type: TYPE_NORMAL
 - en: '[PRE78]'
+  id: totrans-344
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE78]'
 - en: 'The plot of the estimated conditional probability shows us the limitations
     of classification trees:'
+  id: totrans-345
   prefs: []
   type: TYPE_NORMAL
 - en: '![](../Images/c15394e2611cb5ad9c651265d66fee4b.png)'
+  id: totrans-346
   prefs: []
   type: TYPE_IMG
 - en: Note that with decision trees, it is difficult to make the boundaries smooth
     since each partition creates a discontinuity.
+  id: totrans-347
   prefs: []
   type: TYPE_NORMAL
 - en: Classification trees have certain advantages that make them very useful. They
@@ -1446,9 +1873,11 @@
     in terms of accuracy, it is rarely the best performing method since it is not
     very flexible and is highly unstable to changes in training data. Random forests,
     explained next, improve on several of these shortcomings.
+  id: totrans-348
   prefs: []
   type: TYPE_NORMAL
 - en: 31.11 Random forests
+  id: totrans-349
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
@@ -1457,6 +1886,7 @@
     prediction performance and reduce instability by *averaging* multiple decision
     trees (a forest of trees constructed with randomness). It has two features that
     help accomplish this.
+  id: totrans-350
   prefs: []
   type: TYPE_NORMAL
 - en: 'The first step is *bootstrap aggregation* or *bagging*. The general idea is
@@ -1466,30 +1896,36 @@
     induce randomness. These two features combined explain the name: the bootstrap
     makes the individual trees **randomly** different, and the combination of trees
     is the **forest**. The specific steps are as follows.'
+  id: totrans-351
   prefs: []
   type: TYPE_NORMAL
 - en: 1\. Build \(B\) decision trees using the training set. We refer to the fitted
     models as \(T_1, T_2, \dots, T_B\). We later explain how we ensure they are different.
+  id: totrans-352
   prefs: []
   type: TYPE_NORMAL
 - en: 2\. For every observation in the test set, form a prediction \(\hat{y}_j\) using
     tree \(T_j\).
+  id: totrans-353
   prefs: []
   type: TYPE_NORMAL
 - en: 3\. For continuous outcomes, form a final prediction with the average \(\hat{y}
     = \frac{1}{B} \sum_{j=1}^B \hat{y}_j\). For categorical data classification, predict
     \(\hat{y}\) with majority vote (most frequent class among \(\hat{y}_1, \dots,
     \hat{y}_T\)).
+  id: totrans-354
   prefs: []
   type: TYPE_NORMAL
 - en: 'So how do we get different decision trees from a single training set? For this,
     we use randomness in two ways which we explain in the steps below. Let \(N\) be
     the number of observations in the training set. To create \(T_j, \, j=1,\ldots,B\)
     from the training set we do the following:'
+  id: totrans-355
   prefs: []
   type: TYPE_NORMAL
 - en: 1\. Create a bootstrap training set by sampling \(N\) observations from the
     training set **with replacement**. This is the first way to induce randomness.
+  id: totrans-356
   prefs: []
   type: TYPE_NORMAL
 - en: 2\. A large number of features is typical in machine learning challenges. Often,
@@ -1498,37 +1934,50 @@
     selecting features to be included in the building of each tree. A different random
     subset is selected for each tree. This reduces correlation between trees in the
     forest, thereby improving prediction accuracy.
+  id: totrans-357
   prefs: []
   type: TYPE_NORMAL
 - en: 'To illustrate how the first steps can result in smoother estimates we will
     demonstrate by fitting a random forest to the 2008 polls data. We will use the
     `randomForest` function in the **randomForest** package:'
+  id: totrans-358
   prefs: []
   type: TYPE_NORMAL
 - en: '[PRE79]'
+  id: totrans-359
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE79]'
 - en: Note that if we apply the function `plot` to the resulting object, stored in
     `fit`, we see how the error rate of our algorithm changes as we add trees.
+  id: totrans-360
   prefs: []
   type: TYPE_NORMAL
 - en: '[PRE80]'
+  id: totrans-361
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE80]'
 - en: '![](../Images/a2b18d33e68d52603195a2b90e0dc6f0.png)'
+  id: totrans-362
   prefs: []
   type: TYPE_IMG
 - en: We can see that in this case, the accuracy improves as we add more trees until
     about 30 trees where accuracy stabilizes.
+  id: totrans-363
   prefs: []
   type: TYPE_NORMAL
 - en: 'The resulting estimate for this random forest can be seen like this:'
+  id: totrans-364
   prefs: []
   type: TYPE_NORMAL
 - en: '[PRE81]'
+  id: totrans-365
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE81]'
 - en: '![](../Images/34bb7b0be65d70386a10f9cb581ad9d8.png)'
+  id: totrans-366
   prefs: []
   type: TYPE_IMG
 - en: Notice that the random forest estimate is much smoother than what we achieved
@@ -1538,24 +1987,33 @@
     each of the bootstrap samples for several values of \(b\) and for each one we
     see the tree that is fitted in grey, the previous trees that were fitted in lighter
     grey, and the result of averaging all the trees estimated up to that point.
+  id: totrans-367
   prefs: []
   type: TYPE_NORMAL
 - en: '![](../Images/550bef0496dbec6bad86297a5fde688e.png)'
+  id: totrans-368
   prefs: []
   type: TYPE_IMG
 - en: 'Here is the random forest fit for our digits example based on two predictors:'
+  id: totrans-369
   prefs: []
   type: TYPE_NORMAL
 - en: '[PRE82]'
+  id: totrans-370
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE82]'
 - en: 'Here is what the conditional probabilities look like:'
+  id: totrans-371
   prefs: []
   type: TYPE_NORMAL
 - en: '[PRE83]'
+  id: totrans-372
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE83]'
 - en: '![](../Images/aeb261afe8a66cf6de7560c232ab3ffc.png)'
+  id: totrans-373
   prefs: []
   type: TYPE_IMG
 - en: 'Visualizing the estimate shows that, although we obtain high accuracy, it appears
@@ -1566,32 +2024,44 @@
     use the **caret** package to optimize over the minimum node size. Because, this
     is not one of the parameters that the **caret** package optimizes by default we
     will write our own code:'
+  id: totrans-374
   prefs: []
   type: TYPE_NORMAL
 - en: '[PRE84]'
+  id: totrans-375
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE84]'
 - en: '![](../Images/046bc6b0264d11e477d87d7799dbcc1e.png)'
+  id: totrans-376
   prefs: []
   type: TYPE_IMG
 - en: We can now fit the random forest with the optimized minimun node size to the
     entire training data and evaluate performance on the test data.
+  id: totrans-377
   prefs: []
   type: TYPE_NORMAL
 - en: '[PRE85]'
+  id: totrans-378
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE85]'
 - en: The selected model improves accuracy and provides a smoother estimate.
+  id: totrans-379
   prefs: []
   type: TYPE_NORMAL
 - en: '[PRE86]'
+  id: totrans-380
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE86]'
 - en: '![](../Images/4b9b2b4efe51a2c9a4d7c1f4d44025fe.png)'
+  id: totrans-381
   prefs: []
   type: TYPE_IMG
 - en: Note that we can avoid writing our own code by using other random forest implementations
     as described in the **caret** manual[^(105)](#fn105).
+  id: totrans-382
   prefs: []
   type: TYPE_NORMAL
 - en: Random forest performs better in all the examples we have considered. However,
@@ -1602,41 +2072,52 @@
     book[^(106)](#fn106). The **caret** package includes the function `varImp` that
     extracts variable importance from any model in which the calculation is implemented.
     We give an example on how we use variable importance in the next section.
+  id: totrans-383
   prefs: []
   type: TYPE_NORMAL
 - en: 31.12 Exercises
+  id: totrans-384
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
 - en: '1\. Create a simple dataset where the outcome grows 0.75 units on average for
     every increase in a predictor:'
+  id: totrans-385
   prefs: []
   type: TYPE_NORMAL
 - en: '[PRE87]'
+  id: totrans-386
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE87]'
 - en: Use `rpart` to fit a regression tree and save the result to `fit`.
+  id: totrans-387
   prefs: []
   type: TYPE_NORMAL
 - en: 2\. Plot the final tree so that you can see where the partitions occurred.
+  id: totrans-388
   prefs: []
   type: TYPE_NORMAL
 - en: 3\. Make a scatterplot of `y` versus `x` along with the predicted values based
     on the fit.
+  id: totrans-389
   prefs: []
   type: TYPE_NORMAL
 - en: 4\. Now model with a random forest instead of a regression tree using `randomForest`
     from the **randomForest** package, and remake the scatterplot with the prediction
     line.
+  id: totrans-390
   prefs: []
   type: TYPE_NORMAL
 - en: 5\. Use the function `plot` to see if the random forest has converged or if
     we need more trees.
+  id: totrans-391
   prefs: []
   type: TYPE_NORMAL
 - en: 6\. It seems that the default values for the random forest result in an estimate
     that is too flexible (not smooth). Re-run the random forest but this time with
     `nodesize` set at 50 and `maxnodes` set at 25\. Remake the plot.
+  id: totrans-392
   prefs: []
   type: TYPE_NORMAL
 - en: 7\. We see that this yields smoother results. Let’s use the `train` function
@@ -1645,18 +2126,22 @@
     so we will use the **Rborist** package and tune the `minNode` argument. Use the
     `train` function to try values `minNode <- seq(5, 250, 25)`. See which value minimizes
     the estimated RMSE.
+  id: totrans-393
   prefs: []
   type: TYPE_NORMAL
 - en: 8\. Make a scatterplot along with the prediction from the best fitted model.
+  id: totrans-394
   prefs: []
   type: TYPE_NORMAL
 - en: 9\. Use the `rpart` function to fit a classification tree to the `tissue_gene_expression`
     dataset. Use the `train` function to estimate the accuracy. Try out `cp` values
     of `seq(0, 0.05, 0.01)`. Plot the accuracy to report the results of the best model.
+  id: totrans-395
   prefs: []
   type: TYPE_NORMAL
 - en: 10\. Study the confusion matrix for the best fitting classification tree. What
     do you observe happening for placenta?
+  id: totrans-396
   prefs: []
   type: TYPE_NORMAL
 - en: 11\. Notice that placentas are called endometrium more often than placenta.
@@ -1666,9 +2151,11 @@
     above analysis but this time permit `rpart` to split any node by using the argument
     `control = rpart.control(minsplit = 0)`. Does the accuracy increase? Look at the
     confusion matrix again.
+  id: totrans-397
   prefs: []
   type: TYPE_NORMAL
 - en: 12\. Plot the tree from the best fitting model obtained in exercise 11.
+  id: totrans-398
   prefs: []
   type: TYPE_NORMAL
 - en: '13\. We can see that with just six genes, we are able to predict the tissue
@@ -1679,54 +2166,71 @@
     the following argument: `nodesize = 1`. This will take several seconds to run.
     If you want to test it out, try using smaller values with `ntree`. Set the seed
     to 1990.'
+  id: totrans-399
   prefs: []
   type: TYPE_NORMAL
 - en: 14\. Use the function `varImp` on the output of `train` and save it to an object
     called `imp`.
+  id: totrans-400
   prefs: []
   type: TYPE_NORMAL
 - en: '15\. The `rpart` model we ran above produced a tree that used just six predictors.
     Extracting the predictor names is not straightforward, but can be done. If the
     output of the call to train was `fit_rpart`, we can extract the names like this:'
+  id: totrans-401
   prefs: []
   type: TYPE_NORMAL
 - en: '[PRE88]'
+  id: totrans-402
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE88]'
 - en: What is the variable importance in the random forest call for these predictors?
     Where do they rank?
+  id: totrans-403
   prefs: []
   type: TYPE_NORMAL
 - en: '16\. Advanced: Extract the top 50 predictors based on importance, take a subset
     of `x` with just these predictors and apply the function `heatmap` to see how
     these genes behave across the tissues. We will introduce the `heatmap` function
     in Chapter [34](clustering.html#clustering).'
+  id: totrans-404
   prefs: []
   type: TYPE_NORMAL
 - en: '* * *'
+  id: totrans-405
   prefs: []
   type: TYPE_NORMAL
 - en: '[http://www.amazon.com/Mathematical-Statistics-Analysis-Available-Enhanced/dp/0534399428](http://www.amazon.com/Mathematical-Statistics-Analysis-Available-Enhanced/dp/0534399428)[↩︎](examples-of-algorithms.html#fnref102)'
+  id: totrans-406
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
 - en: '[https://web.stanford.edu/~hastie/Papers/ESLII.pdf](https://web.stanford.edu/~hastie/Papers/ESLII.pdf)[↩︎](examples-of-algorithms.html#fnref103)'
+  id: totrans-407
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
 - en: '[https://papers.ssrn.com/sol3/Delivery.cfm/SSRN_ID1759289_code1486039.pdf?abstractid=1759289&mirid=1&type=2](https://papers.ssrn.com/sol3/Delivery.cfm/SSRN_ID1759289_code1486039.pdf?abstractid=1759289&mirid=1&type=2)[↩︎](examples-of-algorithms.html#fnref104)'
+  id: totrans-408
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
 - en: '[http://topepo.github.io/caret/available-models.html](http://topepo.github.io/caret/available-models.html)[↩︎](examples-of-algorithms.html#fnref105)'
+  id: totrans-409
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[http://topepo.github.io/caret/available-models.html](http://topepo.github.io/caret/available-models.html)[↩︎](examples-of-algorithms.html#fnref105)'
 - en: '[https://web.stanford.edu/~hastie/Papers/ESLII.pdf](https://web.stanford.edu/~hastie/Papers/ESLII.pdf)[↩︎](examples-of-algorithms.html#fnref106)'
+  id: totrans-410
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[https://web.stanford.edu/~hastie/Papers/ESLII.pdf](https://web.stanford.edu/~hastie/Papers/ESLII.pdf)[↩︎](examples-of-algorithms.html#fnref106)'
 - en: '[https://topepo.github.io/caret/available-models.html](https://topepo.github.io/caret/available-models.html)[↩︎](examples-of-algorithms.html#fnref107)'
+  id: totrans-411
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[https://topepo.github.io/caret/available-models.html](https://topepo.github.io/caret/available-models.html)[↩︎](examples-of-algorithms.html#fnref107)'

@@ -701,29 +701,34 @@
   id: totrans-100
   prefs: []
   type: TYPE_NORMAL
+  zh: 4. 再次运行交叉验证，但这次在重新定义`x_subset`为与`y`有“统计显著”关联的列定义的`x`的子集之后。现在的准确率是多少？
 - en: '5\. Re-run the cross validation again, but this time using kNN. Try out the
     following grid of tuning parameters: `k = seq(101, 301, 25)`. Make a plot of the
     resulting accuracy.'
   id: totrans-101
   prefs: []
   type: TYPE_NORMAL
+  zh: 5. 再次运行交叉验证，但这次使用kNN。尝试以下调整参数网格：`k = seq(101, 301, 25)`。绘制结果的准确率图。
 - en: 6\. In exercises 3 and 4, we see that despite the fact that `x` and `y` are
     completely independent, we were able to predict `y` with accuracy higher than
     70%. We must be doing something wrong then. What is it?
   id: totrans-102
   prefs: []
   type: TYPE_NORMAL
+  zh: 6. 在练习3和4中，我们看到尽管`x`和`y`完全独立，我们还是能够以超过70%的准确率预测`y`。那么我们一定是做错了什么。是什么？
 - en: The function `train` estimates accuracy on the same data it uses to train the
     algorithm.
   id: totrans-103
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 函数`train`在算法使用的相同数据上估计准确率。
 - en: We are over-fitting the model by including 100 predictors.
   id: totrans-104
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 我们通过包含100个预测因子来过度拟合模型。
 - en: We used the entire dataset to select the columns used in the model. This step
     needs to be included as part of the algorithm. The cross validation was done **after**
     this selection.
@@ -731,30 +736,36 @@
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 我们使用整个数据集来选择模型中使用的列。这一步需要作为算法的一部分包含。交叉验证是在这一选择之后进行的。
 - en: The high accuracy is just due to random variability.
   id: totrans-106
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 高准确率仅仅是由于随机变异性。
 - en: 7\. Advanced. Re-do the cross validation but this time include the selection
     step in the cross validation. The accuracy should now be close to 50%.
   id: totrans-107
   prefs: []
   type: TYPE_NORMAL
+  zh: 7. 高级。重新进行交叉验证，但这次将选择步骤包含在交叉验证中。现在准确率应该接近50%。
 - en: 8\. Load the `tissue_gene_expression` dataset. Use the `train` function to predict
     tissue from gene expression. Use kNN. What `k` works best?
   id: totrans-108
   prefs: []
   type: TYPE_NORMAL
+  zh: 8. 加载`tissue_gene_expression`数据集。使用`train`函数根据基因表达预测组织。使用kNN。哪个`k`效果最好？
 - en: 29.5 Bootstrap
   id: totrans-109
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 29.5 自举
 - en: 'Suppose the income distribution of your population is as follows:'
   id: totrans-110
   prefs: []
   type: TYPE_NORMAL
+  zh: 假设你的人口收入分布如下：
 - en: '[PRE15]'
   id: totrans-111
   prefs: []
@@ -764,10 +775,12 @@
   id: totrans-112
   prefs: []
   type: TYPE_IMG
+  zh: '![图片](../Images/248d2876eee837ac55c5745775c76480.png)'
 - en: 'The population median is:'
   id: totrans-113
   prefs: []
   type: TYPE_NORMAL
+  zh: 总体中位数是：
 - en: '[PRE16]'
   id: totrans-114
   prefs: []
@@ -779,6 +792,7 @@
   id: totrans-115
   prefs: []
   type: TYPE_NORMAL
+  zh: 假设我们无法访问整个总体，但想估计中位数\(m\)。我们抽取一个100个样本，并用样本中位数\(M\)估计总体中位数\(m\)：
 - en: '[PRE17]'
   id: totrans-116
   prefs: []
@@ -788,11 +802,13 @@
   id: totrans-117
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们能构建一个置信区间吗？\(M\)的分布是什么？
 - en: Because we are simulating the data, we can use a Monte Carlo simulation to learn
     the distribution of \(M\).
   id: totrans-118
   prefs: []
   type: TYPE_NORMAL
+  zh: 因为我们在模拟数据，我们可以使用蒙特卡洛模拟来学习\(M\)的分布。
 - en: '[PRE18]'
   id: totrans-119
   prefs: []
@@ -802,6 +818,7 @@
   id: totrans-120
   prefs: []
   type: TYPE_IMG
+  zh: '![图片](../Images/32d39de9ad041fa6e5367e5b46c731d7.png)'
 - en: If we know this distribution, we can construct a confidence interval. The problem
     here is that, as we have already described, in practice we do not have access
     to the distribution. In the past, we have used the Central Limit Theorem, but
@@ -810,6 +827,7 @@
   id: totrans-121
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果我们知道这个分布，我们可以构建一个置信区间。问题在于，正如我们已经描述的，在实践中我们没有访问到这个分布。过去，我们使用了中心极限定理，但我们所研究的CLT适用于平均值，而这里我们感兴趣的是中位数。我们可以看到，基于CLT的95%置信区间
 - en: '[PRE19]'
   id: totrans-122
   prefs: []
@@ -820,6 +838,7 @@
   id: totrans-123
   prefs: []
   type: TYPE_NORMAL
+  zh: 与如果我们知道\(M\)的实际分布，我们会生成的置信区间
 - en: '[PRE20]'
   id: totrans-124
   prefs: []
@@ -833,12 +852,14 @@
   id: totrans-125
   prefs: []
   type: TYPE_NORMAL
+  zh: 自举允许我们在无法访问整个分布的情况下近似蒙特卡洛模拟。一般思路相对简单。我们假设观察到的样本是总体。然后我们（有放回地）抽取与原始数据集相同大小的数据集。然后在这些*自举样本*上计算汇总统计量，在这种情况下是中位数。
 - en: 'Theory tells us that, in many situations, the distribution of the statistics
     obtained with bootstrap samples approximate the distribution of our actual statistic.
     This is how we construct bootstrap samples and an approximate distribution:'
   id: totrans-126
   prefs: []
   type: TYPE_NORMAL
+  zh: 理论告诉我们，在许多情况下，使用自举样本获得的统计量的分布近似于我们实际统计量的分布。这就是我们构建自举样本和近似分布的方法：
 - en: '[PRE21]'
   id: totrans-127
   prefs: []

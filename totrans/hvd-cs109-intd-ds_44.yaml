@@ -1,11 +1,15 @@
 - en: Chapter 30 The caret package
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 第30章 caret包
 - en: 原文：[https://rafalab.dfci.harvard.edu/dsbook/caret.html](https://rafalab.dfci.harvard.edu/dsbook/caret.html)
+  id: totrans-1
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 原文：[https://rafalab.dfci.harvard.edu/dsbook/caret.html](https://rafalab.dfci.harvard.edu/dsbook/caret.html)
 - en: We have already learned about regression and kNN as machine learning algorithms.
     In later sections, we learn several others, and this is just a small subset of
     all the algorithms out there. Many of these algorithms are implemented in R. However,
@@ -16,221 +20,343 @@
     does not include the needed packages and, to implement a package through **caret**,
     you still need to install the library. The required packages for each method are
     described in the package manual.
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们已经学习了回归和kNN作为机器学习算法。在后面的章节中，我们将学习几个其他的算法，这仅仅是所有算法中的一小部分。许多这些算法都在R中实现。然而，它们是通过不同的包、由不同的作者开发的，并且通常使用不同的语法。**caret**包试图统一这些差异并提供一致性。它目前包括237种不同的方法，这些方法在**caret**包手册中进行了总结[^(98)](#fn98)。请记住，**caret**不包括所需的包，要通过**caret**实现一个包，你仍然需要安装库。每种方法的所需包在包手册中进行了描述。
 - en: 'The **caret** package also provides a function that performs cross validation
     for us. Here we provide some examples showing how we use this incredibly helpful
     package. We will use the 2 or 7 example to illustrate:'
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: '**caret**包还提供了一个为我们执行交叉验证的函数。这里我们提供了一些示例，展示了我们如何使用这个极其有用的包。我们将使用2或7的示例来演示：'
 - en: '[PRE0]'
+  id: totrans-4
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: 30.1 The caret `train` functon
+  id: totrans-5
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 30.1 caret `train`函数
 - en: 'The **caret** `train` function lets us train different algorithms using similar
     syntax. So, for example, we can type:'
+  id: totrans-6
   prefs: []
   type: TYPE_NORMAL
+  zh: '**caret**的`train`函数让我们可以使用类似的语法来训练不同的算法。所以，例如，我们可以输入：'
 - en: '[PRE1]'
+  id: totrans-7
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: To make predictions, we can use the output of this function directly without
     needing to look at the specifics of `predict.glm` and `predict.knn`. Instead,
     we can learn how to obtain predictions from `predict.train`.
+  id: totrans-8
   prefs: []
   type: TYPE_NORMAL
+  zh: 为了进行预测，我们可以直接使用该函数的输出，而无需查看`predict.glm`和`predict.knn`的具体细节。相反，我们可以学习如何从`predict.train`获取预测。
 - en: 'The code looks the same for both methods:'
+  id: totrans-9
   prefs: []
   type: TYPE_NORMAL
+  zh: 两种方法的代码看起来是一样的：
 - en: '[PRE2]'
+  id: totrans-10
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: 'This permits us to quickly compare the algorithms. For example, we can compare
     the accuracy like this:'
+  id: totrans-11
   prefs: []
   type: TYPE_NORMAL
+  zh: 这使我们能够快速比较算法。例如，我们可以这样比较准确度：
 - en: '[PRE3]'
+  id: totrans-12
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: 30.2 Cross validation
+  id: totrans-13
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 30.2 交叉验证
 - en: 'When an algorithm includes a tuning parameter, `train` automatically uses cross
     validation to decide among a few default values. To find out what parameter or
     parameters are optimized, you can read the manual [^(99)](#fn99) or study the
     output of:'
+  id: totrans-14
   prefs: []
   type: TYPE_NORMAL
+  zh: 当一个算法包含一个调整参数时，`train` 会自动使用交叉验证来决定几个默认值。要找出哪些参数或参数被优化，你可以阅读手册 [^(99)](#fn99)
+    或研究以下输出的内容：
 - en: '[PRE4]'
+  id: totrans-15
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE4]'
 - en: 'We can also use a quick lookup like this:'
+  id: totrans-16
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们也可以使用这样的快速查找：
 - en: '[PRE5]'
+  id: totrans-17
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE5]'
 - en: 'If we run it with default values:'
+  id: totrans-18
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果我们使用默认值运行它：
 - en: '[PRE6]'
+  id: totrans-19
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE6]'
 - en: 'you can quickly see the results of the cross validation using the `ggplot`
     function. The argument `highlight` highlights the max:'
+  id: totrans-20
   prefs: []
   type: TYPE_NORMAL
+  zh: 你可以快速使用`ggplot`函数看到交叉验证的结果。`highlight`参数突出显示最大值：
 - en: '[PRE7]'
+  id: totrans-21
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE7]'
 - en: '![](../Images/569a9d2f9db0942b9ab94a96cc11fe6d.png)'
+  id: totrans-22
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/569a9d2f9db0942b9ab94a96cc11fe6d.png)'
 - en: By default, the cross validation is performed by taking 25 bootstrap samples
     comprised of 25% of the observations. For the `kNN` method, the default is to
     try \(k=5,7,9\). We change this using the `tuneGrid` parameter. The grid of values
     must be supplied by a data frame with the parameter names as specified in the
     `modelLookup` output.
+  id: totrans-23
   prefs: []
   type: TYPE_NORMAL
+  zh: 默认情况下，交叉验证是通过取25个包含25%观测值的bootstrap样本来执行的。对于`kNN`方法，默认值是尝试\(k=5,7,9\)。我们可以使用`tuneGrid`参数来改变这个值。值网格必须由一个数据框提供，其中参数名称与`modelLookup`输出中指定的名称相匹配。
 - en: 'Here, we present an example where we try out 30 values between 9 and 67\. To
     do this with **caret**, we need to define a column named `k`, so we use this:
     `data.frame(k = seq(9, 67, 2))`.'
+  id: totrans-24
   prefs: []
   type: TYPE_NORMAL
+  zh: 在这里，我们提供了一个例子，我们尝试了9到67之间的30个值。要使用**caret**做到这一点，我们需要定义一个名为`k`的列，所以我们使用这个：`data.frame(k
+    = seq(9, 67, 2))`。
 - en: Note that when running this code, we are fitting 30 versions of kNN to 25 bootstrapped
     samples. Since we are fitting \(30 \times 25 = 750\) kNN models, running this
     code will take several seconds. We set the seed because cross validation is a
     random procedure and we want to make sure the result here is reproducible.
+  id: totrans-25
   prefs: []
   type: TYPE_NORMAL
+  zh: 注意，当我们运行此代码时，我们在25个自助样本上拟合了30个kNN版本。由于我们拟合了\(30 \times 25 = 750\)个kNN模型，运行此代码将需要几秒钟。我们设置种子是因为交叉验证是一个随机过程，我们希望确保这里的结果是可重复的。
 - en: '[PRE8]'
+  id: totrans-26
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE8]'
 - en: '![](../Images/6037f6ad81d1fe6b80ac5cbf370d4bc1.png)'
+  id: totrans-27
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/6037f6ad81d1fe6b80ac5cbf370d4bc1.png)'
 - en: 'To access the parameter that maximized the accuracy, you can use this:'
+  id: totrans-28
   prefs: []
   type: TYPE_NORMAL
+  zh: 要访问最大化准确度的参数，可以使用以下方法：
 - en: '[PRE9]'
+  id: totrans-29
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE9]'
 - en: 'and the best performing model like this:'
+  id: totrans-30
   prefs: []
   type: TYPE_NORMAL
+  zh: 以及最佳性能的模型如下：
 - en: '[PRE10]'
+  id: totrans-31
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE10]'
 - en: 'The function `predict` will use this best performing model. Here is the accuracy
     of the best model when applied to the test set, which we have not used at all
     yet because the cross validation was done on the training set:'
+  id: totrans-32
   prefs: []
   type: TYPE_NORMAL
+  zh: 函数`predict`将使用这个最佳性能的模型。以下是当应用于测试集时最佳模型的准确度，我们还没有使用过测试集，因为交叉验证是在训练集上进行的：
 - en: '[PRE11]'
+  id: totrans-33
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE11]'
 - en: 'If we want to change how we perform cross validation, we can use the `trainControl`
     function. We can make the code above go a bit faster by using, for example, 10-fold
     cross validation. This means we have 10 samples using 10% of the observations
     each. We accomplish this using the following code:'
+  id: totrans-34
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果我们想要改变交叉验证的方式，可以使用`trainControl`函数。我们可以通过使用，例如，10折交叉验证来使上面的代码运行得更快。这意味着我们有10个样本，每个样本使用10%的观测值。我们使用以下代码来完成这个任务：
 - en: '[PRE12]'
+  id: totrans-35
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE12]'
 - en: '![](../Images/b4417133785c94316cdca9ab4b89584f.png)'
+  id: totrans-36
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/b4417133785c94316cdca9ab4b89584f.png)'
 - en: We notice that the accuracy estimates are more variable, which is expected since
     we changed the number of samples used to estimate accuracy.
+  id: totrans-37
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们注意到准确度估计的变异性更大，这是预期的，因为我们改变了用于估计准确度的样本数量。
 - en: 'Note that `results` component of the `train` output includes several summary
     statistics related to the variability of the cross validation estimates:'
+  id: totrans-38
   prefs: []
   type: TYPE_NORMAL
+  zh: 注意，`train`输出的`results`组件包括与交叉验证估计变异性相关的几个汇总统计量：
 - en: '[PRE13]'
+  id: totrans-39
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE13]'
 - en: '30.3 Example: fitting with loess'
+  id: totrans-40
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 30.3 示例：使用loess进行拟合
 - en: 'The best fitting kNN model approximates the true conditional probability:'
+  id: totrans-41
   prefs: []
   type: TYPE_NORMAL
+  zh: 最佳拟合的kNN模型近似真实的条件概率：
 - en: '[PRE14]'
+  id: totrans-42
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE14]'
 - en: '![](../Images/12253402f898fb6b3e84f744bae52c07.png)'
+  id: totrans-43
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/12253402f898fb6b3e84f744bae52c07.png)'
 - en: 'However, we do see that the boundary is somewhat wiggly. This is because kNN,
     like the basic bin smoother, does not use a kernel. To improve this we could try
     loess. By reading through the available models part of the manual[^(100)](#fn100)
     we see that we can use the `gamLoess` method. In the manual[^(101)](#fn101) we
     also see that we need to install the **gam** package if we have not done so already:'
+  id: totrans-44
   prefs: []
   type: TYPE_NORMAL
+  zh: 然而，我们确实看到边界线有些曲折。这是因为kNN，就像基本的二进制平滑器一样，不使用核。为了改进这一点，我们可以尝试使用loess。通过阅读手册中可用的模型部分[^(100)](#fn100)，我们看到我们可以使用`gamLoess`方法。在手册[^(101)](#fn101)中，我们还看到如果尚未安装，我们需要安装**gam**包：
 - en: '[PRE15]'
+  id: totrans-45
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE15]'
 - en: 'Then we see that we have two parameters to optimize:'
+  id: totrans-46
   prefs: []
   type: TYPE_NORMAL
+  zh: 然后，我们看到我们有两个参数需要优化：
 - en: '[PRE16]'
+  id: totrans-47
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE16]'
 - en: 'We will stick to a degree of 1\. But to try out different values for the span,
     we still have to include a column in the table with the name `degree` so we can
     do this:'
+  id: totrans-48
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们将坚持使用1次方。但为了尝试不同的span值，我们仍然需要在表中包含一个名为`degree`的列，以便我们可以这样做：
 - en: '[PRE17]'
+  id: totrans-49
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE17]'
 - en: We will use the default cross validation control parameters.
+  id: totrans-50
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们将使用默认的交叉验证控制参数。
 - en: '[PRE18]'
+  id: totrans-51
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE18]'
 - en: '![](../Images/b7b54b8595c45cebd51ba3b2487370bd.png)'
+  id: totrans-52
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/b7b54b8595c45cebd51ba3b2487370bd.png)'
 - en: 'We can see that the method performs similar to kNN:'
+  id: totrans-53
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们可以看到这种方法与kNN的性能相似：
 - en: '[PRE19]'
+  id: totrans-54
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE19]'
 - en: 'and produces a smoother estimate of the conditional probability:'
+  id: totrans-55
   prefs: []
   type: TYPE_NORMAL
+  zh: 并产生条件概率的更平滑估计：
 - en: '![](../Images/8cf8ec118b4c459fa93254e8a943d0f0.png)'
+  id: totrans-56
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/8cf8ec118b4c459fa93254e8a943d0f0.png)'
 - en: '* * *'
+  id: totrans-57
   prefs: []
   type: TYPE_NORMAL
+  zh: '* * *'
 - en: '[https://topepo.github.io/caret/available-models.html](https://topepo.github.io/caret/available-models.html)[↩︎](caret.html#fnref98)'
+  id: totrans-58
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[https://topepo.github.io/caret/available-models.html](https://topepo.github.io/caret/available-models.html)[↩︎](caret.html#fnref98)'
 - en: '[http://topepo.github.io/caret/available-models.html](http://topepo.github.io/caret/available-models.html)[↩︎](caret.html#fnref99)'
+  id: totrans-59
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[http://topepo.github.io/caret/available-models.html](http://topepo.github.io/caret/available-models.html)[↩︎](caret.html#fnref99)'
 - en: '[https://topepo.github.io/caret/available-models.html](https://topepo.github.io/caret/available-models.html)[↩︎](caret.html#fnref100)'
+  id: totrans-60
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[https://topepo.github.io/caret/available-models.html](https://topepo.github.io/caret/available-models.html)[↩︎](caret.html#fnref100)'
 - en: '[https://topepo.github.io/caret/train-models-by-tag.html](https://topepo.github.io/caret/train-models-by-tag.html)[↩︎](caret.html#fnref101)'
+  id: totrans-61
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[https://topepo.github.io/caret/train-models-by-tag.html](https://topepo.github.io/caret/train-models-by-tag.html)[↩︎](caret.html#fnref101)'
