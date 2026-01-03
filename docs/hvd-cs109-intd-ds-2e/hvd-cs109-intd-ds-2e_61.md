@@ -26,17 +26,36 @@
 
 Netflix 数据不是公开可用的，但 GroupLens 研究实验室⁴使用超过 138,000 个用户对 27,000 多部电影进行的超过 2000 万次评分生成了自己的数据库。我们通过**dslabs**包提供这些数据的一个小子集：
 
-[PRE0]
+```r
+library(data.table)
+library(dslabs)
+movielens |> tibble:::tibble](https://tibble.tidyverse.org/reference/tibble.html)() |> [head(5)
+#> # A tibble: 5 × 7
+#>   movieId title                      year genres userId rating timestamp
+#>     <int> <chr>                     <int> <fct>   <int>  <dbl>     <int>
+#> 1      31 Dangerous Minds            1995 Drama       1    2.5    1.26e9
+#> 2    1029 Dumbo                      1941 Anima…      1    3      1.26e9
+#> 3    1061 Sleepers                   1996 Thril…      1    3      1.26e9
+#> 4    1129 Escape from New York       1981 Actio…      1    2      1.26e9
+#> 5    1172 Cinema Paradiso (Nuovo c…  1989 Drama       1    4      1.26e9
+```
 
 每一行代表一个用户对一部电影给出的评分。
 
 由于我们正在处理一个相对较大的数据集，我们将数据框转换为`data.table`对象，以利用更高效的数据处理。
 
-[PRE1]
+```r
+dt <- as.data.table(movielens)
+```
 
 我们可以看到提供了评分的唯一用户数量以及被评分的唯一电影数量：
 
-[PRE2]
+```r
+dt, .(n_users = [uniqueN(userId), n_movies = uniqueN(movieId))]
+#>    n_users n_movies
+#>      <int>    <int>
+#> 1:     671     9066
+```
 
 如果我们把这两个数字相乘，得到的数字超过 500 万，但我们的数据集只有大约 10 万行。这告诉我们，并非每个用户都对每部电影进行了评分。事实上，每个用户平均评分的电影数量是 71 部。我们可以将数据视为一个非常大的矩阵，其中用户是行，电影是列，其中包含许多缺失项。电影推荐系统的目标是准确预测这些缺失值。***
 
@@ -44,7 +63,10 @@ Netflix 数据不是公开可用的，但 GroupLens 研究实验室⁴使用超�
 
 **让我们来看看数据的一些一般特性，以便通过检查电影评分数量和用户评分数量的直方图来更好地了解挑战：
 
-[PRE3]
+```r
+hist(log2(table(dt$movieId)), 0:9, xlab = "# Ratings (log 2)", main = "Movies")
+hist(table(dt$userId), seq(0, 2400, 50), xlab = "# Ratings", main = "Users")
+```
 
 ![](img/a83ed5856e2a815eca5f713cd1deaf7e.png)*  *我们首先注意到，一些电影的评分远多于其他电影。大多数电影只被评分几次，而少数电影则积累了数百次评分。这种模式并不令人惊讶。流行的、广泛发行的电影往往被许多用户观看和评分，而小众或独立电影则吸引着更小的观众群体。
 
@@ -58,11 +80,16 @@ Netflix 数据不是公开可用的，但 GroupLens 研究实验室⁴使用超�
 
 我们首先关注那些为我们提供了足够信息以便从他们的行为中学习到的用户。在这种情况下，我们只保留至少有 100 个评分的用户：
 
-[PRE4]
+```r
+dt <- as.data.table(movielens)[, if (.N >= 100) .SD, by = userId]
+```
 
 为了方便起见，我们将`userId`和`movieId`都转换为字符字符串。这样我们就可以在向量中使用它们作为名称。我们还只保留与这次分析相关的列，以保持打印输出的可管理性：
 
-[PRE5]
+```r
+dt, `:=`(userId = [as.character(userId), movieId = as.character(movieId))]
+dt <- dt, [c("userId", "movieId", "title", "rating")]
+```
 
 *电影标题不一定唯一。例如，这个数据集中包含三部不同的电影，标题都是《金刚》。因此，我们保留`movieId`作为唯一标识符，只保留`title`用于解释和可视化**。为了评估我们的模型，我们将数据分为两部分：
 
@@ -72,15 +99,25 @@ Netflix 数据不是公开可用的，但 GroupLens 研究实验室⁴使用超�
 
 我们在用户级别创建分割，将每个用户的 80%的评分分配给训练集，20%分配给测试集：
 
-[PRE6]
+```r
+set.seed(2006)
+indexes <- split(1:nrow(dt), dt$userId)
+test_ind <- sapply(indexes, function(i) sample(i, ceiling(length(i) * 0.2)))
+test_ind <- sort(unlist(test_ind))
+```
 
 *然后我们构建两个数据集**：
 
-[PRE7]
+```r
+test_set  <- dt[test_ind,]
+train_set <- dt[-test_ind,]
+```
 
 *由于模型无法对它从未见过的电影做出预测，我们从测试集中移除了不在训练集中的任何电影**：
 
-[PRE8]
+```r
+test_set <- test_setmovieId [%in% train_set$movieId]
+```
 
 *这为我们提供了一个一致的训练和测试框架，我们将在本章中一直使用**。*********
 
@@ -100,7 +137,9 @@ $$ \mbox{RMSE} = \sqrt{\frac{1}{N} \sum_{i,j} (y_{ij} - \hat{y}_{ij})²} $$
 
 为了方便计算任何残差向量的 RMSE，我们定义：
 
-[PRE9]
+```r
+rmse <- function(r) sqrt(mean(r²))
+```
 
 *我们在第二十九章更正式地讨论了均方误差**。
 
@@ -116,15 +155,23 @@ $$ Y_{ij} = \mu + \varepsilon_{ij} $$
 
 使 RMSE 最小的 $\mu$ 值是最小二乘估计，在这种情况下，它只是训练集中所有评分的平均值：
 
-[PRE10]
+```r
+mu <- mean(train_set$rating)
+```
 
 如果我们用这个单一值预测测试集中的每个评分，得到的 RMSE 是：
 
-[PRE11]
+```r
+rmse(test_set$rating - mu)
+#> [1] 1.04
+```
 
 从数学上讲，这个选择对这个模型是最优的。任何其他数字都会导致更大的 RMSE。例如：
 
-[PRE12]
+```r
+rmse(test_set$rating - 3)
+#> [1] 1.17
+```
 
 这种简单的方法提供了一个有用的基线。然而，它远远达不到赢得 Netflix 挑战赛所需的性能，该挑战要求 RMSE 大约为 0.857 才能赢得一百万美元的奖金。我们应该通过将更多结构纳入模型来做得更好**。
 
@@ -132,7 +179,9 @@ $$ Y_{ij} = \mu + \varepsilon_{ij} $$
 
 ****一个自然的问题是所有用户是否都以相同的方式评分电影。一些用户倾向于给出非常高的评分，而其他人很少给出超过三个星级的评分。为了看到这一点，我们计算每个用户的平均评分：
 
-[PRE13]
+```r
+hist(with(dt, tapply(rating, userId, mean)), nclass = 30, main = "User averages")
+```
 
 ![](img/9594a219d6d9fbaa027d7fb32b8b540d.png)*  *直方图显示了显著的变化。这表明，评分之间的某些差异可以通过用户对评分的慷慨程度或严格程度来解释，而不管被评分的电影是什么。
 
@@ -142,23 +191,33 @@ $$ Y_{ij} = \mu + \alpha_i + \varepsilon_{ij} $$
 
 在这里，$\mu$ 代表整体平均评分，而 $\alpha_i$ 捕捉用户 $i$ 偏离该平均程度的大小。统计学教科书通常将 $\alpha_i$ 称为处理效应。在 Netflix 奖项文献中，它们通常被称为 *偏差项*。
 
-这是一个线性模型，因此我们可以使用 `[lm()](https://rdrr.io/r/stats/lm.html)` 来拟合模型：
+这是一个线性模型，因此我们可以使用 `lm()` 来拟合模型：
 
-[PRE14]
+```r
+fit <- lm(rating ~ userId, data = train_set)
+```
 
 然而，在这个数据集中，用户效应参数的数量是：
 
-[PRE15]
+```r
+uniqueN(train_set$userId)
+#> [1] 263
+```
 
 因此，我们需要数百个虚拟变量，这使得拟合模型在计算上效率低下。
 
 幸运的是，对于这个模型，我们可以直接推导出最小二乘估计。估计 $\hat{\alpha}_i$ 简单地是用户 $i$ 的 $y_{ij} - \hat{\mu}$ 的平均值：
 
-[PRE16]
+```r
+mu <- mean(train_set$rating)
+user_avgs <- train_set, .(avg = [mean(rating - mu)), by = userId]
+```
 
 我们将这些值存储在一个命名向量中，这使得我们可以轻松地查找每个用户的效应**：
 
-[PRE17]
+```r
+a <- setNames(user_avgs$avg, user_avgs$userId)
+```
 
 从这一点开始，我们使用`a`来表示用户效果估计向量$\hat{\alpha}_i$，稍后我们将使用`b`来表示电影效果估计。在代码中，为了方便，我们省略了帽子符号，但在数学表达式中，我们将继续写$\hat{\alpha}_i$和$\hat{\beta}_j$以明确这些是估计值。*
 
@@ -168,11 +227,17 @@ $$ \hat{y}_{ij} = \hat{\mu} + \hat{\alpha}_i $$
 
 由于评分总是在 0.5 到 5 之间，我们定义一个辅助函数来强制执行此约束：
 
-[PRE18]
+```r
+clamp <- function(x, lower = 0.5, upper = 5) pmax(pmin(x, upper), lower)
+```
 
 我们使用在训练集上获得的估计值来预测测试集，然后评估 RMSE：*
 
-[PRE19]
+```r
+resid <- with(test_set, rating - clamp(mu + a[userId]))
+rmse(resid)
+#> [1] 0.949
+```
 
 RMSE 下降，这证实了用户效果提高了我们的预测。但用户并不是唯一的变量来源。有些电影比其他电影更受欢迎。我们接下来解决这个问题。************
 
@@ -186,9 +251,11 @@ $$ Y_{ij} = \mu + \alpha_i + \beta_j + \varepsilon_{ij} $$
 
 在原则上，我们可以使用最小二乘法一次性估计所有用户和电影效果：
 
-[PRE20]
+```r
+fit <- lm(rating ~ userId + movieId, data = train_set)
+```
 
-然而，这需要创建数千个指示变量，每个用户和一个电影。结果的设计矩阵很大且稀疏，使得`[lm()](https://rdrr.io/r/stats/lm.html)`对于这个目的效率低下。*
+然而，这需要创建数千个指示变量，每个用户和一个电影。结果的设计矩阵很大且稀疏，使得`lm()`对于这个目的效率低下。*
 
 相反，我们使用一个*交替最小二乘法（ALS）*算法。这是一个依赖于两个事实的迭代方法：
 
@@ -198,11 +265,27 @@ $$ Y_{ij} = \mu + \alpha_i + \beta_j + \varepsilon_{ij} $$
 
 通过交替这些更新，估计值收敛到最小二乘解。
 
-[PRE21]
+```r
+fit <- copy(train_set)
+mu <- mean(fit$rating)
+fit[, `:=`(a = 0, b = 0)]  # starting values
+ for (iter in 1:100) {
+ a_old <- copy(fit$a)
+ b_old <- copy(fit$b)
+
+ fit, a := [mean(rating - mu - b), by = userId]
+ fit, b := [mean(rating - mu - a), by = movieId]
+
+ if (max(c(abs(fit$a - a_old), abs(fit$b - b_old))) < 1e-6) break
+}
+```
 
 然后我们将用户和电影效果提取到一个命名向量中：*
 
-[PRE22]
+```r
+a <- setNames(fit$a, fit$userId)
+b <- setNames(fit$b, fit$movieId)
+```
 
 当用户和电影效果都到位时，我们的预测为：*
 
@@ -210,7 +293,11 @@ $$ \hat{y}_{ij} = \hat{\mu} + \hat{\alpha}_i + \hat{\beta}_j $$
 
 测试集预测的 RMSE 结果为：
 
-[PRE23]
+```r
+resid <- with(test_set, rating - clamp(mu + a[userId] + b[movieId]))
+rmse(resid)
+#> [1] 0.882
+```
 
 这进一步减少了误差，证实了包括用户和电影效果可以提高预测准确性。然而，这些估计仍然可能不稳定，特别是对于只有少数评分的电影。********
 
@@ -218,19 +305,39 @@ $$ \hat{y}_{ij} = \hat{\mu} + \hat{\alpha}_i + \hat{\beta}_j $$
 
 ***如果我们检查具有最大估计电影效果$\hat{\beta}_j$的电影，我们会发现它们都是冷门电影，只有单一评分：*
 
-[PRE24]
+```r
+top_movies <- names(bb == [max(b)])
+train_set, .(n = .N), by = .(movieId, title)][movieId [%in% top_movies]
+#>    movieId                                         title     n
+#>     <char>                                        <char> <int>
+#> 1:    1450 Prisoner of the Mountains (Kavkazsky plennik)     1
+#> 2:    4076                                     Two Ninas     1
+#> 3:    4591                               Erik the Viking     1
+#> 4:    4930                             Funeral in Berlin     1
+#> 5:    5427                                       Caveman     1
+```
 
 我们真的相信这些是数据库中最好的电影吗？这些所谓的顶级评分电影都没有出现在测试集中。为了进一步调查，让我们检查所有估计效应 $\hat{\beta}_j \ge 2$ 的电影：
 
-[PRE25]
+```r
+top_movies <- names(b[b > 2])
+length(top_movies)
+#> [1] 16
+```
 
 这 16 部电影中所有电影的评分最多只有两次：
 
-[PRE26]
+```r
+range(table(train_setmovieId [%in% top_movies]$movieId))
+#> [1] 1 2
+```
 
 我们在测试集中对这些电影的每一个预测都是一个高估：
 
-[PRE27]
+```r
+range(resid[with(test_set, which(movieId %in% top_movies))])
+#> [1] -1.41 -0.50
+```
 
 这是一个明显的 *过拟合* 例子。仅被评分一次或两次的电影可以通过偶然的机会获得非常大的正（或负）估计。支持的观察结果越少，估计的变异性就越大。这些不稳定的估计导致预测误差很大，进而增加了 RMSE。
 
@@ -258,7 +365,10 @@ $$ \frac{1}{N}\sum_{i=1}^N \left[ y_i - \left(\beta_0 + \sum_{j=1}^p x_{ij}\beta
 
 这种方法被称为 *岭回归*。R 中的 `MASS` 包提供了 `lm.ridge` 函数，用于使用惩罚最小二乘法拟合模型：
 
-[PRE28]
+```r
+library([MASS](http://www.stats.ox.ac.uk/pub/MASS4/))
+fit <- [lm.ridge](https://rdrr.io/pkg/MASS/man/lm.ridge.html)(y ~ x, lambda = 0.001)
+```
 
 然而，这个函数对于有数千个指示变量的模型效率不高，就像我们在电影评分应用中那样。在下面的章节中，我们使用受罚最小二乘法，但为了找到估计值，我们实现了 第 24.1.7 节 中描述的 ALS 算法。*
 
@@ -294,11 +404,32 @@ $$ \hat{\beta}_j(\lambda) = \frac{1}{n_j + N\lambda} \sum_{i=1}^{n_j} \left(y_{i
 
 为了方便起见，我们定义了一个辅助函数 `fit_als`，它接受一个 `lambda` 值并返回一个包含用户和电影效果的正规化估计值的 `train_set` 的副本。这个函数专门针对我们的电影评分示例。它假设 `train_set` 在环境中可用。
 
-[PRE29]
+```r
+fit_als <- function(lambda, tol = 1e-6, max_iter = 100) {
+ fit <- copy(train_set)
+ N <- nrow(fit)
+ mu <- mean(fit$rating)
+ fit[, `:=`(a = 0, b = 0)]  # starting values
+ for (iter in 1:max_iter) {
+ a_old <- copy(fit$a)
+ b_old <- copy(fit$b)
+
+ fit, a := [sum(rating - mu - b)/(.N + N*lambda) , by = userId]
+ fit, b := [sum(rating - mu - a)/(.N + N*lambda), by = movieId]
+
+ delta <- max(c(abs(fit$a - a_old), abs(fit$b - b_old)))
+ if (delta < tol) break
+ }
+ return(with(fit, list(mu = mu, a = setNames(a, userId), b = setNames(b, movieId))))
+}
+```
 
 这种实现交替更新用户效果 `a` 和电影效果 `b` 的惩罚估计，直到更新小于 `tol` 或我们达到 `max_iter`。最终结果是每个电影的正规化电影效果：
 
-[PRE30]
+```r
+fit <- fit_als(lambda = 0.0001)
+mu <- fit$mu; a_reg <- fit$a; b_reg <- fit$b
+```
 
 注意，在这个例子中我们使用 $\lambda = 0.0001$。在 第 24.3 节 中，我们描述了一种数据驱动的方法来选择 $\lambda$，以优化预测精度。****
 
@@ -314,13 +445,27 @@ $$ \hat{\beta}_j(\lambda) = \frac{1}{n_j + N\lambda} \sum_{i=1}^{n_j} \left(y_{i
 
 ***让我们看看在惩罚模型下的前 5 部电影：
 
-[PRE31]
+```r
+top_movies <- names(sort(-b_reg[unique(names(b_reg))])[1:5])
+train_set, .(n = .N), by = .(movieId, title)][movieId [%in% top_movies]
+#>    movieId                     title     n
+#>     <char>                    <char> <int>
+#> 1:     296              Pulp Fiction   155
+#> 2:     858            Godfather, The   112
+#> 3:      50       Usual Suspects, The   111
+#> 4:     318 Shawshank Redemption, The   131
+#> 5:    1252                 Chinatown    49
+```
 
 这些比之前的一评级电影列表更有说服力。
 
 最后，我们评估了 RMSE：
 
-[PRE32]
+```r
+resid <- with(test_set, rating - clamp(mu + a_reg[userId] + b_reg[movieId]))
+rmse(resid)
+#> [1] 0.868
+```
 
 RMSE 有所提高，证实了正则化稳定了估计并减少了过度**********
 
@@ -332,23 +477,42 @@ RMSE 有所提高，证实了正则化稳定了估计并减少了过度*********
 
 我们考虑了 0 到 0.0002 之间的 100 个值：
 
-[PRE33]
+```r
+lambdas <- seq(0, 0.0002, length.out = 100)
+rmses <- sapply(lambdas, function(lambda) { 
+ fit <- fit_als(lambda)
+ resid <- with(test_set, rating - clamp(fit$mu + fit$a[userId] + fit$b[movieId]))
+ rmse(resid)
+})
+```
 
 然后我们将 RMSE 作为 $\lambda$ 的函数绘制出来：
 
-[PRE34]
+```r
+plot(lambdas, rmses, type = "l", xlab = expression(lambda), ylab = "RMSE")
+```
 
 ![](img/d082f0488897214a50173afb35e3e27e.png)*  *我们看到一个明显的最小值。最佳值是：
 
-[PRE35]
+```r
+best_lambda <- lambdas[which.min(rmses)]
+best_lambda
+#> [1] 3.64e-05
+```
 
 我们现在使用这个值重新拟合模型：
 
-[PRE36]
+```r
+fit <- fit_als(best_lambda)
+```
 
 并计算最终的 RMSE：
 
-[PRE37]
+```r
+resid <- with(test_set, rating - clamp(fit$mu + fit$a[userId] + fit$b[movieId]))
+rmse(resid)
+#> [1] 0.863
+```
 
 这个结果证实了正则化提高了我们的预测精度。下表比较了这一 RMSE 与早期模型获得的值。
 
@@ -364,23 +528,38 @@ RMSE 有所提高，证实了正则化稳定了估计并减少了过度*********
 
 ***对于练习 1-8，我们将使用以下模拟：一位教育专家正在倡导建立较小的学校。这位专家的推荐基于这样一个事实：在表现最好的学校中，许多都是小规模的。让我们为 1000 所学校模拟一个数据集。首先，让我们模拟每所学校的学生人数。
 
-[PRE38]
+```r
+set.seed(1986)
+n <- round(2^rnorm(1000, 8, 1))
+```
 
 现在让我们为每所学校分配一个*真实*的质量，这个质量完全独立于规模。这是我们想要估计的参数，它代表了该校平均学生在能力测试中会得到的分数。我们模拟这个值如下：
 
-[PRE39]
+```r
+mu <- round(80 + 2 * rt(1000, 5))
+```
 
 现在让我们构建一个数据集：
 
-[PRE40]
+```r
+schools <- data.frame(id = sprintf("PS%03d", 0:999), size = n, quality = mu, 
+ rank = rank(-mu))
+```
 
 我们可以看到，前 10 所学校是：
 
-[PRE41]
+```r
+library([dplyr](https://dplyr.tidyverse.org))
+schools |> top_n(10, quality) |> arrange(desc(quality))
+```
 
 现在让该校的学生参加考试。每个学校的学生之间存在差异，因此考试分数也会有随机性，所以我们将模拟考试分数，使其呈正态分布，平均成绩由学校质量决定，标准差为 30 个百分比点：
 
-[PRE42]
+```r
+scores <- sapply(1:nrow(schools), function(i)
+ rnorm(schools$size[i], schools$quality[i], 30))
+schools <- schools |> mutate(score = sapply(scores, mean))
+```
 
 1. 根据平均分数，哪些是顶尖学校？只显示 ID、规模和平均分数。
 
@@ -394,7 +573,9 @@ RMSE 有所提高，证实了正则化稳定了估计并减少了过度*********
 
 让我们使用正则化来挑选最好的学校。记住，正则化会将偏离平均值的差异缩小到 0。因此，为了应用正则化，我们首先需要将我们要缩小的值居中。让我们称它为`theta`：
 
-[PRE43]
+```r
+schools <- mutate(schools, theta = score - mean(score))
+```
 
 使用本章中显示的惩罚最小二乘估计的封闭形式解来证明我们可以通过将`theta`乘以`size/(size + 1000*lambda)`来找到正则化估计。尝试`lambda = 0.05`并检查基于此正则化估计的前 10 所学校。
 
@@ -434,7 +615,7 @@ $$ \frac{1}{N}\sum_{i,j} \left[y_{ij} - (\mu + \alpha_i + \beta_j)\right]² + \l
 
 +   绘制平均评分与每年评分数量的关系图。
 
-12. `movielens`数据还包括一个时间戳。*将时间戳转换为日期（提示：使用[lubridate::as_datetime](https://lubridate.tidyverse.org/reference/as_date.html)）。* 计算每周的平均评分（提示：使用`round_date`和`group_by`）。在 x 轴上绘制时间，在 y 轴上绘制每周平均评分。* 解释趋势。时间效应看起来合理吗？
+12. `movielens`数据还包括一个时间戳。*将时间戳转换为日期（提示：使用lubridate::as_datetime）。* 计算每周的平均评分（提示：使用`round_date`和`group_by`）。在 x 轴上绘制时间，在 y 轴上绘制每周平均评分。* 解释趋势。时间效应看起来合理吗？
 
 13. `movielens`数据还包括一个`genres`。*将`genres`中的每个*唯一组合*视为一个类别。*计算每个类别的平均评分及其标准误差。*制作误差条形图。
 

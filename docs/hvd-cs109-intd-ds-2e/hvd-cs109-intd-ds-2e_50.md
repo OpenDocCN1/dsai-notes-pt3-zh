@@ -12,15 +12,29 @@
 
 我们可以通过**HistData**包访问高尔顿家族的身高数据。这些数据包含几十个家庭的高度：母亲、父亲、女儿和儿子。为了模仿高尔顿的分析，我们将创建一个包含父亲和每个家庭随机选择的一个儿子的身高的数据集。在这里我们使用**data.table**包，因为它允许编写更简洁的代码：
 
-[PRE0]
+```r
+library(data.table)
+library([HistData](https://friendly.github.io/HistData/))
+ set.seed(1983)
+galton <- as.data.table(GaltonFamilies)
+galton <- galtongender == "male", .SD[[sample(.N, 1)], by = family]
+galton <- galton[, .(father, son = childHeight)]
+```
 
 假设我们被要求总结父亲和儿子的数据。由于这两个分布都很好地被正态分布所近似，我们可以使用两个平均值和两个标准差作为总结：
 
-[PRE1]
+```r
+galton, .(f_avg=[mean(father), f_sd=sd(father), s_avg=mean(son), s_sd=sd(son))]
+#>    f_avg  f_sd s_avg  s_sd
+#>    <num> <num> <num> <num>
+#> 1:  69.1  2.55  69.2  2.72
+```
 
 然而，这个总结未能描述数据的一个重要特征：父亲越高，儿子也越高。
 
-[PRE2]
+```r
+galton |> ggplot(aes(father, son)) + geom_point(alpha = 0.5)
+```
 
 ![](img/232cb8a04a56e348feb2c0c403a042b9.png)*  *我们将了解到相关系数是两个变量如何一起移动的有信息量的总结，然后通过注意到如何使用另一个变量来预测一个变量来激励简单的回归。***
 
@@ -34,7 +48,9 @@ $$ \rho = \frac{1}{n} \sum_{i=1}^n \left( \frac{x_i-\mu_x}{\sigma_x} \right)\lef
 
 我们可以使用 R 代码表示上面的公式：
 
-[PRE3]
+```r
+rho <- mean(scale(x) * scale(y))
+```
 
 为了了解这个方程如何捕捉两个变量一起移动的方式，请注意，每个项 $\frac{x_i - \mu_x}{\sigma_x}$ 表示 $x_i$ 的值与 $x$ 的平均值相差多少个标准差，而 $\frac{y_i - \mu_y}{\sigma_y}$ 对 $y_i$ 相对于 $y$ 的平均值做同样的处理。如果 $x$ 和 $y$ 没有关系，这些标准化值的乘积 $\left(\frac{x_i - \mu_x}{\sigma_x}\right)\left(\frac{y_i - \mu_y}{\sigma_y}\right)$ 将会正（正乘正或负乘负）的次数与负（正乘负或负乘正）的次数大致相同。当平均时，这些乘积会相互抵消，得到接近零的相关性。如果 $x$ 和 $y$ 倾向于同时增加或减少，大多数乘积将是正的，从而得到正相关。如果其中一个增加而另一个减少，大多数乘积将是负的，从而得到负相关。*
 
@@ -42,7 +58,10 @@ $$ \rho = \frac{1}{n} \sum_{i=1}^n \left( \frac{x_i-\mu_x}{\sigma_x} \right)\lef
 
 对于其他成对数据，相关性介于 -1 和 1 之间。使用 `cor` 函数计算的父亲和儿子身高之间的相关性约为 0.5：
 
-[PRE4]
+```r
+galton, [cor(father, son)]
+#> [1] 0.43
+```
 
 *函数 `cor(x, y)` 计算样本相关性，它将乘积之和除以 `length(x)-1` 而不是 `length(x)`。这种做法的理由与我们在计算样本标准差 `sd(x)` 时除以 `length(x)-1` 的理由相似。也就是说，这种调整有助于考虑样本的自由度，这对于无偏估计是必要的。* *为了了解不同 $\rho$ 值的数据看起来是什么样子，以下是六个相关系数从 -0.9 到 0.99 的成对示例：*
 
@@ -56,19 +75,31 @@ $$ \rho = \frac{1}{n} \sum_{i=1}^n \left( \frac{x_i-\mu_x}{\sigma_x} \right)\lef
 
 为了说明，让我们假设 179 对父亲和儿子构成了我们的整个种群。一个不幸的遗传学家只能负担得起 25 对随机样本的测量。样本相关系数可以通过以下方式计算：
 
-[PRE5]
+```r
+r <- galton[sample(.N, 25, replace = TRUE), cor(father, son)]
+```
 
 `r` 是一个随机变量。我们可以运行蒙特卡洛模拟来查看其分布：
 
-[PRE6]
+```r
+N <- 25
+r <- replicate(1000, galton[sample(.N, N, replace = TRUE), cor(father, son)])
+hist(r, breaks = 20)
+```
 
 ![](img/521a13a790e8d5313d5bd3656f6fa405.png)*  *我们看到 `r` 的期望值是总体相关系数：
 
-[PRE7]
+```r
+mean(r)
+#> [1] 0.427
+```
 
 并且它相对于 `r` 可以取的值范围的标准误差相对较高：
 
-[PRE8]
+```r
+sd(r)
+#> [1] 0.161
+```
 
 因此，在解释相关性时，请记住，从样本中得出的相关性是包含不确定性的估计。
 
@@ -120,21 +151,35 @@ $$ \mathrm{SD}[Y \mid X = x] = \sqrt{\mathrm{Var}(Y \mid X = x)} $$
 
 因此，为了获得预测，我们希望使用高尔顿收集的样本来估计 $E[Y|X=72]$。当使用连续数据时，我们常常面临这样的挑战：在 $X = 72$ 的数据点并不多：
 
-[PRE9]
+```r
+sum(galton$father == 72)
+#> [1] 8
+```
 
 如果我们把数字改为 72.5，我们将得到更少的数据点：
 
-[PRE10]
+```r
+sum(galton$father == 72.5)
+#> [1] 1
+```
 
 一种提高条件期望估计的实用方法是定义具有相似 $x$ 值的观察层。在我们的例子中，我们可以将父亲身高四舍五入到最接近的英寸，并假设它们都是 72 英寸。如果我们这样做，我们最终会得到以下预测：一个父亲身高为 72 英寸的儿子：
 
-[PRE11]
+```r
+mean(galton[round(father) == 72]$son)
+#> [1] 70.5
+```
 
 请注意，身高为 72 英寸的父亲高于平均水平，具体来说（72.0 - 69.1）/ 2.5 = 1.1 个标准差高于平均水平父亲。我们的预测 70.5 也高于平均水平，但仅比平均水平儿子高出 0.48 个标准差。72 英寸父亲儿子的预测身高有*回归*到平均身高。我们注意到身高比标准差减少的数量约为 0.5，这恰好接近样本相关系数。正如我们将在后面的章节中看到的，这并非巧合。
 
 如果我们想要预测任何身高，而不仅仅是 72 英寸，我们可以将相同的方法应用于每个层。分层后跟随箱线图让我们看到每个组的分布：
 
-[PRE12]
+```r
+galton, .(father_strata = [factor(round(father)), son)] |>
+ggplot(aes(father_strata, son)) + 
+ geom_boxplot() + 
+ geom_point()
+```
 
 ![](img/172e32e6bdc88b1d48b15d055ab6cd15.png)*  *不出所料，组的中心随着身高的增加而增加。此外，这些中心似乎遵循线性关系。下面，我们绘制了每个组的平均值。如果我们考虑到这些平均值是具有标准误的随机变量，数据与这些点遵循直线是一致的：
 
@@ -162,15 +207,29 @@ $$ \hat{y} = \mu_Y + \rho \left( \frac{x-\mu_X}{\sigma_X} \right) \sigma_Y $$
 
 我们可以通过将上述公式转换为 $\hat{y} = m + bx$ 的形式来向图表添加回归线，这给出了斜率 $m = \rho \frac{\sigma_y}{\sigma_x}$ 和截距 $b = \mu_y - m \mu_x$：
 
-[PRE13]
+```r
+params <- galton, .(mu_x = [mean(father), mu_y = mean(son),
+ s_x  = sd(father), s_y  = sd(son),
+ r    = cor(father, son))]
+ galton |> ggplot(aes(father, son)) + 
+ geom_point(alpha = 0.5) +
+ geom_abline(slope = with(params, r*s_y/s_x), 
+ intercept = with(params, mu_y - r*s_y/s_x*mu_x))
+```
 
 ![](img/0c237d29e0ec21c3ed7bd0bc004c10da.png)*  **使用 **ggplot** 我们不需要计算所有这些汇总，可以很容易地使用 `geom_smooth` 函数添加回归线：
 
-[PRE14]
+```r
+galton |> ggplot(aes(father, son)) + geom_point() + geom_smooth(method = "lm") 
+```
 
 在第 16.3 节 中，我们解释了这里的 `lm` 代表什么。**  **注意，回归公式意味着如果我们首先对变量进行标准化，即减去平均值并除以标准差，那么回归线的截距为 0，斜率等于相关系数 $\rho$。你可以绘制相同的图表，但使用这样的标准单位：
 
-[PRE15]
+```r
+galton |> ggplot(aes(scale(father), scale(son))) + 
+ geom_point(alpha = 0.5) +
+ geom_abline(intercept = 0, slope = r) 
+```
 
 ### 线性回归提高精度
 
@@ -182,15 +241,36 @@ $$ \hat{y} = \mu_Y + \rho \left( \frac{x-\mu_X}{\sigma_X} \right) \sigma_Y $$
 
 我们的目标是估计使用每种方法获得的预测的期望值和标准误差。我们希望期望值非常接近真实总体平均值，而标准误差要尽可能小。为了做到这一点，我们使用蒙特卡洛模拟。具体来说，我们从总体中反复抽取大小为 $N = 50$ 的家庭随机样本，对每个样本计算这两种预测，然后检查这些重复估计的分布。该分布的平均值提供了每种方法期望值的估计，其标准差提供了标准误差的估计，这反映了预测在随机样本之间的变化程度。
 
-[PRE16]
+```r
+B <- 1000
+N <- 50
+ conditional_avg <- replicate(B, {
+ dat <- galton[sample(.N, N, replace = TRUE)]
+ dat[round(father) == 72, if (.N) mean(son) else NA]
+})
+ linear_regression_prediction <- replicate(B, {
+ dat <- galton[sample(.N, N, replace = TRUE)]
+ dat, [mean(son) + cor(father, son)*(72 - mean(father))/sd(son)*sd(father)]
+})
+```
 
 尽管两种方法得到的期望值几乎相同：
 
-[PRE17]
+```r
+mean(conditional_avg, na.rm = TRUE)
+#> [1] 70.5
+mean(linear_regression_prediction)
+#> [1] 70.4
+```
 
 线性回归预测的标准误差要小得多：
 
-[PRE18]
+```r
+sd(conditional_avg, na.rm = TRUE)
+#> [1] 1.08
+sd(linear_regression_prediction)
+#> [1] 0.534
+```
 
 这意味着基于线性回归的预测在重复样本中具有更高的稳定性。原因很直观：条件平均值基于相对较小的数据子集，即身高约为 72 英寸的父亲，因此其估计值变化更大。在某些样本中，我们甚至可能在该组中几乎没有或没有观察值，这就是为什么我们使用 `na.rm=TRUE` 的原因。另一方面，回归线是使用整个数据集的信息进行估计的，这使得其预测更加精确。
 
@@ -218,7 +298,12 @@ $$ \hat{y} = \mu_Y + \rho \left( \frac{x-\mu_X}{\sigma_X} \right) \sigma_Y $$
 
 如果我们认为身高数据很好地被双变量正态分布近似，那么我们应该在每个层中看到正态近似的成立。在这里，我们通过标准化的父亲身高对儿子身高进行分层，并看到这个假设似乎成立：
 
-[PRE19]
+```r
+galton, .(son, z = [round((father - mean(father))/sd(father)))]z [%in% -2:2] |>
+ ggplot() + 
+ stat_qq(aes(sample = son)) +
+ facet_wrap( ~ z) 
+```
 
 ![](img/64d01c0bbf91b2493735067093512074.png)*  *Galton 使用数学统计学证明了，当两个变量遵循双变量正态分布时，计算回归线等同于计算条件期望。这里我们不展示推导过程，但我们可以证明，在这个假设下，对于任何给定的 $x$ 值，$X=x$ 的 $Y$ 对的期望值是：
 
@@ -250,7 +335,10 @@ $$ \mathrm{SD}[Y \mid X=x ] = \sigma_Y \sqrt{1-\rho²} $$
 
 **我们计算了一条回归线来预测儿子的身高与父亲身高。我们使用了以下计算：***
 
-[PRE20]
+```r
+m_1 <- with(params, r*s_y/s_x)
+b_1 <- with(params, mu_y - m_1*mu_x)
+```
 
 这给出了函数 $\mathrm{E}[Y\mid X=x] =$ 37.5 + 0.46 $x$。
 
@@ -258,7 +346,10 @@ $$ \mathrm{SD}[Y \mid X=x ] = \sigma_Y \sqrt{1-\rho²} $$
 
 我们需要计算 $\mathrm{E}[X \mid Y=y]$。由于数据近似为双变量正态，之前描述的理论告诉我们这个条件期望将遵循具有斜率和截距的直线：
 
-[PRE21]
+```r
+m_2 <- with(params, r*s_x/s_y)
+b_2 <- with(params, mu_x - m_2*mu_y)
+```
 
 使用这些计算我们得到 $\mathrm{E}[X \mid Y=y] =$ 41.2 + 0.4y。再次，我们看到回归到平均值：对父亲的预测比儿子身高 $y$ 对儿子平均值的预测更接近。
 
@@ -324,7 +415,12 @@ $$ \frac{\hat{y} - .255}{.032} = 0.46 \left( \frac{x - .261}{.031}\right) $$
 
 3. 我们进行了一次蒙特卡洛模拟，发现当 $N=25$ 时，中心极限定理（CLT）对于样本相关性的分布并不是一个好的近似。使用来自 **MASS** 包的 `mvrnorm` 函数生成相关数据：
 
-[PRE22]
+```r
+library([MASS](http://www.stats.ox.ac.uk/pub/MASS4/))
+N <- 25
+dat <- mvrnorm](https://rdrr.io/pkg/MASS/man/mvrnorm.html)(N, [c(0, 0), matrix(c(1, 0.9, 0.9, 1), 2, 2))
+cor(dat[,1], dat[,2])
+```
 
 对 $N <- c(25, 50, 100, 250, 500, 1000)$ 进行 10,000 次蒙特卡洛模拟，以确定 CLT 何时开始成为一个有用的近似。
 

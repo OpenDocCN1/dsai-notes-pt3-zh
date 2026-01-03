@@ -34,7 +34,13 @@ QQ 图最常见的使用是评估两个分布 $F_1(x)$ 和 $F_2(x)$ 是否相似
 
 到目前为止，我们只考察了男性的身高分布。我们预计女性的分布将与男性相似，但平均身高差异会导致 2-3 英寸的偏移。QQ 图确认了这一点：
 
-[PRE0]
+```r
+library(dslabs)
+f <- with(heights, height[sex == "Female"])
+m <- with(heights, height[sex == "Male"])
+qqplot(f - mean(f), m - mean(m))
+abline(0,1)
+```
 
 ![](img/69cfaf931a3cc6bdea455c55837fa9c0.png)*  *我们看到在图的中部，点位于身份线上，确认了分布相似，除了偏移。然而，对于较小的和较大的分位数，我们看到偏离了线。我们将在第 3.3 节中回到这个观察。*
 
@@ -48,19 +54,33 @@ QQ 图的常见用途是评估数据是否遵循正态分布。
 
 标准正态分布的累积分布函数（CDF）表示为 $\Phi(x)$，表示一个正态随机变量小于 $x$ 的概率。例如，$\Phi(-1.96) = 0.025$ 和 $\Phi(1.96) = 0.975$。在 R 中，这可以通过 `pnorm` 函数计算：
 
-[PRE1]
+```r
+pnorm(-1.96)
+#> [1] 0.025
+```
 
 *$\Phi$ 的逆，表示为 $\Phi^{-1}(p)$，提供了**理论分位数**。例如，$\Phi^{-1}(0.975) = 1.96$，我们可以通过 `qnorm` 计算得到：
 
-[PRE2]
+```r
+qnorm(0.975)
+#> [1] 1.96
+```
 
 默认情况下，`pnorm` 和 `qnorm` 假设为**标准正态分布**（均值 0，标准差 1）。您可以使用 `mean` 和 `sd` 参数指定不同的参数：
 
-[PRE3]
+```r
+qnorm(0.975, mean = 69, sd = 3)
+#> [1] 74.9
+```
 
 对于观察数据，我们可以使用 `quantile` 函数计算样本分位数。例如，以下是男性身高的四分位数：
 
-[PRE4]
+```r
+x <- with(heights, height[sex == "Male"])
+quantile(x, c(0.25, 0.50, 0.75))
+#> 25% 50% 75% 
+#>  67  69  72
+```
 
 为了检查这些数据是否近似正态分布，我们可以按照以下步骤构建 QQ 图：
 
@@ -74,23 +94,40 @@ QQ 图的常见用途是评估数据是否遵循正态分布。
 
 示例：
 
-[PRE5]
+```r
+p <- seq(0.05, 0.95, 0.05)
+sample_quantiles <- quantile(x, p)
+theoretical_quantiles <- qnorm(p, mean = mean(x), sd = sd(x))
+plot(theoretical_quantiles, sample_quantiles)
+abline(0, 1)
+```
 
 ![](img/075f73da751c892a7b2e54745a7c062c.png)*  *因为点接近身份线，我们得出结论，正态分布为这个数据集提供了一个很好的近似。
 
 如果我们首先标准化数据，代码就会变得简单：
 
-[PRE6]
+```r
+plot(quantile(scale(x), p), qnorm(p))
+```
 
 R 提供了生成与正态分布比较的 q-q 图的内置函数：
 
-[PRE7]
+```r
+qqnorm(x)
+qqline(x)
+```
 
 这些函数使用数据 `x` 的平均值和标准差来定义用于 x 轴值的理论正态分布。换句话说，绘制的线代表如果数据具有与观察样本相同的均值和扩散的正态分布，我们会期望看到的情况。
 
 并且与 **ggplot2** 相当：
 
-[PRE8]
+```r
+library([ggplot2](https://ggplot2.tidyverse.org))
+heights |> filter(sex == "Male") |>
+ ggplot](https://ggplot2.tidyverse.org/reference/ggplot.html)(aes(sample = [scale(height))) + 
+ geom_qq() +
+ geom_abline()
+```
 
 *默认情况下，`qqnorm` 和 `geom_qq` 都使用所有 $n$ 分位数，其中 $p_i = (i - 0.5)/n$。由于这种默认行为，大数据集可以产生数千个重叠的点，看起来像一条实线。在这种情况下，手动计算并绘制一个较小的、具有代表性的分位数集，而不是依赖于 `qqplot` 或 `qqnorm` 中的默认设置，会更好。**********
 
@@ -104,7 +141,11 @@ R 提供了生成与正态分布比较的 q-q 图的内置函数：
 
 我们了解到，当我们想要快速比较两个或多个分布时，箱线图很有用。以下是女性和男性的身高：
 
-[PRE9]
+```r
+library([tidyverse](https://tidyverse.tidyverse.org))
+library(dslabs)
+heights |> ggplot(aes(sex, height, fill = sex)) + geom_boxplot()
+```
 
 ![](img/cff227cc0046180a2422d4dfba688bb2.png)*  *该图立即显示，男性平均身高高于女性。标准差似乎相似。但是，正态近似也适用于调查收集的女性身高数据吗？我们预计它们将遵循正态分布，就像男性一样。然而，探索性绘图显示，这种近似并不那么有用：
 
@@ -116,7 +157,12 @@ R 提供了生成与正态分布比较的 q-q 图的内置函数：
 
 关于前五个最小值，请注意这些是：
 
-[PRE10]
+```r
+heights |> filter(sex == "Female") |> 
+ top_n(5, desc(height)) |>
+ pull(height)
+#> [1] 51 53 55 52 52
+```
 
 因为这些是报告的高度，一种可能是学生本意是想输入`5'1"`、`5'2"`、`5'3"`或`5'5"`。******
 
@@ -146,7 +192,11 @@ R 提供了生成与正态分布比较的 q-q 图的内置函数：
 
 6. 定义包含男性和女性身高的变量如下：
 
-[PRE11]
+```r
+library(dslabs)
+male <- heights$height[heights$sex == "Male"]
+female <- heights$height[heights$sex == "Female"]
+```
 
 我们有多少个测量值？
 

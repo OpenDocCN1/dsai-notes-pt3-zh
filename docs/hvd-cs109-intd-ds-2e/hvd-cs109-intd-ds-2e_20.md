@@ -12,7 +12,11 @@
 
 我们需要回答问题的数据并不总是以我们可读的电子表格形式存在。例如，我们在 R 基础知识章节中使用的美国谋杀数据集最初来自这个维基百科页面：
 
-[PRE0]
+```r
+url <- paste0("https://en.wikipedia.org/w/index.php?title=",
+ "Gun_violence_in_the_United_States_by_state",
+ "&direction=prev&oldid=810166167")
+```
 
 当您访问网页时，可以看到数据表：
 
@@ -28,7 +32,41 @@
 
 由于此代码是可访问的，我们可以下载 HTML 文件，将其导入 R 中，然后编写程序从页面中提取所需的信息。然而，一旦我们查看 HTML 代码，这可能会显得是一项艰巨的任务。但我们将向您展示一些方便的工具来简化这个过程。为了了解它是如何工作的，以下是来自提供美国谋杀数据维基百科页面的几行代码：
 
-[PRE1]
+```r
+<table class="wikitable sortable">
+<tr>
+<th>State</th>
+<th><a href="/wiki/List_of_U.S._states_and_territories_by_population" 
+title="List of U.S. states and territories by population">Population</a><br />
+<small>(total inhabitants)</small><br />
+<small>(2015)</small> <sup id="cite_ref-1" class="reference">
+<a href="#cite_note-1">[1]</a></sup></th>
+<th>Murders and Nonnegligent
+<p>Manslaughter<br />
+<small>(total deaths)</small><br />
+<small>(2015)</small> <sup id="cite_ref-2" class="reference">
+<a href="#cite_note-2">[2]</a></sup></p>
+</th>
+<th>Murder and Nonnegligent
+<p>Manslaughter Rate<br />
+<small>(per 100,000 inhabitants)</small><br />
+<small>(2015)</small></p>
+</th>
+</tr>
+<tr>
+<td><a href="/wiki/Alabama" title="Alabama">Alabama</a></td>
+<td>4,853,875</td>
+<td>348</td>
+<td>7.2</td>
+</tr>
+<tr>
+<td><a href="/wiki/Alaska" title="Alaska">Alaska</a></td>
+<td>737,709</td>
+<td>59</td>
+<td>8.0</td>
+</tr>
+<tr>
+```
 
 您实际上可以看到数据，但数据值被 HTML 代码如`<td>`包围。我们还可以看到其存储的模式。如果您了解 HTML，您可以编写利用这些模式提取所需内容的程序。我们还利用了一种广泛用于使网页看起来“漂亮”的语言，称为层叠样式表（CSS）。我们将在第 15.1.3 节中详细介绍这一点。
 
@@ -38,37 +76,74 @@
 
 *tidyverse** 提供了一个名为 **rvest** 的网络抓取包。使用此包的第一步是将网页导入 R。该包使这一过程变得非常简单：
 
-[PRE2]
+```r
+library([tidyverse](https://tidyverse.tidyverse.org))
+library([rvest](https://rvest.tidyverse.org/))
+h <- [read_html](http://xml2.r-lib.org/reference/read_xml.html)(url)
+```
 
 请注意，现在整个美国维基百科上的“谋杀案”网页现在都包含在 `h` 中。这个对象的类是：
 
-[PRE3]
+```r
+class(h)
+#> [1] "xml_document" "xml_node"
+```
 
 实际上，**rvest** 包更加通用；它处理 XML 文档。XML 是一种通用标记语言（ML 代表的就是这个），可以用来表示任何类型的数据。HTML 是 XML 的一种特定类型，专门为表示网页而开发。在这里，我们专注于 HTML 文档。
 
 现在，我们如何从对象 `h` 中提取表格？如果你打印 `h`，我们会看到一些不太有用的对象信息。我们可以使用 `html_text` 函数查看下载的网页的所有代码，如下所示：
 
-[PRE4]
+```r
+html_text(h)
+```
 
 我们在这里不展示输出，因为它包含了数千个字符。但如果我们查看它，我们可以看到我们想要的数据都存储在一个 HTML 表格中：你可以在上面的 HTML 代码的这一行中看到 `<table class="wikitable sortable">`。HTML 文档的不同部分，通常用 `<` 和 `>` 之间的消息定义，被称为 *节点*。**rvest** 包包含用于提取 HTML 文档节点的函数：`html_nodes` 提取所有不同类型的节点，`html_node` 提取第一个节点。要从 HTML 代码中提取表格，我们使用：
 
-[PRE5]
+```r
+tab <- h |> html_nodes("table")
+```
 
 现在，我们不再拥有整个网页，而是只有页面中表格的 HTML 代码：
 
-[PRE6]
+```r
+tab
+#> {xml_nodeset (2)}
+#> [1] <table class="wikitable sortable"><tbody>\n<tr>\n<th>State\n</th> ...
+#> [2] <table class="nowraplinks hlist mw-collapsible mw-collapsed navbo ...
+```
 
 我们感兴趣的表格是第一个：
 
-[PRE7]
+```r
+tab[[1]]
+#> {html_node}
+#> <table class="wikitable sortable">
+#> [1] <tbody>\n<tr>\n<th>State\n</th>\n<th>\n<a href="/wiki/List_of_U.S ...
+```
 
 这显然不是一个整洁的数据集，甚至不是一个数据框。在上面的代码中，你可以肯定地看到一个模式，编写代码来提取数据是完全可以实现的。事实上，**rvest** 包包含一个专门用于将 HTML 表格转换为数据框的函数：
 
-[PRE8]
+```r
+tab <- tab[1]] |> [html_table()
+class(tab)
+#> [1] "tbl_df"     "tbl"        "data.frame"
+```
 
 我们现在已经非常接近拥有一个可用的数据表了：
 
-[PRE9]
+```r
+tab <- tab |> setNames(c("state", "population", "total", "murder_rate")) 
+head(tab)
+#> # A tibble: 6 × 4
+#>   state      population total murder_rate
+#>   <chr>      <chr>      <chr>       <dbl>
+#> 1 Alabama    4,853,875  348           7.2
+#> 2 Alaska     737,709    59            8 
+#> 3 Arizona    6,817,565  309           4.5
+#> 4 Arkansas   2,977,853  181           6.1
+#> 5 California 38,993,940 1,861         4.8
+#> # ℹ 1 more row
+```
 
 我们仍然需要进行一些整理。例如，我们需要删除逗号并将字符转换为数字。在继续之前，我们将学习一种更通用的从网站提取信息的方法。********
 
@@ -84,15 +159,53 @@ SelectorGadget⁵ 是一款软件，允许你交互式地确定你需要从网�
 
 **在互联网上共享数据变得越来越普遍。不幸的是，提供者使用不同的格式，这使得数据分析师将数据整理到 R 中变得更加困难。然而，也有一些标准正在变得越来越普遍。目前，一个被广泛采用的格式是 JavaScript 对象表示法或 JSON。因为这个格式非常通用，它不像电子表格。这个 JSON 文件看起来更像是你用来定义列表的代码。以下是一个存储在 JSON 格式的信息示例：***
 
-[PRE10]
+```r
+#> [
+#>   {
+#>     "name": "Miguel",
+#>     "student_id": 1,
+#>     "exam_1": 85,
+#>     "exam_2": 86
+#>   },
+#>   {
+#>     "name": "Sofia",
+#>     "student_id": 2,
+#>     "exam_1": 94,
+#>     "exam_2": 93
+#>   },
+#>   {
+#>     "name": "Aya",
+#>     "student_id": 3,
+#>     "exam_1": 87,
+#>     "exam_2": 88
+#>   },
+#>   {
+#>     "name": "Cheng",
+#>     "student_id": 4,
+#>     "exam_1": 90,
+#>     "exam_2": 91
+#>   }
+#> ]
+```
 
 上面的文件实际上代表一个数据框。要读取它，我们可以使用 **jsonlite** 包中的 `fromJSON` 函数。请注意，JSON 文件通常通过互联网提供。一些组织提供 JSON API 或网络服务，你可以直接连接到它们并获取数据。以下是一个提供诺贝尔奖获得者信息的示例：
 
-[PRE11]
+```r
+library([jsonlite](https://jeroen.r-universe.dev/jsonlite))
+nobel <- [fromJSON](https://jeroen.r-universe.dev/jsonlite/reference/fromJSON.html)("http://api.nobelprize.org/v1/prize.json")
+```
 
 这下载了一个列表。第一个参数，名为“prizes”的表格包含了关于诺贝尔奖获得者信息。每一行对应一个特定的年份和类别。“laureates”列包含一个数据框列表，每个获奖者都有一个包含 id、firstname、surname 和 motivation 列的数据框。
 
-[PRE12]
+```r
+nobel$prizes |>
+ filter(category == "literature" & year == "1971") |> 
+ pull(laureates) |>
+ first() |>
+ select(id, firstname, surname)
+#>    id firstname surname
+#> 1 645     Pablo  Neruda
+```
 
 您可以通过检查 **jsonlite** 包的教程和帮助文件来了解更多信息。此包旨在处理相对简单的任务，例如将数据转换为表格。为了获得更多灵活性，我们推荐使用 **rjson** 包。*****
 
@@ -134,31 +247,57 @@ HTTP 是通过互联网进行数据共享最广泛使用的协议。**httr2** �
 
 假设你想从 CDC 获取按州划分的 COVID-19 死亡数据。通过访问他们的数据目录⁸，你可以搜索数据集并发现数据是通过以下 API 提供的：
 
-[PRE13]
+```r
+url <- "https://data.cdc.gov/resource/muzy-jte6.csv"
+```
 
 然后我们可以创建并执行如下请求：
 
-[PRE14]
+```r
+library([httr2](https://httr2.r-lib.org))
+response <- [request](https://httr2.r-lib.org/reference/request.html)(url) |> [req_perform](https://httr2.r-lib.org/reference/req_perform.html)()
+```
 
 我们可以通过查看返回的对象来查看请求的结果。
 
-[PRE15]
+```r
+response
+#> <httr2_response>
+#> GET https://data.cdc.gov/resource/muzy-jte6.csv
+#> Status: 200 OK
+#> Content-Type: text/csv
+#> Body: In memory (210922 bytes)
+```
 
 为了提取主体，即数据所在的位置，我们可以使用 `resp_body_string` 并将结果，一个以逗号分隔的字符串，发送到 `read_csv`
 
-[PRE16]
+```r
+library([readr](https://readr.tidyverse.org))
+tab <- response |> resp_body_string()
+```
 
 我们注意到返回的对象只有 1000 条记录。API 通常限制你可以下载的数据量。该 API 的文档⁹ 解释说我们可以通过 `$limit` 参数来更改这个限制。我们可以使用 `req_url_query` 将其添加到我们的请求中：
 
-[PRE17]
+```r
+response <- [request](https://httr2.r-lib.org/reference/request.html)(url) |> 
+ [req_url_query](https://httr2.r-lib.org/reference/req_url.html)(`$limit` = 100000) |>
+ [req_perform](https://httr2.r-lib.org/reference/req_perform.html)() 
+```
 
 CDC 服务以 csv 格式返回数据，但由网络服务更常使用的格式是 JSON。CDC 还通过以下 URL 提供了 json 格式的数据：
 
-[PRE18]
+```r
+url <- "https://data.cdc.gov/resource/muzy-jte6.json"
+```
 
 为了提取数据表，我们使用来自 **jsonlite** 包的 `fromJSON` 函数。
 
-[PRE19]
+```r
+tab <- [request](https://httr2.r-lib.org/reference/request.html)(url) |> 
+ [req_perform](https://httr2.r-lib.org/reference/req_perform.html)() |> 
+ [resp_body_string](https://httr2.r-lib.org/reference/resp_body_raw.html)() |> 
+ [fromJSON](https://jeroen.r-universe.dev/jsonlite/reference/fromJSON.html)(flatten = TRUE)
+```
 
 在处理 API 时，检查 API 的文档以了解速率限制、所需头信息或认证方法是非常重要的。`httr2` 包提供了处理这些要求的工具，例如设置头信息或认证参数。**********
 
@@ -172,13 +311,17 @@ CDC 服务以 csv 格式返回数据，但由网络服务更常使用的格式�
 
 2. 注意，尽管不太有用，我们实际上可以通过输入以下内容来查看页面内容：
 
-[PRE20]
+```r
+html_text(h)
+```
 
 下一步是提取表格。为此，我们可以使用 `html_nodes` 函数。我们了解到 HTML 中的表格与 `table` 节点相关联。使用 `html_nodes` 函数提取所有表格。将其存储在对象 `nodes` 中。
 
 3. `html_nodes` 函数返回一个类为 `xml_node` 的对象列表。我们可以使用例如 `html_text` 函数来查看每个对象的内容。例如，你可以这样查看任意选择组件的内容：
 
-[PRE21]
+```r
+html_text(nodes[[8]])
+```
 
 如果该对象的内容是 HTML 表格，我们可以使用 `html_table` 函数将其转换为数据框。使用 `html_table` 函数将 `nodes` 的第 8 个条目转换为表格。
 
@@ -216,7 +359,10 @@ CDC 服务以 csv 格式返回数据，但由网络服务更常使用的格式�
 
 12. 我们可以看到，问题之一是洋基队被列为*N.Y. Yankees*和*NY Yankees*。在下一节中，我们将学习解决此类问题的有效方法。在这里，我们可以手动这样做如下：
 
-[PRE22]
+```r
+tab_1 <- tab_1 |>
+ mutate(Team = ifelse(Team == "N.Y. Yankees", "NY Yankees", Team))
+```
 
 现在将表格连接起来，只显示奥克兰和洋基队以及工资列。
 

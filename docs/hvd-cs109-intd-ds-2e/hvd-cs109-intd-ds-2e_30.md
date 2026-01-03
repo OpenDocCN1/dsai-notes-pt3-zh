@@ -10,7 +10,13 @@
 
 为了说明理解分布及其与描述性统计量之间关系所需的概念，我们将假装我们需要向 ET，一个从未见过人类的地球外生物，描述我们同学的身高。作为第一步，我们需要收集数据。为此，我们要求学生报告他们的身高（英寸）。我们要求他们提供性别信息，因为我们知道存在两种不同的性别分布。我们收集数据并将其保存在**dslabs**包中包含的`heights`数据框中。
 
-[PRE0]
+```r
+library(dslabs)
+str(heights)
+#> 'data.frame':    1050 obs. of  2 variables:
+#>  $ sex   : Factor w/ 2 levels "Female","Male": 2 2 2 2 2 1 1 1 1 2 ...
+#>  $ height: num  75 70 68 74 61 65 66 62 66 67 ...
+```
 
 向 ET 传达身高的一种方法就是简单地发送一个包含所有身高的列表。然而，还有更有效的方法来传达这些信息，理解分布的概念将有所帮助。为了简化解释，我们首先关注男性的身高。我们将在第 3.3 节中检查女性的身高数据。
 
@@ -40,7 +46,12 @@ $$ p_k = \frac{\text{类别 } k \text{ 出现在列表中的次数}}{n} $$
 
 这里有一个关于美国州区域的例子：
 
-[PRE1]
+```r
+prop.table(table(state.region))
+#> state.region
+#>     Northeast         South North Central          West 
+#>          0.18          0.32          0.24          0.26
+```
 
 当数据是离散数值时，相对频率分布的定义方式相同，但更常见的是使用以下符号，因为频率可以被认为是数值的函数：
 
@@ -98,11 +109,19 @@ $$(49.5, 50.5], (50.5, 51.5], (51.5, 52.5], (52.5, 53.5], \dots, (82.5, 83.5]$$
 
 我们可以使用以下**ggplot2**代码来完成这项工作：
 
-[PRE2]
+```r
+library([tidyverse](https://tidyverse.tidyverse.org))
+heights |> filter(sex == "Male") |> 
+ mutate(height = round(height)) |>
+ count(height) |> mutate(f = n / sum(n)) |> 
+ ggplot(aes(height, f)) + geom_col()
+```
 
 ![](img/b50ae91dc2e270ae6530a84ada5ed2ab.png)*  *R 的基础`hist`函数也允许我们快速构建直方图。我们可以定义自定义的箱间隔，这对于分组极端值和避免空箱特别有用：*
 
-[PRE3]
+```r
+with(heights, hist(heightsex == "Male"], breaks = [c(50, 55, 60:80, 85)))
+```
 
 ![](img/3c8f6cf8cdd9a582f2942967c894826d.png)*  *如果我们将这些图表之一发送给一个对人类身高分布不熟悉的地球外生物，他们可以立即获得关于数据的关键见解。首先，身高值范围从 50 到 84 英寸，超过 95%的观测值在 63 到 75 英寸之间。其次，分布在大约 69 英寸处近似对称。此外，通过求和箱计数，可以估计任何给定区间内数据所占的比例。因此，直方图提供了一个直观的总结，仅使用大约 30 个箱计数就保留了从原始的 812 个身高测量值中提取的大部分信息。*
 
@@ -110,13 +129,20 @@ $$(49.5, 50.5], (50.5, 51.5], (51.5, 52.5], (52.5, 53.5], \dots, (82.5, 83.5]$$
 
 默认情况下，直方图通常在 y 轴上显示频率而不是相对频率。**ggplot2**包遵循这一惯例：
 
-[PRE4]
+```r
+heights |> filter(sex == "Male") |> ggplot(aes(x = height)) + 
+ geom_histogram](https://ggplot2.tidyverse.org/reference/geom_histogram.html)(breaks = [c(50, 55, 60:80, 85), fill = "grey", color = "black")
+```
 
 ![](img/ad2a6de39b161a247dfb596cd4055f97.png)*  *注意我们使用`fill`和`color`来模仿`hist`的行为。
 
 当显示频率时，使用等间距的分箱很重要，因为较大的分箱自然会包含更多的观察值，并可能扭曲数据的视觉表示。要显示**相对**频率，可以通过设置`y = after_stat(density)`来修改代码：
 
-[PRE5]
+```r
+heights |> filter(sex == "Male") |> 
+ ggplot(aes(x = height, y = after_stat(density))) + 
+ geom_histogram](https://ggplot2.tidyverse.org/reference/geom_histogram.html)(breaks = [c(50, 55, 60:80, 85), fill = "grey", color = "black")
+```
 
 ![](img/36952a0e52ea23660c7256a4b81a35ba.png)***  ***### 选择分箱宽度
 
@@ -126,7 +152,10 @@ $$(49.5, 50.5], (50.5, 51.5], (51.5, 52.5], (52.5, 53.5], \dots, (82.5, 83.5]$$
 
 ****平滑密度图与直方图类似，但数据没有被分成分箱。以下是我们身高数据的平滑密度图：
 
-[PRE6]
+```r
+heights |> filter(sex == "Male") |> 
+ ggplot(aes(height)) + geom_density(alpha = 0.2, fill = "#00BFC4")
+```
 
 ![](img/b214c656bb52b8b05911f836052c4abf.png)*  *在这个图中，我们不再在区间边界处有尖锐的边缘，许多局部峰值也被移除了。
 

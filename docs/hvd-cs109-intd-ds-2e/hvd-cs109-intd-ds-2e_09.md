@@ -66,7 +66,7 @@
 
 当使用文本文件存储电子表格时，行断行符用于分隔行，而一个预定义的字符，称为*分隔符*，用于在行内分隔列。最常见的分隔符是逗号（`,`）、分号（`;`）、空格（``）和制表符（预设的空格数或`\t`）。将这些文件读入 R 时，使用的方法略有不同，因此我们需要知道使用了哪种分隔符。在某些情况下，分隔符可以从文件后缀推断出来。例如，以`csv`结尾的文件预期是逗号分隔的，而以`tsv`结尾的文件预期是制表符分隔的。然而，对于以`txt`结尾的文件，推断分隔符会更困难。因此，我们建议查看文件而不是从后缀推断。您可以使用`readLines`函数在 R 中查看文件中的任意行数：``
 
-[PRE4] [readLines](https://rdrr.io/r/base/readLines.html)("murders.csv", n = 3) #> [1] "state,abb,region,population,total" #> [2] "Alabama,AL,South,4779736,135"  #> [3] "Alaska,AK,West,710231,19" [PRE5]`
+PRE4] [readLines("murders.csv", n = 3) #> [1] "state,abb,region,population,total" #> [2] "Alabama,AL,South,4779736,135"  #> [3] "Alaska,AK,West,710231,19" [PRE5]`
 
 ### `*6.2.2 二进制文件*`
 
@@ -74,11 +74,11 @@
 
 ### `*6.2.3 编码*`
 
-[PRE6] fn <- "calificaciones.csv" [file.copy](https://rdrr.io/r/base/files.html)([file.path](https://rdrr.io/r/base/file.path.html)([system.file](https://rdrr.io/r/base/system.file.html)("extdata", package = "dslabs"), fn), fn) #> [1] TRUE [readLines](https://rdrr.io/r/base/readLines.html)(fn, n = 1) #> [1] "\"nombre\",\"f.n.\",\"estampa\",\"puntuaci\xf3n\"" [PRE7]`*****
+PRE6] fn <- "calificaciones.csv" [file.copy(file.path(system.file("extdata", package = "dslabs"), fn), fn) #> 1] TRUE [readLines(fn, n = 1) #> [1] "\"nombre\",\"f.n.\",\"estampa\",\"puntuaci\xf3n\"" [PRE7]`*****
 
 ## ***`**6.3 解析器**`***
 
-**[PRE8] dat <- [read.csv](https://rdrr.io/r/utils/read.table.html)("murders.csv") [PRE9] x <- [scan](https://rdrr.io/r/base/scan.html)("murders.csv", sep = ",", what = "c") x[1:10] #>  [1] "state"      "abb"        "region"     "population" "total"  #>  [6] "Alabama"    "AL"         "South"      "4779736"    "135" [PRE10] [library](https://rdrr.io/r/base/library.html)([readr](https://readr.tidyverse.org)) [PRE11] dat <- [read_csv](https://readr.tidyverse.org/reference/read_delim.html)("murders.csv") #> Rows: 51 Columns: 5 #> ── Column specification ──────────────────────────────────────────────── #> Delimiter: "," #> chr (3): state, abb, region #> dbl (2): population, total #>  #> ℹ Use `spec()` to retrieve the full column specification for this data. #> ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message. [PRE12] [guess_encoding](https://readr.tidyverse.org/reference/encoding.html)("murders.csv") #> # A tibble: 1 × 2 #>   encoding confidence #>   <chr>         <dbl> #> 1 ASCII             1 [PRE13] [guess_encoding](https://readr.tidyverse.org/reference/encoding.html)("calificaciones.csv") #> # A tibble: 3 × 2 #>   encoding   confidence #>   <chr>           <dbl> #> 1 ISO-8859-1       0.92 #> 2 ISO-8859-2       0.72 #> 3 ISO-8859-9       0.53 [PRE14] dat <- [read_csv](https://readr.tidyverse.org/reference/read_delim.html)("calificaciones.csv", show_col_types = FALSE,  locale = [locale](https://readr.tidyverse.org/reference/locale.html)(encoding = "ISO-8859-1")) [PRE15] [names](https://rdrr.io/r/base/names.html)(dat) #> [1] "nombre"     "f.n."       "estampa"    "puntuación" [PRE16] [library](https://rdrr.io/r/base/library.html)([readxl](https://readxl.tidyverse.org)) [PRE17] [library](https://rdrr.io/r/base/library.html)([data.table](https://r-datatable.com)) dat <- [fread](https://rdatatable.gitlab.io/data.table/reference/fread.html)("murders.csv") [PRE18] url <- [paste0](https://rdrr.io/r/base/paste.html)("https://raw.githubusercontent.com/",  "rafalab/dslabs/master/inst/extdata/murders.csv") [PRE19] dat <- [read.csv](https://rdrr.io/r/utils/read.table.html)(url) [PRE20] [download.file](https://rdrr.io/r/utils/download.file.html)(url, "murders.csv") [PRE21] tmp_filename <- [tempfile](https://rdrr.io/r/base/tempfile.html)() [download.file](https://rdrr.io/r/utils/download.file.html)(url, tmp_filename) dat <- [read_csv](https://readr.tidyverse.org/reference/read_delim.html)(tmp_filename) [file.remove](https://rdrr.io/r/base/files.html)(tmp_filename) [PRE22]`***
+**PRE8] dat <- read.csv("murders.csv") PRE9] x <- scan("murders.csv", sep = ",", what = "c") x1:10] #>  1] "state"      "abb"        "region"     "population" "total"  #>  [6] "Alabama"    "AL"         "South"      "4779736"    "135" [PRE10] [library(readr("murders.csv") #> Rows: 51 Columns: 5 #> ── Column specification ──────────────────────────────────────────────── #> Delimiter: "," #> chr (3): state, abb, region #> dbl (2): population, total #>  #> ℹ Use `spec()` to retrieve the full column specification for this data. #> ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message. PRE12] [guess_encoding("murders.csv") #> # A tibble: 1 × 2 #>   encoding confidence #>   <chr>         <dbl> #> 1 ASCII             1 PRE13] [guess_encoding("calificaciones.csv") #> # A tibble: 3 × 2 #>   encoding   confidence #>   <chr>           <dbl> #> 1 ISO-8859-1       0.92 #> 2 ISO-8859-2       0.72 #> 3 ISO-8859-9       0.53 PRE14] dat <- [read_csv("calificaciones.csv", show_col_types = FALSE,  locale = locale(encoding = "ISO-8859-1")) PRE15] [names(dat) #> 1] "nombre"     "f.n."       "estampa"    "puntuación" [PRE16] [library(readxl(tmp_filename) [file.remove(tmp_filename) [PRE22]`***
 
 ## *`****6.4 使用电子表格组织数据****`*
 
@@ -86,7 +86,7 @@
 
 ## *``****6.5 练习****``*
 
-[PRE23] 路径 <- [system.file](https://rdrr.io/r/base/system.file.html)("extdata", package = "dslabs") 文件列表 <- [list.files](https://rdrr.io/r/base/list.files.html)(路径) 文件 [PRE24] [names](https://rdrr.io/r/base/names.html)(dat) [PRE25]`*
+PRE23] 路径 <- [system.file("extdata", package = "dslabs") 文件列表 <- list.files(路径) 文件 PRE24] [names(dat) [PRE25]`*
 
 * * *
 

@@ -1,27 +1,35 @@
 - en: Chapter 40 Reproducible projects with RStudio and R markdown
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 第40章 使用RStudio和R Markdown进行可重复的项目
 - en: 原文：[https://rafalab.dfci.harvard.edu/dsbook/reproducible-projects-with-rstudio-and-r-markdown.html](https://rafalab.dfci.harvard.edu/dsbook/reproducible-projects-with-rstudio-and-r-markdown.html)
+  id: totrans-1
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 原文：[https://rafalab.dfci.harvard.edu/dsbook/reproducible-projects-with-rstudio-and-r-markdown.html](https://rafalab.dfci.harvard.edu/dsbook/reproducible-projects-with-rstudio-and-r-markdown.html)
 - en: The final product of a data analysis project is often a report. Many scientific
     publications can be thought of as a final report of a data analysis. The same
     is true for news articles based on data, an analysis report for your company,
     or lecture notes for a class on how to analyze data. The reports are often on
     paper or in a PDF that includes a textual description of the findings along with
     some figures and tables resulting from the analysis.
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: 数据分析项目的最终成果通常是一份报告。许多科学出版物可以被视为数据分析的最终报告。基于数据的新闻报道、公司分析报告或数据分析课程讲义也是如此。这些报告通常以纸张或包含分析结果文本描述以及一些图表和表格的PDF形式呈现。
 - en: Imagine that after you finish the analysis and the report, you are told that
     you were given the wrong dataset, you are sent a new one and you are asked to
     run the same analysis with this new dataset. Or what if you realize that a mistake
     was made and need to re-examine the code, fix the error, and re-run the analysis?
     Or imagine that someone you are training wants to see the code and be able to
     reproduce the results to learn about your approach?
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: 想象一下，在你完成分析和报告后，你被告知你得到了错误的数据集，你被发送了一个新的数据集，并要求你使用这个新的数据集运行相同的分析。或者，如果你意识到犯了一个错误并需要重新检查代码、修复错误并重新运行分析怎么办？或者想象一下，你正在培训的人想看看代码并能够重现结果以了解你的方法？
 - en: Situations like the ones just described are actually quite common for a data
     scientist. Here, we describe how you can keep your data science projects organized
     with RStudio so that re-running an analysis is straight-forward. We then demonstrate
@@ -30,12 +38,17 @@
     is possible due to the fact that R markdown documents permit code and textual
     descriptions to be combined into the same document, and the figures and tables
     produced by the code are automatically added to the document.
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: 正如刚才描述的情况，对于数据科学家来说实际上是非常常见的。在这里，我们描述了如何使用RStudio来组织你的数据科学项目，以便重新运行分析变得简单直接。然后，我们展示了如何使用R
+    Markdown和**knitR**包生成可重复的报告，这将极大地帮助以最少的工作重新创建报告。这是由于R Markdown文档允许将代码和文本描述组合到同一文档中，并且由代码生成的图表和表格会自动添加到文档中。
 - en: 40.1 RStudio projects
+  id: totrans-5
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 40.1 RStudio项目
 - en: RStudio provides a way to keep all the components of a data analysis project
     organized into one folder and to keep track of information about this project,
     such as the Git status of files, in one file. In Section [39.6](git.html#rstudio-git)
@@ -43,23 +56,33 @@
     projects. In this section we quickly demonstrate how to start a new a project
     and some recommendations on how to keep these organized. RStudio projects also
     permit you to have several RStudio sessions open and keep track of which is which.
+  id: totrans-6
   prefs: []
   type: TYPE_NORMAL
+  zh: RStudio提供了一种方法，可以将数据分析项目的所有组件组织到一个文件夹中，并跟踪有关此项目的信息，例如文件的Git状态，在一个文件中。在第[39.6](git.html#rstudio-git)节中，我们展示了RStudio如何通过RStudio项目促进Git和GitHub的使用。在本节中，我们简要演示了如何开始一个新的项目以及一些关于如何保持这些项目组织有序的建议。RStudio项目还允许你打开多个RStudio会话并跟踪每个会话是哪一个。
 - en: To start a project, click on *File* and then *New Project*. Often we have already
     created a folder to save the work, as we did in Section [38.7](unix.html#prep-project)
     and we select *Existing Directory*. Here we show an example in which we have not
     yet created a folder and select the *New Directory* option.
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: 要开始一个项目，点击*文件*然后*新建项目*。通常我们已经在保存工作的地方创建了一个文件夹，就像我们在第[38.7](unix.html#prep-project)节中做的那样，我们选择*现有目录*。在这里，我们展示了一个例子，我们还没有创建文件夹，选择了*新建目录*选项。
 - en: '![](../Images/4606db039dc02e96635b6ec825ad660a.png)![](../Images/119a4082ad0445ff7cc443d0be0e6532.png)'
+  id: totrans-8
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/4606db039dc02e96635b6ec825ad660a.png)![](../Images/119a4082ad0445ff7cc443d0be0e6532.png)'
 - en: 'Then, for a data analysis project, you usually select the *New Project* option:'
+  id: totrans-9
   prefs: []
   type: TYPE_NORMAL
+  zh: 那么，对于一个数据分析项目，你通常选择*新建项目*选项：
 - en: '![](../Images/48fb4accb582e6347abf9789fea33c16.png)'
+  id: totrans-10
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/48fb4accb582e6347abf9789fea33c16.png)'
 - en: Now you will have to decide on the location of the folder that will be associated
     with your project, as well as the name of the folder. When choosing a folder name,
     just like with file names, make sure it is a meaningful name that will help you
@@ -68,56 +91,83 @@
     this project *my-first-project*. This will then generate a *Rproj* file called
     *my-first-project.Rproj* in the folder associated with the project. We will see
     how this is useful a few lines below.
+  id: totrans-11
   prefs: []
   type: TYPE_NORMAL
+  zh: 现在，你必须决定与你的项目关联的文件夹的位置以及文件夹的名称。在选择文件夹名称时，就像文件名一样，确保它是一个有意义的名称，这将帮助你记住项目的内容。与文件一样，我们建议使用小写字母，没有空格，并使用连字符来分隔单词。我们将把这个项目的文件夹命名为
+    *my-first-project*。这将在这个项目关联的文件夹中生成一个名为 *my-first-project.Rproj* 的 *Rproj* 文件。我们将在下面几行中看到这如何有用。
 - en: '![](../Images/17d004e987b53d026c317a7e0cc45a07.png)'
+  id: totrans-12
   prefs: []
   type: TYPE_IMG
+  zh: '![图片4](../Images/17d004e987b53d026c317a7e0cc45a07.png)'
 - en: You will be given options on where this folder should be on your filesystem.
     In this example, we will place it in our home folder, but this is generally not
     good practice. As we described in Section [38.7](unix.html#prep-project) in the
     Unix chapter, you want to organize your filesystem following a hierarchical approach
     and with a folder called *projects* where you keep a folder for each project.
+  id: totrans-13
   prefs: []
   type: TYPE_NORMAL
+  zh: 你将会有选项来决定这个文件夹在你的文件系统中的位置。在这个例子中，我们将将其放置在我们的主文件夹中，但这通常不是好的做法。正如我们在 Unix 章节中的
+    [38.7](unix.html#prep-project) 节所描述的，你希望按照分层方法组织你的文件系统，并有一个名为 *projects* 的文件夹，其中包含每个项目的文件夹。
 - en: '![](../Images/e83a1be64552457f550b704b643ec204.png)'
+  id: totrans-14
   prefs: []
   type: TYPE_IMG
+  zh: '![图片5](../Images/e83a1be64552457f550b704b643ec204.png)'
 - en: 'When you start using RStudio with a project, you will see the project name
     in the upper right corner. This will remind you what project this particular RStudio
     session belongs to. When you open an RStudio session with no project, it will
     say *Project: (None)*.'
+  id: totrans-15
   prefs: []
   type: TYPE_NORMAL
+  zh: 当你使用项目启动 RStudio 时，你将在右上角看到项目名称。这将提醒你这个特定的 RStudio 会话属于哪个项目。当你没有项目地打开 RStudio
+    会话时，它将显示 *项目：无*。
 - en: When working on a project, all files will be saved and searched for in the folder
     associated with the project. Below, we show an example of a script that we wrote
     and saved with the name *code.R*. Because we used a meaningful name for the project,
     we can be a bit less informative when we name the files. Although we do not do
     it here, you can have several scripts open at once. You simply need to click *File*,
     then *New File* and pick the type of file you want to edit.
+  id: totrans-16
   prefs: []
   type: TYPE_NORMAL
+  zh: 当你在项目上工作时，所有文件都将被保存在与项目关联的文件夹中，并在此文件夹中进行搜索。下面，我们展示了一个我们编写的并命名为 *code.R* 的脚本示例。因为我们为项目使用了有意义的名称，所以在命名文件时我们可以稍微少一些信息。尽管我们在这里没有这样做，但你可以在一次打开多个脚本。你只需点击
+    *文件*，然后 *新建文件* 并选择你想要编辑的文件类型。
 - en: '![](../Images/399629e8fcde4ead5a87fed3059d86b1.png)'
+  id: totrans-17
   prefs: []
   type: TYPE_IMG
+  zh: '![图片3](../Images/399629e8fcde4ead5a87fed3059d86b1.png)'
 - en: One of the main advantages of using Projects is that after closing RStudio,
     if we wish to continue where we left off on the project, we simply double click
     or open the file saved when we first created the RStudio project. In this case,
     the file is called *my-first-project.Rproj*. If we open this file, RStudio will
     start up and open the scripts we were editing.
+  id: totrans-18
   prefs: []
   type: TYPE_NORMAL
+  zh: 使用项目的主要优势之一是，在关闭 RStudio 后，如果我们希望继续在项目中的工作，我们只需双击或打开我们首次创建 RStudio 项目时保存的文件。在这种情况下，文件被命名为
+    *my-first-project.Rproj*。如果我们打开这个文件，RStudio 将启动并打开我们正在编辑的脚本。
 - en: '![](../Images/00911d30f9c58cb77866c3f04d7db8a7.png)![](../Images/06636fe046c144a749403a44f049629f.png)'
+  id: totrans-19
   prefs: []
   type: TYPE_IMG
+  zh: '![图片1](../Images/00911d30f9c58cb77866c3f04d7db8a7.png)![图片2](../Images/06636fe046c144a749403a44f049629f.png)'
 - en: Another advantage is that if you click on two or more different Rproj files,
     you start new RStudio and R sessions for each.
+  id: totrans-20
   prefs: []
   type: TYPE_NORMAL
+  zh: 另一个优势是，如果你点击两个或更多不同的 Rproj 文件，你将为每个文件启动新的 RStudio 和 R 会话。
 - en: 40.2 R markdown
+  id: totrans-21
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 40.2 R markdown
 - en: 'R markdown is a format for *literate programming* documents. It is based on
     *markdown*, a markup language that is widely used to generate html pages. You
     can learn more about markdown here: [https://www.markdowntutorial.com/](https://www.markdowntutorial.com/).
@@ -129,244 +179,376 @@
     different than the final product. This seems like a disadvantage at first, but
     it is not because, for example, instead of producing plots and inserting them
     one by one into the word processing document, the plots are automatically added.'
+  id: totrans-22
   prefs: []
   type: TYPE_NORMAL
+  zh: R Markdown是一种用于*文学编程*文档的格式。它基于*Markdown*，这是一种广泛用于生成HTML页面的标记语言。你可以在这里了解更多关于Markdown的信息：[https://www.markdowntutorial.com/](https://www.markdowntutorial.com/)。文学编程将指令、文档和详细的注释编织在机器可执行代码之间，产生一个描述程序的文档，这对于人类理解是最好的（Knuth
+    1984）。与Microsoft Word等字处理器不同，在R Markdown中，你需要*编译*文档以生成最终报告。R Markdown文档看起来与最终产品不同。乍一看这似乎是一个缺点，但事实并非如此，因为例如，而不是一个接一个地生成图表并将其插入到字处理文档中，图表会自动添加。
 - en: 'In RStudio, you can start an R markdown document by clicking on *File*, *New
     File*, the *R Markdown*. You will then be asked to enter a title and author for
     your document. We are going to prepare a report on gun murders so we will give
     it an appropriate name. You can also decide what format you would like the final
     report to be in: HTML, PDF, or Microsoft Word. Later, we can easily change this,
     but here we select html as it is the preferred format for debugging purposes:'
+  id: totrans-23
   prefs: []
   type: TYPE_NORMAL
+  zh: 在RStudio中，你可以通过点击*文件*，*新建文件*，*R Markdown*来开始一个R Markdown文档。然后你将被要求输入文档的标题和作者。我们将准备一份关于枪支谋杀的报告，所以我们将给它一个合适的名字。你也可以决定你想要的最终报告的格式：HTML、PDF或Microsoft
+    Word。稍后我们可以轻松更改此设置，但在这里我们选择html，因为它是调试目的的首选格式：
 - en: '![](../Images/b4367827c0a3970394226fb55bf2194c.png)![](../Images/77b600bfb17d60e5101a9f2143743e92.png)'
+  id: totrans-24
   prefs: []
   type: TYPE_IMG
+  zh: '![模板文件](../Images/b4367827c0a3970394226fb55bf2194c.png)![模板文件](../Images/77b600bfb17d60e5101a9f2143743e92.png)'
 - en: 'This will generate a template file:'
+  id: totrans-25
   prefs: []
   type: TYPE_NORMAL
+  zh: 这将生成一个模板文件：
 - en: '![](../Images/7f1ca37daa5f50fff004adc7a5e0ebac.png)'
+  id: totrans-26
   prefs: []
   type: TYPE_IMG
+  zh: '![输出示例](../Images/7f1ca37daa5f50fff004adc7a5e0ebac.png)'
 - en: As a convention, we use the `Rmd` suffix for these files.
+  id: totrans-27
   prefs: []
   type: TYPE_NORMAL
+  zh: 作为惯例，我们使用`Rmd`后缀为这些文件。
 - en: Once you gain experience with R Markdown, you will be able to do this without
     the template and can simply start from a blank template.
+  id: totrans-28
   prefs: []
   type: TYPE_NORMAL
+  zh: 一旦你有了R Markdown的经验，你将能够不使用模板，直接从空白模板开始。
 - en: In the template, you will see several things to note.
+  id: totrans-29
   prefs: []
   type: TYPE_NORMAL
+  zh: 在模板中，你会看到一些需要注意的事项。
 - en: 40.2.1 The header
+  id: totrans-30
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 40.2.1 标题
 - en: 'At the top you see:'
+  id: totrans-31
   prefs: []
   type: TYPE_NORMAL
+  zh: 在顶部你看到：
 - en: '[PRE0]'
+  id: totrans-32
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: The things between the `---` is the header. We actually don’t need a header,
     but it is often useful. You can define many other things in the header than what
     is included in the template. We don’t discuss those here, but much information
     is available online. The one parameter that we will highlight is `output`. By
     changing this to, say, `pdf_document`, we can control the type of output that
     is produced when we compile.
+  id: totrans-33
   prefs: []
   type: TYPE_NORMAL
+  zh: 介于`---`之间的内容是标题。实际上我们不需要标题，但它通常很有用。你可以在标题中定义许多其他内容，而不仅仅是模板中包含的内容。我们在这里不讨论这些内容，但网上有很多信息。我们将强调的一个参数是`output`。通过将其更改为，例如，`pdf_document`，我们可以控制编译时产生的输出类型。
 - en: 40.2.2 R code chunks
+  id: totrans-34
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 40.2.2 R代码块
 - en: 'In various places in the document, we see something like this:'
+  id: totrans-35
   prefs: []
   type: TYPE_NORMAL
+  zh: 在文档的各个地方，我们看到类似这样的内容：
 - en: '[PRE1]{r}'
+  id: totrans-36
   prefs: []
   type: TYPE_NORMAL
+  zh: '[PRE1]{r}'
 - en: summary(pressure)
+  id: totrans-37
   prefs: []
   type: TYPE_NORMAL
+  zh: summary(pressure)
 - en: '[PRE2]'
+  id: totrans-38
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: These are the code chunks. When you compile the document, the R code inside
     the chunk, in this case `summary(pressure)`, will be evaluated and the result
     included in that position in the final document.
+  id: totrans-39
   prefs: []
   type: TYPE_NORMAL
+  zh: 这些是代码块。当你编译文档时，块内的R代码，在本例中为`summary(pressure)`，将被评估并包含在最终文档的相应位置。
 - en: To add your own R chunks, you can type the characters above quickly with the
     key binding command-option-I on the Mac and Ctrl-Alt-I on Windows.
+  id: totrans-40
   prefs: []
   type: TYPE_NORMAL
+  zh: 要添加自己的R代码块，你可以在Mac上使用快捷键命令-选项-I，在Windows上使用Ctrl-Alt-I快速输入上述字符。
 - en: 'This applies to plots as well; the plot will be placed in that position. We
     can write something like this:'
+  id: totrans-41
   prefs: []
   type: TYPE_NORMAL
+  zh: 这也适用于图表；图表将被放置在那个位置。我们可以写一些像这样的内容：
 - en: '[PRE3]{r}'
+  id: totrans-42
   prefs: []
   type: TYPE_NORMAL
+  zh: '[PRE3]{r}'
 - en: plot(pressure)
+  id: totrans-43
   prefs: []
   type: TYPE_NORMAL
+  zh: 绘制压力图
 - en: '[PRE4]'
+  id: totrans-44
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE4]'
 - en: 'By default, the code will show up as well. To avoid having the code show up,
     you can use an argument. To avoid this, you can use the argument `echo=FALSE`.
     For example:'
+  id: totrans-45
   prefs: []
   type: TYPE_NORMAL
+  zh: 默认情况下，代码也会显示出来。为了避免代码显示，您可以使用一个参数。为了避免这种情况，您可以使用参数 `echo=FALSE`。例如：
 - en: '[PRE5]{r, echo=FALSE}'
+  id: totrans-46
   prefs: []
   type: TYPE_NORMAL
+  zh: '[PRE5]{r, echo=FALSE}'
 - en: summary(pressure)
+  id: totrans-47
   prefs: []
   type: TYPE_NORMAL
+  zh: summary(pressure)
 - en: '[PRE6]'
+  id: totrans-48
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE6]'
 - en: 'We recommend getting into the habit of adding a label to the R code chunks.
     This will be very useful when debugging, among other situations. You do this by
     adding a descriptive word like this:'
+  id: totrans-49
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们建议养成在 R 代码块中添加标签的习惯。这在调试以及其他情况下将非常有用。您可以通过添加一个描述性单词来完成此操作，如下所示：
 - en: '[PRE7]{r pressure-summary}'
+  id: totrans-50
   prefs: []
   type: TYPE_NORMAL
+  zh: '[PRE7]{r pressure-summary}'
 - en: summary(pressure)
+  id: totrans-51
   prefs: []
   type: TYPE_NORMAL
+  zh: summary(pressure)
 - en: '[PRE8]'
+  id: totrans-52
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE8]'
 - en: 40.2.3 Global options
+  id: totrans-53
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 40.2.3 全局选项
 - en: 'One of the R chunks contains a complex looking call:'
+  id: totrans-54
   prefs: []
   type: TYPE_NORMAL
+  zh: 其中一个 R 代码块包含一个看起来复杂的调用：
 - en: '[PRE9]{r setup, include=FALSE}'
+  id: totrans-55
   prefs: []
   type: TYPE_NORMAL
+  zh: '[PRE9]{r setup, include=FALSE}'
 - en: knitr::opts_chunk$set(echo = TRUE)
+  id: totrans-56
   prefs: []
   type: TYPE_NORMAL
+  zh: knitr::opts_chunk$set(echo = TRUE)
 - en: '[PRE10]'
+  id: totrans-57
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE10]'
 - en: We will not cover this here, but as you become more experienced with R Markdown,
     you will learn the advantages of setting global options for the compilation process.
+  id: totrans-58
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们在这里不会介绍这一点，但随着您对 R Markdown 的经验越来越丰富，您将了解到为编译过程设置全局选项的优势。
 - en: 40.2.4 knitR
+  id: totrans-59
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 40.2.4 knitR
 - en: 'We use the **knitR** package to compile R markdown documents. The specific
     function used to compile is the `knit` function, which takes a filename as input.
     RStudio provides a button that makes it easier to compile the document. For the
     screenshot below, we have edited the document so that a report on gun murders
     is produced. You can see the file here: [https://raw.githubusercontent.com/rairizarry/murders/master/report.Rmd](https://raw.githubusercontent.com/rairizarry/murders/master/report.Rmd).
     You can now click on the `Knit` button:'
+  id: totrans-60
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们使用 **knitR** 包来编译 R Markdown 文档。用于编译的具体函数是 `knit` 函数，它接受一个文件名作为输入。RStudio
+    提供了一个按钮，使得编译文档变得更加容易。对于下面的截图，我们已经编辑了文档，以便生成一份关于枪支谋杀的报告。您可以在以下位置看到该文件：[https://raw.githubusercontent.com/rairizarry/murders/master/report.Rmd](https://raw.githubusercontent.com/rairizarry/murders/master/report.Rmd)。现在您可以点击
+    `Knit` 按钮：
 - en: '![](../Images/9949879909db06b7c988ee99d37ed11d.png)'
+  id: totrans-61
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/9949879909db06b7c988ee99d37ed11d.png)'
 - en: The first time you click on the *Knit* button, a dialog box may appear asking
     you to install packages you need.
+  id: totrans-62
   prefs: []
   type: TYPE_NORMAL
+  zh: 第一次点击 *Knit* 按钮时，可能会弹出一个对话框，询问您安装所需的包。
 - en: 'Once you have installed the packages, clicking the *Knit* will compile your
     R markdown file and the resulting document will pop up:'
+  id: totrans-63
   prefs: []
   type: TYPE_NORMAL
+  zh: 安装完包后，点击 *Knit* 将会编译您的 R Markdown 文件，生成的文档将会弹出：
 - en: 'This produces an html document which you can see in your working directory.
     To view it, open a terminal and list the files. You can open the file in a browser
     and use this to present your analysis. You can also produce a PDF or Microsoft
     document by changing:'
+  id: totrans-64
   prefs: []
   type: TYPE_NORMAL
+  zh: 这将生成一个可以在工作目录中看到的 HTML 文档。要查看它，请打开一个终端并列出文件。您可以在浏览器中打开该文件，并使用它来展示您的分析。您还可以通过更改以下内容来生成
+    PDF 或 Microsoft 文档：
 - en: '`output: html_document` to `output: pdf_document` or `output: word_document`.'
+  id: totrans-65
   prefs: []
   type: TYPE_NORMAL
+  zh: '将 `output: html_document` 更改为 `output: pdf_document` 或 `output: word_document`。'
 - en: 'We can also produce documents that render on GitHub using `output: github_document`.
     This will produce a markdown file, with suffix `md`, that renders in GitHub. Because
     we have uploaded these files to GitHub, you can click on the `md` file and you
     will see the report as a webpage:'
+  id: totrans-66
   prefs: []
   type: TYPE_NORMAL
+  zh: '我们还可以使用 `output: github_document` 来生成在 GitHub 上渲染的文档。这将生成一个带有 `md` 后缀的 markdown
+    文件，在 GitHub 上进行渲染。因为我们已经将这些文件上传到 GitHub，所以您可以点击 `md` 文件，您将看到报告作为一个网页：'
 - en: '![](../Images/84786323a7c52484f030e6595400d672.png)'
+  id: totrans-67
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/84786323a7c52484f030e6595400d672.png)'
 - en: This is a convenient way to share your reports.
+  id: totrans-68
   prefs: []
   type: TYPE_NORMAL
+  zh: 这是一种方便分享您报告的方法。
 - en: 40.2.5 More on R markdown
+  id: totrans-69
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 40.2.5 更多关于 R Markdown
 - en: 'There is a lot more you can do with R markdown. We highly recommend you continue
     learning as you gain more experience writing reports in R. There are many free
     resources on the internet including:'
+  id: totrans-70
   prefs: []
   type: TYPE_NORMAL
+  zh: 您可以使用 R Markdown 做很多事情。我们强烈建议您在撰写 R 报告的过程中积累更多经验后继续学习。互联网上有许多免费资源，包括：
 - en: 'RStudio’s tutorial: [https://rmarkdown.rstudio.com](https://rmarkdown.rstudio.com)'
+  id: totrans-71
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: RStudio 的教程：[https://rmarkdown.rstudio.com](https://rmarkdown.rstudio.com)
 - en: 'The cheat sheet: [https://www.rstudio.com/wp-content/uploads/2015/02/rmarkdown-cheatsheet.pdf](https://www.rstudio.com/wp-content/uploads/2015/02/rmarkdown-cheatsheet.pdf)'
+  id: totrans-72
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 快速参考指南：[https://www.rstudio.com/wp-content/uploads/2015/02/rmarkdown-cheatsheet.pdf](https://www.rstudio.com/wp-content/uploads/2015/02/rmarkdown-cheatsheet.pdf)
 - en: 'The knitR book: [https://yihui.name/knitr/](https://yihui.name/knitr/)'
+  id: totrans-73
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: knitR 书籍：[https://yihui.name/knitr/](https://yihui.name/knitr/)
 - en: 40.3 Organizing a data science project
+  id: totrans-74
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 40.3 组织数据科学项目
 - en: In this section we put it all together to create the US murders project and
     share it on GitHub.
+  id: totrans-75
   prefs: []
   type: TYPE_NORMAL
+  zh: 在本节中，我们将所有内容整合在一起，创建美国谋杀案项目并在 GitHub 上分享。
 - en: 40.3.1 Create directories in Unix
+  id: totrans-76
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 40.3.1 在 Unix 中创建目录
 - en: 'In Section [38.7](unix.html#prep-project) we demonstrated how to use Unix to
     prepare for a data science project using an example. Here we continue this example
     and show how to use RStudio. In Section [38.7](unix.html#prep-project) we created
     the following directories using Unix:'
+  id: totrans-77
   prefs: []
   type: TYPE_NORMAL
+  zh: 在第 [38.7](unix.html#prep-project) 节中，我们展示了如何使用 Unix 通过一个示例来准备数据科学项目。在这里，我们继续这个示例，并展示如何使用
+    RStudio。在第 [38.7](unix.html#prep-project) 节中，我们使用 Unix 创建了以下目录：
 - en: '[PRE11]'
+  id: totrans-78
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE11]'
 - en: 40.3.2 Create an RStudio project
+  id: totrans-79
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 40.3.2 创建 RStudio 项目
 - en: In the next section we will use create an RStudio project. In RStudio we go
     to *File* and then *New Project…* and when given the options we pick *Existing
     Directory*. We then write the full path of the `murders` directory created above.
+  id: totrans-80
   prefs: []
   type: TYPE_NORMAL
+  zh: 在下一节中，我们将创建一个 RStudio 项目。在 RStudio 中，我们转到 *文件*，然后 *新建项目…*，当给出选项时我们选择 *现有目录*。然后我们写下上面创建的
+    `murders` 目录的完整路径。
 - en: '![](../Images/a7ac7cacd5249288ac6b7b4bdb01ce1f.png)![](../Images/088a4a38089bd009b73bdee2500233db.png)'
+  id: totrans-81
   prefs: []
   type: TYPE_IMG
+  zh: '![图片1](../Images/a7ac7cacd5249288ac6b7b4bdb01ce1f.png)![图片2](../Images/088a4a38089bd009b73bdee2500233db.png)'
 - en: Once you do this, you will see the `rdas` and `data` directories you created
     in the RStudio *Files* tab.
+  id: totrans-82
   prefs: []
   type: TYPE_NORMAL
+  zh: 一旦你这样做，你将在 RStudio 的 *文件* 选项卡中看到你创建的 `rdas` 和 `data` 目录。
 - en: '![](../Images/d99139da5d9847ffdf807e325af273cc.png)'
+  id: totrans-83
   prefs: []
   type: TYPE_IMG
+  zh: '![图片3](../Images/d99139da5d9847ffdf807e325af273cc.png)'
 - en: 'Keep in mind that when we are in this project, our default working directory
     will be `~/projects/murders`. You can confirm this by typing `getwd()` into your
     R session. This is important because it will help us organize the code when we
@@ -375,144 +557,217 @@
     The problem with using full paths is that your code is unlikely to work on filesystems
     other than yours since the directory structures will be different. This includes
     using the home directory `~` as part of your path.'
+  id: totrans-84
   prefs: []
   type: TYPE_NORMAL
+  zh: 请记住，当我们在这个项目中时，我们的默认工作目录将是 `~/projects/murders`。你可以通过在 R 会话中输入 `getwd()` 来确认这一点。这很重要，因为它将帮助我们组织代码，当我们需要编写文件路径时。**提示：在数据科学项目中始终使用相对路径。这些应该相对于默认工作目录。**使用完整路径的问题在于，你的代码很可能无法在其他文件系统上工作，因为目录结构将不同。这包括使用主目录
+    `~` 作为路径的一部分。
 - en: 40.3.3 Edit some R scripts
+  id: totrans-85
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 40.3.3 编辑一些 R 脚本
 - en: Let’s now write a script that downloads a file into the data directory. We will
     call this file `download-data.R`.
+  id: totrans-86
   prefs: []
   type: TYPE_NORMAL
+  zh: 现在我们编写一个脚本，将文件下载到数据目录中。我们将这个文件命名为 `download-data.R`。
 - en: 'The content of this file will be:'
+  id: totrans-87
   prefs: []
   type: TYPE_NORMAL
+  zh: 这个文件的内容将是：
 - en: '[PRE12]'
+  id: totrans-88
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE12]'
 - en: Notice that we are using the relative path `data/murders.csv`.
+  id: totrans-89
   prefs: []
   type: TYPE_NORMAL
+  zh: 注意到我们正在使用相对路径 `data/murders.csv`。
 - en: Run this code in R and you will see that a file is added to the `data` directory.
+  id: totrans-90
   prefs: []
   type: TYPE_NORMAL
+  zh: 在 R 中运行此代码，你将看到 `data` 目录中添加了一个文件。
 - en: 'Now we are ready to write a script to read this data and prepare a table that
     we can use for analysis. Call the file `wrangle-data.R`. The content of this file
     will be:'
+  id: totrans-91
   prefs: []
   type: TYPE_NORMAL
+  zh: 现在我们准备编写一个脚本来读取这些数据并准备一个我们可以用于分析的表格。将文件命名为 `wrangle-data.R`。这个文件的内容将是：
 - en: '[PRE13]'
+  id: totrans-92
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE13]'
 - en: Again note that we use relative paths exclusively.
+  id: totrans-93
   prefs: []
   type: TYPE_NORMAL
+  zh: 再次注意，我们只使用相对路径。
 - en: 'In this file, we introduce an R command we have not seen: `save`. The `save`
     command in R saves objects into what is called an *rda file*: *rda* is short for
     R data. We recommend using the `.rda` suffix on files saving R objects. You will
     see that `.RData` is also used.'
+  id: totrans-94
   prefs: []
   type: TYPE_NORMAL
+  zh: 在这个文件中，我们介绍了一个我们之前没有见过的 R 命令：`save`。R 中的 `save` 命令将对象保存到称为 *rda 文件* 的东西中：*rda*
+    是 R 数据的缩写。我们建议在保存 R 对象的文件上使用 `.rda` 后缀。你会发现 `.RData` 也被使用了。
 - en: If you run this code above, the processed data object will be saved in a file
     in the `rda` directory. Although not the case here, this approach is often practical
     because generating the data object we use for final analyses and plots can be
     a complex and time-consuming process. So we run this process once and save the
     file. But we still want to be able to generate the entire analysis from the raw
     data.
+  id: totrans-95
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果你运行上面的代码，处理后的数据对象将被保存在 `rda` 目录中的一个文件中。尽管这里不是这种情况，但这种方法通常很实用，因为生成我们用于最终分析和绘图的数据对象可能是一个复杂且耗时的过程。所以我们只运行这个过程一次并保存文件。但我们仍然希望能够从原始数据生成整个分析。
 - en: 'Now we are ready to write the analysis file. Let’s call it `analysis.R`. The
     content should be the following:'
+  id: totrans-96
   prefs: []
   type: TYPE_NORMAL
+  zh: 现在我们准备编写分析文件。让我们称它为 `analysis.R`。内容应该是以下：
 - en: '[PRE14]'
+  id: totrans-97
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE14]'
 - en: If you run this analysis, you will see that it generates a plot.
+  id: totrans-98
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果你运行这个分析，你会看到它生成一个图表。
 - en: 40.3.4 Create some more directories using Unix
+  id: totrans-99
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 40.3.4 使用 Unix 创建更多目录
 - en: 'Now suppose we want to save the generated plot for use in a report or presentation.
     We can do this with the **ggplot** command `ggsave`. But where do we put the graph?
     We should be systematically organized so we will save plots to a directory called
     `figs`. Start by creating a directory by typing the following in the terminal:'
+  id: totrans-100
   prefs: []
   type: TYPE_NORMAL
+  zh: 现在假设我们想要保存生成的图表，以便在报告或演示中使用。我们可以使用**ggplot**命令`ggsave`来完成这个操作。但是，我们应该把图表放在哪里呢？我们应该有系统地组织，所以我们会把图表保存到名为`figs`的目录中。首先，在终端中输入以下命令来创建一个目录：
 - en: '[PRE15]'
+  id: totrans-101
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE15]'
 - en: 'and then you can add the line:'
+  id: totrans-102
   prefs: []
   type: TYPE_NORMAL
+  zh: 然后你可以添加以下行：
 - en: '[PRE16]'
+  id: totrans-103
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE16]'
 - en: to your R script. If you run the script now, a png file will be saved into the
     `figs` directory. If we wanted to copy that file to some other directory where
     we are developing a presentation, we can avoid using the mouse by using the `cp`
     command in our terminal.
+  id: totrans-104
   prefs: []
   type: TYPE_NORMAL
+  zh: 将其添加到你的R脚本中。如果你现在运行脚本，一个png文件将被保存到`figs`目录中。如果我们想要将这个文件复制到我们正在开发演示的其他目录中，我们可以通过在终端中使用`cp`命令来避免使用鼠标。
 - en: 40.3.5 Add a README file
+  id: totrans-105
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 40.3.5 添加README文件
 - en: 'You now have a self-contained analysis in one directory. One final recommendation
     is to create a `README.txt` file describing what each of these files does for
     the benefit of others reading your code, including your future self. This would
     not be a script but just some notes. One of the options provided when opening
     a new file in RStudio is a text file. You can save something like this into the
     text file:'
+  id: totrans-106
   prefs: []
   type: TYPE_NORMAL
+  zh: 现在，你已经在单个目录中拥有了一个自包含的分析。一个最后的建议是创建一个`README.txt`文件，描述这些文件各自的作用，以便其他人阅读你的代码时受益，包括你未来的自己。这不会是一个脚本，而只是一些笔记。在RStudio中打开新文件时提供的选项之一是文本文件。你可以将类似以下内容保存到文本文件中：
 - en: '[PRE17]'
+  id: totrans-107
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE17]'
 - en: 40.3.6 Initializing a Git directory
+  id: totrans-108
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 40.3.6 初始化Git目录
 - en: In Section [39.5](git.html#init) we demonstrated how to initialize a Git directory
     and connect it to the upstream repository on GitHub, which we already created
     in that section.
+  id: totrans-109
   prefs: []
   type: TYPE_NORMAL
+  zh: 在第[39.5](git.html#init)节中，我们展示了如何初始化Git目录并将其连接到GitHub上的上游仓库，我们已经在那一节中创建了它。
 - en: 'We can do this in the Unix terminal:'
+  id: totrans-110
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们可以在Unix终端中这样做：
 - en: '[PRE18]'
+  id: totrans-111
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE18]'
 - en: 40.3.7 Add, commit, and push files using RStudio
+  id: totrans-112
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 40.3.7 使用RStudio添加、提交和推送文件
 - en: We can continue adding and committing each file, but it might be easier to use
     RStudio. To do this, start the project by opening the Rproj file. The git icons
     should appear and you can add, commit and push using these.
+  id: totrans-113
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们可以继续添加和提交每个文件，但使用RStudio可能会更容易。为此，通过打开Rproj文件来开始项目。git图标应该会出现，你可以使用这些图标来添加、提交和推送。
 - en: '![](../Images/4c25d6e6e432fd624eab9325fdbefead.png)![](../Images/6e6c41b682c9924b2dd6f84287ef1f82.png)![](../Images/fad1808de1bfb2e7fd7847470f26f8bc.png)'
+  id: totrans-114
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/4c25d6e6e432fd624eab9325fdbefead.png)![](../Images/6e6c41b682c9924b2dd6f84287ef1f82.png)![](../Images/fad1808de1bfb2e7fd7847470f26f8bc.png)'
 - en: We can now go to GitHub and confirm that our files are there. You can see a
     version of this project, organized with Unix directories, on GitHub[^(123)](#fn123).
     You can download a copy to your computer by using the `git clone` command on your
     terminal. This command will create a directory called `murders` in your working
     directory, so be careful where you call it from.
+  id: totrans-115
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们现在可以前往GitHub并确认我们的文件已经上传。你可以在GitHub上看到这个项目的版本，它使用Unix目录组织[^(123)](#fn123)。你可以通过在终端中使用`git
+    clone`命令将副本下载到你的电脑上。这个命令将在你的工作目录中创建一个名为`murders`的目录，所以请小心选择调用它的位置。
 - en: '[PRE19]'
+  id: totrans-116
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE19]'
 - en: '* * *'
+  id: totrans-117
   prefs: []
   type: TYPE_NORMAL
+  zh: '* * *'
 - en: '[https://github.com/rairizarry/murders](https://github.com/rairizarry/murders)[↩︎](reproducible-projects-with-rstudio-and-r-markdown.html#fnref123)'
+  id: totrans-118
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[https://github.com/rairizarry/murders](https://github.com/rairizarry/murders)[↩︎](reproducible-projects-with-rstudio-and-r-markdown.html#fnref123)'

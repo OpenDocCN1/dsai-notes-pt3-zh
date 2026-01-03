@@ -38,11 +38,21 @@ $$ Y_j \sim \mbox{N}\left(\theta, \, 2\sqrt{p(1-p)/N}\right) $$
 
 下面是一个模拟六个民意调查的例子，假设分布为 2.1，$N$ 为 2,000：
 
-[PRE0]
+```r
+set.seed(2012)
+J <- 6
+N <- 3000
+theta <- .021
+p <- (theta + 1)/2
+y <- rnorm(J, theta, 2*sqrt(p*(1 - p)/N))
+```
 
 现在，假设我们有 $J=6$ 个来自 $I=5$ 位不同民意调查员的民意调查。为了简单起见，让我们假设所有民意调查都有相同的样本量 $N$。尿壶模型告诉我们，对于所有民意调查员，分布都是相同的，因此为了模拟数据，我们为每个民意调查员使用相同的模型：
 
-[PRE1]
+```r
+I <- 5
+y <- sapply(1:I, function(i) rnorm(J, theta, 2*sqrt(p*(1 - p)/N)))
+```
 
 正如预期的那样，模拟数据并没有真正捕捉到实际数据的特征，因为它没有考虑到民意调查员之间的变异：
 
@@ -54,7 +64,10 @@ $$ \begin{aligned} h_i &\sim \mbox{N}\left(0, \sigma_h\right)\\ Y_{ij} \mid h_i 
 
 为了模拟特定调查员的数据，我们首先需要抽取一个 $h_i$，然后在此效果添加后生成单个调查数据。在下面的模拟中，我们假设 $\sigma_h$ 为 0.025，并使用 `rnorm` 生成 $h$：
 
-[PRE2]
+```r
+h <- rnorm(I, 0, 0.025)
+y <- sapply(1:I, function(i) theta + hi] + [rnorm(J, 0, 2*sqrt(p*(1 - p)/N)))
+```
 
 模拟数据现在看起来更接近观察数据：
 
@@ -82,23 +95,41 @@ $$ \begin{aligned} b &\sim \mbox{N}\left(0, \sigma_b\right)\\ h_j \mid \, b &\si
 
 *现在，让我们将上述模型拟合到数据中。我们将使用第十章中定义的`one_poll_per_pollster`数据**：
 
-[PRE3]
+```r
+one_poll_per_pollster <- polls |> group_by(pollster) |> 
+ filter(enddate == max(enddate)) |>
+ ungroup()
+```
 
 *在这里，我们只有一个民意调查员的一个民意调查，所以我们将去掉 $j$ 索引，并像以前一样用 $Y_1, \dots, Y_I$ 表示数据。作为提醒，我们有来自 $I=$20 个民意调查员的数据。根据上述模型假设，我们可以从数学上证明平均 $\bar{Y}$
 
-[PRE4]
+```r
+y_bar <- mean(one_poll_per_pollster$spread)
+```
 
 *具有期望值 $\theta$；因此，从长远来看，它提供了一个对感兴趣结果的非偏估计。但这个估计有多精确？我们能用观察到的样本标准差来构建对 $\bar{Y}$ 标准误差的估计吗？**
 
 结果表明，由于 $Y_i$ 是相关的，估计标准误差比我们之前描述的要复杂。具体来说，我们可以证明标准误差可以用以下方式估计： 
 
-[PRE5]
+```r
+sigma_b <- 0.03
+s2 <- with(one_poll_per_pollster, sd(spread)²/length(spread))
+se <- sqrt(s2 + sigma_b²)
+```
 
 *如前所述，估计 $\sigma_b$ 需要过去选举的数据。然而，收集这些数据是一个复杂的过程，超出了本书的范围。为了提供一个实用的例子，我们将 $\sigma_b$ 设置为 3%。**
 
 我们现在可以重新进行贝叶斯计算，以考虑这种额外的变异性。这种调整得到的结果与 FiveThirtyEight 的估计非常接近：
 
-[PRE6]******
+```r
+theta_0 <- 0
+tau <- 0.05
+B <- se²/(se² + tau²)
+posterior_mean <- B*theta_0 + (1 - B)*y_bar
+posterior_se <- sqrt(1/(1/se² + 1/tau²))
+1 - pnorm(0, posterior_mean, posterior_se)
+#> [1] 0.803
+```******
 
 ## **12.5 预测选举人团**
 
@@ -112,21 +143,36 @@ $$ \begin{aligned} b &\sim \mbox{N}\left(0, \sigma_b\right)\\ h_j \mid \, b &\si
 
 现在我们已经准备好预测 2016 年的选举人团结果。我们首先创建一个包含每个州选举人票数的数据框：
 
-[PRE7]
+```r
+results <- results_us_election_2016 |> select(state, electoral_votes)
+```
 
 然后我们汇总选举前最后几周进行的民意调查的结果，并仅包括在注册和可能投票的选民中进行的调查。我们定义 `spread` 为估计的比例差异：
 
-[PRE8]
+```r
+polls <- polls_us_election_2016 |>
+ filter(state != "U.S." & enddate >= "2016-11-02" &  population != "a") |>
+ mutate(spread = (rawpoll_clinton - rawpoll_trump)/100)
+```
 
 如果一个民意调查员在这个时期进行了不止一次的调查，我们只保留最新的。
 
-[PRE9]**
+```r
+polls <- polls |>
+ arrange(population, desc(enddate)) |>
+ group_by(state, pollster) |>
+ slice(1) |>
+ ungroup() 
+```**
 
 ### ***加权平均值***
 
 **而不是简单地平均民意调查，FiveThirtyEight 根据字母等级给民意调查员分配权重，该等级存储在 `grade` 列中。这个等级反映了民意调查员过去的准确性和可靠性。我们生成一个包含等级和权重的表格，以供将来使用：
 
-[PRE10]
+```r
+weights <- data.frame(grade = unique(sort(polls$grade))) |> 
+ mutate(weight = seq(0.3, 1, length = length(grade)))
+```
 
 *FiveThirtyEight 在确定每个民意调查的权重时考虑了各种因素，包括选举日的接近程度。然而，为了简化，这次分析仅关注民意调查员的等级。* 等级较高的民意调查员在模型中分配更多的权重，使他们的结果具有更大的影响力，而等级较低或可靠性较低的民意调查员贡献较少。这通过加权平均在数学上实现：
 
@@ -150,43 +196,88 @@ $$ \mathrm{SE}[\bar{Y}_w] = \frac{\sigma_h}{\sqrt{N_{\mbox{eff}}}} \mbox{ with }
 
 我们现在使用这些方程来计算加权平均值：
 
-[PRE11]
+```r
+polls <- polls |> 
+ filter(!is.na(grade)) |>
+ left_join(weights, by = "grade") |> 
+ group_by(state) |>
+ summarize(n = n(),
+ avg = sum(weight*spread)/sum(weight), 
+ sd = sqrt(sum(weight*(spread - avg)²)/((n - 1)/n*sum(weight))),
+ n_eff = sum(weight)²/sum(weight²))
+```
 
 我们假设民意调查员或*house effect*标准差 $\sigma_h$ 在各州之间是相同的，并取基于有效样本量大于或等于 5 的这些值的中间值：
 
-[PRE12]
+```r
+polls$sd <- with(polls, median(sd[n_eff >= 5], na.rm = TRUE))
+```
 
 *在本书的线性模型部分，我们探讨了估计标准差的一种更严格的统计方法。* 接下来我们使用 `left_join` 命令将包含每个州的选举人票的 `results` 数据框和包含汇总统计数据的 `polls` 数据框合并：
 
-[PRE13]********
+```r
+results <- left_join(results, polls, by = "state")
+```********
 
 ### *****构建先验概率*****
 
 ****为了进行概率论证，我们将使用贝叶斯模型。为此，我们需要每个州先验分布的均值和标准差。我们将假设先验分布为正态分布，并使用 2012 年选举结果来构建先验均值。具体来说，我们计算民主党（奥巴马）和共和党（罗姆尼）候选人之间的差异：*
 
-[PRE14]
+```r
+results <- results_us_election_2012 |> 
+ mutate(theta_0 = (obama - romney)/100) |> 
+ select(state, theta_0) |> 
+ right_join(results, by = "state")
+```
 
 与对普选票先验的处理一样，我们为先验标准差分配 5%或 $\tau=0.05$。
 
-[PRE15]**
+```r
+results$tau <- 0.05
+```**
 
 ### *****计算后验分布*****
 
 ****在建立先验分布后，我们可以计算每个州的后验分布。在某些州，结果被认为是高度可预测的，一个政党（共和党或民主党）几乎肯定能赢。因此，在这些州没有进行民意调查。在这种情况下，后验分布保持与先验分布相同。
 
-[PRE16]*****
+```r
+results <- results |>
+ mutate(B = sd²/n_eff/((sd²/n_eff) + tau²),
+ posterior_mean = if_else(is.na(avg), theta, B*theta_0 + (1 - B)*avg),
+ posterior_se = if_else(is.na(avg), tau, sqrt(1/(n_eff/sd² + 1/tau²))))
+```*****
 
 ### **蒙特卡洛模拟**
 
 *然后我们使用蒙特卡洛方法为每个州生成 50,000 个选举日结果 $\theta$。对于每次迭代，我们检查每个迭代的 $\theta$。如果 $\theta<0$，则在该迭代中特朗普获得该州的全部选举人票。我们假设每个州的投票结果是独立的**。
 
-[PRE17]
+```r
+set.seed(1983)
+B <- 50000
+n_states <- nrow(results)
+trump_ev <- replicate(B,{
+ theta <- with(results, rnorm(n_states, posterior_mean, posterior_se))
+ sum(results$electoral_votes[theta < 0])
+})
+mean(trump_ev > 269)
+#> [1] 0.00322
+```
 
 这个模型给特朗普赢得选举的机会不到 1%，这与普林斯顿选举联合会的预测相似。我们现在知道这相当不准确。发生了什么？*
 
 上面的模型忽略了系统性投票误差的可能性，并且错误地假设不同州的投票结果是独立的。为了纠正这一点，我们假设系统性误差项的标准差为 3%。对于每次迭代，我们为所有州随机生成系统性误差并将其添加到结果中。
 
-[PRE18]
+```r
+sigma_b <- 0.03
+trump_ev_2 <- replicate(B, {
+ bias <- rnorm(1, 0, sigma_b) 
+ mu <- with(results, rnorm(n_states, posterior_mean, posterior_se))
+ mu <- mu + bias
+ sum(results$electoral_votes[mu < 0])
+})
+mean(trump_ev_2 > 269)
+#> [1] 0.243
+```
 
 这给特朗普赢得选举的机会接近 25%，这最终证明是一个更合理的估计，并且更接近 FiveThirtyEight 预测的 29%。******
 
@@ -198,7 +289,18 @@ $$ \mathrm{SE}[\bar{Y}_w] = \frac{\sigma_h}{\sqrt{N_{\mbox{eff}}}} \mbox{ with }
 
 事实上，只有 5 个州中，投票平均在差异的符号上犯了错误。
 
-[PRE19]
+```r
+tmp |> filter(sign(spread) != sign(avg)) |>
+ select(state, avg, spread) |>
+ mutate(across(-state, ~round(.,1))) |>
+ setNames(c("State", "Polling average", "Actual result"))
+#>            State Polling average Actual result
+#> 1        Florida             0.1          -1.2
+#> 2   Pennsylvania             2.0          -0.7
+#> 3       Michigan             3.3          -0.2
+#> 4 North Carolina             0.9          -3.7
+#> 5      Wisconsin             5.6          -0.8
+```
 
 然而，请注意，所有误差都在同一方向，这表明存在系统性的投票误差。然而，散点图显示有几个点高于身份线，这表明所有州均匀偏差的假设存在偏差。更仔细的检查表明，偏差因地理区域而异，有些地区的效应比其他地区更强。这种模式通过直接绘制区域间的差异也得到了进一步证实：*
 
@@ -220,11 +322,21 @@ $$ \mathrm{SE}[\bar{Y}_w] = \frac{\sigma_h}{\sqrt{N_{\mbox{eff}}}} \mbox{ with }
 
 为了确保我们观察到的变异性不是由于调查员效应，让我们研究一个调查员的数据：
 
-[PRE20]
+```r
+one_pollster <- polls_us_election_2016 |> 
+ filter(pollster == "Ipsos" & state == "U.S.") |> 
+ mutate(spread = rawpoll_clinton/100 - rawpoll_trump/100)
+```
 
 由于没有调查员效应，那么理论上的标准误差可能与数据得出的标准差相匹配。但经验标准差高于可能的理论估计的最高值：
 
-[PRE21]
+```r
+one_pollster |> mutate(p_hat = (spread + 1)/2, N = samplesize) |>
+ summarize(empirical = sd(spread), 
+ theoretical = median(2*sqrt(p_hat*(1 - p_hat)/N))) 
+#>   empirical theoretical
+#> 1    0.0403      0.0277
+```
 
 此外，数据的分布并不像理论预测的那样正常：
 
@@ -242,13 +354,26 @@ $$ \mathrm{SE}[\bar{Y}_w] = \frac{\sigma_h}{\sqrt{N_{\mbox{eff}}}} \mbox{ with }
 
 ***1. 创建以下表格：*
 
-[PRE22]
+```r
+library([tidyverse](https://tidyverse.tidyverse.org))
+library(dslabs)
+polls <- polls_us_election_2016 |> 
+ filter(state != "U.S." & enddate >= "2016-10-31") |> 
+ mutate(spread = rawpoll_clinton/100 - rawpoll_trump/100)
+```
 
 现在，对于每一项调查，使用中心极限定理（CLT）为每项调查报告的分布创建一个 95%置信区间。将得到的对象命名为 cis，其中包含置信区间的下限和上限的列。使用`select`函数保留`state, startdate, enddate, pollster, grade, spread, lower, upper`这些列。*
 
 2. 您可以使用`left_join`函数将最终结果添加到您刚刚创建的`cis`表中，如下所示：
 
-[PRE23]
+```r
+add <- results_us_election_2016 |> 
+ mutate(actual_spread = clinton/100 - trump/100) |> 
+ select(state, actual_spread)
+cis <- cis |> 
+ mutate(state = as.character(state)) |> 
+ left_join(add, by = "state")
+```
 
 现在，确定 95%置信区间包含存储在`actual_spread`中的选举之夜结果的频率。*
 
@@ -270,7 +395,16 @@ $$ \mathrm{SE}[\bar{Y}_w] = \frac{\sigma_h}{\sqrt{N_{\mbox{eff}}}} \mbox{ with }
 
 12. 尽管频率派预测为.450，但没有任何一个棒球爱好者会做出这样的预测。为什么？一个原因是他们知道这个估计有很大的不确定性。然而，主要原因是他们隐含地使用了一个考虑了多年跟踪棒球的层次模型。使用以下代码探索 2013 年之前三个赛季的击球率分布，并描述这告诉我们什么。
 
-[PRE24]
+```r
+library([tidyverse](https://tidyverse.tidyverse.org))
+library([Lahman](https://cdalzell.github.io/Lahman/))
+filter(Batting, yearID %in% 2010:2012) |> 
+ mutate(AVG = H/AB) |> 
+ filter(AB > 500) |> 
+ ggplot(aes(AVG)) +
+ geom_histogram(color = "black", binwidth = .01) +
+ facet_wrap( ~ yearID)
+```
 
 13. 所以是何塞幸运，还是他是过去 50 年中见过的最佳击球手？或许这是运气和天赋的结合。但各占多少呢？如果我们确信他是幸运的，我们应该将他交易到一个信任.450 观察结果并且可能高估他潜力的球队。层次模型为我们提供了如何看到.450 观察结果的数学描述。首先，我们随机选择一个球员，其内在能力由例如$\theta$这样的指标总结。然后，我们观察 20 次随机结果，成功概率为$\theta$。你会在层次模型的第一级使用什么模型？*
 

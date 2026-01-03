@@ -134,7 +134,11 @@
 
 第一个方法是添加*抖动*，这会给每个点添加一个小随机移动。在这种情况下，添加水平抖动不会改变解释，因为点的高度没有变化，但我们最小化了落在彼此之上的点的数量，因此更好地直观地了解数据的分布。第二个改进来自于使用*alpha 混合*：使点变得半透明。更多的点落在彼此之上，图表就越暗，这也帮助我们了解点的分布。以下是添加抖动和 alpha 混合的相同图表：
 
-[PRE0]
+```r
+heights |> 
+ ggplot(aes(sex, height)) +
+ geom_jitter(width = 0.05, alpha = 0.2) 
+```
 
 ![](img/7db5830c13e88f55459df74096584743.png)*  *现在我们开始感觉到，平均而言，男性的身高比女性高。我们还注意到点的深色水平带，表明许多人报告的值是四舍五入到最接近的整数。*
 
@@ -232,7 +236,11 @@ $$ \log\left( \frac{A + 0.5}{B + 0.5} \right) $$
 
 *大约 10% 的人口有色盲。不幸的是，**ggplot2** 中使用的默认颜色对这个群体来说并不理想。然而，**ggplot2** 确实使得更改图表中使用的调色板变得容易。我们如何在 R cookbook¹¹ 中使用色盲友好调色板的例子描述如下：
 
-[PRE1]
+```r
+color_blind_friendly_cols <- 
+ c("#999999", "#E69F00", "#56B4E9", "#009E73", 
+ "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
+```
 
 以下是一些颜色
 
@@ -351,7 +359,9 @@ $$ \log\left( \frac{A + 0.5}{B + 0.5} \right) $$
 
 **对于这些练习，我们将使用 **dslabs** 包中的疫苗数据：
 
-[PRE2]
+```r
+library(dslabs)
+```
 
 1. 饼图是合适的：
 
@@ -391,15 +401,26 @@ $$ \log\left( \frac{A + 0.5}{B + 0.5} \right) $$
 
 4. 要在左侧制作图表，我们必须重新排序状态变量的级别。
 
-[PRE3]
+```r
+dat <- us_contagious_diseases |> 
+ filter(year == 1967 & disease=="Measles" & !is.na(population)) |>
+ mutate(rate = count / population * 10000 * 52 / weeks_reporting)
+```
 
 注意当我们制作条形图时会发生什么：
 
-[PRE4]
+```r
+dat |> ggplot(aes(state, rate)) +
+ geom_col() +
+ coord_flip() 
+```
 
 ![](img/a7813e8e9e9cfb5619ea031a75673d8b.png)*  *定义这些对象：
 
-[PRE5]
+```r
+state <- dat$state
+rate <- dat$count/dat$population*10000*52/dat$weeks_reporting
+```
 
 重新定义`state`对象，以便按级别重新排序。打印新的`state`对象及其级别，以便您可以查看向量是否未按级别重新排序。
 
@@ -407,7 +428,16 @@ $$ \log\left( \frac{A + 0.5}{B + 0.5} \right) $$
 
 6. 假设我们感兴趣的是比较美国各地区的枪支谋杀率。我们看到这个图表：
 
-[PRE6]
+```r
+library(dslabs)
+murders |> mutate(rate = total/population*100000) |>
+group_by(region) |>
+summarize(avg = mean(rate)) |>
+mutate(region = factor(region)) |>
+ggplot(aes(region, avg)) +
+geom_col() + 
+ylab("Murder Rate Average")
+```
 
 ![](img/8aa9c7e3a27b58fca09a10e389fef7be.png)*  *并决定搬到西部地区的一个州。这种解释的主要问题是什么？
 
@@ -421,7 +451,9 @@ $$ \log\left( \frac{A + 0.5}{B + 0.5} \right) $$
 
 7. 制作谋杀率的箱形图，定义为
 
-[PRE7]
+```r
+murders |> mutate(rate = total/population*100000)
+```
 
 按地区显示所有点，并按中位数比率对地区进行排序。
 

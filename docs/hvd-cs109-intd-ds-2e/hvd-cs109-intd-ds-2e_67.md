@@ -94,7 +94,11 @@ $$ f(\mathbf{x}) \equiv \mathrm{E}[Y \mid \mathbf{X}=\mathbf{x} ] $$
 
 下面是观察到的 $X_2$ 与观察到的 $X_1$ 的关系图，颜色表示 $y$ 是 2（红色）还是 7（蓝色）：
 
-[PRE0]
+```r
+library([caret](https://github.com/topepo/caret/))
+library(dslabs)
+mnist_27$train |> ggplot(aes(x_1, x_2, color = y)) + geom_point()
+```
 
 ![](img/45f15e2e364ffc9d17a96ec244778985.png)*  *我们可以立即看到一些模式。例如，如果 $x_1$ 很大（图像的左上角有大量的墨水），那么这个数字很可能是 7。另外，对于 $x_1$ 较小的值，2 似乎出现在 $x_2$ 的中间值范围内。
 
@@ -130,7 +134,9 @@ $$ \hat{\beta}_0 + \hat{\beta}_1 x_1 + \hat{\beta}_2 x_2 = 0 \implies x_2 = -\ha
 
 *为了解释平滑概念背后的主要思想，我们首先关注一个只有一个预测因子的问题。我们选择一个具有明显趋势但非线性的例子：2008 年美国总统选举中奥巴马和麦凯恩之间的民调差距。**
 
-[PRE1]
+```r
+polls_2008 |> ggplot(aes(day, margin)) + geom_point()
+```
 
 *![图片](img/479d1cbf716d71f6cb543eec9fb47a3e.png)**  **稍后我们将学习如何将平滑思想扩展到更高维度。**
 
@@ -164,7 +170,7 @@ $$ E[Y_i | X_i = x_i ] \approx \mu \mbox{ if } |x_i - x_0| \leq 3.5 $$
 
 术语 *带宽*、*核半径*、*窗口大小* 和 *跨度* 有时可以互换使用，但它们的精确含义取决于惯例。根据上述定义，窗口大小是 *带宽的两倍*。
 
-一些 R 函数，如 `[ksmooth()](https://rdrr.io/r/stats/ksmooth.html)`，使用 *完整窗口大小* 作为带宽。按照这个惯例，带宽为 7 对应于我们记法中的 $h = 3.5$。*这个假设意味着 $f(x_0)$ 的良好估计是窗口中 $y_i$ 值的平均值。如果我们定义 $A_0$ 为满足 $|x_i - x_0| \leq 3.5$ 的索引 $i$ 的集合，并且 $N_0$ 为 $A_0$ 中的索引数量，那么我们的估计是：
+一些 R 函数，如 `ksmooth()`，使用 *完整窗口大小* 作为带宽。按照这个惯例，带宽为 7 对应于我们记法中的 $h = 3.5$。*这个假设意味着 $f(x_0)$ 的良好估计是窗口中 $y_i$ 值的平均值。如果我们定义 $A_0$ 为满足 $|x_i - x_0| \leq 3.5$ 的索引 $i$ 的集合，并且 $N_0$ 为 $A_0$ 中的索引数量，那么我们的估计是：
 
 $$ \hat{f}(x_0) = \frac{1}{N_0} \sum_{i \in A_0} y_i $$
 
@@ -180,7 +186,14 @@ $$ \hat{f}(x_0) = \frac{1}{N_0} \sum_{i \in A_0} y_i $$
 
 最终的代码和估计结果如下所示：
 
-[PRE2]
+```r
+span <- 7 
+fit <- with(polls_2008, ksmooth(day, margin, kernel = "box", bandwidth = span))
+ polls_2008 |> mutate(fit = fit$y) |>
+ ggplot(aes(x = day)) +
+ geom_point(aes(y = margin), size = 3, alpha = .5, color = "grey") + 
+ geom_line(aes(y = fit), color = "red")
+```
 
 ![图片](img/c1951778a2f44b12178ad8b4bc931557.png)*
 
@@ -204,7 +217,13 @@ $$ \hat{f}(x_0) \;=\; \frac{\sum_{i=1}^N w_{x_0}(x_i)\,y_i}{\sum_{i=1}^N w_{x_0}
 
 正态核的最终代码和结果图看起来像这样：
 
-[PRE3]
+```r
+fit <- with(polls_2008, ksmooth(day, margin, kernel = "normal", bandwidth = 7))
+ polls_2008 |> mutate(smooth = fit$y) |>
+ ggplot(aes(day, margin)) +
+ geom_point(size = 3, alpha = .5, color = "grey") + 
+ geom_line(aes(day, smooth), color = "red")
+```
 
 ![](img/16ae8a3d47bcdc00c79a358d81feba2b.png)*  *注意这个版本看起来更平滑。
 
@@ -232,7 +251,15 @@ $$ E[Y_i | X_i = x_i ] = \beta_0 + \beta_1 (x_i-x_0) \mbox{ if } |x_i - x_0| \le
 
 由于我们使用更大的样本量来估计局部参数，最终结果比箱式平滑器更平滑：
 
-[PRE4]
+```r
+total_days <- diff(range(polls_2008$day))
+span <- 21/total_days
+fit <- loess(margin ~ day, degree = 1, span = span, data = polls_2008)
+polls_2008 |> mutate(smooth = fit$fitted) |>
+ ggplot(aes(day, margin)) +
+ geom_point(size = 3, alpha = .5, color = "grey") +
+ geom_line(aes(day, smooth), color = "red")
+```
 
 ![图片](img/2ec01304497f3976b3ee028a18eb2e5d.png)*  *不同的跨度给出了不同的估计。我们可以看到不同的窗口大小如何导致不同的估计：
 
@@ -268,7 +295,17 @@ $$ E[Y_i | X_i = x_i ] = \beta_0 + \beta_1 (x_i-x_0) + \beta_2 (x_i-x_0)² \mbox
 
 你可能已经注意到，当我们展示使用 loess 的代码时，我们设置了`degree = 1`。这告诉 loess 拟合一阶多项式，也就是线的花哨名称。如果你阅读 loess 的帮助页面，你会看到参数`degree`默认为 2。默认情况下，loess 拟合抛物线而不是线。以下是拟合线（红色虚线）和拟合抛物线（橙色实线）的比较：
 
-[PRE5]
+```r
+total_days <- diff(range(polls_2008$day))
+span <- 28/total_days
+fit_1 <- loess(margin ~ day, degree = 1, span = span, data = polls_2008)
+fit_2 <- loess(margin ~ day, span = span, data = polls_2008)
+ polls_2008 |> mutate(smooth_1 = fit_1$fitted, smooth_2 = fit_2$fitted) |>
+ ggplot(aes(day, margin)) +
+ geom_point(size = 3, alpha = .5, color = "grey") +
+ geom_line(aes(day, smooth_1), color = "red", lty = 2) +
+ geom_line(aes(day, smooth_2), color = "orange", lty = 1) 
+```
 
 ![](img/4ea5fc0f23c8e9c0c5f38c0a20906041.png)*  *`degree = 2`给我们带来了更多波动的结果。一般来说，我们实际上更喜欢`degree = 1`，因为它不太容易受到这种噪声的影响。*****
 
@@ -276,11 +313,19 @@ $$ E[Y_i | X_i = x_i ] = \beta_0 + \beta_1 (x_i-x_0) + \beta_2 (x_i-x_0)² \mbox
 
 ***`ggplot2`包中的`geom_smooth`函数支持多种平滑方法。默认情况下，它使用 loess 或相关方法，即广义加性模型，如果任何数据窗口超过 1000 个观测值时使用后者。我们可以通过`method`函数请求使用 loess：
 
-[PRE6]
+```r
+polls_2008 |> ggplot(aes(day, margin)) +
+ geom_point() + 
+ geom_smooth(method = loess, formula = y ~ x)
+```
 
 ![](img/d0602050c455106cbf394a3df6133e46.png)*  *但是要注意默认参数，因为它们很少是最优的。然而，你可以方便地更改。例如，使用`loess`你可以使用以下代码：
 
-[PRE7]
+```r
+polls_2008 |> ggplot(aes(day, margin)) +
+ geom_point() + 
+ geom_smooth](https://ggplot2.tidyverse.org/reference/geom_smooth.html)(method = loess, formulat = y ~ x, method.args = [list(span = 0.15, degree = 1))
+```
 
 ![](img/04c85b9ee60fb9d2671ef1a8319b8451.png)*********
 
@@ -298,17 +343,26 @@ $$ p(\mathbf{x}) = \mathrm{Pr}(Y=1 \mid X_1=x_1 , X_2 = x_2). $$
 
 2. 在我们刚刚制作的图中，我们看到身高低值时存在高变异性。这是因为在这些层中我们的数据点很少。这次使用`quantile`函数来计算分位数 $0.1,0.2,\dots,0.9$ 和`cut`函数来确保每个组有相同数量的点。提示：对于任何数值向量`x`，你可以根据以下示例创建基于分位数的组。
 
-[PRE8]
+```r
+cut(x, quantile(x, seq(0, 1, 0.1)), include.lowest = TRUE)
+```
 
 3. 使用**MASS**包生成来自双变量正态分布的数据，如下所示：
 
-[PRE9]
+```r
+Sigma <- 9*matrix(c(1,0.5,0.5,1), 2, 2)
+dat <- MASS::mvrnorm](https://rdrr.io/pkg/MASS/man/mvrnorm.html)(n = 10000, [c(69, 69), Sigma) |>
+ data.frame() |> setNames(c("x", "y"))
+```
 
 你可以使用`plot(dat)`快速绘制数据。使用与上一个练习类似的方法来估计条件期望并绘制图形。
 
 4. **dslabs**包提供了以下数据集，其中包含 2015-2018 年波多黎各的死亡计数。
 
-[PRE10]
+```r
+library(dslabs)
+head(pr_death_counts)
+```
 
 从 2018 年 5 月之前的数据中移除，然后使用`loess`函数获取预期死亡人数作为日期函数的平滑估计。绘制这个结果平滑函数。使跨度大约为两个月。
 
@@ -316,11 +370,16 @@ $$ p(\mathbf{x}) = \mathrm{Pr}(Y=1 \mid X_1=x_1 , X_2 = x_2). $$
 
 6. 假设我们只想使用第二个协变量来预测`mnist_27`数据集中的 2s 和 7s。我们能这样做吗？初步观察似乎数据没有多少预测能力。实际上，如果我们拟合一个常规逻辑回归，`x_2`的系数并不显著！
 
-[PRE11]
+```r
+library(dslabs)
+glm(y ~ x_2, family = "binomial", data = mnist_27) 
+```
 
 在这里绘制散点图没有用，因为`y`是二元的：
 
-[PRE12]
+```r
+with(mnist_27$train, plot(x_2, y)
+```
 
 将一个局部加权回归线拟合到上面的数据，并绘制结果。注意，这里存在预测能力，但条件概率不是线性的。*********
 

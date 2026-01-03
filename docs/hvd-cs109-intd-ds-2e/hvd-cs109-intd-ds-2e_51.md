@@ -56,15 +56,31 @@ $$ RSS = \sum_{i=1}^n \left\{ y_i - \left(\beta_0 + \beta_1 x_i \right)\right\}�
 
 我们将演示如何使用先前定义的`galton`数据集来找到这些值：
 
-[PRE0]
+```r
+library(data.table)
+library([HistData](https://friendly.github.io/HistData/))
+ set.seed(1983)
+galton <- as.data.table(GaltonFamilies)gender == "male", .SD[[sample(.N, 1)], by = family]
+galton <- galton[, .(father, son = childHeight)]
+```
 
 让我们先编写一个函数来计算任何一对值$\beta_0$和$\beta_1$的 RSS。
 
-[PRE1]
+```r
+rss <- function(beta0, beta1, data){
+ resid <- galton$son - (beta0 + beta1*galton$father)
+ return(sum(resid²))
+}
+```
 
 因此，对于任何一对值，我们都会得到一个 RSS。以下是 RSS 作为$\beta_1$函数的图表，当我们保持$\beta_0$固定在 25 时。
 
-[PRE2]
+```r
+beta1 <- seq(0, 1, length = nrow(galton))
+results <- data.frame(beta1 = beta1, rss = sapply(beta1, rss, beta0 = 25))
+results |> ggplot(aes(beta1, rss)) + geom_line() + 
+ geom_line(aes(beta1, rss))
+```
 
 ![](img/6a2b5abea08935ad589c71229b28a1c9.png)*  *我们可以看到$\beta_1$在约 0.65 处有一个明显的最小值。然而，这个$\beta_1$的最小值是在$\beta_0 = 25$时，这是我们任意选择的值。我们不知道(25, 0.65)是否是使所有可能对中的方程最小化的对。
 
@@ -78,13 +94,35 @@ $$ Y_i = \beta_0 + \beta_1 x_i + \varepsilon_i $$
 
 以$Y_i$代表儿子的身高，$x_i$代表父亲的身高，我们可以使用以下代码：
 
-[PRE3]
+```r
+fit <- lm(son ~ father, data = galton)
+```
 
 我们最常用的`lm`方法是使用字符`~`来让`lm`知道哪个是我们预测的变量（`~`的左边）以及我们用来预测的变量（`~`的右边）。截距会自动添加到将要拟合的模型中。
 
 对象`fit`包含了关于拟合的信息。我们可以使用`summary`函数来提取这些信息的摘要：
 
-[PRE4]
+```r
+summary(fit)
+#> 
+#> Call:
+#> lm(formula = son ~ father, data = galton)
+#> 
+#> Residuals:
+#>    Min     1Q Median     3Q    Max 
+#>  -9.38  -1.59   0.00   1.83   9.39 
+#> 
+#> Coefficients:
+#>             Estimate Std. Error t value Pr(>|t|) 
+#> (Intercept)  37.4658     5.0052    7.49  3.2e-12 ***
+#> father        0.4592     0.0724    6.34  1.8e-09 ***
+#> ---
+#> Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+#> 
+#> Residual standard error: 2.46 on 177 degrees of freedom
+#> Multiple R-squared:  0.185,  Adjusted R-squared:  0.181 
+#> F-statistic: 40.2 on 1 and 177 DF,  p-value: 1.82e-09
+```
 
 为了理解这个摘要中包含的一些术语，我们需要记住 LSE 是随机变量。数学统计学给我们一些关于这些随机变量分布的想法。
 
@@ -94,7 +132,13 @@ $$ Y_i = \beta_0 + \beta_1 x_i + \varepsilon_i $$
 
 最小二乘估计（LSE）是从数据$y_1,\dots,y_N$中导出的，这些数据是随机变量$Y_1, \dots, Y_N$的一个实现。这意味着我们的估计值是随机变量。为了看到这一点，我们可以运行一个蒙特卡洛模拟，其中我们假设儿子和父亲的身高数据定义了一个总体，随机抽取一个大小为$N=50$的样本，并计算每个样本的回归斜率系数：
 
-[PRE5]
+```r
+N <- 25
+lse <- replicate(10000, {
+ smpl <-  galton[sample(.N, N, replace = TRUE)]
+ coef(lm(son ~ father, data = smpl))
+})
+```
 
 我们可以通过绘制它们的分布图来看到估计值的变异性：
 
@@ -104,17 +148,31 @@ $$ Y_i = \beta_0 + \beta_1 x_i + \varepsilon_i $$
 
 计算标准误差有点复杂，但数学理论确实允许我们计算它们，并且它们包含在`lm`函数提供的摘要中。`summary`函数显示了标准误差估计：
 
-[PRE6]
+```r
+fit <- lm(son ~ father, data = galton[sample(.N, N, replace = TRUE)])
+summary(fit)$coef
+#>             Estimate Std. Error t value Pr(>|t|)
+#> (Intercept)   26.574     17.383    1.53   0.1400
+#> father         0.627      0.249    2.52   0.0193
+```
 
 你可以看到上面报告的标准误差估计与模拟中的标准误差非常接近：
 
-[PRE7]
+```r
+with(lse, c(se_0 = sd(beta_0), se_1 = sd(beta_1)))
+#>   se_0   se_1 
+#> 13.012  0.188
+```
 
 `summary`函数还报告了 t 统计量（`t value`）和 p 值（`Pr(>|t|)`）。t 统计量实际上并不是基于中心极限定理，而是基于$\varepsilon$s 服从正态分布的假设。在这个假设下，数学理论告诉我们，LSE 除以其标准误差，$\hat{\beta}_0 / \widehat{\mathrm{SE}}[\hat{\beta}_0]$和$\hat{\beta}_1 / \widehat{\mathrm{SE}}[\hat{\beta}_1]$，将遵循具有$N-p$自由度的 t 分布，其中$p$是我们模型中的参数数量。在我们的例子中$p=2$，两个 p 值分别来自于检验$\beta_0 = 0$和$\beta_1=0$的零假设。
 
 记住，正如我们在第 10.2.3 节中描述的，对于足够大的 $N$，中心极限定理（CLT）是有效的，t 分布几乎与正态分布相同。此外，请注意，我们可以使用 `confint` 函数构建置信区间：
 
-[PRE8]
+```r
+confint(fit, "father", level = 0.95)
+#>        2.5 % 97.5 %
+#> father 0.112   1.14
+```
 
 尽管我们在这本书中没有展示示例，但回归模型的假设检验在流行病学和经济学中很常见，用于做出诸如“在调整 X、Y 和 Z 后，A 对 B 的影响在统计上显著”的陈述。然而，为了使这些陈述成立，必须满足几个假设。****
 
@@ -128,11 +186,18 @@ $$\hat{y} = \hat{\beta}_0 + \hat{\beta}_1 x$$
 
 请记住，预测值 $\hat{y}$ 也是一个随机变量，数学理论告诉我们标准误差是什么。如果我们假设误差是正态分布的，或者样本量足够大，我们可以使用理论来构建置信区间。事实上，**ggplot2** 层的 `geom_smooth(method = "lm")` 使用这些置信区间包围回归线：
 
-[PRE9]
+```r
+galton |> ggplot(aes(son, father)) + geom_point() + geom_smooth(method = "lm")
+```
 
 ![](img/2e761bfe40c162f3684286ce8a1f390f.png)*  *R 函数 `predict` 接收一个 `lm` 对象作为输入并返回预测值。如果需要，它还会提供构建置信区间所需的标准误差和其他信息：
 
-[PRE10]**********
+```r
+fit <- lm(son ~ father, data = galton) 
+y_hat <- predict(fit, se.fit = TRUE)
+names(y_hat)
+#> [1] "fit"            "se.fit"         "df"             "residual.scale"
+```**********
 
 ## ****16.4 模型诊断****
 
@@ -154,7 +219,9 @@ $$ \varepsilon = Y - \left(\beta_0 + \beta_1 x_i \right). $$ 实际上，残差�
 
 我们更倾向于图表而不是基于例如相关性的总结，因为，如第 15.2.2 节所述，相关性并不总是关联性的最佳总结。将 `plot` 函数应用于 `lm` 对象会自动绘制这些图表。
 
-[PRE11]
+```r
+plot(fit, which = 1:3)
+```
 
 ![](img/0c32658af2f1b07541b79d8f38b7a0d0.png)*  *此函数可以生成六种不同的图表，`which` 参数允许你指定要查看的图表。你可以通过阅读 `plot.lm` 帮助文件来了解更多信息。然而，一些图表基于更高级的概念，超出了本书的范围。要了解更多信息，我们建议阅读推荐阅读部分中包含的关于回归分析的进阶书籍。
 
@@ -170,7 +237,11 @@ $$ \varepsilon = Y - \left(\beta_0 + \beta_1 x_i \right). $$ 实际上，残差�
 
 要理解这些模型，想象一下你是 16 世纪的伽利略，试图描述一个下落物体的速度。一个助手爬上比萨斜塔并扔下一个球，而其他几个助手在不同时间记录位置。让我们使用我们目前所知的方程模拟一些数据，并添加一些测量误差。`dslabs`函数`rfalling_object`生成这些模拟：
 
-[PRE12]
+```r
+library([tidyverse](https://tidyverse.tidyverse.org))
+library(dslabs)
+falling_object <- [rfalling_object](https://rdrr.io/pkg/dslabs/man/rfalling_object.html)()
+```
 
 助手将数据交给伽利略，这就是他看到的情况：
 
@@ -196,15 +267,31 @@ $$ Y_i = \beta_0 + \beta_1 x_i + \beta_2 x_i² + \varepsilon_i, i=1,\dots,n $$
 
 最小二乘法计算不需要误差近似为正态分布。`lm`函数将找到$\beta$，以最小化残差平方和：
 
-[PRE13]
+```r
+fit <- falling_object |> 
+ mutate(time_sq = time²) |> 
+ lm(observed_distance~time+time_sq, data = _)
+summary(fit)$coefficients
+#>             Estimate Std. Error t value Pr(>|t|)
+#> (Intercept)   54.753      0.625  87.589 5.36e-17
+#> time           0.575      0.893   0.644 5.33e-01
+#> time_sq       -4.929      0.265 -18.603 1.16e-09
+```
 
 让我们检查估计的抛物线是否适合数据。**broom**函数`augment`使我们能够轻松地做到这一点：
 
-[PRE14]
+```r
+broom::[augment](https://generics.r-lib.org/reference/augment.html)(fit) |> 
+ ggplot() +
+ geom_point(aes(time, observed_distance)) + 
+ geom_line(aes(time, .fitted), col = "blue")
+```
 
 ![](img/07c5e764e9dbfdc3c71dc9cb52dfc611.png)*  *残差证实了误差的正态近似是合理的：
 
-[PRE15]
+```r
+plot(fit, which=1:2)
+```
 
 ![](img/cde093027594c0e697596d1e72b2f23f.png)*  *感谢我的高中物理老师，我知道下落物体的轨迹方程是：
 
@@ -214,7 +301,13 @@ $$ d(t) = h_0 + v_0 t - 0.5 \times 9.8 \, t² $$
 
 这些与参数估计一致：
 
-[PRE16]
+```r
+confint(fit)
+#>             2.5 % 97.5 %
+#> (Intercept) 53.38  56.13
+#> time        -1.39   2.54
+#> time_sq     -5.51  -4.35
+```
 
 比萨斜塔的高度在$\beta_0$的置信区间内，初始速度 0 在$\beta_1$的置信区间内（注意 p 值大于 0.05），加速度常数在$-2 \times \beta_2$的置信区间内。**********
 

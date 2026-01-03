@@ -51,7 +51,11 @@ Real Clear Politics¹ 是一个新闻聚合器，它组织和发布民意调查�
 
 *dslabs** 包含一个函数，可以显示从这个罐子中进行的随机抽取：
 
-[PRE0]
+```r
+library([tidyverse](https://tidyverse.tidyverse.org))
+library(dslabs)
+[take_poll](https://rdrr.io/pkg/dslabs/man/take_poll.html)(25)
+```
 
 ![](img/e73cfbe6c467faa88dd518ac632d7947.png)*  *思考一下你将如何根据上述数据构建你的区间。
 
@@ -115,7 +119,10 @@ $$ \mathrm{E}[\bar{X}] = p $$
 
 图表显示，我们需要一个超过 10,000 人的调查才能达到如此低的标准误差。我们很少看到这么大规模的调查，部分原因是相关的成本。根据 Real Clear Politics 表格，民意调查的样本量范围在 500-3,500 人之间。对于样本量为 1,000 且 $p=0.51$ 的情况，标准误差是：
 
-[PRE1]
+```r
+sqrt(p*(1 - p))/sqrt(1000)
+#> [1] 0.0158
+```
 
 或者 1.5 个百分点。因此，即使在大规模调查中，对于竞争激烈的选举，如果我们没有意识到 $\bar{X}$ 是一个随机变量，它也可能误导我们。然而，我们实际上可以更多地了解我们接近 $p$ 的程度，我们将在第 9.4.1 节中这样做。
 
@@ -159,11 +166,19 @@ $$ \widehat{\mathrm{SE}}[\bar{X}] = \sqrt{\bar{X}(1 - \bar{X})/N}. $$
 
 在统计学中，帽子符号表示估计值。例如，$\hat{p}$ 通常用来代替 $\bar{X}$ 表示 $p$ 的估计值。同样，$\widehat{\mathrm{SE}}$ 表示我们正在估计标准误差而不是精确计算它。* 使用我们之前的民意调查，其中 $\bar{X} = 0.48$ 和 $N = 25$，我们得到：
 
-[PRE2]
+```r
+x_hat <- 0.48
+se <- sqrt(x_hat*(1 - x_hat)/25)
+se
+#> [1] 0.0999
+```
 
 现在我们可以计算我们的估计值在真实值 2% 以内的概率：
 
-[PRE3]
+```r
+pnorm(0.02/se) - pnorm(-0.02/se)
+#> [1] 0.159
+```
 
 当 $N = 25$ 时，这种情况发生的可能性很小。
 
@@ -187,7 +202,15 @@ $$ \left[\bar{X} - 1.96,\widehat{\mathrm{SE}}[\bar{X}], , \bar{X} + 1.96,\wideha
 
 该区间的端点不是固定的数字——它们取决于数据。每次我们取一个新的样本，我们就会得到一个新的 $\bar{X}$ 和一个新的置信区间。为了看到这一点，我们可以使用之前相同的参数重复抽样过程：
 
-[PRE4]
+```r
+p <- 0.45
+N <- 1000
+x <- sample(c(0, 1), size = N, replace = TRUE, prob = c(1 - p, p))
+x_hat <- mean(x)
+se_hat <- sqrt(x_hat*(1 - x_hat)/N)
+c(x_hat - 1.96*se_hat, x_hat + 1.96*se_hat)
+#> [1] 0.400 0.462
+```
 
 如果你多次运行此代码，你会看到由于随机抽样变化，区间会从一次运行到下一次运行而变化。
 
@@ -203,7 +226,10 @@ $$ \Pr(-z \leq Z \leq z) = 1 - \alpha, $$
 
 在 R 中，这可以计算为：
 
-[PRE5]
+```r
+alpha <- 0.01
+z <- qnorm(1 - alpha/2)
+```
 
 例如，`qnorm(0.975)` 对于 95% 的置信区间给出 1.96，而 `qnorm(0.995)` 对于 99% 的区间给出 2.58。******
 
@@ -211,7 +237,20 @@ $$ \Pr(-z \leq Z \leq z) = 1 - \alpha, $$
 
 ****我们可以通过蒙特卡洛模拟验证我们构建的区间具有包含 $p$ 的所需概率。通过反复抽取样本并构建置信区间，我们可以检查区间实际上包含 $p$ 的真实值的频率。
 
-[PRE6]
+```r
+set.seed(1)
+N <- 1000
+B <- 10000
+p <- 0.45
+inside <- replicate(B, {
+ x <- sample(c(0,1), size = N, replace = TRUE, prob = c(1 - p, p))
+ x_hat <- mean(x)
+ se_hat <- sqrt(x_hat*(1 - x_hat)/N)
+ p >= x_hat - 1.96*se_hat & p <= x_hat + 1.96*se_hat
+})
+mean(inside)
+#> [1] 0.948
+```
 
 正如预期的那样，区间大约有 95% 的时间覆盖 $p$。
 
@@ -277,7 +316,10 @@ $$ z \times \sqrt{\bar{X}(1-\bar{X}) / N}. $$
 
 13. 向量 `errors` 包含了对于每个模拟样本，我们的估计 $\bar{X}$ 与实际 $p$ 之间的差异。我们称这个差异为*误差*。计算误差的平均值，并绘制蒙特卡洛模拟中生成的误差的直方图。
 
-[PRE7]
+```r
+mean(errors)
+hist(errors)
+```
 
 并选择以下哪个最能描述它们的分布：
 
@@ -335,11 +377,19 @@ $$ z \times \sqrt{\bar{X}(1-\bar{X}) / N}. $$
 
 在接下来的练习中，我们将使用包含在 **dslabs** 包中的 2016 年选举的实际民调。具体来说，我们将使用选举前一周结束的所有全国民调。
 
-[PRE8]
+```r
+library(dslabs)
+library([tidyverse](https://tidyverse.tidyverse.org))
+polls <- polls_us_election_2016 |> 
+ filter(enddate >= "2016-10-31" & state == "U.S.") 
+```
 
 24. 对于第一份民调，你可以获得样本量和估计的克林顿百分比：
 
-[PRE9]
+```r
+N <- polls$samplesize[1]
+x_hat <- polls$rawpoll_clinton[1]/100
+```
 
 假设只有两位候选人，构建选举之夜克林顿选民比例 $p$ 的 95% 置信区间。
 
@@ -353,7 +403,11 @@ $$ z \times \sqrt{\bar{X}(1-\bar{X}) / N}. $$
 
 29. 与预期相比，只有极少数的民调产生了包含$p$的置信区间。如果你仔细查看表格，你会看到大多数未能包含$p$的民调都是低估的。主要原因是不确定的选民，即那些尚未决定他们将投票给谁或不想说的人。因为，从历史上看，不确定的选民在选举日几乎平均分配在两个主要候选人之间，因此估计两个候选人比例的差距或差异更有信息量，我们将用$\theta$表示它，在本届选举中为$0.482 - 0.461 = 0.021$。假设只有两个政党，且$\theta = 2p - 1$。重新定义`polls`如下，并重新做练习 15，但针对差异。
 
-[PRE10]
+```r
+polls <- polls_us_election_2016 |> 
+ filter(enddate >= "2016-10-31" & state == "U.S.")  |>
+ mutate(theta_hat = rawpoll_clinton/100 - rawpoll_trump/100)
+```
 
 30. 现在重复练习 26，但针对差异进行。
 

@@ -4,7 +4,17 @@
 
 观察定义数据集的数字和字符串通常没有太大用处。为了说服自己，打印并盯着美国谋杀数据表看看：
 
-[PRE0]
+```r
+library(dslabs)
+head(murders)
+#>        state abb region population total
+#> 1    Alabama  AL  South    4779736   135
+#> 2     Alaska  AK   West     710231    19
+#> 3    Arizona  AZ   West    6392017   232
+#> 4   Arkansas  AR  South    2915918    93
+#> 5 California  CA   West   37253956  1257
+#> 6   Colorado  CO   West    5029196    65
+```
 
 你从盯着这张表格中学到了什么？你能多快确定哪个州的人口最多？哪个州的人口最少？一个典型的州有多大？人口规模和谋杀总数之间有关系吗？这个国家的不同地区谋杀率是如何变化的？对于大多数人类大脑来说，仅通过观察数字很难提取这些信息。相比之下，上述所有问题的答案都可以通过查看这个图表轻松获得：*
 

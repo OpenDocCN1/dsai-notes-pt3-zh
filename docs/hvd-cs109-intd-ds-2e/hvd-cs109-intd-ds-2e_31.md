@@ -18,7 +18,9 @@ $$\mathrm{Pr}(a < x \leq b) = \int_a^b \frac{1}{\sqrt{2\pi}\sigma} e^{-\frac{1}{
 
 但是，你不需要记住公式就可以在实践中使用正态分布。最重要的特征是它完全由两个参数定义：$\mu$ 和 $\sigma$。公式中的其余符号代表区间的端点 $a$ 和 $b$ 以及已知的数学常数 $\pi$ 和 $e$。这两个参数，$\mu$ 和 $\sigma$，分别被称为分布的 *均值* 和 *标准差*（分别用希腊字母 $m$ 和 $s$ 表示）。在 R 中，函数 `pnorm` 允许我们计算任何 $a,\mu,$ 和 $\sigma$ 的 $\mathrm{Pr}(x \leq a)$：
 
-[PRE0]
+```r
+pnorm(a, mu, sigma)
+```
 
 分布是对称的，以 $\mu$ 为中心，大部分值（约 95%）都在 $\mu$ 的 $2\sigma$ 范围内。当 $\mu = 0$ 和 $\sigma = 1$ 时，正态分布看起来是这样的：
 
@@ -38,11 +40,18 @@ $$ \sigma_x = \sqrt{\frac{1}{n}\sum_{i=1}^n (x_i - \mu_x)²} $$ 这可以被认�
 
 让我们计算男性身高的平均值和标准差：
 
-[PRE1]
+```r
+library([tidyverse](https://tidyverse.tidyverse.org))
+library(rafalib)
+x <- with(heights, height[sex == "Male"])
+```
 
 预定义的函数`mean`和`sd`可以在这里使用：
 
-[PRE2]
+```r
+m <- mean(x)
+s <- sd(x)
+```
 
 *如第 10.2.1 节中解释的原因，`sd(x)`除以`length(x)-1`而不是`length(x)`。但请注意，当`length(x)`很大时，`sd(x)`和`sqrt(sum((x-mu)²)/length(x))`实际上是相等的。* 如果存储在`x`中的值的分布很好地被正态分布所近似，那么使用具有均值`m <- mean(x)`和标准差`s <- sd(x)`的正态分布是有意义的。这意味着`x`的整个分布可以用这两个数字来概括！
 
@@ -54,7 +63,9 @@ $$ \sigma_x = \sqrt{\frac{1}{n}\sum_{i=1}^n (x_i - \mu_x)²} $$ 这可以被认�
 
 为了验证这一点，我们可以比较由正态模型预测的落在给定区间（例如$(a, b]$）内的观测值的比例与数据中实际观察到的比例。区间$[a, b]$内的值的比例可以用以下方法计算：
 
-[PRE3]
+```r
+mean(x > a & x <= b)
+```
 
 在这里，逻辑表达式`x >= a & x <= b`对于区间内的所有`x`值返回`TRUE`，否则返回`FALSE`。因为`mean`函数自动将`TRUE`转换为 1，将`FALSE`转换为 0，所以这个逻辑向量的平均值简单地是落在区间内的观测值的比例。我们将在整个书中使用这种方便的方法。
 
@@ -62,11 +73,21 @@ $$ \sigma_x = \sqrt{\frac{1}{n}\sum_{i=1}^n (x_i - \mu_x)²} $$ 这可以被认�
 
 低于平均学生的概率：
 
-[PRE4]
+```r
+pnorm(m, m, s)
+#> [1] 0.5
+mean(x <= m)
+#> [1] 0.515
+```
 
 平均数在两个标准差范围内的概率：
 
-[PRE5]
+```r
+pnorm(76.5, m, s) - pnorm(62.1, m, s)
+#> [1] 0.954
+mean(x > 62.1 & x <= 76.5)
+#> [1] 0.95
+```
 
 *当使用离散数据的正态近似（例如，当身高四舍五入到最接近的英寸时），请注意`mean(x < a)`和`mean(x <= a)`可能不同。在这种情况下，通常应用*连续性校正*，使用`pnorm(a + delta/2, m, s)`来近似`mean(x <= a)`，其中`delta`是箱宽（在我们的例子中，1 英寸）。然而，在我们的数据集中，一些学生报告了更精确的测量值，因此离散化的程度不同。因此，应该小心地应用正态近似。********
 
@@ -78,11 +99,16 @@ $$ \sigma_x = \sqrt{\frac{1}{n}\sum_{i=1}^n (x_i - \mu_x)²} $$ 这可以被认�
 
 在 R 中，我们可以使用`scale`函数将数据转换为标准单位：
 
-[PRE6]
+```r
+z <- scale(x)
+```
 
 要查看有多少男性在平均值的 2 个标准差范围内，我们只需输入：
 
-[PRE7]
+```r
+mean(abs(z) < 2)
+#> [1] 0.95
+```
 
 比例大约是 95%，这正是正态分布所预测的！
 
@@ -102,19 +128,31 @@ $$ \sigma_x = \sqrt{\frac{1}{n}\sum_{i=1}^n (x_i - \mu_x)²} $$ 这可以被认�
 
 假设一位同事负责收集一组男性的人口统计数据。数据报告身高以英尺为单位，并存储在以下对象中：
 
-[PRE8]
+```r
+library(dslabs)
+str(outlier_example)
+#>  num [1:500] 5.59 5.8 5.54 6.15 5.83 5.54 5.87 5.93 5.89 5.67 ...
+```
 
 我们的同事利用了身高通常很好地近似正态分布的事实，并用平均值和标准差总结数据：
 
-[PRE9]
+```r
+mean(outlier_example)
+#> [1] 6.1
+```
 
 我们的同事撰写了一份报告，指出这个男性群体比平常要高得多。平均身高超过六英尺！然而，使用你的数据分析技能，你可能会注意到一些意想不到的事情：标准差超过 7 英尺。
 
-[PRE10]
+```r
+sd(outlier_example)
+#> [1] 7.8
+```
 
 加减两个标准差，你会注意到 95%的这部分人群的身高将在-9.49 至 21.7 英尺之间，这是没有意义的。一个快速的图表揭示了问题：
 
-[PRE11]
+```r
+boxplot(outlier_example)
+```
 
 ![](img/b9dd27b9683f0c9ee24329450b5b0aa7.png)*  *由于我们知道 180 英尺的身高是不可能的，因此似乎至少有一个值是没有意义的。箱线图将这个点检测为异常值。****
 
@@ -124,7 +162,10 @@ $$ \sigma_x = \sqrt{\frac{1}{n}\sum_{i=1}^n (x_i - \mu_x)²} $$ 这可以被认�
 
 我们示例数据的中间值是：
 
-[PRE12]
+```r
+median(outlier_example)
+#> [1] 5.74
+```
 
 这相当于大约 5 英尺 9 英寸。当数据包含异常值时，中位数通常是衡量 *典型* 值的更好指标。****
 
@@ -136,7 +177,10 @@ $$ \sigma_x = \sqrt{\frac{1}{n}\sum_{i=1}^n (x_i - \mu_x)²} $$ 这可以被认�
 
 对于我们的身高数据，MAD 是：
 
-[PRE13]
+```r
+mad(outlier_example)
+#> [1] 0.237
+```
 
 这相当于大约 3 英寸。
 
@@ -150,7 +194,10 @@ $$ \sigma_x = \sqrt{\frac{1}{n}\sum_{i=1}^n (x_i - \mu_x)²} $$ 这可以被认�
 
 在我们的例子中，这个近似效果很好。基于 IQR 的标准差估计为：
 
-[PRE14]
+```r
+IQR(outlier_example)/1.349
+#> [1] 0.245
+```
 
 对应大约 3 英寸。
 
@@ -166,27 +213,47 @@ $$ [Q_1 - 1.5 \times \text{IQR}, ; Q_3 + 1.5 \times \text{IQR}], \quad \text{其
 
 当数据遵循**标准正态分布**时，这个范围是：
 
-[PRE15]
+```r
+q3 <- qnorm(0.75); q1 <- qnorm(0.25); iqr <- q3 - q1
+c(q1 - 1.5*iqr, q3 + 1.5*iqr)
+#> [1] -2.7  2.7
+```
 
 使用`pnorm`，我们可以计算预期落在这个范围内的数据比例：
 
-[PRE16]
+```r
+r <- c(q1 - 1.5*iqr, q3 + 1.5*iqr)
+round((pnorm(r2]) - [pnorm(r[1]))*100, 3)
+#> [1] 99.3
+```
 
 因此，对于正态分布，大约 99.302%的数据位于这个区间内。换句话说，我们预计在一个完美的正态数据集中，每 1000 个观测值中大约有 7 个会落在这个范围之外，这不是因为它们是错误的，而是由于随机变化。
 
 为了使定义更严格，图基提出了使用更宽的乘数，例如 3 而不是 1.5，来标记*远端异常值*。对于正态分布的数据，范围
 
-[PRE17]
+```r
+r <- c(q1 - 3*iqr , q3 + 3*iqr)
+round((pnorm(r2]) - [pnorm(r[1]))*100, 4)
+#> [1] 100
+```
 
-涵盖了大约 99.9998%的所有值，这意味着大约每百万个观测值中只有两个会落在这个范围之外。在**ggplot** `[geom_boxplot()](https://ggplot2.tidyverse.org/reference/geom_boxplot.html)` 函数中，这个乘数由`coef`参数控制，默认为 1.5。
+涵盖了大约 99.9998%的所有值，这意味着大约每百万个观测值中只有两个会落在这个范围之外。在**ggplot** `geom_boxplot()` 函数中，这个乘数由`coef`参数控制，默认为 1.5。
 
 让我们将图基的规则应用于我们的身高数据。极端的 180 英尺测量值远远超出了由 $Q_3 + 3 \times \text{IQR}$ 定义的范围内：
 
-[PRE18]
+```r
+max_height <- quantile(outlier_example, 0.75) + 3*IQR(outlier_example)
+max_height
+#>  75% 
+#> 6.91
+```
 
 如果我们移除这个值，剩余的数据将遵循一个大约正常的分布，正如预期的那样：
 
-[PRE19]
+```r
+x <- outlier_example[outlier_example < max_height]
+hist(x, breaks = seq(5, 7, 2/12))
+```
 
 ![](img/1cb9d7fb5309459532f8bcd39c37c952.png)*  *这证明了图基方法的有用性：它提供了一种客观、可重复的方法来检测异常观测值——这种方法能够适应数据的自身分布。*************
 
@@ -212,7 +279,10 @@ $$ [Q_1 - 1.5 \times \text{IQR}, ; Q_3 + 1.5 \times \text{IQR}], \quad \text{其
 
 ***1. 加载身高数据集并创建一个只包含男性身高的向量`x`：*
 
-[PRE20]
+```r
+library(dslabs)
+x <- heights$height[heights$sex=="Male"]
+```
 
 数据中在 69 至 72 英寸（高于 69 英寸，但不超过 72 英寸）之间的比例是多少？提示：使用逻辑运算符和`mean`。*
 
@@ -240,7 +310,10 @@ $$ [Q_1 - 1.5 \times \text{IQR}, ; Q_3 + 1.5 \times \text{IQR}], \quad \text{其
 
 我们将使用**HistData**包。加载`Galton`数据并创建一个仅包含儿童身高的向量`x`：
 
-[PRE21]
+```r
+library([HistData](https://friendly.github.io/HistData/))
+x <- Galton$child
+```
 
 9. 计算这些数据的平均值和标准差。
 
@@ -248,7 +321,10 @@ $$ [Q_1 - 1.5 \times \text{IQR}, ; Q_3 + 1.5 \times \text{IQR}], \quad \text{其
 
 11. 现在假设高尔顿在输入第一个值时犯了一个错误，忘记使用小数点。你可以通过以下方式模仿这个错误：
 
-[PRE22]
+```r
+x_with_error <- x
+x_with_error[1] <- x_with_error[1]*10
+```
 
 这个错误之后平均身高增长了多少英寸？
 
@@ -276,7 +352,11 @@ $$ [Q_1 - 1.5 \times \text{IQR}, ; Q_3 + 1.5 \times \text{IQR}], \quad \text{其
 
 19. 我们在`heights`数据框中查看的身高不是学生报告的原身高。原始报告的身高也包含在**dslabs**包中的对象`reported_heights`中。注意，这个数据框中的`height`列是字符类型，如果我们尝试创建一个包含数值版本的列：
 
-[PRE23]
+```r
+library([tidyverse](https://tidyverse.tidyverse.org)) 
+reported_heights <- reported_heights |>
+ mutate(original_heights = height, height = as.numeric(height))
+```
 
 我们得到了关于 NAs 的警告。检查导致 NAs 的行并描述为什么会发生这种情况。
 

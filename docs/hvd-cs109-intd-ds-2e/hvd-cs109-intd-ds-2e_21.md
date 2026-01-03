@@ -16,7 +16,10 @@
 
 ## 16.1 stringr 包
 
-[PRE0]
+```r
+library([tidyverse](https://tidyverse.tidyverse.org))
+library([stringr](https://stringr.tidyverse.org))
+```
 
 一般来说，字符串处理任务可以分为在字符串中**检测**、**定位**、**提取**或**替换**模式。我们将看到几个示例。下表包括了**stringr**包中可用的函数。我们按任务将它们分开。我们还包括了当可用时的基础 R 的等效函数。
 
@@ -64,23 +67,58 @@
 
 `dslabs`包包括了从其中获得身高数据集的原始数据。你可以这样加载它：
 
-[PRE1]
+```r
+library(dslabs)
+head(reported_heights)
+#>            time_stamp    sex height
+#> 1 2014-09-02 13:40:36   Male     75
+#> 2 2014-09-02 13:46:59   Male     70
+#> 3 2014-09-02 13:59:20   Male     68
+#> 4 2014-09-02 14:51:53   Male     74
+#> 5 2014-09-02 15:16:15   Male     61
+#> 6 2014-09-02 15:16:16 Female     65
+```
 
 这些高度是通过一个网页表单获得的，学生们被要求输入他们的身高。他们可以输入任何内容，但说明要求输入以英寸为单位的*高度*，一个数字。我们收集了 1,095 份提交，但不幸的是，包含报告的身高列中有几个非数字条目，因此变成了字符向量：
 
-[PRE2]
+```r
+class(reported_heights$height)
+#> [1] "character"
+```
 
 如果我们尝试将其解析为数字，我们会得到一个警告：
 
-[PRE3]
+```r
+x <- as.numeric(reported_heights$height)
+#> Warning: NAs introduced by coercion
+```
 
 尽管大多数值看起来像是按照要求输入的英寸高度，但我们最终还是有许多`NA`：
 
-[PRE4]
+```r
+sum(is.na(x))
+#> [1] 81
+```
 
 以下是未能成功转换的一些条目：
 
-[PRE5]
+```r
+reported_heights |> 
+ mutate(new_height = as.numeric(height)) |>
+ filter(is.na(new_height)) |> 
+ head(n = 10)
+#>             time_stamp    sex                 height new_height
+#> 1  2014-09-02 15:16:28   Male                  5' 4"         NA
+#> 2  2014-09-02 15:16:37 Female                  165cm         NA
+#> 3  2014-09-02 15:16:52   Male                    5'7         NA
+#> 4  2014-09-02 15:16:56   Male                  >9000         NA
+#> 5  2014-09-02 15:16:56   Male                   5'7"         NA
+#> 6  2014-09-02 15:17:09 Female                   5'3"         NA
+#> 7  2014-09-02 15:18:00   Male 5 feet and 8.11 inches         NA
+#> 8  2014-09-02 15:19:48   Male                   5'11         NA
+#> 9  2014-09-04 00:46:45   Male                  5'9''         NA
+#> 10 2014-09-04 10:29:44   Male                 5'10''         NA
+```
 
 我们立即看到了发生了什么。一些学生没有按照要求报告他们的身高。我们可以丢弃这些数据并继续。然而，许多条目遵循的模式，在原则上，我们可以轻松地将它们转换为英寸。例如，在上面的输出中，我们看到各种使用格式`x'y"`或`x'y''`的案例，其中`x`和`y`分别代表英尺和英寸。这些案例中的每一个都可以由人类读取并转换为英寸，例如`5'4"`是`5*12 + 4 = 64`。因此，我们可以手动修复所有有问题的条目。然而，人类容易犯错，所以自动方法更可取。此外，因为我们计划继续收集数据，所以编写自动纠正错误输入的代码将很方便。
 
@@ -90,21 +128,34 @@
 
 我们应用这个函数，并找到有问题的条目数量：
 
-[PRE6]
+```r
+problems <- reported_heights |> 
+ mutate(inches = suppressWarnings(as.numeric(height))) |>
+ filter(is.na(inches) | inches < 50 | inches > 84) |>
+ pull(height)
+length(problems)
+#> [1] 292
+```
 
 现在我们可以通过简单地打印它们来查看所有案例。如果我们这样做，我们会看到可以使用三种模式来定义这些异常中的三个大型组。
 
 1. 形式为`x'y`或`x' y''`或`x'y"`的模式，其中`x`和`y`分别代表英尺和英寸。以下有十个例子：
 
-[PRE7]
+```r
+#> 5' 4" 5'7 5'7" 5'3" 5'11 5'9'' 5'10'' 5' 10 5'5" 5'2"
+```
 
 2. 形式为`x.y`或`x,y`的模式，其中`x`代表英尺，`y`代表英寸。以下有十个例子：
 
-[PRE8]
+```r
+#> 5.3 5.5 6.5 5.8 5.6 5,3 5.9 6,8 5.5 6.2
+```
 
 3. 报告的条目是以厘米而不是英寸为单位。以下有十个例子：
 
-[PRE9]
+```r
+#> 150 175 177 178 163 175 178 165 165 180
+```
 
 一旦我们看到这些大组遵循特定的模式，我们就可以制定一个行动计划。
 
@@ -126,39 +177,60 @@
 
 **在 R 中定义字符串，我们可以使用双引号或单引号：
 
-[PRE10]
+```r
+s <- "Hello!"
+s <- 'Hello!' 
+```
 
 确保你选择正确的单引号，而不是反引号`` ` ``。
 
 现在，如果我们想定义的字符串中包含双引号会怎样？例如，如果我们想写成 10 英寸这样`10"`？在这种情况下，你不能使用：
 
-[PRE11]
+```r
+s <- "10""
+```
 
 因为这只是字符串`10`后面跟着一个双引号。如果你在 R 中输入这个，你会得到一个错误，因为你没有关闭双引号。为了避免这种情况，我们可以使用单引号：
 
-[PRE12]
+```r
+s <- '10"'
+```
 
 如果我们打印出`s`，我们会看到双引号被反斜杠`\`转义了。
 
-[PRE13]
+```r
+s
+#> [1] "10\""
+```
 
 实际上，使用反斜杠转义提供了一种在仍然使用双引号定义字符串的同时定义字符串的方法：
 
-[PRE14]
+```r
+s <- "10\""
+```
 
 在 R 中，`cat`函数让我们看到字符串实际上看起来是什么样子：
 
-[PRE15]
+```r
+cat(s)
+#> 10"
+```
 
 现在，如果我们想我们的字符串是 5 英尺，写成这样`5'`？在这种情况下，我们可以使用双引号或转义单引号
 
-[PRE16]
+```r
+s <- "5'"
+s <- '5\''
+```
 
 所以我们已经学会了如何分别写出 5 英尺和 10 英寸，但如果我们想将它们一起写出来，表示*5 英尺和 10 英寸*，写成这样`5'10"`？在这种情况下，单引号和双引号都不起作用，因为`'5'10"'`在 5 之后关闭了字符串，而`"5'10""`在 10 之后关闭了字符串。记住，如果我们将上述代码片段之一输入 R，它将卡住等待你关闭开头的引号，你将不得不使用*esc*按钮退出执行。
 
 为了达到预期的结果，我们需要用反斜杠`\`转义两个引号。你可以转义任何可能被误认为是关闭引号的字符。这两个选项是：
 
-[PRE17]
+```r
+s <- '5\'10"'
+s <- "5'10\""
+```
 
 在处理字符串时，转义字符是经常需要使用的东西。另一个经常需要转义的字符是反斜杠字符本身。我们可以用`\\`来做到这一点。当使用正则表达式时，下一节的主题，我们经常需要转义这种方法中使用的*特殊字符*。***********
 
@@ -174,41 +246,69 @@
 
 从技术上讲，任何字符串都是正则表达式，可能最简单的例子是一个单个字符。所以下一个代码示例中使用的逗号`,`就是一个简单的正则表达式搜索示例。
 
-[PRE18]
+```r
+pattern <- ","
+str_detect](https://stringr.tidyverse.org/reference/str_detect.html)([c("1", "10", "100", "1,000", "10,000"), pattern) 
+#> [1] FALSE FALSE FALSE  TRUE  TRUE
+```
 
 在上面，我们提到一个条目包含了`cm`。这也是一个简单的正则表达式示例。我们可以这样显示所有使用了`cm`的条目：
 
-[PRE19]*
+```r
+str_subset(reported_heights$height, "cm")
+#> [1] "165cm"  "170 cm"
+```*
 
 ### **16.4.2 特殊字符**
 
 *现在让我们考虑一个稍微复杂一点的例子。以下哪个字符串包含模式`cm`或`inches`？
 
-[PRE20]
+```r
+yes <- c("180 cm", "70 inches")
+no <- c("180", "70''")
+s <- c(yes, no)
+```
 
 我们可以通过两次搜索来完成这个操作：
 
-[PRE21]
+```r
+str_detect(s, "cm") | str_detect(s, "inches")
+#> [1]  TRUE  TRUE FALSE FALSE
+```
 
 然而，我们不需要这样做。正则表达式*语言*与普通字符串的主要区别在于我们可以使用特殊字符。这些字符具有特定的意义。我们首先介绍`|`，它表示*或*。所以如果我们想知道`cm`或`inches`是否出现在字符串中，我们可以使用正则表达式`cm|inches`：
 
-[PRE22]
+```r
+str_detect(s, "cm|inches")
+#> [1]  TRUE  TRUE FALSE FALSE
+```
 
 并得到正确答案。
 
 另一个有用的特殊字符是`\d`，它表示任何数字：0，1，2，3，4，5，6，7，8，9。反斜杠用于将其与字符`d`区分开来。在 R 中，我们必须*转义*反斜杠`\`，所以我们实际上必须使用`\\d`来表示数字。以下是一个示例：
 
-[PRE23]
+```r
+yes <- c("5", "6", "5'10", "5 feet", "4'11")
+no <- c("", ".", "Five", "six")
+s <- c(yes, no)
+pattern <- "\\d"
+str_detect(s, pattern)
+#> [1]  TRUE  TRUE  TRUE  TRUE  TRUE FALSE FALSE FALSE FALSE
+```
 
 我们借此机会介绍`str_view`函数，它在故障排除中非常有用，因为它显示了每个匹配字符串的所有匹配项。每个匹配项都被`<`和`>`字符包围。下面，我们可以看到`5`有一个匹配项，而`5'10`有三个匹配项。
 
-[PRE24]
+```r
+str_view(s, pattern)
+```
 
 ![](img/59e3dbb35b5312e164ac5dde18d86313.png)
 
 要查看所有字符串，即使没有匹配，我们也可以使用`match = NA`参数。
 
-[PRE25]
+```r
+str_view(s, pattern, match = NA)
+```
 
 ![](img/36b7d4075996ee08ec472590036b5d32.png)
 
@@ -220,13 +320,21 @@
 
 **字符类用于定义可以匹配的一系列字符。我们使用方括号`[]`定义字符类。例如，如果我们想要模式只匹配有`5`或`6`的情况，我们使用正则表达式`[56]`：
 
-[PRE26]
+```r
+str_view(s, "[56]", match = NA)
+```
 
 ![](img/49599a73970727879e030f1745adada3.png)
 
 假设我们想要匹配介于 4 和 7 之间的值。定义字符类的一种常见方式是使用范围。例如，`[0-9]`等同于`\\d`。因此，我们想要的模式是`[4-7]`。
 
-[PRE27]
+```r
+yes <- as.character(4:7)
+no <- as.character(1:3)
+s <- c(yes, no)
+str_detect(s, "[4-7]")
+#> [1]  TRUE  TRUE  TRUE  TRUE FALSE FALSE FALSE
+```
 
 然而，重要的是要知道，在正则表达式中，一切都是字符；没有数字。所以`4`是字符`4`，而不是数字 4。例如，注意到`[1-20]`并不表示从 1 到 20，它表示字符 1 到 2 或字符 0。所以`[1-20]`简单地表示由 0、1 和 2 组成的字符类。
 
@@ -240,7 +348,13 @@
 
 这个模式现在只检测恰好有一个数字的字符串：
 
-[PRE28]
+```r
+pattern <- "^\\d$"
+yes <- c("1", "5", "9")
+no <- c("12", "123", " 1", "a4", "b")
+s <- c(yes, no)
+str_view(s, pattern, match = NA)
+```
 
 ![](img/5ca6920fea0aac4495fc24547d9518ba.png)
 
@@ -252,7 +366,12 @@
 
 我们用一个例子来说明。一个或两个数字的模式是：
 
-[PRE29]
+```r
+pattern <- "^\\d{1,2}$"
+yes <- c("1", "5", "9", "12")
+no <- c("123", "a4", "b")
+str_view](https://stringr.tidyverse.org/reference/str_view.html)([c(yes, no), pattern, match = NA)
+```
 
 ![](img/c31afb946fad37ba886534e18261deaa.png)*
 
@@ -260,7 +379,9 @@
 
 使用我们所学的知识，我们现在可以构建一个`x'y"`模式的例子，其中`x`代表英尺，`y`代表英寸。
 
-[PRE30]
+```r
+pattern <- "^[4-7]'\\d{1,2}\"$"
+```
 
 模式现在变得越来越复杂，但你可以仔细观察并分解它：*
 
@@ -278,7 +399,14 @@
 
 让我们测试一下：
 
-[PRE31]
+```r
+yes <- c("5'7\"", "6'2\"",  "5'12\"")
+no <- c("6,2\"", "6.2\"","I am 5'11\"", "3'2\"", "64")
+str_detect(yes, pattern)
+#> [1] TRUE TRUE TRUE
+str_detect(no, pattern)
+#> [1] FALSE FALSE FALSE FALSE FALSE
+```
 
 目前，我们允许英寸为 12 或更大。稍后我们将添加一个限制，因为对此的正则表达式比我们准备展示的要复杂一些。******
 
@@ -286,11 +414,18 @@
 
 **我们遇到的另一个问题是空格。例如，我们的模式不匹配`5' 4"`，因为在`'`和`4`之间有一个空格，而我们的模式不允许空格。空格是字符，R 不会忽略它们：***
 
-[PRE32]
+```r
+identical("Hi", "Hi ")
+#> [1] FALSE
+```
 
 在正则表达式中，`\s`代表空白。为了找到像`5' 4`这样的模式，我们可以将我们的模式更改为：*
 
-[PRE33]
+```r
+pattern_2 <- "^[4-7]'\\s\\d{1,2}\"$"
+str_subset(problems, pattern_2)
+#> [1] "5' 4\""  "5' 11\"" "5' 7\""
+```
 
 然而，这不会匹配没有空格的图案。那么我们是否需要多个正则表达式模式？结果证明，我们也可以用量词来实现这一点。*****
 
@@ -298,13 +433,31 @@
 
 **我们希望模式允许空格，但不是必须的。即使有几个空格，比如这个例子中的`5' 4`，我们仍然希望它匹配。有一个量词正是为此目的。在正则表达式中，字符`*`表示前一个字符的零个或多个实例。以下是一个例子：***
 
-[PRE34]
+```r
+yes <- c("AB", "A1B", "A11B", "A111B", "A1111B")
+no <- c("A2B", "A21B")
+str_detect(yes, "A1*B")
+#> [1] TRUE TRUE TRUE TRUE TRUE
+str_detect(no, "A1*B")
+#> [1] FALSE FALSE
+```
 
 上面的模式匹配第一个字符串，它没有 1，以及所有包含一个或多个 1 的字符串。然后我们可以通过在空格字符`\s`后面添加`*`来改进我们的模式。*
 
 还有另外两个类似的量词。对于零次或一次，我们可以使用`?`，而对于一次或多次，我们可以使用`+`。你可以通过这个例子看到它们的不同：
 
-[PRE35]
+```r
+data.frame(string = c("AB", "A1B", "A11B", "A111B", "A1111B"),
+ none_or_more = str_detect(yes, "A1*B"),
+ nore_or_once = str_detect(yes, "A1?B"),
+ once_or_more = str_detect(yes, "A1+B"))
+#>   string none_or_more nore_or_once once_or_more
+#> 1     AB         TRUE         TRUE        FALSE
+#> 2    A1B         TRUE         TRUE         TRUE
+#> 3   A11B         TRUE        FALSE         TRUE
+#> 4  A111B         TRUE        FALSE         TRUE
+#> 5 A1111B         TRUE        FALSE         TRUE
+```
 
 实际上，我们将在报告高度示例中使用这三个量词，但我们将稍后在后续部分看到它们。*****
 
@@ -312,7 +465,15 @@
 
 **为了指定我们不想检测的模式，我们可以在方括号内使用`^`符号，但只能**在方括号内**。记住，方括号外部的`^`表示字符串的开始。所以，例如，如果我们想检测除了字母之外任何东西前面的数字，我们可以这样做：***
 
-[PRE36]
+```r
+pattern <- "[^a-zA-Z]\\d"
+yes <- c(".3", "+2", "-0","*4")
+no <- c("A3", "B2", "C0", "E4")
+str_detect(yes, pattern)
+#> [1] TRUE TRUE TRUE TRUE
+str_detect(no, pattern)
+#> [1] FALSE FALSE FALSE FALSE
+```
 
 另一种生成搜索除了之外的所有内容的模式的方法是使用特殊字符的大写形式。例如 `\\D` 表示除了数字之外的所有内容，`\\S` 表示除了空格之外的所有内容，等等。***
 
@@ -324,53 +485,103 @@
 
 为了避免更改像 `70.2` 这样的模式，我们将要求第一个数字在 4 到 7 之间 `[4-7]`，第二个数字是零个或多个数字 `\\d*`。让我们首先定义一个匹配此模式的简单模式：
 
-[PRE37]
+```r
+pattern_without_groups <- "^[4-7],\\d*$"
+```
 
 我们想要提取数字，以便然后使用句点形成新的版本。这些是我们的两个组，因此我们用括号将它们封装起来：***
 
-[PRE38]
+```r
+pattern_with_groups <-  "^([4-7]),(\\d*)$"
+```
 
 我们将与我们要稍后使用的部分匹配的模式部分封装起来。添加组不会影响检测，因为它只是表示我们想要保存由组捕获的内容。请注意，当使用 `str_detect` 时，两种模式返回相同的结果：***
 
-[PRE39]
+```r
+yes <- c("5,9", "5,11", "6,", "6,1")
+no <- c("5'9", ",", "2,8", "6.1.1")
+s <- c(yes, no)
+str_detect(s, pattern_without_groups)
+#> [1]  TRUE  TRUE  TRUE  TRUE FALSE FALSE FALSE FALSE
+str_detect(s, pattern_with_groups)
+#> [1]  TRUE  TRUE  TRUE  TRUE FALSE FALSE FALSE FALSE
+```
 
 一旦我们定义了组，我们就可以使用 `str_match` 函数来提取这些组定义的值：***
 
-[PRE40]
+```r
+str_match(s, pattern_with_groups)
+#>      [,1]   [,2] [,3]
+#> [1,] "5,9"  "5"  "9" 
+#> [2,] "5,11" "5"  "11"
+#> [3,] "6,"   "6"  "" 
+#> [4,] "6,1"  "6"  "1" 
+#> [5,] NA     NA   NA 
+#> [6,] NA     NA   NA 
+#> [7,] NA     NA   NA 
+#> [8,] NA     NA   NA
+```
 
 注意，第二列和第三列分别包含英尺和英寸。第一列是字符串匹配模式的部分。如果没有发生匹配，我们看到一个 `NA`。
 
 现在我们可以理解 `str_extract` 和 `str_match` 函数之间的区别。`str_extract` 仅提取与模式匹配的字符串，而不是由组定义的值：***
 
-[PRE41]*******
+```r
+str_extract(s, pattern_with_groups)
+#> [1] "5,9"  "5,11" "6,"   "6,1"  NA     NA     NA     NA
+```*******
 
 ### ***16.4.10 搜索和替换***
 
 **之前我们定义了包含不像是英寸的字符串的对象 `problems`。我们可以看到，我们的问题字符串中并不太多与该模式匹配：***
 
-[PRE42]
+```r
+pattern <- "^[4-7]'\\d{1,2}\"$"
+sum(str_detect(problems, pattern))
+#> [1] 14
+```
 
 为了了解为什么是这样，我们展示了一些例子，以揭示我们没有更多匹配的原因：
 
-[PRE43]
+```r
+problemsc(2, 10, 11, 12, 15)] |> [str_view(pattern)
+```
 
 ![](img/fd8e9cf8b253ebe1ea15ce2f98d658d4.png)
 
 我们立即看到的一个初始问题是，一些学生写出了“feet”和“inches”这两个词。我们可以使用 `str_subset` 函数看到这样做条目的例子：
 
-[PRE44]
+```r
+str_subset(problems, "inches")
+#> [1] "5 feet and 8.11 inches" "Five foot eight inches"
+#> [3] "5 feet 7inches"         "5ft 9 inches" 
+#> [5] "5 ft 9 inches"          "5 feet 6 inches"
+```
 
 我们还看到，一些条目使用了两个单引号 `''` 而不是双引号 `"`。
 
-[PRE45]
+```r
+str_subset(problems, "''")
+#>  [1] "5'9''"   "5'10''"  "5'10''"  "5'3''"   "5'7''"   "5'6''" 
+#>  [7] "5'7.5''" "5'7.5''" "5'10''"  "5'11''"  "5'10''"  "5'5''"
+```
 
 为了纠正这一点，我们可以用统一的符号替换表示英寸和英尺的不同方式。我们将使用 `'` 表示英尺，而对于英寸，我们将简单地不使用符号，因为有些条目是 `x'y` 的形式。现在，如果我们不再使用英寸符号，我们必须相应地更改我们的模式：***
 
-[PRE46]
+```r
+pattern <- "^[4-7]'\\d{1,2}$"
+```
 
 如果我们在这个匹配之前进行替换，我们会得到更多的匹配：
 
-[PRE47]
+```r
+problems |> 
+ str_replace("feet|ft|foot", "'") |> # replace feet, ft, foot with ' 
+ str_replace("inches|in|''|\"", "") |> # remove all inches symbols
+ str_detect(pattern) |> 
+ sum()
+#> [1] 48
+```
 
 然而，我们仍然有很多案例要处理。
 
@@ -378,7 +589,15 @@
 
 目前，我们通过在英尺符号 `'` 前后添加 `\\s*` 来改进我们的模式，以允许英尺符号和数字之间有空间。现在我们可以匹配更多条目：
 
-[PRE48]
+```r
+pattern <- "^[4-7]\\s*'\\s*\\d{1,2}$"
+problems |> 
+ str_replace("feet|ft|foot", "'") |> # replace feet, ft, foot with ' 
+ str_replace("inches|in|''|\"", "") |> # remove all inches symbols
+ str_detect(pattern) |> 
+ sum()
+#> [1] 53
+```
 
 我们可能会倾向于通过使用 `str_replace_all` 移除所有空格来避免这样做。然而，在进行此类操作时，我们需要确保它不会产生意外的效果。在我们的报告高度示例中，这将是一个问题，因为一些条目是以 `x y` 的形式出现的，英尺和英寸之间由空格分隔。如果我们移除所有空格，我们将错误地将 `x y` 转换为 `xy`，这意味着 `6 1` 将成为 `61` 英寸而不是 `73` 英寸。
 
@@ -390,13 +609,22 @@
 
 对于第 `i` 个组的正则表达式特殊字符是 `\\i`。因此，`\\1` 是从第一个组中提取的值，`\\2` 是从第二个组中提取的值，依此类推。作为一个简单的例子，请注意以下代码将替换逗号为句点，但仅当它位于 4 到 7 之间的数字之后，并且后面跟着零个或多个数字时：
 
-[PRE49]
+```r
+pattern_with_groups <-  "^([4-7]),(\\d*)$"
+yes <- c("5,9", "5,11", "6,", "6,1")
+no <- c("5'9", ",", "2,8", "6.1.1")
+s <- c(yes, no)
+str_replace(s, pattern_with_groups, "\\1'\\2")
+#> [1] "5'9"   "5'11"  "6'"    "6'1"   "5'9"   ","     "2,8"   "6.1.1"
+```
 
 我们可以使用这个来转换我们报告的高度中的情况。
 
 我们现在可以定义一个模式，帮助我们将所有 `x.y`、`x,y` 和 `x y` 转换为我们喜欢的格式。我们需要使 `pattern_with_groups` 更灵活一些，以捕获所有情况。
 
-[PRE50]
+```r
+pattern_with_groups <- "^([4-7])\\s*[,\\.\\s+]\\s*(\\d*)$"
+```
 
 让我们来分解这个：
 
@@ -416,11 +644,18 @@
 
 我们可以看到它似乎正在工作：
 
-[PRE51]
+```r
+str_subset](https://stringr.tidyverse.org/reference/str_subset.html)(problems, pattern_with_groups) |> [head()
+#> [1] "5.3"  "5.25" "5.5"  "6.5"  "5.8"  "5.6"
+```
 
 并且能够执行搜索和替换：
 
-[PRE52]
+```r
+str_subset(problems, pattern_with_groups) |> 
+ str_replace](https://stringr.tidyverse.org/reference/str_replace.html)(pattern_with_groups, "\\1'\\2") |> [head()
+#> [1] "5'3"  "5'25" "5'5"  "6'5"  "5'8"  "5'6"
+```
 
 同样，我们将在稍后处理英寸大于十二的挑战。*******
 
@@ -432,11 +667,17 @@
 
 传统的示例检查密码必须满足几个条件，例如 1) 8-16 个单词字符，2) 以字母开头，3) 至少有一个数字。你可以连接前瞻来检查多个条件。对于我们的示例，我们可以写出
 
-[PRE53]
+```r
+pattern <- "(?=\\w{8,16})(?=^[a-z|A-Z].*)(?=.*\\d+.*)"
+```
 
 一个更简单的例子是将所有 `superman` 改为 `supergirl`，而不改变所有男性为女性。我们可以使用类似这样的前瞻：
 
-[PRE54]****
+```r
+s <- "Superman saved a man. The man thanked superman."
+str_replace_all(s, "(?<=[Ss]uper)man", "girl")
+#> [1] "Supergirl saved a man. The man thanked supergirl."
+```****
 
 ### ***16.4.13 分离变量***
 
@@ -444,11 +685,23 @@
 
 假设我们有一个如下所示的数据框：
 
-[PRE55]
+```r
+tab <- data.frame(x = c("5'10", "6' 1", "5 ' 9", "5'11\""))
+```
 
 请注意，使用 `separate_wider_delim` 在这里不会起作用，因为分隔符可能在不同条目中变化。使用 `separate_wider_regex` 我们可以定义灵活的模式，这些模式与每个列匹配。
 
-[PRE56]
+```r
+patterns <- c(feet = "\\d", "\\s*'\\s*", inches = "\\d{1,2}", ".*")
+tab |> separate_wider_regex(x, patterns = patterns)
+#> # A tibble: 4 × 2
+#>   feet  inches
+#>   <chr> <chr> 
+#> 1 5     10 
+#> 2 6     1 
+#> 3 5     9 
+#> 4 5     11
+```
 
 通过不为 `patterns` 的第二个和第四个条目命名，我们告诉函数不要保留与该模式匹配的值。********
 
@@ -456,17 +709,30 @@
 
 **一般来说，字符串开头或结尾的空格是无意义的。这些可能特别具有欺骗性，因为有时它们可能很难看到：
 
-[PRE57]
+```r
+s <- "Hi "
+cat(s)
+#> Hi
+identical(s, "Hi")
+#> [1] FALSE
+```
 
 这是一个足够普遍的问题，以至于有一个专门的函数用于移除它们：`str_trim`。
 
-[PRE58]****
+```r
+str_trim("5 ' 9 ")
+#> [1] "5 ' 9"
+```****
 
 ## ***16.6 大小写转换***
 
 **请注意，正则表达式是区分大小写的。我们经常想要匹配一个单词，而不考虑大小写。实现这一目标的一种方法是将所有内容首先转换为小写，然后忽略大小写进行操作。例如，请注意，其中一个条目将数字写成文字 `Five foot eight inches`。虽然效率不高，但我们可以在 `zero` 到 `0`、`one` 到 `1` 等等之间添加 13 个额外的 `str_replace` 调用来转换。为了避免必须为 `Zero` 和 `zero`、`One` 和 `one` 等等分别编写两个单独的操作，我们可以使用 `str_to_lower` 函数首先将所有内容转换为小写：
 
-[PRE59]
+```r
+s <- c("Five feet eight inches")
+str_to_lower(s)
+#> [1] "five feet eight inches"
+```
 
 其他相关函数包括 `str_to_upper` 和 `str_to_title`。我们现在可以定义一个将所有问题案例转换为英寸的程序。****
 
@@ -476,27 +742,88 @@
 
 让我们看看使用我们在 16.4 节 中介绍的方法可以恢复多少问题条目。我们首先定义一个函数，用于检测未报告为英寸或厘米的条目：
 
-[PRE60]
+```r
+not_inches_or_cm <- function(x, smallest = 50, tallest = 84){
+ inches <- suppressWarnings(as.numeric(x))
+ is.na(inches) |
+ !((inches >= smallest & inches <= tallest) |
+ (inches/2.54 >= smallest & inches/2.54 <= tallest))
+}
+```
 
 我们可以看到有多少条目不是英寸或厘米：
 
-[PRE61]
+```r
+problems <- reported_heights |> 
+ filter(not_inches_or_cm(height)) |>
+ pull(height)
+length(problems)
+#> [1] 200
+```
 
 让我们看看我们可以通过应用第 16.4 节的发现恢复多少英尺英寸格式。具体来说，我们将英尺/foot/ft 替换为`'`，移除单词 inches 及其缩写，然后将类似模式重写为所需的英尺`'`英寸模式。一旦完成，我们就会看到有多少比例不符合所需模式。
 
-[PRE62]
+```r
+converted <- problems |> 
+ str_replace("feet|foot|ft", "'") |> 
+ str_remove_all("inches|in|''|\"") |> 
+ str_replace("^([4-7])\\s*[,\\.\\s+]\\s*(\\d*)$", "\\1'\\2") 
+index <- str_detect(converted, "^[4-7]\\s*'\\s*\\d{1,2}$")
+mean(!index)
+#> [1] 0.385
+```
 
 我们看到还有相当一部分尚未修复。试错法是找到满足所有所需条件的正则表达式模式的一种常见方法。我们可以检查剩余的案例，试图解码我们可以用来修复它们的新模式：
 
-[PRE63]
+```r
+converted[!index]
+#>  [1] "6"             "165cm"         "511"           "6" 
+#>  [5] "2"             ">9000"         "5 ' and 8.11 " "11111" 
+#>  [9] "6"             "103.2"         "19"            "5" 
+#> [13] "300"           "6'"            "6"             "Five ' eight "
+#> [17] "7"             "214"           "6"             "0.7" 
+#> [21] "6"             "2'33"          "612"           "1,70" 
+#> [25] "87"            "5'7.5"         "5'7.5"         "111" 
+#> [29] "5' 7.78"       "12"            "6"             "yyy" 
+#> [33] "89"            "34"            "25"            "6" 
+#> [37] "6"             "22"            "684"           "6" 
+#> [41] "1"             "1"             "6*12"          "87" 
+#> [45] "6"             "1.6"           "120"           "120" 
+#> [49] "23"            "1.7"           "6"             "5" 
+#> [53] "69"            "5' 9 "         "5 ' 9 "        "6" 
+#> [57] "6"             "86"            "708,661"       "5 ' 6 " 
+#> [61] "6"             "649,606"       "10000"         "1" 
+#> [65] "728,346"       "0"             "6"             "6" 
+#> [69] "6"             "100"           "88"            "6" 
+#> [73] "170 cm"        "7,283,465"     "5"             "5" 
+#> [77] "34"
+```
 
 我们注意到两名学生添加了`cm`，一些条目末尾有空格，所以我们将其纳入我们的清理阶段。我们还注意到至少有一条记录写出了诸如`Five foot eight inches`之类的数字。我们可以使用**english**包中的`[words()](https://rdrr.io/pkg/english/man/words.html)`函数将这些转换为实际数字。为了准备我们的最终产品，我们定义了一个函数，用于清理之前注意到的这些问题和新问题：
 
-[PRE64]
+```r
+library(english)
+cleanup <- function(s){
+ s <- str_remove_all(s, "inches|in|''|\"|cm|and") |> 
+ str_trim() |>
+ str_to_lower()
+ for (i in 0:11) {
+ s <- str_replace_all](https://stringr.tidyverse.org/reference/str_replace.html)(s, [words](https://rdrr.io/pkg/english/man/words.html)(i), [as.character(i))
+ }
+ return(s)
+}
+```
 
 许多人也注意到，身高正好为 5 或 6 英尺的学生没有输入任何英寸，例如`6'`，而我们的模式要求必须包含英寸，并且一些条目使用米制，其中一些使用欧洲小数，例如`1.6`和`1,70`。因此，我们创建了一个函数，将这些更正添加到已经识别为需要重新格式化的条目中，以便将其作为英尺`'`英寸格式化：
 
-[PRE65]
+```r
+convert_format <- function(s){
+ s |> str_replace("feet|foot|ft", "'") |> 
+ str_replace("^([4-7])\\s*[,\\.\\s+]\\s*(\\d*)$", "\\1'\\2") |> 
+ str_replace("^([56])'?$", "\\1'0") |> 
+ str_replace("^([12])\\s*,\\s*(\\d*)$", "\\1\\.\\2")
+}
+```
 
 现在我们准备好处理报告的身高数据集。策略如下：
 
@@ -510,19 +837,71 @@
 
 5. 最后，我们决定条目是英寸、厘米还是米，并相应地进行转换。
 
-[PRE66]
+```r
+patterns <- c(feet = "4-7", 
+ "\\s*'\\s*", 
+ inches = "\\d+\\.?\\d*")
+smallest <- 50
+tallest <- 84
+new_heights <- reported_heights |> 
+ mutate(original = height, 
+ height = convert_format(cleanup(height))) |>
+ separate_wider_regex(height, patterns = patterns, 
+ too_few = "align_start", 
+ cols_remove = FALSE) |> 
+ mutate(across(c(height, feet, inches), as.numeric)) |>
+ mutate(guess = 12 * feet + inches) |>
+ mutate(height = case_when(
+ is.na(height) ~ as.numeric(NA),
+ between(height, smallest, tallest) ~ height,  #inches
+ between(height/2.54, smallest, tallest) ~ height/2.54, #cm
+ between(height*100/2.54, smallest, tallest) ~ height*100/2.54, #meters
+ TRUE ~ as.numeric(NA))) |>
+ mutate(height = ifelse(is.na(height) & 
+ inches <= 12 & between(guess, smallest, tallest),
+ guess, height)) |>
+ select(-feet, -inches, -guess)
+```
 
 我们看到我们修复了除 44 条以外的所有条目。你可以看到这些大多是无法修复的：
 
-[PRE67]
+```r
+new_heights |> filter(is.na](https://rdrr.io/r/base/NA.html)(height)) |> [pull(original)
+#>  [1] "511"       ">9000"     "5.25"      "11111"     "103.2" 
+#>  [6] "19"        "300"       "5.75"      "7"         "214" 
+#> [11] "0.7"       "2'33"      "612"       "87"        "111" 
+#> [16] "12"        "yyy"       "89"        "34"        "25" 
+#> [21] "22"        "684"       "1"         "1"         "6*12" 
+#> [26] "87"        "120"       "120"       "23"        "5.51" 
+#> [31] "5.69"      "86"        "708,661"   "5.25"      "649,606" 
+#> [36] "10000"     "1"         "728,346"   "0"         "100" 
+#> [41] "5.57"      "88"        "7,283,465" "34"
+```
 
 你可以通过输入以下内容来查看我们修复的条目：
 
-[PRE68]
+```r
+new_heights |>
+ filter(not_inches_or_cm(original)) |>
+ select(original, height) |> 
+ arrange(height) |>
+ View()
+```
 
 一个最后的观察是，如果我们看看我们课程中最矮的学生：
 
-[PRE69]
+```r
+new_heights |> arrange(height) |> head(n = 6)
+#> # A tibble: 6 × 4
+#>   time_stamp          sex    height original
+#>   <chr>               <chr>   <dbl> <chr> 
+#> 1 2017-07-04 01:30:25 Male       50 50 
+#> 2 2017-09-07 10:40:35 Male       50 50 
+#> 3 2014-09-02 15:18:30 Female     51 51 
+#> 4 2016-06-05 14:07:20 Female     52 52 
+#> 5 2016-06-05 14:07:38 Female     52 52 
+#> # ℹ 1 more row
+```
 
 我们看到身高为 50、51、52 等等。这些较矮的身高很少见，学生实际上可能是指 5’0、5’1、5’2 等等。因为我们并不完全确定，所以我们将它们保留为报告的数值。对象 new_heights 包含本案例研究的最终解决方案。*************
 
@@ -530,7 +909,21 @@
 
 **在**dslabs**提供的某些数据集中，显示了荷兰按性别划分的科学资助率：
 
-[PRE70]
+```r
+library(dslabs)
+research_funding_rates |> 
+ select("discipline", "success_rates_men", "success_rates_women")
+#>            discipline success_rates_men success_rates_women
+#> 1   Chemical sciences              26.5                25.6
+#> 2   Physical sciences              19.3                23.1
+#> 3             Physics              26.9                22.2
+#> 4          Humanities              14.3                19.3
+#> 5  Technical sciences              15.9                21.0
+#> 6   Interdisciplinary              11.4                21.8
+#> 7 Earth/life sciences              24.4                14.3
+#> 8     Social sciences              15.3                11.5
+#> 9    Medical sciences              18.8                11.2
+```
 
 数据来自发表在《美国国家科学院院刊》（PNAS）上的一篇论文⁵，这是一本广受欢迎的科学期刊。然而，数据并没有以电子表格的形式提供；它是在 PDF 文档中的一个表格中。以下是表格的截图：
 
@@ -540,55 +933,129 @@
 
 我们可以手动提取数字，但这可能导致人为错误。相反，我们可以尝试使用 R 来整理数据。我们首先下载 PDF 文档，然后将其导入 R：
 
-[PRE71]
+```r
+library(["pdftools"](https://ropensci.r-universe.dev/pdftools))
+temp_file <- tempfile()
+url <- paste0("https://web.archive.org/web/20150927033124/",
+ "https://www.pnas.org/content/suppl/2015/09/16/",
+ "1510159112.DCSupplemental/pnas.201510159SI.pdf")
+download.file(url, temp_file, mode = "wb")
+txt <- [pdf_text](https://docs.ropensci.org/pdftools//reference/pdftools.html)(temp_file)
+file.remove(temp_file)
+```
 
 *`mode = "wb"` 参数仅在 Microsoft Windows 中使用时是必要的。在 MacOS 或 Linux 上，默认的 `mode = "w"` 就可以工作。要了解这种差异，请参阅 `download.file` 帮助文件。* 如果我们检查对象文本，我们会注意到它是一个字符向量，每个页面都有一个条目。因此，我们保留我们想要的页面：
 
-[PRE72]
+```r
+raw_data_research_funding_rates <- txt[2]
+```
 
 上述步骤实际上可以跳过，因为我们已经将此原始数据包含在 **dslabs** 包中。
 
 检查对象 `raw_data_research_funding_rates`，我们发现它是一个长字符串，页面上的每一行（包括表格行）都由换行符 `\n` 分隔。将此转换为数据框的第一步是将行单独存储，以便它们易于访问。为此，我们使用 `str_split` 函数：
 
-[PRE73]
+```r
+tab <- str_split(raw_data_research_funding_rates, "\n+")
+```
 
 *在 MacOS 或 Linux 上，您可以直接使用 `\n` 作为分隔符。Microsoft Windows 和基于 Unix 的 macOS 使用不同的约定来处理文本文件中的行结束，因此 `raw_data_research_funding_rates` 在 Windows 上使用时 `\n` 更多。* 因为我们从只有一个字符串开始，所以我们最终得到一个只有一个条目的列表。
 
-[PRE74]
+```r
+tab <- tab[[1]]
+```
 
 通过检查 `tab`，我们看到列名信息是第三和第四条记录：
 
-[PRE75]
+```r
+the_names_1 <- tab[3]
+the_names_2 <- tab[4]
+```
 
 这些行中的第一行看起来像这样：
 
-[PRE76]
+```r
+#>                                                       Applications, n
+#>                   Awards, n                      Success rates, %
+```
 
 我们想要为每一列创建一个具有单个名称的向量。使用我们刚刚学到的某些函数，我们可以这样做。
 
 让我们从上面的 `the_names_1` 开始。我们想要去除前导空格和逗号后面的任何内容。我们使用正则表达式来处理后者。然后我们可以通过分割由空格分隔的字符串来获取元素。我们只想在有两个或更多空格时进行分割，以避免分割 `Success rates`。因此，我们使用正则表达式 `\\s{2,}`
 
-[PRE77]
+```r
+the_names_1 <- the_names_1 |>
+ str_trim() |>
+ str_replace_all(",\\s.", "") |>
+ str_split("\\s{2,}", simplify = TRUE)
+the_names_1 
+#>      [,1]           [,2]     [,3] 
+#> [1,] "Applications" "Awards" "Success rates"
+```
 
 现在我们将查看 `the_names_2`：
 
-[PRE78]
+```r
+#>                         Discipline              Total     Men      Women
+#> n         Total    Men       Women          Total    Men      Women
+```
 
 在这里，我们想要去除前导空格，然后按照我们为第一行所做的那样通过空格进行分割：
 
-[PRE79]
+```r
+the_names_2 <- the_names_2 |>
+ str_trim() |>
+ str_split("\\s+", simplify = TRUE)
+the_names_2
+#>      [,1]         [,2]    [,3]  [,4]    [,5]    [,6]  [,7]    [,8] 
+#> [1,] "Discipline" "Total" "Men" "Women" "Total" "Men" "Women" "Total"
+#>      [,9]  [,10] 
+#> [1,] "Men" "Women"
+```
 
 然后我们可以将这些信息连接起来，为每一列生成一个名称：
 
-[PRE80]
+```r
+tmp_names <- paste(rep(the_names_1, each = 3), the_names_2[-1], sep = "_")
+the_names <- c(the_names_2[1], tmp_names) |>
+ str_to_lower() |>
+ str_replace_all("\\s", "_")
+the_names
+#>  [1] "discipline"          "applications_total"  "applications_men" 
+#>  [4] "applications_women"  "awards_total"        "awards_men" 
+#>  [7] "awards_women"        "success_rates_total" "success_rates_men" 
+#> [10] "success_rates_women"
+```
 
 现在我们准备获取实际数据。通过检查 `tab` 对象，我们发现信息位于第 6 到 14 行。我们可以再次使用 `str_split` 来实现我们的目标：
 
-[PRE81]
+```r
+new_research_funding_rates <- tab[6:14] |>
+ str_trim() |>
+ str_split("\\s{2,}", simplify = TRUE) |>
+ data.frame() |>
+ setNames(the_names) |>
+ mutate(across(-1, parse_number))
+new_research_funding_rates |> as_tibble()
+#> # A tibble: 9 × 10
+#>   discipline      applications_total applications_men applications_women
+#>   <chr>                        <dbl>            <dbl>              <dbl>
+#> 1 Chemical scien…                122               83                 39
+#> 2 Physical scien…                174              135                 39
+#> 3 Physics                         76               67                  9
+#> 4 Humanities                     396              230                166
+#> 5 Technical scie…                251              189                 62
+#> # ℹ 4 more rows
+#> # ℹ 6 more variables: awards_total <dbl>, awards_men <dbl>,
+#> #   awards_women <dbl>, success_rates_total <dbl>,
+#> #   success_rates_men <dbl>, success_rates_women <dbl>
+```
 
 我们可以看到这些对象是相同的：
 
-[PRE82]***************
+```r
+identical(research_funding_rates, new_research_funding_rates)
+#> [1] TRUE
+```***************
 
 ## ****16.9 重命名层级****
 
@@ -598,19 +1065,46 @@
 
 这里有一个示例，展示了如何重命名具有长名称的国家：
 
-[PRE83]
+```r
+library(dslabs)
+```
 
 假设我们想展示加勒比地区按国家划分的预期寿命时间序列。如果我们绘制这个图
 
-[PRE84]
+```r
+gapminder |> 
+ filter(region == "Caribbean") |>
+ ggplot(aes(year, life_expectancy, color = country)) +
+ geom_line()
+```
 
 ![](img/efabee861dc07fe5d8b3732c7b70d2f1.png)*  *我们可以看到图例占据了大部分的绘图区域，因为我们有四个国家名称超过 12 个字符。我们可以使用`case_when`函数来重命名这些级别：
 
-[PRE85]
+```r
+x <- levels(gapminder$country)
+levels](https://rdrr.io/r/base/levels.html)(gapminder$country) <- [case_when(
+ x == "Antigua and Barbuda" ~ "Barbuda",
+ x == "Dominican Republic" ~ "DR",
+ x == "St. Vincent and the Grenadines" ~ "St. Vincent",
+ x == "Trinidad and Tobago" ~ "Trinidad",
+ .default = x)
+gapminder |> 
+ filter(region == "Caribbean") |>
+ ggplot(aes(year, life_expectancy, color = country)) +
+ geom_line()
+```
 
 ![](img/210fe4581933d24767caaa51f5ef4228.png)*  *我们可以使用**forcats**包中的`fct_recode`函数来代替：
 
-[PRE86]*******
+```r
+library([forcats](https://forcats.tidyverse.org/))
+gapminder$country <- 
+ fct_recode(gapminder$country, 
+ "Barbuda" = "Antigua and Barbuda",
+ "DR" = "Dominican Republic",
+ "St. Vincent" = "St. Vincent and the Grenadines",
+ "Trinidad" = "Trinidad and Tobago")
+```*******
 
 ## ****16.10 练习****
 
@@ -618,15 +1112,22 @@
 
 2. 在**dslabs**包的`extdata`目录中，你可以找到一个包含从 2015 年 1 月 1 日到 2018 年 5 月 31 日每天死亡率数据的 PDF 文件。你可以这样找到文件：
 
-[PRE87]
+```r
+fn <- system.file("extdata", "RD-Mortality-Report_2015-18-180531.pdf",
+ package="dslabs")
+```
 
 找到并打开文件，或者直接从 RStudio 中打开。在 Mac 上，你可以输入以下命令：
 
-[PRE88]
+```r
+system2("open", args = fn)
+```
 
 在 Windows 上，你可以输入以下命令：
 
-[PRE89]
+```r
+system("cmd.exe", input = paste("start", fn))
+```
 
 以下哪个最能描述这个文件：
 
@@ -640,7 +1141,10 @@
 
 3. 我们将创建一个整洁的数据集，其中每一行代表一个观察值。这个数据集中的变量将是年份、月份、日期和死亡人数。首先安装并加载**pdftools**包：
 
-[PRE90]
+```r
+install.packages("pdftools")
+library([pdftools](https://ropensci.r-universe.dev/pdftools))
+```
 
 现在使用`pdf_text`函数读取`fn`并将其结果存储在一个名为`txt`的对象中。以下哪个最能描述你在`txt`中看到的内容？
 

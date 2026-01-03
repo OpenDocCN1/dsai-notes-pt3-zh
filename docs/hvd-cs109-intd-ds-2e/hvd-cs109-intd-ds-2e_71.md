@@ -28,11 +28,24 @@
 
 我们的第一个例子是基于电影评分。在这里，我们快速构建了一个矩阵 `movies`，它包含了至少有 100 个评分的用户中评分最高的 50 部电影：
 
-[PRE0]
+```r
+library(dslabs)
+library(data.table)
+library([stringr](https://stringr.tidyverse.org))
+dt <- as.data.table(movielens)
+dt <- dt[, if (.N >= 100) .SD, by = userId]
+top_movies <- dt[, .N, by = .(movieId, title)]
+dt <- dtmovieId [%in% top_movies[order(-N)][1:50, movieId]]
+dt <- dcast(dt, title ~ userId, value.var = "rating") 
+movies <- as.matrix(dt[,-1])
+rownames(movies) <- str_remove(dt$title, ": Episode") |> str_trunc(20)
+```
 
 请注意，如果我们直接从原始评分中计算距离，评分普遍较高的电影往往会彼此靠近，评分普遍较低的电影也是如此。然而，这并不是我们真正感兴趣的。相反，我们想要捕捉 263 位不同用户之间的评分相关性。为了实现这一点，我们通过去除电影效应来对每部电影的评分进行中心化：**
 
-[PRE1]
+```r
+movies <- movies - rowMeans(movies, na.rm = TRUE)
+```
 
 如第二十四章所述，由于并非每个用户都对每部电影进行评分，因此许多条目缺失，所以我们使用参数`na.rm = TRUE`。有了中心化数据，我们现在可以根据电影的评分模式对电影进行聚类。**
 
@@ -44,7 +57,9 @@
 
 在聚类之前，我们通过减去每个基因的平均表达水平来创建基因表达矩阵的中心化版本。这确保我们关注基因表达的*相对差异*而不是绝对大小：
 
-[PRE2]
+```r
+genex <- sweep(tissue_gene_expression$x, 2, colMeans(tissue_gene_expression$x))
+```
 
 当我们后来探索`genex`时，即使没有给出算法的组织标签，我们也应该看到结构的出现：来自同一组织的样本往往聚集在一起，因为它们共享特征的表达模式。***
 
@@ -52,7 +67,9 @@
 
 **我们首先描述的聚类算法是*层次聚类*。与许多聚类算法一样，第一步是计算每对观测之间的距离。我们以`movies`矩阵为例进行此操作：**
 
-[PRE3]
+```r
+d <- dist(movies)
+```
 
 `dist`函数自动处理缺失值并标准化距离测量，确保计算的两个电影之间的距离不依赖于可用的评分数量。**
 
@@ -60,11 +77,15 @@
 
 `hclust`函数实现了这个算法，并接受距离作为输入：
 
-[PRE4]
+```r
+h <- hclust(d)
+```
 
 我们可以使用树状图来查看生成的组。将`plot`函数应用于`hclust`对象会创建一个树状图：
 
-[PRE5]
+```r
+plot(h, cex = 0.75, main = "", xlab = "")
+```
 
 ![](img/884c49d7033d9b437a9b3a2c8eb0991a.png)*  *这个图给出了任意两部电影之间的距离近似。为了找到这个距离，我们找到从上到下这些电影首次分成两个不同组的位置。这个位置的高度是这两个组之间的距离。例如，三部《星球大战》电影之间的距离是 8 或更少，而《失落文明的探险者》和《沉默的羔羊》之间的距离大约是 17。
 
@@ -72,15 +93,25 @@
 
 函数`cutree`可以应用于`hclust`的输出，以执行这两个操作之一并生成组。参数`k`可以用来指定组数，或者，参数`h`可以用来表示组内成员之间的最小距离。以下是请求形成 10 个组的方法：
 
-[PRE6]
+```r
+groups <- cutree(h, k = 10)
+```
 
 请注意，聚类提供了一些关于电影类型的见解。第 2 组看起来像是备受赞誉的电影：
 
-[PRE7]
+```r
+names(groups)[groups == 2]
+#> [1] "American Beauty"      "Fargo"                "Godfather, The" 
+#> [4] "Pulp Fiction"         "Silence of the La..." "Usual Suspects, The"
+```
 
 并且第 9 组看起来像是*极客*电影：
 
-[PRE8]
+```r
+names(groups)[groups == 9]
+#> [1] "Lord of the Rings..." "Lord of the Rings..." "Lord of the Rings..."
+#> [4] "Star Wars IV - A ..." "Star Wars V - The..." "Star Wars VI - Re..."
+```
 
 我们可以通过使`k`更大或`h`更小来改变组的大小。*********
 
@@ -92,17 +123,24 @@
 
 我们使用来自**dslabs**的`tissue_gene_expression`数据集来说明这种方法。
 
-[PRE9]
+```r
+h_1 <- hclust(dist(genex))
+h_2 <- hclust(dist(t(genex)))
+```
 
 请注意，我们进行了两次聚类：我们对样本（`h_1`）和基因（`h_2`）进行了聚类。
 
 现在，我们可以使用这个聚类的结果来排序行和列：
 
-[PRE10]
+```r
+image(genex[h_1$order, h_2$order])
+```
 
 执行所有这些操作的`heatmap`函数：
 
-[PRE11]
+```r
+heatmap(genex)
+```
 
 注意我们没有展示上面两行代码的结果，因为特征太多，绘图将没有意义。因此，我们将过滤一些列并重新绘制图表。
 
@@ -110,7 +148,12 @@
 
 在这里，我们展示了如何将热图限制在仅显示最易变的基因上，这些基因通常揭示了最强的生物模式。我们首先计算每个基因的标准差，选择前 25 个最易变的基因，然后使用更合适的发散颜色方案绘制热图：
 
-[PRE12]
+```r
+library([matrixStats](https://github.com/HenrikBengtsson/matrixStats))
+sds <- [colSds](https://rdrr.io/pkg/matrixStats/man/rowSds.html)(genex, na.rm = TRUE)
+o <- order(sds, decreasing = TRUE)[1:25]
+heatmap(genex,o], col = [rev(RColorBrewer::[brewer.pal](https://rdrr.io/pkg/RColorBrewer/man/ColorBrewer.html)(11, "Spectral")))
+```
 
 ![](img/314f3c221b1b06b49b32e10278faaaa8.png)*  *我们在热图中看到了清晰的模式：观测值聚集成组，这些组在很大程度上对应于组织类型，基因也形成聚类，反映了生物上有意义的结构。例如，SV2B、GPM6B、LRP4 和 DOCK4 等基因聚集在一起，因为它们都与神经元功能有关。
 
@@ -132,19 +175,40 @@ k-means 算法要求我们预先定义 $k$，即我们想要创建的聚类数�
 
 我们可以运行 k-means 来看看它是否可以发现不同的组织：
 
-[PRE13]
+```r
+set.seed(2001)
+km <- kmeans(genex, centers = 7)
+```
 
 聚类分配存储在 `cluster` 组件中：
 
-[PRE14]
+```r
+km$cluster[1:5]
+#> cerebellum_1 cerebellum_2 cerebellum_3 cerebellum_4 cerebellum_5 
+#>            7            7            7            7            7
+```
 
 由于初始中心是随机选择的（这就是为什么我们使用 `set.seed`），生成的聚类可能会有所不同。为了提高稳定性，我们可以多次重复这个过程，使用不同的随机起始点，并保留最佳结果。随机起始点的数量由 `nstart` 参数设置：
 
-[PRE15]
+```r
+set.seed(2001)
+km <- kmeans(genex, centers = 7, nstart = 100)
+```
 
 由于我们这个数据集有真实的组织标签，我们可以评估 k-means 生成的聚类与已知生物组之间的匹配程度。最简单的方法是检查列联表，并评估每个聚类的*纯度*，即大多数样本是否来自单一的组织类型：
 
-[PRE16]
+```r
+table(km$cluster, tissue_gene_expression$y)
+#> 
+#>     cerebellum colon endometrium hippocampus kidney liver placenta
+#>   1         33     0           0           0      0     0        0
+#>   2          0    34           0           0      1     0        0
+#>   3          0     0           0           0      0    26        0
+#>   4          0     0          15           0      0     0        0
+#>   5          0     0           0           0     38     0        0
+#>   6          5     0           0          31      0     0        0
+#>   7          0     0           0           0      0     0        6
+```
 
 结果显示，k-means 在恢复组织结构方面做得相当不错。例如，簇 1、3、4、5 和 7 分别大致对应于小脑、肝脏、子宫内膜、肾脏和胎盘。所有海马样本都落入簇 6，尽管有五个小脑样本被错误地包含在内。簇 2 几乎捕获了所有结肠样本，只有一个肾脏样本分配错误。
 
@@ -156,7 +220,19 @@ k-means 算法要求我们预先定义 $k$，即我们想要创建的聚类数�
 
 一个方便的第一步是使用列联表（或混淆矩阵）可视化簇质量，就像我们上面用 `table` 做的那样。在这里，行代表簇，列代表真实类别。在可选地重新排序行或列以使结构更容易理解之后：
 
-[PRE17]
+```r
+tab <- table(km$cluster, tissue_gene_expression$y)
+tab,[apply(tab, 1, which.max)]
+#> 
+#>     cerebellum colon liver endometrium kidney hippocampus placenta
+#>   1         33     0     0           0      0           0        0
+#>   2          0    34     0           0      1           0        0
+#>   3          0     0    26           0      0           0        0
+#>   4          0     0     0          15      0           0        0
+#>   5          0     0     0           0     38           0        0
+#>   6          5     0     0           0      0          31        0
+#>   7          0     0     0           0      0           0        6
+```
 
 一个“纯”簇看起来像一行只有一个主导条目，其余条目相对较小。这表明分配给该簇的观测几乎共享相同的真实标签。
 
@@ -180,7 +256,11 @@ $$ \text{Purity} = \frac{1}{N} \sum_{k=1}^K \max_j | C_k \cap L_j | $$
 
 我们可以计算我们的基因表达示例的纯度，并注意到它非常接近 1：
 
-[PRE18]
+```r
+tab <- table(km$cluster, tissue_gene_expression$y)
+sum(apply(tab, 1, max))/sum(tab)
+#> [1] 0.968
+```
 
 ### *其他指标：ARI 和 NMI*
 
@@ -194,7 +274,7 @@ $$ \text{Purity} = \frac{1}{N} \sum_{k=1}^K \max_j | C_k \cap L_j | $$
 
 ## ***32.6 练习题***
 
-**1. 使用标准距离（例如，欧几里得距离）计算`movies`数据集中用户之间的成对距离。你会得到一个错误，因为某些用户对没有共同评价的电影，产生所有值为 NAs 的行或列。为了诊断这个问题，创建一个矩阵`in_common`，其中条目$(i, j)$是用户$i$和$j$共同评价的电影数量。*提示:* 使用`[is.na()](https://rdrr.io/r/base/NA.html)`与`[crossprod()](https://rdrr.io/r/base/crossprod.html)`一起使用。
+**1. 使用标准距离（例如，欧几里得距离）计算`movies`数据集中用户之间的成对距离。你会得到一个错误，因为某些用户对没有共同评价的电影，产生所有值为 NAs 的行或列。为了诊断这个问题，创建一个矩阵`in_common`，其中条目$(i, j)$是用户$i$和$j$共同评价的电影数量。*提示:* 使用`is.na()`与`crossprod()`一起使用。
 
 2. 创建一个`movies`矩阵的简化版本，其中只包含与子集内每个其他用户至少共享一部共同评价电影的用户。通过减去他们的平均值来对每个用户的评分进行中心化，计算距离矩阵，并运行层次聚类（`hclust`）。检查生成的树状图：你是否观察到任何结构？是否有用户组聚在一起？
 
@@ -206,19 +286,35 @@ $$ \text{Purity} = \frac{1}{N} \sum_{k=1}^K \max_j | C_k \cap L_j | $$
 
 6. 练习 5 的结果与使用以下方法获得的 k-means 聚类结果不同：
 
-[PRE19]
+```r
+set.seed(2001)
+km <- kmeans(genex, centers = 7, nstart = 100)
+```
 
 检查`km$centers`中的聚类中心。将小脑样本（例如，`"cerebellum_29"`）的基因表达轮廓与每个七个中心进行比较，以查看它最相似的中心：
 
-[PRE20]
+```r
+par(mfrow = c(4, 2))
+for (i in 1:7) {
+ plot(km$centers[i,], genex["cerebellum_29",],
+ xlim = range(genex), ylim = range(genex))
+}
+```
 
 对于 `"cerebellum_30"`、`"kidney_38"`、`"kidney_39"`、`"liver_13"` 和 `"liver_14"` 重复上述操作，并将这些样本直接进行比较。使用这些比较来提出对练习 5 中观察到的不匹配的可能解释。
 
 7. 将 MNIST 数字的一个子集聚类成**10**个簇：
 
-[PRE21]
+```r
+mnist <- [read_mnist](https://rdrr.io/pkg/dslabs/man/read_mnist.html)()
+set.seed(1990)
+index <- sample(nrow(mnist$train$images), 1000)
+x <- mnist$train$images[index,]
+y <- factor(mnist$train$labels[index])
+km <- kmeans(x, centers = 10, nstart = 100)
+```
 
-使用 `[table()](https://rdrr.io/r/base/table.html)` 比较簇分配与真实标签。计算所得聚类的簇纯度。当要求找到 10 个数字簇时，k-means 算法表现如何？
+使用 `table()` 比较簇分配与真实标签。计算所得聚类的簇纯度。当要求找到 10 个数字簇时，k-means 算法表现如何？
 
 8. 以图像的形式检查簇中心。例如，注意与“3”最相关的簇中心可能是“3”和“5”的混合。评论你的观察结果。
 

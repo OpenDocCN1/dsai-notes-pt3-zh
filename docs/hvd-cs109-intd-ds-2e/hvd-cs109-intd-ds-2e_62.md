@@ -20,7 +20,10 @@ $$ r_{ij} = y_{ij} - (\hat{\mu} + \hat{\alpha}_i + \hat{\beta}_j) $$
 
 通过使用上一章中定义的 `fit_als` 函数，将模型拟合到 `train_set` 数据集，
 
-[PRE0]
+```r
+fit <- fit_als(lambda = 3.636364e-05)
+train_set[, resid := rating - clamp(fit$mu + fit$a[userId] + fit$b[movieId])]
+```
 
 并与三部其他电影的残差进行比较：*
 
@@ -38,23 +41,39 @@ $$ r_{ij} = y_{ij} - (\hat{\mu} + \hat{\alpha}_i + \hat{\beta}_j) $$
 
 我们从一个简单的模拟例子开始。具体来说，我们模拟了六部电影和 120 个用户的评分 $Y_{ij}$。为了简单起见，我们假设这些评分已经根据第二十四章中描述的电影和用户效应进行了调整。我们将 120 个用户和 6 个电影效应的结果存储在对象 `y` 中：
 
-[PRE1]
+```r
+dim(y)
+#> [1] 120   6
+```
 
 如果我们检查基于用户评分的电影之间的相关性，我们会注意到一个模式：
 
-[PRE2]
+```r
+cor(y)
+#>                      Godfather Godfather 2 Goodfellas Scent of a Woman You've Got Mail Sleepless in Seattle
+#> Godfather                1.000       0.671      0.558           -0.527          -0.734               -0.721
+#> Godfather 2              0.671       1.000      0.471           -0.450          -0.649               -0.739
+#> Goodfellas               0.558       0.471      1.000           -0.888          -0.487               -0.505
+#> Scent of a Woman        -0.527      -0.450     -0.888            1.000           0.451                0.475
+#> You've Got Mail         -0.734      -0.649     -0.487            0.451           1.000                0.756
+#> Sleepless in Seattle    -0.721      -0.739     -0.505            0.475           0.756                1.000
+```
 
 似乎评分在类型内呈正相关，例如，在动作片或浪漫片中，而在两个类型之间呈负相关。在统计学中，这种模式通常由因素来解释：未观察到的或潜在的变量，这些变量解释了观察变量之间的相关性或关联。在一定的假设下，我们将在下面描述，这些潜在因素可以从数据中估计出来，并用于捕捉驱动相关性的潜在结构。
 
 一种方法是利用我们对电影类型的了解来定义一个因素，以区分动作片和浪漫片：
 
-[PRE3]
+```r
+q <- c(1, 1, 1, -1, -1, -1)
+```
 
 我们将动作片编码为`-1`，将浪漫片编码为`1`。
 
 为了量化每个用户的类型偏好，我们为每个用户 $i$（`y` 的行）拟合一个单独的线性模型，使用 `apply`：
 
-[PRE4]
+```r
+p <- apply(y, 1, function(y_i) lm(y_i ~ q - 1)$coef)
+```
 
 我们在公式中包含`-1`，因为残差被构建为具有均值为 0，因此不需要截距。
 
@@ -62,19 +81,37 @@ $$ r_{ij} = y_{ij} - (\hat{\mu} + \hat{\alpha}_i + \hat{\beta}_j) $$
 
 将这些跨用户收集起来，我们得到 `p`，一个向量，每个用户有一个条目。下面的直方图显示用户聚类成这三种类型：
 
-[PRE5]
+```r
+hist(p, breaks = seq(-2, 2, 0.1))
+```
 
 ![](img/6ceb784578732e97977ff6e29130ba05.png)*  *我们现在表明，我们可以仅使用两个向量的乘积来近似每个评分 $Y_{ij}$：一个描述用户偏好（$p$），另一个描述电影特征（$q$）。为了与矩阵代数一起工作，我们将向量转换为矩阵并相乘：
 
-[PRE6]
+```r
+p <- matrix(p)
+q <- matrix(q)
+plot(p %*% t(q), y)
+```
 
 ![](img/6b80c2e2be8bc2a0236f7ec88b812b68.png)*  *点大致沿着对角线分布，这意味着模型捕捉到了数据中相当多的结构。然而，仍然存在大量的未解释变异。即使在移除了“动作片与浪漫片”效应之后，我们仍然看到相关性模式：
 
-[PRE7]
+```r
+cor(y - p %*% t(q))
+#>                      Godfather Godfather 2 Goodfellas Scent of a Woman You've Got Mail Sleepless in Seattle
+#> Godfather                1.000       0.185     -0.545            0.557          -0.280               -0.198
+#> Godfather 2              0.185       1.000     -0.618            0.594          -0.186               -0.364
+#> Goodfellas              -0.545      -0.618      1.000           -0.671           0.619                0.650
+#> Scent of a Woman         0.557       0.594     -0.671            1.000          -0.641               -0.656
+#> You've Got Mail         -0.280      -0.186      0.619           -0.641           1.000                0.353
+#> Sleepless in Seattle    -0.198      -0.364      0.650           -0.656           0.353                1.000
+```
 
 仔细观察，这种结构似乎来自于阿尔·帕西诺是否出现在电影中。这表明我们可以通过添加一个第二个潜在因素来改进模型，这个因素可以区分帕西诺电影和非帕西诺电影。我们通过在 `q` 中添加第二个列来实现这一点：
 
-[PRE8]
+```r
+q <- cbind(c(1, 1, 1, -1, -1, -1),
+ c(1, 1, -1, 1, -1, -1))
+```
 
 现在每部电影都由*两个潜在因素*来描述：
 
@@ -84,7 +121,9 @@ $$ r_{ij} = y_{ij} - (\hat{\mu} + \hat{\alpha}_i + \hat{\beta}_j) $$
 
 然后，我们为每个用户拟合一个模型来估计他们对每个因素的偏好：
 
-[PRE9]
+```r
+p <- t(apply(y, 1, function(y_i) lm(y_i ~ q-1)$coef))
+```
 
 因为 `q` 现在有两组列，`lm` 为每个用户返回两个系数。第一个系数捕捉群体/浪漫偏好，第二个系数捕捉用户是否倾向于喜欢阿尔·帕西诺的电影。
 
@@ -92,11 +131,22 @@ $$ r_{ij} = y_{ij} - (\hat{\mu} + \hat{\alpha}_i + \hat{\beta}_j) $$
 
 使用两个因素，我们的预测能力提高了：
 
-[PRE10]
+```r
+plot(p %*% t(q), y)
+```
 
 ![](img/8b7c8f7398a1e5485512599167f47446.png)*  *现在，如果我们看看残差相关性
 
-[PRE11]
+```r
+cor(y - p %*% t(q))
+#>                      Godfather Godfather 2 Goodfellas Scent of a Woman You've Got Mail Sleepless in Seattle
+#> Godfather              1.00000     -0.3597    0.00716          0.00716          0.2412              0.41857
+#> Godfather 2           -0.35970      1.0000   -0.04429         -0.04429          0.4955              0.20741
+#> Goodfellas             0.00716     -0.0443    1.00000          1.00000         -0.0339             -0.00554
+#> Scent of a Woman       0.00716     -0.0443    1.00000          1.00000         -0.0339             -0.00554
+#> You've Got Mail        0.24118      0.4955   -0.03395         -0.03395          1.0000             -0.27145
+#> Sleepless in Seattle   0.41857      0.2074   -0.00554         -0.00554         -0.2714              1.00000
+```
 
 现在没有明显的模式了。这两个潜在因素现在解释了数据中的主要结构。
 
@@ -126,7 +176,9 @@ $$ (\mathbf{q}^\top\mathbf{q}) \, \hat{\mathbf{p}}_i = \mathbf{q}^\top \mathbf{y
 
 关键观察结果是 $\mathbf{q}$ 对每个用户都是相同的，因此反复运行 `lm` 是浪费的：它每次都重新计算相同的矩阵运算。相反，我们可以通过使用矩阵运算一次求解系统，然后高效地将其应用于所有用户：
 
-[PRE12]
+```r
+p <- t(qr.solve(crossprod(q)) %*% t(q) %*% t(y))
+```
 
 这同时计算所有 $\hat{\mathbf{p}}_i$ 值，避免了数千个单独的模型拟合。*************
 
@@ -140,21 +192,38 @@ $$ \mathbf{Y} = \mathbf{Z} \mathbf{V}^\top $$
 
 让我们在前一部分构建的 $\mathbf{Y}$ 上执行主成分分析（PCA）并检查结果：
 
-[PRE13]
+```r
+pca <- prcomp(y, center = FALSE)
+```
 
 首先，请注意，前两个主成分解释了超过 85% 的变异性*：
 
-[PRE14]
+```r
+pca$sdev²/sum(pca$sdev²)
+#> [1] 0.6939 0.1790 0.0402 0.0313 0.0303 0.0253
+```
 
 接下来，请注意 $\mathbf{V}$ 的第一列*：
 
-[PRE15]
+```r
+pca$rotation[,1]
+#>            Godfather          Godfather 2           Goodfellas 
+#>                0.306                0.261                0.581 
+#>     Scent of a Woman      You've Got Mail Sleepless in Seattle 
+#>               -0.570               -0.294               -0.300
+```
 
 将正值分配给动作电影，将负值分配给浪漫电影*。
 
 第二列：
 
-[PRE16]
+```r
+pca$rotation[,2]
+#>            Godfather          Godfather 2           Goodfellas 
+#>                0.354                0.377               -0.382 
+#>     Scent of a Woman      You've Got Mail Sleepless in Seattle 
+#>                0.437               -0.448               -0.442
+```
 
 这是为阿尔·帕西诺的电影编码*。
 
@@ -184,7 +253,15 @@ $$ \mathbf{Q}^\top\mathbf{Q} = \mathbf{I} $$
 
 从我们正则化的用户 + 电影模型（在第二十四章中介绍）的残差开始，我们可以检查在考虑整体平均值和用户及电影效应后，电影评分的相关性。我们关注一小部分知名标题，计算这些残差的相关矩阵：
 
-[PRE17]
+```r
+#>                      Godfather Godfather II Goodfellas Scent of a Woman You've Got Mail Sleepless in Seattle
+#> Godfather                 1.00         0.84       0.49             0.46           -0.36                -0.42
+#> Godfather II              0.84         1.00       0.47             0.21           -0.25                -0.43
+#> Goodfellas                0.49         0.47       1.00             0.04           -0.27                -0.45
+#> Scent of a Woman          0.46         0.21       0.04             1.00           -0.37                -0.50
+#> You've Got Mail          -0.36        -0.25      -0.27            -0.37            1.00                 0.43
+#> Sleepless in Seattle     -0.42        -0.43      -0.45            -0.50            0.43                 1.00
+```
 
 正如模拟示例中所示，我们看到了明显的相关性模式。例如，*教父*，*教父续集*和*好家伙*具有相似的残差，而浪漫喜剧则表现出不同的行为。这表明评分受到影响*潜在特征*，这些特征以有意义的方式将电影和用户分组。
 
@@ -222,13 +299,21 @@ $$ \frac{1}{N} \sum_{i,j} \left[Y_{ij} - \left(\mu + \alpha_i + \beta_j + \sum_{
 
 *dslabs** 包提供了 `fit_recommender_model` 函数，该函数实现了一个带有正则化的潜在因子模型：
 
-[PRE18]
+```r
+fit <- with(train_set, fit_recommender_model(rating, userId, movieId, reltol=1e-6))
+```
 
 您可以通过运行 `?fit_recommender_model` 并检查源代码来了解更多关于该函数的信息。*
 
 一旦我们有一个拟合的模型，我们就可以为测试集构建预测并计算 RMSE：
 
-[PRE19]
+```r
+i <- test_set$userId
+j <- test_set$movieId
+resid <- test_set$rating - with(fit, mu + ai] + b[j] + [rowSums(p[i,]*q[j,]))
+rmse(resid)
+#> [1] 0.859
+```
 
 这提高了准确性，超过了 第二十四章 中的正则化用户 + 电影效应模型。它以简化的形式说明了 Netflix 奖获奖者如何改进预测：通过结合正则化与学习用户-电影交互中隐藏结构的潜在因子模型。*
 
@@ -240,11 +325,15 @@ $$ \frac{1}{N} \sum_{i,j} \left[Y_{ij} - \left(\mu + \alpha_i + \beta_j + \sum_{
 
 这些因子的估计包含在 `fit$q` 中。由于一些电影没有足够的评分来稳定估计潜在因子，`fit_recommender_model` 函数将这些电影排除在估计之外。因此，我们使用以下方法获得估计的电影因子 $\mathbf{q}_k$：
 
-[PRE20]
+```r
+factors <- fit$q[fit$n_item >= fit$min_ratings,] 
+```
 
 为了使解释更容易，我们用电影标题替换了行名（即电影 ID）：*
 
-[PRE21]
+```r
+rownames(factors) <- movielens[match(rownames(factors), movieId)]$title
+```
 
 绘制前两个因子可以揭示几个见解。首先注意，我们早期示例中的六部电影用蓝色突出显示：我们可以看到这两个因子开始解释我们之前看到的关联，动作电影聚集在一起，爱情电影远离这些电影，而阿尔·帕西诺则位于中间某个位置：*
 
@@ -254,19 +343,44 @@ $$ \frac{1}{N} \sum_{i,j} \left[Y_{ij} - \left(\mu + \alpha_i + \beta_j + \sum_{
 
 第一个因子区分标志性黑暗经典
 
-[PRE22]
+```r
+names(sort(factors[,1], decreasing = TRUE)[1:5])
+#> [1] "2001: A Space Odyssey" 
+#> [2] "Dr. Strangelove or: How I Learned to Stop Worrying and Love the Bomb"
+#> [3] "Clockwork Orange, A" 
+#> [4] "Taxi Driver" 
+#> [5] "Silence of the Lambs, The"
+```
 
 来自好莱坞大片
 
-[PRE23]
+```r
+names(sort(factors[,1])[1:5])
+#> [1] "Armageddon" 
+#> [2] "Pearl Harbor" 
+#> [3] "Con Air" 
+#> [4] "Star Wars: Episode I - The Phantom Menace"
+#> [5] "Mission: Impossible II"
+```
 
 第二个因子区分奇怪的文化电影
 
-[PRE24]
+```r
+names(sort(factors[,2], decreasing = TRUE)[1:5])
+#> [1] "Showgirls"         "Scary Movie"       "Leaving Las Vegas"
+#> [4] "Dogma"             "Rosemary's Baby"
+```
 
 来自大预算史诗历史和奇幻史诗
 
-[PRE25]
+```r
+names(sort(factors[,2])[1:5])
+#> [1] "Lord of the Rings: The Two Towers, The" 
+#> [2] "Lord of the Rings: The Return of the King, The" 
+#> [3] "Lord of the Rings: The Fellowship of the Ring, The"
+#> [4] "Dances with Wolves" 
+#> [5] "Matrix, The"
+```
 
 这些结果表明，潜在因子捕捉到了电影类型和风格中的有意义区别，展示了潜在因子模型如何从稀疏评分数据中揭示可解释的结构。********
 
@@ -298,11 +412,23 @@ $$ \mathbf{U}^\top \mathbf{D} \mathbf{U} = \mathbf{D}² $$
 
 在 R 中，我们可以使用 `svd` 来计算 SVD 并确认其与 PCA 的关系：
 
-[PRE26]
+```r
+x <- matrix(rnorm(1000), 100, 10)
+pca <- prcomp(x, center = FALSE)
+s <- svd(x)
+ all.equal(pca$rotation, s$v, check.attributes = FALSE)
+#> [1] TRUE
+all.equal(pca$sdev², s$d²/(nrow(x) - 1))
+#> [1] TRUE
+all.equal(pca$x, s$u %*% diag(s$d), check.attributes = FALSE)
+#> [1] TRUE
+```
 
 作为一个优化点，请注意 `s$u %*% diag(s$d)` 可以更高效地写成：
 
-[PRE27]
+```r
+sweep(s$u, 2, s$d, "*")
+```
 
 奇异值分解是现代数据分析中最广泛使用的工具之一，它出现在信号处理、基因组学、图像压缩、自然语言处理、协同过滤和数值优化等众多领域。每次我们想要降低维度、揭示隐藏结构或处理大型、噪声矩阵时，SVD 都提供了一个原则性的基础。事实上，许多最成功的机器学习算法，包括 Netflix Prize 中使用的潜在因素方法，都是直接建立在它之上的。******
 
@@ -312,7 +438,9 @@ $$ \mathbf{U}^\top \mathbf{D} \mathbf{U} = \mathbf{D}² $$
 
 2. 使用几个不同的值拟合推荐模型
 
-[PRE28]
+```r
+lambdas <- expand.grid(lambda_1 = 10^-(3:6), lambda_2 = 10^-c(2:5))
+```
 
 哪一对在验证集上给出了最低的 RMSE？简要解释为什么过少的或过多的惩罚会损害性能。
 
@@ -340,7 +468,17 @@ $$ \mathbf{U}^\top \mathbf{D} \mathbf{U} = \mathbf{D}² $$
 
 $$ Y_{ij} = \mu_{ij} + \varepsilon_{ij} $$ 其中 $\mu_{ij}$ 是学生在班级 $j$ 的预期成绩，$\varepsilon_{ij}$ 是由于随机机会在回答考试问题（例如猜测或愚蠢的错误）而产生的随机变化。我们假设 $\varepsilon_{ij}$ 之间相互独立。我们将使用以下方式模拟数据：
 
-[PRE29]
+```r
+set.seed(1987)
+n <- 100; k <- 8
+s <- 64*matrix(c(1, .85, .5,
+ .85, 1, .5,
+ .5, .5, 1), 3, 3) 
+m <- MASS::mvrnorm](https://rdrr.io/pkg/MASS/man/mvrnorm.html)(n, [rep(0, 3), s)
+m <- m[order(rowMeans(m), decreasing = TRUE), ] %x% matrix(rep(1, k), nrow = 1)
+y <- m + matrix(rnorm(n * k * 3, 0, 3), n, k * 3)
+colnames(y) <- paste(rep(c("Math", "Science", "Arts"), each = k), 1:k, sep = "_")
+```
 
 我们希望尽可能简单地总结每个学生的 24 个测试分数。学生在所有科目中是否表现相同，或者我们看到了哪些模式？在某一科目中表现良好是否预示着在另一科目中也表现良好？SVD 如何帮助我们看到这种结构？
 
@@ -348,7 +486,18 @@ $$ Y_{ij} = \mu_{ij} + \varepsilon_{ij} $$ 其中 $\mu_{ij}$ 是学生在班级 
 
 首先定义一个辅助函数来可视化矩阵：
 
-[PRE30]
+```r
+nice_image <- function(x, zlim = range(x), cex.axis = 0.5, ...) {
+ cols <- seq_len(ncol(x))
+ rows <- seq_len(nrow(x))
+ image(cols, rows, t(x[rev(rows), , drop = FALSE]),
+ col  = rev(colorRampPalette(RColorBrewer::[brewer.pal](https://rdrr.io/pkg/RColorBrewer/man/ColorBrewer.html)(9, "RdBu"))(500)),
+ xaxt = "n", yaxt = "n", xlab = "", ylab = "",
+ zlim = zlim, ...)
+ abline(h = rows + 0.5, v = cols + 0.5)
+ axis(1, at = cols, labels = colnames(x), las = 2, cex.axis = cex.axis)
+}
+```
 
 7. 使用 `nice_image(y)` 可视化 100 名学生的 24 个测试分数。以下哪个选项最能描述你所看到的内容？
 
@@ -362,7 +511,10 @@ $$ Y_{ij} = \mu_{ij} + \varepsilon_{ij} $$ 其中 $\mu_{ij}$ 是学生在班级 
 
 8. 现在查看 24 个测试的相关矩阵：
 
-[PRE31]
+```r
+nice_image(cor(y), zlim = c(-1, 1))
+axis(side = 2, at = 1:ncol(y), labels = rev(colnames(y)), las = 2, cex.axis = 0.5)
+```
 
 哪个选项最能描述相关性模式？
 
@@ -376,7 +528,9 @@ $$ Y_{ij} = \mu_{ij} + \varepsilon_{ij} $$ 其中 $\mu_{ij}$ 是学生在班级 
 
 9. 首先计算 `y` 中的总平方和：
 
-[PRE32]
+```r
+tss_y <- sum(colSums(y²))
+```
 
 现在计算 SVD
 
@@ -408,11 +562,17 @@ $$ \mathbf{Y} = \mathbf{U}\mathbf{D}\mathbf{V}^\top. $$
 
 计算每个 PC 解释的方差百分比：
 
-[PRE33]
+```r
+s <- svd(y)
+plot(1:ncol(y), s$d²/sum(s$d²)*100, xlab = "PC", ylab = "Variance explained (%)")
+```
 
 你应该看到第一个 PC 解释了超过 60% 的变异性。将第一个 PC 与每个学生的平均成绩进行比较：
 
-[PRE34]
+```r
+pc1 <- s$u[, 1]*s$d[1]
+plot(rowMeans(y), pc1)
+```
 
 *你将如何用通俗易懂的语言解释第一个主成分？（记住符号是任意的，所以高 PC1 可以对应于优秀学生或差学生，取决于符号。）
 
@@ -440,7 +600,11 @@ $$ \hat{\mu}_{ij} = \sum_{k=1}³ \mathbf{u}_k d_{k,k} \mathbf{v}_k^\top. $$
 
 16. 最后，检查前三个右奇异向量（$\mathbf{V}$ 的列）：
 
-[PRE35]
+```r
+v <- s$v
+rownames(v) <- colnames(y)
+nice_image(t(v[, 1:3]))
+```
 
 *每一行对应一门课程（例如，`Math_1`，`Science_3`，`Arts_5`），每一列对应一个因子（PC1，PC2，PC3）。你将如何解释 $\mathbf{V}$ 的前三列？请用通俗易懂的语言为这三个因子各写一个简短的解释。
 

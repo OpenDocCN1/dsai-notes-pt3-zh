@@ -40,7 +40,12 @@
 
 *dslabs** 中的 `polls_us_election_2016` 数据集的以下子集包括选举前一年内进行的全国民调和州民调的结果，并按 FiveThirtyEight 组织。在这个第一个例子中，我们将筛选数据以包括选举前一周内对可能选民（lv）进行的全国民调，并考虑他们对传播的估计：
 
-[PRE0]
+```r
+library(dslabs)
+polls <- polls_us_election_2016 |> 
+ filter(state == "U.S." & enddate >= "2016-11-02" & population == "lv") |>
+ mutate(spread = rawpoll_clinton/100 - rawpoll_trump/100) 
+```
 
 请注意，我们将专注于预测传播，而不是比例 $p$。由于我们假设只有两个党派，我们知道传播是 $\theta = p - (1-p) = 2p - 1$。因此，我们所做的一切都可以很容易地适应对 $\theta$ 的估计。一旦我们有了我们的估计 $\bar{X}$ 和 $\widehat{\mathrm{SE}}[\bar{X}]$，我们用 $2\bar{X} - 1$ 来估计传播，由于我们乘以了 2，标准误差是 $2\widehat{\mathrm{SE}}[\bar{X}]$。记住，减去 1 不会增加任何变异性，因此它不会影响标准误差。此外，中心极限定理（CLT）也适用于此处，因为我们的估计是样本平均值的线性组合，而样本平均值本身近似服从正态分布。*
 
@@ -48,17 +53,24 @@
 
 假设我们之前描述的抽屉模型是好的，我们可以使用这些信息根据汇总数据构建一个置信区间。估计的范围是：
 
-[PRE1]
+```r
+theta_hat <- with(polls, sum(spread*samplesize)/sum(samplesize)) 
+```
 
 并且标准误差是：
 
-[PRE2]
+```r
+p_hat <- (theta_hat + 1)/2 
+moe <- 2*1.96*sqrt(p_hat*(1 - p_hat)/sum(polls$samplesize))
+```
 
 因此，我们报告的范围是 3.59%，误差范围为 0.4%。在选举之夜，我们发现实际百分比是 2.1%，这超出了 95% 的置信区间。发生了什么？
 
 报告范围的直方图揭示了一个问题：
 
-[PRE3]
+```r
+polls |> ggplot(aes(spread)) + geom_histogram(color = "black", binwidth = .01)
+```
 
 ![](img/22dcd21b772046ccc2569c71a9c2267b.png)* *这些估计值似乎不是正态分布的，标准误差似乎大于 0.0038。理论在这里不起作用。*****
 
@@ -66,7 +78,15 @@
 
 ***请注意，数据来自不同的民意调查机构，其中一些每周进行几次民调：
 
-[PRE4]
+```r
+polls |> count(pollster) |> arrange(desc(n)) |> head(5)
+#>                   pollster n
+#> 1                 IBD/TIPP 6
+#> 2 The Times-Picayune/Lucid 6
+#> 3    USC Dornsife/LA Times 6
+#> 4 ABC News/Washington Post 5
+#> 5     CVOTER International 5
+```
 
 让我们可视化一下那些定期进行民调的民意调查机构的数据：
 
@@ -74,17 +94,33 @@
 
 这个图揭示了一个意外的结果。首先，考虑理论预测的每个民调的标准误差在 0.018 到 0.033 之间：
 
-[PRE5]
+```r
+polls |> group_by(pollster) |> filter(n() >= 5) |>
+ summarize(se = 2*sqrt(p_hat*(1 - p_hat)/median(samplesize)))
+#> # A tibble: 5 × 2
+#>   pollster                     se
+#>   <fct>                     <dbl>
+#> 1 ABC News/Washington Post 0.0243
+#> 2 CVOTER International     0.0260
+#> 3 IBD/TIPP                 0.0333
+#> 4 The Times-Picayune/Lucid 0.0197
+#> 5 USC Dornsife/LA Times    0.0183
+```
 
 这与我们看到的所有民调中的内部变化一致。然而，似乎存在 *跨民调的差异*。例如，观察 USC Dornsife/LA Times 民调机构预测特朗普领先 4%，而 Ipsos 预测克林顿领先超过 5%。我们学到的理论对不同的民意调查机构产生具有不同期望值的民调没有任何说明，相反，它假设所有民调都有相同的期望值。FiveThirtyEight 将这些差异称为 *house effects*。我们也将它们称为 *民意调查偏差*。我们的简单抽屉模型中没有任何东西可以解释这些民意调查机构之间的差异。
 
 这种模型设定错误导致了一个过于自信的区间，最终没有包括选举之夜的结果。因此，我们不是用抽屉模型来模拟生成这些值的流程，而是直接模拟民意调查结果。为此，我们收集数据。具体来说，对于每个民意调查机构，我们查看选举前的最后报告结果：
 
-[PRE6]
+```r
+one_poll_per_pollster <- polls |> group_by(pollster) |> 
+ filter(enddate == max(enddate)) |> ungroup()
+```
 
 以下是这 20 个民意调查机构最终民调计算范围的直方图：
 
-[PRE7]
+```r
+hist(one_poll_per_pollster$spread, breaks = 10)
+```
 
 ![](img/d0823f98349daae02a14de7e008e21ea.png)*  *尽管我们不再使用罐子中红色（共和党）和蓝色（民主党）珠子的模型，但我们的新模型也可以被视为罐子模型，但包含所有可能民意调查者的投票结果。将我们的 $N=$ 20 数据点 $Y_1,\dots Y_N$ 视为从这个罐子中抽取的随机样本。为了开发一个有用的模型，我们 *假设* 罐子的期望值是实际的分布 $\theta = 2p - 1$，这意味着样本平均有期望值 $\theta$。
 
@@ -110,13 +146,23 @@ $$ s = \sqrt{ \frac{1}{N-1} \sum_{i=1}^N (Y_i - \bar{Y})² } $$
 
 R 中的 `sd` 函数计算样本标准差：
 
-[PRE8]
+```r
+sd(one_poll_per_pollster$spread)
+#> [1] 0.0222
+```
 
 ### *计算置信区间*
 
 *我们现在可以根据我们的新数据驱动模型形成一个新的置信区间：**
 
-[PRE9]
+```r
+results <- one_poll_per_pollster |> 
+ summarize(avg = mean(spread), se = sd(spread)/sqrt(length(spread))) |> 
+ mutate(start = avg - 1.96*se, end = avg + 1.96*se) 
+round(results*100, 2)
+#>    avg  se start end
+#> 1 3.03 0.5  2.06   4
+```
 
 *我们的置信区间现在更宽了，因为它包含了民意调查者的变异性。它确实包括了选举之夜的 2.1%的结果。此外，请注意，它足够小，以至于不包括 0，这意味着我们相信克林顿将赢得普选票。**
 
@@ -144,23 +190,49 @@ $$ t = \frac{\bar{Y} - \theta}{s/\sqrt{N}} $$
 
 如果我们愿意假设民意调查效应数据是正态分布的，基于样本数据 $Y_1, \dots, Y_N$，
 
-[PRE10]
+```r
+one_poll_per_pollster |> ggplot(aes(sample = spread)) + stat_qq()
+```
 
 ![](img/e69442df1aff1f6cdfeca40dbf554a37.png)*  *然后 $t$ 遵循具有 $N-1$ 个自由度的 t 分布。为了构建 95% 的置信区间，我们只需使用 `qt` 而不是 `qnorm`：这导致比之前得到的置信区间略大：
 
-[PRE11]
+```r
+n <- length(one_poll_per_pollster$spread)
+ttest_ci <- one_poll_per_pollster |> 
+ summarize(avg = mean(spread), se = sd(spread)/sqrt(length(spread))) |> 
+ mutate(start = avg - qt(0.975, n - 1)*se, end = avg + qt(0.975, n - 1)*se) |>
+ select(start, end)
+round(ttest_ci*100, 2)
+#>   start  end
+#> 1  1.99 4.07
+```
 
 这个区间比使用正态分布的区间要大，因为 t 分布的尾部较宽，如密度图所示。具体来说，t 分布的 97.5 分位数值
 
-[PRE12]
+```r
+qt(0.975, n - 1)
+#> [1] 2.09
+```
 
 比正态分布的值要大
 
-[PRE13]
+```r
+qnorm(0.975)
+#> [1] 1.96
+```
 
 *使用 t 分布和 t 统计量是 *t 检验* 的基础，这是一种广泛用于计算 p 值的方法。要了解更多关于 t 检验的信息，您可以查阅任何统计学教科书。*  *t 分布还可以用来模拟比正态分布更可能出现的较大偏差。在他们的蒙特卡洛模拟中，FiveThirtyEight 使用 t 分布来生成更好地模拟选举数据中偏差的错误。例如，在威斯康星州，六个高质量民调的平均值为支持克林顿 7%，标准差为 3%，但特朗普以 0.8% 的优势获胜。即使考虑到整体偏差，这个 7.7% 的残差比正态分布更符合 t 分布数据。
 
-[PRE14]******************
+```r
+polls_us_election_2016 |>
+ filter(state == "Wisconsin" & enddate > "2016-11-01" & 
+ population == "lv" & grade %in% c("A+","A","A-","B+","B")) |>
+ left_join(results_us_election_2016, by = "state") |>
+ mutate(spread = rawpoll_clinton - rawpoll_trump, actual = clinton - trump) |>
+ summarize(actual = first(actual), estimate = mean(spread), sd = sd(spread)) 
+#>   actual estimate sd
+#> 1 -0.764     7.04  3
+```******************
 
 ## *****10.3 练习题*****
 
@@ -168,7 +240,11 @@ $$ t = \frac{\bar{Y} - \theta}{s/\sqrt{N}} $$
 
 将回答身高调查的男性定义为总体
 
-[PRE15]
+```r
+library(dslabs)
+x <- heights |> filter(sex == "Male") |>
+ pull(height)
+```
 
 来回答以下问题。
 

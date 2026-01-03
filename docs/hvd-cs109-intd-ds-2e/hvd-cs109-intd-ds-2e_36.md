@@ -30,11 +30,16 @@
 
 一个例子是 R 中的 `sample` 函数。我们将在下面的代码中演示其用法。首先，我们使用 `rep` 函数生成一个罐子：
 
-[PRE0]
+```r
+beads <- rep(c("red", "blue"), times = c(2,3))
+```
 
 然后使用 `sample` 随机选择一个珠子：*
 
-[PRE1]
+```r
+sample(beads, 1)
+#> [1] "red"
+```
 
 这一行代码产生一个随机结果。我们希望无限次重复这个实验，但这是不可能的。相反，我们重复实验足够多次，以使结果在实际上等同于无限次重复。这是一个 *蒙特卡洛* 模拟的例子。*
 
@@ -42,15 +47,25 @@
 
 要执行我们的第一次蒙特卡洛模拟，我们使用 `replicate` 函数，它允许我们重复相同的任务任意次数。在这里，我们重复随机事件 10,000 次：
 
-[PRE2]
+```r
+set.seed(1986) 
+events <- replicate(10000, sample(beads, 1))
+```
 
 *这里我们使用 `replicate` 函数是为了教育目的，但有一个更快的方法来生成这个模拟：*
 
-[PRE3]
+```r
+sample(beads, 10000, replace = TRUE)
+```
 
 我们将在下一节中解释。** 我们现在可以验证我们的定义是否与这个蒙特卡洛模拟近似相一致。我们使用 `table` 来计数结果，而 `prop.table` 给出比例：*
 
-[PRE4]
+```r
+prop.table(table(events))
+#> events
+#>  blue   red 
+#> 0.601 0.399
+```
 
 上述数字代表通过此蒙特卡洛模拟获得的估计概率。统计学理论告诉我们，随着 $B$ 的增大，估计值将越来越接近 3/5=0.6 和 2/5=0.4。*
 
@@ -60,13 +75,17 @@
 
 在我们继续之前，我们将简要解释以下重要的一行代码：
 
-[PRE5]
+```r
+set.seed(1986) 
+```
 
 在这本书的整个过程中，我们使用随机数生成器。这意味着所呈现的许多结果可能会因偶然性而改变，表明静态版本的书籍可能显示的结果与您按照代码执行时获得的结果不同。实际上，这是完全可以接受的，因为结果是随机的，并且会因偶然性而改变。然而，如果您想确保每次运行的结果都一致，您可以设置 R 的随机数生成种子为一个特定的数字。在上文中，我们将其设置为 1986。我们不想每次都使用相同的种子，所以我们使用了一种流行的选择种子方法，即年份 - 月份 - 日期。例如，我们在 2018 年 12 月 20 日选择了 1986：$2018 - 12 - 20 = 1986$。
 
 您可以通过查看文档来了解更多关于设置随机数种子（seed）的信息：
 
-[PRE6]
+```r
+?set.seed
+```
 
 在练习中，我们可能会要求您设置种子以确保您获得的结果与我们期望的完全一致。**
 
@@ -74,13 +93,20 @@
 
 *函数 `sample` 有一个参数允许我们从罐中选取多个元素。然而，默认情况下，这种选择是无放回的：选中珠子后不会放回袋中。注意当我们随机选择五颗珠子时会发生什么：
 
-[PRE7]
+```r
+sample(beads, 5)
+#> [1] "red"  "blue" "blue" "blue" "red"
+sample(beads, 5)
+#> [1] "red"  "red"  "blue" "blue" "blue"
+```
 
 这导致的结果是一直由三个蓝色珠子和两个红色珠子组成的排列。如果我们要求选择六颗珠子，我们会得到一个错误。
 
 然而，`sample` 函数可以直接使用，无需使用 `replicate`，在相同条件下不断重复抽取 1 个 5 颗珠子的相同实验。为此，我们以放回的方式抽样：在选中珠子后将其放回罐中。我们可以通过更改 `replace` 参数来告诉 `sample` 做这件事，该参数默认为 `FALSE`，将其更改为 `replace = TRUE`：
 
-[PRE8]*********
+```r
+events <- sample(beads, 10000, replace = TRUE)
+```*********
 
 ## ****5.4 组合与排列****
 
@@ -90,11 +116,20 @@
 
 首先，让我们构建一副牌：
 
-[PRE9]
+```r
+numbers <- c("Ace", "Deuce", "Three", "Four", "Five", "Six", "Seven",
+ "Eight", "Nine", "Ten", "Jack", "Queen", "King")
+suits <- c("Diamonds", "Clubs", "Hearts", "Spades")
+deck <- expand.grid(number = numbers, suit = suits)
+deck <- paste(deck$number, deck$suit)
+```
 
 如果我们随机抽取一张牌，抽到国王的概率是 1/13：
 
-[PRE10]
+```r
+mean(deck %in% paste("King", suits))
+#> [1] 0.0769
+```
 
 因为牌组包括了所有可能的结果，这个计算给出了确切的概率。由于 `mean` 将逻辑值转换为 0s 和 1s，结果表示了牌组中国王的比例，即四张牌中的五十二张，这正好对应于理论概率 $1/13$。
 
@@ -102,23 +137,55 @@
 
 这里是一个简单的例子，列举了从三个物品中每次取两个的所有排列：
 
-[PRE11]
+```r
+library([gtools](https://github.com/r-gregmisc/gtools))
+[permutations](https://rdrr.io/pkg/gtools/man/combinations.html)(3, 2)
+#>      [,1] [,2]
+#> [1,]    1    2
+#> [2,]    1    3
+#> [3,]    2    1
+#> [4,]    2    3
+#> [5,]    3    1
+#> [6,]    3    2
+```
 
 这列出了从数字 1、2 和 3 的所有有序对。请注意，(1,2)和(2,1)被视为不同的。如果顺序不重要，我们使用`[combinations()](https://rdrr.io/pkg/gtools/man/combinations.html)`：
 
-[PRE12]
+```r
+[combinations](https://rdrr.io/pkg/gtools/man/combinations.html)(3, 2)
+#>      [,1] [,2]
+#> [1,]    1    2
+#> [2,]    1    3
+#> [3,]    2    3
+```
 
 现在(1,2)和(2,1)被视为相同的结果。
 
 让我们使用这些工具来计算 21 点游戏中“自然 21”的概率，这发生在玩家的前两张牌是一张 A 和一张面牌（杰克、皇后、国王或 10）。由于顺序不重要，我们使用`[combinations()](https://rdrr.io/pkg/gtools/man/combinations.html)`：
 
-[PRE13]
+```r
+aces <- paste("Ace", suits)
+facecard <- expand.grid(number = c("King", "Queen", "Jack", "Ten"), suit = suits)
+facecard <- paste(facecard$number, facecard$suit)
+hands <- [combinations](https://rdrr.io/pkg/gtools/man/combinations.html)(52, 2, v = deck)
+mean((hands,1] [%in% aces & hands,2] [%in% facecard) |
+ (hands,2] [%in% aces & hands,1] [%in% facecard))
+#> [1] 0.0483
+```
 
 ### 蒙特卡洛方法
 
 我们可以通过模拟获得相同的结果。我们不是枚举所有组合，而是反复从牌堆中抽取两张牌，并检查我们是否得到了一个“自然 21”。这是对相同概率的蒙特卡洛近似。
 
-[PRE14]
+```r
+blackjack <- function(){
+ x <- sample(deck, 2)
+ (x1] [%in% aces & x2] [%in% facecard) | (x2] [%in% aces & x1] [%in% facecard)
+}
+ results <- replicate(10000, blackjack())
+mean(results)
+#> [1] 0.0453
+```
 
 两种方法得到的结果几乎相同。组合函数给出精确的概率，而蒙特卡洛模拟提供了一个近似值，随着重复次数的增加，该近似值收敛到相同的值。**********
 
@@ -132,7 +199,22 @@
 
 我们可以使用概率来证明，如果你坚持原始的门选择，你赢得奖品的几率仍然是 1/3。然而，如果你切换到另一扇门，你赢得奖品的几率翻倍到 2/3！这可能会让人感觉反直觉。许多人错误地认为两种机会都是 1/2，因为你是在两个选项之间进行选择。你可以在可汗学院²上观看详细的数学解释，或者在维基百科³上阅读。下面，我们使用蒙特卡洛模拟来查看哪种策略更好。请注意，为了教学目的，这段代码写得比应有的要长。
 
-[PRE15]
+```r
+monty_hall <- function(strategy = c("stick", "switch")) {
+ strategy <- match.arg(strategy)
+ doors <- c("1", "2", "3")
+ prize_door <- sample(doors, 1)
+ my_pick <- sample(doors, 1)
+ show <- sample(setdiff(doors, c(my_pick, prize_door)), 1)
+ final <- if (strategy == "stick") my_pick else setdiff(doors, c(my_pick, show))
+ final == prize_door
+}
+B <- 10000
+mean(replicate(B, monty_hall("stick")))
+#> [1] 0.326
+mean(replicate(B, monty_hall("switch")))
+#> [1] 0.669
+```
 
 当我们检查代码时，我们注意到以`my_pick`和`show`开头的行在我们坚持原始选择时不会影响最终结果。这证实了在这种情况下我们的获胜概率是预期的 1/3。当我们切换时，蒙特卡洛模拟验证了 2/3 的概率。这说明了为什么切换可以提高我们的机会：`show`行移除了一个肯定不是赢家的门，有效地将其概率转移到了剩余未开启的门上。因此，除非我们的初始选择是正确的，这种情况只发生三分之一的几率，我们通过切换获胜，这种情况发生三分之二的几率。*
 
@@ -142,27 +224,44 @@
 
 首先，请注意，生日可以用 1 到 365 之间的数字来表示，因此 50 个生日的样本可以如下获得：
 
-[PRE16]
+```r
+n <- 50
+bdays <- sample(1:365, n, replace = TRUE)
+```
 
 为了检查这 50 个人中是否至少有两个人有相同的生日，我们可以使用`duplicated`函数，该函数在向量的元素是重复项时返回`TRUE`：
 
-[PRE17]
+```r
+any(duplicated(bdays))
+#> [1] TRUE
+```
 
 在这种情况下，我们看到确实发生了这种情况；至少有两个人在同一天出生。
 
 为了估计这个群体中共享生日的概率，我们通过重复采样 50 个生日的集合来重复这个实验：
 
-[PRE18]
+```r
+same_birthday <- function(n) any(duplicated(sample(1:365, n, replace = TRUE)))
+results <- replicate(10000, same_birthday(50))
+mean(results)
+#> [1] 0.969
+```
 
 人们往往低估这些概率，所以让我们说我们想利用这个知识来和朋友打赌，一群人中两个人共享生日的可能性。在什么群体规模下，几率会超过 50%？超过 75%？
 
 让我们创建一个查找表。我们可以快速创建一个函数来计算任何群体大小：
 
-[PRE19]
+```r
+compute_prob <- function(n, B = 10000) mean(replicate(B, same_birthday(n)))
+n <- seq(1,60)
+prob <- sapply(n, compute_prob)
+```
 
 现在我们可以绘制一个图表，显示在大小为$n$的群体中两个人有相同生日的估计概率：
 
-[PRE20]
+```r
+plot(n, prob)
+```
 
 ![](img/7e766e6c9b09d15e740b140881da4d63.png)*  *现在让我们计算确切的概率，而不是依赖于蒙特卡洛近似。使用数学给出精确答案，并且由于我们不需要模拟实验，所以速度更快。我们应用一个常见的概率技巧：不是寻找至少有两个人共享生日的概率，而是计算没有人共享生日的概率。根据乘法规则，第一个人可以拥有任何生日，第二个人必须从剩余的 365 天中的 364 天中选择，以此类推，所有$n$个生日都是独特的概率为：
 
@@ -170,7 +269,12 @@ $$ 1 \times \frac{364}{365}\times\frac{363}{365} \dots \frac{365-n + 1}{365} $$
 
 我们可以编写一个函数来对任何数字进行此操作，并将其作为红色曲线绘制出来：
 
-[PRE21]
+```r
+exact_prob <- function(n) 1 - prod(seq(365, 365 - n + 1)/365)
+eprob <- sapply(n, exact_prob)
+plot(n, prob)
+lines(n, eprob, col = "red")
+```
 
 ![](img/7dbd0cc5942fdd27e215ea576a8dae1f.png)*  *这个图显示蒙特卡洛模拟提供了非常准确的概率估计。如果我们无法计算确切的概率，我们仍然可以准确地估计它们。***********
 
@@ -182,7 +286,13 @@ $$ 1 \times \frac{364}{365}\times\frac{363}{365} \dots \frac{365-n + 1}{365} $$
 
 一种实际的方法是检查估计的稳定性。以下例子说明了 25 人小组的生日问题。
 
-[PRE22]
+```r
+B <- 10^seq(1, 5, len = 100)
+compute_prob <- function(B, n = 25) mean(replicate(B, same_birthday(n)))
+prob <- sapply(B, compute_prob)
+plot(log10(B), prob)
+abline(h = eprob[25], lty = 2)
+```
 
 ![](img/7e66aadb5a5e20c4b2146bb63d773888.png)*  *在这个图中，我们可以看到值在大约 1,000 时开始稳定下来。*****
 
@@ -204,7 +314,9 @@ $$ 1 \times \frac{364}{365}\times\frac{363}{365} \dots \frac{365-n + 1}{365} $$
 
 8. 创建一个蒙特卡洛模拟来验证上一个问题的答案。使用 `B <- 10000` 次模拟。提示：使用以下代码生成前四场比赛的结果：
 
-[PRE23]
+```r
+celtic_wins <- sample(c(0,1), 4, replace = TRUE, prob = c(0.6, 0.4))
+```
 
 凯尔特人队必须赢得这 4 场比赛中的至少一场。
 
@@ -214,13 +326,29 @@ $$ 1 \times \frac{364}{365}\times\frac{363}{365} \dots \frac{365-n + 1}{365} $$
 
 11. 两支球队，$A$ 和 $B$，正在进行一场七场系列赛。球队 $A$ 比球队 $B$ 更强，每场比赛获胜的概率为 $p>0.5$。给定一个值 $p$，劣势球队 $B$ 赢得系列赛的概率可以使用以下基于蒙特卡洛模拟的函数计算：
 
-[PRE24]
+```r
+prob_win <- function(p, B =10000){
+ result <- replicate(B, {
+ b_win <- sample(c(1,0), 7, replace = TRUE, prob = c(1 - p, p))
+ sum(b_win) >= 4
+ })
+ mean(result)
+}
+```
 
 使用函数 `sapply` 计算概率，称为 `ws`，对于 `p <- seq(0.5, 0.95, 0.025)`。然后绘制结果。
 
 12. 重复上述练习，但现在将概率固定在 `p <- 0.75`，并计算不同系列长度的概率：1 局最佳，3 局最佳，5 局最佳，等等。具体来说，`ns <- seq(1, 25, 2)`。提示：使用以下函数。
 
-[PRE25]******
+```r
+prob_win <- function(n, p = 0.75, B = 10000){
+ result <- replicate(B, {
+ b_win <- sample(c(1,0), n, replace = TRUE, prob = c(1 - p, p))
+ sum(b_win) >= (n + 1)/2
+ })
+ mean(result)
+}
+```******
 
 * * *
 

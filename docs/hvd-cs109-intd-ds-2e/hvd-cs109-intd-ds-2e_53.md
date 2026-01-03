@@ -26,7 +26,20 @@
 
 支持这一结论的主要证据是基于百分比的比较，我们可以使用论文中提供的数据来计算这些百分比：
 
-[PRE0]
+```r
+library([tidyverse](https://tidyverse.tidyverse.org))
+library(dslabs)
+totals <- research_funding_rates |> select(-discipline) |> 
+ summarize_all(sum) |>
+ summarize(yes_men = awards_men, 
+ no_men = applications_men - awards_men, 
+ yes_women = awards_women, 
+ no_women = applications_women - awards_women) 
+ totals |> summarize(percent_men = yes_men/(yes_men + no_men),
+ percent_women = yes_women/(yes_women + no_women))
+#>   percent_men percent_women
+#> 1       0.177         0.149
+```
 
 但这仅仅是因为随机变异性吗？在这里，我们学习如何对这类数据进行推断。
 
@@ -38,7 +51,15 @@
 
 例如，假设她正确地识别出了 4 个杯子中的 3 个：
 
-[PRE1]
+```r
+tab <- table(guess =  c("m", "t", "m", "t", "t", "m", "t", "m"),
+ actual = c("m", "t", "m", "t", "t", "t", "m", "m"))
+tab
+#>      actual
+#> guess m t
+#>     m 3 1
+#>     t 1 3
+```
 
 为了评估这是否提供了真实能力的证据，我们考虑她是在猜测的*零假设。因为她知道每种类型的杯子都有四个，猜测相当于从包含 4 个*先加牛奶*和 4 个*先加茶*的杯子中随机抽取 4 个杯子。
 
@@ -50,7 +71,10 @@ $$ \frac{\binom{4}{k}\binom{4}{4-k}}{\binom{8}{4}}. $$
 
 这个计算正是*费舍尔精确检验*所执行的。在 R 中，我们可以输入：
 
-[PRE2]
+```r
+fisher.test(tab, alternative = "greater")$p.value
+#> [1] 0.243
+```
 
 *历史记录表明，这位女士在原始演示中确实表现良好。费舍尔的目标不是确认或反驳她的能力，而是说明如何设计一个公平的实验，以及如何用概率评估证据。****
 
@@ -66,19 +90,34 @@ $$ \frac{\binom{4}{k}\binom{4}{4-k}}{\binom{8}{4}}. $$
 
 卡方检验的第一步是创建观察到的*二列联表*：
 
-[PRE3]
+```r
+o <- with(totals, data.frame(men = c(no_men, yes_men), 
+ women = c(no_women, yes_women),
+ row.names = c("no", "yes")))
+```
 
 然后我们估计整体资助率，我们将用它来确定如果成功资助独立于性别分配，我们会期望看到什么：
 
-[PRE4]
+```r
+rate <- with(totals, (yes_men + yes_women))/sum(totals)
+```
 
 我们使用这个来计算我们期望偶然看到的结果：
 
-[PRE5]
+```r
+e <- with(totals, data.frame(men = (no_men + yes_men)*c(1 - rate, rate),
+ women = (no_women + yes_women)*c(1 - rate, rate),
+ row.names = c("no", "yes")))
+```
 
 我们可以看到，比预期更多的男性获得了资助，而比预期更少的女性获得了资助：
 
-[PRE6]
+```r
+cbind(o, e)
+#>      men women  men women
+#> no  1345  1011 1365   991
+#> yes  290   177  270   197
+```
 
 然而，在零假设下，这些观察值是随机变量。卡方统计量量化了观察表与期望表之间的差异，通过：
 
@@ -90,25 +129,40 @@ $$ \frac{\binom{4}{k}\binom{4}{4-k}}{\binom{8}{4}}. $$
 
 1.  将所有这些值相加得到最终统计量。
 
-[PRE7]
+```r
+sum((o - e)²/e)
+#> [1] 4.01
+```
 
 我们使用这个汇总统计量，因为它的抽样分布可以被一个已知的参数分布所近似：卡方分布。
 
 R 函数`chisq.test`接受一个二乘二表，并返回测试结果：
 
-[PRE8]
+```r
+chisq_test <- chisq.test(o, correct = FALSE)
+```
 
 我们看到 p 值是 0.045：
 
-[PRE9]
+```r
+chisq_test$p.value
+#> [1] 0.0451
+```
 
 *默认情况下，`chisq.test`函数应用了一个*连续性校正*。这种校正从观察值和期望值之间的绝对偏差中减去 0.5：
 
-[PRE10]
+```r
+sum((abs(o - e) - 0.5)² / e)
+#> [1] 3.81
+```
 
 这符合默认行为：
 
-[PRE11]
+```r
+chisq.test(o)$statistic
+#> X-squared 
+#>      3.81
+```
 
 这种调整的原因是，卡方检验基于一个*连续*概率分布，而二乘二表计数是*离散*的。当样本量较小时，连续近似和离散分布之间的差异可能是明显的。连续性校正稍微降低了测试统计量，以考虑到这种不匹配，使近似更加保守（也就是说，不太可能偶然产生小的 p 值）。
 
@@ -149,7 +203,12 @@ $$ \log\left(\frac{ad}{bc}\right) \pm 1.96 \sqrt{\frac{1}{a} + \frac{1}{b} + \fr
 
 在这里，我们计算我们的资助数据的几率比并构建一个 95% 的置信区间：
 
-[PRE12]
+```r
+or <- o[1,1]*o[2,2]/(o[2,1]*o[1,2])
+se <- sqrt(sum(1/o))
+exp(log(or) + c(-1,1) * qnorm(0.975) * se)
+#> [1] 0.662 0.996
+```
 
 这使我们能够评估关联的幅度及其不确定性。估计的几率比小于 1，表明在这个数据集中，女性的获得资助的几率低于男性。95% 的置信区间不包括 1，这意味着 p 值小于 0.05。*
 
@@ -211,25 +270,45 @@ $$ \log\left(\frac{p_1}{1-p_1}\right) = \beta_0 + \beta_1. $$
 
 `glm`函数可以通过使用成功和失败的两列矩阵直接处理分组计数：
 
-[PRE13]
+```r
+success <- with(totals, c(yes_men, yes_women))
+failure <- with(totals, c(no_men, no_women))
+y <- cbind(success, failure)
+```
 
 并编码组指示符：
 
-[PRE14]
+```r
+x <- factor(c("men", "women"))
+```
 
 然后我们使用`glm`拟合模型：
 
-[PRE15]
+```r
+fit <- glm(y ~ x, family = binomial)
+coefficients(summary(fit))
+#>             Estimate Std. Error z value  Pr(>|z|)
+#> (Intercept)   -1.534     0.0647   -23.7 3.83e-124
+#> xwomen        -0.208     0.1041    -2.0  4.54e-02
+```
 
 为了获得估计的比值比，我们对方程系数进行指数化：
 
-[PRE16]
+```r
+exp(fit$coef[2])
+#> xwomen 
+#>  0.812
+```
 
 这个值表示女性相对于男性的获得资助几率的乘性变化。
 
 通过对 $\beta_1$ 的对应置信区间进行指数化，可以得到这个比率的 95% 置信区间：
 
-[PRE17]
+```r
+exp(confint(fit, 2))
+#>  2.5 % 97.5 % 
+#>  0.661  0.995
+```
 
 这个区间提供了效应大小和不确定性的度量。*****
 
@@ -237,11 +316,23 @@ $$ \log\left(\frac{p_1}{1-p_1}\right) = \beta_0 + \beta_1. $$
 
 **我们可以确认，逻辑回归得到的比率估计值与简单二乘表（保存在 `o` 中）的计算结果相同：并保存在 `or` 和 `se` 中：
 
-[PRE18]
+```r
+or <- o[1,1]*o[2,2]/(o[2,1]*o[1,2])
+se <- sqrt(sum(1/o))
+c(log(or),se)
+#> [1] -0.208  0.104
+ c(tidy(fit)$estimate[2], tidy(fit)$std.error[2])
+#> [1] -0.208  0.104
+```
 
 *从 `chisq.test` 和逻辑回归得到 p 值
 
-[PRE19]
+```r
+chisq.test(o, correct = FALSE)$p.value
+#> [1] 0.0451
+tidy(fit)$p.value[2]
+#> [1] 0.0454
+```
 
 略有不同，因为它们基于不同的近似。************
 
@@ -263,11 +354,19 @@ $$ g\left(\mathrm{E}[Y_i]\right) = \beta_0 + \sum_{j=1}^J \beta_j x_{ij} $$
 
 `SAheart` 数据集包含来自南非高风险地区成年男性的回顾性样本观察结果：
 
-[PRE20]
+```r
+data("SAheart", package = "bestglm")
+```
 
 如果我们计算每个年龄层中心脏病患者的比例，并检查对数几率，关系看起来大约是线性的：
 
-[PRE21]
+```r
+SAheart |> 
+ group_by(age) |>
+ summarize(chd = mean(chd)) |>
+ ggplot](https://ggplot2.tidyverse.org/reference/ggplot.html)(aes(age, [log(chd/(1 - chd)))) + 
+ geom_point()
+```
 
 ![](img/ce4e11cf9fef0d8a851627c1e5c13f92.png)*  *这表明逻辑回归模型：
 
@@ -275,15 +374,31 @@ $$ \log\left\{\frac{\Pr(Y_i=1)}{1 - \Pr(Y_i=1)}\right\} = \beta_0 + \beta_1 x_i 
 
 拟合可以使用以下方法拟合模型：
 
-[PRE22]
+```r
+fit <- glm(chd ~ age, family = binomial, data = SAheart)
+tidy(fit)[2,]
+#> # A tibble: 1 × 5
+#>   term  estimate std.error statistic  p.value
+#>   <chr>    <dbl>     <dbl>     <dbl>    <dbl>
+#> 1 age     0.0641   0.00853      7.51 5.76e-14
+```
 
 然后我们可以使用广义线性模型（GLM）理论来构建一个 95%置信区间的优势比：
 
-[PRE23]
+```r
+exp(confint(fit))[2, ]
+#> Waiting for profiling to be done...
+#>  2.5 % 97.5 % 
+#>   1.05   1.08
+```
 
 我们还可以使用拟合的模型来计算特定年龄的预测概率：
 
-[PRE24]
+```r
+predict(fit, data.frame(age = seq(20, 80, 10)), type = "response")
+#>      1      2      3      4      5      6      7 
+#> 0.0963 0.1682 0.2774 0.4216 0.5805 0.7243 0.8330
+```
 
 当`type = response`时，`predict`函数使用逆对数变换将$\hat{\beta}_0 + \hat{\beta}_1 x_i$转换为估计概率。
 
@@ -293,17 +408,34 @@ $$ \log\left\{\frac{\Pr(Y_i=1)}{1 - \Pr(Y_i=1)}\right\} = \beta_0 + \beta_1 x_i 
 
 **`InsectSprays`数据集记录了使用不同喷雾处理后农业田地单位中发现的昆虫数量：
 
-[PRE25]
+```r
+InsectSprays |>  ggplot(aes(spray, count)) + geom_boxplot() + geom_jitter()
+```
 
 ![](img/547b224c054f3e08e5ae076b675cb245.png)*  *喷雾 C 效果最为显著。我们可以比较不同喷雾的平均昆虫数量：
 
-[PRE26]
+```r
+with(InsectSprays, tapply(count, spray, mean))
+```
 
 但是，我们如何评估不确定性？我们能构建置信区间吗？请注意，计数很小（通常小于 10），每组样本量仅为 12，因此正态近似可能不可靠。
 
 泊松回归提供了一个替代方案。首先，我们将 C 作为参照组，然后拟合模型：
 
-[PRE27]
+```r
+InsectSprays$spray <- relevel(InsectSprays$spray, ref = "C") 
+fit <- glm(count ~ spray, family = poisson, data = InsectSprays)
+tidy(fit, conf.int = TRUE)
+#> # A tibble: 6 × 7
+#>   term        estimate std.error statistic  p.value conf.low conf.high
+#>   <chr>          <dbl>     <dbl>     <dbl>    <dbl>    <dbl>     <dbl>
+#> 1 (Intercept)    0.734     0.200      3.67 2.43e- 4   0.315       1.10
+#> 2 sprayA         1.94      0.214      9.07 1.18e-19   1.54        2.38
+#> 3 sprayB         2.00      0.213      9.36 7.65e-21   1.60        2.44
+#> 4 sprayD         0.859     0.239      3.60 3.20e- 4   0.404       1.34
+#> 5 sprayE         0.519     0.253      2.05 4.00e- 2   0.0315      1.03
+#> # ℹ 1 more row
+```
 
 在这里，参数衡量的是相对于喷雾 C 的预期计数的乘性变化的对数。如果一个喷雾的效果与喷雾 C 相同，其相应的参数估计将是 0。估计的系数及其置信区间表明，几种喷雾与喷雾 C 有显著差异，这些差异太大，不能仅用泊松抽样变异性来解释。换句话说，喷雾 C 的卓越性能不太可能是偶然的。
 
@@ -331,7 +463,11 @@ $$ \log\left\{\frac{\Pr(Y_i=1)}{1 - \Pr(Y_i=1)}\right\} = \beta_0 + \beta_1 x_i 
 
 注意，优势比和 p 值之间的关系不是一对一的；它取决于样本大小。因此，一个非常小的 p 值并不一定意味着一个很大的优势比。观察如果我们将我们的二乘二表乘以 10 会发生什么，这不会改变优势比：
 
-[PRE28]*****
+```r
+ox10 <- o |> mutate(men = men*10, women = women*10) 
+c(chisq.test(o)$p.value, chisq.test(ox10)$p.value)
+#> [1] 5.09e-02 2.63e-10
+```*****
 
 ## *****18.5 练习*****
 
@@ -359,7 +495,11 @@ $$ \log\left\{\frac{\Pr(Y_i=1)}{1 - \Pr(Y_i=1)}\right\} = \beta_0 + \beta_1 x_i 
 
 8. 在 2016 年美国总统选举期间，当时的候选人唐纳德·J·特朗普使用他的推特账户作为与潜在选民沟通的方式。Todd Vaziri 假设“每个非夸张的推文都来自 iPhone（他的工作人员）。每个夸张的推文都来自 Android（他本人）。”我们将使用关联检验来测试这个假设。**dslabs**对象`sentiment_counts`提供了一个表格，其中包含来自每个来源（Android 或 iPhone）的几个情感计数：
 
-[PRE29]
+```r
+library([tidyverse](https://tidyverse.tidyverse.org))
+library(dslabs)
+sentiment_counts
+```
 
 计算每个情感与 Android 和 iPhone 相比的几率比，并将其添加到表中。
 
@@ -373,7 +513,10 @@ $$ \log\left\{\frac{\Pr(Y_i=1)}{1 - \Pr(Y_i=1)}\right\} = \beta_0 + \beta_1 x_i 
 
 13. **titanic**包中的`titanic_train`数据集包含 891 名乘客的数据，他们曾在泰坦尼克号上：
 
-[PRE30]
+```r
+library([titanic](https://github.com/paulhendricks/titanic))
+titanic_train
+```
 
 在此数据集中：
 
@@ -383,7 +526,10 @@ $$ \log\left\{\frac{\Pr(Y_i=1)}{1 - \Pr(Y_i=1)}\right\} = \beta_0 + \beta_1 x_i 
 
 拟合一个以生存为结果、性别为预测因子的逻辑回归模型。
 
-[PRE31]
+```r
+fit_gender <- glm(Survived ~ Sex, family = binomial, data = titanic_train)
+summary(fit_gender)
+```
 
 1.  解释`性别`系数的符号。
 
@@ -393,7 +539,11 @@ $$ \log\left\{\frac{\Pr(Y_i=1)}{1 - \Pr(Y_i=1)}\right\} = \beta_0 + \beta_1 x_i 
 
 14. 现在拟合一个同时包含`性别`和`舱位`的模型：
 
-[PRE32]
+```r
+titanic_train$Pclass <- factor(titanic_train$Pclass)
+fit_class <- glm(Survived ~ Sex + Pclass, family = binomial, data = titanic_train)
+summary(fit_class)
+```
 
 1.  根据估计，哪个乘客舱的生存几率最高？
 
@@ -401,7 +551,10 @@ $$ \log\left\{\frac{\Pr(Y_i=1)}{1 - \Pr(Y_i=1)}\right\} = \beta_0 + \beta_1 x_i 
 
 15\. 拟合一个包含交互项的模型：
 
-[PRE33]
+```r
+fit_interaction <- glm(Survived ~ Sex * Pclass, family = binomial, data = titanic_train)
+summary(fit_interaction)
+```
 
 1.  性别效应是否随班级而变化？
 
@@ -411,11 +564,18 @@ $$ \log\left\{\frac{\Pr(Y_i=1)}{1 - \Pr(Y_i=1)}\right\} = \beta_0 + \beta_1 x_i 
 
 回忆一下泊松回归模型：
 
-[PRE34]
+```r
+fit_glm <- glm(count ~ spray, family = poisson, data = InsectSprays)
+summary(fit_glm)
+```
 
 将线性回归模型拟合到对数转换后的计数（我们必须添加 0.5，因为有些计数为 0）：
 
-[PRE35]
+```r
+InsectSprays$log_count <- log(InsectSprays$count + 0.5)
+fit_lm <- lm(log_count ~ spray, data = InsectSprays)
+summary(fit_lm)
+```
 
 1.  比较 `fit_glm` 和 `fit_lm` 估计的喷雾效应。
 
@@ -439,11 +599,15 @@ $$ r_i = \frac{y_i - \hat{\mu}_i}{\sqrt{\hat{\mu}_i}}. $$
 
 您可以使用以下方法在 R 中绘制皮尔逊残差：
 
-[PRE36]
+```r
+plot(fit_glm, which = 1)
+```
 
 为了将此与拟合对数转换后的计数线性模型进行比较：
 
-[PRE37]
+```r
+plot(fit_lm, which = 1)
+```
 
 1.  哪个模型看起来更好地描述了数据？
 

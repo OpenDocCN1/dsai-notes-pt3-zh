@@ -18,7 +18,16 @@
 
 为了说明目的，我们考虑一个简单的双胞胎身高示例。一些对是成年人，其他的是儿童。在这里，我们模拟了 100 个二维点，每个点代表一对双胞胎。我们使用**MASS**包中的`mvrnorm`函数来模拟双变量正态数据。
 
-[PRE0]
+```r
+set.seed(1983)
+library([MASS](http://www.stats.ox.ac.uk/pub/MASS4/))
+n <- 100
+rho <- 0.9
+sigma <- 3
+s <- sigma²*matrix(c(1, rho, rho, 1), 2, 2)
+x <- rbind(mvrnorm](https://rdrr.io/pkg/MASS/man/mvrnorm.html)(n/2, [c(69, 69), s),
+ mvrnorm](https://rdrr.io/pkg/MASS/man/mvrnorm.html)(n/2, [c(60, 60), s))
+```
 
 *散点图迅速揭示出相关性很高，并且存在两组双胞胎，成年人（右上角的点）和儿童（左下角的点）：
 
@@ -28,13 +37,20 @@
 
 为了表明这里提出的思想具有普遍的实用性，我们将标准化数据，使观测值处于标准单位而不是英寸：
 
-[PRE1]
+```r
+library([matrixStats](https://github.com/HenrikBengtsson/matrixStats))
+x <- sweep(sweep(x, 2, colMeans(x)), 2, [colSds](https://rdrr.io/pkg/matrixStats/man/rowSds.html)(x), "/")
+```
 
 *在上面的散点图中，我们还显示了观测 1 和 2 之间的距离（蓝色），以及观测 1 和 51 之间的距离（红色）。注意，蓝色线较短，这意味着 1 和 2 更接近。
 
 我们可以使用`dist`来计算这些距离：
 
-[PRE2]
+```r
+d <- as.matrix(dist(x))
+c(d[1, 2], d[2, 51])
+#> [1] 0.595 1.388
+```
 
 这种距离基于两个维度，我们需要一个仅基于一个维度的距离近似。*
 
@@ -98,11 +114,20 @@ $$ \mathbf{Z} = \mathbf{X} \mathbf{A} \mbox{ with } \mathbf{A} = \, \begin{pmatr
 
 如果我们定义：
 
-[PRE3]
+```r
+theta <- -45 * pi/180 #convert degrees to radians
+A <- matrix(c(cos(theta), -sin(theta), sin(theta), cos(theta)), 2, 2)
+```
 
 我们可以使用线性代数编写任何角度 $\theta$ 的旋转代码：
 
-[PRE4]
+```r
+rotate <- function(x, theta){
+ theta <- theta * pi/180
+ A <- matrix(c(cos(theta), -sin(theta), sin(theta), cos(theta)), 2, 2)
+ x %*% A
+}
+```
 
 $\mathbf{A}$ 的列被称为 *方向*，因为如果我们从 $(0,0)$ 画一个向量到 $(a_{1j}, a_{2j})$，它指向将成为第 $j$ 维度的直线方向。
 
@@ -124,7 +149,10 @@ $$ \mathbf{Z} \mathbf{A}^\top = \mathbf{X} \mathbf{A}\mathbf{A}^\top\ = \mathbf{
 
 因此，在这个特定情况下，$\mathbf{A}^\top$ 是 $\mathbf{A}$ 的逆。这也意味着 $\mathbf{X}$ 中的所有信息都包含在旋转 $\mathbf{Z}$ 中，并且可以通过线性变换检索。一个结果是，对于任何旋转，距离都得到保留。以下是一个 30 度旋转的例子，尽管它适用于任何角度：
 
-[PRE5]
+```r
+all.equal(as.matrix(dist(rotate(x, 30))), as.matrix(dist(x)))
+#> [1] TRUE
+```
 
 下一节将解释为什么会发生这种情况。******
 
@@ -146,7 +174,10 @@ $$ \|\mathbf{z}_h - \mathbf{z}_i\| = \|\mathbf{A}^\top \mathbf{x}_h - \mathbf{A}
 
 我们之前已经证明了我们的旋转具有这种性质。我们可以使用 R 来确认：
 
-[PRE6]
+```r
+all.equal(A %*% t(A), diag(2))
+#> [1] TRUE
+```
 
 要了解这个名称的由来，请回忆在线性代数中，如果两个向量，比如说 **x** 和 **y**，被称为 *正交*，那么
 
@@ -162,17 +193,30 @@ $$ \sum_{1=1}^n \|\mathbf{z}_i\|² = \sum_{i=1}^n \|\mathbf{A}^\top\mathbf{x}_i\
 
 我们可以使用 R 来确认：
 
-[PRE7]
+```r
+theta <- -45
+z <- rotate(x, theta) # works for any theta
+sum(x²)
+#> [1] 198
+sum(z²)
+#> [1] 198
+```
 
 这可以解释为正交变换保证所有信息都得到保留的事实。
 
 然而，尽管总和保持不变，但各个列的平方和发生了变化。在这里，我们计算了分配给每个列的 TSS 比例，称为 $\mathbf{X}$ 的 *解释方差* 或 *捕获方差*：
 
-[PRE8]
+```r
+colSums(x²)/sum(x²)
+#> [1] 0.5 0.5
+```
 
 和 $\mathbf{Z}$：
 
-[PRE9]
+```r
+colSums(z²)/sum(z²)
+#> [1] 0.9848 0.0152
+```
 
 在下一节中，我们描述了如何利用这个最后的数学结果。*********
 
@@ -184,17 +228,27 @@ $$ \sum_{1=1}^n \|\mathbf{z}_i\|² = \sum_{i=1}^n \|\mathbf{A}^\top\mathbf{x}_i\
 
 在我们的例子中，我们旨在找到一个旋转，以最大化第一列的解释方差。以下代码在 -90 到 0 度的旋转范围内进行网格搜索，以识别这种变换：
 
-[PRE10]
+```r
+angles <- seq(0, -90)
+v <- sapply(angles, function(angle) colSums(rotate(x, angle)²))
+variance_explained <- v1,]/[sum(x²)
+plot(angles, variance_explained, type = "l")
+```
 
 ![](img/fb08c5e3ea8bb213778bc072e0083a98.png)*  *我们发现 -45 度的旋转似乎达到了最大值，第一维解释了超过 98% 的总可变性。我们用 $\mathbf{V}$ 表示这个旋转矩阵：
 
-[PRE11]
+```r
+theta <- -45 * pi/180
+V <- matrix(c(cos(theta), -sin(theta), sin(theta), cos(theta)), 2, 2)
+```
 
 我们可以使用以下方法旋转整个数据集：
 
 $$ \mathbf{Z} = \mathbf{X}\mathbf{V} $$
 
-[PRE12]
+```r
+z <- x %*% V
+```
 
 以下动画进一步说明了不同旋转如何影响旋转数据维度的可变性：
 
@@ -206,7 +260,11 @@ $$ \mathbf{Z} = \mathbf{X}\mathbf{V} $$
 
 我们还注意到，两组，成人和儿童，可以通过一个数字摘要清楚地观察到，比任何两个原始维度都要好。
 
-[PRE13]
+```r
+hist(x,1], breaks = [seq(-4,4,0.5))
+hist(x,2], breaks = [seq(-4,4,0.5))
+hist(z,1], breaks = [seq(-4,4,0.5))
+```
 
 ![](img/3ebf0e4b9f06dbace042fa0bba76dff5.png)*  *我们可以可视化这些，以了解第一成分如何总结数据。在下面的图中，红色代表高值，蓝色代表负值：
 
@@ -238,7 +296,9 @@ $\mathbf{Z}$ 的每一列都是一个主成分，而 $\mathbf{V}$ 的列定义�
 
 PCA 最大化问题的解不是唯一的。例如，$\|\mathbf{X} \mathbf{v}\| = \|-\mathbf{X} \mathbf{v}\|$，所以 $\mathbf{v}$ 和 $-\mathbf{v}$ 都产生相同的主成分方向。同样，如果我们翻转 $\mathbf{Z}$（主成分）中任何列的符号，只要我们也翻转 $\mathbf{V}$（旋转矩阵）中相应的列的符号，我们就可以保持等式 $\mathbf{X} = \mathbf{Z} \mathbf{V}^\top$ 的相等性。这意味着我们可以自由地改变 $\mathbf{Z}$ 和 $\mathbf{V}$ 中任何列的符号，而不会影响 PCA 的结果。* 在 R 中，我们可以使用 `prcomp` 函数找到任何矩阵的主成分：
 
-[PRE14]
+```r
+pca <- prcomp(x, center = FALSE)
+```
 
 请注意，默认行为是在计算主成分之前将 `x` 的列居中，在我们的例子中我们不需要这个操作，因为我们的矩阵已经缩放。
 
@@ -246,19 +306,39 @@ PCA 最大化问题的解不是唯一的。例如，$\|\mathbf{X} \mathbf{v}\| =
 
 我们可以看到，`pca$rotation` 的列确实是获得 -45 度旋转的结果（记住符号是任意的）：
 
-[PRE15]
+```r
+pca$rotation
+#>         PC1    PC2
+#> [1,] -0.707  0.707
+#> [2,] -0.707 -0.707
+```
 
 每个列的变化量的平方根包含在 `pca$sdev` 组件中。这意味着我们可以使用以下方法计算每个主成分解释的方差：
 
-[PRE16]
+```r
+pca$sdev²/sum(pca$sdev²)
+#> [1] 0.9848 0.0152
+```
 
 `summary` 函数执行此计算：
 
-[PRE17]
+```r
+summary(pca)
+#> Importance of components:
+#>                          PC1    PC2
+#> Standard deviation     1.403 0.1745
+#> Proportion of Variance 0.985 0.0152
+#> Cumulative Proportion  0.985 1.0000
+```
 
 我们还可以看到，我们可以像上面所解释的那样旋转 `x` ($\mathbf{X}$) 和 `pca$x` ($\mathbf{Z}$)：
 
-[PRE18]**************
+```r
+all.equal(pca$x, x %*% pca$rotation)
+#> [1] TRUE
+all.equal(x, pca$x %*% t(pca$rotation))
+#> [1] TRUE
+```**************
 
 ## ****23.6 示例****
 
@@ -266,31 +346,62 @@ PCA 最大化问题的解不是唯一的。例如，$\|\mathbf{X} \mathbf{v}\| =
 
 `iris` 数据集是数据分析课程中广泛使用的示例。它包含四个植物测量值，即花瓣长度、花瓣宽度、花萼长度和花萼宽度，来自三个不同物种的花：
 
-[PRE19]
+```r
+names(iris)
+#> [1] "Sepal.Length" "Sepal.Width"  "Petal.Length" "Petal.Width" 
+#> [5] "Species"
+```
 
 如果你使用 `iris$Species` 检查物种列，你会看到观察结果按物种分组。
 
 当我们可视化观察之间的成对距离时，一个清晰的模式出现：数据似乎聚集成三个不同的组，其中一个物种与其他两个物种明显分离。这种结构与已知的物种标签一致：
 
-[PRE20]
+```r
+x <- as.matrix(iris[,1:4])
+d <- dist(x)
+image(as.matrix(d), col = rev(RColorBrewer::[brewer.pal](https://rdrr.io/pkg/RColorBrewer/man/ColorBrewer.html)(9, "RdBu")))
+```
 
 ![](img/795d925e7fe75c06df1b34ba6b255196.png)*  *我们的特征矩阵有四个维度，但其中三个维度高度相关：
 
-[PRE21]
+```r
+cor(x)
+#>              Sepal.Length Sepal.Width Petal.Length Petal.Width
+#> Sepal.Length        1.000      -0.118        0.872       0.818
+#> Sepal.Width        -0.118       1.000       -0.428      -0.366
+#> Petal.Length        0.872      -0.428        1.000       0.963
+#> Petal.Width         0.818      -0.366        0.963       1.000
+```
 
 如果我们对 `iris` 数据集应用 PCA，我们预计前几个主成分将捕捉到数据中的大部分变化。由于原始变量高度相关，PCA 应该允许我们仅使用两个维度来近似观察之间的距离，从而有效地压缩数据同时保留其结构。
 
 我们使用 `summary` 函数来检查每个主成分解释了多少方差：
 
-[PRE22]
+```r
+pca <- prcomp(x)
+summary(pca)
+#> Importance of components:
+#>                          PC1    PC2    PC3     PC4
+#> Standard deviation     2.056 0.4926 0.2797 0.15439
+#> Proportion of Variance 0.925 0.0531 0.0171 0.00521
+#> Cumulative Proportion  0.925 0.9777 0.9948 1.00000
+```
 
 前两个维度解释了几乎 98% 的变异性。因此，我们应该能够用两个维度很好地近似距离。我们通过仅使用前两个维度计算距离并与原始数据进行比较来确认这一点：
 
-[PRE23]
+```r
+d_approx <- dist(pca$x[, 1:2])
+plot(d, d_approx); abline(0, 1, col = "red")
+```
 
 ![](img/59cdf2308845a0537d4b708a7ffae8a9.png)*  *这个结果的一个有用应用是，我们现在可以在二维图中可视化观察之间的距离。在这个图中，任何一对点之间的距离近似于原始高维空间中相应观察之间的实际距离。
 
-[PRE24]
+```r
+data.frame(pca$x[,1:2], Species = iris$Species) |>
+ ggplot(aes(PC1, PC2, fill = Species)) +
+ geom_point(cex = 3, pch = 21) +
+ coord_fixed(ratio = 1)
+```
 
 ![](img/51f104f7f765747e523afe68b077074b.png)*  *我们根据标签给观察结果着色，并注意到，使用这两个维度，我们几乎实现了完美的分离。
 
@@ -306,13 +417,19 @@ PCA 最大化问题的解不是唯一的。例如，$\|\mathbf{X} \mathbf{v}\| =
 
 如果尚未加载，让我们先加载数据：
 
-[PRE25]
+```r
+library(dslabs)
+if (!exists("mnist")) mnist <- [read_mnist](https://rdrr.io/pkg/dslabs/man/read_mnist.html)()
+```
 
 由于像素非常小，我们预计网格上彼此靠近的像素是相关的，这意味着可以进行降维。
 
 让我们计算主成分（PCs）（这需要几秒钟，因为这个矩阵相当大）并检查每个 PC 解释的方差：
 
-[PRE26]
+```r
+pca <- prcomp(mnist$train$images)
+plot(pca$sdev²/sum(pca$sdev²), xlab = "PC", ylab = "Variance explained")
+```
 
 ![图片](img/8e2977fdfe97603208dd9f859d032909.png)*  *我们可以看到前几个 PC 已经解释了大部分的变异性。此外，仅通过查看前两个 PC，我们已看到有关标签的信息。这里是一个 500 个数字的随机样本：
 
@@ -334,7 +451,9 @@ PCA 最大化问题的解不是唯一的。例如，$\|\mathbf{X} \mathbf{v}\| =
 
 ***1. 我们想通过绘图来探索`tissue_gene_expression`预测值。
 
-[PRE27]
+```r
+dim(tissue_gene_expression$x)
+```
 
 我们希望了解哪些观察值彼此接近，但预测值是 500 维的，因此绘图很困难。用表示组织类型的颜色绘制前两个主成分。
 

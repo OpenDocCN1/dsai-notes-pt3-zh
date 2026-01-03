@@ -44,19 +44,39 @@ $$ \mathrm{Pr}(D=1 \mid +) = \frac{0.99 \cdot 0.00025}{0.99 \cdot 0.00025 + 0.01
 
 我们首先从患病率约为 1/4000 的人群中随机选择 100,000 人。
 
-[PRE0]
+```r
+p <- 0.00025
+N <- 100000
+D <- sample(c(1, 0), N, replace = TRUE, prob = c(p, 1 - p))
+```
 
 正如预期的那样，患病人数很少，而未患病人数很多，
 
-[PRE1]
+```r
+N_1 <- sum(D == 1)
+N_0 <- sum(D == 0)
+cat(N_1, "with disease, and", N_0, "without.")
+#> 23 with disease, and 99977 without.
+```
 
 这使得在测试不完美的情况下，我们更有可能看到一些假阳性。现在，每个人都会接受测试，测试正确率为 99%：
 
-[PRE2]
+```r
+acc <- 0.99
+test <- vector("character", N)
+testD == 1] <- [sample(c("+", "-"), N_1, replace = TRUE, prob = c(acc, 1 - acc))
+testD == 0] <- [sample(c("-", "+"), N_0, replace = TRUE, prob = c(acc, 1 - acc))
+```
 
 由于健康个体的人数远多于患病个体的人数，即使低误报率也会导致比实际病例更多的健康个体测试呈阳性。
 
-[PRE3]
+```r
+table(D, test)
+#>    test
+#> D       -     +
+#>   0 99012   965
+#>   1     0    23
+```
 
 从这张表中，我们可以看到有疾病的阳性测试比例是 988 个中的 23 个。我们可以反复运行这个程序，以看到实际上，概率收敛到大约 0.02。****
 
@@ -98,15 +118,29 @@ $$ B \theta_0 + (1-B) \bar{Y}= \theta_0 + (1-B)(\bar{Y}-\theta_0)\\ $$ 随着 $B
 
 例如，我们计算一个后验分布，并在定义了均值为 0%和标准误差为 5%的先验分布后，为流行票差构建一个可信区间。这个先验分布可以这样解释：在看到投票数据之前，我们不相信任何候选人具有优势，并且任何方向的 10%的差异都是可能的。
 
-[PRE4]
+```r
+theta_0 <- 0
+tau <- 0.05
+```
 
 然后我们可以通过将上述方程应用于第十章中定义的`one_poll_per_pollster`数据来计算后验分布：
 
-[PRE5]
+```r
+res <- one_poll_per_pollster |> 
+ summarise(y_bar = mean(spread), sigma = sd(spread), n = n())
+B <- with(res, sigma²/n / (sigma²/n + tau²))
+posterior_mean <- B*theta_0 + (1 - B)*res$y_bar
+posterior_se <- with(res, sqrt(1/(n/sigma² + 1/tau²)))
+posterior_mean + c(-1, 1)*qnorm(0.975)*posterior_se
+#> [1] 0.0203 0.0397
+```
 
 此外，我们现在可以做出频率主义者方法无法做出的概率性陈述。具体来说，$\mathrm{Pr}(\mu>0 \mid \bar{X})$可以按照以下方式计算：
 
-[PRE6]
+```r
+1 - pnorm(0, posterior_mean, posterior_se)
+#> [1] 1
+```
 
 根据上述计算，我们几乎可以 100%确定克林顿将赢得普选票，这个估计感觉过于自信。此外，它并不符合 FiveThirtyEight 报道的 81.4%的概率。是什么导致了这种差异？我们当前模型尚未捕捉到所有的不确定性来源。我们将在第十二章章节链接中重新审视这个问题，并解决缺失的变异性。******
 
@@ -146,7 +180,13 @@ $$ \mathrm{Pr}(A \mid B) = 0.50 $$
 
 创建以下表格，包含过去两周内进行的投票：
 
-[PRE7]
+```r
+library([tidyverse](https://tidyverse.tidyverse.org))
+library(dslabs)
+polls <- polls_us_election_2016 |> 
+ filter(state == "Florida" & enddate >= "2016-11-04" ) |> 
+ mutate(spread = rawpoll_clinton/100 - rawpoll_trump/100)
+```
 
 取这些投票的平均差值。中心极限定理告诉我们这个平均值大约是正态分布的。计算平均值并提供标准误的估计。将结果保存在名为 `results` 的对象中。
 

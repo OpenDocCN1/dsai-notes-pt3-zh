@@ -10,15 +10,45 @@
 
 假设我们想探索美国各州人口规模与选举人票数之间的关系。我们在这个表中找到了人口规模：
 
-[PRE0]
+```r
+library([tidyverse](https://tidyverse.tidyverse.org))
+library(dslabs)
+head(murders)
+#>        state abb region population total
+#> 1    Alabama  AL  South    4779736   135
+#> 2     Alaska  AK   West     710231    19
+#> 3    Arizona  AZ   West    6392017   232
+#> 4   Arkansas  AR  South    2915918    93
+#> 5 California  CA   West   37253956  1257
+#> 6   Colorado  CO   West    5029196    65
+```
 
 以及在这个表中：
 
-[PRE1]
+```r
+head(results_us_election_2016)
+#>          state electoral_votes clinton trump johnson stein mcmullin
+#> 1   California              55    61.7  31.6    3.37 1.965    0.279
+#> 2        Texas              38    43.2  52.2    3.16 0.798    0.472
+#> 3      Florida              29    47.8  49.0    2.20 0.684    0.000
+#> 4     New York              29    59.0  36.5    2.29 1.398    0.134
+#> 5     Illinois              20    55.8  38.8    3.79 1.387    0.211
+#> 6 Pennsylvania              20    47.5  48.2    2.38 0.810    0.105
+#>   others
+#> 1 1.0383
+#> 2 0.0992
+#> 3 0.2732
+#> 4 0.6591
+#> 5 0.0294
+#> 6 1.0571
+```
 
 仅仅将这两个表连接起来是不行的，因为各州的顺序并不相同。
 
-[PRE2]
+```r
+identical(results_us_election_2016$state, murders$state)
+#> [1] FALSE
+```
 
 下面描述的*连接*函数旨在处理这个挑战。
 
@@ -26,7 +56,25 @@
 
 *dplyr**包中的*连接*函数确保表被合并，使得匹配的行在一起。如果你了解 SQL，你会看到这种方法和语法非常相似。一般思路是，需要确定一个或多个列，这些列将用于匹配两个表。然后返回一个新的包含合并信息的表。注意，如果我们使用`left_join`通过州来连接上面的两个表会发生什么（我们将移除`others`列，并将`electoral_votes`重命名，以便表格适合页面）：
 
-[PRE3]
+```r
+tab <- left_join(murders, results_us_election_2016, by = "state") |>
+ select(-others) |> rename(ev = electoral_votes)
+head(tab)
+#>        state abb region population total ev clinton trump johnson stein
+#> 1    Alabama  AL  South    4779736   135  9    34.4  62.1    2.09 0.442
+#> 2     Alaska  AK   West     710231    19  3    36.6  51.3    5.88 1.800
+#> 3    Arizona  AZ   West    6392017   232 11    44.6  48.1    4.08 1.319
+#> 4   Arkansas  AR  South    2915918    93  6    33.7  60.6    2.65 0.838
+#> 5 California  CA   West   37253956  1257 55    61.7  31.6    3.37 1.965
+#> 6   Colorado  CO   West    5029196    65  9    48.2  43.3    5.18 1.383
+#>   mcmullin
+#> 1    0.000
+#> 2    0.000
+#> 3    0.670
+#> 4    1.165
+#> 5    0.279
+#> 6    1.040
+```
 
 数据已成功连接，现在我们可以，例如，绘制一个图来探索关系：
 
@@ -36,7 +84,13 @@
 
 在实践中，并不是每个表中的每一行都一定在另一个表中有一个匹配的行。因此，我们有了几种不同的连接方式。为了说明这个挑战，我们将从上面的表中取子集。我们创建了`tab1`和`tab2`这两个表，它们有一些共同的状态，但并非全部：
 
-[PRE4]
+```r
+tab_1 <- slice(murders, 1:6) |> select(state, population)
+tab_2 <- results_us_election_2016 |> 
+ filter(state %in% c("Alabama", "Alaska", "Arizona", 
+ "California", "Connecticut", "Delaware")) |> 
+ select(state, electoral_votes) |> rename(ev = electoral_votes)
+```
 
 我们将在下一节中使用这两个表作为例子。
 
@@ -44,17 +98,37 @@
 
 假设我们想要一个类似于`tab_1`的表，但添加我们可用的任何州的选举人票数。为此，我们使用`left_join`，并将`tab_1`作为第一个参数。我们通过`by`参数指定要匹配的列。
 
-[PRE5]
+```r
+left_join(tab_1, tab_2, by = "state")
+#>        state population ev
+#> 1    Alabama    4779736  9
+#> 2     Alaska     710231  3
+#> 3    Arizona    6392017 11
+#> 4   Arkansas    2915918 NA
+#> 5 California   37253956 55
+#> 6   Colorado    5029196 NA
+```
 
 注意，`NA`s 被添加到`tab_2`中未出现的两个州。此外，请注意，这个函数以及所有其他连接函数都可以通过管道接收第一个参数：
 
-[PRE6]*
+```r
+tab_1 |> left_join(tab_2, by = "state")
+```*
 
 ### **12.1.2 右连接**
 
 *如果我们想要一个与第二个表具有相同行的表，而不是与第一个表具有相同行的表，我们可以使用`right_join`：
 
-[PRE7]
+```r
+tab_1 |> right_join(tab_2, by = "state")
+#>         state population ev
+#> 1     Alabama    4779736  9
+#> 2      Alaska     710231  3
+#> 3     Arizona    6392017 11
+#> 4  California   37253956 55
+#> 5 Connecticut         NA  7
+#> 6    Delaware         NA  3
+```
 
 现在 NAs 出现在来自`tab_1`的列中。
 
@@ -62,25 +136,55 @@
 
 **如果我们只想保留两个表中都有信息的行，我们使用`inner_join`。你可以将其视为一个交集：
 
-[PRE8]***
+```r
+inner_join(tab_1, tab_2, by = "state")
+#>        state population ev
+#> 1    Alabama    4779736  9
+#> 2     Alaska     710231  3
+#> 3    Arizona    6392017 11
+#> 4 California   37253956 55
+```***
 
 ### ***12.1.4 全连接***
 
 **如果我们想保留所有行并用 NAs 填充缺失部分，我们可以使用 `full_join`。你可以将其视为一个并集：
 
-[PRE9]***
+```r
+full_join(tab_1, tab_2, by = "state")
+#>         state population ev
+#> 1     Alabama    4779736  9
+#> 2      Alaska     710231  3
+#> 3     Arizona    6392017 11
+#> 4    Arkansas    2915918 NA
+#> 5  California   37253956 55
+#> 6    Colorado    5029196 NA
+#> 7 Connecticut         NA  7
+#> 8    Delaware         NA  3
+```***
 
 ### ***12.1.5 半连接***
 
 **`semi_join` 函数允许我们保留第一表中在第二表中具有信息的部分。它不会添加第二表的列：
 
-[PRE10]***
+```r
+semi_join(tab_1, tab_2, by = "state")
+#>        state population
+#> 1    Alabama    4779736
+#> 2     Alaska     710231
+#> 3    Arizona    6392017
+#> 4 California   37253956
+```***
 
 ### ***12.1.6 反连接***
 
 **函数 `anti_join` 是 `semi_join` 的对立面。它保留第一表中在第二表中没有信息的元素：
 
-[PRE11]
+```r
+anti_join(tab_1, tab_2, by = "state")
+#>      state population
+#> 1 Arkansas    2915918
+#> 2 Colorado    5029196
+```
 
 以下图表总结了上述连接：
 
@@ -96,7 +200,15 @@
 
 `dplyr` 函数 *bind_cols* 通过将它们作为 tibble 的列来绑定两个对象。例如，我们很快就想创建一个由我们可以使用的数字组成的数据框
 
-[PRE12]
+```r
+bind_cols(a = 1:3, b = 4:6)
+#> # A tibble: 3 × 2
+#>       a     b
+#>   <int> <int>
+#> 1     1     4
+#> 2     2     5
+#> 3     3     6
+```
 
 此函数要求我们为列分配名称。这里我们选择了 `a` 和 `b`。
 
@@ -104,13 +216,40 @@
 
 `bind_cols` 也可以绑定两个不同的数据框。例如，这里我们拆分了 `tab` 数据框，然后将其重新绑定在一起：
 
-[PRE13]*
+```r
+tab_1 <- tab[, 1:3]
+tab_2 <- tab[, 4:6]
+tab_3 <- tab[, 7:8]
+new_tab <- bind_cols(tab_1, tab_2, tab_3)
+head(new_tab)
+#>        state abb region population total ev clinton trump
+#> 1    Alabama  AL  South    4779736   135  9    34.4  62.1
+#> 2     Alaska  AK   West     710231    19  3    36.6  51.3
+#> 3    Arizona  AZ   West    6392017   232 11    44.6  48.1
+#> 4   Arkansas  AR  South    2915918    93  6    33.7  60.6
+#> 5 California  CA   West   37253956  1257 55    61.7  31.6
+#> 6   Colorado  CO   West    5029196    65  9    48.2  43.3
+```*
 
 ### **12.2.2 按行绑定**
 
 *`bind_rows` 函数与 `bind_cols` 类似，但绑定的是行而不是列：
 
-[PRE14]
+```r
+tab_1 <- tab[1:2,]
+tab_2 <- tab[3:4,]
+bind_rows(tab_1, tab_2)
+#>      state abb region population total ev clinton trump johnson stein
+#> 1  Alabama  AL  South    4779736   135  9    34.4  62.1    2.09 0.442
+#> 2   Alaska  AK   West     710231    19  3    36.6  51.3    5.88 1.800
+#> 3  Arizona  AZ   West    6392017   232 11    44.6  48.1    4.08 1.319
+#> 4 Arkansas  AR  South    2915918    93  6    33.7  60.6    2.65 0.838
+#>   mcmullin
+#> 1     0.00
+#> 2     0.00
+#> 3     0.67
+#> 4     1.17
+```
 
 这是基于 R-base 函数 `rbind`。******
 
@@ -122,49 +261,116 @@
 
 你可以对任何类型的向量进行交集，例如数值：
 
-[PRE15]
+```r
+[intersect](https://generics.r-lib.org/reference/setops.html)(1:10, 6:15)
+#> [1]  6  7  8  9 10
+```
 
 或者字符：
 
-[PRE16]
+```r
+intersect](https://generics.r-lib.org/reference/setops.html)([c("a","b","c"), c("b","c","d"))
+#> [1] "b" "c"
+```
 
 `dplyr` 包含一个 `intersect` 函数，可以应用于具有相同列名的表。此函数返回两个表之间的公共行。为了确保我们使用 `dplyr` 版本的 `intersect` 而不是基础 R 版本，我们可以使用 `[dplyr::intersect](https://generics.r-lib.org/reference/setops.html)` 如此：
 
-[PRE17]**
+```r
+tab_1 <- tab[1:5,]
+tab_2 <- tab[3:7,]
+dplyr::[intersect](https://generics.r-lib.org/reference/setops.html)(tab_1, tab_2)
+#>        state abb region population total ev clinton trump johnson stein
+#> 1    Arizona  AZ   West    6392017   232 11    44.6  48.1    4.08 1.319
+#> 2   Arkansas  AR  South    2915918    93  6    33.7  60.6    2.65 0.838
+#> 3 California  CA   West   37253956  1257 55    61.7  31.6    3.37 1.965
+#>   mcmullin
+#> 1    0.670
+#> 2    1.165
+#> 3    0.279
+```**
 
 ### ***12.3.2 并集***
 
 **同样，*并集* 取向量的并集。例如：
 
-[PRE18]
+```r
+[union](https://generics.r-lib.org/reference/setops.html)(1:10, 6:15)
+#>  [1]  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15
+union](https://generics.r-lib.org/reference/setops.html)([c("a","b","c"), c("b","c","d"))
+#> [1] "a" "b" "c" "d"
+```
 
 `dplyr` 包含了一个 `union` 版本，它可以结合两个具有相同列名的表的全部行。
 
-[PRE19]****
+```r
+tab_1 <- tab[1:5,]
+tab_2 <- tab[3:7,]
+dplyr::[union](https://generics.r-lib.org/reference/setops.html)(tab_1, tab_2) 
+#>         state abb    region population total ev clinton trump johnson
+#> 1     Alabama  AL     South    4779736   135  9    34.4  62.1    2.09
+#> 2      Alaska  AK      West     710231    19  3    36.6  51.3    5.88
+#> 3     Arizona  AZ      West    6392017   232 11    44.6  48.1    4.08
+#> 4    Arkansas  AR     South    2915918    93  6    33.7  60.6    2.65
+#> 5  California  CA      West   37253956  1257 55    61.7  31.6    3.37
+#> 6    Colorado  CO      West    5029196    65  9    48.2  43.3    5.18
+#> 7 Connecticut  CT Northeast    3574097    97  7    54.6  40.9    2.96
+#>   stein mcmullin
+#> 1 0.442    0.000
+#> 2 1.800    0.000
+#> 3 1.319    0.670
+#> 4 0.838    1.165
+#> 5 1.965    0.279
+#> 6 1.383    1.040
+#> 7 1.389    0.128
+```****
 
 ### ***12.3.3 `setdiff`***
 
 **通过 `setdiff` 可以获得第一个和第二个参数的集合差。与 `intersect` 和 `union` 不同，此函数不是对称的：
 
-[PRE20]
+```r
+[setdiff](https://generics.r-lib.org/reference/setops.html)(1:10, 6:15)
+#> [1] 1 2 3 4 5
+[setdiff](https://generics.r-lib.org/reference/setops.html)(6:15, 1:10)
+#> [1] 11 12 13 14 15
+```
 
 与上面显示的函数类似，**dplyr** 也有针对数据框的版本：
 
-[PRE21]****
+```r
+tab_1 <- tab[1:5,]
+tab_2 <- tab[3:7,]
+dplyr::[setdiff](https://generics.r-lib.org/reference/setops.html)(tab_1, tab_2)
+#>     state abb region population total ev clinton trump johnson stein
+#> 1 Alabama  AL  South    4779736   135  9    34.4  62.1    2.09 0.442
+#> 2  Alaska  AK   West     710231    19  3    36.6  51.3    5.88 1.800
+#>   mcmullin
+#> 1        0
+#> 2        0
+```****
 
 ### ***12.3.4 `setequal`***
 
 **最后，函数 `setequal` 告诉我们两个集合是否相同，无论顺序如何。所以请注意：
 
-[PRE22]
+```r
+[setequal](https://generics.r-lib.org/reference/setops.html)(1:5, 1:6)
+#> [1] FALSE
+```
 
 但：
 
-[PRE23]
+```r
+[setequal](https://generics.r-lib.org/reference/setops.html)(1:5, 5:1)
+#> [1] TRUE
+```
 
 `dplyr` 版本检查数据框是否相等，无论行或列的顺序*：
 
-[PRE24]********
+```r
+dplyr::[setequal](https://generics.r-lib.org/reference/setops.html)(tab_1, tab_2)
+#> [1] FALSE
+```********
 
 ## ***12.4 使用 data.table 进行连接***
 
@@ -172,11 +378,16 @@
 
 在 **tidyverse** 中，我们使用 `left_join` 将两个表连接起来：
 
-[PRE25]
+```r
+tab <- left_join(murders, results_us_election_2016, by = "state") 
+```
 
 在 **data.table** 中，`merge` 函数的工作方式类似：
 
-[PRE26]
+```r
+library(data.table)
+tab <- merge(murders, results_us_election_2016, by = "state", all.x = TRUE)
+```
 
 `merge` 不为不同类型的连接定义不同的函数，而是使用逻辑参数 `all`（全连接）、`all.x`（左连接）和 `all.y`（右连接）。*****
 
@@ -186,11 +397,20 @@
 
 `Batting` 数据框包含了许多年所有球员的进攻统计数据。例如，你可以通过运行以下代码看到前 10 名击球手：
 
-[PRE27]
+```r
+library([Lahman](https://cdalzell.github.io/Lahman/))
+ top <- Batting |> 
+ filter(yearID == 2016) |>
+ arrange(desc(HR)) |>
+ slice(1:10)
+ top |> as_tibble()
+```
 
 但这些人是谁？我们看到一个 ID，但没有名字。球员的名字在这个表中
 
-[PRE28]
+```r
+People |> as_tibble()
+```
 
 我们可以看到列名 `nameFirst` 和 `nameLast`。使用 `left_join` 函数创建一个顶级全垒打手的表格。该表应包含 `playerID`、名字、姓氏和全垒打次数（HR）。用这个新表重写 `top` 对象。
 
@@ -198,7 +418,13 @@
 
 3. 在之前的练习中，我们创建了 `co2` 数据集的整洁版本：
 
-[PRE29]
+```r
+co2_wide <- data.frame(matrix(co2, ncol = 12, byrow = TRUE)) |> 
+ setNames(1:12) |>
+ mutate(year = 1959:1997) |>
+ pivot_longer(-year, names_to = "month", values_to = "co2") |>
+ mutate(month = as.numeric(month))
+```
 
 我们想看看月度趋势是否在变化，所以我们将移除年份效应，然后绘制结果。我们首先计算每年的平均值。使用 `group_by` 和 `summarize` 计算每年的平均 CO2。将结果保存在名为 `yearly_avg` 的对象中。
 

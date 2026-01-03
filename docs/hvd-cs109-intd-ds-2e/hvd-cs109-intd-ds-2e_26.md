@@ -76,7 +76,13 @@ Markdown 是一种用于 *文学编程* 文档的格式，广泛用于生成 htm
 
 在顶部，你可以看到：
 
-[PRE0]
+```r
+---
+title: "Report on Gun Murders"
+author: "Rafael Irizarry"
+format: html
+---
+```
 
 `---` 之间的内容是 *YAML* 标题。YAML 是一种广泛使用的语言，主要用于提供配置数据。在 Quarto 和 R Markdown 中，它主要用于定义文档的选项。你可以在标题中定义比模板中包含的更多其他内容。我们在这里不讨论那些内容，但 quartoguide³ 中提供了大量信息。我们将强调的一个参数是 `format`。通过将其更改为，例如，`pdf`，我们可以控制编译时产生的输出类型。标题和作者参数会自动填写，因为我们已经在创建新文档时弹出的 RStudio 对话框中填写了空白。
 
@@ -84,11 +90,13 @@ Markdown 是一种用于 *文学编程* 文档的格式，广泛用于生成 htm
 
 在文档的各个地方，我们会看到类似的东西：
 
-[PRE1]{r}
+```r
+```{r}
 
 1 + 1
 
-[PRE2]
+```r
+```
 
 这些是代码块。当你编译文档时，代码块内的 R 代码，在这个例子中是`1+1`，将被评估，并将结果包含在最终文档的相应位置。
 
@@ -96,37 +104,46 @@ Markdown 是一种用于 *文学编程* 文档的格式，广泛用于生成 htm
 
 这同样适用于图表；图表将被放置在那个位置。我们可以写如下内容：
 
-[PRE3]{r}
+```r
+```{r}
 
 plot(1)
 
-[PRE4]
+```r
+```
 
 默认情况下，代码也会显示。为了避免代码显示，可以使用一个带有`#|`注释的参数。为了避免在最终文档中显示代码，可以使用参数`echo: FALSE`。例如：
 
-[PRE5]{r}
+```r
+```{r}
 
 #| echo: false
 
 1+1
 
-[PRE6]
+```r
+```
 
 我们建议养成给 R 代码块添加标签的习惯。这在调试和其他情况下将非常有用。你可以通过添加一个描述性的词，如这样：
 
-[PRE7]{r}
+```r
+```{r}
 
 #| 标签：一加一
 
 1+1
 
-[PRE8]***
+```r
+```***
 
 ### ***20.2.3 全局执行选项***
 
 **如果你想要全局应用一个选项，可以在标题下的`execute`部分包含它。例如，在标题中添加以下行可以使代码默认不显示：
 
-[PRE9]
+```r
+execute:
+  echo: false
+```
 
 我们在这里不会详细说明，但随着你对 R Markdown 的熟悉，你将了解设置编译过程全局选项的优势。***
 
@@ -164,7 +181,13 @@ plot(1)
 
 在 第 18.6 节 中，我们通过一个示例演示了如何使用 Unix 准备数据科学项目。这里我们继续这个示例，并展示如何使用 RStudio。在 第 18.6 节 中，我们使用 Unix 创建了以下目录：
 
-[PRE10]
+```r
+cd ~
+cd projects
+mkdir murders
+cd murders
+mkdir data rdas 
+```
 
 ### *20.3.2 创建 RStudio 项目*
 
@@ -178,7 +201,7 @@ plot(1)
 
 ![](img/a3c03f2ef8084f0d03bd68c9a6551c0a.png)
 
-请记住，当我们在这个项目中时，我们的默认工作目录将是 `~/projects/murders`。你可以通过在 R 会话中输入 `[getwd()](https://rdrr.io/r/base/getwd.html)` 来确认这一点。这很重要，因为它将帮助我们组织代码，当我们需要编写文件路径时。
+请记住，当我们在这个项目中时，我们的默认工作目录将是 `~/projects/murders`。你可以通过在 R 会话中输入 `getwd()` 来确认这一点。这很重要，因为它将帮助我们组织代码，当我们需要编写文件路径时。
 
 在数据分析项目中，尽量始终使用相对路径。这些路径应相对于默认工作目录。使用完整路径的问题，包括使用家目录 `~` 作为路径的一部分，是代码可能无法在其他文件系统上工作，因为目录结构将不同。**
 
@@ -188,7 +211,12 @@ plot(1)
 
 此文件的将包含以下内容：
 
-[PRE11]
+```r
+url <- "https://raw.githubusercontent.com/rafalab/dslabs/master/inst/
+extdata/murders.csv"
+dest_file <- "data/murders.csv"
+download.file(url, destfile = dest_file)
+```
 
 请注意，我们正在使用相对路径 `data/murders.csv`。
 
@@ -196,7 +224,13 @@ plot(1)
 
 现在我们准备编写一个脚本来读取这些数据，并准备一个我们可以用于分析的表格。将文件命名为 `wrangle-data.R`。此文件的内容将如下：
 
-[PRE12]
+```r
+library([tidyverse](https://tidyverse.tidyverse.org))
+murders <- read_csv("data/murders.csv")
+murders <- murders |> mutate(region = factor(region),
+ rate = total / population * 10⁵)
+save(murders, file = "rdas/murders.rda")
+```
 
 再次注意，我们只使用相对路径。****
 
@@ -208,17 +242,28 @@ plot(1)
 
 当`save`允许您保存多个对象，然后使用相同的名称加载时，`saveRDS`函数允许您保存一个对象，而不需要名称。要将其恢复，您使用`readRDS`函数。如何使用此函数的一个例子是，您在一个会话中保存它：
 
-[PRE13]
+```r
+saveRDS(murders, file = "rdas/murders.rda")
+```
 
 然后在另一个会话中读取它，使用您想要的任何对象名称：
 
-[PRE14]*****
+```r
+dat <- readRDS("rdas/murders.rda")
+```*****
 
 ### ****20.3.5 主要分析文件****
 
 ***现在我们准备好编写分析文件了。让我们称它为`analysis.R`。内容应该是以下内容：
 
-[PRE15]
+```r
+library([tidyverse](https://tidyverse.tidyverse.org))
+load("rdas/murders.rda")
+ murders |> mutate(abb = reorder(abb, rate)) |>
+ ggplot(aes(abb, rate)) +
+ geom_bar(width = 0.5, stat = "identity", color = "black") +
+ coord_flip()
+```
 
 如果您运行此分析，您将看到它生成一个图表。*****
 
@@ -226,11 +271,15 @@ plot(1)
 
 ***现在假设我们想要保存生成的图表以用于报告或演示。我们可以使用**ggplot**命令`ggsave`来完成此操作。但我们应该把图表放在哪里？我们应该有系统地组织，所以我们将把图表保存到名为`figs`的目录中。首先，在终端中输入以下内容来创建一个目录：
 
-[PRE16]
+```r
+mkdir figs
+```
 
 然后您可以添加以下行：
 
-[PRE17]
+```r
+ggsave("figs/barplot.png")
+```
 
 到您的 R 脚本中。如果您现在运行脚本，一个 png 文件将被保存到`figs`目录中。如果我们想要将此文件复制到我们正在开发演示的其他目录中，我们可以通过在终端中使用`cp`命令来避免使用鼠标。******
 
@@ -238,7 +287,16 @@ plot(1)
 
 ***您现在在单个目录中拥有一个自包含的分析。最后的建议是创建一个`README.txt`文件，描述每个文件的功能，以便其他人阅读您的代码时受益，包括您未来的自己。这不会是一个脚本，而只是一些笔记。在 RStudio 中打开新文件时提供的选项之一是文本文件。您可以将类似以下内容保存到文本文件中：
 
-[PRE18]****
+```r
+We analyze US gun murder data collected by the FBI.
+
+download-data.R - Downloads csv file to data directory
+
+wrangle-data.R - Creates a derived dataset and saves as R object in rdas
+directory
+
+analysis.R - A plot is generated and saved in the figs directory.
+```****
 
 ### ****20.3.8 初始化 Git 目录****
 
@@ -246,7 +304,14 @@ plot(1)
 
 我们可以在 Unix 终端中这样做：
 
-[PRE19]****
+```r
+cd ~/projects/murders
+git init
+git add README.txt
+git commit -m "First commit. Adding README.txt file just to get started"
+git remote add origin `https://github.com/rairizarry/murders.git`
+git push -u origin remote
+```****
 
 ### ****20.3.9 使用 RStudio 添加、提交和推送文件****
 
@@ -260,7 +325,9 @@ plot(1)
 
 我们现在可以前往 GitHub 确认我们的文件是否已上传。您可以在 GitHub 上看到这个项目的版本，它使用 Unix 目录组织⁸。您可以通过在终端使用`git clone`命令将副本下载到您的计算机上。此命令将在您的当前工作目录中创建一个名为`murders`的目录，所以请小心选择调用它的位置。
 
-[PRE20]*******
+```r
+git clone https://github.com/rairizarry/murders.git
+```*******
 
 * * *
 

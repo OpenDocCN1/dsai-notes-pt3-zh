@@ -16,11 +16,19 @@
 
 在本章中，我们考虑了一个旨在测试高脂肪饮食对小鼠生理影响的实验。小鼠被随机选择并分为两组：一组接受高脂肪饮食，被视为*治疗*，而另一组作为对照组，接受常规*饲料*。数据包含在**dslabs**包中：
 
-[PRE0]
+```r
+library(dslabs)
+table(mice_weights$diet)
+#> 
+#> chow   hf 
+#>  394  386
+```
 
 箱线图显示，高脂肪饮食的小鼠平均体重较重。
 
-[PRE1]
+```r
+with(mice_weights, boxplot(body_weight ~ diet))
+```
 
 ![](img/d683e1dcc12e93235c8c0607134c88c8.png)*  *然而，鉴于我们是随机划分小鼠的，观察到的差异是否仅仅是由于偶然？
 
@@ -30,7 +38,15 @@
 
 *两组样本平均值，高脂肪饮食和常规饲料，是不同的：
 
-[PRE2]
+```r
+library([tidyverse](https://tidyverse.tidyverse.org))
+mice_weights |> group_by(diet) |> summarize(average = mean(body_weight))
+#> # A tibble: 2 × 2
+#>   diet  average
+#>   <fct>   <dbl>
+#> 1 chow     31.5
+#> 2 hf       36.7
+```
 
 然而，这是一个随机抽取的小鼠样本，分配到饮食组也是随机进行的。那么这种差异是由于偶然吗？我们将使用假设检验来回答这个问题，假设检验首先在第十三章中描述。
 
@@ -50,11 +66,20 @@ $$ t = \frac{\bar{X}_1 - \bar{X}_0}{\sqrt{\frac{s_1²}{N_1} + \frac{s_0²}{N_0}}
 
 当零假设为真时，服从标准正态分布。这意味着我们可以轻松地计算观察到与我们获得值一样大的值的概率：
 
-[PRE3]
+```r
+stats <- mice_weights |> 
+ group_by(diet) |> 
+ summarize(xbar = mean](https://rdrr.io/r/base/mean.html)(body_weight), s = sd(body_weight), n = [n()) 
+t_stat <- with(stats, (xbar2] - xbar[1])/[sqrt(s[2]²/n[2] + s[1]²/n[1]))
+t_stat
+#> [1] 9.34
+```
 
 我们也可以使用 R 函数在一行内完成计算：
 
-[PRE4]
+```r
+with(mice_weights, t.test(body_weight[diet == "hf"], body_weight[diet == "chow"]))
+```
 
 在这里，t 值远远超过 3，所以我们实际上不需要计算 p 值`1-pnorm(t_stat)`，因为我们知道它将会非常小。
 
@@ -80,11 +105,18 @@ $$ Y_i = \beta_0 + \beta_1 x_i + \varepsilon_i $$
 
 那么，我们如何估计 $\beta_1$ 并计算这个概率？线性模型的一个强大特性是我们可以使用相同的 LSE 机制来估计 $\beta$ 及其标准误差：
 
-[PRE5]
+```r
+fit <- lm(body_weight ~ diet, data = mice_weights)
+```
 
 因为 `diet` 是一个有两个条目的因子，`lm` 函数知道要使用 $x_i$，一个指示变量来拟合上面的线性模型。`summary` 函数显示给我们结果估计、标准误差和 p 值：
 
-[PRE6]
+```r
+coefficients(summary(fit))
+#>             Estimate Std. Error t value Pr(>|t|)
+#> (Intercept)    31.54      0.386   81.74 0.00e+00
+#> diethf          5.14      0.548    9.36 8.02e-20
+```
 
 如果我们查看 `diethf` 行，这里计算出的 `t 值` 是估计值除以其估计的标准误差：$\hat{\beta}_1 / \widehat{\mathrm{SE}}[\hat{\beta}_1]$。`Pr(>|t|)` 是在检验 $\beta_1=0$ 的零假设时的 p 值。
 
@@ -98,13 +130,17 @@ $$ Y_i = \beta_0 + \beta_1 x_i + \varepsilon_i $$
 
 注意，这个实验包括了雄性和雌性小鼠，并且已知雄性小鼠更重。这解释了为什么残差依赖于性别变量：
 
-[PRE7]
+```r
+boxplot(fit$residuals ~ mice_weights$sex)
+```
 
 ![](img/f3cae82d08eb4da6ec98491d59fbee70.png)*  *这种误设可能具有实际影响；例如，如果接受高脂肪饮食的雄性小鼠更多，那么这可以解释这种增加。相反，如果接受较少，我们可能会低估饮食效果。性别可能是一个混杂因素，表明我们的模型肯定可以改进。
 
 From examining the data:
 
-[PRE8]
+```r
+mice_weights |> ggplot](https://ggplot2.tidyverse.org/reference/ggplot.html)(aes(diet, log2(body_weight), fill = sex)) + [geom_boxplot()
+```
 
 ![](img/153dd963a79a07204f9e9c4a29dc73f4.png)*  *我们看到饮食效果在两种性别中都存在，并且雄性比雌性重。尽管并不那么明显，饮食效果在雄性中似乎也更强烈。
 
@@ -146,11 +182,20 @@ $$ \begin{aligned} \mbox{雌性在普通饮食中} \implies x_{1i} = 0, \,x_{2i}
 
 在 R 中，我们可以使用以下方式指定上述线性模型：
 
-[PRE9]
+```r
+fit <- lm(body_weight ~ diet*sex, data = mice_weights)
+```
 
 在这里，`*` 表示 *因子交叉*，而不是乘法：`diet*sex` 是 `diet+sex+diet:sex` 的简写，表示在模型中分别包含饮食、性别和饮食/性别的交互作用。
 
-[PRE10]
+```r
+summary(fit)$coef
+#>             Estimate Std. Error t value  Pr(>|t|)
+#> (Intercept)    27.83      0.440   63.27 1.48e-308
+#> diethf          3.88      0.624    6.22  8.02e-10
+#> sexM            7.53      0.627   12.02  1.27e-30
+#> diethf:sexM     2.66      0.891    2.99  2.91e-03
+```
 
 请注意，雄性效应大于饮食效应，饮食效应对两种性别都具有统计学意义，饮食对雄性的影响在 1 到 4.5 克之间。
 
@@ -160,11 +205,16 @@ $$ Y_i = \beta_0 + \beta_1 x_{i1} + \beta_2 x_{i2} + \varepsilon_i $$
 
 在此模型中，$\beta_1$ 是一个通用的饮食效应，无论性别如何都适用。在 R 中，我们使用以下代码，使用 `+` 而不是 `*`：
 
-[PRE11]
+```r
+fit <- lm(body_weight ~ diet + sex, data = mice_weights)
+```
 
 请注意，此模型没有考虑男性和女性之间饮食效应的差异。诊断图将揭示这一缺陷，通过显示残差是有偏的：对于饮食的女性，平均而言是负的，而对于饮食的男性，平均而言是正的，而不是围绕 0 中心。
 
-[PRE12]
+```r
+boxplot(fit$residuals ~ diet + sex, data = mice_weights) 
+abline(h = 0, lty = 2)
+```
 
 ![](img/5f41efe2d72ad32c09f8f4bef2886fd8.png)*  *科学研究表明，尤其是在流行病学和社会科学领域，由于变量数量众多，经常从模型中省略交互项。添加交互项需要众多参数，在极端情况下可能会阻止模型拟合。然而，省略交互项隐含地假设它们为 0，这可能导致无法很好地描述数据的模型，因此不适合使用。相反，当我们能够捍卫没有交互效应的假设时，排除交互项的模型更容易解释，因为参数通常被视为结果随着分配的治疗程度增加的幅度。
 
@@ -176,15 +226,31 @@ $$ Y_i = \beta_0 + \beta_1 x_{i1} + \beta_2 x_{i2} + \varepsilon_i $$
 
 当一个因素被包含在公式中时，`lm`的默认行为是将截距项定义为第一水平的期望值，其他系数则表示与其他水平与第一水平之间的差异，或称为*对比*。我们可以通过以下方式使用`lm`来估计性别效应：
 
-[PRE13]
+```r
+fit <- lm(body_weight ~ sex, data = mice_weights)
+coefficients(fit)
+#> (Intercept)        sexM 
+#>       29.76        8.82
+```
 
 为了恢复男性的期望均值，我们可以简单地添加两个系数：
 
-[PRE14]
+```r
+sum(fit$coefficients[1:2])
+#> [1] 38.6
+```
 
 `emmeans`包简化了计算，并计算标准误差：
 
-[PRE15]
+```r
+library([emmeans](https://rvlenth.github.io/emmeans/))
+[emmeans](https://rvlenth.github.io/emmeans/reference/emmeans.html)(fit, ~sex)
+#>  sex emmean    SE  df lower.CL upper.CL
+#>  F     29.8 0.339 778     29.1     30.4
+#>  M     38.6 0.346 778     37.9     39.3
+#> 
+#> Confidence level used: 0.95
+```
 
 现在，如果我们真的不想定义参考水平怎么办？如果我们想有一个参数来表示每个组与总体均值之间的差异怎么办？我们能写出一个这样的模型吗：
 
@@ -194,19 +260,36 @@ $$ Y_i = \beta_0 + \beta_1 x_{i1} + \beta_2 x_{i2} + \varepsilon_i $$ 其中 $x_
 
 请记住，这并不是允许估计参数的唯一约束。任何线性约束都可以，因为它为我们系统添加了第三个方程。广泛使用的约束是要求 $\beta_1 + \beta_2 = 0$。在 R 中，我们可以使用以下方式使用 `contrasts` 参数来实现这一点：
 
-[PRE16]
+```r
+fit <- lm(body_weight ~ sex, data = mice_weights, contrasts = list(sex=contr.sum))
+coefficients(fit)
+#> (Intercept)        sex1 
+#>       34.17       -4.41
+```
 
 我们看到截距现在更大，反映了整体均值而不是仅女性的均值。另一个系数，$\beta_1$，代表模型中女性与整体均值之间的对比。男性的系数没有显示，因为它冗余：$\beta_1= -\beta_2$.
 
 如果我们想查看所有估计值，**emmeans** 包也为我们进行了计算：
 
-[PRE17]
+```r
+[contrast](https://rvlenth.github.io/emmeans/reference/contrast.html)([emmeans](https://rvlenth.github.io/emmeans/reference/emmeans.html)(fit, ~sex))
+#>  contrast estimate    SE  df t.ratio p.value
+#>  F effect    -4.41 0.242 778 -18.200  <.0001
+#>  M effect     4.41 0.242 778  18.200  <.0001
+#> 
+#> P value adjustment: fdr method for 2 tests
+```
 
 当因素有多个水平时，使用这种替代约束更为实用，选择基线变得不那么方便。此外，我们可能对系数的方差比对组间和参考水平之间的对比更感兴趣。
 
 作为例子，考虑我们的数据集中的老鼠实际上来自几个代：
 
-[PRE18]
+```r
+table(mice_weights$gen)
+#> 
+#>   4   7   8   9  11 
+#>  97 195 193  97 198
+```
 
 为了估计不同代际引起的可变性，一个方便的模型是：
 
@@ -222,7 +305,18 @@ $$ \sigma²_{\text{gen}} \equiv \frac{1}{J}\sum_{j=1}^J \beta_j² $$
 
 我们可以使用以下方法查看估计的系数：
 
-[PRE19]
+```r
+fit <- lm(body_weight ~ gen,  data = mice_weights, contrasts = list(gen=contr.sum))
+[contrast](https://rvlenth.github.io/emmeans/reference/contrast.html)([emmeans](https://rvlenth.github.io/emmeans/reference/emmeans.html)(fit, ~gen)) 
+#>  contrast     estimate    SE  df t.ratio p.value
+#>  gen4 effect    -0.122 0.705 775  -0.174  0.8620
+#>  gen7 effect    -0.812 0.542 775  -1.497  0.3370
+#>  gen8 effect    -0.113 0.544 775  -0.207  0.8620
+#>  gen9 effect     0.149 0.705 775   0.212  0.8620
+#>  gen11 effect    0.897 0.540 775   1.663  0.3370
+#> 
+#> P value adjustment: fdr method for 5 tests
+```
 
 在下一节中，我们将简要描述一种用于研究与该因素相关的可变性的有用技术。************
 
@@ -234,11 +328,18 @@ ANOVA（方差分析）提供了对$\sigma²_{\text{gen}}$的估计，并对原�
 
 一旦使用一个或多个因素拟合了线性模型，就可以使用`aov`函数进行方差分析。具体来说，计算因素变异性估计的同时，还会计算一个可用于假设检验的统计量：
 
-[PRE20]
+```r
+summary(aov(fit))
+#>              Df Sum Sq Mean Sq F value Pr(>F)
+#> gen           4    294    73.5    1.13   0.34
+#> Residuals   775  50479    65.1
+```
 
 记住，如果给出一个模型公式，`aov`将拟合该模型：
 
-[PRE21]
+```r
+summary(aov(body_weight ~ gen, data = mice_weights))
+```
 
 我们不需要指定约束条件，因为 ANOVA 需要将总和约束为 0，以便结果可解释。
 
@@ -250,7 +351,16 @@ ANOVA（方差分析）提供了对$\sigma²_{\text{gen}}$的估计，并对原�
 
 注意，我们可以对多个因素进行方差分析：
 
-[PRE22]
+```r
+summary(aov(body_weight ~ sex + diet + gen,  data = mice_weights))
+#>              Df Sum Sq Mean Sq F value Pr(>F) 
+#> sex           1  15165   15165  389.80 <2e-16 ***
+#> diet          1   5238    5238  134.64 <2e-16 ***
+#> gen           4    295      74    1.89   0.11 
+#> Residuals   773  30074      39 
+#> ---
+#> Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+```
 
 这项分析表明，性别是最大的变异性来源，这与之前做出的探索性绘图一致。
 
@@ -282,13 +392,19 @@ $$ \sum_{j=1}^J \alpha_j = 0 \text{ 和 } \sum_{k=1}^K \beta_k = 0 $$
 
 ****1\. 一旦拟合了模型，标准误差 $\sigma$ 的估计值可以按以下方式获得：
 
-[PRE23]
+```r
+fit <- lm(body_weight ~ diet, data = mice_weights)
+summary(fit)$sigma
+```
 
 使用只包括饮食和考虑性别的模型来计算 $\sigma$ 的估计值。这些估计值是否相同？如果不相同，原因是什么？
 
 2\. `lm` 拟合线性模型的一个假设是，误差 $\varepsilon_i$ 的标准差对所有 $i$ 是相同的。这意味着它不依赖于期望值。像这样按老鼠的重量分组：
 
-[PRE24]
+```r
+breaks <- with(mice_weights, seq(min(body_weight), max(body_weight), 1))
+dat <- mutate(mice_weights, group = cut(body_weight, breaks, include_lowest=TRUE))
+```
 
 计算具有超过 10 个观察值的组的 `body_weight` 的平均值和标准差，并使用数据探索来验证此假设是否成立。
 
@@ -302,7 +418,15 @@ $$ \sum_{j=1}^J \alpha_j = 0 \text{ 和 } \sum_{k=1}^K \beta_k = 0 $$
 
 7\. 在 第十章 中，我们讨论了调查员偏差并使用可视化来激发这种偏差的存在。在这里，我们将对其进行更严格的处理。我们将考虑进行了每日调查的两个调查员。我们将查看选举前一个月的全国调查：
 
-[PRE25]
+```r
+library(dslabs)
+polls <- polls_us_election_2016 |> 
+ filter(pollster %in% c("Rasmussen Reports/Pulse Opinion Research",
+ "The Times-Picayune/Lucid") &
+ enddate >= "2016-10-15" &
+ state == "U.S.") |> 
+ mutate(spread = rawpoll_clinton/100 - rawpoll_trump/100) 
+```
 
 我们想要回答的问题是：是否存在调查员偏差？绘制每个调查员的分布图。
 
@@ -330,7 +454,11 @@ $$ Y_{ij} = \mu + b_i + \varepsilon_{ij} $$
 
 10\. 假设我们将 $\bar{Y}_1$ 定义为第一个调查员进行的调查结果的平均值，$Y_{1,1},\dots,Y_{1,N_1}$，其中 $N_1$ 是第一个调查员进行的调查数量：
 
-[PRE26]
+```r
+polls |> 
+ filter(pollster=="Rasmussen Reports/Pulse Opinion Research") |> 
+ summarize(N_1 = n())
+```
 
 $\bar{Y}_1$ 的期望值是多少？
 
@@ -368,6 +496,14 @@ $$ \frac{\bar{Y}_2 - \bar{Y}_1}{\sqrt{s_2²/N_2 + s_1²/N_1}} $$
 
 对于这个练习，创建一个新的表格：
 
-[PRE27]
+```r
+polls <- polls_us_election_2016 |> 
+ filter(enddate >= "2016-10-15" &
+ state == "U.S.") |>
+ group_by(pollster) |>
+ filter(n() >= 5) |> 
+ mutate(spread = rawpoll_clinton/100 - rawpoll_trump/100) |>
+ ungroup()
+```
 
 计算每个民意调查员的平均值和标准差，并检查平均值之间的变异性。将其与民意调查员内部的标准差总结的变异性进行比较。**********

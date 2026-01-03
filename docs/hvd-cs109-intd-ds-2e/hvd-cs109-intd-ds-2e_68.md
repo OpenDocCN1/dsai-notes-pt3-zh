@@ -22,23 +22,35 @@ $$ p(\mathbf{x}) = \mathrm{Pr}(Y = 1 \mid X_1 = x_1 , X_2 = x_2). $$
 
 为了拟合 $k$ 近邻模型，我们使用来自 **caret** 包的 `knn3` 函数。帮助文件显示了调用此函数的两种方式；我们将使用 *公式接口*，它允许我们将模型写成以下形式
 
-[PRE0]
+```r
+outcome ~ predictor_1 + predictor_2 + ...
+```
 
 由于我们的训练集存储在数据框中，我们可以使用缩写 `y ~ .` 来表示“使用 `y` 作为结果，所有其他列作为预测变量。”
 
 我们还必须选择邻居的数量 $k$。默认值是 `k = 5`，我们将在这里使用。将这一点结合起来，我们的调用看起来像：
 
-[PRE1]
+```r
+library(dslabs)
+library([caret](https://github.com/topepo/caret/))
+#> Loading required package: lattice
+knn_fit <- [knn3](https://rdrr.io/pkg/caret/man/knn3.html)(y ~ ., data = mnist_27$train, k = 5)
+```
 
 在这种情况下，由于我们的数据集是平衡的，我们同样关心敏感性和特异性，我们将使用准确率来量化性能。
 
 `knn3` 的 `predict` 函数返回 $p(\mathbf{x})$ 的估计（`type = "prob"`）或预测（`type = "class"`）：
 
-[PRE2]
+```r
+y_hat_knn <- predict(knn_fit, mnist_27$test, type = "class")
+```
 
 我们看到，默认参数的 kNN 已经击败了 GLM：
 
-[PRE3]
+```r
+mean(y_hat_knn == mnist_27$test$y)
+#> [1] 0.815
+```
 
 为了了解为什么是这样，我们绘制 $\hat{p}(\mathbf{x})$ 并将其与真实的条件概率 $p(\mathbf{x})$ 进行比较：
 
@@ -46,7 +58,14 @@ $$ p(\mathbf{x}) = \mathrm{Pr}(Y = 1 \mid X_1 = x_1 , X_2 = x_2). $$
 
 我们看到 kNN 更好地适应了$p(\mathbf{x})$的非线性形状。然而，我们的估计在红色区域中有一些蓝色的孤岛，这在直观上并不合理。我们注意到，与测试集相比，我们在训练集中有更高的准确率：
 
-[PRE4]
+```r
+y_hat_knn <- predict(knn_fit, mnist_27$train, type = "class")
+mean(y_hat_knn == mnist_27$train$y)
+#> [1] 0.858
+ y_hat_knn <- predict(knn_fit, mnist_27$test, type = "class")
+mean(y_hat_knn == mnist_27$test$y)
+#> [1] 0.815
+```
 
 这是由于我们所说的*过拟合*。****
 
@@ -56,11 +75,20 @@ $$ p(\mathbf{x}) = \mathrm{Pr}(Y = 1 \mid X_1 = x_1 , X_2 = x_2). $$
 
 在这里，我们使用$k = 1$拟合 kNN 模型，并确认我们在训练集中获得了接近完美的准确率：
 
-[PRE5]
+```r
+knn_fit_1 <- [knn3](https://rdrr.io/pkg/caret/man/knn3.html)(y ~ ., data = mnist_27$train, k = 1)
+y_hat_knn_1 <- predict(knn_fit_1, mnist_27$train, type = "class")
+mean(y_hat_knn_1 == mnist_27$train$y)
+#> [1] 0.994
+```
 
 但在测试集中，准确率实际上比我们使用回归得到的准确率还要差：
 
-[PRE6]
+```r
+y_hat_knn_1 <- predict(knn_fit_1, mnist_27$test, type = "class")
+mean(y_hat_knn_1 == mnist_27$test$y)
+#> [1] 0.81
+```
 
 我们可以通过绘制$\hat{p}(\mathbf{x})$产生的决策规则边界来看到过拟合问题：
 
@@ -72,7 +100,12 @@ $$ p(\mathbf{x}) = \mathrm{Pr}(Y = 1 \mid X_1 = x_1 , X_2 = x_2). $$
 
 **尽管不如$k=1$时严重，但我们看到当$k = 5$时，我们也出现了过拟合。因此，我们应该考虑一个更大的$k$。让我们尝试一个更大的数字，例如$k = 401$。
 
-[PRE7]
+```r
+knn_fit_401 <- [knn3](https://rdrr.io/pkg/caret/man/knn3.html)(y ~ ., data = mnist_27$train, k = 401)
+y_hat_knn_401 <- predict(knn_fit_401, mnist_27$test, type = "class")
+mean(y_hat_knn_401 == mnist_27$test$y)
+#> [1] 0.76
+```
 
 估计结果与使用回归得到的估计相似：
 
@@ -226,7 +259,16 @@ $$ \hat{\mbox{MSE}}(\lambda) = \frac{1}{B} \sum_{b = 1}^B \hat{\mbox{MSE}}_b(\la
 
 生成数据集：
 
-[PRE8]
+```r
+set.seed(1996)
+n <- 1000
+p <- 10000
+x <- matrix(rnorm(n * p), n, p)
+colnames(x) <- paste0("x_", 1:p)
+y <- factor(rbinom(n, 1, 0.5))   # completely random binary outcome
+ # smaller subset for initial exercises
+x_subset <- x, [sample(p, 100)]
+```
 
 因为`x`和`y`是独立的，没有分类器应该达到比 0.5 大得多的精度。
 
@@ -238,13 +280,17 @@ $$ \hat{\mbox{MSE}}(\lambda) = \frac{1}{B} \sum_{b = 1}^B \hat{\mbox{MSE}}_b(\la
 
 2. 我们现在使用 t 检验来选择预测因子，尽管所有预测因子都是噪声。对于`x`的每一列，计算一个 t 检验，比较`y = 1`组中的值与`y = 0`组中的值，并提取 p 值：
 
-[PRE9]
+```r
+pvals <- apply(x, 2, function(col) t.test(col ~ y)$p.value)
+```
 
 创建一个索引`ind`，包含 p 值小于 0.01 的预测因子。有多少个预测因子通过了这个截止值？
 
 3. 定义：
 
-[PRE10]
+```r
+x_subset <- x[, ind]
+```
 
 重复练习 1，但使用这个新的`x_subset`。
 
@@ -300,7 +346,10 @@ $$ \hat{\mbox{MSE}}(\lambda) = \frac{1}{B} \sum_{b = 1}^B \hat{\mbox{MSE}}_b(\la
 
 8. 我们可以使用 `createResample` 创建重采样样本。
 
-[PRE11]
+```r
+set.seed(1995)
+indexes <- [createResample](https://rdrr.io/pkg/caret/man/createDataPartition.html)(mnist_27$train$y, 10)
+```
 
 在第一个重采样样本中，索引 3、4 和 7 出现了多少次？
 

@@ -12,11 +12,16 @@
 
 我们介绍了**caret**包，它提供了有用的函数来促进 R 中的机器学习，我们将在第 31.2 节中更详细地描述它。在我们的第一个例子中，我们使用**dslabs**包提供的高度数据。
 
-[PRE0]
+```r
+library([caret](https://github.com/topepo/caret/))
+library(dslabs)
+```
 
 我们首先指出，`heights$sex`提供了结果（Y），而`heights$height`是我们的预测变量（X）。为了简化本章中使用的代码，我们重命名了变量：
 
-[PRE1]
+```r
+names(heights) <- c("y", "x")
+```
 
 在这个例子中，我们有一个单一的预测变量，结果为分类：每个观测值要么是`Male`，要么是`Female`。由于男性和女性之间的平均身高差异相对于每个组内的变异性是适度的，我们不应期望用非常高的准确性预测$Y$。但我们能否比随机猜测做得更好？为了回答这个问题，我们首先需要一个量化的方法来定义“更好”的含义。
 
@@ -28,13 +33,19 @@
 
 生成训练集和测试集的标准方法是通过随机分割数据。**caret**包包括一个名为`createDataPartition`的函数，它帮助我们生成用于将数据随机分割成训练集和测试集的索引：
 
-[PRE2]
+```r
+set.seed(2010)
+train_index <- [createDataPartition](https://rdrr.io/pkg/caret/man/createDataPartition.html)(heights$y, times = 1, p = 0.5, list = FALSE)
+```
 
 `times`参数用于定义要返回多少个随机索引样本，`p`参数用于定义索引代表数据集的比例，而`list`参数用于决定我们是否希望返回索引列表。
 
 我们可以使用`createDataPartition`函数调用的结果来定义训练集和测试集，如下所示：
 
-[PRE3]
+```r
+train_set <- heights[train_index, ]
+test_set <- heights[-train_index, ]
+```
 
 我们现在将使用*仅*训练集开发一个算法。一旦我们完成算法的开发，我们将*冻结*它，并使用测试集来评估它。当结果为分类时，评估算法的最简单方法就是简单地报告在测试集中正确预测的案例比例。这个指标通常被称为*总体准确率*。**
 
@@ -44,29 +55,46 @@
 
 让我们先开发最简单的机器算法：猜测结果。
 
-[PRE4]
+```r
+y_hat <- factor(sample(c("Female", "Male"), nrow(test_set), replace = TRUE))
+```
 
 请注意，我们完全忽略了预测变量，只是在猜测性别。
 
 总体准确率*简单地定义为预测正确的总体比例：
 
-[PRE5]
+```r
+mean(y_hat == test_set$y)
+#> [1] 0.482
+```
 
 不出所料，我们的准确率大约是 50%。我们只是在猜测！
 
 我们能做得更好吗？探索性数据分析表明我们可以，因为平均而言，男性的身高略高于女性。但我们如何利用这个洞察力呢？让我们尝试另一种简单的方法：如果身高低于平均男性身高两个标准差，则预测 1（女性）：
 
-[PRE6]
+```r
+cutoff <- with(train_set, mean(x) - 2*sd(x))
+y_hat <- factor(ifelse(test_set$x <= cutoff, "Female", "Male"))
+```
 
 准确率从 0.5 上升到大约 0.8：
 
-[PRE7]
+```r
+mean(test_set$y == y_hat)
+#> [1] 0.771
+```
 
 但我们能否做得更好？在上面的例子中，我们使用了 62 的截止值，但我们可以检查其他截止值所获得的准确性，然后选择提供最佳结果的那个值。但请记住，**我们只应使用训练集来优化截止值**：测试集仅用于评估。尽管对于这个简单的例子来说这不是一个大问题，但稍后我们将了解到，在训练集上评估算法可能会导致*过拟合*，这通常会导致过于乐观的评估。
 
 在这里，我们检查了 10 个不同截止值的准确性，并选择了产生最佳结果的那个：
 
-[PRE8]
+```r
+cutoffs <- seq(61, 70)
+accuracy <- sapply(cutoffs, function(cutoff){
+ y_hat <- factor(ifelse(train_set$x <= cutoff, "Female", "Male"))
+ mean(y_hat == train_set$y)
+})
+```
 
 我们可以绘制一个图，显示训练集上男性和女性的准确性：
 
@@ -74,15 +102,26 @@
 
 我们看到最大值是：
 
-[PRE9]
+```r
+max(accuracy)
+#> [1] 0.832
+```
 
 这个值远高于 0.5。产生这个准确性的截止值是：
 
-[PRE10]
+```r
+best_cutoff <- cutoffs[which.max(accuracy)]
+best_cutoff
+#> [1] 64
+```
 
 现在我们可以将这个截止值测试在我们的测试集上，以确保我们的准确性不是过于乐观的：
 
-[PRE11]
+```r
+y_hat <- factor(ifelse(test_set$x <= best_cutoff, "Female", "Male"))
+mean(y_hat == test_set$y)
+#> [1] 0.821
+```
 
 我们发现它略低于训练集观察到的准确性。这是因为我们使用了训练集来选择截止值，所以存在一些过度训练。然而，我们的基于截止值的方法仍然比猜测要好。而且通过在一个我们没有训练过的数据集上进行测试，我们知道我们的改进不是由于过度训练。**********
 
@@ -92,15 +131,30 @@
 
 一般而言，整体准确性可能会误导。为了理解原因，我们首先构建一个*混淆矩阵*，这是一个表格，它统计了每种预测和真实结果的组合出现的频率。在 R 中，我们可以使用`table`创建这个表格，但**caret**包提供了一个方便的函数`confusionMatrix`，它不仅计算混淆矩阵，还报告了我们将稍后使用的几个额外的性能指标：
 
-[PRE12]
+```r
+cm <- [confusionMatrix](https://rdrr.io/pkg/caret/man/confusionMatrix.html)(data = y_hat, reference = test_set$y)
+cm$table
+#>           Reference
+#> Prediction Female Male
+#>     Female     54   29
+#>     Male       65  377
+```
 
 如果我们仔细研究这个表格，就会发现一个问题。如果我们分别计算每个性别的准确性（在下一节中，我们将解释，在这个上下文中，*灵敏度*和*特异性*分别等同于女性和男性的准确性），我们得到：
 
-[PRE13]
+```r
+cm$byClass[c("Sensitivity", "Specificity")]
+#> Sensitivity Specificity 
+#>       0.454       0.929
+```
 
 我们注意到一个不平衡：预测为男性的女性太多。我们几乎将一半的女性错误地标记为男性！那么我们的整体准确性怎么会这么高呢？这是因为*患病率*，定义为数据中$Y=1$的比例，很低。这些身高是从三个数据科学课程中收集的，其中两个课程的男性入学率更高：
 
-[PRE14]
+```r
+cm$byClass["Prevalence"]
+#> Prevalence 
+#>      0.227
+```
 
 因此，在计算整体准确性时，对女性犯的错误的高比例被对男性正确预测的收益所抵消。
 
@@ -149,13 +203,23 @@
 
 如果你将此输入 R：
 
-[PRE15]
+```r
+cm <- [confusionMatrix](https://rdrr.io/pkg/caret/man/confusionMatrix.html)(data = y_hat, reference = test_set$sex)
+print(cm)
+```
 
 你将看到几个指标，包括准确率、灵敏度、特异性和阳性预测值（PPV）。
 
 你可以直接访问这些指标，例如，像这样：
 
-[PRE16]
+```r
+cm$overall["Accuracy"]
+#> Accuracy 
+#>    0.821
+cm$byClass[c("Sensitivity","Specificity", "Prevalence", "Pos Pred Value")]
+#>    Sensitivity    Specificity     Prevalence Pos Pred Value 
+#>          0.454          0.929          0.227          0.651
+```
 
 我们可以看到，尽管灵敏度相对较低，但仍然可能实现较高的整体准确率。正如我们上面所暗示的，这种情况发生的原因是由于低发病率（0.23）：女性的比例较低。由于发病率低，未能正确预测女性（灵敏度低）并不会像未能正确预测男性（特异度低）那样大幅降低整体准确率。这是一个为什么检查灵敏度和特异度而不仅仅是准确率很重要的例子。*
 
@@ -177,7 +241,13 @@ $$ \frac{1}{\frac{\beta²}{1+\beta²}\frac{1}{\mbox{召回率}} + \frac{1}{1+\be
 
 让我们重新构建我们的预测算法，但这次是最大化 F 分数而不是整体准确性：
 
-[PRE17]
+```r
+cutoffs <- seq(61, 70)
+F_1 <- sapply(cutoffs, function(cutoff){
+ y_hat <- factor(ifelse(train_set$x <= cutoff, "Female", "Male"))
+ [F_meas](https://rdrr.io/pkg/caret/man/recall.html)(y_hat, train_set$y)
+})
+```
 
 与之前一样，我们可以绘制这些 $F_1$ 衡量值与截止值的对比图：
 
@@ -185,15 +255,28 @@ $$ \frac{1}{\frac{\beta²}{1+\beta²}\frac{1}{\mbox{召回率}} + \frac{1}{1+\be
 
 我们看到它在 $F_1$ 值最大化时：
 
-[PRE18]
+```r
+max(F_1)
+#> [1] 0.617
+```
 
 这个最大值是在我们使用以下截止值时达到的：
 
-[PRE19]
+```r
+best_cutoff <- cutoffs[which.max(F_1)]
+best_cutoff
+#> [1] 66
+```
 
 66 的截止值比 64 更有意义，因为它更接近男性和女性平均身高的中点。此外，它还在结果混淆矩阵中提供了灵敏度和特异性之间的更好平衡。
 
-[PRE20]
+```r
+y_hat <- factor(ifelse(test_set$x <= best_cutoff, "Female", "Male"))
+[sensitivity](https://rdrr.io/pkg/caret/man/sensitivity.html)(y_hat, test_set$y)
+#> [1] 0.672
+[specificity](https://rdrr.io/pkg/caret/man/sensitivity.html)(y_hat, test_set$y)
+#> [1] 0.837
+```
 
 现在我们可以看到，我们的表现比猜测要好得多，灵敏度和特异性都相对较高。*******
 
@@ -207,7 +290,15 @@ $$ \frac{1}{\frac{\beta²}{1+\beta²}\frac{1}{\mbox{召回率}} + \frac{1}{1+\be
 
 ROC 曲线绘制了灵敏度（表示为 TPR）与 1 - 特异性（表示为假阳性率 FPR）的对比。在这里，我们计算了不同猜测男性概率所需的 TPR 和 FPR：
 
-[PRE21]
+```r
+probs <- seq(0, 1, length.out = 10)
+guessing <- sapply(probs, function(p){
+ y_hat <- sample(c("Male", "Female"), nrow(test_set), TRUE, c(p, 1 - p)) 
+ y_hat <- factor(y_hat, levels = c("Female", "Male"))
+ c(FPR = 1 - [specificity](https://rdrr.io/pkg/caret/man/sensitivity.html)(y_hat, test_set$y),
+ TPR = [sensitivity](https://rdrr.io/pkg/caret/man/sensitivity.html)(y_hat, test_set$y))
+})
+```
 
 我们可以使用类似的代码来计算我们第二种方法的这些值。通过同时绘制两条曲线，我们能够比较不同特异性值下的灵敏度：
 
@@ -271,13 +362,20 @@ $$ \hat{\mbox{MSE}} = \frac{1}{N}\sum_{i=1}^N (\hat{y}_i - y_i)² $$
 
 ***在以下练习中，我们使用 Titanic 数据集来探索使用基于连续预测因子的简单决策规则进行分类的评价指标。我们的目标不是构建一个复杂的模型，而是了解准确率、敏感性、特异性、精确率和患病率如何取决于截止值的选择。我们将使用票价（票价）、年龄和乘客等级（`Pclass`）等变量来预测生存，将生存（`Survived`）视为二元结果。
 
-[PRE22]
+```r
+library([tidyverse](https://tidyverse.tidyverse.org))
+library([caret](https://github.com/topepo/caret/))
+library([titanic](https://github.com/paulhendricks/titanic))
+ titanic <- titanic_train |> select(Survived, Pclass, Sex, Age, Fare) |> drop_na() |>
+ mutate(Survived = factor(Survived, levels = c(1,0)), 
+ Pclass = factor(Pclass), Sex = factor(Sex))
+```
 
 请注意，我们将级别定义为 `c(1,0)` 以避免由于 **caret** 将正 $Y=1$ 定义为第一个级别而导致的默认行为。**
 
 1. 将 `titanic` 数据集分为 `train_set`（80% 的数据）和 `test_set`（剩余的 20%）。
 
-2. 使用 `Fare`（票价）作为连续得分来预测生存。创建一个简单的规则：如果 `Fare > cutoff`，则预测 `1`（生存），否则预测 `0`。取 `cutoff = median(train_set$Fare)`。在 `test_set` 上计算准确率。提示：当使用 `[factor()](https://rdrr.io/r/base/factor.html)` 时，R 默认按字母顺序对级别进行排序。这意味着`0`将排在`1`之前，所以如果你在未指定级别的情况下将预测转换为因子，正类可能会被错误地分配。然而，在这个数据集中，Survived 的第一个级别是 1。确保你的预测因子的级别与 test_set$Survived 的级别相匹配，在计算准确率或混淆矩阵之前。
+2. 使用 `Fare`（票价）作为连续得分来预测生存。创建一个简单的规则：如果 `Fare > cutoff`，则预测 `1`（生存），否则预测 `0`。取 `cutoff = median(train_set$Fare)`。在 `test_set` 上计算准确率。提示：当使用 `factor()` 时，R 默认按字母顺序对级别进行排序。这意味着`0`将排在`1`之前，所以如果你在未指定级别的情况下将预测转换为因子，正类可能会被错误地分配。然而，在这个数据集中，Survived 的第一个级别是 1。确保你的预测因子的级别与 test_set$Survived 的级别相匹配，在计算准确率或混淆矩阵之前。
 
 3. 练习 2 中实现的准确率与简单地预测每个人为 `0`（未生存）相比如何？
 
@@ -285,7 +383,9 @@ $$ \hat{\mbox{MSE}} = \frac{1}{N}\sum_{i=1}^N (\hat{y}_i - y_i)² $$
 
 5. 现在重复练习 3，但使用不同的截止值：
 
-[PRE23]
+```r
+cutoffs <- quantile(train_set$Fare, probs = seq(0.05, 0.95, 0.1))
+```
 
 对于每个截止值，使用 `Fare > cutoff` 将乘客分类为生存/未生存，并绘制在 `train_set` 上计算的准确率与截止值的关系图。
 
@@ -295,11 +395,16 @@ $$ \hat{\mbox{MSE}} = \frac{1}{N}\sum_{i=1}^N (\hat{y}_i - y_i)² $$
 
 8. 现在用一个逻辑回归模型作为更精细的连续得分。拟合模型：
 
-[PRE24]
+```r
+fit <- glm(Survived == "1" ~ ., family = binomial, data = train_set)
+```
 
 我们可以使用`predict`函数从训练集和测试集中为每个个体获得生存的预测概率：
 
-[PRE25]
+```r
+p_hat_train <- predict(fit, newdata = train_set, type = "response")
+p_hat_test <- predict(fit, newdata = test_set, type = "response")
+```
 
 如果这个概率大于 0.5，则将乘客分类为生存。当在训练集和测试集上计算准确率时，这种比较与我们在第 2 题和第 3 题中的比较有何不同？请评论为什么差异比我们之前的比较更大。
 
@@ -307,7 +412,9 @@ $$ \hat{\mbox{MSE}} = \frac{1}{N}\sum_{i=1}^N (\hat{y}_i - y_i)² $$
 
 10. 该数据集中生存的整体普及率是：
 
-[PRE26]
+```r
+mean(titanic$Survived == "1")
+```
 
 假设你在生存普及率仅为 20%的新环境中部署你的基于 glm 的规则（第 8 题）。无需代码，定性解释这种普及率的变化会如何影响*精确度*（阳性预测值），即使灵敏度和特异性保持不变。为什么在评估模型时考虑普及率很重要？*********
 

@@ -14,29 +14,56 @@
 
 我们将使用在第 21.2 节中介绍的 MNIST 数据集。我们可以使用以下**dslabs**包函数加载数据：
 
-[PRE0]
+```r
+library(dslabs)
+mnist <- [read_mnist](https://rdrr.io/pkg/dslabs/man/read_mnist.html)()
+```
 
 该数据集包括两个部分，一个训练集和一个测试集：
 
-[PRE1]
+```r
+names(mnist)
+#> [1] "train" "test"
+```
 
 每个组件都包含一个矩阵，其中列包含特征：
 
-[PRE2]
+```r
+dim(mnist$train$images)
+#> [1] 60000   784
+```
 
 以及一个包含类别的整数向量：
 
-[PRE3]
+```r
+class(mnist$train$labels)
+#> [1] "integer"
+table(mnist$train$labels)
+#> 
+#>    0    1    2    3    4    5    6    7    8    9 
+#> 5923 6742 5958 6131 5842 5421 5918 6265 5851 5949
+```
 
 因为我们希望这个例子能在笔记本电脑上运行，并且在一小时内完成，所以我们将考虑数据集的一个子集。我们将从训练集中随机抽取 10,000 行，从测试集中随机抽取 1,000 行：
 
-[PRE4]
+```r
+set.seed(1990)
+index <- sample(nrow(mnist$train$images), 10000)
+x <- mnist$train$images[index,]
+y <- factor(mnist$train$labels[index])
+index <- sample(nrow(mnist$test$images), 1000)
+x_test <- mnist$test$images[index,]
+y_test <- factor(mnist$test$labels[index])
+```
 
 但您也可以尝试在整个数据集上应用这些想法。
 
 当将模型拟合到大型数据集时，我们建议使用矩阵而不是数据框，因为矩阵操作通常更快。在**caret**包中，预测矩阵必须具有列名，以便在测试集上的预测过程中准确跟踪特征。如果矩阵缺少列名，可以根据它们的位置分配名称：
 
-[PRE5]*****
+```r
+colnames(x) <- 1:ncol(mnist$train$images)
+colnames(x_test) <- colnames(x)
+```*****
 
 ## ***31.2 caret 包***
 
@@ -50,7 +77,12 @@ R 中拟合机器算法的函数都略有不同。例如，`lm`、`glm`、`qda`�
 
 *caret** 的 `train` 函数让我们可以使用类似的语法训练不同的算法。因此，例如，我们可以键入以下内容来训练三个不同的模型：
 
-[PRE6]
+```r
+library([caret](https://github.com/topepo/caret/))
+train_glm <- [train](https://rdrr.io/pkg/caret/man/train.html)(y ~ ., method = "glm", data = mnist_27$train)
+train_qda <- [train](https://rdrr.io/pkg/caret/man/train.html)(y ~ ., method = "qda", data = mnist_27$train)
+train_knn <- [train](https://rdrr.io/pkg/caret/man/train.html)(y ~ ., method = "knn", data = mnist_27$train)
+```
 
 正如我们在 第 31.2.3 节 中更详细地解释的那样，`train` 函数使用重采样方法为您选择参数，以估计 MSE，默认使用 bootstrap。
 
@@ -60,7 +92,10 @@ R 中拟合机器算法的函数都略有不同。例如，`lm`、`glm`、`qda`�
 
 这里有一个逻辑回归的例子：
 
-[PRE7]
+```r
+fit <- glm(y ~ ., family = "binomial", data = mnist_27$train)
+p_hat <- predict(fit, newdata = mnist_27$test)
+```
 
 在这种情况下，该函数只是简单地计算
 
@@ -68,13 +103,19 @@ $$ \hat{p}(\mathbf{x}) = g^{-1}\left(\hat{\beta}_0 + \hat{\beta}_1 x_1 + \hat{\b
 
 对于测试集 `mnist_27$test` 中的 `x_1` 和 `x_2`，有了这些估计值，我们可以做出预测并计算我们的准确率：
 
-[PRE8]
+```r
+y_hat <- factor(ifelse(p_hat > 0.5, 7, 2))
+```
 
 然而，请注意，`predict` 并不总是返回相同类型的对象；这取决于它应用的对象类型。要了解具体细节，您需要查看特定于所使用的拟合对象类型的帮助文件。
 
 `predict` 实际上是 R 中一种特殊类型的函数，称为 *泛型函数*。泛型函数根据接收到的对象类型调用其他函数。因此，如果 `predict` 接收到来自 `lm` 函数的对象，它将调用 `predict.lm`。如果它接收来自 `glm` 的对象，它将调用 `predict.glm`。如果拟合来自 `knn3`，它将调用 `predict.knn3`，依此类推。这些函数相似但不完全相同。您可以通过阅读帮助文件了解更多关于它们之间差异的信息：
 
-[PRE9]
+```r
+?predict.glm
+?predict.qda
+?predict.knn3
+```
 
 `predict` 函数有多个版本，许多机器学习算法定义了自己的 `predict` 函数。
 
@@ -82,29 +123,47 @@ $$ \hat{p}(\mathbf{x}) = g^{-1}\left(\hat{\beta}_0 + \hat{\beta}_1 x_1 + \hat{\b
 
 所有方法的代码看起来都一样：
 
-[PRE10]
+```r
+y_hat_glm <- predict(train_glm, mnist_27$test, type = "raw")
+y_hat_qda <- predict(train_qda, mnist_27$test, type = "raw")
+y_hat_knn <- predict(train_knn, mnist_27$test, type = "raw")
+```
 
 这使我们能够快速比较算法。例如，我们可以这样比较准确率：
 
-[PRE11]*****
+```r
+fits <- list(glm = train_glm, qda = train_qda, knn = train_knn)
+sapply(fits, function(fit) 
+ mean(predict(fit, mnist_27$test, type = "raw") == mnist_27$test$y))
+#>   glm   qda   knn 
+#> 0.775 0.815 0.835
+```*****
 
 ### ***重采样***
 
 **当算法包含一个调整参数时，`train`会自动使用重采样方法来估计均方误差（MSE）并在几个默认候选值之间进行选择。要找出哪些参数被优化，可以阅读**caret**手册²或研究以下输出的结果：
 
-[PRE12]
+```r
+[modelLookup](https://rdrr.io/pkg/caret/man/modelLookup.html)("knn")
+```
 
 要了解**caret**如何实现 kNN 的所有细节，可以使用以下方法：
 
-[PRE13]
+```r
+[getModelInfo](https://rdrr.io/pkg/caret/man/modelLookup.html)("knn")
+```
 
 如果我们使用默认值运行它：
 
-[PRE14]
+```r
+train_knn <- [train](https://rdrr.io/pkg/caret/man/train.html)(y ~ ., method = "knn", data = mnist_27$train)
+```
 
 你可以使用`ggplot`函数快速查看交叉验证的结果。`highlight`参数突出显示最大值：
 
-[PRE15]
+```r
+ggplot(train_knn, highlight = TRUE)
+```
 
 ![](img/dbcbb2b3b48881e8c09dc33c6a04459d.png)*  *默认情况下，重采样是通过取 25 个自助样本来进行的，每个样本包含 25%的观测值。
 
@@ -112,27 +171,50 @@ $$ \hat{p}(\mathbf{x}) = g^{-1}\left(\hat{\beta}_0 + \hat{\beta}_1 x_1 + \hat{\b
 
 在这里，我们提供了一个例子，我们尝试了 1 到 75 之间的 38 个值。要在**caret**中这样做，我们需要定义一个名为`k`的列，所以我们使用这个：`data.frame(k = seq(11, 105, 2))`。请注意，在运行此代码时，我们正在将 38 个 kNN 版本拟合到 25 个自助样本。由于我们正在拟合$38 \times 25 = 950$个 kNN 模型，运行此代码将需要几秒钟。
 
-[PRE16]
+```r
+train_knn <- [train](https://rdrr.io/pkg/caret/man/train.html)(y ~ ., method = "knn", 
+ data = mnist_27$train,
+ tuneGrid = data.frame(k = seq(11, 105, 4)))
+ggplot(train_knn, highlight = TRUE)
+```
 
 ![](img/7f714224b7cbe9315e50b5fb6ceaf5ee.png)*  **重采样方法涉及随机采样步骤，因此相同代码的重复运行可能会产生不同的结果。为了确保你的结果可以被精确复制，请在分析开始时始终设置随机种子，就像我们在本章开头所做的那样。*  *要访问最大化准确率的参数，可以使用以下方法：
 
-[PRE17]
+```r
+train_knn$bestTune
+#>     k
+#> 13 59
+```
 
 以及表现最好的模型如下：
 
-[PRE18]
+```r
+train_knn$finalModel
+```
 
 `predict`函数将使用这个表现最好的模型。以下是该模型在测试集上的准确率，我们尚未使用测试集，因为交叉验证是在训练集上进行的：
 
-[PRE19]
+```r
+mean(predict(train_knn, mnist_27$test, type = "raw") == mnist_27$test$y)
+#> [1] 0.825
+```
 
 自助法并不总是重采样的最佳方法（例如，参见第 31.5 节）。如果我们想更改我们的重采样方法，可以使用`trainControl`函数。例如，下面的代码运行了 10 折交叉验证。这意味着我们有 10 个样本，每个样本使用 90%的观测值进行训练。我们使用以下代码实现这一点：
 
-[PRE20]
+```r
+control <- [trainControl](https://rdrr.io/pkg/caret/man/trainControl.html)(method = "cv", number = 10, p = .9)
+train_knn_cv <- [train](https://rdrr.io/pkg/caret/man/train.html)(y ~ ., method = "knn", 
+ data = mnist_27$train,
+ tuneGrid = data.frame(k = seq(11, 105, 4)),
+ trControl = control)
+```
 
 *`train`输出的`results`组件包括与交叉验证估计的变异性相关的几个汇总统计量：
 
-[PRE21]
+```r
+names(train_knn$results)
+#> [1] "k"          "Accuracy"   "Kappa"      "AccuracySD" "KappaSD"
+```
 
 你可以从手册³中了解更多关于**caret**包的详细信息。******************
 
@@ -144,17 +226,24 @@ $$ \hat{p}(\mathbf{x}) = g^{-1}\left(\hat{\beta}_0 + \hat{\beta}_1 x_1 + \hat{\b
 
 例如，我们可以运行 **caret** 包中的 `nearZeroVar` 函数，以查看有几个特征在观测之间变化不大。我们可以看到有大量特征接近于 0 的变异性：
 
-[PRE22]
+```r
+library([matrixStats](https://github.com/HenrikBengtsson/matrixStats))
+hist([colSds](https://rdrr.io/pkg/matrixStats/man/rowSds.html)(x), breaks = 256)
+```
 
 ![](img/4bdff4256010dca8944dfe28e6f4037b.png)*  *这是预期的，因为图像中有一部分很少包含文字（暗像素）。
 
 *caret** 包包括一个推荐移除因 *接近零变异* 而应移除特征的函数：
 
-[PRE23]
+```r
+nzv <- [nearZeroVar](https://rdrr.io/pkg/caret/man/nearZeroVar.html)(x)
+```
 
 我们可以看到建议移除的列靠近边缘：
 
-[PRE24]
+```r
+image(matrix(1:784 %in% nzv, 28, 28))
+```
 
 ![](img/cb94ae40377774c4a3a9706da36d072c.png)*  *因此，我们最终移除了 `length(nzv)` = 532 个预测变量。
 
@@ -162,7 +251,12 @@ $$ \hat{p}(\mathbf{x}) = g^{-1}\left(\hat{\beta}_0 + \hat{\beta}_1 x_1 + \hat{\b
 
 下面是一个示例，演示了如何移除接近零变异的预测变量，然后对剩余的预测变量进行中心化：
 
-[PRE25]
+```r
+pp <- preProcess](https://rdrr.io/pkg/caret/man/preProcess.html)(x, method = [c("nzv", "center"))
+centered_subsetted_x_test <- predict(pp, newdata = x_test)
+dim(centered_subsetted_x_test)
+#> [1] 1000  252
+```
 
 此外，**caret** 中的 `train` 函数包括一个 `preProcess` 参数，允许用户指定在模型训练期间自动应用哪些预处理步骤。我们将在第 31.5 节中进一步探讨这一功能。*********
 
@@ -172,11 +266,19 @@ $$ \hat{p}(\mathbf{x}) = g^{-1}\left(\hat{\beta}_0 + \hat{\beta}_1 x_1 + \hat{\b
 
 *caret** 包旨在利用并行处理，但您需要明确告诉 R 并行运行任务。为此，我们使用 **doParallel** 包：
 
-[PRE26]
+```r
+library([doParallel](https://github.com/RevolutionAnalytics/doparallel))
+nc <- detectCores() - 1   # it is convention to leave 1 core for the OS
+cl <- makeCluster(nc)
+[registerDoParallel](https://rdrr.io/pkg/doParallel/man/registerDoParallel.html)(cl)
+```
 
 如果你使用并行化，一旦你完成模型的拟合，请确保使用以下代码让 R 知道你已经完成：
 
-[PRE27]
+```r
+stopCluster(cl)
+[stopImplicitCluster](https://rdrr.io/pkg/doParallel/man/registerDoParallel.html)()
+```
 
 *当在多个处理器之间并行化任务时，考虑内存耗尽的风险是很重要的。每个处理器可能需要数据的副本或其大部分，这可能会使整体内存需求成倍增加。如果数据或模型很大，这尤其具有挑战性。********
 
@@ -192,15 +294,25 @@ $$ \hat{p}(\mathbf{x}) = g^{-1}\left(\hat{\beta}_0 + \hat{\beta}_1 x_1 + \hat{\b
 
 第一步是优化 $k$。
 
-[PRE28]
+```r
+train_knn <- [train](https://rdrr.io/pkg/caret/man/train.html)(x, y, method = "knn", 
+ preProcess = "nzv",
+ trControl = [trainControl](https://rdrr.io/pkg/caret/man/trainControl.html)("cv", number = 20, p = 0.95),
+ tuneGrid = data.frame(k = seq(1, 7, 2)))
+```
 
 一旦我们优化了我们的算法，`predict`函数默认使用与整个训练数据拟合的最佳性能算法：
 
-[PRE29]
+```r
+y_hat_knn <- predict(train_knn, x_test, type = "raw")
+```
 
 我们实现了相对较高的准确率：
 
-[PRE30]**
+```r
+mean(y_hat_knn == y_test)
+#> [1] 0.953
+```**
 
 ### ***使用 PCA 进行降维***
 
@@ -208,21 +320,32 @@ $$ \hat{p}(\mathbf{x}) = g^{-1}\left(\hat{\beta}_0 + \hat{\beta}_1 x_1 + \hat{\b
 
 例如，假设我们想要保留至少解释 90%变异性的最小 PC 数量：
 
-[PRE31]
+```r
+pca <- prcomp(x)
+p <- which(cumsum(pca$sdev²) / sum(pca$sdev²) >= 0.9)[1]
+```
 
 现在我们可以仅使用这些 87 个转换特征重新运行我们的算法：
 
-[PRE32]
+```r
+fit_knn_pca <- [knn3](https://rdrr.io/pkg/caret/man/knn3.html)(pca$x[, 1:p], y, k = train_knn$bestTune)
+```
 
 使用 PCA 进行预测的一个关键点是，PCA 变换必须仅从训练集中学习。如果我们使用验证集或测试集来计算主成分，甚至用于中心化的均值，我们无意中将从这些集中泄露信息到训练过程中，导致过拟合。
 
 为了避免这种情况，我们在训练集上计算必要的中心化和旋转矩阵：
 
-[PRE33]
+```r
+newdata <- sweep(x_test, 2, colMeans(x)) %*% pca$rotation[, 1:p]
+y_hat_knn_pca <- predict(fit_knn_pca, newdata, type = "class")
+```
 
 得到的准确度与使用完整特征集得到的相似，但只使用了 87 个维度：
 
-[PRE34]
+```r
+mean(y_hat_knn_pca == y_test)
+#> [1] 0.954
+```
 
 在这个例子中，我们使用了针对原始数据优化的 $k$ 值，而不是 PCA 变换后的数据。为了在使用 PCA 时获得无偏的 MSE 估计，我们必须在每个交叉验证分割中重新计算 PCA，并将结果变换应用于相应的验证折叠。
 
@@ -236,7 +359,16 @@ $$ \hat{p}(\mathbf{x}) = g^{-1}\left(\hat{\beta}_0 + \hat{\beta}_1 x_1 + \hat{\b
 
 这里是如何修改我们之前的代码，让 caret 在预处理期间执行 PCA：
 
-[PRE35]
+```r
+train_knn_pca <- [train](https://rdrr.io/pkg/caret/man/train.html)(x, y, method = "knn", 
+ preProcess = c("nzv", "pca"),
+ trControl = [trainControl](https://rdrr.io/pkg/caret/man/trainControl.html)("cv", number = 20, p = 0.95,
+ preProcOptions = list(thresh = 0.9)),
+ tuneGrid = data.frame(k = seq(1, 7, 2)))
+y_hat_knn_pca <- predict(train_knn_pca, x_test, type = "raw")
+mean(y_hat_knn_pca == y_test)
+#> [1] 0.955
+```
 
 这引发了一个自然的问题：我们为什么选择了 0.9？另一个阈值是否会带来更好的性能？
 
@@ -246,15 +378,26 @@ $$ \hat{p}(\mathbf{x}) = g^{-1}\left(\hat{\beta}_0 + \hat{\beta}_1 x_1 + \hat{\b
 
 *使用随机森林算法，可以优化多个参数，但主要的一个是 `mtry`，即每个树随机选择的预测因子数量。这也是** caret **函数 `train` 在使用 **randomForest** 包的默认实现时允许的唯一调整参数**。
 
-[PRE36]
+```r
+library([randomForest](https://www.stat.berkeley.edu/~breiman/RandomForests/))
+train_rf <- [train](https://rdrr.io/pkg/caret/man/train.html)(x, y, method = "rf", 
+ preProcess = "nzv",
+ tuneGrid = data.frame(mtry = seq(5, 15)))
+y_hat_rf <- predict(train_rf, x_test, type = "raw")
+```
 
 现在我们已经优化了我们的算法，我们准备拟合我们的最终模型：
 
-[PRE37]
+```r
+y_hat_rf <- predict(train_rf, x_test, type = "raw")
+```
 
 与 kNN 一样，我们也实现了高准确度：
 
-[PRE38]
+```r
+mean(y_hat_rf == y_test)
+#> [1] 0.956
+```
 
 通过优化其他一些算法参数，我们可以实现更高的准确度。
 
@@ -262,7 +405,12 @@ $$ \hat{p}(\mathbf{x}) = g^{-1}\left(\hat{\beta}_0 + \hat{\beta}_1 x_1 + \hat{\b
 
 `train` 函数用于估计准确度的默认方法是测试 25 个自助样本的预测。这可能会导致计算时间较长。例如，如果我们正在考虑几个调整参数的值，比如 10，那么我们将拟合算法 250 次。我们可以使用 `system.time` 函数来估计运行算法一次需要多长时间：
 
-[PRE39]
+```r
+nzv <- [nearZeroVar](https://rdrr.io/pkg/caret/man/nearZeroVar.html)(x)
+system.time({fit_rf <- [randomForest](https://rdrr.io/pkg/randomForest/man/randomForest.html)(x[, -nzv], y,  mtry = 9)})
+#>    user  system elapsed 
+#>  61.657   0.598  62.356
+```
 
 并使用此来估计 250 次迭代的总时间。在这种情况下，它将是几个小时。
 
@@ -272,7 +420,9 @@ $$ \hat{p}(\mathbf{x}) = g^{-1}\left(\hat{\beta}_0 + \hat{\beta}_1 x_1 + \hat{\b
 
 这里我们可以看到，错误率在大约 200 棵树后稳定下来：
 
-[PRE40]
+```r
+plot(fit_rf)
+```
 
 ![](img/a174dc0673d92642c2676fb34be527d5.png)* *我们可以利用这个发现来加速交叉验证过程。具体来说，因为默认值是 500，通过在上面的`train`调用中添加`ntree = 200`参数，该过程将快 2.5 倍。**
 
@@ -280,11 +430,17 @@ $$ \hat{p}(\mathbf{x}) = g^{-1}\left(\hat{\beta}_0 + \hat{\beta}_1 x_1 + \hat{\b
 
 *我们在第 30.5.1 节中描述了变量重要性。以下函数计算每个特征的重要性：
 
-[PRE41]
+```r
+imp <- [varImp](https://rdrr.io/pkg/caret/man/varImp.html)(fit_rf)
+```
 
 我们可以通过绘制图像来查看哪些特征被使用得最多：
 
-[PRE42]
+```r
+mat <- rep(0, ncol(x))
+mat[-nzv] <- imp$Overall
+image(matrix(mat, 28, 28))
+```
 
 ![](img/86d369848a13b2715debfff80c0fe776.png)***********
 
@@ -304,7 +460,15 @@ $$ \hat{p}(\mathbf{x}) = g^{-1}\left(\hat{\beta}_0 + \hat{\beta}_1 x_1 + \hat{\b
 
 这里有一个简单的例子，我们通过取随机森林和 kNN 的平均值来计算新的类概率。我们可以看到，准确率提高了：
 
-[PRE43]
+```r
+p_rf <- predict(fit_rf, x_test[,-nzv], type = "prob") 
+p_rf <- p_rf / rowSums(p_rf)
+p_knn_pca  <- predict(train_knn_pca, x_test, type = "prob")
+p <- (p_rf + p_knn_pca)/2
+y_pred <- factor(apply(p, 1, which.max) - 1)
+mean(y_pred == y_test)
+#> [1] 0.963
+```
 
 我们刚刚只用两种算法构建了一个集成。通过结合更多表现相似但相互独立的算法，我们可以进一步提高准确性。*****
 
@@ -312,7 +476,13 @@ $$ \hat{p}(\mathbf{x}) = g^{-1}\left(\hat{\beta}_0 + \hat{\beta}_1 x_1 + \hat{\b
 
 ***1. 创建一个简单的数据集，其中结果在预测变量每增加 0.75 个单位时平均增长：
 
-[PRE44]
+```r
+n <- 1000
+sigma <- 0.25
+x <- rnorm(n, 0, 1)
+y <- 0.75 * x + rnorm(n, 0, sigma)
+dat <- data.frame(x = x, y = y)
+```
 
 在第三十章的练习中，我们看到了在`randomForest`函数中更改`maxnodes`或`nodesize`可以改进这个数据集的估计。让我们使用`train`函数来帮助我们选择这些值。从**caret**手册中我们可以看到，我们无法使用`randomForest`调整`maxnodes`参数或`nodesize`参数，因此我们将使用**Rborist**包并调整`minNode`参数。使用`train`函数尝试`minNode <- seq(5, 250, 25)`的值。查看哪个值可以最小化估计的 RMSE。
 
@@ -320,11 +490,16 @@ $$ \hat{p}(\mathbf{x}) = g^{-1}\left(\hat{\beta}_0 + \hat{\beta}_1 x_1 + \hat{\b
 
 3. 这个**dslabs** `tissue_gene_expression`数据集包括一个矩阵`x`：
 
-[PRE45]
+```r
+library(dslabs)
+dim(tissue_gene_expression$x)
+```
 
 使用在 500 个基因上测量 189 个生物样本的基因表达。组织类型存储在`y`中：
 
-[PRE46]
+```r
+table(tissue_gene_expression$y)
+```
 
 将数据分为训练集和测试集，然后使用 kNN 预测组织类型并查看你获得的准确率。尝试$k = 1, 3, \dots, 11$。
 
@@ -332,7 +507,14 @@ $$ \hat{p}(\mathbf{x}) = g^{-1}\left(\hat{\beta}_0 + \hat{\beta}_1 x_1 + \hat{\b
 
 创建一个仅包含`cerebellum`和`hippocampus`（大脑的两个部分）类和一个包含 10 个随机选择列的预测矩阵的数据集。
 
-[PRE47]
+```r
+set.seed(1993)
+tissues <- c("cerebellum", "hippocampus")
+ind <- which(tissue_gene_expression$y %in% tissues)
+y <- droplevels(tissue_gene_expression$y[ind])
+x <- tissue_gene_expression$x[ind, ]
+x <- x, [sample(ncol(x), 10)]
+```
 
 估计 LDA 的准确率。
 
@@ -348,7 +530,12 @@ $$ \hat{p}(\mathbf{x}) = g^{-1}\left(\hat{\beta}_0 + \hat{\beta}_1 x_1 + \hat{\b
 
 10. 现在我们将稍微增加挑战的复杂性：我们将考虑所有组织类型。
 
-[PRE48]
+```r
+set.seed(1993)
+y <- tissue_gene_expression$y
+x <- tissue_gene_expression$x
+x <- x, [sample(ncol(x), 10)]
+```
 
 使用 LDA 能得到多少准确率？
 
@@ -358,7 +545,9 @@ $$ \hat{p}(\mathbf{x}) = g^{-1}\left(\hat{\beta}_0 + \hat{\beta}_1 x_1 + \hat{\b
 
 13. 使用`rpart`函数将分类树拟合到包含所有基因的`tissue_gene_expression`数据集，即重新定义
 
-[PRE49]
+```r
+x <- tissue_gene_expression$x
+```
 
 使用`train`函数估计准确率。尝试`cp`值为`seq(0, 0.05, 0.01)`。绘制准确率以报告最佳模型的结果。
 
@@ -374,7 +563,14 @@ $$ \hat{p}(\mathbf{x}) = g^{-1}\left(\hat{\beta}_0 + \hat{\beta}_1 x_1 + \hat{\b
 
 19. 在练习 15 中运行的`rpart`模型产生了一个只使用了少数预测因子的树。提取预测因子名称并不直接，但可以做到。如果`train`调用的输出是`fit_rpart`，我们可以这样提取名称：
 
-[PRE50]
+```r
+ind <- !(fit_rpart$finalModel$frame$var == "<leaf>")
+tree_terms <- 
+ fit_rpart$finalModel$frame$var[ind] |>
+ unique() |>
+ as.character()
+tree_terms
+```
 
 对于这些预测因子，随机森林调用中的变量重要性是什么？它们排名如何？
 
@@ -382,17 +578,32 @@ $$ \hat{p}(\mathbf{x}) = g^{-1}\left(\hat{\beta}_0 + \hat{\beta}_1 x_1 + \hat{\b
 
 21. 在第三十章中，对于 2 或 7 的示例，我们通过绘制图像来比较给定两个预测因子 $\mathbf{x} = (x_1, x_2)^\top$ 的条件概率 $p(\mathbf{x})$ 与使用机器学习算法得到的拟合 $\hat{p}(\mathbf{x})$。以下代码可以用来生成这些图像，并在 $x_1$ 和 $x_2$ 的函数值为 $0.5$ 的点上绘制曲线：
 
-[PRE51]
+```r
+plot_cond_prob <- function(x_1, x_2, p){
+ data.frame(x_1 = x_1, x_2 = x_2, p = p) |>
+ ggplot(aes(x_1, x_2)) +
+ geom_raster(aes(fill = p), show.legend = FALSE) +
+ stat_contour(aes(z = p), breaks = 0.5, color = "black") +
+ scale_fill_gradientn](https://ggplot2.tidyverse.org/reference/scale_gradient.html)(colors = [c("#F8766D", "white", "#00BFC4"))
+}
+```
 
 我们可以这样看到 2 或 7 示例的真实条件概率：
 
-[PRE52]
+```r
+with(mnist_27$true_p, plot_cond_prob(x_1, x_2, p))
+```
 
 将 kNN 模型拟合并绘制估计的条件概率图。提示：使用`newdata = mnist_27$train`参数来获取网格点的预测结果。
 
 22. 注意，在练习 21 中制作的图中，边界有些曲折。这是因为 kNN，就像基本的二进制平滑器一样，不使用核。为了改进这一点，我们可以尝试使用 loess。通过阅读**caret**手册中可用的模型部分，我们看到我们可以使用`gamLoess`方法。如果我们还没有安装，我们需要安装**gam**包。我们看到我们有两个参数需要优化：
 
-[PRE53]
+```r
+[modelLookup](https://rdrr.io/pkg/caret/man/modelLookup.html)("gamLoess")
+#>      model parameter  label forReg forClass probModel
+#> 1 gamLoess      span   Span   TRUE     TRUE      TRUE
+#> 2 gamLoess    degree Degree   TRUE     TRUE      TRUE
+```
 
 使用重采样选择介于 0.15 和 0.75 之间的跨度。保持`degree = 1`。选择了哪个跨度？
 
@@ -402,7 +613,14 @@ $$ \hat{p}(\mathbf{x}) = g^{-1}\left(\hat{\beta}_0 + \hat{\beta}_1 x_1 + \hat{\b
 
 这里是一个你可以尝试的模型名称向量：
 
-[PRE54]
+```r
+models <- c(
+ "glm", "lda", "naive_bayes", "svmLinear", "gamboost",
+ "gamLoess", "qda", "knn", "kknn", "loclda", "gam", "rf",
+ "ranger", "wsrf", "Rborist", "avNNet", "mlp", "monmlp",
+ "gbm", "adaboost", "svmRadial", "svmRadialCost", "svmRadialSigma"
+)
+```
 
 使用默认的调整参数使用`[train()](https://rdrr.io/pkg/caret/man/train.html)`拟合每个模型，并将拟合的模型对象保存在一个列表中。你可能需要根据你尝试的模型安装额外的包，并且一些模型将产生警告——这是预期的。
 
@@ -422,7 +640,10 @@ $$ \hat{p}(\mathbf{x}) = g^{-1}\left(\hat{\beta}_0 + \hat{\beta}_1 x_1 + \hat{\b
 
 32. 注意，每个方法也可以产生一个估计的条件概率。我们可以取这些估计的条件概率的平均值，而不是多数投票。对于大多数方法，我们可以在`train`函数中使用`type = "prob"`。注意，一些方法在调用`train`时需要使用`trControl=trainControl(classProbs=TRUE)`参数。此外，如果类别有数字作为名称，这些方法将不起作用。提示：像这样更改级别：
 
-[PRE55]
+```r
+dat$train$y <- recode_factor(dat$train$y, "2"="two", "7"="seven")
+dat$test$y <- recode_factor(dat$test$y, "2"="two", "7"="seven")
+```
 
 33. 在本章中，我们在 MNIST 数据集的一个子集上展示了几个机器学习算法。尝试将模型拟合到整个数据集上。****************
 

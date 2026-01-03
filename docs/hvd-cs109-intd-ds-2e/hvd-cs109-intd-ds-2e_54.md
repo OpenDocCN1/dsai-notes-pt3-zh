@@ -38,27 +38,51 @@
 
 可以使用蒙特卡洛模拟来展示数据挖掘如何导致在非相关变量中找到高相关性。我们将把我们的模拟结果保存到 tibble 中：
 
-[PRE0]
+```r
+library(data.table)
+library([ggplot2](https://ggplot2.tidyverse.org))
+N <- 25
+g <- 1000000
+sim_data <- data.table(group = rep(1:g, each = N), x = rnorm(N*g), y = rnorm(N*g))
+```
 
 注意我们创建了组，并为每个组生成了一对独立的向量，$X$和$Y$，每个向量有 25 个观测值。因为我们构建了模拟，所以我们知道$X$和$Y$是不相关的。
 
 接下来，我们计算每个组中$X$和$Y$之间的相关性并寻找最大值：
 
-[PRE1]
+```r
+res <- sim_data, .(r = [cor(x, y)), by = group][order(-r)]
+max(res$r)
+#> [1] 0.814
+```
 
 我们看到了最大相关性为 0.81。如果你只绘制实现这一相关性的组的数据，它将显示一个令人信服的图表，表明$X$和$Y$实际上相关：
 
-[PRE2]
+```r
+sim_datagroup == res[[which.max(r), group]] |>
+ ggplot(aes(x, y)) +
+ geom_point() + 
+ geom_smooth(formula = 'y ~ x', method = "lm")
+```
 
 ![](img/f51ed488ad887be723d81f49d219e3a8.png)*  *记住，相关性总结是一个随机变量。以下是蒙特卡洛模拟生成的分布：
 
-[PRE3]
+```r
+res |> ggplot(aes(x = r)) + geom_histogram(binwidth = 0.1, color = "black")
+```
 
 ![](img/83f4291d50ab918bfe149bdab69526e0.png)*  *这是一个简单的数学事实：如果我们观察 100 万个预期为 0 但标准误差为 0.2 的随机相关性，最大的一个将接近 1。
 
 如果我们对这个组进行回归并解释 p 值，我们会错误地声称这是一个具有统计学意义的关联：
 
-[PRE4]
+```r
+library([broom](https://broom.tidymodels.org/))
+sim_datagroup == res[[which.max(r), group], broom::tidy](https://generics.r-lib.org/reference/tidy.html)([lm(y ~ x))][2,]
+#> # A tibble: 1 × 5
+#>   term  estimate std.error statistic     p.value
+#>   <chr>    <dbl>     <dbl>     <dbl>       <dbl>
+#> 1 x        0.794     0.118      6.73 0.000000732
+```
 
 这种被称为 p-hacking 的实践被广泛讨论，因为它可能会损害科学发现的可靠性。由于期刊通常更倾向于统计显著的结果而非无结果，研究人员有动力强调显著性。例如，在流行病学和社会科学等领域，分析师可能会探索结果与许多暴露之间的关联，但只报告那些具有较小 p 值的一个。同样，他们可能会尝试几种模型规格来调整混杂因素并选择给出最强结果的一个。在实验设置中，一项研究可能会重复多次，但只报告“成功”的运行。这些做法并不总是故意的违规行为；它们通常源于有限的统计理解或一厢情愿的思考。更高级的统计学课程涵盖了调整分析以考虑这些多重比较的方法。*****
 
@@ -66,31 +90,53 @@
 
 **假设我们测量两个独立的结果，$X$和$Y$，并对每一组测量进行标准化。现在想象一下，我们犯了一个错误，忘记对其中一个值进行标准化，比如说第 23 个条目。我们可以通过以下模拟数据来展示这种情况：
 
-[PRE5]
+```r
+set.seed(1985)
+x <- rnorm(100, 100, 1)
+y <- rnorm(100, 84, 1)
+x-23] <- [scale(x[-23])
+y-23] <- [scale(y[-23])
+```
 
 数据看起来是这样的：
 
-[PRE6]
+```r
+plot(x, y)
+```
 
 ![](img/f9a27f8f7b5aa555d9c6bade872ad6b6.png)*  *不出所料，相关性非常高：
 
-[PRE7]
+```r
+cor(x,y)
+#> [1] 0.988
+```
 
 但是，这是由一个异常值驱动的。如果我们移除这个异常值，相关性会大大降低，几乎接近于 0，这正是它应有的样子：
 
-[PRE8]
+```r
+cor(x[-23], y[-23])
+#> [1] -0.0442
+```
 
 对于估计对异常值稳健的总体相关性，存在一种不同于样本相关性的方法。它被称为*斯皮尔曼相关系数*。其思想很简单：计算值的排名之间的相关性。以下是排名相互之间绘制的图：
 
-[PRE9]
+```r
+plot(rank(x), rank(y))
+```
 
 ![](img/d229b1110b0b179afc3cc6905c7fff02.png)*  *异常值不再与一个非常大的值相关联，相关性显著降低：
 
-[PRE10]
+```r
+cor(rank(x), rank(y))
+#> [1] 0.00251
+```
 
 斯皮尔曼相关系数也可以这样计算：
 
-[PRE11]
+```r
+cor(x, y, method = "spearman")
+#> [1] 0.00251
+```
 
 *虽然斯皮尔曼相关系数受异常值的影响较小，但这种稳健性是有代价的。因为它依赖于排名而不是实际值，所以对变量之间细微的线性关系不太敏感。因此，当确实存在但程度适中的相关性时，斯皮尔曼估计可能比皮尔逊相关系数更接近于零。在实践中，皮尔逊相关系数在检测没有异常值的数据中的真实线性关联时更有效，而斯皮尔曼相关系数在存在异常值或非线性单调关系时更受欢迎。** * *在推荐阅读部分，我们包括了关于对异常值稳健且适用于广泛情况的估计技术的参考文献。***********
 
@@ -110,7 +156,13 @@ $$ X = \beta_0 + \beta_1 y + \varepsilon $$
 
 到父亲-儿子身高数据中，其中 $X$ 和 $y$ 分别代表父亲和儿子的身高。在这里因果性地解释 $\beta_1$ 是倒退的，因为它会暗示儿子的身高决定了父亲的身高。使用先前定义的 `galton` 数据集，我们确实得到了一个具有统计学意义的斜率，这表明统计显著性并不等同于因果关系或正确的效应方向。
 
-[PRE12]
+```r
+tidy](https://generics.r-lib.org/reference/tidy.html)([lm(father ~ son, data = galton))[2,]
+#> # A tibble: 1 × 5
+#>   term  estimate std.error statistic       p.value
+#>   <chr>    <dbl>     <dbl>     <dbl>         <dbl>
+#> 1 son      0.407    0.0636      6.40 0.00000000136
+```
 
 该模型与数据拟合得非常好，估计值、标准误差和 p 值都正确地显示了儿子身高与父亲身高之间存在关联。然而，如果我们只看其数学公式，它很容易被误解为暗示儿子的身高导致了父亲的身高。根据我们对遗传学和生物学的了解，我们知道影响的方向是相反的。统计模型本身并没有错误，我们也没有编码错误。这里误导的是解释，而不是模型或计算。*****
 
@@ -126,11 +178,32 @@ $$ X = \beta_0 + \beta_1 y + \varepsilon $$
 
 1973 年从加州大学伯克利分校六个专业的入学数据中显示，男性被录取的人数多于女性：男性录取率为 44%，女性为 30%³。我们可以加载数据并计算一个统计检验，这明显拒绝了性别和录取独立性的假设：
 
-[PRE13]
+```r
+library([dplyr](https://dplyr.tidyverse.org))
+two_by_two <- admissions |> group_by(gender) |> 
+ summarize(total_admitted = round(sum(admitted / 100 * applicants)), 
+ not_admitted = sum(applicants) - sum(total_admitted)) |>
+ select(-gender) 
+chisq.test(two_by_two)$p.value
+#> [1] 1.06e-21
+```
 
 但更仔细的检查显示了一个矛盾的结果。以下是按专业划分的入学百分比：
 
-[PRE14]
+```r
+admissions |> select(major, gender, admitted) |>
+ pivot_wider(names_from = "gender", values_from = "admitted") |>
+ mutate(women_minus_men = women - men) |> print(n = 6)
+#> # A tibble: 6 × 4
+#>   major   men women women_minus_men
+#>   <chr> <dbl> <dbl>           <dbl>
+#> 1 A        62    82              20
+#> 2 B        63    68               5
+#> 3 C        37    34              -3
+#> 4 D        33    35               2
+#> 5 E        28    24              -4
+#> 6 F         6     7               1
+```
 
 对于六个专业中的五个，差异很小，专业 A 倾向于女性。更重要的是，这些差异都远远小于在查看总体总数时观察到的男性 14.2 分的优势。
 
@@ -138,11 +211,20 @@ $$ X = \beta_0 + \beta_1 y + \varepsilon $$
 
 发现混杂因子，以及理解它们如何导致误导性结论，通常需要探索性数据分析和分析性思维。查看上表，我们注意到不同专业之间的入学率存在很大的差异。这会不会影响整体结果？为了调查，我们在入学表中添加了一个 *选择性* 列，即每个专业内的整体入学率。
 
-[PRE15]
+```r
+admissions <- group_by(admissions, major) |>
+ summarize(selectivity = sum(admitted*applicants/100)/sum(applicants)) |>
+ right_join(admissions, by = "major")
+```
 
 接下来，我们考察申请人数与专业选择性之间的关系。如果选择性是一个混杂因素，那么不同选择性的专业之间可能存在性别差异的模式。
 
-[PRE16]
+```r
+admissions |>
+ ggplot(aes(selectivity, applicants, label = major)) +
+ geom_text() +
+ facet_wrap(~gender) 
+```
 
 ![](img/b3292ebaa2fb64cd85dd5ad9cf58dd80.png)*  *我们可以立即看到关键问题：女性向不那么选择性的专业（A 和 B）提交的申请远远少于男性。因此，系部选择性是一个影响性别（不同的申请模式）和录取结果的双重混杂因素。***
 
@@ -152,7 +234,10 @@ $$ X = \beta_0 + \beta_1 y + \varepsilon $$
 
 这里有一个例子，我们按专业进行分层绘制录取情况，并显示女性倾向于申请更选择性的专业：***
 
-[PRE17]
+```r
+admissions |> ggplot(aes(major, admitted, col = gender, size = applicants)) + 
+ geom_point()
+```
 
 ![](img/2784bc5e7767a31f8a5cf5b76e281176.png)*  *我们看到，按专业划分，性别之间的录取率没有太大差异。然而，大量男性申请专业 B，该专业录取超过 60%的申请者，导致整体比较出现混淆。这个图表表明，需要更复杂的分析来调整专业因素。我们将在下一章学习如何进行这种分析，在第二十章。***
 
@@ -192,7 +277,10 @@ $$ X = \beta_0 + \beta_1 y + \varepsilon $$
 
 1. 原始论文结论的主要证据依赖于百分比的比较。论文中的表 S1 包含了我们需要的信息：
 
-[PRE18]
+```r
+library(dslabs)
+research_funding_rates
+```
 
 构建用于关于性别奖项差异结论的二维表。
 

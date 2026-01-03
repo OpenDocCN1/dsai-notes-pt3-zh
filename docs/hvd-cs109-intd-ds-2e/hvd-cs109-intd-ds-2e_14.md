@@ -22,7 +22,21 @@ Hans Rosling 以他独特的方式传达了基于实际数据趋势，使用有�
 
 为了回答这些问题，我们将使用 **dslabs** 中提供的 `gapminder` 数据集。这个数据集是使用来自 Gapminder Foundation 的多个电子表格创建的。你可以这样访问表格：
 
-[PRE0]
+```r
+library([tidyverse](https://tidyverse.tidyverse.org))
+library(dslabs)
+gapminder |> as_tibble()
+#> # A tibble: 10,545 × 9
+#>   country     year infant_mortality life_expectancy fertility population
+#>   <fct>      <int>            <dbl>           <dbl>     <dbl>      <dbl>
+#> 1 Albania     1960            115\.             62.9      6.19    1636054
+#> 2 Algeria     1960            148\.             47.5      7.65   11124892
+#> 3 Angola      1960            208              36.0      7.32    5270844
+#> 4 Antigua a…  1960             NA              63.0      4.43      54681
+#> 5 Argentina   1960             59.9            65.4      3.11   20619075
+#> # ℹ 10,540 more rows
+#> # ℹ 3 more variables: gdp <dbl>, continent <fct>, region <fct>
+```
 
 正如在 *关于贫困的新见解* 视频中所做的那样，我们首先测试我们对不同国家儿童死亡率差异的知识。对于下面六个国家配对中的每一个，你认为哪个国家在 2015 年的儿童死亡率最高？你认为哪一对最相似？*
 
@@ -40,7 +54,14 @@ Hans Rosling 以他独特的方式传达了基于实际数据趋势，使用有�
 
 要用数据**回答这些问题**，我们可以使用**dplyr**。例如，对于第一次比较，我们看到：
 
-[PRE1]
+```r
+gapminder |> 
+ filter(year == 2015 & country %in% c("Sri Lanka","Turkey")) |> 
+ select(country, infant_mortality)
+#>     country infant_mortality
+#> 1 Sri Lanka              8.4
+#> 2    Turkey             11.6
+```
 
 土耳其的婴儿死亡率较高。
 
@@ -64,7 +85,11 @@ Hans Rosling 以他独特的方式传达了基于实际数据趋势，使用有�
 
 为了分析这种世界观，我们的第一个图是寿命与生育率（每名女性的平均子女数）的散点图。我们首先查看大约 50 年前的数据，那时这种观点可能首次在我们脑海中根深蒂固。
 
-[PRE2]
+```r
+filter(gapminder, year == 1962) |>
+ ggplot(aes(fertility, life_expectancy)) +
+ geom_point()
+```
 
 ![](img/c4a1702fc6d07160280a120f299db599.png)*  *大多数观点可以分为两个截然不同的类别：
 
@@ -74,7 +99,11 @@ Hans Rosling 以他独特的方式传达了基于实际数据趋势，使用有�
 
 为了确认这些国家确实是我们预期的地区，我们可以用颜色来代表大洲。
 
-[PRE3]
+```r
+filter(gapminder, year == 1962) |>
+ ggplot( aes(fertility, life_expectancy, color = continent)) +
+ geom_point() 
+```
 
 ![](img/1dd8cf9e23050ee91380d6b717c3988e.png)*  *1962 年，“西方与发展中国家”的观点在某种程度上是现实的。50 年后，情况是否仍然如此？**** 
 
@@ -84,11 +113,21 @@ Hans Rosling 以他独特的方式传达了基于实际数据趋势，使用有�
 
 要实现分面，我们添加一个带有`facet_grid`函数的层，该函数自动分离图表。这个函数允许你通过列表示一个变量和行表示另一个变量，使用最多两个变量进行分面。该函数期望行和列变量由一个`~`分隔。以下是一个添加了`facet_grid`作为最后一层的散点图的示例：
 
-[PRE4]
+```r
+filter(gapminder, year %in% c(1962, 2012)) |>
+ ggplot(aes(fertility, life_expectancy, col = continent)) +
+ geom_point() +
+ facet_grid(year~continent)
+```
 
 ![](img/6efbff95215eefb7b50c44ed75812fcd.png)*  *我们看到了每个大陆/年份对的图。然而，这只是一个例子，比我们想要的要多，我们想要的只是比较 1962 年和 2012 年。在这种情况下，只有一个变量，我们使用`.`让分面知道我们不是使用第二个变量：
 
-[PRE5]
+```r
+filter(gapminder, year %in% c(1962, 2012)) |>
+ ggplot(aes(fertility, life_expectancy, col = continent)) +
+ geom_point() +
+ facet_grid(. ~ year)
+```
 
 ![](img/838c00a177bdd5429c830bbe4179c979.png)*  *这个图清楚地表明，大多数国家已经从*发展中国家*集群移动到*西方国家*集群。到 2012 年，西方与发展中国家的观点已经不再适用。当比较欧洲和亚洲时，这一点尤其明显，后者包括几个取得了巨大进步的国家。
 
@@ -96,7 +135,15 @@ Hans Rosling 以他独特的方式传达了基于实际数据趋势，使用有�
 
 为了探索这种转变是如何逐年发生的，我们可以绘制几个年份的图。例如，我们可以添加 1970 年、1980 年、1990 年和 2000 年。如果我们这样做，我们不会希望所有图都在同一行，这是`facet_grid`的默认行为，因为它们会变得太薄而无法显示数据。相反，我们希望使用多行和多列。`facet_wrap`函数允许我们通过自动包装一系列图来实现这一点，以便每个显示都有可查看的维度：
 
-[PRE6]
+```r
+years <- c(1962, 1980, 1990, 2000, 2012)
+continents <- c("Europe", "Asia")
+gapminder |> 
+ filter(year %in% years & continent %in% continents) |>
+ ggplot( aes(fertility, life_expectancy, col = continent)) +
+ geom_point() +
+ facet_wrap(~year) 
+```
 
 ![](img/8bc149825ddbc800c8d9f26c6c5146c8.png)*  *这个图清楚地显示了大多数亚洲国家比欧洲国家改善的速度要快得多。*
 
@@ -104,7 +151,12 @@ Hans Rosling 以他独特的方式传达了基于实际数据趋势，使用有�
 
 轴范围的默认选择很重要。当不使用`facet`时，这个范围由图中显示的数据决定。当使用`facet`时，这个范围由所有图中显示的数据决定，因此在整个图中保持固定。这使得跨图比较变得容易。例如，在上面的图中，我们可以看到大多数国家的预期寿命都在增加，而生育率在下降。我们之所以看到这一点，是因为点云在移动。如果我们调整刻度，情况就不同了：
 
-[PRE7]
+```r
+filter(gapminder, year %in% c(1962, 2012)) |>
+ ggplot(aes(fertility, life_expectancy, col = continent)) +
+ geom_point() +
+ facet_wrap(. ~ year, scales = "free")
+```
 
 ![](img/1f16159baccb7a32d70af6837b9937de.png)*  *在上面的图中，我们必须特别注意范围，以注意到右侧的图具有更长的预期寿命。********
 
@@ -114,25 +166,50 @@ Hans Rosling 以他独特的方式传达了基于实际数据趋势，使用有�
 
 时间序列图在 x 轴上有时间，在 y 轴上有感兴趣的输出或测量。例如，这里是美国生育率的趋势图：
 
-[PRE8]
+```r
+gapminder |> 
+ filter(country == "United States") |> 
+ ggplot(aes(year, fertility)) +
+ geom_point()
+```
 
 ![](img/11524c31ada4fc80dc40d372e18be5e5.png)*  *我们看到趋势根本不是线性的。相反，在 20 世纪 60 年代和 70 年代有一个急剧下降，降至 2 以下。然后趋势回到 2，并在 20 世纪 90 年代稳定下来。
 
 当点均匀且密集地分布时，就像这里一样，我们通过用线连接点来创建曲线，以传达这些数据来自单一系列，这里是一个国家。为此，我们使用`geom_line`函数而不是`geom_point`。
 
-[PRE9]
+```r
+gapminder |> 
+ filter(country == "United States") |> 
+ ggplot(aes(year, fertility)) +
+ geom_line()
+```
 
 ![](img/08acbdfce7381508a5acb768f429a1bf.png)*  *当我们查看两个国家时，这尤其有用。我们可以对数据进行子集化，包括两个国家，一个来自欧洲，一个来自亚洲，然后调整上面的代码：
 
-[PRE10]
+```r
+countries <- c("South Korea", "Germany")
+ gapminder |> filter(country %in% countries) |> 
+ ggplot(aes(year,fertility)) +
+ geom_line()
+```
 
 ![](img/20ed97a53c3a07e18c82ac55684cb483.png)*  *不幸的是，这不是我们想要的图表。不是每个国家的线条，而是两个国家的点被连接起来。这实际上是可以预料的，因为我们没有告诉`ggplot`我们想要两条分开的线。为了让`ggplot`知道需要分别制作两条曲线，我们将每个点分配到一个`group`中，一个国家一个：
 
-[PRE11]
+```r
+countries <- c("South Korea","Germany")
+ gapminder |> filter(country %in% countries & !is.na(fertility)) |> 
+ ggplot(aes(year, fertility, group = country)) +
+ geom_line()
+```
 
 ![](img/6c841c83a28ec055813731e56efbd5ab.png)*  *但是哪条线对应哪个国家？我们可以分配颜色来区分这一点。使用`color`参数为不同的国家分配不同颜色的一个有用副作用是数据会自动分组：
 
-[PRE12]
+```r
+countries <- c("South Korea","Germany")
+gapminder |> filter(country %in% countries & !is.na(fertility)) |> 
+ ggplot(aes(year,fertility, col = country)) +
+ geom_line()
+```
 
 ![](img/544de6b1c922c16e2631cbd0652be74f.png)*  *该图清楚地显示了韩国的生育率在 20 世纪 60 年代和 70 年代急剧下降，到 1990 年与德国的生育率相似。
 
@@ -140,7 +217,14 @@ Hans Rosling 以他独特的方式传达了基于实际数据趋势，使用有�
 
 我们演示了如何使用`geomtextpath`包来做这件事。我们定义一个包含标签位置的表格数据，然后使用第二个映射仅用于这些标签：
 
-[PRE13]
+```r
+library([geomtextpath](https://allancameron.github.io/geomtextpath/))
+gapminder |> 
+ filter(country %in% countries) |> 
+ ggplot(aes(year, life_expectancy, col = country, label = country)) +
+ [geom_textpath](https://allancameron.github.io/geomtextpath/reference/geom_textpath.html)() +
+ theme(legend.position = "none")
+```
 
 ![](img/0614f53ec0ab27cd217bb31edb874dc9.png)*  *这个图清楚地显示了预期寿命的提高是如何随着生育率的下降而发生的。1960 年，德国人的预期寿命比韩国人长 15 年，尽管到 2010 年这个差距完全消失。它展示了在过去 40 年里许多非西方国家所取得的进步。*********
 
@@ -150,7 +234,10 @@ Hans Rosling 以他独特的方式传达了基于实际数据趋势，使用有�
 
 `gapminder`数据表包括一个包含各国国内生产总值（GDP）的列。GDP 衡量一个国家在一年内生产的商品和服务的市场价值。人均 GDP 通常被用作一个国家财富的粗略总结。在这里，我们将这个数量除以 365，以获得更可解释的度量——*每日美元*。使用当前的美元作为单位，每天收入低于 2 美元的人被定义为生活在*绝对贫困*中。我们将这个变量添加到数据表中：
 
-[PRE14]
+```r
+gapminder <- gapminder |> 
+ mutate(dollars_per_day = gdp/population/365)
+```
 
 GDP 值已根据通货膨胀进行调整，并代表当前的美元，因此这些值意味着可以跨年进行比较。当然，这些是国家的平均值，并且每个国家内部存在很大的变异性。下面描述的所有图表和洞察都关系到国家平均值，而不是个人。*
 
@@ -158,7 +245,13 @@ GDP 值已根据通货膨胀进行调整，并代表当前的美元，因此这�
 
 下面是 1970 年的每日收入直方图：
 
-[PRE15]
+```r
+past_year <- 1970
+gapminder |> 
+ filter(year == past_year & !is.na(gdp)) |>
+ ggplot(aes(dollars_per_day)) + 
+ geom_histogram(binwidth = 1, color = "black")
+```
 
 ![](img/002c5e319f3b7adf6ff545d8e4caada6.png)*  *我们使用`color = "black"`参数来绘制边界，并清楚地区分各个区间。*
 
@@ -168,7 +261,12 @@ GDP 值已根据通货膨胀进行调整，并代表当前的美元，因此这�
 
 如果我们对平均值应用 2 为底的对数变换，分布如下：
 
-[PRE16]
+```r
+gapminder |> 
+ filter(year == past_year & !is.na(gdp)) |>
+ ggplot](https://ggplot2.tidyverse.org/reference/ggplot.html)(aes([log2(dollars_per_day))) + 
+ geom_histogram(binwidth = 1, color = "black")
+```
 
 ![](img/f75504b40188305e38477c969f1e6c92.png)*  *从某种意义上说，这提供了对中低收入国家的近距离观察。**
 
@@ -184,11 +282,21 @@ GDP 值已根据通货膨胀进行调整，并代表当前的美元，因此这�
 
 对于一个以 10 为底更有意义的例子，考虑人口规模。以 10 为底的对数更可取，因为这些的范围是：
 
-[PRE17]
+```r
+filter(gapminder, year == past_year) |>
+ summarize(min = min(population), max = max(population))
+#>     min      max
+#> 1 46075 8.09e+08
+```
 
 以下是转换值的直方图：
 
-[PRE18]
+```r
+gapminder |> 
+ filter(year == past_year) |>
+ ggplot](https://ggplot2.tidyverse.org/reference/ggplot.html)(aes([log10(population))) +
+ geom_histogram(binwidth = 0.5, color = "black")
+```
 
 ![](img/db0239a08503a8d8f7a0b9ff69e1ea6b.png)*  *在上图中，我们可以快速看到国家人口介于十万和一百亿之间。****
 
@@ -206,9 +314,15 @@ GDP 值已根据通货膨胀进行调整，并代表当前的美元，因此这�
 
 如我们之前所学，如果我们想使用对数来缩放坐标轴，我们可以使用`scale_x_continuous`函数。我们不需要先对值进行对数转换，而是应用这一层：
 
-[PRE19]
+```r
+gapminder |> 
+ filter(year == past_year & !is.na(gdp)) |>
+ ggplot(aes(dollars_per_day)) + 
+ geom_histogram(binwidth = 1, color = "black") +
+ scale_x_continuous(trans = "log2")
+```
 
-![](img/a9131d0b50294ed0cf1e864198b4a20b.png)*  *请注意，以 10 为底的对数转换有自己的函数：`[scale_x_log10()](https://ggplot2.tidyverse.org/reference/scale_continuous.html)`，但目前以 2 为底没有，尽管我们可以轻松定义自己的。
+!](img/a9131d0b50294ed0cf1e864198b4a20b.png)*  *请注意，以 10 为底的对数转换有自己的函数：`[scale_x_log10()`，但目前以 2 为底没有，尽管我们可以轻松定义自己的。
 
 通过`trans`参数还有其他可用的转换。正如我们稍后将要学习的，平方根(`sqrt`)转换在考虑计数时很有用。对数转换(`logit`)在绘制 0 到 1 之间的比例时很有用。`reverse`转换在我们想要较小的值在右边或顶部时很有用。********
 
@@ -224,15 +338,39 @@ GDP 值已根据通货膨胀进行调整，并代表当前的美元，因此这�
 
 让我们先快速查看按地区划分的数据。我们按中位数重新排序地区，并使用对数刻度。
 
-[PRE20]
+```r
+gapminder |> 
+ filter(year == past_year & !is.na(gdp)) |>
+ mutate(region = reorder(region, dollars_per_day, FUN = median)) |>
+ ggplot(aes(dollars_per_day, region)) +
+ geom_point() +
+ scale_x_continuous(trans = "log2") 
+```
 
 ![](img/aa4dca439d022570a54e385b302d2bb7.png)*  *我们已经可以看到确实存在“西方与其它”的二分性：我们看到两个清晰的组，富裕组由北美、北欧和西欧以及新西兰和澳大利亚组成。我们根据这个观察结果定义组：
 
-[PRE21]
+```r
+gapminder <- gapminder |> 
+ mutate(group = case_when(
+ region %in% c("Western Europe", "Northern Europe","Southern Europe", 
+ "Northern America", 
+ "Australia and New Zealand") ~ "West",
+ region %in% c("Eastern Asia", "South-Eastern Asia") ~ "East Asia",
+ region %in% c("Caribbean", "Central America", 
+ "South America") ~ "Latin America",
+ continent == "Africa" & 
+ region != "Northern Africa" ~ "Sub-Saharan",
+ TRUE ~ "Others"))
+```
 
 我们将这个`group`变量转换为因子，以控制级别的顺序：
 
-[PRE22]
+```r
+gapminder <- gapminder |> 
+ mutate(group = factor(group, levels = c("Others", "Latin America", 
+ "East Asia", "Sub-Saharan",
+ "West")))
+```
 
 在下一节中，我们将展示如何可视化和比较组间的分布。
 
@@ -240,11 +378,22 @@ GDP 值已根据通货膨胀进行调整，并代表当前的美元，因此这�
 
 上述的探索性数据分析揭示了 1970 年人均收入分布的两个特点。使用直方图，我们发现了一个双峰分布，众数与穷国和富国相关。现在我们想要比较这五个组之间的分布，以确认“西方与其它”的二分性。每个类别中的点数足够多，以至于一个总结图可能是有用的。我们可以生成五个直方图或五个密度图，但将所有视觉总结放在一个图中可能更实用。因此，我们首先将箱线图并排放置。请注意，我们添加了`theme(axis.text.x = element_text(angle = 90, hjust = 1))`层，将组标签垂直，因为如果水平显示它们则不合适，并且我们移除了轴标签以留出空间。
 
-[PRE23]
+```r
+p <- gapminder |> 
+ filter(year == past_year & !is.na(gdp)) |>
+ ggplot(aes(group, dollars_per_day)) +
+ geom_boxplot() +
+ scale_y_continuous(trans = "log2") +
+ xlab("") +
+ theme(axis.text.x = element_text(angle = 90, hjust = 1)) 
+p
+```
 
 ![](img/e81ce75beec65b7c7e853f77c4d069a1.png)*  *箱线图的局限性在于，通过将数据总结为五个数字，我们可能会错过数据的重要特征。避免这种情况的一种方法是通过展示数据。
 
-[PRE24]
+```r
+p + geom_point(alpha = 0.5)
+```
 
 ![](img/6987a7a4fd1fb21c60ef70721605ca06.png)**
 
@@ -256,17 +405,31 @@ GDP 值已根据通货膨胀进行调整，并代表当前的美元，因此这�
 
 在我们担心箱线图总结过于简单的情况下，我们可以展示堆叠的平滑密度或直方图。我们称这些为*脊线图*。因为我们习惯于使用 x 轴上的值来可视化密度，所以我们垂直堆叠它们。此外，由于这种方法需要更多的空间，因此叠加它们很方便。`ggridges`包提供了一个方便的函数来完成这项工作。以下是上面显示的带有箱线图的收入数据，但使用的是*脊线图*。
 
-[PRE25]
+```r
+library([ggridges](https://wilkelab.org/ggridges/))
+p <- gapminder |> 
+ filter(year == past_year & !is.na(dollars_per_day)) |>
+ ggplot(aes(dollars_per_day, group)) + 
+ scale_x_continuous(trans = "log2") 
+p  + [geom_density_ridges](https://wilkelab.org/ggridges/reference/geom_density_ridges.html)() 
+```
 
 ![](img/138ecbab77a585b23769915a90143185.png)*  *请注意，我们必须反转用于箱线图的`x`和`y`轴。一个有用的`geom_density_ridges`参数是`scale`，它允许你确定重叠的程度，其中`scale = 1`表示没有重叠，更大的值会导致更多的重叠。
 
 如果数据点的数量足够小，我们可以使用以下代码将它们添加到脊线图中：
 
-[PRE26]
+```r
+p + [geom_density_ridges](https://wilkelab.org/ggridges/reference/geom_density_ridges.html)(jittered_points = TRUE)
+```
 
 ![](img/5a98f314bb7476536d1fdcc51d4054f6.png)*  *默认情况下，点的垂直高度是抖动的，不应以任何方式解释。为了显示数据点，但又不使用抖动，我们可以使用以下代码来添加所谓的数据的*毛刷表示*。
 
-[PRE27]
+```r
+p + [geom_density_ridges](https://wilkelab.org/ggridges/reference/geom_density_ridges.html)(jittered_points = TRUE, 
+ position = [position_points_jitter](https://wilkelab.org/ggridges/reference/position_points_jitter.html)(height = 0),
+ point_shape = '|', point_size = 3, 
+ point_alpha = 1, alpha = 0.7)
+```
 
 ![](img/fb532ad409e029a0480d9123414cc179.png)*****
 
@@ -276,29 +439,72 @@ GDP 值已根据通货膨胀进行调整，并代表当前的美元，因此这�
 
 因此，我们只为在两年都有数据的国家绘制图表：
 
-[PRE28]
+```r
+past_year <- 1970
+present_year <- 2010
+years <- c(past_year, present_year)
+country_list <- gapminder |> 
+ filter(year %in% c(present_year, past_year)) |>
+ group_by(country) |>
+ summarize(n = sum(!is.na(dollars_per_day)), .groups = "drop") |>
+ filter(n == 2) |>
+ pull(country)
+```
 
 这些 108 个国家占世界人口的 86%，因此这个子集应该是具有代表性的。我们可以使用此代码比较分布：**
 
-[PRE29]
+```r
+gapminder |> 
+ filter(year %in% years & country %in% country_list) |>
+ mutate(west = ifelse(group == "West", "West", "Developing")) |>
+ ggplot(aes(dollars_per_day)) +
+ geom_histogram(binwidth = 1, color = "black") +
+ scale_x_continuous(trans = "log2") + 
+ facet_grid(year ~ west)
+```
 
 ![](img/c644fd9efd1ece580f2af364869ebe26.png)*  *现在我们看到富裕国家变得更富裕了，但从百分比来看，贫穷国家似乎改善得更多。特别是，我们看到每天收入超过 16 美元的*发展中国家*的比例显著增加。
 
 为了看到哪些特定地区改善得最多，我们可以重新制作我们上面制作的箱线图，但现在添加 2010 年，然后使用分面来比较两年。
 
-[PRE30]
+```r
+gapminder |> 
+ filter(year %in% years & country %in% country_list) |>
+ ggplot(aes(group, dollars_per_day)) +
+ geom_boxplot() +
+ theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
+ scale_y_continuous(trans = "log2") +
+ xlab("") +
+ facet_grid(. ~ year)
+```
 
 ![](img/5f4612c047e783c8aeb6f92b28b3b070.png)*  *在这里，我们暂停一下，介绍另一个强大的**ggplot2**功能。因为我们想比较每个地区在前后的情况，所以对于每个地区，将 1970 年的箱线图放在 2010 年的箱线图旁边会方便很多。一般来说，当数据并排绘制时，比较更容易。
 
 因此，我们不是进行分面处理，而是将每年的数据保留在一起，并根据年份来着色（或填充）它们。请注意，组别会根据年份自动分开，并且每对箱线图都会相邻绘制。因为年份列是一个数字，所以我们必须将其转换为因子，因为**ggplot2**会自动为因子的每个类别分配一个颜色。
 
-[PRE31]
+```r
+gapminder |> 
+ filter(year %in% years & country %in% country_list) |>
+ mutate(year = factor(year)) |>
+ ggplot(aes(group, dollars_per_day, fill = year)) +
+ geom_boxplot() +
+ theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
+ scale_y_continuous(trans = "log2") +
+ xlab("") 
+```
 
 ![](img/9b1e2eccc0bf4c2febdce0cc525e10e1.png)*  *之前的数据探索表明，在过去 40 年里，富裕国家和贫穷国家之间的收入差距已经显著缩小。我们使用一系列直方图和箱线图来观察这一点。我们建议用一张图表简洁地传达这一信息。
 
 让我们从注意到 1970 年和 2010 年的收入分布密度图传达了差距正在缩小的信息开始：
 
-[PRE32]
+```r
+gapminder |> 
+ filter(year %in% years & country %in% country_list) |>
+ ggplot(aes(dollars_per_day)) +
+ geom_density(fill = "grey") + 
+ scale_x_continuous(trans = "log2") + 
+ facet_grid(. ~ year)
+```
 
 ![](img/c5a3edcb8b7e68f21c4ba5112a48f133.png)*  *在 1970 年的图表中，我们可以看到两个明显的模式：贫穷国家和富裕国家。到了 2010 年，一些贫穷国家似乎向右移动，缩小了差距。
 
@@ -312,25 +518,53 @@ GDP 值已根据通货膨胀进行调整，并代表当前的美元，因此这�
 
 在 **ggplot2** 中，我们使用函数 `after_stat` 访问这些变量。因此，我们将使用以下映射：
 
-[PRE33]
+```r
+aes(x = dollars_per_day, y = after_stat(count))
+```
 
 现在，我们可以通过简单地更改上一段代码块中的映射来创建所需的图表。我们还将扩展 x 轴的极限。
 
-[PRE34]
+```r
+p <- gapminder |> 
+ filter(year %in% years & country %in% country_list) |>
+ mutate(group = ifelse(group == "West", "West", "Developing")) |>
+ ggplot(aes(dollars_per_day, y = after_stat(count), fill = group)) +
+ scale_x_continuous](https://ggplot2.tidyverse.org/reference/scale_continuous.html)(trans = "log2", limits = [c(0.125, 300))
+p + geom_density(alpha = 0.2) + facet_grid(year ~ .)
+```
 
 ![](img/a85e45a92ef16fac08e6d1093397d98c.png)*  *如果我们想使密度更平滑，我们使用 `bw` 参数，以便在每种密度中使用相同的带宽。我们在尝试了几个值后选择了 0.75。
 
-[PRE35]
+```r
+p + geom_density(alpha = 0.2, bw = 0.75) + facet_grid(year ~ .)
+```
 
 ![](img/2555d723a10de9662c7edd4539b0f385.png)*  *这个图表现在非常清楚地显示了正在发生的事情。发展中国家的分布正在变化。出现了一个第三种模式，由那些差距缩小最多的国家组成。
 
 为了可视化是否上述任何组在驱动这一变化，我们可以快速制作一个脊线图：
 
-[PRE36]
+```r
+gapminder |> 
+ filter(year %in% years & !is.na(dollars_per_day)) |>
+ ggplot(aes(dollars_per_day, group)) + 
+ scale_x_continuous(trans = "log2") + 
+ [geom_density_ridges](https://wilkelab.org/ggridges/reference/geom_density_ridges.html)(bandwidth = 1.5) +
+ facet_grid(. ~ year)
+```
 
 ![](img/1b320c68fa5bf7ba58e211c44f30e4c3.png)*  *另一种实现这一目标的方法是将密度堆叠在一起：
 
-[PRE37]
+```r
+gapminder |> 
+ filter(year %in% years & country %in% country_list) |>
+ group_by(year) |>
+ mutate(weight = population/sum(population)*2) |>
+ ungroup() |>
+ ggplot(aes(dollars_per_day, fill = group)) +
+ scale_x_continuous](https://ggplot2.tidyverse.org/reference/scale_continuous.html)(trans = "log2", limits = [c(0.125, 300)) + 
+ geom_density(alpha = 0.2, bw = 0.75, position = "stack") + 
+ facet_grid(year ~ .) 
+```
 
 ![](img/aaf10299edbbeb0ab3aa47e1707f1641.png)*  *在这里，我们可以清楚地看到东亚、拉丁美洲和其他地区的分布如何明显向右移动，而撒哈拉以南非洲保持不变。
 
@@ -388,17 +622,37 @@ $$f(p) = \log \left( \frac{p}{1-p} \right)$$
 
 用于这些图表的数据由提科项目⁹收集、整理和分发。它们包括从 1928 年到 2011 年，来自所有五十个州的七种疾病的每周报告计数。我们在**dslabs**包中包括了年度总计：
 
-[PRE38]
+```r
+library([tidyverse](https://tidyverse.tidyverse.org))
+library(RColorBrewer)
+library(dslabs)
+names(us_contagious_diseases)
+#> [1] "disease"         "state"           "year" 
+#> [4] "weeks_reporting" "count"           "population"
+```
 
 我们创建了一个临时对象`dat`，它只存储麻疹数据，包括每 10 万人比率，按疾病平均值排序州，并删除阿拉斯加和夏威夷，因为它们只在 20 世纪 50 年代末成为州。请注意，有一个`weeks_reporting`列告诉我们一年中有多少周的数据被报告。在计算比率时，我们必须调整这个值。
 
-[PRE39]*
+```r
+the_disease <- "Measles"
+dat <- us_contagious_diseases |>
+ filter(!state %in% c("Hawaii","Alaska") & disease == the_disease) |>
+ mutate(rate = count / population * 10000 * 52 / weeks_reporting) |> 
+ mutate(state = reorder(state, ifelse(year <= 1963, rate, NA), 
+ median, na.rm = TRUE)) 
+```*
 
 ### **10.9.2 趋势图**
 
 *我们现在可以轻松地按年份绘制疾病比率。以下是加利福尼亚的麻疹数据：
 
-[PRE40]
+```r
+dat |> filter(state == "California" & !is.na(rate)) |>
+ ggplot(aes(year, rate)) +
+ geom_line() + 
+ ylab("Cases per 10,000")  + 
+ geom_vline(xintercept = 1963, col = "blue")
+```
 
 ![](img/c9532af778625beb64702eb0d4ff77f9.png)*  *我们在 1963 年添加了一条垂直线，因为这是疫苗被引入的时间¹⁰。******
 
@@ -410,15 +664,45 @@ $$f(p) = \log \left( \frac{p}{1-p} \right)$$
 
 我们使用`geom_tile`几何形状用代表疾病率的颜色填充区域。我们使用平方根变换来避免极高计数主导图表。注意，缺失值以灰色显示。请注意，一旦一种疾病基本被根除，一些州就完全停止报告病例。这就是为什么我们在 1980 年之后看到这么多灰色。
 
-[PRE41]
+```r
+dat |> ggplot(aes(year, state, fill = rate)) +
+ geom_tile(color = "grey50") +
+ scale_x_continuous](https://ggplot2.tidyverse.org/reference/scale_continuous.html)(expand = [c(0,0)) +
+ scale_fill_gradientn(colors = [brewer.pal](https://rdrr.io/pkg/RColorBrewer/man/ColorBrewer.html)(9, "Reds"), trans = "sqrt") +
+ geom_vline(xintercept = 1963, col = "blue") +
+ theme_minimal() + 
+ theme(panel.grid = element_blank(), 
+ legend.position = "bottom", 
+ text = element_text(size = 8)) +
+ labs(title = the_disease, x = "", y = "")
+```
 
 ![](img/557ca4d7978ff90f28a6fb5ae20283bf.png)*  *这个图表非常有力地证明了疫苗的贡献。然而，这个图表的一个局限性是它使用颜色来表示数量，我们之前解释过这会使我们难以确切知道值有多高。位置和长度是更好的线索。如果我们愿意放弃州信息，我们可以制作一个显示值的图表版本。我们还可以显示美国的平均值，我们像这样计算：
 
-[PRE42]
+```r
+avg <- us_contagious_diseases |>
+ filter(disease == the_disease) |> group_by(year) |>
+ summarize(us_rate = sum(count, na.rm = TRUE) / 
+ sum(population, na.rm = TRUE) * 10000)
+```
 
 现在我们来制作图表，我们简单地使用`geom_line`几何形状：
 
-[PRE43]
+```r
+dat |> 
+ filter(!is.na(rate)) |>
+ ggplot() +
+ geom_line(aes(year, rate, group = state),  color = "grey50", 
+ show.legend = FALSE, alpha = 0.2, linewidth = 1) +
+ geom_line(mapping = aes(year, us_rate),  data = avg, linewidth = 1) +
+ scale_y_continuous](https://ggplot2.tidyverse.org/reference/scale_continuous.html)(trans = "sqrt", breaks = [c(5, 25, 125, 300)) + 
+ ggtitle("Cases per 10,000 by state") + 
+ xlab("") + ylab("") +
+ geom_text](https://ggplot2.tidyverse.org/reference/geom_text.html)(data = [data.frame(x = 1955, y = 50), 
+ mapping = aes(x, y, label = "US average"), 
+ color = "black") + 
+ geom_vline(xintercept = 1963, col = "blue")
+```
 
 ![](img/0705112b9ca3f4433207b40d6853e23f.png)*  *理论上，我们可以使用颜色来表示分类值州，但很难挑选出 50 种不同的颜色。******
 

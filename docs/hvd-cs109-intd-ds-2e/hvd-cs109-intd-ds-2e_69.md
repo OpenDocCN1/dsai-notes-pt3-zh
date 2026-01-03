@@ -10,7 +10,10 @@
 
 为了使示例具体且易于理解，我们使用第 28.3.1 节中引入的两个预测者数字数据集作为我们的示例。这个数据集足够小以进行可视化，同时足够丰富以揭示真实算法的行为。所有代码示例都依赖于**dslabs**包中的函数。稍后，在第三十一章中，我们将展示如何使用提供统一接口进行拟合和调整许多不同机器学习方法的**caret**包来有效地实现这些想法。
 
-[PRE0]
+```r
+library([caret](https://github.com/topepo/caret/))
+library(dslabs)
+```
 
 ## 30.1 线性和逻辑回归
 
@@ -100,19 +103,34 @@ $$ p(\mathbf{x}) = \mathrm{Pr}(Y = 1|\mathbf{X}=\mathbf{x}) = \frac{f_{\mathbf{X
 
 让我们从一个非常简单且无趣，但具有说明性的案例开始：与预测身高相关的例子。
 
-[PRE1]
+```r
+set.seed(1995)
+y <- heights$height
+train_index <- [createDataPartition](https://rdrr.io/pkg/caret/man/createDataPartition.html)(y, times = 1, p = 0.5, list = FALSE)
+train_set <- heights[train_index,]
+test_set <- heights[-train_index,]
+```
 
 在这种情况下，朴素贝叶斯方法特别合适，因为我们知道正态分布是性别对身高条件分布的良好近似，对于两个类别 $Y = 1$（女性）和 $Y = 0$（男性）。这意味着我们可以通过简单地从数据中估计平均值和标准差来近似条件分布 $f_{X|Y = 1}$ 和 $f_{X|Y = 0}$：
 
-[PRE2]
+```r
+param <- train_set |> group_by(sex) |> summarize(m = mean(height), s = sd(height))
+```
 
 发病率，我们将用 $\pi = \mathrm{Pr}(Y = 1)$ 表示，可以从数据中估计出来：
 
-[PRE3]
+```r
+pi <- mean(train_set$sex == "Female")
+```
 
 现在我们可以使用我们对平均值和标准差的估计来得到一个实际的规则：
 
-[PRE4]
+```r
+x <- test_set$height
+f0 <- dnorm(x, param$m[2], param$s[2])
+f1 <- dnorm(x, param$m[1], param$s[1])
+p_hat_bayes <- f1*pi / (f1*pi + f0*(1 - pi))
+```
 
 我们的朴素贝叶斯估计 $\hat{p}(x)$ 与逻辑回归估计非常相似：
 
@@ -128,21 +146,36 @@ $$ \hat{p}(x)= \frac{\hat{f}_{X|Y = 1}(x) \hat{\pi}} { \hat{f}_{X|Y = 0}(x)(1-\h
 
 如我们之前讨论的，我们的样本发病率远低于一般人群，仅为 0.24。因此，如果我们使用规则 $\hat{p}(x) > 0.5$ 来预测女性，我们的准确率将因低敏感性而受到影响：
 
-[PRE5]
+```r
+y_hat_bayes <- ifelse(p_hat_bayes > 0.5, "Female", "Male")
+sensitivity](https://rdrr.io/pkg/caret/man/sensitivity.html)(data = [factor(y_hat_bayes), reference = factor(test_set$sex))
+#> [1] 0.324
+```
 
 再次强调，这是因为算法更重视特异性以应对低发病率：
 
-[PRE6]
+```r
+specificity](https://rdrr.io/pkg/caret/man/sensitivity.html)(data = [factor(y_hat_bayes), reference = factor(test_set$sex))
+#> [1] 0.947
+```
 
 这主要是因为 $\hat{\pi}$ 大大低于 0.5，所以我们更倾向于预测 `男性`。在我们的样本中，这样做是有道理的，因为我们确实有较高的男性比例。但如果我们将这一结果外推到一般人群，我们的整体准确率将受到低敏感性的影响。
 
 朴素贝叶斯方法为我们提供了一种直接纠正这一问题的方法，因为我们只需简单地将 $\hat{\pi}$ 设置为我们想要的任何值。因此，为了平衡特异性和敏感性，我们不必改变决策规则中的截止值，而可以简单地像这样将 $\hat{\pi}$ 设置为 0.5：
 
-[PRE7]
+```r
+p_hat_bayes_unbiased <- f1 * 0.5 / (f1 * 0.5 + f0 * (1 - 0.5)) 
+y_hat_bayes_unbiased <- ifelse(p_hat_bayes_unbiased > 0.5, "Female", "Male")
+```
 
 注意敏感性的差异，平衡得更好：
 
-[PRE8]
+```r
+sensitivity](https://rdrr.io/pkg/caret/man/sensitivity.html)([factor(y_hat_bayes_unbiased), factor(test_set$sex))
+#> [1] 0.775
+specificity](https://rdrr.io/pkg/caret/man/sensitivity.html)([factor(y_hat_bayes_unbiased), factor(test_set$sex))
+#> [1] 0.717
+```
 
 新的规则还给我们提供了一个非常直观的 66-67 之间的截止值，这大约是女性和男性平均身高的中间值：
 
@@ -162,11 +195,18 @@ $$ \hat{p}(\mathbf{x})= \frac{\hat{f}_{\mathbf{X}|Y = 1}(\mathbf{x}) \hat{\pi}} 
 
 我们可以使用**MASS**包中的`qda`函数来拟合 QDA：
 
-[PRE9]
+```r
+train_qda <- MASS::[qda](https://rdrr.io/pkg/MASS/man/qda.html)(y ~ ., data = mnist_27$train)
+y_hat <- predict(train_qda, mnist_27$test)$class
+```
 
 我们发现我们获得了相对较好的准确率：
 
-[PRE10]
+```r
+[confusionMatrix](https://rdrr.io/pkg/caret/man/confusionMatrix.html)(y_hat, mnist_27$test$y)$overall["Accuracy"] 
+#> Accuracy 
+#>    0.815
+```
 
 条件概率看起来相对较好，尽管它不如核平滑器拟合得那么好：
 
@@ -186,11 +226,18 @@ QDA 在这里可以工作得很好，但随着预测变量数量的增加，它�
 
 我们可以使用**MASS**包的`lda`函数来拟合 LDA：
 
-[PRE11]
+```r
+train_lda <- MASS::[lda](https://rdrr.io/pkg/MASS/man/lda.html)(y ~ ., data = mnist_27$train)
+y_hat <- predict(train_lda, mnist_27$test)$class
+```
 
 现在椭圆的大小以及角度都是相同的。这是因为它们被假定为具有相同的标准差和相关性。尽管这个附加约束降低了参数的数量，但刚性降低了我们的准确性：*
 
-[PRE12]
+```r
+[confusionMatrix](https://rdrr.io/pkg/caret/man/confusionMatrix.html)(y_hat, mnist_27$test$y)$overall["Accuracy"]
+#> Accuracy 
+#>    0.775
+```
 
 当我们强制这个假设时，我们可以从数学上证明边界是一条线，就像逻辑回归一样。因此，我们称这种方法为 *线性* 判别分析（LDA）。同样，对于 QDA，我们可以证明边界必须是一个二次函数。*
 
@@ -282,15 +329,27 @@ $$ \log f(\mathbf{x}) \propto (\mathbf{x} - \boldsymbol{\mu})^\top\Sigma^{-1}(\m
 
 为了激励本节，我们将使用一个新的数据集，该数据集包括橄榄油成分分解为 8 种脂肪酸的详细情况：
 
-[PRE13]
+```r
+names(olive)
+#>  [1] "region"      "area"        "palmitic"    "palmitoleic"
+#>  [5] "stearic"     "oleic"       "linoleic"    "linolenic" 
+#>  [9] "arachidic"   "eicosenoic"
+```
 
 为了说明目的，我们将尝试使用脂肪酸成分值作为预测因子来预测区域。
 
-[PRE14]
+```r
+table(olive$region)
+#> 
+#> Northern Italy       Sardinia Southern Italy 
+#>            151             98            323
+```
 
 我们移除了`area`列，因为我们不会将其用作预测因子。
 
-[PRE15]
+```r
+olive <- select(olive, -area)
+```
 
 使用 kNN，我们可以达到测试集准确率 0.97。然而，一些数据探索揭示，我们应该能够做得更好。例如，如果我们按地区对每个预测因子的分布进行分层，我们会看到 eicosenoic 仅在意大利南部存在，而 linoleic 将北意大利与撒丁岛分开。
 
@@ -340,21 +399,35 @@ $$ \sum_{i:\, x_i \in R_1(j,s)} (y_i - \hat{y}_{R_1})² + \sum_{i:\, x_i \in R_2
 
 让我们看看这个算法在 2008 年总统选举民意调查数据上的表现。我们将使用 **rpart** 包中的 `rpart` 函数。
 
-[PRE16]
+```r
+library([rpart](https://github.com/bethatkinson/rpart))
+fit <- [rpart](https://rdrr.io/pkg/rpart/man/rpart.html)(margin ~ ., data = polls_2008)
+```
 
 在这种情况下，只有一个预测器。因此我们不需要决定通过哪个预测器 $j$ 进行分割，我们只需要决定使用什么值 $s$ 进行分割。我们可以直观地看到分割的位置：
 
-[PRE17]
+```r
+plot(fit, margin = 0.1)
+text(fit, cex = 0.75)
+```
 
 ![](img/652222a5d06ca6cfa0b114e773240a2b.png)*  *第一次分割发生在第 39.5 天。然后其中一个区域在第 86.5 天被分割。这两个新的分区分别在第 49.5 天和第 117.5 天进行分割，以此类推。我们最终得到 8 个分区。
 
 您也可以通过输入以下命令来查看分区：
 
-[PRE18]
+```r
+summary(fit)
+```
 
 最终的估计 $\hat{f}(x)$ 看起来是这样的：
 
-[PRE19]
+```r
+polls_2008 |> 
+ mutate(y_hat = predict(fit)) |> 
+ ggplot() +
+ geom_point(aes(day, margin)) +
+ geom_step(aes(day, y_hat), col = "red")
+```
 
 ![](img/9873565e9597347e1c19d9f9949997e4.png)*  *请注意，算法在 8 个节点处停止了分区。这个决定是基于一个称为复杂度参数（cp）的度量。每次数据被分成两个新的分区时，训练集的 RSS 都会减少，因为模型获得了适应数据的灵活性。如果继续分割直到每个观测值都孤立在自己的分区中，RSS 最终会达到 0，因为单个值的平均值就是该值本身。为了防止这种过度拟合，算法要求每个新的分割至少减少 RSS 的 cp 倍。因此，较大的 cp 值会提前停止算法，导致节点数量减少。
 
@@ -372,7 +445,10 @@ $$ \sum_{i:\, x_i \in R_1(j,s)} (y_i - \hat{y}_{R_1})² + \sum_{i:\, x_i \in R_2
 
 注意，如果我们已经有一个树并且想要应用更高的 cp 值，我们可以使用`prune`函数。我们称这种操作为*剪枝*，因为我们正在剪掉不符合`cp`标准的分区。以下是一个例子，我们创建了一个使用`cp = 0`的树，然后将其剪枝回来：
 
-[PRE20]*******
+```r
+fit <- [rpart](https://rdrr.io/pkg/rpart/man/rpart.html)(margin ~ ., data = polls_2008, control = [rpart.control](https://rdrr.io/pkg/rpart/man/rpart.control.html)(cp = 0))
+pruned_fit <- [prune](https://rdrr.io/pkg/rpart/man/prune.rpart.html)(fit, cp = 0.01)
+```*******
 
 ### **分类（决策）树**
 
@@ -422,11 +498,16 @@ $$ \mbox{entropy}(j) = -\sum_{k = 1}^K \hat{p}_{j,k}\log(\hat{p}_{j,k}), \mbox{ 
 
 为了说明第一步如何导致更平滑的估计，我们将对 2008 年的民意调查数据进行随机森林拟合。我们将使用**randomForest**包中的`randomForest`函数：
 
-[PRE21]
+```r
+library([randomForest](https://www.stat.berkeley.edu/~breiman/RandomForests/))
+fit <- [randomForest](https://rdrr.io/pkg/randomForest/man/randomForest.html)(margin ~ ., data = polls_2008) 
+```
 
 注意，如果我们将`plot`函数应用于结果对象，我们可以看到随着我们添加树，我们算法的错误率如何变化：
 
-[PRE22]
+```r
+plot(fit)
+```
 
 ![](img/453fde1d6f26e20d73aa52319c9a184d.png)
 
@@ -434,7 +515,9 @@ $$ \mbox{entropy}(j) = -\sum_{k = 1}^K \hat{p}_{j,k}\log(\hat{p}_{j,k}), \mbox{ 
 
 使用这种方法得到的随机森林估计结果，如上所示：
 
-[PRE23]
+```r
+y_hat <-  predict(fit, newdata = polls_2008)
+```
 
 如以下红色曲线所示：
 
@@ -444,7 +527,10 @@ $$ \mbox{entropy}(j) = -\sum_{k = 1}^K \hat{p}_{j,k}\log(\hat{p}_{j,k}), \mbox{ 
 
 ![](img/4ee992eec5fce5e5afb7b68912fe08fa.png)
 
-[PRE24]
+```r
+library([randomForest](https://www.stat.berkeley.edu/~breiman/RandomForests/))
+train_rf <- [randomForest](https://rdrr.io/pkg/randomForest/man/randomForest.html)(y ~ ., data = mnist_27$train)
+```
 
 对于我们的 2 或 7 个示例，随机森林拟合的准确率为 0.825。以下是条件概率的图示：
 
@@ -462,11 +548,25 @@ $$ \mbox{entropy}(j) = -\sum_{k = 1}^K \hat{p}_{j,k}\log(\hat{p}_{j,k}), \mbox{ 
 
 ***1. 使用以下代码创建数据集：
 
-[PRE25]
+```r
+n <- 100
+Sigma <- 9*matrix(c(1.0, 0.5, 0.5, 1.0), 2, 2)
+dat <- MASS::mvrnorm](https://rdrr.io/pkg/MASS/man/mvrnorm.html)(n = 100, [c(69, 69), Sigma) |>
+ data.frame() |> setNames(c("x", "y"))
+```
 
 使用**caret**包将数据集划分为大小相等的测试集和训练集。训练一个线性模型并报告 RMSE。重复此练习 100 次，并绘制 RMSE 的直方图，报告平均值和标准差。提示：像这样修改前面显示的代码：
 
-[PRE26]
+```r
+library([caret](https://github.com/topepo/caret/))
+y <- dat$y
+test_index <- [createDataPartition](https://rdrr.io/pkg/caret/man/createDataPartition.html)(y, times = 1, p = 0.5, list = FALSE)
+train_set <- dat[train_index,]
+test_set <- dat[-train_index,]
+fit <- lm(y ~ x, data = train_set)
+y_hat <- fit$coef[1] + fit$coef[2]*test_set$x
+sqrt(mean((y_hat - test_set$y)²))
+```
 
 将其放入对`replicate`的调用中。
 
@@ -484,7 +584,12 @@ $$ \mbox{entropy}(j) = -\sum_{k = 1}^K \hat{p}_{j,k}\log(\hat{p}_{j,k}), \mbox{ 
 
 4. 现在重复练习 1，但这次通过改变`Sigma`来使`x`和`y`之间的相关性更大：
 
-[PRE27]
+```r
+n <- 100
+Sigma <- 9*matrix(c(1, 0.95, 0.95, 1), 2, 2)
+dat <- MASS::mvrnorm](https://rdrr.io/pkg/MASS/man/mvrnorm.html)(n = 100, [c(69, 69), Sigma) |>
+ data.frame() |> setNames(c("x", "y"))
+```
 
 重复练习并注意 RMSE 现在发生了什么。
 
@@ -500,17 +605,29 @@ $$ \mbox{entropy}(j) = -\sum_{k = 1}^K \hat{p}_{j,k}\log(\hat{p}_{j,k}), \mbox{ 
 
 6. 使用以下代码创建数据集：
 
-[PRE28]
+```r
+n <- 1000
+Sigma <- matrix(c(1, 3/4, 3/4, 3/4, 1, 0, 3/4, 0, 1), 3, 3)
+dat <- MASS::mvrnorm](https://rdrr.io/pkg/MASS/man/mvrnorm.html)(n = 100, [c(0, 0, 0), Sigma) |>
+ data.frame() |> setNames(c("y", "x_1", "x_2"))
+```
 
 请注意，`y`与`x_1`和`x_2`都相关，但两个预测因子彼此独立。
 
-[PRE29]
+```r
+cor(dat)
+```
 
 使用**caret**包将数据集划分为大小相等的测试集和训练集。比较仅使用`x_1`、仅使用`x_2`以及同时使用`x_1`和`x_2`时的 RMSE。训练一个线性模型并报告 RMSE。
 
 7. 重复练习 6，但现在创建一个`x_1`和`x_2`高度相关的例子：
 
-[PRE30]
+```r
+n <- 1000
+Sigma <- matrix(c(1.0, 0.75, 0.75, 0.75, 1.0, 0.95, 0.75, 0.95, 1.0), 3, 3)
+dat <- MASS::mvrnorm](https://rdrr.io/pkg/MASS/man/mvrnorm.html)(n = 100, [c(0, 0, 0), Sigma) |>
+ data.frame() |> setNames(c("y", "x_1", "x_2"))
+```
 
 使用**caret**包将数据集划分为大小相等的测试集和训练集。比较仅使用`x_1`、仅使用`x_2`以及同时使用`x_1`和`x_2`时的 RMSE。训练一个线性模型并报告 RMSE。
 
@@ -526,11 +643,27 @@ $$ \mbox{entropy}(j) = -\sum_{k = 1}^K \hat{p}_{j,k}\log(\hat{p}_{j,k}), \mbox{ 
 
 9. 定义以下数据集：
 
-[PRE31]
+```r
+make_data <- function(n = 1000, p = 0.5, 
+ mu_0 = 0, mu_1 = 2, 
+ sigma_0 = 1,  sigma_1 = 1){
+ y <- rbinom(n, 1, p)
+ f_0 <- rnorm(n, mu_0, sigma_0)
+ f_1 <- rnorm(n, mu_1, sigma_1)
+ x <- ifelse(y == 1, f_1, f_0)
+ test_index <- [createDataPartition](https://rdrr.io/pkg/caret/man/createDataPartition.html)(y, times = 1, p = 0.5, list = FALSE)
+ list(train = data.frame(x = x, y = as.factor(y)) |> 
+ slice(-test_index),
+ test = data.frame(x = x, y = as.factor(y)) |> 
+ slice(test_index))
+}
+```
 
 请注意，我们已定义了一个变量`x`，它可以预测二元结果`y`。
 
-[PRE32]
+```r
+dat$train |> ggplot(aes(x, color = y)) + geom_density()
+```
 
 通过将(Y)视为连续结果来拟合线性回归模型，然后通过预测值超过 0.5 时将观测值分类为 1，来拟合一个逻辑回归模型。接下来，对相同的数据拟合逻辑回归模型，并比较这两种方法的分类准确率。
 
@@ -540,7 +673,10 @@ $$ \mbox{entropy}(j) = -\sum_{k = 1}^K \hat{p}_{j,k}\log(\hat{p}_{j,k}), \mbox{ 
 
 12. **dslabs**包包含一个类似于`mnist_27`的示例数据集，但也包括 1。您可以加载并探索它如下：
 
-[PRE33]
+```r
+library(dslabs)
+mnist_127$train |> ggplot(aes(x_1, x_2, color = y)) + geom_point()
+```
 
 使用**MASS**包中的`qda`函数拟合 QDA，然后为测试预测创建混淆矩阵。以下哪项最能描述混淆矩阵：
 
@@ -564,7 +700,15 @@ $$ \mbox{entropy}(j) = -\sum_{k = 1}^K \hat{p}_{j,k}\log(\hat{p}_{j,k}), \mbox{ 
 
 14. 要可视化 QDA 决策边界，首先创建一个密集的点网格，覆盖$(x_1, x_2)$空间：
 
-[PRE34]
+```r
+GS <- 150
+new_x <- with(mnist_127$train,
+ expand.grid(
+ x_1 = seq(min(x_1), max(x_1), length.out = GS),
+ x_2 = seq(min(x_2), max(x_2), length.out = GS)
+ )
+)
+```
 
 使用拟合的 QDA 模型通过`predict(qda_fit, newdata = new_x)`计算网格上的预测概率。这将给出网格中每个点的$\hat{p}(x_1, x_2)$。
 
@@ -588,7 +732,13 @@ $$ \mbox{entropy}(j) = -\sum_{k = 1}^K \hat{p}_{j,k}\log(\hat{p}_{j,k}), \mbox{ 
 
 19. 创建一个简单的数据集，其中结果在预测变量每增加一个单位时平均增长 0.75 个单位。
 
-[PRE35]
+```r
+n <- 1000
+sigma <- 0.25
+x <- rnorm(n, 0, 1)
+y <- 0.75 * x + rnorm(n, 0, sigma)
+dat <- data.frame(x = x, y = y)
+```
 
 使用 `rpart` 拟合回归树并将结果保存到 `fit` 中。
 
@@ -604,11 +754,16 @@ $$ \mbox{entropy}(j) = -\sum_{k = 1}^K \hat{p}_{j,k}\log(\hat{p}_{j,k}), \mbox{ 
 
 25. 这个 **dslabs** 数据集包括 `tissue_gene_expression`，其中有一个矩阵 `x`：
 
-[PRE36]
+```r
+library(dslabs)
+dim(tissue_gene_expression$x)
+```
 
 使用在 189 个生物样本上测量的 500 个基因的表达来表示七个不同的组织。组织类型存储在 `tissue_gene_expression$y` 中。
 
-[PRE37]
+```r
+table(tissue_gene_expression$y)
+```
 
 使用包 **randomForest** 中的 `randomForest` 函数拟合随机森林。然后使用 `varImp` 函数查看哪些是前 10 个最具预测性的基因。绘制报告的重要性直方图，以了解重要性值的分布。*****************
 
