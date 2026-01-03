@@ -95,7 +95,7 @@ $$ f(\mathbf{x}) \equiv \mathrm{E}[Y \mid \mathbf{X}=\mathbf{x} ] $$
 下面是观察到的 $X_2$ 与观察到的 $X_1$ 的关系图，颜色表示 $y$ 是 2（红色）还是 7（蓝色）：
 
 ```r
-library([caret](https://github.com/topepo/caret/))
+library(caret)
 library(dslabs)
 mnist_27$train |> ggplot(aes(x_1, x_2, color = y)) + geom_point()
 ```

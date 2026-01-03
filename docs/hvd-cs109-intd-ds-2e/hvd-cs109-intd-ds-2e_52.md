@@ -39,7 +39,7 @@ with(mice_weights, boxplot(body_weight ~ diet))
 *两组样本平均值，高脂肪饮食和常规饲料，是不同的：
 
 ```r
-library([tidyverse](https://tidyverse.tidyverse.org))
+library(tidyverse
 mice_weights |> group_by(diet) |> summarize(average = mean(body_weight))
 #> # A tibble: 2 × 2
 #>   diet  average
@@ -243,8 +243,8 @@ sum(fit$coefficients[1:2])
 `emmeans`包简化了计算，并计算标准误差：
 
 ```r
-library([emmeans](https://rvlenth.github.io/emmeans/))
-[emmeans](https://rvlenth.github.io/emmeans/reference/emmeans.html)(fit, ~sex)
+library(emmeans)
+emmeans(fit, ~sex)
 #>  sex emmean    SE  df lower.CL upper.CL
 #>  F     29.8 0.339 778     29.1     30.4
 #>  M     38.6 0.346 778     37.9     39.3
@@ -272,7 +272,7 @@ coefficients(fit)
 如果我们想查看所有估计值，**emmeans** 包也为我们进行了计算：
 
 ```r
-[contrast](https://rvlenth.github.io/emmeans/reference/contrast.html)([emmeans](https://rvlenth.github.io/emmeans/reference/emmeans.html)(fit, ~sex))
+contrast(emmeans(fit, ~sex))
 #>  contrast estimate    SE  df t.ratio p.value
 #>  F effect    -4.41 0.242 778 -18.200  <.0001
 #>  M effect     4.41 0.242 778  18.200  <.0001
@@ -307,7 +307,7 @@ $$ \sigma²_{\text{gen}} \equiv \frac{1}{J}\sum_{j=1}^J \beta_j² $$
 
 ```r
 fit <- lm(body_weight ~ gen,  data = mice_weights, contrasts = list(gen=contr.sum))
-[contrast](https://rvlenth.github.io/emmeans/reference/contrast.html)([emmeans](https://rvlenth.github.io/emmeans/reference/emmeans.html)(fit, ~gen)) 
+contrast(emmeans(fit, ~gen)) 
 #>  contrast     estimate    SE  df t.ratio p.value
 #>  gen4 effect    -0.122 0.705 775  -0.174  0.8620
 #>  gen7 effect    -0.812 0.542 775  -1.497  0.3370

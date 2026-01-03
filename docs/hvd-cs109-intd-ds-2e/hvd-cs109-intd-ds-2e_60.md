@@ -20,7 +20,7 @@
 
 ```r
 set.seed(1983)
-library([MASS](http://www.stats.ox.ac.uk/pub/MASS4/))
+library(MASS)
 n <- 100
 rho <- 0.9
 sigma <- 3
@@ -38,8 +38,8 @@ x <- rbind(mvrnorm](https://rdrr.io/pkg/MASS/man/mvrnorm.html)(n/2, [c(69, 69), 
 为了表明这里提出的思想具有普遍的实用性，我们将标准化数据，使观测值处于标准单位而不是英寸：
 
 ```r
-library([matrixStats](https://github.com/HenrikBengtsson/matrixStats))
-x <- sweep(sweep(x, 2, colMeans(x)), 2, [colSds](https://rdrr.io/pkg/matrixStats/man/rowSds.html)(x), "/")
+library(matrixStats)
+x <- sweep(sweep(x, 2, colMeans(x)), 2, colSds(x), "/")
 ```
 
 *在上面的散点图中，我们还显示了观测 1 和 2 之间的距离（蓝色），以及观测 1 和 51 之间的距离（红色）。注意，蓝色线较短，这意味着 1 和 2 更接近。
@@ -359,7 +359,7 @@ names(iris)
 ```r
 x <- as.matrix(iris[,1:4])
 d <- dist(x)
-image(as.matrix(d), col = rev(RColorBrewer::[brewer.pal](https://rdrr.io/pkg/RColorBrewer/man/ColorBrewer.html)(9, "RdBu")))
+image(as.matrix(d), col = rev(RColorBrewer::brewer.pal(9, "RdBu")))
 ```
 
 ![](img/795d925e7fe75c06df1b34ba6b255196.png)*  *我们的特征矩阵有四个维度，但其中三个维度高度相关：
@@ -419,7 +419,7 @@ data.frame(pca$x[,1:2], Species = iris$Species) |>
 
 ```r
 library(dslabs)
-if (!exists("mnist")) mnist <- [read_mnist](https://rdrr.io/pkg/dslabs/man/read_mnist.html)()
+if (!exists("mnist")) mnist <- read_mnist()
 ```
 
 由于像素非常小，我们预计网格上彼此靠近的像素是相关的，这意味着可以进行降维。

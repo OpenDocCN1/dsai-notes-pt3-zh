@@ -491,7 +491,7 @@ nice_image <- function(x, zlim = range(x), cex.axis = 0.5, ...) {
  cols <- seq_len(ncol(x))
  rows <- seq_len(nrow(x))
  image(cols, rows, t(x[rev(rows), , drop = FALSE]),
- col  = rev(colorRampPalette(RColorBrewer::[brewer.pal](https://rdrr.io/pkg/RColorBrewer/man/ColorBrewer.html)(9, "RdBu"))(500)),
+ col  = rev(colorRampPalette(RColorBrewer::brewer.pal(9, "RdBu"))(500)),
  xaxt = "n", yaxt = "n", xlab = "", ylab = "",
  zlim = zlim, ...)
  abline(h = rows + 0.5, v = cols + 0.5)

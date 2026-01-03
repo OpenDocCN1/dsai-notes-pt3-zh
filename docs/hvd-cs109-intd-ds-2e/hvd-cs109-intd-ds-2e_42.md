@@ -52,9 +52,9 @@ Real Clear Politics¹ 是一个新闻聚合器，它组织和发布民意调查�
 *dslabs** 包含一个函数，可以显示从这个罐子中进行的随机抽取：
 
 ```r
-library([tidyverse](https://tidyverse.tidyverse.org))
+library(tidyverse
 library(dslabs)
-[take_poll](https://rdrr.io/pkg/dslabs/man/take_poll.html)(25)
+take_poll(25)
 ```
 
 ![](img/e73cfbe6c467faa88dd518ac632d7947.png)*  *思考一下你将如何根据上述数据构建你的区间。
@@ -379,7 +379,7 @@ hist(errors)
 
 ```r
 library(dslabs)
-library([tidyverse](https://tidyverse.tidyverse.org))
+library(tidyverse
 polls <- polls_us_election_2016 |> 
  filter(enddate >= "2016-10-31" & state == "U.S.") 
 ```

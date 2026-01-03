@@ -67,8 +67,8 @@
 然而，我们可以考察团队层面的统计数据。拥有许多盗垒的球队与拥有很少盗垒的球队相比如何？保送呢？让我们看看一些数据！我们首先创建一个包含从 1962 年（所有球队首次像今天一样打 162 场比赛的第一年）到 2001 年（Money Ball 中球队组建的前一年）的统计数据的数据框。我们将数据转换为*每场比赛*的比率，因为由于罢工，一小部分赛季的比赛少于平常，而一些球队由于平局决定者而进行了额外的比赛。我们还定义了一个`单打`列，以供以后使用。
 
 ```r
-library([tidyverse](https://tidyverse.tidyverse.org))
-library([Lahman](https://cdalzell.github.io/Lahman/))
+library(tidyverse
+library(Lahman)
 dat <- Teams |> filter(yearID %in% 1962:2001) |>
  mutate(singles = H - X2B - X3B - HR) |>
  select(teamID, yearID, G, R, SB, singles, BB, HR) |>
@@ -421,7 +421,7 @@ filter(players, playerID %in% c("damonjo01", "giambja01", "menecfr01")) |>
 1. 在我们开始之前，我们想要生成两张表格。一张是 2002 年的表格，另一张是 1999-2001 赛季平均值的表格。我们想要定义每局出场的统计数据。以下是创建 2002 年表格的方法，仅保留出场次数超过 100 次的球员：
 
 ```r
-library([Lahman](https://cdalzell.github.io/Lahman/))
+library(Lahman)
 dat <- Batting |> filter(yearID == 2002) |>
  mutate(pa = AB + BB, 
  singles = (H - X2B - X3B - HR)/pa, bb = BB/pa) |>
@@ -446,7 +446,7 @@ dat <- inner_join(dat, avg, by = "playerID")
 5. 在前面的部分中，我们计算了母亲和女儿、母亲和儿子、父亲和女儿以及父亲和儿子之间的相关性。我们注意到，父亲和儿子之间的相关性最高，而母亲和儿子之间的相关性最低。我们可以使用以下方法来计算这些相关性：
 
 ```r
-library([HistData](https://friendly.github.io/HistData/))
+library(HistData)
 set.seed(1)
 galton <- GaltonFamilies |>
  group_by(family, gender) |>

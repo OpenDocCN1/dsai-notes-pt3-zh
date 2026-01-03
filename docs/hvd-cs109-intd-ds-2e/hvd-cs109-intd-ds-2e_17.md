@@ -11,7 +11,7 @@
 假设我们想探索美国各州人口规模与选举人票数之间的关系。我们在这个表中找到了人口规模：
 
 ```r
-library([tidyverse](https://tidyverse.tidyverse.org))
+library(tidyverse
 library(dslabs)
 head(murders)
 #>        state abb region population total
@@ -262,7 +262,7 @@ bind_rows(tab_1, tab_2)
 你可以对任何类型的向量进行交集，例如数值：
 
 ```r
-[intersect](https://generics.r-lib.org/reference/setops.html)(1:10, 6:15)
+intersect(1:10, 6:15)
 #> [1]  6  7  8  9 10
 ```
 
@@ -273,12 +273,12 @@ intersect](https://generics.r-lib.org/reference/setops.html)([c("a","b","c"), c(
 #> [1] "b" "c"
 ```
 
-`dplyr` 包含一个 `intersect` 函数，可以应用于具有相同列名的表。此函数返回两个表之间的公共行。为了确保我们使用 `dplyr` 版本的 `intersect` 而不是基础 R 版本，我们可以使用 `[dplyr::intersect](https://generics.r-lib.org/reference/setops.html)` 如此：
+`dplyr` 包含一个 `intersect` 函数，可以应用于具有相同列名的表。此函数返回两个表之间的公共行。为了确保我们使用 `dplyr` 版本的 `intersect` 而不是基础 R 版本，我们可以使用 `dplyr::intersect` 如此：
 
 ```r
 tab_1 <- tab[1:5,]
 tab_2 <- tab[3:7,]
-dplyr::[intersect](https://generics.r-lib.org/reference/setops.html)(tab_1, tab_2)
+dplyr::intersect(tab_1, tab_2)
 #>        state abb region population total ev clinton trump johnson stein
 #> 1    Arizona  AZ   West    6392017   232 11    44.6  48.1    4.08 1.319
 #> 2   Arkansas  AR  South    2915918    93  6    33.7  60.6    2.65 0.838
@@ -294,7 +294,7 @@ dplyr::[intersect](https://generics.r-lib.org/reference/setops.html)(tab_1, tab_
 **同样，*并集* 取向量的并集。例如：
 
 ```r
-[union](https://generics.r-lib.org/reference/setops.html)(1:10, 6:15)
+union(1:10, 6:15)
 #>  [1]  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15
 union](https://generics.r-lib.org/reference/setops.html)([c("a","b","c"), c("b","c","d"))
 #> [1] "a" "b" "c" "d"
@@ -305,7 +305,7 @@ union](https://generics.r-lib.org/reference/setops.html)([c("a","b","c"), c("b",
 ```r
 tab_1 <- tab[1:5,]
 tab_2 <- tab[3:7,]
-dplyr::[union](https://generics.r-lib.org/reference/setops.html)(tab_1, tab_2) 
+dplyr::union(tab_1, tab_2) 
 #>         state abb    region population total ev clinton trump johnson
 #> 1     Alabama  AL     South    4779736   135  9    34.4  62.1    2.09
 #> 2      Alaska  AK      West     710231    19  3    36.6  51.3    5.88
@@ -329,9 +329,9 @@ dplyr::[union](https://generics.r-lib.org/reference/setops.html)(tab_1, tab_2)
 **通过 `setdiff` 可以获得第一个和第二个参数的集合差。与 `intersect` 和 `union` 不同，此函数不是对称的：
 
 ```r
-[setdiff](https://generics.r-lib.org/reference/setops.html)(1:10, 6:15)
+setdiff(1:10, 6:15)
 #> [1] 1 2 3 4 5
-[setdiff](https://generics.r-lib.org/reference/setops.html)(6:15, 1:10)
+setdiff(6:15, 1:10)
 #> [1] 11 12 13 14 15
 ```
 
@@ -340,7 +340,7 @@ dplyr::[union](https://generics.r-lib.org/reference/setops.html)(tab_1, tab_2)
 ```r
 tab_1 <- tab[1:5,]
 tab_2 <- tab[3:7,]
-dplyr::[setdiff](https://generics.r-lib.org/reference/setops.html)(tab_1, tab_2)
+dplyr::setdiff(tab_1, tab_2)
 #>     state abb region population total ev clinton trump johnson stein
 #> 1 Alabama  AL  South    4779736   135  9    34.4  62.1    2.09 0.442
 #> 2  Alaska  AK   West     710231    19  3    36.6  51.3    5.88 1.800
@@ -354,21 +354,21 @@ dplyr::[setdiff](https://generics.r-lib.org/reference/setops.html)(tab_1, tab_2)
 **最后，函数 `setequal` 告诉我们两个集合是否相同，无论顺序如何。所以请注意：
 
 ```r
-[setequal](https://generics.r-lib.org/reference/setops.html)(1:5, 1:6)
+setequal(1:5, 1:6)
 #> [1] FALSE
 ```
 
 但：
 
 ```r
-[setequal](https://generics.r-lib.org/reference/setops.html)(1:5, 5:1)
+setequal(1:5, 5:1)
 #> [1] TRUE
 ```
 
 `dplyr` 版本检查数据框是否相等，无论行或列的顺序*：
 
 ```r
-dplyr::[setequal](https://generics.r-lib.org/reference/setops.html)(tab_1, tab_2)
+dplyr::setequal(tab_1, tab_2)
 #> [1] FALSE
 ```********
 
@@ -398,7 +398,7 @@ tab <- merge(murders, results_us_election_2016, by = "state", all.x = TRUE)
 `Batting` 数据框包含了许多年所有球员的进攻统计数据。例如，你可以通过运行以下代码看到前 10 名击球手：
 
 ```r
-library([Lahman](https://cdalzell.github.io/Lahman/))
+library(Lahman)
  top <- Batting |> 
  filter(yearID == 2016) |>
  arrange(desc(HR)) |>

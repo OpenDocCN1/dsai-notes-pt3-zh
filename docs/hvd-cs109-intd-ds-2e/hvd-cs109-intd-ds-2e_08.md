@@ -13,7 +13,7 @@
 `data.table` 是一个独立的包，需要安装。一旦安装，我们就需要加载它以及我们将使用的其他包：
 
 ```r
-library([dplyr](https://dplyr.tidyverse.org))
+library(dplyr
 library(dslabs)
 library(data.table)
 ```

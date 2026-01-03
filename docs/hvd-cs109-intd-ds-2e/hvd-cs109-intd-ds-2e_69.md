@@ -11,7 +11,7 @@
 为了使示例具体且易于理解，我们使用第 28.3.1 节中引入的两个预测者数字数据集作为我们的示例。这个数据集足够小以进行可视化，同时足够丰富以揭示真实算法的行为。所有代码示例都依赖于**dslabs**包中的函数。稍后，在第三十一章中，我们将展示如何使用提供统一接口进行拟合和调整许多不同机器学习方法的**caret**包来有效地实现这些想法。
 
 ```r
-library([caret](https://github.com/topepo/caret/))
+library(caret)
 library(dslabs)
 ```
 
@@ -106,7 +106,7 @@ $$ p(\mathbf{x}) = \mathrm{Pr}(Y = 1|\mathbf{X}=\mathbf{x}) = \frac{f_{\mathbf{X
 ```r
 set.seed(1995)
 y <- heights$height
-train_index <- [createDataPartition](https://rdrr.io/pkg/caret/man/createDataPartition.html)(y, times = 1, p = 0.5, list = FALSE)
+train_index <- createDataPartition(y, times = 1, p = 0.5, list = FALSE)
 train_set <- heights[train_index,]
 test_set <- heights[-train_index,]
 ```
@@ -196,14 +196,14 @@ $$ \hat{p}(\mathbf{x})= \frac{\hat{f}_{\mathbf{X}|Y = 1}(\mathbf{x}) \hat{\pi}} 
 我们可以使用**MASS**包中的`qda`函数来拟合 QDA：
 
 ```r
-train_qda <- MASS::[qda](https://rdrr.io/pkg/MASS/man/qda.html)(y ~ ., data = mnist_27$train)
+train_qda <- MASS::qda(y ~ ., data = mnist_27$train)
 y_hat <- predict(train_qda, mnist_27$test)$class
 ```
 
 我们发现我们获得了相对较好的准确率：
 
 ```r
-[confusionMatrix](https://rdrr.io/pkg/caret/man/confusionMatrix.html)(y_hat, mnist_27$test$y)$overall["Accuracy"] 
+confusionMatrix(y_hat, mnist_27$test$y)$overall["Accuracy"] 
 #> Accuracy 
 #>    0.815
 ```
@@ -227,14 +227,14 @@ QDA 在这里可以工作得很好，但随着预测变量数量的增加，它�
 我们可以使用**MASS**包的`lda`函数来拟合 LDA：
 
 ```r
-train_lda <- MASS::[lda](https://rdrr.io/pkg/MASS/man/lda.html)(y ~ ., data = mnist_27$train)
+train_lda <- MASS::lda(y ~ ., data = mnist_27$train)
 y_hat <- predict(train_lda, mnist_27$test)$class
 ```
 
 现在椭圆的大小以及角度都是相同的。这是因为它们被假定为具有相同的标准差和相关性。尽管这个附加约束降低了参数的数量，但刚性降低了我们的准确性：*
 
 ```r
-[confusionMatrix](https://rdrr.io/pkg/caret/man/confusionMatrix.html)(y_hat, mnist_27$test$y)$overall["Accuracy"]
+confusionMatrix(y_hat, mnist_27$test$y)$overall["Accuracy"]
 #> Accuracy 
 #>    0.775
 ```
@@ -400,8 +400,8 @@ $$ \sum_{i:\, x_i \in R_1(j,s)} (y_i - \hat{y}_{R_1})² + \sum_{i:\, x_i \in R_2
 让我们看看这个算法在 2008 年总统选举民意调查数据上的表现。我们将使用 **rpart** 包中的 `rpart` 函数。
 
 ```r
-library([rpart](https://github.com/bethatkinson/rpart))
-fit <- [rpart](https://rdrr.io/pkg/rpart/man/rpart.html)(margin ~ ., data = polls_2008)
+library(rpart)
+fit <- rpart(margin ~ ., data = polls_2008)
 ```
 
 在这种情况下，只有一个预测器。因此我们不需要决定通过哪个预测器 $j$ 进行分割，我们只需要决定使用什么值 $s$ 进行分割。我们可以直观地看到分割的位置：
@@ -446,8 +446,8 @@ polls_2008 |>
 注意，如果我们已经有一个树并且想要应用更高的 cp 值，我们可以使用`prune`函数。我们称这种操作为*剪枝*，因为我们正在剪掉不符合`cp`标准的分区。以下是一个例子，我们创建了一个使用`cp = 0`的树，然后将其剪枝回来：
 
 ```r
-fit <- [rpart](https://rdrr.io/pkg/rpart/man/rpart.html)(margin ~ ., data = polls_2008, control = [rpart.control](https://rdrr.io/pkg/rpart/man/rpart.control.html)(cp = 0))
-pruned_fit <- [prune](https://rdrr.io/pkg/rpart/man/prune.rpart.html)(fit, cp = 0.01)
+fit <- rpart(margin ~ ., data = polls_2008, control = rpart.control(cp = 0))
+pruned_fit <- prune(fit, cp = 0.01)
 ```*******
 
 ### **分类（决策）树**
@@ -499,8 +499,8 @@ $$ \mbox{entropy}(j) = -\sum_{k = 1}^K \hat{p}_{j,k}\log(\hat{p}_{j,k}), \mbox{ 
 为了说明第一步如何导致更平滑的估计，我们将对 2008 年的民意调查数据进行随机森林拟合。我们将使用**randomForest**包中的`randomForest`函数：
 
 ```r
-library([randomForest](https://www.stat.berkeley.edu/~breiman/RandomForests/))
-fit <- [randomForest](https://rdrr.io/pkg/randomForest/man/randomForest.html)(margin ~ ., data = polls_2008) 
+library(randomForest)
+fit <- randomForest(margin ~ ., data = polls_2008) 
 ```
 
 注意，如果我们将`plot`函数应用于结果对象，我们可以看到随着我们添加树，我们算法的错误率如何变化：
@@ -528,8 +528,8 @@ y_hat <-  predict(fit, newdata = polls_2008)
 ![](img/4ee992eec5fce5e5afb7b68912fe08fa.png)
 
 ```r
-library([randomForest](https://www.stat.berkeley.edu/~breiman/RandomForests/))
-train_rf <- [randomForest](https://rdrr.io/pkg/randomForest/man/randomForest.html)(y ~ ., data = mnist_27$train)
+library(randomForest)
+train_rf <- randomForest(y ~ ., data = mnist_27$train)
 ```
 
 对于我们的 2 或 7 个示例，随机森林拟合的准确率为 0.825。以下是条件概率的图示：
@@ -558,9 +558,9 @@ dat <- MASS::mvrnorm](https://rdrr.io/pkg/MASS/man/mvrnorm.html)(n = 100, [c(69,
 使用**caret**包将数据集划分为大小相等的测试集和训练集。训练一个线性模型并报告 RMSE。重复此练习 100 次，并绘制 RMSE 的直方图，报告平均值和标准差。提示：像这样修改前面显示的代码：
 
 ```r
-library([caret](https://github.com/topepo/caret/))
+library(caret)
 y <- dat$y
-test_index <- [createDataPartition](https://rdrr.io/pkg/caret/man/createDataPartition.html)(y, times = 1, p = 0.5, list = FALSE)
+test_index <- createDataPartition(y, times = 1, p = 0.5, list = FALSE)
 train_set <- dat[train_index,]
 test_set <- dat[-train_index,]
 fit <- lm(y ~ x, data = train_set)
@@ -651,7 +651,7 @@ make_data <- function(n = 1000, p = 0.5,
  f_0 <- rnorm(n, mu_0, sigma_0)
  f_1 <- rnorm(n, mu_1, sigma_1)
  x <- ifelse(y == 1, f_1, f_0)
- test_index <- [createDataPartition](https://rdrr.io/pkg/caret/man/createDataPartition.html)(y, times = 1, p = 0.5, list = FALSE)
+ test_index <- createDataPartition(y, times = 1, p = 0.5, list = FALSE)
  list(train = data.frame(x = x, y = as.factor(y)) |> 
  slice(-test_index),
  test = data.frame(x = x, y = as.factor(y)) |> 

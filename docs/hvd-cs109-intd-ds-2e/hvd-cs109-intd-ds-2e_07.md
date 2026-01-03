@@ -11,7 +11,7 @@
 我们可以通过安装和加载**tidyverse**包一次性加载所有 tidyverse 包：
 
 ```r
-library([tidyverse](https://tidyverse.tidyverse.org))
+library(tidyverse
 ```
 
 本书中我们将学习如何实现 tidyverse 方法，但在深入细节之前，在本章中我们介绍了一些最广泛使用的 tidyverse 功能，从用于操作数据框的**dplyr**包和用于处理函数的**purrr**包开始。请注意，tidyverse 还包括一个绘图包**ggplot2**，我们将在本书数据可视化部分的第八章中介绍，还有在第六章中讨论的**readr**包以及其他许多包。在本章中，我们首先介绍*tidy 数据*的概念，然后展示我们如何使用 tidyverse 以这种格式处理数据框。
@@ -121,7 +121,7 @@ filter(new_dataframe, rate <= 0.71)
 *dplyr**提供了一系列辅助函数，用于根据内容选择列。例如，以下代码使用`where`函数仅保留数值列：
 
 ```r
-new_dataframe <- select(murders, [where](https://tidyselect.r-lib.org/reference/where.html)(is.numeric))
+new_dataframe <- select(murders, where(is.numeric))
 names(new_dataframe)
 #> [1] "population" "total"      "rate"
 ```
@@ -129,7 +129,7 @@ names(new_dataframe)
 辅助函数`starts_with`、`ends_with`、`contains`、`matches`和`num_range`可以用来根据列名选择列。以下是一个示例，显示所有以`r`开头的行：
 
 ```r
-new_dataframe <- select(murders, [starts_with](https://tidyselect.r-lib.org/reference/starts_with.html)("r"))
+new_dataframe <- select(murders, starts_with("r"))
 names(new_dataframe)
 #> [1] "region" "rate"
 ```
@@ -153,13 +153,13 @@ mutate(murders, across(c(population, total), log10))
 当使用`across`时，辅助函数非常有用。例如，如果我们想将相同的转换应用于所有数值变量：
 
 ```r
-mutate(murders, across([where](https://tidyselect.r-lib.org/reference/where.html)(is.numeric), log10))
+mutate(murders, across(where(is.numeric), log10))
 ```
 
 或者所有字符变量：
 
 ```r
-mutate(murders, across([where](https://tidyselect.r-lib.org/reference/where.html)(is.character), tolower))
+mutate(murders, across(where(is.character), tolower))
 ```
 
 *您现在可以开始练习 5-11 题了。*********
@@ -228,7 +228,7 @@ murders |> select(state, region, rate) |> filter(rate <= 0.71)
 *dplyr**中的`summarize`函数提供了一种使用直观且易于阅读的代码来计算摘要统计的方法。我们从基于身高的简单示例开始。`heights`数据集包括课堂调查中报告的学生身高和性别。
 
 ```r
-library([dplyr](https://dplyr.tidyverse.org))
+library(dplyr
 library(dslabs)
 ```
 
@@ -599,7 +599,7 @@ s_n <- sapply(n, compute_s_n)
 我们将要学习的第一个`purrr`函数是`map`，它的工作方式与`sapply`非常相似，但始终，没有例外，返回一个列表：
 
 ```r
-library([purrr](https://purrr.tidyverse.org/))
+library(purrr)
 s_n <- map(n, compute_s_n)
 class(s_n)
 #> [1] "list"
@@ -731,7 +731,7 @@ between(x, a, b)
 5. 加载**dplyr**包和谋杀数据集。
 
 ```r
-library([dplyr](https://dplyr.tidyverse.org))
+library(dplyr
 library(dslabs)
 ```
 

@@ -16,7 +16,7 @@
 
 ```r
 library(dslabs)
-mnist <- [read_mnist](https://rdrr.io/pkg/dslabs/man/read_mnist.html)()
+mnist <- read_mnist()
 ```
 
 该数据集包括两个部分，一个训练集和一个测试集：
@@ -78,10 +78,10 @@ R 中拟合机器算法的函数都略有不同。例如，`lm`、`glm`、`qda`�
 *caret** 的 `train` 函数让我们可以使用类似的语法训练不同的算法。因此，例如，我们可以键入以下内容来训练三个不同的模型：
 
 ```r
-library([caret](https://github.com/topepo/caret/))
-train_glm <- [train](https://rdrr.io/pkg/caret/man/train.html)(y ~ ., method = "glm", data = mnist_27$train)
-train_qda <- [train](https://rdrr.io/pkg/caret/man/train.html)(y ~ ., method = "qda", data = mnist_27$train)
-train_knn <- [train](https://rdrr.io/pkg/caret/man/train.html)(y ~ ., method = "knn", data = mnist_27$train)
+library(caret)
+train_glm <- train(y ~ ., method = "glm", data = mnist_27$train)
+train_qda <- train(y ~ ., method = "qda", data = mnist_27$train)
+train_knn <- train(y ~ ., method = "knn", data = mnist_27$train)
 ```
 
 正如我们在 第 31.2.3 节 中更详细地解释的那样，`train` 函数使用重采样方法为您选择参数，以估计 MSE，默认使用 bootstrap。
@@ -144,19 +144,19 @@ sapply(fits, function(fit)
 **当算法包含一个调整参数时，`train`会自动使用重采样方法来估计均方误差（MSE）并在几个默认候选值之间进行选择。要找出哪些参数被优化，可以阅读**caret**手册²或研究以下输出的结果：
 
 ```r
-[modelLookup](https://rdrr.io/pkg/caret/man/modelLookup.html)("knn")
+modelLookup("knn")
 ```
 
 要了解**caret**如何实现 kNN 的所有细节，可以使用以下方法：
 
 ```r
-[getModelInfo](https://rdrr.io/pkg/caret/man/modelLookup.html)("knn")
+getModelInfo("knn")
 ```
 
 如果我们使用默认值运行它：
 
 ```r
-train_knn <- [train](https://rdrr.io/pkg/caret/man/train.html)(y ~ ., method = "knn", data = mnist_27$train)
+train_knn <- train(y ~ ., method = "knn", data = mnist_27$train)
 ```
 
 你可以使用`ggplot`函数快速查看交叉验证的结果。`highlight`参数突出显示最大值：
@@ -172,7 +172,7 @@ ggplot(train_knn, highlight = TRUE)
 在这里，我们提供了一个例子，我们尝试了 1 到 75 之间的 38 个值。要在**caret**中这样做，我们需要定义一个名为`k`的列，所以我们使用这个：`data.frame(k = seq(11, 105, 2))`。请注意，在运行此代码时，我们正在将 38 个 kNN 版本拟合到 25 个自助样本。由于我们正在拟合$38 \times 25 = 950$个 kNN 模型，运行此代码将需要几秒钟。
 
 ```r
-train_knn <- [train](https://rdrr.io/pkg/caret/man/train.html)(y ~ ., method = "knn", 
+train_knn <- train(y ~ ., method = "knn", 
  data = mnist_27$train,
  tuneGrid = data.frame(k = seq(11, 105, 4)))
 ggplot(train_knn, highlight = TRUE)
@@ -202,8 +202,8 @@ mean(predict(train_knn, mnist_27$test, type = "raw") == mnist_27$test$y)
 自助法并不总是重采样的最佳方法（例如，参见第 31.5 节）。如果我们想更改我们的重采样方法，可以使用`trainControl`函数。例如，下面的代码运行了 10 折交叉验证。这意味着我们有 10 个样本，每个样本使用 90%的观测值进行训练。我们使用以下代码实现这一点：
 
 ```r
-control <- [trainControl](https://rdrr.io/pkg/caret/man/trainControl.html)(method = "cv", number = 10, p = .9)
-train_knn_cv <- [train](https://rdrr.io/pkg/caret/man/train.html)(y ~ ., method = "knn", 
+control <- trainControl(method = "cv", number = 10, p = .9)
+train_knn_cv <- train(y ~ ., method = "knn", 
  data = mnist_27$train,
  tuneGrid = data.frame(k = seq(11, 105, 4)),
  trControl = control)
@@ -227,8 +227,8 @@ names(train_knn$results)
 例如，我们可以运行 **caret** 包中的 `nearZeroVar` 函数，以查看有几个特征在观测之间变化不大。我们可以看到有大量特征接近于 0 的变异性：
 
 ```r
-library([matrixStats](https://github.com/HenrikBengtsson/matrixStats))
-hist([colSds](https://rdrr.io/pkg/matrixStats/man/rowSds.html)(x), breaks = 256)
+library(matrixStats)
+hist(colSds(x), breaks = 256)
 ```
 
 ![](img/4bdff4256010dca8944dfe28e6f4037b.png)*  *这是预期的，因为图像中有一部分很少包含文字（暗像素）。
@@ -236,7 +236,7 @@ hist([colSds](https://rdrr.io/pkg/matrixStats/man/rowSds.html)(x), breaks = 256)
 *caret** 包包括一个推荐移除因 *接近零变异* 而应移除特征的函数：
 
 ```r
-nzv <- [nearZeroVar](https://rdrr.io/pkg/caret/man/nearZeroVar.html)(x)
+nzv <- nearZeroVar(x)
 ```
 
 我们可以看到建议移除的列靠近边缘：
@@ -267,17 +267,17 @@ dim(centered_subsetted_x_test)
 *caret** 包旨在利用并行处理，但您需要明确告诉 R 并行运行任务。为此，我们使用 **doParallel** 包：
 
 ```r
-library([doParallel](https://github.com/RevolutionAnalytics/doparallel))
+library(doParallel)
 nc <- detectCores() - 1   # it is convention to leave 1 core for the OS
 cl <- makeCluster(nc)
-[registerDoParallel](https://rdrr.io/pkg/doParallel/man/registerDoParallel.html)(cl)
+registerDoParallel(cl)
 ```
 
 如果你使用并行化，一旦你完成模型的拟合，请确保使用以下代码让 R 知道你已经完成：
 
 ```r
 stopCluster(cl)
-[stopImplicitCluster](https://rdrr.io/pkg/doParallel/man/registerDoParallel.html)()
+stopImplicitCluster()
 ```
 
 *当在多个处理器之间并行化任务时，考虑内存耗尽的风险是很重要的。每个处理器可能需要数据的副本或其大部分，这可能会使整体内存需求成倍增加。如果数据或模型很大，这尤其具有挑战性。********
@@ -295,9 +295,9 @@ stopCluster(cl)
 第一步是优化 $k$。
 
 ```r
-train_knn <- [train](https://rdrr.io/pkg/caret/man/train.html)(x, y, method = "knn", 
+train_knn <- train(x, y, method = "knn", 
  preProcess = "nzv",
- trControl = [trainControl](https://rdrr.io/pkg/caret/man/trainControl.html)("cv", number = 20, p = 0.95),
+ trControl = trainControl("cv", number = 20, p = 0.95),
  tuneGrid = data.frame(k = seq(1, 7, 2)))
 ```
 
@@ -328,7 +328,7 @@ p <- which(cumsum(pca$sdev²) / sum(pca$sdev²) >= 0.9)[1]
 现在我们可以仅使用这些 87 个转换特征重新运行我们的算法：
 
 ```r
-fit_knn_pca <- [knn3](https://rdrr.io/pkg/caret/man/knn3.html)(pca$x[, 1:p], y, k = train_knn$bestTune)
+fit_knn_pca <- knn3(pca$x[, 1:p], y, k = train_knn$bestTune)
 ```
 
 使用 PCA 进行预测的一个关键点是，PCA 变换必须仅从训练集中学习。如果我们使用验证集或测试集来计算主成分，甚至用于中心化的均值，我们无意中将从这些集中泄露信息到训练过程中，导致过拟合。
@@ -360,9 +360,9 @@ mean(y_hat_knn_pca == y_test)
 这里是如何修改我们之前的代码，让 caret 在预处理期间执行 PCA：
 
 ```r
-train_knn_pca <- [train](https://rdrr.io/pkg/caret/man/train.html)(x, y, method = "knn", 
+train_knn_pca <- train(x, y, method = "knn", 
  preProcess = c("nzv", "pca"),
- trControl = [trainControl](https://rdrr.io/pkg/caret/man/trainControl.html)("cv", number = 20, p = 0.95,
+ trControl = trainControl("cv", number = 20, p = 0.95,
  preProcOptions = list(thresh = 0.9)),
  tuneGrid = data.frame(k = seq(1, 7, 2)))
 y_hat_knn_pca <- predict(train_knn_pca, x_test, type = "raw")
@@ -379,8 +379,8 @@ mean(y_hat_knn_pca == y_test)
 *使用随机森林算法，可以优化多个参数，但主要的一个是 `mtry`，即每个树随机选择的预测因子数量。这也是** caret **函数 `train` 在使用 **randomForest** 包的默认实现时允许的唯一调整参数**。
 
 ```r
-library([randomForest](https://www.stat.berkeley.edu/~breiman/RandomForests/))
-train_rf <- [train](https://rdrr.io/pkg/caret/man/train.html)(x, y, method = "rf", 
+library(randomForest)
+train_rf <- train(x, y, method = "rf", 
  preProcess = "nzv",
  tuneGrid = data.frame(mtry = seq(5, 15)))
 y_hat_rf <- predict(train_rf, x_test, type = "raw")
@@ -406,8 +406,8 @@ mean(y_hat_rf == y_test)
 `train` 函数用于估计准确度的默认方法是测试 25 个自助样本的预测。这可能会导致计算时间较长。例如，如果我们正在考虑几个调整参数的值，比如 10，那么我们将拟合算法 250 次。我们可以使用 `system.time` 函数来估计运行算法一次需要多长时间：
 
 ```r
-nzv <- [nearZeroVar](https://rdrr.io/pkg/caret/man/nearZeroVar.html)(x)
-system.time({fit_rf <- [randomForest](https://rdrr.io/pkg/randomForest/man/randomForest.html)(x[, -nzv], y,  mtry = 9)})
+nzv <- nearZeroVar(x)
+system.time({fit_rf <- randomForest(x[, -nzv], y,  mtry = 9)})
 #>    user  system elapsed 
 #>  61.657   0.598  62.356
 ```
@@ -431,7 +431,7 @@ plot(fit_rf)
 *我们在第 30.5.1 节中描述了变量重要性。以下函数计算每个特征的重要性：
 
 ```r
-imp <- [varImp](https://rdrr.io/pkg/caret/man/varImp.html)(fit_rf)
+imp <- varImp(fit_rf)
 ```
 
 我们可以通过绘制图像来查看哪些特征被使用得最多：
@@ -599,7 +599,7 @@ with(mnist_27$true_p, plot_cond_prob(x_1, x_2, p))
 22. 注意，在练习 21 中制作的图中，边界有些曲折。这是因为 kNN，就像基本的二进制平滑器一样，不使用核。为了改进这一点，我们可以尝试使用 loess。通过阅读**caret**手册中可用的模型部分，我们看到我们可以使用`gamLoess`方法。如果我们还没有安装，我们需要安装**gam**包。我们看到我们有两个参数需要优化：
 
 ```r
-[modelLookup](https://rdrr.io/pkg/caret/man/modelLookup.html)("gamLoess")
+modelLookup("gamLoess")
 #>      model parameter  label forReg forClass probModel
 #> 1 gamLoess      span   Span   TRUE     TRUE      TRUE
 #> 2 gamLoess    degree Degree   TRUE     TRUE      TRUE
@@ -622,7 +622,7 @@ models <- c(
 )
 ```
 
-使用默认的调整参数使用`[train()](https://rdrr.io/pkg/caret/man/train.html)`拟合每个模型，并将拟合的模型对象保存在一个列表中。你可能需要根据你尝试的模型安装额外的包，并且一些模型将产生警告——这是预期的。
+使用默认的调整参数使用`train()`拟合每个模型，并将拟合的模型对象保存在一个列表中。你可能需要根据你尝试的模型安装额外的包，并且一些模型将产生警告——这是预期的。
 
 25. 现在你已经有一个包含所有训练模型的列表，使用`sapply`或`map`为测试集创建一个预测矩阵。你应该得到一个有`length(mnist_27$test$y)`行和`length(models)`列的矩阵。
 

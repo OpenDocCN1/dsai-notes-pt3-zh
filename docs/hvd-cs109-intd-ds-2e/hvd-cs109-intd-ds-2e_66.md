@@ -13,7 +13,7 @@
 我们介绍了**caret**包，它提供了有用的函数来促进 R 中的机器学习，我们将在第 31.2 节中更详细地描述它。在我们的第一个例子中，我们使用**dslabs**包提供的高度数据。
 
 ```r
-library([caret](https://github.com/topepo/caret/))
+library(caret)
 library(dslabs)
 ```
 
@@ -35,7 +35,7 @@ names(heights) <- c("y", "x")
 
 ```r
 set.seed(2010)
-train_index <- [createDataPartition](https://rdrr.io/pkg/caret/man/createDataPartition.html)(heights$y, times = 1, p = 0.5, list = FALSE)
+train_index <- createDataPartition(heights$y, times = 1, p = 0.5, list = FALSE)
 ```
 
 `times`参数用于定义要返回多少个随机索引样本，`p`参数用于定义索引代表数据集的比例，而`list`参数用于决定我们是否希望返回索引列表。
@@ -132,7 +132,7 @@ mean(y_hat == test_set$y)
 一般而言，整体准确性可能会误导。为了理解原因，我们首先构建一个*混淆矩阵*，这是一个表格，它统计了每种预测和真实结果的组合出现的频率。在 R 中，我们可以使用`table`创建这个表格，但**caret**包提供了一个方便的函数`confusionMatrix`，它不仅计算混淆矩阵，还报告了我们将稍后使用的几个额外的性能指标：
 
 ```r
-cm <- [confusionMatrix](https://rdrr.io/pkg/caret/man/confusionMatrix.html)(data = y_hat, reference = test_set$y)
+cm <- confusionMatrix(data = y_hat, reference = test_set$y)
 cm$table
 #>           Reference
 #> Prediction Female Male
@@ -204,7 +204,7 @@ cm$byClass["Prevalence"]
 如果你将此输入 R：
 
 ```r
-cm <- [confusionMatrix](https://rdrr.io/pkg/caret/man/confusionMatrix.html)(data = y_hat, reference = test_set$sex)
+cm <- confusionMatrix(data = y_hat, reference = test_set$sex)
 print(cm)
 ```
 
@@ -245,7 +245,7 @@ $$ \frac{1}{\frac{\beta²}{1+\beta²}\frac{1}{\mbox{召回率}} + \frac{1}{1+\be
 cutoffs <- seq(61, 70)
 F_1 <- sapply(cutoffs, function(cutoff){
  y_hat <- factor(ifelse(train_set$x <= cutoff, "Female", "Male"))
- [F_meas](https://rdrr.io/pkg/caret/man/recall.html)(y_hat, train_set$y)
+ F_meas(y_hat, train_set$y)
 })
 ```
 
@@ -272,9 +272,9 @@ best_cutoff
 
 ```r
 y_hat <- factor(ifelse(test_set$x <= best_cutoff, "Female", "Male"))
-[sensitivity](https://rdrr.io/pkg/caret/man/sensitivity.html)(y_hat, test_set$y)
+sensitivity(y_hat, test_set$y)
 #> [1] 0.672
-[specificity](https://rdrr.io/pkg/caret/man/sensitivity.html)(y_hat, test_set$y)
+specificity(y_hat, test_set$y)
 #> [1] 0.837
 ```
 
@@ -295,8 +295,8 @@ probs <- seq(0, 1, length.out = 10)
 guessing <- sapply(probs, function(p){
  y_hat <- sample(c("Male", "Female"), nrow(test_set), TRUE, c(p, 1 - p)) 
  y_hat <- factor(y_hat, levels = c("Female", "Male"))
- c(FPR = 1 - [specificity](https://rdrr.io/pkg/caret/man/sensitivity.html)(y_hat, test_set$y),
- TPR = [sensitivity](https://rdrr.io/pkg/caret/man/sensitivity.html)(y_hat, test_set$y))
+ c(FPR = 1 - specificity(y_hat, test_set$y),
+ TPR = sensitivity(y_hat, test_set$y))
 })
 ```
 
@@ -363,9 +363,9 @@ $$ \hat{\mbox{MSE}} = \frac{1}{N}\sum_{i=1}^N (\hat{y}_i - y_i)² $$
 ***在以下练习中，我们使用 Titanic 数据集来探索使用基于连续预测因子的简单决策规则进行分类的评价指标。我们的目标不是构建一个复杂的模型，而是了解准确率、敏感性、特异性、精确率和患病率如何取决于截止值的选择。我们将使用票价（票价）、年龄和乘客等级（`Pclass`）等变量来预测生存，将生存（`Survived`）视为二元结果。
 
 ```r
-library([tidyverse](https://tidyverse.tidyverse.org))
-library([caret](https://github.com/topepo/caret/))
-library([titanic](https://github.com/paulhendricks/titanic))
+library(tidyverse
+library(caret)
+library(titanic)
  titanic <- titanic_train |> select(Survived, Pclass, Sex, Age, Fare) |> drop_na() |>
  mutate(Survived = factor(Survived, levels = c(1,0)), 
  Pclass = factor(Pclass), Sex = factor(Sex))

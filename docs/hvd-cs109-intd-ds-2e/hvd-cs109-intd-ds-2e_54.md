@@ -40,7 +40,7 @@
 
 ```r
 library(data.table)
-library([ggplot2](https://ggplot2.tidyverse.org))
+library(ggplot2
 N <- 25
 g <- 1000000
 sim_data <- data.table(group = rep(1:g, each = N), x = rnorm(N*g), y = rnorm(N*g))
@@ -76,8 +76,8 @@ res |> ggplot(aes(x = r)) + geom_histogram(binwidth = 0.1, color = "black")
 如果我们对这个组进行回归并解释 p 值，我们会错误地声称这是一个具有统计学意义的关联：
 
 ```r
-library([broom](https://broom.tidymodels.org/))
-sim_datagroup == res[[which.max(r), group], broom::tidy](https://generics.r-lib.org/reference/tidy.html)([lm(y ~ x))][2,]
+library(broom)
+sim_datagroup == res[which.max(r), group], broom::tidy([lm(y ~ x))][2,]
 #> # A tibble: 1 × 5
 #>   term  estimate std.error statistic     p.value
 #>   <chr>    <dbl>     <dbl>     <dbl>       <dbl>
@@ -179,7 +179,7 @@ tidy](https://generics.r-lib.org/reference/tidy.html)([lm(father ~ son, data = g
 1973 年从加州大学伯克利分校六个专业的入学数据中显示，男性被录取的人数多于女性：男性录取率为 44%，女性为 30%³。我们可以加载数据并计算一个统计检验，这明显拒绝了性别和录取独立性的假设：
 
 ```r
-library([dplyr](https://dplyr.tidyverse.org))
+library(dplyr
 two_by_two <- admissions |> group_by(gender) |> 
  summarize(total_admitted = round(sum(admitted / 100 * applicants)), 
  not_admitted = sum(applicants) - sum(total_admitted)) |>

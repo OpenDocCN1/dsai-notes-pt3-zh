@@ -15,7 +15,7 @@
 我们可以在这里看到 R 用于数据的示例数据类型：
 
 ```r
-library([tidyverse](https://tidyverse.tidyverse.org))
+library(tidyverse
 library(dslabs)
 polls_us_election_2016$startdate |> head()
 #> [1] "2016-11-03" "2016-11-01" "2016-11-02" "2016-11-04" "2016-11-03"
@@ -58,7 +58,7 @@ polls_us_election_2016 |> filter(pollster == "Ipsos" & state == "U.S.") |>
 **`lubridate`包提供了处理日期和时间的工具。
 
 ```r
-library([lubridate](https://lubridate.tidyverse.org))
+library(lubridate
 ```
 
 我们将随机抽取一些日期样本来展示一些可以做的有用事情：

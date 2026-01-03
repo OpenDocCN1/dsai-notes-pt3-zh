@@ -58,7 +58,7 @@ $$ RSS = \sum_{i=1}^n \left\{ y_i - \left(\beta_0 + \beta_1 x_i \right)\right\}�
 
 ```r
 library(data.table)
-library([HistData](https://friendly.github.io/HistData/))
+library(HistData)
  set.seed(1983)
 galton <- as.data.table(GaltonFamilies)gender == "male", .SD[[sample(.N, 1)], by = family]
 galton <- galton[, .(father, son = childHeight)]
@@ -238,9 +238,9 @@ plot(fit, which = 1:3)
 要理解这些模型，想象一下你是 16 世纪的伽利略，试图描述一个下落物体的速度。一个助手爬上比萨斜塔并扔下一个球，而其他几个助手在不同时间记录位置。让我们使用我们目前所知的方程模拟一些数据，并添加一些测量误差。`dslabs`函数`rfalling_object`生成这些模拟：
 
 ```r
-library([tidyverse](https://tidyverse.tidyverse.org))
+library(tidyverse
 library(dslabs)
-falling_object <- [rfalling_object](https://rdrr.io/pkg/dslabs/man/rfalling_object.html)()
+falling_object <- rfalling_object()
 ```
 
 助手将数据交给伽利略，这就是他看到的情况：
@@ -281,7 +281,7 @@ summary(fit)$coefficients
 让我们检查估计的抛物线是否适合数据。**broom**函数`augment`使我们能够轻松地做到这一点：
 
 ```r
-broom::[augment](https://generics.r-lib.org/reference/augment.html)(fit) |> 
+broom::augment(fit) |> 
  ggplot() +
  geom_point(aes(time, observed_distance)) + 
  geom_line(aes(time, .fitted), col = "blue")

@@ -61,9 +61,9 @@ MNIST 数据集是通过数字化数千个手写数字生成的，这些数字�
 使用 **dslabs** 包加载数据：
 
 ```r
-library([tidyverse](https://tidyverse.tidyverse.org))
+library(tidyverse
 library(dslabs)
-mnist <- [read_mnist](https://rdrr.io/pkg/dslabs/man/read_mnist.html)()
+mnist <- read_mnist()
 ```
 
 像素强度被保存在一个矩阵中：
@@ -269,8 +269,8 @@ avg <- rowMeans(x)
 *并且 `rowSds` 函数来自 **matrixStats** 包，它计算每行的标准差：**
 
 ```r
-library([matrixStats](https://github.com/HenrikBengtsson/matrixStats))
-sds <- [rowSds](https://rdrr.io/pkg/matrixStats/man/rowSds.html)(x)
+library(matrixStats)
+sds <- rowSds(x)
 ```
 
 *函数 `colMeans` 和 `colSds` 提供了列的版本。**
@@ -300,7 +300,7 @@ x[apply(!is.na(x), 1, all),]
 这是一个常见的操作，我们有一个 **matrixStats** 函数来更快地完成它：
 
 ```r
-x[![rowAnyNAs](https://rdrr.io/pkg/matrixStats/man/anyMissing.html)(x),]
+x![rowAnyNAs(x),]
 ```******
 
 ### ****使用矩阵进行索引****
@@ -350,7 +350,7 @@ x - rowMeans(x)
 相同的向量化也适用于其他算术操作，例如除法。例如，我们可以使用以下方法同时中心化和缩放行：
 
 ```r
-(x - rowMeans(x))/[rowSds](https://rdrr.io/pkg/matrixStats/man/rowSds.html)(x)
+(x - rowMeans(x))/rowSds(x)
 ```
 
 这相当于 `scale(x)`，但这里显式地执行以展示底层的向量化操作。***
@@ -404,7 +404,7 @@ sweep(x, 1, rowMeans(x))
 要进行缩放而不是居中，只需更改操作：
 
 ```r
-sweep(x, 2, [colSds](https://rdrr.io/pkg/matrixStats/man/rowSds.html)(x), "/")
+sweep(x, 2, colSds(x), "/")
 ```
 
 `sweep` 函数也超越了矩阵的范畴，它可以处理超过两个维度的数组以及匹配维度的统计向量 (`STATS`)。*********
@@ -466,7 +466,7 @@ boxplot(avg ~ y)
 使用我们在第 21.3.5 节和第 21.3.6 节中学到的知识，我们可以有效地计算和过滤出这样的列。为了量化每个像素的可变性，我们使用**matrixStats**包中的`colSds`函数计算其在所有图像中的标准差：
 
 ```r
-sds <- [colSds](https://rdrr.io/pkg/matrixStats/man/rowSds.html)(x)
+sds <- colSds(x)
 ```
 
 快速查看这些值的分布显示，一些像素的逐个值变异性非常低：
@@ -488,7 +488,7 @@ image(1:28, 1:28, matrix(sds, 28, 28)[, 28:1])
 因此，如果我们想从矩阵中移除无信息预测因子，我们可以写这一行代码：
 
 ```r
-new_x <- x[,[colSds](https://rdrr.io/pkg/matrixStats/man/rowSds.html)(x) > 60]
+new_x <- x,[colSds(x) > 60]
 dim(new_x)
 #> [1] 60000   322
 ```
@@ -533,13 +533,13 @@ bin_X <- (x > 255/2)*1
 使用我们在第 21.4 节中学到的知识意味着我们可以按如下方式缩放矩阵的每一行：
 
 ```r
-(x - rowMeans(x))/[rowSds](https://rdrr.io/pkg/matrixStats/man/rowSds.html)(x)
+(x - rowMeans(x))/rowSds(x)
 ```
 
 对于列，我们可以组合两次调用`sweep`：*
 
 ```r
-sweep(sweep(x, 2, colMeans(x)), 2, [colSds](https://rdrr.io/pkg/matrixStats/man/rowSds.html)(x), FUN = "/")
+sweep(sweep(x, 2, colMeans(x)), 2, colSds(x), FUN = "/")
 ```
 
 注意我们可以通过将`2`替换为`1`并使用`rowMeans`和`rowSds`来标准化行。*

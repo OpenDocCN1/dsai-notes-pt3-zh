@@ -225,7 +225,7 @@ download.file(url, destfile = dest_file)
 现在我们准备编写一个脚本来读取这些数据，并准备一个我们可以用于分析的表格。将文件命名为 `wrangle-data.R`。此文件的内容将如下：
 
 ```r
-library([tidyverse](https://tidyverse.tidyverse.org))
+library(tidyverse
 murders <- read_csv("data/murders.csv")
 murders <- murders |> mutate(region = factor(region),
  rate = total / population * 10⁵)
@@ -257,7 +257,7 @@ dat <- readRDS("rdas/murders.rda")
 ***现在我们准备好编写分析文件了。让我们称它为`analysis.R`。内容应该是以下内容：
 
 ```r
-library([tidyverse](https://tidyverse.tidyverse.org))
+library(tidyverse
 load("rdas/murders.rda")
  murders |> mutate(abb = reorder(abb, rate)) |>
  ggplot(aes(abb, rate)) +

@@ -110,7 +110,7 @@ $$(49.5, 50.5], (50.5, 51.5], (51.5, 52.5], (52.5, 53.5], \dots, (82.5, 83.5]$$
 我们可以使用以下**ggplot2**代码来完成这项工作：
 
 ```r
-library([tidyverse](https://tidyverse.tidyverse.org))
+library(tidyverse
 heights |> filter(sex == "Male") |> 
  mutate(height = round(height)) |>
  count(height) |> mutate(f = n / sum(n)) |> 

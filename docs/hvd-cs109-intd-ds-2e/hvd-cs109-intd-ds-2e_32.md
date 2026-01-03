@@ -122,7 +122,7 @@ qqline(x)
 并且与 **ggplot2** 相当：
 
 ```r
-library([ggplot2](https://ggplot2.tidyverse.org))
+library(ggplot2
 heights |> filter(sex == "Male") |>
  ggplot](https://ggplot2.tidyverse.org/reference/ggplot.html)(aes(sample = [scale(height))) + 
  geom_qq() +
@@ -142,7 +142,7 @@ heights |> filter(sex == "Male") |>
 我们了解到，当我们想要快速比较两个或多个分布时，箱线图很有用。以下是女性和男性的身高：
 
 ```r
-library([tidyverse](https://tidyverse.tidyverse.org))
+library(tidyverse
 library(dslabs)
 heights |> ggplot(aes(sex, height, fill = sex)) + geom_boxplot()
 ```

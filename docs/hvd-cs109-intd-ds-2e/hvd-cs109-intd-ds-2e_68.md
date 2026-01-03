@@ -32,9 +32,9 @@ outcome ~ predictor_1 + predictor_2 + ...
 
 ```r
 library(dslabs)
-library([caret](https://github.com/topepo/caret/))
+library(caret)
 #> Loading required package: lattice
-knn_fit <- [knn3](https://rdrr.io/pkg/caret/man/knn3.html)(y ~ ., data = mnist_27$train, k = 5)
+knn_fit <- knn3(y ~ ., data = mnist_27$train, k = 5)
 ```
 
 在这种情况下，由于我们的数据集是平衡的，我们同样关心敏感性和特异性，我们将使用准确率来量化性能。
@@ -76,7 +76,7 @@ mean(y_hat_knn == mnist_27$test$y)
 在这里，我们使用$k = 1$拟合 kNN 模型，并确认我们在训练集中获得了接近完美的准确率：
 
 ```r
-knn_fit_1 <- [knn3](https://rdrr.io/pkg/caret/man/knn3.html)(y ~ ., data = mnist_27$train, k = 1)
+knn_fit_1 <- knn3(y ~ ., data = mnist_27$train, k = 1)
 y_hat_knn_1 <- predict(knn_fit_1, mnist_27$train, type = "class")
 mean(y_hat_knn_1 == mnist_27$train$y)
 #> [1] 0.994
@@ -101,7 +101,7 @@ mean(y_hat_knn_1 == mnist_27$test$y)
 **尽管不如$k=1$时严重，但我们看到当$k = 5$时，我们也出现了过拟合。因此，我们应该考虑一个更大的$k$。让我们尝试一个更大的数字，例如$k = 401$。
 
 ```r
-knn_fit_401 <- [knn3](https://rdrr.io/pkg/caret/man/knn3.html)(y ~ ., data = mnist_27$train, k = 401)
+knn_fit_401 <- knn3(y ~ ., data = mnist_27$train, k = 401)
 y_hat_knn_401 <- predict(knn_fit_401, mnist_27$test, type = "class")
 mean(y_hat_knn_401 == mnist_27$test$y)
 #> [1] 0.76
@@ -348,7 +348,7 @@ x_subset <- x[, ind]
 
 ```r
 set.seed(1995)
-indexes <- [createResample](https://rdrr.io/pkg/caret/man/createDataPartition.html)(mnist_27$train$y, 10)
+indexes <- createResample(mnist_27$train$y, 10)
 ```
 
 在第一个重采样样本中，索引 3、4 和 7 出现了多少次？

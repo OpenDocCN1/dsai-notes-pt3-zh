@@ -181,7 +181,7 @@ $$ \mathrm{Pr}(A \mid B) = 0.50 $$
 创建以下表格，包含过去两周内进行的投票：
 
 ```r
-library([tidyverse](https://tidyverse.tidyverse.org))
+library(tidyverse
 library(dslabs)
 polls <- polls_us_election_2016 |> 
  filter(state == "Florida" & enddate >= "2016-11-04" ) |> 

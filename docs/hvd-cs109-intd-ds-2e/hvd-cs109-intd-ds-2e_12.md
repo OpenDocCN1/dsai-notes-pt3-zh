@@ -11,8 +11,8 @@
 在整本书中，我们将使用**ggplot2**¹包来创建图表。
 
 ```r
-library([dplyr](https://dplyr.tidyverse.org))
-library([ggplot2](https://ggplot2.tidyverse.org))
+library(dplyr
+library(ggplot2
 ```
 
 在 R 中创建图表的方法还有很多。实际上，R 的基本安装就已经提供了相当强大的绘图功能。还有其他用于创建图形的包，如**grid**和**lattice**。我们选择在这本书中使用**ggplot2**，因为它将图表分解成组件，这种方式允许初学者使用直观且相对容易记忆的语法创建相对复杂且美观的图表。
@@ -277,17 +277,17 @@ p5
 可以使用 `theme` 函数更改 **ggplot2** 图表的风格。**ggplot2** 包包含几个主题。实际上，对于本书中的大多数图表，我们使用 **dslabs** 包中的一个函数来自动设置默认主题：
 
 ```r
-[ds_theme_set](https://rdrr.io/pkg/dslabs/man/ds_theme_set.html)()
+ds_theme_set()
 ```
 
 包 **ggthemes** 添加了许多其他主题。其中之一是我们在这里使用的 `theme_economist` 主题。安装包后，您可以通过添加类似这样的层来更改样式：
 
 ```r
-library([ggthemes](https://jrnold.github.io/ggthemes/))
-p6 <- p5 + [theme_economist](http://jrnold.github.io/ggthemes/reference/theme_economist.html)()
+library(ggthemes)
+p6 <- p5 + theme_economist()
 ```
 
-您可以通过简单地更改函数来查看其他主题的外观。例如，您可能会尝试 `[theme_fivethirtyeight()](http://jrnold.github.io/ggthemes/reference/theme_fivethirtyeight.html)` 主题。
+您可以通过简单地更改函数来查看其他主题的外观。例如，您可能会尝试 `theme_fivethirtyeight()` 主题。
 
 最后的更改是为了更好地定位标签以避免拥挤；目前，一些标签重叠在一起。添加包 **ggrepel** 包含一个几何形状，在添加标签的同时确保它们不会重叠。我们只需将 `geom_text` 更改为 `geom_text_repel`。*****
 
@@ -296,8 +296,8 @@ p6 <- p5 + [theme_economist](http://jrnold.github.io/ggthemes/reference/theme_ec
 **现在我们已经完成了测试，我们可以写一行代码从头开始生成我们想要的图表。
 
 ```r
-library([ggthemes](https://jrnold.github.io/ggthemes/))
-library([ggrepel](https://ggrepel.slowkow.com/))
+library(ggthemes)
+library(ggrepel)
  r <- murders |> 
  summarize(rate = sum(total) /  sum(population) * 10⁶) |>
  pull(rate)
@@ -312,7 +312,7 @@ library([ggrepel](https://ggrepel.slowkow.com/))
  x = "Populations in millions (log scale)", 
  y = "Total number of murders (log scale)",
  color = "Region") +
- [theme_economist](http://jrnold.github.io/ggthemes/reference/theme_economist.html)()
+ theme_economist()
 ```
 
 ![](img/5168f5e7cb9157f8cf04b21c3a778a9c.png)****
@@ -414,7 +414,7 @@ x |> ggplot(aes(x, y, fill = z)) +
 
 ```r
 library(gridExtra)
-[grid.arrange](https://rdrr.io/pkg/gridExtra/man/arrangeGrob.html)(p5, p6, ncol = 2)
+grid.arrange(p5, p6, ncol = 2)
 ```
 
 ![](img/d1adb7c99d19b1f5e62c9421dd003a1b.png)****
@@ -424,8 +424,8 @@ library(gridExtra)
 **首先，加载 **dplyr** 和 **ggplot2** 库以及 `murders` 和 `heights` 数据。
 
 ```r
-library([dplyr](https://dplyr.tidyverse.org))
-library([ggplot2](https://ggplot2.tidyverse.org))
+library(dplyr
+library(ggplot2
 library(dslabs)
 ```
 
@@ -463,7 +463,7 @@ p <- murders |> ggplot()
 
 4\. 你刚刚创建的对象 `p` 的类别是什么？
 
-5\. 现在我们将添加一层，以及相应的美学映射。对于谋杀数据，我们绘制了总谋杀数与人口规模的关系。探索 `murders` 数据框，以提醒自己这两个变量的名称，并选择正确的答案。**提示**：查看 `[?murders](https://rdrr.io/pkg/dslabs/man/murders.html)`。
+5\. 现在我们将添加一层，以及相应的美学映射。对于谋杀数据，我们绘制了总谋杀数与人口规模的关系。探索 `murders` 数据框，以提醒自己这两个变量的名称，并选择正确的答案。**提示**：查看 `?murders`。
 
 1.  `state` 和 `abb`。
 
@@ -587,7 +587,7 @@ heights |>
 
 * * *
 
-**1.  [ggplot2 文档](https://ggplot2.tidyverse.org/)↩︎
+**1.  ggplot2 文档↩︎
 
 1.  [Springer 出版社书籍](http://www.springer.com/us/book/9780387245447)↩︎
 

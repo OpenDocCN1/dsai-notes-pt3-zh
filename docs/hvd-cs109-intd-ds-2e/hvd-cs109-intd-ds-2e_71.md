@@ -31,7 +31,7 @@
 ```r
 library(dslabs)
 library(data.table)
-library([stringr](https://stringr.tidyverse.org))
+library(stringr
 dt <- as.data.table(movielens)
 dt <- dt[, if (.N >= 100) .SD, by = userId]
 top_movies <- dt[, .N, by = .(movieId, title)]
@@ -149,10 +149,10 @@ heatmap(genex)
 在这里，我们展示了如何将热图限制在仅显示最易变的基因上，这些基因通常揭示了最强的生物模式。我们首先计算每个基因的标准差，选择前 25 个最易变的基因，然后使用更合适的发散颜色方案绘制热图：
 
 ```r
-library([matrixStats](https://github.com/HenrikBengtsson/matrixStats))
-sds <- [colSds](https://rdrr.io/pkg/matrixStats/man/rowSds.html)(genex, na.rm = TRUE)
+library(matrixStats)
+sds <- colSds(genex, na.rm = TRUE)
 o <- order(sds, decreasing = TRUE)[1:25]
-heatmap(genex,o], col = [rev(RColorBrewer::[brewer.pal](https://rdrr.io/pkg/RColorBrewer/man/ColorBrewer.html)(11, "Spectral")))
+heatmap(genex,o], col = rev(RColorBrewer::[brewer.pal(11, "Spectral")))
 ```
 
 ![](img/314f3c221b1b06b49b32e10278faaaa8.png)*  *我们在热图中看到了清晰的模式：观测值聚集成组，这些组在很大程度上对应于组织类型，基因也形成聚类，反映了生物上有意义的结构。例如，SV2B、GPM6B、LRP4 和 DOCK4 等基因聚集在一起，因为它们都与神经元功能有关。
@@ -306,7 +306,7 @@ for (i in 1:7) {
 7. 将 MNIST 数字的一个子集聚类成**10**个簇：
 
 ```r
-mnist <- [read_mnist](https://rdrr.io/pkg/dslabs/man/read_mnist.html)()
+mnist <- read_mnist()
 set.seed(1990)
 index <- sample(nrow(mnist$train$images), 1000)
 x <- mnist$train$images[index,]

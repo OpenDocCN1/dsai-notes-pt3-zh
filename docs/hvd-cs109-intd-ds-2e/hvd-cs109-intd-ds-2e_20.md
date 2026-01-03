@@ -77,9 +77,9 @@ title="List of U.S. states and territories by population">Population</a><br />
 *tidyverse** 提供了一个名为 **rvest** 的网络抓取包。使用此包的第一步是将网页导入 R。该包使这一过程变得非常简单：
 
 ```r
-library([tidyverse](https://tidyverse.tidyverse.org))
-library([rvest](https://rvest.tidyverse.org/))
-h <- [read_html](http://xml2.r-lib.org/reference/read_xml.html)(url)
+library(tidyverse
+library(rvest)
+h <- read_html(url)
 ```
 
 请注意，现在整个美国维基百科上的“谋杀案”网页现在都包含在 `h` 中。这个对象的类是：
@@ -191,8 +191,8 @@ SelectorGadget⁵ 是一款软件，允许你交互式地确定你需要从网�
 上面的文件实际上代表一个数据框。要读取它，我们可以使用 **jsonlite** 包中的 `fromJSON` 函数。请注意，JSON 文件通常通过互联网提供。一些组织提供 JSON API 或网络服务，你可以直接连接到它们并获取数据。以下是一个提供诺贝尔奖获得者信息的示例：
 
 ```r
-library([jsonlite](https://jeroen.r-universe.dev/jsonlite))
-nobel <- [fromJSON](https://jeroen.r-universe.dev/jsonlite/reference/fromJSON.html)("http://api.nobelprize.org/v1/prize.json")
+library(jsonlite)
+nobel <- fromJSON("http://api.nobelprize.org/v1/prize.json")
 ```
 
 这下载了一个列表。第一个参数，名为“prizes”的表格包含了关于诺贝尔奖获得者信息。每一行对应一个特定的年份和类别。“laureates”列包含一个数据框列表，每个获奖者都有一个包含 id、firstname、surname 和 motivation 列的数据框。
@@ -254,8 +254,8 @@ url <- "https://data.cdc.gov/resource/muzy-jte6.csv"
 然后我们可以创建并执行如下请求：
 
 ```r
-library([httr2](https://httr2.r-lib.org))
-response <- [request](https://httr2.r-lib.org/reference/request.html)(url) |> [req_perform](https://httr2.r-lib.org/reference/req_perform.html)()
+library(httr2
+response <- request(url) |> req_perform()
 ```
 
 我们可以通过查看返回的对象来查看请求的结果。
@@ -272,16 +272,16 @@ response
 为了提取主体，即数据所在的位置，我们可以使用 `resp_body_string` 并将结果，一个以逗号分隔的字符串，发送到 `read_csv`
 
 ```r
-library([readr](https://readr.tidyverse.org))
+library(readr
 tab <- response |> resp_body_string()
 ```
 
 我们注意到返回的对象只有 1000 条记录。API 通常限制你可以下载的数据量。该 API 的文档⁹ 解释说我们可以通过 `$limit` 参数来更改这个限制。我们可以使用 `req_url_query` 将其添加到我们的请求中：
 
 ```r
-response <- [request](https://httr2.r-lib.org/reference/request.html)(url) |> 
- [req_url_query](https://httr2.r-lib.org/reference/req_url.html)(`$limit` = 100000) |>
- [req_perform](https://httr2.r-lib.org/reference/req_perform.html)() 
+response <- request(url) |> 
+ req_url_query(`$limit` = 100000) |>
+ req_perform() 
 ```
 
 CDC 服务以 csv 格式返回数据，但由网络服务更常使用的格式是 JSON。CDC 还通过以下 URL 提供了 json 格式的数据：
@@ -293,10 +293,10 @@ url <- "https://data.cdc.gov/resource/muzy-jte6.json"
 为了提取数据表，我们使用来自 **jsonlite** 包的 `fromJSON` 函数。
 
 ```r
-tab <- [request](https://httr2.r-lib.org/reference/request.html)(url) |> 
- [req_perform](https://httr2.r-lib.org/reference/req_perform.html)() |> 
- [resp_body_string](https://httr2.r-lib.org/reference/resp_body_raw.html)() |> 
- [fromJSON](https://jeroen.r-universe.dev/jsonlite/reference/fromJSON.html)(flatten = TRUE)
+tab <- request(url) |> 
+ req_perform() |> 
+ resp_body_string() |> 
+ fromJSON(flatten = TRUE)
 ```
 
 在处理 API 时，检查 API 的文档以了解速率限制、所需头信息或认证方法是非常重要的。`httr2` 包提供了处理这些要求的工具，例如设置头信息或认证参数。**********
@@ -380,7 +380,7 @@ tab_1 <- tab_1 |>
 
 1.  [`selectorgadget.com/`](http://selectorgadget.com/)↩︎
 
-1.  [`rvest.tidyverse.org/articles/selectorgadget.html`](https://rvest.tidyverse.org/articles/selectorgadget.html)↩︎
+1.  `rvest.tidyverse.org/articles/selectorgadget.html`↩︎
 
 1.  [`www.analyticsvidhya.com/blog/2017/03/beginners-guide-on-web-scraping-in-r-using-rvest-with-hands-on-knowledge/`](https://www.analyticsvidhya.com/blog/2017/03/beginners-guide-on-web-scraping-in-r-using-rvest-with-hands-on-knowledge/)↩︎
 

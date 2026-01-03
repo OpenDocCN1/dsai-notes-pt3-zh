@@ -15,7 +15,7 @@
 我们回到使用成年男性学生身高的例子：
 
 ```r
-library([tidyverse](https://tidyverse.tidyverse.org))
+library(tidyverse
 library(dslabs)
 x <- heights |> filter(sex == "Male") |> pull(height)
 ```

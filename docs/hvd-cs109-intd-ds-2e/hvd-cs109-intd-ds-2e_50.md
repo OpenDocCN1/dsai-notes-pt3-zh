@@ -14,7 +14,7 @@
 
 ```r
 library(data.table)
-library([HistData](https://friendly.github.io/HistData/))
+library(HistData)
  set.seed(1983)
 galton <- as.data.table(GaltonFamilies)
 galton <- galtongender == "male", .SD[[sample(.N, 1)], by = family]
@@ -416,7 +416,7 @@ $$ \frac{\hat{y} - .255}{.032} = 0.46 \left( \frac{x - .261}{.031}\right) $$
 3. 我们进行了一次蒙特卡洛模拟，发现当 $N=25$ 时，中心极限定理（CLT）对于样本相关性的分布并不是一个好的近似。使用来自 **MASS** 包的 `mvrnorm` 函数生成相关数据：
 
 ```r
-library([MASS](http://www.stats.ox.ac.uk/pub/MASS4/))
+library(MASS)
 N <- 25
 dat <- mvrnorm](https://rdrr.io/pkg/MASS/man/mvrnorm.html)(N, [c(0, 0), matrix(c(1, 0.9, 0.9, 1), 2, 2))
 cor(dat[,1], dat[,2])

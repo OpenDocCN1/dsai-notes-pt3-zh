@@ -67,7 +67,7 @@ Sys.setlocale("LC_ALL", "en_US.UTF-8")
 **`readr` 包包含一个 `locale()` 函数，可以在 R 中使用它来学习或更改当前的区域设置：
 
 ```r
-library([readr](https://readr.tidyverse.org))
+library(readr
 locale()
 #> <locale>
 #> Numbers:  123,456.78
@@ -172,7 +172,7 @@ dat$puntuación
 现在，为了计算学生年龄，让我们尝试将提交时间更改为日期格式：
 
 ```r
-library([lubridate](https://lubridate.tidyverse.org))
+library(lubridate
 #> 
 #> Attaching package: 'lubridate'
 #> The following objects are masked from 'package:base':

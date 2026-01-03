@@ -133,13 +133,13 @@ mean(deck %in% paste("King", suits))
 
 因为牌组包括了所有可能的结果，这个计算给出了确切的概率。由于 `mean` 将逻辑值转换为 0s 和 1s，结果表示了牌组中国王的比例，即四张牌中的五十二张，这正好对应于理论概率 $1/13$。
 
-现在让我们介绍两个关键函数：`[permutations()](https://rdrr.io/pkg/gtools/man/combinations.html)`和`[combinations()](https://rdrr.io/pkg/gtools/man/combinations.html)`，这两个函数来自**gtools**包。这些函数允许我们根据顺序是否重要（`permutations`）或不重要（`combinations`）来枚举从列表中选择物品的所有可能方式。这样的计算在概率论中是基本的，因为它们允许我们在复杂的环境中计算可能结果的数量，例如确定抽取特定扑克牌手或按特定顺序排列牌的几率。纸牌游戏、彩票以及许多其他概率问题都依赖于这些原则来计算精确的概率。对于对数学基础感兴趣的读者，推荐阅读部分列出了探索排列和组合的详细概率教科书的书籍。
+现在让我们介绍两个关键函数：`permutations()`和`combinations()`，这两个函数来自**gtools**包。这些函数允许我们根据顺序是否重要（`permutations`）或不重要（`combinations`）来枚举从列表中选择物品的所有可能方式。这样的计算在概率论中是基本的，因为它们允许我们在复杂的环境中计算可能结果的数量，例如确定抽取特定扑克牌手或按特定顺序排列牌的几率。纸牌游戏、彩票以及许多其他概率问题都依赖于这些原则来计算精确的概率。对于对数学基础感兴趣的读者，推荐阅读部分列出了探索排列和组合的详细概率教科书的书籍。
 
 这里是一个简单的例子，列举了从三个物品中每次取两个的所有排列：
 
 ```r
-library([gtools](https://github.com/r-gregmisc/gtools))
-[permutations](https://rdrr.io/pkg/gtools/man/combinations.html)(3, 2)
+library(gtools)
+permutations(3, 2)
 #>      [,1] [,2]
 #> [1,]    1    2
 #> [2,]    1    3
@@ -149,10 +149,10 @@ library([gtools](https://github.com/r-gregmisc/gtools))
 #> [6,]    3    2
 ```
 
-这列出了从数字 1、2 和 3 的所有有序对。请注意，(1,2)和(2,1)被视为不同的。如果顺序不重要，我们使用`[combinations()](https://rdrr.io/pkg/gtools/man/combinations.html)`：
+这列出了从数字 1、2 和 3 的所有有序对。请注意，(1,2)和(2,1)被视为不同的。如果顺序不重要，我们使用`combinations()`：
 
 ```r
-[combinations](https://rdrr.io/pkg/gtools/man/combinations.html)(3, 2)
+combinations(3, 2)
 #>      [,1] [,2]
 #> [1,]    1    2
 #> [2,]    1    3
@@ -161,13 +161,13 @@ library([gtools](https://github.com/r-gregmisc/gtools))
 
 现在(1,2)和(2,1)被视为相同的结果。
 
-让我们使用这些工具来计算 21 点游戏中“自然 21”的概率，这发生在玩家的前两张牌是一张 A 和一张面牌（杰克、皇后、国王或 10）。由于顺序不重要，我们使用`[combinations()](https://rdrr.io/pkg/gtools/man/combinations.html)`：
+让我们使用这些工具来计算 21 点游戏中“自然 21”的概率，这发生在玩家的前两张牌是一张 A 和一张面牌（杰克、皇后、国王或 10）。由于顺序不重要，我们使用`combinations()`：
 
 ```r
 aces <- paste("Ace", suits)
 facecard <- expand.grid(number = c("King", "Queen", "Jack", "Ten"), suit = suits)
 facecard <- paste(facecard$number, facecard$suit)
-hands <- [combinations](https://rdrr.io/pkg/gtools/man/combinations.html)(52, 2, v = deck)
+hands <- combinations(52, 2, v = deck)
 mean((hands,1] [%in% aces & hands,2] [%in% facecard) |
  (hands,2] [%in% aces & hands,1] [%in% facecard))
 #> [1] 0.0483

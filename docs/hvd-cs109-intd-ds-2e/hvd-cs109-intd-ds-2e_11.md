@@ -27,7 +27,7 @@
 假设我们必须向 ET 描述我们同学的身高，ET 是一个从未见过人类的地球外生物。作为第一步，我们需要收集数据。为此，我们要求学生报告他们的身高（英寸）。我们要求他们提供性别信息，因为我们知道存在两种不同的性别身高分布。我们收集数据并将其保存在`heights`数据框中：
 
 ```r
-library([tidyverse](https://tidyverse.tidyverse.org))
+library(tidyverse
 library(dslabs)
 head(heights)
 #>      sex height

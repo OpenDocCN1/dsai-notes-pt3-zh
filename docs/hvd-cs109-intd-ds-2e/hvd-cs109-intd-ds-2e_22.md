@@ -15,10 +15,10 @@
 我们将使用以下库：
 
 ```r
-library([tidyverse](https://tidyverse.tidyverse.org))
-library([scales](https://scales.r-lib.org))
-library([tidytext](https://juliasilge.github.io/tidytext/))
-library([textdata](https://emilhvitfeldt.github.io/textdata/))
+library(tidyverse
+library(scales
+library(tidytext)
+library(textdata)
 library(dslabs)
 ```
 
@@ -39,7 +39,7 @@ names(trump_tweets)
 #> [7] "favorite_count"          "is_retweet"
 ```
 
-帮助文件 `[?trump_tweets](https://rdrr.io/pkg/dslabs/man/trump_tweets.html)` 提供了每个变量代表的详细说明。实际的推文包含在 `text` 变量中：
+帮助文件 `?trump_tweets` 提供了每个变量代表的详细说明。实际的推文包含在 `text` 变量中：
 
 ```r
 trump_tweets$text16413] |> str_wrap(width = [options()$width) |> cat()
@@ -84,7 +84,7 @@ campaign_tweets |>
  ggplot(aes(hour, percent, color = source)) +
  geom_line() +
  geom_point() +
- scale_y_continuous(labels = [percent_format](https://scales.r-lib.org/reference/percent_format.html)()) +
+ scale_y_continuous(labels = percent_format()) +
  labs(x = "Hour of day (EST)", y = "% of tweets", color = "")
 ```
 
@@ -111,7 +111,7 @@ example
 #> 2     2 Violets are blue,
 #> 3     3 Sugar is sweet, 
 #> 4     4 And so are you.
-example |> [unnest_tokens](https://juliasilge.github.io/tidytext/reference/unnest_tokens.html)(word, text)
+example |> unnest_tokens(word, text)
 #> # A tibble: 13 × 2
 #>    line word 
 #>   <dbl> <chr> 
@@ -131,7 +131,7 @@ campaign_tweets$texti] |> str_wrap(width = 65) |> [cat()
 #> Great to be back in Iowa! #TBT with @JerryJrFalwell joining me in
 #> Davenport- this past winter. #MAGA https://t.co/A5IF0QHnic
 campaign_tweets[i,] |> 
- [unnest_tokens](https://juliasilge.github.io/tidytext/reference/unnest_tokens.html)(word, text) |>
+ unnest_tokens(word, text) |>
  pull(word) 
 #>  [1] "great"          "to"             "be"             "back" 
 #>  [5] "in"             "iowa"           "tbt"            "with" 
@@ -146,7 +146,7 @@ campaign_tweets[i,] |>
 links_to_pics <- "https://t.co/[A-Za-z\\d]+|&amp;"
 campaign_tweets[i,] |> 
  mutate(text = str_remove_all(text, links_to_pics))  |>
- [unnest_tokens](https://juliasilge.github.io/tidytext/reference/unnest_tokens.html)(word, text) |>
+ unnest_tokens(word, text) |>
  pull(word)
 #>  [1] "great"          "to"             "be"             "back" 
 #>  [5] "in"             "iowa"           "tbt"            "with" 
@@ -160,7 +160,7 @@ campaign_tweets[i,] |>
 ```r
 tweet_words <- campaign_tweets |> 
  mutate(text = str_remove_all(text, links_to_pics))  |>
- [unnest_tokens](https://juliasilge.github.io/tidytext/reference/unnest_tokens.html)(word, text)
+ unnest_tokens(word, text)
 ```
 
 我们现在可以回答像“最常见的单词是什么？”这样的问题：
@@ -200,7 +200,7 @@ head(stop_words)
 ```r
 tweet_words <- campaign_tweets |> 
  mutate(text = str_remove_all(text, links_to_pics))  |>
- [unnest_tokens](https://juliasilge.github.io/tidytext/reference/unnest_tokens.html)(word, text) |>
+ unnest_tokens(word, text) |>
  filter(!word %in% stop_words$word ) 
 ```
 
@@ -227,7 +227,7 @@ tweet_words |>
 ```r
 tweet_words <- campaign_tweets |> 
  mutate(text = str_remove_all(text, links_to_pics))  |>
- [unnest_tokens](https://juliasilge.github.io/tidytext/reference/unnest_tokens.html)(word, text) |>
+ unnest_tokens(word, text) |>
  filter(!word %in% stop_words$word &
  !str_detect(word, "^\\d+$")) |>
  mutate(word = str_replace(word, "^'", ""))
@@ -287,13 +287,13 @@ android_vs_iphone |> filter(Android + iPhone >= 100) |>  arrange(ratio)
 *`bing`词典将单词分为`正面`和`负面`情感。我们可以使用*tidytext*函数`get_sentiments`查看这一点**：
 
 ```r
-[get_sentiments](https://juliasilge.github.io/tidytext/reference/get_sentiments.html)("bing")
+get_sentiments("bing")
 ```
 
 *`AFINN`词典将单词分配给介于-5 和 5 之间的分数，其中-5 是最负面的，5 是最正面的**。请注意，此词典在第一次调用`get_sentiment`函数时需要下载：
 
 ```r
-[get_sentiments](https://juliasilge.github.io/tidytext/reference/get_sentiments.html)("afinn")
+get_sentiments("afinn")
 ```
 
 *`nrc`词典提供几种不同的情感。请注意，这也需要在第一次使用时下载**。
@@ -377,7 +377,7 @@ sentiment_counts
 
 ```r
 install.packages("gutenbergr")
-library([gutenbergr](https://docs.ropensci.org/gutenbergr/))
+library(gutenbergr)
 ```
 
 您可以看到如下所示的可用书籍：
@@ -388,7 +388,7 @@ gutenberg_metadata
 
 1. 使用`str_detect`查找小说《傲慢与偏见》的 ID。
 
-2. 我们注意到有几个版本。`[gutenberg_works()](https://docs.ropensci.org/gutenbergr/reference/gutenberg_works.html)`函数过滤这个表格以移除重复项并仅包含英语作品。阅读帮助文件并使用此函数查找《傲慢与偏见》的 ID。
+2. 我们注意到有几个版本。`gutenberg_works()`函数过滤这个表格以移除重复项并仅包含英语作品。阅读帮助文件并使用此函数查找《傲慢与偏见》的 ID。
 
 3. 使用`gutenberg_download`函数下载《傲慢与偏见》的文本。将其保存到名为`book`的对象中。
 

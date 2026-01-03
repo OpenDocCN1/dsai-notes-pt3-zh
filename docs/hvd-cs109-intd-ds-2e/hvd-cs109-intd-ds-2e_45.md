@@ -355,7 +355,7 @@ one_pollster |> mutate(p_hat = (spread + 1)/2, N = samplesize) |>
 ***1. 创建以下表格：*
 
 ```r
-library([tidyverse](https://tidyverse.tidyverse.org))
+library(tidyverse
 library(dslabs)
 polls <- polls_us_election_2016 |> 
  filter(state != "U.S." & enddate >= "2016-10-31") |> 
@@ -396,8 +396,8 @@ cis <- cis |>
 12. 尽管频率派预测为.450，但没有任何一个棒球爱好者会做出这样的预测。为什么？一个原因是他们知道这个估计有很大的不确定性。然而，主要原因是他们隐含地使用了一个考虑了多年跟踪棒球的层次模型。使用以下代码探索 2013 年之前三个赛季的击球率分布，并描述这告诉我们什么。
 
 ```r
-library([tidyverse](https://tidyverse.tidyverse.org))
-library([Lahman](https://cdalzell.github.io/Lahman/))
+library(tidyverse
+library(Lahman)
 filter(Batting, yearID %in% 2010:2012) |> 
  mutate(AVG = H/AB) |> 
  filter(AB > 500) |> 

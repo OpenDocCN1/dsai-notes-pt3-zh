@@ -27,7 +27,7 @@
 支持这一结论的主要证据是基于百分比的比较，我们可以使用论文中提供的数据来计算这些百分比：
 
 ```r
-library([tidyverse](https://tidyverse.tidyverse.org))
+library(tidyverse
 library(dslabs)
 totals <- research_funding_rates |> select(-discipline) |> 
  summarize_all(sum) |>
@@ -496,7 +496,7 @@ c(chisq.test(o)$p.value, chisq.test(ox10)$p.value)
 8. 在 2016 年美国总统选举期间，当时的候选人唐纳德·J·特朗普使用他的推特账户作为与潜在选民沟通的方式。Todd Vaziri 假设“每个非夸张的推文都来自 iPhone（他的工作人员）。每个夸张的推文都来自 Android（他本人）。”我们将使用关联检验来测试这个假设。**dslabs**对象`sentiment_counts`提供了一个表格，其中包含来自每个来源（Android 或 iPhone）的几个情感计数：
 
 ```r
-library([tidyverse](https://tidyverse.tidyverse.org))
+library(tidyverse
 library(dslabs)
 sentiment_counts
 ```
@@ -514,7 +514,7 @@ sentiment_counts
 13. **titanic**包中的`titanic_train`数据集包含 891 名乘客的数据，他们曾在泰坦尼克号上：
 
 ```r
-library([titanic](https://github.com/paulhendricks/titanic))
+library(titanic)
 titanic_train
 ```
 

@@ -683,7 +683,7 @@ ls -l
 
 1.  [`library.si.edu/sites/default/files/tutorial/pdf/filenamingorganizing20180227.pdf`](https://library.si.edu/sites/default/files/tutorial/pdf/filenamingorganizing20180227.pdf)↩︎
 
-1.  [`style.tidyverse.org/`](https://style.tidyverse.org/)↩︎
+1.  `style.tidyverse.org/`↩︎
 
 1.  [`github.com/rairizarry/murders`](https://github.com/rairizarry/murders)↩︎
 

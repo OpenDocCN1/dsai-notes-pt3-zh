@@ -11,7 +11,7 @@
 在本节中，我们将使用第 4.1 节中描述的生育宽格式数据集作为示例。
 
 ```r
-library([tidyverse](https://tidyverse.tidyverse.org)) 
+library(tidyverse 
 library(dslabs)
 path <- system.file("extdata", package = "dslabs")
 filename <- file.path(path, "fertility-two-countries-example.csv")
@@ -272,10 +272,10 @@ dat_wide <- dcast(dat_long, country + year ~ name, value.var = "value")
 
 **`janitor` 包包括一些常见的数据整理步骤的函数。这些步骤通常是重复且耗时的。关键特性包括检查和清理列名、删除空或重复行以及转换数据类型的函数。它还提供了轻松生成频率表和执行交叉表的特性。该包旨在与 **tidyverse** 无缝工作。在这里，我们展示了四个示例。**
 
-电子表格通常使用与编程不兼容的名称。最常见的问题是带有空格的列名。`[clean_names()](https://sfirke.github.io/janitor/reference/clean_names.html)` 函数试图解决这个问题和其他常见问题。默认情况下，它强制变量名变为小写，并使用下划线代替空格。在这个例子中，我们更改了上一节中创建的 `dat` 对象的变量名，然后演示了这个函数的工作方式：
+电子表格通常使用与编程不兼容的名称。最常见的问题是带有空格的列名。`clean_names()` 函数试图解决这个问题和其他常见问题。默认情况下，它强制变量名变为小写，并使用下划线代替空格。在这个例子中，我们更改了上一节中创建的 `dat` 对象的变量名，然后演示了这个函数的工作方式：
 
 ```r
-library([janitor](https://github.com/sfirke/janitor))
+library(janitor)
 names(dat) <- c("Country", "Year", "Fertility",  "Life Expectancy")
 clean_names](https://sfirke.github.io/janitor/reference/clean_names.html)(dat) |> [names()
 #> [1] "country"         "year"            "fertility" 
@@ -298,7 +298,7 @@ data.frame(ids = letters[1:3], x = 1:3, y = 4:6) |>
 
 ```r
 x <- read.csv(file.path(path, "murders.csv"), header = FALSE) |> 
- [row_to_names](https://sfirke.github.io/janitor/reference/row_to_names.html)(1)
+ row_to_names(1)
 names(x)
 #> [1] "state"      "abb"        "region"     "population" "total"
 ```
@@ -307,7 +307,7 @@ names(x)
 
 ```r
 x <- bind_rows(x, x[1,])
-[get_dupes](https://sfirke.github.io/janitor/reference/get_dupes.html)(x)
+get_dupes(x)
 #> No variable names specified - using all columns.
 #>     state abb region population total dupe_count
 #> 1 Alabama  AL  South    4779736   135          2

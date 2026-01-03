@@ -23,7 +23,7 @@ Hans Rosling 以他独特的方式传达了基于实际数据趋势，使用有�
 为了回答这些问题，我们将使用 **dslabs** 中提供的 `gapminder` 数据集。这个数据集是使用来自 Gapminder Foundation 的多个电子表格创建的。你可以这样访问表格：
 
 ```r
-library([tidyverse](https://tidyverse.tidyverse.org))
+library(tidyverse
 library(dslabs)
 gapminder |> as_tibble()
 #> # A tibble: 10,545 × 9
@@ -218,11 +218,11 @@ gapminder |> filter(country %in% countries & !is.na(fertility)) |>
 我们演示了如何使用`geomtextpath`包来做这件事。我们定义一个包含标签位置的表格数据，然后使用第二个映射仅用于这些标签：
 
 ```r
-library([geomtextpath](https://allancameron.github.io/geomtextpath/))
+library(geomtextpath)
 gapminder |> 
  filter(country %in% countries) |> 
  ggplot(aes(year, life_expectancy, col = country, label = country)) +
- [geom_textpath](https://allancameron.github.io/geomtextpath/reference/geom_textpath.html)() +
+ geom_textpath() +
  theme(legend.position = "none")
 ```
 
@@ -406,12 +406,12 @@ p + geom_point(alpha = 0.5)
 在我们担心箱线图总结过于简单的情况下，我们可以展示堆叠的平滑密度或直方图。我们称这些为*脊线图*。因为我们习惯于使用 x 轴上的值来可视化密度，所以我们垂直堆叠它们。此外，由于这种方法需要更多的空间，因此叠加它们很方便。`ggridges`包提供了一个方便的函数来完成这项工作。以下是上面显示的带有箱线图的收入数据，但使用的是*脊线图*。
 
 ```r
-library([ggridges](https://wilkelab.org/ggridges/))
+library(ggridges)
 p <- gapminder |> 
  filter(year == past_year & !is.na(dollars_per_day)) |>
  ggplot(aes(dollars_per_day, group)) + 
  scale_x_continuous(trans = "log2") 
-p  + [geom_density_ridges](https://wilkelab.org/ggridges/reference/geom_density_ridges.html)() 
+p  + geom_density_ridges() 
 ```
 
 ![](img/138ecbab77a585b23769915a90143185.png)*  *请注意，我们必须反转用于箱线图的`x`和`y`轴。一个有用的`geom_density_ridges`参数是`scale`，它允许你确定重叠的程度，其中`scale = 1`表示没有重叠，更大的值会导致更多的重叠。
@@ -419,14 +419,14 @@ p  + [geom_density_ridges](https://wilkelab.org/ggridges/reference/geom_density_
 如果数据点的数量足够小，我们可以使用以下代码将它们添加到脊线图中：
 
 ```r
-p + [geom_density_ridges](https://wilkelab.org/ggridges/reference/geom_density_ridges.html)(jittered_points = TRUE)
+p + geom_density_ridges(jittered_points = TRUE)
 ```
 
 ![](img/5a98f314bb7476536d1fdcc51d4054f6.png)*  *默认情况下，点的垂直高度是抖动的，不应以任何方式解释。为了显示数据点，但又不使用抖动，我们可以使用以下代码来添加所谓的数据的*毛刷表示*。
 
 ```r
-p + [geom_density_ridges](https://wilkelab.org/ggridges/reference/geom_density_ridges.html)(jittered_points = TRUE, 
- position = [position_points_jitter](https://wilkelab.org/ggridges/reference/position_points_jitter.html)(height = 0),
+p + geom_density_ridges(jittered_points = TRUE, 
+ position = position_points_jitter(height = 0),
  point_shape = '|', point_size = 3, 
  point_alpha = 1, alpha = 0.7)
 ```
@@ -548,7 +548,7 @@ gapminder |>
  filter(year %in% years & !is.na(dollars_per_day)) |>
  ggplot(aes(dollars_per_day, group)) + 
  scale_x_continuous(trans = "log2") + 
- [geom_density_ridges](https://wilkelab.org/ggridges/reference/geom_density_ridges.html)(bandwidth = 1.5) +
+ geom_density_ridges(bandwidth = 1.5) +
  facet_grid(. ~ year)
 ```
 
@@ -623,7 +623,7 @@ $$f(p) = \log \left( \frac{p}{1-p} \right)$$
 用于这些图表的数据由提科项目⁹收集、整理和分发。它们包括从 1928 年到 2011 年，来自所有五十个州的七种疾病的每周报告计数。我们在**dslabs**包中包括了年度总计：
 
 ```r
-library([tidyverse](https://tidyverse.tidyverse.org))
+library(tidyverse
 library(RColorBrewer)
 library(dslabs)
 names(us_contagious_diseases)
@@ -668,7 +668,7 @@ dat |> filter(state == "California" & !is.na(rate)) |>
 dat |> ggplot(aes(year, state, fill = rate)) +
  geom_tile(color = "grey50") +
  scale_x_continuous](https://ggplot2.tidyverse.org/reference/scale_continuous.html)(expand = [c(0,0)) +
- scale_fill_gradientn(colors = [brewer.pal](https://rdrr.io/pkg/RColorBrewer/man/ColorBrewer.html)(9, "Reds"), trans = "sqrt") +
+ scale_fill_gradientn(colors = brewer.pal(9, "Reds"), trans = "sqrt") +
  geom_vline(xintercept = 1963, col = "blue") +
  theme_minimal() + 
  theme(panel.grid = element_blank(), 

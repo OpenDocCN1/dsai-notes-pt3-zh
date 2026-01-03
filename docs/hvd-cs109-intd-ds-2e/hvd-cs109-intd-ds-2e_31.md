@@ -41,7 +41,7 @@ $$ \sigma_x = \sqrt{\frac{1}{n}\sum_{i=1}^n (x_i - \mu_x)²} $$ 这可以被认�
 让我们计算男性身高的平均值和标准差：
 
 ```r
-library([tidyverse](https://tidyverse.tidyverse.org))
+library(tidyverse
 library(rafalib)
 x <- with(heights, height[sex == "Male"])
 ```
@@ -311,7 +311,7 @@ x <- heights$height[heights$sex=="Male"]
 我们将使用**HistData**包。加载`Galton`数据并创建一个仅包含儿童身高的向量`x`：
 
 ```r
-library([HistData](https://friendly.github.io/HistData/))
+library(HistData)
 x <- Galton$child
 ```
 
@@ -353,7 +353,7 @@ x_with_error[1] <- x_with_error[1]*10
 19. 我们在`heights`数据框中查看的身高不是学生报告的原身高。原始报告的身高也包含在**dslabs**包中的对象`reported_heights`中。注意，这个数据框中的`height`列是字符类型，如果我们尝试创建一个包含数值版本的列：
 
 ```r
-library([tidyverse](https://tidyverse.tidyverse.org)) 
+library(tidyverse 
 reported_heights <- reported_heights |>
  mutate(original_heights = height, height = as.numeric(height))
 ```

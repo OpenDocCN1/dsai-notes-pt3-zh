@@ -17,8 +17,8 @@
 ## 16.1 stringr 包
 
 ```r
-library([tidyverse](https://tidyverse.tidyverse.org))
-library([stringr](https://stringr.tidyverse.org))
+library(tidyverse
+library(stringr
 ```
 
 一般来说，字符串处理任务可以分为在字符串中**检测**、**定位**、**提取**或**替换**模式。我们将看到几个示例。下表包括了**stringr**包中可用的函数。我们按任务将它们分开。我们还包括了当可用时的基础 R 的等效函数。
@@ -799,7 +799,7 @@ converted[!index]
 #> [77] "34"
 ```
 
-我们注意到两名学生添加了`cm`，一些条目末尾有空格，所以我们将其纳入我们的清理阶段。我们还注意到至少有一条记录写出了诸如`Five foot eight inches`之类的数字。我们可以使用**english**包中的`[words()](https://rdrr.io/pkg/english/man/words.html)`函数将这些转换为实际数字。为了准备我们的最终产品，我们定义了一个函数，用于清理之前注意到的这些问题和新问题：
+我们注意到两名学生添加了`cm`，一些条目末尾有空格，所以我们将其纳入我们的清理阶段。我们还注意到至少有一条记录写出了诸如`Five foot eight inches`之类的数字。我们可以使用**english**包中的`words()`函数将这些转换为实际数字。为了准备我们的最终产品，我们定义了一个函数，用于清理之前注意到的这些问题和新问题：
 
 ```r
 library(english)
@@ -808,7 +808,7 @@ cleanup <- function(s){
  str_trim() |>
  str_to_lower()
  for (i in 0:11) {
- s <- str_replace_all](https://stringr.tidyverse.org/reference/str_replace.html)(s, [words](https://rdrr.io/pkg/english/man/words.html)(i), [as.character(i))
+ s <- str_replace_all](https://stringr.tidyverse.org/reference/str_replace.html)(s, words(i), [as.character(i))
  }
  return(s)
 }
@@ -934,13 +934,13 @@ research_funding_rates |>
 我们可以手动提取数字，但这可能导致人为错误。相反，我们可以尝试使用 R 来整理数据。我们首先下载 PDF 文档，然后将其导入 R：
 
 ```r
-library(["pdftools"](https://ropensci.r-universe.dev/pdftools))
+library("pdftools")
 temp_file <- tempfile()
 url <- paste0("https://web.archive.org/web/20150927033124/",
  "https://www.pnas.org/content/suppl/2015/09/16/",
  "1510159112.DCSupplemental/pnas.201510159SI.pdf")
 download.file(url, temp_file, mode = "wb")
-txt <- [pdf_text](https://docs.ropensci.org/pdftools//reference/pdftools.html)(temp_file)
+txt <- pdf_text(temp_file)
 file.remove(temp_file)
 ```
 
@@ -1097,7 +1097,7 @@ gapminder |>
 ![](img/210fe4581933d24767caaa51f5ef4228.png)*  *我们可以使用**forcats**包中的`fct_recode`函数来代替：
 
 ```r
-library([forcats](https://forcats.tidyverse.org/))
+library(forcats)
 gapminder$country <- 
  fct_recode(gapminder$country, 
  "Barbuda" = "Antigua and Barbuda",
@@ -1143,7 +1143,7 @@ system("cmd.exe", input = paste("start", fn))
 
 ```r
 install.packages("pdftools")
-library([pdftools](https://ropensci.r-universe.dev/pdftools))
+library(pdftools)
 ```
 
 现在使用`pdf_text`函数读取`fn`并将其结果存储在一个名为`txt`的对象中。以下哪个最能描述你在`txt`中看到的内容？

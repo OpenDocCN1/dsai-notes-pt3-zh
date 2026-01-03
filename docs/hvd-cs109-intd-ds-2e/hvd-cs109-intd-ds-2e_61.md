@@ -366,8 +366,8 @@ $$ \frac{1}{N}\sum_{i=1}^N \left[ y_i - \left(\beta_0 + \sum_{j=1}^p x_{ij}\beta
 这种方法被称为 *岭回归*。R 中的 `MASS` 包提供了 `lm.ridge` 函数，用于使用惩罚最小二乘法拟合模型：
 
 ```r
-library([MASS](http://www.stats.ox.ac.uk/pub/MASS4/))
-fit <- [lm.ridge](https://rdrr.io/pkg/MASS/man/lm.ridge.html)(y ~ x, lambda = 0.001)
+library(MASS)
+fit <- lm.ridge(y ~ x, lambda = 0.001)
 ```
 
 然而，这个函数对于有数千个指示变量的模型效率不高，就像我们在电影评分应用中那样。在下面的章节中，我们使用受罚最小二乘法，但为了找到估计值，我们实现了 第 24.1.7 节 中描述的 ALS 算法。*
@@ -549,7 +549,7 @@ schools <- data.frame(id = sprintf("PS%03d", 0:999), size = n, quality = mu,
 我们可以看到，前 10 所学校是：
 
 ```r
-library([dplyr](https://dplyr.tidyverse.org))
+library(dplyr
 schools |> top_n(10, quality) |> arrange(desc(quality))
 ```
 
