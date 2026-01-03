@@ -100,10 +100,7 @@ GitHub 提供了一份详细的指南，说明如何获取访问令牌⁵，您�
 
 下一步是让 Git 知道我们是谁。这将使与 GitHub 连接更容易。为此，请在我们的终端窗口中输入以下两个命令：
 
-```r
-git config --global user.name "Your Name"
-git config --global user.mail "your@email.com"
-```
+[PRE0]
 
 这将更改 Git 配置，以便每次您使用 Git 时，它都会知道这些信息。请注意，**您需要使用您用于打开 GitHub 账户的电子邮件账户**。
 
@@ -111,18 +108,13 @@ git config --global user.mail "your@email.com"
 
 在终端中，切换到您想要存储本地仓库的目录。我们建议将目录命名为与 GitHub 仓库相同的名称。在我们的示例中，我们会使用：
 
-```r
-mkdir homework-0
-cd homework-0
-```
+[PRE1]
 
 然后，我们将目录初始化为 Git 仓库，开始版本控制过程。
 
-```r
-git init
-```
+[PRE2]
 
-*main 与 master* *GitHub 现在使用`main`作为默认分支名称。在过去，Git 和 GitHub 都使用`master`作为默认。因此，许多较旧的仓库或较旧的 Git 版本可能仍然使用`master`作为其主要分支*。
+main 与 master* *GitHub 现在使用`main`作为默认分支名称。在过去，Git 和 GitHub 都使用`master`作为默认。因此，许多较旧的仓库或较旧的 Git 版本可能仍然使用`master`作为其主要分支*。
 
 为了确保您的本地分支与 GitHub 仓库的分支名称一致：
 
@@ -132,15 +124,11 @@ git init
 
 要验证你的本地分支名称，请使用：
 
-```r
-git branch
-```
+[PRE3]
 
 如果你看到分支名称不是`main`，但希望它是`main`，可以使用以下命令重命名：
 
-```r
-git branch -M main*
-```
+[PRE4]
 
 `-M`代表移动。请注意，这与更改分支不同，它是重命名当前分支。* *要将本地仓库与其在 GitHub 上的对应仓库链接起来，你需要 GitHub 仓库的 URL。要找到这个 URL，请访问仓库的网页。点击绿色的*代码*按钮以快速复制 URL，在我们的例子中是`https://github.com/rairizarry/homework-0.git`。
 
@@ -148,9 +136,7 @@ git branch -M main*
 
 一旦你有了这个，你可以输入：
 
-```r
-git remote add origin https://github.com/rairizarry/homework-0.git
-```
+[PRE5]
 
 要理解这个命令，请注意`git remote add`添加了一个新的远程引用。在 Git 中，*远程*指的是你的代码仓库存储的另一个地方，通常在互联网或另一个网络上。`origin`是给远程仓库或其他人将之视为主项目源的中央仓库的常规名称。它基本上是仓库 URL 的简写别名。你可以技术上将其命名为任何你想要的名称，但`origin`是最常用的约定。最后，`https://github.com/rairizarry/homework-0.git`是远程仓库的 URL。它告诉 Git 仓库托管的位置。这些命令共同设置了一个新的本地 Git 仓库，并将其链接到 GitHub 上的远程仓库。* *## 19.7 Git 基础知识
 
@@ -162,27 +148,15 @@ git remote add origin https://github.com/rairizarry/homework-0.git
 
 工作目录与你的 Unix 工作目录相同。在我们的例子中，如果我们创建`homework-0`目录中的文件，它被认为是工作目录的一部分。Git 可以使用命令告诉你工作目录中的文件与其他区域中文件版本的关系：
 
-```r
-git status
-```
+[PRE6]
 
 因为我们还没有做任何事情，你应该会收到一条类似的消息：
 
-```r
-On branch main
-
-No commits yet
-
-nothing to commit (create/copy files and use "git add" to track)
-```
+[PRE7]
 
 如果我们添加一个文件，比如`code.R`，你会看到一条类似的消息：
 
-```r
-Untracked files:
-  (use "git add <file>..." to include in what will be committed)
-    code.R
-```
+[PRE8]
 
 ### 19.7.2 添加
 
@@ -192,34 +166,15 @@ Untracked files:
 
 为了演示，我们将`code.R`添加到暂存区：
 
-```r
-git add code.R
-```
+[PRE9]
 
 现在运行`git status`会显示：
 
-```r
-Changes to be committed:
-  (use "git rm --cached <file>..." to unstage)
-    new file:   code.R
-```
+[PRE10]
 
 注意，工作目录中有不在暂存区的其他文件并不是问题。例如，如果我们创建文件`test-1.R`和`test-2.R`，`git status`会提醒我们这些文件尚未暂存：
 
-```r
-On branch main
-
-No commits yet
-
-Changes to be committed:
-  (use "git rm --cached <file>..." to unstage)
-    new file:   code.R
-
-Untracked files:
-  (use "git add <file>..." to include in what will be committed)
-    test-1.R
-    test-2.R
-```
+[PRE11]
 
 ### 19.7.3 提交
 
@@ -227,70 +182,37 @@ Untracked files:
 
 如果我们现在准备好制作仓库的第一个版本，该版本仅包括 `code.R`，我们可以使用以下命令：
 
-```r
-git commit -m "Adding a new file." 
-```
+[PRE12]
 
 注意，`commit` 需要我们添加一条消息。使这些消息信息丰富将帮助我们记住为什么做出这个更改。运行 `commit` 后，我们将收到一条消息，告知我们已提交：
 
-```r
-[main (root-commit) 1735c25] adding a new file
- 1 file changed, 0 insertions(+), 0 deletions(-)
- create mode 100644 code.R
-```
+[PRE13]
 
 注意，如果我们编辑 `code.R`，它只会在工作目录中发生变化。`git status` 会显示给我们
 
-```r
-Changes not staged for commit:
- (use "git add <file>..." to update what will be committed)
-  (use "git restore <file>..." to discard changes in working directory)
-    modified:   code.R
-```
+[PRE14]
 
 要将编辑后的文件添加到本地仓库，我们需要暂存编辑后的文件并提交更改
 
-```r
-git add code.R
-git commit -m "Added some lines of code."
-```
+[PRE15]
 
 这将给我们一条消息，告知我们已进行更改：
 
-```r
-[main 8843673] added some lines of code
- 1 file changed, 1 insertion(+)
-```
+[PRE16]
 
 注意，我们可以通过在 `commit` 命令后跟要提交的文件，只用一行命令就达到相同的效果：
 
-```r
-git commit -m "Added some lines of code." code.R
-```
+[PRE17]
 
 当文件更改的数量很少，并且我们可以在末尾列出它们时，这很方便。
 
 要查看版本控制的实际操作，请注意当我们输入
 
-```r
-git log code.R
-```
+[PRE18]
 
 我们得到存储在我们日志中的版本列表：
 
-```r
-commit 88436739dcbd57d8ad27a23663d30fd2c06034ca (HEAD -> main)
-Author: Rafael A Irizarry 
-Date:   Sun Sep 3 15:32:03 2023 -0400
-
-    Added some lines of code.
-
-commit 1735c25c675d23790df1f9cdb3a215a13c8ae5d6
-Author: Rafael A Irizarry 
-Date:   Sun Sep 3 15:27:19 2023 -0400
-
-    Adding a new file.
-```
+[PRE19]
 
 ### 19.7.4 push
 
@@ -298,28 +220,19 @@ Date:   Sun Sep 3 15:27:19 2023 -0400
 
 一旦我们准备好将本地仓库与上游 GitHub 仓库同步，我们可以使用
 
-```r
-git push -u origin main
-```
+[PRE20]
 
-*如果您是第一次将代码推送到您的 GitHub 账户，您将需要输入密码，并输入我们在第 19.5 节中描述的个人访问令牌。您可能只需要这样做一次。*  *`-u` 标志，代表 `--set-upstream`，将使 Git 记住在这个仓库中，您想要推送到远程仓库 `origin` 中定义的 `main` 分支。这很有益处，因为下次您想要从这个分支推送到或拉取时，您只需简单地使用
+如果您是第一次将代码推送到您的 GitHub 账户，您将需要输入密码，并输入我们在第 19.5 节中描述的个人访问令牌。您可能只需要这样做一次。*  *`-u` 标志，代表 `--set-upstream`，将使 Git 记住在这个仓库中，您想要推送到远程仓库 `origin` 中定义的 `main` 分支。这很有益处，因为下次您想要从这个分支推送到或拉取时，您只需简单地使用
 
-```r
-git push
-```
+[PRE21]
 
 如果您需要提醒您正在推送到哪里，您可以输入
 
-```r
-git remote -v
-```
+[PRE22]
 
 `v` 代表 `verbose`。在我们的例子中，我们将得到
 
-```r
-origin  https://github.com/username/homework-0.git (fetch)
-origin  https://github.com/username/homework-0.git (push)
-```
+[PRE23]
 
 我们接下来描述 `fetch`。如果您没有收到任何回复，这意味着您还没有定义远程仓库，就像我们在第 19.6 节中所做的那样。*  *### 19.7.5 fetch 和 merge
 
@@ -329,15 +242,11 @@ origin  https://github.com/username/homework-0.git (push)
 
 如果这是一个协作项目，上游仓库可能会发生变化，与您的版本不同。为了更新您的本地仓库以与上游仓库一致，我们使用 `fetch` 命令：
 
-```r
-git fetch
-```
+[PRE24]
 
 然后为了将这些副本放入我们的工作目录，我们使用以下命令：
 
-```r
-git merge
-```
+[PRE25]
 
 ### 19.7.6 pull
 
@@ -345,23 +254,17 @@ git merge
 
 我们经常只想获取和合并，而不进行检查。为此，我们使用：
 
-```r
-git pull
-```
+[PRE26]
 
 ### 19.7.7 克隆
 
 您可以轻松地从现有的公共仓库使用 `git clone` 下载所有代码和版本控制日志。当您克隆时，您实际上是在制作整个目录的完整副本。例如，您可以使用以下方式下载创建此书所使用的所有代码：
 
-```r
-git clone https://github.com/rafalab/dsbook-part-1.git
-```
+[PRE27]
 
 您可以看到一个简单的示例，这是通过克隆此仓库在 Unix 章节中创建的谋杀目录：
 
-```r
-git clone https://github.com/rairizarry/murders.git
-```
+[PRE28]
 
 如果你使用 `git clone`，你不需要初始化，因为分支和远程仓库已经定义好了。现在，要推送更改，你需要被添加为合作者。否则，你将不得不遵循更复杂的 *pull request* 流程，这里我们不涉及。*  *## 19.8 .gitignore
 
@@ -419,7 +322,7 @@ git clone https://github.com/rairizarry/murders.git
 
 恭喜你，你已经在 GitHub 仓库成功共享了代码！
 
-*对于这里显示的示例，我们只添加了 *code.R*。但，一般来说，对于 RStudio 项目，我们建议添加一个 README.md 文件以及 .gitignore 和 .Rproj 文件。** *
+对于这里显示的示例，我们只添加了 *code.R*。但，一般来说，对于 RStudio 项目，我们建议添加一个 README.md 文件以及 .gitignore 和 .Rproj 文件。** *
 
 1.  [`www.codecademy.com/learn/learn-git`](https://www.codecademy.com/learn/learn-git)↩︎
 
