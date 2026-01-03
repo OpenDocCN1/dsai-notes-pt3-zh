@@ -1,0 +1,353 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+  "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Chapter 40 Reproducible projects with RStudio and R markdown</title>
+<link href="../Styles/Style.css" type="text/css" rel="stylesheet"/>
+</head>
+<body>
+<h1>Chapter 40 Reproducible projects with RStudio and R markdown</h1>
+<blockquote>原文：<a href="https://rafalab.dfci.harvard.edu/dsbook/reproducible-projects-with-rstudio-and-r-markdown.html">https://rafalab.dfci.harvard.edu/dsbook/reproducible-projects-with-rstudio-and-r-markdown.html</a></blockquote>
+<div id="reproducible-projects-with-rstudio-and-r-markdown" class="section level1 hasAnchor" number="40">
+
+<p>The final product of a data analysis project is often a report. Many scientific publications can be thought of as a final report of a data analysis. The same is true for news articles based on data, an analysis report for your company, or lecture notes for a class on how to analyze data. The reports are often on paper or in a PDF that includes a textual description of the findings along with some figures and tables resulting from the analysis.</p>
+<p>Imagine that after you finish the analysis and the report, you are told that you were given the wrong dataset, you are sent a new one and you are asked to run the same analysis with this new dataset. Or what if you realize that a mistake was made and need to re-examine the code, fix the error, and re-run the analysis? Or imagine that someone you are training wants to see the code and be able to reproduce the results to learn about your approach?</p>
+<p>Situations like the ones just described are actually quite common for a data scientist. Here, we describe how you can keep your data science projects organized with RStudio so that re-running an analysis is straight-forward. We then demonstrate how to generate reproducible reports with R markdown and the <strong>knitR</strong> package in a way that will greatly help with recreating reports with minimal work. This is possible due to the fact that R markdown documents permit code and textual descriptions to be combined into the same document, and the figures and tables produced by the code are automatically added to the document.</p>
+<div id="rstudio-projects" class="section level2 hasAnchor" number="40.1">
+<h2><span class="header-section-number">40.1</span> RStudio projects<a href="reproducible-projects-with-rstudio-and-r-markdown.html#rstudio-projects" class="anchor-section" aria-label="Anchor link to header"/></h2>
+<p>RStudio provides a way to keep all the components of a data analysis project organized into one folder and to keep track of information about this project, such as the Git status of files, in one file. In Section <a href="git.html#rstudio-git">39.6</a> we demonstrate how RStudio facilitates the use of Git and GitHub through RStudio projects. In this section we quickly demonstrate how to start a new a project and some recommendations on how to keep these organized. RStudio projects also permit you to have several RStudio sessions open and keep track of which is which.</p>
+<p>To start a project, click on <em>File</em> and then <em>New Project</em>. Often we have already created a folder to save the work, as we did in Section <a href="unix.html#prep-project">38.7</a> and we select <em>Existing Directory</em>. Here we show an example
+in which we have not yet created a folder and select the <em>New Directory</em> option.</p>
+<p><img src="../Images/4606db039dc02e96635b6ec825ad660a.png" width="70%" style="display: block; margin-left: auto; margin-right: auto; background-color: #000; padding:3px;" data-original-src="https://rafalab.dfci.harvard.edu/dsbook/productivity/img/windows-screenshots/VirtualBox_Windows-7-Enterprise_23_03_2018_09_20_21.png"/><img src="../Images/119a4082ad0445ff7cc443d0be0e6532.png" width="70%" style="display: block; margin-left: auto; margin-right: auto; background-color: #000; padding:3px;" data-original-src="https://rafalab.dfci.harvard.edu/dsbook/productivity/img/windows-screenshots/VirtualBox_Windows-7-Enterprise_23_03_2018_09_20_28.png"/></p>
+<p>Then, for a data analysis project, you usually select the <em>New Project</em> option:</p>
+<p><img src="../Images/48fb4accb582e6347abf9789fea33c16.png" width="70%" style="display: block; margin-left: auto; margin-right: auto; background-color: #000; padding:3px;" data-original-src="https://rafalab.dfci.harvard.edu/dsbook/productivity/img/windows-screenshots/VirtualBox_Windows-7-Enterprise_23_03_2018_09_20_35.png"/></p>
+<p>Now you will have to decide on the location of the folder that will be associated with your project, as well as the name of the folder. When choosing a folder name, just like with file names, make sure it is a meaningful name that will help you remember what the project is about. As with files, we recommend using lower case letters, no spaces, and hyphens to separate words. We will call the folder for this project <em>my-first-project</em>. This will then generate a <em>Rproj</em> file called <em>my-first-project.Rproj</em> in the folder associated with the project. We will see how this is useful a few lines below.</p>
+<p><img src="../Images/17d004e987b53d026c317a7e0cc45a07.png" width="70%" style="display: block; margin-left: auto; margin-right: auto; background-color: #000; padding:3px;" data-original-src="https://rafalab.dfci.harvard.edu/dsbook/productivity/img/windows-screenshots/VirtualBox_Windows-7-Enterprise_23_03_2018_09_21_09.png"/></p>
+<p>You will be given options on where this folder should be on your filesystem. In this example, we will place it in our home folder, but this is generally not good practice. As we described in Section <a href="unix.html#prep-project">38.7</a> in the Unix chapter, you want to organize your filesystem following a hierarchical approach and with a folder called <em>projects</em> where you keep a folder for each project.</p>
+<p><img src="../Images/e83a1be64552457f550b704b643ec204.png" width="70%" style="display: block; margin-left: auto; margin-right: auto; background-color: #000; padding:3px;" data-original-src="https://rafalab.dfci.harvard.edu/dsbook/productivity/img/windows-screenshots/VirtualBox_Windows-7-Enterprise_23_03_2018_09_21_56.png"/></p>
+<p>When you start using RStudio with a project, you will see the project name in the upper right corner. This will remind you what project this particular RStudio session belongs to. When you open an RStudio session with no project, it will say <em>Project: (None)</em>.</p>
+<p>When working on a project, all files will be saved and searched for in the folder associated with the project. Below, we show an example of a script that we wrote and saved with the name <em>code.R</em>. Because we used a meaningful name for the project, we can be a bit less informative when we name the files. Although we do not do it here, you can have several scripts open at once. You simply need to click <em>File</em>, then <em>New File</em> and pick the type of file you want to edit.</p>
+<p><img src="../Images/399629e8fcde4ead5a87fed3059d86b1.png" width="70%" style="display: block; margin-left: auto; margin-right: auto; background-color: #000; padding:3px;" data-original-src="https://rafalab.dfci.harvard.edu/dsbook/productivity/img/windows-screenshots/VirtualBox_Windows-7-Enterprise_23_03_2018_09_23_26.png"/></p>
+<p>One of the main advantages of using Projects is that after closing RStudio, if we wish to continue where we left off on the project, we simply double click or open the file saved when we first created the RStudio project. In this case, the file is called <em>my-first-project.Rproj</em>. If we open this file, RStudio will start up and open the scripts we were editing.</p>
+<p><img src="../Images/00911d30f9c58cb77866c3f04d7db8a7.png" width="45%" style="display: block; margin-left: auto; margin-right: auto; background-color: #000; padding:3px;" data-original-src="https://rafalab.dfci.harvard.edu/dsbook/productivity/img/windows-screenshots/VirtualBox_Windows-7-Enterprise_23_03_2018_09_24_08.png"/><img src="../Images/06636fe046c144a749403a44f049629f.png" width="45%" style="display: block; margin-left: auto; margin-right: auto; background-color: #000; padding:3px;" data-original-src="https://rafalab.dfci.harvard.edu/dsbook/productivity/img/windows-screenshots/VirtualBox_Windows-7-Enterprise_23_03_2018_09_24_21.png"/></p>
+<p>Another advantage is that if you click on two or more different Rproj files, you start new RStudio and R sessions for each.</p>
+</div>
+<div id="r-markdown" class="section level2 hasAnchor" number="40.2">
+<h2><span class="header-section-number">40.2</span> R markdown<a href="reproducible-projects-with-rstudio-and-r-markdown.html#r-markdown" class="anchor-section" aria-label="Anchor link to header"/></h2>
+<p>R markdown is a format for <em>literate programming</em> documents. It is based on <em>markdown</em>, a markup language that is widely used to generate html pages. You can learn more about markdown here: <a href="https://www.markdowntutorial.com/">https://www.markdowntutorial.com/</a>. Literate programming weaves instructions, documentation, and detailed comments in between machine executable code, producing a document that describes the program that is best for human understanding (Knuth 1984). Unlike a word processor, such as Microsoft Word, where what you see is what you get, with R markdown, you need to <em>compile</em> the document into the final report. The R markdown document looks different than the final product. This seems like a disadvantage at first, but it is not because, for example, instead of producing plots and inserting them one by one into the word processing document, the plots are automatically added.</p>
+<p>In RStudio, you can start an R markdown document by clicking on <em>File</em>, <em>New File</em>, the <em>R Markdown</em>. You will then be asked to enter a title and author for your document. We are going to prepare a report on gun murders so we will give it an appropriate name. You can also decide what format you would like the final report to be in: HTML, PDF, or Microsoft Word. Later, we can easily change this, but here we select html as it is the preferred format for debugging purposes:</p>
+<p><img src="../Images/b4367827c0a3970394226fb55bf2194c.png" width="45%" style="display: block; margin-left: auto; margin-right: auto; background-color: #000; padding:3px;" data-original-src="https://rafalab.dfci.harvard.edu/dsbook/productivity/img/windows-screenshots/VirtualBox_Windows-7-Enterprise_23_03_2018_14_53_18.png"/><img src="../Images/77b600bfb17d60e5101a9f2143743e92.png" width="45%" style="display: block; margin-left: auto; margin-right: auto; background-color: #000; padding:3px;" data-original-src="https://rafalab.dfci.harvard.edu/dsbook/productivity/img/windows-screenshots/VirtualBox_Windows-7-Enterprise_23_03_2018_14_53_19.png"/></p>
+<p>This will generate a template file:</p>
+<p><img src="../Images/7f1ca37daa5f50fff004adc7a5e0ebac.png" width="70%" style="display: block; margin-left: auto; margin-right: auto; background-color: #000; padding:3px;" data-original-src="https://rafalab.dfci.harvard.edu/dsbook/productivity/img/windows-screenshots/VirtualBox_Windows-7-Enterprise_23_03_2018_14_53_20.png"/></p>
+<p>As a convention, we use the <code>Rmd</code> suffix for these files.</p>
+<p>Once you gain experience with R Markdown, you will be able to do this without the template and can simply start from a blank template.</p>
+<p>In the template, you will see several things to note.</p>
+<div id="the-header" class="section level3 hasAnchor" number="40.2.1">
+<h3><span class="header-section-number">40.2.1</span> The header<a href="reproducible-projects-with-rstudio-and-r-markdown.html#the-header" class="anchor-section" aria-label="Anchor link to header"/></h3>
+<p>At the top you see:</p>
+<pre><code>---
+title: "Report on Gun Murders"
+author: "Rafael Irizarry"
+date: "April 16, 2018"
+output: html_document
+---</code></pre>
+<p>The things between the <code>---</code> is the header. We actually don’t need a header, but it is often useful. You can define many other things in the header than what is included in the template. We don’t discuss those here, but much information is available online. The one parameter that we will highlight is <code>output</code>. By changing this to, say, <code>pdf_document</code>, we can control the type of output that is produced when we compile.</p>
+</div>
+<div id="r-code-chunks" class="section level3 hasAnchor" number="40.2.2">
+<h3><span class="header-section-number">40.2.2</span> R code chunks<a href="reproducible-projects-with-rstudio-and-r-markdown.html#r-code-chunks" class="anchor-section" aria-label="Anchor link to header"/></h3>
+<p>In various places in the document, we see something like this:</p>
+<pre><code>```{r}
+summary(pressure)
+```</code></pre>
+<p>These are the code chunks. When you compile the document, the R code inside the chunk, in this case <code>summary(pressure)</code>, will be evaluated and the result included in that position in the final document.</p>
+<p>To add your own R chunks, you can type the characters above quickly with the key binding command-option-I on the Mac and Ctrl-Alt-I on Windows.</p>
+<p>This applies to plots as well; the plot will be placed in that position. We can write something like this:</p>
+<pre><code>```{r}
+plot(pressure)
+```</code></pre>
+<p>By default, the code will show up as well. To avoid having the code show up, you can use an argument. To avoid this, you can use the argument <code>echo=FALSE</code>. For example:</p>
+<pre><code>```{r, echo=FALSE}
+summary(pressure)
+```</code></pre>
+<p>We recommend getting into the habit of adding a label to the R code chunks. This will be very useful when debugging, among other situations. You do this by adding a descriptive word like this:</p>
+<pre><code>```{r pressure-summary}
+summary(pressure)
+```</code></pre>
+</div>
+<div id="global-options" class="section level3 hasAnchor" number="40.2.3">
+<h3><span class="header-section-number">40.2.3</span> Global options<a href="reproducible-projects-with-rstudio-and-r-markdown.html#global-options" class="anchor-section" aria-label="Anchor link to header"/></h3>
+<p>One of the R chunks contains a complex looking call:</p>
+<pre><code>```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```</code></pre>
+<p>We will not cover this here, but as you become more experienced with R Markdown, you will learn the advantages of setting global options for the compilation process.</p>
+</div>
+<div id="knitr" class="section level3 hasAnchor" number="40.2.4">
+<h3><span class="header-section-number">40.2.4</span> knitR<a href="reproducible-projects-with-rstudio-and-r-markdown.html#knitr" class="anchor-section" aria-label="Anchor link to header"/></h3>
+<p>We use the <strong>knitR</strong> package to compile R markdown documents. The specific function used to compile is the <code>knit</code> function, which takes a filename as input. RStudio provides a button that makes it easier to compile the document. For the screenshot below, we have edited the document so that a report on gun murders is produced. You can see the file here: <a href="https://raw.githubusercontent.com/rairizarry/murders/master/report.Rmd">https://raw.githubusercontent.com/rairizarry/murders/master/report.Rmd</a>. You can now click on the <code>Knit</code> button:</p>
+<p><img src="../Images/9949879909db06b7c988ee99d37ed11d.png" width="70%" style="display: block; margin-left: auto; margin-right: auto; background-color: #000; padding:3px;" data-original-src="https://rafalab.dfci.harvard.edu/dsbook/productivity/img/windows-screenshots/VirtualBox_Windows-7-Enterprise_23_03_2018_14_53_21.0.png"/></p>
+<p>The first time you click on the <em>Knit</em> button, a dialog box may appear asking you to install packages you need.
+<!--
+<img src="productivity/img/windows-screenshots/VirtualBox_Windows-7-Enterprise_23_03_2018_14_53_21.5.png" width="70%" style="display: block; margin-left: auto; margin-right: auto; background-color: #000; padding:3px;" style="display: block; margin: auto;" />
+--></p>
+<p>Once you have installed the packages, clicking the <em>Knit</em> will compile your R markdown file and the resulting document will pop up:</p>
+<p>This produces an html document which you can see in your working directory. To view it, open a terminal and list the files. You can open the file in a browser and use this to present your analysis. You can also produce a PDF or Microsoft document by changing:</p>
+<p><code>output: html_document</code> to <code>output: pdf_document</code> or <code>output: word_document</code>.</p>
+<p>We can also produce documents that render on GitHub using <code>output: github_document</code>.
+<!--
+<img src="productivity/img/windows-screenshots/VirtualBox_Windows-7-Enterprise_23_03_2018_14_53_23.png" width="70%" style="display: block; margin-left: auto; margin-right: auto; background-color: #000; padding:3px;" style="display: block; margin: auto;" />
+-->
+This will produce a markdown file, with suffix <code>md</code>, that renders in GitHub. Because we have uploaded these files to GitHub, you can click on the <code>md</code> file and you will see the report as a webpage:</p>
+<!--
+
+<img src="productivity/img/windows-screenshots/VirtualBox_Windows-7-Enterprise_23_03_2018_14_53_37.png" width="70%" style="display: block; margin-left: auto; margin-right: auto; background-color: #000; padding:3px;" style="display: block; margin: auto;" />
+
+-->
+<p><img src="../Images/84786323a7c52484f030e6595400d672.png" width="70%" style="display: block; margin-left: auto; margin-right: auto; background-color: #000; padding:3px;" data-original-src="https://rafalab.dfci.harvard.edu/dsbook/productivity/img/windows-screenshots/VirtualBox_Windows-7-Enterprise_23_03_2018_14_53_38.png"/></p>
+<p>This is a convenient way to share your reports.</p>
+</div>
+<div id="more-on-r-markdown" class="section level3 hasAnchor" number="40.2.5">
+<h3><span class="header-section-number">40.2.5</span> More on R markdown<a href="reproducible-projects-with-rstudio-and-r-markdown.html#more-on-r-markdown" class="anchor-section" aria-label="Anchor link to header"/></h3>
+<p>There is a lot more you can do with R markdown. We highly recommend you continue learning as you gain more experience writing reports in R. There are many free resources on the internet including:</p>
+<ul>
+<li>RStudio’s tutorial: <a href="https://rmarkdown.rstudio.com">https://rmarkdown.rstudio.com</a></li>
+<li>The cheat sheet: <a href="https://www.rstudio.com/wp-content/uploads/2015/02/rmarkdown-cheatsheet.pdf">https://www.rstudio.com/wp-content/uploads/2015/02/rmarkdown-cheatsheet.pdf</a></li>
+<li>The knitR book: <a href="https://yihui.name/knitr/">https://yihui.name/knitr/</a></li>
+</ul>
+</div>
+</div>
+<div id="organizing" class="section level2 hasAnchor" number="40.3">
+<h2><span class="header-section-number">40.3</span> Organizing a data science project<a href="reproducible-projects-with-rstudio-and-r-markdown.html#organizing" class="anchor-section" aria-label="Anchor link to header"/></h2>
+<p>In this section we put it all together to create the US murders project and share it on GitHub.</p>
+<div id="create-directories-in-unix" class="section level3 hasAnchor" number="40.3.1">
+<h3><span class="header-section-number">40.3.1</span> Create directories in Unix<a href="reproducible-projects-with-rstudio-and-r-markdown.html#create-directories-in-unix" class="anchor-section" aria-label="Anchor link to header"/></h3>
+<p>In Section <a href="unix.html#prep-project">38.7</a> we demonstrated how to use Unix to prepare for a data science project using an example. Here we continue this example and show how to use RStudio. In Section <a href="unix.html#prep-project">38.7</a> we created the following directories using Unix:</p>
+<div class="sourceCode" id="cb1493"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1493-1"><a href="reproducible-projects-with-rstudio-and-r-markdown.html#cb1493-1" tabindex="-1"/><span class="bu">cd</span> ~</span>
+<span id="cb1493-2"><a href="reproducible-projects-with-rstudio-and-r-markdown.html#cb1493-2" tabindex="-1"/><span class="bu">cd</span> projects</span>
+<span id="cb1493-3"><a href="reproducible-projects-with-rstudio-and-r-markdown.html#cb1493-3" tabindex="-1"/><span class="fu">mkdir</span> murders</span>
+<span id="cb1493-4"><a href="reproducible-projects-with-rstudio-and-r-markdown.html#cb1493-4" tabindex="-1"/><span class="bu">cd</span> murders</span>
+<span id="cb1493-5"><a href="reproducible-projects-with-rstudio-and-r-markdown.html#cb1493-5" tabindex="-1"/><span class="fu">mkdir</span> data rdas </span></code></pre></div>
+</div>
+<div id="create-an-rstudio-project" class="section level3 hasAnchor" number="40.3.2">
+<h3><span class="header-section-number">40.3.2</span> Create an RStudio project<a href="reproducible-projects-with-rstudio-and-r-markdown.html#create-an-rstudio-project" class="anchor-section" aria-label="Anchor link to header"/></h3>
+<p>In the next section we will use create an RStudio project. In RStudio we go to <em>File</em> and then <em>New Project…</em> and when given the options we pick <em>Existing Directory</em>. We then write the full path of the <code>murders</code> directory created above.</p>
+<p><img src="../Images/a7ac7cacd5249288ac6b7b4bdb01ce1f.png" width="45%" style="display: block; margin-left: auto; margin-right: auto; background-color: #000; padding:3px;" data-original-src="https://rafalab.dfci.harvard.edu/dsbook/productivity/img/windows-screenshots/VirtualBox_Windows-7-Enterprise_23_03_2018_14_53_14.png"/><img src="../Images/088a4a38089bd009b73bdee2500233db.png" width="45%" style="display: block; margin-left: auto; margin-right: auto; background-color: #000; padding:3px;" data-original-src="https://rafalab.dfci.harvard.edu/dsbook/productivity/img/windows-screenshots/VirtualBox_Windows-7-Enterprise_23_03_2018_14_53_15.png"/></p>
+<p>Once you do this, you will see the <code>rdas</code> and <code>data</code> directories you created in the RStudio <em>Files</em> tab.</p>
+<p><img src="../Images/d99139da5d9847ffdf807e325af273cc.png" width="70%" style="display: block; margin-left: auto; margin-right: auto; background-color: #000; padding:3px;" data-original-src="https://rafalab.dfci.harvard.edu/dsbook/productivity/img/windows-screenshots/VirtualBox_Windows-7-Enterprise_23_03_2018_14_53_16.png"/></p>
+<p>Keep in mind that when we are in this project, our default working directory will be <code>~/projects/murders</code>. You can confirm this by typing <code>getwd()</code> into your R session. This is important because it will help us organize the code when we need to write file paths.
+<strong>Pro tip: always use relative paths in code for data science projects. These should be relative to the default working directory.</strong> The problem with using full paths is that your code is unlikely to work on filesystems other than yours since the directory structures will be different. This includes using the home directory <code>~</code> as part of your path.</p>
+</div>
+<div id="edit-some-r-scripts" class="section level3 hasAnchor" number="40.3.3">
+<h3><span class="header-section-number">40.3.3</span> Edit some R scripts<a href="reproducible-projects-with-rstudio-and-r-markdown.html#edit-some-r-scripts" class="anchor-section" aria-label="Anchor link to header"/></h3>
+<p>Let’s now write a script that downloads a file into the data directory. We will call this file <code>download-data.R</code>.</p>
+<p>The content of this file will be:</p>
+<div class="sourceCode" id="cb1494"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1494-1"><a href="reproducible-projects-with-rstudio-and-r-markdown.html#cb1494-1" tabindex="-1"/>url <span class="ot">&lt;-</span> <span class="st">"https://raw.githubusercontent.com/rafalab/dslabs/master/inst/</span></span>
+<span id="cb1494-2"><a href="reproducible-projects-with-rstudio-and-r-markdown.html#cb1494-2" tabindex="-1"/><span class="st">extdata/murders.csv"</span></span>
+<span id="cb1494-3"><a href="reproducible-projects-with-rstudio-and-r-markdown.html#cb1494-3" tabindex="-1"/>dest_file <span class="ot">&lt;-</span> <span class="st">"data/murders.csv"</span></span>
+<span id="cb1494-4"><a href="reproducible-projects-with-rstudio-and-r-markdown.html#cb1494-4" tabindex="-1"/><span class="fu">download.file</span>(url, <span class="at">destfile =</span> dest_file)</span></code></pre></div>
+<p>Notice that we are using the relative path <code>data/murders.csv</code>.</p>
+<p>Run this code in R and you will see that a file is added to the <code>data</code> directory.</p>
+<p>Now we are ready to write a script to read this data and prepare a table that we can use for analysis. Call the file <code>wrangle-data.R</code>. The content of this file will be:</p>
+<div class="sourceCode" id="cb1495"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1495-1"><a href="reproducible-projects-with-rstudio-and-r-markdown.html#cb1495-1" tabindex="-1"/><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1495-2"><a href="reproducible-projects-with-rstudio-and-r-markdown.html#cb1495-2" tabindex="-1"/>murders <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/murders.csv"</span>)</span>
+<span id="cb1495-3"><a href="reproducible-projects-with-rstudio-and-r-markdown.html#cb1495-3" tabindex="-1"/>murders <span class="ot">&lt;-</span>murders <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="at">region =</span> <span class="fu">factor</span>(region),</span>
+<span id="cb1495-4"><a href="reproducible-projects-with-rstudio-and-r-markdown.html#cb1495-4" tabindex="-1"/>                             <span class="at">rate =</span> total <span class="sc">/</span> population <span class="sc">*</span> <span class="dv">10</span><span class="sc">^</span><span class="dv">5</span>)</span>
+<span id="cb1495-5"><a href="reproducible-projects-with-rstudio-and-r-markdown.html#cb1495-5" tabindex="-1"/><span class="fu">save</span>(murders, <span class="at">file =</span> <span class="st">"rdas/murders.rda"</span>)</span></code></pre></div>
+<p>Again note that we use relative paths exclusively.</p>
+<p>In this file, we introduce an R command we have not seen: <code>save</code>. The <code>save</code> command in R saves objects into what is called an <em>rda file</em>: <em>rda</em> is short for R data. We recommend using the <code>.rda</code> suffix on files saving R objects. You will see that <code>.RData</code> is also used.</p>
+<p>If you run this code above, the processed data object will be saved in a file in the <code>rda</code> directory. Although not the case here, this approach is often practical because generating the data object we use for final analyses and plots can be a complex and time-consuming process. So we run this process once and save the file. But we still want to be able to generate the entire analysis from the raw data.</p>
+<p>Now we are ready to write the analysis file. Let’s call it <code>analysis.R</code>. The content should be the following:</p>
+<div class="sourceCode" id="cb1496"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1496-1"><a href="reproducible-projects-with-rstudio-and-r-markdown.html#cb1496-1" tabindex="-1"/><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1496-2"><a href="reproducible-projects-with-rstudio-and-r-markdown.html#cb1496-2" tabindex="-1"/><span class="fu">load</span>(<span class="st">"rdas/murders.rda"</span>)</span>
+<span id="cb1496-3"><a href="reproducible-projects-with-rstudio-and-r-markdown.html#cb1496-3" tabindex="-1"/></span>
+<span id="cb1496-4"><a href="reproducible-projects-with-rstudio-and-r-markdown.html#cb1496-4" tabindex="-1"/>murders <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="at">abb =</span> <span class="fu">reorder</span>(abb, rate)) <span class="sc">|&gt;</span></span>
+<span id="cb1496-5"><a href="reproducible-projects-with-rstudio-and-r-markdown.html#cb1496-5" tabindex="-1"/>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(abb, rate)) <span class="sc">+</span></span>
+<span id="cb1496-6"><a href="reproducible-projects-with-rstudio-and-r-markdown.html#cb1496-6" tabindex="-1"/>  <span class="fu">geom_bar</span>(<span class="at">width =</span> <span class="fl">0.5</span>, <span class="at">stat =</span> <span class="st">"identity"</span>, <span class="at">color =</span> <span class="st">"black"</span>) <span class="sc">+</span></span>
+<span id="cb1496-7"><a href="reproducible-projects-with-rstudio-and-r-markdown.html#cb1496-7" tabindex="-1"/>  <span class="fu">coord_flip</span>()</span></code></pre></div>
+<p>If you run this analysis, you will see that it generates a plot.</p>
+</div>
+<div id="create-some-more-directories-using-unix" class="section level3 hasAnchor" number="40.3.4">
+<h3><span class="header-section-number">40.3.4</span> Create some more directories using Unix<a href="reproducible-projects-with-rstudio-and-r-markdown.html#create-some-more-directories-using-unix" class="anchor-section" aria-label="Anchor link to header"/></h3>
+<p>Now suppose we want to save the generated plot for use in a report or presentation. We can do this with the <strong>ggplot</strong> command <code>ggsave</code>. But where do we put the graph? We should be systematically organized so we will save plots to a directory called <code>figs</code>. Start by creating a directory by typing the following in the terminal:</p>
+<div class="sourceCode" id="cb1497"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1497-1"><a href="reproducible-projects-with-rstudio-and-r-markdown.html#cb1497-1" tabindex="-1"/><span class="fu">mkdir</span> figs</span></code></pre></div>
+<p>and then you can add the line:</p>
+<div class="sourceCode" id="cb1498"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1498-1"><a href="reproducible-projects-with-rstudio-and-r-markdown.html#cb1498-1" tabindex="-1"/><span class="fu">ggsave</span>(<span class="st">"figs/barplot.png"</span>)</span></code></pre></div>
+<p>to your R script. If you run the script now, a png file will be saved into the <code>figs</code> directory. If we wanted to copy that file to some other directory where we are developing a presentation, we can avoid using the mouse by using the <code>cp</code> command in our terminal.</p>
+</div>
+<div id="add-a-readme-file" class="section level3 hasAnchor" number="40.3.5">
+<h3><span class="header-section-number">40.3.5</span> Add a README file<a href="reproducible-projects-with-rstudio-and-r-markdown.html#add-a-readme-file" class="anchor-section" aria-label="Anchor link to header"/></h3>
+<p>You now have a self-contained analysis in one directory. One final recommendation is to create a <code>README.txt</code> file describing what each of these files does for the benefit of others reading your code, including your future self. This would not be a script but just some notes. One of the options provided when opening a new file in RStudio is a text file. You can save something like this into the text file:</p>
+<pre><code>We analyze US gun murder data collected by the FBI.
+
+download-data.R - Downloads csv file to data directory
+
+wrangle-data.R - Creates a derived dataset and saves as R object in rdas
+directory
+
+analysis.R - A plot is generated and saved in the figs directory.</code></pre>
+</div>
+<div id="initializing-a-git-directory" class="section level3 hasAnchor" number="40.3.6">
+<h3><span class="header-section-number">40.3.6</span> Initializing a Git directory<a href="reproducible-projects-with-rstudio-and-r-markdown.html#initializing-a-git-directory" class="anchor-section" aria-label="Anchor link to header"/></h3>
+<p>In Section <a href="git.html#init">39.5</a> we demonstrated how to initialize a Git directory and connect it to the upstream repository on GitHub, which we already created in that section.</p>
+<p>We can do this in the Unix terminal:</p>
+<div class="sourceCode" id="cb1500"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1500-1"><a href="reproducible-projects-with-rstudio-and-r-markdown.html#cb1500-1" tabindex="-1"/><span class="bu">cd</span> ~/projects/murders</span>
+<span id="cb1500-2"><a href="reproducible-projects-with-rstudio-and-r-markdown.html#cb1500-2" tabindex="-1"/><span class="fu">git</span> init</span>
+<span id="cb1500-3"><a href="reproducible-projects-with-rstudio-and-r-markdown.html#cb1500-3" tabindex="-1"/><span class="fu">git</span> add README.txt</span>
+<span id="cb1500-4"><a href="reproducible-projects-with-rstudio-and-r-markdown.html#cb1500-4" tabindex="-1"/><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">"First commit. Adding README.txt file just to get started"</span></span>
+<span id="cb1500-5"><a href="reproducible-projects-with-rstudio-and-r-markdown.html#cb1500-5" tabindex="-1"/><span class="fu">git</span> remote add origin <span class="kw">`</span><span class="ex">https://github.com/rairizarry/murders.git</span><span class="kw">`</span></span>
+<span id="cb1500-6"><a href="reproducible-projects-with-rstudio-and-r-markdown.html#cb1500-6" tabindex="-1"/><span class="fu">git</span> push</span></code></pre></div>
+</div>
+<div id="add-commit-and-push-files-using-rstudio" class="section level3 hasAnchor" number="40.3.7">
+<h3><span class="header-section-number">40.3.7</span> Add, commit, and push files using RStudio<a href="reproducible-projects-with-rstudio-and-r-markdown.html#add-commit-and-push-files-using-rstudio" class="anchor-section" aria-label="Anchor link to header"/></h3>
+<p>We can continue adding and committing each file, but it might be easier to use RStudio. To do this, start the project by opening the Rproj file. The git icons should appear and you can add, commit and push using these.</p>
+<p><img src="../Images/4c25d6e6e432fd624eab9325fdbefead.png" width="30%" style="display: block; margin-left: auto; margin-right: auto; background-color: #000; padding:3px;" data-original-src="https://rafalab.dfci.harvard.edu/dsbook/productivity/img/windows-screenshots/VirtualBox_Windows-7-Enterprise_23_03_2018_14_53_32.png"/><img src="../Images/6e6c41b682c9924b2dd6f84287ef1f82.png" width="30%" style="display: block; margin-left: auto; margin-right: auto; background-color: #000; padding:3px;" data-original-src="https://rafalab.dfci.harvard.edu/dsbook/productivity/img/windows-screenshots/VirtualBox_Windows-7-Enterprise_23_03_2018_14_53_34.png"/><img src="../Images/fad1808de1bfb2e7fd7847470f26f8bc.png" width="30%" style="display: block; margin-left: auto; margin-right: auto; background-color: #000; padding:3px;" data-original-src="https://rafalab.dfci.harvard.edu/dsbook/productivity/img/windows-screenshots/VirtualBox_Windows-7-Enterprise_23_03_2018_14_53_35.png"/></p>
+<p>We can now go to GitHub and confirm that our files are there.
+<!--
+<img src="productivity/img/windows-screenshots/VirtualBox_Windows-7-Enterprise_23_03_2018_14_53_37.png" width="70%" style="display: block; margin-left: auto; margin-right: auto; background-color: #000; padding:3px;" style="display: block; margin: auto;" />
+-->
+You can see a version of this project, organized with Unix directories, on GitHub<a href="#fn123" class="footnote-ref" id="fnref123"><sup>123</sup></a>.
+You can download a copy to your computer by using the <code>git clone</code> command on your terminal. This command will create a directory called <code>murders</code> in your working directory, so be careful where you call it from.</p>
+<div class="sourceCode" id="cb1501"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1501-1"><a href="reproducible-projects-with-rstudio-and-r-markdown.html#cb1501-1" tabindex="-1"/>git clone https<span class="sc">:</span><span class="er">//</span>github.com<span class="sc">/</span>rairizarry<span class="sc">/</span>murders.git</span></code></pre></div>
+
+</div>
+</div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="footnotes">
+<hr/>
+<ol start="123">
+<li id="fn123"><p><a href="https://github.com/rairizarry/murders" class="uri">https://github.com/rairizarry/murders</a><a href="reproducible-projects-with-rstudio-and-r-markdown.html#fnref123" class="footnote-back">↩︎</a></p></li>
+</ol>
+</div>
+                
+</body>
+</html>

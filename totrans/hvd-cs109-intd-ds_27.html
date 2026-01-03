@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+  "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Chapter 17 Regression</title>
+<link href="../Styles/Style.css" type="text/css" rel="stylesheet"/>
+</head>
+<body>
+<h1>Chapter 17 Regression</h1>
+<blockquote>原文：<a href="https://rafalab.dfci.harvard.edu/dsbook/regression.html">https://rafalab.dfci.harvard.edu/dsbook/regression.html</a></blockquote>
+<div id="regression" class="section level1 hasAnchor" number="17">
+
+<p>Up to this point, this book has focused mainly on single variables. However, in data science applications, it is very common to be interested in the relationship between two or more variables. For instance, in Chapter <a href="linear-models.html#linear-models">18</a> we will use a data-driven approach that examines the relationship between player statistics and success to guide the building of a baseball team with a limited budget. Before delving into this more complex example, we introduce necessary concepts needed to understand regression using a simpler illustration. We actually use the dataset from which regression was born.</p>
+<p>The example is from genetics. Francis Galton<a href="#fn60" class="footnote-ref" id="fnref60"><sup>60</sup></a> studied the variation and heredity of human traits. Among many other traits, Galton collected and studied height data from families to try to understand heredity. While doing this, he developed the concepts of correlation and regression, as well as a connection to pairs of data that follow a normal distribution. Of course, at the time this data was collected our knowledge of genetics was quite limited compared to what we know today. A very specific question Galton tried to answer was: how well can we predict a child’s height based on the parents’ height? The technique he developed to answer this question, regression, can also be applied to our baseball question. Regression can be applied in many other circumstances as well.</p>
+<p><strong>Historical note</strong>: Galton made important contributions to statistics and genetics, but he was also one of the first proponents of eugenics, a scientifically flawed philosophical movement favored by many biologists of Galton’s time but with horrific historical consequences. You can read more about it here: <a href="https://pged.org/history-eugenics-and-genetics/">https://pged.org/history-eugenics-and-genetics/</a>.</p>
+<div id="galton" class="section level2 hasAnchor" number="17.1">
+<h2><span class="header-section-number">17.1</span> Case study: is height hereditary?<a href="regression.html#galton" class="anchor-section" aria-label="Anchor link to header"/></h2>
+<p>We have access to Galton’s family height data through the <strong>HistData</strong> package. This data contains heights on several dozen families: mothers, fathers, daughters, and sons. To imitate Galton’s analysis, we will create a dataset with the heights of fathers and a randomly selected son of each family:</p>
+<div class="sourceCode" id="cb664"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb664-1"><a href="regression.html#cb664-1" tabindex="-1"/><span class="fu">library</span>(tidyverse)</span>
+<span id="cb664-2"><a href="regression.html#cb664-2" tabindex="-1"/><span class="fu">library</span>(HistData)</span>
+<span id="cb664-3"><a href="regression.html#cb664-3" tabindex="-1"/><span class="fu">data</span>(<span class="st">"GaltonFamilies"</span>)</span>
+<span id="cb664-4"><a href="regression.html#cb664-4" tabindex="-1"/></span>
+<span id="cb664-5"><a href="regression.html#cb664-5" tabindex="-1"/><span class="fu">set.seed</span>(<span class="dv">1983</span>)</span>
+<span id="cb664-6"><a href="regression.html#cb664-6" tabindex="-1"/>galton_heights <span class="ot">&lt;-</span> GaltonFamilies <span class="sc">|&gt;</span></span>
+<span id="cb664-7"><a href="regression.html#cb664-7" tabindex="-1"/>  <span class="fu">filter</span>(gender <span class="sc">==</span> <span class="st">"male"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb664-8"><a href="regression.html#cb664-8" tabindex="-1"/>  <span class="fu">group_by</span>(family) <span class="sc">|&gt;</span></span>
+<span id="cb664-9"><a href="regression.html#cb664-9" tabindex="-1"/>  <span class="fu">sample_n</span>(<span class="dv">1</span>) <span class="sc">|&gt;</span></span>
+<span id="cb664-10"><a href="regression.html#cb664-10" tabindex="-1"/>  <span class="fu">ungroup</span>() <span class="sc">|&gt;</span></span>
+<span id="cb664-11"><a href="regression.html#cb664-11" tabindex="-1"/>  <span class="fu">select</span>(father, childHeight) <span class="sc">|&gt;</span></span>
+<span id="cb664-12"><a href="regression.html#cb664-12" tabindex="-1"/>  <span class="fu">rename</span>(<span class="at">son =</span> childHeight)</span></code></pre></div>
+<p>In the exercises, we will look at other relationships including mothers and daughters.</p>
+<p>Suppose we were asked to summarize the father and son data. Since both distributions are well approximated by the normal distribution, we could use the two averages and two standard deviations as summaries:</p>
+<div class="sourceCode" id="cb665"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb665-1"><a href="regression.html#cb665-1" tabindex="-1"/>galton_heights <span class="sc">|&gt;</span> </span>
+<span id="cb665-2"><a href="regression.html#cb665-2" tabindex="-1"/>  <span class="fu">summarize</span>(<span class="fu">mean</span>(father), <span class="fu">sd</span>(father), <span class="fu">mean</span>(son), <span class="fu">sd</span>(son))</span>
+<span id="cb665-3"><a href="regression.html#cb665-3" tabindex="-1"/><span class="co">#&gt; # A tibble: 1 × 4</span></span>
+<span id="cb665-4"><a href="regression.html#cb665-4" tabindex="-1"/><span class="co">#&gt;   `mean(father)` `sd(father)` `mean(son)` `sd(son)`</span></span>
+<span id="cb665-5"><a href="regression.html#cb665-5" tabindex="-1"/><span class="co">#&gt;            &lt;dbl&gt;        &lt;dbl&gt;       &lt;dbl&gt;     &lt;dbl&gt;</span></span>
+<span id="cb665-6"><a href="regression.html#cb665-6" tabindex="-1"/><span class="co">#&gt; 1           69.1         2.55        69.2      2.71</span></span></code></pre></div>
+<p>However, this summary fails to describe an important characteristic of the data: the trend that the taller the father, the taller the son.</p>
+<div class="sourceCode" id="cb666"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb666-1"><a href="regression.html#cb666-1" tabindex="-1"/>galton_heights <span class="sc">|&gt;</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(father, son)) <span class="sc">+</span> </span>
+<span id="cb666-2"><a href="regression.html#cb666-2" tabindex="-1"/>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>)</span></code></pre></div>
+<p><img src="../Images/5fec11eb08ca35d1965166e5bb2d7a78.png" width="40%" style="display: block; margin: auto;" data-original-src="https://rafalab.dfci.harvard.edu/dsbook/book_files/figure-html/scatterplot-1.png"/></p>
+<p>We will learn that the correlation coefficient is an informative summary of how two variables move together and then see how this can be used to predict one variable using the other.</p>
+</div>
+<div id="corr-coef" class="section level2 hasAnchor" number="17.2">
+<h2><span class="header-section-number">17.2</span> The correlation coefficient<a href="regression.html#corr-coef" class="anchor-section" aria-label="Anchor link to header"/></h2>
+<p>The correlation coefficient is defined for a list of pairs <span class="math inline">\((x_1, y_1), \dots, (x_n,y_n)\)</span> as the average of the product of the standardized values:</p>
+<p><span class="math display">\[
+\rho = \frac{1}{n} \sum_{i=1}^n \left( \frac{x_i-\mu_x}{\sigma_x} \right)\left( \frac{y_i-\mu_y}{\sigma_y} \right)
+\]</span>
+with <span class="math inline">\(\mu_x, \mu_y\)</span> the averages of <span class="math inline">\(x_1,\dots, x_n\)</span> and <span class="math inline">\(y_1, \dots, y_n\)</span>, respectively, and <span class="math inline">\(\sigma_x, \sigma_y\)</span> the standard deviations. The Greek letter <span class="math inline">\(\rho\)</span> is commonly used in statistics books to denote the correlation. The Greek letter for <span class="math inline">\(r\)</span>, <span class="math inline">\(\rho\)</span>, because it is the first letter of regression. Soon we learn about the connection between correlation and regression. We can represent the formula above with R code using:</p>
+<div class="sourceCode" id="cb667"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb667-1"><a href="regression.html#cb667-1" tabindex="-1"/>rho <span class="ot">&lt;-</span> <span class="fu">mean</span>(<span class="fu">scale</span>(x) <span class="sc">*</span> <span class="fu">scale</span>(y))</span></code></pre></div>
+<p>To understand why this equation does in fact summarize how two variables move together, consider the <span class="math inline">\(i\)</span>-th entry of <span class="math inline">\(x\)</span> is <span class="math inline">\(\left( \frac{x_i-\mu_x}{\sigma_x} \right)\)</span> SDs away from the average. Similarly, the <span class="math inline">\(y_i\)</span> that is paired with <span class="math inline">\(x_i\)</span>, is <span class="math inline">\(\left( \frac{y_1-\mu_y}{\sigma_y} \right)\)</span> SDs away from the average <span class="math inline">\(y\)</span>. If <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> are unrelated, the product <span class="math inline">\(\left( \frac{x_i-\mu_x}{\sigma_x} \right)\left( \frac{y_i-\mu_y}{\sigma_y} \right)\)</span> will be positive ( <span class="math inline">\(+ \times +\)</span> and <span class="math inline">\(- \times -\)</span> ) as often as negative (<span class="math inline">\(+ \times -\)</span> and <span class="math inline">\(- \times +\)</span>) and will average out to about 0. This correlation is the average and therefore unrelated variables will have 0 correlation. If instead the quantities vary together, then we are averaging mostly positive products ( <span class="math inline">\(+ \times +\)</span> and <span class="math inline">\(- \times -\)</span>) and we get a positive correlation. If they vary in opposite directions, we get a negative correlation.</p>
+<p>The correlation coefficient is always between -1 and 1. We can show this mathematically: consider that we can’t have higher correlation than when we compare a list to itself (perfect correlation) and in this case the correlation is:</p>
+<p><span class="math display">\[
+\rho = \frac{1}{n} \sum_{i=1}^n \left( \frac{x_i-\mu_x}{\sigma_x} \right)^2 =
+\frac{1}{\sigma_x^2} \frac{1}{n} \sum_{i=1}^n \left( x_i-\mu_x \right)^2 =
+\frac{1}{\sigma_x^2} \sigma^2_x =
+1
+\]</span></p>
+<p>A similar derivation, but with <span class="math inline">\(x\)</span> and its exact opposite, proves the correlation has to be bigger or equal to -1.</p>
+<p>For other pairs, the correlation is in between -1 and 1. The correlation between father and son’s heights is about 0.5:</p>
+<div class="sourceCode" id="cb668"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb668-1"><a href="regression.html#cb668-1" tabindex="-1"/>galton_heights <span class="sc">|&gt;</span> <span class="fu">summarize</span>(<span class="at">r =</span> <span class="fu">cor</span>(father, son)) <span class="sc">|&gt;</span> <span class="fu">pull</span>(r)</span>
+<span id="cb668-2"><a href="regression.html#cb668-2" tabindex="-1"/><span class="co">#&gt; [1] 0.433</span></span></code></pre></div>
+<p>To see what data looks like for different values of <span class="math inline">\(\rho\)</span>, here are six examples of pairs with correlations ranging from -0.9 to 0.99:</p>
+<p><img src="../Images/27347fed9dab43c36628d916d89e6a43.png" width="70%" style="display: block; margin: auto;" data-original-src="https://rafalab.dfci.harvard.edu/dsbook/book_files/figure-html/what-correlation-looks-like-1.png"/></p>
+<div id="sample-correlation-is-a-random-variable" class="section level3 hasAnchor" number="17.2.1">
+<h3><span class="header-section-number">17.2.1</span> Sample correlation is a random variable<a href="regression.html#sample-correlation-is-a-random-variable" class="anchor-section" aria-label="Anchor link to header"/></h3>
+<p>Before we continue connecting correlation to regression, let’s remind ourselves about random variability.</p>
+<p>In most data science applications, we observe data that includes random variation. For example, in many cases, we do not observe data for the entire population of interest but rather for a random sample. As with the average and standard deviation, the <em>sample correlation</em> is the most commonly used estimate of the population correlation. This implies that the correlation we compute and use as a summary is a random variable.</p>
+<p>By way of illustration, let’s assume that the 179 pairs of fathers and sons is our entire population. A less fortunate geneticist can only afford measurements from a random sample of 25 pairs. The sample correlation can be computed with:</p>
+<div class="sourceCode" id="cb669"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb669-1"><a href="regression.html#cb669-1" tabindex="-1"/>R <span class="ot">&lt;-</span> <span class="fu">sample_n</span>(galton_heights, <span class="dv">25</span>, <span class="at">replace =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb669-2"><a href="regression.html#cb669-2" tabindex="-1"/>  <span class="fu">summarize</span>(<span class="at">r =</span> <span class="fu">cor</span>(father, son)) <span class="sc">|&gt;</span> <span class="fu">pull</span>(r)</span></code></pre></div>
+<p><code>R</code> is a random variable. We can run a Monte Carlo simulation to see its distribution:</p>
+<div class="sourceCode" id="cb670"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb670-1"><a href="regression.html#cb670-1" tabindex="-1"/>B <span class="ot">&lt;-</span> <span class="dv">1000</span></span>
+<span id="cb670-2"><a href="regression.html#cb670-2" tabindex="-1"/>N <span class="ot">&lt;-</span> <span class="dv">25</span></span>
+<span id="cb670-3"><a href="regression.html#cb670-3" tabindex="-1"/>R <span class="ot">&lt;-</span> <span class="fu">replicate</span>(B, {</span>
+<span id="cb670-4"><a href="regression.html#cb670-4" tabindex="-1"/>  <span class="fu">sample_n</span>(galton_heights, N, <span class="at">replace =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb670-5"><a href="regression.html#cb670-5" tabindex="-1"/>    <span class="fu">summarize</span>(<span class="at">r=</span><span class="fu">cor</span>(father, son)) <span class="sc">|&gt;</span> </span>
+<span id="cb670-6"><a href="regression.html#cb670-6" tabindex="-1"/>    <span class="fu">pull</span>(r)</span>
+<span id="cb670-7"><a href="regression.html#cb670-7" tabindex="-1"/>})</span>
+<span id="cb670-8"><a href="regression.html#cb670-8" tabindex="-1"/><span class="fu">qplot</span>(R, <span class="at">geom =</span> <span class="st">"histogram"</span>, <span class="at">binwidth =</span> <span class="fl">0.05</span>, <span class="at">color =</span> <span class="fu">I</span>(<span class="st">"black"</span>))</span></code></pre></div>
+<p><img src="../Images/90e114fe5ba730e80480b917c6584784.png" width="70%" style="display: block; margin: auto;" data-original-src="https://rafalab.dfci.harvard.edu/dsbook/book_files/figure-html/sample-correlation-distribution-1.png"/></p>
+<p>We see that the expected value of <code>R</code> is the population correlation:</p>
+<div class="sourceCode" id="cb671"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb671-1"><a href="regression.html#cb671-1" tabindex="-1"/><span class="fu">mean</span>(R)</span>
+<span id="cb671-2"><a href="regression.html#cb671-2" tabindex="-1"/><span class="co">#&gt; [1] 0.431</span></span></code></pre></div>
+<p>and that it has a relatively high standard error relative to the range of values <code>R</code> can take:</p>
+<div class="sourceCode" id="cb672"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb672-1"><a href="regression.html#cb672-1" tabindex="-1"/><span class="fu">sd</span>(R)</span>
+<span id="cb672-2"><a href="regression.html#cb672-2" tabindex="-1"/><span class="co">#&gt; [1] 0.161</span></span></code></pre></div>
+<p>So, when interpreting correlations, remember that correlations derived from samples are estimates containing uncertainty.</p>
+<p>Also, note that because the sample correlation is an average of independent draws, the central limit actually applies. Therefore, for large enough <span class="math inline">\(N\)</span>, the distribution of <code>R</code> is approximately normal with expected value <span class="math inline">\(\rho\)</span>. The standard deviation, which is somewhat complex to derive, is <span class="math inline">\(\sqrt{\frac{1-r^2}{N-2}}\)</span>.</p>
+<p>In our example, <span class="math inline">\(N=25\)</span> does not seem to be large enough to make the approximation a good one:</p>
+<div class="sourceCode" id="cb673"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb673-1"><a href="regression.html#cb673-1" tabindex="-1"/><span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">sample=</span>R), <span class="at">data =</span> <span class="fu">data.frame</span>(R)) <span class="sc">+</span> </span>
+<span id="cb673-2"><a href="regression.html#cb673-2" tabindex="-1"/>  <span class="fu">stat_qq</span>() <span class="sc">+</span> </span>
+<span id="cb673-3"><a href="regression.html#cb673-3" tabindex="-1"/>  <span class="fu">geom_abline</span>(<span class="at">intercept =</span> <span class="fu">mean</span>(R), <span class="at">slope =</span> <span class="fu">sqrt</span>((<span class="dv">1</span><span class="sc">-</span><span class="fu">mean</span>(R)<span class="sc">^</span><span class="dv">2</span>)<span class="sc">/</span>(N<span class="dv">-2</span>)))</span></code></pre></div>
+<p><img src="../Images/c147facb988e6a21c3d6bf6030b11b10.png" width="40%" style="display: block; margin: auto;" data-original-src="https://rafalab.dfci.harvard.edu/dsbook/book_files/figure-html/small-sample-correlation-not-normal-1.png"/></p>
+<p>If you increase <span class="math inline">\(N\)</span>, you will see the distribution converging to normal.</p>
+</div>
+<div id="correlation-is-not-always-a-useful-summary" class="section level3 hasAnchor" number="17.2.2">
+<h3><span class="header-section-number">17.2.2</span> Correlation is not always a useful summary<a href="regression.html#correlation-is-not-always-a-useful-summary" class="anchor-section" aria-label="Anchor link to header"/></h3>
+<p>Correlation is not always a good summary of the relationship between two variables. The following four artificial datasets, referred to as Anscombe’s quartet, famously illustrate this point. All these pairs have a correlation of 0.82:</p>
+<pre><code>#&gt; `geom_smooth()` using formula = 'y ~ x'</code></pre>
+<p><img src="../Images/0f4d4b8226c67279a51e993b96cf10e9.png" width="70%" style="display: block; margin: auto;" data-original-src="https://rafalab.dfci.harvard.edu/dsbook/book_files/figure-html/ascombe-quartet-1.png"/></p>
+<p>Correlation is only meaningful in a particular context. To help us understand when it is that correlation is meaningful as a summary statistic, we will return to the example of predicting a son’s height using his father’s height. This will help motivate and define linear regression. We start by demonstrating how correlation can be useful for prediction.</p>
+</div>
+</div>
+<div id="conditional-expectation" class="section level2 hasAnchor" number="17.3">
+<h2><span class="header-section-number">17.3</span> Conditional expectations<a href="regression.html#conditional-expectation" class="anchor-section" aria-label="Anchor link to header"/></h2>
+<p>Suppose we are asked to guess the height of a randomly selected son and we don’t know his father’s height. Because the distribution of sons’ heights is approximately normal, we know the average height, 69.2, is the value with the highest proportion and would be the prediction with the highest chance of minimizing the error. But what if we are told that the father is taller than average, say 72 inches tall, do we still guess 69.2 for the son?</p>
+<p>It turns out that if we were able to collect data from a very large number of fathers that are 72 inches, the distribution of their sons’ heights would be normally distributed. This implies that the average of the distribution computed on this subset would be our best prediction.</p>
+<p>In general, we call this approach <em>conditioning</em>. The general idea is that we stratify a population into groups and compute summaries in each group. To provide a mathematical description of conditioning, consider we have a population of pairs of values <span class="math inline">\((x_1,y_1),\dots,(x_n,y_n)\)</span>, for example all father and son heights in England. In the previous chapter we learned that if you take a random pair <span class="math inline">\((X,Y)\)</span>, the expected value and best predictor of <span class="math inline">\(Y\)</span> is <span class="math inline">\(\mbox{E}(Y) = \mu_y\)</span>, the population average <span class="math inline">\(1/n\sum_{i=1}^n y_i\)</span>. However, we are no longer interested in the general population, instead we are interested in only the subset of a population with a specific <span class="math inline">\(x_i\)</span> value, 72 inches in our example. This subset of the population, is also a population and thus the same principles and properties we have learned apply. The <span class="math inline">\(y_i\)</span> in the subpopulation have a distribution, referred to as the <em>conditional distribution</em>, and this distribution has an expected value referred to as the <em>conditional expectation</em>. In our example, the conditional expectation is the average height of all sons in England with fathers that are 72 inches. The statistical notation for the conditional expectation is</p>
+<p><span class="math display">\[
+\mbox{E}(Y \mid X = x)
+\]</span></p>
+<p>with <span class="math inline">\(x\)</span> representing the fixed value that defines that subset, for example 72 inches. Similarly, we denote the standard deviation of the strata with</p>
+<p><span class="math display">\[
+\mbox{SD}(Y \mid X = x) = \sqrt{\mbox{Var}(Y \mid X = x)}
+\]</span></p>
+<p>Because the conditional expectation <span class="math inline">\(E(Y\mid X=x)\)</span> is the best predictor for the random variable <span class="math inline">\(Y\)</span> for an individual in the strata defined by <span class="math inline">\(X=x\)</span>, many data science challenges reduce to estimating this quantity. The conditional standard deviation quantifies the precision of the prediction.</p>
+<p>In the example we have been considering, we are interested in computing the average son height <em>conditioned</em> on the father being 72 inches tall. We want to estimate <span class="math inline">\(E(Y|X=72)\)</span> using the sample collected by Galton. We previously learned that the sample average is the preferred approach to estimating the population average. However, a challenge when using this approach to estimating conditional expectations is that for continuous data we don’t have many data points matching exactly one value in our sample. For example, we have only:</p>
+<div class="sourceCode" id="cb675"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb675-1"><a href="regression.html#cb675-1" tabindex="-1"/><span class="fu">sum</span>(galton_heights<span class="sc">$</span>father <span class="sc">==</span> <span class="dv">72</span>)</span>
+<span id="cb675-2"><a href="regression.html#cb675-2" tabindex="-1"/><span class="co">#&gt; [1] 8</span></span></code></pre></div>
+<p>fathers that are exactly 72-inches. If we change the number to 72.5, we get even fewer data points:</p>
+<div class="sourceCode" id="cb676"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb676-1"><a href="regression.html#cb676-1" tabindex="-1"/><span class="fu">sum</span>(galton_heights<span class="sc">$</span>father <span class="sc">==</span> <span class="fl">72.5</span>)</span>
+<span id="cb676-2"><a href="regression.html#cb676-2" tabindex="-1"/><span class="co">#&gt; [1] 1</span></span></code></pre></div>
+<p>A practical way to improve these estimates of the conditional expectations, is to define strata of with similar values of <span class="math inline">\(x\)</span>. In our example, we can round father heights to the nearest inch and assume that they are all 72 inches. If we do this, we end up with the following prediction for the son of a father that is 72 inches tall:</p>
+<div class="sourceCode" id="cb677"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb677-1"><a href="regression.html#cb677-1" tabindex="-1"/>conditional_avg <span class="ot">&lt;-</span> galton_heights <span class="sc">|&gt;</span> </span>
+<span id="cb677-2"><a href="regression.html#cb677-2" tabindex="-1"/>  <span class="fu">filter</span>(<span class="fu">round</span>(father) <span class="sc">==</span> <span class="dv">72</span>) <span class="sc">|&gt;</span></span>
+<span id="cb677-3"><a href="regression.html#cb677-3" tabindex="-1"/>  <span class="fu">summarize</span>(<span class="at">avg =</span> <span class="fu">mean</span>(son)) <span class="sc">|&gt;</span> </span>
+<span id="cb677-4"><a href="regression.html#cb677-4" tabindex="-1"/>  <span class="fu">pull</span>(avg)</span>
+<span id="cb677-5"><a href="regression.html#cb677-5" tabindex="-1"/>conditional_avg</span>
+<span id="cb677-6"><a href="regression.html#cb677-6" tabindex="-1"/><span class="co">#&gt; [1] 70.5</span></span></code></pre></div>
+<p>Note that a 72-inch father is taller than average – specifically, (72.0 - 69.1)/2.5 =
+1.1 standard deviations taller than the average father. Our prediction 70.5 is also taller than average, but only 0.49 standard deviations larger than the average son. The sons of 72-inch fathers have <em>regressed</em> some to the average height. We notice that the reduction in how many SDs taller is about 0.5, which happens to be the correlation. As we will see in a later section, this is not a coincidence.</p>
+<p>If we want to make a prediction of any height, not just 72, we could apply the same approach to each strata. Stratification followed by boxplots lets us see the distribution of each group:</p>
+<div class="sourceCode" id="cb678"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb678-1"><a href="regression.html#cb678-1" tabindex="-1"/>galton_heights <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="at">father_strata =</span> <span class="fu">factor</span>(<span class="fu">round</span>(father))) <span class="sc">|&gt;</span> </span>
+<span id="cb678-2"><a href="regression.html#cb678-2" tabindex="-1"/>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(father_strata, son)) <span class="sc">+</span> </span>
+<span id="cb678-3"><a href="regression.html#cb678-3" tabindex="-1"/>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span> </span>
+<span id="cb678-4"><a href="regression.html#cb678-4" tabindex="-1"/>  <span class="fu">geom_point</span>()</span></code></pre></div>
+<p><img src="../Images/047e6fe49a5dfbe90622e22d8a0d7b8b.png" width="40%" style="display: block; margin: auto;" data-original-src="https://rafalab.dfci.harvard.edu/dsbook/book_files/figure-html/boxplot-1-1.png"/></p>
+<p>Not surprisingly, the centers of the groups are increasing with height.
+Furthermore, these centers appear to follow a linear relationship. Below we plot the averages of each group. If we take into account that these averages are random variables with standard errors, the data is consistent with these points following a straight line:</p>
+<p><img src="../Images/e4a898fdcfdf5a58c84bb05a37956a79.png" width="40%" style="display: block; margin: auto;" data-original-src="https://rafalab.dfci.harvard.edu/dsbook/book_files/figure-html/conditional-averages-follow-line-1.png"/></p>
+<p>The fact that these conditional averages follow a line is not a coincidence. In the next section, we explain that the line these averages follow is what we call the <em>regression line</em>, which improves the precision of our estimates. However, it is not always appropriate to estimate conditional expectations with the regression line so we also describe Galton’s theoretical justification for using the regression line.</p>
+</div>
+<div id="the-regression-line" class="section level2 hasAnchor" number="17.4">
+<h2><span class="header-section-number">17.4</span> The regression line<a href="regression.html#the-regression-line" class="anchor-section" aria-label="Anchor link to header"/></h2>
+<p>If we are predicting a random variable <span class="math inline">\(Y\)</span> knowing the value of another <span class="math inline">\(X=x\)</span> using a regression line, then we predict that for every standard deviation, <span class="math inline">\(\sigma_X\)</span>, that <span class="math inline">\(x\)</span> increases above the average <span class="math inline">\(\mu_X\)</span>, <span class="math inline">\(Y\)</span> increase <span class="math inline">\(\rho\)</span> standard deviations <span class="math inline">\(\sigma_Y\)</span> above the average <span class="math inline">\(\mu_Y\)</span> with <span class="math inline">\(\rho\)</span> the correlation between <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>. The formula for the regression is therefore:</p>
+<p><span class="math display">\[
+\left( \frac{Y-\mu_Y}{\sigma_Y} \right) = \rho \left( \frac{x-\mu_X}{\sigma_X} \right)
+\]</span></p>
+<p>We can rewrite it like this:</p>
+<p><span class="math display">\[
+Y = \mu_Y + \rho \left( \frac{x-\mu_X}{\sigma_X} \right) \sigma_Y
+\]</span></p>
+<p>If there is perfect correlation, the regression line predicts an increase that is the same number of SDs. If there is 0 correlation, then we don’t use <span class="math inline">\(x\)</span> at all for the prediction and simply predict the average <span class="math inline">\(\mu_Y\)</span>. For values between 0 and 1, the prediction is somewhere in between. If the correlation is negative, we predict a reduction instead of an increase.</p>
+<p>Note that if the correlation is positive and lower than 1, our prediction is closer, in standard units, to the average height than the value used to predict, <span class="math inline">\(x\)</span>, is to the average of the <span class="math inline">\(x\)</span>s. This is why we call it <em>regression</em>: the son regresses to the average height. In fact, the title of Galton’s paper was: <em>Regression toward mediocrity in hereditary stature</em>. To add regression lines to plots, we will need the above formula in the form:</p>
+<p><span class="math display">\[
+y= b + mx \mbox{ with slope } m = \rho \frac{\sigma_y}{\sigma_x} \mbox{ and intercept } b=\mu_y - m \mu_x
+\]</span></p>
+<p>Here we add the regression line to the original data:</p>
+<div class="sourceCode" id="cb679"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb679-1"><a href="regression.html#cb679-1" tabindex="-1"/>mu_x <span class="ot">&lt;-</span> <span class="fu">mean</span>(galton_heights<span class="sc">$</span>father)</span>
+<span id="cb679-2"><a href="regression.html#cb679-2" tabindex="-1"/>mu_y <span class="ot">&lt;-</span> <span class="fu">mean</span>(galton_heights<span class="sc">$</span>son)</span>
+<span id="cb679-3"><a href="regression.html#cb679-3" tabindex="-1"/>s_x <span class="ot">&lt;-</span> <span class="fu">sd</span>(galton_heights<span class="sc">$</span>father)</span>
+<span id="cb679-4"><a href="regression.html#cb679-4" tabindex="-1"/>s_y <span class="ot">&lt;-</span> <span class="fu">sd</span>(galton_heights<span class="sc">$</span>son)</span>
+<span id="cb679-5"><a href="regression.html#cb679-5" tabindex="-1"/>r <span class="ot">&lt;-</span> <span class="fu">cor</span>(galton_heights<span class="sc">$</span>father, galton_heights<span class="sc">$</span>son)</span>
+<span id="cb679-6"><a href="regression.html#cb679-6" tabindex="-1"/></span>
+<span id="cb679-7"><a href="regression.html#cb679-7" tabindex="-1"/>galton_heights <span class="sc">|&gt;</span> </span>
+<span id="cb679-8"><a href="regression.html#cb679-8" tabindex="-1"/>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(father, son)) <span class="sc">+</span> </span>
+<span id="cb679-9"><a href="regression.html#cb679-9" tabindex="-1"/>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb679-10"><a href="regression.html#cb679-10" tabindex="-1"/>  <span class="fu">geom_abline</span>(<span class="at">slope =</span> r <span class="sc">*</span> s_y<span class="sc">/</span>s_x, <span class="at">intercept =</span> mu_y <span class="sc">-</span> r <span class="sc">*</span> s_y<span class="sc">/</span>s_x <span class="sc">*</span> mu_x) </span></code></pre></div>
+<p><img src="../Images/074c8015cfc06dc991cf40facc49e5f0.png" width="40%" style="display: block; margin: auto;" data-original-src="https://rafalab.dfci.harvard.edu/dsbook/book_files/figure-html/regression-line-1.png"/></p>
+<p>The regression formula implies that if we first standardize the variables, that is subtract the average and divide by the standard deviation, then the regression line has intercept 0 and slope equal to the correlation <span class="math inline">\(\rho\)</span>. You can make same plot, but using standard units like this:</p>
+<div class="sourceCode" id="cb680"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb680-1"><a href="regression.html#cb680-1" tabindex="-1"/>galton_heights <span class="sc">|&gt;</span> </span>
+<span id="cb680-2"><a href="regression.html#cb680-2" tabindex="-1"/>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="fu">scale</span>(father), <span class="fu">scale</span>(son))) <span class="sc">+</span> </span>
+<span id="cb680-3"><a href="regression.html#cb680-3" tabindex="-1"/>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb680-4"><a href="regression.html#cb680-4" tabindex="-1"/>  <span class="fu">geom_abline</span>(<span class="at">intercept =</span> <span class="dv">0</span>, <span class="at">slope =</span> r) </span></code></pre></div>
+<div id="regression-improves-precision" class="section level3 hasAnchor" number="17.4.1">
+<h3><span class="header-section-number">17.4.1</span> Regression improves precision<a href="regression.html#regression-improves-precision" class="anchor-section" aria-label="Anchor link to header"/></h3>
+<p>Let’s compare the two approaches to prediction that we have presented:</p>
+<ol style="list-style-type: decimal">
+<li>Round fathers’ heights to closest inch, stratify, and then take the average.</li>
+<li>Compute the regression line and use it to predict.</li>
+</ol>
+<p>We use a Monte Carlo simulation sampling <span class="math inline">\(N=50\)</span> families:</p>
+<div class="sourceCode" id="cb681"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb681-1"><a href="regression.html#cb681-1" tabindex="-1"/>B <span class="ot">&lt;-</span> <span class="dv">1000</span></span>
+<span id="cb681-2"><a href="regression.html#cb681-2" tabindex="-1"/>N <span class="ot">&lt;-</span> <span class="dv">50</span></span>
+<span id="cb681-3"><a href="regression.html#cb681-3" tabindex="-1"/></span>
+<span id="cb681-4"><a href="regression.html#cb681-4" tabindex="-1"/><span class="fu">set.seed</span>(<span class="dv">1983</span>)</span>
+<span id="cb681-5"><a href="regression.html#cb681-5" tabindex="-1"/>conditional_avg <span class="ot">&lt;-</span> <span class="fu">replicate</span>(B, {</span>
+<span id="cb681-6"><a href="regression.html#cb681-6" tabindex="-1"/>  dat <span class="ot">&lt;-</span> <span class="fu">sample_n</span>(galton_heights, N)</span>
+<span id="cb681-7"><a href="regression.html#cb681-7" tabindex="-1"/>  dat <span class="sc">|&gt;</span> <span class="fu">filter</span>(<span class="fu">round</span>(father) <span class="sc">==</span> <span class="dv">72</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb681-8"><a href="regression.html#cb681-8" tabindex="-1"/>    <span class="fu">summarize</span>(<span class="at">avg =</span> <span class="fu">mean</span>(son)) <span class="sc">|&gt;</span> </span>
+<span id="cb681-9"><a href="regression.html#cb681-9" tabindex="-1"/>    <span class="fu">pull</span>(avg)</span>
+<span id="cb681-10"><a href="regression.html#cb681-10" tabindex="-1"/>  })</span>
+<span id="cb681-11"><a href="regression.html#cb681-11" tabindex="-1"/></span>
+<span id="cb681-12"><a href="regression.html#cb681-12" tabindex="-1"/>regression_prediction <span class="ot">&lt;-</span> <span class="fu">replicate</span>(B, {</span>
+<span id="cb681-13"><a href="regression.html#cb681-13" tabindex="-1"/>  dat <span class="ot">&lt;-</span> <span class="fu">sample_n</span>(galton_heights, N)</span>
+<span id="cb681-14"><a href="regression.html#cb681-14" tabindex="-1"/>  mu_x <span class="ot">&lt;-</span> <span class="fu">mean</span>(dat<span class="sc">$</span>father)</span>
+<span id="cb681-15"><a href="regression.html#cb681-15" tabindex="-1"/>  mu_y <span class="ot">&lt;-</span> <span class="fu">mean</span>(dat<span class="sc">$</span>son)</span>
+<span id="cb681-16"><a href="regression.html#cb681-16" tabindex="-1"/>  s_x <span class="ot">&lt;-</span> <span class="fu">sd</span>(dat<span class="sc">$</span>father)</span>
+<span id="cb681-17"><a href="regression.html#cb681-17" tabindex="-1"/>  s_y <span class="ot">&lt;-</span> <span class="fu">sd</span>(dat<span class="sc">$</span>son)</span>
+<span id="cb681-18"><a href="regression.html#cb681-18" tabindex="-1"/>  r <span class="ot">&lt;-</span> <span class="fu">cor</span>(dat<span class="sc">$</span>father, dat<span class="sc">$</span>son)</span>
+<span id="cb681-19"><a href="regression.html#cb681-19" tabindex="-1"/>  mu_y <span class="sc">+</span> r<span class="sc">*</span>(<span class="dv">72</span> <span class="sc">-</span> mu_x)<span class="sc">/</span>s_x<span class="sc">*</span>s_y</span>
+<span id="cb681-20"><a href="regression.html#cb681-20" tabindex="-1"/>})</span></code></pre></div>
+<p>Although the expected value of these two random variables is about the same:</p>
+<div class="sourceCode" id="cb682"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb682-1"><a href="regression.html#cb682-1" tabindex="-1"/><span class="fu">mean</span>(conditional_avg, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb682-2"><a href="regression.html#cb682-2" tabindex="-1"/><span class="co">#&gt; [1] 70.5</span></span>
+<span id="cb682-3"><a href="regression.html#cb682-3" tabindex="-1"/><span class="fu">mean</span>(regression_prediction)</span>
+<span id="cb682-4"><a href="regression.html#cb682-4" tabindex="-1"/><span class="co">#&gt; [1] 70.5</span></span></code></pre></div>
+<p>The standard error for the regression prediction is substantially smaller:</p>
+<div class="sourceCode" id="cb683"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb683-1"><a href="regression.html#cb683-1" tabindex="-1"/><span class="fu">sd</span>(conditional_avg, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb683-2"><a href="regression.html#cb683-2" tabindex="-1"/><span class="co">#&gt; [1] 0.964</span></span>
+<span id="cb683-3"><a href="regression.html#cb683-3" tabindex="-1"/><span class="fu">sd</span>(regression_prediction)</span>
+<span id="cb683-4"><a href="regression.html#cb683-4" tabindex="-1"/><span class="co">#&gt; [1] 0.452</span></span></code></pre></div>
+<p>The regression line is therefore much more stable than the conditional mean. There is an intuitive reason for this. The conditional average is computed on a relatively small subset: the fathers that are about 72 inches tall. In fact, in some of the permutations we have no data, which is why we use <code>na.rm=TRUE</code>. The regression always uses all the data.</p>
+<p>So why not always use the regression for prediction? Because it is not always appropriate. For example, Anscombe provided cases for which the data does not have a linear relationship. So are we justified in using the regression line to predict? Galton answered this in the positive for height data. The justification, which we include in the next section, is somewhat more advanced than the rest of the chapter.</p>
+</div>
+<div id="bivariate-normal-distribution-advanced" class="section level3 hasAnchor" number="17.4.2">
+<h3><span class="header-section-number">17.4.2</span> Bivariate normal distribution (advanced)<a href="regression.html#bivariate-normal-distribution-advanced" class="anchor-section" aria-label="Anchor link to header"/></h3>
+<p>Correlation and the regression slope are a widely used summary statistic, but they are often misused or misinterpreted. Anscombe’s examples provide over-simplified cases of dataset in which summarizing with correlation would be a mistake. But there are many more real-life examples.</p>
+<p>The main way we motivate the use of correlation involves what is called the <em>bivariate normal distribution</em>.</p>
+<p>When a pair of random variables is approximated by the bivariate normal distribution, scatterplots look like ovals. As we saw in Section <a href="regression.html#corr-coef">17.2</a>, they can be thin (high correlation) or circle-shaped (no correlation).</p>
+<!--
+<img src="book_files/figure-html/bivariate-ovals-1.png" width="70%" style="display: block; margin: auto;" />
+-->
+<p>A more technical way to define the bivariate normal distribution is the following: if <span class="math inline">\(X\)</span> is a normally distributed random variable, <span class="math inline">\(Y\)</span> is also a normally distributed random variable, and the conditional distribution of <span class="math inline">\(Y\)</span> for any <span class="math inline">\(X=x\)</span> is approximately normal, then the pair is approximately bivariate normal. When three or more variables have the property that each pair is bivariate normal, we say the variables follow a <em>multivariate</em> normal distribution or that they are <em>jointly normal</em>.</p>
+<ul>
+<li>or simply that the variables are <em>jointly normal</em></li>
+</ul>
+<p>If we think the height data is well approximated by the bivariate normal distribution, then we should see the normal approximation hold for each strata. Here we stratify the son heights by the standardized father heights and see that the assumption appears to hold:</p>
+<div class="sourceCode" id="cb684"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb684-1"><a href="regression.html#cb684-1" tabindex="-1"/>galton_heights <span class="sc">|&gt;</span></span>
+<span id="cb684-2"><a href="regression.html#cb684-2" tabindex="-1"/>  <span class="fu">mutate</span>(<span class="at">z_father =</span> <span class="fu">round</span>((father <span class="sc">-</span> <span class="fu">mean</span>(father)) <span class="sc">/</span> <span class="fu">sd</span>(father))) <span class="sc">|&gt;</span></span>
+<span id="cb684-3"><a href="regression.html#cb684-3" tabindex="-1"/>  <span class="fu">filter</span>(z_father <span class="sc">%in%</span> <span class="sc">-</span><span class="dv">2</span><span class="sc">:</span><span class="dv">2</span>) <span class="sc">|&gt;</span></span>
+<span id="cb684-4"><a href="regression.html#cb684-4" tabindex="-1"/>  <span class="fu">ggplot</span>() <span class="sc">+</span>  </span>
+<span id="cb684-5"><a href="regression.html#cb684-5" tabindex="-1"/>  <span class="fu">stat_qq</span>(<span class="fu">aes</span>(<span class="at">sample =</span> son)) <span class="sc">+</span></span>
+<span id="cb684-6"><a href="regression.html#cb684-6" tabindex="-1"/>  <span class="fu">facet_wrap</span>( <span class="sc">~</span> z_father) </span></code></pre></div>
+<p><img src="../Images/26293e6e62fc31fda1137b467b344cc3.png" width="70%" style="display: block; margin: auto;" data-original-src="https://rafalab.dfci.harvard.edu/dsbook/book_files/figure-html/qqnorm-of-strata-1.png"/></p>
+<p>Now we come back to defining correlation. Galton used mathematical statistics to demonstrate that, when two variables follow a bivariate normal distribution, computing the regression line is equivalent to computing conditional expectations. We don’t show the derivation here, but we can show that under this assumption, for any given value of <span class="math inline">\(x\)</span>, the expected value of the <span class="math inline">\(Y\)</span> in pairs for which <span class="math inline">\(X=x\)</span> is:</p>
+<p><span class="math display">\[
+\mbox{E}(Y | X=x) = \mu_Y +  \rho \frac{X-\mu_X}{\sigma_X}\sigma_Y
+\]</span></p>
+<p>This is the regression line, with slope <span class="math display">\[\rho \frac{\sigma_Y}{\sigma_X}\]</span> and intercept <span class="math inline">\(\mu_y - m\mu_X\)</span>. It is equivalent to the regression equation we showed earlier which can be written like this:</p>
+<p><span class="math display">\[
+\frac{\mbox{E}(Y \mid X=x)  - \mu_Y}{\sigma_Y} = \rho \frac{x-\mu_X}{\sigma_X}
+\]</span></p>
+<p>This implies that, if our data is approximately bivariate, the regression line gives the conditional probability. Therefore, we can obtain a much more stable estimate of the conditional expectation by finding the regression line and using it to predict.</p>
+<p>In summary, if our data is approximately bivariate, then the conditional expectation, the best prediction of <span class="math inline">\(Y\)</span> given we know the value of <span class="math inline">\(X\)</span>, is given by the regression line.</p>
+</div>
+<div id="variance-explained" class="section level3 hasAnchor" number="17.4.3">
+<h3><span class="header-section-number">17.4.3</span> Variance explained<a href="regression.html#variance-explained" class="anchor-section" aria-label="Anchor link to header"/></h3>
+<p>The bivariate normal theory also tells us that the standard deviation of the <em>conditional</em> distribution described above is:</p>
+<p><span class="math display">\[
+\mbox{SD}(Y \mid X=x ) = \sigma_Y \sqrt{1-\rho^2}
+\]</span></p>
+<p>To see why this is intuitive, notice that without conditioning, <span class="math inline">\(\mbox{SD}(Y) = \sigma_Y\)</span>, we are looking at the variability of all the sons. But once we condition, we are only looking at the variability of the sons with a tall, 72-inch, father. This group will all tend to be somewhat tall so the standard deviation is reduced.</p>
+<p>Specifically, it is reduced to <span class="math inline">\(\sqrt{1-\rho^2} = \sqrt{1 - 0.25}\)</span> = 0.87 of what it was originally. We could say that father heights “explain” 13% of the variability observed in son heights.</p>
+<p>The statement “<span class="math inline">\(X\)</span> explains such and such percent of the variability” is commonly used in academic papers. In this case, this percent actually refers to the variance (the SD squared). So if the data is bivariate normal, the variance is reduced by <span class="math inline">\(1-\rho^2\)</span>, so we say that <span class="math inline">\(X\)</span> explains <span class="math inline">\(1- (1-\rho^2)=\rho^2\)</span> (the correlation squared) of the variance.</p>
+<p>But it is important to remember that the “variance explained” statement only makes sense when the data is approximated by a bivariate normal distribution.</p>
+</div>
+<div id="warning-there-are-two-regression-lines" class="section level3 hasAnchor" number="17.4.4">
+<h3><span class="header-section-number">17.4.4</span> Warning: there are two regression lines<a href="regression.html#warning-there-are-two-regression-lines" class="anchor-section" aria-label="Anchor link to header"/></h3>
+<p>We computed a regression line to predict the son’s height from father’s height. We used these calculations:</p>
+<div class="sourceCode" id="cb685"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb685-1"><a href="regression.html#cb685-1" tabindex="-1"/>mu_x <span class="ot">&lt;-</span> <span class="fu">mean</span>(galton_heights<span class="sc">$</span>father)</span>
+<span id="cb685-2"><a href="regression.html#cb685-2" tabindex="-1"/>mu_y <span class="ot">&lt;-</span> <span class="fu">mean</span>(galton_heights<span class="sc">$</span>son)</span>
+<span id="cb685-3"><a href="regression.html#cb685-3" tabindex="-1"/>s_x <span class="ot">&lt;-</span> <span class="fu">sd</span>(galton_heights<span class="sc">$</span>father)</span>
+<span id="cb685-4"><a href="regression.html#cb685-4" tabindex="-1"/>s_y <span class="ot">&lt;-</span> <span class="fu">sd</span>(galton_heights<span class="sc">$</span>son)</span>
+<span id="cb685-5"><a href="regression.html#cb685-5" tabindex="-1"/>r <span class="ot">&lt;-</span> <span class="fu">cor</span>(galton_heights<span class="sc">$</span>father, galton_heights<span class="sc">$</span>son)</span>
+<span id="cb685-6"><a href="regression.html#cb685-6" tabindex="-1"/>m_1 <span class="ot">&lt;-</span>  r <span class="sc">*</span> s_y <span class="sc">/</span> s_x</span>
+<span id="cb685-7"><a href="regression.html#cb685-7" tabindex="-1"/>b_1 <span class="ot">&lt;-</span> mu_y <span class="sc">-</span> m_1<span class="sc">*</span>mu_x</span></code></pre></div>
+<p>which gives us the function <span class="math inline">\(\mbox{E}(Y\mid X=x) =\)</span> 37.3 + 0.46 <span class="math inline">\(x\)</span>.</p>
+<p>What if we want to predict the father’s height based on the son’s? It is important to know that this is not determined by computing the inverse function:
+<span class="math inline">\(x = \{ \mbox{E}(Y\mid X=x) -\)</span> 37.3 <span class="math inline">\(\} /\)</span> 0.5.</p>
+<p>We need to compute <span class="math inline">\(\mbox{E}(X \mid Y=y)\)</span>. Since the data is approximately bivariate normal, the theory described above tells us that this conditional expectation will follow a line with slope and intercept:</p>
+<div class="sourceCode" id="cb686"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb686-1"><a href="regression.html#cb686-1" tabindex="-1"/>m_2 <span class="ot">&lt;-</span>  r <span class="sc">*</span> s_x <span class="sc">/</span> s_y</span>
+<span id="cb686-2"><a href="regression.html#cb686-2" tabindex="-1"/>b_2 <span class="ot">&lt;-</span> mu_x <span class="sc">-</span> m_2 <span class="sc">*</span> mu_y</span></code></pre></div>
+<p>So we get <span class="math inline">\(\mbox{E}(X \mid Y=y) =\)</span> 40.9 + 0.41y. Again we see regression to the average: the prediction for the father is closer to the father average than the son heights <span class="math inline">\(y\)</span> is to the son average.</p>
+<p>Here is a plot showing the two regression lines, with blue for the predicting son heights with father heights and red for predicting father heights with son heights:</p>
+<div class="sourceCode" id="cb687"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb687-1"><a href="regression.html#cb687-1" tabindex="-1"/>galton_heights <span class="sc">|&gt;</span> </span>
+<span id="cb687-2"><a href="regression.html#cb687-2" tabindex="-1"/>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(father, son)) <span class="sc">+</span> </span>
+<span id="cb687-3"><a href="regression.html#cb687-3" tabindex="-1"/>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span> </span>
+<span id="cb687-4"><a href="regression.html#cb687-4" tabindex="-1"/>  <span class="fu">geom_abline</span>(<span class="at">intercept =</span> b_1, <span class="at">slope =</span> m_1, <span class="at">col =</span> <span class="st">"blue"</span>) <span class="sc">+</span></span>
+<span id="cb687-5"><a href="regression.html#cb687-5" tabindex="-1"/>  <span class="fu">geom_abline</span>(<span class="at">intercept =</span> <span class="sc">-</span>b_2<span class="sc">/</span>m_2, <span class="at">slope =</span> <span class="dv">1</span><span class="sc">/</span>m_2, <span class="at">col =</span> <span class="st">"red"</span>) </span></code></pre></div>
+<p><img src="../Images/ea121f88ef72bb36fd8b8b70634c0133.png" width="40%" style="display: block; margin: auto;" data-original-src="https://rafalab.dfci.harvard.edu/dsbook/book_files/figure-html/two-regression-lines-1.png"/></p>
+</div>
+</div>
+<div id="exercises-36" class="section level2 hasAnchor" number="17.5">
+<h2><span class="header-section-number">17.5</span> Exercises<a href="regression.html#exercises-36" class="anchor-section" aria-label="Anchor link to header"/></h2>
+<p>1. Load the <code>GaltonFamilies</code> data from the <strong>HistData</strong>. The children in each family are listed by gender and then by height. Create a dataset called <code>galton_heights</code> by picking a male and female at random.</p>
+<p>2. Make a scatterplot for heights between mothers and daughters, mothers and sons, fathers and daughters, and fathers and sons.</p>
+<p>3. Compute the correlation in heights between mothers and daughters, mothers and sons, fathers and daughters, and fathers and sons.</p>
+
+</div>
+</div>
+<div class="footnotes">
+<hr/>
+<ol start="60">
+<li id="fn60"><p><a href="https://en.wikipedia.org/wiki/Francis_Galton" class="uri">https://en.wikipedia.org/wiki/Francis_Galton</a><a href="regression.html#fnref60" class="footnote-back">↩︎</a></p></li>
+</ol>
+</div>
+                
+</body>
+</html>
