@@ -1,0 +1,736 @@
+# 第十章 实践中的数据可视化
+
+> [`rafalab.dfci.harvard.edu/dsbook/gapminder.html`](https://rafalab.dfci.harvard.edu/dsbook/gapminder.html)
+
+在本章中，我们将展示相对简单的**ggplot2**代码如何创建有洞察力和美观的图表。作为动机，我们将创建帮助我们更好地理解世界健康和经济趋势的图表。我们将实施在第八章和 9.8 章学到的内容，并学习如何增强代码以完善图表。在我们进行案例研究的过程中，我们将描述相关的通用数据可视化原则，并学习诸如*分面*、*时间序列图*、*转换*和*脊线图*等概念。
+
+## 10.1 案例研究：关于贫困的新见解
+
+汉斯·罗斯林²⁶是 Gapminder Foundation²⁷的联合创始人，该组织致力于通过使用数据来消除关于所谓发展中世界的常见神话来教育公众。该组织使用数据来展示实际的健康和经济趋势如何与来自灾难、悲剧和其他不幸事件的耸人听闻的媒体报道中的叙述相矛盾。正如 Gapminder Foundation 网站所述：
+
+> > > 记者和游说者讲述戏剧性的故事。这是他们的工作。他们讲述关于非凡事件和非凡人物的故事。这些戏剧性故事的堆积在人们心中形成了一个过于戏剧化的世界观和强烈的负面压力感：“世界正在变得更糟！”、“是我们对抗他们！”、“其他人很奇怪！”、“人口一直在增长！”以及“没有人关心！”
+
+汉斯·罗斯林以他独特而戏剧性的方式传达了基于实际数据的趋势，运用了有效的数据可视化。本节基于两个体现这种教育方法的演讲：[关于贫困的新见解]²⁸ 和《你见过的最佳统计数据》²⁹。具体来说，在本节中，我们使用数据尝试回答以下两个问题：
+
+1.  将当今世界划分为西方富裕国家和非洲、亚洲和拉丁美洲的发展中世界是否是一个公平的描述？
+
+1.  在过去 40 年里，国家间的收入不平等是否恶化了？
+
+为了回答这些问题，我们将使用**dslabs**提供的`gapminder`数据集。这个数据集是使用来自 Gapminder Foundation 的多个电子表格创建的。你可以这样访问表格：
+
+```r
+library(tidyverse)
+library(dslabs)
+data(gapminder)
+gapminder |> as_tibble()
+#> # A tibble: 10,545 × 9
+#>   country     year infant_mortality life_expectancy fertility population
+#>   <fct>      <int>            <dbl>           <dbl>     <dbl>      <dbl>
+#> 1 Albania     1960            115\.             62.9      6.19    1636054
+#> 2 Algeria     1960            148\.             47.5      7.65   11124892
+#> 3 Angola      1960            208              36.0      7.32    5270844
+#> 4 Antigua a…  1960             NA              63.0      4.43      54681
+#> 5 Argentina   1960             59.9            65.4      3.11   20619075
+#> # ℹ 10,540 more rows
+#> # ℹ 3 more variables: gdp <dbl>, continent <fct>, region <fct>
+```
+
+### 10.1.1 汉斯·罗斯林测验
+
+正如*关于贫困的新见解*视频中所示，我们首先测试我们对不同国家儿童死亡率差异的知识。对于下面六个国家对的每一个，你认为哪个国家在 2015 年的儿童死亡率最高？你认为哪一对最相似？
+
+1.  斯里兰卡或土耳其
+
+1.  波兰或韩国
+
+1.  马来西亚或俄罗斯
+
+1.  巴基斯坦或越南
+
+1.  泰国或南非
+
+在没有数据的情况下回答这些问题时，通常会选择非欧洲国家具有更高的儿童死亡率：斯里兰卡高于土耳其，韩国高于波兰，马来西亚高于俄罗斯。也普遍认为，被认为是发展中国家的一部分的国家：巴基斯坦、越南、泰国和南非，具有类似的死亡率。
+
+要用数据来回答这些问题，我们可以使用 **dplyr**。例如，对于第一次比较，我们看到：
+
+```r
+gapminder |> 
+ filter(year == 2015 & country %in% c("Sri Lanka","Turkey")) |> 
+ select(country, infant_mortality)
+#>     country infant_mortality
+#> 1 Sri Lanka              8.4
+#> 2    Turkey             11.6
+```
+
+土耳其的婴儿死亡率更高。
+
+我们可以在所有比较中使用此代码，并找到以下结果：
+
+```r
+#> New names:
+#> • `country` -> `country...1`
+#> • `infant_mortality` ->
+#>   `infant_mortality...2`
+#> • `country` -> `country...3`
+#> • `infant_mortality` ->
+#>   `infant_mortality...4`
+```
+
+| 国家 | 婴儿死亡率 | 国家 | 婴儿死亡率 |
+| --- | --- | --- | --- |
+| --- | --- | --- | --- |
+| 斯里兰卡 | 8.4 | 土耳其 | 11.6 |
+| 波兰 | 4.5 | 韩国丨 2.9 |
+| 马来西亚 | 6.0 | 俄罗斯 | 8.2 |
+| 巴基斯坦 | 65.8 | 越南 | 17.3 |
+| 泰国 | 10.5 | 南非 | 33.6 |
+
+我们可以看到，这份名单上的欧洲国家儿童死亡率较高：波兰的比率高于韩国，俄罗斯的比率高于马来西亚。我们还看到，巴基斯坦的比率远高于越南，南非的比率远高于泰国。结果发现，当汉斯·罗斯林向受过教育的人群发放这个测验时，平均得分不到 2.5 分（满分 5 分），比他们随机猜测的结果还要差。这表明，我们不仅无知，而且信息不准确。在本章中，我们将看到数据可视化如何帮助我们获取信息。
+
+## 10.2 散点图
+
+这种情况的原因源于先入为主的观念，即世界分为两组：西方世界（西欧和北美），以长寿和小家庭为特征，而发展中国家（非洲、亚洲和拉丁美洲）则以短寿和大家庭为特征。但是，数据是否支持这种二分法观点？
+
+回答这个问题的必要数据也存在于我们的 `gapminder` 表中。利用我们新学到的数据可视化技能，我们将能够应对这个挑战。
+
+为了分析这种世界观，我们的第一个图表是预期寿命与生育率（每名女性的平均孩子数）的散点图。我们首先查看大约 50 年前的数据，那时这种观点可能首次在我们脑海中根深蒂固。
+
+```r
+filter(gapminder, year == 1962) |>
+ ggplot(aes(fertility, life_expectancy)) +
+ geom_point()
+```
+
+![](img/acb05e17ecb899dee94eb2dffc2d3299.png)
+
+大多数点都落在了两个截然不同的类别中：
+
+1.  家庭平均预期寿命约为 70 岁，且孩子数不超过 3 个。
+
+1.  家庭平均预期寿命低于 65 岁，且孩子数超过 5 个。
+
+为了确认这些国家确实来自我们预期的地区，我们可以用颜色来代表大洲。
+
+```r
+filter(gapminder, year == 1962) |>
+ ggplot( aes(fertility, life_expectancy, color = continent)) +
+ geom_point() 
+```
+
+![](img/811497d0ebb04e5cd1e54faf6d761a28.png)
+
+1962 年，“西方与发展中国家”的观点基于一些现实。50 年后，这种情况是否仍然如此？
+
+## 10.3 分面
+
+我们可以像为 1962 年做的那样轻松地绘制 2012 年的数据。然而，为了进行比较，并排图表更可取。在 **ggplot2** 中，我们可以通过 *分面* 变量来实现这一点：通过某些变量对数据进行分层，并为每个层制作相同的图表。
+
+要实现分面，我们添加一个带有 `facet_grid` 函数的层，该函数自动分离图表。这个函数允许你通过列表示一个变量和行表示另一个变量，最多使用两个变量进行分面。该函数期望行和列变量由一个 `~` 分隔。以下是一个添加了 `facet_grid` 作为最后一层的散点图示例：
+
+```r
+filter(gapminder, year%in%c(1962, 2012)) |>
+ ggplot(aes(fertility, life_expectancy, col = continent)) +
+ geom_point() +
+ facet_grid(year~continent)
+```
+
+![](img/849d5adf4fdcb660c5d2ff71d9bde70e.png)
+
+我们可以看到每个大陆/年份对的图表。然而，这只是一个示例，比我们想要的要多，我们想要的只是比较 1962 年和 2012 年。在这种情况下，只有一个变量，我们使用 `.` 来让分面知道我们不是使用其中一个变量：
+
+```r
+filter(gapminder, year%in%c(1962, 2012)) |>
+ ggplot(aes(fertility, life_expectancy, col = continent)) +
+ geom_point() +
+ facet_grid(. ~ year)
+```
+
+![](img/5b79801106925612c6d046f42c605d98.png)
+
+这个图表清楚地表明，大多数国家已经从 *发展中国家* 群体移动到 *西方国家* 群体。到 2012 年，西方与发展中国家之间的观点已经不再适用。当比较欧洲和亚洲时，这一点尤其明显，后者包括几个取得了巨大进步的国家。
+
+### 10.3.1 `facet_wrap`
+
+要探索这种变化是如何逐年发生的，我们可以为几年制作图表。例如，我们可以添加 1970 年、1980 年、1990 年和 2000 年。如果我们这样做，我们不会希望所有图表都在同一行，这是 `facet_grid` 的默认行为，因为它们会变得太薄而无法显示数据。相反，我们将希望使用多行和多列。`facet_wrap` 函数允许我们通过自动包裹一系列图表来实现这一点，以便每个显示都有可查看的维度：
+
+```r
+years <- c(1962, 1980, 1990, 2000, 2012)
+continents <- c("Europe", "Asia")
+gapminder |> 
+ filter(year %in% years & continent %in% continents) |>
+ ggplot( aes(fertility, life_expectancy, col = continent)) +
+ geom_point() +
+ facet_wrap(~year) 
+```
+
+![](img/0665a8b344aade1ef7012ea81674a3bc.png)
+
+这个图表清楚地显示了大多数亚洲国家比欧洲国家改善得更快。
+
+### 10.3.2 为更好的比较固定刻度
+
+轴范围的默认选择非常重要。当不使用 `facet` 时，这个范围由图表中显示的数据决定。当使用 `facet` 时，这个范围由所有图表中显示的数据决定，因此在整个图表中保持固定。这使得跨图表的比较变得容易得多。例如，在上面的图表中，我们可以看到大多数国家的预期寿命有所增加，而生育率有所下降。我们之所以能看到这一点，是因为点云发生了移动。如果我们调整刻度，情况就不同了：
+
+```r
+filter(gapminder, year%in%c(1962, 2012)) |>
+ ggplot(aes(fertility, life_expectancy, col = continent)) +
+ geom_point() +
+ facet_wrap(. ~ year, scales = "free")
+```
+
+![](img/9cd29b748f8207bb2da83752b41f3f5b.png)
+
+在上面的图表中，我们必须特别注意范围，才能注意到右侧的图表有更长的预期寿命。
+
+## 10.4 时间序列图表
+
+上述可视化有效地说明了数据不再支持西方与发达国家之间的观点。一旦我们看到这些图表，新的问题就会浮现。例如，哪些国家改善得更多，哪些国家改善得更少？在过去 50 年中改善是持续的，还是在某些时期加速了？为了更仔细地观察这些问题，我们引入了*时间序列图*。
+
+时间序列图在 x 轴上有时间，在 y 轴上有感兴趣的结果或测量值。例如，这里是美国生育率的趋势图：
+
+```r
+gapminder |> 
+ filter(country == "United States") |> 
+ ggplot(aes(year, fertility)) +
+ geom_point()
+```
+
+![图片](img/0f8c632ec5bc7efe78f7e8f879323bb6.png)
+
+我们可以看到，趋势根本不是线性的。相反，在 20 世纪 60 年代和 70 年代期间有一个急剧的下降，低于 2。然后趋势在 20 世纪 90 年代回到 2 并稳定下来。
+
+当点均匀且密集地分布时，就像这里一样，我们通过用线连接点来创建曲线，以传达这些数据来自一个单一系列，这里是一个国家。为此，我们使用`geom_line`函数而不是`geom_point`。
+
+```r
+gapminder |> 
+ filter(country == "United States") |> 
+ ggplot(aes(year, fertility)) +
+ geom_line()
+```
+
+![图片](img/fbcd7528162f4a71b99ae4c7828f4ad0.png)
+
+当我们观察两个国家时，这一点尤其有用。如果我们对数据进行子集化，包括一个来自欧洲和一个来自亚洲的国家，然后调整上面的代码：
+
+```r
+countries <- c("South Korea","Germany")
+
+gapminder |> filter(country %in% countries) |> 
+ ggplot(aes(year,fertility)) +
+ geom_line()
+```
+
+![图片](img/18eeb689997a8cffc529cc2e025279c7.png)
+
+不幸的是，这不是我们想要的图表。不是每个国家都有一条线，而是两个国家的点都被连接起来。这实际上是预期的，因为我们没有告诉`ggplot`我们想要两条分开的线。为了让`ggplot`知道需要制作两条分别的曲线，我们将每个点分配到一个`group`中，每个国家一个：
+
+```r
+countries <- c("South Korea","Germany")
+
+gapminder |> filter(country %in% countries & !is.na(fertility)) |> 
+ ggplot(aes(year, fertility, group = country)) +
+ geom_line()
+```
+
+![图片](img/554bca2c1d6bc7e92f336daf29721f50.png)
+
+但哪条线对应哪个国家呢？我们可以用颜色来区分。使用`color`参数为不同的国家分配不同颜色的一个有用副作用是数据会自动分组：
+
+```r
+countries <- c("South Korea","Germany")
+
+gapminder |> filter(country %in% countries & !is.na(fertility)) |> 
+ ggplot(aes(year,fertility, col = country)) +
+ geom_line()
+```
+
+![图片](img/90b583a2cce8b795cd80d740ca24e0d5.png)
+
+该图清楚地显示了韩国的生育率在 20 世纪 60 年代和 70 年代急剧下降，到 1990 年与德国的生育率相似。
+
+### 10.4.1 使用标签而不是图例
+
+对于趋势图，我们建议标注线条而不是使用图例，因为观众可以快速看到哪条线代表哪个国家。这个建议实际上适用于大多数图表：标注通常比图例更受欢迎。
+
+我们演示了如何使用`geomtextpath`包来做这件事。我们定义一个包含标签位置的表格数据，然后使用第二个映射仅用于这些标签：
+
+```r
+library(geomtextpath)
+
+gapminder |> 
+ filter(country %in% countries) |> 
+ ggplot(aes(year, life_expectancy, col = country, label = country)) +
+ geom_textpath() +
+ theme(legend.position = "none")
+```
+
+![图片](img/6d0822113258637232069fb2096c8561.png)
+
+这个图表清楚地显示了预期寿命的提高是如何随着生育率的下降而发生的。在 1960 年，德国人的预期寿命比韩国人长 15 年，尽管到 2010 年这个差距已经完全消失。它展示了在过去 40 年里许多非西方国家所取得的进步。
+
+## 10.5 数据变换
+
+现在，我们将注意力转向与普遍认为的过去几十年全球财富分配变得更差这一观点相关的第二个问题。当向普通观众询问贫穷国家是否变得更穷，富裕国家是否变得更富时，大多数人回答是。通过使用分层、直方图、平滑密度和箱线图，我们将能够理解这是否确实如此。首先，我们学习变换如何有时有助于提供更丰富的总结和图表。
+
+`gapminder` 数据表包括一个包含各国国内生产总值（GDP）的列。GDP 衡量一个国家在一年内生产的商品和服务的市场价值。人均 GDP 通常被用作一个国家财富的粗略总结。在这里，我们将这个数量除以 365，以获得更易理解的度量——*每日美元*。使用当前的美元作为单位，如果一个人的日收入低于 2 美元，则被定义为生活在*绝对贫困*中。我们将这个变量添加到数据表中：
+
+```r
+gapminder <- gapminder |>  mutate(dollars_per_day = gdp/population/365)
+```
+
+GDP 值已根据通货膨胀进行调整，并代表当前的美元，因此这些值旨在跨年进行比较。当然，这些是国家的平均值，并且每个国家内部存在很大的变异性。下面描述的所有图表和洞察都关系到国家平均值，而不是个人。
+
+### 10.5.1 对数变换
+
+下面是 1970 年每日收入的直方图：
+
+```r
+past_year <- 1970
+gapminder |> 
+ filter(year == past_year & !is.na(gdp)) |>
+ ggplot(aes(dollars_per_day)) + 
+ geom_histogram(binwidth = 1, color = "black")
+```
+
+![](img/da4c1134d5158d414b91cf422f41f101.png)
+
+我们使用`color = "black"`参数来绘制边界，并清楚地区分各个区间。
+
+在这个图表中，我们看到对于大多数国家，平均值低于每天 10 美元。然而，x 轴的大部分都用于表示平均每天收入超过 10 美元的 35 个国家。因此，这个图表对于每天收入低于 10 美元的国家来说并不很有信息量。
+
+可能更直观的是，能够快速看到大约有多少国家的平均每日收入约为 1 美元（极端贫困）、2 美元（非常贫困）、4 美元（贫困）、8 美元（中等）、16 美元（富裕）、32 美元（富有）、64 美元（非常富有）。这些变化是乘法的，对数变换将乘法变化转换为加法变化：当使用 2 作为底数时，一个值的翻倍变成了增加 1。
+
+如果我们对数据进行以 2 为底的对数变换，这就是其分布情况：
+
+```r
+gapminder |> 
+ filter(year == past_year & !is.na(gdp)) |>
+ ggplot(aes(log2(dollars_per_day))) + 
+ geom_histogram(binwidth = 1, color = "black")
+```
+
+![](img/d6bb0065d46fef0ecaa6b4176d29255d.png)
+
+从某种意义上说，这为中等和低收入国家提供了一个*近距离*的观察。
+
+### 10.5.2 哪个底数？
+
+在上述情况中，我们在对数变换中使用了 2 作为底数。其他常见的选项是以 \(\mathrm{e}\)（自然对数）为底和以 10 为底。
+
+通常，我们不推荐在数据探索和可视化中使用自然对数。这是因为虽然\(2², 2³, 2⁴, \dots\)或\(10², 10³, \dots\)在我们的头脑中很容易计算，但\(\mathrm{e}², \mathrm{e}³, \dots\)并不容易计算，因此刻度不直观或难以解释。
+
+在每天美元的例子中，我们使用 2 为底而不是 10 为底，因为结果的范围更容易解释。正在绘制的值的范围是 0.327，48.885。
+
+在十进制中，这变成了一个包含非常少数整数的范围：只有 0 和 1。在二进制中，我们的范围包括-2，-1，0，1，2，3，4 和 5。当 x 是介于-10 和 10 之间的整数时，计算\(2^x\)和\(10^x\)更容易，所以我们更倾向于使用较小的整数。有限范围的另一个后果是选择箱宽更具挑战性。以 2 为底的对数，我们知道箱宽为 1 将转换为范围在\(x\)到\(2x\)之间的箱。
+
+对于一个更适合使用十进制的例子，考虑人口规模。以 10 为底的对数是首选，因为这些的范围是：
+
+```r
+filter(gapminder, year == past_year) |>
+ summarize(min = min(population), max = max(population))
+#>     min      max
+#> 1 46075 8.09e+08
+```
+
+这里是变换值的直方图：
+
+```r
+gapminder |> 
+ filter(year == past_year) |>
+ ggplot(aes(log10(population))) +
+ geom_histogram(binwidth = 0.5, color = "black")
+```
+
+![图片](img/add21d76b27dbb9a1b85c1a2729aca74.png)
+
+在上面，我们可以很快地看到国家人口介于十万和一百亿之间。
+
+### 10.5.3 转换值或刻度？
+
+我们可以在图表中使用两种方法来使用对数变换。我们可以在绘图之前对数据进行对数变换，或者在坐标轴上使用对数刻度。这两种方法都很有用，并且具有不同的优势。如果我们对数据进行对数变换，我们可以更容易地解释刻度中的中间值。例如，如果我们看到：
+
+`----1----x----2--------3----`
+
+对于对数变换后的数据，我们知道\(x\)的值大约是 1.5。如果刻度是已对数的：
+
+`----10---x---100------1000---`
+
+然后，为了确定`x`，我们需要计算\(10^{1.5}\)，这在我们的头脑中并不容易。使用对数刻度的优点是我们在轴上看到原始值。然而，显示对数刻度的优点是原始值在图中显示，这更容易解释。例如，我们会看到“每天 32 美元”而不是“每天 5 个以 2 为底的对数美元”。
+
+如我们之前所学的，如果我们想要用对数来缩放轴，我们可以使用`scale_x_continuous`函数。我们不是先对值进行对数变换，而是应用这个层：
+
+```r
+gapminder |> 
+ filter(year == past_year & !is.na(gdp)) |>
+ ggplot(aes(dollars_per_day)) + 
+ geom_histogram(binwidth = 1, color = "black") +
+ scale_x_continuous(trans = "log2")
+```
+
+![图片](img/42ba5332a2cdfea28b4ed5ec5506d2e0.png)
+
+注意，10 为底的对数变换有自己的函数：`scale_x_log10()`，但目前 2 为底没有，尽管我们可以轻松地定义自己的。
+
+通过`trans`参数还有其他可用的变换。正如我们稍后将要学习的，平方根（`sqrt`）变换在考虑计数时很有用。逻辑变换（`logit`）在绘制 0 到 1 之间的比例时很有用。`reverse`变换在我们想要较小的值在右边或顶部时很有用。
+
+## 10.6 可视化多模态分布
+
+在上面的直方图中，我们看到两个*峰值*：一个在大约 4，另一个在大约 32。在统计学中，这些峰值有时被称为*峰值*。分布的峰值是频率最高的值。正态分布的峰值是平均值。当一个分布，如上面的分布，不是从峰值单调递减时，我们称它再次上升和下降的位置为*局部峰值*，并说该分布有*多个峰值*。
+
+上面的直方图表明，1970 年国家收入分布有两个峰值：一个在大约每天 2 美元（对数 2 刻度中的 1），另一个在大约每天 32 美元（对数 2 刻度中的 5）。这种*双峰性*与由平均每天收入低于 8 美元（对数 2 刻度中的 3）的国家和收入高于该水平的国家组成的二分世界是一致的。
+
+## 10.7 使用箱线图和脊线图比较多个分布
+
+直方图显示，1970 年的收入分布值显示出二分性。然而，直方图并没有显示两组国家是*西方*与*发展中国家*的对立。
+
+让我们从快速检查按地区划分的数据开始。我们按中位数重新排序地区，并使用对数刻度。
+
+```r
+gapminder |> 
+ filter(year == past_year & !is.na(gdp)) |>
+ mutate(region = reorder(region, dollars_per_day, FUN = median)) |>
+ ggplot(aes(dollars_per_day, region)) +
+ geom_point() +
+ scale_x_continuous(trans = "log2") 
+```
+
+![图片](img/fcc8af23d7d4032b5dc109ccf12a12f4.png)
+
+我们已经可以看到确实存在“西方与其它”的二分性：我们看到两个明显的组，富裕组由北美、北欧和西欧、新西兰和澳大利亚组成。我们根据这个观察结果定义组：
+
+```r
+gapminder <- gapminder |> 
+ mutate(group = case_when(
+ region %in% c("Western Europe", "Northern Europe","Southern Europe", 
+ "Northern America", 
+ "Australia and New Zealand") ~ "West",
+ region %in% c("Eastern Asia", "South-Eastern Asia") ~ "East Asia",
+ region %in% c("Caribbean", "Central America", 
+ "South America") ~ "Latin America",
+ continent == "Africa" & 
+ region != "Northern Africa" ~ "Sub-Saharan",
+ TRUE ~ "Others"))
+```
+
+我们将这个`group`变量转换为一个因子，以控制级别的顺序：
+
+```r
+gapminder <- gapminder |> 
+ mutate(group = factor(group, levels = c("Others", "Latin America", 
+ "East Asia", "Sub-Saharan",
+ "West")))
+```
+
+在下一节中，我们将展示如何可视化和比较不同组之间的分布。
+
+### 10.7.1 箱线图
+
+上述探索性数据分析揭示了 1970 年人均收入分布的两个特点。使用直方图，我们发现了一个双峰分布，其峰值与贫穷国家和富裕国家相关。我们现在想要比较这五个组之间的分布，以确认“西方与其它”的二分性。每个类别中的点数足够多，以至于一个总结图可能是有用的。我们可以生成五个直方图或五个密度图，但将所有视觉总结放在一个图中可能更实用。因此，我们首先将箱线图并排放置。请注意，我们添加了层`theme(axis.text.x = element_text(angle = 90, hjust = 1))`来使组标签垂直，因为如果水平显示它们则不合适，并移除了轴标签以留出空间。
+
+```r
+p <- gapminder |> 
+ filter(year == past_year & !is.na(gdp)) |>
+ ggplot(aes(group, dollars_per_day)) +
+ geom_boxplot() +
+ scale_y_continuous(trans = "log2") +
+ xlab("") +
+ theme(axis.text.x = element_text(angle = 90, hjust = 1)) 
+p
+```
+
+![图片](img/a52b6221e2c8a9156867ea87c7c18210.png)
+
+箱线图有一个局限性，即通过将数据总结为五个数字，我们可能会错过数据的重要特征。避免这种情况的一种方法是通过显示数据。
+
+```r
+p + geom_point(alpha = 0.5)
+```
+
+![图片](img/5ce7b47fe1b8a730d7b817ad5f36fd1f.png)
+
+### 10.7.2 脊线图
+
+显示每个单独的点并不总是能揭示分布的重要特征。尽管这里不是这种情况，当数据点的数量非常大以至于有重叠时，显示数据可能会适得其反。箱线图通过提供五数总结来帮助解决这个问题，但这也有局限性。例如，箱线图不会允许我们发现双峰分布。为了看到这一点，请注意下面的两个图是在总结相同的数据集：
+
+![图片](img/6eac7447ea318b4a4db078c57c16d734.png)
+
+在我们担心箱线图总结过于简单的情况下，我们可以展示堆叠的平滑密度或直方图。我们把这些称为*脊图*。因为我们习惯于用 x 轴上的值来可视化密度，所以我们垂直堆叠它们。此外，由于这种方法需要更多的空间，叠加它们很方便。**ggridges**包提供了一个方便的函数来做这件事。下面是上面展示的收入数据，带有箱线图，但使用了*脊图*。
+
+```r
+library(ggridges)
+p <- gapminder |> 
+ filter(year == past_year & !is.na(dollars_per_day)) |>
+ ggplot(aes(dollars_per_day, group)) + 
+ scale_x_continuous(trans = "log2") 
+p  + geom_density_ridges() 
+```
+
+![图片](img/6e95e02d67b66bdf967128e1105b6b9d.png)
+
+注意，我们必须反转用于箱线图的`x`和`y`。一个有用的`geom_density_ridges`参数是`scale`，它允许你确定重叠的程度，其中`scale = 1`表示没有重叠，更大的值会导致更多的重叠。
+
+如果数据点的数量足够少，我们可以使用以下代码将它们添加到脊图中：
+
+```r
+p + geom_density_ridges(jittered_points = TRUE)
+```
+
+![图片](img/9878a65e099866c933f37bddf334f158.png)
+
+默认情况下，点的长度是抖动的，不应以任何方式解释。为了显示数据点，但又不使用抖动，我们可以使用以下代码来添加所谓的数据的*毛刷表示*。
+
+```r
+p + geom_density_ridges(jittered_points = TRUE, 
+ position = position_points_jitter(height = 0),
+ point_shape = '|', point_size = 3, 
+ point_alpha = 1, alpha = 0.7)
+```
+
+![图片](img/0cedaa53f42219e85171495faa92f887.png)
+
+### 10.7.3 示例：1970 年与 2010 年的收入分布
+
+数据探索清楚地显示，1970 年存在“西方与其它”的二分法。但这种二分法持续存在吗？让我们使用`facet_grid`来看看分布是如何变化的。首先，我们将关注两组：西方和其它。我们制作四个直方图。
+
+```r
+past_year <- 1970
+present_year <- 2010
+years <- c(past_year, present_year)
+gapminder |> 
+ filter(year %in% years & !is.na(gdp)) |>
+ mutate(west = ifelse(group == "West", "West", "Developing")) |>
+ ggplot(aes(dollars_per_day)) +
+ geom_histogram(binwidth = 1, color = "black") +
+ scale_x_continuous(trans = "log2") + 
+ facet_grid(year ~ west)
+```
+
+![图片](img/158242e39beb6a925a4ae7f93741f36c.png)
+
+在我们解释这个图的发现之前，我们注意到 2010 年的直方图中代表的国家比 1970 年多：总计数更大。一个原因是几个国家在 1970 年之后成立。例如，苏联在 20 世纪 90 年代分裂成几个国家。另一个原因是 2010 年有更多国家的数据可用。
+
+我们只使用在两年都有数据的国家的数据重新制作这些图。在这本书的数据处理部分，我们将学习**tidyverse**工具，这些工具允许我们编写高效的代码来完成这项工作，但在这里我们可以使用简单的代码，使用`intersect`函数：
+
+```r
+country_list_1 <- gapminder |> 
+ filter(year == past_year & !is.na(dollars_per_day)) |> 
+ pull(country)
+
+country_list_2 <- gapminder |> 
+ filter(year == present_year & !is.na(dollars_per_day)) |> 
+ pull(country)
+
+country_list <- intersect(country_list_1, country_list_2)
+```
+
+这 108 个国家占世界人口的 86%，所以这个子集应该是具有代表性的。
+
+让我们重新制作这张图表，但只针对这个子集，只需在`filter`函数中简单添加`country %in% country_list`：
+
+![图片](img/c9e22cfd8d6d4f1dea53b9d1cf611ec8.png)
+
+现在，我们看到富裕国家变得更富裕了，但从百分比来看，贫穷国家似乎改善得更多。特别是，我们看到每天收入超过 16 美元的发展中国家比例显著增加。
+
+要看到哪些具体地区改善最多，我们可以重新制作上面的箱线图，但现在添加 2010 年，然后使用分面比较两年。
+
+```r
+gapminder |> 
+ filter(year %in% years & country %in% country_list) |>
+ ggplot(aes(group, dollars_per_day)) +
+ geom_boxplot() +
+ theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
+ scale_y_continuous(trans = "log2") +
+ xlab("") +
+ facet_grid(. ~ year)
+```
+
+![图片](img/16f576b01264d0a92ead8f94656e7bf6.png)
+
+在这里，我们暂停一下，介绍另一个强大的**ggplot2**功能。因为我们想比较每个地区的前后情况，所以对于每个地区的 1970 年箱线图和 2010 年箱线图并排显示将非常方便。一般来说，当数据并排绘制时，比较更容易。
+
+因此，我们不是使用分面，而是将每年的数据保持在一起，并要求根据年份着色（或填充）。请注意，组别会自动按年份分开，并且每对箱线图都会并排绘制。因为年份是数字，所以我们将其转换为因子，因为**ggplot2**会自动为因子的每个类别分配一种颜色。请注意，我们必须将年份列从数值转换为因子。
+
+```r
+gapminder |> 
+ filter(year %in% years & country %in% country_list) |>
+ mutate(year = factor(year)) |>
+ ggplot(aes(group, dollars_per_day, fill = year)) +
+ geom_boxplot() +
+ theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
+ scale_y_continuous(trans = "log2") +
+ xlab("") 
+```
+
+![图片](img/af0a8f9cf73b3ba01a5a6d050ae8e268.png)
+
+最后，我们指出，如果我们最感兴趣的是比较前后值，那么绘制百分比增长可能更有意义。我们还没有准备好学习如何编写这段代码，但以下是图表可能的样子：
+
+![图片](img/82f3c313f99a1c49487d8443a337546b.png)
+
+前面的数据探索表明，在过去 40 年里，富裕国家和贫穷国家之间的收入差距已经显著缩小。我们使用一系列直方图和箱线图来观察这一点。我们建议用一张图表简洁地传达这一信息。
+
+让我们先注意，1970 年和 2010 年的收入分布密度图传达了差距正在缩小的信息：
+
+```r
+gapminder |> 
+ filter(year %in% years & country %in% country_list) |>
+ ggplot(aes(dollars_per_day)) +
+ geom_density(fill = "grey") + 
+ scale_x_continuous(trans = "log2") + 
+ facet_grid(. ~ year)
+```
+
+![图片](img/9c26c15312eec8604798ad5c8ae5347c.png)
+
+在 1970 年的图表中，我们看到两个明显的模式：贫穷国家和富裕国家。到 2010 年，似乎一些贫穷国家已经向右移动，缩小了差距。
+
+下一条我们需要传达的信息是，这种分布变化的原因是几个贫穷国家变得更富裕，而不是一些富裕国家变得更贫穷。为此，我们可以在数据探索期间确定的组别上分配一种颜色。
+
+然而，我们首先需要学习如何以保留每个组别中国家数量信息的方式制作这些平滑密度图。为了理解为什么我们需要这样做，请注意每个组别大小的差异：
+
+| 发展中 | 西方 |
+| --- | --- |
+| 87 | 21 |
+
+但是，当我们叠加两个密度时，默认情况下，每个分布表示的面积加起来为 1，无论每个组的大小如何：
+
+```r
+gapminder |> 
+ filter(year %in% years & country %in% country_list) |>
+ mutate(group = ifelse(group == "West", "West", "Developing")) |>
+ ggplot(aes(dollars_per_day, fill = group)) +
+ scale_x_continuous(trans = "log2") +
+ geom_density(alpha = 0.2) + 
+ facet_grid(year ~ .)
+```
+
+![图片](img/892a1f0a0e32472ba3c46193c1985e7a.png)
+
+这使得看起来每个组中都有相同数量的国家。要改变这一点，我们需要学习如何使用 `geom_density` 函数访问计算变量。
+
+### 10.7.4 访问计算变量
+
+要使这些密度的面积与组的大小成比例，我们可以简单地乘以 y 轴的值和组的大小。从 `geom_density` 帮助文件中，我们看到这些函数计算一个名为 `count` 的变量，它正好做这件事。我们希望这个变量在 y 轴上而不是密度上。
+
+在 **ggplot2** 中，我们通过在变量名周围使用两个点来访问这些变量。因此，我们将使用以下映射：
+
+```r
+aes(x = dollars_per_day, y = ..count..)
+```
+
+我们现在可以通过简单地更改之前代码块中的映射来创建所需的图表。我们还将扩展 x 轴的极限。
+
+```r
+p <- gapminder |> 
+ filter(year %in% years & country %in% country_list) |>
+ mutate(group = ifelse(group == "West", "West", "Developing")) |>
+ ggplot(aes(dollars_per_day, y = ..count.., fill = group)) +
+ scale_x_continuous(trans = "log2", limit = c(0.125, 300))
+
+p + geom_density(alpha = 0.2) + 
+ facet_grid(year ~ .)
+#> Warning: The dot-dot notation (`..count..`) was
+#> deprecated in ggplot2 3.4.0.
+#> ℹ Please use `after_stat(count)`
+#>   instead.
+#> This warning is displayed once every 8
+#> hours.
+#> Call
+#> `lifecycle::last_lifecycle_warnings()`
+#> to see where this warning was generated.
+```
+
+![图片](img/a621cf5fb70b0454e615e1cd0e43af6e.png)
+
+如果我们想让密度更平滑，我们可以使用 `bw` 参数，这样每个密度的带宽都是相同的。我们在尝试了几个值之后选择了 0.75。
+
+```r
+p + geom_density(alpha = 0.2, bw = 0.75) + facet_grid(year ~ .)
+```
+
+![图片](img/20ba574ea4e4813ca1cdb7871805b25e.png)
+
+这个图表现在非常清楚地显示了正在发生的事情。发展中国家的分布正在变化。出现了一个新的模式，由那些差距缩小最多的国家组成。
+
+为了可视化是否上述定义的任何组在推动这一点，我们可以快速制作一个脊状图：
+
+```r
+gapminder |> 
+ filter(year %in% years & !is.na(dollars_per_day)) |>
+ ggplot(aes(dollars_per_day, group)) + 
+ scale_x_continuous(trans = "log2") + 
+ geom_density_ridges(bandwidth = 1.5) +
+ facet_grid(. ~ year)
+```
+
+![图片](img/47495f3932986a2af1dd086b64a507d0.png)
+
+另一种实现方式是将密度堆叠在彼此之上：
+
+```r
+gapminder |> 
+ filter(year %in% years & country %in% country_list) |>
+ group_by(year) |>
+ mutate(weight = population/sum(population)*2) |>
+ ungroup() |>
+ ggplot(aes(dollars_per_day, fill = group)) +
+ scale_x_continuous(trans = "log2", limit = c(0.125, 300)) + 
+ geom_density(alpha = 0.2, bw = 0.75, position = "stack") + 
+ facet_grid(year ~ .) 
+```
+
+![图片](img/95cb08bd59c487c424866a4455e42a73.png)
+
+在这里，我们可以清楚地看到东亚、拉丁美洲和其他地区的分布如何明显向右移动。而撒哈拉以南非洲保持停滞。
+
+注意我们按照组的级别排序，以便首先绘制西部的密度，然后是撒哈拉以南非洲。首先绘制两个极端值允许我们更好地看到剩余的双峰性。
+
+### 10.7.5 加权密度
+
+最后一点，我们注意到这些分布对每个国家都给予相同的权重。所以，如果大多数人口正在改善，但居住在一个非常大的国家，例如中国，我们可能不会重视这一点。实际上，我们可以使用 `weight` 映射参数来加权平滑密度。然后图表看起来是这样的：
+
+![图片](img/224a08a4949701349f26f31e0937e33d.png)
+
+这个特定的图表非常清楚地显示了收入分配差距是如何随着大多数穷人仍然留在撒哈拉以南非洲而缩小的。
+
+## 10.8 生态谬误和展示数据的重要性
+
+在本节中，我们一直在比较世界各地的地区。我们看到了，平均而言，一些地区比其他地区做得更好。在本节中，我们专注于描述在考察一个国家的婴儿死亡率与平均收入之间的关系时，组内变异性的重要性。
+
+我们定义了更多地区，并比较了这些地区的平均值：
+
+![图表](img/59c7752ee06cbbb7104b52baee6d2d2a.png)
+
+这两个变量之间的关系几乎是完美的线性关系，图表显示了巨大的差异。在西方，婴儿死亡率不到 0.5%，而在撒哈拉以南非洲，这个比率超过 6%！
+
+注意，这个图表使用了一种新的变换，即逻辑变换。
+
+### 10.8.1 逻辑变换
+
+比例或比率 \(p\) 的逻辑或 logit 变换定义为：
+
+\[f(p) = \log \left( \frac{p}{1-p} \right)\]
+
+当 \(p\) 是比例或概率时，被取对数的量 \(p/(1-p)\) 被称为*几率*。在这种情况下，\(p\) 是婴儿的存活比例。几率告诉我们预期存活婴儿比死亡婴儿多多少。对数变换使这个量对称。如果比率相同，那么对数几率是 0。增加或减少的折叠变成正负增量。
+
+这个比例对于当我们想强调接近 0 或 1 的差异时很有用。对于生存率来说，这很重要，因为 90%的生存率是不可接受的，而 99%的生存率相对较好。我们更希望生存率接近 99.9%。我们希望我们的比例能够突出这些差异，而 logit 就是这样做的。注意，99.9/0.1 大约是 99/1 的 10 倍，而 99/1 大约是 90/10 的 10 倍。通过使用对数，这些折叠变化变成了恒定的增加。
+
+### 10.8.2 展示数据
+
+现在，回到我们的图表。基于上面的图表，我们是否得出结论：一个低收入国家注定会有低生存率？我们是否得出结论：撒哈拉以南非洲的生存率普遍低于南亚，而南亚又低于太平洋岛屿，如此等等？
+
+仅根据显示平均值的图表就得出这个结论被称为*生态谬误*。生存率和收入之间几乎完美的关系仅在地区层面的平均值中观察到。一旦我们展示了所有数据，我们就会看到一个更为复杂的故事：
+
+![图表](img/8ef36385d88aee206933cc615683db6b.png)
+
+具体来说，我们看到有很大的变异性。我们看到来自同一地区的国家可以相当不同，而且收入相同的国家可能有不同的生存率。例如，尽管撒哈拉以南非洲的平均健康状况和经济成果较差，但该群体内部存在很大的变异性。毛里求斯和博茨瓦纳的表现优于安哥拉和塞拉利昂，毛里求斯的表现与西方国家相当。
+
+* * *
+
+1.  [Hans Rosling 维基百科页面](https://en.wikipedia.org/wiki/Hans_Rosling)↩︎
+
+1.  [Gapminder 官方网站](http://www.gapminder.org/)↩︎
+
+1.  [Hans Rosling 揭示关于贫困的新见解](https://www.ted.com/talks/hans_rosling_reveals_new_insights_on_poverty?language=en)↩︎
+
+1.  [Hans Rosling 展示你见过的最好统计数据](https://www.ted.com/talks/hans_rosling_shows_the_best_stats_you_ve_ever_seen)↩︎
