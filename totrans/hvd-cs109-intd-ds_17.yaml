@@ -1,0 +1,805 @@
+- en: Chapter 9 Visualizing data distributions
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: 原文：[https://rafalab.dfci.harvard.edu/dsbook/dataviz-distributions.html](https://rafalab.dfci.harvard.edu/dsbook/dataviz-distributions.html)
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: 'You may have noticed that numerical data is often summarized with the *average*
+    value. For example, the quality of a high school is sometimes summarized with
+    one number: the average score on a standardized test. Occasionally, a second number
+    is reported: the *standard deviation*. For example, you might read a report stating
+    that scores were 680 plus or minus 50 (the standard deviation). The report has
+    summarized an entire vector of scores with just two numbers. Is this appropriate?
+    Is there any important piece of information that we are missing by only looking
+    at this summary rather than the entire list?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Our first data visualization building block is learning to summarize lists of
+    factors or numeric vectors. More often than not, the best way to share or explore
+    this summary is through data visualization. The most basic statistical summary
+    of a list of objects or numbers is its distribution. Once a data has been summarized
+    as a distribution, there are several data visualization techniques to effectively
+    relay this information. For this reason, it is important to have a deep understand
+    the concept of a distribution.
+  prefs: []
+  type: TYPE_NORMAL
+- en: In this chapter, we first discuss properties of a variety of distributions and
+    how to visualize distributions using a motivating example of student heights.
+    We then discuss the **ggplot2** geometries for these visualizations in Section
+    [9.8](dataviz-distributions.html#other-geometries).
+  prefs: []
+  type: TYPE_NORMAL
+- en: 9.1 Variable types
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'The two main variables types are *categorical* and *numeric*. Each can be divided
+    into two other groups: categorical can be ordinal or not, whereas numerical variables
+    can be discrete or continuous. When each entry in a dataset comes from one of
+    a small number of groups, we refer to the data as *categorical data*. Two simple
+    examples are sex (male or female) and US regions (Northeast, South, North Central,
+    West). Some categorical data can be ordered even if they are not numbers per se,
+    such as spiciness (mild, medium, hot). In statistics textbooks, ordered categorical
+    data are referred to as *ordinal* data. Examples of numerical data are population
+    sizes, murder rates, and heights. Some numerical data can be treated as ordered
+    categorical. We can further divide numerical data into continuous and discrete.
+    Continuous variables are those that can take any value, such as heights, if measured
+    with enough precision. For example, a pair of twins may be 68.12 and 68.11 inches,
+    respectively. Counts, such as population sizes, are discrete because they have
+    to be round numbers.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Keep in mind that discrete numeric data can be considered ordinal. Although
+    this is technically true, we usually reserve the term ordinal data for variables
+    belonging to a small number of different groups, with each group having many members.
+    In contrast, when we have many groups with few cases in each group, we typically
+    refer to them as discrete numerical variables. So, for example, the number of
+    packs of cigarettes a person smokes a day, rounded to the closest pack, would
+    be considered ordinal, while the actual number of cigarettes would be considered
+    a numerical variable. But, indeed, there are examples that can be considered both
+    numerical and ordinal when it comes to visualizing data.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Here we focus on numeric variables because visualizing this data type is substantially
+    more complex. However, we start by describing data visualization and summarization
+    approaches for categorical data.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '9.2 Case study: describing student heights'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: We introduce a new motivating problem. It is an artificial one, but it will
+    help us illustrate the concepts needed to understand distributions.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Pretend that we have to describe the heights of our classmates to ET, an extraterrestrial
+    that has never seen humans. As a first step, we need to collect data. To do this,
+    we ask students to report their heights in inches. We ask them to provide sex
+    information because we know there are two different distributions by sex. We collect
+    the data and save it in the `heights` data frame:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs: []
+  type: TYPE_PRE
+- en: One way to convey the heights to ET is to simply send him this list of 1050
+    heights. But there are much more effective ways to convey this information, and
+    understanding the concept of a distribution will be key. To simplify the explanation,
+    we first focus on male heights. We examine the female height data in Section [9.6](dataviz-distributions.html#student-height-cont).
+  prefs: []
+  type: TYPE_NORMAL
+- en: 9.3 Distributions
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'The most basic statistical summary of a list of objects or numbers is its *distribution*.
+    The simplest way to think of a distribution is as a compact description of a list
+    with many entries. This concept should not be new for readers of this book. For
+    example, with categorical data, the distribution simply describes the proportion
+    of each unique category. The sex represented in the heights dataset is:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE1]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'This two-category *frequency table* is the simplest form of a distribution.
+    We don’t really need to visualize it since one number describes everything we
+    need to know: 23% are females and the rest are males. When there are more categories,
+    then a simple barplot describes the distribution. Here is an example with US state
+    regions:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![](../Images/87bd4cd15c92f89f12f2c42e74753053.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: This particular plot simply shows us four numbers, one for each category. We
+    usually use barplots to display a few numbers. Although this particular plot does
+    not provide much more insight than a frequency table itself, it is a first example
+    of how we convert a vector into a plot that succinctly summarizes all the information
+    in the vector. When the data is numerical, the task of displaying distributions
+    is more challenging.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 9.3.1 Histograms
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: Numerical data that are not categorical also have distributions. However, in
+    general, when data is not categorical, reporting the frequency of each entry,
+    as we did for categorical data, is not an effective summary since most entries
+    are unique. or example, in our case study, while several students reported a height
+    of 68 inches, only one student reported a height of `68.503937007874` inches and
+    only one student reported a height `68.8976377952756` inches. We assume that they
+    converted from 174 and 175 centimeters, respectively.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Statistics textbooks teach us that a more useful way to define a distribution
+    for numeric data is to define a function that reports the proportion of the data
+    below \(a\) for all possible values of \(a\). This function is called the emipirical
+    cumulative distribution function (eCDF), it can be plotted, and it provides a
+    full description of the distribution of our data. Here is the eCDF for male student
+    heights:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![](../Images/c4ce8e5d4ea4ca88c55a75cd35e7b7a3.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: 'However, summarizing data by plotting the eCDF is actually not very popular
+    in practice. The main reason is that it does not easily convey characteristics
+    of interest such as: at what value is the distribution centered? Is the distribution
+    symmetric? What ranges contain 95% of the values?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '*Histograms*, are much preferred because they greatly facilitate answering
+    such questions. Histograms sacrifice just a bit of information to produce plots
+    that are much easier to interpret. The simplest way to make a histogram is to
+    divide the span of our data into non-overlapping bins of the same size. Then,
+    for each bin, we count the number of values that fall in that interval. The histogram
+    plots these counts as bars with the base of the bar defined by the intervals.
+    Here is the histogram for the height data splitting the range of values into one
+    inch intervals: \((49.5, 50.5],(50.5, 51.5],(51.5,52.5],(52.5,53.5],...,(82.5,83.5]\)'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![](../Images/35e6a8e09f5a40ff27931987fc09b90a.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: As you can see in the figure above, a histogram is similar to a barplot, but
+    it differs in that the x-axis is numerical, not categorical.
+  prefs: []
+  type: TYPE_NORMAL
+- en: If we send this plot to ET, he will immediately learn some important properties
+    about our data. First, the range of the data is from 50 to 84 with the majority
+    (more than 95%) between 63 and 75 inches. Second, the heights are close to symmetric
+    around 69 inches. Also, by adding up counts, ET could obtain a very good approximation
+    of the proportion of the data in any interval. Therefore, the histogram above
+    is not only easy to interpret, but also provides almost all the information contained
+    in the raw list of 812 heights with about 30 bin counts.
+  prefs: []
+  type: TYPE_NORMAL
+- en: What information do we lose? Note that all values in each interval are treated
+    the same when computing bin heights. So, for example, the histogram does not distinguish
+    between 64, 64.1, and 64.2 inches. Given that these differences are almost unnoticeable
+    to the eye, the practical implications are negligible and we were able to summarize
+    the data to just 23 numbers.
+  prefs: []
+  type: TYPE_NORMAL
+- en: We discuss how to code histograms in Section [9.8](dataviz-distributions.html#other-geometries).
+  prefs: []
+  type: TYPE_NORMAL
+- en: 9.3.2 Smoothed density
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '*Smooth density* plots relay the same information as a histogram but are aesthetically
+    more appealing. Here is what a smooth density plot looks like for our heights
+    data:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![](../Images/8505dfecfa70ae0d7ab67ea6efe77f12.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: In this plot, we no longer have sharp edges at the interval boundaries and many
+    of the local peaks have been removed. Also, the scale of the y-axis changed from
+    counts to *density*. To fully understand smooth densities, we have to understand
+    *estimates*, a topic we don’t cover until later. Here we simply describe them
+    as making the histograms prettier by drawing a curve that goes through the top
+    of the histogream bars and then removing the bars. The values shown y-axis are
+    chosen so that the area under the curve at up to 1\. This implies that for any
+    interval, the area under the curve for that interval gives us an approximation
+    of how what proportion of the data is in the interval.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'An advantage of smooth densities over histograms for visualization purposes
+    is that densities make it easier to compare two distributions. This is in large
+    part because the jagged edges of the histogram add clutter. Here is an example
+    comparing male and female heights:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![](../Images/cdf11531833b3543ff78621648907562.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: With the right argument, `ggplot` automatically shades the intersecting region
+    with a different color. We will show examples of **ggplot2** code for densities
+    in Section [10](gapminder.html#gapminder) as well as Section [9.8](dataviz-distributions.html#other-geometries).
+  prefs: []
+  type: TYPE_NORMAL
+- en: 9.3.3 The normal distribution
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: 'Histograms and density plots provide excellent summaries of a distribution.
+    But can we summarize even further? We often see the average and standard deviation
+    used as summary statistics: a two-number summary! To understand what these summaries
+    are and why they are so widely used, we need to understand the normal distribution.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'The normal distribution, also known as the bell curve and as the Gaussian distribution.
+    Here is what the normal distribution looks like:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![](../Images/f934fa530aaca1de4b321fbc301682d6.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: The normal distribution is one of the most famous mathematical concepts in history.
+    A reason for this is that the distribution of many datasets can be approximated
+    with normal distributions. These include including gambling winnings, heights,
+    weights, blood pressure, standardized test scores, and experimental measurement
+    errors. Statistical textbooks offer explanations for why this is the case. But
+    how can the same distribution approximate datasets with completely different ranges
+    for values, for example heights and weights? A second important characteristic
+    of the normal distribution is that it can be adapted to different datasets by
+    just adjusting two numbers, refered to as the *average* or *mean* and the standard
+    deviation (SD). The normal distribution is symmetric, centered at what we refer
+    to as the average, and most values (about 95%) are within 2 SDs from the average.
+    The plot above shows a normal distribution with average 0 and SD 1, often referred
+    to as a *standard normal*. Note that the fact that vecause only two numbers are
+    needed to adapt the normal distribution to a dataset, implies that if our data
+    distribution is approximated by a normal distribution, all the information needed
+    to describe the distribution can be encoded in just two numbers. We now define
+    these values for an arbitrary list of numbers.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Once we are convinced that our data, say it is stored in the vector `x`, has
+    a distribution that is *approximately normal* we can find the specifc one that
+    matches our data by matching the average and SD of the data to the average and
+    SD of the normal distribution, respectively. For a list of numbers contained in
+    a vector `x`:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE2]'
+  prefs: []
+  type: TYPE_PRE
+- en: the average is defined as
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE3]'
+  prefs: []
+  type: TYPE_PRE
+- en: and the SD is defined as
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE4]'
+  prefs: []
+  type: TYPE_PRE
+- en: which can be interpreted as the average distance between values and their average.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'The pre-built functions `mean` and `sd` (note that, for reasons explained in
+    statistics textbooks,`sd` divides by `length(x)-1` rather than `length(x)`) can
+    be used here:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE5]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Here is a plot of the smooth density and the normal distribution with mean
+    = 69.3 and SD = 3.6 plotted as a black line with our student height smooth density
+    in blue:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![](../Images/52c239a5424ed777f1a74acd9f9945bc.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: 9.4 Boxplots
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: To understand boxplots we need to define some terms that are commonly used in
+    exploratory data analysis.
+  prefs: []
+  type: TYPE_NORMAL
+- en: The *percentiles* are the values for which \(p = 0.01, 0.02, ..., 0.99\) of
+    the data are less then or equal to that value, respectively. We call, for example,
+    the case of \(p=0.10\) the 10th percentile, which gives us a number for which
+    10% of the data is below. The most famous percentile is the 50th, also known as
+    the *median*. Another special case that receives a name are the *quartiles*, which
+    are obtained when setting \(p=0.25,0.50\), and \(0.75\), which are used by the
+    boxplot.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'To motivate boxplots we will go back to the US murder data. Suppose we want
+    to summarize the murder rate distribution. Using the data visualization technique
+    we have learned, we can quickly see that the normal approximation does not apply
+    here:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![](../Images/4a45ef83efb4b8ed9446be15ef44de41.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: In this case, the histogram above or a smooth density plot would serve as a
+    relatively succinct summary.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Now suppose those used to receiving just two numbers as summaries ask us for
+    a more compact numerical summary.
+  prefs: []
+  type: TYPE_NORMAL
+- en: The *boxplot* provides a five-number summary composed of the range along with
+    the *quartiles* (the 25th, 50th, and 75th percentiles). The R implementation of
+    boxplots ignore *outliers* when computing the range and instead plot these as
+    independent points. The help file provides a specific definition of outliers.
+    The boxplot shows these numbers as a “box” with “whiskers”
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![](../Images/4d1676032cd44f0f829c031c9def8913.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: with the box defined by the 25% and 75% percentile and the whiskers showing
+    the range. The distance between these two is called the *interquartile* range.
+    The two points are outliers according to the R implementation. The median is shown
+    with a horizontal line.
+  prefs: []
+  type: TYPE_NORMAL
+- en: From just this simple plot, we know that the median is about 2.5, that the distribution
+    is not symmetric, and that the range is 0 to 5 for the great majority of states
+    with two exceptions.
+  prefs: []
+  type: TYPE_NORMAL
+- en: We discuss how to make boxplots in Section [9.8](dataviz-distributions.html#other-geometries).
+  prefs: []
+  type: TYPE_NORMAL
+- en: 9.5 Stratification
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'In data analysis we often divide observations into groups based on the values
+    of one or more variables associated with those observations. For example in the
+    next section we divide the height values into groups based on a sex variable:
+    females and males. We call this procedure *stratification* and refer to the resulting
+    groups as *strata*.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Stratification is common in data visualization because we are often interested
+    in how the distribution of variables differs across different subgroups. We will
+    see several examples throughout this part of the book.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '9.6 Case study: describing student heights (continued)'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'Using the histogram, density plots, and QQ-plots, we have become convinced
+    that the male height data is well approximated with a normal distribution. In
+    this case, we report back to ET a very succinct summary: male heights follow a
+    normal distribution with an average of 69.3 inches and a SD of 3.6 inches. With
+    this information, ET will have a good idea of what to expect when he meets our
+    male students. However, to provide a complete picture we need to also provide
+    a summary of the female heights.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'We learned that boxplots are useful when we want to quickly compare two or
+    more distributions. Here are the heights for men and women:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![](../Images/927c7d38056a3c70bd58b862ae0cf929.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: 'The plot immediately reveals that males are, on average, taller than females.
+    The standard deviations appear to be similar. But does the normal approximation
+    also work for the female height data collected by the survey? We expect that they
+    will follow a normal distribution, just like males. However, exploratory plots
+    reveal that the approximation is not as useful:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![](../Images/aeefe6857f7bf307a3e0341ab2a7c5f4.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: 'We see something we did not see for the males: the density plot has a second
+    “bump”. Also, the highest points tend to be taller than expected by the normal
+    than expected heights for a normal distribution. When reporting back to ET, we
+    might need to provide a histogram rather than just the average and standard deviation
+    for the female heights.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: However, go back and read Tukey’s quote. We have noticed what we didn’t expect
+    to see. If we look at other female height distributions, we do find that they
+    are well approximated with a normal distribution. So why are our female students
+    different? Is our class a requirement for the female basketball team? Are small
+    proportions of females claiming to be taller than they are? Another, perhaps more
+    likely, explanation is that in the form students used to enter their heights,
+    `FEMALE` was the default sex and some males entered their heights, but forgot
+    to change the sex variable. In any case, data visualization has helped discover
+    a potential flaw in our data.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Regarding the five smallest values, note that these values are:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE6]'
+  prefs: []
+  type: TYPE_PRE
+- en: Because these are reported heights, a possibility is that the student meant
+    to enter `5'1"`, `5'2"`, `5'3"` or `5'5"`.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 9.7 Exercises
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '1\. Define variables containing the heights of males and females like this:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE7]'
+  prefs: []
+  type: TYPE_PRE
+- en: How many measurements do we have for each?
+  prefs: []
+  type: TYPE_NORMAL
+- en: 2\. Suppose we can’t make a plot and want to compare the distributions side
+    by side. We can’t just list all the numbers. Instead, we will look at the percentiles.
+    Create a five row table showing `female_percentiles` and `male_percentiles` with
+    the 10th, 30th, 50th, 70th, & 90th percentiles for each sex. Then create a data
+    frame with these two as columns.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '3\. Study the following boxplots showing population sizes by country:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![](../Images/6c2a96f953bf2584db1e0b122a526fdf.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: Which continent has the country with the biggest population size?
+  prefs: []
+  type: TYPE_NORMAL
+- en: 4\. What continent has the largest median population size?
+  prefs: []
+  type: TYPE_NORMAL
+- en: 5\. What is median population size for Africa to the nearest million?
+  prefs: []
+  type: TYPE_NORMAL
+- en: 6\. What proportion of countries in Europe have populations below 14 million?
+  prefs: []
+  type: TYPE_NORMAL
+- en: '0.99'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '0.75'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '0.50'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '0.25'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: 7\. If we use a log transformation, which continent shown above has the largest
+    interquartile range?
+  prefs: []
+  type: TYPE_NORMAL
+- en: '8\. Load the height data set and create a vector `x` with just the male heights:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE8]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'What proportion of the data is between 69 and 72 inches (taller than 69, but
+    shorter or equal to 72)? Hint: use a logical operator and `mean`.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 9.8 ggplot2 geometries
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: In Chapter [8](ggplot2.html#ggplot2), we introduced the **ggplot2** package
+    for data visualization. Here we demonstrate how to generate plots related to distributions,
+    specifically the plots shown earlier in this chapter.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 9.8.1 Barplots
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: To generate a barplot we can use the `geom_bar` geometry. The default is to
+    count the number of each category and draw a bar. Here is the plot for the regions
+    of the US.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE9]'
+  prefs: []
+  type: TYPE_PRE
+- en: '![](../Images/e66312667712d5ad79d598fdbad8fad2.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: 'We often already have a table with a distribution that we want to present as
+    a barplot. Here is an example of such a table:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE10]'
+  prefs: []
+  type: TYPE_PRE
+- en: We no longer want `geom_bar` to count, but rather just plot a bar to the height
+    provided by the `proportion` variable. For this we need to provide `x` (the categories)
+    and `y` (the values) and use the `stat="identity"` option.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE11]'
+  prefs: []
+  type: TYPE_PRE
+- en: '![](../Images/9f417685c33ac321b3edbce26467298a.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: 9.8.2 Histograms
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: 'To generate histograms we use `geom_histogram`. By looking at the help file
+    for this function, we learn that the only required argument is `x`, the variable
+    for which we will construct a histogram. We dropped the `x` because we know it
+    is the first argument. The code looks like this:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE12]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'If we run the code above, it gives us a message:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: 'We previously used a bin size of 1 inch, so the code looks like this:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE13]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Finally, if for aesthetic reasons we want to add color, we use the arguments
+    described in the help file. We also add labels and a title:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE14]'
+  prefs: []
+  type: TYPE_PRE
+- en: '![](../Images/0427c87177b91ebef8922d1991263a91.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: 9.8.3 Density plots
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: 'To create a smooth density, we use the `geom_density`. To make a smooth density
+    plot with the data previously shown as a histogram we can use this code:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE15]'
+  prefs: []
+  type: TYPE_PRE
+- en: To fill in with color, we can use the `fill` argument.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE16]'
+  prefs: []
+  type: TYPE_PRE
+- en: '![](../Images/9c949603a0244e335e74c99dac137e68.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: 'To change the smoothness of the density, we use the `adjust` argument to multiply
+    the default value by that `adjust`. For example, if we want the bandwidth to be
+    twice as big we use:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE17]'
+  prefs: []
+  type: TYPE_PRE
+- en: 9.8.4 Boxplots
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: The geometry for boxplot is `geom_boxplot`. As discussed, boxplots are useful
+    for comparing distributions. For example, below are the previously shown heights
+    for women, but compared to men. For this geometry, we need arguments `x` as the
+    categories, and `y` as the values.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![](../Images/3a284446d24c0039e5c92e77139d5dca.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: 9.8.5 Images
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: 'Images were not needed for the concepts described in this chapter, but we will
+    use images in Section [11.14](data-visualization-principles.html#vaccines), so
+    we introduce the two geometries used to create images: **geom_tile** and **geom_raster**.
+    They behave similarly; to see how they differ, please consult the help file. To
+    create an image in **ggplot2** we need a data frame with the x and y coordinates
+    as well as the values associated with each of these. Here is a data frame.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE18]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Note that this is the tidy version of a matrix, `matrix(1:120, 12, 10)`. To
+    plot the image we use the following code:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE19]'
+  prefs: []
+  type: TYPE_PRE
+- en: With these images you will often want to change the color scale. This can be
+    done through the `scale_fill_gradientn` layer.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE20]'
+  prefs: []
+  type: TYPE_PRE
+- en: '![](../Images/865db5bd77332ccac82df95d10fe7df5.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: 9.8.6 Quick plots
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: In Section [8.13](ggplot2.html#qplot) we introduced `qplot` as a useful function
+    when we need to make a quick scatterplot. We can also use `qplot` to make histograms,
+    density plots, boxplot, qqplots and more. Although it does not provide the level
+    of control of `ggplot`, `qplot` is definitely useful as it permits us to make
+    a plot with a short snippet of code.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Suppose we have the female heights in an object `x`:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE21]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'To make a quick histogram we can use:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE22]'
+  prefs: []
+  type: TYPE_PRE
+- en: The function guesses that we want to make a histogram because we only supplied
+    one variable. In Section [8.13](ggplot2.html#qplot) we saw that if we supply `qplot`
+    two variables, it automatically makes a scatterplot.
+  prefs: []
+  type: TYPE_NORMAL
+- en: To make a quick qqplot you have to use the `sample` argument. Note that we can
+    add layers just as we do with `ggplot`.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE23]'
+  prefs: []
+  type: TYPE_PRE
+- en: If we supply a factor and a numeric vector, we obtain a plot like the one below.
+    Note that in the code below we are using the `data` argument. Because the data
+    frame is not the first argument in `qplot`, we have to use the dot operator.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE24]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'We can also select a specific geometry by using the `geom` argument. So to
+    convert the plot above to a boxplot, we use the following code:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE25]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'We can also use the `geom` argument to generate a density plot instead of a
+    histogram:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE26]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Although not as much as with `ggplot`, we do have some flexibility to improve
+    the results of `qplot`. Looking at the help file we see several ways in which
+    we can improve the look of the histogram above. Here is an example:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE27]'
+  prefs: []
+  type: TYPE_PRE
+- en: '![](../Images/7b46eb5090225b3d508c858cbf71f156.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: '**Technical note**: The reason we use `I("black")` is because we want `qplot`
+    to treat `"black"` as a character rather than convert it to a factor, which is
+    the default behavior within `aes`, which is internally called here. In general,
+    the function `I` is used in R to say “keep it as it is”.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 9.9 Exercises
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 1\. Now we are going to use the `geom_histogram` function to make a histogram
+    of the heights in the `height` data frame. When reading the documentation for
+    this function we see that it requires just one mapping, the values to be used
+    for the histogram. Make a histogram of all the plots.
+  prefs: []
+  type: TYPE_NORMAL
+- en: What is the variable containing the heights?
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`sex`'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '`heights`'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '`height`'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '`heights$height`'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: 2\. Now create a ggplot object using the pipe to assign the heights data to
+    a ggplot object. Assign `height` to the x values through the `aes` function.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 3\. Now we are ready to add a layer to actually make the histogram. Use the
+    object created in the previous exercise and the `geom_histogram` function to make
+    the histogram.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '4\. Note that when we run the code in the previous exercise we get the warning:
+    `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.`'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Use the `binwidth` argument to change the histogram made in the previous exercise
+    to use bins of size 1 inch.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 5\. Instead of a histogram, we are going to make a smooth density plot. In this
+    case we will not make an object, but instead render the plot with one line of
+    code. Change the geometry in the code previously used to make a smooth density
+    instead of a histogram.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 6\. Now we are going to make a density plot for males and females separately.
+    We can do this using the `group` argument. We assign groups via the aesthetic
+    mapping as each point needs to a group before making the calculations needed to
+    estimate a density.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 7\. We can also assign groups through the `color` argument. This has the added
+    benefit that it uses color to distinguish the groups. Change the code above to
+    use color.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '8\. We can also assign groups through the `fill` argument. This has the added
+    benefit that it uses colors to distinguish the groups, like this:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE28]'
+  prefs: []
+  type: TYPE_PRE
+- en: However, here the second density is drawn over the other. We can make the curves
+    more visible by using alpha blending to add transparency. Set the alpha parameter
+    to 0.2 in the `geom_density` function to make this change.
+  prefs: []
+  type: TYPE_NORMAL

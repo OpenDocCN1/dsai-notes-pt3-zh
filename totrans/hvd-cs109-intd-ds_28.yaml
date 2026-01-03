@@ -1,0 +1,1612 @@
+- en: Chapter 18 Linear models
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: 原文：[https://rafalab.dfci.harvard.edu/dsbook/linear-models.html](https://rafalab.dfci.harvard.edu/dsbook/linear-models.html)
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: Since Galton’s original development, regression has become one of the most widely
+    used tools in data science. One reason has to do with the fact that regression
+    permits us to find relationships between two variables taking into account the
+    effects of other variables that affect both. This has been particularly popular
+    in fields where randomized experiments are hard to run, such as economics and
+    epidemiology.
+  prefs: []
+  type: TYPE_NORMAL
+- en: When we are not able to randomly assign each individual to a treatment or control
+    group, confounding is particularly prevalent. For example, consider estimating
+    the effect of eating fast foods on life expectancy using data collected from a
+    random sample of people in a jurisdiction. Fast food consumers are more likely
+    to be smokers, drinkers, and have lower incomes. Therefore, a naive regression
+    model may lead to an overestimate of the negative health effect of fast food.
+    So how do we account for confounding in practice? In this chapter we learn how
+    linear models can help with such situations and can be used to describe how one
+    or more variables affect an outcome variable.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '18.1 Case study: Moneyball'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '*Moneyball: The Art of Winning an Unfair Game* is a book by Michael Lewis about
+    the Oakland Athletics (A’s) baseball team and its general manager, the person
+    tasked with building the team, Billy Beane.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Traditionally, baseball teams use *scouts* to help them decide what players
+    to hire. These scouts evaluate players by observing them perform. Scouts tend
+    to favor athletic players with observable physical abilities. For this reason,
+    scouts tend to agree on who the best players are and, as a result, these players
+    tend to be in high demand. This in turn drives up their salaries.
+  prefs: []
+  type: TYPE_NORMAL
+- en: From 1989 to 1991, the A’s had one of the highest payrolls in baseball. They
+    were able to buy the best players and, during that time, they were one of the
+    best teams. However, in 1995 the A’s team owner changed and the new management
+    cut the budget drastically, leaving then general manager, Sandy Alderson, with
+    one of the lowest payrolls in baseball. He could no longer afford the most sought-after
+    players. Alderson began using a statistical approach to find inefficiencies in
+    the market. Alderson was a mentor to Billy Beane, who succeeded him in 1998 and
+    fully embraced data science, as opposed to scouts, as a method for finding low-cost
+    players that data predicted would help the team win. Today, this strategy has
+    been adapted by most baseball teams. As we will see, regression plays a large
+    role in this approach.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'As motivation for this chapter, we will pretend it is 2002 and try to build
+    a baseball team with a limited budget, just like the A’s had to do. To appreciate
+    what you are up against, note that in 2002 the Yankees’ payroll of $125,928,583
+    more than tripled the Oakland A’s $39,679,746:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![](../Images/0ef1ed834b7e0f0fdfb6fe9c0b48236e.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: 18.1.1 Sabermetrics
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: Statistics have been used in baseball since its beginnings. The dataset we will
+    be using, included in the **Lahman** library, goes back to the 19th century. For
+    example, a summary statistics we will describe soon, the *batting average*, has
+    been used for decades to summarize a batter’s success. Other statistics[^(61)](#fn61)
+    such as home runs (HR), runs batted in (RBI), and stolen bases (SB) are reported
+    for each player in the game summaries included in the sports section of newspapers,
+    with players rewarded for high numbers. Although summary statistics such as these
+    were widely used in baseball, data analysis per se was not. These statistics were
+    arbitrarily decided on without much thought as to whether they actually predicted
+    anything or were related to helping a team win.
+  prefs: []
+  type: TYPE_NORMAL
+- en: This changed with Bill James[^(62)](#fn62). In the late 1970s, this aspiring
+    writer and baseball fan started publishing articles describing more in-depth analysis
+    of baseball data. He named the approach of using data to predict what outcomes
+    best predicted if a team would win *sabermetrics*[^(63)](#fn63). Until Billy Beane
+    made sabermetrics the center of his baseball operation, Bill James’ work was mostly
+    ignored by the baseball world. Currently, sabermetrics popularity is no longer
+    limited to just baseball; other sports have started to use this approach as well.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'In this chapter, to simplify the exercise, we will focus on scoring runs and
+    ignore the two other important aspects of the game: pitching and fielding. We
+    will see how regression analysis can help develop strategies to build a competitive
+    baseball team with a constrained budget. The approach can be divided into two
+    separate data analyses. In the first, we determine which recorded player-specific
+    statistics predict runs. In the second, we examine if players were undervalued
+    based on what our first analysis predicts.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 18.1.2 Baseball basics
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: To see how regression will help us find undervalued players, we actually don’t
+    need to understand all the details about the game of baseball, which has over
+    100 rules. Here, we distill the sport to the basic knowledge one needs to know
+    how to effectively attack the data science problem.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'The goal of a baseball game is to score more runs (points) than the other team.
+    Each team has 9 batters that have an opportunity to hit a ball with a bat in a
+    predetermined order. After the 9th batter has had their turn, the first batter
+    bats again, then the second, and so on. Each time a batter has an opportunity
+    to bat, we call it a plate appearance (PA). At each PA, the other team’s *pitcher*
+    throws the ball and the batter tries to hit it. The PA ends with an binary outcome:
+    the batter either makes an *out* (failure) and returns to the bench or the batter
+    doesn’t (success) and can run around the bases, and potentially score a run (reach
+    all 4 bases). Each team gets nine tries, referred to as *innings*, to score runs
+    and each inning ends after three outs (three failures).'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Here is a video showing a success: [https://www.youtube.com/watch?v=HL-XjMCPfio](https://www.youtube.com/watch?v=HL-XjMCPfio).
+    And here is one showing a failure: [https://www.youtube.com/watch?v=NeloljCx-1g](https://www.youtube.com/watch?v=NeloljCx-1g).
+    In these videos, we see how luck is involved in the process. When at bat, the
+    batter wants to hit the ball hard. If the batter hits it hard enough, it is a
+    HR, the best possible outcome as the batter gets at least one automatic run. But
+    sometimes, due to chance, the batter hits the ball very hard and a defender catches
+    it, resulting in an out. In contrast, sometimes the batter hits the ball softly,
+    but it lands just in the right place. The fact that there is chance involved hints
+    at why probability models will be involved.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Now there are several ways to succeed. Understanding this distinction will be
+    important for our analysis. When the batter hits the ball, the batter wants to
+    pass as many *bases* as possible. There are four bases with the fourth one called
+    *home plate*. Home plate is where batters start by trying to hit, so the bases
+    form a cycle.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![](../Images/8dc4d698e3eaf44748b912a889261cb0.png) (Courtesy of Cburnett[^(64)](#fn64).
+    CC BY-SA 3.0 license[^(65)](#fn65).)'
+  prefs: []
+  type: TYPE_IMG
+- en: A batter who *goes around the bases* and arrives home, scores a run.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'We are simplifying a bit, but there are five ways a batter can succeed, that
+    is, not make an out:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Bases on balls (BB) - the pitcher fails to throw the ball through a predefined
+    area considered to be hittable (the strikezone), so the batter is permitted to
+    go to first base.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Single - Batter hits the ball and gets to first base.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Double (2B) - Batter hits the ball and gets to second base.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Triple (3B) - Batter hits the ball and gets to third base.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Home Run (HR) - Batter hits the ball and goes all the way home and scores a
+    run.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 'Here is an example of a HR: [https://www.youtube.com/watch?v=xYxSZJ9GZ-w](https://www.youtube.com/watch?v=xYxSZJ9GZ-w).
+    If a batter gets to a base, the batter still has a chance of getting home and
+    scoring a run if the next batter hits successfully. While the batter is *on base*,
+    the batter can also try to steal a base (SB). If a batter runs fast enough, the
+    batter can try to go from one base to the next without the other team tagging
+    the runner. [Here] is an example of a stolen base: [https://www.youtube.com/watch?v=JSE5kfxkzfk](https://www.youtube.com/watch?v=JSE5kfxkzfk).'
+  prefs: []
+  type: TYPE_NORMAL
+- en: All these events are kept track of during the season and are available to us
+    through the **Lahman** package. Now we will start discussing how data analysis
+    can help us decide how to use these statistics to evaluate players.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 18.1.3 No awards for BB
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: Historically, the *batting average* has been considered the most important offensive
+    statistic. To define this average, we define a *hit* (H) and an *at bat* (AB).
+    Singles, doubles, triples, and home runs are hits. The fifth way to be successful,
+    BB, is not a hit. An AB is the number of times you either get a hit or make an
+    out; BBs are excluded. The batting average is simply H/AB and is considered the
+    main measure of a success rate. Today this success rate ranges from 20% to 38%.
+    We refer to the batting average in thousands so, for example, if your success
+    rate is 28%, we call it *batting 280*.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![](../Images/f6f7fedb47a8f4aa3fe27163b5bc5bb3.png) (Picture courtesy of Keith
+    Allison[^(66)](#fn66). CC BY-SA 2.0 license[^(67)](#fn67).)'
+  prefs: []
+  type: TYPE_IMG
+- en: One of Bill James’ first important insights is that the batting average ignores
+    BB, but a BB is a success. He proposed we use the *on base percentage* (OBP) instead
+    of batting average. He defined OBP as (H+BB)/(AB+BB) which is simply the proportion
+    of plate appearances that don’t result in an out, a very intuitive measure. He
+    noted that a player that gets many more BB than the average player might not be
+    recognized if the batter does not excel in batting average. But is this player
+    not helping produce runs? No award is given to the player with the most BB. However,
+    bad habits are hard to break and baseball did not immediately adopt OBP as an
+    important statistic. In contrast, total stolen bases were considered important
+    and an award[^(68)](#fn68) given to the player with the most. But players with
+    high totals of SB also made more outs as they did not always succeed. Does a player
+    with high SB total help produce runs? Can we use data science to determine if
+    it’s better to pay for players with high BB or SB?
+  prefs: []
+  type: TYPE_NORMAL
+- en: 18.1.4 Base on balls or stolen bases?
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: One of the challenges in this analysis is that it is not obvious how to determine
+    if a player produces runs because so much depends on his teammates. We do keep
+    track of the number of runs scored by a player. However, remember that if a player
+    X bats right before someone who hits many HRs, batter X will score many runs.
+    But these runs don’t necessarily happen if we hire player X but not his HR hitting
+    teammate. However, we can examine team-level statistics. How do teams with many
+    SB compare to teams with few? How about BB? We have data! Let’s examine some.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Let’s start with an obvious one: HRs. Do teams that hit more home runs score
+    more runs? We examine data from 1962, the first year all teams played 162 games
+    (like today) instead of 154, to 2001, the year before the year for which we will
+    construct a team. The visualization of choice when exploring the relationship
+    between two variables, such as HRs and wins, is a scatterplot:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs: []
+  type: TYPE_PRE
+- en: '![](../Images/31ab46a45fa55554e57e6874dfe053e1.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: 'The plot shows a strong association: teams with more HRs tend to score more
+    runs. Now let’s examine the relationship between stolen bases and runs:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE1]'
+  prefs: []
+  type: TYPE_PRE
+- en: '![](../Images/88bf204546e5815908967b8a9ecf0394.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: 'Here the relationship is not as clear. Finally, let’s examine the relationship
+    between BB and runs:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE2]'
+  prefs: []
+  type: TYPE_PRE
+- en: '![](../Images/fc78b3e7291dc2ae2ad95a13c3fc32ac.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: Here again we see a clear association. But does this mean that increasing a
+    team’s BBs **causes** an increase in runs? One of the most important lessons you
+    learn in this book is that **association is not causation.**
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'In fact, it looks like BBs and HRs are also associated:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE3]'
+  prefs: []
+  type: TYPE_PRE
+- en: '![](../Images/da070b5ec298c7756e8282075c8d248e.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: We know that HRs cause runs because, as the name “home run” implies, when a
+    player hits a HR they are guaranteed at least one run. Could it be that HRs also
+    cause BB and this makes it appear as if BB cause runs? When this happens we say
+    there is *confounding*, an important concept we will learn more about throughout
+    this chapter.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Linear regression will help us parse all this out and quantify the associations.
+    This will then help us determine what players to recruit. Specifically, we will
+    try to predict things like how many more runs will a team score if we increase
+    the number of BBs, but keep the HRs fixed? Regression will help us answer questions
+    like this one.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 18.1.5 Regression applied to baseball statistics
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: Can we use regression with these data? First, notice that the HR and Run data
+    appear to be bivariate normal. We save the plot into the object `p` as we will
+    use it again later.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE4]'
+  prefs: []
+  type: TYPE_PRE
+- en: '![](../Images/caeff824c1417a376deb31d52e9c9c34.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: 'The qq-plots confirm that the normal approximation is useful here:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE5]'
+  prefs: []
+  type: TYPE_PRE
+- en: '![](../Images/e0f151f96c90be8b48bcfb10e564ecd6.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: 'Now we are ready to use linear regression to predict the number of runs a team
+    will score if we know how many home runs the team hits. All we need to do is compute
+    the five summary statistics:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE6]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'and use the formulas given above to create the regression lines:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE7]'
+  prefs: []
+  type: TYPE_PRE
+- en: '![](../Images/50887b189442ad076514663ca32288a5.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: 'Soon we will learn R functions, such as `lm`, that make fitting regression
+    lines much easier. Another example is the **ggplot2** function `geom_smooth` which
+    computes and adds a regression line to plot along with confidence intervals, which
+    we also learn about later. We use the argument `method = "lm"` which stands for
+    *linear model*, the title of an upcoming section. So we can simplify the code
+    above like this:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE8]'
+  prefs: []
+  type: TYPE_PRE
+- en: '![](../Images/24658d1f31e11613af48975493d29975.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: In the example above, the slope is 1.859\. So this tells us that teams that
+    hit 1 more HR per game than the average team, score 1.859 more runs per game than
+    the average team. Given that the most common final score is a difference of a
+    run, this can certainly lead to a large increase in wins. Not surprisingly, HR
+    hitters are very expensive. Because we are working on a budget, we will need to
+    find some other way to increase wins. So in the next section we move our attention
+    to BB.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 18.2 Confounding
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'Previously, we noted a strong relationship between Runs and BB. If we find
+    the regression line for predicting runs from bases on balls, we a get slope of:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE9]'
+  prefs: []
+  type: TYPE_PRE
+- en: So does this mean that if we go and hire low salary players with many BB, and
+    who therefore increase the number of walks per game by 2, our team will score
+    1.5 more runs per game?
+  prefs: []
+  type: TYPE_NORMAL
+- en: We are again reminded that association is not causation. The data does provide
+    strong evidence that a team with two more BB per game than the average team, scores
+    1.5 runs per game. But this does not mean that BB are the cause.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Note that if we compute the regression line slope for singles we get:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE10]'
+  prefs: []
+  type: TYPE_PRE
+- en: which is a lower value than what we obtain for BB.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Also, notice that a single gets you to first base just like a BB. Those that
+    know about baseball will tell you that with a single, runners on base have a better
+    chance of scoring than with a BB. So how can BB be more predictive of runs? The
+    reason this happen is because of confounding. Here we show the correlation between
+    HR, BB, and singles:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE11]'
+  prefs: []
+  type: TYPE_PRE
+- en: It turns out that pitchers, afraid of HRs, will sometimes avoid throwing strikes
+    to HR hitters. As a result, HR hitters tend to have more BBs and a team with many
+    HRs will also have more BBs. Although it may appear that BBs cause runs, it is
+    actually the HRs that cause most of these runs. We say that BBs are *confounded*
+    with HRs. Nonetheless, could it be that BBs still help? To find out, we somehow
+    have to adjust for the HR effect. Regression can help with this as well.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 18.2.1 Understanding confounding through stratification
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: 'A first approach is to keep HRs fixed at a certain value and then examine the
+    relationship between BB and runs. As we did when we stratified fathers by rounding
+    to the closest inch, here we can stratify HR per game to the closest ten. We filter
+    out the strata with few points to avoid highly variable estimates:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE12]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'and then make a scatterplot for each strata:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE13]'
+  prefs: []
+  type: TYPE_PRE
+- en: '![](../Images/19233ccb5e66a4dce055aa7029b1faf4.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: 'Remember that the regression slope for predicting runs with BB was 0.7\. Once
+    we stratify by HR, these slopes are substantially reduced:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE14]'
+  prefs: []
+  type: TYPE_PRE
+- en: The slopes are reduced, but they are not 0, which indicates that BBs are helpful
+    for producing runs, just not as much as previously thought. In fact, the values
+    above are closer to the slope we obtained from singles, 0.45, which is more consistent
+    with our intuition. Since both singles and BB get us to first base, they should
+    have about the same predictive power.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Although our understanding of the application tells us that HR cause BB but
+    not the other way around, we can still check if stratifying by BB makes the effect
+    of BB go down. To do this, we use the same code except that we swap HR and BBs
+    to get this plot:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE15]'
+  prefs: []
+  type: TYPE_PRE
+- en: '![](../Images/375bf78afde6244e68912da0302461ad.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: 'In this case, the slopes do not change much from the original:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE16]'
+  prefs: []
+  type: TYPE_PRE
+- en: They are reduced a bit, which is consistent with the fact that BB do in fact
+    cause some runs.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE17]'
+  prefs: []
+  type: TYPE_PRE
+- en: Regardless, it seems that if we stratify by HR, we have bivariate distributions
+    for runs versus BB. Similarly, if we stratify by BB, we have approximate bivariate
+    normal distributions for HR versus runs.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 18.2.2 multivariable regression
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: 'It is somewhat complex to be computing regression lines for each strata. We
+    are essentially fitting models like this:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[ \mbox{E}[R \mid BB = x_1, \, HR = x_2] = \beta_0 + \beta_1(x_2) x_1 + \beta_2(x_1)
+    x_2 \]
+  prefs: []
+  type: TYPE_NORMAL
+- en: with the slopes for \(x_1\) changing for different values of \(x_2\) and vice
+    versa. But is there an easier approach?
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'If we take random variability into account, the slopes in the strata don’t
+    appear to change much. If these slopes are in fact the same, this implies that
+    \(\beta_1(x_2)\) and \(\beta_2(x_1)\) are constants. This in turn implies that
+    the expectation of runs conditioned on HR and BB can be written like this:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[ \mbox{E}[R \mid BB = x_1, \, HR = x_2] = \beta_0 + \beta_1 x_1 + \beta_2
+    x_2 \]
+  prefs: []
+  type: TYPE_NORMAL
+- en: This model suggests that if the number of HR is fixed at \(x_2\), we observe
+    a linear relationship between runs and BB with an intercept of \(\beta_0 + \beta_2
+    x_2\). Our exploratory data analysis suggested this. The model also suggests that
+    as the number of HR grows, the intercept growth is linear as well and determined
+    by \(\beta_1 x_1\).
+  prefs: []
+  type: TYPE_NORMAL
+- en: In this analysis, referred to as *multivariable regression*, you will often
+    hear people say that the BB slope \(\beta_1\) is *adjusted* for the HR effect.
+    If the model is correct then confounding has been accounted for. But how do we
+    estimate \(\beta_1\) and \(\beta_2\) from the data? For this, we learn about linear
+    models and least squares estimates.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 18.3 Least squares estimates
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: We have described how if data is bivariate normal then the conditional expectations
+    follow the regression line. The fact that the conditional expectation is a line
+    is not an extra assumption but rather a derived result. However, in practice it
+    is common to explicitly write down a model that describes the relationship between
+    two or more variables using a *linear model*.
+  prefs: []
+  type: TYPE_NORMAL
+- en: We note that “linear” here does not refer to lines exclusively, but rather to
+    the fact that the conditional expectation is a linear combination of known quantities.
+    In mathematics, when we multiply each variable by a constant and then add them
+    together, we say we formed a linear combination of the variables. For example,
+    \(3x - 4y + 5z\) is a linear combination of \(x\), \(y\), and \(z\). We can also
+    add a constant so \(2 + 3x - 4y + 5z\) is also linear combination of \(x\), \(y\),
+    and \(z\).
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'So \(\beta_0 + \beta_1 x_1 + \beta_2 x_2\), is a linear combination of \(x_1\)
+    and \(x_2\). The simplest linear model is a constant \(\beta_0\); the second simplest
+    is a line \(\beta_0 + \beta_1 x\). If we were to specify a linear model for Galton’s
+    data, we would denote the \(N\) observed father heights with \(x_1, \dots, x_n\),
+    then we model the \(N\) son heights we are trying to predict with:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[ Y_i = \beta_0 + \beta_1 x_i + \varepsilon_i, \, i=1,\dots,N. \]
+  prefs: []
+  type: TYPE_NORMAL
+- en: Here \(x_i\) is the father’s height, which is fixed (not random) due to the
+    conditioning, and \(Y_i\) is the random son’s height that we want to predict.
+    We further assume that \(\varepsilon_i\) are independent from each other, have
+    expected value 0 and the standard deviation, call it \(\sigma\), does not depend
+    on \(i\).
+  prefs: []
+  type: TYPE_NORMAL
+- en: In the above model, we know the \(x_i\), but to have a useful model for prediction,
+    we need \(\beta_0\) and \(\beta_1\). We estimate these from the data. Once we
+    do this, we can predict son’s heights for any father’s height \(x\). We show how
+    to do this in the next section.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Note that if we further assume that the \(\varepsilon\) is normally distributed,
+    then this model is exactly the same one we derived earlier by assuming bivariate
+    normal data. A somewhat nuanced difference is that in the first approach we assumed
+    the data was bivariate normal and that the linear model was derived, not assumed.
+    In practice, linear models are just assumed without necessarily assuming normality:
+    the distribution of the \(\varepsilon\)s is not specified. Nevertheless, if your
+    data is bivariate normal, the above linear model holds. If your data is not bivariate
+    normal, then you will need to have other ways of justifying the model.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 18.3.1 Interpreting linear models
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: 'One reason linear models are popular is that they are interpretable. In the
+    case of Galton’s data, we can interpret the data like this: due to inherited genes,
+    the son’s height prediction grows by \(\beta_1\) for each inch we increase the
+    father’s height \(x\). Because not all sons with fathers of height \(x\) are of
+    equal height, we need the term \(\varepsilon\), which explains the remaining variability.
+    This remaining variability includes the mother’s genetic effect, environmental
+    factors, and other biological randomness.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Given how we wrote the model above, the intercept \(\beta_0\) is not very interpretable
+    as it is the predicted height of a son with a father with no height. Due to regression
+    to the mean, the prediction will usually be a bit larger than 0\. To make the
+    slope parameter more interpretable, we can rewrite the model slightly as:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[ Y_i = \beta_0 + \beta_1 (x_i - \bar{x}) + \varepsilon_i, \, i=1,\dots,N \]
+  prefs: []
+  type: TYPE_NORMAL
+- en: with \(\bar{x} = 1/N \sum_{i=1}^N x_i\) the average of the \(x\). In this case
+    \(\beta_0\) represents the height when \(x_i = \bar{x}\), which is the height
+    of the son of an average father.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 18.3.2 Least Squares Estimates (LSE)
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: 'For linear models to be useful, we have to estimate the unknown \(\beta\)s.
+    The standard approach in science is to find the values that minimize the distance
+    of the fitted model to the data. The following is called the least squares (LS)
+    equation and we will see it often in this chapter. For Galton’s data, we would
+    write:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[ RSS = \sum_{i=1}^n \left\{ y_i - \left(\beta_0 + \beta_1 x_i \right)\right\}^2
+    \]
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'This quantity is called the residual sum of squares (RSS). Once we find the
+    values that minimize the RSS, we will call the values the least squares estimates
+    (LSE) and denote them with \(\hat{\beta}_0\) and \(\hat{\beta}_1\). Let’s demonstrate
+    this with the previously defined dataset:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE18]'
+  prefs: []
+  type: TYPE_PRE
+- en: Let’s write a function that computes the RSS for any pair of values \(\beta_0\)
+    and \(\beta_1\).
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE19]'
+  prefs: []
+  type: TYPE_PRE
+- en: So for any pair of values, we get an RSS. Here is a plot of the RSS as a function
+    of \(\beta_1\) when we keep the \(\beta_0\) fixed at 25.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE20]'
+  prefs: []
+  type: TYPE_PRE
+- en: '![](../Images/22b814caacab79e2d6bae93299ce8aa9.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: We can see a clear minimum for \(\beta_1\) at around 0.65\. However, this minimum
+    for \(\beta_1\) is for when \(\beta_0 = 25\), a value we arbitrarily picked. We
+    don’t know if (25, 0.65) is the pair that minimizes the equation across all possible
+    pairs.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Trial and error is not going to work in this case. We could search for a minimum
+    within a fine grid of \(\beta_0\) and \(\beta_1\) values, but this is unnecessarily
+    time-consuming since we can use calculus: take the partial derivatives, set them
+    to 0 and solve for \(\beta_1\) and \(\beta_2\). Of course, if we have many parameters,
+    these equations can get rather complex. But there are functions in R that do these
+    calculations for us. We will learn these next. To learn the mathematics behind
+    this, you can consult a book on linear models.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 18.3.3 The `lm` function
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: 'In R, we can obtain the least squares estimates using the `lm` function. To
+    fit the model:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[ Y_i = \beta_0 + \beta_1 x_i + \varepsilon_i \]
+  prefs: []
+  type: TYPE_NORMAL
+- en: with \(Y_i\) the son’s height and \(x_i\) the father’s height, we can use this
+    code to obtain the least squares estimates.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE21]'
+  prefs: []
+  type: TYPE_PRE
+- en: The most common way we use `lm` is by using the character `~` to let `lm` know
+    which is the variable we are predicting (left of `~`) and which we are using to
+    predict (right of `~`). The intercept is added automatically to the model that
+    will be fit.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'The object `fit` includes more information about the fit. We can use the function
+    `summary` to extract more of this information (not shown):'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE22]'
+  prefs: []
+  type: TYPE_PRE
+- en: To understand some of the information included in this summary we need to remember
+    that the LSE are random variables. Mathematical statistics gives us some ideas
+    of the distribution of these random variables
+  prefs: []
+  type: TYPE_NORMAL
+- en: 18.3.4 LSE are random variables
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: 'The LSE is derived from the data \(y_1,\dots,y_N\), which are a realization
+    of random variables \(Y_1, \dots, Y_N\). This implies that our estimates are random
+    variables. To see this, we can run a Monte Carlo simulation in which we assume
+    the son and father height data defines a population, take a random sample of size
+    \(N=50\), and compute the regression slope coefficient for each one:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE23]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'We can see the variability of the estimates by plotting their distributions:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![](../Images/c3481ab42cee1f594313601629ac1e49.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: 'The reason these look normal is because the central limit theorem applies here
+    as well: for large enough \(N\), the least squares estimates will be approximately
+    normal with expected value \(\beta_0\) and \(\beta_1\), respectively. The standard
+    errors are a bit complicated to compute, but mathematical theory does allow us
+    to compute them and they are included in the summary provided by the `lm` function.
+    Here it is for one of our simulated data sets:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE24]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'You can see that the standard errors estimates reported by the `summary` are
+    close to the standard errors from the simulation:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE25]'
+  prefs: []
+  type: TYPE_PRE
+- en: The `summary` function also reports t-statistics (`t value`) and p-values (`Pr(>|t|)`).
+    The t-statistic is not actually based on the central limit theorem but rather
+    on the assumption that the \(\varepsilon\)s follow a normal distribution. Under
+    this assumption, mathematical theory tells us that the LSE divided by their standard
+    error, \(\hat{\beta}_0 / \hat{\mbox{SE}}(\hat{\beta}_0 )\) and \(\hat{\beta}_1
+    / \hat{\mbox{SE}}(\hat{\beta}_1 )\), follow a t-distribution with \(N-p\) degrees
+    of freedom, with \(p\) the number of parameters in our model. In the case of height
+    \(p=2\), the two p-values are testing the null hypothesis that \(\beta_0 = 0\)
+    and \(\beta_1=0\), respectively.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Remember that, as we described in Section [16.10](models.html#t-dist) for large
+    enough \(N\), the CLT works and the t-distribution becomes almost the same as
+    the normal distribution. Also, notice that we can construct confidence intervals,
+    but we will soon learn about **broom**, an add-on package that makes this easy.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Although we do not show examples in this book, hypothesis testing with regression
+    models is commonly used in epidemiology and economics to make statements such
+    as “the effect of A on B was statistically significant after adjusting for X,
+    Y, and Z”. However, several assumptions have to hold for these statements to be
+    true.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 18.3.5 Predicted values are random variables
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: 'Once we fit our model, we can obtain prediction of \(Y\) by plugging in the
+    estimates into the regression model. For example, if the father’s height is \(x\),
+    then our prediction \(\hat{Y}\) for the son’s height will be:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[\hat{Y} = \hat{\beta}_0 + \hat{\beta}_1 x\]
+  prefs: []
+  type: TYPE_NORMAL
+- en: When we plot \(\hat{Y}\) versus \(x\), we see the regression line.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Keep in mind that the prediction \(\hat{Y}\) is also a random variable and
+    mathematical theory tells us what the standard errors are. If we assume the errors
+    are normal, or have a large enough sample size, we can use theory to construct
+    confidence intervals as well. In fact, the **ggplot2** layer `geom_smooth(method
+    = "lm")` that we previously used plots \(\hat{Y}\) and surrounds it by confidence
+    intervals:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE26]'
+  prefs: []
+  type: TYPE_PRE
+- en: '![](../Images/86d75725da1a78a1377c3c10c2ad06bb.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: 'The R function `predict` takes an `lm` object as input and returns the prediction.
+    If requested, the standard errors and other information from which we can construct
+    confidence intervals is provided:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE27]'
+  prefs: []
+  type: TYPE_PRE
+- en: 18.4 Exercises
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: We have shown how BB and singles have similar predictive power for scoring runs.
+    Another way to compare the usefulness of these baseball metrics is by assessing
+    how stable they are across the years. Since we have to pick players based on their
+    previous performances, we will prefer metrics that are more stable. In these exercises,
+    we will compare the stability of singles and BBs.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 1\. Before we get started, we want to generate two tables. One for 2002 and
+    another for the average of 1999-2001 seasons. We want to define per plate appearance
+    statistics. Here is how we create the 2017 table. Keeping only players with more
+    than 100 plate appearances.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE28]'
+  prefs: []
+  type: TYPE_PRE
+- en: Now compute a similar table but with rates computed over 1999-2001.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '2\. You can use the `inner_join` function to combine the 2001 data and averages
+    in the same table:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE29]'
+  prefs: []
+  type: TYPE_PRE
+- en: Compute the correlation between 2002 and the previous seasons for singles and
+    BB.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 3\. Note that the correlation is higher for BB. To quickly get an idea of the
+    uncertainty associated with this correlation estimate, we will fit a linear model
+    and compute confidence intervals for the slope coefficient. However, first make
+    scatterplots to confirm that fitting a linear model is appropriate.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 4\. Now fit a linear model for each metric and use the `confint` function to
+    compare the estimates.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 18.5 Linear regression in the tidyverse
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'To see how we use the `lm` function in a more complex analysis, let’s go back
+    to the baseball example. In a previous example, we estimated regression lines
+    to predict runs for BB in different HR strata. We first constructed a data frame
+    similar to this:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE30]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Since we didn’t know the `lm` function, to compute the regression line in each
+    strata, we used the formula directly like this:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE31]'
+  prefs: []
+  type: TYPE_PRE
+- en: We argued that the slopes are similar and that the differences were perhaps
+    due to random variation. To provide a more rigorous defense of the slopes being
+    the same, which led to our multivariable model, we could compute confidence intervals
+    for each slope. We have not learned the formula for this, but the `lm` function
+    provides enough information to construct them.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'First, note that if we try to use the `lm` function to get the estimated slope
+    like this:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE32]'
+  prefs: []
+  type: TYPE_PRE
+- en: we don’t get the result we want. The `lm` function ignores the `group_by`. This
+    is expected because `lm` is not part of the **tidyverse** and does not know how
+    to handle the outcome of a grouped tibble.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'The **tidyverse** functions know how to interpret grouped tibbles. Furthermore,
+    to facilitate stringing commands through the pipe `|>`, **tidyverse** functions
+    consistently return data frames, since this assures that the output of a function
+    is accepted as the input of another. But most R functions do not recognize grouped
+    tibbles nor do they return data frames. The `lm` function is an example. However,
+    we can write a function that uses `lm` to compute and return the wanted summaries
+    in a data frame and then use the `summarize` function:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE33]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Here is an example in which we return both estimated parameters:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE34]'
+  prefs: []
+  type: TYPE_PRE
+- en: If you think this is all a bit too complicated, you are not alone. To simplify
+    things, we introduce the **broom** package which was designed to facilitate the
+    use of model fitting functions, such as `lm`, with the **tidyverse**.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 18.5.1 The broom package
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: Our original task was to provide an estimate and confidence interval for the
+    slope estimates of each strata. The **broom** package will make this quite easy.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'The **broom** package has three main functions, all of which extract information
+    from the object returned by `lm` and return it in a **tidyverse** friendly data
+    frame. These functions are `tidy`, `glance`, and `augment`. The `tidy` function
+    returns estimates and related information as a data frame:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE35]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'We can add other important summaries, such as confidence intervals:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE36]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Because the outcome is a data frame, we can immediately use it with `summarize`
+    to string together the commands that produce the table we are after. Because a
+    data frame is returned, we can filter and select the rows and columns we want,
+    which facilitates working with **ggplot2**:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE37]'
+  prefs: []
+  type: TYPE_PRE
+- en: '![](../Images/c1ed2665538e30e8cba6fce736305a94.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: Now we return to discussing our original task of determining if slopes changed.
+    The plot we just made, using `summarize` and `tidy`, shows that the confidence
+    intervals overlap, which provides a nice visual confirmation that our assumption
+    that the slope does not change is safe.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'The other functions provided by **broom**, `glance`, and `augment`, relate
+    to model-specific and observation-specific outcomes, respectively. Here, we can
+    see the model fit summaries `glance` returns:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE38]'
+  prefs: []
+  type: TYPE_PRE
+- en: You can learn more about these summaries in any regression text book.
+  prefs: []
+  type: TYPE_NORMAL
+- en: We will see an example of `augment` in the next section.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 18.6 Exercises
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '1\. In a previous section, we computed the correlation between mothers and
+    daughters, mothers and sons, fathers and daughters, and fathers and sons, and
+    noticed that the highest correlation is between fathers and sons and the lowest
+    is between mothers and sons. We can compute these correlations using:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE39]'
+  prefs: []
+  type: TYPE_PRE
+- en: Are these differences statistically significant? To answer this, we will compute
+    the slopes of the regression line along with their standard errors. Start by using
+    `lm` and the **broom** package to compute the slopes LSE and the standard errors.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 2\. Repeat the exercise above, but compute a confidence interval as well.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 3\. Plot the confidence intervals and notice that they overlap, which implies
+    that the data is consistent with the inheritance of height being independent of
+    sex.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '4\. Because we are selecting children at random, we can actually do something
+    like a permutation test here. Repeat the computation of correlations 100 times
+    taking a different sample each time. Hint: use similar code to what we used with
+    simulations.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 5\. Fit a linear regression model to obtain the effects of BB and HR on Runs
+    (at the team level) in 1971\. Use the `tidy` function in the **broom** package
+    to obtain the results in a data frame.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 6\. Now let’s repeat the above for each year since 1962 and make a plot. Use
+    `summarize` and the **broom** package to fit this model for every year since 1962.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 7\. Use the results of the previous exercise to plot the estimated effects of
+    BB on runs.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '8\. **Advanced**. Write a function that takes R, HR, and BB as arguments and
+    fits two linear models: `R ~ BB` and `R~BB+HR`. Then use the `summary` function
+    to obtain the `BB` for both models for each year since 1962\. Then plot these
+    against each other as a function of time.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '18.7 Case study: Moneyball (continued)'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'In trying to answer how well BBs predict runs, data exploration led us to a
+    model:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[ \mbox{E}[R \mid BB = x_1, HR = x_2] = \beta_0 + \beta_1 x_1 + \beta_2 x_2
+    \]
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Here, the data is approximately normal and conditional distributions were also
+    normal. Thus, we are justified in using a linear model:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[ Y_i = \beta_0 + \beta_1 x_{i,1} + \beta_2 x_{i,2} + \varepsilon_i \]
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'with \(Y_i\) runs per game for team \(i\), \(x_{i,1}\) walks per game, and
+    \(x_{i,2}\). To use `lm` here, we need to let the function know we have two predictor
+    variables. So we use the `+` symbol as follows:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE40]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'We can use `tidy` to see a nice summary:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE41]'
+  prefs: []
+  type: TYPE_PRE
+- en: When we fit the model with only one variable, the estimated slopes were 0.743
+    and 1.859 for BB and HR, respectively. Note that when fitting the multivariable
+    model both go down, with the BB effect decreasing much more.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Now we want to construct a metric to pick players, we need to consider singles,
+    doubles, and triples as well. Can we build a model that predicts runs based on
+    all these outcomes?
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'We now are going to take somewhat of a “leap of faith” and assume that these
+    five variables are jointly normal. This means that if we pick any one of them,
+    and hold the other four fixed, the relationship with the outcome is linear and
+    the slope does not depend on the four values held constant. If this is true, then
+    a linear model for our data is:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[ Y_i = \beta_0 + \beta_1 x_{i,1} + \beta_2 x_{i,2} + \beta_3 x_{i,3}+ \beta_4
+    x_{i,4} + \beta_5 x_{i,5} + \varepsilon_i \]
+  prefs: []
+  type: TYPE_NORMAL
+- en: with \(x_{i,1}, x_{i,2}, x_{i,3}, x_{i,4}, x_{i,5}\) representing BB, singles,
+    doubles, triples, and HR respectively.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Using `lm`, we can quickly find the LSE for the parameters using:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE42]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Note we fit the model to data up until 2001, the year before we will construct
+    our team. We can see the coefficients using `tidy`:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE43]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'To see how well our metric actually predicts runs, we can predict the number
+    of runs for each team in 2002 using the function `predict`, then make a plot:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE44]'
+  prefs: []
+  type: TYPE_PRE
+- en: '![](../Images/85fa3561507ae58a9e901bf33fc007ee.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: Our model does quite a good job as demonstrated by the fact that points from
+    the observed versus predicted plot fall close to the identity line.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'So instead of using batting average, or just number of HR, as a measure of
+    picking players, we can use our fitted model to form a metric that relates more
+    directly to run production. Specifically, to define a metric for player A, we
+    imagine a team made up of players just like player A and use our fitted regression
+    model to predict how many runs this team would produce. The formula would look
+    like this: -2.758 + 0.37 \(\times\) BB + 0.517 \(\times\) singles + 0.775 \(\times\)
+    doubles + 1.239 \(\times\) triples + 1.442 \(\times\) HR.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: To define a player-specific metric, we have a bit more work to do. A challenge
+    here is that we derived the metric for teams, based on team-level summary statistics.
+    For example, the HR value that is entered into the equation is HR per game for
+    the entire team. If we compute the HR per game for a player, it will be much lower
+    since the total is accumulated by 9 batters. Furthermore, if a player only plays
+    part of the game and gets fewer opportunities than average, it is still considered
+    a game played. For players, a rate that takes into account opportunities is the
+    per-plate-appearance rate.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'To make the per-game team rate comparable to the per-plate-appearance player
+    rate, we compute the average number of team plate appearances per game:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE45]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'We compute the per-plate-appearance rates for players available in 2002 on
+    data from 1997-2001\. To avoid small sample artifacts, we filter players with
+    less than 200 plate appearances per year. Here is the entire calculation in one
+    line:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE46]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'The player-specific predicted runs computed here can be interpreted as the
+    number of runs we predict a team will score if all batters are exactly like that
+    player. The distribution shows that there is wide variability across players:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE47]'
+  prefs: []
+  type: TYPE_PRE
+- en: '![](../Images/e2b5822059485892f862fdaf6468136d.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: 18.7.1 Adding salary and position information
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: To actually build the team, we will need to know their salaries as well as their
+    defensive position. For this, we use the `righ_join` function to combine the `players`
+    data frame we just created with the player information data frame included in
+    some of the other Lahman data tables.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Start by adding the 2002 salary of each player:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE48]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Next, we add their defensive position. This is a somewhat complicated task
+    because players play more than one position each year. The **Lahman** package
+    table `Appearances` tells how many games each player played in each position,
+    so we can pick the position that was most played using `which.max` on each row.
+    We use `apply` to do this. However, because some players are traded, they appear
+    more than once on the table, so we first sum their appearances across teams. Here,
+    we pick the one position the player most played using the `top_n` function. To
+    make sure we only pick one position, in the case of ties, we pick the first row
+    of the resulting data frame. We also remove the `OF` position which stands for
+    outfielder, a generalization of three positions: left field (LF), center field
+    (CF), and right field (RF). We also remove pitchers since they don’t bat in the
+    league in which the A’s play.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE49]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Finally, we add their first and last name:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE50]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'If you are a baseball fan, you will recognize the top 10 players:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE51]'
+  prefs: []
+  type: TYPE_PRE
+- en: 18.7.2 Picking nine players
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: 'On average, players with a higher metric have higher salaries:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE52]'
+  prefs: []
+  type: TYPE_PRE
+- en: '![](../Images/e89ca6bd64acb65abccd65c4d334a143.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: 'We can search for good deals by looking at players who produce many more runs
+    than others with similar salaries. We can use this table to decide what players
+    to pick and keep our total salary below the 40 million dollars Billy Beane had
+    to work with. This can be done using what computer scientists call linear programming.
+    This is not something we teach, but here are the position players selected with
+    this approach:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '| nameFirst | nameLast | POS | salary | R_hat |'
+  prefs: []
+  type: TYPE_TB
+- en: '| --- | --- | --- | --- | --- |'
+  prefs: []
+  type: TYPE_TB
+- en: '| Todd | Helton | 1B | 5000000 | 7.76 |'
+  prefs: []
+  type: TYPE_TB
+- en: '| Mike | Piazza | C | 10571429 | 7.34 |'
+  prefs: []
+  type: TYPE_TB
+- en: '| Edgar | Martinez | DH | 7086668 | 7.26 |'
+  prefs: []
+  type: TYPE_TB
+- en: '| Jim | Edmonds | CF | 7333333 | 6.55 |'
+  prefs: []
+  type: TYPE_TB
+- en: '| Jeff | Kent | 2B | 6000000 | 6.39 |'
+  prefs: []
+  type: TYPE_TB
+- en: '| Phil | Nevin | 3B | 2600000 | 6.16 |'
+  prefs: []
+  type: TYPE_TB
+- en: '| Matt | Stairs | RF | 500000 | 6.06 |'
+  prefs: []
+  type: TYPE_TB
+- en: '| Henry | Rodriguez | LF | 300000 | 5.94 |'
+  prefs: []
+  type: TYPE_TB
+- en: '| John | Valentin | SS | 550000 | 5.28 |'
+  prefs: []
+  type: TYPE_TB
+- en: We see that all these players have above average BB and most have above average
+    HR rates, while the same is not true for singles. Here is a table with statistics
+    standardized across players so that, for example, above average HR hitters have
+    values above 0.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '| nameLast | BB | singles | doubles | triples | HR | AVG | R_hat |'
+  prefs: []
+  type: TYPE_TB
+- en: '| --- | --- | --- | --- | --- | --- | --- | --- |'
+  prefs: []
+  type: TYPE_TB
+- en: '| Helton | 0.909 | -0.215 | 2.649 | -0.311 | 1.522 | 2.670 | 2.542 |'
+  prefs: []
+  type: TYPE_TB
+- en: '| Piazza | 0.328 | 0.423 | 0.204 | -1.418 | 1.825 | 2.199 | 2.093 |'
+  prefs: []
+  type: TYPE_TB
+- en: '| Martinez | 2.135 | -0.005 | 1.265 | -1.224 | 0.808 | 2.203 | 2.004 |'
+  prefs: []
+  type: TYPE_TB
+- en: '| Edmonds | 1.071 | -0.558 | 0.791 | -1.152 | 0.973 | 0.854 | 1.259 |'
+  prefs: []
+  type: TYPE_TB
+- en: '| Kent | 0.232 | -0.732 | 2.011 | 0.448 | 0.766 | 0.787 | 1.093 |'
+  prefs: []
+  type: TYPE_TB
+- en: '| Nevin | 0.307 | -0.905 | 0.479 | -1.191 | 1.193 | 0.105 | 0.850 |'
+  prefs: []
+  type: TYPE_TB
+- en: '| Stairs | 1.100 | -1.513 | -0.046 | -1.129 | 1.121 | -0.561 | 0.742 |'
+  prefs: []
+  type: TYPE_TB
+- en: '| Rodriguez | 0.201 | -1.596 | 0.332 | -0.782 | 1.320 | -0.672 | 0.613 |'
+  prefs: []
+  type: TYPE_TB
+- en: '| Valentin | 0.180 | -0.929 | 1.794 | -0.435 | -0.045 | -0.472 | -0.088 |'
+  prefs: []
+  type: TYPE_TB
+- en: 18.8 The regression fallacy
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'Wikipedia defines the *sophomore slump* as:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: A sophomore slump or sophomore jinx or sophomore jitters refers to an instance
+    in which a second, or sophomore, effort fails to live up to the standards of the
+    first effort. It is commonly used to refer to the apathy of students (second year
+    of high school, college or university), the performance of athletes (second season
+    of play), singers/bands (second album), television shows (second seasons) and
+    movies (sequels/prequels).
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: In Major League Baseball, the rookie of the year (ROY) award is given to the
+    first-year player who is judged to have performed the best. The *sophmore slump*
+    phrase is used to describe the observation that ROY award winners don’t do as
+    well during their second year. For example, this Fox Sports article[^(69)](#fn69)
+    asks “Will MLB’s tremendous rookie class of 2015 suffer a sophomore slump?”.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Does the data confirm the existence of a sophomore slump? Let’s take a look.
+    Examining the data for batting average, we see that this observation holds true
+    for the top performing ROYs:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '| nameFirst | nameLast | rookie_year | rookie | sophomore |'
+  prefs: []
+  type: TYPE_TB
+- en: '| --- | --- | --- | --- | --- |'
+  prefs: []
+  type: TYPE_TB
+- en: '| Willie | McCovey | 1959 | 0.354 | 0.238 |'
+  prefs: []
+  type: TYPE_TB
+- en: '| Ichiro | Suzuki | 2001 | 0.350 | 0.321 |'
+  prefs: []
+  type: TYPE_TB
+- en: '| Al | Bumbry | 1973 | 0.337 | 0.233 |'
+  prefs: []
+  type: TYPE_TB
+- en: '| Fred | Lynn | 1975 | 0.331 | 0.314 |'
+  prefs: []
+  type: TYPE_TB
+- en: '| Albert | Pujols | 2001 | 0.329 | 0.314 |'
+  prefs: []
+  type: TYPE_TB
+- en: In fact, the proportion of players that have a lower batting average their sophomore
+    year is 0.698.
+  prefs: []
+  type: TYPE_NORMAL
+- en: So is it “jitters” or “jinx”? To answer this question, let’s turn our attention
+    to all players that played the 2013 and 2014 seasons and batted more than 130
+    times (minimum to win Rookie of the Year).
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'The same pattern arises when we look at the top performers: batting averages
+    go down for most of the top performers.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '| nameFirst | nameLast | 2013 | 2014 |'
+  prefs: []
+  type: TYPE_TB
+- en: '| --- | --- | --- | --- |'
+  prefs: []
+  type: TYPE_TB
+- en: '| Miguel | Cabrera | 0.348 | 0.313 |'
+  prefs: []
+  type: TYPE_TB
+- en: '| Hanley | Ramirez | 0.345 | 0.283 |'
+  prefs: []
+  type: TYPE_TB
+- en: '| Michael | Cuddyer | 0.331 | 0.332 |'
+  prefs: []
+  type: TYPE_TB
+- en: '| Scooter | Gennett | 0.324 | 0.289 |'
+  prefs: []
+  type: TYPE_TB
+- en: '| Joe | Mauer | 0.324 | 0.277 |'
+  prefs: []
+  type: TYPE_TB
+- en: 'But these are not rookies! Also, look at what happens to the worst performers
+    of 2013:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '| nameFirst | nameLast | 2013 | 2014 |'
+  prefs: []
+  type: TYPE_TB
+- en: '| --- | --- | --- | --- |'
+  prefs: []
+  type: TYPE_TB
+- en: '| Danny | Espinosa | 0.158 | 0.219 |'
+  prefs: []
+  type: TYPE_TB
+- en: '| Dan | Uggla | 0.179 | 0.149 |'
+  prefs: []
+  type: TYPE_TB
+- en: '| Jeff | Mathis | 0.181 | 0.200 |'
+  prefs: []
+  type: TYPE_TB
+- en: '| B. J. | Upton | 0.184 | 0.208 |'
+  prefs: []
+  type: TYPE_TB
+- en: '| Adam | Rosales | 0.190 | 0.262 |'
+  prefs: []
+  type: TYPE_TB
+- en: 'Their batting averages mostly go up! Is this some sort of reverse sophomore
+    slump? It is not. There is no such thing as the sophomore slump. This is all explained
+    with a simple statistical fact: the correlation for performance in two separate
+    years is high, but not perfect:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![](../Images/2923bb3aec59160ec23ddae616a26592.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: 'The correlation is 0.46 and the data look very much like a bivariate normal
+    distribution, which means we predict a 2014 batting average \(Y\) for any given
+    player that had a 2013 batting average \(X\) with:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[ \frac{Y - .255}{.032} = 0.46 \left( \frac{X - .261}{.023}\right) \]
+  prefs: []
+  type: TYPE_NORMAL
+- en: Because the correlation is not perfect, regression tells us that, on average,
+    expect high performers from 2013 to do a bit worse in 2014\. It’s not a jinx;
+    it’s just due to chance. The ROY are selected from the top values of \(X\) so
+    it is expected that \(Y\) will regress to the mean.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 18.9 Measurement error models
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Up to now, all our linear regression examples have been applied to two or more
+    random variables. We assume the pairs are bivariate normal and use this to motivate
+    a linear model. This approach covers most real-life examples of linear regression.
+    The other major application comes from measurement errors models. In these applications,
+    it is common to have a non-random covariate, such as time, and randomness is introduced
+    from measurement error rather than sampling or natural variability.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'To understand these models, imagine you are Galileo in the 16th century trying
+    to describe the velocity of a falling object. An assistant climbs the Tower of
+    Pisa and drops a ball, while several other assistants record the position at different
+    times. Let’s simulate some data using the equations we know today and adding some
+    measurement error. The **dslabs** function `rfalling_object` generates these simulations:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE53]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'The assistants hand the data to Galileo and this is what he sees:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE54]'
+  prefs: []
+  type: TYPE_PRE
+- en: '![](../Images/eccb6f1cfb24ddd39bef21af604a8519.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: 'Galileo does not know the exact equation, but by looking at the plot above,
+    he deduces that the position should follow a parabola, which we can write like
+    this:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[ f(x) = \beta_0 + \beta_1 x + \beta_2 x^2\]
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'The data does not fall exactly on a parabola. Galileo knows this is due to
+    measurement error. His helpers make mistakes when measuring the distance. To account
+    for this, he models the data with:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[ Y_i = \beta_0 + \beta_1 x_i + \beta_2 x_i^2 + \varepsilon_i, i=1,\dots,n
+    \]
+  prefs: []
+  type: TYPE_NORMAL
+- en: with \(Y_i\) representing distance in meters, \(x_i\) representing time in seconds,
+    and \(\varepsilon\) accounting for measurement error. The measurement error is
+    assumed to be random, independent from each other, and having the same distribution
+    for each \(i\). We also assume that there is no bias, which means the expected
+    value \(\mbox{E}[\varepsilon] = 0\).
+  prefs: []
+  type: TYPE_NORMAL
+- en: Note that this is a linear model because it is a linear combination of known
+    quantities (\(x\) and \(x^2\) are known) and unknown parameters (the \(\beta\)s
+    are unknown parameters to Galileo). Unlike our previous examples, here \(x\) is
+    a fixed quantity; we are not conditioning.
+  prefs: []
+  type: TYPE_NORMAL
+- en: To pose a new physical theory and start making predictions about other falling
+    objects, Galileo needs actual numbers, rather than unknown parameters. Using LSE
+    seems like a reasonable approach. How do we find the LSE?
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'LSE calculations do not require the errors to be approximately normal. The
+    `lm` function will find the \(\beta\) s that will minimize the residual sum of
+    squares:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE55]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Let’s check if the estimated parabola fits the data. The **broom** function
+    `augment` lets us do this easily:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE56]'
+  prefs: []
+  type: TYPE_PRE
+- en: '![](../Images/f6b29d5c69bf1923a18c72314e2449ab.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: 'Thanks to my high school physics teacher, I know that the equation for the
+    trajectory of a falling object is:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[d = h_0 + v_0 t - 0.5 \times 9.8 t^2\]
+  prefs: []
+  type: TYPE_NORMAL
+- en: with \(h_0\) and \(v_0\) the starting height and velocity, respectively. The
+    data we simulated above followed this equation and added measurement error to
+    simulate `n` observations for dropping the ball \((v_0=0)\) from the tower of
+    Pisa \((h_0=55.86)\).
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'These are consistent with the parameter estimates:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE57]'
+  prefs: []
+  type: TYPE_PRE
+- en: The Tower of Pisa height is within the confidence interval for \(\beta_0\),
+    the initial velocity 0 is in the confidence interval for \(\beta_1\) (note the
+    p-value is larger than 0.05), and the acceleration constant is in a confidence
+    interval for \(-2 \times \beta_2\).
+  prefs: []
+  type: TYPE_NORMAL
+- en: 18.10 Exercises
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'Since the 1980s, sabermetricians have used a summary statistic different from
+    batting average to evaluate players. They realized walks were important and that
+    doubles, triples, and HRs, should be weighed more than singles. As a result, they
+    proposed the following metric:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[ \frac{\mbox{BB}}{\mbox{PA}} + \frac{\mbox{Singles} + 2 \mbox{Doubles} + 3
+    \mbox{Triples} + 4\mbox{HR}}{\mbox{AB}} \]
+  prefs: []
+  type: TYPE_NORMAL
+- en: They called this on-base-percentage plus slugging percentage (OPS). Although
+    the sabermetricians probably did not use regression, here we show how this metric
+    is close to what one gets with regression.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 1\. Compute the OPS for each team in the 2001 season. Then plot Runs per game
+    versus OPS.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 2\. For every year since 1962, compute the correlation between runs per game
+    and OPS; then plot these correlations as a function of year.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '3\. Note that we can rewrite OPS as a weighted average of BBs, singles, doubles,
+    triples, and HRs. We know that the weights for doubles, triples, and HRs are 2,
+    3, and 4 times that of singles. But what about BB? What is the weight for BB relative
+    to singles? Hint: the weight for BB relative to singles will be a function of
+    AB and PA.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 4\. Note that the weight for BB, \(\frac{\mbox{AB}}{\mbox{PA}}\), will change
+    from team to team. To see how variable it is, compute and plot this quantity for
+    each team for each year since 1962\. Then plot it again, but instead of computing
+    it for every team, compute and plot the ratio for the entire year. Then, once
+    you are convinced that there is not much of a time or team trend, report the overall
+    average.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '5\. So now we know that the formula for OPS is proportional to \(0.91 \times
+    \mbox{BB} + \mbox{singles} + 2 \times \mbox{doubles} + 3 \times \mbox{triples}
+    + 4 \times \mbox{HR}\). Let’s see how these coefficients compare to those obtained
+    with regression. Fit a regression model to the data after 1962, as done earlier:
+    using per game statistics for each year for each team. After fitting this model,
+    report the coefficients as weights relative to the coefficient for singles.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 6\. We see that our linear regression model coefficients follow the same general
+    trend as those used by OPS, but with slightly less weight for metrics other than
+    singles. For each team in years after 1962, compute the OPS, the predicted runs
+    with the regression model and compute the correlation between the two as well
+    as the correlation with runs per game.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '7\. We see that using the regression approach predicts runs slightly better
+    than OPS, but not that much. However, note that we have been computing OPS and
+    predicting runs for teams when these measures are used to evaluate players. Let’s
+    show that OPS is quite similar to what one obtains with regression at the player
+    level. For the 1962 season and after, compute the OPS and the predicted runs from
+    our model for each player and plot them. Use the PA per game correction we used
+    in the previous chapter:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 8\. What players have show the largest difference between their rank by predicted
+    runs and OPS?
+  prefs: []
+  type: TYPE_NORMAL
+- en: '* * *'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[http://mlb.mlb.com/stats/league_leaders.jsp](http://mlb.mlb.com/stats/league_leaders.jsp)[↩︎](linear-models.html#fnref61)'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[https://en.wikipedia.org/wiki/Bill_James](https://en.wikipedia.org/wiki/Bill_James)[↩︎](linear-models.html#fnref62)'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[https://en.wikipedia.org/wiki/Sabermetrics](https://en.wikipedia.org/wiki/Sabermetrics)[↩︎](linear-models.html#fnref63)'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[https://en.wikipedia.org/wiki/User:Cburnett](https://en.wikipedia.org/wiki/User:Cburnett)[↩︎](linear-models.html#fnref64)'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[https://creativecommons.org/licenses/by-sa/3.0/deed.en](https://creativecommons.org/licenses/by-sa/3.0/deed.en)[↩︎](linear-models.html#fnref65)'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[https://www.flickr.com/people/27003603@N00](https://www.flickr.com/people/27003603@N00)[↩︎](linear-models.html#fnref66)'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[https://creativecommons.org/licenses/by-sa/2.0](https://creativecommons.org/licenses/by-sa/2.0)[↩︎](linear-models.html#fnref67)'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[http://www.baseball-almanac.com/awards/lou_brock_award.shtml](http://www.baseball-almanac.com/awards/lou_brock_award.shtml)[↩︎](linear-models.html#fnref68)'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[http://www.foxsports.com/mlb/story/kris-bryant-carlos-correa-rookies-of-year-award-matt-duffy-francisco-lindor-kang-sano-120715](http://www.foxsports.com/mlb/story/kris-bryant-carlos-correa-rookies-of-year-award-matt-duffy-francisco-lindor-kang-sano-120715)[↩︎](linear-models.html#fnref69)'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL

@@ -1,0 +1,433 @@
+- en: Chapter 28 Smoothing
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: 原文：[https://rafalab.dfci.harvard.edu/dsbook/smoothing.html](https://rafalab.dfci.harvard.edu/dsbook/smoothing.html)
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: 'Before continuing learning about machine learning algorithms, we introduce
+    the important concept of *smoothing*. Smoothing is a very powerful technique used
+    all across data analysis. Other names given to this technique are *curve fitting*
+    and *low pass filtering*. It is designed to detect trends in the presence of noisy
+    data in cases in which the shape of the trend is unknown. The *smoothing* name
+    comes from the fact that to accomplish this feat, we assume that the trend is
+    *smooth*, as in a smooth surface. In contrast, the noise, or deviation from the
+    trend, is unpredictably wobbly:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![](../Images/39e8b7bc7718b33d6786b6d27ef1a1e0.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: Part of what we explain in this section are the assumptions that permit us to
+    extract the trend from the noise.
+  prefs: []
+  type: TYPE_NORMAL
+- en: To understand why we cover this topic, remember that the concepts behind smoothing
+    techniques are extremely useful in machine learning because conditional expectations/probabilities
+    can be thought of as *trends* of unknown shapes that we need to estimate in the
+    presence of uncertainty.
+  prefs: []
+  type: TYPE_NORMAL
+- en: To explain these concepts, we will focus first on a problem with just one predictor.
+    Specifically, we try to estimate the time trend in the 2008 US popular vote poll
+    margin (difference between Obama and McCain).
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs: []
+  type: TYPE_PRE
+- en: '![](../Images/33c753cc76e5495db280338fe5afd9ce.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: For the purposes of this example, do not think of it as a forecasting problem.
+    Instead, we are simply interested in learning the shape of the trend *after* the
+    election is over.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'We assume that for any given day \(x\), there is a true preference among the
+    electorate \(f(x)\), but due to the uncertainty introduced by the polling, each
+    data point comes with an error \(\varepsilon\). A mathematical model for the observed
+    poll margin \(Y_i\) is:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[ Y_i = f(x_i) + \varepsilon_i \]
+  prefs: []
+  type: TYPE_NORMAL
+- en: To think of this as a machine learning problem, consider that we want to predict
+    \(Y\) given a day \(x\). If we knew the conditional expectation \(f(x) = \mbox{E}(Y
+    \mid X=x)\), we would use it. But since we don’t know this conditional expectation,
+    we have to estimate it. Let’s use regression, since it is the only method we have
+    learned up to now.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE1]'
+  prefs: []
+  type: TYPE_PRE
+- en: '![](../Images/b86b677a5e00ed50e6453bd37a154533.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: The line we see does not appear to describe the trend very well. For example,
+    on September 4 (day -62), the Republican Convention was held and the data suggest
+    that it gave John McCain a boost in the polls. However, the regression line does
+    not capture this potential trend. To see the *lack of fit* more clearly, we note
+    that points above the fitted line (blue) and those below (red) are not evenly
+    distributed across days. We therefore need an alternative, more flexible approach.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 28.1 Bin smoothing
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: The general idea of smoothing is to group data points into strata in which the
+    value of \(f(x)\) can be assumed to be constant. We can make this assumption because
+    we think \(f(x)\) changes slowly and, as a result, \(f(x)\) is almost constant
+    in small windows of time. An example of this idea for the `poll_2008` data is
+    to assume that public opinion remained approximately the same within a week’s
+    time. With this assumption in place, we have several data points with the same
+    expected value.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'If we fix a day to be in the center of our week, call it \(x_0\), then for
+    any other day \(x\) such that \(|x - x_0| \leq 3.5\), we assume \(f(x)\) is a
+    constant \(f(x) = \mu\). This assumption implies that: \[ E[Y_i | X_i = x_i ]
+    \approx \mu \mbox{ if } |x_i - x_0| \leq 3.5 \]'
+  prefs: []
+  type: TYPE_NORMAL
+- en: In smoothing, we call the size of the interval satisfying \(|x_i - x_0| \leq
+    3.5\) the *window size*, *bandwidth* or *span*. Later we will see that we try
+    to optimize this parameter.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'This assumption implies that a good estimate for \(f(x)\) is the average of
+    the \(Y_i\) values in the window. If we define \(A_0\) as the set of indexes \(i\)
+    such that \(|x_i - x_0| \leq 3.5\) and \(N_0\) as the number of indexes in \(A_0\),
+    then our estimate is:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[ \hat{f}(x_0) = \frac{1}{N_0} \sum_{i \in A_0} Y_i \]
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'The idea behind *bin smoothing* is to make this calculation with each value
+    of \(x\) as the center. In the poll example, for each day, we would compute the
+    average of the values within a week with that day in the center. Here are two
+    examples: \(x_0 = -125\) and \(x_0 = -55\). The blue segment represents the resulting
+    average.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![](../Images/95d812d368d43f1795628ea269129e0d.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: 'By computing this mean for every point, we form an estimate of the underlying
+    curve \(f(x)\). Below we show the procedure happening as we move from the -155
+    up to 0\. At each value of \(x_0\), we keep the estimate \(\hat{f}(x_0)\) and
+    move on to the next point:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![](../Images/69319dec272ac5ea90e9f844e2c3f75a.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: 'The final code and resulting estimate look like this:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE2]'
+  prefs: []
+  type: TYPE_PRE
+- en: '![](../Images/a5e8d00883cb7550219caf37a19c8957.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: 28.2 Kernels
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: The final result from the bin smoother is quite wiggly. One reason for this
+    is that each time the window moves, two points change. We can attenuate this somewhat
+    by taking weighted averages that give the center point more weight than far away
+    points, with the two points at the edges receiving very little weight.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'You can think of the bin smoother approach as a weighted average:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[ \hat{f}(x_0) = \sum_{i=1}^N w_0(x_i) Y_i \]
+  prefs: []
+  type: TYPE_NORMAL
+- en: in which each point receives a weight of either \(0\) or \(1/N_0\), with \(N_0\)
+    the number of points in the week. In the code above, we used the argument `kernel="box"`
+    in our call to the function `ksmooth`. This is because the weight function looks
+    like a box. The `ksmooth` function provides a “smoother” option which uses the
+    normal density to assign weights.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![](../Images/b093e44cd054eec7d471d8e377c7b48d.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: 'The final code and resulting plot for the normal kernel look like this:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE3]'
+  prefs: []
+  type: TYPE_PRE
+- en: '![](../Images/f37b76875bbc5b7df28b09dba9129c43.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: Notice that the final estimate now looks smoother.
+  prefs: []
+  type: TYPE_NORMAL
+- en: There are several functions in R that implement bin smoothers. One example is
+    `ksmooth`, shown above. In practice, however, we typically prefer methods that
+    use slightly more complex models than fitting a constant. The final result above,
+    for example, is still somewhat wiggly in parts we don’t expect it to be (between
+    -125 and -75, for example). Methods such as `loess`, which we explain next, improve
+    on this.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 28.3 Local weighted regression (loess)
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'A limitation of the bin smoother approach just described is that we need small
+    windows for the approximately constant assumptions to hold. As a result, we end
+    up with a small number of data points to average and obtain imprecise estimates
+    \(\hat{f}(x)\). Here we describe how *local weighted regression* (loess) permits
+    us to consider larger window sizes. To do this, we will use a mathematical result,
+    referred to as Taylor’s theorem, which tells us that if you look closely enough
+    at any smooth function \(f(x)\), it will look like a line. To see why this makes
+    sense, consider the curved edges gardeners make using straight-edged spades:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![](../Images/681e15fff37cd58e2c0d52a95eafb337.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: (“Downing Street garden path edge”[^(95)](#fn95) by Flckr user Number 10[^(96)](#fn96).
+    CC-BY 2.0 license[^(97)](#fn97).)
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Instead of assuming the function is approximately constant in a window, we
+    assume the function is locally linear. We can consider larger window sizes with
+    the linear assumption than with a constant. Instead of the one-week window, we
+    consider a larger one in which the trend is approximately linear. We start with
+    a three-week window and later consider and evaluate other options:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[ E[Y_i | X_i = x_i ] = \beta_0 + \beta_1 (x_i-x_0) \mbox{ if } |x_i - x_0|
+    \leq 21 \]
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'For every point \(x_0\), loess defines a window and fits a line within that
+    window. Here is an example showing the fits for \(x_0=-125\) and \(x_0 = -55\):'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE4]'
+  prefs: []
+  type: TYPE_PRE
+- en: '![](../Images/0d2c341558baf7506a058c1ec4ad7e3a.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: The fitted value at \(x_0\) becomes our estimate \(\hat{f}(x_0)\). Below we
+    show the procedure happening as we move from the -155 up to 0.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![](../Images/0026555fb8548df2993635288770de11.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: 'The final result is a smoother fit than the bin smoother since we use larger
+    sample sizes to estimate our local parameters:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE5]'
+  prefs: []
+  type: TYPE_PRE
+- en: '![](../Images/7f3b9427320a80a67e76a852b2a0864e.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: 'Different spans give us different estimates. We can see how different window
+    sizes lead to different estimates:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![](../Images/ec037b8e3bfeef08a2c244b37a93fa40.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: 'Here are the final estimates:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![](../Images/104bfa83c00618e969ed3a066722edaa.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: There are three other differences between `loess` and the typical bin smoother.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 1\. Rather than keeping the bin size the same, `loess` keeps the number of points
+    used in the local fit the same. This number is controlled via the `span` argument,
+    which expects a proportion. For example, if `N` is the number of data points and
+    `span=0.5`, then for a given \(x\), `loess` will use the `0.5 * N` closest points
+    to \(x\) for the fit.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '2\. When fitting a line locally, `loess` uses a *weighted* approach. Basically,
+    instead of using least squares, we minimize a weighted version:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[ \sum_{i=1}^N w_0(x_i) \left[Y_i - \left\{\beta_0 + \beta_1 (x_i-x_0)\right\}\right]^2
+    \]
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'However, instead of the Gaussian kernel, loess uses a function called the Tukey
+    tri-weight:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[ W(u)= \left( 1 - |u|^3\right)^3 \mbox{ if } |u| \leq 1 \mbox{ and } W(u)
+    = 0 \mbox{ if } |u| > 1 \]
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'To define the weights, we denote \(2h\) as the window size and define:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[ w_0(x_i) = W\left(\frac{x_i - x_0}{h}\right) \]
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'This kernel differs from the Gaussian kernel in that more points get values
+    closer to the max:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![](../Images/0ed96385ae63df388cd887187edbd17c.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: 3\. `loess` has the option of fitting the local model *robustly*. An iterative
+    algorithm is implemented in which, after fitting a model in one iteration, outliers
+    are detected and down-weighted for the next iteration. To use this option, we
+    use the argument `family="symmetric"`.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 28.3.1 Fitting parabolas
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: Taylor’s theorem also tells us that if you look at any mathematical function
+    closely enough, it looks like a parabola. The theorem also states that you don’t
+    have to look as closely when approximating with parabolas as you do when approximating
+    with lines. This means we can make our windows even larger and fit parabolas instead
+    of lines.
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[ E[Y_i | X_i = x_i ] = \beta_0 + \beta_1 (x_i-x_0) + \beta_2 (x_i-x_0)^2 \mbox{
+    if } |x_i - x_0| \leq h \]
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'This is actually the default procedure of the function `loess`. You may have
+    noticed that when we showed the code for using loess, we set `degree = 1`. This
+    tells loess to fit polynomials of degree 1, a fancy name for lines. If you read
+    the help page for loess, you will see that the argument `degree` defaults to 2\.
+    By default, loess fits parabolas not lines. Here is a comparison of the fitting
+    lines (red dashed) and fitting parabolas (orange solid):'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE6]'
+  prefs: []
+  type: TYPE_PRE
+- en: '![](../Images/cd627b0229463290f99e237385bb7bd4.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: The `degree = 2` gives us more wiggly results. We actually prefer `degree =
+    1` as it is less prone to this kind of noise.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 28.3.2 Beware of default smoothing parameters
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '`ggplot` uses loess in its `geom_smooth` function:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE7]'
+  prefs: []
+  type: TYPE_PRE
+- en: '![](../Images/d880e16a0c76802e566627e94edeec45.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: 'But be careful with default parameters as they are rarely optimal. However,
+    you can conveniently change them:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE8]'
+  prefs: []
+  type: TYPE_PRE
+- en: '![](../Images/9fab01c90e5f0e937dc94b57d35378de.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: 28.4 Connecting smoothing to machine learning
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'To see how smoothing relates to machine learning with a concrete example, consider
+    our [27.8](introduction-to-machine-learning.html#two-or-seven) example. If we
+    define the outcome \(Y = 1\) for digits that are seven and \(Y=0\) for digits
+    that are 2, then we are interested in estimating the conditional probability:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[ p(x_1, x_2) = \mbox{Pr}(Y=1 \mid X_1=x_1 , X_2 = x_2). \] with \(X_1\) and
+    \(X_2\) the two predictors defined in Section [27.8](introduction-to-machine-learning.html#two-or-seven).
+    In this example, the 0s and 1s we observe are “noisy” because for some regions
+    the probabilities \(p(x_1, x_2)\) are not that close to 0 or 1\. So we need to
+    estimate \(p(x_1, x_2)\). Smoothing is an alternative to accomplishing this. In
+    Section [27.8](introduction-to-machine-learning.html#two-or-seven) we saw that
+    linear regression was not flexible enough to capture the non-linear nature of
+    \(p(x_1, x_2)\), thus smoothing approaches may provide an improvement. In the
+    next chapter we describe a popular machine learning algorithm, k-nearest neighbors,
+    which is based on bin smoothing.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 28.5 Exercises
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 1\. In the wrangling part of this book, we used the code below to obtain mortality
+    counts for Puerto Rico for 2015-2018.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE9]'
+  prefs: []
+  type: TYPE_PRE
+- en: Use the `loess` function to obtain a smooth estimate of the expected number
+    of deaths as a function of date. Plot this resulting smooth function. Make the
+    span about two months long.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 2\. Plot the smooth estimates against day of the year, all on the same plot
+    but with different colors.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 3\. Suppose we want to predict 2s and 7s in our `mnist_27` dataset with just
+    the second covariate. Can we do this? On first inspection it appears the data
+    does not have much predictive power. In fact, if we fit a regular logistic regression,
+    the coefficient for `x_2` is not significant!
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE10]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Plotting a scatterplot here is not useful since `y` is binary:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE11]'
+  prefs: []
+  type: TYPE_PRE
+- en: Fit a loess line to the data above and plot the results. Notice that there is
+    predictive power, except the conditional probability is not linear.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '* * *'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[https://www.flickr.com/photos/49707497@N06/7361631644](https://www.flickr.com/photos/49707497@N06/7361631644)[↩︎](smoothing.html#fnref95)'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[https://www.flickr.com/photos/number10gov/](https://www.flickr.com/photos/number10gov/)[↩︎](smoothing.html#fnref96)'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[https://creativecommons.org/licenses/by/2.0/](https://creativecommons.org/licenses/by/2.0/)[↩︎](smoothing.html#fnref97)'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL

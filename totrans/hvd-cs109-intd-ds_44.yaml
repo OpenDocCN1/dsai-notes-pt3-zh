@@ -1,0 +1,236 @@
+- en: Chapter 30 The caret package
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: 原文：[https://rafalab.dfci.harvard.edu/dsbook/caret.html](https://rafalab.dfci.harvard.edu/dsbook/caret.html)
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: We have already learned about regression and kNN as machine learning algorithms.
+    In later sections, we learn several others, and this is just a small subset of
+    all the algorithms out there. Many of these algorithms are implemented in R. However,
+    they are distributed via different packages, developed by different authors, and
+    often use different syntax. The **caret** package tries to consolidate these differences
+    and provide consistency. It currently includes 237 different methods which are
+    summarized in the **caret** package manual[^(98)](#fn98). Keep in mind that **caret**
+    does not include the needed packages and, to implement a package through **caret**,
+    you still need to install the library. The required packages for each method are
+    described in the package manual.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'The **caret** package also provides a function that performs cross validation
+    for us. Here we provide some examples showing how we use this incredibly helpful
+    package. We will use the 2 or 7 example to illustrate:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs: []
+  type: TYPE_PRE
+- en: 30.1 The caret `train` functon
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'The **caret** `train` function lets us train different algorithms using similar
+    syntax. So, for example, we can type:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE1]'
+  prefs: []
+  type: TYPE_PRE
+- en: To make predictions, we can use the output of this function directly without
+    needing to look at the specifics of `predict.glm` and `predict.knn`. Instead,
+    we can learn how to obtain predictions from `predict.train`.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'The code looks the same for both methods:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE2]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'This permits us to quickly compare the algorithms. For example, we can compare
+    the accuracy like this:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE3]'
+  prefs: []
+  type: TYPE_PRE
+- en: 30.2 Cross validation
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'When an algorithm includes a tuning parameter, `train` automatically uses cross
+    validation to decide among a few default values. To find out what parameter or
+    parameters are optimized, you can read the manual [^(99)](#fn99) or study the
+    output of:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE4]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'We can also use a quick lookup like this:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE5]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'If we run it with default values:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE6]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'you can quickly see the results of the cross validation using the `ggplot`
+    function. The argument `highlight` highlights the max:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE7]'
+  prefs: []
+  type: TYPE_PRE
+- en: '![](../Images/569a9d2f9db0942b9ab94a96cc11fe6d.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: By default, the cross validation is performed by taking 25 bootstrap samples
+    comprised of 25% of the observations. For the `kNN` method, the default is to
+    try \(k=5,7,9\). We change this using the `tuneGrid` parameter. The grid of values
+    must be supplied by a data frame with the parameter names as specified in the
+    `modelLookup` output.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Here, we present an example where we try out 30 values between 9 and 67\. To
+    do this with **caret**, we need to define a column named `k`, so we use this:
+    `data.frame(k = seq(9, 67, 2))`.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Note that when running this code, we are fitting 30 versions of kNN to 25 bootstrapped
+    samples. Since we are fitting \(30 \times 25 = 750\) kNN models, running this
+    code will take several seconds. We set the seed because cross validation is a
+    random procedure and we want to make sure the result here is reproducible.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE8]'
+  prefs: []
+  type: TYPE_PRE
+- en: '![](../Images/6037f6ad81d1fe6b80ac5cbf370d4bc1.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: 'To access the parameter that maximized the accuracy, you can use this:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE9]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'and the best performing model like this:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE10]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'The function `predict` will use this best performing model. Here is the accuracy
+    of the best model when applied to the test set, which we have not used at all
+    yet because the cross validation was done on the training set:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE11]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'If we want to change how we perform cross validation, we can use the `trainControl`
+    function. We can make the code above go a bit faster by using, for example, 10-fold
+    cross validation. This means we have 10 samples using 10% of the observations
+    each. We accomplish this using the following code:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE12]'
+  prefs: []
+  type: TYPE_PRE
+- en: '![](../Images/b4417133785c94316cdca9ab4b89584f.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: We notice that the accuracy estimates are more variable, which is expected since
+    we changed the number of samples used to estimate accuracy.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Note that `results` component of the `train` output includes several summary
+    statistics related to the variability of the cross validation estimates:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE13]'
+  prefs: []
+  type: TYPE_PRE
+- en: '30.3 Example: fitting with loess'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'The best fitting kNN model approximates the true conditional probability:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE14]'
+  prefs: []
+  type: TYPE_PRE
+- en: '![](../Images/12253402f898fb6b3e84f744bae52c07.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: 'However, we do see that the boundary is somewhat wiggly. This is because kNN,
+    like the basic bin smoother, does not use a kernel. To improve this we could try
+    loess. By reading through the available models part of the manual[^(100)](#fn100)
+    we see that we can use the `gamLoess` method. In the manual[^(101)](#fn101) we
+    also see that we need to install the **gam** package if we have not done so already:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE15]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Then we see that we have two parameters to optimize:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE16]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'We will stick to a degree of 1\. But to try out different values for the span,
+    we still have to include a column in the table with the name `degree` so we can
+    do this:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE17]'
+  prefs: []
+  type: TYPE_PRE
+- en: We will use the default cross validation control parameters.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE18]'
+  prefs: []
+  type: TYPE_PRE
+- en: '![](../Images/b7b54b8595c45cebd51ba3b2487370bd.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: 'We can see that the method performs similar to kNN:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE19]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'and produces a smoother estimate of the conditional probability:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![](../Images/8cf8ec118b4c459fa93254e8a943d0f0.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: '* * *'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[https://topepo.github.io/caret/available-models.html](https://topepo.github.io/caret/available-models.html)[↩︎](caret.html#fnref98)'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[http://topepo.github.io/caret/available-models.html](http://topepo.github.io/caret/available-models.html)[↩︎](caret.html#fnref99)'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[https://topepo.github.io/caret/available-models.html](https://topepo.github.io/caret/available-models.html)[↩︎](caret.html#fnref100)'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[https://topepo.github.io/caret/train-models-by-tag.html](https://topepo.github.io/caret/train-models-by-tag.html)[↩︎](caret.html#fnref101)'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL

@@ -1,0 +1,328 @@
+- en: Chapter 32 Machine learning in practice
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: 原文：[https://rafalab.dfci.harvard.edu/dsbook/machine-learning-in-practice.html](https://rafalab.dfci.harvard.edu/dsbook/machine-learning-in-practice.html)
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: 'Now that we have learned several methods and explored them with illustrative
+    examples, we are going to try them out on a real example: the MNIST digits.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'We can load this data using the following **dslabs** package:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'The dataset includes two components, a training set and test set:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE1]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Each of these components includes a matrix with features in the columns:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE2]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'and vector with the classes as integers:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE3]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Because we want this example to run on a small laptop and in less than one
+    hour, we will consider a subset of the dataset. We will sample 10,000 random rows
+    from the training set and 1,000 random rows from the test set:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE4]'
+  prefs: []
+  type: TYPE_PRE
+- en: 32.1 Preprocessing
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: In machine learning, we often transform predictors before running the machine
+    algorithm. We also remove predictors that are clearly not useful. We call these
+    steps *preprocessing*.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Examples of preprocessing include standardizing the predictors, taking the log
+    transform of some predictors, removing predictors that are highly correlated with
+    others, and removing predictors with very few non-unique values or close to zero
+    variation. We show an example below.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'We can run the `nearZero` function from the **caret** package to see that several
+    features do not vary much from observation to observation. We can see that there
+    is a large number of features with 0 variability:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE5]'
+  prefs: []
+  type: TYPE_PRE
+- en: '![](../Images/8b3adc3e90a85eaf3cb24b12b030c6f4.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: This is expected because there are parts of the image that rarely contain writing
+    (dark pixels).
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'The **caret** packages includes a function that recommends features to be removed
+    due to *near zero variance*:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE6]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'We can see the columns recommended for removal:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE7]'
+  prefs: []
+  type: TYPE_PRE
+- en: '[PRE8]'
+  prefs: []
+  type: TYPE_PRE
+- en: '![](../Images/af2856cc29a4156f6b92f8117ece28f8.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: 'So we end up keeping this number of columns:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE9]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Now we are ready to fit some models. Before we start, we need to add column
+    names to the feature matrices as these are required by **caret**:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE10]'
+  prefs: []
+  type: TYPE_PRE
+- en: 32.2 k-nearest neighbor and random forest
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Let’s start with kNN. The first step is to optimize for \(k\). Keep in mind
+    that when we run the algorithm, we will have to compute a distance between each
+    observation in the test set and each observation in the training set. There are
+    a lot of computations. We will therefore use k-fold cross validation to improve
+    speed.
+  prefs: []
+  type: TYPE_NORMAL
+- en: If we run the following code, the computing time on a standard laptop will be
+    several minutes.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE11]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'In general, it is a good idea to try a test run with a subset of the data to
+    get an idea of timing before we start running code that might take hours to complete.
+    We can do this as follows:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE12]'
+  prefs: []
+  type: TYPE_PRE
+- en: We can then increase `n` and `b` and try to establish a pattern of how they
+    affect computing time to get an idea of how long the fitting process will take
+    for larger values of `n` and `b`. You want to know if a function is going to take
+    hours, or even days, before you run it.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Once we optimize our algorithm, we can fit it to the entire dataset:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE13]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'We now achieve a high accuracy:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE14]'
+  prefs: []
+  type: TYPE_PRE
+- en: From the specificity and sensitivity, we also see that 8s are the hardest to
+    detect and the most commonly incorrectly predicted digit is 7.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE15]'
+  prefs: []
+  type: TYPE_PRE
+- en: Now let’s see if we can do even better with the random forest algorithm.
+  prefs: []
+  type: TYPE_NORMAL
+- en: With random forest, computation time is a challenge. For each forest, we need
+    to build hundreds of trees. We also have several parameters we can tune.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Because with random forest the fitting is the slowest part of the procedure
+    rather than the predicting (as with kNN), we will use only five-fold cross validation.
+    We will also reduce the number of trees that are fit since we are not yet building
+    our final model.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Finally, to compute on a smaller dataset, we will take a random sample of the
+    observations when constructing each tree. We can change this number with the `nSamp`
+    argument.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE16]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Now that we have optimized our algorithm, we are ready to fit our final model:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE17]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'To check that we ran enough trees we can use the plot function:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE18]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'We see that we achieve high accuracy:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE19]'
+  prefs: []
+  type: TYPE_PRE
+- en: With some further tuning, we can get even higher accuracy.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 32.3 Variable importance
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'The following function computes the importance of each feature:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE20]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'We can see which features are being used most by plotting an image:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE21]'
+  prefs: []
+  type: TYPE_PRE
+- en: '[PRE22]'
+  prefs: []
+  type: TYPE_PRE
+- en: '![](../Images/7b43c7f2e50098c236c49a1870ebda0d.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: 32.4 Visual assessments
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: An important part of data analysis is visualizing results to determine why we
+    are failing. How we do this depends on the application. Below we show the images
+    of digits for which we made an incorrect prediction. We can compare what we get
+    with kNN to random forest.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Here are some errors for the random forest:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![](../Images/3c04675619cb272c97b1f2d553ccd90e.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: By examining errors like this we often find specific weaknesses to algorithms
+    or parameter choices and can try to correct them.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 32.5 Ensembles
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: The idea of an ensemble is similar to the idea of combining data from different
+    pollsters to obtain a better estimate of the true support for each candidate.
+  prefs: []
+  type: TYPE_NORMAL
+- en: In machine learning, one can usually greatly improve the final results by combining
+    the results of different algorithms.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Here is a simple example where we compute new class probabilities by taking
+    the average of random forest and kNN. We can see that the accuracy improves to
+    0.96:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE23]'
+  prefs: []
+  type: TYPE_PRE
+- en: In the exercises we are going to build several machine learning models for the
+    `mnist_27` dataset and then build an ensemble.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 32.6 Exercises
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '1\. Use the `mnist_27` training set to build a model with several of the models
+    available from the **caret** package. For example, you can try these:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE24]'
+  prefs: []
+  type: TYPE_PRE
+- en: We have not explained many of these, but apply them anyway using `train` with
+    all the default parameters. Keep the results in a list. You might need to install
+    some packages. Keep in mind that you will likely get some warnings.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 2\. Now that you have all the trained models in a list, use `sapply` or `map`
+    to create a matrix of predictions for the test set. You should end up with a matrix
+    with `length(mnist_27$test$y)` rows and `length(models)` columns.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 3\. Now compute accuracy for each model on the test set.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 4\. Now build an ensemble prediction by majority vote and compute its accuracy.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 5\. Earlier we computed the accuracy of each method on the training set and
+    noticed they varied. Which individual methods do better than the ensemble?
+  prefs: []
+  type: TYPE_NORMAL
+- en: 6\. It is tempting to remove the methods that do not perform well and re-do
+    the ensemble. The problem with this approach is that we are using the test data
+    to make a decision. However, we could use the accuracy estimates obtained from
+    cross validation with the training data. Obtain these estimates and save them
+    in an object.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 7\. Now let’s only consider the methods with an estimated accuracy of 0.8 when
+    constructing the ensemble. What is the accuracy now?
+  prefs: []
+  type: TYPE_NORMAL
+- en: '8\. **Advanced**: If two methods give results that are the same, ensembling
+    them will not change the results at all. For each pair of metrics compare the
+    percent of time they call the same thing. Then use the `heatmap` function to visualize
+    the results. Hint: use the `method = "binary"` argument in the `dist` function.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '9\. **Advanced**: Note that each method can also produce an estimated conditional
+    probability. Instead of majority vote we can take the average of these estimated
+    conditional probabilities. For most methods, we can the use the `type = "prob"`
+    in the train function. However, some of the methods require you to use the argument
+    `trControl=trainControl(classProbs=TRUE)` when calling train. Also these methods
+    do not work if classes have numbers as names. Hint: change the levels like this:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE25]'
+  prefs: []
+  type: TYPE_PRE
+- en: 10\. In this chapter, we illustrated a couple of machine learning algorithms
+    on a subset of the MNIST dataset. Try fitting a model to the entire dataset.
+  prefs: []
+  type: TYPE_NORMAL

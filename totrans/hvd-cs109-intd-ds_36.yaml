@@ -1,0 +1,256 @@
+- en: Chapter 25 Parsing dates and times
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: 原文：[https://rafalab.dfci.harvard.edu/dsbook/parsing-dates-and-times.html](https://rafalab.dfci.harvard.edu/dsbook/parsing-dates-and-times.html)
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: 25.1 The date data type
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'We have described three main types of vectors: numeric, character, and logical.
+    In data science projects, we very often encounter variables that are dates. Although
+    we can represent a date with a string, for example `November 2, 2017`, once we
+    pick a reference day, referred to as the *epoch*, they can be converted to numbers
+    by calculating the number of days since the epoch. Computer languages usually
+    use January 1, 1970, as the epoch. So, for example, January 2, 1970 is day 1,
+    December 31, 1969 is day -1, and November 2, 2017, is day 17,204.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Now how should we represent dates and times when analyzing data in R? We could
+    just use days since the epoch, but then it is almost impossible to interpret.
+    If I tell you it’s November 2, 2017, you know what this means immediately. If
+    I tell you it’s day 17,204, you will be quite confused. Similar problems arise
+    with times and even more complications can appear due to time zones.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'For this reason, R defines a data type just for dates and times. We saw an
+    example in the polls data:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'These look like strings, but they are not:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE1]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Look at what happens when we convert them to numbers:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE2]'
+  prefs: []
+  type: TYPE_PRE
+- en: It turns them into days since the epoch. The `as.Date` function can convert
+    a character into a date. So to see that the epoch is day 0 we can type
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE3]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Plotting functions, such as those in ggplot, are aware of the date format.
+    This means that, for example, a scatterplot can use the numeric representation
+    to decide on the position of the point, but include the string in the labels:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE4]'
+  prefs: []
+  type: TYPE_PRE
+- en: '![](../Images/b01836f6eaa69eb9c9fc742a4e1ed7f9.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: Note in particular that the month names are displayed, a very convenient feature.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 25.2 The lubridate package
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: The **tidyverse** includes functionality for dealing with dates through the
+    **lubridate** package.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE5]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'We will take a random sample of dates to show some of the useful things one
+    can do:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE6]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'The functions `year`, `month` and `day` extract those values:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE7]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'We can also extract the month labels:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE8]'
+  prefs: []
+  type: TYPE_PRE
+- en: '[PRE9]'
+  prefs: []
+  type: TYPE_PRE
+- en: Another useful set of functions are the *parsers* that convert strings into
+    dates. The function `ymd` assumes the dates are in the format YYYY-MM-DD and tries
+    to parse as well as possible.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE10]'
+  prefs: []
+  type: TYPE_PRE
+- en: A further complication comes from the fact that dates often come in different
+    formats in which the order of year, month, and day are different. The preferred
+    format is to show year (with all four digits), month (two digits), and then day,
+    or what is called the ISO 8601\. Specifically we use YYYY-MM-DD so that if we
+    order the string, it will be ordered by date. You can see the function `ymd` returns
+    them in this format.
+  prefs: []
+  type: TYPE_NORMAL
+- en: But, what if you encounter dates such as “09/01/02”? This could be September
+    1, 2002 or January 2, 2009 or January 9, 2002. In these cases, examining the entire
+    vector of dates will help you determine what format it is by process of elimination.
+    Once you know, you can use the many parses provided by **lubridate**.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'For example, if the string is:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE11]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'The `ymd` function assumes the first entry is the year, the second is the month,
+    and the third is the day, so it converts it to:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE12]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'The `mdy` function assumes the first entry is the month, then the day, then
+    the year:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE13]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'The *lubridate* package provides a function for every possibility:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE14]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'The **lubridate** package is also useful for dealing with times. In R base,
+    you can get the current time typing `Sys.time()`. The **lubridate** package provides
+    a slightly more advanced function, `now`, that permits you to define the time
+    zone:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE15]'
+  prefs: []
+  type: TYPE_PRE
+- en: You can see all the available time zones with `OlsonNames()` function.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'We can also extract hours, minutes, and seconds:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE16]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'The package also includes a function to parse strings into times as well as
+    parsers for time objects that include dates:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE17]'
+  prefs: []
+  type: TYPE_PRE
+- en: This package has many other useful functions. We describe two of these here
+    that we find particularly useful.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'The `make_date` function can be used to quickly create a date object. It takes
+    three arguments: year, month, day, hour, minute, seconds, and time zone defaulting
+    to the epoch values on UTC time. So create an date object representing, for example,
+    July 6, 2019 we write:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE18]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'To make a vector of January 1 for the 80s we write:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE19]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Another very useful function is the `round_date`. It can be used to *round*
+    dates to nearest year, quarter, month, week, day, hour, minutes, or seconds. So
+    if we want to group all the polls by week of the year we can do the following:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE20]'
+  prefs: []
+  type: TYPE_PRE
+- en: '![](../Images/7a52f7f33baf27c83c30be5ddcef6230.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: 25.3 Exercises
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: In the previous exercise section, we wrangled data from a PDF file containing
+    vital statistics from Puerto Rico. We did this for the month of September. Below
+    we include code that does it for all 12 months.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE21]'
+  prefs: []
+  type: TYPE_PRE
+- en: 1\. We want to make a plot of death counts versus date. A first step is to convert
+    the month variable from characters to numbers. Note that the month abbreviations
+    are in Spanglish. Use the `recode` function to convert months to numbers and redefine
+    `tab`.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '2\. Create a new column `date` with the date for each observation. Hint: use
+    the `make_date` function.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 3\. Plot deaths versus date.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 4\. Note that after May 31, 2018, the deaths are all 0\. The data is probably
+    not entered yet. We also see a drop off starting around May 1\. Redefine `tab`
+    to exclude observations taken on or after May 1, 2018\. Then, remake the plot.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '5\. Remake the plot above but this time plot deaths against the day of the
+    year, for example, Jan 12, 2016 and Jan 12, 2017 are both day 12\. Use color to
+    denote the different years. Hint: use the **lubridate** function `yday`.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 6\. Remake the plot above but, this time, use two different colors for before
+    and after September 20, 2017.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '7\. Advanced: remake the plot above, but this time show the month in the x-axis.
+    Hint: create a variable with the date for a given year. Then use the `scale_x_date`
+    function to show just the months.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '8\. Remake the deaths versus day but with weekly averages. Hint: use the function
+    `round_date`.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '9\. Remake the plot but with monthly averages. Hint: use the function `round_date`
+    again.'
+  prefs: []
+  type: TYPE_NORMAL

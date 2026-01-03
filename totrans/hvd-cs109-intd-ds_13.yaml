@@ -1,0 +1,390 @@
+- en: Chapter 6 data.table
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: 原文：[https://rafalab.dfci.harvard.edu/dsbook/data.html](https://rafalab.dfci.harvard.edu/dsbook/data.html)
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: In this book, we use tidyverse packages to illustrate because beginners find
+    the code readable and this permits us to focus on data analysis and statistical
+    concepts. However, there are other approaches to wrangling and analyzing data
+    in R that are faster and better at handling large objects. The **data.table**
+    package, for example, is one of the most popular and we therefore provide a very
+    quick introduction in this chapter . There are several online resources, including
+    this introduction[^(15)](#fn15) for those wanting to learn more.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 6.1 Manipulating data tables
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '`data.table` is a separate package that needs to be installed. Once installed,
+    we then need to load it:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'We will provide example code showing the **data.table** approaches to **dplyr**’s
+    `mutate`, `filter`, `select`, `group_by`, and `summarize` shown in Chapter [4](tidyverse.html#tidyverse).
+    As in that chapter, we will use the `murders` dataset:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'The first step when using **data.table** is to convert the data frame into
+    a `data.table` object using the `setDT` function:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE1]'
+  prefs: []
+  type: TYPE_PRE
+- en: Without this initial step, most of the approaches shown below will not work.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 6.1.1 Selecting
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: 'Selecting with **data.table** is done in a similar way to subsetting matrices.
+    While with **dplyr** we write:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE2]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'In **data.table**, we use notation similar to what is used with matrices:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE3]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'We can also use the `.()` **data.table** notation to alert R that variables
+    inside the parenthesis are column names, not objects in the R environment. So
+    the above can also be written like this:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE4]'
+  prefs: []
+  type: TYPE_PRE
+- en: 6.1.2 Adding a column or changing columns
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: 'We learned to use the **dplyr** `mutate` function with this example:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE5]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**data.table** uses an approach that avoids a new assignment (update by reference).
+    This can help with large datasets that take up most of your computer’s memory.
+    The **data.table** :=` function permits us to do this:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE6]'
+  prefs: []
+  type: TYPE_PRE
+- en: This adds a new column, `rate`, to the table. Notice that, as in **dplyr**,
+    we used `total` and `population` without quotes.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'We can see that the new column is added:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE7]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'To define new multiple columns, we can use the `:=` function with multiple
+    arguments:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE8]'
+  prefs: []
+  type: TYPE_PRE
+- en: '6.1.3 Technical detail: reference versus copy'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: 'The **data.table** package is designed to avoid wasting memory. So if you make
+    a copy of a table, like this:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE9]'
+  prefs: []
+  type: TYPE_PRE
+- en: '`y` is actually referencing `x`, it is not an new opject: it’s just another
+    name for `x`. Until you change `y`, a new object will not be made. However, the
+    `:=` function changes *by reference* so if you change `x`, a new object is not
+    made and `y` continues to be just another name for `x`:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE10]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'You can also change `x` like this:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE11]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'To avoid this, you can use the `copy` function which forces the creation of
+    an actual copy:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE12]'
+  prefs: []
+  type: TYPE_PRE
+- en: 6.1.4 Subsetting
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: 'With **dplyr**, we filtered like this:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE13]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'With **data.table**, we again use an approach similar to subsetting matrices,
+    except **data.table** knows that `rate` refers to a column name and not an object
+    in the R environment:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE14]'
+  prefs: []
+  type: TYPE_PRE
+- en: Notice that we can combine the filter and select into one succint command. Here
+    are the state names and rates for those with rates below 0.7.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE15]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Compare to the **dplyr** approach:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE16]'
+  prefs: []
+  type: TYPE_PRE
+- en: 6.2 Exercises
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '1\. Load the **data.table** package and the murders dataset and convert it
+    to `data.table` object:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE17]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Remember you can add columns like this:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE18]'
+  prefs: []
+  type: TYPE_PRE
+- en: Add a murders column named `rate` with the per 100,000 murder rate as in the
+    example code above.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 2\. Add a column `rank` containing the rank, from highest to lowest murder rate.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '3\. If we want to only show the states and population sizes, we can use:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE19]'
+  prefs: []
+  type: TYPE_PRE
+- en: Show the state names and abbreviations in `murders`.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '4\. You can show just the New York row like this:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE20]'
+  prefs: []
+  type: TYPE_PRE
+- en: You can use other logical vectors to filter rows.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Show the top 5 states with the highest murder rates. After we add murder rate
+    and rank, do not change the murders dataset, just show the result. Remember that
+    you can filter based on the `rank` column.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '5\. We can remove rows using the `!=` operator. For example, to remove Florida,
+    we would do this:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE21]'
+  prefs: []
+  type: TYPE_PRE
+- en: Create a new data frame called `no_south` that removes states from the South
+    region. How many states are in this category? You can use the function `nrow`
+    for this.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '6\. We can also use `%in%` to filter. You can therefore see the data from New
+    York and Texas as follows:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE22]'
+  prefs: []
+  type: TYPE_PRE
+- en: Create a new data frame called `murders_nw` with only the states from the Northeast
+    and the West. How many states are in this category?
+  prefs: []
+  type: TYPE_NORMAL
+- en: 7\. Suppose you want to live in the Northeast or West **and** want the murder
+    rate to be less than 1\. We want to see the data for the states satisfying these
+    options. Note that you can use logical operators with `filter`. Here is an example
+    in which we filter to keep only small states in the Northeast region.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE23]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Make sure `murders` has been defined with `rate` and `rank` and still has all
+    states. Create a table called `my_states` that contains rows for states satisfying
+    both the conditions: they are in the Northeast or West and the murder rate is
+    less than 1\. Show only the state name, the rate, and the rank.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 6.3 Summarizing data
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'As an example, we will use the `heights` dataset:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE24]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'In **data.table**, we can call functions inside `.()` and they will be applied
+    to rows. So the equivalent of:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE25]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'in **dplyr** is the following:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE26]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Note that this permits a compact way of subsetting and then summarizing. Instead
+    of:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE27]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'we can write:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE28]'
+  prefs: []
+  type: TYPE_PRE
+- en: 6.3.1 Multiple summaries
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: 'In chapter [4](tidyverse.html#tidyverse), we defined the function:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE29]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Similar to **dplyr**, we can call this function within `.()` to obtain the
+    three number summary:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE30]'
+  prefs: []
+  type: TYPE_PRE
+- en: 6.3.2 Group then summarize
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: 'The `group_by` followed by `summarize` in **dplyr** is performed in one line
+    in **data.table**. We simply add the `by` argument to split the data into groups
+    based on the values in categorical variable:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE31]'
+  prefs: []
+  type: TYPE_PRE
+- en: 6.4 Sorting data frames
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'We can order rows using the same approach we use for filter. Here are the states
+    ordered by murder rate:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE32]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'N To sort the table in descending order, we can order by the negative of `population`
+    or use the `decreasing` argument:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE33]'
+  prefs: []
+  type: TYPE_PRE
+- en: 6.4.1 Nested sorting
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: Similarly, we can perform nested ordering by including more than one variable
+    in order
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE34]'
+  prefs: []
+  type: TYPE_PRE
+- en: '``'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 6.5 Exercises
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: For these exercises, we will be using the **NHANES** data.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE35]'
+  prefs: []
+  type: TYPE_PRE
+- en: 1\. We will provide some basic facts about blood pressure. First let’s select
+    a group to set the standard. We will use 20-to-29-year-old females. `AgeDecade`
+    is a categorical variable with these ages. Note that the category is coded like
+    ” 20-29”, with a space in front! Use the **data.table** package to compute the
+    average and standard deviation of systolic blood pressure as saved in the `BPSysAve`
+    variable. Save it to a variable called `ref`.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 2\. Report the min and max values for the same group.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 3\. Compute the average and standard deviation for females, but for each age
+    group separately rather than a selected decade as in question 1\. Note that the
+    age groups are defined by `AgeDecade`.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 4\. Repeat exercise 3 for males.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 5\. For males between the ages of 40-49, compare systolic blood pressure across
+    race as reported in the `Race1` variable. Order the resulting table from lowest
+    to highest average systolic blood pressure.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '* * *'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[https://cran.r-project.org/web/packages/data.table/vignettes/datatable-intro.html](https://cran.r-project.org/web/packages/data.table/vignettes/datatable-intro.html)[↩︎](data.html#fnref15)'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL

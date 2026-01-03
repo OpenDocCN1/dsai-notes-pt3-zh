@@ -1,0 +1,866 @@
+- en: Chapter 8 ggplot2
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: 原文：[https://rafalab.dfci.harvard.edu/dsbook/ggplot2.html](https://rafalab.dfci.harvard.edu/dsbook/ggplot2.html)
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: Exploratory data visualization is perhaps the greatest strength of R. One can
+    quickly go from idea to data to plot with a unique balance of flexibility and
+    ease. For example, Excel may be easier than R for some plots, but it is nowhere
+    near as flexible. D3.js may be more flexible and powerful than R, but it takes
+    much longer to generate a plot.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Throughout the book, we will be creating plots using the **ggplot2**[^(22)](#fn22)
+    package.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs: []
+  type: TYPE_PRE
+- en: Many other approaches are available for creating plots in R. In fact, the plotting
+    capabilities that come with a basic installation of R are already quite powerful.
+    There are also other packages for creating graphics such as **grid** and **lattice**.
+    We chose to use **ggplot2** in this book because it breaks plots into components
+    in a way that permits beginners to create relatively complex and aesthetically
+    pleasing plots using syntax that is intuitive and comparatively easy to remember.
+  prefs: []
+  type: TYPE_NORMAL
+- en: One reason **ggplot2** is generally more intuitive for beginners is that it
+    uses a grammar of graphics[^(23)](#fn23), the *gg* in **ggplot2**. This is analogous
+    to the way learning grammar can help a beginner construct hundreds of different
+    sentences by learning just a handful of verbs, nouns and adjectives without having
+    to memorize each specific sentence. Similarly, by learning a handful of **ggplot2**
+    building blocks and its grammar, you will be able to create hundreds of different
+    plots.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Another reason **ggplot2** is easy for beginners is that its default behavior
+    is carefully chosen to satisfy the great majority of cases and is visually pleasing.
+    As a result, it is possible to create informative and elegant graphs with relatively
+    simple and readable code.
+  prefs: []
+  type: TYPE_NORMAL
+- en: One limitation is that **ggplot2** is designed to work exclusively with data
+    tables in tidy format (where rows are observations and columns are variables).
+    However, a substantial percentage of datasets that beginners work with are in,
+    or can be converted into, this format. An advantage of this approach is that,
+    assuming that our data is tidy, **ggplot2** simplifies plotting code and the learning
+    of grammar for a variety of plots.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'To use **ggplot2** you will have to learn several functions and arguments.
+    These are hard to memorize, so we highly recommend you have the ggplot2 cheat
+    sheet handy. You can get a copy here: [https://www.rstudio.com/wp-content/uploads/2015/03/ggplot2-cheatsheet.pdf](https://www.rstudio.com/wp-content/uploads/2015/03/ggplot2-cheatsheet.pdf)
+    or simply perform an internet search for “ggplot2 cheat sheet”.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 8.1 The components of a graph
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'We will construct a graph that summarizes the US murders dataset that looks
+    like this:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![](../Images/8e3e305141e862980406e5311f56daef.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: We can clearly see how much states vary across population size and the total
+    number of murders. Not surprisingly, we also see a clear relationship between
+    murder totals and population size. A state falling on the dashed grey line has
+    the same murder rate as the US average. The four geographic regions are denoted
+    with color, which depicts how most southern states have murder rates above the
+    average.
+  prefs: []
+  type: TYPE_NORMAL
+- en: This data visualization shows us pretty much all the information in the data
+    table. The code needed to make this plot is relatively simple. We will learn to
+    create the plot part by part.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'The first step in learning **ggplot2** is to be able to break a graph apart
+    into components. Let’s break down the plot above and introduce some of the **ggplot2**
+    terminology. The main three components to note are:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Data**: The US murders data table is being summarized. We refer to this as
+    the **data** component.'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Geometry**: The plot above is a scatterplot. This is referred to as the **geometry**
+    component. Other possible geometries are barplot, histogram, smooth densities,
+    qqplot, and boxplot. We will learn more about these in the Data Visualization
+    part of the book.'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Aesthetic mapping**: The plot uses several visual cues to represent the information
+    provided by the dataset. The two most important cues in this plot are the point
+    positions on the x-axis and y-axis, which represent population size and the total
+    number of murders, respectively. Each point represents a different observation,
+    and we *map* data about these observations to visual cues like x- and y-scale.
+    Color is another visual cue that we map to region. We refer to this as the **aesthetic
+    mapping** component. How we define the mapping depends on what **geometry** we
+    are using.'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 'We also note that:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: The points are labeled with the state abbreviations.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: The range of the x-axis and y-axis appears to be defined by the range of the
+    data. They are both on log-scales.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: There are labels, a title, a legend, and we use the style of The Economist magazine.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: We will now construct the plot piece by piece.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'We start by loading the dataset:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE1]'
+  prefs: []
+  type: TYPE_PRE
+- en: 8.2 `ggplot` objects
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'The first step in creating a **ggplot2** graph is to define a `ggplot` object.
+    We do this with the function `ggplot`, which initializes the graph. If we read
+    the help file for this function, we see that the first argument is used to specify
+    what data is associated with this object:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE2]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'We can also pipe the data in as the first argument. So this line of code is
+    equivalent to the one above:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE3]'
+  prefs: []
+  type: TYPE_PRE
+- en: '![](../Images/268c6aea44a2342addbeeb193d804526.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: It renders a plot, in this case a blank slate since no geometry has been defined.
+    The only style choice we see is a grey background.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'What has happened above is that the object was created and, because it was
+    not assigned, it was automatically evaluated. But we can assign our plot to an
+    object, for example like this:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE4]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'To render the plot associated with this object, we simply print the object
+    `p`. The following two lines of code each produce the same plot we see above:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE5]'
+  prefs: []
+  type: TYPE_PRE
+- en: 8.3 Geometries
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'In `ggplot2` we create graphs by adding *layers*. Layers can define geometries,
+    compute summary statistics, define what scales to use, or even change styles.
+    To add layers, we use the symbol `+`. In general, a line of code will look like
+    this:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: DATA |> `ggplot()` + LAYER 1 + LAYER 2 + … + LAYER N
+  prefs:
+  - PREF_BQ
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: Usually, the first added layer defines the geometry. We want to make a scatterplot.
+    What geometry do we use?
+  prefs: []
+  type: TYPE_NORMAL
+- en: Taking a quick look at the cheat sheet, we see that the function used to create
+    plots with this geometry is `geom_point`.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![](../Images/b177b692360a8ded975bbd64e8514610.png)![](../Images/42d7e365d69f4d65e51bf4682d79a6d0.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: (Image courtesy of RStudio[^(24)](#fn24). CC-BY-4.0 license[^(25)](#fn25).)
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Geometry function names follow the pattern: `geom_X` where X is the name of
+    the geometry. Some examples include `geom_point`, `geom_bar`, and `geom_histogram`.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'For `geom_point` to run properly we need to provide data and a mapping. We
+    have already connected the object `p` with the `murders` data table, and if we
+    add the layer `geom_point` it defaults to using this data. To find out what mappings
+    are expected, we read the **Aesthetics** section of the help file `geom_point`
+    help file:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE6]'
+  prefs: []
+  type: TYPE_PRE
+- en: and, as expected, we see that at least two arguments are required `x` and `y`.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 8.4 Aesthetic mappings
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '**Aesthetic mappings** describe how properties of the data connect with features
+    of the graph, such as distance along an axis, size, or color. The `aes` function
+    connects data with what we see on the graph by defining aesthetic mappings and
+    will be one of the functions you use most often when plotting. The outcome of
+    the `aes` function is often used as the argument of a geometry function. This
+    example produces a scatterplot of total murders versus population in millions:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE7]'
+  prefs: []
+  type: TYPE_PRE
+- en: We can drop the `x =` and `y =` if we wanted to since these are the first and
+    second expected arguments, as seen in the help page.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Instead of defining our plot from scratch, we can also add a layer to the `p`
+    object that was defined above as `p <- ggplot(data = murders)`:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE8]'
+  prefs: []
+  type: TYPE_PRE
+- en: '![](../Images/386827274d3fa4320b91fc25872c63c9.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: 'The scale and labels are defined by default when adding this layer. Like **dplyr**
+    functions, `aes` also uses the variable names from the object component: we can
+    use `population` and `total` without having to call them as `murders$population`
+    and `murders$total`. The behavior of recognizing the variables from the data component
+    is quite specific to `aes`. With most functions, if you try to access the values
+    of `population` or `total` outside of `aes` you receive an error.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 8.5 Layers
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: A second layer in the plot we wish to make involves adding a label to each point
+    to identify the state. The `geom_label` and `geom_text` functions permit us to
+    add text to the plot with and without a rectangle behind the text, respectively.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Because each point (each state in this case) has a label, we need an aesthetic
+    mapping to make the connection between points and labels. By reading the help
+    file, we learn that we supply the mapping between point and label through the
+    `label` argument of `aes`. So the code looks like this:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE9]'
+  prefs: []
+  type: TYPE_PRE
+- en: '![](../Images/33d613ec9b953d3a3c5eb4189aaa53d8.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: We have successfully added a second layer to the plot.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'As an example of the unique behavior of `aes` mentioned above, note that this
+    call:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE10]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'is fine, whereas this call:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE11]'
+  prefs: []
+  type: TYPE_PRE
+- en: will give you an error since `abb` is not found because it is outside of the
+    `aes` function. The layer `geom_text` does not know where to find `abb` since
+    it is a column name and not a global variable.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 8.5.1 Tinkering with arguments
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: 'Each geometry function has many arguments other than `aes` and `data`. They
+    tend to be specific to the function. For example, in the plot we wish to make,
+    the points are larger than the default size. In the help file we see that `size`
+    is an aesthetic and we can change it like this:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE12]'
+  prefs: []
+  type: TYPE_PRE
+- en: '![](../Images/8828f704be1c414e5cf4e07c634fac08.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: '`size` is **not** a mapping: whereas mappings use data from specific observations
+    and need to be inside `aes()`, operations we want to affect all the points the
+    same way do not need to be included inside `aes`.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Now because the points are larger it is hard to see the labels. If we read
+    the help file for `geom_text`, we see the `nudge_x` argument, which moves the
+    text slightly to the right or to the left:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE13]'
+  prefs: []
+  type: TYPE_PRE
+- en: '![](../Images/025635373efb57faa8137bf99d36d570.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: This is preferred as it makes it easier to read the text. In Section [8.11](ggplot2.html#add-on-packages)
+    we learn a better way of assuring we can see the points and the labels.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 8.6 Global versus local aesthetic mappings
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'In the previous line of code, we define the mapping `aes(population/10^6, total)`
+    twice, once in each geometry. We can avoid this by using a *global* aesthetic
+    mapping. We can do this when we define the blank slate `ggplot` object. Remember
+    that the function `ggplot` contains an argument that permits us to define aesthetic
+    mappings:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE14]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'If we define a mapping in `ggplot`, all the geometries that are added as layers
+    will default to this mapping. We redefine `p`:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE15]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'and then we can simply write the following code to produce the previous plot:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE16]'
+  prefs: []
+  type: TYPE_PRE
+- en: We keep the `size` and `nudge_x` arguments in `geom_point` and `geom_text`,
+    respectively, because we want to only increase the size of points and only nudge
+    the labels. If we put those arguments in `aes` then they would apply to both plots.
+    Also note that the `geom_point` function does not need a `label` argument and
+    therefore ignores that aesthetic.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'If necessary, we can override the global mapping by defining a new mapping
+    within each layer. These *local* definitions override the *global*. Here is an
+    example:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE17]'
+  prefs: []
+  type: TYPE_PRE
+- en: '![](../Images/73ad88f042857bc6a8cf74fdc7178246.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: Clearly, the second call to `geom_text` does not use `population` and `total`.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 8.7 Scales
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'First, our desired scales are in log-scale. This is not the default, so this
+    change needs to be added through a *scales* layer. A quick look at the cheat sheet
+    reveals the `scale_x_continuous` function lets us control the behavior of scales.
+    We use them like this:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE18]'
+  prefs: []
+  type: TYPE_PRE
+- en: '![](../Images/923b8abe8cb2ecb7de56db357f0dfcc5.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: Because we are in the log-scale now, the *nudge* must be made smaller.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'This particular transformation is so common that **ggplot2** provides the specialized
+    functions `scale_x_log10` and `scale_y_log10`, which we can use to rewrite the
+    code like this:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE19]'
+  prefs: []
+  type: TYPE_PRE
+- en: 8.8 Labels and titles
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'Similarly, the cheat sheet quickly reveals that to change labels and add a
+    title, we use the following functions:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE20]'
+  prefs: []
+  type: TYPE_PRE
+- en: '![](../Images/17c21a7b69cbbfa52d068ebd5f9894e8.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: We are almost there! All we have left to do is add color, a legend, and optional
+    changes to the style.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 8.9 Categories as colors
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'We can change the color of the points using the `col` argument in the `geom_point`
+    function. To facilitate demonstration of new features, we will redefine `p` to
+    be everything except the points layer:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE21]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'and then test out what happens by adding different calls to `geom_point`. We
+    can make all the points blue by adding the `color` argument:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE22]'
+  prefs: []
+  type: TYPE_PRE
+- en: '![](../Images/f8a48d7321d07cc6a1c5c7e86d901543.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: This, of course, is not what we want. We want to assign color depending on the
+    geographical region. A nice default behavior of **ggplot2** is that if we assign
+    a categorical variable to color, it automatically assigns a different color to
+    each category and also adds a legend.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Since the choice of color is determined by a feature of each observation, this
+    is an aesthetic mapping. To map each point to a color, we need to use `aes`. We
+    use the following code:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE23]'
+  prefs: []
+  type: TYPE_PRE
+- en: '![](../Images/538e41381f4fec10745c98cfdc5cf936.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: The `x` and `y` mappings are inherited from those already defined in `p`, so
+    we do not redefine them. We also move `aes` to the first argument since that is
+    where mappings are expected in this function call.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Here we see yet another useful default behavior: **ggplot2** automatically
+    adds a legend that maps color to region. To avoid adding this legend we set the
+    `geom_point` argument `show.legend = FALSE`.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 8.10 Annotation, shapes, and adjustments
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: We often want to add shapes or annotation to figures that are not derived directly
+    from the aesthetic mapping; examples include labels, boxes, shaded areas, and
+    lines.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Here we want to add a line that represents the average murder rate for the
+    entire country. Once we determine the per million rate to be \(r\), this line
+    is defined by the formula: \(y = r x\), with \(y\) and \(x\) our axes: total murders
+    and population in millions, respectively. In the log-scale this line turns into:
+    \(\log(y) = \log(r) + \log(x)\). So in our plot it’s a line with slope 1 and intercept
+    \(\log(r)\). To compute this value, we use our **dplyr** skills:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE24]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'To add a line we use the `geom_abline` function. **ggplot2** uses `ab` in the
+    name to remind us we are supplying the intercept (`a`) and slope (`b`). The default
+    line has slope 1 and intercept 0 so we only have to define the intercept:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE25]'
+  prefs: []
+  type: TYPE_PRE
+- en: '![](../Images/b72572cca75cb99fdb04e2edb051cb9f.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: Here `geom_abline` does not use any information from the data object.
+  prefs: []
+  type: TYPE_NORMAL
+- en: We can change the line type and color of the lines using arguments. Also, we
+    draw it first so it doesn’t go over our points.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE26]'
+  prefs: []
+  type: TYPE_PRE
+- en: Note that we have redefined `p` and used this new `p` below and in the next
+    section.
+  prefs: []
+  type: TYPE_NORMAL
+- en: The default plots created by **ggplot2** are already very useful. However, we
+    frequently need to make minor tweaks to the default behavior. Although it is not
+    always obvious how to make these even with the cheat sheet, **ggplot2** is very
+    flexible.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'For example, we can make changes to the legend via the `scale_color_discrete`
+    function. In our plot the word *region* is capitalized and we can change it like
+    this:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE27]'
+  prefs: []
+  type: TYPE_PRE
+- en: 8.11 Add-on packages
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: The power of **ggplot2** is augmented further due to the availability of add-on
+    packages. The remaining changes needed to put the finishing touches on our plot
+    require the **ggthemes** and **ggrepel** packages.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'The style of a **ggplot2** graph can be changed using the `theme` functions.
+    Several themes are included as part of the **ggplot2** package. In fact, for most
+    of the plots in this book, we use a function in the **dslabs** package that automatically
+    sets a default theme:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE28]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Many other themes are added by the package **ggthemes**. Among those are the
+    `theme_economist` theme that we used. After installing the package, you can change
+    the style by adding a layer like this:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE29]'
+  prefs: []
+  type: TYPE_PRE
+- en: You can see how some of the other themes look by simply changing the function.
+    For instance, you might try the `theme_fivethirtyeight()` theme instead.
+  prefs: []
+  type: TYPE_NORMAL
+- en: The final difference has to do with the position of the labels. In our plot,
+    some of the labels fall on top of each other. The add-on package **ggrepel** includes
+    a geometry that adds labels while ensuring that they don’t fall on top of each
+    other. We simply change `geom_text` with `geom_text_repel`.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 8.12 Putting it all together
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Now that we are done testing, we can write one piece of code that produces our
+    desired plot from scratch.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE30]'
+  prefs: []
+  type: TYPE_PRE
+- en: '![](../Images/0c03cbf96dcf02ebcda923bb50b689ce.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: 8.13 Quick plots with `qplot`
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: We have learned the powerful approach to generating visualization with ggplot.
+    However, there are instances in which all we want is to make a quick plot of,
+    for example, a histogram of the values in a vector, a scatterplot of the values
+    in two vectors, or a boxplot using categorical and numeric vectors. We demonstrated
+    how to generate these plots with `hist`, `plot`, and `boxplot`. However, if we
+    want to keep consistent with the ggplot style, we can use the function `qplot`.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'If we have values in two vectors, say:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE31]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'and we want to make a scatterplot with ggplot, we would have to type something
+    like:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE32]'
+  prefs: []
+  type: TYPE_PRE
+- en: This seems like too much code for such a simple plot. The `qplot` function sacrifices
+    the flexibility provided by the `ggplot` approach, but allows us to generate a
+    plot quickly.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE33]'
+  prefs: []
+  type: TYPE_PRE
+- en: We will learn more about `qplot` in Section [9.8](dataviz-distributions.html#other-geometries)
+  prefs: []
+  type: TYPE_NORMAL
+- en: 8.14 Grids of plots
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'There are often reasons to graph plots next to each other. The **gridExtra**
+    package permits us to do that:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE34]'
+  prefs: []
+  type: TYPE_PRE
+- en: '![](../Images/245745c75bb6f23db617feef4fecd4d0.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: 8.15 Exercises
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Start by loading the **dplyr** and **ggplot2** library as well as the `murders`
+    and `heights` data.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE35]'
+  prefs: []
+  type: TYPE_PRE
+- en: 1\. With **ggplot2** plots can be saved as objects. For example we can associate
+    a dataset with a plot object like this
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE36]'
+  prefs: []
+  type: TYPE_PRE
+- en: Because `data` is the first argument we don’t need to spell it out
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE37]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'and we can also use the pipe:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE38]'
+  prefs: []
+  type: TYPE_PRE
+- en: What is class of the object `p`?
+  prefs: []
+  type: TYPE_NORMAL
+- en: 2\. Remember that to print an object you can use the command `print` or simply
+    type the object. Print the object `p` defined in exercise one and describe what
+    you see.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Nothing happens.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: A blank slate plot.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: A scatterplot.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: A histogram.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: 3\. Using the pipe `|>`, create an object `p` but this time associated with
+    the `heights` dataset instead of the `murders` dataset.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 4\. What is the class of the object `p` you have just created?
+  prefs: []
+  type: TYPE_NORMAL
+- en: '5\. Now we are going to add a layer and the corresponding aesthetic mappings.
+    For the murders data we plotted total murders versus population sizes. Explore
+    the `murders` data frame to remind yourself what are the names for these two variables
+    and select the correct answer. **Hint**: Look at `?murders`.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`state` and `abb`.'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '`total_murders` and `population_size`.'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '`total` and `population`.'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '`murders` and `size`.'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '6\. To create the scatterplot we add a layer with `geom_point`. The aesthetic
+    mappings require us to define the x-axis and y-axis variables, respectively. So
+    the code looks like this:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE39]'
+  prefs: []
+  type: TYPE_PRE
+- en: except we have to define the two variables `x` and `y`. Fill this out with the
+    correct variable names.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '7\. Note that if we don’t use argument names, we can obtain the same plot by
+    making sure we enter the variable names in the right order like this:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE40]'
+  prefs: []
+  type: TYPE_PRE
+- en: Remake the plot but now with total in the x-axis and population in the y-axis.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 8\. If instead of points we want to add text, we can use the `geom_text()` or
+    `geom_label()` geometries. The following code
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE41]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'will give us the error message: `Error: geom_label requires the following missing
+    aesthetics: label`'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Why is this?
+  prefs: []
+  type: TYPE_NORMAL
+- en: We need to map a character to each point through the label argument in aes.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: We need to let `geom_label` know what character to use in the plot.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: The `geom_label` geometry does not require x-axis and y-axis values.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '`geom_label` is not a ggplot2 command.'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: 9\. Rewrite the code above to use abbreviation as the label through `aes`
+  prefs: []
+  type: TYPE_NORMAL
+- en: 10\. Change the color of the labels to blue. How will we do this?
+  prefs: []
+  type: TYPE_NORMAL
+- en: Adding a column called `blue` to `murders`.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: Because each label needs a different color we map the colors through `aes`.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: Use the `color` argument in `ggplot`.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: Because we want all colors to be blue, we do not need to map colors, just use
+    the color argument in `geom_label`.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: 11\. Rewrite the code above to make the labels blue.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '12\. Now suppose we want to use color to represent the different regions. In
+    this case which of the following is most appropriate:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Adding a column called `color` to `murders` with the color we want to use.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: Because each label needs a different color we map the colors through the color
+    argument of `aes` .
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: Use the `color` argument in `ggplot`.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: Because we want all colors to be blue, we do not need to map colors, just use
+    the color argument in `geom_label`.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: 13\. Rewrite the code above to make the labels’ color be determined by the state’s
+    region.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 14\. Now we are going to change the x-axis to a log scale to account for the
+    fact the distribution of population is skewed. Let’s start by defining an object
+    `p` holding the plot we have made up to now
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE42]'
+  prefs: []
+  type: TYPE_PRE
+- en: To change the y-axis to a log scale we learned about the `scale_x_log10()` function.
+    Add this layer to the object `p` to change the scale and render the plot.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 15\. Repeat the previous exercise but now change both axes to be in the log
+    scale.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '16\. Now edit the code above to add the title “Gun murder data” to the plot.
+    Hint: use the `ggtitle` function.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '* * *'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[https://ggplot2.tidyverse.org/](https://ggplot2.tidyverse.org/)[↩︎](ggplot2.html#fnref22)'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[http://www.springer.com/us/book/9780387245447](http://www.springer.com/us/book/9780387245447)[↩︎](ggplot2.html#fnref23)'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[https://github.com/rstudio/cheatsheets](https://github.com/rstudio/cheatsheets)[↩︎](ggplot2.html#fnref24)'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[https://github.com/rstudio/cheatsheets/blob/master/LICENSE](https://github.com/rstudio/cheatsheets/blob/master/LICENSE)[↩︎](ggplot2.html#fnref25)'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
