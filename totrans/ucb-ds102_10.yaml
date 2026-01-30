@@ -1,0 +1,700 @@
+- en: Bayesian Hierarchical Models
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: 原文：[https://data102.org/ds-102-book/content/chapters/02/hierarchical-models](https://data102.org/ds-102-book/content/chapters/02/hierarchical-models)
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '[<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" width="1.25rem"
+    height="1.25rem" class="myst-fm-license-cc-icon myst-fm-license-cc-icon-main inline-block
+    mx-1"><title>Content License: Creative Commons Attribution Share Alike 4.0 International
+    (CC-BY-SA-4.0)</title></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"
+    width="1.25rem" height="1.25rem" class="myst-fm-license-cc-icon myst-fm-license-cc-icon-by
+    inline-block mr-1"><title>Credit must be given to the creator</title></svg><svg
+    viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" width="1.25rem" height="1.25rem"
+    class="myst-fm-license-cc-icon myst-fm-license-cc-icon-sa inline-block mr-1"><title>Adaptations
+    must be shared under the same terms</title></svg>](https://creativecommons.org/licenses/by-sa/4.0/)[](https://github.com/ds-102/ds-102-book
+    "GitHub Repository: ds-102/ds-102-book")[](https://github.com/ds-102/ds-102-book/edit/main/ds-102-book/content/chapters/02/02_hierarchical_models.ipynb
+    "Edit This Page")'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'We’ve seen so far that a Bayesian approach can be useful in cases where we
+    have prior domain knowledge that we want to incorporate into our model. We’ve
+    also seen that the effect of choosing a prior depends heavily on how much data
+    we have: the less data we have, the more our conclusions tilt toward the prior.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'In many cases, we may not have as much external prior knowledge, and we want
+    to rely on parts of the dataset that are larger to help offset parts of the dataset
+    that are smaller. We’ll make this (very) abstract idea concrete with an example
+    looking at kidney cancer deaths in the US between 1980 and 1989\. The data used
+    in this section, as well as inspiration for the modeling and analysis, comes from
+    [Bayesian Data Analysis](http://www.stat.columbia.edu/~gelman/book/) pp 47-51\.
+    The cleaned version of the data came from [Robin Ryder](https://github.com/robinryder/BDA-kidney).
+    Note that the dataset suffers from a severe bias: it only contains information
+    on white men. We’ll discuss issues with this later in this section.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: We’ll walk through the process of setting up a model for this more complex dataset,
+    and in the process see several advantages and perspectives on Bayesian models.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Example: Understanding Kidney Cancer Death Risk[¶](#example-understanding-kidney-cancer-death-risk
+    "Link to this Section")'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'Before we can start modeling, we must first understand the data. We’ll focus
+    on the following columns:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`state`: the US state'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`Location`: the county and state as a string'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`fips`, which provides the [FIPS code](https://en.wikipedia.org/wiki/Federal_Information_Processing_Standard_state_code)
+    for each county: this is a standard identifier that can often be used to join
+    datasets with county-level information.'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`dc` and `dc.2`: the number of kidney cancer deaths between 1980-1984 and 1985-1989,
+    respectively'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`pop` and `pop.2`: the population between 1980-1984 and 1985-1989, respectively'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[PRE1]'
+  prefs: []
+  type: TYPE_PRE
+- en: Loading...
+  prefs: []
+  type: TYPE_NORMAL
+- en: For simplicity, we’ll focus our analysis on 1980-1984\. Our goal will be to
+    understand **in which counties people are at the highest risk of kidney cancer
+    death**. This could help inform public health actions, or could reveal information
+    about underlying carcinogens (e.g., proximity to chemical treatment plants, etc.)
+    that should be investigated and remedied.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE2]'
+  prefs: []
+  type: TYPE_PRE
+- en: '`<Axes: xlabel=''rate_naive'', ylabel=''Count''>`![<Figure size 640x480 with
+    1 Axes>](../Images/79b0f950d09b7a1a924a69a8615001c0.png)'
+  prefs: []
+  type: TYPE_NORMAL
+- en: From this, it appears that most counties have a rate between 1 in 100,000 (0.00001)
+    and 1 in 10,000 (0.0001), but a sizeable number have a rate of 0.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'If our goal is merely to characterize exactly what happened in each county
+    from 1980-1984, this visualization could be enough. However, our goal is to understand
+    the risk of kidney cancer death in each county, in a way that could help inform
+    public health. This motivates the definition of our parameter of interest: **for
+    county <semantics><mrow><mi>i</mi></mrow><annotation encoding="application/x-tex">i</annotation></semantics>i,
+    what is each person’s average risk of dying from kidney cancer?**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Intuitively, we can see that in counties with very low population, this dataset
+    will provide a poor estimate of this parameter. Take, for example, a hypothetical
+    county with only 10 people. Because the rate we’re interested in is close to 1
+    in 10,000, we’re very likely to see 0 deaths, but that doesn’t mean that the risk
+    for these 10 people is 0! We can see this empirically:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE3]'
+  prefs: []
+  type: TYPE_PRE
+- en: '`<Axes: xlabel=''pop'', ylabel=''rate_naive''>`![<Figure size 640x480 with
+    1 Axes>](../Images/a8e336f7c6092eff032f4615e35cc27b.png)'
+  prefs: []
+  type: TYPE_NORMAL
+- en: For larger counties, our estimates are consistently between 0.00002 and 0.00008,
+    but for the small counties, the estimates have much higher variability.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Here, we have a situation where we have a very large amount of data (in fact,
+    our dataset contains a census of the entire population of interest), but we’re
+    trying to quantify a relatively rare phenomenon. Next, we’ll see how Bayesian
+    inference can help us leverage the more certain information from large counties
+    to make good inferences for small counties.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Bayesian Hierarchical Modeling as a Middle Ground[¶](#bayesian-hierarchical-modeling-as-a-middle-ground
+    "Link to this Section")
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'We can consider the approach we took earlier as one extreme of a spectrum:
+    we estimated the death rate for each county separately, and didn’t pool or share
+    any information across counties at all.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'On the opposite extreme of the spectrum, we could pool all the data from all
+    the counties together:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE4]'
+  prefs: []
+  type: TYPE_PRE
+- en: '`4.856485743364176e-05`'
+  prefs: []
+  type: TYPE_NORMAL
+- en: While this provides a good estimate of the rate overall, it obscures variability
+    across counties, and prevents us from making county-level inferences or finding
+    locations most in need of targeting.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'To achieve a middle ground between these two extremes, we’ll use a **Bayesian
+    hierarchical model**:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: For each county, let <semantics><mrow><msub><mi>θ</mi><mi>i</mi></msub><mo>∈</mo><mo
+    stretchy="false">[</mo><mn>0</mn><mo separator="true">,</mo><mn>1</mn><mo stretchy="false">]</mo></mrow><annotation
+    encoding="application/x-tex">\theta_i \in [0, 1]</annotation></semantics>θi​∈[0,1]
+    be a random variable indicating the risk of kidney cancer death for an individual
+    in that county.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 'We’ll use the same prior distribution for each county: a Beta<semantics><mrow><mo
+    stretchy="false">(</mo><mi>a</mi><mo separator="true">,</mo><mi>b</mi><mo stretchy="false">)</mo></mrow><annotation
+    encoding="application/x-tex">(a, b)</annotation></semantics>(a,b) (for values
+    of <semantics><mrow><mi>a</mi></mrow><annotation encoding="application/x-tex">a</annotation></semantics>a
+    and <semantics><mrow><mi>b</mi></mrow><annotation encoding="application/x-tex">b</annotation></semantics>b
+    yet to be determined), but each is a separate random variable and will have a
+    separate posterior distribution.'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Let <semantics><mrow><msub><mi>y</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">y_i</annotation></semantics>yi​
+    be a **binomial** random variable for each county indicating the number of kidney
+    cancer deaths for that county, with parameters <semantics><mrow><msub><mi>n</mi><mi>i</mi></msub></mrow><annotation
+    encoding="application/x-tex">n_i</annotation></semantics>ni​ (the county population)
+    and <semantics><mrow><msub><mi>θ</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">\theta_i</annotation></semantics>θi​
+    (the county-level risk).
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Notationally, we can write the above bullet points as
+  prefs: []
+  type: TYPE_NORMAL
+- en: <semantics><mtable rowspacing="0.25em" columnalign="right left right" columnspacing="0em
+    1em"><mtr><mtd><mstyle scriptlevel="0" displaystyle="true"><msub><mi>θ</mi><mi>i</mi></msub></mstyle></mtd><mtd><mstyle
+    scriptlevel="0" displaystyle="true"><mrow><mo>∼</mo><mrow><mi mathvariant="normal">B</mi><mi
+    mathvariant="normal">e</mi><mi mathvariant="normal">t</mi><mi mathvariant="normal">a</mi></mrow><mo
+    stretchy="false">(</mo><mi>a</mi><mo separator="true">,</mo><mi>b</mi><mo stretchy="false">)</mo><mo
+    separator="true">,</mo></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mi>i</mi><mo>∈</mo><mo
+    stretchy="false">{</mo><mn>1</mn><mo separator="true">,</mo><mn>2</mn><mo separator="true">,</mo><mo>…</mo><mo
+    stretchy="false">}</mo></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0"
+    displaystyle="true"><msub><mi>y</mi><mi>i</mi></msub></mstyle></mtd><mtd><mstyle
+    scriptlevel="0" displaystyle="true"><mrow><mo>∼</mo><mrow><mi mathvariant="normal">B</mi><mi
+    mathvariant="normal">i</mi><mi mathvariant="normal">n</mi><mi mathvariant="normal">o</mi><mi
+    mathvariant="normal">m</mi><mi mathvariant="normal">i</mi><mi mathvariant="normal">a</mi><mi
+    mathvariant="normal">l</mi></mrow><mo stretchy="false">(</mo><msub><mi>θ</mi><mi>i</mi></msub><mo
+    separator="true">,</mo><msub><mi>n</mi><mi>i</mi></msub><mo stretchy="false">)</mo><mo
+    separator="true">,</mo></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mi>i</mi><mo>∈</mo><mo
+    stretchy="false">{</mo><mn>1</mn><mo separator="true">,</mo><mn>2</mn><mo separator="true">,</mo><mo>…</mo><mo
+    separator="true">,</mo><mi>C</mi><mo stretchy="false">}</mo></mrow></mstyle></mtd></mtr></mtable><annotation
+    encoding="application/x-tex">\begin{align*} \theta_i &\sim \mathrm{Beta}(a, b),
+    & i \in \{1, 2, \ldots\} \\ y_i &\sim \mathrm{Binomial}(\theta_i, n_i), & i \in
+    \{1, 2, \ldots, C\} \end{align*}</annotation></semantics>θi​yi​​∼Beta(a,b),∼Binomial(θi​,ni​),​i∈{1,2,…}i∈{1,2,…,C}​[(1)](#Oxjxv4dlwS
+    "Link to this Equation")
+  prefs: []
+  type: TYPE_NORMAL
+- en: We saw in the last section that if the likelihood for a sequence of random variables
+    <semantics><mrow><msub><mi>x</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">x_i</annotation></semantics>xi​
+    is Bernoulli<semantics><mrow><mo stretchy="false">(</mo><mi>θ</mi><mo stretchy="false">)</mo></mrow><annotation
+    encoding="application/x-tex">(\theta)</annotation></semantics>(θ) and the prior
+    for <semantics><mrow><mi>θ</mi></mrow><annotation encoding="application/x-tex">\theta</annotation></semantics>θ
+    is Beta<semantics><mrow><mo stretchy="false">(</mo><mi>a</mi><mo separator="true">,</mo><mi>b</mi><mo
+    stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">(a, b)</annotation></semantics>(a,b),
+    then the posterior for <semantics><mrow><mi>θ</mi></mrow><annotation encoding="application/x-tex">\theta</annotation></semantics>θ
+    is Beta<semantics><mrow><mo fence="true">(</mo><mi>a</mi><mo>+</mo><mo>∑</mo><msub><mi>x</mi><mi>i</mi></msub><mo
+    separator="true">,</mo><mi>b</mi><mo>+</mo><mi>n</mi><mo>−</mo><mo>∑</mo><msub><mi>x</mi><mi>i</mi></msub><mo
+    fence="true">)</mo></mrow><annotation encoding="application/x-tex">\left(a + \sum
+    x_i, b + n - \sum x_i\right)</annotation></semantics>(a+∑xi​,b+n−∑xi​). We can
+    also show that **if the likelihood a random variable <semantics><mrow><mi>y</mi></mrow><annotation
+    encoding="application/x-tex">y</annotation></semantics>y is Binomial<semantics><mrow><mo
+    stretchy="false">(</mo><mi>n</mi><mo separator="true">,</mo><mi>θ</mi><mo stretchy="false">)</mo></mrow><annotation
+    encoding="application/x-tex">(n, \theta)</annotation></semantics>(n,θ) and the
+    prior for <semantics><mrow><mi>θ</mi></mrow><annotation encoding="application/x-tex">\theta</annotation></semantics>θ
+    is Beta<semantics><mrow><mo stretchy="false">(</mo><mi>a</mi><mo separator="true">,</mo><mi>b</mi><mo
+    stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">(a, b)</annotation></semantics>(a,b),
+    then the posterior for <semantics><mrow><mi>θ</mi></mrow><annotation encoding="application/x-tex">\theta</annotation></semantics>θ
+    is Beta<semantics><mrow><mo stretchy="false">(</mo><mi>a</mi><mo>+</mo><mi>y</mi><mo
+    separator="true">,</mo><mi>b</mi><mo>+</mo><mi>n</mi><mo>−</mo><mi>y</mi><mo stretchy="false">)</mo></mrow><annotation
+    encoding="application/x-tex">(a + y, b + n - y)</annotation></semantics>(a+y,b+n−y).**
+    In other words, just as the beta distribution is the conjugate prior for the Bernoulli
+    likelihood, it is also the conjugate prior for the binomial likelihood. (It also
+    happens to be the conjugate prior for the geometric likelihood as well!)
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Putting all this together, we can now compute the posterior distribution. Instead
+    of a single parameter <semantics><mrow><mi>θ</mi></mrow><annotation encoding="application/x-tex">\theta</annotation></semantics>θ,
+    we now have <semantics><mrow><mi>C</mi></mrow><annotation encoding="application/x-tex">C</annotation></semantics>C
+    parameters, <semantics><mrow><msub><mi>θ</mi><mn>1</mn></msub><mo separator="true">,</mo><mo>…</mo><mo
+    separator="true">,</mo><msub><mi>θ</mi><mi>C</mi></msub></mrow><annotation encoding="application/x-tex">\theta_1,
+    \ldots, \theta_C</annotation></semantics>θ1​,…,θC​. The posterior distribution
+    is the joint distribution of all of these random variables, conditioned on all
+    of the observed data:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: <semantics><mtable rowspacing="0.25em" columnalign="right left" columnspacing="0em"><mtr><mtd><mstyle
+    scriptlevel="0" displaystyle="true"><mrow><mi>p</mi><mo stretchy="false">(</mo><msub><mi>θ</mi><mn>1</mn></msub><mo
+    separator="true">,</mo><mo>…</mo><mo separator="true">,</mo><msub><mi>θ</mi><mi>C</mi></msub><mi
+    mathvariant="normal">∣</mi><msub><mi>y</mi><mn>1</mn></msub><mo separator="true">,</mo><mo>…</mo><mo
+    separator="true">,</mo><msub><mi>y</mi><mi>C</mi></msub><mo stretchy="false">)</mo></mrow></mstyle></mtd><mtd><mstyle
+    scriptlevel="0" displaystyle="true"><mrow><mo>∝</mo><mover><mover><mrow><mi>p</mi><mo
+    stretchy="false">(</mo><msub><mi>y</mi><mn>1</mn></msub><mo separator="true">,</mo><mo>…</mo><mo
+    separator="true">,</mo><msub><mi>y</mi><mi>c</mi></msub><mi mathvariant="normal">∣</mi><msub><mi>θ</mi><mn>1</mn></msub><mo
+    separator="true">,</mo><mo>…</mo><mo separator="true">,</mo><msub><mi>θ</mi><mi>C</mi></msub><mo
+    stretchy="false">)</mo></mrow><mo stretchy="true">⏞</mo></mover><mtext>likelihood</mtext></mover><mover><mover><mrow><mi>p</mi><mo
+    stretchy="false">(</mo><msub><mi>θ</mi><mn>1</mn></msub><mo separator="true">,</mo><mo>…</mo><mo
+    separator="true">,</mo><msub><mi>θ</mi><mi>C</mi></msub><mo stretchy="false">)</mo></mrow><mo
+    stretchy="true">⏞</mo></mover><mtext>prior</mtext></mover></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle
+    scriptlevel="0" displaystyle="true"><mrow><mo>=</mo><munderover><mo>∏</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mi>C</mi></munderover><msubsup><mi>θ</mi><mi>i</mi><mrow><mi>a</mi><mo>+</mo><msub><mi>y</mi><mi>i</mi></msub><mo>−</mo><mn>1</mn></mrow></msubsup><mo
+    stretchy="false">(</mo><mn>1</mn><mo>−</mo><msub><mi>θ</mi><mi>i</mi></msub><msup><mo
+    stretchy="false">)</mo><mrow><mi>b</mi><mo>+</mo><msub><mi>n</mi><mi>i</mi></msub><mo>−</mo><msub><mi>y</mi><mi>i</mi></msub><mo>−</mo><mn>1</mn></mrow></msup></mrow></mstyle></mtd></mtr></mtable><annotation
+    encoding="application/x-tex">\begin{align*} p(\theta_1, \ldots, \theta_C | y_1,
+    \ldots, y_C) &\propto \overbrace{p(y_1, \ldots, y_c | \theta_1, \ldots, \theta_C)}^{\text{likelihood}}\,
+    \overbrace{p(\theta_1, \ldots, \theta_C)}^{\text{prior}} \\ &= \prod_{i=1}^C \theta_i^{a+y_i-1}(1-\theta_i)^{b
+    + n_i - y_i - 1} \end{align*}</annotation></semantics>p(θ1​,…,θC​∣y1​,…,yC​)​∝p(y1​,…,yc​∣θ1​,…,θC​)​likelihood​p(θ1​,…,θC​)​prior​=i=1∏C​θia+yi​−1​(1−θi​)b+ni​−yi​−1​[(2)](#hbXiz5pOW1
+    "Link to this Equation")
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'From this, we can conclude that we can compute the posterior independently
+    for every county:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: <semantics><mrow><msub><mi>θ</mi><mi>i</mi></msub><mi mathvariant="normal">∣</mi><msub><mi>y</mi><mi>i</mi></msub><mo>∼</mo><mrow><mi
+    mathvariant="normal">B</mi><mi mathvariant="normal">e</mi><mi mathvariant="normal">t</mi><mi
+    mathvariant="normal">a</mi></mrow><mo stretchy="false">(</mo><mi>a</mi><mo>+</mo><msub><mi>y</mi><mi>i</mi></msub><mo
+    separator="true">,</mo><mi>b</mi><mo>+</mo><msub><mi>n</mi><mi>i</mi></msub><mo>−</mo><msub><mi>y</mi><mi>i</mi></msub><mo
+    stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">\theta_i
+    | y_i \sim \mathrm{Beta}(a + y_i, b + n_i - y_i)</annotation></semantics>θi​∣yi​∼Beta(a+yi​,b+ni​−yi​)[(3)](#yIvt4kv8OR
+    "Link to this Equation")
+  prefs: []
+  type: TYPE_NORMAL
+- en: Note that according to the posterior distribution <semantics><mrow><mi>p</mi><mo
+    stretchy="false">(</mo><msub><mi>θ</mi><mn>1</mn></msub><mo separator="true">,</mo><mo>…</mo><mo
+    separator="true">,</mo><msub><mi>θ</mi><mi>C</mi></msub><mi mathvariant="normal">∣</mi><msub><mi>y</mi><mn>1</mn></msub><mo
+    separator="true">,</mo><mo>…</mo><mo separator="true">,</mo><msub><mi>y</mi><mi>C</mi></msub><mo
+    stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">p(\theta_1,
+    \ldots, \theta_C | y_1, \ldots, y_C)</annotation></semantics>p(θ1​,…,θC​∣y1​,…,yC​),
+    the distribution for each county’s parameter is independent of all other counties,
+    because the joint distribution can be written as a product of the marginal distributions.
+    But, they all share the parameters <semantics><mrow><mi>a</mi></mrow><annotation
+    encoding="application/x-tex">a</annotation></semantics>a and <semantics><mrow><mi>b</mi></mrow><annotation
+    encoding="application/x-tex">b</annotation></semantics>b in common.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Choosing the Prior[¶](#choosing-the-prior "Link to this Section")
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: 'Just as in the earlier example, we’re now left with a critically important
+    question: **how do we choose <semantics><mrow><mi>a</mi></mrow><annotation encoding="application/x-tex">a</annotation></semantics>a
+    and <semantics><mrow><mi>b</mi></mrow><annotation encoding="application/x-tex">b</annotation></semantics>b**?
+    We’ll examine four approaches, in increasing order of complexity and sophistication:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Uninformative prior
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: Educated guess
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: Empirical Bayes
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: Hierarchical model
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: Uninformative Prior[¶](#uninformative-prior "Link to this Section")
+  prefs:
+  - PREF_H4
+  type: TYPE_NORMAL
+- en: 'If we don’t know anything about the data, we can choose an **uninformative
+    prior**: in other words, one that provides as little information as possible.
+    In this example, we might choose a uniform distribution over <semantics><mrow><mo
+    stretchy="false">[</mo><mn>0</mn><mo separator="true">,</mo><mn>1</mn><mo stretchy="false">]</mo></mrow><annotation
+    encoding="application/x-tex">[0, 1]</annotation></semantics>[0,1] (i.e., <semantics><mrow><mi>a</mi><mo>=</mo><mi>b</mi><mo>=</mo><mn>1</mn></mrow><annotation
+    encoding="application/x-tex">a = b = 1</annotation></semantics>a=b=1). While this
+    avoids the problem of specifying a prior, it also isn’t particularly useful. If
+    we use such a weak prior, we’re saying that risk values closer to 0.8 are just
+    as likely as values closer to 0.0001: this clearly does not align with what we
+    already know about the problem. If we take this approach and then compute the
+    posterior distributions, we would see results similar to the no-pooling estimates
+    earlier.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Educated Guess[¶](#educated-guess "Link to this Section")
+  prefs:
+  - PREF_H4
+  type: TYPE_NORMAL
+- en: 'A good prior distribution should encode our knowledge about the quantity of
+    interest. In this case, everything we know comes from what we’ve done here: above,
+    we estimated an overall rate of about 4.9 in 10,000\. If we choose <semantics><mrow><mi>a</mi><mo>=</mo><mn>5</mn></mrow><annotation
+    encoding="application/x-tex">a = 5</annotation></semantics>a=5 and <semantics><mrow><mi>b</mi><mo>=</mo><mn>9995</mn></mrow><annotation
+    encoding="application/x-tex">b = 9995</annotation></semantics>b=9995, then the
+    mean of the prior is <semantics><mrow><mn>5</mn><mo>×</mo><mn>1</mn><msup><mn>0</mn><mrow><mo>−</mo><mn>5</mn></mrow></msup></mrow><annotation
+    encoding="application/x-tex">5 \times 10^{-5}</annotation></semantics>5×10−5.
+    So, one possible option is Beta<semantics><mrow><mo stretchy="false">(</mo><mn>5</mn><mo
+    separator="true">,</mo><mn>9995</mn><mo stretchy="false">)</mo></mrow><annotation
+    encoding="application/x-tex">(5, 9995)</annotation></semantics>(5,9995).'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Note that this is somewhat arbitrary: we could have just as easily chosen <semantics><mrow><mi>a</mi><mo>=</mo><mn>10</mn></mrow><annotation
+    encoding="application/x-tex">a = 10</annotation></semantics>a=10 and <semantics><mrow><mi>b</mi><mo>=</mo><mn>19990</mn></mrow><annotation
+    encoding="application/x-tex">b = 19990</annotation></semantics>b=19990, or <semantics><mrow><mi>a</mi><mo>=</mo><mn>50</mn></mrow><annotation
+    encoding="application/x-tex">a = 50</annotation></semantics>a=50 and <semantics><mrow><mi>b</mi><mo>=</mo><mn>99950</mn></mrow><annotation
+    encoding="application/x-tex">b = 99950</annotation></semantics>b=99950, and obtained
+    the same mean.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Empirical Bayes[¶](#empirical-bayes "Link to this Section")
+  prefs:
+  - PREF_H4
+  type: TYPE_NORMAL
+- en: Empirical Bayes is a hybrid Bayesian-frequentist approach that uses frequentist
+    methods to find guesses or prior distributions for quantities of interest. In
+    this case, we’ll use a frequentist approach to make a better guess for <semantics><mrow><mi>a</mi></mrow><annotation
+    encoding="application/x-tex">a</annotation></semantics>a and <semantics><mrow><mi>b</mi></mrow><annotation
+    encoding="application/x-tex">b</annotation></semantics>b.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'In particular, we saw earlier that the smaller counties produced naive estimates
+    that varied too much. What if we just looked at the larger counties? We’ll start
+    by deciding on a (somewhat arbitrary) threshold of big versus small counties.
+    From the scatterplot above, we can see that after a certain size, the non-pooled
+    estimates seem to be much less variable. We can zoom in to decide on a threshold:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE5]'
+  prefs: []
+  type: TYPE_PRE
+- en: '![<Figure size 640x480 with 1 Axes>](../Images/4fd778acebdc23cda19892a931e82f25.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: 'Based on this, we’ll use 300,000 as a cutoff (the dotted line), and ignore
+    counties smaller than this when estimating the parameters of the prior:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE6]'
+  prefs: []
+  type: TYPE_PRE
+- en: '`<Axes: xlabel=''rate_naive'', ylabel=''Count''>`![<Figure size 640x480 with
+    1 Axes>](../Images/dfa13bc2ef732529fabfb049190a9bed.png)'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'We’ll use this empirical distribution (or rather, a slightly modified version
+    of it) as our prior: this is where the “empirical” in empirical Bayes comes from.
+    Since we want to use a beta prior, we need to fit a beta distribution to this
+    data. In other words, we need to find parameters <semantics><mrow><mi>a</mi></mrow><annotation
+    encoding="application/x-tex">a</annotation></semantics>a and <semantics><mrow><mi>b</mi></mrow><annotation
+    encoding="application/x-tex">b</annotation></semantics>b that are a good fit for
+    this sequence of observations (in the histogram above).'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'This is exactly the problem we solved in the last section using maximum likelihood!
+    We’ll use maximum likelihood to fit a beta distribution to these data. This time,
+    instead of deriving the MLEs for the Beta distribution, we’ll use scipy to do
+    it for us:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE7]'
+  prefs: []
+  type: TYPE_PRE
+- en: '[PRE8]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Using this approach, our prior would be Beta<semantics><mrow><mo stretchy="false">(</mo><mn>9.27</mn><mo
+    separator="true">,</mo><mn>195581</mn><mo stretchy="false">)</mo></mrow><annotation
+    encoding="application/x-tex">(9.27, 195581)</annotation></semantics>(9.27,195581).
+    To summarize what we did:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: We want to find the parameters <semantics><mrow><mi>a</mi></mrow><annotation
+    encoding="application/x-tex">a</annotation></semantics>a and <semantics><mrow><mi>b</mi></mrow><annotation
+    encoding="application/x-tex">b</annotation></semantics>b of the prior, using our
+    data to help us since we don’t have any domain knowledge
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 'We determined that we trust the data from the large counties, but not the smaller
+    counties (because they are too variable). Note that this is an implicit **assumption**
+    which could lead us astray: for example, if larger counties are biased toward
+    lower or higher rates, then using them to estimate parameters of the prior is
+    a bad idea.'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: We looked at the naively estimated rates for the large counties only, and fit
+    a beta distribution to those, and then used that beta distribution as our prior.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 'Let’s compare the results for these two approaches. For ease of visualization,
+    we’ll look at a histogram of each county’s LMSE estimate:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE9]'
+  prefs: []
+  type: TYPE_PRE
+- en: '[PRE10]'
+  prefs: []
+  type: TYPE_PRE
+- en: '![<Figure size 640x480 with 1 Axes>](../Images/5cd0d141d289b418def914548340eeb6.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: In both cases, we no longer see estimates of 0\. Note that because the empirical
+    Bayes prior was stronger (i.e., less variable due to larger values of <semantics><mrow><mi>a</mi></mrow><annotation
+    encoding="application/x-tex">a</annotation></semantics>a and <semantics><mrow><mi>b</mi></mrow><annotation
+    encoding="application/x-tex">b</annotation></semantics>b), the posterior estimates
+    fall in a narrower range.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Full Hierarchical Model[¶](#full-hierarchical-model "Link to this Section")
+  prefs:
+  - PREF_H4
+  type: TYPE_NORMAL
+- en: 'Philosophically, taking a Bayesian approach means that we’re deciding to treat
+    unknown quantities as random variables, rather than fixed parameters. From what
+    we’ve seen so far, in this model, <semantics><mrow><mi>a</mi></mrow><annotation
+    encoding="application/x-tex">a</annotation></semantics>a and <semantics><mrow><mi>b</mi></mrow><annotation
+    encoding="application/x-tex">b</annotation></semantics>b are important unknown
+    quantities that have a fairly significant effect on the outcome of our inference.
+    So, we’ll now try treating them as random variables. Note that we now have two
+    levels of unknown random variables: <semantics><mrow><msub><mi>θ</mi><mi>i</mi></msub></mrow><annotation
+    encoding="application/x-tex">\theta_i</annotation></semantics>θi​, which we’ve
+    already established, are the county-level risk probabilities. <semantics><mrow><mi>a</mi></mrow><annotation
+    encoding="application/x-tex">a</annotation></semantics>a and <semantics><mrow><mi>b</mi></mrow><annotation
+    encoding="application/x-tex">b</annotation></semantics>b are now US-level average
+    parameters that reflect the risk across all counties. This is a common feature
+    of hierarchical models: one set of variables is closely linked to the data for
+    each group (in this case, county), and one set of variables represents more global
+    information (in this case, the entire US).'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'But this leads to yet another modeling question: **what prior distribution
+    do we choose for <semantics><mrow><mi>a</mi></mrow><annotation encoding="application/x-tex">a</annotation></semantics>a
+    and <semantics><mrow><mi>b</mi></mrow><annotation encoding="application/x-tex">b</annotation></semantics>b**?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Unfortunately, there is no convenient distribution that is a conjugate prior
+    for the parameters of the beta distribution. While there are many possible distributions
+    we could use, we’ll use a uniform distribution out of simplicity and convenience.
+    But, we’re still left with the question of how to choose the parameters of that
+    uniform distribution! Since we know that <semantics><mrow><mi>b</mi><mo>></mo><mo>></mo><mi>a</mi></mrow><annotation
+    encoding="application/x-tex">b >> a</annotation></semantics>b>>a, we’ll make the
+    somewhat arbitrary choice of saying <semantics><mrow><mi>a</mi><mo>∼</mo><mrow><mi
+    mathvariant="normal">U</mi><mi mathvariant="normal">n</mi><mi mathvariant="normal">i</mi><mi
+    mathvariant="normal">f</mi><mi mathvariant="normal">o</mi><mi mathvariant="normal">r</mi><mi
+    mathvariant="normal">m</mi></mrow><mo stretchy="false">(</mo><mn>0</mn><mo separator="true">,</mo><mn>50</mn><mo
+    stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">a \sim
+    \mathrm{Uniform}(0, 50)</annotation></semantics>a∼Uniform(0,50) and <semantics><mrow><mi>b</mi><mo>∼</mo><mrow><mi
+    mathvariant="normal">U</mi><mi mathvariant="normal">n</mi><mi mathvariant="normal">i</mi><mi
+    mathvariant="normal">f</mi><mi mathvariant="normal">o</mi><mi mathvariant="normal">r</mi><mi
+    mathvariant="normal">m</mi></mrow><mo stretchy="false">(</mo><mn>0</mn><mo separator="true">,</mo><mn>300000</mn><mo
+    stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">b \sim
+    \mathrm{Uniform}(0, 300000)</annotation></semantics>b∼Uniform(0,300000). We can
+    then write out the full model:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: <semantics><mtable rowspacing="0.25em" columnalign="right left right" columnspacing="0em
+    1em"><mtr><mtd><mstyle scriptlevel="0" displaystyle="true"><mi>a</mi></mstyle></mtd><mtd><mstyle
+    scriptlevel="0" displaystyle="true"><mrow><mo>∼</mo><mrow><mi mathvariant="normal">U</mi><mi
+    mathvariant="normal">n</mi><mi mathvariant="normal">i</mi><mi mathvariant="normal">f</mi><mi
+    mathvariant="normal">o</mi><mi mathvariant="normal">r</mi><mi mathvariant="normal">m</mi></mrow><mo
+    stretchy="false">(</mo><mn>0</mn><mo separator="true">,</mo><mn>50</mn><mo stretchy="false">)</mo></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle
+    scriptlevel="0" displaystyle="true"><mi>b</mi></mstyle></mtd><mtd><mstyle scriptlevel="0"
+    displaystyle="true"><mrow><mo>∼</mo><mrow><mi mathvariant="normal">U</mi><mi mathvariant="normal">n</mi><mi
+    mathvariant="normal">i</mi><mi mathvariant="normal">f</mi><mi mathvariant="normal">o</mi><mi
+    mathvariant="normal">r</mi><mi mathvariant="normal">m</mi></mrow><mo stretchy="false">(</mo><mn>0</mn><mo
+    separator="true">,</mo><mn>300000</mn><mo stretchy="false">)</mo></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle
+    scriptlevel="0" displaystyle="true"><msub><mi>θ</mi><mi>i</mi></msub></mstyle></mtd><mtd><mstyle
+    scriptlevel="0" displaystyle="true"><mrow><mo>∼</mo><mrow><mi mathvariant="normal">B</mi><mi
+    mathvariant="normal">e</mi><mi mathvariant="normal">t</mi><mi mathvariant="normal">a</mi></mrow><mo
+    stretchy="false">(</mo><mi>a</mi><mo separator="true">,</mo><mi>b</mi><mo stretchy="false">)</mo><mo
+    separator="true">,</mo></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mi>i</mi><mo>∈</mo><mo
+    stretchy="false">{</mo><mn>1</mn><mo separator="true">,</mo><mn>2</mn><mo separator="true">,</mo><mo>…</mo><mo
+    stretchy="false">}</mo></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0"
+    displaystyle="true"><msub><mi>y</mi><mi>i</mi></msub></mstyle></mtd><mtd><mstyle
+    scriptlevel="0" displaystyle="true"><mrow><mo>∼</mo><mrow><mi mathvariant="normal">B</mi><mi
+    mathvariant="normal">i</mi><mi mathvariant="normal">n</mi><mi mathvariant="normal">o</mi><mi
+    mathvariant="normal">m</mi><mi mathvariant="normal">i</mi><mi mathvariant="normal">a</mi><mi
+    mathvariant="normal">l</mi></mrow><mo stretchy="false">(</mo><msub><mi>θ</mi><mi>i</mi></msub><mo
+    separator="true">,</mo><msub><mi>n</mi><mi>i</mi></msub><mo stretchy="false">)</mo><mo
+    separator="true">,</mo></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mi>i</mi><mo>∈</mo><mo
+    stretchy="false">{</mo><mn>1</mn><mo separator="true">,</mo><mn>2</mn><mo separator="true">,</mo><mo>…</mo><mo
+    stretchy="false">}</mo></mrow></mstyle></mtd></mtr></mtable><annotation encoding="application/x-tex">\begin{align*}
+    a &\sim \mathrm{Uniform}(0, 50) \\ b &\sim \mathrm{Uniform}(0, 300000) \\ \theta_i
+    &\sim \mathrm{Beta}(a, b), & i \in \{1, 2, \ldots\} \\ y_i &\sim \mathrm{Binomial}(\theta_i,
+    n_i), & i \in \{1, 2, \ldots\} \end{align*}</annotation></semantics>abθi​yi​​∼Uniform(0,50)∼Uniform(0,300000)∼Beta(a,b),∼Binomial(θi​,ni​),​i∈{1,2,…}i∈{1,2,…}​[(4)](#zcEzd5Tnwo
+    "Link to this Equation")
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Unfortunately, there is no convenient way to compute the posterior distribution
+    here: we must resort to approximate techniques. We’ll return to this model in
+    the next section, after we develop tools for approximate inference.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Bias in the Kidney Cancer Dataset[¶](#bias-in-the-kidney-cancer-dataset "Link
+    to this Section")
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '*The content in this section is under active development and is subject to
+    change.*'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'As mentioned earlier, the dataset as provided only contains data about white
+    men. However, kidney cancer risk is not uniform, as seen in this data from the
+    NIH’s National Cancer Institute:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![explorer-graph.png](../Images/65e882661b309df51cbeb16d3f16fcca.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: From this, we can see that there are clearly racial disparities in kidney cancer
+    occurrence. Further, any county-level effects that we see may have racial disparities
+    as well. How might we solve this? Unfortunately, in this case, because we don’t
+    have much insight into how the data were collected, and because they were collected
+    so long ago, we can’t improve our analysis.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '(Optional) Example: Gaussian Mixture Model for Exoplanet Habitability[¶](#id-optional-example-gaussian-mixture-model-for-exoplanet-habitability
+    "Link to this Section")'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '*The model in this section is loosely based on work in the paper [Classifying
+    Exoplanets with Gaussian Mixture Model](https://arxiv.org/abs/1708.00605) by Kulkarni
+    and Desai.*'
+  prefs: []
+  type: TYPE_NORMAL
+- en: In this section, we’ll look at a different kind of hierarchical model, where
+    the groups are slightly less explicit. This kind of model is usually known as
+    a *mixture model*.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Exoplanet Data[¶](#exoplanet-data "Link to this Section")
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: 'We’ll work with a dataset of [exoplanets](https://science.nasa.gov/exoplanets/):
+    planets outside our solar system. Each row in the `planets` dataframe contains
+    information about 517 exoplanets from NASA. We’ll use it to explore which planets
+    might be able to support life as we know it.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: The dataset contains the following columns.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`name`: the name of the exoplanet'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`orbital_period`: how many days it takes for the planet to orbit its star'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`mass`: the mass of the planet, in multiples of Earth’s mass (e.g., the second
+    planet, 55 Cnc e, has a mass 73.6% of Earth’s)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`radius`: the radius of the planet, in multiples of Earth’s radius (e.g., the
+    second planet, 55 Cnc e, has a radius almost twice the size of Earth’s)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`star_temperature`: the temperature of the star that the planet orbits, in
+    Kelvin'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`density`: the density of the planet, in g/cm^3'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Note that in astronomy, it’s more common to measure mass and radius in terms
+    of the planet Jupiter rather than Earth (Jupiter is about 11 times the radius
+    of earth and about 317 times the mass), but we’re using Earth-based measurements
+    since we’re going to use Earth as a standard for habitability.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE11]'
+  prefs: []
+  type: TYPE_PRE
+- en: Loading...
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'We’ll focus our analysis on the radius:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE12]'
+  prefs: []
+  type: TYPE_PRE
+- en: '`<Axes: xlabel=''radius'', ylabel=''Density''>`![<Figure size 640x480 with
+    1 Axes>](../Images/53177c158525d0a731cd31dd1a567c68.png)'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'We can see that there are two groups of planets: those with relatively small
+    radii (closer to Earth-sized), and those with larger radii (closer to Jupiter-sized).
+    We can see that if we try to fit a single Gaussian distribution to this data,
+    the resulting fit is rather poor:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE13]'
+  prefs: []
+  type: TYPE_PRE
+- en: '![<Figure size 640x480 with 1 Axes>](../Images/e3678e88daf799f955ff4c0aa2366540.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: 'Visually, the result is somewhat obvious: the data fall into two distinct groups,
+    so trying to impose one Gaussian distribution produces a poor fit. Instead, what
+    we want is a more sophisticated model that can directly model these two groups,
+    and help us infer properties of each group separately.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE14]'
+  prefs: []
+  type: TYPE_PRE
+- en: '(Optional) Gaussian Mixture Model: Specifying a Probability Model for the Exoplanet
+    Data[¶](#id-optional-gaussian-mixture-model-specifying-a-probability-model-for-the-exoplanet-data
+    "Link to this Section")'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '*Text coming soon: see video*'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE15]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Hierarchical Models: a more general definition[¶](#hierarchical-models-a-more-general-definition
+    "Link to this Section")'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '*Coming soon*'
+  prefs: []
+  type: TYPE_NORMAL

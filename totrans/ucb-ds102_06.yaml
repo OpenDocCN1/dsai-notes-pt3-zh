@@ -1,0 +1,186 @@
+- en: Binary Classification
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: 原文：[https://data102.org/ds-102-book/content/chapters/01/binary-classification](https://data102.org/ds-102-book/content/chapters/01/binary-classification)
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '[<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" width="1.25rem"
+    height="1.25rem" class="myst-fm-license-cc-icon myst-fm-license-cc-icon-main inline-block
+    mx-1"><title>Content License: Creative Commons Attribution Share Alike 4.0 International
+    (CC-BY-SA-4.0)</title></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"
+    width="1.25rem" height="1.25rem" class="myst-fm-license-cc-icon myst-fm-license-cc-icon-by
+    inline-block mr-1"><title>Credit must be given to the creator</title></svg><svg
+    viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" width="1.25rem" height="1.25rem"
+    class="myst-fm-license-cc-icon myst-fm-license-cc-icon-sa inline-block mr-1"><title>Adaptations
+    must be shared under the same terms</title></svg>](https://creativecommons.org/licenses/by-sa/4.0/)[](https://github.com/ds-102/ds-102-book
+    "GitHub Repository: ds-102/ds-102-book")[](https://github.com/ds-102/ds-102-book/edit/main/ds-102-book/content/chapters/01/04_binary_classification.ipynb
+    "Edit This Page")'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs: []
+  type: TYPE_PRE
+- en: Binary Classification[¶](#binary-classification "Link to this Section")
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: 'In binary classification, just as in the previous section, we’re also trying
+    to make a binary decision. A key difference is that instead of using the language
+    of hypothesis testing, we use the language of machine learning and classification:
+    we have data points that we’re trying to classify as belonging to one of two groups,
+    which (without loss of generality) we’ll call class 0 and class 1.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: In hypothesis testing, we made our decision using <semantics><mrow><mi>p</mi></mrow><annotation
+    encoding="application/x-tex">p</annotation></semantics>p-values, which captured
+    the probability (for each test), given the data, that our data were observed under
+    some null hypothesis. In binary classification, we’re interested in the probability,
+    given the data, that our data were observed under class 0 or under class 1\. Most
+    classification algorithms will give us some arbitrary number. These numbers are
+    often, but not always, between 0 and 1, in which case we can interpret them as
+    the probability of belonging to class 1\. We typically apply a threshold to that
+    number to obtain a binary decision.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'For example, logistic regression produces probabilities: for a particular datum,
+    a logistic regression classifier might predict that it has a 0.7 probability of
+    belonging to class 1\. We apply some threshold (often, but not always 0.5): if
+    our value is above the threshold (as in this case), we make a decision of 1; otherwise,
+    we make a decision of 0.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'While the mechanics of obtaining a decision are different for binary classification,
+    the big ideas we’ve learned in the last few section remain just as relevant: in
+    particular, we can think about the tradeoffs involved by understanding the row-wise
+    and columnn-wise error rates. In binary classification, we visualize and analyze
+    these error rates primarily through two visualizations: a receiver operating characteristic
+    (ROC) curve, and a precision-recall curve.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'ROC Curves: Trading off Row-Wise Rates[¶](#roc-curves-trading-off-row-wise-rates
+    "Link to this Section")'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'ROC curves help us visualize the tradeoff between different **row-wise rates**.
+    Let’s make things concrete with an example. Suppose a manufacturing company trains
+    a classifier that uses computer vision (e.g., a vision transformer) to predict
+    whether each product coming off its assembly line is defective (1) or not (0).
+    They obtain the following results on a held-out test set:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE1]'
+  prefs: []
+  type: TYPE_PRE
+- en: Loading...
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE2]'
+  prefs: []
+  type: TYPE_PRE
+- en: '[PRE3]'
+  prefs: []
+  type: TYPE_PRE
+- en: Loading...
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE4]'
+  prefs: []
+  type: TYPE_PRE
+- en: Loading...
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Just as before, we can see the same tradeoff between the row-wise rates: as
+    our TPR increases (i.e., we are better at catching defective products), our FPR
+    also increases (i.e., we get worse with non-defective products). The examples
+    above show two points on that tradeoff, but there exists one such point for each
+    different possible threshold value. Instead of computing and manually reviewing
+    the confusion matrix for each threshold, we can instead visualize the TPR and
+    FPR associated with each possible one by using the `roc_curve` function in `scikit-learn`:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE5]'
+  prefs: []
+  type: TYPE_PRE
+- en: '![<Figure size 400x400 with 1 Axes>](../Images/d8b2db36f5d6aef7f2cbd4a2f98218eb.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: Each point on this graph represents one threshold. For example, the point at
+    around (0.2, 0.8) tells us that if we choose that particular threshold value,
+    we’ll achieve a false positive rate of 0.2 and a true positive rate of 0.8.
+  prefs: []
+  type: TYPE_NORMAL
+- en: What if that FPR was unacceptably high? We could instead choose a threshold
+    corresponding to the point at around (0.1, 0.4). This tells us that if we want
+    a smaller FPR of 0.1, we have to accept a much lower TPR of 0.1.
+  prefs: []
+  type: TYPE_NORMAL
+- en: This provides us a way of clearly visualizing the tradeoffs involved, at least
+    as far as the row-wise rates are concerned.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Exercise**: write code to find the threshold value that gives us an FPR as
+    close as possible to 0.2\. *Hint: use the `thresholds_roc` array.*'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Precision-Recall Curves and Column-Wise Rates[¶](#precision-recall-curves-and-column-wise-rates
+    "Link to this Section")
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: We saw in previous sections that the row-wise rates alone can’t tell us the
+    whole story! We saw that in cases where the prevalence is low, even if we have
+    relatively high row-wise rates, our column-wise rates can be quite low. In this
+    example, a threshold of 0.5 leads to a TPR and TNR close to 0.8 (i.e., our algorithm
+    is about <semantics><mrow><mn>80</mn><mi mathvariant="normal">%</mi></mrow><annotation
+    encoding="application/x-tex">80\%</annotation></semantics>80% accurate for defective
+    products and about <semantics><mrow><mn>80</mn><mi mathvariant="normal">%</mi></mrow><annotation
+    encoding="application/x-tex">80\%</annotation></semantics>80% accurate for non-defective
+    products), but a prediction of “defective” will be wrong more than half the time!
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE6]'
+  prefs: []
+  type: TYPE_PRE
+- en: Loading...
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE7]'
+  prefs: []
+  type: TYPE_PRE
+- en: Just as the ROC curve plots the true positive rate against the false positive
+    rate, a precision-recall curve plots the precision against the recall.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Remember from before that the **precision** is the complement of the FDP: in
+    other words, it describes how well we do when we make a decision of <semantics><mrow><mi>D</mi><mo>=</mo><mn>1</mn></mrow><annotation
+    encoding="application/x-tex">D=1</annotation></semantics>D=1, or in this case,
+    when the classifier flags a product as defective. The **recall** is just another
+    term for the true positive rate (which we’ve also referred to as the power and
+    sensitivity). Plotting these two helps us understand the tradeoffs between row-wise
+    and column-wise rates. Let’s see what it looks like for the example above:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE8]'
+  prefs: []
+  type: TYPE_PRE
+- en: '![<Figure size 400x400 with 1 Axes>](../Images/9f582f3d8df12b439e62c4a6c06ffd04.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: We can see that this tells us a complementary story. We can see that the left
+    part of the curve is very noisy, and in the center, as recall improves, precision
+    improves up to about 0.55 until it starts dropping off quickly for much higher
+    values of the recall. What does this mean?
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Exercise**: explain why the left part of the curve looks so noisy. *Hint:
+    consider what kind of threshold will lead to very low recall, and then explain
+    how that kind of threshold affects the denominator in our precision calculation.*'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Exercise**: explain why the precision increases with recall for a while before
+    decreasing for recall values higher than about 0.6.'
+  prefs: []
+  type: TYPE_NORMAL

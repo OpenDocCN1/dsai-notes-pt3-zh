@@ -1,0 +1,590 @@
+- en: Graphical Models, Probability Distributions, and Independence
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: 原文：[https://data102.org/ds-102-book/content/chapters/02/graphical-models](https://data102.org/ds-102-book/content/chapters/02/graphical-models)
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '[<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" width="1.25rem"
+    height="1.25rem" class="myst-fm-license-cc-icon myst-fm-license-cc-icon-main inline-block
+    mx-1"><title>Content License: Creative Commons Attribution Share Alike 4.0 International
+    (CC-BY-SA-4.0)</title></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"
+    width="1.25rem" height="1.25rem" class="myst-fm-license-cc-icon myst-fm-license-cc-icon-by
+    inline-block mr-1"><title>Credit must be given to the creator</title></svg><svg
+    viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" width="1.25rem" height="1.25rem"
+    class="myst-fm-license-cc-icon myst-fm-license-cc-icon-sa inline-block mr-1"><title>Adaptations
+    must be shared under the same terms</title></svg>](https://creativecommons.org/licenses/by-sa/4.0/)[](https://github.com/ds-102/ds-102-book
+    "GitHub Repository: ds-102/ds-102-book")[](https://github.com/ds-102/ds-102-book/edit/main/ds-102-book/content/chapters/02/03_graphical_models.ipynb
+    "Edit This Page")'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs: []
+  type: TYPE_PRE
+- en: Graphical Models, Probability Distributions, and Independence[¶](#graphical-models-probability-distributions-and-independence
+    "Link to this Section")
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: Graphical Models[¶](#graphical-models "Link to this Section")
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: A **graphical model** provides a visual representation of a Bayesian hierarchical
+    model using. These models are sometimes known as Bayesian networks, or **Bayes
+    nets**.
+  prefs: []
+  type: TYPE_NORMAL
+- en: We represent each random variable with a node (circle), and a directed edge
+    (arrow) between two random variables indicates that the the distribution for the
+    child variable is conditioned on the parent variable. When drawing graphical models,
+    we usually start with the variables that don’t depend on any others. These are
+    usually, but not always, unobserved parameters of interest like <semantics><mrow><mi>θ</mi></mrow><annotation
+    encoding="application/x-tex">\theta</annotation></semantics>θ in this example.
+    Then, we proceed by drawing a node for each variable that depends on those, and
+    so on. Variables that are observed are shaded in.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'We’ll draw graphical models for the three examples we’ve seen in previous sections:
+    the product review model, the kidney cancer model, and the exoplanet model.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Graphical model for product reviews[¶](#graphical-model-for-product-reviews
+    "Link to this Section")
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: 'In our product review model, we have the following random variables:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: <semantics><mtable rowspacing="0.25em" columnalign="right left" columnspacing="0em"><mtr><mtd><mstyle
+    scriptlevel="0" displaystyle="true"><mrow><msub><mi>x</mi><mi>i</mi></msub><mi
+    mathvariant="normal">∣</mi><mi>θ</mi></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0"
+    displaystyle="true"><mrow><mo>∼</mo><mrow><mi mathvariant="normal">B</mi><mi mathvariant="normal">e</mi><mi
+    mathvariant="normal">r</mi><mi mathvariant="normal">n</mi><mi mathvariant="normal">o</mi><mi
+    mathvariant="normal">u</mi><mi mathvariant="normal">l</mi><mi mathvariant="normal">l</mi><mi
+    mathvariant="normal">i</mi></mrow><mo stretchy="false">(</mo><mi>θ</mi><mo stretchy="false">)</mo></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle
+    scriptlevel="0" displaystyle="true"><mi>θ</mi></mstyle></mtd><mtd><mstyle scriptlevel="0"
+    displaystyle="true"><mrow><mo>∼</mo><mrow><mi mathvariant="normal">B</mi><mi mathvariant="normal">e</mi><mi
+    mathvariant="normal">t</mi><mi mathvariant="normal">a</mi></mrow><mo stretchy="false">(</mo><mi>a</mi><mo
+    separator="true">,</mo><mi>b</mi><mo stretchy="false">)</mo></mrow></mstyle></mtd></mtr></mtable><annotation
+    encoding="application/x-tex">\begin{align} x_i | \theta &\sim \mathrm{Bernoulli}(\theta)
+    \\ \theta &\sim \mathrm{Beta}(a, b) \end{align}</annotation></semantics>xi​∣θθ​∼Bernoulli(θ)∼Beta(a,b)​​[(1)](#Zd52pk10Gw
+    "Link to this Equation")
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'In this case, this means we start with a node for the product quality <semantics><mrow><mi>θ</mi></mrow><annotation
+    encoding="application/x-tex">\theta</annotation></semantics>θ, and then with one
+    node for each review <semantics><mrow><msub><mi>x</mi><mi>i</mi></msub></mrow><annotation
+    encoding="application/x-tex">x_i</annotation></semantics>xi​, all of which depend
+    on <semantics><mrow><mi>θ</mi></mrow><annotation encoding="application/x-tex">\theta</annotation></semantics>θ.
+    The nodes for the observed reviews <semantics><mrow><msub><mi>x</mi><mi>i</mi></msub></mrow><annotation
+    encoding="application/x-tex">x_i</annotation></semantics>xi​ are shaded in, while
+    the node for the hidden (unobserved) product quality <semantics><mrow><mi>θ</mi></mrow><annotation
+    encoding="application/x-tex">\theta</annotation></semantics>θ is not:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![](../Images/a33913a1ac74d8ab32ea47a54a81b6dc.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: This visual representation shows us the structure of the model, by making it
+    clear that each review <semantics><mrow><msub><mi>x</mi><mi>i</mi></msub></mrow><annotation
+    encoding="application/x-tex">x_i</annotation></semantics>xi​ depends on the quality
+    <semantics><mrow><mi>θ</mi></mrow><annotation encoding="application/x-tex">\theta</annotation></semantics>θ.
+    But just as before, this model is simple enough that we already knew that. Next,
+    we’ll look at the graphical model for a more interesting example.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Graphical model for kidney cancer death risk[¶](#graphical-model-for-kidney-cancer-death-risk
+    "Link to this Section")
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: 'Recall the full hierarchical model for the kidney cancer death risk example:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: <semantics><mtable rowspacing="0.25em" columnalign="right left right" columnspacing="0em
+    1em"><mtr><mtd><mstyle scriptlevel="0" displaystyle="true"><mi>a</mi></mstyle></mtd><mtd><mstyle
+    scriptlevel="0" displaystyle="true"><mrow><mo>∼</mo><mrow><mi mathvariant="normal">U</mi><mi
+    mathvariant="normal">n</mi><mi mathvariant="normal">i</mi><mi mathvariant="normal">f</mi><mi
+    mathvariant="normal">o</mi><mi mathvariant="normal">r</mi><mi mathvariant="normal">m</mi></mrow><mo
+    stretchy="false">(</mo><mn>0</mn><mo separator="true">,</mo><mn>50</mn><mo stretchy="false">)</mo></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle
+    scriptlevel="0" displaystyle="true"><mi>b</mi></mstyle></mtd><mtd><mstyle scriptlevel="0"
+    displaystyle="true"><mrow><mo>∼</mo><mrow><mi mathvariant="normal">U</mi><mi mathvariant="normal">n</mi><mi
+    mathvariant="normal">i</mi><mi mathvariant="normal">f</mi><mi mathvariant="normal">o</mi><mi
+    mathvariant="normal">r</mi><mi mathvariant="normal">m</mi></mrow><mo stretchy="false">(</mo><mn>0</mn><mo
+    separator="true">,</mo><mn>300000</mn><mo stretchy="false">)</mo></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle
+    scriptlevel="0" displaystyle="true"><msub><mi>θ</mi><mi>i</mi></msub></mstyle></mtd><mtd><mstyle
+    scriptlevel="0" displaystyle="true"><mrow><mo>∼</mo><mrow><mi mathvariant="normal">B</mi><mi
+    mathvariant="normal">e</mi><mi mathvariant="normal">t</mi><mi mathvariant="normal">a</mi></mrow><mo
+    stretchy="false">(</mo><mi>a</mi><mo separator="true">,</mo><mi>b</mi><mo stretchy="false">)</mo><mo
+    separator="true">,</mo></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mi>i</mi><mo>∈</mo><mo
+    stretchy="false">{</mo><mn>1</mn><mo separator="true">,</mo><mn>2</mn><mo separator="true">,</mo><mo>…</mo><mo
+    separator="true">,</mo><mi>C</mi><mo stretchy="false">}</mo></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle
+    scriptlevel="0" displaystyle="true"><msub><mi>y</mi><mi>i</mi></msub></mstyle></mtd><mtd><mstyle
+    scriptlevel="0" displaystyle="true"><mrow><mo>∼</mo><mrow><mi mathvariant="normal">B</mi><mi
+    mathvariant="normal">i</mi><mi mathvariant="normal">n</mi><mi mathvariant="normal">o</mi><mi
+    mathvariant="normal">m</mi><mi mathvariant="normal">i</mi><mi mathvariant="normal">a</mi><mi
+    mathvariant="normal">l</mi></mrow><mo stretchy="false">(</mo><msub><mi>θ</mi><mi>i</mi></msub><mo
+    separator="true">,</mo><msub><mi>n</mi><mi>i</mi></msub><mo stretchy="false">)</mo><mo
+    separator="true">,</mo></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mi>i</mi><mo>∈</mo><mo
+    stretchy="false">{</mo><mn>1</mn><mo separator="true">,</mo><mn>2</mn><mo separator="true">,</mo><mo>…</mo><mo
+    separator="true">,</mo><mi>C</mi><mo stretchy="false">}</mo></mrow></mstyle></mtd></mtr></mtable><annotation
+    encoding="application/x-tex">\begin{align*} a &\sim \mathrm{Uniform}(0, 50) \\
+    b &\sim \mathrm{Uniform}(0, 300000) \\ \theta_i &\sim \mathrm{Beta}(a, b), & i
+    \in \{1, 2, \ldots, C\} \\ y_i &\sim \mathrm{Binomial}(\theta_i, n_i), & i \in
+    \{1, 2, \ldots, C\} \end{align*}</annotation></semantics>abθi​yi​​∼Uniform(0,50)∼Uniform(0,300000)∼Beta(a,b),∼Binomial(θi​,ni​),​i∈{1,2,…,C}i∈{1,2,…,C}​[(2)](#Xgs0SMXVrf
+    "Link to this Equation")
+  prefs: []
+  type: TYPE_NORMAL
+- en: <semantics><mrow><msub><mi>y</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">y_i</annotation></semantics>yi​
+    represents the number of kidney cancer deaths in county <semantics><mrow><mi>i</mi></mrow><annotation
+    encoding="application/x-tex">i</annotation></semantics>i (out of a population
+    of <semantics><mrow><msub><mi>n</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">n_i</annotation></semantics>ni​).
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: <semantics><mrow><msub><mi>θ</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">\theta_i</annotation></semantics>θi​
+    represents the kidney cancer death rate for county <semantics><mrow><mi>i</mi></mrow><annotation
+    encoding="application/x-tex">i</annotation></semantics>i.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: <semantics><mrow><mi>a</mi></mrow><annotation encoding="application/x-tex">a</annotation></semantics>a
+    and <semantics><mrow><mi>b</mi></mrow><annotation encoding="application/x-tex">b</annotation></semantics>b
+    represent the parameters of the shared prior for the county-level rates.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 'In order to draw the graphical model, we need to draw one node per random variable,
+    and draw arrows to indicate dependency. We know that:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: We need a node for <semantics><mrow><mi>a</mi></mrow><annotation encoding="application/x-tex">a</annotation></semantics>a
+    and a node for <semantics><mrow><mi>b</mi></mrow><annotation encoding="application/x-tex">b</annotation></semantics>b.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: We need one node for each <semantics><mrow><msub><mi>θ</mi><mi>i</mi></msub></mrow><annotation
+    encoding="application/x-tex">\theta_i</annotation></semantics>θi​ and one node
+    for each <semantics><mrow><msub><mi>y</mi><mi>i</mi></msub></mrow><annotation
+    encoding="application/x-tex">y_i</annotation></semantics>yi​.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Each <semantics><mrow><msub><mi>θ</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">\theta_i</annotation></semantics>θi​
+    depends on <semantics><mrow><mi>a</mi></mrow><annotation encoding="application/x-tex">a</annotation></semantics>a
+    and <semantics><mrow><mi>b</mi></mrow><annotation encoding="application/x-tex">b</annotation></semantics>b.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Each <semantics><mrow><msub><mi>y</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">y_i</annotation></semantics>yi​
+    depends on <semantics><mrow><msub><mi>θ</mi><mi>i</mi></msub></mrow><annotation
+    encoding="application/x-tex">\theta_i</annotation></semantics>θi​ and <semantics><mrow><msub><mi>n</mi><mi>i</mi></msub></mrow><annotation
+    encoding="application/x-tex">n_i</annotation></semantics>ni​.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Because <semantics><mrow><msub><mi>n</mi><mi>i</mi></msub></mrow><annotation
+    encoding="application/x-tex">n_i</annotation></semantics>ni​ is a fixed number,
+    we’ll draw it as a dot.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 'So, our full graphical model looks like:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![](../Images/1a4c9943343a73b59cb5d252c25caec9.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: '(Optional) Example: Graphical Model for Exoplanet Model[¶](#id-optional-example-graphical-model-for-exoplanet-model
+    "Link to this Section")'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '*Text coming soon: see video*'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE1]'
+  prefs: []
+  type: TYPE_PRE
+- en: Relating graphical models to probability distributions[¶](#relating-graphical-models-to-probability-distributions
+    "Link to this Section")
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: When we were drawing graphical models above, we drew one node per variable,
+    and started from the “top,” working with the variables that didn’t depend on any
+    others. We then worked our way through the model, ending with observed variables.
+    When looking at a graphical model to derive the corresponding joint distribution
+    of all the variables in the model, we follow a similar process. For example, in
+    the kidney cancer death rate model, we can write the joint distribution of all
+    the variables in our model by starting at the root (i.e., the nodes that have
+    no parents), and then proceeding through their children, writing the joint distribution
+    as a product.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'So, we start with <semantics><mrow><mi>p</mi><mo stretchy="false">(</mo><mi>a</mi><mo
+    stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">p(a)</annotation></semantics>p(a)
+    and <semantics><mrow><mi>p</mi><mo stretchy="false">(</mo><mi>b</mi><mo stretchy="false">)</mo></mrow><annotation
+    encoding="application/x-tex">p(b)</annotation></semantics>p(b), then <semantics><mrow><mi>p</mi><mo
+    stretchy="false">(</mo><msub><mi>θ</mi><mi>i</mi></msub><mi mathvariant="normal">∣</mi><mi>a</mi><mo
+    separator="true">,</mo><mi>b</mi><mo stretchy="false">)</mo></mrow><annotation
+    encoding="application/x-tex">p(\theta_i | a, b)</annotation></semantics>p(θi​∣a,b)
+    (for <semantics><mrow><mi>i</mi><mo>∈</mo><mo stretchy="false">{</mo><mn>1</mn><mo
+    separator="true">,</mo><mo>…</mo><mo separator="true">,</mo><mi>C</mi><mo stretchy="false">}</mo></mrow><annotation
+    encoding="application/x-tex">i \in \{1, \ldots, C\}</annotation></semantics>i∈{1,…,C}),
+    then <semantics><mrow><mi>p</mi><mo stretchy="false">(</mo><msub><mi>y</mi><mi>i</mi></msub><mi
+    mathvariant="normal">∣</mi><msub><mi>θ</mi><mi>i</mi></msub><mo stretchy="false">)</mo></mrow><annotation
+    encoding="application/x-tex">p(y_i | \theta_i)</annotation></semantics>p(yi​∣θi​):'
+  prefs: []
+  type: TYPE_NORMAL
+- en: <semantics><mrow><mi>p</mi><mo stretchy="false">(</mo><mi>a</mi><mo separator="true">,</mo><mi>b</mi><mo
+    separator="true">,</mo><msub><mi>θ</mi><mn>1</mn></msub><mo separator="true">,</mo><mo>…</mo><mo
+    separator="true">,</mo><msub><mi>θ</mi><mi>C</mi></msub><mo separator="true">,</mo><msub><mi>y</mi><mn>1</mn></msub><mo
+    separator="true">,</mo><mo>…</mo><mo separator="true">,</mo><msub><mi>y</mi><mi>C</mi></msub><mo
+    stretchy="false">)</mo><mo>=</mo><mi>p</mi><mo stretchy="false">(</mo><mi>a</mi><mo
+    stretchy="false">)</mo><mi>p</mi><mo stretchy="false">(</mo><mi>b</mi><mo stretchy="false">)</mo><munderover><mo>∏</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mi>C</mi></munderover><mi>p</mi><mo
+    stretchy="false">(</mo><msub><mi>θ</mi><mi>i</mi></msub><mo>∣</mo><mi>a</mi><mo
+    separator="true">,</mo><mi>b</mi><mo stretchy="false">)</mo><mi>p</mi><mo stretchy="false">(</mo><msub><mi>y</mi><mi>i</mi></msub><mo>∣</mo><msub><mi>θ</mi><mi>i</mi></msub><mo
+    stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">p(a, b,
+    \theta_1, \ldots, \theta_C, y_1, \ldots, y_C) = p(a)p(b) \prod_{i=1}^C p(\theta_i\mid
+    a, b) p(y_i\mid\theta_i)</annotation></semantics>p(a,b,θ1​,…,θC​,y1​,…,yC​)=p(a)p(b)i=1∏C​p(θi​∣a,b)p(yi​∣θi​)[(3)](#N1KBlbXTa3
+    "Link to this Equation")
+  prefs: []
+  type: TYPE_NORMAL
+- en: Factoring the distribution this way helps us understand and mathematically demonstrate
+    the independence and dependence relationships in our graphical models, as we’ll
+    see shortly.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE2]'
+  prefs: []
+  type: TYPE_PRE
+- en: Independence and Conditional Independence[¶](#independence-and-conditional-independence
+    "Link to this Section")
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'Review: independence and conditional independence[¶](#review-independence-and-conditional-independence
+    "Link to this Section")'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: 'We say that two random variables <semantics><mrow><mi>w</mi></mrow><annotation
+    encoding="application/x-tex">w</annotation></semantics>w and <semantics><mrow><mi>v</mi></mrow><annotation
+    encoding="application/x-tex">v</annotation></semantics>v are **independent** if
+    knowing the value of one tells us nothing about the distribution of the other.
+    Notationally, we write <semantics><mrow><mi>w</mi><mo>⊥</mo><mtext> ⁣</mtext><mtext> ⁣</mtext><mtext> ⁣</mtext><mo>⊥</mo><mi>v</mi></mrow><annotation
+    encoding="application/x-tex">w \perp\!\!\!\perp v</annotation></semantics>w⊥⊥v.
+    The following statements are all true for independent random variables <semantics><mrow><mi>w</mi></mrow><annotation
+    encoding="application/x-tex">w</annotation></semantics>w and <semantics><mrow><mi>v</mi></mrow><annotation
+    encoding="application/x-tex">v</annotation></semantics>v:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'If <semantics><mrow><mi>w</mi></mrow><annotation encoding="application/x-tex">w</annotation></semantics>w
+    and <semantics><mrow><mi>v</mi></mrow><annotation encoding="application/x-tex">v</annotation></semantics>v
+    are independent (<semantics><mrow><mi>w</mi><mo>⊥</mo><mtext> ⁣</mtext><mtext> ⁣</mtext><mtext> ⁣</mtext><mo>⊥</mo><mi>v</mi></mrow><annotation
+    encoding="application/x-tex">w \perp\!\!\!\perp v</annotation></semantics>w⊥⊥v),
+    then the joint distribution <semantics><mrow><mi>p</mi><mo stretchy="false">(</mo><mi>w</mi><mo
+    separator="true">,</mo><mi>v</mi><mo stretchy="false">)</mo></mrow><annotation
+    encoding="application/x-tex">p(w, v)</annotation></semantics>p(w,v) can be written
+    as the product of the marginal distributions: <semantics><mrow><mi>p</mi><mo stretchy="false">(</mo><mi>w</mi><mo
+    separator="true">,</mo><mi>v</mi><mo stretchy="false">)</mo><mo>=</mo><mi>p</mi><mo
+    stretchy="false">(</mo><mi>w</mi><mo stretchy="false">)</mo><mi>p</mi><mo stretchy="false">(</mo><mi>v</mi><mo
+    stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">p(w, v)
+    = p(w)p(v)</annotation></semantics>p(w,v)=p(w)p(v).'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 'If <semantics><mrow><mi>w</mi></mrow><annotation encoding="application/x-tex">w</annotation></semantics>w
+    and <semantics><mrow><mi>v</mi></mrow><annotation encoding="application/x-tex">v</annotation></semantics>v
+    are independent (<semantics><mrow><mi>w</mi><mo>⊥</mo><mtext> ⁣</mtext><mtext> ⁣</mtext><mtext> ⁣</mtext><mo>⊥</mo><mi>v</mi></mrow><annotation
+    encoding="application/x-tex">w \perp\!\!\!\perp v</annotation></semantics>w⊥⊥v),
+    then the conditional distributions are equal to the marginal distributions: <semantics><mrow><mi>p</mi><mo
+    stretchy="false">(</mo><mi>w</mi><mi mathvariant="normal">∣</mi><mi>v</mi><mo
+    stretchy="false">)</mo><mo>=</mo><mi>p</mi><mo stretchy="false">(</mo><mi>w</mi><mo
+    stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">p(w|v)
+    = p(w)</annotation></semantics>p(w∣v)=p(w) and <semantics><mrow><mi>p</mi><mo
+    stretchy="false">(</mo><mi>v</mi><mi mathvariant="normal">∣</mi><mi>w</mi><mo
+    stretchy="false">)</mo><mo>=</mo><mi>p</mi><mo stretchy="false">(</mo><mi>v</mi><mo
+    stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">p(v|w)
+    = p(v)</annotation></semantics>p(v∣w)=p(v).'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '***Exercise**: using the definition of conditional distributions, show that
+    the two conditions above are mathematically equivalent.*'
+  prefs: []
+  type: TYPE_NORMAL
+- en: We say that two random variables <semantics><mrow><mi>w</mi></mrow><annotation
+    encoding="application/x-tex">w</annotation></semantics>w and <semantics><mrow><mi>v</mi></mrow><annotation
+    encoding="application/x-tex">v</annotation></semantics>v are **conditionally independent**
+    given a third random variable <semantics><mrow><mi>u</mi></mrow><annotation encoding="application/x-tex">u</annotation></semantics>u
+    if, when we condition on <semantics><mrow><mi>u</mi></mrow><annotation encoding="application/x-tex">u</annotation></semantics>u,
+    knowing the value of one of <semantics><mrow><mi>v</mi></mrow><annotation encoding="application/x-tex">v</annotation></semantics>v
+    or <semantics><mrow><mi>w</mi></mrow><annotation encoding="application/x-tex">w</annotation></semantics>w
+    tells us nothing about the distribution of the other. Notationally, we write <semantics><mrow><mi>w</mi><mo>⊥</mo><mtext> ⁣</mtext><mtext> ⁣</mtext><mtext> ⁣</mtext><mo>⊥</mo><mi>v</mi><mo>∣</mo><mi>u</mi></mrow><annotation
+    encoding="application/x-tex">w \perp\!\!\!\perp v \mid u</annotation></semantics>w⊥⊥v∣u,
+    and mathematically this means that <semantics><mrow><mi>p</mi><mo stretchy="false">(</mo><mi>w</mi><mo
+    separator="true">,</mo><mi>v</mi><mo>∣</mo><mi>u</mi><mo stretchy="false">)</mo><mo>=</mo><mi>p</mi><mo
+    stretchy="false">(</mo><mi>w</mi><mo>∣</mo><mi>u</mi><mo stretchy="false">)</mo><mi>p</mi><mo
+    stretchy="false">(</mo><mi>v</mi><mo>∣</mo><mi>u</mi><mo stretchy="false">)</mo></mrow><annotation
+    encoding="application/x-tex">p(w, v \mid u) = p(w\mid u) p(v \mid u)</annotation></semantics>p(w,v∣u)=p(w∣u)p(v∣u).
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'For example, suppose <semantics><mrow><msub><mi>x</mi><mn>1</mn></msub></mrow><annotation
+    encoding="application/x-tex">x_1</annotation></semantics>x1​ and <semantics><mrow><msub><mi>x</mi><mn>2</mn></msub></mrow><annotation
+    encoding="application/x-tex">x_2</annotation></semantics>x2​ are the heights of
+    two people randomly sampled from a very specific population with some average
+    height <semantics><mrow><mi>μ</mi></mrow><annotation encoding="application/x-tex">\mu</annotation></semantics>μ:
+    this population could be college students, or second-graders, or Olympic swimmers,
+    or some other group entirely.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: If we know the value of <semantics><mrow><mi>μ</mi></mrow><annotation encoding="application/x-tex">\mu</annotation></semantics>μ,
+    then <semantics><mrow><msub><mi>x</mi><mn>1</mn></msub></mrow><annotation encoding="application/x-tex">x_1</annotation></semantics>x1​
+    and <semantics><mrow><msub><mi>x</mi><mn>2</mn></msub></mrow><annotation encoding="application/x-tex">x_2</annotation></semantics>x2​
+    are conditionally independent, because they’re random samples from the same distribution
+    with known mean <semantics><mrow><mi>μ</mi></mrow><annotation encoding="application/x-tex">\mu</annotation></semantics>μ.
+    For example, if we are given that <semantics><mrow><mi>μ</mi><mo>=</mo><msup><mn>4</mn><mo
+    mathvariant="normal" lspace="0em" rspace="0em">′</mo></msup><msup><mn>1</mn><mrow><mo
+    mathvariant="normal">′</mo><mo mathvariant="normal">′</mo></mrow></msup></mrow><annotation
+    encoding="application/x-tex">\mu = 4'1''</annotation></semantics>μ=4′1′′, then
+    knowing <semantics><mrow><msub><mi>x</mi><mn>1</mn></msub></mrow><annotation encoding="application/x-tex">x_1</annotation></semantics>x1​
+    does not tell us anything about <semantics><mrow><msub><mi>x</mi><mn>2</mn></msub></mrow><annotation
+    encoding="application/x-tex">x_2</annotation></semantics>x2​.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Suppose instead that we don’t know the value of <semantics><mrow><mi>μ</mi></mrow><annotation
+    encoding="application/x-tex">\mu</annotation></semantics>μ. Then, we find out
+    that <semantics><mrow><msub><mi>x</mi><mn>1</mn></msub><mo>=</mo><msup><mn>7</mn><mo
+    mathvariant="normal" lspace="0em" rspace="0em">′</mo></msup><msup><mn>1</mn><mrow><mo
+    mathvariant="normal">′</mo><mo mathvariant="normal">′</mo></mrow></msup></mrow><annotation
+    encoding="application/x-tex">x_1 = 7'' 1''''</annotation></semantics>x1​=7′1′′.
+    In this case, we might guess that the ‘specific population’ is likely a very tall
+    group, such as NBA players. This will affect our belief about the distribution
+    of <semantics><mrow><msub><mi>x</mi><mn>2</mn></msub></mrow><annotation encoding="application/x-tex">x_2</annotation></semantics>x2​
+    (i.e., we should expect the second person to be tall too). So, in this case:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '<semantics><mrow><msub><mi>x</mi><mn>1</mn></msub></mrow><annotation encoding="application/x-tex">x_1</annotation></semantics>x1​
+    and <semantics><mrow><msub><mi>x</mi><mn>2</mn></msub></mrow><annotation encoding="application/x-tex">x_2</annotation></semantics>x2​
+    are conditionally independent given <semantics><mrow><mi>μ</mi></mrow><annotation
+    encoding="application/x-tex">\mu</annotation></semantics>μ: <semantics><mrow><msub><mi>x</mi><mn>1</mn></msub><mo>⊥</mo><mtext> ⁣</mtext><mtext> ⁣</mtext><mtext> ⁣</mtext><mo>⊥</mo><msub><mi>x</mi><mn>2</mn></msub><mo>∣</mo><mi>μ</mi></mrow><annotation
+    encoding="application/x-tex">x_1 \perp\!\!\!\perp x_2 \mid \mu</annotation></semantics>x1​⊥⊥x2​∣μ.'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '<semantics><mrow><msub><mi>x</mi><mn>1</mn></msub></mrow><annotation encoding="application/x-tex">x_1</annotation></semantics>x1​
+    and <semantics><mrow><msub><mi>x</mi><mn>2</mn></msub></mrow><annotation encoding="application/x-tex">x_2</annotation></semantics>x2​
+    are not unconditionally independent: it is not true that <semantics><mrow><msub><mi>x</mi><mn>1</mn></msub><mo>⊥</mo><mtext> ⁣</mtext><mtext> ⁣</mtext><mtext> ⁣</mtext><mo>⊥</mo><msub><mi>x</mi><mn>2</mn></msub></mrow><annotation
+    encoding="application/x-tex">x_1 \perp\!\!\!\perp x_2</annotation></semantics>x1​⊥⊥x2​.'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[PRE3]'
+  prefs: []
+  type: TYPE_PRE
+- en: Independence and conditional independence in graphical models[¶](#independence-and-conditional-independence-in-graphical-models
+    "Link to this Section")
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: 'The structure of a graphical model can tell us a lot about the independence
+    relationships between the variables in our model. Specifically, we can determine
+    whether two random variables are unconditionally independent or conditionally
+    independent given a third variable, just by looking at the structure of the model.
+    Let’s look at a few examples to illustrate this. We’ll start with the height example
+    we just saw:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![](../Images/abae86a27b0e2e7a0ba6520abc9b4bce.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: From our reasoning above, we know that <semantics><mrow><msub><mi>x</mi><mn>1</mn></msub><mo>⊥</mo><mtext> ⁣</mtext><mtext> ⁣</mtext><mtext> ⁣</mtext><mo>⊥</mo><msub><mi>x</mi><mn>2</mn></msub><mo>∣</mo><mi>μ</mi></mrow><annotation
+    encoding="application/x-tex">x_1 \perp\!\!\!\perp x_2 \mid \mu</annotation></semantics>x1​⊥⊥x2​∣μ,
+    but that <semantics><mrow><msub><mi>x</mi><mn>1</mn></msub></mrow><annotation
+    encoding="application/x-tex">x_1</annotation></semantics>x1​ and <semantics><mrow><msub><mi>x</mi><mn>2</mn></msub></mrow><annotation
+    encoding="application/x-tex">x_2</annotation></semantics>x2​ are not unconditionally
+    independent. This is true in general for any three variables in a graphical model
+    in this configuration.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '***Exercise**: mathematically prove the results stated above.*'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Solution**: To show that <semantics><mrow><msub><mi>x</mi><mn>1</mn></msub></mrow><annotation
+    encoding="application/x-tex">x_1</annotation></semantics>x1​ and <semantics><mrow><msub><mi>x</mi><mn>2</mn></msub></mrow><annotation
+    encoding="application/x-tex">x_2</annotation></semantics>x2​ are not unconditionally
+    independent, we must show that <semantics><mrow><mi>p</mi><mo stretchy="false">(</mo><msub><mi>x</mi><mn>1</mn></msub><mo
+    separator="true">,</mo><msub><mi>x</mi><mn>2</mn></msub><mo stretchy="false">)</mo><mo
+    mathvariant="normal">≠</mo><mi>p</mi><mo stretchy="false">(</mo><msub><mi>x</mi><mn>1</mn></msub><mo
+    stretchy="false">)</mo><mi>p</mi><mo stretchy="false">(</mo><msub><mi>x</mi><mn>2</mn></msub><mo
+    stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">p(x_1,
+    x_2) \neq p(x_1)p(x_2)</annotation></semantics>p(x1​,x2​)=p(x1​)p(x2​). We can
+    compute <semantics><mrow><mi>p</mi><mo stretchy="false">(</mo><msub><mi>x</mi><mn>1</mn></msub><mo
+    separator="true">,</mo><msub><mi>x</mi><mn>2</mn></msub><mo stretchy="false">)</mo></mrow><annotation
+    encoding="application/x-tex">p(x_1, x_2)</annotation></semantics>p(x1​,x2​) by
+    looking at the joint distribution over all three variables and then marginalizing
+    over <semantics><mrow><mi>μ</mi></mrow><annotation encoding="application/x-tex">\mu</annotation></semantics>μ:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: <semantics><mtable rowspacing="0.25em" columnalign="right left" columnspacing="0em"><mtr><mtd><mstyle
+    scriptlevel="0" displaystyle="true"><mrow><mi>p</mi><mo stretchy="false">(</mo><msub><mi>x</mi><mn>1</mn></msub><mo
+    separator="true">,</mo><msub><mi>x</mi><mn>2</mn></msub><mo stretchy="false">)</mo></mrow></mstyle></mtd><mtd><mstyle
+    scriptlevel="0" displaystyle="true"><mrow><mo>=</mo><mo>∫</mo><mi>p</mi><mo stretchy="false">(</mo><msub><mi>x</mi><mn>1</mn></msub><mo
+    separator="true">,</mo><msub><mi>x</mi><mn>2</mn></msub><mo separator="true">,</mo><mi>μ</mi><mo
+    stretchy="false">)</mo><mi>d</mi><mi>μ</mi></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle
+    scriptlevel="0" displaystyle="true"><mrow><mo>=</mo><mo>∫</mo><mi>p</mi><mo stretchy="false">(</mo><mi>μ</mi><mo
+    stretchy="false">)</mo><mi>p</mi><mo stretchy="false">(</mo><msub><mi>x</mi><mn>1</mn></msub><mo>∣</mo><mi>μ</mi><mo
+    stretchy="false">)</mo><mi>p</mi><mo stretchy="false">(</mo><msub><mi>x</mi><mn>2</mn></msub><mo>∣</mo><mi>μ</mi><mo
+    stretchy="false">)</mo><mi>d</mi><mi>μ</mi></mrow></mstyle></mtd></mtr></mtable><annotation
+    encoding="application/x-tex">\begin{align*} p(x_1, x_2) &= \int p(x_1, x_2, \mu)
+    d\mu \\ &= \int p(\mu) p(x_1 \mid \mu) p(x_2 \mid \mu) d\mu \end{align*}</annotation></semantics>p(x1​,x2​)​=∫p(x1​,x2​,μ)dμ=∫p(μ)p(x1​∣μ)p(x2​∣μ)dμ​[(4)](#I7UsmwhI5P
+    "Link to this Equation")
+  prefs: []
+  type: TYPE_NORMAL
+- en: Unfortunately, there is no way to factor the integral that separates terms with
+    <semantics><mrow><msub><mi>x</mi><mn>1</mn></msub></mrow><annotation encoding="application/x-tex">x_1</annotation></semantics>x1​
+    and terms with <semantics><mrow><msub><mi>x</mi><mn>2</mn></msub></mrow><annotation
+    encoding="application/x-tex">x_2</annotation></semantics>x2​, so this does not
+    factor. In other words, in general, the integral above will not equal <semantics><mrow><mi>p</mi><mo
+    stretchy="false">(</mo><msub><mi>x</mi><mn>1</mn></msub><mo stretchy="false">)</mo><mi>p</mi><mo
+    stretchy="false">(</mo><msub><mi>x</mi><mn>2</mn></msub><mo stretchy="false">)</mo></mrow><annotation
+    encoding="application/x-tex">p(x_1)p(x_2)</annotation></semantics>p(x1​)p(x2​),
+    so the variables are not unconditionally independent.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'What about conditional independence given <semantics><mrow><mi>μ</mi></mrow><annotation
+    encoding="application/x-tex">\mu</annotation></semantics>μ? We need to show that
+    <semantics><mrow><mi>p</mi><mo stretchy="false">(</mo><msub><mi>x</mi><mn>1</mn></msub><mo
+    separator="true">,</mo><msub><mi>x</mi><mn>2</mn></msub><mo>∣</mo><mi>μ</mi><mo
+    stretchy="false">)</mo><mo>=</mo><mi>p</mi><mo stretchy="false">(</mo><msub><mi>x</mi><mn>1</mn></msub><mo>∣</mo><mi>μ</mi><mo
+    stretchy="false">)</mo><mi>p</mi><mo stretchy="false">(</mo><msub><mi>x</mi><mn>2</mn></msub><mo>∣</mo><mi>μ</mi><mo
+    stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">p(x_1,
+    x_2\mid\mu) = p(x_1\mid\mu) p(x_2\mid\mu)</annotation></semantics>p(x1​,x2​∣μ)=p(x1​∣μ)p(x2​∣μ):'
+  prefs: []
+  type: TYPE_NORMAL
+- en: <semantics><mtable rowspacing="0.25em" columnalign="right left" columnspacing="0em"><mtr><mtd><mstyle
+    scriptlevel="0" displaystyle="true"><mrow><mi>p</mi><mo stretchy="false">(</mo><msub><mi>x</mi><mn>1</mn></msub><mo
+    separator="true">,</mo><msub><mi>x</mi><mn>2</mn></msub><mo>∣</mo><mi>μ</mi><mo
+    stretchy="false">)</mo></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mo>=</mo><mfrac><mrow><mi>p</mi><mo
+    stretchy="false">(</mo><msub><mi>x</mi><mn>1</mn></msub><mo separator="true">,</mo><msub><mi>x</mi><mn>2</mn></msub><mo
+    separator="true">,</mo><mi>μ</mi><mo stretchy="false">)</mo></mrow><mrow><mi>p</mi><mo
+    stretchy="false">(</mo><mi>μ</mi><mo stretchy="false">)</mo></mrow></mfrac></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle
+    scriptlevel="0" displaystyle="true"><mrow><mo>=</mo><mfrac><mrow><mi>p</mi><mo
+    stretchy="false">(</mo><mi>μ</mi><mo stretchy="false">)</mo><mi>p</mi><mo stretchy="false">(</mo><msub><mi>x</mi><mn>1</mn></msub><mo>∣</mo><mi>μ</mi><mo
+    stretchy="false">)</mo><mi>p</mi><mo stretchy="false">(</mo><msub><mi>x</mi><mn>2</mn></msub><mo>∣</mo><mi>μ</mi><mo
+    stretchy="false">)</mo></mrow><mrow><mi>p</mi><mo stretchy="false">(</mo><mi>μ</mi><mo
+    stretchy="false">)</mo></mrow></mfrac></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle
+    scriptlevel="0" displaystyle="true"><mrow><mo>=</mo><mi>p</mi><mo stretchy="false">(</mo><msub><mi>x</mi><mn>1</mn></msub><mo>∣</mo><mi>μ</mi><mo
+    stretchy="false">)</mo><mi>p</mi><mo stretchy="false">(</mo><msub><mi>x</mi><mn>2</mn></msub><mo>∣</mo><mi>μ</mi><mo
+    stretchy="false">)</mo></mrow></mstyle></mtd></mtr></mtable><annotation encoding="application/x-tex">\begin{align*}
+    p(x_1, x_2 \mid \mu) &= \frac{p(x_1, x_2, \mu)}{p(\mu)} \\ &= \frac{p(\mu) p(x_1
+    \mid \mu) p(x_2 \mid \mu)}{p(\mu)} \\ &= p(x_1 \mid \mu) p(x_2 \mid \mu) \end{align*}</annotation></semantics>p(x1​,x2​∣μ)​=p(μ)p(x1​,x2​,μ)​=p(μ)p(μ)p(x1​∣μ)p(x2​∣μ)​=p(x1​∣μ)p(x2​∣μ)​[(5)](#lnA7wEZvwJ
+    "Link to this Equation")
+  prefs: []
+  type: TYPE_NORMAL
+- en: This mathematical result aligns with the intuition we built in the previous
+    section.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Let’s look at another example:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![](../Images/691c99b7681fc85a45f6823b68709fef.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: In this example, <semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics>x
+    and <semantics><mrow><mi>z</mi></mrow><annotation encoding="application/x-tex">z</annotation></semantics>z
+    are not unconditionally independent. Intuitively, we can see that <semantics><mrow><mi>y</mi></mrow><annotation
+    encoding="application/x-tex">y</annotation></semantics>y depends on <semantics><mrow><mi>x</mi></mrow><annotation
+    encoding="application/x-tex">x</annotation></semantics>x, and <semantics><mrow><mi>z</mi></mrow><annotation
+    encoding="application/x-tex">z</annotation></semantics>z depends on <semantics><mrow><mi>y</mi></mrow><annotation
+    encoding="application/x-tex">y</annotation></semantics>y, so that <semantics><mrow><mi>x</mi></mrow><annotation
+    encoding="application/x-tex">x</annotation></semantics>x and <semantics><mrow><mi>z</mi></mrow><annotation
+    encoding="application/x-tex">z</annotation></semantics>z are dependent.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'But, <semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics>x
+    and <semantics><mrow><mi>z</mi></mrow><annotation encoding="application/x-tex">z</annotation></semantics>z
+    are conditionally independent given <semantics><mrow><mi>y</mi></mrow><annotation
+    encoding="application/x-tex">y</annotation></semantics>y: the lack of an arrow
+    directly from <semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics>x
+    to <semantics><mrow><mi>z</mi></mrow><annotation encoding="application/x-tex">z</annotation></semantics>z
+    tells us that <semantics><mrow><mi>z</mi></mrow><annotation encoding="application/x-tex">z</annotation></semantics>z
+    only depends on <semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics>x
+    through <semantics><mrow><mi>y</mi></mrow><annotation encoding="application/x-tex">y</annotation></semantics>y.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '***Exercise**: mathematically prove the results stated above.*'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Let’s look at a third example:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![](../Images/9b892ab790c214b917774ac80db8d749.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: 'In this example, <semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics>x
+    and <semantics><mrow><mi>z</mi></mrow><annotation encoding="application/x-tex">z</annotation></semantics>z
+    are unconditionally independent, but given <semantics><mrow><mi>y</mi></mrow><annotation
+    encoding="application/x-tex">y</annotation></semantics>y, they are conditionally
+    dependent. Why? Let’s look at an example that will help us build intuition for
+    this result. Suppose that:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: <semantics><mrow><mi>y</mi></mrow><annotation encoding="application/x-tex">y</annotation></semantics>y
+    is whether or not I have a stuffy nose.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: <semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics>x
+    is whether or not I am sick (with a cold, flu, COVID, etc.)
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: <semantics><mrow><mi>z</mi></mrow><annotation encoding="application/x-tex">z</annotation></semantics>z
+    is whether or not I have seasonal allergies.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 'First, we can see that the description matches the graphical model: whether
+    or not I have a stuffy nose depends on whether or not I’m sick, and whether or
+    not I have allergies. But, sickness and allergies don’t affect each other. In
+    other words, if I don’t know anything about whether I have a stuffy nose, then
+    my sickness and allergies are independent of each other.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Now, suppose I wake up one morning with a stuffy nose (i.e., <semantics><mrow><mi>y</mi><mo>=</mo><mn>1</mn></mrow><annotation
+    encoding="application/x-tex">y=1</annotation></semantics>y=1), and I’m trying
+    to determine whether I’m sick or have allergies. I look at the weather forecast,
+    and see that the pollen counts are very high. As soon as I hear this information,
+    I’m a lot more certain that <semantics><mrow><mi>z</mi><mo>=</mo><mn>1</mn></mrow><annotation
+    encoding="application/x-tex">z=1</annotation></semantics>z=1. But, even though
+    the weather forecast didn’t directly tell me anything about whether or not I’m
+    sick, my belief that I’m sick drops significantly: my symptoms have been **explained
+    away** by the explanation that I probably have allergies.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: In other words, conditioned on a value of <semantics><mrow><mi>y</mi></mrow><annotation
+    encoding="application/x-tex">y</annotation></semantics>y (stuffy nose), knowing
+    something about <semantics><mrow><mi>z</mi></mrow><annotation encoding="application/x-tex">z</annotation></semantics>z
+    (allergies) gives me information about the distribution of <semantics><mrow><mi>x</mi></mrow><annotation
+    encoding="application/x-tex">x</annotation></semantics>x (sickness). This is precisely
+    the definition of conditional dependence.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '***Exercise**: mathematically prove the results above.*'
+  prefs: []
+  type: TYPE_NORMAL
+- en: These results can be formalized and generalized in the **d-separation** or **Bayes’
+    ball** algorithm. While this algorithm is beyond the scope of this textbook, we’ll
+    look at a variant of it in a few chapters when we talk about causality.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE4]'
+  prefs: []
+  type: TYPE_PRE

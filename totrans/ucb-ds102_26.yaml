@@ -1,0 +1,536 @@
+- en: Causal Inference in Randomized Experiments
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: 原文：[https://data102.org/ds-102-book/content/chapters/04/randomized-experiments](https://data102.org/ds-102-book/content/chapters/04/randomized-experiments)
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '[<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" width="1.25rem"
+    height="1.25rem" class="myst-fm-license-cc-icon myst-fm-license-cc-icon-main inline-block
+    mx-1"><title>Content License: Creative Commons Attribution Share Alike 4.0 International
+    (CC-BY-SA-4.0)</title></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"
+    width="1.25rem" height="1.25rem" class="myst-fm-license-cc-icon myst-fm-license-cc-icon-by
+    inline-block mr-1"><title>Credit must be given to the creator</title></svg><svg
+    viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" width="1.25rem" height="1.25rem"
+    class="myst-fm-license-cc-icon myst-fm-license-cc-icon-sa inline-block mr-1"><title>Adaptations
+    must be shared under the same terms</title></svg>](https://creativecommons.org/licenses/by-sa/4.0/)[](https://github.com/ds-102/ds-102-book
+    "GitHub Repository: ds-102/ds-102-book")[](https://github.com/ds-102/ds-102-book/edit/main/ds-102-book/content/chapters/04/04_randomized_experiments.ipynb
+    "Edit This Page")'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'In this section, we’ll build a deeper understanding of randomized experiments.
+    Recall from the last section the table of potential outcomes:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '| Unit | Outcome if not treated | Outcome if treated | Treated or not? |'
+  prefs: []
+  type: TYPE_TB
+- en: '| 1 | ? | <semantics><mrow><msub><mi>Y</mi><mn>1</mn></msub><mo stretchy="false">(</mo><mn>1</mn><mo
+    stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">Y_1(1)</annotation></semantics>Y1​(1)
+    | <semantics><mrow><msub><mi>Z</mi><mn>1</mn></msub><mo>=</mo><mn>1</mn></mrow><annotation
+    encoding="application/x-tex">Z_1=1</annotation></semantics>Z1​=1 |'
+  prefs: []
+  type: TYPE_TB
+- en: '| 2 | <semantics><mrow><msub><mi>Y</mi><mn>2</mn></msub><mo stretchy="false">(</mo><mn>0</mn><mo
+    stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">Y_2(0)</annotation></semantics>Y2​(0)
+    | ? | <semantics><mrow><msub><mi>Z</mi><mn>2</mn></msub><mo>=</mo><mn>0</mn></mrow><annotation
+    encoding="application/x-tex">Z_2=0</annotation></semantics>Z2​=0 |'
+  prefs: []
+  type: TYPE_TB
+- en: '| 3 | <semantics><mrow><msub><mi>Y</mi><mn>3</mn></msub><mo stretchy="false">(</mo><mn>0</mn><mo
+    stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">Y_3(0)</annotation></semantics>Y3​(0)
+    | ? | <semantics><mrow><msub><mi>Z</mi><mn>3</mn></msub><mo>=</mo><mn>0</mn></mrow><annotation
+    encoding="application/x-tex">Z_3=0</annotation></semantics>Z3​=0 |'
+  prefs: []
+  type: TYPE_TB
+- en: '| 4 | ? | <semantics><mrow><msub><mi>Y</mi><mn>4</mn></msub><mo stretchy="false">(</mo><mn>1</mn><mo
+    stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">Y_4(1)</annotation></semantics>Y4​(1)
+    | <semantics><mrow><msub><mi>Z</mi><mn>4</mn></msub><mo>=</mo><mn>1</mn></mrow><annotation
+    encoding="application/x-tex">Z_4=1</annotation></semantics>Z4​=1 |'
+  prefs: []
+  type: TYPE_TB
+- en: '| 5 | <semantics><mrow><msub><mi>Y</mi><mn>5</mn></msub><mo stretchy="false">(</mo><mn>0</mn><mo
+    stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">Y_5(0)</annotation></semantics>Y5​(0)
+    | ? | <semantics><mrow><msub><mi>Z</mi><mn>5</mn></msub><mo>=</mo><mn>0</mn></mrow><annotation
+    encoding="application/x-tex">Z_5=0</annotation></semantics>Z5​=0 |'
+  prefs: []
+  type: TYPE_TB
+- en: Randomized experiments and potential outcomes[¶](#randomized-experiments-and-potential-outcomes
+    "Link to this Section")
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'In a randomized experiment, we protect ourselves from dealing with confounding
+    variables by randomizing units into treatment and control. In other words, we
+    choose each <semantics><mrow><msub><mi>Z</mi><mi>i</mi></msub></mrow><annotation
+    encoding="application/x-tex">Z_i</annotation></semantics>Zi​ randomly, and we
+    choose it independent of whatever <semantics><mrow><msub><mi>Y</mi><mi>i</mi></msub><mo
+    stretchy="false">(</mo><mn>0</mn><mo stretchy="false">)</mo></mrow><annotation
+    encoding="application/x-tex">Y_i(0)</annotation></semantics>Yi​(0) and <semantics><mrow><msub><mi>Y</mi><mi>i</mi></msub><mo
+    stretchy="false">(</mo><mn>1</mn><mo stretchy="false">)</mo></mrow><annotation
+    encoding="application/x-tex">Y_i(1)</annotation></semantics>Yi​(1) might be. Mathematically,
+    we can write:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: <semantics><mtable rowspacing="0.25em" columnalign="right" columnspacing=""><mtr><mtd><mstyle
+    scriptlevel="0" displaystyle="true"><mrow><mo fence="false" stretchy="true" minsize="1.2em"
+    maxsize="1.2em">(</mo><msub><mi>Y</mi><mi>i</mi></msub><mo stretchy="false">(</mo><mn>0</mn><mo
+    stretchy="false">)</mo><mo separator="true">,</mo><msub><mi>Y</mi><mi>i</mi></msub><mo
+    stretchy="false">(</mo><mn>1</mn><mo stretchy="false">)</mo><mo fence="false"
+    stretchy="true" minsize="1.2em" maxsize="1.2em">)</mo><mo>⊥</mo><mtext> ⁣</mtext><mtext> ⁣</mtext><mtext> ⁣</mtext><mo>⊥</mo><msub><mi>Z</mi><mi>i</mi></msub></mrow></mstyle></mtd></mtr></mtable><annotation
+    encoding="application/x-tex">\begin{align} \big(Y_i(0), Y_i(1)\big) \perp \!\!\!
+    \perp Z_i \end{align}</annotation></semantics>(Yi​(0),Yi​(1))⊥⊥Zi​​​[(1)](#PeMQi8p5B6
+    "Link to this Equation")
+  prefs: []
+  type: TYPE_NORMAL
+- en: Remember, this doesn’t mean that the treatment is independent from the observed
+    outcome! It only means that the treatment is independent from the *pair* of potential
+    outcomes. The observed outcome <semantics><mrow><msub><mi>Y</mi><mrow><mi>i</mi><mo
+    separator="true">,</mo><mi>o</mi><mi>b</mi><mi>s</mi></mrow></msub><mo>=</mo><msub><mi>Y</mi><mi>i</mi></msub><mo
+    stretchy="false">(</mo><mn>0</mn><mo stretchy="false">)</mo><mo stretchy="false">(</mo><mn>1</mn><mo>−</mo><msub><mi>Z</mi><mi>i</mi></msub><mo
+    stretchy="false">)</mo><mo>+</mo><msub><mi>Y</mi><mi>i</mi></msub><mo stretchy="false">(</mo><mn>1</mn><mo
+    stretchy="false">)</mo><msub><mi>Z</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">Y_{i,obs}
+    = Y_i(0)(1-Z_i) + Y_i(1) Z_i</annotation></semantics>Yi,obs​=Yi​(0)(1−Zi​)+Yi​(1)Zi​
+    always depends on the treatment decision. In other words, knowing the treatment
+    decision <semantics><mrow><msub><mi>Z</mi><mi>i</mi></msub></mrow><annotation
+    encoding="application/x-tex">Z_i</annotation></semantics>Zi​ always gives us information
+    about *which* of the two potential outcomes (<semantics><mrow><msub><mi>Y</mi><mi>i</mi></msub><mo
+    stretchy="false">(</mo><mn>0</mn><mo stretchy="false">)</mo></mrow><annotation
+    encoding="application/x-tex">Y_i(0)</annotation></semantics>Yi​(0) or <semantics><mrow><msub><mi>Y</mi><mi>i</mi></msub><mo
+    stretchy="false">(</mo><mn>1</mn><mo stretchy="false">)</mo></mrow><annotation
+    encoding="application/x-tex">Y_i(1)</annotation></semantics>Yi​(1)) we observed
+    (except in the uninteresting scenario where the treatment is completely unrelated
+    to the outcome), but
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'For example, consider a double-blind vaccine trial. We can consider the potential
+    outcomes for a particular subject: they represent what happens to that subject
+    if they get the vaccine (<semantics><mrow><msub><mi>Y</mi><mi>i</mi></msub><mo
+    stretchy="false">(</mo><mn>1</mn><mo stretchy="false">)</mo></mrow><annotation
+    encoding="application/x-tex">Y_i(1)</annotation></semantics>Yi​(1)) or if they
+    don’t get the vaccine (<semantics><mrow><msub><mi>Y</mi><mi>i</mi></msub><mo stretchy="false">(</mo><mn>0</mn><mo
+    stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">Y_i(0)</annotation></semantics>Yi​(0)).
+    This is the pair of potential outcomes, <semantics><mrow><mo fence="false" stretchy="true"
+    minsize="1.2em" maxsize="1.2em">(</mo><msub><mi>Y</mi><mi>i</mi></msub><mo stretchy="false">(</mo><mn>0</mn><mo
+    stretchy="false">)</mo><mo separator="true">,</mo><msub><mi>Y</mi><mi>i</mi></msub><mo
+    stretchy="false">(</mo><mn>1</mn><mo stretchy="false">)</mo><mo fence="false"
+    stretchy="true" minsize="1.2em" maxsize="1.2em">)</mo></mrow><annotation encoding="application/x-tex">\big(Y_i(0),
+    Y_i(1)\big)</annotation></semantics>(Yi​(0),Yi​(1)). Next, consider the treatment
+    decision <semantics><mrow><msub><mi>Z</mi><mi>i</mi></msub></mrow><annotation
+    encoding="application/x-tex">Z_i</annotation></semantics>Zi​: this represents
+    whether the subject got the vaccine (<semantics><mrow><msub><mi>Z</mi><mi>i</mi></msub><mo>=</mo><mn>1</mn></mrow><annotation
+    encoding="application/x-tex">Z_i = 1</annotation></semantics>Zi​=1) or a placebo
+    (<semantics><mrow><msub><mi>Z</mi><mi>i</mi></msub><mo>=</mo><mn>0</mn></mrow><annotation
+    encoding="application/x-tex">Z_i = 0</annotation></semantics>Zi​=0). These are
+    independent: knowing whether or not a subject got the vaccine/placebo gives us
+    no information about the pair of potential outcomes: it only gives us information
+    about which one of the two we observe in the real world.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Computing the average treatment effect[¶](#computing-the-average-treatment-effect
+    "Link to this Section")
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: 'You may remember learning that in a randomized controlled trial, we can determine
+    causality by using the difference in means between the treatment and control groups.
+    Let’s now show mathematically that this is true. Recall from the previous section
+    our definition of the ATE <semantics><mrow><mi>τ</mi></mrow><annotation encoding="application/x-tex">\tau</annotation></semantics>τ:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: <semantics><mrow><mi>τ</mi><mo>=</mo><mi>E</mi><mo stretchy="false">[</mo><msub><mi>Y</mi><mi>i</mi></msub><mo
+    stretchy="false">(</mo><mn>1</mn><mo stretchy="false">)</mo><mo>−</mo><msub><mi>Y</mi><mi>i</mi></msub><mo
+    stretchy="false">(</mo><mn>0</mn><mo stretchy="false">)</mo><mo stretchy="false">]</mo><mo>=</mo><mi>E</mi><mo
+    stretchy="false">[</mo><msub><mi>Y</mi><mi>i</mi></msub><mo stretchy="false">(</mo><mn>1</mn><mo
+    stretchy="false">)</mo><mo stretchy="false">]</mo><mo>−</mo><mi>E</mi><mo stretchy="false">[</mo><msub><mi>Y</mi><mi>i</mi></msub><mo
+    stretchy="false">(</mo><mn>0</mn><mo stretchy="false">)</mo><mo stretchy="false">]</mo></mrow><annotation
+    encoding="application/x-tex">\tau = E[Y_i(1) - Y_i(0)] = E[Y_i(1)] - E[Y_i(0)]</annotation></semantics>τ=E[Yi​(1)−Yi​(0)]=E[Yi​(1)]−E[Yi​(0)][(2)](#DYcy3TsLv0
+    "Link to this Equation")
+  prefs: []
+  type: TYPE_NORMAL
+- en: If <semantics><mrow><msub><mi>Z</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">Z_i</annotation></semantics>Zi​
+    and <semantics><mrow><msub><mi>Y</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">Y_i</annotation></semantics>Yi​
+    are independent, then <semantics><mrow><mi>E</mi><mo stretchy="false">[</mo><msub><mi>Y</mi><mi>i</mi></msub><mo
+    stretchy="false">(</mo><mo>⋅</mo><mo stretchy="false">)</mo><mo stretchy="false">]</mo><mo>=</mo><mi>E</mi><mo
+    stretchy="false">[</mo><msub><mi>Y</mi><mi>i</mi></msub><mo stretchy="false">(</mo><mo>⋅</mo><mo
+    stretchy="false">)</mo><mi mathvariant="normal">∣</mi><msub><mi>Z</mi><mi>i</mi></msub><mo
+    stretchy="false">]</mo></mrow><annotation encoding="application/x-tex">E[Y_i(\cdot)]
+    = E[Y_i(\cdot)|Z_i]</annotation></semantics>E[Yi​(⋅)]=E[Yi​(⋅)∣Zi​]. In other
+    words, conditioning on <semantics><mrow><msub><mi>Z</mi><mi>i</mi></msub></mrow><annotation
+    encoding="application/x-tex">Z_i</annotation></semantics>Zi​ shouldn’t change
+    the expectation, as long as <semantics><mrow><msub><mi>Z</mi><mi>i</mi></msub></mrow><annotation
+    encoding="application/x-tex">Z_i</annotation></semantics>Zi​ and <semantics><mrow><msub><mi>Y</mi><mi>i</mi></msub><mo
+    stretchy="false">(</mo><mo>⋅</mo><mo stretchy="false">)</mo></mrow><annotation
+    encoding="application/x-tex">Y_i(\cdot)</annotation></semantics>Yi​(⋅) are independent.
+  prefs: []
+  type: TYPE_NORMAL
+- en: <semantics><mtable rowspacing="0.25em" columnalign="right left" columnspacing="0em"><mtr><mtd><mstyle
+    scriptlevel="0" displaystyle="true"><mi>τ</mi></mstyle></mtd><mtd><mstyle scriptlevel="0"
+    displaystyle="true"><mrow><mo>=</mo><mi>E</mi><mo stretchy="false">[</mo><msub><mi>Y</mi><mi>i</mi></msub><mo
+    stretchy="false">(</mo><mn>1</mn><mo stretchy="false">)</mo><mo stretchy="false">]</mo><mo>−</mo><mi>E</mi><mo
+    stretchy="false">[</mo><msub><mi>Y</mi><mi>i</mi></msub><mo stretchy="false">(</mo><mn>0</mn><mo
+    stretchy="false">)</mo><mo stretchy="false">]</mo></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle
+    scriptlevel="0" displaystyle="true"><mrow><mo>=</mo><mi>E</mi><mo stretchy="false">[</mo><msub><mi>Y</mi><mi>i</mi></msub><mo
+    stretchy="false">(</mo><mn>1</mn><mo stretchy="false">)</mo><mi mathvariant="normal">∣</mi><msub><mi>Z</mi><mi>i</mi></msub><mo>=</mo><mn>1</mn><mo
+    stretchy="false">]</mo><mo>−</mo><mi>E</mi><mo stretchy="false">[</mo><msub><mi>Y</mi><mi>i</mi></msub><mo
+    stretchy="false">(</mo><mn>0</mn><mo stretchy="false">)</mo><mi mathvariant="normal">∣</mi><msub><mi>Z</mi><mi>i</mi></msub><mo>=</mo><mn>0</mn><mo
+    stretchy="false">]</mo><mstyle mathsize="0.7em"><mo stretchy="false">(</mo><mtext>if </mtext><mo
+    stretchy="false">(</mo><msub><mi>Y</mi><mi>i</mi></msub><mo stretchy="false">(</mo><mn>0</mn><mo
+    stretchy="false">)</mo><mo separator="true">,</mo><msub><mi>Y</mi><mi>i</mi></msub><mo
+    stretchy="false">(</mo><mn>1</mn><mo stretchy="false">)</mo><mo stretchy="false">)</mo><mo>⊥</mo><mo>⊥</mo><msub><mi>Z</mi><mi>i</mi></msub><mo
+    stretchy="false">)</mo></mstyle></mrow></mstyle></mtd></mtr></mtable><annotation
+    encoding="application/x-tex">\begin{align} \tau &= E[Y_i(1)] - E[Y_i(0)] \\ &=
+    E[Y_i(1)|Z_i=1] - E[Y_i(0)|Z_i=0] \quad{\scriptsize (\text{if }(Y_i(0), Y_i(1))
+    \perp \!\! \perp Z_i)} \end{align}</annotation></semantics>τ​=E[Yi​(1)]−E[Yi​(0)]=E[Yi​(1)∣Zi​=1]−E[Yi​(0)∣Zi​=0](if (Yi​(0),Yi​(1))⊥⊥Zi​)​​[(3)](#lIBnEkbUjQ
+    "Link to this Equation")
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'These two terms correspond to the mean outcomes in the treatment and control
+    groups, respectively. If we have <semantics><mrow><mi>n</mi></mrow><annotation
+    encoding="application/x-tex">n</annotation></semantics>n observations <semantics><mrow><mo
+    stretchy="false">(</mo><msub><mi>Z</mi><mn>1</mn></msub><mo separator="true">,</mo><msub><mi>Y</mi><mrow><mn>1</mn><mo
+    separator="true">,</mo><mi>o</mi><mi>b</mi><mi>s</mi></mrow></msub><mo stretchy="false">)</mo><mo
+    separator="true">,</mo><mo>…</mo><mo separator="true">,</mo><mo stretchy="false">(</mo><msub><mi>Z</mi><mi>n</mi></msub><mo
+    separator="true">,</mo><msub><mi>Y</mi><mrow><mi>n</mi><mo separator="true">,</mo><mi>o</mi><mi>b</mi><mi>s</mi></mrow></msub><mo
+    stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">(Z_1, Y_{1,obs}),
+    \ldots, (Z_n, Y_{n,obs})</annotation></semantics>(Z1​,Y1,obs​),…,(Zn​,Yn,obs​),
+    then our empirical estimate for the ATE is just:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '<semantics><mtable rowspacing="0.25em" columnalign="right left" columnspacing="0em"><mtr><mtd><mstyle
+    scriptlevel="0" displaystyle="true"><mover accent="true"><mi>τ</mi><mo>^</mo></mover></mstyle></mtd><mtd><mstyle
+    scriptlevel="0" displaystyle="true"><mrow><mo>=</mo><munder><munder><mrow><mo
+    fence="true">[</mo><mfrac><mn>1</mn><msub><mi>n</mi><mn>1</mn></msub></mfrac><munder><mo>∑</mo><mrow><mi>i</mi><mo>:</mo><msub><mi>Z</mi><mi>i</mi></msub><mo>=</mo><mn>1</mn></mrow></munder><msub><mi>Y</mi><mi>i</mi></msub><mo
+    fence="true">]</mo></mrow><mo stretchy="true">⏟</mo></munder><mrow><mo>=</mo><msub><mover
+    accent="true"><mi>Y</mi><mo>ˉ</mo></mover><mrow><mi>o</mi><mi>b</mi><mi>s</mi><mo
+    separator="true">,</mo><mn>1</mn></mrow></msub></mrow></munder><mo>−</mo><munder><munder><mrow><mo
+    fence="true">[</mo><mfrac><mn>1</mn><msub><mi>n</mi><mn>0</mn></msub></mfrac><munder><mo>∑</mo><mrow><mi>i</mi><mo>:</mo><msub><mi>Z</mi><mi>i</mi></msub><mo>=</mo><mn>0</mn></mrow></munder><msub><mi>Y</mi><mi>i</mi></msub><mo
+    fence="true">]</mo></mrow><mo stretchy="true">⏟</mo></munder><mrow><mo>=</mo><msub><mover
+    accent="true"><mi>Y</mi><mo>ˉ</mo></mover><mrow><mi>o</mi><mi>b</mi><mi>s</mi><mo
+    separator="true">,</mo><mn>0</mn></mrow></msub></mrow></munder><mo separator="true">,</mo></mrow></mstyle></mtd></mtr></mtable><annotation
+    encoding="application/x-tex">\begin{align} \hat{\tau} &= \underbrace{\left[\frac{1}{n_1}
+    \sum_{i: Z_i = 1} Y_i\right]}_{=\bar{Y}_{obs,1}} - \underbrace{\left[\frac{1}{n_0}
+    \sum_{i: Z_i = 0} Y_i\right]}_{=\bar{Y}_{obs,0}}, \end{align}</annotation></semantics>τ^​==Yˉobs,1​[n1​1​i:Zi​=1∑​Yi​]​​−=Yˉobs,0​[n0​1​i:Zi​=0∑​Yi​]​​,​​[(4)](#wKYBdx6pje
+    "Link to this Equation")'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'where <semantics><mrow><msub><mi>n</mi><mn>1</mn></msub></mrow><annotation
+    encoding="application/x-tex">n_1</annotation></semantics>n1​ is the number of
+    treated units and <semantics><mrow><msub><mi>n</mi><mn>0</mn></msub></mrow><annotation
+    encoding="application/x-tex">n_0</annotation></semantics>n0​ is the number of
+    untreated units, and <semantics><mrow><msub><mover accent="true"><mi>Y</mi><mo>ˉ</mo></mover><mrow><mi>o</mi><mi>b</mi><mi>s</mi><mo
+    separator="true">,</mo><mn>1</mn></mrow></msub></mrow><annotation encoding="application/x-tex">\bar{Y}_{obs,1}</annotation></semantics>Yˉobs,1​
+    and <semantics><mrow><msub><mover accent="true"><mi>Y</mi><mo>ˉ</mo></mover><mrow><mi>o</mi><mi>b</mi><mi>s</mi><mo
+    separator="true">,</mo><mn>0</mn></mrow></msub></mrow><annotation encoding="application/x-tex">\bar{Y}_{obs,0}</annotation></semantics>Yˉobs,0​
+    are the means of the treatment and control groups respectively. This quantity
+    <semantics><mrow><mover accent="true"><mi>τ</mi><mo>^</mo></mover></mrow><annotation
+    encoding="application/x-tex">\hat{\tau}</annotation></semantics>τ^, which you’ve
+    most likely seen and used before (e.g., in Data 8), has many names. Here are a
+    few of them:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: The **difference in means**
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: The **simple difference in mean outcomes / simple difference in observed means
+    (SDO)**
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: The **Neyman estimator**
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: The ***prima facie* causal effect**, <semantics><mrow><msub><mi>τ</mi><mrow><mi>P</mi><mi>F</mi></mrow></msub></mrow><annotation
+    encoding="application/x-tex">\tau_{PF}</annotation></semantics>τPF​ (*prima facie*
+    is latin for “at first sight”).
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs: []
+  type: TYPE_PRE
+- en: '[PRE1]'
+  prefs: []
+  type: TYPE_PRE
+- en: '(Optional) Fixed-sample assumption: Fisher and Neyman[¶](#id-optional-fixed-sample-assumption-fisher-and-neyman
+    "Link to this Section")'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: In this section, we’ll analyze randomized experiments and the Neyman estimator
+    under the fixed-sample assumption. Recall that in this setting, we assume that
+    <semantics><mrow><msub><mi>Z</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">Z_i</annotation></semantics>Zi​
+    (which we observe) is random, but that <semantics><mrow><msub><mi>Y</mi><mi>i</mi></msub><mo
+    stretchy="false">(</mo><mn>0</mn><mo stretchy="false">)</mo></mrow><annotation
+    encoding="application/x-tex">Y_i(0)</annotation></semantics>Yi​(0) and <semantics><mrow><msub><mi>Y</mi><mi>i</mi></msub><mo
+    stretchy="false">(</mo><mn>1</mn><mo stretchy="false">)</mo></mrow><annotation
+    encoding="application/x-tex">Y_i(1)</annotation></semantics>Yi​(1) (which are
+    unknown) are fixed. In this case, the statement of independence above doesn’t
+    really make sense, since <semantics><mrow><msub><mi>Y</mi><mi>i</mi></msub><mo
+    stretchy="false">(</mo><mn>0</mn><mo stretchy="false">)</mo></mrow><annotation
+    encoding="application/x-tex">Y_i(0)</annotation></semantics>Yi​(0) and <semantics><mrow><msub><mi>Y</mi><mi>i</mi></msub><mo
+    stretchy="false">(</mo><mn>1</mn><mo stretchy="false">)</mo></mrow><annotation
+    encoding="application/x-tex">Y_i(1)</annotation></semantics>Yi​(1) are not random.
+    However, we can still compute the Neyman estimator. We’ll develop some properties
+    of the estimator, then use those to construct a confidence interval for the estimated
+    ATE. Finally, we’ll look at two different hypothesis tests used in randomized
+    experiments.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Properties of the Neyman estimator[¶](#properties-of-the-neyman-estimator "Link
+    to this Section")
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: 'The Neyman estimator has two useful properties: the first is that it’s unbiased,
+    and the second is that its variance can be bounded by the estimated variances
+    within the two groups:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: <semantics><mtable rowspacing="0.25em" columnalign="right left" columnspacing="0em"><mtr><mtd><mstyle
+    scriptlevel="0" displaystyle="true"><mrow><mi>E</mi><mo stretchy="false">[</mo><mover
+    accent="true"><mi>τ</mi><mo>^</mo></mover><mo stretchy="false">]</mo></mrow></mstyle></mtd><mtd><mstyle
+    scriptlevel="0" displaystyle="true"><mrow><mo>=</mo><mi>τ</mi></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle
+    scriptlevel="0" displaystyle="true"><mrow><mtext>var</mtext><mo stretchy="false">(</mo><mover
+    accent="true"><mi>τ</mi><mo>^</mo></mover><mo stretchy="false">)</mo></mrow></mstyle></mtd><mtd><mstyle
+    scriptlevel="0" displaystyle="true"><mrow><mo>≤</mo><mfrac><msubsup><mover accent="true"><mi>σ</mi><mo>^</mo></mover><mn>1</mn><mn>2</mn></msubsup><msub><mi>n</mi><mn>1</mn></msub></mfrac><mo>+</mo><mfrac><msubsup><mover
+    accent="true"><mi>σ</mi><mo>^</mo></mover><mn>0</mn><mn>2</mn></msubsup><msub><mi>n</mi><mn>0</mn></msub></mfrac><mo
+    separator="true">,</mo></mrow></mstyle></mtd></mtr></mtable><annotation encoding="application/x-tex">\begin{align*}
+    E[\hat{\tau}] &= \tau \\ \text{var}(\hat{\tau}) &\leq \frac{\hat{\sigma}_1^2}{n_1}
+    + \frac{\hat{\sigma}_0^2}{n_0}, \end{align*}</annotation></semantics>E[τ^]var(τ^)​=τ≤n1​σ^12​​+n0​σ^02​​,​[(5)](#qIATDZgAGK
+    "Link to this Equation")
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'where <semantics><mrow><msub><mover accent="true"><mi>σ</mi><mo>^</mo></mover><mi>k</mi></msub></mrow><annotation
+    encoding="application/x-tex">\hat{\sigma}_k</annotation></semantics>σ^k​ is the
+    sample standard deviation of the potential treatment outcomes <semantics><mrow><msub><mi>Y</mi><mn>1</mn></msub><mo
+    stretchy="false">(</mo><mi>k</mi><mo stretchy="false">)</mo><mo separator="true">,</mo><mo>…</mo><mo
+    separator="true">,</mo><msub><mi>Y</mi><mi>n</mi></msub><mo stretchy="false">(</mo><mi>k</mi><mo
+    stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">Y_1(k),
+    \ldots, Y_n(k)</annotation></semantics>Y1​(k),…,Yn​(k):'
+  prefs: []
+  type: TYPE_NORMAL
+- en: <semantics><mtable rowspacing="0.25em" columnalign="right left" columnspacing="0em"><mtr><mtd><mstyle
+    scriptlevel="0" displaystyle="true"><msub><mover accent="true"><mi>σ</mi><mo>^</mo></mover><mi>k</mi></msub></mstyle></mtd><mtd><mstyle
+    scriptlevel="0" displaystyle="true"><mrow><mo>=</mo><mfrac><mn>1</mn><mrow><mi>n</mi><mo>−</mo><mn>1</mn></mrow></mfrac><munder><mo>∑</mo><mi>i</mi></munder><mo
+    fence="false" stretchy="true" minsize="1.2em" maxsize="1.2em">(</mo><msub><mi>Y</mi><mi>i</mi></msub><mo
+    stretchy="false">(</mo><mi>k</mi><mo stretchy="false">)</mo><mo>−</mo><mover accent="true"><mi>Y</mi><mo>ˉ</mo></mover><mo
+    stretchy="false">(</mo><mi>k</mi><mo stretchy="false">)</mo><mo fence="false"
+    stretchy="true" minsize="1.2em" maxsize="1.2em">)</mo></mrow></mstyle></mtd></mtr></mtable><annotation
+    encoding="application/x-tex">\begin{align*} \hat{\sigma}_k &= \frac{1}{n - 1}
+    \sum_{i} \big(Y_i(k) - \bar{Y}(k)\big) \end{align*}</annotation></semantics>σ^k​​=n−11​i∑​(Yi​(k)−Yˉ(k))​[(6)](#HVGykh2X8I
+    "Link to this Equation")
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Since this depends on the counterfactual outcomes that we don’t get to observe,
+    we’ll typically approximate it by replacing the true sample variances with the
+    sample variances within each observed group in our data, and call this <semantics><mrow><mover
+    accent="true"><mi>V</mi><mo>^</mo></mover></mrow><annotation encoding="application/x-tex">\hat{V}</annotation></semantics>V^:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '<semantics><mtable rowspacing="0.25em" columnalign="right left" columnspacing="0em"><mtr><mtd><mstyle
+    scriptlevel="0" displaystyle="true"><mover accent="true"><mi>V</mi><mo>^</mo></mover></mstyle></mtd><mtd><mstyle
+    scriptlevel="0" displaystyle="true"><mrow><mo>=</mo><mo fence="false" stretchy="true"
+    minsize="3em" maxsize="3em">[</mo><mfrac><mn>1</mn><msub><mi>n</mi><mn>1</mn></msub></mfrac><munder><munder><mrow><mfrac><mn>1</mn><mrow><msub><mi>n</mi><mn>1</mn></msub><mo>−</mo><mn>1</mn></mrow></mfrac><munder><mo>∑</mo><mrow><mi>i</mi><mo>:</mo><msub><mi>Z</mi><mi>i</mi></msub><mo>=</mo><mn>1</mn></mrow></munder><mo
+    fence="false" stretchy="true" minsize="1.2em" maxsize="1.2em">(</mo><msub><mi>Y</mi><mi>i</mi></msub><mo>−</mo><msub><mover
+    accent="true"><mi>Y</mi><mo>ˉ</mo></mover><mrow><mi>o</mi><mi>b</mi><mi>s</mi><mo
+    separator="true">,</mo><mn>1</mn></mrow></msub><msup><mo fence="false" stretchy="true"
+    minsize="1.2em" maxsize="1.2em">)</mo><mn>2</mn></msup></mrow><mo stretchy="true">⏟</mo></munder><mtext>sample std. dev. of treatment group</mtext></munder><mo
+    fence="false" stretchy="true" minsize="3em" maxsize="3em">]</mo><mo>+</mo><mo
+    fence="false" stretchy="true" minsize="3em" maxsize="3em">[</mo><mfrac><mn>1</mn><msub><mi>n</mi><mn>0</mn></msub></mfrac><munder><munder><mrow><mfrac><mn>1</mn><mrow><msub><mi>n</mi><mn>0</mn></msub><mo>−</mo><mn>1</mn></mrow></mfrac><munder><mo>∑</mo><mrow><mi>i</mi><mo>:</mo><msub><mi>Z</mi><mi>i</mi></msub><mo>=</mo><mn>0</mn></mrow></munder><mo
+    fence="false" stretchy="true" minsize="1.2em" maxsize="1.2em">(</mo><msub><mi>Y</mi><mi>i</mi></msub><mo>−</mo><msub><mover
+    accent="true"><mi>Y</mi><mo>ˉ</mo></mover><mrow><mi>o</mi><mi>b</mi><mi>s</mi><mo
+    separator="true">,</mo><mn>0</mn></mrow></msub><msup><mo fence="false" stretchy="true"
+    minsize="1.2em" maxsize="1.2em">)</mo><mn>2</mn></msup></mrow><mo stretchy="true">⏟</mo></munder><mtext>sample std. dev. of control group</mtext></munder><mo
+    fence="false" stretchy="true" minsize="3em" maxsize="3em">]</mo></mrow></mstyle></mtd></mtr></mtable><annotation
+    encoding="application/x-tex">\begin{align*} \hat{V} &= \Bigg[\frac{1}{n_1} \underbrace{%
+    \frac{1}{n_1 - 1} \sum_{i: Z_i = 1} \big(Y_i - \bar{Y}_{obs,1}\big)^2}_{% \text{sample
+    std. dev. of treatment group}}\Bigg] + \Bigg[\frac{1}{n_0} \underbrace{% \frac{1}{n_0
+    - 1} \sum_{i: Z_i = 0} \big(Y_i - \bar{Y}_{obs,0}\big)^2}_{% \text{sample std.
+    dev. of control group}}\Bigg] \end{align*}</annotation></semantics>V^​=[n1​1​sample std. dev. of treatment groupn1​−11​i:Zi​=1∑​(Yi​−Yˉobs,1​)2​​]+[n0​1​sample std. dev. of control groupn0​−11​i:Zi​=0∑​(Yi​−Yˉobs,0​)2​​]​[(7)](#dQP2iN6wHd
+    "Link to this Equation")'
+  prefs: []
+  type: TYPE_NORMAL
+- en: It can be shown that under certain regularity conditions, as the number of samples
+    grows larger, the distribution of the quantity <semantics><mrow><mfrac><mrow><mover
+    accent="true"><mi>τ</mi><mo>^</mo></mover><mo>−</mo><mi>τ</mi></mrow><msqrt><mover
+    accent="true"><mi>V</mi><mo>^</mo></mover></msqrt></mfrac></mrow><annotation encoding="application/x-tex">\frac{\hat{\tau}
+    - \tau}{\sqrt{\hat{V}}}</annotation></semantics>V^​τ^−τ​ converges to a normal
+    distribution <semantics><mrow><mi>N</mi><mo stretchy="false">(</mo><mn>0</mn><mo
+    separator="true">,</mo><msup><mi>σ</mi><mn>2</mn></msup><mo stretchy="false">)</mo></mrow><annotation
+    encoding="application/x-tex">N(0, \sigma^2)</annotation></semantics>N(0,σ2), where
+    <semantics><mrow><msup><mi>σ</mi><mn>2</mn></msup><mo><</mo><mn>1</mn></mrow><annotation
+    encoding="application/x-tex">\sigma^2 < 1</annotation></semantics>σ2<1.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Confidence intervals for the ATE[¶](#confidence-intervals-for-the-ate "Link
+    to this Section")
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: 'Given the fact above, we can construct an asymptotically valid <semantics><mrow><mn>95</mn><mi
+    mathvariant="normal">%</mi></mrow><annotation encoding="application/x-tex">95\%</annotation></semantics>95%
+    confidence interval for <semantics><mrow><mi>τ</mi></mrow><annotation encoding="application/x-tex">\tau</annotation></semantics>τ
+    as follows: $$'
+  prefs: []
+  type: TYPE_NORMAL
+- en: <semantics><mtable rowspacing="0.25em" columnalign="right" columnspacing=""><mtr><mtd><mstyle
+    scriptlevel="0" displaystyle="true"><mrow><mo fence="true">(</mo><mover accent="true"><mi>τ</mi><mo>^</mo></mover><mo>−</mo><mn>1.96</mn><msqrt><mover
+    accent="true"><mi>V</mi><mo>^</mo></mover></msqrt><mo separator="true">,</mo><mover
+    accent="true"><mi>τ</mi><mo>^</mo></mover><mo>+</mo><mn>1.96</mn><msqrt><mover
+    accent="true"><mi>V</mi><mo>^</mo></mover></msqrt><mo fence="true">)</mo></mrow></mstyle></mtd></mtr></mtable><annotation
+    encoding="application/x-tex">\begin{align*} \left(\hat{\tau} - 1.96\sqrt{\hat{V}},
+    \hat{\tau} + 1.96\sqrt{\hat{V}}\right) \end{align*}</annotation></semantics>(τ^−1.96V^​,τ^+1.96V^​)​[(8)](#S2rfPGr9ad
+    "Link to this Equation")
+  prefs: []
+  type: TYPE_NORMAL
+- en: $$
+  prefs: []
+  type: TYPE_NORMAL
+- en: Hypothesis testing for causal effects[¶](#hypothesis-testing-for-causal-effects
+    "Link to this Section")
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: 'In the classic null hypothesis significance testing framework, there are two
+    different null hypotheses commonly used when measuring causal effects in randomized
+    trials:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Fisher’s strong null** (also known as Fisher’s sharp null) states that for
+    every unit, the treatment effect <semantics><mrow><msub><mi>Y</mi><mi>i</mi></msub><mo
+    stretchy="false">(</mo><mn>1</mn><mo stretchy="false">)</mo><mo>−</mo><msub><mi>Y</mi><mi>i</mi></msub><mo
+    stretchy="false">(</mo><mn>0</mn><mo stretchy="false">)</mo><mo>=</mo><mn>0</mn></mrow><annotation
+    encoding="application/x-tex">Y_i(1) - Y_i(0) = 0</annotation></semantics>Yi​(1)−Yi​(0)=0.'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '**Neyman’s weak null** states that the average treatment effect is 0\. In other
+    words, even if some individual treatment effects are positive and some are negative,
+    they average out to 0.'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: The first is a much stricter null hypothesis (hence the name “strong null”),
+    since it states that all the treatment effects are 0\. The second is looser, requiring
+    only that the treatment effects average out to 0\. Because of this, the strong
+    null is often easier to reject.
+  prefs: []
+  type: TYPE_NORMAL
+- en: To test a hypothesis against Neyman’s weak null, we construct the test statistic
+    <semantics><mrow><mfrac><mover accent="true"><mi>τ</mi><mo>^</mo></mover><msqrt><mover
+    accent="true"><mi>V</mi><mo>^</mo></mover></msqrt></mfrac></mrow><annotation encoding="application/x-tex">\frac{\hat{\tau}}{\sqrt{\hat{V}}}</annotation></semantics>V^​τ^​.
+    Under the Neyman weak null hypothesis, this should follow a standard normal distribution.
+  prefs: []
+  type: TYPE_NORMAL
+- en: To test a hypothessis against Fisher’s strong null, we need some stronger mathematical
+    machinery. We’ll limit ourself to cases where the treatment and outcome are both
+    binary, and use a technique called **permutation testing**. In this technique,
+    we randomly shuffle the treatment/control labels, and use that to build a null
+    distribution for the difference in outcomes (for a refresher on this technique,
+    see the [Data 8 textbook](https://www.inferentialthinking.com/chapters/12/1/AB_Testing.html)).
+    Instead of randomly shuffling, however, Fisher’s exact test instead looks at every
+    single possible permutation, and computes a <semantics><mrow><mi>p</mi></mrow><annotation
+    encoding="application/x-tex">p</annotation></semantics>p-value in closed form.
+  prefs: []
+  type: TYPE_NORMAL
+- en: (Optional) Complications with randomized experiments[¶](#id-optional-complications-with-randomized-experiments
+    "Link to this Section")
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Randomized experiments present several challenges that make them infeasible
+    in some circumstances. Here are some of the issues that come up with them. Note
+    that this list is far from exhaustive!
+  prefs: []
+  type: TYPE_NORMAL
+- en: Compliance[¶](#compliance "Link to this Section")
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: 'Carrying out a randomized experiment requires that the units follow their treatment/no-treatment
+    assignment. This is easier to ensure in some experiments than others. Consider
+    the following examples:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: An experiment to determine whether a new fertilizer increases crop yield
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: A double-blind vaccine trial
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: An experiment on whether using a mindfulness app for at least 20 minutes a day
+    causes better sleep
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: An experiment on whether eating a certain amount of chocolate causes improved
+    heart function
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: For the first two, we can guarantee that the treatment will be properly followed.
+    As experimenters, we know that if a certain unit (plant, person, etc.) is assigned
+    to the treatment group, that they will receive the treatment.
+  prefs: []
+  type: TYPE_NORMAL
+- en: For the last two, however, this is more difficult to ensure. While we can ask
+    subjects in a research study to use an app for a certain amount of time per day,
+    we can’t guarantee that every subject will follow the instructions perfectly.
+  prefs: []
+  type: TYPE_NORMAL
+- en: In particular, in some randomized experiments, we can’t guarantee that units
+    will be **compliant** with the treatment assignment. We can’t solve this by simply
+    removing the units that were non-compliant, since this could introduce bias and/or
+    confounding.
+  prefs: []
+  type: TYPE_NORMAL
+- en: External validity[¶](#external-validity "Link to this Section")
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '**External validity** refers to whether or not a finding from a randomized
+    experiment will apply to a broader population of interest. This often arises due
+    to sampling bias, contrived situations in an experiment that don’t reflect real-world
+    conditions, or other similar effects.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Consider the following example:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Suppose we want to determine whether watching a 15-minute video about common
+    pitfalls and misunderstandings of probability helps people make better decisions
+    about whether news stories they read are valid. We recruit a random sample of
+    Data 102 students, randomly assign half to watch the video, and assign the other
+    half not to watch the video. We then evaluate how well the students can critically
+    evaluate several news stories. We find that the videos have no effect: everyone
+    in our sample does an excellent job of evaluation, regardless of whether or not
+    they watched the video.'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: 'In this case, our randomized experiment shows no causal effect, but our sample
+    is not representative of the population at large: we can expect that most Data
+    102 students, who are probability experts, already know the common pitfalls in
+    the 15-minute video. Among a larger population, however, the same might not be
+    true!'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Ethical considerations[¶](#ethical-considerations "Link to this Section")
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: 'Randomized experiments might not always be ethical. Suppose we want to determine
+    whether or not the death penalty acts as a deterrent: in other words, does instituting
+    the death penalty cause a reduction in crime?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Random assignment of the death penalty is profoundly unethical, and no randomized
+    experiment can determine this.
+  prefs: []
+  type: TYPE_NORMAL

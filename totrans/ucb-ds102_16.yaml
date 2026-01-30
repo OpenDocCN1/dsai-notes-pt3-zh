@@ -1,0 +1,590 @@
+- en: Regression review
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: 原文：[https://data102.org/ds-102-book/content/chapters/03/regression-review](https://data102.org/ds-102-book/content/chapters/03/regression-review)
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '[<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" width="1.25rem"
+    height="1.25rem" class="myst-fm-license-cc-icon myst-fm-license-cc-icon-main inline-block
+    mx-1"><title>Content License: Creative Commons Attribution Share Alike 4.0 International
+    (CC-BY-SA-4.0)</title></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"
+    width="1.25rem" height="1.25rem" class="myst-fm-license-cc-icon myst-fm-license-cc-icon-by
+    inline-block mr-1"><title>Credit must be given to the creator</title></svg><svg
+    viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" width="1.25rem" height="1.25rem"
+    class="myst-fm-license-cc-icon myst-fm-license-cc-icon-sa inline-block mr-1"><title>Adaptations
+    must be shared under the same terms</title></svg>](https://creativecommons.org/licenses/by-sa/4.0/)[](https://github.com/ds-102/ds-102-book
+    "GitHub Repository: ds-102/ds-102-book")[](https://github.com/ds-102/ds-102-book/edit/main/ds-102-book/content/chapters/03/02_regression_review.ipynb
+    "Edit This Page")<details class="myst-dropdown rounded-md my-5 shadow dark:shadow-2xl
+    dark:shadow-neutral-900 overflow-hidden bg-gray-50 dark:bg-stone-800"><summary
+    class="myst-dropdown-header m-0 text-lg font-medium py-1 min-h-[2em] pl-3 cursor-pointer
+    hover:shadow-[inset_0_0_0px_30px_#00000003] dark:hover:shadow-[inset_0_0_0px_30px_#FFFFFF03]
+    bg-gray-100 dark:bg-slate-900">Notebook Cell</summary>'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE0]</details>'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Regression review[¶](#regression-review "Link to this Section")
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: '*This section is a review of linear regression. You may find it helpful to
+    review [Section 15.4 of the Data 100 textbook](https://learningds.org/ch/15/linear_multi.html),
+    which covers the corresponding material.*'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Recall that regression is a form of supervised learning. Given some data <semantics><mrow><mi>x</mi></mrow><annotation
+    encoding="application/x-tex">x</annotation></semantics>x (typically a scalar or
+    a vector), we’re trying to predict a single value <semantics><mrow><mi>y</mi></mrow><annotation
+    encoding="application/x-tex">y</annotation></semantics>y. You’ve seen cases where
+    <semantics><mrow><mi>y</mi></mrow><annotation encoding="application/x-tex">y</annotation></semantics>y
+    is a real number (linear regression) or a binary value <semantics><mrow><mo>∈</mo><mo
+    stretchy="false">{</mo><mn>0</mn><mo separator="true">,</mo><mn>1</mn><mo stretchy="false">}</mo></mrow><annotation
+    encoding="application/x-tex">\in \{0, 1\}</annotation></semantics>∈{0,1} (logistic
+    regression). Let’s briefly review the setup for linear regression.
+  prefs: []
+  type: TYPE_NORMAL
+- en: We have a collection of data <semantics><mrow><mo stretchy="false">(</mo><msub><mi>x</mi><mn>1</mn></msub><mo
+    separator="true">,</mo><msub><mi>y</mi><mn>1</mn></msub><mo stretchy="false">)</mo><mo
+    separator="true">,</mo><mo>…</mo><mo separator="true">,</mo><mo stretchy="false">(</mo><msub><mi>x</mi><mi>n</mi></msub><mo
+    separator="true">,</mo><msub><mi>y</mi><mi>n</mi></msub><mo stretchy="false">)</mo></mrow><annotation
+    encoding="application/x-tex">(x_1, y_1), \ldots, (x_n, y_n)</annotation></semantics>(x1​,y1​),…,(xn​,yn​).
+    We’re trying to predict <semantics><mrow><msub><mi>y</mi><mi>i</mi></msub></mrow><annotation
+    encoding="application/x-tex">y_i</annotation></semantics>yi​ from <semantics><mrow><msub><mi>x</mi><mi>i</mi></msub></mrow><annotation
+    encoding="application/x-tex">x_i</annotation></semantics>xi​, but our prediction
+    won’t be perfect. We’ll use the notation <semantics><mrow><msub><mover accent="true"><mi>y</mi><mo>^</mo></mover><mi>i</mi></msub></mrow><annotation
+    encoding="application/x-tex">\hat{y}_i</annotation></semantics>y^​i​ to represent
+    the predicted value for data point <semantics><mrow><mi>i</mi></mrow><annotation
+    encoding="application/x-tex">i</annotation></semantics>i. We start by discussing
+    how to get the predictions, and then move on to the relationship between the predictions
+    and the actual observed values.
+  prefs: []
+  type: TYPE_NORMAL
+- en: One dimension[¶](#one-dimension "Link to this Section")
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: In one dimension, we have data in the form <semantics><mrow><mo stretchy="false">(</mo><msub><mi>x</mi><mn>1</mn></msub><mo
+    separator="true">,</mo><msub><mi>y</mi><mn>1</mn></msub><mo stretchy="false">)</mo><mo
+    separator="true">,</mo><mo>…</mo><mo separator="true">,</mo><mo stretchy="false">(</mo><msub><mi>x</mi><mi>n</mi></msub><mo
+    separator="true">,</mo><msub><mi>y</mi><mi>n</mi></msub><mo stretchy="false">)</mo></mrow><annotation
+    encoding="application/x-tex">(x_1, y_1), \ldots, (x_n, y_n)</annotation></semantics>(x1​,y1​),…,(xn​,yn​),
+    where each <semantics><mrow><msub><mi>x</mi><mi>i</mi></msub></mrow><annotation
+    encoding="application/x-tex">x_i</annotation></semantics>xi​ is a scalar and each
+    <semantics><mrow><msub><mi>y</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">y_i</annotation></semantics>yi​
+    is a scalar. We form a linear prediction
+  prefs: []
+  type: TYPE_NORMAL
+- en: <semantics><mrow><msub><mover accent="true"><mi>y</mi><mo>^</mo></mover><mi>i</mi></msub><mo>=</mo><mi>a</mi><msub><mi>x</mi><mi>i</mi></msub><mo>+</mo><mi>b</mi><mo
+    separator="true">,</mo></mrow><annotation encoding="application/x-tex">\hat{y}_i
+    = ax_i + b,</annotation></semantics>y^​i​=axi​+b,[(1)](#kG4fwV19lg "Link to this
+    Equation")
+  prefs: []
+  type: TYPE_NORMAL
+- en: where <semantics><mrow><mi>a</mi></mrow><annotation encoding="application/x-tex">a</annotation></semantics>a
+    is a slope and <semantics><mrow><mi>b</mi></mrow><annotation encoding="application/x-tex">b</annotation></semantics>b
+    is an intercept. In one-dimensional linear regression, we compute <semantics><mrow><mi>a</mi></mrow><annotation
+    encoding="application/x-tex">a</annotation></semantics>a and <semantics><mrow><mi>b</mi></mrow><annotation
+    encoding="application/x-tex">b</annotation></semantics>b from the observed data
+    points <semantics><mrow><mo stretchy="false">(</mo><msub><mi>x</mi><mn>1</mn></msub><mo
+    separator="true">,</mo><msub><mi>y</mi><mn>1</mn></msub><mo stretchy="false">)</mo><mo
+    separator="true">,</mo><mo>…</mo><mo separator="true">,</mo><mo stretchy="false">(</mo><msub><mi>x</mi><mi>n</mi></msub><mo
+    separator="true">,</mo><msub><mi>y</mi><mi>n</mi></msub><mo stretchy="false">)</mo></mrow><annotation
+    encoding="application/x-tex">(x_1, y_1), \ldots, (x_n, y_n)</annotation></semantics>(x1​,y1​),…,(xn​,yn​).
+  prefs: []
+  type: TYPE_NORMAL
+- en: Multiple dimensions[¶](#multiple-dimensions "Link to this Section")
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: In multiple linear regression, we still have data in the form <semantics><mrow><mo
+    stretchy="false">(</mo><msub><mi>x</mi><mn>1</mn></msub><mo separator="true">,</mo><msub><mi>y</mi><mn>1</mn></msub><mo
+    stretchy="false">)</mo><mo separator="true">,</mo><mo>…</mo><mo separator="true">,</mo><mo
+    stretchy="false">(</mo><msub><mi>x</mi><mi>n</mi></msub><mo separator="true">,</mo><msub><mi>y</mi><mi>n</mi></msub><mo
+    stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">(x_1, y_1),
+    \ldots, (x_n, y_n)</annotation></semantics>(x1​,y1​),…,(xn​,yn​), but now each
+    <semantics><mrow><msub><mi>x</mi><mi>i</mi></msub><mo>∈</mo><msup><mi mathvariant="double-struck">R</mi><mi>d</mi></msup></mrow><annotation
+    encoding="application/x-tex">x_i \in \mathbb{R}^d</annotation></semantics>xi​∈Rd
+    is a <semantics><mrow><mi>d</mi></mrow><annotation encoding="application/x-tex">d</annotation></semantics>d-dimensional
+    vector. We can write
+  prefs: []
+  type: TYPE_NORMAL
+- en: <semantics><mrow><msub><mi>x</mi><mi>i</mi></msub><mo>=</mo><mrow><mo fence="true">(</mo><msub><mi>x</mi><mrow><mi>i</mi><mn>1</mn></mrow></msub><mo
+    separator="true">,</mo><msub><mi>x</mi><mrow><mi>i</mi><mn>2</mn></mrow></msub><mo
+    separator="true">,</mo><mo>…</mo><mo separator="true">,</mo><msub><mi>x</mi><mrow><mi>i</mi><mi>d</mi></mrow></msub><mo
+    fence="true">)</mo></mrow></mrow><annotation encoding="application/x-tex">x_i
+    = \left(x_{i1}, x_{i2}, \ldots, x_{id}\right)</annotation></semantics>xi​=(xi1​,xi2​,…,xid​)[(2)](#ElXpQL675H
+    "Link to this Equation")
+  prefs: []
+  type: TYPE_NORMAL
+- en: Each entry of this vector corresponds to a different aspect of this data point
+    that we’re using in our prediction. We call each of these a **predictor** or **feature**.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'In multiple linear regression, we form our prediction for data point <semantics><mrow><mi>i</mi></mrow><annotation
+    encoding="application/x-tex">i</annotation></semantics>i, <semantics><mrow><msub><mover
+    accent="true"><mi>y</mi><mo>^</mo></mover><mi>i</mi></msub></mrow><annotation
+    encoding="application/x-tex">\hat{y}_i</annotation></semantics>y^​i​, as follows:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: <semantics><mrow><msub><mover accent="true"><mi>y</mi><mo>^</mo></mover><mi>i</mi></msub><mo>=</mo><munder><mo>∑</mo><mi>j</mi></munder><msub><mi>β</mi><mi>j</mi></msub><msub><mi>x</mi><mrow><mi>i</mi><mi>j</mi></mrow></msub></mrow><annotation
+    encoding="application/x-tex">\hat{y}_i = \sum_j \beta_j x_{ij}</annotation></semantics>y^​i​=j∑​βj​xij​[(3)](#ZLMCF601Li
+    "Link to this Equation")
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'The <semantics><mrow><mi>d</mi></mrow><annotation encoding="application/x-tex">d</annotation></semantics>d-dimensional
+    vector <semantics><mrow><mi>β</mi><mo>=</mo><mo stretchy="false">(</mo><msub><mi>β</mi><mn>1</mn></msub><mo
+    separator="true">,</mo><mo>…</mo><mo separator="true">,</mo><msub><mi>β</mi><mi>d</mi></msub><mo
+    stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">\beta =
+    (\beta_1, \ldots, \beta_d)</annotation></semantics>β=(β1​,…,βd​) contains the
+    **coefficients** for each predictor: linear regression involves figuring out what
+    these are. We can write this in vector notation using the vectors <semantics><mrow><mi>β</mi></mrow><annotation
+    encoding="application/x-tex">\beta</annotation></semantics>β and <semantics><mrow><msub><mi>x</mi><mi>i</mi></msub></mrow><annotation
+    encoding="application/x-tex">x_i</annotation></semantics>xi​:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: <semantics><mrow><msub><mover accent="true"><mi>y</mi><mo>^</mo></mover><mi>i</mi></msub><mo>=</mo><msup><mi>β</mi><mi>T</mi></msup><msub><mi>x</mi><mi>i</mi></msub><mo>=</mo><msubsup><mi>x</mi><mi>i</mi><mi>T</mi></msubsup><mi>β</mi></mrow><annotation
+    encoding="application/x-tex">\hat{y}_i = \beta^T x_i = x_i^T \beta</annotation></semantics>y^​i​=βTxi​=xiT​β[(4)](#kYvQ59R4tx
+    "Link to this Equation")
+  prefs: []
+  type: TYPE_NORMAL
+- en: We can take this notation one step further, and construct a matrix with all
+    the <semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics>x
+    values for all data points and all features.
+  prefs: []
+  type: TYPE_NORMAL
+- en: <semantics><mrow><mi>X</mi><mo>=</mo><mrow><mo fence="true">(</mo><mtable rowspacing="0.16em"
+    columnalign="center center center center" columnspacing="1em"><mtr><mtd><mstyle
+    scriptlevel="0" displaystyle="false"><msub><mi>x</mi><mn>11</mn></msub></mstyle></mtd><mtd><mstyle
+    scriptlevel="0" displaystyle="false"><msub><mi>x</mi><mn>12</mn></msub></mstyle></mtd><mtd><mstyle
+    scriptlevel="0" displaystyle="false"><mo lspace="0em" rspace="0em">⋯</mo></mstyle></mtd><mtd><mstyle
+    scriptlevel="0" displaystyle="false"><msub><mi>x</mi><mrow><mn>1</mn><mi>d</mi></mrow></msub></mstyle></mtd></mtr><mtr><mtd><mstyle
+    scriptlevel="0" displaystyle="false"><msub><mi>x</mi><mn>21</mn></msub></mstyle></mtd><mtd><mstyle
+    scriptlevel="0" displaystyle="false"><msub><mi>x</mi><mn>22</mn></msub></mstyle></mtd><mtd><mstyle
+    scriptlevel="0" displaystyle="false"><mo lspace="0em" rspace="0em">⋯</mo></mstyle></mtd><mtd><mstyle
+    scriptlevel="0" displaystyle="false"><msub><mi>x</mi><mrow><mn>2</mn><mi>d</mi></mrow></msub></mstyle></mtd></mtr><mtr><mtd><mstyle
+    scriptlevel="0" displaystyle="false"><mi><mi mathvariant="normal">⋮</mi><mpadded
+    height="0em" voffset="0em"><mspace mathbackground="black" width="0em" height="1.5em"></mspace></mpadded></mi></mstyle></mtd><mtd><mstyle
+    scriptlevel="0" displaystyle="false"><mi><mi mathvariant="normal">⋮</mi><mpadded
+    height="0em" voffset="0em"><mspace mathbackground="black" width="0em" height="1.5em"></mspace></mpadded></mi></mstyle></mtd><mtd><mstyle
+    scriptlevel="0" displaystyle="false"><mo lspace="0em" rspace="0em">⋱</mo></mstyle></mtd><mtd><mstyle
+    scriptlevel="0" displaystyle="false"><mi><mi mathvariant="normal">⋮</mi><mpadded
+    height="0em" voffset="0em"><mspace mathbackground="black" width="0em" height="1.5em"></mspace></mpadded></mi></mstyle></mtd></mtr><mtr><mtd><mstyle
+    scriptlevel="0" displaystyle="false"><msub><mi>x</mi><mrow><mi>n</mi><mn>1</mn></mrow></msub></mstyle></mtd><mtd><mstyle
+    scriptlevel="0" displaystyle="false"><msub><mi>x</mi><mrow><mi>n</mi><mn>2</mn></mrow></msub></mstyle></mtd><mtd><mstyle
+    scriptlevel="0" displaystyle="false"><mo lspace="0em" rspace="0em">⋯</mo></mstyle></mtd><mtd><mstyle
+    scriptlevel="0" displaystyle="false"><msub><mi>x</mi><mrow><mi>n</mi><mi>d</mi></mrow></msub></mstyle></mtd></mtr></mtable><mo
+    fence="true">)</mo></mrow></mrow><annotation encoding="application/x-tex">X =
+    \begin{pmatrix} x_{11} & x_{12} & \cdots & x_{1d} \\ x_{21} & x_{22} & \cdots
+    & x_{2d} \\ \vdots & \vdots & \ddots & \vdots \\ x_{n1} & x_{n2} & \cdots & x_{nd}
+    \end{pmatrix}</annotation></semantics>X=⎝⎛​x11​x21​⋮xn1​​x12​x22​⋮xn2​​⋯⋯⋱⋯​x1d​x2d​⋮xnd​​⎠⎞​[(5)](#nB9TL2QMWc
+    "Link to this Equation")
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'One entry of this matrix, <semantics><mrow><msub><mi>x</mi><mrow><mi>i</mi><mi>j</mi></mrow></msub></mrow><annotation
+    encoding="application/x-tex">x_{ij}</annotation></semantics>xij​, represents feature
+    <semantics><mrow><mi>j</mi></mrow><annotation encoding="application/x-tex">j</annotation></semantics>j
+    for data point <semantics><mrow><mi>i</mi></mrow><annotation encoding="application/x-tex">i</annotation></semantics>i.
+    If we consider the entire vector of predictions <semantics><mrow><mover accent="true"><mi>y</mi><mo>^</mo></mover><mo>=</mo><mrow><mo
+    fence="true">(</mo><msub><mover accent="true"><mi>y</mi><mo>^</mo></mover><mn>1</mn></msub><mo
+    separator="true">,</mo><mo>…</mo><mo separator="true">,</mo><msub><mover accent="true"><mi>y</mi><mo>^</mo></mover><mi>n</mi></msub><mo
+    fence="true">)</mo></mrow></mrow><annotation encoding="application/x-tex">\hat{y}
+    = \left(\hat{y}_1, \ldots, \hat{y}_n\right)</annotation></semantics>y^​=(y^​1​,…,y^​n​),
+    we can write the predictions in a fully vectorized way:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: <semantics><mrow><mover accent="true"><mi>y</mi><mo>^</mo></mover><mo>=</mo><mi>X</mi><mi>β</mi></mrow><annotation
+    encoding="application/x-tex">\hat{y} = X\beta</annotation></semantics>y^​=Xβ[(6)](#hZj53UBjFz
+    "Link to this Equation")
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'We can interpret each coefficient <semantics><mrow><msub><mi>β</mi><mi>j</mi></msub></mrow><annotation
+    encoding="application/x-tex">\beta_j</annotation></semantics>βj​ in the context
+    of the model as follows: “if <semantics><mrow><msub><mi>x</mi><mi>j</mi></msub></mrow><annotation
+    encoding="application/x-tex">x_j</annotation></semantics>xj​ increases by <semantics><mrow><mi>t</mi></mrow><annotation
+    encoding="application/x-tex">t</annotation></semantics>t, then the model predicts
+    that <semantics><mrow><mi>y</mi></mrow><annotation encoding="application/x-tex">y</annotation></semantics>y
+    should increase by about <semantics><mrow><msub><mi>β</mi><mi>j</mi></msub><mo>×</mo><mi>t</mi></mrow><annotation
+    encoding="application/x-tex">\beta_j \times t</annotation></semantics>βj​×t.”'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE1]'
+  prefs: []
+  type: TYPE_PRE
+- en: Likelihoods and loss functions[¶](#likelihoods-and-loss-functions "Link to this
+    Section")
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'In order to compute the vector of coefficients <semantics><mrow><mi>β</mi></mrow><annotation
+    encoding="application/x-tex">\beta</annotation></semantics>β, we need some way
+    to connect the predictions <semantics><mrow><msub><mover accent="true"><mi>y</mi><mo>^</mo></mover><mi>i</mi></msub></mrow><annotation
+    encoding="application/x-tex">\hat{y}_i</annotation></semantics>y^​i​ (which are
+    based on <semantics><mrow><mi>β</mi></mrow><annotation encoding="application/x-tex">\beta</annotation></semantics>β)
+    with the actual observed values <semantics><mrow><msub><mi>y</mi><mi>i</mi></msub></mrow><annotation
+    encoding="application/x-tex">y_i</annotation></semantics>yi​. You’ve seen two
+    ways of doing this:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: A loss function between the prediction <semantics><mrow><mover accent="true"><mi>y</mi><mo>^</mo></mover></mrow><annotation
+    encoding="application/x-tex">\hat{y}</annotation></semantics>y^​ and the observed
+    value <semantics><mrow><mi>y</mi></mrow><annotation encoding="application/x-tex">y</annotation></semantics>y;
+    we can minimize this loss function to find <semantics><mrow><mi>β</mi></mrow><annotation
+    encoding="application/x-tex">\beta</annotation></semantics>β.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: A probabilistic model that describes the errors <semantics><mrow><mi>ϵ</mi><mo>=</mo><mi>y</mi><mo>−</mo><mover
+    accent="true"><mi>y</mi><mo>^</mo></mover></mrow><annotation encoding="application/x-tex">\epsilon
+    = y - \hat{y}</annotation></semantics>ϵ=y−y^​ as random variables, and tries to
+    maximize the likelihood of the data under that model.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: Loss functions[¶](#loss-functions "Link to this Section")
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: 'Recall that in ordinary least-squares linear regression, we try to find the
+    value of <semantics><mrow><mi>y</mi></mrow><annotation encoding="application/x-tex">y</annotation></semantics>y
+    that minimizes the mean squared error (MSE). We can write the MSE as follows:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: <semantics><mrow><mtext>MSE</mtext><mo>=</mo><mfrac><mn>1</mn><mi>n</mi></mfrac><munder><mo>∑</mo><mi>i</mi></munder><mo
+    stretchy="false">(</mo><msub><mi>y</mi><mi>i</mi></msub><mo>−</mo><msup><mi>β</mi><mi>T</mi></msup><msub><mi>x</mi><mi>i</mi></msub><msup><mo
+    stretchy="false">)</mo><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">\text{MSE}
+    = \frac{1}{n}\sum_i (y_i - \beta^T x_i)^2</annotation></semantics>MSE=n1​i∑​(yi​−βTxi​)2[(7)](#PqQQJfOKwT
+    "Link to this Equation")
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'We can also write it as the [<semantics><mrow><msub><mi mathvariant="normal">ℓ</mi><mn>2</mn></msub></mrow><annotation
+    encoding="application/x-tex">\ell_2</annotation></semantics>ℓ2​ norm](https://en.wikipedia.org/wiki/Norm_(mathematics)#Euclidean_norm)
+    of the vector <semantics><mrow><mi>y</mi><mo>−</mo><mover accent="true"><mi>y</mi><mo>^</mo></mover></mrow><annotation
+    encoding="application/x-tex">y - \hat{y}</annotation></semantics>y−y^​:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: <semantics><mrow><mtext>MSE</mtext><mo>=</mo><mfrac><mn>1</mn><mi>n</mi></mfrac><msubsup><mrow><mo
+    fence="true">∥</mo><mi>y</mi><mo>−</mo><mover accent="true"><mi>y</mi><mo>^</mo></mover><mo
+    fence="true">∥</mo></mrow><mn>2</mn><mn>2</mn></msubsup><mo>=</mo><mfrac><mn>1</mn><mi>n</mi></mfrac><msubsup><mrow><mo
+    fence="true">∥</mo><mi>y</mi><mo>−</mo><mi>X</mi><mi>β</mi><mo fence="true">∥</mo></mrow><mn>2</mn><mn>2</mn></msubsup></mrow><annotation
+    encoding="application/x-tex">\text{MSE} = \frac{1}{n}\left\|y - \hat{y}\right\|_2^2
+    = \frac{1}{n}\left\|y - X\beta\right\|_2^2</annotation></semantics>MSE=n1​∥y−y^​∥22​=n1​∥y−Xβ∥22​[(8)](#jFV3eNvoj9
+    "Link to this Equation")
+  prefs: []
+  type: TYPE_NORMAL
+- en: where for any vector <semantics><mrow><mi>z</mi></mrow><annotation encoding="application/x-tex">z</annotation></semantics>z,
+    the <semantics><mrow><msub><mi mathvariant="normal">ℓ</mi><mn>2</mn></msub></mrow><annotation
+    encoding="application/x-tex">\ell_2</annotation></semantics>ℓ2​ norm of <semantics><mrow><mi>z</mi></mrow><annotation
+    encoding="application/x-tex">z</annotation></semantics>z is <semantics><mrow><mi
+    mathvariant="normal">∥</mi><mi>z</mi><msub><mi mathvariant="normal">∥</mi><mn>2</mn></msub><mo>=</mo><msqrt><mrow><msub><mo>∑</mo><mi>i</mi></msub><msubsup><mi>z</mi><mi>i</mi><mn>2</mn></msubsup></mrow></msqrt></mrow><annotation
+    encoding="application/x-tex">\|z\|_2 = \sqrt{\sum_i z_i^2}</annotation></semantics>∥z∥2​=∑i​zi2​​.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'We want to choose a value for <semantics><mrow><mi>β</mi></mrow><annotation
+    encoding="application/x-tex">\beta</annotation></semantics>β that makes this as
+    small as possible:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: <semantics><mrow><mover accent="true"><mi>β</mi><mo>^</mo></mover><mo>=</mo><msub><mtext>argmin</mtext><mi>β</mi></msub><mi
+    mathvariant="normal">∥</mi><mi>y</mi><mo>−</mo><mi>X</mi><mi>β</mi><msubsup><mi
+    mathvariant="normal">∥</mi><mn>2</mn><mn>2</mn></msubsup></mrow><annotation encoding="application/x-tex">\hat{\beta}
+    = \text{argmin}_\beta \|y - X\beta\|_2^2</annotation></semantics>β^​=argminβ​∥y−Xβ∥22​[(9)](#xZ3YrZnoEz
+    "Link to this Equation")
+  prefs: []
+  type: TYPE_NORMAL
+- en: Likelihood and noise[¶](#likelihood-and-noise "Link to this Section")
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '*We’ll build heavily off the formulation in this section, so make sure you
+    understand what’s going on here well!*'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'We can also describe the errors in our model:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: <semantics><mrow><msub><mi>y</mi><mi>i</mi></msub><mo>=</mo><msup><mi>β</mi><mi>T</mi></msup><msub><mi>x</mi><mi>i</mi></msub><mo>+</mo><msub><mi>ϵ</mi><mi>i</mi></msub><mo
+    separator="true">,</mo></mrow><annotation encoding="application/x-tex">y_i = \beta^T
+    x_i + \epsilon_i,</annotation></semantics>yi​=βTxi​+ϵi​,[(10)](#nkgk8r8Okn "Link
+    to this Equation")
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'where <semantics><mrow><msub><mi>ϵ</mi><mi>i</mi></msub><mo>∼</mo><mi>N</mi><mo
+    stretchy="false">(</mo><mn>0</mn><mo separator="true">,</mo><msup><mi>σ</mi><mn>2</mn></msup><mo
+    stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">\epsilon_i
+    \sim N(0, \sigma^2)</annotation></semantics>ϵi​∼N(0,σ2) is a random variable that
+    represents the noise, or error, in the observed value. We can vectorize this noise,
+    too: we’ll write <semantics><mrow><mi>ϵ</mi><mo>=</mo><mo stretchy="false">(</mo><msub><mi>ϵ</mi><mn>1</mn></msub><mo
+    separator="true">,</mo><mo>…</mo><mo separator="true">,</mo><msub><mi>ϵ</mi><mi>n</mi></msub><mo
+    stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">\epsilon
+    = (\epsilon_1, \ldots, \epsilon_n)</annotation></semantics>ϵ=(ϵ1​,…,ϵn​) so that
+    the vector <semantics><mrow><mi>ϵ</mi></mrow><annotation encoding="application/x-tex">\epsilon</annotation></semantics>ϵ
+    has a multivariate normal distribution <semantics><mrow><mi>ϵ</mi><mo>∼</mo><mi>N</mi><mo
+    stretchy="false">(</mo><mn>0</mn><mo separator="true">,</mo><msup><mi>σ</mi><mn>2</mn></msup><msub><mi>I</mi><mi>n</mi></msub><mo
+    stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">\epsilon
+    \sim N(0, \sigma^2 I_n)</annotation></semantics>ϵ∼N(0,σ2In​). We can then write:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: <semantics><mrow><mi>y</mi><mo>=</mo><mi>X</mi><mi>β</mi><mo>+</mo><mi>ϵ</mi><mo
+    separator="true">,</mo></mrow><annotation encoding="application/x-tex">y = X\beta
+    + \epsilon,</annotation></semantics>y=Xβ+ϵ,[(11)](#Ub6Xklhptf "Link to this Equation")
+  prefs: []
+  type: TYPE_NORMAL
+- en: or equivalently, using properties of the normal distribution,
+  prefs: []
+  type: TYPE_NORMAL
+- en: <semantics><mrow><mi>y</mi><mi mathvariant="normal">∣</mi><mi>β</mi><mo>∼</mo><mi>N</mi><mo
+    stretchy="false">(</mo><mi>X</mi><mi>β</mi><mo separator="true">,</mo><msup><mi>σ</mi><mn>2</mn></msup><msub><mi>I</mi><mi>n</mi></msub><mo
+    stretchy="false">)</mo><mi mathvariant="normal">.</mi></mrow><annotation encoding="application/x-tex">y
+    | \beta \sim N(X\beta, \sigma^2 I_n).</annotation></semantics>y∣β∼N(Xβ,σ2In​).[(12)](#MiidVOmHCu
+    "Link to this Equation")
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'We can interpret this equation as telling us that the **average prediction**
+    is <semantics><mrow><mi>X</mi><mi>β</mi></mrow><annotation encoding="application/x-tex">X\beta</annotation></semantics>Xβ.
+    This equation is a likelihood model: it tells us the likelihood of data <semantics><mrow><mi>y</mi></mrow><annotation
+    encoding="application/x-tex">y</annotation></semantics>y given the parameter(s)
+    <semantics><mrow><mi>β</mi></mrow><annotation encoding="application/x-tex">\beta</annotation></semantics>β.
+    Note that we are treating <semantics><mrow><mi>X</mi></mrow><annotation encoding="application/x-tex">X</annotation></semantics>X
+    as fixed and known, so there’s no probability model associated with it. We’ll
+    generally focus on this version, rather than the previous one'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Let’s think about the implicit assumptions we’re making by choosing a normal
+    likelihood. Recall that under a normal distribution, we’re very unlikely to see
+    values more than 3<semantics><mrow><mi>σ</mi></mrow><annotation encoding="application/x-tex">\sigma</annotation></semantics>σ
+    away from the mean. That means that we’re implicitly assuming that the vast majority
+    of <semantics><mrow><mi>y</mi></mrow><annotation encoding="application/x-tex">y</annotation></semantics>y-values
+    we see will be within 3<semantics><mrow><mi>σ</mi></mrow><annotation encoding="application/x-tex">\sigma</annotation></semantics>σ
+    of the average prediction prediction <semantics><mrow><mi>X</mi><mi>β</mi></mrow><annotation
+    encoding="application/x-tex">X\beta</annotation></semantics>Xβ. This helps explain
+    why linear regression is sensitive to outliers: the likelihood of a point very
+    far away from the average prediction is very small, but the likelihood of several
+    points all somewhat far away is much higher.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: This model is often referred to as **ordinary least squares, or OLS**.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Under this model, one reasonable way to estimate <semantics><mrow><mi>β</mi></mrow><annotation
+    encoding="application/x-tex">\beta</annotation></semantics>β is to choose the
+    value that maximizes the likelihood. When choosing a value of <semantics><mrow><mi>β</mi></mrow><annotation
+    encoding="application/x-tex">\beta</annotation></semantics>β to maximize the likelihood,
+    we note that we don’t actually care about the normalizing constant in the normal
+    distribution. So, we can write:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: <semantics><mtable rowspacing="0.25em" columnalign="right left" columnspacing="0em"><mtr><mtd><mstyle
+    scriptlevel="0" displaystyle="true"><mover accent="true"><mi>β</mi><mo>^</mo></mover></mstyle></mtd><mtd><mstyle
+    scriptlevel="0" displaystyle="true"><mrow><mo>=</mo><msub><mtext>argmax</mtext><mi>β</mi></msub><mi>exp</mi><mo>⁡</mo><mrow><mo
+    fence="true">{</mo><mo>−</mo><mfrac><mn>1</mn><mn>2</mn></mfrac><mo stretchy="false">(</mo><mi>y</mi><mo>−</mo><mi>X</mi><mi>β</mi><msup><mo
+    stretchy="false">)</mo><mi>T</mi></msup><mo stretchy="false">(</mo><msup><mi>σ</mi><mn>2</mn></msup><msub><mi>I</mi><mi>n</mi></msub><msup><mo
+    stretchy="false">)</mo><mrow><mo>−</mo><mn>1</mn></mrow></msup><mo stretchy="false">(</mo><mi>y</mi><mo>−</mo><mi>X</mi><mi>β</mi><msup><mo
+    stretchy="false">)</mo><mi>T</mi></msup><mo fence="true">}</mo></mrow></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle
+    scriptlevel="0" displaystyle="true"><mrow><mo>=</mo><msub><mtext>argmax</mtext><mi>β</mi></msub><mi>exp</mi><mo>⁡</mo><mrow><mo
+    fence="true">{</mo><mo>−</mo><mfrac><mn>1</mn><mrow><mn>2</mn><msup><mi>σ</mi><mn>2</mn></msup></mrow></mfrac><mi
+    mathvariant="normal">∥</mi><mi>y</mi><mo>−</mo><mi>X</mi><mi>β</mi><msubsup><mi
+    mathvariant="normal">∥</mi><mn>2</mn><mn>2</mn></msubsup><mo fence="true">}</mo></mrow></mrow></mstyle></mtd></mtr></mtable><annotation
+    encoding="application/x-tex">\begin{align} \hat{\beta} &= \text{argmax}_\beta
+    \exp\left\{-\frac{1}{2}(y - X\beta)^T(\sigma^2 I_n)^{-1}(y-X\beta)^T\right\} \\
+    &= \text{argmax}_\beta \exp\left\{-\frac{1}{2\sigma^2}\|y - X\beta\|_2^2\right\}
+    \end{align}</annotation></semantics>β^​​=argmaxβ​exp{−21​(y−Xβ)T(σ2In​)−1(y−Xβ)T}=argmaxβ​exp{−2σ21​∥y−Xβ∥22​}​​[(13)](#DKAtnKhdUE
+    "Link to this Equation")
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Just as we did in our earlier foray into maximum likelihood estimation, we’ll
+    take advantage of the fact that the <semantics><mrow><mi>log</mi><mo>⁡</mo></mrow><annotation
+    encoding="application/x-tex">\log</annotation></semantics>log function is monotonically
+    increasing, and optimize the log-likelihood. Furthermore, we’ll make this a minimization
+    rather than a maximization. In general, for any well-behaved function <semantics><mrow><mi>f</mi></mrow><annotation
+    encoding="application/x-tex">f</annotation></semantics>f:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: <semantics><mtable rowspacing="0.25em" columnalign="right left" columnspacing="0em"><mtr><mtd><mstyle
+    scriptlevel="0" displaystyle="true"><mrow><msub><mtext>argmax</mtext><mi>θ</mi></msub><mi>f</mi><mo
+    stretchy="false">(</mo><mi>θ</mi><mo stretchy="false">)</mo></mrow></mstyle></mtd><mtd><mstyle
+    scriptlevel="0" displaystyle="true"><mrow><mo>=</mo><msub><mtext>argmax</mtext><mi>θ</mi></msub><mi>log</mi><mo>⁡</mo><mo
+    stretchy="false">(</mo><mi>f</mi><mo stretchy="false">(</mo><mi>θ</mi><mo stretchy="false">)</mo><mo
+    stretchy="false">)</mo></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0"
+    displaystyle="true"><mrow><mo>=</mo><msub><mtext>argmin</mtext><mi>θ</mi></msub><mrow><mo
+    fence="true">[</mo><mo>−</mo><mi>log</mi><mo>⁡</mo><mo stretchy="false">(</mo><mi>f</mi><mo
+    stretchy="false">(</mo><mi>θ</mi><mo stretchy="false">)</mo><mo stretchy="false">)</mo><mo
+    fence="true">]</mo></mrow></mrow></mstyle></mtd></mtr></mtable><annotation encoding="application/x-tex">\begin{align}
+    \text{argmax}_\theta f(\theta) &= \text{argmax}_\theta \log(f(\theta)) \\ &= \text{argmin}_\theta
+    \left[-\log(f(\theta))\right] \\ \end{align}</annotation></semantics>argmaxθ​f(θ)​=argmaxθ​log(f(θ))=argminθ​[−log(f(θ))]​​[(14)](#lTnyrDsVJw
+    "Link to this Equation")
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'So, we can write:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: <semantics><mtable rowspacing="0.25em" columnalign="right left" columnspacing="0em"><mtr><mtd><mstyle
+    scriptlevel="0" displaystyle="true"><mover accent="true"><mi>β</mi><mo>^</mo></mover></mstyle></mtd><mtd><mstyle
+    scriptlevel="0" displaystyle="true"><mrow><mo>=</mo><msub><mtext>argmax</mtext><mi>β</mi></msub><mi>exp</mi><mo>⁡</mo><mrow><mo
+    fence="true">{</mo><mo>−</mo><mfrac><mn>1</mn><mrow><mn>2</mn><msup><mi>σ</mi><mn>2</mn></msup></mrow></mfrac><mi
+    mathvariant="normal">∥</mi><mi>y</mi><mo>−</mo><mi>X</mi><mi>β</mi><msubsup><mi
+    mathvariant="normal">∥</mi><mn>2</mn><mn>2</mn></msubsup><mo fence="true">}</mo></mrow></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle
+    scriptlevel="0" displaystyle="true"><mrow><mo>=</mo><msub><mtext>argmin</mtext><mi>β</mi></msub><mrow><mo
+    fence="true">[</mo><mfrac><mn>1</mn><mrow><mn>2</mn><msup><mi>σ</mi><mn>2</mn></msup></mrow></mfrac><mi
+    mathvariant="normal">∥</mi><mi>y</mi><mo>−</mo><mi>X</mi><mi>β</mi><msubsup><mi
+    mathvariant="normal">∥</mi><mn>2</mn><mn>2</mn></msubsup><mo fence="true">]</mo></mrow></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle
+    scriptlevel="0" displaystyle="true"><mrow><mo>=</mo><msub><mtext>argmin</mtext><mi>β</mi></msub><mi
+    mathvariant="normal">∥</mi><mi>y</mi><mo>−</mo><mi>X</mi><mi>β</mi><msubsup><mi
+    mathvariant="normal">∥</mi><mn>2</mn><mn>2</mn></msubsup></mrow></mstyle></mtd></mtr></mtable><annotation
+    encoding="application/x-tex">\begin{align} \hat{\beta} &= \text{argmax}_\beta
+    \exp\left\{-\frac{1}{2\sigma^2}\|y - X\beta\|_2^2\right\} \\ &= \text{argmin}_\beta
+    \left[\frac{1}{2\sigma^2}\|y - X\beta\|_2^2 \right]\\ &= \text{argmin}_\beta \|y
+    - X\beta\|_2^2 \end{align}</annotation></semantics>β^​​=argmaxβ​exp{−2σ21​∥y−Xβ∥22​}=argminβ​[2σ21​∥y−Xβ∥22​]=argminβ​∥y−Xβ∥22​​​[(15)](#QkdxzqPcu3
+    "Link to this Equation")
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'So, we’ve found that maximizing the Gaussian likelihood of the data is exactly
+    equivalent to minimizing the squared loss. This is true in general for regression
+    problems: we can arrive at the same answer by either choosing a loss function
+    and minimizing it, or choosing a corresponding likelihood and maximizing it.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Uncertainty in Regression Predictions[¶](#uncertainty-in-regression-predictions
+    "Link to this Section")
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: It’s important to remember that when making a prediction for a new data point,
+    there are multiple sources of uncertainty. Recall that our model states that <semantics><mrow><mover
+    accent="true"><mi>y</mi><mo>^</mo></mover><mo>=</mo><mi>X</mi><mover accent="true"><mi>β</mi><mo>^</mo></mover><mo>+</mo><mi>ϵ</mi></mrow><annotation
+    encoding="application/x-tex">\hat{y} = X\hat{\beta} + \epsilon</annotation></semantics>y^​=Xβ^​+ϵ.
+    When making a prediction, we have some uncertainty the first term <semantics><mrow><mi>X</mi><mover
+    accent="true"><mi>β</mi><mo>^</mo></mover></mrow><annotation encoding="application/x-tex">X\hat{\beta}</annotation></semantics>Xβ^​,
+    because the coefficients we estimate depend on the random data. We also have additional
+    uncertainty from the second term, depending on how much variability the model
+    estimates in the data around the average predictions.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Logistic regression[¶](#logistic-regression "Link to this Section")
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'Recall that in logistic regression, we’re trying to predict binary outputs:
+    <semantics><mrow><msub><mi>y</mi><mi>i</mi></msub><mo>∈</mo><mo stretchy="false">{</mo><mn>0</mn><mo
+    separator="true">,</mo><mn>1</mn><mo stretchy="false">}</mo></mrow><annotation
+    encoding="application/x-tex">y_i \in \{0, 1\}</annotation></semantics>yi​∈{0,1}.
+    We’re trying to predict the **probability** that <semantics><mrow><msub><mi>y</mi><mi>i</mi></msub></mrow><annotation
+    encoding="application/x-tex">y_i</annotation></semantics>yi​ will be 1, which
+    we’ll call <semantics><mrow><mover accent="true"><mi>y</mi><mo>^</mo></mover></mrow><annotation
+    encoding="application/x-tex">\hat{y}</annotation></semantics>y^​:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: <semantics><mrow><msub><mover accent="true"><mi>y</mi><mo>^</mo></mover><mi>i</mi></msub><mo>=</mo><mi>σ</mi><mo
+    stretchy="false">(</mo><msup><mi>β</mi><mi>T</mi></msup><msub><mi>x</mi><mi>i</mi></msub><mo
+    stretchy="false">)</mo><mo separator="true">,</mo></mrow><annotation encoding="application/x-tex">\hat{y}_i
+    = \sigma(\beta^T x_i),</annotation></semantics>y^​i​=σ(βTxi​),[(16)](#r7zGOzeEjX
+    "Link to this Equation")
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'where <semantics><mrow><mi>σ</mi></mrow><annotation encoding="application/x-tex">\sigma</annotation></semantics>σ
+    is the sigmoid function, which converts real values to values between 0 and 1\.
+    To find <semantics><mrow><mi>β</mi></mrow><annotation encoding="application/x-tex">\beta</annotation></semantics>β,
+    we minimize the binary cross-entropy loss:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: <semantics><mrow><mover accent="true"><mi>β</mi><mo>^</mo></mover><mo>=</mo><msub><mtext>argmin</mtext><mi>β</mi></msub><munder><mo>∑</mo><mi>i</mi></munder><mo>−</mo><mrow><mo
+    fence="true">[</mo><msub><mi>y</mi><mi>i</mi></msub><mi>ln</mi><mo>⁡</mo><mo stretchy="false">(</mo><msub><mover
+    accent="true"><mi>y</mi><mo>^</mo></mover><mi>i</mi></msub><mo stretchy="false">)</mo><mo>+</mo><mo
+    stretchy="false">(</mo><mn>1</mn><mo>−</mo><msub><mi>y</mi><mi>i</mi></msub><mo
+    stretchy="false">)</mo><mi>ln</mi><mo>⁡</mo><mo stretchy="false">(</mo><mn>1</mn><mo>−</mo><msub><mover
+    accent="true"><mi>y</mi><mo>^</mo></mover><mi>i</mi></msub><mo stretchy="false">)</mo><mo
+    fence="true">]</mo></mrow></mrow><annotation encoding="application/x-tex">\hat{\beta}
+    = \text{argmin}_\beta \sum_i -\left[ y_i \ln(\hat{y}_i) + (1-y_i) \ln(1-\hat{y}_i)
+    \right]</annotation></semantics>β^​=argminβ​i∑​−[yi​ln(y^​i​)+(1−yi​)ln(1−y^​i​)][(17)](#WXYSxvPGL9
+    "Link to this Equation")
+  prefs: []
+  type: TYPE_NORMAL
+- en: You’ll show on the discussion worksheet that if we assume the likelihood model
+    for <semantics><mrow><mi>y</mi></mrow><annotation encoding="application/x-tex">y</annotation></semantics>y
+    is Bernoulli with parameter <semantics><mrow><mi>σ</mi><mo stretchy="false">(</mo><msup><mi>β</mi><mi>T</mi></msup><msub><mi>x</mi><mi>i</mi></msub><mo
+    stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">\sigma(\beta^T
+    x_i)</annotation></semantics>σ(βTxi​), then maximizing the likelihood is equivalent
+    to minimizing the binary cross-entropy loss.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '*For a deeper refresher on logistic regression, see [Chapter 23 of the Data
+    100 textbook](https://www.textbook.ds100.org/ch/23/classification_intro.html).
+    Note that our notation is slightly different:*'
+  prefs: []
+  type: TYPE_NORMAL
+- en: We’re using <semantics><mrow><mi>β</mi></mrow><annotation encoding="application/x-tex">\beta</annotation></semantics>β
+    instead of <semantics><mrow><mi>θ</mi></mrow><annotation encoding="application/x-tex">\theta</annotation></semantics>θ
+    for the coefficients
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: We’re using <semantics><mrow><mover accent="true"><mi>y</mi><mo>^</mo></mover></mrow><annotation
+    encoding="application/x-tex">\hat{y}</annotation></semantics>y^​ for the predictions
+    instead of <semantics><mrow><msub><mi>f</mi><mover accent="true"><mi>θ</mi><mo>^</mo></mover></msub></mrow><annotation
+    encoding="application/x-tex">f_{\hat{\theta}}</annotation></semantics>fθ^​.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[PRE2]'
+  prefs: []
+  type: TYPE_PRE
+- en: Loading...
+  prefs: []
+  type: TYPE_NORMAL
+- en: Fitting models with `scikit-learn`[¶](#fitting-models-with-scikit-learn "Link
+    to this Section")
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: You may recall that the easiest way to fit a linear model is to use the `LinearRegression`
+    model from `scikit-learn`. We can then inspect the coefficients and intercept
+    using the `coef_` and `intercept_` attributes respectively, and make predictions
+    on new data points using the `predict()` method.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE3]'
+  prefs: []
+  type: TYPE_PRE
+- en: '[PRE4]'
+  prefs: []
+  type: TYPE_PRE
+- en: '`(-0.0638684061258262, array([ 0.15201513, -0.62278861]))`'
+  prefs: []
+  type: TYPE_NORMAL
+- en: In this chapter, we’ll use two new packages for regression in frequentist and
+    Bayesian paradigms. The first will be [statsmodels](https://www.statsmodels.org/stable/index.html),
+    which fits linear models using a frequentist approach, and [Bambi](https://bambinos.github.io/bambi/),
+    which uses `PyMC` for approximate inference in Bayesian linear models.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Known, unknown, random, and fixed[¶](#known-unknown-random-and-fixed "Link to
+    this Section")
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'In regression modeling, we typically use a probability model for the observed
+    target values <semantics><mrow><mi>y</mi></mrow><annotation encoding="application/x-tex">y</annotation></semantics>y,
+    but we tend to assume that the predictors <semantics><mrow><mi>X</mi></mrow><annotation
+    encoding="application/x-tex">X</annotation></semantics>X are **fixed and known**.
+    To summarize:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '| Variable | Description | Known or unknown? | Fixed or random? (Bayesian)
+    | Fixed or random? (frequentist) |'
+  prefs: []
+  type: TYPE_TB
+- en: '| <semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics>x
+    | Predictors | Known | Fixed, known | Fixed, known |'
+  prefs: []
+  type: TYPE_TB
+- en: '| <semantics><mrow><mi>y</mi></mrow><annotation encoding="application/x-tex">y</annotation></semantics>y
+    | Target values | Known for training set, unknown for test set | Random | Random
+    |'
+  prefs: []
+  type: TYPE_TB
+- en: '| <semantics><mrow><mi>β</mi></mrow><annotation encoding="application/x-tex">\beta</annotation></semantics>β
+    | Coefficients | Unknown | Random | Fixed |'
+  prefs: []
+  type: TYPE_TB

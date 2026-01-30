@@ -1,0 +1,595 @@
+- en: Causality and Potential Outcomes
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: 原文：[https://data102.org/ds-102-book/content/chapters/04/causality-potential-outcomes](https://data102.org/ds-102-book/content/chapters/04/causality-potential-outcomes)
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '[<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" width="1.25rem"
+    height="1.25rem" class="myst-fm-license-cc-icon myst-fm-license-cc-icon-main inline-block
+    mx-1"><title>Content License: Creative Commons Attribution Share Alike 4.0 International
+    (CC-BY-SA-4.0)</title></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"
+    width="1.25rem" height="1.25rem" class="myst-fm-license-cc-icon myst-fm-license-cc-icon-by
+    inline-block mr-1"><title>Credit must be given to the creator</title></svg><svg
+    viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" width="1.25rem" height="1.25rem"
+    class="myst-fm-license-cc-icon myst-fm-license-cc-icon-sa inline-block mr-1"><title>Adaptations
+    must be shared under the same terms</title></svg>](https://creativecommons.org/licenses/by-sa/4.0/)[](https://github.com/ds-102/ds-102-book
+    "GitHub Repository: ds-102/ds-102-book")[](https://github.com/ds-102/ds-102-book/edit/main/ds-102-book/content/chapters/04/03_causality_potential_outcomes.ipynb
+    "Edit This Page")'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Now that we understand association and correlation (and their limitations),
+    we are ready to begin our journey into causal inference. We’ll start with a discussion
+    of the concept of causality: what it means, and why it matters. Then, we’ll define
+    a specific way of thinking about causality, using counterfactual reasoning, that
+    will guide the remainder of our study of causal inference.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: What is causality? (Optional)[¶](#what-is-causality-optional "Link to this Section")
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'To understand causality, let’s explore the meaning of the word “cause”. Consider
+    the following sentences: all of them use words like “causes” or “because”, and
+    they are all valid sentences in modern English, but the meaning of “cause” is
+    slightly different in each one:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: The soccer ball moved because I kicked it.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: The couple broke up because one of them moved to another country.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: I am who I am today because of my parents.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: Gravity causes objects to fall to the Earth.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: Down Syndrome is caused by having 3 copies of chromosome 21.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: Humans burning fossil fuels is causing climate change.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: Barbarian invasions caused the Roman Empire to fall.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: Smoking causes lung cancer.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: 'Most modern understanding of the word “cause” aligns with what the Greek philosopher
+    Aristotle called “agent” or “efficient” cause: where one agent or object brings
+    about change in another. Taking a closer look at the examples above, if we limit
+    ourselves to this understanding, we should eliminate sentences 3 and 4\. In sentence
+    3, the thing being “caused” is “who I am today”, which doesn’t fall under the
+    idea of a “change”. Similarly, in sentence 4, the thing doing the causing is “gravity”,
+    which isn’t a specific thing or object, but rather a conceptual physical theory.
+    Note that this is a subjective determination!'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'One way to think about cause is to divide the statements above into *deterministic*
+    and *probabilistic* cause. What do these mean? If A is a deterministic cause of
+    B, then whenever A happens, B must happen. In contrast, if A is a probabilistic
+    cause of B, then whenever A happens, the probability of B increases. Going back
+    to our examples above, sentences 1, 5, and 6 are all statements of deterministic
+    causality. This doesn’t mean that the causality in the remaining sentences (2,
+    7, and 8) isn’t real! For example, consider statement 7: most historians believe
+    that the Roman Empire was in a prolonged state of decline before the barbarian
+    invasions. However, those invasions still had a real, tangible impact on the empire’s
+    fall.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'There are many other ways of thinking about causality: for example, we can
+    divide the statements above into instance causality and class causality; single
+    cause and multiple cause; simple action and compound action; and much more.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Why does causality matter?[¶](#why-does-causality-matter "Link to this Section")
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'Understanding causality is important because it affects decisions people make
+    in the real world. For example:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: In health, understanding causal links is critical for practicing evidence-based
+    medicine. If we know that a certain behavior causes an illness, then doctors and/or
+    public health officials should recommend that people avoid that behavior. Similarly,
+    if a drug causes people to recover from a certain medical condition, then it should
+    be best practice to use that drug to treat people with the condition.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: On the other hand, if we observe an association between a certain behavior and
+    some kinds of illness, it’s important to understand whether that association is
+    due to a causal link. For example, suppose a study shows an association between
+    taking expensive multivitamins and lower risk of cancer. If there is in fact a
+    causal link, then doctors should recommend the multivitamins. But, if the association
+    is due to a confounding factor (e.g., wealthier people have access to better healthcare
+    which causes lower cancer, and also have access to expensive multivitamins), then
+    doctors should **not** recommend them.
+  prefs:
+  - PREF_IND
+  type: TYPE_NORMAL
+- en: In economics and social sciences, understanding causality has important effects
+    on policy choices. For example, conventional wisdom states that increasing the
+    minimum wage will cause lower employment, and so any policy that increases minimum
+    wage should carefully consider the tradeoffs between increased wages and lower
+    overall employment. However, a [landmark 1992 study by David Card](https://doi.org/10.1177/001979399204600103)
+    showed that a national minimum wage increase did not cause any changes in the
+    employment rate, which motivates a change in policy in favor of higher minimum
+    wages.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: In business, understanding causality is critical to good decision making. For
+    example, knowing whether a certain advertising or marketing change will cause
+    changes in consumer behavior can be a very useful factor in evaluating whether
+    a business should spend money on that change.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Why is causality hard?[¶](#why-is-causality-hard "Link to this Section")
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: As we saw in section 4.1, causality is often hard because of **confounding variables**.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs: []
+  type: TYPE_PRE
+- en: Loading...
+  prefs: []
+  type: TYPE_NORMAL
+- en: Potential outcomes and counterfactuals[¶](#potential-outcomes-and-counterfactuals
+    "Link to this Section")
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '*Some of this material is covered in [Section 12.2 of the Data 8 textbook](https://inferentialthinking.com/chapters/12/2/Causality.html#potential-outcomes)
+    from a more conceptual lens.*'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Suppose you have a fever, and you decide to take an aspirin. If your fever
+    went away an hour later, how can we know whether the aspirin *caused* your fever
+    to go down? To help us answer this question, consider the following thought experiment:
+    imagine yourself in two parallel universes. In Universe 1, you took the aspirin.
+    In Universe 0, you didn’t take the aspirin. If your fever improved by the same
+    amount in both universes, then that seems like strong evidence that the aspirin
+    did *not* cause your fever to go down. On the other hand, if your fever went down
+    in Universe 1 and not in Universe 0, then that seems like strong evidence that
+    the aspirin *did* cause your fever to go down.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Notationally, we’ll use <semantics><mrow><mi>Y</mi><mo stretchy="false">(</mo><mn>1</mn><mo
+    stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">Y(1)</annotation></semantics>Y(1)
+    to denote the outcome (in this case, your temperature) in Universe 1, and <semantics><mrow><mi>Y</mi><mo
+    stretchy="false">(</mo><mn>0</mn><mo stretchy="false">)</mo></mrow><annotation
+    encoding="application/x-tex">Y(0)</annotation></semantics>Y(0) for the outcome
+    in Universe 0 (*Note: You may also see people use superscripts, e.g., <semantics><mrow><msup><mi>Y</mi><mn>0</mn></msup></mrow><annotation
+    encoding="application/x-tex">Y^0</annotation></semantics>Y0 and <semantics><mrow><msup><mi>Y</mi><mn>1</mn></msup></mrow><annotation
+    encoding="application/x-tex">Y^1</annotation></semantics>Y1, but in this class
+    we’ll consistently use <semantics><mrow><mi>Y</mi><mo stretchy="false">(</mo><mn>0</mn><mo
+    stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">Y(0)</annotation></semantics>Y(0)
+    and <semantics><mrow><mi>Y</mi><mo stretchy="false">(</mo><mn>1</mn><mo stretchy="false">)</mo></mrow><annotation
+    encoding="application/x-tex">Y(1)</annotation></semantics>Y(1))*. In any real-world
+    data, we only get to observe one of these: in the example above, if you decided
+    to take the aspirin, then you would only ever observe <semantics><mrow><mi>Y</mi><mo
+    stretchy="false">(</mo><mn>1</mn><mo stretchy="false">)</mo></mrow><annotation
+    encoding="application/x-tex">Y(1)</annotation></semantics>Y(1). For this reason,
+    the other universe is often called the **counterfactual** universe. This brings
+    us to the **fundamental problem of causal inference**: that we can never observe
+    both <semantics><mrow><mi>Y</mi><mo stretchy="false">(</mo><mn>1</mn><mo stretchy="false">)</mo></mrow><annotation
+    encoding="application/x-tex">Y(1)</annotation></semantics>Y(1) and <semantics><mrow><mi>Y</mi><mo
+    stretchy="false">(</mo><mn>0</mn><mo stretchy="false">)</mo></mrow><annotation
+    encoding="application/x-tex">Y(0)</annotation></semantics>Y(0) for the same individual.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE1]'
+  prefs: []
+  type: TYPE_PRE
+- en: Loading...
+  prefs: []
+  type: TYPE_NORMAL
+- en: Notation[¶](#notation "Link to this Section")
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: 'Suppose we’re interested in whether a particular treatment causes a particular
+    outcome. We’ll mostly limit ourselves to the case where the treatment is binary.
+    We’re interested in whether applying the treatment to a particular *unit* causes
+    a change in the outcome. Here, the word *unit* refers to the individuals in our
+    study. They could be individual people, groups of people, or even inanimate objects
+    (e.g., in a study on whether fertilizer causes increased crop yields, the units
+    might be fields, or they they might be individual plants). We’ll use the following
+    notation:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '<semantics><mrow><msub><mi>Y</mi><mi>i</mi></msub><mo stretchy="false">(</mo><mn>0</mn><mo
+    stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">Y_i(0)</annotation></semantics>Yi​(0)
+    and <semantics><mrow><msub><mi>Y</mi><mi>i</mi></msub><mo stretchy="false">(</mo><mn>1</mn><mo
+    stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">Y_i(1)</annotation></semantics>Yi​(1)
+    are the potential outcomes for unit <semantics><mrow><mi>i</mi></mrow><annotation
+    encoding="application/x-tex">i</annotation></semantics>i: they’re the outcomes
+    for the universe where unit <semantics><mrow><mi>i</mi></mrow><annotation encoding="application/x-tex">i</annotation></semantics>i
+    wasn’t/was treated, respectively.'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: <semantics><mrow><msub><mi>Z</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">Z_i</annotation></semantics>Zi​
+    tells us whether unit <semantics><mrow><mi>i</mi></mrow><annotation encoding="application/x-tex">i</annotation></semantics>i
+    was treated or not.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: For example, if <semantics><mrow><msub><mi>Z</mi><mn>7</mn></msub><mo>=</mo><mn>1</mn></mrow><annotation
+    encoding="application/x-tex">Z_7 = 1</annotation></semantics>Z7​=1, that means
+    unit 7 was treated, and we only got to observe <semantics><mrow><msub><mi>Y</mi><mn>7</mn></msub><mo
+    stretchy="false">(</mo><mn>1</mn><mo stretchy="false">)</mo></mrow><annotation
+    encoding="application/x-tex">Y_7(1)</annotation></semantics>Y7​(1) (and did not
+    get to observe <semantics><mrow><msub><mi>Y</mi><mn>7</mn></msub><mo stretchy="false">(</mo><mn>0</mn><mo
+    stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">Y_7(0)</annotation></semantics>Y7​(0)).
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: <semantics><mrow><msub><mi>Y</mi><mrow><mi>i</mi><mo separator="true">,</mo><mi>o</mi><mi>b</mi><mi>s</mi></mrow></msub></mrow><annotation
+    encoding="application/x-tex">Y_{i, obs}</annotation></semantics>Yi,obs​ is shorthand
+    for “the outcome in the universe that we actually observed”.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: In other words, <semantics><mrow><msub><mi>Y</mi><mrow><mi>i</mi><mo separator="true">,</mo><mi>o</mi><mi>b</mi><mi>s</mi></mrow></msub><mo>=</mo><msub><mi>Y</mi><mi>i</mi></msub><mo
+    stretchy="false">(</mo><msub><mi>Z</mi><mi>i</mi></msub><mo stretchy="false">)</mo></mrow><annotation
+    encoding="application/x-tex">Y_{i, obs} = Y_i(Z_i)</annotation></semantics>Yi,obs​=Yi​(Zi​).
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: In cases where <semantics><mrow><msub><mi>Z</mi><mi>i</mi></msub></mrow><annotation
+    encoding="application/x-tex">Z_i</annotation></semantics>Zi​ is binary, we can
+    write <semantics><mrow><msub><mi>Y</mi><mrow><mi>i</mi><mo separator="true">,</mo><mi>o</mi><mi>b</mi><mi>s</mi></mrow></msub><mo>=</mo><msub><mi>Z</mi><mi>i</mi></msub><mo>⋅</mo><msub><mi>Y</mi><mi>i</mi></msub><mo
+    stretchy="false">(</mo><mn>1</mn><mo stretchy="false">)</mo><mo>+</mo><mo stretchy="false">(</mo><mn>1</mn><mo>−</mo><msub><mi>Z</mi><mi>i</mi></msub><mo
+    stretchy="false">)</mo><mo>⋅</mo><msub><mi>Y</mi><mi>i</mi></msub><mo stretchy="false">(</mo><mn>0</mn><mo
+    stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">Y_{i,obs}
+    = Z_i \cdot Y_i(1) + (1-Z_i) \cdot Y_i(0)</annotation></semantics>Yi,obs​=Zi​⋅Yi​(1)+(1−Zi​)⋅Yi​(0).
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: We’ll sometimes use the notation <semantics><mrow><msub><mi>Y</mi><mi>i</mi></msub></mrow><annotation
+    encoding="application/x-tex">Y_i</annotation></semantics>Yi​ as shorthand for
+    <semantics><mrow><msub><mi>Y</mi><mrow><mi>i</mi><mo separator="true">,</mo><mi>o</mi><mi>b</mi><mi>s</mi></mrow></msub></mrow><annotation
+    encoding="application/x-tex">Y_{i,obs}</annotation></semantics>Yi,obs​.
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: We’ll also use the notation <semantics><mrow><msub><mi>Y</mi><mi>i</mi></msub><mo
+    stretchy="false">(</mo><mo>⋅</mo><mo stretchy="false">)</mo></mrow><annotation
+    encoding="application/x-tex">Y_i(\cdot)</annotation></semantics>Yi​(⋅) as shorthand
+    for the pair <semantics><mrow><mo fence="false" stretchy="true" minsize="1.2em"
+    maxsize="1.2em">(</mo><msub><mi>Y</mi><mi>i</mi></msub><mo stretchy="false">(</mo><mn>0</mn><mo
+    stretchy="false">)</mo><mo separator="true">,</mo><msub><mi>Y</mi><mi>i</mi></msub><mo
+    stretchy="false">(</mo><mn>1</mn><mo stretchy="false">)</mo><mo fence="false"
+    stretchy="true" minsize="1.2em" maxsize="1.2em">)</mo></mrow><annotation encoding="application/x-tex">\big(Y_i(0),
+    Y_i(1)\big)</annotation></semantics>(Yi​(0),Yi​(1)).
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 'We can visualize the potential outcomes in a table:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '| Unit (<semantics><mrow><mi>i</mi></mrow><annotation encoding="application/x-tex">i</annotation></semantics>i)
+    | Outcome if not treated | Outcome if treated | Treated or not? |'
+  prefs: []
+  type: TYPE_TB
+- en: '| 1 | <semantics><mrow><msub><mi>Y</mi><mn>1</mn></msub><mo stretchy="false">(</mo><mn>0</mn><mo
+    stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">Y_1(0)</annotation></semantics>Y1​(0)
+    | <semantics><mrow><msub><mi>Y</mi><mn>1</mn></msub><mo stretchy="false">(</mo><mn>1</mn><mo
+    stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">Y_1(1)</annotation></semantics>Y1​(1)
+    | <semantics><mrow><msub><mi>Z</mi><mn>1</mn></msub></mrow><annotation encoding="application/x-tex">Z_1</annotation></semantics>Z1​
+    |'
+  prefs: []
+  type: TYPE_TB
+- en: '| 2 | <semantics><mrow><msub><mi>Y</mi><mn>2</mn></msub><mo stretchy="false">(</mo><mn>0</mn><mo
+    stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">Y_2(0)</annotation></semantics>Y2​(0)
+    | <semantics><mrow><msub><mi>Y</mi><mn>2</mn></msub><mo stretchy="false">(</mo><mn>1</mn><mo
+    stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">Y_2(1)</annotation></semantics>Y2​(1)
+    | <semantics><mrow><msub><mi>Z</mi><mn>2</mn></msub></mrow><annotation encoding="application/x-tex">Z_2</annotation></semantics>Z2​
+    |'
+  prefs: []
+  type: TYPE_TB
+- en: '| 3 | <semantics><mrow><msub><mi>Y</mi><mn>3</mn></msub><mo stretchy="false">(</mo><mn>0</mn><mo
+    stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">Y_3(0)</annotation></semantics>Y3​(0)
+    | <semantics><mrow><msub><mi>Y</mi><mn>3</mn></msub><mo stretchy="false">(</mo><mn>1</mn><mo
+    stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">Y_3(1)</annotation></semantics>Y3​(1)
+    | <semantics><mrow><msub><mi>Z</mi><mn>3</mn></msub></mrow><annotation encoding="application/x-tex">Z_3</annotation></semantics>Z3​
+    |'
+  prefs: []
+  type: TYPE_TB
+- en: '| 4 | <semantics><mrow><msub><mi>Y</mi><mn>4</mn></msub><mo stretchy="false">(</mo><mn>0</mn><mo
+    stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">Y_4(0)</annotation></semantics>Y4​(0)
+    | <semantics><mrow><msub><mi>Y</mi><mn>4</mn></msub><mo stretchy="false">(</mo><mn>1</mn><mo
+    stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">Y_4(1)</annotation></semantics>Y4​(1)
+    | <semantics><mrow><msub><mi>Z</mi><mn>4</mn></msub></mrow><annotation encoding="application/x-tex">Z_4</annotation></semantics>Z4​
+    |'
+  prefs: []
+  type: TYPE_TB
+- en: '| 5 | <semantics><mrow><msub><mi>Y</mi><mn>5</mn></msub><mo stretchy="false">(</mo><mn>0</mn><mo
+    stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">Y_5(0)</annotation></semantics>Y5​(0)
+    | <semantics><mrow><msub><mi>Y</mi><mn>5</mn></msub><mo stretchy="false">(</mo><mn>1</mn><mo
+    stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">Y_5(1)</annotation></semantics>Y5​(1)
+    | <semantics><mrow><msub><mi>Z</mi><mn>5</mn></msub></mrow><annotation encoding="application/x-tex">Z_5</annotation></semantics>Z5​
+    |'
+  prefs: []
+  type: TYPE_TB
+- en: 'In reality, we never get to observe the entire table. Instead, the data we
+    observe look more like:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '| Unit | Outcome if not treated | Outcome if treated | Treated or not? |'
+  prefs: []
+  type: TYPE_TB
+- en: '| 1 | ? | <semantics><mrow><msub><mi>Y</mi><mn>1</mn></msub><mo stretchy="false">(</mo><mn>1</mn><mo
+    stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">Y_1(1)</annotation></semantics>Y1​(1)
+    | <semantics><mrow><msub><mi>Z</mi><mn>1</mn></msub><mo>=</mo><mn>1</mn></mrow><annotation
+    encoding="application/x-tex">Z_1=1</annotation></semantics>Z1​=1 |'
+  prefs: []
+  type: TYPE_TB
+- en: '| 2 | <semantics><mrow><msub><mi>Y</mi><mn>2</mn></msub><mo stretchy="false">(</mo><mn>0</mn><mo
+    stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">Y_2(0)</annotation></semantics>Y2​(0)
+    | ? | <semantics><mrow><msub><mi>Z</mi><mn>2</mn></msub><mo>=</mo><mn>0</mn></mrow><annotation
+    encoding="application/x-tex">Z_2=0</annotation></semantics>Z2​=0 |'
+  prefs: []
+  type: TYPE_TB
+- en: '| 3 | <semantics><mrow><msub><mi>Y</mi><mn>3</mn></msub><mo stretchy="false">(</mo><mn>0</mn><mo
+    stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">Y_3(0)</annotation></semantics>Y3​(0)
+    | ? | <semantics><mrow><msub><mi>Z</mi><mn>3</mn></msub><mo>=</mo><mn>0</mn></mrow><annotation
+    encoding="application/x-tex">Z_3=0</annotation></semantics>Z3​=0 |'
+  prefs: []
+  type: TYPE_TB
+- en: '| 4 | ? | <semantics><mrow><msub><mi>Y</mi><mn>4</mn></msub><mo stretchy="false">(</mo><mn>1</mn><mo
+    stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">Y_4(1)</annotation></semantics>Y4​(1)
+    | <semantics><mrow><msub><mi>Z</mi><mn>4</mn></msub><mo>=</mo><mn>1</mn></mrow><annotation
+    encoding="application/x-tex">Z_4=1</annotation></semantics>Z4​=1 |'
+  prefs: []
+  type: TYPE_TB
+- en: '| 5 | <semantics><mrow><msub><mi>Y</mi><mn>5</mn></msub><mo stretchy="false">(</mo><mn>0</mn><mo
+    stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">Y_5(0)</annotation></semantics>Y5​(0)
+    | ? | <semantics><mrow><msub><mi>Z</mi><mn>5</mn></msub><mo>=</mo><mn>0</mn></mrow><annotation
+    encoding="application/x-tex">Z_5=0</annotation></semantics>Z5​=0 |'
+  prefs: []
+  type: TYPE_TB
+- en: 'It’s important to keep the right intuition in mind for <semantics><mrow><msub><mi>Z</mi><mi>i</mi></msub></mrow><annotation
+    encoding="application/x-tex">Z_i</annotation></semantics>Zi​: this variable does
+    not represent the treatment itself; instead, it represents the decision on whether
+    or not to treat unit <semantics><mrow><mi>i</mi></mrow><annotation encoding="application/x-tex">i</annotation></semantics>i.
+    The effect of the treatment itself is captured in the difference between <semantics><mrow><msub><mi>Y</mi><mi>i</mi></msub><mo
+    stretchy="false">(</mo><mn>0</mn><mo stretchy="false">)</mo></mrow><annotation
+    encoding="application/x-tex">Y_i(0)</annotation></semantics>Yi​(0) and <semantics><mrow><msub><mi>Y</mi><mi>i</mi></msub><mo
+    stretchy="false">(</mo><mn>1</mn><mo stretchy="false">)</mo></mrow><annotation
+    encoding="application/x-tex">Y_i(1)</annotation></semantics>Yi​(1). Let’s look
+    at two examples that make this distinction clearer. These examples also preview
+    some of the insights we’ll develop further in the next two sections.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: In a randomized controlled trial, we randomly assign units to the treatment
+    and control groups. Because the trial is randomized, the treatment/control assignment
+    <semantics><mrow><msub><mi>Z</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">Z_i</annotation></semantics>Zi​
+    is independent of the potential outcomes <semantics><mrow><mo stretchy="false">(</mo><msub><mi>Y</mi><mi>i</mi></msub><mo
+    stretchy="false">(</mo><mn>0</mn><mo stretchy="false">)</mo><mo separator="true">,</mo><msub><mi>Y</mi><mi>i</mi></msub><mo
+    stretchy="false">(</mo><mn>1</mn><mo stretchy="false">)</mo><mo stretchy="false">)</mo></mrow><annotation
+    encoding="application/x-tex">(Y_i(0), Y_i(1))</annotation></semantics>(Yi​(0),Yi​(1)).
+    This doesn’t mean that the treatment is independent of the outcome we observe!
+    (Remeber, the observed outcome is <semantics><mrow><msub><mi>Y</mi><mrow><mi>i</mi><mo
+    separator="true">,</mo><mi>o</mi><mi>b</mi><mi>s</mi></mrow></msub><mo>=</mo><msub><mi>Y</mi><mi>i</mi></msub><mo
+    stretchy="false">(</mo><msub><mi>Z</mi><mi>i</mi></msub><mo stretchy="false">)</mo></mrow><annotation
+    encoding="application/x-tex">Y_{i,obs} = Y_i(Z_i)</annotation></semantics>Yi,obs​=Yi​(Zi​))
+    It only means that in a randomized controlled trial, the *decision* on whether
+    or not to treat is independent of the potential outcomes. We’ll see in this next
+    section how this fact can be very useful.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Suppose we look at an observational study measuring the effect of yacht ownership
+    on attitudes toward taxation. Here, <semantics><mrow><msub><mi>Z</mi><mi>i</mi></msub><mo>=</mo><mn>1</mn></mrow><annotation
+    encoding="application/x-tex">Z_i = 1</annotation></semantics> Zi​=1 if respondent
+    <semantics><mrow><mi>i</mi></mrow><annotation encoding="application/x-tex">i</annotation></semantics>i
+    owns a yacht; <semantics><mrow><msub><mi>Y</mi><mi>i</mi></msub><mo stretchy="false">(</mo><mn>0</mn><mo
+    stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">Y_i(0)</annotation></semantics>Yi​(0)
+    represents respondent <semantics><mrow><mi>i</mi></mrow><annotation encoding="application/x-tex">i</annotation></semantics>i’s
+    attitude toward taxation if they *did not* own a yacht; and <semantics><mrow><msub><mi>Y</mi><mi>i</mi></msub><mo
+    stretchy="false">(</mo><mn>0</mn><mo stretchy="false">)</mo></mrow><annotation
+    encoding="application/x-tex">Y_i(0)</annotation></semantics>Yi​(0) represents
+    respondent <semantics><mrow><mi>i</mi></mrow><annotation encoding="application/x-tex">i</annotation></semantics>i’s
+    attitude toward taxation if they *did* own a yacht. In this case, we can intuitively
+    see that if someone is wealthy enough to own a yacht, regardless of whether they
+    do or not (i.e., whether they’re in Universe 1 or Universe 0), they will probably
+    prefer lower taxes.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[PRE2]'
+  prefs: []
+  type: TYPE_PRE
+- en: Loading...
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE3]'
+  prefs: []
+  type: TYPE_PRE
+- en: Loading...
+  prefs: []
+  type: TYPE_NORMAL
+- en: Average treatment effect[¶](#average-treatment-effect "Link to this Section")
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'We’ve already seen that we can never know the difference <semantics><mrow><msub><mi>Y</mi><mi>i</mi></msub><mo
+    stretchy="false">(</mo><mn>1</mn><mo stretchy="false">)</mo><mo>−</mo><msub><mi>Y</mi><mi>i</mi></msub><mo
+    stretchy="false">(</mo><mn>0</mn><mo stretchy="false">)</mo></mrow><annotation
+    encoding="application/x-tex">Y_i(1) - Y_i(0)</annotation></semantics>Yi​(1)−Yi​(0)
+    for an individual unit <semantics><mrow><mi>i</mi></mrow><annotation encoding="application/x-tex">i</annotation></semantics>i,
+    since we only get to observe one of the two. So, what we’ll do instead is look
+    at the **Average Treatment Effect (ATE)**, which we’ll denote with the greek letter
+    tau <semantics><mrow><mi>τ</mi></mrow><annotation encoding="application/x-tex">\tau</annotation></semantics>τ:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: <semantics><mrow><mtext>ATE</mtext><mo>=</mo><mi>τ</mi><mo>=</mo><mi>E</mi><mo
+    stretchy="false">[</mo><msub><mi>Y</mi><mi>i</mi></msub><mo stretchy="false">(</mo><mn>1</mn><mo
+    stretchy="false">)</mo><mo>−</mo><msub><mi>Y</mi><mi>i</mi></msub><mo stretchy="false">(</mo><mn>0</mn><mo
+    stretchy="false">)</mo><mo stretchy="false">]</mo></mrow><annotation encoding="application/x-tex">\text{ATE}
+    = \tau = E[Y_i(1) - Y_i(0)]</annotation></semantics>ATE=τ=E[Yi​(1)−Yi​(0)][(1)](#kGlTPQzyR0
+    "Link to this Equation")
+  prefs: []
+  type: TYPE_NORMAL
+- en: Remember that the <semantics><mrow><msub><mi>Y</mi><mi>i</mi></msub><mo stretchy="false">(</mo><mo>⋅</mo><mo
+    stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">Y_i(\cdot)</annotation></semantics>Yi​(⋅)s
+    are i.i.d. random variables, so the expectation here is over the randomness in
+    that distribution. We’ll often drop the <semantics><mrow><mi>i</mi></mrow><annotation
+    encoding="application/x-tex">i</annotation></semantics>i in the notation for convenience.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'If we knew all the data in the table above (including the counterfactual outcomes,
+    marked with “?”), then we could take the difference in means of the two columns
+    to find the ATE. But if we take the average of only the values we actually see,
+    then we’re implicitly conditioning on the the treatment decision. In other words,
+    if we computed the average of the second column (“Outcome if not treated”), it
+    would be <semantics><mrow><mi>E</mi><mo stretchy="false">[</mo><mi>Y</mi><mo stretchy="false">(</mo><mn>0</mn><mo
+    stretchy="false">)</mo><mi mathvariant="normal">∣</mi><mi>Z</mi><mo>=</mo><mn>0</mn><mo
+    stretchy="false">]</mo></mrow><annotation encoding="application/x-tex">E[Y(0)
+    | Z = 0]</annotation></semantics>E[Y(0)∣Z=0]. How do we relate this conditional
+    expectation to the unconditional one in the ATE? We’ve already seen how to do
+    this: the tower property (also known as iterated expectation):'
+  prefs: []
+  type: TYPE_NORMAL
+- en: <semantics><mtable rowspacing="0.25em" columnalign="right left" columnspacing="0em"><mtr><mtd><mstyle
+    scriptlevel="0" displaystyle="true"><mi>τ</mi></mstyle></mtd><mtd><mstyle scriptlevel="0"
+    displaystyle="true"><mrow><mo>=</mo><mi>E</mi><mo stretchy="false">[</mo><mi>Y</mi><mo
+    stretchy="false">(</mo><mn>1</mn><mo stretchy="false">)</mo><mo>−</mo><mi>Y</mi><mo
+    stretchy="false">(</mo><mn>0</mn><mo stretchy="false">)</mo><mi mathvariant="normal">∣</mi><mi>Z</mi><mo>=</mo><mn>1</mn><mo
+    stretchy="false">]</mo><mi>P</mi><mo stretchy="false">(</mo><mi>Z</mi><mo>=</mo><mn>1</mn><mo
+    stretchy="false">)</mo><mo>+</mo><mi>E</mi><mo stretchy="false">[</mo><mi>Y</mi><mo
+    stretchy="false">(</mo><mn>1</mn><mo stretchy="false">)</mo><mo>−</mo><mi>Y</mi><mo
+    stretchy="false">(</mo><mn>0</mn><mo stretchy="false">)</mo><mi mathvariant="normal">∣</mi><mi>Z</mi><mo>=</mo><mn>0</mn><mo
+    stretchy="false">]</mo><mi>P</mi><mo stretchy="false">(</mo><mi>Z</mi><mo>=</mo><mn>0</mn><mo
+    stretchy="false">)</mo></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0"
+    displaystyle="true"><mrow><mo>=</mo><mo fence="false" stretchy="true" minsize="1.8em"
+    maxsize="1.8em">(</mo><mover><mover><mrow><mi>E</mi><mo stretchy="false">[</mo><mi>Y</mi><mo
+    stretchy="false">(</mo><mn>1</mn><mo stretchy="false">)</mo><mi mathvariant="normal">∣</mi><mi>Z</mi><mo>=</mo><mn>1</mn><mo
+    stretchy="false">]</mo></mrow><mo stretchy="true">⏞</mo></mover><mtext>observed</mtext></mover><mo>−</mo><mover><mover><mrow><mi>E</mi><mo
+    stretchy="false">[</mo><mi>Y</mi><mo stretchy="false">(</mo><mn>0</mn><mo stretchy="false">)</mo><mi
+    mathvariant="normal">∣</mi><mi>Z</mi><mo>=</mo><mn>1</mn><mo stretchy="false">]</mo></mrow><mo
+    stretchy="true">⏞</mo></mover><mtext>counterfactual</mtext></mover><mo fence="false"
+    stretchy="true" minsize="1.8em" maxsize="1.8em">)</mo><mi>P</mi><mo stretchy="false">(</mo><mi>Z</mi><mo>=</mo><mn>1</mn><mo
+    stretchy="false">)</mo><mo>+</mo></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle
+    scriptlevel="0" displaystyle="true"><mrow><mo fence="false" stretchy="true" minsize="1.8em"
+    maxsize="1.8em">(</mo><munder><munder><mrow><mi>E</mi><mo stretchy="false">[</mo><mi>Y</mi><mo
+    stretchy="false">(</mo><mn>1</mn><mo stretchy="false">)</mo><mi mathvariant="normal">∣</mi><mi>Z</mi><mo>=</mo><mn>0</mn><mo
+    stretchy="false">]</mo></mrow><mo stretchy="true">⏟</mo></munder><mtext>counterfactual</mtext></munder><mo>−</mo><munder><munder><mrow><mi>E</mi><mo
+    stretchy="false">[</mo><mi>Y</mi><mo stretchy="false">(</mo><mn>0</mn><mo stretchy="false">)</mo><mi
+    mathvariant="normal">∣</mi><mi>Z</mi><mo>=</mo><mn>0</mn><mo stretchy="false">]</mo></mrow><mo
+    stretchy="true">⏟</mo></munder><mtext>observed</mtext></munder><mo fence="false"
+    stretchy="true" minsize="1.8em" maxsize="1.8em">)</mo><mi>P</mi><mo stretchy="false">(</mo><mi>Z</mi><mo>=</mo><mn>0</mn><mo
+    stretchy="false">)</mo></mrow></mstyle></mtd></mtr></mtable><annotation encoding="application/x-tex">\begin{align}
+    \tau &= E[Y(1) - Y(0) | Z = 1]P(Z=1) + E[Y(1) - Y(0)|Z=0]P(Z=0) \\ &= \Big(\,\overbrace{E[Y(1)
+    | Z = 1]}^{\text{observed}} - \overbrace{E[Y(0) | Z = 1]}^{\text{counterfactual}}\,\Big)P(Z=1)
+    \, + \\ & \quad\,\Big(\,\underbrace{E[Y(1)|Z=0]}_{\text{counterfactual}} - \underbrace{E[Y(0)|Z=0]}_{\text{observed}}\,\Big)P(Z=0)
+    \end{align}</annotation></semantics>τ​=E[Y(1)−Y(0)∣Z=1]P(Z=1)+E[Y(1)−Y(0)∣Z=0]P(Z=0)=(E[Y(1)∣Z=1]​observed​−E[Y(0)∣Z=1]​counterfactual​)P(Z=1)+(counterfactualE[Y(1)∣Z=0]​​−observedE[Y(0)∣Z=0]​​)P(Z=0)​​[(2)](#EKX6r1mr61
+    "Link to this Equation")
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Taking a closer look at these four terms, we see that two of them (the first
+    and the last) correspond to data that we got to observe. Unfortunately, the middle
+    two terms are counterfactual terms: if <semantics><mrow><msub><mi>Z</mi><mi>i</mi></msub><mo>=</mo><mn>1</mn></mrow><annotation
+    encoding="application/x-tex">Z_i=1</annotation></semantics>Zi​=1, then we don’t
+    get to observe <semantics><mrow><msub><mi>Y</mi><mi>i</mi></msub><mo stretchy="false">(</mo><mn>0</mn><mo
+    stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">Y_i(0)</annotation></semantics>Yi​(0)!'
+  prefs: []
+  type: TYPE_NORMAL
+- en: In the next few sections, we’ll see ways of working around this problem.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE4]'
+  prefs: []
+  type: TYPE_PRE
+- en: Loading...
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Outcomes: fixed or random?[¶](#outcomes-fixed-or-random "Link to this Section")'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'There are two different schools of thought around how to model the potential
+    outcomes <semantics><mrow><msub><mi>Y</mi><mi>i</mi></msub><mo stretchy="false">(</mo><mn>0</mn><mo
+    stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">Y_i(0)</annotation></semantics>Yi​(0)
+    and <semantics><mrow><msub><mi>Y</mi><mi>i</mi></msub><mo stretchy="false">(</mo><mn>1</mn><mo
+    stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">Y_i(1)</annotation></semantics>Yi​(1):'
+  prefs: []
+  type: TYPE_NORMAL
+- en: In the **fixed-sample approach**, we assume that the potential outcomes <semantics><mrow><msub><mi>Y</mi><mi>i</mi></msub><mo
+    stretchy="false">(</mo><mn>0</mn><mo stretchy="false">)</mo></mrow><annotation
+    encoding="application/x-tex">Y_i(0)</annotation></semantics>Yi​(0) and <semantics><mrow><msub><mi>Y</mi><mi>i</mi></msub><mo
+    stretchy="false">(</mo><mn>1</mn><mo stretchy="false">)</mo></mrow><annotation
+    encoding="application/x-tex">Y_i(1)</annotation></semantics>Yi​(1) are fixed,
+    and only <semantics><mrow><msub><mi>Z</mi><mi>i</mi></msub></mrow><annotation
+    encoding="application/x-tex">Z_i</annotation></semantics>Zi​ is random. We observe
+    one outcome <semantics><mrow><msub><mi>Y</mi><mrow><mi>i</mi><mo separator="true">,</mo><mi>o</mi><mi>b</mi><mi>s</mi></mrow></msub><mo>=</mo><msub><mi>Y</mi><mi>i</mi></msub><mo
+    stretchy="false">(</mo><msub><mi>Z</mi><mi>i</mi></msub><mo stretchy="false">)</mo></mrow><annotation
+    encoding="application/x-tex">Y_{i,obs} = Y_i(Z_i)</annotation></semantics>Yi,obs​=Yi​(Zi​),
+    which is fixed and known, and the other is fixed and unknown.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: 'In the **superpopulation model**, we assume that the tuples <semantics><mrow><mo
+    stretchy="false">(</mo><msub><mi>Z</mi><mi>i</mi></msub><mo separator="true">,</mo><msub><mi>Y</mi><mi>i</mi></msub><mo
+    stretchy="false">(</mo><mn>0</mn><mo stretchy="false">)</mo><mo separator="true">,</mo><msub><mi>Y</mi><mi>i</mi></msub><mo
+    stretchy="false">(</mo><mn>1</mn><mo stretchy="false">)</mo><mo stretchy="false">)</mo></mrow><annotation
+    encoding="application/x-tex">(Z_i, Y_i(0), Y_i(1))</annotation></semantics>(Zi​,Yi​(0),Yi​(1))
+    are random and i.i.d.: in other words, there’s some joint distribution over treatment
+    and potential outcomes, and each unit’s data (treament decision and potential
+    outcomes) are independent of each other unit’s data.'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: Historically, the fixed-sample approach was developed to analyze randomized
+    experiments, and is still an active area of research. The superpopulation model
+    is newer, and has been expanded in the last 40 years. It can be applied to both
+    randomized experiments and observational studies.
+  prefs: []
+  type: TYPE_NORMAL
+- en: In this book, we’ll focus on the superpopulation model.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Stable Unit Treatment Value Assumption (SUTVA)[¶](#stable-unit-treatment-value-assumption-sutva
+    "Link to this Section")
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'The stable unit treatment value assumption (SUTVA) is a pair of assumptions
+    that we must meet in order to use the methods we’re about to develop. The assumptions
+    are:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: References
+  prefs: []
+  type: TYPE_NORMAL
+- en: Card, D. (1992). Using Regional Variation in Wages to Measure the Effects of
+    the Federal Minimum Wage. *ILR Review*, *46*(1), 22–37\. [10.1177/001979399204600103](https://doi.org/10.1177/001979399204600103)
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL

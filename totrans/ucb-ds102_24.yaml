@@ -1,0 +1,344 @@
+- en: Quantifying Association
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: 原文：[https://data102.org/ds-102-book/content/chapters/04/quantifying-association](https://data102.org/ds-102-book/content/chapters/04/quantifying-association)
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '[<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" width="1.25rem"
+    height="1.25rem" class="myst-fm-license-cc-icon myst-fm-license-cc-icon-main inline-block
+    mx-1"><title>Content License: Creative Commons Attribution Share Alike 4.0 International
+    (CC-BY-SA-4.0)</title></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"
+    width="1.25rem" height="1.25rem" class="myst-fm-license-cc-icon myst-fm-license-cc-icon-by
+    inline-block mr-1"><title>Credit must be given to the creator</title></svg><svg
+    viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" width="1.25rem" height="1.25rem"
+    class="myst-fm-license-cc-icon myst-fm-license-cc-icon-sa inline-block mr-1"><title>Adaptations
+    must be shared under the same terms</title></svg>](https://creativecommons.org/licenses/by-sa/4.0/)[](https://github.com/ds-102/ds-102-book
+    "GitHub Repository: ds-102/ds-102-book")[](https://github.com/ds-102/ds-102-book/edit/main/ds-102-book/content/chapters/04/02_quantifying_association.ipynb
+    "Edit This Page")'
+  prefs: []
+  type: TYPE_NORMAL
+- en: We’ll start our journey into causal inference by looking at several ways of
+    quantifying association.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Throughout, we’ll assume we have two random variables, <semantics><mrow><mi>Z</mi></mrow><annotation
+    encoding="application/x-tex">Z</annotation></semantics>Z and <semantics><mrow><mi>Y</mi></mrow><annotation
+    encoding="application/x-tex">Y</annotation></semantics>Y, and sometimes a third
+    variable <semantics><mrow><mi>X</mi></mrow><annotation encoding="application/x-tex">X</annotation></semantics>X.
+    Although most of the methods we’ll describe can be used regardless of how we interpret
+    them, it will be helpful when we move to causality to think of <semantics><mrow><mi>Z</mi></mrow><annotation
+    encoding="application/x-tex">Z</annotation></semantics>Z as either a treatment
+    or covariate, to think of <semantics><mrow><mi>Y</mi></mrow><annotation encoding="application/x-tex">Y</annotation></semantics>Y
+    as an outcome, and to think of <semantics><mrow><mi>X</mi></mrow><annotation encoding="application/x-tex">X</annotation></semantics>X
+    as a potential confounding variable.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Continuous Data: Correlation and Regression[¶](#continuous-data-correlation-and-regression
+    "Link to this Section")'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Correlation coefficient[¶](#correlation-coefficient "Link to this Section")
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: 'There are a few different ways to measure correlation. The most common is the
+    **Pearson correlation** (also called the correlation coefficient), usually denoted
+    with <semantics><mrow><mi>r</mi></mrow><annotation encoding="application/x-tex">r</annotation></semantics>r
+    or <semantics><mrow><mi>ρ</mi></mrow><annotation encoding="application/x-tex">\rho</annotation></semantics>ρ
+    (the greek letter *rho*):'
+  prefs: []
+  type: TYPE_NORMAL
+- en: <semantics><mrow><msub><mi>ρ</mi><mrow><mi>Z</mi><mi>Y</mi></mrow></msub><mo>=</mo><mfrac><mrow><mtext>cov</mtext><mo
+    stretchy="false">(</mo><mi>Z</mi><mo separator="true">,</mo><mi>Y</mi><mo stretchy="false">)</mo></mrow><msqrt><mrow><mtext>var</mtext><mo
+    stretchy="false">(</mo><mi>Z</mi><mo stretchy="false">)</mo><mtext>var</mtext><mo
+    stretchy="false">(</mo><mi>Y</mi><mo stretchy="false">)</mo></mrow></msqrt></mfrac></mrow><annotation
+    encoding="application/x-tex">\rho_{ZY} = \frac{\text{cov}(Z, Y)}{\sqrt{\text{var}(Z)\text{var}(Y)}}</annotation></semantics>ρZY​=var(Z)var(Y)​cov(Z,Y)​[(1)](#tBWIUQZ8m0
+    "Link to this Equation")
+  prefs: []
+  type: TYPE_NORMAL
+- en: This is a good measure of the linear association between <semantics><mrow><mi>Z</mi></mrow><annotation
+    encoding="application/x-tex">Z</annotation></semantics>Z and <semantics><mrow><mi>Y</mi></mrow><annotation
+    encoding="application/x-tex">Y</annotation></semantics>Y. For a refresher on Pearson
+    correlation, see the [Data 8 textbook](https://www.inferentialthinking.com/chapters/15/1/Correlation.html)
+    and the [Data 140 textbook](http://prob140.org/textbook/content/Chapter_13/01_Covariance.html#correlation).
+  prefs: []
+  type: TYPE_NORMAL
+- en: Linear regression[¶](#linear-regression "Link to this Section")
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: 'If we were to fit a linear model to predict <semantics><mrow><mi>Y</mi></mrow><annotation
+    encoding="application/x-tex">Y</annotation></semantics>Y from <semantics><mrow><mi>Z</mi></mrow><annotation
+    encoding="application/x-tex">Z</annotation></semantics>Z, it would look something
+    like:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: <semantics><mrow><mi>Y</mi><mo>=</mo><mi>α</mi><mo>+</mo><mi>β</mi><mi>Z</mi><mo>+</mo><mi>ε</mi><mi
+    mathvariant="normal">.</mi></mrow><annotation encoding="application/x-tex">Y =
+    \alpha + \beta Z + \varepsilon.</annotation></semantics>Y=α+βZ+ε.[(2)](#YlPZ77ixZW
+    "Link to this Equation")
+  prefs: []
+  type: TYPE_NORMAL
+- en: As usual, we assume that <semantics><mrow><mi>ε</mi></mrow><annotation encoding="application/x-tex">\varepsilon</annotation></semantics>ε
+    is zero-mean noise, with the additional property that cov<semantics><mrow><mo
+    stretchy="false">(</mo><mi>Z</mi><mo separator="true">,</mo><mi>ε</mi><mo stretchy="false">)</mo><mo>=</mo><mn>0</mn></mrow><annotation
+    encoding="application/x-tex">(Z, \varepsilon) = 0</annotation></semantics>(Z,ε)=0.
+    We’ve talked a lot about how to interpret this equation as a predictive model,
+    but now we’ll look at it slightly differently.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'We’ll think of this equation as simply a descriptive explanation of a relationship
+    between <semantics><mrow><mi>Z</mi></mrow><annotation encoding="application/x-tex">Z</annotation></semantics>Z
+    and <semantics><mrow><mi>Y</mi></mrow><annotation encoding="application/x-tex">Y</annotation></semantics>Y,
+    where the most important part of the relationship is <semantics><mrow><mi>β</mi></mrow><annotation
+    encoding="application/x-tex">\beta</annotation></semantics>β. We can use all the
+    same computational machinery we’ve already developed to fit the model and compute
+    <semantics><mrow><mi>β</mi></mrow><annotation encoding="application/x-tex">\beta</annotation></semantics>β,
+    and the interpretation is subject to the limitations we’ve already learned about
+    (e.g., it doesn’t capture nonlinear association, it can be impacted by outliers,
+    etc.). While it’s common to describe <semantics><mrow><mi>β</mi></mrow><annotation
+    encoding="application/x-tex">\beta</annotation></semantics>β as quantifying the
+    “effect” of <semantics><mrow><mi>Z</mi></mrow><annotation encoding="application/x-tex">Z</annotation></semantics>Z
+    on <semantics><mrow><mi>Y</mi></mrow><annotation encoding="application/x-tex">Y</annotation></semantics>Y,
+    it’s important to understand the limitations of the word “effect” here: linear
+    regression can only tell us the *predictive* effect, rather than the causal effect.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: So, we’ll use the coefficient <semantics><mrow><mi>β</mi></mrow><annotation
+    encoding="application/x-tex">\beta</annotation></semantics>β as a means to quantify
+    the relationship between <semantics><mrow><mi>Z</mi></mrow><annotation encoding="application/x-tex">Z</annotation></semantics>Z
+    and <semantics><mrow><mi>y</mi></mrow><annotation encoding="application/x-tex">y</annotation></semantics>y.
+    Starting from our assumption that cov<semantics><mrow><mo stretchy="false">(</mo><mi>Z</mi><mo
+    separator="true">,</mo><mi>ε</mi><mo stretchy="false">)</mo><mo>=</mo><mn>0</mn></mrow><annotation
+    encoding="application/x-tex">(Z, \varepsilon) = 0</annotation></semantics>(Z,ε)=0
+    and using properties of covariance, we can show that <semantics><mrow><mi>β</mi><mo>=</mo><mfrac><mrow><mtext>cov</mtext><mo
+    stretchy="false">(</mo><mi>Z</mi><mo separator="true">,</mo><mi>Y</mi><mo stretchy="false">)</mo></mrow><mrow><mtext>var</mtext><mo
+    stretchy="false">(</mo><mi>Z</mi><mo stretchy="false">)</mo></mrow></mfrac></mrow><annotation
+    encoding="application/x-tex">\beta = \frac{\text{cov}(Z, Y)}{\text{var}(Z)}</annotation></semantics>β=var(Z)cov(Z,Y)​.
+    From here, we can also show that <semantics><mrow><mi>β</mi><mo>=</mo><msub><mi>ρ</mi><mrow><mi>Z</mi><mi>Y</mi></mrow></msub><msqrt><mfrac><mrow><mtext>var</mtext><mo
+    stretchy="false">(</mo><mi>Y</mi><mo stretchy="false">)</mo></mrow><mrow><mtext>var</mtext><mo
+    stretchy="false">(</mo><mi>Z</mi><mo stretchy="false">)</mo></mrow></mfrac></msqrt></mrow><annotation
+    encoding="application/x-tex">\beta = \rho_{ZY} \sqrt{\frac{\text{var}(Y)}{\text{var}(Z)}}</annotation></semantics>β=ρZY​var(Z)var(Y)​​
+    (as you may have seen empirically in Data 8).
+  prefs: []
+  type: TYPE_NORMAL
+- en: For example, suppose we’re interested in quantifying the relationship between
+    the number of years of schooling an individual has received (<semantics><mrow><mi>Z</mi></mrow><annotation
+    encoding="application/x-tex">Z</annotation></semantics>Z) and their income (<semantics><mrow><mi>Y</mi></mrow><annotation
+    encoding="application/x-tex">Y</annotation></semantics>Y). If we were to compute
+    the coefficient <semantics><mrow><mi>β</mi></mrow><annotation encoding="application/x-tex">\beta</annotation></semantics>β,
+    it would provide a way of quantifying the association between these two variables.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Multiple linear regression[¶](#multiple-linear-regression "Link to this Section")
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: 'Suppose we are now interested in quantifying the relationship between two variables
+    <semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics>x
+    and <semantics><mrow><mi>y</mi></mrow><annotation encoding="application/x-tex">y</annotation></semantics>y,
+    but we also want to account for or “control for” the effect of a third variable,
+    <semantics><mrow><mi>w</mi></mrow><annotation encoding="application/x-tex">w</annotation></semantics>w.
+    Assuming a linear relationship between them, we can extend our earlier relationship:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: <semantics><mrow><mi>Y</mi><mo>=</mo><mi>α</mi><mo>+</mo><mi>β</mi><mi>Z</mi><mo>+</mo><mi>γ</mi><mi>X</mi><mo>+</mo><mi>ε</mi><mi
+    mathvariant="normal">.</mi></mrow><annotation encoding="application/x-tex">Y =
+    \alpha + \beta Z + \gamma X + \varepsilon.</annotation></semantics>Y=α+βZ+γX+ε.[(3)](#q1NZTE11V5
+    "Link to this Equation")
+  prefs: []
+  type: TYPE_NORMAL
+- en: In this case, we can interpret <semantics><mrow><mi>β</mi></mrow><annotation
+    encoding="application/x-tex">\beta</annotation></semantics>β as a measure of association
+    between <semantics><mrow><mi>Z</mi></mrow><annotation encoding="application/x-tex">Z</annotation></semantics>Z
+    and <semantics><mrow><mi>Y</mi></mrow><annotation encoding="application/x-tex">Y</annotation></semantics>Y
+    while **controlling for** or **adjusting for** the effect of a third variable
+    <semantics><mrow><mi>X</mi></mrow><annotation encoding="application/x-tex">X</annotation></semantics>X.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Here are some refresher resources on linear regression:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[Prob 140 textbook Chapter 24](http://prob140.org/textbook/content/Chapter_24/00_Simple_Linear_Regression.html)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 'Data 100 textbook: [Chapter 14](https://www.textbook.ds100.org/ch/14/linear_models.html)
+    and [Chapter 18](https://www.textbook.ds100.org/ch/18/mult_model.html)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs: []
+  type: TYPE_PRE
+- en: Loading...
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Binary Data: (A Different Kind of) Risk[¶](#binary-data-a-different-kind-of-risk
+    "Link to this Section")'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'Correlation and regression coefficients are a fine way to measure association
+    between continuous numerical variables, but what if our data are categorical?
+    We’ll restrict ourselves to binary data in this section for simplicity. We’ll
+    look at three commonly used metrics for these cases: risk difference (RD), risk
+    ratio (RR), and odds ratio (OR).'
+  prefs: []
+  type: TYPE_NORMAL
+- en: When dealing with categorical data, we’ll often start by visualizing the data
+    in a contingency table. We’ve already seen an example of this when we looked at
+    Simpson’s Paradox.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  | <semantics><mrow><mi>y</mi><mo>=</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">y=0</annotation></semantics>y=0
+    | <semantics><mrow><mi>y</mi><mo>=</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">y=1</annotation></semantics>y=1
+    |'
+  prefs: []
+  type: TYPE_TB
+- en: '| <semantics><mrow><mi>z</mi><mo>=</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">z=0</annotation></semantics>z=0
+    | <semantics><mrow><msub><mi>n</mi><mn>00</mn></msub></mrow><annotation encoding="application/x-tex">n_{00}</annotation></semantics>n00​
+    | <semantics><mrow><msub><mi>n</mi><mn>01</mn></msub></mrow><annotation encoding="application/x-tex">n_{01}</annotation></semantics>n01​
+    |'
+  prefs: []
+  type: TYPE_TB
+- en: '| <semantics><mrow><mi>z</mi><mo>=</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">z=1</annotation></semantics>z=1
+    | <semantics><mrow><msub><mi>n</mi><mn>10</mn></msub></mrow><annotation encoding="application/x-tex">n_{10}</annotation></semantics>n10​
+    | <semantics><mrow><msub><mi>n</mi><mn>11</mn></msub></mrow><annotation encoding="application/x-tex">n_{11}</annotation></semantics>n11​
+    |'
+  prefs: []
+  type: TYPE_TB
+- en: 'Note that these are different from the 2x2 tables that we used at the beginning
+    of the course: there, the rows and columns represented reality and our decisions,
+    respectively. Here, they represent two different observed variables in our data.
+    Just as with those tables, there’s no standard convention about what to put in
+    the rows vs the columns.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: For example, suppose we are interested in examining the relationship between
+    receiving a vaccine (<semantics><mrow><mi>z</mi></mrow><annotation encoding="application/x-tex">z</annotation></semantics>z)
+    for a particular virus and being infected with that virus (<semantics><mrow><mi>y</mi></mrow><annotation
+    encoding="application/x-tex">y</annotation></semantics>y). We’ll look at a study
+    conducted on that vaccine. We’ll use <semantics><mrow><mi>z</mi><mo>=</mo><mn>1</mn></mrow><annotation
+    encoding="application/x-tex">z=1</annotation></semantics>z=1 to indicate getting
+    the vaccine, and <semantics><mrow><mi>y</mi><mo>=</mo><mn>1</mn></mrow><annotation
+    encoding="application/x-tex">y=1</annotation></semantics>y=1 to indicate being
+    infected with the virus. In this case, for example, <semantics><mrow><msub><mi>n</mi><mn>10</mn></msub></mrow><annotation
+    encoding="application/x-tex">n_{10}</annotation></semantics>n10​ would represent
+    the number of people in the study who received the vaccine and did not get infected.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Most of the metrics we’ll discuss are based on the **risk**, which represents
+    the probability of <semantics><mrow><mi>y</mi><mo>=</mo><mn>1</mn></mrow><annotation
+    encoding="application/x-tex">y=1</annotation></semantics>y=1 given a particular
+    value of <semantics><mrow><mi>z</mi></mrow><annotation encoding="application/x-tex">z</annotation></semantics>z:
+    The risk for <semantics><mrow><mi>z</mi><mo>=</mo><mn>1</mn></mrow><annotation
+    encoding="application/x-tex">z=1</annotation></semantics>z=1 is <semantics><mrow><mi>P</mi><mo
+    stretchy="false">(</mo><mi>y</mi><mo>=</mo><mn>1</mn><mi mathvariant="normal">∣</mi><mi>z</mi><mo>=</mo><mn>1</mn><mo
+    stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">P(y=1 |
+    z=1)</annotation></semantics>P(y=1∣z=1) and the risk for <semantics><mrow><mi>z</mi><mo>=</mo><mn>0</mn></mrow><annotation
+    encoding="application/x-tex">z=0</annotation></semantics>z=0 is <semantics><mrow><mi>P</mi><mo
+    stretchy="false">(</mo><mi>y</mi><mo>=</mo><mn>1</mn><mi mathvariant="normal">∣</mi><mi>z</mi><mo>=</mo><mn>0</mn><mo
+    stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">P(y=1|z=0)</annotation></semantics>P(y=1∣z=0).
+    Note that this definition is completely unrelated to the risk that we learned
+    about in Chapter 1.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'In our vaccination example, the term *risk* has an intuitive interpretation:
+    it represents your risk of being infected given whether or not you were vaccinated.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'The **risk difference (RD)** is defined as follows:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: <semantics><mtable rowspacing="0.25em" columnalign="right left" columnspacing="0em"><mtr><mtd><mstyle
+    scriptlevel="0" displaystyle="true"><mrow><mi>R</mi><mi>D</mi></mrow></mstyle></mtd><mtd><mstyle
+    scriptlevel="0" displaystyle="true"><mrow><mo>=</mo><munder><munder><mrow><mi>P</mi><mo
+    stretchy="false">(</mo><mi>Y</mi><mo>=</mo><mn>1</mn><mo>∣</mo><mi>Z</mi><mo>=</mo><mn>1</mn><mo
+    stretchy="false">)</mo></mrow><mo stretchy="true">⏟</mo></munder><mrow><mtext>risk for </mtext><mi>Z</mi><mo>=</mo><mn>1</mn></mrow></munder><mo>−</mo><munder><munder><mrow><mi>P</mi><mo
+    stretchy="false">(</mo><mi>Y</mi><mo>=</mo><mn>1</mn><mo>∣</mo><mi>Z</mi><mo>=</mo><mn>0</mn><mo
+    stretchy="false">)</mo></mrow><mo stretchy="true">⏟</mo></munder><mrow><mtext>risk for </mtext><mi>Z</mi><mo>=</mo><mn>0</mn></mrow></munder></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle
+    scriptlevel="0" displaystyle="true"><mrow><mo>=</mo><mover><mover><mfrac><msub><mi>n</mi><mn>11</mn></msub><mrow><msub><mi>n</mi><mn>10</mn></msub><mo>+</mo><msub><mi>n</mi><mn>11</mn></msub></mrow></mfrac><mo
+    stretchy="true">⏞</mo></mover></mover><mo>−</mo><mover><mover><mfrac><msub><mi>n</mi><mn>01</mn></msub><mrow><msub><mi>n</mi><mn>00</mn></msub><mo>+</mo><msub><mi>n</mi><mn>01</mn></msub></mrow></mfrac><mo
+    stretchy="true">⏞</mo></mover></mover></mrow></mstyle></mtd></mtr></mtable><annotation
+    encoding="application/x-tex">\begin{align} RD &= \underbrace{P(Y=1 \mid Z=1)}_{\text{risk
+    for }Z=1} - \underbrace{P(Y=1 \mid Z=0)}_{\text{risk for }Z=0} \\ &= \quad\,\overbrace{\frac{n_{11}}{n_{10}
+    + n_{11}}}^{} \quad\,\,-\quad\, \overbrace{\frac{n_{01}}{n_{00} + n_{01}}}^{}
+    \end{align}</annotation></semantics>RD​=risk for Z=1P(Y=1∣Z=1)​​−risk for Z=0P(Y=1∣Z=0)​​=n10​+n11​n11​​​​−n00​+n01​n01​​​​​​[(4)](#jJcjgrnpCa
+    "Link to this Equation")
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Returning to the vaccine example: if the vaccine works as intended (i.e., there’s
+    a strong association between being vaccinated and being infected), your risk of
+    being infected should decrease after being vaccinated, and the risk difference
+    should be a negative number far from 0\. On the other hand, if there’s little
+    to no relationship between vaccination and infection, then the two terms should
+    be very similar, and the risk difference should be close to 0.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: We can see the same fact mathematically. If <semantics><mrow><mi>Z</mi></mrow><annotation
+    encoding="application/x-tex">Z</annotation></semantics>Z and <semantics><mrow><mi>Y</mi></mrow><annotation
+    encoding="application/x-tex">Y</annotation></semantics>Y are independent, then
+    <semantics><mrow><mi>P</mi><mo stretchy="false">(</mo><mi>Y</mi><mo>=</mo><mn>1</mn><mo>∣</mo><mi>Z</mi><mo>=</mo><mn>1</mn><mo
+    stretchy="false">)</mo><mo>=</mo><mi>P</mi><mo stretchy="false">(</mo><mi>Y</mi><mo>=</mo><mn>1</mn><mo>∣</mo><mi>Z</mi><mo>=</mo><mn>0</mn><mo
+    stretchy="false">)</mo><mo>=</mo><mi>P</mi><mo stretchy="false">(</mo><mi>Y</mi><mo>=</mo><mn>1</mn><mo
+    stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">P(Y=1 \mid
+    Z=1) = P(Y=1 \mid Z=0) = P(Y=1)</annotation></semantics>P(Y=1∣Z=1)=P(Y=1∣Z=0)=P(Y=1),
+    so the two terms are equal. This means that they cancel and that the risk difference
+    is 0.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'The **risk ratio (RR)**, also sometimes called the relative risk, is defined
+    similarly as the ratio (instead of the difference) between the two quantities
+    above:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: <semantics><mrow><mi>R</mi><mi>R</mi><mo>=</mo><mfrac><mrow><mi>P</mi><mo stretchy="false">(</mo><mi>Y</mi><mo>=</mo><mn>1</mn><mo>∣</mo><mi>Z</mi><mo>=</mo><mn>1</mn><mo
+    stretchy="false">)</mo></mrow><mrow><mi>P</mi><mo stretchy="false">(</mo><mi>Y</mi><mo>=</mo><mn>1</mn><mo>∣</mo><mi>Z</mi><mo>=</mo><mn>0</mn><mo
+    stretchy="false">)</mo></mrow></mfrac></mrow><annotation encoding="application/x-tex">RR
+    = \frac{P(Y=1 \mid Z=1)}{P(Y=1 \mid Z=0)}</annotation></semantics>RR=P(Y=1∣Z=0)P(Y=1∣Z=1)​[(5)](#nZ0NwweSKG
+    "Link to this Equation")
+  prefs: []
+  type: TYPE_NORMAL
+- en: We can use similar reasoning as above to conclude that this ratio should 1 when
+    <semantics><mrow><mi>Z</mi></mrow><annotation encoding="application/x-tex">Z</annotation></semantics>Z
+    and <semantics><mrow><mi>Y</mi></mrow><annotation encoding="application/x-tex">Y</annotation></semantics>Y
+    are independent.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'The third commonly used measure is the **odds ratio (OR)**. It’s the ratio
+    of two odds, where each odds is itself a ratio:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: <semantics><mrow><mi>O</mi><mi>R</mi><mo>=</mo><mfrac><mover><mover><mrow><mi>P</mi><mo
+    stretchy="false">(</mo><mi>Y</mi><mo>=</mo><mn>1</mn><mi mathvariant="normal">∣</mi><mi>Z</mi><mo>=</mo><mn>1</mn><mo
+    stretchy="false">)</mo><mi mathvariant="normal">/</mi><mi>P</mi><mo stretchy="false">(</mo><mi>Y</mi><mo>=</mo><mn>0</mn><mi
+    mathvariant="normal">∣</mi><mi>Z</mi><mo>=</mo><mn>1</mn><mo stretchy="false">)</mo></mrow><mo
+    stretchy="true">⏞</mo></mover><mrow><mtext>odds of </mtext><mi>y</mi><mtext> in the presence of </mtext><mi>Z</mi></mrow></mover><munder><munder><mrow><mi>P</mi><mo
+    stretchy="false">(</mo><mi>Y</mi><mo>=</mo><mn>1</mn><mi mathvariant="normal">∣</mi><mi>Z</mi><mo>=</mo><mn>0</mn><mo
+    stretchy="false">)</mo><mi mathvariant="normal">/</mi><mi>P</mi><mo stretchy="false">(</mo><mi>Y</mi><mo>=</mo><mn>0</mn><mi
+    mathvariant="normal">∣</mi><mi>Z</mi><mo>=</mo><mn>0</mn><mo stretchy="false">)</mo></mrow><mo
+    stretchy="true">⏟</mo></munder><mrow><mtext>odds of </mtext><mi>y</mi><mtext> in the absence of </mtext><mi>Z</mi></mrow></munder></mfrac></mrow><annotation
+    encoding="application/x-tex">OR = \frac{% \overbrace{P(Y=1|Z=1)/P(Y=0|Z=1)}^{\text{odds
+    of }y\text{ in the presence of }Z}}{% \underbrace{P(Y=1|Z=0)/P(Y=0|Z=0)}_{\text{odds
+    of }y\text{ in the absence of }Z}}</annotation></semantics>OR=odds of y in the absence of ZP(Y=1∣Z=0)/P(Y=0∣Z=0)​​P(Y=1∣Z=1)/P(Y=0∣Z=1)​odds of y in the presence of Z​​[(6)](#HTNw2PqsbC
+    "Link to this Equation")
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'While this looks more complicated, we can show that it simplifies to:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: <semantics><mrow><mi>O</mi><mi>R</mi><mo>=</mo><mfrac><msub><mi>n</mi><mn>00</mn></msub><msub><mi>n</mi><mn>10</mn></msub></mfrac><mo>⋅</mo><mfrac><msub><mi>n</mi><mn>11</mn></msub><msub><mi>n</mi><mn>01</mn></msub></mfrac></mrow><annotation
+    encoding="application/x-tex">OR = \frac{n_{00}}{n_{10}} \cdot \frac{n_{11}}{n_{01}}</annotation></semantics>OR=n10​n00​​⋅n01​n11​​[(7)](#ueJfuPRlVA
+    "Link to this Equation")
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE1]'
+  prefs: []
+  type: TYPE_PRE
+- en: Loading...
+  prefs: []
+  type: TYPE_NORMAL
