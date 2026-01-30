@@ -1,11 +1,15 @@
 - en: 'Causal Inference in Observational Studies: Unconfoundedness'
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 观察性研究中的因果推断：无混杂性
 - en: 原文：[https://data102.org/ds-102-book/content/chapters/04/observational-studies-unconfoundedness](https://data102.org/ds-102-book/content/chapters/04/observational-studies-unconfoundedness)
+  id: totrans-1
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 原文：[https://data102.org/ds-102-book/content/chapters/04/observational-studies-unconfoundedness](https://data102.org/ds-102-book/content/chapters/04/observational-studies-unconfoundedness)
 - en: '[<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" width="1.25rem"
     height="1.25rem" class="myst-fm-license-cc-icon myst-fm-license-cc-icon-main inline-block
     mx-1"><title>Content License: Creative Commons Attribution Share Alike 4.0 International
@@ -17,78 +21,115 @@
     must be shared under the same terms</title></svg>](https://creativecommons.org/licenses/by-sa/4.0/)[](https://github.com/ds-102/ds-102-book
     "GitHub Repository: ds-102/ds-102-book")[](https://github.com/ds-102/ds-102-book/edit/main/ds-102-book/content/chapters/04/05_observational_studies_unconfoundedness.ipynb
     "Edit This Page")'
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: '[<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" width="1.25rem"
+    height="1.25rem" class="myst-fm-license-cc-icon myst-fm-license-cc-icon-main inline-block
+    mx-1"><title>内容许可：知识共享 署名-相同方式共享 4.0 国际 (CC-BY-SA-4.0)</title></svg><svg viewBox="0
+    0 24 24" fill="currentColor" aria-hidden="true" width="1.25rem" height="1.25rem"
+    class="myst-fm-license-cc-icon myst-fm-license-cc-icon-by inline-block mr-1"><title>必须署名原作者</title></svg><svg
+    viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" width="1.25rem" height="1.25rem"
+    class="myst-fm-license-cc-icon myst-fm-license-cc-icon-sa inline-block mr-1"><title>演绎作品必须以相同许可协议共享</title></svg>](https://creativecommons.org/licenses/by-sa/4.0/)[](https://github.com/ds-102/ds-102-book
+    "GitHub 仓库：ds-102/ds-102-book")[](https://github.com/ds-102/ds-102-book/edit/main/ds-102-book/content/chapters/04/05_observational_studies_unconfoundedness.ipynb
+    "编辑此页面")'
 - en: 'So far, we’ve looked at ways of measuring association in any dataset. We’ve
     also looked at how we can draw conclusions about causality in randomized controlled
     trials. But in many cases, randomized controlled trials are not viable. Some reasons
     for that might be:'
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: 到目前为止，我们已经探讨了在任何数据集中衡量关联性的方法。我们也研究了如何在随机对照试验中得出因果结论。但在许多情况下，随机对照试验并不可行。其原因可能包括：
 - en: '**Ethical considerations**: suppose we believe that a certain treatment might
     harm people. In order to test this belief in a randomized controlled trial, we
     would have to subject people to a treatment that we believe would harm them, which
     is profoundly unethical. In such cases, we need alternative ways of drawing causal
     conclusions: we have an obligation as data scientists and researchers to avoid
     making [the mistakes of the past](https://en.wikipedia.org/wiki/Unethical_human_experimentation_in_the_United_States).'
+  id: totrans-4
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**伦理考量**：假设我们相信某种疗法可能对人有害。为了在随机对照试验中验证这一信念，我们将不得不让受试者接受我们相信会伤害他们的疗法，这是极不道德的。在这种情况下，我们需要其他方法来得出因果结论：作为数据科学家和研究人员，我们有责任避免重蹈[过去的错误](https://en.wikipedia.org/wiki/Unethical_human_experimentation_in_the_United_States)。'
 - en: '**Cost**: Randomized controlled trials can be expensive to run: we must find
     randomly chosen individuals that are representative the population; apply a treatment
     to half of them; and measure the outcomes, potentially over a long range of time.
     In some cases, this may be infeasible.'
+  id: totrans-5
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**成本**：进行随机对照试验可能非常昂贵：我们必须找到能代表总体的随机选择的个体；对其中一半施加干预；并测量结果，这可能需要很长一段时间。在某些情况下，这可能是不可行的。'
 - en: '**Sample size**: due to cost considerations, randomized controlled trials may
     not have enough subjects to draw strong statistical conclusions.'
+  id: totrans-6
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**样本量**：由于成本考虑，随机对照试验可能没有足够的受试者来得出强有力的统计结论。'
 - en: There is a wealth of data available on observational studies. In this section,
     we’ll look at ways we can use this data to draw causal conclusions. As we saw
     when looking at association, the most common problem when trying to draw conclusions
     about causality is the presence of confounding variables. We’ll focus our attention
     on methods that try to account for these confounding variables.
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: 关于观察性研究有大量可用的数据。在本节中，我们将探讨如何利用这些数据来得出因果结论。正如我们在考察关联性时所看到的，试图得出因果结论时最常见的问题是存在混杂变量。我们将重点关注那些试图解释这些混杂变量的方法。
 - en: Why it’s hard[¶](#why-its-hard "Link to this Section")
+  id: totrans-8
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 为何困难[¶](#why-its-hard "链接至此章节")
 - en: When dealing with data from observational studies, we can’t just take the simple
     difference in means anymore. To see why not, let’s return to our restaurants example.
     We’ll do the same computations we did before, but this time from the potential
     outcomes perspective.
+  id: totrans-9
   prefs: []
   type: TYPE_NORMAL
+  zh: 在处理来自观察性研究的数据时，我们不能再简单地取均值差值。为了理解为什么不能，让我们回到餐厅的例子。我们将进行与之前相同的计算，但这次从潜在结果的角度出发。
 - en: 'Consider the science table version of the data (where we’ve converted 👍 to
     1 and 👎 to 0, so that averages correspond to percentages liked):'
+  id: totrans-10
   prefs: []
   type: TYPE_NORMAL
+  zh: 考虑数据的科学表版本（其中我们将 👍 转换为 1，👎 转换为 0，因此平均值对应喜欢的百分比）：
 - en: '[PRE0]'
+  id: totrans-11
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: Loading...
+  id: totrans-12
   prefs: []
   type: TYPE_NORMAL
+  zh: 加载中...
 - en: 'The `NaN` values indicate missing counterfactual outcomes that we don’t get
     to observe: for example, dish 0 was ordered from Restaurant A, so we don’t know
     what rating the critics would have given a dish from Restaurant B on that day.'
+  id: totrans-13
   prefs: []
   type: TYPE_NORMAL
+  zh: '`NaN` 值表示我们无法观测到的缺失反事实结果：例如，菜 0 是从餐厅 A 点的，所以我们不知道评论家在那天会给餐厅 B 的菜打多少分。'
 - en: 'Displaying the data this way requires us to think about it slightly differently,
     and highlights the implications of the potential outcomes framework! In particular:'
+  id: totrans-14
   prefs: []
   type: TYPE_NORMAL
+  zh: 以这种方式展示数据需要我们稍微不同地思考它，并突显了潜在结果框架的含义！特别是：
 - en: <semantics><mrow><msub><mi>Z</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">Z_i</annotation></semantics>Zi​
     corresponds to whether the critic ordered dish <semantics><mrow><mi>i</mi></mrow><annotation
     encoding="application/x-tex">i</annotation></semantics>i from restaurant A or
     B.
+  id: totrans-15
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: <semantics><mrow><msub><mi>Z</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">Z_i</annotation></semantics>Zi​
+    对应评论家是从餐厅 A 还是餐厅 B 点菜 <semantics><mrow><mi>i</mi></mrow><annotation encoding="application/x-tex">i</annotation></semantics>i。
 - en: '<semantics><mrow><msub><mi>Y</mi><mi>i</mi></msub><mo stretchy="false">(</mo><mi>A</mi><mo
     stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">Y_i(A)</annotation></semantics>Yi​(A)
     and <semantics><mrow><msub><mi>Y</mi><mi>i</mi></msub><mo stretchy="false">(</mo><mi>B</mi><mo
@@ -96,42 +137,66 @@
     represent what-ifs: *if* the critics had ordered dish <semantics><mrow><mi>i</mi></mrow><annotation
     encoding="application/x-tex">i</annotation></semantics>i from a particular restaurant,
     would they have liked it?'
+  id: totrans-16
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: <semantics><mrow><msub><mi>Y</mi><mi>i</mi></msub><mo stretchy="false">(</mo><mi>A</mi><mo
+    stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">Y_i(A)</annotation></semantics>Yi​(A)
+    和 <semantics><mrow><msub><mi>Y</mi><mi>i</mi></msub><mo stretchy="false">(</mo><mi>B</mi><mo
+    stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">Y_i(B)</annotation></semantics>Yi​(B)
+    代表假设情况：*如果*评论家从特定餐厅点了菜 <semantics><mrow><mi>i</mi></mrow><annotation encoding="application/x-tex">i</annotation></semantics>i，他们会喜欢它吗？
 - en: 'The year is our confounder (or confounding variable): we’ll use <semantics><mrow><msub><mi>X</mi><mi>i</mi></msub></mrow><annotation
     encoding="application/x-tex">X_i</annotation></semantics>Xi​ to denote the year
     that dish <semantics><mrow><mi>i</mi></mrow><annotation encoding="application/x-tex">i</annotation></semantics>i
     was ordered in.'
+  id: totrans-17
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 年份是我们的混杂因素（或混杂变量）：我们将使用 <semantics><mrow><msub><mi>X</mi><mi>i</mi></msub></mrow><annotation
+    encoding="application/x-tex">X_i</annotation></semantics>Xi​ 来表示菜 <semantics><mrow><mi>i</mi></mrow><annotation
+    encoding="application/x-tex">i</annotation></semantics>i 被点单的年份。
 - en: 'Our representation of the data this way makes it clear that we can’t compute
     the ATE:'
+  id: totrans-18
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们以这种方式表示数据，清楚地表明我们无法计算平均处理效应（ATE）：
 - en: '[PRE1]'
+  id: totrans-19
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: '`nan`'
+  id: totrans-20
   prefs: []
   type: TYPE_NORMAL
+  zh: '`nan`'
 - en: 'In trying to understand a causal relationship between choice of restaurant
     and liking the food, naively using the simple difference in observed means (SDO)
     can mislead us, as we already saw:'
+  id: totrans-21
   prefs: []
   type: TYPE_NORMAL
+  zh: 在试图理解餐厅选择与食物喜好之间的因果关系时，天真地使用观测均值的简单差值（SDO）可能会误导我们，正如我们已经看到的：
 - en: '[PRE2]'
+  id: totrans-22
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: '`np.float64(0.20000000000000007)`'
+  id: totrans-23
   prefs: []
   type: TYPE_NORMAL
+  zh: '`np.float64(0.20000000000000007)`'
 - en: Confounding variables and the superpopulation model[¶](#confounding-variables-and-the-superpopulation-model
     "Link to this Section")
+  id: totrans-24
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 混杂变量与超总体模型[¶](#confounding-variables-and-the-superpopulation-model "链接到此章节")
 - en: In the case of a randomized controlled trial, we saw that we could use the difference
     in means estimator because of the independence between the treatment assignment
     <semantics><mrow><msub><mi>Z</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">Z_i</annotation></semantics>Zi​
@@ -144,13 +209,23 @@
     study, this independence assumption no longer holds. We’ve seen a few examples
     of this in the last few sections, where confounding variables affect both the
     treatment and the outcome.
+  id: totrans-25
   prefs: []
   type: TYPE_NORMAL
+  zh: 在随机对照试验中，由于处理分配 <semantics><mrow><msub><mi>Z</mi><mi>i</mi></msub></mrow><annotation
+    encoding="application/x-tex">Z_i</annotation></semantics>Zi​ 与潜在结果 <semantics><mrow><mo
+    fence="false" stretchy="true" minsize="1.2em" maxsize="1.2em">(</mo><msub><mi>Y</mi><mi>i</mi></msub><mo
+    stretchy="false">(</mo><mn>0</mn><mo stretchy="false">)</mo><mo separator="true">,</mo><msub><mi>Y</mi><mi>i</mi></msub><mo
+    stretchy="false">(</mo><mn>1</mn><mo stretchy="false">)</mo><mo fence="false"
+    stretchy="true" minsize="1.2em" maxsize="1.2em">)</mo></mrow><annotation encoding="application/x-tex">\big(Y_i(0),
+    Y_i(1)\big)</annotation></semantics>(Yi​(0),Yi​(1)) 之间的独立性，我们可以使用均值差估计量。但是，在观察性研究中，这种独立性假设不再成立。我们在前几节中已经看到了几个这样的例子，其中混杂变量同时影响处理和结果。
 - en: 'In this section, we’ll focus on a few methods that answer the question: if
     we also observe the confounding variable, can we determine whether the treatment
     has an effect on the outcome?'
+  id: totrans-26
   prefs: []
   type: TYPE_NORMAL
+  zh: 在本节中，我们将重点介绍几种方法来回答这个问题：如果我们同时观察到混杂变量，我们能否确定处理是否对结果有影响？
 - en: Our notation will be similar to what we’ve used before, and we’ll add a new
     variable <semantics><mrow><msub><mi>X</mi><mi>i</mi></msub></mrow><annotation
     encoding="application/x-tex">X_i</annotation></semantics>Xi​ for each unit that
@@ -162,18 +237,33 @@
     Y_i(1), X_i)</annotation></semantics>(Zi​,Yi​(0),Yi​(1),Xi​) for each unit that
     are i.i.d. (that is, the tuple for one unit is independent from the tuple for
     the next unit). This is called the **superpopulation model**.
+  id: totrans-27
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们的符号表示将与之前使用的类似，并且我们会为每个单元添加一个新变量 <semantics><mrow><msub><mi>X</mi><mi>i</mi></msub></mrow><annotation
+    encoding="application/x-tex">X_i</annotation></semantics>Xi​ 来表示混杂信息。对于每个单元，我们拥有独立同分布（即一个单元的元组与下一个单元的元组相互独立）的元组
+    <semantics><mrow><mo stretchy="false">(</mo><msub><mi>Z</mi><mi>i</mi></msub><mo
+    separator="true">,</mo><msub><mi>Y</mi><mi>i</mi></msub><mo stretchy="false">(</mo><mn>0</mn><mo
+    stretchy="false">)</mo><mo separator="true">,</mo><msub><mi>Y</mi><mi>i</mi></msub><mo
+    stretchy="false">(</mo><mn>1</mn><mo stretchy="false">)</mo><mo separator="true">,</mo><msub><mi>X</mi><mi>i</mi></msub><mo
+    stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">(Z_i, Y_i(0),
+    Y_i(1), X_i)</annotation></semantics>(Zi​,Yi​(0),Yi​(1),Xi​)。这被称为**超总体模型**。
 - en: Conditional average treatment effect and unconfoundedness[¶](#conditional-average-treatment-effect-and-unconfoundedness
     "Link to this Section")
+  id: totrans-28
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 条件平均处理效应与无混杂性[¶](#conditional-average-treatment-effect-and-unconfoundedness
+    "Link to this Section")
 - en: 'We’ll define a new quantity called the **conditional average treatment effect
     (CATE)**. This is like the ATE we saw before, but conditioned on a particular
     value of <semantics><mrow><mi>X</mi></mrow><annotation encoding="application/x-tex">X</annotation></semantics>X:'
+  id: totrans-29
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们将定义一个新的量，称为**条件平均处理效应**。这类似于我们之前看到的平均处理效应，但条件是 <semantics><mrow><mi>X</mi></mrow><annotation
+    encoding="application/x-tex">X</annotation></semantics>X 的特定值：
 - en: <semantics><mrow><mtext>CATE</mtext><mo>=</mo><mi>τ</mi><mo stretchy="false">(</mo><mi>x</mi><mo
     stretchy="false">)</mo><mo>=</mo><mi>E</mi><mo stretchy="false">[</mo><mi>Y</mi><mo
     stretchy="false">(</mo><mn>1</mn><mo stretchy="false">)</mo><mo>−</mo><mi>Y</mi><mo
@@ -181,23 +271,41 @@
     stretchy="false">]</mo></mrow><annotation encoding="application/x-tex">\text{CATE}
     = \tau(x) = E[Y(1) - Y(0) | X = x]</annotation></semantics>CATE=τ(x)=E[Y(1)−Y(0)∣X=x][(1)](#vQzp03TqGh
     "Link to this Equation")
+  id: totrans-30
   prefs: []
   type: TYPE_NORMAL
+  zh: <semantics><mrow><mtext>CATE</mtext><mo>=</mo><mi>τ</mi><mo stretchy="false">(</mo><mi>x</mi><mo
+    stretchy="false">)</mo><mo>=</mo><mi>E</mi><mo stretchy="false">[</mo><mi>Y</mi><mo
+    stretchy="false">(</mo><mn>1</mn><mo stretchy="false">)</mo><mo>−</mo><mi>Y</mi><mo
+    stretchy="false">(</mo><mn>0</mn><mo stretchy="false">)</mo><mi mathvariant="normal">∣</mi><mi>X</mi><mo>=</mo><mi>x</mi><mo
+    stretchy="false">]</mo></mrow><annotation encoding="application/x-tex">\text{CATE}
+    = \tau(x) = E[Y(1) - Y(0) | X = x]</annotation></semantics>CATE=τ(x)=E[Y(1)−Y(0)∣X=x][(1)](#vQzp03TqGh
+    "Link to this Equation")
 - en: 'Introducing the conditioning alone doesn’t help us: if we were to expand this
     using the tower property to condition on <semantics><mrow><mi>Z</mi></mrow><annotation
     encoding="application/x-tex">Z</annotation></semantics>Z, we’ll still have counterfactual
     terms. So why did we do it? It turns out that we only need to make one assumption
     for this to help us. This assumption is called **unconfoundedness**:'
+  id: totrans-31
   prefs: []
   type: TYPE_NORMAL
+  zh: 仅仅引入条件设定本身对我们没有帮助：如果我们使用塔性质来对 <semantics><mrow><mi>Z</mi></mrow><annotation
+    encoding="application/x-tex">Z</annotation></semantics>Z 进行条件设定以展开此式，我们仍然会得到反事实项。那么我们为什么要这样做呢？事实证明，我们只需要做一个假设就能让它帮助我们。这个假设被称为**无混杂性**：
 - en: <semantics><mrow><mo fence="false" stretchy="true" minsize="1.2em" maxsize="1.2em">(</mo><mi>Y</mi><mo
     stretchy="false">(</mo><mn>0</mn><mo stretchy="false">)</mo><mo separator="true">,</mo><mi>Y</mi><mo
     stretchy="false">(</mo><mn>1</mn><mo stretchy="false">)</mo><mo fence="false"
     stretchy="true" minsize="1.2em" maxsize="1.2em">)</mo><mo>⊥</mo><mtext> ⁣</mtext><mtext> ⁣</mtext><mtext> ⁣</mtext><mo>⊥</mo><mi>Z</mi><mo>∣</mo><mi>X</mi></mrow><annotation
     encoding="application/x-tex">\big(Y(0), Y(1)\big) \perp \!\!\! \perp Z \mid X</annotation></semantics>(Y(0),Y(1))⊥⊥Z∣X[(2)](#aLnnZOsh1M
     "Link to this Equation")
+  id: totrans-32
   prefs: []
   type: TYPE_NORMAL
+  zh: <semantics><mrow><mo fence="false" stretchy="true" minsize="1.2em" maxsize="1.2em">(</mo><mi>Y</mi><mo
+    stretchy="false">(</mo><mn>0</mn><mo stretchy="false">)</mo><mo separator="true">,</mo><mi>Y</mi><mo
+    stretchy="false">(</mo><mn>1</mn><mo stretchy="false">)</mo><mo fence="false"
+    stretchy="true" minsize="1.2em" maxsize="1.2em">)</mo><mo>⊥</mo><mtext> ⁣</mtext><mtext> ⁣</mtext><mtext> ⁣</mtext><mo>⊥</mo><mi>Z</mi><mo>∣</mo><mi>X</mi></mrow><annotation
+    encoding="application/x-tex">\big(Y(0), Y(1)\big) \perp \!\!\! \perp Z \mid X</annotation></semantics>(Y(0),Y(1))⊥⊥Z∣X[(2)](#aLnnZOsh1M
+    "Link to this Equation")
 - en: This is a statement of conditional independence. The potential outcomes <semantics><mrow><mi>Y</mi><mo
     stretchy="false">(</mo><mn>0</mn><mo stretchy="false">)</mo></mrow><annotation
     encoding="application/x-tex">Y(0)</annotation></semantics>Y(0) and <semantics><mrow><mi>Y</mi><mo
@@ -207,19 +315,31 @@
     but this assumption states that they are conditionally independent *if* we know
     the value of a confounding variable <semantics><mrow><mi>X</mi></mrow><annotation
     encoding="application/x-tex">X</annotation></semantics>X.
+  id: totrans-33
   prefs: []
   type: TYPE_NORMAL
+  zh: 这是一个条件独立性的陈述。潜在结果 <semantics><mrow><mi>Y</mi><mo stretchy="false">(</mo><mn>0</mn><mo
+    stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">Y(0)</annotation></semantics>Y(0)
+    和 <semantics><mrow><mi>Y</mi><mo stretchy="false">(</mo><mn>1</mn><mo stretchy="false">)</mo></mrow><annotation
+    encoding="application/x-tex">Y(1)</annotation></semantics>Y(1) 可能并不独立于处理决策 <semantics><mrow><mi>Z</mi></mrow><annotation
+    encoding="application/x-tex">Z</annotation></semantics>Z，但这个假设指出，*如果*我们知道混杂变量
+    <semantics><mrow><mi>X</mi></mrow><annotation encoding="application/x-tex">X</annotation></semantics>X
+    的值，它们就是条件独立的。
 - en: 'In the restaurant example above, unconfoundedness would mean that within each
     year, the decision whether to order from A or B (treatment) is independent of
     the ratings that dishes from A and B would get (potential outcomes). It does *not*
     state that the restaurant is conditionally independent of the rating: this is
     a subtle but important distinction.'
+  id: totrans-34
   prefs: []
   type: TYPE_NORMAL
+  zh: 在上面的餐厅例子中，无混杂性意味着在每一年内，是从A还是B点餐（处理）的决定，与A和B的菜品会获得的评分（潜在结果）是独立的。它并*没有*说餐厅与评分是条件独立的：这是一个微妙但重要的区别。
 - en: 'If we assume unconfoundedness, then we can safely estimate the CATE using the
     difference in conditional means:'
+  id: totrans-35
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果我们假设无混杂性，那么我们就可以安全地使用条件均值的差异来估计CATE：
 - en: <semantics><mtable rowspacing="0.25em" columnalign="right left right" columnspacing="0em
     1em"><mtr><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mi>τ</mi><mo
     stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo></mrow></mstyle></mtd><mtd><mstyle
@@ -245,16 +365,46 @@
     expectation)}}\\ &= E[Y(1) | X = x, Z = 1] - E[Y(0) | X = x, Z = 0] & {\tiny\text{(unconfoundedness)}}
     \end{align}</annotation></semantics>τ(x)​=E[Y(1)−Y(0)∣X=x]=E[Y(1)∣X=x]−E[Y(0)∣X=x]=E[Y(1)∣X=x,Z=1]−E[Y(0)∣X=x,Z=0]​(linearity of (conditional) expectation)(unconfoundedness)​​[(3)](#MdGRFYoato
     "Link to this Equation")
+  id: totrans-36
   prefs: []
   type: TYPE_NORMAL
+  zh: <semantics><mtable rowspacing="0.25em" columnalign="right left right" columnspacing="0em
+    1em"><mtr><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mi>τ</mi><mo
+    stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo></mrow></mstyle></mtd><mtd><mstyle
+    scriptlevel="0" displaystyle="true"><mrow><mo>=</mo><mi>E</mi><mo stretchy="false">[</mo><mi>Y</mi><mo
+    stretchy="false">(</mo><mn>1</mn><mo stretchy="false">)</mo><mo>−</mo><mi>Y</mi><mo
+    stretchy="false">(</mo><mn>0</mn><mo stretchy="false">)</mo><mi mathvariant="normal">∣</mi><mi>X</mi><mo>=</mo><mi>x</mi><mo
+    stretchy="false">]</mo></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0"
+    displaystyle="true"><mrow><mo>=</mo><mi>E</mi><mo stretchy="false">[</mo><mi>Y</mi><mo
+    stretchy="false">(</mo><mn>1</mn><mo stretchy="false">)</mo><mi mathvariant="normal">∣</mi><mi>X</mi><mo>=</mo><mi>x</mi><mo
+    stretchy="false">]</mo><mo>−</mo><mi>E</mi><mo stretchy="false">[</mo><mi>Y</mi><mo
+    stretchy="false">(</mo><mn>0</mn><mo stretchy="false">)</mo><mi mathvariant="normal">∣</mi><mi>X</mi><mo>=</mo><mi>x</mi><mo
+    stretchy="false">]</mo></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="true"><mstyle
+    mathsize="0.5em"><mtext>(线性（条件）期望性质)</mtext></mstyle></mstyle></mtd></mtr><mtr><mtd><mstyle
+    scriptlevel="0" displaystyle="true"><mrow><mo>=</mo><mi>E</mi><mo stretchy="false">[</mo><mi>Y</mi><mo
+    stretchy="false">(</mo><mn>1</mn><mo stretchy="false">)</mo><mi mathvariant="normal">∣</mi><mi>X</mi><mo>=</mo><mi>x</mi><mo
+    separator="true">,</mo><mi>Z</mi><mo>=</mo><mn>1</mn><mo stretchy="false">]</mo><mo>−</mo><mi>E</mi><mo
+    stretchy="false">[</mo><mi>Y</mi><mo stretchy="false">(</mo><mn>0</mn><mo stretchy="false">)</mo><mi
+    mathvariant="normal">∣</mi><mi>X</mi><mo>=</mo><mi>x</mi><mo separator="true">,</mo><mi>Z</mi><mo>=</mo><mn>0</mn><mo
+    stretchy="false">]</mo></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="true"><mstyle
+    mathsize="0.5em"><mtext>(无混杂性)</mtext></mstyle></mstyle></mtd></mtr></mtable><annotation
+    encoding="application/x-tex">\begin{align} \tau(x) &= E[Y(1) - Y(0) | X = x] &\\
+    &= E[Y(1) | X = x] - E[Y(0) | X = x] & {\tiny\text{(linearity of (conditional)
+    expectation)}}\\ &= E[Y(1) | X = x, Z = 1] - E[Y(0) | X = x, Z = 0] & {\tiny\text{(unconfoundedness)}}
+    \end{align}</annotation></semantics>τ(x)​=E[Y(1)−Y(0)∣X=x]=E[Y(1)∣X=x]−E[Y(0)∣X=x]=E[Y(1)∣X=x,Z=1]−E[Y(0)∣X=x,Z=0]​(线性（条件）期望性质)(无混杂性)​​[(3)](#MdGRFYoato
+    "Link to this Equation")
 - en: From CATE to ATE[¶](#from-cate-to-ate "Link to this Section")
+  id: totrans-37
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 从CATE到ATE[¶](#from-cate-to-ate "Link to this Section")
 - en: 'In most cases, what we’re really interested in is the ATE. How do we get from
     the CATE to the ATE? We can use the law of iterated expectation (tower property):'
+  id: totrans-38
   prefs: []
   type: TYPE_NORMAL
+  zh: 在大多数情况下，我们真正感兴趣的是平均处理效应（ATE）。我们如何从条件平均处理效应（CATE）得到ATE呢？我们可以使用迭代期望定律（塔性质）：
 - en: <semantics><mrow><mi>E</mi><mo stretchy="false">[</mo><mi>Y</mi><mo stretchy="false">(</mo><mn>1</mn><mo
     stretchy="false">)</mo><mo>−</mo><mi>Y</mi><mo stretchy="false">(</mo><mn>0</mn><mo
     stretchy="false">)</mo><mo stretchy="false">]</mo><mo>=</mo><msub><mi>E</mi><mi>X</mi></msub><mo
@@ -264,11 +414,23 @@
     stretchy="false">]</mo><mo stretchy="false">]</mo></mrow><annotation encoding="application/x-tex">E[Y(1)
     - Y(0)] = E_X[E_Y[Y(1)-Y(0) | X]]</annotation></semantics>E[Y(1)−Y(0)]=EX​[EY​[Y(1)−Y(0)∣X]][(4)](#JmjHRYEddG
     "Link to this Equation")
+  id: totrans-39
   prefs: []
   type: TYPE_NORMAL
+  zh: <semantics><mrow><mi>E</mi><mo stretchy="false">[</mo><mi>Y</mi><mo stretchy="false">(</mo><mn>1</mn><mo
+    stretchy="false">)</mo><mo>−</mo><mi>Y</mi><mo stretchy="false">(</mo><mn>0</mn><mo
+    stretchy="false">)</mo><mo stretchy="false">]</mo><mo>=</mo><msub><mi>E</mi><mi>X</mi></msub><mo
+    stretchy="false">[</mo><msub><mi>E</mi><mi>Y</mi></msub><mo stretchy="false">[</mo><mi>Y</mi><mo
+    stretchy="false">(</mo><mn>1</mn><mo stretchy="false">)</mo><mo>−</mo><mi>Y</mi><mo
+    stretchy="false">(</mo><mn>0</mn><mo stretchy="false">)</mo><mi mathvariant="normal">∣</mi><mi>X</mi><mo
+    stretchy="false">]</mo><mo stretchy="false">]</mo></mrow><annotation encoding="application/x-tex">E[Y(1)
+    - Y(0)] = E_X[E_Y[Y(1)-Y(0) | X]]</annotation></semantics>E[Y(1)−Y(0)]=EX​[EY​[Y(1)−Y(0)∣X]][(4)](#JmjHRYEddG
+    "Link to this Equation")
 - en: In other words,
+  id: totrans-40
   prefs: []
   type: TYPE_NORMAL
+  zh: 换句话说，
 - en: <semantics><mtable rowspacing="0.25em" columnalign="right left" columnspacing="0em"><mtr><mtd><mstyle
     scriptlevel="0" displaystyle="true"><mrow><mi>A</mi><mi>T</mi><mi>E</mi></mrow></mstyle></mtd><mtd><mstyle
     scriptlevel="0" displaystyle="true"><mrow><mo>=</mo><mi>E</mi><mo stretchy="false">[</mo><mi>τ</mi><mo
@@ -278,23 +440,42 @@
     stretchy="false">)</mo></mrow></mstyle></mtd></mtr></mtable><annotation encoding="application/x-tex">\begin{align}
     ATE &= E[\tau(X)] \\ &= \sum_x \tau(x) P(X=x) \end{align}</annotation></semantics>ATE​=E[τ(X)]=x∑​τ(x)P(X=x)​​[(5)](#FzwtpRjxCu
     "Link to this Equation")
+  id: totrans-41
   prefs: []
   type: TYPE_NORMAL
+  zh: <semantics><mtable rowspacing="0.25em" columnalign="right left" columnspacing="0em"><mtr><mtd><mstyle
+    scriptlevel="0" displaystyle="true"><mrow><mi>A</mi><mi>T</mi><mi>E</mi></mrow></mstyle></mtd><mtd><mstyle
+    scriptlevel="0" displaystyle="true"><mrow><mo>=</mo><mi>E</mi><mo stretchy="false">[</mo><mi>τ</mi><mo
+    stretchy="false">(</mo><mi>X</mi><mo stretchy="false">)</mo><mo stretchy="false">]</mo></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle
+    scriptlevel="0" displaystyle="true"><mrow><mo>=</mo><munder><mo>∑</mo><mi>x</mi></munder><mi>τ</mi><mo
+    stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo><mi>P</mi><mo stretchy="false">(</mo><mi>X</mi><mo>=</mo><mi>x</mi><mo
+    stretchy="false">)</mo></mrow></mstyle></mtd></mtr></mtable><annotation encoding="application/x-tex">\begin{align}
+    ATE &= E[\tau(X)] \\ &= \sum_x \tau(x) P(X=x) \end{align}</annotation></semantics>ATE​=E[τ(X)]=x∑​τ(x)P(X=x)​​[(5)](#FzwtpRjxCu
+    "Link to this Equation")
 - en: (where we would use an integral instead of a sum if <semantics><mrow><mi>X</mi></mrow><annotation
     encoding="application/x-tex">X</annotation></semantics>X is continuous).
+  id: totrans-42
   prefs: []
   type: TYPE_NORMAL
+  zh: （如果 <semantics><mrow><mi>X</mi></mrow><annotation encoding="application/x-tex">X</annotation></semantics>X
+    是连续的，我们将使用积分代替求和）。
 - en: 'What does this look like in practice? Let’s go back to the restaurant example.
     Instead of computing the difference in means for the entire dataset, we’ll do
     it separately, once for 2020 and once for 2019:'
+  id: totrans-43
   prefs: []
   type: TYPE_NORMAL
+  zh: 这在实践中是怎样的呢？让我们回到餐厅的例子。我们不再计算整个数据集的均值差，而是分别计算，一次针对2020年，一次针对2019年：
 - en: '[PRE3]'
+  id: totrans-44
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: '[PRE4]'
+  id: totrans-45
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE4]'
 - en: 'These correspond to the CATEs <semantics><mrow><mi>τ</mi><mo stretchy="false">(</mo><mn>2020</mn><mo
     stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">\tau(2020)</annotation></semantics>τ(2020)
     and <semantics><mrow><mi>τ</mi><mo stretchy="false">(</mo><mn>2019</mn><mo stretchy="false">)</mo></mrow><annotation
@@ -305,213 +486,326 @@
     of choosing restaurant B (rather than A) on the probability of the critics liking
     their food?”, and similarly for <semantics><mrow><mi>τ</mi><mo stretchy="false">(</mo><mn>2020</mn><mo
     stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">\tau(2020)</annotation></semantics>τ(2020).'
+  id: totrans-46
   prefs: []
   type: TYPE_NORMAL
+  zh: 这些分别对应于条件平均处理效应（CATE）<semantics><mrow><mi>τ</mi><mo stretchy="false">(</mo><mn>2020</mn><mo
+    stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">\tau(2020)</annotation></semantics>τ(2020)
+    和 <semantics><mrow><mi>τ</mi><mo stretchy="false">(</mo><mn>2019</mn><mo stretchy="false">)</mo></mrow><annotation
+    encoding="application/x-tex">\tau(2019)</annotation></semantics>τ(2019)。我们可以用英语解释
+    <semantics><mrow><mi>τ</mi><mo stretchy="false">(</mo><mn>2019</mn><mo stretchy="false">)</mo></mrow><annotation
+    encoding="application/x-tex">\tau(2019)</annotation></semantics>τ(2019) 为：“给定一道菜是在2019年点的，选择餐厅B（而非A）对评论家喜欢其食物的概率的因果效应是什么？”，对于
+    <semantics><mrow><mi>τ</mi><mo stretchy="false">(</mo><mn>2020</mn><mo stretchy="false">)</mo></mrow><annotation
+    encoding="application/x-tex">\tau(2020)</annotation></semantics>τ(2020) 同理。
 - en: 'Just like earlier, we see that these values have the opposite sign from the
     SDO computed on the entire data: Restaurant A was better-liked in 2020 and 2019\.
     But, because the critics ordered from Restaurant A more in 2020 (which had lower
     ratings overall), Restaurant A looks worse in the aggregate data.'
+  id: totrans-47
   prefs: []
   type: TYPE_NORMAL
+  zh: 就像之前一样，我们看到这些值的符号与在整个数据上计算出的简单差异估计（SDO）相反：餐厅A在2020年和2019年更受欢迎。但是，由于评论家在2020年（总体评分较低）更多地从餐厅A点餐，餐厅A在汇总数据中看起来更差。
 - en: 'How do we combine these to estimate the ATE? We need the marginal probabilities
     <semantics><mrow><mi>P</mi><mo stretchy="false">(</mo><mn>2020</mn><mo stretchy="false">)</mo></mrow><annotation
     encoding="application/x-tex">P(2020)</annotation></semantics>P(2020) and <semantics><mrow><mi>P</mi><mo
     stretchy="false">(</mo><mn>2019</mn><mo stretchy="false">)</mo></mrow><annotation
     encoding="application/x-tex">P(2019)</annotation></semantics>P(2019):'
+  id: totrans-48
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们如何结合这些来估计平均处理效应（ATE）？我们需要边际概率 <semantics><mrow><mi>P</mi><mo stretchy="false">(</mo><mn>2020</mn><mo
+    stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">P(2020)</annotation></semantics>P(2020)
+    和 <semantics><mrow><mi>P</mi><mo stretchy="false">(</mo><mn>2019</mn><mo stretchy="false">)</mo></mrow><annotation
+    encoding="application/x-tex">P(2019)</annotation></semantics>P(2019)：
 - en: '[PRE5]'
+  id: totrans-49
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE5]'
 - en: '[PRE6]'
+  id: totrans-50
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE6]'
 - en: 'This is our first causal inference from observational data! To state it formally:'
+  id: totrans-51
   prefs: []
   type: TYPE_NORMAL
+  zh: 这是我们从观测数据中进行的首次因果推断！正式表述如下：
 - en: '**If we assume that the year is the only confounder for the effect of restaurant
     choice on reviews, then choosing Restaurant A causes the critics to like dishes
     about 8% more**.'
+  id: totrans-52
   prefs: []
   type: TYPE_NORMAL
+  zh: '**如果我们假设年份是餐厅选择对评价影响的唯一混杂因素，那么选择餐厅A会导致评论家对菜品的喜爱度提高约8%**。'
 - en: 'When we assume that the year is the only confounder, we’re assuming **unconfoundedness*:
     that the pair of potential outcomes (i.e., the what-ifs for their reviews) are
     independent of which restaurant they actually chose, given the year.'
+  id: totrans-53
   prefs: []
   type: TYPE_NORMAL
+  zh: 当我们假设年份是唯一的混杂因素时，我们就是在假设**无混杂性*：即给定年份，一对潜在结果（即关于他们评价的假设情况）与他们实际选择的餐厅无关。
 - en: 'Note that we can’t just make a blanket statement about causality: this statement
     depends heavily on our use of the unconfoundedness assumption. This is true in
     general: in order to draw causal inferences outside of randomized controlled experiments,
     we need to make assumptions. When reporting your causal conclusions, it’s always
     important to communicate the assumptions you made!'
+  id: totrans-54
   prefs: []
   type: TYPE_NORMAL
+  zh: 请注意，我们不能笼统地断言因果关系：这个结论在很大程度上依赖于我们对无混杂性假设的使用。这通常是正确的：为了在随机对照实验之外得出因果推断，我们需要做出假设。在报告你的因果结论时，始终重要的是要说明你所做的假设！
 - en: Outcome Regression[¶](#outcome-regression "Link to this Section")
+  id: totrans-55
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 结果回归[¶](#outcome-regression "Link to this Section")
 - en: '*Coming soon*'
+  id: totrans-56
   prefs: []
   type: TYPE_NORMAL
+  zh: '*即将推出*'
 - en: Inverse propensity weighting[¶](#inverse-propensity-weighting "Link to this
     Section")
+  id: totrans-57
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 逆倾向性加权[¶](#inverse-propensity-weighting "Link to this Section")
 - en: 'In inverse propensity weighting, we’re intuitively trying to undo or compensate
     for the effect of the confounder by reweighting the outcome variables based on
     the treatment and confounders. To illustrate the effect, we’ll use a synthetic
     dataset from a treatment for high blood pressure for twenty people. The data contain
     three columns:'
+  id: totrans-58
   prefs: []
   type: TYPE_NORMAL
+  zh: 在逆倾向加权中，我们直观地试图通过基于治疗和混杂变量对结果变量进行重新加权，来抵消或补偿混杂变量的影响。为了说明这种效果，我们将使用一个包含二十个人的高血压治疗的合成数据集。数据包含三列：
 - en: '`treated`, which says whether or not each person received the treatment'
+  id: totrans-59
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`treated`，表示每个人是否接受了治疗'
 - en: '`is_old`, whether the patient is older than 45 (1) or not (0)'
+  id: totrans-60
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`is_old`，患者年龄是否大于45岁（1表示是，0表示否）'
 - en: '`bp_change`, how much the person’s (systolic) blood pressure dropped (in mm
     Hg)'
+  id: totrans-61
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`bp_change`，该个体的（收缩压）血压下降了多少（单位：毫米汞柱）'
 - en: '[PRE7]'
+  id: totrans-62
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE7]'
 - en: Loading...
+  id: totrans-63
   prefs: []
   type: TYPE_NORMAL
+  zh: 正在加载...
 - en: '[PRE8]'
+  id: totrans-64
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE8]'
 - en: Loading...
+  id: totrans-65
   prefs: []
   type: TYPE_NORMAL
+  zh: 正在加载...
 - en: 'From a quick look at the data, we can see a few facts:'
+  id: totrans-66
   prefs: []
   type: TYPE_NORMAL
+  zh: 快速浏览数据，我们可以发现几个事实：
 - en: Most of the people who received the treatment were older
+  id: totrans-67
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 大多数接受治疗的人是老年人
 - en: Almost all the younger peoples’ BP improved (i.e., went down)
+  id: totrans-68
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 几乎所有年轻人的血压都改善了（即下降了）
 - en: Most of the older peoples’ BP did not improve
+  id: totrans-69
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 大多数老年人的血压并未改善
 - en: We have very few data points. There are only twenty people overall, and even
     fewer once we slice the data up. For example, there are only two older people
     who took the treatment.
+  id: totrans-70
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 我们的数据点非常少。总共只有二十个人，一旦对数据进行切片，数量就更少了。例如，接受治疗的老年人只有两位。
 - en: 'We’ll ignore the last point for now, for the sake of illustration. The first
     three points make it very clear that *age is a confounding variable* for the effect
     of the treatment. One way to quantify the degree of confounding is using the conditional
     probability of receving the treatment given the confounder: this is called the
     **propensity score**.'
+  id: totrans-71
   prefs: []
   type: TYPE_NORMAL
+  zh: 为了说明问题，我们暂时忽略最后一点。前三点非常清楚地表明，*年龄是治疗效应的一个混杂变量*。量化混杂程度的一种方法是使用给定混杂变量下接受治疗的条件概率：这被称为**倾向得分**。
 - en: '[PRE9]'
+  id: totrans-72
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE9]'
 - en: Loading...
+  id: totrans-73
   prefs: []
   type: TYPE_NORMAL
+  zh: 正在加载...
 - en: 'For the older group, the probability of receiving the treatment is <semantics><mrow><mn>7</mn><mi
     mathvariant="normal">/</mi><mn>9</mn><mo>≈</mo><mn>0.78</mn></mrow><annotation
     encoding="application/x-tex">7/9 \approx 0.78</annotation></semantics>7/9≈0.78.
     For the younger group, the probability is <semantics><mrow><mn>4</mn><mi mathvariant="normal">/</mi><mn>11</mn><mo>≈</mo><mn>0.36</mn></mrow><annotation
     encoding="application/x-tex">4/11 \approx 0.36</annotation></semantics>4/11≈0.36.
     We can add these into the table:'
+  id: totrans-74
   prefs: []
   type: TYPE_NORMAL
+  zh: 对于老年组，接受治疗的概率是 <semantics><mrow><mn>7</mn><mi mathvariant="normal">/</mi><mn>9</mn><mo>≈</mo><mn>0.78</mn></mrow><annotation
+    encoding="application/x-tex">7/9 \approx 0.78</annotation></semantics>7/9≈0.78。对于年轻组，概率是
+    <semantics><mrow><mn>4</mn><mi mathvariant="normal">/</mi><mn>11</mn><mo>≈</mo><mn>0.36</mn></mrow><annotation
+    encoding="application/x-tex">4/11 \approx 0.36</annotation></semantics>4/11≈0.36。我们可以将这些数据添加到表格中：
 - en: '[PRE10]'
+  id: totrans-75
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE10]'
 - en: Loading...
+  id: totrans-76
   prefs: []
   type: TYPE_NORMAL
+  zh: 正在加载...
 - en: This tells us that person 0 had a 0.36 probability of receiving the treatment,
     given that they were younger, and so on.
+  id: totrans-77
   prefs: []
   type: TYPE_NORMAL
+  zh: 这告诉我们，考虑到第0号个体是年轻人，其接受治疗的概率为0.36，依此类推。
 - en: Reweighting[¶](#reweighting "Link to this Section")
+  id: totrans-78
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 重新加权[¶](#reweighting "链接至此章节")
 - en: 'If we try to naively compute a causal effect using the data above, we’ll be
     led astray:'
+  id: totrans-79
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果我们试图天真地使用上述数据计算因果效应，我们将会被误导：
 - en: '[PRE11]'
+  id: totrans-80
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE11]'
 - en: '`np.float64(-0.6797979797979803)`'
+  id: totrans-81
   prefs: []
   type: TYPE_NORMAL
+  zh: '`np.float64(-0.6797979797979803)`'
 - en: 'The effect appears to be very small: only a drop of 0.68mm Hg. This is because
     of the confounding effect: younger people are overrepresented in the control group,
     and underrepresented in the treatment group (and vice versa for older people).'
+  id: totrans-82
   prefs: []
   type: TYPE_NORMAL
+  zh: 这种效应似乎非常微小：仅下降了0.68毫米汞柱。这是由于混杂效应造成的：对照组中年轻人比例过高，而治疗组中年轻人比例过低（老年人则相反）。
 - en: 'What if we try to adjust for the overrepresentation/underrepresentation by
     re-weighting each data point? Let’s start by looking at the treatment group. For
     this group, we should **increase** the weight on the younger people (because there
     are too few of them). There are many ways we could do this: one is to divide by
     the propensity score. In particular, the approach we’re going to take will give
     us an **unbiased estimate of the ATE**, even in the presence of confounding!'
+  id: totrans-83
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果我们尝试通过重新加权每个数据点来调整过度代表/代表不足的情况呢？让我们从观察治疗组开始。对于这个组，我们应该**增加**年轻人的权重（因为他们数量太少）。有很多方法可以做到这一点：其中之一是除以倾向得分。具体来说，我们将采用的方法将为我们提供**ATE的无偏估计**，即使在存在混杂因素的情况下也是如此！
 - en: '[PRE12]'
+  id: totrans-84
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE12]'
 - en: Loading...
+  id: totrans-85
   prefs: []
   type: TYPE_NORMAL
+  zh: 正在加载...
 - en: This gives a significantly increased weight to the improvements from the younger
     group (and only a very slightly increased weight to the improvements from the
     older group).
+  id: totrans-86
   prefs: []
   type: TYPE_NORMAL
+  zh: 这显著增加了年轻组改善的权重（并且只非常轻微地增加了年长组改善的权重）。
 - en: 'What about the control group? There, we want to increase the weight on the
     older people. Dividing by the propensity score would have the opposite effect
     from what we want: instead, we’ll divide by 1 minus the propensity score.'
+  id: totrans-87
   prefs: []
   type: TYPE_NORMAL
+  zh: 那么对照组呢？在那里，我们希望增加老年人的权重。除以倾向得分会产生与我们期望相反的效果：相反，我们将除以1减去倾向得分。
 - en: '[PRE13]'
+  id: totrans-88
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE13]'
 - en: Loading...
+  id: totrans-89
   prefs: []
   type: TYPE_NORMAL
+  zh: 加载中...
 - en: 'Now, we can compare the difference in reweighted means:'
+  id: totrans-90
   prefs: []
   type: TYPE_NORMAL
+  zh: 现在，我们可以比较重新加权后的均值差异：
 - en: '[PRE14]'
+  id: totrans-91
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE14]'
 - en: '`np.float64(-1.857142857142857)`'
+  id: totrans-92
   prefs: []
   type: TYPE_NORMAL
+  zh: '`np.float64(-1.857142857142857)`'
 - en: We can see that this does a much better job of capturing the real effect!
+  id: totrans-93
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们可以看到，这能更好地捕捉真实效果！
 - en: Inverse Propensity Score Weighting (IPW)[¶](#inverse-propensity-score-weighting-ipw
     "Link to this Section")
+  id: totrans-94
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 逆倾向得分加权（IPW）[¶](#inverse-propensity-score-weighting-ipw "Link to this Section")
 - en: 'Using the logic above, and our ad hoc processing of the table, we’re now ready
     to define the IPW (inverse propensity weighted) estimator for the ATE:'
+  id: totrans-95
   prefs: []
   type: TYPE_NORMAL
+  zh: 根据上述逻辑以及我们对表格的临时处理，我们现在可以定义ATE的IPW（逆倾向加权）估计量：
 - en: '<semantics><mrow><msub><mover accent="true"><mi>τ</mi><mo>^</mo></mover><mrow><mi>I</mi><mi>P</mi><mi>W</mi></mrow></msub><mo>=</mo><mfrac><mn>1</mn><mi>n</mi></mfrac><munder><munder><mrow><munder><mo>∑</mo><mrow><mi>i</mi><mo>:</mo><msub><mi>Z</mi><mi>i</mi></msub><mo>=</mo><mn>1</mn></mrow></munder><mfrac><msub><mi>Y</mi><mi>i</mi></msub><mrow><mi>e</mi><mo
     stretchy="false">(</mo><msub><mi>X</mi><mi>i</mi></msub><mo stretchy="false">)</mo></mrow></mfrac></mrow><mo
     stretchy="true">⏟</mo></munder><mtext>reweighted treated rows</mtext></munder><mo>−</mo><mfrac><mn>1</mn><mi>n</mi></mfrac><munder><munder><mrow><munder><mo>∑</mo><mrow><mi>i</mi><mo>:</mo><msub><mi>Z</mi><mi>i</mi></msub><mo>=</mo><mn>0</mn></mrow></munder><mfrac><msub><mi>Y</mi><mi>i</mi></msub><mrow><mn>1</mn><mo>−</mo><mi>e</mi><mo
@@ -521,23 +815,40 @@
     Z_i = 1} \frac{Y_i}{e(X_i)} }_{\text{reweighted treated rows}} - \frac{1}{n} \underbrace{%
     \sum_{i: Z_i = 0} \frac{Y_i}{1-e(X_i)} }_{\text{reweighted control rows}}</annotation></semantics>τ^IPW​=n1​reweighted treated rowsi:Zi​=1∑​e(Xi​)Yi​​​​−n1​reweighted control rowsi:Zi​=0∑​1−e(Xi​)Yi​​​​[(6)](#usAmwEdhW9
     "Link to this Equation")'
+  id: totrans-96
   prefs: []
   type: TYPE_NORMAL
+  zh: '<semantics><mrow><msub><mover accent="true"><mi>τ</mi><mo>^</mo></mover><mrow><mi>I</mi><mi>P</mi><mi>W</mi></mrow></msub><mo>=</mo><mfrac><mn>1</mn><mi>n</mi></mfrac><munder><munder><mrow><munder><mo>∑</mo><mrow><mi>i</mi><mo>:</mo><msub><mi>Z</mi><mi>i</mi></msub><mo>=</mo><mn>1</mn></mrow></munder><mfrac><msub><mi>Y</mi><mi>i</mi></msub><mrow><mi>e</mi><mo
+    stretchy="false">(</mo><msub><mi>X</mi><mi>i</mi></msub><mo stretchy="false">)</mo></mrow></mfrac></mrow><mo
+    stretchy="true">⏟</mo></munder><mtext>重新加权的处理组行</mtext></munder><mo>−</mo><mfrac><mn>1</mn><mi>n</mi></mfrac><munder><munder><mrow><munder><mo>∑</mo><mrow><mi>i</mi><mo>:</mo><msub><mi>Z</mi><mi>i</mi></msub><mo>=</mo><mn>0</mn></mrow></munder><mfrac><msub><mi>Y</mi><mi>i</mi></msub><mrow><mn>1</mn><mo>−</mo><mi>e</mi><mo
+    stretchy="false">(</mo><msub><mi>X</mi><mi>i</mi></msub><mo stretchy="false">)</mo></mrow></mfrac></mrow><mo
+    stretchy="true">⏟</mo></munder><mtext>重新加权的对照组行</mtext></munder></mrow><annotation
+    encoding="application/x-tex">\hat{\tau}_{IPW} = \frac{1}{n} \underbrace{% \sum_{i:
+    Z_i = 1} \frac{Y_i}{e(X_i)} }_{\text{reweighted treated rows}} - \frac{1}{n} \underbrace{%
+    \sum_{i: Z_i = 0} \frac{Y_i}{1-e(X_i)} }_{\text{reweighted control rows}}</annotation></semantics>τ^IPW​=n1​重新加权的处理组行i:Zi​=1∑​e(Xi​)Yi​​​​−n1​重新加权的对照组行i:Zi​=0∑​1−e(Xi​)Yi​​​​[(6)](#usAmwEdhW9
+    "Link to this Equation")'
 - en: 'This is a particularly useful estimator because **if the unconfoundedness assumption**
     (also known as the conditional independence assumption or CIA) **is true, then
     this will be an unbiased estimate of the true ATE**: <semantics><mrow><mi>E</mi><mo
     stretchy="false">[</mo><msub><mover accent="true"><mi>τ</mi><mo>^</mo></mover><mrow><mi>I</mi><mi>P</mi><mi>W</mi></mrow></msub><mo
     stretchy="false">]</mo><mo>=</mo><mi>τ</mi></mrow><annotation encoding="application/x-tex">E[\hat{\tau}_{IPW}]
     = \tau</annotation></semantics>E[τ^IPW​]=τ.'
+  id: totrans-97
   prefs: []
   type: TYPE_NORMAL
+  zh: 这是一个特别有用的估计量，因为**如果无混淆假设**（也称为条件独立假设或CIA）**成立，那么这将是真实ATE的无偏估计**：<semantics><mrow><mi>E</mi><mo
+    stretchy="false">[</mo><msub><mover accent="true"><mi>τ</mi><mo>^</mo></mover><mrow><mi>I</mi><mi>P</mi><mi>W</mi></mrow></msub><mo
+    stretchy="false">]</mo><mo>=</mo><mi>τ</mi></mrow><annotation encoding="application/x-tex">E[\hat{\tau}_{IPW}]
+    = \tau</annotation></semantics>E[τ^IPW​]=τ。
 - en: 'Intuitively, why does it make sense to divide by the propensity score (for
     the treatment group) and one minus the propensity score (for the control group)?
     We’re trying to find units that were less likely to end up in the group that they
     did, and give those higher weight. Recall that the propensity score and its complement
     are conditional probabilities:'
+  id: totrans-98
   prefs: []
   type: TYPE_NORMAL
+  zh: 直观上，为什么除以倾向得分（对于处理组）和1减去倾向得分（对于控制组）是合理的？我们试图找到那些**不太可能**最终进入其所在组的单元，并赋予它们更高的权重。回想一下，倾向得分及其补数是条件概率：
 - en: <semantics><mtable rowspacing="0.25em" columnalign="right left" columnspacing="0em"><mtr><mtd><mstyle
     scriptlevel="0" displaystyle="true"><mrow><mi>e</mi><mo stretchy="false">(</mo><mi>x</mi><mo
     stretchy="false">)</mo></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mo>=</mo><mi>P</mi><mo
@@ -549,62 +860,95 @@
     stretchy="false">)</mo></mrow></mstyle></mtd></mtr></mtable><annotation encoding="application/x-tex">\begin{align*}
     e(x) &= P(Z=1 | X=x) \\ 1 - e(x) &= P(Z=0 | X=x) \end{align*}</annotation></semantics>e(x)1−e(x)​=P(Z=1∣X=x)=P(Z=0∣X=x)​[(7)](#SrYeRkV3m1
     "Link to this Equation")
+  id: totrans-99
   prefs: []
   type: TYPE_NORMAL
+  zh: <semantics><mtable rowspacing="0.25em" columnalign="right left" columnspacing="0em"><mtr><mtd><mstyle
+    scriptlevel="0" displaystyle="true"><mrow><mi>e</mi><mo stretchy="false">(</mo><mi>x</mi><mo
+    stretchy="false">)</mo></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mo>=</mo><mi>P</mi><mo
+    stretchy="false">(</mo><mi>Z</mi><mo>=</mo><mn>1</mn><mi mathvariant="normal">∣</mi><mi>X</mi><mo>=</mo><mi>x</mi><mo
+    stretchy="false">)</mo></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0"
+    displaystyle="true"><mrow><mn>1</mn><mo>−</mo><mi>e</mi><mo stretchy="false">(</mo><mi>x</mi><mo
+    stretchy="false">)</mo></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mo>=</mo><mi>P</mi><mo
+    stretchy="false">(</mo><mi>Z</mi><mo>=</mo><mn>0</mn><mi mathvariant="normal">∣</mi><mi>X</mi><mo>=</mo><mi>x</mi><mo
+    stretchy="false">)</mo></mrow></mstyle></mtd></mtr></mtable><annotation encoding="application/x-tex">\begin{align*}
+    e(x) &= P(Z=1 | X=x) \\ 1 - e(x) &= P(Z=0 | X=x) \end{align*}</annotation></semantics>e(x)1−e(x)​=P(Z=1∣X=x)=P(Z=0∣X=x)​[(7)](#SrYeRkV3m1
+    "链接到此公式")
 - en: For the treatment group, we want to find units that, because of confounding,
     were unlikely to end up in the treatment group (in the example above, this corresponds
     to finding younger people). Those units will have a very small propensity score,
     so we can divide by it to increase the weight on them.
+  id: totrans-100
   prefs: []
   type: TYPE_NORMAL
+  zh: 对于处理组，我们希望找到那些由于混杂因素而**不太可能**最终进入处理组的单元（在上面的例子中，这对应于找到更年轻的人）。这些单元的倾向得分会非常小，因此我们可以通过除以它来增加它们的权重。
 - en: For the control group, we want to find units that, because of confounding, were
     unlikely to end up in the control group (in the example above, this corresponds
     to finding older people). Those units will have a very **large** propensity score
     (close to 1), so we can divide by 1 minus the propensity score to increase the
     weight on them.
+  id: totrans-101
   prefs: []
   type: TYPE_NORMAL
+  zh: 对于控制组，我们希望找到那些由于混杂因素而**不太可能**最终进入控制组的单元（在上面的例子中，这对应于找到更年长的人）。这些单元的倾向得分会非常**大**（接近1），因此我们可以除以1减去倾向得分来增加它们的权重。
 - en: The same process will give **less** weight to units that are overrepresented
     in their group.
+  id: totrans-102
   prefs: []
   type: TYPE_NORMAL
+  zh: 同样的过程会对组内**过度代表**的单元赋予**较小**的权重。
 - en: For a proof that the IPW estimator above gives an **unbiased estimate** of the
     true ATE, see one of these sources. Try the proof yourself as an exercise before
     looking at the answer!
+  id: totrans-103
   prefs: []
   type: TYPE_NORMAL
+  zh: 关于上述IPW估计量能给出真实ATE的**无偏估计**的证明，请参阅以下来源之一。在查看答案之前，尝试自己证明一下作为练习！
 - en: '[A First Course in Causal Inference](https://arxiv.org/pdf/2305.18793) by Peng
     Ding (Section 11.2.1, pg. 159) has a proof that uses the same notation as this
     book.'
+  id: totrans-104
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 彭丁的《因果推断初级教程》(https://arxiv.org/pdf/2305.18793)（第11.2.1节，第159页）提供了一个证明，其使用的符号与本书相同。
 - en: '[Causal Inference: The Mixtape](https://mixtape.scunning.com/05-matching_and_subclassification#weighting-on-the-propensity-score)
     by Scott Cunningham has a proof that uses slightly different notation.'
+  id: totrans-105
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: Scott Cunningham 的《因果推断：混合带》(https://mixtape.scunning.com/05-matching_and_subclassification#weighting-on-the-propensity-score)
+    提供了一个证明，其使用的符号略有不同。
 - en: Computing propensity scores using logistic regression[¶](#computing-propensity-scores-using-logistic-regression
     "Link to this Section")
+  id: totrans-106
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 使用逻辑回归计算倾向得分[¶](#computing-propensity-scores-using-logistic-regression "链接到此章节")
 - en: In this example, our confounder was binary, which made it very easy to compute
     the propensity scores using simple arithmetic. But in many applications, our confounders
     could be continuous, or we could have multiple confounders. In such cases, computing
     propensity scores is not as trivial.
+  id: totrans-107
   prefs: []
   type: TYPE_NORMAL
+  zh: 在这个例子中，我们的混杂因素是二元的，这使得通过简单算术计算倾向得分变得非常容易。但在许多应用中，混杂因素可能是连续的，或者我们可能有多个混杂因素。在这种情况下，计算倾向得分就不那么简单了。
 - en: 'In these cases, we typically use logistic regression to predict them. Note
     that although this is the same logistic regression you’re familiar with, the purpose
     of using it is very different: here, we aren’t trying to make predictions, or
     achieve high prediction accuracy. We’re instead just using it to determine for
     each row, what is the probability (based on the confounders) of that row ending
     up in the treatment group?'
+  id: totrans-108
   prefs: []
   type: TYPE_NORMAL
+  zh: 在这些情况下，我们通常使用逻辑回归来预测它们。请注意，尽管这是您熟悉的逻辑回归，但使用它的目的却大不相同：在这里，我们并非试图进行预测或追求高预测精度。相反，我们只是用它来确定每一行（基于混杂因素）最终进入处理组的概率是多少？
 - en: 'This means that we don’t have to worry about splitting our data into testing
     and training sets: instead, we fit the model on our entire dataset, and use the
     predicted probabilities as propensity scores.'
+  id: totrans-109
   prefs: []
   type: TYPE_NORMAL
+  zh: 这意味着我们无需担心将数据分割为测试集和训练集：相反，我们在整个数据集上拟合模型，并将预测概率用作倾向得分。

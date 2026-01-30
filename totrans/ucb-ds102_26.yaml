@@ -3,11 +3,13 @@
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 随机实验中的因果推断
 - en: 原文：[https://data102.org/ds-102-book/content/chapters/04/randomized-experiments](https://data102.org/ds-102-book/content/chapters/04/randomized-experiments)
   id: totrans-1
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 原文：[https://data102.org/ds-102-book/content/chapters/04/randomized-experiments](https://data102.org/ds-102-book/content/chapters/04/randomized-experiments)
 - en: '[<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" width="1.25rem"
     height="1.25rem" class="myst-fm-license-cc-icon myst-fm-license-cc-icon-main inline-block
     mx-1"><title>Content License: Creative Commons Attribution Share Alike 4.0 International
@@ -22,15 +24,26 @@
   id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: '[<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" width="1.25rem"
+    height="1.25rem" class="myst-fm-license-cc-icon myst-fm-license-cc-icon-main inline-block
+    mx-1"><title>内容许可：知识共享 署名-相同方式共享 4.0 国际 (CC-BY-SA-4.0)</title></svg><svg viewBox="0
+    0 24 24" fill="currentColor" aria-hidden="true" width="1.25rem" height="1.25rem"
+    class="myst-fm-license-cc-icon myst-fm-license-cc-icon-by inline-block mr-1"><title>必须注明原作者</title></svg><svg
+    viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" width="1.25rem" height="1.25rem"
+    class="myst-fm-license-cc-icon myst-fm-license-cc-icon-sa inline-block mr-1"><title>演绎作品必须使用相同许可协议共享</title></svg>](https://creativecommons.org/licenses/by-sa/4.0/)[](https://github.com/ds-102/ds-102-book
+    "GitHub 仓库：ds-102/ds-102-book")[](https://github.com/ds-102/ds-102-book/edit/main/ds-102-book/content/chapters/04/04_randomized_experiments.ipynb
+    "编辑此页面")'
 - en: 'In this section, we’ll build a deeper understanding of randomized experiments.
     Recall from the last section the table of potential outcomes:'
   id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: 在本节中，我们将更深入地理解随机实验。回顾上一节中的潜在结果表：
 - en: '| Unit | Outcome if not treated | Outcome if treated | Treated or not? |'
   id: totrans-4
   prefs: []
   type: TYPE_TB
+  zh: '| 单元 | 未接受处理时的结果 | 接受处理时的结果 | 是否接受处理？ |'
 - en: '| 1 | ? | <semantics><mrow><msub><mi>Y</mi><mn>1</mn></msub><mo stretchy="false">(</mo><mn>1</mn><mo
     stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">Y_1(1)</annotation></semantics>Y1​(1)
     | <semantics><mrow><msub><mi>Z</mi><mn>1</mn></msub><mo>=</mo><mn>1</mn></mrow><annotation
@@ -38,6 +51,10 @@
   id: totrans-5
   prefs: []
   type: TYPE_TB
+  zh: '| 1 | ? | <semantics><mrow><msub><mi>Y</mi><mn>1</mn></msub><mo stretchy="false">(</mo><mn>1</mn><mo
+    stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">Y_1(1)</annotation></semantics>Y1​(1)
+    | <semantics><mrow><msub><mi>Z</mi><mn>1</mn></msub><mo>=</mo><mn>1</mn></mrow><annotation
+    encoding="application/x-tex">Z_1=1</annotation></semantics>Z1​=1 |'
 - en: '| 2 | <semantics><mrow><msub><mi>Y</mi><mn>2</mn></msub><mo stretchy="false">(</mo><mn>0</mn><mo
     stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">Y_2(0)</annotation></semantics>Y2​(0)
     | ? | <semantics><mrow><msub><mi>Z</mi><mn>2</mn></msub><mo>=</mo><mn>0</mn></mrow><annotation
@@ -45,6 +62,10 @@
   id: totrans-6
   prefs: []
   type: TYPE_TB
+  zh: '| 2 | <semantics><mrow><msub><mi>Y</mi><mn>2</mn></msub><mo stretchy="false">(</mo><mn>0</mn><mo
+    stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">Y_2(0)</annotation></semantics>Y2​(0)
+    | ? | <semantics><mrow><msub><mi>Z</mi><mn>2</mn></msub><mo>=</mo><mn>0</mn></mrow><annotation
+    encoding="application/x-tex">Z_2=0</annotation></semantics>Z2​=0 |'
 - en: '| 3 | <semantics><mrow><msub><mi>Y</mi><mn>3</mn></msub><mo stretchy="false">(</mo><mn>0</mn><mo
     stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">Y_3(0)</annotation></semantics>Y3​(0)
     | ? | <semantics><mrow><msub><mi>Z</mi><mn>3</mn></msub><mo>=</mo><mn>0</mn></mrow><annotation
@@ -52,6 +73,10 @@
   id: totrans-7
   prefs: []
   type: TYPE_TB
+  zh: '| 3 | <semantics><mrow><msub><mi>Y</mi><mn>3</mn></msub><mo stretchy="false">(</mo><mn>0</mn><mo
+    stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">Y_3(0)</annotation></semantics>Y3​(0)
+    | ? | <semantics><mrow><msub><mi>Z</mi><mn>3</mn></msub><mo>=</mo><mn>0</mn></mrow><annotation
+    encoding="application/x-tex">Z_3=0</annotation></semantics>Z3​=0 |'
 - en: '| 4 | ? | <semantics><mrow><msub><mi>Y</mi><mn>4</mn></msub><mo stretchy="false">(</mo><mn>1</mn><mo
     stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">Y_4(1)</annotation></semantics>Y4​(1)
     | <semantics><mrow><msub><mi>Z</mi><mn>4</mn></msub><mo>=</mo><mn>1</mn></mrow><annotation
@@ -59,6 +84,10 @@
   id: totrans-8
   prefs: []
   type: TYPE_TB
+  zh: '| 4 | ? | <semantics><mrow><msub><mi>Y</mi><mn>4</mn></msub><mo stretchy="false">(</mo><mn>1</mn><mo
+    stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">Y_4(1)</annotation></semantics>Y4​(1)
+    | <semantics><mrow><msub><mi>Z</mi><mn>4</mn></msub><mo>=</mo><mn>1</mn></mrow><annotation
+    encoding="application/x-tex">Z_4=1</annotation></semantics>Z4​=1 |'
 - en: '| 5 | <semantics><mrow><msub><mi>Y</mi><mn>5</mn></msub><mo stretchy="false">(</mo><mn>0</mn><mo
     stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">Y_5(0)</annotation></semantics>Y5​(0)
     | ? | <semantics><mrow><msub><mi>Z</mi><mn>5</mn></msub><mo>=</mo><mn>0</mn></mrow><annotation
@@ -215,6 +244,14 @@
   id: totrans-17
   prefs: []
   type: TYPE_NORMAL
+  zh: <semantics><mrow><mi>τ</mi><mo>=</mo><mi>E</mi><mo stretchy="false">[</mo><msub><mi>Y</mi><mi>i</mi></msub><mo
+    stretchy="false">(</mo><mn>1</mn><mo stretchy="false">)</mo><mo>−</mo><msub><mi>Y</mi><mi>i</mi></msub><mo
+    stretchy="false">(</mo><mn>0</mn><mo stretchy="false">)</mo><mo stretchy="false">]</mo><mo>=</mo><mi>E</mi><mo
+    stretchy="false">[</mo><msub><mi>Y</mi><mi>i</mi></msub><mo stretchy="false">(</mo><mn>1</mn><mo
+    stretchy="false">)</mo><mo stretchy="false">]</mo><mo>−</mo><mi>E</mi><mo stretchy="false">[</mo><msub><mi>Y</mi><mi>i</mi></msub><mo
+    stretchy="false">(</mo><mn>0</mn><mo stretchy="false">)</mo><mo stretchy="false">]</mo></mrow><annotation
+    encoding="application/x-tex">\tau = E[Y_i(1) - Y_i(0)] = E[Y_i(1)] - E[Y_i(0)]</annotation></semantics>τ=E[Yi​(1)−Yi​(0)]=E[Yi​(1)]−E[Yi​(0)][(2)](#DYcy3TsLv0
+    "Link to this Equation")
 - en: If <semantics><mrow><msub><mi>Z</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">Z_i</annotation></semantics>Zi​
     and <semantics><mrow><msub><mi>Y</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">Y_i</annotation></semantics>Yi​
     are independent, then <semantics><mrow><mi>E</mi><mo stretchy="false">[</mo><msub><mi>Y</mi><mi>i</mi></msub><mo
@@ -232,6 +269,19 @@
   id: totrans-18
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果 <semantics><mrow><msub><mi>Z</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">Z_i</annotation></semantics>Zi​
+    和 <semantics><mrow><msub><mi>Y</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">Y_i</annotation></semantics>Yi​
+    相互独立，那么 <semantics><mrow><mi>E</mi><mo stretchy="false">[</mo><msub><mi>Y</mi><mi>i</mi></msub><mo
+    stretchy="false">(</mo><mo>⋅</mo><mo stretchy="false">)</mo><mo stretchy="false">]</mo><mo>=</mo><mi>E</mi><mo
+    stretchy="false">[</mo><msub><mi>Y</mi><mi>i</mi></msub><mo stretchy="false">(</mo><mo>⋅</mo><mo
+    stretchy="false">)</mo><mi mathvariant="normal">∣</mi><msub><mi>Z</mi><mi>i</mi></msub><mo
+    stretchy="false">]</mo></mrow><annotation encoding="application/x-tex">E[Y_i(\cdot)]
+    = E[Y_i(\cdot)|Z_i]</annotation></semantics>E[Yi​(⋅)]=E[Yi​(⋅)∣Zi​]。换言之，只要 <semantics><mrow><msub><mi>Z</mi><mi>i</mi></msub></mrow><annotation
+    encoding="application/x-tex">Z_i</annotation></semantics>Zi​ 和 <semantics><mrow><msub><mi>Y</mi><mi>i</mi></msub><mo
+    stretchy="false">(</mo><mo>⋅</mo><mo stretchy="false">)</mo></mrow><annotation
+    encoding="application/x-tex">Y_i(\cdot)</annotation></semantics>Yi​(⋅) 相互独立，以
+    <semantics><mrow><msub><mi>Z</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">Z_i</annotation></semantics>Zi​
+    为条件就不应改变期望值。
 - en: <semantics><mtable rowspacing="0.25em" columnalign="right left" columnspacing="0em"><mtr><mtd><mstyle
     scriptlevel="0" displaystyle="true"><mi>τ</mi></mstyle></mtd><mtd><mstyle scriptlevel="0"
     displaystyle="true"><mrow><mo>=</mo><mi>E</mi><mo stretchy="false">[</mo><msub><mi>Y</mi><mi>i</mi></msub><mo
@@ -254,6 +304,25 @@
   id: totrans-19
   prefs: []
   type: TYPE_NORMAL
+  zh: <semantics><mtable rowspacing="0.25em" columnalign="right left" columnspacing="0em"><mtr><mtd><mstyle
+    scriptlevel="0" displaystyle="true"><mi>τ</mi></mstyle></mtd><mtd><mstyle scriptlevel="0"
+    displaystyle="true"><mrow><mo>=</mo><mi>E</mi><mo stretchy="false">[</mo><msub><mi>Y</mi><mi>i</mi></msub><mo
+    stretchy="false">(</mo><mn>1</mn><mo stretchy="false">)</mo><mo stretchy="false">]</mo><mo>−</mo><mi>E</mi><mo
+    stretchy="false">[</mo><msub><mi>Y</mi><mi>i</mi></msub><mo stretchy="false">(</mo><mn>0</mn><mo
+    stretchy="false">)</mo><mo stretchy="false">]</mo></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle
+    scriptlevel="0" displaystyle="true"><mrow><mo>=</mo><mi>E</mi><mo stretchy="false">[</mo><msub><mi>Y</mi><mi>i</mi></msub><mo
+    stretchy="false">(</mo><mn>1</mn><mo stretchy="false">)</mo><mi mathvariant="normal">∣</mi><msub><mi>Z</mi><mi>i</mi></msub><mo>=</mo><mn>1</mn><mo
+    stretchy="false">]</mo><mo>−</mo><mi>E</mi><mo stretchy="false">[</mo><msub><mi>Y</mi><mi>i</mi></msub><mo
+    stretchy="false">(</mo><mn>0</mn><mo stretchy="false">)</mo><mi mathvariant="normal">∣</mi><msub><mi>Z</mi><mi>i</mi></msub><mo>=</mo><mn>0</mn><mo
+    stretchy="false">]</mo><mstyle mathsize="0.7em"><mo stretchy="false">(</mo><mtext>若 </mtext><mo
+    stretchy="false">(</mo><msub><mi>Y</mi><mi>i</mi></msub><mo stretchy="false">(</mo><mn>0</mn><mo
+    stretchy="false">)</mo><mo separator="true">,</mo><msub><mi>Y</mi><mi>i</mi></msub><mo
+    stretchy="false">(</mo><mn>1</mn><mo stretchy="false">)</mo><mo stretchy="false">)</mo><mo>⊥</mo><mo>⊥</mo><msub><mi>Z</mi><mi>i</mi></msub><mo
+    stretchy="false">)</mo></mstyle></mrow></mstyle></mtd></mtr></mtable><annotation
+    encoding="application/x-tex">\begin{align} \tau &= E[Y_i(1)] - E[Y_i(0)] \\ &=
+    E[Y_i(1)|Z_i=1] - E[Y_i(0)|Z_i=0] \quad{\scriptsize (\text{if }(Y_i(0), Y_i(1))
+    \perp \!\! \perp Z_i)} \end{align}</annotation></semantics>τ​=E[Yi​(1)]−E[Yi​(0)]=E[Yi​(1)∣Zi​=1]−E[Yi​(0)∣Zi​=0](若 (Yi​(0),Yi​(1))⊥⊥Zi​)​​[(3)](#lIBnEkbUjQ
+    "Link to this Equation")
 - en: 'These two terms correspond to the mean outcomes in the treatment and control
     groups, respectively. If we have <semantics><mrow><mi>n</mi></mrow><annotation
     encoding="application/x-tex">n</annotation></semantics>n observations <semantics><mrow><mo
@@ -267,6 +336,13 @@
   id: totrans-20
   prefs: []
   type: TYPE_NORMAL
+  zh: 这两个术语分别对应处理组和对照组的平均结果。如果我们有 <semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics>n
+    个观测值 <semantics><mrow><mo stretchy="false">(</mo><msub><mi>Z</mi><mn>1</mn></msub><mo
+    separator="true">,</mo><msub><mi>Y</mi><mrow><mn>1</mn><mo separator="true">,</mo><mi>o</mi><mi>b</mi><mi>s</mi></mrow></msub><mo
+    stretchy="false">)</mo><mo separator="true">,</mo><mo>…</mo><mo separator="true">,</mo><mo
+    stretchy="false">(</mo><msub><mi>Z</mi><mi>n</mi></msub><mo separator="true">,</mo><msub><mi>Y</mi><mrow><mi>n</mi><mo
+    separator="true">,</mo><mi>o</mi><mi>b</mi><mi>s</mi></mrow></msub><mo stretchy="false">)</mo></mrow><annotation
+    encoding="application/x-tex">(Z_1, Y_{1,obs}), \ldots, (Z_n, Y_{n,obs})</annotation></semantics>(Z1​,Y1,obs​),…,(Zn​,Yn,obs​)，那么我们对平均处理效应（ATE）的经验估计即为：
 - en: '<semantics><mtable rowspacing="0.25em" columnalign="right left" columnspacing="0em"><mtr><mtd><mstyle
     scriptlevel="0" displaystyle="true"><mover accent="true"><mi>τ</mi><mo>^</mo></mover></mstyle></mtd><mtd><mstyle
     scriptlevel="0" displaystyle="true"><mrow><mo>=</mo><munder><munder><mrow><mo
@@ -285,6 +361,21 @@
   id: totrans-21
   prefs: []
   type: TYPE_NORMAL
+  zh: '<semantics><mtable rowspacing="0.25em" columnalign="right left" columnspacing="0em"><mtr><mtd><mstyle
+    scriptlevel="0" displaystyle="true"><mover accent="true"><mi>τ</mi><mo>^</mo></mover></mstyle></mtd><mtd><mstyle
+    scriptlevel="0" displaystyle="true"><mrow><mo>=</mo><munder><munder><mrow><mo
+    fence="true">[</mo><mfrac><mn>1</mn><msub><mi>n</mi><mn>1</mn></msub></mfrac><munder><mo>∑</mo><mrow><mi>i</mi><mo>:</mo><msub><mi>Z</mi><mi>i</mi></msub><mo>=</mo><mn>1</mn></mrow></munder><msub><mi>Y</mi><mi>i</mi></msub><mo
+    fence="true">]</mo></mrow><mo stretchy="true">⏟</mo></munder><mrow><mo>=</mo><msub><mover
+    accent="true"><mi>Y</mi><mo>ˉ</mo></mover><mrow><mi>o</mi><mi>b</mi><mi>s</mi><mo
+    separator="true">,</mo><mn>1</mn></mrow></msub></mrow></munder><mo>−</mo><munder><munder><mrow><mo
+    fence="true">[</mo><mfrac><mn>1</mn><msub><mi>n</mi><mn>0</mn></msub></mfrac><munder><mo>∑</mo><mrow><mi>i</mi><mo>:</mo><msub><mi>Z</mi><mi>i</mi></msub><mo>=</mo><mn>0</mn></mrow></munder><msub><mi>Y</mi><mi>i</mi></msub><mo
+    fence="true">]</mo></mrow><mo stretchy="true">⏟</mo></munder><mrow><mo>=</mo><msub><mover
+    accent="true"><mi>Y</mi><mo>ˉ</mo></mover><mrow><mi>o</mi><mi>b</mi><mi>s</mi><mo
+    separator="true">,</mo><mn>0</mn></mrow></msub></mrow></munder><mo separator="true">,</mo></mrow></mstyle></mtd></mtr></mtable><annotation
+    encoding="application/x-tex">\begin{align} \hat{\tau} &= \underbrace{\left[\frac{1}{n_1}
+    \sum_{i: Z_i = 1} Y_i\right]}_{=\bar{Y}_{obs,1}} - \underbrace{\left[\frac{1}{n_0}
+    \sum_{i: Z_i = 0} Y_i\right]}_{=\bar{Y}_{obs,0}}, \end{align}</annotation></semantics>τ^​==Yˉobs,1​[n1​1​i:Zi​=1∑​Yi​]​​−=Yˉobs,0​[n0​1​i:Zi​=0∑​Yi​]​​,​​[(4)](#wKYBdx6pje
+    "Link to this Equation")'
 - en: 'where <semantics><mrow><msub><mi>n</mi><mn>1</mn></msub></mrow><annotation
     encoding="application/x-tex">n_1</annotation></semantics>n1​ is the number of
     treated units and <semantics><mrow><msub><mi>n</mi><mn>0</mn></msub></mrow><annotation
@@ -301,11 +392,22 @@
   id: totrans-22
   prefs: []
   type: TYPE_NORMAL
+  zh: 其中 <semantics><mrow><msub><mi>n</mi><mn>1</mn></msub></mrow><annotation encoding="application/x-tex">n_1</annotation></semantics>n1​
+    是处理组的单元数量，<semantics><mrow><msub><mi>n</mi><mn>0</mn></msub></mrow><annotation
+    encoding="application/x-tex">n_0</annotation></semantics>n0​ 是未处理组的单元数量，而 <semantics><mrow><msub><mover
+    accent="true"><mi>Y</mi><mo>ˉ</mo></mover><mrow><mi>o</mi><mi>b</mi><mi>s</mi><mo
+    separator="true">,</mo><mn>1</mn></mrow></msub></mrow><annotation encoding="application/x-tex">\bar{Y}_{obs,1}</annotation></semantics>Yˉobs,1​
+    和 <semantics><mrow><msub><mover accent="true"><mi>Y</mi><mo>ˉ</mo></mover><mrow><mi>o</mi><mi>b</mi><mi>s</mi><mo
+    separator="true">,</mo><mn>0</mn></mrow></msub></mrow><annotation encoding="application/x-tex">\bar{Y}_{obs,0}</annotation></semantics>Yˉobs,0​
+    分别是处理组和对照组的均值。这个量 <semantics><mrow><mover accent="true"><mi>τ</mi><mo>^</mo></mover></mrow><annotation
+    encoding="application/x-tex">\hat{\tau}</annotation></semantics>τ^（您很可能在 Data
+    8 等课程中见过并使用过）有许多名称。以下是其中几个：
 - en: The **difference in means**
   id: totrans-23
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**均值差**'
 - en: The **simple difference in mean outcomes / simple difference in observed means
     (SDO)**
   id: totrans-24
@@ -408,6 +510,18 @@
   id: totrans-33
   prefs: []
   type: TYPE_NORMAL
+  zh: <semantics><mtable rowspacing="0.25em" columnalign="right left" columnspacing="0em"><mtr><mtd><mstyle
+    scriptlevel="0" displaystyle="true"><mrow><mi>E</mi><mo stretchy="false">[</mo><mover
+    accent="true"><mi>τ</mi><mo>^</mo></mover><mo stretchy="false">]</mo></mrow></mstyle></mtd><mtd><mstyle
+    scriptlevel="0" displaystyle="true"><mrow><mo>=</mo><mi>τ</mi></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle
+    scriptlevel="0" displaystyle="true"><mrow><mtext>var</mtext><mo stretchy="false">(</mo><mover
+    accent="true"><mi>τ</mi><mo>^</mo></mover><mo stretchy="false">)</mo></mrow></mstyle></mtd><mtd><mstyle
+    scriptlevel="0" displaystyle="true"><mrow><mo>≤</mo><mfrac><msubsup><mover accent="true"><mi>σ</mi><mo>^</mo></mover><mn>1</mn><mn>2</mn></msubsup><msub><mi>n</mi><mn>1</mn></msub></mfrac><mo>+</mo><mfrac><msubsup><mover
+    accent="true"><mi>σ</mi><mo>^</mo></mover><mn>0</mn><mn>2</mn></msubsup><msub><mi>n</mi><mn>0</mn></msub></mfrac><mo
+    separator="true">,</mo></mrow></mstyle></mtd></mtr></mtable><annotation encoding="application/x-tex">\begin{align*}
+    E[\hat{\tau}] &= \tau \\ \text{var}(\hat{\tau}) &\leq \frac{\hat{\sigma}_1^2}{n_1}
+    + \frac{\hat{\sigma}_0^2}{n_0}, \end{align*}</annotation></semantics>E[τ^]var(τ^)​=τ≤n1​σ^12​​+n0​σ^02​​,​[(5)](#qIATDZgAGK
+    "Link to this Equation")
 - en: 'where <semantics><mrow><msub><mover accent="true"><mi>σ</mi><mo>^</mo></mover><mi>k</mi></msub></mrow><annotation
     encoding="application/x-tex">\hat{\sigma}_k</annotation></semantics>σ^k​ is the
     sample standard deviation of the potential treatment outcomes <semantics><mrow><msub><mi>Y</mi><mn>1</mn></msub><mo
@@ -418,6 +532,13 @@
   id: totrans-34
   prefs: []
   type: TYPE_NORMAL
+  zh: 其中 <semantics><mrow><msub><mover accent="true"><mi>σ</mi><mo>^</mo></mover><mi>k</mi></msub></mrow><annotation
+    encoding="application/x-tex">\hat{\sigma}_k</annotation></semantics>σ^k​ 是潜在处理结果
+    <semantics><mrow><msub><mi>Y</mi><mn>1</mn></msub><mo stretchy="false">(</mo><mi>k</mi><mo
+    stretchy="false">)</mo><mo separator="true">,</mo><mo>…</mo><mo separator="true">,</mo><msub><mi>Y</mi><mi>n</mi></msub><mo
+    stretchy="false">(</mo><mi>k</mi><mo stretchy="false">)</mo></mrow><annotation
+    encoding="application/x-tex">Y_1(k), \ldots, Y_n(k)</annotation></semantics>Y1​(k),…,Yn​(k)
+    的样本标准差：
 - en: <semantics><mtable rowspacing="0.25em" columnalign="right left" columnspacing="0em"><mtr><mtd><mstyle
     scriptlevel="0" displaystyle="true"><msub><mover accent="true"><mi>σ</mi><mo>^</mo></mover><mi>k</mi></msub></mstyle></mtd><mtd><mstyle
     scriptlevel="0" displaystyle="true"><mrow><mo>=</mo><mfrac><mn>1</mn><mrow><mi>n</mi><mo>−</mo><mn>1</mn></mrow></mfrac><munder><mo>∑</mo><mi>i</mi></munder><mo
@@ -431,6 +552,16 @@
   id: totrans-35
   prefs: []
   type: TYPE_NORMAL
+  zh: <semantics><mtable rowspacing="0.25em" columnalign="right left" columnspacing="0em"><mtr><mtd><mstyle
+    scriptlevel="0" displaystyle="true"><msub><mover accent="true"><mi>σ</mi><mo>^</mo></mover><mi>k</mi></msub></mstyle></mtd><mtd><mstyle
+    scriptlevel="0" displaystyle="true"><mrow><mo>=</mo><mfrac><mn>1</mn><mrow><mi>n</mi><mo>−</mo><mn>1</mn></mrow></mfrac><munder><mo>∑</mo><mi>i</mi></munder><mo
+    fence="false" stretchy="true" minsize="1.2em" maxsize="1.2em">(</mo><msub><mi>Y</mi><mi>i</mi></msub><mo
+    stretchy="false">(</mo><mi>k</mi><mo stretchy="false">)</mo><mo>−</mo><mover accent="true"><mi>Y</mi><mo>ˉ</mo></mover><mo
+    stretchy="false">(</mo><mi>k</mi><mo stretchy="false">)</mo><mo fence="false"
+    stretchy="true" minsize="1.2em" maxsize="1.2em">)</mo></mrow></mstyle></mtd></mtr></mtable><annotation
+    encoding="application/x-tex">\begin{align*} \hat{\sigma}_k &= \frac{1}{n - 1}
+    \sum_{i} \big(Y_i(k) - \bar{Y}(k)\big) \end{align*}</annotation></semantics>σ^k​​=n−11​i∑​(Yi​(k)−Yˉ(k))​[(6)](#HVGykh2X8I
+    "Link to this Equation")
 - en: 'Since this depends on the counterfactual outcomes that we don’t get to observe,
     we’ll typically approximate it by replacing the true sample variances with the
     sample variances within each observed group in our data, and call this <semantics><mrow><mover
@@ -464,6 +595,26 @@
   id: totrans-37
   prefs: []
   type: TYPE_NORMAL
+  zh: '<semantics><mtable rowspacing="0.25em" columnalign="right left" columnspacing="0em"><mtr><mtd><mstyle
+    scriptlevel="0" displaystyle="true"><mover accent="true"><mi>V</mi><mo>^</mo></mover></mstyle></mtd><mtd><mstyle
+    scriptlevel="0" displaystyle="true"><mrow><mo>=</mo><mo fence="false" stretchy="true"
+    minsize="3em" maxsize="3em">[</mo><mfrac><mn>1</mn><msub><mi>n</mi><mn>1</mn></msub></mfrac><munder><munder><mrow><mfrac><mn>1</mn><mrow><msub><mi>n</mi><mn>1</mn></msub><mo>−</mo><mn>1</mn></mrow></mfrac><munder><mo>∑</mo><mrow><mi>i</mi><mo>:</mo><msub><mi>Z</mi><mi>i</mi></msub><mo>=</mo><mn>1</mn></mrow></munder><mo
+    fence="false" stretchy="true" minsize="1.2em" maxsize="1.2em">(</mo><msub><mi>Y</mi><mi>i</mi></msub><mo>−</mo><msub><mover
+    accent="true"><mi>Y</mi><mo>ˉ</mo></mover><mrow><mi>o</mi><mi>b</mi><mi>s</mi><mo
+    separator="true">,</mo><mn>1</mn></mrow></msub><msup><mo fence="false" stretchy="true"
+    minsize="1.2em" maxsize="1.2em">)</mo><mn>2</mn></msup></mrow><mo stretchy="true">⏟</mo></munder><mtext>处理组样本标准差</mtext></munder><mo
+    fence="false" stretchy="true" minsize="3em" maxsize="3em">]</mo><mo>+</mo><mo
+    fence="false" stretchy="true" minsize="3em" maxsize="3em">[</mo><mfrac><mn>1</mn><msub><mi>n</mi><mn>0</mn></msub></mfrac><munder><munder><mrow><mfrac><mn>1</mn><mrow><msub><mi>n</mi><mn>0</mn></msub><mo>−</mo><mn>1</mn></mrow></mfrac><munder><mo>∑</mo><mrow><mi>i</mi><mo>:</mo><msub><mi>Z</mi><mi>i</mi></msub><mo>=</mo><mn>0</mn></mrow></munder><mo
+    fence="false" stretchy="true" minsize="1.2em" maxsize="1.2em">(</mo><msub><mi>Y</mi><mi>i</mi></msub><mo>−</mo><msub><mover
+    accent="true"><mi>Y</mi><mo>ˉ</mo></mover><mrow><mi>o</mi><mi>b</mi><mi>s</mi><mo
+    separator="true">,</mo><mn>0</mn></mrow></msub><msup><mo fence="false" stretchy="true"
+    minsize="1.2em" maxsize="1.2em">)</mo><mn>2</mn></msup></mrow><mo stretchy="true">⏟</mo></munder><mtext>对照组样本标准差</mtext></munder><mo
+    fence="false" stretchy="true" minsize="3em" maxsize="3em">]</mo></mrow></mstyle></mtd></mtr></mtable><annotation
+    encoding="application/x-tex">\begin{align*} \hat{V} &= \Bigg[\frac{1}{n_1} \underbrace{%
+    \frac{1}{n_1 - 1} \sum_{i: Z_i = 1} \big(Y_i - \bar{Y}_{obs,1}\big)^2}_{% \text{处理组样本标准差}}\Bigg]
+    + \Bigg[\frac{1}{n_0} \underbrace{% \frac{1}{n_0 - 1} \sum_{i: Z_i = 0} \big(Y_i
+    - \bar{Y}_{obs,0}\big)^2}_{% \text{对照组样本标准差}}\Bigg] \end{align*}</annotation></semantics>V^​=[n1​1​处理组样本标准差n1​−11​i:Zi​=1∑​(Yi​−Yˉobs,1​)2​​]+[n0​1​对照组样本标准差n0​−11​i:Zi​=0∑​(Yi​−Yˉobs,0​)2​​]​[(7)](#dQP2iN6wHd
+    "链接到此方程")'
 - en: It can be shown that under certain regularity conditions, as the number of samples
     grows larger, the distribution of the quantity <semantics><mrow><mfrac><mrow><mover
     accent="true"><mi>τ</mi><mo>^</mo></mover><mo>−</mo><mi>τ</mi></mrow><msqrt><mover
@@ -477,12 +628,20 @@
   id: totrans-38
   prefs: []
   type: TYPE_NORMAL
+  zh: 可以证明，在一定的正则性条件下，随着样本数量的增加，统计量 <semantics><mrow><mfrac><mrow><mover accent="true"><mi>τ</mi><mo>^</mo></mover><mo>−</mo><mi>τ</mi></mrow><msqrt><mover
+    accent="true"><mi>V</mi><mo>^</mo></mover></msqrt></mfrac></mrow><annotation encoding="application/x-tex">\frac{\hat{\tau}
+    - \tau}{\sqrt{\hat{V}}}</annotation></semantics>V^​τ^−τ​ 的分布收敛于正态分布 <semantics><mrow><mi>N</mi><mo
+    stretchy="false">(</mo><mn>0</mn><mo separator="true">,</mo><msup><mi>σ</mi><mn>2</mn></msup><mo
+    stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">N(0, \sigma^2)</annotation></semantics>N(0,σ2)，其中
+    <semantics><mrow><msup><mi>σ</mi><mn>2</mn></msup><mo><</mo><mn>1</mn></mrow><annotation
+    encoding="application/x-tex">\sigma^2 < 1</annotation></semantics>σ2<1。
 - en: Confidence intervals for the ATE[¶](#confidence-intervals-for-the-ate "Link
     to this Section")
   id: totrans-39
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 平均处理效应的置信区间[¶](#confidence-intervals-for-the-ate "链接至此章节")
 - en: 'Given the fact above, we can construct an asymptotically valid <semantics><mrow><mn>95</mn><mi
     mathvariant="normal">%</mi></mrow><annotation encoding="application/x-tex">95\%</annotation></semantics>95%
     confidence interval for <semantics><mrow><mi>τ</mi></mrow><annotation encoding="application/x-tex">\tau</annotation></semantics>τ
@@ -490,6 +649,9 @@
   id: totrans-40
   prefs: []
   type: TYPE_NORMAL
+  zh: 基于上述事实，我们可以为 <semantics><mrow><mi>τ</mi></mrow><annotation encoding="application/x-tex">\tau</annotation></semantics>τ
+    构建一个渐近有效的 <semantics><mrow><mn>95</mn><mi mathvariant="normal">%</mi></mrow><annotation
+    encoding="application/x-tex">95\%</annotation></semantics>95% 置信区间，如下所示： $$
 - en: <semantics><mtable rowspacing="0.25em" columnalign="right" columnspacing=""><mtr><mtd><mstyle
     scriptlevel="0" displaystyle="true"><mrow><mo fence="true">(</mo><mover accent="true"><mi>τ</mi><mo>^</mo></mover><mo>−</mo><mn>1.96</mn><msqrt><mover
     accent="true"><mi>V</mi><mo>^</mo></mover></msqrt><mo separator="true">,</mo><mover
@@ -501,22 +663,33 @@
   id: totrans-41
   prefs: []
   type: TYPE_NORMAL
+  zh: <semantics><mtable rowspacing="0.25em" columnalign="right" columnspacing=""><mtr><mtd><mstyle
+    scriptlevel="0" displaystyle="true"><mrow><mo fence="true">(</mo><mover accent="true"><mi>τ</mi><mo>^</mo></mover><mo>−</mo><mn>1.96</mn><msqrt><mover
+    accent="true"><mi>V</mi><mo>^</mo></mover></msqrt><mo separator="true">,</mo><mover
+    accent="true"><mi>τ</mi><mo>^</mo></mover><mo>+</mo><mn>1.96</mn><msqrt><mover
+    accent="true"><mi>V</mi><mo>^</mo></mover></msqrt><mo fence="true">)</mo></mrow></mstyle></mtd></mtr></mtable><annotation
+    encoding="application/x-tex">\begin{align*} \left(\hat{\tau} - 1.96\sqrt{\hat{V}},
+    \hat{\tau} + 1.96\sqrt{\hat{V}}\right) \end{align*}</annotation></semantics>(τ^−1.96V^​,τ^+1.96V^​)​[(8)](#S2rfPGr9ad
+    "链接至此公式")
 - en: $$
   id: totrans-42
   prefs: []
   type: TYPE_NORMAL
+  zh: $$
 - en: Hypothesis testing for causal effects[¶](#hypothesis-testing-for-causal-effects
     "Link to this Section")
   id: totrans-43
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 因果效应的假设检验[¶](#hypothesis-testing-for-causal-effects "链接至此章节")
 - en: 'In the classic null hypothesis significance testing framework, there are two
     different null hypotheses commonly used when measuring causal effects in randomized
     trials:'
   id: totrans-44
   prefs: []
   type: TYPE_NORMAL
+  zh: 在经典的零假设显著性检验框架中，随机化试验中衡量因果效应时通常使用两种不同的零假设：
 - en: '**Fisher’s strong null** (also known as Fisher’s sharp null) states that for
     every unit, the treatment effect <semantics><mrow><msub><mi>Y</mi><mi>i</mi></msub><mo
     stretchy="false">(</mo><mn>1</mn><mo stretchy="false">)</mo><mo>−</mo><msub><mi>Y</mi><mi>i</mi></msub><mo
@@ -526,6 +699,10 @@
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '**Fisher 强零假设**（也称为 Fisher 尖锐零假设）认为对于每个单元，处理效应 <semantics><mrow><msub><mi>Y</mi><mi>i</mi></msub><mo
+    stretchy="false">(</mo><mn>1</mn><mo stretchy="false">)</mo><mo>−</mo><msub><mi>Y</mi><mi>i</mi></msub><mo
+    stretchy="false">(</mo><mn>0</mn><mo stretchy="false">)</mo><mo>=</mo><mn>0</mn></mrow><annotation
+    encoding="application/x-tex">Y_i(1) - Y_i(0) = 0</annotation></semantics>Yi​(1)−Yi​(0)=0。'
 - en: '**Neyman’s weak null** states that the average treatment effect is 0\. In other
     words, even if some individual treatment effects are positive and some are negative,
     they average out to 0.'
@@ -533,6 +710,7 @@
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '**Neyman 弱零假设** 认为平均处理效应为 0。换句话说，即使某些个体的处理效应为正，某些为负，它们平均起来为 0。'
 - en: The first is a much stricter null hypothesis (hence the name “strong null”),
     since it states that all the treatment effects are 0\. The second is looser, requiring
     only that the treatment effects average out to 0\. Because of this, the strong
