@@ -1,0 +1,73 @@
+# SciPy 2018 视频专辑导航教程 📚
+
+在本教程中，我们将一起浏览“SciPy 2018视频专辑”的完整内容列表。这份列表包含了从P1到P73的多个视频主题，涵盖了科学计算、数据可视化、机器学习、工作流管理等多个前沿领域。我们将对这些主题进行整理和分类，帮助你快速了解每个视频的核心内容，并找到你感兴趣的学习方向。
+
+## 概述
+
+SciPy 2018大会汇集了众多Python科学计算领域的专家和实践者，分享了他们在工具开发、算法应用和工程实践方面的最新成果。以下列表按视频编号（P1至P73）排列，每个条目都包含视频的原始标题和对应的Markdown文件链接。通过学习这些内容，你可以系统地掌握Python在科学研究中的强大应用。
+
+## 视频内容列表
+
+以下是完整的视频专辑列表，每个视频都对应一个独立的Markdown文件，记录了该演讲或教程的详细内容。
+
+*   [ScipyCon 2018 笔记](README.md)
+*   [P1：Binder 2.0 - 下一代可复现科学环境](P1-SciPy-2018视频专辑--P1--Binder-2-0---Next-Generation-of-Reproducible-Scientific-Envi---GalileoHua---BV1TE411n7Ny.md)
+*   [P2：bqplot - Jupyter中的无缝交互式可视化与仪表板](P2-SciPy-2018视频专辑--P2--bqplot--Seamless-Interactive-Visualizations-and-Dashboards-i---GalileoHua---BV1TE411n7Ny.md)
+*   [P3：为plotly.py带来ipywidgets支持](P3-SciPy-2018视频专辑--P3--Bringing-ipywidgets-Support-to-plotly-py-_-SciPy-2018-_-Jon---GalileoHua---BV1TE411n7Ny.md)
+*   [P4：用于科学发现的数据可视化](P4-SciPy-2018视频专辑--P4--Data-Visualization-for-Scientific-Discovery-_-SciPy-2018-_-Z---GalileoHua---BV1TE411n7Ny.md)
+*   [P5：MetPy声明式绘图接口的开发](P5-SciPy-2018视频专辑--P5--Development-of-MetPy-s-Declarative-Plotting-Interface-_-SciP---GalileoHua---BV1TE411n7Ny.md)
+*   [P6：Jupyter中的交互式3D可视化](P6-SciPy-2018视频专辑--P6--Interactive-3D-Visualization-in-Jupyter-_-SciPy-2018-_--Maar---GalileoHua---BV1TE411n7Ny.md)
+*   [P7：利用Jupyter、Rust和WebAssembly进行交互式数据可视化](P7-SciPy-2018视频专辑--P7--Interactive-Data-Visualization-Leveraging-Jupyter--Rust-and---GalileoHua---BV1TE411n7Ny.md)
+*   [P8：KubeFlow - 在Kubernetes上进行Python式的大规模机器学习](P8-SciPy-2018视频专辑--P8--KubeFlow---Pythonic-Machine-Learning-at-Scale-on-Kubernetes---GalileoHua---BV1TE411n7Ny.md)
+*   [P9：物理学 - 通往贝叶斯深度学习的门户](P9-SciPy-2018视频专辑--P9--Physics---A-Gateway-to-Bayesian-Deep-Learning-_-SciPy-2018-_---GalileoHua---BV1TE411n7Ny.md)
+*   [P10：PyViz - 统一浏览器内数据可视化的Python工具](P10-SciPy-2018视频专辑--P10--PyViz---Unifying-Python-Tools-for-In-Browser-Data-Visualiza---GalileoHua---BV1TE411n7Ny.md)
+*   [P11：Recipe2Vec - word2vec如何帮助我们发现相关的美味食谱](P11-SciPy-2018视频专辑--P11--Recipe2Vec---How-word2vec-Helped-us-Discover-Related-Tasty---GalileoHua---BV1TE411n7Ny.md)
+*   [P12：signac - 一个用于数据和工作流管理的Python框架](P12-SciPy-2018视频专辑--P12--signac---A-Python-Framework-for-Data-and-Workflow-Managemen---GalileoHua---BV1TE411n7Ny.md)
+*   [P13：SimuPy - 一个用于建模和模拟动态系统的Python框架](P13-SciPy-2018视频专辑--P13--SimuPy----A-Python-Framework-for-Modeling-and-Simulating-Dy---GalileoHua---BV1TE411n7Ny.md)
+*   [P14：Yaksh - 通过实践促进学习](P14-SciPy-2018视频专辑--P14--Yaksh---Facilitating-Learning-by-Doing-_-SciPy-2018-_-Prabh---GalileoHua---BV1TE411n7Ny.md)
+*   [P15：超越爬虫：当你没有标签时如何使用机器学习](P15-SciPy-2018视频专辑--P15--Beyond-Scraping---How-to-Use-Machine-Learning-When-You_re-n---GalileoHua---BV1TE411n7Ny.md)
+*   [P16：使用NOAA开放数据和Jupyter Notebook构建天气应用](P16-SciPy-2018视频专辑--P16--Building-a-Weather-App-using-NOAA-Open-Data---Jupyter-Noteb---GalileoHua---BV1TE411n7Ny.md)
+*   [P17：为通用相机控制协议构建面向对象的Python接口](P17-SciPy-2018视频专辑--P17--Building-an-Object-Oriented-Python-Interface-for-the-Generi---GalileoHua---BV1TE411n7Ny.md)
+*   [P18：pyPRISM的设计与实现 - 一个聚合物液体统计力学工具](P18-SciPy-2018视频专辑--P18--Design-and-Implementation-of-pyPRISM--A-Polymer-Liquid-Stat---GalileoHua---BV1TE411n7Ny.md)
+*   [P19：EarthSim - 使用PyViz的灵活环境模拟工作流](P19-SciPy-2018视频专辑--P19--EarthSim---Flexible-Environmental-Simulation-Workflows-With---GalileoHua---BV1TE411n7Ny.md)
+*   [P20：工程师代码 - 面向工程师的可重用开源教育模块](P20-SciPy-2018视频专辑--P20--Engineers-Code--Re-usable--Open-Educational-Modules-for-Eng---GalileoHua---BV1TE411n7Ny.md)
+*   [P21：GAtor遗传算法中用于分子晶体结构预测的进化生态位](P21-SciPy-2018视频专辑--P21--Evolutionary-Niching-in-the-GAtor-Genetic-Algorithm-for-Mol---GalileoHua---BV1TE411n7Ny.md)
+*   [P22：使用深度生成模型和Python探索分子空间](P22-SciPy-2018视频专辑--P22--Exploring-Molecular-Space-with-Deep-Generative-Models-and-P---GalileoHua---BV1TE411n7Ny.md)
+*   [P23：使用Dask并行化科学Python](P23-SciPy-2018视频专辑--P23--Parallelizing-Scientific-Python-with-Dask-_-SciPy-2018-Tuto---GalileoHua---BV1TE411n7Ny.md)
+*   [P24：Parsl - 在Python中实现可扩展的交互式计算](P24-SciPy-2018视频专辑--P24--Parsl--Enabling-Scalable-Interactive-Computing-in-Python-_---GalileoHua---BV1TE411n7Ny.md)
+*   [P25：Astropy的实际应用](P25-SciPy-2018视频专辑--P25--Practical-Applications-of-Astropy-_-SciPy-2018-_-David-Shup---GalileoHua---BV1TE411n7Ny.md)
+*   [P26：Ray - 一个用于AI的分布式执行框架](P26-SciPy-2018视频专辑--P26--Ray---A-Distributed-Execution-Framework-for-AI-_-SciPy-2018---GalileoHua---BV1TE411n7Ny.md)
+*   [P27：Resonance - 通过计算建模学习机械振动](P27-SciPy-2018视频专辑--P27--Resonance--Learning-Mechanical-Vibrations-Through-Computati---GalileoHua---BV1TE411n7Ny.md)
+*   [P28：在Python中复活古蛋白质](P28-SciPy-2018视频专辑--P28--Resurrecting-Ancient-Proteins-in-Python-_-SciPy-2018-_-Zach---GalileoHua---BV1TE411n7Ny.md)
+*   [P29：Python在近期引力波天文学突破中的作用](P29-SciPy-2018视频专辑--P29--Role-of-Python-in-Recent-Gravitational-Wave-Astronomy-Break---GalileoHua---BV1TE411n7Ny.md)
+*   [P30：缺失数据的安全处理指南](P30-SciPy-2018视频专辑--P30--Safe-Handling-Instructions-for-Missing-Data-_-SciPy-2018-_---GalileoHua---BV1TE411n7Ny.md)
+*   [P31：使用Dask进行可扩展的机器学习](P31-SciPy-2018视频专辑--P31--Scalable-Machine-Learning-with-Dask-_-SciPy-2018-_--Olivier---GalileoHua---BV1TE411n7Ny.md)
+*   [P32：scikit-learn与表格数据：弥合差距](P32-SciPy-2018视频专辑--P32--scikit-learn-and-Tabular-Data-Closing-the-Gap-_-SciPy-2018---GalileoHua---BV1TE411n7Ny.md)
+*   [P33：这种药物应该被批准吗？使用Stan的贝叶斯答案](P33-SciPy-2018视频专辑--P33--Should-this-Drug-be-Approved-A-Bayesian-s-Answer-with-Stan---GalileoHua---BV1TE411n7Ny.md)
+*   [P34：自动化机器学习的过去、现在和未来](P34-SciPy-2018视频专辑--P34--The-Past--Present--and-Future-of-Automated-Machine-Learning---GalileoHua---BV1TE411n7Ny.md)
+*   [P35：使用Mayavi进行3D可视化](P35-SciPy-2018视频专辑--P35--3D-Visualization-with-Mayavi-_-SciPy-2018-Tutorial-_-Prabhu---GalileoHua---BV1TE411n7Ny.md)
+*   [P36：在透明和可扩展的Python中解决多线程与多进程问题](P36-SciPy-2018视频专辑--P36--Addressing-Multithreading---Multiprocessing-in-Transparent---GalileoHua---BV1TE411n7Ny.md)
+*   [P37：Julia语言介绍（初级）](P37-SciPy-2018视频专辑--P37--An-Introduction-to-Julia--Beginner-Level--_-SciPy-2018-Tuto---GalileoHua---BV1TE411n7Ny.md)
+*   [P38：Matplotlib剖析（初级）](P38-SciPy-2018视频专辑--P38--Anatomy-of-Matplotlib--Beginner-Level--_-SciPy-2018-Tutoria---GalileoHua---BV1TE411n7Ny.md)
+*   [P39：Apache Arrow - 一个用于内存数据的跨语言开发平台](P39-SciPy-2018视频专辑--P39--Apache-Arrow---A-Cross-Language-Development-Platform-for-in---GalileoHua---BV1TE411n7Ny.md)
+*   [P40：环游世界80法 - 使用地理空间数据工作入门](P40-SciPy-2018视频专辑--P40--Around-the-World-in-80-Ways---An-Introduction-to-Working-w_---GalileoHua---BV1TE411n7Ny.md)
+*   [P41：使用PyMT连接跨尺度和语言的科学模型](P41-SciPy-2018视频专辑--P41--Connecting-Scientific-Models-across-Scales---Languages-w_-P---GalileoHua---BV1TE411n7Ny.md)
+*   [P42：使用CVXPY在Python中进行凸优化](P42-SciPy-2018视频专辑--P42--Convex-Optimization-in-Python-with-CVXPY-_-SciPy-2018-_-Ste---GalileoHua---BV1TE411n7Ny.md)
+*   [P43：使用统计距离检测异常](P43-SciPy-2018视频专辑--P43--Detecting-Anomalies-Using-Statistical-Distances-_-SciPy-201---GalileoHua---BV1TE411n7Ny.md)
+*   [P44：GeoBIPy - Python中的地球物理贝叶斯推断](P44-SciPy-2018视频专辑--P44--GeoBIPy---Geophysical-Bayesian-Inference-in-Python-_-SciPy---GalileoHua---BV1TE411n7Ny.md)
+*   [P45：JupyterLab入门（初级）](P45-SciPy-2018视频专辑--P45--Getting-Started-with-JupyterLab--Beginner-Level--_-SciPy-20---GalileoHua---BV1TE411n7Ny.md)
+*   [P46：TensorFlow入门（初级）](P46-SciPy-2018视频专辑--P46--Getting-Started-with-TensorFlow--Beginner-Level--_-SciPy-20---GalileoHua---BV1TE411n7Ny.md)
+*   [P47：动手进行卫星图像分析](P47-SciPy-2018视频专辑--P47--Hands-on-Satellite-Imagery-Analysis-_-SciPy-2018-Tutorial-_---GalileoHua---BV1TE411n7Ny.md)
+*   [P48：使用SciPy和scikit-image在Python中进行图像分析](P48-SciPy-2018视频专辑--P48--Image-Analysis-in-Python-with-SciPy-and-scikit-image-_-SciP---GalileoHua---BV1TE411n7Ny.md)
+*   [P49：使用主题模型进行信息提取](P49-SciPy-2018视频专辑--P49--Information-Extraction-Using-Topic-Models-_-SciPy-2018-Tuto---GalileoHua---BV1TE411n7Ny.md)
+*   [P50：奶酪店内部 - Python打包如何工作](P50-SciPy-2018视频专辑--P50--Inside-the-Cheeseshop---How-Python-Packaging-Works-_-SciPy---GalileoHua---BV1TE411n7Ny.md)
+*   [P51：使用NumPy进行数值计算入门（初级）](P51-SciPy-2018视频专辑--P51--Intro-to-Numerical-Computing-with-NumPy--Beginner--_-SciPy---GalileoHua---BV1TE411n7Ny.md)
+*   [P52：Python地理空间数据分析入门](P52-SciPy-2018视频专辑--P52--Introduction-to-Geospatial-Data-Analysis-with-Python-_-SciP---GalileoHua---BV1TE411n7Ny.md)
+*   [P53：Python与编程入门](P53-SciPy-2018视频专辑--P53--Introduction-to-Python-and-Programming-_-SciPy-2018-Tutoria---GalileoHua---BV1TE411n7Ny.md)
+*   [P54：主题演讲 - 数据民主化](P54-SciPy-2018视频专辑--P54--Keynote---Democratizing-Data-_-SciPy-2018-_-Tracy-Teal-gMW9---GalileoHua---BV1TE411n7Ny.md)
+*   [P55：主题演讲 - SciPy 1.0及未来：代码与社区的故事](P55-SciPy-2018视频专辑--P55--Keynote---SciPy-1-0-and-Beyond---A-Story-of-Code-and-Commun---GalileoHua---BV1TE411n7Ny.md)
+*   [P56：使用scikit-learn进行机器学习 第2部分](P56-SciPy-2018视频专辑--P56--Machine-Learning-with-scikit-learn-Part-2-_-SciPy-2018-_--L---GalileoHua---BV1TE411n7Ny.md)
+*   [P57：使用Scikit-Learn进行机器学习，第1部分](P57-SciPy-2018视频专辑--P57--Machine-Learning-with-Scikit-Learn--Part-1-_-SciPy-2018-Tut---GalileoHua---BV1TE411n7Ny.md)
+*   [P58：网络分析变得简单 - 网络基础](P58-SciPy-2018视频专辑--P58--Network-Analysis-Made-Simple---Network-Fundamentals-_-SciPy---GalileoHua---BV1TE411n7Ny.md)
+*   [P59：“异质主体”建模的开源工具](P59-SciPy-2018视频专辑--P59--Open-Source-Tools-for-_Heterogeneous-Agent_-Modeling-_-SciP---GalileoHua---BV1TE411n7Ny.md)
+*   [P60
