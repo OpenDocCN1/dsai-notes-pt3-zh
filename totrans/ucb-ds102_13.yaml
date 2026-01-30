@@ -1,11 +1,15 @@
 - en: Bayesian Inference with Sampling
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 基于采样的贝叶斯推断
 - en: 原文：[https://data102.org/ds-102-book/content/chapters/02/inference-with-sampling](https://data102.org/ds-102-book/content/chapters/02/inference-with-sampling)
+  id: totrans-1
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 原文：[https://data102.org/ds-102-book/content/chapters/02/inference-with-sampling](https://data102.org/ds-102-book/content/chapters/02/inference-with-sampling)
 - en: '[<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" width="1.25rem"
     height="1.25rem" class="myst-fm-license-cc-icon myst-fm-license-cc-icon-main inline-block
     mx-1"><title>Content License: Creative Commons Attribution Share Alike 4.0 International
@@ -17,77 +21,124 @@
     must be shared under the same terms</title></svg>](https://creativecommons.org/licenses/by-sa/4.0/)[](https://github.com/ds-102/ds-102-book
     "GitHub Repository: ds-102/ds-102-book")[](https://github.com/ds-102/ds-102-book/edit/main/ds-102-book/content/chapters/02/05_inference_with_sampling.ipynb
     "Edit This Page")'
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: '[<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" width="1.25rem"
+    height="1.25rem" class="myst-fm-license-cc-icon myst-fm-license-cc-icon-main inline-block
+    mx-1"><title>内容许可：知识共享 署名-相同方式共享 4.0 国际许可协议 (CC-BY-SA-4.0)</title></svg><svg viewBox="0
+    0 24 24" fill="currentColor" aria-hidden="true" width="1.25rem" height="1.25rem"
+    class="myst-fm-license-cc-icon myst-fm-license-cc-icon-by inline-block mr-1"><title>必须注明原作者</title></svg><svg
+    viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" width="1.25rem" height="1.25rem"
+    class="myst-fm-license-cc-icon myst-fm-license-cc-icon-sa inline-block mr-1"><title>衍生作品必须在相同条款下共享</title></svg>](https://creativecommons.org/licenses/by-sa/4.0/)[](https://github.com/ds-102/ds-102-book
+    "GitHub 仓库：ds-102/ds-102-book")[](https://github.com/ds-102/ds-102-book/edit/main/ds-102-book/content/chapters/02/05_inference_with_sampling.ipynb
+    "编辑此页面")'
 - en: '[PRE0]'
+  id: totrans-3
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: Bayesian Inference with Sampling[¶](#bayesian-inference-with-sampling "Link
     to this Section")
+  id: totrans-4
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 基于采样的贝叶斯推断[¶](#bayesian-inference-with-sampling "Link to this Section")
 - en: Approximating a Known Distribution with Samples[¶](#approximating-a-known-distribution-with-samples
     "Link to this Section")
+  id: totrans-5
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 用样本近似已知分布[¶](#approximating-a-known-distribution-with-samples "Link to this
+    Section")
 - en: We’ve seen before that we can compute an empirical distribution from a sample
     of data points. In this section, we’ll use samples to approximate distributions.
+  id: totrans-6
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们之前已经看到，可以从数据点样本中计算出经验分布。在本节中，我们将使用样本来近似分布。
 - en: 'Let’s start by using samples to approximate a known, easy-to-compute distribution:
     Beta<semantics><mrow><mo stretchy="false">(</mo><mn>3</mn><mo separator="true">,</mo><mn>4</mn><mo
     stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">(3, 4)</annotation></semantics>(3,4).
     While this is a somewhat silly example because the distribution is easy to reason
     about, it will help us see how samples can provide a useful approximation to a
     distribution.'
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: 让我们从一个已知且易于计算的分布开始，用采样来近似它：Beta<semantics><mrow><mo stretchy="false">(</mo><mn>3</mn><mo
+    separator="true">,</mo><mn>4</mn><mo stretchy="false">)</mo></mrow><annotation
+    encoding="application/x-tex">(3, 4)</annotation></semantics>(3,4)。虽然这个例子有些“傻”，因为该分布很容易推理，但它将帮助我们理解采样如何为分布提供有用的近似。
 - en: '[PRE1]'
+  id: totrans-8
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: '[PRE2]'
+  id: totrans-9
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: '![<Figure size 640x480 with 1 Axes>](../Images/e56dc94fc08b6fa23b83ddfbb7648db0.png)'
+  id: totrans-10
   prefs: []
   type: TYPE_IMG
+  zh: '![<Figure size 640x480 with 1 Axes>](../Images/e56dc94fc08b6fa23b83ddfbb7648db0.png)'
 - en: 'We can see that the samples are a good representation for the distribution,
     as long as we have enough. We can use the mean of the samples to approximate the
     mean of the distribution:'
+  id: totrans-11
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们可以看到，只要样本数量足够，它们就能很好地代表分布。我们可以使用样本的均值来近似分布的均值：
 - en: '[PRE3]'
+  id: totrans-12
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: '[PRE4]'
+  id: totrans-13
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE4]'
 - en: Similarly, we could use the variance of the samples to estimate the variance
     of the distribution, and so on.
+  id: totrans-14
   prefs: []
   type: TYPE_NORMAL
+  zh: 同样地，我们可以使用样本的方差来估计分布的方差，依此类推。
 - en: 'While this method was extremely easy to implement, it’s also somewhat silly:
     for this distribution, anything that we can do with samples can also be done analytically.
     Usually, we want to approximate difficult, intractable distributions that involve
     impossible-to-compute normalization constants. So, that’s what we’ll do next.'
+  id: totrans-15
   prefs: []
   type: TYPE_NORMAL
+  zh: 虽然这种方法实现起来极其简单，但也有些“傻”：对于这个分布，任何我们可以用样本完成的操作也都可以通过解析方法完成。通常，我们想要近似的是那些难以处理、涉及无法计算归一化常数的复杂分布。所以，接下来我们将处理这类情况。
 - en: Rejection Sampling[¶](#rejection-sampling "Link to this Section")
+  id: totrans-16
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 拒绝采样[¶](#rejection-sampling "Link to this Section")
 - en: Rejection sampling works by generating a large number of proposals, and then
     rejecting those that are unlikely or impossible.
+  id: totrans-17
   prefs: []
   type: TYPE_NORMAL
+  zh: 拒绝采样的工作原理是生成大量提议样本，然后拒绝那些可能性低或不可能出现的样本。
 - en: 'As a warm-up, consider a distribution over two dimensions, <semantics><mrow><msub><mi>θ</mi><mn>1</mn></msub></mrow><annotation
     encoding="application/x-tex">\theta_1</annotation></semantics>θ1​ and <semantics><mrow><msub><mi>θ</mi><mn>2</mn></msub></mrow><annotation
     encoding="application/x-tex">\theta_2</annotation></semantics>θ2​, that’s uniform
     over the unit circle:'
+  id: totrans-18
   prefs: []
   type: TYPE_NORMAL
+  zh: 作为热身，考虑一个二维分布，涉及<semantics><mrow><msub><mi>θ</mi><mn>1</mn></msub></mrow><annotation
+    encoding="application/x-tex">\theta_1</annotation></semantics>θ1​和<semantics><mrow><msub><mi>θ</mi><mn>2</mn></msub></mrow><annotation
+    encoding="application/x-tex">\theta_2</annotation></semantics>θ2​，它在单位圆上是均匀的：
 - en: <semantics><mtable rowspacing="0.25em" columnalign="right left" columnspacing="0em"><mtr><mtd><mstyle
     scriptlevel="0" displaystyle="true"><mrow><mi>p</mi><mo stretchy="false">(</mo><mi>θ</mi><mi
     mathvariant="normal">∣</mi><mi>x</mi><mo stretchy="false">)</mo></mrow></mstyle></mtd><mtd><mstyle
@@ -101,62 +152,109 @@
     1 & \text{if } \theta_1^2 + \theta_2^2 \leq 1 \\ 0 & \text{otherwise} \end{cases}
     \end{align*}</annotation></semantics>p(θ∣x)​∝{10​if θ12​+θ22​≤1otherwise​​[(1)](#OX8miyOKgh
     "Link to this Equation")
+  id: totrans-19
   prefs: []
   type: TYPE_NORMAL
+  zh: <semantics><mtable rowspacing="0.25em" columnalign="right left" columnspacing="0em"><mtr><mtd><mstyle
+    scriptlevel="0" displaystyle="true"><mrow><mi>p</mi><mo stretchy="false">(</mo><mi>θ</mi><mi
+    mathvariant="normal">∣</mi><mi>x</mi><mo stretchy="false">)</mo></mrow></mstyle></mtd><mtd><mstyle
+    scriptlevel="0" displaystyle="true"><mrow><mo>∝</mo><mrow><mo fence="true">{</mo><mtable
+    rowspacing="0.36em" columnalign="left left" columnspacing="1em"><mtr><mtd><mstyle
+    scriptlevel="0" displaystyle="false"><mn>1</mn></mstyle></mtd><mtd><mstyle scriptlevel="0"
+    displaystyle="false"><mrow><mtext>如果 </mtext><msubsup><mi>θ</mi><mn>1</mn><mn>2</mn></msubsup><mo>+</mo><msubsup><mi>θ</mi><mn>2</mn><mn>2</mn></msubsup><mo>≤</mo><mn>1</mn></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle
+    scriptlevel="0" displaystyle="false"><mn>0</mn></mstyle></mtd><mtd><mstyle scriptlevel="0"
+    displaystyle="false"><mtext>否则</mtext></mstyle></mtd></mtr></mtable></mrow></mrow></mstyle></mtd></mtr></mtable><annotation
+    encoding="application/x-tex">\begin{align*} p(\theta|x) &\propto \begin{cases}
+    1 & \text{if } \theta_1^2 + \theta_2^2 \leq 1 \\ 0 & \text{otherwise} \end{cases}
+    \end{align*}</annotation></semantics>p(θ∣x)​∝{10​如果 θ12​+θ22​≤1否则​​[(1)](#OX8miyOKgh
+    "链接到此方程")
 - en: 'Suppose we want to sample from this distribution: in other words, we want to
     sample a pair of random variables (<semantics><mrow><msub><mi>θ</mi><mn>1</mn></msub></mrow><annotation
     encoding="application/x-tex">\theta_1</annotation></semantics>θ1​, <semantics><mrow><msub><mi>θ</mi><mn>2</mn></msub></mrow><annotation
     encoding="application/x-tex">\theta_2</annotation></semantics>θ2​) drawn uniformly
     from the unit circle, shown as the blue region below.'
+  id: totrans-20
   prefs: []
   type: TYPE_NORMAL
+  zh: 假设我们想从这个分布中采样：换句话说，我们想从单位圆中均匀抽取一对随机变量（<semantics><mrow><msub><mi>θ</mi><mn>1</mn></msub></mrow><annotation
+    encoding="application/x-tex">\theta_1</annotation></semantics>θ1​, <semantics><mrow><msub><mi>θ</mi><mn>2</mn></msub></mrow><annotation
+    encoding="application/x-tex">\theta_2</annotation></semantics>θ2​），如下方的蓝色区域所示。
 - en: How can we go about doing this?
+  id: totrans-21
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们该如何着手做这件事呢？
 - en: '[PRE5]'
+  id: totrans-22
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE5]'
 - en: '![<Figure size 400x400 with 1 Axes>](../Images/3c59444ccd21120254e6b80898a1ce6c.png)'
+  id: totrans-23
   prefs: []
   type: TYPE_IMG
+  zh: '![<尺寸为 400x400 的图，包含 1 个坐标轴>](../Images/3c59444ccd21120254e6b80898a1ce6c.png)'
 - en: In the previous example, we could easily sample from the beta distribution using
     `stats.beta.rvs`. Unfortunately, there’s no equivalent for the distribution shown
     above.
+  id: totrans-24
   prefs: []
   type: TYPE_NORMAL
+  zh: 在前一个例子中，我们可以轻松地使用`stats.beta.rvs`从贝塔分布中采样。不幸的是，对于上面所示的分布，没有等效的方法。
 - en: 'But, we can sample from the unit square by drawing two independent Uniform<semantics><mrow><mo
     stretchy="false">(</mo><mn>0</mn><mo separator="true">,</mo><mn>1</mn><mo stretchy="false">)</mo></mrow><annotation
     encoding="application/x-tex">(0, 1)</annotation></semantics>(0,1) samples. We
     can easily check whether the sample falls within the unit circle or not, and then
     throw it away (or **reject** it) if it falls outside. Here’s what it would look
     like to do that for many samples:'
+  id: totrans-25
   prefs: []
   type: TYPE_NORMAL
+  zh: 但是，我们可以通过抽取两个独立的均匀分布<semantics><mrow><mo stretchy="false">(</mo><mn>0</mn><mo
+    separator="true">,</mo><mn>1</mn><mo stretchy="false">)</mo></mrow><annotation
+    encoding="application/x-tex">(0, 1)</annotation></semantics>(0,1)样本来从单位正方形中采样。我们可以轻松检查样本是否落在单位圆内，如果落在外面就丢弃（或**拒绝**）它。以下是对多个样本进行此操作的效果图：
 - en: '[PRE6]'
+  id: totrans-26
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE6]'
 - en: '[PRE7]'
+  id: totrans-27
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE7]'
 - en: <details class="myst-dropdown rounded-md my-5 shadow dark:shadow-2xl dark:shadow-neutral-900
     overflow-hidden bg-gray-50 dark:bg-stone-800"><summary class="myst-dropdown-header
     m-0 text-lg font-medium py-1 min-h-[2em] pl-3 cursor-pointer hover:shadow-[inset_0_0_0px_30px_#00000003]
     dark:hover:shadow-[inset_0_0_0px_30px_#FFFFFF03] bg-gray-100 dark:bg-slate-900">Source</summary>
+  id: totrans-28
   prefs: []
   type: TYPE_NORMAL
+  zh: <details class="myst-dropdown rounded-md my-5 shadow dark:shadow-2xl dark:shadow-neutral-900
+    overflow-hidden bg-gray-50 dark:bg-stone-800"><summary class="myst-dropdown-header
+    m-0 text-lg font-medium py-1 min-h-[2em] pl-3 cursor-pointer hover:shadow-[inset_0_0_0px_30px_#00000003]
+    dark:hover:shadow-[inset_0_0_0px_30px_#FFFFFF03] bg-gray-100 dark:bg-slate-900">源代码</summary>
 - en: '[PRE8]</details> ![<Figure size 400x400 with 1 Axes>](../Images/b3a8190c9825f9aea7019d39a1b25006.png)'
+  id: totrans-29
   prefs: []
   type: TYPE_NORMAL
+  zh: '[PRE8]</details> ![<Figure size 400x400 with 1 Axes>](../Images/b3a8190c9825f9aea7019d39a1b25006.png)'
 - en: Here, samples in purple (darker) are rejected, so that we are left with the
     yellow (lighter) samples that represent the distribution from above.
+  id: totrans-30
   prefs: []
   type: TYPE_NORMAL
+  zh: 这里，紫色（较深）的样本被拒绝，因此我们得到黄色（较浅）的样本，它们代表了上述分布。
 - en: '[PRE9]'
+  id: totrans-31
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE9]'
 - en: Loading...
+  id: totrans-32
   prefs: []
   type: TYPE_NORMAL
+  zh: 加载中...
 - en: 'Next, let’s think about sampling from a distribution with a complicated density.
     Suppose we want to sample from the distribution with density <semantics><mrow><mi>p</mi><mo
     stretchy="false">(</mo><mi>θ</mi><mi mathvariant="normal">∣</mi><mi>x</mi><mo
@@ -167,25 +265,45 @@
     for <semantics><mrow><mi>θ</mi><mo>∈</mo><mo stretchy="false">[</mo><mn>0</mn><mo
     separator="true">,</mo><mn>1.5</mn><mo stretchy="false">]</mo></mrow><annotation
     encoding="application/x-tex">\theta \in [0,1.5]</annotation></semantics>θ∈[0,1.5]:'
+  id: totrans-33
   prefs: []
   type: TYPE_NORMAL
+  zh: 接下来，让我们思考如何从一个具有复杂概率密度的分布中进行采样。假设我们想从密度函数为 <semantics><mrow><mi>p</mi><mo stretchy="false">(</mo><mi>θ</mi><mi
+    mathvariant="normal">∣</mi><mi>x</mi><mo stretchy="false">)</mo><mo>∝</mo><mi>θ</mi><mo>⋅</mo><mo
+    stretchy="false">(</mo><mn>1.5</mn><mo>−</mo><mi>θ</mi><mo stretchy="false">)</mo><mo>⋅</mo><mi>sin</mi><mo>⁡</mo><mo
+    stretchy="false">(</mo><mi>θ</mi><mo stretchy="false">)</mo></mrow><annotation
+    encoding="application/x-tex">p(\theta|x) \propto \theta \cdot (1.5-\theta) \cdot
+    \sin(\theta)</annotation></semantics>p(θ∣x)∝θ⋅(1.5−θ)⋅sin(θ) 的分布中采样，其中 <semantics><mrow><mi>θ</mi><mo>∈</mo><mo
+    stretchy="false">[</mo><mn>0</mn><mo separator="true">,</mo><mn>1.5</mn><mo stretchy="false">]</mo></mrow><annotation
+    encoding="application/x-tex">\theta \in [0,1.5]</annotation></semantics>θ∈[0,1.5]：
 - en: '[PRE10]'
+  id: totrans-34
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE10]'
 - en: <details class="myst-dropdown rounded-md my-5 shadow dark:shadow-2xl dark:shadow-neutral-900
     overflow-hidden bg-gray-50 dark:bg-stone-800"><summary class="myst-dropdown-header
     m-0 text-lg font-medium py-1 min-h-[2em] pl-3 cursor-pointer hover:shadow-[inset_0_0_0px_30px_#00000003]
     dark:hover:shadow-[inset_0_0_0px_30px_#FFFFFF03] bg-gray-100 dark:bg-slate-900">Source</summary>
+  id: totrans-35
   prefs: []
   type: TYPE_NORMAL
+  zh: <details class="myst-dropdown rounded-md my-5 shadow dark:shadow-2xl dark:shadow-neutral-900
+    overflow-hidden bg-gray-50 dark:bg-stone-800"><summary class="myst-dropdown-header
+    m-0 text-lg font-medium py-1 min-h-[2em] pl-3 cursor-pointer hover:shadow-[inset_0_0_0px_30px_#00000003]
+    dark:hover:shadow-[inset_0_0_0px_30px_#FFFFFF03] bg-gray-100 dark:bg-slate-900">源代码</summary>
 - en: '[PRE11]</details> ![<Figure size 500x300 with 1 Axes>](../Images/cb641f3020c9236e61761bd0c5d23e3f.png)'
+  id: totrans-36
   prefs: []
   type: TYPE_NORMAL
+  zh: '[PRE11]</details> ![<Figure size 500x300 with 1 Axes>](../Images/cb641f3020c9236e61761bd0c5d23e3f.png)'
 - en: 'How can we make this look like the geometry-based example from before? The
     solution is an algorithm called **rejection sampling**. There are two ways of
     understanding how it works:'
+  id: totrans-37
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们如何能让这看起来像之前基于几何的例子呢？解决方案是一种名为**拒绝采样**的算法。有两种方式来理解它的工作原理：
 - en: The first is to start by generating samples from a uniform distribution. We’ll
     then throw some away at random (instead of deterministically like in the previous
     example). Intuitively, looking at the diagram below that compares our target to
@@ -196,9 +314,15 @@
     and we should try to keep more samples between 0.5 and 1\. In other words, our
     probability of rejecting each sample should depend on how likely it is according
     to the target.
+  id: totrans-38
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 第一种方法是从均匀分布开始生成样本，然后随机丢弃部分样本（而非像前例那样确定性丢弃）。直观来看，通过比较下图中的目标分布与 Uniform<semantics><mrow><mo
+    stretchy="false">(</mo><mn>0</mn><mo separator="true">,</mo><mn>1.5</mn><mo stretchy="false">)</mo></mrow><annotation
+    encoding="application/x-tex">(0, 1.5)</annotation></semantics>(0,1.5) 分布可知：对于极小的
+    <semantics><mrow><mi>θ</mi></mrow><annotation encoding="application/x-tex">\theta</annotation></semantics>θ
+    值，我们应尝试丢弃更多样本；而在 0.5 到 1 之间，则应保留更多样本。换言之，每个样本的拒绝概率应取决于其在目标分布下的似然程度。
 - en: The second is to change our one-dimensional sampling problem (i.e., generate
     samples for <semantics><mrow><mi>θ</mi></mrow><annotation encoding="application/x-tex">\theta</annotation></semantics>θ)
     into a two-dimensional sampling problem, where we start by sampling from the orange
@@ -209,30 +333,48 @@
     it falls above the corresponding target height for that value of <semantics><mrow><mi>θ</mi></mrow><annotation
     encoding="application/x-tex">\theta</annotation></semantics>θ), then we will reject
     the sample.
+  id: totrans-39
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 第二种方法是将我们的一维采样问题（即生成 <semantics><mrow><mi>θ</mi></mrow><annotation encoding="application/x-tex">\theta</annotation></semantics>θ
+    的样本）转化为二维采样问题：首先从下图中橙色矩形区域采样，然后丢弃未落在蓝色曲线下方的样本。为此，我们必须先在 0 到 1.5 之间采样 <semantics><mrow><mi>θ</mi></mrow><annotation
+    encoding="application/x-tex">\theta</annotation></semantics>θ 值，再为每个 θ 值采样一个高度。如果高度过大（即高于该
+    θ 值对应的目标分布高度），则拒绝该样本。
 - en: '[PRE12]'
+  id: totrans-40
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE12]'
 - en: <details class="myst-dropdown rounded-md my-5 shadow dark:shadow-2xl dark:shadow-neutral-900
     overflow-hidden bg-gray-50 dark:bg-stone-800"><summary class="myst-dropdown-header
     m-0 text-lg font-medium py-1 min-h-[2em] pl-3 cursor-pointer hover:shadow-[inset_0_0_0px_30px_#00000003]
     dark:hover:shadow-[inset_0_0_0px_30px_#FFFFFF03] bg-gray-100 dark:bg-slate-900">Source</summary>
+  id: totrans-41
   prefs: []
   type: TYPE_NORMAL
+  zh: <details class="myst-dropdown rounded-md my-5 shadow dark:shadow-2xl dark:shadow-neutral-900
+    overflow-hidden bg-gray-50 dark:bg-stone-800"><summary class="myst-dropdown-header
+    m-0 text-lg font-medium py-1 min-h-[2em] pl-3 cursor-pointer hover:shadow-[inset_0_0_0px_30px_#00000003]
+    dark:hover:shadow-[inset_0_0_0px_30px_#FFFFFF03] bg-gray-100 dark:bg-slate-900">来源</summary>
 - en: '[PRE13]</details> ![<Figure size 500x300 with 1 Axes>](../Images/89b420d2330b93a59608c0b5a4e732d1.png)'
+  id: totrans-42
   prefs: []
   type: TYPE_NORMAL
+  zh: '[PRE13]</details> ![<Figure size 500x300 with 1 Axes>](../Images/89b420d2330b93a59608c0b5a4e732d1.png)'
 - en: 'To be more precise, rejection sampling works as follows: given an unnormalized
     target distribution and proposal distribution, we generate samples from the normalized
     version of the target distribution by:'
+  id: totrans-43
   prefs: []
   type: TYPE_NORMAL
+  zh: 更准确地说，拒绝采样工作原理如下：给定未归一化的目标分布和提议分布，我们通过以下步骤从归一化后的目标分布生成样本：
 - en: Generate samples from the proposal distribution.
+  id: totrans-44
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 从提议分布中生成样本。
 - en: 'For each generated sample from the previous step, compute the ratio of the
     target divided by the proposal. This represents the probability that we’ll accept
     the sample: larger values of the target will lead to higher acceptance probability,
@@ -240,9 +382,11 @@
     order for this ratio to be treated as a probability, we require that the target
     always be less than (or equal to) the proposal: this can always be achieved through
     a good choice of proposal and appropriate scaling of the target distribution.'
+  id: totrans-45
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 对于上一步生成的每个样本，计算目标分布与提议分布的比值。该比值代表我们接受该样本的概率：目标分布值越大，接受概率越高；目标分布值越小，接受概率越低。为使该比值能被视作概率，我们要求目标分布值始终小于（或等于）提议分布值：通过选择合适的提议分布并对目标分布进行适当缩放，总能满足此条件。
 - en: Randomly accept or reject each sample from step 1, with probability determined
     by its ratio from step 2\. This can be done by generating a Uniform<semantics><mrow><mo
     stretchy="false">(</mo><mn>0</mn><mo separator="true">,</mo><mn>1</mn><mo stretchy="false">)</mo></mrow><annotation
@@ -250,62 +394,95 @@
     for each sample, and accepting the sample that random variable is less than the
     acceptance probability. **Stop and convince yourself that this is true before
     continuing!** Discard all rejected samples.
+  id: totrans-46
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 随机接受或拒绝步骤1中的每个样本，其概率由步骤2中的比率决定。这可以通过为每个样本生成一个 Uniform<semantics><mrow><mo stretchy="false">(</mo><mn>0</mn><mo
+    separator="true">,</mo><mn>1</mn><mo stretchy="false">)</mo></mrow><annotation
+    encoding="application/x-tex">(0, 1)</annotation></semantics>(0,1) 随机变量，并接受该随机变量小于接受概率的样本来实现。**在继续之前，请停下来并确信这是正确的！**
+    丢弃所有被拒绝的样本。
 - en: The accepted samples will be true samples from the normalized density corresponding
     to the unnormalized target.
+  id: totrans-47
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 被接受的样本将是来自与未归一化目标相对应的归一化密度的真实样本。
 - en: 'The following code implements rejection sampling. Note that there are only
     four (substantive) lines of code in this function, corresponding to the four steps
     above:'
+  id: totrans-48
   prefs: []
   type: TYPE_NORMAL
+  zh: 以下代码实现了拒绝采样。请注意，此函数中只有四行（实质性）代码，对应于上述四个步骤：
 - en: '[PRE14]'
+  id: totrans-49
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE14]'
 - en: 'Let’s apply it to our target distribution from above, using `rejection_sample_uniform(num_proposals=500)`
     and `rejection_sample_uniform(num_proposals=10000)`:'
+  id: totrans-50
   prefs: []
   type: TYPE_NORMAL
+  zh: 让我们将其应用于上述目标分布，使用 `rejection_sample_uniform(num_proposals=500)` 和 `rejection_sample_uniform(num_proposals=10000)`：
 - en: <details class="myst-dropdown rounded-md my-5 shadow dark:shadow-2xl dark:shadow-neutral-900
     overflow-hidden bg-gray-50 dark:bg-stone-800"><summary class="myst-dropdown-header
     m-0 text-lg font-medium py-1 min-h-[2em] pl-3 cursor-pointer hover:shadow-[inset_0_0_0px_30px_#00000003]
     dark:hover:shadow-[inset_0_0_0px_30px_#FFFFFF03] bg-gray-100 dark:bg-slate-900">Source</summary>
+  id: totrans-51
   prefs: []
   type: TYPE_NORMAL
+  zh: <details class="myst-dropdown rounded-md my-5 shadow dark:shadow-2xl dark:shadow-neutral-900
+    overflow-hidden bg-gray-50 dark:bg-stone-800"><summary class="myst-dropdown-header
+    m-0 text-lg font-medium py-1 min-h-[2em] pl-3 cursor-pointer hover:shadow-[inset_0_0_0px_30px_#00000003]
+    dark:hover:shadow-[inset_0_0_0px_30px_#FFFFFF03] bg-gray-100 dark:bg-slate-900">源代码</summary>
 - en: '[PRE15]</details>'
+  id: totrans-52
   prefs: []
   type: TYPE_NORMAL
+  zh: '[PRE15]</details>'
 - en: '[PRE16]'
+  id: totrans-53
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE16]'
 - en: '![<Figure size 800x300 with 2 Axes>](../Images/c2c5d296ceff86bc940cdca502db235e.png)'
+  id: totrans-54
   prefs: []
   type: TYPE_IMG
+  zh: '![<Figure size 800x300 with 2 Axes>](../Images/c2c5d296ceff86bc940cdca502db235e.png)'
 - en: 'From the results, we can see that rejection sampling, when run with enough
     proposals, correctly and accurately gives us samples from the target distribution.
     But, it can be **inefficient**: we accepted less than half of the samples each
     time! Indeed, even with 10,000 proposals (right), the samples don’t perfectly
     represent the target distribution.'
+  id: totrans-55
   prefs: []
   type: TYPE_NORMAL
+  zh: 从结果中我们可以看到，当有足够多的提议样本时，拒绝采样能够正确且准确地为我们提供来自目标分布的样本。但是，它可能**效率低下**：我们每次接受的样本不到一半！确实，即使有10,000个提议样本（右侧），这些样本也不能完美地代表目标分布。
 - en: This problem of inefficiency is caused by rejecting samples. Note that the maximum
     acceptance probability was only around 0.64\. If we were to scale the proposal
     distribution by a factor of <semantics><mrow><mn>1</mn><mi mathvariant="normal">/</mi><mn>0.64</mn><mo>≈</mo><mn>1.56</mn></mrow><annotation
     encoding="application/x-tex">1/0.64 \approx 1.56</annotation></semantics>1/0.64≈1.56,
     then we’d reject fewer samples overall, while still ensuring that the probabilities
     never went above 1.
+  id: totrans-56
   prefs: []
   type: TYPE_NORMAL
+  zh: 这种效率低下的问题是由拒绝样本引起的。请注意，最大接受概率仅为0.64左右。如果我们将提议分布按比例缩放 <semantics><mrow><mn>1</mn><mi
+    mathvariant="normal">/</mi><mn>0.64</mn><mo>≈</mo><mn>1.56</mn></mrow><annotation
+    encoding="application/x-tex">1/0.64 \approx 1.56</annotation></semantics>1/0.64≈1.56
+    倍，那么总体上我们拒绝的样本会更少，同时仍能确保概率永远不会超过1。
 - en: Unfortunately, the inefficiency problem starts to get much worse when working
     in high dimensions! When dealing with high-dimensional distributions, there is
     often much more of the space with relatively low density, which means many more
     samples being rejected.
+  id: totrans-57
   prefs: []
   type: TYPE_NORMAL
+  zh: 不幸的是，当处理高维问题时，效率低下的问题会变得严重得多！在处理高维分布时，空间中通常有更多区域的密度相对较低，这意味着会有更多的样本被拒绝。
 - en: As a second example, what happens if we want to sample from a target distribution
     that takes on values in <semantics><mrow><mo stretchy="false">[</mo><mn>0</mn><mo
     separator="true">,</mo><mi mathvariant="normal">∞</mi><mo stretchy="false">)</mo></mrow><annotation
@@ -325,20 +502,45 @@
     we’ll never generate a sample greater than <semantics><mrow><mi>b</mi></mrow><annotation
     encoding="application/x-tex">b</annotation></semantics>b, so our samples won’t
     match the true distribution.
+  id: totrans-58
   prefs: []
   type: TYPE_NORMAL
+  zh: 作为第二个例子，如果我们想从取值在 <semantics><mrow><mo stretchy="false">[</mo><mn>0</mn><mo
+    separator="true">,</mo><mi mathvariant="normal">∞</mi><mo stretchy="false">)</mo></mrow><annotation
+    encoding="application/x-tex">[0, \infty)</annotation></semantics>[0,∞) 的目标分布中抽样，会发生什么？例如，假设我们的密度函数为
+    <semantics><mrow><mi>p</mi><mo stretchy="false">(</mo><mi>θ</mi><mi mathvariant="normal">∣</mi><mi>x</mi><mo
+    stretchy="false">)</mo><mo>∝</mo><mi>exp</mi><mo>⁡</mo><mo stretchy="false">(</mo><mo>−</mo><mi>θ</mi><mo
+    stretchy="false">)</mo><mi mathvariant="normal">∣</mi><mi>sin</mi><mo>⁡</mo><mo
+    stretchy="false">(</mo><mn>2</mn><mi>θ</mi><mo stretchy="false">)</mo><mi mathvariant="normal">∣</mi></mrow><annotation
+    encoding="application/x-tex">p(\theta|x) \propto \exp(-\theta) |\sin(2\theta)|</annotation></semantics>p(θ∣x)∝exp(−θ)∣sin(2θ)∣，其中
+    <semantics><mrow><mi>θ</mi><mo>∈</mo><mo stretchy="false">[</mo><mn>0</mn><mo
+    separator="true">,</mo><mi mathvariant="normal">∞</mi><mo stretchy="false">)</mo></mrow><annotation
+    encoding="application/x-tex">\theta \in [0, \infty)</annotation></semantics>θ∈[0,∞)。我们不能使用均匀分布
+    <semantics><mrow><mo stretchy="false">(</mo><mi>a</mi><mo separator="true">,</mo><mi>b</mi><mo
+    stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">(a, b)</annotation></semantics>(a,b)
+    作为提议分布。为什么不行？因为对于任何 <semantics><mrow><mi>b</mi></mrow><annotation encoding="application/x-tex">b</annotation></semantics>b
+    值，我们永远无法生成大于 <semantics><mrow><mi>b</mi></mrow><annotation encoding="application/x-tex">b</annotation></semantics>b
+    的样本，因此我们的样本将无法匹配真实分布。
 - en: 'Instead, we could use the normal or exponential distribution:'
+  id: totrans-59
   prefs: []
   type: TYPE_NORMAL
+  zh: 相反，我们可以使用正态分布或指数分布：
 - en: '[PRE17]'
+  id: totrans-60
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE17]'
 - en: '[PRE18]'
+  id: totrans-61
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE18]'
 - en: '![<Figure size 640x480 with 1 Axes>](../Images/4c9631b1ce2795562fa5de28084383ad.png)'
+  id: totrans-62
   prefs: []
   type: TYPE_IMG
+  zh: '![<Figure size 640x480 with 1 Axes>](../Images/4c9631b1ce2795562fa5de28084383ad.png)'
 - en: To summarize, we saw that rejection sampling can be used to draw samples given
     only an unnormalized target distribution. Even though it can be used to draw samples
     from any unnormalized target, we most often will use it (and other sampling methods)
@@ -346,8 +548,13 @@
     <semantics><mrow><mi>p</mi><mo stretchy="false">(</mo><mi>θ</mi><mi mathvariant="normal">∣</mi><mi>x</mi><mo
     stretchy="false">)</mo><mi>p</mi><mo stretchy="false">(</mo><mi>θ</mi><mo stretchy="false">)</mo></mrow><annotation
     encoding="application/x-tex">p(\theta|x)p(\theta)</annotation></semantics>p(θ∣x)p(θ).
+  id: totrans-63
   prefs: []
   type: TYPE_NORMAL
+  zh: 总而言之，我们了解到拒绝采样可用于仅根据未归一化的目标分布进行抽样。尽管它可以用于从任何未归一化的目标分布中抽取样本，但我们最常将其（以及其他抽样方法）用于未归一化的目标分布，即后验分布的分子
+    <semantics><mrow><mi>p</mi><mo stretchy="false">(</mo><mi>θ</mi><mi mathvariant="normal">∣</mi><mi>x</mi><mo
+    stretchy="false">)</mo><mi>p</mi><mo stretchy="false">(</mo><mi>θ</mi><mo stretchy="false">)</mo></mrow><annotation
+    encoding="application/x-tex">p(\theta|x)p(\theta)</annotation></semantics>p(θ∣x)p(θ)。
 - en: 'Rejection sampling works by using a proposal distribution that’s easy to sample
     from: while the normal and uniform distributions are most common, we can use any
     distribution as long as (a) we can draw samples from it, and (b) we can guarantee
@@ -356,57 +563,84 @@
     (2) computing the ratio of target divided by proposal as the acceptance probability,
     and (3) accepting each sample with its acceptance probability. It’s typically
     inefficient, especially in high dimensions.'
+  id: totrans-64
   prefs: []
   type: TYPE_NORMAL
+  zh: 拒绝采样通过使用一个易于采样的提议分布来工作：虽然正态分布和均匀分布最为常见，但我们可以使用任何分布，只要 (a) 我们可以从中抽取样本，并且 (b)
+    我们可以保证它总是大于（或等于）目标分布的缩放版本。其工作原理是：(1) 从提议分布生成提议样本，(2) 计算目标分布与提议分布的比值作为接受概率，(3)
+    根据其接受概率接受每个样本。它通常效率低下，尤其是在高维情况下。
 - en: '[PRE19]'
+  id: totrans-65
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE19]'
 - en: Loading...
+  id: totrans-66
   prefs: []
   type: TYPE_NORMAL
+  zh: 加载中...
 - en: Markov Chain Monte Carlo[¶](#markov-chain-monte-carlo "Link to this Section")
+  id: totrans-67
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: Markov Chain Monte Carlo[¶](#markov-chain-monte-carlo "Link to this Section")
 - en: We noticed that the inefficiency of rejection sampling was due to the large
     number of proposals that we rejected and discarded. Indeed, rejection sampling
     generates each sample independently, without using any information from previously
     generated samples about which areas have lower and higher probability.
+  id: totrans-68
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们注意到，拒绝采样的低效性源于我们拒绝并丢弃了大量提议样本。确实，拒绝采样独立地生成每个样本，没有利用先前生成的样本中关于哪些区域概率较低、哪些区域概率较高的任何信息。
 - en: '**Markov chain Monte Carlo (MCMC)** methods take a different approach by generating
     a sequence of samples. Each sample depends on the previous one, which lets us
     generate better samples. We’ll construct the sequence of samples in such a way
     that they form a Markov chain whose steady state distribution is the true normalized
     version of the target distribution.'
+  id: totrans-69
   prefs: []
   type: TYPE_NORMAL
+  zh: '**马尔可夫链蒙特卡洛 (MCMC)** 方法采用了一种不同的策略，它通过生成一系列样本来工作。每个样本都依赖于前一个样本，这使我们能够生成更好的样本。我们将以这样一种方式构建样本序列，使其形成一个马尔可夫链，其稳态分布就是目标分布的真实归一化版本。'
 - en: Markov Chains[¶](#markov-chains "Link to this Section")
+  id: totrans-70
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: Markov Chains[¶](#markov-chains "Link to this Section")
 - en: See [Chapter 10 of the Data 140 textbook](https://data140.org/textbook/content/Chapter_10/00_Markov_Chains.html)
     for a discussion of Markov Chains.
+  id: totrans-71
   prefs: []
   type: TYPE_NORMAL
+  zh: 关于马尔可夫链的讨论，请参阅 [Data 140 教材第 10 章](https://data140.org/textbook/content/Chapter_10/00_Markov_Chains.html)。
 - en: Metropolis-Hastings (Optional)[¶](#metropolis-hastings-optional "Link to this
     Section")
+  id: totrans-72
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: Metropolis-Hastings (Optional)[¶](#metropolis-hastings-optional "Link to this
+    Section")
 - en: '*Work in progress*'
+  id: totrans-73
   prefs: []
   type: TYPE_NORMAL
+  zh: '*进行中*'
 - en: Gibbs sampling[¶](#gibbs-sampling "Link to this Section")
+  id: totrans-74
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: Gibbs sampling[¶](#gibbs-sampling "Link to this Section")
 - en: 'Gibbs sampling is an algorithm designed to work with high-dimensional posterior
     distributions. It works by iteratively resampling each individual variable conditioned
     on the data and all other random variables. For example, let’s revisit the uniform
     distribution over the unit circle from above:'
+  id: totrans-75
   prefs: []
   type: TYPE_NORMAL
+  zh: Gibbs 采样是一种专为处理高维后验分布而设计的算法。它通过迭代地对每个单独变量进行重采样来工作，条件是给定数据和其他所有随机变量。例如，让我们重新审视上面提到的单位圆上的均匀分布：
 - en: <semantics><mtable rowspacing="0.25em" columnalign="right left" columnspacing="0em"><mtr><mtd><mstyle
     scriptlevel="0" displaystyle="true"><mrow><mi>p</mi><mo stretchy="false">(</mo><mi>θ</mi><mi
     mathvariant="normal">∣</mi><mi>x</mi><mo stretchy="false">)</mo></mrow></mstyle></mtd><mtd><mstyle
@@ -420,8 +654,22 @@
     1 & \text{if } \theta_1^2 + \theta_2^2 \leq 1 \\ 0 & \text{otherwise} \end{cases}
     \end{align*}</annotation></semantics>p(θ∣x)​∝{10​if θ12​+θ22​≤1otherwise​​[(2)](#sKmz0UEnpw
     "Link to this Equation")
+  id: totrans-76
   prefs: []
   type: TYPE_NORMAL
+  zh: <semantics><mtable rowspacing="0.25em" columnalign="right left" columnspacing="0em"><mtr><mtd><mstyle
+    scriptlevel="0" displaystyle="true"><mrow><mi>p</mi><mo stretchy="false">(</mo><mi>θ</mi><mi
+    mathvariant="normal">∣</mi><mi>x</mi><mo stretchy="false">)</mo></mrow></mstyle></mtd><mtd><mstyle
+    scriptlevel="0" displaystyle="true"><mrow><mo>∝</mo><mrow><mo fence="true">{</mo><mtable
+    rowspacing="0.36em" columnalign="left left" columnspacing="1em"><mtr><mtd><mstyle
+    scriptlevel="0" displaystyle="false"><mn>1</mn></mstyle></mtd><mtd><mstyle scriptlevel="0"
+    displaystyle="false"><mrow><mtext>如果 </mtext><msubsup><mi>θ</mi><mn>1</mn><mn>2</mn></msubsup><mo>+</mo><msubsup><mi>θ</mi><mn>2</mn><mn>2</mn></msubsup><mo>≤</mo><mn>1</mn></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle
+    scriptlevel="0" displaystyle="false"><mn>0</mn></mstyle></mtd><mtd><mstyle scriptlevel="0"
+    displaystyle="false"><mtext>否则</mtext></mstyle></mtd></mtr></mtable></mrow></mrow></mstyle></mtd></mtr></mtable><annotation
+    encoding="application/x-tex">\begin{align*} p(\theta|x) &\propto \begin{cases}
+    1 & \text{if } \theta_1^2 + \theta_2^2 \leq 1 \\ 0 & \text{otherwise} \end{cases}
+    \end{align*}</annotation></semantics>p(θ∣x)​∝{10​如果 θ12​+θ22​≤1否则​​[(2)](#sKmz0UEnpw
+    "链接到此方程")
 - en: 'Suppose that we are given a particular value of <semantics><mrow><msub><mi>θ</mi><mn>1</mn></msub></mrow><annotation
     encoding="application/x-tex">\theta_1</annotation></semantics>θ1​, say <semantics><mrow><msub><mi>θ</mi><mn>1</mn></msub><mo>=</mo><mn>0.5</mn></mrow><annotation
     encoding="application/x-tex">\theta_1 = 0.5</annotation></semantics>θ1​=0.5. Conditioned
@@ -429,25 +677,43 @@
     mathvariant="normal">∣</mi><msub><mi>θ</mi><mn>1</mn></msub><mo>=</mo><mn>0.5</mn></mrow><annotation
     encoding="application/x-tex">\theta_2|\theta_1=0.5</annotation></semantics>θ2​∣θ1​=0.5:
     it’s uniform over the vertical line shown below:'
+  id: totrans-77
   prefs: []
   type: TYPE_NORMAL
+  zh: 假设我们已知 <semantics><mrow><msub><mi>θ</mi><mn>1</mn></msub></mrow><annotation
+    encoding="application/x-tex">\theta_1</annotation></semantics>θ1​ 的一个特定值，例如 <semantics><mrow><msub><mi>θ</mi><mn>1</mn></msub><mo>=</mo><mn>0.5</mn></mrow><annotation
+    encoding="application/x-tex">\theta_1 = 0.5</annotation></semantics>θ1​=0.5。基于这个值，我们可以轻松推断
+    <semantics><mrow><msub><mi>θ</mi><mn>2</mn></msub><mi mathvariant="normal">∣</mi><msub><mi>θ</mi><mn>1</mn></msub><mo>=</mo><mn>0.5</mn></mrow><annotation
+    encoding="application/x-tex">\theta_2|\theta_1=0.5</annotation></semantics>θ2​∣θ1​=0.5
+    的分布：它在如下所示的垂直线上是均匀的：
 - en: <details class="myst-dropdown rounded-md my-5 shadow dark:shadow-2xl dark:shadow-neutral-900
     overflow-hidden bg-gray-50 dark:bg-stone-800"><summary class="myst-dropdown-header
     m-0 text-lg font-medium py-1 min-h-[2em] pl-3 cursor-pointer hover:shadow-[inset_0_0_0px_30px_#00000003]
     dark:hover:shadow-[inset_0_0_0px_30px_#FFFFFF03] bg-gray-100 dark:bg-slate-900">Source</summary>
+  id: totrans-78
   prefs: []
   type: TYPE_NORMAL
+  zh: <details class="myst-dropdown rounded-md my-5 shadow dark:shadow-2xl dark:shadow-neutral-900
+    overflow-hidden bg-gray-50 dark:bg-stone-800"><summary class="myst-dropdown-header
+    m-0 text-lg font-medium py-1 min-h-[2em] pl-3 cursor-pointer hover:shadow-[inset_0_0_0px_30px_#00000003]
+    dark:hover:shadow-[inset_0_0_0px_30px_#FFFFFF03] bg-gray-100 dark:bg-slate-900">源代码</summary>
 - en: '[PRE20]</details> ![<Figure size 400x400 with 1 Axes>](../Images/9a3a53c5ee5a42674408463538844efb.png)'
+  id: totrans-79
   prefs: []
   type: TYPE_NORMAL
+  zh: '[PRE20]</details> ![<尺寸为400x400，包含1个坐标轴的图>](../Images/9a3a53c5ee5a42674408463538844efb.png)'
 - en: 'So, given any particular value of <semantics><mrow><msub><mi>θ</mi><mn>1</mn></msub></mrow><annotation
     encoding="application/x-tex">\theta_1</annotation></semantics>θ1​, we could easily
     draw a sample for <semantics><mrow><msub><mi>θ</mi><mn>2</mn></msub></mrow><annotation
     encoding="application/x-tex">\theta_2</annotation></semantics>θ2​ conditioned
     on that value by sampling out of a uniform distribution. With a bit of algebra,
     we can write this as:'
+  id: totrans-80
   prefs: []
   type: TYPE_NORMAL
+  zh: 因此，给定 <semantics><mrow><msub><mi>θ</mi><mn>1</mn></msub></mrow><annotation encoding="application/x-tex">\theta_1</annotation></semantics>θ1​
+    的任意特定值，我们可以通过从均匀分布中采样，轻松地基于该值为 <semantics><mrow><msub><mi>θ</mi><mn>2</mn></msub></mrow><annotation
+    encoding="application/x-tex">\theta_2</annotation></semantics>θ2​ 抽取一个条件样本。经过一些代数运算，我们可以将其写为：
 - en: <semantics><mrow><msub><mi>θ</mi><mn>2</mn></msub><mo>∣</mo><msub><mi>θ</mi><mn>1</mn></msub><mo>∼</mo><mrow><mi
     mathvariant="normal">U</mi><mi mathvariant="normal">n</mi><mi mathvariant="normal">i</mi><mi
     mathvariant="normal">f</mi><mi mathvariant="normal">o</mi><mi mathvariant="normal">r</mi><mi
@@ -456,11 +722,22 @@
     fence="true">)</mo></mrow></mrow><annotation encoding="application/x-tex">\theta_2
     \mid \theta_1 \sim \mathrm{Uniform}\left(-\sqrt{1-\theta_1^2}, \sqrt{1-\theta_1^2}\right)</annotation></semantics>θ2​∣θ1​∼Uniform(−1−θ12​​,1−θ12​​)[(3)](#rBWHd6C5Ki
     "Link to this Equation")
+  id: totrans-81
   prefs: []
   type: TYPE_NORMAL
+  zh: <semantics><mrow><msub><mi>θ</mi><mn>2</mn></msub><mo>∣</mo><msub><mi>θ</mi><mn>1</mn></msub><mo>∼</mo><mrow><mi
+    mathvariant="normal">U</mi><mi mathvariant="normal">n</mi><mi mathvariant="normal">i</mi><mi
+    mathvariant="normal">f</mi><mi mathvariant="normal">o</mi><mi mathvariant="normal">r</mi><mi
+    mathvariant="normal">m</mi></mrow><mrow><mo fence="true">(</mo><mo>−</mo><msqrt><mrow><mn>1</mn><mo>−</mo><msubsup><mi>θ</mi><mn>1</mn><mn>2</mn></msubsup></mrow></msqrt><mo
+    separator="true">,</mo><msqrt><mrow><mn>1</mn><mo>−</mo><msubsup><mi>θ</mi><mn>1</mn><mn>2</mn></msubsup></mrow></msqrt><mo
+    fence="true">)</mo></mrow></mrow><annotation encoding="application/x-tex">\theta_2
+    \mid \theta_1 \sim \mathrm{Uniform}\left(-\sqrt{1-\theta_1^2}, \sqrt{1-\theta_1^2}\right)</annotation></semantics>θ2​∣θ1​∼Uniform(−1−θ12​​,1−θ12​​)[(3)](#rBWHd6C5Ki
+    "Link to this Equation")
 - en: And by symmetry
+  id: totrans-82
   prefs: []
   type: TYPE_NORMAL
+  zh: 根据对称性
 - en: Note that even though we made reference to posterior distributions and conditioning
     on data throughout this section, Gibbs sampling is a general method that can be
     used to sample from any high-dimensional target where the conditional distributions
@@ -472,28 +749,46 @@
     stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">p(\theta_i
     | \theta_1, \ldots, \theta_{i-1}, \theta_{i+1}, \ldots, \theta_n)</annotation></semantics>p(θi​∣θ1​,…,θi−1​,θi+1​,…,θn​)
     are easy to sample from.
+  id: totrans-83
   prefs: []
   type: TYPE_NORMAL
+  zh: 请注意，尽管我们在本节中多次提及后验分布和基于数据的条件化，吉布斯采样是一种通用方法，可用于从任何高维目标分布中采样，只要其条件分布 <semantics><mrow><mi>p</mi><mo
+    stretchy="false">(</mo><msub><mi>θ</mi><mi>i</mi></msub><mi mathvariant="normal">∣</mi><msub><mi>θ</mi><mn>1</mn></msub><mo
+    separator="true">,</mo><mo>…</mo><mo separator="true">,</mo><msub><mi>θ</mi><mrow><mi>i</mi><mo>−</mo><mn>1</mn></mrow></msub><mo
+    separator="true">,</mo><msub><mi>θ</mi><mrow><mi>i</mi><mo>+</mo><mn>1</mn></mrow></msub><mo
+    separator="true">,</mo><mo>…</mo><mo separator="true">,</mo><msub><mi>θ</mi><mi>n</mi></msub><mo
+    stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">p(\theta_i
+    | \theta_1, \ldots, \theta_{i-1}, \theta_{i+1}, \ldots, \theta_n)</annotation></semantics>p(θi​∣θ1​,…,θi−1​,θi+1​,…,θn​)
+    易于采样。
 - en: Implementing models in PyMC[¶](#implementing-models-in-pymc "Link to this Section")
+  id: totrans-84
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 在 PyMC 中实现模型[¶](#implementing-models-in-pymc "Link to this Section")
 - en: 'We spent a lot of time doing algebra to derive the posterior distributions
     and estimates for the review model. At this point, you might be asking: couldn’t
     we do a lot of that work computationally? It turns out the answer is yes! PyMC
     is a Python library for Bayesian inference. In order to use it, you must specify
     a probabilistic model (like the three we’ve just seen) and observed data, and
     it will compute the posterior distribution over all unknown variables.'
+  id: totrans-85
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们花了大量时间进行代数推导，以得出评价模型的后验分布和估计值。此时，你可能会问：我们能否通过计算来完成大部分工作？事实证明答案是肯定的！PyMC 是一个用于贝叶斯推断的
+    Python 库。要使用它，你必须指定一个概率模型（就像我们刚刚看到的三个模型）和观测数据，然后它将计算所有未知变量的后验分布。
 - en: Product Review Model in PyMC[¶](#product-review-model-in-pymc "Link to this
     Section")
+  id: totrans-86
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: PyMC 中的产品评价模型[¶](#product-review-model-in-pymc "Link to this Section")
 - en: 'Let’s try it out on the product review model:'
+  id: totrans-87
   prefs: []
   type: TYPE_NORMAL
+  zh: 让我们在产品评价模型上尝试一下：
 - en: <semantics><mtable rowspacing="0.25em" columnalign="right left" columnspacing="0em"><mtr><mtd><mstyle
     scriptlevel="0" displaystyle="true"><mrow><msub><mi>x</mi><mi>i</mi></msub><mi
     mathvariant="normal">∣</mi><mi>θ</mi></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0"
@@ -508,65 +803,115 @@
     encoding="application/x-tex">\begin{align} x_i | \theta &\sim \mathrm{Bernoulli}(\theta)
     \\ \theta &\sim \mathrm{Beta}(\alpha, \beta) \end{align}</annotation></semantics>xi​∣θθ​∼Bernoulli(θ)∼Beta(α,β)​​[(4)](#FzOQRfRfEa
     "Link to this Equation")
+  id: totrans-88
   prefs: []
   type: TYPE_NORMAL
+  zh: <semantics><mtable rowspacing="0.25em" columnalign="right left" columnspacing="0em"><mtr><mtd><mstyle
+    scriptlevel="0" displaystyle="true"><mrow><msub><mi>x</mi><mi>i</mi></msub><mi
+    mathvariant="normal">∣</mi><mi>θ</mi></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0"
+    displaystyle="true"><mrow><mo>∼</mo><mrow><mi mathvariant="normal">B</mi><mi mathvariant="normal">e</mi><mi
+    mathvariant="normal">r</mi><mi mathvariant="normal">n</mi><mi mathvariant="normal">o</mi><mi
+    mathvariant="normal">u</mi><mi mathvariant="normal">l</mi><mi mathvariant="normal">l</mi><mi
+    mathvariant="normal">i</mi></mrow><mo stretchy="false">(</mo><mi>θ</mi><mo stretchy="false">)</mo></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle
+    scriptlevel="0" displaystyle="true"><mi>θ</mi></mstyle></mtd><mtd><mstyle scriptlevel="0"
+    displaystyle="true"><mrow><mo>∼</mo><mrow><mi mathvariant="normal">B</mi><mi mathvariant="normal">e</mi><mi
+    mathvariant="normal">t</mi><mi mathvariant="normal">a</mi></mrow><mo stretchy="false">(</mo><mi>α</mi><mo
+    separator="true">,</mo><mi>β</mi><mo stretchy="false">)</mo></mrow></mstyle></mtd></mtr></mtable><annotation
+    encoding="application/x-tex">\begin{align} x_i | \theta &\sim \mathrm{Bernoulli}(\theta)
+    \\ \theta &\sim \mathrm{Beta}(\alpha, \beta) \end{align}</annotation></semantics>xi​∣θθ​∼Bernoulli(θ)∼Beta(α,β)​​[(4)](#FzOQRfRfEa
+    "链接至此方程")
 - en: 'We’ll start by specifying our data: Microwave A has 3 positive reviews and
     0 negative reviews, and Microwave B has 19 positive reviews and 1 negative review.'
+  id: totrans-89
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们将从指定数据开始：微波炉 A 有 3 条正面评价和 0 条负面评价，微波炉 B 有 19 条正面评价和 1 条负面评价。
 - en: '[PRE21]'
+  id: totrans-90
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE21]'
 - en: 'Then, we’ll define the model: carefully review the code below, making sure
     you understand the logic behind each line (except the very last one):'
+  id: totrans-91
   prefs: []
   type: TYPE_NORMAL
+  zh: 然后，我们将定义模型：请仔细审阅下面的代码，确保你理解每一行背后的逻辑（除了最后一行）：
 - en: '[PRE22]'
+  id: totrans-92
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE22]'
 - en: '[PRE23]'
+  id: totrans-93
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE23]'
 - en: Loading...Loading...
+  id: totrans-94
   prefs: []
   type: TYPE_NORMAL
+  zh: 正在加载...正在加载...
 - en: '[PRE24]'
+  id: totrans-95
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE24]'
 - en: Loading...
+  id: totrans-96
   prefs: []
   type: TYPE_NORMAL
+  zh: 正在加载...
 - en: '[PRE25]'
+  id: totrans-97
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE25]'
 - en: Loading...
+  id: totrans-98
   prefs: []
   type: TYPE_NORMAL
+  zh: 正在加载...
 - en: 'Take a moment and look at the output, making note of the different attributes.
     Right now, we’re most interested in the samples from the posterior, which are
     in `trace.posterior[''theta''].values`:'
+  id: totrans-99
   prefs: []
   type: TYPE_NORMAL
+  zh: 花点时间查看输出，注意不同的属性。目前，我们最感兴趣的是来自后验分布的样本，它们位于 `trace.posterior['theta'].values`
+    中：
 - en: '[PRE26]'
+  id: totrans-100
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE26]'
 - en: '![<Figure size 400x200 with 1 Axes>](../Images/8c50da89fe71512b498302f5184efb19.png)'
+  id: totrans-101
   prefs: []
   type: TYPE_IMG
+  zh: '![<尺寸为 400x200 且包含 1 个坐标轴的图形>](../Images/8c50da89fe71512b498302f5184efb19.png)'
 - en: (Optional) Exoplanet model in PyMC[¶](#id-optional-exoplanet-model-in-pymc "Link
     to this Section")
+  id: totrans-102
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: （可选）PyMC 中的系外行星模型[¶](#id-optional-exoplanet-model-in-pymc "链接至此章节")
 - en: '[PRE27]'
+  id: totrans-103
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE27]'
 - en: '`(517, 6)`'
+  id: totrans-104
   prefs: []
   type: TYPE_NORMAL
+  zh: '`(517, 6)`'
 - en: 'Let’s try a more interesting model: our mixture model for exoplanets:'
+  id: totrans-105
   prefs: []
   type: TYPE_NORMAL
+  zh: 让我们尝试一个更有趣的模型：我们用于系外行星的混合模型：
 - en: <semantics><mtable rowspacing="0.25em" columnalign="right left right" columnspacing="0em
     1em"><mtr><mtd><mstyle scriptlevel="0" displaystyle="true"><msub><mi>z</mi><mi>i</mi></msub></mstyle></mtd><mtd><mstyle
     scriptlevel="0" displaystyle="true"><mrow><mo>∼</mo><mrow><mi mathvariant="normal">B</mi><mi
@@ -593,26 +938,67 @@
     | z_i, \mu_0, \mu_1 &\sim \mathcal{N}(\mu_{z_i}, \sigma) & i = 1, \ldots, n\\
     \end{align}</annotation></semantics>zi​μk​xi​∣zi​,μ0​,μ1​​∼Bernoulli(π)∼N(μp​,σp​)∼N(μzi​​,σ)​i=1,…,nk=0,1i=1,…,n​​[(5)](#a0gd0TuYa7
     "Link to this Equation")
+  id: totrans-106
   prefs: []
   type: TYPE_NORMAL
+  zh: <semantics><mtable rowspacing="0.25em" columnalign="right left right" columnspacing="0em
+    1em"><mtr><mtd><mstyle scriptlevel="0" displaystyle="true"><msub><mi>z</mi><mi>i</mi></msub></mstyle></mtd><mtd><mstyle
+    scriptlevel="0" displaystyle="true"><mrow><mo>∼</mo><mrow><mi mathvariant="normal">B</mi><mi
+    mathvariant="normal">e</mi><mi mathvariant="normal">r</mi><mi mathvariant="normal">n</mi><mi
+    mathvariant="normal">o</mi><mi mathvariant="normal">u</mi><mi mathvariant="normal">l</mi><mi
+    mathvariant="normal">l</mi><mi mathvariant="normal">i</mi></mrow><mo stretchy="false">(</mo><mi>π</mi><mo
+    stretchy="false">)</mo></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mi>i</mi><mo>=</mo><mn>1</mn><mo
+    separator="true">,</mo><mo>…</mo><mo separator="true">,</mo><mi>n</mi></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle
+    scriptlevel="0" displaystyle="true"><msub><mi>μ</mi><mi>k</mi></msub></mstyle></mtd><mtd><mstyle
+    scriptlevel="0" displaystyle="true"><mrow><mo>∼</mo><mi mathvariant="script">N</mi><mo
+    stretchy="false">(</mo><msub><mi>μ</mi><mi>p</mi></msub><mo separator="true">,</mo><msub><mi>σ</mi><mi>p</mi></msub><mo
+    stretchy="false">)</mo></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mi>k</mi><mo>=</mo><mn>0</mn><mo
+    separator="true">,</mo><mn>1</mn></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle
+    scriptlevel="0" displaystyle="true"><mrow><msub><mi>x</mi><mi>i</mi></msub><mi
+    mathvariant="normal">∣</mi><msub><mi>z</mi><mi>i</mi></msub><mo separator="true">,</mo><msub><mi>μ</mi><mn>0</mn></msub><mo
+    separator="true">,</mo><msub><mi>μ</mi><mn>1</mn></msub></mrow></mstyle></mtd><mtd><mstyle
+    scriptlevel="0" displaystyle="true"><mrow><mo>∼</mo><mi mathvariant="script">N</mi><mo
+    stretchy="false">(</mo><msub><mi>μ</mi><msub><mi>z</mi><mi>i</mi></msub></msub><mo
+    separator="true">,</mo><mi>σ</mi><mo stretchy="false">)</mo></mrow></mstyle></mtd><mtd><mstyle
+    scriptlevel="0" displaystyle="true"><mrow><mi>i</mi><mo>=</mo><mn>1</mn><mo separator="true">,</mo><mo>…</mo><mo
+    separator="true">,</mo><mi>n</mi></mrow></mstyle></mtd></mtr></mtable><annotation
+    encoding="application/x-tex">\begin{align} z_i &\sim \mathrm{Bernoulli}(\pi) &
+    i = 1, \ldots, n \\ \mu_k &\sim \mathcal{N}(\mu_p, \sigma_p) & k =0, 1 \\ x_i
+    | z_i, \mu_0, \mu_1 &\sim \mathcal{N}(\mu_{z_i}, \sigma) & i = 1, \ldots, n\\
+    \end{align}</annotation></semantics>zi​μk​xi​∣zi​,μ0​,μ1​​∼Bernoulli(π)∼N(μp​,σp​)∼N(μzi​​,σ)​i=1,…,nk=0,1i=1,…,n​​[(5)](#a0gd0TuYa7
+    "链接到此方程")
 - en: 'First, we’ll need a trick called “fancy indexing”. Here’s how it works:'
+  id: totrans-107
   prefs: []
   type: TYPE_NORMAL
+  zh: 首先，我们需要一个名为“花式索引”的技巧。其工作原理如下：
 - en: '[PRE28]'
+  id: totrans-108
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE28]'
 - en: '`array([10.2, 1.3, 1.3, 10.2, 10.2, 1.3])`'
+  id: totrans-109
   prefs: []
   type: TYPE_NORMAL
+  zh: '`array([10.2, 1.3, 1.3, 10.2, 10.2, 1.3])`'
 - en: '[PRE29]'
+  id: totrans-110
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE29]'
 - en: '[PRE30]'
+  id: totrans-111
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE30]'
 - en: Loading...Loading...
+  id: totrans-112
   prefs: []
   type: TYPE_NORMAL
+  zh: 加载中...加载中...
 - en: '[PRE31]'
+  id: totrans-113
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE31]'

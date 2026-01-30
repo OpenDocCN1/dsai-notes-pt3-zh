@@ -1,11 +1,15 @@
 - en: Graphical Models, Probability Distributions, and Independence
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 图模型、概率分布与独立性
 - en: 原文：[https://data102.org/ds-102-book/content/chapters/02/graphical-models](https://data102.org/ds-102-book/content/chapters/02/graphical-models)
+  id: totrans-1
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 原文：[https://data102.org/ds-102-book/content/chapters/02/graphical-models](https://data102.org/ds-102-book/content/chapters/02/graphical-models)
 - en: '[<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" width="1.25rem"
     height="1.25rem" class="myst-fm-license-cc-icon myst-fm-license-cc-icon-main inline-block
     mx-1"><title>Content License: Creative Commons Attribution Share Alike 4.0 International
@@ -17,25 +21,44 @@
     must be shared under the same terms</title></svg>](https://creativecommons.org/licenses/by-sa/4.0/)[](https://github.com/ds-102/ds-102-book
     "GitHub Repository: ds-102/ds-102-book")[](https://github.com/ds-102/ds-102-book/edit/main/ds-102-book/content/chapters/02/03_graphical_models.ipynb
     "Edit This Page")'
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: '[<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" width="1.25rem"
+    height="1.25rem" class="myst-fm-license-cc-icon myst-fm-license-cc-icon-main inline-block
+    mx-1"><title>内容许可：知识共享 署名-相同方式共享 4.0 国际 (CC-BY-SA-4.0)</title></svg><svg viewBox="0
+    0 24 24" fill="currentColor" aria-hidden="true" width="1.25rem" height="1.25rem"
+    class="myst-fm-license-cc-icon myst-fm-license-cc-icon-by inline-block mr-1"><title>必须向创作者署名</title></svg><svg
+    viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" width="1.25rem" height="1.25rem"
+    class="myst-fm-license-cc-icon myst-fm-license-cc-icon-sa inline-block mr-1"><title>改编作品必须在相同条款下共享</title></svg>](https://creativecommons.org/licenses/by-sa/4.0/)[](https://github.com/ds-102/ds-102-book
+    "GitHub 仓库：ds-102/ds-102-book")[](https://github.com/ds-102/ds-102-book/edit/main/ds-102-book/content/chapters/02/03_graphical_models.ipynb
+    "编辑此页面")'
 - en: '[PRE0]'
+  id: totrans-3
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: Graphical Models, Probability Distributions, and Independence[¶](#graphical-models-probability-distributions-and-independence
     "Link to this Section")
+  id: totrans-4
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 图模型、概率分布与独立性[¶](#graphical-models-probability-distributions-and-independence
+    "链接至此章节")
 - en: Graphical Models[¶](#graphical-models "Link to this Section")
+  id: totrans-5
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 图模型[¶](#graphical-models "链接至此章节")
 - en: A **graphical model** provides a visual representation of a Bayesian hierarchical
     model using. These models are sometimes known as Bayesian networks, or **Bayes
     nets**.
+  id: totrans-6
   prefs: []
   type: TYPE_NORMAL
+  zh: '**图模型** 提供了一种使用视觉化方式表示贝叶斯层次模型的方法。这些模型有时也被称为贝叶斯网络，或 **贝叶斯网**。'
 - en: We represent each random variable with a node (circle), and a directed edge
     (arrow) between two random variables indicates that the the distribution for the
     child variable is conditioned on the parent variable. When drawing graphical models,
@@ -44,20 +67,29 @@
     encoding="application/x-tex">\theta</annotation></semantics>θ in this example.
     Then, we proceed by drawing a node for each variable that depends on those, and
     so on. Variables that are observed are shaded in.
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们用节点（圆圈）表示每个随机变量，两个随机变量之间的有向边（箭头）表示子变量的分布以父变量为条件。绘制图模型时，我们通常从那些不依赖于任何其他变量的变量开始。这些变量通常是（但不总是）未观测到的感兴趣参数，例如本例中的
+    <semantics><mrow><mi>θ</mi></mrow><annotation encoding="application/x-tex">\theta</annotation></semantics>θ。然后，我们继续为依赖于这些变量的每个变量绘制节点，依此类推。观测到的变量会以阴影表示。
 - en: 'We’ll draw graphical models for the three examples we’ve seen in previous sections:
     the product review model, the kidney cancer model, and the exoplanet model.'
+  id: totrans-8
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们将为之前章节中见过的三个示例绘制图模型：产品评价模型、肾癌模型和系外行星模型。
 - en: Graphical model for product reviews[¶](#graphical-model-for-product-reviews
     "Link to this Section")
+  id: totrans-9
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 产品评价的图模型[¶](#graphical-model-for-product-reviews "链接至此章节")
 - en: 'In our product review model, we have the following random variables:'
+  id: totrans-10
   prefs: []
   type: TYPE_NORMAL
+  zh: 在我们的产品评价模型中，有以下随机变量：
 - en: <semantics><mtable rowspacing="0.25em" columnalign="right left" columnspacing="0em"><mtr><mtd><mstyle
     scriptlevel="0" displaystyle="true"><mrow><msub><mi>x</mi><mi>i</mi></msub><mi
     mathvariant="normal">∣</mi><mi>θ</mi></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0"
@@ -72,8 +104,23 @@
     encoding="application/x-tex">\begin{align} x_i | \theta &\sim \mathrm{Bernoulli}(\theta)
     \\ \theta &\sim \mathrm{Beta}(a, b) \end{align}</annotation></semantics>xi​∣θθ​∼Bernoulli(θ)∼Beta(a,b)​​[(1)](#Zd52pk10Gw
     "Link to this Equation")
+  id: totrans-11
   prefs: []
   type: TYPE_NORMAL
+  zh: <semantics><mtable rowspacing="0.25em" columnalign="right left" columnspacing="0em"><mtr><mtd><mstyle
+    scriptlevel="0" displaystyle="true"><mrow><msub><mi>x</mi><mi>i</mi></msub><mi
+    mathvariant="normal">∣</mi><mi>θ</mi></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0"
+    displaystyle="true"><mrow><mo>∼</mo><mrow><mi mathvariant="normal">B</mi><mi mathvariant="normal">e</mi><mi
+    mathvariant="normal">r</mi><mi mathvariant="normal">n</mi><mi mathvariant="normal">o</mi><mi
+    mathvariant="normal">u</mi><mi mathvariant="normal">l</mi><mi mathvariant="normal">l</mi><mi
+    mathvariant="normal">i</mi></mrow><mo stretchy="false">(</mo><mi>θ</mi><mo stretchy="false">)</mo></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle
+    scriptlevel="0" displaystyle="true"><mi>θ</mi></mstyle></mtd><mtd><mstyle scriptlevel="0"
+    displaystyle="true"><mrow><mo>∼</mo><mrow><mi mathvariant="normal">B</mi><mi mathvariant="normal">e</mi><mi
+    mathvariant="normal">t</mi><mi mathvariant="normal">a</mi></mrow><mo stretchy="false">(</mo><mi>a</mi><mo
+    separator="true">,</mo><mi>b</mi><mo stretchy="false">)</mo></mrow></mstyle></mtd></mtr></mtable><annotation
+    encoding="application/x-tex">\begin{align} x_i | \theta &\sim \mathrm{Bernoulli}(\theta)
+    \\ \theta &\sim \mathrm{Beta}(a, b) \end{align}</annotation></semantics>xi​∣θθ​∼Bernoulli(θ)∼Beta(a,b)​​[(1)](#Zd52pk10Gw
+    "链接到此公式")
 - en: 'In this case, this means we start with a node for the product quality <semantics><mrow><mi>θ</mi></mrow><annotation
     encoding="application/x-tex">\theta</annotation></semantics>θ, and then with one
     node for each review <semantics><mrow><msub><mi>x</mi><mi>i</mi></msub></mrow><annotation
@@ -83,27 +130,45 @@
     encoding="application/x-tex">x_i</annotation></semantics>xi​ are shaded in, while
     the node for the hidden (unobserved) product quality <semantics><mrow><mi>θ</mi></mrow><annotation
     encoding="application/x-tex">\theta</annotation></semantics>θ is not:'
+  id: totrans-12
   prefs: []
   type: TYPE_NORMAL
+  zh: 在这种情况下，这意味着我们首先为产品质量 <semantics><mrow><mi>θ</mi></mrow><annotation encoding="application/x-tex">\theta</annotation></semantics>θ
+    建立一个节点，然后为每条评论 <semantics><mrow><msub><mi>x</mi><mi>i</mi></msub></mrow><annotation
+    encoding="application/x-tex">x_i</annotation></semantics>xi​ 各建立一个节点，所有这些节点都依赖于
+    <semantics><mrow><mi>θ</mi></mrow><annotation encoding="application/x-tex">\theta</annotation></semantics>θ。已观测到的评论节点
+    <semantics><mrow><msub><mi>x</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">x_i</annotation></semantics>xi​
+    被涂上阴影，而隐藏（未观测到）的产品质量节点 <semantics><mrow><mi>θ</mi></mrow><annotation encoding="application/x-tex">\theta</annotation></semantics>θ
+    则没有：
 - en: '![](../Images/a33913a1ac74d8ab32ea47a54a81b6dc.png)'
+  id: totrans-13
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/a33913a1ac74d8ab32ea47a54a81b6dc.png)'
 - en: This visual representation shows us the structure of the model, by making it
     clear that each review <semantics><mrow><msub><mi>x</mi><mi>i</mi></msub></mrow><annotation
     encoding="application/x-tex">x_i</annotation></semantics>xi​ depends on the quality
     <semantics><mrow><mi>θ</mi></mrow><annotation encoding="application/x-tex">\theta</annotation></semantics>θ.
     But just as before, this model is simple enough that we already knew that. Next,
     we’ll look at the graphical model for a more interesting example.
+  id: totrans-14
   prefs: []
   type: TYPE_NORMAL
+  zh: 这种可视化表示通过清晰地展示每条评论 <semantics><mrow><msub><mi>x</mi><mi>i</mi></msub></mrow><annotation
+    encoding="application/x-tex">x_i</annotation></semantics>xi​ 都依赖于质量 <semantics><mrow><mi>θ</mi></mrow><annotation
+    encoding="application/x-tex">\theta</annotation></semantics>θ，向我们展示了模型的结构。但和之前一样，这个模型足够简单，我们早已知道这一点。接下来，我们将看一个更有趣的例子的图模型。
 - en: Graphical model for kidney cancer death risk[¶](#graphical-model-for-kidney-cancer-death-risk
     "Link to this Section")
+  id: totrans-15
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 肾癌死亡风险的图模型[¶](#graphical-model-for-kidney-cancer-death-risk "链接到此章节")
 - en: 'Recall the full hierarchical model for the kidney cancer death risk example:'
+  id: totrans-16
   prefs: []
   type: TYPE_NORMAL
+  zh: 回顾肾癌死亡风险示例的完整层次模型：
 - en: <semantics><mtable rowspacing="0.25em" columnalign="right left right" columnspacing="0em
     1em"><mtr><mtd><mstyle scriptlevel="0" displaystyle="true"><mi>a</mi></mstyle></mtd><mtd><mstyle
     scriptlevel="0" displaystyle="true"><mrow><mo>∼</mo><mrow><mi mathvariant="normal">U</mi><mi
@@ -136,84 +201,167 @@
     \in \{1, 2, \ldots, C\} \\ y_i &\sim \mathrm{Binomial}(\theta_i, n_i), & i \in
     \{1, 2, \ldots, C\} \end{align*}</annotation></semantics>abθi​yi​​∼Uniform(0,50)∼Uniform(0,300000)∼Beta(a,b),∼Binomial(θi​,ni​),​i∈{1,2,…,C}i∈{1,2,…,C}​[(2)](#Xgs0SMXVrf
     "Link to this Equation")
+  id: totrans-17
   prefs: []
   type: TYPE_NORMAL
+  zh: <semantics><mtable rowspacing="0.25em" columnalign="right left right" columnspacing="0em
+    1em"><mtr><mtd><mstyle scriptlevel="0" displaystyle="true"><mi>a</mi></mstyle></mtd><mtd><mstyle
+    scriptlevel="0" displaystyle="true"><mrow><mo>∼</mo><mrow><mi mathvariant="normal">U</mi><mi
+    mathvariant="normal">n</mi><mi mathvariant="normal">i</mi><mi mathvariant="normal">f</mi><mi
+    mathvariant="normal">o</mi><mi mathvariant="normal">r</mi><mi mathvariant="normal">m</mi></mrow><mo
+    stretchy="false">(</mo><mn>0</mn><mo separator="true">,</mo><mn>50</mn><mo stretchy="false">)</mo></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle
+    scriptlevel="0" displaystyle="true"><mi>b</mi></mstyle></mtd><mtd><mstyle scriptlevel="0"
+    displaystyle="true"><mrow><mo>∼</mo><mrow><mi mathvariant="normal">U</mi><mi mathvariant="normal">n</mi><mi
+    mathvariant="normal">i</mi><mi mathvariant="normal">f</mi><mi mathvariant="normal">o</mi><mi
+    mathvariant="normal">r</mi><mi mathvariant="normal">m</mi></mrow><mo stretchy="false">(</mo><mn>0</mn><mo
+    separator="true">,</mo><mn>300000</mn><mo stretchy="false">)</mo></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle
+    scriptlevel="0" displaystyle="true"><msub><mi>θ</mi><mi>i</mi></msub></mstyle></mtd><mtd><mstyle
+    scriptlevel="0" displaystyle="true"><mrow><mo>∼</mo><mrow><mi mathvariant="normal">B</mi><mi
+    mathvariant="normal">e</mi><mi mathvariant="normal">t</mi><mi mathvariant="normal">a</mi></mrow><mo
+    stretchy="false">(</mo><mi>a</mi><mo separator="true">,</mo><mi>b</mi><mo stretchy="false">)</mo><mo
+    separator="true">,</mo></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mi>i</mi><mo>∈</mo><mo
+    stretchy="false">{</mo><mn>1</mn><mo separator="true">,</mo><mn>2</mn><mo separator="true">,</mo><mo>…</mo><mo
+    separator="true">,</mo><mi>C</mi><mo stretchy="false">}</mo></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle
+    scriptlevel="0" displaystyle="true"><msub><mi>y</mi><mi>i</mi></msub></mstyle></mtd><mtd><mstyle
+    scriptlevel="0" displaystyle="true"><mrow><mo>∼</mo><mrow><mi mathvariant="normal">B</mi><mi
+    mathvariant="normal">i</mi><mi mathvariant="normal">n</mi><mi mathvariant="normal">o</mi><mi
+    mathvariant="normal">m</mi><mi mathvariant="normal">i</mi><mi mathvariant="normal">a</mi><mi
+    mathvariant="normal">l</mi></mrow><mo stretchy="false">(</mo><msub><mi>θ</mi><mi>i</mi></msub><mo
+    separator="true">,</mo><msub><mi>n</mi><mi>i</mi></msub><mo stretchy="false">)</mo><mo
+    separator="true">,</mo></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mi>i</mi><mo>∈</mo><mo
+    stretchy="false">{</mo><mn>1</mn><mo separator="true">,</mo><mn>2</mn><mo separator="true">,</mo><mo>…</mo><mo
+    separator="true">,</mo><mi>C</mi><mo stretchy="false">}</mo></mrow></mstyle></mtd></mtr></mtable><annotation
+    encoding="application/x-tex">\begin{align*} a &\sim \mathrm{Uniform}(0, 50) \\
+    b &\sim \mathrm{Uniform}(0, 300000) \\ \theta_i &\sim \mathrm{Beta}(a, b), & i
+    \in \{1, 2, \ldots, C\} \\ y_i &\sim \mathrm{Binomial}(\theta_i, n_i), & i \in
+    \{1, 2, \ldots, C\} \end{align*}</annotation></semantics>a ∼ 均匀分布(0, 50) b ∼ 均匀分布(0,
+    300000) θ_i ∼ 贝塔分布(a, b), i ∈ {1, 2, …, C} y_i ∼ 二项分布(θ_i, n_i), i ∈ {1, 2, …,
+    C} [(2)](#Xgs0SMXVrf "链接到此方程")
 - en: <semantics><mrow><msub><mi>y</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">y_i</annotation></semantics>yi​
     represents the number of kidney cancer deaths in county <semantics><mrow><mi>i</mi></mrow><annotation
     encoding="application/x-tex">i</annotation></semantics>i (out of a population
     of <semantics><mrow><msub><mi>n</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">n_i</annotation></semantics>ni​).
+  id: totrans-18
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: <semantics><mrow><msub><mi>y</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">y_i</annotation></semantics>yi​
+    表示第 <semantics><mrow><mi>i</mi></mrow><annotation encoding="application/x-tex">i</annotation></semantics>i
+    个县的肾癌死亡人数（总人口为 <semantics><mrow><msub><mi>n</mi><mi>i</mi></msub></mrow><annotation
+    encoding="application/x-tex">n_i</annotation></semantics>ni​）。
 - en: <semantics><mrow><msub><mi>θ</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">\theta_i</annotation></semantics>θi​
     represents the kidney cancer death rate for county <semantics><mrow><mi>i</mi></mrow><annotation
     encoding="application/x-tex">i</annotation></semantics>i.
+  id: totrans-19
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: <semantics><mrow><msub><mi>θ</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">\theta_i</annotation></semantics>θi​
+    表示第 <semantics><mrow><mi>i</mi></mrow><annotation encoding="application/x-tex">i</annotation></semantics>i
+    个县的肾癌死亡率。
 - en: <semantics><mrow><mi>a</mi></mrow><annotation encoding="application/x-tex">a</annotation></semantics>a
     and <semantics><mrow><mi>b</mi></mrow><annotation encoding="application/x-tex">b</annotation></semantics>b
     represent the parameters of the shared prior for the county-level rates.
+  id: totrans-20
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: <semantics><mrow><mi>a</mi></mrow><annotation encoding="application/x-tex">a</annotation></semantics>a
+    和 <semantics><mrow><mi>b</mi></mrow><annotation encoding="application/x-tex">b</annotation></semantics>b
+    表示县级死亡率共享先验分布的参数。
 - en: 'In order to draw the graphical model, we need to draw one node per random variable,
     and draw arrows to indicate dependency. We know that:'
+  id: totrans-21
   prefs: []
   type: TYPE_NORMAL
+  zh: 为了绘制图模型，我们需要为每个随机变量绘制一个节点，并用箭头表示依赖关系。我们知道：
 - en: We need a node for <semantics><mrow><mi>a</mi></mrow><annotation encoding="application/x-tex">a</annotation></semantics>a
     and a node for <semantics><mrow><mi>b</mi></mrow><annotation encoding="application/x-tex">b</annotation></semantics>b.
+  id: totrans-22
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 我们需要为 <semantics><mrow><mi>a</mi></mrow><annotation encoding="application/x-tex">a</annotation></semantics>a
+    设置一个节点，并为 <semantics><mrow><mi>b</mi></mrow><annotation encoding="application/x-tex">b</annotation></semantics>b
+    设置一个节点。
 - en: We need one node for each <semantics><mrow><msub><mi>θ</mi><mi>i</mi></msub></mrow><annotation
     encoding="application/x-tex">\theta_i</annotation></semantics>θi​ and one node
     for each <semantics><mrow><msub><mi>y</mi><mi>i</mi></msub></mrow><annotation
     encoding="application/x-tex">y_i</annotation></semantics>yi​.
+  id: totrans-23
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 我们需要为每个 <semantics><mrow><msub><mi>θ</mi><mi>i</mi></msub></mrow><annotation
+    encoding="application/x-tex">\theta_i</annotation></semantics>θi​ 设置一个节点，并为每个
+    <semantics><mrow><msub><mi>y</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">y_i</annotation></semantics>yi​
+    设置一个节点。
 - en: Each <semantics><mrow><msub><mi>θ</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">\theta_i</annotation></semantics>θi​
     depends on <semantics><mrow><mi>a</mi></mrow><annotation encoding="application/x-tex">a</annotation></semantics>a
     and <semantics><mrow><mi>b</mi></mrow><annotation encoding="application/x-tex">b</annotation></semantics>b.
+  id: totrans-24
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 每个 <semantics><mrow><msub><mi>θ</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">\theta_i</annotation></semantics>θi​
+    都依赖于 <semantics><mrow><mi>a</mi></mrow><annotation encoding="application/x-tex">a</annotation></semantics>a
+    和 <semantics><mrow><mi>b</mi></mrow><annotation encoding="application/x-tex">b</annotation></semantics>b。
 - en: Each <semantics><mrow><msub><mi>y</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">y_i</annotation></semantics>yi​
     depends on <semantics><mrow><msub><mi>θ</mi><mi>i</mi></msub></mrow><annotation
     encoding="application/x-tex">\theta_i</annotation></semantics>θi​ and <semantics><mrow><msub><mi>n</mi><mi>i</mi></msub></mrow><annotation
     encoding="application/x-tex">n_i</annotation></semantics>ni​.
+  id: totrans-25
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 每个 <semantics><mrow><msub><mi>y</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">y_i</annotation></semantics>yi​
+    都依赖于 <semantics><mrow><msub><mi>θ</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">\theta_i</annotation></semantics>θi​
+    和 <semantics><mrow><msub><mi>n</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">n_i</annotation></semantics>ni​。
 - en: Because <semantics><mrow><msub><mi>n</mi><mi>i</mi></msub></mrow><annotation
     encoding="application/x-tex">n_i</annotation></semantics>ni​ is a fixed number,
     we’ll draw it as a dot.
+  id: totrans-26
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 因为 <semantics><mrow><msub><mi>n</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">n_i</annotation></semantics>ni​
+    是一个固定数字，我们将把它画成一个点。
 - en: 'So, our full graphical model looks like:'
+  id: totrans-27
   prefs: []
   type: TYPE_NORMAL
+  zh: 因此，我们完整的图模型如下所示：
 - en: '![](../Images/1a4c9943343a73b59cb5d252c25caec9.png)'
+  id: totrans-28
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/1a4c9943343a73b59cb5d252c25caec9.png)'
 - en: '(Optional) Example: Graphical Model for Exoplanet Model[¶](#id-optional-example-graphical-model-for-exoplanet-model
     "Link to this Section")'
+  id: totrans-29
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: （可选）示例：系外行星模型的图模型[¶](#id-optional-example-graphical-model-for-exoplanet-model
+    "Link to this Section")
 - en: '*Text coming soon: see video*'
+  id: totrans-30
   prefs: []
   type: TYPE_NORMAL
+  zh: '*文本即将推出：请参阅视频*'
 - en: '[PRE1]'
+  id: totrans-31
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: Relating graphical models to probability distributions[¶](#relating-graphical-models-to-probability-distributions
     "Link to this Section")
+  id: totrans-32
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 将图模型与概率分布关联起来[¶](#relating-graphical-models-to-probability-distributions "Link
+    to this Section")
 - en: When we were drawing graphical models above, we drew one node per variable,
     and started from the “top,” working with the variables that didn’t depend on any
     others. We then worked our way through the model, ending with observed variables.
@@ -223,8 +371,10 @@
     the variables in our model by starting at the root (i.e., the nodes that have
     no parents), and then proceeding through their children, writing the joint distribution
     as a product.
+  id: totrans-33
   prefs: []
   type: TYPE_NORMAL
+  zh: 在我们之前绘制图模型时，我们为每个变量绘制一个节点，并从“顶部”开始，处理那些不依赖于任何其他变量的变量。然后我们逐步处理整个模型，最终到达观测变量。当查看图模型以推导模型中所有变量的联合分布时，我们遵循类似的过程。例如，在肾癌死亡率模型中，我们可以通过从根节点（即没有父节点的节点）开始，然后遍历它们的子节点，将联合分布写成一个乘积的形式。
 - en: 'So, we start with <semantics><mrow><mi>p</mi><mo stretchy="false">(</mo><mi>a</mi><mo
     stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">p(a)</annotation></semantics>p(a)
     and <semantics><mrow><mi>p</mi><mo stretchy="false">(</mo><mi>b</mi><mo stretchy="false">)</mo></mrow><annotation
@@ -238,8 +388,22 @@
     then <semantics><mrow><mi>p</mi><mo stretchy="false">(</mo><msub><mi>y</mi><mi>i</mi></msub><mi
     mathvariant="normal">∣</mi><msub><mi>θ</mi><mi>i</mi></msub><mo stretchy="false">)</mo></mrow><annotation
     encoding="application/x-tex">p(y_i | \theta_i)</annotation></semantics>p(yi​∣θi​):'
+  id: totrans-34
   prefs: []
   type: TYPE_NORMAL
+  zh: 因此，我们从 <semantics><mrow><mi>p</mi><mo stretchy="false">(</mo><mi>a</mi><mo stretchy="false">)</mo></mrow><annotation
+    encoding="application/x-tex">p(a)</annotation></semantics>p(a) 和 <semantics><mrow><mi>p</mi><mo
+    stretchy="false">(</mo><mi>b</mi><mo stretchy="false">)</mo></mrow><annotation
+    encoding="application/x-tex">p(b)</annotation></semantics>p(b) 开始，然后是 <semantics><mrow><mi>p</mi><mo
+    stretchy="false">(</mo><msub><mi>θ</mi><mi>i</mi></msub><mi mathvariant="normal">∣</mi><mi>a</mi><mo
+    separator="true">,</mo><mi>b</mi><mo stretchy="false">)</mo></mrow><annotation
+    encoding="application/x-tex">p(\theta_i | a, b)</annotation></semantics>p(θi​∣a,b)（对于
+    <semantics><mrow><mi>i</mi><mo>∈</mo><mo stretchy="false">{</mo><mn>1</mn><mo
+    separator="true">,</mo><mo>…</mo><mo separator="true">,</mo><mi>C</mi><mo stretchy="false">}</mo></mrow><annotation
+    encoding="application/x-tex">i \in \{1, \ldots, C\}</annotation></semantics>i∈{1,…,C}），接着是
+    <semantics><mrow><mi>p</mi><mo stretchy="false">(</mo><msub><mi>y</mi><mi>i</mi></msub><mi
+    mathvariant="normal">∣</mi><msub><mi>θ</mi><mi>i</mi></msub><mo stretchy="false">)</mo></mrow><annotation
+    encoding="application/x-tex">p(y_i | \theta_i)</annotation></semantics>p(yi​∣θi​)：
 - en: <semantics><mrow><mi>p</mi><mo stretchy="false">(</mo><mi>a</mi><mo separator="true">,</mo><mi>b</mi><mo
     separator="true">,</mo><msub><mi>θ</mi><mn>1</mn></msub><mo separator="true">,</mo><mo>…</mo><mo
     separator="true">,</mo><msub><mi>θ</mi><mi>C</mi></msub><mo separator="true">,</mo><msub><mi>y</mi><mn>1</mn></msub><mo
@@ -252,26 +416,48 @@
     \theta_1, \ldots, \theta_C, y_1, \ldots, y_C) = p(a)p(b) \prod_{i=1}^C p(\theta_i\mid
     a, b) p(y_i\mid\theta_i)</annotation></semantics>p(a,b,θ1​,…,θC​,y1​,…,yC​)=p(a)p(b)i=1∏C​p(θi​∣a,b)p(yi​∣θi​)[(3)](#N1KBlbXTa3
     "Link to this Equation")
+  id: totrans-35
   prefs: []
   type: TYPE_NORMAL
+  zh: <semantics><mrow><mi>p</mi><mo stretchy="false">(</mo><mi>a</mi><mo separator="true">,</mo><mi>b</mi><mo
+    separator="true">,</mo><msub><mi>θ</mi><mn>1</mn></msub><mo separator="true">,</mo><mo>…</mo><mo
+    separator="true">,</mo><msub><mi>θ</mi><mi>C</mi></msub><mo separator="true">,</mo><msub><mi>y</mi><mn>1</mn></msub><mo
+    separator="true">,</mo><mo>…</mo><mo separator="true">,</mo><msub><mi>y</mi><mi>C</mi></msub><mo
+    stretchy="false">)</mo><mo>=</mo><mi>p</mi><mo stretchy="false">(</mo><mi>a</mi><mo
+    stretchy="false">)</mo><mi>p</mi><mo stretchy="false">(</mo><mi>b</mi><mo stretchy="false">)</mo><munderover><mo>∏</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mi>C</mi></munderover><mi>p</mi><mo
+    stretchy="false">(</mo><msub><mi>θ</mi><mi>i</mi></msub><mo>∣</mo><mi>a</mi><mo
+    separator="true">,</mo><mi>b</mi><mo stretchy="false">)</mo><mi>p</mi><mo stretchy="false">(</mo><msub><mi>y</mi><mi>i</mi></msub><mo>∣</mo><msub><mi>θ</mi><mi>i</mi></msub><mo
+    stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">p(a, b,
+    \theta_1, \ldots, \theta_C, y_1, \ldots, y_C) = p(a)p(b) \prod_{i=1}^C p(\theta_i\mid
+    a, b) p(y_i\mid\theta_i)</annotation></semantics>p(a,b,θ1​,…,θC​,y1​,…,yC​)=p(a)p(b)i=1∏C​p(θi​∣a,b)p(yi​∣θi​)[(3)](#N1KBlbXTa3
+    "Link to this Equation")
 - en: Factoring the distribution this way helps us understand and mathematically demonstrate
     the independence and dependence relationships in our graphical models, as we’ll
     see shortly.
+  id: totrans-36
   prefs: []
   type: TYPE_NORMAL
+  zh: 以这种方式分解分布有助于我们理解和数学地证明图模型中的独立性与条件依赖关系，稍后我们将看到这一点。
 - en: '[PRE2]'
+  id: totrans-37
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: Independence and Conditional Independence[¶](#independence-and-conditional-independence
     "Link to this Section")
+  id: totrans-38
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 独立性与条件独立性[¶](#independence-and-conditional-independence "Link to this Section")
 - en: 'Review: independence and conditional independence[¶](#review-independence-and-conditional-independence
     "Link to this Section")'
+  id: totrans-39
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 回顾：独立性与条件独立性[¶](#review-independence-and-conditional-independence "Link to this
+    Section")
 - en: 'We say that two random variables <semantics><mrow><mi>w</mi></mrow><annotation
     encoding="application/x-tex">w</annotation></semantics>w and <semantics><mrow><mi>v</mi></mrow><annotation
     encoding="application/x-tex">v</annotation></semantics>v are **independent** if
@@ -281,8 +467,15 @@
     The following statements are all true for independent random variables <semantics><mrow><mi>w</mi></mrow><annotation
     encoding="application/x-tex">w</annotation></semantics>w and <semantics><mrow><mi>v</mi></mrow><annotation
     encoding="application/x-tex">v</annotation></semantics>v:'
+  id: totrans-40
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们说两个随机变量 <semantics><mrow><mi>w</mi></mrow><annotation encoding="application/x-tex">w</annotation></semantics>w
+    和 <semantics><mrow><mi>v</mi></mrow><annotation encoding="application/x-tex">v</annotation></semantics>v
+    是**独立的**，如果知道其中一个的值并不能告诉我们另一个的分布信息。在符号上，我们写作 <semantics><mrow><mi>w</mi><mo>⊥</mo><mtext> ⁣</mtext><mtext> ⁣</mtext><mtext> ⁣</mtext><mo>⊥</mo><mi>v</mi></mrow><annotation
+    encoding="application/x-tex">w \perp\!\!\!\perp v</annotation></semantics>w⊥⊥v。对于独立的随机变量
+    <semantics><mrow><mi>w</mi></mrow><annotation encoding="application/x-tex">w</annotation></semantics>w
+    和 <semantics><mrow><mi>v</mi></mrow><annotation encoding="application/x-tex">v</annotation></semantics>v，以下陈述均成立：
 - en: 'If <semantics><mrow><mi>w</mi></mrow><annotation encoding="application/x-tex">w</annotation></semantics>w
     and <semantics><mrow><mi>v</mi></mrow><annotation encoding="application/x-tex">v</annotation></semantics>v
     are independent (<semantics><mrow><mi>w</mi><mo>⊥</mo><mtext> ⁣</mtext><mtext> ⁣</mtext><mtext> ⁣</mtext><mo>⊥</mo><mi>v</mi></mrow><annotation
@@ -295,9 +488,21 @@
     stretchy="false">(</mo><mi>w</mi><mo stretchy="false">)</mo><mi>p</mi><mo stretchy="false">(</mo><mi>v</mi><mo
     stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">p(w, v)
     = p(w)p(v)</annotation></semantics>p(w,v)=p(w)p(v).'
+  id: totrans-41
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 如果 <semantics><mrow><mi>w</mi></mrow><annotation encoding="application/x-tex">w</annotation></semantics>w
+    和 <semantics><mrow><mi>v</mi></mrow><annotation encoding="application/x-tex">v</annotation></semantics>v
+    相互独立（<semantics><mrow><mi>w</mi><mo>⊥</mo><mtext> ⁣</mtext><mtext> ⁣</mtext><mtext> ⁣</mtext><mo>⊥</mo><mi>v</mi></mrow><annotation
+    encoding="application/x-tex">w \perp\!\!\!\perp v</annotation></semantics>w⊥⊥v），那么联合分布
+    <semantics><mrow><mi>p</mi><mo stretchy="false">(</mo><mi>w</mi><mo separator="true">,</mo><mi>v</mi><mo
+    stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">p(w, v)</annotation></semantics>p(w,v)
+    可以写成边缘分布的乘积：<semantics><mrow><mi>p</mi><mo stretchy="false">(</mo><mi>w</mi><mo
+    separator="true">,</mo><mi>v</mi><mo stretchy="false">)</mo><mo>=</mo><mi>p</mi><mo
+    stretchy="false">(</mo><mi>w</mi><mo stretchy="false">)</mo><mi>p</mi><mo stretchy="false">(</mo><mi>v</mi><mo
+    stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">p(w, v)
+    = p(w)p(v)</annotation></semantics>p(w,v)=p(w)p(v)。
 - en: 'If <semantics><mrow><mi>w</mi></mrow><annotation encoding="application/x-tex">w</annotation></semantics>w
     and <semantics><mrow><mi>v</mi></mrow><annotation encoding="application/x-tex">v</annotation></semantics>v
     are independent (<semantics><mrow><mi>w</mi><mo>⊥</mo><mtext> ⁣</mtext><mtext> ⁣</mtext><mtext> ⁣</mtext><mo>⊥</mo><mi>v</mi></mrow><annotation
@@ -311,13 +516,27 @@
     stretchy="false">)</mo><mo>=</mo><mi>p</mi><mo stretchy="false">(</mo><mi>v</mi><mo
     stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">p(v|w)
     = p(v)</annotation></semantics>p(v∣w)=p(v).'
+  id: totrans-42
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 如果 <semantics><mrow><mi>w</mi></mrow><annotation encoding="application/x-tex">w</annotation></semantics>w
+    和 <semantics><mrow><mi>v</mi></mrow><annotation encoding="application/x-tex">v</annotation></semantics>v
+    相互独立（<semantics><mrow><mi>w</mi><mo>⊥</mo><mtext> ⁣</mtext><mtext> ⁣</mtext><mtext> ⁣</mtext><mo>⊥</mo><mi>v</mi></mrow><annotation
+    encoding="application/x-tex">w \perp\!\!\!\perp v</annotation></semantics>w⊥⊥v），那么条件分布等于边缘分布：<semantics><mrow><mi>p</mi><mo
+    stretchy="false">(</mo><mi>w</mi><mi mathvariant="normal">∣</mi><mi>v</mi><mo
+    stretchy="false">)</mo><mo>=</mo><mi>p</mi><mo stretchy="false">(</mo><mi>w</mi><mo
+    stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">p(w|v)
+    = p(w)</annotation></semantics>p(w∣v)=p(w) 且 <semantics><mrow><mi>p</mi><mo stretchy="false">(</mo><mi>v</mi><mi
+    mathvariant="normal">∣</mi><mi>w</mi><mo stretchy="false">)</mo><mo>=</mo><mi>p</mi><mo
+    stretchy="false">(</mo><mi>v</mi><mo stretchy="false">)</mo></mrow><annotation
+    encoding="application/x-tex">p(v|w) = p(v)</annotation></semantics>p(v∣w)=p(v)。
 - en: '***Exercise**: using the definition of conditional distributions, show that
     the two conditions above are mathematically equivalent.*'
+  id: totrans-43
   prefs: []
   type: TYPE_NORMAL
+  zh: '***练习**：利用条件分布的定义，证明上述两个条件在数学上是等价的。*'
 - en: We say that two random variables <semantics><mrow><mi>w</mi></mrow><annotation
     encoding="application/x-tex">w</annotation></semantics>w and <semantics><mrow><mi>v</mi></mrow><annotation
     encoding="application/x-tex">v</annotation></semantics>v are **conditionally independent**
@@ -332,8 +551,22 @@
     stretchy="false">(</mo><mi>w</mi><mo>∣</mo><mi>u</mi><mo stretchy="false">)</mo><mi>p</mi><mo
     stretchy="false">(</mo><mi>v</mi><mo>∣</mo><mi>u</mi><mo stretchy="false">)</mo></mrow><annotation
     encoding="application/x-tex">p(w, v \mid u) = p(w\mid u) p(v \mid u)</annotation></semantics>p(w,v∣u)=p(w∣u)p(v∣u).
+  id: totrans-44
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们说，给定第三个随机变量 <semantics><mrow><mi>u</mi></mrow><annotation encoding="application/x-tex">u</annotation></semantics>u，两个随机变量
+    <semantics><mrow><mi>w</mi></mrow><annotation encoding="application/x-tex">w</annotation></semantics>w
+    和 <semantics><mrow><mi>v</mi></mrow><annotation encoding="application/x-tex">v</annotation></semantics>v
+    是**条件独立的**，如果当我们以 <semantics><mrow><mi>u</mi></mrow><annotation encoding="application/x-tex">u</annotation></semantics>u
+    为条件时，知道 <semantics><mrow><mi>v</mi></mrow><annotation encoding="application/x-tex">v</annotation></semantics>v
+    或 <semantics><mrow><mi>w</mi></mrow><annotation encoding="application/x-tex">w</annotation></semantics>w
+    其中一个的值，并不能告诉我们另一个的分布信息。在符号上，我们写作 <semantics><mrow><mi>w</mi><mo>⊥</mo><mtext> ⁣</mtext><mtext> ⁣</mtext><mtext> ⁣</mtext><mo>⊥</mo><mi>v</mi><mo>∣</mo><mi>u</mi></mrow><annotation
+    encoding="application/x-tex">w \perp\!\!\!\perp v \mid u</annotation></semantics>w⊥⊥v∣u，其数学含义是
+    <semantics><mrow><mi>p</mi><mo stretchy="false">(</mo><mi>w</mi><mo separator="true">,</mo><mi>v</mi><mo>∣</mo><mi>u</mi><mo
+    stretchy="false">)</mo><mo>=</mo><mi>p</mi><mo stretchy="false">(</mo><mi>w</mi><mo>∣</mo><mi>u</mi><mo
+    stretchy="false">)</mo><mi>p</mi><mo stretchy="false">(</mo><mi>v</mi><mo>∣</mo><mi>u</mi><mo
+    stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">p(w, v
+    \mid u) = p(w\mid u) p(v \mid u)</annotation></semantics>p(w,v∣u)=p(w∣u)p(v∣u)。
 - en: 'For example, suppose <semantics><mrow><msub><mi>x</mi><mn>1</mn></msub></mrow><annotation
     encoding="application/x-tex">x_1</annotation></semantics>x1​ and <semantics><mrow><msub><mi>x</mi><mn>2</mn></msub></mrow><annotation
     encoding="application/x-tex">x_2</annotation></semantics>x2​ are the heights of
@@ -341,8 +574,13 @@
     height <semantics><mrow><mi>μ</mi></mrow><annotation encoding="application/x-tex">\mu</annotation></semantics>μ:
     this population could be college students, or second-graders, or Olympic swimmers,
     or some other group entirely.'
+  id: totrans-45
   prefs: []
   type: TYPE_NORMAL
+  zh: 例如，假设 <semantics><mrow><msub><mi>x</mi><mn>1</mn></msub></mrow><annotation encoding="application/x-tex">x_1</annotation></semantics>x1​
+    和 <semantics><mrow><msub><mi>x</mi><mn>2</mn></msub></mrow><annotation encoding="application/x-tex">x_2</annotation></semantics>x2​
+    是从一个具有特定平均身高 <semantics><mrow><mi>μ</mi></mrow><annotation encoding="application/x-tex">\mu</annotation></semantics>μ
+    的非常具体的人群中随机抽取的两个人的身高：这个人群可以是大学生、二年级学生、奥运游泳运动员，或者完全是其他某个群体。
 - en: If we know the value of <semantics><mrow><mi>μ</mi></mrow><annotation encoding="application/x-tex">\mu</annotation></semantics>μ,
     then <semantics><mrow><msub><mi>x</mi><mn>1</mn></msub></mrow><annotation encoding="application/x-tex">x_1</annotation></semantics>x1​
     and <semantics><mrow><msub><mi>x</mi><mn>2</mn></msub></mrow><annotation encoding="application/x-tex">x_2</annotation></semantics>x2​
@@ -355,8 +593,19 @@
     knowing <semantics><mrow><msub><mi>x</mi><mn>1</mn></msub></mrow><annotation encoding="application/x-tex">x_1</annotation></semantics>x1​
     does not tell us anything about <semantics><mrow><msub><mi>x</mi><mn>2</mn></msub></mrow><annotation
     encoding="application/x-tex">x_2</annotation></semantics>x2​.
+  id: totrans-46
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果我们知道 <semantics><mrow><mi>μ</mi></mrow><annotation encoding="application/x-tex">\mu</annotation></semantics>μ
+    的值，那么 <semantics><mrow><msub><mi>x</mi><mn>1</mn></msub></mrow><annotation encoding="application/x-tex">x_1</annotation></semantics>x1​
+    和 <semantics><mrow><msub><mi>x</mi><mn>2</mn></msub></mrow><annotation encoding="application/x-tex">x_2</annotation></semantics>x2​
+    就是条件独立的，因为它们是来自已知均值 <semantics><mrow><mi>μ</mi></mrow><annotation encoding="application/x-tex">\mu</annotation></semantics>μ
+    的同一分布的随机样本。例如，如果已知 <semantics><mrow><mi>μ</mi><mo>=</mo><msup><mn>4</mn><mo mathvariant="normal"
+    lspace="0em" rspace="0em">′</mo></msup><msup><mn>1</mn><mrow><mo mathvariant="normal">′</mo><mo
+    mathvariant="normal">′</mo></mrow></msup></mrow><annotation encoding="application/x-tex">\mu
+    = 4'1''</annotation></semantics>μ=4′1′′，那么知道 <semantics><mrow><msub><mi>x</mi><mn>1</mn></msub></mrow><annotation
+    encoding="application/x-tex">x_1</annotation></semantics>x1​ 并不会告诉我们任何关于 <semantics><mrow><msub><mi>x</mi><mn>2</mn></msub></mrow><annotation
+    encoding="application/x-tex">x_2</annotation></semantics>x2​ 的信息。
 - en: 'Suppose instead that we don’t know the value of <semantics><mrow><mi>μ</mi></mrow><annotation
     encoding="application/x-tex">\mu</annotation></semantics>μ. Then, we find out
     that <semantics><mrow><msub><mi>x</mi><mn>1</mn></msub><mo>=</mo><msup><mn>7</mn><mo
@@ -367,42 +616,71 @@
     group, such as NBA players. This will affect our belief about the distribution
     of <semantics><mrow><msub><mi>x</mi><mn>2</mn></msub></mrow><annotation encoding="application/x-tex">x_2</annotation></semantics>x2​
     (i.e., we should expect the second person to be tall too). So, in this case:'
+  id: totrans-47
   prefs: []
   type: TYPE_NORMAL
+  zh: 假设我们不知道 <semantics><mrow><mi>μ</mi></mrow><annotation encoding="application/x-tex">\mu</annotation></semantics>μ
+    的值。然后，我们发现 <semantics><mrow><msub><mi>x</mi><mn>1</mn></msub><mo>=</mo><msup><mn>7</mn><mo
+    mathvariant="normal" lspace="0em" rspace="0em">′</mo></msup><msup><mn>1</mn><mrow><mo
+    mathvariant="normal">′</mo><mo mathvariant="normal">′</mo></mrow></msup></mrow><annotation
+    encoding="application/x-tex">x_1 = 7' 1''</annotation></semantics>x1​=7′1′′。在这种情况下，我们可能会猜测这个“特定群体”很可能是一个身高非常高的群体，比如NBA球员。这将影响我们对
+    <semantics><mrow><msub><mi>x</mi><mn>2</mn></msub></mrow><annotation encoding="application/x-tex">x_2</annotation></semantics>x2​
+    分布的信念（即，我们也应该预期第二个人很高）。因此，在这种情况下：
 - en: '<semantics><mrow><msub><mi>x</mi><mn>1</mn></msub></mrow><annotation encoding="application/x-tex">x_1</annotation></semantics>x1​
     and <semantics><mrow><msub><mi>x</mi><mn>2</mn></msub></mrow><annotation encoding="application/x-tex">x_2</annotation></semantics>x2​
     are conditionally independent given <semantics><mrow><mi>μ</mi></mrow><annotation
     encoding="application/x-tex">\mu</annotation></semantics>μ: <semantics><mrow><msub><mi>x</mi><mn>1</mn></msub><mo>⊥</mo><mtext> ⁣</mtext><mtext> ⁣</mtext><mtext> ⁣</mtext><mo>⊥</mo><msub><mi>x</mi><mn>2</mn></msub><mo>∣</mo><mi>μ</mi></mrow><annotation
     encoding="application/x-tex">x_1 \perp\!\!\!\perp x_2 \mid \mu</annotation></semantics>x1​⊥⊥x2​∣μ.'
+  id: totrans-48
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: <semantics><mrow><msub><mi>x</mi><mn>1</mn></msub></mrow><annotation encoding="application/x-tex">x_1</annotation></semantics>x1​
+    和 <semantics><mrow><msub><mi>x</mi><mn>2</mn></msub></mrow><annotation encoding="application/x-tex">x_2</annotation></semantics>x2​
+    在给定 <semantics><mrow><mi>μ</mi></mrow><annotation encoding="application/x-tex">\mu</annotation></semantics>μ
+    的条件下是条件独立的：<semantics><mrow><msub><mi>x</mi><mn>1</mn></msub><mo>⊥</mo><mtext> ⁣</mtext><mtext> ⁣</mtext><mtext> ⁣</mtext><mo>⊥</mo><msub><mi>x</mi><mn>2</mn></msub><mo>∣</mo><mi>μ</mi></mrow><annotation
+    encoding="application/x-tex">x_1 \perp\!\!\!\perp x_2 \mid \mu</annotation></semantics>x1​⊥⊥x2​∣μ。
 - en: '<semantics><mrow><msub><mi>x</mi><mn>1</mn></msub></mrow><annotation encoding="application/x-tex">x_1</annotation></semantics>x1​
     and <semantics><mrow><msub><mi>x</mi><mn>2</mn></msub></mrow><annotation encoding="application/x-tex">x_2</annotation></semantics>x2​
     are not unconditionally independent: it is not true that <semantics><mrow><msub><mi>x</mi><mn>1</mn></msub><mo>⊥</mo><mtext> ⁣</mtext><mtext> ⁣</mtext><mtext> ⁣</mtext><mo>⊥</mo><msub><mi>x</mi><mn>2</mn></msub></mrow><annotation
     encoding="application/x-tex">x_1 \perp\!\!\!\perp x_2</annotation></semantics>x1​⊥⊥x2​.'
+  id: totrans-49
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: <semantics><mrow><msub><mi>x</mi><mn>1</mn></msub></mrow><annotation encoding="application/x-tex">x_1</annotation></semantics>x1​
+    和 <semantics><mrow><msub><mi>x</mi><mn>2</mn></msub></mrow><annotation encoding="application/x-tex">x_2</annotation></semantics>x2​
+    并非无条件独立：<semantics><mrow><msub><mi>x</mi><mn>1</mn></msub><mo>⊥</mo><mtext> ⁣</mtext><mtext> ⁣</mtext><mtext> ⁣</mtext><mo>⊥</mo><msub><mi>x</mi><mn>2</mn></msub></mrow><annotation
+    encoding="application/x-tex">x_1 \perp\!\!\!\perp x_2</annotation></semantics>x1​⊥⊥x2​
+    并不成立。
 - en: '[PRE3]'
+  id: totrans-50
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: Independence and conditional independence in graphical models[¶](#independence-and-conditional-independence-in-graphical-models
     "Link to this Section")
+  id: totrans-51
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 图模型中的独立性与条件独立性[¶](#independence-and-conditional-independence-in-graphical-models
+    "Link to this Section")
 - en: 'The structure of a graphical model can tell us a lot about the independence
     relationships between the variables in our model. Specifically, we can determine
     whether two random variables are unconditionally independent or conditionally
     independent given a third variable, just by looking at the structure of the model.
     Let’s look at a few examples to illustrate this. We’ll start with the height example
     we just saw:'
+  id: totrans-52
   prefs: []
   type: TYPE_NORMAL
+  zh: 图模型的结构可以告诉我们很多关于模型中变量间独立性关系的信息。具体来说，仅通过观察模型的结构，我们就能判断两个随机变量是无条件独立，还是在给定第三个变量的条件下条件独立。让我们通过几个例子来说明这一点。我们将从刚才看到的身高例子开始：
 - en: '![](../Images/abae86a27b0e2e7a0ba6520abc9b4bce.png)'
+  id: totrans-53
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/abae86a27b0e2e7a0ba6520abc9b4bce.png)'
 - en: From our reasoning above, we know that <semantics><mrow><msub><mi>x</mi><mn>1</mn></msub><mo>⊥</mo><mtext> ⁣</mtext><mtext> ⁣</mtext><mtext> ⁣</mtext><mo>⊥</mo><msub><mi>x</mi><mn>2</mn></msub><mo>∣</mo><mi>μ</mi></mrow><annotation
     encoding="application/x-tex">x_1 \perp\!\!\!\perp x_2 \mid \mu</annotation></semantics>x1​⊥⊥x2​∣μ,
     but that <semantics><mrow><msub><mi>x</mi><mn>1</mn></msub></mrow><annotation
@@ -410,11 +688,19 @@
     encoding="application/x-tex">x_2</annotation></semantics>x2​ are not unconditionally
     independent. This is true in general for any three variables in a graphical model
     in this configuration.
+  id: totrans-54
   prefs: []
   type: TYPE_NORMAL
+  zh: 根据我们之前的推理，我们知道 <semantics><mrow><msub><mi>x</mi><mn>1</mn></msub><mo>⊥</mo><mtext> ⁣</mtext><mtext> ⁣</mtext><mtext> ⁣</mtext><mo>⊥</mo><msub><mi>x</mi><mn>2</mn></msub><mo>∣</mo><mi>μ</mi></mrow><annotation
+    encoding="application/x-tex">x_1 \perp\!\!\!\perp x_2 \mid \mu</annotation></semantics>x1​⊥⊥x2​∣μ，但
+    <semantics><mrow><msub><mi>x</mi><mn>1</mn></msub></mrow><annotation encoding="application/x-tex">x_1</annotation></semantics>x1​
+    和 <semantics><mrow><msub><mi>x</mi><mn>2</mn></msub></mrow><annotation encoding="application/x-tex">x_2</annotation></semantics>x2​
+    并非无条件独立。对于图模型中这种配置下的任意三个变量，这一结论普遍成立。
 - en: '***Exercise**: mathematically prove the results stated above.*'
+  id: totrans-55
   prefs: []
   type: TYPE_NORMAL
+  zh: '***练习**：用数学方法证明上述结论。*'
 - en: '**Solution**: To show that <semantics><mrow><msub><mi>x</mi><mn>1</mn></msub></mrow><annotation
     encoding="application/x-tex">x_1</annotation></semantics>x1​ and <semantics><mrow><msub><mi>x</mi><mn>2</mn></msub></mrow><annotation
     encoding="application/x-tex">x_2</annotation></semantics>x2​ are not unconditionally
@@ -429,8 +715,21 @@
     encoding="application/x-tex">p(x_1, x_2)</annotation></semantics>p(x1​,x2​) by
     looking at the joint distribution over all three variables and then marginalizing
     over <semantics><mrow><mi>μ</mi></mrow><annotation encoding="application/x-tex">\mu</annotation></semantics>μ:'
+  id: totrans-56
   prefs: []
   type: TYPE_NORMAL
+  zh: '**解决方案**：要证明 <semantics><mrow><msub><mi>x</mi><mn>1</mn></msub></mrow><annotation
+    encoding="application/x-tex">x_1</annotation></semantics>x1​ 和 <semantics><mrow><msub><mi>x</mi><mn>2</mn></msub></mrow><annotation
+    encoding="application/x-tex">x_2</annotation></semantics>x2​ 并非无条件独立，我们必须证明 <semantics><mrow><mi>p</mi><mo
+    stretchy="false">(</mo><msub><mi>x</mi><mn>1</mn></msub><mo separator="true">,</mo><msub><mi>x</mi><mn>2</mn></msub><mo
+    stretchy="false">)</mo><mo mathvariant="normal">≠</mo><mi>p</mi><mo stretchy="false">(</mo><msub><mi>x</mi><mn>1</mn></msub><mo
+    stretchy="false">)</mo><mi>p</mi><mo stretchy="false">(</mo><msub><mi>x</mi><mn>2</mn></msub><mo
+    stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">p(x_1,
+    x_2) \neq p(x_1)p(x_2)</annotation></semantics>p(x1​,x2​)=p(x1​)p(x2​)。我们可以通过考察所有三个变量的联合分布，然后对
+    <semantics><mrow><mi>μ</mi></mrow><annotation encoding="application/x-tex">\mu</annotation></semantics>μ
+    进行边缘化来计算 <semantics><mrow><mi>p</mi><mo stretchy="false">(</mo><msub><mi>x</mi><mn>1</mn></msub><mo
+    separator="true">,</mo><msub><mi>x</mi><mn>2</mn></msub><mo stretchy="false">)</mo></mrow><annotation
+    encoding="application/x-tex">p(x_1, x_2)</annotation></semantics>p(x1​,x2​)：'
 - en: <semantics><mtable rowspacing="0.25em" columnalign="right left" columnspacing="0em"><mtr><mtd><mstyle
     scriptlevel="0" displaystyle="true"><mrow><mi>p</mi><mo stretchy="false">(</mo><msub><mi>x</mi><mn>1</mn></msub><mo
     separator="true">,</mo><msub><mi>x</mi><mn>2</mn></msub><mo stretchy="false">)</mo></mrow></mstyle></mtd><mtd><mstyle
@@ -444,8 +743,22 @@
     encoding="application/x-tex">\begin{align*} p(x_1, x_2) &= \int p(x_1, x_2, \mu)
     d\mu \\ &= \int p(\mu) p(x_1 \mid \mu) p(x_2 \mid \mu) d\mu \end{align*}</annotation></semantics>p(x1​,x2​)​=∫p(x1​,x2​,μ)dμ=∫p(μ)p(x1​∣μ)p(x2​∣μ)dμ​[(4)](#I7UsmwhI5P
     "Link to this Equation")
+  id: totrans-57
   prefs: []
   type: TYPE_NORMAL
+  zh: <semantics><mtable rowspacing="0.25em" columnalign="right left" columnspacing="0em"><mtr><mtd><mstyle
+    scriptlevel="0" displaystyle="true"><mrow><mi>p</mi><mo stretchy="false">(</mo><msub><mi>x</mi><mn>1</mn></msub><mo
+    separator="true">,</mo><msub><mi>x</mi><mn>2</mn></msub><mo stretchy="false">)</mo></mrow></mstyle></mtd><mtd><mstyle
+    scriptlevel="0" displaystyle="true"><mrow><mo>=</mo><mo>∫</mo><mi>p</mi><mo stretchy="false">(</mo><msub><mi>x</mi><mn>1</mn></msub><mo
+    separator="true">,</mo><msub><mi>x</mi><mn>2</mn></msub><mo separator="true">,</mo><mi>μ</mi><mo
+    stretchy="false">)</mo><mi>d</mi><mi>μ</mi></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle
+    scriptlevel="0" displaystyle="true"><mrow><mo>=</mo><mo>∫</mo><mi>p</mi><mo stretchy="false">(</mo><mi>μ</mi><mo
+    stretchy="false">)</mo><mi>p</mi><mo stretchy="false">(</mo><msub><mi>x</mi><mn>1</mn></msub><mo>∣</mo><mi>μ</mi><mo
+    stretchy="false">)</mo><mi>p</mi><mo stretchy="false">(</mo><msub><mi>x</mi><mn>2</mn></msub><mo>∣</mo><mi>μ</mi><mo
+    stretchy="false">)</mo><mi>d</mi><mi>μ</mi></mrow></mstyle></mtd></mtr></mtable><annotation
+    encoding="application/x-tex">\begin{align*} p(x_1, x_2) &= \int p(x_1, x_2, \mu)
+    d\mu \\ &= \int p(\mu) p(x_1 \mid \mu) p(x_2 \mid \mu) d\mu \end{align*}</annotation></semantics>p(x1​,x2​)​=∫p(x1​,x2​,μ)dμ=∫p(μ)p(x1​∣μ)p(x2​∣μ)dμ​[(4)](#I7UsmwhI5P
+    "Link to this Equation")
 - en: Unfortunately, there is no way to factor the integral that separates terms with
     <semantics><mrow><msub><mi>x</mi><mn>1</mn></msub></mrow><annotation encoding="application/x-tex">x_1</annotation></semantics>x1​
     and terms with <semantics><mrow><msub><mi>x</mi><mn>2</mn></msub></mrow><annotation
@@ -455,8 +768,15 @@
     stretchy="false">(</mo><msub><mi>x</mi><mn>2</mn></msub><mo stretchy="false">)</mo></mrow><annotation
     encoding="application/x-tex">p(x_1)p(x_2)</annotation></semantics>p(x1​)p(x2​),
     so the variables are not unconditionally independent.
+  id: totrans-58
   prefs: []
   type: TYPE_NORMAL
+  zh: 遗憾的是，无法对积分进行因式分解，以分离包含<semantics><mrow><msub><mi>x</mi><mn>1</mn></msub></mrow><annotation
+    encoding="application/x-tex">x_1</annotation></semantics>x1​的项和包含<semantics><mrow><msub><mi>x</mi><mn>2</mn></msub></mrow><annotation
+    encoding="application/x-tex">x_2</annotation></semantics>x2​的项，因此它无法分解。换句话说，通常上述积分不会等于<semantics><mrow><mi>p</mi><mo
+    stretchy="false">(</mo><msub><mi>x</mi><mn>1</mn></msub><mo stretchy="false">)</mo><mi>p</mi><mo
+    stretchy="false">(</mo><msub><mi>x</mi><mn>2</mn></msub><mo stretchy="false">)</mo></mrow><annotation
+    encoding="application/x-tex">p(x_1)p(x_2)</annotation></semantics>p(x1​)p(x2​)，因此这些变量并非无条件独立。
 - en: 'What about conditional independence given <semantics><mrow><mi>μ</mi></mrow><annotation
     encoding="application/x-tex">\mu</annotation></semantics>μ? We need to show that
     <semantics><mrow><mi>p</mi><mo stretchy="false">(</mo><msub><mi>x</mi><mn>1</mn></msub><mo
@@ -465,8 +785,15 @@
     stretchy="false">)</mo><mi>p</mi><mo stretchy="false">(</mo><msub><mi>x</mi><mn>2</mn></msub><mo>∣</mo><mi>μ</mi><mo
     stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">p(x_1,
     x_2\mid\mu) = p(x_1\mid\mu) p(x_2\mid\mu)</annotation></semantics>p(x1​,x2​∣μ)=p(x1​∣μ)p(x2​∣μ):'
+  id: totrans-59
   prefs: []
   type: TYPE_NORMAL
+  zh: 给定<semantics><mrow><mi>μ</mi></mrow><annotation encoding="application/x-tex">\mu</annotation></semantics>μ的条件独立性如何？我们需要证明<semantics><mrow><mi>p</mi><mo
+    stretchy="false">(</mo><msub><mi>x</mi><mn>1</mn></msub><mo separator="true">,</mo><msub><mi>x</mi><mn>2</mn></msub><mo>∣</mo><mi>μ</mi><mo
+    stretchy="false">)</mo><mo>=</mo><mi>p</mi><mo stretchy="false">(</mo><msub><mi>x</mi><mn>1</mn></msub><mo>∣</mo><mi>μ</mi><mo
+    stretchy="false">)</mo><mi>p</mi><mo stretchy="false">(</mo><msub><mi>x</mi><mn>2</mn></msub><mo>∣</mo><mi>μ</mi><mo
+    stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">p(x_1,
+    x_2\mid\mu) = p(x_1\mid\mu) p(x_2\mid\mu)</annotation></semantics>p(x1​,x2​∣μ)=p(x1​∣μ)p(x2​∣μ)：
 - en: <semantics><mtable rowspacing="0.25em" columnalign="right left" columnspacing="0em"><mtr><mtd><mstyle
     scriptlevel="0" displaystyle="true"><mrow><mi>p</mi><mo stretchy="false">(</mo><msub><mi>x</mi><mn>1</mn></msub><mo
     separator="true">,</mo><msub><mi>x</mi><mn>2</mn></msub><mo>∣</mo><mi>μ</mi><mo
@@ -485,18 +812,43 @@
     p(x_1, x_2 \mid \mu) &= \frac{p(x_1, x_2, \mu)}{p(\mu)} \\ &= \frac{p(\mu) p(x_1
     \mid \mu) p(x_2 \mid \mu)}{p(\mu)} \\ &= p(x_1 \mid \mu) p(x_2 \mid \mu) \end{align*}</annotation></semantics>p(x1​,x2​∣μ)​=p(μ)p(x1​,x2​,μ)​=p(μ)p(μ)p(x1​∣μ)p(x2​∣μ)​=p(x1​∣μ)p(x2​∣μ)​[(5)](#lnA7wEZvwJ
     "Link to this Equation")
+  id: totrans-60
   prefs: []
   type: TYPE_NORMAL
+  zh: <semantics><mtable rowspacing="0.25em" columnalign="right left" columnspacing="0em"><mtr><mtd><mstyle
+    scriptlevel="0" displaystyle="true"><mrow><mi>p</mi><mo stretchy="false">(</mo><msub><mi>x</mi><mn>1</mn></msub><mo
+    separator="true">,</mo><msub><mi>x</mi><mn>2</mn></msub><mo>∣</mo><mi>μ</mi><mo
+    stretchy="false">)</mo></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mo>=</mo><mfrac><mrow><mi>p</mi><mo
+    stretchy="false">(</mo><msub><mi>x</mi><mn>1</mn></msub><mo separator="true">,</mo><msub><mi>x</mi><mn>2</mn></msub><mo
+    separator="true">,</mo><mi>μ</mi><mo stretchy="false">)</mo></mrow><mrow><mi>p</mi><mo
+    stretchy="false">(</mo><mi>μ</mi><mo stretchy="false">)</mo></mrow></mfrac></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle
+    scriptlevel="0" displaystyle="true"><mrow><mo>=</mo><mfrac><mrow><mi>p</mi><mo
+    stretchy="false">(</mo><mi>μ</mi><mo stretchy="false">)</mo><mi>p</mi><mo stretchy="false">(</mo><msub><mi>x</mi><mn>1</mn></msub><mo>∣</mo><mi>μ</mi><mo
+    stretchy="false">)</mo><mi>p</mi><mo stretchy="false">(</mo><msub><mi>x</mi><mn>2</mn></msub><mo>∣</mo><mi>μ</mi><mo
+    stretchy="false">)</mo></mrow><mrow><mi>p</mi><mo stretchy="false">(</mo><mi>μ</mi><mo
+    stretchy="false">)</mo></mrow></mfrac></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle
+    scriptlevel="0" displaystyle="true"><mrow><mo>=</mo><mi>p</mi><mo stretchy="false">(</mo><msub><mi>x</mi><mn>1</mn></msub><mo>∣</mo><mi>μ</mi><mo
+    stretchy="false">)</mo><mi>p</mi><mo stretchy="false">(</mo><msub><mi>x</mi><mn>2</mn></msub><mo>∣</mo><mi>μ</mi><mo
+    stretchy="false">)</mo></mrow></mstyle></mtd></mtr></mtable><annotation encoding="application/x-tex">\begin{align*}
+    p(x_1, x_2 \mid \mu) &= \frac{p(x_1, x_2, \mu)}{p(\mu)} \\ &= \frac{p(\mu) p(x_1
+    \mid \mu) p(x_2 \mid \mu)}{p(\mu)} \\ &= p(x_1 \mid \mu) p(x_2 \mid \mu) \end{align*}</annotation></semantics>p(x1​,x2​∣μ)​=p(μ)p(x1​,x2​,μ)​=p(μ)p(μ)p(x1​∣μ)p(x2​∣μ)​=p(x1​∣μ)p(x2​∣μ)​[(5)](#lnA7wEZvwJ
+    "Link to this Equation")
 - en: This mathematical result aligns with the intuition we built in the previous
     section.
+  id: totrans-61
   prefs: []
   type: TYPE_NORMAL
+  zh: 这个数学结果与我们上一节建立的直觉相符。
 - en: 'Let’s look at another example:'
+  id: totrans-62
   prefs: []
   type: TYPE_NORMAL
+  zh: 让我们来看另一个例子：
 - en: '![](../Images/691c99b7681fc85a45f6823b68709fef.png)'
+  id: totrans-63
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/691c99b7681fc85a45f6823b68709fef.png)'
 - en: In this example, <semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics>x
     and <semantics><mrow><mi>z</mi></mrow><annotation encoding="application/x-tex">z</annotation></semantics>z
     are not unconditionally independent. Intuitively, we can see that <semantics><mrow><mi>y</mi></mrow><annotation
@@ -506,8 +858,18 @@
     encoding="application/x-tex">y</annotation></semantics>y, so that <semantics><mrow><mi>x</mi></mrow><annotation
     encoding="application/x-tex">x</annotation></semantics>x and <semantics><mrow><mi>z</mi></mrow><annotation
     encoding="application/x-tex">z</annotation></semantics>z are dependent.
+  id: totrans-64
   prefs: []
   type: TYPE_NORMAL
+  zh: 在这个例子中，<semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics>x
+    和 <semantics><mrow><mi>z</mi></mrow><annotation encoding="application/x-tex">z</annotation></semantics>z
+    不是无条件独立的。直观上，我们可以看到 <semantics><mrow><mi>y</mi></mrow><annotation encoding="application/x-tex">y</annotation></semantics>y
+    依赖于 <semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics>x，而
+    <semantics><mrow><mi>z</mi></mrow><annotation encoding="application/x-tex">z</annotation></semantics>z
+    依赖于 <semantics><mrow><mi>y</mi></mrow><annotation encoding="application/x-tex">y</annotation></semantics>y，因此
+    <semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics>x
+    和 <semantics><mrow><mi>z</mi></mrow><annotation encoding="application/x-tex">z</annotation></semantics>z
+    是相互依赖的。
 - en: 'But, <semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics>x
     and <semantics><mrow><mi>z</mi></mrow><annotation encoding="application/x-tex">z</annotation></semantics>z
     are conditionally independent given <semantics><mrow><mi>y</mi></mrow><annotation
@@ -517,47 +879,78 @@
     tells us that <semantics><mrow><mi>z</mi></mrow><annotation encoding="application/x-tex">z</annotation></semantics>z
     only depends on <semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics>x
     through <semantics><mrow><mi>y</mi></mrow><annotation encoding="application/x-tex">y</annotation></semantics>y.'
+  id: totrans-65
   prefs: []
   type: TYPE_NORMAL
+  zh: 但是，在给定 <semantics><mrow><mi>y</mi></mrow><annotation encoding="application/x-tex">y</annotation></semantics>y
+    的条件下，<semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics>x
+    和 <semantics><mrow><mi>z</mi></mrow><annotation encoding="application/x-tex">z</annotation></semantics>z
+    是条件独立的：从 <semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics>x
+    到 <semantics><mrow><mi>z</mi></mrow><annotation encoding="application/x-tex">z</annotation></semantics>z
+    没有直接的箭头告诉我们，<semantics><mrow><mi>z</mi></mrow><annotation encoding="application/x-tex">z</annotation></semantics>z
+    仅通过 <semantics><mrow><mi>y</mi></mrow><annotation encoding="application/x-tex">y</annotation></semantics>y
+    依赖于 <semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics>x。
 - en: '***Exercise**: mathematically prove the results stated above.*'
+  id: totrans-66
   prefs: []
   type: TYPE_NORMAL
+  zh: '***练习**：用数学方法证明上述结果。*'
 - en: 'Let’s look at a third example:'
+  id: totrans-67
   prefs: []
   type: TYPE_NORMAL
+  zh: 让我们来看第三个例子：
 - en: '![](../Images/9b892ab790c214b917774ac80db8d749.png)'
+  id: totrans-68
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/9b892ab790c214b917774ac80db8d749.png)'
 - en: 'In this example, <semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics>x
     and <semantics><mrow><mi>z</mi></mrow><annotation encoding="application/x-tex">z</annotation></semantics>z
     are unconditionally independent, but given <semantics><mrow><mi>y</mi></mrow><annotation
     encoding="application/x-tex">y</annotation></semantics>y, they are conditionally
     dependent. Why? Let’s look at an example that will help us build intuition for
     this result. Suppose that:'
+  id: totrans-69
   prefs: []
   type: TYPE_NORMAL
+  zh: 在这个例子中，<semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics>x
+    和 <semantics><mrow><mi>z</mi></mrow><annotation encoding="application/x-tex">z</annotation></semantics>z
+    是无条件独立的，但在给定 <semantics><mrow><mi>y</mi></mrow><annotation encoding="application/x-tex">y</annotation></semantics>y
+    的条件下，它们是条件依赖的。为什么？让我们看一个有助于我们理解这个结果的例子。假设：
 - en: <semantics><mrow><mi>y</mi></mrow><annotation encoding="application/x-tex">y</annotation></semantics>y
     is whether or not I have a stuffy nose.
+  id: totrans-70
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: <semantics><mrow><mi>y</mi></mrow><annotation encoding="application/x-tex">y</annotation></semantics>y
+    表示我是否鼻塞。
 - en: <semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics>x
     is whether or not I am sick (with a cold, flu, COVID, etc.)
+  id: totrans-71
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: <semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics>x
+    表示我是否生病（感冒、流感、新冠等）。
 - en: <semantics><mrow><mi>z</mi></mrow><annotation encoding="application/x-tex">z</annotation></semantics>z
     is whether or not I have seasonal allergies.
+  id: totrans-72
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: <semantics><mrow><mi>z</mi></mrow><annotation encoding="application/x-tex">z</annotation></semantics>z
+    表示我是否患有季节性过敏。
 - en: 'First, we can see that the description matches the graphical model: whether
     or not I have a stuffy nose depends on whether or not I’m sick, and whether or
     not I have allergies. But, sickness and allergies don’t affect each other. In
     other words, if I don’t know anything about whether I have a stuffy nose, then
     my sickness and allergies are independent of each other.'
+  id: totrans-73
   prefs: []
   type: TYPE_NORMAL
+  zh: 首先，我们可以看到描述与图模型相符：我是否鼻塞取决于我是否生病以及是否过敏。但是，生病和过敏彼此并不直接影响。换句话说，如果我对是否鼻塞一无所知，那么我的生病状态和过敏状态就是相互独立的。
 - en: 'Now, suppose I wake up one morning with a stuffy nose (i.e., <semantics><mrow><mi>y</mi><mo>=</mo><mn>1</mn></mrow><annotation
     encoding="application/x-tex">y=1</annotation></semantics>y=1), and I’m trying
     to determine whether I’m sick or have allergies. I look at the weather forecast,
@@ -567,24 +960,38 @@
     the weather forecast didn’t directly tell me anything about whether or not I’m
     sick, my belief that I’m sick drops significantly: my symptoms have been **explained
     away** by the explanation that I probably have allergies.'
+  id: totrans-74
   prefs: []
   type: TYPE_NORMAL
+  zh: 现在，假设某天早晨我醒来时鼻子不通气（即 <semantics><mrow><mi>y</mi><mo>=</mo><mn>1</mn></mrow><annotation
+    encoding="application/x-tex">y=1</annotation></semantics>y=1），而我正试图判断自己是生病了还是过敏。我查看了天气预报，发现花粉浓度非常高。一听到这个消息，我就更加确信
+    <semantics><mrow><mi>z</mi><mo>=</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">z=1</annotation></semantics>z=1。但是，尽管天气预报并没有直接告诉我是否生病，但我对自己生病的信念却大幅下降：我的症状已经被“很可能过敏”这个解释**解释掉了**。
 - en: In other words, conditioned on a value of <semantics><mrow><mi>y</mi></mrow><annotation
     encoding="application/x-tex">y</annotation></semantics>y (stuffy nose), knowing
     something about <semantics><mrow><mi>z</mi></mrow><annotation encoding="application/x-tex">z</annotation></semantics>z
     (allergies) gives me information about the distribution of <semantics><mrow><mi>x</mi></mrow><annotation
     encoding="application/x-tex">x</annotation></semantics>x (sickness). This is precisely
     the definition of conditional dependence.
+  id: totrans-75
   prefs: []
   type: TYPE_NORMAL
+  zh: 换句话说，在给定 <semantics><mrow><mi>y</mi></mrow><annotation encoding="application/x-tex">y</annotation></semantics>y（鼻塞）的某个值时，了解关于
+    <semantics><mrow><mi>z</mi></mrow><annotation encoding="application/x-tex">z</annotation></semantics>z（过敏）的信息，就能让我获得关于
+    <semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics>x（生病）分布的信息。这正是条件依赖的定义。
 - en: '***Exercise**: mathematically prove the results above.*'
+  id: totrans-76
   prefs: []
   type: TYPE_NORMAL
+  zh: '***练习**：用数学方法证明上述结果。*'
 - en: These results can be formalized and generalized in the **d-separation** or **Bayes’
     ball** algorithm. While this algorithm is beyond the scope of this textbook, we’ll
     look at a variant of it in a few chapters when we talk about causality.
+  id: totrans-77
   prefs: []
   type: TYPE_NORMAL
+  zh: 这些结果可以在**d-分离**或**贝叶斯球**算法中得到形式化和推广。虽然该算法超出了本教科书的范围，但我们将在后续章节讨论因果关系时，探讨它的一个变体。
 - en: '[PRE4]'
+  id: totrans-78
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE4]'

@@ -1,11 +1,15 @@
 - en: Uncertainty Quantification
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 不确定性量化
 - en: 原文：[https://data102.org/ds-102-book/content/chapters/03/uncertainty-quantification](https://data102.org/ds-102-book/content/chapters/03/uncertainty-quantification)
+  id: totrans-1
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 原文：[https://data102.org/ds-102-book/content/chapters/03/uncertainty-quantification](https://data102.org/ds-102-book/content/chapters/03/uncertainty-quantification)
 - en: '[<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" width="1.25rem"
     height="1.25rem" class="myst-fm-license-cc-icon myst-fm-license-cc-icon-main inline-block
     mx-1"><title>Content License: Creative Commons Attribution Share Alike 4.0 International
@@ -17,53 +21,83 @@
     must be shared under the same terms</title></svg>](https://creativecommons.org/licenses/by-sa/4.0/)[](https://github.com/ds-102/ds-102-book
     "GitHub Repository: ds-102/ds-102-book")[](https://github.com/ds-102/ds-102-book/edit/main/ds-102-book/content/chapters/03/05_uncertainty_quantification.ipynb
     "Edit This Page")'
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: '[<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" width="1.25rem"
+    height="1.25rem" class="myst-fm-license-cc-icon myst-fm-license-cc-icon-main inline-block
+    mx-1"><title>内容许可：知识共享 署名-相同方式共享 4.0 国际许可协议 (CC-BY-SA-4.0)</title></svg><svg viewBox="0
+    0 24 24" fill="currentColor" aria-hidden="true" width="1.25rem" height="1.25rem"
+    class="myst-fm-license-cc-icon myst-fm-license-cc-icon-by inline-block mr-1"><title>必须为创作者署名</title></svg><svg
+    viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" width="1.25rem" height="1.25rem"
+    class="myst-fm-license-cc-icon myst-fm-license-cc-icon-sa inline-block mr-1"><title>改编作品必须在相同条款下共享</title></svg>](https://creativecommons.org/licenses/by-sa/4.0/)[](https://github.com/ds-102/ds-102-book
+    "GitHub 仓库：ds-102/ds-102-book")[](https://github.com/ds-102/ds-102-book/edit/main/ds-102-book/content/chapters/03/05_uncertainty_quantification.ipynb
+    "编辑此页面")'
 - en: '[PRE0]'
+  id: totrans-3
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: (Almost) every dataset we work with has some amount of uncertainty in it. Everything
     from the randomness in a sample, measurement error, differences between the data
     and the underlying truth they represent, and much more can lead to uncertainty.
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们处理的（几乎）每个数据集都存在一定程度的不确定性。从样本的随机性、测量误差、数据与其所代表的基础事实之间的差异，以及更多因素，都可能导致不确定性。
 - en: 'Therefore, anything we **compute** using the data also inherits some uncertainty.
     So, it’s important to always report that uncertainty:'
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: 因此，任何我们使用数据**计算**得出的结果也会继承一些不确定性。所以，始终报告这种不确定性至关重要：
 - en: If we infer a parameter or trend, we should report our uncertainty in the inference.
+  id: totrans-6
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 如果我们推断一个参数或趋势，就应当报告推断中的不确定性。
 - en: If we make a prediction, we should report our uncertainty in the prediction.
+  id: totrans-7
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 如果我们做出预测，就应当报告预测中的不确定性。
 - en: If we draw a conclusion, we should report our uncertainty in the conclusion.
+  id: totrans-8
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 如果我们得出结论，就应当报告结论中的不确定性。
 - en: While uncertainty quantification looks slightly different from frequentist and
     Bayesian perspectives, the core ideas above remain true regardless.
+  id: totrans-9
   prefs: []
   type: TYPE_NORMAL
+  zh: 尽管从频率派和贝叶斯视角看，不确定性量化的表现形式略有不同，但上述核心理念在任何情况下都成立。
 - en: Frequentist Uncertainty Quantification[¶](#frequentist-uncertainty-quantification
     "Link to this Section")
+  id: totrans-10
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 频率派不确定性量化[¶](#frequentist-uncertainty-quantification "链接至此章节")
 - en: In the frequentist setting, we treat our data as random, but our unknowns as
     fixed. So, any uncertainty we quantify is only over the data! We **cannot** make
     statements like “*The unknown is probably within*” or “*The probability of the
     parameter being..*”.
+  id: totrans-11
   prefs: []
   type: TYPE_NORMAL
+  zh: 在频率派框架下，我们将数据视为随机的，而将未知量视为固定的。因此，我们量化的任何不确定性都仅针对数据！我们**不能**做出诸如“*未知量很可能在...范围内*”或“*参数为...的概率是...*”这样的陈述。
 - en: 'While these statements can be more intuitive and might align with what we want
     to say when quantifying uncertainty, they only make sense in the context of a
     probability model for the unknown: we’ll have to take a Bayesian approach in order
     to say anything of this sort.'
+  id: totrans-12
   prefs: []
   type: TYPE_NORMAL
+  zh: 尽管这些表述可能更直观，并且可能符合我们在量化不确定性时想要表达的意思，但它们只有在为未知量建立概率模型的背景下才有意义：我们必须采用贝叶斯方法才能做出此类表述。
 - en: The main way we’ll quantify uncertainty in the frequentist setting is by using
     the distribution of our estimators. Specifically, whenever we estimate some parameter
     <semantics><mrow><mi>θ</mi></mrow><annotation encoding="application/x-tex">\theta</annotation></semantics>θ
@@ -76,37 +110,64 @@
     can use the distribution of <semantics><mrow><mover accent="true"><mi>θ</mi><mo>^</mo></mover></mrow><annotation
     encoding="application/x-tex">\hat{\theta}</annotation></semantics>θ^ to quantify
     uncertainty.
+  id: totrans-13
   prefs: []
   type: TYPE_NORMAL
+  zh: 在频率论框架下，我们量化不确定性的主要方式是利用估计量的分布。具体来说，当我们用估计量 <semantics><mrow><mover accent="true"><mi>θ</mi><mo>^</mo></mover><mo>=</mo><mi>f</mi><mo
+    stretchy="false">(</mo><msub><mi>x</mi><mn>1</mn></msub><mo separator="true">,</mo><mo>…</mo><mo
+    separator="true">,</mo><msub><mi>x</mi><mi>n</mi></msub><mo stretchy="false">)</mo></mrow><annotation
+    encoding="application/x-tex">\hat{\theta} = f(x_1, \ldots, x_n)</annotation></semantics>θ^=f(x1​,…,xn​)
+    来估计某个参数 <semantics><mrow><mi>θ</mi></mrow><annotation encoding="application/x-tex">\theta</annotation></semantics>θ
+    时，该估计量是随机的，因为它依赖于随机数据（即使 <semantics><mrow><mi>θ</mi></mrow><annotation encoding="application/x-tex">\theta</annotation></semantics>θ
+    是固定的）。因此，我们可以利用 <semantics><mrow><mover accent="true"><mi>θ</mi><mo>^</mo></mover></mrow><annotation
+    encoding="application/x-tex">\hat{\theta}</annotation></semantics>θ^ 的分布来量化不确定性。
 - en: We already know that if we have the distribution of <semantics><mrow><mover
     accent="true"><mi>θ</mi><mo>^</mo></mover></mrow><annotation encoding="application/x-tex">\hat{\theta}</annotation></semantics>θ^,
     we can construct a **confidence interval**, which gives us an idea of how much
     our estimator could vary if we had observed different datasets. But before we
     can construct one, we need to determine the distribution for <semantics><mrow><mover
     accent="true"><mi>θ</mi><mo>^</mo></mover></mrow><annotation encoding="application/x-tex">\hat{\theta}</annotation></semantics>θ^.
+  id: totrans-14
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们已经知道，如果掌握了 <semantics><mrow><mover accent="true"><mi>θ</mi><mo>^</mo></mover></mrow><annotation
+    encoding="application/x-tex">\hat{\theta}</annotation></semantics>θ^ 的分布，我们就可以构建一个**置信区间**，这能让我们了解如果观测到不同的数据集，我们的估计量可能会有多大变化。但在构建之前，我们需要先确定
+    <semantics><mrow><mover accent="true"><mi>θ</mi><mo>^</mo></mover></mrow><annotation
+    encoding="application/x-tex">\hat{\theta}</annotation></semantics>θ^ 的分布。
 - en: '[PRE1]'
+  id: totrans-15
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: Loading...
+  id: totrans-16
   prefs: []
   type: TYPE_NORMAL
+  zh: 加载中...
 - en: UQ with the Central Limit Theorem[¶](#uq-with-the-central-limit-theorem "Link
     to this Section")
+  id: totrans-17
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 利用中心极限定理进行不确定性量化[¶](#uq-with-the-central-limit-theorem "Link to this Section")
 - en: '*For more on the Central Limit Theorem, see [Chapter 14 of the Data 140 textbook](https://data140.org/textbook/content/Chapter_14/00_The_Central_Limit_Theorem.html).*'
+  id: totrans-18
   prefs: []
   type: TYPE_NORMAL
+  zh: '*关于中心极限定理的更多内容，请参阅 [Data 140 教材第 14 章](https://data140.org/textbook/content/Chapter_14/00_The_Central_Limit_Theorem.html)。*'
 - en: 'If we want to use the distribution of <semantics><mrow><mover accent="true"><mi>θ</mi><mo>^</mo></mover></mrow><annotation
     encoding="application/x-tex">\hat{\theta}</annotation></semantics>θ^ to quantify
     our uncertainty, then we have to start by answering: "what is the distribution
     of <semantics><mrow><mover accent="true"><mi>θ</mi><mo>^</mo></mover></mrow><annotation
     encoding="application/x-tex">\hat{\theta}</annotation></semantics>θ^?'
+  id: totrans-19
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果我们想利用 <semantics><mrow><mover accent="true"><mi>θ</mi><mo>^</mo></mover></mrow><annotation
+    encoding="application/x-tex">\hat{\theta}</annotation></semantics>θ^ 的分布来量化不确定性，那么首先要回答的问题是：“<semantics><mrow><mover
+    accent="true"><mi>θ</mi><mo>^</mo></mover></mrow><annotation encoding="application/x-tex">\hat{\theta}</annotation></semantics>θ^
+    的分布是什么？”
 - en: 'In the case where <semantics><mrow><mi>θ</mi></mrow><annotation encoding="application/x-tex">\theta</annotation></semantics>θ
     is the sample mean, we can answer this with one of the most beautiful results
     in statistics: the **Central Limit Theorem**. Briefly, this states that if <semantics><mrow><mover
@@ -123,8 +184,19 @@
     a normal distribution with mean <semantics><mrow><mi>μ</mi></mrow><annotation
     encoding="application/x-tex">\mu</annotation></semantics>μ and variance <semantics><mrow><msup><mi>σ</mi><mn>2</mn></msup><mi
     mathvariant="normal">/</mi><mi>n</mi></mrow><annotation encoding="application/x-tex">\sigma^2/n</annotation></semantics>σ2/n.'
+  id: totrans-20
   prefs: []
   type: TYPE_NORMAL
+  zh: 当<semantics><mrow><mi>θ</mi></mrow><annotation encoding="application/x-tex">\theta</annotation></semantics>为样本均值时，我们可以用统计学中最优美的结果之一来回答这个问题：**中心极限定理**。简而言之，该定理指出，若<semantics><mrow><mover
+    accent="true"><mi>μ</mi><mo>^</mo></mover></mrow><annotation encoding="application/x-tex">\hat{\mu}</annotation></semantics>是数据点<semantics><mrow><msub><mi>x</mi><mn>1</mn></msub><mo
+    separator="true">,</mo><mo>…</mo><mo separator="true">,</mo><msub><mi>x</mi><mi>n</mi></msub></mrow><annotation
+    encoding="application/x-tex">x_1, \ldots, x_n</annotation></semantics>的样本均值，其中每个<semantics><mrow><msub><mi>x</mi><mi>i</mi></msub></mrow><annotation
+    encoding="application/x-tex">x_i</annotation></semantics>的均值为<semantics><mrow><mi>μ</mi></mrow><annotation
+    encoding="application/x-tex">\mu</annotation></semantics>且（有限）方差为<semantics><mrow><msup><mi>σ</mi><mn>2</mn></msup></mrow><annotation
+    encoding="application/x-tex">\sigma^2</annotation></semantics>，则<semantics><mrow><mover
+    accent="true"><mi>μ</mi><mo>^</mo></mover></mrow><annotation encoding="application/x-tex">\hat{\mu}</annotation></semantics>的分布会收敛于一个均值为<semantics><mrow><mi>μ</mi></mrow><annotation
+    encoding="application/x-tex">\mu</annotation></semantics>、方差为<semantics><mrow><msup><mi>σ</mi><mn>2</mn></msup><mi
+    mathvariant="normal">/</mi><mi>n</mi></mrow><annotation encoding="application/x-tex">\sigma^2/n</annotation></semantics>的正态分布。
 - en: Note that a similar result holds for any maximum likelihood estimate! While
     the details are beyond the scope of this class, one can show that if <semantics><mrow><msub><mover
     accent="true"><mi>θ</mi><mo>^</mo></mover><mrow><mi>M</mi><mi>L</mi><mi>E</mi></mrow></msub></mrow><annotation
@@ -147,102 +219,168 @@
     which quantifies how much information each <semantics><mrow><msub><mi>x</mi><mi>i</mi></msub></mrow><annotation
     encoding="application/x-tex">x_i</annotation></semantics>xi​ gives us about <semantics><mrow><mi>θ</mi></mrow><annotation
     encoding="application/x-tex">\theta</annotation></semantics>θ.
+  id: totrans-21
   prefs: []
   type: TYPE_NORMAL
+  zh: 请注意，类似的结果适用于任何最大似然估计！虽然细节超出了本课程的范围，但可以证明，如果 <semantics><mrow><msub><mover accent="true"><mi>θ</mi><mo>^</mo></mover><mrow><mi>M</mi><mi>L</mi><mi>E</mi></mrow></msub></mrow><annotation
+    encoding="application/x-tex">\hat{\theta}_{MLE}</annotation></semantics>θ^MLE​
+    是基于数据点 <semantics><mrow><msub><mi>x</mi><mn>1</mn></msub><mo separator="true">,</mo><mo>…</mo><mo
+    separator="true">,</mo><msub><mi>x</mi><mi>n</mi></msub></mrow><annotation encoding="application/x-tex">x_1,
+    \ldots, x_n</annotation></semantics>x1​,…,xn​ 对某个参数 <semantics><mrow><mi>θ</mi></mrow><annotation
+    encoding="application/x-tex">\theta</annotation></semantics>θ 的最大似然估计，那么 <semantics><mrow><msub><mover
+    accent="true"><mi>θ</mi><mo>^</mo></mover><mrow><mi>M</mi><mi>L</mi><mi>E</mi></mrow></msub></mrow><annotation
+    encoding="application/x-tex">\hat{\theta}_{MLE}</annotation></semantics>θ^MLE​
+    的分布**也**收敛于正态分布，其均值为 <semantics><mrow><mi>θ</mi></mrow><annotation encoding="application/x-tex">\theta</annotation></semantics>θ，方差为
+    <semantics><mrow><mn>1</mn><mi mathvariant="normal">/</mi><mo stretchy="false">(</mo><mi>n</mi><mi>I</mi><mo
+    stretchy="false">(</mo><mi>θ</mi><mo stretchy="false">)</mo><mo stretchy="false">)</mo></mrow><annotation
+    encoding="application/x-tex">1/(nI(\theta))</annotation></semantics>1/(nI(θ))。这里，<semantics><mrow><mi>I</mi><mo
+    stretchy="false">(</mo><mi>θ</mi><mo stretchy="false">)</mo></mrow><annotation
+    encoding="application/x-tex">I(\theta)</annotation></semantics>I(θ) 是似然函数的[费希尔信息](https://en.wikipedia.org/wiki/Fisher_information)，它量化了每个
+    <semantics><mrow><msub><mi>x</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">x_i</annotation></semantics>xi​
+    为我们提供的关于 <semantics><mrow><mi>θ</mi></mrow><annotation encoding="application/x-tex">\theta</annotation></semantics>θ
+    的信息量。
 - en: 'While the details (e.g., Fisher information) are beyond the scope of this class,
     the takeaway is important:'
+  id: totrans-22
   prefs: []
   type: TYPE_NORMAL
+  zh: 虽然具体细节（例如，费希尔信息）超出了本课程的范围，但关键要点很重要：
 - en: Asymptotically (i.e., as the number of observations gets very large), **the
     distribution of a maximum likelihood estimator, like that of a sample mean, converges
     to a normal distribution**.
+  id: totrans-23
   prefs: []
   type: TYPE_NORMAL
+  zh: 渐近地（即当观测数量变得非常大时），**最大似然估计量的分布，如同样本均值的分布一样，收敛于正态分布**。
 - en: '[PRE2]'
+  id: totrans-24
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: Loading...
+  id: totrans-25
   prefs: []
   type: TYPE_NORMAL
+  zh: 加载中...
 - en: UQ with the Bootstrap[¶](#uq-with-the-bootstrap "Link to this Section")
+  id: totrans-26
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 使用自助法进行不确定性量化[¶](#uq-with-the-bootstrap "链接到此章节")
 - en: '*You may find it helpful to review [Chapter 13.2 of the Data 8 textbook](https://inferentialthinking.com/chapters/13/2/Bootstrap.html),
     which covers the bootstrap.*'
+  id: totrans-27
   prefs: []
   type: TYPE_NORMAL
+  zh: '*你可能会发现复习[《Data 8》教材的第13.2章](https://inferentialthinking.com/chapters/13/2/Bootstrap.html)会很有帮助，该章节涵盖了自助法。*'
 - en: In many cases, we might not be able to compute the distribution of <semantics><mrow><mover
     accent="true"><mi>θ</mi><mo>^</mo></mover></mrow><annotation encoding="application/x-tex">\hat{\theta}</annotation></semantics>θ^
     analytically. In some of these cases, we can use the **bootstrap** to quantify
     uncertainty.
+  id: totrans-28
   prefs: []
   type: TYPE_NORMAL
+  zh: 在许多情况下，我们可能无法解析地计算出 <semantics><mrow><mover accent="true"><mi>θ</mi><mo>^</mo></mover></mrow><annotation
+    encoding="application/x-tex">\hat{\theta}</annotation></semantics>θ^ 的分布。在这些情况中的某些部分，我们可以使用**自助法**来量化不确定性。
 - en: Bootstrap limitations[¶](#bootstrap-limitations "Link to this Section")
+  id: totrans-29
   prefs:
   - PREF_H4
   type: TYPE_NORMAL
+  zh: 自助法的局限性[¶](#bootstrap-limitations "Link to this Section")
 - en: 'The bootstrap works well in most, but not all situations. Here are some guidelines
     for when to (and when not to) use it:'
+  id: totrans-30
   prefs: []
   type: TYPE_NORMAL
+  zh: 自助法在大多数情况下效果良好，但并非适用于所有情况。以下是一些关于何时使用（以及何时不使用）它的指导原则：
 - en: The bootstrap is a **good** choice when the presence or absence of a single
     sample won’t change the estimate dramatically (e.g., this is not true for the
     min or max)
+  id: totrans-31
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 当单个样本的存在与否不会显著改变估计值时（例如，对于最小值或最大值，这种情况则不适用），自助法是一个**很好**的选择。
 - en: The bootstrap is a **good** choice when the number of data points is very small
+  id: totrans-32
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 当数据点数量非常少时，自助法是一个**很好**的选择。
 - en: The bootstrap is a **good** choice when the number of parameters <semantics><mrow><mi>d</mi></mrow><annotation
     encoding="application/x-tex">d</annotation></semantics>d being estimated is much
     smaller than the number of data points <semantics><mrow><mi>n</mi></mrow><annotation
     encoding="application/x-tex">n</annotation></semantics>n (e.g., this is not true
     for neural networks, where we are estimating a very large number of parameters)
+  id: totrans-33
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 当待估计参数数量 <semantics><mrow><mi>d</mi></mrow><annotation encoding="application/x-tex">d</annotation></semantics>d
+    远小于数据点数量 <semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics>n
+    时（例如，对于神经网络，我们估计的参数数量非常庞大，这种情况则不适用），自助法是一个**很好**的选择。
 - en: '[PRE3]'
+  id: totrans-34
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: Loading...
+  id: totrans-35
   prefs: []
   type: TYPE_NORMAL
+  zh: 加载中...
 - en: '[PRE4]'
+  id: totrans-36
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE4]'
 - en: Loading...
+  id: totrans-37
   prefs: []
   type: TYPE_NORMAL
+  zh: 加载中...
 - en: Confidence intervals[¶](#confidence-intervals "Link to this Section")
+  id: totrans-38
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 置信区间[¶](#confidence-intervals "Link to this Section")
 - en: '*You may find it helpful to review [Section 13.3 of the Data 8 textbook](https://inferentialthinking.com/chapters/13/3/Confidence_Intervals.html),
     which covers confidence intervals.*'
+  id: totrans-39
   prefs: []
   type: TYPE_NORMAL
+  zh: '*你可能会发现回顾[Data 8教材的第13.3节](https://inferentialthinking.com/chapters/13/3/Confidence_Intervals.html)会很有帮助，该节涵盖了置信区间。*'
 - en: A confidence interval provides a measure of uncertainty about our estimator,
     based on its distribution. Recall that confidence intervals provide a guarantee
     about the process, not about the location of the (fixed) unknown parameter. Specifically,
     thinking about a 95% confidence interval, we know that 95% of datasets will produce
     an interval that contains the true parameter. We don’t know whether our interval
     happens to be one of the lucky 95%, or one of the unlucky 5%.
+  id: totrans-40
   prefs: []
   type: TYPE_NORMAL
+  zh: 置信区间基于估计量的分布，提供了关于我们估计器不确定性的度量。请记住，置信区间提供的是关于过程（而非固定未知参数位置）的保证。具体来说，对于一个95%的置信区间，我们知道95%的数据集会产生包含真实参数的区间。但我们不知道我们的区间恰好是幸运的95%之一，还是不幸的5%之一。
 - en: '[PRE5]'
+  id: totrans-41
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE5]'
 - en: Loading...
+  id: totrans-42
   prefs: []
   type: TYPE_NORMAL
+  zh: 加载中...
 - en: 'Uncertainty in GLMs: comparing coefficient and prediction intervals[¶](#uncertainty-in-glms-comparing-coefficient-and-prediction-intervals
     "Link to this Section")'
+  id: totrans-43
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: GLM中的不确定性：比较系数区间与预测区间[¶](#uncertainty-in-glms-comparing-coefficient-and-prediction-intervals
+    "Link to this Section")
 - en: When quantifying uncertainty in GLMs, it’s important to keep in mind that there
     are multiple sources of uncertainty. For example, consider our estimate of the
     coefficients, <semantics><mrow><mover accent="true"><mi>β</mi><mo>^</mo></mover></mrow><annotation
@@ -257,8 +395,18 @@
     different dataset, we might have gotten a different set of estimated coefficients
     <semantics><mrow><mover accent="true"><mi>β</mi><mo>^</mo></mover></mrow><annotation
     encoding="application/x-tex">\hat{\beta}</annotation></semantics>β^​.
+  id: totrans-44
   prefs: []
   type: TYPE_NORMAL
+  zh: 在量化广义线性模型（GLMs）中的不确定性时，必须牢记不确定性有多个来源。例如，考虑我们从数据 <semantics><mrow><mo stretchy="false">(</mo><msub><mi>x</mi><mn>1</mn></msub><mo
+    separator="true">,</mo><msub><mi>y</mi><mn>1</mn></msub><mo stretchy="false">)</mo><mo
+    separator="true">,</mo><mo>…</mo><mo separator="true">,</mo><mo stretchy="false">(</mo><msub><mi>x</mi><mi>n</mi></msub><mo
+    separator="true">,</mo><msub><mi>y</mi><mi>n</mi></msub><mo stretchy="false">)</mo></mrow><annotation
+    encoding="application/x-tex">(x_1, y_1), \ldots, (x_n, y_n)</annotation></semantics>(x1​,y1​),…,(xn​,yn​)
+    计算得出的系数估计值 <semantics><mrow><mover accent="true"><mi>β</mi><mo>^</mo></mover></mrow><annotation
+    encoding="application/x-tex">\hat{\beta}</annotation></semantics>β^​。这些是给定观测数据的最大似然估计值，因此其本身具有固有的不确定性。换句话说，如果我们观测到不同的数据集，可能会得到一组不同的估计系数
+    <semantics><mrow><mover accent="true"><mi>β</mi><mo>^</mo></mover></mrow><annotation
+    encoding="application/x-tex">\hat{\beta}</annotation></semantics>β^​。
 - en: 'Now, consider our estimated prediction for a new data point, <semantics><mrow><msub><mover
     accent="true"><mi>y</mi><mo>^</mo></mover><mrow><mi>n</mi><mo>+</mo><mn>1</mn></mrow></msub></mrow><annotation
     encoding="application/x-tex">\hat{y}_{n+1}</annotation></semantics>y^​n+1​. To
@@ -266,8 +414,14 @@
     encoding="application/x-tex">x</annotation></semantics>x. In this case, we can
     write the distribution for the new value <semantics><mrow><msub><mi>y</mi><mrow><mi>n</mi><mo>+</mo><mn>1</mn></mrow></msub></mrow><annotation
     encoding="application/x-tex">y_{n+1}</annotation></semantics>yn+1​ as:'
+  id: totrans-45
   prefs: []
   type: TYPE_NORMAL
+  zh: 现在，考虑我们对一个新数据点的预测估计值 <semantics><mrow><msub><mover accent="true"><mi>y</mi><mo>^</mo></mover><mrow><mi>n</mi><mo>+</mo><mn>1</mn></mrow></msub></mrow><annotation
+    encoding="application/x-tex">\hat{y}_{n+1}</annotation></semantics>y^​n+1​。为简化起见，我们将重点讨论标量
+    <semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics>x
+    的线性回归。在这种情况下，我们可以将新值 <semantics><mrow><msub><mi>y</mi><mrow><mi>n</mi><mo>+</mo><mn>1</mn></mrow></msub></mrow><annotation
+    encoding="application/x-tex">y_{n+1}</annotation></semantics>yn+1​ 的分布写为：
 - en: <semantics><mrow><msub><mover accent="true"><mi>y</mi><mo>^</mo></mover><mrow><mi>n</mi><mo>+</mo><mn>1</mn></mrow></msub><mo>∼</mo><mi
     mathvariant="script">N</mi><mrow><mo fence="true">(</mo><msub><mover accent="true"><mi>β</mi><mo>^</mo></mover><mn>0</mn></msub><mo>+</mo><msub><mover
     accent="true"><mi>β</mi><mo>^</mo></mover><mn>1</mn></msub><msub><mi>x</mi><mrow><mi>n</mi><mo>+</mo><mn>1</mn></mrow></msub><mo
@@ -275,16 +429,29 @@
     encoding="application/x-tex">\hat{y}_{n+1} \sim \mathcal{N}\left(\hat{\beta}_0
     + \hat{\beta}_1 x_{n+1}\,,\, \sigma^2\right)</annotation></semantics>y^​n+1​∼N(β^​0​+β^​1​xn+1​,σ2)[(1)](#k0KIlnwgYB
     "Link to this Equation")
+  id: totrans-46
   prefs: []
   type: TYPE_NORMAL
+  zh: <semantics><mrow><msub><mover accent="true"><mi>y</mi><mo>^</mo></mover><mrow><mi>n</mi><mo>+</mo><mn>1</mn></mrow></msub><mo>∼</mo><mi
+    mathvariant="script">N</mi><mrow><mo fence="true">(</mo><msub><mover accent="true"><mi>β</mi><mo>^</mo></mover><mn>0</mn></msub><mo>+</mo><msub><mover
+    accent="true"><mi>β</mi><mo>^</mo></mover><mn>1</mn></msub><msub><mi>x</mi><mrow><mi>n</mi><mo>+</mo><mn>1</mn></mrow></msub><mo
+    separator="true">,</mo><msup><mi>σ</mi><mn>2</mn></msup><mo fence="true">)</mo></mrow></mrow><annotation
+    encoding="application/x-tex">\hat{y}_{n+1} \sim \mathcal{N}\left(\hat{\beta}_0
+    + \hat{\beta}_1 x_{n+1}\,,\, \sigma^2\right)</annotation></semantics>y^​n+1​∼N(β^​0​+β^​1​xn+1​,σ2)[(1)](#k0KIlnwgYB
+    "链接至此方程")
 - en: 'Here, there are two sources of uncertainty: (1) the uncertainty in our estimator
     for the coefficients, <semantics><mrow><mover accent="true"><mi>β</mi><mo>^</mo></mover></mrow><annotation
     encoding="application/x-tex">\hat{\beta}</annotation></semantics>β^​; and (2)
     the uncertainty in the observed value and how far away it’ll be from the average
     prediction (i.e., prediction line), as quantified by <semantics><mrow><mi>σ</mi></mrow><annotation
     encoding="application/x-tex">\sigma</annotation></semantics>σ.'
+  id: totrans-47
   prefs: []
   type: TYPE_NORMAL
+  zh: 这里存在两种不确定性来源：(1) 系数估计量 <semantics><mrow><mover accent="true"><mi>β</mi><mo>^</mo></mover></mrow><annotation
+    encoding="application/x-tex">\hat{\beta}</annotation></semantics>β^​ 的不确定性；以及
+    (2) 观测值的不确定性及其偏离平均预测值（即预测线）的程度，这由 <semantics><mrow><mi>σ</mi></mrow><annotation
+    encoding="application/x-tex">\sigma</annotation></semantics>σ 量化。
 - en: So, if we want to construct a confidence interval for <semantics><mrow><msub><mover
     accent="true"><mi>β</mi><mo>^</mo></mover><mn>0</mn></msub></mrow><annotation
     encoding="application/x-tex">\hat{\beta}_0</annotation></semantics>β^​0​, we need
@@ -293,36 +460,56 @@
     encoding="application/x-tex">\hat{y}_{n+1}</annotation></semantics>y^​n+1​, we
     need to consider **both** sources of uncertainty! This second type of interval
     is often called a **prediction interval**.
+  id: totrans-48
   prefs: []
   type: TYPE_NORMAL
+  zh: 因此，如果我们想为 <semantics><mrow><msub><mover accent="true"><mi>β</mi><mo>^</mo></mover><mn>0</mn></msub></mrow><annotation
+    encoding="application/x-tex">\hat{\beta}_0</annotation></semantics>β^​0​ 构建一个置信区间，我们只需要考虑第一种不确定性来源。但是，如果我们想为
+    <semantics><mrow><msub><mover accent="true"><mi>y</mi><mo>^</mo></mover><mrow><mi>n</mi><mo>+</mo><mn>1</mn></mrow></msub></mrow><annotation
+    encoding="application/x-tex">\hat{y}_{n+1}</annotation></semantics>y^​n+1​ 构建一个置信区间，我们需要考虑**两种**不确定性来源！这第二种区间通常被称为**预测区间**。
 - en: Using Bootstrap to Quantify Uncertainty in GLMs[¶](#using-bootstrap-to-quantify-uncertainty-in-glms
     "Link to this Section")
+  id: totrans-49
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 使用自助法量化广义线性模型中的不确定性[¶](#using-bootstrap-to-quantify-uncertainty-in-glms "Link
+    to this Section")
 - en: '*Text coming soon: see video*'
+  id: totrans-50
   prefs: []
   type: TYPE_NORMAL
+  zh: '*文本即将推出：请参阅视频*'
 - en: '[PRE6]'
+  id: totrans-51
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE6]'
 - en: Loading...
+  id: totrans-52
   prefs: []
   type: TYPE_NORMAL
+  zh: 正在加载...
 - en: Bayesian Uncertainty Quantification[¶](#bayesian-uncertainty-quantification
     "Link to this Section")
+  id: totrans-53
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 贝叶斯不确定性量化[¶](#bayesian-uncertainty-quantification "Link to this Section")
 - en: In the Bayesian setting, we treat our unknown parameters as random. This means
     that we can make statements like “The unknown is probably between A and B”, which
     we couldn’t in the frequentist setting.
+  id: totrans-54
   prefs: []
   type: TYPE_NORMAL
+  zh: 在贝叶斯框架下，我们将未知参数视为随机变量。这意味着我们可以做出诸如“未知量很可能在A和B之间”的陈述，而这在频率主义框架下是无法实现的。
 - en: Credible Intervals[¶](#credible-intervals "Link to this Section")
+  id: totrans-55
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 可信区间[¶](#credible-intervals "Link to this Section")
 - en: This motivates the definition of a **credible interval**. A <semantics><mrow><mi>p</mi><mi
     mathvariant="normal">%</mi></mrow><annotation encoding="application/x-tex">p\%</annotation></semantics>p%
     credible interval for a parameter <semantics><mrow><mi>θ</mi></mrow><annotation
@@ -349,20 +536,48 @@
     encoding="application/x-tex">\int_{0.3}^{1.7} p(\theta|x_1, \ldots, x_n) d\theta
     = 0.9</annotation></semantics>∫0.31.7​p(θ∣x1​,…,xn​)dθ=0.9 (assuming <semantics><mrow><mi>θ</mi></mrow><annotation
     encoding="application/x-tex">\theta</annotation></semantics>θ is continuous).
+  id: totrans-56
   prefs: []
   type: TYPE_NORMAL
+  zh: 这引出了**可信区间**的定义。对于参数 <semantics><mrow><mi>θ</mi></mrow><annotation encoding="application/x-tex">\theta</annotation></semantics>θ，一个
+    <semantics><mrow><mi>p</mi><mi mathvariant="normal">%</mi></mrow><annotation encoding="application/x-tex">p\%</annotation></semantics>p%
+    可信区间 <semantics><mrow><mo stretchy="false">(</mo><mi>a</mi><mo separator="true">,</mo><mi>b</mi><mo
+    stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">(a, b)</annotation></semantics>(a,b)
+    表示，在给定观测数据的情况下，参数 <semantics><mrow><mi>θ</mi></mrow><annotation encoding="application/x-tex">\theta</annotation></semantics>θ
+    落在 <semantics><mrow><mi>a</mi></mrow><annotation encoding="application/x-tex">a</annotation></semantics>a
+    和 <semantics><mrow><mi>b</mi></mrow><annotation encoding="application/x-tex">b</annotation></semantics>b
+    之间的概率为 <semantics><mrow><mi>p</mi><mi mathvariant="normal">%</mi></mrow><annotation
+    encoding="application/x-tex">p\%</annotation></semantics>p%。例如，假设我们为 <semantics><mrow><mi>θ</mi></mrow><annotation
+    encoding="application/x-tex">\theta</annotation></semantics>θ 生成了一个 <semantics><mrow><mn>90</mn><mi
+    mathvariant="normal">%</mi></mrow><annotation encoding="application/x-tex">90\%</annotation></semantics>90%
+    可信区间 <semantics><mrow><mo stretchy="false">(</mo><mn>0.3</mn><mo separator="true">,</mo><mn>1.7</mn><mo
+    stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">(0.3, 1.7)</annotation></semantics>(0.3,1.7)。这告诉我们，根据观测数据，<semantics><mrow><mi>θ</mi></mrow><annotation
+    encoding="application/x-tex">\theta</annotation></semantics>θ 在 0.3 和 1.7 之间的概率是
+    0.9，等价于 <semantics><mrow><msubsup><mo>∫</mo><mn>0.3</mn><mn>1.7</mn></msubsup><mi>p</mi><mo
+    stretchy="false">(</mo><mi>θ</mi><mi mathvariant="normal">∣</mi><msub><mi>x</mi><mn>1</mn></msub><mo
+    separator="true">,</mo><mo>…</mo><mo separator="true">,</mo><msub><mi>x</mi><mi>n</mi></msub><mo
+    stretchy="false">)</mo><mi>d</mi><mi>θ</mi><mo>=</mo><mn>0.9</mn></mrow><annotation
+    encoding="application/x-tex">\int_{0.3}^{1.7} p(\theta|x_1, \ldots, x_n) d\theta
+    = 0.9</annotation></semantics>∫0.31.7​p(θ∣x1​,…,xn​)dθ=0.9（假设 <semantics><mrow><mi>θ</mi></mrow><annotation
+    encoding="application/x-tex">\theta</annotation></semantics>θ 是连续的）。
 - en: 'Notice how much simpler this definition is than the confidence interval! This
     is one of the advantages of taking a Bayesian approach: treating our unknown as
     random lets us make intuitive statements about the probability that it takes on
     certain values.'
+  id: totrans-57
   prefs: []
   type: TYPE_NORMAL
+  zh: 请注意，这个定义比置信区间要简单得多！这是采用贝叶斯方法的一个优势：将未知量视为随机变量，使我们能够对其取特定值的概率做出直观的陈述。
 - en: '[PRE7]'
+  id: totrans-58
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE7]'
 - en: Loading...
+  id: totrans-59
   prefs: []
   type: TYPE_NORMAL
+  zh: 正在加载...
 - en: However, one problem with this definition is that it is **not unique**! Indeed,
     there are many possible credible intervals for a given level of confidence/credibility.
     Consider the following distribution, and the three possible <semantics><mrow><mn>80</mn><mi
@@ -372,54 +587,86 @@
     so all three are valid <semantics><mrow><mn>80</mn><mi mathvariant="normal">%</mi></mrow><annotation
     encoding="application/x-tex">80\%</annotation></semantics>80% credible intervals.
     Which one would you prefer?
+  id: totrans-60
   prefs: []
   type: TYPE_NORMAL
+  zh: 然而，这个定义的一个问题是它**不唯一**！确实，对于给定的置信度/可信度水平，存在许多可能的可信区间。考虑以下分布，以及三个可能的 <semantics><mrow><mn>80</mn><mi
+    mathvariant="normal">%</mi></mrow><annotation encoding="application/x-tex">80\%</annotation></semantics>80%
+    可信区间。对于所有这三个区间，蓝色阴影区域的总面积都是 <semantics><mrow><mn>80</mn><mi mathvariant="normal">%</mi></mrow><annotation
+    encoding="application/x-tex">80\%</annotation></semantics>80%，因此它们都是有效的 <semantics><mrow><mn>80</mn><mi
+    mathvariant="normal">%</mi></mrow><annotation encoding="application/x-tex">80\%</annotation></semantics>80%
+    可信区间。你更倾向于哪一个？
 - en: '![](../Images/ce70fcaee9a6228bb06dd970b9e747a8.png)'
+  id: totrans-61
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/ce70fcaee9a6228bb06dd970b9e747a8.png)'
 - en: 'The one in the center seems the most appealing: it covers an area of highest
     density, and is also the narrowest. This motivates the definition of a **highest
     density interval (HDI)**, sometimes also called a highest posterior density (HPD)
     interval. The HDI is the narrowest interval for a given level of credibility/confidence.'
+  id: totrans-62
   prefs: []
   type: TYPE_NORMAL
+  zh: 中间的那个似乎最吸引人：它覆盖了最高密度的区域，并且也是最窄的。这引出了**最高密度区间（HDI）**的定义，有时也称为最高后验密度（HPD）区间。HDI
+    是给定可信度/置信度水平下最窄的区间。
 - en: '*Exercise: is the HDI always unique? If not, then what constraints could we
     place on the posterior to ensure it’s unique?*'
+  id: totrans-63
   prefs: []
   type: TYPE_NORMAL
+  zh: '*练习：最高密度区间总是唯一的吗？如果不是，那么我们可以对后验分布施加什么约束来确保其唯一性？*'
 - en: We can see that the intervals we saw in Section 3.3 were HDIs that PyMC automatically
     constructed for us.
+  id: totrans-64
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们可以看到，在第 3.3 节中看到的区间是 PyMC 自动为我们构建的 HDI。
 - en: '[PRE8]'
+  id: totrans-65
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE8]'
 - en: Loading...
+  id: totrans-66
   prefs: []
   type: TYPE_NORMAL
+  zh: 加载中...
 - en: Constructing HDIs from samples[¶](#constructing-hdis-from-samples "Link to this
     Section")
+  id: totrans-67
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '[从样本构建最高密度区间](#constructing-hdis-from-samples "链接到此章节")'
 - en: 'Given a posterior in closed form, we could analytically find <semantics><mrow><mi>a</mi></mrow><annotation
     encoding="application/x-tex">a</annotation></semantics>a and <semantics><mrow><mi>b</mi></mrow><annotation
     encoding="application/x-tex">b</annotation></semantics>b to minimize the width
     of the interval. But in practice, we rarely obtain posterior distributions in
     closed form: we usually end up approximating them with samples. So, how might
     we find an HDI with samples?'
+  id: totrans-68
   prefs: []
   type: TYPE_NORMAL
+  zh: 给定一个闭式后验分布，我们可以解析地找到 <semantics><mrow><mi>a</mi></mrow><annotation encoding="application/x-tex">a</annotation></semantics>a
+    和 <semantics><mrow><mi>b</mi></mrow><annotation encoding="application/x-tex">b</annotation></semantics>b
+    以最小化区间宽度。但在实践中，我们很少能得到闭式后验分布：我们通常最终会用样本来近似它们。那么，我们如何用样本来找到 HDI 呢？
 - en: 'Let’s do a simple example with some samples from a Beta-distributed random
     variable:'
+  id: totrans-69
   prefs: []
   type: TYPE_NORMAL
+  zh: 让我们用一个来自 Beta 分布随机变量的样本做一个简单的例子：
 - en: '[PRE9]'
+  id: totrans-70
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE9]'
 - en: '`array([0.37568015, 0.3054924 , 0.40978748, 0.10349559, 0.17014057])`'
+  id: totrans-71
   prefs: []
   type: TYPE_NORMAL
+  zh: '`array([0.37568015, 0.3054924 , 0.40978748, 0.10349559, 0.17014057])`'
 - en: 'Call the samples <semantics><mrow><msub><mi>θ</mi><mn>1</mn></msub><mo separator="true">,</mo><mo>…</mo><mo
     separator="true">,</mo><msub><mi>θ</mi><mn>100</mn></msub></mrow><annotation encoding="application/x-tex">\theta_1,
     \ldots, \theta_{100}</annotation></semantics>θ1​,…,θ100​. We can construct a <semantics><mrow><mn>90</mn><mi
@@ -433,39 +680,72 @@
     and reporting <semantics><mrow><mo stretchy="false">[</mo><msub><mi>θ</mi><mi>i</mi></msub><mo
     separator="true">,</mo><msub><mi>θ</mi><mi>j</mi></msub><mo stretchy="false">]</mo></mrow><annotation
     encoding="application/x-tex">[\theta_i, \theta_j]</annotation></semantics>[θi​,θj​]:'
+  id: totrans-72
   prefs: []
   type: TYPE_NORMAL
+  zh: 将这些样本称为<semantics><mrow><msub><mi>θ</mi><mn>1</mn></msub><mo separator="true">,</mo><mo>…</mo><mo
+    separator="true">,</mo><msub><mi>θ</mi><mn>100</mn></msub></mrow><annotation encoding="application/x-tex">\theta_1,
+    \ldots, \theta_{100}</annotation></semantics>θ1​,…,θ100​。我们可以通过排序样本，选择任意满足<semantics><mrow><mo
+    stretchy="false">(</mo><mi>j</mi><mo>−</mo><mi>i</mi><mo stretchy="false">)</mo><mi
+    mathvariant="normal">/</mi><mn>200</mn><mo>=</mo><mn>0.9</mn></mrow><annotation
+    encoding="application/x-tex">(j-i)/200 = 0.9</annotation></semantics>(j−i)/200=0.9的<semantics><mrow><mi>i</mi></mrow><annotation
+    encoding="application/x-tex">i</annotation></semantics>i和<semantics><mrow><mi>j</mi></mrow><annotation
+    encoding="application/x-tex">j</annotation></semantics>j，并报告<semantics><mrow><mo
+    stretchy="false">[</mo><msub><mi>θ</mi><mi>i</mi></msub><mo separator="true">,</mo><msub><mi>θ</mi><mi>j</mi></msub><mo
+    stretchy="false">]</mo></mrow><annotation encoding="application/x-tex">[\theta_i,
+    \theta_j]</annotation></semantics>[θi​,θj​]来构建一个<semantics><mrow><mn>90</mn><mi
+    mathvariant="normal">%</mi></mrow><annotation encoding="application/x-tex">90\%</annotation></semantics>90%的可信区间：
 - en: '[PRE10]'
+  id: totrans-73
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE10]'
 - en: '[PRE11]'
+  id: totrans-74
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE11]'
 - en: How can we find the HDI? We can simply search over all intervals of width <semantics><mrow><mn>200</mn><mo>×</mo><mn>0.9</mn><mo>=</mo><mn>180</mn></mrow><annotation
     encoding="application/x-tex">200 \times 0.9 = 180</annotation></semantics>200×0.9=180,
     and find the narrowest one.
+  id: totrans-75
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们如何找到最高密度区间？我们可以简单地搜索所有宽度为<semantics><mrow><mn>200</mn><mo>×</mo><mn>0.9</mn><mo>=</mo><mn>180</mn></mrow><annotation
+    encoding="application/x-tex">200 \times 0.9 = 180</annotation></semantics>200×0.9=180的区间，并找出最窄的那个。
 - en: '[PRE12]'
+  id: totrans-76
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE12]'
 - en: '[PRE13]'
+  id: totrans-77
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE13]'
 - en: Bayesian UQ for Predictions[¶](#bayesian-uq-for-predictions "Link to this Section")
+  id: totrans-78
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 预测的贝叶斯不确定性量化[¶](#bayesian-uq-for-predictions "链接至此章节")
 - en: Just as in the frequentist world, in Bayesian GLMs, we can also construct credible
     intervals for our predictions! These will be constructed using the posterior predictive
     density, and inherit the uncertainty in the inference for the unknown coefficients
     as well as the uncertainty in the inference for parameters like <semantics><mrow><mi>σ</mi></mrow><annotation
     encoding="application/x-tex">\sigma</annotation></semantics>σ in linear regression.
+  id: totrans-79
   prefs: []
   type: TYPE_NORMAL
+  zh: 正如在频率主义世界中一样，在贝叶斯广义线性模型中，我们也可以为预测构建可信区间！这些区间将使用后验预测密度构建，并继承未知系数推断中的不确定性，以及线性回归中类似<semantics><mrow><mi>σ</mi></mrow><annotation
+    encoding="application/x-tex">\sigma</annotation></semantics>σ等参数推断中的不确定性。
 - en: '[PRE14]'
+  id: totrans-80
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE14]'
 - en: Loading...
+  id: totrans-81
   prefs: []
   type: TYPE_NORMAL
+  zh: 加载中...
