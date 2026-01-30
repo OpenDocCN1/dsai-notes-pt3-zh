@@ -69,6 +69,7 @@
 +   [UCB CS294 深度无监督学习笔记](docs/ucb-cs294-unsup/README.md)
 +   [UCB Data8 计算与推断思维](docs/ucb-data8-notes/README.md)
 +   [UCB Data100：数据科学的原理和技巧](docs/ucb-ds100-notes/README.md)
++   [UCB Data102：数据、推断与决策](docs/ucb-ds102/README.md)
 +   [UCB 全栈深度学习课程笔记](docs/ucb-fsdl/README.md)
 +   [UCB Prob140：面向数据科学的概率论](docs/ucb-prob140-notes/README.md)
 +   [UCB STAT187 深度学习笔记](docs/ucb-stat187-dl/README.md)
