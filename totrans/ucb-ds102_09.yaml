@@ -1,11 +1,15 @@
 - en: Parameter estimation and Bayesian Inference Fundamentals
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 参数估计和贝叶斯推理基础
 - en: 原文：[https://data102.org/ds-102-book/content/chapters/02/parameter-estimation](https://data102.org/ds-102-book/content/chapters/02/parameter-estimation)
+  id: totrans-1
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 原文：[https://data102.org/ds-102-book/content/chapters/02/parameter-estimation](https://data102.org/ds-102-book/content/chapters/02/parameter-estimation)
 - en: '[<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" width="1.25rem"
     height="1.25rem" class="myst-fm-license-cc-icon myst-fm-license-cc-icon-main inline-block
     mx-1"><title>Content License: Creative Commons Attribution Share Alike 4.0 International
@@ -21,17 +25,34 @@
     class="myst-dropdown-header m-0 text-lg font-medium py-1 min-h-[2em] pl-3 cursor-pointer
     hover:shadow-[inset_0_0_0px_30px_#00000003] dark:hover:shadow-[inset_0_0_0px_30px_#FFFFFF03]
     bg-gray-100 dark:bg-slate-900">Notebook Cell</summary>'
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: '[<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" width="1.25rem"
+    height="1.25rem" class="myst-fm-license-cc-icon myst-fm-license-cc-icon-main inline-block
+    mx-1"><title>内容许可：Creative Commons Attribution Share Alike 4.0 国际 (CC-BY-SA-4.0)</title></svg><svg
+    viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" width="1.25rem" height="1.25rem"
+    class="myst-fm-license-cc-icon myst-fm-license-cc-icon-by inline-block mr-1"><title>必须提及创作者</title></svg><svg
+    viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" width="1.25rem" height="1.25rem"
+    class="myst-fm-license-cc-icon myst-fm-license-cc-icon-sa inline-block mr-1"><title>改编必须以相同条款共享</title></svg>](https://creativecommons.org/licenses/by-sa/4.0/)[](https://github.com/ds-102/ds-102-book
+    "GitHub 仓库：ds-102/ds-102-book")[](https://github.com/ds-102/ds-102-book/edit/main/ds-102-book/content/chapters/02/01_parameter_estimation.ipynb
+    "编辑此页")<details class="myst-dropdown rounded-md my-5 shadow dark:shadow-2xl dark:shadow-neutral-900
+    overflow-hidden bg-gray-50 dark:bg-stone-800"><summary class="myst-dropdown-header
+    m-0 text-lg font-medium py-1 min-h-[2em] pl-3 cursor-pointer hover:shadow-[inset_0_0_0px_30px_#00000003]
+    dark:hover:shadow-[inset_0_0_0px_30px_#FFFFFF03] bg-gray-100 dark:bg-slate-900">笔记本单元</summary>'
 - en: '[PRE0]</details>'
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: '[PRE0]</details>'
 - en: '*You may find it helpful to read [Chapter 20](http://prob140.org/textbook/content/Chapter_20/00_Approaches_to_Estimation.html)
     and [Chapter 21](http://prob140.org/textbook/content/Chapter_21/00_The_Beta_and_the_Binomial.html)
     of the Data 140 textbook, which present a different exposition of similar material,
     but are **not** required prerequisites for this chapter.*'
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: '*您可能发现阅读数据140教科书的第20章（[链接](http://prob140.org/textbook/content/Chapter_20/00_Approaches_to_Estimation.html)）和第21章（[链接](http://prob140.org/textbook/content/Chapter_21/00_The_Beta_and_the_Binomial.html)）会有所帮助，这两章提供了类似材料的另一种阐述，但它们**不是**本章的先决条件。*'
 - en: 'We’ll begin our exploration of Bayesian and frequentist modeling with a simple
     example that highlights some key differences between the two approaches. Recall
     our setup: we observe some data <semantics><mrow><msub><mi>x</mi><mn>1</mn></msub><mo
@@ -41,8 +62,13 @@
     encoding="application/x-tex">\theta</annotation></semantics>θ of interest. In
     this and the following sections, we’ll focus on two simple examples to help us
     build intuition:'
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们将从一个简单的例子开始，这个例子突出了贝叶斯和频率主义方法之间的关键差异。回忆我们的设置：我们观察了一些数据 <semantics><mrow><msub><mi>x</mi><mn>1</mn></msub><mo
+    separator="true">,</mo><mo>…</mo><mo separator="true">,</mo><msub><mi>x</mi><mi>n</mi></msub></mrow><annotation
+    encoding="application/x-tex">x_1, \ldots, x_n</annotation></semantics>x1​,…,xn​，我们将使用它们来估计一些感兴趣的参数
+    <semantics><mrow><mi>θ</mi></mrow><annotation encoding="application/x-tex">\theta</annotation></semantics>θ。在本节和接下来的几节中，我们将关注两个简单的例子，以帮助我们建立直觉：
 - en: '**Estimating product quality**: <semantics><mrow><msub><mi>x</mi><mn>1</mn></msub><mo
     separator="true">,</mo><mo>…</mo><mo separator="true">,</mo><msub><mi>x</mi><mi>n</mi></msub></mrow><annotation
     encoding="application/x-tex">x_1, \ldots, x_n</annotation></semantics>x1​,…,xn​
@@ -51,9 +77,15 @@
     0 and 1 that represents the probability of someone leaving a good review. Intuitively,
     <semantics><mrow><mi>θ</mi></mrow><annotation encoding="application/x-tex">\theta</annotation></semantics>θ
     represents our estimate of the quality of the product.'
+  id: totrans-6
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**估计产品质量**： <semantics><mrow><msub><mi>x</mi><mn>1</mn></msub><mo separator="true">,</mo><mo>…</mo><mo
+    separator="true">,</mo><msub><mi>x</mi><mi>n</mi></msub></mrow><annotation encoding="application/x-tex">x_1,
+    \ldots, x_n</annotation></semantics>x1​,…,xn​ 是在线销售产品的评价（👍/1 或 👎/0），而 <semantics><mrow><mi>θ</mi></mrow><annotation
+    encoding="application/x-tex">\theta</annotation></semantics>θ 是介于0和1之间的一个数字，代表某人留下好评的概率。直观上，<semantics><mrow><mi>θ</mi></mrow><annotation
+    encoding="application/x-tex">\theta</annotation></semantics>θ 代表我们对产品质量的估计。'
 - en: '**Estimating average height**: <semantics><mrow><msub><mi>x</mi><mn>1</mn></msub><mo
     separator="true">,</mo><mo>…</mo><mo separator="true">,</mo><msub><mi>x</mi><mi>n</mi></msub></mrow><annotation
     encoding="application/x-tex">x_1, \ldots, x_n</annotation></semantics>x1​,…,xn​
@@ -61,46 +93,70 @@
     individuals in a random sample, and <semantics><mrow><mi>θ</mi></mrow><annotation
     encoding="application/x-tex">\theta</annotation></semantics>θ is the average height
     of individuals in the population.'
+  id: totrans-7
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**估计平均身高**： <semantics><mrow><msub><mi>x</mi><mn>1</mn></msub><mo separator="true">,</mo><mo>…</mo><mo
+    separator="true">,</mo><msub><mi>x</mi><mi>n</mi></msub></mrow><annotation encoding="application/x-tex">x_1,
+    \ldots, x_n</annotation></semantics>x1​,…,xn​ 是随机样本中 <semantics><mrow><mi>n</mi></mrow><annotation
+    encoding="application/x-tex">n</annotation></semantics>n 个个体的身高，而 <semantics><mrow><mi>θ</mi></mrow><annotation
+    encoding="application/x-tex">\theta</annotation></semantics>θ 是该群体中个体的平均身高。'
 - en: We’ll start with the first example.
+  id: totrans-8
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们从第一个例子开始。
 - en: Intuition and computation[¶](#intuition-and-computation "Link to this Section")
+  id: totrans-9
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 直觉和计算[¶](#intuition-and-computation "链接到本节")
 - en: 'Suppose you’re shopping for a new microwave. You find two choices, both of
     which cost about the same amount:'
+  id: totrans-10
   prefs: []
   type: TYPE_NORMAL
+  zh: 假设你在寻找一款新的微波炉。你找到了两个选择，它们的价格大致相同：
 - en: Microwave A has three positive reviews and no negative reviews
+  id: totrans-11
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 微波A有三个正面评价，没有负面评价
 - en: Microwave B has 19 positive reviews and 1 negative review
+  id: totrans-12
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 微波B有19个正面评价和1个负面评价
 - en: Which one should you buy?
+  id: totrans-13
   prefs: []
   type: TYPE_NORMAL
+  zh: 你应该买哪一个？
 - en: Intuitively, there isn’t necessarily a right or wrong answer. But, in a scenario
     like this, most shoppers would probably prefer microwave B. Seeing more data points,
     even if one is negative, reassures us that the results we’re seeing in the reviews
     are consistent.
+  id: totrans-14
   prefs: []
   type: TYPE_NORMAL
+  zh: 直观上，并不一定有正确或错误的答案。但在这种情况下，大多数购物者可能会更倾向于购买微波B。看到更多的数据点，即使有一个是负面的，也能让我们确信我们在评价中看到的结果是一致的。
 - en: We’ll approach this question computationally from a frequentist and then a Bayesian
     perspective, and see how well each one can incorporate the intuition above.
+  id: totrans-15
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们将从频率派和贝叶斯派的角度计算性地处理这个问题，并看看每个方法如何很好地结合上述直觉。
 - en: 'When formulating a statistical model (regardless of choosing a Bayesian or
     frequentist approach), it’s important to choose a model so that the parameter
     we’re estimating satisfies the following criteria:'
+  id: totrans-16
   prefs: []
   type: TYPE_NORMAL
+  zh: 当制定一个统计模型（无论选择贝叶斯派还是频率派方法）时，选择一个模型非常重要，以确保我们估计的参数满足以下标准：
 - en: The parameter should reflect the underlying quantity that we’re interested in
     estimating. In this case, we’ll quantify how “good” each microwave is using <semantics><mrow><mi>θ</mi></mrow><annotation
     encoding="application/x-tex">\theta</annotation></semantics>θ, and then we can
@@ -108,30 +164,46 @@
     encoding="application/x-tex">\theta</annotation></semantics>θ). Our choice above,
     the probability of leaving a positive review, satisfies this, since better products
     should be more likely to get positive reviews than worse products.
+  id: totrans-17
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 参数应该反映我们感兴趣估计的潜在数量。在这种情况下，我们将使用 <semantics><mrow><mi>θ</mi></mrow><annotation
+    encoding="application/x-tex">\theta</annotation></semantics>θ 来量化每款微波炉的“好”程度，然后我们可以简单地选择“更好”的微波炉（即具有更高
+    <semantics><mrow><mi>θ</mi></mrow><annotation encoding="application/x-tex">\theta</annotation></semantics>θ
+    值的微波炉）。我们上面的选择，留下正面评价的概率，满足这个条件，因为更好的产品应该比更差的产品更有可能获得正面评价。
 - en: 'The parameter should fit clearly within our probability model: in other words,
     our probability model should relate the observed data and the parameter. We’ll
     see more about how this works shortly.'
+  id: totrans-18
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 参数应该清楚地符合我们的概率模型：换句话说，我们的概率模型应该将观测数据与参数联系起来。我们很快就会看到这是如何工作的。
 - en: Our goal will be to estimate and draw conclusions about the parameter <semantics><mrow><mi>θ</mi></mrow><annotation
     encoding="application/x-tex">\theta</annotation></semantics>θ based on the observed
     data <semantics><mrow><msub><mi>x</mi><mn>1</mn></msub><mo separator="true">,</mo><mo>…</mo><mo
     separator="true">,</mo><msub><mi>x</mi><mi>n</mi></msub></mrow><annotation encoding="application/x-tex">x_1,
     \ldots, x_n</annotation></semantics>x1​,…,xn​.
+  id: totrans-19
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们的目标将是根据观测数据 <semantics><mrow><msub><mi>x</mi><mn>1</mn></msub><mo separator="true">,</mo><mo>…</mo><mo
+    separator="true">,</mo><msub><mi>x</mi><mi>n</mi></msub></mrow><annotation encoding="application/x-tex">x_1,
+    \ldots, x_n</annotation></semantics>x1​,…,xn​来估计和得出关于参数 <semantics><mrow><mi>θ</mi></mrow><annotation
+    encoding="application/x-tex">\theta</annotation></semantics>θ的结论。
 - en: '[PRE1]'
+  id: totrans-20
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: 'Frequentist parameter estimation: maximum likelihood[¶](#frequentist-parameter-estimation-maximum-likelihood
     "Link to this Section")'
+  id: totrans-21
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 频率派参数估计：最大似然[¶](#frequentist-parameter-estimation-maximum-likelihood "链接到这个部分")
 - en: Before we can actually do any parameter estimation, we need to first specify
     the relevant probability distributions. Recall that in the frequentist setting,
     we’re assuming that the data (our binary reviews, <semantics><mrow><msub><mi>x</mi><mn>1</mn></msub><mo
@@ -140,8 +212,13 @@
     are random, but that the parameter (the probability of generating a positive review
     <semantics><mrow><mi>θ</mi></mrow><annotation encoding="application/x-tex">\theta</annotation></semantics>θ)
     is fixed and unknown.
+  id: totrans-22
   prefs: []
   type: TYPE_NORMAL
+  zh: 在我们实际上进行任何参数估计之前，我们首先需要指定相关的概率分布。回想一下，在频率派设定中，我们假设数据（我们的二元评论，<semantics><mrow><msub><mi>x</mi><mn>1</mn></msub><mo
+    separator="true">,</mo><mo>…</mo><mo separator="true">,</mo><msub><mi>x</mi><mi>n</mi></msub></mrow><annotation
+    encoding="application/x-tex">x_1, \ldots, x_n</annotation></semantics>x1​,…,xn​）是随机的，但参数（生成正面评论的概率
+    <semantics><mrow><mi>θ</mi></mrow><annotation encoding="application/x-tex">\theta</annotation></semantics>θ）是固定且未知的。
 - en: 'To set up a probability model in the frequentist setting, all we need is a
     **likelihood** <semantics><mrow><mi>p</mi><mo stretchy="false">(</mo><msub><mi>x</mi><mi>i</mi></msub><mi
     mathvariant="normal">∣</mi><mi>θ</mi><mo stretchy="false">)</mo></mrow><annotation
@@ -152,8 +229,13 @@
     a **Bernoulli distribution** (for more on Bernoulli distributions, see the [Data
     140 textbook](http://prob140.org/textbook/content/Chapter_03/02_Distributions.html#named-distributions)
     or [Wikipedia](https://en.wikipedia.org/wiki/Bernoulli_distribution)):'
+  id: totrans-23
   prefs: []
   type: TYPE_NORMAL
+  zh: 在频率派设定中建立概率模型，我们需要的只是一个**似然函数** <semantics><mrow><mi>p</mi><mo stretchy="false">(</mo><msub><mi>x</mi><mi>i</mi></msub><mi
+    mathvariant="normal">∣</mi><mi>θ</mi><mo stretchy="false">)</mo></mrow><annotation
+    encoding="application/x-tex">p(x_i|\theta)</annotation></semantics>p(xi​∣θ)。这告诉我们，在给定的<semantics><mrow><mi>θ</mi></mrow><annotation
+    encoding="application/x-tex">\theta</annotation></semantics>θ值下，数据点出现的可能性。由于我们的数据是二元的，而参数是介于0和1之间的一个数字，一个自然的选择是**伯努利分布**（有关伯努利分布的更多信息，请参阅[数据140教科书](http://prob140.org/textbook/content/Chapter_03/02_Distributions.html#named-distributions)或[维基百科](https://en.wikipedia.org/wiki/Bernoulli_distribution))：
 - en: <semantics><mrow><msub><mi>x</mi><mi>i</mi></msub><mi mathvariant="normal">∣</mi><mi>θ</mi><mo>∼</mo><mrow><mi
     mathvariant="normal">B</mi><mi mathvariant="normal">e</mi><mi mathvariant="normal">r</mi><mi
     mathvariant="normal">n</mi><mi mathvariant="normal">o</mi><mi mathvariant="normal">u</mi><mi
@@ -161,15 +243,27 @@
     stretchy="false">(</mo><mi>θ</mi><mo stretchy="false">)</mo></mrow><annotation
     encoding="application/x-tex">x_i | \theta \sim \mathrm{Bernoulli}(\theta)</annotation></semantics>xi​∣θ∼Bernoulli(θ)[(1)](#BIhxXQDa3R
     "Link to this Equation")
+  id: totrans-24
   prefs: []
   type: TYPE_NORMAL
+  zh: <semantics><mrow><msub><mi>x</mi><mi>i</mi></msub><mi mathvariant="normal">∣</mi><mi>θ</mi><mo>∼</mo><mrow><mi
+    mathvariant="normal">B</mi><mi mathvariant="normal">e</mi><mi mathvariant="normal">r</mi><mi
+    mathvariant="normal">n</mi><mi mathvariant="normal">o</mi><mi mathvariant="normal">u</mi><mi
+    mathvariant="normal">l</mi><mi mathvariant="normal">l</mi><mi mathvariant="normal">i</mi></mrow><mo
+    stretchy="false">(</mo><mi>θ</mi><mo stretchy="false">)</mo></mrow><annotation
+    encoding="application/x-tex">x_i | \theta \sim \mathrm{Bernoulli}(\theta)</annotation></semantics>xi​∣θ∼Bernoulli(θ)[(1)](#BIhxXQDa3R
+    "链接到这个方程")
 - en: 'This notation means “conditioned on <semantics><mrow><mi>θ</mi></mrow><annotation
     encoding="application/x-tex">\theta</annotation></semantics>θ, <semantics><mrow><msub><mi>x</mi><mi>i</mi></msub></mrow><annotation
     encoding="application/x-tex">x_i</annotation></semantics>xi​ follows a Bernoulli
     distribution with parameter <semantics><mrow><mi>θ</mi></mrow><annotation encoding="application/x-tex">\theta</annotation></semantics>θ”.
     In other words:'
+  id: totrans-25
   prefs: []
   type: TYPE_NORMAL
+  zh: 这种符号表示“在<semantics><mrow><mi>θ</mi></mrow><annotation encoding="application/x-tex">\theta</annotation></semantics>θ的条件下，<semantics><mrow><msub><mi>x</mi><mi>i</mi></msub></mrow><annotation
+    encoding="application/x-tex">x_i</annotation></semantics>xi​遵循参数为<semantics><mrow><mi>θ</mi></mrow><annotation
+    encoding="application/x-tex">\theta</annotation></semantics>θ的伯努利分布”。换句话说：
 - en: <semantics><mrow><mi>p</mi><mo stretchy="false">(</mo><msub><mi>x</mi><mi>i</mi></msub><mi
     mathvariant="normal">∣</mi><mi>θ</mi><mo stretchy="false">)</mo><mo>=</mo><mrow><mo
     fence="true">{</mo><mtable rowspacing="0.36em" columnalign="left left" columnspacing="1em"><mtr><mtd><mstyle
@@ -180,26 +274,46 @@
     encoding="application/x-tex">p(x_i|\theta) = \begin{cases} \theta & \text{ if
     }x_i = 1 \\ 1-\theta & \text{ if }x_i = 0 \end{cases}</annotation></semantics>p(xi​∣θ)={θ1−θ​ if xi​=1 if xi​=0​[(2)](#QIRW5T5Ir4
     "Link to this Equation")
+  id: totrans-26
   prefs: []
   type: TYPE_NORMAL
+  zh: <semantics><mrow><mi>p</mi><mo stretchy="false">(</mo><msub><mi>x</mi><mi>i</mi></msub><mi
+    mathvariant="normal">∣</mi><mi>θ</mi><mo stretchy="false">)</mo><mo>=</mo><mrow><mo
+    fence="true">{</mo><mtable rowspacing="0.36em" columnalign="left left" columnspacing="1em"><mtr><mtd><mstyle
+    scriptlevel="0" displaystyle="false"><mi>θ</mi></mstyle></mtd><mtd><mstyle scriptlevel="0"
+    displaystyle="false"><mrow><mtext> if </mtext><msub><mi>x</mi><mi>i</mi></msub><mo>=</mo><mn>1</mn></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle
+    scriptlevel="0" displaystyle="false"><mrow><mn>1</mn><mo>−</mo><mi>θ</mi></mrow></mstyle></mtd><mtd><mstyle
+    scriptlevel="0" displaystyle="false"><mrow><mtext> if </mtext><msub><mi>x</mi><mi>i</mi></msub><mo>=</mo><mn>0</mn></mrow></mstyle></mtd></mtr></mtable></mrow></mrow><annotation
+    encoding="application/x-tex">p(x_i|\theta) = \begin{cases} \theta & \text{ if
+    }x_i = 1 \\ 1-\theta & \text{ if }x_i = 0 \end{cases}</annotation></semantics>p(xi​∣θ)={θ1−θ​ if xi​=1 if xi​=0​[(2)](#QIRW5T5Ir4
+    "Link to this Equation")
 - en: '[PRE2]'
+  id: totrans-27
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: Loading...
+  id: totrans-28
   prefs: []
   type: TYPE_NORMAL
+  zh: 加载中...
 - en: 'While the underlying probability should be familiar to you, there are some
     important conceptual leaps that we’ve taken:'
+  id: totrans-29
   prefs: []
   type: TYPE_NORMAL
+  zh: 虽然基础概率对你来说应该很熟悉，但我们已经进行了一些重要的概念跳跃：
 - en: 'This notation represents a **parametric family** of distributions: different
     values of <semantics><mrow><mi>θ</mi></mrow><annotation encoding="application/x-tex">\theta</annotation></semantics>θ
     lead to different distributions for <semantics><mrow><msub><mi>x</mi><mi>i</mi></msub></mrow><annotation
     encoding="application/x-tex">x_i</annotation></semantics>xi​, but they all fall
     within the Bernoulli family of distributions.'
+  id: totrans-30
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 这种符号表示一个**参数族**分布：不同的<semantics><mrow><mi>θ</mi></mrow><annotation encoding="application/x-tex">\theta</annotation></semantics>θ值会导致<semantics><mrow><msub><mi>x</mi><mi>i</mi></msub></mrow><annotation
+    encoding="application/x-tex">x_i</annotation></semantics>xi​的不同分布，但它们都属于伯努利分布族。
 - en: 'Since our goal in this process is to find a “good” value of <semantics><mrow><mi>θ</mi></mrow><annotation
     encoding="application/x-tex">\theta</annotation></semantics>θ using the observed
     data <semantics><mrow><msub><mi>x</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">x_i</annotation></semantics>xi​,
@@ -209,9 +323,15 @@
     that we consider, we can plug in our data and get the probability of observing
     it, if that value of <semantics><mrow><mi>θ</mi></mrow><annotation encoding="application/x-tex">\theta</annotation></semantics>θ
     were true.'
+  id: totrans-31
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 由于我们在这个过程中旨在通过观察到的数据<semantics><mrow><msub><mi>x</mi><mi>i</mi></msub></mrow><annotation
+    encoding="application/x-tex">x_i</annotation></semantics>xi​找到“良好”的<semantics><mrow><mi>θ</mi></mrow><annotation
+    encoding="application/x-tex">\theta</annotation></semantics>θ值，我们可以将其视为一个关于<semantics><mrow><mi>θ</mi></mrow><annotation
+    encoding="application/x-tex">\theta</annotation></semantics>θ的函数：对于任何我们考虑的<semantics><mrow><mi>θ</mi></mrow><annotation
+    encoding="application/x-tex">\theta</annotation></semantics>θ值，我们可以将我们的数据代入并得到如果该值是真实的，观察它的概率。
 - en: 'The simplest way to estimate <semantics><mrow><mi>θ</mi></mrow><annotation
     encoding="application/x-tex">\theta</annotation></semantics>θ in the frequentist
     setting is to use **maximum likelihood estimation (MLE)** and choose the value
@@ -219,18 +339,28 @@
     that maximizes the likelihood: in other words, we’ll pick the value of <semantics><mrow><mi>θ</mi></mrow><annotation
     encoding="application/x-tex">\theta</annotation></semantics>θ that makes our data
     look as likely as possible.'
+  id: totrans-32
   prefs: []
   type: TYPE_NORMAL
+  zh: 在频率主义设定中，估计<semantics><mrow><mi>θ</mi></mrow><annotation encoding="application/x-tex">\theta</annotation></semantics>θ的最简单方法是使用**最大似然估计（MLE**）并选择使<semantics><mrow><mi>θ</mi></mrow><annotation
+    encoding="application/x-tex">\theta</annotation></semantics>θ最大化的值：换句话说，我们将选择使我们的数据看起来尽可能可能性的<semantics><mrow><mi>θ</mi></mrow><annotation
+    encoding="application/x-tex">\theta</annotation></semantics>θ的值。
 - en: 'Here’s how we’ll go about it:'
+  id: totrans-33
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们将这样进行：
 - en: We’ll write the likelihood for all the data points, <semantics><mrow><msub><mi>x</mi><mn>1</mn></msub><mo
     separator="true">,</mo><mo>…</mo><mo separator="true">,</mo><msub><mi>x</mi><mi>n</mi></msub></mrow><annotation
     encoding="application/x-tex">x_1, \ldots, x_n</annotation></semantics>x1​,…,xn​
     (we already did it for a single point above)
+  id: totrans-34
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 我们将写出所有数据点的似然，<semantics><mrow><msub><mi>x</mi><mn>1</mn></msub><mo separator="true">,</mo><mo>…</mo><mo
+    separator="true">,</mo><msub><mi>x</mi><mi>n</mi></msub></mrow><annotation encoding="application/x-tex">x_1,
+    \ldots, x_n</annotation></semantics>x1​,…,xn​（我们已经在上面为单个点做了这件事）
 - en: We’ll use the log-likelihood instead of the likelihood. This will make things
     a little easier computationally. Why is this okay? Because <semantics><mrow><mi>log</mi><mo>⁡</mo></mrow><annotation
     encoding="application/x-tex">\log</annotation></semantics>log is a monotonically
@@ -241,43 +371,68 @@
     also maximizes <semantics><mrow><mi>p</mi><mo stretchy="false">(</mo><mi>x</mi><mi
     mathvariant="normal">∣</mi><mi>θ</mi><mo stretchy="false">)</mo></mrow><annotation
     encoding="application/x-tex">p(x|\theta)</annotation></semantics>p(x∣θ).
+  id: totrans-35
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 我们将使用对数似然而不是似然。这会使计算稍微容易一些。为什么这是可以接受的？因为<semantics><mrow><mi>log</mi><mo>⁡</mo></mrow><annotation
+    encoding="application/x-tex">\log</annotation></semantics>对数是一个单调递增函数，所以最大化<semantics><mrow><mi>log</mi><mo>⁡</mo><mo
+    stretchy="false">(</mo><mi>p</mi><mo stretchy="false">(</mo><mi>x</mi><mi mathvariant="normal">∣</mi><mi>θ</mi><mo
+    stretchy="false">)</mo><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">\log(p(x|\theta))</annotation></semantics>对数(p(x∣θ))的相同<semantics><mrow><mi>θ</mi></mrow><annotation
+    encoding="application/x-tex">\theta</annotation></semantics>θ值也最大化了<semantics><mrow><mi>p</mi><mo
+    stretchy="false">(</mo><mi>x</mi><mi mathvariant="normal">∣</mi><mi>θ</mi><mo
+    stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">p(x|\theta)</annotation></semantics>p(x∣θ)。
 - en: To find the best value of <semantics><mrow><mi>θ</mi></mrow><annotation encoding="application/x-tex">\theta</annotation></semantics>θ,
     we’ll take the derivative of the log-likelihood with respect to <semantics><mrow><mi>θ</mi></mrow><annotation
     encoding="application/x-tex">\theta</annotation></semantics>θ, set it equal to
     0, and solve.
+  id: totrans-36
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 为了找到<semantics><mrow><mi>θ</mi></mrow><annotation encoding="application/x-tex">\theta</annotation></semantics>θ的最佳值，我们将对对数似然相对于<semantics><mrow><mi>θ</mi></mrow><annotation
+    encoding="application/x-tex">\theta</annotation></semantics>θ的导数进行求导，将其设置为0，并求解。
 - en: We’ll confirm that step 3 gave us a maximum (rather than a minimum) by computing
     the second derivative and confirming that it’s negative, and checking the boundaries.
+  id: totrans-37
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 我们将通过计算二阶导数并确认其为负值，以及检查边界来确认第3步给出了最大值（而不是最小值）。
 - en: 1\. Writing the likelihood[¶](#id-1-writing-the-likelihood "Link to this Section")
+  id: totrans-38
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '1. 编写似然[¶](#id-1-writing-the-likelihood "链接到本节") '
 - en: 'Our likelihood for all the data points is:'
+  id: totrans-39
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们所有数据点的似然是：
 - en: <semantics><mrow><mi>p</mi><mo stretchy="false">(</mo><msub><mi>x</mi><mn>1</mn></msub><mo
     separator="true">,</mo><mo>…</mo><mo separator="true">,</mo><msub><mi>x</mi><mi>n</mi></msub><mi
     mathvariant="normal">∣</mi><mi>θ</mi><mo stretchy="false">)</mo></mrow><annotation
     encoding="application/x-tex">p(x_1, \ldots, x_n | \theta)</annotation></semantics>p(x1​,…,xn​∣θ)[(3)](#iv3UyIB13K
     "Link to this Equation")
+  id: totrans-40
   prefs: []
   type: TYPE_NORMAL
+  zh: <semantics><mrow><mi>p</mi><mo stretchy="false">(</mo><msub><mi>x</mi><mn>1</mn></msub><mo
+    separator="true">,</mo><mo>…</mo><mo separator="true">,</mo><msub><mi>x</mi><mi>n</mi></msub><mi
+    mathvariant="normal">∣</mi><mi>θ</mi><mo stretchy="false">)</mo></mrow><annotation
+    encoding="application/x-tex">p(x_1, \ldots, x_n | \theta)</annotation></semantics>p(x1​,…,xn​∣θ)[(3)](#iv3UyIB13K
+    "链接到这个方程")
 - en: 'We’ll assume that our samples are conditionally i.i.d. (independent and identically
     distributed) given the parameter <semantics><mrow><mi>θ</mi></mrow><annotation
     encoding="application/x-tex">\theta</annotation></semantics>θ. In our example,
     this means that **if** we know how good the product is, then knowing one review
     doesn’t tell us anything about the other reviews. This means we can simplify our
     likelihood:'
+  id: totrans-41
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们假设我们的样本在参数<semantics><mrow><mi>θ</mi></mrow><annotation encoding="application/x-tex">\theta</annotation></semantics>θ的条件下是条件独立同分布的（i.i.d.）。在我们的例子中，这意味着如果我们知道产品的质量如何，那么知道一条评论并不会告诉我们关于其他评论的任何信息。这意味着我们可以简化我们的似然函数：
 - en: <semantics><mtable rowspacing="0.25em" columnalign="right left" columnspacing="0em"><mtr><mtd><mstyle
     scriptlevel="0" displaystyle="true"><mrow><mi>p</mi><mo stretchy="false">(</mo><msub><mi>x</mi><mn>1</mn></msub><mo
     separator="true">,</mo><mo>…</mo><mo separator="true">,</mo><msub><mi>x</mi><mi>n</mi></msub><mi
@@ -287,32 +442,58 @@
     stretchy="false">)</mo></mrow></mstyle></mtd></mtr></mtable><annotation encoding="application/x-tex">\begin{align}
     p(x_1, \ldots, x_n|\theta) &= \prod_{i=1}^n p(x_i|\theta) \end{align}</annotation></semantics>p(x1​,…,xn​∣θ)​=i=1∏n​p(xi​∣θ)​​[(4)](#SUpuhY5HRj
     "Link to this Equation")
+  id: totrans-42
   prefs: []
   type: TYPE_NORMAL
+  zh: <semantics><mtable rowspacing="0.25em" columnalign="right left" columnspacing="0em"><mtr><mtd><mstyle
+    scriptlevel="0" displaystyle="true"><mrow><mi>p</mi><mo stretchy="false">(</mo><msub><mi>x</mi><mn>1</mn></msub><mo
+    separator="true">,</mo><mo>…</mo><mo separator="true">,</mo><msub><mi>x</mi><mi>n</mi></msub><mi
+    mathvariant="normal">∣</mi><mi>θ</mi><mo stretchy="false">)</mo></mrow></mstyle></mtd><mtd><mstyle
+    scriptlevel="0" displaystyle="true"><mrow><mo>=</mo><munderover><mo>∏</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mi>n</mi></munderover><mi>p</mi><mo
+    stretchy="false">(</mo><msub><mi>x</mi><mi>i</mi></msub><mi mathvariant="normal">∣</mi><mi>θ</mi><mo
+    stretchy="false">)</mo></mrow></mstyle></mtd></mtr></mtable><annotation encoding="application/x-tex">\begin{align}
+    p(x_1, \ldots, x_n|\theta) &= \prod_{i=1}^n p(x_i|\theta) \end{align}</annotation></semantics>p(x1​,…,xn​∣θ)​=i=1∏n​p(xi​∣θ)​​[(4)](#SUpuhY5HRj
+    "Link to this Equation")
 - en: 'Next, we need to figure out a more mathematically convenient way to write the
     likelihood for an individual point, <semantics><mrow><mi>p</mi><mo stretchy="false">(</mo><msub><mi>x</mi><mi>i</mi></msub><mi
     mathvariant="normal">∣</mi><mi>θ</mi><mo stretchy="false">)</mo></mrow><annotation
     encoding="application/x-tex">p(x_i|\theta)</annotation></semantics>p(xi​∣θ), than
     the version we wrote in the previous section. Here’s an alternative way of writing
     it that means the same thing:'
+  id: totrans-43
   prefs: []
   type: TYPE_NORMAL
+  zh: 接下来，我们需要找出一种更便于数学表达的方式来书写单个点的似然函数，即<semantics><mrow><mi>p</mi><mo stretchy="false">(</mo><msub><mi>x</mi><mi>i</mi></msub><mi
+    mathvariant="normal">∣</mi><mi>θ</mi><mo stretchy="false">)</mo></mrow><annotation
+    encoding="application/x-tex">p(x_i|\theta)</annotation></semantics>p(xi​∣θ)，比我们在上一节中写的那一种版本更方便。这里有一个表达相同意思的替代方法：
 - en: <semantics><mrow><mi>p</mi><mo stretchy="false">(</mo><msub><mi>x</mi><mi>i</mi></msub><mi
     mathvariant="normal">∣</mi><mi>θ</mi><mo stretchy="false">)</mo><mo>=</mo><msup><mi>θ</mi><msub><mi>x</mi><mi>i</mi></msub></msup><mo
     stretchy="false">(</mo><mn>1</mn><mo>−</mo><mi>θ</mi><msup><mo stretchy="false">)</mo><mrow><mn>1</mn><mo>−</mo><msub><mi>x</mi><mi>i</mi></msub></mrow></msup></mrow><annotation
     encoding="application/x-tex">p(x_i|\theta) = \theta^{x_i}(1-\theta)^{1-x_i}</annotation></semantics>p(xi​∣θ)=θxi​(1−θ)1−xi​[(5)](#V7kp0iteCI
     "Link to this Equation")
+  id: totrans-44
   prefs: []
   type: TYPE_NORMAL
+  zh: <semantics><mrow><mi>p</mi><mo stretchy="false">(</mo><msub><mi>x</mi><mi>i</mi></msub><mi
+    mathvariant="normal">∣</mi><mi>θ</mi><mo stretchy="false">)</mo><mo>=</mo><msup><mi>θ</mi><msub><mi>x</mi><mi>i</mi></msub></msup><mo
+    stretchy="false">(</mo><mn>1</mn><mo>−</mo><mi>θ</mi><msup><mo stretchy="false">)</mo><mrow><mn>1</mn><mo>−</mo><msub><mi>x</mi><mi>i</mi></msub></mrow></msup></mrow><annotation
+    encoding="application/x-tex">p(x_i|\theta) = \theta^{x_i}(1-\theta)^{1-x_i}</annotation></semantics>p(xi​∣θ)=θxi​(1−θ)1−xi​[(5)](#V7kp0iteCI
+    "Link to this Equation")
 - en: Convince yourself that this is the same by plugging in <semantics><mrow><msub><mi>x</mi><mi>i</mi></msub><mo>=</mo><mn>1</mn></mrow><annotation
     encoding="application/x-tex">x_i=1</annotation></semantics>xi​=1 and <semantics><mrow><msub><mi>x</mi><mi>i</mi></msub><mo>=</mo><mn>0</mn></mrow><annotation
     encoding="application/x-tex">x_i=0</annotation></semantics>xi​=0.
+  id: totrans-45
   prefs: []
   type: TYPE_NORMAL
+  zh: 通过将<semantics><mrow><msub><mi>x</mi><mi>i</mi></msub><mo>=</mo><mn>1</mn></mrow><annotation
+    encoding="application/x-tex">x_i=1</annotation></semantics>xi​=1和<semantics><mrow><msub><mi>x</mi><mi>i</mi></msub><mo>=</mo><mn>0</mn></mrow><annotation
+    encoding="application/x-tex">x_i=0</annotation></semantics>xi​=0代入，来让自己相信这是相同的。
 - en: 'Now that we have this notationally convenient way of writing it, when we multiply
     all of them together, the exponents add:'
+  id: totrans-46
   prefs: []
   type: TYPE_NORMAL
+  zh: 现在我们有了这种便于书写的表达方式，当我们把它们全部相乘时，指数会相加：
 - en: <semantics><mtable rowspacing="0.25em" columnalign="right left" columnspacing="0em"><mtr><mtd><mstyle
     scriptlevel="0" displaystyle="true"><mrow><mi>p</mi><mo stretchy="false">(</mo><msub><mi>x</mi><mn>1</mn></msub><mo
     separator="true">,</mo><mo>…</mo><mo separator="true">,</mo><msub><mi>x</mi><mi>n</mi></msub><mi
@@ -332,16 +513,43 @@
     p(x_i|\theta) \\ &= \prod_{i=1}^n \theta^{x_i}(1-\theta)^{1-x_i} \\ &= \theta^{\left[\sum_i
     x_i\right]}(1-\theta)^{\left[\sum_i (1-x_i)\right]} \\ \end{align}</annotation></semantics>p(x1​,…,xn​∣θ)​=i=1∏n​p(xi​∣θ)=i=1∏n​θxi​(1−θ)1−xi​=θ[∑i​xi​](1−θ)[∑i​(1−xi​)]​​[(6)](#o3KJBvNL6M
     "Link to this Equation")
+  id: totrans-47
   prefs: []
   type: TYPE_NORMAL
+  zh: <semantics><mtable rowspacing="0.25em" columnalign="right left" columnspacing="0em"><mtr><mtd><mstyle
+    scriptlevel="0" displaystyle="true"><mrow><mi>p</mi><mo stretchy="false">(</mo><msub><mi>x</mi><mn>1</mn></msub><mo
+    separator="true">,</mo><mo>…</mo><mo separator="true">,</mo><msub><mi>x</mi><mi>n</mi></msub><mi
+    mathvariant="normal">∣</mi><mi>θ</mi><mo stretchy="false">)</mo></mrow></mstyle></mtd><mtd><mstyle
+    scriptlevel="0" displaystyle="true"><mrow><mo>=</mo><munderover><mo>∏</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mi>n</mi></munderover><mi>p</mi><mo
+    stretchy="false">(</mo><msub><mi>x</mi><mi>i</mi></msub><mi mathvariant="normal">∣</mi><mi>θ</mi><mo
+    stretchy="false">)</mo></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0"
+    displaystyle="true"><mrow><mo>=</mo><munderover><mo>∏</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mi>n</mi></munderover><msup><mi>θ</mi><msub><mi>x</mi><mi>i</mi></msub></msup><mo
+    stretchy="false">(</mo><mn>1</mn><mo>−</mo><mi>θ</mi><msup><mo stretchy="false">)</mo><mrow><mn>1</mn><mo>−</mo><msub><mi>x</mi><mi>i</mi></msub></mrow></msup></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle
+    scriptlevel="0" displaystyle="true"><mrow><mo>=</mo><msup><mi>θ</mi><mrow><mo
+    fence="true">[</mo><munder><mo>∑</mo><mi>i</mi></munder><msub><mi>x</mi><mi>i</mi></msub><mo
+    fence="true">]</mo></mrow></msup><mo stretchy="false">(</mo><mn>1</mn><mo>−</mo><mi>θ</mi><msup><mo
+    stretchy="false">)</mo><mrow><mo fence="true">[</mo><munder><mo>∑</mo><mi>i</mi></munder><mo
+    stretchy="false">(</mo><mn>1</mn><mo>−</mo><msub><mi>x</mi><mi>i</mi></msub><mo
+    stretchy="false">)</mo><mo fence="true">]</mo></mrow></msup></mrow></mstyle></mtd></mtr></mtable><annotation
+    encoding="application/x-tex">\begin{align} p(x_1, \ldots, x_n|\theta) &= \prod_{i=1}^n
+    p(x_i|\theta) \\ &= \prod_{i=1}^n \theta^{x_i}(1-\theta)^{1-x_i} \\ &= \theta^{\left[\sum_i
+    x_i\right]}(1-\theta)^{\left[\sum_i (1-x_i)\right]} \\ \end{align}</annotation></semantics>概率分布函数
+    p(x1​,…,xn​∣θ) 等于 i=1∏n​p(xi​∣θ)，等于 i=1∏n​θxi​(1−θ)1−xi​，等于 θ[∑i​xi​](1−θ)[∑i​(1−xi​)]，其中
+    [(6)](#o3KJBvNL6M "Link to this Equation") 是方程的引用链接。
 - en: 'The first exponent is simply the number of positive reviews, and the second
     exponent is simply the number of negative reviews. To simplify our expression,
     we’ll **let <semantics><mrow><mi>k</mi></mrow><annotation encoding="application/x-tex">k</annotation></semantics>k
     be the number of positive reviews** <semantics><mrow><mo fence="true">(</mo><mi>k</mi><mo>=</mo><msub><mo>∑</mo><mi>i</mi></msub><msub><mi>x</mi><mi>i</mi></msub><mo
     fence="true">)</mo></mrow><annotation encoding="application/x-tex">\left(k = \sum_i
     x_i\right)</annotation></semantics>(k=∑i​xi​), so that this becomes:'
+  id: totrans-48
   prefs: []
   type: TYPE_NORMAL
+  zh: 第一个指数简单表示正面评价的数量，第二个指数简单表示负面评价的数量。为了简化我们的表达式，我们将 **将 <semantics><mrow><mi>k</mi></mrow><annotation
+    encoding="application/x-tex">k</annotation></semantics>k 定义为正面评价的数量** <semantics><mrow><mo
+    fence="true">(</mo><mi>k</mi><mo>=</mo><msub><mo>∑</mo><mi>i</mi></msub><msub><mi>x</mi><mi>i</mi></msub><mo
+    fence="true">)</mo></mrow><annotation encoding="application/x-tex">\left(k = \sum_i
+    x_i\right)</annotation></semantics>(k=∑i​xi​)，因此表达式变为：
 - en: <semantics><mtable rowspacing="0.25em" columnalign="right left" columnspacing="0em"><mtr><mtd><mstyle
     scriptlevel="0" displaystyle="true"><mrow><mi>p</mi><mo stretchy="false">(</mo><msub><mi>x</mi><mn>1</mn></msub><mo
     separator="true">,</mo><mo>…</mo><mo separator="true">,</mo><msub><mi>x</mi><mi>n</mi></msub><mi
@@ -351,12 +559,24 @@
     encoding="application/x-tex">\begin{align} p(x_1, \ldots, x_n|\theta) &= \theta^{k}(1-\theta)^{n-k}
     \\ \end{align}</annotation></semantics>p(x1​,…,xn​∣θ)​=θk(1−θ)n−k​​[(7)](#VQ9rBtrZaU
     "Link to this Equation")
+  id: totrans-49
   prefs: []
   type: TYPE_NORMAL
+  zh: <semantics><mtable rowspacing="0.25em" columnalign="right left" columnspacing="0em"><mtr><mtd><mstyle
+    scriptlevel="0" displaystyle="true"><mrow><mi>p</mi><mo stretchy="false">(</mo><msub><mi>x</mi><mn>1</mn></msub><mo
+    separator="true">,</mo><mo>…</mo><mo separator="true">,</mo><msub><mi>x</mi><mi>n</mi></msub><mi
+    mathvariant="normal">∣</mi><mi>θ</mi><mo stretchy="false">)</mo></mrow></mstyle></mtd><mtd><mstyle
+    scriptlevel="0" displaystyle="true"><mrow><mo>=</mo><msup><mi>θ</mi><mi>k</mi></msup><mo
+    stretchy="false">(</mo><mn>1</mn><mo>−</mo><mi>θ</mi><msup><mo stretchy="false">)</mo><mrow><mi>n</mi><mo>−</mo><mi>k</mi></mrow></msup></mrow></mstyle></mtd></mtr></mtable><annotation
+    encoding="application/x-tex">\begin{align} p(x_1, \ldots, x_n|\theta) &= \theta^{k}(1-\theta)^{n-k}
+    \\ \end{align}</annotation></semantics>p(x1​,…,xn​∣θ)​=θk(1−θ)n−k​​[(7)](#VQ9rBtrZaU
+    "链接到此方程")
 - en: 2\. Taking the log[¶](#id-2-taking-the-log "Link to this Section")
+  id: totrans-50
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 2. 取对数[¶](#id-2-taking-the-log "链接到本节")
 - en: <semantics><mtable rowspacing="0.25em" columnalign="right left" columnspacing="0em"><mtr><mtd><mstyle
     scriptlevel="0" displaystyle="true"><mrow><mi>log</mi><mo>⁡</mo><mi>p</mi><mo
     stretchy="false">(</mo><msub><mi>x</mi><mn>1</mn></msub><mo separator="true">,</mo><mo>…</mo><mo
@@ -367,12 +587,25 @@
     encoding="application/x-tex">\begin{align} \log p(x_1, \ldots, x_n|\theta) &=
     k\log\theta + (n-k)\log(1-\theta) \end{align}</annotation></semantics>logp(x1​,…,xn​∣θ)​=klogθ+(n−k)log(1−θ)​​[(8)](#itzyfNsWyV
     "Link to this Equation")
+  id: totrans-51
   prefs: []
   type: TYPE_NORMAL
+  zh: <semantics><mtable rowspacing="0.25em" columnalign="right left" columnspacing="0em"><mtr><mtd><mstyle
+    scriptlevel="0" displaystyle="true"><mrow><mi>log</mi><mo>⁡</mo><mi>p</mi><mo
+    stretchy="false">(</mo><msub><mi>x</mi><mn>1</mn></msub><mo separator="true">,</mo><mo>…</mo><mo
+    separator="true">,</mo><msub><mi>x</mi><mi>n</mi></msub><mi mathvariant="normal">∣</mi><mi>θ</mi><mo
+    stretchy="false">)</mo></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mo>=</mo><mi>k</mi><mi>log</mi><mo>⁡</mo><mi>θ</mi><mo>+</mo><mo
+    stretchy="false">(</mo><mi>n</mi><mo>−</mo><mi>k</mi><mo stretchy="false">)</mo><mi>log</mi><mo>⁡</mo><mo
+    stretchy="false">(</mo><mn>1</mn><mo>−</mo><mi>θ</mi><mo stretchy="false">)</mo></mrow></mstyle></mtd></mtr></mtable><annotation
+    encoding="application/x-tex">\begin{align} \log p(x_1, \ldots, x_n|\theta) &=
+    k\log\theta + (n-k)\log(1-\theta) \end{align}</annotation></semantics>logp(x1​,…,xn​∣θ)​=klogθ+(n−k)log(1−θ)​​[(8)](#itzyfNsWyV
+    "链接到此方程")
 - en: 3\. Maximizing[¶](#id-3-maximizing "Link to this Section")
+  id: totrans-52
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 3. 最大化[¶](#id-3-maximizing "链接到本节")
 - en: <semantics><mtable rowspacing="0.25em" columnalign="right left" columnspacing="0em"><mtr><mtd><mstyle
     scriptlevel="0" displaystyle="true"><mrow><mfrac><mi>d</mi><mrow><mi>d</mi><mi>θ</mi></mrow></mfrac><mi>log</mi><mo>⁡</mo><mi>p</mi><mo
     stretchy="false">(</mo><msub><mi>x</mi><mn>1</mn></msub><mo separator="true">,</mo><mo>…</mo><mo
@@ -392,23 +625,49 @@
     &= 0 \\ \frac{k}{\theta} - \frac{n-k}{1-\theta} &= 0 \\ \theta &= \frac{k}{n}
     \end{align}</annotation></semantics>dθd​logp(x1​,…,xn​∣θ)dθd​[klogθ+(n−k)log(1−θ)]θk​−1−θn−k​θ​=0=0=0=nk​​​[(9)](#L2Of1EwUy0
     "Link to this Equation")
+  id: totrans-53
   prefs: []
   type: TYPE_NORMAL
+  zh: <semantics><mtable rowspacing="0.25em" columnalign="right left" columnspacing="0em"><mtr><mtd><mstyle
+    scriptlevel="0" displaystyle="true"><mrow><mfrac><mi>d</mi><mrow><mi>d</mi><mi>θ</mi></mrow></mfrac><mi>log</mi><mo>⁡</mo><mi>p</mi><mo
+    stretchy="false">(</mo><msub><mi>x</mi><mn>1</mn></msub><mo separator="true">,</mo><mo>…</mo><mo
+    separator="true">,</mo><msub><mi>x</mi><mi>n</mi></msub><mi mathvariant="normal">∣</mi><mi>θ</mi><mo
+    stretchy="false">)</mo></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mo>=</mo><mn>0</mn></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle
+    scriptlevel="0" displaystyle="true"><mrow><mfrac><mi>d</mi><mrow><mi>d</mi><mi>θ</mi></mrow></mfrac><mrow><mo
+    fence="true">[</mo><mi>k</mi><mi>log</mi><mo>⁡</mo><mi>θ</mi><mo>+</mo><mo stretchy="false">(</mo><mi>n</mi><mo>−</mo><mi>k</mi><mo
+    stretchy="false">)</mo><mi>log</mi><mo>⁡</mo><mo stretchy="false">(</mo><mn>1</mn><mo>−</mo><mi>θ</mi><mo
+    stretchy="false">)</mo><mo fence="true">]</mo></mrow></mrow></mstyle></mtd><mtd><mstyle
+    scriptlevel="0" displaystyle="true"><mrow><mo>=</mo><mn>0</mn></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle
+    scriptlevel="0" displaystyle="true"><mrow><mfrac><mi>k</mi><mi>θ</mi></mfrac><mo>−</mo><mfrac><mrow><mi>n</mi><mo>−</mo><mi>k</mi></mrow><mrow><mn>1</mn><mo>−</mo><mi>θ</mi></mrow></mfrac></mrow></mstyle></mtd><mtd><mstyle
+    scriptlevel="0" displaystyle="true"><mrow><mo>=</mo><mn>0</mn></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle
+    scriptlevel="0" displaystyle="true"><mi>θ</mi></mstyle></mtd><mtd><mstyle scriptlevel="0"
+    displaystyle="true"><mrow><mo>=</mo><mfrac><mi>k</mi><mi>n</mi></mfrac></mrow></mstyle></mtd></mtr></mtable><annotation
+    encoding="application/x-tex">\begin{align} \frac{d}{d\theta} \log p(x_1, \ldots,
+    x_n|\theta) &= 0 \\ \frac{d}{d\theta} \left[k\log\theta + (n-k)\log(1-\theta)\right]
+    &= 0 \\ \frac{k}{\theta} - \frac{n-k}{1-\theta} &= 0 \\ \theta &= \frac{k}{n}
+    \end{align}</annotation></semantics>对dθdlogp(x1​,…,xn​∣θ)dθd[klogθ+(n−k)log(1−θ)]θk​−1−θn−k​θ​=0=0=0=nk​​求导等于0等于0等于0等于0[(9)](#L2Of1EwUy0
+    "链接到这个方程")
 - en: 'Finally, we’ve arrived at our maximum likelihood estimate for the Bernoulli
     likelihood: it’s simply the fraction of total reviews that are positive. This
     is a very intuitive result!'
+  id: totrans-54
   prefs: []
   type: TYPE_NORMAL
+  zh: 最后，我们得到了伯努利似然的最大似然估计：它仅仅是总评论中正面评论的比例。这是一个非常直观的结果！
 - en: 'At this point, we can see why we chose to use the log likelihood: it was easier
     to differentiate the expression from step 2 than it would have been to differentiate
     the expression from step 1 (if you need to, convince yourself that this is true
     by computing the derivative).'
+  id: totrans-55
   prefs: []
   type: TYPE_NORMAL
+  zh: 在这一点上，我们可以看到为什么我们选择使用对数似然：相对于从步骤1的表达式求导，从步骤2的表达式求导更容易（如果你需要，可以通过计算导数来让自己相信这是真的）。
 - en: 4\. Verifying a maximum[¶](#id-4-verifying-a-maximum "Link to this Section")
+  id: totrans-56
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 4. 验证最大值[¶](#id-4-verifying-a-maximum "链接到本节")
 - en: <semantics><mtable rowspacing="0.25em" columnalign="right left" columnspacing="0em"><mtr><mtd><mstyle
     scriptlevel="0" displaystyle="true"><mrow><mfrac><msup><mi>d</mi><mn>2</mn></msup><mrow><mi>d</mi><msup><mi>θ</mi><mn>2</mn></msup></mrow></mfrac><mi>log</mi><mo>⁡</mo><mi>p</mi><mo
     stretchy="false">(</mo><msub><mi>x</mi><mn>1</mn></msub><mo separator="true">,</mo><mo>…</mo><mo
@@ -423,27 +682,52 @@
     x_n|\theta) &= \frac{d}{d\theta} \left[\frac{k}{\theta} - \frac{n-k}{1-\theta}\right]\\
     &= -\frac{k}{\theta^2} - \frac{n-k}{(1-\theta)^2}\\ &< 0, \end{align}</annotation></semantics>dθ2d2​logp(x1​,…,xn​∣θ)​=dθd​[θk​−1−θn−k​]=−θ2k​−(1−θ)2n−k​<0,​​[(10)](#mpXlcHE8IL
     "Link to this Equation")
+  id: totrans-57
   prefs: []
   type: TYPE_NORMAL
+  zh: <semantics><mtable rowspacing="0.25em" columnalign="right left" columnspacing="0em"><mtr><mtd><mstyle
+    scriptlevel="0" displaystyle="true"><mrow><mfrac><msup><mi>d</mi><mn>2</mn></msup><mrow><mi>d</mi><msup><mi>θ</mi><mn>2</mn></msup></mrow></mfrac><mi>log</mi><mo>⁡</mo><mi>p</mi><mo
+    stretchy="false">(</mo><msub><mi>x</mi><mn>1</mn></msub><mo separator="true">,</mo><mo>…</mo><mo
+    separator="true">,</mo><msub><mi>x</mi><mi>n</mi></msub><mi mathvariant="normal">∣</mi><mi>θ</mi><mo
+    stretchy="false">)</mo></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mo>=</mo><mfrac><mi>d</mi><mrow><mi>d</mi><mi>θ</mi></mrow></mfrac><mrow><mo
+    fence="true">[</mo><mfrac><mi>k</mi><mi>θ</mi></mfrac><mo>−</mo><mfrac><mrow><mi>n</mi><mo>−</mo><mi>k</mi></mrow><mrow><mn>1</mn><mo>−</mo><mi>θ</mi></mrow></mfrac><mo
+    fence="true">]</mo></mrow></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0"
+    displaystyle="true"><mrow><mo>=</mo><mo>−</mo><mfrac><mi>k</mi><msup><mi>θ</mi><mn>2</mn></msup></mfrac><mo>−</mo><mfrac><mrow><mi>n</mi><mo>−</mo><mi>k</mi></mrow><mrow><mo
+    stretchy="false">(</mo><mn>1</mn><mo>−</mo><mi>θ</mi><msup><mo stretchy="false">)</mo><mn>2</mn></msup></mrow></mfrac></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle
+    scriptlevel="0" displaystyle="true"><mrow><mo><</mo><mn>0</mn><mo separator="true">,</mo></mrow></mstyle></mtd></mtr></mtable><annotation
+    encoding="application/x-tex">\begin{align} \frac{d^2}{d\theta^2} \log p(x_1, \ldots,
+    x_n|\theta) &= \frac{d}{d\theta} \left[\frac{k}{\theta} - \frac{n-k}{1-\theta}\right]\\
+    &= -\frac{k}{\theta^2} - \frac{n-k}{(1-\theta)^2}\\ &< 0, \end{align}</annotation></semantics>对θ的二阶导数d²/dθ²logp(x₁,
+    …, xₙ|θ)等于dθdθ[dθ[k/θ−(n−k)/(1−θ)]]等于−k/θ²−(n−k)/(1−θ)²<0，其中[公式(10)](#mpXlcHE8IL
+    "链接到这个公式")
 - en: where the last statement is true because <semantics><mrow><mi>n</mi></mrow><annotation
     encoding="application/x-tex">n</annotation></semantics>n, <semantics><mrow><mi>k</mi></mrow><annotation
     encoding="application/x-tex">k</annotation></semantics>k, and <semantics><mrow><mi>θ</mi></mrow><annotation
     encoding="application/x-tex">\theta</annotation></semantics>θ are all positive,
     and <semantics><mrow><mi>n</mi><mo>≥</mo><mi>k</mi></mrow><annotation encoding="application/x-tex">n
     \geq k</annotation></semantics>n≥k.
+  id: totrans-58
   prefs: []
   type: TYPE_NORMAL
+  zh: 其中最后一个陈述是正确的，因为<semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics>n，<semantics><mrow><mi>k</mi></mrow><annotation
+    encoding="application/x-tex">k</annotation></semantics>k，和<semantics><mrow><mi>θ</mi></mrow><annotation
+    encoding="application/x-tex">\theta</annotation></semantics>θ都是正数，并且<semantics><mrow><mi>n</mi><mo>≥</mo><mi>k</mi></mrow><annotation
+    encoding="application/x-tex">n \geq k</annotation></semantics>n≥k。
 - en: In many cases, it may also be necessary to check the boundary values, especially
     if the likelihood function is monotonically increasing or decreasing over the
     range of possible <semantics><mrow><mi>θ</mi></mrow><annotation encoding="application/x-tex">\theta</annotation></semantics>θ
     values.
+  id: totrans-59
   prefs: []
   type: TYPE_NORMAL
+  zh: 在许多情况下，检查边界值也可能是必要的，特别是如果似然函数在可能的θ值范围内单调递增或递减时。
 - en: Applying the maximum likelihood estimate[¶](#applying-the-maximum-likelihood-estimate
     "Link to this Section")
+  id: totrans-60
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 应用最大似然估计[¶](#applying-the-maximum-likelihood-estimate "链接到这个部分")
 - en: 'Let’s return to our example comparing microwaves A and B. If we apply maximum
     likelihood for each one, we get that <semantics><mrow><msub><mover accent="true"><mi>θ</mi><mo>^</mo></mover><mrow><mi>A</mi><mo
     separator="true">,</mo><mtext>MLE</mtext></mrow></msub><mo>=</mo><mn>3</mn><mi
@@ -453,24 +737,41 @@
     mathvariant="normal">/</mi><mn>20</mn><mo>=</mo><mn>0.95</mn></mrow><annotation
     encoding="application/x-tex">\hat{\theta}_{B,\text{MLE}} = 19/20 = 0.95</annotation></semantics>θ^B,MLE​=19/20=0.95:
     in other words, MLE tells us that Microwave A is the better choice.'
+  id: totrans-61
   prefs: []
   type: TYPE_NORMAL
+  zh: 让我们回到我们比较微波A和B的例子。如果我们对每个都应用最大似然估计，我们得到<semantics><mrow><msub><mover accent="true"><mi>θ</mi><mo>^</mo></mover><mrow><mi>A</mi><mo
+    separator="true">,</mo><mtext>MLE</mtext></mrow></msub><mo>=</mo><mn>3</mn><mi
+    mathvariant="normal">/</mi><mn>3</mn><mo>=</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">\hat{\theta}_{A,
+    \text{MLE}} = 3/3 = 1</annotation></semantics>θ^A,MLE​=3/3=1和<semantics><mrow><msub><mover
+    accent="true"><mi>θ</mi><mo>^</mo></mover><mrow><mi>B</mi><mo separator="true">,</mo><mtext>MLE</mtext></mrow></msub><mo>=</mo><mn>19</mn><mi
+    mathvariant="normal">/</mi><mn>20</mn><mo>=</mo><mn>0.95</mn></mrow><annotation
+    encoding="application/x-tex">\hat{\theta}_{B,\text{MLE}} = 19/20 = 0.95</annotation></semantics>θ^B,MLE​=19/20=0.95：换句话说，最大似然估计告诉我们微波A是更好的选择。
 - en: In other words, the value of <semantics><mrow><mi>θ</mi></mrow><annotation encoding="application/x-tex">\theta</annotation></semantics>θ
     that makes “3 positive reviews only” as likely as possible is <semantics><mrow><mi>θ</mi><mo>=</mo><mn>1</mn></mrow><annotation
     encoding="application/x-tex">\theta=1</annotation></semantics>θ=1. Similarly,
     the value of <semantics><mrow><mi>θ</mi></mrow><annotation encoding="application/x-tex">\theta</annotation></semantics>θ
     that makes “19 positive reviews and 1 negative review” as likely as possible is
     <semantics><mrow><mi>θ</mi><mo>=</mo><mn>0.95</mn></mrow><annotation encoding="application/x-tex">\theta=0.95</annotation></semantics>θ=0.95.
+  id: totrans-62
   prefs: []
   type: TYPE_NORMAL
+  zh: 换句话说，使“只有3条正面评价”尽可能可能发生的<semantics><mrow><mi>θ</mi></mrow><annotation encoding="application/x-tex">\theta</annotation></semantics>θ的值是<semantics><mrow><mi>θ</mi><mo>=</mo><mn>1</mn></mrow><annotation
+    encoding="application/x-tex">\theta=1</annotation></semantics>θ=1。同样，使“19条正面评价和1条负面评价”尽可能可能发生的<semantics><mrow><mi>θ</mi></mrow><annotation
+    encoding="application/x-tex">\theta</annotation></semantics>θ的值是<semantics><mrow><mi>θ</mi><mo>=</mo><mn>0.95</mn></mrow><annotation
+    encoding="application/x-tex">\theta=0.95</annotation></semantics>θ=0.95。
 - en: '[PRE3]'
+  id: totrans-63
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: 'A different way: Bayesian inference[¶](#a-different-way-bayesian-inference
     "Link to this Section")'
+  id: totrans-64
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 另一种方法：贝叶斯推理[¶](#a-different-way-bayesian-inference "链接到本节")
 - en: 'In the Bayesian setting, we’ll assume that the unknown parameter <semantics><mrow><mi>θ</mi></mrow><annotation
     encoding="application/x-tex">\theta</annotation></semantics>θ is a random variable.
     Now, instead of looking for a single estimate, we’ll consider the probability
@@ -484,8 +785,16 @@
     of the randomness in <semantics><mrow><mi>θ</mi></mrow><annotation encoding="application/x-tex">\theta</annotation></semantics>θ
     after seeing the data <semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics>x.
     We’ll compute it using Bayes’ rule:'
+  id: totrans-65
   prefs: []
   type: TYPE_NORMAL
+  zh: 在贝叶斯框架下，我们将假设未知参数<semantics><mrow><mi>θ</mi></mrow><annotation encoding="application/x-tex">\theta</annotation></semantics>θ是一个随机变量。现在，我们不再寻找单个估计值，而是考虑在观察数据<semantics><mrow><mi>x</mi></mrow><annotation
+    encoding="application/x-tex">x</annotation></semantics>x之后<semantics><mrow><mi>θ</mi></mrow><annotation
+    encoding="application/x-tex">\theta</annotation></semantics>θ的概率分布。这是条件分布<semantics><mrow><mi>p</mi><mo
+    stretchy="false">(</mo><mi>θ</mi><mi mathvariant="normal">∣</mi><mi>x</mi><mo
+    stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">p(\theta|x)</annotation></semantics>p(θ∣x)，我们称之为**后验分布**。在本章的其余部分，我们将学习如何计算和解释这个分布。它代表了我们看到数据<semantics><mrow><mi>x</mi></mrow><annotation
+    encoding="application/x-tex">x</annotation></semantics>x后对<semantics><mrow><mi>θ</mi></mrow><annotation
+    encoding="application/x-tex">\theta</annotation></semantics>θ中的随机性的理解。我们将使用贝叶斯定理来计算它：
 - en: <semantics><mtable rowspacing="0.25em" columnalign="right left" columnspacing="0em"><mtr><mtd><mstyle
     scriptlevel="0" displaystyle="true"><munder><munder><mrow><mi>p</mi><mo stretchy="false">(</mo><mi>θ</mi><mi
     mathvariant="normal">∣</mi><mi>x</mi><mo stretchy="false">)</mo></mrow><mo stretchy="true">⏟</mo></munder><mtext>posterior</mtext></munder></mstyle></mtd><mtd><mstyle
@@ -498,8 +807,21 @@
     &= \frac{\overbrace{p(x|\theta)}^{\text{likelihood}}\,\, \overbrace{p(\theta)}^{\text{prior}}}{p(x)}
     \end{align}</annotation></semantics>posteriorp(θ∣x)​​​=p(x)p(x∣θ)​likelihood​p(θ)​prior​​​​[(11)](#MW0DJFnW4W
     "Link to this Equation")
+  id: totrans-66
   prefs: []
   type: TYPE_NORMAL
+  zh: <semantics><mtable rowspacing="0.25em" columnalign="right left" columnspacing="0em"><mtr><mtd><mstyle
+    scriptlevel="0" displaystyle="true"><munder><munder><mrow><mi>p</mi><mo stretchy="false">(</mo><mi>θ</mi><mi
+    mathvariant="normal">∣</mi><mi>x</mi><mo stretchy="false">)</mo></mrow><mo stretchy="true">⏟</mo></munder><mtext>后验</mtext></munder></mstyle></mtd><mtd><mstyle
+    scriptlevel="0" displaystyle="true"><mrow><mo>=</mo><mfrac><mrow><mover><mover><mrow><mi>p</mi><mo
+    stretchy="false">(</mo><mi>x</mi><mi mathvariant="normal">∣</mi><mi>θ</mi><mo
+    stretchy="false">)</mo></mrow><mo stretchy="true">⏞</mo></mover><mtext>似然</mtext></mover><mover><mover><mrow><mi>p</mi><mo
+    stretchy="false">(</mo><mi>θ</mi><mo stretchy="false">)</mo></mrow><mo stretchy="true">⏞</mo></mover><mtext>先验</mtext></mover></mrow><mrow><mi>p</mi><mo
+    stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo></mrow></mfrac></mrow></mstyle></mtd></mtr></mtable><annotation
+    encoding="application/x-tex">\begin{align} \underbrace{p(\theta|x)}_{\text{后验}}
+    &= \frac{\overbrace{p(x|\theta)}^{\text{似然}}\,\, \overbrace{p(\theta)}^{\text{先验}}}{p(x)}
+    \end{align}</annotation></semantics>后验p(θ∣x)​​=p(x)p(x∣θ)​似然p(θ)​先验​​[(11)](#MW0DJFnW4W
+    "链接到这个方程")
 - en: 'When we set up a probability model in the previous section, we chose a likelihood
     that described the connection between our parameter <semantics><mrow><mi>θ</mi></mrow><annotation
     encoding="application/x-tex">\theta</annotation></semantics>θ and our data <semantics><mrow><mi>x</mi></mrow><annotation
@@ -510,8 +832,16 @@
     encoding="application/x-tex">\theta</annotation></semantics>θ before we get to
     see any data. Typically, we choose a prior based on domain knowledge and/or computational
     convenience: we’ll see a few examples of this in the next sections.'
+  id: totrans-67
   prefs: []
   type: TYPE_NORMAL
+  zh: 在上一节中，当我们建立概率模型时，我们选择了一个描述我们的参数 <semantics><mrow><mi>θ</mi></mrow><annotation
+    encoding="application/x-tex">\theta</annotation></semantics>θ 和我们的数据 <semantics><mrow><mi>x</mi></mrow><annotation
+    encoding="application/x-tex">x</annotation></semantics>x 之间关系的似然函数。在贝叶斯公式中，我们还需要选择另一件事：一个
+    **先验** <semantics><mrow><mi>p</mi><mo stretchy="false">(</mo><mi>θ</mi><mo stretchy="false">)</mo></mrow><annotation
+    encoding="application/x-tex">p(\theta)</annotation></semantics>p(θ)，它代表在我们看到任何数据之前对
+    <semantics><mrow><mi>θ</mi></mrow><annotation encoding="application/x-tex">\theta</annotation></semantics>θ
+    的信念。通常，我们会根据领域知识或计算便利性来选择先验：我们将在下一节中看到一些这方面的例子。
 - en: 'Note that we can treat the denominator here as a constant, because <semantics><mrow><mi>p</mi><mo
     stretchy="false">(</mo><mi>θ</mi><mi mathvariant="normal">∣</mi><mi>x</mi><mo
     stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">p(\theta|x)</annotation></semantics>p(θ∣x)
@@ -523,8 +853,18 @@
     So, we’ll often write the posterior as follows (recall that the symbol <semantics><mrow><mo>∝</mo></mrow><annotation
     encoding="application/x-tex">\propto</annotation></semantics>∝ means “is proportional
     to”):'
+  id: totrans-68
   prefs: []
   type: TYPE_NORMAL
+  zh: 注意，我们可以将这里的分母视为常数，因为 <semantics><mrow><mi>p</mi><mo stretchy="false">(</mo><mi>θ</mi><mi
+    mathvariant="normal">∣</mi><mi>x</mi><mo stretchy="false">)</mo></mrow><annotation
+    encoding="application/x-tex">p(\theta|x)</annotation></semantics>p(θ∣x) 是关于 <semantics><mrow><mi>θ</mi></mrow><annotation
+    encoding="application/x-tex">\theta</annotation></semantics>θ 的一个分布，而分母 <semantics><mrow><mi>p</mi><mo
+    stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo></mrow><annotation
+    encoding="application/x-tex">p(x)</annotation></semantics>p(x) 不依赖于 <semantics><mrow><mi>θ</mi></mrow><annotation
+    encoding="application/x-tex">\theta</annotation></semantics>θ。因此，我们通常将后验分布写成以下形式（回想一下，符号
+    <semantics><mrow><mo>∝</mo></mrow><annotation encoding="application/x-tex">\propto</annotation></semantics>∝
+    表示“成比例于”）：
 - en: <semantics><mtable rowspacing="0.25em" columnalign="right left" columnspacing="0em"><mtr><mtd><mstyle
     scriptlevel="0" displaystyle="true"><mrow><mi>p</mi><mo stretchy="false">(</mo><mi>θ</mi><mi
     mathvariant="normal">∣</mi><mi>x</mi><mo stretchy="false">)</mo></mrow></mstyle></mtd><mtd><mstyle
@@ -534,40 +874,68 @@
     encoding="application/x-tex">\begin{align} p(\theta|x) &\propto p(x|\theta)p(\theta)
     \end{align}</annotation></semantics>p(θ∣x)​∝p(x∣θ)p(θ)​​[(12)](#WZSCTN744y "Link
     to this Equation")
+  id: totrans-69
   prefs: []
   type: TYPE_NORMAL
+  zh: <semantics><mtable rowspacing="0.25em" columnalign="right left" columnspacing="0em"><mtr><mtd><mstyle
+    scriptlevel="0" displaystyle="true"><mrow><mi>p</mi><mo stretchy="false">(</mo><mi>θ</mi><mi
+    mathvariant="normal">∣</mi><mi>x</mi><mo stretchy="false">)</mo></mstyle></mtd><mtd><mstyle
+    scriptlevel="0" displaystyle="true"><mrow><mo>∝</mo><mi>p</mi><mo stretchy="false">(</mo><mi>x</mi><mi
+    mathvariant="normal">∣</mi><mi>θ</mi><mo stretchy="false">)</mo><mi>p</mi><mo
+    stretchy="false">(</mo><mi>θ</mi><mo stretchy="false">)</mo></mrow></mstyle></mtd></mtr></mtable><annotation
+    encoding="application/x-tex">\begin{align} p(\theta|x) &\propto p(x|\theta)p(\theta)
+    \end{align}</annotation></semantics>p(θ∣x)∝p(x∣θ)p(θ)（[12](#WZSCTN744y "链接到这个方程"））
 - en: 'Even though the denominator is a constant, it still matters: more on this later.
     For now, we’ll just try to find ways to get away without computing it.'
+  id: totrans-70
   prefs: []
   type: TYPE_NORMAL
+  zh: 尽管分母是一个常数，但它仍然很重要：关于这一点稍后还会详细说明。现在，我们只需尝试找到不计算它的方法。
 - en: 'We have two important questions left to answer before we can compute a Bayesian
     estimate:'
+  id: totrans-71
   prefs: []
   type: TYPE_NORMAL
+  zh: 在我们能够计算贝叶斯估计之前，我们还有两个重要的问题需要回答：
 - en: How do we choose the prior <semantics><mrow><mi>p</mi><mo stretchy="false">(</mo><mi>θ</mi><mo
     stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">p(\theta)</annotation></semantics>p(θ)?
+  id: totrans-72
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 我们如何选择先验分布 <semantics><mrow><mi>p</mi><mo stretchy="false">(</mo><mi>θ</mi><mo
+    stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">p(\theta)</annotation></semantics>p(θ)？
 - en: Once we get the posterior distribution <semantics><mrow><mi>p</mi><mo stretchy="false">(</mo><mi>θ</mi><mi
     mathvariant="normal">∣</mi><mi>x</mi><mo stretchy="false">)</mo></mrow><annotation
     encoding="application/x-tex">p(\theta|x)</annotation></semantics>p(θ∣x), how do
     we use that to choose a single value of <semantics><mrow><mi>θ</mi></mrow><annotation
     encoding="application/x-tex">\theta</annotation></semantics>θ as our estimate?
+  id: totrans-73
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 一旦我们得到了后验分布 <semantics><mrow><mi>p</mi><mo stretchy="false">(</mo><mi>θ</mi><mi
+    mathvariant="normal">∣</mi><mi>x</mi><mo stretchy="false">)</mo></mrow><annotation
+    encoding="application/x-tex">p(\theta|x)</annotation></semantics>p(θ∣x)，我们如何使用它来选择一个单一的值
+    <semantics><mrow><mi>θ</mi></mrow><annotation encoding="application/x-tex">\theta</annotation></semantics>θ
+    作为我们的估计值？
 - en: We’ll answer these two questions in the next section.
+  id: totrans-74
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们将在下一节回答这两个问题。
 - en: '[PRE4]'
+  id: totrans-75
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE4]'
 - en: 'Choosing a prior: Beta distributions[¶](#choosing-a-prior-beta-distributions
     "Link to this Section")'
+  id: totrans-76
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 选择先验分布：Beta分布[¶](#choosing-a-prior-beta-distributions "链接到这个部分"）
 - en: 'Let’s return to our product review example. For our prior <semantics><mrow><mi>p</mi><mo
     stretchy="false">(</mo><mi>θ</mi><mo stretchy="false">)</mo></mrow><annotation
     encoding="application/x-tex">p(\theta)</annotation></semantics>p(θ), which represents
@@ -579,44 +947,71 @@
     <semantics><mrow><mi>α</mi></mrow><annotation encoding="application/x-tex">\alpha</annotation></semantics>α
     and <semantics><mrow><mi>β</mi></mrow><annotation encoding="application/x-tex">\beta</annotation></semantics>β.
     It’s defined as:'
+  id: totrans-77
   prefs: []
   type: TYPE_NORMAL
+  zh: 让我们回到我们的产品评论示例。对于我们的先验<semantics><mrow><mi>p</mi><mo stretchy="false">(</mo><mi>θ</mi><mo
+    stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">p(\theta)</annotation></semantics>p(θ)，它代表我们在看到任何数据之前对未知产品质量的信念<semantics><mrow><mi>θ</mi></mrow><annotation
+    encoding="application/x-tex">\theta</annotation></semantics>θ，我们将选择[贝塔分布](https://en.wikipedia.org/wiki/Beta_distribution)。这并不是我们唯一可以选择的分布，但它恰好是一个特别方便的选择：我们稍后会看到原因。贝塔分布有两个参数，<semantics><mrow><mi>α</mi></mrow><annotation
+    encoding="application/x-tex">\alpha</annotation></semantics>α和<semantics><mrow><mi>β</mi></mrow><annotation
+    encoding="application/x-tex">\beta</annotation></semantics>β。它定义为：
 - en: <semantics><mrow><mi>p</mi><mo stretchy="false">(</mo><mi>θ</mi><mo stretchy="false">)</mo><mo>∝</mo><msup><mi>θ</mi><mrow><mi>α</mi><mo>−</mo><mn>1</mn></mrow></msup><mo
     stretchy="false">(</mo><mn>1</mn><mo>−</mo><mi>θ</mi><msup><mo stretchy="false">)</mo><mrow><mi>β</mi><mo>−</mo><mn>1</mn></mrow></msup></mrow><annotation
     encoding="application/x-tex">p(\theta) \propto \theta^{\alpha-1} (1-\theta)^{\beta-1}</annotation></semantics>p(θ)∝θα−1(1−θ)β−1[(13)](#J9Vx9fK8aZ
     "Link to this Equation")
+  id: totrans-78
   prefs: []
   type: TYPE_NORMAL
+  zh: <semantics><mrow><mi>p</mi><mo stretchy="false">(</mo><mi>θ</mi><mo stretchy="false">)</mo><mo>∝</mo><msup><mi>θ</mi><mrow><mi>α</mi><mo>−</mo><mn>1</mn></mrow></msup><mo
+    stretchy="false">(</mo><mn>1</mn><mo>−</mo><mi>θ</mi><msup><mo stretchy="false">)</mo><mrow><mi>β</mi><mo>−</mo><mn>1</mn></mrow></msup></mrow><annotation
+    encoding="application/x-tex">p(\theta) \propto \theta^{\alpha-1} (1-\theta)^{\beta-1}</annotation></semantics>p(θ)∝θα−1(1−θ)β−1[(13)](#J9Vx9fK8aZ
+    "Link to this Equation")
 - en: 'The normalization constant is quite complicated, but we don’t need to know
     what it is to use the beta distribution. Since this is a well-studied distribution,
     we can find out any facts about it that we need just by looking them up. Try it
     yourself: without doing any computation, what is the expectation of a beta-distributed
     random variable? What is the mode?'
+  id: totrans-79
   prefs: []
   type: TYPE_NORMAL
+  zh: 归一化常数相当复杂，但使用贝塔分布我们不需要知道它是什么。由于这是一个研究得很好的分布，我们可以通过查阅找到我们需要的任何关于它的信息。试着自己做一下：不进行任何计算，贝塔分布随机变量的期望值是多少？众数是什么？
 - en: Normalizing the Beta distribution (optional)[¶](#normalizing-the-beta-distribution-optional
     "Link to this Section")
+  id: totrans-80
   prefs:
   - PREF_H4
   type: TYPE_NORMAL
+  zh: 归一化贝塔分布（可选）[¶](#normalizing-the-beta-distribution-optional "Link to this Section")
 - en: 'How would we go about computing the normalization constant for this distribution?
     We know that the formula above is missing a constant of proportionality, which
     we’ll call <semantics><mrow><mi>Z</mi></mrow><annotation encoding="application/x-tex">Z</annotation></semantics>Z:'
+  id: totrans-81
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们如何计算这个分布的归一化常数呢？我们知道上面的公式缺少一个比例常数，我们将称之为<semantics><mrow><mi>Z</mi></mrow><annotation
+    encoding="application/x-tex">Z</annotation></semantics>Z：
 - en: <semantics><mrow><mi>p</mi><mo stretchy="false">(</mo><mi>θ</mi><mo stretchy="false">)</mo><mo>=</mo><mfrac><mn>1</mn><mi>Z</mi></mfrac><msup><mi>θ</mi><mrow><mi>α</mi><mo>−</mo><mn>1</mn></mrow></msup><mo
     stretchy="false">(</mo><mn>1</mn><mo>−</mo><mi>θ</mi><msup><mo stretchy="false">)</mo><mrow><mi>β</mi><mo>−</mo><mn>1</mn></mrow></msup></mrow><annotation
     encoding="application/x-tex">p(\theta) = \frac{1}{Z} \theta^{\alpha-1} (1-\theta)^{\beta-1}</annotation></semantics>p(θ)=Z1​θα−1(1−θ)β−1[(14)](#WUQeM87uGw
     "Link to this Equation")
+  id: totrans-82
   prefs: []
   type: TYPE_NORMAL
+  zh: <semantics><mrow><mi>p</mi><mo stretchy="false">(</mo><mi>θ</mi><mo stretchy="false">)</mo><mo>=</mo><mfrac><mn>1</mn><mi>Z</mi></mfrac><msup><mi>θ</mi><mrow><mi>α</mi><mo>−</mo><mn>1</mn></mrow></msup><mo
+    stretchy="false">(</mo><mn>1</mn><mo>−</mo><mi>θ</mi><msup><mo stretchy="false">)</mo><mrow><mi>β</mi><mo>−</mo><mn>1</mn></mrow></msup></mrow><annotation
+    encoding="application/x-tex">p(\theta) = \frac{1}{Z} \theta^{\alpha-1} (1-\theta)^{\beta-1}</annotation></semantics>p(θ)=Z1​θα−1(1−θ)β−1[(14)](#WUQeM87uGw
+    "Link to this Equation")
 - en: We’ll need to solve for <semantics><mrow><mi>Z</mi></mrow><annotation encoding="application/x-tex">Z</annotation></semantics>Z.
     As a probability density function (PDF), we know that the distribution <semantics><mrow><mi>p</mi><mo
     stretchy="false">(</mo><mi>θ</mi><mo stretchy="false">)</mo></mrow><annotation
     encoding="application/x-tex">p(\theta)</annotation></semantics>p(θ) should integrate
     to 1\. So,
+  id: totrans-83
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们需要求解<semantics><mrow><mi>Z</mi></mrow><annotation encoding="application/x-tex">Z</annotation></semantics>Z。作为一个概率密度函数（PDF），我们知道分布<semantics><mrow><mi>p</mi><mo
+    stretchy="false">(</mo><mi>θ</mi><mo stretchy="false">)</mo></mrow><annotation
+    encoding="application/x-tex">p(\theta)</annotation></semantics>p(θ)应该积分到1。因此，
 - en: <semantics><mtable rowspacing="0.25em" columnalign="right left" columnspacing="0em"><mtr><mtd><mstyle
     scriptlevel="0" displaystyle="true"><mrow><msubsup><mo>∫</mo><mn>0</mn><mn>1</mn></msubsup><mfrac><mn>1</mn><mi>Z</mi></mfrac><msup><mi>θ</mi><mrow><mi>α</mi><mo>−</mo><mn>1</mn></mrow></msup><mo
     stretchy="false">(</mo><mn>1</mn><mo>−</mo><mi>θ</mi><msup><mo stretchy="false">)</mo><mrow><mi>β</mi><mo>−</mo><mn>1</mn></mrow></msup><mi>d</mi><mi>θ</mi></mrow></mstyle></mtd><mtd><mstyle
@@ -628,33 +1023,57 @@
     (1-\theta)^{\beta-1} \, d\theta &= 1 \\ \int_0^1 \theta^{\alpha-1} (1-\theta)^{\beta-1}
     \, d\theta &= Z \end{align*}</annotation></semantics>∫01​Z1​θα−1(1−θ)β−1dθ∫01​θα−1(1−θ)β−1dθ​=1=Z​[(15)](#qXdic5uhmt
     "Link to this Equation")
+  id: totrans-84
   prefs: []
   type: TYPE_NORMAL
+  zh: <semantics><mtable rowspacing="0.25em" columnalign="right left" columnspacing="0em"><mtr><mtd><mstyle
+    scriptlevel="0" displaystyle="true"><mrow><msubsup><mo>∫</mo><mn>0</mn><mn>1</mn></msubsup><mfrac><mn>1</mn><mi>Z</mi></mfrac><msup><mi>θ</mi><mrow><mi>α</mi><mo>−</mo><mn>1</mn></mrow></msup><mo
+    stretchy="false">(</mo><mn>1</mn><mo>−</mo><mi>θ</mi><msup><mo stretchy="false">)</mo><mrow><mi>β</mi><mo>−</mo><mn>1</mn></mrow></msup><mi>d</mi><mi>θ</mi></mrow></mstyle></mtd><mtd><mstyle
+    scriptlevel="0" displaystyle="true"><mrow><mo>=</mo><mn>1</mn></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle
+    scriptlevel="0" displaystyle="true"><mrow><msubsup><mo>∫</mo><mn>0</mn><mn>1</mn></msubsup><msup><mi>θ</mi><mrow><mi>α</mi><mo>−</mo><mn>1</mn></mrow></msup><mo
+    stretchy="false">(</mo><mn>1</mn><mo>−</mo><mi>θ</mi><msup><mo stretchy="false">)</mo><mrow><mi>β</mi><mo>−</mo><mn>1</mn></mrow></msup><mi>d</mi><mi>θ</mi></mrow></mstyle></mtd><mtd><mstyle
+    scriptlevel="0" displaystyle="true"><mrow><mo>=</mo><mi>Z</mi></mrow></mstyle></mtd></mtr></mtable><annotation
+    encoding="application/x-tex">\begin{align*} \int_0^1 \frac{1}{Z} \theta^{\alpha-1}
+    (1-\theta)^{\beta-1} \, d\theta &= 1 \\ \int_0^1 \theta^{\alpha-1} (1-\theta)^{\beta-1}
+    \, d\theta &= Z \end{align*}</annotation></semantics>∫01​Z1​θα−1(1−θ)β−1dθ∫01​θα−1(1−θ)β−1dθ​=1=Z​[(15)](#qXdic5uhmt
+    "Link to this Equation")
 - en: This integral is difficult to compute, but we can look up that the result is
     something called the [Beta function](https://en.wikipedia.org/wiki/Beta_function).
     Details about this function are beyond the scope of this class, but it’s related
     to the Gamma function (an extension of the factorial function to non-integer values).
+  id: totrans-85
   prefs: []
   type: TYPE_NORMAL
+  zh: 这个积分难以计算，但我们查阅得知结果是称为[贝塔函数](https://en.wikipedia.org/wiki/Beta_function)的东西。关于这个函数的细节超出了本课程的范围，但它与伽马函数（将阶乘函数扩展到非整数值）有关。
 - en: 'In other words, no matter what the values of <semantics><mrow><mi>α</mi></mrow><annotation
     encoding="application/x-tex">\alpha</annotation></semantics>α and <semantics><mrow><mi>β</mi></mrow><annotation
     encoding="application/x-tex">\beta</annotation></semantics>β are, the denominator
     will always have the same form: a beta function. This is why we typically ignore
     it, and only write out the proportionality.'
+  id: totrans-86
   prefs: []
   type: TYPE_NORMAL
+  zh: 换句话说，无论<semantics><mrow><mi>α</mi></mrow><annotation encoding="application/x-tex">\alpha</annotation></semantics>α和<semantics><mrow><mi>β</mi></mrow><annotation
+    encoding="application/x-tex">\beta</annotation></semantics>β的值是什么，分母总是具有相同的形式：一个贝塔函数。这就是为什么我们通常忽略它，只写出比例关系。
 - en: Also note that <semantics><mrow><mi>Z</mi></mrow><annotation encoding="application/x-tex">Z</annotation></semantics>Z
     does not depend on <semantics><mrow><mi>θ</mi></mrow><annotation encoding="application/x-tex">\theta</annotation></semantics>θ,
     but it does depend on the parameters <semantics><mrow><mi>α</mi></mrow><annotation
     encoding="application/x-tex">\alpha</annotation></semantics>α and <semantics><mrow><mi>β</mi></mrow><annotation
     encoding="application/x-tex">\beta</annotation></semantics>β.
+  id: totrans-87
   prefs: []
   type: TYPE_NORMAL
+  zh: 还要注意的是，<semantics><mrow><mi>Z</mi></mrow><annotation encoding="application/x-tex">Z</annotation></semantics>Z
+    不依赖于 <semantics><mrow><mi>θ</mi></mrow><annotation encoding="application/x-tex">\theta</annotation></semantics>θ，但它依赖于参数
+    <semantics><mrow><mi>α</mi></mrow><annotation encoding="application/x-tex">\alpha</annotation></semantics>α
+    和 <semantics><mrow><mi>β</mi></mrow><annotation encoding="application/x-tex">\beta</annotation></semantics>β。
 - en: Intuition for the Beta distribution[¶](#intuition-for-the-beta-distribution
     "Link to this Section")
+  id: totrans-88
   prefs:
   - PREF_H4
   type: TYPE_NORMAL
+  zh: 贝塔分布的直观理解[¶](#intuition-for-the-beta-distribution "链接到本节")
 - en: 'Before we compute the posterior, let’s build some intuition for how the beta
     distribution works. The [Wikipedia page](https://en.wikipedia.org/wiki/Beta_distribution)
     has some helpful examples of what it looks like for different values of <semantics><mrow><mi>α</mi></mrow><annotation
@@ -662,14 +1081,23 @@
     encoding="application/x-tex">\beta</annotation></semantics>β. Let’s look at a
     few of those examples. Recall that we can use the distributions in `scipy.stats`
     to compute and visualize probability density functions (PDFs):'
+  id: totrans-89
   prefs: []
   type: TYPE_NORMAL
+  zh: 在我们计算后验分布之前，让我们先对贝塔分布的工作原理有一些直观的理解。维基百科页面（[Wikipedia page](https://en.wikipedia.org/wiki/Beta_distribution)）上有一些关于不同
+    <semantics><mrow><mi>α</mi></mrow><annotation encoding="application/x-tex">\alpha</annotation></semantics>α
+    和 <semantics><mrow><mi>β</mi></mrow><annotation encoding="application/x-tex">\beta</annotation></semantics>β
+    值的贝塔分布样式的有用示例。让我们看看其中的一些示例。回想一下，我们可以使用 `scipy.stats` 中的分布来计算和可视化概率密度函数（PDF）：
 - en: '[PRE5]'
+  id: totrans-90
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE5]'
 - en: '![<Figure size 360x216 with 1 Axes>](../Images/a889c8f0276ce27260351dff5ad00fca.png)'
+  id: totrans-91
   prefs: []
   type: TYPE_IMG
+  zh: '![<Figure size 360x216 with 1 Axes>](../Images/a889c8f0276ce27260351dff5ad00fca.png)'
 - en: 'We can see that different values of the parameters lead to different shapes
     for the beta distribution. In particular, when <semantics><mrow><mi>α</mi></mrow><annotation
     encoding="application/x-tex">\alpha</annotation></semantics>α is larger than <semantics><mrow><mi>β</mi></mrow><annotation
@@ -684,18 +1112,36 @@
     with different values: what changes as <semantics><mrow><mi>α</mi></mrow><annotation
     encoding="application/x-tex">\alpha</annotation></semantics>α and <semantics><mrow><mi>β</mi></mrow><annotation
     encoding="application/x-tex">\beta</annotation></semantics>β get larger?'
+  id: totrans-92
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们可以看到，参数的不同值会导致贝塔分布形状的不同。特别是，当 <semantics><mrow><mi>α</mi></mrow><annotation
+    encoding="application/x-tex">\alpha</annotation></semantics>α 大于 <semantics><mrow><mi>β</mi></mrow><annotation
+    encoding="application/x-tex">\beta</annotation></semantics>β 时，较大的 <semantics><mrow><mi>θ</mi></mrow><annotation
+    encoding="application/x-tex">\theta</annotation></semantics>θ 值更有可能，反之亦然。我们还可以看到，Beta<semantics><mrow><mo
+    stretchy="false">(</mo><mn>1</mn><mo separator="true">,</mo><mn>1</mn><mo stretchy="false">)</mo></mrow><annotation
+    encoding="application/x-tex">(1, 1)</annotation></semantics>(1,1) 与在 <semantics><mrow><mo
+    stretchy="false">[</mo><mn>0</mn><mo separator="true">,</mo><mn>1</mn><mo stretchy="false">]</mo></mrow><annotation
+    encoding="application/x-tex">[0, 1]</annotation></semantics>[0,1] 上的均匀分布相同。尝试用不同的值进行实验：当
+    <semantics><mrow><mi>α</mi></mrow><annotation encoding="application/x-tex">\alpha</annotation></semantics>α
+    和 <semantics><mrow><mi>β</mi></mrow><annotation encoding="application/x-tex">\beta</annotation></semantics>β
+    变大时，会发生什么变化？
 - en: '[PRE6]'
+  id: totrans-93
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE6]'
 - en: Computing the posterior[¶](#computing-the-posterior "Link to this Section")
+  id: totrans-94
   prefs:
   - PREF_H4
   type: TYPE_NORMAL
+  zh: 计算后验分布[¶](#computing-the-posterior "链接到本节")
 - en: 'Now that we’ve set up the prior, we can compute the posterior distribution:'
+  id: totrans-95
   prefs: []
   type: TYPE_NORMAL
+  zh: 现在我们已经设置了先验分布，我们可以计算后验分布：
 - en: <semantics><mtable rowspacing="0.25em" columnalign="right left" columnspacing="0em"><mtr><mtd><mstyle
     scriptlevel="0" displaystyle="true"><mrow><mi>p</mi><mo stretchy="false">(</mo><mi>θ</mi><mi
     mathvariant="normal">∣</mi><mi>x</mi><mo stretchy="false">)</mo></mrow></mstyle></mtd><mtd><mstyle
@@ -723,6 +1169,7 @@
     (1-\theta)^{\beta-1}\Big] \\ &\propto \theta^{\alpha + \left[\sum_i x_i\right]
     - 1}(1-\theta)^{\beta + \left[\sum_i (1-x_i)\right] - 1} \end{align}</annotation></semantics>p(θ∣x)​∝p(x∣θ)p(θ)∝[θ[∑i​xi​](1−θ)[∑i​(1−xi​)]][θα−1(1−θ)β−1]∝θα+[∑i​xi​]−1(1−θ)β+[∑i​(1−xi​)]−1​​[(16)](#XnEK8nXMx1
     "Link to this Equation")
+  id: totrans-96
   prefs: []
   type: TYPE_NORMAL
 - en: We can see that this is also a beta distribution, because it looks like <semantics><mrow><msup><mi>θ</mi><mrow><mtext>stuff</mtext><mo>−</mo><mn>1</mn></mrow></msup><mo
@@ -735,8 +1182,17 @@
     stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">\beta +
     \sum_i (1-x_i)</annotation></semantics>β+∑i​(1−xi​), so we can write the posterior
     as
+  id: totrans-97
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们可以看出这也是一个贝塔分布，因为它看起来像 <semantics><mrow><msup><mi>θ</mi><mrow><mtext>stuff</mtext><mo>−</mo><mn>1</mn></mrow></msup><mo
+    stretchy="false">(</mo><mn>1</mn><mo>−</mo><mi>θ</mi><msup><mo stretchy="false">)</mo><mrow><mtext>other stuff</mtext><mo>−</mo><mn>1</mn></mrow></msup></mrow><annotation
+    encoding="application/x-tex">\theta^{\text{stuff}-1}(1-\theta)^{\text{other stuff}-1}</annotation></semantics>θstuff−1(1−θ)other stuff−1.
+    它有参数 <semantics><mrow><mi>α</mi><mo>+</mo><msub><mo>∑</mo><mi>i</mi></msub><msub><mi>x</mi><mi>i</mi></msub></mrow><annotation
+    encoding="application/x-tex">\alpha + \sum_i x_i</annotation></semantics>α+∑i​xi​
+    和 <semantics><mrow><mi>β</mi><mo>+</mo><msub><mo>∑</mo><mi>i</mi></msub><mo stretchy="false">(</mo><mn>1</mn><mo>−</mo><msub><mi>x</mi><mi>i</mi></msub><mo
+    stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">\beta +
+    \sum_i (1-x_i)</annotation></semantics>β+∑i​(1−xi​)，因此我们可以将后验写成
 - en: <semantics><mrow><mi>θ</mi><mi mathvariant="normal">∣</mi><mi>x</mi><mo>∼</mo><mrow><mi
     mathvariant="normal">B</mi><mi mathvariant="normal">e</mi><mi mathvariant="normal">t</mi><mi
     mathvariant="normal">a</mi></mrow><mo fence="false" stretchy="true" minsize="3em"
@@ -747,37 +1203,64 @@
     encoding="application/x-tex">\theta|x \sim \mathrm{Beta}\Bigg(\alpha + \sum_i
     x_i\,,\,\, \beta + \sum_i (1-x_i)\Bigg)</annotation></semantics>θ∣x∼Beta(α+i∑​xi​,β+i∑​(1−xi​))[(17)](#wXgyywvwup
     "Link to this Equation")
+  id: totrans-98
   prefs: []
   type: TYPE_NORMAL
+  zh: <semantics><mrow><mi>θ</mi><mi mathvariant="normal">∣</mi><mi>x</mi><mo>∼</mo><mrow><mi
+    mathvariant="normal">B</mi><mi mathvariant="normal">e</mi><mi mathvariant="normal">t</mi><mi
+    mathvariant="normal">a</mi></mrow><mo fence="false" stretchy="true" minsize="3em"
+    maxsize="3em">(</mo><mi>α</mi><mo>+</mo><munder><mo>∑</mo><mi>i</mi></munder><msub><mi>x</mi><mi>i</mi></msub><mo
+    separator="true">,</mo><mi>β</mi><mo>+</mo><munder><mo>∑</mo><mi>i</mi></munder><mo
+    stretchy="false">(</mo><mn>1</mn><mo>−</mo><msub><mi>x</mi><mi>i</mi></msub><mo
+    stretchy="false">)</mo><mo fence="false" stretchy="true" minsize="3em" maxsize="3em">)</mo></mrow><annotation
+    encoding="application/x-tex">\theta|x \sim \mathrm{Beta}\Bigg(\alpha + \sum_i
+    x_i\,,\,\, \beta + \sum_i (1-x_i)\Bigg)</annotation></semantics>θ∣x∼Beta(α+i∑​xi​,β+i∑​(1−xi​))[(17)](#wXgyywvwup
+    "链接到这个方程")
 - en: By making this observation, we avoided having to compute the denominator <semantics><mrow><mi>p</mi><mo
     stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo></mrow><annotation
     encoding="application/x-tex">p(x)</annotation></semantics>p(x)!
+  id: totrans-99
   prefs: []
   type: TYPE_NORMAL
+  zh: 通过这个观察，我们避免了需要计算分母 <semantics><mrow><mi>p</mi><mo stretchy="false">(</mo><mi>x</mi><mo
+    stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">p(x)</annotation></semantics>p(x)!
 - en: This is because the beta distribution is the **conjugate prior** for the Bernoulli
     distribution. This means that whenever we have a Bernoulli likelihood, if we choose
     a prior from the beta family, then the posterior distribution will also be in
     the beta family.
+  id: totrans-100
   prefs: []
   type: TYPE_NORMAL
+  zh: 这是因为贝塔分布是伯努利分布的**共轭先验**。这意味着每当我们有伯努利似然时，如果我们从贝塔家族中选择一个先验，那么后验分布也将属于贝塔家族。
 - en: '[PRE7]'
+  id: totrans-101
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE7]'
 - en: 'Demo: prior and posterior Betas[¶](#demo-prior-and-posterior-betas "Link to
     this Section")'
+  id: totrans-102
   prefs:
   - PREF_H4
   type: TYPE_NORMAL
+  zh: 示例：先验和后验贝塔分布[¶](#demo-prior-and-posterior-betas "链接到这个部分")
 - en: <details class="myst-dropdown rounded-md my-5 shadow dark:shadow-2xl dark:shadow-neutral-900
     overflow-hidden bg-gray-50 dark:bg-stone-800"><summary class="myst-dropdown-header
     m-0 text-lg font-medium py-1 min-h-[2em] pl-3 cursor-pointer hover:shadow-[inset_0_0_0px_30px_#00000003]
     dark:hover:shadow-[inset_0_0_0px_30px_#FFFFFF03] bg-gray-100 dark:bg-slate-900">Notebook
     Cell</summary>
+  id: totrans-103
   prefs: []
   type: TYPE_NORMAL
+  zh: <details class="myst-dropdown rounded-md my-5 shadow dark:shadow-2xl dark:shadow-neutral-900
+    overflow-hidden bg-gray-50 dark:bg-stone-800"><summary class="myst-dropdown-header
+    m-0 text-lg font-medium py-1 min-h-[2em] pl-3 cursor-pointer hover:shadow-[inset_0_0_0px_30px_#00000003]
+    dark:hover:shadow-[inset_0_0_0px_30px_#FFFFFF03] bg-gray-100 dark:bg-slate-900">笔记本单元</summary>
 - en: '[PRE8]</details>'
+  id: totrans-104
   prefs: []
   type: TYPE_NORMAL
+  zh: '[PRE8]</details>'
 - en: Let’s visualize some examples of prior and posterior beta distributions. We’ll
     use the `plot_beta_prior_and_posterior` function, which takes in the parameters
     of the prior (<semantics><mrow><mi>a</mi></mrow><annotation encoding="application/x-tex">a</annotation></semantics>a
@@ -787,14 +1270,22 @@
     encoding="application/x-tex">n-k</annotation></semantics>n−k), and shows the prior
     and posterior distributions for <semantics><mrow><mi>θ</mi></mrow><annotation
     encoding="application/x-tex">\theta</annotation></semantics>θ on the same graph.
+  id: totrans-105
   prefs: []
   type: TYPE_NORMAL
+  zh: 让我们可视化一些先验和后验Beta分布的例子。我们将使用`plot_beta_prior_and_posterior`函数，该函数接受先验参数（<semantics><mrow><mi>a</mi></mrow><annotation
+    encoding="application/x-tex">a</annotation></semantics>a 和 <semantics><mrow><mi>b</mi></mrow><annotation
+    encoding="application/x-tex">b</annotation></semantics>b）以及正负观察的数量（<semantics><mrow><mi>k</mi></mrow><annotation
+    encoding="application/x-tex">k</annotation></semantics>k 和 <semantics><mrow><mi>n</mi><mo>−</mo><mi>k</mi></mrow><annotation
+    encoding="application/x-tex">n-k</annotation></semantics>n−k），并在同一张图上显示θ的后验分布。
 - en: We’ll start with Microwave A, which had 3 positive reviews and 0 negative reviews.
     For now, we’ll just explore a few different choices and look at the outcomes.
     Later, we’ll discuss which choice of prior could be a better fit for this particular
     problem.
+  id: totrans-106
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们从微波A开始，它有3条正面评论和0条负面评论。现在，我们将探索几种不同的选择并查看结果。稍后，我们将讨论哪种先验选择可能更适合这个问题。
 - en: First, what happens if we use a <semantics><mrow><mrow><mi mathvariant="normal">B</mi><mi
     mathvariant="normal">e</mi><mi mathvariant="normal">t</mi><mi mathvariant="normal">a</mi></mrow><mo
     stretchy="false">(</mo><mn>1</mn><mo separator="true">,</mo><mn>1</mn><mo stretchy="false">)</mo></mrow><annotation
@@ -803,14 +1294,20 @@
     prior represents the belief that before observing any reviews, all values of <semantics><mrow><mi>θ</mi></mrow><annotation
     encoding="application/x-tex">\theta</annotation></semantics>θ (between 0 and 1)
     should be equally likely.
+  id: totrans-107
   prefs: []
   type: TYPE_NORMAL
+  zh: 首先，如果我们使用Beta(1,1)先验，会发生什么？我们之前看到这等同于均匀先验。直观上，这个先验表示在观察任何评论之前，所有θ（在0和1之间）的值应该具有相同的可能性。
 - en: '[PRE9]'
+  id: totrans-108
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE9]'
 - en: '![<Figure size 360x280 with 1 Axes>](../Images/6272aa315a559975af91a9e3946a6c64.png)'
+  id: totrans-109
   prefs: []
   type: TYPE_IMG
+  zh: '![<Figure size 360x280 with 1 Axes>](../Images/6272aa315a559975af91a9e3946a6c64.png)'
 - en: Looking at the orange density, it assigns higher probability to larger values
     of <semantics><mrow><mi>θ</mi></mrow><annotation encoding="application/x-tex">\theta</annotation></semantics>θ.
     What if we use a different prior? We’ll try a Beta<semantics><mrow><mo stretchy="false">(</mo><mn>1</mn><mo
@@ -820,60 +1317,91 @@
     encoding="application/x-tex">\theta</annotation></semantics>θ are more likely
     than larger ones (i.e., we are skeptical of product quality before we see any
     reviews).
+  id: totrans-110
   prefs: []
   type: TYPE_NORMAL
+  zh: 观察橙色密度，它将更高的概率分配给θ更大的值。如果我们使用不同的先验会怎样？我们将尝试Beta(1,5)先验，这表示在观察任何评论之前，θ的较小值比较大值更有可能（即，我们在看到任何评论之前对产品质量持怀疑态度）。
 - en: '[PRE10]'
+  id: totrans-111
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE10]'
 - en: '![<Figure size 360x280 with 1 Axes>](../Images/fa1c8af7d79ec7631aab92f9c1dc56c0.png)'
+  id: totrans-112
   prefs: []
   type: TYPE_IMG
+  zh: '![<Figure size 360x280 with 1 Axes>](../Images/fa1c8af7d79ec7631aab92f9c1dc56c0.png)'
 - en: Changing the prior distribution has dramatically changed the posterior distribution.
     What if we had used an even more “skeptical” prior?
+  id: totrans-113
   prefs: []
   type: TYPE_NORMAL
+  zh: 改变先验分布极大地改变了后验分布。如果我们使用一个更加“怀疑”的先验会怎样？
 - en: '[PRE11]'
+  id: totrans-114
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE11]'
 - en: '![<Figure size 360x280 with 1 Axes>](../Images/58b7cec0ea17cb61fffb520129ad7208.png)'
+  id: totrans-115
   prefs: []
   type: TYPE_IMG
+  zh: '![<Figure size 360x280 with 1 Axes>](../Images/58b7cec0ea17cb61fffb520129ad7208.png)'
 - en: We can see that for microwave A, our choice of prior has a significant effect
     on the posterior distribution. What about for microwave B?
+  id: totrans-116
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们可以看到，对于微波A，我们选择的先验对后验分布有显著的影响。那么对于微波B呢？
 - en: '[PRE12]'
+  id: totrans-117
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE12]'
 - en: '![<Figure size 360x280 with 1 Axes>](../Images/178926f9c92b4ca06eb01abbd9ed79a3.png)![<Figure
     size 360x280 with 1 Axes>](../Images/47e659802f3cb3d5834fb52b64256a31.png)![<Figure
     size 360x280 with 1 Axes>](../Images/41fe814c8108d92d696a747f00eab078.png)'
+  id: totrans-118
   prefs: []
   type: TYPE_IMG
+  zh: '![<图大小 360x280，1 个坐标轴>](../Images/178926f9c92b4ca06eb01abbd9ed79a3.png)![<图大小
+    360x280，1 个坐标轴>](../Images/47e659802f3cb3d5834fb52b64256a31.png)![<图大小 360x280，1
+    个坐标轴>](../Images/41fe814c8108d92d696a747f00eab078.png)'
 - en: 'Here, the prior still has an effect on the posterior distribution: the more
     “skeptical” the prior is, the more the posterior shifts to the left. But, the
     effect of the prior is much smaller than it was for Microwave A. This illustrates
     a general trend in Bayesian inference: **with less data, the prior usually has
     a stronger effect on the posterior**.'
+  id: totrans-119
   prefs: []
   type: TYPE_NORMAL
+  zh: 在这里，先验分布仍然对后验分布有影响：先验越“怀疑”，后验分布就越向左偏移。但是，先验分布的影响远小于微波A的情况。这说明了贝叶斯推理中的一个普遍趋势：**数据越少，先验分布通常对后验分布的影响越强**。
 - en: '[PRE13]'
+  id: totrans-120
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE13]'
 - en: Point estimates[¶](#point-estimates "Link to this Section")
+  id: totrans-121
   prefs:
   - PREF_H4
   type: TYPE_NORMAL
+  zh: 点估计[¶](#point-estimates "链接到本节")
 - en: 'Once we have a posterior distribution, we will often want to answer the question:
     how do we use the distribution to get a single estimate for <semantics><mrow><mi>θ</mi></mrow><annotation
     encoding="application/x-tex">\theta</annotation></semantics>θ? This single number
     is typically called a **point estimate**.'
+  id: totrans-122
   prefs: []
   type: TYPE_NORMAL
+  zh: 一旦我们有了后验分布，我们通常会想要回答一个问题：我们如何使用这个分布来得到一个关于 <semantics><mrow><mi>θ</mi></mrow><annotation
+    encoding="application/x-tex">\theta</annotation></semantics>θ 的单一估计？这个单一数字通常被称为**点估计**。
 - en: 'We’ll start with two answers for question 1: the **Maximum a Posteriori (MAP)
     estimate** and the **Minimum/Least Mean Squared Error (MMSE/LMSE) Estimate**.'
+  id: totrans-123
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们将针对问题1开始提供两个答案：**最大后验（MAP）估计**和**最小/最小均方误差（MMSE/LMSE）估计**。
 - en: The **MAP estimate** is the estimate that maximizes the posterior distribution.
     Remember that the posterior distribution represents our belief about the unknown
     parameter <semantics><mrow><mi>θ</mi></mrow><annotation encoding="application/x-tex">\theta</annotation></semantics>θ.
@@ -885,19 +1413,32 @@
     we can look up the maximum value (mode) of the distribution to find that it’s
     <semantics><mrow><mfrac><mrow><mi>α</mi><mo>−</mo><mn>1</mn></mrow><mrow><mi>α</mi><mo>+</mo><mi>β</mi><mo>−</mo><mn>2</mn></mrow></mfrac></mrow><annotation
     encoding="application/x-tex">\frac{\alpha-1}{\alpha+\beta-2}</annotation></semantics>α+β−2α−1​.
+  id: totrans-124
   prefs: []
   type: TYPE_NORMAL
+  zh: '**MAP估计**是最大化后验分布的估计。记住，后验分布代表了我们对于未知参数 <semantics><mrow><mi>θ</mi></mrow><annotation
+    encoding="application/x-tex">\theta</annotation></semantics>θ 的信念。直观地说，MAP估计是根据这种信念最有可能的
+    <semantics><mrow><mi>θ</mi></mrow><annotation encoding="application/x-tex">\theta</annotation></semantics>θ
+    值。对于一个Beta<semantics><mrow><mo stretchy="false">(</mo><mi>α</mi><mo separator="true">,</mo><mi>β</mi><mo
+    stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">(\alpha,
+    \beta)</annotation></semantics>(α,β) 分布，我们可以查找分布的最大值（众数），发现它是 <semantics><mrow><mfrac><mrow><mi>α</mi><mo>−</mo><mn>1</mn></mrow><mrow><mi>α</mi><mo>+</mo><mi>β</mi><mo>−</mo><mn>2</mn></mrow></mfrac></mrow><annotation
+    encoding="application/x-tex">\frac{\alpha-1}{\alpha+\beta-2}</annotation></semantics>α+β−2α−1​。'
 - en: '**Optional exercise**: derive the mode of the beta distribution. *Hint: instead
     of maximizing the Beta density with respect to <semantics><mrow><mi>θ</mi></mrow><annotation
     encoding="application/x-tex">\theta</annotation></semantics>θ, try taking the
     log first, just like we did before.*'
+  id: totrans-125
   prefs: []
   type: TYPE_NORMAL
+  zh: '**可选练习**：推导Beta分布的众数。*提示：不要像之前那样对 <semantics><mrow><mi>θ</mi></mrow><annotation
+    encoding="application/x-tex">\theta</annotation></semantics>θ 求Beta密度的最大值，而是先取对数。*'
 - en: 'The **LMSE estimate** is simply the mean of the posterior distribution. It
     has this name because we can show that the mean of the posterior distribution
     minimizes the mean squared error:'
+  id: totrans-126
   prefs: []
   type: TYPE_NORMAL
+  zh: '**LMSE估计**是后验分布的均值。它之所以有这个名字，是因为我们可以证明后验分布的均值最小化了均方误差：'
 - en: <semantics><mtable rowspacing="0.25em" columnalign="right" columnspacing=""><mtr><mtd><mstyle
     scriptlevel="0" displaystyle="true"><mrow><msub><mtext>argmin</mtext><mi>a</mi></msub><msub><mi>E</mi><mrow><mi>p</mi><mo
     stretchy="false">(</mo><mi>θ</mi><mi mathvariant="normal">∣</mi><mi>x</mi><mo
@@ -909,89 +1450,147 @@
     \text{argmin}_a E_{p(\theta|x)}\left[(a-\theta)^2\right] = E_{p(\theta|x)}\left[\theta\right]
     \end{align}</annotation></semantics>argmina​Ep(θ∣x)​[(a−θ)2]=Ep(θ∣x)​[θ]​​[(18)](#zYiSxf3uVc
     "Link to this Equation")
+  id: totrans-127
   prefs: []
   type: TYPE_NORMAL
+  zh: <semantics><mtable rowspacing="0.25em" columnalign="right" columnspacing=""><mtr><mtd><mstyle
+    scriptlevel="0" displaystyle="true"><mrow><msub><mtext>argmin</mtext><mi>a</mi></msub><msub><mi>E</mi><mrow><mi>p</mi><mo
+    stretchy="false">(</mo><mi>θ</mi><mi mathvariant="normal">∣</mi><mi>x</mi><mo
+    stretchy="false">)</mo></mrow></msub><mrow><mo fence="true">[</mo><mo stretchy="false">(</mo><mi>a</mi><mo>−</mo><mi>θ</mi><msup><mo
+    stretchy="false">)</mo><mn>2</mn></msup><mo fence="true">]</mo></mrow><mo>=</mo><msub><mi>E</mi><mrow><mi>p</mi><mo
+    stretchy="false">(</mo><mi>θ</mi><mi mathvariant="normal">∣</mi><mi>x</mi><mo
+    stretchy="false">)</mo></mrow></msub><mrow><mo fence="true">[</mo><mi>θ</mi><mo
+    fence="true">]</mo></mrow></mrow></mstyle></mtd></mtr></mtable><annotation encoding="application/x-tex">\begin{align}
+    \text{argmin}_a E_{p(\theta|x)}\left[(a-\theta)^2\right] = E_{p(\theta|x)}\left[\theta\right]
+    \end{align}</annotation></semantics>argmina​Ep(θ∣x)​[(a−θ)2]=Ep(θ∣x)​[θ]（[18](#zYiSxf3uVc
+    "链接到这个方程"））
 - en: The mean of a Beta<semantics><mrow><mo stretchy="false">(</mo><mi>α</mi><mo
     separator="true">,</mo><mi>β</mi><mo stretchy="false">)</mo></mrow><annotation
     encoding="application/x-tex">(\alpha, \beta)</annotation></semantics>(α,β)-distributed
     random variable is <semantics><mrow><mfrac><mi>α</mi><mrow><mi>α</mi><mo>+</mo><mi>β</mi></mrow></mfrac></mrow><annotation
     encoding="application/x-tex">\frac{\alpha}{\alpha+\beta}</annotation></semantics>α+βα​.
+  id: totrans-128
   prefs: []
   type: TYPE_NORMAL
+  zh: Beta<semantics><mrow><mo stretchy="false">(</mo><mi>α</mi><mo separator="true">,</mo><mi>β</mi><mo
+    stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">(\alpha,
+    \beta)</annotation></semantics>(α,β) 分布的随机变量的均值是 <semantics><mrow><mfrac><mi>α</mi><mrow><mi>α</mi><mo>+</mo><mi>β</mi></mrow></mfrac></mrow><annotation
+    encoding="application/x-tex">\frac{\alpha}{\alpha+\beta}</annotation></semantics>α+βα​.
 - en: '[PRE14]'
+  id: totrans-129
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE14]'
 - en: '[PRE15]'
+  id: totrans-130
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE15]'
 - en: Choosing the prior parameters[¶](#choosing-the-prior-parameters "Link to this
     Section")
+  id: totrans-131
   prefs:
   - PREF_H4
   type: TYPE_NORMAL
+  zh: 选择先验参数[¶](#choosing-the-prior-parameters "链接到这个部分"）
 - en: Returning to our microwave example, we can see that our choice of prior encodes
     our beliefs about products and reviews.
+  id: totrans-132
   prefs: []
   type: TYPE_NORMAL
+  zh: 回到我们的微波例子，我们可以看到我们选择的先验编码了我们关于产品和评论的信念。
 - en: 'For example, if we think that most products are good until proven otherwise
     by the review data, then we could choose a more “optimistic” prior, such as Beta<semantics><mrow><mo
     stretchy="false">(</mo><mn>5</mn><mo separator="true">,</mo><mn>1</mn><mo stretchy="false">)</mo></mrow><annotation
     encoding="application/x-tex">(5, 1)</annotation></semantics>(5,1), which favors
     (assigns higher probability to) larger values of <semantics><mrow><mi>θ</mi></mrow><annotation
     encoding="application/x-tex">\theta</annotation></semantics>θ. In this case:'
+  id: totrans-133
   prefs: []
   type: TYPE_NORMAL
+  zh: 例如，如果我们认为大多数产品在经过审查数据证明其不好之前都是好的，那么我们可以选择一个更“乐观”的先验，例如 Beta<semantics><mrow><mo
+    stretchy="false">(</mo><mn>5</mn><mo separator="true">,</mo><mn>1</mn><mo stretchy="false">)</mo></mrow><annotation
+    encoding="application/x-tex">(5, 1)</annotation></semantics>(5,1)，这有利于（分配更高的概率给）更大的
+    <semantics><mrow><mi>θ</mi></mrow><annotation encoding="application/x-tex">\theta</annotation></semantics>θ
+    值。在这种情况下：
 - en: The posterior for the quality of microwave A is Beta<semantics><mrow><mo stretchy="false">(</mo><mn>8</mn><mo
     separator="true">,</mo><mn>1</mn><mo stretchy="false">)</mo></mrow><annotation
     encoding="application/x-tex">(8, 1)</annotation></semantics>(8,1), and the MAP
     estimate is 1.
+  id: totrans-134
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 微波A的质量后验是 Beta<semantics><mrow><mo stretchy="false">(</mo><mn>8</mn><mo separator="true">,</mo><mn>1</mn><mo
+    stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">(8, 1)</annotation></semantics>(8,1)，并且最大似然估计值为
+    1。
 - en: The posterior for the quality of microwave B is Beta<semantics><mrow><mo stretchy="false">(</mo><mn>24</mn><mo
     separator="true">,</mo><mn>2</mn><mo stretchy="false">)</mo></mrow><annotation
     encoding="application/x-tex">(24, 2)</annotation></semantics>(24,2), and the MAP
     estimate is 0.96. Under this prior, microwave A looks better.
+  id: totrans-135
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 微波B的质量后验是 Beta<semantics><mrow><mo stretchy="false">(</mo><mn>24</mn><mo separator="true">,</mo><mn>2</mn><mo
+    stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">(24, 2)</annotation></semantics>(24,2)，并且最大似然估计值为
+    0.96。在这个先验下，微波A看起来更好。
 - en: 'But, if we believe that most products are bad until proven otherwise by the
     review data, we may choose a Beta<semantics><mrow><mo stretchy="false">(</mo><mn>1</mn><mo
     separator="true">,</mo><mn>5</mn><mo stretchy="false">)</mo></mrow><annotation
     encoding="application/x-tex">(1, 5)</annotation></semantics>(1,5) prior, which
     favors smaller values of <semantics><mrow><mi>θ</mi></mrow><annotation encoding="application/x-tex">\theta</annotation></semantics>θ.
     In this case:'
+  id: totrans-136
   prefs: []
   type: TYPE_NORMAL
+  zh: 但是，如果我们相信大多数产品在经过审查数据证明之前都是不好的，我们可能会选择 Beta<semantics><mrow><mo stretchy="false">(</mo><mn>1</mn><mo
+    separator="true">,</mo><mn>5</mn><mo stretchy="false">)</mo></mrow><annotation
+    encoding="application/x-tex">(1, 5)</annotation></semantics>(1,5) 先验，这有利于较小的 <semantics><mrow><mi>θ</mi></mrow><annotation
+    encoding="application/x-tex">\theta</annotation></semantics>θ 值。在这种情况下：
 - en: 'The posterior for the quality of microwave A is Beta<semantics><mrow><mo stretchy="false">(</mo><mn>4</mn><mo
     separator="true">,</mo><mn>5</mn><mo stretchy="false">)</mo></mrow><annotation
     encoding="application/x-tex">(4, 5)</annotation></semantics>(4,5): if we compute
     the MAP estimate, we get 0.43.'
+  id: totrans-137
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 微波A的质量后验分布为 Beta<semantics><mrow><mo stretchy="false">(</mo><mn>4</mn><mo separator="true">,</mo><mn>5</mn><mo
+    stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">(4, 5)</annotation></semantics>(4,5)：如果我们计算最大似然估计，我们得到
+    0.43。
 - en: The posterior for the quality of microwave B is Beta<semantics><mrow><mo stretchy="false">(</mo><mn>20</mn><mo
     separator="true">,</mo><mn>6</mn><mo stretchy="false">)</mo></mrow><annotation
     encoding="application/x-tex">(20, 6)</annotation></semantics>(20,6), and the MAP
     estimate is 0.79. So, under this prior, microwave B looks better.
+  id: totrans-138
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 微波B的质量后验分布为 Beta<semantics><mrow><mo stretchy="false">(</mo><mn>20</mn><mo separator="true">,</mo><mn>6</mn><mo
+    stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">(20, 6)</annotation></semantics>(20,6)，最大似然估计值为
+    0.79。因此，在这个先验下，微波B看起来更好。
 - en: From this, we can take away that **our choice of prior can often have a significant
     effect on our results**. So, it’s important to choose priors that capture your
     assumptions and belief about the world, and to be explicit about communicating
     those assumptions with others when sharing your results.
+  id: totrans-139
   prefs: []
   type: TYPE_NORMAL
+  zh: 从这里，我们可以得出结论，**我们选择先验概率往往会对我们的结果产生重大影响**。因此，选择能够反映你对世界假设和信念的先验概率非常重要，并且在分享你的结果时，要明确地与他人沟通这些假设。
 - en: 'Another attempt: a non-conjugate prior[¶](#another-attempt-a-non-conjugate-prior
     "Link to this Section")'
+  id: totrans-140
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 另一种尝试：非共轭先验[¶](#another-attempt-a-non-conjugate-prior "链接到本节")
 - en: To see why the conjugate prior is so helpful, let’s see what would have happened
     if we chose a different prior.
+  id: totrans-141
   prefs: []
   type: TYPE_NORMAL
+  zh: 为了了解为什么共轭先验如此有用，让我们看看如果我们选择不同的先验会发生什么。
 - en: 'Suppose we instead choose the prior <semantics><mrow><mi>p</mi><mo stretchy="false">(</mo><mi>θ</mi><mo
     stretchy="false">)</mo><mo>=</mo><mfrac><mi>π</mi><mn>2</mn></mfrac><mi>cos</mi><mo>⁡</mo><mrow><mo
     fence="true">(</mo><mfrac><mi>π</mi><mn>2</mn></mfrac><mi>θ</mi><mo fence="true">)</mo></mrow><mo
@@ -999,23 +1598,41 @@
     separator="true">,</mo><mn>1</mn><mo stretchy="false">]</mo></mrow><annotation
     encoding="application/x-tex">p(\theta) = \frac{\pi}{2} \cos\left(\frac{\pi}{2}
     \theta\right), \, \theta \in [0, 1]</annotation></semantics>p(θ)=2π​cos(2π​θ),θ∈[0,1]:'
+  id: totrans-142
   prefs: []
   type: TYPE_NORMAL
+  zh: '假设我们选择以下先验 <semantics><mrow><mi>p</mi><mo stretchy="false">(</mo><mi>θ</mi><mo
+    stretchy="false">)</mo><mo>=</mo><mfrac><mi>π</mi><mn>2</mn></mfrac><mi>cos</mi><mo>⁡</mo><mrow><mo
+    fence="true">(</mo><mfrac><mi>π</mi><mn>2</mn></mfrac><mi>θ</mi><mo fence="true">)</mo></mrow><mo
+    separator="true">,</mo><mi>θ</mi><mo>∈</mo><mo stretchy="false">[</mo><mn>0</mn><mo
+    separator="true">,</mo><mn>1</mn><mo stretchy="false">]</mo></mrow><annotation
+    encoding="application/x-tex">p(\theta) = \frac{\pi}{2} \cos\left(\frac{\pi}{2}
+    \theta\right), \, \theta \in [0, 1]</annotation></semantics>p(θ)=2π​cos(2π​θ),θ∈[0,1]:'
 - en: '[PRE16]'
+  id: totrans-143
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE16]'
 - en: '![<Figure size 400x240 with 1 Axes>](../Images/bdc13940c62009ce521018cfa2d40fb3.png)'
+  id: totrans-144
   prefs: []
   type: TYPE_IMG
+  zh: '![<Figure size 400x240 with 1 Axes>](../Images/bdc13940c62009ce521018cfa2d40fb3.png)'
 - en: '[PRE17]'
+  id: totrans-145
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE17]'
 - en: '`0.9999991742330661`'
+  id: totrans-146
   prefs: []
   type: TYPE_NORMAL
+  zh: '`0.9999991742330661`'
 - en: 'We can try to compute the posterior just as we did before:'
+  id: totrans-147
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们可以尝试像之前一样计算后验概率：
 - en: <semantics><mtable rowspacing="0.25em" columnalign="right left" columnspacing="0em"><mtr><mtd><mstyle
     scriptlevel="0" displaystyle="true"><mrow><mi>p</mi><mo stretchy="false">(</mo><mi>θ</mi><mi
     mathvariant="normal">∣</mi><mi>x</mi><mo stretchy="false">)</mo></mrow></mstyle></mtd><mtd><mstyle
@@ -1034,24 +1651,49 @@
     \\ &\propto \Bigg[\theta^{\left[\sum_i x_i\right]}(1-\theta)^{\left[\sum_i (1-x_i)\right]}\Bigg]\cos\left(\frac{\pi}{2}\theta\right)
     \end{align}</annotation></semantics>p(θ∣x)​∝p(x∣θ)p(θ)∝[θ[∑i​xi​](1−θ)[∑i​(1−xi​)]]cos(2π​θ)​​[(19)](#MTfNnZHfv5
     "Link to this Equation")
+  id: totrans-148
   prefs: []
   type: TYPE_NORMAL
+  zh: <semantics><mtable rowspacing="0.25em" columnalign="right left" columnspacing="0em"><mtr><mtd><mstyle
+    scriptlevel="0" displaystyle="true"><mrow><mi>p</mi><mo stretchy="false">(</mo><mi>θ</mi><mi
+    mathvariant="normal">∣</mi><mi>x</mi><mo stretchy="false">)</mo></mrow></mstyle></mtd><mtd><mstyle
+    scriptlevel="0" displaystyle="true"><mrow><mo>∝</mo><mi>p</mi><mo stretchy="false">(</mo><mi>x</mi><mi
+    mathvariant="normal">∣</mi><mi>θ</mi><mo stretchy="false">)</mo><mi>p</mi><mo
+    stretchy="false">(</mo><mi>θ</mi><mo stretchy="false">)</mo></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle
+    scriptlevel="0" displaystyle="true"><mrow><mo>∝</mo><mo fence="false" stretchy="true"
+    minsize="3em" maxsize="3em">[</mo><msup><mi>θ</mi><mrow><mo fence="true">[</mo><munder><mo>∑</mo><mi>i</mi></munder><msub><mi>x</mi><mi>i</mi></msub><mo
+    fence="true">]</mo></mrow></msup><mo stretchy="false">(</mo><mn>1</mn><mo>−</mo><mi>θ</mi><msup><mo
+    stretchy="false">)</mo><mrow><mo fence="true">[</mo><munder><mo>∑</mo><mi>i</mi></munder><mo
+    stretchy="false">(</mo><mn>1</mn><mo>−</mo><msub><mi>x</mi><mi>i</mi></msub><mo
+    stretchy="false">)</mo><mo fence="true">]</mo></mrow></msup><mo fence="false"
+    stretchy="true" minsize="3em" maxsize="3em">]</mo><mi>cos</mi><mo>⁡</mo><mrow><mo
+    fence="true">(</mo><mfrac><mi>π</mi><mn>2</mn></mfrac><mi>θ</mi><mo fence="true">)</mo></mrow></mrow></mstyle></mtd></mtr></mtable><annotation
+    encoding="application/x-tex">\begin{align} p(\theta|x) &\propto p(x|\theta)p(\theta)
+    \\ &\propto \Bigg[\theta^{\left[\sum_i x_i\right]}(1-\theta)^{\left[\sum_i (1-x_i)\right]}\Bigg]\cos\left(\frac{\pi}{2}\theta\right)
+    \end{align}</annotation></semantics>p(θ∣x)∝p(x∣θ)p(θ)∝[θ[∑i​xi​](1−θ)[∑i​(1−xi​)]]cos(2π​θ)​​[(19)](#MTfNnZHfv5
+    "链接到这个方程")
 - en: 'This distribution looks much more complicated: we can’t reduce it to a known
     distribution at all. Furthermore, there is no way to compute the normalizing constant
     in closed form: we’ll need to use numerical integration.'
+  id: totrans-149
   prefs: []
   type: TYPE_NORMAL
+  zh: 这个分布看起来要复杂得多：我们根本无法将其简化为已知的分布。此外，无法以封闭形式计算归一化常数：我们需要使用数值积分。
 - en: This makes it hard to reason about the distribution or use intuition about known
     distributions. It also means that if we want to compute quantities of interest
     about it (e.g., the mean/mode of the posterior for the LMSE/MAP estimates respectively),
     then we have to apply numerical integration.
+  id: totrans-150
   prefs: []
   type: TYPE_NORMAL
+  zh: 这使得对分布进行推理变得困难，也意味着如果我们想计算关于它的感兴趣量（例如，对于LMSE/MAP估计的后验的均值/众数），我们必须应用数值积分。
 - en: 'A continuous example: estimating heights[¶](#a-continuous-example-estimating-heights
     "Link to this Section")'
+  id: totrans-151
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 一个连续的例子：估计身高[¶](#a-continuous-example-estimating-heights "链接到这个部分")
 - en: 'Suppose instead that now our parameter of interest <semantics><mrow><mi>θ</mi></mrow><annotation
     encoding="application/x-tex">\theta</annotation></semantics>θ is the average height
     of a population, and our data <semantics><mrow><msub><mi>x</mi><mn>1</mn></msub><mo
@@ -1060,20 +1702,34 @@
     are heights of individuals in a sample. A Bernoulli distribution no longer makes
     sense for these continuous data. There are many options we could choose, but for
     simplicity we’ll use a normal distribution (also known as the Gaussian distribution):'
+  id: totrans-152
   prefs: []
   type: TYPE_NORMAL
+  zh: 假设现在我们感兴趣的参数 <semantics><mrow><mi>θ</mi></mrow><annotation encoding="application/x-tex">\theta</annotation></semantics>θ
+    是人群的平均身高，我们的数据 <semantics><mrow><msub><mi>x</mi><mn>1</mn></msub><mo separator="true">,</mo><mo>…</mo><mo
+    separator="true">,</mo><msub><mi>x</mi><mi>n</mi></msub></mrow><annotation encoding="application/x-tex">x_1,
+    \ldots, x_n</annotation></semantics>x1​,…,xn​ 是样本中个体的身高。对于这些连续数据，二项分布不再适用。我们可以选择很多种方法，但为了简单起见，我们将使用正态分布（也称为高斯分布）：
 - en: <semantics><mrow><msub><mi>x</mi><mi>i</mi></msub><mi mathvariant="normal">∣</mi><mi>θ</mi><mo>∼</mo><mi
     mathvariant="script">N</mi><mo stretchy="false">(</mo><mi>θ</mi><mo separator="true">,</mo><msup><mi>σ</mi><mn>2</mn></msup><mo
     stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">x_i|\theta
     \sim \mathcal{N}(\theta, \sigma^2)</annotation></semantics>xi​∣θ∼N(θ,σ2)[(20)](#V9XoCuKknv
     "Link to this Equation")
+  id: totrans-153
   prefs: []
   type: TYPE_NORMAL
+  zh: <semantics><mrow><msub><mi>x</mi><mi>i</mi></msub><mi mathvariant="normal">∣</mi><mi>θ</mi><mo>∼</mo><mi
+    mathvariant="script">N</mi><mo stretchy="false">(</mo><mi>θ</mi><mo separator="true">,</mo><msup><mi>σ</mi><mn>2</mn></msup><mo
+    stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">x_i|\theta
+    \sim \mathcal{N}(\theta, \sigma^2)</annotation></semantics>xi​∣θ∼N(θ,σ2)[(20)](#V9XoCuKknv
+    "链接到这个方程")
 - en: 'Frequentist estimation: MLE for the Gaussian likelihood[¶](#frequentist-estimation-mle-for-the-gaussian-likelihood
     "Link to this Section")'
+  id: totrans-154
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 经验主义估计：高斯似然函数的最大似然估计[¶](#frequentist-estimation-mle-for-the-gaussian-likelihood
+    "链接到这个部分")
 - en: We can go through a similar process as before to find the MLE for the Gaussian
     likelihood. Because the normalizing constant <semantics><mrow><mfrac><mn>1</mn><mrow><mi>σ</mi><msqrt><mrow><mn>2</mn><mi>π</mi></mrow></msqrt></mrow></mfrac></mrow><annotation
     encoding="application/x-tex">\frac{1}{\sigma\sqrt{2\pi}}</annotation></semantics>σ2π​1​
@@ -1081,8 +1737,13 @@
     (and our goal is to optimize for <semantics><mrow><mi>θ</mi></mrow><annotation
     encoding="application/x-tex">\theta</annotation></semantics>θ, we’ll leave it
     out for now.
+  id: totrans-155
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们可以像之前一样通过类似的过程来找到高斯似然函数的最大似然估计。因为归一化常数 <semantics><mrow><mfrac><mn>1</mn><mrow><mi>σ</mi><msqrt><mrow><mn>2</mn><mi>π</mi></mrow></msqrt></mrow></mfrac></mrow><annotation
+    encoding="application/x-tex">\frac{1}{\sigma\sqrt{2\pi}}</annotation></semantics>σ2π​1​
+    不依赖于 <semantics><mrow><mi>θ</mi></mrow><annotation encoding="application/x-tex">\theta</annotation></semantics>θ（我们的目标是优化
+    <semantics><mrow><mi>θ</mi></mrow><annotation encoding="application/x-tex">\theta</annotation></semantics>θ，所以我们现在先不考虑它）。
 - en: <semantics><mtable rowspacing="0.25em" columnalign="right left" columnspacing="0em"><mtr><mtd><mstyle
     scriptlevel="0" displaystyle="true"><mrow><mi>p</mi><mo stretchy="false">(</mo><msub><mi>x</mi><mi>i</mi></msub><mi
     mathvariant="normal">∣</mi><mi>θ</mi><mo stretchy="false">)</mo></mrow></mstyle></mtd><mtd><mstyle
@@ -1102,9 +1763,11 @@
     &= \left(\frac{1}{\sigma\sqrt{2\pi}}\right)^n \exp\left\{\sum_{i=1}^n \frac{1}{2\sigma^2}(x_i-\theta)^2\right\}
     \end{align}</annotation></semantics>p(xi​∣θ)p(x1​,…,xn​∣θ)​σ2π​1​exp{2σ21​(xi​−θ)2}=(σ2π​1​)nexp{i=1∑n​2σ21​(xi​−θ)2}​​[(21)](#XS18nmj1ST
     "Link to this Equation")
+  id: totrans-156
   prefs: []
   type: TYPE_NORMAL
 - en: 'The log-likelihood is:'
+  id: totrans-157
   prefs: []
   type: TYPE_NORMAL
 - en: <semantics><mtable rowspacing="0.25em" columnalign="right left" columnspacing="0em"><mtr><mtd><mstyle
@@ -1120,12 +1783,29 @@
     n\log\left(\frac{1}{\sigma\sqrt{2\pi}}\right) + \sum_{i=1}^n \frac{1}{2\sigma^2}(x_i-\theta)^2
     \end{align}</annotation></semantics>logp(x1​,…,xn​∣θ)​=nlog(σ2π​1​)+i=1∑n​2σ21​(xi​−θ)2​​[(22)](#gLwWyOGz6k
     "Link to this Equation")
+  id: totrans-158
   prefs: []
   type: TYPE_NORMAL
+  zh: <semantics><mtable rowspacing="0.25em" columnalign="right left" columnspacing="0em"><mtr><mtd><mstyle
+    scriptlevel="0" displaystyle="true"><mrow><mi>log</mi><mo>⁡</mo><mi>p</mi><mo
+    stretchy="false">(</mo><msub><mi>x</mi><mn>1</mn></msub><mo separator="true">,</mo><mo>…</mo><mo
+    separator="true">,</mo><msub><mi>x</mi><mi>n</mi></msub><mi mathvariant="normal">∣</mi><mi>θ</mi><mo
+    stretchy="false">)</mo></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mo>=</mo><mi>n</mi><mi>log</mi><mo>⁡</mo><mrow><mo
+    fence="true">(</mo><mfrac><mn>1</mn><mrow><mi>σ</mi><msqrt><mrow><mn>2</mn><mi>π</mi></mrow></msqrt></mrow></mfrac><mo
+    fence="true">)</mo></mrow><mo>+</mo><munderover><mo>∑</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mi>n</mi></munderover><mfrac><mn>1</mn><mrow><mn>2</mn><msup><mi>σ</mi><mn>2</mn></msup></mrow></mfrac><mo
+    stretchy="false">(</mo><msub><mi>x</mi><mi>i</mi></msub><mo>−</mo><mi>θ</mi><msup><mo
+    stretchy="false">)</mo><mn>2</mn></msup></mrow></mstyle></mtd></mtr></mtable><annotation
+    encoding="application/x-tex">\begin{align} \log p(x_1, \ldots, x_n|\theta) &=
+    n\log\left(\frac{1}{\sigma\sqrt{2\pi}}\right) + \sum_{i=1}^n \frac{1}{2\sigma^2}(x_i-\theta)^2
+    \end{align}</annotation></semantics>logp(x1​,…,xn​∣θ)​=nlog(σ2π​1​)+i=1∑n​2σ21​(xi​−θ)2​​[(22)](#gLwWyOGz6k
+    "Link to this Equation")
 - en: 'Differentiating with respect to <semantics><mrow><mi>θ</mi></mrow><annotation
     encoding="application/x-tex">\theta</annotation></semantics>θ and solving is straightforward:'
+  id: totrans-159
   prefs: []
   type: TYPE_NORMAL
+  zh: 对 <semantics><mrow><mi>θ</mi></mrow><annotation encoding="application/x-tex">\theta</annotation></semantics>θ
+    求导并求解是直接的：
 - en: <semantics><mtable rowspacing="0.25em" columnalign="right left" columnspacing="0em"><mtr><mtd><mstyle
     scriptlevel="0" displaystyle="true"><mrow><munderover><mo>∑</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mi>n</mi></munderover><mo>−</mo><mfrac><mn>1</mn><msup><mi>σ</mi><mn>2</mn></msup></mfrac><mo
     stretchy="false">(</mo><msub><mi>x</mi><mi>i</mi></msub><mo>−</mo><mi>θ</mi><mo
@@ -1135,29 +1815,48 @@
     encoding="application/x-tex">\begin{align} \sum_{i=1}^n -\frac{1}{\sigma^2}(x_i-\theta)
     &= 0 \\ \theta &= \frac{1}{n} \sum_i x_i \end{align}</annotation></semantics>i=1∑n​−σ21​(xi​−θ)θ​=0=n1​i∑​xi​​​[(23)](#m9hjEWKViM
     "Link to this Equation")
+  id: totrans-160
   prefs: []
   type: TYPE_NORMAL
+  zh: <semantics><mtable rowspacing="0.25em" columnalign="right left" columnspacing="0em"><mtr><mtd><mstyle
+    scriptlevel="0" displaystyle="true"><mrow><munderover><mo>∑</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mi>n</mi></munderover><mo>−</mo><mfrac><mn>1</mn><msup><mi>σ</mi><mn>2</mn></msup></mfrac><mo
+    stretchy="false">(</mo><msub><mi>x</mi><mi>i</mi></msub><mo>−</mo><mi>θ</mi><mo
+    stretchy="false">)</mo></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mo>=</mo><mn>0</mn></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle
+    scriptlevel="0" displaystyle="true"><mi>θ</mi></mstyle></mtd><mtd><mstyle scriptlevel="0"
+    displaystyle="true"><mrow><mo>=</mo><mfrac><mn>1</mn><mi>n</mi></mfrac><munder><mo>∑</mo><mi>i</mi></munder><msub><mi>x</mi><mi>i</mi></msub></mrow></mstyle></mtd></mtr></mtable><annotation
+    encoding="application/x-tex">\begin{align} \sum_{i=1}^n -\frac{1}{\sigma^2}(x_i-\theta)
+    &= 0 \\ \theta &= \frac{1}{n} \sum_i x_i \end{align}</annotation></semantics>i=1∑n​−σ21​(xi​−θ)θ​=0=n1​i∑​xi​​​[(23)](#m9hjEWKViM
+    "Link to this Equation")
 - en: 'Once again, MLE has given us a very intuitive answer: the value for our parameter
     (population height average) that makes the data most likely is simply the mean
     of the sample heights. Note that our answer didn’t depend on <semantics><mrow><mi>σ</mi></mrow><annotation
     encoding="application/x-tex">\sigma</annotation></semantics>σ!'
+  id: totrans-161
   prefs: []
   type: TYPE_NORMAL
+  zh: 再次，最大似然估计（MLE）给了我们一个非常直观的答案：使数据最有可能的参数（总体高度平均值）就是样本高度的均值。注意，我们的答案并不依赖于 <semantics><mrow><mi>σ</mi></mrow><annotation
+    encoding="application/x-tex">\sigma</annotation></semantics>σ！
 - en: '**Exercise**: Suppose instead of the population average, we had been interested
     in the population standard deviation. What is the MLE for the population standard
     deviation?'
+  id: totrans-162
   prefs: []
   type: TYPE_NORMAL
+  zh: '**练习**：假设我们感兴趣的不是总体平均数，而是总体标准差。总体标准差的MLE是多少？'
 - en: Bayesian inference for heights[¶](#bayesian-inference-for-heights "Link to this
     Section")
+  id: totrans-163
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 高度贝叶斯推断[¶](#bayesian-inference-for-heights "链接到这个部分")
 - en: 'Now suppose we instead take a Bayesian approach, and treat <semantics><mrow><mi>θ</mi></mrow><annotation
     encoding="application/x-tex">\theta</annotation></semantics>θ as random. Just
     like before, we’re interested in the posterior distribution:'
+  id: totrans-164
   prefs: []
   type: TYPE_NORMAL
+  zh: 现在假设我们采用贝叶斯方法，并将<semantics><mrow><mi>θ</mi></mrow><annotation encoding="application/x-tex">\theta</annotation></semantics>θ视为随机变量。就像之前一样，我们感兴趣的是后验分布：
 - en: <semantics><mrow><mi>p</mi><mo stretchy="false">(</mo><mi>θ</mi><mi mathvariant="normal">∣</mi><msub><mi>x</mi><mn>1</mn></msub><mo
     separator="true">,</mo><mo>…</mo><mo separator="true">,</mo><msub><mi>x</mi><mi>n</mi></msub><mo
     stretchy="false">)</mo><mo>=</mo><mfrac><mrow><mi>p</mi><mo stretchy="false">(</mo><msub><mi>x</mi><mn>1</mn></msub><mo
@@ -1169,18 +1868,37 @@
     encoding="application/x-tex">p(\theta|x_1, \ldots, x_n) = \frac{p(x_1, \ldots,
     x_n|\theta)p(\theta)}{p(x_1, \ldots, x_n)}</annotation></semantics>p(θ∣x1​,…,xn​)=p(x1​,…,xn​)p(x1​,…,xn​∣θ)p(θ)​[(24)](#MBsIIt7f1j
     "Link to this Equation")
+  id: totrans-165
   prefs: []
   type: TYPE_NORMAL
+  zh: <semantics><mrow><mi>p</mi><mo stretchy="false">(</mo><mi>θ</mi><mi mathvariant="normal">∣</mi><msub><mi>x</mi><mn>1</mn></msub><mo
+    separator="true">,</mo><mo>…</mo><mo separator="true">,</mo><msub><mi>x</mi><mi>n</mi></msub><mo
+    stretchy="false">)</mo><mo>=</mo><mfrac><mrow><mi>p</mi><mo stretchy="false">(</mo><msub><mi>x</mi><mn>1</mn></msub><mo
+    separator="true">,</mo><mo>…</mo><mo separator="true">,</mo><msub><mi>x</mi><mi>n</mi></msub><mi
+    mathvariant="normal">∣</mi><mi>θ</mi><mo stretchy="false">)</mo><mi>p</mi><mo
+    stretchy="false">(</mo><mi>θ</mi><mo stretchy="false">)</mo></mrow><mrow><mi>p</mi><mo
+    stretchy="false">(</mo><msub><mi>x</mi><mn>1</mn></msub><mo separator="true">,</mo><mo>…</mo><mo
+    separator="true">,</mo><msub><mi>x</mi><mi>n</mi></msub><mo stretchy="false">)</mo></mrow></mfrac></mrow><annotation
+    encoding="application/x-tex">p(\theta|x_1, \ldots, x_n) = \frac{p(x_1, \ldots,
+    x_n|\theta)p(\theta)}{p(x_1, \ldots, x_n)}</annotation></semantics>p(θ∣x1​,…,xn​)=p(x1​,…,xn​)p(x1​,…,xn​∣θ)p(θ)​[(24)](#MBsIIt7f1j
+    "链接到这个方程")
 - en: 'Since our parameter of interest is also a continuous variable, we could try
     using a normal distribution for the prior as well:'
+  id: totrans-166
   prefs: []
   type: TYPE_NORMAL
+  zh: 由于我们感兴趣的参数也是一个连续变量，我们可以尝试使用正态分布作为先验分布：
 - en: <semantics><mrow><mi>θ</mi><mo>∼</mo><mi mathvariant="script">N</mi><mo stretchy="false">(</mo><msub><mi>μ</mi><mn>0</mn></msub><mo
     separator="true">,</mo><msubsup><mi>σ</mi><mn>0</mn><mn>2</mn></msubsup><mo stretchy="false">)</mo></mrow><annotation
     encoding="application/x-tex">\theta \sim \mathcal{N}(\mu_0, \sigma_0^2)</annotation></semantics>θ∼N(μ0​,σ02​)[(25)](#JQDR20vH6K
     "Link to this Equation")
+  id: totrans-167
   prefs: []
   type: TYPE_NORMAL
+  zh: <semantics><mrow><mi>θ</mi><mo>∼</mo><mi mathvariant="script">N</mi><mo stretchy="false">(</mo><msub><mi>μ</mi><mn>0</mn></msub><mo
+    separator="true">,</mo><msubsup><mi>σ</mi><mn>0</mn><mn>2</mn></msubsup><mo stretchy="false">)</mo></mrow><annotation
+    encoding="application/x-tex">\theta \sim \mathcal{N}(\mu_0, \sigma_0^2)</annotation></semantics>θ∼N(μ0​,σ02​)[(25)](#JQDR20vH6K
+    "链接到这个方程")
 - en: Note that the parameters of this prior distribution, <semantics><mrow><msub><mi>μ</mi><mn>0</mn></msub></mrow><annotation
     encoding="application/x-tex">\mu_0</annotation></semantics>μ0​ and <semantics><mrow><msubsup><mi>σ</mi><mn>0</mn><mn>2</mn></msubsup></mrow><annotation
     encoding="application/x-tex">\sigma_0^2</annotation></semantics>σ02​, are different
@@ -1190,14 +1908,24 @@
     encoding="application/x-tex">\mu_0</annotation></semantics>μ0​ and some variance
     <semantics><mrow><msubsup><mi>σ</mi><mn>0</mn><mn>2</mn></msubsup></mrow><annotation
     encoding="application/x-tex">\sigma_0^2</annotation></semantics>σ02​.
+  id: totrans-168
   prefs: []
   type: TYPE_NORMAL
+  zh: 注意，这个先验分布的参数，<semantics><mrow><msub><mi>μ</mi><mn>0</mn></msub></mrow><annotation
+    encoding="application/x-tex">\mu_0</annotation></semantics>μ0​ 和 <semantics><mrow><msubsup><mi>σ</mi><mn>0</mn><mn>2</mn></msubsup></mrow><annotation
+    encoding="application/x-tex">\sigma_0^2</annotation></semantics>σ02​，与似然函数中的参数不同！这意味着我们的参数
+    <semantics><mrow><mi>θ</mi></mrow><annotation encoding="application/x-tex">\theta</annotation></semantics>θ，即总体均值，遵循具有某些均值
+    <semantics><mrow><msub><mi>μ</mi><mn>0</mn></msub></mrow><annotation encoding="application/x-tex">\mu_0</annotation></semantics>μ0​
+    和某些方差 <semantics><mrow><msubsup><mi>σ</mi><mn>0</mn><mn>2</mn></msubsup></mrow><annotation
+    encoding="application/x-tex">\sigma_0^2</annotation></semantics>σ02​ 的正态分布。
 - en: Although the algebra is a bit more involved, we can show that the normal distribution
     is the conjugate prior for the mean of a normal distribution. In other words,
     the posterior distribution for <semantics><mrow><mi>θ</mi></mrow><annotation encoding="application/x-tex">\theta</annotation></semantics>θ
     is also normal.
+  id: totrans-169
   prefs: []
   type: TYPE_NORMAL
+  zh: 虽然代数运算稍微复杂一些，但我们可以证明正态分布是正态分布均值的共轭先验。换句话说，θ的后验分布也是正态分布。
 - en: <semantics><mrow><mi>θ</mi><mi mathvariant="normal">∣</mi><msub><mi>x</mi><mn>1</mn></msub><mo
     separator="true">,</mo><mo>…</mo><msub><mi>x</mi><mi>n</mi></msub><mo>∼</mo><mi
     mathvariant="script">N</mi><mrow><mo fence="true">(</mo><mfrac><mn>1</mn><mrow><mfrac><mn>1</mn><msubsup><mi>σ</mi><mn>0</mn><mn>2</mn></msubsup></mfrac><mo>+</mo><mfrac><mi>n</mi><msup><mi>σ</mi><mn>2</mn></msup></mfrac></mrow></mfrac><mrow><mo
@@ -1208,64 +1936,111 @@
     + \frac{n}{\sigma^2}}\left(\frac{\mu_0}{\sigma_0^2} + \frac{\sum_{i=1}^n x_i}{\sigma^2}\right),
     \left(\frac{1}{\sigma_0^2} + \frac{n}{\sigma^2}\right)^{-1} \right)</annotation></semantics>θ∣x1​,…xn​∼N(σ02​1​+σ2n​1​(σ02​μ0​​+σ2∑i=1n​xi​​),(σ02​1​+σ2n​)−1)[(26)](#nEf6eDiqdh
     "Link to this Equation")
+  id: totrans-170
   prefs: []
   type: TYPE_NORMAL
+  zh: <semantics><mrow><mi>θ</mi><mi mathvariant="normal">∣</mi><msub><mi>x</mi><mn>1</mn></msub><mo
+    separator="true">,</mo><mo>…</mo><msub><mi>x</mi><mi>n</mi></msub><mo>∼</mo><mi
+    mathvariant="script">N</mi><mrow><mo fence="true">(</mo><mfrac><mn>1</mn><mrow><mfrac><mn>1</mn><msubsup><mi>σ</mi><mn>0</mn><mn>2</mn></msubsup></mfrac><mo>+</mo><mfrac><mi>n</mi><msup><mi>σ</mi><mn>2</mn></msup></mfrac></mrow></mfrac><mrow><mo
+    fence="true">(</mo><mfrac><msub><mi>μ</mi><mn>0</mn></msub><msubsup><mi>σ</mi><mn>0</mn><mn>2</mn></msubsup></mfrac><mo>+</mo><mfrac><mrow><munderover><mo>∑</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mi>n</mi></munderover><msub><mi>x</mi><mi>i</mi></msub></mrow><msup><mi>σ</mi><mn>2</mn></msup></mfrac><mo
+    fence="true">)</mo></mrow><mo separator="true">,</mo><msup><mrow><mo fence="true">(</mo><mfrac><mn>1</mn><msubsup><mi>σ</mi><mn>0</mn><mn>2</mn></msubsup></mfrac><mo>+</mo><mfrac><mi>n</mi><msup><mi>σ</mi><mn>2</mn></msup></mfrac><mo
+    fence="true">)</mo></mrow><mrow><mo>−</mo><mn>1</mn></mrow></msup><mo fence="true">)</mo></mrow></mrow><annotation
+    encoding="application/x-tex">\theta | x_1, \ldots x_n \sim \mathcal{N}\left( \frac{1}{\frac{1}{\sigma_0^2}
+    + \frac{n}{\sigma^2}}\left(\frac{\mu_0}{\sigma_0^2} + \frac{\sum_{i=1}^n x_i}{\sigma^2}\right),
+    \left(\frac{1}{\sigma_0^2} + \frac{n}{\sigma^2}\right)^{-1} \right)</annotation></semantics>θ∣x1​,…xn​∼N(σ02​1​+σ2n​1​(σ02​μ0​​+σ2∑i=1n​xi​​),(σ02​1​+σ2n​)−1)[(26)](#nEf6eDiqdh
+    "链接到这个方程")
 - en: 'It’s not quite as easy to read a quick interpretation from this as it was from
     the Beta posterior update. Let’s try to visualize some priors and posteriors and
     see if we can build intuition:'
+  id: totrans-171
   prefs: []
   type: TYPE_NORMAL
+  zh: 从这个公式中快速解读出含义并不像从贝塔后验更新中那样容易。让我们尝试可视化一些先验和后验，看看我们是否能建立一些直观的理解：
 - en: '[PRE18]'
+  id: totrans-172
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE18]'
 - en: <details class="myst-dropdown rounded-md my-5 shadow dark:shadow-2xl dark:shadow-neutral-900
     overflow-hidden bg-gray-50 dark:bg-stone-800"><summary class="myst-dropdown-header
     m-0 text-lg font-medium py-1 min-h-[2em] pl-3 cursor-pointer hover:shadow-[inset_0_0_0px_30px_#00000003]
     dark:hover:shadow-[inset_0_0_0px_30px_#FFFFFF03] bg-gray-100 dark:bg-slate-900">Notebook
     Cell</summary>
+  id: totrans-173
   prefs: []
   type: TYPE_NORMAL
+  zh: <details class="myst-dropdown rounded-md my-5 shadow dark:shadow-2xl dark:shadow-neutral-900
+    overflow-hidden bg-gray-50 dark:bg-stone-800"><summary class="myst-dropdown-header
+    m-0 text-lg font-medium py-1 min-h-[2em] pl-3 cursor-pointer hover:shadow-[inset_0_0_0px_30px_#00000003]
+    dark:hover:shadow-[inset_0_0_0px_30px_#FFFFFF03] bg-gray-100 dark:bg-slate-900">笔记本单元</summary>
 - en: '[PRE19]</details>'
+  id: totrans-174
   prefs: []
   type: TYPE_NORMAL
+  zh: '[PRE19]</details>'
 - en: '[PRE20]'
+  id: totrans-175
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE20]'
 - en: '[PRE21]'
+  id: totrans-176
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE21]'
 - en: '![<Figure size 360x280 with 1 Axes>](../Images/5f3e457ed2c64b7d5796923043a798bd.png)'
+  id: totrans-177
   prefs: []
   type: TYPE_IMG
+  zh: '![<Figure size 360x280 with 1 Axes>](../Images/5f3e457ed2c64b7d5796923043a798bd.png)'
 - en: '[PRE22]'
+  id: totrans-178
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE22]'
 - en: '![<Figure size 360x280 with 1 Axes>](../Images/af06242d28932f19973605e435605ed4.png)'
+  id: totrans-179
   prefs: []
   type: TYPE_IMG
+  zh: '![<Figure size 360x280 with 1 Axes>](../Images/af06242d28932f19973605e435605ed4.png)'
 - en: '[PRE23]'
+  id: totrans-180
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE23]'
 - en: '![<Figure size 360x280 with 1 Axes>](../Images/5f22e7e0a1dd54a85adcf307d641a640.png)'
+  id: totrans-181
   prefs: []
   type: TYPE_IMG
+  zh: '![<Figure size 360x280 with 1 Axes>](../Images/5f22e7e0a1dd54a85adcf307d641a640.png)'
 - en: '[PRE24]'
+  id: totrans-182
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE24]'
 - en: '![<Figure size 360x280 with 1 Axes>](../Images/f03158629030af2868861e7ec978a920.png)'
+  id: totrans-183
   prefs: []
   type: TYPE_IMG
+  zh: '![<Figure size 360x280 with 1 Axes>](../Images/f03158629030af2868861e7ec978a920.png)'
 - en: 'Just as before, we can observe that the prior has a stronger effect when we
     have less data. We can also see that the posterior distribution becomes narrower
     as the amount of data increases. This is another general fact: **the more data
     we observe, the narrower our posterior distribution becomes.**'
+  id: totrans-184
   prefs: []
   type: TYPE_NORMAL
+  zh: 就像之前一样，我们可以观察到，当我们拥有较少数据时，先验参数的影响更强烈。我们还可以看到，随着数据量的增加，后验分布变得更加狭窄。这是另一个普遍的事实：**观察到的数据越多，我们的后验分布就越狭窄。**
 - en: '**Optional Exercise**: now that you’ve seen the effect of the prior parameters
     in a normal prior + normal likelihood model, give an intuitive explanation of
     how the parameters interact in the posterior distribution above for <semantics><mrow><mi>p</mi><mo
     stretchy="false">(</mo><mi>θ</mi><mi mathvariant="normal">∣</mi><msub><mi>x</mi><mn>1</mn></msub><mo
     separator="true">,</mo><mo>…</mo><msub><mi>x</mi><mi>n</mi></msub><mo stretchy="false">)</mo></mrow><annotation
     encoding="application/x-tex">p(\theta | x_1, \ldots x_n)</annotation></semantics>p(θ∣x1​,…xn​).'
+  id: totrans-185
   prefs: []
   type: TYPE_NORMAL
+  zh: '**可选练习**：既然你已经看到了在正常先验 + 正态似然模型中先验参数的影响，现在请对上述后验分布中参数如何相互作用给出一个直观的解释，对于 <semantics><mrow><mi>p</mi><mo
+    stretchy="false">(</mo><mi>θ</mi><mi mathvariant="normal">∣</mi><msub><mi>x</mi><mn>1</mn></msub><mo
+    separator="true">,</mo><mo>…</mo><msub><mi>x</mi><mi>n</mi></msub><mo stretchy="false">)</mo></mrow><annotation
+    encoding="application/x-tex">p(\theta | x_1, \ldots x_n)</annotation></semantics>p(θ∣x1​,…xn​).'

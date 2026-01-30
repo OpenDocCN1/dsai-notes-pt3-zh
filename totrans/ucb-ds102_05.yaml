@@ -1,11 +1,15 @@
 - en: Multiple Hypothesis Testing
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 多重假设检验
 - en: 原文：[https://data102.org/ds-102-book/content/chapters/01/multiple-tests](https://data102.org/ds-102-book/content/chapters/01/multiple-tests)
+  id: totrans-1
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 原文：[https://data102.org/ds-102-book/content/chapters/01/multiple-tests](https://data102.org/ds-102-book/content/chapters/01/multiple-tests)
 - en: '[<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" width="1.25rem"
     height="1.25rem" class="myst-fm-license-cc-icon myst-fm-license-cc-icon-main inline-block
     mx-1"><title>Content License: Creative Commons Attribution Share Alike 4.0 International
@@ -21,16 +25,33 @@
     class="myst-dropdown-header m-0 text-lg font-medium py-1 min-h-[2em] pl-3 cursor-pointer
     hover:shadow-[inset_0_0_0px_30px_#00000003] dark:hover:shadow-[inset_0_0_0px_30px_#FFFFFF03]
     bg-gray-100 dark:bg-slate-900">Notebook Cell</summary>'
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: '[<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" width="1.25rem"
+    height="1.25rem" class="myst-fm-license-cc-icon myst-fm-license-cc-icon-main inline-block
+    mx-1"><title>内容许可：Creative Commons Attribution Share Alike 4.0 国际 (CC-BY-SA-4.0)</title></svg><svg
+    viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" width="1.25rem" height="1.25rem"
+    class="myst-fm-license-cc-icon myst-fm-license-cc-icon-by inline-block mr-1"><title>必须注明创作者</title></svg><svg
+    viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" width="1.25rem" height="1.25rem"
+    class="myst-fm-license-cc-icon myst-fm-license-cc-icon-sa inline-block mr-1"><title>改编必须以相同条款共享</title></svg>](https://creativecommons.org/licenses/by-sa/4.0/)[](https://github.com/ds-102/ds-102-book
+    "GitHub 仓库：ds-102/ds-102-book")[](https://github.com/ds-102/ds-102-book/edit/main/ds-102-book/content/chapters/01/03_multiple_tests.ipynb
+    "编辑此页")<details class="myst-dropdown rounded-md my-5 shadow dark:shadow-2xl dark:shadow-neutral-900
+    overflow-hidden bg-gray-50 dark:bg-stone-800"><summary class="myst-dropdown-header
+    m-0 text-lg font-medium py-1 min-h-[2em] pl-3 cursor-pointer hover:shadow-[inset_0_0_0px_30px_#00000003]
+    dark:hover:shadow-[inset_0_0_0px_30px_#FFFFFF03] bg-gray-100 dark:bg-slate-900">笔记本单元</summary>'
 - en: '[PRE0]</details>'
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: '[PRE0]'
 - en: Multiple testing and the replication crisis[¶](#multiple-testing-and-the-replication-crisis
     "Link to this Section")
+  id: totrans-4
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 多重检验与复制危机[¶](#multiple-testing-and-the-replication-crisis "链接到本节")
 - en: So far, we’ve looked at false positive rate (FPR) and true positive rate (TPR,
     or power) when evaluating a single hypothesis test. We saw that when using the
     traditional null hypothesis significance testing (NHST) framework, we choose a
@@ -38,29 +59,39 @@
     hypothesis, we can compute the TPR by looking at the probability of making a discovery
     under that alternative hypothesis (i.e., the probability that our test statistic
     is above our decision threshold under that simple alternative hypothesis).
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: 到目前为止，我们已经讨论了在评估单个假设检验时，如何考虑假阳性率（FPR）和真阳性率（TPR，或功效）。我们了解到，在使用传统的零假设显著性检验（NHST）框架时，我们选择一个p值阈值，这是我们每个测试的FPR。如果我们选择一个简单的备择假设，我们可以通过查看在该简单备择假设下做出发现的概率来计算TPR（即，在我们的测试统计量超过决策阈值的情况下，该简单备择假设的概率）。
 - en: 'But in many cases, controlling the false positive rate might not be enough
     to give us the desired level of errors. To help illustrate this, we’ll consider
     three researchers conducting hypothetical studies of associations between how
     much margarine people eat and how many books they read in a year:'
+  id: totrans-6
   prefs: []
   type: TYPE_NORMAL
+  zh: 但在很多情况下，仅仅控制假阳性率可能不足以达到我们期望的错误水平。为了帮助说明这一点，我们将考虑三位研究人员进行假设性研究，研究人们每年吃多少黄油和每年读多少本书之间的关联：
 - en: Researcher Nat conducts one test, looking at a random sample of all individuals
     in the US.
+  id: totrans-7
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 研究员纳特进行了一次测试，观察了美国所有个人的随机样本。
 - en: Researcher Stan conducts fifty tests, looking at fifty random samples, one from
     each state in the US.
+  id: totrans-8
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 研究员斯坦进行了五十次测试，观察了来自美国每个州的五十个随机样本。
 - en: Researcher Colin conducts 3,244 tests, looking at 3,244 random samples, one
     from each county in the US.
+  id: totrans-9
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 研究员科林进行了3,244次测试，观察了来自美国每个县的3,244个随机样本。
 - en: 'Suppose all three of them use a p-value threshold of 0.05: this means that
     they should have only a <semantics><mrow><mn>5</mn><mi mathvariant="normal">%</mi></mrow><annotation
     encoding="application/x-tex">5\%</annotation></semantics>5% chance of finding
@@ -68,8 +99,11 @@
     safely assume that *in every test, the null hypothesis is true*: in other words,
     there is no correlation between margarine consumption and reading books. If that’s
     the case, what is the expected number of false positives each one will find?'
+  id: totrans-10
   prefs: []
   type: TYPE_NORMAL
+  zh: 假设他们三人都使用0.05的p值阈值：这意味着他们发现假阳性的概率只有 <semantics><mrow><mn>5</mn><mi mathvariant="normal">%</mi></mrow><annotation
+    encoding="application/x-tex">5\%</annotation></semantics>5%。此外，由于研究的前提有些荒谬，我们可以安全地假设*在每次测试中，零假设都是正确的*：换句话说，黄油消费与阅读书籍之间没有相关性。如果是这样，每个人预期的假阳性数量是多少？
 - en: 'The number of FPs each researcher finds is a Bernoulli random variable with
     parameter <semantics><mrow><mi>p</mi><mo>=</mo><mn>0.05</mn></mrow><annotation
     encoding="application/x-tex">p=0.05</annotation></semantics>p=0.05 and <semantics><mrow><mi>n</mi><mo>∈</mo><mo
@@ -78,42 +112,63 @@
     50, 3244\}</annotation></semantics>n∈{1,50,3244} depending on the researcher.
     So, the expected number of false positives is <semantics><mrow><mi>n</mi><mi>p</mi></mrow><annotation
     encoding="application/x-tex">np</annotation></semantics>np:'
+  id: totrans-11
   prefs: []
   type: TYPE_NORMAL
+  zh: 每位研究人员发现的假阳性数量是一个参数为 <semantics><mrow><mi>p</mi><mo>=</mo><mn>0.05</mn></mrow><annotation
+    encoding="application/x-tex">p=0.05</annotation></semantics>p=0.05 且 <semantics><mrow><mi>n</mi><mo>∈</mo><mo
+    stretchy="false">{</mo><mn>1</mn><mo separator="true">,</mo><mn>50</mn><mo separator="true">,</mo><mn>3244</mn><mo
+    stretchy="false">}</mo></mrow><annotation encoding="application/x-tex">n \in \{1,
+    50, 3244\}</annotation></semantics>n∈{1,50,3244} 的伯努利随机变量，具体取决于研究人员。因此，预期的假阳性数量是
+    <semantics><mrow><mi>n</mi><mi>p</mi></mrow><annotation encoding="application/x-tex">np</annotation></semantics>np：
 - en: 'Nat’s expected number of false positives is <semantics><mrow><mn>0.05</mn><mo>×</mo><mn>1</mn><mo>=</mo><mn>0.05</mn></mrow><annotation
     encoding="application/x-tex">0.05 \times 1 = 0.05</annotation></semantics>0.05×1=0.05:
     this is very close to 0.'
+  id: totrans-12
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 内特预期的假阳性数量是 <semantics><mrow><mn>0.05</mn><mo>×</mo><mn>1</mn><mo>=</mo><mn>0.05</mn></mrow><annotation
+    encoding="application/x-tex">0.05 \times 1 = 0.05</annotation></semantics>0.05×1=0.05：这非常接近0。
 - en: 'Stan’s expected number of false positives is <semantics><mrow><mn>0.05</mn><mo>×</mo><mn>50</mn><mo>=</mo><mn>2.5</mn></mrow><annotation
     encoding="application/x-tex">0.05 \times 50 = 2.5</annotation></semantics>0.05×50=2.5:
     in other words, even though the null hypothesis is true, Stan should expect to
     have 2-3 states come up as false positives.'
+  id: totrans-13
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 斯坦预期的假阳性数量是 <semantics><mrow><mn>0.05</mn><mo>×</mo><mn>50</mn><mo>=</mo><mn>2.5</mn></mrow><annotation
+    encoding="application/x-tex">0.05 \times 50 = 2.5</annotation></semantics>0.05×50=2.5：换句话说，即使零假设为真，斯坦也应该预期有2-3个州被误判为假阳性。
 - en: 'Colin’s expected number of false positives is <semantics><mrow><mn>0.05</mn><mo>×</mo><mn>3244</mn><mo>=</mo><mn>162.2</mn></mrow><annotation
     encoding="application/x-tex">0.05 \times 3244 = 162.2</annotation></semantics>0.05×3244=162.2:
     Colin should expect to have, on average, 162 counties come up as false positives.'
+  id: totrans-14
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 科林预期的假阳性数量是 <semantics><mrow><mn>0.05</mn><mo>×</mo><mn>3244</mn><mo>=</mo><mn>162.2</mn></mrow><annotation
+    encoding="application/x-tex">0.05 \times 3244 = 162.2</annotation></semantics>0.05×3244=162.2：科林应该预期平均有162个县被误判为假阳性。
 - en: 'These false positives could have serious impacts! Stan’s study, if covered
     poorly in the news, could result in dramatic headlines like “California and Idaho
     show strong link between margarine consumption and reading: should elementary
     schools serve more margarine to improve reading rates?” While this example seems
     somewhat silly since it’s obvious that the associations are spurious, this happens
     often when researchers use poor statistical practices.'
+  id: totrans-15
   prefs: []
   type: TYPE_NORMAL
+  zh: 这些假阳性可能会产生严重影响！如果斯坦的研究在新闻报道中被处理不当，可能会导致戏剧性的标题，例如“加利福尼亚和爱达荷州显示黄油消费与阅读之间存在强烈联系：小学应该提供更多黄油以提高阅读率吗？”虽然这个例子看起来有些荒谬，因为很明显这些关联是虚假的，但研究人员使用不良的统计实践时这种情况经常发生。
 - en: A <semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics>p-value
     threshold of 0.05 means that we should expect that when the null hypothesis is
     true, <semantics><mrow><mn>5</mn><mi mathvariant="normal">%</mi></mrow><annotation
     encoding="application/x-tex">5\%</annotation></semantics>5% of the time, we’ll
     incorrectly make a discovery. This adds up when doing lots of tests.
+  id: totrans-16
   prefs: []
   type: TYPE_NORMAL
+  zh: 一个0.05的p值阈值意味着，当零假设为真时，我们应预期在<semantics><mrow><mn>5</mn><mi mathvariant="normal">%</mi></mrow><annotation
+    encoding="application/x-tex">5\%</annotation></semantics>5% 的时间里，我们会错误地做出一个发现。当进行大量测试时，这种情况会累积起来。
 - en: This issue can often come up when researchers are deciding which associations
     to test. For example, a researcher might be interested in the effect of Vitamin
     D supplements on overall health. If an initial analysis of the data returns no
@@ -126,13 +181,19 @@
     one false positive is<semantics><mrow><mn>1</mn><mo>−</mo><msup><mrow><mo fence="true">(</mo><mn>1</mn><mo>−</mo><mn>0.05</mn><mo
     fence="true">)</mo></mrow><mn>9</mn></msup><mo>≈</mo><mn>0.37</mn></mrow><annotation
     encoding="application/x-tex">~1 - \left(1-0.05\right)^9 \approx 0.37</annotation></semantics> 1−(1−0.05)9≈0.37.
+  id: totrans-17
   prefs: []
   type: TYPE_NORMAL
+  zh: 当研究人员决定要测试哪些关联时，这个问题经常会发生。例如，一个研究人员可能对维生素D补充剂对整体健康的影响感兴趣。如果对数据的初步分析没有返回结果，研究人员可能会尝试看看这些效果是否对不同性别的人不同。如果这也找不到结果，研究人员可能会认为维生素D从阳光中的吸收取决于皮肤中的黑色素，所以他们可能会查看所有六种不同的[Fitzpatrick皮肤类型](https://en.wikipedia.org/wiki/Fitzpatrick_scale)的效果。在这个时候，在可能是一个相当无害的测试序列中，研究人员已经进行了9个不同的测试，至少出现一个假阳性的概率是<semantics><mrow><mn>1</mn><mo>−</mo><msup><mrow><mo
+    fence="true">(</mo><mn>1</mn><mo>−</mo><mn>0.05</mn><mo fence="true">)</mo></mrow><mn>9</mn></msup><mo>≈</mo><mn>0.37</mn></mrow><annotation
+    encoding="application/x-tex">~1 - \left(1-0.05\right)^9 \approx 0.37</annotation></semantics> 1−(1−0.05)9≈0.37。
 - en: Different approaches to multiple testing[¶](#different-approaches-to-multiple-testing
     "Link to this Section")
+  id: totrans-18
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 多重测试的不同方法[¶](#different-approaches-to-multiple-testing "链接到本节")
 - en: 'We’ve seen that when we conduct multiple hypothesis tests at a fixed <semantics><mrow><mi>p</mi></mrow><annotation
     encoding="application/x-tex">p</annotation></semantics>p-value threshold, we can
     control the FPR of each test, but we don’t necessarily control the rate of making
@@ -140,20 +201,29 @@
     involving all the tests we conduct, and find algorithms that control those error
     rates. We’ll let <semantics><mrow><mi>m</mi></mrow><annotation encoding="application/x-tex">m</annotation></semantics>m
     be the number of hypothesis tests, and define two error rates:'
+  id: totrans-19
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们已经看到，当我们在一个固定的<semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics>p值阈值下进行多次假设检验时，我们可以控制每个测试的FPR，但我们不一定能控制多次测试中犯错误的速率。为了解决这个问题，我们将定义涉及我们进行的所有测试的错误率，并找到控制这些错误率的算法。我们将让<semantics><mrow><mi>m</mi></mrow><annotation
+    encoding="application/x-tex">m</annotation></semantics>m 表示假设检验的次数，并定义两个错误率：
 - en: The **family-wise error rate (FWER)** is the probability of any one of the <semantics><mrow><mi>m</mi></mrow><annotation
     encoding="application/x-tex">m</annotation></semantics>m tests resulting in a
     false positive.
+  id: totrans-20
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**家族错误率（FWER）**是任何一次<semantics><mrow><mi>m</mi></mrow><annotation encoding="application/x-tex">m</annotation></semantics>m
+    次测试导致假阳性的概率。'
 - en: The **false discovery rate (FDR)** is the expected value of the false discovery
     proportion (FDP) for the <semantics><mrow><mi>m</mi></mrow><annotation encoding="application/x-tex">m</annotation></semantics>m
     tests.
+  id: totrans-21
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**假发现率（FDR）**是对于<semantics><mrow><mi>m</mi></mrow><annotation encoding="application/x-tex">m</annotation></semantics>m
+    次测试的假发现比例（FDP）的期望值。'
 - en: 'We’ll explore two algorithms that we can apply to the <semantics><mrow><mi>p</mi></mrow><annotation
     encoding="application/x-tex">p</annotation></semantics>p-values obtained from
     all <semantics><mrow><mi>m</mi></mrow><annotation encoding="application/x-tex">m</annotation></semantics>m
@@ -162,61 +232,86 @@
     that error rate will be below a certain value we choose. Once we describe the
     algorithms, we’ll discuss the tradeoffs between the two, and how those tradeoffs
     are related to the inherent properties of the two error rates.'
+  id: totrans-22
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们将探讨两种算法，这些算法可以应用于从所有<semantics><mrow><mi>m</mi></mrow><annotation encoding="application/x-tex">m</annotation></semantics>m次测试中获得的<semantics><mrow><mi>p</mi></mrow><annotation
+    encoding="application/x-tex">p</annotation></semantics>p值：Bonferroni校正，它控制FWER，以及Benjamini-Hochberg过程，它控制FDR。在这里，“控制”意味着我们保证错误率将低于我们选择的某个值。一旦我们描述了这些算法，我们将讨论两种算法之间的权衡，以及这些权衡如何与两种错误率的固有属性相关。
 - en: '[PRE1]'
+  id: totrans-23
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: Loading...
+  id: totrans-24
   prefs: []
   type: TYPE_NORMAL
+  zh: 加载中...
 - en: '[PRE2]'
+  id: totrans-25
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: Loading...
+  id: totrans-26
   prefs: []
   type: TYPE_NORMAL
+  zh: 加载中...
 - en: Randomness, FWER, FDR, and FDP[¶](#randomness-fwer-fdr-and-fdp "Link to this
     Section")
+  id: totrans-27
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 随机性、FWER、FDR和FDP[¶](#randomness-fwer-fdr-and-fdp "链接到本节")
 - en: Up until now, we’ve focused primarily on the false discovery *proportion* (FDP).
     From now on, we’ll look more at the false discovery *rate* (FDR), so it’s important
     to understand the distinction between the two. Throughout this section, we’ll
     take a frequentist approach, and assume that our data are random (and because
     our decisions are based on our data, they’re random too), and that reality is
     fixed and unknown.
+  id: totrans-28
   prefs: []
   type: TYPE_NORMAL
+  zh: 到目前为止，我们主要关注的是**假发现比例**（FDP）。从现在开始，我们将更多地关注**假发现率**（FDR），因此理解这两者之间的区别很重要。在本节中，我们将采用频率主义方法，并假设我们的数据是随机的（而且因为我们的决策是基于我们的数据，所以它们也是随机的），现实是固定且未知的。
 - en: 'The FDP is the value that we obtain for any particular dataset: we obtain data,
     make a series of decisions, and then the false discovery proportion is based on
     those particular decisions.'
+  id: totrans-29
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: FDP是我们为任何特定数据集获得的价值：我们获得数据，做出一系列决策，然后假发现比例是基于那些特定决策的。
 - en: The FDR is the expectation of the FDP, where the expectation is taken over the
     randomness in the data. In other words, the FDR is the average FDP, averaged across
     all possible datasets (and weighted by how likely each one is).
+  id: totrans-30
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: FDR是FDP的期望值，这里的期望值是对数据中的随机性进行取值。换句话说，FDR是平均FDP，平均所有可能的数据集（并按每个数据集的可能性进行加权）。
 - en: Similarly, for any particular dataset, we can define the event “at least one
     false positive happened”. This event either occurs or it doesn’t for any particular
     series of decisions. The family-wise error rate (FWER) is the probability of this
     event occurring for any dataset.
+  id: totrans-31
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 类似地，对于任何特定的数据集，我们可以定义事件“至少发生了一个假阳性”。对于任何一系列决策，这个事件要么发生，要么不发生。家族错误率（FWER）是对于任何数据集该事件发生的概率。
 - en: In other words, the false discovery **proportion** is based on any particular
     dataset, while the false discovery **rate** is the average FDP across all possible
     datasets.
+  id: totrans-32
   prefs: []
   type: TYPE_NORMAL
+  zh: 换句话说，**假发现比例**是基于任何特定的数据集，而**假发现率**是所有可能数据集的平均FDP。
 - en: Known and Unknown[¶](#known-and-unknown "Link to this Section")
+  id: totrans-33
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 已知与未知[¶](#known-and-unknown "链接到本节")
 - en: 'Throughout this section, we’ll discuss FDP, FDR, and FWER as metrics to help
     us evaluate a decision-making process. But recall that in reality, we only ever
     observe the data and the decisions we make based on the data: reality is unknown
@@ -224,11 +319,17 @@
     the FDP for any particular series of decisions, because it requires us to know
     when <semantics><mrow><mi>R</mi><mo>=</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">R=0</annotation></semantics>R=0
     and when <semantics><mrow><mi>R</mi><mo>=</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">R=1</annotation></semantics>R=1.'
+  id: totrans-34
   prefs: []
   type: TYPE_NORMAL
+  zh: 在本节中，我们将讨论FDP、FDR和FWER作为评估决策过程的指标。但请记住，在现实中，我们只能观察到数据和基于数据的决策：现实对我们来说是未知的。这意味着在许多现实世界的场景中，我们实际上无法计算任何特定一系列决策的FDP，因为这需要我们知道何时<semantics><mrow><mi>R</mi><mo>=</mo><mn>0</mn></mrow><annotation
+    encoding="application/x-tex">R=0</annotation></semantics>R=0和何时<semantics><mrow><mi>R</mi><mo>=</mo><mn>1</mn></mrow><annotation
+    encoding="application/x-tex">R=1</annotation></semantics>R=1。
 - en: So if we can’t actually compute the FDP, why are we analyzing it?
+  id: totrans-35
   prefs: []
   type: TYPE_NORMAL
+  zh: 因此，如果我们实际上无法计算FDP，我们为什么要分析它？
 - en: 'The key is that the FDR (average FDP) provides a way of evaluating an algorithm.
     We’ll discuss several procedures, and show that on average, they perform well:
     in other words, if we look at the performance of these procedures averaged over
@@ -236,31 +337,44 @@
     be below a certain level. For example, we’ll look at a procedure called Bonferroni
     correction and show that if we use it, our FWER, or probability of making a false
     positive, will be less than a particular threshold that we get to specify.'
+  id: totrans-36
   prefs: []
   type: TYPE_NORMAL
+  zh: 关键在于FDR（平均FDP）提供了一种评估算法的方法。我们将讨论几个程序，并表明平均而言，它们的性能良好：换句话说，如果我们观察这些程序在数据随机性上的平均性能，我们可以从数学上证明FDR或FWER将低于某个特定水平。例如，我们将研究一个称为Bonferroni
+    correction的程序，并表明如果我们使用它，我们的FWER，即做出错误阳性的概率，将低于我们特定指定的某个阈值。
 - en: This process, of first defining algorithms that operate on the observed data
     to make decisions, then theoretically evaluating those algorithms using metrics
     that depend on unknown variables, is something we’ll see over and over throughout
     this course.
+  id: totrans-37
   prefs: []
   type: TYPE_NORMAL
+  zh: 这个过程，首先定义在观测数据上操作以做出决策的算法，然后使用依赖于未知变量的指标来理论上评估这些算法，是我们将在整个课程中反复看到的东西。
 - en: '[PRE3]'
+  id: totrans-38
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: Loading...
+  id: totrans-39
   prefs: []
   type: TYPE_NORMAL
+  zh: 加载中...
 - en: Bonferroni correction[¶](#bonferroni-correction "Link to this Section")
+  id: totrans-40
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '[Bonferroni correction](#bonferroni-correction "链接到本节")'
 - en: Bonferroni correction is a technique for controlling the FWER. In this context,
     when we use the term “**controlling** the FWER at level <semantics><mrow><mi>α</mi></mrow><annotation
     encoding="application/x-tex">\alpha</annotation></semantics>α”, this just means
     that we want the FWER to be less than or equal to some value <semantics><mrow><mi>α</mi></mrow><annotation
     encoding="application/x-tex">\alpha</annotation></semantics>α that we choose.
+  id: totrans-41
   prefs: []
   type: TYPE_NORMAL
+  zh: Bonferroni correction是一种控制FWER的技术。在这个上下文中，当我们使用“**控制**”FWER在水平α时，这仅仅意味着我们希望FWER低于或等于我们选择的某个值α。
 - en: 'The procedure itself is very simple: it says that if we want to guarantee that
     our FWER for <semantics><mrow><mi>m</mi></mrow><annotation encoding="application/x-tex">m</annotation></semantics>m
     tests will be less than or equal to <semantics><mrow><mi>α</mi></mrow><annotation
@@ -272,34 +386,51 @@
     we should use a <semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics>p-value
     threshold for each test of <semantics><mrow><mn>0.01</mn><mi mathvariant="normal">/</mi><mn>5000</mn><mo>=</mo><mn>2</mn><mo>×</mo><mn>1</mn><msup><mn>0</mn><mrow><mo>−</mo><mn>6</mn></mrow></msup></mrow><annotation
     encoding="application/x-tex">0.01 / 5000 = 2 \times 10^{-6}</annotation></semantics>0.01/5000=2×10−6.'
+  id: totrans-42
   prefs: []
   type: TYPE_NORMAL
+  zh: 该程序本身非常简单：它指出，如果我们想保证我们的m个测试的FWER（家庭错误率）小于或等于α，那么我们只需要使用一个p值阈值为α/m来对每个测试做出决策。例如，如果我们想保证500个测试的FWER为0.01，那么我们应该为每个测试使用p值阈值为0.01/5000=2×10−6。
 - en: Let’s show why this formula works. We’ll start by establishing some facts and
     definitions that we need.
+  id: totrans-43
   prefs: []
   type: TYPE_NORMAL
+  zh: 让我们展示为什么这个公式是有效的。我们首先将建立一些我们需要的事实和定义。
 - en: To start, we’ll need to use the [union bound](https://en.wikipedia.org/wiki/Boole%27s_inequality),
     which states that for events <semantics><mrow><msub><mi>A</mi><mn>1</mn></msub><mo
     separator="true">,</mo><mo>…</mo><mo separator="true">,</mo><msub><mi>A</mi><mi>m</mi></msub></mrow><annotation
     encoding="application/x-tex">A_1, \ldots, A_m</annotation></semantics>A1​,…,Am​,
     that
+  id: totrans-44
   prefs: []
   type: TYPE_NORMAL
+  zh: 首先，我们需要使用[并集不等式](https://en.wikipedia.org/wiki/Boole%27s_inequality)，它指出对于事件<semantics><mrow><msub><mi>A</mi><mn>1</mn></msub><mo
+    separator="true">,</mo><mo>…</mo><mo separator="true">,</mo><msub><mi>A</mi><mi>m</mi></msub></mrow><annotation
+    encoding="application/x-tex">A_1, \ldots, A_m</annotation></semantics>A1​,…,Am​，有
 - en: <semantics><mrow><mi>P</mi><mrow><mo fence="true">(</mo><munderover><mo>⋃</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mi>m</mi></munderover><msub><mi>A</mi><mi>i</mi></msub><mo
     fence="true">)</mo></mrow><mo>≤</mo><munderover><mo>∑</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mi>m</mi></munderover><mi>P</mi><mo
     stretchy="false">(</mo><msub><mi>A</mi><mi>i</mi></msub><mo stretchy="false">)</mo><mi
     mathvariant="normal">.</mi></mrow><annotation encoding="application/x-tex">P\left(\bigcup_{i=1}^m
     A_i\right) \leq \sum_{i=1}^m P(A_i).</annotation></semantics>P(i=1⋃m​Ai​)≤i=1∑m​P(Ai​).[(1)](#BYnLUCY4HM
     "Link to this Equation")
+  id: totrans-45
   prefs: []
   type: TYPE_NORMAL
+  zh: <semantics><mrow><mi>P</mi><mrow><mo fence="true">(</mo><munderover><mo>⋃</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mi>m</mi></munderover><msub><mi>A</mi><mi>i</mi></msub><mo
+    fence="true">)</mo></mrow><mo>≤</mo><munderover><mo>∑</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mi>m</mi></munderover><mi>P</mi><mo
+    stretchy="false">(</mo><msub><mi>A</mi><mi>i</mi></msub><mo stretchy="false">)</mo><mi
+    mathvariant="normal">.</mi></mrow><annotation encoding="application/x-tex">P\left(\bigcup_{i=1}^m
+    A_i\right) \leq \sum_{i=1}^m P(A_i).\right.</annotation></semantics>P(i=1⋃m​Ai​)≤i=1∑m​P(Ai​).[(1)](#BYnLUCY4HM
+    "链接到这个公式")
 - en: Informally, this says that if we add up the independent probabilities of the
     events occuring, the result will always be greater than or equal to the probability
     of the union of those events. Intuitively, this is true because when computing
     the probability of the union, we have to effectively subtract off the overlap
     between probabilities.
+  id: totrans-46
   prefs: []
   type: TYPE_NORMAL
+  zh: 非正式地说，这意味着如果我们把事件发生的独立概率相加，结果总是大于或等于这些事件并集的概率。直观上，这是正确的，因为在计算并集的概率时，我们必须有效地减去概率之间的重叠部分。
 - en: 'To use the union bound, we’ll define the indicator variables <semantics><mrow><msub><mi>T</mi><mn>1</mn></msub><mo
     separator="true">,</mo><mo>…</mo><mo separator="true">,</mo><msub><mi>T</mi><mi>m</mi></msub></mrow><annotation
     encoding="application/x-tex">T_1, \ldots, T_m</annotation></semantics>T1​,…,Tm​,
@@ -316,11 +447,27 @@
     <semantics><mrow><mi>P</mi><mo stretchy="false">(</mo><msub><mi>T</mi><mi>i</mi></msub><mo
     stretchy="false">)</mo><mo>=</mo><mi>γ</mi></mrow><annotation encoding="application/x-tex">P(T_i)
     = \gamma</annotation></semantics>P(Ti​)=γ.'
+  id: totrans-47
   prefs: []
   type: TYPE_NORMAL
+  zh: 要使用并集界，我们将定义指示变量 <semantics><mrow><msub><mi>T</mi><mn>1</mn></msub><mo separator="true">,</mo><mo>…</mo><mo
+    separator="true">,</mo><msub><mi>T</mi><mi>m</mi></msub></mrow><annotation encoding="application/x-tex">T_1,
+    \ldots, T_m</annotation></semantics>T1​,…,Tm​，其中 <semantics><mrow><msub><mi>T</mi><mi>i</mi></msub></mrow><annotation
+    encoding="application/x-tex">T_i</annotation></semantics>Ti​ 是测试 <semantics><mrow><mi>i</mi></mrow><annotation
+    encoding="application/x-tex">i</annotation></semantics>i 结果为假阳性的事件。家族错误率是任何一项测试为假阳性的概率：换句话说，<semantics><mrow><mi>F</mi><mi>W</mi><mi>E</mi><mi>R</mi><mo>=</mo><mi>P</mi><mo
+    stretchy="false">(</mo><msub><mi>T</mi><mn>1</mn></msub><mo>∪</mo><msub><mi>T</mi><mn>2</mn></msub><mo>∪</mo><msub><mi>T</mi><mn>3</mn></msub><mo>⋯</mo><mo>∪</mo><msub><mi>T</mi><mi>m</mi></msub><mo
+    stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">FWER =
+    P(T_1 \cup T_2 \cup T_3 \cdots \cup T_m)</annotation></semantics>FWER= P(T1​∪T2​∪T3​⋯∪Tm​).
+    我们从上一节知道，如果我们为每个测试使用相同的 <semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics>p-值阈值
+    <semantics><mrow><mi>γ</mi></mrow><annotation encoding="application/x-tex">\gamma</annotation></semantics>γ，那么
+    <semantics><mrow><mi>P</mi><mo stretchy="false">(</mo><msub><mi>T</mi><mi>i</mi></msub><mo
+    stretchy="false">)</mo><mo>=</mo><mi>γ</mi></mrow><annotation encoding="application/x-tex">P(T_i)
+    = \gamma</annotation></semantics>P(Ti​)=γ.
 - en: 'Putting it all together, we have:'
+  id: totrans-48
   prefs: []
   type: TYPE_NORMAL
+  zh: 将所有内容综合起来，我们有：
 - en: <semantics><mtable rowspacing="0.25em" columnalign="right left" columnspacing="0em"><mtr><mtd><mstyle
     scriptlevel="0" displaystyle="true"><mrow><mi>F</mi><mi>W</mi><mi>E</mi><mi>R</mi></mrow></mstyle></mtd><mtd><mstyle
     scriptlevel="0" displaystyle="true"><mrow><mo>=</mo><mi>P</mi><mrow><mo fence="true">(</mo><munderover><mo>⋃</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mi>m</mi></munderover><msub><mi>T</mi><mi>i</mi></msub><mo
@@ -331,8 +478,19 @@
     encoding="application/x-tex">\begin{align*} FWER &= P\left(\bigcup_{i=1}^m T_i\right)
     \\ &\leq \sum_{i=1}^m P\left(T_i\right) \\ &= m \gamma \end{align*}</annotation></semantics>FWER​=P(i=1⋃m​Ti​)≤i=1∑m​P(Ti​)=mγ​[(2)](#mLFMKPYQEt
     "Link to this Equation")
+  id: totrans-49
   prefs: []
   type: TYPE_NORMAL
+  zh: <semantics><mtable rowspacing="0.25em" columnalign="right left" columnspacing="0em"><mtr><mtd><mstyle
+    scriptlevel="0" displaystyle="true"><mrow><mi>F</mi><mi>W</mi><mi>E</mi><mi>R</mi></mrow></mstyle></mtd><mtd><mstyle
+    scriptlevel="0" displaystyle="true"><mrow><mo>=</mo><mi>P</mi><mrow><mo fence="true">(</mo><munderover><mo>⋃</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mi>m</mi></munderover><msub><mi>T</mi><mi>i</mi></msub><mo
+    fence="true">)</mo></mrow></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0"
+    displaystyle="true"><mrow><mo>≤</mo><munderover><mo>∑</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mi>m</mi></munderover><mi>P</mi><mrow><mo
+    fence="true">(</mo><msub><mi>T</mi><mi>i</mi></msub><mo fence="true">)</mo></mrow></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle
+    scriptlevel="0" displaystyle="true"><mrow><mo>=</mo><mi>m</mi><mi>γ</mi></mrow></mstyle></mtd></mtr></mtable><annotation
+    encoding="application/x-tex">\begin{align*} FWER &= P\left(\bigcup_{i=1}^m T_i\right)
+    \\ &\leq \sum_{i=1}^m P\left(T_i\right) \\ &= m \gamma \end{align*}</annotation></semantics>FWER=
+    P( i=1⋃m​Ti​) ≤ i=1∑m​P(Ti​) = mγ [(2)](#mLFMKPYQEt "链接到这个方程")
 - en: If we choose our <semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics>p-value
     threshold for each test <semantics><mrow><mi>γ</mi></mrow><annotation encoding="application/x-tex">\gamma</annotation></semantics>γ
     to be equal to <semantics><mrow><mi>α</mi><mi mathvariant="normal">/</mi><mi>m</mi></mrow><annotation
@@ -342,23 +500,39 @@
     encoding="application/x-tex">\alpha</annotation></semantics>α, and we guarantee
     that our FWER is less than or equal to <semantics><mrow><mi>α</mi></mrow><annotation
     encoding="application/x-tex">\alpha</annotation></semantics>α.
+  id: totrans-50
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果我们选择每个测试的 <semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics>p
+    值阈值 <semantics><mrow><mi>γ</mi></mrow><annotation encoding="application/x-tex">\gamma</annotation></semantics>γ
+    等于 <semantics><mrow><mi>α</mi><mi mathvariant="normal">/</mi><mi>m</mi></mrow><annotation
+    encoding="application/x-tex">\alpha/m</annotation></semantics>α/m（记住 <semantics><mrow><mi>α</mi></mrow><annotation
+    encoding="application/x-tex">\alpha</annotation></semantics>α 是我们想要的 FWER），那么右侧就变成了
+    <semantics><mrow><mi>α</mi></mrow><annotation encoding="application/x-tex">\alpha</annotation></semantics>α，我们就能保证我们的
+    FWER 小于或等于 <semantics><mrow><mi>α</mi></mrow><annotation encoding="application/x-tex">\alpha</annotation></semantics>α。
 - en: '[PRE4]'
+  id: totrans-51
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE4]'
 - en: Loading...
+  id: totrans-52
   prefs: []
   type: TYPE_NORMAL
+  zh: 加载中...
 - en: Controlling FDR[¶](#controlling-fdr "Link to this Section")
+  id: totrans-53
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 控制 FDR[¶](#controlling-fdr "链接到本节")
 - en: Why control FDR instead of FWER?[¶](#why-control-fdr-instead-of-fwer "Link to
     this Section")
+  id: totrans-54
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 为什么控制 FDR 而不是 FWER？[¶](#why-control-fdr-instead-of-fwer "链接到本节")
 - en: 'Suppose we conduct 1,000,000 tests, and we want to control the FWER at level
     0.01. If we use the Bonferroni procedure, our <semantics><mrow><mi>p</mi></mrow><annotation
     encoding="application/x-tex">p</annotation></semantics>p-value threshold will
@@ -373,8 +547,18 @@
     <semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics>p-value
     threshold from Bonferroni correction gets smaller as <semantics><mrow><mi>m</mi></mrow><annotation
     encoding="application/x-tex">m</annotation></semantics>m increases.'
+  id: totrans-55
   prefs: []
   type: TYPE_NORMAL
+  zh: 假设我们进行 1,000,000 次测试，并希望将 FWER 控制在 0.01 的水平。如果我们使用 Bonferroni 方法，我们的 <semantics><mrow><mi>p</mi></mrow><annotation
+    encoding="application/x-tex">p</annotation></semantics>p 值阈值将是 10^(-8)：只有当 <semantics><mrow><mi>p</mi></mrow><annotation
+    encoding="application/x-tex">p</annotation></semantics>p 值极其小的时候，我们才会做出发现！这是因为
+    FWER 是一个非常严格的标准。控制 FWER 意味着我们要确保在 <semantics><mrow><mi>m</mi></mrow><annotation
+    encoding="application/x-tex">m</annotation></semantics>m 次测试中产生任何假阳性的概率小于或等于 <semantics><mrow><mi>α</mi></mrow><annotation
+    encoding="application/x-tex">\alpha</annotation></semantics>α：随着 <semantics><mrow><mi>m</mi></mrow><annotation
+    encoding="application/x-tex">m</annotation></semantics>m 的增大，这个要求变得越来越难以满足。这就是为什么随着
+    <semantics><mrow><mi>m</mi></mrow><annotation encoding="application/x-tex">m</annotation></semantics>m
+    的增加，Bonferroni 校正的 p 值阈值会变得越来越小。
 - en: Controlling FDR, on the other hand, is much more forgiving of a small number
     of errors. In our example above, controlling FDR at level 0.01 means that out
     of the discoveries we make, we want <semantics><mrow><mn>1</mn><mi mathvariant="normal">%</mi></mrow><annotation
@@ -384,13 +568,19 @@
     encoding="application/x-tex">m</annotation></semantics>m grows without imposing
     such a drastically low <semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics>p-value
     threshold. Next, we’ll see an algorithm that strikes this middle ground.
+  id: totrans-56
   prefs: []
   type: TYPE_NORMAL
+  zh: 另一方面，控制 FDR 对少量错误更为宽容。在我们上面的例子中，在 0.01 水平上控制 FDR 意味着在我们做出的发现中，我们希望 1% 或更少的它们是错误的。这仍然比我们通过简单阈值化看到的只控制
+    FPR 更为严格，但随着 m 的增长，它更容易满足，而不需要施加如此极端低的 <semantics><mrow><mi>p</mi></mrow><annotation
+    encoding="application/x-tex">p</annotation></semantics>p-value 阈值。接下来，我们将看到一个达到这个中间点的算法。
 - en: The Benjamini-Hochberg Procedure[¶](#the-benjamini-hochberg-procedure "Link
     to this Section")
+  id: totrans-57
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: Benjamini-Hochberg 程序[¶](#the-benjamini-hochberg-procedure "链接到本节")
 - en: 'The Benjamini-Hochberg (often abbreviated to B-H) procedure is slightly more
     complicated than Bonferroni correction, but it also uses the same <semantics><mrow><mi>p</mi></mrow><annotation
     encoding="application/x-tex">p</annotation></semantics>p-value threshold for all
@@ -398,8 +588,13 @@
     encoding="application/x-tex">p</annotation></semantics>p-values themselves to
     determine the threshold. Here’s how it works, for a desired FDR <semantics><mrow><mi>α</mi></mrow><annotation
     encoding="application/x-tex">\alpha</annotation></semantics>α:'
+  id: totrans-58
   prefs: []
   type: TYPE_NORMAL
+  zh: 'Benjamini-Hochberg (通常简称为 B-H) 程序比 Bonferroni 校正稍微复杂一些，但它也使用相同的 <semantics><mrow><mi>p</mi></mrow><annotation
+    encoding="application/x-tex">p</annotation></semantics>p-value 阈值对所有测试。关键是，我们使用
+    <semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics>p-values
+    本身来确定阈值。以下是它的工作原理，对于一个期望的 FDR <semantics><mrow><mi>α</mi></mrow><annotation encoding="application/x-tex">\alpha</annotation></semantics>α:'
 - en: First, sort the <semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics>p-values,
     and index them by <semantics><mrow><mi>k</mi></mrow><annotation encoding="application/x-tex">k</annotation></semantics>k
     (i.e., the first one corresponds to <semantics><mrow><mi>k</mi><mo>=</mo><mn>1</mn></mrow><annotation
@@ -407,9 +602,15 @@
     to <semantics><mrow><mi>k</mi><mo>=</mo><mn>2</mn></mrow><annotation encoding="application/x-tex">k=2</annotation></semantics>k=2,
     and so on, until the last one corresponds to <semantics><mrow><mi>k</mi><mo>=</mo><mi>m</mi></mrow><annotation
     encoding="application/x-tex">k=m</annotation></semantics>k=m)
+  id: totrans-59
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 首先，对 <semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics>p-values
+    进行排序，并按 <semantics><mrow><mi>k</mi></mrow><annotation encoding="application/x-tex">k</annotation></semantics>k
+    (即，第一个对应于 <semantics><mrow><mi>k</mi><mo>=</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">k=1</annotation></semantics>k=1，第二个对应于
+    <semantics><mrow><mi>k</mi><mo>=</mo><mn>2</mn></mrow><annotation encoding="application/x-tex">k=2</annotation></semantics>k=2，以此类推，直到最后一个对应于
+    <semantics><mrow><mi>k</mi><mo>=</mo><mi>m</mi></mrow><annotation encoding="application/x-tex">k=m</annotation></semantics>k=m)
 - en: For each sorted <semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics>p-value,
     compare it to the value <semantics><mrow><mfrac><mrow><mi>k</mi><mi>α</mi></mrow><mi>m</mi></mfrac></mrow><annotation
     encoding="application/x-tex">\frac{k\alpha}{m}</annotation></semantics>mkα​ (i.e.,
@@ -419,82 +620,128 @@
     encoding="application/x-tex">2\alpha/m</annotation></semantics>2α/m, and so on,
     until the largest one gets compared to <semantics><mrow><mi>α</mi></mrow><annotation
     encoding="application/x-tex">\alpha</annotation></semantics>α)
+  id: totrans-60
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 对于每个排序的<semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics>p值，将其与值<semantics><mrow><mfrac><mrow><mi>k</mi><mi>α</mi></mrow><mi>m</mi></mfrac></mrow><annotation
+    encoding="application/x-tex">\frac{k\alpha}{m}</annotation></semantics>mkα比较（即，最小的p值与<semantics><mrow><mi>α</mi><mi
+    mathvariant="normal">/</mi><mi>m</mi></mrow><annotation encoding="application/x-tex">\alpha/m</annotation></semantics>α/m比较，第二小的与<semantics><mrow><mn>2</mn><mi>α</mi><mi
+    mathvariant="normal">/</mi><mi>m</mi></mrow><annotation encoding="application/x-tex">2\alpha/m</annotation></semantics>2α/m比较，以此类推，直到最大的与<semantics><mrow><mi>α</mi></mrow><annotation
+    encoding="application/x-tex">\alpha</annotation></semantics>α比较）
 - en: Find the largest sorted <semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics>p-value
     that’s still below its comparison value
+  id: totrans-61
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 找到仍然低于其比较值的最大的排序<semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics>p值
 - en: Use that <semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics>p-value
     as the threshold
+  id: totrans-62
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 使用该<semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics>p值作为阈值
 - en: '[PRE5]'
+  id: totrans-63
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE5]'
 - en: Loading...
+  id: totrans-64
   prefs: []
   type: TYPE_NORMAL
+  zh: 加载中...
 - en: A Visual Comparison of Naive thresholding, Bonferroni, and Benjamini-Hochberg[¶](#a-visual-comparison-of-naive-thresholding-bonferroni-and-benjamini-hochberg
     "Link to this Section")
+  id: totrans-65
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: Naive阈值、Bonferroni和Benjamini-Hochberg的视觉比较[¶](#a-visual-comparison-of-naive-thresholding-bonferroni-and-benjamini-hochberg
+    "链接到本节")
 - en: 'Consider the <semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics>p-values
     we looked at in the last section. We’ll add a column `k` that provides the index
     after being sorted:'
+  id: totrans-66
   prefs: []
   type: TYPE_NORMAL
+  zh: 考虑我们在上一节中查看的<semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics>p值。我们将添加一列`k`，它提供排序后的索引：
 - en: '[PRE6]'
+  id: totrans-67
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE6]'
 - en: Loading...
+  id: totrans-68
   prefs: []
   type: TYPE_NORMAL
+  zh: 加载中...
 - en: 'We can visualize the <semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics>p-values
     in sorted order:'
+  id: totrans-69
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们可以按顺序可视化<semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics>p值：
 - en: '[PRE7]'
+  id: totrans-70
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE7]'
 - en: '![<Figure size 600x450 with 1 Axes>](../Images/1fa6ea6a1791152f89a21e5f53a22469.png)'
+  id: totrans-71
   prefs: []
   type: TYPE_IMG
+  zh: '![<Figure size 600x450 with 1 Axes>](../Images/1fa6ea6a1791152f89a21e5f53a22469.png)'
 - en: 'Here, the <semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics>x-axis
     is <semantics><mrow><mi>k</mi></mrow><annotation encoding="application/x-tex">k</annotation></semantics>k,
     the index, and the <semantics><mrow><mi>y</mi></mrow><annotation encoding="application/x-tex">y</annotation></semantics>y-axis
     represents the <semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics>p-value.
     We can visualize the results of two techniques:'
+  id: totrans-72
   prefs: []
   type: TYPE_NORMAL
+  zh: 在这里，<semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics>x轴是<semantics><mrow><mi>k</mi></mrow><annotation
+    encoding="application/x-tex">k</annotation></semantics>k，即索引，而<semantics><mrow><mi>y</mi></mrow><annotation
+    encoding="application/x-tex">y</annotation></semantics>y轴表示<semantics><mrow><mi>p</mi></mrow><annotation
+    encoding="application/x-tex">p</annotation></semantics>p值。我们可以可视化两种技术的结果：
 - en: If we use a naive <semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics>p-value
     threshold of 0.05 for all tests, we will obtain an FPR of 0.05\. This threshold
     is the black line below.
+  id: totrans-73
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 如果我们为所有测试使用0.05的朴素<semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics>p值阈值，我们将获得0.05的FPR。这个阈值是下面的黑线。
 - en: If we use Bonferroni correction and want a FWER of 0.05 (i.e., the probability
     of making any false positives at all is 0.05), then we should use a <semantics><mrow><mi>p</mi></mrow><annotation
     encoding="application/x-tex">p</annotation></semantics>p-value threshold of <semantics><mrow><mfrac><mn>0.05</mn><mn>100</mn></mfrac><mo>=</mo><mn>0.0005</mn></mrow><annotation
     encoding="application/x-tex">\frac{0.05}{100} = 0.0005</annotation></semantics>1000.05​=0.0005.
     This threshold is the red dashed line below.
+  id: totrans-74
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 如果我们使用Bonferroni校正并希望得到0.05的FWER（即，做出任何假阳性的概率为0.05），那么我们应该使用一个<semantics><mrow><mi>p</mi></mrow><annotation
+    encoding="application/x-tex">p</annotation></semantics>p值阈值为<semantics><mrow><mfrac><mn>0.05</mn><mn>100</mn></mfrac><mo>=</mo><mn>0.0005</mn></mrow><annotation
+    encoding="application/x-tex">\frac{0.05}{100} = 0.0005</annotation></semantics>1000.05​=0.0005。这个阈值是下面的红色虚线。
 - en: We can see that by using the more conservative Bonferroni threshold (in red),
     we leave
+  id: totrans-75
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们可以看到，通过使用更保守的Bonferroni阈值（红色），我们留下了
 - en: '[PRE8]'
+  id: totrans-76
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE8]'
 - en: '![<Figure size 600x450 with 1 Axes>](../Images/bd9976cf5dc26fa54645fc1bb00bfc0c.png)'
+  id: totrans-77
   prefs: []
   type: TYPE_IMG
+  zh: '![<Figure size 600x450 with 1 Axes>](../Images/bd9976cf5dc26fa54645fc1bb00bfc0c.png)'
 - en: 'In this visualization, how does the Benjamini-Hochberg procedure work? We compare
     each <semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics>p-value
     to the comparison value <semantics><mrow><mfrac><mrow><mi>k</mi><mi>α</mi></mrow><mi>m</mi></mfrac></mrow><annotation
@@ -502,14 +749,23 @@
     in this visualization is a diagonal line. In order to better see what’s going
     on, we’ll also zoom in on a narrower range of <semantics><mrow><mi>p</mi></mrow><annotation
     encoding="application/x-tex">p</annotation></semantics>p-values:'
+  id: totrans-78
   prefs: []
   type: TYPE_NORMAL
+  zh: 在这个可视化中，Benjamini-Hochberg过程是如何工作的？我们比较每个<semantics><mrow><mi>p</mi></mrow><annotation
+    encoding="application/x-tex">p</annotation></semantics>p值与比较值<semantics><mrow><mfrac><mrow><mi>k</mi><mi>α</mi></mrow><mi>m</mi></mfrac></mrow><annotation
+    encoding="application/x-tex">\frac{k\alpha}{m}</annotation></semantics>mkα​，在这个可视化中是一个对角线。为了更好地看到正在发生的事情，我们还将放大一个更窄范围的<semantics><mrow><mi>p</mi></mrow><annotation
+    encoding="application/x-tex">p</annotation></semantics>p值：
 - en: '[PRE9]'
+  id: totrans-79
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE9]'
 - en: '![<Figure size 600x450 with 1 Axes>](../Images/879eba4f617fbe8e77cdb6d3e84a6f03.png)'
+  id: totrans-80
   prefs: []
   type: TYPE_IMG
+  zh: '![<Figure size 600x450 with 1 Axes>](../Images/879eba4f617fbe8e77cdb6d3e84a6f03.png)'
 - en: 'The Benjamini-Hochberg procedure says to take the largest <semantics><mrow><mi>p</mi></mrow><annotation
     encoding="application/x-tex">p</annotation></semantics>p-value that’s below the
     comparison value <semantics><mrow><mfrac><mrow><mi>k</mi><mi>α</mi></mrow><mi>m</mi></mfrac></mrow><annotation
@@ -519,52 +775,82 @@
     choose to reject the null hypothesis for the first 16 <semantics><mrow><mi>p</mi></mrow><annotation
     encoding="application/x-tex">p</annotation></semantics>p-values (after being sorted).
     The graph below shows all three thresholds:'
+  id: totrans-81
   prefs: []
   type: TYPE_NORMAL
+  zh: Benjamini-Hochberg过程建议取小于比较值<semantics><mrow><mfrac><mrow><mi>k</mi><mi>α</mi></mrow><mi>m</mi></mfrac></mrow><annotation
+    encoding="application/x-tex">\frac{k\alpha}{m}</annotation></semantics>mkα​的最大<semantics><mrow><mi>p</mi></mrow><annotation
+    encoding="application/x-tex">p</annotation></semantics>p值：在这种情况下，那就是索引16的点。这成为我们的<semantics><mrow><mi>p</mi></mrow><annotation
+    encoding="application/x-tex">p</annotation></semantics>p值阈值，因此我们选择拒绝前16个<semantics><mrow><mi>p</mi></mrow><annotation
+    encoding="application/x-tex">p</annotation></semantics>p值（排序后）。下面的图表显示了所有三个阈值：
 - en: '[PRE10]'
+  id: totrans-82
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE10]'
 - en: '![<Figure size 600x450 with 1 Axes>](../Images/44b6f16e38978396a2f51f81ef4a13a9.png)'
+  id: totrans-83
   prefs: []
   type: TYPE_IMG
+  zh: '![<Figure size 600x450 with 1 Axes>](../Images/44b6f16e38978396a2f51f81ef4a13a9.png)'
 - en: (Optional) Why does Benjamini-Hochberg Control FDR?[¶](#id-optional-why-does-benjamini-hochberg-control-fdr
     "Link to this Section")
+  id: totrans-84
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: （可选）为什么Benjamini-Hochberg可以控制FDR？[¶](#id-optional-why-does-benjamini-hochberg-control-fdr
+    "链接到本节")
 - en: '*Text coming soon: see video*'
+  id: totrans-85
   prefs: []
   type: TYPE_NORMAL
+  zh: '*文本即将到来：请看视频*'
 - en: '[PRE11]'
+  id: totrans-86
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE11]'
 - en: Loading...
+  id: totrans-87
   prefs: []
   type: TYPE_NORMAL
+  zh: 加载中...
 - en: Comparing and Contrasting FWER and FDR[¶](#comparing-and-contrasting-fwer-and-fdr
     "Link to this Section")
+  id: totrans-88
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 比较和对比FWER和FDR[¶](#comparing-and-contrasting-fwer-and-fdr "链接到本节")
 - en: 'Now that we’ve seen how we might control FWER and FDR, we’ll build a better
     understanding of when each one might be better suited for a particular problem.
     Recall the definitions:'
+  id: totrans-89
   prefs: []
   type: TYPE_NORMAL
+  zh: 现在我们已经看到了如何控制FWER和FDR，我们将更好地理解在特定问题中何时每个可能更适合。回顾定义：
 - en: Family-wise error rate (FWER) is the probability that any of the <semantics><mrow><mi>m</mi></mrow><annotation
     encoding="application/x-tex">m</annotation></semantics>m tests is a false positive.
+  id: totrans-90
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 家族错误率（FWER）是任何测试中出现假阳性的概率。
 - en: False discovery rate (FDR) is the expected FDP, or equivalently, the expected
     fraction of discoveries that are incorrect.
+  id: totrans-91
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 假发现率（FDR）是预期的FDP，或者说，是预期的不正确发现的比率。
 - en: Suppose we conduct 1,000,000 tests (<semantics><mrow><mi>m</mi><mo>=</mo><mn>1000000</mn></mrow><annotation
     encoding="application/x-tex">m=1000000</annotation></semantics>m=1000000).
+  id: totrans-92
   prefs: []
   type: TYPE_NORMAL
+  zh: 假设我们进行了100万个测试（<semantics><mrow><mi>m</mi><mo>=</mo><mn>1000000</mn></mrow><annotation
+    encoding="application/x-tex">m=1000000</annotation></semantics>m=1000000）。
 - en: 'If we want a FWER of 0.05, this means that we want the probability of any one
     of the 1,000,000 tests being a false positive to be 0.05 or less. In order to
     control this probability, we’ll need to be very conservative: after all, even
@@ -574,8 +860,12 @@
     typically leads to very low power, or true positive rate (TPR), because our <semantics><mrow><mi>p</mi></mrow><annotation
     encoding="application/x-tex">p</annotation></semantics>p-value threshold is so
     low that we miss many true positives.'
+  id: totrans-93
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果我们希望FWER为0.05，这意味着我们希望100万个测试中任何一个测试为假阳性的概率不超过0.05。为了控制这个概率，我们需要非常保守：毕竟，即使是单个假阳性也意味着我们已经失败了。换句话说，控制FWER要求我们非常保守，并使用非常小的<semantics><mrow><mi>p</mi></mrow><annotation
+    encoding="application/x-tex">p</annotation></semantics><p>值阈值。这通常会导致非常低的功效，或者说真正的阳性率（TPR），因为我们的<semantics><mrow><mi>p</mi></mrow><annotation
+    encoding="application/x-tex">p</annotation></semantics><p>值阈值如此之低，以至于我们错过了许多真正的阳性。
 - en: On the other hand, if we want a FDR of 0.05, this just means that out of the
     discoveries we make in the 1,000,000 tests, on average, we want <semantics><mrow><mn>95</mn><mi
     mathvariant="normal">%</mi></mrow><annotation encoding="application/x-tex">95\%</annotation></semantics>95%
@@ -583,12 +873,17 @@
     threshold. In other words, when we control FDR, we accept some more false positives,
     and in return we can achieve a higher true positive rate (i.e., do better in the
     case where <semantics><mrow><mi>R</mi><mo>=</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">R=1</annotation></semantics>R=1).
+  id: totrans-94
   prefs: []
   type: TYPE_NORMAL
+  zh: 另一方面，如果我们希望假发现率（FDR）为0.05，这仅仅意味着在100万个测试中，我们平均希望95%或更多的发现是正确的。我们可以通过一个不那么保守的阈值来实现这一点。换句话说，当我们控制FDR时，我们接受一些假阳性，作为回报，我们可以实现更高的真正阳性率（即，在<semantics><mrow><mi>R</mi><mo>=</mo><mn>1</mn></mrow><annotation
+    encoding="application/x-tex">R=1</annotation></semantics>R=1)的情况下做得更好）。
 - en: How do these interpretations translate into choosing a rate to control in real-world
     applications? We’ll look at two examples to help illustrate the difference.
+  id: totrans-95
   prefs: []
   type: TYPE_NORMAL
+  zh: 这些解释如何转化为在现实世界应用中选择控制率？我们将通过两个例子来帮助说明差异。
 - en: Consider a medical test for a rare condition where the only treatment is a dangerous
     surgery. In this case, a false positive could subject a patient to unnecessarily
     undergo the procedure, putting the patient’s life needlessly at risk and potentially
@@ -597,9 +892,11 @@
     case where a false positive is much worse than a false negative, controlling FWER
     is likely a better choice, since controlling FWER favors false negatives over
     false positives.
+  id: totrans-96
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 考虑一种罕见疾病的医学检测，这种疾病的唯一治疗方法是危险的手术。在这种情况下，假阳性可能导致患者不必要地接受手术，使患者的生命无谓地处于危险之中，并可能引发医疗创伤。另一方面，假阴性虽然由于缺乏治疗可能仍然具有潜在危害，但可能没有这么严重。在这种情况下，或者任何假阳性远比假阴性更严重的情况，控制家族错误发现率（FWER）可能是一个更好的选择，因为控制FWER倾向于假阴性而非假阳性。
 - en: Consider an online retailer who is interested in conducting many A/B tests to
     measure whether various website changes improve the chances that shoppers will
     buy products. In this case, the harm of a false positive is not particularly severe,
@@ -607,9 +904,11 @@
     encoding="application/x-tex">5\%</annotation></semantics>5% of our discoveries
     could be wrong, especially if it means a better chance of finding changes that
     increase product purchases.
+  id: totrans-97
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 考虑一个对进行大量A/B测试以衡量各种网站更改是否提高购物者购买产品机会感兴趣的在线零售商。在这种情况下，假阳性的危害并不特别严重，我们可能能够容忍我们的发现中有5%是错误的，尤其是如果这意味着有更好的机会找到能增加产品购买的机会。
 - en: Note that both of these examples are somewhat ambiguous! In the first example,
     the cost of a false negative depends strongly on how much the treatment improves
     the prognosis for patients with the condition, whether follow-on tests exist,
@@ -617,11 +916,17 @@
     costs (time and money spent by developers to make the changes, changes in user
     opinion about the website based on the changes, etc.), then this could affect
     whether we might prefer one over the other.
+  id: totrans-98
   prefs: []
   type: TYPE_NORMAL
+  zh: 注意，这两个例子都有点模糊！在第一个例子中，假阴性的成本强烈取决于治疗如何改善该条件患者的预后，是否存在后续测试等因素。同样，在第二个例子中，如果网站更改有辅助成本（开发者为进行更改所花费的时间和金钱，以及基于更改的用户对网站的看法变化等），那么这可能会影响我们是否可能更喜欢其中一个。
 - en: '[PRE12]'
+  id: totrans-99
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE12]'
 - en: Loading...
+  id: totrans-100
   prefs: []
   type: TYPE_NORMAL
+  zh: 加载中...

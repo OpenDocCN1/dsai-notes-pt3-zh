@@ -1,11 +1,15 @@
 - en: Binary Classification
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 二元分类
 - en: 原文：[https://data102.org/ds-102-book/content/chapters/01/binary-classification](https://data102.org/ds-102-book/content/chapters/01/binary-classification)
+  id: totrans-1
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 原文：[https://data102.org/ds-102-book/content/chapters/01/binary-classification](https://data102.org/ds-102-book/content/chapters/01/binary-classification)
 - en: '[<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" width="1.25rem"
     height="1.25rem" class="myst-fm-license-cc-icon myst-fm-license-cc-icon-main inline-block
     mx-1"><title>Content License: Creative Commons Attribution Share Alike 4.0 International
@@ -17,22 +21,38 @@
     must be shared under the same terms</title></svg>](https://creativecommons.org/licenses/by-sa/4.0/)[](https://github.com/ds-102/ds-102-book
     "GitHub Repository: ds-102/ds-102-book")[](https://github.com/ds-102/ds-102-book/edit/main/ds-102-book/content/chapters/01/04_binary_classification.ipynb
     "Edit This Page")'
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: '[<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" width="1.25rem"
+    height="1.25rem" class="myst-fm-license-cc-icon myst-fm-license-cc-icon-main inline-block
+    mx-1"><title>内容许可：Creative Commons Attribution Share Alike 4.0 国际 (CC-BY-SA-4.0)</title></svg><svg
+    viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" width="1.25rem" height="1.25rem"
+    class="myst-fm-license-cc-icon myst-fm-license-cc-icon-by inline-block mr-1"><title>必须提及创作者</title></svg><svg
+    viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" width="1.25rem" height="1.25rem"
+    class="myst-fm-license-cc-icon myst-fm-license-cc-icon-sa inline-block mr-1"><title>改编必须以相同条款共享</title></svg>](https://creativecommons.org/licenses/by-sa/4.0/)[](https://github.com/ds-102/ds-102-book
+    "GitHub 仓库：ds-102/ds-102-book")[](https://github.com/ds-102/ds-102-book/edit/main/ds-102-book/content/chapters/01/04_binary_classification.ipynb
+    "编辑此页")'
 - en: '[PRE0]'
+  id: totrans-3
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: Binary Classification[¶](#binary-classification "Link to this Section")
+  id: totrans-4
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 二元分类[¶](#binary-classification "链接到本节")
 - en: 'In binary classification, just as in the previous section, we’re also trying
     to make a binary decision. A key difference is that instead of using the language
     of hypothesis testing, we use the language of machine learning and classification:
     we have data points that we’re trying to classify as belonging to one of two groups,
     which (without loss of generality) we’ll call class 0 and class 1.'
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: 在二元分类中，就像上一节一样，我们也在尝试做出二元决策。一个关键的区别是，我们不是使用假设检验的语言，而是使用机器学习和分类的语言：我们有数据点，我们试图将它们分类为属于两个组中的一个，我们可以（不失一般性）称它们为类别0和类别1。
 - en: In hypothesis testing, we made our decision using <semantics><mrow><mi>p</mi></mrow><annotation
     encoding="application/x-tex">p</annotation></semantics>p-values, which captured
     the probability (for each test), given the data, that our data were observed under
@@ -42,56 +62,80 @@
     often, but not always, between 0 and 1, in which case we can interpret them as
     the probability of belonging to class 1\. We typically apply a threshold to that
     number to obtain a binary decision.
+  id: totrans-6
   prefs: []
   type: TYPE_NORMAL
+  zh: 在假设检验中，我们使用<semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics>p值来做决策，这些p值捕捉了在给定数据的情况下，我们的数据在某个零假设下被观察到的概率。在二元分类中，我们感兴趣的是在给定数据的情况下，我们的数据在类别0或类别1下被观察到的概率。大多数分类算法都会给出一些任意数。这些数字通常，但不总是，介于0和1之间，在这种情况下，我们可以将它们解释为属于类别1的概率。我们通常将一个阈值应用到这个数字上，以获得二元决策。
 - en: 'For example, logistic regression produces probabilities: for a particular datum,
     a logistic regression classifier might predict that it has a 0.7 probability of
     belonging to class 1\. We apply some threshold (often, but not always 0.5): if
     our value is above the threshold (as in this case), we make a decision of 1; otherwise,
     we make a decision of 0.'
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: 例如，逻辑回归产生概率：对于一个特定的数据点，逻辑回归分类器可能会预测它有0.7的概率属于类别1。我们应用一些阈值（通常是，但不总是0.5）：如果我们的值高于阈值（就像这个例子一样），我们做出决策1；否则，我们做出决策0。
 - en: 'While the mechanics of obtaining a decision are different for binary classification,
     the big ideas we’ve learned in the last few section remain just as relevant: in
     particular, we can think about the tradeoffs involved by understanding the row-wise
     and columnn-wise error rates. In binary classification, we visualize and analyze
     these error rates primarily through two visualizations: a receiver operating characteristic
     (ROC) curve, and a precision-recall curve.'
+  id: totrans-8
   prefs: []
   type: TYPE_NORMAL
+  zh: 虽然在二元分类中获取决策的机制不同，但我们之前几节学到的重大思想仍然同样相关：特别是，我们可以通过理解行内和列内错误率来考虑涉及的权衡。在二元分类中，我们主要通过两种可视化来可视化和分析这些错误率：接收者操作特征（ROC）曲线和精确率-召回率曲线。
 - en: 'ROC Curves: Trading off Row-Wise Rates[¶](#roc-curves-trading-off-row-wise-rates
     "Link to this Section")'
+  id: totrans-9
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: ROC曲线：权衡行内率[¶](#roc-curves-trading-off-row-wise-rates "链接到本节")
 - en: 'ROC curves help us visualize the tradeoff between different **row-wise rates**.
     Let’s make things concrete with an example. Suppose a manufacturing company trains
     a classifier that uses computer vision (e.g., a vision transformer) to predict
     whether each product coming off its assembly line is defective (1) or not (0).
     They obtain the following results on a held-out test set:'
+  id: totrans-10
   prefs: []
   type: TYPE_NORMAL
+  zh: ROC曲线帮助我们可视化不同**行内率**之间的权衡。让我们用一个例子来具体说明。假设一家制造公司训练了一个分类器，该分类器使用计算机视觉（例如，一个视觉转换器）来预测其装配线上的每个产品是否为缺陷（1）或非缺陷（0）。他们在保留的测试集上获得了以下结果：
 - en: '[PRE1]'
+  id: totrans-11
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: Loading...
+  id: totrans-12
   prefs: []
   type: TYPE_NORMAL
+  zh: 加载中...
 - en: '[PRE2]'
+  id: totrans-13
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: '[PRE3]'
+  id: totrans-14
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: Loading...
+  id: totrans-15
   prefs: []
   type: TYPE_NORMAL
+  zh: 加载中...
 - en: '[PRE4]'
+  id: totrans-16
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE4]'
 - en: Loading...
+  id: totrans-17
   prefs: []
   type: TYPE_NORMAL
+  zh: 加载中...
 - en: 'Just as before, we can see the same tradeoff between the row-wise rates: as
     our TPR increases (i.e., we are better at catching defective products), our FPR
     also increases (i.e., we get worse with non-defective products). The examples
@@ -99,37 +143,53 @@
     different possible threshold value. Instead of computing and manually reviewing
     the confusion matrix for each threshold, we can instead visualize the TPR and
     FPR associated with each possible one by using the `roc_curve` function in `scikit-learn`:'
+  id: totrans-18
   prefs: []
   type: TYPE_NORMAL
+  zh: 就像之前一样，我们可以看到行内率之间的相同权衡：随着我们的TPR增加（即我们更好地捕捉到有缺陷的产品），我们的FPR也会增加（即我们对非缺陷产品的处理变得更差）。上面的例子显示了权衡中的两个点，但对于每个不同的可能阈值值都存在这样一个点。我们不必为每个阈值计算和手动审查混淆矩阵，而是可以通过使用`scikit-learn`中的`roc_curve`函数来可视化与每个可能阈值相关的TPR和FPR：
 - en: '[PRE5]'
+  id: totrans-19
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE5]'
 - en: '![<Figure size 400x400 with 1 Axes>](../Images/d8b2db36f5d6aef7f2cbd4a2f98218eb.png)'
+  id: totrans-20
   prefs: []
   type: TYPE_IMG
+  zh: '![<Figure size 400x400 with 1 Axes>](../Images/d8b2db36f5d6aef7f2cbd4a2f98218eb.png)'
 - en: Each point on this graph represents one threshold. For example, the point at
     around (0.2, 0.8) tells us that if we choose that particular threshold value,
     we’ll achieve a false positive rate of 0.2 and a true positive rate of 0.8.
+  id: totrans-21
   prefs: []
   type: TYPE_NORMAL
+  zh: 图上的每个点代表一个阈值。例如，大约在(0.2, 0.8)处的点告诉我们，如果我们选择那个特定的阈值值，我们将实现0.2的假阳性率和0.8的真正阳性率。
 - en: What if that FPR was unacceptably high? We could instead choose a threshold
     corresponding to the point at around (0.1, 0.4). This tells us that if we want
     a smaller FPR of 0.1, we have to accept a much lower TPR of 0.1.
+  id: totrans-22
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果那个FPR过高，我们可以选择一个大约在(0.1, 0.4)处的阈值。这告诉我们，如果我们想要更小的FPR为0.1，我们必须接受一个远低于0.1的TPR。
 - en: This provides us a way of clearly visualizing the tradeoffs involved, at least
     as far as the row-wise rates are concerned.
+  id: totrans-23
   prefs: []
   type: TYPE_NORMAL
+  zh: 这为我们提供了一种清晰可视化涉及权衡的方法，至少就行内率而言。
 - en: '**Exercise**: write code to find the threshold value that gives us an FPR as
     close as possible to 0.2\. *Hint: use the `thresholds_roc` array.*'
+  id: totrans-24
   prefs: []
   type: TYPE_NORMAL
+  zh: '**练习**：编写代码以找到给我们一个尽可能接近0.2的FPR的阈值值。*提示：使用`thresholds_roc`数组*。'
 - en: Precision-Recall Curves and Column-Wise Rates[¶](#precision-recall-curves-and-column-wise-rates
     "Link to this Section")
+  id: totrans-25
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 精确率-召回率曲线和列内率[¶](#precision-recall-curves-and-column-wise-rates "链接到本节")
 - en: We saw in previous sections that the row-wise rates alone can’t tell us the
     whole story! We saw that in cases where the prevalence is low, even if we have
     relatively high row-wise rates, our column-wise rates can be quite low. In this
@@ -139,21 +199,33 @@
     products and about <semantics><mrow><mn>80</mn><mi mathvariant="normal">%</mi></mrow><annotation
     encoding="application/x-tex">80\%</annotation></semantics>80% accurate for non-defective
     products), but a prediction of “defective” will be wrong more than half the time!
+  id: totrans-26
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们在前面几节中看到，仅靠行率并不能告诉我们整个故事！我们看到，在患病率低的情况下，即使我们有相对较高的行率，我们的列率也可能相当低。在这个例子中，阈值为0.5导致TPR和TNR接近0.8（即，我们的算法对缺陷产品的准确率约为<semantics><mrow><mn>80</mn><mi
+    mathvariant="normal">%</mi></mrow><annotation encoding="application/x-tex">80\%</annotation></semantics>80%，对非缺陷产品的准确率也约为<semantics><mrow><mn>80</mn><mi
+    mathvariant="normal">%</mi></mrow><annotation encoding="application/x-tex">80\%</annotation></semantics>80%），但预测“有缺陷”的错误率将超过一半！
 - en: '[PRE6]'
+  id: totrans-27
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE6]'
 - en: Loading...
+  id: totrans-28
   prefs: []
   type: TYPE_NORMAL
+  zh: 加载中...
 - en: '[PRE7]'
+  id: totrans-29
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE7]'
 - en: Just as the ROC curve plots the true positive rate against the false positive
     rate, a precision-recall curve plots the precision against the recall.
+  id: totrans-30
   prefs: []
   type: TYPE_NORMAL
+  zh: 正如ROC曲线绘制了真正例率与假正例率的关系一样，精确度-召回率曲线绘制了精确度与召回率的关系。
 - en: 'Remember from before that the **precision** is the complement of the FDP: in
     other words, it describes how well we do when we make a decision of <semantics><mrow><mi>D</mi><mo>=</mo><mn>1</mn></mrow><annotation
     encoding="application/x-tex">D=1</annotation></semantics>D=1, or in this case,
@@ -161,26 +233,39 @@
     term for the true positive rate (which we’ve also referred to as the power and
     sensitivity). Plotting these two helps us understand the tradeoffs between row-wise
     and column-wise rates. Let’s see what it looks like for the example above:'
+  id: totrans-31
   prefs: []
   type: TYPE_NORMAL
+  zh: 记住之前提到的**精确度**是FDP的补数：换句话说，它描述了当我们做出<semantics><mrow><mi>D</mi><mo>=</mo><mn>1</mn></mrow><annotation
+    encoding="application/x-tex">D=1</annotation></semantics>D=1的决定时，或者在这种情况下，当分类器将产品标记为缺陷时，我们做得有多好。**召回率**只是真正例率的另一个术语（我们也将它称为功率和灵敏度）。绘制这两个指标有助于我们理解行率和列率之间的权衡。让我们看看上面的例子是什么样的：
 - en: '[PRE8]'
+  id: totrans-32
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE8]'
 - en: '![<Figure size 400x400 with 1 Axes>](../Images/9f582f3d8df12b439e62c4a6c06ffd04.png)'
+  id: totrans-33
   prefs: []
   type: TYPE_IMG
+  zh: '![<图大小为400x400，包含1个坐标轴>](../Images/9f582f3d8df12b439e62c4a6c06ffd04.png)'
 - en: We can see that this tells us a complementary story. We can see that the left
     part of the curve is very noisy, and in the center, as recall improves, precision
     improves up to about 0.55 until it starts dropping off quickly for much higher
     values of the recall. What does this mean?
+  id: totrans-34
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们可以看到，这告诉我们一个互补的故事。我们可以看到，曲线的左侧非常嘈杂，在中间，随着召回率的提高，精确度提高到约0.55，然后开始迅速下降，对于召回率更高的值。这意味着什么？
 - en: '**Exercise**: explain why the left part of the curve looks so noisy. *Hint:
     consider what kind of threshold will lead to very low recall, and then explain
     how that kind of threshold affects the denominator in our precision calculation.*'
+  id: totrans-35
   prefs: []
   type: TYPE_NORMAL
+  zh: '**练习**：解释为什么曲线的左侧看起来如此嘈杂。*提示：考虑哪种阈值会导致非常低的召回率，然后解释这种阈值是如何影响我们精确度计算中的分母的。*'
 - en: '**Exercise**: explain why the precision increases with recall for a while before
     decreasing for recall values higher than about 0.6.'
+  id: totrans-36
   prefs: []
   type: TYPE_NORMAL
+  zh: '**练习**：解释为什么精确度在召回率高于约0.6之前会随着召回率的增加而增加，然后又下降。'
