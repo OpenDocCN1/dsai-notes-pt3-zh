@@ -1,11 +1,15 @@
 - en: Neural networks and backpropagation
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 神经网络与反向传播
 - en: 原文：[https://data102.org/ds-102-book/content/chapters/03/neural-networks](https://data102.org/ds-102-book/content/chapters/03/neural-networks)
+  id: totrans-1
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 原文：[https://data102.org/ds-102-book/content/chapters/03/neural-networks](https://data102.org/ds-102-book/content/chapters/03/neural-networks)
 - en: '[<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" width="1.25rem"
     height="1.25rem" class="myst-fm-license-cc-icon myst-fm-license-cc-icon-main inline-block
     mx-1"><title>Content License: Creative Commons Attribution Share Alike 4.0 International
@@ -17,30 +21,49 @@
     must be shared under the same terms</title></svg>](https://creativecommons.org/licenses/by-sa/4.0/)[](https://github.com/ds-102/ds-102-book
     "GitHub Repository: ds-102/ds-102-book")[](https://github.com/ds-102/ds-102-book/edit/main/ds-102-book/content/chapters/03/07_neural_networks.ipynb
     "Edit This Page")'
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: '[<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" width="1.25rem"
+    height="1.25rem" class="myst-fm-license-cc-icon myst-fm-license-cc-icon-main inline-block
+    mx-1"><title>内容许可：知识共享 署名-相同方式共享 4.0 国际 (CC-BY-SA-4.0)</title></svg><svg viewBox="0
+    0 24 24" fill="currentColor" aria-hidden="true" width="1.25rem" height="1.25rem"
+    class="myst-fm-license-cc-icon myst-fm-license-cc-icon-by inline-block mr-1"><title>必须为创作者署名</title></svg><svg
+    viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" width="1.25rem" height="1.25rem"
+    class="myst-fm-license-cc-icon myst-fm-license-cc-icon-sa inline-block mr-1"><title>演绎作品必须基于相同条款共享</title></svg>](https://creativecommons.org/licenses/by-sa/4.0/)[](https://github.com/ds-102/ds-102-book
+    "GitHub 仓库：ds-102/ds-102-book")[](https://github.com/ds-102/ds-102-book/edit/main/ds-102-book/content/chapters/03/07_neural_networks.ipynb
+    "编辑此页面")'
 - en: Neural nets are a very powerful class of methods that have become popular in
     fields like computer vision and natural language processing, where coming up with
     good features can be challenging.
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: 神经网络是一类非常强大的方法，在计算机视觉和自然语言处理等领域已变得非常流行，在这些领域中，设计出好的特征可能具有挑战性。
 - en: 'While there’s a rich mathematical foundation underlying neural nets, in this
     class we’ll focus on one of the big computational ideas that’s at the heart of
     most neural net implementations: backpropagation and automatic differentiation.
     While these ideas were initially conceived for neural nets, they’re now used in
     many other ways too: libraries like PyMC use automatic differentiation to do efficient
     Bayesian inference; and much more.'
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: 虽然神经网络有着丰富的数学基础，但在本课程中，我们将重点关注大多数神经网络实现的核心计算思想之一：**反向传播**和**自动微分**。虽然这些思想最初是为神经网络构思的，但现在它们也以许多其他方式被使用：像
+    PyMC 这样的库使用自动微分来进行高效的贝叶斯推断；等等。
 - en: In general, automatic differentiation and backpropagation are useful for any
     problem where the solution involves computing gradients!
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: 一般来说，对于任何解决方案涉及计算梯度的问题，自动微分和反向传播都很有用！
 - en: A feed-forward neural network[¶](#a-feed-forward-neural-network "Link to this
     Section")
+  id: totrans-6
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 前馈神经网络[¶](#a-feed-forward-neural-network "链接至此章节")
 - en: 'As we’ve already seen, linear regression is a simple but powerful model: to
     predict a value <semantics><mrow><mi>y</mi></mrow><annotation encoding="application/x-tex">y</annotation></semantics>y
     from a vector of features <semantics><mrow><mi>x</mi><mo>=</mo><mo stretchy="false">(</mo><msub><mi>x</mi><mn>1</mn></msub><mo
@@ -48,13 +71,23 @@
     stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">x = (x_1,
     \ldots, x_k)</annotation></semantics>x=(x1​,…,xk​), linear regression uses the
     following:'
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: 正如我们已经看到的，线性回归是一个简单但强大的模型：为了从特征向量 <semantics><mrow><mi>x</mi><mo>=</mo><mo stretchy="false">(</mo><msub><mi>x</mi><mn>1</mn></msub><mo
+    separator="true">,</mo><mo>…</mo><mo separator="true">,</mo><msub><mi>x</mi><mi>k</mi></msub><mo
+    stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">x = (x_1,
+    \ldots, x_k)</annotation></semantics>x=(x1​,…,xk​) 预测一个值 <semantics><mrow><mi>y</mi></mrow><annotation
+    encoding="application/x-tex">y</annotation></semantics>y，线性回归使用以下公式：
 - en: <semantics><mrow><mi>y</mi><mo>=</mo><mi>W</mi><mi>x</mi><mo>+</mo><mi>b</mi></mrow><annotation
     encoding="application/x-tex">y = Wx + b</annotation></semantics>y=Wx+b[(1)](#NDJrX1ikVo
     "Link to this Equation")
+  id: totrans-8
   prefs: []
   type: TYPE_NORMAL
+  zh: <semantics><mrow><mi>y</mi><mo>=</mo><mi>W</mi><mi>x</mi><mo>+</mo><mi>b</mi></mrow><annotation
+    encoding="application/x-tex">y = Wx + b</annotation></semantics>y=Wx+b[(1)](#NDJrX1ikVo
+    "链接至此公式")
 - en: Here, <semantics><mrow><mi>W</mi></mrow><annotation encoding="application/x-tex">W</annotation></semantics>W
     is a vector of coefficients, sometimes also called **weights**, and <semantics><mrow><mi>b</mi></mrow><annotation
     encoding="application/x-tex">b</annotation></semantics>b is a scalar that we call
@@ -63,19 +96,32 @@
     and <semantics><mrow><mi>y</mi></mrow><annotation encoding="application/x-tex">y</annotation></semantics>y
     is nonlinear. We also saw that if we want to model complex, nonlinear interactions
     *while still using linear models*, we need to define more complex features.
+  id: totrans-9
   prefs: []
   type: TYPE_NORMAL
+  zh: 这里，<semantics><mrow><mi>W</mi></mrow><annotation encoding="application/x-tex">W</annotation></semantics>W
+    是一个系数向量，有时也称为**权重**，而 <semantics><mrow><mi>b</mi></mrow><annotation encoding="application/x-tex">b</annotation></semantics>b
+    是一个我们称为截距或偏置的标量。正如我们在上一节中看到的，当 <semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics>x
+    和 <semantics><mrow><mi>y</mi></mrow><annotation encoding="application/x-tex">y</annotation></semantics>y
+    之间的关系是非线性时，线性模型可能会失效。我们还看到，如果我们想要建模复杂、非线性的交互关系，*同时仍然使用线性模型*，就需要定义更复杂的特征。
 - en: 'Motivated by this, what if we tried using another layer of linear regression
     that could compute features for us? It might look something like this:'
+  id: totrans-10
   prefs: []
   type: TYPE_NORMAL
+  zh: 受此启发，如果我们尝试使用另一层线性回归来为我们计算特征呢？它可能看起来像这样：
 - en: <semantics><mrow><mi>y</mi><mo>=</mo><msub><mi>W</mi><mn>2</mn></msub><mo stretchy="false">(</mo><mover><mover><mrow><msub><mi>W</mi><mn>1</mn></msub><mi>x</mi><mo>+</mo><msub><mi>b</mi><mn>1</mn></msub></mrow><mo
     stretchy="true">⏞</mo></mover><mtext>features</mtext></mover><mo stretchy="false">)</mo><mo>+</mo><msub><mi>b</mi><mn>2</mn></msub></mrow><annotation
     encoding="application/x-tex">y = W_2(\overbrace{W_1 x + b_1}^\text{features})
     + b_2</annotation></semantics>y=W2​(W1​x+b1​​features​)+b2​[(2)](#JQNk2Df1tW "Link
     to this Equation")
+  id: totrans-11
   prefs: []
   type: TYPE_NORMAL
+  zh: <semantics><mrow><mi>y</mi><mo>=</mo><msub><mi>W</mi><mn>2</mn></msub><mo stretchy="false">(</mo><mover><mover><mrow><msub><mi>W</mi><mn>1</mn></msub><mi>x</mi><mo>+</mo><msub><mi>b</mi><mn>1</mn></msub></mrow><mo
+    stretchy="true">⏞</mo></mover><mtext>特征</mtext></mover><mo stretchy="false">)</mo><mo>+</mo><msub><mi>b</mi><mn>2</mn></msub></mrow><annotation
+    encoding="application/x-tex">y = W_2(\overbrace{W_1 x + b_1}^\text{features})
+    + b_2</annotation></semantics>y=W2​(W1​x+b1​​特征​)+b2​[(2)](#JQNk2Df1tW "链接到此方程")
 - en: Here, <semantics><mrow><msub><mi>W</mi><mn>1</mn></msub></mrow><annotation encoding="application/x-tex">W_1</annotation></semantics>W1​
     is now an <semantics><mrow><mi>m</mi><mo>×</mo><mi>k</mi></mrow><annotation encoding="application/x-tex">m
     \times k</annotation></semantics>m×k matrix of weights, and the result of the
@@ -88,8 +134,18 @@
     in the scalar <semantics><mrow><msub><mi>b</mi><mn>2</mn></msub></mrow><annotation
     encoding="application/x-tex">b_2</annotation></semantics>b2​, to obtain <semantics><mrow><mi>y</mi></mrow><annotation
     encoding="application/x-tex">y</annotation></semantics>y.
+  id: totrans-12
   prefs: []
   type: TYPE_NORMAL
+  zh: 此处，<semantics><mrow><msub><mi>W</mi><mn>1</mn></msub></mrow><annotation encoding="application/x-tex">W_1</annotation></semantics>W1​
+    现在是一个 <semantics><mrow><mi>m</mi><mo>×</mo><mi>k</mi></mrow><annotation encoding="application/x-tex">m
+    \times k</annotation></semantics>m×k 的权重矩阵，矩阵-向量乘法与加法 <semantics><mrow><msub><mi>W</mi><mn>1</mn></msub><mi>x</mi><mo>+</mo><msub><mi>b</mi><mn>1</mn></msub></mrow><annotation
+    encoding="application/x-tex">W_1x + b_1</annotation></semantics>W1​x+b1​ 的结果是一个
+    <semantics><mrow><mi>m</mi></mrow><annotation encoding="application/x-tex">m</annotation></semantics>m
+    维的特征向量。然后，我们使用向量 <semantics><mrow><msub><mi>W</mi><mn>2</mn></msub></mrow><annotation
+    encoding="application/x-tex">W_2</annotation></semantics>W2​ 中的权重和标量 <semantics><mrow><msub><mi>b</mi><mn>2</mn></msub></mrow><annotation
+    encoding="application/x-tex">b_2</annotation></semantics>b2​ 中的截距/偏置，对这些特征应用线性回归，从而得到
+    <semantics><mrow><mi>y</mi></mrow><annotation encoding="application/x-tex">y</annotation></semantics>y。
 - en: Unfortunately, this doesn’t work because it reduces to a single layer of linear
     regression. Applying a bit of algebra, we can simplify the above equation to <semantics><mrow><mi>y</mi><mo>=</mo><mo
     fence="false" stretchy="true" minsize="1.2em" maxsize="1.2em">(</mo><msub><mi>W</mi><mn>2</mn></msub><msub><mi>W</mi><mn>1</mn></msub><mo
@@ -98,36 +154,64 @@
     fence="false" stretchy="true" minsize="1.2em" maxsize="1.2em">)</mo></mrow><annotation
     encoding="application/x-tex">y = \big(W_2W_1\big)x + \big(W_2b_1 + b_2\big)</annotation></semantics>y=(W2​W1​)x+(W2​b1​+b2​),
     which is just linear regression written in an unnecessarily complicated way.
+  id: totrans-13
   prefs: []
   type: TYPE_NORMAL
+  zh: 遗憾的是，这种方法行不通，因为它简化为单层线性回归。通过一些代数运算，我们可以将上述方程简化为 <semantics><mrow><mi>y</mi><mo>=</mo><mo
+    fence="false" stretchy="true" minsize="1.2em" maxsize="1.2em">(</mo><msub><mi>W</mi><mn>2</mn></msub><msub><mi>W</mi><mn>1</mn></msub><mo
+    fence="false" stretchy="true" minsize="1.2em" maxsize="1.2em">)</mo><mi>x</mi><mo>+</mo><mo
+    fence="false" stretchy="true" minsize="1.2em" maxsize="1.2em">(</mo><msub><mi>W</mi><mn>2</mn></msub><msub><mi>b</mi><mn>1</mn></msub><mo>+</mo><msub><mi>b</mi><mn>2</mn></msub><mo
+    fence="false" stretchy="true" minsize="1.2em" maxsize="1.2em">)</mo></mrow><annotation
+    encoding="application/x-tex">y = \big(W_2W_1\big)x + \big(W_2b_1 + b_2\big)</annotation></semantics>y=(W2​W1​)x+(W2​b1​+b2​)，这只不过是用一种不必要的复杂方式写出的线性回归。
 - en: 'In order to prevent the simplification to linear regression, we could apply
     a nonlinear function <semantics><mrow><mi>f</mi></mrow><annotation encoding="application/x-tex">f</annotation></semantics>f
     as part of computing the features:'
+  id: totrans-14
   prefs: []
   type: TYPE_NORMAL
+  zh: 为了防止简化为线性回归，我们可以应用一个非线性函数 <semantics><mrow><mi>f</mi></mrow><annotation encoding="application/x-tex">f</annotation></semantics>f
+    作为计算特征的一部分：
 - en: <semantics><mrow><mi>y</mi><mo>=</mo><msub><mi>W</mi><mn>2</mn></msub><mover><mover><mrow><mi>f</mi><mo
     stretchy="false">(</mo><msub><mi>W</mi><mn>1</mn></msub><mi>x</mi><mo>+</mo><msub><mi>b</mi><mn>1</mn></msub><mo
     stretchy="false">)</mo></mrow><mo stretchy="true">⏞</mo></mover><mtext>features</mtext></mover><mo>+</mo><msub><mi>b</mi><mn>2</mn></msub></mrow><annotation
     encoding="application/x-tex">y = W_2 \overbrace{f(W_1 x + b_1)}^\text{features}
     + b_2</annotation></semantics>y=W2​f(W1​x+b1​)​features​+b2​[(3)](#V8VopBwHuC
     "Link to this Equation")
+  id: totrans-15
   prefs: []
   type: TYPE_NORMAL
+  zh: <semantics><mrow><mi>y</mi><mo>=</mo><msub><mi>W</mi><mn>2</mn></msub><mover><mover><mrow><mi>f</mi><mo
+    stretchy="false">(</mo><msub><mi>W</mi><mn>1</mn></msub><mi>x</mi><mo>+</mo><msub><mi>b</mi><mn>1</mn></msub><mo
+    stretchy="false">)</mo></mrow><mo stretchy="true">⏞</mo></mover><mtext>features</mtext></mover><mo>+</mo><msub><mi>b</mi><mn>2</mn></msub></mrow><annotation
+    encoding="application/x-tex">y = W_2 \overbrace{f(W_1 x + b_1)}^\text{features}
+    + b_2</annotation></semantics>y=W2​f(W1​x+b1​)​features​+b2​[(3)](#V8VopBwHuC
+    "Link to this Equation")
 - en: This is now the simplest possible neural network, which we call a **feed-forward**
     or **fully connected** network with one hidden layer (the so-called “hidden layer”
     is the result of the computation <semantics><mrow><mi>f</mi><mo stretchy="false">(</mo><msub><mi>W</mi><mn>1</mn></msub><mi>x</mi><mo>+</mo><msub><mi>b</mi><mn>1</mn></msub><mo
     stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">f(W_1 x
     + b_1)</annotation></semantics>f(W1​x+b1​)).
+  id: totrans-16
   prefs: []
   type: TYPE_NORMAL
+  zh: 这就是目前最简单的神经网络，我们称之为具有一个隐藏层的**前馈**或**全连接**网络（所谓的“隐藏层”就是计算 <semantics><mrow><mi>f</mi><mo
+    stretchy="false">(</mo><msub><mi>W</mi><mn>1</mn></msub><mi>x</mi><mo>+</mo><msub><mi>b</mi><mn>1</mn></msub><mo
+    stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">f(W_1 x
+    + b_1)</annotation></semantics>f(W1​x+b1​) 的结果）。
 - en: The nonlinear function <semantics><mrow><mi>f</mi></mrow><annotation encoding="application/x-tex">f</annotation></semantics>f
     can be anything from a sigmoid or logistic function to the ReLU (restricted linear
     unit) function, <semantics><mrow><mi>f</mi><mo stretchy="false">(</mo><mi>z</mi><mo
     stretchy="false">)</mo><mo>=</mo><mi>max</mi><mo>⁡</mo><mo stretchy="false">(</mo><mn>0</mn><mo
     separator="true">,</mo><mi>z</mi><mo stretchy="false">)</mo></mrow><annotation
     encoding="application/x-tex">f(z) = \max(0, z)</annotation></semantics>f(z)=max(0,z).
+  id: totrans-17
   prefs: []
   type: TYPE_NORMAL
+  zh: 非线性函数 <semantics><mrow><mi>f</mi></mrow><annotation encoding="application/x-tex">f</annotation></semantics>f
+    可以是任何函数，从 sigmoid 或 logistic 函数到 ReLU（受限线性单元）函数，即 <semantics><mrow><mi>f</mi><mo
+    stretchy="false">(</mo><mi>z</mi><mo stretchy="false">)</mo><mo>=</mo><mi>max</mi><mo>⁡</mo><mo
+    stretchy="false">(</mo><mn>0</mn><mo separator="true">,</mo><mi>z</mi><mo stretchy="false">)</mo></mrow><annotation
+    encoding="application/x-tex">f(z) = \max(0, z)</annotation></semantics>f(z)=max(0,z)。
 - en: In order to fit a linear regression model, we had to estimate good coefficients.
     In probabilistic terms, we did this using In order to fit a neural network, we
     have to estimate good weights <semantics><mrow><msub><mi>W</mi><mn>1</mn></msub><mo
@@ -136,8 +220,14 @@
     and biases <semantics><mrow><msub><mi>b</mi><mn>1</mn></msub><mo separator="true">,</mo><msub><mi>b</mi><mn>2</mn></msub><mo
     separator="true">,</mo><mi>l</mi><mi>d</mi><mi>o</mi><mi>t</mi><mi>s</mi></mrow><annotation
     encoding="application/x-tex">b_1, b_2, ldots</annotation></semantics>b1​,b2​,ldots.
+  id: totrans-18
   prefs: []
   type: TYPE_NORMAL
+  zh: 为了拟合线性回归模型，我们必须估计出良好的系数。从概率的角度来说，我们是通过...来做到这一点的。为了拟合神经网络，我们必须估计出良好的权重<semantics><mrow><msub><mi>W</mi><mn>1</mn></msub><mo
+    separator="true">,</mo><msub><mi>W</mi><mn>2</mn></msub><mo separator="true">,</mo><mo>…</mo></mrow><annotation
+    encoding="application/x-tex">W_1, W_2, \ldots</annotation></semantics>W1​,W2​,…和偏置<semantics><mrow><msub><mi>b</mi><mn>1</mn></msub><mo
+    separator="true">,</mo><msub><mi>b</mi><mn>2</mn></msub><mo separator="true">,</mo><mi>l</mi><mi>d</mi><mi>o</mi><mi>t</mi><mi>s</mi></mrow><annotation
+    encoding="application/x-tex">b_1, b_2, ldots</annotation></semantics>b1​,b2​,ldots。
 - en: 'To make our notation a little simpler, we’ll use <semantics><mrow><mi>θ</mi></mrow><annotation
     encoding="application/x-tex">\theta</annotation></semantics>θ to denote all our
     parameters: <semantics><mrow><mi>θ</mi><mo>=</mo><mo stretchy="false">(</mo><msub><mi>W</mi><mn>1</mn></msub><mo
@@ -150,18 +240,34 @@
     separator="true">,</mo><mi>y</mi><mo stretchy="false">)</mo></mrow><annotation
     encoding="application/x-tex">\ell(\theta, y)</annotation></semantics>ℓ(θ,y) and
     then use stochastic gradient descent to minimize it.'
+  id: totrans-19
   prefs: []
   type: TYPE_NORMAL
+  zh: 为了使我们的符号更简洁一些，我们将使用<semantics><mrow><mi>θ</mi></mrow><annotation encoding="application/x-tex">\theta</annotation></semantics>θ来表示我们所有的参数：<semantics><mrow><mi>θ</mi><mo>=</mo><mo
+    stretchy="false">(</mo><msub><mi>W</mi><mn>1</mn></msub><mo separator="true">,</mo><msub><mi>W</mi><mn>2</mn></msub><mo
+    separator="true">,</mo><msub><mi>b</mi><mn>1</mn></msub><mo separator="true">,</mo><msub><mi>b</mi><mn>2</mn></msub><mo
+    stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">\theta
+    = (W_1, W_2, b_1, b_2)</annotation></semantics>θ=(W1​,W2​,b1​,b2​)。为了找到<semantics><mrow><mi>θ</mi></mrow><annotation
+    encoding="application/x-tex">\theta</annotation></semantics>θ的最佳值，我们将定义一个损失函数<semantics><mrow><mi
+    mathvariant="normal">ℓ</mi><mo stretchy="false">(</mo><mi>θ</mi><mo separator="true">,</mo><mi>y</mi><mo
+    stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">\ell(\theta,
+    y)</annotation></semantics>ℓ(θ,y)，然后使用随机梯度下降法来最小化它。
 - en: '[PRE0]'
+  id: totrans-20
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: Loading...
+  id: totrans-21
   prefs: []
   type: TYPE_NORMAL
+  zh: 加载中...
 - en: Empirical risk minimization[¶](#empirical-risk-minimization "Link to this Section")
+  id: totrans-22
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 经验风险最小化[¶](#empirical-risk-minimization "链接到此章节")
 - en: 'We start by choosing a loss function. In general, the choice of loss function
     depends on the problem we’re solving, but two common choices are the squared error
     loss (also known as <semantics><mrow><msub><mi mathvariant="normal">ℓ</mi><mn>2</mn></msub></mrow><annotation
@@ -169,8 +275,12 @@
     binary cross-entropy loss (BCE). Let’s consider the <semantics><mrow><msub><mi
     mathvariant="normal">ℓ</mi><mn>2</mn></msub></mrow><annotation encoding="application/x-tex">\ell_2</annotation></semantics>ℓ2​
     loss:'
+  id: totrans-23
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们首先选择一个损失函数。通常，损失函数的选择取决于我们所要解决的问题，但两种常见的选择是平方误差损失（也称为<semantics><mrow><msub><mi
+    mathvariant="normal">ℓ</mi><mn>2</mn></msub></mrow><annotation encoding="application/x-tex">\ell_2</annotation></semantics>ℓ2损失）和二元交叉熵损失（BCE）。让我们考虑<semantics><mrow><msub><mi
+    mathvariant="normal">ℓ</mi><mn>2</mn></msub></mrow><annotation encoding="application/x-tex">\ell_2</annotation></semantics>ℓ2损失：
 - en: <semantics><mtable rowspacing="0.25em" columnalign="right left" columnspacing="0em"><mtr><mtd><mstyle
     scriptlevel="0" displaystyle="true"><mrow><mi mathvariant="normal">ℓ</mi><mo stretchy="false">(</mo><mi>θ</mi><mo
     separator="true">,</mo><mi>y</mi><mo stretchy="false">)</mo></mrow></mstyle></mtd><mtd><mstyle
@@ -183,11 +293,26 @@
     encoding="application/x-tex">\begin{align*} \ell(\theta, y) &= (y - \hat{y})^2
     \\ &= \left(y - \left[W_2 f(W_1 x + b_1) + b_2\right]\right)^2 \end{align*}</annotation></semantics>ℓ(θ,y)​=(y−y^​)2=(y−[W2​f(W1​x+b1​)+b2​])2​[(4)](#evhlQrOOxS
     "Link to this Equation")
+  id: totrans-24
   prefs: []
   type: TYPE_NORMAL
+  zh: <semantics><mtable rowspacing="0.25em" columnalign="right left" columnspacing="0em"><mtr><mtd><mstyle
+    scriptlevel="0" displaystyle="true"><mrow><mi mathvariant="normal">ℓ</mi><mo stretchy="false">(</mo><mi>θ</mi><mo
+    separator="true">,</mo><mi>y</mi><mo stretchy="false">)</mo></mrow></mstyle></mtd><mtd><mstyle
+    scriptlevel="0" displaystyle="true"><mrow><mo>=</mo><mo stretchy="false">(</mo><mi>y</mi><mo>−</mo><mover
+    accent="true"><mi>y</mi><mo>^</mo></mover><msup><mo stretchy="false">)</mo><mn>2</mn></msup></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle
+    scriptlevel="0" displaystyle="true"><mrow><mo>=</mo><msup><mrow><mo fence="true">(</mo><mi>y</mi><mo>−</mo><mrow><mo
+    fence="true">[</mo><msub><mi>W</mi><mn>2</mn></msub><mi>f</mi><mo stretchy="false">(</mo><msub><mi>W</mi><mn>1</mn></msub><mi>x</mi><mo>+</mo><msub><mi>b</mi><mn>1</mn></msub><mo
+    stretchy="false">)</mo><mo>+</mo><msub><mi>b</mi><mn>2</mn></msub><mo fence="true">]</mo></mrow><mo
+    fence="true">)</mo></mrow><mn>2</mn></msup></mrow></mstyle></mtd></mtr></mtable><annotation
+    encoding="application/x-tex">\begin{align*} \ell(\theta, y) &= (y - \hat{y})^2
+    \\ &= \left(y - \left[W_2 f(W_1 x + b_1) + b_2\right]\right)^2 \end{align*}</annotation></semantics>ℓ(θ,y)​=(y−y^​)2=(y−[W2​f(W1​x+b1​)+b2​])2​[(4)](#evhlQrOOxS
+    "Link to this Equation")
 - en: 'We’ll minimize the average loss:'
+  id: totrans-25
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们将最小化平均损失：
 - en: <semantics><mtable rowspacing="0.25em" columnalign="right left" columnspacing="0em"><mtr><mtd><mstyle
     scriptlevel="0" displaystyle="true"><mrow><mi>R</mi><mo stretchy="false">(</mo><mi>θ</mi><mo
     stretchy="false">)</mo></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mo>=</mo><mfrac><mn>1</mn><mi>n</mi></mfrac><munderover><mo>∑</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mi>n</mi></munderover><msup><mrow><mo
@@ -198,28 +323,47 @@
     encoding="application/x-tex">\begin{align*} R(\theta) &= \frac{1}{n} \sum_{i=1}^n
     \left(y_i - \left[W_2 f(W_1 x_i + b_1) + b_2\right]\right)^2 \end{align*}</annotation></semantics>R(θ)​=n1​i=1∑n​(yi​−[W2​f(W1​xi​+b1​)+b2​])2​[(5)](#vsISgwaOxq
     "Link to this Equation")
+  id: totrans-26
   prefs: []
   type: TYPE_NORMAL
+  zh: <semantics><mtable rowspacing="0.25em" columnalign="right left" columnspacing="0em"><mtr><mtd><mstyle
+    scriptlevel="0" displaystyle="true"><mrow><mi>R</mi><mo stretchy="false">(</mo><mi>θ</mi><mo
+    stretchy="false">)</mo></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mo>=</mo><mfrac><mn>1</mn><mi>n</mi></mfrac><munderover><mo>∑</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mi>n</mi></munderover><msup><mrow><mo
+    fence="true">(</mo><msub><mi>y</mi><mi>i</mi></msub><mo>−</mo><mrow><mo fence="true">[</mo><msub><mi>W</mi><mn>2</mn></msub><mi>f</mi><mo
+    stretchy="false">(</mo><msub><mi>W</mi><mn>1</mn></msub><msub><mi>x</mi><mi>i</mi></msub><mo>+</mo><msub><mi>b</mi><mn>1</mn></msub><mo
+    stretchy="false">)</mo><mo>+</mo><msub><mi>b</mi><mn>2</mn></msub><mo fence="true">]</mo></mrow><mo
+    fence="true">)</mo></mrow><mn>2</mn></msup></mrow></mstyle></mtd></mtr></mtable><annotation
+    encoding="application/x-tex">\begin{align*} R(\theta) &= \frac{1}{n} \sum_{i=1}^n
+    \left(y_i - \left[W_2 f(W_1 x_i + b_1) + b_2\right]\right)^2 \end{align*}</annotation></semantics>R(θ)​=n1​i=1∑n​(yi​−[W2​f(W1​xi​+b1​)+b2​])2​[(5)](#vsISgwaOxq
+    "Link to this Equation")
 - en: Here, we’re averaging over the empirical distribution of the data in our training
     set, which makes this a **frequentist risk**. The process of minimizing this loss
     is often referred to as **empirical risk minimization**.
+  id: totrans-27
   prefs: []
   type: TYPE_NORMAL
+  zh: 这里，我们是在对训练集中数据的经验分布进行平均，这使其成为**频率主义风险**。最小化此损失的过程通常被称为**经验风险最小化**。
 - en: 'Review: Stochastic gradient descent[¶](#review-stochastic-gradient-descent
     "Link to this Section")'
+  id: totrans-28
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 回顾：随机梯度下降[¶](#review-stochastic-gradient-descent "Link to this Section")
 - en: '*For more on stochastic gradient descent, you may find it helpful to review
     Chapter of the Data 100 textbook*.'
+  id: totrans-29
   prefs: []
   type: TYPE_NORMAL
+  zh: '*关于随机梯度下降的更多内容，您可能会发现回顾 Data 100 教材的第章会有所帮助*。'
 - en: (Stochastic) gradient descent is a powerful tool that lets us find the minimum
     of any function, as long as we can compute its gradient. Recall that a gradient
     is a vector of partial derivatives with respect to each parameter. In the example
     above, our gradient would be
+  id: totrans-30
   prefs: []
   type: TYPE_NORMAL
+  zh: （随机）梯度下降是一个强大的工具，只要我们能计算函数的梯度，它就能让我们找到任何函数的最小值。回想一下，梯度是一个关于每个参数的偏导数向量。在上面的例子中，我们的梯度将是
 - en: <semantics><mrow><msub><mi mathvariant="normal">∇</mi><mi>θ</mi></msub><mi mathvariant="normal">ℓ</mi><mo
     stretchy="false">(</mo><mi>θ</mi><mo separator="true">,</mo><mi>y</mi><mo stretchy="false">)</mo><mo>=</mo><mrow><mo
     fence="true">(</mo><mtable rowspacing="0.16em" columnalign="center" columnspacing="1em"><mtr><mtd><mstyle
@@ -240,8 +384,29 @@
     y)\\ \frac{\partial \ell}{\partial W_2}(\theta, y)\\ \frac{\partial \ell}{\partial
     b_1}(\theta, y)\\ \frac{\partial \ell}{\partial b_2}(\theta, y) \end{pmatrix}</annotation></semantics>∇θ​ℓ(θ,y)=⎝⎛​∂W1​∂ℓ​(θ,y)∂W2​∂ℓ​(θ,y)∂b1​∂ℓ​(θ,y)∂b2​∂ℓ​(θ,y)​⎠⎞​[(6)](#YvFQgU6Qhm
     "Link to this Equation")
+  id: totrans-31
   prefs: []
   type: TYPE_NORMAL
+  zh: <semantics><mrow><msub><mi mathvariant="normal">∇</mi><mi>θ</mi></msub><mi mathvariant="normal">ℓ</mi><mo
+    stretchy="false">(</mo><mi>θ</mi><mo separator="true">,</mo><mi>y</mi><mo stretchy="false">)</mo><mo>=</mo><mrow><mo
+    fence="true">(</mo><mtable rowspacing="0.16em" columnalign="center" columnspacing="1em"><mtr><mtd><mstyle
+    scriptlevel="0" displaystyle="false"><mrow><mfrac><mrow><mi mathvariant="normal">∂</mi><mi
+    mathvariant="normal">ℓ</mi></mrow><mrow><mi mathvariant="normal">∂</mi><msub><mi>W</mi><mn>1</mn></msub></mrow></mfrac><mo
+    stretchy="false">(</mo><mi>θ</mi><mo separator="true">,</mo><mi>y</mi><mo stretchy="false">)</mo></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle
+    scriptlevel="0" displaystyle="false"><mrow><mfrac><mrow><mi mathvariant="normal">∂</mi><mi
+    mathvariant="normal">ℓ</mi></mrow><mrow><mi mathvariant="normal">∂</mi><msub><mi>W</mi><mn>2</mn></msub></mrow></mfrac><mo
+    stretchy="false">(</mo><mi>θ</mi><mo separator="true">,</mo><mi>y</mi><mo stretchy="false">)</mo></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle
+    scriptlevel="0" displaystyle="false"><mrow><mfrac><mrow><mi mathvariant="normal">∂</mi><mi
+    mathvariant="normal">ℓ</mi></mrow><mrow><mi mathvariant="normal">∂</mi><msub><mi>b</mi><mn>1</mn></msub></mrow></mfrac><mo
+    stretchy="false">(</mo><mi>θ</mi><mo separator="true">,</mo><mi>y</mi><mo stretchy="false">)</mo></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle
+    scriptlevel="0" displaystyle="false"><mrow><mfrac><mrow><mi mathvariant="normal">∂</mi><mi
+    mathvariant="normal">ℓ</mi></mrow><mrow><mi mathvariant="normal">∂</mi><msub><mi>b</mi><mn>2</mn></msub></mrow></mfrac><mo
+    stretchy="false">(</mo><mi>θ</mi><mo separator="true">,</mo><mi>y</mi><mo stretchy="false">)</mo></mrow></mstyle></mtd></mtr></mtable><mo
+    fence="true">)</mo></mrow></mrow><annotation encoding="application/x-tex">\nabla_\theta
+    \ell (\theta, y) = \begin{pmatrix} \frac{\partial \ell}{\partial W_1}(\theta,
+    y)\\ \frac{\partial \ell}{\partial W_2}(\theta, y)\\ \frac{\partial \ell}{\partial
+    b_1}(\theta, y)\\ \frac{\partial \ell}{\partial b_2}(\theta, y) \end{pmatrix}</annotation></semantics>∇θ​ℓ(θ,y)=⎝⎛​∂W1​∂ℓ​(θ,y)∂W2​∂ℓ​(θ,y)∂b1​∂ℓ​(θ,y)∂b2​∂ℓ​(θ,y)​⎠⎞​[(6)](#YvFQgU6Qhm
+    "链接到此方程")
 - en: '**Gradient descent** is an optimization procedure where we start with an initial
     estimate for our parameters, <semantics><mrow><msup><mi>θ</mi><mrow><mo stretchy="false">(</mo><mn>0</mn><mo
     stretchy="false">)</mo></mrow></msup></mrow><annotation encoding="application/x-tex">\theta^{(0)}</annotation></semantics>θ(0).
@@ -250,8 +415,16 @@
     separator="true">,</mo><msup><mi>θ</mi><mrow><mo stretchy="false">(</mo><mn>2</mn><mo
     stretchy="false">)</mo></mrow></msup><mo separator="true">,</mo><mo>…</mo></mrow><annotation
     encoding="application/x-tex">\theta^{(1)}, \theta^{(2)}, \ldots</annotation></semantics>θ(1),θ(2),…:'
+  id: totrans-32
   prefs: []
   type: TYPE_NORMAL
+  zh: '**梯度下降**是一种优化过程，我们从参数的初始估计值 <semantics><mrow><msup><mi>θ</mi><mrow><mo stretchy="false">(</mo><mn>0</mn><mo
+    stretchy="false">)</mo></mrow></msup></mrow><annotation encoding="application/x-tex">\theta^{(0)}</annotation></semantics>θ(0)
+    开始。然后我们反复应用以下更新来得到 <semantics><mrow><msup><mi>θ</mi><mrow><mo stretchy="false">(</mo><mn>1</mn><mo
+    stretchy="false">)</mo></mrow></msup><mo separator="true">,</mo><msup><mi>θ</mi><mrow><mo
+    stretchy="false">(</mo><mn>2</mn><mo stretchy="false">)</mo></mrow></msup><mo
+    separator="true">,</mo><mo>…</mo></mrow><annotation encoding="application/x-tex">\theta^{(1)},
+    \theta^{(2)}, \ldots</annotation></semantics>θ(1),θ(2),…：'
 - en: <semantics><mrow><msup><mi>θ</mi><mrow><mo stretchy="false">(</mo><mi>t</mi><mo>+</mo><mn>1</mn><mo
     stretchy="false">)</mo></mrow></msup><mo>=</mo><msup><mi>θ</mi><mrow><mo stretchy="false">(</mo><mi>t</mi><mo
     stretchy="false">)</mo></mrow></msup><mo>−</mo><mi>α</mi><msub><mi mathvariant="normal">∇</mi><mi>θ</mi></msub><mi
@@ -261,57 +434,93 @@
     encoding="application/x-tex">\theta^{(t+1)} = \theta^{(t)} - \alpha \nabla_\theta
     \ell(\theta^{(t)}, y)</annotation></semantics>θ(t+1)=θ(t)−α∇θ​ℓ(θ(t),y)[(7)](#e8AkbdVF17
     "Link to this Equation")
+  id: totrans-33
   prefs: []
   type: TYPE_NORMAL
+  zh: <semantics><mrow><msup><mi>θ</mi><mrow><mo stretchy="false">(</mo><mi>t</mi><mo>+</mo><mn>1</mn><mo
+    stretchy="false">)</mo></mrow></msup><mo>=</mo><msup><mi>θ</mi><mrow><mo stretchy="false">(</mo><mi>t</mi><mo
+    stretchy="false">)</mo></mrow></msup><mo>−</mo><mi>α</mi><msub><mi mathvariant="normal">∇</mi><mi>θ</mi></msub><mi
+    mathvariant="normal">ℓ</mi><mo stretchy="false">(</mo><msup><mi>θ</mi><mrow><mo
+    stretchy="false">(</mo><mi>t</mi><mo stretchy="false">)</mo></mrow></msup><mo
+    separator="true">,</mo><mi>y</mi><mo stretchy="false">)</mo></mrow><annotation
+    encoding="application/x-tex">\theta^{(t+1)} = \theta^{(t)} - \alpha \nabla_\theta
+    \ell(\theta^{(t)}, y)</annotation></semantics>θ(t+1)=θ(t)−α∇θ​ℓ(θ(t),y)[(7)](#e8AkbdVF17
+    "链接到此公式")
 - en: Here, <semantics><mrow><mi>α</mi></mrow><annotation encoding="application/x-tex">\alpha</annotation></semantics>α
     is a learning rate (typically a small positive number, also sometimes called a
     step size), and <semantics><mrow><mi>y</mi></mrow><annotation encoding="application/x-tex">y</annotation></semantics>y
     is the data we observed. In **stochastic gradient descent**, instead of computing
     the gradient using all of our data, we divide our data into batches, and at each
     iteration, compute the gradient on one batch in sequence.
+  id: totrans-34
   prefs: []
   type: TYPE_NORMAL
+  zh: 这里，<semantics><mrow><mi>α</mi></mrow><annotation encoding="application/x-tex">\alpha</annotation></semantics>α
+    是学习率（通常是一个小的正数，有时也称为步长），而 <semantics><mrow><mi>y</mi></mrow><annotation encoding="application/x-tex">y</annotation></semantics>y
+    是我们观测到的数据。在**随机梯度下降**中，我们不是使用所有数据来计算梯度，而是将数据分成批次，并在每次迭代中依次计算一个批次的梯度。
 - en: This means that we must compute the gradient at every single iteration. So,
     anything we can do to compute gradients faster and more efficiently will make
     our entire optimization process faster and more efficient.
+  id: totrans-35
   prefs: []
   type: TYPE_NORMAL
+  zh: 这意味着我们必须在每次迭代中计算梯度。因此，任何能让我们更快、更高效计算梯度的方法，都将使我们的整个优化过程更快、更高效。
 - en: '[PRE1]'
+  id: totrans-36
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: Loading...
+  id: totrans-37
   prefs: []
   type: TYPE_NORMAL
+  zh: 加载中...
 - en: Gradients and Backpropagation[¶](#gradients-and-backpropagation "Link to this
     Section")
+  id: totrans-38
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 梯度与反向传播[¶](#gradients-and-backpropagation "链接到此章节")
 - en: Backpropagation is an algorithm for efficiently computing gradients by applying
     the chain rule in an order designed to avoid redundant computation. To see how
     it works, we’ll consider a very simple loss function of three variables. We’ll
     compute the gradient manually using the chain rule, and then we’ll see how backpropagation
     can do the same computation more efficiently.
+  id: totrans-39
   prefs: []
   type: TYPE_NORMAL
+  zh: 反向传播是一种通过按特定顺序应用链式法则来高效计算梯度的算法，该顺序旨在避免冗余计算。为了理解其工作原理，我们将考虑一个包含三个变量的非常简单的损失函数。我们将使用链式法则手动计算梯度，然后看看反向传播如何能更高效地进行相同的计算。
 - en: Computing gradients with the chain rule[¶](#computing-gradients-with-the-chain-rule
     "Link to this Section")
+  id: totrans-40
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 使用链式法则计算梯度[¶](#computing-gradients-with-the-chain-rule "链接到此章节")
 - en: 'Consider a very simple loss function involving three variables, <semantics><mrow><mi>a</mi></mrow><annotation
     encoding="application/x-tex">a</annotation></semantics>a, <semantics><mrow><mi>b</mi></mrow><annotation
     encoding="application/x-tex">b</annotation></semantics>b, and <semantics><mrow><mi>c</mi></mrow><annotation
     encoding="application/x-tex">c</annotation></semantics>c:'
+  id: totrans-41
   prefs: []
   type: TYPE_NORMAL
+  zh: 考虑一个涉及三个变量 <semantics><mrow><mi>a</mi></mrow><annotation encoding="application/x-tex">a</annotation></semantics>a、<semantics><mrow><mi>b</mi></mrow><annotation
+    encoding="application/x-tex">b</annotation></semantics>b 和 <semantics><mrow><mi>c</mi></mrow><annotation
+    encoding="application/x-tex">c</annotation></semantics>c 的非常简单的损失函数：
 - en: <semantics><mrow><mi>L</mi><mo stretchy="false">(</mo><mi>a</mi><mo separator="true">,</mo><mi>b</mi><mo
     separator="true">,</mo><mi>c</mi><mo stretchy="false">)</mo><mo>=</mo><mo stretchy="false">(</mo><mi>a</mi><mo>+</mo><mn>3</mn><mi>b</mi><mo
     stretchy="false">)</mo><msup><mi>c</mi><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">L(a,
     b, c) = (a + 3b)c^2</annotation></semantics>L(a,b,c)=(a+3b)c2[(8)](#IzwNxcz1Y5
     "Link to this Equation")
+  id: totrans-42
   prefs: []
   type: TYPE_NORMAL
+  zh: <semantics><mrow><mi>L</mi><mo stretchy="false">(</mo><mi>a</mi><mo separator="true">,</mo><mi>b</mi><mo
+    separator="true">,</mo><mi>c</mi><mo stretchy="false">)</mo><mo>=</mo><mo stretchy="false">(</mo><mi>a</mi><mo>+</mo><mn>3</mn><mi>b</mi><mo
+    stretchy="false">)</mo><msup><mi>c</mi><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">L(a,
+    b, c) = (a + 3b)c^2</annotation></semantics>L(a,b,c)=(a+3b)c2[(8)](#IzwNxcz1Y5
+    "链接到此方程")
 - en: 'We can compute the partial derivatives with respect to <semantics><mrow><mi>a</mi></mrow><annotation
     encoding="application/x-tex">a</annotation></semantics>a, <semantics><mrow><mi>b</mi></mrow><annotation
     encoding="application/x-tex">b</annotation></semantics>b, and <semantics><mrow><mi>c</mi></mrow><annotation
@@ -321,8 +530,16 @@
     encoding="application/x-tex">r = c^2</annotation></semantics>r=c2, so that <semantics><mrow><mi>L</mi><mo>=</mo><mi>q</mi><mi>r</mi></mrow><annotation
     encoding="application/x-tex">L = qr</annotation></semantics>L=qr. The partial
     derivatives are:'
+  id: totrans-43
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们可以计算关于 <semantics><mrow><mi>a</mi></mrow><annotation encoding="application/x-tex">a</annotation></semantics>a、<semantics><mrow><mi>b</mi></mrow><annotation
+    encoding="application/x-tex">b</annotation></semantics>b 和 <semantics><mrow><mi>c</mi></mrow><annotation
+    encoding="application/x-tex">c</annotation></semantics>c 的偏导数。为了更清晰地展示我们在何时何地使用链式法则，令
+    <semantics><mrow><mi>q</mi><mo>=</mo><mi>a</mi><mo>+</mo><mn>3</mn><mi>b</mi></mrow><annotation
+    encoding="application/x-tex">q = a+3b</annotation></semantics>q=a+3b 且 <semantics><mrow><mi>r</mi><mo>=</mo><msup><mi>c</mi><mn>2</mn></msup></mrow><annotation
+    encoding="application/x-tex">r = c^2</annotation></semantics>r=c2，于是有 <semantics><mrow><mi>L</mi><mo>=</mo><mi>q</mi><mi>r</mi></mrow><annotation
+    encoding="application/x-tex">L = qr</annotation></semantics>L=qr。偏导数如下：
 - en: <semantics><mtable rowspacing="0.25em" columnalign="right left" columnspacing="0em"><mtr><mtd><mstyle
     scriptlevel="0" displaystyle="true"><mfrac><mrow><mi mathvariant="normal">∂</mi><mi>L</mi></mrow><mrow><mi
     mathvariant="normal">∂</mi><mi>a</mi></mrow></mfrac></mstyle></mtd><mtd><mstyle
@@ -346,8 +563,32 @@
     b} = c^2 \cdot 3 \\ \frac{\partial L}{\partial c} &= \frac{\partial L}{\partial
     r}\cdot\frac{\partial r}{\partial c} = (a+3b) \cdot 2c \end{align*}</annotation></semantics>∂a∂L​∂b∂L​∂c∂L​​=∂q∂L​⋅∂a∂q​=c2⋅1=∂q∂L​⋅∂b∂q​=c2⋅3=∂r∂L​⋅∂c∂r​=(a+3b)⋅2c​[(9)](#Y7DiwIAIiu
     "Link to this Equation")
+  id: totrans-44
   prefs: []
   type: TYPE_NORMAL
+  zh: <semantics><mtable rowspacing="0.25em" columnalign="right left" columnspacing="0em"><mtr><mtd><mstyle
+    scriptlevel="0" displaystyle="true"><mfrac><mrow><mi mathvariant="normal">∂</mi><mi>L</mi></mrow><mrow><mi
+    mathvariant="normal">∂</mi><mi>a</mi></mrow></mfrac></mstyle></mtd><mtd><mstyle
+    scriptlevel="0" displaystyle="true"><mrow><mo>=</mo><mfrac><mrow><mi mathvariant="normal">∂</mi><mi>L</mi></mrow><mrow><mi
+    mathvariant="normal">∂</mi><mi>q</mi></mrow></mfrac><mo>⋅</mo><mfrac><mrow><mi
+    mathvariant="normal">∂</mi><mi>q</mi></mrow><mrow><mi mathvariant="normal">∂</mi><mi>a</mi></mrow></mfrac><mo>=</mo><msup><mi>c</mi><mn>2</mn></msup><mo>⋅</mo><mn>1</mn></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle
+    scriptlevel="0" displaystyle="true"><mfrac><mrow><mi mathvariant="normal">∂</mi><mi>L</mi></mrow><mrow><mi
+    mathvariant="normal">∂</mi><mi>b</mi></mrow></mfrac></mstyle></mtd><mtd><mstyle
+    scriptlevel="0" displaystyle="true"><mrow><mo>=</mo><mfrac><mrow><mi mathvariant="normal">∂</mi><mi>L</mi></mrow><mrow><mi
+    mathvariant="normal">∂</mi><mi>q</mi></mrow></mfrac><mo>⋅</mo><mfrac><mrow><mi
+    mathvariant="normal">∂</mi><mi>q</mi></mrow><mrow><mi mathvariant="normal">∂</mi><mi>b</mi></mrow></mfrac><mo>=</mo><msup><mi>c</mi><mn>2</mn></msup><mo>⋅</mo><mn>3</mn></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle
+    scriptlevel="0" displaystyle="true"><mfrac><mrow><mi mathvariant="normal">∂</mi><mi>L</mi></mrow><mrow><mi
+    mathvariant="normal">∂</mi><mi>c</mi></mrow></mfrac></mstyle></mtd><mtd><mstyle
+    scriptlevel="0" displaystyle="true"><mrow><mo>=</mo><mfrac><mrow><mi mathvariant="normal">∂</mi><mi>L</mi></mrow><mrow><mi
+    mathvariant="normal">∂</mi><mi>r</mi></mrow></mfrac><mo>⋅</mo><mfrac><mrow><mi
+    mathvariant="normal">∂</mi><mi>r</mi></mrow><mrow><mi mathvariant="normal">∂</mi><mi>c</mi></mrow></mfrac><mo>=</mo><mo
+    stretchy="false">(</mo><mi>a</mi><mo>+</mo><mn>3</mn><mi>b</mi><mo stretchy="false">)</mo><mo>⋅</mo><mn>2</mn><mi>c</mi></mrow></mstyle></mtd></mtr></mtable><annotation
+    encoding="application/x-tex">\begin{align*} \frac{\partial L}{\partial a} &= \frac{\partial
+    L}{\partial q}\cdot\frac{\partial q}{\partial a} = c^2 \cdot 1 \\ \frac{\partial
+    L}{\partial b} &= \frac{\partial L}{\partial q}\cdot\frac{\partial q}{\partial
+    b} = c^2 \cdot 3 \\ \frac{\partial L}{\partial c} &= \frac{\partial L}{\partial
+    r}\cdot\frac{\partial r}{\partial c} = (a+3b) \cdot 2c \end{align*}</annotation></semantics>∂a∂L​∂b∂L​∂c∂L​​=∂q∂L​⋅∂a∂q​=c2⋅1=∂q∂L​⋅∂b∂q​=c2⋅3=∂r∂L​⋅∂c∂r​=(a+3b)⋅2c​[(9)](#Y7DiwIAIiu
+    "链接到此方程")
 - en: 'Even in this simple example, we can see that there was some redundant work
     involved: in doing this computation, we needed to compute <semantics><mrow><mfrac><mrow><mi
     mathvariant="normal">∂</mi><mi>L</mi></mrow><mrow><mi mathvariant="normal">∂</mi><mi>q</mi></mrow></mfrac><mo>=</mo><msup><mi>c</mi><mn>2</mn></msup></mrow><annotation
@@ -355,59 +596,91 @@
     twice. In a more complicated expression, especially one with many nested function
     calls, the redundant work would become much worse. Backpropagation gives us a
     way to compute these gradients more efficiently.'
+  id: totrans-45
   prefs: []
   type: TYPE_NORMAL
+  zh: 即使在这个简单的例子中，我们也能看出其中涉及了一些冗余工作：在进行此计算时，我们需要计算两次 <semantics><mrow><mfrac><mrow><mi
+    mathvariant="normal">∂</mi><mi>L</mi></mrow><mrow><mi mathvariant="normal">∂</mi><mi>q</mi></mrow></mfrac><mo>=</mo><msup><mi>c</mi><mn>2</mn></msup></mrow><annotation
+    encoding="application/x-tex">\frac{\partial L}{\partial q} = c^2</annotation></semantics>∂q∂L​=c2。在一个更复杂的表达式中，尤其是在有许多嵌套函数调用的情况下，冗余工作会变得严重得多。反向传播为我们提供了一种更高效计算这些梯度的方法。
 - en: '[PRE2]'
+  id: totrans-46
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: Loading...
+  id: totrans-47
   prefs: []
   type: TYPE_NORMAL
+  zh: 加载中...
 - en: '[PRE3]'
+  id: totrans-48
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: Loading...
+  id: totrans-49
   prefs: []
   type: TYPE_NORMAL
+  zh: 加载中...
 - en: 'Backpropagation: an example[¶](#backpropagation-an-example "Link to this Section")'
+  id: totrans-50
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 反向传播：一个示例[¶](#backpropagation-an-example "链接至此章节")
 - en: Instead of representing the computation as an algebraic expression, let’s express
     it as a computation graph. This is a visual representation of the mathematical
     expression.
+  id: totrans-51
   prefs: []
   type: TYPE_NORMAL
+  zh: 与其将计算表示为代数表达式，不如将其表示为计算图。这是数学表达式的可视化表示。
 - en: Given specific numerical values for <semantics><mrow><mi>a</mi></mrow><annotation
     encoding="application/x-tex">a</annotation></semantics>a, <semantics><mrow><mi>b</mi></mrow><annotation
     encoding="application/x-tex">b</annotation></semantics>b, and <semantics><mrow><mi>c</mi></mrow><annotation
     encoding="application/x-tex">c</annotation></semantics>c, backpropagation is an
     efficient way to compute the loss and the gradient (i.e., all the partial derivatives),
     with no redundant computation.
+  id: totrans-52
   prefs: []
   type: TYPE_NORMAL
+  zh: 给定 <semantics><mrow><mi>a</mi></mrow><annotation encoding="application/x-tex">a</annotation></semantics>a、<semantics><mrow><mi>b</mi></mrow><annotation
+    encoding="application/x-tex">b</annotation></semantics>b 和 <semantics><mrow><mi>c</mi></mrow><annotation
+    encoding="application/x-tex">c</annotation></semantics>c 的具体数值，反向传播是一种计算损失和梯度（即所有偏导数）的高效方法，且没有冗余计算。
 - en: 'We start by computing the loss itself. This involves just doing the computations
     specified by the graph, denoted by the blue numbers above the arrows:'
+  id: totrans-53
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们首先计算损失函数本身。这仅涉及执行图中箭头上方蓝色数字所指定的计算：
 - en: '![](../Images/7ebf128674b110b75005a4932a279339.png)'
+  id: totrans-54
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/7ebf128674b110b75005a4932a279339.png)'
 - en: Next, let’s notice that when we did the calculations in the previous section
     to find the gradient, most of our expressions started at the loss, then, using
     the chain rule, computed partial derivatives with respect to things like <semantics><mrow><mi>q</mi></mrow><annotation
     encoding="application/x-tex">q</annotation></semantics>q and <semantics><mrow><mi>r</mi></mrow><annotation
     encoding="application/x-tex">r</annotation></semantics>r. Let’s try to write these
     partial derivatives on the graph, and see if we can use them to keep working backwards.
+  id: totrans-55
   prefs: []
   type: TYPE_NORMAL
+  zh: 接下来，我们注意到，在上一节计算梯度时，我们的大多数表达式都是从损失函数开始，然后利用链式法则计算关于 <semantics><mrow><mi>q</mi></mrow><annotation
+    encoding="application/x-tex">q</annotation></semantics>q 和 <semantics><mrow><mi>r</mi></mrow><annotation
+    encoding="application/x-tex">r</annotation></semantics>r 等变量的偏导数。让我们尝试将这些偏导数写在图上，看看是否能利用它们继续反向工作。
 - en: 'First, we’ll start with the easiest derivative, the derivative of the loss
     with respect to itself: <semantics><mrow><mfrac><mrow><mi mathvariant="normal">∂</mi><mi>L</mi></mrow><mrow><mi
     mathvariant="normal">∂</mi><mi>L</mi></mrow></mfrac></mrow><annotation encoding="application/x-tex">\frac{\partial
     L}{\partial L}</annotation></semantics>∂L∂L​. This is just 1!'
+  id: totrans-56
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 首先，我们从最简单的导数开始，即损失函数对其自身的导数：<semantics><mrow><mfrac><mrow><mi mathvariant="normal">∂</mi><mi>L</mi></mrow><mrow><mi
+    mathvariant="normal">∂</mi><mi>L</mi></mrow></mfrac></mrow><annotation encoding="application/x-tex">\frac{\partial
+    L}{\partial L}</annotation></semantics>∂L∂L​。结果就是 1！
 - en: Next, we’ll compute the derivative of the loss with respect to <semantics><mrow><mi>q</mi></mrow><annotation
     encoding="application/x-tex">q</annotation></semantics>q (top right branch of
     the graph). How did we get from <semantics><mrow><mi>q</mi></mrow><annotation
@@ -418,9 +691,17 @@
     derivative of <semantics><mrow><mi>L</mi></mrow><annotation encoding="application/x-tex">L</annotation></semantics>L
     with respect to <semantics><mrow><mi>q</mi></mrow><annotation encoding="application/x-tex">q</annotation></semantics>q
     is just 16.
+  id: totrans-57
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 接下来，我们将计算损失相对于 <semantics><mrow><mi>q</mi></mrow><annotation encoding="application/x-tex">q</annotation></semantics>q（图中右上分支）的导数。我们是如何从
+    <semantics><mrow><mi>q</mi></mrow><annotation encoding="application/x-tex">q</annotation></semantics>q
+    得到 <semantics><mrow><mi>L</mi></mrow><annotation encoding="application/x-tex">L</annotation></semantics>L
+    的呢？我们将其乘以了 16（也就是说，对于这些特定的数值，<semantics><mrow><mi>L</mi><mo>=</mo><mn>16</mn><mi>q</mi></mrow><annotation
+    encoding="application/x-tex">L = 16q</annotation></semantics>L=16q）。因此，<semantics><mrow><mi>L</mi></mrow><annotation
+    encoding="application/x-tex">L</annotation></semantics>L 相对于 <semantics><mrow><mi>q</mi></mrow><annotation
+    encoding="application/x-tex">q</annotation></semantics>q 的偏导数就是 16。
 - en: 'Continuing along the top part of the graph, now we can compute the derivative
     with respect to <semantics><mrow><mi>a</mi></mrow><annotation encoding="application/x-tex">a</annotation></semantics>a.
     How did we get from <semantics><mrow><mi>a</mi></mrow><annotation encoding="application/x-tex">a</annotation></semantics>a
@@ -440,9 +721,27 @@
     L}{\partial q}</annotation></semantics>∂q∂L​ = 16\. So, our answer is <semantics><mrow><mfrac><mrow><mi
     mathvariant="normal">∂</mi><mi>L</mi></mrow><mrow><mi mathvariant="normal">∂</mi><mi>a</mi></mrow></mfrac><mo>=</mo><mn>1</mn><mo>⋅</mo><mn>16</mn><mo>=</mo><mn>16</mn></mrow><annotation
     encoding="application/x-tex">\frac{\partial L}{\partial a} = 1 \cdot 16 = 16</annotation></semantics>∂a∂L​=1⋅16=16.'
+  id: totrans-58
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 沿着图的上半部分继续，现在我们可以计算关于 <semantics><mrow><mi>a</mi></mrow><annotation encoding="application/x-tex">a</annotation></semantics>a
+    的导数。我们是如何从 <semantics><mrow><mi>a</mi></mrow><annotation encoding="application/x-tex">a</annotation></semantics>a
+    得到 <semantics><mrow><mi>q</mi></mrow><annotation encoding="application/x-tex">q</annotation></semantics>q
+    的？我们加了 9（也就是说，对于这些具体的数字，<semantics><mrow><mi>q</mi><mo>=</mo><mi>a</mi><mo>+</mo><mn>9</mn></mrow><annotation
+    encoding="application/x-tex">q = a + 9</annotation></semantics>q=a+9）。因此，<semantics><mrow><mi>q</mi></mrow><annotation
+    encoding="application/x-tex">q</annotation></semantics>q 关于 <semantics><mrow><mi>a</mi></mrow><annotation
+    encoding="application/x-tex">a</annotation></semantics>a 的偏导数就是 1。但我们要计算的是 <semantics><mrow><mfrac><mrow><mi
+    mathvariant="normal">∂</mi><mi>L</mi></mrow><mrow><mi mathvariant="normal">∂</mi><mi>a</mi></mrow></mfrac></mrow><annotation
+    encoding="application/x-tex">\frac{\partial L}{\partial a}</annotation></semantics>∂a∂L​，而不是
+    <semantics><mrow><mfrac><mrow><mi mathvariant="normal">∂</mi><mi>q</mi></mrow><mrow><mi
+    mathvariant="normal">∂</mi><mi>a</mi></mrow></mfrac></mrow><annotation encoding="application/x-tex">\frac{\partial
+    q}{\partial a}</annotation></semantics>∂a∂q​。所以，我们将利用链式法则，乘以“到目前为止的导数”：即 <semantics><mrow><mfrac><mrow><mi
+    mathvariant="normal">∂</mi><mi>L</mi></mrow><mrow><mi mathvariant="normal">∂</mi><mi>q</mi></mrow></mfrac></mrow><annotation
+    encoding="application/x-tex">\frac{\partial L}{\partial q}</annotation></semantics>∂q∂L​
+    = 16。因此，我们的答案是 <semantics><mrow><mfrac><mrow><mi mathvariant="normal">∂</mi><mi>L</mi></mrow><mrow><mi
+    mathvariant="normal">∂</mi><mi>a</mi></mrow></mfrac><mo>=</mo><mn>1</mn><mo>⋅</mo><mn>16</mn><mo>=</mo><mn>16</mn></mrow><annotation
+    encoding="application/x-tex">\frac{\partial L}{\partial a} = 1 \cdot 16 = 16</annotation></semantics>∂a∂L​=1⋅16=16。
 - en: Next, we’ll look at the <semantics><mrow><mi>b</mi></mrow><annotation encoding="application/x-tex">b</annotation></semantics>b
     branch of the graph. From similar reasoning to above, the derivative at the output
     of the “multiply by three” block is just 16\. How do we use that to compute the
@@ -450,9 +749,15 @@
     To get from <semantics><mrow><mi>b</mi></mrow><annotation encoding="application/x-tex">b</annotation></semantics>b
     to that value, we multiplied by 3\. So, the corresponding term in the chain rule
     is 3\. We multiply that with what we have so far, 16, to get 48.
+  id: totrans-59
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 接下来，我们来看图的 <semantics><mrow><mi>b</mi></mrow><annotation encoding="application/x-tex">b</annotation></semantics>b
+    分支。根据与上述类似的推理，“乘以三”模块输出处的导数就是 16。我们如何利用它来计算关于 <semantics><mrow><mi>b</mi></mrow><annotation
+    encoding="application/x-tex">b</annotation></semantics>b 的导数呢？从 <semantics><mrow><mi>b</mi></mrow><annotation
+    encoding="application/x-tex">b</annotation></semantics>b 到该值，我们乘以了 3。因此，链式法则中对应的项是
+    3。我们将其与目前已有的值 16 相乘，得到 48。
 - en: Finally, let’s look at the <semantics><mrow><mi>c</mi></mrow><annotation encoding="application/x-tex">c</annotation></semantics>c
     branch at the bottom of the graph. We’ll start by computing the derivative with
     respect to <semantics><mrow><mi>r</mi></mrow><annotation encoding="application/x-tex">r</annotation></semantics>r.
@@ -460,9 +765,15 @@
     encoding="application/x-tex">r</annotation></semantics>r by 11 to get <semantics><mrow><mi>L</mi></mrow><annotation
     encoding="application/x-tex">L</annotation></semantics>L, so that means that the
     derivative is 11.
+  id: totrans-60
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 最后，我们来看计算图底部的 <semantics><mrow><mi>c</mi></mrow><annotation encoding="application/x-tex">c</annotation></semantics>c
+    分支。首先计算关于 <semantics><mrow><mi>r</mi></mrow><annotation encoding="application/x-tex">r</annotation></semantics>r
+    的导数。与上面的步骤 2 类似，我们将 <semantics><mrow><mi>r</mi></mrow><annotation encoding="application/x-tex">r</annotation></semantics>r
+    乘以 11 得到 <semantics><mrow><mi>L</mi></mrow><annotation encoding="application/x-tex">L</annotation></semantics>L，这意味着导数为
+    11。
 - en: All we have left is to go through the “square” block. The derivative of its
     output with respect to its input is two times the input (in other words, <semantics><mrow><mfrac><mrow><mi
     mathvariant="normal">∂</mi><mi>r</mi></mrow><mrow><mi mathvariant="normal">∂</mi><mi>c</mi></mrow></mfrac><mo>=</mo><mn>2</mn><mi>c</mi></mrow><annotation
@@ -470,89 +781,142 @@
     Since the input was 4, that means our new term is 8, and our overall derivative
     on this branch is <semantics><mrow><mn>11</mn><mo>⋅</mo><mn>8</mn><mo>=</mo><mn>88</mn></mrow><annotation
     encoding="application/x-tex">11 \cdot 8 = 88</annotation></semantics>11⋅8=88.
+  id: totrans-61
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 最后只剩下“平方”模块。其输出相对于输入的导数是输入的两倍（即 <semantics><mrow><mfrac><mrow><mi mathvariant="normal">∂</mi><mi>r</mi></mrow><mrow><mi
+    mathvariant="normal">∂</mi><mi>c</mi></mrow></mfrac><mo>=</mo><mn>2</mn><mi>c</mi></mrow><annotation
+    encoding="application/x-tex">\frac{\partial r}{\partial c} = 2c</annotation></semantics>∂c∂r​=2c）。由于输入是
+    4，这意味着我们的新项是 8，而此分支上的总导数为 <semantics><mrow><mn>11</mn><mo>⋅</mo><mn>8</mn><mo>=</mo><mn>88</mn></mrow><annotation
+    encoding="application/x-tex">11 \cdot 8 = 88</annotation></semantics>11⋅8=88。
 - en: 'Now we’re done! We’ve computed the derivatives, as shown in this completed
     graph with the backpropagation intermediate and final results in red below the
     arrows:'
+  id: totrans-62
   prefs: []
   type: TYPE_NORMAL
+  zh: 现在完成了！我们已经计算出了导数，如下方已完成的计算图所示，其中反向传播的中间结果和最终结果以红色标注在箭头下方：
 - en: '![](../Images/117fd80086b487684adb958efd1e1ec3.png)'
+  id: totrans-63
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/117fd80086b487684adb958efd1e1ec3.png)'
 - en: '[PRE4]'
+  id: totrans-64
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE4]'
 - en: Loading...
+  id: totrans-65
   prefs: []
   type: TYPE_NORMAL
+  zh: 加载中...
 - en: Backpropagation[¶](#backpropagation "Link to this Section")
+  id: totrans-66
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 反向传播[¶](#backpropagation "Link to this Section")
 - en: In general, all we need to successfully run backpropagation is the ability to
     differentiate every mathematical building block of our loss (don’t forget, the
     loss depends on the prediction). For every building block, we need to know how
     to compute the forward pass (the mathematical operation, like addition, multiplication,
     squaring, etc.) and the backward pass (multiplying by the derivative).
+  id: totrans-67
   prefs: []
   type: TYPE_NORMAL
+  zh: 总的来说，成功运行反向传播只需要能够对损失函数的每个数学构建模块进行微分（别忘了，损失取决于预测值）。对于每个构建模块，我们需要知道如何计算前向传播（数学运算，如加法、乘法、平方等）和反向传播（乘以导数）。
 - en: (Optional) Backpropagation in pytorch[¶](#id-optional-backpropagation-in-pytorch
     "Link to this Section")
+  id: totrans-68
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: （可选）PyTorch 中的反向传播[¶](#id-optional-backpropagation-in-pytorch "Link to this
+    Section")
 - en: 'Let’s see what this looks like in code using pytorch. We start by defining
     tensors for a, b, and c: tensors are the basic datatype of pytorch, much like
     arrays in numpy.'
+  id: totrans-69
   prefs: []
   type: TYPE_NORMAL
+  zh: 让我们看看在 PyTorch 代码中这是如何实现的。首先为 a、b 和 c 定义张量：张量是 PyTorch 的基本数据类型，类似于 NumPy 中的数组。
 - en: '[PRE5]'
+  id: totrans-70
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE5]'
 - en: 'We then define tensors for q and r. Note that each one contains both the value
     computed as well as the necessary operation to compute the gradient in the backward
     pass:'
+  id: totrans-71
   prefs: []
   type: TYPE_NORMAL
+  zh: 接着我们为 q 和 r 定义张量。请注意，每个张量既包含计算得到的值，也包含反向传播中计算梯度所需的必要操作：
 - en: '[PRE6]'
+  id: totrans-72
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE6]'
 - en: '[PRE7]'
+  id: totrans-73
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE7]'
 - en: 'Finally, we define our loss:'
+  id: totrans-74
   prefs: []
   type: TYPE_NORMAL
+  zh: 最后，我们定义损失函数：
 - en: '[PRE8]'
+  id: totrans-75
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE8]'
 - en: '`tensor(176., grad_fn=<MulBackward0>)`'
+  id: totrans-76
   prefs: []
   type: TYPE_NORMAL
+  zh: '`tensor(176., grad_fn=<MulBackward0>)`'
 - en: 'Now that we’ve computed the loss, we can have PyTorch run backpropagation and
     compute all the derivatives with the `.backward()` method:'
+  id: totrans-77
   prefs: []
   type: TYPE_NORMAL
+  zh: 计算完损失后，我们可以让 PyTorch 运行反向传播，并通过 `.backward()` 方法计算所有导数：
 - en: '[PRE9]'
+  id: totrans-78
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE9]'
 - en: 'Let’s look at the gradient for each input:'
+  id: totrans-79
   prefs: []
   type: TYPE_NORMAL
+  zh: 让我们看看每个输入的梯度：
 - en: '[PRE10]'
+  id: totrans-80
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE10]'
 - en: '[PRE11]'
+  id: totrans-81
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE11]'
 - en: We can see that the results match up precisely with what we computed above manually!
+  id: totrans-82
   prefs: []
   type: TYPE_NORMAL
+  zh: 可以看到，结果与我们上面手动计算的结果完全吻合！
 - en: '[PRE12]'
+  id: totrans-83
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE12]'
 - en: Loading...
+  id: totrans-84
   prefs: []
   type: TYPE_NORMAL
+  zh: 加载中...
