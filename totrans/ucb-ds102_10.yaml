@@ -1,8 +1,10 @@
 - en: Bayesian Hierarchical Models
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
 - en: 原文：[https://data102.org/ds-102-book/content/chapters/02/hierarchical-models](https://data102.org/ds-102-book/content/chapters/02/hierarchical-models)
+  id: totrans-1
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
@@ -17,15 +19,19 @@
     must be shared under the same terms</title></svg>](https://creativecommons.org/licenses/by-sa/4.0/)[](https://github.com/ds-102/ds-102-book
     "GitHub Repository: ds-102/ds-102-book")[](https://github.com/ds-102/ds-102-book/edit/main/ds-102-book/content/chapters/02/02_hierarchical_models.ipynb
     "Edit This Page")'
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
 - en: '[PRE0]'
+  id: totrans-3
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: 'We’ve seen so far that a Bayesian approach can be useful in cases where we
     have prior domain knowledge that we want to incorporate into our model. We’ve
     also seen that the effect of choosing a prior depends heavily on how much data
     we have: the less data we have, the more our conclusions tilt toward the prior.'
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
 - en: 'In many cases, we may not have as much external prior knowledge, and we want
@@ -37,48 +43,60 @@
     The cleaned version of the data came from [Robin Ryder](https://github.com/robinryder/BDA-kidney).
     Note that the dataset suffers from a severe bias: it only contains information
     on white men. We’ll discuss issues with this later in this section.'
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
 - en: We’ll walk through the process of setting up a model for this more complex dataset,
     and in the process see several advantages and perspectives on Bayesian models.
+  id: totrans-6
   prefs: []
   type: TYPE_NORMAL
 - en: 'Example: Understanding Kidney Cancer Death Risk[¶](#example-understanding-kidney-cancer-death-risk
     "Link to this Section")'
+  id: totrans-7
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
 - en: 'Before we can start modeling, we must first understand the data. We’ll focus
     on the following columns:'
+  id: totrans-8
   prefs: []
   type: TYPE_NORMAL
 - en: '`state`: the US state'
+  id: totrans-9
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
 - en: '`Location`: the county and state as a string'
+  id: totrans-10
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
 - en: '`fips`, which provides the [FIPS code](https://en.wikipedia.org/wiki/Federal_Information_Processing_Standard_state_code)
     for each county: this is a standard identifier that can often be used to join
     datasets with county-level information.'
+  id: totrans-11
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
 - en: '`dc` and `dc.2`: the number of kidney cancer deaths between 1980-1984 and 1985-1989,
     respectively'
+  id: totrans-12
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
 - en: '`pop` and `pop.2`: the population between 1980-1984 and 1985-1989, respectively'
+  id: totrans-13
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
 - en: '[PRE1]'
+  id: totrans-14
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: Loading...
+  id: totrans-15
   prefs: []
   type: TYPE_NORMAL
 - en: For simplicity, we’ll focus our analysis on 1980-1984\. Our goal will be to
@@ -86,17 +104,22 @@
     death**. This could help inform public health actions, or could reveal information
     about underlying carcinogens (e.g., proximity to chemical treatment plants, etc.)
     that should be investigated and remedied.
+  id: totrans-16
   prefs: []
   type: TYPE_NORMAL
 - en: '[PRE2]'
+  id: totrans-17
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: '`<Axes: xlabel=''rate_naive'', ylabel=''Count''>`![<Figure size 640x480 with
     1 Axes>](../Images/79b0f950d09b7a1a924a69a8615001c0.png)'
+  id: totrans-18
   prefs: []
   type: TYPE_NORMAL
 - en: From this, it appears that most counties have a rate between 1 in 100,000 (0.00001)
     and 1 in 10,000 (0.0001), but a sizeable number have a rate of 0.
+  id: totrans-19
   prefs: []
   type: TYPE_NORMAL
 - en: 'If our goal is merely to characterize exactly what happened in each county
@@ -105,6 +128,7 @@
     public health. This motivates the definition of our parameter of interest: **for
     county <semantics><mrow><mi>i</mi></mrow><annotation encoding="application/x-tex">i</annotation></semantics>i,
     what is each person’s average risk of dying from kidney cancer?**'
+  id: totrans-20
   prefs: []
   type: TYPE_NORMAL
 - en: 'Intuitively, we can see that in counties with very low population, this dataset
@@ -112,17 +136,22 @@
     county with only 10 people. Because the rate we’re interested in is close to 1
     in 10,000, we’re very likely to see 0 deaths, but that doesn’t mean that the risk
     for these 10 people is 0! We can see this empirically:'
+  id: totrans-21
   prefs: []
   type: TYPE_NORMAL
 - en: '[PRE3]'
+  id: totrans-22
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: '`<Axes: xlabel=''pop'', ylabel=''rate_naive''>`![<Figure size 640x480 with
     1 Axes>](../Images/a8e336f7c6092eff032f4615e35cc27b.png)'
+  id: totrans-23
   prefs: []
   type: TYPE_NORMAL
 - en: For larger counties, our estimates are consistently between 0.00002 and 0.00008,
     but for the small counties, the estimates have much higher variability.
+  id: totrans-24
   prefs: []
   type: TYPE_NORMAL
 - en: Here, we have a situation where we have a very large amount of data (in fact,
@@ -130,35 +159,44 @@
     trying to quantify a relatively rare phenomenon. Next, we’ll see how Bayesian
     inference can help us leverage the more certain information from large counties
     to make good inferences for small counties.
+  id: totrans-25
   prefs: []
   type: TYPE_NORMAL
 - en: Bayesian Hierarchical Modeling as a Middle Ground[¶](#bayesian-hierarchical-modeling-as-a-middle-ground
     "Link to this Section")
+  id: totrans-26
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
 - en: 'We can consider the approach we took earlier as one extreme of a spectrum:
     we estimated the death rate for each county separately, and didn’t pool or share
     any information across counties at all.'
+  id: totrans-27
   prefs: []
   type: TYPE_NORMAL
 - en: 'On the opposite extreme of the spectrum, we could pool all the data from all
     the counties together:'
+  id: totrans-28
   prefs: []
   type: TYPE_NORMAL
 - en: '[PRE4]'
+  id: totrans-29
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE4]'
 - en: '`4.856485743364176e-05`'
+  id: totrans-30
   prefs: []
   type: TYPE_NORMAL
 - en: While this provides a good estimate of the rate overall, it obscures variability
     across counties, and prevents us from making county-level inferences or finding
     locations most in need of targeting.
+  id: totrans-31
   prefs: []
   type: TYPE_NORMAL
 - en: 'To achieve a middle ground between these two extremes, we’ll use a **Bayesian
     hierarchical model**:'
+  id: totrans-32
   prefs: []
   type: TYPE_NORMAL
 - en: For each county, let <semantics><mrow><msub><mi>θ</mi><mi>i</mi></msub><mo>∈</mo><mo
@@ -166,6 +204,7 @@
     encoding="application/x-tex">\theta_i \in [0, 1]</annotation></semantics>θi​∈[0,1]
     be a random variable indicating the risk of kidney cancer death for an individual
     in that county.
+  id: totrans-33
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
@@ -176,6 +215,7 @@
     and <semantics><mrow><mi>b</mi></mrow><annotation encoding="application/x-tex">b</annotation></semantics>b
     yet to be determined), but each is a separate random variable and will have a
     separate posterior distribution.'
+  id: totrans-34
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
@@ -185,10 +225,12 @@
     encoding="application/x-tex">n_i</annotation></semantics>ni​ (the county population)
     and <semantics><mrow><msub><mi>θ</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">\theta_i</annotation></semantics>θi​
     (the county-level risk).
+  id: totrans-35
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
 - en: Notationally, we can write the above bullet points as
+  id: totrans-36
   prefs: []
   type: TYPE_NORMAL
 - en: <semantics><mtable rowspacing="0.25em" columnalign="right left right" columnspacing="0em
@@ -212,6 +254,7 @@
     & i \in \{1, 2, \ldots\} \\ y_i &\sim \mathrm{Binomial}(\theta_i, n_i), & i \in
     \{1, 2, \ldots, C\} \end{align*}</annotation></semantics>θi​yi​​∼Beta(a,b),∼Binomial(θi​,ni​),​i∈{1,2,…}i∈{1,2,…,C}​[(1)](#Oxjxv4dlwS
     "Link to this Equation")
+  id: totrans-37
   prefs: []
   type: TYPE_NORMAL
 - en: We saw in the last section that if the likelihood for a sequence of random variables
@@ -240,6 +283,7 @@
     In other words, just as the beta distribution is the conjugate prior for the Bernoulli
     likelihood, it is also the conjugate prior for the binomial likelihood. (It also
     happens to be the conjugate prior for the geometric likelihood as well!)
+  id: totrans-38
   prefs: []
   type: TYPE_NORMAL
 - en: 'Putting all this together, we can now compute the posterior distribution. Instead
@@ -250,8 +294,14 @@
     \ldots, \theta_C</annotation></semantics>θ1​,…,θC​. The posterior distribution
     is the joint distribution of all of these random variables, conditioned on all
     of the observed data:'
+  id: totrans-39
   prefs: []
   type: TYPE_NORMAL
+  zh: 综合以上所有内容，我们现在可以计算后验分布。不同于单个参数 <semantics><mrow><mi>θ</mi></mrow><annotation
+    encoding="application/x-tex">\theta</annotation></semantics>θ，我们现在有 <semantics><mrow><mi>C</mi></mrow><annotation
+    encoding="application/x-tex">C</annotation></semantics>C 个参数，<semantics><mrow><msub><mi>θ</mi><mn>1</mn></msub><mo
+    separator="true">,</mo><mo>…</mo><mo separator="true">,</mo><msub><mi>θ</mi><mi>C</mi></msub></mrow><annotation
+    encoding="application/x-tex">\theta_1, \ldots, \theta_C</annotation></semantics>θ1​,…,θC​。后验分布是所有这些随机变量的联合分布，并以所有观测数据为条件：
 - en: <semantics><mtable rowspacing="0.25em" columnalign="right left" columnspacing="0em"><mtr><mtd><mstyle
     scriptlevel="0" displaystyle="true"><mrow><mi>p</mi><mo stretchy="false">(</mo><msub><mi>θ</mi><mn>1</mn></msub><mo
     separator="true">,</mo><mo>…</mo><mo separator="true">,</mo><msub><mi>θ</mi><mi>C</mi></msub><mi
@@ -273,10 +323,12 @@
     \overbrace{p(\theta_1, \ldots, \theta_C)}^{\text{prior}} \\ &= \prod_{i=1}^C \theta_i^{a+y_i-1}(1-\theta_i)^{b
     + n_i - y_i - 1} \end{align*}</annotation></semantics>p(θ1​,…,θC​∣y1​,…,yC​)​∝p(y1​,…,yc​∣θ1​,…,θC​)​likelihood​p(θ1​,…,θC​)​prior​=i=1∏C​θia+yi​−1​(1−θi​)b+ni​−yi​−1​[(2)](#hbXiz5pOW1
     "Link to this Equation")
+  id: totrans-40
   prefs: []
   type: TYPE_NORMAL
 - en: 'From this, we can conclude that we can compute the posterior independently
     for every county:'
+  id: totrans-41
   prefs: []
   type: TYPE_NORMAL
 - en: <semantics><mrow><msub><mi>θ</mi><mi>i</mi></msub><mi mathvariant="normal">∣</mi><msub><mi>y</mi><mi>i</mi></msub><mo>∼</mo><mrow><mi
@@ -286,6 +338,7 @@
     stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">\theta_i
     | y_i \sim \mathrm{Beta}(a + y_i, b + n_i - y_i)</annotation></semantics>θi​∣yi​∼Beta(a+yi​,b+ni​−yi​)[(3)](#yIvt4kv8OR
     "Link to this Equation")
+  id: totrans-42
   prefs: []
   type: TYPE_NORMAL
 - en: Note that according to the posterior distribution <semantics><mrow><mi>p</mi><mo
@@ -299,9 +352,11 @@
     But, they all share the parameters <semantics><mrow><mi>a</mi></mrow><annotation
     encoding="application/x-tex">a</annotation></semantics>a and <semantics><mrow><mi>b</mi></mrow><annotation
     encoding="application/x-tex">b</annotation></semantics>b in common.
+  id: totrans-43
   prefs: []
   type: TYPE_NORMAL
 - en: Choosing the Prior[¶](#choosing-the-prior "Link to this Section")
+  id: totrans-44
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
@@ -309,25 +364,31 @@
     question: **how do we choose <semantics><mrow><mi>a</mi></mrow><annotation encoding="application/x-tex">a</annotation></semantics>a
     and <semantics><mrow><mi>b</mi></mrow><annotation encoding="application/x-tex">b</annotation></semantics>b**?
     We’ll examine four approaches, in increasing order of complexity and sophistication:'
+  id: totrans-45
   prefs: []
   type: TYPE_NORMAL
 - en: Uninformative prior
+  id: totrans-46
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
 - en: Educated guess
+  id: totrans-47
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
 - en: Empirical Bayes
+  id: totrans-48
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
 - en: Hierarchical model
+  id: totrans-49
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
 - en: Uninformative Prior[¶](#uninformative-prior "Link to this Section")
+  id: totrans-50
   prefs:
   - PREF_H4
   type: TYPE_NORMAL
@@ -343,9 +404,11 @@
     already know about the problem. If we take this approach and then compute the
     posterior distributions, we would see results similar to the no-pooling estimates
     earlier.'
+  id: totrans-51
   prefs: []
   type: TYPE_NORMAL
 - en: Educated Guess[¶](#educated-guess "Link to this Section")
+  id: totrans-52
   prefs:
   - PREF_H4
   type: TYPE_NORMAL
@@ -359,6 +422,7 @@
     So, one possible option is Beta<semantics><mrow><mo stretchy="false">(</mo><mn>5</mn><mo
     separator="true">,</mo><mn>9995</mn><mo stretchy="false">)</mo></mrow><annotation
     encoding="application/x-tex">(5, 9995)</annotation></semantics>(5,9995).'
+  id: totrans-53
   prefs: []
   type: TYPE_NORMAL
 - en: 'Note that this is somewhat arbitrary: we could have just as easily chosen <semantics><mrow><mi>a</mi><mo>=</mo><mn>10</mn></mrow><annotation
@@ -367,9 +431,11 @@
     encoding="application/x-tex">a = 50</annotation></semantics>a=50 and <semantics><mrow><mi>b</mi><mo>=</mo><mn>99950</mn></mrow><annotation
     encoding="application/x-tex">b = 99950</annotation></semantics>b=99950, and obtained
     the same mean.'
+  id: totrans-54
   prefs: []
   type: TYPE_NORMAL
 - en: Empirical Bayes[¶](#empirical-bayes "Link to this Section")
+  id: totrans-55
   prefs:
   - PREF_H4
   type: TYPE_NORMAL
@@ -378,6 +444,7 @@
     this case, we’ll use a frequentist approach to make a better guess for <semantics><mrow><mi>a</mi></mrow><annotation
     encoding="application/x-tex">a</annotation></semantics>a and <semantics><mrow><mi>b</mi></mrow><annotation
     encoding="application/x-tex">b</annotation></semantics>b.
+  id: totrans-56
   prefs: []
   type: TYPE_NORMAL
 - en: 'In particular, we saw earlier that the smaller counties produced naive estimates
@@ -385,23 +452,31 @@
     by deciding on a (somewhat arbitrary) threshold of big versus small counties.
     From the scatterplot above, we can see that after a certain size, the non-pooled
     estimates seem to be much less variable. We can zoom in to decide on a threshold:'
+  id: totrans-57
   prefs: []
   type: TYPE_NORMAL
 - en: '[PRE5]'
+  id: totrans-58
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE5]'
 - en: '![<Figure size 640x480 with 1 Axes>](../Images/4fd778acebdc23cda19892a931e82f25.png)'
+  id: totrans-59
   prefs: []
   type: TYPE_IMG
 - en: 'Based on this, we’ll use 300,000 as a cutoff (the dotted line), and ignore
     counties smaller than this when estimating the parameters of the prior:'
+  id: totrans-60
   prefs: []
   type: TYPE_NORMAL
 - en: '[PRE6]'
+  id: totrans-61
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE6]'
 - en: '`<Axes: xlabel=''rate_naive'', ylabel=''Count''>`![<Figure size 640x480 with
     1 Axes>](../Images/dfa13bc2ef732529fabfb049190a9bed.png)'
+  id: totrans-62
   prefs: []
   type: TYPE_NORMAL
 - en: 'We’ll use this empirical distribution (or rather, a slightly modified version
@@ -411,30 +486,38 @@
     encoding="application/x-tex">a</annotation></semantics>a and <semantics><mrow><mi>b</mi></mrow><annotation
     encoding="application/x-tex">b</annotation></semantics>b that are a good fit for
     this sequence of observations (in the histogram above).'
+  id: totrans-63
   prefs: []
   type: TYPE_NORMAL
 - en: 'This is exactly the problem we solved in the last section using maximum likelihood!
     We’ll use maximum likelihood to fit a beta distribution to these data. This time,
     instead of deriving the MLEs for the Beta distribution, we’ll use scipy to do
     it for us:'
+  id: totrans-64
   prefs: []
   type: TYPE_NORMAL
 - en: '[PRE7]'
+  id: totrans-65
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE7]'
 - en: '[PRE8]'
+  id: totrans-66
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE8]'
 - en: 'Using this approach, our prior would be Beta<semantics><mrow><mo stretchy="false">(</mo><mn>9.27</mn><mo
     separator="true">,</mo><mn>195581</mn><mo stretchy="false">)</mo></mrow><annotation
     encoding="application/x-tex">(9.27, 195581)</annotation></semantics>(9.27,195581).
     To summarize what we did:'
+  id: totrans-67
   prefs: []
   type: TYPE_NORMAL
 - en: We want to find the parameters <semantics><mrow><mi>a</mi></mrow><annotation
     encoding="application/x-tex">a</annotation></semantics>a and <semantics><mrow><mi>b</mi></mrow><annotation
     encoding="application/x-tex">b</annotation></semantics>b of the prior, using our
     data to help us since we don’t have any domain knowledge
+  id: totrans-68
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
@@ -443,25 +526,33 @@
     which could lead us astray: for example, if larger counties are biased toward
     lower or higher rates, then using them to estimate parameters of the prior is
     a bad idea.'
+  id: totrans-69
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
 - en: We looked at the naively estimated rates for the large counties only, and fit
     a beta distribution to those, and then used that beta distribution as our prior.
+  id: totrans-70
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
 - en: 'Let’s compare the results for these two approaches. For ease of visualization,
     we’ll look at a histogram of each county’s LMSE estimate:'
+  id: totrans-71
   prefs: []
   type: TYPE_NORMAL
 - en: '[PRE9]'
+  id: totrans-72
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE9]'
 - en: '[PRE10]'
+  id: totrans-73
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE10]'
 - en: '![<Figure size 640x480 with 1 Axes>](../Images/5cd0d141d289b418def914548340eeb6.png)'
+  id: totrans-74
   prefs: []
   type: TYPE_IMG
 - en: In both cases, we no longer see estimates of 0\. Note that because the empirical
@@ -469,9 +560,11 @@
     encoding="application/x-tex">a</annotation></semantics>a and <semantics><mrow><mi>b</mi></mrow><annotation
     encoding="application/x-tex">b</annotation></semantics>b), the posterior estimates
     fall in a narrower range.
+  id: totrans-75
   prefs: []
   type: TYPE_NORMAL
 - en: Full Hierarchical Model[¶](#full-hierarchical-model "Link to this Section")
+  id: totrans-76
   prefs:
   - PREF_H4
   type: TYPE_NORMAL
@@ -491,11 +584,13 @@
     of hierarchical models: one set of variables is closely linked to the data for
     each group (in this case, county), and one set of variables represents more global
     information (in this case, the entire US).'
+  id: totrans-77
   prefs: []
   type: TYPE_NORMAL
 - en: 'But this leads to yet another modeling question: **what prior distribution
     do we choose for <semantics><mrow><mi>a</mi></mrow><annotation encoding="application/x-tex">a</annotation></semantics>a
     and <semantics><mrow><mi>b</mi></mrow><annotation encoding="application/x-tex">b</annotation></semantics>b**?'
+  id: totrans-78
   prefs: []
   type: TYPE_NORMAL
 - en: 'Unfortunately, there is no convenient distribution that is a conjugate prior
@@ -516,6 +611,7 @@
     stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">b \sim
     \mathrm{Uniform}(0, 300000)</annotation></semantics>b∼Uniform(0,300000). We can
     then write out the full model:'
+  id: totrans-79
   prefs: []
   type: TYPE_NORMAL
 - en: <semantics><mtable rowspacing="0.25em" columnalign="right left right" columnspacing="0em
@@ -549,28 +645,34 @@
     &\sim \mathrm{Beta}(a, b), & i \in \{1, 2, \ldots\} \\ y_i &\sim \mathrm{Binomial}(\theta_i,
     n_i), & i \in \{1, 2, \ldots\} \end{align*}</annotation></semantics>abθi​yi​​∼Uniform(0,50)∼Uniform(0,300000)∼Beta(a,b),∼Binomial(θi​,ni​),​i∈{1,2,…}i∈{1,2,…}​[(4)](#zcEzd5Tnwo
     "Link to this Equation")
+  id: totrans-80
   prefs: []
   type: TYPE_NORMAL
 - en: 'Unfortunately, there is no convenient way to compute the posterior distribution
     here: we must resort to approximate techniques. We’ll return to this model in
     the next section, after we develop tools for approximate inference.'
+  id: totrans-81
   prefs: []
   type: TYPE_NORMAL
 - en: Bias in the Kidney Cancer Dataset[¶](#bias-in-the-kidney-cancer-dataset "Link
     to this Section")
+  id: totrans-82
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
 - en: '*The content in this section is under active development and is subject to
     change.*'
+  id: totrans-83
   prefs: []
   type: TYPE_NORMAL
 - en: 'As mentioned earlier, the dataset as provided only contains data about white
     men. However, kidney cancer risk is not uniform, as seen in this data from the
     NIH’s National Cancer Institute:'
+  id: totrans-84
   prefs: []
   type: TYPE_NORMAL
 - en: '![explorer-graph.png](../Images/65e882661b309df51cbeb16d3f16fcca.png)'
+  id: totrans-85
   prefs: []
   type: TYPE_IMG
 - en: From this, we can see that there are clearly racial disparities in kidney cancer
@@ -578,24 +680,29 @@
     as well. How might we solve this? Unfortunately, in this case, because we don’t
     have much insight into how the data were collected, and because they were collected
     so long ago, we can’t improve our analysis.
+  id: totrans-86
   prefs: []
   type: TYPE_NORMAL
 - en: '(Optional) Example: Gaussian Mixture Model for Exoplanet Habitability[¶](#id-optional-example-gaussian-mixture-model-for-exoplanet-habitability
     "Link to this Section")'
+  id: totrans-87
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
 - en: '*The model in this section is loosely based on work in the paper [Classifying
     Exoplanets with Gaussian Mixture Model](https://arxiv.org/abs/1708.00605) by Kulkarni
     and Desai.*'
+  id: totrans-88
   prefs: []
   type: TYPE_NORMAL
 - en: In this section, we’ll look at a different kind of hierarchical model, where
     the groups are slightly less explicit. This kind of model is usually known as
     a *mixture model*.
+  id: totrans-89
   prefs: []
   type: TYPE_NORMAL
 - en: Exoplanet Data[¶](#exoplanet-data "Link to this Section")
+  id: totrans-90
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
@@ -603,35 +710,43 @@
     planets outside our solar system. Each row in the `planets` dataframe contains
     information about 517 exoplanets from NASA. We’ll use it to explore which planets
     might be able to support life as we know it.'
+  id: totrans-91
   prefs: []
   type: TYPE_NORMAL
 - en: The dataset contains the following columns.
+  id: totrans-92
   prefs: []
   type: TYPE_NORMAL
 - en: '`name`: the name of the exoplanet'
+  id: totrans-93
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
 - en: '`orbital_period`: how many days it takes for the planet to orbit its star'
+  id: totrans-94
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
 - en: '`mass`: the mass of the planet, in multiples of Earth’s mass (e.g., the second
     planet, 55 Cnc e, has a mass 73.6% of Earth’s)'
+  id: totrans-95
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
 - en: '`radius`: the radius of the planet, in multiples of Earth’s radius (e.g., the
     second planet, 55 Cnc e, has a radius almost twice the size of Earth’s)'
+  id: totrans-96
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
 - en: '`star_temperature`: the temperature of the star that the planet orbits, in
     Kelvin'
+  id: totrans-97
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
 - en: '`density`: the density of the planet, in g/cm^3'
+  id: totrans-98
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
@@ -639,62 +754,92 @@
     of the planet Jupiter rather than Earth (Jupiter is about 11 times the radius
     of earth and about 317 times the mass), but we’re using Earth-based measurements
     since we’re going to use Earth as a standard for habitability.
+  id: totrans-99
   prefs: []
   type: TYPE_NORMAL
 - en: '[PRE11]'
+  id: totrans-100
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE11]'
 - en: Loading...
+  id: totrans-101
   prefs: []
   type: TYPE_NORMAL
 - en: 'We’ll focus our analysis on the radius:'
+  id: totrans-102
   prefs: []
   type: TYPE_NORMAL
 - en: '[PRE12]'
+  id: totrans-103
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE12]'
 - en: '`<Axes: xlabel=''radius'', ylabel=''Density''>`![<Figure size 640x480 with
     1 Axes>](../Images/53177c158525d0a731cd31dd1a567c68.png)'
+  id: totrans-104
   prefs: []
   type: TYPE_NORMAL
 - en: 'We can see that there are two groups of planets: those with relatively small
     radii (closer to Earth-sized), and those with larger radii (closer to Jupiter-sized).
     We can see that if we try to fit a single Gaussian distribution to this data,
     the resulting fit is rather poor:'
+  id: totrans-105
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们可以看到有两类行星：一类半径相对较小（更接近地球大小），另一类半径较大（更接近木星大小）。可以看出，如果我们尝试用一个单一的高斯分布来拟合这些数据，得到的拟合效果相当差：
 - en: '[PRE13]'
+  id: totrans-106
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE13]'
 - en: '![<Figure size 640x480 with 1 Axes>](../Images/e3678e88daf799f955ff4c0aa2366540.png)'
+  id: totrans-107
   prefs: []
   type: TYPE_IMG
+  zh: '![<Figure size 640x480 with 1 Axes>](../Images/e3678e88daf799f955ff4c0aa2366540.png)'
 - en: 'Visually, the result is somewhat obvious: the data fall into two distinct groups,
     so trying to impose one Gaussian distribution produces a poor fit. Instead, what
     we want is a more sophisticated model that can directly model these two groups,
     and help us infer properties of each group separately.'
+  id: totrans-108
   prefs: []
   type: TYPE_NORMAL
+  zh: 从视觉上看，结果有些显而易见：数据明显分为两组，因此试图用一个高斯分布来拟合效果很差。相反，我们需要一个更复杂的模型，能够直接对这两组数据进行建模，并帮助我们分别推断每组数据的特性。
 - en: '[PRE14]'
+  id: totrans-109
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE14]'
 - en: '(Optional) Gaussian Mixture Model: Specifying a Probability Model for the Exoplanet
     Data[¶](#id-optional-gaussian-mixture-model-specifying-a-probability-model-for-the-exoplanet-data
     "Link to this Section")'
+  id: totrans-110
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: （可选）高斯混合模型：为系外行星数据指定概率模型[¶](#id-optional-gaussian-mixture-model-specifying-a-probability-model-for-the-exoplanet-data
+    "Link to this Section")
 - en: '*Text coming soon: see video*'
+  id: totrans-111
   prefs: []
   type: TYPE_NORMAL
+  zh: '*文本即将发布：请观看视频*'
 - en: '[PRE15]'
+  id: totrans-112
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE15]'
 - en: 'Hierarchical Models: a more general definition[¶](#hierarchical-models-a-more-general-definition
     "Link to this Section")'
+  id: totrans-113
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 层次模型：一个更通用的定义[¶](#hierarchical-models-a-more-general-definition "Link to this
+    Section")
 - en: '*Coming soon*'
+  id: totrans-114
   prefs: []
   type: TYPE_NORMAL
+  zh: '*即将发布*'

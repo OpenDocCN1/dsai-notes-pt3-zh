@@ -1,8 +1,10 @@
 - en: Bayesian Inference
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
 - en: 原文：[https://data102.org/ds-102-book/content/chapters/02/inference](https://data102.org/ds-102-book/content/chapters/02/inference)
+  id: totrans-1
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
@@ -17,12 +19,16 @@
     must be shared under the same terms</title></svg>](https://creativecommons.org/licenses/by-sa/4.0/)[](https://github.com/ds-102/ds-102-book
     "GitHub Repository: ds-102/ds-102-book")[](https://github.com/ds-102/ds-102-book/edit/main/ds-102-book/content/chapters/02/04_inference.ipynb
     "Edit This Page")'
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
 - en: '[PRE0]'
+  id: totrans-3
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: Bayesian Inference[¶](#bayesian-inference "Link to this Section")
+  id: totrans-4
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
@@ -31,10 +37,12 @@
     distributions are useful in Bayesian inference, and then explain why they’re hard.
     Then, in the next section, we’ll learn about approximating distributions using
     sampling.
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
 - en: Why we need posterior distributions[¶](#why-we-need-posterior-distributions
     "Link to this Section")
+  id: totrans-6
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
@@ -43,13 +51,16 @@
     encoding="application/x-tex">\theta</annotation></semantics>θ. We saw that for
     simple models like the product review model or the model for heights, it was easy
     to compute the posterior exactly, because we chose a conjugate prior.
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
 - en: 'In the product review example:'
+  id: totrans-8
   prefs: []
   type: TYPE_NORMAL
 - en: Our parameter of interest <semantics><mrow><mi>θ</mi></mrow><annotation encoding="application/x-tex">\theta</annotation></semantics>θ
     represents the probability of a positive review.
+  id: totrans-9
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
@@ -65,17 +76,20 @@
     separator="true">,</mo><mi>β</mi><mo>+</mo><mi>n</mi><mo>−</mo><mo>∑</mo><msub><mi>x</mi><mi>i</mi></msub><mo
     fence="true">)</mo></mrow></mrow><annotation encoding="application/x-tex">\theta
     | x \sim \mathrm{Beta}\left(\alpha + \sum x_i, \beta + n - \sum x_i\right)</annotation></semantics>θ∣x∼Beta(α+∑xi​,β+n−∑xi​).'
+  id: totrans-10
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
 - en: This made it easy to determine things like the MAP estimate or LMSE estimate,
     simply by using known properties of the Beta distribution.
+  id: totrans-11
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
 - en: 'But what if our posterior distribution didn’t have such a convenient form?
     In that case, we would have to compute the posterior (and any estimates from it)
     ourselves:'
+  id: totrans-12
   prefs: []
   type: TYPE_NORMAL
 - en: <semantics><mtable rowspacing="0.25em" columnalign="right left" columnspacing="0em"><mtr><mtd><mstyle
@@ -93,6 +107,7 @@
     encoding="application/x-tex">\begin{align} p(\theta|x) &= \frac{p(x|\theta)p(\theta)}{p(x)}
     \\ &= \frac{p(x|\theta)p(\theta)}{\int p(x|\theta)p(\theta)\,d\theta} \\ \end{align}</annotation></semantics>p(θ∣x)​=p(x)p(x∣θ)p(θ)​=∫p(x∣θ)p(θ)dθp(x∣θ)p(θ)​​​[(1)](#gydV4BSpve
     "Link to this Equation")
+  id: totrans-13
   prefs: []
   type: TYPE_NORMAL
 - en: 'In general, the integral in the denominator could be impossible to compute.
@@ -100,14 +115,17 @@
     it doesn’t depend on <semantics><mrow><mi>θ</mi></mrow><annotation encoding="application/x-tex">\theta</annotation></semantics>θ,
     and it’s normalizing because we need it for the distribution or density to sum
     or integrate to 1.'
+  id: totrans-14
   prefs: []
   type: TYPE_NORMAL
 - en: In the next section, we’ll see a few examples that illustrate why computing
     the normalizing constant is hard, but first, let’s look at three examples of why
     we might need to know it in the first place.
+  id: totrans-15
   prefs: []
   type: TYPE_NORMAL
 - en: Computing probabilities[¶](#computing-probabilities "Link to this Section")
+  id: totrans-16
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
@@ -115,6 +133,7 @@
     encoding="application/x-tex">\theta</annotation></semantics>θ is greater than
     0.7, given the observed data. In this case, we can set up an integral to compute
     this:'
+  id: totrans-17
   prefs: []
   type: TYPE_NORMAL
 - en: <semantics><mtable rowspacing="0.25em" columnalign="right left" columnspacing="0em"><mtr><mtd><mstyle
@@ -135,10 +154,12 @@
     p(\theta|x) \, dx \\ &= \int_{0.7}^1 \frac{p(x|\theta)p(\theta)}{p(x)} \, dx \\
     &= \frac{1}{p(x)} \int_{0.7}^1 p(x|\theta)p(\theta) \, dx \end{align}</annotation></semantics>P(θ>0.7∣x)​=∫0.71​p(θ∣x)dx=∫0.71​p(x)p(x∣θ)p(θ)​dx=p(x)1​∫0.71​p(x∣θ)p(θ)dx​​[(2)](#qt7NANmbSO
     "Link to this Equation")
+  id: totrans-18
   prefs: []
   type: TYPE_NORMAL
 - en: In the last step, we used the fact that p(x) doesn’t depend on <semantics><mrow><mi>θ</mi></mrow><annotation
     encoding="application/x-tex">\theta</annotation></semantics>θ.
+  id: totrans-19
   prefs: []
   type: TYPE_NORMAL
 - en: 'If we don’t know <semantics><mrow><mi>p</mi><mo stretchy="false">(</mo><mi>x</mi><mo
@@ -150,19 +171,25 @@
     case, if we don’t know the normalizing constant, there’s no way we can determine
     the probability: we’ll always be wrong by an unknown factor, which means that
     our answer is useless.'
+  id: totrans-20
   prefs: []
   type: TYPE_NORMAL
 - en: '[PRE1]'
+  id: totrans-21
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: Loading...
+  id: totrans-22
   prefs: []
   type: TYPE_NORMAL
 - en: MAP Estimation[¶](#map-estimation "Link to this Section")
+  id: totrans-23
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
 - en: 'Suppose we want to compute the MAP estimate:'
+  id: totrans-24
   prefs: []
   type: TYPE_NORMAL
 - en: <semantics><mtable rowspacing="0.25em" columnalign="right left" columnspacing="0em"><mtr><mtd><mstyle
@@ -181,10 +208,12 @@
     p(\theta|x) \\ &= \underset{\theta}{\operatorname{argmax}} \frac{p(x|\theta)p(\theta)}{p(x)}
     \\ &= \underset{\theta}{\operatorname{argmax}} p(x|\theta)p(\theta) \\ \end{align}</annotation></semantics>θ^MAP​​=θargmax​p(θ∣x)=θargmax​p(x)p(x∣θ)p(θ)​=θargmax​p(x∣θ)p(θ)​​[(3)](#rPJLURgfb7
     "Link to this Equation")
+  id: totrans-25
   prefs: []
   type: TYPE_NORMAL
 - en: In the last step, we used the fact that p(x) doesn’t depend on <semantics><mrow><mi>θ</mi></mrow><annotation
     encoding="application/x-tex">\theta</annotation></semantics>θ.
+  id: totrans-26
   prefs: []
   type: TYPE_NORMAL
 - en: If <semantics><mrow><mi>θ</mi></mrow><annotation encoding="application/x-tex">\theta</annotation></semantics>θ
@@ -197,21 +226,25 @@
     over all of them, which would be impossible. Similarly, if <semantics><mrow><mi>θ</mi></mrow><annotation
     encoding="application/x-tex">\theta</annotation></semantics>θ is high-dimensional,
     then the search can also be intractable.
+  id: totrans-27
   prefs: []
   type: TYPE_NORMAL
 - en: 'To summarize: for low-dimensional continuous variables, or discrete random
     variables with a low number of possible values, we can compute the MAP estimate
     without needing to know the exact posterior. For higher-dimensional random variables
     and/or discrete random variables with many possible values, this won’t work.'
+  id: totrans-28
   prefs: []
   type: TYPE_NORMAL
 - en: LMSE Estimation[¶](#lmse-estimation "Link to this Section")
+  id: totrans-29
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
 - en: 'Suppose we want to compute the LMSE estimate. Recall the definition of conditional
     expectation (see Data 140 textbook, [Chapter 9](http://prob140.org/textbook/content/Chapter_09/02_Expectation_by_Conditioning.html)
     and [Chapter 15](http://prob140.org/textbook/content/Chapter_15/03_Expectation.html)):'
+  id: totrans-30
   prefs: []
   type: TYPE_NORMAL
 - en: <semantics><mtable rowspacing="0.25em" columnalign="right left" columnspacing="0em"><mtr><mtd><mstyle
@@ -235,6 +268,7 @@
     \, d\theta \\ &= \frac{1}{p(x)} \int \theta \cdot p(x|\theta)p(\theta)\, d\theta
     \end{align}</annotation></semantics>θ^LMSE​​=Eθ∣x​[θ]=∫θ⋅p(θ∣x)dθ=∫θ⋅p(x)p(x∣θ)p(θ)​dθ=p(x)1​∫θ⋅p(x∣θ)p(θ)dθ​​[(4)](#AEKQ3ST87L
     "Link to this Equation")
+  id: totrans-31
   prefs: []
   type: TYPE_NORMAL
 - en: In order to compute the LMSE estimate, we need to compute the denominator, <semantics><mrow><mi>p</mi><mo
@@ -242,6 +276,7 @@
     encoding="application/x-tex">p(x)</annotation></semantics>p(x). If we don’t know
     it, then our estimate will be off by a multiplicative factor that we don’t know,
     making it effectively useless.
+  id: totrans-32
   prefs: []
   type: TYPE_NORMAL
 - en: The same is true for computing the expected value of any other function of <semantics><mrow><mi>θ</mi></mrow><annotation
@@ -250,15 +285,18 @@
     to the posterior distribution, what is the variance of <semantics><mrow><mi>θ</mi></mrow><annotation
     encoding="application/x-tex">\theta</annotation></semantics>θ?” will lead to the
     same problem.
+  id: totrans-33
   prefs: []
   type: TYPE_NORMAL
 - en: 'To summarize: any computations involving the posteriors (probabilities, expectations,
     etc.) require us to have the full normalized distribution: the numerator in Bayes’
     rule isn’t enough.'
+  id: totrans-34
   prefs: []
   type: TYPE_NORMAL
 - en: Why computing posterior distributions is hard[¶](#why-computing-posterior-distributions-is-hard
     "Link to this Section")
+  id: totrans-35
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
@@ -266,10 +304,12 @@
     was easy to compute the exact posterior for the unknown variable that we were
     interested in. This happened because we chose a conjugate prior. In most other
     cases, computing the exact posterior is hard! Here are two examples:'
+  id: totrans-36
   prefs: []
   type: TYPE_NORMAL
 - en: One-dimensional non-conjugate prior[¶](#one-dimensional-non-conjugate-prior
     "Link to this Section")
+  id: totrans-37
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
@@ -281,6 +321,7 @@
     \theta\right)</annotation></semantics>p(θ)=π2​cos(2π​θ) for <semantics><mrow><mi>θ</mi><mo>∈</mo><mo
     stretchy="false">[</mo><mn>0</mn><mo separator="true">,</mo><mn>1</mn><mo stretchy="false">]</mo></mrow><annotation
     encoding="application/x-tex">\theta \in [0, 1]</annotation></semantics>θ∈[0,1].
+  id: totrans-38
   prefs: []
   type: TYPE_NORMAL
 - en: <semantics><mtable rowspacing="0.25em" columnalign="right left" columnspacing="0em"><mtr><mtd><mstyle
@@ -301,6 +342,7 @@
     \\ &\propto \Big[\theta^{\left[\sum_i x_i\right]}(1-\theta)^{\left[\sum_i (1-x_i)\right]}\Big]\cos\left(\frac{\pi}{2}\theta\right)
     \end{align}</annotation></semantics>p(θ∣x)​∝p(x∣θ)p(θ)∝[θ[∑i​xi​](1−θ)[∑i​(1−xi​)]]cos(2π​θ)​​[(5)](#o5HgS3UKsO
     "Link to this Equation")
+  id: totrans-39
   prefs: []
   type: TYPE_NORMAL
 - en: 'This distribution looks much more complicated: we can’t reduce it to a known
@@ -308,6 +350,7 @@
     stretchy="false">(</mo><mi>θ</mi><mi mathvariant="normal">∣</mi><mi>x</mi><mo
     stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">p(\theta|x)</annotation></semantics>p(θ∣x),
     we’d need to figure out the normalizing constant. This requires solving the integral:'
+  id: totrans-40
   prefs: []
   type: TYPE_NORMAL
 - en: <semantics><mtable rowspacing="0.25em" columnalign="right left" columnspacing="0em"><mtr><mtd><mstyle
@@ -325,6 +368,7 @@
     x_i\right]}(1-\theta)^{\left[\sum_i (1-x_i)\right]}\Big]\cos\left(\frac{\pi}{2}\theta\right)\,d\theta
     \end{align}</annotation></semantics>p(x)​=∫01​[θ[∑i​xi​](1−θ)[∑i​(1−xi​)]]cos(2π​θ)dθ​​[(6)](#GOrY7tRB7t
     "Link to this Equation")
+  id: totrans-41
   prefs: []
   type: TYPE_NORMAL
 - en: This integral is difficult to solve in closed form. In this specific example,
@@ -336,9 +380,11 @@
     then find the normalizing constant that way. As we saw above, we don’t need the
     normalizing constant if we’re only interested in the MAP estimate, but we can’t
     compute the LMSE estimate without it.
+  id: totrans-42
   prefs: []
   type: TYPE_NORMAL
 - en: Multi-dimensional example[¶](#multi-dimensional-example "Link to this Section")
+  id: totrans-43
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
@@ -351,8 +397,16 @@
     encoding="application/x-tex">\mu_0</annotation></semantics>μ0​ and <semantics><mrow><msub><mi>μ</mi><mn>1</mn></msub></mrow><annotation
     encoding="application/x-tex">\mu_1</annotation></semantics>μ1​ are the mean radii
     of those two groups, respectively.'
+  id: totrans-44
   prefs: []
   type: TYPE_NORMAL
+  zh: 考虑上次的系外行星模型：<semantics><mrow><msub><mi>x</mi><mi>i</mi></msub></mrow><annotation
+    encoding="application/x-tex">x_i</annotation></semantics>xi​ 是行星 <semantics><mrow><mi>i</mi></mrow><annotation
+    encoding="application/x-tex">i</annotation></semantics>i 的（观测到的）半径，<semantics><mrow><msub><mi>z</mi><mi>i</mi></msub></mrow><annotation
+    encoding="application/x-tex">z_i</annotation></semantics>zi​ 表示该行星属于第 0 组（小型，可能宜居的行星）还是第
+    1 组（大型，可能不宜居的行星），而 <semantics><mrow><msub><mi>μ</mi><mn>0</mn></msub></mrow><annotation
+    encoding="application/x-tex">\mu_0</annotation></semantics>μ0​ 和 <semantics><mrow><msub><mi>μ</mi><mn>1</mn></msub></mrow><annotation
+    encoding="application/x-tex">\mu_1</annotation></semantics>μ1​ 分别是这两组的平均半径。
 - en: <semantics><mtable rowspacing="0.25em" columnalign="right left right" columnspacing="0em
     1em"><mtr><mtd><mstyle scriptlevel="0" displaystyle="true"><msub><mi>z</mi><mi>i</mi></msub></mstyle></mtd><mtd><mstyle
     scriptlevel="0" displaystyle="true"><mrow><mo>∼</mo><mrow><mi mathvariant="normal">B</mi><mi
@@ -379,6 +433,7 @@
     | z_i, \mu_0, \mu_1 &\sim \mathcal{N}(\mu_{z_i}, \sigma) & i = 1, \ldots, n\\
     \end{align}</annotation></semantics>zi​μk​xi​∣zi​,μ0​,μ1​​∼Bernoulli(π)∼N(μp​,σp​)∼N(μzi​​,σ)​i=1,…,nk=0,1i=1,…,n​​[(7)](#Ey66nptGD4
     "Link to this Equation")
+  id: totrans-45
   prefs: []
   type: TYPE_NORMAL
 - en: We can write the likelihood and prior. To simplify, we’ll write <semantics><mrow><mi
@@ -388,6 +443,7 @@
     stretchy="false">(</mo><mi>y</mi><mo>−</mo><mi>m</mi><msup><mo stretchy="false">)</mo><mn>2</mn></msup><mo
     fence="true">}</mo></mrow></mrow><annotation encoding="application/x-tex">\mathcal{N}(y;
     m, s) = \frac{1}{s \sqrt{2\pi}} \exp\left\{-\frac{1}{2s^2}(y - m)^2\right\}</annotation></semantics>N(y;m,s)=s2π​1​exp{−2s21​(y−m)2}
+  id: totrans-46
   prefs: []
   type: TYPE_NORMAL
 - en: <semantics><mtable rowspacing="0.25em" columnalign="right left" columnspacing="0em"><mtr><mtd><mstyle
@@ -409,6 +465,7 @@
     \\ p(\mu_k) &= \mathcal{N}(\mu_k; \mu_p, \sigma_p) \\ p(x_i | z_i, \mu_0, \mu_1)
     &= \mathcal{N}(x_i; \mu_{z_i}, \sigma) \end{align}</annotation></semantics>p(zi​)p(μk​)p(xi​∣zi​,μ0​,μ1​)​=πzi​(1−π)1−zi​=N(μk​;μp​,σp​)=N(xi​;μzi​​,σ)​​[(8)](#Tqt6q2Dr6G
     "Link to this Equation")
+  id: totrans-47
   prefs: []
   type: TYPE_NORMAL
 - en: We can try computing the posterior over the hidden variables <semantics><mrow><msub><mi>z</mi><mi>i</mi></msub></mrow><annotation
@@ -421,6 +478,7 @@
     separator="true">,</mo><msub><mi>z</mi><mi>n</mi></msub></mrow><annotation encoding="application/x-tex">z_1,
     \dots, z_n</annotation></semantics>z1​,…,zn​ (and similarly for <semantics><mrow><msub><mi>x</mi><mrow><mn>1</mn><mo>:</mo><mi>n</mi></mrow></msub></mrow><annotation
     encoding="application/x-tex">x_{1:n}</annotation></semantics>x1:n​).
+  id: totrans-48
   prefs: []
   type: TYPE_NORMAL
 - en: <semantics><mtable rowspacing="0.25em" columnalign="right left" columnspacing="0em"><mtr><mtd><mstyle
@@ -438,6 +496,7 @@
     p(z_{1:n}, \mu_0, \mu_1 | x_{1:n}) &\propto p(\mu_0)p(\mu_1)\prod_i \left[p(z_i)
     p(x_i | z_i, \mu_0, \mu_1)\right] \end{align}</annotation></semantics>p(z1:n​,μ0​,μ1​∣x1:n​)​∝p(μ0​)p(μ1​)i∏​[p(zi​)p(xi​∣zi​,μ0​,μ1​)]​​[(9)](#eYhX5JlzSt
     "Link to this Equation")
+  id: totrans-49
   prefs: []
   type: TYPE_NORMAL
 - en: This distribution is more complicated than anything we’ve seen up until now.
@@ -448,13 +507,23 @@
     \ldots, z_n</annotation></semantics>z1​,…,zn​ and the two group means <semantics><mrow><msub><mi>μ</mi><mn>0</mn></msub></mrow><annotation
     encoding="application/x-tex">\mu_0</annotation></semantics>μ0​ and <semantics><mrow><msub><mi>μ</mi><mn>1</mn></msub></mrow><annotation
     encoding="application/x-tex">\mu_1</annotation></semantics>μ1​).
+  id: totrans-50
   prefs: []
   type: TYPE_NORMAL
+  zh: 这个分布比我们目前所见过的任何分布都要复杂。它是关于 **n+2** 个随机变量（组标签 <semantics><mrow><msub><mi>z</mi><mn>1</mn></msub><mo
+    separator="true">,</mo><mo>…</mo><mo separator="true">,</mo><msub><mi>z</mi><mi>n</mi></msub></mrow><annotation
+    encoding="application/x-tex">z_1, \ldots, z_n</annotation></semantics>z1​,…,zn​
+    以及两个组均值 <semantics><mrow><msub><mi>μ</mi><mn>0</mn></msub></mrow><annotation encoding="application/x-tex">\mu_0</annotation></semantics>μ0​
+    和 <semantics><mrow><msub><mi>μ</mi><mn>1</mn></msub></mrow><annotation encoding="application/x-tex">\mu_1</annotation></semantics>μ1​）的联合分布。
 - en: 'Computing the normalization constant <semantics><mrow><mi>p</mi><mo stretchy="false">(</mo><msub><mi>x</mi><mrow><mn>1</mn><mo>:</mo><mi>n</mi></mrow></msub><mo
     stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">p(x_{1:n})</annotation></semantics>p(x1:n​)
     requires a complicated combination of sums and integrals:'
+  id: totrans-51
   prefs: []
   type: TYPE_NORMAL
+  zh: 计算归一化常数 <semantics><mrow><mi>p</mi><mo stretchy="false">(</mo><msub><mi>x</mi><mrow><mn>1</mn><mo>:</mo><mi>n</mi></mrow></msub><mo
+    stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">p(x_{1:n})</annotation></semantics>p(x1:n​)
+    需要复杂的求和与积分组合：
 - en: <semantics><mtable rowspacing="0.25em" columnalign="right left" columnspacing="0em"><mtr><mtd><mstyle
     scriptlevel="0" displaystyle="true"><mrow><mi>p</mi><mo stretchy="false">(</mo><msub><mi>x</mi><mrow><mn>1</mn><mo>:</mo><mi>n</mi></mrow></msub><mo
     stretchy="false">)</mo></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mo>=</mo><munderover><mo>∑</mo><mrow><msub><mi>z</mi><mn>1</mn></msub><mo>=</mo><mn>0</mn></mrow><mn>1</mn></munderover><munderover><mo>∑</mo><mrow><msub><mi>z</mi><mn>2</mn></msub><mo>=</mo><mn>0</mn></mrow><mn>1</mn></munderover><mo>…</mo><munderover><mo>∑</mo><mrow><msub><mi>z</mi><mi>n</mi></msub><mo>=</mo><mn>0</mn></mrow><mn>1</mn></munderover><mo>∫</mo><mo>∫</mo><mi>p</mi><mo
@@ -469,28 +538,35 @@
     \ldots \sum_{z_n=0}^1 \int \int p(\mu_0)p(\mu_1)\prod_i \left[p(z_i) p(x_i | z_i,
     \mu_0, \mu_1)\right] d\mu_0 d\mu_1 \end{align}</annotation></semantics>p(x1:n​)​=z1​=0∑1​z2​=0∑1​…zn​=0∑1​∫∫p(μ0​)p(μ1​)i∏​[p(zi​)p(xi​∣zi​,μ0​,μ1​)]dμ0​dμ1​​​[(10)](#XLdn19lhCQ
     "Link to this Equation")
+  id: totrans-52
   prefs: []
   type: TYPE_NORMAL
 - en: 'For our dataset of over 500 planets, the sums alone would require a completely
     intractable amount of computation:'
+  id: totrans-53
   prefs: []
   type: TYPE_NORMAL
 - en: '[PRE2]'
+  id: totrans-54
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: '`429049853758163107186368799942587076079339706258956588087153966199096448962353503257659977541340909686081019461967553627320124249982290238285876768194691072`'
+  id: totrans-55
   prefs: []
   type: TYPE_NORMAL
 - en: 'Worse still, we can’t even compute the MAP estimate for the labels <semantics><mrow><msub><mi>z</mi><mi>i</mi></msub></mrow><annotation
     encoding="application/x-tex">z_i</annotation></semantics>zi​: in order to find
     the one that maximizes the numerator, we’d have to search over all 2^(517) combinations,
     which is also completely intractable.'
+  id: totrans-56
   prefs: []
   type: TYPE_NORMAL
 - en: 'Even in this fairly simple model, with two groups, we’ve found that exact inference
     is completely hopeless: there’s no way we can compute the exact posterior for
     all our unknowns. In the rest of this section, we’ll talk about ways to get around
     this problem using approximations to the posterior distribution.'
+  id: totrans-57
   prefs: []
   type: TYPE_NORMAL
 - en: Specifically, our approximation methods will take advantage of what we’ve learned.
@@ -510,11 +586,15 @@
     encoding="application/x-tex">p(\theta|x) = \frac{p(x|\theta)p(\theta)}{p(x)}</annotation></semantics>p(θ∣x)=p(x)p(x∣θ)p(θ)​.
     While there are multiple families of methods to provide such approximations, in
     this textbook we’ll focus on ones that use **samples** to approximate the distribution.
+  id: totrans-58
   prefs: []
   type: TYPE_NORMAL
 - en: '[PRE3]'
+  id: totrans-59
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: Loading...
+  id: totrans-60
   prefs: []
   type: TYPE_NORMAL
