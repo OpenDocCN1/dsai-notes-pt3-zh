@@ -18,6 +18,7 @@
 +   [Karpathy GPT 教程笔记](docs/karpathy-gpt/README.md)
 +   [科罗拉多应用深度学习笔记](docs/klld-appdl/README.md)
 +   [李宏毅机器学习深度学习笔记 2021](docs/leemldl/README.md)
++   [李宏毅机器学习深度学习笔记 2026](docs/leemldl-2026/README.md)
 +   [大模型 Agent 论文翻译](docs/llm-agent/README.md)
 +   [大语言模型系列综述](docs/llm-survey/README.md)
 +   [MIT 18.06 线性代数笔记](docs/mit-18.06-linalg-notes/README.md)
