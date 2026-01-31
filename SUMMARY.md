@@ -17,6 +17,7 @@
 +   [七月在线公开课笔记](docs/julyedu/README.md)
 +   [Karpathy GPT 教程笔记](docs/karpathy-gpt/README.md)
 +   [科罗拉多应用深度学习笔记](docs/klld-appdl/README.md)
++   [李宏毅生成式人工智能导论笔记 2024](docs/lee-genai-2024/README.md)
 +   [李宏毅机器学习深度学习笔记 2021](docs/leemldl/README.md)
 +   [李宏毅机器学习深度学习笔记 2026](docs/leemldl-2026/README.md)
 +   [大模型 Agent 论文翻译](docs/llm-agent/README.md)
