@@ -296,11 +296,13 @@
   id: totrans-43
   prefs: []
   type: TYPE_NORMAL
+  zh: 其中 \(x_0, x_1,\) 和 \(x_2\) 是我们想要确定的未知数（基函数的系数）。由于数据点比参数多得多，我们并不期望函数会精确地通过数据点。对于这个例子，在有噪声的数据点上，我们不希望函数精确地通过数据点，因为我们正在试图模拟一般趋势而不是捕捉噪声。
 - en: Computational Complexity
   id: totrans-44
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 计算复杂度
 - en: Since the system of normal equations yield a square and symmetric matrix, the
     least-squares solution can be computed using efficient methods such as Cholesky
     factorization. Note that the overall computational complexity of the factorization
@@ -309,108 +311,139 @@
   id: totrans-45
   prefs: []
   type: TYPE_NORMAL
+  zh: 由于正则方程组产生一个平方对称矩阵，最小二乘解可以使用如Cholesky分解等有效方法来计算。请注意，分解的整体计算复杂度是 \(\mathcal{O}(n^3)\)。然而，矩阵
+    \({\bf A} ^T {\bf A}\) 的构建复杂度是 \(\mathcal{O}(mn^2)\)。
 - en: In typical data fitting problems, \(m >> n\), so the overall time complexity
     of the Normal Equations method is \({\bf \mathcal{O}(mn^2)}\).
   id: totrans-46
   prefs: []
   type: TYPE_NORMAL
+  zh: 在典型的数据拟合问题中，\(m >> n\)，因此正则方程法的时间复杂度总体上是 \({\bf \mathcal{O}(mn^2)}\).
 - en: Solving Least-Squares Problems Using SVD
   id: totrans-47
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 使用奇异值分解（SVD）求解最小二乘问题
 - en: Another way to solve the least-squares problem \({\bf A} {\bf x} \cong {\bf
     b}\) (where we are looking for \({\bf x}\) that minimizes \(\|{\bf b} - {\bf A}
     {\bf x}\|_2^2\)) is to use the singular value decomposition (SVD) of \({\bf A}\),
   id: totrans-48
   prefs: []
   type: TYPE_NORMAL
+  zh: 解决最小二乘问题 \({\bf A} {\bf x} \cong {\bf b}\)（其中我们寻找 \({\bf x}\) 以最小化 \(\|{\bf
+    b} - {\bf A} {\bf x}\|_2^2\)）的另一种方法是使用 \({\bf A}\) 的奇异值分解（SVD）。
 - en: \[{\bf A} = {\bf U \Sigma V}^T\]
   id: totrans-49
   prefs: []
   type: TYPE_NORMAL
+  zh: \[{\bf A} = {\bf U \Sigma V}^T\]
 - en: 'where the squared norm of the residual becomes:'
   id: totrans-50
   prefs: []
   type: TYPE_NORMAL
+  zh: 其中残差的平方范数变为：
 - en: \[ \begin{align} \|{\bf b} - {\bf A} {\bf x}\|_2^2 &= \|{\bf b} - {\bf U \Sigma
     V}^T {\bf x}\|_2^2 & (1)\\ &= \|{\bf U}^T ({\bf b} - {\bf U \Sigma V}^T {\bf x})\|_2^2
     & (2)\\ &= \|{\bf U}^T {\bf b} - {\bf \Sigma V}^T {\bf x}\|_2^2 \end{align} \]
   id: totrans-51
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \begin{align} \|{\bf b} - {\bf A} {\bf x}\|_2^2 &= \|{\bf b} - {\bf U \Sigma
+    V}^T {\bf x}\|_2^2 & (1)\\ &= \|{\bf U}^T ({\bf b} - {\bf U \Sigma V}^T {\bf x})\|_2^2
+    & (2)\\ &= \|{\bf U}^T {\bf b} - {\bf \Sigma V}^T {\bf x}\|_2^2 \end{align} \]
 - en: We can go from (1) to (2) because multiplying a vector by an orthogonal matrix
     does not change the 2-norm of the vector. Now, let
   id: totrans-52
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们可以从（1）到（2）进行转换，因为乘以一个正交矩阵不会改变向量的2-范数。现在，让
 - en: \[ {\bf y} = {\bf V}^T {\bf x} \]\[ {\bf z} = {\bf U}^T {\bf b}, \]
   id: totrans-53
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ {\bf y} = {\bf V}^T {\bf x} \]\[ {\bf z} = {\bf U}^T {\bf b}, \]
 - en: We are now looking for \({\bf y}\) that minimizes
   id: totrans-54
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们现在正在寻找 \({\bf y}\) 以最小化
 - en: \[ \|{\bf z} - \Sigma {\bf y}\|_2^2\. \]
   id: totrans-55
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \|{\bf z} - \Sigma {\bf y}\|_2^2\. \]
 - en: Note that
   id: totrans-56
   prefs: []
   type: TYPE_NORMAL
+  zh: 注意到
 - en: \[ \Sigma {\bf y} = \begin{bmatrix} \sigma_1 y_1\\ \sigma_2 y_2\\ \vdots \\
     \sigma_n y_n \end{bmatrix},(\sigma_i = \Sigma_{i,i}) \]
   id: totrans-57
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \Sigma {\bf y} = \begin{bmatrix} \sigma_1 y_1\\ \sigma_2 y_2\\ \vdots \\
+    \sigma_n y_n \end{bmatrix},(\sigma_i = \Sigma_{i,i}) \]
 - en: so we choose
   id: totrans-58
   prefs: []
   type: TYPE_NORMAL
+  zh: 因此我们选择
 - en: \[ y_i = \begin{cases} \frac{z_i}{\sigma_i} & \sigma_i \neq 0\\ 0 & \sigma_i
     = 0 \end{cases} \]
   id: totrans-59
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ y_i = \begin{cases} \frac{z_i}{\sigma_i} & \sigma_i \neq 0\\ 0 & \sigma_i
+    = 0 \end{cases} \]
 - en: which will minimize \(\|{\bf z} - {\bf \Sigma} {\bf y}\|_2^2\). Finally, we
     compute
   id: totrans-60
   prefs: []
   type: TYPE_NORMAL
+  zh: 这将最小化 \(\|{\bf z} - {\bf \Sigma} {\bf y}\|_2^2\). 最后，我们计算
 - en: \[{\bf x} = {\bf V} {\bf y}\]
   id: totrans-61
   prefs: []
   type: TYPE_NORMAL
+  zh: \[{\bf x} = {\bf V} {\bf y}\]
 - en: to find \({\bf x}\). The expression of least-squares solution is
   id: totrans-62
   prefs: []
   type: TYPE_NORMAL
+  zh: 为了找到 \({\bf x}\)。最小二乘解的表达式是
 - en: \[{\bf x} = \sum_{\sigma_i \neq 0} \frac{ {\bf u}_i^T {\bf b} }{\sigma_i} {\bf
     v}_i\]
   id: totrans-63
   prefs: []
   type: TYPE_NORMAL
+  zh: \[{\bf x} = \sum_{\sigma_i \neq 0} \frac{ {\bf u}_i^T {\bf b} }{\sigma_i} {\bf
+    v}_i\]
 - en: where \({\bf u}_i\) represents the \(i\)th column of \({\bf U}\) and \({\bf
     v}_i\) represents the \(i\)th column of \({\bf V}\).
   id: totrans-64
   prefs: []
   type: TYPE_NORMAL
+  zh: 其中 \({\bf u}_i\) 表示 \({\bf U}\) 的第 \(i\) 列，\({\bf v}_i\) 表示 \({\bf V}\) 的第 \(i\)
+    列。
 - en: 'In closed-form, we can express the least-squares solution as:'
   id: totrans-65
   prefs: []
   type: TYPE_NORMAL
+  zh: 在闭式表达中，我们可以将最小二乘解表示为：
 - en: \[{\bf x} = {\bf V\Sigma}^{+}{\bf U}^T{\bf b}\]
   id: totrans-66
   prefs: []
   type: TYPE_NORMAL
+  zh: \[{\bf x} = {\bf V\Sigma}^{+}{\bf U}^T{\bf b}\]
 - en: 'where \({\bf \Sigma}^{+}\) is the pseudoinverse of the singular matrix computed
     by taking the reciprocal of the non-zero diagonal entries, leaving the zeros in
     place and transposing the resulting matrix. For example:'
   id: totrans-67
   prefs: []
   type: TYPE_NORMAL
+  zh: 其中 \({\bf \Sigma}^{+}\) 是通过取非零对角元素的倒数，保留零，并转置结果矩阵计算出的奇异矩阵的伪逆。例如：
 - en: \[\Sigma = \begin{bmatrix} \sigma_1 & & &\\ & \ddots & & \\& & \sigma_r &\\
     & & & 0\\ 0 & ... & ... & 0 \\ \vdots & \ddots & \ddots & \vdots \\ 0 & ... &
     ... & 0 \end{bmatrix} \quad \implies \quad \Sigma^{+} = \begin{bmatrix} \frac{1}{\sigma_1}
@@ -419,56 +452,77 @@
   id: totrans-68
   prefs: []
   type: TYPE_NORMAL
+  zh: \[\Sigma = \begin{bmatrix} \sigma_1 & & &\\ & \ddots & & \\& & \sigma_r &\\
+    & & & 0\\ 0 & ... & ... & 0 \\ \vdots & \ddots & \ddots & \vdots \\ 0 & ... &
+    ... & 0 \end{bmatrix} \quad \implies \quad \Sigma^{+} = \begin{bmatrix} \frac{1}{\sigma_1}
+    & & & & 0 & \dots & 0 \\ & \ddots & & & & \ddots &\\ & & \frac{1}{\sigma_r} &
+    & 0 & \dots & 0 \\ & & & 0 & 0 & \dots & 0 \end{bmatrix}.\]
 - en: 'Or in reduced form:'
   id: totrans-69
   prefs: []
   type: TYPE_NORMAL
+  zh: 或者以简化的形式：
 - en: \[{\bf x} = {\bf V\Sigma}_R^{+}{\bf U}_R^T{\bf b}\]
   id: totrans-70
   prefs: []
   type: TYPE_NORMAL
+  zh: \[{\bf x} = {\bf V\Sigma}_R^{+}{\bf U}_R^T{\bf b}\]
 - en: Computational Complexity Using Reduced SVD
   id: totrans-71
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 使用简化 SVD 的计算复杂度
 - en: Solving the least squares problem using a **given** reduced SVD has time complexity
     \(\mathcal{O}(mn)\).
   id: totrans-72
   prefs: []
   type: TYPE_NORMAL
+  zh: 使用**给定**的简化 SVD 求解最小二乘问题的时间复杂度为 \(\mathcal{O}(mn)\)。
 - en: Assume we know the reduced SVD of \(\bf A\) beforehand (which inplies that we
     know the entries of \(\bf V, \Sigma^{+}_{R}, U^{T}_{R}\) beforehand).
   id: totrans-73
   prefs: []
   type: TYPE_NORMAL
+  zh: 假设我们事先知道 \(\bf A\) 的简化奇异值分解（这意味着我们事先知道 \(\bf V, \Sigma^{+}_{R}, U^{T}_{R}\)
+    的元素）。
 - en: Then, solving \(\bf z = U^{T}_{R}b\) with \(n \times m\) matrix \(\bf U^{T}_{R}\)
     and \(m \times 1\) vector \(\bf b\) has \(\mathcal{O}(mn)\).
   id: totrans-74
   prefs: []
   type: TYPE_NORMAL
+  zh: 然后，使用 \(n \times m\) 矩阵 \(\bf U^{T}_{R}\) 和 \(m \times 1\) 向量 \(\bf b\) 求解 \(\bf
+    z = U^{T}_{R}b\) 的复杂度为 \(\mathcal{O}(mn)\)。
 - en: Solving \(\bf y = \Sigma^{+}_{R}z\) with \(n \times n\) matrix \(\bf \Sigma^{+}_{R}\)
     and \(n \times 1\) vector \(\bf z\) has \(\mathcal{O}(n)\) since \(\bf \Sigma^{+}_{R}\)
     is a diagonal matrix.
   id: totrans-75
   prefs: []
   type: TYPE_NORMAL
+  zh: 使用 \(n \times n\) 矩阵 \(\bf \Sigma^{+}_{R}\) 和 \(n \times 1\) 向量 \(\bf z\) 求解
+    \(\bf y = \Sigma^{+}_{R}z\) 的复杂度为 \(\mathcal{O}(n)\)，因为 \(\bf \Sigma^{+}_{R}\)
+    是一个对角矩阵。
 - en: Solving \(\bf x = Vy\) with \(n \times n\) matrix \(\bf V\) and \(n \times 1\)
     vector \(\bf y\) has \(\mathcal{O}(n^2)\).
   id: totrans-76
   prefs: []
   type: TYPE_NORMAL
+  zh: 使用 \(n \times n\) 矩阵 \(\bf V\) 和 \(n \times 1\) 向量 \(\bf y\) 求解 \(\bf x = Vy\)
+    的复杂度为 \(\mathcal{O}(n^2)\)。
 - en: Therefore the time complexity is \(\mathcal{O}(n^2 + n + mn) = \mathcal{O}(mn)\)
     since \(m > n\). We can achieve this only when we know the Reduced SVD of \(\bf
     A\) beforehand.
   id: totrans-77
   prefs: []
   type: TYPE_NORMAL
+  zh: 因此，时间复杂度为 \(\mathcal{O}(n^2 + n + mn) = \mathcal{O}(mn)\)，因为 \(m > n\)。我们只有在事先知道
+    \(\bf A\) 的简化奇异值分解的情况下才能实现这一点。
 - en: Determining Residual in Least-Squares Problem Using SVD
   id: totrans-78
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 使用 SVD 确定最小二乘问题中的残差
 - en: We've shown above how the SVD can be used to find the least-squares solution
     (the solution that minimizes the squared 2-norm of the residual) to the least
     squares problem \({\bf A} {\bf x} \cong {\bf b}\). We can also use the SVD to
@@ -477,6 +531,8 @@
   id: totrans-79
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们已经展示了如何使用 SVD 来找到最小二乘问题的最小二乘解（即最小化残差平方 2-范数的解）\({\bf A} {\bf x} \cong {\bf
+    b}\)。我们还可以使用 SVD 来确定残差值的最小二乘解的精确表达式。
 - en: Assume in the SVD of \({\bf A}\), \({\bf A} = {\bf U \Sigma V}^T\), the diagonal
     entries of \({\bf \Sigma}\) are in descending order (\(\sigma_1 \ge \sigma_2 \ge
     \dots \)), and the first \(r\) diagonal entries of \({\bf \Sigma}\) are nonzeros
@@ -484,42 +540,55 @@
   id: totrans-80
   prefs: []
   type: TYPE_NORMAL
+  zh: 假设在 \({\bf A}\) 的奇异值分解中，\({\bf A} = {\bf U \Sigma V}^T\)，\({\bf \Sigma}\) 的对角线元素按降序排列（\(\sigma_1
+    \ge \sigma_2 \ge \dots \)），并且 \({\bf \Sigma}\) 的前 \(r\) 个对角线元素非零，其余为零，那么
 - en: \[\begin{align} \|{\bf b} - A {\bf x}\|_2^2 &= \|{\bf z} - \Sigma {\bf y}\|_2^2\\
     &= \sum_{i=1}^n (z_i - \sigma_i y_i)^2\\ &= \sum_{i=1}^r (z_i - \sigma_i \frac{z_i}{\sigma_i})^2
     + \sum_{i=r+1}^n (z_i - 0)^2\\ &= \sum_{i=r+1}^n z_i^2 \end{align}\]
   id: totrans-81
   prefs: []
   type: TYPE_NORMAL
+  zh: \[\begin{align} \|{\bf b} - A {\bf x}\|_2^2 &= \|{\bf z} - \Sigma {\bf y}\|_2^2\\
+    &= \sum_{i=1}^n (z_i - \sigma_i y_i)^2\\ &= \sum_{i=1}^r (z_i - \sigma_i \frac{z_i}{\sigma_i})^2
+    + \sum_{i=r+1}^n (z_i - 0)^2\\ &= \sum_{i=r+1}^n z_i^2 \end{align}\]
 - en: Recall that
   id: totrans-82
   prefs: []
   type: TYPE_NORMAL
+  zh: 回想一下
 - en: \[ {\bf z} = {\bf U}^T {\bf b}, \]
   id: totrans-83
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ {\bf z} = {\bf U}^T {\bf b}, \]
 - en: we get
   id: totrans-84
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们得到
 - en: \[ \|{\bf b} - {\bf A} {\bf x}\|_2^2 = \sum_{i=r+1}^n ({\bf u}_i^T {\bf b})^2
     \]
   id: totrans-85
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \|{\bf b} - {\bf A} {\bf x}\|_2^2 = \sum_{i=r+1}^n ({\bf u}_i^T {\bf b})^2
+    \]
 - en: where \({\bf u}_i\) represents the \(i\)th column of \({\bf U}\).
   id: totrans-86
   prefs: []
   type: TYPE_NORMAL
+  zh: \({\bf u}_i\) 表示 \({\bf U}\) 的第 \(i\) 列。
 - en: (For more formal proof check [this video.](https://mediaspace.illinois.edu/media/t/1_w6u83js8/158464041))
   id: totrans-87
   prefs: []
   type: TYPE_NORMAL
+  zh: （更多正式的证明请查看[这个视频](https://mediaspace.illinois.edu/media/t/1_w6u83js8/158464041)）
 - en: Example of a Least-Squares solution using SVD
   id: totrans-88
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 使用 SVD 求解最小二乘解的示例
 - en: 'Assume we have \(3\) data points, \({(t_i,y_i)}={(1,1.2),(2,1.9),(3,1)}\),
     we want to find the coefficients for a line, \({y = x_0 + x_1 t}\), that best
     fits these data points. The code for using SVD to solve this least-squares problem
@@ -527,6 +596,8 @@
   id: totrans-89
   prefs: []
   type: TYPE_NORMAL
+  zh: 假设我们有 \(3\) 个数据点，\({(t_i,y_i)}={(1,1.2),(2,1.9),(3,1)}\)，我们想要找到最佳拟合这些数据点的直线，\({y
+    = x_0 + x_1 t}\) 的系数。使用 SVD 求解这个最小二乘问题的代码如下：
 - en: '[PRE0]'
   id: totrans-90
   prefs: []
@@ -537,6 +608,7 @@
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 非线性最小二乘问题与线性最小二乘问题比较
 - en: The above linear least-squares problem is associated with an overdetermined
     linear system \(A {\bf x} \cong {\bf b}.\) This problem is called "linear" because
     the fitting function we are looking for is linear in the components of \({\bf
