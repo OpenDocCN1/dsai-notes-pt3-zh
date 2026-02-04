@@ -1,43 +1,63 @@
 - en: Eigenvalues and Eigenvectors
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 特征值和特征向量
 - en: 原文：[https://cs357.cs.illinois.edu/textbook/notes/eigen.html](https://cs357.cs.illinois.edu/textbook/notes/eigen.html)
+  id: totrans-1
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 原文：[https://cs357.cs.illinois.edu/textbook/notes/eigen.html](https://cs357.cs.illinois.edu/textbook/notes/eigen.html)
 - en: Learning Objectives
+  id: totrans-2
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 学习目标
 - en: Compute eigenvalue/eigenvector for various applications.
+  id: totrans-3
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 为各种应用计算特征值/特征向量。
 - en: Use the Power Method to find an eigenvector.
+  id: totrans-4
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 使用幂方法找到特征向量。
 - en: Definition of eigenvalue/eigenvectors.
+  id: totrans-5
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 特征值/特征向量的定义。
 - en: Methods of obtaining eigenvalues.
+  id: totrans-6
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 获取特征值的方法。
 - en: Computing eigenvalue/eigenvectors for various applications.
+  id: totrans-7
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 为各种应用计算特征值/特征向量。
 - en: Using the Power Method to find an eigenvector.
+  id: totrans-8
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 使用幂方法找到特征向量。
 - en: Eigenvalues and Eigenvectors
+  id: totrans-9
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 特征值和特征向量
 - en: An ***eigenvalue*** of an \(n \times n\) matrix \(\mathbf{A}\) is a scalar \(\lambda\)
     such that \(\mathbf{A} {\bf x} = \lambda {\bf x}\) for some non-zero vector \({\bf
     x}\). The eigenvalue \(\lambda\) can be any real or complex scalar, (which we
@@ -47,355 +67,570 @@
     (which we write \({\bf x}\in \mathbb{C}^n\)). The equation \(\mathbf{A}\mathbf{x}=\lambda\mathbf{x}\)
     is called the ***eigenvalue equation*** and any such non-zero vector \({\bf x}\)
     is called an ***eigenvector*** of \(\mathbf{A}\) corresponding to \(\lambda\).
+  id: totrans-10
   prefs: []
   type: TYPE_NORMAL
+  zh: 一个 \(n \times n\) 矩阵 \(\mathbf{A}\) 的**特征值**是一个标量 \(\lambda\)，使得对于某个非零向量 \({\bf
+    x}\)，有 \(\mathbf{A} {\bf x} = \lambda {\bf x}\)。特征值 \(\lambda\) 可以是任何实数或复数标量（我们写作
+    \(\lambda \in \mathbb{R}\ \text{或 } \lambda \in \mathbb{C}\)）。即使矩阵 \(\mathbf{A}\)
+    的所有项都是实数，特征值也可以是复数。在这种情况下，相应的向量 \({\bf x}\) 必须具有复数值分量（我们写作 \({\bf x}\in \mathbb{C}^n\))。方程
+    \(\mathbf{A}\mathbf{x}=\lambda\mathbf{x}\) 被称为**特征值方程**，任何这样的非零向量 \({\bf x}\)
+    被称为 \(\mathbf{A}\) 对应于 \(\lambda\) 的**特征向量**。
 - en: 'The eigenvalue equation can be rearranged to \((\mathbf{A} - \lambda {\bf I})
     {\bf x} = 0\), and because \({\bf x}\) is not zero this has solutions if and only
     if \(\lambda\) is a solution of the ***characteristic equation***:'
+  id: totrans-11
   prefs: []
   type: TYPE_NORMAL
+  zh: 可以将特征值方程重新排列为 \((\mathbf{A} - \lambda {\bf I}) {\bf x} = 0\)，由于 \({\bf x}\)
+    不为零，因此当且仅当 \(\lambda\) 是**特征方程**的解时，才有解：
 - en: \[\operatorname{det}(\mathbf{A} - \lambda {\bf I}) = 0.\]
+  id: totrans-12
   prefs: []
   type: TYPE_NORMAL
+  zh: \[\operatorname{det}(\mathbf{A} - \lambda {\bf I}) = 0.\]
 - en: The expression \(p(\lambda) = \operatorname{det}(\mathbf{A} - \lambda {\bf I})\)
     is called the ***characteristic polynomial*** and is a polynomial of degree \(n\).
+  id: totrans-13
   prefs: []
   type: TYPE_NORMAL
+  zh: 表达式 \(p(\lambda) = \operatorname{det}(\mathbf{A} - \lambda {\bf I})\) 被称为**特征多项式**，是一个
+    \(n\) 次的多项式。
 - en: Although all eigenvalues can be found by solving the characteristic equation,
     there is no general, closed-form analytical solution for the roots of polynomials
     of degree \(n \ge 5\) and this is not a good numerical approach for finding eigenvalues.
+  id: totrans-14
   prefs: []
   type: TYPE_NORMAL
+  zh: 虽然可以通过求解特征方程找到所有特征值，但对于 \(n \ge 5\) 的多项式的根没有一般形式的封闭形式的解析解，这也不是寻找特征值的好数值方法。
 - en: Unless otherwise specified, we write eigenvalues ordered by magnitude, so that
+  id: totrans-15
   prefs: []
   type: TYPE_NORMAL
+  zh: 除非另有说明，我们按大小顺序写出特征值，即
 - en: \[|\lambda_1| \geq |\lambda_2| \geq \cdots \geq |\lambda_n|,\]
+  id: totrans-16
   prefs: []
   type: TYPE_NORMAL
+  zh: \[|\lambda_1| \geq |\lambda_2| \geq \cdots \geq |\lambda_n|,\]
 - en: and we normalize eigenvectors, so that \(\|{\bf x}\| = 1\).
+  id: totrans-17
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们对特征向量进行归一化，使得 \(\|{\bf x}\| = 1\)。
 - en: We define the nullspace of \(A\) as the span, or set of all linear combinations,
     of the solutions for \(\mathbf {Ax}= \mathbf{0}\).
+  id: totrans-18
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们定义 \(A\) 的零空间为 \(\mathbf {Ax}= \mathbf{0}\) 的解的线性组合的生成空间，或所有线性组合的集合。
 - en: 'Example: Solving a Small Matrix for Eigenvalues'
+  id: totrans-19
   prefs:
   - PREF_H4
   type: TYPE_NORMAL
+  zh: 示例：求解小矩阵以找到特征值
 - en: If the matrix is reasonably small, we can find the determinant and solve for
     the characteristic polynomial efficiently.
+  id: totrans-20
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果矩阵相对较小，我们可以高效地找到行列式并求解特征多项式。
 - en: \[\bf{A}=\begin{bmatrix} 2 & 1 \\ 4 & 2 \end{bmatrix} \qquad \text{det}(\bf{A}-
     \bf{I}\lambda)=p(\lambda)=(2-\lambda)^2-4 \rightarrow \lambda_1=0, \lambda_2=4\]
+  id: totrans-21
   prefs: []
   type: TYPE_NORMAL
+  zh: \[\bf{A}=\begin{bmatrix} 2 & 1 \\ 4 & 2 \end{bmatrix} \qquad \text{det}(\bf{A}-
+    \bf{I}\lambda)=p(\lambda)=(2-\lambda)^2-4 \rightarrow \lambda_1=0, \lambda_2=4\]
 - en: Second, we find the eigenvectors for each eigenvalue by solving for the trivial
     solution (the nullspace) of \(\bf A-\bf I\lambda\). **Note** any multiple of \(\bf
     x\) below is a valid eigenvector to its eigenvalue.
+  id: totrans-22
   prefs: []
   type: TYPE_NORMAL
+  zh: 第二，我们通过求解 \(\bf A-\bf I\lambda\) 的平凡解（零空间）来找到每个特征值对应的特征向量。**注意**以下任何 \(\bf x\)
+    的倍数都是其特征值的有效特征向量。
 - en: '\[\lambda_1: \begin{bmatrix} 2 & 1 \\ 4 & 2 \end{bmatrix}\bf x=0 \rightarrow
     \bf{x}=\begin{bmatrix} 1 \\ -2 \end{bmatrix} \qquad \lambda_2: \begin{bmatrix}
     -2 & 1 \\ 4 & -2 \end{bmatrix}\bf{x}=0 \rightarrow \bf{x}=\begin{bmatrix} 1 \\
     2 \end{bmatrix}\]'
+  id: totrans-23
   prefs: []
   type: TYPE_NORMAL
+  zh: '\[\lambda_1: \begin{bmatrix} 2 & 1 \\ 4 & 2 \end{bmatrix}\bf x=0 \rightarrow
+    \bf{x}=\begin{bmatrix} 1 \\ -2 \end{bmatrix} \qquad \lambda_2: \begin{bmatrix}
+    -2 & 1 \\ 4 & -2 \end{bmatrix}\bf{x}=0 \rightarrow \bf{x}=\begin{bmatrix} 1 \\
+    2 \end{bmatrix}\]'
 - en: Diagonalizability
+  id: totrans-24
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 对角化性
 - en: 'An \(n \times n\) matrix with \(n\) linearly independent eigenvectors can be
     expressed as its eigenvalues and eigenvectors as:'
+  id: totrans-25
   prefs: []
   type: TYPE_NORMAL
+  zh: 一个 \(n \times n\) 矩阵，如果它有 \(n\) 个线性无关的特征向量，可以表示为其特征值和特征向量的形式：
 - en: \[\mathbf{A}\mathbf{X} = \begin{bmatrix} \vert & & \vert \\ \lambda_1 {\bf x}_1
     & \dots & \lambda_n {\bf x}_n \\ \vert & & \vert \end{bmatrix} = \begin{bmatrix}
     \vert & & \vert \\ {\bf x}_1 & \dots & {\bf x}_n \\ \vert & & \vert \end{bmatrix}
     \begin{bmatrix}\lambda_1 & & \\ & \ddots & \\ & & \lambda_n \end{bmatrix} = \mathbf{X}\mathbf{D}\]
+  id: totrans-26
   prefs: []
   type: TYPE_NORMAL
+  zh: \[\mathbf{A}\mathbf{X} = \begin{bmatrix} \vert & & \vert \\ \lambda_1 {\bf x}_1
+    & \dots & \lambda_n {\bf x}_n \\ \vert & & \vert \end{bmatrix} = \begin{bmatrix}
+    \vert & & \vert \\ {\bf x}_1 & \dots & {\bf x}_n \\ \vert & & \vert \end{bmatrix}
+    \begin{bmatrix}\lambda_1 & & \\ & \ddots & \\ & & \lambda_n \end{bmatrix} = \mathbf{X}\mathbf{D}\]
 - en: 'The eigenvector matrix can be inverted to obtain the following ***similarity
     transformation*** of \(\mathbf{A}\):'
+  id: totrans-27
   prefs: []
   type: TYPE_NORMAL
+  zh: 特征向量矩阵可以求逆以获得 \(\mathbf{A}\) 的以下 **相似变换**：
 - en: \[\mathbf{AX} = \mathbf{XD} \iff \mathbf{A} = \mathbf{XDX}^{-1} \iff \mathbf{X}^{-1}\mathbf{A}\mathbf{X}
     = \mathbf{D}\]
+  id: totrans-28
   prefs: []
   type: TYPE_NORMAL
+  zh: \[\mathbf{AX} = \mathbf{XD} \iff \mathbf{A} = \mathbf{XDX}^{-1} \iff \mathbf{X}^{-1}\mathbf{A}\mathbf{X}
+    = \mathbf{D}\]
 - en: Multiplying the matrix \(\mathbf{A}\) by \(\mathbf{X}^{-1}\) on the left and
     \(\mathbf{X}\) on the right transforms it into a diagonal matrix; it has been
     ‘‘diagonalized''.
+  id: totrans-29
   prefs: []
   type: TYPE_NORMAL
+  zh: 将矩阵 \(\mathbf{A}\) 左乘以 \(\mathbf{X}^{-1}\) 和右乘以 \(\mathbf{X}\) 将其转换为对角矩阵；它已经被“对角化”。
 - en: 'Example: Matrix that is diagonalizable'
+  id: totrans-30
   prefs:
   - PREF_H4
   type: TYPE_NORMAL
+  zh: 示例：可对角化的矩阵
 - en: 'An \(n \times n\) matrix is diagonalizable if and only if it has \(n\) linearly
     independent eigenvectors. For example:'
+  id: totrans-31
   prefs: []
   type: TYPE_NORMAL
+  zh: 一个 \(n \times n\) 矩阵是可对角化的当且仅当它有 \(n\) 个线性无关的特征向量。例如：
 - en: \[\overbrace{\begin{bmatrix} 1/6 & -1/3 & 1/6 \\ -1/2 & 0 & 1/2 \\ 1/3 & 1/3
     & 1/3 \end{bmatrix}}^{\mathbf{X}^{-1}} \overbrace{\begin{bmatrix} 1 & 1 & 0 \\
     1 & 0 & 1 \\ 0 & 1 & 1 \end{bmatrix}}^{\mathbf{A}} \overbrace{\begin{bmatrix}
     1 & -1 & 1 \\ -2 & 0 & 1 \\ 1 & 1 & 1 \end{bmatrix}}^{\mathbf{X}} = \overbrace{\begin{bmatrix}
     -1 & 0 & 0 \\ 0 & 1 & 0 \\ 0 & 0 & 2 \end{bmatrix}}^{\mathbf{D}}\]
+  id: totrans-32
   prefs: []
   type: TYPE_NORMAL
+  zh: \[\overbrace{\begin{bmatrix} 1/6 & -1/3 & 1/6 \\ -1/2 & 0 & 1/2 \\ 1/3 & 1/3
+    & 1/3 \end{bmatrix}}^{\mathbf{X}^{-1}} \overbrace{\begin{bmatrix} 1 & 1 & 0 \\
+    1 & 0 & 1 \\ 0 & 1 & 1 \end{bmatrix}}^{\mathbf{A}} \overbrace{\begin{bmatrix}
+    1 & -1 & 1 \\ -2 & 0 & 1 \\ 1 & 1 & 1 \end{bmatrix}}^{\mathbf{X}} = \overbrace{\begin{bmatrix}
+    -1 & 0 & 0 \\ 0 & 1 & 0 \\ 0 & 0 & 2 \end{bmatrix}}^{\mathbf{D}}\]
 - en: 'Example: Matrix that is not diagonalizable'
+  id: totrans-33
   prefs:
   - PREF_H4
   type: TYPE_NORMAL
+  zh: 示例：不可对角化的矩阵
 - en: A matrix \(\mathbf{A}\) with linearly dependent eigenvectors is not diagonalizable.
     For example, while it is true that
+  id: totrans-34
   prefs: []
   type: TYPE_NORMAL
+  zh: 一个具有线性相关特征向量的矩阵 \(\mathbf{A}\) 是不可对角化的。例如，虽然以下说法是正确的：
 - en: \[\overbrace{\begin{bmatrix} 1 & 1 \\ 0 & 1 \end{bmatrix}}^{\mathbf{A}} \overbrace{\begin{bmatrix}
     1 & 1 \\ 0 & 0 \end{bmatrix}}^{\mathbf{X}} = \overbrace{\begin{bmatrix} 1 & 1
     \\ 0 & 0 \end{bmatrix}}^{\mathbf{X}} \overbrace{\begin{bmatrix} 1 & 0 \\ 0 & 1
     \end{bmatrix}}^{\mathbf{D}},\]
+  id: totrans-35
   prefs: []
   type: TYPE_NORMAL
+  zh: \[\overbrace{\begin{bmatrix} 1 & 1 \\ 0 & 1 \end{bmatrix}}^{\mathbf{A}} \overbrace{\begin{bmatrix}
+    1 & 1 \\ 0 & 0 \end{bmatrix}}^{\mathbf{X}} = \overbrace{\begin{bmatrix} 1 & 1
+    \\ 0 & 0 \end{bmatrix}}^{\mathbf{X}} \overbrace{\begin{bmatrix} 1 & 0 \\ 0 & 1
+    \end{bmatrix}}^{\mathbf{D}},\]
 - en: the matrix \(\mathbf{X}\) does not have an inverse, so we cannot diagonalize
     \(\mathbf{A}\) by applying an inverse. In fact, for any non-singular matrix \(\mathbf{P}\),
     the product \(\mathbf{P}^{-1}\mathbf{AP}\) is not diagonal.
+  id: totrans-36
   prefs: []
   type: TYPE_NORMAL
+  zh: 矩阵 \(\mathbf{X}\) 没有逆矩阵，所以我们不能通过应用逆矩阵来对 \(\mathbf{A}\) 进行对角化。事实上，对于任何非奇异矩阵 \(\mathbf{P}\)，乘积
+    \(\mathbf{P}^{-1}\mathbf{AP}\) 也不是对角矩阵。
 - en: 'Example: Diagonalizing a Matrix (Code Snippet)'
+  id: totrans-37
   prefs:
   - PREF_H4
   type: TYPE_NORMAL
+  zh: 示例：对角化矩阵（代码片段）
 - en: The following code snippet diagonalizes a square matrix, if possible. Take careful
     note that eigenvectors are stored as columns of a 2d numpy array.
+  id: totrans-38
   prefs: []
   type: TYPE_NORMAL
+  zh: 以下代码片段在可能的情况下对角化一个方阵，请注意，特征向量作为二维 numpy 数组的列存储。
 - en: '[PRE0]'
+  id: totrans-39
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: Things to Remember About Eigenvalues
+  id: totrans-40
   prefs:
   - PREF_H4
   type: TYPE_NORMAL
+  zh: 关于特征值需要记住的事项
 - en: Eigenvalues can have zero value.
+  id: totrans-41
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 特征值可以取零值。
 - en: Eigenvalues can be negative.
+  id: totrans-42
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 特征值可以是负数。
 - en: Eigenvalues can be real or complex numbers.
+  id: totrans-43
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 特征值可以是实数或复数。
 - en: An \(n \times n\) real matrix can have complex eigenvalues.
+  id: totrans-44
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 一个 \(n \times n\) 的实矩阵可以具有复特征值。
 - en: The eigenvalues of an \(n \times n\) matrix are not necessarily unique. In fact,
     we can define the multiplicity of an eigenvalue. The geometric multiplicity of
     an eigenvector \(\lambda\) corresponds to the number of linearly independent eigenvectors
     of \(\lambda\)
+  id: totrans-45
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: \(n \times n\) 矩阵的特征值不一定唯一。实际上，我们可以定义特征值的重数。特征向量 \(\lambda\) 的几何重数对应于 \(\lambda\)
+    的线性无关特征向量的数量。
 - en: If an \(n \times n\) matrix has \(n\) linearly independent eigenvectors, then
     the matrix is diagonalizable. Therefore, a rank-deficient matrix can still be
     diagonalizable.
+  id: totrans-46
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 如果一个 \(n \times n\) 矩阵有 \(n\) 个线性无关的特征向量，那么该矩阵是可对角化的。因此，秩亏矩阵仍然可能是可对角化的。
 - en: Conditions for Diagonalizibility
+  id: totrans-47
   prefs:
   - PREF_H4
   type: TYPE_NORMAL
+  zh: 可对角化的条件
 - en: If an \(n \times n\) matrix \(\mathbf A\) has \(n\) linearly independent eigenvectors
     \(\mathbf x\) then \(\mathbf A\) is diagonalizable.
+  id: totrans-48
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 如果一个 \(n \times n\) 矩阵 \(\mathbf A\) 有 \(n\) 个线性无关的特征向量 \(\mathbf x\)，那么 \(\mathbf
+    A\) 是可对角化的。
 - en: If an \(n \times n\) matrix has less than \(n\) eigenvectors, the matrix is
     called defective (and therefore not diagonalizable).
+  id: totrans-49
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 如果一个 \(n \times n\) 矩阵的特征向量少于 \(n\) 个，那么该矩阵被称为病态的（因此不可对角化）。
 - en: If an \(n \times n\) matrix has \(n\) distinct eigenvalues then A is diagonalizable.
+  id: totrans-50
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 如果一个 \(n \times n\) 矩阵有 \(n\) 个不同的特征值，那么 A 是可对角化的。
 - en: Eigenvalues of a Shifted Matrix
+  id: totrans-51
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 平移矩阵的特征值
 - en: Given a matrix \(\mathbf{A}\), for any constant scalar \(\sigma\), we define
     the ***shifted matrix*** is \(\mathbf{A} - \sigma {\bf I}\). If \(\lambda\) is
     an eigenvalue of \(\mathbf{A}\) with eigenvector \({\bf x}\) then \(\lambda -
     \sigma\) is an eigenvalue of the shifted matrix with the same eigenvector. This
     can be derived by
+  id: totrans-52
   prefs: []
   type: TYPE_NORMAL
+  zh: 给定一个矩阵 \(\mathbf{A}\)，对于任何常数标量 \(\sigma\)，我们定义 ***平移矩阵*** 是 \(\mathbf{A} - \sigma
+    {\bf I}\)。如果 \(\lambda\) 是 \(\mathbf{A}\) 的一个特征值，其特征向量为 \({\bf x}\)，那么 \(\lambda
+    - \sigma\) 是平移矩阵的一个特征值，其特征向量相同。这可以通过以下方式推导出来：
 - en: \[\begin{aligned} (\mathbf{A} - \sigma {\bf I}) {\bf x} &= \mathbf{A} {\bf x}
     - \sigma {\bf I} {\bf x} \\ &= \lambda {\bf x} - \sigma {\bf x} \\ &= (\lambda
     - \sigma) {\bf x}. \end{aligned}\]
+  id: totrans-53
   prefs: []
   type: TYPE_NORMAL
+  zh: \[\begin{aligned} (\mathbf{A} - \sigma {\bf I}) {\bf x} &= \mathbf{A} {\bf x}
+    - \sigma {\bf I} {\bf x} \\ &= \lambda {\bf x} - \sigma {\bf x} \\ &= (\lambda
+    - \sigma) {\bf x}. \end{aligned}\]
 - en: Eigenvalues of an Inverse
+  id: totrans-54
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 逆矩阵的特征值
 - en: 'An invertible matrix cannot have an eigenvalue equal to zero. An eigenvalue
     equal to zero would imply a trivial solution to \(\mathbf{Ax}=\mathbf{b}\), a
     nullspace of nonzero dimension, and therefore a non invertible matrix. Furthermore,
     the eigenvalues of the inverse matrix are equal to the inverse of the eigenvalues
     of the original matrix:'
+  id: totrans-55
   prefs: []
   type: TYPE_NORMAL
+  zh: 可逆矩阵不能有等于零的特征值。等于零的特征值将意味着 \(\mathbf{Ax}=\mathbf{b}\) 的平凡解，一个非零维数的零空间，因此一个不可逆矩阵。此外，逆矩阵的特征值等于原矩阵特征值的倒数：
 - en: \[\mathbf{A} {\bf x} = \lambda {\bf x}\implies \\ \mathbf{A}^{-1} \mathbf{A}
     {\bf x} = \lambda \mathbf{A}^{-1} {\bf x} \implies \\ {\bf x} = \lambda \mathbf{A}^{-1}
     {\bf x}\implies \\ \mathbf{A}^{-1} {\bf x} = \frac{1}{\lambda} {\bf x}.\]
+  id: totrans-56
   prefs: []
   type: TYPE_NORMAL
+  zh: \[\mathbf{A} {\bf x} = \lambda {\bf x}\implies \\ \mathbf{A}^{-1} \mathbf{A}
+    {\bf x} = \lambda \mathbf{A}^{-1} {\bf x} \implies \\ {\bf x} = \lambda \mathbf{A}^{-1}
+    {\bf x}\implies \\ \mathbf{A}^{-1} {\bf x} = \frac{1}{\lambda} {\bf x}.\]
 - en: Eigenvalues of a Shifted Inverse
+  id: totrans-57
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 平移逆矩阵的特征值
 - en: 'Similarly, we can describe the eigenvalues for shifted inverse matrices as:'
+  id: totrans-58
   prefs: []
   type: TYPE_NORMAL
+  zh: 同样，我们可以描述平移逆矩阵的特征值：
 - en: \[(\mathbf{A} - \sigma {\bf I})^{-1} {\bf x} = \frac{1}{\lambda - \sigma} {\bf
     x}.\]
+  id: totrans-59
   prefs: []
   type: TYPE_NORMAL
+  zh: \[(\mathbf{A} - \sigma {\bf I})^{-1} {\bf x} = \frac{1}{\lambda - \sigma} {\bf
+    x}.\]
 - en: It is important to note here that the eigenvectors remain unchanged for shifted
     or/and inverted matrices.
+  id: totrans-60
   prefs: []
   type: TYPE_NORMAL
+  zh: 在这里需要注意的是，对于平移或/和逆矩阵，特征向量保持不变。
 - en: Expressing an Arbitrary Vector as a Linear Combination of Eigenvectors
+  id: totrans-61
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 将任意向量表示为特征向量的线性组合
 - en: 'If an \(n\times n\) matrix \(\mathbf{A}\) is diagonalizable, then we can write
     an arbitrary vector as a linear combination of the eigenvectors of \(\mathbf{A}\).
     Let \({\bf u}_1,{\bf u}_2,\dots,{\bf u}_n\) be \(n\) linearly independent eigenvectors
     of \(\mathbf{A}\); then an arbitrary vector \(\mathbf{x}_0\) can be written:'
+  id: totrans-62
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果一个 \(n\times n\) 矩阵 \(\mathbf{A}\) 是可对角化的，那么我们可以将任意向量表示为 \(\mathbf{A}\) 的特征向量的线性组合。设
+    \({\bf u}_1,{\bf u}_2,\dots,{\bf u}_n\) 是 \(\mathbf{A}\) 的 \(n\) 个线性无关的特征向量；那么任意向量
+    \(\mathbf{x}_0\) 可以表示为：
 - en: \[{\bf x}_0 = \alpha_1 {\bf u}_1 + \alpha_2 {\bf u}_2 + \dots + \alpha_n {\bf
     u}_n.\]
+  id: totrans-63
   prefs: []
   type: TYPE_NORMAL
+  zh: \[{\bf x}_0 = \alpha_1 {\bf u}_1 + \alpha_2 {\bf u}_2 + \dots + \alpha_n {\bf
+    u}_n.\]
 - en: 'If we apply the matrix \(\mathbf{A}\) to \(\mathbf{x}_0\):'
+  id: totrans-64
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果我们将矩阵 \(\mathbf{A}\) 应用于 \(\mathbf{x}_0\)：
 - en: \[\begin{align} \mathbf{A}{\bf x}_0 &= \alpha_1 \mathbf{A}{\bf u}_1 + \alpha_2\mathbf{A}{\bf
     u}_2 + \dots + \alpha_n \mathbf{A}{\bf u}_n, \\ &= \alpha_1 \lambda_1 {\bf u}_1
     + \alpha_2\lambda_2 {\bf u}_2 + \dots + \alpha_n \lambda_n {\bf u}_n, \\ &= \lambda_1
     \left(\alpha_1 {\bf u}_1 + \alpha_2\frac{\lambda_2}{\lambda_1}{\bf u}_2 + \dots
     + \alpha_n \frac{\lambda_n}{\lambda_1} {\bf u}_n\right). \\ \end{align}\]
+  id: totrans-65
   prefs: []
   type: TYPE_NORMAL
+  zh: \[\begin{align} \mathbf{A}{\bf x}_0 &= \alpha_1 \mathbf{A}{\bf u}_1 + \alpha_2\mathbf{A}{\bf
+    u}_2 + \dots + \alpha_n \mathbf{A}{\bf u}_n, \\ &= \alpha_1 \lambda_1 {\bf u}_1
+    + \alpha_2\lambda_2 {\bf u}_2 + \dots + \alpha_n \lambda_n {\bf u}_n, \\ &= \lambda_1
+    \left(\alpha_1 {\bf u}_1 + \alpha_2\frac{\lambda_2}{\lambda_1}{\bf u}_2 + \dots
+    + \alpha_n \frac{\lambda_n}{\lambda_1} {\bf u}_n\right). \\ \end{align}\]
 - en: If we repeatedly apply \(\mathbf{A}\) we have
+  id: totrans-66
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果我们反复应用 \(\mathbf{A}\)，则有
 - en: \[\mathbf{A}^k{\bf x}_0= \lambda_1^k \left(\alpha_1 {\bf u}_1 + \alpha_2\left(\frac{\lambda_2}{\lambda_1}\right)^k{\bf
     u}_2 + \dots + \alpha_n \left(\frac{\lambda_n}{\lambda_1}\right)^k {\bf u}_n\right).\]
+  id: totrans-67
   prefs: []
   type: TYPE_NORMAL
+  zh: \[\mathbf{A}^k{\bf x}_0= \lambda_1^k \left(\alpha_1 {\bf u}_1 + \alpha_2\left(\frac{\lambda_2}{\lambda_1}\right)^k{\bf
+    u}_2 + \dots + \alpha_n \left(\frac{\lambda_n}{\lambda_1}\right)^k {\bf u}_n\right).\]
 - en: In the case where one eigenvalue has magnitude that is strictly greater than
     all the others, i.e.
+  id: totrans-68
   prefs: []
   type: TYPE_NORMAL
+  zh: 在一个特征值的模严格大于其他所有特征值的情况下，即
 - en: \(\vert\lambda_1\vert > \vert\lambda_2\vert\geq \vert\lambda_3\vert \geq \dots
     \geq\vert\lambda_n\vert\),
+  id: totrans-69
   prefs: []
   type: TYPE_NORMAL
+  zh: \(\vert\lambda_1\vert > \vert\lambda_2\vert\geq \vert\lambda_3\vert \geq \dots
+    \geq\vert\lambda_n\vert\),
 - en: this implies
+  id: totrans-70
   prefs: []
   type: TYPE_NORMAL
+  zh: 这意味着
 - en: \[\lim_{k\to\infty}\frac{\mathbf{A}^k {\bf x}_0}{\lambda_1^{k}} = \alpha_1 {\bf
     u}_1.\]
+  id: totrans-71
   prefs: []
   type: TYPE_NORMAL
+  zh: \[\lim_{k\to\infty}\frac{\mathbf{A}^k {\bf x}_0}{\lambda_1^{k}} = \alpha_1 {\bf
+    u}_1.\]
 - en: 'Plainly, as we repeatedly apply \(\mathbf{A}\) to an arbitrary vector - which
     can always be composed as a linear combination of \(n\) linearly independent eigenvectors
     spanning \(\mathbb{R}^n\) - the result converges to a multiple of the dominant
     eigenvector of \(\mathbf{A}\): \(\bf{u_1}\). This observation motivates the algorithm
     known as ***power iteration***, which is the topic of the next section.'
+  id: totrans-72
   prefs: []
   type: TYPE_NORMAL
+  zh: 显然，当我们反复将 \(\mathbf{A}\) 应用到一个任意向量上——这个向量总是可以由 \(n\) 个线性无关的特征向量组成，这些特征向量张成 \(\mathbb{R}^n\)
+    ——结果收敛到 \(\mathbf{A}\) 的主导特征向量的一个倍数：\(\bf{u_1}\)。这一观察启发了一种称为**幂迭代**的算法，这是下一节的主题。
 - en: Power Iteration algorithm
+  id: totrans-73
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 幂迭代算法
 - en: For a matrix \({\bf A}\), power iteration will find a scalar multiple of an
     eigenvector \({\bf u}_1\), corresponding to the dominant eigenvalue (largest in
     magnitude) \(\lambda_1\), provided that \(\vert\lambda_1\vert\) is strictly greater
     than the magnitude of the other eigenvalues, i.e., \(\vert\lambda_1\vert > \vert\lambda_2\vert
     \ge \dots \ge \vert\lambda_n\vert\).
+  id: totrans-74
   prefs: []
   type: TYPE_NORMAL
+  zh: 对于一个矩阵 \({\bf A}\)，幂迭代将找到一个特征向量 \({\bf u}_1\) 的标量倍，对应于主导特征值（模最大的）\(\lambda_1\)，前提是
+    \(\vert\lambda_1\vert\) 严格大于其他特征值的模，即 \(\vert\lambda_1\vert > \vert\lambda_2\vert
+    \ge \dots \ge \vert\lambda_n\vert\).
 - en: Suppose
+  id: totrans-75
   prefs: []
   type: TYPE_NORMAL
+  zh: 假设
 - en: \[\mathbf{x}_0 = \alpha_1 \mathbf{u}_1 + \alpha_2\mathbf{u}_2 + \dots \alpha_n\mathbf{u}_n,\text{
     with }\alpha_1 \neq 0.\]
+  id: totrans-76
   prefs: []
   type: TYPE_NORMAL
+  zh: \[\mathbf{x}_0 = \alpha_1 \mathbf{u}_1 + \alpha_2\mathbf{u}_2 + \dots \alpha_n\mathbf{u}_n,\text{
+    with }\alpha_1 \neq 0.\]
 - en: From the previous section, the iterative sequence
+  id: totrans-77
   prefs: []
   type: TYPE_NORMAL
+  zh: 从上一节，迭代序列
 - en: \[\mathbf{x}_k = \mathbf{A}\mathbf{x}_{k-1}\text{ for }k=1,2,3,\dots\]
+  id: totrans-78
   prefs: []
   type: TYPE_NORMAL
+  zh: \[\mathbf{x}_k = \mathbf{A}\mathbf{x}_{k-1}\text{ for }k=1,2,3,\dots\]
 - en: satisfies
+  id: totrans-79
   prefs: []
   type: TYPE_NORMAL
+  zh: 满足
 - en: \[\mathbf{x}_k = \mathbf{A}^k\mathbf{x}_0 \implies \lim_{k\to\infty}\frac{\mathbf{x}_k}{\lambda_1^k}
     = \alpha_1\mathbf{u}_1.\]
+  id: totrans-80
   prefs: []
   type: TYPE_NORMAL
+  zh: \[\mathbf{x}_k = \mathbf{A}^k\mathbf{x}_0 \implies \lim_{k\to\infty}\frac{\mathbf{x}_k}{\lambda_1^k}
+    = \alpha_1\mathbf{u}_1.\]
 - en: Thus, for large \(k\), we have \(\mathbf{x}_k\approx \lambda_1^k \alpha_1\mathbf{u}_1\).
     Unfortunately, this means that \(\|\mathbf{x}_k\| \approx |\lambda_1|^k\cdot\|\alpha_1\mathbf{u}_1\|,\)
     which will be very large if \(|\lambda_1| > 1\), or very small if \(|\lambda_1|
     < 1\). For this reason, we use ***normalized*** power iteration.
+  id: totrans-81
   prefs: []
   type: TYPE_NORMAL
+  zh: 因此，对于大的 \(k\)，我们有 \(\mathbf{x}_k\approx \lambda_1^k \alpha_1\mathbf{u}_1\)。不幸的是，这意味着
+    \(\|\mathbf{x}_k\| \approx |\lambda_1|^k\cdot\|\alpha_1\mathbf{u}_1\|,\) 如果 \(|\lambda_1|
+    > 1\)，这将非常大，如果 \(|\lambda_1| < 1\)，这将非常小。因此，我们使用**归一化**幂迭代。
 - en: 'Normalized power iteration, is given by the following. Let \(\mathbf{x}_0\)
     be a vector with unit norm: \(\|\mathbf{x}_0\| = 1\) (any norm is fine), with
     \(\mathbf{x}_0 = \alpha_1 \mathbf{u}_1 + \alpha_2\mathbf{u}_2 + \dots \alpha_n\mathbf{u}_n,\text{
     and }\alpha_1 \neq 0\).'
+  id: totrans-82
   prefs: []
   type: TYPE_NORMAL
+  zh: 归一化幂迭代，由以下给出。设 \(\mathbf{x}_0\) 是一个单位范数的向量：\(\|\mathbf{x}_0\| = 1\)（任何范数都行），且
+    \(\mathbf{x}_0 = \alpha_1 \mathbf{u}_1 + \alpha_2\mathbf{u}_2 + \dots \alpha_n\mathbf{u}_n,\text{
+    and }\alpha_1 \neq 0\).
 - en: '***Normalized power iteration*** is defined by the following iterative sequence
     for \(k=1,2,3,\dots\):'
+  id: totrans-83
   prefs: []
   type: TYPE_NORMAL
+  zh: '**归一化幂迭代**定义为以下迭代序列，对于 \(k=1,2,3,\dots\):'
 - en: \[\begin{align} &\mathbf{y}_k = \mathbf{A}\mathbf{x}_{k-1} \\ &\mathbf{x}_k
     = \frac{\mathbf{y}_k}{\|\mathbf{y}_k\|} \end{align}\]
+  id: totrans-84
   prefs: []
   type: TYPE_NORMAL
+  zh: \[\begin{align} &\mathbf{y}_k = \mathbf{A}\mathbf{x}_{k-1} \\ &\mathbf{x}_k
+    = \frac{\mathbf{y}_k}{\|\mathbf{y}_k\|} \end{align}\]
 - en: where the norm \(\|\cdot\|\) is identical to the norm used when we assumed \(\|\mathbf{x}_0\|
     = 1\).
+  id: totrans-85
   prefs: []
   type: TYPE_NORMAL
+  zh: 其中范数 \(\|\cdot\|\) 与我们假设 \(\|\mathbf{x}_0\| = 1\) 时使用的范数相同。
 - en: It can be shown that this sequence satisfies
+  id: totrans-86
   prefs: []
   type: TYPE_NORMAL
+  zh: 可以证明这个序列满足
 - en: \[\mathbf{x}_k = \frac{\mathbf{A}^k\mathbf{x}_0}{\|\mathbf{A}^k\mathbf{x}_0\|}.\]
+  id: totrans-87
   prefs: []
   type: TYPE_NORMAL
+  zh: \[\mathbf{x}_k = \frac{\mathbf{A}^k\mathbf{x}_0}{\|\mathbf{A}^k\mathbf{x}_0\|}.\]
 - en: This means that for large values of \(k\), we have
+  id: totrans-88
   prefs: []
   type: TYPE_NORMAL
+  zh: 这意味着对于大的 \(k\) 值，我们有
 - en: \[\mathbf{x}_k \approx \left(\frac{\lambda_1}{|\lambda_1|}\right)^k\cdot\frac{\alpha_1\mathbf{u}_1}{\|\alpha_1\mathbf{u}_1\|}.\]
+  id: totrans-89
   prefs: []
   type: TYPE_NORMAL
+  zh: \[\mathbf{x}_k \approx \left(\frac{\lambda_1}{|\lambda_1|}\right)^k\cdot\frac{\alpha_1\mathbf{u}_1}{\|\alpha_1\mathbf{u}_1\|}.\]
 - en: 'The largest eigenvalue could be positive, negative, or a complex number. In
     each case we will have:'
+  id: totrans-90
   prefs: []
   type: TYPE_NORMAL
+  zh: 最大的特征值可能是正数、负数或复数。在每种情况下，我们都会有：
 - en: \[\begin{align} \lambda_1 > 0 \implies &\mathbf{x}_k \approx \frac{\alpha_1\mathbf{u}_1}{\|\alpha_1\mathbf{u}_1\|}\hspace{22.5mm}
     \mathbf{x}_k\text{ converges} \\ \lambda_1 < 0 \implies &\mathbf{x}_k \approx
     (-1)^k \frac{\alpha_1\mathbf{u}_1}{\|\alpha_1\mathbf{u}_1\|}\hspace{11.5mm} \text{in
@@ -403,126 +638,206 @@
     \lambda_1 = re^{i\theta} \implies & \mathbf{x}_k \approx e^{ik\theta} \frac{\alpha_1\mathbf{u}_1}{\|\alpha_1\mathbf{u}_1\|}
     \hspace{16mm} \text{in the limit, }\mathbf{x}_k \text{ is a scalar multiple of
     } \mathbf{u}_1 \text{ with coefficient that rotates around the unit circle}. \end{align}\]
+  id: totrans-91
   prefs: []
   type: TYPE_NORMAL
+  zh: \[\begin{align} \lambda_1 > 0 \implies &\mathbf{x}_k \approx \frac{\alpha_1\mathbf{u}_1}{\|\alpha_1\mathbf{u}_1\|}\hspace{22.5mm}
+    \mathbf{x}_k\text{ 收敛} \\ \lambda_1 < 0 \implies &\mathbf{x}_k \approx (-1)^k
+    \frac{\alpha_1\mathbf{u}_1}{\|\alpha_1\mathbf{u}_1\|}\hspace{11.5mm} \text{在极限情况下，}\mathbf{x}_k\text{
+    在 } \pm\frac{\alpha_1\mathbf{u}_1}{\|\alpha_1\mathbf{u}_1\|} \text{ 之间交替} \\ \lambda_1
+    = re^{i\theta} \implies & \mathbf{x}_k \approx e^{ik\theta} \frac{\alpha_1\mathbf{u}_1}{\|\alpha_1\mathbf{u}_1\|}
+    \hspace{16mm} \text{在极限情况下，}\mathbf{x}_k \text{ 是 } \mathbf{u}_1 \text{ 的一个标量倍，其系数在单位圆上旋转}.
+    \end{align}\]
 - en: Strictly speaking, normalized power iteration only converges to a single vector
     if \(\lambda_1 > 0\), but \(\mathbf{x}_k\) will be close to a scalar multiple
     of the eigenvector \(\mathbf{u}_1\) for large values of \(k\), regardless of whether
     the dominant eigenvalue is positive, negative, or complex. So normalized power
     iteration will work for any value of \(\lambda_1\), as long as it is strictly
     bigger in magnitude than the other eigenvalues.
+  id: totrans-92
   prefs: []
   type: TYPE_NORMAL
+  zh: 严格来说，归一化幂迭代只有在 \(\lambda_1 > 0\) 时才收敛到单个向量，但无论主导特征值是正数、负数还是复数，\(\mathbf{x}_k\)
+    都会接近特征向量 \(\mathbf{u}_1\) 的一个标量倍，对于大的 \(k\) 值。因此，归一化幂迭代对于任何 \(\lambda_1\) 值都有效，只要它的绝对值比其他特征值大。
 - en: Power Iteration code
+  id: totrans-93
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 幂迭代代码
 - en: 'The following code snippet performs power iteration:'
+  id: totrans-94
   prefs: []
   type: TYPE_NORMAL
+  zh: 以下代码片段执行幂迭代：
 - en: '[PRE1]'
+  id: totrans-95
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: 'Example: Two Steps of Power Iteration'
+  id: totrans-96
   prefs:
   - PREF_H4
   type: TYPE_NORMAL
+  zh: '**示例：幂迭代的两步**'
 - en: 'We''ll use normalized power iteration (with the infinity norm) to approximate
     an eigenvector of the following matrix: \(\mathbf{A} = \begin{bmatrix} 1 & -2
     \\ -1 & 1 \end{bmatrix},\) and the following initial guess: \(\mathbf{x}_0 = \begin{bmatrix}
     -1 \\ 0 \end{bmatrix}\)'
+  id: totrans-97
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们将使用归一化幂迭代（使用无穷范数）来逼近以下矩阵的特征向量：\(\mathbf{A} = \begin{bmatrix} 1 & -2 \\ -1
+    & 1 \end{bmatrix}\)，以及以下初始猜测：\(\mathbf{x}_0 = \begin{bmatrix} -1 \\ 0 \end{bmatrix}\)
 - en: '**First Iteration**:'
+  id: totrans-98
   prefs: []
   type: TYPE_NORMAL
+  zh: '**第一次迭代**:'
 - en: \[\begin{align} &\mathbf{y}_1 = \mathbf{A}\mathbf{x}_0 = \begin{bmatrix} 1 &
     -2 \\ -1 & 1 \end{bmatrix} \begin{bmatrix} -1 \\ 0 \end{bmatrix} = \begin{bmatrix}
     -1 \\ 1 \end{bmatrix},\\[15pt] &\mathbf{x}_1 = \frac{\mathbf{y}_1}{\|\mathbf{y}_1\|_{\infty}}
     = \mathbf{y}_1 = \begin{bmatrix} -1 \\ 1\end{bmatrix}. \end{align}\]
+  id: totrans-99
   prefs: []
   type: TYPE_NORMAL
+  zh: \[\begin{align} &\mathbf{y}_1 = \mathbf{A}\mathbf{x}_0 = \begin{bmatrix} 1 &
+    -2 \\ -1 & 1 \end{bmatrix} \begin{bmatrix} -1 \\ 0 \end{bmatrix} = \begin{bmatrix}
+    -1 \\ 1 \end{bmatrix},\\[15pt] &\mathbf{x}_1 = \frac{\mathbf{y}_1}{\|\mathbf{y}_1\|_{\infty}}
+    = \mathbf{y}_1 = \begin{bmatrix} -1 \\ 1\end{bmatrix}. \end{align}\]
 - en: '**Second Iteration**:'
+  id: totrans-100
   prefs: []
   type: TYPE_NORMAL
+  zh: '**第二次迭代**:'
 - en: \[\begin{align} &\mathbf{y}_2 = \mathbf{A}\mathbf{x}_1 = \begin{bmatrix} 1 &
     -2 \\ -1 & 1 \end{bmatrix} \begin{bmatrix} -1 \\ 1 \end{bmatrix} = \begin{bmatrix}
     -3 \\ 2 \end{bmatrix},\\[15pt] &\mathbf{x}_2 = \frac{\mathbf{y}_2}{\|\mathbf{y}_2\|_{\infty}}
     = \frac{1}{3}\mathbf{y}_2= \begin{bmatrix} -1 \\ \frac{2}{3}\end{bmatrix} = \begin{bmatrix}
     -1 \\ 0.6666\dots\end{bmatrix}. \end{align}\]
+  id: totrans-101
   prefs: []
   type: TYPE_NORMAL
+  zh: \[\begin{align} &\mathbf{y}_2 = \mathbf{A}\mathbf{x}_1 = \begin{bmatrix} 1 &
+    -2 \\ -1 & 1 \end{bmatrix} \begin{bmatrix} -1 \\ 1 \end{bmatrix} = \begin{bmatrix}
+    -3 \\ 2 \end{bmatrix},\\[15pt] &\mathbf{x}_2 = \frac{\mathbf{y}_2}{\|\mathbf{y}_2\|_{\infty}}
+    = \frac{1}{3}\mathbf{y}_2= \begin{bmatrix} -1 \\ \frac{2}{3}\end{bmatrix} = \begin{bmatrix}
+    -1 \\ 0.6666\dots\end{bmatrix}. \end{align}\]
 - en: 'Even after only two iterations, we are getting close to a corresponding eigenvector:'
+  id: totrans-102
   prefs: []
   type: TYPE_NORMAL
+  zh: 即使只有两次迭代，我们也在接近相应的特征向量：
 - en: \[\mathbf{u}_1 = \begin{bmatrix} -1 \\ \frac{1}{\sqrt{2}} \end{bmatrix} \approx
     \begin{bmatrix} -1 \\ 0.7071 \end{bmatrix}\]
+  id: totrans-103
   prefs: []
   type: TYPE_NORMAL
+  zh: \[\mathbf{u}_1 = \begin{bmatrix} -1 \\ \frac{1}{\sqrt{2}} \end{bmatrix} \approx
+    \begin{bmatrix} -1 \\ 0.7071 \end{bmatrix}\]
 - en: with relative error about 4 percent when measured in the infinity norm.
+  id: totrans-104
   prefs: []
   type: TYPE_NORMAL
+  zh: 当用无穷范数测量时，相对误差约为 4%。
 - en: Computing Eigenvalues from Eigenvectors
+  id: totrans-105
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 从特征向量计算特征值
 - en: Power iteration allows us to find an approximate eigenvector corresponding to
     the largest eigenvalue in magnitude. How can we compute the actual eigenvalue
     from this?
+  id: totrans-106
   prefs: []
   type: TYPE_NORMAL
+  zh: 力迭代允许我们找到对应于最大特征值（模）的近似特征向量。我们如何从这个近似特征向量计算实际的特征值呢？
 - en: 'If \(\lambda\) is an eigenvalue of \(\mathbf{A}\), with corresponding eigenvector
     \(\mathbf{u}\), then we can compute the value of \(\lambda\) using the ***Rayleigh
     Quotient***:'
+  id: totrans-107
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果 \(\lambda\) 是 \(\mathbf{A}\) 的一个特征值，对应的特征向量为 \(\mathbf{u}\)，那么我们可以使用 ***瑞利商***
+    来计算 \(\lambda\) 的值：
 - en: \[\lambda = \frac{\mathbf{u}^T\mathbf{A}\mathbf{u}}{\mathbf{u}^T\mathbf{u}}.\]
+  id: totrans-108
   prefs: []
   type: TYPE_NORMAL
+  zh: \[\lambda = \frac{\mathbf{u}^T\mathbf{A}\mathbf{u}}{\mathbf{u}^T\mathbf{u}}.\]
 - en: Thus, one can compute an approximate eigenvalue using the approximate eigenvector
     found during power iteration.
+  id: totrans-109
   prefs: []
   type: TYPE_NORMAL
+  zh: 因此，可以使用在幂迭代过程中找到的近似特征向量来计算一个近似特征值。
 - en: Power Iteration and Floating-Point Arithmetic
+  id: totrans-110
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 力迭代与浮点运算
 - en: Recall that we made the assumption that the initial guess satisfies
+  id: totrans-111
   prefs: []
   type: TYPE_NORMAL
+  zh: 回想一下，我们假设初始猜测满足
 - en: \[\mathbf{x}_0 = \alpha_1 \mathbf{u}_1 + \alpha_2\mathbf{u}_2 + \dots \alpha_n\mathbf{u}_n,\text{
     with }\alpha_1 \neq 0.\]
+  id: totrans-112
   prefs: []
   type: TYPE_NORMAL
+  zh: \[\mathbf{x}_0 = \alpha_1 \mathbf{u}_1 + \alpha_2\mathbf{u}_2 + \dots \alpha_n\mathbf{u}_n,\text{
+    其中 }\alpha_1 \neq 0.\]
 - en: What happens if we choose an initial guess where \(\alpha_1 = 0\)? If we further
     assume that \(\vert\lambda_2\vert > \vert\lambda_3\vert\geq \vert\lambda_4\vert
     \geq \dots \geq\vert\lambda_n\vert\), then in theory
+  id: totrans-113
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果我们选择的初始猜测中 \(\alpha_1 = 0\) 会发生什么？如果我们进一步假设 \(\vert\lambda_2\vert > \vert\lambda_3\vert\geq
+    \vert\lambda_4\vert \geq \dots \geq\vert\lambda_n\vert\)，那么在理论上
 - en: \[\mathbf{A}^k\boldsymbol{x}_0= \lambda_2^k \left(\alpha_2 {\bf u}_2 + \alpha_3\left(\frac{\lambda_3}{\lambda_2}\right)^k{\bf
     u}_3 + \dots + \alpha_n \left(\frac{\lambda_n}{\lambda_2}\right)^k {\bf u}_n\right),\]
+  id: totrans-114
   prefs: []
   type: TYPE_NORMAL
+  zh: \[\mathbf{A}^k\boldsymbol{x}_0= \lambda_2^k \left(\alpha_2 {\bf u}_2 + \alpha_3\left(\frac{\lambda_3}{\lambda_2}\right)^k{\bf
+    u}_3 + \dots + \alpha_n \left(\frac{\lambda_n}{\lambda_2}\right)^k {\bf u}_n\right),\]
 - en: and we would expect that
+  id: totrans-115
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们预计
 - en: \[\lim_{k\to\infty}\frac{\mathbf{A}^k \boldsymbol{x}_0}{\lambda_2^{k}} = \alpha_2
     {\bf u}_2.\]
+  id: totrans-116
   prefs: []
   type: TYPE_NORMAL
+  zh: \[\lim_{k\to\infty}\frac{\mathbf{A}^k \boldsymbol{x}_0}{\lambda_2^{k}} = \alpha_2
+    {\bf u}_2.\]
 - en: In practice, this does not happen. For one thing, choosing an initial guess
     such that \(\alpha_1 = 0\) is extremely unlikely if we have no prior knowledge
     about the eigenvector \(\mathbf{u}_1\). Since power iteration is performed numerically,
     using finite precision arithmetic, we will encounter the presence of rounding
     error in every iteration. This means that at every iteration \(k\text{, including
     }k = 0\), we will instead have
+  id: totrans-117
   prefs: []
   type: TYPE_NORMAL
+  zh: 实际上，这种情况不会发生。一方面，如果我们对特征向量 \(\mathbf{u}_1\) 没有先验知识，选择一个 \(\alpha_1 = 0\) 的初始猜测几乎是不可能的。由于幂迭代是数值上进行的，使用有限精度算术，我们将在每次迭代中遇到舍入误差的存在。这意味着在每次迭代
+    \(k\)（包括 \(k = 0\)），我们实际上将会有
 - en: \[\mathbf{A}^k\hat{\boldsymbol{x}}_0= \lambda_1^k \left(\hat{\alpha}_1 \boldsymbol{u}_1
     + \hat{\alpha}_2\left(\frac{\lambda_2}{\lambda_1}\right)^k\boldsymbol{u}_2 + \dots
     + \hat{\alpha}_n \left(\frac{\lambda_n}{\lambda_1}\right)^k \boldsymbol{u}_n\right),\]
+  id: totrans-118
   prefs: []
   type: TYPE_NORMAL
+  zh: \[\mathbf{A}^k\hat{\boldsymbol{x}}_0= \lambda_1^k \left(\hat{\alpha}_1 \boldsymbol{u}_1
+    + \hat{\alpha}_2\left(\frac{\lambda_2}{\lambda_1}\right)^k\boldsymbol{u}_2 + \dots
+    + \hat{\alpha}_n \left(\frac{\lambda_n}{\lambda_1}\right)^k \boldsymbol{u}_n\right),\]
 - en: where the \(\hat{\alpha}_k\) are the approximate expansion coefficients of the
     rounded result. Even if \(\alpha_1 = 0\), the finite precision representation
     \(\hat{\mathbf{x}}_0\), will very likely have expansion coefficient \(\hat{\alpha}_1
@@ -532,83 +847,134 @@
     after enough iterations. The probability of coming up with a starting guess \(\mathbf{x}_0\)
     such that \(\hat{\alpha}_1 = 0\) for all iterations is very, very low, if not
     impossible.
+  id: totrans-119
   prefs: []
   type: TYPE_NORMAL
+  zh: 其中 \(\hat{\alpha}_k\) 是舍入结果的近似展开系数。即使 \(\alpha_1 = 0\)，有限精度的表示 \(\hat{\mathbf{x}}_0\)，很可能具有展开系数
+    \(\hat{\alpha}_1 \neq 0\)。即使在舍入初始猜测不会引入非零 \(\hat{\alpha}_1\) 的情况下，在足够多的迭代后，舍入应用矩阵
+    \(\mathbf{A}\) 后几乎肯定会在主导特征向量中引入一个非零分量。得到一个起始猜测 \(\mathbf{x}_0\)，使得所有迭代中 \(\hat{\alpha}_1
+    = 0\) 的概率非常非常低，如果不是不可能的话。
 - en: Power Iteration without a Dominant Eigenvalue
+  id: totrans-120
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 没有主特征值的幂迭代
 - en: 'Above, we assumed that one eigenvalue had magnitude strictly larger than all
     the others: \(\vert\lambda_1\vert > \vert\lambda_2\vert\geq \vert\lambda_3\vert
     \geq \dots \geq\vert\lambda_n\vert\). What happens if \(\vert\lambda_1\vert =
     \vert\lambda_2\vert\)?'
+  id: totrans-121
   prefs: []
   type: TYPE_NORMAL
+  zh: 在上面，我们假设一个特征值的模严格大于所有其他特征值：\(\vert\lambda_1\vert > \vert\lambda_2\vert\geq \vert\lambda_3\vert
+    \geq \dots \geq\vert\lambda_n\vert\)。如果 \(\vert\lambda_1\vert = \vert\lambda_2\vert\)
+    会发生什么？
 - en: 'If \(\lambda_1 = \lambda_2 = \lambda \in \mathbb{R}\), then:'
+  id: totrans-122
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果 \(\lambda_1 = \lambda_2 = \lambda \in \mathbb{R}\)，那么：
 - en: \[\mathbf{x}_k = \mathbf{A}^k\mathbf{x}_0 \approx \alpha_1\lambda^k\mathbf{u}_1
     + \alpha_2\lambda^k\mathbf{u}_2 = \lambda^k\left(\alpha_1\mathbf{u}_1 + \alpha_2\mathbf{u}_2\right),\]
+  id: totrans-123
   prefs: []
   type: TYPE_NORMAL
+  zh: \[\mathbf{x}_k = \mathbf{A}^k\mathbf{x}_0 \approx \alpha_1\lambda^k\mathbf{u}_1
+    + \alpha_2\lambda^k\mathbf{u}_2 = \lambda^k\left(\alpha_1\mathbf{u}_1 + \alpha_2\mathbf{u}_2\right),\]
 - en: hence
+  id: totrans-124
   prefs: []
   type: TYPE_NORMAL
+  zh: 因此
 - en: \[\lim_{k\to\infty}\lambda^{-k}\mathbf{A}^k\mathbf{x}_0 = \alpha_1\mathbf{u}_1
     + \alpha_2\mathbf{u}_2.\]
+  id: totrans-125
   prefs: []
   type: TYPE_NORMAL
+  zh: \[\lim_{k\to\infty}\lambda^{-k}\mathbf{A}^k\mathbf{x}_0 = \alpha_1\mathbf{u}_1
+    + \alpha_2\mathbf{u}_2.\]
 - en: The quantity \(\alpha_1\mathbf{u}_1 + \alpha_2\mathbf{u}_2\) is still an eigenvector
     corresponding to \(\lambda\), so power iteration will still approach a dominant
     eigenvector.
+  id: totrans-126
   prefs: []
   type: TYPE_NORMAL
+  zh: 量 \(\alpha_1\mathbf{u}_1 + \alpha_2\mathbf{u}_2\) 仍然是对应于 \(\lambda\) 的特征向量，因此幂迭代仍然会趋近于主特征向量。
 - en: If the dominant eigenvalues have opposite sign, i.e., \(\lambda_1 = -\lambda_2
     = \lambda \in \mathbb{R}\), then
+  id: totrans-127
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果主特征值具有相反的符号，即 \(\lambda_1 = -\lambda_2 = \lambda \in \mathbb{R}\)，那么
 - en: \[\mathbf{x}_k = \mathbf{A}^k\mathbf{x}_0 \approx \alpha_1\lambda^k\mathbf{u}_1
     + \alpha_2(-\lambda)^k\mathbf{u}_2 = \lambda^k\left(\alpha_1\mathbf{u}_1 + (-1)^k\alpha_2\mathbf{u}_2\right).\]
+  id: totrans-128
   prefs: []
   type: TYPE_NORMAL
+  zh: \[\mathbf{x}_k = \mathbf{A}^k\mathbf{x}_0 \approx \alpha_1\lambda^k\mathbf{u}_1
+    + \alpha_2(-\lambda)^k\mathbf{u}_2 = \lambda^k\left(\alpha_1\mathbf{u}_1 + (-1)^k\alpha_2\mathbf{u}_2\right).\]
 - en: For large \(k\), we will have \(\lambda^{-k}\mathbf{A}\mathbf{x}_0 \approx \alpha_1\mathbf{u}_1
     + (-1)^k\alpha_2\mathbf{u}_2\), which although is a linear combination of two
     eigenvectors, is ***not*** itself an eigenvector of \(\mathbf{A}\).
+  id: totrans-129
   prefs: []
   type: TYPE_NORMAL
+  zh: 对于大的 \(k\)，我们将有 \(\lambda^{-k}\mathbf{A}\mathbf{x}_0 \approx \alpha_1\mathbf{u}_1
+    + (-1)^k\alpha_2\mathbf{u}_2\)，尽管它是两个特征向量的线性组合，但它本身 ***不是*** \(\mathbf{A}\) 的特征向量。
 - en: Finally, if the two dominant eigenvalues are a complex-conjugate pair \(\lambda_1
     = re^{i\theta},\ \lambda_2 = re^{-i\theta}\), then \(\mathbf{x}_k = \mathbf{A}^k\mathbf{x}_0
     \approx \alpha_1\lambda^k\mathbf{u}_1 + \alpha_2(\overline{\lambda})^k\mathbf{u}_2
     = \lambda^k\left(\alpha_1\mathbf{u}_1 + \left(\frac{\overline{\lambda}}{\lambda}\right)^k\alpha_2\mathbf{u}_2\right)
     = \lambda^k(\alpha_1\mathbf{u}_1 + \alpha_2 e^{-i2k\theta}\mathbf{u}_2).\)
+  id: totrans-130
   prefs: []
   type: TYPE_NORMAL
+  zh: 最后，如果两个主特征值是复共轭对 \(\lambda_1 = re^{i\theta},\ \lambda_2 = re^{-i\theta}\)，那么
+    \(\mathbf{x}_k = \mathbf{A}^k\mathbf{x}_0 \approx \alpha_1\lambda^k\mathbf{u}_1
+    + \alpha_2(\overline{\lambda})^k\mathbf{u}_2 = \lambda^k\left(\alpha_1\mathbf{u}_1
+    + \left(\frac{\overline{\lambda}}{\lambda}\right)^k\alpha_2\mathbf{u}_2\right)
+    = \lambda^k(\alpha_1\mathbf{u}_1 + \alpha_2 e^{-i2k\theta}\mathbf{u}_2).\)
 - en: For large \(k\), \(\lambda^{-k}\mathbf{A}\mathbf{x}_0\) approximate a linear
     combination of two eigenvectors, but this linear combination will not itself be
     an eigenvector.
+  id: totrans-131
   prefs: []
   type: TYPE_NORMAL
+  zh: 对于大的 \(k\)，\(\lambda^{-k}\mathbf{A}\mathbf{x}_0\) 近似为两个特征向量的线性组合，但这种线性组合本身 ***不是***
+    特征向量。
 - en: Inverse Iteration
+  id: totrans-132
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 逆迭代
 - en: 'To obtain an eigenvector corresponding to the ***smallest*** eigenvalue \(\lambda_n\)
     of a non-singular matrix, we can apply power iteration to \(\mathbf{A}^{-1}\).
     The following recurrence relationship describes inverse iteration algorithm: \(\boldsymbol{x}_{k+1}
     = \frac{\mathbf{A}^{-1} \boldsymbol{x}_k}{\|\mathbf{A}^{-1} \boldsymbol{x}_k\|}.\)
     Do not forget to nomalize each \(\boldsymbol{x}_{k+1}.\)'
+  id: totrans-133
   prefs: []
   type: TYPE_NORMAL
+  zh: 为了获得对应于非奇异矩阵的 ***最小*** 特征值 \(\lambda_n\) 的特征向量，我们可以对 \(\mathbf{A}^{-1}\) 应用幂迭代。以下递推关系描述了逆迭代算法：\(\boldsymbol{x}_{k+1}
+    = \frac{\mathbf{A}^{-1} \boldsymbol{x}_k}{\|\mathbf{A}^{-1} \boldsymbol{x}_k\|}.\)
+    不要忘记对每个 \(\boldsymbol{x}_{k+1}\) 进行归一化。
 - en: In practice, instead of taking the inverse and using it for power iteration,
     we perform the LU factorization of \(\mathbf{A}\) and perform an LU solve for
     each iteration, decreasing our runtime from \(O(n^3)\) per iteration to \(O(n^2)\)
     per iteration, still with \(O(n^3)\) preprocessing.
+  id: totrans-134
   prefs: []
   type: TYPE_NORMAL
+  zh: 在实践中，我们不是取逆并用于幂迭代，而是对 \(\mathbf{A}\) 进行 LU 分解，并对每次迭代进行 LU 解，将每次迭代的运行时间从 \(O(n^3)\)
+    降低到 \(O(n^2)\)，预处理仍然是 \(O(n^3)\)。
 - en: Inverse Iteration with Shift
+  id: totrans-135
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 带平移的逆迭代
 - en: 'To obtain an eigenvector corresponding to the eigenvalue closest to some value
     \(\sigma\), \(\mathbf{A}\) can be shifted by \(\sigma\) and inverted in order
     to solve it similarly to the power iteration algorithm. The following recurrence
@@ -616,85 +982,135 @@
     - \sigma \mathbf{I})^{-1} \boldsymbol{x}_k}{\|(\mathbf{A} - \sigma \mathbf{I})^{-1}
     \boldsymbol{x}_k\|}\). Note that this is identical to inverse iteration if the
     shift is zero.'
+  id: totrans-136
   prefs: []
   type: TYPE_NORMAL
+  zh: 为了获得与某个值 \(\sigma\) 最接近的特征值对应的特征向量，可以将 \(\mathbf{A}\) 平移 \(\sigma\) 并求逆，以便类似于幂迭代算法来求解。以下递推关系描述了逆迭代算法：\(\boldsymbol{x}_{k+1}
+    = \frac{(\mathbf{A} - \sigma \mathbf{I})^{-1} \boldsymbol{x}_k}{\|(\mathbf{A}
+    - \sigma \mathbf{I})^{-1} \boldsymbol{x}_k\|}\)。注意，如果平移为零，则这与逆迭代相同。
 - en: Rayleigh Quotient Iteration
+  id: totrans-137
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 瑞利商迭代
 - en: 'The shift \(\sigma\) can be updated based on a current estimate of the eigenvalue
     in order to improve convergence rate. Such an estimate can be found using the
     Rayleigh Quotient. Rayleigh Quotient Iteration is given by the following recurrence
     relation:'
+  id: totrans-138
   prefs: []
   type: TYPE_NORMAL
+  zh: 可以根据当前特征值的估计值更新平移 \(\sigma\) 以提高收敛速度。这种估计可以通过瑞利商得到。瑞利商迭代由以下递推关系给出：
 - en: \[\sigma_k = \frac{\boldsymbol{x}_k^T \mathbf{A} \boldsymbol{x}_k}{\boldsymbol{x}_k^T\boldsymbol{x}_k}\]
     \[\boldsymbol{x}_{k+1} = \frac{(\mathbf{A} - \sigma_k \mathbf{I})^{-1} \boldsymbol{x}_k}{\|(\mathbf{A}
     - \sigma_k \mathbf{I})^{-1} \boldsymbol{x}_k\|}.\]
+  id: totrans-139
   prefs: []
   type: TYPE_NORMAL
+  zh: \[\sigma_k = \frac{\boldsymbol{x}_k^T \mathbf{A} \boldsymbol{x}_k}{\boldsymbol{x}_k^T\boldsymbol{x}_k}\]
+    \[\boldsymbol{x}_{k+1} = \frac{(\mathbf{A} - \sigma_k \mathbf{I})^{-1} \boldsymbol{x}_k}{\|(\mathbf{A}
+    - \sigma_k \mathbf{I})^{-1} \boldsymbol{x}_k\|}.\]
 - en: Convergence properties
+  id: totrans-140
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 收敛性质
 - en: 'The convergence rate for power iteration is ***linear*** and the recurrence
     relationship for the error between the current iterate and a dominant eigenvector
     is given by: \(\mathbf{e}_{k+1} \approx \frac{|\lambda_2|}{|\lambda_1|}\mathbf{e}_k\).'
+  id: totrans-141
   prefs: []
   type: TYPE_NORMAL
+  zh: 功迭代法的收敛率是**线性**的，当前迭代与主特征向量之间误差的递推关系为：\(\mathbf{e}_{k+1} \approx \frac{|\lambda_2|}{|\lambda_1|}\mathbf{e}_k\)。
 - en: 'The convergence rate for (shifted) inverse iteration is also linear, but now
     depends on the two closest eigenvalues to the shift \(\sigma\). (Remember that
     standard inverse iteration corresponds to a shift \(\sigma = 0\).) The recurrence
     relationship for the errors is given by: \(\mathbf{e}_{k+1} \approx \frac{|\lambda_\text{closest}
     - \sigma|}{|\lambda_\text{second-closest} - \sigma|}\mathbf{e}_k.\)'
+  id: totrans-142
   prefs: []
   type: TYPE_NORMAL
+  zh: （平移的）逆迭代法的收敛率也是线性的，但现在取决于与平移 \(\sigma\) 最接近的两个特征值。（记住，标准逆迭代对应于平移 \(\sigma =
+    0\)。）误差的递推关系为：\(\mathbf{e}_{k+1} \approx \frac{|\lambda_\text{closest} - \sigma|}{|\lambda_\text{second-closest}
+    - \sigma|}\mathbf{e}_k\)。
 - en: Cost and Convergence Summary
+  id: totrans-143
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 成本和收敛性摘要
 - en: '| Method | Description | Cost | Convergence |'
+  id: totrans-144
   prefs: []
   type: TYPE_TB
+  zh: '| 方法 | 描述 | 成本 | 收敛性 |'
 - en: '| --- | --- | --- | --- |'
+  id: totrans-145
   prefs: []
   type: TYPE_TB
+  zh: '| --- | --- | --- | --- |'
 - en: '| Power Method | \(\boldsymbol{x}_{k+1} = \mathbf{A} \boldsymbol{x}_{k}\) |
     \(kn^2\) | \(\left&#124;\frac{\lambda_2}{\lambda_1}\right&#124;\) |'
+  id: totrans-146
   prefs: []
   type: TYPE_TB
+  zh: '| 功方法 | \(\boldsymbol{x}_{k+1} = \mathbf{A} \boldsymbol{x}_{k}\) | \(kn^2\)
+    | \(\left|\frac{\lambda_2}{\lambda_1}\right|\) |'
 - en: '| Inverse Power Method | \(\mathbf{A} \boldsymbol{x}_{k+1} = \boldsymbol{x}_{k}\)
     | \(n^{3} + kn^2\) | \(\left&#124;\frac{\lambda_n}{\lambda_{n-1}}\right&#124;\)
     |'
+  id: totrans-147
   prefs: []
   type: TYPE_TB
+  zh: '| 逆幂方法 | \(\mathbf{A} \boldsymbol{x}_{k+1} = \boldsymbol{x}_{k}\) | \(n^{3}
+    + kn^2\) | \(\left|\frac{\lambda_n}{\lambda_{n-1}}\right|\) |'
 - en: '| Shifted Inverse Power Method | \((\mathbf{A} - \sigma \mathbf{I}) \boldsymbol{x}_{k+1}
     = \boldsymbol{x}_{k}\) | \(n^{3} + kn^2\) | \(\left&#124;\frac{\lambda_c-\sigma}{\lambda_{c2}-\sigma}\right&#124;\)
     |'
+  id: totrans-148
   prefs: []
   type: TYPE_TB
+  zh: '| 平移逆幂方法 | \((\mathbf{A} - \sigma \mathbf{I}) \boldsymbol{x}_{k+1} = \boldsymbol{x}_{k}\)
+    | \(n^{3} + kn^2\) | \(\left|\frac{\lambda_c-\sigma}{\lambda_{c2}-\sigma}\right|\)
+    |'
 - en: '\(\lambda_1\): largest eigenvalue (in magnitude)'
+  id: totrans-149
   prefs: []
   type: TYPE_NORMAL
+  zh: '\(\lambda_1\): 最大的特征值（按大小）'
 - en: '\(\lambda_2\): second largest eigenvalue (in magnitude)'
+  id: totrans-150
   prefs: []
   type: TYPE_NORMAL
+  zh: '\(\lambda_2\): 第二大的特征值（按大小）'
 - en: '\(\lambda_n\): smallest eigenvalue (in magnitude)'
+  id: totrans-151
   prefs: []
   type: TYPE_NORMAL
+  zh: '\(\lambda_n\): 最小的特征值（按大小）'
 - en: '\(\lambda_{n-1}\): second smallest eigenvalue (in magnitude)'
+  id: totrans-152
   prefs: []
   type: TYPE_NORMAL
+  zh: '\(\lambda_{n-1}\): 第二小的特征值（按大小）'
 - en: '\(\lambda_c\): closest eigenvalue to \(\sigma\)'
+  id: totrans-153
   prefs: []
   type: TYPE_NORMAL
+  zh: '\(\lambda_c\): 最接近 \(\sigma\) 的特征值'
 - en: '\(\lambda_{c2}\): second closest eigenvalue to \(\sigma\)'
+  id: totrans-154
   prefs: []
   type: TYPE_NORMAL
+  zh: '\(\lambda_{c2}\): 最接近 \(\sigma\) 的第二个特征值'
 - en: Orthogonal Matrices
+  id: totrans-155
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 正交矩阵
 - en: 'Square matrices are called ***orthogonal*** if and only if the columns are
     mutually orthogonal to one another and have a norm of \(1\) (such a set of vectors
     are formally known as an ***orthonormal*** set), i.e.: \(\boldsymbol{c}_i^T \boldsymbol{c}_j
@@ -706,205 +1122,312 @@
     \(\boldsymbol{c}_i\), \(i=1, \dots, n\), are the columns of \(\mathbf{A}\), and
     \(\langle \cdot, \cdot \rangle\) is the inner product operator. Orthogonal matrices
     have many desirable properties:'
+  id: totrans-156
   prefs: []
   type: TYPE_NORMAL
+  zh: 方阵被称为***正交的***，当且仅当其列向量彼此正交且范数为 \(1\)（这样的向量集形式上称为***正交归一***集），即：\(\boldsymbol{c}_i^T
+    \boldsymbol{c}_j = 0 \quad \forall \ i \neq j, \quad \|\boldsymbol{c}_i\| = 1
+    \quad \forall \ i \iff \mathbf{A} \in \mathcal{O}(n),\) 或者 \(\langle\boldsymbol{c}_i,\boldsymbol{c}_j
+    \rangle = \begin{cases} 0 \quad \mathrm{if} \ i \neq j, \\ 1 \quad \mathrm{if}
+    \ i = j \end{cases} \iff \mathbf{A} \in \mathcal{O}(n),\) 其中 \(\mathcal{O}(n)\)
+    是所有 \(n \times n\) 的正交矩阵的集合，称为正交群，\(\boldsymbol{c}_i\), \(i=1, \dots, n\) 是 \(\mathbf{A}\)
+    的列向量，\(\langle \cdot, \cdot \rangle\) 是内积算子。正交矩阵具有许多理想的性质：
 - en: (a) \(\mathbf{A}^T \in \mathcal{O}(n)\)
+  id: totrans-157
   prefs: []
   type: TYPE_NORMAL
+  zh: (a) \(\mathbf{A}^T \in \mathcal{O}(n)\)
 - en: (b) \(\mathbf{A}^T \mathbf{A} = \mathbf{A} \mathbf{A}^T = \mathbf{I} \implies
     \mathbf{A}^{-1} = \mathbf{A}^T\)
+  id: totrans-158
   prefs: []
   type: TYPE_NORMAL
+  zh: (b) \(\mathbf{A}^T \mathbf{A} = \mathbf{A} \mathbf{A}^T = \mathbf{I} \implies
+    \mathbf{A}^{-1} = \mathbf{A}^T\)
 - en: (c) \(\det{\mathbf{A}} = \pm 1\)
+  id: totrans-159
   prefs: []
   type: TYPE_NORMAL
+  zh: (c) \(\det{\mathbf{A}} = \pm 1\)
 - en: (d) \(\kappa_2(\mathbf{A}) = 1\)
+  id: totrans-160
   prefs: []
   type: TYPE_NORMAL
+  zh: (d) \(\kappa_2(\mathbf{A}) = 1\)
 - en: Gram-Schmidt
+  id: totrans-161
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: Gram-Schmidt
 - en: 'The algorithm to construct an orthogonal basis from a set of linearly independent
     vectors is called the Gram-Schmidt process. For a basis set \(\{x_1, x_2, \dots
     x_n\}\), we can form an orthogonal set \(\{v_1, v_2, \dots v_n\}\) given by the
     following transformation:'
+  id: totrans-162
   prefs: []
   type: TYPE_NORMAL
+  zh: 从一组线性无关的向量构造正交基的算法称为Gram-Schmidt过程。对于一个基集 \(\{x_1, x_2, \dots x_n\}\)，我们可以通过以下变换形成一个正交集
+    \(\{v_1, v_2, \dots v_n\}\)：
 - en: \(\begin{align} \boldsymbol{v}_1 &= \boldsymbol{x}_1, \\ \boldsymbol{v}_2 &=
     \boldsymbol{x}_2 - \frac{\langle\boldsymbol{v}_1,\boldsymbol{x}_2\rangle}{\|\boldsymbol{v}_1\|^2}\boldsymbol{v}_1,\\
     \boldsymbol{v}_3 &= \boldsymbol{x}_3 - \frac{\langle\boldsymbol{v}_1,\boldsymbol{x}_3\rangle}{\|\boldsymbol{v}_1\|^2}\boldsymbol{v}_1
     - \frac{\langle\boldsymbol{v}_2,\boldsymbol{x}_3\rangle}{\|\boldsymbol{v}_2\|^2}\boldsymbol{v}_2,\\
     \vdots &= \vdots\\ \boldsymbol{v}_n &= \boldsymbol{x}_n - \sum_{i=1}^{n-1}\frac{\langle\boldsymbol{v}_i,\boldsymbol{x}_n\rangle}{\|\boldsymbol{v}_i\|^2}\boldsymbol{v}_i,
     \end{align}\)
+  id: totrans-163
   prefs: []
   type: TYPE_NORMAL
+  zh: \(\begin{align} \boldsymbol{v}_1 &= \boldsymbol{x}_1, \\ \boldsymbol{v}_2 &=
+    \boldsymbol{x}_2 - \frac{\langle\boldsymbol{v}_1,\boldsymbol{x}_2\rangle}{\|\boldsymbol{v}_1\|^2}\boldsymbol{v}_1,\\
+    \boldsymbol{v}_3 &= \boldsymbol{x}_3 - \frac{\langle\boldsymbol{v}_1,\boldsymbol{x}_3\rangle}{\|\boldsymbol{v}_1\|^2}\boldsymbol{v}_1
+    - \frac{\langle\boldsymbol{v}_2,\boldsymbol{x}_3\rangle}{\|\boldsymbol{v}_2\|^2}\boldsymbol{v}_2,\\
+    \vdots &= \vdots\\ \boldsymbol{v}_n &= \boldsymbol{x}_n - \sum_{i=1}^{n-1}\frac{\langle\boldsymbol{v}_i,\boldsymbol{x}_n\rangle}{\|\boldsymbol{v}_i\|^2}\boldsymbol{v}_i,
+    \end{align}\)
 - en: where \(\langle \cdot, \cdot \rangle\) is the inner product operator. Each of
     the vectors in the new orthogonal set \(\{v_1, v_2, \dots v_n\}\) can be **normalized**
     independently to obtain an **orthonormal basis**.
+  id: totrans-164
   prefs: []
   type: TYPE_NORMAL
+  zh: 其中 \(\langle \cdot, \cdot \rangle\) 是内积算子。新正交集 \(\{v_1, v_2, \dots v_n\}\) 中的每个向量都可以独立地**归一化**，以获得**正交归一基**。
 - en: Review Questions
+  id: totrans-165
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 复习问题
 - en: What is the definition of an eigenvalue/eigenvector pair?
+  id: totrans-166
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 自主值/特征向量对的定义是什么？
 - en: If \(\mathbf{v}\) is an eigenvector of \(\mathbf{A}\), what can we say about
     \(c\mathbf{v}\) for any nonzero scalar \(c\)?
+  id: totrans-167
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 如果 \(\mathbf{v}\) 是 \(\mathbf{A}\) 的一个特征向量，对于任何非零标量 \(c\)，我们可以说关于 \(c\mathbf{v}\)
+    什么？
 - en: What is the relationship between the eigenvalues of \(\mathbf{A}\) and the eigenvalues
     of \(\\\) 1) \(c\mathbf{A}\) for some scalar \(c\), \(\\\) 2) \((\mathbf{A} -
     \sigma \mathbf{I})\) for some scalar \(\sigma\),\(\\\) 3) \(\mathbf{A}^{-1}\)?
+  id: totrans-168
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: \(\mathbf{A}\) 的特征值与以下特征值之间的关系是什么？1) 对于某个标量 \(c\)，\(c\mathbf{A}\) 的特征值，2) 对于某个标量
+    \(\sigma\)，\((\mathbf{A} - \sigma \mathbf{I})\) 的特征值，3) \(\mathbf{A}^{-1}\) 的特征值？
 - en: What is the relationship between the eigenvectors of \(\mathbf{A}\) and the
     eigenvectors of \(\\\) 1) \(c\mathbf{A}\) for some scalar \(c\), \(\\\) 2) \((\mathbf{A}
     - \sigma \mathbf{I})\) for some scalar \(\sigma\), \(\\\) 3) \(\mathbf{A}^{-1}\)?
+  id: totrans-169
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: \(\mathbf{A}\) 的特征向量与以下特征向量之间的关系是什么？1) 对于某个标量 \(c\)，\(c\mathbf{A}\) 的特征向量，2)
+    对于某个标量 \(\sigma\)，\((\mathbf{A} - \sigma \mathbf{I})\) 的特征向量，3) \(\mathbf{A}^{-1}\)
+    的特征向量？
 - en: Be able to run a few steps of normalized power iteration.
+  id: totrans-170
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 能够运行归一化幂迭代的一步或几步。
 - en: To what eigenvector of \(\mathbf{A}\) does power iteration converge?
+  id: totrans-171
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 力迭代收敛到 \(\mathbf{A}\) 的哪个特征向量？
 - en: To what eigenvector of \(\mathbf{A}\) does inverse power iteration converge?
+  id: totrans-172
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 逆幂迭代收敛到 \(\mathbf{A}\) 的哪个特征向量？
 - en: To what eigenvector of \(\mathbf{A}\) does inverse power iteration with a shift
     converge?
+  id: totrans-173
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 带位移的逆幂迭代收敛到 \(\mathbf{A}\) 的哪个特征向量？
 - en: Describe the cost of inverse iteration.
+  id: totrans-174
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 描述逆迭代法的成本。
 - en: Describe the cost of inverse iteration if we are given an LU-factorization of
     \((\mathbf{A} - \sigma \mathbf{I})\).
+  id: totrans-175
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 如果我们给定 \((\mathbf{A} - \sigma \mathbf{I})\) 的 LU 分解，描述逆迭代法的成本。
 - en: When can power iteration (or normalized power iteration) fail?
+  id: totrans-176
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 在什么情况下幂迭代（或归一化幂迭代）会失败？
 - en: How can we approximate an eigenvalue of \(\mathbf{A}\) given an approximate
     eigenvector?
+  id: totrans-177
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 给定一个近似特征向量，我们如何近似 \(\mathbf{A}\) 的特征值？
 - en: What happens if we do not normalize our iterates during power iteration?
+  id: totrans-178
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 如果我们在幂迭代过程中不对迭代进行归一化，会发生什么？
 - en: What is the Rayleigh quotient?
+  id: totrans-179
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 什么是雷利商？
 - en: What happens to the result of power iteration if the initial guess does not
     have any components of the dominant eigenvector? Does this depend on whether we
     are using finite or infinite precision?
+  id: totrans-180
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 如果初始猜测没有主特征向量的任何分量，幂迭代的结果会发生什么？这取决于我们使用的是有限精度还是无限精度吗？
 - en: What is the convergence rate of power iteration?
+  id: totrans-181
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 幂迭代的收敛速度是多少？
 - en: How does the convergence of power iteration depend on the eigenvalues?
+  id: totrans-182
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 幂迭代的收敛如何依赖于特征值？
 - en: How can we find eigenvalues of a matrix other than the dominant eigenvalue?
+  id: totrans-183
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 我们如何找到矩阵的其他特征值，而不仅仅是主特征值？
 - en: What does it mean for a matrix to be diagonalizable?
+  id: totrans-184
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 矩阵可对角化意味着什么？
 - en: Are all matrices diagonalizable?
+  id: totrans-185
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 所有矩阵都可以对角化吗？
 - en: Changelog
+  id: totrans-186
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 更新日志
 - en: 'October 28th, 2025: Dev Singh (dsingh14) — fix eigenvector computation'
+  id: totrans-187
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 2025年10月28日：Dev Singh（dsingh14）— 修复特征向量计算
 - en: 'February 13th, 2024: Pascal Adhikary (pascala2) — add info/examples from slides,
     reorganize'
+  id: totrans-188
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 2024年2月13日：Pascal Adhikary（pascala2）— 添加来自幻灯片的信息/示例，重新组织
 - en: 'February 28th, 2022: Yuxuan Chen (yuxuan19) — added learning objectives, cost
     summary'
+  id: totrans-189
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 2022年2月28日：陈宇轩（yuxuan19）— 添加学习目标，成本摘要
 - en: <details><summary>View Remaining Entries</summary>
+  id: totrans-190
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: <details><summary>查看剩余条目</summary>
 - en: 'March 1st, 2020: Peter Sentz () — added text to include content from slides'
+  id: totrans-191
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 2020年3月1日：Peter Sentz（）— 添加文本以包含幻灯片内容
 - en: 'October 14th, 2018: Erin Carrier (ecarrie2) — removes orthogonal/GS sections'
+  id: totrans-192
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 2018年10月14日：Erin Carrier（ecarrie2）— 删除正交/GS 部分
 - en: 'January 14th, 2018: Erin Carrier (ecarrie2) — removes demo links'
+  id: totrans-193
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 2018年1月14日：Erin Carrier（ecarrie2）— 删除演示链接
 - en: 'November 10th, 2017: Erin Carrier (ecarrie2) — adds costs of methods'
+  id: totrans-194
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 2017年11月10日：Erin Carrier（ecarrie2）— 添加方法成本
 - en: 'October 26th, 2017: Matthew West (mwest) — rewrote eval/evec definitions'
+  id: totrans-195
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 2017年10月26日：Matthew West（mwest）— 重写 eval/evec 定义
 - en: 'October 25th, 2017: Erin Carrier (ecarrie2) — minor fixes, added review questions'
+  id: totrans-196
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 2017年10月25日：Erin Carrier（ecarrie2）— 进行小修，添加复习问题
 - en: 'October 16th, 2017: Luke Olson (lukeo) — outline'
+  id: totrans-197
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 2017年10月16日：Luke Olson（lukeo）— 概述
 - en: 'October 14th, 2017: Arun Lakshmanan (lakshma2) — first complete draft</details>'
+  id: totrans-198
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 2017年10月14日：Arun Lakshmanan（lakshma2）— 首次完整草案</details>
 - en: Authors
+  id: totrans-199
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 作者
 - en: CS 357 Course Staff
+  id: totrans-200
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: CS 357 课程工作人员
