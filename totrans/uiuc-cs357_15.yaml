@@ -3,42 +3,51 @@
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 求解非线性方程
 - en: 原文：[https://cs357.cs.illinois.edu/textbook/notes/solve_nd.html](https://cs357.cs.illinois.edu/textbook/notes/solve_nd.html)
   id: totrans-1
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 原文：[https://cs357.cs.illinois.edu/textbook/notes/solve_nd.html](https://cs357.cs.illinois.edu/textbook/notes/solve_nd.html)
 - en: Learning objectives
   id: totrans-2
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 学习目标
 - en: Evaluate the bisection, newton, and secant methods to solve nonlinear equations
     in 1D
   id: totrans-3
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 评估二分法、牛顿法和割线法求解一维非线性方程
 - en: Apply Newton's method to solve a nonlinear system of equations
   id: totrans-4
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 应用牛顿法求解非线性方程组
 - en: Root of a Function
   id: totrans-5
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 函数的根
 - en: 'Consider a function \(f : \mathbb{R} \to \mathbb{R}\). The point \(x \in \mathbb{R}\)
     is called the ***root*** of \(f\) if \(f(x) = 0\).'
   id: totrans-6
   prefs: []
   type: TYPE_NORMAL
+  zh: '考虑一个函数 \(f : \mathbb{R} \to \mathbb{R}\)。如果 \(f(x) = 0\)，则 \(x \in \mathbb{R}\)
+    被称为 \(f\) 的 ***根***。'
 - en: Solution of an Equation
   id: totrans-7
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 方程的求解
 - en: 'Finding the values of \(x\) for which \(f(x) = 0\) is useful for many applications,
     but a more general task is to find the values of \(x\) for which \(f(x) = y\).
     The same techniques used to find the root of a function can be used to solve an
@@ -46,20 +55,24 @@
   id: totrans-8
   prefs: []
   type: TYPE_NORMAL
+  zh: 找到 \(f(x) = 0\) 的 \(x\) 值对于许多应用很有用，但一个更一般的目标是找到 \(f(x) = y\) 的 \(x\) 值。用于找到函数根的技术可以用来通过操纵函数来解方程，如下所示：
 - en: \[\tilde{f}(x) = f(x) - y = 0\]
   id: totrans-9
   prefs: []
   type: TYPE_NORMAL
+  zh: \[\tilde{f}(x) = f(x) - y = 0\]
 - en: The new function \(\tilde{f}(x)\) has a root at the solution to the original
     equation \(f(x) = y\).
   id: totrans-10
   prefs: []
   type: TYPE_NORMAL
+  zh: 新函数 \(\tilde{f}(x)\) 在原方程 \(f(x) = y\) 的解处有一个根。
 - en: Nonlinear Equations in 1D
   id: totrans-11
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 一维非线性方程
 - en: Linear functions are trivial to solve, as are quadratic functions if you have
     the quadratic formula memorized. However, polynomials of higher degree and non-polynomial
     functions are much more difficult to solve. The simplest technique for solving
@@ -70,139 +83,172 @@
   id: totrans-12
   prefs: []
   type: TYPE_NORMAL
+  zh: 线性函数很容易求解，如果你记住了二次公式，二次函数也容易求解。然而，高次多项式和非多项式函数的求解要困难得多。求解这些类型方程的最简单技术是使用迭代求根技术。我们不会直接找出
+    \(f(x) = 0\) 的位置，而是从一个初始猜测开始，并在多个步骤中逐步改进，直到我们的 *残差* \(f(x)\) 足够小。
 - en: Convergence
   id: totrans-13
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 收敛性
 - en: 'An iterative method converges with rate \(\mathbf r\) if:'
   id: totrans-14
   prefs: []
   type: TYPE_NORMAL
+  zh: 一个迭代方法以 \(\mathbf r\) 的速率收敛，如果：
 - en: \[\lim_{k\to\infty} \frac{\|e_{k + 1}\|}{\|e_{k}\|^{\mathbf r}} = C, \quad 0
     < C < \infty\]
   id: totrans-15
   prefs: []
   type: TYPE_NORMAL
+  zh: \[\lim_{k\to\infty} \frac{\|e_{k + 1}\|}{\|e_{k}\|^{\mathbf r}} = C, \quad 0
+    < C < \infty\]
 - en: where \(e_k\) is the error at iteration k.
   id: totrans-16
   prefs: []
   type: TYPE_NORMAL
+  zh: 其中 \(e_k\) 是第 k 次迭代的误差。
 - en: '\[\begin{eqnarray} \mathbf{r} &=& 1: linear\ convergence\\ \\ 1 < \mathbf{r}
     &<& 2: superlinear\ convergence\\ \\ \mathbf{r} &=& 2: quadratic\ convergence\\
     \end{eqnarray}\]'
   id: totrans-17
   prefs: []
   type: TYPE_NORMAL
+  zh: '\[\begin{eqnarray} \mathbf{r} &=& 1: 线性收敛\\ \\ 1 < \mathbf{r} &<& 2: 超线性收敛\\
+    \\ \mathbf{r} &=& 2: 二次收敛\\ \end{eqnarray}\]'
 - en: '**Linear convergence** gains a constant number of accurate digits each step
     (the error shrinks linearly). When \(C\) is close to 1 convergence is slow.'
   id: totrans-18
   prefs: []
   type: TYPE_NORMAL
+  zh: '**线性收敛**每一步增加一个常数数量的准确数字（误差线性减小）。当 \(C\) 接近 1 时，收敛速度慢。'
 - en: '**Quadratic convergence** doubles the number of accurate digits in each step
     (the error shrinks quadratically). However it only starts making sense once \(\|e^k\|\)
     is small, and C does not matter much.'
   id: totrans-19
   prefs: []
   type: TYPE_NORMAL
+  zh: '**二次收敛**使每一步的准确数字数量加倍（误差呈二次减小）。然而，它只有在 \(\|e^k\|\) 很小的时候才有意义，而 C 并不重要。'
 - en: Example
   id: totrans-20
   prefs:
   - PREF_H4
   type: TYPE_NORMAL
+  zh: 示例
 - en: What is the convergence rate of **Power Iteration**?
   id: totrans-21
   prefs: []
   type: TYPE_NORMAL
+  zh: '**幂迭代**的收敛速率是多少？'
 - en: <details><summary>**Answer**</summary>
   id: totrans-22
   prefs: []
   type: TYPE_NORMAL
+  zh: <details><summary>**答案**</summary>
 - en: Recall from the power iteration method
   id: totrans-23
   prefs: []
   type: TYPE_NORMAL
+  zh: 从幂迭代方法中回忆
 - en: \[\lim_{k\to\infty} \frac{\|e_{k + 1}\|}{\|e_{k}\|^{\mathbf 1}} = |\frac{\lambda_{2}}
     {\lambda_{1}}| = C\]
   id: totrans-24
   prefs: []
   type: TYPE_NORMAL
+  zh: \[\lim_{k\to\infty} \frac{\|e_{k + 1}\|}{\|e_{k}\|^{\mathbf 1}} = |\frac{\lambda_{2}}
+    {\lambda_{1}}| = C\]
 - en: We see that when \({\mathbf r} = 1\), we get a constant for the ratio between
     two consecutive iterations. Therefore power iteration has linear convergence.</details>
   id: totrans-25
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们看到当 \({\mathbf r} = 1\) 时，我们得到两个连续迭代之间的比值为常数。因此幂迭代具有线性收敛。</details>
 - en: Bisection Method
   id: totrans-26
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 二分法
 - en: The bisection method is the simplest root-finding technique.
   id: totrans-27
   prefs: []
   type: TYPE_NORMAL
+  zh: 二分法是最简单的求根技术。
 - en: Algorithm
   id: totrans-28
   prefs:
   - PREF_H4
   type: TYPE_NORMAL
+  zh: 算法
 - en: 'The algorithm for bisection is analogous to binary search:'
   id: totrans-29
   prefs: []
   type: TYPE_NORMAL
+  zh: 二分法的算法类似于二分查找：
 - en: Take two points, \(a\) and \(b\), on each side of the root such that \(f(a)\)
     and \(f(b)\) have opposite signs.
   id: totrans-30
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 在根的两侧取两个点，\(a\) 和 \(b\)，使得 \(f(a)\) 和 \(f(b)\) 符号相反。
 - en: Calculate the midpoint \(c = \frac{a + b}{2}\)
   id: totrans-31
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 计算中点 \(c = \frac{a + b}{2}\)
 - en: Evaluate \(f(c)\) and use \(c\) to replace either \(a\) or \(b\), keeping the
     signs of the endpoints opposite.
   id: totrans-32
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 评估 \(f(c)\) 并使用 \(c\) 替换 \(a\) 或 \(b\)，保持端点的符号相反。
 - en: With this algorithm we successively half the length of the interval known to
     contain the root each time. We can repeat this process until the length of the
     interval is less than the tolerance to which we want to know the root.
   id: totrans-33
   prefs: []
   type: TYPE_NORMAL
+  zh: 使用这个算法，我们每次迭代都依次将包含根的区间的长度减半。我们可以重复这个过程，直到区间的长度小于我们想要知道根的容差。
 - en: Convergence
   id: totrans-34
   prefs:
   - PREF_H4
   type: TYPE_NORMAL
+  zh: 收敛性
 - en: The bisection method does not estimate \(x_{k}\), the approximation of the desired
     root \(x\). It instead finds an interval (smaller than a given tolerance), that
     contains the root.
   id: totrans-35
   prefs: []
   type: TYPE_NORMAL
+  zh: 二分法不估计 \(x_{k}\)，即所需根 \(x\) 的近似值。它而是找到一个包含根的区间（小于给定的容差）。
 - en: Therefore, the error at iteration k is defined to be the length of the interval
     at k iterations or \(\frac{(b - a)}{2^k}\).
   id: totrans-36
   prefs: []
   type: TYPE_NORMAL
+  zh: 因此，迭代 k 的误差定义为 k 次迭代时区间的长度，或 \(\frac{(b - a)}{2^k}\)。
 - en: \[\lim_{k\to\infty} \frac{\|e_{k + 1}\|}{\|e_{k}\|^{\mathbf r}} = \lim_{k\to\infty}
     \frac{\|\frac{(b - a)}{2^{k + 1}}\|}{\|\frac{(b - a)}{2^k}\|} = 0.5\]
   id: totrans-37
   prefs: []
   type: TYPE_NORMAL
+  zh: \[\lim_{k\to\infty} \frac{\|e_{k + 1}\|}{\|e_{k}\|^{\mathbf r}} = \lim_{k\to\infty}
+    \frac{\|\frac{(b - a)}{2^{k + 1}}\|}{\|\frac{(b - a)}{2^k}\|} = 0.5\]
 - en: Which gives us linear convergence, with a constant of \(\frac{1}{2}\).
   id: totrans-38
   prefs: []
   type: TYPE_NORMAL
+  zh: 这给出了线性收敛，常数为 \(\frac{1}{2}\)。
 - en: Computational Cost
   id: totrans-39
   prefs:
   - PREF_H4
   type: TYPE_NORMAL
+  zh: 计算成本
 - en: Conceptually bisection method uses 2 function evaluations at each iteration.
     However, at each step either one of \(a\) or \(b\) stays the same. So, at each
     iteration (after the first iteration), one of \(f(a)\) or \(f(b)\) was computed
@@ -212,43 +258,53 @@
   id: totrans-40
   prefs: []
   type: TYPE_NORMAL
+  zh: 从概念上讲，二分法在每次迭代中使用 2 次函数评估。然而，在每一步中，\(a\) 或 \(b\) 中的一个保持不变。因此，在每次迭代（第一次迭代之后），在之前的迭代中已经计算了
+    \(f(a)\) 或 \(f(b)\) 中的一个。因此，二分法每次迭代只需要进行一次新的函数评估。根据函数评估的成本，这可以节省显著的成本。
 - en: Drawbacks
   id: totrans-41
   prefs:
   - PREF_H4
   type: TYPE_NORMAL
+  zh: 缺点
 - en: The bisection method requires us to know a little about our function. Specifically,
     \(f(x)\) must be continuous and we must have an interval \([a, b]\) such that
   id: totrans-42
   prefs: []
   type: TYPE_NORMAL
+  zh: 二分法要求我们对我们所研究的函数有一定的了解。具体来说，\(f(x)\) 必须是连续的，并且我们必须有一个区间 \([a, b]\)，使得
 - en: \[\mathrm{sgn}(f(a)) = -\mathrm{sgn}(f(b)).\]
   id: totrans-43
   prefs: []
   type: TYPE_NORMAL
+  zh: \[\mathrm{sgn}(f(a)) = -\mathrm{sgn}(f(b)).\]
 - en: Then, by the intermediate value theorem, we know that there must be a root in
     the interval \([a,b]\).
   id: totrans-44
   prefs: []
   type: TYPE_NORMAL
+  zh: 然后，根据介值定理，我们知道在区间 \([a,b]\) 内必须有一个根。
 - en: This restriction means that the bisection method cannot solve for the root of
     \(x^2\), as it never crosses the x-axis and becomes negative.
   id: totrans-45
   prefs: []
   type: TYPE_NORMAL
+  zh: 这个限制意味着二分法不能求解 \(x^2\) 的根，因为它永远不会穿过 x 轴并变为负数。
 - en: Example
   id: totrans-46
   prefs:
   - PREF_H4
   type: TYPE_NORMAL
+  zh: 示例
 - en: \[f(x) = x^3 - x - 1\] <details><summary>**Answer**</summary>
   id: totrans-47
   prefs: []
   type: TYPE_NORMAL
+  zh: \[f(x) = x^3 - x - 1\] <details><summary>**答案**</summary>
 - en: '![](../Images/ee64c8344097c9d7056bb06f48325443.png)'
   id: totrans-48
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/ee64c8344097c9d7056bb06f48325443.png)'
 - en: From the graph above, we can see that \(f(x)\) has a root somewhere between
     1 and 2\. It is difficult to tell exactly what the root is, but we can use the
     bisection method to approximate it. Specifically, we can set \(a = 1\) and \(b
@@ -256,25 +312,33 @@
   id: totrans-49
   prefs: []
   type: TYPE_NORMAL
+  zh: 从上面的图中，我们可以看到 \(f(x)\) 在 1 和 2 之间有一个根。很难确切知道根是什么，但我们可以使用二分法来近似它。具体来说，我们可以将 \(a
+    = 1\) 和 \(b = 2\)。
 - en: '**Iteration 1**'
   id: totrans-50
   prefs: []
   type: TYPE_NORMAL
+  zh: '**迭代 1**'
 - en: \[\begin{flalign*} &\hspace{0.4cm}a = 1 \hspace{6.5cm} f(a) = f(1) = -1&\\ &\hspace{0.4cm}b
     = 2 \hspace{6.5cm} f(b) = f(2) = 5&\\ &\hspace{0.4cm}c = \frac{a + b}{2} = \frac{3}{2}
     = 1.5 \hspace{3cm} f(c) = f(1.5) = 1.5^3 - 1.5 - 1 = 0.875& \end{flalign*}\]
   id: totrans-51
   prefs: []
   type: TYPE_NORMAL
+  zh: \[\begin{flalign*} &\hspace{0.4cm}a = 1 \hspace{6.5cm} f(a) = f(1) = -1&\\ &\hspace{0.4cm}b
+    = 2 \hspace{6.5cm} f(b) = f(2) = 5&\\ &\hspace{0.4cm}c = \frac{a + b}{2} = \frac{3}{2}
+    = 1.5 \hspace{3cm} f(c) = f(1.5) = 1.5^3 - 1.5 - 1 = 0.875& \end{flalign*}\]
 - en: Since \(f(b)\) and \(f(c)\) are both positive, we will replace \(b\) with \(c\)
     and further narrow our interval.
   id: totrans-52
   prefs: []
   type: TYPE_NORMAL
+  zh: 由于 \(f(b)\) 和 \(f(c)\) 都是正数，我们将用 \(c\) 替换 \(b\) 并进一步缩小我们的区间。
 - en: '**Iteration 2**'
   id: totrans-53
   prefs: []
   type: TYPE_NORMAL
+  zh: '**迭代 2**'
 - en: \[\begin{flalign*} &\hspace{0.4cm}a = 1 \hspace{6.5cm} f(a) = f(1) = -1&\\ &\hspace{0.4cm}b
     = 1.5 \hspace{6.2cm} f(b) = f(1.5) = 0.875&\\ &\hspace{0.4cm}c = \frac{a + b}{2}
     = \frac{2.5}{2} = 1.25 \hspace{2.5cm} f(c) = f(1.25) = 1.25^3 - 1.25 - 1 = -0.296875&
@@ -282,21 +346,28 @@
   id: totrans-54
   prefs: []
   type: TYPE_NORMAL
+  zh: \[\begin{flalign*} &\hspace{0.4cm}a = 1 \hspace{6.5cm} f(a) = f(1) = -1&\\ &\hspace{0.4cm}b
+    = 1.5 \hspace{6.2cm} f(b) = f(1.5) = 0.875&\\ &\hspace{0.4cm}c = \frac{a + b}{2}
+    = \frac{2.5}{2} = 1.25 \hspace{2.5cm} f(c) = f(1.25) = 1.25^3 - 1.25 - 1 = -0.296875&
+    \end{flalign*}\]
 - en: Since \(f(a)\) and \(f(c)\) are both negative, we will replace \(a\) with \(c\)
     and further narrow our interval.
   id: totrans-55
   prefs: []
   type: TYPE_NORMAL
+  zh: 由于 \(f(a)\) 和 \(f(c)\) 都是负数，我们将用 \(c\) 替换 \(a\) 并进一步缩小我们的区间。
 - en: Note that as described above, we didn't need to recalculate \(f(a)\) or \(f(b)\)
     as we had already calculated them during the previous iteration. Reusing these
     values can be a significant cost savings.
   id: totrans-56
   prefs: []
   type: TYPE_NORMAL
+  zh: 注意，如上所述，我们不需要重新计算 \(f(a)\) 或 \(f(b)\)，因为我们已经在之前的迭代中计算了它们。重用这些值可以显著节省成本。
 - en: '**Iteration 3**'
   id: totrans-57
   prefs: []
   type: TYPE_NORMAL
+  zh: '**迭代 3**'
 - en: \[\begin{flalign*} &\hspace{0.4cm}a = 1.25 \hspace{6.0cm} f(a) = f(1.25) = -0.296875&\\
     &\hspace{0.4cm}b = 1.5 \hspace{6.25cm} f(b) = f(1.5) = 0.875&\\ &\hspace{0.4cm}c
     = \frac{a + b}{2} = \frac{1.25 + 1.5}{2} = 1.375 \hspace{0.9cm} f(c) = f(1.375)
@@ -304,176 +375,220 @@
   id: totrans-58
   prefs: []
   type: TYPE_NORMAL
+  zh: \[\begin{flalign*} &\hspace{0.4cm}a = 1.25 \hspace{6.0cm} f(a) = f(1.25) = -0.296875&\\
+    &\hspace{0.4cm}b = 1.5 \hspace{6.25cm} f(b) = f(1.5) = 0.875&\\ &\hspace{0.4cm}c
+    = \frac{a + b}{2} = \frac{1.25 + 1.5}{2} = 1.375 \hspace{0.9cm} f(c) = f(1.375)
+    = 1.375^3 - 1.375 - 1 = 0.224609375& \end{flalign*}\]
 - en: Since \(f(b)\) and \(f(c)\) are both positive, we will replace \(b\) with \(c\)
     and further narrow our interval.
   id: totrans-59
   prefs: []
   type: TYPE_NORMAL
+  zh: 由于 \(f(b)\) 和 \(f(c)\) 都是正的，我们将用 \(c\) 替换 \(b\)，并进一步缩小我们的区间。
 - en: '**…**'
   id: totrans-60
   prefs: []
   type: TYPE_NORMAL
+  zh: '**…**'
 - en: '**Iteration n**'
   id: totrans-61
   prefs: []
   type: TYPE_NORMAL
+  zh: '**迭代 n**'
 - en: When running the code for bisection method given below, the resulting approximate
     root determined is \(1.324717957244502\). With bisection, we can approximate the
     root to a desired tolerance (the value above is for the default tolerances).
   id: totrans-62
   prefs: []
   type: TYPE_NORMAL
+  zh: 当运行下面的二分法代码时，得到的近似根为 \(1.324717957244502\)。使用二分法，我们可以将根近似到所需的公差（上面的值是默认公差）。
 - en: '**Code**'
   id: totrans-63
   prefs: []
   type: TYPE_NORMAL
+  zh: '**代码**'
 - en: 'The following Python code calls SciPy''s `bisect` method:'
   id: totrans-64
   prefs: []
   type: TYPE_NORMAL
+  zh: 以下 Python 代码调用 SciPy 的 `bisect` 方法：
 - en: '[PRE0]</details>'
   id: totrans-65
   prefs: []
   type: TYPE_NORMAL
+  zh: '[PRE0]'
 - en: Newton's Method
   id: totrans-66
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 牛顿法
 - en: 'The Newton-Raphson Method (a.k.a. Newton''s Method) uses a Taylor series approximation
     of the function to find an approximate solution. Specifically, it takes the first
     2 terms:'
   id: totrans-67
   prefs: []
   type: TYPE_NORMAL
+  zh: 牛顿-拉夫森方法（又称牛顿法）使用函数的泰勒级数近似来寻找一个近似解。具体来说，它取前两项：
 - en: \[f(x_k + h) \approx f(x_k) + f'(x_k)h\]
   id: totrans-68
   prefs: []
   type: TYPE_NORMAL
+  zh: \[f(x_k + h) \approx f(x_k) + f'(x_k)h\]
 - en: Algorithm
   id: totrans-69
   prefs:
   - PREF_H4
   type: TYPE_NORMAL
+  zh: 算法
 - en: 'Starting with the Taylor series above, we can find the root of this new function
     like so:'
   id: totrans-70
   prefs: []
   type: TYPE_NORMAL
+  zh: 从上面的泰勒级数开始，我们可以这样找到这个新函数的根：
 - en: \[f(x_k) + f'(x_k)h = 0\] \[h = - \frac{f(x_k)}{f'(x_k)}\]
   id: totrans-71
   prefs: []
   type: TYPE_NORMAL
+  zh: \[f(x_k) + f'(x_k)h = 0\] \[h = - \frac{f(x_k)}{f'(x_k)}\]
 - en: 'This value of \(h\) is known as the **Newton step**. Now, \(h\) can be used
     to perform a **Newton update**, to find a value of \(x\) closer to the root of
     \(f\):'
   id: totrans-72
   prefs: []
   type: TYPE_NORMAL
+  zh: 这个 \(h\) 值被称为 **牛顿步**。现在，\(h\) 可以用来执行 **牛顿更新**，以找到更接近 \(f\) 的根的 \(x\) 值：
 - en: \[\begin{eqnarray} x_{k+1} &=& x_k + h \\ &=& x_k - \frac{f(x_k)}{f'(x_k)} \end{eqnarray}\]
   id: totrans-73
   prefs: []
   type: TYPE_NORMAL
+  zh: \[\begin{eqnarray} x_{k+1} &=& x_k + h \\ &=& x_k - \frac{f(x_k)}{f'(x_k)} \end{eqnarray}\]
 - en: Geometrically, \((x_{k+1}, 0)\) is the intersection of the x-axis and the tangent
     of the graph at \((x_k, f(x_k))\).
   id: totrans-74
   prefs: []
   type: TYPE_NORMAL
+  zh: 几何上，\((x_{k+1}, 0)\) 是 x 轴与 \((x_k, f(x_k))\) 处图形的切线的交点。
 - en: By repeating this procedure, we can get closer and closer to the actual root.
   id: totrans-75
   prefs: []
   type: TYPE_NORMAL
+  zh: 通过重复此过程，我们可以越来越接近实际的根。
 - en: Computational Cost
   id: totrans-76
   prefs:
   - PREF_H4
   type: TYPE_NORMAL
+  zh: 计算成本
 - en: With Newton's method, at each iteration we must evaluate both \(f(x)\) and \(f'(x)\).
   id: totrans-77
   prefs: []
   type: TYPE_NORMAL
+  zh: 使用牛顿法，在每次迭代中，我们必须评估 \(f(x)\) 和 \(f'(x)\)。
 - en: Convergence
   id: totrans-78
   prefs:
   - PREF_H4
   type: TYPE_NORMAL
+  zh: 收敛
 - en: Although Newton's method is more costly than the bisection method, it converges
     quicker.
   id: totrans-79
   prefs: []
   type: TYPE_NORMAL
+  zh: 尽管牛顿法比二分法成本更高，但它收敛得更快。
 - en: \[\lim_{k\to\infty} \frac{\|e_{k + 1}\|}{\|e_{k}\|^{\mathbf 2}} = C\]
   id: totrans-80
   prefs: []
   type: TYPE_NORMAL
+  zh: \[\lim_{k\to\infty} \frac{\|e_{k + 1}\|}{\|e_{k}\|^{\mathbf 2}} = C\]
 - en: Which gives us quadratic convergence. However, as we see in the next section,
     this can depend on the initial guess.
   id: totrans-81
   prefs: []
   type: TYPE_NORMAL
+  zh: 这给我们带来了二次收敛。然而，正如我们在下一节中看到的，这取决于初始猜测。
 - en: Drawbacks
   id: totrans-82
   prefs:
   - PREF_H4
   type: TYPE_NORMAL
+  zh: 缺点
 - en: The additional cost of evaluating the derivative makes each iteration slower
     to compute.
   id: totrans-83
   prefs: []
   type: TYPE_NORMAL
+  zh: 评估导数的额外成本使得每次迭代计算速度变慢。
 - en: Many functions are not easily differentiable, so Newton's Method is not always
     possible. Even in cases when it is possible to evaluate the derivative, it may
     be quite costly.
   id: totrans-84
   prefs: []
   type: TYPE_NORMAL
+  zh: 许多函数不易微分，因此牛顿法并不总是可行。即使在可以评估导数的情况下，它可能也相当昂贵。
 - en: Convergence only works well if you are already close to the root. Specifically,
     if started too far from the root Newton's method may not converge at all.
   id: totrans-85
   prefs: []
   type: TYPE_NORMAL
+  zh: 收敛只有在您已经接近根的情况下才有效。具体来说，如果起始位置离根太远，牛顿法可能根本不会收敛。
 - en: Example
   id: totrans-86
   prefs:
   - PREF_H4
   type: TYPE_NORMAL
+  zh: 示例
 - en: \[\begin{align*} f(x) &= x^3 - x - 1 \\ f'(x) &= 3x^2 - 1 \end{align*}\] <details><summary>**Answer**</summary>
   id: totrans-87
   prefs: []
   type: TYPE_NORMAL
+  zh: \[\begin{align*} f(x) &= x^3 - x - 1 \\ f'(x) &= 3x^2 - 1 \end{align*}\] <details><summary>**答案**</summary>
 - en: '![](../Images/ee64c8344097c9d7056bb06f48325443.png)'
   id: totrans-88
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/ee64c8344097c9d7056bb06f48325443.png)'
 - en: From the graph above, we can see that the root is somewhere near \(x = 1\).
     We will use \(x_0\) as our starting position.
   id: totrans-89
   prefs: []
   type: TYPE_NORMAL
+  zh: 从上面的图中，我们可以看到根大约在 \(x = 1\) 附近。我们将使用 \(x_0\) 作为我们的起始位置。
 - en: '**Iteration 1**'
   id: totrans-90
   prefs: []
   type: TYPE_NORMAL
+  zh: '**迭代 1**'
 - en: \(\begin{flalign*} \hspace{2cm} x_1 &= x_0 - \frac{f(x_0)}{f'(x_0)} \\ &= 1
     - \frac{f(1)}{f'(1)} &\\ &= 1 - \frac{1^3 - 1 - 1}{3 \cdot 1^2 - 1} \\ &= 1 +
     \frac{1}{2} \\ &= 1.5 \end{flalign*}\)
   id: totrans-91
   prefs: []
   type: TYPE_NORMAL
+  zh: \(\begin{flalign*} \hspace{2cm} x_1 &= x_0 - \frac{f(x_0)}{f'(x_0)} \\ &= 1
+    - \frac{f(1)}{f'(1)} &\\ &= 1 - \frac{1^3 - 1 - 1}{3 \cdot 1^2 - 1} \\ &= 1 +
+    \frac{1}{2} \\ &= 1.5 \end{flalign*}\)
 - en: '**Iteration 2**'
   id: totrans-92
   prefs: []
   type: TYPE_NORMAL
+  zh: '**迭代2**'
 - en: \(\begin{flalign*} \hspace{2cm} x_2 &= x_1 - \frac{f(x_1)}{f'(x_1)} \\ &= 1.5
     - \frac{f(1.5)}{f'(1.5)} &\\ &= 1.5 - \frac{1.5^3 - 1.5 - 1}{3 \cdot 1.5^2 - 1}
     \\ &= 1.5 - \frac{0.875}{5.75} \\ &= 1.3478260869565217 \end{flalign*}\)
   id: totrans-93
   prefs: []
   type: TYPE_NORMAL
+  zh: \(\begin{flalign*} \hspace{2cm} x_2 &= x_1 - \frac{f(x_1)}{f'(x_1)} \\ &= 1.5
+    - \frac{f(1.5)}{f'(1.5)} &\\ &= 1.5 - \frac{1.5^3 - 1.5 - 1}{3 \cdot 1.5^2 - 1}
+    \\ &= 1.5 - \frac{0.875}{5.75} \\ &= 1.3478260869565217 \end{flalign*}\)
 - en: '**Iteration 3**'
   id: totrans-94
   prefs: []
   type: TYPE_NORMAL
+  zh: '**迭代3**'
 - en: \[\begin{flalign*} \hspace{2cm} x_3 &= x_2 - \frac{f(x_2)}{f'(x_2)} \\ &= 1.3478260869565217
     - \frac{f(1.3478260869565217)}{f'(1.3478260869565217)}& \\ &= 1.3478260869565217
     - \frac{1.3478260869565217^3 - 1.3478260869565217 - 1}{3 \cdot 1.3478260869565217^2
@@ -482,67 +597,85 @@
   id: totrans-95
   prefs: []
   type: TYPE_NORMAL
+  zh: \[\begin{flalign*} \hspace{2cm} x_3 &= x_2 - \frac{f(x_2)}{f'(x_2)} \\ &= 1.3478260869565217
+    - \frac{f(1.3478260869565217)}{f'(1.3478260869565217)}& \\ &= 1.3478260869565217
+    - \frac{1.3478260869565217^3 - 1.3478260869565217 - 1}{3 \cdot 1.3478260869565217^2
+    - 1} \\ &= 1.3478260869565217 - \frac{0.10068217309114824}{4.449905482041588}
+    \\ &= 1.325200398950907 \end{flalign*}\]
 - en: As you can see, Newton's Method is already converging significantly faster than
     the Bisection Method.
   id: totrans-96
   prefs: []
   type: TYPE_NORMAL
+  zh: 如您所见，牛顿法已经比二分法收敛得快得多。
 - en: '**…**'
   id: totrans-97
   prefs: []
   type: TYPE_NORMAL
+  zh: '**…**'
 - en: '**Iteration n**'
   id: totrans-98
   prefs: []
   type: TYPE_NORMAL
+  zh: '**迭代 n**'
 - en: When running the code for Newton's method given below, the resulting approximate
     root determined is \(1.324717957244746\).
   id: totrans-99
   prefs: []
   type: TYPE_NORMAL
+  zh: 当运行以下牛顿法代码时，得到的近似根为 \(1.324717957244746\)。
 - en: '**Code**'
   id: totrans-100
   prefs: []
   type: TYPE_NORMAL
+  zh: '**代码**'
 - en: 'The following Python code calls SciPy''s `newton` method:'
   id: totrans-101
   prefs: []
   type: TYPE_NORMAL
+  zh: 以下 Python 代码调用 SciPy 的 `newton` 方法：
 - en: '[PRE1]</details>'
   id: totrans-102
   prefs: []
   type: TYPE_NORMAL
+  zh: '[PRE1]'
 - en: Secant Method
   id: totrans-103
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 切线法
 - en: 'Like Newton''s Method, secant method uses the Taylor Series to find the solution.
     However, you may not always be able to take the derivative of a function. Secant
     method gets around this by approximating the derivative as:'
   id: totrans-104
   prefs: []
   type: TYPE_NORMAL
+  zh: 与牛顿法类似，切线法使用泰勒级数来找到解。然而，您可能并不总是能够对函数求导。切线法通过近似导数来解决这个问题：
 - en: \[f'(x_k) \approx \frac{f(x_k) - f(x_{k-1})}{x_k - x_{k-1}}\]
   id: totrans-105
   prefs: []
   type: TYPE_NORMAL
+  zh: \[f'(x_k) \approx \frac{f(x_k) - f(x_{k-1})}{x_k - x_{k-1}}\]
 - en: Algorithm
   id: totrans-106
   prefs:
   - PREF_H4
   type: TYPE_NORMAL
+  zh: 算法
 - en: The steps involved in the Secant Method are identical to those of the Newton
     Method, with the derivative replaced by an approximation for the slope of the
     tangent.
   id: totrans-107
   prefs: []
   type: TYPE_NORMAL
+  zh: 切线法涉及的步骤与牛顿法相同，只是将导数替换为切线斜率的近似值。
 - en: Computational Cost
   id: totrans-108
   prefs:
   - PREF_H4
   type: TYPE_NORMAL
+  zh: 计算成本
 - en: Similar to bisection, although secant method conceptually requires 2 function
     evaluations per iteration, one of the function evaluations will have been computed
     in the previous iteration and can be reused. So, secant method requires 1 new
@@ -550,83 +683,105 @@
   id: totrans-109
   prefs: []
   type: TYPE_NORMAL
+  zh: 与二分法类似，尽管切线法在概念上需要每迭代一次进行两次函数评估，其中一次函数评估已在上一迭代中计算并可以重用。因此，切线法每迭代一次需要1个新的函数评估（第一次迭代之后）。
 - en: Convergence
   id: totrans-110
   prefs:
   - PREF_H4
   type: TYPE_NORMAL
+  zh: 收敛性
 - en: Secant method has superlinear convergence.
   id: totrans-111
   prefs: []
   type: TYPE_NORMAL
+  zh: 切线法具有超线性收敛性。
 - en: 'More specifically, the rate of convergence \(r\) is:'
   id: totrans-112
   prefs: []
   type: TYPE_NORMAL
+  zh: 更具体地说，收敛率 \(r\) 是：
 - en: \[r = \frac{1 + \sqrt{5}}{2} \approx 1.618\]
   id: totrans-113
   prefs: []
   type: TYPE_NORMAL
+  zh: \[r = \frac{1 + \sqrt{5}}{2} \approx 1.618\]
 - en: This happens to be the golden ratio.
   id: totrans-114
   prefs: []
   type: TYPE_NORMAL
+  zh: 这恰好是黄金比例。
 - en: Drawbacks
   id: totrans-115
   prefs:
   - PREF_H4
   type: TYPE_NORMAL
+  zh: 缺点
 - en: This technique has many of the same drawbacks as Newton's Method, but does not
     require a derivative. It does not converge as quickly as Newton's Method. It also
     requires two starting guesses near the root.
   id: totrans-116
   prefs: []
   type: TYPE_NORMAL
+  zh: 这种技术与牛顿法有许多相同的缺点，但不需要导数。它的收敛速度不如牛顿法快。它还需要两个接近根的起始猜测值。
 - en: Example
   id: totrans-117
   prefs:
   - PREF_H4
   type: TYPE_NORMAL
+  zh: 示例
 - en: \[f(x) = x^3 - x - 1\] <details><summary>**Answer**</summary>
   id: totrans-118
   prefs: []
   type: TYPE_NORMAL
+  zh: \[f(x) = x^3 - x - 1\] <details><summary>**答案**</summary>
 - en: '![](../Images/ee64c8344097c9d7056bb06f48325443.png)'
   id: totrans-119
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/ee64c8344097c9d7056bb06f48325443.png)'
 - en: Let's start with \(x_0 = 1\) and \(x_{-1} = 2\).
   id: totrans-120
   prefs: []
   type: TYPE_NORMAL
+  zh: 让我们从 \(x_0 = 1\) 和 \(x_{-1} = 2\) 开始。
 - en: '**Iteration 1**'
   id: totrans-121
   prefs: []
   type: TYPE_NORMAL
+  zh: '**迭代1**'
 - en: 'First, find an approximate for the derivative (slope):'
   id: totrans-122
   prefs: []
   type: TYPE_NORMAL
+  zh: 首先，找到导数（斜率）的近似值：
 - en: \[\begin{flalign*} \hspace{0.5cm}f'(x_0) &\approx \frac{f(x_0) - f(x_{-1})}{x_0
     - x_{-1}} \\ &= \frac{f(1) - f(2)}{1 - 2} &\\ &= \frac{(1^3 - 1 - 1) - (2^3 -
     2 - 1)}{1 - 2} \\ &= \frac{(-1) - (5)}{1 - 2} \\ &= 6 \end{flalign*}\]
   id: totrans-123
   prefs: []
   type: TYPE_NORMAL
+  zh: \[\begin{flalign*} \hspace{0.5cm}f'(x_0) &\approx \frac{f(x_0) - f(x_{-1})}{x_0
+    - x_{-1}} \\ &= \frac{f(1) - f(2)}{1 - 2} &\\ &= \frac{(1^3 - 1 - 1) - (2^3 -
+    2 - 1)}{1 - 2} \\ &= \frac{(-1) - (5)}{1 - 2} \\ &= 6 \end{flalign*}\]
 - en: 'Then, use this for Newton''s Method:'
   id: totrans-124
   prefs: []
   type: TYPE_NORMAL
+  zh: 然后，用这个结果来应用牛顿法：
 - en: \(\begin{flalign*} \hspace{0.5cm}x_1 &= x_0 - \frac{f(x_0)}{f'(x_0)} \\ &= 1
     - \frac{f(1)}{f'(1)} &\\ &= 1 - \frac{1^3 - 1 - 1}{6} \\ &= 1 + \frac{1}{6} \\
     &= 1.1666666666666667 \end{flalign*}\)
   id: totrans-125
   prefs: []
   type: TYPE_NORMAL
+  zh: \(\begin{flalign*} \hspace{0.5cm}x_1 &= x_0 - \frac{f(x_0)}{f'(x_0)} \\ &= 1
+    - \frac{f(1)}{f'(1)} &\\ &= 1 - \frac{1^3 - 1 - 1}{6} \\ &= 1 + \frac{1}{6} \\
+    &= 1.1666666666666667 \end{flalign*}\)
 - en: '**Iteration 2**'
   id: totrans-126
   prefs: []
   type: TYPE_NORMAL
+  zh: '**迭代2**'
 - en: \[\begin{flalign*} \hspace{0.5cm}f'(x_1) &\approx \frac{f(x_1) - f(x_0)}{x_1
     - x_0} \\ &= \frac{f(1.1666666666666667) - f(1)}{1.1666666666666667 - 1} &\\ &=
     \frac{(1.1666666666666667^3 - 1.1666666666666667 - 1) - (1^3 - 1 - 1)}{1.1666666666666667
@@ -635,6 +790,11 @@
   id: totrans-127
   prefs: []
   type: TYPE_NORMAL
+  zh: \[\begin{flalign*} \hspace{0.5cm}f'(x_1) &\approx \frac{f(x_1) - f(x_0)}{x_1
+    - x_0} \\ &= \frac{f(1.1666666666666667) - f(1)}{1.1666666666666667 - 1} &\\ &=
+    \frac{(1.1666666666666667^3 - 1.1666666666666667 - 1) - (1^3 - 1 - 1)}{1.1666666666666667
+    - 1} \\ &= \frac{(-0.5787037037037035) - (-1)}{1.1666666666666667 - 1} \\ &= 2.5277777777777777
+    \end{flalign*}\]
 - en: \(\begin{flalign*} \hspace{0.5cm}x_2 &= x_1 - \frac{f(x_1)}{f'(x_1)} \\ &= 1.1666666666666667
     - \frac{f(1.1666666666666667)}{f'(1.1666666666666667)} &\\ &= 1.1666666666666667
     - \frac{1.1666666666666667^3 - 1.1666666666666667 - 1}{2.5277777777777777} \\
@@ -643,10 +803,16 @@
   id: totrans-128
   prefs: []
   type: TYPE_NORMAL
+  zh: \(\begin{flalign*} \hspace{0.5cm}x_2 &= x_1 - \frac{f(x_1)}{f'(x_1)} \\ &= 1.1666666666666667
+    - \frac{f(1.1666666666666667)}{f'(1.1666666666666667)} &\\ &= 1.1666666666666667
+    - \frac{1.1666666666666667^3 - 1.1666666666666667 - 1}{2.5277777777777777} \\
+    &= 1.1666666666666667 - \frac{-0.5787037037037035}{2.5277777777777777} \\ &= 1.3956043956043955
+    \end{flalign*}\)
 - en: '**Iteration 3**'
   id: totrans-129
   prefs: []
   type: TYPE_NORMAL
+  zh: '**迭代3**'
 - en: \[\begin{flalign*} \hspace{0.5cm}f'(x_2) &\approx \frac{f(x_2) - f(x_1)}{x_2
     - x_1} \\ &= \frac{f(1.3956043956043955) - f(1.1666666666666667)}{1.3956043956043955
     - 1.1666666666666667} &\\ &= \frac{(1.3956043956043955^3 - 1.3956043956043955
@@ -660,47 +826,66 @@
   id: totrans-130
   prefs: []
   type: TYPE_NORMAL
+  zh: \[\begin{flalign*} \hspace{0.5cm}f'(x_2) &\approx \frac{f(x_2) - f(x_1)}{x_2
+    - x_1} \\ &= \frac{f(1.3956043956043955) - f(1.1666666666666667)}{1.3956043956043955
+    - 1.1666666666666667} &\\ &= \frac{(1.3956043956043955^3 - 1.3956043956043955
+    - 1) - (1.1666666666666667^3 - 1.1666666666666667 - 1)}{1.3956043956043955 - 1.1666666666666667}
+    \\ &= \frac{(0.3226305152401032) - (-0.5787037037037035)}{1.3956043956043955 -
+    1.1666666666666667} \\ &= 3.9370278683465503 \end{flalign*}\] \[\begin{flalign*}
+    \hspace{0.5cm}x_3 &= x_2 - \frac{f(x_2)}{f'(x_2)} \\ &= 1.3956043956043955 - \frac{f(1.3956043956043955)}{f'(1.3956043956043955)}
+    &\\ &= 1.3956043956043955 - \frac{1.3956043956043955^3 - 1.3956043956043955 -
+    1}{3.9370278683465503} \\ &= 1.3956043956043955 - \frac{0.3226305152401032}{3.9370278683465503}
+    \\ &= 1.3136566609098987 \end{flalign*}\]
 - en: '**…**'
   id: totrans-131
   prefs: []
   type: TYPE_NORMAL
+  zh: '**…**'
 - en: '**Iteration n**'
   id: totrans-132
   prefs: []
   type: TYPE_NORMAL
+  zh: '**迭代n**'
 - en: When running the code for secant method given below, the resulting approximate
     root determined is \(1.324717957244753\).
   id: totrans-133
   prefs: []
   type: TYPE_NORMAL
+  zh: 当运行以下割线法的代码时，确定的近似根为 \(1.324717957244753\)。
 - en: '**Code**'
   id: totrans-134
   prefs: []
   type: TYPE_NORMAL
+  zh: '**代码**'
 - en: 'SciPy''s `newton` method serves double-duty. If given a function \(f\) and
     a first derivative \(f''\), it will use Newton''s Method. If it is not given a
     derivative, it will instead use the Secant Method to approximate it:'
   id: totrans-135
   prefs: []
   type: TYPE_NORMAL
+  zh: SciPy的`newton`方法具有双重功能。如果给定一个函数 \(f\) 和一个一阶导数 \(f'\)，它将使用牛顿法。如果没有给定导数，它将改用割线法来近似它：
 - en: '[PRE2]</details>'
   id: totrans-136
   prefs: []
   type: TYPE_NORMAL
+  zh: '[PRE2]'
 - en: 1D Summary
   id: totrans-137
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 1D总结
 - en: '![1D methods](../Images/ae9f318e967365cc35c5324d72da7f4c.png)'
   id: totrans-138
   prefs: []
   type: TYPE_IMG
+  zh: '![1D方法](../Images/ae9f318e967365cc35c5324d72da7f4c.png)'
 - en: Nonlinear System of Equations
   id: totrans-139
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 非线性方程组
 - en: 'Similar to root-finding in 1 dimension, we can also perform root-finding for
     multiple equations in \(n\) dimensions. Mathematically, we are trying to solve
     \(\boldsymbol{f(x) = 0}\) for \(\boldsymbol{f} : \mathbb{R}^n \to \mathbb{R}^n\).
@@ -708,139 +893,180 @@
   id: totrans-140
   prefs: []
   type: TYPE_NORMAL
+  zh: '与一维的根查找类似，我们也可以在 \(n\) 维中进行多方程的根查找。从数学上讲，我们试图求解 \(\boldsymbol{f(x) = 0}\) 对于
+    \(\boldsymbol{f} : \mathbb{R}^n \to \mathbb{R}^n\)。换句话说，\(\boldsymbol{f(x)}\)
+    现在是一个向量值函数'
 - en: \[\boldsymbol{f(x)} = \begin{bmatrix} f_1(\boldsymbol{x}) \\ \vdots \\ f_n(\boldsymbol{x})
     \end{bmatrix} = \begin{bmatrix} f_1(x_1, \ldots, x_n) \\ \vdots \\ f_n(x_1, \ldots,
     x_n) \end{bmatrix}\]
   id: totrans-141
   prefs: []
   type: TYPE_NORMAL
+  zh: \[\boldsymbol{f(x)} = \begin{bmatrix} f_1(\boldsymbol{x}) \\ \vdots \\ f_n(\boldsymbol{x})
+    \end{bmatrix} = \begin{bmatrix} f_1(x_1, \ldots, x_n) \\ \vdots \\ f_n(x_1, \ldots,
+    x_n) \end{bmatrix}\]
 - en: 'If we are instead looking for the solution to \(\boldsymbol{f(x) = y}\), we
     can rework our function like so:'
   id: totrans-142
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果我们正在寻找 \(\boldsymbol{f(x) = y}\) 的解，我们可以重新设计我们的函数如下：
 - en: \[\boldsymbol{\tilde{f}(x)} = \boldsymbol{f(x)} - \boldsymbol{y} = \boldsymbol{0}\]
   id: totrans-143
   prefs: []
   type: TYPE_NORMAL
+  zh: \[\boldsymbol{\tilde{f}(x)} = \boldsymbol{f(x)} - \boldsymbol{y} = \boldsymbol{0}\]
 - en: We can think of each equation as a function that describes a surface. We are
     looking for vectors that describe the intersection of these surfaces.
   id: totrans-144
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们可以将每个方程视为一个描述曲面的函数。我们正在寻找描述这些曲面交点的向量。
 - en: The Jacobian Matrix
   id: totrans-145
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 雅可比矩阵
 - en: 'Given \(\boldsymbol{f} : \mathbb{R}^n \to \mathbb{R}^n\) we define the Jacobian
     matrix \({\bf J}_f\) as:'
   id: totrans-146
   prefs: []
   type: TYPE_NORMAL
+  zh: '给定 \(\boldsymbol{f} : \mathbb{R}^n \to \mathbb{R}^n\)，我们定义雅可比矩阵 \({\bf J}_f\)
+    为：'
 - en: \[{\bf J}_f(\boldsymbol{x}) = \begin{bmatrix} \frac{\partial f_1}{\partial x_1}
     & \ldots & \frac{\partial f_1}{\partial x_n} \\ \vdots & \ddots & \vdots \\ \frac{\partial
     f_n}{\partial x_1} & \ldots & \frac{\partial f_n}{\partial x_n} \end{bmatrix}\]
   id: totrans-147
   prefs: []
   type: TYPE_NORMAL
+  zh: \[{\bf J}_f(\boldsymbol{x}) = \begin{bmatrix} \frac{\partial f_1}{\partial x_1}
+    & \ldots & \frac{\partial f_1}{\partial x_n} \\ \vdots & \ddots & \vdots \\ \frac{\partial
+    f_n}{\partial x_1} & \ldots & \frac{\partial f_n}{\partial x_n} \end{bmatrix}\]
 - en: Newton's Method
   id: totrans-148
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 牛顿法
 - en: 'The multi-dimensional equivalent of Newton''s Method involves approximating
     a function as:'
   id: totrans-149
   prefs: []
   type: TYPE_NORMAL
+  zh: 牛顿法的多维等价形式涉及将函数近似为：
 - en: \[\boldsymbol{f(x + s)} \approx \boldsymbol{f(x)} + {\bf J}_f(\boldsymbol{x})\boldsymbol{s}\]
   id: totrans-150
   prefs: []
   type: TYPE_NORMAL
+  zh: \[\boldsymbol{f(x + s)} \approx \boldsymbol{f(x)} + {\bf J}_f(\boldsymbol{x})\boldsymbol{s}\]
 - en: where \({\bf J}_f\) is the ***Jacobian matrix*** of \(\boldsymbol{f}\).
   id: totrans-151
   prefs: []
   type: TYPE_NORMAL
+  zh: 其中 \({\bf J}_f\) 是 \(\boldsymbol{f}\) 的 ***雅可比矩阵***。
 - en: 'By setting this to \(\mathbf{0}\) and rearranging, we get:'
   id: totrans-152
   prefs: []
   type: TYPE_NORMAL
+  zh: 通过将其设置为 \(\mathbf{0}\) 并重新排列，我们得到：
 - en: \[\begin{align*} {\bf J}_f(\boldsymbol{x})\boldsymbol{s} &= -\boldsymbol{f(x)}
     \qquad \qquad (1) \\ \boldsymbol{s} &= - {\bf J}_f(\boldsymbol{x})^{-1} \boldsymbol{f(x)}
     \end{align*}\]
   id: totrans-153
   prefs: []
   type: TYPE_NORMAL
+  zh: \[\begin{align*} {\bf J}_f(\boldsymbol{x})\boldsymbol{s} &= -\boldsymbol{f(x)}
+    \qquad \qquad (1) \\ \boldsymbol{s} &= - {\bf J}_f(\boldsymbol{x})^{-1} \boldsymbol{f(x)}
+    \end{align*}\]
 - en: Note that in practice we would not actually invert the Jacobian, but would instead
     solve the linear system in \((1)\) to determine the step.
   id: totrans-154
   prefs: []
   type: TYPE_NORMAL
+  zh: 注意，在实践中，我们实际上不会求雅可比矩阵的逆，而是会求解 \((1)\) 中的线性系统以确定步长。
 - en: Algorithm
   id: totrans-155
   prefs:
   - PREF_H4
   type: TYPE_NORMAL
+  zh: 算法
 - en: 'Similar to the way we solved for \(x_{k+1}\) in 1 dimension, we can solve for:'
   id: totrans-156
   prefs: []
   type: TYPE_NORMAL
+  zh: 与我们在一维中求解 \(x_{k+1}\) 的方式类似，我们可以求解：
 - en: \(\boldsymbol{x_{k+1}} = \boldsymbol{x_k} + \boldsymbol{s_k}\) where \(\boldsymbol{s_k}\)
     is determined by solving the linear system \({\bf J}_f(\boldsymbol{x_k})\boldsymbol{s_k}
     = -\boldsymbol{f(x_k)}.\)
   id: totrans-157
   prefs: []
   type: TYPE_NORMAL
+  zh: \(\boldsymbol{x_{k+1}} = \boldsymbol{x_k} + \boldsymbol{s_k}\) 其中 \(\boldsymbol{s_k}\)
+    通过求解线性系统 \({\bf J}_f(\boldsymbol{x_k})\boldsymbol{s_k} = -\boldsymbol{f(x_k)}\)
+    确定。
 - en: Drawbacks
   id: totrans-158
   prefs:
   - PREF_H4
   type: TYPE_NORMAL
+  zh: 缺点
 - en: Just like in 1D, Newton's Method only converges locally. It may also be expensive
     to compute \({\bf J}_f\) at each iteration and we must solve a linear system at
     each iteration.
   id: totrans-159
   prefs: []
   type: TYPE_NORMAL
+  zh: 就像在一维中一样，牛顿法只在局部收敛。在每次迭代中计算 \({\bf J}_f\) 也可能很昂贵，并且我们必须在每次迭代中求解一个线性系统。
 - en: Example
   id: totrans-160
   prefs:
   - PREF_H4
   type: TYPE_NORMAL
+  zh: 示例
 - en: Find a root for
   id: totrans-161
   prefs: []
   type: TYPE_NORMAL
+  zh: 求解
 - en: \[\boldsymbol{f}(x, y) = \begin{bmatrix} x + 2y - 2 \\ x^2 + 4y^2 - 4 \end{bmatrix}\]
     <details><summary>**Answer**</summary>
   id: totrans-162
   prefs: []
   type: TYPE_NORMAL
+  zh: \[\boldsymbol{f}(x, y) = \begin{bmatrix} x + 2y - 2 \\ x^2 + 4y^2 - 4 \end{bmatrix}\]
 - en: 'The corresponding Jacobian and inverse Jacobian are:'
   id: totrans-163
   prefs: []
   type: TYPE_NORMAL
+  zh: 相应的雅可比矩阵和逆雅可比矩阵为：
 - en: \[{\bf J}_f(\boldsymbol{x}) = \begin{bmatrix} 1 & 2 \\ 2x & 8y \end{bmatrix}\]
     \[{\bf J}_f^{-1} = \frac{1}{x - 2y} \begin{bmatrix} -2y & \frac{1}{2} \\ \frac{x}{2}
     & - \frac{1}{4} \end{bmatrix}\]
   id: totrans-164
   prefs: []
   type: TYPE_NORMAL
+  zh: \[{\bf J}_f(\boldsymbol{x}) = \begin{bmatrix} 1 & 2 \\ 2x & 8y \end{bmatrix}\]
+    \[{\bf J}_f^{-1} = \frac{1}{x - 2y} \begin{bmatrix} -2y & \frac{1}{2} \\ \frac{x}{2}
+    & - \frac{1}{4} \end{bmatrix}\]
 - en: In this example, as the Jacobian is a \(2 \times 2\) matrix with a simple inverse,
     we work explicitly with the inverse, even though we would not explicitly compute
     the inverse for a real problem.
   id: totrans-165
   prefs: []
   type: TYPE_NORMAL
+  zh: 在这个例子中，由于雅可比矩阵是一个 \(2 \times 2\) 矩阵，其逆简单，我们明确地使用逆矩阵，即使在实际问题中我们不会明确地计算逆矩阵。
 - en: Let's start at \(\boldsymbol{x_0} = \begin{bmatrix}1 \\ 1\end{bmatrix}\).
   id: totrans-166
   prefs: []
   type: TYPE_NORMAL
+  zh: 让我们从 \(\boldsymbol{x_0} = \begin{bmatrix}1 \\ 1\end{bmatrix}\) 开始。
 - en: '**Iteration 1**'
   id: totrans-167
   prefs: []
   type: TYPE_NORMAL
+  zh: '**迭代 1**'
 - en: \(\begin{flalign*} \hspace{2cm}\boldsymbol{x_1} &= \boldsymbol{x_0} - {\bf J}_f(\boldsymbol{x_0})^{-1}
     \boldsymbol{f(x_0)} \\ &= \begin{bmatrix}1 \\ 1\end{bmatrix} - \frac{1}{1 - 2}\begin{bmatrix}-2
     & \frac{1}{2} \\ \frac{1}{2} & - \frac{1}{4}\end{bmatrix} \begin{bmatrix}1 \\
@@ -849,10 +1075,16 @@
   id: totrans-168
   prefs: []
   type: TYPE_NORMAL
+  zh: \(\begin{flalign*} \hspace{2cm}\boldsymbol{x_1} &= \boldsymbol{x_0} - {\bf J}_f(\boldsymbol{x_0})^{-1}
+    \boldsymbol{f(x_0)} \\ &= \begin{bmatrix}1 \\ 1\end{bmatrix} - \frac{1}{1 - 2}\begin{bmatrix}-2
+    & \frac{1}{2} \\ \frac{1}{2} & - \frac{1}{4}\end{bmatrix} \begin{bmatrix}1 \\
+    1\end{bmatrix} &\\ &= \begin{bmatrix}1 \\ 1\end{bmatrix} + \begin{bmatrix}-1.5
+    \\ 0.25\end{bmatrix} \\ &= \begin{bmatrix}-0.5 \\ 1.25\end{bmatrix} \end{flalign*}\)
 - en: '**Iteration 2**'
   id: totrans-169
   prefs: []
   type: TYPE_NORMAL
+  zh: '**迭代 2**'
 - en: \(\begin{flalign*} \hspace{2cm}\boldsymbol{x_2} &= \boldsymbol{x_1} - {\bf J}_f(\boldsymbol{x_1})^{-1}
     \boldsymbol{f(x_1)} \\ &= \begin{bmatrix}-0.5 \\ 1.25\end{bmatrix} - \frac{1}{-0.5
     - 2.5}\begin{bmatrix}-2.5 & \frac{1}{2} \\ - \frac{1}{4} & - \frac{1}{4}\end{bmatrix}
@@ -862,10 +1094,17 @@
   id: totrans-170
   prefs: []
   type: TYPE_NORMAL
+  zh: \(\begin{flalign*} \hspace{2cm}\boldsymbol{x_2} &= \boldsymbol{x_1} - {\bf J}_f(\boldsymbol{x_1})^{-1}
+    \boldsymbol{f(x_1)} \\ &= \begin{bmatrix}-0.5 \\ 1.25\end{bmatrix} - \frac{1}{-0.5
+    - 2.5}\begin{bmatrix}-2.5 & \frac{1}{2} \\ - \frac{1}{4} & - \frac{1}{4}\end{bmatrix}
+    \begin{bmatrix}0 \\ 2.5\end{bmatrix} &\\ &= \begin{bmatrix}-0.5 \\ 1.25\end{bmatrix}
+    + \frac{1}{3}\begin{bmatrix}1.25 \\ -0.625\end{bmatrix} \\ &= \begin{bmatrix}-0.08333333
+    \\ 1.04166667\end{bmatrix} \end{flalign*}\)
 - en: '**Iteration 3**'
   id: totrans-171
   prefs: []
   type: TYPE_NORMAL
+  zh: '**迭代 3**'
 - en: \[\begin{flalign*} \hspace{2cm}\boldsymbol{x_3} &= \boldsymbol{x_2} - {\bf J}_f(\boldsymbol{x_2})^{-1}
     \boldsymbol{f(x_2)} \\ &= \begin{bmatrix}-0.08333333 \\ 1.04166667\end{bmatrix}
     - \frac{1}{-0.08333333 - 2.08333334}\begin{bmatrix}-2.08333334 & 0.5 \\ -0.041666665
@@ -876,69 +1115,89 @@
   id: totrans-172
   prefs: []
   type: TYPE_NORMAL
+  zh: \[\begin{flalign*} \hspace{2cm}\boldsymbol{x_3} &= \boldsymbol{x_2} - {\bf J}_f(\boldsymbol{x_2})^{-1}
+    \boldsymbol{f(x_2)} \\ &= \begin{bmatrix}-0.08333333 \\ 1.04166667\end{bmatrix}
+    - \frac{1}{-0.08333333 - 2.08333334}\begin{bmatrix}-2.08333334 & 0.5 \\ -0.041666665
+    & -0.25\end{bmatrix} \begin{bmatrix}9.99999993922529 \cdot 10^{-9} \\ 0.34722224944444413\end{bmatrix}
+    &\\ &= \begin{bmatrix}-0.08333333 \\ 1.04166667\end{bmatrix} + \frac{1}{2.1666666699999997}\begin{bmatrix}0.1736111
+    \\ -0.08680556\end{bmatrix} \\ &= \begin{bmatrix}-0.00320513 \\ 1.00160256\end{bmatrix}
+    \end{flalign*}\]
 - en: '**…**'
   id: totrans-173
   prefs: []
   type: TYPE_NORMAL
+  zh: '**…**'
 - en: '**Iteration n**'
   id: totrans-174
   prefs: []
   type: TYPE_NORMAL
+  zh: '**迭代 n**'
 - en: When running the code for Newton's method given below, the resulting approximate
     root determined is \(\begin{bmatrix}-2.74060567 \cdot 10^{-16} & 1\end{bmatrix}^\top.\)
   id: totrans-175
   prefs: []
   type: TYPE_NORMAL
+  zh: 在运行以下牛顿法的代码时，确定的近似根为 \(\begin{bmatrix}-2.74060567 \cdot 10^{-16} & 1\end{bmatrix}^\top.\)
 - en: '**Code**'
   id: totrans-176
   prefs: []
   type: TYPE_NORMAL
+  zh: '**代码**'
 - en: '[PRE3]</details>'
   id: totrans-177
   prefs: []
   type: TYPE_NORMAL
+  zh: '[PRE3]</details>'
 - en: Review Questions
   id: totrans-178
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 复习问题
 - en: How do you use methods for root-finding to solve a nonlinear equation for some
     value other than the root?
   id: totrans-179
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 你如何使用根查找方法来解决非线性方程的某个非根值？
 - en: 'For a given nonlinear equation (1D), you should be able to run a couple steps
     of:'
   id: totrans-180
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 对于一个给定的非线性方程（1D），你应该能够运行几个步骤：
 - en: 1) Bisection method
   id: totrans-181
   prefs:
   - PREF_IND
   type: TYPE_NORMAL
+  zh: 1) 二分法
 - en: 2) Secant method
   id: totrans-182
   prefs:
   - PREF_IND
   type: TYPE_NORMAL
+  zh: 2) 梯度法
 - en: 3) Newton's method
   id: totrans-183
   prefs:
   - PREF_IND
   type: TYPE_NORMAL
+  zh: 3) 牛顿法
 - en: How many function evaluations are required per iteration for bisection?
   id: totrans-184
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 二分法每迭代需要多少次函数评估？
 - en: What is the convergence rate of bisection method? Will it always converge?
   id: totrans-185
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 二分法的收敛率是多少？它总是会收敛吗？
 - en: Using the bisection method, given a specific initial interval \([a,b]\) and
     a given tolerance \(tol\), how many iterations would be required for the approximate
     root to be accurate to the given tolerance?
@@ -946,61 +1205,72 @@
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 使用二分法，给定一个特定的初始区间 \([a,b]\) 和一个给定的容差 \(tol\)，需要多少次迭代才能使近似根达到给定的容差精度？
 - en: How many function evaluations are required per iteration for 1D Newton's method
     for root-finding? Which functions must be evaluated?
   id: totrans-187
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 1D 牛顿法根查找每迭代需要多少次函数评估？哪些函数必须被评估？
 - en: What is the convergence rate of Newton's method for 1D rootfinding?
   id: totrans-188
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 牛顿法在 1D 根查找中的收敛率是多少？
 - en: How many function evaluations are required per iteration for secant method?
   id: totrans-189
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 梯度法每迭代需要多少次函数评估？
 - en: What is the convergence rate of secant method? Will it always converge?
   id: totrans-190
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 割线法的收敛率是多少？它总是会收敛吗？
 - en: What are the advantages and disadvantages of bisection, Newton's method, and
     secant method? (e.g. why would you use one over the other?)
   id: totrans-191
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 二分法、牛顿法和割线法的优缺点是什么？（例如，为什么你会选择其中一个而不是另一个？）
 - en: For a given vector-valued function \(\mathbf{f}(\mathbf{x})\), what is the Jacobian
     (both in general and evaluated at a specific point).
   id: totrans-192
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 对于给定的向量值函数 \(\mathbf{f}(\mathbf{x})\)，雅可比矩阵（在一般情况和特定点上的计算）是什么。
 - en: For a simple system of nonlinear equations, you should be able to run one step
     of \(n\)-dimensional Newton's method.
   id: totrans-193
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 对于一个简单的非线性方程组，你应该能够运行一步 \(n\) 维牛顿法。
 - en: What is the convergence rate of Newton's method for rootfinding in \(n\) dimensions?
     Will it always converge?
   id: totrans-194
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 牛顿法在 \(n\) 维根查找中的收敛率是多少？它总是会收敛吗？
 - en: What operations are required per iteration for Newton's method in \(n\) dimensions?
   id: totrans-195
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 在 \(n\) 维中，牛顿法每迭代需要哪些操作？
 - en: Changelog
   id: totrans-196
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 变更日志
 - en: 'February 24th, 2024: Apramey Hosahalli (apramey2) — aligned equations, added
     description of convergence from lecture, and added summary image'
   id: totrans-197
