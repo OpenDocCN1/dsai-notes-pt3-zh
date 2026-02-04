@@ -1,0 +1,371 @@
+- en: Random Number Generators and Monte Carlo Method
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: 原文：[https://cs357.cs.illinois.edu/textbook/notes/random-monte-carlo.html](https://cs357.cs.illinois.edu/textbook/notes/random-monte-carlo.html)
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: Learning Objectives
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Understand the properties of random number generators and what properties are
+    desirable in a random number generator.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Give examples of problems where you would use Monte Carlo.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Characterize the error of Monte Carlo.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Random Number Generators
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '***Random Number Generators (RNG)*** are algorithms or methods that can be
+    used to generate a sequence of numbers that cannot be reasonably predicted. There
+    are usually two principal methods for generating random numbers: ***truly-random
+    methods*** and ***pseudorandom methods***. Truly-random methods generate numbers
+    according to some random physical phenomenon. For instance, rolling a fair die
+    will generate truly random numbers between 1 and 6\. Other example sources include
+    atmospheric noise and thermal noise. Pseudorandom methods generate numbers using
+    computational algorithms that produce sequences of apparently random results,
+    which are in fact predictable and reproducible.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: When using a pseudorandom method, any generated sequence must eventually repeat
+    since only a finite quantity of numbers can be represented in computer. The ***period***
+    of a pseudorandom number generator is defined as the maximum length of the repetition-free
+    prefix of the sequence.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Properties of Random Number Generators
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: 'A random number generator has the following properties:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '*Random pattern*: passes statistical tests of randomness.'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '*Efficiency*: executes rapidly and requires little storage.'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '*Long period*: goes as long as possible before repeating.'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '*Repeatability*: produces same sequence if started with same initial conditions.'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '*Portability*: runs on different kinds of computers and is capable of producing
+    same sequence on each.'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Linear Congruential Generator
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: 'A ***linear congruential generator*** (LCG) is pseudorandom number generator
+    of the form:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: $$ x_0 = \text{seed} $$$$ x_{n+1} = (a x_{n} + c) (\text{mod} \phantom{x} M)
+    $$
+  prefs: []
+  type: TYPE_NORMAL
+- en: where \(a\) (the multiplier) and \(c\) (the increment) are given integers, and
+    \(x_0\) is called the ***seed***. The period of an LCG cannot exceed \(M\) (the
+    modulus). The period may be less than \(M\) depending on the values of \(a\) and
+    \(c\). The quality depends on both \(a\) and \(c\).
+  prefs: []
+  type: TYPE_NORMAL
+- en: Example of a LCG
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: Below is the Python code for an example LCG that generates the numbers \(1,3,7,5,1,3,7,5,\dots\)
+    given an initial seed of \(1\). To follow the pattern, we double the previous
+    number, add \(1\), and mod by 10, so \(a=2\), \(c=1\), and \(M=10\).
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs: []
+  type: TYPE_PRE
+- en: Random Variables
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: A ***random variable*** \(X\) can be thought of as a function that maps the
+    outcome of unpredictable (random) processes to numerical quantities. If you have
+    previous statistics experience, you are likely familiar with this concept.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Examples of random variables include:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: How much rain are we getting tomorrow?
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Will my buttered bread land face-down?
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: We don't have an exact number to represent these random processes, but we can
+    approximate the long-run outcome of random variables through the [law of large
+    numbers](https://en.wikipedia.org/wiki/Law_of_large_numbers).
+  prefs: []
+  type: TYPE_NORMAL
+- en: Discrete Random Variables
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: Each ***discrete random variable*** \(X\) can take a discrete value, \(x_i\)
+    with probability \(p_i\) for \(i = 1,…m\) and \(\Sigma_{i=1}^m p_i = 1\) (i.e.
+    the possible values are countable). This is in contrast to continuous random variables,
+    where the possible values are uncountably infinite.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Expected Value of a Discrete Random Variable
+  prefs:
+  - PREF_H4
+  type: TYPE_NORMAL
+- en: The **expected value** of a discrete random variable, \(E(x)\), is defined as
+    \(\Sigma_{i=1}^m p_i x_i\). This concept can be thought of as the "average outcome".
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Example of a Discrete Random Variable: Coin Toss'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: Consider a random variable \(X\) which is the result of a coin toss that can
+    be heads or tails.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '$$ X=1\text{: toss is heads} $$$$ X=0\text{: toss is tails} $$'
+  prefs: []
+  type: TYPE_NORMAL
+- en: For each individual toss, \(x_i\) is \(0\) or \(1\) and each \(x_i\) has probability
+    \(p_i=0.5\).
+  prefs: []
+  type: TYPE_NORMAL
+- en: What is the expected value for this coin toss?
+  prefs: []
+  type: TYPE_NORMAL
+- en: <details><summary>**Answer**</summary> For a coin toss, the expectation is$
+    E(X) = 1 \cdot 0.5 + 0 \cdot 0.5 = 0.5$</details>
+  prefs: []
+  type: TYPE_NORMAL
+- en: Now, suppose we toss a "fair" coin 1000 times, and record the number of times
+    we get heads. What would the distribution look like if we run this \(1000\) coin
+    toss experiment \(N\) times (let's say \(N=100\)) ?
+  prefs: []
+  type: TYPE_NORMAL
+- en: <details><summary>**Answer**</summary> The recorded number for each 1000 coin
+    toss experiment would likely land close to the expected value \(0.5\). The results
+    of running the experiment \(N\) times would look will look like a normal distribution,
+    with the majority of the results close to \(0.5\). This is also known as the law
+    of large numbers (when N is large).</details>
+  prefs: []
+  type: TYPE_NORMAL
+- en: Monte Carlo
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '***Monte Carlo methods*** are algorithms that rely on repeated random sampling
+    to approximate a desired quantity. Monte Carlo methods are typically used in modeling
+    the following types of problems:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Nondeterministic processes,
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Complicated deterministic systems and deterministic problems with high dimensionality
+    (e.g. integration of non-trivial functions).
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 'One of the most common applications of Monte Carlo is to approximate the area/volume
+    for a given shape. For example, to approximate the area of a circle, we can first
+    uniformly sample a large number of points in a square region around the circle.
+    Then, we check which points are inside the circle to get a percentage of points
+    in the circle, \(p\). Finally, we approximate the circle''s area by multiplying
+    \(p\) by the square''s area. Monte Carlo works in this scenario because:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Uniform random sampling** means that we ensure points are scattered throughout
+    region and cover it well'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: Based on the **law of large numbers**, as we increase the number of samples,
+    the average area value will converge to the true area value. So, using a large
+    number of samples improves our estimate.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: Integration with Monte Carlo
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: 'Consider using Monte Carlo to estimate an integral \(I = \int_a^b f(x) dx\).
+    Let \(X\) be a uniformly distributed random variable on \([a, b]\). Then, \(I
+    = (b-a) \mathbb{E}[f(X)]\). Using Monte Carlo with \(n\) samples, our estimate
+    of the expected value is:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[S_n = \frac{1}{n} \sum_i^n f(X_i)\]
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'so the approximate value for the integral is:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[ I_n = (b-a) \frac{1}{n} \sum_i^n f(X_i) \]
+  prefs: []
+  type: TYPE_NORMAL
+- en: By the law of large numbers, as \(n \to \infty\), the sample average \(S_n\)
+    will converge to the expected value \(\mathbb{E}[f(X)]\). So, as \(n \to \infty\),
+    \(I_n \to \int_a^b f(x) dx\).
+  prefs: []
+  type: TYPE_NORMAL
+- en: According to central limit theorem, as \(n \to \infty\),
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[ \sqrt{n} (S_n - \mu) \to N(0, \sigma^2) \]
+  prefs: []
+  type: TYPE_NORMAL
+- en: where \(N(0, \sigma^2)\) is a normal distribution; \(\mu = \mathbb{E}[f(X)]\)
+    and \(\sigma^2 = Var[X]\).
+  prefs: []
+  type: TYPE_NORMAL
+- en: Error/Convergence
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: Let \(Z\) be a random variable with normal distribution \(N(0, \sigma^2)\).
+    Then the error of Monte Carlo estimate, \(err = S_n - \mu\), can be written as
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[ err \to \frac{1}{\sqrt{n}} Z \]
+  prefs: []
+  type: TYPE_NORMAL
+- en: when \(n \to \infty\).
+  prefs: []
+  type: TYPE_NORMAL
+- en: Therefore, the asymptotic behavior of the Monte Carlo method is \(\mathcal{O}(\frac{1}{\sqrt{n}})\),
+    where \(n\) is the number of samples.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Example: Applying Monte Carlo'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: 'We can use Monte Carlo to efficiently approximate the definite integral of
+    a complicated function, which is especially useful in higher dimensions when other
+    numerical integration techniques are extremely costly. Below is the Python code
+    for approximating the intergral of a function \(f(x,y) = x+y\) over the domain
+    \([x_{min}, x_{max}] \times [y_{min}, y_{max}]\):'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE1]'
+  prefs: []
+  type: TYPE_PRE
+- en: Review Questions
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: What is a pseudo-random number generator?
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: What are properties of good random number generators?
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: What are advantages/disadvantages of pseudorandom number generators in comparison
+    to using truly random numbers?
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: What is a linear congruential generator (LCG)?
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: What is a seed for a random number generator?
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: Do random number generators repeat? Are they reproducible?
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: What are Monte Carlo methods and how are they used?
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: For Monte Carlo, how does the error behave in relation to the number of sampling
+    points?
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: Given a computed value from Monte Carlo and a sampling error, what sampling
+    error could you expect for a different number of samples?
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: For a small example problem, use Monte Carlo to estimate the area of a certian
+    domain.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: For a small example problem, use Monte Carlo to estimate the integral of a function.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: Changelog
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'February 17th, 2024: Bhargav Chandaka (bhargav9) — major reorganziation to
+    match up with content in slides/videos'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 'January 25th, 2018: Yu Meng (yumeng5) — first complete draft'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 'January 25th, 2018: Erin Carrier (ecarrie2) — minor fixes throughout, adds
+    review questions'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: <details><summary>View Remaining Entries</summary>
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 'January 17th, 2018: Erin Carrier (ecarrie2) — outline</details>'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Authors
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: CS 357 Course Staff
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL

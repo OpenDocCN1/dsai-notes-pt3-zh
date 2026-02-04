@@ -1,0 +1,559 @@
+- en: Least Squares Fitting
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: 原文：[https://cs357.cs.illinois.edu/textbook/notes/linear-least-squares.html](https://cs357.cs.illinois.edu/textbook/notes/linear-least-squares.html)
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: Learning Objectives
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Set up a linear least-squares problem from a set of data
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Use an SVD to solve the least-squares problem
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Quantify the error in a least-squares problem
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Linear Regression with a Set of Data
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Given \(m\) data points (where \(m>2\)), \(\{(t_1,y_1),(t_2,y_2),\dots,(t_m,y_m)\}\),
+    we want to find a straight line that best fits these data points. Mathematically,
+    we are finding \(x_0\) and \(x_1\) such that
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[ y_i = x_0 + x_1\,t_i , \quad \forall i \in [1,m]. \]
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'In matrix form, the resulting linear system is:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[ \begin{bmatrix} 1 & t_1 \\ 1& t_2 \\ \vdots & \vdots\\ 1& t_m \end{bmatrix}
+    \begin{bmatrix} x_0\\ x_1 \end{bmatrix} = \begin{bmatrix} y_1\\ y_2\\ \vdots\\
+    y_m \end{bmatrix} \]\[{\bf A x} = {\bf b}\]
+  prefs: []
+  type: TYPE_NORMAL
+- en: where \({\bf A}\) is an \(m\times n\) matrix, \({\bf x}\) is an \(n\times 1\)
+    matrix, and \({\bf b}\) is an \(m\times 1\) matrix.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Ideally, we want to find the appropriate linear combination of the columns of
+    \({\bf A}\) that makes up the vector \({\bf b}\). If a solution exists that satisfies
+    \({\bf A x} = {\bf b}\), then \({\bf b} \in range({\bf A})\).
+  prefs: []
+  type: TYPE_NORMAL
+- en: However, in this system of linear equations, we have more equations than unknowns,
+    and there is usually no exact solution to the above problem.
+  prefs: []
+  type: TYPE_NORMAL
+- en: When \( m>n\), we call this linear system ***overdetermined*** and the \({\bf
+    A x} = {\bf b}\) equality is usually not exactly satisfiable as \({\bf b}\) may
+    not lie in the column space of \({\bf A}\).
+  prefs: []
+  type: TYPE_NORMAL
+- en: Therefore, an overdetermined system is better written as
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[{\bf A x} \cong {\bf b}\]
+  prefs: []
+  type: TYPE_NORMAL
+- en: Linear Least-squares Problem
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: For an overdetermined system \({\bf A x}\cong {\bf b}\), we are typically looking
+    for a solution \({\bf x}\) that minimizes the Euclidean norm of the residual vector
+    \({\bf r} = {\bf b} - {\bf A} {\bf x}\),
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[\min_{ {\bf x} } \|{\bf r}\|_2^2 = \min_{ {\bf x} } \|{\bf b} - {\bf A} {\bf
+    x}\|_2^2.\]
+  prefs: []
+  type: TYPE_NORMAL
+- en: This problem \(A {\bf x} \cong {\bf b}\) is called a ***linear least-squares
+    problem***, and the solution \({\bf x}\) is called the ***least-squares solution***.
+    \({\bf A}\) is an \({m \times n}\) matrix where \({m \ge n}\), \({m}\) is the
+    number of data pair points and \({n}\) is the number of parameters of the "best
+    fit" function. The Linear Least Squares problem, \(A {\bf x} \cong {\bf b}\),
+    ***always*** has a solution. This solution is unique if and only if \({rank({\bf
+    A})= n}\).
+  prefs: []
+  type: TYPE_NORMAL
+- en: Normal Equations
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'Consider the least squares problem \({\bf A} {\bf x} \cong {\bf b}\), where
+    \({\bf A} \) is \(m \times n\) real matrix (with \(m > n\)). As stated above,
+    the least squares solution minimizes the squared 2-norm of the residual. Hence,
+    we want to find the \(\mathbf{x}\) that minimizes the function:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[\phi(\mathbf{x}) = \|\mathbf{r}\|_2^2 = (\mathbf{b} - {\bf A} \mathbf{x})^T
+    (\mathbf{b} - {\bf A} \mathbf{x}) = \mathbf{b}^T \mathbf{b} - 2\mathbf{x}^T {\bf
+    A} ^T \mathbf{b} + \mathbf{x}^T {\bf A} ^T {\bf A} \mathbf{x}.\]
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'To solve this unconstrained minimization problem, we need to satisfy the first
+    order necessary condition to get a stationary point:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[\nabla \phi(\mathbf{x}) = 0 \Rightarrow -2 {\bf A} ^T \mathbf{b} + 2 {\bf
+    A} ^T {\bf A} \mathbf{x} = 0.\]
+  prefs: []
+  type: TYPE_NORMAL
+- en: The resulting square (\(n \times n\)) linear system
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[{\bf A} ^T {\bf A} \mathbf{x} = {\bf A} ^T \mathbf{b}\]
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'is called the system of **normal equations**. If the matrix \({\bf A}\) is
+    full rank, the least-squares solution is unique and given by:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[{\bf x} = ({\bf A} ^T {\bf A})^{-1} {\bf A} ^T \mathbf{b}\]
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'We can look at the second-order sufficient condition of the minimization problem
+    by evaluating the Hessian of \(\phi\):'
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[{\bf H} = 2 {\bf A} ^T {\bf A}\]
+  prefs: []
+  type: TYPE_NORMAL
+- en: Since the Hessian is symmetric and positive-definite, we confirm that the least-squares
+    solution \({\bf x}\) is indeed a minimizer.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Although the least squares problem can be solved via the normal equations for
+    full rank matrices, the solution tend to worsen the conditioning of the problem.
+    Specifically,
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[\text{cond}({\bf A}^T {\bf A}) = (\text{cond}({\bf A}))^2.\]
+  prefs: []
+  type: TYPE_NORMAL
+- en: Because of this, finding the least squares solution using Normal Equations is
+    often not a good choice (however, simple to implement).
+  prefs: []
+  type: TYPE_NORMAL
+- en: Another approach to solve Linear Least Squares is to find \({\bf y} = {\bf A}
+    {\bf x}\) which is closest to the vector \({\bf b}\). When the residual \({\bf
+    r} = {\bf b} - {\bf y} = {\bf b} - {\bf A} {\bf x}\) is orthogonal to all columns
+    of \({\bf A}\), then \({\bf y}\) is closest to \({\bf b}\).
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[{\bf A}^T{\bf r} = {\bf A^T}\left({\bf b} - {\bf A} {\bf x}\right) = 0 \implies
+    {\bf A} ^T {\bf A} {\bf x} = {\bf A}^T {\bf b}\]
+  prefs: []
+  type: TYPE_NORMAL
+- en: Data Fitting vs Interpolation
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: It is important to understand that interpolation and least-squares data fitting,
+    while somewhat similar, are fundamentally different in their goals. In both problems
+    we have a set of data points \((t_i, y_i)\), \(i=1,\ldots,m\), and we are attempting
+    to determine the coefficients for a linear combination of basis functions.
+  prefs: []
+  type: TYPE_NORMAL
+- en: With interpolation, we are looking for the linear combination of basis functions
+    such that the resulting function passes through each of the data points *exactly*.
+    So, for \(m\) unique data points, we need \(m\) linearly independent basis functions
+    (and the resulting linear system will be square and full rank, so it will have
+    an exact solution).
+  prefs: []
+  type: TYPE_NORMAL
+- en: In contrast, however, with least squares data fitting we have some model that
+    we are trying to find the parameters of the model that best fits the data points.
+    For example, with linear least squares we may have 300 noisy data points that
+    we want to model as a quadratic function. Therefore, we are trying represent our
+    data as
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[y = x_0 + x_1 t + x_2 t^2\]
+  prefs: []
+  type: TYPE_NORMAL
+- en: where \(x_0, x_1,\) and \(x_2\) are the unknowns we want to determine (the coefficients
+    to our basis functions). Because there are significantly more data points than
+    parameters, we do not expect that the function will exactly pass through the data
+    points. For this example, with noisy data points we would not want our function
+    to pass through the data points exactly as we are looking to model the general
+    trend and not capture the noise.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Computational Complexity
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Since the system of normal equations yield a square and symmetric matrix, the
+    least-squares solution can be computed using efficient methods such as Cholesky
+    factorization. Note that the overall computational complexity of the factorization
+    is \(\mathcal{O}(n^3)\). However, the construction of the matrix \({\bf A} ^T
+    {\bf A}\) has complexity \(\mathcal{O}(mn^2)\).
+  prefs: []
+  type: TYPE_NORMAL
+- en: In typical data fitting problems, \(m >> n\), so the overall time complexity
+    of the Normal Equations method is \({\bf \mathcal{O}(mn^2)}\).
+  prefs: []
+  type: TYPE_NORMAL
+- en: Solving Least-Squares Problems Using SVD
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Another way to solve the least-squares problem \({\bf A} {\bf x} \cong {\bf
+    b}\) (where we are looking for \({\bf x}\) that minimizes \(\|{\bf b} - {\bf A}
+    {\bf x}\|_2^2\)) is to use the singular value decomposition (SVD) of \({\bf A}\),
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[{\bf A} = {\bf U \Sigma V}^T\]
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'where the squared norm of the residual becomes:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[ \begin{align} \|{\bf b} - {\bf A} {\bf x}\|_2^2 &= \|{\bf b} - {\bf U \Sigma
+    V}^T {\bf x}\|_2^2 & (1)\\ &= \|{\bf U}^T ({\bf b} - {\bf U \Sigma V}^T {\bf x})\|_2^2
+    & (2)\\ &= \|{\bf U}^T {\bf b} - {\bf \Sigma V}^T {\bf x}\|_2^2 \end{align} \]
+  prefs: []
+  type: TYPE_NORMAL
+- en: We can go from (1) to (2) because multiplying a vector by an orthogonal matrix
+    does not change the 2-norm of the vector. Now, let
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[ {\bf y} = {\bf V}^T {\bf x} \]\[ {\bf z} = {\bf U}^T {\bf b}, \]
+  prefs: []
+  type: TYPE_NORMAL
+- en: We are now looking for \({\bf y}\) that minimizes
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[ \|{\bf z} - \Sigma {\bf y}\|_2^2\. \]
+  prefs: []
+  type: TYPE_NORMAL
+- en: Note that
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[ \Sigma {\bf y} = \begin{bmatrix} \sigma_1 y_1\\ \sigma_2 y_2\\ \vdots \\
+    \sigma_n y_n \end{bmatrix},(\sigma_i = \Sigma_{i,i}) \]
+  prefs: []
+  type: TYPE_NORMAL
+- en: so we choose
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[ y_i = \begin{cases} \frac{z_i}{\sigma_i} & \sigma_i \neq 0\\ 0 & \sigma_i
+    = 0 \end{cases} \]
+  prefs: []
+  type: TYPE_NORMAL
+- en: which will minimize \(\|{\bf z} - {\bf \Sigma} {\bf y}\|_2^2\). Finally, we
+    compute
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[{\bf x} = {\bf V} {\bf y}\]
+  prefs: []
+  type: TYPE_NORMAL
+- en: to find \({\bf x}\). The expression of least-squares solution is
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[{\bf x} = \sum_{\sigma_i \neq 0} \frac{ {\bf u}_i^T {\bf b} }{\sigma_i} {\bf
+    v}_i\]
+  prefs: []
+  type: TYPE_NORMAL
+- en: where \({\bf u}_i\) represents the \(i\)th column of \({\bf U}\) and \({\bf
+    v}_i\) represents the \(i\)th column of \({\bf V}\).
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'In closed-form, we can express the least-squares solution as:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[{\bf x} = {\bf V\Sigma}^{+}{\bf U}^T{\bf b}\]
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'where \({\bf \Sigma}^{+}\) is the pseudoinverse of the singular matrix computed
+    by taking the reciprocal of the non-zero diagonal entries, leaving the zeros in
+    place and transposing the resulting matrix. For example:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[\Sigma = \begin{bmatrix} \sigma_1 & & &\\ & \ddots & & \\& & \sigma_r &\\
+    & & & 0\\ 0 & ... & ... & 0 \\ \vdots & \ddots & \ddots & \vdots \\ 0 & ... &
+    ... & 0 \end{bmatrix} \quad \implies \quad \Sigma^{+} = \begin{bmatrix} \frac{1}{\sigma_1}
+    & & & & 0 & \dots & 0 \\ & \ddots & & & & \ddots &\\ & & \frac{1}{\sigma_r} &
+    & 0 & \dots & 0 \\ & & & 0 & 0 & \dots & 0 \end{bmatrix}.\]
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Or in reduced form:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[{\bf x} = {\bf V\Sigma}_R^{+}{\bf U}_R^T{\bf b}\]
+  prefs: []
+  type: TYPE_NORMAL
+- en: Computational Complexity Using Reduced SVD
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Solving the least squares problem using a **given** reduced SVD has time complexity
+    \(\mathcal{O}(mn)\).
+  prefs: []
+  type: TYPE_NORMAL
+- en: Assume we know the reduced SVD of \(\bf A\) beforehand (which inplies that we
+    know the entries of \(\bf V, \Sigma^{+}_{R}, U^{T}_{R}\) beforehand).
+  prefs: []
+  type: TYPE_NORMAL
+- en: Then, solving \(\bf z = U^{T}_{R}b\) with \(n \times m\) matrix \(\bf U^{T}_{R}\)
+    and \(m \times 1\) vector \(\bf b\) has \(\mathcal{O}(mn)\).
+  prefs: []
+  type: TYPE_NORMAL
+- en: Solving \(\bf y = \Sigma^{+}_{R}z\) with \(n \times n\) matrix \(\bf \Sigma^{+}_{R}\)
+    and \(n \times 1\) vector \(\bf z\) has \(\mathcal{O}(n)\) since \(\bf \Sigma^{+}_{R}\)
+    is a diagonal matrix.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Solving \(\bf x = Vy\) with \(n \times n\) matrix \(\bf V\) and \(n \times 1\)
+    vector \(\bf y\) has \(\mathcal{O}(n^2)\).
+  prefs: []
+  type: TYPE_NORMAL
+- en: Therefore the time complexity is \(\mathcal{O}(n^2 + n + mn) = \mathcal{O}(mn)\)
+    since \(m > n\). We can achieve this only when we know the Reduced SVD of \(\bf
+    A\) beforehand.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Determining Residual in Least-Squares Problem Using SVD
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: We've shown above how the SVD can be used to find the least-squares solution
+    (the solution that minimizes the squared 2-norm of the residual) to the least
+    squares problem \({\bf A} {\bf x} \cong {\bf b}\). We can also use the SVD to
+    determine an exact expression for the value of the residual with the least-squares
+    solution.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Assume in the SVD of \({\bf A}\), \({\bf A} = {\bf U \Sigma V}^T\), the diagonal
+    entries of \({\bf \Sigma}\) are in descending order (\(\sigma_1 \ge \sigma_2 \ge
+    \dots \)), and the first \(r\) diagonal entries of \({\bf \Sigma}\) are nonzeros
+    while all others are zeros, then
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[\begin{align} \|{\bf b} - A {\bf x}\|_2^2 &= \|{\bf z} - \Sigma {\bf y}\|_2^2\\
+    &= \sum_{i=1}^n (z_i - \sigma_i y_i)^2\\ &= \sum_{i=1}^r (z_i - \sigma_i \frac{z_i}{\sigma_i})^2
+    + \sum_{i=r+1}^n (z_i - 0)^2\\ &= \sum_{i=r+1}^n z_i^2 \end{align}\]
+  prefs: []
+  type: TYPE_NORMAL
+- en: Recall that
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[ {\bf z} = {\bf U}^T {\bf b}, \]
+  prefs: []
+  type: TYPE_NORMAL
+- en: we get
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[ \|{\bf b} - {\bf A} {\bf x}\|_2^2 = \sum_{i=r+1}^n ({\bf u}_i^T {\bf b})^2
+    \]
+  prefs: []
+  type: TYPE_NORMAL
+- en: where \({\bf u}_i\) represents the \(i\)th column of \({\bf U}\).
+  prefs: []
+  type: TYPE_NORMAL
+- en: (For more formal proof check [this video.](https://mediaspace.illinois.edu/media/t/1_w6u83js8/158464041))
+  prefs: []
+  type: TYPE_NORMAL
+- en: Example of a Least-Squares solution using SVD
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: 'Assume we have \(3\) data points, \({(t_i,y_i)}={(1,1.2),(2,1.9),(3,1)}\),
+    we want to find the coefficients for a line, \({y = x_0 + x_1 t}\), that best
+    fits these data points. The code for using SVD to solve this least-squares problem
+    is:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs: []
+  type: TYPE_PRE
+- en: Non-linear Least-Squares Problems vs. Linear Least-Squares Problems
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: The above linear least-squares problem is associated with an overdetermined
+    linear system \(A {\bf x} \cong {\bf b}.\) This problem is called "linear" because
+    the fitting function we are looking for is linear in the components of \({\bf
+    x}\). For example, if we are looking for a polynomial fitting function
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[ f(t,{\bf x}) = x_1 + x_2t + x_3t^2 + \dotsb + x_nt^{n-1} \]
+  prefs: []
+  type: TYPE_NORMAL
+- en: to fit the data points \({(t_i,y_i), i = 1, …, m}\) and (\(m > n\)), the problem
+    can be solved using the linear least-squares method, because \(f(t,{\bf x})\)
+    is linear in the components of \({\bf x}\) (though \(f(t,{\bf x})\) is nonlinear
+    in \(t\)).
+  prefs: []
+  type: TYPE_NORMAL
+- en: If the fitting function \(f(t,{\bf x})\) for data points \((t_i,y_i), i = 1,
+    ..., m\) is nonlinear in the components of \({\bf x}\), then the problem is a
+    non-linear least-squares problem. For example, fitting sum of exponentials
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[ f(t,{\bf x}) = x_1 e^{x_2 t} + x_2 e^{x_3 t} + \dotsb + x_{n-1} e^{x_n t}
+    \]
+  prefs: []
+  type: TYPE_NORMAL
+- en: is a ***non-linear least-squares problem***.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Linear least-squares problems have a closed form solution while nonlinear least-squares
+    problems do not have a closed form solution and requires numerical methods to
+    solve.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Review Questions
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: What value does the least-squares solution minimize?
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: For a given model and given data points, can you form the system \({\bf A x}
+    \cong {\bf b}\) for a least squares problem?
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: For a small problem, given some data points and a model, can you determine the
+    least squares solution?
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: In general, what can we say about the value of the residual for the least squares
+    solution?
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: What are the differences between least squares data fitting and interpolation?
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: Given the SVD of a matrix \({\bf A}\), how can we use the SVD to compute the
+    residual of the least squares solution?
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: Given the SVD of a matrix \({\bf A}\), how can we use the SVD to compute the
+    least squares solution? Be able to do this for a small problem.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: Given an already computed SVD of a matrix \({\bf A}\), what is the cost of using
+    the SVD to solve a least squares problem?
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: Why would you use the SVD instead of normal equations to find the solution to
+    \({\bf A x} \cong {\bf b}\)?
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: 'Which costs less: solving a least squares problem via the normal equations
+    or solving a least squares problem using the SVD?'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: What is the difference between a linear and a nonlinear least squares problem?
+    What sort of model makes it a nonlinear problem? For data points \({\left(t_i,
+    y_i\right)}\), is fitting \({y = a*cos(t) + b}\) where \({a}\) and \({b}\) are
+    the coefficients we are trying to determine a linear or nonlinear least squares
+    problem?
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: Changelog
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'March 6th, 2024: Bhargav Chandaka (bhargav9) — major reorganziation to match
+    up with content in slides/videos'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 'April 28th, 2023: Yuxuan Chen (yuxuan19) — adding computational complexity
+    using reduced SVD'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 'April 9th, 2022: Arnav Shah (arnavss2) — add few comments from slides asked
+    in homework'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: <details><summary>View Remaining Entries</summary>
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 'August 8th, 2020: Jerry Yang (jiayiy7) — adds formal proof link for solving
+    least-squares using SVD'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 'April 26th, 2020: Mariana Silva (mfsilva) — improved text overall; removed
+    theory of the nonlinear least-squares'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 'November 14th, 2018: Erin Carrier (ecarrie2) — fix typo in lstsq res sum range'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 'January 14th, 2018: Erin Carrier (ecarrie2) — removes demo links'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 'November 29th, 2017: Erin Carrier (ecarrie2) — fixes typos in lst-sq code,
+    jacobian desc in nonlinear lst-sq'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 'November 17th, 2017: Erin Carrier (ecarrie2) — fixes incorrect link'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 'November 16th, 2017: Erin Carrier (ecarrie2) — adds review questions, minor
+    formatting changes throughout for consistency, adds normal equations and interp
+    vs lst-sq sections, removes Gauss-Newton from nonlinear least squares'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 'November 12th, 2017: Yu Meng (yumeng5) — first complete draft'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 'October 17th, 2017: Luke Olson (lukeo) — outline</details>'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Authors
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: CS 357 Course Staff
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL

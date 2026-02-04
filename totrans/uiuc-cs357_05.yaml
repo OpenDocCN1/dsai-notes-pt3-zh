@@ -1,0 +1,797 @@
+- en: Rounding
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: 原文：[https://cs357.cs.illinois.edu/textbook/notes/rounding.html](https://cs357.cs.illinois.edu/textbook/notes/rounding.html)
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: Learning Objectives
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Understand the rounding options of a non-representable number using the IEEE-754
+    floating pont standard.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Measure the error in rounding numbers using the IEEE-754 floating point standard
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Understand catastrophic cancellation in floating point arithmetic
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Predict the outcome of loss of significance in floating point arithmetic
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Make an optimal selection among a group of mathematically equivalent formulae
+    to minimize floating point error
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Rounding Options in IEEE-754
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'Not all real numbers can be stored exactly as floating point numbers. Consider
+    a real number in the normalized floating point form:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[x = \pm 1.b_1 b_2 b_3 ... b_n ... \times 2^m\]
+  prefs: []
+  type: TYPE_NORMAL
+- en: where \(n\) is the number of bits in the significand and \(m\) is the exponent
+    for a given floating point system. If \(x\) does not have an exact representation
+    as a floating point number, it will be instead represented as either \(x_{-}\)
+    or \(x_{+}\), the nearest two floating point numbers.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Without loss of generality, let us assume \(x\) is a positive number. In this
+    case, we have:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[x_{-} = 1.b_1 b_2 b_3 ... b_n \times 2^m\]
+  prefs: []
+  type: TYPE_NORMAL
+- en: and
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[x_{+} = 1.b_1 b_2 b_3 ... b_n \times 2^m + 0.\underbrace{000000...0001}_{n\text{
+    bits}} \times 2^m\]![](../Images/1fa0f011597abe699785d7e54c67f1de.png)
+  prefs: []
+  type: TYPE_NORMAL
+- en: Notice that \(x_{-}\) is retrieved by "chopping" all the bits after the \(n^{th}\)
+    bit, and \(x_{+} = x_{-} + {\epsilon}_{m} \times 2^m\), where \({\epsilon}_{m}\)
+    is the machine epsilon.
+  prefs: []
+  type: TYPE_NORMAL
+- en: The process of replacing a real number \(x\) by a nearby machine number (either
+    \(x_{-}\) or \(x_{+}\)) is called **rounding**, and the error involved is called
+    **roundoff error**.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![](../Images/a71f1b345e75c811ecb7193358366769.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: 'IEEE-754 doesn''t specify exactly how to round floating point numbers, but
+    there are several different options:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: round towards zero
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: round towards infinity
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: round up
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: round down
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: round to the next nearest floating point number (either round up or down, whatever
+    is closer)
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: round by chopping
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 'We will denote the floating point number as \(fl(x)\). The rounding rules above
+    can be summarized below:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![](../Images/bdec8c44150fced8a4719734836b0e1d.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: 'round by chopping: \(fl(x) = x_{-}\)'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Round-off Errors
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'For each distinct exponent number \(m \in [L, U]\), the gap between two machine
+    numbers is (notice that \(\epsilon_m\) is the machine epsilon, and is irrelevant
+    with \(m\)):'
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[\vert x_{+} - x_{-} \vert = 0.\underbrace{000000...0001}_{n\text{ bits}} \times
+    2^m = \epsilon_m \times 2^m\]
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Notice that the interval between successive floating point numbers is not uniform:
+    the interval is smaller as the magnitude of the numbers themselves is smaller,
+    and it is bigger as the numbers get bigger. For example, considering simple precision:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '\[x_{+} \hspace{3mm}\text{and}\hspace{3mm} x_{-} \hspace{3mm}\text{of the form}\hspace{3mm}
+    q \times 2^{-10}: \vert x_{+} - x_{-} \vert = 2^{-33} \approx 10^{-10}\] \[x_{+}
+    \hspace{3mm}\text{and}\hspace{3mm} x_{-} \hspace{3mm}\text{of the form}\hspace{3mm}
+    q \times 2^{4}: \vert x_{+} - x_{-} \vert = 2^{-19} \approx 2 \times 10^{-6}\]
+    \[x_{+} \hspace{3mm}\text{and}\hspace{3mm} x_{-} \hspace{3mm}\text{of the form}\hspace{3mm}
+    q \times 2^{20}: \vert x_{+} - x_{-} \vert = 2^{-3} \approx 0.125\] \[x_{+} \hspace{3mm}\text{and}\hspace{3mm}
+    x_{-} \hspace{3mm}\text{of the form}\hspace{3mm} q \times 2^{60}: \vert x_{+}
+    - x_{-} \vert = 2^{37} \approx 10^{11}\]'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Hence it's better to use machine epsilon to bound the error in representing
+    a real number as a machine number.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Absolute error:'
+  prefs:
+  - PREF_H4
+  type: TYPE_NORMAL
+- en: \[\vert fl(x) - x \vert \le \vert x_{+} - x_{-} \vert = \epsilon_m \times 2^m\]
+    \[\vert fl(x) - x \vert \le \epsilon_m \times 2^m\]
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Relative error:'
+  prefs:
+  - PREF_H4
+  type: TYPE_NORMAL
+- en: \[\frac{ \vert fl(x) - x \vert }{ \vert x \vert } \le \frac{ \epsilon_m \times
+    2^m } { \vert \pm 1.b_1 b_2 b_3 ... b_n ... \times 2^m \vert }\] \[\frac{ \vert
+    fl(x) - x \vert }{ \vert x \vert } \le \epsilon_m\]
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Using this inequality, observe that for the IEEE **single-precision** floating
+    point system: \(\frac{ \vert fl(x) - x \vert }{ \vert x \vert } \le 2^{-23} \approx
+    1.2 \times 10^{-7}\). Since the system consistently introduces relative errors
+    of about \(10^{-7}\), a single precision floating point system typically gives
+    you about **7** (decimal) accurate digits.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Similarly, observe that for the IEEE **double-precision** floating point system:
+    \(\frac{ \vert fl(x) - x \vert }{ \vert x \vert } \le 2^{-52} \approx 2.2 \times
+    10^{-16}\). Since the system consistently introduces relative errors of about
+    \(10^{-16}\), a double precision floating point system typically gives you about
+    **16** (decimal) accurate digits.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Example: Determine the rounding error of a non-representable number'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: If we round to the nearest, what is the double-precision machine representation
+    for 0.1? How much rounding error does it introduce?
+  prefs: []
+  type: TYPE_NORMAL
+- en: '<details style="line-height: 2;"><summary>**Answer**</summary> Use the same
+    algorithm that converts a decimal fraction to binary (as introduced in the previous
+    section), we build the following table:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '| Previous Fractional Part \( \times 2 \) | Integer Part | Current Fractional
+    Part |'
+  prefs: []
+  type: TYPE_TB
+- en: '| --- | --- | --- |'
+  prefs: []
+  type: TYPE_TB
+- en: '| 0.2 | 0 | 0.2 |'
+  prefs: []
+  type: TYPE_TB
+- en: '| 0.4 | 0 | 0.4 |'
+  prefs: []
+  type: TYPE_TB
+- en: '| 0.8 | 0 | 0.8 |'
+  prefs: []
+  type: TYPE_TB
+- en: '| 1.6 | 1 | 0.6 |'
+  prefs: []
+  type: TYPE_TB
+- en: '| 1.2 | 1 | 0.2 |'
+  prefs: []
+  type: TYPE_TB
+- en: '| 0.4 | 0 | 0.4 |'
+  prefs: []
+  type: TYPE_TB
+- en: '| 0.8 | 0 | 0.8 |'
+  prefs: []
+  type: TYPE_TB
+- en: '| 1.6 | 1 | 0.6 |'
+  prefs: []
+  type: TYPE_TB
+- en: '| 1.2 | 1 | 0.2 |'
+  prefs: []
+  type: TYPE_TB
+- en: '| ... | ... | ... |'
+  prefs: []
+  type: TYPE_TB
+- en: We can observe that the integer part sequence \( {0, 0, 1, 1} \) is recurring.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Then, we have \( 0.1 = (0.000110011\hspace{1mm}\overline{0011})_2 = (1.10011\hspace{1mm}\overline{0011})_2
+    \times 2^{-4}\) .
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Rounded by nearest, the double-precision machine representation for 0.1 is
+    the tuple \( (s, c, f) \), where \(s\) is the sign bit, \(c\) is the exponent
+    field, and \(f\) is the significand:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: \( s = 0 \)
+  prefs: []
+  type: TYPE_NORMAL
+- en: \( m = -4 \Rightarrow c = m + 1023 = 1019 = 01111111011\)
+  prefs: []
+  type: TYPE_NORMAL
+- en: \( f = 10011...0011...0011010 \)
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'In other words, the double-precision machine representation for 0.1 is:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: \( \bf{0\hspace{2mm}01111111011\hspace{2mm}\underbrace{10011...0011...0011010}_{52\text{
+    bits}}} \)
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'The rounding error is then:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: \( fl(0.1) - 0.1 = (0.00011001100110011...11010)_2 - (0.00011001100110011...1100110011\overline{0011})_2\)
+    \(= (0.\underbrace{0...0}_{54\text{ 0's}}000110011\overline{0011})_2 = 2^{-54}
+    \times 0.1 = 2^{-2} \times 0.1 \times 2^{-52} = \bf{0.025\epsilon_m}\)</details>
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Example: Floating Point Equality'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: Assume you are working with IEEE single-precision numbers. Find the smallest
+    representable number \(a\) that satisfies \(2^8 + a \neq 2^8\).
+  prefs: []
+  type: TYPE_NORMAL
+- en: '<details style="line-height: 2;"><summary>**Answer**</summary> In this class,
+    to approximate the smallest number \(x\) such that \(2^n + x \neq 2^n\), we use
+    the formula \(x = \epsilon_m \cdot 2^n\).'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Therefore, given that \(\epsilon_m\) for IEEE single-precision is \(2^{-23}\),
+    the answer is \(\bf{a = 2^{-23} \cdot 2^8 = 2^{-15}}\).
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'If you''re interested in the \(\textbf{exact}\) smallest number, here''s the
+    solution (you do not need to know about this for CS 357, and please only use the
+    formula above for all assignments in this class):'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Notice that we use the default rounding mode - rounding to the nearest representable
+    value. If the result is midway between two representable values, the even representable
+    is chosen. "Even" means the lowest-order bit is zero.
+  prefs: []
+  type: TYPE_NORMAL
+- en: The smallest representable number larger than \(2^8\) is \((2+\epsilon_m)\times
+    2^8\).
+  prefs: []
+  type: TYPE_NORMAL
+- en: Let \(x_{-} = 2^8\) and \(x_{+} = (2+\epsilon_m)\times 2^8\).
+  prefs: []
+  type: TYPE_NORMAL
+- en: In order to have \(2^8 + a\) rounded to \(x_{+}\), we must have \(a \gt \frac{\vert
+    x_{+} - x_{-} \vert}{2} = \frac{\epsilon_m\times 2^8}{2} = \frac{2^{-23}\times
+    2^8}{2} = 2^{-16}\).
+  prefs: []
+  type: TYPE_NORMAL
+- en: The smallest machine representable number greater than \(2^{-16}\) is \((1 +
+    \epsilon_m) \times 2^{-16}\).
+  prefs: []
+  type: TYPE_NORMAL
+- en: Hence \(\bf{a = \bf{(1 + 2^{-23}) \times 2^{-16}}}\).</details>
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Example: Uneven Distribution of Floating Point Numbers in any FPS'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: 'Consider the small floating point number system \(x = \pm 1.b_1 b_2 \times
+    2^m \) for \(m \in [-4, 4]\) and \(b_i \in \{0, 1\}\):'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '<details style="line-height: 2;"><summary>**Details**</summary> \( (1.00)_2
+    \times 2^{-4} = 0.0625 \)'
+  prefs: []
+  type: TYPE_NORMAL
+- en: \( (1.01)_2 \times 2^{-4} = 0.078125 \)
+  prefs: []
+  type: TYPE_NORMAL
+- en: \( (1.10)_2 \times 2^{-4} = 0.09375 \)
+  prefs: []
+  type: TYPE_NORMAL
+- en: \( (1.11)_2 \times 2^{-4} = 0.109375 \)
+  prefs: []
+  type: TYPE_NORMAL
+- en: \( (1.00)_2 \times 2^{-3} = 0.125 \)
+  prefs: []
+  type: TYPE_NORMAL
+- en: \( (1.01)_2 \times 2^{-3} = 0.15625 \)
+  prefs: []
+  type: TYPE_NORMAL
+- en: \( (1.10)_2 \times 2^{-3} = 0.1875 \)
+  prefs: []
+  type: TYPE_NORMAL
+- en: \( (1.11)_2 \times 2^{-3} = 0.21875 \)
+  prefs: []
+  type: TYPE_NORMAL
+- en: \( (1.00)_2 \times 2^{-2} = 0.25 \)
+  prefs: []
+  type: TYPE_NORMAL
+- en: \( (1.01)_2 \times 2^{-2} = 0.3125 \)
+  prefs: []
+  type: TYPE_NORMAL
+- en: \( (1.10)_2 \times 2^{-2} = 0.375 \)
+  prefs: []
+  type: TYPE_NORMAL
+- en: \( (1.11)_2 \times 2^{-2} = 0.4375 \)
+  prefs: []
+  type: TYPE_NORMAL
+- en: \( (1.00)_2 \times 2^{-1} = 0.5 \)
+  prefs: []
+  type: TYPE_NORMAL
+- en: \( (1.01)_2 \times 2^{-1} = 0.625 \)
+  prefs: []
+  type: TYPE_NORMAL
+- en: \( (1.10)_2 \times 2^{-1} = 0.75 \)
+  prefs: []
+  type: TYPE_NORMAL
+- en: \( (1.11)_2 \times 2^{-1} = 0.875 \)
+  prefs: []
+  type: TYPE_NORMAL
+- en: \( (1.00)_2 \times 2^{0} = 1.0 \)
+  prefs: []
+  type: TYPE_NORMAL
+- en: \( (1.01)_2 \times 2^{0} = 1.25 \)
+  prefs: []
+  type: TYPE_NORMAL
+- en: \( (1.10)_2 \times 2^{0} = 1.5 \)
+  prefs: []
+  type: TYPE_NORMAL
+- en: \( (1.11)_2 \times 2^{0} = 1.75 \)
+  prefs: []
+  type: TYPE_NORMAL
+- en: \( (1.00)_2 \times 2^{1} = 2.0 \)
+  prefs: []
+  type: TYPE_NORMAL
+- en: \( (1.01)_2 \times 2^{1} = 2.5 \)
+  prefs: []
+  type: TYPE_NORMAL
+- en: \( (1.10)_2 \times 2^{1} = 3.0 \)
+  prefs: []
+  type: TYPE_NORMAL
+- en: \( (1.11)_2 \times 2^{1} = 3.5 \)
+  prefs: []
+  type: TYPE_NORMAL
+- en: \( (1.00)_2 \times 2^{2} = 4.0 \)
+  prefs: []
+  type: TYPE_NORMAL
+- en: \( (1.01)_2 \times 2^{2} = 5.0 \)
+  prefs: []
+  type: TYPE_NORMAL
+- en: \( (1.10)_2 \times 2^{2} = 6.0 \)
+  prefs: []
+  type: TYPE_NORMAL
+- en: \( (1.11)_2 \times 2^{2} = 7.0 \)
+  prefs: []
+  type: TYPE_NORMAL
+- en: \( (1.00)_2 \times 2^{3} = 8.0 \)
+  prefs: []
+  type: TYPE_NORMAL
+- en: \( (1.01)_2 \times 2^{3} = 10.0 \)
+  prefs: []
+  type: TYPE_NORMAL
+- en: \( (1.10)_2 \times 2^{3} = 12.0 \)
+  prefs: []
+  type: TYPE_NORMAL
+- en: \( (1.11)_2 \times 2^{3} = 14.0 \)
+  prefs: []
+  type: TYPE_NORMAL
+- en: \( (1.00)_2 \times 2^{4} = 16.0 \)
+  prefs: []
+  type: TYPE_NORMAL
+- en: \( (1.01)_2 \times 2^{4} = 20.0 \)
+  prefs: []
+  type: TYPE_NORMAL
+- en: \( (1.10)_2 \times 2^{4} = 24.0 \)
+  prefs: []
+  type: TYPE_NORMAL
+- en: \( (1.11)_2 \times 2^{4} = 28.0 \)</details>
+  prefs: []
+  type: TYPE_NORMAL
+- en: Mathematical Properties of Floating Point Operations
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'Not necessarily associative: \((x + y) + z \neq x + (y + z)\).'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: This is because \(fl(fl(x + y) + z) \neq fl(x + fl(y + z))\).
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Not necessarily distributive: \(z \cdot (x + y) \neq z \cdot x + z \cdot y\).'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: This is because \(fl(z \cdot fl(x + y)) \neq fl(fl(z \cdot x) + fl(z \cdot y))\).
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Not necessarily cumulative: repeatedly adding a very small number to a large
+    number may do nothing.'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 'Example: Non-associative Feature'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: Find \(a\), \(b\) and \(c\) such that \((a + b) + c \neq a + (b + c)\) under
+    double-precision floating point arithmetic.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '<details style="line-height: 2;"><summary>**Answer**</summary> Let \(a = \pi,
+    b = 10^{100}, c = -10^{100}\)'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Under double-precision floating point arithmetic:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: \((a + b) + c = 10^{100} + (-10^{100}) = 0\)
+  prefs: []
+  type: TYPE_NORMAL
+- en: \(a + (b + c) = \pi + 0 = \pi\)</details>
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Example: Non-distributive Feature'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: Find \(a\), \(b\) and \(c\) such that \(c(a + b) \neq ca + cb\) under double-precision
+    floating point arithmetic.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '<details style="line-height: 2;"><summary>**Answer**</summary> Let \(a = 0.1,
+    b = 0.2, c = 100\)'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Under double-precision floating point arithmetic:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: \(c(a + b) = 100 \times 0.30000000000000004 = 30.000000000000004\)
+  prefs: []
+  type: TYPE_NORMAL
+- en: \(ca + cb = 10 + 20 = 30\)</details>
+  prefs: []
+  type: TYPE_NORMAL
+- en: Floating Point Arithmetic
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'The basic idea of floating point arithmetic is to first compute the exact result,
+    and then round the result to make it fit into the desired precision:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[x + y = fl(x + y)\] \[x \times y = fl(x \times y)\]
+  prefs: []
+  type: TYPE_NORMAL
+- en: Floating Point Addition
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'Adding two floating point numbers is easy. The basic idea is:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Bring both numbers to a common exponent
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: Do grade-school addition from the front, until you run out of digits in your
+    system
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: Round the result
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: Consider a number system such that \(x = \pm 1.b_1 b_2 b_3 \times 2^m\) for
+    \(m \in [-4, 4]\) and \(b_i \in \{0, 1\}\), and we perform addition on two numbers
+    from this system.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Example 1: No Rounding Needed'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: Let \(a = (1.101)_2 \times 2^1\) and \(b = (1.001)_2 \times 2^1\), find \(c
+    = a + b\).
+  prefs: []
+  type: TYPE_NORMAL
+- en: '<details style="line-height: 2;"><summary>**Answer**</summary> \(c = a + b
+    = (10.110)_2 \times 2^1 = (1.011)_2 \times 2^2\)</details>'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Example 2: No Rounding Needed'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: Let \(a = (1.100)_2 \times 2^1\) and \(b = (1.100)_2 \times 2^{-1}\), find \(c
+    = a + b\).
+  prefs: []
+  type: TYPE_NORMAL
+- en: '<details style="line-height: 2;"><summary>**Answer**</summary> \(c = a + b
+    = (1.100)_2 \times 2^1 + (0.011)_2 \times 2^1 = (1.111)_2 \times 2^1\)</details>'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Example 3: Requiring Rounding and Precision Lost'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: Let \(a = (1.a_1a_2a_3a_4a_5a_6...a_n...)_2 \times 2^0\) and \(b = (1.b_1b_2b_3b_4b_5b_6...b_n...)_2
+    \times 2^{-8}\), find \(c = a + b\). Assume a single-precision system is used,
+    and that \(n \gt 23\).
+  prefs: []
+  type: TYPE_NORMAL
+- en: '<details style="line-height: 2;"><summary>**Answer**</summary> In single precision:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: \(a = (1.a_1a_2a_3a_4a_5a_6...a_{22}a_{23})_2 \times 2^0\)
+  prefs: []
+  type: TYPE_NORMAL
+- en: \(b = (1.b_1b_2b_3b_4b_5b_6...b_{22}b_{23})_2 \times 2^{-8}\)
+  prefs: []
+  type: TYPE_NORMAL
+- en: So \(a + b = (1.a_1a_2a_3a_4a_5a_6...a_{22}a_{23})_2 \times 2^0 + (0.00000001b_1b_2b_3b_4b_5b_6...b_{14}b_{15})_2
+    \times 2^0\)
+  prefs: []
+  type: TYPE_NORMAL
+- en: In this example, the result \(c = fl(a+b)\) includes only \(15\) bits of precision
+    from \(b\), so a lost of precision happens as well.</details>
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Example 4: Require Rounding and Precision Lost'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: Let \(a = (1.101)_2 \times 2^0\) and \(b = (1.000)_2 \times 2^0\), find \(c
+    = a + b\). Round down if necessary.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '<details style="line-height: 2;"><summary>**Answer**</summary> \(c = a + b
+    = (10.101)_2 \times 2^0 \approx (1.010)_2 \times 2^1\)</details>'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Example 5: Require Rounding and Precision Lost'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: Let \(a = (1.101)_2 \times 2^1\) and \(b = (1.001)_2 \times 2^{-1}\), find \(c
+    = a + b\). Round down if necessary.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '<details style="line-height: 2;"><summary>**Answer**</summary>\[\begin{align}
+    a &= 1.101 \times 2^1 \\ b &= 0.01001 \times 2^1 \\ a + b &= 1.111 \times 2^1
+    \\ \end{align}\]You''ll notice that we added two numbers with 4 significant digits,
+    and our result also has 4 significant digits. There is no loss of significant
+    digits with floating point addition.</details>'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Example 6: No Rounding Needed but Precision Lost'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: Let \(a = (1.1011)_2 \times 2^1\) and \(b = (-1.1010)_2 \times 2^1\), find \(c
+    = a + b\).
+  prefs: []
+  type: TYPE_NORMAL
+- en: '<details style="line-height: 2;"><summary>**Answer**</summary> \(c = a + b
+    = (0.0001)_2 \times 2^1 = (1.????)_2 \times 2^{-3}\)'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Unfortunately there is not data to indicate what the missing digits should be.
+    The effect is that the number of significant digits in the result is reduced.
+    Machine fills them with its best guess,which is often not good (usually what is
+    called spurious zeros). This phenomenon is called Catastrophic Cancellation.</details>
+  prefs: []
+  type: TYPE_NORMAL
+- en: Floating Point Subtraction and Catastrophic Cancellation
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Floating point subtraction works much the same was that addition does. However,
+    problems occur when you subtract two numbers of similar magnitude.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'For example, in order to subtract \(b = (1.1010)_2 \times 2^1\) from \(a =
+    (1.1011)_2 \times 2^1\), this would look like:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[\begin{align} a &= 1.1011???? \times 2^1 \\ b &= 1.1010???? \times 2^1 \\
+    a - b &= 0.0001???? \times 2^1 \\ \end{align}\]
+  prefs: []
+  type: TYPE_NORMAL
+- en: When we normalize the result, we get \(1.???? \times 2^{-3}\). There is no data
+    to indicate what the missing digits should be. Although the floating point number
+    will be stored with 4 digits in the fractional, it will only be accurate to a
+    single significant digit. This loss of significant digits is known as ***catastrophic
+    cancellation***.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'More rigidly, consider a general case when \(x \approx y\). Without loss of
+    generality, we assume \(x, y \gt 0\) (if \(x\) and \(y\) are negative, then \(y
+    - x = -(x - y) = -x - (-y)\), where \(-x\) and \(-y\) are both positive and similar
+    in magnitude). Suppose we need to calculate \(fl(y - x)\) given:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[x = 1.a_1 a_2 a_3 ... a_{n-2} a_{n-1}0 a_{n+1} a_{n+2} ... \times 2^m\] \[y
+    = 1.a_1 a_2 a_3 ... a_{n-2} a_{n-1}1 b_{n+1} b_{n+2} ... \times 2^m\]
+  prefs: []
+  type: TYPE_NORMAL
+- en: It can be shown that for all \(n \gt 1\), precision lost happens, and it becomes
+    more catastrophic when \(n\) increases (in other words, when \(x\) and \(y\) gets
+    more similar). Then, consider when \(n = 23\) and single-precision floating point
+    system is used, then \(fl(y - x) = 1.????... \times 2^{-23+m}\), where the leading
+    "\(1\)" before the decimal point becomes the only significant digit. Notice that
+    the floating point system may produce \(fl(y - x) = 1.000... \times 2^{-n+m}\),
+    but all digits after the decimal point are "guessed" and are not significant digits.
+    In fact, the precision lost is not due to \(fl(y-x)\) but due to rounding of \(x,
+    y\) from the beginning in order to get numbers representable by the floating point
+    system.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Example: Using Mathematically-Equivalent Formulae to Prevent Cancellation'
+  prefs:
+  - PREF_H4
+  type: TYPE_NORMAL
+- en: Consider the function \(f(x) = \sqrt{x^{2} + 1} - 1\). When we evaluate \(f(x)\)
+    for values of \(x\) near zero, we may encounter loss of significance due to floating
+    point subtraction. If \(x = 10^{-3}\), using five-decimal-digit arithmetic, \(f(10^{-3})
+    = \sqrt{10^{-6} + 1} - 1 = 0\). How can we find an alternative formula to perform
+    mathematically-equivalent computation without catastrophic cancellation?
+  prefs: []
+  type: TYPE_NORMAL
+- en: '<details style="line-height: 2;"><summary>**Answer**</summary> A method of
+    avoiding loss of significant digits is to eliminate subtraction:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: \( f(x) = \sqrt{x^{2} + 1} - 1 = \frac{ (\sqrt{x^{2} + 1} - 1) \cdot (\sqrt{x^{2}
+    + 1} + 1) } { \sqrt{x^{2} + 1} + 1 } = \frac{ x^{2} } { (\sqrt{x^{2} + 1} + 1)
+    } \)
+  prefs: []
+  type: TYPE_NORMAL
+- en: Thus for \( x = 10^{-3} \), using five-decimal-digit arithmetic, \( f(10^{-3})
+    = \frac{ 10^{-6} } { 2 } \).</details>
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Example: Calculating Relative Error when Cancellation Occurs'
+  prefs:
+  - PREF_H4
+  type: TYPE_NORMAL
+- en: If \(x = 0.3721448693\) and \(y = 0.3720214371\), what is the relative error
+    in the computation of \((x − y)\) in a computer with five decimal digits of accuracy?
+  prefs: []
+  type: TYPE_NORMAL
+- en: '<details style="line-height: 2;"><summary>**Answer**</summary> Using five decimal
+    digits of accuracy, the numbers are rounded as:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: \(fl(x) = 0.37214\) and \(fl(y) = 0.37202\)
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Then the subtraction is computed:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: \(fl(x) − fl(y) = 0.37214 − 0.37202 = 0.00012 \)
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'The result of the operation is:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: \(fl(x − y) = 1.20000 × 10^{−2}\)
+  prefs: []
+  type: TYPE_NORMAL
+- en: Notice that the last four digits are filled with spurious zeros.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'The relative error between the exact and computer solutions is given by:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: \( \frac{\vert (x - y) - fl(x - y) \vert}{\vert (x - y) \vert} = \frac{0.0001234322
+    − 0.00012}{0.000123432} = \frac{0.0000034322}{0.000123432} \approx \bf{3 \times
+    10^{-2}} \)
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Note that the magnitude of the error due to the subtraction is large when compared
+    with the relative error due to the rounding, which is:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: \( \frac{\vert x - fl(x) \vert}{\vert x \vert} \approx 1.3 \times 10^{-5} \)</details>
+  prefs: []
+  type: TYPE_NORMAL
+- en: Review Questions
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Given a real number, what is the rounding error involved in storing it as a
+    machine number? What is the relative error?
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: How can we bound the relative error of representing a real number as a normalized
+    machine number?
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: What is cancellation? Why is it a problem?
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: What types of operations lead to catastrophic cancellation?
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: Given two different equations for evaluating the same value, can you identify
+    which is more accurate for certain x and why?
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: Changelog
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'March 31st, 2024: Kaiyao Ke (kaiyaok2) — aligned notes with slides, added examples
+    and refactored existing notes'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 'January 30th, 2022: Yuxuan Chen (yuxuan19) — added new FP content; added FP
+    subtraction example'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 'April 28th, 2020: Mariana Silva (mfsilva) — started from content out of FP
+    page; added new rounding text'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: <details><summary>View Remaining Entries</summary></details>
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Authors
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: CS 357 Course Staff
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL

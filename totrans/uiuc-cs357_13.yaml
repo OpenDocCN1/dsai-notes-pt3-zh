@@ -1,0 +1,385 @@
+- en: Markov chains
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: 原文：[https://cs357.cs.illinois.edu/textbook/notes/markov.html](https://cs357.cs.illinois.edu/textbook/notes/markov.html)
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: Learning Objectives
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Create adjacency matrices for undirected, directed, and weighted graphs.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Identify and represent stochastic models as Markov chains.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Implement the PageRank algorithm.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Graphs
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'Graphs as Matrices:'
+  prefs:
+  - PREF_H4
+  type: TYPE_NORMAL
+- en: A graph, at an abstract level, is a set of objects in which pairs of objects
+    are in some sense related. Here, graphs manifest simply as nodes (vertices) and
+    edges which connect them. It can be very helpful to store this information - the
+    relationships between nodes - in a matrix. To do so, we use an **adjacency matrix**.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Undirected Graphs:'
+  prefs:
+  - PREF_H4
+  type: TYPE_NORMAL
+- en: 'The following is an example of an undirected graph:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![](../Images/63f6833fb95e6bc3820f50f5e5e284ac.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: 'The adjacency matrix, \({\bf A}\), for undirected graphs is *always* symmetric
+    and is defined as:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[a_{ij} = \begin{cases} 1 \quad \mathrm{if} \ (\mathrm{node}_i, \mathrm{node}_j)
+    \ \textrm{are connected} \\ 0 \quad \mathrm{otherwise} \end{cases},\]
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'where \(a_{ij}\) is the \((i,j)\) element of \({\bf A}\). The adjacency matrix
+    which describes the example graph above is:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[ {\bf A} = \begin{bmatrix} 0 & 1 & 1 & 1 & 0 & 0 \\ 1 & 1 & 0 & 0 & 1 & 0
+    \\ 1 & 0 & 0 & 1 & 0 & 0 \\ 1 & 0 & 1 & 0 & 1 & 1 \\ 0 & 1 & 0 & 1 & 0 & 0 \\
+    0 & 0 & 0 & 1 & 0 & 1 \end{bmatrix}.\]
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Directed Graphs:'
+  prefs:
+  - PREF_H4
+  type: TYPE_NORMAL
+- en: 'The following is an example of a directed graph:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![](../Images/530b86c333871875673336ace259525e.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: 'The adjacency matrix, \({\bf A}\), for directed graphs is defined as:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[ a_{ij} = \begin{cases} 1 \quad \mathrm{if} \ \mathrm{node}_i \leftarrow \mathrm{node}_j
+    \\ 0 \quad \mathrm{otherwise} \end{cases}, \]
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'where \(a_{ij}\) is the \((i,j)\) element of \({\bf A}\). This matrix is typically
+    asymmetric, so it is important to adhere to the definition. **Note** that while
+    we effectively use columns to represent the "from" nodes and rows to represent
+    the "to" nodes, this is not necessarily standard and you may encounter the reverse
+    direction. The adjacency matrix which describes the example graph above is:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[ {\bf A} = \begin{bmatrix} 0 & 0 & 0 & 1 & 0 & 0 \\ 1 & 1 & 0 & 0 & 0 & 0
+    \\ 1 & 0 & 0 & 0 & 0 & 0 \\ 0 & 0 & 1 & 0 & 1 & 0 \\ 0 & 1 & 0 & 0 & 0 & 0 \\
+    0 & 0 & 0 & 1 & 0 & 1 \end{bmatrix}.\]
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Weighted Directed Graphs:'
+  prefs:
+  - PREF_H4
+  type: TYPE_NORMAL
+- en: 'The following is an example of a weighted directed graph:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![](../Images/668717f73a8a8055f084521a4bff3efe.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: 'The adjacency matrix, \({\bf A}\), for weighted directed graphs is defined
+    as:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[ a_{ij} = \begin{cases} w_{ij} \quad \mathrm{if} \ \mathrm{node}_i \leftarrow
+    \mathrm{node}_j \\ 0 \quad \ \ \mathrm{otherwise} \end{cases}, \]
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'where \(a_{ij}\) is the \((i,j)\) element of \({\bf A}\), and \(w_{ij}\) is
+    the link weight associated with edge connecting nodes \(i\) and \(j\). The adjacency
+    matrix which describes the example graph above is:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[ {\bf A} = \begin{bmatrix} 0 & 0 & 0 & 0.4 & 0 & 0 \\ 0.1 & 0.5 & 0 & 0 &
+    0 & 0 \\ 0.9 & 0 & 0 & 0 & 0 & 0 \\ 0 & 0 & 1.0 & 0 & 1.0 & 0 \\ 0 & 0.5 & 0 &
+    0 & 0 & 0 \\ 0 & 0 & 0 & 0.6 & 0 & 1.0 \end{bmatrix}.\]
+  prefs: []
+  type: TYPE_NORMAL
+- en: Typically, when we discuss weighted directed graphs it is in the context of
+    transition matrices for Markov chains where the link weights across each column
+    sum to \(1\).
+  prefs: []
+  type: TYPE_NORMAL
+- en: Markov Chain
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: A ***Markov chain*** is a stochastic model where the probability of future (next)
+    state depends only on the most recent (current) state. This memoryless property
+    of a stochastic process is called ***Markov property***. From a probability perspective,
+    the Markov property implies that the conditional probability distribution of the
+    future state (conditioned on both past and current states) depends only on the
+    current state.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'The ***Markov property***, more formally can be written as:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[P(X_{n+1} = x_{n+1} | X_0 = x_0, X_1 = x_1, ..., X_n = x_n) = P(X_{n+1} =
+    x_{n+1} | X_n = x_n)\]
+  prefs: []
+  type: TYPE_NORMAL
+- en: Markov Matrix
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: A ***Markov/Transition/Stochastic matrix*** is a square matrix used to describe
+    the transitions of a Markov chain. Each of its entries is a non-negative real
+    number representing a probability. Based on Markov property, next state vector
+    \({\bf x}_{k+1}\) is obtained by left-multiplying the Markov matrix \({\bf M}\)
+    with the current state vector \({\bf x}_k\).
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[ {\bf x}_{k+1} = {\bf M} {\bf x}_k \]
+  prefs: []
+  type: TYPE_NORMAL
+- en: In this course, unless specifically stated otherwise, we define the transition
+    matrix \({\bf M}\) as a left Markov matrix where each column sums to \(1\). Alternatively,
+    we can say the \(1\text{-}norm\) of each column is \(1\).
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Note**: Alternative definitions in outside resources may present \({\bf M}\)
+    as a right markov matrix where each row of \({\bf M}\) sums to \(1\) and the next
+    state is obtained by right-multiplying by \({\bf M}\), i.e. \({\bf x}_{k+1}^T
+    = {\bf x}_k^T {\bf M}\).'
+  prefs: []
+  type: TYPE_NORMAL
+- en: A steady state vector \({\bf x}^*\) is a probability vector (entries are non-negative
+    and sum to \(1\)) that is unchanged by the operation with the Markov matrix \(M\),
+    i.e.
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[ {\bf M} {\bf x}^* = {\bf x}^* \]
+  prefs: []
+  type: TYPE_NORMAL
+- en: Therefore, the steady state vector \({\bf x}^*\) is an eigenvector corresponding
+    to the eigenvalue \(\lambda=1\) of matrix \({\bf M}\). If there is more than one
+    eigenvector with \(\lambda=1\), then a weighted sum of the corresponding steady
+    state vectors will also be a steady state vector. Therefore, the steady state
+    vector of a Markov chain may not be unique and could depend on the initial state
+    vector.
+  prefs: []
+  type: TYPE_NORMAL
+- en: In summary, repeated multiplication of a state vector \({\bf x}\) from the left
+    by a Markov matrix \({\bf M}\)converges to a vector of eigenvalue \(\lambda=1\).
+    This should remind you of the Power Iteration method. The largest eigenvalue of
+    a Markov matrix by magnitude is always 1.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Markov Chain Example: Weather'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'Suppose we want to build a Markov Chain model for weather predicting in UIUC
+    during summer. We observed that:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: a sunny day is \(60\%\) likely to be followed by another sunny day, \(10\%\)
+    likely followed by a rainy day and \(30\%\) likely followed by a cloudy day;
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: a rainy day is \(40\%\) likely to be followed by another rainy day, \(20\%\)
+    likely followed by a sunny day and \(40\%\) likely followed by a cloudy day;
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: a cloudy day is \(40\%\) likely to be followed by another cloudy day, \(30\%\)
+    likely followed by a rainy day and \(30\%\) likely followed by a sunny day.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 'The state diagram is shown below:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![](../Images/67a08bd95794ad17370f281e93253bf6.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: The Markov matrix is
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[ {\bf M} = \begin{bmatrix} 0.6 & 0.2 & 0.3 \\ 0.1 & 0.4 & 0.3 \\ 0.3 & 0.4
+    & 0.4 \end{bmatrix}. \]
+  prefs: []
+  type: TYPE_NORMAL
+- en: If the weather on day \(0\) is known to be rainy, then
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[ {\bf x}_0 = \begin{bmatrix} 0 \\ 1 \\ 0 \end{bmatrix}; \]
+  prefs: []
+  type: TYPE_NORMAL
+- en: and we can determine the probability vector for day \(1\) by
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[ {\bf x}_1 = {\bf M} {\bf x}_0\. \]
+  prefs: []
+  type: TYPE_NORMAL
+- en: The probability distribution for the weather on day \(n\) is given by
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[ {\bf x}_n = {\bf M}^{n} {\bf x}_0\. \]
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Markov Chain Example: Page Rank'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Page Rank is a straightforward algorithm which was popularized by Google Search
+    to rank webpages. It attempts to model user behavior by assuming a random surfer
+    continuously clicks links at random. So, the importance of a web page is determined
+    by the probability of a random user ending up at that page.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![](../Images/50aee4ee5b87ef71ea0d84a47cd1da6d.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: Let the above graph represent websites as nodes and outgoing links as directed
+    eges. First, we create an adjacency matrix.
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[ {\bf A} = \begin{bmatrix} 0 & 0 & 0 & 1 & 0 & 1 \\ 1 & 0 & 0 & 0 & 0 & 0
+    \\ 0 & 1 & 0 & 0 & 0 & 0 \\ 0 & 1 & 1 & 0 & 0 & 0 \\ 0 & 0 & 1 & 0 & 0 & 0 \\
+    1 & 0 & 1 & 0 & 1 & 0 \\ \end{bmatrix} \]
+  prefs: []
+  type: TYPE_NORMAL
+- en: Next, we take the accumulated weight (influence) going into a given page, and
+    redistribute it evenly across each outgoing link. This is a Markov matrix. As
+    before, we can perform repeated iteration on a random state vector until steady-state
+    in order to find what page the user will most likely end up at.
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[ {\bf A} = \begin{bmatrix} 0 & 0 & 0 & 1.0 & 0 & 1.0 \\ 0.5 & 0 & 0 & 0 &
+    0 & 0 \\ 0 & 0.5 & 0 & 0 & 0 & 0 \\ 0 & 0.5 & 0.33 & 0 & 0 & 0 \\ 0 & 0 & 0.33
+    & 0 & 0 & 0 \\ 0.5 & 0 & 0.33 & 0 & 1.0 & 0 \\ \end{bmatrix} \]
+  prefs: []
+  type: TYPE_NORMAL
+- en: Sites therefore become "important" if they're linked to by other "important"
+    sites. The intuition roughly follows that if a site \(s\) is linked within another
+    site that is rarely embedded, then the rank of site \(s\) will not increase much.
+    Conversely, if site \(s\) is linked within more popular sites, its rank will increase.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Naive Page Rank: Shortcomings'
+  prefs:
+  - PREF_H4
+  type: TYPE_NORMAL
+- en: 'A weakpoint of this naive implementation of Page Rank is that a unique solution
+    is not guaranteed. **Brin-Page (1990s)** proposed:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '"PageRank can be thought of as a model of user behavior We assume there is
+    a random surfer who is given a web page at random and keeps clicking on links,
+    never hitting "back", **but eventually gets bored and starts on another random
+    page**."'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: \[{\bf{M}} = d{\bf{A}} + \frac{1-d}{n}\bf{1} \]
+  prefs: []
+  type: TYPE_NORMAL
+- en: We introduce a constant, or damping factor, \(d\) in order to model the random
+    jump. Let \(n\) be the number of nodes in the graph. Here, a surfer clicks on
+    a link on the current page with probability \(d\) and opens a random page with
+    probability \(1-d\). This model makes all entries of M greater than zero, and
+    guarantees a unique solution.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Review Questions
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Given an undirected or directed graph (weighted or unweighted), determine the
+    adjacency matrix for the graph.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: What is a transition matrix? Given a graph representing the transitions or a
+    description of the problem, determine the transition matrix.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Changelog
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'March 3rd, 2024: Pascal Adhikary (pascala2) — add slide info, page rank'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 'April 1st, 2018: Erin Carrier (ecarrie2) — minor reorg and formatting changes'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 'March 25th, 2018: Yu Meng (yumeng5) — adds Markov chains'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: <details><summary>View Remaining Entries</summary>
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 'March 1st, 2018: Erin Carrier (ecarrie2) — adds more review questions'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 'January 14th, 2018: Erin Carrier (ecarrie2) — removes demo links'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 'November 2nd, 2017: Erin Carrier (ecarrie2) — adds changelog, fix COO row index
+    error'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 'October 25th, 2017: Arun Lakshmanan (lakshma2) — first complete draft'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 'October 25th, 2017: Erin Carrier (ecarrie2) — adds review questions, minor
+    fixes and formatting changes'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 'October 16th, 2017: Luke Olson (lukeo) — outline</details>'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Authors
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: CS 357 Course Staff
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL

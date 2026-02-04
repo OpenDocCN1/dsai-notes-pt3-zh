@@ -1,0 +1,1200 @@
+- en: LU Decomposition for Solving Linear Equations
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: 原文：[https://cs357.cs.illinois.edu/textbook/notes/linsys.html](https://cs357.cs.illinois.edu/textbook/notes/linsys.html)
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: Learning Objectives
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Understand the use of linear system of equations.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Use known data to set up linear system of equations for practical problems.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Describe the factorization \({\bf A} = {\bf LU}\).
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Compare the cost of LU with other operations such as matrix-matrix multiplication.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Implement an LU decomposition algorithm.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Given an LU decomposition for \({\bf A}\), solve the system \({\bf Ax} = {\bf
+    b}\).
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Give examples of matrices for which pivoting is needed.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Implement an LUP decomposition algorithm.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Manually compute LU and LUP decompositions.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Compute and use LU decompositions using library functions.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 'Basic Idea: The "Undo" button for Linear Operations'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'Matrix-vector multiplication: given the data \({\bf x}\) and the operator \({\bf
+    A}\), we can find \({\bf y}\) such that \({\bf y = Ax}\):'
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[\bf{x} \hspace{5mm} {\xRightarrow[transformation]{A}} \hspace{5mm} \bf{y}\]
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'What if we know \({\bf y}\) but not \({\bf x}\)? We need to "undo" the transformation:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[\bf{y} \hspace{5mm} {\xRightarrow[?]{A^{-1}}} \hspace{5mm} \bf{x} \hspace{3cm}
+    \textbf{Solve}\hspace{3mm} Ax=y \hspace{3mm}\text{for} \hspace{3mm}\bf{x}\]
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Example: Undoing the Transformation'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: Suppose we have known operator \({\bf A}\), known data \({\bf y}\), and unkown
+    data \({\bf x}\) that satisfies the relationship \({\bf y = Ax}\). The values
+    of \({\bf A}\) and \({\bf y}\) are given below.
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[\textbf{A} = \begin{bmatrix} 1 & 2 \\ 3 & 4 \end{bmatrix}\hspace{5mm} \textbf{x}
+    = \begin{bmatrix} x_1 \\ x_2 \end{bmatrix} \hspace{5mm} \text{and} \hspace{5mm}
+    \textbf{y} = \begin{bmatrix} 5 \\ 11 \end{bmatrix} .\]
+  prefs: []
+  type: TYPE_NORMAL
+- en: How can we solve for \(\textbf{x} = [x_1, x_2]^T\)?
+  prefs: []
+  type: TYPE_NORMAL
+- en: '<details><summary>**Answer**</summary> We construct the following set of linear
+    equations: $ \begin{cases} x_1 + 2x_2 = 5\\ 3x_1 + 4x_2 = 11 \end{cases} \hspace{5mm}
+    $ Then the solution is: $ \begin{cases} x_1 = 1\\ x_2 = 2 \end{cases} \hspace{5mm}
+    \text{, or} \hspace{5mm} \textbf{x} = \begin{bmatrix} 1 \\ 2 \end{bmatrix} $</details>'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Example: Image Blurring and Recovery'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: The original image displaying an SSN number is stored as a \(2D\) array of real
+    numbers between \(0\) and \(1\) (\(0\) represents a white pixel, \(1\) represents
+    a black pixel).It has \(40\) rows of pixels and \(100\) columns of pixels. We
+    can flatten the \(2D\) array into a \(1D\) array \(\bf{x}\) containing the \(1D\)
+    data with dimension \(4000\). We can then apply blurring operation to data \(\bf{x}\),
+    i.e.
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[\bf{y} = \bf{A}\bf{x}\]
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'where \(\bf{A}\) is the blur operator and \(\bf{y}\) is the blurred image:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![](../Images/ffbc1d32bdd00a371173255d3c58e535.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: 'To "undo" blurring to recover original image, we solve a linear system of equations
+    using the blur operator \(\bf{A}\) and the blurred image \(\bf{y}\). The following
+    graph shows the transformation when \(\bf{y}\)does not have any noise ("clean
+    data"):'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![](../Images/1c6b06a56875aac3051aaae5d8edf34c.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: 'It is also possible to recover \(\bf{x}\) with a certain extent of noise:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![](../Images/a1353aa9e2081b44eea5b8acddd497cd.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: To answer "How much noise can we add and still be able to recover meaningful
+    information from the original image?" and "At which point this inverse transformation
+    fails?", we need information about the sensitivity of the "undo" operation covered
+    later in this course.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Back Substitution Algorithm for Upper Triangular Systems
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: To actually solve \({\bf A x} = {\bf b}\), we can start with an "easier" system
+    of equations. Let's consider triangular matrices - the ***back substitution algorithm***
+    solves the linear system \({\bf U x} = {\bf b}\) where \({\bf U}\) is an upper-triangular
+    matrix.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'An upper-triangular linear system \({\bf U}{\bf x} = {\bf b}\) can be written
+    in matrix form:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[\begin{bmatrix} U_{11} & U_{12} & \ldots & U_{1n} \\ 0 & U_{22} & \ldots &
+    U_{2n} \\ \vdots & \vdots & \ddots & \vdots \\ 0 & 0 & \ldots & U_{nn} \\ \end{bmatrix}
+    \begin{bmatrix} x_1 \\ x_2 \\ \vdots \\ x_n \end{bmatrix} = \begin{bmatrix} b_1
+    \\ b_2 \\ \vdots \\ b_n \end{bmatrix}.\]
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Observe that the upper-triangular system \({\bf U}x = b\) can be written as
+    the set of linear equations:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[\begin{matrix} U_{11} x_1 & + & U_{12} x_2 & + & \ldots & + & U_{1n} x_n &
+    = & b_1 \\ & & U_{22} x_2 & + & \ldots & + & U_{2n} x_n & = & b_2 \\ & & & & \ddots
+    & & \vdots & = & \vdots \\ & & & & & & U_{nn} x_n & = & b_n. \end{matrix}\]
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'The back substitution solution works from the bottom up to give:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[\begin{aligned} x_n &= \frac{b_n}{U_{nn}} \\ x_{n-1} &= \frac{b_{n-1} - U_{n-1,n}
+    x_n}{U_{n-1,n-1}} \\ &\vdots \\ x_1 &= \frac{b_1 - \sum_{j=2}^n U_{1j} x_j}{U_{11}}.
+    \end{aligned}\]
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'So the general form of solution is:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[x_n = \frac{b_n}{U_{nn}}; \hspace{1cm} x_i = \frac{b_i - \sum_{j=i+1}^n U_{ij}
+    x_j}{U_{ii}} \hspace{5mm} \text{for i = n-1, n-2, ..., 1}\]
+  prefs: []
+  type: TYPE_NORMAL
+- en: Notice that there are \(n\) divisions, \(\frac{n(n-1)}{2}\) subtractions / additions,
+    and \(\frac{n(n-1)}{2}\) multiplications, hence the **computational complexity**
+    is \(\bf{O(n^2)}\).
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Alternatively, we can also write \({\bf U}x = b\) as a linear combination of
+    the columns of \(\bf{U}\):'
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[x_1 \hspace{1mm} \textbf{U}[:\hspace{1mm},1] + x_2 \hspace{1mm} \textbf{U}[:\hspace{1mm},2]
+    + \ldots + x_{n} \hspace{1mm} \textbf{U}[:\hspace{1mm},n] = \textbf{b}\]
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'The properties of the back substitution algorithm are:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: If any of the diagonal elements \(U_{ii}\) are zero then the system is singular
+    and cannot be solved.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: If all diagonal elements of \({\bf U}\) are non-zero then the system has a unique
+    solution.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: The number of operations for the back substitution algorithm is \(O(n^2)\) as
+    \(n \to \infty\).
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: 'The code for the back substitution algorithm to solve \({\bf U x} = {\bf b}\)
+    is:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Example: Back Substitution for an Upper Triangular System'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: \[\begin{bmatrix} 2 & 3 & 1 & 1 \\ 0 & 2 & 2 & 3 \\ 0 & 0 & 6 & 4 \\ 0 & 0 &
+    0 & 2 \\ \end{bmatrix} \begin{bmatrix} x_1 \\ x_2 \\ x_3 \\ x_4 \end{bmatrix}
+    = \begin{bmatrix} 2 \\ 2 \\ 6 \\ 4 \end{bmatrix}.\]
+  prefs: []
+  type: TYPE_NORMAL
+- en: How can we solve for \(x = [x_1, x_2, x_3, x_4]^T\)?
+  prefs: []
+  type: TYPE_NORMAL
+- en: <details><summary>**Answer**</summary> $ 2x_4 = 4 \Rightarrow x_4 = \frac{4}{2}
+    = 2 $ $ 6x_3 + 4x_4 = 6 \Rightarrow x_3 = \frac{6 - 4(2)}{6} = -\frac{1}{3} $
+    $ 2x_2 + 2x_3 + 3x_4 = 2 \Rightarrow x_2 = \frac{2 - 2(-\frac{1}{3}) - 3(2)}{2}
+    = -\frac{5}{3} $ $ 2x_1 + 3x_2 + x_3 + x_4 = 2 \Rightarrow x_1 = \frac{2 - 3(-\frac{5}{3})
+    - (-\frac{1}{3}) - 2}{2} = \frac{8}{3} $</details>
+  prefs: []
+  type: TYPE_NORMAL
+- en: Forward Substitution Algorithm for Lower Triangular Systems
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: The ***forward substitution algorithm*** solves the linear system \({\bf Lx}
+    = {\bf b}\) where \({\bf L}\) is a lower triangular matrix. It is the reversed
+    version of back substitution.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'A lower-triangular linear system \({\bf L}{\bf x} = {\bf b}\) can be written
+    in matrix form:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[\begin{bmatrix} L_{11} & 0 & \ldots & 0 \\ L_{21} & L_{22} & \ldots & 0 \\
+    \vdots & \vdots & \ddots & 0 \\ L_{n1} & L_{n2} & \ldots & L_{nn} \\ \end{bmatrix}
+    \begin{bmatrix} x_1 \\ x_2 \\ \vdots \\ x_n \end{bmatrix} = \begin{bmatrix} b_1
+    \\ b_2 \\ \vdots \\ b_n \end{bmatrix}.\]
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'This can also be written as the set of linear equations:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[\begin{matrix} L_{11} x_1 & & & & & & & = & b_1 \\ L_{21} x_1 & + & L_{22}
+    x_2 & & & & & = & b_2 \\ \vdots & + & \vdots & + & \ddots & & & = & \vdots \\
+    L_{n1} x_1 & + & L_{n2} x_2 & + & \ldots & + & L_{nn} x_n & = & b_n. \end{matrix}\]
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'The forward substitution algorithm solves a lower-triangular linear system
+    by working from the top down and solving each variable in turn. In math this is:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[\begin{aligned} x_1 &= \frac{b_1}{L_{11}} \\ x_2 &= \frac{b_2 - L_{21} x_1}{L_{22}}
+    \\ &\vdots \\ x_n &= \frac{b_n - \sum_{j=1}^{n-1} L_{nj} x_j}{L_{nn}}. \end{aligned}\]
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'So the general form of solution is:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[x_1 = \frac{b_1}{L_{11}}; \hspace{1cm} x_i = \frac{b_i - \sum_{j=1}^{i-1}
+    L_{ij} x_j}{L_{ii}} \hspace{5mm} \text{for i = 2, 3, ..., n}\]
+  prefs: []
+  type: TYPE_NORMAL
+- en: Notice that there are also \(n\) divisions, \(\frac{n(n-1)}{2}\) subtractions
+    / additions, and \(\frac{n(n-1)}{2}\) multiplications, hence the **computational
+    complexity** is \(\bf{O(n^2)}\).
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'The properties of the forward substitution algorithm are:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: If any of the diagonal elements \(L_{ii}\) are zero then the system is singular
+    and cannot be solved.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: If all diagonal elements of \({\bf L}\) are non-zero then the system has a unique
+    solution.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: The number of operations for the forward substitution algorithm is \(O(n^2)\)
+    as \(n \to \infty\).
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: 'The code for the forward substitution algorithm to solve \({\bf L x} = {\bf
+    b}\) is:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE1]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Example: Forward-substitution for a Lower Triangular System'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: \[\begin{bmatrix} 2 & 0 & 0 & 0 \\ 3 & 2 & 0 & 0 \\ 1 & 2 & 6 & 0 \\ 1 & 3 &
+    4 & 2 \\ \end{bmatrix} \begin{bmatrix} x_1 \\ x_2 \\ x_3 \\ x_4 \end{bmatrix}
+    = \begin{bmatrix} 2 \\ 2 \\ 6 \\ 4 \end{bmatrix}.\]
+  prefs: []
+  type: TYPE_NORMAL
+- en: How can we solve for \(x = [x_1, x_2, x_3, x_4]^T\)?
+  prefs: []
+  type: TYPE_NORMAL
+- en: <details><summary>**Answer**</summary> $ 2x_1 = 2 \Rightarrow x_1 = 1 $ $ 3x_1
+    + 2x_2 = 2 \Rightarrow x_2 = \frac{2-3}{2} = -0.5 $ $ 1x_1 + 2x_2 + 6x_3 = 6 \Rightarrow
+    x_3 = \frac{6-1+1}{6} = 1 $ $ 1x_1 + 3x_2 + 4x_3 + 2x_4 = 4 \Rightarrow x_4 =
+    \frac{4-1+1.5-4}{2} = 0.25 $</details>
+  prefs: []
+  type: TYPE_NORMAL
+- en: LU Decomposition Definition
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'To solve \({\bf A x} = {\bf b}\) when \(\bf{A}\) is a non-triangular matrix,
+    We can perform LU factorization: given an \(n \times n\) matrix \(\bf{A}\), the
+    ***LU decomposition*** of a matrix \({\bf A}\) is the pair of matrices \({\bf
+    L}\) and \({\bf U}\) such that:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: \({\bf A} = {\bf LU}\)
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: \({\bf L}\) is a lower-triangular matrix with all diagonal entries equal to
+    1
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: \({\bf U}\) is an upper-triangular matrix.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: \[\begin{bmatrix} 1 & 0 & \ldots & 0 \\ L_{21} & 1 & \ldots & 0 \\ \vdots &
+    \vdots & \ddots & \vdots \\ L_{n1} & L_{n2} & \ldots & 1 \\ \end{bmatrix} \begin{bmatrix}
+    u_{11} & U_{12} & \ldots & U_{1n} \\ 0 & U_{22} & \ldots & U_{2n} \\ \vdots &
+    \vdots & \ddots & \vdots \\ 0 & 0 & \ldots & U_{nn} \\ \end{bmatrix} = \begin{bmatrix}
+    A_{11} & A_{12} & \ldots & A_{1n} \\ A_{21} & A_{22} & \ldots & A_{2n} \\ \vdots
+    & \vdots & \ddots & \vdots \\ A_{n1} & A_{n2} & \ldots & A_{nn} \\ \end{bmatrix}\]
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'The properties of the LU decomposition are:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: The LU decomposition may not exist for a matrix \({\bf A}\).
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: If the LU decomposition exists then it is unique.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: The LU decomposition provides an efficient means of solving linear equations.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: The reason that \({\bf L}\) has all diagonal entries set to 1 is that this means
+    the LU decomposition is unique. This choice is somewhat arbitrary (we could have
+    decided that \({\bf U}\) must have 1 on the diagonal) but it is the standard choice.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: We use the terms ***decomposition*** and ***factorization*** interchangeably
+    to mean writing a matrix as a product of two or more other matrices, generally
+    with some defined properties (such as lower/upper triangular).
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: 'Example: LU Decomposition'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: Consider a \(3 \times 3\) matrix \(A = \begin{bmatrix} 1 & 2 & 2 \\ 4 & 4 &
+    2 \\ 4 & 6 & 4 \end{bmatrix} .\)
+  prefs: []
+  type: TYPE_NORMAL
+- en: The LU factorization is \({\bf A} = {\bf LU} = \begin{bmatrix} 1 & 0 & 0 \\
+    4 & 1 & 0 \\ 4 & 0.5 & 1 \end{bmatrix} \begin{bmatrix} 1 & 2 & 2 \\ 0 & -4 & -6
+    \\ 0 & 0 & -1 \end{bmatrix}.\)
+  prefs: []
+  type: TYPE_NORMAL
+- en: Solving LU-Decomposed Linear Systems
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'Knowing the LU decomposition for a matrix \({\bf A}\) allows us to solve the
+    linear system \({\bf A x} = {\bf b}\) using a combination of forward and back
+    substitution. In equations this is:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[\begin{aligned} {\bf A x} &= {\bf b} \\ {\bf L U x} &= {\bf b} \\ {\bf U x}
+    &= {\bf L}^{-1} {\bf b} \\ {\bf x} &= {\bf U}^{-1} ({\bf L}^{-1} {\bf b}), \end{aligned}\]
+  prefs: []
+  type: TYPE_NORMAL
+- en: where we first evaluate \({\bf L}^{-1} {\bf b}\) using forward substitution
+    and then evaluate \({\bf x} = {\bf U}^{-1} ({\bf L}^{-1} {\bf b})\) using back
+    substitution.
+  prefs: []
+  type: TYPE_NORMAL
+- en: An equivalent way to write this is to introduce a new vector \({\bf y}\) defined
+    by \(\bf{y} = {\bf U x}\). Assuming the LU factorization of matrix \(\bf{A}\)
+    is known, we can solve the general system
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[\bf{LU \hspace{1mm} x = b}\]
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'By solving two triangular systems:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[\bf{Ly=b} \hspace{5mm} {\xRightarrow{\text{Solve for } \bf{y}}} \hspace{5mm}
+    \text{Forward substitution with complexity } O(n^2)\] \[\bf{Ux=y} \hspace{5mm}
+    {\xRightarrow{\text{Solve for } \bf{x}}} \hspace{5mm} \text{Back substitution
+    with complexity } O(n^2)\]
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'We have thus replaced \({\bf A x} = {\bf b}\) with *two* linear systems: \({\bf
+    L y} = {\bf b}\) and \({\bf U x} = {\bf y}\). These two linear systems can then
+    be solved one after the other using forward and back substitution.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: The number of operations for the LU solve algorithm is \(O(n^2)\) as \(n \to
+    \infty\).
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'The ***LU solve algorithm*** code for solving the linear system \({\bf L U
+    x} = {\bf b}\) is:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE2]'
+  prefs: []
+  type: TYPE_PRE
+- en: The LU Decomposition Algorithm
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'Given a matrix \({\bf A}\) there are many different algorithms to find the
+    matrices \({\bf L}\) and \({\bf U}\) for the LU decomposition. Here we will use
+    the ***recursive leading-row-column LU algorithm***. Let''s first consider the
+    simple case when \({\bf A}\) is a \(2\times 2\) matrix:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![](../Images/b110ed32e81f76337e21c963946cbd00.png)*Errata**The diagram above
+    is actually broken (we''re fixing it). It should be that U11 = A11 and U12 = A12\.*
+    *Use a similar idea to write \({\bf A}\) in block form when \({\bf A}\) is an
+    \(n\times n\) matrix:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![](../Images/40a003279a8cd29f9a20f34d4c75570d.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: 'Then \({\bf A} = {\bf LU}\) can be re-written as:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[\begin{aligned} \begin{bmatrix} a_{11} & \boldsymbol{a}_{12} \\ \boldsymbol{a}_{21}
+    & {\bf A}_{22} \end{bmatrix} &= \begin{bmatrix} 1 & \boldsymbol{0} \\ \boldsymbol{\ell}_{21}
+    & {\bf L}_{22} \end{bmatrix} \begin{bmatrix} u_{11} & \boldsymbol{u}_{12} \\ \boldsymbol{0}
+    & {\bf U}_{22} \end{bmatrix} \\ &= \begin{bmatrix} u_{11} & \boldsymbol{u}_{12}
+    \\ u_{11} \boldsymbol{\ell}_{21} & (\boldsymbol{\ell}_{21} \boldsymbol{u}_{12}
+    + {\bf L}_{22} {\bf U}_{22}) \end{bmatrix}. \end{aligned}\]
+  prefs: []
+  type: TYPE_NORMAL
+- en: In the above block form of the \(n \times n\) matrix \({\bf A}\), the entry
+    \(a_{11}\) is a scalar, \(\boldsymbol{a}_{12}\) is a \(1 \times (n-1)\) row vector,
+    \(\boldsymbol{a}_{12}\) is an \((n-1) \times 1\) column vector, and \({\bf A}_{22}\)
+    is an \((n-1) \times (n-1)\) matrix.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Comparing the left- and right-hand side entries of the above block matrix equation
+    we see that:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[\begin{aligned} a_{11} &= u_{11} \\ \boldsymbol{a}_{12} &= \boldsymbol{u}_{12}
+    \\ \boldsymbol{a}_{21} &= u_{11} \boldsymbol{\ell}_{21} \\ A_{22} &= \boldsymbol{\ell}_{21}
+    \boldsymbol{u}_{12} + {\bf L}_{22} {\bf U}_{22}. \end{aligned}\]
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'These four equations can be rearranged to solve for the components of the \({\bf
+    L}\) and \({\bf U}\) matrices as:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[\begin{aligned} u_{11} &= a_{11}\\ \boldsymbol{u}_{12} &= \boldsymbol{a}_{12}
+    \\ \boldsymbol{\ell}_{21} &= \frac{1}{u_{11}} \boldsymbol{a}_{21} \\ {\bf L}_{22}
+    {\bf U}_{22} &= \underbrace{ {\bf A}_{22} - \boldsymbol{a}_{21} (a_{11})^{-1}
+    \boldsymbol{a}_{12}}_{\text{Schur complement } S_{22}}. \end{aligned}\]
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Notice that:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: The first row of \(\bf{U}\) is the first row of \(\bf{A}\).
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: The first column of \(\bf{L}\) is \(\frac{\text{the first column of }\textbf{A}}{u_{11}}\).
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: \({\bf L}_{22} {\bf U}_{22}\) needs another factorization.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: In other words, the first three equations above can be immediately evaluated
+    to give the first row and column of \({\bf L}\) and \({\bf U}\). The last equation
+    can then have its right-hand-side evaluated, which gives the ***Schur complement***
+    \(S_{22}\) of \({\bf A}\). We thus have the equation \({\bf L}_{22} {\bf U}_{22}
+    = {\bf S}_{22}\), which is an \((n-1) \times (n-1)\) LU decomposition problem
+    which we can recursively solve.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'The code for the ***recursive leading-row-column LU algorithm*** to find \({\bf
+    L}\) and \({\bf U}\) for \({\bf A} = {\bf LU}\) is:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE3]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Number of divisions: \((n-1)+(n-2)+\ldots+1=\frac{n(n-1)}{2}\)'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Number of multiplications: \((n-1)^2+(n-2)^2+\ldots+1^2=\frac{n^3}{3} - \frac{n^2}{2}
+    + \frac{n}{6}\)'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Number of subtractions: \((n-1)^2+(n-2)^2+\ldots+1^2=\frac{n^3}{3} - \frac{n^2}{2}
+    + \frac{n}{6}\)'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Hence the number of operations for the recursive leading-row-column LU decomposition
+    algorithm is \(\bf{O(n^3)}\) as \(n \to \infty\).
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Example: LU decomposition'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: Consider the matrix \(\bf{A} = \begin{bmatrix} 2 & 8 & 4 & 1 \\ 1 & 2 & 3 &
+    3 \\ 1 & 2 & 6 & 2 \\ 1 & 3 & 4 & 2 \end{bmatrix} .\)
+  prefs: []
+  type: TYPE_NORMAL
+- en: How can we find an LU Decomposition for this matrix?
+  prefs: []
+  type: TYPE_NORMAL
+- en: <details><summary>**Answer**</summary> Note that we use \(\bf {M}\) to keep
+    track of the matrix (e.g. \(\bf {L_{22}U_{22}}\) in the first step) that needs
+    recursive factorization.
+  prefs: []
+  type: TYPE_NORMAL
+- en: The first row of \(\bf{U}\) is the first row of \(\bf{A}\).
+  prefs: []
+  type: TYPE_NORMAL
+- en: The first column of \(\bf{L}\) is \(\frac{\text{the first column of }\textbf{A}}{u_{11}}\).
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Also, as \({\bf L}_{22} {\bf U}_{22} = {\bf A}_{22} - \boldsymbol{a}_{21} (a_{11})^{-1}
+    \boldsymbol{a}_{12}\), we have the following after the first step (notice that
+    we use the tensor product operator "\(\otimes\)" to denote the outer product of
+    two vectors): $ \textbf{L} = \begin{bmatrix} 1 & 0 & 0 & 0 \\ \textbf{0.5} & 1
+    & 0 & 0 \\ \textbf{0.5} & ? & 1 & 0 \\ \textbf{0.5} & ? & ? & 1 \end{bmatrix};
+    \hspace{5mm} \textbf{U} = \begin{bmatrix} 2 & \textbf{8} & \textbf{4} & \textbf{1}
+    \\ 0 & ? & ? & ? \\ 0 & 0 & ? & ? \\ 0 & 0 & 0 & ? \end{bmatrix}; \hspace{5mm}
+    \textbf{M} = \begin{bmatrix} 2 & 3 & 3 \\ 2 & 6 & 2 \\ 3 & 4 & 2 \end{bmatrix}
+    - \begin{bmatrix} 0.5 \\ 0.5 \\ 0.5 \end{bmatrix} \otimes \begin{bmatrix} 8 \\
+    4 \\ 1 \end{bmatrix} = \begin{bmatrix} -2 & 1 & 2.5 \\ -2 & 4 & 1.5 \\ -1 & 2
+    & 1.5 \end{bmatrix} $ Similarly, in the second (recursive) step: $ \textbf{L}
+    = \begin{bmatrix} 1 & 0 & 0 & 0 \\ 0.5 & 1 & 0 & 0 \\ 0.5 & \textbf{1} & 1 & 0
+    \\ 0.5 & \textbf{0.5} & ? & 1 \end{bmatrix}; \hspace{5mm} \textbf{U} = \begin{bmatrix}
+    2 & 8 & 4 & 1 \\ 0 & -2 & \textbf{1} & \textbf{2.5} \\ 0 & 0 & ? & ? \\ 0 & 0
+    & 0 & ? \end{bmatrix}; \hspace{5mm} \textbf{M} = \begin{bmatrix} 4 & 1.5 \\ 2
+    & 1.5 \end{bmatrix} - \begin{bmatrix} 1 \\ 0.5 \end{bmatrix} \otimes \begin{bmatrix}
+    1 \\ 2.5 \end{bmatrix} = \begin{bmatrix} 3 & -1 \\ 1.5 & 0.25 \end{bmatrix} $
+    The next step is: $ \textbf{L} = \begin{bmatrix} 1 & 0 & 0 & 0 \\ 0.5 & 1 & 0
+    & 0 \\ 0.5 & 1 & 1 & 0 \\ 0.5 & 0.5 & \textbf{0.5} & 1 \end{bmatrix}; \hspace{5mm}
+    \textbf{U} = \begin{bmatrix} 2 & 8 & 4 & 1 \\ 0 & -2 & 1 & 2.5 \\ 0 & 0 & 3 &
+    \textbf{-1} \\ 0 & 0 & 0 & ? \end{bmatrix}; \hspace{5mm} \textbf{M} = \begin{bmatrix}
+    0.25 \end{bmatrix} - \begin{bmatrix} 0.5 \end{bmatrix} \otimes \begin{bmatrix}
+    -1 \end{bmatrix} = \begin{bmatrix} 0.75 \end{bmatrix} $ So the final result is:
+    $ \textbf{L} = \begin{bmatrix} 1 & 0 & 0 & 0 \\ 0.5 & 1 & 0 & 0 \\ 0.5 & 1 & 1
+    & 0 \\ 0.5 & 0.5 & 0.5 & 1 \end{bmatrix}; \hspace{5mm} \textbf{U} = \begin{bmatrix}
+    2 & 8 & 4 & 1 \\ 0 & -2 & 1 & 2.5 \\ 0 & 0 & 3 & -1 \\ 0 & 0 & 0 & 0.75 \end{bmatrix}
+    $</details>'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Example: Matrix for which LU Decomposition Fails'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: An example of a matrix which has no LU decomposition is
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[{\bf A} = \begin{bmatrix} 2 & 8 & 4 & 1 \\ 1 & 4 & 3 & 3 \\ 1 & 2 & 6 & 2
+    \\ 1 & 3 & 4 & 2 \end{bmatrix}\]
+  prefs: []
+  type: TYPE_NORMAL
+- en: Why?
+  prefs: []
+  type: TYPE_NORMAL
+- en: '<details><summary>**Answer**</summary> The first step of LU Decomposition is
+    (notice that we use the tensor product operator "\(\otimes\)" to denote the outer
+    product of two vectors): $ \textbf{L} = \begin{bmatrix} 1 & 0 & 0 & 0 \\ \textbf{0.5}
+    & 1 & 0 & 0 \\ \textbf{0.5} & ? & 1 & 0 \\ \textbf{0.5} & ? & ? & 1 \end{bmatrix};
+    \hspace{5mm} \textbf{U} = \begin{bmatrix} 2 & 8 & 4 & 1 \\ 0 & ? & ? & ? \\ 0
+    & 0 & ? & ? \\ 0 & 0 & 0 & ? \end{bmatrix}; \hspace{5mm} \bf{L_{22}U_{22}} = \begin{bmatrix}
+    4 & 3 & 3 \\ 2 & 6 & 2 \\ 3 & 4 & 2 \end{bmatrix} - \begin{bmatrix} 0.5 \\ 0.5
+    \\ 0.5 \end{bmatrix} \otimes \begin{bmatrix} 8 \\ 4 \\ 1 \end{bmatrix} = \begin{bmatrix}
+    \textbf{0} & 1 & 2.5 \\ -2 & 4 & 1.5 \\ -1 & 2 & 1.5 \end{bmatrix} $ The next
+    update for the lower triangular matrix will result in a division by zero. LU factorization
+    fails, so \(\bf A\) does not have a normal LU decomposition.</details>'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Solving Linear Systems Using LU Decomposition
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: We can put the above sections together to produce an algorithm for solving the
+    system \({\bf A x} = {\bf b}\), where we first compute the LU decomposition of
+    \({\bf A}\) and then use forward and back substitution to solve for \({\bf x}\).
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'The properties of this algorithm are:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: The algorithm may fail, even if \({\bf A}\) is invertible.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: The number of operations in the algorithm is \(\mathcal{O}(n^3)\) as \(n \to
+    \infty\).
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: 'The code for the ***linear solver using LU decomposition*** is:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE4]'
+  prefs: []
+  type: TYPE_PRE
+- en: Pivoting
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: The LU decomposition can fail when the top-left entry in the matrix \({\bf A}\)
+    is zero or very small compared to other entries. ***Pivoting*** is a strategy
+    to mitigate this problem by rearranging the rows and/or columns of \({\bf A}\)
+    to put a larger element in the top-left position.
+  prefs: []
+  type: TYPE_NORMAL
+- en: There are many different pivoting algorithms. The most common of these are ***full
+    pivoting***, ***partial pivoting***, and ***scaled partial pivoting***. We will
+    only discuss ***partial pivoting*** in detail.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 1) ***Partial pivoting*** only rearranges the rows of \({\bf A}\) and leaves
+    the columns fixed.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![](../Images/84a9fe9fc77b8fbc44ff66e90c84049a.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: 2) ***Full pivoting*** rearranges both rows and columns.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![](../Images/b9e9c57c936b56ff92b79234757f9616.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: 3) ***Scaled partial pivoting*** approximates full pivoting without actually
+    rearranging columns.
+  prefs: []
+  type: TYPE_NORMAL
+- en: LU Decomposition with Partial Pivoting
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'The ***LU decomposition with partial pivoting (LUP)*** of an \(n \times n\)
+    matrix \({\bf A}\) is the triple of matrices \({\bf L}\), \({\bf U}\), and \({\bf
+    P}\) such that:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: \({\bf P A} = {\bf LU} \)
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: \({\bf L}\) is an \(n \times n\) lower-triangular matrix with all diagonal entries
+    equal to 1.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: \({\bf U}\) is an \(n \times n\) upper-triangular matrix.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: \({\bf P}\) is an \(n \times n\) permutation matrix.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: 'The properties of the LUP decomposition are:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: The permutation matrix \({\bf P}\) acts to permute the rows of \({\bf A}\).
+    This attempts to put large entries in the top-left position of \({\bf A}\) and
+    each sub-matrix in the recursion, to avoid needing to divide by a small or zero
+    element.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: The LUP decomposition always exists for a matrix \({\bf A}\).
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: The LUP decomposition of a matrix \({\bf A}\) is not unique.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: The LUP decomposition provides a more robust method of solving linear systems
+    than LU decomposition without pivoting, and it is approximately the same cost.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: 'LU factorization with partial pivoting can be completed for any matrix A: Suppose
+    you are at stage k and there is no non-zero entry on or below the diagonal in
+    column k. At this point, there is nothing else you can do, so the algorithm leaves
+    a zero in the diagonal entry of U. Note that the matrix U is singular, and so
+    is the matrix A. Subsequent back substitutions using U will fail, but the LU factorization
+    itself is still completed.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Solving LUP decomposition linear systems
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Knowing the LUP decomposition for a matrix \({\bf A}\) allows us to solve the
+    linear system \({\bf A x} = {\bf b}\) by first applying \({\bf P}\) and then using
+    the LU solver. In equations we start by taking \({\bf A x} = {\bf b}\) and multiplying
+    both sides by \({\bf P}\), giving
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[\begin{aligned} {\bf Ax} &= {\bf b} \\ {\bf PAx} &= {\bf Pb} \\ {\bf LUx}
+    &= {\bf Pb}. \end{aligned}\]
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'The code for the ***LUP solve algorithm*** to solve the linear system \({\bf
+    L U x} = {\bf P b}\) is:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE5]'
+  prefs: []
+  type: TYPE_PRE
+- en: The number of operations for the LUP solve algorithm is \(\mathcal{O}(n^2)\)
+    as \(n \to \infty\).
+  prefs: []
+  type: TYPE_NORMAL
+- en: The LUP decomposition algorithm
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Just as there are different LU decomposition algorithms, there are also different
+    algorithms to find a LUP decomposition. Here we use the ***recursive leading-row-column
+    LUP algorithm***.
+  prefs: []
+  type: TYPE_NORMAL
+- en: This algorithm is a recursive method for finding \({\bf L}\), \({\bf U}\), and
+    \({\bf P}\) so that \({\bf P A} = {\bf L U}\). It consists of the following steps.
+  prefs: []
+  type: TYPE_NORMAL
+- en: First choose \(i\) so that row \(i\) in \({\bf A}\) has the largest absolute
+    first entry. That is, \(\vert A_{i1}\vert \ge \vert A_{j1}\vert\) for all \(j\).
+    Let \({\bf P}_1\) be the permutation matrix that pivots (shifts) row \(i\) to
+    the first row, and leaves all other rows in order. We can explicitly write \({\bf
+    P}_1\) as
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: \[{\bf P}_1 = \begin{bmatrix} 0_{1(i-1)} & 1 & 0_{1(n-i)} \\ I_{(i-1)(i-1)}
+    & 0 & 0_{(i-1)(n-i)} \\ 0_{(n-i)(i-1)} & 0 & I_{(n-i)(n-i)} \end{bmatrix} = \begin{bmatrix}
+    0 & \ldots & 0 & 1 & 0 & \ldots & 0 \\ 1 & \ldots & 0 & 0 & 0 & \ldots & 0 \\
+    \vdots & \ddots & \vdots & \vdots & \vdots & \ldots & 0 \\ 0 & \ldots & 1 & 0
+    & 0 & \ldots & 0 \\ 0 & \ldots & 0 & 0 & 1 & \ldots & 0 \\ \vdots & \ddots & \vdots
+    & \vdots & \vdots & \ldots & 0 \\ 0 & \ldots & 0 & 0 & 0 & \ldots & 1 \end{bmatrix}.\]
+  prefs:
+  - PREF_IND
+  type: TYPE_NORMAL
+- en: Write \(\bar{ {\bf A} }\) to denote the pivoted \({\bf A}\) matrix, so \(\bar{
+    {\bf A} } = {\bf P}_1 {\bf A}\).
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: Let \({\bf P}_2\) be a permutation matrix that leaves the first row where it
+    is, but permutes all other rows. We can write \({\bf P}_2\) as \({\bf P}_2 = \begin{bmatrix}
+    1 & \boldsymbol{0} \\ \boldsymbol{0} & P_{22} \end{bmatrix},\) where \({\bf P}_{22}\)
+    is an \((n-1) \times (n-1)\) permutation matrix.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: Factorize the (unknown) full permutation matrix \({\bf P}\) as the product of
+    \({\bf P}_2\) and \({\bf P}_1\), so \({\bf P} = {\bf P}_2 {\bf P}_1\). This means
+    that \({\bf P} A = {\bf P}_2 {\bf P}_1 A = {\bf P}_2 \bar{ {\bf A} }\), which
+    first shifts row \(i\) of \({\bf A}\) to the top, and then permutes the remaining
+    rows. This is a completely general permutation matrix \({\bf P}\), but this factorization
+    is key to enabling a recursive algorithm.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: Using the factorization \({\bf P} = {\bf P}_2 {\bf P}_1\), now write the LUP
+    factorization in block form as
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: \[\begin{aligned} {\bf P A} &= {\bf L U} \\ {\bf P_2} \bar{ {\bf A} } &= {\bf
+    L U} \\ \begin{bmatrix} 1 & \boldsymbol{0} \\ \boldsymbol{0} & {\bf P}_{22} \end{bmatrix}
+    \begin{bmatrix} \bar{a}_{11} & \bar{\boldsymbol{a}}_{12} \\ \bar{\boldsymbol{a}}_{21}
+    & \bar{ {\bf A} }_{22} \end{bmatrix} &= \begin{bmatrix} 1 & \boldsymbol{0} \\
+    \boldsymbol{\ell}_{21} & {\bf L}_{22} \end{bmatrix} \begin{bmatrix} u_{11} & \boldsymbol{u}_{12}
+    \\ \boldsymbol{0} & {\bf U}_{22} \end{bmatrix} \\ \begin{bmatrix} \bar{a}_{11}
+    & \bar{\boldsymbol{a}}_{12} \\ {\bf P}_{22} \bar{\boldsymbol{a}}_{21} & {\bf P}_{22}
+    \bar{ {\bf A} }_{22} \end{bmatrix} &= \begin{bmatrix} u_{11} & \boldsymbol{u}_{12}
+    \\ u_{11} \boldsymbol{\ell}_{21} & (\boldsymbol{\ell}_{21} \boldsymbol{u}_{12}
+    + {\bf L}_{22} {\bf U}_{22}) \end{bmatrix} \end{aligned}\]
+  prefs:
+  - PREF_IND
+  type: TYPE_NORMAL
+- en: Equating the entries in the above matrices gives the equations
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: \[\begin{aligned} \bar{a}_{11} &= u_{11} \\ \bar{\boldsymbol{a}}_{12} &= \boldsymbol{u}_{12}
+    \\ {\bf P}_{22} \bar{\boldsymbol{a}}_{21} &= u_{11} \boldsymbol{\ell}_{21} \\
+    {\bf P}_{22} \bar{A}_{22} &= \boldsymbol{\ell}_{21} \boldsymbol{u}_{12} + {\bf
+    L}_{22} {\bf U}_{22}. \end{aligned}\]
+  prefs:
+  - PREF_IND
+  type: TYPE_NORMAL
+- en: Substituting the first three equations above into the last one and rearranging
+    gives
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: \[{\bf P}_{22} \underbrace{\Bigl(\bar{A}_{22} - \bar{\boldsymbol{a}}_{21} (\bar{a}_{11})^{-1}
+    \bar{\boldsymbol{a}}_{12}\Bigr)}_{\text{Schur complement } {\bf S}_{22}} = {\bf
+    L}_{22} {\bf U}_{22}.\]
+  prefs:
+  - PREF_IND
+  type: TYPE_NORMAL
+- en: Recurse to find the LUP decomposition of \(S_{22}\), resulting in \({\bf L}_{22}\),
+    \({\bf U}_{22}\), and \({\bf P}_{22}\) that satisfy the above equation.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: Solve for the first rows and columns of \({\bf L}\) and \({\bf U}\) with the
+    above equations to give
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: \[\begin{aligned} u_{11} &= \bar{a}_{11} \\ \boldsymbol{u}_{12} &= \bar{\boldsymbol{a}}_{12}
+    \\ \boldsymbol{\ell}_{21} &= \frac{1}{\bar{a}_{11}} {\bf P}_{22} \bar{\boldsymbol{a}}_{21}.
+    \end{aligned}\]
+  prefs:
+  - PREF_IND
+  type: TYPE_NORMAL
+- en: Finally, reconstruct the full matrices \({\bf L}\), \({\bf U}\), and \({\bf
+    P}\) from the component parts.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: 'In code the ***recursive leading-row-column LUP algorithm*** for finding the
+    LU decomposition of \({\bf A}\) with partial pivoting is:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE6]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'The properties of the recursive leading-row-column LUP decomposition algorithm
+    are:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: The computational complexity (number of operations) of the algorithm is \(\mathcal{O}(n^3)\)
+    as \(n \to \infty\).
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: The last step in the code that computes \({\bf P}\) does not do so by constructing
+    and multiplying \({\bf P}_2\) and \({\bf P}_1\). This is because this would be
+    an \(\mathcal{O}(n^3)\) step, making the whole algorithm \(\mathcal{O}(n^4)\).
+    Instead we take advantage of the special structure of \({\bf P}_2\) and \({\bf
+    P}_1\) to compute \({\bf P}\) with \(\mathcal{O}(n^2)\) work.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: Solving General Linear Systems using LUP Decomposition
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Just as with the plain LU decomposition, we can use LUP decomposition to solve
+    the linear system \({\bf A x }= {\bf b}\). This is the ***linear solver using
+    LUP decomposition*** algorithm.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'The properties of this algorithm are:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: The algorithm may fail. In particular if \({\bf A}\) is singular (or singular
+    in finite precision), U will have a zero on it's diagonal.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: As LU factorization has \(\mathcal{O}(n^3)\) opeations, and solving \(Ly = b\)
+    and \(Ux = y\) both have \(\mathcal{O}(n^2)\) opeations, the number of total operations
+    in this algorithm is \(\bf{\mathcal{O}(n^3)}\) as \(n \to \infty\).
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: We decouple the factorization step from the actual solve, since in enigeering
+    applications, it might be possible to reuse the LU factorization of the same matrix
+    in solving multiple linear systems.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: 'The code for the ***linear solver using LUP decomposition*** is:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE7]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Example: LUP Decomposition'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: Consider the matrix \(\bf{A} = \begin{bmatrix} 2 & 1 & 1 & 0 \\ 4 & 3 & 3 &
+    1 \\ 8 & 7 & 9 & 5 \\ 6 & 7 & 9 & 8 \end{bmatrix} .\)
+  prefs: []
+  type: TYPE_NORMAL
+- en: How can we find an LUP Decomposition for this matrix?
+  prefs: []
+  type: TYPE_NORMAL
+- en: '<details><summary>**Answer**</summary> Note that we use \({\bf {\overline{M}}}\)
+    to keep track of the matrix (e.g. \(\bf L_{22} U_{22}\) in the first step) that
+    needs recursive factorization, and the tensor product operator "\(\otimes\)" to
+    denote the outer product of two vectors. In the first step: $ \bf{P\overline{M}}
+    = \begin{bmatrix} 0 & 0 & 1 & 0 \\ 0 & 1 & 0 & 0 \\ 1 & 0 & 0 & 0 \\ 0 & 0 & 0
+    & 1 \end{bmatrix} \begin{bmatrix} 2 & 1 & 1 & 0 \\ 4 & 3 & 3 & 1 \\ 8 & 7 & 9
+    & 5 \\ 6 & 7 & 9 & 8 \end{bmatrix} = \begin{bmatrix} 8 & 7 & 9 & 5 \\ 4 & 3 &
+    3 & 1 \\ 2 & 1 & 0 & 0 \\ 6 & 7 & 9 & 8 \end{bmatrix} $ $ \textbf{L} = \begin{bmatrix}
+    1 & 0 & 0 & 0 \\ \textbf{0.5} & 1 & 0 & 0 \\ \textbf{0.25} & ? & 1 & 0 \\ \textbf{0.75}
+    & ? & ? & 1 \end{bmatrix}; \hspace{5mm} \textbf{U} = \begin{bmatrix} 8 & \textbf{7}
+    & \textbf{9} & \textbf{5} \\ 0 & ? & ? & ? \\ 0 & 0 & ? & ? \\ 0 & 0 & 0 & ? \end{bmatrix};
+    \hspace{5mm} \bf{\overline{M}} = \begin{bmatrix} 3 & 3 & 1 \\ 1 & 0 & 0 \\ 7 &
+    9 & 8 \end{bmatrix} - \begin{bmatrix} 0.5 \\ 0.25 \\ 0.75 \end{bmatrix} \otimes
+    \begin{bmatrix} 7 \\ 9 \\ 5 \end{bmatrix} = \begin{bmatrix} -0.5 & -1.5 & -1.5
+    \\ -0.75 & -1.25 & -1.25 \\ 1.75 & 2.25 & 4.25 \end{bmatrix} $ Similarly, in the
+    second (recursive) step: $ \bf{P\overline{M}} = \begin{bmatrix} 0 & 0 & 1 \\ 0
+    & 1 & 0 \\ 1 & 0 & 0 \end{bmatrix} \begin{bmatrix} -0.5 & -1.5 & -1.5 \\ -0.75
+    & -1.25 & -1.25 \\ 1.75 & 2.25 & 4.25 \end{bmatrix} = \begin{bmatrix} 1.75 & 2.25
+    & 4.25 \\ -0.75 & -1.25 & -1.25 \\ -0.5 & -1.5 & -1.5 \end{bmatrix} $ $ \textbf{L}
+    = \begin{bmatrix} 1 & 0 & 0 & 0 \\ \textbf{0.75} & 1 & 0 & 0 \\ 0.25 & \textbf{-0.428}
+    & 1 & 0 \\ \textbf{0.5} & \textbf{-0.285} & ? & 1 \end{bmatrix}; \hspace{5mm}
+    \textbf{U} = \begin{bmatrix} 8 & 7 & 9 & 5 \\ 0 & \textbf{1.75} & \textbf{2.25}
+    & \textbf{4.25} \\ 0 & 0 & ? & ? \\ 0 & 0 & 0 & ? \end{bmatrix} $ $ \bf{\overline{M}}
+    = \begin{bmatrix} -1.25 & -1.25 \\ -1.5 & -1.5 \end{bmatrix} - \begin{bmatrix}
+    -0.428 \\ -0.285 \end{bmatrix} \otimes \begin{bmatrix} 2.25 \\ 4.25 \end{bmatrix}
+    = \begin{bmatrix} -0.287 & 0.569 \\ -0.8587 & -0.2887 \end{bmatrix} $ The next
+    step is: $ \bf{P\overline{M}} = \begin{bmatrix} 0 & 1 \\ 1 & 0 \end{bmatrix} \begin{bmatrix}
+    -0.287 & 0.569 \\ -0.8587 & -0.2887 \end{bmatrix} = \begin{bmatrix} -0.8587 &
+    -0.2887 \\ -0.287 & 0.569 \end{bmatrix} $ $ \textbf{L} = \begin{bmatrix} 1 & 0
+    & 0 & 0 \\ 0.75 & 1 & 0 & 0 \\ \textbf{0.5} & \textbf{-0.285} & 1 & 0 \\ \textbf{0.25}
+    & \textbf{-0.428} & \textbf{0.334} & 1 \end{bmatrix}; \hspace{5mm} \textbf{U}
+    = \begin{bmatrix} 8 & 7 & 9 & 5 \\ 0 & 1.75 & 2.25 & 4.25 \\ 0 & 0 & \textbf{-0.86}
+    & \textbf{-0.29} \\ 0 & 0 & 0 & ? \end{bmatrix}; \hspace{5mm} \bf{\overline{M}}
+    = \begin{bmatrix} 0.569 \end{bmatrix} - \begin{bmatrix} 0.334 \end{bmatrix} \otimes
+    \begin{bmatrix} -0.29 \end{bmatrix} = \begin{bmatrix} 0.67 \end{bmatrix} $ So
+    the final result is: $ \textbf{L} = \begin{bmatrix} 1 & 0 & 0 & 0 \\ 0.75 & 1
+    & 0 & 0 \\ 0.5 & -0.285 & 1 & 0 \\ 0.25 & -0.428 & 0.334 & 1 \end{bmatrix}; \hspace{5mm}
+    \textbf{U} = \begin{bmatrix} 8 & 7 & 9 & 5 \\ 0 & 1.75 & 2.25 & 4.25 \\ 0 & 0
+    & -0.86 & -0.29 \\ 0 & 0 & 0 & 0.67 \end{bmatrix}; \hspace{5mm} \textbf{P} = \begin{bmatrix}
+    0 & 0 & 1 & 0 \\ 0 & 0 & 0 & 1 \\ 0 & 1 & 0 & 0 \\ 1 & 0 & 0 & 0 \end{bmatrix}
+    $</details>'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Example: Matrix for which LUP Decomposition Succeeds but LU Decomposition Fails'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: 'Consider a matrix which has no LU decomposition:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[{\bf A} = \begin{bmatrix} 0 & 1 \\ 2 & 1 \end{bmatrix}.\]
+  prefs: []
+  type: TYPE_NORMAL
+- en: How can we find an LUP Decomposition for this matrix?
+  prefs: []
+  type: TYPE_NORMAL
+- en: <details><summary>**Answer**</summary> To find the LUP decomposition of \(\bf
+    A\), we first write the permutation matrix \({\bf P}\) that shifts the second
+    row to the top, so that the top-left entry has the largest possible magnitude.
+    This gives $ \overbrace{\begin{bmatrix} 0 & 1 \\ 1 & 0 \end{bmatrix}}^{P} \overbrace{\begin{bmatrix}
+    0 & 1 \\ 2 & 1 \end{bmatrix}}^{A} = \overbrace{\begin{bmatrix} 2 & 1 \\ 0 & 1
+    \end{bmatrix}}^{\bar{A}} = \overbrace{\begin{bmatrix} 1 & 0 \\ 0 & 1 \end{bmatrix}}^{L}
+    \overbrace{\begin{bmatrix} 2 & 1 \\ 0 & 1 \end{bmatrix}}^{U}. $</details>
+  prefs: []
+  type: TYPE_NORMAL
+- en: Review Questions
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Given a factorization \({\bf P A} = {\bf LU}\), how would you solve the system
+    \({\bf A}\mathbf{x} = \mathbf{b}\)?
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: Understand the process of solving a triangular system. Solve an example triangular
+    system.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: Recognize and understand Python code implementing forward substitution, back
+    substitution, and LU factorization.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: When does an LU factorization exist?
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: When does an LUP factorization exist?
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: What special properties do \({\bf P}\), \({\bf L}\) and \({\bf U}\) have?
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: Can we find an LUP factorization of a singular matrix?
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: What happens if we try to solve a system \({\bf A}\mathbf{x} = \mathbf{b}\)
+    with a singular matrix \({\bf A}\)?
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: Compute the LU factorization of a small matrix by hand.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: Why do we use pivoting when solving linear systems?
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: How do we choose a pivot element?
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: What effect does a given permutation matrix have when multiplied by another
+    matrix?
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: What is the cost of matrix-matrix multiplication?
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: What is the cost of computing an LU or LUP factorization?
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: What is the cost of forward or back substitution?
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: What is the cost of solving \({\bf A}\mathbf{x} = \mathbf{b}\) for a general
+    matrix?
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: What is the cost of solving \({\bf A}\mathbf{x} = \mathbf{b}\) for a triangular
+    matrix?
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: What is the cost of solving \({\bf A}\mathbf{x} = \mathbf{b_i}\) with the same
+    matrix \({\bf A}\) and several right-hand side vectors \(\mathbf{b}_i\)?
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: Given a process that takes time \(\mathcal{O}(n^k)\), what happens to the runtime
+    if we double the input size (i.e. double \(n\))? What if we triple the input size?
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: Changelog
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'October 2nd, 2024: Dev Singh (dsingh14) — fix lu_decomp'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 'September 30th, 2024: Kaiyao Ke (kaiyaok2) — minor bug fix'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 'February 13th, 2024: Kaiyao Ke (kaiyaok2) — aligned notes with slides, added
+    examples and refactored existing notes'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: <details><summary>View Remaining Entries</summary>
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 'October 20th, 2023: Yuxuan Chen (yuxuan19) — update lu_decomp() code'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 'February 28th, 2018: Erin Carrier (ecarrie2) — fix error in ludecomp() code'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 'February 22nd, 2018: Erin Carrier (ecarrie2) — update properties for solving
+    using LUP'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 'January 14th, 2018: Erin Carrier (ecarrie2) — removes demo links'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 'November 2nd, 2017: Arun Lakshmanan (lakshma2) — minor fix in lup_solve(),
+    add changelog'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 'November 2nd, 2017: John Doherty (jjdoher2) — fixed typo in back substitution'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 'October 25th, 2017: Nathan Bowman (nlbowma2) — added review questions'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 'October 23rd, 2017: Erin Carrier (ecarrie2) — fix links'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 'October 20th, 2017: Matthew West (mwest) — minor fix in back_sub()'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 'October 19th, 2017: Nathan Bowman (nlbowma2) — minor existence of LUP'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 'October 17th, 2017: Erin Carrier (ecarrie2) — fixes'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 'October 17th, 2017: Luke Olson (lukeo) — update links'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 'October 16th, 2017: Matthew West (mwest) — first draft complete</details>'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Authors
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: CS 357 Course Staff*
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL

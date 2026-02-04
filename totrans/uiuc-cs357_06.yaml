@@ -1,0 +1,408 @@
+- en: Taylor Series
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: 原文：[https://cs357.cs.illinois.edu/textbook/notes/taylor.html](https://cs357.cs.illinois.edu/textbook/notes/taylor.html)
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: Learning Objectives
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Approximate a function using a Taylor series
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Approximate function derivatives using a Taylor series
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Quantify the error in a Taylor series approximation
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Polynomial Overview
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Degree *n* Polynomial
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: A polynomial in a variable \(x\) can always be written (or rewritten) in the
+    form
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[ a_{n}x^{n}+a_{n-1}x^{n-1}+\dotsb +a_{2}x^{2}+a_{1}x+a_{0} \]
+  prefs: []
+  type: TYPE_NORMAL
+- en: where \(a_{i}\) (\(0 \le i \le n\)) are constants.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Using the summation notation, we can express the polynomial concisely by
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[ \sum_{k=0}^{n} a_k x^k. \]
+  prefs: []
+  type: TYPE_NORMAL
+- en: If \(a_n \neq 0\), the polynomial is called an \(n\)-th degree polynomial.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Degree *n* Polynomial as a Linear Combination of Monomials
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: A monomial in a variable \(x\) is a power of \(x\) where the exponent is a nonnegative
+    integer (i.e. \(x^n\) where \(n\) is a nonnegative integer). You might see another
+    definition of monomial which allows a nonzero constant as a coefficient in the
+    monomial (i.e. \(a x^n\) where \(a\) is nonzero and \(n\) is a nonnegative integer).
+    Then an \(n\)-th degree polynomial
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[ \sum_{k=0}^{n} a_k x^k \]
+  prefs: []
+  type: TYPE_NORMAL
+- en: can be seen as a linear combination of monomials \({x^i\ |\ 0 \le i \le n}\).
+  prefs: []
+  type: TYPE_NORMAL
+- en: Taylor Series Expansion
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'Taylor Series Expansion: Infinite'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: A Taylor series is a representation of a function as an infinite sum of terms
+    that are calculated from the values of the function's derivatives at a single
+    point. The Taylor series expansion about \(x=x_0\) of a function \(f(x)\) that
+    is infinitely differentiable at \(x_0\) is the power series
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[ f(x_0)+\frac{f'(x_0)}{1!}(x-x_0)+\frac{f''(x_0)}{2!}(x-x_0)^2+\frac{f'''(x_0)}{3!}(x-x_0)^3+\dotsb
+    \]
+  prefs: []
+  type: TYPE_NORMAL
+- en: Using the summation notation, we can express the Taylor series concisely by
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[ \sum_{k=0}^{\infty} \frac{f^{(k)}(x_0)}{k!}(x-x_0)^k .\]
+  prefs: []
+  type: TYPE_NORMAL
+- en: (Recall that \(0! = 1\))
+  prefs: []
+  type: TYPE_NORMAL
+- en: The infinite Taylor series expansion of any polynomial is the polynomial itself.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Taylor Series Expansion: Finite'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: In practice, however, we often cannot compute the (infinite) Taylor series of
+    the function, or the function is not infinitely differentiable at some points.
+    Therefore, we often have to truncate the Taylor series (use a finite number of
+    terms) to approximate the function.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Taylor Series Approximation of Degree *n*
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: If we use the first \(n+1\) terms of the Taylor series, we will get
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[ T_n(x) = \sum_{k=0}^{n} \frac{f^{(k)}(x_0)}{k!}(x-x_0)^k ,\]
+  prefs: []
+  type: TYPE_NORMAL
+- en: which is called a Taylor polynomial of degree \(n\).
+  prefs: []
+  type: TYPE_NORMAL
+- en: The finite Taylor series expansion of degree \(n\) for any polynomial is the
+    polynomial itself truncated to degree \(n\).
+  prefs: []
+  type: TYPE_NORMAL
+- en: Examples
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: Example of a Taylor Series Expansion
+  prefs:
+  - PREF_H4
+  type: TYPE_NORMAL
+- en: How would we expand \(f(x) = \cos x\) about the point \(x_0 = 0\), following
+    the formula
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[f(x) = f(x_0)+\frac{ f'(x_0) }{1!}(x-x_0)+\frac{ f''(x_0) }{2!}(x-x_0)^2+\frac{
+    f'''(x_0) }{3!}(x-x_0)^3+\dotsb\] <details><summary>**Answer**</summary> Well,
+    we need to compute the derivatives of \(f(x)\) = cos \(x\) at \(x = x_0\). $ \begin{align}
+    f(x_0) &= \cos(0) = 1\\ f'(x_0) &= -\sin(0) = 0\\ f''(x_0) &= -\cos(0) = -1\\
+    f'''(x_0) &= \sin(0) = 0\\ f^{(4)}(x_0) &= \cos(0) = 1\\ &\vdots \end{align} $
+    Then $ \begin{align} \cos x &= f(0)+\frac{f'(0)}{1!}x+\frac{f''(0)}{2!}x^2+\frac{f'''(0)}{3!}x^3+\dotsb\\
+    &= 1 + 0 - \frac{1}{2}x^2 + 0 +\dotsb\\ &= \sum_{k=0}^{\infty} \frac{(-1)^k}{(2k)!}x^{2k}
+    \end{align} $</details>
+  prefs: []
+  type: TYPE_NORMAL
+- en: Example of Using a Truncated Taylor Series to Approximate a Function
+  prefs:
+  - PREF_H4
+  type: TYPE_NORMAL
+- en: How would we approximate \(f(x) = \sin x\) at \(x = 2\) using a degree-4 Taylor
+    polynomial about (centered at) the point \(x_0 = 0\), following the formula
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[ f(x) \approx f(x_0)+\frac{f'(x_0)}{1!}(x-x_0)+\frac{f''(x_0)}{2!}(x-x_0)^2+\frac{f'''(x_0)}{3!}(x-x_0)^3+\frac{f^{(4)}(x_0)}{4!}(x-x_0)^4,
+    \]<details><summary>**Answer**</summary> Well, we need to compute the first 4
+    derivatives of \(f(x)\) = sin \(x\) at \(x = x_0\).\[\begin{align} f(x_0) &= \sin(0)
+    = 0\\ f'(x_0) &= \cos(0) = 1\\ f''(x_0) &= -\sin(0) = 0\\ f'''(x_0) &= -\cos(0)
+    = -1\\ f^{(4)}(x_0) &= \sin(0) = 0 \end{align}\]Then\[\begin{align} \sin x &\approx
+    f(0)+\frac{f'(0)}{1!}x+\frac{f''(0)}{2!}x^2+\frac{f'''(0)}{3!}x^3+\frac{f^{(4)}(0)}{4!}x^4\\
+    &= 0 + x + 0 - \frac{1}{3!}x^3 + 0 \\ &= x - \frac{1}{6}x^3 \end{align}\]Using
+    this truncated Taylor series centered at \(x_0 = 0\), we can approximate \(f(x)\)
+    = sin \(x\) at \(x=2\). To do so, we simply plug \(x = 2\) into the above formula
+    for the degree 4 Taylor polynomial giving\[\begin{align} \sin(2) &\approx 2 -
+    \frac{1}{6} 2^3 \\ &\approx 2 - \frac{8}{6} \\ &\approx \frac{2}{3} \end{align}.\]We
+    can always use Taylor polynomial with higher degrees to do the estimation. In
+    a similar way that we derive the closed-form expression for cos \(x\), we can
+    write the Taylor Series for sin \(x\) as\[ \sin x = \sum_{k=0}^{\infty} \frac{(-1)^k}{(2k+1)!}x^{2k+1}
+    \]</details>
+  prefs: []
+  type: TYPE_NORMAL
+- en: Taylor Series Error
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Error Bound when Truncating a Taylor Series
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: Suppose that \(f(x)\) is an \(n+1\) times differentiable function of \(x\),
+    and \(T_n(x)\) is the Taylor polynomial of degree \(n\) for \(f(x)\) centered
+    at \(x_0\). Then when \(h = |x-x_0| \to 0\), we obtain the truncation error bound
+    by \[ \left|f(x)-T_n(x)\right|\le C \cdot h^{n+1} = O(h^{n+1}) \]
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'We will see the exact expression of \(C\) in the next section: *Taylor Remainder
+    Theorem*.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Taylor Remainder Theorem
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: Suppose that \(f(x)\) is an \(n+1\) times differentiable function of \(x\).
+    Let \(R_n(x)\) denote the difference between \(f(x)\) and the Taylor polynomial
+    of degree \(n\) for \(f(x)\) centered at \(x_0\). Then
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[ R_n(x) = f(x) - T_n(x) = \frac{f^{(n+1)}(\xi)}{(n+1)!} (x-x_0)^{n+1} \]
+  prefs: []
+  type: TYPE_NORMAL
+- en: for some \(\xi\) between \(x\) and \(x_0\). Thus, the constant \(C\) mentioned
+    above is
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[ \max\limits_{\xi} \frac{\vert f^{(n+1)}(\xi)\vert }{(n+1)!}\]
+  prefs: []
+  type: TYPE_NORMAL
+- en: .
+  prefs: []
+  type: TYPE_NORMAL
+- en: Note that this value is equivalent to the next term of the Taylor series.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Asymptotic behavior of the error
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: Let's say we have \(f(x)\) approximated using \(t_n(x)\). Suppose the given
+    interval is \(h_1\) between \(x_0\) and \(x\) and the error associated with it
+    is \(e_1\). Let's say we have another interval \(h_2\) and we need to find the
+    error \(e_2\) associated with it.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Using the formula \(e = O(h^{n+1})\), we get
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[e_1 \propto {h_1}^{n+1}\] \[e_2 \propto {h_2}^{n+1}\]
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[ \frac{e_1}{e_2} = (\frac{h_1}{h_2})^{n+1} \]
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[e_2 = (\frac{h_2}{h_1})^{n+1}e_1\]
+  prefs: []
+  type: TYPE_NORMAL
+- en: Examples
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: Example of an Error Bound
+  prefs:
+  - PREF_H4
+  type: TYPE_NORMAL
+- en: 'Suppose we want to approximate \(f(x) = \sin x\) using a degree-4 Taylor polynomial
+    expanded about the point \(x_0 = 0\). How would we compute the error bound for
+    this approximation, following the Taylor Remainder Theorem:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[ R_4(x) = \frac{f^{(5)}(\xi)}{5!} (x-x_0)^{5} \]
+  prefs: []
+  type: TYPE_NORMAL
+- en: for some \(\xi\) between \(x_0\) and \(x\).
+  prefs: []
+  type: TYPE_NORMAL
+- en: <details><summary>**Answer**</summary> If we want to find the upper bound for
+    the absolute error, we are looking for an upper bound for \( \vert f^{(5)}(\xi)\vert
+    \).
+  prefs: []
+  type: TYPE_NORMAL
+- en: Since \( f^{(5)}(x) = \cos x \)
+  prefs: []
+  type: TYPE_NORMAL
+- en: \( |f^{(5)}(\xi)|\le \cos(0) \rightarrow |f^{(5)}(\xi)|\le 1 \)
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Then:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: \( |R_4(x)| = \left|\frac{f^{(5)}(\xi)}{5!} (x-x_0)^{5}\right| = \frac{|f^{(5)}(\xi)|}{5!}
+    |x|^{5} \le \frac{1}{120} |x|^{5} \)</details>
+  prefs: []
+  type: TYPE_NORMAL
+- en: Example of Error Predictions
+  prefs:
+  - PREF_H4
+  type: TYPE_NORMAL
+- en: Suppose you expand \(\sqrt{x - 10}\) in a Taylor polynomial of degree 3 about
+    the center \(x_0 = 12\). For \(h_1 = 0.5\), you find that the Taylor truncation
+    error is about \(10^{-4}\). How would you find the Taylor truncation error for
+    \(h_2 = 0.25\)?
+  prefs: []
+  type: TYPE_NORMAL
+- en: <details><summary>**Answer**</summary> We can use the formula \(e_2 = (\frac{h_2}{h_1})^{n+1}e_1\)
+    to find the Taylor truncation error for \(h_2 = 0.25\).
+  prefs: []
+  type: TYPE_NORMAL
+- en: Here, \(n = 3\) and hence \(e_2 = (\frac{0.25}{0.5})^{4} \cdot 10^{-4} = 0.625
+    \cdot 10^{-5}\).</details>
+  prefs: []
+  type: TYPE_NORMAL
+- en: Review Questions
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: What is the general form of a Taylor series?
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: How do you use a Taylor series to approximate a function at a given point?
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: How can you approximate the derivative of a function using Taylor series?
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: How can you approximate the integral of a function using Taylor series?
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: Given a function and a center, can you write out the *n*-th degree Taylor polynomial?
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: For an *n*-th degree Taylor polynomial, what is the bound on the error of your
+    approximation as a function of distance from the center?
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: For simple functions, can you find the constant *C* in the Taylor error bound?
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: Be able to determine how many terms are required for a Taylor series approximation
+    to have less than some given error.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: Changelog
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'February 18th, 2025: Kaiyao Ke (kaiyaok2) — fix rendering bugs'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 'March 29th, 2024: Dev Singh (dsingh14) — added clarifications on taylor series
+    error bound and approximations'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 'March 27th, 2024: Arnav Aggarwal (arnava4) — aligned notes with slides and
+    added additional examples'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: <details><summary>View Remaining Entries</summary>
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 'January 25th, 2022: Arnav Shah (arnavss2) — Added error predictions from slides'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 'January 20th, 2021: Mariana Silva (mfsilva) — Removed FD content'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 'February 10th, 2020: Peter Sentz (sentz2) — Correct some small mistakes and
+    update some notation'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 'January 29th, 2019: John Doherty (jjdoher2) — Added Finite Difference section
+    from F18 activity'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 'January 14th, 2018: Erin Carrier (ecarrie2) — removes demo links'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 'November 2nd, 2017: Erin Carrier (ecarrie2) — adds changelog'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 'October 27th, 2017: Yu Meng (yumeng5) — first complete draft'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 'October 27th, 2017: Erin Carrier (ecarrie2) — adds review questions, minor
+    fixes throughout'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 'October 17th, 2017: Luke Olson (lukeo) — outline</details>'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Authors
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: CS 357 Course Staff
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL

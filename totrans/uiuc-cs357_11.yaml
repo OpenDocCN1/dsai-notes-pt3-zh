@@ -1,0 +1,589 @@
+- en: Condition Numbers
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: 原文：[https://cs357.cs.illinois.edu/textbook/notes/condition.html](https://cs357.cs.illinois.edu/textbook/notes/condition.html)
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: Learning Objectives
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Compute the condition number
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Quantify the impact of a high condition number
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Numerical experiments
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '**Input** has uncertainties:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Errors due to representation with finite precision
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Error in the sampling
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Once you select your numerical method, how much error should you expect to see
+    in your output?
+  prefs: []
+  type: TYPE_NORMAL
+- en: '*Is your method sensitive to errors (perturbation) in the input?*'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Sensitivity of Solutions of Linear Systems and Error Bound
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Motivation
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: Suppose we start with a non-singular system of linear equations \({\bf A} \boldsymbol{x}
+    = \boldsymbol{b}\). If we change the right-hand side vector \(\boldsymbol{b}\)
+    (the input) by a small amount \(\Delta \boldsymbol{b}\), how much will the solution
+    \(\boldsymbol{x}\) (the output) change, i.e., how large is \(\Delta \boldsymbol{x}\)?
+  prefs: []
+  type: TYPE_NORMAL
+- en: Let's explore this!
+  prefs: []
+  type: TYPE_NORMAL
+- en: Derivation
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: Let \(\boldsymbol{x}\) be the solution of \({\bf A} \boldsymbol{x} = \boldsymbol{b}\)
+    and \(\hat{\boldsymbol{x}}\) be the solution of the perturbed problem \({\bf A}
+    \hat{\boldsymbol{x}} = \boldsymbol{b} + \Delta \boldsymbol{b}\).
+  prefs: []
+  type: TYPE_NORMAL
+- en: In addition, let \(\Delta \boldsymbol{x} = \hat{\boldsymbol{x}} - \boldsymbol{x}\)
+    be the absolute error in output.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Then we have \({\bf A} \boldsymbol{x} + {\bf A} \Delta \boldsymbol{x} = \boldsymbol{b}
+    + \Delta \boldsymbol{b},\) so \({\bf A} \Delta \boldsymbol{x} = \Delta \boldsymbol{b}.\)
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Using the above equations, we''ll see how the relative error in output \(\left(\frac{\|\Delta
+    \boldsymbol{x}\|}{\|\boldsymbol{x}\|}\right)\) is related to the relative error
+    in input \(\left(\frac{\|\Delta \boldsymbol{b}\|}{\|\boldsymbol{b}\|}\right)\):'
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[\begin{align} \frac{\|\Delta \boldsymbol{x}\| / \|\boldsymbol{x}\|}{\|\Delta
+    \boldsymbol{b}\| / \|\boldsymbol{b}\|} &= \frac{\|\Delta \boldsymbol{x}\| \|\boldsymbol{b}\|}{\|\boldsymbol{x}\|
+    \|\Delta \boldsymbol{b}\|}\\ &= \frac{\|{\bf A}^{-1} \Delta \boldsymbol{b}\| \|{\bf
+    A} \boldsymbol{x}\|}{\|\boldsymbol{x}\| \|\Delta \boldsymbol{b}\|}\\ &\le \frac{\|{\bf
+    A}^{-1}\| \|\Delta \boldsymbol{b}\| \|{\bf A}\| \|\boldsymbol{x}\|}{\|\boldsymbol{x}\|
+    \|\Delta \boldsymbol{b}\|} \\ &= \|{\bf A}^{-1}\| \|{\bf A}\|\\ &= \text{cond}({\bf
+    A}) \end{align}\]
+  prefs: []
+  type: TYPE_NORMAL
+- en: where we used \(\|{\bf A}\boldsymbol{x}\| \le \|{\bf A}\| \|\boldsymbol{x}\|,
+    \forall \boldsymbol{x}.\)
+  prefs: []
+  type: TYPE_NORMAL
+- en: Matrix Perturbation and Error Bound
+  prefs:
+  - PREF_H4
+  type: TYPE_NORMAL
+- en: Then
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[\frac{\|\Delta \boldsymbol{x}\|}{\|\boldsymbol{x}\|} \le \text{cond}({\bf
+    A})\frac{\|\Delta \boldsymbol{b}\|}{\|\boldsymbol{b}\|} \qquad (1)\]
+  prefs: []
+  type: TYPE_NORMAL
+- en: Instead of changing the input \(\boldsymbol{b}\), we can also add a perturbation
+    to the matrix \(\boldsymbol{A}\) (input) by a small amount \(\boldsymbol{E}\),
+    such that
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[\begin{align} (\boldsymbol{A} + \boldsymbol{E}) \hat{\boldsymbol{x}} = \boldsymbol{b}
+    \end{align}\]
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'and in a similar way obtain:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[\frac{\|\Delta \boldsymbol{x}\|}{\|\boldsymbol{x}\|} \le \text{cond}({\bf
+    A})\frac{\| \boldsymbol{E}\|}{\|\boldsymbol{A}\|}\]
+  prefs: []
+  type: TYPE_NORMAL
+- en: Therefore, if we know the relative error in input, then we can use the condition
+    number of the system to obtain an upper bound for the relative error of our computed
+    solution (output).
+  prefs: []
+  type: TYPE_NORMAL
+- en: Example
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: Give an example of a matrix that is very well-conditioned (i.e., has a condition
+    number that is good for computation). Select the best possible condition number(s)
+    of a matrix?
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[\begin{flalign} & \text{A) } \text{cond}({\bf A}) < 0 \\ & \text{B) } \text{cond}({\bf
+    A}) = 0 \\ & \text{C) } 0 < \text{cond}({\bf A}) < 1 \\ & \text{D) } \text{cond}({\bf
+    A}) = 1 \\ & \text{E) } \text{cond}({\bf A}) = \text{large numbers} \\ && \end{flalign}\]
+    <details><summary>**Answer**</summary>
+  prefs: []
+  type: TYPE_NORMAL
+- en: \(\bf D\)
+  prefs: []
+  type: TYPE_NORMAL
+- en: The condition number of a matrix \({\bf A}\) cannot be less than 1 and a smaller
+    condition number will minimize the relative error in output \(\left(\frac{\|\Delta
+    \boldsymbol{x}\|}{\|\boldsymbol{x}\|}\right)\). Since we want to minimize the
+    error in computation, choice \( \text{D} \) is the correct answer.</details>
+  prefs: []
+  type: TYPE_NORMAL
+- en: Condition Number
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Condition Number Definition
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '***Condition Number***: a measure of sensitivity of solving a linear system
+    of equations to variations in the input.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: The ***condition number*** of a square nonsingular matrix \({\bf A}\) is defined
+    by \(\text{cond}({\bf A}) = \kappa({\bf A}) = \|{\bf A}\| \|{\bf A}^{-1}\|\).
+    This is also the condition number associated with solving the linear system \({\bf
+    A} \boldsymbol{x} = \boldsymbol{b}\). A matrix with a large condition number is
+    said to be ***ill-conditioned***, while a matrix with a small condition is said
+    to be ***well-conditioned***.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'The identity matrix is well conditioned. We show this by the following:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Assuming the inverse of \(\|{\bf A}\|\) exists, \(\text{cond}({\bf A}) = \|{\bf
+    A}\| \|{\bf A}^{-1}\| \geq \|{\bf A}{\bf A}^{-1}\| = \|{\bf I}\| = 1.\)
+  prefs: []
+  type: TYPE_NORMAL
+- en: This is the smallest possible condition number. Small condition numbers correspond
+    to little error amplification. Remember, small condition numbers are good!
+  prefs: []
+  type: TYPE_NORMAL
+- en: If \({\bf A}\) is singular (\({\bf A}^{-1}\) does not exist), we can define
+    \(\text{cond}({\bf A}) = \infty\) by convention.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Induced Matrix Norms
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: 'Recall that the induced matrix norm is given by:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[\begin{align} \|{\bf A}\|_p := \max_{\|\mathbf{x}\|=1} \|{\bf A}\mathbf{x}\|_p
+    \end{align}\]
+  prefs: []
+  type: TYPE_NORMAL
+- en: The condition number can be measured with any \(p\)-norm, so to be precise we
+    typically specify the norm being used, i.e. \(\text{cond}_2\), \(\text{cond}_1,
+    \text{cond}_{\infty}\).
+  prefs: []
+  type: TYPE_NORMAL
+- en: For the 1-norm, we take the maximum absolute column sum of the matrix \(\boldsymbol{A}\)
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[\|{\bf A}\|_1 = \max_j \sum_{i=1}^n \vert a_{ij} \vert.\]
+  prefs: []
+  type: TYPE_NORMAL
+- en: For the \(\infty\)-norm, we take the maximum absolute row sum of the matrix
+    \(\boldsymbol{A}\)
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[\|{\bf A}\|_{\infty} = \max_i \sum_{j=1}^n \vert a_{ij} \vert.\]
+  prefs: []
+  type: TYPE_NORMAL
+- en: For the 2-norm, \(\sigma_k\) are the singular values of the matrix \(\boldsymbol{A}\)
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[\|{\bf A}\|_{2} = \max_k \sigma_k\]
+  prefs: []
+  type: TYPE_NORMAL
+- en: Condition Number of Orthogonal Matrices
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: What is the 2-norm condition number of an orthogonal matrix \(\boldsymbol{A}\)?
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[\begin{align} \text{cond}({\bf A}) = \|{\bf A}\|_2 \|{\bf A}^{-1}\|_2 = \|{\bf
+    A}\|_2 \|{\bf A}^{T}\|_2 = 1 \end{align}\]
+  prefs: []
+  type: TYPE_NORMAL
+- en: Hence, this means that orthogonal matrices have optimal conditioning.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Things to Remember About Condition Numbers
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: For any matrix \({\bf A}\), \(\text{cond}({\bf A}) \geq 1.\)
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: For the identity matrix \({\bf I}\), \(\text{cond}({\bf I}) = 1.\)
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: For any matrix \({\bf A}\) and a nonzero scalar \(\gamma\), \(\text{cond}(\gamma
+    {\bf A}) = \text{cond}({\bf A}).\)
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: For any diagonal matrix \({\bf D}\), \(\text{cond}({\bf D})\) = \(\frac{\text{max}\mid
+    d_{i} \mid}{\text{min}\mid d_{i} \mid}.\)
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 'The condition number is a measure of how close a matrix is to being singular:
+    a matrix with large condition number is nearly singular, whereas a matrix with
+    a condition number close to 1 is far from being singular.'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: The determinant of a matrix is **NOT** a good indicator to check whether a matrix
+    is near singularity.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Example
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: What is the 2-norm-based condition number of the diagonal matrix
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[\mathbf{A} = \begin{bmatrix} 100 & 0 & 0 \\ 0 & 13 & 0 \\ 0 & 0 & 0.5 \end{bmatrix}?\]
+    \[\begin{flalign} & \text{A) } 1 \\ & \text{B) } 50 \\ & \text{C) } 100 \\ & \text{D)
+    } 200 \\ && \end{flalign}\] <details><summary>**Answer**</summary>
+  prefs: []
+  type: TYPE_NORMAL
+- en: \(\bf D\)
+  prefs: []
+  type: TYPE_NORMAL
+- en: As mentioned above, for any diagonal matrix \({\bf D}\), \(\text{cond}({\bf
+    D}) \) = \(\frac{\text{max}\mid d_{i} \mid}{\text{min}\mid d_{i} \mid}.\) Hence,
+    the answer is \( 100 / 0.5 = 200\. \)
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Another way to go about this question is by obtaining the inverse of the diagonal
+    matrix \({\bf A}\):'
+  prefs: []
+  type: TYPE_NORMAL
+- en: \( \mathbf{A^{-1}} = \begin{bmatrix} 1/100 & 0 & 0 \\ 0 & 1/13 & 0 \\ 0 & 0
+    & 2 \end{bmatrix}? \)
+  prefs: []
+  type: TYPE_NORMAL
+- en: \( \begin{align} \text{cond}({\bf A}) = \|{\bf A}\|_2 \|{\bf A}^{-1}\|_2 = 100
+    * 2 = 200 \end{align} \)</details>
+  prefs: []
+  type: TYPE_NORMAL
+- en: Residual vs Error
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: The ***residual vector*** \(\boldsymbol{r}\) of approximate solution \(\hat{\boldsymbol{x}}\)
+    for the linear system \({\bf A} \boldsymbol{x} = \boldsymbol{b}\) is defined as
+    \(\boldsymbol{r} = \boldsymbol{b} - {\bf A} \hat{\boldsymbol{x}}\). Since \({\bf
+    A} \hat{\boldsymbol{x}} = \boldsymbol{b} + \Delta \boldsymbol{b}\), we have
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[\boldsymbol{r} = \boldsymbol{b} - (\boldsymbol{b} + \Delta \boldsymbol{b})
+    = -\Delta \boldsymbol{b}\]
+  prefs: []
+  type: TYPE_NORMAL
+- en: Therefore, [equation (1)](#matrix-perturbation-and-error-bound) can also be
+    written as
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[\frac{\|\Delta \boldsymbol{x}\|}{\|\boldsymbol{x}\|} \le \text{cond}({\bf
+    A})\frac{\|\boldsymbol{r}\|}{\|\boldsymbol{b}\|}\]
+  prefs: []
+  type: TYPE_NORMAL
+- en: If we define relative residual as \(\frac{\|\boldsymbol{r}\|}{\|\boldsymbol{b}\|}\),
+    we can see that a small relative residual implies small relative error in approximate
+    solution only if \({\bf A}\) is well-conditioned (\(\text{cond}({\bf A})\) is
+    small).
+  prefs: []
+  type: TYPE_NORMAL
+- en: In addition, it's important to note the difference between relative residual
+    and relative error. The relative residual \(\frac{\|\boldsymbol{r}\|}{\|\boldsymbol{b}\|}\)
+    tells us how well the approximate solution \(\hat{\boldsymbol{x}}\) satisfies
+    the linear system \({\bf A} \boldsymbol{x} = \boldsymbol{b}\). The relative error
+    \(\frac{\|\Delta \boldsymbol{x}\|}{\|\boldsymbol{x}\|}\) tells us how close the
+    approximated solution \(\hat{\boldsymbol{x}}\) is to the exact solution \(\boldsymbol{x}\).
+    Keep in mind that we don't know the exact solution \(\boldsymbol{x}\), this is
+    why we started using the residual vector \(\boldsymbol{r}\).
+  prefs: []
+  type: TYPE_NORMAL
+- en: Example
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: \[\mathbf{A} = \begin{bmatrix} 13 & 0 & 0 \\ 0 & 1 & 0 \\ 0 & 0 & 15 \end{bmatrix}\]
+  prefs: []
+  type: TYPE_NORMAL
+- en: Suppose we have \({\boldsymbol{x}}\) as a solution of \({\bf A} \boldsymbol{x}
+    = \boldsymbol{b}\), and \(\hat {\boldsymbol{x}}\) as a solution of \({\bf A} \hat{\boldsymbol{x}}
+    = \boldsymbol{b} + \Delta \boldsymbol{b}\). We define \({\bf r} = {\bf A} \hat{\boldsymbol{x}}
+    - \boldsymbol{b}\). If we know that the relative residual \(\frac{\|\boldsymbol{r}\|}{\|\boldsymbol{b}\|}\)
+    is \(10^{-4}\), determine the upper bound for the output relative error. Assume
+    2-norm.
+  prefs: []
+  type: TYPE_NORMAL
+- en: <details><summary>**Answer**</summary>
+  prefs: []
+  type: TYPE_NORMAL
+- en: \(\frac{\|\Delta \boldsymbol{x}\|}{\|\boldsymbol{x}\|} \le \text{cond}({\bf
+    A})\frac{\|\boldsymbol{r}\|}{\|\boldsymbol{b}\|} = \mathbf{15 * 10^{-4}} \)</details>
+  prefs: []
+  type: TYPE_NORMAL
+- en: Alternative Definitions of Relative Residual
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: As a reminder, the relative residual \(\frac{\|\boldsymbol{r}\|}{\|\boldsymbol{b}\|}\)
+    tells us how well the approximate solution \(\hat{\boldsymbol{x}}\) satisfies
+    the linear system \({\bf A} \boldsymbol{x} = \boldsymbol{b}\).
+  prefs: []
+  type: TYPE_NORMAL
+- en: There are other closely related quantities that also have the name "relative
+    residual". Note that
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[\begin{align} \|\Delta \boldsymbol{x}\| &= \|\hat{\boldsymbol{x}} - \boldsymbol{x}\|
+    \\ &= \|\boldsymbol{A}^{-1}\boldsymbol{A}\hat{\boldsymbol{x}} - \boldsymbol{A}^{-1}\boldsymbol{b}\|
+    \\ &= \|\boldsymbol{A}^{-1}(\boldsymbol{A}\hat{\boldsymbol{x}} - \boldsymbol{b})\|
+    \\ &= \|\boldsymbol{A}^{-1}\boldsymbol{r}\|\\ &\leq \|\boldsymbol{A}^{-1}\|\cdot
+    \| \boldsymbol{r}\| \\ &= \|\boldsymbol{A}^{-1}\|\cdot \|\boldsymbol{A}\| \frac{\|\boldsymbol{r}\|}{\|\boldsymbol{A}\|}
+    \\ &= \text{cond}(\boldsymbol{A})\frac{\|\boldsymbol{r}\|}{\|\boldsymbol{A}\|}.
+    \end{align}\]
+  prefs: []
+  type: TYPE_NORMAL
+- en: In summary,
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[\|\Delta \boldsymbol{x}\| \leq \text{cond}(\boldsymbol{A})\frac{\|\boldsymbol{r}\|}{\|\boldsymbol{A}\|}\qquad
+    (2)\]
+  prefs: []
+  type: TYPE_NORMAL
+- en: We can divide this inequality by \(\|\boldsymbol{x}\|\) to obtain
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[\frac{\|\Delta \boldsymbol{x}\|}{\|\boldsymbol{x}\|} \le \text{cond}({\bf
+    A})\frac{\|\boldsymbol{r}\|}{\|\boldsymbol{A}\|\cdot\|\boldsymbol{x}\|}.\]
+  prefs: []
+  type: TYPE_NORMAL
+- en: The quantity \(\frac{\|\boldsymbol{r}\|}{\|\boldsymbol{A}\|\cdot\|\boldsymbol{x}\|}\)
+    is also known as the relative residual. This inequality is useful mathematically,
+    but involves the norm \(\|\mathbf{x}\|\) of the unknown solution, so it isn't
+    a practical way to bound the relative error. Since \(\|\boldsymbol{b}\| = \|\boldsymbol{A}\boldsymbol{x}\|
+    \leq \|\boldsymbol{A}\|\cdot \|\boldsymbol{x}\|\), we have
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[\frac{\|\boldsymbol{r}\|}{\|\boldsymbol{A}\|\cdot\|\boldsymbol{x}\|} \leq
+    \frac{\|\boldsymbol{r}\|}{\|\boldsymbol{b}\|}\]
+  prefs: []
+  type: TYPE_NORMAL
+- en: '*Note that the two sides are sometimes equal for certain choices of \(\boldsymbol{b}\).*'
+  prefs: []
+  type: TYPE_NORMAL
+- en: We can also divide [equation (2)](#alternative-definitions-of-relative-residual)
+    by \(\|\hat{\boldsymbol{x}}\|\) to obtain
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[\frac{\|\Delta \boldsymbol{x}\|}{\|\hat{\boldsymbol{x}}\|} \le \text{cond}({\bf
+    A})\frac{\|\boldsymbol{r}\|}{\|\boldsymbol{A}\|\cdot\|\hat{\boldsymbol{x}}\|}.\]
+  prefs: []
+  type: TYPE_NORMAL
+- en: The left-hand side is no longer the relative error (the denominator is the norm
+    of the approximate solution now, not the exact solution), but the right-hand side
+    can still provide a reasonable estimate of the relative error. It is also computable,
+    since the norm of the true solution does not appear on the right-hand side.
+  prefs: []
+  type: TYPE_NORMAL
+- en: For this reason, the quantity \(\frac{\|\boldsymbol{r}\|}{\|\boldsymbol{A}\|\cdot\|\hat{\boldsymbol{x}}\|}\)
+    is also known as the relative residual. This is used in the next section to describe
+    the relationship between the residual and errors in the matrix \(\boldsymbol{A}\).
+  prefs: []
+  type: TYPE_NORMAL
+- en: While 3 different quantities all being named "relative residual" may be confusing,
+    you should be able to determine which one is being discussed by the context.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Gaussian Elimination (with Partial Pivoting) is Guaranteed to Produce a Small
+    Residual
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'When we use Gaussian elimination with partial pivoting to compute the solution
+    for the linear system \({\bf A} \boldsymbol{x} = \boldsymbol{b}\) and obtain an
+    approximate solution \(\hat{\boldsymbol{x}}\), the residual vector \(\boldsymbol{r}\)
+    satisfies:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[\frac{\|\boldsymbol{r}\|}{\|{\bf A}\| \|\hat{\boldsymbol{x}}\|} \le \frac{\|E\|}{\|{\bf
+    A}\|} \le c \epsilon_{mach}\]
+  prefs: []
+  type: TYPE_NORMAL
+- en: where \(E\) is backward error in \({\bf A}\) (which is defined by \(({\bf A}+E)\hat{\boldsymbol{x}}
+    = \boldsymbol{b}\)), \(c\) is a coefficient related to \({\bf A}\) and \(\epsilon_{mach}\)
+    is machine epsilon.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Typically \(c\) is small with partial pivoting, but \(c\) can be arbitrarily
+    large without pivoting.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Therefore, Gaussian elimination with partial pivoting yields **small relative
+    residual regardless of conditioning of the system **.****
+  prefs: []
+  type: TYPE_NORMAL
+- en: For more details, see [Gaussian Elimination & Roundoff Error](https://math.la.asu.edu/~gardner/lu-round.pdf).
+  prefs: []
+  type: TYPE_NORMAL
+- en: Accuracy Rule of Thumb for Conditioning
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Suppose we apply Gaussian elimination with partial pivoting and back substitution
+    to the linear system \({\bf A} \boldsymbol{x} = \boldsymbol{b}\) and obtain a
+    computed solution \(\hat{\boldsymbol{x}}\). If the entries in \({\bf A}\) and
+    \(\boldsymbol{b}\) are accurate to \(s\) decimal digits, and \(\text{cond}({\bf
+    A}) \approx 10^w\), then the elements of the solution vector \(\hat{\boldsymbol{x}}\)
+    will be accurate to about \(s-w\) decimal digits.
+  prefs: []
+  type: TYPE_NORMAL
+- en: For a proof of this rule of thumb, please see [Fundamentals of Matrix Computations
+    by David S. Watkins](https://books.google.com/books?id=xi5omWiQ-3kC&pg=PA165&lpg=PA165&dq=gaussian+elimination+rule+of+thumb&source=bl&ots=KlQVax3zja&sig=o4SHiYPAXodkk39u9yw0NYZe1Zo&hl=en&sa=X&ved=0ahUKEwiopPykkvjWAhWjzIMKHYGpDIsQ6AEIXzAK#v=onepage&q=gaussian%20elimination%20rule%20of%20thumb&f=false).
+  prefs: []
+  type: TYPE_NORMAL
+- en: Example
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: How many accurate decimal digits in the solution can we expect to obtain if
+    we solve a linear system \({\bf A} \boldsymbol{x} = \boldsymbol{b}\) where \(\text{cond}({\bf
+    A}) = 10^{10}\) using Gaussian elimination with partial pivoting, assuming we
+    are using IEEE double precision and the inputs are accurate to machine precision?
+  prefs: []
+  type: TYPE_NORMAL
+- en: <details><summary>**Answer**</summary> In IEEE double precision, \(\epsilon_{mach}
+    \approx 2.2\times 10^{-16}\), which means the entries in \({\bf A}\) and \(\boldsymbol{b}\)
+    are accurate to \(\vert\log_{10}(2.2\times 10^{-16})\vert \approx 16\) decimal
+    digits.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Then, using the rule of thumb, we know the entries in \(\hat{\boldsymbol{x}}\)
+    will be accurate to about \(16-10 = 6\) decimal digits.</details>
+  prefs: []
+  type: TYPE_NORMAL
+- en: Review Questions
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: What is the definition of a condition number?
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: What is the condition number of solving \({\bf A}\mathbf{x} = \mathbf{b}\)?
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: What is the condition number of matrix-vector multiplication?
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: Calculate the \(p\)-norm condition number of a matrix for a given \(p\).
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: Do you want a small condition number or a large condition number?
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: What is the condition number of an orthogonal matrix?
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: If you have \(p\) accurate digits in \({\bf A}\) and \(\mathbf{b}\), how many
+    accurate digits do you have in the solution of \({\bf A}\mathbf{x} = \mathbf{b}\)
+    if the condition number of \({\bf A}\) is \(\kappa\)?
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: When solving a linear system \({\bf A}\mathbf{x} = \mathbf{b}\), does a small
+    residual guarantee an accurate result?
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: Consider solving a linear system \({\bf A}\mathbf{x} = \mathbf{b}\). When does
+    Gaussian elimination with partial pivoting produce a small residual?
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: How does the condition number of a matrix \({\bf A}\) relate to the condition
+    number of \({\bf A}^{-1}\)?
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: Changelog
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'February 12th, 2024: Arnav Aggarwal (arnava4) — aligned notes with slides and
+    added additional examples'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 'March 19th, 2022: Yuxuan Chen (yuxuan19) — added condition number bullet pounts,
+    minor fixes'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 'October 27th, 2017: Yu Meng (yumeng5) — first complete draft'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: <details><summary>View Remaining Entries</summary>
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 'October 27th, 2017: Erin Carrier (ecarrie2) — adds review questions, minor
+    fixes throughout, revised rule of thumb wording'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 'October 17th, 2017: Luke Olson (lukeo) — outline</details>'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Authors
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: CS 357 Course Staff
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL

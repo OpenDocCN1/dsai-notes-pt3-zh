@@ -1,0 +1,273 @@
+- en: Sparse Matrices
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: 原文：[https://cs357.cs.illinois.edu/textbook/notes/sparse.html](https://cs357.cs.illinois.edu/textbook/notes/sparse.html)
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: Dense Matrices
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'A dense matrix stores all values including zeros. So, a \(m \times n\) matrix
+    would have to store \(O(m \times n)\) entries. For example:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[A = \begin{bmatrix} 1.0 & 0 & 0 \\ 3.0 & 4.0 & 0 \\ 6.0 & 0 & 7.0 \\ 0 & 0
+    & 10.0 \end{bmatrix}.\]
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'To store the matrix, all components are generally saved in row-major order.
+    For \(\mathbf{A}\) given above, we would store:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[A_{dense} = \begin{bmatrix} 1.0 & 0 & 0 & 3.0 & 4.0 & 0 & 6.0 & 0 & 7.0 &
+    0 & 0 & 10.0 \end{bmatrix}.\]
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'The dimensions of the matrix are stored separately:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[A_{shape} = \\(n_{row}, n_{col})\\ = \\(4, 3)\\.\]
+  prefs: []
+  type: TYPE_NORMAL
+- en: Sparse Matrices
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Some types of matrices contain too many zeros, and storing all those zero entries
+    is wasteful. A sparse matrix is a matrix with few non-zero entries.
+  prefs: []
+  type: TYPE_NORMAL
+- en: A \(m \times n\) matrix is called sparse if it has \(O(min(m, n))\) non-zero
+    entries.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Goals
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: A sparse matrix aims to store large matrices efficiently without storing many
+    zeros, which allows for more economical computations. It also saves storage space,
+    which can reduce memory overhead on a system.
+  prefs: []
+  type: TYPE_NORMAL
+- en: The number of operations required to add two dense matrices \(\mathbf{P}\),
+    \(\mathbf{Q}\) is \(O(n(\mathbf{P}) + n(\mathbf{Q}))\) where \((n(\mathbf{X}))\)
+    is the number of elements in \(\mathbf{X}\).
+  prefs: []
+  type: TYPE_NORMAL
+- en: The number of operations required to add two sparse matrices \(\mathbf{P}\),
+    \(\mathbf{Q}\) is \(O(nnz(\mathbf{P}) + nnz(\mathbf{Q}))\) where \((nnz(\mathbf{X}))\)
+    is the number of non-zero elements in \(\mathbf{X}\).
+  prefs: []
+  type: TYPE_NORMAL
+- en: Storage Solutions
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: There are many ways to store sparse matrices such as Coordinate (COO), Compressed
+    Sparse Row (CSR), Block Sparse Row (BSR), Dictionary of Keys (DOK), etc.
+  prefs: []
+  type: TYPE_NORMAL
+- en: We will focus on Coordinate and Compressed Sparse Row.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Let''s explore ways to store the following example:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[\mathbf{A}= \begin{bmatrix} 1.0 & 0 & 0 & 2.0 & 0 \\ 3.0 & 4.0 & 0 & 5.0 &
+    0 \\ 6.0 & 0 & 7.0 & 8.0 & 9.0 \\ 0 & 0 & 10.0 & 11.0 & 0 \\ 0 & 0 & 0 & 0 & 12.0
+    \end{bmatrix}.\]
+  prefs: []
+  type: TYPE_NORMAL
+- en: Coordinate Format (COO)
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: 'COO stores arrays of row indices, column indices and the corresponding non-zero
+    data values in any order. This format provides fast methods to construct sparse
+    matrices and convert to different sparse formats. For \({\bf A}\) the COO format
+    is:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[\textrm{data} = \begin{bmatrix} 12.0 & 9.0 & 7.0 & 5.0 & 1.0 & 2.0 & 11.0
+    & 3.0 & 6.0 & 4.0 & 8.0 & 10.0\end{bmatrix}\] \[\textrm{row} = \begin{bmatrix}
+    4 & 2 & 2 & 1 & 0 & 0 & 3 & 1 & 2 & 1 & 2 & 3 \end{bmatrix}\] \[\textrm{col} =
+    \begin{bmatrix} 4 & 4 & 2 & 3 & 0 & 3 & 3 & 0 & 0 & 1 & 3 & 2 \end{bmatrix}\]
+  prefs: []
+  type: TYPE_NORMAL
+- en: \(\textrm{row}\) and \(\textrm{col}\) are arrays of \(nnz\) integers.
+  prefs: []
+  type: TYPE_NORMAL
+- en: \(\textrm{data}\) is an \(nnz\) array of the data type of the original matrix,
+    in this case doubles.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'How to interpret: The first entries of \(\textrm{data}\), \(\textrm{row}\),
+    \(\textrm{col}\) are 12.0, 4, 4, respectively, meaning there is a 12.0 at position
+    (4, 4) of the matrix; second entries are 9.0, 2, 4, so there is a 9.0 at (2, 4).'
+  prefs: []
+  type: TYPE_NORMAL
+- en: A COO matrix stores \(3 \times nnz\) elements. This method can be sorted as
+    each index in the row, col, and data arrays describe the same element.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Converting this matrix into COO format in python can be done using the `scipy.sparse`
+    library.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs: []
+  type: TYPE_PRE
+- en: You can also recreate a sparse matrix in COO format to a dense or CSR matrix
+    in python using the `scipy.sparse` library.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE1]'
+  prefs: []
+  type: TYPE_PRE
+- en: Compressed Sparse Row (CSR)
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: 'CSR, also commonly known as the Yale format, encodes rows offsets, column indices
+    and the corresponding non-zero data values. The row offsets are defined by the
+    followign recursive relationship (starting with \(\textrm{rowptr}[0] = 0\)):'
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[ \textrm{rowptr}[j] = \textrm{rowptr}[j-1] + \mathrm{nnz}(\textrm{row}_{j-1}),
+    \\ \]
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'where \(\mathrm{nnz}(\textrm{row}_k)\) is the number of non-zero elements in
+    the \(k^{th}\) row. Note that the length of \(\textrm{rowptr}\) is \(n_{rows}
+    + 1\), where the last element in \(\textrm{rowptr}\) is the number of nonzeros
+    in \(A\). For \({\bf A}\) the CSR format is:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: \[\textrm{data} = \begin{bmatrix} 1.0 & 2.0 & 3.0 & 4.0 & 5.0 & 6.0 & 7.0 &
+    8.0 & 9.0 & 10.0 & 11.0 & 12.0 \end{bmatrix}\] \[\textrm{col} = \begin{bmatrix}
+    0 & 3 & 0 & 1 & 3 & 0 & 2 & 3 & 4 & 2 & 3 & 4\end{bmatrix}\] \[\textrm{rowptr}
+    = \begin{bmatrix} 0 & 2 & 5 & 9 & 11 & 12 \end{bmatrix}\]
+  prefs: []
+  type: TYPE_NORMAL
+- en: \(\textrm{rowptr}\) contains the row offset (array of \(m + 1\) integers).
+  prefs: []
+  type: TYPE_NORMAL
+- en: \(\textrm{col}\) contains column indices (array of \(nnz\) integers).
+  prefs: []
+  type: TYPE_NORMAL
+- en: \(\textrm{data}\) contains non-zero elements (array of \(nnz\) type of data
+    values, in this case doubles).
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'How to interpret: The first two entries of \(\textrm{rowptr}\) gives us the
+    elements in the first row. Interval [0, 2) of \(\textrm{data}\) and \(\textrm{col}\),
+    corresponding to two (data, column) pairs: (1.0, 0) and (2.0, 3), means the first
+    row has 1.0 at column 0 and 2.0 at column 3\. The second and third entries of
+    \(\textrm{rowptr}\) tells us [2, 5) of \(\textrm{data}\) and \(\textrm{col}\)
+    corresponds to the second row. The three pairs (3.0, 0), (4.0, 1), (5.0, 3) means
+    in the second row, there is a 3.0 at column 0, a 4.0 at column 1, and a 5.0 at
+    column 3.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: A CSR matrix stores \(2 \times nnz + m + 1\) elements. It also provides fast
+    arithmetic operations between sparse matrices, and fast matrix vector product.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Converting this matrix into CSR format in python can be done using the `scipy.sparse`
+    library.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE2]'
+  prefs: []
+  type: TYPE_PRE
+- en: You can also recreate a sparse matrix in CSR format to a dense or COO matrix
+    in python using the `scipy.sparse` library.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE3]'
+  prefs: []
+  type: TYPE_PRE
+- en: CSR Matrix Vector Product Algorithm
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'The following code snippet performs CSR matrix vector product for square matrices:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE4]'
+  prefs: []
+  type: TYPE_PRE
+- en: Review Questions
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: What does it mean for a matrix to be sparse?
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: What factors might you consider when deciding how to store a sparse matrix?
+    (Why would you store a matrix in one format over another?)
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: Given a sparse matrix, put the matrix in CSR format.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: Given a sparse matrix, put the matrix in COO format.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: For a given matrix, how many bytes total are required to store it in CSR format?
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: For a given matrix, how many bytes total are required to store it in COO format?
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: Changelog
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'October 28th, 2025: Dev Singh (dsingh14) — fix dense matrix example'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 'October 31st, 2024: Kaiyao Ke (kaiyaok2) — minor bug fix'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 'February 14th, 2024: Kriti Chandak (kritic3) — added information from slides
+    and additional examples'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: <details><summary>View Remaining Entries</summary>
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 'March 6th, 2022: Victor Zhao (chenyan4) — added instructions on how to interpret
+    COO and CSR'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 'March 1st, 2020: Peter Sentz (sentz2) — extracted material from previous reference
+    pages</details>'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Authors
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: CS 357 Course Staff
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
