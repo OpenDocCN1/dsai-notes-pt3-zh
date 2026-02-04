@@ -4,31 +4,31 @@
 
 ## 稠密矩阵
 
-稠密矩阵存储所有值，包括零。因此，一个 \(m \times n\) 的矩阵必须存储 \(O(m \times n)\) 个项。例如：
+稠密矩阵存储所有值，包括零。因此，一个 $m \times n$ 的矩阵必须存储 $O(m \times n)$ 个项。例如：
 
-\[A = \begin{bmatrix} 1.0 & 0 & 0 \\ 3.0 & 4.0 & 0 \\ 6.0 & 0 & 7.0 \\ 0 & 0 & 10.0 \end{bmatrix}.\]
+$$A = \begin{bmatrix} 1.0 & 0 & 0 \\ 3.0 & 4.0 & 0 \\ 6.0 & 0 & 7.0 \\ 0 & 0 & 10.0 \end{bmatrix}.$$
 
-为了存储矩阵，所有组件通常以行主序保存。对于上面给出的 \(\mathbf{A}\)，我们会存储：
+为了存储矩阵，所有组件通常以行主序保存。对于上面给出的 $\mathbf{A}$，我们会存储：
 
-\[A_{dense} = \begin{bmatrix} 1.0 & 0 & 0 & 3.0 & 4.0 & 0 & 6.0 & 0 & 7.0 & 0 & 0 & 10.0 \end{bmatrix}.\]
+$$A_{dense} = \begin{bmatrix} 1.0 & 0 & 0 & 3.0 & 4.0 & 0 & 6.0 & 0 & 7.0 & 0 & 0 & 10.0 \end{bmatrix}.$$
 
 矩阵的维度是单独存储的：
 
-\[A_{shape} = \\(n_{row}, n_{col})\\ = \\(4, 3)\\.\]
+$$A_{shape} = \$n_{row}, n_{col})\\ = \$4, 3)\\.$$
 
 ## 稀疏矩阵
 
 一些类型的矩阵包含太多的零，存储所有这些零项是浪费的。稀疏矩阵是一种非零项很少的矩阵。
 
-一个 \(m \times n\) 的矩阵如果它有 \(O(min(m, n))\) 个非零项，则称为稀疏矩阵。
+一个 $m \times n$ 的矩阵如果它有 $O(min(m, n))$ 个非零项，则称为稀疏矩阵。
 
 ## 目标
 
 稀疏矩阵旨在以高效的方式存储大型矩阵，而不存储许多零，这允许进行更经济的计算。它还节省了存储空间，这可以减少系统上的内存开销。
 
-添加两个稠密矩阵 \(\mathbf{P}\) 和 \(\mathbf{Q}\) 所需的操作数是 \(O(n(\mathbf{P}) + n(\mathbf{Q}))\)，其中 \((n(\mathbf{X}))\) 是 \(\mathbf{X}\) 中的元素数量。
+添加两个稠密矩阵 $\mathbf{P}$ 和 $\mathbf{Q}$ 所需的操作数是 $O(n(\mathbf{P}) + n(\mathbf{Q}))$，其中 $(n(\mathbf{X}))$ 是 $\mathbf{X}$ 中的元素数量。
 
-添加两个稀疏矩阵 \(\mathbf{P}\) 和 \(\mathbf{Q}\) 所需的操作数是 \(O(nnz(\mathbf{P}) + nnz(\mathbf{Q}))\)，其中 \((nnz(\mathbf{X}))\) 是 \(\mathbf{X}\) 中非零元素的数量。
+添加两个稀疏矩阵 $\mathbf{P}$ 和 $\mathbf{Q}$ 所需的操作数是 $O(nnz(\mathbf{P}) + nnz(\mathbf{Q}))$，其中 $(nnz(\mathbf{X}))$ 是 $\mathbf{X}$ 中非零元素的数量。
 
 ## 存储解决方案
 
@@ -38,21 +38,21 @@
 
 让我们探索存储以下示例的方法：
 
-\[\mathbf{A}= \begin{bmatrix} 1.0 & 0 & 0 & 2.0 & 0 \\ 3.0 & 4.0 & 0 & 5.0 & 0 \\ 6.0 & 0 & 7.0 & 8.0 & 9.0 \\ 0 & 0 & 10.0 & 11.0 & 0 \\ 0 & 0 & 0 & 0 & 12.0 \end{bmatrix}.\]
+$$\mathbf{A}= \begin{bmatrix} 1.0 & 0 & 0 & 2.0 & 0 \\ 3.0 & 4.0 & 0 & 5.0 & 0 \\ 6.0 & 0 & 7.0 & 8.0 & 9.0 \\ 0 & 0 & 10.0 & 11.0 & 0 \\ 0 & 0 & 0 & 0 & 12.0 \end{bmatrix}.$$
 
 ### 坐标格式（COO）
 
-COO 存储行索引、列索引和相应的非零数据值的数组，顺序可以是任意的。这种格式提供了快速构建稀疏矩阵和转换为不同稀疏格式的方法。对于 \({\bf A}\) 的 COO 格式是：
+COO 存储行索引、列索引和相应的非零数据值的数组，顺序可以是任意的。这种格式提供了快速构建稀疏矩阵和转换为不同稀疏格式的方法。对于 ${\bf A}$ 的 COO 格式是：
 
-\[\textrm{data} = \begin{bmatrix} 12.0 & 9.0 & 7.0 & 5.0 & 1.0 & 2.0 & 11.0 & 3.0 & 6.0 & 4.0 & 8.0 & 10.0\end{bmatrix}\] \[\textrm{row} = \begin{bmatrix} 4 & 2 & 2 & 1 & 0 & 0 & 3 & 1 & 2 & 1 & 2 & 3 \end{bmatrix}\] \[\textrm{col} = \begin{bmatrix} 4 & 4 & 2 & 3 & 0 & 3 & 3 & 0 & 0 & 1 & 3 & 2 \end{bmatrix}\]
+$$\textrm{data} = \begin{bmatrix} 12.0 & 9.0 & 7.0 & 5.0 & 1.0 & 2.0 & 11.0 & 3.0 & 6.0 & 4.0 & 8.0 & 10.0\end{bmatrix}$$ $$\textrm{row} = \begin{bmatrix} 4 & 2 & 2 & 1 & 0 & 0 & 3 & 1 & 2 & 1 & 2 & 3 \end{bmatrix}$$ $$\textrm{col} = \begin{bmatrix} 4 & 4 & 2 & 3 & 0 & 3 & 3 & 0 & 0 & 1 & 3 & 2 \end{bmatrix}$$
 
-\(\textrm{row}\) 和 \(\textrm{col}\) 是 \(nnz\) 个整数的数组。
+$\textrm{row}$ 和 $\textrm{col}$ 是 $nnz$ 个整数的数组。
 
-\(\textrm{data}\) 是原始矩阵数据类型的 \(nnz\) 数组，在这种情况下是双精度浮点数。
+$\textrm{data}$ 是原始矩阵数据类型的 $nnz$ 数组，在这种情况下是双精度浮点数。
 
-如何解释：\(\textrm{data}\)，\(\textrm{row}\)，\(\textrm{col}\) 的前几个条目分别是 12.0，4，4，这意味着矩阵的位置 (4, 4) 处有 12.0；第二个条目是 9.0，2，4，所以 (2, 4) 处有 9.0。
+如何解释：$\textrm{data}$，$\textrm{row}$，$\textrm{col}$ 的前几个条目分别是 12.0，4，4，这意味着矩阵的位置 (4, 4) 处有 12.0；第二个条目是 9.0，2，4，所以 (2, 4) 处有 9.0。
 
-COO 矩阵存储 \(3 \times nnz\) 个元素。这种方法可以排序，因为行、列和数据数组中的每个索引描述的是相同的元素。
+COO 矩阵存储 $3 \times nnz$ 个元素。这种方法可以排序，因为行、列和数据数组中的每个索引描述的是相同的元素。
 
 在 Python 中，可以使用 `scipy.sparse` 库将此矩阵转换为 COO 格式。
 
@@ -88,23 +88,23 @@ CSR = COO.tocsr()
 
 ### 压缩稀疏行 (CSR)
 
-CSR，也常称为耶鲁格式，编码行偏移、列索引和相应的非零数据值。行偏移由以下递归关系定义（从 \(\textrm{rowptr}[0] = 0\) 开始）：
+CSR，也常称为耶鲁格式，编码行偏移、列索引和相应的非零数据值。行偏移由以下递归关系定义（从 $\textrm{rowptr}[0] = 0$ 开始）：
 
-\[ \textrm{rowptr}[j] = \textrm{rowptr}[j-1] + \mathrm{nnz}(\textrm{row}_{j-1}), \\ \]
+$$ \textrm{rowptr}[j] = \textrm{rowptr}[j-1] + \mathrm{nnz}(\textrm{row}_{j-1}), \\ $$
 
-其中 \(\mathrm{nnz}(\textrm{row}_k)\) 是第 \(k\) 行中非零元素的数量。注意，\(\textrm{rowptr}\) 的长度是 \(n_{rows} + 1\)，其中 \(\textrm{rowptr}\) 的最后一个元素是 \(A\) 中的非零元素数量。对于 CSR 格式的 \({\bf A}\)：
+其中 $\mathrm{nnz}(\textrm{row}_k)$ 是第 $k$ 行中非零元素的数量。注意，$\textrm{rowptr}$ 的长度是 $n_{rows} + 1$，其中 $\textrm{rowptr}$ 的最后一个元素是 $A$ 中的非零元素数量。对于 CSR 格式的 ${\bf A}$：
 
-\[\textrm{data} = \begin{bmatrix} 1.0 & 2.0 & 3.0 & 4.0 & 5.0 & 6.0 & 7.0 & 8.0 & 9.0 & 10.0 & 11.0 & 12.0 \end{bmatrix}\] \[\textrm{col} = \begin{bmatrix} 0 & 3 & 0 & 1 & 3 & 0 & 2 & 3 & 4 & 2 & 3 & 4\end{bmatrix}\] \[\textrm{rowptr} = \begin{bmatrix} 0 & 2 & 5 & 9 & 11 & 12 \end{bmatrix}\]
+$$\textrm{data} = \begin{bmatrix} 1.0 & 2.0 & 3.0 & 4.0 & 5.0 & 6.0 & 7.0 & 8.0 & 9.0 & 10.0 & 11.0 & 12.0 \end{bmatrix}$$ $$\textrm{col} = \begin{bmatrix} 0 & 3 & 0 & 1 & 3 & 0 & 2 & 3 & 4 & 2 & 3 & 4\end{bmatrix}$$ $$\textrm{rowptr} = \begin{bmatrix} 0 & 2 & 5 & 9 & 11 & 12 \end{bmatrix}$$
 
-\(\textrm{rowptr}\) 包含行偏移（\(m + 1\) 个整数的数组）。
+$\textrm{rowptr}$ 包含行偏移（$m + 1$ 个整数的数组）。
 
-\(\textrm{col}\) 包含列索引（\(nnz\) 个整数的数组）。
+$\textrm{col}$ 包含列索引（$nnz$ 个整数的数组）。
 
-\(\textrm{data}\) 包含非零元素（\(nnz\) 个数据值类型的数组，在这种情况下是双精度浮点数）。
+$\textrm{data}$ 包含非零元素（$nnz$ 个数据值类型的数组，在这种情况下是双精度浮点数）。
 
-如何解释：\(\textrm{rowptr}\) 的前两个条目给出了第一行的元素。\(\textrm{data}\) 和 \(\textrm{col}\) 的区间 [0, 2) 对应两个 (data, column) 对：\( (1.0, 0) \) 和 \( (2.0, 3) \)，意味着第一行在列 0 处有 1.0，在列 3 处有 2.0。\(\textrm{rowptr}\) 的第二个和第三个条目告诉我们 \(\textrm{data}\) 和 \(\textrm{col}\) 的 [2, 5) 区间对应第二行。三个对 \((3.0, 0)\)，\((4.0, 1)\)，\((5.0, 3)\) 意味着在第二行中，列 0 处有 3.0，列 1 处有 4.0，列 3 处有 5.0。
+如何解释：$\textrm{rowptr}$ 的前两个条目给出了第一行的元素。$\textrm{data}$ 和 $\textrm{col}$ 的区间 [0, 2) 对应两个 (data, column) 对：$ (1.0, 0) $ 和 $ (2.0, 3) $，意味着第一行在列 0 处有 1.0，在列 3 处有 2.0。$\textrm{rowptr}$ 的第二个和第三个条目告诉我们 $\textrm{data}$ 和 $\textrm{col}$ 的 [2, 5) 区间对应第二行。三个对 $(3.0, 0)$，$(4.0, 1)$，$(5.0, 3)$ 意味着在第二行中，列 0 处有 3.0，列 1 处有 4.0，列 3 处有 5.0。
 
-CSR 矩阵存储 \(2 \times nnz + m + 1\) 个元素。它还提供了在稀疏矩阵之间进行快速算术运算和快速矩阵向量积的功能。
+CSR 矩阵存储 $2 \times nnz + m + 1$ 个元素。它还提供了在稀疏矩阵之间进行快速算术运算和快速矩阵向量积的功能。
 
 在 Python 中，可以使用 `scipy.sparse` 库将此矩阵转换为 CSR 格式。
 
@@ -172,11 +172,11 @@ def csr_mat_vec(A, x):
 
 +   2024 年 2 月 14 日：Kriti Chandak (kritic3) — 添加了幻灯片信息和额外的示例
 
-+   <details><summary>查看剩余条目</summary>
++   <summary>查看剩余条目</summary>
 
     +   2022 年 3 月 6 日：Victor Zhao (chenyan4) — 添加了如何解释 COO 和 CSR 的说明
 
-    +   2020 年 3 月 1 日：Peter Sentz (sentz2) — 从之前的参考页面中提取了材料</details>
+    +   2020 年 3 月 1 日：Peter Sentz (sentz2) — 从之前的参考页面中提取了材料
 
 ## 作者
 

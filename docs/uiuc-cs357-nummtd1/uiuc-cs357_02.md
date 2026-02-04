@@ -2,9 +2,9 @@
 
 > 原文：[`cs357.cs.illinois.edu/textbook/notes/python.html`](https://cs357.cs.illinois.edu/textbook/notes/python.html)
 
-<details><summary style="font-size: 1.1em;">查看幻灯片</summary>
+<summary style="font-size: 1.1em;">查看幻灯片</summary>
 
-如果你在这里看不到 PDF，请点击 这里 下载 PDF。</details>
+如果你在这里看不到 PDF，请点击 这里 下载 PDF。
 
 ## 学习目标
 
@@ -35,11 +35,11 @@ d = 2 * a
 
 变量 `c` 和 `d` 的正确类型是什么？
 
-\[\begin{flalign} & \text{A) } \text{c 是浮点数，d 是浮点数} \\ & \text{B) } \text{c 是浮点数，d 是整数} \\ & \text{C) } \text{c 是整数，d 是整数} \\ & \text{D) } \text{c 是整数，d 是浮点数} \\ \end{flalign}\] <details><summary>**答案**</summary>
+$$\begin{flalign} & \text{A) } \text{c 是浮点数，d 是浮点数} \\ & \text{B) } \text{c 是浮点数，d 是整数} \\ & \text{C) } \text{c 是整数，d 是整数} \\ & \text{D) } \text{c 是整数，d 是浮点数} \\ \end{flalign}$$ <summary>**答案**</summary>
 
 **B.**
 
-在 Python 中，任何整数和浮点数之间的操作都会得到浮点数。因此，c 是浮点数。d 是整数，因为我们对两个整数进行了乘法运算。</details>
+在 Python 中，任何整数和浮点数之间的操作都会得到浮点数。因此，c 是浮点数。d 是整数，因为我们对两个整数进行了乘法运算。
 
 ## 名称和值
 
@@ -64,7 +64,7 @@ b.append(4)
 
 `b.append(4)` 修改了对象列表，使得列表现在是 `[1, 2, 3, 4]`。我们知道 b 现在是 `[1, 2, 3, 4]`，但变量名 a 发生了什么变化？
 
-<details><summary>**答案**</summary> 因为 a 和 b 绑定到同一个列表，一旦列表被修改，它们将具有相同的值。</details>
+<summary>**答案**</summary> 因为 a 和 b 绑定到同一个列表，一旦列表被修改，它们将具有相同的值。
 
 ### 获取对象的 "id"
 
@@ -166,11 +166,11 @@ c = a + [b]
 a.append(b) 
 ```
 
-<details><summary>**答案**</summary>
+<summary>**答案**</summary>
 
 **C**
 
-A 是不正确的，因为 `c` 的列表中最终有两个 "hey" 元素。B 是不正确的，因为 `a += b` 将 "hey" 的每个字符都作为其自己的元素添加。因此，C 必须是正确的选择。</details>
+A 是不正确的，因为 `c` 的列表中最终有两个 "hey" 元素。B 是不正确的，因为 `a += b` 将 "hey" 的每个字符都作为其自己的元素添加。因此，C 必须是正确的选择。
 
 ## 对象和命名
 
@@ -212,11 +212,11 @@ C: `computer_science ['electrical', 'physics']`
 
 D: `computer_science ['electrical']`
 
-<details><summary>**答案**</summary>
+<summary>**答案**</summary>
 
 **C**
 
-在上面的代码片段中，由于 Python 中字符串是不可变的，John 和 Tim 指的是不同的对象，因此变量 John 等于`'computer_science'`。列表是可变的，所以 Julie 和 Anna 等于同一个列表：`['electrical', 'physics']`。因此，C 是正确的选择。</details>
+在上面的代码片段中，由于 Python 中字符串是不可变的，John 和 Tim 指的是不同的对象，因此变量 John 等于`'computer_science'`。列表是可变的，所以 Julie 和 Anna 等于同一个列表：`['electrical', 'physics']`。因此，C 是正确的选择。
 
 ## 索引
 
@@ -231,13 +231,13 @@ a[1::2][::-1]
 
 上面的命令行输出是什么？
 
-\[\begin{flalign} & \text{A) } [1, 3, 5, 7, 9] \\ & \text{B) } [1, 3] \\ & \text{C) } [3, 1] \\ & \text{D) } [9, 7] \\ & \text{E) } [9, 7, 5, 3, 1] \\ && \end{flalign}\] <details><summary>**答案**</summary>
+$$\begin{flalign} & \text{A) } [1, 3, 5, 7, 9] \\ & \text{B) } [1, 3] \\ & \text{C) } [3, 1] \\ & \text{D) } [9, 7] \\ & \text{E) } [9, 7, 5, 3, 1] \\ && \end{flalign}$$ <summary>**答案**</summary>
 
-\(\bf E\)
+$\bf E$
 
 第一步是获取数组 a[1::2]的结果数组。在零索引数组中，起始索引是 1，步长是 1 直到数组的末尾（因为没有给出停止索引）。因此，结果数组是[1, 3, 5, 7, 9]，我们现在将其称为数组 b。
 
-最后一步是获取数组 b[::-1]的结果数组。没有给出起始或停止索引，但步长是-1。这意味着我们只需要反转数组 b，因为负步长意味着我们从数组的末尾开始迭代，而不是从开始迭代。因此，最终的数组将是[9, 7, 5, 3, 1]，这等于答案选项 E。</details>
+最后一步是获取数组 b[::-1]的结果数组。没有给出起始或停止索引，但步长是-1。这意味着我们只需要反转数组 b，因为负步长意味着我们从数组的末尾开始迭代，而不是从开始迭代。因此，最终的数组将是[9, 7, 5, 3, 1]，这等于答案选项 E。
 
 ## 控制流程
 
@@ -333,13 +333,13 @@ def do_stuff(a, b):
 do_stuff(a, b) 
 ```
 
-<details><summary>**答案**</summary>
+<summary>**答案**</summary>
 
 **B**
 
 B 是正确答案，因为在 Python 中`ints`是不可变的。这意味着在函数内部将`a`增加 1 和将`b`增加 2 只会为 a 和 b 创建新的对象。这些新对象将限制在函数的作用域内，因此变量不会被修改。
 
-然而，列表是可变对象，向其中添加值并不会创建新的对象。函数只是更新已经具有全局作用域的变量，因此这些变量被修改。</details>
+然而，列表是可变对象，向其中添加值并不会创建新的对象。函数只是更新已经具有全局作用域的变量，因此这些变量被修改。
 
 ## 字典
 
@@ -547,7 +547,7 @@ print(C)
 
 +   2024 年 3 月 16 日：Arnav Aggarwal (arnava4) — 将笔记与幻灯片对齐并添加了额外的示例
 
-+   <details><summary>查看剩余条目</summary></details>
++   <summary>查看剩余条目</summary>
 
 ## 作者
 
