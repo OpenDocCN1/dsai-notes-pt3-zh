@@ -1281,6 +1281,9 @@
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 设 \({\bf P}_2\) 为一个置换矩阵，它保持第一行不变，但交换所有其他行。我们可以将 \({\bf P}_2\) 写成 \({\bf P}_2
+    = \begin{bmatrix} 1 & \boldsymbol{0} \\ \boldsymbol{0} & P_{22} \end{bmatrix},\)
+    其中 \({\bf P}_{22}\) 是一个 \((n-1) \times (n-1)\) 的置换矩阵。
 - en: Factorize the (unknown) full permutation matrix \({\bf P}\) as the product of
     \({\bf P}_2\) and \({\bf P}_1\), so \({\bf P} = {\bf P}_2 {\bf P}_1\). This means
     that \({\bf P} A = {\bf P}_2 {\bf P}_1 A = {\bf P}_2 \bar{ {\bf A} }\), which
@@ -1291,12 +1294,16 @@
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 将（未知的）完整置换矩阵 \({\bf P}\) 分解为 \({\bf P}_2\) 和 \({\bf P}_1\) 的乘积，即 \({\bf P} =
+    {\bf P}_2 {\bf P}_1\)。这意味着 \({\bf P} A = {\bf P}_2 {\bf P}_1 A = {\bf P}_2 \bar{
+    {\bf A} }\)，这首先将 \({\bf A}\) 的第 \(i\) 行移到顶部，然后交换剩余的行。这是一个完全一般的置换矩阵 \({\bf P}\)，但这种分解对于实现递归算法至关重要。
 - en: Using the factorization \({\bf P} = {\bf P}_2 {\bf P}_1\), now write the LUP
     factorization in block form as
   id: totrans-179
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 使用因式分解 \({\bf P} = {\bf P}_2 {\bf P}_1\)，现在将 LUP 分解写成块形式
 - en: \[\begin{aligned} {\bf P A} &= {\bf L U} \\ {\bf P_2} \bar{ {\bf A} } &= {\bf
     L U} \\ \begin{bmatrix} 1 & \boldsymbol{0} \\ \boldsymbol{0} & {\bf P}_{22} \end{bmatrix}
     \begin{bmatrix} \bar{a}_{11} & \bar{\boldsymbol{a}}_{12} \\ \bar{\boldsymbol{a}}_{21}
@@ -1311,11 +1318,22 @@
   prefs:
   - PREF_IND
   type: TYPE_NORMAL
+  zh: \[\begin{aligned} {\bf P A} &= {\bf L U} \\ {\bf P_2} \bar{ {\bf A} } &= {\bf
+    L U} \\ \begin{bmatrix} 1 & \boldsymbol{0} \\ \boldsymbol{0} & {\bf P}_{22} \end{bmatrix}
+    \begin{bmatrix} \bar{a}_{11} & \bar{\boldsymbol{a}}_{12} \\ \bar{\boldsymbol{a}}_{21}
+    & \bar{ {\bf A} }_{22} \end{bmatrix} &= \begin{bmatrix} 1 & \boldsymbol{0} \\
+    \boldsymbol{\ell}_{21} & {\bf L}_{22} \end{bmatrix} \begin{bmatrix} u_{11} & \boldsymbol{u}_{12}
+    \\ \boldsymbol{0} & {\bf U}_{22} \end{bmatrix} \\ \begin{bmatrix} \bar{a}_{11}
+    & \bar{\boldsymbol{a}}_{12} \\ {\bf P}_{22} \bar{\boldsymbol{a}}_{21} & {\bf P}_{22}
+    \bar{ {\bf A} }_{22} \end{bmatrix} &= \begin{bmatrix} u_{11} & \boldsymbol{u}_{12}
+    \\ u_{11} \boldsymbol{\ell}_{21} & (\boldsymbol{\ell}_{21} \boldsymbol{u}_{12}
+    + {\bf L}_{22} {\bf U}_{22}) \end{bmatrix} \end{aligned}\]
 - en: Equating the entries in the above matrices gives the equations
   id: totrans-181
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 将上述矩阵中的对应项相等，得到方程
 - en: \[\begin{aligned} \bar{a}_{11} &= u_{11} \\ \bar{\boldsymbol{a}}_{12} &= \boldsymbol{u}_{12}
     \\ {\bf P}_{22} \bar{\boldsymbol{a}}_{21} &= u_{11} \boldsymbol{\ell}_{21} \\
     {\bf P}_{22} \bar{A}_{22} &= \boldsymbol{\ell}_{21} \boldsymbol{u}_{12} + {\bf
@@ -1324,12 +1342,17 @@
   prefs:
   - PREF_IND
   type: TYPE_NORMAL
+  zh: \[\begin{aligned} \bar{a}_{11} &= u_{11} \\ \bar{\boldsymbol{a}}_{12} &= \boldsymbol{u}_{12}
+    \\ {\bf P}_{22} \bar{\boldsymbol{a}}_{21} &= u_{11} \boldsymbol{\ell}_{21} \\
+    {\bf P}_{22} \bar{A}_{22} &= \boldsymbol{\ell}_{21} \boldsymbol{u}_{12} + {\bf
+    L}_{22} {\bf U}_{22}. \end{aligned}\]
 - en: Substituting the first three equations above into the last one and rearranging
     gives
   id: totrans-183
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 将上述前三个方程代入最后一个方程并重新排列得到
 - en: \[{\bf P}_{22} \underbrace{\Bigl(\bar{A}_{22} - \bar{\boldsymbol{a}}_{21} (\bar{a}_{11})^{-1}
     \bar{\boldsymbol{a}}_{12}\Bigr)}_{\text{Schur complement } {\bf S}_{22}} = {\bf
     L}_{22} {\bf U}_{22}.\]
@@ -1337,18 +1360,24 @@
   prefs:
   - PREF_IND
   type: TYPE_NORMAL
+  zh: \[{\bf P}_{22} \underbrace{\Bigl(\bar{A}_{22} - \bar{\boldsymbol{a}}_{21} (\bar{a}_{11})^{-1}
+    \bar{\boldsymbol{a}}_{12}\Bigr)}_{\text{Schur complement } {\bf S}_{22}} = {\bf
+    L}_{22} {\bf U}_{22}.\]
 - en: Recurse to find the LUP decomposition of \(S_{22}\), resulting in \({\bf L}_{22}\),
     \({\bf U}_{22}\), and \({\bf P}_{22}\) that satisfy the above equation.
   id: totrans-185
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 递归求解 \(S_{22}\) 的 LUP 分解，得到满足上述方程的 \({\bf L}_{22}\)，\({\bf U}_{22}\) 和 \({\bf
+    P}_{22}\)。
 - en: Solve for the first rows and columns of \({\bf L}\) and \({\bf U}\) with the
     above equations to give
   id: totrans-186
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 使用上述方程求解 \({\bf L}\) 和 \({\bf U}\) 的第一行和列，得到
 - en: \[\begin{aligned} u_{11} &= \bar{a}_{11} \\ \boldsymbol{u}_{12} &= \bar{\boldsymbol{a}}_{12}
     \\ \boldsymbol{\ell}_{21} &= \frac{1}{\bar{a}_{11}} {\bf P}_{22} \bar{\boldsymbol{a}}_{21}.
     \end{aligned}\]
@@ -1356,12 +1385,16 @@
   prefs:
   - PREF_IND
   type: TYPE_NORMAL
+  zh: \[\begin{aligned} u_{11} &= \bar{a}_{11} \\ \boldsymbol{u}_{12} &= \bar{\boldsymbol{a}}_{12}
+    \\ \boldsymbol{\ell}_{21} &= \frac{1}{\bar{a}_{11}} {\bf P}_{22} \bar{\boldsymbol{a}}_{21}.
+    \end{aligned}\]
 - en: Finally, reconstruct the full matrices \({\bf L}\), \({\bf U}\), and \({\bf
     P}\) from the component parts.
   id: totrans-188
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 最后，从组成部分重建完整的矩阵 \({\bf L}\)，\({\bf U}\) 和 \({\bf P}\)。
 - en: 'In code the ***recursive leading-row-column LUP algorithm*** for finding the
     LU decomposition of \({\bf A}\) with partial pivoting is:'
   id: totrans-189
@@ -1512,6 +1545,44 @@
   id: totrans-205
   prefs: []
   type: TYPE_NORMAL
+  zh: <details><summary>**答案**</summary> 注意，我们使用 \({\bf {\overline{M}}}\) 来跟踪需要递归分解的矩阵（例如第一步中的
+    \(\bf L_{22} U_{22}\)），并且使用张量积运算符 "\(\otimes\)" 来表示两个向量的外积。在第一步中：$ \bf{P\overline{M}}
+    = \begin{bmatrix} 0 & 0 & 1 & 0 \\ 0 & 1 & 0 & 0 \\ 1 & 0 & 0 & 0 \\ 0 & 0 & 0
+    & 1 \end{bmatrix} \begin{bmatrix} 2 & 1 & 1 & 0 \\ 4 & 3 & 3 & 1 \\ 8 & 7 & 9
+    & 5 \\ 6 & 7 & 9 & 8 \end{bmatrix} = \begin{bmatrix} 8 & 7 & 9 & 5 \\ 4 & 3 &
+    3 & 1 \\ 2 & 1 & 0 & 0 \\ 6 & 7 & 9 & 8 \end{bmatrix} $ $ \textbf{L} = \begin{bmatrix}
+    1 & 0 & 0 & 0 \\ \textbf{0.5} & 1 & 0 & 0 \\ \textbf{0.25} & ? & 1 & 0 \\ \textbf{0.75}
+    & ? & ? & 1 \end{bmatrix}; \hspace{5mm} \textbf{U} = \begin{bmatrix} 8 & \textbf{7}
+    & \textbf{9} & \textbf{5} \\ 0 & ? & ? & ? \\ 0 & 0 & ? & ? \\ 0 & 0 & 0 & ? \end{bmatrix};
+    \hspace{5mm} \bf{\overline{M}} = \begin{bmatrix} 3 & 3 & 1 \\ 1 & 0 & 0 \\ 7 &
+    9 & 8 \end{bmatrix} - \begin{bmatrix} 0.5 \\ 0.25 \\ 0.75 \end{bmatrix} \otimes
+    \begin{bmatrix} 7 \\ 9 \\ 5 \end{bmatrix} = \begin{bmatrix} -0.5 & -1.5 & -1.5
+    \\ -0.75 & -1.25 & -1.25 \\ 1.75 & 2.25 & 4.25 \end{bmatrix} $ 类似地，在第二步（递归）中：$
+    \bf{P\overline{M}} = \begin{bmatrix} 0 & 0 & 1 \\ 0 & 1 & 0 \\ 1 & 0 & 0 \end{bmatrix}
+    \begin{bmatrix} -0.5 & -1.5 & -1.5 \\ -0.75 & -1.25 & -1.25 \\ 1.75 & 2.25 & 4.25
+    \end{bmatrix} = \begin{bmatrix} 1.75 & 2.25 & 4.25 \\ -0.75 & -1.25 & -1.25 \\
+    -0.5 & -1.5 & -1.5 \end{bmatrix} $ $ \textbf{L} = \begin{bmatrix} 1 & 0 & 0 &
+    0 \\ \textbf{0.75} & 1 & 0 & 0 \\ 0.25 & \textbf{-0.428} & 1 & 0 \\ \textbf{0.5}
+    & \textbf{-0.285} & ? & 1 \end{bmatrix}; \hspace{5mm} \textbf{U} = \begin{bmatrix}
+    8 & 7 & 9 & 5 \\ 0 & \textbf{1.75} & \textbf{2.25} & \textbf{4.25} \\ 0 & 0 &
+    ? & ? \\ 0 & 0 & 0 & ? \end{bmatrix} $ $ \bf{\overline{M}} = \begin{bmatrix} -1.25
+    & -1.25 \\ -1.5 & -1.5 \end{bmatrix} - \begin{bmatrix} -0.428 \\ -0.285 \end{bmatrix}
+    \otimes \begin{bmatrix} 2.25 \\ 4.25 \end{bmatrix} = \begin{bmatrix} -0.287 &
+    0.569 \\ -0.8587 & -0.2887 \end{bmatrix} $ 下一步是：$ \bf{P\overline{M}} = \begin{bmatrix}
+    0 & 1 \\ 1 & 0 \end{bmatrix} \begin{bmatrix} -0.287 & 0.569 \\ -0.8587 & -0.2887
+    \end{bmatrix} = \begin{bmatrix} -0.8587 & -0.2887 \\ -0.287 & 0.569 \end{bmatrix}
+    $ $ \textbf{L} = \begin{bmatrix} 1 & 0 & 0 & 0 \\ 0.75 & 1 & 0 & 0 \\ \textbf{0.5}
+    & \textbf{-0.285} & 1 & 0 \\ \textbf{0.25} & \textbf{-0.428} & \textbf{0.334}
+    & 1 \end{bmatrix}; \hspace{5mm} \textbf{U} = \begin{bmatrix} 8 & 7 & 9 & 5 \\
+    0 & 1.75 & 2.25 & 4.25 \\ 0 & 0 & \textbf{-0.86} & \textbf{-0.29} \\ 0 & 0 & 0
+    & ? \end{bmatrix}; \hspace{5mm} \bf{\overline{M}} = \begin{bmatrix} 0.569 \end{bmatrix}
+    - \begin{bmatrix} 0.334 \end{bmatrix} \otimes \begin{bmatrix} -0.29 \end{bmatrix}
+    = \begin{bmatrix} 0.67 \end{bmatrix} $ 因此，最终结果是：$ \textbf{L} = \begin{bmatrix}
+    1 & 0 & 0 & 0 \\ 0.75 & 1 & 0 & 0 \\ 0.5 & -0.285 & 1 & 0 \\ 0.25 & -0.428 & 0.334
+    & 1 \end{bmatrix}; \hspace{5mm} \textbf{U} = \begin{bmatrix} 8 & 7 & 9 & 5 \\
+    0 & 1.75 & 2.25 & 4.25 \\ 0 & 0 & -0.86 & -0.29 \\ 0 & 0 & 0 & 0.67 \end{bmatrix};
+    \hspace{5mm} \textbf{P} = \begin{bmatrix} 0 & 0 & 1 & 0 \\ 0 & 0 & 0 & 1 \\ 0
+    & 1 & 0 & 0 \\ 1 & 0 & 0 & 0 \end{bmatrix} $</details>
 - en: 'Example: Matrix for which LUP Decomposition Succeeds but LU Decomposition Fails'
   id: totrans-206
   prefs:

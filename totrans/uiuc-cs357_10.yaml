@@ -1,88 +1,110 @@
 - en: Sparse Matrices
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
 - en: 原文：[https://cs357.cs.illinois.edu/textbook/notes/sparse.html](https://cs357.cs.illinois.edu/textbook/notes/sparse.html)
+  id: totrans-1
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
 - en: Dense Matrices
+  id: totrans-2
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
 - en: 'A dense matrix stores all values including zeros. So, a \(m \times n\) matrix
     would have to store \(O(m \times n)\) entries. For example:'
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
 - en: \[A = \begin{bmatrix} 1.0 & 0 & 0 \\ 3.0 & 4.0 & 0 \\ 6.0 & 0 & 7.0 \\ 0 & 0
     & 10.0 \end{bmatrix}.\]
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
 - en: 'To store the matrix, all components are generally saved in row-major order.
     For \(\mathbf{A}\) given above, we would store:'
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
 - en: \[A_{dense} = \begin{bmatrix} 1.0 & 0 & 0 & 3.0 & 4.0 & 0 & 6.0 & 0 & 7.0 &
     0 & 0 & 10.0 \end{bmatrix}.\]
+  id: totrans-6
   prefs: []
   type: TYPE_NORMAL
 - en: 'The dimensions of the matrix are stored separately:'
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
 - en: \[A_{shape} = \\(n_{row}, n_{col})\\ = \\(4, 3)\\.\]
+  id: totrans-8
   prefs: []
   type: TYPE_NORMAL
 - en: Sparse Matrices
+  id: totrans-9
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
 - en: Some types of matrices contain too many zeros, and storing all those zero entries
     is wasteful. A sparse matrix is a matrix with few non-zero entries.
+  id: totrans-10
   prefs: []
   type: TYPE_NORMAL
 - en: A \(m \times n\) matrix is called sparse if it has \(O(min(m, n))\) non-zero
     entries.
+  id: totrans-11
   prefs: []
   type: TYPE_NORMAL
 - en: Goals
+  id: totrans-12
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
 - en: A sparse matrix aims to store large matrices efficiently without storing many
     zeros, which allows for more economical computations. It also saves storage space,
     which can reduce memory overhead on a system.
+  id: totrans-13
   prefs: []
   type: TYPE_NORMAL
 - en: The number of operations required to add two dense matrices \(\mathbf{P}\),
     \(\mathbf{Q}\) is \(O(n(\mathbf{P}) + n(\mathbf{Q}))\) where \((n(\mathbf{X}))\)
     is the number of elements in \(\mathbf{X}\).
+  id: totrans-14
   prefs: []
   type: TYPE_NORMAL
 - en: The number of operations required to add two sparse matrices \(\mathbf{P}\),
     \(\mathbf{Q}\) is \(O(nnz(\mathbf{P}) + nnz(\mathbf{Q}))\) where \((nnz(\mathbf{X}))\)
     is the number of non-zero elements in \(\mathbf{X}\).
+  id: totrans-15
   prefs: []
   type: TYPE_NORMAL
 - en: Storage Solutions
+  id: totrans-16
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
 - en: There are many ways to store sparse matrices such as Coordinate (COO), Compressed
     Sparse Row (CSR), Block Sparse Row (BSR), Dictionary of Keys (DOK), etc.
+  id: totrans-17
   prefs: []
   type: TYPE_NORMAL
 - en: We will focus on Coordinate and Compressed Sparse Row.
+  id: totrans-18
   prefs: []
   type: TYPE_NORMAL
 - en: 'Let''s explore ways to store the following example:'
+  id: totrans-19
   prefs: []
   type: TYPE_NORMAL
 - en: \[\mathbf{A}= \begin{bmatrix} 1.0 & 0 & 0 & 2.0 & 0 \\ 3.0 & 4.0 & 0 & 5.0 &
     0 \\ 6.0 & 0 & 7.0 & 8.0 & 9.0 \\ 0 & 0 & 10.0 & 11.0 & 0 \\ 0 & 0 & 0 & 0 & 12.0
     \end{bmatrix}.\]
+  id: totrans-20
   prefs: []
   type: TYPE_NORMAL
 - en: Coordinate Format (COO)
+  id: totrans-21
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
@@ -90,77 +112,97 @@
     data values in any order. This format provides fast methods to construct sparse
     matrices and convert to different sparse formats. For \({\bf A}\) the COO format
     is:'
+  id: totrans-22
   prefs: []
   type: TYPE_NORMAL
 - en: \[\textrm{data} = \begin{bmatrix} 12.0 & 9.0 & 7.0 & 5.0 & 1.0 & 2.0 & 11.0
     & 3.0 & 6.0 & 4.0 & 8.0 & 10.0\end{bmatrix}\] \[\textrm{row} = \begin{bmatrix}
     4 & 2 & 2 & 1 & 0 & 0 & 3 & 1 & 2 & 1 & 2 & 3 \end{bmatrix}\] \[\textrm{col} =
     \begin{bmatrix} 4 & 4 & 2 & 3 & 0 & 3 & 3 & 0 & 0 & 1 & 3 & 2 \end{bmatrix}\]
+  id: totrans-23
   prefs: []
   type: TYPE_NORMAL
 - en: \(\textrm{row}\) and \(\textrm{col}\) are arrays of \(nnz\) integers.
+  id: totrans-24
   prefs: []
   type: TYPE_NORMAL
 - en: \(\textrm{data}\) is an \(nnz\) array of the data type of the original matrix,
     in this case doubles.
+  id: totrans-25
   prefs: []
   type: TYPE_NORMAL
 - en: 'How to interpret: The first entries of \(\textrm{data}\), \(\textrm{row}\),
     \(\textrm{col}\) are 12.0, 4, 4, respectively, meaning there is a 12.0 at position
     (4, 4) of the matrix; second entries are 9.0, 2, 4, so there is a 9.0 at (2, 4).'
+  id: totrans-26
   prefs: []
   type: TYPE_NORMAL
 - en: A COO matrix stores \(3 \times nnz\) elements. This method can be sorted as
     each index in the row, col, and data arrays describe the same element.
+  id: totrans-27
   prefs: []
   type: TYPE_NORMAL
 - en: Converting this matrix into COO format in python can be done using the `scipy.sparse`
     library.
+  id: totrans-28
   prefs: []
   type: TYPE_NORMAL
 - en: '[PRE0]'
+  id: totrans-29
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: You can also recreate a sparse matrix in COO format to a dense or CSR matrix
     in python using the `scipy.sparse` library.
+  id: totrans-30
   prefs: []
   type: TYPE_NORMAL
 - en: '[PRE1]'
+  id: totrans-31
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: Compressed Sparse Row (CSR)
+  id: totrans-32
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
 - en: 'CSR, also commonly known as the Yale format, encodes rows offsets, column indices
     and the corresponding non-zero data values. The row offsets are defined by the
     followign recursive relationship (starting with \(\textrm{rowptr}[0] = 0\)):'
+  id: totrans-33
   prefs: []
   type: TYPE_NORMAL
 - en: \[ \textrm{rowptr}[j] = \textrm{rowptr}[j-1] + \mathrm{nnz}(\textrm{row}_{j-1}),
     \\ \]
+  id: totrans-34
   prefs: []
   type: TYPE_NORMAL
 - en: 'where \(\mathrm{nnz}(\textrm{row}_k)\) is the number of non-zero elements in
     the \(k^{th}\) row. Note that the length of \(\textrm{rowptr}\) is \(n_{rows}
     + 1\), where the last element in \(\textrm{rowptr}\) is the number of nonzeros
     in \(A\). For \({\bf A}\) the CSR format is:'
+  id: totrans-35
   prefs: []
   type: TYPE_NORMAL
 - en: \[\textrm{data} = \begin{bmatrix} 1.0 & 2.0 & 3.0 & 4.0 & 5.0 & 6.0 & 7.0 &
     8.0 & 9.0 & 10.0 & 11.0 & 12.0 \end{bmatrix}\] \[\textrm{col} = \begin{bmatrix}
     0 & 3 & 0 & 1 & 3 & 0 & 2 & 3 & 4 & 2 & 3 & 4\end{bmatrix}\] \[\textrm{rowptr}
     = \begin{bmatrix} 0 & 2 & 5 & 9 & 11 & 12 \end{bmatrix}\]
+  id: totrans-36
   prefs: []
   type: TYPE_NORMAL
 - en: \(\textrm{rowptr}\) contains the row offset (array of \(m + 1\) integers).
+  id: totrans-37
   prefs: []
   type: TYPE_NORMAL
 - en: \(\textrm{col}\) contains column indices (array of \(nnz\) integers).
+  id: totrans-38
   prefs: []
   type: TYPE_NORMAL
 - en: \(\textrm{data}\) contains non-zero elements (array of \(nnz\) type of data
     values, in this case doubles).
+  id: totrans-39
   prefs: []
   type: TYPE_NORMAL
 - en: 'How to interpret: The first two entries of \(\textrm{rowptr}\) gives us the
@@ -171,103 +213,145 @@
     corresponds to the second row. The three pairs (3.0, 0), (4.0, 1), (5.0, 3) means
     in the second row, there is a 3.0 at column 0, a 4.0 at column 1, and a 5.0 at
     column 3.'
+  id: totrans-40
   prefs: []
   type: TYPE_NORMAL
 - en: A CSR matrix stores \(2 \times nnz + m + 1\) elements. It also provides fast
     arithmetic operations between sparse matrices, and fast matrix vector product.
+  id: totrans-41
   prefs: []
   type: TYPE_NORMAL
 - en: Converting this matrix into CSR format in python can be done using the `scipy.sparse`
     library.
+  id: totrans-42
   prefs: []
   type: TYPE_NORMAL
 - en: '[PRE2]'
+  id: totrans-43
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: You can also recreate a sparse matrix in CSR format to a dense or COO matrix
     in python using the `scipy.sparse` library.
+  id: totrans-44
   prefs: []
   type: TYPE_NORMAL
 - en: '[PRE3]'
+  id: totrans-45
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: CSR Matrix Vector Product Algorithm
+  id: totrans-46
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
 - en: 'The following code snippet performs CSR matrix vector product for square matrices:'
+  id: totrans-47
   prefs: []
   type: TYPE_NORMAL
 - en: '[PRE4]'
+  id: totrans-48
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE4]'
 - en: Review Questions
+  id: totrans-49
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
 - en: What does it mean for a matrix to be sparse?
+  id: totrans-50
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
 - en: What factors might you consider when deciding how to store a sparse matrix?
     (Why would you store a matrix in one format over another?)
+  id: totrans-51
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 在决定如何存储稀疏矩阵时，您可能考虑哪些因素？（为什么您会选择一种格式而不是另一种格式来存储矩阵？）
 - en: Given a sparse matrix, put the matrix in CSR format.
+  id: totrans-52
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 给定一个稀疏矩阵，将其转换为CSR格式。
 - en: Given a sparse matrix, put the matrix in COO format.
+  id: totrans-53
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 给定一个稀疏矩阵，将其转换为COO格式。
 - en: For a given matrix, how many bytes total are required to store it in CSR format?
+  id: totrans-54
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 对于一个给定的矩阵，存储它需要多少字节的CSR格式？
 - en: For a given matrix, how many bytes total are required to store it in COO format?
+  id: totrans-55
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 对于一个给定的矩阵，存储它需要多少字节的COO格式？
 - en: Changelog
+  id: totrans-56
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 更新日志
 - en: 'October 28th, 2025: Dev Singh (dsingh14) — fix dense matrix example'
+  id: totrans-57
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 2025年10月28日：Dev Singh (dsingh14) — 修复了密集矩阵示例
 - en: 'October 31st, 2024: Kaiyao Ke (kaiyaok2) — minor bug fix'
+  id: totrans-58
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 2024年10月31日：Kaiyao Ke (kaiyaok2) — 修复了小错误
 - en: 'February 14th, 2024: Kriti Chandak (kritic3) — added information from slides
     and additional examples'
+  id: totrans-59
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 2024年2月14日：Kriti Chandak (kritic3) — 添加了幻灯片信息和额外的示例
 - en: <details><summary>View Remaining Entries</summary>
+  id: totrans-60
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: <details><summary>查看剩余条目</summary>
 - en: 'March 6th, 2022: Victor Zhao (chenyan4) — added instructions on how to interpret
     COO and CSR'
+  id: totrans-61
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 2022年3月6日：Victor Zhao (chenyan4) — 添加了如何解释COO和CSR的说明
 - en: 'March 1st, 2020: Peter Sentz (sentz2) — extracted material from previous reference
     pages</details>'
+  id: totrans-62
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 2020年3月1日：Peter Sentz (sentz2) — 从之前的参考页面中提取了材料</details>
 - en: Authors
+  id: totrans-63
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 作者
 - en: CS 357 Course Staff
+  id: totrans-64
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: CS 357 课程工作人员
