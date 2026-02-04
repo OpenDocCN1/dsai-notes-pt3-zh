@@ -3,41 +3,49 @@
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 马尔可夫链
 - en: 原文：[https://cs357.cs.illinois.edu/textbook/notes/markov.html](https://cs357.cs.illinois.edu/textbook/notes/markov.html)
   id: totrans-1
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 原文：[https://cs357.cs.illinois.edu/textbook/notes/markov.html](https://cs357.cs.illinois.edu/textbook/notes/markov.html)
 - en: Learning Objectives
   id: totrans-2
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 学习目标
 - en: Create adjacency matrices for undirected, directed, and weighted graphs.
   id: totrans-3
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 为无向图、有向图和加权图创建邻接矩阵。
 - en: Identify and represent stochastic models as Markov chains.
   id: totrans-4
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 识别并表示随机模型为马尔可夫链。
 - en: Implement the PageRank algorithm.
   id: totrans-5
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 实现PageRank算法。
 - en: Graphs
   id: totrans-6
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 图
 - en: 'Graphs as Matrices:'
   id: totrans-7
   prefs:
   - PREF_H4
   type: TYPE_NORMAL
+  zh: 图作为矩阵：
 - en: A graph, at an abstract level, is a set of objects in which pairs of objects
     are in some sense related. Here, graphs manifest simply as nodes (vertices) and
     edges which connect them. It can be very helpful to store this information - the
@@ -45,62 +53,79 @@
   id: totrans-8
   prefs: []
   type: TYPE_NORMAL
+  zh: 在抽象层面上，图是一组对象，其中对象对以某种方式相关。在这里，图简单地表现为节点（顶点）和连接它们的边。将这种信息——节点之间的关系——存储在矩阵中可能非常有帮助。为此，我们使用**邻接矩阵**。
 - en: 'Undirected Graphs:'
   id: totrans-9
   prefs:
   - PREF_H4
   type: TYPE_NORMAL
+  zh: 无向图：
 - en: 'The following is an example of an undirected graph:'
   id: totrans-10
   prefs: []
   type: TYPE_NORMAL
+  zh: 以下是一个无向图的示例：
 - en: '![](../Images/63f6833fb95e6bc3820f50f5e5e284ac.png)'
   id: totrans-11
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/63f6833fb95e6bc3820f50f5e5e284ac.png)'
 - en: 'The adjacency matrix, \({\bf A}\), for undirected graphs is *always* symmetric
     and is defined as:'
   id: totrans-12
   prefs: []
   type: TYPE_NORMAL
+  zh: 无向图的邻接矩阵 \({\bf A}\) 总是**对称**的，定义为：
 - en: \[a_{ij} = \begin{cases} 1 \quad \mathrm{if} \ (\mathrm{node}_i, \mathrm{node}_j)
     \ \textrm{are connected} \\ 0 \quad \mathrm{otherwise} \end{cases},\]
   id: totrans-13
   prefs: []
   type: TYPE_NORMAL
+  zh: \[a_{ij} = \begin{cases} 1 \quad \mathrm{if} \ (\mathrm{node}_i, \mathrm{node}_j)
+    \ \textrm{are connected} \\ 0 \quad \mathrm{otherwise} \end{cases},\]
 - en: 'where \(a_{ij}\) is the \((i,j)\) element of \({\bf A}\). The adjacency matrix
     which describes the example graph above is:'
   id: totrans-14
   prefs: []
   type: TYPE_NORMAL
+  zh: 其中 \(a_{ij}\) 是 \({\bf A}\) 的 \((i,j)\) 元素。描述上述示例图的邻接矩阵为：
 - en: \[ {\bf A} = \begin{bmatrix} 0 & 1 & 1 & 1 & 0 & 0 \\ 1 & 1 & 0 & 0 & 1 & 0
     \\ 1 & 0 & 0 & 1 & 0 & 0 \\ 1 & 0 & 1 & 0 & 1 & 1 \\ 0 & 1 & 0 & 1 & 0 & 0 \\
     0 & 0 & 0 & 1 & 0 & 1 \end{bmatrix}.\]
   id: totrans-15
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ {\bf A} = \begin{bmatrix} 0 & 1 & 1 & 1 & 0 & 0 \\ 1 & 1 & 0 & 0 & 1 & 0
+    \\ 1 & 0 & 0 & 1 & 0 & 0 \\ 1 & 0 & 1 & 0 & 1 & 1 \\ 0 & 1 & 0 & 1 & 0 & 0 \\
+    0 & 0 & 0 & 1 & 0 & 1 \end{bmatrix}.\]
 - en: 'Directed Graphs:'
   id: totrans-16
   prefs:
   - PREF_H4
   type: TYPE_NORMAL
+  zh: 有向图：
 - en: 'The following is an example of a directed graph:'
   id: totrans-17
   prefs: []
   type: TYPE_NORMAL
+  zh: 以下是一个有向图的示例：
 - en: '![](../Images/530b86c333871875673336ace259525e.png)'
   id: totrans-18
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/530b86c333871875673336ace259525e.png)'
 - en: 'The adjacency matrix, \({\bf A}\), for directed graphs is defined as:'
   id: totrans-19
   prefs: []
   type: TYPE_NORMAL
+  zh: 有向图的邻接矩阵 \({\bf A}\) 定义为：
 - en: \[ a_{ij} = \begin{cases} 1 \quad \mathrm{if} \ \mathrm{node}_i \leftarrow \mathrm{node}_j
     \\ 0 \quad \mathrm{otherwise} \end{cases}, \]
   id: totrans-20
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ a_{ij} = \begin{cases} 1 \quad \mathrm{if} \ \mathrm{node}_i \leftarrow \mathrm{node}_j
+    \\ 0 \quad \mathrm{otherwise} \end{cases}, \]
 - en: 'where \(a_{ij}\) is the \((i,j)\) element of \({\bf A}\). This matrix is typically
     asymmetric, so it is important to adhere to the definition. **Note** that while
     we effectively use columns to represent the "from" nodes and rows to represent
@@ -109,41 +134,52 @@
   id: totrans-21
   prefs: []
   type: TYPE_NORMAL
+  zh: 其中 \(a_{ij}\) 是 \({\bf A}\) 的 \((i,j)\) 元素。这个矩阵通常是反对称的，因此遵守定义很重要。**注意**，虽然我们实际上使用列来表示“从”节点，行来表示“到”节点，但这并不一定是标准的，你可能会遇到相反的方向。描述上述示例图的邻接矩阵为：
 - en: \[ {\bf A} = \begin{bmatrix} 0 & 0 & 0 & 1 & 0 & 0 \\ 1 & 1 & 0 & 0 & 0 & 0
     \\ 1 & 0 & 0 & 0 & 0 & 0 \\ 0 & 0 & 1 & 0 & 1 & 0 \\ 0 & 1 & 0 & 0 & 0 & 0 \\
     0 & 0 & 0 & 1 & 0 & 1 \end{bmatrix}.\]
   id: totrans-22
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ {\bf A} = \begin{bmatrix} 0 & 0 & 0 & 1 & 0 & 0 \\ 1 & 1 & 0 & 0 & 0 & 0
+    \\ 1 & 0 & 0 & 0 & 0 & 0 \\ 0 & 0 & 1 & 0 & 1 & 0 \\ 0 & 1 & 0 & 0 & 0 & 0 \\
+    0 & 0 & 0 & 1 & 0 & 1 \end{bmatrix}.\]
 - en: 'Weighted Directed Graphs:'
   id: totrans-23
   prefs:
   - PREF_H4
   type: TYPE_NORMAL
+  zh: 加权有向图：
 - en: 'The following is an example of a weighted directed graph:'
   id: totrans-24
   prefs: []
   type: TYPE_NORMAL
+  zh: 以下是一个加权有向图的示例：
 - en: '![](../Images/668717f73a8a8055f084521a4bff3efe.png)'
   id: totrans-25
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/668717f73a8a8055f084521a4bff3efe.png)'
 - en: 'The adjacency matrix, \({\bf A}\), for weighted directed graphs is defined
     as:'
   id: totrans-26
   prefs: []
   type: TYPE_NORMAL
+  zh: 加权有向图的邻接矩阵 \({\bf A}\) 定义为：
 - en: \[ a_{ij} = \begin{cases} w_{ij} \quad \mathrm{if} \ \mathrm{node}_i \leftarrow
     \mathrm{node}_j \\ 0 \quad \ \ \mathrm{otherwise} \end{cases}, \]
   id: totrans-27
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ a_{ij} = \begin{cases} w_{ij} \quad \mathrm{if} \ \mathrm{node}_i \leftarrow
+    \mathrm{node}_j \\ 0 \quad \ \ \mathrm{otherwise} \end{cases}, \]
 - en: 'where \(a_{ij}\) is the \((i,j)\) element of \({\bf A}\), and \(w_{ij}\) is
     the link weight associated with edge connecting nodes \(i\) and \(j\). The adjacency
     matrix which describes the example graph above is:'
   id: totrans-28
   prefs: []
   type: TYPE_NORMAL
+  zh: 其中 \(a_{ij}\) 是 \({\bf A}\) 的 \((i,j)\) 元素，\(w_{ij}\) 是连接节点 \(i\) 和 \(j\) 的边的链接权重。描述上述示例图的邻接矩阵为：
 - en: \[ {\bf A} = \begin{bmatrix} 0 & 0 & 0 & 0.4 & 0 & 0 \\ 0.1 & 0.5 & 0 & 0 &
     0 & 0 \\ 0.9 & 0 & 0 & 0 & 0 & 0 \\ 0 & 0 & 1.0 & 0 & 1.0 & 0 \\ 0 & 0.5 & 0 &
     0 & 0 & 0 \\ 0 & 0 & 0 & 0.6 & 0 & 1.0 \end{bmatrix}.\]
@@ -276,64 +312,79 @@
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 一个晴天有 \(60\%\) 的可能性接着又是晴天，\(10\%\) 的可能性接着是雨天，\(30\%\) 的可能性接着是阴天；
 - en: a rainy day is \(40\%\) likely to be followed by another rainy day, \(20\%\)
     likely followed by a sunny day and \(40\%\) likely followed by a cloudy day;
   id: totrans-47
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 一个雨天有 \(40\%\) 的可能性接着又是雨天，\(20\%\) 的可能性接着是晴天，\(40\%\) 的可能性接着是阴天；
 - en: a cloudy day is \(40\%\) likely to be followed by another cloudy day, \(30\%\)
     likely followed by a rainy day and \(30\%\) likely followed by a sunny day.
   id: totrans-48
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 一个阴天有 \(40\%\) 的可能性接着又是阴天，\(30\%\) 的可能性接着是雨天，\(30\%\) 的可能性接着是晴天。
 - en: 'The state diagram is shown below:'
   id: totrans-49
   prefs: []
   type: TYPE_NORMAL
+  zh: 状态图如下所示：
 - en: '![](../Images/67a08bd95794ad17370f281e93253bf6.png)'
   id: totrans-50
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/67a08bd95794ad17370f281e93253bf6.png)'
 - en: The Markov matrix is
   id: totrans-51
   prefs: []
   type: TYPE_NORMAL
+  zh: 马尔可夫矩阵是
 - en: \[ {\bf M} = \begin{bmatrix} 0.6 & 0.2 & 0.3 \\ 0.1 & 0.4 & 0.3 \\ 0.3 & 0.4
     & 0.4 \end{bmatrix}. \]
   id: totrans-52
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ {\bf M} = \begin{bmatrix} 0.6 & 0.2 & 0.3 \\ 0.1 & 0.4 & 0.3 \\ 0.3 & 0.4
+    & 0.4 \end{bmatrix}. \]
 - en: If the weather on day \(0\) is known to be rainy, then
   id: totrans-53
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果已知第 \(0\) 天的天气是雨天，那么
 - en: \[ {\bf x}_0 = \begin{bmatrix} 0 \\ 1 \\ 0 \end{bmatrix}; \]
   id: totrans-54
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ {\bf x}_0 = \begin{bmatrix} 0 \\ 1 \\ 0 \end{bmatrix}; \]
 - en: and we can determine the probability vector for day \(1\) by
   id: totrans-55
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们可以通过以下方式确定第 \(1\) 天的概率向量：
 - en: \[ {\bf x}_1 = {\bf M} {\bf x}_0\. \]
   id: totrans-56
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ {\bf x}_1 = {\bf M} {\bf x}_0\. \]
 - en: The probability distribution for the weather on day \(n\) is given by
   id: totrans-57
   prefs: []
   type: TYPE_NORMAL
+  zh: 第 \(n\) 天天气的概率分布由以下给出
 - en: \[ {\bf x}_n = {\bf M}^{n} {\bf x}_0\. \]
   id: totrans-58
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ {\bf x}_n = {\bf M}^{n} {\bf x}_0\. \]
 - en: 'Markov Chain Example: Page Rank'
   id: totrans-59
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 马尔可夫链示例：Page Rank
 - en: Page Rank is a straightforward algorithm which was popularized by Google Search
     to rank webpages. It attempts to model user behavior by assuming a random surfer
     continuously clicks links at random. So, the importance of a web page is determined
@@ -341,21 +392,27 @@
   id: totrans-60
   prefs: []
   type: TYPE_NORMAL
+  zh: Page Rank 是一个简单的算法，它被 Google 搜索推广，用于网页排名。它试图通过假设一个随机访问者会连续随机点击链接来模拟用户行为。因此，一个网页的重要性由随机用户最终到达该页面的概率决定。
 - en: '![](../Images/50aee4ee5b87ef71ea0d84a47cd1da6d.png)'
   id: totrans-61
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/50aee4ee5b87ef71ea0d84a47cd1da6d.png)'
 - en: Let the above graph represent websites as nodes and outgoing links as directed
     eges. First, we create an adjacency matrix.
   id: totrans-62
   prefs: []
   type: TYPE_NORMAL
+  zh: 让上面的图表示网站为节点，出站链接为有向边。首先，我们创建一个邻接矩阵。
 - en: \[ {\bf A} = \begin{bmatrix} 0 & 0 & 0 & 1 & 0 & 1 \\ 1 & 0 & 0 & 0 & 0 & 0
     \\ 0 & 1 & 0 & 0 & 0 & 0 \\ 0 & 1 & 1 & 0 & 0 & 0 \\ 0 & 0 & 1 & 0 & 0 & 0 \\
     1 & 0 & 1 & 0 & 1 & 0 \\ \end{bmatrix} \]
   id: totrans-63
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ {\bf A} = \begin{bmatrix} 0 & 0 & 0 & 1 & 0 & 1 \\ 1 & 0 & 0 & 0 & 0 & 0
+    \\ 0 & 1 & 0 & 0 & 0 & 0 \\ 0 & 1 & 1 & 0 & 0 & 0 \\ 0 & 0 & 1 & 0 & 0 & 0 \\
+    1 & 0 & 1 & 0 & 1 & 0 \\ \end{bmatrix} \]
 - en: Next, we take the accumulated weight (influence) going into a given page, and
     redistribute it evenly across each outgoing link. This is a Markov matrix. As
     before, we can perform repeated iteration on a random state vector until steady-state
@@ -363,12 +420,16 @@
   id: totrans-64
   prefs: []
   type: TYPE_NORMAL
+  zh: 接下来，我们取一个给定页面的累积权重（影响力），并将其平均分配到每个出站链接。这是一个马尔可夫矩阵。和之前一样，我们可以对一个随机状态向量进行重复迭代，直到达到稳态，以找到用户最有可能到达的页面。
 - en: \[ {\bf A} = \begin{bmatrix} 0 & 0 & 0 & 1.0 & 0 & 1.0 \\ 0.5 & 0 & 0 & 0 &
     0 & 0 \\ 0 & 0.5 & 0 & 0 & 0 & 0 \\ 0 & 0.5 & 0.33 & 0 & 0 & 0 \\ 0 & 0 & 0.33
     & 0 & 0 & 0 \\ 0.5 & 0 & 0.33 & 0 & 1.0 & 0 \\ \end{bmatrix} \]
   id: totrans-65
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ {\bf A} = \begin{bmatrix} 0 & 0 & 0 & 1.0 & 0 & 1.0 \\ 0.5 & 0 & 0 & 0 &
+    0 & 0 \\ 0 & 0.5 & 0 & 0 & 0 & 0 \\ 0 & 0.5 & 0.33 & 0 & 0 & 0 \\ 0 & 0 & 0.33
+    & 0 & 0 & 0 \\ 0.5 & 0 & 0.33 & 0 & 1.0 & 0 \\ \end{bmatrix} \]
 - en: Sites therefore become "important" if they're linked to by other "important"
     sites. The intuition roughly follows that if a site \(s\) is linked within another
     site that is rarely embedded, then the rank of site \(s\) will not increase much.
@@ -376,16 +437,20 @@
   id: totrans-66
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果一个站点被其他“重要”站点链接，那么这个站点就会变得“重要”。直觉上大致可以这样理解：如果一个站点 \(s\) 被嵌入在一个很少被嵌入的另一个站点中，那么站点
+    \(s\) 的排名不会增加太多。相反，如果一个站点 \(s\) 被嵌入在更受欢迎的站点中，它的排名将会增加。
 - en: 'Naive Page Rank: Shortcomings'
   id: totrans-67
   prefs:
   - PREF_H4
   type: TYPE_NORMAL
+  zh: Naive Page Rank：缺点
 - en: 'A weakpoint of this naive implementation of Page Rank is that a unique solution
     is not guaranteed. **Brin-Page (1990s)** proposed:'
   id: totrans-68
   prefs: []
   type: TYPE_NORMAL
+  zh: 这种 Page Rank 的简单实现的一个弱点是，不能保证有唯一解。**布林-佩奇（1990年代）**提出了：
 - en: '"PageRank can be thought of as a model of user behavior We assume there is
     a random surfer who is given a web page at random and keeps clicking on links,
     never hitting "back", **but eventually gets bored and starts on another random
@@ -394,6 +459,7 @@
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: “PageRank 可以被视为用户行为的一个模型。我们假设有一个随机访问者，他被随机分配到一个网页，并持续点击链接，从不点击“后退”，**但最终会感到无聊并开始访问另一个随机页面**。”
 - en: \[{\bf{M}} = d{\bf{A}} + \frac{1-d}{n}\bf{1} \]
   id: totrans-70
   prefs: []
