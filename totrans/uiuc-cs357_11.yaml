@@ -1,84 +1,131 @@
 - en: Condition Numbers
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 条件数
 - en: 原文：[https://cs357.cs.illinois.edu/textbook/notes/condition.html](https://cs357.cs.illinois.edu/textbook/notes/condition.html)
+  id: totrans-1
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: '[https://cs357.cs.illinois.edu/textbook/notes/condition.html](https://cs357.cs.illinois.edu/textbook/notes/condition.html)'
 - en: Learning Objectives
+  id: totrans-2
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 学习目标
 - en: Compute the condition number
+  id: totrans-3
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 计算条件数
 - en: Quantify the impact of a high condition number
+  id: totrans-4
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 量化高条件数的影响
 - en: Numerical experiments
+  id: totrans-5
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 数值实验
 - en: '**Input** has uncertainties:'
+  id: totrans-6
   prefs: []
   type: TYPE_NORMAL
+  zh: '**输入**存在不确定性：'
 - en: Errors due to representation with finite precision
+  id: totrans-7
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 由于有限精度表示引起的错误
 - en: Error in the sampling
+  id: totrans-8
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 采样误差
 - en: Once you select your numerical method, how much error should you expect to see
     in your output?
+  id: totrans-9
   prefs: []
   type: TYPE_NORMAL
+  zh: 一旦你选择了你的数值方法，你应该期望在输出中看到多少误差？
 - en: '*Is your method sensitive to errors (perturbation) in the input?*'
+  id: totrans-10
   prefs: []
   type: TYPE_NORMAL
+  zh: '*你的方法对输入中的误差（扰动）敏感吗？*'
 - en: Sensitivity of Solutions of Linear Systems and Error Bound
+  id: totrans-11
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 线性系统解的敏感性和误差界限
 - en: Motivation
+  id: totrans-12
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 动机
 - en: Suppose we start with a non-singular system of linear equations \({\bf A} \boldsymbol{x}
     = \boldsymbol{b}\). If we change the right-hand side vector \(\boldsymbol{b}\)
     (the input) by a small amount \(\Delta \boldsymbol{b}\), how much will the solution
     \(\boldsymbol{x}\) (the output) change, i.e., how large is \(\Delta \boldsymbol{x}\)?
+  id: totrans-13
   prefs: []
   type: TYPE_NORMAL
+  zh: 假设我们从非奇异线性方程组 \({\bf A} \boldsymbol{x} = \boldsymbol{b}\) 开始。如果我们通过一个小量 \(\Delta
+    \boldsymbol{b}\) 改变右侧向量 \(\boldsymbol{b}\)（输入），解 \(\boldsymbol{x}\)（输出）将改变多少，即
+    \(\Delta \boldsymbol{x}\) 有多大？
 - en: Let's explore this!
+  id: totrans-14
   prefs: []
   type: TYPE_NORMAL
+  zh: 让我们探索这个问题！
 - en: Derivation
+  id: totrans-15
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 推导
 - en: Let \(\boldsymbol{x}\) be the solution of \({\bf A} \boldsymbol{x} = \boldsymbol{b}\)
     and \(\hat{\boldsymbol{x}}\) be the solution of the perturbed problem \({\bf A}
     \hat{\boldsymbol{x}} = \boldsymbol{b} + \Delta \boldsymbol{b}\).
+  id: totrans-16
   prefs: []
   type: TYPE_NORMAL
+  zh: 设 \(\boldsymbol{x}\) 是 \({\bf A} \boldsymbol{x} = \boldsymbol{b}\) 的解，\(\hat{\boldsymbol{x}}\)
+    是扰动问题 \({\bf A} \hat{\boldsymbol{x}} = \boldsymbol{b} + \Delta \boldsymbol{b}\)
+    的解。
 - en: In addition, let \(\Delta \boldsymbol{x} = \hat{\boldsymbol{x}} - \boldsymbol{x}\)
     be the absolute error in output.
+  id: totrans-17
   prefs: []
   type: TYPE_NORMAL
+  zh: 此外，设 \(\Delta \boldsymbol{x} = \hat{\boldsymbol{x}} - \boldsymbol{x}\) 为输出中的绝对误差。
 - en: Then we have \({\bf A} \boldsymbol{x} + {\bf A} \Delta \boldsymbol{x} = \boldsymbol{b}
     + \Delta \boldsymbol{b},\) so \({\bf A} \Delta \boldsymbol{x} = \Delta \boldsymbol{b}.\)
+  id: totrans-18
   prefs: []
   type: TYPE_NORMAL
+  zh: 然后，我们有 \({\bf A} \boldsymbol{x} + {\bf A} \Delta \boldsymbol{x} = \boldsymbol{b}
+    + \Delta \boldsymbol{b},\) 因此 \({\bf A} \Delta \boldsymbol{x} = \Delta \boldsymbol{b}.\)
 - en: 'Using the above equations, we''ll see how the relative error in output \(\left(\frac{\|\Delta
     \boldsymbol{x}\|}{\|\boldsymbol{x}\|}\right)\) is related to the relative error
     in input \(\left(\frac{\|\Delta \boldsymbol{b}\|}{\|\boldsymbol{b}\|}\right)\):'
+  id: totrans-19
   prefs: []
   type: TYPE_NORMAL
+  zh: 使用上述方程，我们将看到输出中的相对误差 \(\left(\frac{\|\Delta \boldsymbol{x}\|}{\|\boldsymbol{x}\|}\right)\)
+    与输入中的相对误差 \(\left(\frac{\|\Delta \boldsymbol{b}\|}{\|\boldsymbol{b}\|}\right)\)
+    之间的关系：
 - en: \[\begin{align} \frac{\|\Delta \boldsymbol{x}\| / \|\boldsymbol{x}\|}{\|\Delta
     \boldsymbol{b}\| / \|\boldsymbol{b}\|} &= \frac{\|\Delta \boldsymbol{x}\| \|\boldsymbol{b}\|}{\|\boldsymbol{x}\|
     \|\Delta \boldsymbol{b}\|}\\ &= \frac{\|{\bf A}^{-1} \Delta \boldsymbol{b}\| \|{\bf
@@ -86,78 +133,113 @@
     A}^{-1}\| \|\Delta \boldsymbol{b}\| \|{\bf A}\| \|\boldsymbol{x}\|}{\|\boldsymbol{x}\|
     \|\Delta \boldsymbol{b}\|} \\ &= \|{\bf A}^{-1}\| \|{\bf A}\|\\ &= \text{cond}({\bf
     A}) \end{align}\]
+  id: totrans-20
   prefs: []
   type: TYPE_NORMAL
+  zh: \[\begin{align} \frac{\|\Delta \boldsymbol{x}\| / \|\boldsymbol{x}\|}{\|\Delta
+    \boldsymbol{b}\| / \|\boldsymbol{b}\|} &= \frac{\|\Delta \boldsymbol{x}\| \|\boldsymbol{b}\|}{\|\boldsymbol{x}\|
+    \|\Delta \boldsymbol{b}\|}\\ &= \frac{\|{\bf A}^{-1} \Delta \boldsymbol{b}\| \|{\bf
+    A} \boldsymbol{x}\|}{\|\boldsymbol{x}\| \|\Delta \boldsymbol{b}\|}\\ &\le \frac{\|{\bf
+    A}^{-1}\| \|\Delta \boldsymbol{b}\| \|{\bf A}\| \|\boldsymbol{x}\|}{\|\boldsymbol{x}\|
+    \|\Delta \boldsymbol{b}\|} \\ &= \|{\bf A}^{-1}\| \|{\bf A}\|\\ &= \text{cond}({\bf
+    A}) \end{align}\]
 - en: where we used \(\|{\bf A}\boldsymbol{x}\| \le \|{\bf A}\| \|\boldsymbol{x}\|,
     \forall \boldsymbol{x}.\)
+  id: totrans-21
   prefs: []
   type: TYPE_NORMAL
+  zh: 其中我们使用了 \(\|{\bf A}\boldsymbol{x}\| \le \|{\bf A}\| \|\boldsymbol{x}\|, \forall
+    \boldsymbol{x}.\)
 - en: Matrix Perturbation and Error Bound
+  id: totrans-22
   prefs:
   - PREF_H4
   type: TYPE_NORMAL
+  zh: 矩阵扰动和误差界限
 - en: Then
+  id: totrans-23
   prefs: []
   type: TYPE_NORMAL
+  zh: 然后
 - en: \[\frac{\|\Delta \boldsymbol{x}\|}{\|\boldsymbol{x}\|} \le \text{cond}({\bf
     A})\frac{\|\Delta \boldsymbol{b}\|}{\|\boldsymbol{b}\|} \qquad (1)\]
+  id: totrans-24
   prefs: []
   type: TYPE_NORMAL
+  zh: \[\frac{\|\Delta \boldsymbol{x}\|}{\|\boldsymbol{x}\|} \le \text{cond}({\bf
+    A})\frac{\|\Delta \boldsymbol{b}\|}{\|\boldsymbol{b}\|} \qquad (1)\]
 - en: Instead of changing the input \(\boldsymbol{b}\), we can also add a perturbation
     to the matrix \(\boldsymbol{A}\) (input) by a small amount \(\boldsymbol{E}\),
     such that
+  id: totrans-25
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们也可以通过一个小量 \(\boldsymbol{E}\) 对矩阵 \(\boldsymbol{A}\)（输入）进行扰动，使得
 - en: \[\begin{align} (\boldsymbol{A} + \boldsymbol{E}) \hat{\boldsymbol{x}} = \boldsymbol{b}
     \end{align}\]
+  id: totrans-26
   prefs: []
   type: TYPE_NORMAL
+  zh: \[\begin{align} (\boldsymbol{A} + \boldsymbol{E}) \hat{\boldsymbol{x}} = \boldsymbol{b}
+    \end{align}\]
 - en: 'and in a similar way obtain:'
+  id: totrans-27
   prefs: []
   type: TYPE_NORMAL
+  zh: 以类似的方式获得：
 - en: \[\frac{\|\Delta \boldsymbol{x}\|}{\|\boldsymbol{x}\|} \le \text{cond}({\bf
     A})\frac{\| \boldsymbol{E}\|}{\|\boldsymbol{A}\|}\]
+  id: totrans-28
   prefs: []
   type: TYPE_NORMAL
 - en: Therefore, if we know the relative error in input, then we can use the condition
     number of the system to obtain an upper bound for the relative error of our computed
     solution (output).
+  id: totrans-29
   prefs: []
   type: TYPE_NORMAL
 - en: Example
+  id: totrans-30
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
 - en: Give an example of a matrix that is very well-conditioned (i.e., has a condition
     number that is good for computation). Select the best possible condition number(s)
     of a matrix?
+  id: totrans-31
   prefs: []
   type: TYPE_NORMAL
 - en: \[\begin{flalign} & \text{A) } \text{cond}({\bf A}) < 0 \\ & \text{B) } \text{cond}({\bf
     A}) = 0 \\ & \text{C) } 0 < \text{cond}({\bf A}) < 1 \\ & \text{D) } \text{cond}({\bf
     A}) = 1 \\ & \text{E) } \text{cond}({\bf A}) = \text{large numbers} \\ && \end{flalign}\]
     <details><summary>**Answer**</summary>
+  id: totrans-32
   prefs: []
   type: TYPE_NORMAL
 - en: \(\bf D\)
+  id: totrans-33
   prefs: []
   type: TYPE_NORMAL
 - en: The condition number of a matrix \({\bf A}\) cannot be less than 1 and a smaller
     condition number will minimize the relative error in output \(\left(\frac{\|\Delta
     \boldsymbol{x}\|}{\|\boldsymbol{x}\|}\right)\). Since we want to minimize the
     error in computation, choice \( \text{D} \) is the correct answer.</details>
+  id: totrans-34
   prefs: []
   type: TYPE_NORMAL
 - en: Condition Number
+  id: totrans-35
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
 - en: Condition Number Definition
+  id: totrans-36
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
 - en: '***Condition Number***: a measure of sensitivity of solving a linear system
     of equations to variations in the input.'
+  id: totrans-37
   prefs: []
   type: TYPE_NORMAL
 - en: The ***condition number*** of a square nonsingular matrix \({\bf A}\) is defined
@@ -166,165 +248,244 @@
     A} \boldsymbol{x} = \boldsymbol{b}\). A matrix with a large condition number is
     said to be ***ill-conditioned***, while a matrix with a small condition is said
     to be ***well-conditioned***.
+  id: totrans-38
   prefs: []
   type: TYPE_NORMAL
 - en: 'The identity matrix is well conditioned. We show this by the following:'
+  id: totrans-39
   prefs: []
   type: TYPE_NORMAL
 - en: Assuming the inverse of \(\|{\bf A}\|\) exists, \(\text{cond}({\bf A}) = \|{\bf
     A}\| \|{\bf A}^{-1}\| \geq \|{\bf A}{\bf A}^{-1}\| = \|{\bf I}\| = 1.\)
+  id: totrans-40
   prefs: []
   type: TYPE_NORMAL
 - en: This is the smallest possible condition number. Small condition numbers correspond
     to little error amplification. Remember, small condition numbers are good!
+  id: totrans-41
   prefs: []
   type: TYPE_NORMAL
 - en: If \({\bf A}\) is singular (\({\bf A}^{-1}\) does not exist), we can define
     \(\text{cond}({\bf A}) = \infty\) by convention.
+  id: totrans-42
   prefs: []
   type: TYPE_NORMAL
 - en: Induced Matrix Norms
+  id: totrans-43
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
 - en: 'Recall that the induced matrix norm is given by:'
+  id: totrans-44
   prefs: []
   type: TYPE_NORMAL
 - en: \[\begin{align} \|{\bf A}\|_p := \max_{\|\mathbf{x}\|=1} \|{\bf A}\mathbf{x}\|_p
     \end{align}\]
+  id: totrans-45
   prefs: []
   type: TYPE_NORMAL
 - en: The condition number can be measured with any \(p\)-norm, so to be precise we
     typically specify the norm being used, i.e. \(\text{cond}_2\), \(\text{cond}_1,
     \text{cond}_{\infty}\).
+  id: totrans-46
   prefs: []
   type: TYPE_NORMAL
 - en: For the 1-norm, we take the maximum absolute column sum of the matrix \(\boldsymbol{A}\)
+  id: totrans-47
   prefs: []
   type: TYPE_NORMAL
 - en: \[\|{\bf A}\|_1 = \max_j \sum_{i=1}^n \vert a_{ij} \vert.\]
+  id: totrans-48
   prefs: []
   type: TYPE_NORMAL
 - en: For the \(\infty\)-norm, we take the maximum absolute row sum of the matrix
     \(\boldsymbol{A}\)
+  id: totrans-49
   prefs: []
   type: TYPE_NORMAL
 - en: \[\|{\bf A}\|_{\infty} = \max_i \sum_{j=1}^n \vert a_{ij} \vert.\]
+  id: totrans-50
   prefs: []
   type: TYPE_NORMAL
 - en: For the 2-norm, \(\sigma_k\) are the singular values of the matrix \(\boldsymbol{A}\)
+  id: totrans-51
   prefs: []
   type: TYPE_NORMAL
 - en: \[\|{\bf A}\|_{2} = \max_k \sigma_k\]
+  id: totrans-52
   prefs: []
   type: TYPE_NORMAL
+  zh: \[\|{\bf A}\|_{2} = \max_k \sigma_k\]
 - en: Condition Number of Orthogonal Matrices
+  id: totrans-53
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 正交矩阵的条件数
 - en: What is the 2-norm condition number of an orthogonal matrix \(\boldsymbol{A}\)?
+  id: totrans-54
   prefs: []
   type: TYPE_NORMAL
+  zh: 正交矩阵 \(\boldsymbol{A}\) 的 2-范数条件数是多少？
 - en: \[\begin{align} \text{cond}({\bf A}) = \|{\bf A}\|_2 \|{\bf A}^{-1}\|_2 = \|{\bf
     A}\|_2 \|{\bf A}^{T}\|_2 = 1 \end{align}\]
+  id: totrans-55
   prefs: []
   type: TYPE_NORMAL
+  zh: \[\begin{align} \text{cond}({\bf A}) = \|{\bf A}\|_2 \|{\bf A}^{-1}\|_2 = \|{\bf
+    A}\|_2 \|{\bf A}^{T}\|_2 = 1 \end{align}\]
 - en: Hence, this means that orthogonal matrices have optimal conditioning.
+  id: totrans-56
   prefs: []
   type: TYPE_NORMAL
+  zh: 因此，这意味着正交矩阵具有最优的条件数。
 - en: Things to Remember About Condition Numbers
+  id: totrans-57
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 关于条件数需要记住的事情
 - en: For any matrix \({\bf A}\), \(\text{cond}({\bf A}) \geq 1.\)
+  id: totrans-58
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 对于任何矩阵 \({\bf A}\)，\(\text{cond}({\bf A}) \geq 1.\)
 - en: For the identity matrix \({\bf I}\), \(\text{cond}({\bf I}) = 1.\)
+  id: totrans-59
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 对于单位矩阵 \({\bf I}\)，\(\text{cond}({\bf I}) = 1.\)
 - en: For any matrix \({\bf A}\) and a nonzero scalar \(\gamma\), \(\text{cond}(\gamma
     {\bf A}) = \text{cond}({\bf A}).\)
+  id: totrans-60
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 对于任何矩阵 \({\bf A}\) 和一个非零标量 \(\gamma\)，\(\text{cond}(\gamma {\bf A}) = \text{cond}({\bf
+    A}).\)
 - en: For any diagonal matrix \({\bf D}\), \(\text{cond}({\bf D})\) = \(\frac{\text{max}\mid
     d_{i} \mid}{\text{min}\mid d_{i} \mid}.\)
+  id: totrans-61
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 对于任何对角矩阵 \({\bf D}\)，\(\text{cond}({\bf D})\) = \(\frac{\text{max}\mid d_{i}
+    \mid}{\text{min}\mid d_{i} \mid}.\)
 - en: 'The condition number is a measure of how close a matrix is to being singular:
     a matrix with large condition number is nearly singular, whereas a matrix with
     a condition number close to 1 is far from being singular.'
+  id: totrans-62
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 条件数是衡量矩阵接近奇异性程度的一个指标：条件数大的矩阵几乎奇异，而条件数接近 1 的矩阵远非奇异。
 - en: The determinant of a matrix is **NOT** a good indicator to check whether a matrix
     is near singularity.
+  id: totrans-63
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 矩阵的行列式并不是检查矩阵是否接近奇异性好的指标。
 - en: Example
+  id: totrans-64
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 示例
 - en: What is the 2-norm-based condition number of the diagonal matrix
+  id: totrans-65
   prefs: []
   type: TYPE_NORMAL
+  zh: 对角矩阵的 2-范数条件数是多少？
 - en: \[\mathbf{A} = \begin{bmatrix} 100 & 0 & 0 \\ 0 & 13 & 0 \\ 0 & 0 & 0.5 \end{bmatrix}?\]
     \[\begin{flalign} & \text{A) } 1 \\ & \text{B) } 50 \\ & \text{C) } 100 \\ & \text{D)
     } 200 \\ && \end{flalign}\] <details><summary>**Answer**</summary>
+  id: totrans-66
   prefs: []
   type: TYPE_NORMAL
+  zh: \[\mathbf{A} = \begin{bmatrix} 100 & 0 & 0 \\ 0 & 13 & 0 \\ 0 & 0 & 0.5 \end{bmatrix}?\]
+    \[\begin{flalign} & \text{A) } 1 \\ & \text{B) } 50 \\ & \text{C) } 100 \\ & \text{D)
+    } 200 \\ && \end{flalign}\] <details><summary>**答案**</summary>
 - en: \(\bf D\)
+  id: totrans-67
   prefs: []
   type: TYPE_NORMAL
+  zh: \(\bf D\)
 - en: As mentioned above, for any diagonal matrix \({\bf D}\), \(\text{cond}({\bf
     D}) \) = \(\frac{\text{max}\mid d_{i} \mid}{\text{min}\mid d_{i} \mid}.\) Hence,
     the answer is \( 100 / 0.5 = 200\. \)
+  id: totrans-68
   prefs: []
   type: TYPE_NORMAL
+  zh: 如上所述，对于任何对角矩阵 \({\bf D}\)，\(\text{cond}({\bf D}) \) = \(\frac{\text{max}\mid
+    d_{i} \mid}{\text{min}\mid d_{i} \mid}.\) 因此，答案是 \( 100 / 0.5 = 200\. \)
 - en: 'Another way to go about this question is by obtaining the inverse of the diagonal
     matrix \({\bf A}\):'
+  id: totrans-69
   prefs: []
   type: TYPE_NORMAL
+  zh: 另一种处理这个问题的方法是求对角矩阵 \({\bf A}\) 的逆：
 - en: \( \mathbf{A^{-1}} = \begin{bmatrix} 1/100 & 0 & 0 \\ 0 & 1/13 & 0 \\ 0 & 0
     & 2 \end{bmatrix}? \)
+  id: totrans-70
   prefs: []
   type: TYPE_NORMAL
+  zh: \( \mathbf{A^{-1}} = \begin{bmatrix} 1/100 & 0 & 0 \\ 0 & 1/13 & 0 \\ 0 & 0
+    & 2 \end{bmatrix}? \)
 - en: \( \begin{align} \text{cond}({\bf A}) = \|{\bf A}\|_2 \|{\bf A}^{-1}\|_2 = 100
     * 2 = 200 \end{align} \)</details>
+  id: totrans-71
   prefs: []
   type: TYPE_NORMAL
+  zh: \( \begin{align} \text{cond}({\bf A}) = \|{\bf A}\|_2 \|{\bf A}^{-1}\|_2 = 100
+    * 2 = 200 \end{align} \)</details>
 - en: Residual vs Error
+  id: totrans-72
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 残差与误差
 - en: The ***residual vector*** \(\boldsymbol{r}\) of approximate solution \(\hat{\boldsymbol{x}}\)
     for the linear system \({\bf A} \boldsymbol{x} = \boldsymbol{b}\) is defined as
     \(\boldsymbol{r} = \boldsymbol{b} - {\bf A} \hat{\boldsymbol{x}}\). Since \({\bf
     A} \hat{\boldsymbol{x}} = \boldsymbol{b} + \Delta \boldsymbol{b}\), we have
+  id: totrans-73
   prefs: []
   type: TYPE_NORMAL
+  zh: 近似解 \(\hat{\boldsymbol{x}}\) 对于线性系统 \({\bf A} \boldsymbol{x} = \boldsymbol{b}\)
+    的残差向量 \(\boldsymbol{r}\) 定义为 \(\boldsymbol{r} = \boldsymbol{b} - {\bf A} \hat{\boldsymbol{x}}\).
+    由于 \({\bf A} \hat{\boldsymbol{x}} = \boldsymbol{b} + \Delta \boldsymbol{b}\)，我们有
 - en: \[\boldsymbol{r} = \boldsymbol{b} - (\boldsymbol{b} + \Delta \boldsymbol{b})
     = -\Delta \boldsymbol{b}\]
+  id: totrans-74
   prefs: []
   type: TYPE_NORMAL
+  zh: \[\boldsymbol{r} = \boldsymbol{b} - (\boldsymbol{b} + \Delta \boldsymbol{b})
+    = -\Delta \boldsymbol{b}\]
 - en: Therefore, [equation (1)](#matrix-perturbation-and-error-bound) can also be
     written as
+  id: totrans-75
   prefs: []
   type: TYPE_NORMAL
+  zh: 因此，[方程（1）](#matrix-perturbation-and-error-bound)也可以写成
 - en: \[\frac{\|\Delta \boldsymbol{x}\|}{\|\boldsymbol{x}\|} \le \text{cond}({\bf
     A})\frac{\|\boldsymbol{r}\|}{\|\boldsymbol{b}\|}\]
+  id: totrans-76
   prefs: []
   type: TYPE_NORMAL
+  zh: \[\frac{\|\Delta \boldsymbol{x}\|}{\|\boldsymbol{x}\|} \le \text{cond}({\bf
+    A})\frac{\|\boldsymbol{r}\|}{\|\boldsymbol{b}\|}\]
 - en: If we define relative residual as \(\frac{\|\boldsymbol{r}\|}{\|\boldsymbol{b}\|}\),
     we can see that a small relative residual implies small relative error in approximate
     solution only if \({\bf A}\) is well-conditioned (\(\text{cond}({\bf A})\) is
     small).
+  id: totrans-77
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果我们定义相对残差为 \(\frac{\|\boldsymbol{r}\|}{\|\boldsymbol{b}\|}\)，我们可以看到，只有当 \({\bf
+    A}\) 是良态的（\(\text{cond}({\bf A})\) 小）时，小的相对残差才意味着近似解中的小的相对误差。
 - en: In addition, it's important to note the difference between relative residual
     and relative error. The relative residual \(\frac{\|\boldsymbol{r}\|}{\|\boldsymbol{b}\|}\)
     tells us how well the approximate solution \(\hat{\boldsymbol{x}}\) satisfies
@@ -333,43 +494,71 @@
     approximated solution \(\hat{\boldsymbol{x}}\) is to the exact solution \(\boldsymbol{x}\).
     Keep in mind that we don't know the exact solution \(\boldsymbol{x}\), this is
     why we started using the residual vector \(\boldsymbol{r}\).
+  id: totrans-78
   prefs: []
   type: TYPE_NORMAL
+  zh: 此外，重要的是要注意相对残差和相对误差之间的区别。相对残差 \(\frac{\|\boldsymbol{r}\|}{\|\boldsymbol{b}\|}\)
+    告诉我们近似解 \(\hat{\boldsymbol{x}}\) 满足线性系统 \({\bf A} \boldsymbol{x} = \boldsymbol{b}\)
+    的程度。相对误差 \(\frac{\|\Delta \boldsymbol{x}\|}{\|\boldsymbol{x}\|}\) 告诉我们近似解 \(\hat{\boldsymbol{x}}\)
+    与精确解 \(\boldsymbol{x}\) 的接近程度。记住，我们不知道精确解 \(\boldsymbol{x}\)，这就是为什么我们开始使用残差向量
+    \(\boldsymbol{r}\) 的原因。
 - en: Example
+  id: totrans-79
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 示例
 - en: \[\mathbf{A} = \begin{bmatrix} 13 & 0 & 0 \\ 0 & 1 & 0 \\ 0 & 0 & 15 \end{bmatrix}\]
+  id: totrans-80
   prefs: []
   type: TYPE_NORMAL
+  zh: \[\mathbf{A} = \begin{bmatrix} 13 & 0 & 0 \\ 0 & 1 & 0 \\ 0 & 0 & 15 \end{bmatrix}\]
 - en: Suppose we have \({\boldsymbol{x}}\) as a solution of \({\bf A} \boldsymbol{x}
     = \boldsymbol{b}\), and \(\hat {\boldsymbol{x}}\) as a solution of \({\bf A} \hat{\boldsymbol{x}}
     = \boldsymbol{b} + \Delta \boldsymbol{b}\). We define \({\bf r} = {\bf A} \hat{\boldsymbol{x}}
     - \boldsymbol{b}\). If we know that the relative residual \(\frac{\|\boldsymbol{r}\|}{\|\boldsymbol{b}\|}\)
     is \(10^{-4}\), determine the upper bound for the output relative error. Assume
     2-norm.
+  id: totrans-81
   prefs: []
   type: TYPE_NORMAL
+  zh: 假设我们有一个 \({\boldsymbol{x}}\) 是 \({\bf A} \boldsymbol{x} = \boldsymbol{b}\) 的解，\(\hat
+    {\boldsymbol{x}}\) 是 \({\bf A} \hat{\boldsymbol{x}} = \boldsymbol{b} + \Delta
+    \boldsymbol{b}\) 的解。我们定义 \({\bf r} = {\bf A} \hat{\boldsymbol{x}} - \boldsymbol{b}\)。如果我们知道相对残差
+    \(\frac{\|\boldsymbol{r}\|}{\|\boldsymbol{b}\|}\) 是 \(10^{-4}\)，确定输出相对误差的上限。假设
+    2-范数。
 - en: <details><summary>**Answer**</summary>
+  id: totrans-82
   prefs: []
   type: TYPE_NORMAL
+  zh: <details><summary>**答案**</summary>
 - en: \(\frac{\|\Delta \boldsymbol{x}\|}{\|\boldsymbol{x}\|} \le \text{cond}({\bf
     A})\frac{\|\boldsymbol{r}\|}{\|\boldsymbol{b}\|} = \mathbf{15 * 10^{-4}} \)</details>
+  id: totrans-83
   prefs: []
   type: TYPE_NORMAL
+  zh: \(\frac{\|\Delta \boldsymbol{x}\|}{\|\boldsymbol{x}\|} \le \text{cond}({\bf
+    A})\frac{\|\boldsymbol{r}\|}{\|\boldsymbol{b}\|} = \mathbf{15 * 10^{-4}} \)</details>
 - en: Alternative Definitions of Relative Residual
+  id: totrans-84
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 相对残差的替代定义
 - en: As a reminder, the relative residual \(\frac{\|\boldsymbol{r}\|}{\|\boldsymbol{b}\|}\)
     tells us how well the approximate solution \(\hat{\boldsymbol{x}}\) satisfies
     the linear system \({\bf A} \boldsymbol{x} = \boldsymbol{b}\).
+  id: totrans-85
   prefs: []
   type: TYPE_NORMAL
+  zh: 作为提醒，相对残差 \(\frac{\|\boldsymbol{r}\|}{\|\boldsymbol{b}\|}\) 告诉我们近似解 \(\hat{\boldsymbol{x}}\)
+    满足线性系统 \({\bf A} \boldsymbol{x} = \boldsymbol{b}\) 的程度。
 - en: There are other closely related quantities that also have the name "relative
     residual". Note that
+  id: totrans-86
   prefs: []
   type: TYPE_NORMAL
+  zh: 还有其他一些与“相对残差”密切相关的量，也具有相同的名称。请注意，
 - en: \[\begin{align} \|\Delta \boldsymbol{x}\| &= \|\hat{\boldsymbol{x}} - \boldsymbol{x}\|
     \\ &= \|\boldsymbol{A}^{-1}\boldsymbol{A}\hat{\boldsymbol{x}} - \boldsymbol{A}^{-1}\boldsymbol{b}\|
     \\ &= \|\boldsymbol{A}^{-1}(\boldsymbol{A}\hat{\boldsymbol{x}} - \boldsymbol{b})\|
@@ -377,213 +566,331 @@
     \| \boldsymbol{r}\| \\ &= \|\boldsymbol{A}^{-1}\|\cdot \|\boldsymbol{A}\| \frac{\|\boldsymbol{r}\|}{\|\boldsymbol{A}\|}
     \\ &= \text{cond}(\boldsymbol{A})\frac{\|\boldsymbol{r}\|}{\|\boldsymbol{A}\|}.
     \end{align}\]
+  id: totrans-87
   prefs: []
   type: TYPE_NORMAL
+  zh: \[\begin{align} \|\Delta \boldsymbol{x}\| &= \|\hat{\boldsymbol{x}} - \boldsymbol{x}\|
+    \\ &= \|\boldsymbol{A}^{-1}\boldsymbol{A}\hat{\boldsymbol{x}} - \boldsymbol{A}^{-1}\boldsymbol{b}\|
+    \\ &= \|\boldsymbol{A}^{-1}(\boldsymbol{A}\hat{\boldsymbol{x}} - \boldsymbol{b})\|
+    \\ &= \|\boldsymbol{A}^{-1}\boldsymbol{r}\|\\ &\leq \|\boldsymbol{A}^{-1}\|\cdot
+    \| \boldsymbol{r}\| \\ &= \|\boldsymbol{A}^{-1}\|\cdot \|\boldsymbol{A}\| \frac{\|\boldsymbol{r}\|}{\|\boldsymbol{A}\|}
+    \\ &= \text{cond}(\boldsymbol{A})\frac{\|\boldsymbol{r}\|}{\|\boldsymbol{A}\|}.
+    \end{align}\]
 - en: In summary,
+  id: totrans-88
   prefs: []
   type: TYPE_NORMAL
+  zh: 总结来说，
 - en: \[\|\Delta \boldsymbol{x}\| \leq \text{cond}(\boldsymbol{A})\frac{\|\boldsymbol{r}\|}{\|\boldsymbol{A}\|}\qquad
     (2)\]
+  id: totrans-89
   prefs: []
   type: TYPE_NORMAL
+  zh: \[\|\Delta \boldsymbol{x}\| \leq \text{cond}(\boldsymbol{A})\frac{\|\boldsymbol{r}\|}{\|\boldsymbol{A}\|}\qquad
+    (2)\]
 - en: We can divide this inequality by \(\|\boldsymbol{x}\|\) to obtain
+  id: totrans-90
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们可以将这个不等式除以 \(\|\boldsymbol{x}\|\) 来得到
 - en: \[\frac{\|\Delta \boldsymbol{x}\|}{\|\boldsymbol{x}\|} \le \text{cond}({\bf
     A})\frac{\|\boldsymbol{r}\|}{\|\boldsymbol{A}\|\cdot\|\boldsymbol{x}\|}.\]
+  id: totrans-91
   prefs: []
   type: TYPE_NORMAL
+  zh: \[\frac{\|\Delta \boldsymbol{x}\|}{\|\boldsymbol{x}\|} \le \text{cond}({\bf
+    A})\frac{\|\boldsymbol{r}\|}{\|\boldsymbol{A}\|\cdot\|\boldsymbol{x}\|}.\]
 - en: The quantity \(\frac{\|\boldsymbol{r}\|}{\|\boldsymbol{A}\|\cdot\|\boldsymbol{x}\|}\)
     is also known as the relative residual. This inequality is useful mathematically,
     but involves the norm \(\|\mathbf{x}\|\) of the unknown solution, so it isn't
     a practical way to bound the relative error. Since \(\|\boldsymbol{b}\| = \|\boldsymbol{A}\boldsymbol{x}\|
     \leq \|\boldsymbol{A}\|\cdot \|\boldsymbol{x}\|\), we have
+  id: totrans-92
   prefs: []
   type: TYPE_NORMAL
+  zh: 量 \(\frac{\|\boldsymbol{r}\|}{\|\boldsymbol{A}\|\cdot\|\boldsymbol{x}\|}\) 也被称为相对残差。这个不等式在数学上是有用的，但它涉及到未知解的范数
+    \(\|\mathbf{x}\|\)，因此它不是限制相对误差的实际方法。由于 \(\|\boldsymbol{b}\| = \|\boldsymbol{A}\boldsymbol{x}\|
+    \leq \|\boldsymbol{A}\|\cdot \|\boldsymbol{x}\|\)，我们有
 - en: \[\frac{\|\boldsymbol{r}\|}{\|\boldsymbol{A}\|\cdot\|\boldsymbol{x}\|} \leq
     \frac{\|\boldsymbol{r}\|}{\|\boldsymbol{b}\|}\]
+  id: totrans-93
   prefs: []
   type: TYPE_NORMAL
+  zh: \[\frac{\|\boldsymbol{r}\|}{\|\boldsymbol{A}\|\cdot\|\boldsymbol{x}\|} \leq
+    \frac{\|\boldsymbol{r}\|}{\|\boldsymbol{b}\|}\]
 - en: '*Note that the two sides are sometimes equal for certain choices of \(\boldsymbol{b}\).*'
+  id: totrans-94
   prefs: []
   type: TYPE_NORMAL
+  zh: '*请注意，在某些选择 \(\boldsymbol{b}\) 的情况下，两边有时是相等的。*'
 - en: We can also divide [equation (2)](#alternative-definitions-of-relative-residual)
     by \(\|\hat{\boldsymbol{x}}\|\) to obtain
+  id: totrans-95
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们还可以将 [方程 (2)](#alternative-definitions-of-relative-residual) 除以 \(\|\hat{\boldsymbol{x}}\|\)
+    来得到
 - en: \[\frac{\|\Delta \boldsymbol{x}\|}{\|\hat{\boldsymbol{x}}\|} \le \text{cond}({\bf
     A})\frac{\|\boldsymbol{r}\|}{\|\boldsymbol{A}\|\cdot\|\hat{\boldsymbol{x}}\|}.\]
+  id: totrans-96
   prefs: []
   type: TYPE_NORMAL
+  zh: \[\frac{\|\Delta \boldsymbol{x}\|}{\|\hat{\boldsymbol{x}}\|} \le \text{cond}({\bf
+    A})\frac{\|\boldsymbol{r}\|}{\|\boldsymbol{A}\|\cdot\|\hat{\boldsymbol{x}}\|}.\]
 - en: The left-hand side is no longer the relative error (the denominator is the norm
     of the approximate solution now, not the exact solution), but the right-hand side
     can still provide a reasonable estimate of the relative error. It is also computable,
     since the norm of the true solution does not appear on the right-hand side.
+  id: totrans-97
   prefs: []
   type: TYPE_NORMAL
+  zh: 左边不再是相对误差（分母现在是近似解的范数，而不是精确解），但右边仍然可以提供一个合理的相对误差估计。它也是可计算的，因为真解的范数没有出现在右边。
 - en: For this reason, the quantity \(\frac{\|\boldsymbol{r}\|}{\|\boldsymbol{A}\|\cdot\|\hat{\boldsymbol{x}}\|}\)
     is also known as the relative residual. This is used in the next section to describe
     the relationship between the residual and errors in the matrix \(\boldsymbol{A}\).
+  id: totrans-98
   prefs: []
   type: TYPE_NORMAL
+  zh: 因此，量 \(\frac{\|\boldsymbol{r}\|}{\|\boldsymbol{A}\|\cdot\|\hat{\boldsymbol{x}}\|}\)
+    也被称为相对残差。这在下一节中用来描述残差与矩阵 \(\boldsymbol{A}\) 中的误差之间的关系。
 - en: While 3 different quantities all being named "relative residual" may be confusing,
     you should be able to determine which one is being discussed by the context.
+  id: totrans-99
   prefs: []
   type: TYPE_NORMAL
+  zh: 虽然3个不同的量都被称为“相对残差”可能会令人困惑，但你应该能够通过上下文确定正在讨论的是哪一个。
 - en: Gaussian Elimination (with Partial Pivoting) is Guaranteed to Produce a Small
     Residual
+  id: totrans-100
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 带部分主元的高斯消元法保证产生小的残差
 - en: 'When we use Gaussian elimination with partial pivoting to compute the solution
     for the linear system \({\bf A} \boldsymbol{x} = \boldsymbol{b}\) and obtain an
     approximate solution \(\hat{\boldsymbol{x}}\), the residual vector \(\boldsymbol{r}\)
     satisfies:'
+  id: totrans-101
   prefs: []
   type: TYPE_NORMAL
+  zh: 当我们使用带部分主元的高斯消元法来计算线性方程组 \({\bf A} \boldsymbol{x} = \boldsymbol{b}\) 的解并得到一个近似解
+    \(\hat{\boldsymbol{x}}\) 时，残差向量 \(\boldsymbol{r}\) 满足：
 - en: \[\frac{\|\boldsymbol{r}\|}{\|{\bf A}\| \|\hat{\boldsymbol{x}}\|} \le \frac{\|E\|}{\|{\bf
     A}\|} \le c \epsilon_{mach}\]
+  id: totrans-102
   prefs: []
   type: TYPE_NORMAL
+  zh: \[\frac{\|\boldsymbol{r}\|}{\|{\bf A}\| \|\hat{\boldsymbol{x}}\|} \le \frac{\|E\|}{\|{\bf
+    A}\|} \le c \epsilon_{mach}\]
 - en: where \(E\) is backward error in \({\bf A}\) (which is defined by \(({\bf A}+E)\hat{\boldsymbol{x}}
     = \boldsymbol{b}\)), \(c\) is a coefficient related to \({\bf A}\) and \(\epsilon_{mach}\)
     is machine epsilon.
+  id: totrans-103
   prefs: []
   type: TYPE_NORMAL
+  zh: 其中 \(E\) 是 \({\bf A}\) 中的向后误差（定义为 \(({\bf A}+E)\hat{\boldsymbol{x}} = \boldsymbol{b}\)），\(c\)
+    是与 \({\bf A}\) 和 \(\epsilon_{mach}\) 相关的系数，而 \(\epsilon_{mach}\) 是机器精度。
 - en: Typically \(c\) is small with partial pivoting, but \(c\) can be arbitrarily
     large without pivoting.
+  id: totrans-104
   prefs: []
   type: TYPE_NORMAL
+  zh: 通常情况下，带部分主元时 \(c\) 较小，但无主元时 \(c\) 可以任意大。
 - en: Therefore, Gaussian elimination with partial pivoting yields **small relative
     residual regardless of conditioning of the system **.****
+  id: totrans-105
   prefs: []
   type: TYPE_NORMAL
+  zh: 因此，无论系统的条件数如何，带部分主元的高斯消元法都会产生**小的相对残差**。****
 - en: For more details, see [Gaussian Elimination & Roundoff Error](https://math.la.asu.edu/~gardner/lu-round.pdf).
+  id: totrans-106
   prefs: []
   type: TYPE_NORMAL
+  zh: 更多细节，请参阅 [高斯消元与舍入误差](https://math.la.asu.edu/~gardner/lu-round.pdf)。
 - en: Accuracy Rule of Thumb for Conditioning
+  id: totrans-107
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 条件数估计的经验法则
 - en: Suppose we apply Gaussian elimination with partial pivoting and back substitution
     to the linear system \({\bf A} \boldsymbol{x} = \boldsymbol{b}\) and obtain a
     computed solution \(\hat{\boldsymbol{x}}\). If the entries in \({\bf A}\) and
     \(\boldsymbol{b}\) are accurate to \(s\) decimal digits, and \(\text{cond}({\bf
     A}) \approx 10^w\), then the elements of the solution vector \(\hat{\boldsymbol{x}}\)
     will be accurate to about \(s-w\) decimal digits.
+  id: totrans-108
   prefs: []
   type: TYPE_NORMAL
+  zh: 假设我们对线性方程组 \({\bf A} \boldsymbol{x} = \boldsymbol{b}\) 应用部分选主元的高斯消元法和回代，并得到一个计算出的解
+    \(\hat{\boldsymbol{x}}\)。如果 \({\bf A}\) 和 \(\boldsymbol{b}\) 中的项精确到 \(s\) 位小数，且
+    \(\text{cond}({\bf A}) \approx 10^w\)，那么解向量 \(\hat{\boldsymbol{x}}\) 的元素将精确到大约
+    \(s-w\) 位小数。
 - en: For a proof of this rule of thumb, please see [Fundamentals of Matrix Computations
     by David S. Watkins](https://books.google.com/books?id=xi5omWiQ-3kC&pg=PA165&lpg=PA165&dq=gaussian+elimination+rule+of+thumb&source=bl&ots=KlQVax3zja&sig=o4SHiYPAXodkk39u9yw0NYZe1Zo&hl=en&sa=X&ved=0ahUKEwiopPykkvjWAhWjzIMKHYGpDIsQ6AEIXzAK#v=onepage&q=gaussian%20elimination%20rule%20of%20thumb&f=false).
+  id: totrans-109
   prefs: []
   type: TYPE_NORMAL
+  zh: 关于这个经验法则的证明，请参阅 [David S. Watkins 的《矩阵计算基础》](https://books.google.com/books?id=xi5omWiQ-3kC&pg=PA165&lpg=PA165&dq=gaussian+elimination+rule+of+thumb&source=bl&ots=KlQVax3zja&sig=o4SHiYPAXodkk39u9yw0NYZe1Zo&hl=en&sa=X&ved=0ahUKEwiopPykkvjWAhWjzIMKHYGpDIsQ6AEIXzAK#v=onepage&q=gaussian%20elimination%20rule%20of%20thumb&f=false)。
 - en: Example
+  id: totrans-110
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 示例
 - en: How many accurate decimal digits in the solution can we expect to obtain if
     we solve a linear system \({\bf A} \boldsymbol{x} = \boldsymbol{b}\) where \(\text{cond}({\bf
     A}) = 10^{10}\) using Gaussian elimination with partial pivoting, assuming we
     are using IEEE double precision and the inputs are accurate to machine precision?
+  id: totrans-111
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果我们使用部分选主元的高斯消元法来解决条件数为 \(10^{10}\) 的线性方程组 \({\bf A} \boldsymbol{x} = \boldsymbol{b}\)，并且假设我们使用
+    IEEE 双精度且输入精确到机器精度，我们期望在解中能得到多少位准确的小数？
 - en: <details><summary>**Answer**</summary> In IEEE double precision, \(\epsilon_{mach}
     \approx 2.2\times 10^{-16}\), which means the entries in \({\bf A}\) and \(\boldsymbol{b}\)
     are accurate to \(\vert\log_{10}(2.2\times 10^{-16})\vert \approx 16\) decimal
     digits.
+  id: totrans-112
   prefs: []
   type: TYPE_NORMAL
+  zh: <details><summary>**答案**</summary> 在 IEEE 双精度中，\(\epsilon_{mach} \approx 2.2\times
+    10^{-16}\)，这意味着 \({\bf A}\) 和 \(\boldsymbol{b}\) 中的项精确到 \(\vert\log_{10}(2.2\times
+    10^{-16})\vert \approx 16\) 位小数。
 - en: Then, using the rule of thumb, we know the entries in \(\hat{\boldsymbol{x}}\)
     will be accurate to about \(16-10 = 6\) decimal digits.</details>
+  id: totrans-113
   prefs: []
   type: TYPE_NORMAL
+  zh: 然后，使用这个经验法则，我们知道 \(\hat{\boldsymbol{x}}\) 中的项将精确到大约 \(16-10 = 6\) 位小数。</details>
 - en: Review Questions
+  id: totrans-114
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 复习问题
 - en: What is the definition of a condition number?
+  id: totrans-115
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 条件数的定义是什么？
 - en: What is the condition number of solving \({\bf A}\mathbf{x} = \mathbf{b}\)?
+  id: totrans-116
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 解方程 \({\bf A}\mathbf{x} = \mathbf{b}\) 的条件数是多少？
 - en: What is the condition number of matrix-vector multiplication?
+  id: totrans-117
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 矩阵-向量乘法的条件数是多少？
 - en: Calculate the \(p\)-norm condition number of a matrix for a given \(p\).
+  id: totrans-118
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 计算给定 \(p\) 的矩阵的 \(p\)-范数条件数。
 - en: Do you want a small condition number or a large condition number?
+  id: totrans-119
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 你想要一个小的条件数还是大的条件数？
 - en: What is the condition number of an orthogonal matrix?
+  id: totrans-120
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 正交矩阵的条件数是多少？
 - en: If you have \(p\) accurate digits in \({\bf A}\) and \(\mathbf{b}\), how many
     accurate digits do you have in the solution of \({\bf A}\mathbf{x} = \mathbf{b}\)
     if the condition number of \({\bf A}\) is \(\kappa\)?
+  id: totrans-121
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 如果你 \({\bf A}\) 和 \(\mathbf{b}\) 有 \(p\) 位准确数字，那么当 \({\bf A}\) 的条件数为 \(\kappa\)
+    时，你在 \({\bf A}\mathbf{x} = \mathbf{b}\) 的解中会有多少位准确数字？
 - en: When solving a linear system \({\bf A}\mathbf{x} = \mathbf{b}\), does a small
     residual guarantee an accurate result?
+  id: totrans-122
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 在解线性方程组 \({\bf A}\mathbf{x} = \mathbf{b}\) 时，小的残差是否保证结果准确？
 - en: Consider solving a linear system \({\bf A}\mathbf{x} = \mathbf{b}\). When does
     Gaussian elimination with partial pivoting produce a small residual?
+  id: totrans-123
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 考虑解线性方程组 \({\bf A}\mathbf{x} = \mathbf{b}\)。何时使用部分选主元的高斯消元法会产生小的残差？
 - en: How does the condition number of a matrix \({\bf A}\) relate to the condition
     number of \({\bf A}^{-1}\)?
+  id: totrans-124
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 矩阵 \({\bf A}\) 的条件数与 \({\bf A}^{-1}\) 的条件数有何关系？
 - en: Changelog
+  id: totrans-125
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 更新日志
 - en: 'February 12th, 2024: Arnav Aggarwal (arnava4) — aligned notes with slides and
     added additional examples'
+  id: totrans-126
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 2024年2月12日：Arnav Aggarwal (arnava4) — 将笔记与幻灯片对齐并添加了额外的示例
 - en: 'March 19th, 2022: Yuxuan Chen (yuxuan19) — added condition number bullet pounts,
     minor fixes'
+  id: totrans-127
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 2022年3月19日：Yuxuan Chen (yuxuan19) — 添加了条件数要点，进行了一些小的修正
 - en: 'October 27th, 2017: Yu Meng (yumeng5) — first complete draft'
+  id: totrans-128
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 2017年10月27日：Yu Meng (yumeng5) — 首次完整草案
 - en: <details><summary>View Remaining Entries</summary>
+  id: totrans-129
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: <details><summary>查看剩余条目</summary>
 - en: 'October 27th, 2017: Erin Carrier (ecarrie2) — adds review questions, minor
     fixes throughout, revised rule of thumb wording'
+  id: totrans-130
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 2017年10月27日：Erin Carrier (ecarrie2) — 添加复习问题，全文小修，修订了经验法则措辞
 - en: 'October 17th, 2017: Luke Olson (lukeo) — outline</details>'
+  id: totrans-131
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 2017年10月17日：Luke Olson (lukeo) — 概要</details>
 - en: Authors
+  id: totrans-132
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 作者
 - en: CS 357 Course Staff
+  id: totrans-133
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: CS 357 课程工作人员
