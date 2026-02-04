@@ -1,193 +1,286 @@
 - en: Principal Component Analysis (PCA)
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 主成分分析（PCA）
 - en: 原文：[https://cs357.cs.illinois.edu/textbook/notes/pca.html](https://cs357.cs.illinois.edu/textbook/notes/pca.html)
+  id: totrans-1
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 原文：[https://cs357.cs.illinois.edu/textbook/notes/pca.html](https://cs357.cs.illinois.edu/textbook/notes/pca.html)
 - en: Learning Objectives
+  id: totrans-2
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 学习目标
 - en: Understand why Principal Component Analysis is an important tool in analyzing
     data sets
+  id: totrans-3
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 理解为什么主成分分析是分析数据集的重要工具
 - en: Know the pros and cons of PCA
+  id: totrans-4
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 了解PCA的优缺点
 - en: Be able to implement PCA algorithm
+  id: totrans-5
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 能够实现PCA算法
 - en: What is PCA?
+  id: totrans-6
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 什么是PCA？
 - en: '***PCA***, or ***Principal Component Analysis***, is an algorithm to reduce
     a large data set without loss of important imformation. ***PCA*** is defined as
     an orthogonal linear transformation that transforms the data to a new coordinate
     system such that the greatest variance by some scalar projection of the data comes
     to lie on the first coordinate (called the ***first principal component***), the
     second greatest variance on the second coordinate, and so on.'
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: '***PCA***，或***主成分分析***，是一种在不丢失重要信息的情况下减少大数据集的算法。***PCA***被定义为一种正交线性变换，它将数据转换到一个新的坐标系，使得数据通过某个标量投影的最大方差位于第一个坐标（称为***第一主成分***），第二个最大方差位于第二个坐标，依此类推。'
 - en: In simpler words, it detects the directions for maximum variance and project
     the original data set to a lower dimensional subspace (up to a change of basis)
     that still contains most of the important imformation.
+  id: totrans-8
   prefs: []
   type: TYPE_NORMAL
+  zh: 简单来说，它检测最大方差的方向，并将原始数据集投影到一个低维子空间（直到基的变化），该子空间仍然包含大部分重要信息。
 - en: 'Pros: Only the "least important" variables are omitted, the more valuable variables
     are kept. Moreover, the created new variables are mutually independent, which
     is essential for linear models.'
+  id: totrans-9
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 优点：只省略了“最不重要的”变量，保留了更有价值的变量。此外，创建的新变量是相互独立的，这对于线性模型是必不可少的。
 - en: 'Cons: The new variables created will have different meanings than the original
     dataset. (Loss of interpretability)'
+  id: totrans-10
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 缺点：新创建的变量将与原始数据集的含义不同。（解释性丢失）
 - en: Example
+  id: totrans-11
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 示例
 - en: Consider a large dataset with \(m\) samples and 30 different cell features.
     There are many variables that are highly correlated with each other. We can create
     an \(m \times\)30 matrix \(\bf A\), with the columns \(\bf F_i\) representing
     the different features.
+  id: totrans-12
   prefs: []
   type: TYPE_NORMAL
+  zh: 考虑一个包含 \(m\) 个样本和30个不同细胞特征的大的数据集。有许多变量彼此高度相关。我们可以创建一个 \(m \times\)30的矩阵 \(\bf
+    A\)，其中列 \(\bf F_i\) 代表不同的特征。
 - en: \[A = \begin{bmatrix} \vdots & \vdots & \vdots \\ F_1 & \cdots & F_{30} \\ \vdots
     & \vdots & \vdots \end{bmatrix}\]
+  id: totrans-13
   prefs: []
   type: TYPE_NORMAL
+  zh: \[A = \begin{bmatrix} \vdots & \vdots & \vdots \\ F_1 & \cdots & F_{30} \\ \vdots
+    & \vdots & \vdots \end{bmatrix}\]
 - en: Now suppose we want to reduce the feature space. One method is to directly remove
     some feature variables. For example, we could ignore the last 20 feature columns
     to obtain a reduced data matrix \(\bf A^*\). This approach is simple and maintains
     the interpretation of the feature variables, but we have lost the dropped column
     information.
+  id: totrans-14
   prefs: []
   type: TYPE_NORMAL
+  zh: 现在假设我们想要降低特征空间。一种方法是直接删除一些特征变量。例如，我们可以忽略最后20个特征列，以获得一个降低的数据矩阵 \(\bf A^*\)。这种方法简单且保持了特征变量的解释性，但我们已经丢失了删除列的信息。
 - en: \[A = \begin{bmatrix} \vdots & \vdots & \vdots \\ F_1 & \cdots & F_{30} \\ \vdots
     & \vdots & \vdots \end{bmatrix} \implies A^{*} = \begin{bmatrix} \vdots & \vdots
     & \vdots \\ F_1 & \cdots & F_{10} \\ \vdots & \vdots & \vdots \end{bmatrix}\]
+  id: totrans-15
   prefs: []
   type: TYPE_NORMAL
+  zh: \[A = \begin{bmatrix} \vdots & \vdots & \vdots \\ F_1 & \cdots & F_{30} \\ \vdots
+    & \vdots & \vdots \end{bmatrix} \implies A^{*} = \begin{bmatrix} \vdots & \vdots
+    & \vdots \\ F_1 & \cdots & F_{10} \\ \vdots & \vdots & \vdots \end{bmatrix}\]
 - en: Another approach is to use PCA. We create "new feature variables" \(\bf F_i^*\)
     from a specific linear combination of the original variables. Each of the new
     variables after PCA are all independent of one another. Now, we are able to use
     less variables, but still contain information of all features. The disadvantage
     here is that we have lost "meaningful" interpretation of the new feature variables.
+  id: totrans-16
   prefs: []
   type: TYPE_NORMAL
+  zh: 另一种方法是使用PCA。我们通过原始变量的特定线性组合创建“新的特征变量”\(\bf F_i^*\)。PCA之后的所有新变量都是相互独立的。现在，我们能够使用更少的变量，但仍然包含所有特征的信息。这里的缺点是我们已经失去了新特征变量的“有意义的”解释。
 - en: \[A = \begin{bmatrix} \vdots & \vdots & \vdots \\ F_1 & \cdots & F_{30} \\ \vdots
     & \vdots & \vdots \end{bmatrix} \implies A^{*} = \begin{bmatrix} \vdots & \vdots
     & \vdots \\ F_1^{*} & F_2^{*} & F_3^{*} \\ \vdots & \vdots & \vdots \end{bmatrix}\]
     \[F_1^{*} = \sum_{i=1}^n a_i F_i\]
+  id: totrans-17
   prefs: []
   type: TYPE_NORMAL
+  zh: \[A = \begin{bmatrix} \vdots & \vdots & \vdots \\ F_1 & \cdots & F_{30} \\ \vdots
+    & \vdots & \vdots \end{bmatrix} \implies A^{*} = \begin{bmatrix} \vdots & \vdots
+    & \vdots \\ F_1^{*} & F_2^{*} & F_3^{*} \\ \vdots & \vdots & \vdots \end{bmatrix}\]
+    \[F_1^{*} = \sum_{i=1}^n a_i F_i\]
 - en: Data Centering
+  id: totrans-18
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 数据中心化
 - en: The first step of PCA is to ***center the data***. We carry out a data shift
     to our data columns of \(\bf A\) such that each column has a mean of 0\. For each
     feature column \(\bf F_i\) of \(\bf A\), we calculate the mean \(\bar{F_i}\) and
     do a subtraction of \(\bar{F_i}\) from each entry of the column \(\bf F_i\). We
     do this procedure to each column, until we obtain a new centered data set \(\bf
     A\).
+  id: totrans-19
   prefs: []
   type: TYPE_NORMAL
+  zh: 主成分分析（PCA）的第一步是**数据中心化**。我们对数据集 \(\bf A\) 的数据列进行平移，使得每一列的平均值为 0。对于 \(\bf A\)
+    的每个特征列 \(\bf F_i\)，我们计算均值 \(\bar{F_i}\)，并从列 \(\bf F_i\) 的每个条目中减去 \(\bar{F_i}\)。我们对每一列执行此过程，直到我们获得一个新的中心化数据集
+    \(\bf A\)。
 - en: Example
+  id: totrans-20
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 示例
 - en: 'This is an example of data centering for a set of 6 data points in 2d coordinate
     space:'
+  id: totrans-21
   prefs: []
   type: TYPE_NORMAL
+  zh: 这是 2 维坐标空间中 6 个数据点数据中心化的一个例子：
 - en: \[p_0 = (8.6, 18.0), p_1 = (3.4, 20.6), p_2 = (4.6, 19.7), p_3 = (3.4, 11.4),
     p_4 = (5.4, 20.3), p_5 = (2.2, 12.4)\]
+  id: totrans-22
   prefs: []
   type: TYPE_NORMAL
+  zh: \[p_0 = (8.6, 18.0), p_1 = (3.4, 20.6), p_2 = (4.6, 19.7), p_3 = (3.4, 11.4),
+    p_4 = (5.4, 20.3), p_5 = (2.2, 12.4)\]
 - en: We first calculate the mean point \(\bar{p} = (4.6, 17.1)\), then shift all
     of the data points such that our new mean point is centered at \(\bar{p}' = (0,
     0)\).
+  id: totrans-23
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们首先计算均值点 \(\bar{p} = (4.6, 17.1)\)，然后平移所有数据点，使得新的均值点 \(\bar{p}' = (0, 0)\)
+    位于中心。
 - en: '![](../Images/992cf518e4653e6529c48b350e4309a7.png)'
+  id: totrans-24
   prefs: []
   type: TYPE_IMG
+  zh: '![图片](../Images/992cf518e4653e6529c48b350e4309a7.png)'
 - en: Covariance Matrix
+  id: totrans-25
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 协方差矩阵
 - en: For our *centered* data set \(\bf A\) of dimension \(m \times n\), where \(m\)
     is the total number of data points and \(n\) is the number of features, the ***Covariance
     Matrix*** is defined to be
+  id: totrans-26
   prefs: []
   type: TYPE_NORMAL
+  zh: 对于我们**中心化**的数据集 \(\bf A\)，其维度为 \(m \times n\)，其中 \(m\) 是数据点的总数，\(n\) 是特征的数目，**协方差矩阵**被定义为
 - en: \[Cov({\bf A}) = \frac{1}{m-1} {\bf A}^T {\bf A}.\]
+  id: totrans-27
   prefs: []
   type: TYPE_NORMAL
+  zh: \[Cov({\bf A}) = \frac{1}{m-1} {\bf A}^T {\bf A}.\]
 - en: The diagonal entries of \(Cov({\bf A})\) explain how each feature correlates
     with itself, and the sum of the diagonal entries is called the overall variability
     (total variance) of the problem.
+  id: totrans-28
   prefs: []
   type: TYPE_NORMAL
+  zh: \(Cov({\bf A})\) 的对角元素解释了每个特征如何与其自身相关，对角元素之和被称为问题的**总体变异性（总方差）**。
 - en: Example
+  id: totrans-29
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 示例
 - en: 'Consider a covariance matrix in the form below. From this matrix, we can obtain:'
+  id: totrans-30
   prefs: []
   type: TYPE_NORMAL
+  zh: 考虑以下形式的协方差矩阵。从这个矩阵中，我们可以得到：
 - en: \(a_{ii}\) = the variance of each \(\bf F_i\) (How \(\bf F_i\) correlates with
     itself). Here \(i = 1, 2, 3\).
+  id: totrans-31
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: \(a_{ii}\) = 每个 \(\bf F_i\) 的方差（\(\bf F_i\) 与其自身的相关性）。这里 \(i = 1, 2, 3\)。
 - en: \(a_{11} + a_{22} + a_{33}\) = Overall variability (total variance).
+  id: totrans-32
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: \(a_{11} + a_{22} + a_{33}\) = 总体变异性（总方差）。
 - en: \(\frac{a_{ii}}{a_{11} + a_{22} + a_{33}} \cdot\) 100% = Percentage of the total
     variance that is explained by \(\bf F_i\). Here \(i = 1, 2, 3\).
+  id: totrans-33
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: \(\frac{a_{ii}}{a_{11} + a_{22} + a_{33}} \cdot\) 100% = 由 \(\bf F_i\) 解释的总方差百分比。这里
+    \(i = 1, 2, 3\)。
 - en: '![](../Images/b3b2882931ba213265605cae7b84da8f.png)'
+  id: totrans-34
   prefs: []
   type: TYPE_IMG
+  zh: '![图片](../Images/b3b2882931ba213265605cae7b84da8f.png)'
 - en: Diagonalization and Principal Components
+  id: totrans-35
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 对角化与主成分
 - en: PCA replaces the original feature variables with new variables, called ***principal
     components***, which are orthogonal (i.e. they have zero covariations) and have
     variances in decreasing order. To accomplish this, we will use the diagonalization
     of the covariance matrix.
+  id: totrans-36
   prefs: []
   type: TYPE_NORMAL
+  zh: PCA 用新的变量替换原始特征变量，这些新变量称为**主成分**，它们是正交的（即它们之间没有协方差）并且方差按降序排列。为了实现这一点，我们将使用协方差矩阵的对角化。
 - en: \[Cov({\bf A}) = \frac{1}{m-1} {\bf A}^T {\bf A} = \frac{1}{m-1} {\bf V D} {\bf
     V}^T.\]
+  id: totrans-37
   prefs: []
   type: TYPE_NORMAL
+  zh: \[Cov({\bf A}) = \frac{1}{m-1} {\bf A}^T {\bf A} = \frac{1}{m-1} {\bf V D} {\bf
+    V}^T.\]
 - en: Here the columns of \({\bf V}\) are the eigenvectors of \({\bf A}^T {\bf A}\),
     with the corresponding eigenvalues as the diagonal entries of the diagonal matrix
     \({\bf D}\). The largest eigenvalue of the covariance matrix corresponds to the
     largest variance of the dataset, and the associated eigenvector is the direction
     of maximum variance, called the ***first principal component***.
+  id: totrans-38
   prefs: []
   type: TYPE_NORMAL
+  zh: 这里 \({\bf V}\) 的列是 \({\bf A}^T {\bf A}\) 的特征向量，相应的特征值是对角矩阵 \({\bf D}\) 的对角元素。协方差矩阵的最大特征值对应于数据集的最大方差，相关的特征向量是最大方差的方向，称为**第一主成分**。
 - en: Example
+  id: totrans-39
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 示例
 - en: For the same covariance matrix in the above example, we can write it in the
     diagonalization form. Here, \(\frac{1}{m-1} \cdot (d_{11} + d_{22} + d_{33})\)
     sums up to \(a_{11} + a_{22} + a_{33}\), which represents the overall variability.
@@ -195,140 +288,211 @@
     the direction of the maximum variance \(\frac{1}{m-1} \cdot d_{11}\). Here, the
     first principal component accounts for \(\frac{d_{11}}{d_{11} + d_{22} + d_{33}}
     \cdot\) 100% of the variability of the question.
+  id: totrans-40
   prefs: []
   type: TYPE_NORMAL
+  zh: 对于上述示例中的相同协方差矩阵，我们可以将其写成对角化形式。在这里，\(\frac{1}{m-1} \cdot (d_{11} + d_{22} + d_{33})\)的总和等于
+    \(a_{11} + a_{22} + a_{33}\)，这代表总体变异性。矩阵 \({\bf V}\) 的第一列是**第一主成分**，它代表最大方差的方向
+    \(\frac{1}{m-1} \cdot d_{11}\)。在这里，第一主成分占问题变异性的 \(\frac{d_{11}}{d_{11} + d_{22}
+    + d_{33}} \cdot\) 100%。
 - en: '![](../Images/66b3d7246fb914b0a5aba839a090a9a4.png)'
+  id: totrans-41
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/66b3d7246fb914b0a5aba839a090a9a4.png)'
 - en: SVD and Data Transforming
+  id: totrans-42
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: SVD 和数据转换
 - en: We know that the eigenvectors of \({\bf A}^T {\bf A}\) are the right singular
     vectors of \({\bf A}\), or the columns of \({\bf V}\) from the SVD decomposition
     of \({\bf A}\) (or the rows of V transpose). Hence, instead of having to calculate
     the covariance matrix and solve an eigenvalue problem, we will instead get the
     reduced form of the SVD!
+  id: totrans-43
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们知道 \({\bf A}^T {\bf A}\) 的特征向量是 \({\bf A}\) 的右奇异向量，或者是 \({\bf A}\) 的奇异值分解（SVD）中的
+    \({\bf V}\) 的列（或者是 \({\bf V}\) 转置的行）。因此，我们不需要计算协方差矩阵和求解特征值问题，而是直接得到 SVD 的简化形式！
 - en: From
+  id: totrans-44
   prefs: []
   type: TYPE_NORMAL
+  zh: 从
 - en: \[{\bf A} = {\bf U \Sigma V}^T,\]
+  id: totrans-45
   prefs: []
   type: TYPE_NORMAL
+  zh: \[{\bf A} = {\bf U \Sigma V}^T,\]
 - en: we can obtain the ***maximum variance*** as the largest squared singular value
     of \({\bf A}\), i.e. \({\sigma ^2 _{max}}\), the maximum squared entry of \({\bf
     \Sigma}\), and the ***first principal component*** (direction of maximum variance)
     as the corresponding column of \({\bf V}\).
+  id: totrans-46
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们可以通过 \({\bf A}\) 的最大奇异值的平方来获得**最大方差**，即 \({\sigma ^2 _{max}}\)，这是 \({\bf \Sigma}\)
+    的最大平方项，以及**第一主成分**（最大方差的方向）作为 \({\bf V}\) 的对应列。
 - en: 'Finally, we can transform our dataset with respect to the directions of our
     principal components:'
+  id: totrans-47
   prefs: []
   type: TYPE_NORMAL
+  zh: 最后，我们可以根据主成分的方向转换我们的数据集：
 - en: \[{\bf A}^* := {\bf A V = U \Sigma}.\]
+  id: totrans-48
   prefs: []
   type: TYPE_NORMAL
+  zh: \[{\bf A}^* := {\bf A V = U \Sigma}.\]
 - en: \({\bf A V}\) is the projection of the data onto the principal components. \({\bf
     A V_k}\) is the projection onto the first k principal components, where \({\bf
     V_k}\) represents the first \(k\) columns of V.
+  id: totrans-49
   prefs: []
   type: TYPE_NORMAL
+  zh: \({\bf A V}\) 是数据在主成分上的投影。\({\bf A V_k}\) 是在第一个 \(k\) 个主成分上的投影，其中 \({\bf V_k}\)
+    代表 \({\bf V}\) 的前 \(k\) 列。
 - en: Summary of PCA Algorithm
+  id: totrans-50
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: PCA 算法总结
 - en: 'Suppose we are given a large data set \(\bf A\) of dimension \(m \times n\),
     and we want to reduce the data set to a smaller one \({\bf A}^*\) of dimension
     \(m \times k\) without loss of important information. We can achieve this by carrying
     out PCA algorithm with the following steps:'
+  id: totrans-51
   prefs: []
   type: TYPE_NORMAL
+  zh: 假设我们给定一个维度为 \(m \times n\) 的大数据集 \(\bf A\)，我们想要将数据集减少到一个较小的数据集 \({\bf A}^*\)（维度为
+    \(m \times k\)），而不丢失重要信息。我们可以通过以下步骤执行 PCA 算法来实现这一点：
 - en: 'Shift the data set \(\bf A\) so that it has zero mean: \({\bf A} = {\bf A}
     - {\bf A}.mean()\).'
+  id: totrans-52
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 将数据集 \(\bf A\) 平移，使其具有零均值：\({\bf A} = {\bf A} - {\bf A}.mean()\).
 - en: 'Compute ***SVD*** for the original data set: \({\bf A}= {\bf U \Sigma V}^T\).'
+  id: totrans-53
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 对原始数据集计算**SVD**：\({\bf A}= {\bf U \Sigma V}^T\).
 - en: Note that the ***variance*** of the data set are determined by the singular
     values of \(\bf A\), i.e. \(\sigma_1, ... , \sigma_n\).
+  id: totrans-54
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 注意到数据集的**方差**由 \(\bf A\) 的奇异值决定，即 \(\sigma_1, ... , \sigma_n\)。
 - en: Note that the columns of \(\bf V\) represent the ***principal directions***
     of the data set.
+  id: totrans-55
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 注意到 \(\bf V\) 的列代表数据集的**主方向**。
 - en: Our new data set is \({\bf A}^* := {\bf AV} ={\bf U\Sigma}\).
+  id: totrans-56
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 我们的新数据集是 \({\bf A}^* := {\bf AV} ={\bf U\Sigma}\)。
 - en: Sometimes we want to reduce the dimension of the data set, and we only use the
     most important \(k\) principal directions, i.e. the first \(k\) columns of V.
     Thus we can change the above Equation \({\bf A}^* = {\bf AV}\) to \({\bf A}^*
     = {\bf AV_k}\), \({\bf A}^*\) has the desired dimension \(m \times k\).
+  id: totrans-57
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 有时我们想要减少数据集的维度，并且只使用最重要的 \(k\) 个主方向，即 \({\bf V}\) 的前 \(k\) 列。因此，我们可以将上述方程 \({\bf
+    A}^* = {\bf AV}\) 改为 \({\bf A}^* = {\bf AV_k}\)，其中 \({\bf A}^*\) 具有所需的维度 \(m \times
+    k\)。
 - en: 'Note that the variance of the data set corresponds to the singular values:
     \(({\bf A}^*)^T {\bf A}^*= {\bf V}^T{\bf A}^T{\bf AV}={\bf \Sigma}^T{\bf \Sigma}\),
     as indicated in step 3.'
+  id: totrans-58
   prefs: []
   type: TYPE_NORMAL
+  zh: 注意到数据集的方差对应于奇异值：\(({\bf A}^*)^T {\bf A}^*= {\bf V}^T{\bf A}^T{\bf AV}={\bf \Sigma}^T{\bf
+    \Sigma}\)，如步骤 3 所示。
 - en: Alternative Definitions of Principal Components
+  id: totrans-59
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 主成分的替代定义
 - en: There are other closely related quantities that also have the name ***principal
     components***. We refer to the principal components as the direction of variances,
     i.e. the columns of \(\bf V\). In some other cases, the ***principal components***
     refer to the variances themselves, i.e. \(\sigma_1^2, ... , \sigma_n^2\). In such
     a case, the direction of variances may be called the ***principal directions***.
     The meaning of ***principal components*** should be clear by the context.
+  id: totrans-60
   prefs: []
   type: TYPE_NORMAL
+  zh: 还有一些其他密切相关的量也被称为***主成分***。我们将主成分称为方差的方向，即 \(\bf V\) 的列。在某些其他情况下，***主成分***指的是方差本身，即
+    \(\sigma_1^2, ... , \sigma_n^2\)。在这种情况下，方差的方向可能被称为***主方向***。***主成分***的含义应通过上下文变得清晰。
 - en: Changelog
+  id: totrans-61
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 更新日志
 - en: 'April 18th, 2024: Dev Singh (dsingh14) — fix a typo in the explanation'
+  id: totrans-62
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 2024年4月18日：Dev Singh (dsingh14) — 修复解释中的错误
 - en: 'April 3rd, 2024: Bhargav Chandaka (bhargav9) — major reorganziation to match
     up with content in slides/videos'
+  id: totrans-63
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 2024年4月3日：Bhargav Chandaka (bhargav9) — 对内容进行重大重组，以与幻灯片/视频中的内容相匹配
 - en: 'April 18th, 2022: Yuxuan Chen (yuxuan19) — Added PCA definition, data centering,
     covariance matrix, diagonalization, svd, examples, summary, alternative def'
+  id: totrans-64
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 2022年4月18日：Yuxuan Chen (yuxuan19) — 添加 PCA 定义、数据中心化、协方差矩阵、对角化、svd、示例、总结、替代定义
 - en: <details><summary>View Remaining Entries</summary>
+  id: totrans-65
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: <details><summary>查看剩余条目</summary>
 - en: 'November 30th, 2020: Jerry Yang (jiayiy7) — fix pca code'
+  id: totrans-66
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 2020年11月30日：Jerry Yang (jiayiy7) — 修复 pca 代码
 - en: 'August 9th, 2020: Yikai Teng (yikait2) — outline</details>'
+  id: totrans-67
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 2020年8月9日：Yikai Teng (yikait2) — 概述</details>
 - en: Authors
+  id: totrans-68
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 作者
 - en: CS 357 Course Staff
+  id: totrans-69
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: CS 357 课程工作人员

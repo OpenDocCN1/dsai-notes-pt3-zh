@@ -3,36 +3,43 @@
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 奇异值分解 (SVD)
 - en: 原文：[https://cs357.cs.illinois.edu/textbook/notes/svd.html](https://cs357.cs.illinois.edu/textbook/notes/svd.html)
   id: totrans-1
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: '[https://cs357.cs.illinois.edu/textbook/notes/svd.html](https://cs357.cs.illinois.edu/textbook/notes/svd.html)'
 - en: Learning Objectives
   id: totrans-2
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 学习目标
 - en: Construct an SVD of a matrix
   id: totrans-3
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 构建矩阵的奇异值分解
 - en: Identify pieces of an SVD
   id: totrans-4
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 识别奇异值分解的各个部分
 - en: Use an SVD to solve a problem
   id: totrans-5
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 使用奇异值分解解决问题
 - en: Overview
   id: totrans-6
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 概述
 - en: Previously, we explored a class of vectors whose directions were left unchanged
     by a matrix. We found that, for any **square** matrix, if there existed \(n\)
     linearly independent eigenvectors, we could diagonalize \(\bf A\) into the form
@@ -41,6 +48,9 @@
   id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: 在之前，我们探索了一类方向由矩阵保持不变的向量。我们发现，对于任何 **方阵**，如果存在 \(n\) 个线性无关的特征向量，我们就可以将 \(\bf
+    A\) 对角化为 \(\bf{AX = XD}\) 的形式，其中 \(\bf X\) 是 \(\mathbb{R}^n\) 的一个基，其中 \(\bf{Ax_i
+    = \lambda_ix_i}\)。
 - en: A more general factorization is, for **any** \(m \times n\) matrix, there exists
     a singular value decomposition in the form \(\bf{AV = U{\Sigma}}\) or \(\bf{A=U{\Sigma}V^T}\).
     To result in this composition, we require \(\bf U\) as an orthogonal basis of
@@ -49,22 +59,28 @@
   id: totrans-8
   prefs: []
   type: TYPE_NORMAL
+  zh: 对于 **任何** \(m \times n\) 矩阵，都存在一个形式为 \(\bf{AV = U{\Sigma}}\) 或 \(\bf{A=U{\Sigma}V^T}\)
+    的奇异值分解。为了得到这种组合，我们需要 \(\bf U\) 作为 \(\mathbb{R}^m\) 的正交基，\(\bf V\) 作为 \(\mathbb{R}^n\)
+    的正交基，\(\bf{\Sigma}\) 作为 \(m \times n\) 的对角矩阵，其中 \(\bf{Av_i = \sigma_iu_i}\)。
 - en: \(\bf U\) is composed of the eigenvectors of \(\bf{AA^T}\) as its columns.
   id: totrans-9
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: \(\bf U\) 由 \(\bf{AA^T}\) 的特征向量作为其列组成。
 - en: \(\bf V\) is composed of the eigenvectors of \(\bf{A^TA}\) as its columns.
   id: totrans-10
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: \(\bf V\) 由 \(\bf{A^TA}\) 的特征向量作为其列组成。
 - en: \(\bf \Sigma\) is a diagonal matrix composed of square roots of the eigenvalues
     of \(\bf{A^TA}\) (or \(\bf{AA^T}\)), called singular values.
   id: totrans-11
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: \(\bf \Sigma\) 是一个对角矩阵，由 \(\bf{A^TA}\)（或 \(\bf{AA^T}\)）的特征值的平方根组成，称为奇异值。
 - en: \(\bf{A^TA}\) and \(\bf{AA^T}\) have the same positive eigenvalues, so the square
     roots of the eigenvalues are also the same.[[1](#footnote-1)]
   id: totrans-12
@@ -72,12 +88,14 @@
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: \(\bf{A^TA}\) 和 \(\bf{AA^T}\) 有相同的正特征值，因此特征值的平方根也是相同的。[1](#footnote-1)
 - en: The diagonal of \(\bf \Sigma\) is ordered by non-increasing singular values
     and the columns of \(\bf U\), \(\bf V\) are ordered respectively.
   id: totrans-13
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: \(\bf \Sigma\) 的对角线按非递增的奇异值排序，而 \(\bf U\) 和 \(\bf V\) 的列分别按顺序排列。
 - en: 'In addition, we define a reduced form: \({\bf A} = {\bf U_{R}} {\bf \Sigma_{R}}
     {\bf V_R}^T\) where \({\bf U_R}\) is an \(m \times k\) matrix, \({\bf V_R}\) is
     an \(n \times k\) matrix, and \({\bf \Sigma_{R}}\) is an \(k \times k\) diagonal
@@ -85,36 +103,47 @@
   id: totrans-14
   prefs: []
   type: TYPE_NORMAL
+  zh: 此外，我们定义一个简化的形式：\({\bf A} = {\bf U_{R}} {\bf \Sigma_{R}} {\bf V_R}^T\)，其中 \({\bf
+    U_R}\) 是一个 \(m \times k\) 矩阵，\({\bf V_R}\) 是一个 \(n \times k\) 矩阵，\({\bf \Sigma_{R}}\)
+    是一个 \(k \times k\) 的对角矩阵。在这里，\(k = \min(m,n)\)。
 - en: 'The proof of these claims follows:'
   id: totrans-15
   prefs: []
   type: TYPE_NORMAL
+  zh: 这些命题的证明如下：
 - en: Singular Value Decomposition
   id: totrans-16
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 奇异值分解
 - en: An \(m \times n\) real matrix \({\bf A}\) has a singular value decomposition
     of the form
   id: totrans-17
   prefs: []
   type: TYPE_NORMAL
+  zh: 一个 \(m \times n\) 的实矩阵 \({\bf A}\) 有如下形式的奇异值分解
 - en: \[{\bf A} = {\bf U} {\bf \Sigma} {\bf V}^T\]
   id: totrans-18
   prefs: []
   type: TYPE_NORMAL
+  zh: \[{\bf A} = {\bf U} {\bf \Sigma} {\bf V}^T\]
 - en: where \({\bf U}\) is an \(m \times m\) orthogonal matrix, \({\bf V}\) is an
     \(n \times n\) orthogonal matrix, and \({\bf \Sigma}\) is an \(m \times n\) diagonal
     matrix. Specifically,
   id: totrans-19
   prefs: []
   type: TYPE_NORMAL
+  zh: 其中 \({\bf U}\) 是一个 \(m \times m\) 的正交矩阵，\({\bf V}\) 是一个 \(n \times n\) 的正交矩阵，\({\bf
+    \Sigma}\) 是一个 \(m \times n\) 的对角矩阵。具体来说，
 - en: \({\bf U}\) is an \(m \times m\) orthogonal matrix whose columns are eigenvectors
     of \({\bf A} {\bf A}^T\), called the **left singular vectors** of \({\bf A}\).
   id: totrans-20
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: \({\bf U}\) 是一个 \(m \times m\) 的正交矩阵，其列是 \({\bf A} {\bf A}^T\) 的特征向量，称为 \({\bf
+    A}\) 的 **左奇异向量**。
 - en: \[\mathbf{A}\mathbf{A}^T = ({\bf U} {\bf \Sigma} {\bf V}^T)({\bf U} {\bf \Sigma}
     {\bf V}^T)^T\] \[\hspace{2cm} ({\bf U} {\bf \Sigma} {\bf V}^T) ({\bf V}^T)^T {\bf
     \Sigma}^T {\bf U}^T = {\bf U} {\bf \Sigma} ({\bf V}^T {\bf V}) {\bf \Sigma}^T
@@ -122,33 +151,44 @@
   id: totrans-21
   prefs: []
   type: TYPE_NORMAL
+  zh: \[\mathbf{A}\mathbf{A}^T = ({\bf U} {\bf \Sigma} {\bf V}^T)({\bf U} {\bf \Sigma}
+    {\bf V}^T)^T\] \[\hspace{2cm} ({\bf U} {\bf \Sigma} {\bf V}^T) ({\bf V}^T)^T {\bf
+    \Sigma}^T {\bf U}^T = {\bf U} {\bf \Sigma} ({\bf V}^T {\bf V}) {\bf \Sigma}^T
+    {\bf U}^T = {\bf U} ({\bf \Sigma} {\bf \Sigma}^T) {\bf U}^T\]
 - en: Hence, \(\bf{AA^T=U\Sigma^2U^T}\), which is a diagonalization, where the columns
     of U are linearly independent.
   id: totrans-22
   prefs: []
   type: TYPE_NORMAL
+  zh: 因此，\(\bf{AA^T=U\Sigma^2U^T}\)，这是一个对角化，其中 \(\bf U\) 的列是线性无关的。
 - en: \({\bf V}\) is an \(n \times n\) orthogonal matrix whose columns are eigenvectors
     of \({\bf A}^T {\bf A}\), called the **right singular vectors** of \({\bf A}\).
   id: totrans-23
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: \({\bf V}\) 是一个 \(n \times n\) 的正交矩阵，其列是 \({\bf A}^T {\bf A}\) 的特征向量，称为 \({\bf
+    A}\) 的 **右奇异向量**。
 - en: \[\mathbf{A}^T\mathbf{A} = ({\bf U} {\bf \Sigma} {\bf V}^T)^T ({\bf U} {\bf
     \Sigma} {\bf V}^T)\] \[= {\bf V} ({\bf \Sigma}^T {\bf \Sigma}) {\bf V}^T\]
   id: totrans-24
   prefs: []
   type: TYPE_NORMAL
+  zh: \[\mathbf{A}^T\mathbf{A} = ({\bf U} {\bf \Sigma} {\bf V}^T)^T ({\bf U} {\bf
+    \Sigma} {\bf V}^T)\] \[= {\bf V} ({\bf \Sigma}^T {\bf \Sigma}) {\bf V}^T\]
 - en: Hence, \(\bf{A^TA=V\Sigma^2V^T}\), which is a diagonalization, where the columns
     of V are linearly independent.
   id: totrans-25
   prefs: []
   type: TYPE_NORMAL
+  zh: 因此，\(\bf{A^TA=V\Sigma^2V^T}\)，这是一个对角化，其中 V 的列是线性无关的。
 - en: '\({\bf \Sigma}\) is an \(m \times n\) diagonal matrix, composed of the square
     root of the eigenvalues of \(A^TA\), in the form:'
   id: totrans-26
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: \({\bf \Sigma}\) 是一个 \(m \times n\) 的对角矩阵，由 \(A^TA\) 的特征值的平方根组成，形式如下：
 - en: \[\begin{eqnarray} {\bf \Sigma} = \begin{bmatrix} \sigma_1 & & \\ & \ddots &
     \\ & & \sigma_s \\ 0 & & 0 \\ \vdots & \ddots & \vdots \\ 0 & & 0 \end{bmatrix}
     \text{when } m > n, \; \text{and} \; {\bf \Sigma} = \begin{bmatrix} \sigma_1 &
@@ -157,16 +197,24 @@
   id: totrans-27
   prefs: []
   type: TYPE_NORMAL
+  zh: \[\begin{eqnarray} {\bf \Sigma} = \begin{bmatrix} \sigma_1 & & \\ & \ddots &
+    \\ & & \sigma_s \\ 0 & & 0 \\ \vdots & \ddots & \vdots \\ 0 & & 0 \end{bmatrix}
+    \text{当 } m > n, \; \text{且} \; {\bf \Sigma} = \begin{bmatrix} \sigma_1 & & &
+    0 & \dots & 0 \\ & \ddots & & & \ddots &\\ & & \sigma_s & 0 & \dots & 0 \\ \end{bmatrix}
+    \text{当} \, m < n. \end{eqnarray}\]
 - en: where \(k = \min(m,n)\) and \(\sigma_1 \ge \sigma_2 \dots \ge \sigma_s \ge 0\).
     The diagonal entries are called the *singular* values of \({\bf A}\).
   id: totrans-28
   prefs: []
   type: TYPE_NORMAL
+  zh: 其中 \(k = \min(m,n)\) 且 \(\sigma_1 \ge \sigma_2 \dots \ge \sigma_s \ge 0\)。对角线元素被称为
+    \({\bf A}\) 的**奇异值**。
 - en: Obtaining Singular Values
   id: totrans-29
   prefs:
   - PREF_H4
   type: TYPE_NORMAL
+  zh: 获取奇异值
 - en: 'Note that the matrices \(\bf{A^TA}\) and \(\bf{AA^T}\) always have the same
     non-zero eigenvalues. In addition, they are both positive semi-definite (defined:
     \(\mathbf{x^{T}Bx} \geq 0 \quad \forall \mathbf{x} \neq 0\)). As the eigenvalues
@@ -175,52 +223,68 @@
   id: totrans-30
   prefs: []
   type: TYPE_NORMAL
+  zh: 注意到矩阵 \(\bf{A^TA}\) 和 \(\bf{AA^T}\) 总是具有相同的非零特征值。此外，它们都是正半定矩阵（定义：\(\mathbf{x^{T}Bx}
+    \geq 0 \quad \forall \mathbf{x} \neq 0\))。由于正半定矩阵的特征值总是非负的，**奇异值总是非负的**。
 - en: 'If \(\mathbf{A}^T\mathbf{x} \ne 0\), then \(\mathbf{A}^T\mathbf{A}\) and \(\mathbf{A}\mathbf{A}^T\)
     both have the same eigenvalues:'
   id: totrans-31
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果 \(\mathbf{A}^T\mathbf{x} \ne 0\)，那么 \(\mathbf{A}^T\mathbf{A}\) 和 \(\mathbf{A}\mathbf{A}^T\)
+    都具有相同的特征值：
 - en: \[\mathbf{A}\mathbf{A}^T\mathbf{x} = \lambda \mathbf{x}\] \[\mathbf{A}^T\mathbf{A}\mathbf{A}^T\mathbf{x}
     = \mathbf{A}^T \lambda \mathbf{x}\] \[\mathbf{A}^T\mathbf{A}(\mathbf{A}^T\mathbf{x})
     = \lambda (\mathbf{A}^T\mathbf{x})\]
   id: totrans-32
   prefs: []
   type: TYPE_NORMAL
+  zh: \[\mathbf{A}\mathbf{A}^T\mathbf{x} = \lambda \mathbf{x}\] \[\mathbf{A}^T\mathbf{A}\mathbf{A}^T\mathbf{x}
+    = \mathbf{A}^T \lambda \mathbf{x}\] \[\mathbf{A}^T\mathbf{A}(\mathbf{A}^T\mathbf{x})
+    = \lambda (\mathbf{A}^T\mathbf{x})\]
 - en: Time Complexity
   id: totrans-33
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 时间复杂度
 - en: The time-complexity for computing the SVD factorization of an arbitrary \(m
     \times n\) matrix is \(\alpha (m^2n + n^3)\), where the constant \(\alpha\) ranges
     from 4 to 10 (or more) depending on the algorithm.
   id: totrans-34
   prefs: []
   type: TYPE_NORMAL
+  zh: 计算任意 \(m \times n\) 矩阵的奇异值分解的时间复杂度是 \(\alpha (m^2n + n^3)\)，其中常数 \(\alpha\)
+    的范围从 4 到 10（或更多），具体取决于算法。
 - en: 'In general, we can define the cost as: \(\mathcal{O}(m^2n + n^3)\)'
   id: totrans-35
   prefs: []
   type: TYPE_NORMAL
+  zh: 通常，我们可以将成本定义为：\(\mathcal{O}(m^2n + n^3)\)
 - en: '![](../Images/654c690c34ee5550fcb76c3415f4c84e.png)'
   id: totrans-36
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/654c690c34ee5550fcb76c3415f4c84e.png)'
 - en: Reduced SVD
   id: totrans-37
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 降秩奇异值分解
 - en: 'The SVD factorization of a non-square matrix \({\bf A}\) of size \(m \times
     n\) can be represented in a reduced format:'
   id: totrans-38
   prefs: []
   type: TYPE_NORMAL
+  zh: 非方阵 \({\bf A}\)（大小为 \(m \times n\)）的奇异值分解可以用降秩格式表示：
 - en: 'For \(m \ge n\): \({\bf U}\) is \(m \times n\), \({\bf \Sigma}\) is \(n \times
     n\), and \({\bf V}\) is \(n \times n\)'
   id: totrans-39
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 对于 \(m \ge n\)：\({\bf U}\) 是 \(m \times n\)，\({\bf \Sigma}\) 是 \(n \times n\)，\({\bf
+    V}\) 是 \(n \times n\)
 - en: 'For \(m \le n\): \({\bf U}\) is \(m \times m\), \({\bf \Sigma}\) is \(m \times
     m\), and \({\bf V}\) is \(n \times m\) (note if \({\bf V}\) is \(n \times m\),
     then \({\bf V}^T\) is \(m \times n\))'
@@ -228,59 +292,77 @@
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 对于 \(m \le n\)：\({\bf U}\) 是 \(m \times m\)，\({\bf \Sigma}\) 是 \(m \times m\)，\({\bf
+    V}\) 是 \(n \times m\)（注意如果 \({\bf V}\) 是 \(n \times m\)，那么 \({\bf V}^T\) 是 \(m
+    \times n\)）
 - en: The following figure depicts the reduced SVD factorization (in red) against
     the full SVD factorizations (in gray).
   id: totrans-41
   prefs: []
   type: TYPE_NORMAL
+  zh: 以下图展示了降秩奇异值分解（红色）与完整奇异值分解（灰色）的对比。
 - en: '![](../Images/9d2ef845015629da1a0fc0bded13e236.png)'
   id: totrans-42
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/9d2ef845015629da1a0fc0bded13e236.png)'
 - en: 'In general, we will represent the reduced SVD as:'
   id: totrans-43
   prefs: []
   type: TYPE_NORMAL
+  zh: 通常，我们将降秩奇异值分解表示为：
 - en: \[{\bf A} = {\bf U}_R {\bf \Sigma}_R {\bf V}_R^T\]
   id: totrans-44
   prefs: []
   type: TYPE_NORMAL
+  zh: \[{\bf A} = {\bf U}_R {\bf \Sigma}_R {\bf V}_R^T\]
 - en: where \({\bf U}_R\) is a \(m \times k\) matrix, \({\bf V}_R\) is a \(n \times
     k\) matrix, \({\bf \Sigma}_R\) is a \(k \times k\) matrix, and \(k = \min(m,n)\).
   id: totrans-45
   prefs: []
   type: TYPE_NORMAL
+  zh: 其中 \({\bf U}_R\) 是一个 \(m \times k\) 矩阵，\({\bf V}_R\) 是一个 \(n \times k\) 矩阵，\({\bf
+    \Sigma}_R\) 是一个 \(k \times k\) 矩阵，且 \(k = \min(m,n)\)。
 - en: 'Example: Computing the SVD'
   id: totrans-46
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 示例：计算奇异值分解
 - en: We begin with the following non-square matrix, \({\bf A}\)
   id: totrans-47
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们从以下非方阵 \({\bf A}\) 开始
 - en: \[ {\bf A} = \left[ \begin{array}{ccc} 3 & 2 & 3 \\ 8 & 8 & 2 \\ 8 & 7 & 4 \\
     1 & 8 & 7 \\ 6 & 4 & 7 \\ \end{array} \right] \]
   id: totrans-48
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ {\bf A} = \left[ \begin{array}{ccc} 3 & 2 & 3 \\ 8 & 8 & 2 \\ 8 & 7 & 4 \\
+    1 & 8 & 7 \\ 6 & 4 & 7 \\ \end{array} \right] \]
 - en: 'and we will compute the reduced form of the SVD (where here \(s = 3\)):'
   id: totrans-49
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们将计算 SVD 的缩减形式（这里 \(s = 3\)）：
 - en: '(1) Compute \({\bf A}^T {\bf A}\):'
   id: totrans-50
   prefs: []
   type: TYPE_NORMAL
+  zh: (1) 计算 \({\bf A}^T {\bf A}\)：
 - en: \[{\bf A}^T {\bf A} = \left[ \begin{array}{ccc} 174 & 158 & 106 \\ 158 & 197
     & 134 \\ 106 & 134 & 127 \\ \end{array} \right]\]
   id: totrans-51
   prefs: []
   type: TYPE_NORMAL
+  zh: \[{\bf A}^T {\bf A} = \left[ \begin{array}{ccc} 174 & 158 & 106 \\ 158 & 197
+    & 134 \\ 106 & 134 & 127 \\ \end{array} \right]\]
 - en: '(2) Compute the eigenvectors and eigenvalues of \({\bf A}^T {\bf A}\):'
   id: totrans-52
   prefs: []
   type: TYPE_NORMAL
+  zh: (2) 计算 \({\bf A}^T {\bf A}\) 的特征向量和特征值：
 - en: \[\lambda_1 = 437.479, \quad \lambda_2 = 42.6444, \quad \lambda_3 = 17.8766,
     \\ \boldsymbol{v}_1 = \begin{bmatrix} 0.585051 \\ 0.652648 \\ 0.481418\end{bmatrix},
     \quad \boldsymbol{v}_2 = \begin{bmatrix} -0.710399 \\ 0.126068 \\ 0.692415 \end{bmatrix},
@@ -288,32 +370,46 @@
   id: totrans-53
   prefs: []
   type: TYPE_NORMAL
+  zh: \[\lambda_1 = 437.479, \quad \lambda_2 = 42.6444, \quad \lambda_3 = 17.8766,
+    \\ \boldsymbol{v}_1 = \begin{bmatrix} 0.585051 \\ 0.652648 \\ 0.481418\end{bmatrix},
+    \quad \boldsymbol{v}_2 = \begin{bmatrix} -0.710399 \\ 0.126068 \\ 0.692415 \end{bmatrix},
+    \quad \boldsymbol{v}_3 = \begin{bmatrix} 0.391212 \\ -0.747098 \\ 0.537398 \end{bmatrix}\]
 - en: '(3) Construct \({\bf V}_R\) from the eigenvectors of \({\bf A}^T {\bf A}\):'
   id: totrans-54
   prefs: []
   type: TYPE_NORMAL
+  zh: (3) 从 \({\bf A}^T {\bf A}\) 的特征向量构造 \({\bf V}_R\)：
 - en: \[ {\bf V}_R = \left[ \begin{array}{ccc} 0.585051 & -0.710399 & 0.391212 \\
     0.652648 & 0.126068 & -0.747098 \\ 0.481418 & 0.692415 & 0.537398 \\ \end{array}
     \right]. \]
   id: totrans-55
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ {\bf V}_R = \left[ \begin{array}{ccc} 0.585051 & -0.710399 & 0.391212 \\
+    0.652648 & 0.126068 & -0.747098 \\ 0.481418 & 0.692415 & 0.537398 \\ \end{array}
+    \right]. \]
 - en: '(4) Construct \({\bf \Sigma}_R\) from the square roots of the eigenvalues of
     \({\bf A}^T {\bf A}\):'
   id: totrans-56
   prefs: []
   type: TYPE_NORMAL
+  zh: (4) 从 \({\bf A}^T {\bf A}\) 的特征值平方根构造 \({\bf \Sigma}_R\)：
 - en: \[ {\bf \Sigma}_R = \begin{bmatrix} 20.916 & 0 & 0 \\ 0 & 6.53207 & 0 \\ 0 &
     0 & 4.22807 \end{bmatrix} \]
   id: totrans-57
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ {\bf \Sigma}_R = \begin{bmatrix} 20.916 & 0 & 0 \\ 0 & 6.53207 & 0 \\ 0 &
+    0 & 4.22807 \end{bmatrix} \]
 - en: (5) Find \({\bf U}\) by solving \({\bf U}{\bf\Sigma} = {\bf A}{\bf V}\). For
     our reduced case, we can find \({\bf U}_R = {\bf A}{\bf V}_R {\bf \Sigma}_R^{-1}\).
     You could also find \({\bf U}\) by computing the eigenvectors of \({\bf AA}^T\).
   id: totrans-58
   prefs: []
   type: TYPE_NORMAL
+  zh: (5) 通过解 \({\bf U}{\bf\Sigma} = {\bf A}{\bf V}\) 来找到 \({\bf U}\)。对于我们的缩减情况，我们可以找到
+    \({\bf U}_R = {\bf A}{\bf V}_R {\bf \Sigma}_R^{-1}\)。您也可以通过计算 \({\bf AA}^T\) 的特征向量来找到
+    \({\bf U}\)。
 - en: \[{\bf U} = \overbrace{\left[ \begin{array}{ccc} 3 & 2 & 3 \\ 8 & 8 & 2 \\ 8
     & 7 & 4 \\ 1 & 8 & 7 \\ 6 & 4 & 7 \\ \end{array} \right]}^{A} \overbrace{\left[
     \begin{array}{ccc} 0.585051 & -0.710399 & 0.391212 \\ 0.652648 & 0.126068 & -0.747098
@@ -326,10 +422,20 @@
   id: totrans-59
   prefs: []
   type: TYPE_NORMAL
+  zh: \[{\bf U} = \overbrace{\left[ \begin{array}{ccc} 3 & 2 & 3 \\ 8 & 8 & 2 \\ 8
+    & 7 & 4 \\ 1 & 8 & 7 \\ 6 & 4 & 7 \\ \end{array} \right]}^{A} \overbrace{\left[
+    \begin{array}{ccc} 0.585051 & -0.710399 & 0.391212 \\ 0.652648 & 0.126068 & -0.747098
+    \\ 0.481418 & 0.692415 & 0.537398 \\ \end{array} \right]}^{V} \overbrace{\left[
+    \begin{array}{ccc} 0.047810 & 0.0 & 0.0 \\ 0.0 & 0.153133 & 0.0 \\ 0.0 & 0.0 &
+    0.236515 \\ \end{array} \right]}^{\Sigma^{-1}}\] \[{\bf U} = \left[ \begin{array}{ccc}
+    0.215371 & 0.030348 & 0.305490 \\ 0.519432 & -0.503779 & -0.419173 \\ 0.534262
+    & -0.311021 & 0.011730 \\ 0.438715 & 0.787878 & -0.431352\\ 0.453759 & 0.166729
+    & 0.738082\\ \end{array} \right]\]
 - en: 'We obtain the following singular value decomposition for \({\bf A}\):'
   id: totrans-60
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们得到了矩阵 \({\bf A}\) 的以下奇异值分解：
 - en: \[ \overbrace{\left[ \begin{array}{ccc} 3 & 2 & 3 \\ 8 & 8 & 2 \\ 8 & 7 & 4
     \\ 1 & 8 & 7 \\ 6 & 4 & 7 \\ \end{array} \right]}^{A} = \overbrace{\left[ \begin{array}{ccc}
     0.215371 & 0.030348 & 0.305490 \\ 0.519432 & -0.503779 & -0.419173 \\ 0.534262
@@ -342,21 +448,33 @@
   id: totrans-61
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \overbrace{\left[ \begin{array}{ccc} 3 & 2 & 3 \\ 8 & 8 & 2 \\ 8 & 7 & 4
+    \\ 1 & 8 & 7 \\ 6 & 4 & 7 \\ \end{array} \right]}^{A} = \overbrace{\left[ \begin{array}{ccc}
+    0.215371 & 0.030348 & 0.305490 \\ 0.519432 & -0.503779 & -0.419173 \\ 0.534262
+    & -0.311021 & 0.011730 \\ 0.438715 & 0.787878 & -0.431352\\ 0.453759 & 0.166729
+    & 0.738082\\ \end{array} \right]}^{U} \overbrace{\left[ \begin{array}{ccc} 20.916
+    & 0 & 0 \\ 0 & 6.53207 & 0 \\ 0 & 0 & 4.22807 \\ \end{array} \right]}^{\Sigma}
+    \overbrace{\left[ \begin{array}{ccc} 0.585051 & 0.652648 & 0.481418 \\ -0.710399
+    & 0.126068 & 0.692415\\ 0.391212 & -0.747098 & 0.537398\\ \end{array} \right]}^{V^T}
+    \]
 - en: Recall that we computed the *reduced* SVD factorization (i.e. \({\bf \Sigma}\)
     is square, \({\bf U}\) is non-square) here.
   id: totrans-62
   prefs: []
   type: TYPE_NORMAL
+  zh: 回想一下，我们在这里计算了 *缩减的* SVD分解（即 \({\bf \Sigma}\) 是方阵，\({\bf U}\) 是非方阵）。
 - en: Rank, null space and range of a matrix
   id: totrans-63
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 矩阵的秩、零空间和值域
 - en: 'Suppose \({\bf A}\) is a \(m \times n\) matrix where \(m > n\) (without loss
     of generality):'
   id: totrans-64
   prefs: []
   type: TYPE_NORMAL
+  zh: 假设 \({\bf A}\) 是一个 \(m \times n\) 的矩阵，其中 \(m > n\)（不失一般性）：
 - en: \[{\bf A}= {\bf U\Sigma V}^{T} = \begin{bmatrix}\vert & & \vert & & \vert \\
     \vert & & \vert & & \vert \\ {\bf u}_1 & \cdots & {\bf u}_n & \cdots & {\bf u}_m\\
     \vert & & \vert & & \vert \\\vert & & \vert & & \vert \end{bmatrix} \begin{bmatrix}
@@ -365,53 +483,72 @@
   id: totrans-65
   prefs: []
   type: TYPE_NORMAL
+  zh: \[{\bf A}= {\bf U\Sigma V}^{T} = \begin{bmatrix}\vert & & \vert & & \vert \\
+    \vert & & \vert & & \vert \\ {\bf u}_1 & \cdots & {\bf u}_n & \cdots & {\bf u}_m\\
+    \vert & & \vert & & \vert \\\vert & & \vert & & \vert \end{bmatrix} \begin{bmatrix}
+    \sigma_1 & & \\ & \ddots & \\ & & \sigma_n \\ & \vdots & \\ -& 0& -\end{bmatrix}
+    \begin{bmatrix} - & {\bf v}_1^T & - \\ & \vdots & \\ - & {\bf v}_n^T & - \end{bmatrix}\]
 - en: 'We can re-write the above as:'
   id: totrans-66
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们可以将上述内容重新写为：
 - en: \[{\bf A} = \begin{bmatrix}\vert & & \vert \\ \vert & & \vert \\ {\bf u}_1 &
     \cdots & {\bf u}_n \\ \vert & & \vert \\ \vert & & \vert \end{bmatrix} \begin{bmatrix}
     - & \sigma_1 {\bf v}_1^T & - \\ & \vdots & \\ - & \sigma_n{\bf v}_n^T & - \end{bmatrix}\]
   id: totrans-67
   prefs: []
   type: TYPE_NORMAL
+  zh: \[{\bf A} = \begin{bmatrix}\vert & & \vert \\ \vert & & \vert \\ {\bf u}_1 &
+    \cdots & {\bf u}_n \\ \vert & & \vert \\ \vert & & \vert \end{bmatrix} \begin{bmatrix}
+    - & \sigma_1 {\bf v}_1^T & - \\ & \vdots & \\ - & \sigma_n{\bf v}_n^T & - \end{bmatrix}\]
 - en: 'Furthermore, the product of two matrices can be written as a sum of outer products:'
   id: totrans-68
   prefs: []
   type: TYPE_NORMAL
+  zh: 此外，两个矩阵的乘积可以写成外积的和：
 - en: \[{\bf A} = \sigma_1 {\bf u}_1 {\bf v}_1^T + \sigma_2 {\bf u}_2 {\bf v}_2^T
     + ... + \sigma_n {\bf u}_n {\bf v}_n^T\]
   id: totrans-69
   prefs: []
   type: TYPE_NORMAL
+  zh: \[{\bf A} = \sigma_1 {\bf u}_1 {\bf v}_1^T + \sigma_2 {\bf u}_2 {\bf v}_2^T
+    + ... + \sigma_n {\bf u}_n {\bf v}_n^T\]
 - en: 'For a general rectangular matrix, we have:'
   id: totrans-70
   prefs: []
   type: TYPE_NORMAL
+  zh: 对于一个一般的矩形矩阵，我们有：
 - en: \[{\bf A} = \sum_{i=1}^{s} \sigma_i {\bf u}_i {\bf v}_i^T\]
   id: totrans-71
   prefs: []
   type: TYPE_NORMAL
+  zh: \[{\bf A} = \sum_{i=1}^{s} \sigma_i {\bf u}_i {\bf v}_i^T\]
 - en: where \(s = \min(m,n)\).
   id: totrans-72
   prefs: []
   type: TYPE_NORMAL
+  zh: 其中 \(s = \min(m,n)\).
 - en: If \({\bf A}\) has \(s\) non-zero singular values, the matrix is full rank,
     i.e. \(\text{rank}({\bf A}) = s\).
   id: totrans-73
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果 \({\bf A}\) 有 \(s\) 个非零奇异值，则矩阵是满秩的，即 \(\text{rank}({\bf A}) = s\).
 - en: If \({\bf A}\) has \(r\) non-zero singular values, and \(r < s\), the matrix
     is rank deficient, i.e. \(\text{rank}({\bf A}) = r\).
   id: totrans-74
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果 \({\bf A}\) 有 \(r\) 个非零奇异值，且 \(r < s\)，则矩阵是秩不足的，即 \(\text{rank}({\bf A})
+    = r\).
 - en: In other words, the rank of \({\bf A}\) equals the number of non-zero singular
     values which is the same as the number of non-zero diagonal elements in \({\bf
     \Sigma}\).
   id: totrans-75
   prefs: []
   type: TYPE_NORMAL
+  zh: 换句话说，\({\bf A}\) 的秩等于非零奇异值的数量，这与 \({\bf \Sigma}\) 中非零对角元素的数量相同。
 - en: Rounding errors may lead to small but non-zero singular values in a rank deficient
     matrix. Singular values that are smaller than a given tolerance are assumed to
     be numerically equivalent to zero, defining what is sometimes called the effective
@@ -419,23 +556,29 @@
   id: totrans-76
   prefs: []
   type: TYPE_NORMAL
+  zh: 四舍五入误差可能导致秩不足矩阵中出现小但非零的奇异值。小于给定容差的奇异值被认为是数值上等同于零的，这定义了有时被称为有效秩的概念。
 - en: The right-singular vectors (columns of \({\bf V}\)) corresponding to vanishing
     singular values of \({\bf A}\) span the null space of \({\bf A}\), i.e. null(\({\bf
     A}\)) = span{\({\bf v}_{r+1}\), \({\bf v}_{r+2}\), …, \({\bf v}_{n}\)}.
   id: totrans-77
   prefs: []
   type: TYPE_NORMAL
+  zh: 与 \({\bf A}\) 的奇异值消失对应的右奇异向量（\({\bf V}\) 的列）张成了 \({\bf A}\) 的零空间，即 null(\({\bf
+    A}\)) = span{\({\bf v}_{r+1}\), \({\bf v}_{r+2}\), …, \({\bf v}_{n}\)}.
 - en: The left-singular vectors (columns of \({\bf U}\)) corresponding to the non-zero
     singular values of \({\bf A}\) span the range of \({\bf A}\), i.e. range(\({\bf
     A}\)) = span{\({\bf u}_{1}\), \({\bf u}_{2}\), …, \({\bf u}_{r}\)}.
   id: totrans-78
   prefs: []
   type: TYPE_NORMAL
+  zh: 与 \({\bf A}\) 的非零奇异值对应的左奇异向量（\({\bf U}\) 的列）张成了 \({\bf A}\) 的值域，即 range(\({\bf
+    A}\)) = span{\({\bf u}_{1}\), \({\bf u}_{2}\), …, \({\bf u}_{r}\)}.
 - en: 'Example:'
   id: totrans-79
   prefs:
   - PREF_H4
   type: TYPE_NORMAL
+  zh: 示例：
 - en: \[{\bf A} = \left[ \begin{array}{cccc} \frac{1}{\sqrt{2}} & -\frac{1}{\sqrt{2}}
     & 0 & 0 \\ \frac{1}{\sqrt{2}}2 &\frac{1}{\sqrt{2}} & 0 & 0 \\ 0 & 0 & 0 & 1 \\
     0 & 0 & 1 & 0 \end{array} \right] \left[ \begin{array}{ccc} 14 & 0 & 0 \\ 0 &
@@ -444,10 +587,16 @@
   id: totrans-80
   prefs: []
   type: TYPE_NORMAL
+  zh: \[{\bf A} = \left[ \begin{array}{cccc} \frac{1}{\sqrt{2}} & -\frac{1}{\sqrt{2}}
+    & 0 & 0 \\ \frac{1}{\sqrt{2}}2 &\frac{1}{\sqrt{2}} & 0 & 0 \\ 0 & 0 & 0 & 1 \\
+    0 & 0 & 1 & 0 \end{array} \right] \left[ \begin{array}{ccc} 14 & 0 & 0 \\ 0 &
+    14 & 0 \\ 0 & 0 & 0 \\ 0 & 0 & 0 \end{array} \right] \left[ \begin{array}{ccc}
+    1 & 0 & 0 \\ 0 & 1 & 0 \\ 0 & 0 & 1 \end{array} \right]\]
 - en: The rank of \({\bf A}\) is 2.
   id: totrans-81
   prefs: []
   type: TYPE_NORMAL
+  zh: \({\bf A}\) 的秩是 2。
 - en: The vectors \(\left[ \begin{array}{c} \frac{1}{\sqrt{2}} \\ \frac{1}{\sqrt{2}}
     \\ 0 \\ 0 \end{array} \right]\) and \(\left[ \begin{array}{c} -\frac{1}{\sqrt{2}}
     \\ \frac{1}{\sqrt{2}} \\ 0 \\ 0 \end{array} \right]\) provide an orthonormal basis
@@ -455,39 +604,51 @@
   id: totrans-82
   prefs: []
   type: TYPE_NORMAL
+  zh: 向量 \(\left[ \begin{array}{c} \frac{1}{\sqrt{2}} \\ \frac{1}{\sqrt{2}} \\ 0 \\
+    0 \end{array} \right]\) 和 \(\left[ \begin{array}{c} -\frac{1}{\sqrt{2}} \\ \frac{1}{\sqrt{2}}
+    \\ 0 \\ 0 \end{array} \right]\) 为 \({\bf A}\) 的值域提供了一个正交归一基。
 - en: The vector \(\left[ \begin{array}{c} 0 \\ 0\\ 1 \end{array} \right]\) provides
     an orthonormal basis for the null space of \({\bf A}\).
   id: totrans-83
   prefs: []
   type: TYPE_NORMAL
+  zh: 向量 \(\left[ \begin{array}{c} 0 \\ 0\\ 1 \end{array} \right]\) 为 \({\bf A}\)
+    的零空间的正交基。
 - en: (Moore-Penrose) Pseudoinverse
   id: totrans-84
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: (Moore-Penrose) 伪逆
 - en: 'If the matrix \({\bf \Sigma}\) is rank deficient, we cannot get its inverse.
     We define instead the pseudoinverse:'
   id: totrans-85
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果矩阵 \({\bf \Sigma}\) 是秩亏的，我们无法得到其逆。我们定义伪逆代替：
 - en: \[({\bf \Sigma}^+)_{ii} = \begin{cases} \frac{1}{\sigma_i} & \sigma_i \neq 0\\
     0 & \sigma_i = 0 \end{cases}\]
   id: totrans-86
   prefs: []
   type: TYPE_NORMAL
+  zh: \[({\bf \Sigma}^+)_{ii} = \begin{cases} \frac{1}{\sigma_i} & \sigma_i \neq 0\\
+    0 & \sigma_i = 0 \end{cases}\]
 - en: 'For a general non-square matrix \({\bf A}\) with known SVD (\({\bf A} = {\bf
     U\Sigma V}^T\)), the pseudoinverse is defined as:'
   id: totrans-87
   prefs: []
   type: TYPE_NORMAL
+  zh: 对于一个具有已知 SVD (\({\bf A} = {\bf U\Sigma V}^T\)) 的一般非方阵 \({\bf A}\)，伪逆定义为：
 - en: \[{\bf A}^{+} = {\bf V\Sigma}^{+}{\bf U}^T\]
   id: totrans-88
   prefs: []
   type: TYPE_NORMAL
+  zh: \[{\bf A}^{+} = {\bf V\Sigma}^{+}{\bf U}^T\]
 - en: 'For example, if we consider a \(m \times n\) full rank matrix where \(m > n\):'
   id: totrans-89
   prefs: []
   type: TYPE_NORMAL
+  zh: 例如，如果我们考虑一个 \(m \times n\) 的满秩矩阵，其中 \(m > n\)：
 - en: \[{\bf A}^{+}= \begin{bmatrix} \vert & ... & \vert \\ {\bf v}_1 & ... & {\bf
     v}_n\\ \vert & ... & \vert \end{bmatrix} \begin{bmatrix} 1/\sigma_1 & & & 0 &
     \dots & 0 \\ & \ddots & & & \ddots &\\ & & 1/\sigma_n & 0 & \dots & 0 \\ \end{bmatrix}
@@ -497,16 +658,24 @@
   id: totrans-90
   prefs: []
   type: TYPE_NORMAL
+  zh: \[{\bf A}^{+}= \begin{bmatrix} \vert & ... & \vert \\ {\bf v}_1 & ... & {\bf
+    v}_n\\ \vert & ... & \vert \end{bmatrix} \begin{bmatrix} 1/\sigma_1 & & & 0 &
+    \dots & 0 \\ & \ddots & & & \ddots &\\ & & 1/\sigma_n & 0 & \dots & 0 \\ \end{bmatrix}
+    \begin{bmatrix}\vert & & \vert & & \vert \\ \vert & & \vert & & \vert \\ {\bf
+    u}_1 & \cdots & {\bf u}_n & \cdots & {\bf u}_m\\ \vert & & \vert & & \vert \\\vert
+    & & \vert & & \vert \end{bmatrix}^T\]
 - en: Euclidean norm of matrices
   id: totrans-91
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 矩阵的欧几里得范数
 - en: 'The induced 2-norm of a matrix \({\bf A}\) can be obtained using the SVD of
     the matrix :'
   id: totrans-92
   prefs: []
   type: TYPE_NORMAL
+  zh: 矩阵 \({\bf A}\) 的诱导 2-范数可以通过矩阵的奇异值分解（SVD）来获得：
 - en: \[\begin{align} \| {\bf A} \|_2 &= \max_{\|\mathbf{x}\|=1} \|\mathbf{A x}\|
     = \max_{\|\mathbf{x}\|=1} \|\mathbf{U \Sigma V}^T {\bf x}\| \\ & =\max_{\|\mathbf{x}\|=1}
     \|\mathbf{ \Sigma V}^T {\bf x}\| = \max_{\|\mathbf{V}^T{\bf x}\|=1} \|\mathbf{
@@ -514,79 +683,102 @@
   id: totrans-93
   prefs: []
   type: TYPE_NORMAL
+  zh: \[\begin{align} \| {\bf A} \|_2 &= \max_{\|\mathbf{x}\|=1} \|\mathbf{A x}\|
+    = \max_{\|\mathbf{x}\|=1} \|\mathbf{U \Sigma V}^T {\bf x}\| \\ & =\max_{\|\mathbf{x}\|=1}
+    \|\mathbf{ \Sigma V}^T {\bf x}\| = \max_{\|\mathbf{V}^T{\bf x}\|=1} \|\mathbf{
+    \Sigma V}^T {\bf x}\| =\max_{\|y\|=1} \|\mathbf{ \Sigma} y\| \end{align}\]
 - en: And hence,
   id: totrans-94
   prefs: []
   type: TYPE_NORMAL
+  zh: 因此，
 - en: \[\| {\bf A} \|_2= \sigma_1\]
   id: totrans-95
   prefs: []
   type: TYPE_NORMAL
+  zh: \[\| {\bf A} \|_2= \sigma_1\]
 - en: In the above equations, all the notations for the norm \(\| . \|\) refer to
     the \(p=2\) Euclidean norm, and we used the fact that \({\bf U}\) and \({\bf V}\)
     are orthogonal matrices and hence \(\|{\bf U}\|_2 = \|{\bf V}\|_2 = 1\).
   id: totrans-96
   prefs: []
   type: TYPE_NORMAL
+  zh: 在上述方程中，所有关于范数 \(\| . \|\) 的符号都指的是 \(p=2\) 的欧几里得范数，并且我们使用了 \({\bf U}\) 和 \({\bf
+    V}\) 是正交矩阵的事实，因此 \(\|{\bf U}\|_2 = \|{\bf V}\|_2 = 1\)。
 - en: 'Example:'
   id: totrans-97
   prefs:
   - PREF_H4
   type: TYPE_NORMAL
+  zh: 示例：
 - en: 'We begin with the following non-square matrix \({\bf A}\):'
   id: totrans-98
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们从以下非方阵 \({\bf A}\) 开始：
 - en: \[{\bf A} = \left[ \begin{array}{ccc} 3 & 2 & 3 \\ 8 & 8 & 2 \\ 8 & 7 & 4 \\
     1 & 8 & 7 \\ 6 & 4 & 7 \\ \end{array} \right].\]
   id: totrans-99
   prefs: []
   type: TYPE_NORMAL
+  zh: \[{\bf A} = \left[ \begin{array}{ccc} 3 & 2 & 3 \\ 8 & 8 & 2 \\ 8 & 7 & 4 \\
+    1 & 8 & 7 \\ 6 & 4 & 7 \\ \end{array} \right].\]
 - en: 'The matrix of singular values, \({\bf \Sigma}\), computed from the SVD factorization
     is:'
   id: totrans-100
   prefs: []
   type: TYPE_NORMAL
+  zh: 从 SVD 分解计算得到的奇异值矩阵 \({\bf \Sigma}\)：
 - en: \[ \Sigma = \left[ \begin{array}{ccc} 20.916 & 0 & 0 \\ 0 & 6.53207 & 0 \\ 0
     & 0 & 4.22807 \\ \end{array} \right]. \]
   id: totrans-101
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \Sigma = \left[ \begin{array}{ccc} 20.916 & 0 & 0 \\ 0 & 6.53207 & 0 \\ 0
+    & 0 & 4.22807 \\ \end{array} \right]. \]
 - en: Consequently the 2-norm of \({\bf A}\) is
   id: totrans-102
   prefs: []
   type: TYPE_NORMAL
+  zh: 因此，\({\bf A}\) 的 2-范数是
 - en: \[ \|{\bf A}\|_2 = 20.916.\]
   id: totrans-103
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \|{\bf A}\|_2 = 20.916.\]
 - en: Euclidean norm of the inverse of matrices
   id: totrans-104
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 矩阵逆的欧几里得范数
 - en: 'Following the same derivation as above, we can show that for a full rank \(n
     \times n\) matrix we have:'
   id: totrans-105
   prefs: []
   type: TYPE_NORMAL
+  zh: 按照上述相同的推导方法，我们可以证明对于一个满秩 \(n \times n\) 矩阵，我们有：
 - en: \[\| {\bf A}^{-1} \|_2= \frac{1}{\sigma_n}\]
   id: totrans-106
   prefs: []
   type: TYPE_NORMAL
+  zh: \[\| {\bf A}^{-1} \|_2= \frac{1}{\sigma_n}\]
 - en: where \({\sigma_n}\) is the smallest singular value.
   id: totrans-107
   prefs: []
   type: TYPE_NORMAL
+  zh: 其中 \({\sigma_n}\) 是最小的奇异值。
 - en: 'For non-square matrices, we can use the definition of the pseudoinverse (regardless
     of the rank):'
   id: totrans-108
   prefs: []
   type: TYPE_NORMAL
+  zh: 对于非方阵，我们可以使用伪逆的定义（无论其秩如何）：
 - en: \[\| {\bf A}^{+} \|_2= \frac{1}{\sigma_r}\]
   id: totrans-109
   prefs: []
   type: TYPE_NORMAL
+  zh: \[\| {\bf A}^{+} \|_2= \frac{1}{\sigma_r}\]
 - en: where \({\sigma_r}\) is the smallest **non-zero** singular value. Note that
     for a full rank square matrix, we have \(\| {\bf A}^{+} \|_2 = \| {\bf A}^{-1}
     \|_2\). An exception of the definition above is the zero matrix. In this case,
@@ -594,62 +786,80 @@
   id: totrans-110
   prefs: []
   type: TYPE_NORMAL
+  zh: 其中 \({\sigma_r}\) 是最小的**非零**奇异值。注意，对于一个满秩的方阵，我们有 \(\| {\bf A}^{+} \|_2 = \|
+    {\bf A}^{-1} \|_2\)。上述定义的一个例外是零矩阵。在这种情况下，\(\| {\bf A}^{+} \|_2 = 0\)
 - en: 2-Norm Condition Number
   id: totrans-111
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 2-范数条件数
 - en: 'The 2-norm condition number of a matrix \({\bf A}\) is given by the ratio of
     its largest singular value to its smallest singular value:'
   id: totrans-112
   prefs: []
   type: TYPE_NORMAL
+  zh: 矩阵 \({\bf A}\) 的 2-范数条件数是其最大奇异值与最小奇异值的比：
 - en: \[\text{cond}_2(A) = \|{\bf A}\|_2 \|{\bf A}^{-1}\|_2 = \sigma_{\max}/\sigma_{\min}.\]
   id: totrans-113
   prefs: []
   type: TYPE_NORMAL
+  zh: \[\text{cond}_2(A) = \|{\bf A}\|_2 \|{\bf A}^{-1}\|_2 = \sigma_{\max}/\sigma_{\min}.\]
 - en: If the matrix \({\bf A}\) is rank deficient, i.e. \(\text{rank}({\bf A}) < \min(m,n)\),
     then \(\text{cond}_2({\bf A}) = \infty\).
   id: totrans-114
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果矩阵 \({\bf A}\) 是秩亏缺的，即 \(\text{rank}({\bf A}) < \min(m,n)\)，那么 \(\text{cond}_2({\bf
+    A}) = \infty\)。
 - en: Low-rank Approximation
   id: totrans-115
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 低秩逼近
 - en: 'The best rank-\(k\) approximation for a \(m \times n\) matrix \({\bf A}\),
     where \(k < s = \min(m,n)\), for some matrix norm \(\|.\|\), is one that minimizes
     the following problem:'
   id: totrans-116
   prefs: []
   type: TYPE_NORMAL
+  zh: 对于一个 \(m \times n\) 的矩阵 \({\bf A}\)，其中 \(k < s = \min(m,n)\)，对于某个矩阵范数 \(\|.\|\)，最佳秩-\(k\)
+    逼近是使以下问题最小化的一个：
 - en: \[\begin{aligned} &\min_{ {\bf A}_k } \ \|{\bf A} - {\bf A}_k\| \\ &\textrm{such
     that} \quad \mathrm{rank}({\bf A}_k) \le k. \end{aligned}\]
   id: totrans-117
   prefs: []
   type: TYPE_NORMAL
+  zh: \[\begin{aligned} &\min_{ {\bf A}_k } \ \|{\bf A} - {\bf A}_k\| \\ &\textrm{such
+    that} \quad \mathrm{rank}({\bf A}_k) \le k. \end{aligned}\]
 - en: 'Under the induced \(2\)-norm, the best rank-\(k\) approximation is given by
     the sum of the first \(k\) outer products of the left and right singular vectors
     scaled by the corresponding singular value (where, \(\sigma_1 \ge \dots \ge \sigma_s\)):'
   id: totrans-118
   prefs: []
   type: TYPE_NORMAL
+  zh: 在诱导的 \(2\)-范数下，最佳秩-\(k\) 逼近由左和右奇异向量的前 \(k\) 个外积的和给出，这些外积由相应的奇异值缩放（其中，\(\sigma_1
+    \ge \dots \ge \sigma_s\)）：
 - en: \[{\bf A}_k = \sigma_1 \bf{u}_1 \bf{v}_1^T + \dots \sigma_k \bf{u}_k \bf{v}_k^T\]
   id: totrans-119
   prefs: []
   type: TYPE_NORMAL
+  zh: \[{\bf A}_k = \sigma_1 \bf{u}_1 \bf{v}_1^T + \dots + \sigma_k \bf{u}_k \bf{v}_k^T\]
 - en: 'Observe that the norm of the difference between the best approximation and
     the matrix under the induced \(2\)-norm condition is the magnitude of the \((k+1)^\text{th}\)
     singular value of the matrix:'
   id: totrans-120
   prefs: []
   type: TYPE_NORMAL
+  zh: 注意到在诱导的 \(2\)-范数条件下，最佳逼近矩阵与矩阵之间的范数是矩阵的第 \((k+1)^\text{th}\) 个奇异值的模：
 - en: \[\|{\bf A} - {\bf A}_k\|_2 = \left|\left|\sum_{i=k+1}^n \sigma_i \bf{u}_i \bf{v}_i^T\right|\right|_2
     = \sigma_{k+1}\]
   id: totrans-121
   prefs: []
   type: TYPE_NORMAL
+  zh: \[\|{\bf A} - {\bf A}_k\|_2 = \left|\left|\sum_{i=k+1}^n \sigma_i \bf{u}_i \bf{v}_i^T\right|\right|_2
+    = \sigma_{k+1}\]
 - en: Note that the best rank-\({k}\) approximation to \({\bf A}\) can be stored efficiently
     by only storing the \({k}\) singular values \({\sigma_1,\dots,\sigma_k}\), the
     \({k}\) left singular vectors \({\bf u_1,\dots,\bf u_k}\), and the \({k}\) right
@@ -657,42 +867,53 @@
   id: totrans-122
   prefs: []
   type: TYPE_NORMAL
+  zh: 注意，最佳秩-\({k}\) 逼近 \({\bf A}\) 可以通过只存储 \({k}\) 个奇异值 \({\sigma_1,\dots,\sigma_k}\)，\({k}\)
+    个左奇异向量 \({\bf u_1,\dots,\bf u_k}\) 和 \({k}\) 个右奇异向量 \({\bf v_1,\dots, \bf v_k}\)
+    来有效地存储。
 - en: 'The figure below show best rank-\(k\) approximations of an image (you can find
     the code snippet that generates these images in the IPython notebook):'
   id: totrans-123
   prefs: []
   type: TYPE_NORMAL
+  zh: 下图显示了图像的最佳秩-\(k\) 逼近（你可以在 IPython 笔记本中找到生成这些图像的代码片段）：
 - en: '![](../Images/0c46411c6d698d32bf197891fb474189.png)'
   id: totrans-124
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/0c46411c6d698d32bf197891fb474189.png)'
 - en: Using SVD to solve a square system of linear equations
   id: totrans-125
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 使用奇异值分解（SVD）求解平方线性方程组
 - en: If \(\bf A\) is an \(n \times n\) square matrix and we want to solve \(\bf{Ax=b}\),
     we can use the svd for A such that
   id: totrans-126
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果 \(\bf A\) 是一个 \(n \times n\) 的平方矩阵，并且我们想求解 \(\bf{Ax=b}\)，我们可以使用 A 的奇异值分解：
 - en: \[\bf{U{\Sigma}V^Tx=b}\] \[\bf{ {\Sigma} V^Tx=U^Tb}\]
   id: totrans-127
   prefs: []
   type: TYPE_NORMAL
+  zh: \[\bf{U{\Sigma}V^Tx=b}\] \[\bf{ {\Sigma} V^Tx=U^Tb}\]
 - en: 'Solve: \(\bf{\Sigma y=U^Tb}\) (diagonal matrix, easy to solve)'
   id: totrans-128
   prefs: []
   type: TYPE_NORMAL
+  zh: 解：\(\bf{\Sigma y=U^Tb}\)（对角矩阵，容易求解）
 - en: 'Evaluate: \(\bf{x=Vy}\)'
   id: totrans-129
   prefs: []
   type: TYPE_NORMAL
+  zh: 评估：\(\bf{x=Vy}\)
 - en: 'Cost of solve: \(O(n^2)\)'
   id: totrans-130
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 求解的成本：\(O(n^2)\)
 - en: Cost of decomposition \(O(n^3)\). Recall that SVD and LU have the same asymptotic
     behavior, however the number of operations - the constant factor before the \(n^3\)
     - for the SVD is larger.
@@ -700,21 +921,26 @@
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 分解的成本 \(O(n^3)\)。回想一下，SVD 和 LU 具有相同的渐近行为，然而 SVD 的操作数——\(n^3\) 前的常数因子——更大。
 - en: Footnotes
   id: totrans-132
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 脚注
 - en: 1\. See [this Math Stack Exchange post](https://web.archive.org/web/20241120230934/https://math.stackexchange.com/questions/1087064/non-zero-eigenvalues-of-aat-and-ata)
     for a brief explanation.
   id: totrans-133
   prefs: []
   type: TYPE_NORMAL
+  zh: 1. 查看 [这篇 Math Stack Exchange 帖子](https://web.archive.org/web/20241120230934/https://math.stackexchange.com/questions/1087064/non-zero-eigenvalues-of-aat-and-ata)
+    以获得简要说明。
 - en: Review Questions
   id: totrans-134
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 复习问题
 - en: For a matrix \(\bf A\) with SVD decomposition \(\bf{A=U{\Sigma}V^T}\), what
     are the columns of \(\bf U\) and how can we find them? What are the columns of
     \(\bf V\) and how can we find them? What are the entries of \(\bf{\Sigma}\) and
@@ -723,11 +949,14 @@
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 对于具有 SVD 分解 \(\bf{A=U{\Sigma}V^T}\) 的矩阵 \(\bf A\)，\(\bf U\) 的列是什么？我们如何找到它们？\(\bf
+    V\) 的列是什么？我们如何找到它们？\(\bf{\Sigma}\) 的元素是什么？我们如何找到它们？
 - en: What special properties are true of \(\bf U\), \(\bf V\) and \(\bf{\Sigma}\)?
   id: totrans-136
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: \(\bf U\), \(\bf V\) 和 \(\bf{\Sigma}\) 具有哪些特殊性质？
 - en: What are the shapes of \(\bf U\), \(\bf V\) and \(\bf{\Sigma}\) in the full
     SVD of an matrix?
   id: totrans-137
