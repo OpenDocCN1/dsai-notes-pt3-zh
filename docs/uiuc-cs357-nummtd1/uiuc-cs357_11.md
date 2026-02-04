@@ -62,7 +62,11 @@ $$\frac{\|\Delta \boldsymbol{x}\|}{\|\boldsymbol{x}\|} \le \text{cond}({\bf A})\
 
 给出一个条件非常好的矩阵的例子（即，具有适合计算的好的条件数）。选择矩阵可能的最优条件数？
 
-$$\begin{flalign} & \text{A) } \text{cond}({\bf A}) < 0 \\ & \text{B) } \text{cond}({\bf A}) = 0 \\ & \text{C) } 0 < \text{cond}({\bf A}) < 1 \\ & \text{D) } \text{cond}({\bf A}) = 1 \\ & \text{E) } \text{cond}({\bf A}) = \text{large numbers} \\ && \end{flalign}$$ <summary>**答案**</summary>
+$$\begin{flalign} & \text{A) } \text{cond}({\bf A}) < 0 \\ & \text{B) } \text{cond}({\bf A}) = 0 \\ & \text{C) } 0 < \text{cond}({\bf A}) < 1 \\ & \text{D) } \text{cond}({\bf A}) = 1 \\ & \text{E) } \text{cond}({\bf A}) = \text{large numbers} \\ && \end{flalign}$$ 
+
+**答案**
+
+
 
 $\bf D$
 
@@ -130,7 +134,11 @@ $$\begin{align} \text{cond}({\bf A}) = \|{\bf A}\|_2 \|{\bf A}^{-1}\|_2 = \|{\bf
 
 对角矩阵的 2-范数条件数是多少？
 
-$$\mathbf{A} = \begin{bmatrix} 100 & 0 & 0 \\ 0 & 13 & 0 \\ 0 & 0 & 0.5 \end{bmatrix}?$$ $$\begin{flalign} & \text{A) } 1 \\ & \text{B) } 50 \\ & \text{C) } 100 \\ & \text{D) } 200 \\ && \end{flalign}$$ <summary>**答案**</summary>
+$$\mathbf{A} = \begin{bmatrix} 100 & 0 & 0 \\ 0 & 13 & 0 \\ 0 & 0 & 0.5 \end{bmatrix}?$$ $$\begin{flalign} & \text{A) } 1 \\ & \text{B) } 50 \\ & \text{C) } 100 \\ & \text{D) } 200 \\ && \end{flalign}$$ 
+
+**答案**
+
+
 
 $\bf D$
 
@@ -162,7 +170,11 @@ $$\mathbf{A} = \begin{bmatrix} 13 & 0 & 0 \\ 0 & 1 & 0 \\ 0 & 0 & 15 \end{bmatri
 
 假设我们有一个 ${\boldsymbol{x}}$ 是 ${\bf A} \boldsymbol{x} = \boldsymbol{b}$ 的解，$\hat {\boldsymbol{x}}$ 是 ${\bf A} \hat{\boldsymbol{x}} = \boldsymbol{b} + \Delta \boldsymbol{b}$ 的解。我们定义 ${\bf r} = {\bf A} \hat{\boldsymbol{x}} - \boldsymbol{b}$。如果我们知道相对残差 $\frac{\|\boldsymbol{r}\|}{\|\boldsymbol{b}\|}$ 是 $10^{-4}$，确定输出相对误差的上限。假设 2-范数。
 
-<summary>**答案**</summary>
+
+
+**答案**
+
+
 
 $\frac{\|\Delta \boldsymbol{x}\|}{\|\boldsymbol{x}\|} \le \text{cond}({\bf A})\frac{\|\boldsymbol{r}\|}{\|\boldsymbol{b}\|} = \mathbf{15 * 10^{-4}} $
 
@@ -222,7 +234,11 @@ $$\frac{\|\boldsymbol{r}\|}{\|{\bf A}\| \|\hat{\boldsymbol{x}}\|} \le \frac{\|E\
 
 如果我们使用部分选主元的高斯消元法来解决条件数为 $10^{10}$ 的线性方程组 ${\bf A} \boldsymbol{x} = \boldsymbol{b}$，并且假设我们使用 IEEE 双精度且输入精确到机器精度，我们期望在解中能得到多少位准确的小数？
 
-<summary>**答案**</summary> 在 IEEE 双精度中，$\epsilon_{mach} \approx 2.2\times 10^{-16}$，这意味着 ${\bf A}$ 和 $\boldsymbol{b}$ 中的项精确到 $\vert\log_{10}(2.2\times 10^{-16})\vert \approx 16$ 位小数。
+
+
+**答案**
+
+在 IEEE 双精度中，$\epsilon_{mach} \approx 2.2\times 10^{-16}$，这意味着 ${\bf A}$ 和 $\boldsymbol{b}$ 中的项精确到 $\vert\log_{10}(2.2\times 10^{-16})\vert \approx 16$ 位小数。
 
 然后，使用这个经验法则，我们知道 $\hat{\boldsymbol{x}}$ 中的项将精确到大约 $16-10 = 6$ 位小数。
 
@@ -256,7 +272,11 @@ $$\frac{\|\boldsymbol{r}\|}{\|{\bf A}\| \|\hat{\boldsymbol{x}}\|} \le \frac{\|E\
 
 +   2017 年 10 月 27 日：Yu Meng (yumeng5) — 首次完整草案
 
-+   <summary>查看剩余条目</summary>
++   
+
+查看剩余条目
+
+
 
     +   2017 年 10 月 27 日：Erin Carrier (ecarrie2) — 添加复习问题，全文小修，修订了经验法则措辞
 

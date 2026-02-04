@@ -2,7 +2,11 @@
 
 > 原文：[`cs357.cs.illinois.edu/textbook/notes/fp.html`](https://cs357.cs.illinois.edu/textbook/notes/fp.html)
 
-<summary style="font-size: 1.1em;">查看幻灯片</summary>
+
+
+查看幻灯片
+
+
 
 如果在这里看不到 PDF，请点击这里下载 PDF。
 
@@ -40,13 +44,21 @@ $$(a_n \ldots a_2 a_1 a_0 . b_1 b_2 b_3 b_4 \dots)_{\beta} = \sum_{k=0}^{n} a_k 
 
 十进制基数：$(426.97)_{10}$
 
-<summary>**答案**</summary>
+
+
+**答案**
+
+
 
 $\begin{equation}(426.97)_{10} = 4 \times 10² + 2 \times 10¹ + 6 \times 10⁰ + 9 \times 10^{-1} + 7 \times 10^{-2} \end{equation}$
 
 二进制基数：$(1011.001)_{2}$
 
-<summary>**答案**</summary>
+
+
+**答案**
+
+
 
 $(1011.001)_{2} = 1 \times 2³ + 0 \times 2² + 1 \times 2¹ + 1 \times 2⁰ + 0 \times 2^{-1} + 0 \times 2^{-2} + 1 \times 2^{-3} = (11.125)_{10}$
 
@@ -116,7 +128,11 @@ $$\begin{eqnarray} &a_i =& 1 \ \forall i \ and \ b_i = 1 \ \forall i \\ &\implie
 
 考虑一个 8 位系统，其中 6 位存储整数部分，2 位存储小数部分。它的范围和精度是多少？
 
-<summary>**答案**</summary>
+
+
+**答案**
+
+
 
 **最小的数**
 
@@ -140,7 +156,11 @@ $0.5 - 0.25 = 63.75 - 63.5 = 0.25$
 
 对于一个 8 位系统，其中 2 位存储整数部分，6 位存储小数部分，情况如何？
 
-<summary>**答案**</summary>
+
+
+**答案**
+
+
 
 **最小的数**
 
@@ -226,7 +246,11 @@ $$\begin{equation} x = \pm 1.b_1b_2 \times 2^m \text{ for } m \in [-4,4] \text{ 
 
 +   最大的规范化正数：
 
-<summary>**答案**</summary>
+
+
+**答案**
+
+
 
 +   整数范围
 
@@ -292,7 +316,11 @@ $$ \begin{equation} (1.11)_2 \times 2⁴ = 28.0 \end{equation} $$
 
 将二进制数 $(100101.101)_2$ 转换为规范化浮点数表示
 
-$$1.f \times 2^m$$ <summary>**答案**</summary>
+$$1.f \times 2^m$$ 
+
+**答案**
+
+
 
 $(100101.101)_2 = (1.00101101)_2 \times 2⁵$ $s = 0,\quad f = 00101101…00,\quad m = 5$ $c=m + 127 = 132 = (10000100)_2$
 
@@ -384,7 +412,11 @@ $$s = 1$$ $$b_1b_2 = (11)_2$$
 
 将这个子规格化数转换为十进制数。
 
-<summary>**答案**</summary>
+
+
+**答案**
+
+
 
 在这个浮点数系统中，子规格化数将表示为
 
@@ -438,7 +470,11 @@ $$\begin{eqnarray} x &=& (-1)¹ \times (0.11)_2 \times 2^{-2} \\ &=& (-1) \times
 
 +   2024 年 4 月 22 日：Apramey Hosahalli (apramey2) — 修复格式并改进流程
 
-+   <summary>查看剩余条目</summary>
++   
+
+查看剩余条目
+
+
 
     +   2024 年 4 月 2 日：Apramey Hosahalli (apramey2) — 添加整数范围章节和固定机器精度
 

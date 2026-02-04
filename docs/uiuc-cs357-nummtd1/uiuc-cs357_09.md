@@ -42,7 +42,11 @@ $$\textbf{A} = \begin{bmatrix} 1 & 2 \\ 3 & 4 \end{bmatrix}\hspace{5mm} \textbf{
 
 我们如何求解 $\textbf{x} = [x_1, x_2]^T$？
 
-<summary>**答案**</summary> 我们构建以下线性方程组：$ \begin{cases} x_1 + 2x_2 = 5\\ 3x_1 + 4x_2 = 11 \end{cases} \hspace{5mm} $ 然后解为：$ \begin{cases} x_1 = 1\\ x_2 = 2 \end{cases} \hspace{5mm} \text{，或者} \hspace{5mm} \textbf{x} = \begin{bmatrix} 1 \\ 2 \end{bmatrix} $
+
+
+**答案**
+
+我们构建以下线性方程组：$ \begin{cases} x_1 + 2x_2 = 5\\ 3x_1 + 4x_2 = 11 \end{cases} \hspace{5mm} $ 然后解为：$ \begin{cases} x_1 = 1\\ x_2 = 2 \end{cases} \hspace{5mm} \text{，或者} \hspace{5mm} \textbf{x} = \begin{bmatrix} 1 \\ 2 \end{bmatrix} $
 
 ### 示例：图像模糊与恢复
 
@@ -123,7 +127,11 @@ $$\begin{bmatrix} 2 & 3 & 1 & 1 \\ 0 & 2 & 2 & 3 \\ 0 & 0 & 6 & 4 \\ 0 & 0 & 0 &
 
 我们如何求解 $x = [x_1, x_2, x_3, x_4]^T$？
 
-<summary>**答案**</summary> $ 2x_4 = 4 \Rightarrow x_4 = \frac{4}{2} = 2 $ $ 6x_3 + 4x_4 = 6 \Rightarrow x_3 = \frac{6 - 4(2)}{6} = -\frac{1}{3} $ $ 2x_2 + 2x_3 + 3x_4 = 2 \Rightarrow x_2 = \frac{2 - 2(-\frac{1}{3}) - 3(2)}{2} = -\frac{5}{3} $ $ 2x_1 + 3x_2 + x_3 + x_4 = 2 \Rightarrow x_1 = \frac{2 - 3(-\frac{5}{3}) - (-\frac{1}{3}) - 2}{2} = \frac{8}{3} $
+
+
+**答案**
+
+$ 2x_4 = 4 \Rightarrow x_4 = \frac{4}{2} = 2 $ $ 6x_3 + 4x_4 = 6 \Rightarrow x_3 = \frac{6 - 4(2)}{6} = -\frac{1}{3} $ $ 2x_2 + 2x_3 + 3x_4 = 2 \Rightarrow x_2 = \frac{2 - 2(-\frac{1}{3}) - 3(2)}{2} = -\frac{5}{3} $ $ 2x_1 + 3x_2 + x_3 + x_4 = 2 \Rightarrow x_1 = \frac{2 - 3(-\frac{5}{3}) - (-\frac{1}{3}) - 2}{2} = \frac{8}{3} $
 
 ## 下三角系统前向替换算法
 
@@ -180,7 +188,11 @@ $$\begin{bmatrix} 2 & 0 & 0 & 0 \\ 3 & 2 & 0 & 0 \\ 1 & 2 & 6 & 0 \\ 1 & 3 & 4 &
 
 我们如何求解 $x = [x_1, x_2, x_3, x_4]^T$？
 
-<summary>**答案**</summary> $ 2x_1 = 2 \Rightarrow x_1 = 1 $ $ 3x_1 + 2x_2 = 2 \Rightarrow x_2 = \frac{2-3}{2} = -0.5 $ $ 1x_1 + 2x_2 + 6x_3 = 6 \Rightarrow x_3 = \frac{6-1+1}{6} = 1 $ $ 1x_1 + 3x_2 + 4x_3 + 2x_4 = 4 \Rightarrow x_4 = \frac{4-1+1.5-4}{2} = 0.25 $
+
+
+**答案**
+
+$ 2x_1 = 2 \Rightarrow x_1 = 1 $ $ 3x_1 + 2x_2 = 2 \Rightarrow x_2 = \frac{2-3}{2} = -0.5 $ $ 1x_1 + 2x_2 + 6x_3 = 6 \Rightarrow x_3 = \frac{6-1+1}{6} = 1 $ $ 1x_1 + 3x_2 + 4x_3 + 2x_4 = 4 \Rightarrow x_4 = \frac{4-1+1.5-4}{2} = 0.25 $
 
 ## LU 分解定义
 
@@ -323,7 +335,11 @@ def lu_decomp(A):
 
 我们如何找到这个矩阵的 LU 分解？
 
-<summary>**答案**</summary> 注意，我们使用 $\bf {M}$ 来跟踪需要递归分解的矩阵（例如第一步中的 $\bf {L_{22}U_{22}}$）。
+
+
+**答案**
+
+注意，我们使用 $\bf {M}$ 来跟踪需要递归分解的矩阵（例如第一步中的 $\bf {L_{22}U_{22}}$）。
 
 $\bf{U}$ 的第一行是 $\bf{A}$ 的第一行。
 
@@ -339,7 +355,11 @@ $${\bf A} = \begin{bmatrix} 2 & 8 & 4 & 1 \\ 1 & 4 & 3 & 3 \\ 1 & 2 & 6 & 2 \\ 1
 
 为什么？
 
-<summary>**答案**</summary> LU 分解的第一步是（注意我们使用张量积运算符"$\otimes$"来表示两个向量的外积）：$ \textbf{L} = \begin{bmatrix} 1 & 0 & 0 & 0 \\ \textbf{0.5} & 1 & 0 & 0 \\ \textbf{0.5} & ? & 1 & 0 \\ \textbf{0.5} & ? & ? & 1 \end{bmatrix}; \hspace{5mm} \textbf{U} = \begin{bmatrix} 2 & 8 & 4 & 1 \\ 0 & ? & ? & ? \\ 0 & 0 & ? & ? \\ 0 & 0 & 0 & ? \end{bmatrix}; \hspace{5mm} \bf{L_{22}U_{22}} = \begin{bmatrix} 4 & 3 & 3 \\ 2 & 6 & 2 \\ 3 & 4 & 2 \end{bmatrix} - \begin{bmatrix} 0.5 \\ 0.5 \\ 0.5 \end{bmatrix} \otimes \begin{bmatrix} 8 \\ 4 \\ 1 \end{bmatrix} = \begin{bmatrix} \textbf{0} & 1 & 2.5 \\ -2 & 4 & 1.5 \\ -1 & 2 & 1.5 \end{bmatrix} $ 下一个更新将导致除以零。LU 分解失败，因此$\bf A$没有正常的 LU 分解。
+
+
+**答案**
+
+LU 分解的第一步是（注意我们使用张量积运算符"$\otimes$"来表示两个向量的外积）：$ \textbf{L} = \begin{bmatrix} 1 & 0 & 0 & 0 \\ \textbf{0.5} & 1 & 0 & 0 \\ \textbf{0.5} & ? & 1 & 0 \\ \textbf{0.5} & ? & ? & 1 \end{bmatrix}; \hspace{5mm} \textbf{U} = \begin{bmatrix} 2 & 8 & 4 & 1 \\ 0 & ? & ? & ? \\ 0 & 0 & ? & ? \\ 0 & 0 & 0 & ? \end{bmatrix}; \hspace{5mm} \bf{L_{22}U_{22}} = \begin{bmatrix} 4 & 3 & 3 \\ 2 & 6 & 2 \\ 3 & 4 & 2 \end{bmatrix} - \begin{bmatrix} 0.5 \\ 0.5 \\ 0.5 \end{bmatrix} \otimes \begin{bmatrix} 8 \\ 4 \\ 1 \end{bmatrix} = \begin{bmatrix} \textbf{0} & 1 & 2.5 \\ -2 & 4 & 1.5 \\ -1 & 2 & 1.5 \end{bmatrix} $ 下一个更新将导致除以零。LU 分解失败，因此$\bf A$没有正常的 LU 分解。
 
 ## 使用 LU 分解求解线性系统
 
@@ -553,7 +573,11 @@ def linear_solve(A, b):
 
 我们如何找到这个矩阵的 LUP 分解？
 
-<summary>**答案**</summary> 注意，我们使用 ${\bf {\overline{M}}}$ 来跟踪需要递归分解的矩阵（例如第一步中的 $\bf L_{22} U_{22}$），并且使用张量积运算符 "$\otimes$" 来表示两个向量的外积。在第一步中：$ \bf{P\overline{M}} = \begin{bmatrix} 0 & 0 & 1 & 0 \\ 0 & 1 & 0 & 0 \\ 1 & 0 & 0 & 0 \\ 0 & 0 & 0 & 1 \end{bmatrix} \begin{bmatrix} 2 & 1 & 1 & 0 \\ 4 & 3 & 3 & 1 \\ 8 & 7 & 9 & 5 \\ 6 & 7 & 9 & 8 \end{bmatrix} = \begin{bmatrix} 8 & 7 & 9 & 5 \\ 4 & 3 & 3 & 1 \\ 2 & 1 & 0 & 0 \\ 6 & 7 & 9 & 8 \end{bmatrix} $ $ \textbf{L} = \begin{bmatrix} 1 & 0 & 0 & 0 \\ \textbf{0.5} & 1 & 0 & 0 \\ \textbf{0.25} & ? & 1 & 0 \\ \textbf{0.75} & ? & ? & 1 \end{bmatrix}; \hspace{5mm} \textbf{U} = \begin{bmatrix} 8 & \textbf{7} & \textbf{9} & \textbf{5} \\ 0 & ? & ? & ? \\ 0 & 0 & ? & ? \\ 0 & 0 & 0 & ? \end{bmatrix}; \hspace{5mm} \bf{\overline{M}} = \begin{bmatrix} 3 & 3 & 1 \\ 1 & 0 & 0 \\ 7 & 9 & 8 \end{bmatrix} - \begin{bmatrix} 0.5 \\ 0.25 \\ 0.75 \end{bmatrix} \otimes \begin{bmatrix} 7 \\ 9 \\ 5 \end{bmatrix} = \begin{bmatrix} -0.5 & -1.5 & -1.5 \\ -0.75 & -1.25 & -1.25 \\ 1.75 & 2.25 & 4.25 \end{bmatrix} $ 类似地，在第二步（递归）中：$ \bf{P\overline{M}} = \begin{bmatrix} 0 & 0 & 1 \\ 0 & 1 & 0 \\ 1 & 0 & 0 \end{bmatrix} \begin{bmatrix} -0.5 & -1.5 & -1.5 \\ -0.75 & -1.25 & -1.25 \\ 1.75 & 2.25 & 4.25 \end{bmatrix} = \begin{bmatrix} 1.75 & 2.25 & 4.25 \\ -0.75 & -1.25 & -1.25 \\ -0.5 & -1.5 & -1.5 \end{bmatrix} $ $ \textbf{L} = \begin{bmatrix} 1 & 0 & 0 & 0 \\ \textbf{0.75} & 1 & 0 & 0 \\ 0.25 & \textbf{-0.428} & 1 & 0 \\ \textbf{0.5} & \textbf{-0.285} & ? & 1 \end{bmatrix}; \hspace{5mm} \textbf{U} = \begin{bmatrix} 8 & 7 & 9 & 5 \\ 0 & \textbf{1.75} & \textbf{2.25} & \textbf{4.25} \\ 0 & 0 & ? & ? \\ 0 & 0 & 0 & ? \end{bmatrix} $ $ \bf{\overline{M}} = \begin{bmatrix} -1.25 & -1.25 \\ -1.5 & -1.5 \end{bmatrix} - \begin{bmatrix} -0.428 \\ -0.285 \end{bmatrix} \otimes \begin{bmatrix} 2.25 \\ 4.25 \end{bmatrix} = \begin{bmatrix} -0.287 & 0.569 \\ -0.8587 & -0.2887 \end{bmatrix} $ 下一步是：$ \bf{P\overline{M}} = \begin{bmatrix} 0 & 1 \\ 1 & 0 \end{bmatrix} \begin{bmatrix} -0.287 & 0.569 \\ -0.8587 & -0.2887 \end{bmatrix} = \begin{bmatrix} -0.8587 & -0.2887 \\ -0.287 & 0.569 \end{bmatrix} $ $ \textbf{L} = \begin{bmatrix} 1 & 0 & 0 & 0 \\ 0.75 & 1 & 0 & 0 \\ \textbf{0.5} & \textbf{-0.285} & 1 & 0 \\ \textbf{0.25} & \textbf{-0.428} & \textbf{0.334} & 1 \end{bmatrix}; \hspace{5mm} \textbf{U} = \begin{bmatrix} 8 & 7 & 9 & 5 \\ 0 & 1.75 & 2.25 & 4.25 \\ 0 & 0 & \textbf{-0.86} & \textbf{-0.29} \\ 0 & 0 & 0 & ? \end{bmatrix}; \hspace{5mm} \bf{\overline{M}} = \begin{bmatrix} 0.569 \end{bmatrix} - \begin{bmatrix} 0.334 \end{bmatrix} \otimes \begin{bmatrix} -0.29 \end{bmatrix} = \begin{bmatrix} 0.67 \end{bmatrix} $ 因此，最终结果是：$ \textbf{L} = \begin{bmatrix} 1 & 0 & 0 & 0 \\ 0.75 & 1 & 0 & 0 \\ 0.5 & -0.285 & 1 & 0 \\ 0.25 & -0.428 & 0.334 & 1 \end{bmatrix}; \hspace{5mm} \textbf{U} = \begin{bmatrix} 8 & 7 & 9 & 5 \\ 0 & 1.75 & 2.25 & 4.25 \\ 0 & 0 & -0.86 & -0.29 \\ 0 & 0 & 0 & 0.67 \end{bmatrix}; \hspace{5mm} \textbf{P} = \begin{bmatrix} 0 & 0 & 1 & 0 \\ 0 & 0 & 0 & 1 \\ 0 & 1 & 0 & 0 \\ 1 & 0 & 0 & 0 \end{bmatrix} $
+
+
+**答案**
+
+注意，我们使用 ${\bf {\overline{M}}}$ 来跟踪需要递归分解的矩阵（例如第一步中的 $\bf L_{22} U_{22}$），并且使用张量积运算符 "$\otimes$" 来表示两个向量的外积。在第一步中：$ \bf{P\overline{M}} = \begin{bmatrix} 0 & 0 & 1 & 0 \\ 0 & 1 & 0 & 0 \\ 1 & 0 & 0 & 0 \\ 0 & 0 & 0 & 1 \end{bmatrix} \begin{bmatrix} 2 & 1 & 1 & 0 \\ 4 & 3 & 3 & 1 \\ 8 & 7 & 9 & 5 \\ 6 & 7 & 9 & 8 \end{bmatrix} = \begin{bmatrix} 8 & 7 & 9 & 5 \\ 4 & 3 & 3 & 1 \\ 2 & 1 & 0 & 0 \\ 6 & 7 & 9 & 8 \end{bmatrix} $ $ \textbf{L} = \begin{bmatrix} 1 & 0 & 0 & 0 \\ \textbf{0.5} & 1 & 0 & 0 \\ \textbf{0.25} & ? & 1 & 0 \\ \textbf{0.75} & ? & ? & 1 \end{bmatrix}; \hspace{5mm} \textbf{U} = \begin{bmatrix} 8 & \textbf{7} & \textbf{9} & \textbf{5} \\ 0 & ? & ? & ? \\ 0 & 0 & ? & ? \\ 0 & 0 & 0 & ? \end{bmatrix}; \hspace{5mm} \bf{\overline{M}} = \begin{bmatrix} 3 & 3 & 1 \\ 1 & 0 & 0 \\ 7 & 9 & 8 \end{bmatrix} - \begin{bmatrix} 0.5 \\ 0.25 \\ 0.75 \end{bmatrix} \otimes \begin{bmatrix} 7 \\ 9 \\ 5 \end{bmatrix} = \begin{bmatrix} -0.5 & -1.5 & -1.5 \\ -0.75 & -1.25 & -1.25 \\ 1.75 & 2.25 & 4.25 \end{bmatrix} $ 类似地，在第二步（递归）中：$ \bf{P\overline{M}} = \begin{bmatrix} 0 & 0 & 1 \\ 0 & 1 & 0 \\ 1 & 0 & 0 \end{bmatrix} \begin{bmatrix} -0.5 & -1.5 & -1.5 \\ -0.75 & -1.25 & -1.25 \\ 1.75 & 2.25 & 4.25 \end{bmatrix} = \begin{bmatrix} 1.75 & 2.25 & 4.25 \\ -0.75 & -1.25 & -1.25 \\ -0.5 & -1.5 & -1.5 \end{bmatrix} $ $ \textbf{L} = \begin{bmatrix} 1 & 0 & 0 & 0 \\ \textbf{0.75} & 1 & 0 & 0 \\ 0.25 & \textbf{-0.428} & 1 & 0 \\ \textbf{0.5} & \textbf{-0.285} & ? & 1 \end{bmatrix}; \hspace{5mm} \textbf{U} = \begin{bmatrix} 8 & 7 & 9 & 5 \\ 0 & \textbf{1.75} & \textbf{2.25} & \textbf{4.25} \\ 0 & 0 & ? & ? \\ 0 & 0 & 0 & ? \end{bmatrix} $ $ \bf{\overline{M}} = \begin{bmatrix} -1.25 & -1.25 \\ -1.5 & -1.5 \end{bmatrix} - \begin{bmatrix} -0.428 \\ -0.285 \end{bmatrix} \otimes \begin{bmatrix} 2.25 \\ 4.25 \end{bmatrix} = \begin{bmatrix} -0.287 & 0.569 \\ -0.8587 & -0.2887 \end{bmatrix} $ 下一步是：$ \bf{P\overline{M}} = \begin{bmatrix} 0 & 1 \\ 1 & 0 \end{bmatrix} \begin{bmatrix} -0.287 & 0.569 \\ -0.8587 & -0.2887 \end{bmatrix} = \begin{bmatrix} -0.8587 & -0.2887 \\ -0.287 & 0.569 \end{bmatrix} $ $ \textbf{L} = \begin{bmatrix} 1 & 0 & 0 & 0 \\ 0.75 & 1 & 0 & 0 \\ \textbf{0.5} & \textbf{-0.285} & 1 & 0 \\ \textbf{0.25} & \textbf{-0.428} & \textbf{0.334} & 1 \end{bmatrix}; \hspace{5mm} \textbf{U} = \begin{bmatrix} 8 & 7 & 9 & 5 \\ 0 & 1.75 & 2.25 & 4.25 \\ 0 & 0 & \textbf{-0.86} & \textbf{-0.29} \\ 0 & 0 & 0 & ? \end{bmatrix}; \hspace{5mm} \bf{\overline{M}} = \begin{bmatrix} 0.569 \end{bmatrix} - \begin{bmatrix} 0.334 \end{bmatrix} \otimes \begin{bmatrix} -0.29 \end{bmatrix} = \begin{bmatrix} 0.67 \end{bmatrix} $ 因此，最终结果是：$ \textbf{L} = \begin{bmatrix} 1 & 0 & 0 & 0 \\ 0.75 & 1 & 0 & 0 \\ 0.5 & -0.285 & 1 & 0 \\ 0.25 & -0.428 & 0.334 & 1 \end{bmatrix}; \hspace{5mm} \textbf{U} = \begin{bmatrix} 8 & 7 & 9 & 5 \\ 0 & 1.75 & 2.25 & 4.25 \\ 0 & 0 & -0.86 & -0.29 \\ 0 & 0 & 0 & 0.67 \end{bmatrix}; \hspace{5mm} \textbf{P} = \begin{bmatrix} 0 & 0 & 1 & 0 \\ 0 & 0 & 0 & 1 \\ 0 & 1 & 0 & 0 \\ 1 & 0 & 0 & 0 \end{bmatrix} $
 
 ### 示例：LUP 分解成功但 LU 分解失败的矩阵
 
@@ -563,7 +587,11 @@ $${\bf A} = \begin{bmatrix} 0 & 1 \\ 2 & 1 \end{bmatrix}.$$
 
 我们如何找到这个矩阵的 LUP 分解？
 
-<summary>**答案**</summary> 要找到 $\bf A$ 的 LUP 分解，我们首先写出置换矩阵 ${\bf P}$，将第二行移到顶部，使得左上角的元素具有最大的可能幅度。这给出 $ \overbrace{\begin{bmatrix} 0 & 1 \\ 1 & 0 \end{bmatrix}}^{P} \overbrace{\begin{bmatrix} 0 & 1 \\ 2 & 1 \end{bmatrix}}^{A} = \overbrace{\begin{bmatrix} 2 & 1 \\ 0 & 1 \end{bmatrix}}^{\bar{A}} = \overbrace{\begin{bmatrix} 1 & 0 \\ 0 & 1 \end{bmatrix}}^{L} \overbrace{\begin{bmatrix} 2 & 1 \\ 0 & 1 \end{bmatrix}}^{U}. $
+
+
+**答案**
+
+要找到 $\bf A$ 的 LUP 分解，我们首先写出置换矩阵 ${\bf P}$，将第二行移到顶部，使得左上角的元素具有最大的可能幅度。这给出 $ \overbrace{\begin{bmatrix} 0 & 1 \\ 1 & 0 \end{bmatrix}}^{P} \overbrace{\begin{bmatrix} 0 & 1 \\ 2 & 1 \end{bmatrix}}^{A} = \overbrace{\begin{bmatrix} 2 & 1 \\ 0 & 1 \end{bmatrix}}^{\bar{A}} = \overbrace{\begin{bmatrix} 1 & 0 \\ 0 & 1 \end{bmatrix}}^{L} \overbrace{\begin{bmatrix} 2 & 1 \\ 0 & 1 \end{bmatrix}}^{U}. $
 
 ## 复习问题
 
@@ -613,7 +641,11 @@ $${\bf A} = \begin{bmatrix} 0 & 1 \\ 2 & 1 \end{bmatrix}.$$
 
 +   2024 年 2 月 13 日：Kaiyao Ke (kaiyaok2) — 将笔记与幻灯片对齐，添加示例并重构现有笔记
 
-+   <summary>查看剩余条目</summary>
++   
+
+查看剩余条目
+
+
 
     +   2023 年 10 月 20 日：Yuxuan Chen (yuxuan19) — 更新 lu_decomp() 代码
 

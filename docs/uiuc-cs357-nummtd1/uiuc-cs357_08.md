@@ -204,7 +204,11 @@ $${\bf A} = \begin{bmatrix} 1 & 7 & 8 & 4\\ -5 & 3 & 2 & 2\\ 0 & 5 & 6 & 6\end{b
 
 执行矩阵-向量乘法 ${\bf Ax}$。
 
-<summary>**答案**</summary> $\begin{eqnarray} {\bf Ax} &=& \begin{bmatrix} 1 & 7 & 8 & 4\\ -5 & 3 & 2 & 2\\ 0 & 5 & 6 & 6\end{bmatrix} \begin{bmatrix}1 \\ 2 \\ 0 \\ -4\end{bmatrix} \\ \\ &=& 1 \begin{bmatrix} 1 \\ -5 \\ 0 \end{bmatrix} + 2 \begin{bmatrix} 7 \\ 3 \\ 5 \end{bmatrix} + 0 \begin{bmatrix} 8 \\ 2 \\ 6 \end{bmatrix} + -4 \begin{bmatrix} 4 \\ 2 \\ 6 \end{bmatrix} \\ \\ &=& \begin{bmatrix} 1 \\ -5 \\ 0 \end{bmatrix} + \begin{bmatrix} 14 \\ 6 \\ 10 \end{bmatrix} + \begin{bmatrix} 0 \\ 0 \\ 0 \end{bmatrix} + \begin{bmatrix} -16 \\ -8 \\ -24 \end{bmatrix} \\ \\ &=& \begin{bmatrix} 1 + 14 + 0 -16 \\ -5 + 6 + 0 - 8\\ 0 + 10 + 0 - 24\end{bmatrix} \\ \\ &=& \begin{bmatrix} -1 \\ -7\\ -14\end{bmatrix} \end{eqnarray}$
+
+
+**答案**
+
+$\begin{eqnarray} {\bf Ax} &=& \begin{bmatrix} 1 & 7 & 8 & 4\\ -5 & 3 & 2 & 2\\ 0 & 5 & 6 & 6\end{bmatrix} \begin{bmatrix}1 \\ 2 \\ 0 \\ -4\end{bmatrix} \\ \\ &=& 1 \begin{bmatrix} 1 \\ -5 \\ 0 \end{bmatrix} + 2 \begin{bmatrix} 7 \\ 3 \\ 5 \end{bmatrix} + 0 \begin{bmatrix} 8 \\ 2 \\ 6 \end{bmatrix} + -4 \begin{bmatrix} 4 \\ 2 \\ 6 \end{bmatrix} \\ \\ &=& \begin{bmatrix} 1 \\ -5 \\ 0 \end{bmatrix} + \begin{bmatrix} 14 \\ 6 \\ 10 \end{bmatrix} + \begin{bmatrix} 0 \\ 0 \\ 0 \end{bmatrix} + \begin{bmatrix} -16 \\ -8 \\ -24 \end{bmatrix} \\ \\ &=& \begin{bmatrix} 1 + 14 + 0 -16 \\ -5 + 6 + 0 - 8\\ 0 + 10 + 0 - 24\end{bmatrix} \\ \\ &=& \begin{bmatrix} -1 \\ -7\\ -14\end{bmatrix} \end{eqnarray}$
 
 ### 线性变换的矩阵表示
 
@@ -234,7 +238,11 @@ $$\mathbf{v} = \begin{bmatrix}\alpha_1 \\ \alpha_2 \\ \alpha_3\end{bmatrix},\hsp
 
 使用上述提供的信息，确定 $f$ 的矩阵表示。
 
-<summary>**答案**</summary> 第一个方程告诉我们 $ \mathbf{w}_1 = f(\mathbf{v}_1) \implies \begin{bmatrix} 1 \\ 0\end{bmatrix} = \begin{bmatrix} a_{11} & a_{12} & a_{13}\\ a_{21} & a_{22} & a_{23}\end{bmatrix}\begin{bmatrix} 1 \\ 0 \\ 0\end{bmatrix} = \begin{bmatrix} a_{11} \\ a_{21} \end{bmatrix}. $ 因此我们知道 $a_{11} = 1,\ a_{21} = 0.$ 第二个方程告诉我们 $ 5\mathbf{w}_1 - \mathbf{w}_2 = f(\mathbf{v}_2) \implies \begin{bmatrix} 5 \\ -1\end{bmatrix} = \begin{bmatrix} 1 & a_{12} & a_{13}\\ 0 & a_{22} & a_{23}\end{bmatrix}\begin{bmatrix} 0 \\ 1 \\ 0\end{bmatrix} = \begin{bmatrix} a_{12} \\ a_{22} \end{bmatrix}. $ 因此我们知道 $a_{12} = 5,\ a_{22} = -1.$ 最后，第三个方程告诉我们 $ 2\mathbf{w}_1 + 2\mathbf{w}_2 = f(\mathbf{v}_2) \implies \begin{bmatrix} 2 \\ 2\end{bmatrix} = \begin{bmatrix} 1 & 5 & a_{13}\\ 0 & -1 & a_{23}\end{bmatrix}\begin{bmatrix} 0 \\ 0 \\ 1\end{bmatrix} = \begin{bmatrix} a_{13} \\ a_{23} \end{bmatrix}. $ 因此，$a_{13} = 2,\ a_{23} = 2$，线性变换 $f$ 可以表示为矩阵：$ \begin{bmatrix} 1 & 5 & 2\\ 0 & -1 & 2\end{bmatrix}. $ 重要的是要注意，矩阵表示不仅取决于 $f$，还取决于我们选择的基。如果我们为向量空间 $V$ 和 $W$ 选择不同的基，$f$ 的矩阵表示也会改变。
+
+
+**答案**
+
+第一个方程告诉我们 $ \mathbf{w}_1 = f(\mathbf{v}_1) \implies \begin{bmatrix} 1 \\ 0\end{bmatrix} = \begin{bmatrix} a_{11} & a_{12} & a_{13}\\ a_{21} & a_{22} & a_{23}\end{bmatrix}\begin{bmatrix} 1 \\ 0 \\ 0\end{bmatrix} = \begin{bmatrix} a_{11} \\ a_{21} \end{bmatrix}. $ 因此我们知道 $a_{11} = 1,\ a_{21} = 0.$ 第二个方程告诉我们 $ 5\mathbf{w}_1 - \mathbf{w}_2 = f(\mathbf{v}_2) \implies \begin{bmatrix} 5 \\ -1\end{bmatrix} = \begin{bmatrix} 1 & a_{12} & a_{13}\\ 0 & a_{22} & a_{23}\end{bmatrix}\begin{bmatrix} 0 \\ 1 \\ 0\end{bmatrix} = \begin{bmatrix} a_{12} \\ a_{22} \end{bmatrix}. $ 因此我们知道 $a_{12} = 5,\ a_{22} = -1.$ 最后，第三个方程告诉我们 $ 2\mathbf{w}_1 + 2\mathbf{w}_2 = f(\mathbf{v}_2) \implies \begin{bmatrix} 2 \\ 2\end{bmatrix} = \begin{bmatrix} 1 & 5 & a_{13}\\ 0 & -1 & a_{23}\end{bmatrix}\begin{bmatrix} 0 \\ 0 \\ 1\end{bmatrix} = \begin{bmatrix} a_{13} \\ a_{23} \end{bmatrix}. $ 因此，$a_{13} = 2,\ a_{23} = 2$，线性变换 $f$ 可以表示为矩阵：$ \begin{bmatrix} 1 & 5 & 2\\ 0 & -1 & 2\end{bmatrix}. $ 重要的是要注意，矩阵表示不仅取决于 $f$，还取决于我们选择的基。如果我们为向量空间 $V$ 和 $W$ 选择不同的基，$f$ 的矩阵表示也会改变。
 
 ### 矩阵作为算子
 
@@ -290,7 +298,11 @@ $\|\mathbf{w}\|_p = (\sum_{i=1}^N \vert w_i \vert^p)^{\frac{1}{p}}$.
 
 考虑$\mathbf{w} = [-3, 5, 0, 1]$的情况。计算$\mathbf{w}$的 1，2 和$\infty$范数。
 
-<summary>**答案**</summary> 对于 1-范数：$\|\mathbf{w}\|_1 = (\sum_{i=1}^N |w_i|¹)^{\frac{1}{1}}$ $\|\mathbf{w}\|_1 = \sum_{i=1}^N |w_i|$ $\|\mathbf{w}\|_1 = |-3| + |5| + |0| + |1|$ $\|\mathbf{w}\|_1 = 3 + 5 + 0 + 1$ $\|\mathbf{w}\|_1 = 9$ 对于 2-范数：$\|\mathbf{w}\|_2 = (\sum_{i=1}^N |w_i|²)^{\frac{1}{2}}$ $\|\mathbf{w}\|_2 = \sqrt{\sum_{i=1}^N w_i²}$ $\|\mathbf{w}\|_2 = \sqrt{(-3)² + (5)² + (0)² + (1)²}$ $\|\mathbf{w}\|_2 = \sqrt{9 + 25 + 0 + 1}$ $\|\mathbf{w}\|_2 = \sqrt{35} \approx 5.92$ 对于$\infty$-范数：$\|\mathbf{w}\|_\infty = \lim_{p\to\infty}(\sum_{i=1}^N |w_i|^p)^{\frac{1}{p}}$ $\|\mathbf{w}\|_\infty = \max_{i=1,\dots,N} |w_i|$ $\|\mathbf{w}\|_\infty = \max(|-3|, |5|, |0|, |1|)$ $\|\mathbf{w}\|_\infty = \max(3, 5, 0, 1)$ $\|\mathbf{w}\|_\infty = 5$
+
+
+**答案**
+
+对于 1-范数：$\|\mathbf{w}\|_1 = (\sum_{i=1}^N |w_i|¹)^{\frac{1}{1}}$ $\|\mathbf{w}\|_1 = \sum_{i=1}^N |w_i|$ $\|\mathbf{w}\|_1 = |-3| + |5| + |0| + |1|$ $\|\mathbf{w}\|_1 = 3 + 5 + 0 + 1$ $\|\mathbf{w}\|_1 = 9$ 对于 2-范数：$\|\mathbf{w}\|_2 = (\sum_{i=1}^N |w_i|²)^{\frac{1}{2}}$ $\|\mathbf{w}\|_2 = \sqrt{\sum_{i=1}^N w_i²}$ $\|\mathbf{w}\|_2 = \sqrt{(-3)² + (5)² + (0)² + (1)²}$ $\|\mathbf{w}\|_2 = \sqrt{9 + 25 + 0 + 1}$ $\|\mathbf{w}\|_2 = \sqrt{35} \approx 5.92$ 对于$\infty$-范数：$\|\mathbf{w}\|_\infty = \lim_{p\to\infty}(\sum_{i=1}^N |w_i|^p)^{\frac{1}{p}}$ $\|\mathbf{w}\|_\infty = \max_{i=1,\dots,N} |w_i|$ $\|\mathbf{w}\|_\infty = \max(|-3|, |5|, |0|, |1|)$ $\|\mathbf{w}\|_\infty = \max(3, 5, 0, 1)$ $\|\mathbf{w}\|_\infty = 5$
 
 ### 范数与误差
 
@@ -308,7 +320,11 @@ $$真实向量 =\begin{bmatrix} 0 \\ 6 \\ -4 \end{bmatrix}\ \ \ \ 近似向量 =
 
 根据上述真实向量和近似向量计算 1-范数误差。
 
-<summary>**答案**</summary> $\begin{eqnarray} 绝对误差 &=& \left\|\begin{bmatrix} 0 \\ 6 \\ -4 \end{bmatrix} - \begin{bmatrix} 0 \\ 5 \\ -3 \end{bmatrix}\right\|_{1}\\ \\ &=& \left\|\begin{bmatrix} 0 \\ 1 \\ -1 \end{bmatrix}\right\|_{1}\\ \\ &=& |0| + |1| + |-1|\\ \\ &=& 2 \end{eqnarray}$ $\begin{eqnarray} 相对误差 &=& \frac{\left\|\begin{bmatrix} 0 \\ 6 \\ -4 \end{bmatrix} - \begin{bmatrix} 0 \\ 5 \\ -3 \end{bmatrix}\right\|_{1}}{\left\|\begin{bmatrix} 0 \\ 6 \\ -4 \end{bmatrix}\right\|_{1}}\\ \\ &=& \frac{2}{|0| + |6| + |-4|}\\ \\ &=& \frac{2}{10}\\ \\ &=& \frac{1}{5}\\ \\ \end{eqnarray}$
+
+
+**答案**
+
+$\begin{eqnarray} 绝对误差 &=& \left\|\begin{bmatrix} 0 \\ 6 \\ -4 \end{bmatrix} - \begin{bmatrix} 0 \\ 5 \\ -3 \end{bmatrix}\right\|_{1}\\ \\ &=& \left\|\begin{bmatrix} 0 \\ 1 \\ -1 \end{bmatrix}\right\|_{1}\\ \\ &=& |0| + |1| + |-1|\\ \\ &=& 2 \end{eqnarray}$ $\begin{eqnarray} 相对误差 &=& \frac{\left\|\begin{bmatrix} 0 \\ 6 \\ -4 \end{bmatrix} - \begin{bmatrix} 0 \\ 5 \\ -3 \end{bmatrix}\right\|_{1}}{\left\|\begin{bmatrix} 0 \\ 6 \\ -4 \end{bmatrix}\right\|_{1}}\\ \\ &=& \frac{2}{|0| + |6| + |-4|}\\ \\ &=& \frac{2}{10}\\ \\ &=& \frac{1}{5}\\ \\ \end{eqnarray}$
 
 ## 矩阵范数
 
@@ -348,7 +364,11 @@ $${\bf Q }=\begin{bmatrix} 1 & 4 \\ 6 & 5 \end{bmatrix}$$
 
 计算矩阵 ${\bf Q}$ 的 Frobenius 范数。
 
-<summary>**答案**</summary> $\begin{eqnarray} \|{\bf Q}\|_{\bf F} &=& \sqrt{1² + 4² + 6² + 5²}\\ &=& \sqrt{78}\\ &\approx& 8.83 \end{eqnarray}$
+
+
+**答案**
+
+$\begin{eqnarray} \|{\bf Q}\|_{\bf F} &=& \sqrt{1² + 4² + 6² + 5²}\\ &=& \sqrt{78}\\ &\approx& 8.83 \end{eqnarray}$
 
 ### 矩阵 p-范数
 
@@ -382,7 +402,11 @@ $${\bf C} = \begin{bmatrix} 3 & -2 \\ -1 & 3 \\ \end{bmatrix}$$
 
 计算矩阵 ${\bf C}$ 的 1-范数、2-范数和 $\infty$-范数。
 
-<summary>**答案**</summary> 矩阵$\bf C$的列和的绝对值是 $ |3| + |-1| = 4, |-2| + |3| = 5\. $ 因此，$\begin{eqnarray} \|{\bf C}\|_1 &=& \max (4, 5)\\ &=& 5\. \end{eqnarray}$ 稀疏值是矩阵 ${\bf C}^T {\bf C}$ 的特征值的平方根。你还可以通过计算矩阵的奇异值分解来找到最大的奇异值。$\|{\bf C}\|_2 = \max_{\|\mathbf{x}\|_2=1} \|{\bf C}\mathbf{x}\|_2$ $det({\bf C}^T {\bf C} - \lambda {\bf I}) = 0$ $ det( \begin{bmatrix} 3 & -1 \\ -2 & 3 \\ \end{bmatrix} \begin{bmatrix} 3 & -2 \\ -1 & 3 \\ \end{bmatrix} - \lambda {\bf I}) = 0 $ $ det( \begin{bmatrix} 9+1 & -6-3 \\ -3-6 & 4+9 \\ \end{bmatrix} - \lambda {\bf I}) = 0 $ $ det( \begin{bmatrix} 10 - \lambda & -9 \\ -9 & 13 - \lambda \\ \end{bmatrix} ) = 0 $ $(10-\lambda)(13-\lambda) - 81 = 0$ $\lambda² - 23\lambda + 130 - 81 = 0$ $\lambda² - 23\lambda + 49 = 0$ $(\lambda-\frac{1}{2}(23+3\sqrt{37}))(\lambda-\frac{1}{2}(23-3\sqrt{37})) = 0$ $\|{\bf C}\|_2 = \sqrt{\lambda_{max}} = \sqrt{\frac{1}{2}(23+3\sqrt{37})} \approx 4.54.$ 矩阵$\bf C$的行和的绝对值是 $ |3| + |-2| = 5, |-1| + |3| = 4\. $ 因此，$\begin{eqnarray} \|{\bf C}\|_{\infty} &=& \max (4, 5)\\ &=& 5\. \end{eqnarray}$
+
+
+**答案**
+
+矩阵$\bf C$的列和的绝对值是 $ |3| + |-1| = 4, |-2| + |3| = 5\. $ 因此，$\begin{eqnarray} \|{\bf C}\|_1 &=& \max (4, 5)\\ &=& 5\. \end{eqnarray}$ 稀疏值是矩阵 ${\bf C}^T {\bf C}$ 的特征值的平方根。你还可以通过计算矩阵的奇异值分解来找到最大的奇异值。$\|{\bf C}\|_2 = \max_{\|\mathbf{x}\|_2=1} \|{\bf C}\mathbf{x}\|_2$ $det({\bf C}^T {\bf C} - \lambda {\bf I}) = 0$ $ det( \begin{bmatrix} 3 & -1 \\ -2 & 3 \\ \end{bmatrix} \begin{bmatrix} 3 & -2 \\ -1 & 3 \\ \end{bmatrix} - \lambda {\bf I}) = 0 $ $ det( \begin{bmatrix} 9+1 & -6-3 \\ -3-6 & 4+9 \\ \end{bmatrix} - \lambda {\bf I}) = 0 $ $ det( \begin{bmatrix} 10 - \lambda & -9 \\ -9 & 13 - \lambda \\ \end{bmatrix} ) = 0 $ $(10-\lambda)(13-\lambda) - 81 = 0$ $\lambda² - 23\lambda + 130 - 81 = 0$ $\lambda² - 23\lambda + 49 = 0$ $(\lambda-\frac{1}{2}(23+3\sqrt{37}))(\lambda-\frac{1}{2}(23-3\sqrt{37})) = 0$ $\|{\bf C}\|_2 = \sqrt{\lambda_{max}} = \sqrt{\frac{1}{2}(23+3\sqrt{37})} \approx 4.54.$ 矩阵$\bf C$的行和的绝对值是 $ |3| + |-2| = 5, |-1| + |3| = 4\. $ 因此，$\begin{eqnarray} \|{\bf C}\|_{\infty} &=& \max (4, 5)\\ &=& 5\. \end{eqnarray}$
 
 ## 复习问题
 
@@ -422,7 +446,11 @@ $${\bf C} = \begin{bmatrix} 3 & -2 \\ -1 & 3 \\ \end{bmatrix}$$
 
 +   2024 年 2 月 17 日：Apramey Hosahalli（apramey2）——添加错误示例，格式化矩阵 p-范数示例
 
-+   <summary>查看剩余条目</summary>
++   
+
+查看剩余条目
+
+
 
     +   2024 年 2 月 16 日：陈宇轩（yuxuan19）——改进示例结构，更新了复习问题
 

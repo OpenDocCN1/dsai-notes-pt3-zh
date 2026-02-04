@@ -42,7 +42,11 @@ $$\begin{eqnarray} \mathbf{r} &=& 1: 线性收敛\\ \\ 1 < \mathbf{r} &<& 2: 超
 
 **幂迭代**的收敛速率是多少？
 
-<summary>**答案**</summary>
+
+
+**答案**
+
+
 
 从幂迭代方法中回忆
 
@@ -92,7 +96,11 @@ $$\mathrm{sgn}(f(a)) = -\mathrm{sgn}(f(b)).$$
 
 #### 示例
 
-$$f(x) = x³ - x - 1$$ <summary>**答案**</summary>
+$$f(x) = x³ - x - 1$$ 
+
+**答案**
+
+
 
 ![](img/ee64c8344097c9d7056bb06f48325443.png)
 
@@ -179,7 +187,11 @@ $$\lim_{k\to\infty} \frac{\|e_{k + 1}\|}{\|e_{k}\|^{\mathbf 2}} = C$$
 
 #### 示例
 
-$$\begin{align*} f(x) &= x³ - x - 1 \\ f'(x) &= 3x² - 1 \end{align*}$$ <summary>**答案**</summary>
+$$\begin{align*} f(x) &= x³ - x - 1 \\ f'(x) &= 3x² - 1 \end{align*}$$ 
+
+**答案**
+
+
 
 ![](img/ee64c8344097c9d7056bb06f48325443.png)
 
@@ -251,7 +263,11 @@ $$r = \frac{1 + \sqrt{5}}{2} \approx 1.618$$
 
 #### 示例
 
-$$f(x) = x³ - x - 1$$ <summary>**答案**</summary>
+$$f(x) = x³ - x - 1$$ 
+
+**答案**
+
+
 
 ![](img/ee64c8344097c9d7056bb06f48325443.png)
 
@@ -442,7 +458,11 @@ root = sol.x
 
 +   2017 年 12 月 25 日：Adam Stewart (adamjs5@illinois.edu) — 第一份完整草案
 
-+   <summary>查看剩余条目</summary>
++   
+
+查看剩余条目
+
+
 
     +   2017 年 12 月 2 日：Erin Carrier (ecarrie2) — 添加复习问题，添加更多成本信息，一些其他小修复
 

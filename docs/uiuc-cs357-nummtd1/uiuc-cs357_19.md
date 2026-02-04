@@ -128,7 +128,11 @@ ${\bf A V}$ 是数据在主成分上的投影。${\bf A V_k}$ 是在第一个 $k
 
 +   2022 年 4 月 18 日：Yuxuan Chen (yuxuan19) — 添加 PCA 定义、数据中心化、协方差矩阵、对角化、svd、示例、总结、替代定义
 
-+   <summary>查看剩余条目</summary>
++   
+
+查看剩余条目
+
+
 
     +   2020 年 11 月 30 日：Jerry Yang (jiayiy7) — 修复 pca 代码
 

@@ -156,7 +156,11 @@ $${\bf{M}} = d{\bf{A}} + \frac{1-d}{n}\bf{1} $$
 
 +   2018 年 3 月 25 日：Yu Meng (yumeng5) — 添加马尔可夫链
 
-+   <summary>查看剩余条目</summary>
++   
+
+查看剩余条目
+
+
 
     +   2018 年 3 月 1 日：Erin Carrier (ecarrie2) — 添加更多复习问题
 

@@ -2,7 +2,11 @@
 
 > 原文：[`cs357.cs.illinois.edu/textbook/notes/error.html`](https://cs357.cs.illinois.edu/textbook/notes/error.html)
 
-<summary style="font-size: 1.1em;">查看幻灯片</summary>
+
+
+查看幻灯片
+
+
 
 如果您在这里看不到 PDF，请点击这里下载 PDF。
 
@@ -274,7 +278,11 @@ $$\begin{align*} f_2(n) &= \mathcal{O}(n²),\\ f_2(n) &= \mathcal{O}(10^{20}n²)
 
 +   2022 年 1 月 20 日：Victor Zhao (chenyan4) — 更改真实值的表示法
 
-+   <summary>查看剩余条目</summary>
++   
+
+查看剩余条目
+
+
 
     +   2020 年 4 月 25 日：Mariana Silva (mfsilva) — 小幅度文本修订
 

@@ -44,7 +44,11 @@ $$\boxed{ \begin{aligned} \underset{\boldsymbol{d \in \mathbb{R}²}}{\mathrm{max
 
 注意到 $\underset{\boldsymbol{d \in \mathbb{R}²}}{\mathrm{max}}\hspace{1mm}f(d_1, d_2) = \underset{\boldsymbol{d \in \mathbb{R}²}}{\mathrm{min}}\hspace{1mm}(-f(d_1, d_2))$，因此我们可以解决以下优化问题：
 
-$$\boxed{ \begin{aligned} \underset{\boldsymbol{d \in \mathbb{R}²}}{\mathrm{min}}\hspace{1mm}(-f(d_1, d_2)) &= -(d_1 \times d_2) \\ \text{\small such that} \quad g(d_1, d_2) &= 2(d_1+d_2) - 20 \leq 0 \end{aligned} }$$ <summary>**更多详情**</summary> 实际上，这个问题是要求在周长约束（20）下最小化矩形的面积。下面的红色区域给出了一个示例：
+$$\boxed{ \begin{aligned} \underset{\boldsymbol{d \in \mathbb{R}²}}{\mathrm{min}}\hspace{1mm}(-f(d_1, d_2)) &= -(d_1 \times d_2) \\ \text{\small such that} \quad g(d_1, d_2) &= 2(d_1+d_2) - 20 \leq 0 \end{aligned} }$$ 
+
+**更多详情**
+
+ 实际上，这个问题是要求在周长约束（20）下最小化矩形的面积。下面的红色区域给出了一个示例：
 
 ![](img/f7f38dae1f63046739242fda3957d3ea.png)
 
@@ -90,7 +94,11 @@ $$\boxed{ \begin{aligned} \underset{\boldsymbol{d \in \mathbb{R}²}}{\mathrm{min
 
 我们如何找到它的局部最小值？
 
-<summary>**答案**</summary> 一阶和二阶导数如下：$f'(x) = 3x²-12x+9$ $f''(x) = 6x-12$ 驻点如下表所示：
+
+
+**答案**
+
+一阶和二阶导数如下：$f'(x) = 3x²-12x+9$ $f''(x) = 6x-12$ 驻点如下表所示：
 
 | ${x}$ | ${f'(x)}$ | ${f''(x)}$ | 特征 |
 | --- | --- | --- | --- |
@@ -105,7 +113,11 @@ $$\boxed{ \begin{aligned} \underset{\boldsymbol{d \in \mathbb{R}²}}{\mathrm{min
 
 找到驻点并检查充分条件。
 
-<summary>**答案**</summary> $f$ 的梯度向量和 Hessian 矩阵如下：$f'(x) = \frac{4x³}{4} - \frac{3x²}{3} - 22x +40 = x³ - x² - 22x + 40$ $f''(x) = 3x² - 2x - 22$ 解 $f'(x) = 0$ 得到三个可能的解，即 $x_1 = -5, x_2 = 2, \text{和 }x_3 = 4$。
+
+
+**答案**
+
+$f$ 的梯度向量和 Hessian 矩阵如下：$f'(x) = \frac{4x³}{4} - \frac{3x²}{3} - 22x +40 = x³ - x² - 22x + 40$ $f''(x) = 3x² - 2x - 22$ 解 $f'(x) = 0$ 得到三个可能的解，即 $x_1 = -5, x_2 = 2, \text{和 }x_3 = 4$。
 
 现在，观察以下：
 
@@ -185,7 +197,11 @@ $$\lim_{k \to \infty} \frac{\vert e_{k+1} \vert}{\vert e_k \vert} = \tau \approx
 
 考虑在一个单峰函数上运行黄金分割搜索。如果黄金分割搜索从初始区间 $[-10, 10]$ 开始，经过 1 次迭代后新区间的长度是多少？
 
-<summary>**答案**</summary> $(10 - (-10)) \times \tau \approx 12.36$
+
+
+**答案**
+
+$(10 - (-10)) \times \tau \approx 12.36$
 
 ## 牛顿法（一维）
 
@@ -211,7 +227,11 @@ $$\bf{x_0} = \textbf{起始猜测}$$ $$\bf{x_{k+1}} = x_k - \frac{f'(x_k)}{f''(x
 
 考虑函数 $f(x) = 4x³ + 2x² + 5x + 40$。如果我们使用初始猜测 $x_0 = 2$，那么经过牛顿法一次迭代后 $x$ 的值是多少？
 
-<summary>**答案**</summary> 要应用牛顿法优化的一步，我们使用迭代公式得到：$$ x_1 = x_0 - \frac{f'(x_0)}{f''(x_0)} $$ 给定函数 $ f(x) = 4x³ + 2x² + 5x + 40 $，其第一导数 $ f'(x) $ 为：$$ f'(x_0) = 12x² + 4x + 5 $$ 因此 $$ f'(2) = 12(2)² + 4(2) + 5 = 12(4) + 8 + 5 = 48 + 8 + 5 = 61 $$ 其第二导数 $ f''(x) $ 为：$$ f''(x) = 24x + 4 $$ 因此 $$ f''(x_0) = 24(2) + 4 = 48 + 4 = 52 $$ 最后，应用牛顿法公式：$$ x_1 = 2 - \frac{61}{52} \approx 0.827 $$
+
+
+**答案**
+
+要应用牛顿法优化的一步，我们使用迭代公式得到：$$ x_1 = x_0 - \frac{f'(x_0)}{f''(x_0)} $$ 给定函数 $ f(x) = 4x³ + 2x² + 5x + 40 $，其第一导数 $ f'(x) $ 为：$$ f'(x_0) = 12x² + 4x + 5 $$ 因此 $$ f'(2) = 12(2)² + 4(2) + 5 = 12(4) + 8 + 5 = 48 + 8 + 5 = 61 $$ 其第二导数 $ f''(x) $ 为：$$ f''(x) = 24x + 4 $$ 因此 $$ f''(x_0) = 24(2) + 4 = 48 + 4 = 52 $$ 最后，应用牛顿法公式：$$ x_1 = 2 - \frac{61}{52} \approx 0.827 $$
 
 ## 梯度和 Hessian 矩阵的定义
 
@@ -261,7 +281,11 @@ $$f(x_1, x_2) = 2x_1³ + 4x_2² + 2x_2 - 24x_1$$
 
 找到驻点并检查充分条件。
 
-<summary>**答案**</summary> 梯度如下：$$ \nabla f(\boldsymbol{x}) = \text{\small gradient} (x) = \begin{bmatrix} 6x_1² - 24 \\ 8x_2 + 2 \\ \end{bmatrix} $$ 解方程 $\nabla f = 0 \text{ 得到 }6x_1² - 24 = 0\text{ 和 }8x_2 + 2 = 0\text{，因此 }x_1 = \pm 2 \text{ 和 } x_2 = -0.25$.
+
+
+**答案**
+
+梯度如下：$$ \nabla f(\boldsymbol{x}) = \text{\small gradient} (x) = \begin{bmatrix} 6x_1² - 24 \\ 8x_2 + 2 \\ \end{bmatrix} $$ 解方程 $\nabla f = 0 \text{ 得到 }6x_1² - 24 = 0\text{ 和 }8x_2 + 2 = 0\text{，因此 }x_1 = \pm 2 \text{ 和 } x_2 = -0.25$.
 
 赫 essian 矩阵如下：$$ {\bf H}\_f(\boldsymbol{x}) = \begin{bmatrix} 12x_1 & 0\\ 0 & 8 \\ \end{bmatrix} $$ $\textbf{情况 1：}$
 
@@ -340,19 +364,31 @@ $$\frac{df}{d\alpha} = \frac{df}{dx_{k+1}}\frac{dx_{k+1}}{d\alpha} = -\nabla f(x
 
 考虑函数 $f(x_1, x_2) = 10(x_1)³ - (x_2)² + x_1 - 1$。在起始猜测 $x_1 = 2, x_2 = 2$ 时，最速下降方向是什么？
 
-<summary>**答案**</summary> $$ -\nabla f(\begin{bmatrix} x_1 \\ x_2 \end{bmatrix}) = - \begin{bmatrix} 30x_1² + 1 \\ -2x_2 \end{bmatrix} $$ $$ -\nabla f(\begin{bmatrix} 2 \\ 2 \end{bmatrix}) = - \begin{bmatrix} 30 \times 4 + 1 \\ -2 \times 2 \end{bmatrix} = \begin{bmatrix} -121 \\ 4 \end{bmatrix} $$
+
+
+**答案**
+
+$$ -\nabla f(\begin{bmatrix} x_1 \\ x_2 \end{bmatrix}) = - \begin{bmatrix} 30x_1² + 1 \\ -2x_2 \end{bmatrix} $$ $$ -\nabla f(\begin{bmatrix} 2 \\ 2 \end{bmatrix}) = - \begin{bmatrix} 30 \times 4 + 1 \\ -2 \times 2 \end{bmatrix} = \begin{bmatrix} -121 \\ 4 \end{bmatrix} $$
 
 ### 示例：最速下降迭代
 
 考虑函数 $f(x_1, x_2) = (x_1 - 1)² + (x_2 - 1)²$。在起始猜测 $y_0 = \begin{bmatrix} 3 \\ 3 \end{bmatrix}^T$ 处的最速下降方向是什么？如果我们选择 $\alpha_0 = 1$，$y_1$ 将会是什么？
 
-<summary>**答案**</summary> $$ y_1 = y_0 - \alpha_0 \nabla f(x_0) $$ $$ -\nabla f(x) = - \begin{bmatrix} 2(y_1 - 1) \\ 2(y_2 - 1) \end{bmatrix} = \begin{bmatrix} -4 \\ -4 \end{bmatrix} $$ $$ y_1 = - \begin{bmatrix} 3 \\ 3 \end{bmatrix} + 1 \times \begin{bmatrix} -4 \\ -4 \end{bmatrix} = \begin{bmatrix} -1 \\ -1 \end{bmatrix} $$
+
+
+**答案**
+
+$$ y_1 = y_0 - \alpha_0 \nabla f(x_0) $$ $$ -\nabla f(x) = - \begin{bmatrix} 2(y_1 - 1) \\ 2(y_2 - 1) \end{bmatrix} = \begin{bmatrix} -4 \\ -4 \end{bmatrix} $$ $$ y_1 = - \begin{bmatrix} 3 \\ 3 \end{bmatrix} + 1 \times \begin{bmatrix} -4 \\ -4 \end{bmatrix} = \begin{bmatrix} -1 \\ -1 \end{bmatrix} $$
 
 ### 示例：步长大小
 
 考虑相同的函数 $f(x_1, x_2) = (x_1 - 1)² + (x_2 - 1)²$ 和初始猜测 $y_0 = \begin{bmatrix} 3 \\ 3 \end{bmatrix}^T$。现在给出了这个函数的等高线图可视化。$\alpha$的理想选择是什么？
 
-![](img/480811736f68e111691e03218fe85b31.png)<summary>**答案**</summary> 从等高线图中观察，$f$ 在 $\begin{bmatrix} 1 \\ 1 \end{bmatrix}$ 处有一个局部最小值。回忆一下上一个问题，$\nabla f(\bf{y_0}) = \begin{bmatrix} -4 \\ -4 \end{bmatrix}$
+![](img/480811736f68e111691e03218fe85b31.png)
+
+**答案**
+
+从等高线图中观察，$f$ 在 $\begin{bmatrix} 1 \\ 1 \end{bmatrix}$ 处有一个局部最小值。回忆一下上一个问题，$\nabla f(\bf{y_0}) = \begin{bmatrix} -4 \\ -4 \end{bmatrix}$
 
 很明显，当 $\alpha = 0.5$ 时，$$ \bf{y_1} = \begin{bmatrix} 3 \\ 3 \end{bmatrix} - 0.5 \times \begin{bmatrix} 4 \\ 4 \end{bmatrix} = \begin{bmatrix} 1 \\ 1 \end{bmatrix} $$ 因此，当 $\bf{\alpha = 0.5}$ 时，最速下降算法在恰好 1 次迭代后收敛到最小值。
 
@@ -418,13 +454,21 @@ def newtons_method(x_init):
 
 要找到函数 $f(x, y) = 3x² +2y²$ 的最小值，牛顿法的一步表达式是什么？
 
-<summary>**答案**</summary> 函数 $ f(x, y) $ 的梯度由以下给出：$$ \nabla f(x, y) = \begin{bmatrix} \frac{\partial f}{\partial x} \\ \frac{\partial f}{\partial y} \end{bmatrix} $$ 并且函数 $ f(x, y) $ 的 Hessian 矩阵由以下给出：$$ H_f(x, y) = \begin{bmatrix} \frac{\partial² f}{\partial x²} & \frac{\partial² f}{\partial x \partial y} \\ \frac{\partial² f}{\partial y \partial x} & \frac{\partial² f}{\partial y²} \end{bmatrix} $$ N 维优化的牛顿算法的求解步骤为：$$ H*f(x_k, y_k)\boldsymbol{s_k} = -\nabla f(x*{k}, y\_{k})$$ 这在数学上等同于：$${\bf{s_k}} = - H_f(x_k, y_k)^{-1} \nabla f(x_k, y_k) $$ 因此，N 维优化的牛顿算法的更新步骤为：$$ \begin{bmatrix} x*{k+1} \\ y*{k+1} \end{bmatrix} = \begin{bmatrix} x_k \\ y_k \end{bmatrix} - H_f(x_k, y_k)^{-1} \nabla f(x_k, y_k) $$ 给定函数 $ f(x, y) = 3x² + 2y² $，其梯度 $ \nabla f(x_k, y_k) $ 和 Hessian 矩阵 $ H_f(x_k, y_k) $ 为：$$ \nabla f(x_k, y_k) = \begin{bmatrix} \frac{\partial f}{\partial x_k} \\ \frac{\partial f}{\partial y_k} \end{bmatrix} = \begin{bmatrix} 6x_k \\ 4y_k \end{bmatrix} $$ $$ H_f(x_k, y_k) = \begin{bmatrix} \frac{\partial² f}{\partial {x_k}²} & \frac{\partial² f}{\partial x_k \partial y_k} \\ \frac{\partial² f}{\partial y_k \partial x_k} & \frac{\partial² f}{\partial {y_k}²} \end{bmatrix} = \begin{bmatrix} 6 & 0 \\ 0 & 4 \end{bmatrix} $$ 因此，答案是：$$ \begin{bmatrix} x*{k+1} \\ y*{k+1} \end{bmatrix} = \begin{bmatrix} x_k \\ y_k \end{bmatrix} - {\begin{bmatrix} 6 & 0 \\ 0 & 4 \end{bmatrix}}^{-1} \begin{bmatrix} 6x_k \\ 4y_k \end{bmatrix} $$
+
+
+**答案**
+
+函数 $ f(x, y) $ 的梯度由以下给出：$$ \nabla f(x, y) = \begin{bmatrix} \frac{\partial f}{\partial x} \\ \frac{\partial f}{\partial y} \end{bmatrix} $$ 并且函数 $ f(x, y) $ 的 Hessian 矩阵由以下给出：$$ H_f(x, y) = \begin{bmatrix} \frac{\partial² f}{\partial x²} & \frac{\partial² f}{\partial x \partial y} \\ \frac{\partial² f}{\partial y \partial x} & \frac{\partial² f}{\partial y²} \end{bmatrix} $$ N 维优化的牛顿算法的求解步骤为：$$ H*f(x_k, y_k)\boldsymbol{s_k} = -\nabla f(x*{k}, y\_{k})$$ 这在数学上等同于：$${\bf{s_k}} = - H_f(x_k, y_k)^{-1} \nabla f(x_k, y_k) $$ 因此，N 维优化的牛顿算法的更新步骤为：$$ \begin{bmatrix} x*{k+1} \\ y*{k+1} \end{bmatrix} = \begin{bmatrix} x_k \\ y_k \end{bmatrix} - H_f(x_k, y_k)^{-1} \nabla f(x_k, y_k) $$ 给定函数 $ f(x, y) = 3x² + 2y² $，其梯度 $ \nabla f(x_k, y_k) $ 和 Hessian 矩阵 $ H_f(x_k, y_k) $ 为：$$ \nabla f(x_k, y_k) = \begin{bmatrix} \frac{\partial f}{\partial x_k} \\ \frac{\partial f}{\partial y_k} \end{bmatrix} = \begin{bmatrix} 6x_k \\ 4y_k \end{bmatrix} $$ $$ H_f(x_k, y_k) = \begin{bmatrix} \frac{\partial² f}{\partial {x_k}²} & \frac{\partial² f}{\partial x_k \partial y_k} \\ \frac{\partial² f}{\partial y_k \partial x_k} & \frac{\partial² f}{\partial {y_k}²} \end{bmatrix} = \begin{bmatrix} 6 & 0 \\ 0 & 4 \end{bmatrix} $$ 因此，答案是：$$ \begin{bmatrix} x*{k+1} \\ y*{k+1} \end{bmatrix} = \begin{bmatrix} x_k \\ y_k \end{bmatrix} - {\begin{bmatrix} 6 & 0 \\ 0 & 4 \end{bmatrix}}^{-1} \begin{bmatrix} 6x_k \\ 4y_k \end{bmatrix} $$
 
 ### 示例：N 维优化中牛顿法的收敛性
 
 当使用牛顿法寻找函数 $f(x, y) = 0.5x² +2.5y²$ 的最小值时，估计收敛所需的迭代次数？
 
-<summary>**答案**</summary> 答案：$\textbf{1}$。
+
+
+**答案**
+
+答案：$\textbf{1}$。
 
 原因：注意到 N 维优化中的牛顿法是从截断到二次项的泰勒级数推导出来的（即，$\frac{1}{2}s^T {\bf H}\_f(\boldsymbol{x})s$)。这意味着它对二次函数是准确的。
 
@@ -476,7 +520,11 @@ def newtons_method(x_init):
 
 +   2024 年 3 月 17 日：Kaiyao Ke (kaiyaok2) — 调整笔记顺序
 
-+   <summary>查看剩余条目</summary>
++   
+
+查看剩余条目
+
+
 
     +   2024 年 3 月 1 日：Kaiyao Ke (kaiyaok2) — 将笔记与幻灯片对齐，添加示例并重构现有笔记
 

@@ -246,7 +246,11 @@ $$ f(t,{\bf x}) = x_1 e^{x_2 t} + x_2 e^{x_3 t} + \dotsb + x_{n-1} e^{x_n t} $$
 
 +   2022 年 4 月 9 日：Arnav Shah (arnavss2) — 在作业中添加了关于幻灯片的一些评论
 
-+   <summary>查看剩余条目</summary>
++   
+
+查看剩余条目
+
+
 
     +   2020 年 8 月 8 日：Jerry Yang (jiayiy7) — 添加了解决最小二乘法使用奇异值分解的正式证明链接
 

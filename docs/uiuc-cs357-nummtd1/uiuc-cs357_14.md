@@ -182,7 +182,11 @@ $$\nabla f(x) = \begin{bmatrix} \frac{\partial f_1}{\partial x_1} & \frac{\parti
 
 +   2021 年 1 月 20 日：Mariana Silva（mfsilva）——将 FD 内容从泰勒部分移动到这个新部分
 
-+   <summary>查看剩余条目</summary>
++   
+
+查看剩余条目
+
+
 
 ## 作者
 

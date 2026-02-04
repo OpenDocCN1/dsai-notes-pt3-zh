@@ -400,7 +400,11 @@ $\begin{align} \boldsymbol{v}_1 &= \boldsymbol{x}_1, \\ \boldsymbol{v}_2 &= \bol
 
 +   2022 年 2 月 28 日：陈宇轩（yuxuan19）— 添加学习目标，成本摘要
 
-+   <summary>查看剩余条目</summary>
++   
+
+查看剩余条目
+
+
 
     +   2020 年 3 月 1 日：Peter Sentz（）— 添加文本以包含幻灯片内容
 

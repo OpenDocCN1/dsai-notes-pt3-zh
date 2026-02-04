@@ -2,7 +2,11 @@
 
 > 原文：[`cs357.cs.illinois.edu/textbook/notes/python.html`](https://cs357.cs.illinois.edu/textbook/notes/python.html)
 
-<summary style="font-size: 1.1em;">查看幻灯片</summary>
+
+
+查看幻灯片
+
+
 
 如果你在这里看不到 PDF，请点击 这里 下载 PDF。
 
@@ -35,7 +39,11 @@ d = 2 * a
 
 变量 `c` 和 `d` 的正确类型是什么？
 
-$$\begin{flalign} & \text{A) } \text{c 是浮点数，d 是浮点数} \\ & \text{B) } \text{c 是浮点数，d 是整数} \\ & \text{C) } \text{c 是整数，d 是整数} \\ & \text{D) } \text{c 是整数，d 是浮点数} \\ \end{flalign}$$ <summary>**答案**</summary>
+$$\begin{flalign} & \text{A) } \text{c 是浮点数，d 是浮点数} \\ & \text{B) } \text{c 是浮点数，d 是整数} \\ & \text{C) } \text{c 是整数，d 是整数} \\ & \text{D) } \text{c 是整数，d 是浮点数} \\ \end{flalign}$$ 
+
+**答案**
+
+
 
 **B.**
 
@@ -64,7 +72,11 @@ b.append(4)
 
 `b.append(4)` 修改了对象列表，使得列表现在是 `[1, 2, 3, 4]`。我们知道 b 现在是 `[1, 2, 3, 4]`，但变量名 a 发生了什么变化？
 
-<summary>**答案**</summary> 因为 a 和 b 绑定到同一个列表，一旦列表被修改，它们将具有相同的值。
+
+
+**答案**
+
+因为 a 和 b 绑定到同一个列表，一旦列表被修改，它们将具有相同的值。
 
 ### 获取对象的 "id"
 
@@ -166,7 +178,11 @@ c = a + [b]
 a.append(b) 
 ```
 
-<summary>**答案**</summary>
+
+
+**答案**
+
+
 
 **C**
 
@@ -212,7 +228,11 @@ C: `computer_science ['electrical', 'physics']`
 
 D: `computer_science ['electrical']`
 
-<summary>**答案**</summary>
+
+
+**答案**
+
+
 
 **C**
 
@@ -231,7 +251,11 @@ a[1::2][::-1]
 
 上面的命令行输出是什么？
 
-$$\begin{flalign} & \text{A) } [1, 3, 5, 7, 9] \\ & \text{B) } [1, 3] \\ & \text{C) } [3, 1] \\ & \text{D) } [9, 7] \\ & \text{E) } [9, 7, 5, 3, 1] \\ && \end{flalign}$$ <summary>**答案**</summary>
+$$\begin{flalign} & \text{A) } [1, 3, 5, 7, 9] \\ & \text{B) } [1, 3] \\ & \text{C) } [3, 1] \\ & \text{D) } [9, 7] \\ & \text{E) } [9, 7, 5, 3, 1] \\ && \end{flalign}$$ 
+
+**答案**
+
+
 
 $\bf E$
 
@@ -333,7 +357,11 @@ def do_stuff(a, b):
 do_stuff(a, b) 
 ```
 
-<summary>**答案**</summary>
+
+
+**答案**
+
+
 
 **B**
 
@@ -547,7 +575,11 @@ print(C)
 
 +   2024 年 3 月 16 日：Arnav Aggarwal (arnava4) — 将笔记与幻灯片对齐并添加了额外的示例
 
-+   <summary>查看剩余条目</summary>
++   
+
+查看剩余条目
+
+
 
 ## 作者
 

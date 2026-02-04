@@ -294,7 +294,11 @@ $$\bf{U{\Sigma}V^Tx=b}$$ $$\bf{ {\Sigma} V^Tx=U^Tb}$$
 
 +   2022 年 4 月 10 日：Yuxuan Chen (yuxuan19) — 添加 svd 证明，更改 svd 成本，包含 svd 总结
 
-+   <summary>查看剩余条目</summary>
++   
+
+查看剩余条目
+
+
 
     +   2020 年 4 月 26 日：Mariana Silva (mfsilva) — 为章节添加更多细节
 
