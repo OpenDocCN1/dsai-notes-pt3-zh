@@ -1,183 +1,280 @@
 - en: Optimization
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 优化
 - en: 原文：[https://cs357.cs.illinois.edu/textbook/notes/optimization.html](https://cs357.cs.illinois.edu/textbook/notes/optimization.html)
+  id: totrans-1
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 原文：[https://cs357.cs.illinois.edu/textbook/notes/optimization.html](https://cs357.cs.illinois.edu/textbook/notes/optimization.html)
 - en: Learning objectives
+  id: totrans-2
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 学习目标
 - en: 'Recognize the goal of optimization: finding an approximation of the minimum
     of a function'
+  id: totrans-3
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 识别优化的目标：寻找函数最小值的近似值
 - en: Understand basic optimization approaches
+  id: totrans-4
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 理解基本的优化方法
 - en: Set up a problem as an *optimization* problem
+  id: totrans-5
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 将问题设定为 *优化* 问题
 - en: 'Understand two methods of 1-D optimization: *Golden Section Search* and *Newton''s
     Method (1D)*'
+  id: totrans-6
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 理解一维优化的两种方法：*黄金分割搜索* 和 *牛顿法（一维）*
 - en: 'Understand two methods of N-D optimization: *Steepest Descent* and *Newton''s
     Method (N-D)*'
+  id: totrans-7
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 理解多维优化的两种方法：*最速下降法* 和 *牛顿法（多维）*
 - en: Identify challenges in optimization
+  id: totrans-8
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 确定优化中的挑战
 - en: 'Optimization: Finding Minima of a Function'
+  id: totrans-9
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 优化：寻找函数的最小值
 - en: The goal of optimization is to find point(s) in a function's domain that minimize
     the function.
+  id: totrans-10
   prefs: []
   type: TYPE_NORMAL
+  zh: 优化的目标是找到函数定义域中的点，使得函数最小化。
 - en: Consider a function \(f:\;S\to \mathbb{R}\), and \(S\subset\mathbb{R}^n\). The
     point \(\boldsymbol{x}^*\in S\) is called the *minimizer* or *minimum* of \(f\)
     if \(f(\boldsymbol{x}^*)\leq f(\boldsymbol{x}) \, \forall x\in S\).
+  id: totrans-11
   prefs: []
   type: TYPE_NORMAL
+  zh: 考虑一个函数 \(f:\;S\to \mathbb{R}\)，其中 \(S\subset\mathbb{R}^n\)。如果 \(\boldsymbol{x}^*\in
+    S\) 是 \(f\) 的最小值或最小化点，当且仅当 \(f(\boldsymbol{x}^*)\leq f(\boldsymbol{x}) \, \forall
+    x\in S\)。
 - en: 'There are two types of optimization:'
+  id: totrans-12
   prefs: []
   type: TYPE_NORMAL
+  zh: 优化有两种类型：
 - en: 'Unconstrained Optimization: find \(\boldsymbol{x}^*\) such that \(f(\boldsymbol{x}^*)
     = \underset{\boldsymbol{x}}{\mathrm{min}}\hspace{1mm}f(\boldsymbol{x})\)'
+  id: totrans-13
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 无约束优化：找到 \(\boldsymbol{x}^*\) 使得 \(f(\boldsymbol{x}^*) = \underset{\boldsymbol{x}}{\mathrm{min}}\hspace{1mm}f(\boldsymbol{x})\)
 - en: 'Constrained Optimization: find \(\boldsymbol{x}^*\) such that \(f(\boldsymbol{x}^*)
     = \underset{\boldsymbol{x}}{\mathrm{min}}\hspace{1mm}f(\boldsymbol{x})\)'
+  id: totrans-14
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 约束优化：找到 \(\boldsymbol{x}^*\) 使得 \(f(\boldsymbol{x}^*) = \underset{\boldsymbol{x}}{\mathrm{min}}\hspace{1mm}f(\boldsymbol{x})\)
 - en: '\(\hspace{2cm} \text{such that: } \boldsymbol{g}(\boldsymbol{x}) = 0 \hspace{5mm}
     \leftarrow \hspace{5mm} \text{\small ``Equality Constraints"}\) \(\hspace{2cm}
     \text{and / or: } \boldsymbol{h}(\boldsymbol{x}) \leq 0 \hspace{5mm} \leftarrow
     \hspace{5mm} \text{\small ``Inequality Constraints"}\)'
+  id: totrans-15
   prefs:
   - PREF_IND
   type: TYPE_NORMAL
+  zh: '\(\hspace{2cm} \text{such that: } \boldsymbol{g}(\boldsymbol{x}) = 0 \hspace{5mm}
+    \leftarrow \hspace{5mm} \text{\small “等式约束”}\) \(\hspace{2cm} \text{and / or:
+    } \boldsymbol{h}(\boldsymbol{x}) \leq 0 \hspace{5mm} \leftarrow \hspace{5mm} \text{\small
+    “不等式约束”}\)'
 - en: for some other functions \(\boldsymbol{g}\) and/or \(\boldsymbol{h}\).
+  id: totrans-16
   prefs:
   - PREF_IND
   type: TYPE_NORMAL
+  zh: for some other functions \(\boldsymbol{g}\) and/or \(\boldsymbol{h}\).
 - en: Notice that a solution is not guaranteed to exist for an optimization problem
     if the domain \(S\) is infinite.
+  id: totrans-17
   prefs: []
   type: TYPE_NORMAL
+  zh: 注意，如果优化问题的定义域 \(S\) 是无限的，则不一定存在解决方案。
 - en: For the rest of this topic we try to find the *minimizer* of a function. Notice
     that if we want a *maximizer* \(\boldsymbol{y}^*\) of a function \(\boldsymbol{f}\)
     such that \(f(\boldsymbol{y}^{*}) = \underset{\boldsymbol{y}}{\mathrm{max}}\hspace{1mm}f(\boldsymbol{y})\),
     we can instead solve the minimization problem to find the *minimizer* \(\boldsymbol{x}^*\)
     where \(\boldsymbol{x}^*\) such that \(f(\boldsymbol{x}^*) = \underset{\boldsymbol{x}}{\mathrm{min}}(\hspace{1mm}-f(\boldsymbol{x}))\).
+  id: totrans-18
   prefs: []
   type: TYPE_NORMAL
+  zh: 在本主题的其余部分，我们试图找到一个函数的最小值。注意，如果我们想要一个函数 \(\boldsymbol{f}\) 的最大化者 \(\boldsymbol{y}^*\)，使得
+    \(f(\boldsymbol{y}^{*}) = \underset{\boldsymbol{y}}{\mathrm{max}}\hspace{1mm}f(\boldsymbol{y})\)，我们可以通过解决最小化问题来找到最小化者
+    \(\boldsymbol{x}^*\)，其中 \(\boldsymbol{x}^*\) 满足 \(f(\boldsymbol{x}^*) = \underset{\boldsymbol{x}}{\mathrm{min}}(\hspace{1mm}-f(\boldsymbol{x}))\)。
 - en: 'Example: Calculus problem'
+  id: totrans-19
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 示例：微积分问题
 - en: 'Given \(d_1, d_2 \gt 0\), find:'
+  id: totrans-20
   prefs: []
   type: TYPE_NORMAL
+  zh: 给定 \(d_1, d_2 \gt 0\)，找到：
 - en: \[\boxed{ \begin{aligned} \underset{\boldsymbol{d \in \mathbb{R}^2}}{\mathrm{max}}\hspace{1mm}f(d_1,
     d_2) &= d_1 \times d_2 \\ \text{\small such that} \quad g(d_1, d_2) &= 2(d_1+d_2)
     - 20 \leq 0 \end{aligned} }\]
+  id: totrans-21
   prefs: []
   type: TYPE_NORMAL
+  zh: \[\boxed{ \begin{aligned} \underset{\boldsymbol{d \in \mathbb{R}^2}}{\mathrm{max}}\hspace{1mm}f(d_1,
+    d_2) &= d_1 \times d_2 \\ \text{\small such that} \quad g(d_1, d_2) &= 2(d_1+d_2)
+    - 20 \leq 0 \end{aligned} }\]
 - en: 'Notice that \(\underset{\boldsymbol{d \in \mathbb{R}^2}}{\mathrm{max}}\hspace{1mm}f(d_1,
     d_2) = \underset{\boldsymbol{d \in \mathbb{R}^2}}{\mathrm{min}}\hspace{1mm}(-f(d_1,
     d_2))\), so we can instead solve the following optimization problem:'
+  id: totrans-22
   prefs: []
   type: TYPE_NORMAL
+  zh: 注意到 \(\underset{\boldsymbol{d \in \mathbb{R}^2}}{\mathrm{max}}\hspace{1mm}f(d_1,
+    d_2) = \underset{\boldsymbol{d \in \mathbb{R}^2}}{\mathrm{min}}\hspace{1mm}(-f(d_1,
+    d_2))\)，因此我们可以解决以下优化问题：
 - en: '\[\boxed{ \begin{aligned} \underset{\boldsymbol{d \in \mathbb{R}^2}}{\mathrm{min}}\hspace{1mm}(-f(d_1,
     d_2)) &= -(d_1 \times d_2) \\ \text{\small such that} \quad g(d_1, d_2) &= 2(d_1+d_2)
     - 20 \leq 0 \end{aligned} }\] <details><summary>**More Details**</summary> In
     fact, this question asked for minimizing maximizing the rectangle area subject
     to perimeter constraint (20). The red region below gives a demo:'
+  id: totrans-23
   prefs: []
   type: TYPE_NORMAL
+  zh: \[\boxed{ \begin{aligned} \underset{\boldsymbol{d \in \mathbb{R}^2}}{\mathrm{min}}\hspace{1mm}(-f(d_1,
+    d_2)) &= -(d_1 \times d_2) \\ \text{\small such that} \quad g(d_1, d_2) &= 2(d_1+d_2)
+    - 20 \leq 0 \end{aligned} }\] <details><summary>**更多详情**</summary> 实际上，这个问题是要求在周长约束（20）下最小化矩形的面积。下面的红色区域给出了一个示例：
 - en: '![](../Images/f7f38dae1f63046739242fda3957d3ea.png)'
+  id: totrans-24
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/f7f38dae1f63046739242fda3957d3ea.png)'
 - en: 'Here''s a visualization of the relationship between \(d_1\) and \(d_2\) in
     terms of area and perimeter:'
+  id: totrans-25
   prefs: []
   type: TYPE_NORMAL
+  zh: 下面是 \(d_1\) 和 \(d_2\) 之间面积和周长的关系的可视化：
 - en: '![](../Images/5fc3caa9691bd2b2136daa775630d0a8.png)</details>'
+  id: totrans-26
   prefs: []
   type: TYPE_NORMAL
+  zh: '![](../Images/5fc3caa9691bd2b2136daa775630d0a8.png)</details>'
 - en: Local vs. Global Minima
+  id: totrans-27
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 局部最小值与全局最小值
 - en: Consider a domain \(S\subset\mathbb{R}^n\), and \(f:S\to\mathbb{R}\).
+  id: totrans-28
   prefs: []
   type: TYPE_NORMAL
+  zh: 考虑一个域 \(S\subset\mathbb{R}^n\)，以及 \(f:S\to\mathbb{R}\)。
 - en: '**Local Minima**: \(\boldsymbol{x}^*\) is a *local minimum* if \(f(\boldsymbol{x}^*)\leq
     f(\boldsymbol{x})\) for all feasible \(\boldsymbol{x}\) in some neighborhood of
     \(\boldsymbol{x}^*\).'
+  id: totrans-29
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**局部最小值**：如果对所有在 \(\boldsymbol{x}^*\) 的某个邻域内的可行 \(\boldsymbol{x}\)，\(\boldsymbol{x}^*\)
+    是一个**局部最小值**，则 \(f(\boldsymbol{x}^*)\leq f(\boldsymbol{x})\)。'
 - en: '**Global Minima**: \(\boldsymbol{x}^*\) is a *global minimum* if \(f(\boldsymbol{x}^*)\leq
     f(\boldsymbol{x})\) for all \(\boldsymbol{x}\in S\).'
+  id: totrans-30
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**全局最小值**：如果对所有 \(\boldsymbol{x}\in S\)，\(\boldsymbol{x}^*\) 是一个**全局最小值**，则
+    \(f(\boldsymbol{x}^*)\leq f(\boldsymbol{x})\)。'
 - en: Note that it is easier to find the local minimum than the global minimum. Given
     a function, finding whether a global minimum exists over the domain is in itself
     a non-trivial problem. Hence, we will limit ourselves to finding the local minima
     of the function.
+  id: totrans-31
   prefs: []
   type: TYPE_NORMAL
+  zh: 注意，找到局部最小值比找到全局最小值更容易。给定一个函数，在域上找到全局最小值是否存在本身就是一个非平凡的问题。因此，我们将限制自己寻找函数的局部最小值。
 - en: Also, note that a function can always have more than 1 minima.
+  id: totrans-32
   prefs: []
   type: TYPE_NORMAL
+  zh: 此外，请注意，一个函数可以总是有多个最小值。
 - en: '![](../Images/764c6d604d5e6887390aecffe210764d.png)'
+  id: totrans-33
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/764c6d604d5e6887390aecffe210764d.png)'
 - en: Two Types of Methods to Resolve 1-Dimensional Optimization Problems
+  id: totrans-34
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 解决一维优化问题的两种方法类型
 - en: First, let's learn about some techniques to resolve 1-D optimization problems.
+  id: totrans-35
   prefs: []
   type: TYPE_NORMAL
+  zh: 首先，让我们了解一些解决一维优化问题的技术。
 - en: 'Given a nonlinear, continuous and smooth function \(f:\;\mathbb{R}\to \mathbb{R}\)
     and the optimization problem \(f(\boldsymbol{x}^*) = \underset{\boldsymbol{x \in
     S}}{\mathrm{min}}\hspace{1mm}f(\boldsymbol{x})\), there are two types of methods
     which we''ll cover in this class:'
+  id: totrans-36
   prefs: []
   type: TYPE_NORMAL
+  zh: 给定一个非线性、连续且光滑的函数 \(f:\;\mathbb{R}\to \mathbb{R}\) 和优化问题 \(f(\boldsymbol{x}^*)
+    = \underset{\boldsymbol{x \in S}}{\mathrm{min}}\hspace{1mm}f(\boldsymbol{x})\)，我们将在这个课程中介绍两种类型的方法：
 - en: 'Derivative-free methods: Only requiring the evaluation of \(f(\boldsymbol{x})\)
     on a set of \(x \in S\). In particular, we cover the **Golden Section Search**
     method.'
+  id: totrans-37
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 无导数方法：只需在 \(S\) 中的一组 \(x \in S\) 上评估 \(f(\boldsymbol{x})\)。特别是，我们涵盖了**黄金分割搜索**方法。
 - en: 'Second-derivative methods: Requiring the evaluation of \(f(\boldsymbol{x})\),
     \(f''(\boldsymbol{x})\), and \(f''''(\boldsymbol{x})\) and on a set of \(x \in
     S\). In particular, we cover **Newton''s Method for 1-D**.'
+  id: totrans-38
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 二阶导数方法：需要评估 \(f(\boldsymbol{x})\)、\(f'(\boldsymbol{x})\) 和 \(f''(\boldsymbol{x})\)，以及
+    \(S\) 中的一组 \(x \in S\)。特别是，我们涵盖了**一维牛顿法**。
 - en: Criteria for 1-D Local Minima
+  id: totrans-39
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 1-D 局部最小值的准则
 - en: In the case of 1-D optimization, we need to find the minima of a continuous
     and smooth function \(f:\;\mathbb{R} \to \mathbb{R}\). Recall from calculus that
     when \(f'(x^*) = 0\), we get a local maximum if \(f''(x^*) < 0\), and a local
@@ -185,128 +282,205 @@
     = 0\)). We can then tell if a point \(x^* \in S\) is a local minimum (i.e., find
     \(\boldsymbol{x}^*\) such that \(f(\boldsymbol{x}^*) = \underset{\boldsymbol{x}}{\mathrm{min}}\hspace{1mm}f(\boldsymbol{x})\))
     by getting the values of the first and second derivatives. Specifically,
+  id: totrans-40
   prefs: []
   type: TYPE_NORMAL
+  zh: 在一维优化情况下，我们需要找到一个连续且光滑的函数 \(f:\;\mathbb{R} \to \mathbb{R}\) 的最小值。回顾微积分，当 \(f'(x^*)
+    = 0\) 时，如果 \(f''(x^*) < 0\)，则得到一个局部最大值；如果 \(f''(x^*) > 0\)，则得到一个局部最小值。（注意，如果 \(f''(x^*)
+    = 0\)，我们无法得出任何结论）。然后，我们可以通过获取一阶和二阶导数的值来判断点 \(x^* \in S\) 是否是局部最小值（即找到 \(\boldsymbol{x}^*\)
+    使得 \(f(\boldsymbol{x}^*) = \underset{\boldsymbol{x}}{\mathrm{min}}\hspace{1mm}f(\boldsymbol{x})\)）。具体来说，
 - en: '(First-order) Necessary condition: \(f''(x^*) = 0\)'
+  id: totrans-41
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: （一阶）必要条件：\(f'(x^*) = 0\)
 - en: '(Second-order) Sufficient condition: \(f''(x^*) = 0\) and \(f''''(x^*) > 0\).'
+  id: totrans-42
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: （二阶）充分条件：\(f'(x^*) = 0\) 和 \(f''(x^*) > 0\)。
 - en: 'Example: 1-D Optimization Problem'
+  id: totrans-43
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 示例：一维优化问题
 - en: Consider the function \(f(x) = x^3 - 6x^2 + 9x -6\)
+  id: totrans-44
   prefs: []
   type: TYPE_NORMAL
+  zh: 考虑函数 \(f(x) = x^3 - 6x^2 + 9x -6\)。
 - en: How can we find a local minimum of it?
+  id: totrans-45
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们如何找到它的局部最小值？
 - en: '<details><summary>**Answer**</summary> The first and second derivatives are
     as follows: $f''(x) = 3x^2-12x+9$ $f''''(x) = 6x-12$ The critical points are tabulated
     as:'
+  id: totrans-46
   prefs: []
   type: TYPE_NORMAL
+  zh: <details><summary>**答案**</summary> 一阶和二阶导数如下：$f'(x) = 3x^2-12x+9$ $f''(x) =
+    6x-12$ 驻点如下表所示：
 - en: '| \({x}\) | \({f''(x)}\) | \({f''''(x)}\) | Characteristic |'
+  id: totrans-47
   prefs: []
   type: TYPE_TB
+  zh: '| \({x}\) | \({f''(x)}\) | \({f''''(x)}\) | 特征 |'
 - en: '| --- | --- | --- | --- |'
+  id: totrans-48
   prefs: []
   type: TYPE_TB
+  zh: '| --- | --- | --- | --- |'
 - en: '| 3 | 0 | \(6\) | Local Minimum |'
+  id: totrans-49
   prefs: []
   type: TYPE_TB
+  zh: '| 3 | 0 | \(6\) | 局部最小值 |'
 - en: '| 1 | 0 | \(-6\) | Local Maximum |'
+  id: totrans-50
   prefs: []
   type: TYPE_TB
+  zh: '| 1 | 0 | \(-6\) | 局部最大值 |'
 - en: Looking at the table, we see that $x=3$ satisfies the sufficient condition for
     being a local minimum.</details>
+  id: totrans-51
   prefs: []
   type: TYPE_NORMAL
+  zh: 从表中可以看出，\(x=3\) 满足局部最小值的充分条件。</details>
 - en: 'Example: Find All Stationary Points of a 1-D Function'
+  id: totrans-52
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 示例：找出1-D函数的所有驻点
 - en: Consider the function \(f(x) = \frac{x^4}{4} - \frac{x^3}{3} - 11x^2 + 40x\)
+  id: totrans-53
   prefs: []
   type: TYPE_NORMAL
+  zh: 考虑函数 \(f(x) = \frac{x^4}{4} - \frac{x^3}{3} - 11x^2 + 40x\)。
 - en: Find the stationary points and check the sufficient conditions.
+  id: totrans-54
   prefs: []
   type: TYPE_NORMAL
+  zh: 找到驻点并检查充分条件。
 - en: '<details><summary>**Answer**</summary> The gradient vector and the Hessian
     matrix for \(f\) are as follows: $f''(x) = \frac{4x^3}{4} - \frac{3x^2}{3} - 22x
     +40 = x^3 - x^2 - 22x + 40$ $f''''(x) = 3x^2 - 2x - 22$ Solve for \(f''(x) = 0\)
     gives three possible solutions, namely \(x_1 = -5, x_2 = 2, \text{and }x_3 = 4\).'
+  id: totrans-55
   prefs: []
   type: TYPE_NORMAL
+  zh: <details><summary>**答案**</summary> \(f\) 的梯度向量和Hessian矩阵如下：$f'(x) = \frac{4x^3}{4}
+    - \frac{3x^2}{3} - 22x +40 = x^3 - x^2 - 22x + 40$ $f''(x) = 3x^2 - 2x - 22$ 解
+    \(f'(x) = 0\) 得到三个可能的解，即 \(x_1 = -5, x_2 = 2, \text{和 }x_3 = 4\)。
 - en: 'Now, observe that:'
+  id: totrans-56
   prefs: []
   type: TYPE_NORMAL
+  zh: 现在，观察以下：
 - en: (1) \(f''(x_1) = 3 \times (-5)^2 - 2 \times (-5) - 22 \gt 0\) \(\rightarrow\)
     \(\bf{x_1 = -5}\) is a local \(\textbf{minimum}\).
+  id: totrans-57
   prefs: []
   type: TYPE_NORMAL
+  zh: (1) \(f''(x_1) = 3 \times (-5)^2 - 2 \times (-5) - 22 \gt 0\) \(\rightarrow\)
+    \(\bf{x_1 = -5}\) 是一个局部 \(\textbf{最小值}\)。
 - en: (2) \(f''(x_2) = 3 \times (2)^2 - 2 \times 2 - 22 \lt 0\) \(\rightarrow\) \(\bf{x_2
     = 2}\) is a local \(\textbf{maximum}\).
+  id: totrans-58
   prefs: []
   type: TYPE_NORMAL
+  zh: (2) \(f''(x_2) = 3 \times (2)^2 - 2 \times 2 - 22 \lt 0\) \(\rightarrow\) \(\bf{x_2
+    = 2}\) 是一个局部 \(\textbf{最大值}\)。
 - en: (3) \(f''(x_3) = 3 \times (4)^2 - 2 \times 4 - 22 \gt 0\) \(\rightarrow\) \(\bf{x_3
     = 4}\) is a local \(\textbf{minimum}\).</details>
+  id: totrans-59
   prefs: []
   type: TYPE_NORMAL
+  zh: (3) \(f''(x_3) = 3 \times (4)^2 - 2 \times 4 - 22 \gt 0\) \(\rightarrow\) \(\bf{x_3
+    = 4}\) 是一个局部 \(\textbf{最小值}\)。</details>
 - en: Unimodal Functions
+  id: totrans-60
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 单峰函数
 - en: 'Let us consider a special family of functions that makes the optimization task
     easier:'
+  id: totrans-61
   prefs: []
   type: TYPE_NORMAL
+  zh: 让我们考虑一个特殊的函数族，它使得优化任务更容易：
 - en: A function \(f:\mathbb{R}\to \mathbb{R}\) is **unimodal** on an interval \([a,b]\)
     if this function has a unique (global) minimum on that interval \([a,b]\)
+  id: totrans-62
   prefs: []
   type: TYPE_NORMAL
+  zh: 一个函数 \(f:\mathbb{R}\to \mathbb{R}\) 在区间 \([a,b]\) 上是**单峰**的，如果这个函数在该区间 \([a,b]\)
+    上有一个唯一的（全局）最小值。
 - en: 'More rigidly, a 1-dimensional function \(f: S\to\mathbb{R}\), is said to be
     unimodal on an interval \([a,b]\) if there is a unique \(\bf{x}^* \in [a, b]\)
     such that \(f(\bf{x}^*)\) is the minimum in \([a, b]\), and that for all \(x_1,
     x_2 \in [a, b]\) where \(x_1 \lt x_2\), the following two properties hold:'
+  id: totrans-63
   prefs: []
   type: TYPE_NORMAL
+  zh: '更严格地说，一个一维函数 \(f: S\to\mathbb{R}\)，如果在区间 \([a,b]\) 上存在唯一的 \(\bf{x}^* \in [a,
+    b]\) 使得 \(f(\bf{x}^*)\) 是 \([a, b]\) 中的最小值，并且对于所有 \(x_1, x_2 \in [a, b]\) 且 \(x_1
+    \lt x_2\)，以下两个性质成立，则称该函数在区间 \([a, b]\) 上是单峰的：'
 - en: \[x_2 < x^*\Rightarrow f(x_1)>f(x_2)\] \[x^* < x_1\Rightarrow f(x_1)<f(x_2)\]
+  id: totrans-64
   prefs: []
   type: TYPE_NORMAL
+  zh: \[x_2 < x^*\Rightarrow f(x_1)>f(x_2)\] \[x^* < x_1\Rightarrow f(x_1)<f(x_2)\]
 - en: 'Some examples of unimodal functions on an interval:'
+  id: totrans-65
   prefs: []
   type: TYPE_NORMAL
+  zh: 区间上单峰函数的一些例子：
 - en: \(f(x) = x^2\) is unimodal on the interval \([-1,1]\)
+  id: totrans-66
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: \(f(x) = x^2\) 在区间 \([-1,1]\) 上是单峰的。
 - en: \(f(x) = \begin{cases} x, \text{ for } x \geq 0, \\ 0, \text{ for } x < 0 \end{cases}\)
     is not unimodal on \([-1,1]\) because the global minimum is not unique. This is
     an example of a convex function that is not unimodal.
+  id: totrans-67
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: \(f(x) = \begin{cases} x, \text{ for } x \geq 0, \\ 0, \text{ for } x < 0 \end{cases}\)
+    在 \([-1,1]\) 上不是单峰的，因为全局最小值不是唯一的。这是一个凸函数但不是单峰函数的例子。
 - en: \(f(x) = \begin{cases} x, \text{ for } x > 0, \\ -100, \text{ for } x = 0,\\
     0 \text{ for } x < 0\end{cases}\) is not unimodal on \([-1,1]\).  It has a unique
     minimum at \(x=0\) but does not steadily decrease(i.e., monotonically decrease)
     as you move from \(-1\) to \(0\).
+  id: totrans-68
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: \(f(x) = \begin{cases} x, \text{ for } x > 0, \\ -100, \text{ for } x = 0,\\
+    0 \text{ for } x < 0\end{cases}\) 在 \([-1,1]\) 上不是单峰的。它在 \(x=0\) 处有一个唯一的最小值，但当你从
+    \(-1\) 移动到 \(0\) 时，它并不持续减少（即单调减少）。
 - en: \(f(x) = cos(x)\) is not unimodal on the interval \([-\pi/2, 2\pi]\) because
     it increases on \([-\pi/2, 0]\).
+  id: totrans-69
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: \(f(x) = cos(x)\) 在区间 \([-\pi/2, 2\pi]\) 上不是单峰的，因为它在 \([-\pi/2, 0]\) 上是增加的。
 - en: In order to simplify, we will consider our objective function to be *unimodal*
     as it guarantees us a unique solution to the minimization problem.
+  id: totrans-70
   prefs: []
   type: TYPE_NORMAL
+  zh: 为了简化，我们将考虑我们的目标函数是**单峰**的，因为它保证了我们有一个唯一的解来最小化问题。
 - en: 'Notice that a given a unimodal function \(f\) and a domain \([a, b]\), we can
     partition \([a, b]\) into \([x_1, x_2, x_4, x_3]\), where \(x_1 = a, x_3 = b\)
     and \(x_2 - x_1 = x_4 - x_2 = x_3 - x_4\). Then we can easily verify that if \(f_2
@@ -315,159 +489,246 @@
     we can apply this "partition" process on the smaller interval recursively until
     it converges to the minimum. Notice that this approach is similar with the binary
     search method in root finding. A demo of this idea is shown in the graph below:'
+  id: totrans-71
   prefs: []
   type: TYPE_NORMAL
+  zh: 注意到，给定一个单峰函数 \(f\) 和一个域 \([a, b]\)，我们可以将 \([a, b]\) 划分为 \([x_1, x_2, x_4, x_3]\)，其中
+    \(x_1 = a, x_3 = b\)，且 \(x_2 - x_1 = x_4 - x_2 = x_3 - x_4\)。然后我们可以很容易地验证，如果 \(f_2
+    = f(x_2) \lt f(x_4) = f_4\)，则极小值 \(x^* \in [x_1, x_4]\)。同样，如果 \(f_2 = f(x_2) \gt
+    f(x_4) = f_4\)，则极小值 \(x^* \in [x_2, x_3]\)。因此，我们可以递归地对较小的区间应用这种“划分”过程，直到收敛到最小值。请注意，这种方法与求根时的二分法类似。下面是这种想法的演示图：
 - en: '![](../Images/7ae84a658a936a3dac7be91c10f078af.png)'
+  id: totrans-72
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/7ae84a658a936a3dac7be91c10f078af.png)'
 - en: However, notice that such method would in general require 2 new function evaluations
     per iteration. Lets see how Golden Section Search can refine this algorithm to
     require only one function evaluation per step.
+  id: totrans-73
   prefs: []
   type: TYPE_NORMAL
+  zh: 然而，请注意，这种方法通常需要每迭代一次进行2次新的函数评估。让我们看看黄金分割搜索如何改进这个算法，使其每步只需要进行一次函数评估。
 - en: Golden Section Search (1-D)
+  id: totrans-74
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 黄金分割搜索（一维）
 - en: Inspired by the algorithm above, we define an *interval reduction* method for
     finding the minimum of a function. As in bisection (for root finding) where we
     reduce the interval such that the reduced interval always contains the root, in
     *Golden Section Search* we reduce our interval such that it always has a unique
     minimizer in our domain.
+  id: totrans-75
   prefs: []
   type: TYPE_NORMAL
+  zh: 受上述算法的启发，我们定义了一种用于寻找函数最小值的 *区间缩减* 方法。与二分法（用于求根）类似，我们在二分法中缩减区间，使得缩减后的区间始终包含根，在
+    *黄金分割搜索* 中，我们缩减区间，使得区间始终在我们的域中有一个唯一的极小值。
 - en: '**Algorithm to find the minima of \(f: [a, b] \to \mathbb{R}\)**:'
+  id: totrans-76
   prefs: []
   type: TYPE_NORMAL
+  zh: '**算法用于寻找 \(f: [a, b] \to \mathbb{R}\) 的最小值**：'
 - en: 'Our goal is to introduce "interior" points \(x_1\) and \(x_2\), and reduce
     the domain to \([x_1, x_2]\) such that:'
+  id: totrans-77
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们的目标是引入“内部”点 \(x_1\) 和 \(x_2\)，并将域缩减到 \([x_1, x_2]\) 以便：
 - en: If \(f(x_1) > f(x_2)\) our new interval would be \([x_1, b]\)
+  id: totrans-78
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 如果 \(f(x_1) > f(x_2)\)，则我们的新区间将是 \([x_1, b]\)
 - en: If \(f(x_1) \leq f(x_2)\) our new interval would be \([a, x_2]\)
+  id: totrans-79
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 如果 \(f(x_1) \leq f(x_2)\)，则我们的新区间将是 \([a, x_2]\)
 - en: 'Since we do not want two function evaluations per step, we need to ensure that
     in the next step:'
+  id: totrans-80
   prefs: []
   type: TYPE_NORMAL
+  zh: 由于我们不希望每步进行两次函数评估，我们需要确保在下一步：
 - en: If the input domain is \([a, x_2]\), reuse \(x_1\) as one of the 2 new "interior"
     points, since it lies between \([a, x_2]\), and \(f(x_1)\) has already been evaluated.
+  id: totrans-81
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 如果输入域是 \([a, x_2]\)，则重用 \(x_1\) 作为2个新的“内部”点之一，因为它位于 \([a, x_2]\) 之间，并且 \(f(x_1)\)
+    已经被评估过。
 - en: Similarly, f the input domain is \([x_1, b]\), reuse \(x_2\) as one of the 2
     new "interior" points, since it lies between \([x_1, b]\), and \(f(x_2)\) has
     already been evaluated.
+  id: totrans-82
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 类似地，如果输入域是 \([x_1, b]\)，则重用 \(x_2\) 作为2个新的“内部”点之一，因为它位于 \([x_1, b]\) 之间，并且 \(f(x_2)\)
+    已经被评估过。
 - en: Set \(h_0 = b - a\) and \(h_1 = b - x_1 = x_2 - a\).
+  id: totrans-83
   prefs: []
   type: TYPE_NORMAL
+  zh: 设置 \(h_0 = b - a\) 和 \(h_1 = b - x_1 = x_2 - a\).
 - en: Since we want to make sure that the intervals to be examined "shrinks" at a
     consistent rate, we need a constant \(\tau\) such that \(h_1 = \tau h_0\) (or
     in general \(h_{k+1} = \tau h_k\) for all \(k \in \mathbb{N}\)).
+  id: totrans-84
   prefs: []
   type: TYPE_NORMAL
+  zh: 由于我们希望确保要检查的区间以一致的速度“缩小”，我们需要一个常数 \(\tau\)，使得 \(h_1 = \tau h_0\)（或者更一般地，对于所有
+    \(k \in \mathbb{N}\)，\(h_{k+1} = \tau h_k\)）。
 - en: 'Since we want to "reuse" either \(x_1\) or \(x_2\), it must hold that \(\tau
     h_1 = (1 - \tau)h_0\) (You can check it''s true using the demo figure above).
     Subsitutue \(h_1\) by \(\tau h_0\), we get:'
+  id: totrans-85
   prefs: []
   type: TYPE_NORMAL
+  zh: 由于我们希望“重用” \(x_1\) 或 \(x_2\)，它必须满足 \(\tau h_1 = (1 - \tau)h_0\)（您可以使用上面的演示图来验证）。将
+    \(h_1\) 替换为 \(\tau h_0\)，我们得到：
 - en: \[\tau \tau h_0 = (1 - \tau)h_0\] \[\tau ^2 = (1 - \tau)\] \[\bf{\tau} = \frac{\sqrt{5}-1}{2}
     \approx \textbf{0.618}\]
+  id: totrans-86
   prefs: []
   type: TYPE_NORMAL
+  zh: \[\tau \tau h_0 = (1 - \tau)h_0\] \[\tau ^2 = (1 - \tau)\] \[\bf{\tau} = \frac{\sqrt{5}-1}{2}
+    \approx \textbf{0.618}\]
 - en: 'Notice that:'
+  id: totrans-87
   prefs: []
   type: TYPE_NORMAL
+  zh: 注意到：
 - en: \[x_1 = a + (1-\tau)(b-a)\] \[x_2 = a + \tau(b-a)\]
+  id: totrans-88
   prefs: []
   type: TYPE_NORMAL
+  zh: \[x_1 = a + (1-\tau)(b-a)\] \[x_2 = a + \tau(b-a)\]
 - en: 'As the interval gets reduced by a fixed factor each time, it can be observed
     that the method is **linearly convergent**:'
+  id: totrans-89
   prefs: []
   type: TYPE_NORMAL
+  zh: 由于每次缩减区间时都按固定因子进行，可以观察到该方法 **线性收敛**：
 - en: \[\lim_{k \to \infty} \frac{\vert e_{k+1} \vert}{\vert e_k \vert} = \tau \approx
     0.618\]
+  id: totrans-90
   prefs: []
   type: TYPE_NORMAL
+  zh: \[\lim_{k \to \infty} \frac{\vert e_{k+1} \vert}{\vert e_k \vert} = \tau \approx
+    0.618\]
 - en: The number \(\frac{\sqrt{5}-1}{2}\) is the inverse of the "Golden-Ratio" and
     hence this algorithm is named Golden Section Search.
+  id: totrans-91
   prefs: []
   type: TYPE_NORMAL
+  zh: 数字 \(\frac{\sqrt{5}-1}{2}\) 是“黄金比例”的倒数，因此这个算法被称为黄金分割搜索。
 - en: In golden section search, we do not need to evaluate any derivatives of \(f(x)\).
     At each iteration we need \(f(x_1)\) and \(f(x_2)\), one of \(x_1\) or \(x_2\)
     will be the same as the previous iteration, so it only requires 1 additional function
     evaluation per iteration (after the first iteration).
+  id: totrans-92
   prefs: []
   type: TYPE_NORMAL
+  zh: 在黄金分割搜索中，我们不需要评估 \(f(x)\) 的任何导数。在每次迭代中，我们需要 \(f(x_1)\) 和 \(f(x_2)\)，其中 \(x_1\)
+    或 \(x_2\) 中的一个将与前一次迭代相同，因此每次迭代只需要额外评估1个函数（第一次迭代之后）。
 - en: 'Example: Golden Section Search "Bracket Length"'
+  id: totrans-93
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 示例：黄金分割搜索“区间长度”
 - en: Consider running Golden Section search on a function that is unimodal. If golden
     section search is started with an initial bracket of \([-10, 10]\), what is the
     length of the new bracket after 1 iteration?
+  id: totrans-94
   prefs: []
   type: TYPE_NORMAL
+  zh: 考虑在一个单峰函数上运行黄金分割搜索。如果黄金分割搜索从初始区间 \([-10, 10]\) 开始，经过1次迭代后新区间的长度是多少？
 - en: <details><summary>**Answer**</summary> $(10 - (-10)) \times \tau \approx 12.36$</details>
+  id: totrans-95
   prefs: []
   type: TYPE_NORMAL
+  zh: <details><summary>**答案**</summary> \((10 - (-10)) \times \tau \approx 12.36\)</details>
 - en: Newton's Method (1-D)
+  id: totrans-96
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 牛顿法（一维）
 - en: 'Using Taylor Expansion, we can approximate the function \(f\) with a quadratic
     function about \(x_0\):'
+  id: totrans-97
   prefs: []
   type: TYPE_NORMAL
+  zh: 使用泰勒展开，我们可以将函数 \(f\) 在 \(x_0\) 处用二次函数来近似：
 - en: \[f(x) \approx f(x_0) + f'(x_0)(x - x_0) + \frac{1}{2}f''(x_0)(x - x_0)^2\]
+  id: totrans-98
   prefs: []
   type: TYPE_NORMAL
+  zh: \[f(x) \approx f(x_0) + f'(x_0)(x - x_0) + \frac{1}{2}f''(x_0)(x - x_0)^2\]
 - en: 'And we want to find the minimum of the quadratic function using the first-order
     necessary condition:'
+  id: totrans-99
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们希望使用一阶必要条件找到二次函数的最小值：
 - en: \[f'(x) = 0 \Rightarrow f'(x_0) + f''(x_0)(x - x_0) = 0\] \[h = (x - x_0) \Rightarrow
     h = \frac{-f'(x_0)}{f''(x_0)}\]
+  id: totrans-100
   prefs: []
   type: TYPE_NORMAL
+  zh: \[f'(x) = 0 \Rightarrow f'(x_0) + f''(x_0)(x - x_0) = 0\] \[h = (x - x_0) \Rightarrow
+    h = \frac{-f'(x_0)}{f''(x_0)}\]
 - en: Note that this is the same as the step for the Newton's method to solve the
     nonlinear equation \(f'(x) = 0\)
+  id: totrans-101
   prefs: []
   type: TYPE_NORMAL
+  zh: 注意，这与牛顿法求解非线性方程 \(f'(x) = 0\) 的步骤相同
 - en: 'We know that in order to find a local minimum we need to find the root of the
     derivative of the function. Inspired from Newton''s method for *root-finding*
     we define our iterative scheme as follows:'
+  id: totrans-102
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们知道，为了找到局部最小值，我们需要找到函数导数的根。受牛顿法求根的启发，我们定义如下迭代方案：
 - en: \[\bf{x_0} = \textbf{starting guess}\] \[\bf{x_{k+1}} = x_k - \frac{f'(x_k)}{f''(x_k)}\]
+  id: totrans-103
   prefs: []
   type: TYPE_NORMAL
+  zh: \[\bf{x_0} = \textbf{起始猜测}\] \[\bf{x_{k+1}} = x_k - \frac{f'(x_k)}{f''(x_k)}\]
 - en: The method typically **converges quadratically**, provided that \(x_k\) is sufficiently
     close to the local minimum. In other words, Newton's method has local convergence,
     and may fail to converge, or converge to a maximum or point of inflection.
+  id: totrans-104
   prefs: []
   type: TYPE_NORMAL
+  zh: 只要 \(x_k\) 足够接近局部最小值，该方法通常**二次收敛**。换句话说，牛顿法具有局部收敛性，可能无法收敛，或者收敛到最大值或拐点。
 - en: For Newton's method for optimization in 1-D, we evaluate \(f'(x_k)\) and \(f''(x_k)\),
     so it requires 2 function evaluations per iteration.
+  id: totrans-105
   prefs: []
   type: TYPE_NORMAL
+  zh: 对于一维优化中的牛顿法，我们需要评估 \(f'(x_k)\) 和 \(f''(x_k)\)，因此每次迭代需要评估2个函数。
 - en: 'Example: Newton''s Method for 1-D'
+  id: totrans-106
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 示例：一维牛顿法
 - en: Consider the function \(f(x) = 4x^3 + 2x^2 + 5x + 40\). If we use the initial
     guess \(x_0 = 2\), what would be the value of \(x\) after one iteration of the
     Newton's method?
+  id: totrans-107
   prefs: []
   type: TYPE_NORMAL
+  zh: 考虑函数 \(f(x) = 4x^3 + 2x^2 + 5x + 40\)。如果我们使用初始猜测 \(x_0 = 2\)，那么经过牛顿法一次迭代后 \(x\)
+    的值是多少？
 - en: '<details><summary>**Answer**</summary> To apply the first step Newton''s method
     for optimization, we use the iterative formula to get: \[ x_1 = x_0 - \frac{f''(x_0)}{f''''(x_0)}
     \] Given the function \( f(x) = 4x^3 + 2x^2 + 5x + 40 \), its first derivative
@@ -476,29 +737,49 @@
     \) is: \[ f''''(x) = 24x + 4 \] Hence \[ f''''(x_0) = 24(2) + 4 = 48 + 4 = 52
     \] Finally, apply Newton''s method formula: \[ x_1 = 2 - \frac{61}{52} \approx
     0.827 \]</details>'
+  id: totrans-108
   prefs: []
   type: TYPE_NORMAL
+  zh: <details><summary>**答案**</summary> 要应用牛顿法优化的一步，我们使用迭代公式得到：\[ x_1 = x_0 - \frac{f'(x_0)}{f''(x_0)}
+    \] 给定函数 \( f(x) = 4x^3 + 2x^2 + 5x + 40 \)，其第一导数 \( f'(x) \) 为：\[ f'(x_0) = 12x^2
+    + 4x + 5 \] 因此 \[ f'(2) = 12(2)^2 + 4(2) + 5 = 12(4) + 8 + 5 = 48 + 8 + 5 = 61
+    \] 其第二导数 \( f''(x) \) 为：\[ f''(x) = 24x + 4 \] 因此 \[ f''(x_0) = 24(2) + 4 = 48
+    + 4 = 52 \] 最后，应用牛顿法公式：\[ x_1 = 2 - \frac{61}{52} \approx 0.827 \]</details>
 - en: Definiton of Gradient and Hessian Matrix
+  id: totrans-109
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 梯度和Hessian矩阵的定义
 - en: 'Now let us revise some key concepts useful in solving N-dimensional optimization
     problems:'
+  id: totrans-110
   prefs: []
   type: TYPE_NORMAL
+  zh: 现在我们来修订一些在解决多维优化问题中有用的关键概念：
 - en: 'Given \(f:\mathbb{R}^n\to \mathbb{R}\), we define the gradient function \(\nabla
     f: \mathbb{R}^n\to\mathbb{R}^n\) as:'
+  id: totrans-111
   prefs: []
   type: TYPE_NORMAL
+  zh: '给定 \(f:\mathbb{R}^n\to \mathbb{R}\)，我们定义梯度函数 \(\nabla f: \mathbb{R}^n\to\mathbb{R}^n\)
+    为：'
 - en: \[\nabla f(\boldsymbol{x}) = \begin{bmatrix} \dfrac{\partial f}{\partial x_1}
     \\ \dfrac{\partial f}{\partial x_2} \\ \vdots \\ \dfrac{\partial f}{\partial x_n}
     \\ \end{bmatrix}\]
+  id: totrans-112
   prefs: []
   type: TYPE_NORMAL
+  zh: \[\nabla f(\boldsymbol{x}) = \begin{bmatrix} \dfrac{\partial f}{\partial x_1}
+    \\ \dfrac{\partial f}{\partial x_2} \\ \vdots \\ \dfrac{\partial f}{\partial x_n}
+    \\ \end{bmatrix}\]
 - en: 'Given \(f:\mathbb{R}^n\to \mathbb{R}\), we define the Hessian matrix \({\bf
     H}_f: \mathbb{R}^n\to\mathbb{R}^{n\times n}\) as:'
+  id: totrans-113
   prefs: []
   type: TYPE_NORMAL
+  zh: '给定 \(f:\mathbb{R}^n\to \mathbb{R}\)，我们定义赫斯矩阵 \({\bf H}_f: \mathbb{R}^n\to\mathbb{R}^{n\times
+    n}\) 为：'
 - en: \[{\bf H}_f(\boldsymbol{x}) = \begin{bmatrix} \dfrac{\partial^2 f}{\partial
     x_1^2} & \dfrac{\partial^2 f}{\partial x_1 \partial x_2} & \ldots & \dfrac{\partial^2
     f}{\partial x_1 \partial x_n} \\ \dfrac{\partial^2 f}{\partial x_2 \partial x_1}
@@ -506,33 +787,54 @@
     x_2 \partial x_n} \\ \vdots & \vdots & \ddots & \vdots \\ \dfrac{\partial^2 f}{\partial
     x_n \partial x_1} & \dfrac{\partial^2 f}{\partial x_n \partial x_2} & \ldots &
     \dfrac{\partial^2 f}{\partial x_n^2} \end{bmatrix}\]
+  id: totrans-114
   prefs: []
   type: TYPE_NORMAL
+  zh: \[{\bf H}_f(\boldsymbol{x}) = \begin{bmatrix} \dfrac{\partial^2 f}{\partial
+    x_1^2} & \dfrac{\partial^2 f}{\partial x_1 \partial x_2} & \ldots & \dfrac{\partial^2
+    f}{\partial x_1 \partial x_n} \\ \dfrac{\partial^2 f}{\partial x_2 \partial x_1}
+    & \dfrac{\partial^2 f}{\partial x_2^2} & \ldots & \dfrac{\partial^2 f}{\partial
+    x_2 \partial x_n} \\ \vdots & \vdots & \ddots & \vdots \\ \dfrac{\partial^2 f}{\partial
+    x_n \partial x_1} & \dfrac{\partial^2 f}{\partial x_n \partial x_2} & \ldots &
+    \dfrac{\partial^2 f}{\partial x_n^2} \end{bmatrix}\]
 - en: Two Types of Methods to Resolve N-Dimensional Optimization Problems
+  id: totrans-115
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 解决 N 维优化问题的两种方法
 - en: 'Given a nonlinear, continuous and smooth function \(f:\;\mathbb{R}^n\to \mathbb{R}\)
     and the optimization problem \(f(\boldsymbol{x}^*) = \underset{\boldsymbol{x \in
     S}}{\mathrm{min}}\hspace{1mm}f(\boldsymbol{x})\), there are two types of methods
     which we''ll cover in this class:'
+  id: totrans-116
   prefs: []
   type: TYPE_NORMAL
+  zh: 给定一个非线性、连续且光滑的函数 \(f:\;\mathbb{R}^n\to \mathbb{R}\) 以及优化问题 \(f(\boldsymbol{x}^*)
+    = \underset{\boldsymbol{x \in S}}{\mathrm{min}}\hspace{1mm}f(\boldsymbol{x})\)，本课程将介绍两种方法：
 - en: 'Gradient (first-derivative) methods: Requiring the evaluation of \(f(\boldsymbol{x})\)
     and \(\nabla f(\boldsymbol{x})\) on a set of \(x \in S\). In particular, we cover
     the **Steepest Descent** method.'
+  id: totrans-117
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 梯度（一阶导数）方法：需要评估 \(f(\boldsymbol{x})\) 和 \(\nabla f(\boldsymbol{x})\) 在集合 \(x
+    \in S\) 中的 \(x\)。特别是，我们将介绍**最速下降法**。
 - en: 'Hessian (second-derivative) methods: Requiring the evaluation of \(f(\boldsymbol{x})\),
     \(\nabla f(\boldsymbol{x})\), and \({\nabla}^2 f(\boldsymbol{x})\) and on a set
     of \(x \in S\). In particular, we cover **Newton''s Method for N-D**.'
+  id: totrans-118
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 赫斯（二阶导数）方法：需要评估 \(f(\boldsymbol{x})\)、\(\nabla f(\boldsymbol{x})\) 和 \({\nabla}^2
+    f(\boldsymbol{x})\) 以及集合 \(x \in S\) 中的 \(x\)。特别是，我们将介绍**N 维牛顿法**。
 - en: 'where:'
+  id: totrans-119
   prefs: []
   type: TYPE_NORMAL
+  zh: 其中：
 - en: \[\boldsymbol{x} = \begin{bmatrix}x_1, x_2, \ldots, x_n\end{bmatrix}\] \[f(\boldsymbol{x})
     = f(\begin{bmatrix}x_1, x_2, \ldots, x_n\end{bmatrix})\] \[\nabla f(\boldsymbol{x})
     = \text{\small gradient} (x) = \begin{bmatrix} \dfrac{\partial f}{\partial x_1}
@@ -545,97 +847,164 @@
     \vdots & \ddots & \vdots \\ \dfrac{\partial^2 f}{\partial x_n \partial x_1} &
     \dfrac{\partial^2 f}{\partial x_n \partial x_2} & \ldots & \dfrac{\partial^2 f}{\partial
     x_n^2} \end{bmatrix}\]
+  id: totrans-120
   prefs: []
   type: TYPE_NORMAL
+  zh: \[\boldsymbol{x} = \begin{bmatrix}x_1, x_2, \ldots, x_n\end{bmatrix}\] \[f(\boldsymbol{x})
+    = f(\begin{bmatrix}x_1, x_2, \ldots, x_n\end{bmatrix})\] \[\nabla f(\boldsymbol{x})
+    = \text{\small gradient} (x) = \begin{bmatrix} \dfrac{\partial f}{\partial x_1}
+    \\ \dfrac{\partial f}{\partial x_2} \\ \vdots \\ \dfrac{\partial f}{\partial x_n}
+    \\ \end{bmatrix}\] \[{\nabla}^2 f(\boldsymbol{x}) = {\bf H}_f(\boldsymbol{x})
+    = \begin{bmatrix} \dfrac{\partial^2 f}{\partial x_1^2} & \dfrac{\partial^2 f}{\partial
+    x_1 \partial x_2} & \ldots & \dfrac{\partial^2 f}{\partial x_1 \partial x_n} \\
+    \dfrac{\partial^2 f}{\partial x_2 \partial x_1} & \dfrac{\partial^2 f}{\partial
+    x_2^2} & \ldots & \dfrac{\partial^2 f}{\partial x_2 \partial x_n} \\ \vdots &
+    \vdots & \ddots & \vdots \\ \dfrac{\partial^2 f}{\partial x_n \partial x_1} &
+    \dfrac{\partial^2 f}{\partial x_n \partial x_2} & \ldots & \dfrac{\partial^2 f}{\partial
+    x_n^2} \end{bmatrix}\]
 - en: Criteria for N-D Local Minima
+  id: totrans-121
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: N 维局部最小值的判据
 - en: 'In the case of n-dimensional optimization, we need to find the minima of a
     continuous and smooth function \(f:\;\mathbb{R}^n \to \mathbb{R}\). We can tell
     if a point \(x^* \in S\) is a local minimum by considering the values of the gradients
     and Hessians. Notice that N-D gradient is equivalent to 1-D derivative, and the
     Hessian matrix has following properties at points of zero gradient:'
+  id: totrans-122
   prefs: []
   type: TYPE_NORMAL
+  zh: 在 n 维优化问题中，我们需要找到一个连续且光滑的函数 \(f:\;\mathbb{R}^n \to \mathbb{R}\) 的最小值。我们可以通过考虑梯度和赫essian
+    矩阵的值来判断一个点 \(x^* \in S\) 是否是局部最小值。注意，N-D 梯度等价于 1-D 导数，赫essian 矩阵在零梯度点的性质如下：
 - en: '| \( H_f(x^*) \) | Eigenvalues of \( H_f(x^*) \) | Critical Point \( x^* \)
     |'
+  id: totrans-123
   prefs: []
   type: TYPE_TB
+  zh: '| \( H_f(x^*) \) | \( H_f(x^*) \) 的特征值 | 临界点 \( x^* \) |'
 - en: '| --- | --- | --- |'
+  id: totrans-124
   prefs: []
   type: TYPE_TB
+  zh: '| --- | --- | --- |'
 - en: '| Positive Definite | All Positive | Minimizer |'
+  id: totrans-125
   prefs: []
   type: TYPE_TB
+  zh: '| 正定 | 所有正值 | 最小值 |'
 - en: '| Negative Definite | All Negative | Maximizer |'
+  id: totrans-126
   prefs: []
   type: TYPE_TB
+  zh: '| 负定 | 所有负值 | 最大值 |'
 - en: '| Indefinite | Indefinite | Saddle Point |'
+  id: totrans-127
   prefs: []
   type: TYPE_TB
+  zh: '| 不定 | 不定 | 鞍点 |'
 - en: 'Therefore, below are the conditions to find \(\boldsymbol{x}^*\) such that
     \(f(\boldsymbol{x}^*) = \underset{\boldsymbol{x}}{\mathrm{min}}\hspace{1mm}f(\boldsymbol{x})\):'
+  id: totrans-128
   prefs: []
   type: TYPE_NORMAL
+  zh: 因此，以下是要找到 \(\boldsymbol{x}^*\) 使得 \(f(\boldsymbol{x}^*) = \underset{\boldsymbol{x}}{\mathrm{min}}\hspace{1mm}f(\boldsymbol{x})\)
+    的条件：
 - en: 'Necessary condition: the gradient \(\nabla f(\boldsymbol{x}^*) = \boldsymbol{0}\)'
+  id: totrans-129
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 必要条件：梯度 \(\nabla f(\boldsymbol{x}^*) = \boldsymbol{0}\)
 - en: 'Sufficient condition: the gradient \(\nabla f(\boldsymbol{x}^*) = \boldsymbol{0}\)
     and the Hessian matrix \(H_f(\boldsymbol{x^*})\) is positive definite.'
+  id: totrans-130
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 充分条件：梯度 \(\nabla f(\boldsymbol{x}^*) = \boldsymbol{0}\) 且赫essian 矩阵 \(H_f(\boldsymbol{x^*})\)
+    是正定的。
 - en: 'Example: Find All Stationary Points of a N-D Function'
+  id: totrans-131
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 示例：找到 N 维函数的所有驻点
 - en: Consider the function
+  id: totrans-132
   prefs: []
   type: TYPE_NORMAL
+  zh: 考虑以下函数
 - en: \[f(x_1, x_2) = 2x_1^3 + 4x_2^2 + 2x_2 - 24x_1\]
+  id: totrans-133
   prefs: []
   type: TYPE_NORMAL
+  zh: \[f(x_1, x_2) = 2x_1^3 + 4x_2^2 + 2x_2 - 24x_1\]
 - en: Find the stationary points and check the sufficient conditions.
+  id: totrans-134
   prefs: []
   type: TYPE_NORMAL
+  zh: 找到驻点并检查充分条件。
 - en: '<details><summary>**Answer**</summary> The gradient is as follows: \[ \nabla
     f(\boldsymbol{x}) = \text{\small gradient} (x) = \begin{bmatrix} 6x_1^2 - 24 \\
     8x_2 + 2 \\ \end{bmatrix} \] Solving for \(\nabla f = 0 \text{ gives }6x_1^2 -
     24 = 0\text{ and }8x_2 + 2 = 0\text{, so }x_1 = \pm 2 \text{ and } x_2 = -0.25\).'
+  id: totrans-135
   prefs: []
   type: TYPE_NORMAL
+  zh: <details><summary>**答案**</summary> 梯度如下：\[ \nabla f(\boldsymbol{x}) = \text{\small
+    gradient} (x) = \begin{bmatrix} 6x_1^2 - 24 \\ 8x_2 + 2 \\ \end{bmatrix} \] 解方程
+    \(\nabla f = 0 \text{ 得到 }6x_1^2 - 24 = 0\text{ 和 }8x_2 + 2 = 0\text{，因此 }x_1
+    = \pm 2 \text{ 和 } x_2 = -0.25\).
 - en: 'The Hessian matrix is as follows: \[ {\bf H}\_f(\boldsymbol{x}) = \begin{bmatrix}
     12x_1 & 0\\ 0 & 8 \\ \end{bmatrix} \] \(\textbf{Situation 1:}\)'
+  id: totrans-136
   prefs: []
   type: TYPE_NORMAL
+  zh: 赫essian 矩阵如下：\[ {\bf H}\_f(\boldsymbol{x}) = \begin{bmatrix} 12x_1 & 0\\ 0 &
+    8 \\ \end{bmatrix} \] \(\textbf{情况 1：}\)
 - en: \[ x^_ = \begin{bmatrix} 2 \\ -0.25 \\ \end{bmatrix} \rightarrow {\bf H}\_f
     = \begin{bmatrix} 24 & 0 \\ 0 & 8 \\ \end{bmatrix} \] The Hessian is positive
     definite (contains only positive eigenvalues), so that \(x^_ = \begin{bmatrix}
     2 \\ -0.25 \\ \end{bmatrix}\) is a \(\textbf{local minimum}\).
+  id: totrans-137
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ x^_ = \begin{bmatrix} 2 \\ -0.25 \\ \end{bmatrix} \rightarrow {\bf H}\_f
+    = \begin{bmatrix} 24 & 0 \\ 0 & 8 \\ \end{bmatrix} \] 赫essian 矩阵是正定的（只包含正特征值），因此
+    \(x^_ = \begin{bmatrix} 2 \\ -0.25 \\ \end{bmatrix}\) 是一个 \(\textbf{局部最小值}\)。
 - en: \(\textbf{Situation 2:}\)
+  id: totrans-138
   prefs: []
   type: TYPE_NORMAL
+  zh: \(\textbf{情况 2：}\)
 - en: \[ x^_ = \begin{bmatrix} -2 \\ -0.25 \\ \end{bmatrix} \rightarrow {\bf H}\_f
     = \begin{bmatrix} -24 & 0 \\ 0 & 8 \\ \end{bmatrix} \] The Hessian is indefinite,
     so that \(x^_ = \begin{bmatrix} 2 \\ -0.25 \\ \end{bmatrix}\) is a \(\textbf{saddle
     point}\).</details>
+  id: totrans-139
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ x^_ = \begin{bmatrix} -2 \\ -0.25 \\ \end{bmatrix} \rightarrow {\bf H}\_f
+    = \begin{bmatrix} -24 & 0 \\ 0 & 8 \\ \end{bmatrix} \] 赫essian 矩阵是不定的，因此 \(x^_
+    = \begin{bmatrix} 2 \\ -0.25 \\ \end{bmatrix}\) 是一个 \(\textbf{鞍点}\)。</details>
 - en: Steepest Descent (N-D)
+  id: totrans-140
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 最陡下降（N-D）
 - en: 'The negative of the gradient of a differentiable function \(f: \mathbb{R}^n\to\mathbb{R}\)
     points downhill (i.e. towards points in the domain having lower values). In other
     words, given a function \(f:\mathbb{R}^n\to \mathbb{R}\) at a point \(\bf{x}\),
     the function will decrease its value in the direction of "steepest descent" \(\bf{-\nabla
     f}\).'
+  id: totrans-141
   prefs: []
   type: TYPE_NORMAL
+  zh: '可微函数 \(f: \mathbb{R}^n\to\mathbb{R}\) 的负梯度指向下坡（即指向域内具有较低值的点）。换句话说，给定一个函数 \(f:\mathbb{R}^n\to
+    \mathbb{R}\) 在点 \(\bf{x}\)，函数将在“最陡下降”方向 \(\bf{-\nabla f}\) 上减小其值。'
 - en: 'This hints us to move in the direction of \(-\nabla f\) while searching for
     the minimum until we reach the point where \(\nabla f(\boldsymbol{x}) = \boldsymbol{0}\).
     Rigidly, for an arbitrary point \(\boldsymbol{x}\), the direction ‘''\(-\nabla
@@ -643,215 +1012,341 @@
     this problem in an iterative approach, then in the \(\bf{k^{th}}\) iteration,
     we define the current steepest descent direction for the current approximation
     \(\boldsymbol{x_k}\):'
+  id: totrans-142
   prefs: []
   type: TYPE_NORMAL
+  zh: 这提示我们在寻找最小值的过程中沿着 \(-\nabla f\) 的方向移动，直到我们达到 \(\nabla f(\boldsymbol{x}) = \boldsymbol{0}\)
+    的点。严格地说，对于任意点 \(\boldsymbol{x}\)，方向“\(-\nabla f(\boldsymbol{x})\)”被称为最速下降方向。如果我们以迭代方法解决这个问题，那么在第
+    \(\bf{k^{th}}\) 次迭代中，我们定义当前近似 \(\boldsymbol{x_k}\) 的当前最速下降方向：
 - en: \[\boldsymbol{s_{k}} = -\nabla f(\boldsymbol{x_k})\]
+  id: totrans-143
   prefs: []
   type: TYPE_NORMAL
+  zh: \[\boldsymbol{s_{k}} = -\nabla f(\boldsymbol{x_k})\]
 - en: 'We know the direction we need to move to approach the minimum but we still
     do not know the distance we need to move in order to approach the minimum. We
     need to perform a "line search" among the steepest descent direction. If \(\boldsymbol{x_k}\)
     was our earlier point then we select the next guess by moving it in the direction
     of the negative gradient:'
+  id: totrans-144
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们知道我们需要移动的方向以接近最小值，但我们仍然不知道我们需要移动多少距离才能接近最小值。我们需要在最速下降方向中进行“线性搜索”。如果 \(\boldsymbol{x_k}\)
+    是我们之前的位置，那么我们通过将其移动到负梯度的方向来选择下一个猜测：
 - en: \[\boldsymbol{x_{k+1}} = \boldsymbol{x_k} + \alpha(-\nabla f(\boldsymbol{x_k})).\]
+  id: totrans-145
   prefs: []
   type: TYPE_NORMAL
+  zh: \[\boldsymbol{x_{k+1}} = \boldsymbol{x_k} + \alpha(-\nabla f(\boldsymbol{x_k})).\]
 - en: 'The next problem would be to find the \(\boldsymbol{\alpha}\), and we use the
     1-dimensional optimization algorithms to find the required \(\boldsymbol{\alpha}\).
     With current \(\boldsymbol{x_k}\), the following equation defines \(\boldsymbol{\alpha_k}\),
     the optimal choice of \(\boldsymbol{\alpha}\) that brings \(\boldsymbol{x_{k+1}}\)
     to the minimal point in the line search:'
+  id: totrans-146
   prefs: []
   type: TYPE_NORMAL
+  zh: 下一个问题将是找到 \(\boldsymbol{\alpha}\)，我们使用一维优化算法来找到所需的 \(\boldsymbol{\alpha}\)。对于当前的
+    \(\boldsymbol{x_k}\)，以下方程定义了 \(\boldsymbol{\alpha_k}\)，这是将 \(\boldsymbol{x_{k+1}}\)
+    带到线性搜索中的最小点的最优 \(\boldsymbol{\alpha}\) 选择：
 - en: \[\boldsymbol{\alpha_k} = \underset{\alpha}{\mathrm{argmin}}\left( f\left(\boldsymbol{x_k}
     + \alpha \boldsymbol{s_k}\right)\right)\]
+  id: totrans-147
   prefs: []
   type: TYPE_NORMAL
+  zh: \[\boldsymbol{\alpha_k} = \underset{\alpha}{\mathrm{argmin}}\left( f\left(\boldsymbol{x_k}
+    + \alpha \boldsymbol{s_k}\right)\right)\]
 - en: 'Hence in each iteration we calculate:'
+  id: totrans-148
   prefs: []
   type: TYPE_NORMAL
+  zh: 因此，在每次迭代中我们计算：
 - en: \[\bf{x_{k+1} = x_k + \alpha _k s_k}\]
+  id: totrans-149
   prefs: []
   type: TYPE_NORMAL
+  zh: \[\bf{x_{k+1} = x_k + \alpha _k s_k}\]
 - en: 'The Steepest Descent algorithm can be formalized as:'
+  id: totrans-150
   prefs: []
   type: TYPE_NORMAL
+  zh: 最速下降算法可以形式化为：
 - en: 'Initial Guess: \(\bf{x_0}\)'
+  id: totrans-151
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 初始猜测：\(\bf{x_0}\)
 - en: 'Evaluate Steepest Descent: \(\bf{s_k = -\nabla f(x_k)}\)'
+  id: totrans-152
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 评估最速下降：\(\bf{s_k = -\nabla f(x_k)}\)
 - en: 'Perform a line search to obtain \(\alpha _k\) (for example, Golden Section
     Search): \(\alpha_k = \underset{\alpha}{\mathrm{argmin}} f(\bf{x_k} + \alpha \bf{s_k})\)'
+  id: totrans-153
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 执行线性搜索以获得 \(\alpha _k\)（例如，黄金分割搜索）：\(\alpha_k = \underset{\alpha}{\mathrm{argmin}}
+    f(\bf{x_k} + \alpha \bf{s_k})\)
 - en: 'Update: \(\bf{x_{k+1} = x_k + \alpha _k s_k}\)'
+  id: totrans-154
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 更新：\(\bf{x_{k+1} = x_k + \alpha _k s_k}\)
 - en: Generally, the *steepest descent* method **converges linearly**.
+  id: totrans-155
   prefs: []
   type: TYPE_NORMAL
+  zh: 通常，*最速下降*方法**线性收敛**。
 - en: 'To translate this algorithm to Python:'
+  id: totrans-156
   prefs: []
   type: TYPE_NORMAL
+  zh: 将此算法翻译成Python：
 - en: '[PRE0]'
+  id: totrans-157
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: 'Side Note: Observe that \(x_{k+1} = \bf{x_k} - \alpha _k \nabla f(x_k)\), so
     \(\frac{dx_{k+1}}{d\alpha} = -\nabla f(x_k)\). Since \(\alpha_k = \underset{\alpha}{\mathrm{argmin}}
     f(\bf{x_k} + \alpha \bf{s_k})\), one necessary condition of the line search is
     \(\frac{df}{d\alpha} = 0\). Then according to chain rule:'
+  id: totrans-158
   prefs: []
   type: TYPE_NORMAL
+  zh: 侧记：观察 \(x_{k+1} = \bf{x_k} - \alpha _k \nabla f(x_k)\)，因此 \(\frac{dx_{k+1}}{d\alpha}
+    = -\nabla f(x_k)\)。由于 \(\alpha_k = \underset{\alpha}{\mathrm{argmin}} f(\bf{x_k}
+    + \alpha \bf{s_k})\)，线性搜索的一个必要条件是 \(\frac{df}{d\alpha} = 0\)。然后根据链式法则：
 - en: \[\frac{df}{d\alpha} = \frac{df}{dx_{k+1}}\frac{dx_{k+1}}{d\alpha} = -\nabla
     f(x_{k+1})^T \nabla f(x_k) = 0\]
+  id: totrans-159
   prefs: []
   type: TYPE_NORMAL
+  zh: \[\frac{df}{d\alpha} = \frac{df}{dx_{k+1}}\frac{dx_{k+1}}{d\alpha} = -\nabla
+    f(x_{k+1})^T \nabla f(x_k) = 0\]
 - en: So \(\nabla f(x_{k+1})\) is **orthogonal** to \(\nabla f(x_k)\).
+  id: totrans-160
   prefs: []
   type: TYPE_NORMAL
+  zh: 因此 \(\nabla f(x_{k+1})\) 与 \(\nabla f(x_k)\) 正交。
 - en: 'Example: Steepest Descent Direction'
+  id: totrans-161
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 示例：最速下降方向
 - en: Consider the function \(f(x_1, x_2) = 10(x_1)^3 - (x_2)^2 + x_1 - 1\). What
     is the steepest descent direction at the starting guess \(x_1 = 2, x_2 = 2\)?
+  id: totrans-162
   prefs: []
   type: TYPE_NORMAL
+  zh: 考虑函数 \(f(x_1, x_2) = 10(x_1)^3 - (x_2)^2 + x_1 - 1\)。在起始猜测 \(x_1 = 2, x_2 =
+    2\) 时，最速下降方向是什么？
 - en: <details><summary>**Answer**</summary> \[ -\bf{\nabla} f(\bf{\begin{bmatrix}
     x_1 \\ x_2 \\ \end{bmatrix}}) = - \begin{bmatrix} 30x_1^2 + 1 \\ -2x_2 \\ \end{bmatrix}
     \] \[ -\bf{\nabla} f(\bf{\begin{bmatrix} 2 \\ 2 \\ \end{bmatrix}}) = - \begin{bmatrix}
     30 \times 4 + 1 \\ -2 \times 2 \\ \end{bmatrix} = \bf{\begin{bmatrix} -121 \\
     4 \\ \end{bmatrix}} \]</details>
+  id: totrans-163
   prefs: []
   type: TYPE_NORMAL
+  zh: <details><summary>**答案**</summary> \[ -\nabla f(\begin{bmatrix} x_1 \\ x_2 \end{bmatrix})
+    = - \begin{bmatrix} 30x_1^2 + 1 \\ -2x_2 \end{bmatrix} \] \[ -\nabla f(\begin{bmatrix}
+    2 \\ 2 \end{bmatrix}) = - \begin{bmatrix} 30 \times 4 + 1 \\ -2 \times 2 \end{bmatrix}
+    = \begin{bmatrix} -121 \\ 4 \end{bmatrix} \]</details>
 - en: 'Example: Steepest Descent Iteration'
+  id: totrans-164
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 示例：最速下降迭代
 - en: Consider the function \(f(x_1, x_2) = (x_1 - 1)^2 + (x_2 - 1)^2\). What is the
     steepest descent direction at the starting guess \(y_0 = [3, 3]^T\)? What will
     \(y_1\) be if we choose \(\alpha_0 = 1\)?
+  id: totrans-165
   prefs: []
   type: TYPE_NORMAL
+  zh: 考虑函数 \(f(x_1, x_2) = (x_1 - 1)^2 + (x_2 - 1)^2\)。在起始猜测 \(y_0 = \begin{bmatrix}
+    3 \\ 3 \end{bmatrix}^T\) 处的最速下降方向是什么？如果我们选择 \(\alpha_0 = 1\)，\(y_1\) 将会是什么？
 - en: <details><summary>**Answer**</summary> \[ y_1 = y_0 - \alpha_0 \nabla f(x_0)
     \] \[ -\bf{\nabla} f(x) = - \begin{bmatrix} 2(y_1 - 1) \\ 2(y_2 - 1) \\ \end{bmatrix}
     = \bf{\begin{bmatrix} -4 \\ -4 \\ \end{bmatrix}} \] \[ y_1 = - \begin{bmatrix}
     3 \\ 3 \\ \end{bmatrix} + 1 \times \bf{\begin{bmatrix} -4 \\ -4 \\ \end{bmatrix}}
     = \bf{\begin{bmatrix} -1 \\ -1 \\ \end{bmatrix}} \]</details>
+  id: totrans-166
   prefs: []
   type: TYPE_NORMAL
+  zh: <details><summary>**答案**</summary> \[ y_1 = y_0 - \alpha_0 \nabla f(x_0) \]
+    \[ -\nabla f(x) = - \begin{bmatrix} 2(y_1 - 1) \\ 2(y_2 - 1) \end{bmatrix} = \begin{bmatrix}
+    -4 \\ -4 \end{bmatrix} \] \[ y_1 = - \begin{bmatrix} 3 \\ 3 \end{bmatrix} + 1
+    \times \begin{bmatrix} -4 \\ -4 \end{bmatrix} = \begin{bmatrix} -1 \\ -1 \end{bmatrix}
+    \]</details>
 - en: 'Example: Step Size'
+  id: totrans-167
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 示例：步长大小
 - en: Consider the same function \(f(x_1, x_2) = (x_1 - 1)^2 + (x_2 - 1)^2\) and the
     initial guess \(y_0 = [3, 3]^T\). You're now given a contour map visualization
     of this function. What is the ideal choice of \(\alpha\)?
+  id: totrans-168
   prefs: []
   type: TYPE_NORMAL
+  zh: 考虑相同的函数 \(f(x_1, x_2) = (x_1 - 1)^2 + (x_2 - 1)^2\) 和初始猜测 \(y_0 = \begin{bmatrix}
+    3 \\ 3 \end{bmatrix}^T\)。现在给出了这个函数的等高线图可视化。\(\alpha\)的理想选择是什么？
 - en: '![](../Images/480811736f68e111691e03218fe85b31.png)<details><summary>**Answer**</summary>
     From the contour map, observe that \(f\) has a local minimum at \( \bf{\begin{bmatrix}
     1 \\ 1 \\ \end{bmatrix}} \). Recall from the previous question that \[ \bf{\nabla}
     f(\bf{y_0}) = \bf{\begin{bmatrix} -4 \\ -4 \\ \end{bmatrix}} \]'
+  id: totrans-169
   prefs: []
   type: TYPE_NORMAL
+  zh: '![](../Images/480811736f68e111691e03218fe85b31.png)<details><summary>**答案**</summary>
+    从等高线图中观察，\(f\) 在 \(\begin{bmatrix} 1 \\ 1 \end{bmatrix}\) 处有一个局部最小值。回忆一下上一个问题，\(\nabla
+    f(\bf{y_0}) = \begin{bmatrix} -4 \\ -4 \end{bmatrix}\)'
 - en: It is clear that with \(\alpha = 0.5\), \[ \bf{y_1} = \begin{bmatrix} 3 \\ 3
     \\ \end{bmatrix} - 0.5 \times \begin{bmatrix} 4 \\ 4 \\ \end{bmatrix} = \bf{\begin{bmatrix}
     1 \\ 1 \\ \end{bmatrix}} \] So with \(\bf{\alpha = 0.5}\), Steepest Descent algorithm
     converge to the minimum after exactly 1 iteration.</details>
+  id: totrans-170
   prefs: []
   type: TYPE_NORMAL
+  zh: 很明显，当 \(\alpha = 0.5\) 时，\[ \bf{y_1} = \begin{bmatrix} 3 \\ 3 \end{bmatrix}
+    - 0.5 \times \begin{bmatrix} 4 \\ 4 \end{bmatrix} = \begin{bmatrix} 1 \\ 1 \end{bmatrix}
+    \] 因此，当 \(\bf{\alpha = 0.5}\) 时，最速下降算法在恰好 1 次迭代后收敛到最小值。</details>
 - en: Newton's Method (N-D)
+  id: totrans-171
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 牛顿法（N 维）
 - en: Newton's Method in \(n\) dimensions is similar to Newton's method for root finding
     in \(n\) dimensions, except we just replace the \(n\)-dimensional function by
     the gradient and the Jacobian matrix by the Hessian matrix. We can arrive at the
     result by considering the Taylor expansion of the function.
+  id: totrans-172
   prefs: []
   type: TYPE_NORMAL
+  zh: \(n\) 维牛顿法与 \(n\) 维根查找的牛顿法类似，只是我们将 \(n\) 维函数替换为梯度，将雅可比矩阵替换为海森矩阵。我们可以通过考虑函数的泰勒展开来得到结果。
 - en: \[f(\boldsymbol{x}+s) \approx f(\boldsymbol{x}) + \nabla f(\boldsymbol{x})^Ts
     + \frac{1}{2}s^T {\bf H}_f(\boldsymbol{x})s = \hat{f}(s)\]
+  id: totrans-173
   prefs: []
   type: TYPE_NORMAL
+  zh: \[f(\boldsymbol{x}+s) \approx f(\boldsymbol{x}) + \nabla f(\boldsymbol{x})^Ts
+    + \frac{1}{2}s^T {\bf H}_f(\boldsymbol{x})s = \hat{f}(s)\]
 - en: 'We solve for \(\nabla \hat{f}(\boldsymbol{s}) = \boldsymbol{0}\) for \(\boldsymbol{s}\).
     Hence the equation can be translated as:'
+  id: totrans-174
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们求解 \(\nabla \hat{f}(\boldsymbol{s}) = \boldsymbol{0}\) 对于 \(\boldsymbol{s}\)。因此，方程可以翻译为：
 - en: \[\nabla f(\boldsymbol{x}) + \frac{1}{2}\cdot 2 {\bf H}_f(\boldsymbol{x})s =
     0\] \[{\bf H}_f(\boldsymbol{x})\boldsymbol{s} = -\nabla f(\boldsymbol{x})\]
+  id: totrans-175
   prefs: []
   type: TYPE_NORMAL
+  zh: \[\nabla f(\boldsymbol{x}) + \frac{1}{2}\cdot 2 {\bf H}_f(\boldsymbol{x})s =
+    0\] \[{\bf H}_f(\boldsymbol{x})\boldsymbol{s} = -\nabla f(\boldsymbol{x})\]
 - en: Which becomes a system of linear equations where we need to solve for the Newton
     step \(\boldsymbol{s}\).
+  id: totrans-176
   prefs: []
   type: TYPE_NORMAL
+  zh: 这变成了一组线性方程，我们需要求解牛顿步 \(\boldsymbol{s}\)。
 - en: 'The steps of the N-Dimensional Newton''s Method for optimization can be formally
     described as follows:'
+  id: totrans-177
   prefs: []
   type: TYPE_NORMAL
+  zh: 优化中 N 维牛顿法的步骤可以形式化描述如下：
 - en: 'Initial Guess: \(\boldsymbol{x_0}\)'
+  id: totrans-178
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 初始猜测：\(\boldsymbol{x_0}\)
 - en: 'Solve: \({\bf H}_f(\boldsymbol{x_k})\boldsymbol{s_k} = -\nabla f(\boldsymbol{x_k})\)'
+  id: totrans-179
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 求解：\({\bf H}_f(\boldsymbol{x_k})\boldsymbol{s_k} = -\nabla f(\boldsymbol{x_k})\)
 - en: 'Update: \(\bf{x_{k+1}} = \bf{x_k} + \bf{s_k}\)'
+  id: totrans-180
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 更新：\(\bf{x_{k+1}} = \bf{x_k} + \bf{s_k}\)
 - en: Note that the Hessian is related to the curvature and therefore contains the
     information about how large the step should be.
+  id: totrans-181
   prefs: []
   type: TYPE_NORMAL
+  zh: 注意，Hessian与曲率有关，因此包含有关步长应该多大的信息。
 - en: 'Some properties of this algorithm:'
+  id: totrans-182
   prefs: []
   type: TYPE_NORMAL
+  zh: 该算法的一些性质：
 - en: Quadratic convergence in normal circumstances.
+  id: totrans-183
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 在正常情况下，具有二次收敛性。
 - en: Need second derivatives L.
+  id: totrans-184
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 需要二阶导数L。
 - en: Local convergence (requires start guess to be close to solution).
+  id: totrans-185
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 局部收敛（需要起始猜测接近解）。
 - en: Works poorly when Hessian is nearly indefinite.
+  id: totrans-186
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 当Hessian矩阵接近不定时，表现不佳。
 - en: 'Cost per iteration: \(O(n^3)\).'
+  id: totrans-187
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 每次迭代的成本：\(O(n^3)\)。
 - en: 'This algorithm can be expressed as a Python function as follows:'
+  id: totrans-188
   prefs: []
   type: TYPE_NORMAL
+  zh: 该算法可以表示为以下Python函数：
 - en: '[PRE1]'
+  id: totrans-189
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: 'Example: One Step of Newton''s Method for N-D Optimization'
+  id: totrans-190
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 示例：N维优化中牛顿法的单步
 - en: To find a minimum of the function \(f(x, y) = 3x^2 +2y^2\), what is the expression
     for one step of Newton's method?
+  id: totrans-191
   prefs: []
   type: TYPE_NORMAL
+  zh: 要找到函数 \(f(x, y) = 3x^2 +2y^2\) 的最小值，牛顿法的一步表达式是什么？
 - en: '<details><summary>**Answer**</summary> The gradient of \( f(x, y) \) is given
     by: \[ \nabla f(x, y) = \begin{bmatrix} \frac{\partial f}{\partial x} \\ \frac{\partial
     f}{\partial y} \end{bmatrix} \] And the Hessian matrix of \( f(x, y) \) is given
@@ -873,192 +1368,295 @@
     x*{k+1} \\ y*{k+1} \end{bmatrix} = \begin{bmatrix} x_k \\ y_k \end{bmatrix} -
     {\begin{bmatrix} 6 & 0 \\ 0 & 4 \end{bmatrix}}^{-1} \begin{bmatrix} 6x_k \\ 4y_k
     \end{bmatrix} \]</details>'
+  id: totrans-192
   prefs: []
   type: TYPE_NORMAL
+  zh: <details><summary>**答案**</summary> 函数 \( f(x, y) \) 的梯度由以下给出：\[ \nabla f(x,
+    y) = \begin{bmatrix} \frac{\partial f}{\partial x} \\ \frac{\partial f}{\partial
+    y} \end{bmatrix} \] 并且函数 \( f(x, y) \) 的Hessian矩阵由以下给出：\[ H_f(x, y) = \begin{bmatrix}
+    \frac{\partial^2 f}{\partial x^2} & \frac{\partial^2 f}{\partial x \partial y}
+    \\ \frac{\partial^2 f}{\partial y \partial x} & \frac{\partial^2 f}{\partial y^2}
+    \end{bmatrix} \] N维优化的牛顿算法的求解步骤为：\[ H*f(x_k, y_k)\boldsymbol{s_k} = -\nabla f(x*{k},
+    y\_{k})\] 这在数学上等同于：\[{\bf{s_k}} = - H_f(x_k, y_k)^{-1} \nabla f(x_k, y_k) \] 因此，N维优化的牛顿算法的更新步骤为：\[
+    \begin{bmatrix} x*{k+1} \\ y*{k+1} \end{bmatrix} = \begin{bmatrix} x_k \\ y_k
+    \end{bmatrix} - H_f(x_k, y_k)^{-1} \nabla f(x_k, y_k) \] 给定函数 \( f(x, y) = 3x^2
+    + 2y^2 \)，其梯度 \( \nabla f(x_k, y_k) \) 和Hessian矩阵 \( H_f(x_k, y_k) \) 为：\[ \nabla
+    f(x_k, y_k) = \begin{bmatrix} \frac{\partial f}{\partial x_k} \\ \frac{\partial
+    f}{\partial y_k} \end{bmatrix} = \begin{bmatrix} 6x_k \\ 4y_k \end{bmatrix} \]
+    \[ H_f(x_k, y_k) = \begin{bmatrix} \frac{\partial^2 f}{\partial {x_k}^2} & \frac{\partial^2
+    f}{\partial x_k \partial y_k} \\ \frac{\partial^2 f}{\partial y_k \partial x_k}
+    & \frac{\partial^2 f}{\partial {y_k}^2} \end{bmatrix} = \begin{bmatrix} 6 & 0
+    \\ 0 & 4 \end{bmatrix} \] 因此，答案是：\[ \begin{bmatrix} x*{k+1} \\ y*{k+1} \end{bmatrix}
+    = \begin{bmatrix} x_k \\ y_k \end{bmatrix} - {\begin{bmatrix} 6 & 0 \\ 0 & 4 \end{bmatrix}}^{-1}
+    \begin{bmatrix} 6x_k \\ 4y_k \end{bmatrix} \]</details>
 - en: 'Example: Convergence of Newton''s Method for N-D Optimization'
+  id: totrans-193
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 示例：N维优化中牛顿法的收敛性
 - en: When using the Newton's Method to find the minimizer of the function \(f(x,
     y) = 0.5x^2 +2.5y^2\), estimate the number of iterations it would take for convergence?
+  id: totrans-194
   prefs: []
   type: TYPE_NORMAL
+  zh: 当使用牛顿法寻找函数 \(f(x, y) = 0.5x^2 +2.5y^2\) 的最小值时，估计收敛所需的迭代次数？
 - en: '<details><summary>**Answer**</summary> Answer: \(\textbf{1}\).'
+  id: totrans-195
   prefs: []
   type: TYPE_NORMAL
+  zh: <details><summary>**答案**</summary> 答案：\(\textbf{1}\)。
 - en: 'Reason: Notice that Newton''s Method for N-D Optimization is derived from Taylor
     series truncated after quadratic terms (i.e,.\(\frac{1}{2}s^T {\bf H}\_f(\boldsymbol{x})s\)).
     This means that it is accurate for quadratic functions.</details>'
+  id: totrans-196
   prefs: []
   type: TYPE_NORMAL
+  zh: 原因：注意到N维优化中的牛顿法是从截断到二次项的泰勒级数推导出来的（即，\(\frac{1}{2}s^T {\bf H}\_f(\boldsymbol{x})s\))。这意味着它对二次函数是准确的。</details>
 - en: Review Questions
+  id: totrans-197
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 复习问题
 - en: What are the necessary and sufficient conditions for a point to be a local minimum
     in one dimension?
+  id: totrans-198
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 一维中，一个点成为局部最小值的必要和充分条件是什么？
 - en: What are the necessary and sufficient conditions for a point to be a local minimum
     in \({n}\) dimensions?
+  id: totrans-199
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 在 \({n}\) 维度中，一个点成为局部最小值的必要和充分条件是什么？
 - en: How do you classify extrema as minima, maxima, or saddle points?
+  id: totrans-200
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 如何将极值分类为最小值、最大值或鞍点？
 - en: What is the difference between a local and a global minimum?
+  id: totrans-201
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 局部最小值和全局最小值之间有什么区别？
 - en: What does it mean for a function to be unimodal?
+  id: totrans-202
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 函数单峰意味着什么？
 - en: What special attribute does a function need to have for golden section search
     to find a minimum?
+  id: totrans-203
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 函数需要具备哪些特殊属性，才能使黄金分割搜索找到最小值？
 - en: Run one iteration of golden section search.
+  id: totrans-204
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 执行一次黄金分割搜索的迭代。
 - en: Calculate the gradient of a function (function has many inputs, one output)
+  id: totrans-205
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 计算函数的梯度（函数有多个输入，一个输出）
 - en: Calculate the Jacobian of a function (function has many inputs, many outputs).
+  id: totrans-206
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 计算函数的雅可比矩阵（函数有多个输入，多个输出）。
 - en: Calculate the Hessian of a function.
+  id: totrans-207
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 计算函数的海森矩阵。
 - en: Find the search direction in steepest/gradient descent.
+  id: totrans-208
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 在最速下降/梯度下降中找到搜索方向。
 - en: Why must you perform a line search each step of gradient descent?
+  id: totrans-209
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 为什么梯度下降的每一步都必须执行线搜索？
 - en: Run one step of Newton's method in one dimension.
+  id: totrans-210
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 在一维中执行牛顿法的一次迭代。
 - en: Run one step of Newton's method in \({n}\) dimensions.
+  id: totrans-211
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 在 \({n}\) 维度中执行牛顿法的一次迭代。
 - en: When does Newton's method fail to converge to a minimum?
+  id: totrans-212
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 牛顿法何时无法收敛到最小值？
 - en: What operations do you need to perform each iteration of golden section search?
+  id: totrans-213
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 黄金分割搜索每次迭代需要执行哪些操作？
 - en: What operations do you need to perform each iteration of Newton's method in
     one dimension?
+  id: totrans-214
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 在一维中，牛顿法每次迭代需要执行哪些操作？
 - en: What operations do you need to perform each iteration of Newton's method in
     \({n}\) dimensions?
+  id: totrans-215
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 在 \({n}\) 维度中，牛顿法每次迭代需要执行哪些操作？
 - en: What is the convergence rate of Newton's method?
+  id: totrans-216
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 牛顿法的收敛速度是多少？
 - en: Changelog
+  id: totrans-217
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 更新日志
 - en: 'November 12th, 2025: Dev Singh (dsingh14) — fix code snippet'
+  id: totrans-218
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 2025年11月12日：Dev Singh (dsingh14) — 修复代码片段
 - en: 'October 31st, 2024: Dev Singh (dsingh14) — fixed gradient calculation'
+  id: totrans-219
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 2024年10月31日：Dev Singh (dsingh14) — 修复梯度计算
 - en: 'March 17th, 2024: Kaiyao Ke (kaiyaok2) — changed the order of the notes'
+  id: totrans-220
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 2024年3月17日：Kaiyao Ke (kaiyaok2) — 调整笔记顺序
 - en: <details><summary>View Remaining Entries</summary>
+  id: totrans-221
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: <details><summary>查看剩余条目</summary>
 - en: 'March 1st, 2024: Kaiyao Ke (kaiyaok2) — aligned notes with slides, added examples
     and refactored existing notes'
+  id: totrans-222
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 2024年3月1日：Kaiyao Ke (kaiyaok2) — 将笔记与幻灯片对齐，添加示例并重构现有笔记
 - en: 'August 8th, 2020: Jerry Yang (jiayiy7) — adds unimodal examples'
+  id: totrans-223
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 2020年8月8日：Jerry Yang (jiayiy7) — 添加单峰示例
 - en: 'April 26th, 2020: Mariana Silva (mfsilva) — small text revision'
+  id: totrans-224
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 2020年4月26日：Mariana Silva (mfsilva) — 小幅度文本修订
 - en: 'April 25th, 2018: Adam Stewart (adamjs5) — fixes missing parenthesis in `newtons_method`'
+  id: totrans-225
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 2018年4月25日：Adam Stewart (adamjs5) — 修复 `newtons_method` 中缺失的括号
 - en: 'November 25th, 2017: Adam Stewart (adamjs5) — fixes missing partial in Hessian
     matrix'
+  id: totrans-226
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 2017年11月25日：Adam Stewart (adamjs5) — 修复海森矩阵中缺失的偏导数
 - en: 'November 20th, 2017: Erin Carrier (ecarrie2) — removes Gauss-Newton/LM, minor
     rewording and small changes throughout'
+  id: totrans-227
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 2017年11月20日：Erin Carrier (ecarrie2) — 删除Gauss-Newton/LM，全文小幅度修改和调整
 - en: 'November 20th, 2017: Nate Bowman (nlbowma2) — adds review questions'
+  id: totrans-228
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 2017年11月20日：Nate Bowman (nlbowma2) — 添加复习问题
 - en: 'November 20th, 2017: Kaushik Kulkarni (kgk2) — fixes table formatting'
+  id: totrans-229
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 2017年11月20日：Kaushik Kulkarni (kgk2) — 修复表格格式
 - en: 'October 25th, 2017: Arun Lakshmanan (lakshma2) — first full draft'
+  id: totrans-230
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 2017年10月25日：Arun Lakshmanan (lakshma2) — 第一份完整草案
 - en: 'October 25th, 2017: Kaushik Kulkarni (kgk2) — first full draft'
+  id: totrans-231
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 2017年10月25日：Kaushik Kulkarni (kgk2) — 第一份完整草案
 - en: 'October 17th, 2017: Luke Olson (lukeo) — outline</details>'
+  id: totrans-232
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 2017年10月17日：Luke Olson (lukeo) — 概述</details>
 - en: Authors
+  id: totrans-233
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 作者
 - en: CS 357 Course Staff
+  id: totrans-234
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: CS 357 课程工作人员

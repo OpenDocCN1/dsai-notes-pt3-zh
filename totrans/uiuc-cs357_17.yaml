@@ -1,84 +1,132 @@
 - en: Least Squares Fitting
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 最小二乘拟合
 - en: 原文：[https://cs357.cs.illinois.edu/textbook/notes/linear-least-squares.html](https://cs357.cs.illinois.edu/textbook/notes/linear-least-squares.html)
+  id: totrans-1
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 原文：[https://cs357.cs.illinois.edu/textbook/notes/linear-least-squares.html](https://cs357.cs.illinois.edu/textbook/notes/linear-least-squares.html)
 - en: Learning Objectives
+  id: totrans-2
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 学习目标
 - en: Set up a linear least-squares problem from a set of data
+  id: totrans-3
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 从一组数据中建立一个线性最小二乘问题
 - en: Use an SVD to solve the least-squares problem
+  id: totrans-4
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 使用奇异值分解来解决最小二乘问题
 - en: Quantify the error in a least-squares problem
+  id: totrans-5
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 量化最小二乘问题中的误差
 - en: Linear Regression with a Set of Data
+  id: totrans-6
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 基于一组数据的线性回归
 - en: Given \(m\) data points (where \(m>2\)), \(\{(t_1,y_1),(t_2,y_2),\dots,(t_m,y_m)\}\),
     we want to find a straight line that best fits these data points. Mathematically,
     we are finding \(x_0\) and \(x_1\) such that
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: 给定 \(m\) 个数据点（其中 \(m>2\)），\(\{(t_1,y_1),(t_2,y_2),\dots,(t_m,y_m)\}\)，我们想要找到一条最佳拟合这些数据点的直线。从数学上讲，我们正在寻找
+    \(x_0\) 和 \(x_1\)，使得
 - en: \[ y_i = x_0 + x_1\,t_i , \quad \forall i \in [1,m]. \]
+  id: totrans-8
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ y_i = x_0 + x_1\,t_i , \quad \forall i \in [1,m]. \]
 - en: 'In matrix form, the resulting linear system is:'
+  id: totrans-9
   prefs: []
   type: TYPE_NORMAL
+  zh: 以矩阵形式，得到的线性系统为：
 - en: \[ \begin{bmatrix} 1 & t_1 \\ 1& t_2 \\ \vdots & \vdots\\ 1& t_m \end{bmatrix}
     \begin{bmatrix} x_0\\ x_1 \end{bmatrix} = \begin{bmatrix} y_1\\ y_2\\ \vdots\\
     y_m \end{bmatrix} \]\[{\bf A x} = {\bf b}\]
+  id: totrans-10
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \begin{bmatrix} 1 & t_1 \\ 1& t_2 \\ \vdots & \vdots\\ 1& t_m \end{bmatrix}
+    \begin{bmatrix} x_0\\ x_1 \end{bmatrix} = \begin{bmatrix} y_1\\ y_2\\ \vdots\\
+    y_m \end{bmatrix} \]\[{\bf A x} = {\bf b}\]
 - en: where \({\bf A}\) is an \(m\times n\) matrix, \({\bf x}\) is an \(n\times 1\)
     matrix, and \({\bf b}\) is an \(m\times 1\) matrix.
+  id: totrans-11
   prefs: []
   type: TYPE_NORMAL
+  zh: 其中 \({\bf A}\) 是一个 \(m\times n\) 矩阵，\({\bf x}\) 是一个 \(n\times 1\) 矩阵，\({\bf
+    b}\) 是一个 \(m\times 1\) 矩阵。
 - en: Ideally, we want to find the appropriate linear combination of the columns of
     \({\bf A}\) that makes up the vector \({\bf b}\). If a solution exists that satisfies
     \({\bf A x} = {\bf b}\), then \({\bf b} \in range({\bf A})\).
+  id: totrans-12
   prefs: []
   type: TYPE_NORMAL
+  zh: 理想情况下，我们想要找到 \({\bf A}\) 的列的适当线性组合，以构成向量 \({\bf b}\)。如果存在一个满足 \({\bf A x} =
+    {\bf b}\) 的解，那么 \({\bf b} \in range({\bf A})\)。
 - en: However, in this system of linear equations, we have more equations than unknowns,
     and there is usually no exact solution to the above problem.
+  id: totrans-13
   prefs: []
   type: TYPE_NORMAL
+  zh: 然而，在这个线性方程组系统中，我们拥有的方程比未知数多，通常上述问题没有精确的解。
 - en: When \( m>n\), we call this linear system ***overdetermined*** and the \({\bf
     A x} = {\bf b}\) equality is usually not exactly satisfiable as \({\bf b}\) may
     not lie in the column space of \({\bf A}\).
+  id: totrans-14
   prefs: []
   type: TYPE_NORMAL
+  zh: 当 \( m>n\) 时，我们称这个线性系统为 ***超定*** 的，并且 \({\bf A x} = {\bf b}\) 的等式通常不能精确满足，因为
+    \({\bf b}\) 可能不在 \({\bf A}\) 的列空间中。
 - en: Therefore, an overdetermined system is better written as
+  id: totrans-15
   prefs: []
   type: TYPE_NORMAL
+  zh: 因此，超定系统最好写成
 - en: \[{\bf A x} \cong {\bf b}\]
+  id: totrans-16
   prefs: []
   type: TYPE_NORMAL
+  zh: \[{\bf A x} \cong {\bf b}\]
 - en: Linear Least-squares Problem
+  id: totrans-17
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 线性最小二乘问题
 - en: For an overdetermined system \({\bf A x}\cong {\bf b}\), we are typically looking
     for a solution \({\bf x}\) that minimizes the Euclidean norm of the residual vector
     \({\bf r} = {\bf b} - {\bf A} {\bf x}\),
+  id: totrans-18
   prefs: []
   type: TYPE_NORMAL
+  zh: 对于一个超定系统 \({\bf A x}\cong {\bf b}\)，我们通常寻找一个解 \({\bf x}\)，使得残差向量 \({\bf r} =
+    {\bf b} - {\bf A} {\bf x}\) 的欧几里得范数最小，
 - en: \[\min_{ {\bf x} } \|{\bf r}\|_2^2 = \min_{ {\bf x} } \|{\bf b} - {\bf A} {\bf
     x}\|_2^2.\]
+  id: totrans-19
   prefs: []
   type: TYPE_NORMAL
+  zh: \[\min_{ {\bf x} } \|{\bf r}\|_2^2 = \min_{ {\bf x} } \|{\bf b} - {\bf A} {\bf
+    x}\|_2^2.\]
 - en: This problem \(A {\bf x} \cong {\bf b}\) is called a ***linear least-squares
     problem***, and the solution \({\bf x}\) is called the ***least-squares solution***.
     \({\bf A}\) is an \({m \times n}\) matrix where \({m \ge n}\), \({m}\) is the
@@ -86,113 +134,170 @@
     fit" function. The Linear Least Squares problem, \(A {\bf x} \cong {\bf b}\),
     ***always*** has a solution. This solution is unique if and only if \({rank({\bf
     A})= n}\).
+  id: totrans-20
   prefs: []
   type: TYPE_NORMAL
+  zh: 这个问题 \(A {\bf x} \cong {\bf b}\) 被称为 ***线性最小二乘问题***，其解 \({\bf x}\) 被称为 ***最小二乘解***。
+    \({\bf A}\) 是一个 \({m \times n}\) 矩阵，其中 \({m \ge n}\)，\({m}\) 是数据对点数，\({n}\) 是“最佳拟合”函数的参数数。线性最小二乘问题
+    \(A {\bf x} \cong {\bf b}\) ***总是*** 有解。当且仅当 \({rank({\bf A})= n}\) 时，这个解是唯一的。
 - en: Normal Equations
+  id: totrans-21
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 正则方程
 - en: 'Consider the least squares problem \({\bf A} {\bf x} \cong {\bf b}\), where
     \({\bf A} \) is \(m \times n\) real matrix (with \(m > n\)). As stated above,
     the least squares solution minimizes the squared 2-norm of the residual. Hence,
     we want to find the \(\mathbf{x}\) that minimizes the function:'
+  id: totrans-22
   prefs: []
   type: TYPE_NORMAL
+  zh: 考虑最小二乘问题 \({\bf A} {\bf x} \cong {\bf b}\)，其中 \({\bf A} \) 是 \(m \times n\)
+    的实矩阵（\(m > n\)）。如上所述，最小二乘解最小化了残差的平方 2-范数。因此，我们想要找到使以下函数最小的 \(\mathbf{x}\)：
 - en: \[\phi(\mathbf{x}) = \|\mathbf{r}\|_2^2 = (\mathbf{b} - {\bf A} \mathbf{x})^T
     (\mathbf{b} - {\bf A} \mathbf{x}) = \mathbf{b}^T \mathbf{b} - 2\mathbf{x}^T {\bf
     A} ^T \mathbf{b} + \mathbf{x}^T {\bf A} ^T {\bf A} \mathbf{x}.\]
+  id: totrans-23
   prefs: []
   type: TYPE_NORMAL
+  zh: \[\phi(\mathbf{x}) = \|\mathbf{r}\|_2^2 = (\mathbf{b} - {\bf A} \mathbf{x})^T
+    (\mathbf{b} - {\bf A} \mathbf{x}) = \mathbf{b}^T \mathbf{b} - 2\mathbf{x}^T {\bf
+    A} ^T \mathbf{b} + \mathbf{x}^T {\bf A} ^T {\bf A} \mathbf{x}.\]
 - en: 'To solve this unconstrained minimization problem, we need to satisfy the first
     order necessary condition to get a stationary point:'
+  id: totrans-24
   prefs: []
   type: TYPE_NORMAL
+  zh: 为了解决这个无约束最小化问题，我们需要满足一阶必要条件以获得驻点：
 - en: \[\nabla \phi(\mathbf{x}) = 0 \Rightarrow -2 {\bf A} ^T \mathbf{b} + 2 {\bf
     A} ^T {\bf A} \mathbf{x} = 0.\]
+  id: totrans-25
   prefs: []
   type: TYPE_NORMAL
+  zh: \[\nabla \phi(\mathbf{x}) = 0 \Rightarrow -2 {\bf A} ^T \mathbf{b} + 2 {\bf
+    A} ^T {\bf A} \mathbf{x} = 0.\]
 - en: The resulting square (\(n \times n\)) linear system
+  id: totrans-26
   prefs: []
   type: TYPE_NORMAL
+  zh: 得到的平方（\(n \times n\)）线性系统
 - en: \[{\bf A} ^T {\bf A} \mathbf{x} = {\bf A} ^T \mathbf{b}\]
+  id: totrans-27
   prefs: []
   type: TYPE_NORMAL
+  zh: \[{\bf A} ^T {\bf A} \mathbf{x} = {\bf A} ^T \mathbf{b}\]
 - en: 'is called the system of **normal equations**. If the matrix \({\bf A}\) is
     full rank, the least-squares solution is unique and given by:'
+  id: totrans-28
   prefs: []
   type: TYPE_NORMAL
+  zh: 被称为**正则方程组**。如果矩阵 \({\bf A}\) 是满秩的，则最小二乘解是唯一的，并且由以下给出：
 - en: \[{\bf x} = ({\bf A} ^T {\bf A})^{-1} {\bf A} ^T \mathbf{b}\]
+  id: totrans-29
   prefs: []
   type: TYPE_NORMAL
+  zh: \[{\bf x} = ({\bf A} ^T {\bf A})^{-1} {\bf A} ^T \mathbf{b}\]
 - en: 'We can look at the second-order sufficient condition of the minimization problem
     by evaluating the Hessian of \(\phi\):'
+  id: totrans-30
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们可以通过评估 \(\phi\) 的Hessian来查看最小化问题的二阶充分条件：
 - en: \[{\bf H} = 2 {\bf A} ^T {\bf A}\]
+  id: totrans-31
   prefs: []
   type: TYPE_NORMAL
+  zh: \[{\bf H} = 2 {\bf A} ^T {\bf A}\]
 - en: Since the Hessian is symmetric and positive-definite, we confirm that the least-squares
     solution \({\bf x}\) is indeed a minimizer.
+  id: totrans-32
   prefs: []
   type: TYPE_NORMAL
+  zh: 由于Hessian矩阵是对称和正定的，我们确认最小二乘解 \({\bf x}\) 确实是一个最小值点。
 - en: Although the least squares problem can be solved via the normal equations for
     full rank matrices, the solution tend to worsen the conditioning of the problem.
     Specifically,
+  id: totrans-33
   prefs: []
   type: TYPE_NORMAL
+  zh: 尽管对于满秩矩阵，可以通过正则方程解决最小二乘问题，但解往往会恶化问题的条件。具体来说，
 - en: \[\text{cond}({\bf A}^T {\bf A}) = (\text{cond}({\bf A}))^2.\]
+  id: totrans-34
   prefs: []
   type: TYPE_NORMAL
+  zh: \[\text{cond}({\bf A}^T {\bf A}) = (\text{cond}({\bf A}))^2.\]
 - en: Because of this, finding the least squares solution using Normal Equations is
     often not a good choice (however, simple to implement).
+  id: totrans-35
   prefs: []
   type: TYPE_NORMAL
+  zh: 由于这个原因，使用正则方程来找到最小二乘解通常不是一个好的选择（尽管实现起来很简单）。
 - en: Another approach to solve Linear Least Squares is to find \({\bf y} = {\bf A}
     {\bf x}\) which is closest to the vector \({\bf b}\). When the residual \({\bf
     r} = {\bf b} - {\bf y} = {\bf b} - {\bf A} {\bf x}\) is orthogonal to all columns
     of \({\bf A}\), then \({\bf y}\) is closest to \({\bf b}\).
+  id: totrans-36
   prefs: []
   type: TYPE_NORMAL
+  zh: 解决线性最小二乘的另一种方法是找到 \({\bf y} = {\bf A} {\bf x}\)，它是最接近向量 \({\bf b}\) 的。当残差 \({\bf
+    r} = {\bf b} - {\bf y} = {\bf b} - {\bf A} {\bf x}\) 与 \({\bf A}\) 的所有列正交时，则 \({\bf
+    y}\) 是最接近 \({\bf b}\) 的。
 - en: \[{\bf A}^T{\bf r} = {\bf A^T}\left({\bf b} - {\bf A} {\bf x}\right) = 0 \implies
     {\bf A} ^T {\bf A} {\bf x} = {\bf A}^T {\bf b}\]
+  id: totrans-37
   prefs: []
   type: TYPE_NORMAL
+  zh: \[{\bf A}^T{\bf r} = {\bf A^T}\left({\bf b} - {\bf A} {\bf x}\right) = 0 \implies
+    {\bf A} ^T {\bf A} {\bf x} = {\bf A}^T {\bf b}\]
 - en: Data Fitting vs Interpolation
+  id: totrans-38
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 数据拟合与插值
 - en: It is important to understand that interpolation and least-squares data fitting,
     while somewhat similar, are fundamentally different in their goals. In both problems
     we have a set of data points \((t_i, y_i)\), \(i=1,\ldots,m\), and we are attempting
     to determine the coefficients for a linear combination of basis functions.
+  id: totrans-39
   prefs: []
   type: TYPE_NORMAL
+  zh: 重要的是要理解，插值和最小二乘数据拟合，尽管在某些方面相似，但它们的目的是根本不同的。在这两个问题中，我们都有一个数据点集 \((t_i, y_i)\)，\(i=1,\ldots,m\)，并且我们试图确定基函数线性组合的系数。
 - en: With interpolation, we are looking for the linear combination of basis functions
     such that the resulting function passes through each of the data points *exactly*.
     So, for \(m\) unique data points, we need \(m\) linearly independent basis functions
     (and the resulting linear system will be square and full rank, so it will have
     an exact solution).
+  id: totrans-40
   prefs: []
   type: TYPE_NORMAL
+  zh: 通过插值，我们寻找基函数的线性组合，使得所得函数能够**精确地**通过每个数据点。因此，对于 \(m\) 个独特的数据点，我们需要 \(m\) 个线性无关的基函数（并且由此产生的线性系统将是方阵且满秩，因此它将有一个精确的解）。
 - en: In contrast, however, with least squares data fitting we have some model that
     we are trying to find the parameters of the model that best fits the data points.
     For example, with linear least squares we may have 300 noisy data points that
     we want to model as a quadratic function. Therefore, we are trying represent our
     data as
+  id: totrans-41
   prefs: []
   type: TYPE_NORMAL
+  zh: 相反，然而，在最小二乘数据拟合中，我们有一些模型，我们试图找到最佳拟合数据点的模型参数。例如，在线性最小二乘中，我们可能有300个有噪声的数据点，我们希望将其建模为二次函数。因此，我们试图将我们的数据表示为
 - en: \[y = x_0 + x_1 t + x_2 t^2\]
+  id: totrans-42
   prefs: []
   type: TYPE_NORMAL
+  zh: \[y = x_0 + x_1 t + x_2 t^2\]
 - en: where \(x_0, x_1,\) and \(x_2\) are the unknowns we want to determine (the coefficients
     to our basis functions). Because there are significantly more data points than
     parameters, we do not expect that the function will exactly pass through the data
     points. For this example, with noisy data points we would not want our function
     to pass through the data points exactly as we are looking to model the general
     trend and not capture the noise.
+  id: totrans-43
   prefs: []
   type: TYPE_NORMAL
 - en: Computational Complexity
+  id: totrans-44
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
@@ -201,86 +306,109 @@
     factorization. Note that the overall computational complexity of the factorization
     is \(\mathcal{O}(n^3)\). However, the construction of the matrix \({\bf A} ^T
     {\bf A}\) has complexity \(\mathcal{O}(mn^2)\).
+  id: totrans-45
   prefs: []
   type: TYPE_NORMAL
 - en: In typical data fitting problems, \(m >> n\), so the overall time complexity
     of the Normal Equations method is \({\bf \mathcal{O}(mn^2)}\).
+  id: totrans-46
   prefs: []
   type: TYPE_NORMAL
 - en: Solving Least-Squares Problems Using SVD
+  id: totrans-47
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
 - en: Another way to solve the least-squares problem \({\bf A} {\bf x} \cong {\bf
     b}\) (where we are looking for \({\bf x}\) that minimizes \(\|{\bf b} - {\bf A}
     {\bf x}\|_2^2\)) is to use the singular value decomposition (SVD) of \({\bf A}\),
+  id: totrans-48
   prefs: []
   type: TYPE_NORMAL
 - en: \[{\bf A} = {\bf U \Sigma V}^T\]
+  id: totrans-49
   prefs: []
   type: TYPE_NORMAL
 - en: 'where the squared norm of the residual becomes:'
+  id: totrans-50
   prefs: []
   type: TYPE_NORMAL
 - en: \[ \begin{align} \|{\bf b} - {\bf A} {\bf x}\|_2^2 &= \|{\bf b} - {\bf U \Sigma
     V}^T {\bf x}\|_2^2 & (1)\\ &= \|{\bf U}^T ({\bf b} - {\bf U \Sigma V}^T {\bf x})\|_2^2
     & (2)\\ &= \|{\bf U}^T {\bf b} - {\bf \Sigma V}^T {\bf x}\|_2^2 \end{align} \]
+  id: totrans-51
   prefs: []
   type: TYPE_NORMAL
 - en: We can go from (1) to (2) because multiplying a vector by an orthogonal matrix
     does not change the 2-norm of the vector. Now, let
+  id: totrans-52
   prefs: []
   type: TYPE_NORMAL
 - en: \[ {\bf y} = {\bf V}^T {\bf x} \]\[ {\bf z} = {\bf U}^T {\bf b}, \]
+  id: totrans-53
   prefs: []
   type: TYPE_NORMAL
 - en: We are now looking for \({\bf y}\) that minimizes
+  id: totrans-54
   prefs: []
   type: TYPE_NORMAL
 - en: \[ \|{\bf z} - \Sigma {\bf y}\|_2^2\. \]
+  id: totrans-55
   prefs: []
   type: TYPE_NORMAL
 - en: Note that
+  id: totrans-56
   prefs: []
   type: TYPE_NORMAL
 - en: \[ \Sigma {\bf y} = \begin{bmatrix} \sigma_1 y_1\\ \sigma_2 y_2\\ \vdots \\
     \sigma_n y_n \end{bmatrix},(\sigma_i = \Sigma_{i,i}) \]
+  id: totrans-57
   prefs: []
   type: TYPE_NORMAL
 - en: so we choose
+  id: totrans-58
   prefs: []
   type: TYPE_NORMAL
 - en: \[ y_i = \begin{cases} \frac{z_i}{\sigma_i} & \sigma_i \neq 0\\ 0 & \sigma_i
     = 0 \end{cases} \]
+  id: totrans-59
   prefs: []
   type: TYPE_NORMAL
 - en: which will minimize \(\|{\bf z} - {\bf \Sigma} {\bf y}\|_2^2\). Finally, we
     compute
+  id: totrans-60
   prefs: []
   type: TYPE_NORMAL
 - en: \[{\bf x} = {\bf V} {\bf y}\]
+  id: totrans-61
   prefs: []
   type: TYPE_NORMAL
 - en: to find \({\bf x}\). The expression of least-squares solution is
+  id: totrans-62
   prefs: []
   type: TYPE_NORMAL
 - en: \[{\bf x} = \sum_{\sigma_i \neq 0} \frac{ {\bf u}_i^T {\bf b} }{\sigma_i} {\bf
     v}_i\]
+  id: totrans-63
   prefs: []
   type: TYPE_NORMAL
 - en: where \({\bf u}_i\) represents the \(i\)th column of \({\bf U}\) and \({\bf
     v}_i\) represents the \(i\)th column of \({\bf V}\).
+  id: totrans-64
   prefs: []
   type: TYPE_NORMAL
 - en: 'In closed-form, we can express the least-squares solution as:'
+  id: totrans-65
   prefs: []
   type: TYPE_NORMAL
 - en: \[{\bf x} = {\bf V\Sigma}^{+}{\bf U}^T{\bf b}\]
+  id: totrans-66
   prefs: []
   type: TYPE_NORMAL
 - en: 'where \({\bf \Sigma}^{+}\) is the pseudoinverse of the singular matrix computed
     by taking the reciprocal of the non-zero diagonal entries, leaving the zeros in
     place and transposing the resulting matrix. For example:'
+  id: totrans-67
   prefs: []
   type: TYPE_NORMAL
 - en: \[\Sigma = \begin{bmatrix} \sigma_1 & & &\\ & \ddots & & \\& & \sigma_r &\\
@@ -288,45 +416,56 @@
     ... & 0 \end{bmatrix} \quad \implies \quad \Sigma^{+} = \begin{bmatrix} \frac{1}{\sigma_1}
     & & & & 0 & \dots & 0 \\ & \ddots & & & & \ddots &\\ & & \frac{1}{\sigma_r} &
     & 0 & \dots & 0 \\ & & & 0 & 0 & \dots & 0 \end{bmatrix}.\]
+  id: totrans-68
   prefs: []
   type: TYPE_NORMAL
 - en: 'Or in reduced form:'
+  id: totrans-69
   prefs: []
   type: TYPE_NORMAL
 - en: \[{\bf x} = {\bf V\Sigma}_R^{+}{\bf U}_R^T{\bf b}\]
+  id: totrans-70
   prefs: []
   type: TYPE_NORMAL
 - en: Computational Complexity Using Reduced SVD
+  id: totrans-71
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
 - en: Solving the least squares problem using a **given** reduced SVD has time complexity
     \(\mathcal{O}(mn)\).
+  id: totrans-72
   prefs: []
   type: TYPE_NORMAL
 - en: Assume we know the reduced SVD of \(\bf A\) beforehand (which inplies that we
     know the entries of \(\bf V, \Sigma^{+}_{R}, U^{T}_{R}\) beforehand).
+  id: totrans-73
   prefs: []
   type: TYPE_NORMAL
 - en: Then, solving \(\bf z = U^{T}_{R}b\) with \(n \times m\) matrix \(\bf U^{T}_{R}\)
     and \(m \times 1\) vector \(\bf b\) has \(\mathcal{O}(mn)\).
+  id: totrans-74
   prefs: []
   type: TYPE_NORMAL
 - en: Solving \(\bf y = \Sigma^{+}_{R}z\) with \(n \times n\) matrix \(\bf \Sigma^{+}_{R}\)
     and \(n \times 1\) vector \(\bf z\) has \(\mathcal{O}(n)\) since \(\bf \Sigma^{+}_{R}\)
     is a diagonal matrix.
+  id: totrans-75
   prefs: []
   type: TYPE_NORMAL
 - en: Solving \(\bf x = Vy\) with \(n \times n\) matrix \(\bf V\) and \(n \times 1\)
     vector \(\bf y\) has \(\mathcal{O}(n^2)\).
+  id: totrans-76
   prefs: []
   type: TYPE_NORMAL
 - en: Therefore the time complexity is \(\mathcal{O}(n^2 + n + mn) = \mathcal{O}(mn)\)
     since \(m > n\). We can achieve this only when we know the Reduced SVD of \(\bf
     A\) beforehand.
+  id: totrans-77
   prefs: []
   type: TYPE_NORMAL
 - en: Determining Residual in Least-Squares Problem Using SVD
+  id: totrans-78
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
@@ -335,39 +474,49 @@
     squares problem \({\bf A} {\bf x} \cong {\bf b}\). We can also use the SVD to
     determine an exact expression for the value of the residual with the least-squares
     solution.
+  id: totrans-79
   prefs: []
   type: TYPE_NORMAL
 - en: Assume in the SVD of \({\bf A}\), \({\bf A} = {\bf U \Sigma V}^T\), the diagonal
     entries of \({\bf \Sigma}\) are in descending order (\(\sigma_1 \ge \sigma_2 \ge
     \dots \)), and the first \(r\) diagonal entries of \({\bf \Sigma}\) are nonzeros
     while all others are zeros, then
+  id: totrans-80
   prefs: []
   type: TYPE_NORMAL
 - en: \[\begin{align} \|{\bf b} - A {\bf x}\|_2^2 &= \|{\bf z} - \Sigma {\bf y}\|_2^2\\
     &= \sum_{i=1}^n (z_i - \sigma_i y_i)^2\\ &= \sum_{i=1}^r (z_i - \sigma_i \frac{z_i}{\sigma_i})^2
     + \sum_{i=r+1}^n (z_i - 0)^2\\ &= \sum_{i=r+1}^n z_i^2 \end{align}\]
+  id: totrans-81
   prefs: []
   type: TYPE_NORMAL
 - en: Recall that
+  id: totrans-82
   prefs: []
   type: TYPE_NORMAL
 - en: \[ {\bf z} = {\bf U}^T {\bf b}, \]
+  id: totrans-83
   prefs: []
   type: TYPE_NORMAL
 - en: we get
+  id: totrans-84
   prefs: []
   type: TYPE_NORMAL
 - en: \[ \|{\bf b} - {\bf A} {\bf x}\|_2^2 = \sum_{i=r+1}^n ({\bf u}_i^T {\bf b})^2
     \]
+  id: totrans-85
   prefs: []
   type: TYPE_NORMAL
 - en: where \({\bf u}_i\) represents the \(i\)th column of \({\bf U}\).
+  id: totrans-86
   prefs: []
   type: TYPE_NORMAL
 - en: (For more formal proof check [this video.](https://mediaspace.illinois.edu/media/t/1_w6u83js8/158464041))
+  id: totrans-87
   prefs: []
   type: TYPE_NORMAL
 - en: Example of a Least-Squares solution using SVD
+  id: totrans-88
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
@@ -375,12 +524,16 @@
     we want to find the coefficients for a line, \({y = x_0 + x_1 t}\), that best
     fits these data points. The code for using SVD to solve this least-squares problem
     is:'
+  id: totrans-89
   prefs: []
   type: TYPE_NORMAL
 - en: '[PRE0]'
+  id: totrans-90
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: Non-linear Least-Squares Problems vs. Linear Least-Squares Problems
+  id: totrans-91
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
@@ -388,172 +541,246 @@
     linear system \(A {\bf x} \cong {\bf b}.\) This problem is called "linear" because
     the fitting function we are looking for is linear in the components of \({\bf
     x}\). For example, if we are looking for a polynomial fitting function
+  id: totrans-92
   prefs: []
   type: TYPE_NORMAL
+  zh: 上述线性最小二乘问题与一个超定线性系统 \(A {\bf x} \cong {\bf b}\) 相关联。这个问题被称为“线性”，因为我们正在寻找的拟合函数在
+    \({\bf x}\) 的分量上是线性的。例如，如果我们正在寻找一个多项式拟合函数
 - en: \[ f(t,{\bf x}) = x_1 + x_2t + x_3t^2 + \dotsb + x_nt^{n-1} \]
+  id: totrans-93
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ f(t,{\bf x}) = x_1 + x_2t + x_3t^2 + \dotsb + x_nt^{n-1} \]
 - en: to fit the data points \({(t_i,y_i), i = 1, …, m}\) and (\(m > n\)), the problem
     can be solved using the linear least-squares method, because \(f(t,{\bf x})\)
     is linear in the components of \({\bf x}\) (though \(f(t,{\bf x})\) is nonlinear
     in \(t\)).
+  id: totrans-94
   prefs: []
   type: TYPE_NORMAL
+  zh: 来拟合数据点 \({(t_i,y_i), i = 1, …, m}\)（其中 \(m > n\)），这个问题可以使用线性最小二乘法来解决，因为 \(f(t,{\bf
+    x})\) 在 \({\bf x}\) 的分量上是线性的（尽管 \(f(t,{\bf x})\) 在 \(t\) 上是非线性的）。
 - en: If the fitting function \(f(t,{\bf x})\) for data points \((t_i,y_i), i = 1,
     ..., m\) is nonlinear in the components of \({\bf x}\), then the problem is a
     non-linear least-squares problem. For example, fitting sum of exponentials
+  id: totrans-95
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果数据点 \((t_i,y_i), i = 1, ..., m\) 的拟合函数 \(f(t,{\bf x})\) 在 \({\bf x}\) 的分量上是非线性的，那么这个问题就是一个非线性最小二乘问题。例如，拟合指数和
 - en: \[ f(t,{\bf x}) = x_1 e^{x_2 t} + x_2 e^{x_3 t} + \dotsb + x_{n-1} e^{x_n t}
     \]
+  id: totrans-96
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ f(t,{\bf x}) = x_1 e^{x_2 t} + x_2 e^{x_3 t} + \dotsb + x_{n-1} e^{x_n t}
+    \]
 - en: is a ***non-linear least-squares problem***.
+  id: totrans-97
   prefs: []
   type: TYPE_NORMAL
+  zh: 是一个***非线性最小二乘问题***。
 - en: Linear least-squares problems have a closed form solution while nonlinear least-squares
     problems do not have a closed form solution and requires numerical methods to
     solve.
+  id: totrans-98
   prefs: []
   type: TYPE_NORMAL
+  zh: 线性最小二乘问题有闭式解，而非线性最小二乘问题没有闭式解，需要使用数值方法来求解。
 - en: Review Questions
+  id: totrans-99
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 复习问题
 - en: What value does the least-squares solution minimize?
+  id: totrans-100
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 最小二乘解最小化什么值？
 - en: For a given model and given data points, can you form the system \({\bf A x}
     \cong {\bf b}\) for a least squares problem?
+  id: totrans-101
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 对于给定的模型和给定的数据点，你能形成最小二乘问题 \({\bf A x} \cong {\bf b}\) 的系统吗？
 - en: For a small problem, given some data points and a model, can you determine the
     least squares solution?
+  id: totrans-102
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 对于一个小问题，给定一些数据点和模型，你能确定最小二乘解吗？
 - en: In general, what can we say about the value of the residual for the least squares
     solution?
+  id: totrans-103
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 通常，我们可以对最小二乘解的残差值说些什么？
 - en: What are the differences between least squares data fitting and interpolation?
+  id: totrans-104
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 最小二乘数据拟合和插值之间有什么区别？
 - en: Given the SVD of a matrix \({\bf A}\), how can we use the SVD to compute the
     residual of the least squares solution?
+  id: totrans-105
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 给定矩阵 \({\bf A}\) 的奇异值分解（SVD），我们如何使用SVD来计算最小二乘解的残差？
 - en: Given the SVD of a matrix \({\bf A}\), how can we use the SVD to compute the
     least squares solution? Be able to do this for a small problem.
+  id: totrans-106
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 给定矩阵 \({\bf A}\) 的奇异值分解（SVD），我们如何使用SVD来计算最小二乘解？对于一个小问题，能够做到这一点。
 - en: Given an already computed SVD of a matrix \({\bf A}\), what is the cost of using
     the SVD to solve a least squares problem?
+  id: totrans-107
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 给定一个矩阵 \({\bf A}\) 的已计算奇异值分解（SVD），使用SVD求解最小二乘问题的成本是多少？
 - en: Why would you use the SVD instead of normal equations to find the solution to
     \({\bf A x} \cong {\bf b}\)?
+  id: totrans-108
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 为什么你会使用奇异值分解（SVD）而不是正则方程来找到 \({\bf A x} \cong {\bf b}\) 的解？
 - en: 'Which costs less: solving a least squares problem via the normal equations
     or solving a least squares problem using the SVD?'
+  id: totrans-109
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 通过正则方程求解最小二乘问题或使用奇异值分解（SVD）求解最小二乘问题哪个成本更低？
 - en: What is the difference between a linear and a nonlinear least squares problem?
     What sort of model makes it a nonlinear problem? For data points \({\left(t_i,
     y_i\right)}\), is fitting \({y = a*cos(t) + b}\) where \({a}\) and \({b}\) are
     the coefficients we are trying to determine a linear or nonlinear least squares
     problem?
+  id: totrans-110
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 线性最小二乘问题和非线性最小二乘问题有什么区别？什么类型的模型使其成为非线性问题？对于数据点 \({\left(t_i, y_i\right)}\)，如果我们尝试拟合
+    \({y = a*cos(t) + b}\)（其中 \({a}\) 和 \({b}\) 是我们试图确定的系数），这是一个线性还是非线性最小二乘问题？
 - en: Changelog
+  id: totrans-111
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 更新日志
 - en: 'March 6th, 2024: Bhargav Chandaka (bhargav9) — major reorganziation to match
     up with content in slides/videos'
+  id: totrans-112
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 2024年3月6日：Bhargav Chandaka (bhargav9) — 对内容进行重大重组，以与幻灯片/视频中的内容相匹配
 - en: 'April 28th, 2023: Yuxuan Chen (yuxuan19) — adding computational complexity
     using reduced SVD'
+  id: totrans-113
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 2023年4月28日：Yuxuan Chen (yuxuan19) — 添加使用降秩SVD的计算复杂度
 - en: 'April 9th, 2022: Arnav Shah (arnavss2) — add few comments from slides asked
     in homework'
+  id: totrans-114
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 2022年4月9日：Arnav Shah (arnavss2) — 在作业中添加了关于幻灯片的一些评论
 - en: <details><summary>View Remaining Entries</summary>
+  id: totrans-115
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: <details><summary>查看剩余条目</summary>
 - en: 'August 8th, 2020: Jerry Yang (jiayiy7) — adds formal proof link for solving
     least-squares using SVD'
+  id: totrans-116
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 2020年8月8日：Jerry Yang (jiayiy7) — 添加了解决最小二乘法使用奇异值分解的正式证明链接
 - en: 'April 26th, 2020: Mariana Silva (mfsilva) — improved text overall; removed
     theory of the nonlinear least-squares'
+  id: totrans-117
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 2020年4月26日：Mariana Silva (mfsilva) — 全面改进了文本；移除了非线性最小二乘法的理论
 - en: 'November 14th, 2018: Erin Carrier (ecarrie2) — fix typo in lstsq res sum range'
+  id: totrans-118
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 2018年11月14日：Erin Carrier (ecarrie2) — 修复了lstsq结果求和范围中的错误
 - en: 'January 14th, 2018: Erin Carrier (ecarrie2) — removes demo links'
+  id: totrans-119
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 2018年1月14日：Erin Carrier (ecarrie2) — 移除了演示链接
 - en: 'November 29th, 2017: Erin Carrier (ecarrie2) — fixes typos in lst-sq code,
     jacobian desc in nonlinear lst-sq'
+  id: totrans-120
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 2017年11月29日：Erin Carrier (ecarrie2) — 修复了lst-sq代码中的错误，非线性lst-sq中的雅可比描述
 - en: 'November 17th, 2017: Erin Carrier (ecarrie2) — fixes incorrect link'
+  id: totrans-121
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 2017年11月17日：Erin Carrier (ecarrie2) — 修复了错误的链接
 - en: 'November 16th, 2017: Erin Carrier (ecarrie2) — adds review questions, minor
     formatting changes throughout for consistency, adds normal equations and interp
     vs lst-sq sections, removes Gauss-Newton from nonlinear least squares'
+  id: totrans-122
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 2017年11月16日：Erin Carrier (ecarrie2) — 添加了复习问题，对全文进行了细微的格式调整以确保一致性，增加了正常方程和插值与列表平方法部分，从非线性最小二乘法中移除了高斯-牛顿法
 - en: 'November 12th, 2017: Yu Meng (yumeng5) — first complete draft'
+  id: totrans-123
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 2017年11月12日：Yu Meng (yumeng5) — 首次完整草案
 - en: 'October 17th, 2017: Luke Olson (lukeo) — outline</details>'
+  id: totrans-124
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 2017年10月17日：Luke Olson (lukeo) — 概要</details>
 - en: Authors
+  id: totrans-125
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 作者
 - en: CS 357 Course Staff
+  id: totrans-126
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: CS 357 课程工作人员
