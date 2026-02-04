@@ -1,140 +1,215 @@
 - en: Taylor Series
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 泰勒级数
 - en: 原文：[https://cs357.cs.illinois.edu/textbook/notes/taylor.html](https://cs357.cs.illinois.edu/textbook/notes/taylor.html)
+  id: totrans-1
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 原文：[https://cs357.cs.illinois.edu/textbook/notes/taylor.html](https://cs357.cs.illinois.edu/textbook/notes/taylor.html)
 - en: Learning Objectives
+  id: totrans-2
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 学习目标
 - en: Approximate a function using a Taylor series
+  id: totrans-3
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 使用泰勒级数近似一个函数
 - en: Approximate function derivatives using a Taylor series
+  id: totrans-4
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 使用泰勒级数近似函数导数
 - en: Quantify the error in a Taylor series approximation
+  id: totrans-5
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 量化泰勒级数近似的误差
 - en: Polynomial Overview
+  id: totrans-6
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 多项式概述
 - en: Degree *n* Polynomial
+  id: totrans-7
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 次数 \(n\) 的多项式
 - en: A polynomial in a variable \(x\) can always be written (or rewritten) in the
     form
+  id: totrans-8
   prefs: []
   type: TYPE_NORMAL
+  zh: 变量 \(x\) 的多项式总可以写成（或重新写成）以下形式
 - en: \[ a_{n}x^{n}+a_{n-1}x^{n-1}+\dotsb +a_{2}x^{2}+a_{1}x+a_{0} \]
+  id: totrans-9
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ a_{n}x^{n}+a_{n-1}x^{n-1}+\dotsb +a_{2}x^{2}+a_{1}x+a_{0} \]
 - en: where \(a_{i}\) (\(0 \le i \le n\)) are constants.
+  id: totrans-10
   prefs: []
   type: TYPE_NORMAL
+  zh: 其中 \(a_{i}\) (\(0 \le i \le n\)) 是常数。
 - en: Using the summation notation, we can express the polynomial concisely by
+  id: totrans-11
   prefs: []
   type: TYPE_NORMAL
+  zh: 使用求和符号，我们可以简洁地表达多项式：
 - en: \[ \sum_{k=0}^{n} a_k x^k. \]
+  id: totrans-12
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \sum_{k=0}^{n} a_k x^k. \]
 - en: If \(a_n \neq 0\), the polynomial is called an \(n\)-th degree polynomial.
+  id: totrans-13
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果 \(a_n \neq 0\)，则该多项式称为 \(n\) 次多项式。
 - en: Degree *n* Polynomial as a Linear Combination of Monomials
+  id: totrans-14
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 次数 \(n\) 的多项式作为单项式的线性组合
 - en: A monomial in a variable \(x\) is a power of \(x\) where the exponent is a nonnegative
     integer (i.e. \(x^n\) where \(n\) is a nonnegative integer). You might see another
     definition of monomial which allows a nonzero constant as a coefficient in the
     monomial (i.e. \(a x^n\) where \(a\) is nonzero and \(n\) is a nonnegative integer).
     Then an \(n\)-th degree polynomial
+  id: totrans-15
   prefs: []
   type: TYPE_NORMAL
+  zh: 变量 \(x\) 的单项式是 \(x\) 的幂，其中指数是非负整数（即 \(x^n\)，其中 \(n\) 是非负整数）。你可能会看到单项式的另一种定义，它允许单项式中的系数为非零常数（即
+    \(a x^n\)，其中 \(a\) 是非零且 \(n\) 是非负整数）。那么一个 \(n\) 次多项式
 - en: \[ \sum_{k=0}^{n} a_k x^k \]
+  id: totrans-16
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \sum_{k=0}^{n} a_k x^k \]
 - en: can be seen as a linear combination of monomials \({x^i\ |\ 0 \le i \le n}\).
+  id: totrans-17
   prefs: []
   type: TYPE_NORMAL
+  zh: 可以看作是单项式 \({x^i\ |\ 0 \le i \le n}\) 的线性组合。
 - en: Taylor Series Expansion
+  id: totrans-18
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 泰勒级数展开
 - en: 'Taylor Series Expansion: Infinite'
+  id: totrans-19
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 泰勒级数展开：无限
 - en: A Taylor series is a representation of a function as an infinite sum of terms
     that are calculated from the values of the function's derivatives at a single
     point. The Taylor series expansion about \(x=x_0\) of a function \(f(x)\) that
     is infinitely differentiable at \(x_0\) is the power series
+  id: totrans-20
   prefs: []
   type: TYPE_NORMAL
+  zh: 泰勒级数是一个函数的表示，它是一个无穷级数，这些项是通过在单一点上计算函数导数的值来计算的。关于 \(x=x_0\) 的函数 \(f(x)\) 的泰勒级数展开，如果
+    \(f(x)\) 在 \(x_0\) 处是可无限次微分的，那么它是一个幂级数
 - en: \[ f(x_0)+\frac{f'(x_0)}{1!}(x-x_0)+\frac{f''(x_0)}{2!}(x-x_0)^2+\frac{f'''(x_0)}{3!}(x-x_0)^3+\dotsb
     \]
+  id: totrans-21
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ f(x_0)+\frac{f'(x_0)}{1!}(x-x_0)+\frac{f''(x_0)}{2!}(x-x_0)^2+\frac{f'''(x_0)}{3!}(x-x_0)^3+\dotsb
+    \]
 - en: Using the summation notation, we can express the Taylor series concisely by
+  id: totrans-22
   prefs: []
   type: TYPE_NORMAL
+  zh: 使用求和符号，我们可以简洁地表达泰勒级数：
 - en: \[ \sum_{k=0}^{\infty} \frac{f^{(k)}(x_0)}{k!}(x-x_0)^k .\]
+  id: totrans-23
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \sum_{k=0}^{\infty} \frac{f^{(k)}(x_0)}{k!}(x-x_0)^k .\]
 - en: (Recall that \(0! = 1\))
+  id: totrans-24
   prefs: []
   type: TYPE_NORMAL
+  zh: （回忆一下 \(0! = 1\)）
 - en: The infinite Taylor series expansion of any polynomial is the polynomial itself.
+  id: totrans-25
   prefs: []
   type: TYPE_NORMAL
+  zh: 任何多项式的无限泰勒级数展开是该多项式本身。
 - en: 'Taylor Series Expansion: Finite'
+  id: totrans-26
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 泰勒级数展开：有限
 - en: In practice, however, we often cannot compute the (infinite) Taylor series of
     the function, or the function is not infinitely differentiable at some points.
     Therefore, we often have to truncate the Taylor series (use a finite number of
     terms) to approximate the function.
+  id: totrans-27
   prefs: []
   type: TYPE_NORMAL
+  zh: 然而，在实践中，我们通常无法计算函数的（无限）泰勒级数，或者函数在某些点处不可无限次微分。因此，我们通常必须截断泰勒级数（使用有限个项）来近似函数。
 - en: Taylor Series Approximation of Degree *n*
+  id: totrans-28
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 次数 \(n\) 的泰勒级数近似
 - en: If we use the first \(n+1\) terms of the Taylor series, we will get
+  id: totrans-29
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果我们使用泰勒级数的前 \(n+1\) 项，我们将得到
 - en: \[ T_n(x) = \sum_{k=0}^{n} \frac{f^{(k)}(x_0)}{k!}(x-x_0)^k ,\]
+  id: totrans-30
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ T_n(x) = \sum_{k=0}^{n} \frac{f^{(k)}(x_0)}{k!}(x-x_0)^k ,\]
 - en: which is called a Taylor polynomial of degree \(n\).
+  id: totrans-31
   prefs: []
   type: TYPE_NORMAL
+  zh: 这被称为 \(n\) 次泰勒多项式。
 - en: The finite Taylor series expansion of degree \(n\) for any polynomial is the
     polynomial itself truncated to degree \(n\).
+  id: totrans-32
   prefs: []
   type: TYPE_NORMAL
+  zh: 任何多项式的 \(n\) 次有限泰勒级数展开是该多项式截断到 \(n\) 次的版本。
 - en: Examples
+  id: totrans-33
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 例子
 - en: Example of a Taylor Series Expansion
+  id: totrans-34
   prefs:
   - PREF_H4
   type: TYPE_NORMAL
+  zh: 泰勒级数展开的例子
 - en: How would we expand \(f(x) = \cos x\) about the point \(x_0 = 0\), following
     the formula
+  id: totrans-35
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们将如何根据公式在点 \(x_0 = 0\) 处展开 \(f(x) = \cos x\)？
 - en: \[f(x) = f(x_0)+\frac{ f'(x_0) }{1!}(x-x_0)+\frac{ f''(x_0) }{2!}(x-x_0)^2+\frac{
     f'''(x_0) }{3!}(x-x_0)^3+\dotsb\] <details><summary>**Answer**</summary> Well,
     we need to compute the derivatives of \(f(x)\) = cos \(x\) at \(x = x_0\). $ \begin{align}
@@ -143,16 +218,29 @@
     Then $ \begin{align} \cos x &= f(0)+\frac{f'(0)}{1!}x+\frac{f''(0)}{2!}x^2+\frac{f'''(0)}{3!}x^3+\dotsb\\
     &= 1 + 0 - \frac{1}{2}x^2 + 0 +\dotsb\\ &= \sum_{k=0}^{\infty} \frac{(-1)^k}{(2k)!}x^{2k}
     \end{align} $</details>
+  id: totrans-36
   prefs: []
   type: TYPE_NORMAL
+  zh: \[f(x) = f(x_0)+\frac{ f'(x_0) }{1!}(x-x_0)+\frac{ f''(x_0) }{2!}(x-x_0)^2+\frac{
+    f'''(x_0) }{3!}(x-x_0)^3+\dotsb\] <details><summary>**答案**</summary> 好吧，我们需要计算
+    \(f(x)\) = cos \(x\) 在 \(x = x_0\) 处的导数。 $ \begin{align} f(x_0) &= \cos(0) = 1\\
+    f'(x_0) &= -\sin(0) = 0\\ f''(x_0) &= -\cos(0) = -1\\ f'''(x_0) &= \sin(0) = 0\\
+    f^{(4)}(x_0) &= \cos(0) = 1\\ &\vdots \end{align} $ 然后 $ \begin{align} \cos x
+    &= f(0)+\frac{f'(0)}{1!}x+\frac{f''(0)}{2!}x^2+\frac{f'''(0)}{3!}x^3+\dotsb\\
+    &= 1 + 0 - \frac{1}{2}x^2 + 0 +\dotsb\\ &= \sum_{k=0}^{\infty} \frac{(-1)^k}{(2k)!}x^{2k}
+    \end{align} $</details>
 - en: Example of Using a Truncated Taylor Series to Approximate a Function
+  id: totrans-37
   prefs:
   - PREF_H4
   type: TYPE_NORMAL
+  zh: 使用截断泰勒级数近似函数的例子
 - en: How would we approximate \(f(x) = \sin x\) at \(x = 2\) using a degree-4 Taylor
     polynomial about (centered at) the point \(x_0 = 0\), following the formula
+  id: totrans-38
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们将如何使用关于点 \(x_0 = 0\) 的四阶泰勒多项式来近似 \(f(x) = \sin x\) 在 \(x = 2\) 处的值，按照以下公式
 - en: \[ f(x) \approx f(x_0)+\frac{f'(x_0)}{1!}(x-x_0)+\frac{f''(x_0)}{2!}(x-x_0)^2+\frac{f'''(x_0)}{3!}(x-x_0)^3+\frac{f^{(4)}(x_0)}{4!}(x-x_0)^4,
     \]<details><summary>**Answer**</summary> Well, we need to compute the first 4
     derivatives of \(f(x)\) = sin \(x\) at \(x = x_0\).\[\begin{align} f(x_0) &= \sin(0)
@@ -168,241 +256,373 @@
     a similar way that we derive the closed-form expression for cos \(x\), we can
     write the Taylor Series for sin \(x\) as\[ \sin x = \sum_{k=0}^{\infty} \frac{(-1)^k}{(2k+1)!}x^{2k+1}
     \]</details>
+  id: totrans-39
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ f(x) \approx f(x_0)+\frac{f'(x_0)}{1!}(x-x_0)+\frac{f''(x_0)}{2!}(x-x_0)^2+\frac{f'''(x_0)}{3!}(x-x_0)^3+\frac{f^{(4)}(x_0)}{4!}(x-x_0)^4,
+    \] <details><summary>**答案**</summary> 好吧，我们需要计算 \(f(x)\) = sin \(x\) 在 \(x = x_0\)
+    处的前 4 阶导数。\[\begin{align} f(x_0) &= \sin(0) = 0\\ f'(x_0) &= \cos(0) = 1\\ f''(x_0)
+    &= -\sin(0) = 0\\ f'''(x_0) &= -\cos(0) = -1\\ f^{(4)}(x_0) &= \sin(0) = 0 \end{align}\]然后\[\begin{align}
+    \sin x &\approx f(0)+\frac{f'(0)}{1!}x+\frac{f''(0)}{2!}x^2+\frac{f'''(0)}{3!}x^3+\frac{f^{(4)}(0)}{4!}x^4\\
+    &= 0 + x + 0 - \frac{1}{3!}x^3 + 0 \\ &= x - \frac{1}{6}x^3 \end{align}\]使用以 \(x_0
+    = 0\) 为中心的这个截断泰勒级数，我们可以近似 \(f(x)\) = sin \(x\) 在 \(x=2\) 处的值。要做到这一点，我们只需将 \(x
+    = 2\) 代入上述四阶泰勒多项式的公式，得到\[\begin{align} \sin(2) &\approx 2 - \frac{1}{6} 2^3 \\
+    &\approx 2 - \frac{8}{6} \\ &\approx \frac{2}{3} \end{align}.\]我们总是可以使用更高阶的泰勒多项式来进行估计。以我们推导
+    cos \(x\) 的闭式表达式的方式类似，我们可以写出 sin \(x\) 的泰勒级数\[ \sin x = \sum_{k=0}^{\infty} \frac{(-1)^k}{(2k+1)!}x^{2k+1}
+    \]</details>
 - en: Taylor Series Error
+  id: totrans-40
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 泰勒级数误差
 - en: Error Bound when Truncating a Taylor Series
+  id: totrans-41
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 截断泰勒级数的误差界
 - en: Suppose that \(f(x)\) is an \(n+1\) times differentiable function of \(x\),
     and \(T_n(x)\) is the Taylor polynomial of degree \(n\) for \(f(x)\) centered
     at \(x_0\). Then when \(h = |x-x_0| \to 0\), we obtain the truncation error bound
     by \[ \left|f(x)-T_n(x)\right|\le C \cdot h^{n+1} = O(h^{n+1}) \]
+  id: totrans-42
   prefs: []
   type: TYPE_NORMAL
+  zh: 假设 \(f(x)\) 是 \(x\) 的 \(n+1\) 阶可微函数，且 \(T_n(x)\) 是以 \(x_0\) 为中心的 \(f(x)\) 的
+    \(n\) 阶泰勒多项式。那么当 \(h = |x-x_0| \to 0\) 时，我们通过 \[ \left|f(x)-T_n(x)\right|\le C
+    \cdot h^{n+1} = O(h^{n+1}) \] 获得截断误差界
 - en: 'We will see the exact expression of \(C\) in the next section: *Taylor Remainder
     Theorem*.'
+  id: totrans-43
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们将在下一节中看到 \(C\) 的确切表达式：*泰勒余项定理*。
 - en: Taylor Remainder Theorem
+  id: totrans-44
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 泰勒余项定理
 - en: Suppose that \(f(x)\) is an \(n+1\) times differentiable function of \(x\).
     Let \(R_n(x)\) denote the difference between \(f(x)\) and the Taylor polynomial
     of degree \(n\) for \(f(x)\) centered at \(x_0\). Then
+  id: totrans-45
   prefs: []
   type: TYPE_NORMAL
+  zh: 假设 \(f(x)\) 是 \(x\) 的 \(n+1\) 阶可微函数。令 \(R_n(x)\) 表示 \(f(x)\) 与以 \(x_0\) 为中心的
+    \(f(x)\) 的 \(n\) 阶泰勒多项式之间的差。那么
 - en: \[ R_n(x) = f(x) - T_n(x) = \frac{f^{(n+1)}(\xi)}{(n+1)!} (x-x_0)^{n+1} \]
+  id: totrans-46
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ R_n(x) = f(x) - T_n(x) = \frac{f^{(n+1)}(\xi)}{(n+1)!} (x-x_0)^{n+1} \]
 - en: for some \(\xi\) between \(x\) and \(x_0\). Thus, the constant \(C\) mentioned
     above is
+  id: totrans-47
   prefs: []
   type: TYPE_NORMAL
+  zh: 对于某个位于 \(x\) 和 \(x_0\) 之间的 \(\xi\)。因此，上述提到的常数 \(C\) 是
 - en: \[ \max\limits_{\xi} \frac{\vert f^{(n+1)}(\xi)\vert }{(n+1)!}\]
+  id: totrans-48
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \max\limits_{\xi} \frac{\vert f^{(n+1)}(\xi)\vert }{(n+1)!}\]
 - en: .
+  id: totrans-49
   prefs: []
   type: TYPE_NORMAL
+  zh: .
 - en: Note that this value is equivalent to the next term of the Taylor series.
+  id: totrans-50
   prefs: []
   type: TYPE_NORMAL
+  zh: 注意，这个值等同于泰勒级数的下一个项。
 - en: Asymptotic behavior of the error
+  id: totrans-51
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 误差的渐近行为
 - en: Let's say we have \(f(x)\) approximated using \(t_n(x)\). Suppose the given
     interval is \(h_1\) between \(x_0\) and \(x\) and the error associated with it
     is \(e_1\). Let's say we have another interval \(h_2\) and we need to find the
     error \(e_2\) associated with it.
+  id: totrans-52
   prefs: []
   type: TYPE_NORMAL
+  zh: 假设我们使用 \(t_n(x)\) 来近似 \(f(x)\)。假设给定的区间是 \(h_1\)，它在 \(x_0\) 和 \(x\) 之间，并且与之相关的误差是
+    \(e_1\)。假设我们还有另一个区间 \(h_2\)，我们需要找到与之相关的误差 \(e_2\)。
 - en: Using the formula \(e = O(h^{n+1})\), we get
+  id: totrans-53
   prefs: []
   type: TYPE_NORMAL
+  zh: 使用公式 \(e = O(h^{n+1})\)，我们得到
 - en: \[e_1 \propto {h_1}^{n+1}\] \[e_2 \propto {h_2}^{n+1}\]
+  id: totrans-54
   prefs: []
   type: TYPE_NORMAL
+  zh: \[e_1 \propto {h_1}^{n+1}\] \[e_2 \propto {h_2}^{n+1}\]
 - en: \[ \frac{e_1}{e_2} = (\frac{h_1}{h_2})^{n+1} \]
+  id: totrans-55
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \frac{e_1}{e_2} = (\frac{h_1}{h_2})^{n+1} \]
 - en: \[e_2 = (\frac{h_2}{h_1})^{n+1}e_1\]
+  id: totrans-56
   prefs: []
   type: TYPE_NORMAL
+  zh: \[e_2 = (\frac{h_2}{h_1})^{n+1}e_1\]
 - en: Examples
+  id: totrans-57
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 示例
 - en: Example of an Error Bound
+  id: totrans-58
   prefs:
   - PREF_H4
   type: TYPE_NORMAL
+  zh: 误差界限示例
 - en: 'Suppose we want to approximate \(f(x) = \sin x\) using a degree-4 Taylor polynomial
     expanded about the point \(x_0 = 0\). How would we compute the error bound for
     this approximation, following the Taylor Remainder Theorem:'
+  id: totrans-59
   prefs: []
   type: TYPE_NORMAL
+  zh: 假设我们想要使用关于点 \(x_0 = 0\) 的4次泰勒多项式来近似 \(f(x) = \sin x\)。我们将如何根据泰勒余项定理计算这个近似的误差界限？
 - en: \[ R_4(x) = \frac{f^{(5)}(\xi)}{5!} (x-x_0)^{5} \]
+  id: totrans-60
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ R_4(x) = \frac{f^{(5)}(\xi)}{5!} (x-x_0)^{5} \]
 - en: for some \(\xi\) between \(x_0\) and \(x\).
+  id: totrans-61
   prefs: []
   type: TYPE_NORMAL
+  zh: 对于某个 \(\xi\)，它在 \(x_0\) 和 \(x\) 之间。
 - en: <details><summary>**Answer**</summary> If we want to find the upper bound for
     the absolute error, we are looking for an upper bound for \( \vert f^{(5)}(\xi)\vert
     \).
+  id: totrans-62
   prefs: []
   type: TYPE_NORMAL
+  zh: <details><summary>**答案**</summary> 如果我们想要找到绝对误差的上界，我们正在寻找 \( \vert f^{(5)}(\xi)\vert
+    \) 的上界。
 - en: Since \( f^{(5)}(x) = \cos x \)
+  id: totrans-63
   prefs: []
   type: TYPE_NORMAL
+  zh: 由于 \( f^{(5)}(x) = \cos x \)
 - en: \( |f^{(5)}(\xi)|\le \cos(0) \rightarrow |f^{(5)}(\xi)|\le 1 \)
+  id: totrans-64
   prefs: []
   type: TYPE_NORMAL
+  zh: \( |f^{(5)}(\xi)|\le \cos(0) \rightarrow |f^{(5)}(\xi)|\le 1 \)
 - en: 'Then:'
+  id: totrans-65
   prefs: []
   type: TYPE_NORMAL
+  zh: 然后：
 - en: \( |R_4(x)| = \left|\frac{f^{(5)}(\xi)}{5!} (x-x_0)^{5}\right| = \frac{|f^{(5)}(\xi)|}{5!}
     |x|^{5} \le \frac{1}{120} |x|^{5} \)</details>
+  id: totrans-66
   prefs: []
   type: TYPE_NORMAL
+  zh: \( |R_4(x)| = \left|\frac{f^{(5)}(\xi)}{5!} (x-x_0)^{5}\right| = \frac{|f^{(5)}(\xi)|}{5!}
+    |x|^{5} \le \frac{1}{120} |x|^{5} \)</details>
 - en: Example of Error Predictions
+  id: totrans-67
   prefs:
   - PREF_H4
   type: TYPE_NORMAL
+  zh: 误差预测示例
 - en: Suppose you expand \(\sqrt{x - 10}\) in a Taylor polynomial of degree 3 about
     the center \(x_0 = 12\). For \(h_1 = 0.5\), you find that the Taylor truncation
     error is about \(10^{-4}\). How would you find the Taylor truncation error for
     \(h_2 = 0.25\)?
+  id: totrans-68
   prefs: []
   type: TYPE_NORMAL
+  zh: 假设你将 \(\sqrt{x - 10}\) 在中心 \(x_0 = 12\) 的3次泰勒多项式中展开。对于 \(h_1 = 0.5\)，你发现泰勒截断误差大约是
+    \(10^{-4}\)。你将如何找到 \(h_2 = 0.25\) 的泰勒截断误差？
 - en: <details><summary>**Answer**</summary> We can use the formula \(e_2 = (\frac{h_2}{h_1})^{n+1}e_1\)
     to find the Taylor truncation error for \(h_2 = 0.25\).
+  id: totrans-69
   prefs: []
   type: TYPE_NORMAL
+  zh: <details><summary>**答案**</summary> 我们可以使用公式 \(e_2 = (\frac{h_2}{h_1})^{n+1}e_1\)
+    来找到 \(h_2 = 0.25\) 时的泰勒截断误差。
 - en: Here, \(n = 3\) and hence \(e_2 = (\frac{0.25}{0.5})^{4} \cdot 10^{-4} = 0.625
     \cdot 10^{-5}\).</details>
+  id: totrans-70
   prefs: []
   type: TYPE_NORMAL
+  zh: 这里，\(n = 3\)，因此 \(e_2 = (\frac{0.25}{0.5})^{4} \cdot 10^{-4} = 0.625 \cdot 10^{-5}\).</details>
 - en: Review Questions
+  id: totrans-71
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 复习问题
 - en: What is the general form of a Taylor series?
+  id: totrans-72
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 泰勒级数的一般形式是什么？
 - en: How do you use a Taylor series to approximate a function at a given point?
+  id: totrans-73
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 你如何使用泰勒级数来近似一个给定点的函数？
 - en: How can you approximate the derivative of a function using Taylor series?
+  id: totrans-74
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 你如何使用泰勒级数来近似一个函数的导数？
 - en: How can you approximate the integral of a function using Taylor series?
+  id: totrans-75
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 你如何使用泰勒级数来近似一个函数的积分？
 - en: Given a function and a center, can you write out the *n*-th degree Taylor polynomial?
+  id: totrans-76
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 给定一个函数和一个中心，你能写出 *n*-次泰勒多项式吗？
 - en: For an *n*-th degree Taylor polynomial, what is the bound on the error of your
     approximation as a function of distance from the center?
+  id: totrans-77
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 对于一个 *n*-次泰勒多项式，你的近似误差作为中心距离的函数的界限是什么？
 - en: For simple functions, can you find the constant *C* in the Taylor error bound?
+  id: totrans-78
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 对于简单函数，你能在泰勒误差界限中找到常数 *C* 吗？
 - en: Be able to determine how many terms are required for a Taylor series approximation
     to have less than some given error.
+  id: totrans-79
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 能够确定为了使泰勒级数近似误差小于某个给定值，需要多少项。
 - en: Changelog
+  id: totrans-80
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 更新日志
 - en: 'February 18th, 2025: Kaiyao Ke (kaiyaok2) — fix rendering bugs'
+  id: totrans-81
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 2025年2月18日：Kaiyao Ke (kaiyaok2) — 修复渲染错误
 - en: 'March 29th, 2024: Dev Singh (dsingh14) — added clarifications on taylor series
     error bound and approximations'
+  id: totrans-82
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 2024年3月29日：Dev Singh (dsingh14) — 在泰勒级数误差界限和近似中添加了说明
 - en: 'March 27th, 2024: Arnav Aggarwal (arnava4) — aligned notes with slides and
     added additional examples'
+  id: totrans-83
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 2024年3月27日：Arnav Aggarwal (arnava4) — 将笔记与幻灯片对齐并添加了额外的示例
 - en: <details><summary>View Remaining Entries</summary>
+  id: totrans-84
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: <details><summary>查看剩余条目</summary>
 - en: 'January 25th, 2022: Arnav Shah (arnavss2) — Added error predictions from slides'
+  id: totrans-85
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 2022年1月25日：Arnav Shah (arnavss2) — 从幻灯片中添加错误预测
 - en: 'January 20th, 2021: Mariana Silva (mfsilva) — Removed FD content'
+  id: totrans-86
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 2021年1月20日：Mariana Silva (mfsilva) — 删除FD内容
 - en: 'February 10th, 2020: Peter Sentz (sentz2) — Correct some small mistakes and
     update some notation'
+  id: totrans-87
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 2020年2月10日：Peter Sentz (sentz2) — 纠正一些小错误并更新一些符号
 - en: 'January 29th, 2019: John Doherty (jjdoher2) — Added Finite Difference section
     from F18 activity'
+  id: totrans-88
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 2019年1月29日：John Doherty (jjdoher2) — 从F18活动添加有限差分章节
 - en: 'January 14th, 2018: Erin Carrier (ecarrie2) — removes demo links'
+  id: totrans-89
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 2018年1月14日：Erin Carrier (ecarrie2) — 删除演示链接
 - en: 'November 2nd, 2017: Erin Carrier (ecarrie2) — adds changelog'
+  id: totrans-90
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 2017年11月2日：Erin Carrier (ecarrie2) — 添加变更日志
 - en: 'October 27th, 2017: Yu Meng (yumeng5) — first complete draft'
+  id: totrans-91
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 2017年10月27日：Yu Meng (yumeng5) — 首次完整草案
 - en: 'October 27th, 2017: Erin Carrier (ecarrie2) — adds review questions, minor
     fixes throughout'
+  id: totrans-92
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 2017年10月27日：Erin Carrier (ecarrie2) — 添加复习问题，全文进行小修
 - en: 'October 17th, 2017: Luke Olson (lukeo) — outline</details>'
+  id: totrans-93
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 2017年10月17日：Luke Olson (lukeo) — 概述</details>
 - en: Authors
+  id: totrans-94
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 作者
 - en: CS 357 Course Staff
+  id: totrans-95
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: CS 357 课程工作人员

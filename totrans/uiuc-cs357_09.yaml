@@ -1,574 +1,911 @@
 - en: LU Decomposition for Solving Linear Equations
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: LU分解求解线性方程
 - en: 原文：[https://cs357.cs.illinois.edu/textbook/notes/linsys.html](https://cs357.cs.illinois.edu/textbook/notes/linsys.html)
+  id: totrans-1
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 原文：[https://cs357.cs.illinois.edu/textbook/notes/linsys.html](https://cs357.cs.illinois.edu/textbook/notes/linsys.html)
 - en: Learning Objectives
+  id: totrans-2
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 学习目标
 - en: Understand the use of linear system of equations.
+  id: totrans-3
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 理解线性方程组的使用。
 - en: Use known data to set up linear system of equations for practical problems.
+  id: totrans-4
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 使用已知数据为实际问题设置线性方程组。
 - en: Describe the factorization \({\bf A} = {\bf LU}\).
+  id: totrans-5
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 描述矩阵 \({\bf A} = {\bf LU}\) 的分解。
 - en: Compare the cost of LU with other operations such as matrix-matrix multiplication.
+  id: totrans-6
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 比较LU分解与其他操作（如矩阵-矩阵乘法）的成本。
 - en: Implement an LU decomposition algorithm.
+  id: totrans-7
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 实现LU分解算法。
 - en: Given an LU decomposition for \({\bf A}\), solve the system \({\bf Ax} = {\bf
     b}\).
+  id: totrans-8
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 给定 \({\bf A}\) 的LU分解，求解方程组 \({\bf Ax} = {\bf b}\)。
 - en: Give examples of matrices for which pivoting is needed.
+  id: totrans-9
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 给出需要行交换的矩阵的例子。
 - en: Implement an LUP decomposition algorithm.
+  id: totrans-10
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 实现LUP分解算法。
 - en: Manually compute LU and LUP decompositions.
+  id: totrans-11
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 手动计算LU和LUP分解。
 - en: Compute and use LU decompositions using library functions.
+  id: totrans-12
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 使用库函数计算并使用LU分解。
 - en: 'Basic Idea: The "Undo" button for Linear Operations'
+  id: totrans-13
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 基本思想：线性操作的“撤销”按钮
 - en: 'Matrix-vector multiplication: given the data \({\bf x}\) and the operator \({\bf
     A}\), we can find \({\bf y}\) such that \({\bf y = Ax}\):'
+  id: totrans-14
   prefs: []
   type: TYPE_NORMAL
+  zh: 矩阵-向量乘法：给定数据 \({\bf x}\) 和算子 \({\bf A}\)，我们可以找到 \({\bf y}\) 使得 \({\bf y = Ax}\)：
 - en: \[\bf{x} \hspace{5mm} {\xRightarrow[transformation]{A}} \hspace{5mm} \bf{y}\]
+  id: totrans-15
   prefs: []
   type: TYPE_NORMAL
+  zh: \[\bf{x} \hspace{5mm} {\xRightarrow[transformation]{A}} \hspace{5mm} \bf{y}\]
 - en: 'What if we know \({\bf y}\) but not \({\bf x}\)? We need to "undo" the transformation:'
+  id: totrans-16
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果我们知道 \({\bf y}\) 但不知道 \({\bf x}\) 会怎样？我们需要“撤销”转换：
 - en: \[\bf{y} \hspace{5mm} {\xRightarrow[?]{A^{-1}}} \hspace{5mm} \bf{x} \hspace{3cm}
     \textbf{Solve}\hspace{3mm} Ax=y \hspace{3mm}\text{for} \hspace{3mm}\bf{x}\]
+  id: totrans-17
   prefs: []
   type: TYPE_NORMAL
+  zh: \[\bf{y} \hspace{5mm} {\xRightarrow[?]{A^{-1}}} \hspace{5mm} \bf{x} \hspace{3cm}
+    \textbf{求解} \hspace{3mm} Ax=y \hspace{3mm}\text{对于} \hspace{3mm}\bf{x}\]
 - en: 'Example: Undoing the Transformation'
+  id: totrans-18
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 示例：撤销转换
 - en: Suppose we have known operator \({\bf A}\), known data \({\bf y}\), and unkown
     data \({\bf x}\) that satisfies the relationship \({\bf y = Ax}\). The values
     of \({\bf A}\) and \({\bf y}\) are given below.
+  id: totrans-19
   prefs: []
   type: TYPE_NORMAL
+  zh: 假设我们已知算子 \({\bf A}\)，已知数据 \({\bf y}\)，以及满足关系 \({\bf y = Ax}\) 的未知数据 \({\bf x}\)。\({\bf
+    A}\) 和 \({\bf y}\) 的值如下所示。
 - en: \[\textbf{A} = \begin{bmatrix} 1 & 2 \\ 3 & 4 \end{bmatrix}\hspace{5mm} \textbf{x}
     = \begin{bmatrix} x_1 \\ x_2 \end{bmatrix} \hspace{5mm} \text{and} \hspace{5mm}
     \textbf{y} = \begin{bmatrix} 5 \\ 11 \end{bmatrix} .\]
+  id: totrans-20
   prefs: []
   type: TYPE_NORMAL
+  zh: \[\textbf{A} = \begin{bmatrix} 1 & 2 \\ 3 & 4 \end{bmatrix}\hspace{5mm} \textbf{x}
+    = \begin{bmatrix} x_1 \\ x_2 \end{bmatrix} \hspace{5mm} \text{和} \hspace{5mm}
+    \textbf{y} = \begin{bmatrix} 5 \\ 11 \end{bmatrix} .\]
 - en: How can we solve for \(\textbf{x} = [x_1, x_2]^T\)?
+  id: totrans-21
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们如何求解 \(\textbf{x} = [x_1, x_2]^T\)？
 - en: '<details><summary>**Answer**</summary> We construct the following set of linear
     equations: $ \begin{cases} x_1 + 2x_2 = 5\\ 3x_1 + 4x_2 = 11 \end{cases} \hspace{5mm}
     $ Then the solution is: $ \begin{cases} x_1 = 1\\ x_2 = 2 \end{cases} \hspace{5mm}
     \text{, or} \hspace{5mm} \textbf{x} = \begin{bmatrix} 1 \\ 2 \end{bmatrix} $</details>'
+  id: totrans-22
   prefs: []
   type: TYPE_NORMAL
+  zh: <details><summary>**答案**</summary> 我们构建以下线性方程组：$ \begin{cases} x_1 + 2x_2 =
+    5\\ 3x_1 + 4x_2 = 11 \end{cases} \hspace{5mm} $ 然后解为：$ \begin{cases} x_1 = 1\\
+    x_2 = 2 \end{cases} \hspace{5mm} \text{，或者} \hspace{5mm} \textbf{x} = \begin{bmatrix}
+    1 \\ 2 \end{bmatrix} $</details>
 - en: 'Example: Image Blurring and Recovery'
+  id: totrans-23
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 示例：图像模糊与恢复
 - en: The original image displaying an SSN number is stored as a \(2D\) array of real
     numbers between \(0\) and \(1\) (\(0\) represents a white pixel, \(1\) represents
     a black pixel).It has \(40\) rows of pixels and \(100\) columns of pixels. We
     can flatten the \(2D\) array into a \(1D\) array \(\bf{x}\) containing the \(1D\)
     data with dimension \(4000\). We can then apply blurring operation to data \(\bf{x}\),
     i.e.
+  id: totrans-24
   prefs: []
   type: TYPE_NORMAL
+  zh: 原始图像显示SSN号码存储为介于 \(0\) 和 \(1\) 之间的实数 \(2D\) 数组（\(0\) 表示白色像素，\(1\) 表示黑色像素）。它有
+    \(40\) 行像素和 \(100\) 列像素。我们可以将 \(2D\) 数组展平为包含 \(1D\) 数据的 \(1D\) 数组 \(\bf{x}\)，其维度为
+    \(4000\)。然后我们可以对数据 \(\bf{x}\) 应用模糊操作，即
 - en: \[\bf{y} = \bf{A}\bf{x}\]
+  id: totrans-25
   prefs: []
   type: TYPE_NORMAL
+  zh: \[\bf{y} = \bf{A}\bf{x}\]
 - en: 'where \(\bf{A}\) is the blur operator and \(\bf{y}\) is the blurred image:'
+  id: totrans-26
   prefs: []
   type: TYPE_NORMAL
+  zh: 其中 \(\bf{A}\) 是模糊算子，\(\bf{y}\) 是模糊图像：
 - en: '![](../Images/ffbc1d32bdd00a371173255d3c58e535.png)'
+  id: totrans-27
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/ffbc1d32bdd00a371173255d3c58e535.png)'
 - en: 'To "undo" blurring to recover original image, we solve a linear system of equations
     using the blur operator \(\bf{A}\) and the blurred image \(\bf{y}\). The following
     graph shows the transformation when \(\bf{y}\)does not have any noise ("clean
     data"):'
+  id: totrans-28
   prefs: []
   type: TYPE_NORMAL
+  zh: 要“撤销”模糊以恢复原始图像，我们使用模糊算子 \(\bf{A}\) 和模糊图像 \(\bf{y}\) 求解线性方程组。以下图表显示了当 \(\bf{y}\)
+    没有任何噪声（“干净数据”）时的转换：
 - en: '![](../Images/1c6b06a56875aac3051aaae5d8edf34c.png)'
+  id: totrans-29
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/1c6b06a56875aac3051aaae5d8edf34c.png)'
 - en: 'It is also possible to recover \(\bf{x}\) with a certain extent of noise:'
+  id: totrans-30
   prefs: []
   type: TYPE_NORMAL
+  zh: 在一定程度上，也有可能从带有噪声的 \(\bf{x}\) 中恢复：
 - en: '![](../Images/a1353aa9e2081b44eea5b8acddd497cd.png)'
+  id: totrans-31
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/a1353aa9e2081b44eea5b8acddd497cd.png)'
 - en: To answer "How much noise can we add and still be able to recover meaningful
     information from the original image?" and "At which point this inverse transformation
     fails?", we need information about the sensitivity of the "undo" operation covered
     later in this course.
+  id: totrans-32
   prefs: []
   type: TYPE_NORMAL
+  zh: 要回答“我们能够添加多少噪声，仍然能够从原始图像中恢复有意义的信息？”以及“在哪个点上这种逆变换失败？”这些问题，我们需要了解本课程后面将介绍的“撤销”操作敏感性信息。
 - en: Back Substitution Algorithm for Upper Triangular Systems
+  id: totrans-33
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 上三角系统的后向替换算法
 - en: To actually solve \({\bf A x} = {\bf b}\), we can start with an "easier" system
     of equations. Let's consider triangular matrices - the ***back substitution algorithm***
     solves the linear system \({\bf U x} = {\bf b}\) where \({\bf U}\) is an upper-triangular
     matrix.
+  id: totrans-34
   prefs: []
   type: TYPE_NORMAL
+  zh: 要实际求解 \({\bf A x} = {\bf b}\)，我们可以从一个“更简单”的方程组开始。让我们考虑三角矩阵——**后向替换算法**解决了 \({\bf
+    U x} = {\bf b}\) 的线性系统，其中 \({\bf U}\) 是一个上三角矩阵。
 - en: 'An upper-triangular linear system \({\bf U}{\bf x} = {\bf b}\) can be written
     in matrix form:'
+  id: totrans-35
   prefs: []
   type: TYPE_NORMAL
+  zh: 上三角线性系统 \({\bf U}{\bf x} = {\bf b}\) 可以写成矩阵形式：
 - en: \[\begin{bmatrix} U_{11} & U_{12} & \ldots & U_{1n} \\ 0 & U_{22} & \ldots &
     U_{2n} \\ \vdots & \vdots & \ddots & \vdots \\ 0 & 0 & \ldots & U_{nn} \\ \end{bmatrix}
     \begin{bmatrix} x_1 \\ x_2 \\ \vdots \\ x_n \end{bmatrix} = \begin{bmatrix} b_1
     \\ b_2 \\ \vdots \\ b_n \end{bmatrix}.\]
+  id: totrans-36
   prefs: []
   type: TYPE_NORMAL
+  zh: \[\begin{bmatrix} U_{11} & U_{12} & \ldots & U_{1n} \\ 0 & U_{22} & \ldots &
+    U_{2n} \\ \vdots & \vdots & \ddots & \vdots \\ 0 & 0 & \ldots & U_{nn} \\ \end{bmatrix}
+    \begin{bmatrix} x_1 \\ x_2 \\ \vdots \\ x_n \end{bmatrix} = \begin{bmatrix} b_1
+    \\ b_2 \\ \vdots \\ b_n \end{bmatrix}.\]
 - en: 'Observe that the upper-triangular system \({\bf U}x = b\) can be written as
     the set of linear equations:'
+  id: totrans-37
   prefs: []
   type: TYPE_NORMAL
+  zh: 注意到上三角系统 \({\bf U}x = b\) 可以写成以下线性方程组：
 - en: \[\begin{matrix} U_{11} x_1 & + & U_{12} x_2 & + & \ldots & + & U_{1n} x_n &
     = & b_1 \\ & & U_{22} x_2 & + & \ldots & + & U_{2n} x_n & = & b_2 \\ & & & & \ddots
     & & \vdots & = & \vdots \\ & & & & & & U_{nn} x_n & = & b_n. \end{matrix}\]
+  id: totrans-38
   prefs: []
   type: TYPE_NORMAL
+  zh: \[\begin{matrix} U_{11} x_1 & + & U_{12} x_2 & + & \ldots & + & U_{1n} x_n &
+    = & b_1 \\ & & U_{22} x_2 & + & \ldots & + & U_{2n} x_n & = & b_2 \\ & & & & \ddots
+    & & \vdots & = & \vdots \\ & & & & & & U_{nn} x_n & = & b_n. \end{matrix}\]
 - en: 'The back substitution solution works from the bottom up to give:'
+  id: totrans-39
   prefs: []
   type: TYPE_NORMAL
+  zh: 后向替换解法从下往上工作，得到：
 - en: \[\begin{aligned} x_n &= \frac{b_n}{U_{nn}} \\ x_{n-1} &= \frac{b_{n-1} - U_{n-1,n}
     x_n}{U_{n-1,n-1}} \\ &\vdots \\ x_1 &= \frac{b_1 - \sum_{j=2}^n U_{1j} x_j}{U_{11}}.
     \end{aligned}\]
+  id: totrans-40
   prefs: []
   type: TYPE_NORMAL
+  zh: \[\begin{aligned} x_n &= \frac{b_n}{U_{nn}} \\ x_{n-1} &= \frac{b_{n-1} - U_{n-1,n}
+    x_n}{U_{n-1,n-1}} \\ &\vdots \\ x_1 &= \frac{b_1 - \sum_{j=2}^n U_{1j} x_j}{U_{11}}.
+    \end{aligned}\]
 - en: 'So the general form of solution is:'
+  id: totrans-41
   prefs: []
   type: TYPE_NORMAL
+  zh: 因此，解的一般形式是：
 - en: \[x_n = \frac{b_n}{U_{nn}}; \hspace{1cm} x_i = \frac{b_i - \sum_{j=i+1}^n U_{ij}
     x_j}{U_{ii}} \hspace{5mm} \text{for i = n-1, n-2, ..., 1}\]
+  id: totrans-42
   prefs: []
   type: TYPE_NORMAL
+  zh: \[x_n = \frac{b_n}{U_{nn}}; \hspace{1cm} x_i = \frac{b_i - \sum_{j=i+1}^n U_{ij}
+    x_j}{U_{ii}} \hspace{5mm} \text{for i = n-1, n-2, ..., 1}\]
 - en: Notice that there are \(n\) divisions, \(\frac{n(n-1)}{2}\) subtractions / additions,
     and \(\frac{n(n-1)}{2}\) multiplications, hence the **computational complexity**
     is \(\bf{O(n^2)}\).
+  id: totrans-43
   prefs: []
   type: TYPE_NORMAL
+  zh: 注意到有 \(n\) 次除法，\(\frac{n(n-1)}{2}\) 次减法/加法，以及 \(\frac{n(n-1)}{2}\) 次乘法，因此计算复杂度是
+    \(\bf{O(n^2)}\)。
 - en: 'Alternatively, we can also write \({\bf U}x = b\) as a linear combination of
     the columns of \(\bf{U}\):'
+  id: totrans-44
   prefs: []
   type: TYPE_NORMAL
+  zh: 或者，我们也可以将 \({\bf U}x = b\) 写成 \(\bf{U}\) 的列的线性组合：
 - en: \[x_1 \hspace{1mm} \textbf{U}[:\hspace{1mm},1] + x_2 \hspace{1mm} \textbf{U}[:\hspace{1mm},2]
     + \ldots + x_{n} \hspace{1mm} \textbf{U}[:\hspace{1mm},n] = \textbf{b}\]
+  id: totrans-45
   prefs: []
   type: TYPE_NORMAL
+  zh: \[x_1 \hspace{1mm} \textbf{U}[:\hspace{1mm},1] + x_2 \hspace{1mm} \textbf{U}[:\hspace{1mm},2]
+    + \ldots + x_{n} \hspace{1mm} \textbf{U}[:\hspace{1mm},n] = \textbf{b}\]
 - en: 'The properties of the back substitution algorithm are:'
+  id: totrans-46
   prefs: []
   type: TYPE_NORMAL
+  zh: 后向替换算法的性质是：
 - en: If any of the diagonal elements \(U_{ii}\) are zero then the system is singular
     and cannot be solved.
+  id: totrans-47
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 如果任何对角元素 \(U_{ii}\) 为零，则该系统是奇异的，无法求解。
 - en: If all diagonal elements of \({\bf U}\) are non-zero then the system has a unique
     solution.
+  id: totrans-48
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 如果 \({\bf U}\) 的所有对角元素都不为零，则该系统有唯一解。
 - en: The number of operations for the back substitution algorithm is \(O(n^2)\) as
     \(n \to \infty\).
+  id: totrans-49
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 后向替换算法的操作次数为 \(O(n^2)\)，当 \(n \to \infty\) 时。
 - en: 'The code for the back substitution algorithm to solve \({\bf U x} = {\bf b}\)
     is:'
+  id: totrans-50
   prefs: []
   type: TYPE_NORMAL
+  zh: 解决 \({\bf U x} = {\bf b}\) 的后向替换算法的代码是：
 - en: '[PRE0]'
+  id: totrans-51
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: 'Example: Back Substitution for an Upper Triangular System'
+  id: totrans-52
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 示例：上三角系统的后向替换
 - en: \[\begin{bmatrix} 2 & 3 & 1 & 1 \\ 0 & 2 & 2 & 3 \\ 0 & 0 & 6 & 4 \\ 0 & 0 &
     0 & 2 \\ \end{bmatrix} \begin{bmatrix} x_1 \\ x_2 \\ x_3 \\ x_4 \end{bmatrix}
     = \begin{bmatrix} 2 \\ 2 \\ 6 \\ 4 \end{bmatrix}.\]
+  id: totrans-53
   prefs: []
   type: TYPE_NORMAL
+  zh: \[\begin{bmatrix} 2 & 3 & 1 & 1 \\ 0 & 2 & 2 & 3 \\ 0 & 0 & 6 & 4 \\ 0 & 0 &
+    0 & 2 \\ \end{bmatrix} \begin{bmatrix} x_1 \\ x_2 \\ x_3 \\ x_4 \end{bmatrix}
+    = \begin{bmatrix} 2 \\ 2 \\ 6 \\ 4 \end{bmatrix}.\]
 - en: How can we solve for \(x = [x_1, x_2, x_3, x_4]^T\)?
+  id: totrans-54
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们如何求解 \(x = [x_1, x_2, x_3, x_4]^T\)？
 - en: <details><summary>**Answer**</summary> $ 2x_4 = 4 \Rightarrow x_4 = \frac{4}{2}
     = 2 $ $ 6x_3 + 4x_4 = 6 \Rightarrow x_3 = \frac{6 - 4(2)}{6} = -\frac{1}{3} $
     $ 2x_2 + 2x_3 + 3x_4 = 2 \Rightarrow x_2 = \frac{2 - 2(-\frac{1}{3}) - 3(2)}{2}
     = -\frac{5}{3} $ $ 2x_1 + 3x_2 + x_3 + x_4 = 2 \Rightarrow x_1 = \frac{2 - 3(-\frac{5}{3})
     - (-\frac{1}{3}) - 2}{2} = \frac{8}{3} $</details>
+  id: totrans-55
   prefs: []
   type: TYPE_NORMAL
+  zh: <details><summary>**答案**</summary> $ 2x_4 = 4 \Rightarrow x_4 = \frac{4}{2}
+    = 2 $ $ 6x_3 + 4x_4 = 6 \Rightarrow x_3 = \frac{6 - 4(2)}{6} = -\frac{1}{3} $
+    $ 2x_2 + 2x_3 + 3x_4 = 2 \Rightarrow x_2 = \frac{2 - 2(-\frac{1}{3}) - 3(2)}{2}
+    = -\frac{5}{3} $ $ 2x_1 + 3x_2 + x_3 + x_4 = 2 \Rightarrow x_1 = \frac{2 - 3(-\frac{5}{3})
+    - (-\frac{1}{3}) - 2}{2} = \frac{8}{3} $</details>
 - en: Forward Substitution Algorithm for Lower Triangular Systems
+  id: totrans-56
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 下三角系统前向替换算法
 - en: The ***forward substitution algorithm*** solves the linear system \({\bf Lx}
     = {\bf b}\) where \({\bf L}\) is a lower triangular matrix. It is the reversed
     version of back substitution.
+  id: totrans-57
   prefs: []
   type: TYPE_NORMAL
+  zh: '**前向替换算法**解决了线性系统 \({\bf Lx} = {\bf b}\)，其中 \({\bf L}\) 是一个下三角矩阵。它是回代法的逆过程。'
 - en: 'A lower-triangular linear system \({\bf L}{\bf x} = {\bf b}\) can be written
     in matrix form:'
+  id: totrans-58
   prefs: []
   type: TYPE_NORMAL
+  zh: 下三角线性系统 \({\bf L}{\bf x} = {\bf b}\) 可以写成矩阵形式：
 - en: \[\begin{bmatrix} L_{11} & 0 & \ldots & 0 \\ L_{21} & L_{22} & \ldots & 0 \\
     \vdots & \vdots & \ddots & 0 \\ L_{n1} & L_{n2} & \ldots & L_{nn} \\ \end{bmatrix}
     \begin{bmatrix} x_1 \\ x_2 \\ \vdots \\ x_n \end{bmatrix} = \begin{bmatrix} b_1
     \\ b_2 \\ \vdots \\ b_n \end{bmatrix}.\]
+  id: totrans-59
   prefs: []
   type: TYPE_NORMAL
+  zh: \[\begin{bmatrix} L_{11} & 0 & \ldots & 0 \\ L_{21} & L_{22} & \ldots & 0 \\
+    \vdots & \vdots & \ddots & 0 \\ L_{n1} & L_{n2} & \ldots & L_{nn} \\ \end{bmatrix}
+    \begin{bmatrix} x_1 \\ x_2 \\ \vdots \\ x_n \end{bmatrix} = \begin{bmatrix} b_1
+    \\ b_2 \\ \vdots \\ b_n \end{bmatrix}.\]
 - en: 'This can also be written as the set of linear equations:'
+  id: totrans-60
   prefs: []
   type: TYPE_NORMAL
+  zh: 这也可以写成以下线性方程组：
 - en: \[\begin{matrix} L_{11} x_1 & & & & & & & = & b_1 \\ L_{21} x_1 & + & L_{22}
     x_2 & & & & & = & b_2 \\ \vdots & + & \vdots & + & \ddots & & & = & \vdots \\
     L_{n1} x_1 & + & L_{n2} x_2 & + & \ldots & + & L_{nn} x_n & = & b_n. \end{matrix}\]
+  id: totrans-61
   prefs: []
   type: TYPE_NORMAL
+  zh: \[\begin{matrix} L_{11} x_1 & & & & & & & = & b_1 \\ L_{21} x_1 & + & L_{22}
+    x_2 & & & & & = & b_2 \\ \vdots & + & \vdots & + & \ddots & & & = & \vdots \\
+    L_{n1} x_1 & + & L_{n2} x_2 & + & \ldots & + & L_{nn} x_n & = & b_n. \end{matrix}\]
 - en: 'The forward substitution algorithm solves a lower-triangular linear system
     by working from the top down and solving each variable in turn. In math this is:'
+  id: totrans-62
   prefs: []
   type: TYPE_NORMAL
+  zh: 前向替换算法通过从上到下工作并依次求解每个变量来解决下三角线性系统。在数学上，这表示为：
 - en: \[\begin{aligned} x_1 &= \frac{b_1}{L_{11}} \\ x_2 &= \frac{b_2 - L_{21} x_1}{L_{22}}
     \\ &\vdots \\ x_n &= \frac{b_n - \sum_{j=1}^{n-1} L_{nj} x_j}{L_{nn}}. \end{aligned}\]
+  id: totrans-63
   prefs: []
   type: TYPE_NORMAL
+  zh: \[\begin{aligned} x_1 &= \frac{b_1}{L_{11}} \\ x_2 &= \frac{b_2 - L_{21} x_1}{L_{22}}
+    \\ &\vdots \\ x_n &= \frac{b_n - \sum_{j=1}^{n-1} L_{nj} x_j}{L_{nn}}. \end{aligned}\]
 - en: 'So the general form of solution is:'
+  id: totrans-64
   prefs: []
   type: TYPE_NORMAL
+  zh: 因此，解的一般形式是：
 - en: \[x_1 = \frac{b_1}{L_{11}}; \hspace{1cm} x_i = \frac{b_i - \sum_{j=1}^{i-1}
     L_{ij} x_j}{L_{ii}} \hspace{5mm} \text{for i = 2, 3, ..., n}\]
+  id: totrans-65
   prefs: []
   type: TYPE_NORMAL
+  zh: \[x_1 = \frac{b_1}{L_{11}}; \hspace{1cm} x_i = \frac{b_i - \sum_{j=1}^{i-1}
+    L_{ij} x_j}{L_{ii}} \hspace{5mm} \text{for i = 2, 3, ..., n}\]
 - en: Notice that there are also \(n\) divisions, \(\frac{n(n-1)}{2}\) subtractions
     / additions, and \(\frac{n(n-1)}{2}\) multiplications, hence the **computational
     complexity** is \(\bf{O(n^2)}\).
+  id: totrans-66
   prefs: []
   type: TYPE_NORMAL
+  zh: 注意，这里也有 \(n\) 次除法，\(\frac{n(n-1)}{2}\) 次减法/加法，以及 \(\frac{n(n-1)}{2}\) 次乘法，因此计算复杂度为
+    \(\bf{O(n^2)}\)。
 - en: 'The properties of the forward substitution algorithm are:'
+  id: totrans-67
   prefs: []
   type: TYPE_NORMAL
+  zh: 前向替换算法的性质：
 - en: If any of the diagonal elements \(L_{ii}\) are zero then the system is singular
     and cannot be solved.
+  id: totrans-68
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 如果矩阵 \({\bf L}\) 的任何对角元素 \(L_{ii}\) 为零，则该系统是奇异的，无法求解。
 - en: If all diagonal elements of \({\bf L}\) are non-zero then the system has a unique
     solution.
+  id: totrans-69
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 如果矩阵 \({\bf L}\) 的所有对角元素均非零，则该系统有唯一解。
 - en: The number of operations for the forward substitution algorithm is \(O(n^2)\)
     as \(n \to \infty\).
+  id: totrans-70
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 当 \(n \to \infty\) 时，前向替换算法的操作次数为 \(O(n^2)\)。
 - en: 'The code for the forward substitution algorithm to solve \({\bf L x} = {\bf
     b}\) is:'
+  id: totrans-71
   prefs: []
   type: TYPE_NORMAL
+  zh: 解决 \({\bf L x} = {\bf b}\) 的前向替换算法的代码是：
 - en: '[PRE1]'
+  id: totrans-72
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: 'Example: Forward-substitution for a Lower Triangular System'
+  id: totrans-73
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 示例：下三角系统的前向替换
 - en: \[\begin{bmatrix} 2 & 0 & 0 & 0 \\ 3 & 2 & 0 & 0 \\ 1 & 2 & 6 & 0 \\ 1 & 3 &
     4 & 2 \\ \end{bmatrix} \begin{bmatrix} x_1 \\ x_2 \\ x_3 \\ x_4 \end{bmatrix}
     = \begin{bmatrix} 2 \\ 2 \\ 6 \\ 4 \end{bmatrix}.\]
+  id: totrans-74
   prefs: []
   type: TYPE_NORMAL
+  zh: \[\begin{bmatrix} 2 & 0 & 0 & 0 \\ 3 & 2 & 0 & 0 \\ 1 & 2 & 6 & 0 \\ 1 & 3 &
+    4 & 2 \\ \end{bmatrix} \begin{bmatrix} x_1 \\ x_2 \\ x_3 \\ x_4 \end{bmatrix}
+    = \begin{bmatrix} 2 \\ 2 \\ 6 \\ 4 \end{bmatrix}.\]
 - en: How can we solve for \(x = [x_1, x_2, x_3, x_4]^T\)?
+  id: totrans-75
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们如何求解 \(x = [x_1, x_2, x_3, x_4]^T\)？
 - en: <details><summary>**Answer**</summary> $ 2x_1 = 2 \Rightarrow x_1 = 1 $ $ 3x_1
     + 2x_2 = 2 \Rightarrow x_2 = \frac{2-3}{2} = -0.5 $ $ 1x_1 + 2x_2 + 6x_3 = 6 \Rightarrow
     x_3 = \frac{6-1+1}{6} = 1 $ $ 1x_1 + 3x_2 + 4x_3 + 2x_4 = 4 \Rightarrow x_4 =
     \frac{4-1+1.5-4}{2} = 0.25 $</details>
+  id: totrans-76
   prefs: []
   type: TYPE_NORMAL
+  zh: <details><summary>**答案**</summary> $ 2x_1 = 2 \Rightarrow x_1 = 1 $ $ 3x_1 +
+    2x_2 = 2 \Rightarrow x_2 = \frac{2-3}{2} = -0.5 $ $ 1x_1 + 2x_2 + 6x_3 = 6 \Rightarrow
+    x_3 = \frac{6-1+1}{6} = 1 $ $ 1x_1 + 3x_2 + 4x_3 + 2x_4 = 4 \Rightarrow x_4 =
+    \frac{4-1+1.5-4}{2} = 0.25 $</details>
 - en: LU Decomposition Definition
+  id: totrans-77
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: LU分解定义
 - en: 'To solve \({\bf A x} = {\bf b}\) when \(\bf{A}\) is a non-triangular matrix,
     We can perform LU factorization: given an \(n \times n\) matrix \(\bf{A}\), the
     ***LU decomposition*** of a matrix \({\bf A}\) is the pair of matrices \({\bf
     L}\) and \({\bf U}\) such that:'
+  id: totrans-78
   prefs: []
   type: TYPE_NORMAL
+  zh: 当 \(\bf{A}\) 是一个非三角矩阵时，为了求解 \({\bf A x} = {\bf b}\)，我们可以执行LU分解：给定一个 \(n \times
+    n\) 的矩阵 \(\bf{A}\)，矩阵 \({\bf A}\) 的 ***LU分解*** 是一对矩阵 \({\bf L}\) 和 \({\bf U}\)，使得：
 - en: \({\bf A} = {\bf LU}\)
+  id: totrans-79
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: \({\bf A} = {\bf LU}\)
 - en: \({\bf L}\) is a lower-triangular matrix with all diagonal entries equal to
     1
+  id: totrans-80
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: \({\bf L}\) 是一个对角线元素都等于1的下三角矩阵
 - en: \({\bf U}\) is an upper-triangular matrix.
+  id: totrans-81
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: \({\bf U}\) 是一个上三角矩阵。
 - en: \[\begin{bmatrix} 1 & 0 & \ldots & 0 \\ L_{21} & 1 & \ldots & 0 \\ \vdots &
     \vdots & \ddots & \vdots \\ L_{n1} & L_{n2} & \ldots & 1 \\ \end{bmatrix} \begin{bmatrix}
     u_{11} & U_{12} & \ldots & U_{1n} \\ 0 & U_{22} & \ldots & U_{2n} \\ \vdots &
     \vdots & \ddots & \vdots \\ 0 & 0 & \ldots & U_{nn} \\ \end{bmatrix} = \begin{bmatrix}
     A_{11} & A_{12} & \ldots & A_{1n} \\ A_{21} & A_{22} & \ldots & A_{2n} \\ \vdots
     & \vdots & \ddots & \vdots \\ A_{n1} & A_{n2} & \ldots & A_{nn} \\ \end{bmatrix}\]
+  id: totrans-82
   prefs: []
   type: TYPE_NORMAL
+  zh: \[\begin{bmatrix} 1 & 0 & \ldots & 0 \\ L_{21} & 1 & \ldots & 0 \\ \vdots &
+    \vdots & \ddots & \vdots \\ L_{n1} & L_{n2} & \ldots & 1 \\ \end{bmatrix} \begin{bmatrix}
+    u_{11} & U_{12} & \ldots & U_{1n} \\ 0 & U_{22} & \ldots & U_{2n} \\ \vdots &
+    \vdots & \ddots & \vdots \\ 0 & 0 & \ldots & U_{nn} \\ \end{bmatrix} = \begin{bmatrix}
+    A_{11} & A_{12} & \ldots & A_{1n} \\ A_{21} & A_{22} & \ldots & A_{2n} \\ \vdots
+    & \vdots & \ddots & \vdots \\ A_{n1} & A_{n2} & \ldots & A_{nn} \\ \end{bmatrix}\]
 - en: 'The properties of the LU decomposition are:'
+  id: totrans-83
   prefs: []
   type: TYPE_NORMAL
+  zh: LU分解的性质是：
 - en: The LU decomposition may not exist for a matrix \({\bf A}\).
+  id: totrans-84
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 矩阵 \({\bf A}\) 的LU分解可能不存在。
 - en: If the LU decomposition exists then it is unique.
+  id: totrans-85
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 如果LU分解存在，则它是唯一的。
 - en: The LU decomposition provides an efficient means of solving linear equations.
+  id: totrans-86
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: LU分解提供了一种有效求解线性方程的方法。
 - en: The reason that \({\bf L}\) has all diagonal entries set to 1 is that this means
     the LU decomposition is unique. This choice is somewhat arbitrary (we could have
     decided that \({\bf U}\) must have 1 on the diagonal) but it is the standard choice.
+  id: totrans-87
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: \({\bf L}\) 的所有对角线元素都设置为1的原因是这意味着LU分解是唯一的。这种选择是有些任意的（我们本可以决定\({\bf U}\)的对角线必须为1），但它是一个标准的选择。
 - en: We use the terms ***decomposition*** and ***factorization*** interchangeably
     to mean writing a matrix as a product of two or more other matrices, generally
     with some defined properties (such as lower/upper triangular).
+  id: totrans-88
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 我们使用“分解”和“因式分解”这两个术语可以互换，意味着将一个矩阵表示为两个或更多其他矩阵的乘积，通常具有一些定义好的性质（如下三角/上三角）。
 - en: 'Example: LU Decomposition'
+  id: totrans-89
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 示例：LU分解
 - en: Consider a \(3 \times 3\) matrix \(A = \begin{bmatrix} 1 & 2 & 2 \\ 4 & 4 &
     2 \\ 4 & 6 & 4 \end{bmatrix} .\)
+  id: totrans-90
   prefs: []
   type: TYPE_NORMAL
+  zh: 考虑一个 \(3 \times 3\) 的矩阵 \(A = \begin{bmatrix} 1 & 2 & 2 \\ 4 & 4 & 2 \\ 4 &
+    6 & 4 \end{bmatrix} .\)
 - en: The LU factorization is \({\bf A} = {\bf LU} = \begin{bmatrix} 1 & 0 & 0 \\
     4 & 1 & 0 \\ 4 & 0.5 & 1 \end{bmatrix} \begin{bmatrix} 1 & 2 & 2 \\ 0 & -4 & -6
     \\ 0 & 0 & -1 \end{bmatrix}.\)
+  id: totrans-91
   prefs: []
   type: TYPE_NORMAL
+  zh: LU分解是 \({\bf A} = {\bf LU} = \begin{bmatrix} 1 & 0 & 0 \\ 4 & 1 & 0 \\ 4 & 0.5
+    & 1 \end{bmatrix} \begin{bmatrix} 1 & 2 & 2 \\ 0 & -4 & -6 \\ 0 & 0 & -1 \end{bmatrix}.\)
 - en: Solving LU-Decomposed Linear Systems
+  id: totrans-92
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 求解LU分解的线性系统
 - en: 'Knowing the LU decomposition for a matrix \({\bf A}\) allows us to solve the
     linear system \({\bf A x} = {\bf b}\) using a combination of forward and back
     substitution. In equations this is:'
+  id: totrans-93
   prefs: []
   type: TYPE_NORMAL
+  zh: 知道矩阵 \({\bf A}\) 的LU分解，我们可以通过前向和后向替换的组合来求解线性系统 \({\bf A x} = {\bf b}\)。在方程中，这表示为：
 - en: \[\begin{aligned} {\bf A x} &= {\bf b} \\ {\bf L U x} &= {\bf b} \\ {\bf U x}
     &= {\bf L}^{-1} {\bf b} \\ {\bf x} &= {\bf U}^{-1} ({\bf L}^{-1} {\bf b}), \end{aligned}\]
+  id: totrans-94
   prefs: []
   type: TYPE_NORMAL
+  zh: \[\begin{aligned} {\bf A x} &= {\bf b} \\ {\bf L U x} &= {\bf b} \\ {\bf U x}
+    &= {\bf L}^{-1} {\bf b} \\ {\bf x} &= {\bf U}^{-1} ({\bf L}^{-1} {\bf b}), \end{aligned}\]
 - en: where we first evaluate \({\bf L}^{-1} {\bf b}\) using forward substitution
     and then evaluate \({\bf x} = {\bf U}^{-1} ({\bf L}^{-1} {\bf b})\) using back
     substitution.
+  id: totrans-95
   prefs: []
   type: TYPE_NORMAL
+  zh: 其中我们首先使用前向替换来评估 \({\bf L}^{-1} {\bf b}\)，然后使用后向替换来评估 \({\bf x} = {\bf U}^{-1}
+    ({\bf L}^{-1} {\bf b})\)。
 - en: An equivalent way to write this is to introduce a new vector \({\bf y}\) defined
     by \(\bf{y} = {\bf U x}\). Assuming the LU factorization of matrix \(\bf{A}\)
     is known, we can solve the general system
+  id: totrans-96
   prefs: []
   type: TYPE_NORMAL
+  zh: 一种等效的写法是引入一个新的向量 \({\bf y}\)，定义为 \(\bf{y} = {\bf U x}\)。假设矩阵 \(\bf{A}\) 的LU分解已知，我们可以求解一般系统
 - en: \[\bf{LU \hspace{1mm} x = b}\]
+  id: totrans-97
   prefs: []
   type: TYPE_NORMAL
+  zh: \[\bf{LU \hspace{1mm} x = b}\]
 - en: 'By solving two triangular systems:'
+  id: totrans-98
   prefs: []
   type: TYPE_NORMAL
+  zh: 通过解两个三角形系统：
 - en: \[\bf{Ly=b} \hspace{5mm} {\xRightarrow{\text{Solve for } \bf{y}}} \hspace{5mm}
     \text{Forward substitution with complexity } O(n^2)\] \[\bf{Ux=y} \hspace{5mm}
     {\xRightarrow{\text{Solve for } \bf{x}}} \hspace{5mm} \text{Back substitution
     with complexity } O(n^2)\]
+  id: totrans-99
   prefs: []
   type: TYPE_NORMAL
+  zh: \[\bf{Ly=b} \hspace{5mm} {\xRightarrow{\text{Solve for } \bf{y}}} \hspace{5mm}
+    \text{Forward substitution with complexity } O(n^2)\] \[\bf{Ux=y} \hspace{5mm}
+    {\xRightarrow{\text{Solve for } \bf{x}}} \hspace{5mm} \text{Back substitution
+    with complexity } O(n^2)\]
 - en: 'We have thus replaced \({\bf A x} = {\bf b}\) with *two* linear systems: \({\bf
     L y} = {\bf b}\) and \({\bf U x} = {\bf y}\). These two linear systems can then
     be solved one after the other using forward and back substitution.'
+  id: totrans-100
   prefs: []
   type: TYPE_NORMAL
+  zh: 因此，我们将 \({\bf A x} = {\bf b}\) 替换为*两个*线性系统：\({\bf L y} = {\bf b}\) 和 \({\bf
+    U x} = {\bf y}\)。然后，可以使用前向和后向替换依次求解这两个线性系统。
 - en: The number of operations for the LU solve algorithm is \(O(n^2)\) as \(n \to
     \infty\).
+  id: totrans-101
   prefs: []
   type: TYPE_NORMAL
+  zh: LU求解算法的操作次数为 \(O(n^2)\)，当 \(n \to \infty\) 时。
 - en: 'The ***LU solve algorithm*** code for solving the linear system \({\bf L U
     x} = {\bf b}\) is:'
+  id: totrans-102
   prefs: []
   type: TYPE_NORMAL
+  zh: 解决线性系统 \({\bf L U x} = {\bf b}\) 的***LU求解算法***代码是：
 - en: '[PRE2]'
+  id: totrans-103
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: The LU Decomposition Algorithm
+  id: totrans-104
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: LU分解算法
 - en: 'Given a matrix \({\bf A}\) there are many different algorithms to find the
     matrices \({\bf L}\) and \({\bf U}\) for the LU decomposition. Here we will use
     the ***recursive leading-row-column LU algorithm***. Let''s first consider the
     simple case when \({\bf A}\) is a \(2\times 2\) matrix:'
+  id: totrans-105
   prefs: []
   type: TYPE_NORMAL
+  zh: 给定一个矩阵 \({\bf A}\)，有许多不同的算法可以找到用于LU分解的矩阵 \({\bf L}\) 和 \({\bf U}\)。在这里，我们将使用***递归主行列LU算法***。让我们首先考虑一个简单的情况，即当
+    \({\bf A}\) 是一个 \(2\times 2\) 矩阵时：
 - en: '![](../Images/b110ed32e81f76337e21c963946cbd00.png)*Errata**The diagram above
     is actually broken (we''re fixing it). It should be that U11 = A11 and U12 = A12\.*
     *Use a similar idea to write \({\bf A}\) in block form when \({\bf A}\) is an
     \(n\times n\) matrix:'
+  id: totrans-106
   prefs: []
   type: TYPE_NORMAL
+  zh: '![](../Images/b110ed32e81f76337e21c963946cbd00.png)*勘误**上面的图实际上是损坏的（我们正在修复它）。它应该是
+    U11 = A11 和 U12 = A12\.* *使用类似的思想，当 \({\bf A}\) 是一个 \(n\times n\) 矩阵时，将 \({\bf
+    A}\) 写成块形式：'
 - en: '![](../Images/40a003279a8cd29f9a20f34d4c75570d.png)'
+  id: totrans-107
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/40a003279a8cd29f9a20f34d4c75570d.png)'
 - en: 'Then \({\bf A} = {\bf LU}\) can be re-written as:'
+  id: totrans-108
   prefs: []
   type: TYPE_NORMAL
+  zh: 然后，\({\bf A} = {\bf LU}\) 可以重新写为：
 - en: \[\begin{aligned} \begin{bmatrix} a_{11} & \boldsymbol{a}_{12} \\ \boldsymbol{a}_{21}
     & {\bf A}_{22} \end{bmatrix} &= \begin{bmatrix} 1 & \boldsymbol{0} \\ \boldsymbol{\ell}_{21}
     & {\bf L}_{22} \end{bmatrix} \begin{bmatrix} u_{11} & \boldsymbol{u}_{12} \\ \boldsymbol{0}
     & {\bf U}_{22} \end{bmatrix} \\ &= \begin{bmatrix} u_{11} & \boldsymbol{u}_{12}
     \\ u_{11} \boldsymbol{\ell}_{21} & (\boldsymbol{\ell}_{21} \boldsymbol{u}_{12}
     + {\bf L}_{22} {\bf U}_{22}) \end{bmatrix}. \end{aligned}\]
+  id: totrans-109
   prefs: []
   type: TYPE_NORMAL
+  zh: \[\begin{aligned} \begin{bmatrix} a_{11} & \boldsymbol{a}_{12} \\ \boldsymbol{a}_{21}
+    & {\bf A}_{22} \end{bmatrix} &= \begin{bmatrix} 1 & \boldsymbol{0} \\ \boldsymbol{\ell}_{21}
+    & {\bf L}_{22} \end{bmatrix} \begin{bmatrix} u_{11} & \boldsymbol{u}_{12} \\ \boldsymbol{0}
+    & {\bf U}_{22} \end{bmatrix} \\ &= \begin{bmatrix} u_{11} & \boldsymbol{u}_{12}
+    \\ u_{11} \boldsymbol{\ell}_{21} & (\boldsymbol{\ell}_{21} \boldsymbol{u}_{12}
+    + {\bf L}_{22} {\bf U}_{22}) \end{bmatrix}. \end{aligned}\]
 - en: In the above block form of the \(n \times n\) matrix \({\bf A}\), the entry
     \(a_{11}\) is a scalar, \(\boldsymbol{a}_{12}\) is a \(1 \times (n-1)\) row vector,
     \(\boldsymbol{a}_{12}\) is an \((n-1) \times 1\) column vector, and \({\bf A}_{22}\)
     is an \((n-1) \times (n-1)\) matrix.
+  id: totrans-110
   prefs: []
   type: TYPE_NORMAL
+  zh: 在上述 \(n \times n\) 矩阵 \({\bf A}\) 的块形式中，项 \(a_{11}\) 是一个标量，\(\boldsymbol{a}_{12}\)
+    是一个 \(1 \times (n-1)\) 行向量，\(\boldsymbol{a}_{12}\) 是一个 \((n-1) \times 1\) 列向量，而
+    \({\bf A}_{22}\) 是一个 \((n-1) \times (n-1)\) 矩阵。
 - en: 'Comparing the left- and right-hand side entries of the above block matrix equation
     we see that:'
+  id: totrans-111
   prefs: []
   type: TYPE_NORMAL
+  zh: 比较上述块矩阵方程的左右两侧的项，我们注意到：
 - en: \[\begin{aligned} a_{11} &= u_{11} \\ \boldsymbol{a}_{12} &= \boldsymbol{u}_{12}
     \\ \boldsymbol{a}_{21} &= u_{11} \boldsymbol{\ell}_{21} \\ A_{22} &= \boldsymbol{\ell}_{21}
     \boldsymbol{u}_{12} + {\bf L}_{22} {\bf U}_{22}. \end{aligned}\]
+  id: totrans-112
   prefs: []
   type: TYPE_NORMAL
+  zh: \[\begin{aligned} a_{11} &= u_{11} \\ \boldsymbol{a}_{12} &= \boldsymbol{u}_{12}
+    \\ \boldsymbol{a}_{21} &= u_{11} \boldsymbol{\ell}_{21} \\ A_{22} &= \boldsymbol{\ell}_{21}
+    \boldsymbol{u}_{12} + {\bf L}_{22} {\bf U}_{22}. \end{aligned}\]
 - en: 'These four equations can be rearranged to solve for the components of the \({\bf
     L}\) and \({\bf U}\) matrices as:'
+  id: totrans-113
   prefs: []
   type: TYPE_NORMAL
+  zh: 这四个方程可以重新排列，以求解 \({\bf L}\) 和 \({\bf U}\) 矩阵的分量：
 - en: \[\begin{aligned} u_{11} &= a_{11}\\ \boldsymbol{u}_{12} &= \boldsymbol{a}_{12}
     \\ \boldsymbol{\ell}_{21} &= \frac{1}{u_{11}} \boldsymbol{a}_{21} \\ {\bf L}_{22}
     {\bf U}_{22} &= \underbrace{ {\bf A}_{22} - \boldsymbol{a}_{21} (a_{11})^{-1}
     \boldsymbol{a}_{12}}_{\text{Schur complement } S_{22}}. \end{aligned}\]
+  id: totrans-114
   prefs: []
   type: TYPE_NORMAL
+  zh: \[\begin{aligned} u_{11} &= a_{11}\\ \boldsymbol{u}_{12} &= \boldsymbol{a}_{12}
+    \\ \boldsymbol{\ell}_{21} &= \frac{1}{u_{11}} \boldsymbol{a}_{21} \\ {\bf L}_{22}
+    {\bf U}_{22} &= \underbrace{ {\bf A}_{22} - \boldsymbol{a}_{21} (a_{11})^{-1}
+    \boldsymbol{a}_{12}}_{\text{Schur补 } S_{22}}. \end{aligned}\]
 - en: 'Notice that:'
+  id: totrans-115
   prefs: []
   type: TYPE_NORMAL
+  zh: 注意：
 - en: The first row of \(\bf{U}\) is the first row of \(\bf{A}\).
+  id: totrans-116
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: \(\bf{U}\) 的第一行是 \(\bf{A}\) 的第一行。
 - en: The first column of \(\bf{L}\) is \(\frac{\text{the first column of }\textbf{A}}{u_{11}}\).
+  id: totrans-117
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: \(\bf{L}\) 的第一列是 \(\frac{\text{矩阵 }\textbf{A} \text{ 的第一列}}{u_{11}}\)。
 - en: \({\bf L}_{22} {\bf U}_{22}\) needs another factorization.
+  id: totrans-118
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: \({\bf L}_{22} {\bf U}_{22}\) 需要另一个分解。
 - en: In other words, the first three equations above can be immediately evaluated
     to give the first row and column of \({\bf L}\) and \({\bf U}\). The last equation
     can then have its right-hand-side evaluated, which gives the ***Schur complement***
     \(S_{22}\) of \({\bf A}\). We thus have the equation \({\bf L}_{22} {\bf U}_{22}
     = {\bf S}_{22}\), which is an \((n-1) \times (n-1)\) LU decomposition problem
     which we can recursively solve.
+  id: totrans-119
   prefs: []
   type: TYPE_NORMAL
+  zh: 换句话说，上面的前三个方程可以立即计算出来，给出 \({\bf L}\) 和 \({\bf U}\) 的第一行和第一列。然后可以计算最后一个方程的右侧，这将给出
+    \({\bf A}\) 的 ***Schur补*** \(S_{22}\)。因此，我们得到方程 \({\bf L}_{22} {\bf U}_{22} =
+    {\bf S}_{22}\)，这是一个 \((n-1) \times (n-1)\) 的LU分解问题，我们可以递归地解决。
 - en: 'The code for the ***recursive leading-row-column LU algorithm*** to find \({\bf
     L}\) and \({\bf U}\) for \({\bf A} = {\bf LU}\) is:'
+  id: totrans-120
   prefs: []
   type: TYPE_NORMAL
+  zh: 找到 \({\bf A} = {\bf LU}\) 的 \({\bf L}\) 和 \({\bf U}\) 的 ***递归主行主列LU算法*** 代码如下：
 - en: '[PRE3]'
+  id: totrans-121
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: 'Number of divisions: \((n-1)+(n-2)+\ldots+1=\frac{n(n-1)}{2}\)'
+  id: totrans-122
   prefs: []
   type: TYPE_NORMAL
+  zh: 除法次数：\((n-1)+(n-2)+\ldots+1=\frac{n(n-1)}{2}\)
 - en: 'Number of multiplications: \((n-1)^2+(n-2)^2+\ldots+1^2=\frac{n^3}{3} - \frac{n^2}{2}
     + \frac{n}{6}\)'
+  id: totrans-123
   prefs: []
   type: TYPE_NORMAL
+  zh: 乘法次数：\((n-1)^2+(n-2)^2+\ldots+1^2=\frac{n^3}{3} - \frac{n^2}{2} + \frac{n}{6}\)
 - en: 'Number of subtractions: \((n-1)^2+(n-2)^2+\ldots+1^2=\frac{n^3}{3} - \frac{n^2}{2}
     + \frac{n}{6}\)'
+  id: totrans-124
   prefs: []
   type: TYPE_NORMAL
+  zh: 减法次数：\((n-1)^2+(n-2)^2+\ldots+1^2=\frac{n^3}{3} - \frac{n^2}{2} + \frac{n}{6}\)
 - en: Hence the number of operations for the recursive leading-row-column LU decomposition
     algorithm is \(\bf{O(n^3)}\) as \(n \to \infty\).
+  id: totrans-125
   prefs: []
   type: TYPE_NORMAL
+  zh: 因此，递归主行主列LU分解算法的操作次数为 \(\bf{O(n^3)}\)，当 \(n \to \infty\) 时。
 - en: 'Example: LU decomposition'
+  id: totrans-126
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 示例：LU分解
 - en: Consider the matrix \(\bf{A} = \begin{bmatrix} 2 & 8 & 4 & 1 \\ 1 & 2 & 3 &
     3 \\ 1 & 2 & 6 & 2 \\ 1 & 3 & 4 & 2 \end{bmatrix} .\)
+  id: totrans-127
   prefs: []
   type: TYPE_NORMAL
+  zh: 考虑矩阵 \(\bf{A} = \begin{bmatrix} 2 & 8 & 4 & 1 \\ 1 & 2 & 3 & 3 \\ 1 & 2 & 6
+    & 2 \\ 1 & 3 & 4 & 2 \end{bmatrix} .\)
 - en: How can we find an LU Decomposition for this matrix?
+  id: totrans-128
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们如何找到这个矩阵的LU分解？
 - en: <details><summary>**Answer**</summary> Note that we use \(\bf {M}\) to keep
     track of the matrix (e.g. \(\bf {L_{22}U_{22}}\) in the first step) that needs
     recursive factorization.
+  id: totrans-129
   prefs: []
   type: TYPE_NORMAL
+  zh: <details><summary>**答案**</summary> 注意，我们使用 \(\bf {M}\) 来跟踪需要递归分解的矩阵（例如第一步中的
+    \(\bf {L_{22}U_{22}}\)）。
 - en: The first row of \(\bf{U}\) is the first row of \(\bf{A}\).
+  id: totrans-130
   prefs: []
   type: TYPE_NORMAL
+  zh: \(\bf{U}\) 的第一行是 \(\bf{A}\) 的第一行。
 - en: The first column of \(\bf{L}\) is \(\frac{\text{the first column of }\textbf{A}}{u_{11}}\).
+  id: totrans-131
   prefs: []
   type: TYPE_NORMAL
+  zh: \(\bf{L}\) 的第一列是 \(\frac{\text{矩阵 }\textbf{A} \text{ 的第一列}}{u_{11}}\)。
 - en: 'Also, as \({\bf L}_{22} {\bf U}_{22} = {\bf A}_{22} - \boldsymbol{a}_{21} (a_{11})^{-1}
     \boldsymbol{a}_{12}\), we have the following after the first step (notice that
     we use the tensor product operator "\(\otimes\)" to denote the outer product of
@@ -596,22 +933,56 @@
     & 0 \\ 0.5 & 0.5 & 0.5 & 1 \end{bmatrix}; \hspace{5mm} \textbf{U} = \begin{bmatrix}
     2 & 8 & 4 & 1 \\ 0 & -2 & 1 & 2.5 \\ 0 & 0 & 3 & -1 \\ 0 & 0 & 0 & 0.75 \end{bmatrix}
     $</details>'
+  id: totrans-132
   prefs: []
   type: TYPE_NORMAL
+  zh: 此外，由于 \({\bf L}_{22} {\bf U}_{22} = {\bf A}_{22} - \boldsymbol{a}_{21} (a_{11})^{-1}
+    \boldsymbol{a}_{12}\)，在第一步之后我们得到以下结果（注意我们使用张量积运算符 "\(\otimes\)" 来表示两个向量的外积）：$
+    \textbf{L} = \begin{bmatrix} 1 & 0 & 0 & 0 \\ \textbf{0.5} & 1 & 0 & 0 \\ \textbf{0.5}
+    & ? & 1 & 0 \\ \textbf{0.5} & ? & ? & 1 \end{bmatrix}; \hspace{5mm} \textbf{U}
+    = \begin{bmatrix} 2 & \textbf{8} & \textbf{4} & \textbf{1} \\ 0 & ? & ? & ? \\
+    0 & 0 & ? & ? \\ 0 & 0 & 0 & ? \end{bmatrix}; \hspace{5mm} \textbf{M} = \begin{bmatrix}
+    2 & 3 & 3 \\ 2 & 6 & 2 \\ 3 & 4 & 2 \end{bmatrix} - \begin{bmatrix} 0.5 \\ 0.5
+    \\ 0.5 \end{bmatrix} \otimes \begin{bmatrix} 8 \\ 4 \\ 1 \end{bmatrix} = \begin{bmatrix}
+    -2 & 1 & 2.5 \\ -2 & 4 & 1.5 \\ -1 & 2 & 1.5 \end{bmatrix} $ 类似地，在第二步（递归）中：$ \textbf{L}
+    = \begin{bmatrix} 1 & 0 & 0 & 0 \\ 0.5 & 1 & 0 & 0 \\ 0.5 & \textbf{1} & 1 & 0
+    \\ 0.5 & \textbf{0.5} & ? & 1 \end{bmatrix}; \hspace{5mm} \textbf{U} = \begin{bmatrix}
+    2 & 8 & 4 & 1 \\ 0 & -2 & \textbf{1} & \textbf{2.5} \\ 0 & 0 & ? & ? \\ 0 & 0
+    & 0 & ? \end{bmatrix}; \hspace{5mm} \textbf{M} = \begin{bmatrix} 4 & 1.5 \\ 2
+    & 1.5 \end{bmatrix} - \begin{bmatrix} 1 \\ 0.5 \end{bmatrix} \otimes \begin{bmatrix}
+    1 \\ 2.5 \end{bmatrix} = \begin{bmatrix} 3 & -1 \\ 1.5 & 0.25 \end{bmatrix} $
+    下一步是：$ \textbf{L} = \begin{bmatrix} 1 & 0 & 0 & 0 \\ 0.5 & 1 & 0 & 0 \\ 0.5 &
+    1 & 1 & 0 \\ 0.5 & 0.5 & \textbf{0.5} & 1 \end{bmatrix}; \hspace{5mm} \textbf{U}
+    = \begin{bmatrix} 2 & 8 & 4 & 1 \\ 0 & -2 & 1 & 2.5 \\ 0 & 0 & 3 & \textbf{-1}
+    \\ 0 & 0 & 0 & ? \end{bmatrix}; \hspace{5mm} \textbf{M} = \begin{bmatrix} 0.25
+    \end{bmatrix} - \begin{bmatrix} 0.5 \end{bmatrix} \otimes \begin{bmatrix} -1 \end{bmatrix}
+    = \begin{bmatrix} 0.75 \end{bmatrix} $ 因此，最终结果是：$ \textbf{L} = \begin{bmatrix}
+    1 & 0 & 0 & 0 \\ 0.5 & 1 & 0 & 0 \\ 0.5 & 1 & 1 & 0 \\ 0.5 & 0.5 & 0.5 & 1 \end{bmatrix};
+    \hspace{5mm} \textbf{U} = \begin{bmatrix} 2 & 8 & 4 & 1 \\ 0 & -2 & 1 & 2.5 \\
+    0 & 0 & 3 & -1 \\ 0 & 0 & 0 & 0.75 \end{bmatrix} $
 - en: 'Example: Matrix for which LU Decomposition Fails'
+  id: totrans-133
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 示例：LU分解失败的矩阵
 - en: An example of a matrix which has no LU decomposition is
+  id: totrans-134
   prefs: []
   type: TYPE_NORMAL
+  zh: 一个没有LU分解的矩阵的例子是
 - en: \[{\bf A} = \begin{bmatrix} 2 & 8 & 4 & 1 \\ 1 & 4 & 3 & 3 \\ 1 & 2 & 6 & 2
     \\ 1 & 3 & 4 & 2 \end{bmatrix}\]
+  id: totrans-135
   prefs: []
   type: TYPE_NORMAL
+  zh: \[{\bf A} = \begin{bmatrix} 2 & 8 & 4 & 1 \\ 1 & 4 & 3 & 3 \\ 1 & 2 & 6 & 2
+    \\ 1 & 3 & 4 & 2 \end{bmatrix}\]
 - en: Why?
+  id: totrans-136
   prefs: []
   type: TYPE_NORMAL
+  zh: 为什么？
 - en: '<details><summary>**Answer**</summary> The first step of LU Decomposition is
     (notice that we use the tensor product operator "\(\otimes\)" to denote the outer
     product of two vectors): $ \textbf{L} = \begin{bmatrix} 1 & 0 & 0 & 0 \\ \textbf{0.5}
@@ -623,188 +994,290 @@
     \textbf{0} & 1 & 2.5 \\ -2 & 4 & 1.5 \\ -1 & 2 & 1.5 \end{bmatrix} $ The next
     update for the lower triangular matrix will result in a division by zero. LU factorization
     fails, so \(\bf A\) does not have a normal LU decomposition.</details>'
+  id: totrans-137
   prefs: []
   type: TYPE_NORMAL
+  zh: <details><summary>**答案**</summary> LU分解的第一步是（注意我们使用张量积运算符"\(\otimes\)"来表示两个向量的外积）：$
+    \textbf{L} = \begin{bmatrix} 1 & 0 & 0 & 0 \\ \textbf{0.5} & 1 & 0 & 0 \\ \textbf{0.5}
+    & ? & 1 & 0 \\ \textbf{0.5} & ? & ? & 1 \end{bmatrix}; \hspace{5mm} \textbf{U}
+    = \begin{bmatrix} 2 & 8 & 4 & 1 \\ 0 & ? & ? & ? \\ 0 & 0 & ? & ? \\ 0 & 0 & 0
+    & ? \end{bmatrix}; \hspace{5mm} \bf{L_{22}U_{22}} = \begin{bmatrix} 4 & 3 & 3
+    \\ 2 & 6 & 2 \\ 3 & 4 & 2 \end{bmatrix} - \begin{bmatrix} 0.5 \\ 0.5 \\ 0.5 \end{bmatrix}
+    \otimes \begin{bmatrix} 8 \\ 4 \\ 1 \end{bmatrix} = \begin{bmatrix} \textbf{0}
+    & 1 & 2.5 \\ -2 & 4 & 1.5 \\ -1 & 2 & 1.5 \end{bmatrix} $ 下一个更新将导致除以零。LU分解失败，因此\(\bf
+    A\)没有正常的LU分解。</details>
 - en: Solving Linear Systems Using LU Decomposition
+  id: totrans-138
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 使用LU分解求解线性系统
 - en: We can put the above sections together to produce an algorithm for solving the
     system \({\bf A x} = {\bf b}\), where we first compute the LU decomposition of
     \({\bf A}\) and then use forward and back substitution to solve for \({\bf x}\).
+  id: totrans-139
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们可以将上述部分组合起来，生成求解系统\({\bf A x} = {\bf b}\)的算法，其中我们首先计算\({\bf A}\)的LU分解，然后使用前向和后向替换来求解\({\bf
+    x}\)。
 - en: 'The properties of this algorithm are:'
+  id: totrans-140
   prefs: []
   type: TYPE_NORMAL
+  zh: 该算法的性质包括：
 - en: The algorithm may fail, even if \({\bf A}\) is invertible.
+  id: totrans-141
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 即使\({\bf A}\)是可逆的，算法也可能失败。
 - en: The number of operations in the algorithm is \(\mathcal{O}(n^3)\) as \(n \to
     \infty\).
+  id: totrans-142
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 随着n趋向于无穷大，算法中的操作数是\(\mathcal{O}(n^3)\)。
 - en: 'The code for the ***linear solver using LU decomposition*** is:'
+  id: totrans-143
   prefs: []
   type: TYPE_NORMAL
+  zh: 使用LU分解的***线性求解器代码***是：
 - en: '[PRE4]'
+  id: totrans-144
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE4]'
 - en: Pivoting
+  id: totrans-145
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 旋转
 - en: The LU decomposition can fail when the top-left entry in the matrix \({\bf A}\)
     is zero or very small compared to other entries. ***Pivoting*** is a strategy
     to mitigate this problem by rearranging the rows and/or columns of \({\bf A}\)
     to put a larger element in the top-left position.
+  id: totrans-146
   prefs: []
   type: TYPE_NORMAL
+  zh: 当矩阵\({\bf A}\)的左上角元素为零或与其他元素相比非常小的时候，LU分解可能会失败。***旋转***是一种通过重新排列\({\bf A}\)的行和/或列，将较大的元素放置在左上角位置来减轻这种问题的策略。
 - en: There are many different pivoting algorithms. The most common of these are ***full
     pivoting***, ***partial pivoting***, and ***scaled partial pivoting***. We will
     only discuss ***partial pivoting*** in detail.
+  id: totrans-147
   prefs: []
   type: TYPE_NORMAL
+  zh: 有许多不同的旋转算法。其中最常见的是***完全旋转***、***部分旋转***和***缩放部分旋转***。我们只将详细讨论***部分旋转***。
 - en: 1) ***Partial pivoting*** only rearranges the rows of \({\bf A}\) and leaves
     the columns fixed.
+  id: totrans-148
   prefs: []
   type: TYPE_NORMAL
+  zh: 1) ***部分旋转***只重新排列\({\bf A}\)的行，并保持列不变。
 - en: '![](../Images/84a9fe9fc77b8fbc44ff66e90c84049a.png)'
+  id: totrans-149
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/84a9fe9fc77b8fbc44ff66e90c84049a.png)'
 - en: 2) ***Full pivoting*** rearranges both rows and columns.
+  id: totrans-150
   prefs: []
   type: TYPE_NORMAL
+  zh: 2) ***完全旋转***重新排列行和列。
 - en: '![](../Images/b9e9c57c936b56ff92b79234757f9616.png)'
+  id: totrans-151
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/b9e9c57c936b56ff92b79234757f9616.png)'
 - en: 3) ***Scaled partial pivoting*** approximates full pivoting without actually
     rearranging columns.
+  id: totrans-152
   prefs: []
   type: TYPE_NORMAL
+  zh: 3) ***缩放部分旋转***在不实际重新排列列的情况下近似完全旋转。
 - en: LU Decomposition with Partial Pivoting
+  id: totrans-153
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 部分旋转LU分解
 - en: 'The ***LU decomposition with partial pivoting (LUP)*** of an \(n \times n\)
     matrix \({\bf A}\) is the triple of matrices \({\bf L}\), \({\bf U}\), and \({\bf
     P}\) such that:'
+  id: totrans-154
   prefs: []
   type: TYPE_NORMAL
+  zh: \(n \times n\)矩阵\({\bf A}\)的***部分旋转LU分解（LUP）***是矩阵\({\bf L}\)、\({\bf U}\)和\({\bf
+    P}\)的三元组，使得：
 - en: \({\bf P A} = {\bf LU} \)
+  id: totrans-155
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: \({\bf P A} = {\bf LU} \)
 - en: \({\bf L}\) is an \(n \times n\) lower-triangular matrix with all diagonal entries
     equal to 1.
+  id: totrans-156
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: \({\bf L}\)是一个\(n \times n\)的下三角矩阵，所有对角线元素都等于1。
 - en: \({\bf U}\) is an \(n \times n\) upper-triangular matrix.
+  id: totrans-157
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: \({\bf U}\)是一个\(n \times n\)的上三角矩阵。
 - en: \({\bf P}\) is an \(n \times n\) permutation matrix.
+  id: totrans-158
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: \({\bf P}\)是一个\(n \times n\)的置换矩阵。
 - en: 'The properties of the LUP decomposition are:'
+  id: totrans-159
   prefs: []
   type: TYPE_NORMAL
+  zh: LUP分解的性质包括：
 - en: The permutation matrix \({\bf P}\) acts to permute the rows of \({\bf A}\).
     This attempts to put large entries in the top-left position of \({\bf A}\) and
     each sub-matrix in the recursion, to avoid needing to divide by a small or zero
     element.
+  id: totrans-160
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 置换矩阵 \({\bf P}\) 作用于 \({\bf A}\) 的行。这试图将大项放在 \({\bf A}\) 的左上角位置以及递归中的每个子矩阵中，以避免需要除以小或零元素。
 - en: The LUP decomposition always exists for a matrix \({\bf A}\).
+  id: totrans-161
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 对于矩阵 \({\bf A}\)，LUP 分解总是存在的。
 - en: The LUP decomposition of a matrix \({\bf A}\) is not unique.
+  id: totrans-162
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 矩阵 \({\bf A}\) 的 LUP 分解不是唯一的。
 - en: The LUP decomposition provides a more robust method of solving linear systems
     than LU decomposition without pivoting, and it is approximately the same cost.
+  id: totrans-163
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: LUP 分解提供了一种比没有选主元的 LU 分解更鲁棒的求解线性系统的方法，并且其成本大致相同。
 - en: 'LU factorization with partial pivoting can be completed for any matrix A: Suppose
     you are at stage k and there is no non-zero entry on or below the diagonal in
     column k. At this point, there is nothing else you can do, so the algorithm leaves
     a zero in the diagonal entry of U. Note that the matrix U is singular, and so
     is the matrix A. Subsequent back substitutions using U will fail, but the LU factorization
     itself is still completed.'
+  id: totrans-164
   prefs: []
   type: TYPE_NORMAL
+  zh: 带部分选主元的 LU 分解可以对任何矩阵 A 完成：假设你处于第 k 阶段，并且在第 k 列的对角线以下没有非零项。在这种情况下，你无法再进行其他操作，因此算法在
+    U 的对角线位置留下一个零。请注意，矩阵 U 是奇异的，矩阵 A 也是奇异的。使用 U 进行后续的回代将失败，但 LU 分解本身仍然完成。
 - en: Solving LUP decomposition linear systems
+  id: totrans-165
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 解决 LUP 分解线性系统
 - en: Knowing the LUP decomposition for a matrix \({\bf A}\) allows us to solve the
     linear system \({\bf A x} = {\bf b}\) by first applying \({\bf P}\) and then using
     the LU solver. In equations we start by taking \({\bf A x} = {\bf b}\) and multiplying
     both sides by \({\bf P}\), giving
+  id: totrans-166
   prefs: []
   type: TYPE_NORMAL
+  zh: 知道矩阵 \({\bf A}\) 的 LUP 分解允许我们通过首先应用 \({\bf P}\)，然后使用 LU 求解器来解决线性系统 \({\bf A
+    x} = {\bf b}\)。在方程中，我们首先取 \({\bf A x} = {\bf b}\)，并将两边乘以 \({\bf P}\)，得到
 - en: \[\begin{aligned} {\bf Ax} &= {\bf b} \\ {\bf PAx} &= {\bf Pb} \\ {\bf LUx}
     &= {\bf Pb}. \end{aligned}\]
+  id: totrans-167
   prefs: []
   type: TYPE_NORMAL
+  zh: \[\begin{aligned} {\bf Ax} &= {\bf b} \\ {\bf PAx} &= {\bf Pb} \\ {\bf LUx}
+    &= {\bf Pb}. \end{aligned}\]
 - en: 'The code for the ***LUP solve algorithm*** to solve the linear system \({\bf
     L U x} = {\bf P b}\) is:'
+  id: totrans-168
   prefs: []
   type: TYPE_NORMAL
+  zh: 解决线性系统 \({\bf L U x} = {\bf P b}\) 的 ***LUP 解算法*** 代码如下：
 - en: '[PRE5]'
+  id: totrans-169
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE5]'
 - en: The number of operations for the LUP solve algorithm is \(\mathcal{O}(n^2)\)
     as \(n \to \infty\).
+  id: totrans-170
   prefs: []
   type: TYPE_NORMAL
+  zh: LUP 解算法的操作次数为 \(\mathcal{O}(n^2)\)，当 \(n \to \infty\) 时。
 - en: The LUP decomposition algorithm
+  id: totrans-171
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: LUP 分解算法
 - en: Just as there are different LU decomposition algorithms, there are also different
     algorithms to find a LUP decomposition. Here we use the ***recursive leading-row-column
     LUP algorithm***.
+  id: totrans-172
   prefs: []
   type: TYPE_NORMAL
+  zh: 正如存在不同的 LU 分解算法一样，也存在不同的 LUP 分解算法。这里我们使用 ***递归主行主列 LUP 算法***。
 - en: This algorithm is a recursive method for finding \({\bf L}\), \({\bf U}\), and
     \({\bf P}\) so that \({\bf P A} = {\bf L U}\). It consists of the following steps.
+  id: totrans-173
   prefs: []
   type: TYPE_NORMAL
+  zh: 此算法是寻找 \({\bf L}\)，\({\bf U}\) 和 \({\bf P}\) 的递归方法，使得 \({\bf P A} = {\bf L U}\)。它包括以下步骤。
 - en: First choose \(i\) so that row \(i\) in \({\bf A}\) has the largest absolute
     first entry. That is, \(\vert A_{i1}\vert \ge \vert A_{j1}\vert\) for all \(j\).
     Let \({\bf P}_1\) be the permutation matrix that pivots (shifts) row \(i\) to
     the first row, and leaves all other rows in order. We can explicitly write \({\bf
     P}_1\) as
+  id: totrans-174
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 首先选择 \(i\)，使得 \({\bf A}\) 的第 \(i\) 行具有最大的绝对第一个元素。也就是说，对于所有 \(j\)，\(\vert A_{i1}\vert
+    \ge \vert A_{j1}\vert\)。设 \({\bf P}_1\) 为将第 \(i\) 行旋转（移动）到第一行，并保持所有其他行顺序的置换矩阵。我们可以明确写出
+    \({\bf P}_1\) 为
 - en: \[{\bf P}_1 = \begin{bmatrix} 0_{1(i-1)} & 1 & 0_{1(n-i)} \\ I_{(i-1)(i-1)}
     & 0 & 0_{(i-1)(n-i)} \\ 0_{(n-i)(i-1)} & 0 & I_{(n-i)(n-i)} \end{bmatrix} = \begin{bmatrix}
     0 & \ldots & 0 & 1 & 0 & \ldots & 0 \\ 1 & \ldots & 0 & 0 & 0 & \ldots & 0 \\
     \vdots & \ddots & \vdots & \vdots & \vdots & \ldots & 0 \\ 0 & \ldots & 1 & 0
     & 0 & \ldots & 0 \\ 0 & \ldots & 0 & 0 & 1 & \ldots & 0 \\ \vdots & \ddots & \vdots
     & \vdots & \vdots & \ldots & 0 \\ 0 & \ldots & 0 & 0 & 0 & \ldots & 1 \end{bmatrix}.\]
+  id: totrans-175
   prefs:
   - PREF_IND
   type: TYPE_NORMAL
+  zh: \[{\bf P}_1 = \begin{bmatrix} 0_{1(i-1)} & 1 & 0_{1(n-i)} \\ I_{(i-1)(i-1)}
+    & 0 & 0_{(i-1)(n-i)} \\ 0_{(n-i)(i-1)} & 0 & I_{(n-i)(n-i)} \end{bmatrix} = \begin{bmatrix}
+    0 & \ldots & 0 & 1 & 0 & \ldots & 0 \\ 1 & \ldots & 0 & 0 & 0 & \ldots & 0 \\
+    \vdots & \ddots & \vdots & \vdots & \vdots & \ldots & 0 \\ 0 & \ldots & 1 & 0
+    & 0 & \ldots & 0 \\ 0 & \ldots & 0 & 0 & 1 & \ldots & 0 \\ \vdots & \ddots & \vdots
+    & \vdots & \vdots & \ldots & 0 \\ 0 & \ldots & 0 & 0 & 0 & \ldots & 1 \end{bmatrix}.\]
 - en: Write \(\bar{ {\bf A} }\) to denote the pivoted \({\bf A}\) matrix, so \(\bar{
     {\bf A} } = {\bf P}_1 {\bf A}\).
+  id: totrans-176
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 用 \(\bar{ {\bf A} }\) 表示选主元的 \({\bf A}\) 矩阵，因此 \(\bar{ {\bf A} } = {\bf P}_1
+    {\bf A}\)。
 - en: Let \({\bf P}_2\) be a permutation matrix that leaves the first row where it
     is, but permutes all other rows. We can write \({\bf P}_2\) as \({\bf P}_2 = \begin{bmatrix}
     1 & \boldsymbol{0} \\ \boldsymbol{0} & P_{22} \end{bmatrix},\) where \({\bf P}_{22}\)
     is an \((n-1) \times (n-1)\) permutation matrix.
+  id: totrans-177
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
@@ -814,11 +1287,13 @@
     first shifts row \(i\) of \({\bf A}\) to the top, and then permutes the remaining
     rows. This is a completely general permutation matrix \({\bf P}\), but this factorization
     is key to enabling a recursive algorithm.
+  id: totrans-178
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
 - en: Using the factorization \({\bf P} = {\bf P}_2 {\bf P}_1\), now write the LUP
     factorization in block form as
+  id: totrans-179
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
@@ -832,10 +1307,12 @@
     \bar{ {\bf A} }_{22} \end{bmatrix} &= \begin{bmatrix} u_{11} & \boldsymbol{u}_{12}
     \\ u_{11} \boldsymbol{\ell}_{21} & (\boldsymbol{\ell}_{21} \boldsymbol{u}_{12}
     + {\bf L}_{22} {\bf U}_{22}) \end{bmatrix} \end{aligned}\]
+  id: totrans-180
   prefs:
   - PREF_IND
   type: TYPE_NORMAL
 - en: Equating the entries in the above matrices gives the equations
+  id: totrans-181
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
@@ -843,111 +1320,154 @@
     \\ {\bf P}_{22} \bar{\boldsymbol{a}}_{21} &= u_{11} \boldsymbol{\ell}_{21} \\
     {\bf P}_{22} \bar{A}_{22} &= \boldsymbol{\ell}_{21} \boldsymbol{u}_{12} + {\bf
     L}_{22} {\bf U}_{22}. \end{aligned}\]
+  id: totrans-182
   prefs:
   - PREF_IND
   type: TYPE_NORMAL
 - en: Substituting the first three equations above into the last one and rearranging
     gives
+  id: totrans-183
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
 - en: \[{\bf P}_{22} \underbrace{\Bigl(\bar{A}_{22} - \bar{\boldsymbol{a}}_{21} (\bar{a}_{11})^{-1}
     \bar{\boldsymbol{a}}_{12}\Bigr)}_{\text{Schur complement } {\bf S}_{22}} = {\bf
     L}_{22} {\bf U}_{22}.\]
+  id: totrans-184
   prefs:
   - PREF_IND
   type: TYPE_NORMAL
 - en: Recurse to find the LUP decomposition of \(S_{22}\), resulting in \({\bf L}_{22}\),
     \({\bf U}_{22}\), and \({\bf P}_{22}\) that satisfy the above equation.
+  id: totrans-185
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
 - en: Solve for the first rows and columns of \({\bf L}\) and \({\bf U}\) with the
     above equations to give
+  id: totrans-186
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
 - en: \[\begin{aligned} u_{11} &= \bar{a}_{11} \\ \boldsymbol{u}_{12} &= \bar{\boldsymbol{a}}_{12}
     \\ \boldsymbol{\ell}_{21} &= \frac{1}{\bar{a}_{11}} {\bf P}_{22} \bar{\boldsymbol{a}}_{21}.
     \end{aligned}\]
+  id: totrans-187
   prefs:
   - PREF_IND
   type: TYPE_NORMAL
 - en: Finally, reconstruct the full matrices \({\bf L}\), \({\bf U}\), and \({\bf
     P}\) from the component parts.
+  id: totrans-188
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
 - en: 'In code the ***recursive leading-row-column LUP algorithm*** for finding the
     LU decomposition of \({\bf A}\) with partial pivoting is:'
+  id: totrans-189
   prefs: []
   type: TYPE_NORMAL
+  zh: 在代码中，用于找到 \({\bf A}\) 的 LU 分解的带部分主元选择的递归主行主列 LUP 算法为：
 - en: '[PRE6]'
+  id: totrans-190
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE6]'
 - en: 'The properties of the recursive leading-row-column LUP decomposition algorithm
     are:'
+  id: totrans-191
   prefs: []
   type: TYPE_NORMAL
+  zh: 递归主行主列 LUP 分解算法的特性包括：
 - en: The computational complexity (number of operations) of the algorithm is \(\mathcal{O}(n^3)\)
     as \(n \to \infty\).
+  id: totrans-192
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 当 \(n \to \infty\) 时，该算法的计算复杂度（操作次数）为 \(\mathcal{O}(n^3)\)。
 - en: The last step in the code that computes \({\bf P}\) does not do so by constructing
     and multiplying \({\bf P}_2\) and \({\bf P}_1\). This is because this would be
     an \(\mathcal{O}(n^3)\) step, making the whole algorithm \(\mathcal{O}(n^4)\).
     Instead we take advantage of the special structure of \({\bf P}_2\) and \({\bf
     P}_1\) to compute \({\bf P}\) with \(\mathcal{O}(n^2)\) work.
+  id: totrans-193
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 代码中计算 \({\bf P}\) 的最后一步并不是通过构造和乘以 \({\bf P}_2\) 和 \({\bf P}_1\) 来实现的。这是因为这将是一个
+    \(\mathcal{O}(n^3)\) 的步骤，使得整个算法变为 \(\mathcal{O}(n^4)\)。相反，我们利用 \({\bf P}_2\) 和
+    \({\bf P}_1\) 的特殊结构，以 \(\mathcal{O}(n^2)\) 的工作量来计算 \({\bf P}\)。
 - en: Solving General Linear Systems using LUP Decomposition
+  id: totrans-194
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 使用 LUP 分解求解一般线性方程组
 - en: Just as with the plain LU decomposition, we can use LUP decomposition to solve
     the linear system \({\bf A x }= {\bf b}\). This is the ***linear solver using
     LUP decomposition*** algorithm.
+  id: totrans-195
   prefs: []
   type: TYPE_NORMAL
+  zh: 正如普通的 LU 分解一样，我们可以使用 LUP 分解来解决线性方程组 \({\bf A x }= {\bf b}\)。这是使用 LUP 分解的线性求解器算法。
 - en: 'The properties of this algorithm are:'
+  id: totrans-196
   prefs: []
   type: TYPE_NORMAL
+  zh: 该算法的特性包括：
 - en: The algorithm may fail. In particular if \({\bf A}\) is singular (or singular
     in finite precision), U will have a zero on it's diagonal.
+  id: totrans-197
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 该算法可能会失败。特别是如果 \({\bf A}\) 是奇异的（或在有限精度下是奇异的），U 的对角线上将会有一个零。
 - en: As LU factorization has \(\mathcal{O}(n^3)\) opeations, and solving \(Ly = b\)
     and \(Ux = y\) both have \(\mathcal{O}(n^2)\) opeations, the number of total operations
     in this algorithm is \(\bf{\mathcal{O}(n^3)}\) as \(n \to \infty\).
+  id: totrans-198
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 由于 LU 分解有 \(\mathcal{O}(n^3)\) 次操作，而求解 \(Ly = b\) 和 \(Ux = y\) 都有 \(\mathcal{O}(n^2)\)
+    次操作，因此当 \(n \to \infty\) 时，该算法的总操作次数为 \(\bf{\mathcal{O}(n^3)}\)。
 - en: We decouple the factorization step from the actual solve, since in enigeering
     applications, it might be possible to reuse the LU factorization of the same matrix
     in solving multiple linear systems.
+  id: totrans-199
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 我们将分解步骤与实际求解步骤解耦，因为在某些工程应用中，在求解多个线性方程组时，可能可以重用同一矩阵的 LU 分解。
 - en: 'The code for the ***linear solver using LUP decomposition*** is:'
+  id: totrans-200
   prefs: []
   type: TYPE_NORMAL
+  zh: 使用 LUP 分解的线性求解器的代码为：
 - en: '[PRE7]'
+  id: totrans-201
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE7]'
 - en: 'Example: LUP Decomposition'
+  id: totrans-202
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 示例：LUP 分解
 - en: Consider the matrix \(\bf{A} = \begin{bmatrix} 2 & 1 & 1 & 0 \\ 4 & 3 & 3 &
     1 \\ 8 & 7 & 9 & 5 \\ 6 & 7 & 9 & 8 \end{bmatrix} .\)
+  id: totrans-203
   prefs: []
   type: TYPE_NORMAL
+  zh: 考虑矩阵 \(\bf{A} = \begin{bmatrix} 2 & 1 & 1 & 0 \\ 4 & 3 & 3 & 1 \\ 8 & 7 & 9
+    & 5 \\ 6 & 7 & 9 & 8 \end{bmatrix} .\)
 - en: How can we find an LUP Decomposition for this matrix?
+  id: totrans-204
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们如何找到这个矩阵的 LUP 分解？
 - en: '<details><summary>**Answer**</summary> Note that we use \({\bf {\overline{M}}}\)
     to keep track of the matrix (e.g. \(\bf L_{22} U_{22}\) in the first step) that
     needs recursive factorization, and the tensor product operator "\(\otimes\)" to
@@ -989,21 +1509,30 @@
     & -0.86 & -0.29 \\ 0 & 0 & 0 & 0.67 \end{bmatrix}; \hspace{5mm} \textbf{P} = \begin{bmatrix}
     0 & 0 & 1 & 0 \\ 0 & 0 & 0 & 1 \\ 0 & 1 & 0 & 0 \\ 1 & 0 & 0 & 0 \end{bmatrix}
     $</details>'
+  id: totrans-205
   prefs: []
   type: TYPE_NORMAL
 - en: 'Example: Matrix for which LUP Decomposition Succeeds but LU Decomposition Fails'
+  id: totrans-206
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 示例：LUP 分解成功但 LU 分解失败的矩阵
 - en: 'Consider a matrix which has no LU decomposition:'
+  id: totrans-207
   prefs: []
   type: TYPE_NORMAL
+  zh: 考虑一个没有 LU 分解的矩阵：
 - en: \[{\bf A} = \begin{bmatrix} 0 & 1 \\ 2 & 1 \end{bmatrix}.\]
+  id: totrans-208
   prefs: []
   type: TYPE_NORMAL
+  zh: \[{\bf A} = \begin{bmatrix} 0 & 1 \\ 2 & 1 \end{bmatrix}.\]
 - en: How can we find an LUP Decomposition for this matrix?
+  id: totrans-209
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们如何找到这个矩阵的 LUP 分解？
 - en: <details><summary>**Answer**</summary> To find the LUP decomposition of \(\bf
     A\), we first write the permutation matrix \({\bf P}\) that shifts the second
     row to the top, so that the top-left entry has the largest possible magnitude.
@@ -1011,190 +1540,278 @@
     0 & 1 \\ 2 & 1 \end{bmatrix}}^{A} = \overbrace{\begin{bmatrix} 2 & 1 \\ 0 & 1
     \end{bmatrix}}^{\bar{A}} = \overbrace{\begin{bmatrix} 1 & 0 \\ 0 & 1 \end{bmatrix}}^{L}
     \overbrace{\begin{bmatrix} 2 & 1 \\ 0 & 1 \end{bmatrix}}^{U}. $</details>
+  id: totrans-210
   prefs: []
   type: TYPE_NORMAL
+  zh: <details><summary>**答案**</summary> 要找到 \(\bf A\) 的 LUP 分解，我们首先写出置换矩阵 \({\bf
+    P}\)，将第二行移到顶部，使得左上角的元素具有最大的可能幅度。这给出 $ \overbrace{\begin{bmatrix} 0 & 1 \\ 1 &
+    0 \end{bmatrix}}^{P} \overbrace{\begin{bmatrix} 0 & 1 \\ 2 & 1 \end{bmatrix}}^{A}
+    = \overbrace{\begin{bmatrix} 2 & 1 \\ 0 & 1 \end{bmatrix}}^{\bar{A}} = \overbrace{\begin{bmatrix}
+    1 & 0 \\ 0 & 1 \end{bmatrix}}^{L} \overbrace{\begin{bmatrix} 2 & 1 \\ 0 & 1 \end{bmatrix}}^{U}.
+    $</details>
 - en: Review Questions
+  id: totrans-211
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 复习问题
 - en: Given a factorization \({\bf P A} = {\bf LU}\), how would you solve the system
     \({\bf A}\mathbf{x} = \mathbf{b}\)?
+  id: totrans-212
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 给定分解 \({\bf P A} = {\bf LU}\)，你将如何解方程 \({\bf A}\mathbf{x} = \mathbf{b}\)？
 - en: Understand the process of solving a triangular system. Solve an example triangular
     system.
+  id: totrans-213
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 理解解三角系统的过程。解一个示例三角系统。
 - en: Recognize and understand Python code implementing forward substitution, back
     substitution, and LU factorization.
+  id: totrans-214
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 识别和理解实现前向替换、后向替换和 LU 分解的 Python 代码。
 - en: When does an LU factorization exist?
+  id: totrans-215
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: LU 分解何时存在？
 - en: When does an LUP factorization exist?
+  id: totrans-216
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: LUP 分解何时存在？
 - en: What special properties do \({\bf P}\), \({\bf L}\) and \({\bf U}\) have?
+  id: totrans-217
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: \({\bf P}\)，\({\bf L}\) 和 \({\bf U}\) 有哪些特殊性质？
 - en: Can we find an LUP factorization of a singular matrix?
+  id: totrans-218
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 我们能否找到一个奇异矩阵的 LUP 分解？
 - en: What happens if we try to solve a system \({\bf A}\mathbf{x} = \mathbf{b}\)
     with a singular matrix \({\bf A}\)?
+  id: totrans-219
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 如果我们尝试用奇异矩阵 \({\bf A}\) 解方程 \({\bf A}\mathbf{x} = \mathbf{b}\)，会发生什么？
 - en: Compute the LU factorization of a small matrix by hand.
+  id: totrans-220
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 通过手工计算一个小矩阵的 LU 分解。
 - en: Why do we use pivoting when solving linear systems?
+  id: totrans-221
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 为什么在解线性系统时使用主元？
 - en: How do we choose a pivot element?
+  id: totrans-222
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 我们如何选择主元元素？
 - en: What effect does a given permutation matrix have when multiplied by another
     matrix?
+  id: totrans-223
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 给定的置换矩阵乘以另一个矩阵时有什么影响？
 - en: What is the cost of matrix-matrix multiplication?
+  id: totrans-224
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 矩阵-矩阵乘法的成本是多少？
 - en: What is the cost of computing an LU or LUP factorization?
+  id: totrans-225
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 计算 LU 或 LUP 分解的成本是多少？
 - en: What is the cost of forward or back substitution?
+  id: totrans-226
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 前向替换或后向替换的成本是多少？
 - en: What is the cost of solving \({\bf A}\mathbf{x} = \mathbf{b}\) for a general
     matrix?
+  id: totrans-227
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 解一般矩阵 \({\bf A}\mathbf{x} = \mathbf{b}\) 的成本是多少？
 - en: What is the cost of solving \({\bf A}\mathbf{x} = \mathbf{b}\) for a triangular
     matrix?
+  id: totrans-228
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 解三角矩阵 \({\bf A}\mathbf{x} = \mathbf{b}\) 的成本是多少？
 - en: What is the cost of solving \({\bf A}\mathbf{x} = \mathbf{b_i}\) with the same
     matrix \({\bf A}\) and several right-hand side vectors \(\mathbf{b}_i\)?
+  id: totrans-229
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 使用相同的矩阵 \({\bf A}\) 和几个右端向量 \(\mathbf{b}_i\) 解 \({\bf A}\mathbf{x} = \mathbf{b_i}\)
+    的成本是多少？
 - en: Given a process that takes time \(\mathcal{O}(n^k)\), what happens to the runtime
     if we double the input size (i.e. double \(n\))? What if we triple the input size?
+  id: totrans-230
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 给定一个时间复杂度为 \(\mathcal{O}(n^k)\) 的过程，如果我们加倍输入大小（即加倍 \(n\)），运行时间会发生什么变化？如果我们三倍输入大小呢？
 - en: Changelog
+  id: totrans-231
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 更新日志
 - en: 'October 2nd, 2024: Dev Singh (dsingh14) — fix lu_decomp'
+  id: totrans-232
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 2024年10月2日：Dev Singh (dsingh14) — 修复 lu_decomp
 - en: 'September 30th, 2024: Kaiyao Ke (kaiyaok2) — minor bug fix'
+  id: totrans-233
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 2024年9月30日：Kaiyao Ke (kaiyaok2) — 修复小错误
 - en: 'February 13th, 2024: Kaiyao Ke (kaiyaok2) — aligned notes with slides, added
     examples and refactored existing notes'
+  id: totrans-234
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 2024年2月13日：Kaiyao Ke (kaiyaok2) — 将笔记与幻灯片对齐，添加示例并重构现有笔记
 - en: <details><summary>View Remaining Entries</summary>
+  id: totrans-235
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: <details><summary>查看剩余条目</summary>
 - en: 'October 20th, 2023: Yuxuan Chen (yuxuan19) — update lu_decomp() code'
+  id: totrans-236
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 2023年10月20日：Yuxuan Chen (yuxuan19) — 更新 lu_decomp() 代码
 - en: 'February 28th, 2018: Erin Carrier (ecarrie2) — fix error in ludecomp() code'
+  id: totrans-237
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 2018年2月28日：Erin Carrier (ecarrie2) — 修复 ludecomp() 代码中的错误
 - en: 'February 22nd, 2018: Erin Carrier (ecarrie2) — update properties for solving
     using LUP'
+  id: totrans-238
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 2018年2月22日：Erin Carrier (ecarrie2) — 更新使用 LUP 解决属性
 - en: 'January 14th, 2018: Erin Carrier (ecarrie2) — removes demo links'
+  id: totrans-239
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 2018年1月14日：Erin Carrier (ecarrie2) — 删除演示链接
 - en: 'November 2nd, 2017: Arun Lakshmanan (lakshma2) — minor fix in lup_solve(),
     add changelog'
+  id: totrans-240
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 2017年11月2日：Arun Lakshmanan (lakshma2) — 在 lup_solve() 中进行小修，添加变更日志
 - en: 'November 2nd, 2017: John Doherty (jjdoher2) — fixed typo in back substitution'
+  id: totrans-241
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 2017年11月2日：John Doherty (jjdoher2) — 修复回代中的错别字
 - en: 'October 25th, 2017: Nathan Bowman (nlbowma2) — added review questions'
+  id: totrans-242
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 2017年10月25日：Nathan Bowman (nlbowma2) — 添加复习问题
 - en: 'October 23rd, 2017: Erin Carrier (ecarrie2) — fix links'
+  id: totrans-243
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 2017年10月23日：Erin Carrier (ecarrie2) — 修复链接
 - en: 'October 20th, 2017: Matthew West (mwest) — minor fix in back_sub()'
+  id: totrans-244
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 2017年10月20日：Matthew West (mwest) — 在 back_sub() 中进行小修
 - en: 'October 19th, 2017: Nathan Bowman (nlbowma2) — minor existence of LUP'
+  id: totrans-245
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 2017年10月19日：Nathan Bowman (nlbowma2) — 小修 LUP 的存在性
 - en: 'October 17th, 2017: Erin Carrier (ecarrie2) — fixes'
+  id: totrans-246
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 2017年10月17日：Erin Carrier (ecarrie2) — 修复
 - en: 'October 17th, 2017: Luke Olson (lukeo) — update links'
+  id: totrans-247
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 2017年10月17日：Luke Olson (lukeo) — 更新链接
 - en: 'October 16th, 2017: Matthew West (mwest) — first draft complete</details>'
+  id: totrans-248
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 2017年10月16日：Matthew West (mwest) — 完成初稿</details>
 - en: Authors
+  id: totrans-249
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 作者
 - en: CS 357 Course Staff*
+  id: totrans-250
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: CS 357 课程工作人员*

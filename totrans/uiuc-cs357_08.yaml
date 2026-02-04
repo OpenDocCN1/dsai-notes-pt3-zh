@@ -1,145 +1,224 @@
 - en: Vectors, Matrices, and Norms
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 向量、矩阵和范数
 - en: 原文：[https://cs357.cs.illinois.edu/textbook/notes/vec-mat.html](https://cs357.cs.illinois.edu/textbook/notes/vec-mat.html)
+  id: totrans-1
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 原文：[https://cs357.cs.illinois.edu/textbook/notes/vec-mat.html](https://cs357.cs.illinois.edu/textbook/notes/vec-mat.html)
 - en: Learning Objectives
+  id: totrans-2
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 学习目标
 - en: Understand vector spaces
+  id: totrans-3
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 理解向量空间
 - en: Identify linear transformations
+  id: totrans-4
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 识别线性变换
 - en: Recognize special matrices
+  id: totrans-5
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 识别特殊矩阵
 - en: Perform matrix-vector multiplications
+  id: totrans-6
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 执行矩阵-向量乘法
 - en: Represent linear transformations as matrices
+  id: totrans-7
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 将线性变换表示为矩阵
 - en: Evaluate the magnitudes of vectors and matrices
+  id: totrans-8
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 计算向量和矩阵的范数
 - en: Vectors and Vector Spaces
+  id: totrans-9
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 向量和向量空间
 - en: Vectors
+  id: totrans-10
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 向量
 - en: A ***vector*** is an array of numbers that represent a magnitude and a direction.
     An n-dimensional vector has n components. A vector is an element of a vector space.
+  id: totrans-11
   prefs: []
   type: TYPE_NORMAL
+  zh: 一个 \***向量*** 是一个表示大小和方向的数字数组。一个 n 维向量有 n 个分量。向量是向量空间的一个元素。
 - en: '\[\text{n-vector: } \mathbf{x} = \begin{bmatrix} \mathbf{x}_{1} \\ \mathbf{x}_{2}
     \\ \vdots \\ \mathbf{x}_{n}\end{bmatrix}\]'
+  id: totrans-12
   prefs: []
   type: TYPE_NORMAL
+  zh: '\[\text{n-向量: } \mathbf{x} = \begin{bmatrix} \mathbf{x}_{1} \\ \mathbf{x}_{2}
+    \\ \vdots \\ \mathbf{x}_{n}\end{bmatrix}\]'
 - en: Example
+  id: totrans-13
   prefs:
   - PREF_H4
   type: TYPE_NORMAL
+  zh: 示例
 - en: This is an example of a 2-dimensional vector.
+  id: totrans-14
   prefs: []
   type: TYPE_NORMAL
+  zh: 这是一个二维向量的例子。
 - en: \[\mathbf{v} = \begin{bmatrix} 1 \\ 3 \end{bmatrix}\hspace{5mm}\]![Vector v
     graph](../Images/47331c93adfb8fe0833df3cda2060797.png)
+  id: totrans-15
   prefs: []
   type: TYPE_NORMAL
+  zh: \[\mathbf{v} = \begin{bmatrix} 1 \\ 3 \end{bmatrix}\hspace{5mm}\]![向量 v 图](../Images/47331c93adfb8fe0833df3cda2060797.png)
 - en: Vector Spaces
+  id: totrans-16
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 向量空间
 - en: 'A ***vector space*** is a set \(V\) of vectors and a field \(F\) (elements
     of \(F\) are called scalars) with the following two operations:'
+  id: totrans-17
   prefs: []
   type: TYPE_NORMAL
+  zh: 一个 \***向量空间*** 是一个向量集 \(V\) 和一个域 \(F\)（\(F\) 的元素称为标量）的集合，具有以下两个运算：
 - en: 'Vector addition: \(\forall \mathbf{v},\mathbf{w} \in V\), \(\mathbf{v} + \mathbf{w}
     \in V\)'
+  id: totrans-18
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 向量加法：\(\forall \mathbf{v},\mathbf{w} \in V\)，\(\mathbf{v} + \mathbf{w} \in V\)
 - en: 'Scalar multiplication: \(\forall \alpha \in F, \mathbf{v} \in V\), \(\alpha
     \mathbf{v} \in V\)'
+  id: totrans-19
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 数乘：\(\forall \alpha \in F, \mathbf{v} \in V\)，\(\alpha \mathbf{v} \in V\)
 - en: 'which satisfiy the following conditions:'
+  id: totrans-20
   prefs: []
   type: TYPE_NORMAL
+  zh: 满足以下条件：
 - en: 'Associativity (vector): \(\forall \mathbf{u}, \mathbf{v}, \mathbf{w} \in V\),
     \((\mathbf{u} + \mathbf{v}) + \mathbf{w} = \mathbf{u} + (\mathbf{v}+\mathbf{w})\)'
+  id: totrans-21
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 结合律（向量）：\(\forall \mathbf{u}, \mathbf{v}, \mathbf{w} \in V\)，\((\mathbf{u} +
+    \mathbf{v}) + \mathbf{w} = \mathbf{u} + (\mathbf{v}+\mathbf{w})\)
 - en: 'Zero vector: There exists a vector \(\mathbf{0} \in V\) such that \(\forall
     \mathbf{u} \in V, \mathbf{0} + \mathbf{u} = \mathbf{u}\)'
+  id: totrans-22
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 零向量：存在一个向量 \(\mathbf{0} \in V\)，使得 \(\forall \mathbf{u} \in V, \mathbf{0} +
+    \mathbf{u} = \mathbf{u}\)
 - en: 'Additive inverse (negatives): For every \(\mathbf{u} \in V\), there exists
     \(\mathbf{-u} \in V\), such that \(\mathbf{u} + \mathbf{-u} = \mathbf{0}\).'
+  id: totrans-23
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 加法逆元（负数）：对于每个 \(\mathbf{u} \in V\)，存在 \(\mathbf{-u} \in V\)，使得 \(\mathbf{u}
+    + \mathbf{-u} = \mathbf{0}\)。
 - en: 'Associativity (scalar): \(\forall \alpha, \beta \in F, \mathbf{u} \in V\),
     \((\alpha \beta) \mathbf{u} = \alpha (\beta \mathbf{u})\)'
+  id: totrans-24
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 结合律（标量）：\(\forall \alpha, \beta \in F, \mathbf{u} \in V\)，\((\alpha \beta) \mathbf{u}
+    = \alpha (\beta \mathbf{u})\)
 - en: 'Distributivity: \(\forall \alpha, \beta \in F, \mathbf{u} \in V\), \((\alpha
     + \beta) \mathbf{u} = \alpha \mathbf{u} + \beta \mathbf{u}\)'
+  id: totrans-25
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 分配律：\(\forall \alpha, \beta \in F, \mathbf{u} \in V\)，\((\alpha + \beta) \mathbf{u}
+    = \alpha \mathbf{u} + \beta \mathbf{u}\)
 - en: 'Unitarity: \(\forall \mathbf{u} \in V\), \(1 \mathbf{u} = \mathbf{u}\)'
+  id: totrans-26
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 单位性：\(\forall \mathbf{u} \in V\)，\(1 \mathbf{u} = \mathbf{u}\)
 - en: If there exist a set of vectors \(\mathbf{v}_1,\mathbf{v}_2\dots, \mathbf{v}_n\)
     such that any vector \(\mathbf{x}\in V\) can be written as a ***linear combination***
+  id: totrans-27
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果存在一组向量 \(\mathbf{v}_1,\mathbf{v}_2\dots, \mathbf{v}_n\)，使得任何向量 \(\mathbf{x}\in
+    V\) 都可以写成 \***线性组合*** 的形式
 - en: \[\mathbf{x} = c_1\mathbf{v}_1+ c_2\mathbf{v}_2 + \dots + c_n\mathbf{v}_n\]
+  id: totrans-28
   prefs: []
   type: TYPE_NORMAL
+  zh: \[\mathbf{x} = c_1\mathbf{v}_1+ c_2\mathbf{v}_2 + \dots + c_n\mathbf{v}_n\]
 - en: with uniquely determined scalars \(c_1,\dots,c_n\), the set \({\mathbf{v}_1,\dots,
     \mathbf{v}_n}\) is called a ***basis*** for \(V\). The size of the basis \(n\)
     is called the ***dimension*** of \(V\).
+  id: totrans-29
   prefs: []
   type: TYPE_NORMAL
+  zh: 具有唯一确定的标量 \(c_1,\dots,c_n\)，集合 \({\mathbf{v}_1,\dots, \mathbf{v}_n}\) 被称为 \(V\)
+    的 \***基***。基的大小 \(n\) 被称为 \(V\) 的 \***维度***。
 - en: 'The standard example of a vector space is \(V=\mathbb{R}^n\) with \(F=\mathbb{R}\).
     Vectors in \(\mathbb{R}^n\) are written as an array of numbers:'
+  id: totrans-30
   prefs: []
   type: TYPE_NORMAL
+  zh: 向量空间的典型例子是 \(V=\mathbb{R}^n\)，其中 \(F=\mathbb{R}\)。在 \(\mathbb{R}^n\) 中的向量可以表示为一个数字数组：
 - en: \[\mathbf{x} = \begin{bmatrix} x_1\\ x_2 \\ \vdots \\ x_n \end{bmatrix} = \begin{bmatrix}
     x_1 & x_2 & \cdots & x_n\end{bmatrix}^T\]
+  id: totrans-31
   prefs: []
   type: TYPE_NORMAL
+  zh: \[\mathbf{x} = \begin{bmatrix} x_1\\ x_2 \\ \vdots \\ x_n \end{bmatrix} = \begin{bmatrix}
+    x_1 & x_2 & \cdots & x_n\end{bmatrix}^T\]
 - en: The dimension of \(\mathbb{R}^n\) is \(n\). The standard basis vectors of \(\mathbb{R}^n\)
     are written as
+  id: totrans-32
   prefs: []
   type: TYPE_NORMAL
+  zh: \(\mathbb{R}^n\) 的维度是 \(n\)。\(\mathbb{R}^n\) 的标准基向量可以表示为
 - en: \[\mathbf{e}_1 = \begin{bmatrix} 1\\ 0 \\ \vdots \\ 0 \end{bmatrix}\hspace{5mm}
     \mathbf{e}_2 = \begin{bmatrix} 0 \\ 1 \\ \vdots \\ 0\end{bmatrix}\ \dots\hspace{5mm}
     \mathbf{e}_n = \begin{bmatrix} 0 \\ 0 \\ \vdots \\ 1\end{bmatrix}.\]
+  id: totrans-33
   prefs: []
   type: TYPE_NORMAL
+  zh: \[\mathbf{e}_1 = \begin{bmatrix} 1\\ 0 \\ \vdots \\ 0 \end{bmatrix}\hspace{5mm}
+    \mathbf{e}_2 = \begin{bmatrix} 0 \\ 1 \\ \vdots \\ 0\end{bmatrix}\ \dots\hspace{5mm}
+    \mathbf{e}_n = \begin{bmatrix} 0 \\ 0 \\ \vdots \\ 1\end{bmatrix}.\]
 - en: A set of vectors \(\mathbf{v}_1,\dots,\mathbf{v}_k\) is called ***linearly independent***
     if the equation \(\alpha_1\mathbf{v}_1 + \alpha_2\mathbf{v}_2 + \dots + \alpha_k\mathbf{v}_k
     = \mathbf{0}\) in the unknowns \(\alpha_1,\dots,\alpha_k\), has only the ***trivial
@@ -147,174 +226,247 @@
     are ***linearly dependent***, and at least one of the vectors can be written as
     a linear combination of the other vectors in the set. A basis is always linearly
     independent.
+  id: totrans-34
   prefs: []
   type: TYPE_NORMAL
+  zh: 一组向量 \(\mathbf{v}_1,\dots,\mathbf{v}_k\) 被称为 **线性无关**，如果方程 \(\alpha_1\mathbf{v}_1
+    + \alpha_2\mathbf{v}_2 + \dots + \alpha_k\mathbf{v}_k = \mathbf{0}\) 在未知数 \(\alpha_1,\dots,\alpha_k\)
+    中只有 **平凡解** \(\alpha_1=\alpha_2 = \dots = \alpha_k = 0\)。否则，这些向量是 **线性相关** 的，并且至少有一个向量可以写成该集合中其他向量的线性组合。基总是线性无关的。
 - en: Inner Product
+  id: totrans-35
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 内积
 - en: 'Let \(V\) be a real vector space. Then, an ***inner product*** is a function
     \(\langle\cdot, \cdot \rangle: V \times V \rightarrow \mathbb{R}\) (i.e., it takes
     two vectors and returns a real number) which satisfies the following four properties,
     where \(\mathbf{u}, \mathbf{v}, \mathbf{w} \in V\) and \(\alpha, \beta \in \mathbb{R}\):'
+  id: totrans-36
   prefs: []
   type: TYPE_NORMAL
+  zh: '令 \(V\) 为一个实向量空间。那么，一个 **内积** 是一个函数 \(\langle\cdot, \cdot \rangle: V \times
+    V \rightarrow \mathbb{R}\)（即它接受两个向量并返回一个实数），它满足以下四个性质，其中 \(\mathbf{u}, \mathbf{v},
+    \mathbf{w} \in V\) 和 \(\alpha, \beta \in \mathbb{R}\)：'
 - en: 'Positivity: \(\langle \mathbf{u}, \mathbf{u} \rangle \geq 0\)'
+  id: totrans-37
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 正定性：\(\langle \mathbf{u}, \mathbf{u} \rangle \geq 0\)
 - en: 'Definiteness: \(\langle \mathbf{u}, \mathbf{u} \rangle = 0\) if and only if
     \(\mathbf{u} = 0\)'
+  id: totrans-38
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 正定性：\(\langle \mathbf{u}, \mathbf{u} \rangle = 0\) 当且仅当 \(\mathbf{u} = 0\)
 - en: 'Symmetric: \(\langle \mathbf{u}, \mathbf{v} \rangle = \langle \mathbf{v}, \mathbf{u}
     \rangle\)'
+  id: totrans-39
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 对称性：\(\langle \mathbf{u}, \mathbf{v} \rangle = \langle \mathbf{v}, \mathbf{u}
+    \rangle\)
 - en: 'Linearity: \(\langle \alpha \mathbf{u} + \beta \mathbf{v}, \mathbf{w} \rangle
     = \alpha \langle \mathbf{u}, w \rangle + \beta \langle \mathbf{v}, \mathbf{w}
     \rangle\)'
+  id: totrans-40
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 线性：\(\langle \alpha \mathbf{u} + \beta \mathbf{v}, \mathbf{w} \rangle = \alpha
+    \langle \mathbf{u}, w \rangle + \beta \langle \mathbf{v}, \mathbf{w} \rangle\)
 - en: The inner product intuitively represents the similarity between two vectors.
     Two vectors \(\mathbf{u}, \mathbf{v} \in V\) are said to be ***orthogonal*** if
     \(\langle \mathbf{u}, \mathbf{v} \rangle = 0\).
+  id: totrans-41
   prefs: []
   type: TYPE_NORMAL
+  zh: 内积直观地表示两个向量之间的相似性。如果 \(\langle \mathbf{u}, \mathbf{v} \rangle = 0\)，则称向量 \(\mathbf{u},
+    \mathbf{v} \in V\) 为 **正交**。
 - en: The standard inner product on \(\mathbb{R}^n\) is the dot product :\(\langle
     \mathbf{x}, \mathbf{y}\rangle = \mathbf{x}^T\mathbf{y} = \sum_{i=1}^nx_i y_i.\)
+  id: totrans-42
   prefs: []
   type: TYPE_NORMAL
+  zh: 在 \(\mathbb{R}^n\) 上的标准内积是点积：\(\langle \mathbf{x}, \mathbf{y}\rangle = \mathbf{x}^T\mathbf{y}
+    = \sum_{i=1}^nx_i y_i.\)
 - en: To read more about [Inner Product Definition](http://mathworld.wolfram.com/InnerProduct.html)
+  id: totrans-43
   prefs: []
   type: TYPE_NORMAL
+  zh: 有关 [内积定义](http://mathworld.wolfram.com/InnerProduct.html) 的更多信息
 - en: Linear Transformations and Matrices
+  id: totrans-44
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 线性变换和矩阵
 - en: 'A function \(f: V \to W\) between two vector spaces \(V\) and \(W\) is called
     ***linear*** if'
+  id: totrans-45
   prefs: []
   type: TYPE_NORMAL
+  zh: '两个向量空间 \(V\) 和 \(W\) 之间的函数 \(f: V \to W\) 被称为 **线性**，如果'
 - en: \(f(\mathbf{u} + \mathbf{v}) = f(\mathbf{u}) + f(\mathbf{v})\), for any \(\mathbf{u},\mathbf{v}
     \in V\)
+  id: totrans-46
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: \(f(\mathbf{u} + \mathbf{v}) = f(\mathbf{u}) + f(\mathbf{v})\)，对于任何 \(\mathbf{u},\mathbf{v}
+    \in V\)
 - en: \(f(c\mathbf{v}) = cf(\mathbf{v})\), for all \(\mathbf{v} \in V\) and all scalars
     \(c\)
+  id: totrans-47
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: \(f(c\mathbf{v}) = cf(\mathbf{v})\)，对于所有 \(\mathbf{v} \in V\) 和所有标量 \(c\)
 - en: \(f\) is commonly called a ***linear transformation***.
+  id: totrans-48
   prefs: []
   type: TYPE_NORMAL
+  zh: \(f\) 通常被称为 **线性变换**。
 - en: If \(n\) and \(m\) are the dimension of \(V\) and \(W\), respectively, then
     \(f\) can be represented as an \(m\times n\) rectangular array or ***matrix***
+  id: totrans-49
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果 \(n\) 和 \(m\) 分别是 \(V\) 和 \(W\) 的维度，那么 \(f\) 可以表示为一个 \(m\times n\) 的矩形数组或
+    **矩阵**
 - en: \[\mathbf{A} = \begin{bmatrix} a_{11} & a_{12} & \dots & a_{1n} \\ a_{21} &
     a_{22} & \dots & a_{2n} \\ \vdots & \vdots & \ddots & \vdots \\ a_{m1} & a_{m2}
     & \dots & a_{mn} \end{bmatrix}.\]
+  id: totrans-50
   prefs: []
   type: TYPE_NORMAL
+  zh: \[\mathbf{A} = \begin{bmatrix} a_{11} & a_{12} & \dots & a_{1n} \\ a_{21} &
+    a_{22} & \dots & a_{2n} \\ \vdots & \vdots & \ddots & \vdots \\ a_{m1} & a_{m2}
+    & \dots & a_{mn} \end{bmatrix}.\]
 - en: Here are some important types of matrices.
+  id: totrans-51
   prefs: []
   type: TYPE_NORMAL
+  zh: 这里有一些重要的矩阵类型。
 - en: Special Matrices
+  id: totrans-52
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 特殊矩阵
 - en: Zero Matrices
+  id: totrans-53
   prefs:
   - PREF_H4
   type: TYPE_NORMAL
+  zh: 零矩阵
 - en: The \(m \times n\) ***zero matrix*** is denoted by \({\bf 0}_{mn}\) and has
     all entries equal to zero. For example, the \(3 \times 4\) zero matrix is
+  id: totrans-54
   prefs: []
   type: TYPE_NORMAL
+  zh: \(m \times n\) 的 **零矩阵** 表示为 \({\bf 0}_{mn}\) 并且所有项都等于零。例如，\(3 \times 4\) 的零矩阵是
 - en: \[{\bf 0}_{34} = \begin{bmatrix} 0 & 0 & 0 & 0 \\ 0 & 0 & 0 & 0 \\ 0 & 0 & 0
     & 0 \end{bmatrix}.\]
+  id: totrans-55
   prefs: []
   type: TYPE_NORMAL
 - en: Identity Matrices
+  id: totrans-56
   prefs:
   - PREF_H4
   type: TYPE_NORMAL
 - en: The \(n \times n\) ***identity matrix*** is denoted by \({\bf I}_n\) and has
     all entries equal to zero except for the diagonal, which is all 1\. For example,
     the \(4 \times 4\) identity matrix is
+  id: totrans-57
   prefs: []
   type: TYPE_NORMAL
 - en: \[{\bf I}_4 = \begin{bmatrix} 1 & 0 & 0 & 0 \\ 0 & 1 & 0 & 0 \\ 0 & 0 & 1 &
     0 \\ 0 & 0 & 0 & 1 \end{bmatrix}.\]
+  id: totrans-58
   prefs: []
   type: TYPE_NORMAL
 - en: '**Properties of identity matrices:**'
+  id: totrans-59
   prefs: []
   type: TYPE_NORMAL
 - en: Multiplying any square matrix with its corresponding identity matrix results
     in the original matrix.
+  id: totrans-60
   prefs: []
   type: TYPE_NORMAL
 - en: \[\mathbf{AI} = \mathbf{A}\] \[\begin{bmatrix} 7 & 1 & 6 \\ 4 & 0 & 5 \\ 1 &
     2 & 3 \end{bmatrix} \begin{bmatrix} 1 & 0 & 0 \\ 0 & 1 & 0 \\ 0 & 0 & 1 \end{bmatrix}
     \mathbf{\ =\ } \begin{bmatrix} 7 & 1 & 6 \\ 4 & 0 & 5 \\ 1 & 2 & 3 \end{bmatrix}\]
+  id: totrans-61
   prefs: []
   type: TYPE_NORMAL
 - en: Diagonal Matrices
+  id: totrans-62
   prefs:
   - PREF_H4
   type: TYPE_NORMAL
 - en: A \(n \times n\) ***diagonal matrix*** has all entries equal to zero except
     for the diagonal entries. We typically use \({\bf D}\) for diagonal matrices.
     For ecample, \(4 \times 4\) diagonal matrices have the form
+  id: totrans-63
   prefs: []
   type: TYPE_NORMAL
 - en: \[\begin{bmatrix} d_{11} & 0 & 0 & 0 \\ 0 & d_{22} & 0 & 0 \\ 0 & 0 & d_{33}
     & 0 \\ 0 & 0 & 0 & d_{44} \end{bmatrix}.\]
+  id: totrans-64
   prefs: []
   type: TYPE_NORMAL
 - en: Triangular Matrices
+  id: totrans-65
   prefs:
   - PREF_H4
   type: TYPE_NORMAL
 - en: A ***lower-triangular matrix*** is a square matrix that is entirely zero above
     the diagonal. We typically use \({\bf L}\) for lower-triangular matrices. For
     example, \(4 \times 4\) lower-triangular matrices have the form
+  id: totrans-66
   prefs: []
   type: TYPE_NORMAL
 - en: \[{\bf L} = \begin{bmatrix} \ell_{11} & 0 & 0 & 0 \\ \ell_{21} & \ell_{22} &
     0 & 0 \\ \ell_{31} & \ell_{32} & \ell_{33} & 0 \\ \ell_{41} & \ell_{42} & \ell_{43}
     & \ell_{44} \end{bmatrix}.\]
+  id: totrans-67
   prefs: []
   type: TYPE_NORMAL
 - en: An ***upper triangular matrix*** is a square matrix that is entirely zero below
     the diagonal. We typically use \({\bf U}\) for upper-triangular matrices. For
     example, \(4 \times 4\) upper-triangular matrices have the form
+  id: totrans-68
   prefs: []
   type: TYPE_NORMAL
 - en: \[{\bf U} = \begin{bmatrix} u_{11} & u_{12} & u_{13} & u_{14} \\ 0 & u_{22}
     & u_{23} & u_{24} \\ 0 & 0 & u_{33} & u_{34} \\ 0 & 0 & 0 & u_{44} \end{bmatrix}.\]
+  id: totrans-69
   prefs: []
   type: TYPE_NORMAL
 - en: '**Properties of triangular matrices:**'
+  id: totrans-70
   prefs: []
   type: TYPE_NORMAL
 - en: An \(n \times n\) triangular matrix has \(n(n-1)/2\) entries that must be zero,
     and \(n(n+1)/2\) entries that are allowed to be non-zero.
+  id: totrans-71
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
 - en: Zero matrices, identity matrices, and diagonal matrices are all both lower triangular
     and upper triangular.
+  id: totrans-72
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
 - en: Permutation Matrices
+  id: totrans-73
   prefs:
   - PREF_H4
   type: TYPE_NORMAL
@@ -322,130 +474,194 @@
     single entry in each row and each column which is 1\. We typically use \({\bf
     P}\) for permutation matrices. An example of a \(4 \times 4\) permutation matrix
     is
+  id: totrans-74
   prefs: []
   type: TYPE_NORMAL
 - en: \[{\bf P} = \begin{bmatrix} 0 & 1 & 0 & 0 \\ 0 & 0 & 0 & 1 \\ 1 & 0 & 0 & 0
     \\ 0 & 0 & 1 & 0 \end{bmatrix}.\]
+  id: totrans-75
   prefs: []
   type: TYPE_NORMAL
 - en: 'The properties of a permutation matrix are:'
+  id: totrans-76
   prefs: []
   type: TYPE_NORMAL
 - en: Exactly \(n\) entries are non-zero.
+  id: totrans-77
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
 - en: Multiplying a vector with a permutation matrix permutes (rearranges) the order
     of the entries in the vector. For example, using \({\bf P}\) above and \(x = [1,
     2, 3, 4]^T\), the product is \({\bf Px} = [2, 4, 1, 3]^T\).
+  id: totrans-78
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
 - en: If \(P_{ij} = 1\) then \(({\bf Px})_i = x_j\).
+  id: totrans-79
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
 - en: The inverse of a permutation matrix is its transpose, so \({\bf PP}^T = {\bf
     P}^T{\bf P} = {\bf I}\).
+  id: totrans-80
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 置换矩阵的逆是其转置，所以 \({\bf PP}^T = {\bf P}^T{\bf P} = {\bf I}\)。
 - en: Matrices in Block Form
+  id: totrans-81
   prefs:
   - PREF_H4
   type: TYPE_NORMAL
+  zh: 分块矩阵
 - en: A matrix in ***block form*** is a matrix partitioned into blocks. A block is
     simply a submatrix. For example, consider
+  id: totrans-82
   prefs: []
   type: TYPE_NORMAL
+  zh: '**分块形式** 的矩阵是将矩阵划分为块的矩阵。块简单地是一个子矩阵。例如，考虑'
 - en: \[{\bf M} = \begin{bmatrix} {\bf A} & {\bf B} \\ {\bf C} & {\bf D} \end{bmatrix}\]
+  id: totrans-83
   prefs: []
   type: TYPE_NORMAL
+  zh: \[{\bf M} = \begin{bmatrix} {\bf A} & {\bf B} \\ {\bf C} & {\bf D} \end{bmatrix}\]
 - en: where \({\bf A}\), \({\bf B}\), \({\bf C}\), and \({\bf D}\) are submatrices.
+  id: totrans-84
   prefs: []
   type: TYPE_NORMAL
+  zh: 其中 \({\bf A}\)，\({\bf B}\)，\({\bf C}\) 和 \({\bf D}\) 是子矩阵。
 - en: There are special matrices in block form as well. For instance, a ***block diagonal***
     matrix is a block matrix whose off-diagonal blocks are zero matrices.
+  id: totrans-85
   prefs: []
   type: TYPE_NORMAL
+  zh: 分块形式中也有特殊的矩阵。例如，**块对角** 矩阵是一个对角块为零矩阵的分块矩阵。
 - en: Matrix Rank
+  id: totrans-86
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 矩阵秩
 - en: The ***rank*** of a matrix is the number of linearly independent columns of
     the matrix. It can also be shown that the matrix has the same number of linearly
     indendent rows, as well. If \(\mathbf{A} \text{ is an } m \times n\) matrix, then
+  id: totrans-87
   prefs: []
   type: TYPE_NORMAL
+  zh: 矩阵的 **秩** 是矩阵中线性无关列的数量。也可以证明矩阵具有相同数量的线性无关行。如果 \(\mathbf{A}\) 是一个 \(m \times
+    n\) 的矩阵，那么
 - en: \(\text{rank}(\mathbf{A}) \leq \text{min}(m,n)\).
+  id: totrans-88
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: \(\text{rank}(\mathbf{A}) \leq \text{min}(m,n)\)。
 - en: If \(\text{rank}(\mathbf{A}) = \text{min}(m,n)\), then \(\mathbf{A}\) is ***full
     rank***. Otherwise, \(\mathbf{A}\) is ***rank deficient***.
+  id: totrans-89
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 如果 \(\text{rank}(\mathbf{A}) = \text{min}(m,n)\)，那么 \(\mathbf{A}\) 是 **满秩**
+    的。否则，\(\mathbf{A}\) 是 **秩亏缺** 的。
 - en: A square \(n\times n\) matrix \(\mathbf{A}\) is ***invertible*** if there exists
     a square matrix \(\mathbf{B}\) such that \(\mathbf{AB} = \mathbf{BA} = \mathbf{I}\),
     where \(\mathbf{I}\) is the \(n\times n\) identity matrix. The matrix \(\mathbf{B}\)
     is denoted by \(\mathbf{A}^{-1}\). A square matrix is invertible if and only if
     it has full rank. A square matrix that is not invertible is called a ***singular***
     matrix.
+  id: totrans-90
   prefs: []
   type: TYPE_NORMAL
+  zh: 一个 \(n\times n\) 的方阵 \(\mathbf{A}\) 是 **可逆的** 如果存在一个方阵 \(\mathbf{B}\) 使得 \(\mathbf{AB}
+    = \mathbf{BA} = \mathbf{I}\)，其中 \(\mathbf{I}\) 是 \(n\times n\) 的单位矩阵。矩阵 \(\mathbf{B}\)
+    表示为 \(\mathbf{A}^{-1}\)。一个方阵是可逆的当且仅当它具有满秩。一个不可逆的方阵称为 **奇异的** 矩阵。
 - en: Matrix-vector multiplication
+  id: totrans-91
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 矩阵-向量乘法
 - en: 'Let \(\mathbf{A}\) be an \(m\times n\) matrix of real numbers. We can also
     write \(\mathbf{A}\in\mathbb{R}^{m\times n}\) as shorthand. If \(\mathbf{x}\)
     is a vector in \(\mathbb{R}^n\) then the matrix-vector product \(\mathbf{A}\mathbf{x}
     = \mathbf{b}\) is a vector in \(\mathbf{R}^m\) defined by:'
+  id: totrans-92
   prefs: []
   type: TYPE_NORMAL
+  zh: 设 \(\mathbf{A}\) 是一个 \(m\times n\) 的实数矩阵。我们也可以用 \(\mathbf{A}\in\mathbb{R}^{m\times
+    n}\) 作为简写。如果 \(\mathbf{x}\) 是 \(\mathbb{R}^n\) 中的一个向量，那么矩阵-向量乘积 \(\mathbf{A}\mathbf{x}
+    = \mathbf{b}\) 是一个 \(\mathbf{R}^m\) 中的向量，定义为：
 - en: \[b_i = \sum_{j=1}^na_{ij}x_j \hspace{6mm} \text{for } i = 1,2,\dots, m.\]
+  id: totrans-93
   prefs: []
   type: TYPE_NORMAL
+  zh: \[b_i = \sum_{j=1}^na_{ij}x_j \hspace{6mm} \text{for } i = 1,2,\dots, m.\]
 - en: We can interpret matrix-vector multiplications in two ways. Throughout this
     online textbook reference, we will use the notation \({\bf a}_i\) to refer to
     the \(i^{th}\) column of the matrix \({\bf A}\) and \({\bf a}^T_i\) to refer to
     the \(i^{th}\) row of the matrix \({\bf A}\).
+  id: totrans-94
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们可以有两种方式来解释矩阵-向量乘法。在整个在线教科书的参考中，我们将使用 \({\bf a}_i\) 来指代矩阵 \({\bf A}\) 的第 \(i\)
+    列，以及 \({\bf a}^T_i\) 来指代矩阵 \({\bf A}\) 的第 \(i\) 行。
 - en: '1) Writing a matrix-vector multiplication as inner products of the rows \({\bf
     A}\):'
+  id: totrans-95
   prefs: []
   type: TYPE_NORMAL
+  zh: 1) 将矩阵-向量乘法表示为 \({\bf A}\) 的行的内积：
 - en: \[\mathbf{A}\mathbf{x} = \begin{bmatrix} \mathbf{a}_{1}^T \cdot \mathbf{x} \\
     \mathbf{a}_{2}^T \cdot \mathbf{x} \\ \vdots \\ \mathbf{a}_{m}^T\cdot \mathbf{x}\end{bmatrix}\]
+  id: totrans-96
   prefs: []
   type: TYPE_NORMAL
+  zh: \[\mathbf{A}\mathbf{x} = \begin{bmatrix} \mathbf{a}_{1}^T \cdot \mathbf{x} \\
+    \mathbf{a}_{2}^T \cdot \mathbf{x} \\ \vdots \\ \mathbf{a}_{m}^T\cdot \mathbf{x}\end{bmatrix}\]
 - en: '2) Writing a matrix-vector multiplication as linear combination of the columns
     of \({\bf A}\):'
+  id: totrans-97
   prefs: []
   type: TYPE_NORMAL
+  zh: 2) 将矩阵-向量乘法表示为 \({\bf A}\) 的列的线性组合：
 - en: \(\mathbf{A}\mathbf{x} = x_1\mathbf{a}_{1} + x_2\mathbf{a}_{2} + \dots x_n\mathbf{a}_{n}
     = x_1\begin{bmatrix}a_{11} \\ a_{21} \\ \vdots \\ a_{m1}\end{bmatrix} + x_2\begin{bmatrix}a_{12}
     \\ a_{22} \\ \vdots \\ a_{m2}\end{bmatrix} + \dots + x_n\begin{bmatrix}a_{1n}
     \\ a_{2n} \\ \vdots \\ a_{mn}\end{bmatrix}\)
+  id: totrans-98
   prefs: []
   type: TYPE_NORMAL
+  zh: \(\mathbf{A}\mathbf{x} = x_1\mathbf{a}_{1} + x_2\mathbf{a}_{2} + \dots x_n\mathbf{a}_{n}
+    = x_1\begin{bmatrix}a_{11} \\ a_{21} \\ \vdots \\ a_{m1}\end{bmatrix} + x_2\begin{bmatrix}a_{12}
+    \\ a_{22} \\ \vdots \\ a_{m2}\end{bmatrix} + \dots + x_n\begin{bmatrix}a_{1n}
+    \\ a_{2n} \\ \vdots \\ a_{mn}\end{bmatrix}\)
 - en: It is this representation that allows us to express any linear transformation
     between finite-dimensional vector spaces with matrices.
+  id: totrans-99
   prefs: []
   type: TYPE_NORMAL
+  zh: 正是这种表示法使我们能够用矩阵表达有限维向量空间之间的任何线性变换。
 - en: Example
+  id: totrans-100
   prefs:
   - PREF_H4
   type: TYPE_NORMAL
+  zh: 示例
 - en: \[{\bf A} = \begin{bmatrix} 1 & 7 & 8 & 4\\ -5 & 3 & 2 & 2\\ 0 & 5 & 6 & 6\end{bmatrix},
     {\bf x} = \begin{bmatrix}1 \\ 2 \\ 0 \\ -4\end{bmatrix}\]
+  id: totrans-101
   prefs: []
   type: TYPE_NORMAL
+  zh: \[{\bf A} = \begin{bmatrix} 1 & 7 & 8 & 4\\ -5 & 3 & 2 & 2\\ 0 & 5 & 6 & 6\end{bmatrix},
+    {\bf x} = \begin{bmatrix}1 \\ 2 \\ 0 \\ -4\end{bmatrix}\]
 - en: Perform a matrix-vector multiplication \({\bf Ax}\).
+  id: totrans-102
   prefs: []
   type: TYPE_NORMAL
+  zh: 执行矩阵-向量乘法 \({\bf Ax}\)。
 - en: <details><summary>**Answer**</summary> $\begin{eqnarray} {\bf Ax} &=& \begin{bmatrix}
     1 & 7 & 8 & 4\\ -5 & 3 & 2 & 2\\ 0 & 5 & 6 & 6\end{bmatrix} \begin{bmatrix}1 \\
     2 \\ 0 \\ -4\end{bmatrix} \\ \\ &=& 1 \begin{bmatrix} 1 \\ -5 \\ 0 \end{bmatrix}
@@ -455,36 +671,63 @@
     0 \\ 0 \\ 0 \end{bmatrix} + \begin{bmatrix} -16 \\ -8 \\ -24 \end{bmatrix} \\
     \\ &=& \begin{bmatrix} 1 + 14 + 0 -16 \\ -5 + 6 + 0 - 8\\ 0 + 10 + 0 - 24\end{bmatrix}
     \\ \\ &=& \begin{bmatrix} -1 \\ -7\\ -14\end{bmatrix} \end{eqnarray}$</details>
+  id: totrans-103
   prefs: []
   type: TYPE_NORMAL
+  zh: <details><summary>**答案**</summary> $\begin{eqnarray} {\bf Ax} &=& \begin{bmatrix}
+    1 & 7 & 8 & 4\\ -5 & 3 & 2 & 2\\ 0 & 5 & 6 & 6\end{bmatrix} \begin{bmatrix}1 \\
+    2 \\ 0 \\ -4\end{bmatrix} \\ \\ &=& 1 \begin{bmatrix} 1 \\ -5 \\ 0 \end{bmatrix}
+    + 2 \begin{bmatrix} 7 \\ 3 \\ 5 \end{bmatrix} + 0 \begin{bmatrix} 8 \\ 2 \\ 6
+    \end{bmatrix} + -4 \begin{bmatrix} 4 \\ 2 \\ 6 \end{bmatrix} \\ \\ &=& \begin{bmatrix}
+    1 \\ -5 \\ 0 \end{bmatrix} + \begin{bmatrix} 14 \\ 6 \\ 10 \end{bmatrix} + \begin{bmatrix}
+    0 \\ 0 \\ 0 \end{bmatrix} + \begin{bmatrix} -16 \\ -8 \\ -24 \end{bmatrix} \\
+    \\ &=& \begin{bmatrix} 1 + 14 + 0 -16 \\ -5 + 6 + 0 - 8\\ 0 + 10 + 0 - 24\end{bmatrix}
+    \\ \\ &=& \begin{bmatrix} -1 \\ -7\\ -14\end{bmatrix} \end{eqnarray}$</details>
 - en: Matrix Representation of Linear Transformations
+  id: totrans-104
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 线性变换的矩阵表示
 - en: 'Let \(\mathbf{e}_1,\mathbf{e}_2,\dots,\mathbf{e}_n\) be the standard basis
     of \(\mathbb{R}^n\). If we define the vector \(\mathbf{z}_j = \mathbf{A}\mathbf{e}_j\),
     then using the interpretation of matrix-vector products as linear combinations
     of the column of \(\mathbf{A}\), we have that:'
+  id: totrans-105
   prefs: []
   type: TYPE_NORMAL
+  zh: 设 \(\mathbf{e}_1,\mathbf{e}_2,\dots,\mathbf{e}_n\) 为 \(\mathbb{R}^n\) 的标准基。如果我们定义向量
+    \(\mathbf{z}_j = \mathbf{A}\mathbf{e}_j\)，那么利用矩阵-向量乘积作为 \(\mathbf{A}\) 的列的线性组合的解释，我们有：
 - en: \[\mathbf{z}_j = \mathbf{A}\mathbf{e}_j = \begin{bmatrix}a_{1j} \\ a_{2j} \\
     \vdots \\ a_{mj}\end{bmatrix} = a_{1j}\begin{bmatrix}1 \\ 0 \\ \vdots \\ 0\end{bmatrix}
     + a_{2j}\begin{bmatrix}0 \\ 1 \\ \vdots \\ 0\end{bmatrix} + \dots + a_{mj}\begin{bmatrix}0
     \\ 0 \\ \vdots \\ 1\end{bmatrix} = \sum_{i=1}^m a_{ij}\hat{\mathbf{e}}_i,\]
+  id: totrans-106
   prefs: []
   type: TYPE_NORMAL
+  zh: \[\mathbf{z}_j = \mathbf{A}\mathbf{e}_j = \begin{bmatrix}a_{1j} \\ a_{2j} \\
+    \vdots \\ a_{mj}\end{bmatrix} = a_{1j}\begin{bmatrix}1 \\ 0 \\ \vdots \\ 0\end{bmatrix}
+    + a_{2j}\begin{bmatrix}0 \\ 1 \\ \vdots \\ 0\end{bmatrix} + \dots + a_{mj}\begin{bmatrix}0
+    \\ 0 \\ \vdots \\ 1\end{bmatrix} = \sum_{i=1}^m a_{ij}\hat{\mathbf{e}}_i,\]
 - en: where we have written the standard basis of \(\mathbb{R}^m\) as \(\hat{\mathbf{e}}_1,\hat{\mathbf{e}}_2,\dots,\hat{\mathbf{e}}_m\).
+  id: totrans-107
   prefs: []
   type: TYPE_NORMAL
+  zh: 其中，我们将 \(\mathbb{R}^m\) 的标准基写为 \(\hat{\mathbf{e}}_1,\hat{\mathbf{e}}_2,\dots,\hat{\mathbf{e}}_m\)。
 - en: In other words, if \(\mathbf{z}_j = \mathbf{A}\mathbf{e}_j\) is written as a
     linear combination of the basis vectors of \(\mathbb{R}^m\), the element \(a_{ij}\)
     is the coefficient corresponding to \(\hat{\mathbf{e}}_{i}\).
+  id: totrans-108
   prefs: []
   type: TYPE_NORMAL
+  zh: 换句话说，如果 \(\mathbf{z}_j = \mathbf{A}\mathbf{e}_j\) 被写成 \(\mathbb{R}^m\) 的基向量的线性组合，那么元素
+    \(a_{ij}\) 是对应于 \(\hat{\mathbf{e}}_{i}\) 的系数。
 - en: Example
+  id: totrans-109
   prefs:
   - PREF_H4
   type: TYPE_NORMAL
+  zh: 示例
 - en: 'Suppose that \(V\) is a vector space with basis \(\mathbf{v}_1,\mathbf{v}_2,\mathbf{v}_3\),
     and \(W\) is a vector space with basis \(\mathbf{w}_1,\mathbf{w}_2\). Then \(V\)
     and \(W\) have dimension 3 and 2, respectively. Thus any linear transformation
@@ -492,36 +735,58 @@
     column vector notation, so that vectors \(\mathbf{v} = \alpha_1\mathbf{v}_1 +
     \alpha_2\mathbf{v}_2 + \alpha_3\mathbf{v}_3\) and \(\mathbf{w} = \beta_1\mathbf{w}_1
     + \beta_2\mathbf{w}_2\) can be written as'
+  id: totrans-110
   prefs: []
   type: TYPE_NORMAL
+  zh: '假设 \(V\) 是一个由 \(\mathbf{v}_1,\mathbf{v}_2,\mathbf{v}_3\) 构成的向量空间，而 \(W\) 是一个由
+    \(\mathbf{w}_1,\mathbf{w}_2\) 构成的向量空间。那么 \(V\) 和 \(W\) 的维度分别是 3 和 2。因此，任何线性变换
+    \(f: V \to W\) 都可以表示为一个 \(2\times 3\) 的矩阵。我们可以引入列向量表示法，使得向量 \(\mathbf{v} = \alpha_1\mathbf{v}_1
+    + \alpha_2\mathbf{v}_2 + \alpha_3\mathbf{v}_3\) 和 \(\mathbf{w} = \beta_1\mathbf{w}_1
+    + \beta_2\mathbf{w}_2\) 可以写成'
 - en: \[\mathbf{v} = \begin{bmatrix}\alpha_1 \\ \alpha_2 \\ \alpha_3\end{bmatrix},\hspace{6mm}
     \mathbf{w} = \begin{bmatrix}\beta_1 \\ \beta_2\end{bmatrix}.\]
+  id: totrans-111
   prefs: []
   type: TYPE_NORMAL
+  zh: \[\mathbf{v} = \begin{bmatrix}\alpha_1 \\ \alpha_2 \\ \alpha_3\end{bmatrix},\hspace{6mm}
+    \mathbf{w} = \begin{bmatrix}\beta_1 \\ \beta_2\end{bmatrix}.\]
 - en: We have not specified what the vector spaces \(V\) and \(W\), but it is fine
     if we treat them like elements of \(\mathbb{R}^3\) and \(\mathbb{R}^2\).
+  id: totrans-112
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们没有指定向量空间 \(V\) 和 \(W\) 的具体内容，但如果我们将它们视为 \(\mathbb{R}^3\) 和 \(\mathbb{R}^2\)
+    的元素，那就没问题。
 - en: 'Suppose that the following facts are known about the linear transformation
     \(f\):'
+  id: totrans-113
   prefs: []
   type: TYPE_NORMAL
+  zh: 假设以下关于线性变换 \(f\) 的性质是已知的：
 - en: \(f(\mathbf{v}_1) = \mathbf{w}_1\)
+  id: totrans-114
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: \(f(\mathbf{v}_1) = \mathbf{w}_1\)
 - en: \(f(\mathbf{v}_2) = 5\mathbf{w}_1 - \mathbf{w}_2\)
+  id: totrans-115
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: \(f(\mathbf{v}_2) = 5\mathbf{w}_1 - \mathbf{w}_2\)
 - en: \(f(\mathbf{v}_3) = 2\mathbf{w}_1 + 2\mathbf{w}_2\)
+  id: totrans-116
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: \(f(\mathbf{v}_3) = 2\mathbf{w}_1 + 2\mathbf{w}_2\)
 - en: Using the information provided above, determine the matrix representation of
     \(f\).
+  id: totrans-117
   prefs: []
   type: TYPE_NORMAL
+  zh: 使用上述提供的信息，确定 \(f\) 的矩阵表示。
 - en: '<details><summary>**Answer**</summary> The first equation tells us $ \mathbf{w}_1
     = f(\mathbf{v}_1) \implies \begin{bmatrix} 1 \\ 0\end{bmatrix} = \begin{bmatrix}
     a_{11} & a_{12} & a_{13}\\ a_{21} & a_{22} & a_{23}\end{bmatrix}\begin{bmatrix}
@@ -539,116 +804,189 @@
     important to note that the matrix representation not only depends on \(f\), but
     also our choice of basis. If we chose different bases for the vector spaces \(V\text{
     and } W\), the matrix representation of \(f\) would change as well.</details>'
+  id: totrans-118
   prefs: []
   type: TYPE_NORMAL
+  zh: <details><summary>**答案**</summary> 第一个方程告诉我们 $ \mathbf{w}_1 = f(\mathbf{v}_1)
+    \implies \begin{bmatrix} 1 \\ 0\end{bmatrix} = \begin{bmatrix} a_{11} & a_{12}
+    & a_{13}\\ a_{21} & a_{22} & a_{23}\end{bmatrix}\begin{bmatrix} 1 \\ 0 \\ 0\end{bmatrix}
+    = \begin{bmatrix} a_{11} \\ a_{21} \end{bmatrix}. $ 因此我们知道 $a_{11} = 1,\ a_{21}
+    = 0.$ 第二个方程告诉我们 $ 5\mathbf{w}_1 - \mathbf{w}_2 = f(\mathbf{v}_2) \implies \begin{bmatrix}
+    5 \\ -1\end{bmatrix} = \begin{bmatrix} 1 & a_{12} & a_{13}\\ 0 & a_{22} & a_{23}\end{bmatrix}\begin{bmatrix}
+    0 \\ 1 \\ 0\end{bmatrix} = \begin{bmatrix} a_{12} \\ a_{22} \end{bmatrix}. $ 因此我们知道
+    $a_{12} = 5,\ a_{22} = -1.$ 最后，第三个方程告诉我们 $ 2\mathbf{w}_1 + 2\mathbf{w}_2 = f(\mathbf{v}_2)
+    \implies \begin{bmatrix} 2 \\ 2\end{bmatrix} = \begin{bmatrix} 1 & 5 & a_{13}\\
+    0 & -1 & a_{23}\end{bmatrix}\begin{bmatrix} 0 \\ 0 \\ 1\end{bmatrix} = \begin{bmatrix}
+    a_{13} \\ a_{23} \end{bmatrix}. $ 因此，\(a_{13} = 2,\ a_{23} = 2\)，线性变换 \(f\) 可以表示为矩阵：$
+    \begin{bmatrix} 1 & 5 & 2\\ 0 & -1 & 2\end{bmatrix}. $ 重要的是要注意，矩阵表示不仅取决于 \(f\)，还取决于我们选择的基。如果我们为向量空间
+    \(V\) 和 \(W\) 选择不同的基，\(f\) 的矩阵表示也会改变。</details>
 - en: Matrices as operators
+  id: totrans-119
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 矩阵作为算子
 - en: Rotation operator
+  id: totrans-120
   prefs:
   - PREF_H4
   type: TYPE_NORMAL
+  zh: 旋转算子
 - en: This rotation matrix rotates points through \(\theta\) in the counterclockwise
     direction.
+  id: totrans-121
   prefs: []
   type: TYPE_NORMAL
+  zh: 这个旋转矩阵以逆时针方向旋转点 \(\theta\)。
 - en: \[{y_1 \choose y_2} = \begin{bmatrix} {\bf \cos(\theta)} & {\bf -\sin(\theta)}
     \\ {\bf \sin(\theta)} & {\bf \cos(\theta)} \end{bmatrix} {x_1 \choose x_2}\]
+  id: totrans-122
   prefs: []
   type: TYPE_NORMAL
+  zh: \[{y_1 \choose y_2} = \begin{bmatrix} {\bf \cos(\theta)} & {\bf -\sin(\theta)}
+    \\ {\bf \sin(\theta)} & {\bf \cos(\theta)} \end{bmatrix} {x_1 \choose x_2}\]
 - en: Scale operator
+  id: totrans-123
   prefs:
   - PREF_H4
   type: TYPE_NORMAL
+  zh: 缩放算子
 - en: The scale operator scales or shrinks points by a in the x-direction and by b
     in the y-direction.
+  id: totrans-124
   prefs: []
   type: TYPE_NORMAL
+  zh: 缩放算子将点在 x 方向上按 a 缩放或缩小，在 y 方向上按 b 缩放或缩小。
 - en: \[{y_1 \choose y_2} = \begin{bmatrix} a & { 0} \\ { 0} & { b} \end{bmatrix}
     {x_1 \choose x_2}\]
+  id: totrans-125
   prefs: []
   type: TYPE_NORMAL
+  zh: \[{y_1 \choose y_2} = \begin{bmatrix} a & { 0} \\ { 0} & { b} \end{bmatrix}
+    {x_1 \choose x_2}\]
 - en: Reflection operator
+  id: totrans-126
   prefs:
   - PREF_H4
   type: TYPE_NORMAL
+  zh: 反射算子
 - en: The reflection matrix reflects points across the x or y axes. The example below
     reflects points across both the x and y axes.
+  id: totrans-127
   prefs: []
   type: TYPE_NORMAL
+  zh: 反射矩阵将点沿 x 或 y 轴反射。以下示例展示了点沿 x 和 y 轴的反射。
 - en: \[{y_1 \choose y_2} = \begin{bmatrix} { -1} & { 0} \\ { 0} & { -1} \end{bmatrix}
     {x_1 \choose x_2}\]
+  id: totrans-128
   prefs: []
   type: TYPE_NORMAL
+  zh: \[{y_1 \choose y_2} = \begin{bmatrix} { -1} & { 0} \\ { 0} & { -1} \end{bmatrix}
+    {x_1 \choose x_2}\]
 - en: Translation operator
+  id: totrans-129
   prefs:
   - PREF_H4
   type: TYPE_NORMAL
+  zh: 平移算子
 - en: The translation or shift operator moves points by a units in the x-direction
     and b units in the y-direction. This is not a linear transformation.
+  id: totrans-130
   prefs: []
   type: TYPE_NORMAL
+  zh: 平移或平移算子将点在 x 方向上移动 a 个单位，在 y 方向上移动 b 个单位。这不是一个线性变换。
 - en: \[{y_1 \choose y_2} = \begin{bmatrix} { 1} & { 0} \\ { 0} & { 1} \end{bmatrix}
     {x_1 \choose x_2} + {a \choose b}\]
+  id: totrans-131
   prefs: []
   type: TYPE_NORMAL
+  zh: \[{y_1 \choose y_2} = \begin{bmatrix} { 1} & { 0} \\ { 0} & { 1} \end{bmatrix}
+    {x_1 \choose x_2} + {a \choose b}\]
 - en: Vector Norm
+  id: totrans-132
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 向量范数
 - en: 'A ***vector norm*** is a function \(\| \mathbf{u} \|: V \rightarrow \mathbb{R}^+_0\)
     (i.e., it takes a vector and returns a nonnegative real number) that satisfies
     the following properties, where \(\mathbf{u}, \mathbf{v} \in V\) and \(\alpha
     \in \mathbb{R}\):'
+  id: totrans-133
   prefs: []
   type: TYPE_NORMAL
+  zh: '**向量范数**是一个函数 \(\| \mathbf{u} \|: V \rightarrow \mathbb{R}^+_0\)（即，它接受一个向量并返回一个非负实数），它满足以下性质，其中
+    \(\mathbf{u}, \mathbf{v} \in V\) 且 \(\alpha \in \mathbb{R}\)：'
 - en: 'Positivity: \(\| \mathbf{u}\| \geq 0\)'
+  id: totrans-134
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 正定性：\(\| \mathbf{u}\| \geq 0\)
 - en: 'Definiteness: \(\|\mathbf{u}\| = 0\) if and only if \(\mathbf{u} = \mathbf{0}\)'
+  id: totrans-135
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 正定性：\(\|\mathbf{u}\| = 0\) 当且仅当 \(\mathbf{u} = \mathbf{0}\)
 - en: 'Homogeneity: \(\|\alpha \mathbf{u}\| = \vert\alpha\vert \|\mathbf{u}\|\)'
+  id: totrans-136
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 同质性：\(\|\alpha \mathbf{u}\| = \vert\alpha\vert \|\mathbf{u}\|\)
 - en: 'Triangle inequality: \(\|\mathbf{u} + \mathbf{v}\| \leq \|\mathbf{u}\| + \|\mathbf{v}\|\)'
+  id: totrans-137
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 三角不等式：\(\|\mathbf{u} + \mathbf{v}\| \leq \|\mathbf{u}\| + \|\mathbf{v}\|\)
 - en: A norm is a generalization of "absolute value" and measures the "magnitude"
     of the input vector.
+  id: totrans-138
   prefs: []
   type: TYPE_NORMAL
+  zh: 范数是“绝对值”的推广，用于衡量输入向量的“大小”。
 - en: The p-norm
+  id: totrans-139
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: p-范数
 - en: The ***p-norm*** is defined as
+  id: totrans-140
   prefs: []
   type: TYPE_NORMAL
+  zh: '**p-范数**定义为'
 - en: \(\|\mathbf{w}\|_p = (\sum_{i=1}^N \vert w_i \vert^p)^{\frac{1}{p}}\).
+  id: totrans-141
   prefs: []
   type: TYPE_NORMAL
+  zh: \(\|\mathbf{w}\|_p = (\sum_{i=1}^N \vert w_i \vert^p)^{\frac{1}{p}}\).
 - en: The definition is a valid norm when \(p \geq 1\). If \(0 \leq p \lt 1\) then
     it is not a valid norm because it violates the triangle inequality.
+  id: totrans-142
   prefs: []
   type: TYPE_NORMAL
+  zh: 当\(p \geq 1\)时，定义是一个有效的范数。如果\(0 \leq p < 1\)，则它不是一个有效的范数，因为它违反了三角不等式。
 - en: When \(p=2\) (2-norm), this is called the ***Euclidean norm*** and it corresponds
     to the length of the vector.
+  id: totrans-143
   prefs: []
   type: TYPE_NORMAL
+  zh: 当\(p=2\)（2-范数）时，这被称为***欧几里得范数***，它对应于向量的长度。
 - en: Vector Norm Examples
+  id: totrans-144
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 向量范数示例
 - en: Consider the case of \(\mathbf{w} = [-3, 5, 0, 1]\). Calculate the 1, 2, and
     \(\infty\) norm of \(\mathbf{w}\).
+  id: totrans-145
   prefs: []
   type: TYPE_NORMAL
+  zh: 考虑\(\mathbf{w} = [-3, 5, 0, 1]\)的情况。计算\(\mathbf{w}\)的1，2和\(\infty\)范数。
 - en: '<details><summary>**Answer**</summary> For the 1-norm: $\|\mathbf{w}\|_1 =
     (\sum_{i=1}^N |w_i|^1)^{\frac{1}{1}}$ $\|\mathbf{w}\|_1 = \sum_{i=1}^N |w_i|$
     $\|\mathbf{w}\|_1 = |-3| + |5| + |0| + |1|$ $\|\mathbf{w}\|_1 = 3 + 5 + 0 + 1$
@@ -659,40 +997,71 @@
     |w_i|^p)^{\frac{1}{p}}$ $\|\mathbf{w}\|_\infty = \max_{i=1,\dots,N} |w_i|$ $\|\mathbf{w}\|_\infty
     = \max(|-3|, |5|, |0|, |1|)$ $\|\mathbf{w}\|_\infty = \max(3, 5, 0, 1)$ $\|\mathbf{w}\|_\infty
     = 5$</details>'
+  id: totrans-146
   prefs: []
   type: TYPE_NORMAL
+  zh: <details><summary>**答案**</summary> 对于1-范数：$\|\mathbf{w}\|_1 = (\sum_{i=1}^N
+    |w_i|^1)^{\frac{1}{1}}$ $\|\mathbf{w}\|_1 = \sum_{i=1}^N |w_i|$ $\|\mathbf{w}\|_1
+    = |-3| + |5| + |0| + |1|$ $\|\mathbf{w}\|_1 = 3 + 5 + 0 + 1$ $\|\mathbf{w}\|_1
+    = 9$ 对于2-范数：$\|\mathbf{w}\|_2 = (\sum_{i=1}^N |w_i|^2)^{\frac{1}{2}}$ $\|\mathbf{w}\|_2
+    = \sqrt{\sum_{i=1}^N w_i^2}$ $\|\mathbf{w}\|_2 = \sqrt{(-3)^2 + (5)^2 + (0)^2
+    + (1)^2}$ $\|\mathbf{w}\|_2 = \sqrt{9 + 25 + 0 + 1}$ $\|\mathbf{w}\|_2 = \sqrt{35}
+    \approx 5.92$ 对于\(\infty\)-范数：$\|\mathbf{w}\|_\infty = \lim_{p\to\infty}(\sum_{i=1}^N
+    |w_i|^p)^{\frac{1}{p}}$ $\|\mathbf{w}\|_\infty = \max_{i=1,\dots,N} |w_i|$ $\|\mathbf{w}\|_\infty
+    = \max(|-3|, |5|, |0|, |1|)$ $\|\mathbf{w}\|_\infty = \max(3, 5, 0, 1)$ $\|\mathbf{w}\|_\infty
+    = 5$</details>
 - en: Norms and Errors
+  id: totrans-147
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 范数与误差
 - en: To calculate the error when computing a vector result, you can apply a norm.
+  id: totrans-148
   prefs: []
   type: TYPE_NORMAL
+  zh: 在计算向量结果时计算误差，可以应用范数。
 - en: \[\begin{eqnarray} \mathbf{Absolute\ Error} = \|\mathbf{True\ Value} - \mathbf{Approximate\
     Value}\|\\ \\ \mathbf{Relative\ Error} = \frac{\|\mathbf{True\ Value} - \mathbf{Approximate\
     Value}\|}{\|\mathbf{True\ Value}\|} \end{eqnarray}\]
+  id: totrans-149
   prefs: []
   type: TYPE_NORMAL
+  zh: \[\begin{eqnarray} 绝对误差 &=& \|\mathbf{True\ Value} - \mathbf{Approximate\ Value}\|\\
+    \\ 相对误差 &=& \frac{\|\mathbf{True\ Value} - \mathbf{Approximate\ Value}\|}{\|\mathbf{True\
+    Value}\|} \end{eqnarray}\]
 - en: '**Caution:** Norms are not additive![[1](#footnote-1)]'
+  id: totrans-150
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: '**注意：** 范数不是可加的![1](#footnote-1)'
 - en: \(\|\mathbf{True\ Value} - \mathbf{Approximate\ Value}\|\\ \neq \|\mathbf{True\
     Value} \| - \|\mathbf{Approximate\ Value} \|\)
+  id: totrans-151
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: \(\|\mathbf{True\ Value} - \mathbf{Approximate\ Value}\|\\ \neq \|\mathbf{True\
+    Value} \| - \|\mathbf{Approximate\ Value} \|\)
 - en: Example
+  id: totrans-152
   prefs:
   - PREF_H4
   type: TYPE_NORMAL
+  zh: 示例
 - en: \[True\ Vector =\begin{bmatrix} 0 \\ 6 \\ -4 \end{bmatrix}\ \ \ \ Approximate\
     Vector =\begin{bmatrix} 0 \\ 5 \\ -3 \end{bmatrix}\]
+  id: totrans-153
   prefs: []
   type: TYPE_NORMAL
+  zh: \[真实向量 =\begin{bmatrix} 0 \\ 6 \\ -4 \end{bmatrix}\ \ \ \ 近似向量 =\begin{bmatrix}
+    0 \\ 5 \\ -3 \end{bmatrix}\]
 - en: Calculate the 1-norm error given the true and approximate vectors above.
+  id: totrans-154
   prefs: []
   type: TYPE_NORMAL
+  zh: 根据上述真实向量和近似向量计算1-范数误差。
 - en: <details><summary>**Answer**</summary> $\begin{eqnarray} Absolute\ Error &=&
     \left\|\begin{bmatrix} 0 \\ 6 \\ -4 \end{bmatrix} - \begin{bmatrix} 0 \\ 5 \\
     -3 \end{bmatrix}\right\|_{1}\\ \\ &=& \left\|\begin{bmatrix} 0 \\ 1 \\ -1 \end{bmatrix}\right\|_{1}\\
@@ -701,139 +1070,221 @@
     0 \\ 5 \\ -3 \end{bmatrix}\right\|_{1}}{\left\|\begin{bmatrix} 0 \\ 6 \\ -4 \end{bmatrix}\right\|_{1}}\\
     \\ &=& \frac{2}{|0| + |6| + |-4|}\\ \\ &=& \frac{2}{10}\\ \\ &=& \frac{1}{5}\\
     \\ \end{eqnarray}$</details>
+  id: totrans-155
   prefs: []
   type: TYPE_NORMAL
+  zh: <details><summary>**答案**</summary> $\begin{eqnarray} 绝对误差 &=& \left\|\begin{bmatrix}
+    0 \\ 6 \\ -4 \end{bmatrix} - \begin{bmatrix} 0 \\ 5 \\ -3 \end{bmatrix}\right\|_{1}\\
+    \\ &=& \left\|\begin{bmatrix} 0 \\ 1 \\ -1 \end{bmatrix}\right\|_{1}\\ \\ &=&
+    |0| + |1| + |-1|\\ \\ &=& 2 \end{eqnarray}$ $\begin{eqnarray} 相对误差 &=& \frac{\left\|\begin{bmatrix}
+    0 \\ 6 \\ -4 \end{bmatrix} - \begin{bmatrix} 0 \\ 5 \\ -3 \end{bmatrix}\right\|_{1}}{\left\|\begin{bmatrix}
+    0 \\ 6 \\ -4 \end{bmatrix}\right\|_{1}}\\ \\ &=& \frac{2}{|0| + |6| + |-4|}\\
+    \\ &=& \frac{2}{10}\\ \\ &=& \frac{1}{5}\\ \\ \end{eqnarray}$</details>
 - en: Matrix Norm
+  id: totrans-156
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 矩阵范数
 - en: 'A ***general matrix norm*** is a real valued function \(\| {\bf A} \|\) that
     satisfies the following properties:'
+  id: totrans-157
   prefs: []
   type: TYPE_NORMAL
+  zh: '一个 ***通用矩阵范数*** 是一个满足以下性质的实值函数 \(\| {\bf A} \|\)： '
 - en: 'Positivity: \(\|{\bf A}\| \geq 0\)'
+  id: totrans-158
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 正定性：\(\|{\bf A}\| \geq 0\)
 - en: 'Definiteness: \(\|{\bf A}\| = 0\) if and only if \({\bf A} = 0\)'
+  id: totrans-159
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 正定性：\(\|{\bf A}\| = 0\) 当且仅当 \({\bf A} = 0\)
 - en: 'Homogeneity: \(\|\lambda {\bf A}\| = \vert\lambda\vert \|{\bf A}\|\) for all
     scalars \(\lambda\)'
+  id: totrans-160
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 同质性：对于所有标量 \(\lambda\)，\(\|\lambda {\bf A}\| = \vert\lambda\vert \|{\bf A}\|\)
 - en: 'Triangle inequality: \(\|{\bf A} + {\bf B}\| \leq \|{\bf A}\| + \|{\bf B}\|\)'
+  id: totrans-161
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 三角不等式：\(\|{\bf A} + {\bf B}\| \leq \|{\bf A}\| + \|{\bf B}\|\)
 - en: '***Induced (or operator) matrix norms*** are associated with a specific vector
     norm \(\| \cdot \|\) and are defined as:'
+  id: totrans-162
   prefs: []
   type: TYPE_NORMAL
+  zh: '***诱导（或算子）矩阵范数*** 与特定的向量范数 \(\| \cdot \|\) 相关，并定义为：'
 - en: \[\|{\bf A}\| := \max_{\|\mathbf{x}\|=1} \|{\bf A}\mathbf{x}\|.\]
+  id: totrans-163
   prefs: []
   type: TYPE_NORMAL
+  zh: \[\|{\bf A}\| := \max_{\|\mathbf{x}\|=1} \|{\bf A}\mathbf{x}\|.\]
 - en: An induced matrix norm is a particular type of a general matrix norm. Induced
     matrix norms tell us the maximum amplification of the norm of any vector when
     multiplied by the matrix. Note that the definition above is equivalent to
+  id: totrans-164
   prefs: []
   type: TYPE_NORMAL
+  zh: 诱导矩阵范数是一般矩阵范数的特定类型。诱导矩阵范数告诉我们任何向量乘以矩阵时范数的最大放大倍数。注意，上述定义与以下定义等价
 - en: \[\|{\bf A}\| = \max_{\|\mathbf{x}\| \neq 0} \frac{\| {\bf A} \mathbf{x}\|}{\|x\|}.\]
+  id: totrans-165
   prefs: []
   type: TYPE_NORMAL
+  zh: \[\|{\bf A}\| = \max_{\|\mathbf{x}\| \neq 0} \frac{\| {\bf A} \mathbf{x}\|}{\|x\|}.\]
 - en: 'In addition to the properties above of general matrix norms, induced matrix
     norms also satisfy the submultiplicative conditions:'
+  id: totrans-166
   prefs: []
   type: TYPE_NORMAL
+  zh: 除了上述一般矩阵范数的性质外，诱导矩阵范数还满足以下子乘性条件：
 - en: \[\| {\bf A} \mathbf{x} \| \leq \|{\bf A}\| \|\mathbf{x}\|\] \[\|{\bf A} {\bf
     B}\| \leq \|{\bf A}\| \|{\bf B}\|\]
+  id: totrans-167
   prefs: []
   type: TYPE_NORMAL
+  zh: \[\| {\bf A} \mathbf{x} \| \leq \|{\bf A}\| \|\mathbf{x}\|\] \[\|{\bf A} {\bf
+    B}\| \leq \|{\bf A}\| \|{\bf B}\|\]
 - en: Frobenius norm
+  id: totrans-168
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: Frobenius 范数
 - en: The Frobenius norm is simply the square root of the sum of every squared element
     of the matrix, which is equivalent to applying the vector \(2\)-norm to the flattened
     matrix,
+  id: totrans-169
   prefs: []
   type: TYPE_NORMAL
+  zh: Frobenius 范数简单地是矩阵中每个平方元素的平方和的平方根，这相当于将向量 \(2\)-范数应用于展平的矩阵，
 - en: \[\|{\bf A}\|_F = \sqrt{\sum_{i,j} a_{ij}^2}.\]
+  id: totrans-170
   prefs: []
   type: TYPE_NORMAL
+  zh: \[\|{\bf A}\|_F = \sqrt{\sum_{i,j} a_{ij}^2}.\]
 - en: The Frobenius norm is an example of a general matrix norm that is not an induced
     norm.
+  id: totrans-171
   prefs: []
   type: TYPE_NORMAL
+  zh: Frobenius 范数是通用矩阵范数的一个例子，它不是诱导范数。
 - en: Example
+  id: totrans-172
   prefs:
   - PREF_H4
   type: TYPE_NORMAL
+  zh: 示例
 - en: \[{\bf Q }=\begin{bmatrix} 1 & 4 \\ 6 & 5 \end{bmatrix}\]
+  id: totrans-173
   prefs: []
   type: TYPE_NORMAL
+  zh: \[{\bf Q }=\begin{bmatrix} 1 & 4 \\ 6 & 5 \end{bmatrix}\]
 - en: Calculate the Frobenius norm of \({\bf Q}.\)
+  id: totrans-174
   prefs: []
   type: TYPE_NORMAL
+  zh: 计算矩阵 \({\bf Q}\) 的 Frobenius 范数。
 - en: <details><summary>**Answer**</summary> $\begin{eqnarray} \|{\bf Q}\|_{\bf F}
     &=& \sqrt{1^2 + 4^2 + 6^2 + 5^2}\\ &=& \sqrt{78}\\ &\approx& 8.83 \end{eqnarray}$</details>
+  id: totrans-175
   prefs: []
   type: TYPE_NORMAL
+  zh: <details><summary>**答案**</summary> $\begin{eqnarray} \|{\bf Q}\|_{\bf F} &=&
+    \sqrt{1^2 + 4^2 + 6^2 + 5^2}\\ &=& \sqrt{78}\\ &\approx& 8.83 \end{eqnarray}$</details>
 - en: The matrix p-norm
+  id: totrans-176
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 矩阵 p-范数
 - en: The matrix p-norm is induced by the p-norm of a vector. It is
+  id: totrans-177
   prefs: []
   type: TYPE_NORMAL
+  zh: 矩阵 p-范数是由向量的 p-范数诱导的。它是
 - en: \[\|{\bf A}\|_p := \max_{\|\mathbf{x}\|_p=1} \|{\bf A}\mathbf{x}\|_p.\]
+  id: totrans-178
   prefs: []
   type: TYPE_NORMAL
+  zh: \[\|{\bf A}\|_p := \max_{\|\mathbf{x}\|_p=1} \|{\bf A}\mathbf{x}\|_p.\]
 - en: 'There are three special cases:'
+  id: totrans-179
   prefs: []
   type: TYPE_NORMAL
+  zh: 有三种特殊情况：
 - en: 1-norm
+  id: totrans-180
   prefs:
   - PREF_H4
   type: TYPE_NORMAL
+  zh: 1-范数
 - en: The 1-norm reduces to the maximum absolute column sum of the matrix, i.e.,
+  id: totrans-181
   prefs: []
   type: TYPE_NORMAL
+  zh: 1-范数简化为矩阵的最大绝对列和，即，
 - en: \[\|{\bf A}\|_1 = \max_j \sum_{i=1}^n \vert a_{ij} \vert.\]
+  id: totrans-182
   prefs: []
   type: TYPE_NORMAL
+  zh: \[\|{\bf A}\|_1 = \max_j \sum_{i=1}^n \vert a_{ij} \vert.\]
 - en: 2-norm
+  id: totrans-183
   prefs:
   - PREF_H4
   type: TYPE_NORMAL
+  zh: 2-范数
 - en: The 2-norm reduces to the maximum singular value of the matrix.
+  id: totrans-184
   prefs: []
   type: TYPE_NORMAL
+  zh: 2-范数简化为矩阵的最大奇异值。
 - en: \[\|{\bf A}\|_{2} = \max_k \sigma_k\]
+  id: totrans-185
   prefs: []
   type: TYPE_NORMAL
+  zh: \[\|{\bf A}\|_{2} = \max_k \sigma_k\]
 - en: \(\infty\)-norm
+  id: totrans-186
   prefs:
   - PREF_H4
   type: TYPE_NORMAL
+  zh: \(\infty\)-范数
 - en: The \(\infty\)-norm reduces to the maximum absolute row sum of the matrix.
+  id: totrans-187
   prefs: []
   type: TYPE_NORMAL
+  zh: \(\infty\)-范数简化为矩阵的最大绝对行和。
 - en: \[\|{\bf A}\|_{\infty} = \max_i \sum_{j=1}^n \vert a_{ij} \vert.\]
+  id: totrans-188
   prefs: []
   type: TYPE_NORMAL
+  zh: \[\|{\bf A}\|_{\infty} = \max_i \sum_{j=1}^n \vert a_{ij} \vert.\]
 - en: Example
+  id: totrans-189
   prefs:
   - PREF_H4
   type: TYPE_NORMAL
+  zh: 示例
 - en: \[{\bf C} = \begin{bmatrix} 3 & -2 \\ -1 & 3 \\ \end{bmatrix}\]
+  id: totrans-190
   prefs: []
   type: TYPE_NORMAL
+  zh: \[{\bf C} = \begin{bmatrix} 3 & -2 \\ -1 & 3 \\ \end{bmatrix}\]
 - en: Calculate the 1-norm, 2-norm, and \(\infty\)-norm of matrix \({\bf C}.\)
+  id: totrans-191
   prefs: []
   type: TYPE_NORMAL
+  zh: 计算矩阵 \({\bf C}\) 的 1-范数、2-范数和 \(\infty\)-范数。
 - en: <details><summary>**Answer**</summary> The matrix \(\bf C\) has absolute column
     sums $ |3| + |-1| = 4, |-2| + |3| = 5\. $ Therefore, $\begin{eqnarray} \|{\bf
     C}\|_1 &=& \max (4, 5)\\ &=& 5\. \end{eqnarray}$ The singular values are the square
@@ -850,184 +1301,273 @@
     \approx 4.54.$ The matrix \(\bf C\) has absolute row sums $ |3| + |-2| = 5, |-1|
     + |3| = 4\. $ Therefore, $\begin{eqnarray} \|{\bf C}\|_{\infty} &=& \max (4, 5)\\
     &=& 5\. \end{eqnarray}$</details>
+  id: totrans-192
   prefs: []
   type: TYPE_NORMAL
+  zh: <details><summary>**答案**</summary> 矩阵\(\bf C\)的列和的绝对值是 \( |3| + |-1| = 4, |-2|
+    + |3| = 5\. \) 因此，$\begin{eqnarray} \|{\bf C}\|_1 &=& \max (4, 5)\\ &=& 5\. \end{eqnarray}$
+    稀疏值是矩阵 \({\bf C}^T {\bf C}\) 的特征值的平方根。你还可以通过计算矩阵的奇异值分解来找到最大的奇异值。$\|{\bf C}\|_2
+    = \max_{\|\mathbf{x}\|_2=1} \|{\bf C}\mathbf{x}\|_2$ $det({\bf C}^T {\bf C} -
+    \lambda {\bf I}) = 0$ $ det( \begin{bmatrix} 3 & -1 \\ -2 & 3 \\ \end{bmatrix}
+    \begin{bmatrix} 3 & -2 \\ -1 & 3 \\ \end{bmatrix} - \lambda {\bf I}) = 0 $ $ det(
+    \begin{bmatrix} 9+1 & -6-3 \\ -3-6 & 4+9 \\ \end{bmatrix} - \lambda {\bf I}) =
+    0 $ $ det( \begin{bmatrix} 10 - \lambda & -9 \\ -9 & 13 - \lambda \\ \end{bmatrix}
+    ) = 0 $ $(10-\lambda)(13-\lambda) - 81 = 0$ $\lambda^2 - 23\lambda + 130 - 81
+    = 0$ $\lambda^2 - 23\lambda + 49 = 0$ $(\lambda-\frac{1}{2}(23+3\sqrt{37}))(\lambda-\frac{1}{2}(23-3\sqrt{37}))
+    = 0$ $\|{\bf C}\|_2 = \sqrt{\lambda_{max}} = \sqrt{\frac{1}{2}(23+3\sqrt{37})}
+    \approx 4.54.$ 矩阵\(\bf C\)的行和的绝对值是 \( |3| + |-2| = 5, |-1| + |3| = 4\. \) 因此，$\begin{eqnarray}
+    \|{\bf C}\|_{\infty} &=& \max (4, 5)\\ &=& 5\. \end{eqnarray}$</details>
 - en: Review Questions
+  id: totrans-193
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 复习问题
 - en: What is a vector space?
+  id: totrans-194
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 什么是向量空间？
 - en: What is an inner product?
+  id: totrans-195
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 内积是什么？
 - en: Given a specific function \(f(\mathbf{x})\), can \(f(\mathbf{x})\) be considered
     an inner product?
+  id: totrans-196
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 给定一个特定的函数\(f(\mathbf{x})\)，\(f(\mathbf{x})\)可以被认为是内积吗？
 - en: What is a vector norm? (What properties must hold for a function to be a vector
     norm?)
+  id: totrans-197
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 什么是向量范数？（一个函数要成为向量范数必须满足哪些性质？）
 - en: Given a specific function \(f(\mathbf{x})\), can \(f(\mathbf{x})\) be considered
     a norm?
+  id: totrans-198
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 给定一个特定的函数\(f(\mathbf{x})\)，\(f(\mathbf{x})\)可以被认为是范数吗？
 - en: What is the definition of an induced matrix norm? What do they measure?
+  id: totrans-199
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 诱导矩阵范数的定义是什么？它们测量什么？
 - en: What properties do induced matrix norms satisfy? Which ones are the submultiplicative
     properties? Be able to apply all of these properties.
+  id: totrans-200
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 诱导矩阵范数满足哪些性质？哪些是次可乘性质？能够应用所有这些性质。
 - en: For an induced matrix norm, given \(\|\mathbf{x}\|\) and \(\|{\bf A}\mathbf{x}\|\)
     for a few vectors, can you determine a lower bound on \(\|{\bf A}\|\)?
+  id: totrans-201
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 对于一个诱导矩阵范数，给定\(\|\mathbf{x}\|\)和\(\|{\bf A}\mathbf{x}\|\)对于几个向量，你能确定\(\|{\bf
+    A}\|\)的下界吗？
 - en: What is the Frobenius matrix norm?
+  id: totrans-202
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 什么是Frobenius矩阵范数？
 - en: For a given vector, compute the 1, 2 and \(\infty\) norm of the vector.
+  id: totrans-203
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 对于给定的向量，计算向量的1，2和\(\infty\)范数。
 - en: For a given matrix, compute the 1, 2 and \(\infty\) norm of the matrix.
+  id: totrans-204
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 对于给定的矩阵，计算矩阵的1，2和\(\infty\)范数。
 - en: Know what the norms of special matrices are (e.g., norm of diagonal matrix,
     orthogonal matrix, etc.)
+  id: totrans-205
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 了解特殊矩阵的规范（例如，对角矩阵、正交矩阵等的范数）
 - en: Footnotes
+  id: totrans-206
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 脚注
 - en: 1\. Over a convex space (which the real, and complex, numbers are).
+  id: totrans-207
   prefs: []
   type: TYPE_NORMAL
+  zh: 1. 在一个凸空间（实数和复数都是）上。
 - en: Changelog
+  id: totrans-208
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 更新日志
 - en: 'October 2nd, 2025: Dev Singh (dsingh14) — fix mistake in norm calculation'
+  id: totrans-209
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 2025年10月2日：Dev Singh（dsingh14）——修复范数计算中的错误
 - en: 'February 20th, 2024: Dev Singh (dsingh14) — add warning about additivity of
     norms'
+  id: totrans-210
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 2024年2月20日：Dev Singh（dsingh14）——添加关于范数可加性的警告
 - en: 'February 17th, 2024: Apramey Hosahalli (apramey2) — added error example, formatted
     matrix p-norm examples'
+  id: totrans-211
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 2024年2月17日：Apramey Hosahalli（apramey2）——添加错误示例，格式化矩阵p-范数示例
 - en: <details><summary>View Remaining Entries</summary>
+  id: totrans-212
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: <details><summary>查看剩余条目</summary>
 - en: 'February 16th, 2024: Yuxuan Chen (yuxuan19) — improved example structure, updated
     review questions'
+  id: totrans-213
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 2024年2月16日：陈宇轩（yuxuan19）——改进示例结构，更新了复习问题
 - en: 'February 15th, 2024: Apramey Hosahalli (apramey2) — improved transitions, added
     example for matrix vector multiplication, and brief explanations for matrices
     as operators'
+  id: totrans-214
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 2024年2月15日：Apramey Hosahalli（apramey2）——改进过渡，添加了矩阵向量乘法的示例，以及矩阵作为算子的简要说明
 - en: 'February 13th, 2024: Apramey Hosahalli (apramey2) — added section for vectors
     and examples for Frobenius and p-norm sections'
+  id: totrans-215
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 2024年2月13日：Apramey Hosahalli (apramey2) — 为向量添加章节，并为Frobenius范数和p-范数章节添加示例
 - en: 'February 10th, 2024: Apramey Hosahalli (apramey2) — re-ordered sections according
     to the lectures and changed learning objectives'
+  id: totrans-216
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 2024年2月10日：Apramey Hosahalli (apramey2) — 根据讲座顺序重新排列章节并更改学习目标
 - en: 'March 1st, 2022: Arnav Shah (arnavss2) — added norms and errors section'
+  id: totrans-217
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 2022年3月1日：Arnav Shah (arnavss2) — 添加了规范和误差章节
 - en: 'February 22nd, 2022: Arnav Shah (arnavss2) — added matrices as operators section'
+  id: totrans-218
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 2022年2月22日：Arnav Shah (arnavss2) — 添加了矩阵作为算子的章节
 - en: 'April 27th, 2020: Mariana Silva (mfsilva) — updated notation and mat-vec section'
+  id: totrans-219
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 2020年4月27日：Mariana Silva (mfsilva) — 更新了符号和矩阵-向量章节
 - en: 'February 1st, 2020: Peter Sentz () — added more text from current slide deck'
+  id: totrans-220
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 2020年2月1日：Peter Sentz () — 从当前幻灯片添加更多文本
 - en: 'March 14th, 2018: Adam Stewart (adamjs5) — clarifying definition of Frobenius
     norm'
+  id: totrans-221
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 2018年3月14日：Adam Stewart (adamjs5) — 阐明Frobenius范数的定义
 - en: 'November 10th, 2017: Erin Carrier (ecarrie2) — fixing index range for example,
     adds linear function definition'
+  id: totrans-222
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 2017年11月10日：Erin Carrier (ecarrie2) — 修复示例的索引范围，添加线性函数定义
 - en: 'October 29th, 2017: Erin Carrier (ecarrie2) — adds block form'
+  id: totrans-223
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 2017年10月29日：Erin Carrier (ecarrie2) — 添加块形式
 - en: 'October 29th, 2017: Erin Carrier (ecarrie2) — adds review questions, completes
     vector space definition, rewords matrix norm section, minor other revisions'
+  id: totrans-224
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 2017年10月29日：Erin Carrier (ecarrie2) — 添加复习问题，完成向量空间定义，重写矩阵范数章节，进行其他小修订
 - en: 'October 29th, 2017: Erin Carrier (ecarrie2) — changing inner product notation,
     additional comments on induced vs general norms'
+  id: totrans-225
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 2017年10月29日：Erin Carrier (ecarrie2) — 更改内积符号，对诱导范数与一般范数进行额外评论
 - en: 'October 28th, 2017: John Doherty (jjdoher2) — first complete draft'
+  id: totrans-226
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 2017年10月28日：John Doherty (jjdoher2) — 第一份完整草案
 - en: 'October 16th, 2017: Matthew West (mwest) — first complete draft</details>'
+  id: totrans-227
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 2017年10月16日：Matthew West (mwest) — 第一份完整草案</details>
 - en: Authors
+  id: totrans-228
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 作者
 - en: CS 357 Course Staff
+  id: totrans-229
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: CS 357 课程工作人员

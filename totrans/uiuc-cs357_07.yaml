@@ -1,32 +1,46 @@
 - en: Random Number Generators and Monte Carlo Method
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 随机数生成器和蒙特卡洛方法
 - en: 原文：[https://cs357.cs.illinois.edu/textbook/notes/random-monte-carlo.html](https://cs357.cs.illinois.edu/textbook/notes/random-monte-carlo.html)
+  id: totrans-1
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 原文：[https://cs357.cs.illinois.edu/textbook/notes/random-monte-carlo.html](https://cs357.cs.illinois.edu/textbook/notes/random-monte-carlo.html)
 - en: Learning Objectives
+  id: totrans-2
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 学习目标
 - en: Understand the properties of random number generators and what properties are
     desirable in a random number generator.
+  id: totrans-3
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 理解随机数生成器的特性以及随机数生成器中期望的特性。
 - en: Give examples of problems where you would use Monte Carlo.
+  id: totrans-4
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 给出使用蒙特卡洛方法的例子。
 - en: Characterize the error of Monte Carlo.
+  id: totrans-5
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 描述蒙特卡洛方法的误差。
 - en: Random Number Generators
+  id: totrans-6
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 随机数生成器
 - en: '***Random Number Generators (RNG)*** are algorithms or methods that can be
     used to generate a sequence of numbers that cannot be reasonably predicted. There
     are usually two principal methods for generating random numbers: ***truly-random
@@ -36,336 +50,499 @@
     atmospheric noise and thermal noise. Pseudorandom methods generate numbers using
     computational algorithms that produce sequences of apparently random results,
     which are in fact predictable and reproducible.'
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: '***随机数生成器 (RNG)*** 是一种算法或方法，可以用来生成一组无法合理预测的数字序列。通常有两种主要的随机数生成方法：***真随机方法***和***伪随机方法***。真随机方法根据某些随机物理现象生成数字。例如，掷一个公平的骰子将生成1到6之间的真随机数。其他示例来源包括大气噪声和热噪声。伪随机方法使用计算算法生成看似随机的结果序列，实际上是可以预测和可重复的。'
 - en: When using a pseudorandom method, any generated sequence must eventually repeat
     since only a finite quantity of numbers can be represented in computer. The ***period***
     of a pseudorandom number generator is defined as the maximum length of the repetition-free
     prefix of the sequence.
+  id: totrans-8
   prefs: []
   type: TYPE_NORMAL
+  zh: 当使用伪随机方法时，由于计算机只能表示有限数量的数字，任何生成的序列最终都会重复。伪随机数生成器的**周期**定义为序列无重复前缀的最大长度。
 - en: Properties of Random Number Generators
+  id: totrans-9
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 随机数生成器的特性
 - en: 'A random number generator has the following properties:'
+  id: totrans-10
   prefs: []
   type: TYPE_NORMAL
+  zh: 随机数生成器具有以下特性：
 - en: '*Random pattern*: passes statistical tests of randomness.'
+  id: totrans-11
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '*随机模式*：通过随机性的统计测试。'
 - en: '*Efficiency*: executes rapidly and requires little storage.'
+  id: totrans-12
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '*效率*：执行速度快，存储需求小。'
 - en: '*Long period*: goes as long as possible before repeating.'
+  id: totrans-13
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '*长周期*：在重复之前尽可能长。'
 - en: '*Repeatability*: produces same sequence if started with same initial conditions.'
+  id: totrans-14
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '*可重复性*：如果以相同的初始条件启动，则会产生相同的序列。'
 - en: '*Portability*: runs on different kinds of computers and is capable of producing
     same sequence on each.'
+  id: totrans-15
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '*可移植性*：在不同的计算机上运行，并且能够在每个计算机上产生相同的序列。'
 - en: Linear Congruential Generator
+  id: totrans-16
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 线性同余生成器
 - en: 'A ***linear congruential generator*** (LCG) is pseudorandom number generator
     of the form:'
+  id: totrans-17
   prefs: []
   type: TYPE_NORMAL
+  zh: 一个***线性同余生成器*** (LCG) 是一种伪随机数生成器，其形式为：
 - en: $$ x_0 = \text{seed} $$$$ x_{n+1} = (a x_{n} + c) (\text{mod} \phantom{x} M)
     $$
+  id: totrans-18
   prefs: []
   type: TYPE_NORMAL
+  zh: $$ x_0 = \text{种子} $$$$ x_{n+1} = (a x_{n} + c) (\text{mod} \phantom{x} M) $$
 - en: where \(a\) (the multiplier) and \(c\) (the increment) are given integers, and
     \(x_0\) is called the ***seed***. The period of an LCG cannot exceed \(M\) (the
     modulus). The period may be less than \(M\) depending on the values of \(a\) and
     \(c\). The quality depends on both \(a\) and \(c\).
+  id: totrans-19
   prefs: []
   type: TYPE_NORMAL
+  zh: 其中\(a\)（乘数）和\(c\)（增量）是给定的整数，\(x_0\)被称为***种子***。LCG的周期不能超过\(M\)（模数）。周期可能小于\(M\)，这取决于\(a\)和\(c\)的值。质量取决于\(a\)和\(c\)。
 - en: Example of a LCG
+  id: totrans-20
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: LCG的示例
 - en: Below is the Python code for an example LCG that generates the numbers \(1,3,7,5,1,3,7,5,\dots\)
     given an initial seed of \(1\). To follow the pattern, we double the previous
     number, add \(1\), and mod by 10, so \(a=2\), \(c=1\), and \(M=10\).
+  id: totrans-21
   prefs: []
   type: TYPE_NORMAL
+  zh: 下面是Python代码示例，展示了一个LCG，它根据初始种子\(1\)生成数字\(1,3,7,5,1,3,7,5,\dots\)。为了遵循模式，我们将前一个数字翻倍，加\(1\)，然后对\(10\)取模，因此\(a=2\)，\(c=1\)，\(M=10\)。
 - en: '[PRE0]'
+  id: totrans-22
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: Random Variables
+  id: totrans-23
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 随机变量
 - en: A ***random variable*** \(X\) can be thought of as a function that maps the
     outcome of unpredictable (random) processes to numerical quantities. If you have
     previous statistics experience, you are likely familiar with this concept.
+  id: totrans-24
   prefs: []
   type: TYPE_NORMAL
+  zh: 一个***随机变量*** \(X\) 可以被视为一个函数，它将不可预测（随机）过程的输出映射到数值。如果你有先前的统计学经验，你可能会熟悉这个概念。
 - en: 'Examples of random variables include:'
+  id: totrans-25
   prefs: []
   type: TYPE_NORMAL
+  zh: 随机变量的例子包括：
 - en: How much rain are we getting tomorrow?
+  id: totrans-26
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 明天我们会下多少雨？
 - en: Will my buttered bread land face-down?
+  id: totrans-27
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 我的黄油面包会正反面朝下吗？
 - en: We don't have an exact number to represent these random processes, but we can
     approximate the long-run outcome of random variables through the [law of large
     numbers](https://en.wikipedia.org/wiki/Law_of_large_numbers).
+  id: totrans-28
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们没有确切的数字来表示这些随机过程，但我们可以通过[大数定律](https://en.wikipedia.org/wiki/Law_of_large_numbers)来近似随机变量的长期结果。
 - en: Discrete Random Variables
+  id: totrans-29
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 离散随机变量
 - en: Each ***discrete random variable*** \(X\) can take a discrete value, \(x_i\)
     with probability \(p_i\) for \(i = 1,…m\) and \(\Sigma_{i=1}^m p_i = 1\) (i.e.
     the possible values are countable). This is in contrast to continuous random variables,
     where the possible values are uncountably infinite.
+  id: totrans-30
   prefs: []
   type: TYPE_NORMAL
+  zh: 每个***离散随机变量*** \(X\) 可以取一个离散值 \(x_i\)，其概率为 \(p_i\)，对于 \(i = 1,…m\)，且 \(\Sigma_{i=1}^m
+    p_i = 1\)（即可能值是可数的）。这与连续随机变量形成对比，连续随机变量的可能值是不可数的无限多。
 - en: Expected Value of a Discrete Random Variable
+  id: totrans-31
   prefs:
   - PREF_H4
   type: TYPE_NORMAL
+  zh: 离散随机变量的期望值
 - en: The **expected value** of a discrete random variable, \(E(x)\), is defined as
     \(\Sigma_{i=1}^m p_i x_i\). This concept can be thought of as the "average outcome".
+  id: totrans-32
   prefs: []
   type: TYPE_NORMAL
+  zh: 离散随机变量的**期望值** \(E(x)\) 定义为 \(\Sigma_{i=1}^m p_i x_i\)。这个概念可以被视为“平均结果”。
 - en: 'Example of a Discrete Random Variable: Coin Toss'
+  id: totrans-33
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 离散随机变量的例子：硬币投掷
 - en: Consider a random variable \(X\) which is the result of a coin toss that can
     be heads or tails.
+  id: totrans-34
   prefs: []
   type: TYPE_NORMAL
+  zh: 考虑一个随机变量 \(X\)，它是硬币投掷的结果，可以是正面或反面。
 - en: '$$ X=1\text{: toss is heads} $$$$ X=0\text{: toss is tails} $$'
+  id: totrans-35
   prefs: []
   type: TYPE_NORMAL
+  zh: '$$ X=1\text{: 投掷为正面} $$$$ X=0\text{: 投掷为反面} $$'
 - en: For each individual toss, \(x_i\) is \(0\) or \(1\) and each \(x_i\) has probability
     \(p_i=0.5\).
+  id: totrans-36
   prefs: []
   type: TYPE_NORMAL
+  zh: 对于每一次投掷，\(x_i\) 是 \(0\) 或 \(1\)，并且每个 \(x_i\) 的概率 \(p_i=0.5\)。
 - en: What is the expected value for this coin toss?
+  id: totrans-37
   prefs: []
   type: TYPE_NORMAL
+  zh: 这个硬币投掷的期望值是多少？
 - en: <details><summary>**Answer**</summary> For a coin toss, the expectation is$
     E(X) = 1 \cdot 0.5 + 0 \cdot 0.5 = 0.5$</details>
+  id: totrans-38
   prefs: []
   type: TYPE_NORMAL
+  zh: <details><summary>**答案**</summary> 对于硬币投掷，期望值是 \( E(X) = 1 \cdot 0.5 + 0 \cdot
+    0.5 = 0.5\)。</details>
 - en: Now, suppose we toss a "fair" coin 1000 times, and record the number of times
     we get heads. What would the distribution look like if we run this \(1000\) coin
     toss experiment \(N\) times (let's say \(N=100\)) ?
+  id: totrans-39
   prefs: []
   type: TYPE_NORMAL
+  zh: 现在，假设我们投掷一枚“公平”的硬币1000次，并记录得到正面的次数。如果我们运行这个 \(1000\) 次硬币投掷实验 \(N\) 次（比如说 \(N=100\)），分布会是什么样子？
 - en: <details><summary>**Answer**</summary> The recorded number for each 1000 coin
     toss experiment would likely land close to the expected value \(0.5\). The results
     of running the experiment \(N\) times would look will look like a normal distribution,
     with the majority of the results close to \(0.5\). This is also known as the law
     of large numbers (when N is large).</details>
+  id: totrans-40
   prefs: []
   type: TYPE_NORMAL
+  zh: <details><summary>**答案**</summary> 每次进行1000次硬币投掷实验所记录的数字可能会接近期望值 \(0.5\)。进行实验
+    \(N\) 次的结果将看起来像正态分布，大多数结果接近 \(0.5\)。这也被称为大数定律（当 \(N\) 很大时）。</details>
 - en: Monte Carlo
+  id: totrans-41
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: Monte Carlo
 - en: '***Monte Carlo methods*** are algorithms that rely on repeated random sampling
     to approximate a desired quantity. Monte Carlo methods are typically used in modeling
     the following types of problems:'
+  id: totrans-42
   prefs: []
   type: TYPE_NORMAL
+  zh: '***Monte Carlo方法*** 是依赖于重复随机采样来近似所需量的算法。Monte Carlo方法通常用于模拟以下类型的问题：'
 - en: Nondeterministic processes,
+  id: totrans-43
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 非确定性过程，
 - en: Complicated deterministic systems and deterministic problems with high dimensionality
     (e.g. integration of non-trivial functions).
+  id: totrans-44
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 复杂的确定性系统和高维度的确定性问题（例如，非平凡函数的积分）。
 - en: 'One of the most common applications of Monte Carlo is to approximate the area/volume
     for a given shape. For example, to approximate the area of a circle, we can first
     uniformly sample a large number of points in a square region around the circle.
     Then, we check which points are inside the circle to get a percentage of points
     in the circle, \(p\). Finally, we approximate the circle''s area by multiplying
     \(p\) by the square''s area. Monte Carlo works in this scenario because:'
+  id: totrans-45
   prefs: []
   type: TYPE_NORMAL
+  zh: Monte Carlo最常见的一个应用是近似给定形状的面积/体积。例如，为了近似圆的面积，我们可以在圆周围的正方形区域内均匀地采样大量点。然后，我们检查哪些点在圆内，以得到圆内点的百分比
+    \(p\)。最后，我们将 \(p\) 乘以正方形的面积来近似圆的面积。Monte Carlo在这种情况下之所以有效，是因为：
 - en: '**Uniform random sampling** means that we ensure points are scattered throughout
     region and cover it well'
+  id: totrans-46
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '**均匀随机采样**意味着我们确保点在整个区域内分散并覆盖良好'
 - en: Based on the **law of large numbers**, as we increase the number of samples,
     the average area value will converge to the true area value. So, using a large
     number of samples improves our estimate.
+  id: totrans-47
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 根据**大数定律**，随着样本数量的增加，平均面积值将收敛到真实面积值。因此，使用大量的样本可以提高我们的估计。
 - en: Integration with Monte Carlo
+  id: totrans-48
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: Monte Carlo积分
 - en: 'Consider using Monte Carlo to estimate an integral \(I = \int_a^b f(x) dx\).
     Let \(X\) be a uniformly distributed random variable on \([a, b]\). Then, \(I
     = (b-a) \mathbb{E}[f(X)]\). Using Monte Carlo with \(n\) samples, our estimate
     of the expected value is:'
+  id: totrans-49
   prefs: []
   type: TYPE_NORMAL
+  zh: 考虑使用蒙特卡洛方法估计积分 \(I = \int_a^b f(x) dx\)。设 \(X\) 是在 \([a, b]\) 上均匀分布的随机变量。那么，\(I
+    = (b-a) \mathbb{E}[f(X)]\)。使用蒙特卡洛方法并取 \(n\) 个样本，我们估计的期望值是：
 - en: \[S_n = \frac{1}{n} \sum_i^n f(X_i)\]
+  id: totrans-50
   prefs: []
   type: TYPE_NORMAL
+  zh: \[S_n = \frac{1}{n} \sum_i^n f(X_i)\]
 - en: 'so the approximate value for the integral is:'
+  id: totrans-51
   prefs: []
   type: TYPE_NORMAL
+  zh: 因此，积分的近似值是：
 - en: \[ I_n = (b-a) \frac{1}{n} \sum_i^n f(X_i) \]
+  id: totrans-52
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ I_n = (b-a) \frac{1}{n} \sum_i^n f(X_i) \]
 - en: By the law of large numbers, as \(n \to \infty\), the sample average \(S_n\)
     will converge to the expected value \(\mathbb{E}[f(X)]\). So, as \(n \to \infty\),
     \(I_n \to \int_a^b f(x) dx\).
+  id: totrans-53
   prefs: []
   type: TYPE_NORMAL
+  zh: 根据大数定律，当 \(n \to \infty\) 时，样本平均值 \(S_n\) 将收敛到期望值 \(\mathbb{E}[f(X)]\)。因此，当
+    \(n \to \infty\) 时，\(I_n \to \int_a^b f(x) dx\)。
 - en: According to central limit theorem, as \(n \to \infty\),
+  id: totrans-54
   prefs: []
   type: TYPE_NORMAL
+  zh: 根据中心极限定理，当 \(n \to \infty\) 时，
 - en: \[ \sqrt{n} (S_n - \mu) \to N(0, \sigma^2) \]
+  id: totrans-55
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ \sqrt{n} (S_n - \mu) \to N(0, \sigma^2) \]
 - en: where \(N(0, \sigma^2)\) is a normal distribution; \(\mu = \mathbb{E}[f(X)]\)
     and \(\sigma^2 = Var[X]\).
+  id: totrans-56
   prefs: []
   type: TYPE_NORMAL
+  zh: 其中 \(N(0, \sigma^2)\) 是正态分布；\(\mu = \mathbb{E}[f(X)]\) 和 \(\sigma^2 = Var[X]\)。
 - en: Error/Convergence
+  id: totrans-57
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 错误/收敛性
 - en: Let \(Z\) be a random variable with normal distribution \(N(0, \sigma^2)\).
     Then the error of Monte Carlo estimate, \(err = S_n - \mu\), can be written as
+  id: totrans-58
   prefs: []
   type: TYPE_NORMAL
+  zh: 设 \(Z\) 是具有正态分布 \(N(0, \sigma^2)\) 的随机变量。那么蒙特卡洛估计的误差 \(err = S_n - \mu\) 可以表示为
 - en: \[ err \to \frac{1}{\sqrt{n}} Z \]
+  id: totrans-59
   prefs: []
   type: TYPE_NORMAL
+  zh: \[ err \to \frac{1}{\sqrt{n}} Z \]
 - en: when \(n \to \infty\).
+  id: totrans-60
   prefs: []
   type: TYPE_NORMAL
+  zh: 当 \(n \to \infty\) 时。
 - en: Therefore, the asymptotic behavior of the Monte Carlo method is \(\mathcal{O}(\frac{1}{\sqrt{n}})\),
     where \(n\) is the number of samples.
+  id: totrans-61
   prefs: []
   type: TYPE_NORMAL
+  zh: 因此，蒙特卡洛方法的渐近行为是 \(\mathcal{O}(\frac{1}{\sqrt{n}})\)，其中 \(n\) 是样本数量。
 - en: 'Example: Applying Monte Carlo'
+  id: totrans-62
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 示例：应用蒙特卡洛
 - en: 'We can use Monte Carlo to efficiently approximate the definite integral of
     a complicated function, which is especially useful in higher dimensions when other
     numerical integration techniques are extremely costly. Below is the Python code
     for approximating the intergral of a function \(f(x,y) = x+y\) over the domain
     \([x_{min}, x_{max}] \times [y_{min}, y_{max}]\):'
+  id: totrans-63
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们可以使用蒙特卡洛方法有效地近似复杂函数的定积分，这在高维空间中尤其有用，因为其他数值积分技术可能非常昂贵。以下是用 Python 代码近似函数 \(f(x,y)
+    = x+y\) 在域 \([x_{min}, x_{max}] \times [y_{min}, y_{max}]\) 上的积分的代码：
 - en: '[PRE1]'
+  id: totrans-64
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: Review Questions
+  id: totrans-65
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 复习问题
 - en: What is a pseudo-random number generator?
+  id: totrans-66
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 什么是伪随机数生成器？
 - en: What are properties of good random number generators?
+  id: totrans-67
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 好的随机数生成器的特性有哪些？
 - en: What are advantages/disadvantages of pseudorandom number generators in comparison
     to using truly random numbers?
+  id: totrans-68
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 与使用真正的随机数相比，伪随机数生成器的优缺点是什么？
 - en: What is a linear congruential generator (LCG)?
+  id: totrans-69
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 什么是线性同余发生器（LCG）？
 - en: What is a seed for a random number generator?
+  id: totrans-70
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 随机数生成器的种子是什么？
 - en: Do random number generators repeat? Are they reproducible?
+  id: totrans-71
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 随机数生成器会重复吗？它们是可复制的吗？
 - en: What are Monte Carlo methods and how are they used?
+  id: totrans-72
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 蒙特卡洛方法是什么？它们是如何使用的？
 - en: For Monte Carlo, how does the error behave in relation to the number of sampling
     points?
+  id: totrans-73
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 对于蒙特卡洛，误差与采样点数的关系如何？
 - en: Given a computed value from Monte Carlo and a sampling error, what sampling
     error could you expect for a different number of samples?
+  id: totrans-74
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 给定蒙特卡洛计算值和采样误差，对于不同数量的样本，你期望的采样误差是多少？
 - en: For a small example problem, use Monte Carlo to estimate the area of a certian
     domain.
+  id: totrans-75
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 对于一个小型示例问题，使用蒙特卡洛方法估计特定区域的面积。
 - en: For a small example problem, use Monte Carlo to estimate the integral of a function.
+  id: totrans-76
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 对于一个小型示例问题，使用蒙特卡洛方法估计函数的积分。
 - en: Changelog
+  id: totrans-77
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 更新日志
 - en: 'February 17th, 2024: Bhargav Chandaka (bhargav9) — major reorganziation to
     match up with content in slides/videos'
+  id: totrans-78
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 2024年2月17日：Bhargav Chandaka (bhargav9) — 对内容进行重大重组，以与幻灯片/视频中的内容相匹配
 - en: 'January 25th, 2018: Yu Meng (yumeng5) — first complete draft'
+  id: totrans-79
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 2018年1月25日：Yu Meng (yumeng5) — 第一份完整草案
 - en: 'January 25th, 2018: Erin Carrier (ecarrie2) — minor fixes throughout, adds
     review questions'
+  id: totrans-80
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 2018年1月25日：Erin Carrier (ecarrie2) — 全文小修，增加复习问题
 - en: <details><summary>View Remaining Entries</summary>
+  id: totrans-81
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: <details><summary>查看剩余条目</summary>
 - en: 'January 17th, 2018: Erin Carrier (ecarrie2) — outline</details>'
+  id: totrans-82
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 2018年1月17日：Erin Carrier (ecarrie2) — 概述</details>
 - en: Authors
+  id: totrans-83
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 作者
 - en: CS 357 Course Staff
+  id: totrans-84
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: CS 357 课程工作人员
