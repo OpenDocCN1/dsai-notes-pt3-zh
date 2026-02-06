@@ -1,4 +1,4 @@
-+   [UCB CS294 深度无监督学习笔记](README.md)
++   [UCB CS294-158 深度无监督学习笔记](README.md)
 +   [课程 P1：深度无监督学习简介 🧠](P1-1-简介---AInsight---BV17W421P7QA_note.md)
 +   [课程 P10：半监督学习与无监督分布对齐 🧠](P10-10-半监督学习和无监督分布对齐---AInsight---BV17W421P7QA_note.md)
 +   [🧬 P11：13a 科学生成模型](P11-13a-科学生成模型---AInsight---BV17W421P7QA_note.md)

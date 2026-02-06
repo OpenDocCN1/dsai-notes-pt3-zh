@@ -69,7 +69,7 @@
 +   [UCB CS188 人工智能导论笔记](docs/ucb-cs188-ai/README.md)
 +   [UCB CS285 深度强化学习笔记](docs/ucb-cs285-rl/README.md)
 +   [UCB CS294-112 深度强化学习中文笔记](docs/ucb-cs294-112-notes/README.md)
-+   [UCB CS294 深度无监督学习笔记](docs/ucb-cs294-unsup/README.md)
++   [UCB CS294-158 深度无监督学习笔记](docs/ucb-cs294-158-unsup/README.md)
 +   [UCB Data8 计算与推断思维](docs/ucb-data8-notes/README.md)
 +   [UCB Data100：数据科学的原理和技巧](docs/ucb-ds100-notes/README.md)
 +   [UCB Data102：数据、推断与决策](docs/ucb-ds102/README.md)
