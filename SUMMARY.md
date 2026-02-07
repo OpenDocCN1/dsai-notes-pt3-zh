@@ -69,6 +69,7 @@
 +   [斯坦福 CS520 知识图谱课程笔记](docs/stf-cs520-kg/README.md)
 +   [斯坦福 ENGR108 矩阵论与应用线性代数笔记](docs/stf-engr108-linalg/README.md)
 +   [斯坦福博弈论笔记](docs/stf-gmtry/README.md)
++   [斯坦福统计学习导论笔记](docs/stf-isl/README.md)
 +   [机器学习超级复习笔记](docs/super-ml-rev-notes/README.md)
 +   [UCB CS182 深度学习笔记](docs/ucb-cs182-dl/README.md)
 +   [UCB CS188 人工智能导论笔记](docs/ucb-cs188-ai/README.md)
