@@ -57,6 +57,7 @@
 +   [斯坦福 CS221 人工智能导论笔记](docs/stf-cs221-ai/README.md)
 +   [斯坦福 CS224d 自然语言处理讲义 2017](docs/stf-cs224d-2017/README.md)
 +   [斯坦福 CS224n 自然语言处理笔记 2017](docs/stf-cs224n-2017/README.md)
++   [斯坦福 CS224n 自然语言处理 2025 笔记](docs/stf-cs224n-2025/README.md)
 +   [斯坦福 CS224U 自然语言理解笔记](docs/stf-cs224u/README.md)
 +   [斯坦福 CS224W 图机器学习笔记](docs/stf-cs224w-gnn/README.md)
 +   [斯坦福 CS231n 卷积神经网络中文讲义](docs/stf-cs231n/README.md)
