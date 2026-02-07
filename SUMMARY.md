@@ -79,6 +79,7 @@
 +   [斯坦福博弈论笔记](docs/stf-gmtry/README.md)
 +   [斯坦福统计学习导论笔记](docs/stf-isl/README.md)
 +   [机器学习超级复习笔记](docs/super-ml-rev-notes/README.md)
++   [TrevorHastie 统计学习导论笔记](docs/trevorhastie-isl/README.md)
 +   [UCB CS182 深度学习笔记](docs/ucb-cs182-dl/README.md)
 +   [UCB CS188 人工智能导论笔记](docs/ucb-cs188-ai/README.md)
 +   [UCB CS285 深度强化学习笔记](docs/ucb-cs285-rl/README.md)
