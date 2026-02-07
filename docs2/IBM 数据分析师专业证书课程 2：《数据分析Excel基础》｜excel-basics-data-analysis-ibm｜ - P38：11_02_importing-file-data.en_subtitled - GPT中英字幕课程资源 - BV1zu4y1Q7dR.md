@@ -1,0 +1,133 @@
+# IBM 数据分析师专业证书课程 2：《数据分析Excel基础》｜excel-basics-data-analysis-ibm｜ - P38：11_02_importing-file-data.en_subtitled - GPT中英字幕课程资源 - BV1zu4y1Q7dR
+
+嗯。Now that you have learned about the importance of data quality in this video。
+
+ you will learn how to import data from a text file using the text importport wizard。
+
+ learn how to adjust column widths， and learn how to add and remove columns and rows。
+
+
+
+![](img/b5dc86b05479748f0e5230f8d7a86b0c_1.png)
+
+As you know， by default， Excel works with dot Xlsx or do Xls files and opens them as workbooks。
+
+ but Excel can also use data that is in other formats such as plain text or data that has been comma separated and tab separated。
+
+ Sometimes these source files will be saved with a dot Txt extension and referred to as text files。
+
+ but others might be saved with a dot csv file extension and are typically referred to as CSv files here in notepad。
+
+ I have opened a text file that contains data about car sales and it uses comma separated values or CSvs to separate each bit of data in a record。
+
+ notice that the top line holds headings such as manufacturer， model， engine size and so on。
+
+ and each one is separated by a comma We want these to become our headers when we import the file into Excel。
+
+
+
+![](img/b5dc86b05479748f0e5230f8d7a86b0c_3.png)
+
+L below these headings is the first line of real data。 And again。
+
+ you can see that each piece of data is also separated by a comma。 There are 16 headings。
+
+ and there are also 16 pieces of data on each of the lines below the headings。
+
+ If we scroll to the bottom。 we can see that last data record is for the Volvo S 80。 Now。
+
+ to open the file in Excel。 we choose file open， and then either select the file from the recently used list or click browse to find the file we want to import。
+
+ when we open the file。 the text import wizard launches automatically。
+
+ and it will start to try and determine what your file is。
+
+ Note that it has been detected as being a delimited file。
+
+ That is one that has its data fields separated by a character such as a comma or a tab。
+
+
+
+![](img/b5dc86b05479748f0e5230f8d7a86b0c_5.png)
+
+As we want the headings to become headers in Excel， we need to ensure that we select the option。
+
+ My data has headers。 We can see a mini preview of the data in the preview box below。
+
+Then we click next to proceed in the wizard In step 2 of the wizard。 we need to select our delimiter。
+
+ That is which character is separating our pieces of data。
+
+ So we select comma and deselect any others。Note the data preview now starts to show us what the imported data will look like。
+
+ you can scroll down and across this preview window to ensure that the data is going to look as you want and expect。
+
+It all looks okay。 so we'll continue with the wizard In step 3 of the wizard。
+
+ we can set the data format for each column。 For example。
+
+ you might want to change a column to text or date format。 In this case。
+
+ we can just accept the default general format and finish the import wizard。
+
+
+
+![](img/b5dc86b05479748f0e5230f8d7a86b0c_7.png)
+
+In Excel， we can see that the headings in the text file have been imported as a header row。
+
+ but also notice that some of the columns are not showing all the data。
+
+ Some of the headings are not showing in full and some of the data is not shown either。
+
+ All you can see are a number of hashes in the cells。
+
+ This is because the column widths are too narrow in some cases。 If you remember。
+
+ you can manually adjust a columns with by dragging the divider across。
+
+ but to change them all in one go， we select all the columns first。
+
+ then double click one of the selected column dividers。
+
+ We can also do a similar thing with rows by dragging them to make them bigger or smaller or double clicking a row divider to autosize it。
+
+ There are some columns that we have decided we don't really need。
+
+ namely vehicle type and latest launch。 So let's remove those。
+
+ This can either be done using the delete dropdown menu in the cells group on the home tab。😊。
+
+And select delete sheet columns， or by selecting and right clicking a column and deleting it that way to add another column。
+
+ you simply select the column to the right of where you want your new column to be。
+
+ then right click the column and choose insert and let's give the header a name such as year to delete a row you don't need。
+
+ select the row， right click it and choose delete and to add a row。
+
+ select the row below the place you want to add your new row， right click the row and choose insert。
+
+If you want to save the file as an Excel file， you can either choose fileile， save as。
+
+ or you can click save as in the yellow tooltip that appeared at the top of the worksheet when we imported the file。
+
+ then you would choose Excel workbook or dot XlSX in the saveve as type box。
+
+
+
+![](img/b5dc86b05479748f0e5230f8d7a86b0c_9.png)
+
+![](img/b5dc86b05479748f0e5230f8d7a86b0c_10.png)
+
+In this video we learned how to import data using the text import wizard。
+
+ we learned how to adjust column widths， and we learned how to add and remove columns in rows In the next video。
+
+ we will discuss the importance of data privacy including sensitive information and personally identifiable data。
+
+
+
+![](img/b5dc86b05479748f0e5230f8d7a86b0c_12.png)
+
+![](img/b5dc86b05479748f0e5230f8d7a86b0c_13.png)

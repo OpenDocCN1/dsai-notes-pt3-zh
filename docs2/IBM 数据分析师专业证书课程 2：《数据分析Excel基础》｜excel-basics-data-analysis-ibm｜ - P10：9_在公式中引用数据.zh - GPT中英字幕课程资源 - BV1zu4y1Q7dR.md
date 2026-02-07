@@ -1,0 +1,203 @@
+# IBM 数据分析师专业证书课程 2：《数据分析Excel基础》｜excel-basics-data-analysis-ibm｜ - P10：9_在公式中引用数据.zh - GPT中英字幕课程资源 - BV1zu4y1Q7dR
+
+嗯。Now that you've had an introduction to functions。
+
+ seeing the use of some common statistical functions and learned about some of the more advanced functions that a data analyst might use in this video we'll look at the difference between relative。
+
+ absolute and mixed references and formulas as well as how to use them and we'll learn about formula errors in Excel。
+
+
+
+![](img/a58ab634b0246c1fe74dd97d19d6495c_1.png)
+
+![](img/a58ab634b0246c1fe74dd97d19d6495c_2.png)
+
+![](img/a58ab634b0246c1fe74dd97d19d6495c_3.png)
+
+It's important to understand the difference between relative and absolute references when creating your formulas by default。
+
+ in Excel， cell references are always relative references。 The term relative is the key here。
+
+ because it means that when you reference a cell， you are， in fact。
+
+ referencing the cell's position in relation to the cell that the formula is in。
+
+That is why when we have been copying formulas from one cell to another so far in this course。
+
+ using either copy and paste or the fill handle， we haven't needed to modify the cell references because Excel assumes you are using relative references。
+
+When the formulas are copied， the cell references are changed to match the relative positions of the cells that are being copied too。
+
+So now we know that relative references are the default in Excel。
+
+ but how do we make it so that the cell references don't change when we copy them for that。
+
+ you need to use absolute references。 In contrast to relative references。 Ab references to cells。
+
+ stay the same when you copy a formula containing such references。Lastly。
+
+ there may also be some instances where you only want one of the cell reference identifiers to be absolute。
+
+ and the other one to be relative。 For example， you might want the row identifier to be absolute。
+
+ but the column identifier to be relative or vice versa。 These are called mixed references。
+
+ and an example of this would be equal sign a dollar sign 1 plus dollar a3。
+
+ where a dollar 1 has a relative column and an absolute row or dollar a3 has an absolute column and a relative row。
+
+😊。
+
+![](img/a58ab634b0246c1fe74dd97d19d6495c_5.png)
+
+In contrast to relative and absolute references， when you copy a formula containing mixed cell references。
+
+ any relative cell references will change， whereas any absolute cell references will stay the same in the copied formula。
+
+First， let's look at an example of using relative references in a formula。For example。
+
+ if we enter the formula equals a 1 plus a 3 in cell 4。
+
+ Note the blue and red highlighted cells in a 1 and A 3。
+
+ These denote the cells being relatively referenced in the formula。
+
+If we copy the formula to the cell directly below using the fill handle。
+
+ we can see that the result changes。 and if we look at the copied formula。
+
+ you can see that the blue and red cell references have changed relative to their position on the worksheet。
+
+The formula has been changed to equals a2 plus a4 in the copied formula。 That is。
+
+ each cell reference has moved one cell down。 And if we copy and paste the formula to C 7。
+
+ you can see that the results also changes。 And again。
+
+ we can see that the blue and red cell references in the copied formula have changed。Now。
+
+ let's look at an example of how to use absolute references in a formula。
+
+All you need to do to make a cell reference absolute is put a dollar sign in front of the column and or row identifiers in the formula。
+
+ For example， if we enter the formula equals dollar sign A 1 plus sign dollar A 3 in cell E 4 note the blue and red highlighted cells in a 1 and A3。
+
+ These denote the cells being absolutely referenced in the formula。
+
+ When we copy the formula using the fill handle， you can see that the result stays the same this time。
+
+😊，And if we look at the copied formula， you can see that the blue and red cell references haven't changed。
+
+ The formula is still equal sign dollar a 1 plus dollar a 3 in the copied formula。
+
+ That is the cell references haven't changed。Similarly， if we then copy and paste the formula to E7。
+
+ you can again see that the result stays the same this time。
+
+ and we can see that the blue and red cell references haven't changed。
+
+ The formula is still equal sign dollar a dollar 1 plus dollar a dollar 3 in the copied formula。
+
+ That is the cell references haven't changed。Lastly。
+
+ we'll look at an example of how to use mixed references in a formula。
+
+ So if we enter the formula equals a dollar 1 plus dollar A 3 in cell G4。
+
+ Note the blue and red highlighted cells in a 1 and A 3。
+
+ These denote the cells being referenced in the formula。
+
+If we copy the formula to the cell below using the fill handle， you can see that the result changes。
+
+ but it's a different result from the previous examples。And if we look at the copied formula。
+
+ you can see that the first blue cell reference has stayed the same。
+
+ But the second red cell reference has changed。 If we copy and paste the formula to G7。
+
+ you can see that the same thing happens， the result changes。 And again。
+
+ we can see that the first blue cell reference has stayed the same in the copied formula While only the red cell reference has changed。
+
+
+
+![](img/a58ab634b0246c1fe74dd97d19d6495c_7.png)
+
+Now we'll have a quick introduction to dealing with formulaula errors in Excel。
+
+Because of the complexity of writing formulas， especially the more complicated ones。
+
+ there are bound to be occasions when you make a mistake in the syntax or in the data selection。
+
+ which will lead to a formula error。 errorsors are typically denoted by displaying in the cell that is supposed to be displaying the result。
+
+ One of the error codes in this list。When you see multiple hash symbols in a cell。
+
+ it's not really an error。 It just means the column either isn't wide enough to display the whole word or value。
+
+ or it contains a negative date or time value。
+
+![](img/a58ab634b0246c1fe74dd97d19d6495c_9.png)
+
+So if we type control plus semicolon， then space， then control plus shift plus semicolon。
+
+ it enters to day date and the current time。 But the cell is too narrow to display it。
+
+ So what we see is multiple hash symbols。 If we adjust the column width。
+
+ we can now see the cell contents。 So as I said， this really shouldn't be considered as an error。
+
+ However， if we enter the formula scene in cell I 7。 When we press enter， we see a hash name error。
+
+ This error was caused by trying to use an X as a multiplication operator when， in fact。
+
+ it should be an asterisk。 Note， the small green triangle in the top left corner of the cell。😊，Also。
+
+ note that when you select the cell， an exclamation mark appears。
+
+ providing you with a hint about what caused the error。 In this case。
+
+ it says the formula contains unrecognized text。 When you click the drop down error next to the exclamation mark for an error。
+
+ you see several options。 The first line also gives you a clue on the nature of the error。
+
+ This one says invalid name， error。 So it was probably a mistyped cell reference。
+
+ value or function name。If you click help on this error。
+
+ a help pane opens with specific information related to this error。
+
+ If you click show calculation steps， a dialog box opens。
+
+ displaying the current syntax with the error underlined， and you can try to evaluate the error。
+
+If you are certain the error is incorrect， you can choose ignore error and if you want to edit the formula。
+
+ click Edit in Formula bar and the cursor will be focused in the formula bar so that you can try and correct the formula error。
+
+If you click error Check optionss， the Excel optionstion dialog box is opened at the section related to error checking rules。
+
+ and you can modify these options to suit your needs。
+
+
+
+![](img/a58ab634b0246c1fe74dd97d19d6495c_11.png)
+
+Each of the errors you make， which generate one of the error codes listed at the start of this video。
+
+ will have a different reason and a different solution。
+
+For more information on each of these errors and typical solutions， visit the link provided。
+
+
+
+![](img/a58ab634b0246c1fe74dd97d19d6495c_13.png)
+
+In this video， we learned about referencing data in formulas。
+
+ specifically differentiating between relative， absolute and mixed references and how to use them。
+
+ and we learned about formula errors in Excel。
+
+![](img/a58ab634b0246c1fe74dd97d19d6495c_15.png)

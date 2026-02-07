@@ -1,0 +1,127 @@
+# IBM 数据分析师专业证书课程 2：《数据分析Excel基础》｜excel-basics-data-analysis-ibm｜ - P29：2_03_spreadsheet-basics-part-1.en_subtitled - GPT中英字幕课程资源 - BV1zu4y1Q7dR
+
+嗯。Now that we have a basic understanding of what spreadsheet software is available and why spreadsheets might be a useful tool for a data analyst。
+
+ let's get started on looking at some of the basics of using a spreadsheet application。
+
+In these videos we will be using the full desktop version of Excel。
+
+ but the majority of the tasks that we will perform can also be done using Excel online and other spreadsheet applications such as Google sheetets Let's first cover some basic spreadsheet terminology When you open Excel。
+
+ you have the option of creating a new blank workbook or opening an existing workbook We're going to choose new and then blank workbook Workbooks are the highest level component in Excel and are represented as a dot Xlsx file So when you open an existing workbook or create a new workbook you are in fact working with a dot XsX file。
+
+
+
+![](img/13842595944e376d8423304c6e90f36c_1.png)
+
+![](img/13842595944e376d8423304c6e90f36c_2.png)
+
+![](img/13842595944e376d8423304c6e90f36c_3.png)
+
+The workbook contains all your data， calculations， and functions。
+
+ and contains several other underlying elements that make up a workbook。
+
+
+
+![](img/13842595944e376d8423304c6e90f36c_5.png)
+
+A workbook consists of one or more worksheets， each of which is represented by a tab in Excel。
+
+ Each worksheet is given a name which is displayed on the corresponding tab for the worksheet by default。
+
+ Each tab is named sheet1， then sheet2， and so on。To make these worksheet tabs more meaningful。
+
+ it is usual to rename them， so they make more sense in relation to the worksheets's purpose。
+
+ for example， you might call a worksheet January sales or perhaps the name of a region or store or even an office or department。
+
+😊，To do this， right click the tab and choose rename instead of right clicking to rename。
+
+ you can also just double click the name of a worksheet tab to rename itEssential。
+
+ worksheet tabs can be named anything you want to fit your particular needs to make it easier to understand what that worksheet represents。
+
+Note that a worksheet that is highlighted as the tirereSa worksheet tab is here is referred to as the active worksheet If you want to order your worksheets in a different way that is very simple to do either drag a worksheet tab to the left or right and drop it in the place you want。
+
+ which is represented by the little black arrow or if you are not comfortable with dragging and dropping。
+
+ then the longer way of doing that is to rightcl the worksheet tab。
+
+ select moveve or copy and then in the list titled before sheetet。
+
+ select where you want your worksheet tab to be placed and click OK。
+
+
+
+![](img/13842595944e376d8423304c6e90f36c_7.png)
+
+Every worksheet is made up of a lot of rectangular boxes called cells。
+
+ These cells will contain your data， which may be text， numbers， formulas or calculation results。
+
+ C are organized in columns， which run vertically down the screen and use a letter system。
+
+ This is column B， for instance， and rows， which run horizontally across the screen and use a numeric system。
+
+ This is row 7， for example， Each cell is represented by a cell reference。
+
+ which is essentially just a column letter and row number。 For example。
+
+ if we click somewhere near the center of this worksheet， we now have the cell M20 selected。
+
+ This is usually referred to as the active cell。 This is not only indicated by the highlighted edges of the cell。
+
+ but also if you look in the top left corner of the worksheet。
+
+ you will see its cell reference is noted in the little box here you can see it says M20。😊。
+
+
+
+![](img/13842595944e376d8423304c6e90f36c_9.png)
+
+![](img/13842595944e376d8423304c6e90f36c_10.png)
+
+One important thing to note here is that cells are always referenced by their column letter first。
+
+ then their row number so column M and row 20 the last element of a workbook I want to mention is a cell range this identifies a collection of several cells selected together that could mean a few cells in the same row or the same column or it could mean several rows and columns together this can either be done using the mouse by selecting the first cell then dragging down or across to include other cells。
+
+ or you can use shift plus arrow keys。
+
+![](img/13842595944e376d8423304c6e90f36c_12.png)
+
+This range of cells is often referred to as an array。
+
+ and it's most commonly used as a reference in calculations and formulas。 For example。
+
+ if you want to add up all the values in a column between cells D9 and D19。
+
+ you would specify this cell range within a formula。
+
+ note that cell ranges are notated using a full colon between the cell references。
+
+ So in this example， it would be D9 colon D19， or to specify a few cells in the same row。
+
+ It might be D9 colon H9。 or to select several rows and columns， it might be D9 colon H19。
+
+ We will see this notation in use later in the course when we start looking at calculations and formulas。
+
+ These cell ranges could even be a reference point to cells contained on another worksheet。
+
+ This is usually referred to as a 3D reference。
+
+![](img/13842595944e376d8423304c6e90f36c_14.png)
+
+We can now close this workbook and we don't need to save it in this video。
+
+ we learned about some of the basic terminology of spreadsheet elements In the next video we will discuss how to navigate around a spreadsheet。
+
+ how to use the ribbon and menus and how to select data。
+
+
+
+![](img/13842595944e376d8423304c6e90f36c_16.png)
+
+![](img/13842595944e376d8423304c6e90f36c_17.png)
+
+![](img/13842595944e376d8423304c6e90f36c_18.png)
