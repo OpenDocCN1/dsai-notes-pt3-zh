@@ -31,6 +31,7 @@
 +   [大语言模型系列综述](docs/llm-survey/README.md)
 +   [MIT 18.06 线性代数笔记](docs/mit-18.06-linalg-notes/README.md)
 +   [MIT 6.0001 Python 入门笔记](docs/mit-60001-python/README.md)
++   [MIT 6.034 人工智能笔记](docs/mit-6034-ai/README.md)
 +   [MIT 6.036 机器学习入门笔记](docs/mit-6036-mlintro/README.md)
 +   [MIT 6.047 基因组机器学习笔记](docs/mit-6047-geneml/README.md)
 +   [MIT 6.874 生物科学深度学习笔记](docs/mit-6874-biodl/README.md)
