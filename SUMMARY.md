@@ -90,6 +90,7 @@
 +   [UCB 全栈深度学习课程笔记](docs/ucb-fsdl/README.md)
 +   [UCB Prob140：面向数据科学的概率论](docs/ucb-prob140-notes/README.md)
 +   [UCB STAT187 深度学习笔记](docs/ucb-stat187-dl/README.md)
++   [UCLA 模式识别与机器学习笔记](docs/ucla-prml/README.md)
 +   [UCSD COGS108 数据科学实战中文笔记](docs/ucsd-cogs108-notes/README.md)
 +   [UIUC CS357 数值方法 I 中文教科书](docs/uiuc-cs357-nummtd1/README.md)
 +   [USF MSDS501 计算数据科学中文讲义](docs/usf-msds501-notes/README.md)
