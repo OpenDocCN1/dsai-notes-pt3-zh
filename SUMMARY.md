@@ -4,6 +4,7 @@
 +   [辛辛那提 MATH100/101 微积分笔记](docs/ccnt-math100-calc/README.md)
 +   [ChatGLM 直播笔记](docs/chatglm/README.md)
 +   [CMU 11-777 多模态机器学习笔记](docs/cmu-11777-multimodalml/README.md)
++   [Daniel Bourke PyTorch 深度学习笔记](docs/daniel-bourke/README.md)
 +   [深度学习系统综述](docs/dl-survey/README.md)
 +   [DeepLearningAI 2025 笔记](docs/dlai25/README.md)
 +   [fast.ai 深度学习笔记](docs/fastai-dl/README.md)
