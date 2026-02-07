@@ -17,6 +17,7 @@
 +   [哈佛 CS109 数据科学导论第二版](docs/hvd-cs109-intd-ds-2e/README.md)
 +   [IBM 机器学习/人工智能/数据分析专项笔记](docs/ibm-ml-ai-da-spec/README.md)
 +   [MIT 6.0001：Python 计算和编程入门第三版](docs/intr-comp-prog-py/README.md)
++   [约翰霍普金斯神经网络基础笔记](docs/jhu-nn-bsc/README.md)
 +   [七月在线公开课笔记](docs/julyedu/README.md)
 +   [Karpathy GPT 教程笔记](docs/karpathy-gpt/README.md)
 +   [科罗拉多应用深度学习笔记](docs/klld-appdl/README.md)
