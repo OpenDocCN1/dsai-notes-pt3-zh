@@ -12,6 +12,7 @@
 +   [fast.ai 机器学习笔记](docs/fastai-ml/README.md)
 +   [fast.ai 数值线性代数讲义中文版 v2](docs/fastai-num-linalg-v2/README.md)
 +   [唐宇迪商品检测课程笔记](docs/goods-detect-tangyudi/README.md)
++   [哈佛 CS229r 深度学习基础笔记](docs/hav-cs229r-dl-bsc/README.md)
 +   [哈佛 CS249r：机器学习系统](docs/hav-cs249r-mlsys/README.md)
 +   [哈佛 CS109 数据科学导论](docs/hvd-cs109-intd-ds/README.md)
 +   [哈佛 CS109 数据科学导论第二版](docs/hvd-cs109-intd-ds-2e/README.md)
