@@ -69,6 +69,7 @@
 +   [斯坦福 CS234 强化学习笔记](docs/stf-cs234-rl/README.md)
 +   [斯坦福 CS236 深度生成模型笔记](docs/stf-cs236-genai/README.md)
 +   [斯坦福 CS25 Transformer 原理笔记](docs/stf-cs25-tfm/README.md)
++   [斯坦福大学 CS323 人工智能觉醒笔记](docs/stf-cs323/README.md)
 +   [斯坦福 CS330 深度多任务与元学习笔记](docs/stf-cs330/README.md)
 +   [斯坦福 CS336 从零构建大语言模型笔记](docs/stf-cs336-llm/README.md)
 +   [斯坦福 CS520 知识图谱课程笔记](docs/stf-cs520-kg/README.md)
