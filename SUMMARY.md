@@ -24,6 +24,7 @@
 +   [李宏毅生成式人工智能导论笔记 2024](docs/lee-genai-2024/README.md)
 +   [李宏毅机器学习深度学习笔记 2021](docs/leemldl/README.md)
 +   [李宏毅机器学习深度学习笔记 2026](docs/leemldl-2026/README.md)
++   [罗格斯大学人工智能概念与策略笔记](docs/lgs-ai-ccpt-stg/README.md)
 +   [罗格斯大学商业人工智能笔记](docs/lgs-bizai/README.md)
 +   [大模型 Agent 论文翻译](docs/llm-agent/README.md)
 +   [大语言模型系列综述](docs/llm-survey/README.md)
