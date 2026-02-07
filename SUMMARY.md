@@ -1,3 +1,4 @@
++   [ASU 强化学习笔记](docs/asu-rl/README.md)
 +   [智源大会 2023 笔记](docs/baai23/README.md)
 +   [智源大会 2024](docs/baai24/README.md)
 +   [MIT 18.03 面向初学者的微积分](docs/calc4b/README.md)
