@@ -8,6 +8,7 @@
 +   [CMU 11-785 深度学习导论笔记](docs/cmu-11785-dl/README.md)
 +   [CMU 16-745 最优控制与强化学习笔记](docs/cmu-16745-rl/README.md)
 +   [Daniel Bourke PyTorch 深度学习笔记](docs/daniel-bourke/README.md)
++   [DeepMind 强化学习笔记](docs/deepmind-rl/README.md)
 +   [深度学习系统综述](docs/dl-survey/README.md)
 +   [DeepLearningAI 2025 笔记](docs/dlai25/README.md)
 +   [杜克大学 MLOps 笔记](docs/duke-mlops/README.md)
