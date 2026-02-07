@@ -41,6 +41,7 @@
 +   [MIT 6.S094 深度学习自动驾驶笔记](docs/mit-6s094-dlauto/README.md)
 +   [MIT 6.S897 医疗机器学习 2019 中文笔记](docs/mit-6s897-medml/README.md)
 +   [慕尼黑工大高级深度学习机器视觉笔记](docs/mnh-adl4cv/README.md)
++   [mrdbourke 一天学会 PyTorch 笔记](docs/mrdbourke-pt/README.md)
 +   [马萨诸塞 CS685 自然语言处理进阶笔记](docs/ms-cs685-nlp/README.md)
 +   [吴恩达大模型教程笔记](docs/ng-llm/README.md)
 +   [台湾大学林轩田机器学习笔记](docs/ntu-hsuantienlin-ml/README.md)
