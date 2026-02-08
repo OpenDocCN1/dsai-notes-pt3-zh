@@ -1,6 +1,6 @@
-![](img/ca6b26bef8c57c5f9e190724cd1288f9_1.png)
-
 # 李宏毅AI课程笔记 - P14：第八讲：深度思考的大型语言模型 🧠
+
+![](img/ca6b26bef8c57c5f9e190724cd1288f9_1.png)
 
 ![](img/ca6b26bef8c57c5f9e190724cd1288f9_3.png)
 

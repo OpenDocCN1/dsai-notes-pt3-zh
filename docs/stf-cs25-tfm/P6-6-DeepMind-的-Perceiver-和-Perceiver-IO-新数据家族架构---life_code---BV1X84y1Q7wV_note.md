@@ -1,8 +1,8 @@
+# 课程 P6：DeepMind 的 Perceiver 和 Perceiver IO 新数据家族架构 🧠
+
 ![](img/1222cb1eda9b25cb98d5ff5f1d8e043f_0.png)
 
 ![](img/1222cb1eda9b25cb98d5ff5f1d8e043f_2.png)
-
-# 课程 P6：DeepMind 的 Perceiver 和 Perceiver IO 新数据家族架构 🧠
 
 在本节课中，我们将要学习 DeepMind 提出的 Perceiver 和 Perceiver IO 系列架构。这些架构旨在构建一个能够处理多种数据模态（如图像、文本、音频等）的通用模型，而无需为每种模态手动设计特定的网络结构。我们将从通用架构的动机开始，逐步解析其核心设计思想、工作原理，并了解其在多个领域的应用效果。
 

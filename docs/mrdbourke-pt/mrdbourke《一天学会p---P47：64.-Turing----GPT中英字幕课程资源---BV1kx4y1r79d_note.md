@@ -1,6 +1,6 @@
-![](img/9af4c2f55c2294927d2d3cb2320bc5bb_0.png)
-
 # PyTorch深度学习课程 - 第47课：将数据转换为张量 🔢
+
+![](img/9af4c2f55c2294927d2d3cb2320bc5bb_0.png)
 
 ![](img/9af4c2f55c2294927d2d3cb2320bc5bb_2.png)
 

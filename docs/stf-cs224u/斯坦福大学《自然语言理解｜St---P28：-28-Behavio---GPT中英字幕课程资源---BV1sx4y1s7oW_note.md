@@ -1,6 +1,6 @@
-![](img/5dc1b45e06fd1ff09bfea4cfdbb09f2d_0.png)
-
 # 斯坦福大学《自然语言理解》课程笔记 P28：NLU模型的行为评估（四）：COGS与ReCOGS 📚
+
+![](img/5dc1b45e06fd1ff09bfea4cfdbb09f2d_0.png)
 
 ![](img/5dc1b45e06fd1ff09bfea4cfdbb09f2d_2.png)
 

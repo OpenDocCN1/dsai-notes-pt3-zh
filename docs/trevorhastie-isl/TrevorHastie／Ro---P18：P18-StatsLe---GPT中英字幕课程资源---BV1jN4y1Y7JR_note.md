@@ -1,6 +1,6 @@
-![](img/0606947fe9f72434f22ee1d7ced83186_0.png)
-
 # 课程06：判别分析（Discriminant Analysis）📊
+
+![](img/0606947fe9f72434f22ee1d7ced83186_0.png)
 
 ![](img/0606947fe9f72434f22ee1d7ced83186_2.png)
 

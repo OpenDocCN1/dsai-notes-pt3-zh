@@ -1,6 +1,6 @@
-![](img/69f871452a274ebc5eb3b89b6adb8fa7_1.png)
-
 # 机器学习基础篇（第1课/共4课）｜第63讲：文档聚类：无监督学习任务 📚
+
+![](img/69f871452a274ebc5eb3b89b6adb8fa7_1.png)
 
 ![](img/69f871452a274ebc5eb3b89b6adb8fa7_2.png)
 

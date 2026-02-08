@@ -1,6 +1,6 @@
-![](img/7da1b52cce540b79246fd249adec4da7_0.png)
-
 # 人工智能—机器学习公开课（七月在线出品） - P8：感性理解GMM 🧠
+
+![](img/7da1b52cce540b79246fd249adec4da7_0.png)
 
 ## 概述
 

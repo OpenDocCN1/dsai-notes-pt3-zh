@@ -1,6 +1,6 @@
-![](img/48b37386ffeeeacd5e8c513ae4df580e_1.png)
-
 # 课程P20：L20- 生成模型(下) 🧠
+
+![](img/48b37386ffeeeacd5e8c513ae4df580e_1.png)
 
 ![](img/48b37386ffeeeacd5e8c513ae4df580e_3.png)
 

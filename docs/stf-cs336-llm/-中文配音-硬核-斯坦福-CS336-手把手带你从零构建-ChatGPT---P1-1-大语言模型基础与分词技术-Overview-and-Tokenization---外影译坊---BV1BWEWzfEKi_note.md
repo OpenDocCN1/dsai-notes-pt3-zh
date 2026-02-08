@@ -1,10 +1,10 @@
+# 课程01：大语言模型基础与分词技术 🧠
+
 ![](img/d03bfdae2fb4e2208a2cc1b59255f3b3_0.png)
 
 ![](img/d03bfdae2fb4e2208a2cc1b59255f3b3_1.png)
 
 ![](img/d03bfdae2fb4e2208a2cc1b59255f3b3_3.png)
-
-# 课程01：大语言模型基础与分词技术 🧠
 
 ![](img/d03bfdae2fb4e2208a2cc1b59255f3b3_5.png)
 

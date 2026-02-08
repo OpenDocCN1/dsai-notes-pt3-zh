@@ -1,6 +1,6 @@
-![](img/4194f0b54971bf2c4c70373f463bac0a_0.png)
-
 # 课程名称：自然语言处理｜Natural Language Processing - P63：13_马尔可夫链 🎲
+
+![](img/4194f0b54971bf2c4c70373f463bac0a_0.png)
 
 ## 概述
 

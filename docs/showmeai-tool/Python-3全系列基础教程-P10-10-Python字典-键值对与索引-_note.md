@@ -1,6 +1,6 @@
-![](img/50bb6b5301b650cc2149f5090f089eae_0.png)
-
 # Python 3全系列基础教程，P10：Python字典：键值对与索引 📚
+
+![](img/50bb6b5301b650cc2149f5090f089eae_0.png)
 
 ![](img/50bb6b5301b650cc2149f5090f089eae_0.png)
 

@@ -1,6 +1,6 @@
-![](img/70e26f77f2cbcdea54fd3b38249c3aa2_1.png)
-
 # 课程 P26：3-鱼与熊掌可以兼得的深度学习 🧠
+
+![](img/70e26f77f2cbcdea54fd3b38249c3aa2_1.png)
 
 ![](img/70e26f77f2cbcdea54fd3b38249c3aa2_3.png)
 

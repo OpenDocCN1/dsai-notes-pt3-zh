@@ -1,8 +1,8 @@
+# 🏛️ 课程 P68：L32.3 - 金字塔场景解析网络
+
 ![](img/0fe36ce64326eea289a3012a7b2cca5b_0.png)
 
 ![](img/0fe36ce64326eea289a3012a7b2cca5b_2.png)
-
-# 🏛️ 课程 P68：L32.3 - 金字塔场景解析网络
 
 ![](img/0fe36ce64326eea289a3012a7b2cca5b_4.png)
 

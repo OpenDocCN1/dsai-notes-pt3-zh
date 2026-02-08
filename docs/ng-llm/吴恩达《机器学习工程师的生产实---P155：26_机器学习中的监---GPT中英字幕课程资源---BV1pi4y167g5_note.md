@@ -1,6 +1,6 @@
-![](img/1345924e5b324d7adaf0daac52fb0686_0.png)
-
 # 机器学习工程师的生产实践（MLOps） - P155：机器学习中的监控目标 📊
+
+![](img/1345924e5b324d7adaf0daac52fb0686_0.png)
 
 ![](img/1345924e5b324d7adaf0daac52fb0686_2.png)
 

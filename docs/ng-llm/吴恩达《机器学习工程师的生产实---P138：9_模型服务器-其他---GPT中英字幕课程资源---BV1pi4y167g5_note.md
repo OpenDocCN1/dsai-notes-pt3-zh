@@ -1,6 +1,6 @@
-![](img/2cb94c040c236f782d3b6409a7f2532e_0.png)
-
 # 课程9：模型服务器 - 其他供应商 🚀
+
+![](img/2cb94c040c236f782d3b6409a7f2532e_0.png)
 
 在本节课中，我们将学习除TensorFlow Serving之外的其他几种流行的模型服务器解决方案。我们将重点介绍NVIDIA的Triton推理服务器、PyTorch的TorchServe以及Kubeflow Serving，了解它们的特点、架构和适用场景。
 

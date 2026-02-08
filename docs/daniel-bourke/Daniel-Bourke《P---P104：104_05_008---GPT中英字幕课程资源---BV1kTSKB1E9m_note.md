@@ -1,6 +1,6 @@
-![](img/542357475afcf9f3a85837ea9af0485d_0.png)
-
 # PyTorch深度学习课程 第104课：将数据集转换为DataLoader 📚
+
+![](img/542357475afcf9f3a85837ea9af0485d_0.png)
 
 在本节课中，我们将学习如何将PyTorch数据集转换为DataLoader。DataLoader是PyTorch中一个非常重要的工具，它允许我们以**小批量（mini-batch）** 的形式高效地加载和处理数据。这对于训练深度学习模型至关重要，因为它能提高计算效率，并为模型提供更多更新梯度的机会。
 

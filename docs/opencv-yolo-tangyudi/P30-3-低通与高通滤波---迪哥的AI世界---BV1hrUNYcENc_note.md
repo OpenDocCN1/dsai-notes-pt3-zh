@@ -1,6 +1,6 @@
-![](img/06fccdc033b140acd3c21d2e86db173a_0.png)
-
 # 课程P30：3-低通与高通滤波 📊
+
+![](img/06fccdc033b140acd3c21d2e86db173a_0.png)
 
 ![](img/06fccdc033b140acd3c21d2e86db173a_2.png)
 

@@ -1,6 +1,6 @@
-![](img/db65af7a751ae4149ef2c60f90bc066c_1.png)
-
 # 课程 P28：L4.2 - PyTorch 中的张量 🧮
+
+![](img/db65af7a751ae4149ef2c60f90bc066c_1.png)
 
 在本节课中，我们将要学习如何在 PyTorch 中操作张量。如果你熟悉 NumPy，你会发现使用 PyTorch 的张量非常简单，因为两者的操作几乎完全相同。
 

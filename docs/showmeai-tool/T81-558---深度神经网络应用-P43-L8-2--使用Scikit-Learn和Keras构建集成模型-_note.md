@@ -1,6 +1,6 @@
-![](img/a5e310b66ad5b4d0e89ea1a7cc4dbf83_0.png)
-
 # T81-558 ｜ 深度神经网络应用 - P43：L8.2 - 使用Scikit-Learn和Keras构建集成模型 🧠🤖
+
+![](img/a5e310b66ad5b4d0e89ea1a7cc4dbf83_0.png)
 
 ![](img/a5e310b66ad5b4d0e89ea1a7cc4dbf83_0.png)
 

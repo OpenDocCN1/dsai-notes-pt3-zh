@@ -1,6 +1,6 @@
-![](img/baecfc5b77a1203770ccb98d1098c64f_0.png)
-
 # 🧬 P9：L9- 表观基因组学L2 部分和 3D 基因组
+
+![](img/baecfc5b77a1203770ccb98d1098c64f_0.png)
 
 ![](img/baecfc5b77a1203770ccb98d1098c64f_0.png)
 

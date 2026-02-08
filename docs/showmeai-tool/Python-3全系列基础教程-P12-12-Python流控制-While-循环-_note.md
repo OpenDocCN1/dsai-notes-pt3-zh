@@ -1,6 +1,6 @@
-![](img/84eadd930b0b3e75c98ca900a0885b35_0.png)
-
 # Python 3全系列基础教程，P12：12）Python流控制：While 循环 🔄
+
+![](img/84eadd930b0b3e75c98ca900a0885b35_0.png)
 
 ![](img/84eadd930b0b3e75c98ca900a0885b35_0.png)
 

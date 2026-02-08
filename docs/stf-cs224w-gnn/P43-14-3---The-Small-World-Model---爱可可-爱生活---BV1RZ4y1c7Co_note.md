@@ -1,8 +1,8 @@
+# 课程 P43：14.3 - 小世界模型 🌐
+
 ![](img/da88a0ae32e139d116e6945c8ff09c3a_0.png)
 
 ![](img/da88a0ae32e139d116e6945c8ff09c3a_1.png)
-
-# 课程 P43：14.3 - 小世界模型 🌐
 
 ![](img/da88a0ae32e139d116e6945c8ff09c3a_3.png)
 

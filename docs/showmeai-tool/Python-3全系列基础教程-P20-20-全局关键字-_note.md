@@ -1,6 +1,6 @@
-![](img/d5b9b4b1de0f36c8a154c3be6260d944_0.png)
-
 # Python 3全系列基础教程，P20：20）全局关键字 🔑
+
+![](img/d5b9b4b1de0f36c8a154c3be6260d944_0.png)
 
 ![](img/d5b9b4b1de0f36c8a154c3be6260d944_0.png)
 

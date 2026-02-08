@@ -1,8 +1,8 @@
+# 课程 P51：16.3 - 身份感知图神经网络 🧠
+
 ![](img/3152acd4b5e7cecbb51dfc264b41f14d_0.png)
 
 ![](img/3152acd4b5e7cecbb51dfc264b41f14d_1.png)
-
-# 课程 P51：16.3 - 身份感知图神经网络 🧠
 
 ![](img/3152acd4b5e7cecbb51dfc264b41f14d_3.png)
 

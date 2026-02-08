@@ -1,6 +1,6 @@
-![](img/2917b3bbdcbc9ca5e7b5aa9181bf40de_0.png)
-
 # Excel中级教程 - P41：使用旋转按钮 📊
+
+![](img/2917b3bbdcbc9ca5e7b5aa9181bf40de_0.png)
 
 ![](img/2917b3bbdcbc9ca5e7b5aa9181bf40de_0.png)
 

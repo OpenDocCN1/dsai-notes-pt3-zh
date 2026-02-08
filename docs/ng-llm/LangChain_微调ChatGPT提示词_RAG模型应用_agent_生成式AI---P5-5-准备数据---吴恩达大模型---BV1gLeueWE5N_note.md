@@ -1,6 +1,6 @@
-![](img/04be87adea703493c4bb301f9c54bbfa_0.png)
-
 # LangChain 微调ChatGPT提示词 RAG模型应用 agent 生成式AI - P5：5-准备数据 📊
+
+![](img/04be87adea703493c4bb301f9c54bbfa_0.png)
 
 在本节课中，我们将学习如何为微调大型语言模型准备数据。数据准备是模型训练过程中的关键步骤，直接影响到最终模型的质量和性能。
 

@@ -1,6 +1,6 @@
-![](img/81e6d02d7154d1bbedc3822bec7e596a_0.png)
-
 # 课程25：AI伦理、治理与ESG 🧭
+
+![](img/81e6d02d7154d1bbedc3822bec7e596a_0.png)
 
 在本节课中，我们将学习人工智能治理（AI Governance）的概念及其目标，了解环境、社会和治理（ESG）框架的含义与作用，并探讨治理、ESG与AI伦理之间的紧密联系。
 

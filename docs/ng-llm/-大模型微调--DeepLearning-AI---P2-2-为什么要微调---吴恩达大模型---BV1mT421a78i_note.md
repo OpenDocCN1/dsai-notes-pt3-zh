@@ -1,6 +1,6 @@
-![](img/1c71155de356fd211c1d20b0eabdb6d7_1.png)
-
 # 大模型微调课程 P2：为什么要微调？ 🤔
+
+![](img/1c71155de356fd211c1d20b0eabdb6d7_1.png)
 
 ![](img/1c71155de356fd211c1d20b0eabdb6d7_3.png)
 

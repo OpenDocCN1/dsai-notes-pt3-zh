@@ -1,3 +1,5 @@
+# 🧠 深度学习集训营 P1：深入理解CNN、RNN和LSTM
+
 ![](img/ddb26fce0e29535760be41fb4a8fbc65_0.png)
 
 ![](img/ddb26fce0e29535760be41fb4a8fbc65_1.png)
@@ -13,8 +15,6 @@
 ![](img/ddb26fce0e29535760be41fb4a8fbc65_6.png)
 
 ![](img/ddb26fce0e29535760be41fb4a8fbc65_7.png)
-
-# 🧠 深度学习集训营 P1：深入理解CNN、RNN和LSTM
 
 ![](img/ddb26fce0e29535760be41fb4a8fbc65_8.png)
 

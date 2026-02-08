@@ -1,6 +1,6 @@
-![](img/f0905daa79183af8016afbf21244b568_0.png)
-
 # P7：BCE代价函数详解 🧮
+
+![](img/f0905daa79183af8016afbf21244b568_0.png)
 
 ![](img/f0905daa79183af8016afbf21244b568_2.png)
 

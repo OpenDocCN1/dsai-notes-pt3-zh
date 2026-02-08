@@ -1,6 +1,6 @@
-![](img/0cc7e38a4f4c14b27415ca3f3a631bb7_1.png)
-
 # 课程 P1：Pandas 数据分析入门教程 🐼
+
+![](img/0cc7e38a4f4c14b27415ca3f3a631bb7_1.png)
 
 在本课程中，我们将学习如何使用 Python 的 Pandas 库进行数据分析。Pandas 是一个强大的工具，可以看作是支持异构数据的 NumPy，或者类似于 R 语言中的数据框。它提供了一种编程方式来操作类似 Excel 表格的数据。
 

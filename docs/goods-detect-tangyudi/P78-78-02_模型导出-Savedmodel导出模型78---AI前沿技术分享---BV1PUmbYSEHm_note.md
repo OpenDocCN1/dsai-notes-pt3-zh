@@ -1,6 +1,6 @@
-![](img/f203abe5be8235bbbc464600d2433da2_1.png)
-
 # 课程 P78：模型导出：SavedModel 导出模型 🚀
+
+![](img/f203abe5be8235bbbc464600d2433da2_1.png)
 
 在本节课中，我们将学习如何使用 TensorFlow 的 `SavedModelBuilder` 将训练好的模型导出为 SavedModel 格式。这种格式是用于部署和提供服务的标准格式。
 

@@ -1,6 +1,6 @@
-![](img/2408182d10091c69bebcccb4a5e3d597_0.png)
-
 # 课程52：像使用OpenAI一样使用稀疏混合专家模型Mixtral 8x7B 🚀
+
+![](img/2408182d10091c69bebcccb4a5e3d597_0.png)
 
 ![](img/2408182d10091c69bebcccb4a5e3d597_2.png)
 

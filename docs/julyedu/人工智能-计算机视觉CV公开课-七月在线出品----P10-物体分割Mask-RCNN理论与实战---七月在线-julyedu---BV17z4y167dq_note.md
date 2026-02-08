@@ -1,6 +1,6 @@
-![](img/ed079101d01256ada3d8d817fab825bb_0.png)
-
 # 🎯 人工智能—计算机视觉CV公开课 P10：物体分割Mask RCNN理论与实战
+
+![](img/ed079101d01256ada3d8d817fab825bb_0.png)
 
 在本节课中，我们将要学习物体分割（Instance Segmentation）的核心概念，特别是基于Mask RCNN的方法。我们将从卷积神经网络（CNN）的基础理论回顾开始，逐步深入到目标检测（RCNN系列）的演进，最终详细讲解Mask RCNN的原理、改进点及其实际应用。课程内容力求简单直白，让初学者能够理解。
 

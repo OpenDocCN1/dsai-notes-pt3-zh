@@ -1,6 +1,6 @@
-![](img/aa86aeffb84b3337c6b5c534c134bd12_0.png)
-
 # 课程 P60：19.3 - 图神经网络的设计空间 🧠
+
+![](img/aa86aeffb84b3337c6b5c534c134bd12_0.png)
 
 ![](img/aa86aeffb84b3337c6b5c534c134bd12_1.png)
 

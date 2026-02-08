@@ -1,6 +1,6 @@
-![](img/a79e11877c93e78d6e0286c3c4597b94_0.png)
-
 # LangChain 课程 P29：基于文档的问答 📄❓
+
+![](img/a79e11877c93e78d6e0286c3c4597b94_0.png)
 
 ![](img/a79e11877c93e78d6e0286c3c4597b94_2.png)
 

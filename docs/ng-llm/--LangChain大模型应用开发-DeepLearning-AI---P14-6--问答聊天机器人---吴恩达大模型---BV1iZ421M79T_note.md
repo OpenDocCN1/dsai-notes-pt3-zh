@@ -1,6 +1,6 @@
-![](img/e1413a46a066fb0fe58e11f740158ac6_0.png)
-
 # 【LangChain大模型应用开发】课程 P14：构建问答聊天机器人 🤖
+
+![](img/e1413a46a066fb0fe58e11f740158ac6_0.png)
 
 ![](img/e1413a46a066fb0fe58e11f740158ac6_2.png)
 

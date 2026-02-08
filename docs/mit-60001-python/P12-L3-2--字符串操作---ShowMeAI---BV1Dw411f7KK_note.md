@@ -1,6 +1,6 @@
-![](img/fc0bad3f7a1272a6dadcc49a0d3873ff_0.png)
-
 # 课程 P12：L3.2 - 字符串操作 🧵
+
+![](img/fc0bad3f7a1272a6dadcc49a0d3873ff_0.png)
 
 ![](img/fc0bad3f7a1272a6dadcc49a0d3873ff_0.png)
 

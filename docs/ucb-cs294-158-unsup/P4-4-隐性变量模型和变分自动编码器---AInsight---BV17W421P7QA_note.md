@@ -1,6 +1,6 @@
-![](img/87a434b39ba2e3c3592ccf38cccca7c9_1.png)
-
 # 课程 P4：隐性变量模型和变分自动编码器 🧠
+
+![](img/87a434b39ba2e3c3592ccf38cccca7c9_1.png)
 
 ![](img/87a434b39ba2e3c3592ccf38cccca7c9_3.png)
 

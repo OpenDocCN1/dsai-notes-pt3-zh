@@ -1,6 +1,6 @@
-![](img/7910dfbf9918bece9384dc84f17a5b5c_0.png)
-
 # 机器学习课程 P45：显著性水平、p值与F统计量 📊
+
+![](img/7910dfbf9918bece9384dc84f17a5b5c_0.png)
 
 ![](img/7910dfbf9918bece9384dc84f17a5b5c_2.png)
 

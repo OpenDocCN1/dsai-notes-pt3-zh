@@ -1,6 +1,6 @@
-![](img/adb0358dffd6dfb3a7e440a365a1f42e_1.png)
-
 # 课程01：基于ChatGLM的金融问答系统构建方案详解 💼
+
+![](img/adb0358dffd6dfb3a7e440a365a1f42e_1.png)
 
 ![](img/adb0358dffd6dfb3a7e440a365a1f42e_3.png)
 

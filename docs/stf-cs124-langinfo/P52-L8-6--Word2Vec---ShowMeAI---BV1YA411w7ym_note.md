@@ -1,6 +1,6 @@
-![](img/30a156b0e11cfb71bcfbd45b9c7cb4de_0.png)
-
 # 📚 课程 P52：L8.6 - Word2Vec 详解
+
+![](img/30a156b0e11cfb71bcfbd45b9c7cb4de_0.png)
 
 在本节课中，我们将学习一种重要的词向量表示方法——Word2Vec。我们将从词向量的基本概念入手，逐步介绍 Skip-gram 模型的原理、目标函数以及其核心思想。
 

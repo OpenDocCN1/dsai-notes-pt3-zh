@@ -1,6 +1,6 @@
-![](img/7ca84620974cefb70e6f3332d9f1ff93_0.png)
-
 # 【七月在线】NLP高端就业训练营10期 - P7：3.基于Luong Attention的机器翻译教程 🧠➡️🗣️
+
+![](img/7ca84620974cefb70e6f3332d9f1ff93_0.png)
 
 在本节课中，我们将学习如何使用Sequence-to-Sequence模型进行机器翻译，并训练一个简单的聊天机器人。我们将从基础的Encoder-Decoder模型开始，逐步引入Luong Attention机制，以提升翻译效果。课程内容将涵盖模型原理、代码实现以及实际应用。
 

@@ -1,8 +1,8 @@
+# 课程 P139：L65.2 - 对抗生成网络改进与Inception Score评估 🧠
+
 ![](img/777d23a5863df979b944c9102b7c3628_1.png)
 
 ![](img/777d23a5863df979b944c9102b7c3628_2.png)
-
-# 课程 P139：L65.2 - 对抗生成网络改进与Inception Score评估 🧠
 
 ![](img/777d23a5863df979b944c9102b7c3628_4.png)
 

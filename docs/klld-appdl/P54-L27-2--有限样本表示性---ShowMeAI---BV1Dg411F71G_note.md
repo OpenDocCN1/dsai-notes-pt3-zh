@@ -1,3 +1,5 @@
+# 深度学习课程 P54：L27.2 - 有限样本表示性 🧠
+
 ![](img/fea6d362cc658db97c8027ebbe363c85_0.png)
 
 ![](img/fea6d362cc658db97c8027ebbe363c85_2.png)
@@ -7,8 +9,6 @@
 ![](img/fea6d362cc658db97c8027ebbe363c85_6.png)
 
 ![](img/fea6d362cc658db97c8027ebbe363c85_8.png)
-
-# 深度学习课程 P54：L27.2 - 有限样本表示性 🧠
 
 ![](img/fea6d362cc658db97c8027ebbe363c85_10.png)
 

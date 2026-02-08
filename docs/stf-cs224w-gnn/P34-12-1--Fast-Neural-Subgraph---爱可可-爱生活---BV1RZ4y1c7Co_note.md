@@ -1,8 +1,8 @@
+# 课程 P34：12.1 - 快速神经子图匹配与计数 🧠🔍
+
 ![](img/edc4816f6a93d86593bbbafcb10091ec_0.png)
 
 ![](img/edc4816f6a93d86593bbbafcb10091ec_1.png)
-
-# 课程 P34：12.1 - 快速神经子图匹配与计数 🧠🔍
 
 ![](img/edc4816f6a93d86593bbbafcb10091ec_3.png)
 

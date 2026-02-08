@@ -1,6 +1,6 @@
-![](img/4ad34bb77d34130fb154b9a2099c9acb_0.png)
-
 # 课程 6d：病例对照抽样与多项逻辑回归 📊
+
+![](img/4ad34bb77d34130fb154b9a2099c9acb_0.png)
 
 ![](img/4ad34bb77d34130fb154b9a2099c9acb_2.png)
 

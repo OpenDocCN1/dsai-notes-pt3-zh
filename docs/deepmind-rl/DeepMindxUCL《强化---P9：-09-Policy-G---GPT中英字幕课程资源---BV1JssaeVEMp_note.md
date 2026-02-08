@@ -1,6 +1,6 @@
-![](img/b85152b0faa6c16f19b8d72f2e99df2e_1.png)
-
 # 课程09：策略梯度与演员-评论员方法 🎯
+
+![](img/b85152b0faa6c16f19b8d72f2e99df2e_1.png)
 
 ![](img/b85152b0faa6c16f19b8d72f2e99df2e_3.png)
 

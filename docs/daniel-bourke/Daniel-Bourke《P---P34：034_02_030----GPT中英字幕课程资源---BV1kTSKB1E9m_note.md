@@ -1,6 +1,6 @@
-![](img/b55b6015ca3e43fe10fe2c01694335db_0.png)
-
 # 课程 34：PyTorch GPU 访问方式详解 🚀
+
+![](img/b55b6015ca3e43fe10fe2c01694335db_0.png)
 
 在本节课中，我们将学习如何在 PyTorch 中访问和使用 GPU 来加速计算。我们将介绍获取 GPU 的不同方式，如何检查 PyTorch 是否能访问 GPU，以及如何编写“设备无关”的代码，以确保你的代码能在有 GPU 时使用 GPU，没有时则自动回退到 CPU。
 

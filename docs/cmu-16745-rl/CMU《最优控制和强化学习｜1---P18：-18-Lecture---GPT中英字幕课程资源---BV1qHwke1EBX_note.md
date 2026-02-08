@@ -1,3 +1,5 @@
+# 课程17：迭代学习控制 (Iterative Learning Control) 🎯
+
 ![](img/7042a09e65e329a4ce152e1d21fedfef_1.png)
 
 ![](img/7042a09e65e329a4ce152e1d21fedfef_3.png)
@@ -9,8 +11,6 @@
 ![](img/7042a09e65e329a4ce152e1d21fedfef_8.png)
 
 ![](img/7042a09e65e329a4ce152e1d21fedfef_10.png)
-
-# 课程17：迭代学习控制 (Iterative Learning Control) 🎯
 
 ![](img/7042a09e65e329a4ce152e1d21fedfef_12.png)
 

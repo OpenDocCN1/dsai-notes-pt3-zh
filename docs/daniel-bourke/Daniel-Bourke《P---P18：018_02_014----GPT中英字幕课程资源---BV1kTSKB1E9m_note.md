@@ -1,6 +1,6 @@
-![](img/f403edcb28e64aaf52a901c83abe5fbe_0.png)
-
 # PyTorch 深度学习课程 018：创建随机张量 🔢
+
+![](img/f403edcb28e64aaf52a901c83abe5fbe_0.png)
 
 在本节课中，我们将学习如何在 PyTorch 中创建随机张量。随机张量是神经网络学习过程中的基础，因为它们通常作为模型的初始参数。
 

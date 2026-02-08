@@ -1,6 +1,6 @@
-![](img/d99190e71cb183dacd5e319fdd2254d4_0.png)
-
 # 📚 课程 P15：L3.4 - 泛化与零概率处理
+
+![](img/d99190e71cb183dacd5e319fdd2254d4_0.png)
 
 ![](img/d99190e71cb183dacd5e319fdd2254d4_2.png)
 

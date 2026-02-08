@@ -1,8 +1,8 @@
+# 课程P44：生成式对抗网络(GAN) - 3 🧠
+
 ![](img/8dfc29f291e690c3ef49e70e82b1aaf9_1.png)
 
 ![](img/8dfc29f291e690c3ef49e70e82b1aaf9_3.png)
-
-# 课程P44：生成式对抗网络(GAN) - 3 🧠
 
 ![](img/8dfc29f291e690c3ef49e70e82b1aaf9_5.png)
 

@@ -1,3 +1,5 @@
+# 哈佛大学《深度学习基础》课程笔记 - 第四讲：鲁棒性 🛡️
+
 ![](img/5908a8422045a5f4b7dc83dccaedb4ad_1.png)
 
 ![](img/5908a8422045a5f4b7dc83dccaedb4ad_3.png)
@@ -21,8 +23,6 @@
 ![](img/5908a8422045a5f4b7dc83dccaedb4ad_20.png)
 
 ![](img/5908a8422045a5f4b7dc83dccaedb4ad_22.png)
-
-# 哈佛大学《深度学习基础》课程笔记 - 第四讲：鲁棒性 🛡️
 
 ![](img/5908a8422045a5f4b7dc83dccaedb4ad_24.png)
 

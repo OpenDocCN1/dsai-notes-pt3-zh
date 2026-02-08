@@ -1,6 +1,6 @@
-![](img/da91ecadf40cdd1c47d6363d58def18c_1.png)
-
 # 课程 P3：Geomstats - 机器学习中的黎曼几何 Python 包 🧮
+
+![](img/da91ecadf40cdd1c47d6363d58def18c_1.png)
 
 在本节课中，我们将要学习 Geomstats，一个用于机器学习中几何计算的 Python 包。我们将了解其设计动机、核心概念、基本操作、学习算法，并与其他相关库进行比较。
 

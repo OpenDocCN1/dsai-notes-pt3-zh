@@ -1,3 +1,5 @@
+# 🎓 课程名称：ASU《强化学习2022-2024》课程第5讲 - 确定性动态规划问题的Rollout算法
+
 ![](img/dd154ec6f7eabeadc4952dfb8a14f3e5_1.png)
 
 ![](img/dd154ec6f7eabeadc4952dfb8a14f3e5_3.png)
@@ -9,8 +11,6 @@
 ![](img/dd154ec6f7eabeadc4952dfb8a14f3e5_9.png)
 
 ![](img/dd154ec6f7eabeadc4952dfb8a14f3e5_11.png)
-
-# 🎓 课程名称：ASU《强化学习2022-2024》课程第5讲 - 确定性动态规划问题的Rollout算法
 
 ## 📖 概述
 在本节课中，我们将学习确定性动态规划（DP）问题中的Rollout算法。我们将回顾有限时域问题，探讨其与无限时域问题的联系，并深入讲解Rollout算法的核心概念、理论性质（特别是其成本改进特性）以及多种变体和扩展。

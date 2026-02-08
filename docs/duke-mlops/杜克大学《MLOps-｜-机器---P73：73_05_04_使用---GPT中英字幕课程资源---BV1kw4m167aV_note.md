@@ -1,6 +1,6 @@
-![](img/5fe6779b8d5b6ff7bbaefe106d461106_1.png)
-
 # 课程 P73：使用 Python 操作 Azure ML Studio 🚀
+
+![](img/5fe6779b8d5b6ff7bbaefe106d461106_1.png)
 
 在本节课中，我们将学习如何使用 Azure ML 核心 Python SDK 与 Azure Machine Learning Studio 进行交互。我们将涵盖从身份验证、创建工作区、创建计算集群，到最后清理资源以避免额外费用的完整流程。
 

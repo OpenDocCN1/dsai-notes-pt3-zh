@@ -1,6 +1,6 @@
-![](img/12f51ab2f1bd161e43ce0f3df4918c45_0.png)
-
 # ChatGPT提示词工程师课程 P2：第2集 📝 提示指南
+
+![](img/12f51ab2f1bd161e43ce0f3df4918c45_0.png)
 
 ![](img/12f51ab2f1bd161e43ce0f3df4918c45_2.png)
 

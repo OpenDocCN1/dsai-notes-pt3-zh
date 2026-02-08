@@ -1,6 +1,6 @@
-![](img/01928d21ce892a52b6799a7c24acbbb5_0.png)
-
 # 神经网络课程 P61：L10.5 - 训练神经网络 🧠
+
+![](img/01928d21ce892a52b6799a7c24acbbb5_0.png)
 
 ![](img/01928d21ce892a52b6799a7c24acbbb5_0.png)
 

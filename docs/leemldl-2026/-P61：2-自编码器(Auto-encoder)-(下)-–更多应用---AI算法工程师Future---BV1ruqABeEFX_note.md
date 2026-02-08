@@ -1,8 +1,8 @@
+# 课程名称：李宏毅机器学习课程 - P61：自编码器(Auto-encoder) (下) – 更多应用 🧠
+
 ![](img/ec10646a10547b58cefc649ed7341cd9_1.png)
 
 ![](img/ec10646a10547b58cefc649ed7341cd9_3.png)
-
-# 课程名称：李宏毅机器学习课程 - P61：自编码器(Auto-encoder) (下) – 更多应用 🧠
 
 ![](img/ec10646a10547b58cefc649ed7341cd9_5.png)
 

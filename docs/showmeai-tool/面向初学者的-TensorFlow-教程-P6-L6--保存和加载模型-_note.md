@@ -1,6 +1,6 @@
-![](img/9b9ffc459a3e832c981ed4cc62448cda_0.png)
-
 # TensorFlow 初学者教程 P6：L6 - 保存和加载模型 🗂️
+
+![](img/9b9ffc459a3e832c981ed4cc62448cda_0.png)
 
 ![](img/9b9ffc459a3e832c981ed4cc62448cda_0.png)
 

@@ -1,3 +1,5 @@
+# 🧠 课程 P13：L6.2 - Kaiming 参数初始化
+
 ![](img/2a83c3d6bd56a9e9b9fc12c277006098_0.png)
 
 ![](img/2a83c3d6bd56a9e9b9fc12c277006098_2.png)
@@ -7,8 +9,6 @@
 ![](img/2a83c3d6bd56a9e9b9fc12c277006098_6.png)
 
 ![](img/2a83c3d6bd56a9e9b9fc12c277006098_8.png)
-
-# 🧠 课程 P13：L6.2 - Kaiming 参数初始化
 
 ![](img/2a83c3d6bd56a9e9b9fc12c277006098_10.png)
 

@@ -1,6 +1,6 @@
-![](img/b37b2fb364773342235455c45cefffa2_1.png)
-
 # 课程04：PyTorch自定义数据集入门 🍕🥩🍣
+
+![](img/b37b2fb364773342235455c45cefffa2_1.png)
 
 ![](img/b37b2fb364773342235455c45cefffa2_3.png)
 

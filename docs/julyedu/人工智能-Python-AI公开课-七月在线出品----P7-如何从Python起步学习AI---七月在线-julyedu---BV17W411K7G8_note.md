@@ -1,8 +1,8 @@
+# 人工智能—Python AI公开课（七月在线出品） - P7：如何从Python起步学习AI 🚀
+
 ![](img/21eb4d81bdcf6905949f0b75d0f66b44_0.png)
 
 ![](img/21eb4d81bdcf6905949f0b75d0f66b44_2.png)
-
-# 人工智能—Python AI公开课（七月在线出品） - P7：如何从Python起步学习AI 🚀
 
 ![](img/21eb4d81bdcf6905949f0b75d0f66b44_4.png)
 

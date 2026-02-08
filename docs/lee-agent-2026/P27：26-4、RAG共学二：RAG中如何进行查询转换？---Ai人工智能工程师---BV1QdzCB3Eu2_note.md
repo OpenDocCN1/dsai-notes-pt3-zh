@@ -1,6 +1,6 @@
-![](img/c2d2ab00cccd5f7d4d1d0adaf4e055b7_1.png)
-
 # 课程27：RAG中的查询转换方法 🧠
+
+![](img/c2d2ab00cccd5f7d4d1d0adaf4e055b7_1.png)
 
 ![](img/c2d2ab00cccd5f7d4d1d0adaf4e055b7_3.png)
 

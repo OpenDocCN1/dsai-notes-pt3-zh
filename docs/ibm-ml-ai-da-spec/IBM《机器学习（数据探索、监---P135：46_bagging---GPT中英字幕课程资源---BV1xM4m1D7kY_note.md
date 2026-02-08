@@ -1,6 +1,6 @@
-![](img/4a9906896b6c7764f88ffcf625efa72b_0.png)
-
 # 机器学习课程笔记 P135：Bagging 与随机森林模型评估 🌲📊
+
+![](img/4a9906896b6c7764f88ffcf625efa72b_0.png)
 
 ![](img/4a9906896b6c7764f88ffcf625efa72b_2.png)
 

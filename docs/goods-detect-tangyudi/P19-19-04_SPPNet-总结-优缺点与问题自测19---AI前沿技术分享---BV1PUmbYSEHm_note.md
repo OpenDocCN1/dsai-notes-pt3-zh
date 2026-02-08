@@ -1,6 +1,6 @@
-![](img/6c3544f7eac8536f872ad61d9b627f0b_0.png)
-
 # 🧠 课程 P19：SPPNet 总结、优缺点与问题自测
+
+![](img/6c3544f7eac8536f872ad61d9b627f0b_0.png)
 
 ![](img/6c3544f7eac8536f872ad61d9b627f0b_2.png)
 

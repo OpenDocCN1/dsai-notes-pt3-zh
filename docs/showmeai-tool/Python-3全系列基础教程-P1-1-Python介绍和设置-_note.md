@@ -1,6 +1,6 @@
-![](img/9f6c197f4ec196be1569c0ee7dc94ea1_0.png)
-
 # Python 3全系列基础教程，P1：Python介绍与设置 🐍
+
+![](img/9f6c197f4ec196be1569c0ee7dc94ea1_0.png)
 
 在本节课中，我们将要学习Python 3的基础入门知识，包括如何检查Python是否已安装、如何安装Python 3、如何测试安装是否成功，以及如何设置一个简单的集成开发环境来编写和运行你的第一个Python程序。
 

@@ -1,10 +1,10 @@
+# 课程 P8：L8 - 循环神经网络与时序驾驶操纵 🚗🧠
+
 ![](img/f6bbe96f7d85d836630eba16e2ef3316_1.png)
 
 ![](img/f6bbe96f7d85d836630eba16e2ef3316_3.png)
 
 ![](img/f6bbe96f7d85d836630eba16e2ef3316_5.png)
-
-# 课程 P8：L8 - 循环神经网络与时序驾驶操纵 🚗🧠
 
 ![](img/f6bbe96f7d85d836630eba16e2ef3316_7.png)
 

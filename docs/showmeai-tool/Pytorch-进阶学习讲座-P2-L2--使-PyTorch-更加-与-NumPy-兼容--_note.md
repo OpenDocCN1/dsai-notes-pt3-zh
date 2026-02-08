@@ -1,6 +1,6 @@
-![](img/34c6afcf80c3f94fb9e6fa9f06c8c00d_1.png)
-
 # PyTorch 进阶学习讲座 P2：L2 - 使 PyTorch 更加“与 NumPy 兼容” 🎯
+
+![](img/34c6afcf80c3f94fb9e6fa9f06c8c00d_1.png)
 
 在本节课中，我们将学习 PyTorch 团队如何致力于提升其与 NumPy 的兼容性。我们将探讨兼容性的意义、PyTorch 1.7 版本中的具体改进，以及未来的发展方向。
 

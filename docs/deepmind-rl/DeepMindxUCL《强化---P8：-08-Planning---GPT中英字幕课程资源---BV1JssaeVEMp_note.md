@@ -1,6 +1,6 @@
-![](img/dffd10a75a8258e6d0b83a87a2b057c8_1.png)
-
 # 课程08：规划与模型 🧠
+
+![](img/dffd10a75a8258e6d0b83a87a2b057c8_1.png)
 
 ![](img/dffd10a75a8258e6d0b83a87a2b057c8_3.png)
 

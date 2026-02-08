@@ -1,8 +1,8 @@
+# 课程P4：第04讲 - RNN、LSTM、Transformer与GNN 🧠
+
 ![](img/3a20427853139ea1e5e8059064af70b7_1.png)
 
 ![](img/3a20427853139ea1e5e8059064af70b7_3.png)
-
-# 课程P4：第04讲 - RNN、LSTM、Transformer与GNN 🧠
 
 ![](img/3a20427853139ea1e5e8059064af70b7_5.png)
 

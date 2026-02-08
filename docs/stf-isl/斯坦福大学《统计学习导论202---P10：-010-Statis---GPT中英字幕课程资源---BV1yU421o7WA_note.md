@@ -1,6 +1,6 @@
-![](img/aa4430558c0ecca62ae5ab8f9a700002_0.png)
-
 # 课程10：假设检验与置信区间 📊
+
+![](img/aa4430558c0ecca62ae5ab8f9a700002_0.png)
 
 ![](img/aa4430558c0ecca62ae5ab8f9a700002_2.png)
 

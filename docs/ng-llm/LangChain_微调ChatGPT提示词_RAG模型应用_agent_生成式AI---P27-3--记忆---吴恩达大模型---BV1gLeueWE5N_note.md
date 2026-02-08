@@ -1,8 +1,8 @@
+# LangChain系列课程 P27：记忆 🧠
+
 ![](img/c86c51310bd0360f0802bd988e1cb8c6_0.png)
 
 ![](img/c86c51310bd0360f0802bd988e1cb8c6_1.png)
-
-# LangChain系列课程 P27：记忆 🧠
 
 ![](img/c86c51310bd0360f0802bd988e1cb8c6_3.png)
 

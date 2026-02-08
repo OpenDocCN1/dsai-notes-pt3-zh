@@ -1,6 +1,6 @@
-![](img/8b48845031b7de63cbe2b85a1050fdec_1.png)
-
 # 课程 P52：数据接口 - 数据读取工厂逻辑实现 🏭
+
+![](img/8b48845031b7de63cbe2b85a1050fdec_1.png)
 
 ![](img/8b48845031b7de63cbe2b85a1050fdec_3.png)
 

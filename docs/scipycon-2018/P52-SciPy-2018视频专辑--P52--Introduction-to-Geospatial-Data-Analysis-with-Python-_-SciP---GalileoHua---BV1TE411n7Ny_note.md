@@ -1,3 +1,5 @@
+# 课程 P52：使用 Python 进行地理空间数据分析入门 🗺️
+
 ![](img/81e8c90c191b11ba7052bce0b0522fb5_1.png)
 
 ![](img/81e8c90c191b11ba7052bce0b0522fb5_3.png)
@@ -9,8 +11,6 @@
 ![](img/81e8c90c191b11ba7052bce0b0522fb5_9.png)
 
 ![](img/81e8c90c191b11ba7052bce0b0522fb5_11.png)
-
-# 课程 P52：使用 Python 进行地理空间数据分析入门 🗺️
 
 ![](img/81e8c90c191b11ba7052bce0b0522fb5_13.png)
 

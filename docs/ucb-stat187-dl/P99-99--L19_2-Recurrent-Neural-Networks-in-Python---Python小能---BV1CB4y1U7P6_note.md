@@ -1,10 +1,10 @@
+# 课程 P99：Python中的递归神经网络 (RNN) 🧠
+
 ![](img/467b7ed10f3bdd3b04e7ec5f22cca723_1.png)
 
 ![](img/467b7ed10f3bdd3b04e7ec5f22cca723_3.png)
 
 ![](img/467b7ed10f3bdd3b04e7ec5f22cca723_5.png)
-
-# 课程 P99：Python中的递归神经网络 (RNN) 🧠
 
 ![](img/467b7ed10f3bdd3b04e7ec5f22cca723_7.png)
 

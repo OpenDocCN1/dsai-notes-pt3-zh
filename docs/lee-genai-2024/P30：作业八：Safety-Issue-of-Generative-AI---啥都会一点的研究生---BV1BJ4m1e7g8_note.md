@@ -1,6 +1,6 @@
-![](img/5d8b84fbbb40bfd6c5afd145e62027ff_1.png)
-
 # 李宏毅2024春《生成式人工智能导论》 - P30：作业八：生成式AI的安全性问题 🛡️
+
+![](img/5d8b84fbbb40bfd6c5afd145e62027ff_1.png)
 
 ![](img/5d8b84fbbb40bfd6c5afd145e62027ff_3.png)
 

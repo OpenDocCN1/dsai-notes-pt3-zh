@@ -1,6 +1,6 @@
-![](img/b7e4833c8ab7ef5ec7b6feb164435263_1.png)
-
 # 📘 课程 P40：洛必达法则在指数型未定式中的应用
+
+![](img/b7e4833c8ab7ef5ec7b6feb164435263_1.png)
 
 ![](img/b7e4833c8ab7ef5ec7b6feb164435263_2.png)
 

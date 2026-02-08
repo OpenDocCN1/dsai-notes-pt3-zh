@@ -1,6 +1,6 @@
-![](img/0cfebc5d85eddda2dbd817993c4aba26_0.png)
-
 # 🎨 P2：【2025版】生成式模型 - 小土堆PyTorch教程
+
+![](img/0cfebc5d85eddda2dbd817993c4aba26_0.png)
 
 ![](img/0cfebc5d85eddda2dbd817993c4aba26_2.png)
 

@@ -1,6 +1,6 @@
-![](img/37d158badb73aa1d46529a346943d4a0_0.png)
-
 # LangChain 微调ChatGPT提示词 RAG模型应用 agent 生成式AI - P42：1——大语言模型、API格式和Token 🧠
+
+![](img/37d158badb73aa1d46529a346943d4a0_0.png)
 
 ![](img/37d158badb73aa1d46529a346943d4a0_2.png)
 

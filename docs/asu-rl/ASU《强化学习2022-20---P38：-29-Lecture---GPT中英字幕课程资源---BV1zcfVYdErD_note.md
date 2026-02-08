@@ -1,3 +1,5 @@
+# 课程9：无限时域问题 🎯
+
 ![](img/b65ccf120818c9d3c32065f1e15d8d0c_1.png)
 
 ![](img/b65ccf120818c9d3c32065f1e15d8d0c_2.png)
@@ -9,8 +11,6 @@
 ![](img/b65ccf120818c9d3c32065f1e15d8d0c_7.png)
 
 ![](img/b65ccf120818c9d3c32065f1e15d8d0c_9.png)
-
-# 课程9：无限时域问题 🎯
 
 ![](img/b65ccf120818c9d3c32065f1e15d8d0c_11.png)
 

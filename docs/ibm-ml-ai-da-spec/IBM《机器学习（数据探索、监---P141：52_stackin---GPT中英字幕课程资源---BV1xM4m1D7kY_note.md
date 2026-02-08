@@ -1,6 +1,6 @@
-![](img/10a175b3e613e881653c8cfca09f4450_1.png)
-
 # 机器学习课程 P141：Stacking算法 🧱
+
+![](img/10a175b3e613e881653c8cfca09f4450_1.png)
 
 ![](img/10a175b3e613e881653c8cfca09f4450_3.png)
 

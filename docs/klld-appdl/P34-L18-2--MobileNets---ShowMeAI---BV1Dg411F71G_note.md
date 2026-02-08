@@ -1,8 +1,8 @@
+# 课程 P34：L18.2 - MobileNets 🚀
+
 ![](img/0cc356f61032df3edcec8162c48c1c13_0.png)
 
 ![](img/0cc356f61032df3edcec8162c48c1c13_2.png)
-
-# 课程 P34：L18.2 - MobileNets 🚀
 
 ![](img/0cc356f61032df3edcec8162c48c1c13_4.png)
 

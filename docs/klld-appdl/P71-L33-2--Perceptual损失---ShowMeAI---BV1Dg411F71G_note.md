@@ -1,8 +1,8 @@
+# 🧠 课程 P71：感知损失（Perceptual Loss）详解
+
 ![](img/d3fb2049701e86ce38d2c5b59f58b928_1.png)
 
 ![](img/d3fb2049701e86ce38d2c5b59f58b928_3.png)
-
-# 🧠 课程 P71：感知损失（Perceptual Loss）详解
 
 ![](img/d3fb2049701e86ce38d2c5b59f58b928_5.png)
 

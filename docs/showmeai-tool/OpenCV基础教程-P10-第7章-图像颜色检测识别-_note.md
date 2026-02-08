@@ -1,8 +1,8 @@
+# OpenCV基础教程，P10：第7章：图像颜色检测识别 🎨
+
 ![](img/07947795d9caed2cc20e4ef5ab09c052_0.png)
 
 ![](img/07947795d9caed2cc20e4ef5ab09c052_1.png)
-
-# OpenCV基础教程，P10：第7章：图像颜色检测识别 🎨
 
 ![](img/07947795d9caed2cc20e4ef5ab09c052_0.png)
 

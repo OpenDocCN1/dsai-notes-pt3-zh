@@ -1,6 +1,6 @@
-![](img/5ed7be07873d0a0984b5ea47907ba420_0.png)
-
 # 课程 P21：Fast R-CNN 中的 RoI Pooling 结构及其与 SPP 的对比 🧠
+
+![](img/5ed7be07873d0a0984b5ea47907ba420_0.png)
 
 在本节课中，我们将要学习 Fast R-CNN 模型中的一个核心组件——RoI Pooling（感兴趣区域池化）。我们将详细探讨它的工作原理、设计目的，并重点对比它与 SPP（空间金字塔池化）层的区别，理解为何 Fast R-CNN 选择了 RoI Pooling 来提升模型效率。
 

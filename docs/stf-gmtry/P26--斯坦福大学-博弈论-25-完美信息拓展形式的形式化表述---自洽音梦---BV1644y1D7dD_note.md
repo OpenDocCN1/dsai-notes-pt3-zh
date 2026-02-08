@@ -1,6 +1,6 @@
-![](img/fa58bce082afffef100039f53641b29d_0.png)
-
 # 课程 P26：完美信息扩展形式博弈的形式化表述 🎲
+
+![](img/fa58bce082afffef100039f53641b29d_0.png)
 
 ![](img/fa58bce082afffef100039f53641b29d_2.png)
 

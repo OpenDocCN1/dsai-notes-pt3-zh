@@ -1,6 +1,6 @@
-![](img/a0796414b36564898589aaca1c14e0cb_0.png)
-
 # LangChain 微调ChatGPT提示词 RAG模型应用 agent 生成式AI - P49：8——评估（上） - 吴恩达大模型 🧪
+
+![](img/a0796414b36564898589aaca1c14e0cb_0.png)
 
 ## 概述
 

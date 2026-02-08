@@ -1,6 +1,6 @@
-![](img/490c3ee68650a01d4e089ac56f8d78b1_0.png)
-
 # Excel高级教程（持续更新中） - P12：12）复选框 - Part 1 📝
+
+![](img/490c3ee68650a01d4e089ac56f8d78b1_0.png)
 
 ![](img/490c3ee68650a01d4e089ac56f8d78b1_0.png)
 

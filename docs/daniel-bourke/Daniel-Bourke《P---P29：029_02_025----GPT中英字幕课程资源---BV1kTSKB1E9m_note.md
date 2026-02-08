@@ -1,6 +1,6 @@
-![](img/678cebb32460ebb8da12804d704eb3a0_0.png)
-
 # PyTorch深度学习入门课程｜第29课：张量重塑、视图与堆叠 📚
+
+![](img/678cebb32460ebb8da12804d704eb3a0_0.png)
 
 在本节课中，我们将学习PyTorch中几种关键的张量操作：重塑（reshape）、视图（view）、堆叠（stack）、压缩（squeeze）和反压缩（unsqueeze）。这些操作对于调整张量的形状和维度至关重要，是解决机器学习中常见形状不匹配问题的核心工具。
 

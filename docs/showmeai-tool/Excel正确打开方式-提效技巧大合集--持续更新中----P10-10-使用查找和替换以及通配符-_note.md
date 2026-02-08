@@ -1,6 +1,6 @@
-![](img/3767d9802a9cc320f5cec4a401b95e42_0.png)
-
 # Excel高效技巧教程 - P10：使用查找、替换与通配符 🔍
+
+![](img/3767d9802a9cc320f5cec4a401b95e42_0.png)
 
 ![](img/3767d9802a9cc320f5cec4a401b95e42_0.png)
 

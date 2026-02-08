@@ -1,6 +1,6 @@
-![](img/3bca822c16ddca77f8b53c77f8683044_1.png)
-
 # 课程三：降维技术详解 🧩
+
+![](img/3bca822c16ddca77f8b53c77f8683044_1.png)
 
 ![](img/3bca822c16ddca77f8b53c77f8683044_3.png)
 

@@ -1,6 +1,6 @@
-![](img/2dceaf58f44771789db3689fc04b5c6b_0.png)
-
 # 斯坦福大学《自然语言理解》课程笔记 P7：GPT 模型详解 🧠
+
+![](img/2dceaf58f44771789db3689fc04b5c6b_0.png)
 
 ![](img/2dceaf58f44771789db3689fc04b5c6b_2.png)
 

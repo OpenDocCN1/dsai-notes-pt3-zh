@@ -1,6 +1,6 @@
-![](img/e6c2e204fbe154f45c93a8f8052c86df_0.png)
-
 # 📊 课程 P21：L7.2 - 关联矩阵
+
+![](img/e6c2e204fbe154f45c93a8f8052c86df_0.png)
 
 ![](img/e6c2e204fbe154f45c93a8f8052c86df_2.png)
 

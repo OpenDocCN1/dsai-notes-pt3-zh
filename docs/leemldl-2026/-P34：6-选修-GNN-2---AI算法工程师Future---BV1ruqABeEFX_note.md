@@ -1,3 +1,5 @@
+# 课程 P34：6-选修-GNN-2 🧠
+
 ![](img/ad7b39de3d7b3cf52bbf083f9e7d7d53_1.png)
 
 ![](img/ad7b39de3d7b3cf52bbf083f9e7d7d53_2.png)
@@ -5,8 +7,6 @@
 ![](img/ad7b39de3d7b3cf52bbf083f9e7d7d53_4.png)
 
 ![](img/ad7b39de3d7b3cf52bbf083f9e7d7d53_6.png)
-
-# 课程 P34：6-选修-GNN-2 🧠
 
 ![](img/ad7b39de3d7b3cf52bbf083f9e7d7d53_8.png)
 

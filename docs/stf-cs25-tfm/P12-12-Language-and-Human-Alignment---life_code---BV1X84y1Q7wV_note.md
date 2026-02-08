@@ -1,8 +1,8 @@
+# 课程 P12：语言与人类对齐 👥🤖
+
 ![](img/b473ddacf8908cc92f68d174d1de8757_0.png)
 
 ![](img/b473ddacf8908cc92f68d174d1de8757_1.png)
-
-# 课程 P12：语言与人类对齐 👥🤖
 
 ![](img/b473ddacf8908cc92f68d174d1de8757_3.png)
 

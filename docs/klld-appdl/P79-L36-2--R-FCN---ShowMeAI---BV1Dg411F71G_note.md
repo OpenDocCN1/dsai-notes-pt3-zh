@@ -1,6 +1,6 @@
-![](img/da6bb82600ae28d5a3393986b1198c39_0.png)
-
 # 🚀 课程 P79：R-FCN 详解
+
+![](img/da6bb82600ae28d5a3393986b1198c39_0.png)
 
 在本节课中，我们将学习 R-FCN（Region-based Fully Convolutional Networks）模型。我们将探讨如何通过全卷积化来进一步提升目标检测算法的性能，并深入理解其核心思想——位置敏感得分图。
 

@@ -1,8 +1,8 @@
+# 课程 P10：从零开始重现 GPT-2 (124M) 🚀
+
 ![](img/fffe638cf84a8d1e020ce63d0efeee6e_1.png)
 
 ![](img/fffe638cf84a8d1e020ce63d0efeee6e_3.png)
-
-# 课程 P10：从零开始重现 GPT-2 (124M) 🚀
 
 ![](img/fffe638cf84a8d1e020ce63d0efeee6e_5.png)
 

@@ -1,6 +1,6 @@
-![](img/da3ed8d603e153897db71c57bb0ef529_0.png)
-
 # 课程10：使用R进行逻辑回归分类 📊
+
+![](img/da3ed8d603e153897db71c57bb0ef529_0.png)
 
 ![](img/da3ed8d603e153897db71c57bb0ef529_2.png)
 

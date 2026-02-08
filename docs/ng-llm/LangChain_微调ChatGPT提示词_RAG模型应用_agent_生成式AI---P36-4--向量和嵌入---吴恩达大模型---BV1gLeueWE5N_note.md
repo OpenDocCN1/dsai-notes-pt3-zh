@@ -1,6 +1,6 @@
-![](img/0a1504e4d52443086f49c2f919757e43_0.png)
-
 # LangChain 微调ChatGPT提示词 RAG模型应用 agent 生成式AI - P36：4——向量和嵌入 📚
+
+![](img/0a1504e4d52443086f49c2f919757e43_0.png)
 
 ![](img/0a1504e4d52443086f49c2f919757e43_2.png)
 

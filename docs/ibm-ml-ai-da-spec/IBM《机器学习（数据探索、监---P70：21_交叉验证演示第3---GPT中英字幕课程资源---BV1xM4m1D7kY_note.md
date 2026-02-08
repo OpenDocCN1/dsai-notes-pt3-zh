@@ -1,8 +1,8 @@
+# 机器学习课程 P70：超参数调优与交叉验证实践 🎯
+
 ![](img/c8a7bdd9cbfec409cc42a6afdd8bab32_0.png)
 
 ![](img/c8a7bdd9cbfec409cc42a6afdd8bab32_2.png)
-
-# 机器学习课程 P70：超参数调优与交叉验证实践 🎯
 
 ![](img/c8a7bdd9cbfec409cc42a6afdd8bab32_4.png)
 

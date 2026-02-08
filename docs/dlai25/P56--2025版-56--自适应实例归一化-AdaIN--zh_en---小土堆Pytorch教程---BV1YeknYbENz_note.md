@@ -1,8 +1,8 @@
+# P56：自适应实例归一化 (AdaIN) 🎨
+
 ![](img/cbc653ff3f6669d0dbb7bf7a923cde17_1.png)
 
 ![](img/cbc653ff3f6669d0dbb7bf7a923cde17_3.png)
-
-# P56：自适应实例归一化 (AdaIN) 🎨
 
 ![](img/cbc653ff3f6669d0dbb7bf7a923cde17_5.png)
 

@@ -1,3 +1,5 @@
+# 课程 08：线性二次型调节器 (LQR) 的三种求解方法 🎯
+
 ![](img/e1b5a00e2fcfee14bb10773a2681bd8f_0.png)
 
 ![](img/e1b5a00e2fcfee14bb10773a2681bd8f_2.png)
@@ -11,8 +13,6 @@
 ![](img/e1b5a00e2fcfee14bb10773a2681bd8f_8.png)
 
 ![](img/e1b5a00e2fcfee14bb10773a2681bd8f_9.png)
-
-# 课程 08：线性二次型调节器 (LQR) 的三种求解方法 🎯
 
 ![](img/e1b5a00e2fcfee14bb10773a2681bd8f_11.png)
 

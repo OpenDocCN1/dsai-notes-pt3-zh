@@ -1,10 +1,10 @@
+# 课程11a：支持向量机（SVM）入门 🚀
+
 ![](img/e4ed7fc58d924a51e3a0ef5ea731ea1a_0.png)
 
 ![](img/e4ed7fc58d924a51e3a0ef5ea731ea1a_2.png)
 
 ![](img/e4ed7fc58d924a51e3a0ef5ea731ea1a_3.png)
-
-# 课程11a：支持向量机（SVM）入门 🚀
 
 ![](img/e4ed7fc58d924a51e3a0ef5ea731ea1a_5.png)
 

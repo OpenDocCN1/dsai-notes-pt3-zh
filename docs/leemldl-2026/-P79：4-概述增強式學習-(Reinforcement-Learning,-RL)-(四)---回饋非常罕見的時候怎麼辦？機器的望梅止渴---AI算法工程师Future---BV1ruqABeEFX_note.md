@@ -1,8 +1,8 @@
+# 李宏毅机器学习课程 P79：稀疏奖励问题与奖励塑形 🎯
+
 ![](img/efa7d1c7ddcc63affe0cb1258c4fd167_1.png)
 
 ![](img/efa7d1c7ddcc63affe0cb1258c4fd167_3.png)
-
-# 李宏毅机器学习课程 P79：稀疏奖励问题与奖励塑形 🎯
 
 ![](img/efa7d1c7ddcc63affe0cb1258c4fd167_5.png)
 

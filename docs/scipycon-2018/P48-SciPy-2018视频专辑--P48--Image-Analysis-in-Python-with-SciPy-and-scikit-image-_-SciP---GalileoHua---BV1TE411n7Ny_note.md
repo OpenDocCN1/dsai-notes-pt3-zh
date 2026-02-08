@@ -1,6 +1,6 @@
-![](img/5f6eab589fce803a1ae2363679a6a5aa_1.png)
-
 # 课程 P48：使用 SciPy 和 scikit-image 进行 Python 图像分析 🖼️
+
+![](img/5f6eab589fce803a1ae2363679a6a5aa_1.png)
 
 在本节课中，我们将学习如何使用 Python 的 SciPy 和 scikit-image 库进行图像分析。课程将从图像的基础表示开始，逐步深入到图像过滤、分割等高级主题，并通过解决实际问题来巩固所学知识。
 

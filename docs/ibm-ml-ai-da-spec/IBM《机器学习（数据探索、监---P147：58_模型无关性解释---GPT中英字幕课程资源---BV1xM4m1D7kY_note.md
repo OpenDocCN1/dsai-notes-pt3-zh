@@ -1,8 +1,8 @@
+# 机器学习课程 P147：模型无关性解释 🧠
+
 ![](img/00bba313dd7be614aecaf7e6d8802905_0.png)
 
 ![](img/00bba313dd7be614aecaf7e6d8802905_2.png)
-
-# 机器学习课程 P147：模型无关性解释 🧠
 
 ![](img/00bba313dd7be614aecaf7e6d8802905_4.png)
 

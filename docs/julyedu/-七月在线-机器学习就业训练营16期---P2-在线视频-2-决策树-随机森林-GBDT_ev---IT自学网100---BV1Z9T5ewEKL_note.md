@@ -1,6 +1,6 @@
-![](img/0d7cf4716f2a9fe62be8bbb35cdaa65d_0.png)
-
 # 机器学习就业训练营 - 第2课：决策树、随机森林与GBDT 🌲
+
+![](img/0d7cf4716f2a9fe62be8bbb35cdaa65d_0.png)
 
 ![](img/0d7cf4716f2a9fe62be8bbb35cdaa65d_2.png)
 

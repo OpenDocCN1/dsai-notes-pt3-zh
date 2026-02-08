@@ -1,6 +1,6 @@
-![](img/6ec77d472f7b28074430ad9a7a5d9e13_1.png)
-
 # 课程 P23：RL 方法 - 批量强化学习 🧠
+
+![](img/6ec77d472f7b28074430ad9a7a5d9e13_1.png)
 
 ![](img/6ec77d472f7b28074430ad9a7a5d9e13_2.png)
 

@@ -1,6 +1,6 @@
-![](img/c7ad889a0733d3b36efc86e0f5eea79d_1.png)
-
 # IBM应用人工智能（从0开始搭建AI机器人）｜课程P118：集成Watson Assistant与Discovery 🤖➡️📚
+
+![](img/c7ad889a0733d3b36efc86e0f5eea79d_1.png)
 
 在本节课中，我们将要学习如何将Watson Assistant与Watson Discovery服务集成，从而构建一个能够回答更广泛、更具体问题的智能聊天机器人。
 

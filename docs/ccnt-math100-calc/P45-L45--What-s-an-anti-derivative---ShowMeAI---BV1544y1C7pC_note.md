@@ -1,6 +1,6 @@
-![](img/1bcc34a7075fec2da43fdcf71e0d3862_1.png)
-
 # 📚 课程 P45：什么是原函数
+
+![](img/1bcc34a7075fec2da43fdcf71e0d3862_1.png)
 
 ![](img/1bcc34a7075fec2da43fdcf71e0d3862_2.png)
 

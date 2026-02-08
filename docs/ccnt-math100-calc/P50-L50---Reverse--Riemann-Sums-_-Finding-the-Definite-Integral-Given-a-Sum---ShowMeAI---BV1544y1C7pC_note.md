@@ -1,8 +1,8 @@
+# 📚 课程 P50：L50 - 从黎曼和反推定积分 🧮
+
 ![](img/4fc76f362102d00d3ccfefa344c1d89a_1.png)
 
 ![](img/4fc76f362102d00d3ccfefa344c1d89a_2.png)
-
-# 📚 课程 P50：L50 - 从黎曼和反推定积分 🧮
 
 ![](img/4fc76f362102d00d3ccfefa344c1d89a_4.png)
 

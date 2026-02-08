@@ -1,10 +1,10 @@
+# 课程名称：李宏毅机器学习课程 - P85：深度强化学习第三讲 - Q-learning (基本概念) 🧠🤖
+
 ![](img/bfffb4cd647ef3cf4d38c9da7911d03a_1.png)
 
 ![](img/bfffb4cd647ef3cf4d38c9da7911d03a_3.png)
 
 ![](img/bfffb4cd647ef3cf4d38c9da7911d03a_5.png)
-
-# 课程名称：李宏毅机器学习课程 - P85：深度强化学习第三讲 - Q-learning (基本概念) 🧠🤖
 
 ## 概述
 在本节课中，我们将要学习强化学习中的一种核心方法——Q-learning。我们将从Q-learning的基本概念开始，介绍其背后的两种价值函数，并详细讲解如何训练Q函数以及实际应用中的关键技巧。

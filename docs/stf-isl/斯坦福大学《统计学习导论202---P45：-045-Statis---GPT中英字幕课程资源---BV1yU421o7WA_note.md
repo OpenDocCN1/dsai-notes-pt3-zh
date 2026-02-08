@@ -1,6 +1,6 @@
-![](img/f66ac6b65a8a7c4793f408f46ac5f8bc_0.png)
-
 # 课程 6.R.2：前向逐步回归 📈
+
+![](img/f66ac6b65a8a7c4793f408f46ac5f8bc_0.png)
 
 ![](img/f66ac6b65a8a7c4793f408f46ac5f8bc_2.png)
 

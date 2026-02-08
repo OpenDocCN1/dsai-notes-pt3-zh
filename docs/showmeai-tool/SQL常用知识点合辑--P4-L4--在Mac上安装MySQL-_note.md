@@ -1,6 +1,6 @@
-![](img/00ef5f07fbdae9a975a3e66fe2b003c7_0.png)
-
 # SQL常用知识点合辑——P4：L4- 在Mac上安装MySQL 🍎
+
+![](img/00ef5f07fbdae9a975a3e66fe2b003c7_0.png)
 
 在本节课中，我们将学习如何在Mac电脑上安装MySQL数据库服务器及其图形化管理工具MySQL Workbench。整个过程分为下载、安装和配置连接几个主要步骤。
 

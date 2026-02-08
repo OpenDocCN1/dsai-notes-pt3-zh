@@ -1,6 +1,6 @@
-![](img/bc0584c0c75ba819fd45026dd17436ee_1.png)
-
 # 课程P63：4-选修-t-SNE介绍 🧠
+
+![](img/bc0584c0c75ba819fd45026dd17436ee_1.png)
 
 ![](img/bc0584c0c75ba819fd45026dd17436ee_3.png)
 

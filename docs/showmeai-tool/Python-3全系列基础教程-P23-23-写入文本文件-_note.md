@@ -1,6 +1,6 @@
-![](img/8456fb4bd663a45b00a3716ccc59148e_0.png)
-
 # Python 3全系列基础教程，P23：读取文本文件 📖
+
+![](img/8456fb4bd663a45b00a3716ccc59148e_0.png)
 
 ![](img/8456fb4bd663a45b00a3716ccc59148e_2.png)
 

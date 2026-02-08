@@ -1,6 +1,6 @@
-![](img/52c2bde06d7c760267046c43c0a9e2d9_0.png)
-
 # SQL常用知识点合辑——P19：L19- 跨数据库联接 🔗
+
+![](img/52c2bde06d7c760267046c43c0a9e2d9_0.png)
 
 ![](img/52c2bde06d7c760267046c43c0a9e2d9_0.png)
 

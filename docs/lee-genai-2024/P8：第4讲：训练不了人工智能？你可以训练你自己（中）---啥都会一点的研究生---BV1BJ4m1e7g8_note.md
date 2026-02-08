@@ -1,6 +1,6 @@
-![](img/8ecd837d8c7f062df40f4b8adbb7fc27_1.png)
-
 # 李宏毅2024春《生成式人工智能导论》 - P8：第4讲：训练不了人工智能？你可以训练你自己（中）🚀
+
+![](img/8ecd837d8c7f062df40f4b8adbb7fc27_1.png)
 
 ![](img/8ecd837d8c7f062df40f4b8adbb7fc27_3.png)
 

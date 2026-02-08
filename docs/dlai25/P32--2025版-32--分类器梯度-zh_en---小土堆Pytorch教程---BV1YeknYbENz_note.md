@@ -1,6 +1,6 @@
-![](img/4e8b10dcbc9aa41fafd4a1b80892c65f_0.png)
-
 # P32：分类器梯度法控制GAN生成 👓
+
+![](img/4e8b10dcbc9aa41fafd4a1b80892c65f_0.png)
 
 ![](img/4e8b10dcbc9aa41fafd4a1b80892c65f_2.png)
 

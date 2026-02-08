@@ -1,6 +1,6 @@
-![](img/7376838b6fac37f89f79dbaaedb141ba_0.png)
-
 # 课程 P44：TFRecord读取 - Dataset准备 🗂️
+
+![](img/7376838b6fac37f89f79dbaaedb141ba_0.png)
 
 在本节课中，我们将学习如何为Pascal VOC 2007数据集编写一个规范的Dataset读取函数。我们将使用TensorFlow的`slim`模块来构建一个标准的数据读取流程，该流程能够从TFRecord文件中解析出图像和标注信息。
 

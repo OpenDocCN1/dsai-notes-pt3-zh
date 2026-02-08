@@ -1,8 +1,8 @@
+# 课程 P57：构建用户友好的聊天机器人 🤖
+
 ![](img/f9ced88d4256bc0bf6b87eda442164f7_0.png)
 
 ![](img/f9ced88d4256bc0bf6b87eda442164f7_1.png)
-
-# 课程 P57：构建用户友好的聊天机器人 🤖
 
 ![](img/f9ced88d4256bc0bf6b87eda442164f7_3.png)
 

@@ -1,8 +1,8 @@
+# 课程 P87：L40.2 - YOLOv3 详解 🎯
+
 ![](img/b4f0ba3d39440d8992c42a0e923ba579_0.png)
 
 ![](img/b4f0ba3d39440d8992c42a0e923ba579_2.png)
-
-# 课程 P87：L40.2 - YOLOv3 详解 🎯
 
 ![](img/b4f0ba3d39440d8992c42a0e923ba579_4.png)
 

@@ -1,10 +1,10 @@
+# 课程 6：确定性最优控制 🎯
+
 ![](img/c12d7beb9be9f42658970bf06ae202a8_0.png)
 
 ![](img/c12d7beb9be9f42658970bf06ae202a8_2.png)
 
 ![](img/c12d7beb9be9f42658970bf06ae202a8_4.png)
-
-# 课程 6：确定性最优控制 🎯
 
 ![](img/c12d7beb9be9f42658970bf06ae202a8_6.png)
 

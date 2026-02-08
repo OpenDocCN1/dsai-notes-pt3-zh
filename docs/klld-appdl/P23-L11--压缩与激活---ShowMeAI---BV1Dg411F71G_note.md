@@ -1,3 +1,5 @@
+# 🧠 课程 P23：L11 - 压缩与激活网络 (Squeeze-and-Excitation Networks)
+
 ![](img/2a478ccbde3374f78e207ac29ff6f98a_0.png)
 
 ![](img/2a478ccbde3374f78e207ac29ff6f98a_2.png)
@@ -5,8 +7,6 @@
 ![](img/2a478ccbde3374f78e207ac29ff6f98a_4.png)
 
 ![](img/2a478ccbde3374f78e207ac29ff6f98a_6.png)
-
-# 🧠 课程 P23：L11 - 压缩与激活网络 (Squeeze-and-Excitation Networks)
 
 在本节课中，我们将学习一种名为“压缩与激活网络”的架构。该网络在ImageNet挑战赛中取得了优异的成绩，其核心思想非常巧妙。我们将详细解析其组成部分：压缩、激活和缩放，并了解如何将其作为构建模块集成到不同的神经网络中。
 

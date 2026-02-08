@@ -1,6 +1,6 @@
-![](img/fd9b27b7fd0e335f6c4d9644508a2751_0.png)
-
 # 课程 P48：L8.2 - 语义向量 📚
+
+![](img/fd9b27b7fd0e335f6c4d9644508a2751_0.png)
 
 ![](img/fd9b27b7fd0e335f6c4d9644508a2751_2.png)
 

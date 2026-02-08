@@ -1,6 +1,6 @@
-![](img/351fb93d60a6130df964b235d2de5e90_0.png)
-
 # LangChain大模型应用开发课程 P12：向量和嵌入 📚
+
+![](img/351fb93d60a6130df964b235d2de5e90_0.png)
 
 ![](img/351fb93d60a6130df964b235d2de5e90_2.png)
 

@@ -1,6 +1,6 @@
-![](img/aaa46bbeefbff26dd59c0470f7f37a3d_1.png)
-
 # 强化学习课程 P31：L18.3 - Actor-Critic 概述 🎯
+
+![](img/aaa46bbeefbff26dd59c0470f7f37a3d_1.png)
 
 在本节课中，我们将学习强化学习中的 **Actor-Critic** 方法。我们将首先介绍 **Critic** 的概念及其作用，然后讲解如何训练 Critic，最后探讨如何将 Critic 与 Actor 结合，以更有效地训练智能体。
 

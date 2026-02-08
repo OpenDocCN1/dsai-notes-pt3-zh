@@ -1,6 +1,6 @@
-![](img/b27be91e6c417d6dbab1ce90f6768e92_1.png)
-
 # 课程P34：4-输入数据处理方法 📊
+
+![](img/b27be91e6c417d6dbab1ce90f6768e92_1.png)
 
 ![](img/b27be91e6c417d6dbab1ce90f6768e92_3.png)
 

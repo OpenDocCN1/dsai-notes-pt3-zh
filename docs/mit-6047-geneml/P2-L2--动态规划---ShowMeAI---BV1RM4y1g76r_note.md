@@ -1,8 +1,8 @@
+# P2：L2- 动态规划 - ShowMeAI - BV1RM4y1g76r
+
 ![](img/6df99e604680666519be9aa0561efd45_0.png)
 
 ![](img/6df99e604680666519be9aa0561efd45_2.png)
-
-# P2：L2- 动态规划 - ShowMeAI - BV1RM4y1g76r
 
 ![](img/6df99e604680666519be9aa0561efd45_4.png)
 

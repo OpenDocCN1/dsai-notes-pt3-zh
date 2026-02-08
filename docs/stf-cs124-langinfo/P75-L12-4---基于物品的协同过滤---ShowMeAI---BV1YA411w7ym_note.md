@@ -1,6 +1,6 @@
-![](img/571076d79d2c423c2eafa974f9ec0b48_0.png)
-
 # 课程 P75：L12.4 - 基于物品的协同过滤 🎬
+
+![](img/571076d79d2c423c2eafa974f9ec0b48_0.png)
 
 ![](img/571076d79d2c423c2eafa974f9ec0b48_0.png)
 

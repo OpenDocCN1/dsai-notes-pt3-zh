@@ -1,6 +1,6 @@
-![](img/8491364e80cc699dfa38baab843a1855_1.png)
-
 # 课程：MLOps ｜ 机器学习运维（Python基础）- P91：API最佳实践 🚀
+
+![](img/8491364e80cc699dfa38baab843a1855_1.png)
 
 在本节课中，我们将学习构建API时应遵循的一些核心最佳实践。我们将重点探讨HTTP状态码的正确使用、不同HTTP请求方法（如GET、POST、PUT、HEAD）的适用场景，以及编写良好API文档的重要性。
 

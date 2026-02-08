@@ -1,6 +1,6 @@
-![](img/b7090f6ba35657c8baf6c44047933359_1.png)
-
 # 构建高级RAG应用 - 课程4：句子窗口检索 (Sentence Window Retrieval) 📚
+
+![](img/b7090f6ba35657c8baf6c44047933359_1.png)
 
 ![](img/b7090f6ba35657c8baf6c44047933359_3.png)
 

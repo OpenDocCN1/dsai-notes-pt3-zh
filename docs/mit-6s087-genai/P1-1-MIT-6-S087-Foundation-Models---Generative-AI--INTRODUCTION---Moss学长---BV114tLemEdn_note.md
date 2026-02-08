@@ -1,6 +1,6 @@
-![](img/f6dd04489ccf3c7c36ec39fb3fef5540_1.png)
-
 # 课程 P1：基础模型与生成式人工智能导论 🧠
+
+![](img/f6dd04489ccf3c7c36ec39fb3fef5540_1.png)
 
 ![](img/f6dd04489ccf3c7c36ec39fb3fef5540_3.png)
 

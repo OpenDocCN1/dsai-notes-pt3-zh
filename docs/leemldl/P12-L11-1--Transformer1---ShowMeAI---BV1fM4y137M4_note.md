@@ -1,6 +1,6 @@
-![](img/f7d02a5e70f1deb698537e2b40a98494_1.png)
-
 # 课程 P12：L11.1 - Transformer 1 🧠
+
+![](img/f7d02a5e70f1deb698537e2b40a98494_1.png)
 
 在本节课中，我们将要学习 Transformer 模型的基本概念，特别是其作为序列到序列（Sequence-to-Sequence）模型的核心思想及其在多种任务中的应用。我们将从序列到序列模型的定义开始，逐步深入到 Transformer 的编码器（Encoder）部分。
 

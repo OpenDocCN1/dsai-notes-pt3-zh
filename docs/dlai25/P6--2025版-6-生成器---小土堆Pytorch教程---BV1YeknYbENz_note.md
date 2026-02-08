@@ -1,6 +1,6 @@
-![](img/767b773a3e83dc744f15e5ba6913dd76_0.png)
-
 # P6：【2025版】6.生成器 - 小土堆Pytorch教程 - BV1YeknYbENz
+
+![](img/767b773a3e83dc744f15e5ba6913dd76_0.png)
 
 ![](img/767b773a3e83dc744f15e5ba6913dd76_2.png)
 

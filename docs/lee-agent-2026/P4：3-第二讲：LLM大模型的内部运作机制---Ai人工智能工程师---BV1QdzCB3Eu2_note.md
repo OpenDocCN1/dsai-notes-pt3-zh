@@ -1,8 +1,8 @@
+# 课程02：LLM大模型的内部运作机制 🧠
+
 ![](img/be46699daac1cf19b21e55d669c57f9a_1.png)
 
 ![](img/be46699daac1cf19b21e55d669c57f9a_3.png)
-
-# 课程02：LLM大模型的内部运作机制 🧠
 
 ![](img/be46699daac1cf19b21e55d669c57f9a_5.png)
 

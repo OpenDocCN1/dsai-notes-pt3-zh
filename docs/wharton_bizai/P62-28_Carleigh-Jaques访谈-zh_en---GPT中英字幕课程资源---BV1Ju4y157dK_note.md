@@ -1,6 +1,6 @@
-![](img/494b2951fa831dc0eef0d5b1267f04e4_1.png)
-
 # 课程P62：Visa与CyberSource中的AI应用 🏦🤖
+
+![](img/494b2951fa831dc0eef0d5b1267f04e4_1.png)
 
 ![](img/494b2951fa831dc0eef0d5b1267f04e4_2.png)
 

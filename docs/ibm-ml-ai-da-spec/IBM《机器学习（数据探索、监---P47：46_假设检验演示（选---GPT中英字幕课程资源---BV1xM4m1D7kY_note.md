@@ -1,6 +1,6 @@
-![](img/9971ad9aa29e3c02756fef2ccc84002f_1.png)
-
 # 机器学习课程 P47：假设检验演示（第二部分）🔬
+
+![](img/9971ad9aa29e3c02756fef2ccc84002f_1.png)
 
 ![](img/9971ad9aa29e3c02756fef2ccc84002f_3.png)
 

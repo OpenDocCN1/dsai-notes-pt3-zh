@@ -1,10 +1,10 @@
+# 课程 P19：模型编辑 (Model Editing) 作业详解 📝
+
 ![](img/c0b7c90900b8f80ddc9de5827bfa0faf_1.png)
 
 ![](img/c0b7c90900b8f80ddc9de5827bfa0faf_3.png)
 
 ![](img/c0b7c90900b8f80ddc9de5827bfa0faf_5.png)
-
-# 课程 P19：模型编辑 (Model Editing) 作业详解 📝
 
 ![](img/c0b7c90900b8f80ddc9de5827bfa0faf_7.png)
 

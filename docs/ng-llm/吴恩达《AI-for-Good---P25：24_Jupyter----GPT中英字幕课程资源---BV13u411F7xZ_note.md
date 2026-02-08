@@ -1,6 +1,6 @@
-![](img/fa8e663da1e5b32bf6e7505033381334_0.png)
-
 # 课程25：Jupyter Notebook实验室简介 🧪
+
+![](img/fa8e663da1e5b32bf6e7505033381334_0.png)
 
 在本节课中，我们将学习如何开始第一个实验，并演示你将使用的Jupyter Notebook环境的一些基本功能。
 

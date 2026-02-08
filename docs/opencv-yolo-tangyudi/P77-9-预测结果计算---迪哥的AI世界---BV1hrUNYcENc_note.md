@@ -1,6 +1,6 @@
-![](img/1ea137e8f745b5e5e3f51b5df975f840_1.png)
-
 # 课程P77：9-预测结果计算 📊
+
+![](img/1ea137e8f745b5e5e3f51b5df975f840_1.png)
 
 ![](img/1ea137e8f745b5e5e3f51b5df975f840_3.png)
 

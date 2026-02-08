@@ -1,8 +1,8 @@
+# 课程 P55：L8.5 - PyTorch 中的逻辑回归 - 代码示例 📝
+
 ![](img/eb410a541f0e309c0b9d6e6b05498cf9_1.png)
 
 ![](img/eb410a541f0e309c0b9d6e6b05498cf9_3.png)
-
-# 课程 P55：L8.5 - PyTorch 中的逻辑回归 - 代码示例 📝
 
 ![](img/eb410a541f0e309c0b9d6e6b05498cf9_5.png)
 

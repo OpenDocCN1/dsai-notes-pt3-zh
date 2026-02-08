@@ -1,6 +1,6 @@
-![](img/92f808ab9f73782d8d11bd07a414de67_1.png)
-
 # 课程 P41：CS 182 讲座 13 第 3 部分 - NLP 中的 BERT 🧠
+
+![](img/92f808ab9f73782d8d11bd07a414de67_1.png)
 
 ![](img/92f808ab9f73782d8d11bd07a414de67_3.png)
 

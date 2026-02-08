@@ -1,8 +1,8 @@
+# 课程01：AI概念与策略概述 🧠
+
 ![](img/0cc4ab836564d1a1efa8c0df497e2dbd_0.png)
 
 ![](img/0cc4ab836564d1a1efa8c0df497e2dbd_1.png)
-
-# 课程01：AI概念与策略概述 🧠
 
 ![](img/0cc4ab836564d1a1efa8c0df497e2dbd_2.png)
 

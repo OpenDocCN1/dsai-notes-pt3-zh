@@ -1,6 +1,6 @@
-![](img/b6489ecdfb895d780a788141c7d67ce7_0.png)
-
 # P64：数据增强的利与弊 📊
+
+![](img/b6489ecdfb895d780a788141c7d67ce7_0.png)
 
 ![](img/b6489ecdfb895d780a788141c7d67ce7_2.png)
 

@@ -1,10 +1,10 @@
+# 统计学习导论｜课程9b：分段多项式与样条回归 📈
+
 ![](img/ef70dc32dbfb60a76e750fe978587b8f_0.png)
 
 ![](img/ef70dc32dbfb60a76e750fe978587b8f_2.png)
 
 ![](img/ef70dc32dbfb60a76e750fe978587b8f_4.png)
-
-# 统计学习导论｜课程9b：分段多项式与样条回归 📈
 
 ![](img/ef70dc32dbfb60a76e750fe978587b8f_6.png)
 

@@ -1,6 +1,6 @@
-![](img/de1893052e22abdfa2edf0acf483e018_0.png)
-
 # 斯坦福大学《统计学习导论2023R语言版》课程笔记 - P63：支持向量分类器 📘
+
+![](img/de1893052e22abdfa2edf0acf483e018_0.png)
 
 ![](img/de1893052e22abdfa2edf0acf483e018_2.png)
 

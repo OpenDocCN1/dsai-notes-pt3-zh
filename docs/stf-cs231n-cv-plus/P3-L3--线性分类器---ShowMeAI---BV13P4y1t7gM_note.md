@@ -1,8 +1,8 @@
+# 🧠 P3：L3- 线性分类器
+
 ![](img/c3cc259ced953d9c22f94117e0ec71a6_1.png)
 
 ![](img/c3cc259ced953d9c22f94117e0ec71a6_3.png)
-
-# 🧠 P3：L3- 线性分类器
 
 ![](img/c3cc259ced953d9c22f94117e0ec71a6_5.png)
 

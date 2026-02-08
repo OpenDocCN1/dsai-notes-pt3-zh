@@ -1,6 +1,6 @@
-![](img/ab6ccf0654a1f2b1f06828cdf0bdc0be_0.png)
-
 # 课程名称：自然语言处理｜P30：29_向量空间模型 🧠📊
+
+![](img/ab6ccf0654a1f2b1f06828cdf0bdc0be_0.png)
 
 ## 概述
 

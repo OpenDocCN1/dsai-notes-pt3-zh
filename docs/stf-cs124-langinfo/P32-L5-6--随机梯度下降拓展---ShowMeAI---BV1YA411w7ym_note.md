@@ -1,6 +1,6 @@
-![](img/1c4f0cfbab04025467a50f9713fb03e3_0.png)
-
 # 课程 P32：L5.6 - 随机梯度下降拓展 🚀
+
+![](img/1c4f0cfbab04025467a50f9713fb03e3_0.png)
 
 ![](img/1c4f0cfbab04025467a50f9713fb03e3_0.png)
 

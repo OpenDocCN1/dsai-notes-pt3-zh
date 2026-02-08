@@ -1,10 +1,10 @@
-![](img/5d0ae53686ce609106fa205ad734fe6c_1.png)
-
 # 人工智能—Kaggle实战公开课（七月在线出品） - P2：零基础入门Kaggle竞赛 🚀
 
-![](img/5d0ae53686ce609106fa205ad734fe6c_3.png)
+![](img/5d0ae53686ce609106fa205ad734fe6c_1.png)
 
 ## 概述
+
+![](img/5d0ae53686ce609106fa205ad734fe6c_3.png)
 
 ![](img/5d0ae53686ce609106fa205ad734fe6c_5.png)
 

@@ -1,8 +1,8 @@
+# IBM应用人工智能（从0开始搭建AI机器人）｜课程P99：使用Flask创建Web应用程序 🚀
+
 ![](img/dd95a412911bb50ce266649daeb5fd9f_0.png)
 
 ![](img/dd95a412911bb50ce266649daeb5fd9f_1.png)
-
-# IBM应用人工智能（从0开始搭建AI机器人）｜课程P99：使用Flask创建Web应用程序 🚀
 
 ![](img/dd95a412911bb50ce266649daeb5fd9f_3.png)
 

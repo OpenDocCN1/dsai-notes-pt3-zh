@@ -1,6 +1,6 @@
-![](img/2b1726ac3f3efec4c4093c68f46e0d62_0.png)
-
 # 📘 课程 P53：L19.1 - 受约束的非线性最小二乘法
+
+![](img/2b1726ac3f3efec4c4093c68f46e0d62_0.png)
 
 ![](img/2b1726ac3f3efec4c4093c68f46e0d62_2.png)
 

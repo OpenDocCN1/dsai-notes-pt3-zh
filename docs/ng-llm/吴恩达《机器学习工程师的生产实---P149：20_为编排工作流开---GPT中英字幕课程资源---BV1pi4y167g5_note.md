@@ -1,6 +1,6 @@
-![](img/336035c952f8220ffce5f6e7eddbfd93_0.png)
-
 # 课程 P149：20_为编排工作流开发组件 🧩
+
+![](img/336035c952f8220ffce5f6e7eddbfd93_0.png)
 
 ![](img/336035c952f8220ffce5f6e7eddbfd93_2.png)
 

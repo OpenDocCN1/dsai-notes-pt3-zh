@@ -1,6 +1,6 @@
-![](img/0ca5dfbb4a99ff7c74026b7b4989e47f_1.png)
-
 # PySpark 大数据处理入门 P4：L4 - PySpark DataFrames 过滤操作 🔍
+
+![](img/0ca5dfbb4a99ff7c74026b7b4989e47f_1.png)
 
 ## 概述
 在本节课中，我们将要学习 PySpark DataFrames 的过滤操作。过滤是数据预处理中的一项关键技术，它允许我们根据指定的布尔条件从数据集中检索出符合条件的记录。

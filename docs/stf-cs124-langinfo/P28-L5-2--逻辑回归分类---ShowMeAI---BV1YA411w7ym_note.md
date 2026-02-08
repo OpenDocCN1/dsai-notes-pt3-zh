@@ -1,6 +1,6 @@
-![](img/d6b049281decbf37247b970b5a9b3eca_0.png)
-
 # 📚 课程 P28：L5.2 - 逻辑回归分类
+
+![](img/d6b049281decbf37247b970b5a9b3eca_0.png)
 
 ![](img/d6b049281decbf37247b970b5a9b3eca_2.png)
 

@@ -1,6 +1,6 @@
-![](img/079f515f9f8c4e59b544aa2ef0b9e96a_0.png)
-
 # 课程9.3：特征扩展与支持向量机 📈
+
+![](img/079f515f9f8c4e59b544aa2ef0b9e96a_0.png)
 
 ![](img/079f515f9f8c4e59b544aa2ef0b9e96a_2.png)
 

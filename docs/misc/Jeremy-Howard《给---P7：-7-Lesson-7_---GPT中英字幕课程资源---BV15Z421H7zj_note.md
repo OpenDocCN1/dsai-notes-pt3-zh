@@ -1,3 +1,5 @@
+# 深度学习实践课程1｜第7课：神经网络内部机制与多目标模型 🧠
+
 ![](img/8d593dbe98ab6a1d7e1641b2ccccb731_1.png)
 
 ![](img/8d593dbe98ab6a1d7e1641b2ccccb731_3.png)
@@ -7,8 +9,6 @@
 ![](img/8d593dbe98ab6a1d7e1641b2ccccb731_7.png)
 
 ![](img/8d593dbe98ab6a1d7e1641b2ccccb731_9.png)
-
-# 深度学习实践课程1｜第7课：神经网络内部机制与多目标模型 🧠
 
 ![](img/8d593dbe98ab6a1d7e1641b2ccccb731_11.png)
 

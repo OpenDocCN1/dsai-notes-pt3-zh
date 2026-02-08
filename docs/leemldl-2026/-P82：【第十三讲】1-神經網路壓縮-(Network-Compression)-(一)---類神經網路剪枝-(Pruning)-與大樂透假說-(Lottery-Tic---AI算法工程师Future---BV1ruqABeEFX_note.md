@@ -1,6 +1,6 @@
-![](img/a6e60307ceaa4ef18b775c3de5262174_1.png)
-
 # 课程13：神经网络压缩（一）—— 神经网络剪枝与大乐透假说 🧠✂️
+
+![](img/a6e60307ceaa4ef18b775c3de5262174_1.png)
 
 在本节课中，我们将学习神经网络压缩（Network Compression）技术，特别是神经网络剪枝（Pruning）方法。我们将探讨为何需要压缩模型、剪枝的基本原理与步骤，并分析著名的“大乐透假说”（Lottery Ticket Hypothesis）及其争议。
 

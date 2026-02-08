@@ -1,6 +1,6 @@
-![](img/d11652f6d675784ee1d00f026ac00f6f_0.png)
-
 # PyTorch深度学习课程 #44：核心PyTorch模型构建类详解 🧱
+
+![](img/d11652f6d675784ee1d00f026ac00f6f_0.png)
 
 在本节课中，我们将详细解析构建PyTorch模型时最核心的几个类。理解这些基础组件是掌握PyTorch的关键。
 

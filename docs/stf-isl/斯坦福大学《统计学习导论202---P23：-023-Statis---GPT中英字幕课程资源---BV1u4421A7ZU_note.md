@@ -1,6 +1,6 @@
-![](img/984d077dbfa0a25dad8f8df340656042_1.png)
-
 # 斯坦福大学《统计学习导论2023Python版》课程笔记 - P23：多元逻辑回归 📊
+
+![](img/984d077dbfa0a25dad8f8df340656042_1.png)
 
 ![](img/984d077dbfa0a25dad8f8df340656042_3.png)
 

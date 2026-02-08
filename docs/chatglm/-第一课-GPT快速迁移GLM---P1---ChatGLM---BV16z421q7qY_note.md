@@ -1,6 +1,6 @@
-![](img/af5fac66acc8cd8fa0b71023d3a05a5a_1.png)
-
 # 第一课：从GPT快速迁移到ChatGLM 🚀
+
+![](img/af5fac66acc8cd8fa0b71023d3a05a5a_1.png)
 
 在本节课中，我们将学习如何将现有的、基于OpenAI GPT模型的代码，快速迁移到使用智谱AI的ChatGLM模型。整个过程只需修改少量配置，无需重写核心业务逻辑。
 

@@ -1,6 +1,6 @@
-![](img/bbdf9cae52c0c953b76e16e0fe5e22ce_0.png)
-
 # 课程 P67：L11.5 - 基于帧的对话系统架构 🏗️
+
+![](img/bbdf9cae52c0c953b76e16e0fe5e22ce_0.png)
 
 ![](img/bbdf9cae52c0c953b76e16e0fe5e22ce_0.png)
 

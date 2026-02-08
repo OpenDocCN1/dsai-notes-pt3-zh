@@ -1,6 +1,6 @@
-![](img/3c5cd0a856eb936b143add6a293ab378_1.png)
-
 # 课程 P80：L10.5.4 - PyTorch 中的 Dropout 🧠
+
+![](img/3c5cd0a856eb936b143add6a293ab378_1.png)
 
 在本节课中，我们将学习如何在 PyTorch 中实际实现和应用 Dropout 技术。我们将从理解“反转 Dropout”的概念开始，然后通过代码示例展示如何在神经网络中添加 Dropout 层，并讨论相关的实践技巧。
 

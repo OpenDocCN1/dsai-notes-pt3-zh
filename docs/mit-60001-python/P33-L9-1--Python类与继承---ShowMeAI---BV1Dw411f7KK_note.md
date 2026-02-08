@@ -1,10 +1,10 @@
+# 🐍 P33：L9.1 - Python类与继承教程
+
 ![](img/240a848cb170b6031b7dbcf28d6b132b_0.png)
 
 ![](img/240a848cb170b6031b7dbcf28d6b132b_2.png)
 
 ![](img/240a848cb170b6031b7dbcf28d6b132b_3.png)
-
-# 🐍 P33：L9.1 - Python类与继承教程
 
 ![](img/240a848cb170b6031b7dbcf28d6b132b_5.png)
 

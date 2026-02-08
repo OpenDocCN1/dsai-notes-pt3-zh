@@ -1,6 +1,6 @@
-![](img/11ce409dfa8ea556d57a303efb43ba9f_1.png)
-
 # IBM应用人工智能（从0开始搭建AI机器人）｜课程P116：理解Watson Discovery 🧠
+
+![](img/11ce409dfa8ea556d57a303efb43ba9f_1.png)
 
 在本节课中，我们将要学习IBM Cloud上最酷的服务之一——Watson Discovery。我们将了解它如何作为一个高级的洞察引擎，利用人工智能能力从数据中提取有价值的信息。
 

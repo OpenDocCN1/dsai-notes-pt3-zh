@@ -1,6 +1,6 @@
-![](img/cc9141875dbcc8c4f438d1c801c2d53e_0.png)
-
 # 课程 P27：L10.1 - 矩阵乘法 🧮
+
+![](img/cc9141875dbcc8c4f438d1c801c2d53e_0.png)
 
 ![](img/cc9141875dbcc8c4f438d1c801c2d53e_2.png)
 

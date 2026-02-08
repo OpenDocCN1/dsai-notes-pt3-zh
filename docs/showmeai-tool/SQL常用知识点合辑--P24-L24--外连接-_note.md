@@ -1,6 +1,6 @@
-![](img/f8df46f601a08cab13c11a5e4f1fe4d4_0.png)
-
 # SQL常用知识点合辑——P24：L24- 外连接 🧩
+
+![](img/f8df46f601a08cab13c11a5e4f1fe4d4_0.png)
 
 ![](img/f8df46f601a08cab13c11a5e4f1fe4d4_0.png)
 

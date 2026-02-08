@@ -1,6 +1,6 @@
-![](img/f786623e1d031b713afaeedcc78bf7c0_0.png)
-
 # 课程名称：空气质量最邻近方法 🏙️
+
+![](img/f786623e1d031b713afaeedcc78bf7c0_0.png)
 
 ## 概述
 

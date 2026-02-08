@@ -1,6 +1,6 @@
-![](img/2201e8f2fa51fbefc9265e6496f84a28_0.png)
-
 # 课程 70：无监督学习 📊
+
+![](img/2201e8f2fa51fbefc9265e6496f84a28_0.png)
 
 ![](img/2201e8f2fa51fbefc9265e6496f84a28_2.png)
 

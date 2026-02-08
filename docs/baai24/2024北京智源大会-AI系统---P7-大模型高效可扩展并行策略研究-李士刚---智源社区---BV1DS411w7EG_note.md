@@ -1,6 +1,6 @@
-![](img/bfafde344a2efb6eb28a3dda582109c1_0.png)
-
 # 课程名称：大模型高效可扩展并行策略研究（P7）🚀
+
+![](img/bfafde344a2efb6eb28a3dda582109c1_0.png)
 
 ![](img/bfafde344a2efb6eb28a3dda582109c1_2.png)
 

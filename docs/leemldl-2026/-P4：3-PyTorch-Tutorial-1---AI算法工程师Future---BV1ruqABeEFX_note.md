@@ -1,3 +1,5 @@
+# 课程 P4：PyTorch 入门教程 - 1 🚀
+
 ![](img/c1be6461eafac84e9f3cb450f666a5f2_0.png)
 
 ![](img/c1be6461eafac84e9f3cb450f666a5f2_2.png)
@@ -7,8 +9,6 @@
 ![](img/c1be6461eafac84e9f3cb450f666a5f2_5.png)
 
 ![](img/c1be6461eafac84e9f3cb450f666a5f2_7.png)
-
-# 课程 P4：PyTorch 入门教程 - 1 🚀
 
 ![](img/c1be6461eafac84e9f3cb450f666a5f2_9.png)
 

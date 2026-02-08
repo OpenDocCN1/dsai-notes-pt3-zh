@@ -1,3 +1,5 @@
+# 🧠 P6：L6-神经网络
+
 ![](img/e3bbdee916775b6931caeacad960048d_0.png)
 
 ![](img/e3bbdee916775b6931caeacad960048d_2.png)
@@ -11,8 +13,6 @@
 ![](img/e3bbdee916775b6931caeacad960048d_10.png)
 
 ![](img/e3bbdee916775b6931caeacad960048d_12.png)
-
-# 🧠 P6：L6-神经网络
 
 ![](img/e3bbdee916775b6931caeacad960048d_14.png)
 

@@ -1,6 +1,6 @@
-![](img/f7a31ddb6db81c87f5b86cc36d385be0_1.png)
-
 # 课程P46：5-选修-GAN理论-1 🧠
+
+![](img/f7a31ddb6db81c87f5b86cc36d385be0_1.png)
 
 ![](img/f7a31ddb6db81c87f5b86cc36d385be0_3.png)
 

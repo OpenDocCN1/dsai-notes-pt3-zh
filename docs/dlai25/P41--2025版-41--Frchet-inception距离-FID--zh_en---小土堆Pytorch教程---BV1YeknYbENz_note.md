@@ -1,6 +1,6 @@
-![](img/6b47e171bf612c15cd2ce5a6eb608a54_1.png)
-
 # 课程P41：Fréchet Inception距离 (FID) 🧮
+
+![](img/6b47e171bf612c15cd2ce5a6eb608a54_1.png)
 
 ![](img/6b47e171bf612c15cd2ce5a6eb608a54_3.png)
 

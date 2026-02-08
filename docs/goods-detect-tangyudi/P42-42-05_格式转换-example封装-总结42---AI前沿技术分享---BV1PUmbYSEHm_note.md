@@ -1,6 +1,6 @@
-![](img/8ccd09ec026d2b0dffb9add06ac37e61_0.png)
-
 # 课程 P42：42.05_格式转换：example封装与总结 📚
+
+![](img/8ccd09ec026d2b0dffb9add06ac37e61_0.png)
 
 在本节课中，我们将学习如何将读取到的图片和XML标注数据，封装成TensorFlow的`tf.train.Example`格式，并最终写入TFRecord文件。这是构建高效数据管道的关键一步。
 

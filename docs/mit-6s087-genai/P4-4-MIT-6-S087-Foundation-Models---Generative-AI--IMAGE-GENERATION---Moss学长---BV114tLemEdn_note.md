@@ -1,6 +1,6 @@
-![](img/e88a8adab4afa05464858710cb85703a_1.png)
-
 # 课程 P4：图像生成与稳定扩散模型 🖼️
+
+![](img/e88a8adab4afa05464858710cb85703a_1.png)
 
 ![](img/e88a8adab4afa05464858710cb85703a_3.png)
 

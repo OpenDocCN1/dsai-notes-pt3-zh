@@ -1,6 +1,6 @@
-![](img/6755031791135bcfe46cba5a2d5e67ec_0.png)
-
 # Python 3全系列基础教程，P13：Python流控制：For 循环 🔄
+
+![](img/6755031791135bcfe46cba5a2d5e67ec_0.png)
 
 ![](img/6755031791135bcfe46cba5a2d5e67ec_2.png)
 

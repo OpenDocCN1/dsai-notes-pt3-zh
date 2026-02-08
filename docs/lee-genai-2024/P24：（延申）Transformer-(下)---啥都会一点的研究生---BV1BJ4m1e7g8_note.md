@@ -1,6 +1,6 @@
-![](img/71d2ee06f17c84b66593b5ff8ecea3ea_1.png)
-
 # 李宏毅2024春《生成式人工智能导论》 - P24：（延申）Transformer (下) 🧠
+
+![](img/71d2ee06f17c84b66593b5ff8ecea3ea_1.png)
 
 在本节课中，我们将要学习Transformer模型中的解码器（Decoder）部分，了解其工作原理、内部结构、与编码器的交互方式，以及训练这类序列到序列（Sequence-to-Sequence）模型时的一些关键技巧和挑战。
 

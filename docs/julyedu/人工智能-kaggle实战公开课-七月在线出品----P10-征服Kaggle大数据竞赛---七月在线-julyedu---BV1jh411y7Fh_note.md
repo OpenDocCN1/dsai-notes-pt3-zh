@@ -1,10 +1,10 @@
+# 人工智能—Kaggle实战公开课（七月在线出品） - P10：征服Kaggle大数据竞赛 🚀
+
 ![](img/14b1ffbecff560f0e2ba4e561533e361_0.png)
 
 ![](img/14b1ffbecff560f0e2ba4e561533e361_2.png)
 
 ![](img/14b1ffbecff560f0e2ba4e561533e361_4.png)
-
-# 人工智能—Kaggle实战公开课（七月在线出品） - P10：征服Kaggle大数据竞赛 🚀
 
 ![](img/14b1ffbecff560f0e2ba4e561533e361_6.png)
 

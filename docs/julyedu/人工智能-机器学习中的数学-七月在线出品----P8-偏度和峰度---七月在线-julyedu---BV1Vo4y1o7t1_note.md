@@ -1,6 +1,6 @@
-![](img/af75f37bd2658eaaf258c2e1fb97a63d_1.png)
-
 # 人工智能—机器学习中的数学（七月在线出品） - P8：偏度和峰度 📊
+
+![](img/af75f37bd2658eaaf258c2e1fb97a63d_1.png)
 
 ![](img/af75f37bd2658eaaf258c2e1fb97a63d_3.png)
 

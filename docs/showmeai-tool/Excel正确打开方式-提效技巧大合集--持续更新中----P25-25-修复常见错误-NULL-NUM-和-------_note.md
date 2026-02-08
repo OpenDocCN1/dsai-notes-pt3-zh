@@ -1,6 +1,6 @@
-![](img/f281ca6b5e382dc30865e6776ee9bd66_0.png)
-
 # Excel常见错误修复教程（P25）🔧
+
+![](img/f281ca6b5e382dc30865e6776ee9bd66_0.png)
 
 ## 概述
 

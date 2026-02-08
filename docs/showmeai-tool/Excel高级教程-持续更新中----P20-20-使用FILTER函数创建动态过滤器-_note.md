@@ -1,6 +1,6 @@
-![](img/1038e6b4de2b2640d751ead9caf1bace_0.png)
-
 # Excel高级教程（持续更新中） - P20：20）使用FILTER函数创建动态过滤器 🎬
+
+![](img/1038e6b4de2b2640d751ead9caf1bace_0.png)
 
 ![](img/1038e6b4de2b2640d751ead9caf1bace_0.png)
 

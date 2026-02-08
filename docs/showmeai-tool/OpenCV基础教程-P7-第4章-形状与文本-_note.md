@@ -1,6 +1,6 @@
-![](img/8a937ccf6391fb83a5e9a49c5cfde311_0.png)
-
 # OpenCV基础教程，P7：第4章：形状与文本 🎨
+
+![](img/8a937ccf6391fb83a5e9a49c5cfde311_0.png)
 
 ![](img/8a937ccf6391fb83a5e9a49c5cfde311_0.png)
 

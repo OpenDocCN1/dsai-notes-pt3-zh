@@ -1,6 +1,6 @@
-![](img/24049a7d231808b7737bdbeaacb130b8_1.png)
-
 # 🖼️ 课程 P15：L10.2 - 可用于图像理解的场景图谱
+
+![](img/24049a7d231808b7737bdbeaacb130b8_1.png)
 
 ![](img/24049a7d231808b7737bdbeaacb130b8_3.png)
 

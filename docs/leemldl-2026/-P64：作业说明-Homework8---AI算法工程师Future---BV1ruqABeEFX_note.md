@@ -1,6 +1,6 @@
-![](img/9403bbde9ce8e895b3dec0135918d9e9_0.png)
-
 # 课程：李宏毅机器学习系统课程 - P64：作业8说明 🧠
+
+![](img/9403bbde9ce8e895b3dec0135918d9e9_0.png)
 
 ![](img/9403bbde9ce8e895b3dec0135918d9e9_2.png)
 

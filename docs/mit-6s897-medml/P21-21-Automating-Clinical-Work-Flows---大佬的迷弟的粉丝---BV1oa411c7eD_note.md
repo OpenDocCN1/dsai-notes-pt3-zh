@@ -1,10 +1,10 @@
+# 课程 P21：自动化临床工作流 🏥
+
 ![](img/bf3ae81906611e60eaea0e70c1482d54_0.png)
 
 ![](img/bf3ae81906611e60eaea0e70c1482d54_1.png)
 
 ![](img/bf3ae81906611e60eaea0e70c1482d54_2.png)
-
-# 课程 P21：自动化临床工作流 🏥
 
 ![](img/bf3ae81906611e60eaea0e70c1482d54_4.png)
 

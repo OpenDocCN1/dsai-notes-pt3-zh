@@ -1,6 +1,6 @@
-![](img/fbd9561f458f1a21f83ba8520b44bf05_0.png)
-
 # 课程15：元学习作业说明 📚
+
+![](img/fbd9561f458f1a21f83ba8520b44bf05_0.png)
 
 ![](img/fbd9561f458f1a21f83ba8520b44bf05_2.png)
 

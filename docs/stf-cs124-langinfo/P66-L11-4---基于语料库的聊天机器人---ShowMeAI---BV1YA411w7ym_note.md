@@ -1,6 +1,6 @@
-![](img/b82ac6494d6fd319bb87364bf6ca9dc0_0.png)
-
 # 课程 P66：L11.4 - 基于语料库的聊天机器人 🤖
+
+![](img/b82ac6494d6fd319bb87364bf6ca9dc0_0.png)
 
 ![](img/b82ac6494d6fd319bb87364bf6ca9dc0_2.png)
 

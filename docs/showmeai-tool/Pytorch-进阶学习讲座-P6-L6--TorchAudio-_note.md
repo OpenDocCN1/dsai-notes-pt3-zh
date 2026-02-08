@@ -1,6 +1,6 @@
-![](img/d47b4dd266be755b011d1bea67152b4b_1.png)
-
 # PyTorch 进阶学习讲座！P6：L6 - TorchAudio 🎼
+
+![](img/d47b4dd266be755b011d1bea67152b4b_1.png)
 
 在本节课中，我们将学习 PyTorch 的音频处理库 **TorchAudio**。我们将了解它的核心功能、设计目标以及如何利用它来构建音频处理管道。
 

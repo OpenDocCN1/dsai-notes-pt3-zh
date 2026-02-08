@@ -1,6 +1,6 @@
-![](img/ca171af6ee2ab9ea3a3f8cc58bab6356_1.png)
-
 # 课程名称：MLOps ｜ 机器学习运维（Python基础） - P72：安装Azure命令行界面(CLI) 🛠️
+
+![](img/ca171af6ee2ab9ea3a3f8cc58bab6356_1.png)
 
 在本节课中，我们将学习如何安装和配置Azure命令行界面（CLI）以及Python Azure SDK。这是构建机器学习运维（MLOps）自动化流程的基础步骤。
 

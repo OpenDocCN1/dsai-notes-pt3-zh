@@ -1,6 +1,6 @@
-![](img/79fc50ec829ef4f32556d1e39e539c36_0.png)
-
 # 【ChatGPT提示词工程师】课程 P3：迭代开发提示词 🚀
+
+![](img/79fc50ec829ef4f32556d1e39e539c36_0.png)
 
 ![](img/79fc50ec829ef4f32556d1e39e539c36_2.png)
 

@@ -1,6 +1,6 @@
-![](img/3b780f87d34ede71ea9b2e53fc98e9f0_0.png)
-
 # 机器学习课程 P133：使用Scikit-learn实现PCA 🛠️
+
+![](img/3b780f87d34ede71ea9b2e53fc98e9f0_0.png)
 
 在本节课中，我们将学习如何使用Scikit-learn库来实现主成分分析（PCA）。我们将从数据预处理开始，逐步完成PCA的拟合、方差解释和最终的数据转换，并了解PCA的常见应用场景。
 

@@ -1,6 +1,6 @@
-![](img/fc5d3a67511f1a589d2c5ee7c6d1c599_0.png)
-
 # 课程 142：将自定义数据集转换为 DataLoader 🚀
+
+![](img/fc5d3a67511f1a589d2c5ee7c6d1c599_0.png)
 
 在本节课中，我们将学习如何将自定义数据集转换为 PyTorch 的 DataLoader，以便能够以批量的形式高效地加载数据，供模型训练使用。
 

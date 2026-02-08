@@ -1,6 +1,6 @@
-![](img/240c632cd8b2d72f9a74459a74dca582_0.png)
-
 # Python 3全系列基础教程，P18：18）打包和解包数据 📦➡️📤
+
+![](img/240c632cd8b2d72f9a74459a74dca582_0.png)
 
 ![](img/240c632cd8b2d72f9a74459a74dca582_0.png)
 

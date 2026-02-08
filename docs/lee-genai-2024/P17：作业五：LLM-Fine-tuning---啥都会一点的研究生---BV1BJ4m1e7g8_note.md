@@ -1,6 +1,6 @@
-![](img/91369f0f8b15d0c7644d7c793ed63def_0.png)
-
 # 李宏毅2024春《生成式人工智能导论》 - P17：作业五：LLM Fine-tuning 📝
+
+![](img/91369f0f8b15d0c7644d7c793ed63def_0.png)
 
 ![](img/91369f0f8b15d0c7644d7c793ed63def_2.png)
 

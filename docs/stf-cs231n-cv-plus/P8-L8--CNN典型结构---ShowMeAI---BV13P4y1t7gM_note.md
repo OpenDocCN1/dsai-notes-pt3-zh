@@ -1,8 +1,8 @@
+# 课程 P8：L8 - CNN典型结构 🏗️
+
 ![](img/e86e5cb7b880d8838dd59e58338ee76b_1.png)
 
 ![](img/e86e5cb7b880d8838dd59e58338ee76b_3.png)
-
-# 课程 P8：L8 - CNN典型结构 🏗️
 
 ![](img/e86e5cb7b880d8838dd59e58338ee76b_5.png)
 

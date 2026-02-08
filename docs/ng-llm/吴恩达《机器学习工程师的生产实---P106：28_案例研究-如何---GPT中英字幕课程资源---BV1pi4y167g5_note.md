@@ -1,6 +1,6 @@
-![](img/3fbde5787d87ec524c7ae3cb62b6185c_0.png)
-
 # 课程28：问答任务的知识蒸馏案例研究 📚
+
+![](img/3fbde5787d87ec524c7ae3cb62b6185c_0.png)
 
 ![](img/3fbde5787d87ec524c7ae3cb62b6185c_2.png)
 

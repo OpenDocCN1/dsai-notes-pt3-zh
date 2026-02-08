@@ -1,6 +1,6 @@
-![](img/4090390f27fdfd2a821e4d9ddae6ccea_0.png)
-
 # PyTorch深度学习课程 06：将图像数据集转换为PyTorch DataLoader 🚀
+
+![](img/4090390f27fdfd2a821e4d9ddae6ccea_0.png)
 
 在本节课中，我们将学习如何将已加载的图像数据集转换为PyTorch的DataLoader。DataLoader是训练深度学习模型的关键组件，它能高效地批量处理数据，并帮助我们更好地管理内存。
 

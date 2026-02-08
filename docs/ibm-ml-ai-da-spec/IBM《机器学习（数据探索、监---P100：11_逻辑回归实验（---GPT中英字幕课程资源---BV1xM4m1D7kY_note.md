@@ -1,6 +1,6 @@
-![](img/9472d88b9d2ea4daf1fd2c7beca99026_1.png)
-
 # 机器学习课程 P100：逻辑回归实验（第三部分）📊
+
+![](img/9472d88b9d2ea4daf1fd2c7beca99026_1.png)
 
 ![](img/9472d88b9d2ea4daf1fd2c7beca99026_3.png)
 

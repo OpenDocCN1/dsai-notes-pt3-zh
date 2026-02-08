@@ -1,6 +1,6 @@
-![](img/2143cfd2c52c8c795e5af20d99916e1d_1.png)
-
 # PyTorch 进阶学习讲座 L14：PyTorch 移动端与 Android 神经网络 API 📱➡️🧠
+
+![](img/2143cfd2c52c8c795e5af20d99916e1d_1.png)
 
 在本节课中，我们将学习如何利用 PyTorch Mobile 与 Android 神经网络 API（NNAPI）在移动设备上高效运行机器学习模型。我们将了解其优势、工作原理以及如何快速开始使用。
 

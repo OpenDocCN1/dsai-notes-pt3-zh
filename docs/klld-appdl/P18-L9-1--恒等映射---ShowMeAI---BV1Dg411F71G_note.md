@@ -1,3 +1,5 @@
+# 课程 P18：L9.1 - 恒等映射 🧠
+
 ![](img/4a4d024a0a4b499b4e7a7301d81e6acf_1.png)
 
 ![](img/4a4d024a0a4b499b4e7a7301d81e6acf_3.png)
@@ -5,8 +7,6 @@
 ![](img/4a4d024a0a4b499b4e7a7301d81e6acf_5.png)
 
 ![](img/4a4d024a0a4b499b4e7a7301d81e6acf_7.png)
-
-# 课程 P18：L9.1 - 恒等映射 🧠
 
 ![](img/4a4d024a0a4b499b4e7a7301d81e6acf_9.png)
 

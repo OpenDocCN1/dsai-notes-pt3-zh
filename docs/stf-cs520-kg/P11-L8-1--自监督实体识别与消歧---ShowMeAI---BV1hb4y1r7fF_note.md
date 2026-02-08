@@ -1,6 +1,6 @@
-![](img/db3dee7b1c95d0dec386f130b7df05d9_0.png)
-
 # 课程 P11：L8.1 - 自监督实体识别与消歧 🧠
+
+![](img/db3dee7b1c95d0dec386f130b7df05d9_0.png)
 
 ![](img/db3dee7b1c95d0dec386f130b7df05d9_2.png)
 

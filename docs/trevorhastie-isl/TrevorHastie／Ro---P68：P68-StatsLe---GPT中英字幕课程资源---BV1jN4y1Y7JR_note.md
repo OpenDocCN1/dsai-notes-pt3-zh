@@ -1,6 +1,6 @@
-![](img/e0de71a0df0e3a9f9eff1bb6ea7037ff_0.png)
-
 # 课程12d：层次聚类 📊
+
+![](img/e0de71a0df0e3a9f9eff1bb6ea7037ff_0.png)
 
 ![](img/e0de71a0df0e3a9f9eff1bb6ea7037ff_2.png)
 

@@ -1,6 +1,6 @@
-![](img/b03ebb4ada58f15f4b305f9e839fcff7_0.png)
-
 # 🧠 课程 P78：控制即推理（第二部分）
+
+![](img/b03ebb4ada58f15f4b305f9e839fcff7_0.png)
 
 ![](img/b03ebb4ada58f15f4b305f9e839fcff7_2.png)
 

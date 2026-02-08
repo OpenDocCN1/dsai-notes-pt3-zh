@@ -1,10 +1,10 @@
+# 课程 P15：5.2 - 关系与迭代分类 🧠
+
 ![](img/108fbeabbaa847a918d3cd7ddee8df4d_0.png)
 
 ![](img/108fbeabbaa847a918d3cd7ddee8df4d_1.png)
 
 ![](img/108fbeabbaa847a918d3cd7ddee8df4d_3.png)
-
-# 课程 P15：5.2 - 关系与迭代分类 🧠
 
 ![](img/108fbeabbaa847a918d3cd7ddee8df4d_5.png)
 

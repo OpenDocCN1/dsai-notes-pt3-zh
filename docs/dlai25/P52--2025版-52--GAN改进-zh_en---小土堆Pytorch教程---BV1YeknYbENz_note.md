@@ -1,8 +1,8 @@
+# 🧠 P52：GAN的改进方法
+
 ![](img/6f6817cfd87724af6556f5ae1fc4904b_0.png)
 
 ![](img/6f6817cfd87724af6556f5ae1fc4904b_2.png)
-
-# 🧠 P52：GAN的改进方法
 
 ![](img/6f6817cfd87724af6556f5ae1fc4904b_4.png)
 

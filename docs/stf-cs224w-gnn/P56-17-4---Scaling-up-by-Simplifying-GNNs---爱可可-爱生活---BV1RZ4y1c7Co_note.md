@@ -1,8 +1,8 @@
+# 课程 P56：17.4 - 通过简化GNN实现扩展 📈
+
 ![](img/ed4dd762fdd0b596c1ad187270d358c2_0.png)
 
 ![](img/ed4dd762fdd0b596c1ad187270d358c2_1.png)
-
-# 课程 P56：17.4 - 通过简化GNN实现扩展 📈
 
 ![](img/ed4dd762fdd0b596c1ad187270d358c2_3.png)
 

@@ -1,6 +1,6 @@
-![](img/8cc3a09560b2d38162ae54c3bfed248a_1.png)
-
 # PyTorch深度学习课程 - P66：批数据训练与测试循环 🚀
+
+![](img/8cc3a09560b2d38162ae54c3bfed248a_1.png)
 
 ![](img/8cc3a09560b2d38162ae54c3bfed248a_3.png)
 

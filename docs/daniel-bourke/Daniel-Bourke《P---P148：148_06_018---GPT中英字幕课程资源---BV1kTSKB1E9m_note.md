@@ -1,6 +1,6 @@
-![](img/abc2badd8713baf862fe95b0edadf8ff_0.png)
-
 # PyTorch深度学习课程 06：探索Torchvision最先进的数据增强技术 🚀
+
+![](img/abc2badd8713baf862fe95b0edadf8ff_0.png)
 
 在本节课中，我们将学习数据增强的概念，并探索如何使用PyTorch的Torchvision库，特别是其最先进的`TrivialAugment`技术，来人为地增加训练数据的多样性，从而提升模型的泛化能力。
 

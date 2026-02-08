@@ -1,6 +1,6 @@
-![](img/73d913d70ea59738b60ece5627ceb411_0.png)
-
 # 课程P1：OpenCV计算机视觉实战课程简介 📚
+
+![](img/73d913d70ea59738b60ece5627ceb411_0.png)
 
 ![](img/73d913d70ea59738b60ece5627ceb411_2.png)
 

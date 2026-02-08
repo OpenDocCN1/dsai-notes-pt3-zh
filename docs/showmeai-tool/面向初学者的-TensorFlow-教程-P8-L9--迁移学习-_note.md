@@ -1,6 +1,6 @@
-![](img/61fab98aab26950654922e0fb57a2416_0.png)
-
 # TensorFlow 初学者教程 P8：L9 - 迁移学习 🚀
+
+![](img/61fab98aab26950654922e0fb57a2416_0.png)
 
 ![](img/61fab98aab26950654922e0fb57a2416_0.png)
 

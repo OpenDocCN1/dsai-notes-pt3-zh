@@ -1,6 +1,6 @@
-![](img/cd04969ae696135a3d12010f8cccfea9_1.png)
-
 # 课程P17：混合策略纳什均衡示例 ⚽️🎯
+
+![](img/cd04969ae696135a3d12010f8cccfea9_1.png)
 
 ![](img/cd04969ae696135a3d12010f8cccfea9_3.png)
 

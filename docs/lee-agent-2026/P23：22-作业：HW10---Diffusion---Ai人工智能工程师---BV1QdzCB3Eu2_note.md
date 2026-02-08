@@ -1,6 +1,6 @@
-![](img/c8b37866b5adabcafc7bd9f11ed28987_1.png)
-
 # 课程23：HW10 - Diffusion模型定制化教程 🎨
+
+![](img/c8b37866b5adabcafc7bd9f11ed28987_1.png)
 
 在本节课中，我们将学习如何完成作业十（HW10），其核心主题是**文本到图像扩散模型（Text-to-Image Diffusion Model）的定制化（Customization）**。我们将理解任务目标、评分标准，并实践两种关键方法来实现特定对象的个性化图像生成。
 

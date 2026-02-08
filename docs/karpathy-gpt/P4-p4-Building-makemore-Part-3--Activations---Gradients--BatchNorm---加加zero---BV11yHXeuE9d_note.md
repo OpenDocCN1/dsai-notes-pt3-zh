@@ -1,3 +1,5 @@
+# P4：构建Makemore第三部分：激活值与梯度，BatchNorm 🧠📈
+
 ![](img/7e929a646a3b3c13dd787fc42b498be7_1.png)
 
 ![](img/7e929a646a3b3c13dd787fc42b498be7_3.png)
@@ -5,8 +7,6 @@
 ![](img/7e929a646a3b3c13dd787fc42b498be7_5.png)
 
 ![](img/7e929a646a3b3c13dd787fc42b498be7_7.png)
-
-# P4：构建Makemore第三部分：激活值与梯度，BatchNorm 🧠📈
 
 ![](img/7e929a646a3b3c13dd787fc42b498be7_9.png)
 

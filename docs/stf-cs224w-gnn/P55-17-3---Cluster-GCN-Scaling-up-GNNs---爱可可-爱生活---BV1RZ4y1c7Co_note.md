@@ -1,8 +1,8 @@
+# 图神经网络课程 P55：17.3 - 使用 Cluster GCN 扩展 GNN 🚀
+
 ![](img/8f723a390bcc3eaabcf452f09cc007d2_0.png)
 
 ![](img/8f723a390bcc3eaabcf452f09cc007d2_1.png)
-
-# 图神经网络课程 P55：17.3 - 使用 Cluster GCN 扩展 GNN 🚀
 
 ![](img/8f723a390bcc3eaabcf452f09cc007d2_3.png)
 

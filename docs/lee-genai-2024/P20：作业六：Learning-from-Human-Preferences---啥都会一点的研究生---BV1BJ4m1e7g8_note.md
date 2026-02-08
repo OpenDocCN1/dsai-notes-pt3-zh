@@ -1,6 +1,6 @@
-![](img/47a75ac7a163c8ded7edfba7d91fb976_1.png)
-
 # 李宏毅2024春《生成式人工智能导论》 - P20：作业六：Learning from Human Preferences 👨‍🏫
+
+![](img/47a75ac7a163c8ded7edfba7d91fb976_1.png)
 
 ![](img/47a75ac7a163c8ded7edfba7d91fb976_3.png)
 

@@ -1,8 +1,8 @@
+# 课程 P64：将对话技能迁移到Watson操作 🚀
+
 ![](img/3dc44eef84404c7ea286bb7bf512c83a_0.png)
 
 ![](img/3dc44eef84404c7ea286bb7bf512c83a_2.png)
-
-# 课程 P64：将对话技能迁移到Watson操作 🚀
 
 在本节课中，我们将学习如何将经典的Watson Assistant对话技能迁移到新版Watson Assistant中，并了解如何将对话技能转换为操作技能。课程分为两部分：第一部分介绍如何从经典版切换到新版；第二部分详细讲解如何迁移对话技能。
 

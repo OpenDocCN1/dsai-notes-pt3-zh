@@ -1,6 +1,6 @@
-![](img/1aaccc13121b796c4c981d548aa633d9_0.png)
-
 # SQL常用知识点合辑——P38：L38- 在更新中使用子查询 📝
+
+![](img/1aaccc13121b796c4c981d548aa633d9_0.png)
 
 ![](img/1aaccc13121b796c4c981d548aa633d9_0.png)
 

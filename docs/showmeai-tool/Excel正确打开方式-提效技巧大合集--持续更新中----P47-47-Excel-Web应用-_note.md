@@ -1,6 +1,6 @@
-![](img/2e3c2d66bc28098e64ec67375fb085cb_0.png)
-
 # Excel正确打开方式！提效技巧大合集！(持续更新中) - P47：47）Excel Web应用 📊
+
+![](img/2e3c2d66bc28098e64ec67375fb085cb_0.png)
 
 ![](img/2e3c2d66bc28098e64ec67375fb085cb_0.png)
 

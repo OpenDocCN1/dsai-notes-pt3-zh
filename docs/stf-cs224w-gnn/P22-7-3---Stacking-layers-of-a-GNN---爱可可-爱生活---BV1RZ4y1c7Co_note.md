@@ -1,8 +1,8 @@
+# 课程 P22：7.3 - 堆叠 GNN 层 🧱
+
 ![](img/34ed9d992c2a1cc8e0bed4cd960adecb_0.png)
 
 ![](img/34ed9d992c2a1cc8e0bed4cd960adecb_1.png)
-
-# 课程 P22：7.3 - 堆叠 GNN 层 🧱
 
 ![](img/34ed9d992c2a1cc8e0bed4cd960adecb_3.png)
 

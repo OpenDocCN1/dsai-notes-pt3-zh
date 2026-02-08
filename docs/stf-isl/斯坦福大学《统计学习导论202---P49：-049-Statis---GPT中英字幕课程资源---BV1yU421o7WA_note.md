@@ -1,6 +1,6 @@
-![](img/0e2b4a57ee40b2d1420250ee9efa666c_0.png)
-
 # 课程 P49：分段多项式与样条 📊
+
+![](img/0e2b4a57ee40b2d1420250ee9efa666c_0.png)
 
 ![](img/0e2b4a57ee40b2d1420250ee9efa666c_2.png)
 

@@ -1,6 +1,6 @@
-![](img/bb764518d4d3a02a8b8edd6a074a3522_0.png)
-
 # 课程 P21：L5.5 - 列表重命名与元素更改 🧾
+
+![](img/bb764518d4d3a02a8b8edd6a074a3522_0.png)
 
 ![](img/bb764518d4d3a02a8b8edd6a074a3522_0.png)
 

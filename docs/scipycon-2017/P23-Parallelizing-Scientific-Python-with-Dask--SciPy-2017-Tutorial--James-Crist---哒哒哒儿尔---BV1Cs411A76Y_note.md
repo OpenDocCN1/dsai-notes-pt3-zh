@@ -1,8 +1,8 @@
+# 课程 P23：使用 Dask 并行化科学 Python 🚀
+
 ![](img/2e0f3d0fda67c161aca31c77d327c239_1.png)
 
 ![](img/2e0f3d0fda67c161aca31c77d327c239_3.png)
-
-# 课程 P23：使用 Dask 并行化科学 Python 🚀
 
 ## 概述
 

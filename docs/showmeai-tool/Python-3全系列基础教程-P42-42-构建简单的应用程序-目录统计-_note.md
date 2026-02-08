@@ -1,6 +1,6 @@
-![](img/fdc7b717fb1febada208161246298987_0.png)
-
 # Python 3全系列基础教程，P42：构建简单的应用程序：目录统计 📊
+
+![](img/fdc7b717fb1febada208161246298987_0.png)
 
 ![](img/fdc7b717fb1febada208161246298987_2.png)
 

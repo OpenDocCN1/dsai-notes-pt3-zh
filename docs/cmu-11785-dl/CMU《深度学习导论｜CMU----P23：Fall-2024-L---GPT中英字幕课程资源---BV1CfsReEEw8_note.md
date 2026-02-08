@@ -1,10 +1,10 @@
+# 课程22-23：生成模型与变分自编码器（VAE）📊
+
 ![](img/6ac0cc52006954dfa71148d5d6ad96b3_0.png)
 
 ![](img/6ac0cc52006954dfa71148d5d6ad96b3_1.png)
 
 ![](img/6ac0cc52006954dfa71148d5d6ad96b3_3.png)
-
-# 课程22-23：生成模型与变分自编码器（VAE）📊
 
 ![](img/6ac0cc52006954dfa71148d5d6ad96b3_5.png)
 

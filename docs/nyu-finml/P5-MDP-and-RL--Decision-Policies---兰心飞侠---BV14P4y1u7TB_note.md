@@ -1,6 +1,6 @@
-![](img/0c2f7ba8374854ab08230eef2fa6ec63_1.png)
-
 # 课程 P5：MDP 与 RL - 决策策略 🧭
+
+![](img/0c2f7ba8374854ab08230eef2fa6ec63_1.png)
 
 ![](img/0c2f7ba8374854ab08230eef2fa6ec63_3.png)
 

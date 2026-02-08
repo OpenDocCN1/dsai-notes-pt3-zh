@@ -1,6 +1,6 @@
-![](img/2bfd6be60b4fc6c9f1dcc4b575b617d0_0.png)
-
 # 机器学习课程 P86：正则化详解（选修）第1部分 📚
+
+![](img/2bfd6be60b4fc6c9f1dcc4b575b617d0_0.png)
 
 ![](img/2bfd6be60b4fc6c9f1dcc4b575b617d0_2.png)
 

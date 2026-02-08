@@ -1,3 +1,5 @@
+# 课程 P78：3-概述增强式学习 (Reinforcement Learning, RL) (三) - Actor-Critic 🤖
+
 ![](img/1da2592808784ec8e7b94bc3bc33f72c_0.png)
 
 ![](img/1da2592808784ec8e7b94bc3bc33f72c_2.png)
@@ -7,8 +9,6 @@
 ![](img/1da2592808784ec8e7b94bc3bc33f72c_6.png)
 
 ![](img/1da2592808784ec8e7b94bc3bc33f72c_8.png)
-
-# 课程 P78：3-概述增强式学习 (Reinforcement Learning, RL) (三) - Actor-Critic 🤖
 
 ![](img/1da2592808784ec8e7b94bc3bc33f72c_10.png)
 

@@ -1,6 +1,6 @@
-![](img/b5da9e0adfa2d119ba2532092d29ebda_0.png)
-
 # 🐛 P23：L7.1 - 测试与调试、异常处理与断言
+
+![](img/b5da9e0adfa2d119ba2532092d29ebda_0.png)
 
 ![](img/b5da9e0adfa2d119ba2532092d29ebda_0.png)
 

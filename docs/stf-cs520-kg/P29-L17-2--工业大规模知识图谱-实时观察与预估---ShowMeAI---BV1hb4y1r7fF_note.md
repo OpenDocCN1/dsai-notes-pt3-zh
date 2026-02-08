@@ -1,6 +1,6 @@
-![](img/b2178112fdbdbb690cdf8680515f8e1a_1.png)
-
 # 课程 P29：L17.2 - 工业大规模知识图谱：实时观察与预估 🚀
+
+![](img/b2178112fdbdbb690cdf8680515f8e1a_1.png)
 
 ![](img/b2178112fdbdbb690cdf8680515f8e1a_3.png)
 

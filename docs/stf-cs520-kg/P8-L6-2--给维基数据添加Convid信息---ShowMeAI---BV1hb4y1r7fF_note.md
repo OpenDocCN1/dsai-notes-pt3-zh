@@ -1,6 +1,6 @@
-![](img/ce69ffb626a00351cd8c2f840b28e5b8_0.png)
-
 # 课程P8：L6.2 - 给维基数据添加Covid信息 📚
+
+![](img/ce69ffb626a00351cd8c2f840b28e5b8_0.png)
 
 ![](img/ce69ffb626a00351cd8c2f840b28e5b8_2.png)
 

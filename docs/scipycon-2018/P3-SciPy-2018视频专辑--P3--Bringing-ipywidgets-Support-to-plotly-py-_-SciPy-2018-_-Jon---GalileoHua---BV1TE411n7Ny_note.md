@@ -1,8 +1,8 @@
+# 📊 课程 P3：为 plotly.py 添加 ipywidgets 支持
+
 ![](img/79d72b306b7a0e079da4e1ec991ba409_1.png)
 
 ![](img/79d72b306b7a0e079da4e1ec991ba409_3.png)
-
-# 📊 课程 P3：为 plotly.py 添加 ipywidgets 支持
 
 在本节课中，我们将学习如何通过将 plotly.py 与 ipywidgets 框架集成，来创建高度交互式的数据可视化。这种集成使得我们能够在 Jupyter Notebook 中动态更新图表，并实现 Python 与 JavaScript 之间的双向通信。
 

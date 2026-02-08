@@ -1,6 +1,6 @@
-![](img/b8ed1df0a67d243d8aabf5ee1cdc42f8_1.png)
-
 # 🧠 课程 P163：L19.5.2.2 - GPT-v1：生成式预训练Transformer
+
+![](img/b8ed1df0a67d243d8aabf5ee1cdc42f8_1.png)
 
 在本节课中，我们将学习生成式预训练Transformer模型，即GPT-v1。我们将了解其核心思想、两阶段训练过程、模型架构以及它在不同下游任务上的应用。
 

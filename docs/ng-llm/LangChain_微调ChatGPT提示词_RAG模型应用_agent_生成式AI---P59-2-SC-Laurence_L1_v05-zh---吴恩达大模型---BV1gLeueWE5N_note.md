@@ -1,6 +1,6 @@
-![](img/791ac583ad27125a297cf4469ba9b698_0.png)
-
 # 课程 P59-2：使用 PaLM API 进行基础代码生成 🚀
+
+![](img/791ac583ad27125a297cf4469ba9b698_0.png)
 
 ![](img/791ac583ad27125a297cf4469ba9b698_2.png)
 

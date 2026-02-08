@@ -1,14 +1,14 @@
-![](img/f6745cf89c85a35f7f1c0fb04a64cbf7_0.png)
-
 # 杜克大学《MLOps ｜ 机器学习运维（Python基础）》 - P95：03_01_05_MLOps趋势与技术 📈
 
+![](img/f6745cf89c85a35f7f1c0fb04a64cbf7_0.png)
+
+## 概述
+
 ![](img/f6745cf89c85a35f7f1c0fb04a64cbf7_1.png)
 
 ![](img/f6745cf89c85a35f7f1c0fb04a64cbf7_0.png)
 
 ![](img/f6745cf89c85a35f7f1c0fb04a64cbf7_1.png)
-
-## 概述
 
 在本节课中，我们将探讨MLOps领域的最新趋势与关键技术。课程内容基于O‘Reilly出版的《Practical MLOps》一书，旨在帮助你了解当前MLOps的热点话题、发展方向以及需要关注的重点。
 

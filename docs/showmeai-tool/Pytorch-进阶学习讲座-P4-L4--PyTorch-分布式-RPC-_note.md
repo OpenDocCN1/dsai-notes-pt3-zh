@@ -1,6 +1,6 @@
-![](img/5747d0e2c4e80d16a5a2b785aa519633_1.png)
-
 # PyTorch 进阶学习讲座！P4：L4 - PyTorch 分布式 RPC 🚀
+
+![](img/5747d0e2c4e80d16a5a2b785aa519633_1.png)
 
 在本节课中，我们将要学习 PyTorch 分布式 RPC 框架。RPC 是 PyTorch 为通用分布式训练提供的一套底层工具，它填补了分布式数据并行无法满足的复杂训练场景的空白。
 

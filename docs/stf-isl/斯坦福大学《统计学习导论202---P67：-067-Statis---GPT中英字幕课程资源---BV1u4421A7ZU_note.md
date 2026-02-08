@@ -1,6 +1,6 @@
-![](img/83eec4165c8f7acbc306c27f13a6b27a_0.png)
-
 # 斯坦福大学《统计学习导论2023Python版》课程笔记 - P67：支持向量分类器 📊
+
+![](img/83eec4165c8f7acbc306c27f13a6b27a_0.png)
 
 ![](img/83eec4165c8f7acbc306c27f13a6b27a_2.png)
 

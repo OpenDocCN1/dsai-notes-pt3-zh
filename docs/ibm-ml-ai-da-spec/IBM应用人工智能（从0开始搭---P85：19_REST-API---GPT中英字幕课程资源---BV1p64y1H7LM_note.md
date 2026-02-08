@@ -1,6 +1,6 @@
-![](img/b6072f7eba7da1694d66e955d3b9f0b1_0.png)
-
 # IBM应用人工智能（从0开始搭建AI机器人）｜课程P85：REST API与HTTP请求详解（第一部分）🌐
+
+![](img/b6072f7eba7da1694d66e955d3b9f0b1_0.png)
 
 在本节课中，我们将深入探讨HTTP协议，特别是统一资源定位符（URL）以及HTTP请求与响应的基本结构。这是理解REST API如何工作的基础。
 

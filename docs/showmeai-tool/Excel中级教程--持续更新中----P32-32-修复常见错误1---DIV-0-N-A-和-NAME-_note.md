@@ -1,6 +1,6 @@
-![](img/a4c5d4348b8f0db6a99a8f0818bc7cea_0.png)
-
 # Excel中级教程 - P32：修复常见错误1 - DIV/0、N/A 和 NAME 🔧
+
+![](img/a4c5d4348b8f0db6a99a8f0818bc7cea_0.png)
 
 ![](img/a4c5d4348b8f0db6a99a8f0818bc7cea_0.png)
 

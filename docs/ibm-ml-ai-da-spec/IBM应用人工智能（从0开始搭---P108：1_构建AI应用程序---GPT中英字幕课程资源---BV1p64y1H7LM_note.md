@@ -1,6 +1,6 @@
-![](img/f0741da6de66b2be1732ce9c826bb693_1.png)
-
 # 课程01：构建AI应用程序 🚀
+
+![](img/f0741da6de66b2be1732ce9c826bb693_1.png)
 
 ![](img/f0741da6de66b2be1732ce9c826bb693_3.png)
 

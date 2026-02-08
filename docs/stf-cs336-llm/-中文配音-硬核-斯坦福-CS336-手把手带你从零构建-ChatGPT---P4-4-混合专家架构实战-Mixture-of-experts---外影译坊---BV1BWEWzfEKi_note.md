@@ -1,10 +1,10 @@
+# 课程 P4：混合专家架构实战 🧠
+
 ![](img/8a2b59eb707a1dcc7b56ff961f892850_0.png)
 
 ![](img/8a2b59eb707a1dcc7b56ff961f892850_1.png)
 
 ![](img/8a2b59eb707a1dcc7b56ff961f892850_3.png)
-
-# 课程 P4：混合专家架构实战 🧠
 
 ![](img/8a2b59eb707a1dcc7b56ff961f892850_5.png)
 

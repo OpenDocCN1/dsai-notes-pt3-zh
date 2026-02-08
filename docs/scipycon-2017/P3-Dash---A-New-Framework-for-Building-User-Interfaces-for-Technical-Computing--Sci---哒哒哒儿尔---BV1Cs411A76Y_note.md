@@ -1,6 +1,6 @@
-![](img/cba3c4b104aa49415e32c3f75928118a_1.png)
-
 # 课程 P3：Dash - 构建技术计算用户界面的新框架 🚀
+
+![](img/cba3c4b104aa49415e32c3f75928118a_1.png)
 
 ![](img/cba3c4b104aa49415e32c3f75928118a_3.png)
 

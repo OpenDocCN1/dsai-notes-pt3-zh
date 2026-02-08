@@ -1,6 +1,6 @@
-![](img/f6ffd1b805f0a0742b0f343967ea5b0e_0.png)
-
 # 课程 12.3：K均值聚类 🧩
+
+![](img/f6ffd1b805f0a0742b0f343967ea5b0e_0.png)
 
 ![](img/f6ffd1b805f0a0742b0f343967ea5b0e_2.png)
 

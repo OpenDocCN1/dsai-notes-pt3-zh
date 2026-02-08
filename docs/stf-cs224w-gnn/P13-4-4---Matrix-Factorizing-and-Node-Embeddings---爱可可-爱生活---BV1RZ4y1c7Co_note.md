@@ -1,8 +1,8 @@
+# 课程 P13：4.4 - 矩阵分解与节点嵌入 📊
+
 ![](img/8a5f885ea91acb45dc69d141a58ccab6_0.png)
 
 ![](img/8a5f885ea91acb45dc69d141a58ccab6_1.png)
-
-# 课程 P13：4.4 - 矩阵分解与节点嵌入 📊
 
 ![](img/8a5f885ea91acb45dc69d141a58ccab6_3.png)
 

@@ -1,6 +1,6 @@
-![](img/ef7b2287ca599c62f39a928a5cd59c87_1.png)
-
 # 课程 P12：L7.2 - 生成模型 🧠
+
+![](img/ef7b2287ca599c62f39a928a5cd59c87_1.png)
 
 ![](img/ef7b2287ca599c62f39a928a5cd59c87_3.png)
 

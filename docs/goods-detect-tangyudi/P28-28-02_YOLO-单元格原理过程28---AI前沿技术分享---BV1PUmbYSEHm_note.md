@@ -1,6 +1,6 @@
-![](img/442a8e22be1cc0123ed37f62741a134b_1.png)
-
 # 课程 P28：YOLO 单元格原理详解 🧱
+
+![](img/442a8e22be1cc0123ed37f62741a134b_1.png)
 
 ![](img/442a8e22be1cc0123ed37f62741a134b_3.png)
 

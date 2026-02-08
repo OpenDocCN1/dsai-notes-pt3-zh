@@ -1,6 +1,6 @@
-![](img/b8b9473def290a95d9a6852fbf7871dc_0.png)
-
 # 神经网络课程 P57：L10.1 - 神经网络单元 🧠
+
+![](img/b8b9473def290a95d9a6852fbf7871dc_0.png)
 
 ![](img/b8b9473def290a95d9a6852fbf7871dc_0.png)
 

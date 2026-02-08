@@ -1,3 +1,5 @@
+# 课程10：离线训练与神经网络 🧠
+
 ![](img/a4e2fec2ae4a3aa8bbd2d676e6720f8c_1.png)
 
 ![](img/a4e2fec2ae4a3aa8bbd2d676e6720f8c_3.png)
@@ -5,8 +7,6 @@
 ![](img/a4e2fec2ae4a3aa8bbd2d676e6720f8c_5.png)
 
 ![](img/a4e2fec2ae4a3aa8bbd2d676e6720f8c_7.png)
-
-# 课程10：离线训练与神经网络 🧠
 
 ![](img/a4e2fec2ae4a3aa8bbd2d676e6720f8c_9.png)
 

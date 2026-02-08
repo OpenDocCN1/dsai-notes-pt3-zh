@@ -1,6 +1,6 @@
-![](img/b0c4581ba02dd6535a7f043d44e384d9_0.png)
-
 # 课程十四：机器终身学习 (Life Long Learning, LL) (一) - 为什么今日的人工智能无法成为天网？灾难性遗忘 (Catastrophic Forgetting) 🤖🧠
+
+![](img/b0c4581ba02dd6535a7f043d44e384d9_0.png)
 
 ![](img/b0c4581ba02dd6535a7f043d44e384d9_2.png)
 

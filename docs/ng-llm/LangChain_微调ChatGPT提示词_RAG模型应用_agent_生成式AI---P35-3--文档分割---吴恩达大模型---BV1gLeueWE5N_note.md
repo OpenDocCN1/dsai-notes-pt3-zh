@@ -1,6 +1,6 @@
-![](img/998abcc69f89944611c944f1c443e931_0.png)
-
 # LangChain 微调ChatGPT提示词 RAG模型应用 agent 生成式AI - P35：3——文档分割 📄✂️
+
+![](img/998abcc69f89944611c944f1c443e931_0.png)
 
 ![](img/998abcc69f89944611c944f1c443e931_2.png)
 

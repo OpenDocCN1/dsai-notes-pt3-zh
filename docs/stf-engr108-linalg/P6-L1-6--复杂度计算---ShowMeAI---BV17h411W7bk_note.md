@@ -1,6 +1,6 @@
-![](img/c4738ebf9b4d92b36d4e9774a25637ce_0.png)
-
 # 课程 P6：L1.6 - 复杂度计算 🧮
+
+![](img/c4738ebf9b4d92b36d4e9774a25637ce_0.png)
 
 ![](img/c4738ebf9b4d92b36d4e9774a25637ce_2.png)
 

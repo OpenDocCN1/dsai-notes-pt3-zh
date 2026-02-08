@@ -1,8 +1,8 @@
+# 课程 P3：1.3 - 图表示的选择 📊
+
 ![](img/d2cf571d294db6efd462f7bdd8719e1c_0.png)
 
 ![](img/d2cf571d294db6efd462f7bdd8719e1c_1.png)
-
-# 课程 P3：1.3 - 图表示的选择 📊
 
 ![](img/d2cf571d294db6efd462f7bdd8719e1c_3.png)
 

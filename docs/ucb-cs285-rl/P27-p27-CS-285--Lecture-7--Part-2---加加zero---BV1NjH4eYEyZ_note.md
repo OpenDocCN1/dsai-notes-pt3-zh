@@ -1,6 +1,6 @@
-![](img/b59afa5106f7a56cb45f9632ba33bf8d_1.png)
-
 # 课程 P27：基于价值的强化学习方法 🧠
+
+![](img/b59afa5106f7a56cb45f9632ba33bf8d_1.png)
 
 ![](img/b59afa5106f7a56cb45f9632ba33bf8d_3.png)
 

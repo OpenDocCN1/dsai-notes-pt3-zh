@@ -1,6 +1,6 @@
-![](img/27cde80aadc413ff7229fb2a10a861bd_0.png)
-
 # P72：pix2pix像素距离损失项 🎨
+
+![](img/27cde80aadc413ff7229fb2a10a861bd_0.png)
 
 ![](img/27cde80aadc413ff7229fb2a10a861bd_2.png)
 

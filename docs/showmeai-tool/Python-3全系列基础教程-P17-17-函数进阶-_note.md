@@ -1,6 +1,6 @@
-![](img/4aa7c1ed1cd904b8a1a262791e1fffd2_0.png)
-
 # Python 3全系列基础教程，P17：17）函数进阶 🚀
+
+![](img/4aa7c1ed1cd904b8a1a262791e1fffd2_0.png)
 
 ![](img/4aa7c1ed1cd904b8a1a262791e1fffd2_2.png)
 

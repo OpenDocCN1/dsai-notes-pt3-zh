@@ -1,6 +1,6 @@
-![](img/392cf1605a1627f98975b05d76f36c39_0.png)
-
 # 课程 P10：【Lab4】Transformers 应用 🧠
+
+![](img/392cf1605a1627f98975b05d76f36c39_0.png)
 
 在本节课中，我们将学习如何使用 Transformer 架构来识别合成文本序列。我们将介绍 `LineCNNTransformer` 类和 `TransformerLitModel` 类，并了解如何将它们应用于文本识别任务。
 

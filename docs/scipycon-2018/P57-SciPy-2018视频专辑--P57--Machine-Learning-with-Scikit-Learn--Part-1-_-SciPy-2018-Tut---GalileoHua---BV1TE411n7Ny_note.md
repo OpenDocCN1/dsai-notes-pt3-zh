@@ -1,6 +1,6 @@
-![](img/c04d678b99df1406ae3dbf232bf3d810_1.png)
-
 # 课程 P57：使用 Scikit-Learn 进行机器学习，第一部分 🧠
+
+![](img/c04d678b99df1406ae3dbf232bf3d810_1.png)
 
 ![](img/c04d678b99df1406ae3dbf232bf3d810_3.png)
 

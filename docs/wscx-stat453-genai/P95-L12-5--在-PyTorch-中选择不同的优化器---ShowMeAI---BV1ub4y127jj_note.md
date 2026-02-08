@@ -1,6 +1,6 @@
-![](img/e868bc34467bdfc4e8973687e34bd6e3_1.png)
-
 # 课程 P95：L12.5 - 在 PyTorch 中选择不同的优化器 🚀
+
+![](img/e868bc34467bdfc4e8973687e34bd6e3_1.png)
 
 在本节课中，我们将学习如何在 PyTorch 中使用不同的优化算法。PyTorch 使得应用这些算法变得非常简单。
 

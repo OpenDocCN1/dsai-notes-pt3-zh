@@ -1,6 +1,6 @@
-![](img/6bac5795ad77a1642d7bf7e11275d6f3_1.png)
-
 # P17：池化与上采样 🧠
+
+![](img/6bac5795ad77a1642d7bf7e11275d6f3_1.png)
 
 ![](img/6bac5795ad77a1642d7bf7e11275d6f3_3.png)
 

@@ -1,8 +1,8 @@
+# 课程 P75：CS 285 第18讲，变分推断（第三部分）🚀
+
 ![](img/9b9fef0e9784f3aeae82f48e0153c28b_1.png)
 
 ![](img/9b9fef0e9784f3aeae82f48e0153c28b_3.png)
-
-# 课程 P75：CS 285 第18讲，变分推断（第三部分）🚀
 
 ![](img/9b9fef0e9784f3aeae82f48e0153c28b_5.png)
 

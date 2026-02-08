@@ -1,6 +1,6 @@
-![](img/04095bb29a99dad8fca5419a36682056_0.png)
-
 # SQL常用知识点合辑——P30：L30- 联合操作符 UNION 🧩
+
+![](img/04095bb29a99dad8fca5419a36682056_0.png)
 
 ![](img/04095bb29a99dad8fca5419a36682056_0.png)
 

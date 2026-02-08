@@ -1,8 +1,8 @@
+# 课程 P12：4.3 - 随机重启游走与个性化PageRank 🚶‍♂️➡️🔄
+
 ![](img/693b34efb7ab21e63adb37b1e6ea04bb_0.png)
 
 ![](img/693b34efb7ab21e63adb37b1e6ea04bb_1.png)
-
-# 课程 P12：4.3 - 随机重启游走与个性化PageRank 🚶‍♂️➡️🔄
 
 ![](img/693b34efb7ab21e63adb37b1e6ea04bb_3.png)
 

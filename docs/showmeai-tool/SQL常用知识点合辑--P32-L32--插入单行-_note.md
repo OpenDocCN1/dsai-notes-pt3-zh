@@ -1,6 +1,6 @@
-![](img/89d6aadd09799eb0a2adeb5a6b77e305_0.png)
-
 # SQL常用知识点合辑——P32：L32- 插入单行 📝
+
+![](img/89d6aadd09799eb0a2adeb5a6b77e305_0.png)
 
 ![](img/89d6aadd09799eb0a2adeb5a6b77e305_0.png)
 

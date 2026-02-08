@@ -1,6 +1,6 @@
-![](img/dc8967adf1c88cad7334f3d36fbc8ce2_0.png)
-
 # Excel高效技巧教程 - P6：使用Count与CountA函数 📊
+
+![](img/dc8967adf1c88cad7334f3d36fbc8ce2_0.png)
 
 在本节课中，我们将学习Excel中两个非常实用的函数：`COUNT`和``COUNTA``。它们能帮助我们快速统计表格中的数据量。此外，我们还会了解如何使用Excel的状态栏来获取即时统计信息，这有时比编写公式更加快捷。
 

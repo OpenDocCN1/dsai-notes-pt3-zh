@@ -1,6 +1,6 @@
-![](img/fbb123b921f1e1e4badad79665aa8c68_1.png)
-
 # 课程 P1：深度无监督学习简介 🧠
+
+![](img/fbb123b921f1e1e4badad79665aa8c68_1.png)
 
 ![](img/fbb123b921f1e1e4badad79665aa8c68_3.png)
 

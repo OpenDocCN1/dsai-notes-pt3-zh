@@ -1,6 +1,6 @@
-![](img/144a8af988a32a6d89b4aa41831d5e1f_1.png)
-
 # 课程1：启动与使用Jupyter Notebook 🚀
+
+![](img/144a8af988a32a6d89b4aa41831d5e1f_1.png)
 
 在本节课中，我们将学习两种用于编程机器学习算法和数据科学的强大工具：**Python编程语言**和**Jupyter Notebook**。我们将从启动Jupyter Notebook开始，逐步了解其界面和基本功能，并编写第一个Python程序。
 

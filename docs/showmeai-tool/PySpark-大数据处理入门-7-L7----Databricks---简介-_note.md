@@ -1,6 +1,6 @@
-![](img/4bf769d9eaf5cd192f62275495d3c7b7_1.png)
-
 # PySpark 大数据处理入门，第7课：📊 Databricks 简介
+
+![](img/4bf769d9eaf5cd192f62275495d3c7b7_1.png)
 
 在本节课中，我们将学习什么是 Databricks 平台，了解其核心功能，并演示如何在社区版中创建集群、上传数据并运行基础的 PySpark 代码。
 

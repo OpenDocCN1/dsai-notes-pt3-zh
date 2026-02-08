@@ -1,10 +1,10 @@
+# 课程 P8：Transformer 电路、诱导头与上下文学习 🧠
+
 ![](img/ee54ecf5185d58647f4bc57e2de3efea_0.png)
 
 ![](img/ee54ecf5185d58647f4bc57e2de3efea_1.png)
 
 ![](img/ee54ecf5185d58647f4bc57e2de3efea_3.png)
-
-# 课程 P8：Transformer 电路、诱导头与上下文学习 🧠
 
 在本节课中，我们将深入探讨 Transformer 模型内部的工作机制，特别是它们如何实现令人惊讶的上下文学习能力。我们将从一个观察到的“相变”现象出发，逐步解析单层和双层注意力 Transformer 的电路结构，并最终揭示“诱导头”这一核心概念如何驱动上下文学习。
 

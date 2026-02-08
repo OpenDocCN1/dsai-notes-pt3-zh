@@ -1,6 +1,6 @@
-![](img/4237d06d285184ff66cb3fc27a044d7c_0.png)
-
 # Python 3全系列基础教程，P15：Python函数介绍 🧩
+
+![](img/4237d06d285184ff66cb3fc27a044d7c_0.png)
 
 ![](img/4237d06d285184ff66cb3fc27a044d7c_0.png)
 

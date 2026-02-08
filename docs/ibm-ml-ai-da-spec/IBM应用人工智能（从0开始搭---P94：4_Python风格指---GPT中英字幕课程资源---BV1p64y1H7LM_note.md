@@ -1,6 +1,6 @@
-![](img/2541df6d68c17eb04574e58bef3f3c31_0.png)
-
 # IBM应用人工智能（从0开始搭建AI机器人）｜课程P94：Python风格指南与编码实践 📝
+
+![](img/2541df6d68c17eb04574e58bef3f3c31_0.png)
 
 ![](img/2541df6d68c17eb04574e58bef3f3c31_2.png)
 

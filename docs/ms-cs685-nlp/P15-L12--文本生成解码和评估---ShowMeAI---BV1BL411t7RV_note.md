@@ -1,6 +1,6 @@
-![](img/dda44bca5d0acc4c45dc4ac3368e0d35_1.png)
-
 # 📝 课程 P15：L12 - 文本生成解码与评估
+
+![](img/dda44bca5d0acc4c45dc4ac3368e0d35_1.png)
 
 ![](img/dda44bca5d0acc4c45dc4ac3368e0d35_3.png)
 

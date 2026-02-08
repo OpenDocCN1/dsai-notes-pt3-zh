@@ -1,6 +1,6 @@
-![](img/b88e8ba0ae2955be5c6fc52091a89eb0_1.png)
-
 # 课程 P12：L8.2 - 网络知识图谱中的指代消解 🧠
+
+![](img/b88e8ba0ae2955be5c6fc52091a89eb0_1.png)
 
 ![](img/b88e8ba0ae2955be5c6fc52091a89eb0_3.png)
 

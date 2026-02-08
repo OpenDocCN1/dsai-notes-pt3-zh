@@ -1,6 +1,6 @@
-![](img/5b93b89e1adf49daf999b6a748f42045_0.png)
-
 # LangChain 微调ChatGPT提示词 RAG模型应用 agent 生成式AI - P60：3.SC-Laurence_L2_v03.zh - 吴恩达大模型 🧠
+
+![](img/5b93b89e1adf49daf999b6a748f42045_0.png)
 
 ![](img/5b93b89e1adf49daf999b6a748f42045_2.png)
 

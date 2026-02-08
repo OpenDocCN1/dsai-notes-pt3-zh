@@ -1,3 +1,5 @@
+# 课程名称：人工智能前沿技术与产业应用 🚀
+
 ![](img/c76ba249280d3ec9222e2e8dfd5a0bc0_0.png)
 
 ![](img/c76ba249280d3ec9222e2e8dfd5a0bc0_1.png)
@@ -9,8 +11,6 @@
 ![](img/c76ba249280d3ec9222e2e8dfd5a0bc0_4.png)
 
 ![](img/c76ba249280d3ec9222e2e8dfd5a0bc0_6.png)
-
-# 课程名称：人工智能前沿技术与产业应用 🚀
 
 ![](img/c76ba249280d3ec9222e2e8dfd5a0bc0_8.png)
 

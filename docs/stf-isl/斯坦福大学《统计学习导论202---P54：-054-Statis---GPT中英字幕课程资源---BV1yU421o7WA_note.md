@@ -1,6 +1,6 @@
-![](img/61eaeda382457bd336adf27ab4a300a0_0.png)
-
 # 课程 054：基于树的方法 🌳
+
+![](img/61eaeda382457bd336adf27ab4a300a0_0.png)
 
 ![](img/61eaeda382457bd336adf27ab4a300a0_2.png)
 

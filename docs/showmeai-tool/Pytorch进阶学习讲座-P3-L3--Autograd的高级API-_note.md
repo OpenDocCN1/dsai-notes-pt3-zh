@@ -1,6 +1,6 @@
-![](img/ae640e7b46aaf17bba8e02172f49117e_1.png)
-
 # PyTorch进阶学习讲座！P3：L3 - Autograd的高级API 🚀
+
+![](img/ae640e7b46aaf17bba8e02172f49117e_1.png)
 
 在本节课中，我们将要学习PyTorch Autograd子系统新增的高级API。这个新API旨在为更广泛的用户（不仅仅是神经网络开发者）提供一个通用、高效且易于使用的自动微分接口。
 

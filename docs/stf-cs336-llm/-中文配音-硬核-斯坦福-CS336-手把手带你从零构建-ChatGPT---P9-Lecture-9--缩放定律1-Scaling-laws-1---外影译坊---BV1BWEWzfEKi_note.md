@@ -1,8 +1,8 @@
+# 斯坦福 CS336 课程笔记：手把手构建 ChatGPT - 第九讲：缩放定律 1 🧮
+
 ![](img/9cb3d85ec5c1299d0398d8d280cb2bb5_0.png)
 
 ![](img/9cb3d85ec5c1299d0398d8d280cb2bb5_1.png)
-
-# 斯坦福 CS336 课程笔记：手把手构建 ChatGPT - 第九讲：缩放定律 1 🧮
 
 ![](img/9cb3d85ec5c1299d0398d8d280cb2bb5_3.png)
 

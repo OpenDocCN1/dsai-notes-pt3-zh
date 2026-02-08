@@ -1,6 +1,6 @@
-![](img/ad94dfd13f2ff25d14746bbbbdb8195a_0.png)
-
 # 机器学习工程师的生产实践（MLOps）课程 - P154：机器学习中的可观测性 🕵️
+
+![](img/ad94dfd13f2ff25d14746bbbbdb8195a_0.png)
 
 ![](img/ad94dfd13f2ff25d14746bbbbdb8195a_2.png)
 

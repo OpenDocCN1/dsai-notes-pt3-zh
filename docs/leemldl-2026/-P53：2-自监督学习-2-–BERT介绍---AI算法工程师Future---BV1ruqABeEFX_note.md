@@ -1,8 +1,8 @@
+# 课程 P53：自监督学习与BERT介绍 🧠
+
 ![](img/c2cfb9e086c9a08908bdb11df43dc50c_1.png)
 
 ![](img/c2cfb9e086c9a08908bdb11df43dc50c_3.png)
-
-# 课程 P53：自监督学习与BERT介绍 🧠
 
 ![](img/c2cfb9e086c9a08908bdb11df43dc50c_5.png)
 

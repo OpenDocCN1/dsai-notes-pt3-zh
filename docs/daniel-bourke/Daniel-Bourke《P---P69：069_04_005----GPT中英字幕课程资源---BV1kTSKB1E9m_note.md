@@ -1,6 +1,6 @@
-![](img/91be41bb0c4a9e62ab098dad3e94bb99_0.png)
-
 # PyTorch深度学习课程 第69课：数据张量化与训练测试集划分 🧠📊
+
+![](img/91be41bb0c4a9e62ab098dad3e94bb99_0.png)
 
 ![](img/91be41bb0c4a9e62ab098dad3e94bb99_2.png)
 

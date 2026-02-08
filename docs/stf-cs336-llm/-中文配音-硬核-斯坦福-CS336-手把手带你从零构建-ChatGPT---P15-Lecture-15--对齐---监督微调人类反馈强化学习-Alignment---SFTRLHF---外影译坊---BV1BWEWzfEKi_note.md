@@ -1,8 +1,8 @@
+# 课程15：对齐 - 监督微调与人类反馈强化学习 🎯
+
 ![](img/fd5396ab810ebdb1f6d99183f97cadc4_0.png)
 
 ![](img/fd5396ab810ebdb1f6d99183f97cadc4_1.png)
-
-# 课程15：对齐 - 监督微调与人类反馈强化学习 🎯
 
 ![](img/fd5396ab810ebdb1f6d99183f97cadc4_3.png)
 

@@ -1,6 +1,6 @@
-![](img/625a4bf69e65a0c80fc8ee1f122dabfd_0.png)
-
 # P5：【2025版】5.判别器 - 小土堆Pytorch教程 - BV1YeknYbENz 🧠
+
+![](img/625a4bf69e65a0c80fc8ee1f122dabfd_0.png)
 
 ![](img/625a4bf69e65a0c80fc8ee1f122dabfd_2.png)
 

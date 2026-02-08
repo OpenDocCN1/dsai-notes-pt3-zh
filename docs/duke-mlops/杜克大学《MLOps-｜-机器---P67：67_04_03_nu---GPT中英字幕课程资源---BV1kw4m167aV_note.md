@@ -1,6 +1,6 @@
-![](img/525a549b9e6fabfbbed1c4328dd51afc_1.png)
-
 # 课程 P67：NumPy 数组简介 🧮
+
+![](img/525a549b9e6fabfbbed1c4328dd51afc_1.png)
 
 在本节课中，我们将学习 NumPy 的基础知识。NumPy 是 Python 中用于科学计算的核心库，它提供了高性能的多维数组对象以及处理这些数组的工具。我们将介绍如何安装 NumPy、导入库、创建数组以及使用一些基本的内置函数。
 

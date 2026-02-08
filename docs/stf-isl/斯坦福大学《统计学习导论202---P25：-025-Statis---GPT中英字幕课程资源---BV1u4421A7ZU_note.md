@@ -1,6 +1,6 @@
-![](img/773de5fbc113b4a6b1908371765a7dcf_0.png)
-
 # 斯坦福大学《统计学习导论2023Python版》课程笔记 - P25：判别分析 📊
+
+![](img/773de5fbc113b4a6b1908371765a7dcf_0.png)
 
 ![](img/773de5fbc113b4a6b1908371765a7dcf_2.png)
 

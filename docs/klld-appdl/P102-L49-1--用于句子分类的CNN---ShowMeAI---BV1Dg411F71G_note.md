@@ -1,3 +1,5 @@
+# P102：L49.1- 用于句子分类的CNN 🧠
+
 ![](img/d0f8a58de2c56043328b4698ed09c13b_1.png)
 
 ![](img/d0f8a58de2c56043328b4698ed09c13b_2.png)
@@ -13,8 +15,6 @@
 ![](img/d0f8a58de2c56043328b4698ed09c13b_7.png)
 
 ![](img/d0f8a58de2c56043328b4698ed09c13b_8.png)
-
-# P102：L49.1- 用于句子分类的CNN 🧠
 
 ![](img/d0f8a58de2c56043328b4698ed09c13b_9.png)
 

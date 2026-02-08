@@ -1,6 +1,6 @@
-![](img/182d0e4246c17f4cf478cc911d7f813e_0.png)
-
 # Python 3全系列基础教程，P41：41）日志基础 📝
+
+![](img/182d0e4246c17f4cf478cc911d7f813e_0.png)
 
 ![](img/182d0e4246c17f4cf478cc911d7f813e_0.png)
 

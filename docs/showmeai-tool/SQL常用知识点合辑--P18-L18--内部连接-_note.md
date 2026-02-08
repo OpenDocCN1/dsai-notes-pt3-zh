@@ -1,6 +1,6 @@
-![](img/9eb98645e94aefd9dacd81a30d25c3e2_0.png)
-
 # SQL常用知识点合辑——P18：L18- 内部连接 🔗
+
+![](img/9eb98645e94aefd9dacd81a30d25c3e2_0.png)
 
 ![](img/9eb98645e94aefd9dacd81a30d25c3e2_0.png)
 

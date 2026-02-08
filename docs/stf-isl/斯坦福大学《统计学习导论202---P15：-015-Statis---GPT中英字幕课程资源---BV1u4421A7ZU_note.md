@@ -1,8 +1,8 @@
+# 课程15：多元线性回归 📈
+
 ![](img/5b7a957819a0e1b1cafe18e02e879ad3_1.png)
 
 ![](img/5b7a957819a0e1b1cafe18e02e879ad3_2.png)
-
-# 课程15：多元线性回归 📈
 
 ![](img/5b7a957819a0e1b1cafe18e02e879ad3_4.png)
 

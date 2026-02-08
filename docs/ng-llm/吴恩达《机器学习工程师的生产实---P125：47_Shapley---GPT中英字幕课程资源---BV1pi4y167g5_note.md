@@ -1,6 +1,6 @@
-![](img/ad0223ef5b25584f3da642e9eb81b2ef_0.png)
-
 # 机器学习工程师的生产实践（MLOps）课程笔记 - P125：47_Shapley值 🎯
+
+![](img/ad0223ef5b25584f3da642e9eb81b2ef_0.png)
 
 ![](img/ad0223ef5b25584f3da642e9eb81b2ef_2.png)
 

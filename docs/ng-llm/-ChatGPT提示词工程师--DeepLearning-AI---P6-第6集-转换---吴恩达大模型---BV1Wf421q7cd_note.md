@@ -1,8 +1,8 @@
+# 🧠 ChatGPT提示词工程师课程 P6：文本转换
+
 ![](img/ed21d6cb87e54be3aa36b62268b33e0d_0.png)
 
 ![](img/ed21d6cb87e54be3aa36b62268b33e0d_2.png)
-
-# 🧠 ChatGPT提示词工程师课程 P6：文本转换
 
 ![](img/ed21d6cb87e54be3aa36b62268b33e0d_4.png)
 

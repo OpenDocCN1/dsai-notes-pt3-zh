@@ -1,3 +1,5 @@
+# 斯坦福 CS336 课程笔记：第12讲 - 评估 (Evaluation) 🧪
+
 ![](img/56d35df73a2d6b7afce0a5d3923839f0_0.png)
 
 ![](img/56d35df73a2d6b7afce0a5d3923839f0_1.png)
@@ -5,8 +7,6 @@
 ![](img/56d35df73a2d6b7afce0a5d3923839f0_3.png)
 
 ![](img/56d35df73a2d6b7afce0a5d3923839f0_5.png)
-
-# 斯坦福 CS336 课程笔记：第12讲 - 评估 (Evaluation) 🧪
 
 ![](img/56d35df73a2d6b7afce0a5d3923839f0_7.png)
 

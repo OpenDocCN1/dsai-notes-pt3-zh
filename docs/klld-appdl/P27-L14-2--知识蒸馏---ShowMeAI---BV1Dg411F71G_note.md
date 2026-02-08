@@ -1,6 +1,6 @@
-![](img/f6bd465ecf07fceded86c8273ac3a88e_0.png)
-
 # 课程 P27：L14.2 - 知识蒸馏 🧪
+
+![](img/f6bd465ecf07fceded86c8273ac3a88e_0.png)
 
 ![](img/f6bd465ecf07fceded86c8273ac3a88e_0.png)
 

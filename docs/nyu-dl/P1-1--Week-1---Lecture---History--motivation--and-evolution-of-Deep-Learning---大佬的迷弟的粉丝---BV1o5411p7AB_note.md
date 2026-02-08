@@ -1,6 +1,6 @@
-![](img/baf12201b38e71a0a8d840cb4b04dc1c_1.png)
-
 # 深度学习课程 P1：历史、动机与演进 🚀
+
+![](img/baf12201b38e71a0a8d840cb4b04dc1c_1.png)
 
 ![](img/baf12201b38e71a0a8d840cb4b04dc1c_3.png)
 

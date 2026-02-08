@@ -1,6 +1,6 @@
-![](img/71ca6b6768abd85a73a41c9bf768d980_1.png)
-
 # P55：噪声映射网络 🧠
+
+![](img/71ca6b6768abd85a73a41c9bf768d980_1.png)
 
 ![](img/71ca6b6768abd85a73a41c9bf768d980_3.png)
 

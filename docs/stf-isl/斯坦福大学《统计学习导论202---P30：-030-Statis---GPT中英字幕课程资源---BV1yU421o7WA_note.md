@@ -1,8 +1,8 @@
+# 课程30：统计学习中的Bootstrap方法 🚀
+
 ![](img/a3eab1bc152e63176a3db3154cd63589_0.png)
 
 ![](img/a3eab1bc152e63176a3db3154cd63589_2.png)
-
-# 课程30：统计学习中的Bootstrap方法 🚀
 
 ![](img/a3eab1bc152e63176a3db3154cd63589_4.png)
 

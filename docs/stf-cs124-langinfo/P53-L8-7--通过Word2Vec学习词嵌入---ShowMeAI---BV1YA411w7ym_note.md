@@ -1,6 +1,6 @@
-![](img/e7cef8eb995a757f9e814108c24d12b9_0.png)
-
 # 课程 P53：L8.7 - 通过 Word2Vec 学习词嵌入 🧠
+
+![](img/e7cef8eb995a757f9e814108c24d12b9_0.png)
 
 ![](img/e7cef8eb995a757f9e814108c24d12b9_0.png)
 

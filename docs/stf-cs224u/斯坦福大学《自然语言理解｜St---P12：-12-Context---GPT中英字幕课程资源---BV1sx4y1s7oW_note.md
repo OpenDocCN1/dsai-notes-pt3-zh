@@ -1,6 +1,6 @@
-![](img/ae45a61f3584b100e771d28b6bce0fca_0.png)
-
 # 斯坦福大学《自然语言理解》课程笔记（P12）📚：上下文词表示（第9部分）- 知识蒸馏
+
+![](img/ae45a61f3584b100e771d28b6bce0fca_0.png)
 
 ![](img/ae45a61f3584b100e771d28b6bce0fca_2.png)
 

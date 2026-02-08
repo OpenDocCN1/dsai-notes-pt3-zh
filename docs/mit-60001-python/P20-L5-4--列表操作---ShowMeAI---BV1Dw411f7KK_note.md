@@ -1,6 +1,6 @@
-![](img/27c8a977856846c2d9ebbc01684a22af_0.png)
-
 # 课程 P20：L5.4 - 列表操作 🧩
+
+![](img/27c8a977856846c2d9ebbc01684a22af_0.png)
 
 ![](img/27c8a977856846c2d9ebbc01684a22af_0.png)
 

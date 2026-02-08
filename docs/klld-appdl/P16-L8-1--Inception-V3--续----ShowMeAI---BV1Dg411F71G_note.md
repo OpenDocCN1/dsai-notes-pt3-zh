@@ -1,3 +1,5 @@
+# 课程 P16：L8.1 - Inception-V3 [续] 🧠
+
 ![](img/f4b93c38cb2648887cbd799201d326a5_0.png)
 
 ![](img/f4b93c38cb2648887cbd799201d326a5_2.png)
@@ -7,8 +9,6 @@
 ![](img/f4b93c38cb2648887cbd799201d326a5_6.png)
 
 ![](img/f4b93c38cb2648887cbd799201d326a5_8.png)
-
-# 课程 P16：L8.1 - Inception-V3 [续] 🧠
 
 ![](img/f4b93c38cb2648887cbd799201d326a5_10.png)
 

@@ -1,6 +1,6 @@
-![](img/fab022df27f36000d76e346b22aaac83_0.png)
-
 # 斯坦福大学《AI觉醒：对经济和社会的影响》课程 - P14：规模化人类反馈 🧠
+
+![](img/fab022df27f36000d76e346b22aaac83_0.png)
 
 ![](img/fab022df27f36000d76e346b22aaac83_2.png)
 

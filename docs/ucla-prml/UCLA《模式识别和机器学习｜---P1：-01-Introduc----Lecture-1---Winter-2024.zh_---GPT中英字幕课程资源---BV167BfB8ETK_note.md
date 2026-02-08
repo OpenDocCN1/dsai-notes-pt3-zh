@@ -1,3 +1,5 @@
+# 课程1：模式识别与机器学习导论 🎯
+
 ![](img/cbeceae410d88df7db50dc6c77ec1551_0.png)
 
 ![](img/cbeceae410d88df7db50dc6c77ec1551_2.png)
@@ -5,8 +7,6 @@
 ![](img/cbeceae410d88df7db50dc6c77ec1551_3.png)
 
 ![](img/cbeceae410d88df7db50dc6c77ec1551_5.png)
-
-# 课程1：模式识别与机器学习导论 🎯
 
 ![](img/cbeceae410d88df7db50dc6c77ec1551_7.png)
 

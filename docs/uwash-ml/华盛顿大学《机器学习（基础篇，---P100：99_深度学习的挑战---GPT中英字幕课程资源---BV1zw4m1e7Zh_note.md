@@ -1,6 +1,6 @@
-![](img/871e9c804a670aecd86baa2be3c877d7_1.png)
-
 # 机器学习基础（第1课/共4课）：深度学习的挑战 🧠
+
+![](img/871e9c804a670aecd86baa2be3c877d7_1.png)
 
 ![](img/871e9c804a670aecd86baa2be3c877d7_3.png)
 

@@ -1,6 +1,6 @@
-![](img/b628f96da61055a7a8431b9ad1d3d9bc_1.png)
-
 # 杜克大学《MLOps ｜ 机器学习运维（Python基础）》 - P75：Hugging Face Datasets 库介绍 🧠
+
+![](img/b628f96da61055a7a8431b9ad1d3d9bc_1.png)
 
 在本节课中，我们将要学习 Hugging Face 生态系统的另一个核心组件：`datasets` 库。这是一个用于动态加载数据集的库，其功能类似于其他动态加载库，如 `ash` 或 `open data`。我们将了解如何利用它来检索存储在 Hugging Face Hub 上的海量数据集。
 

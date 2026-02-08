@@ -1,6 +1,6 @@
-![](img/53c7c09d8eb1f22d1330df77256a9f36_0.png)
-
 # SQL常用知识点合辑——P22：L22- 复合连接条件 🔗
+
+![](img/53c7c09d8eb1f22d1330df77256a9f36_0.png)
 
 ![](img/53c7c09d8eb1f22d1330df77256a9f36_0.png)
 

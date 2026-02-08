@@ -1,8 +1,8 @@
+# 人工智能—Kaggle实战公开课（七月在线出品） - P3：Kaggle Expedia酒店推荐比赛 🏨
+
 ![](img/d770745e1ec64775e7ba3e83c1496204_0.png)
 
 ![](img/d770745e1ec64775e7ba3e83c1496204_2.png)
-
-# 人工智能—Kaggle实战公开课（七月在线出品） - P3：Kaggle Expedia酒店推荐比赛 🏨
 
 ![](img/d770745e1ec64775e7ba3e83c1496204_4.png)
 

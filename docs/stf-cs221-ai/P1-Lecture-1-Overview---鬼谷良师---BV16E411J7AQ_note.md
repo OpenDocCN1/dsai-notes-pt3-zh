@@ -1,10 +1,10 @@
+# 🧠 课程 P1：人工智能概述
+
 ![](img/d91fb120778fc0cf20292df73273b81e_1.png)
 
 ![](img/d91fb120778fc0cf20292df73273b81e_2.png)
 
 ![](img/d91fb120778fc0cf20292df73273b81e_4.png)
-
-# 🧠 课程 P1：人工智能概述
 
 ![](img/d91fb120778fc0cf20292df73273b81e_6.png)
 

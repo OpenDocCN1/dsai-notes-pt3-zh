@@ -1,6 +1,6 @@
-![](img/e0306186e53379df61c553760759c5b0_0.png)
-
 # LangChain 微调ChatGPT提示词 RAG模型应用 agent 生成式AI - P81：参数高效微调2——PEFT技术1 - LoRA（低秩适应） 🧠
+
+![](img/e0306186e53379df61c553760759c5b0_0.png)
 
 ![](img/e0306186e53379df61c553760759c5b0_2.png)
 

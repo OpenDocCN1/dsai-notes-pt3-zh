@@ -1,8 +1,8 @@
+# 课程 P2：Jupyter 交互式可视化与仪表盘构建 🎨
+
 ![](img/a25c05f31ef83315f47ebfedbfe70933_1.png)
 
 ![](img/a25c05f31ef83315f47ebfedbfe70933_3.png)
-
-# 课程 P2：Jupyter 交互式可视化与仪表盘构建 🎨
 
 ![](img/a25c05f31ef83315f47ebfedbfe70933_5.png)
 

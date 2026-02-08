@@ -1,8 +1,8 @@
+# IBM应用人工智能（从0开始搭建AI机器人）｜课程11：创建Watson操作 🛠️
+
 ![](img/832c4d3cfc1d35fbe27fab5d7aa061ca_0.png)
 
 ![](img/832c4d3cfc1d35fbe27fab5d7aa061ca_2.png)
-
-# IBM应用人工智能（从0开始搭建AI机器人）｜课程11：创建Watson操作 🛠️
 
 ![](img/832c4d3cfc1d35fbe27fab5d7aa061ca_4.png)
 

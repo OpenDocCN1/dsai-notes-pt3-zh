@@ -1,6 +1,6 @@
-![](img/fc4e1fe16f364cba6d367857af527af6_0.png)
-
 # 深度学习课程 P62：L10.6 - 计算图与反向传播 🧠
+
+![](img/fc4e1fe16f364cba6d367857af527af6_0.png)
 
 ![](img/fc4e1fe16f364cba6d367857af527af6_0.png)
 

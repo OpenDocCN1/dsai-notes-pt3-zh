@@ -1,3 +1,5 @@
+# P5：p5 建造 makemore 第四部分：成为一个反向传播忍者 🥷
+
 ![](img/86f8499f4a173e8882bce59ebef07fb4_1.png)
 
 ![](img/86f8499f4a173e8882bce59ebef07fb4_2.png)
@@ -21,8 +23,6 @@
 ![](img/86f8499f4a173e8882bce59ebef07fb4_20.png)
 
 ![](img/86f8499f4a173e8882bce59ebef07fb4_22.png)
-
-# P5：p5 建造 makemore 第四部分：成为一个反向传播忍者 🥷
 
 ![](img/86f8499f4a173e8882bce59ebef07fb4_24.png)
 

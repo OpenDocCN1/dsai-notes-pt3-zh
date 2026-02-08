@@ -1,6 +1,6 @@
-![](img/71345bf3bbd15cc2ac4da959e974311d_0.png)
-
 # 课程名称：CMU《深度学习导论｜11-785 Introduction to Deep Learning Spring 2025》第21讲：神经网络内部机制解析 🧠
+
+![](img/71345bf3bbd15cc2ac4da959e974311d_0.png)
 
 ## 概述
 

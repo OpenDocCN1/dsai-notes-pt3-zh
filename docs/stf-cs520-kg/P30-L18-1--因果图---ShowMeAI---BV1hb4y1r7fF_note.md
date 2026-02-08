@@ -1,6 +1,6 @@
-![](img/72f96fee52ab12170a2480c9c84a7ee1_0.png)
-
 # 📊 课程 P30：L18.1 - 因果图
+
+![](img/72f96fee52ab12170a2480c9c84a7ee1_0.png)
 
 ![](img/72f96fee52ab12170a2480c9c84a7ee1_2.png)
 

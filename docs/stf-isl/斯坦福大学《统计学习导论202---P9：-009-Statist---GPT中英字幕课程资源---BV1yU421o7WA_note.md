@@ -1,8 +1,8 @@
+# 课程9：简单线性回归 📈
+
 ![](img/e364fb84eb4c8ff7e7535ba03899c68e_0.png)
 
 ![](img/e364fb84eb4c8ff7e7535ba03899c68e_2.png)
-
-# 课程9：简单线性回归 📈
 
 ![](img/e364fb84eb4c8ff7e7535ba03899c68e_4.png)
 

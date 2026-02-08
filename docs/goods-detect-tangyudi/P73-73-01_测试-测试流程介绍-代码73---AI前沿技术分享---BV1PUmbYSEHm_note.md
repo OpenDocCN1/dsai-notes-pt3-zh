@@ -1,6 +1,6 @@
-![](img/c29eafed08b5e9ee1345407ca2fb2599_1.png)
-
 # 课程 P73：73.01_测试流程介绍与代码实现 🧪
+
+![](img/c29eafed08b5e9ee1345407ca2fb2599_1.png)
 
 ![](img/c29eafed08b5e9ee1345407ca2fb2599_3.png)
 

@@ -1,8 +1,8 @@
+# Python正则表达式课程 P1：一小时掌握Python正则表达式 🐍
+
 ![](img/da8ee5de7a086ab699eec08ed957b1f1_1.png)
 
 ![](img/da8ee5de7a086ab699eec08ed957b1f1_3.png)
-
-# Python正则表达式课程 P1：一小时掌握Python正则表达式 🐍
 
 ![](img/da8ee5de7a086ab699eec08ed957b1f1_5.png)
 

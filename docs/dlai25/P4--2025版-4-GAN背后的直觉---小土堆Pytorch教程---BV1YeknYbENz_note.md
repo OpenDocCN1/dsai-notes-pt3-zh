@@ -1,8 +1,8 @@
+# P4：【2025版】4.GAN背后的直觉 🧠 - 小土堆Pytorch教程
+
 ![](img/d1d0e2a5bb645d94e64d5485053d06c4_0.png)
 
 ![](img/d1d0e2a5bb645d94e64d5485053d06c4_2.png)
-
-# P4：【2025版】4.GAN背后的直觉 🧠 - 小土堆Pytorch教程
 
 ![](img/d1d0e2a5bb645d94e64d5485053d06c4_4.png)
 

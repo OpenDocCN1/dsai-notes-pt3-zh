@@ -1,10 +1,10 @@
-![](img/fb0bdca3f516d79e7e34fe8bed949ae1_0.png)
-
 # 论文公开课（七月在线出品） - P3：AlphaGo Zero背后的算法
 
 ![](img/fb0bdca3f516d79e7e34fe8bed949ae1_0.png)
 
 ## 📚 课程概述
+
+![](img/fb0bdca3f516d79e7e34fe8bed949ae1_0.png)
 
 在本节课中，我们将学习AlphaGo Zero背后的核心算法。我们将从强化学习的基本框架入手，分析早期AlphaGo如何利用人类知识，并重点探讨AlphaGo Zero如何摒弃人类棋谱，通过自我对弈实现超越。课程将结合两篇关键论文，深入浅出地解释深度模型与蒙特卡洛树搜索的结合，以及这种“专家迭代”训练范式的原理。
 

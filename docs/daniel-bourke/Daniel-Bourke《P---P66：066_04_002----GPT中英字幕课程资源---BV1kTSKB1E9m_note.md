@@ -1,8 +1,8 @@
+# PyTorch深度学习课程 P66：分类问题的输入与输出形状示例 🍕📊
+
 ![](img/a81be931b8ea17ba1165cacc237f4ebc_0.png)
 
 ![](img/a81be931b8ea17ba1165cacc237f4ebc_2.png)
-
-# PyTorch深度学习课程 P66：分类问题的输入与输出形状示例 🍕📊
 
 ![](img/a81be931b8ea17ba1165cacc237f4ebc_4.png)
 

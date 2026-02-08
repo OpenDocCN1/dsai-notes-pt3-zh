@@ -1,6 +1,6 @@
-![](img/78decb96bddf8938af86edabb4a076fa_0.png)
-
 # 📚 课程 P4：L4 - 隐马尔可夫模型 (HMM) 第1部分
+
+![](img/78decb96bddf8938af86edabb4a076fa_0.png)
 
 ![](img/78decb96bddf8938af86edabb4a076fa_2.png)
 

@@ -1,8 +1,8 @@
+# P5：L3.1 - 随机失活Dropout 🎲
+
 ![](img/2e147076f781266bf2b61eab4417f21d_1.png)
 
 ![](img/2e147076f781266bf2b61eab4417f21d_3.png)
-
-# P5：L3.1 - 随机失活Dropout 🎲
 
 ![](img/2e147076f781266bf2b61eab4417f21d_5.png)
 

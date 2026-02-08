@@ -1,6 +1,6 @@
-![](img/e5b1f97fbbe4ecf135886a27072b357a_0.png)
-
 # 课程P8：3.2 - 随机游走节点嵌入方法 🚶‍♂️➡️🧩
+
+![](img/e5b1f97fbbe4ecf135886a27072b357a_0.png)
 
 ![](img/e5b1f97fbbe4ecf135886a27072b357a_1.png)
 

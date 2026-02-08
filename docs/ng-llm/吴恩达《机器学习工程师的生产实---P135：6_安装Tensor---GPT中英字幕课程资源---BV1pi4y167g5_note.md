@@ -1,6 +1,6 @@
-![](img/94df207c28dddd31ead74c4c807c524d_0.png)
-
 # 课程 6：安装与使用 TensorFlow Serving 🚀
+
+![](img/94df207c28dddd31ead74c4c807c524d_0.png)
 
 在本节课中，我们将学习如何在自己的基础设施上部署机器学习模型。我们将重点介绍开源解决方案 TensorFlow Serving，并完成从训练一个简单模型到部署并远程调用它的完整流程。我们将使用基于 Linux 的 Google Colab 环境，这些步骤同样适用于你自己的服务器。
 

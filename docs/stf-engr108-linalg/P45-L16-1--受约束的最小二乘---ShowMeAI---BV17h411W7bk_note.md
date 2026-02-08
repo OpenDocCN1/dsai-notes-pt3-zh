@@ -1,8 +1,8 @@
+# 📘 课程 P45：L16.1 - 受约束的最小二乘法
+
 ![](img/a347ce16f1a9aca1ccc7ba74e717c1e6_0.png)
 
 ![](img/a347ce16f1a9aca1ccc7ba74e717c1e6_1.png)
-
-# 📘 课程 P45：L16.1 - 受约束的最小二乘法
 
 ![](img/a347ce16f1a9aca1ccc7ba74e717c1e6_0.png)
 

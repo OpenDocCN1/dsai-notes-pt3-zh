@@ -1,8 +1,8 @@
+# 课程 P16：5.3 - 集体分类 🧠
+
 ![](img/1278d0c467e2ecfccca2af4230632df0_0.png)
 
 ![](img/1278d0c467e2ecfccca2af4230632df0_1.png)
-
-# 课程 P16：5.3 - 集体分类 🧠
 
 ![](img/1278d0c467e2ecfccca2af4230632df0_3.png)
 

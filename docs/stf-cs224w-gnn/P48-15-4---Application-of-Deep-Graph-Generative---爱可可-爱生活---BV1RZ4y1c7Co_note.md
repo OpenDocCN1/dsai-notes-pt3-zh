@@ -1,6 +1,6 @@
-![](img/e69e847a971eae132a1a62b6d246d86d_0.png)
-
 # 课程 P48：15.4 - 深度图生成模型的应用 🧪
+
+![](img/e69e847a971eae132a1a62b6d246d86d_0.png)
 
 ![](img/e69e847a971eae132a1a62b6d246d86d_1.png)
 

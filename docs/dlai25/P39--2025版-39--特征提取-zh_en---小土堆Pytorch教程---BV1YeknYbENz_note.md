@@ -1,6 +1,6 @@
-![](img/3a8eaa57ca3fd822faf3874ee8b322e7_1.png)
-
 # P39：特征提取 🧠 - 小土堆PyTorch教程
+
+![](img/3a8eaa57ca3fd822faf3874ee8b322e7_1.png)
 
 ![](img/3a8eaa57ca3fd822faf3874ee8b322e7_3.png)
 

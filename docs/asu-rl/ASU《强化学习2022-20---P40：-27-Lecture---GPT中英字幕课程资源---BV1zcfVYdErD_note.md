@@ -1,6 +1,6 @@
-![](img/9743f7b5653caf53dcc894fa1d5c494a_0.png)
-
 # 课程11：近似线性规划与策略空间近似 🧠
+
+![](img/9743f7b5653caf53dcc894fa1d5c494a_0.png)
 
 ![](img/9743f7b5653caf53dcc894fa1d5c494a_2.png)
 

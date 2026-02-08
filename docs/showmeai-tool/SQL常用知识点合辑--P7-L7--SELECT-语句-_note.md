@@ -1,6 +1,6 @@
-![](img/3ac0cd0bdd7339c70521bd045805fd1d_0.png)
-
 # SQL常用知识点合辑——P7：L7- SELECT 语句 📖
+
+![](img/3ac0cd0bdd7339c70521bd045805fd1d_0.png)
 
 ![](img/3ac0cd0bdd7339c70521bd045805fd1d_0.png)
 

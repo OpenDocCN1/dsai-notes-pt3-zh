@@ -1,6 +1,6 @@
-![](img/6cd565dbf75b80e7df2ac35e081833ec_0.png)
-
 # Excel高级教程（持续更新中） - P10：10）使用“推荐的数据透视表” 📊
+
+![](img/6cd565dbf75b80e7df2ac35e081833ec_0.png)
 
 ![](img/6cd565dbf75b80e7df2ac35e081833ec_0.png)
 

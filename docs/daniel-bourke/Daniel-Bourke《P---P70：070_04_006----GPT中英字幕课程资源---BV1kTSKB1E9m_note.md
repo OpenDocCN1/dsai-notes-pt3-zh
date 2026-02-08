@@ -1,6 +1,6 @@
-![](img/2839d8d527e20dd0e06d8eeff92b9cbc_0.png)
-
 # PyTorch深度学习课程 #70：建模步骤规划与设备无关代码配置 🚀
+
+![](img/2839d8d527e20dd0e06d8eeff92b9cbc_0.png)
 
 ## 概述
 

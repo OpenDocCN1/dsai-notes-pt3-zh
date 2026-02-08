@@ -1,6 +1,6 @@
-![](img/58817370e1b151fd2fb54af9b14eafd4_0.png)
-
 # 课程名称：统计学习导论 - 第100讲：错误发现率与Benjamini-Hochberg方法 🧪
+
+![](img/58817370e1b151fd2fb54af9b14eafd4_0.png)
 
 ![](img/58817370e1b151fd2fb54af9b14eafd4_2.png)
 

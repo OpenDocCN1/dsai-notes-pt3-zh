@@ -1,6 +1,6 @@
-![](img/235f34fac8c56f580d57b2d272973ead_0.png)
-
 # 课程088：K均值聚类 📊
+
+![](img/235f34fac8c56f580d57b2d272973ead_0.png)
 
 ![](img/235f34fac8c56f580d57b2d272973ead_2.png)
 

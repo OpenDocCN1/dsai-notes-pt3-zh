@@ -1,6 +1,6 @@
-![](img/255bbae857c3c7b4f016bf873cf0c331_0.png)
-
 # PyTorch深度学习课程 P81：136. 创建图像数据加载器 📂
+
+![](img/255bbae857c3c7b4f016bf873cf0c331_0.png)
 
 ![](img/255bbae857c3c7b4f016bf873cf0c331_0.png)
 

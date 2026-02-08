@@ -1,6 +1,6 @@
-![](img/369eb9be7244bddab38538212e5254e5_0.png)
-
 # 课程 P99：L46.2 - GloVe 词向量模型详解 🧤
+
+![](img/369eb9be7244bddab38538212e5254e5_0.png)
 
 ![](img/369eb9be7244bddab38538212e5254e5_2.png)
 

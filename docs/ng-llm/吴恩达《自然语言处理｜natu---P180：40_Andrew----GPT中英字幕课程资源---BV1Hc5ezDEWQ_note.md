@@ -1,6 +1,6 @@
-![](img/5b11c73c04728ed7666a5f83acaecdd8_0.png)
-
 # 课程名称：吴恩达《自然语言处理》P180 - 与Quoc Le的访谈 🎙️
+
+![](img/5b11c73c04728ed7666a5f83acaecdd8_0.png)
 
 ## 概述
 

@@ -1,6 +1,6 @@
-![](img/2bed8b0bedf661ce13a19e6983053f9b_1.png)
-
 # P49：定义公平 🔍
+
+![](img/2bed8b0bedf661ce13a19e6983053f9b_1.png)
 
 ![](img/2bed8b0bedf661ce13a19e6983053f9b_3.png)
 

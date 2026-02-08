@@ -1,6 +1,6 @@
-![](img/9fb8d9dd04796c9d352a78350c807c17_1.png)
-
 # 绘图必备Matplotlib，P8：添加和更改文本 📝
+
+![](img/9fb8d9dd04796c9d352a78350c807c17_1.png)
 
 ![](img/9fb8d9dd04796c9d352a78350c807c17_3.png)
 

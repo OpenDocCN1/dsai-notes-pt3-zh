@@ -1,6 +1,6 @@
-![](img/8ac7fd1cb246ba3f44ef0a49a9a194ac_0.png)
-
 # 📚 课程 P5：L5 - 图神经网络与注意力机制
+
+![](img/8ac7fd1cb246ba3f44ef0a49a9a194ac_0.png)
 
 ## 📖 概述
 

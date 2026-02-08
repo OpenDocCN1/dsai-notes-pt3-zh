@@ -1,6 +1,6 @@
-![](img/076f1f1acc2a15b26fe091e37291845e_1.png)
-
 # 课程P83：YOLOv3模型预测与效果展示 🚀
+
+![](img/076f1f1acc2a15b26fe091e37291845e_1.png)
 
 ![](img/076f1f1acc2a15b26fe091e37291845e_3.png)
 

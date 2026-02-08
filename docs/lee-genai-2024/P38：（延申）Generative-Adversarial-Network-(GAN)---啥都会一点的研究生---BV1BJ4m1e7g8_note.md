@@ -1,8 +1,8 @@
+# 李宏毅2024春《生成式人工智能导论》 - P38：（延申）Generative Adversarial Network (GAN) 🎭
+
 ![](img/61fbaed93dbd8647a10eb08f10c39135_1.png)
 
 ![](img/61fbaed93dbd8647a10eb08f10c39135_3.png)
-
-# 李宏毅2024春《生成式人工智能导论》 - P38：（延申）Generative Adversarial Network (GAN) 🎭
 
 ![](img/61fbaed93dbd8647a10eb08f10c39135_5.png)
 

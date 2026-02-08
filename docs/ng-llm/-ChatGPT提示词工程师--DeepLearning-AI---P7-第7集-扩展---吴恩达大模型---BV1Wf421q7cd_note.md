@@ -1,6 +1,6 @@
-![](img/438e48cb73e816738efc4d8b3de2ff84_0.png)
-
 # 【ChatGPT提示词工程师】课程 P7：扩展任务与温度参数 🧠
+
+![](img/438e48cb73e816738efc4d8b3de2ff84_0.png)
 
 ![](img/438e48cb73e816738efc4d8b3de2ff84_1.png)
 

@@ -1,3 +1,5 @@
+# 机器学习课程 P3：风险分解与正则化 🧠
+
 ![](img/4e43eb5d01ffd7bcdfbbc08b055bcf2a_1.png)
 
 ![](img/4e43eb5d01ffd7bcdfbbc08b055bcf2a_2.png)
@@ -5,8 +7,6 @@
 ![](img/4e43eb5d01ffd7bcdfbbc08b055bcf2a_4.png)
 
 ![](img/4e43eb5d01ffd7bcdfbbc08b055bcf2a_6.png)
-
-# 机器学习课程 P3：风险分解与正则化 🧠
 
 ![](img/4e43eb5d01ffd7bcdfbbc08b055bcf2a_8.png)
 

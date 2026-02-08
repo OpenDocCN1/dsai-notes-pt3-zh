@@ -1,6 +1,6 @@
-![](img/f2e780b69e031634fbfadb8557d184c4_0.png)
-
 # Python 3全系列基础教程，P36：36）迭代器 🔄
+
+![](img/f2e780b69e031634fbfadb8557d184c4_0.png)
 
 ![](img/f2e780b69e031634fbfadb8557d184c4_0.png)
 

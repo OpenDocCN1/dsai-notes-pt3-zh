@@ -1,8 +1,8 @@
+# 课程 P38：13.2 - 网络社区 🕸️
+
 ![](img/c3f1e08c022f50f5c3bf18cd7733ad0e_0.png)
 
 ![](img/c3f1e08c022f50f5c3bf18cd7733ad0e_1.png)
-
-# 课程 P38：13.2 - 网络社区 🕸️
 
 ![](img/c3f1e08c022f50f5c3bf18cd7733ad0e_3.png)
 

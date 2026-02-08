@@ -1,8 +1,8 @@
+# 机器学习课程 P68：交叉验证演示第一部分 📊
+
 ![](img/29f79d9ce2580b5b47cbeffbe75c489f_0.png)
 
 ![](img/29f79d9ce2580b5b47cbeffbe75c489f_2.png)
-
-# 机器学习课程 P68：交叉验证演示第一部分 📊
 
 ![](img/29f79d9ce2580b5b47cbeffbe75c489f_3.png)
 

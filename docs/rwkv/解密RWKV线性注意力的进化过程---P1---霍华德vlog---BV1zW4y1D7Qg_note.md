@@ -1,6 +1,6 @@
-![](img/aa74668df0273f164db93be7b94715d8_0.png)
-
 # 课程一：解密RWKV线性注意力的进化过程 - P1 🧠
+
+![](img/aa74668df0273f164db93be7b94715d8_0.png)
 
 ![](img/aa74668df0273f164db93be7b94715d8_2.png)
 

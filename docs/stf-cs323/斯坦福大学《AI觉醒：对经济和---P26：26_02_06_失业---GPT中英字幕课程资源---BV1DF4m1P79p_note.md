@@ -1,6 +1,6 @@
-![](img/45cbdd181ea2146088fcdeddef52d064_0.png)
-
 # 斯坦福大学《AI觉醒：对经济和社会的影响》课程笔记 - P26：应对失业问题的政策思路 💼
+
+![](img/45cbdd181ea2146088fcdeddef52d064_0.png)
 
 ![](img/45cbdd181ea2146088fcdeddef52d064_2.png)
 

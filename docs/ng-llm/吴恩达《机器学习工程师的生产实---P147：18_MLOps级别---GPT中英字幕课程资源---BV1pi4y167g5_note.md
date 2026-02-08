@@ -1,6 +1,6 @@
-![](img/b57cabd576c377b3701b344a577ba16b_0.png)
-
 # 课程 18：MLOps 成熟度级别 0 🚦
+
+![](img/b57cabd576c377b3701b344a577ba16b_0.png)
 
 ![](img/b57cabd576c377b3701b344a577ba16b_2.png)
 

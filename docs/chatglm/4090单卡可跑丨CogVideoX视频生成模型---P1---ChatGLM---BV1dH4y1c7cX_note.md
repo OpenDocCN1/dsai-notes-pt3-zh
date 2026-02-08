@@ -1,6 +1,6 @@
-![](img/ebeee9ddf8cee16b44d90abc5d46c69d_1.png)
-
 # 课程名称：CogVideoX视频生成模型详解与部署指南 - P1
+
+![](img/ebeee9ddf8cee16b44d90abc5d46c69d_1.png)
 
 ## 概述 📖
 

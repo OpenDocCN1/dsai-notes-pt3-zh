@@ -1,8 +1,8 @@
+# 📘 课程 P51：L18.2 - LM(Levenberg–Marquardt)算法
+
 ![](img/16a9d86cd45f78e02f6d43f1cdd3f5a9_0.png)
 
 ![](img/16a9d86cd45f78e02f6d43f1cdd3f5a9_2.png)
-
-# 📘 课程 P51：L18.2 - LM(Levenberg–Marquardt)算法
 
 在本节课中，我们将学习一种用于近似或启发式求解非线性最小二乘问题的方法——Levenberg–Marquardt（LM）算法。我们将探讨其基本思想、算法步骤，并通过一个实例来理解其工作原理。
 

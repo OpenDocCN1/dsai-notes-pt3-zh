@@ -1,6 +1,6 @@
-![](img/59e4b76bd6d8a7df4dcd466c2ed52360_0.png)
-
 # 斯坦福大学《统计学习导论2023Python版》课程笔记 P33：📊 5.1 交叉验证
+
+![](img/59e4b76bd6d8a7df4dcd466c2ed52360_0.png)
 
 ![](img/59e4b76bd6d8a7df4dcd466c2ed52360_2.png)
 

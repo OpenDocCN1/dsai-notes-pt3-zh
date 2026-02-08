@@ -1,3 +1,5 @@
+# 课程 1447-七月在线-机器学习集训营15期 - P15：08-NLP-4-智能问答机器人项目的部署、总结 📚🤖
+
 ![](img/ef1ed3f9de92bfce3386f590b5b0c195_0.png)
 
 ![](img/ef1ed3f9de92bfce3386f590b5b0c195_2.png)
@@ -5,8 +7,6 @@
 ![](img/ef1ed3f9de92bfce3386f590b5b0c195_4.png)
 
 ![](img/ef1ed3f9de92bfce3386f590b5b0c195_6.png)
-
-# 课程 1447-七月在线-机器学习集训营15期 - P15：08-NLP-4-智能问答机器人项目的部署、总结 📚🤖
 
 ![](img/ef1ed3f9de92bfce3386f590b5b0c195_8.png)
 

@@ -1,6 +1,6 @@
-![](img/9fdb6991c94c6629bfbb30c9e40830d4_0.png)
-
 # SQL常用知识点合辑——P17：L17- LIMIT 运算符 📄
+
+![](img/9fdb6991c94c6629bfbb30c9e40830d4_0.png)
 
 ![](img/9fdb6991c94c6629bfbb30c9e40830d4_0.png)
 

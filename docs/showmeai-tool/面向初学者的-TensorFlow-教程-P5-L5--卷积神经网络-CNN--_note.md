@@ -1,6 +1,6 @@
-![](img/f02af098f9ad70406fc18680eac4bd94_0.png)
-
 # TensorFlow 教程 P5：L5 - 卷积神经网络 (CNN) 🧠
+
+![](img/f02af098f9ad70406fc18680eac4bd94_0.png)
 
 ![](img/f02af098f9ad70406fc18680eac4bd94_0.png)
 

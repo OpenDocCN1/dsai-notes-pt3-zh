@@ -1,6 +1,6 @@
-![](img/f06a45c51d4b35f701a8d422ac2f266a_0.png)
-
 # 课程 038：验证与交叉验证 📊
+
+![](img/f06a45c51d4b35f701a8d422ac2f266a_0.png)
 
 ![](img/f06a45c51d4b35f701a8d422ac2f266a_2.png)
 

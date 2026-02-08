@@ -1,6 +1,6 @@
-![](img/1eae3936774b1be13c8af1d47c2f0646_1.png)
-
 # 课程P7：第四周实践课 - 聆听卷积 🔊🎵
+
+![](img/1eae3936774b1be13c8af1d47c2f0646_1.png)
 
 ![](img/1eae3936774b1be13c8af1d47c2f0646_3.png)
 

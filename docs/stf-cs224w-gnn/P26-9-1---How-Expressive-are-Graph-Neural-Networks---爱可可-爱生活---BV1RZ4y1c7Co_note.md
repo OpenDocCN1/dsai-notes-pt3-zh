@@ -1,8 +1,8 @@
+# 课程 P26：9.1 - 图神经网络有多强大？ 🧠
+
 ![](img/2837e80fef690b0019cfdaa1f80ef7c8_0.png)
 
 ![](img/2837e80fef690b0019cfdaa1f80ef7c8_1.png)
-
-# 课程 P26：9.1 - 图神经网络有多强大？ 🧠
 
 ![](img/2837e80fef690b0019cfdaa1f80ef7c8_3.png)
 

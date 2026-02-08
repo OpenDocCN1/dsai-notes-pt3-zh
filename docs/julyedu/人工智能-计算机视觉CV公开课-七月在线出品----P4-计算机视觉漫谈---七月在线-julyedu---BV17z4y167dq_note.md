@@ -1,3 +1,5 @@
+# 人工智能—计算机视觉CV公开课（七月在线出品） - P4：计算机视觉漫谈 🧠
+
 ![](img/1d0db470f5cd4d671b3c6730af32f6c6_1.png)
 
 ![](img/1d0db470f5cd4d671b3c6730af32f6c6_3.png)
@@ -5,8 +7,6 @@
 ![](img/1d0db470f5cd4d671b3c6730af32f6c6_5.png)
 
 ![](img/1d0db470f5cd4d671b3c6730af32f6c6_7.png)
-
-# 人工智能—计算机视觉CV公开课（七月在线出品） - P4：计算机视觉漫谈 🧠
 
 ![](img/1d0db470f5cd4d671b3c6730af32f6c6_9.png)
 

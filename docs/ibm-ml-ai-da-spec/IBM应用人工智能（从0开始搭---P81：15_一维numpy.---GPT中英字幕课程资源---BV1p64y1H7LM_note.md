@@ -1,6 +1,6 @@
-![](img/e690c93beb7dc0474e89ee5f0af68774_0.png)
-
 # IBM应用人工智能课程 P81：一维NumPy入门 🧮
+
+![](img/e690c93beb7dc0474e89ee5f0af68774_0.png)
 
 在本节课中，我们将学习NumPy库的基础知识，特别是关于一维数组（1D Numpy Arrays）的内容。NumPy是科学计算的核心库，也是Pandas等高级工具的基础。我们将从数组创建开始，逐步学习索引、切片以及各种数组操作。
 

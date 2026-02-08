@@ -1,6 +1,6 @@
-![](img/09ef0dc5bcb480ff88b22238827c1783_0.png)
-
 # Python 3全系列基础教程，P6：Python字符串操作 🧵
+
+![](img/09ef0dc5bcb480ff88b22238827c1783_0.png)
 
 ![](img/09ef0dc5bcb480ff88b22238827c1783_0.png)
 

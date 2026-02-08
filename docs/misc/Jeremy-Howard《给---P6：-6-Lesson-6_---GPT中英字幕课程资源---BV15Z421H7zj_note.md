@@ -1,3 +1,5 @@
+# 课程6：表格数据与决策树 🌳
+
 ![](img/7383febe20d317edb4f4d72ed5e239c6_1.png)
 
 ![](img/7383febe20d317edb4f4d72ed5e239c6_3.png)
@@ -15,8 +17,6 @@
 ![](img/7383febe20d317edb4f4d72ed5e239c6_14.png)
 
 ![](img/7383febe20d317edb4f4d72ed5e239c6_16.png)
-
-# 课程6：表格数据与决策树 🌳
 
 ![](img/7383febe20d317edb4f4d72ed5e239c6_18.png)
 

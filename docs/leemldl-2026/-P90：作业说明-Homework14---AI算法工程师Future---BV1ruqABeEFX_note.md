@@ -1,6 +1,6 @@
-![](img/656b24c6ec2f7e7dbe1f3ff09313b1b9_1.png)
-
 # 课程：李宏毅机器学习系统课程 - 作业14：持续学习 📚
+
+![](img/656b24c6ec2f7e7dbe1f3ff09313b1b9_1.png)
 
 ![](img/656b24c6ec2f7e7dbe1f3ff09313b1b9_3.png)
 

@@ -1,6 +1,6 @@
-![](img/23e7e024eacd8fc2fbd5216b1f322792_0.png)
-
 # SQL常用知识点合辑——P16：L16- ORDER BY 运算符 📊
+
+![](img/23e7e024eacd8fc2fbd5216b1f322792_0.png)
 
 ![](img/23e7e024eacd8fc2fbd5216b1f322792_0.png)
 

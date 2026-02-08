@@ -1,6 +1,6 @@
-![](img/38e02da33e68e21ebc35d4ab9d4d43de_0.png)
-
 # 机器学习课程 P36：常用分布估计与推断 📊
+
+![](img/38e02da33e68e21ebc35d4ab9d4d43de_0.png)
 
 ![](img/38e02da33e68e21ebc35d4ab9d4d43de_2.png)
 

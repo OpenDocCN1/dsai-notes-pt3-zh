@@ -1,6 +1,6 @@
-![](img/cefd63b858b9ffbbbae77ae87ec88f44_0.png)
-
 # P3：真实生活中的GAN 🎭 - 小土堆Pytorch教程
+
+![](img/cefd63b858b9ffbbbae77ae87ec88f44_0.png)
 
 ![](img/cefd63b858b9ffbbbae77ae87ec88f44_2.png)
 

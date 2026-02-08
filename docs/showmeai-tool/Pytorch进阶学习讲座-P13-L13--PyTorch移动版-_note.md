@@ -1,6 +1,6 @@
-![](img/26aca7c4871d57c8c593b5a764582be0_1.png)
-
 # PyTorch进阶学习讲座！P13：L13- PyTorch移动版 🚀
+
+![](img/26aca7c4871d57c8c593b5a764582be0_1.png)
 
 在本节课中，我们将学习PyTorch移动版（PyTorch Mobile）在过去一年中的主要改进。内容包括CPU性能优化、GPU原型支持、扩展的文档与教程，以及移动推理加速器的相关信息。
 

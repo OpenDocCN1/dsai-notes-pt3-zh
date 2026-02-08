@@ -1,6 +1,6 @@
-![](img/c90c3c06d1e295caeb58f6aac3221f81_0.png)
-
 # LangChain 微调ChatGPT提示词 RAG模型应用 agent 生成式AI - P55：4：图像生成应用 🖼️
+
+![](img/c90c3c06d1e295caeb58f6aac3221f81_0.png)
 
 ## 概述
 

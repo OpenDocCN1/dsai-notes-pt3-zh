@@ -1,6 +1,6 @@
-![](img/4b126a9c0436433d6b4aae9ace6be002_0.png)
-
 # 🧠 课程 P3：L3 - 孪生网络与相似度学习
+
+![](img/4b126a9c0436433d6b4aae9ace6be002_0.png)
 
 ![](img/4b126a9c0436433d6b4aae9ace6be002_0.png)
 

@@ -1,10 +1,10 @@
+# 课程 P71：pix2pix 中的 U-Net 生成器 🧠
+
 ![](img/d5151f777486cc3c0d1851de4bae0338_0.png)
 
 ![](img/d5151f777486cc3c0d1851de4bae0338_2.png)
 
 ![](img/d5151f777486cc3c0d1851de4bae0338_4.png)
-
-# 课程 P71：pix2pix 中的 U-Net 生成器 🧠
 
 ![](img/d5151f777486cc3c0d1851de4bae0338_6.png)
 

@@ -1,6 +1,6 @@
-![](img/1d7d4ebea6993b495563ec85714abe21_0.png)
-
 # 课程P37：原始与变换坐标计算 📐
+
+![](img/1d7d4ebea6993b495563ec85714abe21_0.png)
 
 ![](img/1d7d4ebea6993b495563ec85714abe21_2.png)
 

@@ -1,8 +1,8 @@
+# 课程P24：8.2 - 训练图神经网络 🧠
+
 ![](img/8cb0a70ee533f20a1559aab08edd6390_0.png)
 
 ![](img/8cb0a70ee533f20a1559aab08edd6390_1.png)
-
-# 课程P24：8.2 - 训练图神经网络 🧠
 
 ![](img/8cb0a70ee533f20a1559aab08edd6390_3.png)
 

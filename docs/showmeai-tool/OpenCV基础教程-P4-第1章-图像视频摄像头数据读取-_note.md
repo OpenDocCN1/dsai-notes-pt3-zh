@@ -1,6 +1,6 @@
-![](img/731f8909febb6ccaa67270b908eccfe1_0.png)
-
 # OpenCV基础教程，P4：第1章：图像、视频与摄像头数据读取 📸
+
+![](img/731f8909febb6ccaa67270b908eccfe1_0.png)
 
 ![](img/731f8909febb6ccaa67270b908eccfe1_0.png)
 

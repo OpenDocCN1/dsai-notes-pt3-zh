@@ -1,6 +1,6 @@
-![](img/d6187ca8d45045e455b7c8c59e779a84_1.png)
-
 # 课程 P11：Recipe2Vec - 如何用Word2Vec发现相关食谱 🍳
+
+![](img/d6187ca8d45045e455b7c8c59e779a84_1.png)
 
 ## 概述
 

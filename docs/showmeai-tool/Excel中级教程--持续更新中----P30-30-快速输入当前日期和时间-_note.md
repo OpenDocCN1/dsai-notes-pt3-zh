@@ -1,6 +1,6 @@
-![](img/08c72fb238e212bdb2f175efd776864e_0.png)
-
 # Excel中级教程 (P30) 📅：快速输入当前日期和时间
+
+![](img/08c72fb238e212bdb2f175efd776864e_0.png)
 
 ![](img/08c72fb238e212bdb2f175efd776864e_0.png)
 

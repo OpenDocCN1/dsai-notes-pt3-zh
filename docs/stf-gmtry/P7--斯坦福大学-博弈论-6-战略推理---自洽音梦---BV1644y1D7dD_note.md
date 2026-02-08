@@ -1,6 +1,6 @@
-![](img/b95f7d656ede3ae48f18315b99af25c3_1.png)
-
 # 课程P7：战略推理与纳什均衡 🎯
+
+![](img/b95f7d656ede3ae48f18315b99af25c3_1.png)
 
 ![](img/b95f7d656ede3ae48f18315b99af25c3_3.png)
 

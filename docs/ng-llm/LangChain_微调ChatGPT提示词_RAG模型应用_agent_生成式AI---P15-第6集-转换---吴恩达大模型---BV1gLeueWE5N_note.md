@@ -1,6 +1,6 @@
-![](img/a32ab69211f39eadd0da37920a2e5c99_0.png)
-
 # LangChain 微调ChatGPT提示词 RAG模型应用 agent 生成式AI - P15：第6集 转换 🛠️
+
+![](img/a32ab69211f39eadd0da37920a2e5c99_0.png)
 
 ![](img/a32ab69211f39eadd0da37920a2e5c99_2.png)
 

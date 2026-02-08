@@ -1,6 +1,6 @@
-![](img/279576bbae9e9097ca3dbeb3a30212dc_1.png)
-
 # 课程12c：聚类分析入门 🧩
+
+![](img/279576bbae9e9097ca3dbeb3a30212dc_1.png)
 
 ![](img/279576bbae9e9097ca3dbeb3a30212dc_3.png)
 

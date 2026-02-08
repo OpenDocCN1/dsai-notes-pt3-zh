@@ -1,8 +1,8 @@
+# 机器学习课程 P144：集成学习（Boosting与Voting Classifier）实践 🚀
+
 ![](img/1bb42b7c7aa21aa1da89f7ddcd9789fb_0.png)
 
 ![](img/1bb42b7c7aa21aa1da89f7ddcd9789fb_2.png)
-
-# 机器学习课程 P144：集成学习（Boosting与Voting Classifier）实践 🚀
 
 ![](img/1bb42b7c7aa21aa1da89f7ddcd9789fb_4.png)
 

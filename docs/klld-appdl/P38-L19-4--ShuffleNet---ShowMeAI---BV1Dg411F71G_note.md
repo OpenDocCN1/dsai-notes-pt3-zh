@@ -1,8 +1,8 @@
+# 🃏 课程 P38：L19.4 - ShuffleNet 详解
+
 ![](img/c7cbc2eaf9a47d6f2348cc75e773b4a5_1.png)
 
 ![](img/c7cbc2eaf9a47d6f2348cc75e773b4a5_3.png)
-
-# 🃏 课程 P38：L19.4 - ShuffleNet 详解
 
 ![](img/c7cbc2eaf9a47d6f2348cc75e773b4a5_5.png)
 

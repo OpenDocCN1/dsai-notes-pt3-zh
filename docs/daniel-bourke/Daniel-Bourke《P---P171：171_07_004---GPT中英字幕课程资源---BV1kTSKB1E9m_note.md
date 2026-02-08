@@ -1,6 +1,6 @@
-![](img/c9f4b606e2595c0366aa14b1edbd4a03_0.png)
-
 # 课程 07：编写首个数据配置 Python 脚本大纲 📝
+
+![](img/c9f4b606e2595c0366aa14b1edbd4a03_0.png)
 
 在本节课中，我们将学习如何将 Jupyter Notebook 中用于创建数据集和数据加载器的代码，转化为一个可复用的 Python 脚本。我们将使用 Jupyter 的魔法命令来高效地完成这一过程。
 

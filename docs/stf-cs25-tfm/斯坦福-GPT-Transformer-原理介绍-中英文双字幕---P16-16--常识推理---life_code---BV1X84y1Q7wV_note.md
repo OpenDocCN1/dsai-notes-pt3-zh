@@ -1,10 +1,10 @@
+# 斯坦福 GPT/Transformer 原理介绍 - P16：常识推理 🧠
+
 ![](img/f6064823a2db16085967ebdd0dffc7e6_0.png)
 
 ![](img/f6064823a2db16085967ebdd0dffc7e6_1.png)
 
 ![](img/f6064823a2db16085967ebdd0dffc7e6_3.png)
-
-# 斯坦福 GPT/Transformer 原理介绍 - P16：常识推理 🧠
 
 ![](img/f6064823a2db16085967ebdd0dffc7e6_5.png)
 

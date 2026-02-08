@@ -1,8 +1,8 @@
+# 课程08：模型选择与评估指标 📊
+
 ![](img/7e52b57fa472fea66be6726d0e22fac3_0.png)
 
 ![](img/7e52b57fa472fea66be6726d0e22fac3_2.png)
-
-# 课程08：模型选择与评估指标 📊
 
 ![](img/7e52b57fa472fea66be6726d0e22fac3_4.png)
 

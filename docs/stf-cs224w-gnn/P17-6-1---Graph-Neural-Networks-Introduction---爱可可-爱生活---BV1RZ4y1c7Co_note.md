@@ -1,6 +1,6 @@
-![](img/fe711ca0ac12b27a7e8672209c105a0e_0.png)
-
 # 课程 P17：6.1 - 图神经网络简介 🧠
+
+![](img/fe711ca0ac12b27a7e8672209c105a0e_0.png)
 
 ![](img/fe711ca0ac12b27a7e8672209c105a0e_1.png)
 

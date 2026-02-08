@@ -1,6 +1,6 @@
-![](img/0ea9200b4e0fbf612259712ddc2868cf_0.png)
-
 # PyTorch深度学习课程｜第172课：创建PyTorch DataLoader生成脚本 🚀
+
+![](img/0ea9200b4e0fbf612259712ddc2868cf_0.png)
 
 在本节课中，我们将学习如何将Jupyter Notebook中用于创建数据加载器的代码，重构并保存为一个独立的、可复用的Python脚本。我们将重点关注`torch.utils.data.DataLoader`的创建过程，并介绍一个能提升GPU数据加载效率的重要参数。
 

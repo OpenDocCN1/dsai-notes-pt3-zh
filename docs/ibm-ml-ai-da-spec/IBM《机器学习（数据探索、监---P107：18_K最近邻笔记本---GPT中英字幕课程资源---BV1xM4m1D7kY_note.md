@@ -1,6 +1,6 @@
-![](img/6eeeac20ac3d52d82c3850278d81aad6_1.png)
-
 # 机器学习课程笔记（107）：K最近邻数据预处理实战 🧹
+
+![](img/6eeeac20ac3d52d82c3850278d81aad6_1.png)
 
 ![](img/6eeeac20ac3d52d82c3850278d81aad6_3.png)
 

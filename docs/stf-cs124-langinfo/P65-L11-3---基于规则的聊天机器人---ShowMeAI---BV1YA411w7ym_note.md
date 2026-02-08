@@ -1,6 +1,6 @@
-![](img/6d0741294ca00cc9a61d69bcec73ad3f_0.png)
-
 # 🤖 课程 P65：L11.3 - 基于规则的聊天机器人
+
+![](img/6d0741294ca00cc9a61d69bcec73ad3f_0.png)
 
 ![](img/6d0741294ca00cc9a61d69bcec73ad3f_0.png)
 

@@ -1,3 +1,5 @@
+# 课程 P56：使用 scikit-learn 进行机器学习（第二部分）🚀
+
 ![](img/a165a3dbdfe2a42de38b6b11de2edad6_1.png)
 
 ![](img/a165a3dbdfe2a42de38b6b11de2edad6_3.png)
@@ -7,8 +9,6 @@
 ![](img/a165a3dbdfe2a42de38b6b11de2edad6_7.png)
 
 ![](img/a165a3dbdfe2a42de38b6b11de2edad6_9.png)
-
-# 课程 P56：使用 scikit-learn 进行机器学习（第二部分）🚀
 
 ![](img/a165a3dbdfe2a42de38b6b11de2edad6_11.png)
 

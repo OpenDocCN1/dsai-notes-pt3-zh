@@ -1,6 +1,6 @@
-![](img/b0f423b1ee3f1e0ac594a3136ce1becb_0.png)
-
 # IBM应用人工智能（从0开始搭建AI机器人）｜第103课：使用GET和POST模式的请求和响应对象 🚀
+
+![](img/b0f423b1ee3f1e0ac594a3136ce1becb_0.png)
 
 ![](img/b0f423b1ee3f1e0ac594a3136ce1becb_1.png)
 

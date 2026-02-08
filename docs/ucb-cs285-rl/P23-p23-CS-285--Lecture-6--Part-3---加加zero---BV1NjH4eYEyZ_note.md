@@ -1,8 +1,8 @@
+# 🎓 课程 P23：演员-评论家算法的实现与离策略扩展
+
 ![](img/d842ad3eeced91a1e3bc013e2f9751d2_1.png)
 
 ![](img/d842ad3eeced91a1e3bc013e2f9751d2_3.png)
-
-# 🎓 课程 P23：演员-评论家算法的实现与离策略扩展
 
 ![](img/d842ad3eeced91a1e3bc013e2f9751d2_5.png)
 

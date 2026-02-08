@@ -1,6 +1,6 @@
-![](img/1a6d1245cd7135a10f1445c03c8aba8f_0.png)
-
 # Python 3全系列基础教程，P9：Python元组：快速且只读 📦
+
+![](img/1a6d1245cd7135a10f1445c03c8aba8f_0.png)
 
 ![](img/1a6d1245cd7135a10f1445c03c8aba8f_0.png)
 

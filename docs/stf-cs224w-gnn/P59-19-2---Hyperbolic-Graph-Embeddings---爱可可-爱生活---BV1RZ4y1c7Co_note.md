@@ -1,8 +1,8 @@
+# 课程 P59：19.2 - 双曲线图嵌入 🌲
+
 ![](img/87b76c104b4a6ed29ba3c84ab1b1eeb2_0.png)
 
 ![](img/87b76c104b4a6ed29ba3c84ab1b1eeb2_1.png)
-
-# 课程 P59：19.2 - 双曲线图嵌入 🌲
 
 ![](img/87b76c104b4a6ed29ba3c84ab1b1eeb2_3.png)
 

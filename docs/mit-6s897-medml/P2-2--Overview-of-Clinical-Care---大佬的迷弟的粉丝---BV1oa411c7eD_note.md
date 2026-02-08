@@ -1,8 +1,8 @@
+# 课程 P2：临床护理概述 🏥
+
 ![](img/93dc5de55bc49da903627be8f830a15a_0.png)
 
 ![](img/93dc5de55bc49da903627be8f830a15a_1.png)
-
-# 课程 P2：临床护理概述 🏥
 
 ![](img/93dc5de55bc49da903627be8f830a15a_3.png)
 

@@ -1,6 +1,6 @@
-![](img/a80361fc3dd2ea0ff755e13cfe3d4b1e_0.png)
-
 # 课程11c：支持向量机中的特征扩展与核函数 🧠
+
+![](img/a80361fc3dd2ea0ff755e13cfe3d4b1e_0.png)
 
 ![](img/a80361fc3dd2ea0ff755e13cfe3d4b1e_2.png)
 

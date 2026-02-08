@@ -1,6 +1,6 @@
-![](img/60ea2893705fea8aa02beef44dac1f5c_0.png)
-
 # ChatGPT提示词工程师课程 P5：推理 🧠
+
+![](img/60ea2893705fea8aa02beef44dac1f5c_0.png)
 
 ![](img/60ea2893705fea8aa02beef44dac1f5c_1.png)
 

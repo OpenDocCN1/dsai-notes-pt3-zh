@@ -1,6 +1,6 @@
-![](img/6759ee1a4176e478df5915cb285d57a7_0.png)
-
 # 机器学习课程 P5：使用 Scikit-learn 管道 🚀
+
+![](img/6759ee1a4176e478df5915cb285d57a7_0.png)
 
 ![](img/6759ee1a4176e478df5915cb285d57a7_2.png)
 

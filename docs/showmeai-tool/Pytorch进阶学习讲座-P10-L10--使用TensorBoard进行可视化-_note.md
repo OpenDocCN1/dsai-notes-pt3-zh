@@ -1,6 +1,6 @@
-![](img/b5a4def1dbfd1f8e544809789db7d98b_1.png)
-
 # PyTorch进阶学习讲座！P10：L10- 使用TensorBoard进行可视化 📊
+
+![](img/b5a4def1dbfd1f8e544809789db7d98b_1.png)
 
 在本节课中，我们将学习如何使用TensorBoard来可视化PyTorch模型。课程将首先概述TensorBoard API，然后深入探讨用于监控训练过程的API，以及用于模型监控的工具API。最后，我们将简要了解一些正在开发中的新功能。
 

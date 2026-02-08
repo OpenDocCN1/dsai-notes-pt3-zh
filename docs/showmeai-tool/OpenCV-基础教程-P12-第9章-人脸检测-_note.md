@@ -1,6 +1,6 @@
-![](img/ee7624d5ac788edf9da2d4cad266c30a_0.png)
-
 # OpenCV 基础教程，P12：第9章：人脸检测 👤
+
+![](img/ee7624d5ac788edf9da2d4cad266c30a_0.png)
 
 ![](img/ee7624d5ac788edf9da2d4cad266c30a_0.png)
 

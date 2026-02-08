@@ -1,3 +1,5 @@
+# 课程 01: 从黑客松到改变世界 🚀
+
 ![](img/6bda95503ebfc0226b221cbf26d4aefb_0.png)
 
 ![](img/6bda95503ebfc0226b221cbf26d4aefb_2.png)
@@ -5,8 +7,6 @@
 ![](img/6bda95503ebfc0226b221cbf26d4aefb_4.png)
 
 ![](img/6bda95503ebfc0226b221cbf26d4aefb_6.png)
-
-# 课程 01: 从黑客松到改变世界 🚀
 
 ![](img/6bda95503ebfc0226b221cbf26d4aefb_8.png)
 

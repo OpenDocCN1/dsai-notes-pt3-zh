@@ -1,6 +1,6 @@
-![](img/8660f6ca174255d5ec5fa668f2b77ac7_0.png)
-
 # SQL常用知识点合辑——P15：L15- IS NULL 运算符 📊
+
+![](img/8660f6ca174255d5ec5fa668f2b77ac7_0.png)
 
 ![](img/8660f6ca174255d5ec5fa668f2b77ac7_0.png)
 

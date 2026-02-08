@@ -1,6 +1,6 @@
-![](img/f2a4eb3d3f298880599d14f78a17a697_1.png)
-
 # 课程 P64：使用 Scikit-build 打包 Python 二进制扩展模块 🛠️
+
+![](img/f2a4eb3d3f298880599d14f78a17a697_1.png)
 
 在本节课中，我们将学习如何为 Python 打包包含 C/C++/Fortran 代码的二进制扩展模块。我们将了解现有方法的局限性，并介绍一个名为 Scikit-build 的解决方案，它能简化构建流程并与 Python 生态系统无缝集成。
 

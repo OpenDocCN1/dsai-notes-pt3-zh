@@ -1,6 +1,6 @@
-![](img/f48f2e4a9b02841d654c21c5d774c255_0.png)
-
 # 课程名称：吴恩达《自然语言处理》 - P176：Hugging Face 入门教程 🚀
+
+![](img/f48f2e4a9b02841d654c21c5d774c255_0.png)
 
 在本节课中，我们将要学习 Hugging Face 平台及其核心的 Transformers 库。我们将了解它能提供什么，以及如何在你的项目中利用它。
 

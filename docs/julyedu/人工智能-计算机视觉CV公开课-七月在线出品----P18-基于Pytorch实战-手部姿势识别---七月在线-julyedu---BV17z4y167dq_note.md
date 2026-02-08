@@ -1,6 +1,6 @@
-![](img/fa1689b7c52f7bde49c00168de5e4814_1.png)
-
 # 人工智能—计算机视觉CV公开课（七月在线出品） - P18：基于Pytorch实战：手部姿势识别 🖐️
+
+![](img/fa1689b7c52f7bde49c00168de5e4814_1.png)
 
 ![](img/fa1689b7c52f7bde49c00168de5e4814_3.png)
 

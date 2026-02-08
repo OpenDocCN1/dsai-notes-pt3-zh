@@ -1,6 +1,6 @@
-![](img/007b8363c10bed4060cf86172290b0d8_1.png)
-
 # TensorFlow 教程 P13：L13 - 数据增强 🚀
+
+![](img/007b8363c10bed4060cf86172290b0d8_1.png)
 
 ![](img/007b8363c10bed4060cf86172290b0d8_2.png)
 

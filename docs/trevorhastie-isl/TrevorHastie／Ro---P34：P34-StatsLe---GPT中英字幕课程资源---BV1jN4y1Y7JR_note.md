@@ -1,6 +1,6 @@
-![](img/ae3286d7ee80ef9e5b554dd432885861_0.png)
-
 # 课程08c：向后逐步选择法 📉
+
+![](img/ae3286d7ee80ef9e5b554dd432885861_0.png)
 
 ![](img/ae3286d7ee80ef9e5b554dd432885861_2.png)
 

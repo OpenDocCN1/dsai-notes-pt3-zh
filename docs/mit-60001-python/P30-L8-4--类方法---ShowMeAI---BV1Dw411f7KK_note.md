@@ -1,6 +1,6 @@
-![](img/e3aefdb55868b1b4b6216d540a85dc1f_0.png)
-
 # 🚗 Python课程 P30：L8.4 - 类方法
+
+![](img/e3aefdb55868b1b4b6216d540a85dc1f_0.png)
 
 ![](img/e3aefdb55868b1b4b6216d540a85dc1f_0.png)
 

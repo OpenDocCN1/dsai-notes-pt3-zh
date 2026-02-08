@@ -1,8 +1,8 @@
+# TensorFlow 教程 P12：📚 TensorFlow 数据集 (TFDS)
+
 ![](img/7bf38e208736fe558252a86bf7cde851_1.png)
 
 ![](img/7bf38e208736fe558252a86bf7cde851_2.png)
-
-# TensorFlow 教程 P12：📚 TensorFlow 数据集 (TFDS)
 
 在本节课中，我们将学习如何使用 TensorFlow 数据集 (TFDS) 来加载、预处理和高效地加载数据。我们将通过图像（MNIST）和文本（IMDB 评论）两个具体示例，演示 TFDS 的核心用法。
 

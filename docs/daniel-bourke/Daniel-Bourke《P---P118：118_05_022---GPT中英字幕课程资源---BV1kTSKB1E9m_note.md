@@ -1,6 +1,6 @@
-![](img/27ce1cd12dc4599bbd8b975d7742543b_0.png)
-
 # PyTorch深度学习课程 第5课：编写首个PyTorch卷积神经网络 🧠
+
+![](img/27ce1cd12dc4599bbd8b975d7742543b_0.png)
 
 在本节课中，我们将要学习如何构建一个卷积神经网络。我们将复现CNN Explainer网站上的“Tiny VGG”架构，并逐步理解其每一层的含义和作用。
 

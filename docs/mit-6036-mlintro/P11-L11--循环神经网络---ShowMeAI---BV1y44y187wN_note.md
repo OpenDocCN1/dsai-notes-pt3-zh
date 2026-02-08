@@ -1,3 +1,5 @@
+# P11：L11- 循环神经网络 🧠
+
 ![](img/52a90b78aac5c82b5fa7c88e786484f1_1.png)
 
 ![](img/52a90b78aac5c82b5fa7c88e786484f1_3.png)
@@ -5,8 +7,6 @@
 ![](img/52a90b78aac5c82b5fa7c88e786484f1_5.png)
 
 ![](img/52a90b78aac5c82b5fa7c88e786484f1_7.png)
-
-# P11：L11- 循环神经网络 🧠
 
 ![](img/52a90b78aac5c82b5fa7c88e786484f1_9.png)
 

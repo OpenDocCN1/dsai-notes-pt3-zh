@@ -1,6 +1,6 @@
-![](img/f5feffa018a44db75867a5659a9bfe4a_1.png)
-
 # 课程P68：68.10_训练：批处理获取与数据形状变换 🧠
+
+![](img/f5feffa018a44db75867a5659a9bfe4a_1.png)
 
 ![](img/f5feffa018a44db75867a5659a9bfe4a_3.png)
 

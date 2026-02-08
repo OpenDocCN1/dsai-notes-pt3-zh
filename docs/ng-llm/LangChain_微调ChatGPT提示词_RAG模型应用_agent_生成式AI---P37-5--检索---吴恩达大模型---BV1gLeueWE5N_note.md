@@ -1,6 +1,6 @@
-![](img/1251636ef68b09989c270ce30b4b171d_0.png)
-
 # LangChain 课程 P37：高级检索技术 🔍
+
+![](img/1251636ef68b09989c270ce30b4b171d_0.png)
 
 ![](img/1251636ef68b09989c270ce30b4b171d_2.png)
 

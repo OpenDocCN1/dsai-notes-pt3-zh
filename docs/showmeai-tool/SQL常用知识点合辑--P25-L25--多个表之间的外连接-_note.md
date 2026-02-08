@@ -1,6 +1,6 @@
-![](img/f6bd3bb20257fc5641e595994cdeaef6_0.png)
-
 # SQL常用知识点合辑——P25：L25- 多个表之间的外连接 🧩
+
+![](img/f6bd3bb20257fc5641e595994cdeaef6_0.png)
 
 ![](img/f6bd3bb20257fc5641e595994cdeaef6_0.png)
 

@@ -1,6 +1,6 @@
-![](img/793deccf236270c3b58ac75d98e00ae2_0.png)
-
 # 课程10：回归树构建与剪枝 🌳
+
+![](img/793deccf236270c3b58ac75d98e00ae2_0.png)
 
 ![](img/793deccf236270c3b58ac75d98e00ae2_2.png)
 

@@ -1,6 +1,6 @@
-![](img/aaa804f0594bbfdeee827aa984db0352_0.png)
-
 # 课程名称：AI与生物多样性监测 🌱 课程编号：P71
+
+![](img/aaa804f0594bbfdeee827aa984db0352_0.png)
 
 ## 概述
 

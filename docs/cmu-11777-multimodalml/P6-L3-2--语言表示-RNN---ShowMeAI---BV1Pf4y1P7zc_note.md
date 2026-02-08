@@ -1,8 +1,8 @@
+# 课程 P6：L3.2 - 语言表示与RNN 🧠📚
+
 ![](img/9c04d3d1b0b24f69e9f46903778cc7db_1.png)
 
 ![](img/9c04d3d1b0b24f69e9f46903778cc7db_3.png)
-
-# 课程 P6：L3.2 - 语言表示与RNN 🧠📚
 
 ![](img/9c04d3d1b0b24f69e9f46903778cc7db_5.png)
 

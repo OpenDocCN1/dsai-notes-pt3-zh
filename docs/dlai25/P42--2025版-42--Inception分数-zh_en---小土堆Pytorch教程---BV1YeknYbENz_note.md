@@ -1,6 +1,6 @@
-![](img/2f846eb79b417f5b7d048c265bc8e8f7_0.png)
-
 # P42课程：Inception分数详解 🧠
+
+![](img/2f846eb79b417f5b7d048c265bc8e8f7_0.png)
 
 ![](img/2f846eb79b417f5b7d048c265bc8e8f7_2.png)
 

@@ -1,3 +1,5 @@
+# 课程 P37：CS 285 第九讲，第二部分 - 策略改进的近似边界 🔬
+
 ![](img/a6bbf1c27fc0a5a67b201d9a15c018ee_1.png)
 
 ![](img/a6bbf1c27fc0a5a67b201d9a15c018ee_3.png)
@@ -5,8 +7,6 @@
 ![](img/a6bbf1c27fc0a5a67b201d9a15c018ee_5.png)
 
 ![](img/a6bbf1c27fc0a5a67b201d9a15c018ee_7.png)
-
-# 课程 P37：CS 285 第九讲，第二部分 - 策略改进的近似边界 🔬
 
 ![](img/a6bbf1c27fc0a5a67b201d9a15c018ee_9.png)
 

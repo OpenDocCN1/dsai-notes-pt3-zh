@@ -1,8 +1,8 @@
+# LangChain 课程 P28：链（Chains）🚀
+
 ![](img/6979b54d544ad51cba7b8167af30399e_0.png)
 
 ![](img/6979b54d544ad51cba7b8167af30399e_2.png)
-
-# LangChain 课程 P28：链（Chains）🚀
 
 ![](img/6979b54d544ad51cba7b8167af30399e_4.png)
 

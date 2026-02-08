@@ -1,3 +1,5 @@
+# P6：构建 Makemore 第五部分：构建一个 WaveNet 🧠
+
 ![](img/c9be2506944533fbac16b5c8db99ea71_1.png)
 
 ![](img/c9be2506944533fbac16b5c8db99ea71_3.png)
@@ -9,8 +11,6 @@
 ![](img/c9be2506944533fbac16b5c8db99ea71_9.png)
 
 ![](img/c9be2506944533fbac16b5c8db99ea71_11.png)
-
-# P6：构建 Makemore 第五部分：构建一个 WaveNet 🧠
 
 ![](img/c9be2506944533fbac16b5c8db99ea71_13.png)
 

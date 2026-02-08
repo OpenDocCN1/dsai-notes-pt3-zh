@@ -1,6 +1,6 @@
-![](img/0ab3f1495dc35c7ebfa4039ef1653a44_1.png)
-
 # 课程 P1：Binder 2.0 - 下一代可复现科学环境 🚀
+
+![](img/0ab3f1495dc35c7ebfa4039ef1653a44_1.png)
 
 ![](img/0ab3f1495dc35c7ebfa4039ef1653a44_3.png)
 

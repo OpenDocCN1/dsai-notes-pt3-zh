@@ -1,10 +1,10 @@
+# IBM应用人工智能（从0开始搭建AI机器人）｜第16课：使用Flask部署Web应用程序 🚀
+
 ![](img/b92ca5738b30ec2623e6d19f11a3ec38_0.png)
 
 ![](img/b92ca5738b30ec2623e6d19f11a3ec38_1.png)
 
 ![](img/b92ca5738b30ec2623e6d19f11a3ec38_3.png)
-
-# IBM应用人工智能（从0开始搭建AI机器人）｜第16课：使用Flask部署Web应用程序 🚀
 
 ![](img/b92ca5738b30ec2623e6d19f11a3ec38_5.png)
 

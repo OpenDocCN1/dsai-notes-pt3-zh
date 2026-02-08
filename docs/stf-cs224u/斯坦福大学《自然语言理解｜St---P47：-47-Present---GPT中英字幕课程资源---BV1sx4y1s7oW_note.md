@@ -1,8 +1,8 @@
+# 课程 47：NLP会议投稿指南 📝
+
 ![](img/d9117ddd811328f5e6c9bb9667edc3f6_0.png)
 
 ![](img/d9117ddd811328f5e6c9bb9667edc3f6_2.png)
-
-# 课程 47：NLP会议投稿指南 📝
 
 ![](img/d9117ddd811328f5e6c9bb9667edc3f6_4.png)
 

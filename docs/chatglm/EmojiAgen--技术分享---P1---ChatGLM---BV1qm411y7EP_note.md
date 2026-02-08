@@ -1,8 +1,8 @@
+# EmojiAgen🤖️技术分享 - P1 - ChatGLM - BV1qm411y7EP
+
 ![](img/9cb6e90fb290de74206e1192f831767c_0.png)
 
 ![](img/9cb6e90fb290de74206e1192f831767c_2.png)
-
-# EmojiAgen🤖️技术分享 - P1 - ChatGLM - BV1qm411y7EP
 
 ![](img/9cb6e90fb290de74206e1192f831767c_4.png)
 

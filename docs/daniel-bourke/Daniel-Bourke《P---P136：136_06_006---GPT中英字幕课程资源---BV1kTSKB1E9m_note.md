@@ -1,6 +1,6 @@
-![](img/6f51689d6d1ae58c022d0f78d1156ced_0.png)
-
 # 课程 136_06_006：数据探索（第三部分）：Matplotlib图像可视化 📊
+
+![](img/6f51689d6d1ae58c022d0f78d1156ced_0.png)
 
 在本节课中，我们将学习如何使用Matplotlib库来可视化图像数据。我们将把PIL库打开的图像转换为NumPy数组，并使用Matplotlib进行显示，同时关注图像的形状信息，为后续转换为PyTorch张量做准备。
 

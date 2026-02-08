@@ -1,6 +1,6 @@
-![](img/16b6c758de51211fb165c676afb96b5a_0.png)
-
 # PyTorch深度学习课程 - 第71课：编写CNN模型 🧠
+
+![](img/16b6c758de51211fb165c676afb96b5a_0.png)
 
 在本节课中，我们将学习如何编写一个卷积神经网络（CNN）。我们将基于CNN Explainer网站上的Tiny VGG架构，使用PyTorch构建我们的第一个CNN模型。通过本节课，你将了解CNN的基本组成部分，并学会如何将它们组合成一个完整的模型。
 

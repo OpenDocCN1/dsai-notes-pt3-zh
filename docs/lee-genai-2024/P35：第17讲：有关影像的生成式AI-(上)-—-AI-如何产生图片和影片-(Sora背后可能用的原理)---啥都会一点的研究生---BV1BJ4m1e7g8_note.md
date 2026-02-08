@@ -1,6 +1,6 @@
-![](img/5910ec4ad7b4c7f6b02cdc3a8eac9821_1.png)
-
 # 李宏毅2024春《生成式人工智能导论》 - P35：第17讲：有关影像的生成式AI (上) — AI 如何产生图片和影片 (Sora背后可能用的原理) 🎬
+
+![](img/5910ec4ad7b4c7f6b02cdc3a8eac9821_1.png)
 
 ![](img/5910ec4ad7b4c7f6b02cdc3a8eac9821_3.png)
 

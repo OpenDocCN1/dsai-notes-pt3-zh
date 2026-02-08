@@ -1,6 +1,6 @@
-![](img/817174280d909f0224e01af2e91bb7b6_0.png)
-
 # Hugging Face速成指南！P5：L5- 模型保存和加载 💾
+
+![](img/817174280d909f0224e01af2e91bb7b6_0.png)
 
 ![](img/817174280d909f0224e01af2e91bb7b6_0.png)
 

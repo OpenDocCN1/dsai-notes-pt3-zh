@@ -1,6 +1,6 @@
-![](img/7cb79f9d5bbfd03ce0b470c0843f2f67_0.png)
-
 # 📘 课程 P18：L6.2 - 矩阵向量乘法
+
+![](img/7cb79f9d5bbfd03ce0b470c0843f2f67_0.png)
 
 ![](img/7cb79f9d5bbfd03ce0b470c0843f2f67_2.png)
 

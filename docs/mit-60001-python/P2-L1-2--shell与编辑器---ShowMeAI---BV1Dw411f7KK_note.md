@@ -1,6 +1,6 @@
-![](img/a992ae449d2244f02c036d83e4ad4fbe_0.png)
-
 # 课程 P2：L1.2 - Shell 与编辑器 🖥️
+
+![](img/a992ae449d2244f02c036d83e4ad4fbe_0.png)
 
 ![](img/a992ae449d2244f02c036d83e4ad4fbe_0.png)
 

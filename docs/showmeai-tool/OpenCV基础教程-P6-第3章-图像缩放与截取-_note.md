@@ -1,8 +1,8 @@
+# OpenCV基础教程 P6：第3章：图像缩放与截取 📏✂️
+
 ![](img/c02cc4a0b399f0cf618147483dcfffbe_0.png)
 
 ![](img/c02cc4a0b399f0cf618147483dcfffbe_1.png)
-
-# OpenCV基础教程 P6：第3章：图像缩放与截取 📏✂️
 
 ![](img/c02cc4a0b399f0cf618147483dcfffbe_3.png)
 

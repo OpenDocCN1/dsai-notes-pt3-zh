@@ -1,6 +1,6 @@
-![](img/b700b7c5c1d4f0cf08b60c5ac1688a90_0.png)
-
 # 课程10：模型选择 🎯
+
+![](img/b700b7c5c1d4f0cf08b60c5ac1688a90_0.png)
 
 ![](img/b700b7c5c1d4f0cf08b60c5ac1688a90_2.png)
 

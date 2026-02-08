@@ -1,6 +1,6 @@
-![](img/2073790dd6021bcc01fbda62e137a44d_0.png)
-
 # SQL常用知识点合辑——P21：L21- 连接多个表 🧩
+
+![](img/2073790dd6021bcc01fbda62e137a44d_0.png)
 
 ![](img/2073790dd6021bcc01fbda62e137a44d_0.png)
 

@@ -1,6 +1,6 @@
-![](img/ef7ab984557a047dd3bdf561abffa3be_0.png)
-
 # 斯坦福大学《机器学习》课程 - P13：偏差-方差权衡与统计学习理论 🎯
+
+![](img/ef7ab984557a047dd3bdf561abffa3be_0.png)
 
 ## 概述
 

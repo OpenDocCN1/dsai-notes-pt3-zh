@@ -1,6 +1,6 @@
-![](img/86c318e0b155ef4664689bfe7f5ec6ee_0.png)
-
 # Excel高级教程（持续更新中） - P17：17）3D 公式 📊
+
+![](img/86c318e0b155ef4664689bfe7f5ec6ee_0.png)
 
 ![](img/86c318e0b155ef4664689bfe7f5ec6ee_0.png)
 

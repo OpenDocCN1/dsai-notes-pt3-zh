@@ -1,3 +1,5 @@
+# 📊 课程 P36：L10 - 程序效率分析 1
+
 ![](img/c3b14cac425f22b6ac9e3a9e921549c5_0.png)
 
 ![](img/c3b14cac425f22b6ac9e3a9e921549c5_2.png)
@@ -5,8 +7,6 @@
 ![](img/c3b14cac425f22b6ac9e3a9e921549c5_4.png)
 
 ![](img/c3b14cac425f22b6ac9e3a9e921549c5_6.png)
-
-# 📊 课程 P36：L10 - 程序效率分析 1
 
 ![](img/c3b14cac425f22b6ac9e3a9e921549c5_8.png)
 

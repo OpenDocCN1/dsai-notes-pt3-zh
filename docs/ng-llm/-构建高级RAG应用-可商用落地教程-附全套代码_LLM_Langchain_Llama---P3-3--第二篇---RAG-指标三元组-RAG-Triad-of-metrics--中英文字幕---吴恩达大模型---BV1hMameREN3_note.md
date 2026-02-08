@@ -1,6 +1,6 @@
-![](img/a2005aee8b790bf2f86eafe6547573fe_0.png)
-
 # 构建高级RAG应用 - 第三课：RAG指标三元组 (RAG Triad) 📊
+
+![](img/a2005aee8b790bf2f86eafe6547573fe_0.png)
 
 ![](img/a2005aee8b790bf2f86eafe6547573fe_2.png)
 

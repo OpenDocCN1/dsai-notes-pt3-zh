@@ -1,6 +1,6 @@
-![](img/b7d0ed02ce37fb36494f54cb7b9c5c82_1.png)
-
 # LangChain 进阶课程 P35：网络搜索检索器 (Web Search Retriever) 🔍
+
+![](img/b7d0ed02ce37fb36494f54cb7b9c5c82_1.png)
 
 ![](img/b7d0ed02ce37fb36494f54cb7b9c5c82_3.png)
 

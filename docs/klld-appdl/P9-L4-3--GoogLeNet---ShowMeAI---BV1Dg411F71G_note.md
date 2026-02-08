@@ -1,8 +1,8 @@
+# 🧠 课程 P9：L4.3 - GoogLeNet 与 Inception 模块详解
+
 ![](img/c53323974854ad9abb40546a34fc5897_0.png)
 
 ![](img/c53323974854ad9abb40546a34fc5897_2.png)
-
-# 🧠 课程 P9：L4.3 - GoogLeNet 与 Inception 模块详解
 
 在本节课中，我们将要学习 GoogLeNet 的核心思想——Inception 模块。我们将探讨其设计动机、基本结构、面临的计算挑战以及优化方案。
 

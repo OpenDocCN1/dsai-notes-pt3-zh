@@ -1,6 +1,6 @@
-![](img/8910203555fedeaeb439f2b2dff4b9cb_0.png)
-
 # Excel 中级教程 - P52：53）LARGE 函数和 SMALL 函数 📊
+
+![](img/8910203555fedeaeb439f2b2dff4b9cb_0.png)
 
 在本节课中，我们将要学习 Excel 中两个功能强大但较少被提及的函数：`LARGE` 函数和 `SMALL` 函数。它们在某些场景下比常用的 `MAX` 和 `MIN` 函数更为灵活和强大。
 

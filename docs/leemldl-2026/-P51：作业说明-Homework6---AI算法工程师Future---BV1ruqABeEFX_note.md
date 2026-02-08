@@ -1,3 +1,5 @@
+# 课程名称：李宏毅机器学习课程 - 作业6 (GAN) 说明 🧠🎨
+
 ![](img/aa9820efadafaef28899688038472fd5_1.png)
 
 ![](img/aa9820efadafaef28899688038472fd5_3.png)
@@ -15,8 +17,6 @@
 ![](img/aa9820efadafaef28899688038472fd5_14.png)
 
 ![](img/aa9820efadafaef28899688038472fd5_16.png)
-
-# 课程名称：李宏毅机器学习课程 - 作业6 (GAN) 说明 🧠🎨
 
 ![](img/aa9820efadafaef28899688038472fd5_18.png)
 

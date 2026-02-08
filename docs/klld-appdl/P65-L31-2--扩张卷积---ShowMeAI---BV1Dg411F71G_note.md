@@ -1,6 +1,6 @@
-![](img/d64b567c8f9cc07f6797cd935f54337f_0.png)
-
 # 🧠 课程 P65：L31.2 - 扩张卷积
+
+![](img/d64b567c8f9cc07f6797cd935f54337f_0.png)
 
 ![](img/d64b567c8f9cc07f6797cd935f54337f_2.png)
 

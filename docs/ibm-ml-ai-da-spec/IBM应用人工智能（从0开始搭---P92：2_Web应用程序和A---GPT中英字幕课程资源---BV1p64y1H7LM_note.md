@@ -1,6 +1,6 @@
-![](img/1d2ad20a454ce87bcaad0c497e17bd47_0.png)
-
 # IBM应用人工智能（从0开始搭建AI机器人）｜课程P92：Web应用程序和API简介 🌐
+
+![](img/1d2ad20a454ce87bcaad0c497e17bd47_0.png)
 
 ![](img/1d2ad20a454ce87bcaad0c497e17bd47_2.png)
 

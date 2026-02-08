@@ -1,6 +1,6 @@
-![](img/576bda86dd4a43d9ef0c1a21b39219f5_0.png)
-
 # 课程 P6：L5 - 如何设计知识图谱schema 🧠
+
+![](img/576bda86dd4a43d9ef0c1a21b39219f5_0.png)
 
 ![](img/576bda86dd4a43d9ef0c1a21b39219f5_0.png)
 

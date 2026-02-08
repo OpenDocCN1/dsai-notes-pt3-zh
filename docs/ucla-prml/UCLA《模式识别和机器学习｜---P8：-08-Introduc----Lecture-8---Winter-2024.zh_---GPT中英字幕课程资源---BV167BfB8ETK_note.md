@@ -1,3 +1,5 @@
+# 课程08：模式识别与机器学习导论 - 偏差-方差分解与性能评估 📊
+
 ![](img/56a72def89d5e70ffc3df8cea2a67035_0.png)
 
 ![](img/56a72def89d5e70ffc3df8cea2a67035_2.png)
@@ -17,8 +19,6 @@
 ![](img/56a72def89d5e70ffc3df8cea2a67035_16.png)
 
 ![](img/56a72def89d5e70ffc3df8cea2a67035_18.png)
-
-# 课程08：模式识别与机器学习导论 - 偏差-方差分解与性能评估 📊
 
 ![](img/56a72def89d5e70ffc3df8cea2a67035_20.png)
 

@@ -1,6 +1,6 @@
-![](img/f8da00bca95829b0b487f1e08381e567_0.png)
-
 # SQL常用知识点合辑——P34：L34- 插入分层行 📝
+
+![](img/f8da00bca95829b0b487f1e08381e567_0.png)
 
 ![](img/f8da00bca95829b0b487f1e08381e567_0.png)
 

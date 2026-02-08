@@ -1,10 +1,10 @@
+# 课程 P93：L42.2 - 组归一化 🧮
+
 ![](img/83ba17850318b0e304d7ea01fdccaf58_1.png)
 
 ![](img/83ba17850318b0e304d7ea01fdccaf58_3.png)
 
 ![](img/83ba17850318b0e304d7ea01fdccaf58_5.png)
-
-# 课程 P93：L42.2 - 组归一化 🧮
 
 ![](img/83ba17850318b0e304d7ea01fdccaf58_7.png)
 

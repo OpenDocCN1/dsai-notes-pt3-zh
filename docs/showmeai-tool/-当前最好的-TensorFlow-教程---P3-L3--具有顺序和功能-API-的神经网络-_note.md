@@ -1,6 +1,6 @@
-![](img/bccade0d8176d09f2f705cdf71207aea_1.png)
-
 # TensorFlow 教程 P3：使用顺序与函数式API构建神经网络 🧠
+
+![](img/bccade0d8176d09f2f705cdf71207aea_1.png)
 
 ![](img/bccade0d8176d09f2f705cdf71207aea_2.png)
 

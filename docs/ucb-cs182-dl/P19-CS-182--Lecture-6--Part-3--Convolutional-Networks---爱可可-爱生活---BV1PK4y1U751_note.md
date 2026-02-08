@@ -1,6 +1,6 @@
-![](img/a4ff087f08c9f3d6c02fc80f7fb2bcb0_1.png)
-
 # 课程 P19：CS 182 - 第6讲 - 第3部分 - 卷积网络 🧠
+
+![](img/a4ff087f08c9f3d6c02fc80f7fb2bcb0_1.png)
 
 ![](img/a4ff087f08c9f3d6c02fc80f7fb2bcb0_3.png)
 

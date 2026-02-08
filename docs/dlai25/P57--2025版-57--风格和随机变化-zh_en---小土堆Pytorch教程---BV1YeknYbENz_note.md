@@ -1,6 +1,6 @@
-![](img/f97c02c42c0f27ba3dc27262ee3abcd1_1.png)
-
 # P57：风格与随机变化 🎨🎲
+
+![](img/f97c02c42c0f27ba3dc27262ee3abcd1_1.png)
 
 ![](img/f97c02c42c0f27ba3dc27262ee3abcd1_3.png)
 

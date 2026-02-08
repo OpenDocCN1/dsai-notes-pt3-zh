@@ -1,6 +1,6 @@
-![](img/7e327f4f816b1746e0253f4e08ce0855_0.png)
-
 # LangChain 微调ChatGPT提示词 RAG模型应用 agent 生成式AI - P12：第3集 迭代 🔄
+
+![](img/7e327f4f816b1746e0253f4e08ce0855_0.png)
 
 ![](img/7e327f4f816b1746e0253f4e08ce0855_2.png)
 

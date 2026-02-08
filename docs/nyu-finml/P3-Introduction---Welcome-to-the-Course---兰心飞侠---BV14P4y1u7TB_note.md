@@ -1,6 +1,6 @@
-![](img/c88fc36c2365c5229ea870ad866f3dfe_0.png)
-
 # 课程P3：强化学习在金融中的应用介绍 📈
+
+![](img/c88fc36c2365c5229ea870ad866f3dfe_0.png)
 
 ![](img/c88fc36c2365c5229ea870ad866f3dfe_1.png)
 

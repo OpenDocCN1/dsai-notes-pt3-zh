@@ -1,8 +1,8 @@
+# 课程 P27：访问 GPU 🚀
+
 ![](img/9ca7a9d0d82ab9aa12529fe17abbe39a_1.png)
 
 ![](img/9ca7a9d0d82ab9aa12529fe17abbe39a_2.png)
-
-# 课程 P27：访问 GPU 🚀
 
 ![](img/9ca7a9d0d82ab9aa12529fe17abbe39a_4.png)
 

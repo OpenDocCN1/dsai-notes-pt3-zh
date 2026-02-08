@@ -1,6 +1,6 @@
-![](img/8e71fb473d0996cd530cc9460e2ebd70_1.png)
-
 # 课程 P74：变分推断（第二部分）🔍
+
+![](img/8e71fb473d0996cd530cc9460e2ebd70_1.png)
 
 ![](img/8e71fb473d0996cd530cc9460e2ebd70_3.png)
 

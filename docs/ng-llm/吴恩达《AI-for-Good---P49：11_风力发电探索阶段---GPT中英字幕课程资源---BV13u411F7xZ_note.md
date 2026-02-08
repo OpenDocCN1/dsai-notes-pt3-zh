@@ -1,6 +1,6 @@
-![](img/ee96358c8daf380e07250c1a3ba0464a_0.png)
-
 # 课程11：风力发电探索阶段 🌬️⚡
+
+![](img/ee96358c8daf380e07250c1a3ba0464a_0.png)
 
 ![](img/ee96358c8daf380e07250c1a3ba0464a_2.png)
 

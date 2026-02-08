@@ -1,6 +1,6 @@
-![](img/d62f591918ca0ed4ff2eac2c929e70f1_0.png)
-
 # OpenCV 基础教程 P9：第6章：图像拼接 📸
+
+![](img/d62f591918ca0ed4ff2eac2c929e70f1_0.png)
 
 ![](img/d62f591918ca0ed4ff2eac2c929e70f1_1.png)
 

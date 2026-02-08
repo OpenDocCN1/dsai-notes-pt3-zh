@@ -1,10 +1,10 @@
+# 课程 P22：机器学习监管入门 🏛️
+
 ![](img/0f046e581f9a116dd1bd80ab8a03dcaa_0.png)
 
 ![](img/0f046e581f9a116dd1bd80ab8a03dcaa_1.png)
 
 ![](img/0f046e581f9a116dd1bd80ab8a03dcaa_3.png)
-
-# 课程 P22：机器学习监管入门 🏛️
 
 ![](img/0f046e581f9a116dd1bd80ab8a03dcaa_5.png)
 

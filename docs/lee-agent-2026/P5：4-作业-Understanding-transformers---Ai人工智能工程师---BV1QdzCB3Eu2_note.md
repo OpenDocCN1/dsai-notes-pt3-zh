@@ -1,10 +1,10 @@
-![](img/118b53e1858e091eb8d7a8cfd19fad62_1.png)
-
 # 课程名称：理解Transformer模型 - 作业三详解 📚
 
-![](img/118b53e1858e091eb8d7a8cfd19fad62_3.png)
+![](img/118b53e1858e091eb8d7a8cfd19fad62_1.png)
 
 ## 概述
+
+![](img/118b53e1858e091eb8d7a8cfd19fad62_3.png)
 
 ![](img/118b53e1858e091eb8d7a8cfd19fad62_5.png)
 

@@ -1,6 +1,6 @@
-![](img/644696af046a3dda36c64e7fd579b712_0.png)
-
 # OpenCV入门课程 P8：图像的读取与处理 📸
+
+![](img/644696af046a3dda36c64e7fd579b712_0.png)
 
 ![](img/644696af046a3dda36c64e7fd579b712_2.png)
 

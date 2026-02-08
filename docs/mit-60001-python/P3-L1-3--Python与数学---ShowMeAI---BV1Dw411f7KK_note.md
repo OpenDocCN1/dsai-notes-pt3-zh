@@ -1,6 +1,6 @@
-![](img/dd6fa7b53ecc694951c9254ecc658632_0.png)
-
 # 课程P3：L1.3 - Python与数学 🐍➗
+
+![](img/dd6fa7b53ecc694951c9254ecc658632_0.png)
 
 ![](img/dd6fa7b53ecc6949514e9254ecc658632_0.png)
 

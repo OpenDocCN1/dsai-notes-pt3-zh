@@ -1,6 +1,6 @@
-![](img/987f1c63e9084fb804d511337ab2db5a_0.png)
-
 # SQL常用知识点合辑——P13：L13- LIKE 运算符 🔍
+
+![](img/987f1c63e9084fb804d511337ab2db5a_0.png)
 
 ![](img/987f1c63e9084fb804d511337ab2db5a_0.png)
 

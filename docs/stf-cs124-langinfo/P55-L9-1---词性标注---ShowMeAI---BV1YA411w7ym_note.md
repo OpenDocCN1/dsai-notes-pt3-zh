@@ -1,6 +1,6 @@
-![](img/065e58b6f6779ce679f42b18d5ac7fd5_0.png)
-
 # 📚 课程 P55：L9.1 - 词性标注
+
+![](img/065e58b6f6779ce679f42b18d5ac7fd5_0.png)
 
 ![](img/065e58b6f6779ce679f42b18d5ac7fd5_0.png)
 

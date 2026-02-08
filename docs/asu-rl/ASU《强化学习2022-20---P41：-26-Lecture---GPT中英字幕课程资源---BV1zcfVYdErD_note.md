@@ -1,6 +1,6 @@
-![](img/00f83d5cd2586dc7186736d8ffae3ed1_0.png)
-
 # 📚 课程12：离线训练中的聚合方法
+
+![](img/00f83d5cd2586dc7186736d8ffae3ed1_0.png)
 
 ![](img/00f83d5cd2586dc7186736d8ffae3ed1_2.png)
 

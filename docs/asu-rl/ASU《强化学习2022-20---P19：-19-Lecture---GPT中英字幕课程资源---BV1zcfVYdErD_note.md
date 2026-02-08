@@ -1,10 +1,10 @@
+# 课程名称：强化学习课程第六讲 - 确定性多步前瞻与约束Rollout 🧠
+
 ![](img/3f993a4cf12861ecb2567e65c2b990df_1.png)
 
 ![](img/3f993a4cf12861ecb2567e65c2b990df_3.png)
 
 ![](img/3f993a4cf12861ecb2567e65c2b990df_5.png)
-
-# 课程名称：强化学习课程第六讲 - 确定性多步前瞻与约束Rollout 🧠
 
 ![](img/3f993a4cf12861ecb2567e65c2b990df_7.png)
 

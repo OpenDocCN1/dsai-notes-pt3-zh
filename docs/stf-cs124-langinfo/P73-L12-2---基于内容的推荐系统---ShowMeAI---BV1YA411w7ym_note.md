@@ -1,6 +1,6 @@
-![](img/0b8b7b4ca089d92633a45efc2a111e3e_0.png)
-
 # 课程 P73：L12.2 - 基于内容的推荐系统 🎬
+
+![](img/0b8b7b4ca089d92633a45efc2a111e3e_0.png)
 
 ![](img/0b8b7b4ca089d92633a45efc2a111e3e_0.png)
 

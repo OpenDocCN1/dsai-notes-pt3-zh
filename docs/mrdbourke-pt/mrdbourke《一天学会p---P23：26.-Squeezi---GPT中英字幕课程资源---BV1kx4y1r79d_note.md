@@ -1,6 +1,6 @@
-![](img/01aa05ad61275c6afc5aed38d671eb35_1.png)
-
 # PyTorch深度学习课程 第26课：张量的压缩、解压与维度重排 🧮
+
+![](img/01aa05ad61275c6afc5aed38d671eb35_1.png)
 
 ![](img/01aa05ad61275c6afc5aed38d671eb35_3.png)
 

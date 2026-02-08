@@ -1,6 +1,6 @@
-![](img/b0272746902c5defc47db2b7d950ab97_0.png)
-
 # Python 3全系列基础教程，P7：Python列表 📋
+
+![](img/b0272746902c5defc47db2b7d950ab97_0.png)
 
 ![](img/b0272746902c5defc47db2b7d950ab97_2.png)
 

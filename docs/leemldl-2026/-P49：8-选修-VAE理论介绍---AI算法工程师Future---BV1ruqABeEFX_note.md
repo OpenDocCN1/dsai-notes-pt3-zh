@@ -1,3 +1,5 @@
+# 课程P49：8-选修-VAE理论介绍 🧠
+
 ![](img/5aa0c7a17e77b29b079bbbaa00e0f423_1.png)
 
 ![](img/5aa0c7a17e77b29b079bbbaa00e0f423_3.png)
@@ -5,8 +7,6 @@
 ![](img/5aa0c7a17e77b29b079bbbaa00e0f423_5.png)
 
 ![](img/5aa0c7a17e77b29b079bbbaa00e0f423_7.png)
-
-# 课程P49：8-选修-VAE理论介绍 🧠
 
 ![](img/5aa0c7a17e77b29b079bbbaa00e0f423_9.png)
 

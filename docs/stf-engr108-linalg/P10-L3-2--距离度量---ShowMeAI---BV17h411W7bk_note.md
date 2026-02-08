@@ -1,8 +1,8 @@
+# 课程 P10：L3.2 - 距离度量 📏
+
 ![](img/51e9e909b9521fdf01acd5041ffd6989_0.png)
 
 ![](img/51e9e909b9521fdf01acd5041ffd6989_2.png)
-
-# 课程 P10：L3.2 - 距离度量 📏
 
 ![](img/51e9e909b9521fdf01acd5041ffd6989_0.png)
 

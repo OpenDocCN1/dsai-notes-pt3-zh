@@ -1,6 +1,6 @@
-![](img/714d3975cef34dd78ff6f34d0a06d434_0.png)
-
 # 课程 P9：L2.5 - while循环 🌀
+
+![](img/714d3975cef34dd78ff6f34d0a06d434_0.png)
 
 ![](img/714d3975cef34dd78ff6f34d0a06d434_0.png)
 

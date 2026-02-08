@@ -1,8 +1,8 @@
+# 🧠 课程20：大语言模型与复合AI系统
+
 ![](img/4ac9a2a1633c64c1fefd38e5e4ebd0e8_1.png)
 
 ![](img/4ac9a2a1633c64c1fefd38e5e4ebd0e8_3.png)
-
-# 🧠 课程20：大语言模型与复合AI系统
 
 ![](img/4ac9a2a1633c64c1fefd38e5e4ebd0e8_5.png)
 

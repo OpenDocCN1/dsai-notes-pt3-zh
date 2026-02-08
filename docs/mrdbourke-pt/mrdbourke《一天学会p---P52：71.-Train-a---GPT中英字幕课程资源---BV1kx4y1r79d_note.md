@@ -1,6 +1,6 @@
-![](img/1ce9f6a4e2ebe16f980c6ec80d94093f_0.png)
-
 # PyTorch深度学习课程 P52：71. 训练与测试循环 🚂
+
+![](img/1ce9f6a4e2ebe16f980c6ec80d94093f_0.png)
 
 ![](img/1ce9f6a4e2ebe16f980c6ec80d94093f_2.png)
 

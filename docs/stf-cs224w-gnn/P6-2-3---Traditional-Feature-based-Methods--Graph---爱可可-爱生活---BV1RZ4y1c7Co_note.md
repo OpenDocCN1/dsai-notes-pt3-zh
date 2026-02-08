@@ -1,6 +1,6 @@
-![](img/69d051fc42eee849a05644930df94adb_0.png)
-
 # 课程 P6：2.3 - 基于图的传统特征方法 📊
+
+![](img/69d051fc42eee849a05644930df94adb_0.png)
 
 ![](img/69d051fc42eee849a05644930df94adb_1.png)
 

@@ -1,6 +1,6 @@
-![](img/852eed57fdbccb329d8c16499aafa438_0.png)
-
 # 📊 课程 P26：L4.8 - 文本分类评估
+
+![](img/852eed57fdbccb329d8c16499aafa438_0.png)
 
 ![](img/852eed57fdbccb329d8c16499aafa438_2.png)
 

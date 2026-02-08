@@ -1,6 +1,6 @@
-![](img/5b975fcdddfdded0638bc4b076f6eff8_0.png)
-
 # PyTorch深度学习入门课程 - P83：评估直线数据上的模型预测 📈
+
+![](img/5b975fcdddfdded0638bc4b076f6eff8_0.png)
 
 在本节课中，我们将学习如何评估一个在直线数据上训练的PyTorch模型，并通过可视化预测结果来确认模型的学习能力。
 

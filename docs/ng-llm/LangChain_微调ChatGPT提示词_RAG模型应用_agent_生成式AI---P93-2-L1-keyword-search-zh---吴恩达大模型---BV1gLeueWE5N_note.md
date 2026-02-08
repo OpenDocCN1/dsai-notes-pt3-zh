@@ -1,6 +1,6 @@
-![](img/988afc7b28b046626b485b8bba457d41_1.png)
-
 # LangChain 微调ChatGPT提示词 RAG模型应用 agent 生成式AI - P93：2.L1-关键词搜索 🔍
+
+![](img/988afc7b28b046626b485b8bba457d41_1.png)
 
 ![](img/988afc7b28b046626b485b8bba457d41_3.png)
 

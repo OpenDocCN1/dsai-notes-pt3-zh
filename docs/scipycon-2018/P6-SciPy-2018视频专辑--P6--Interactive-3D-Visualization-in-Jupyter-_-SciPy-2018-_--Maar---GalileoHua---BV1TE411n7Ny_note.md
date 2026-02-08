@@ -1,6 +1,6 @@
-![](img/f6efcd6e1f4edb53ad9377f7e60054ac_1.png)
-
 # 课程 P6：Jupyter 中的交互式 3D 可视化 🚀
+
+![](img/f6efcd6e1f4edb53ad9377f7e60054ac_1.png)
 
 ![](img/f6efcd6e1f4edb53ad9377f7e60054ac_3.png)
 

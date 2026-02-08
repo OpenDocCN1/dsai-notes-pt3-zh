@@ -1,6 +1,6 @@
-![](img/0b65af9cf41effe51ffb6d11a8588f4c_1.png)
-
 # 课程 P48：训练与测试整体结构设计 🏗️
+
+![](img/0b65af9cf41effe51ffb6d11a8588f4c_1.png)
 
 ![](img/0b65af9cf41effe51ffb6d11a8588f4c_3.png)
 

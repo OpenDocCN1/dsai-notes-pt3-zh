@@ -1,8 +1,8 @@
+# 机器学习课程 P143：梯度提升与AdaBoost模型实践 📈
+
 ![](img/d970090f0a2e272b44b760d16fe1e7e5_1.png)
 
 ![](img/d970090f0a2e272b44b760d16fe1e7e5_2.png)
-
-# 机器学习课程 P143：梯度提升与AdaBoost模型实践 📈
 
 ![](img/d970090f0a2e272b44b760d16fe1e7e5_4.png)
 

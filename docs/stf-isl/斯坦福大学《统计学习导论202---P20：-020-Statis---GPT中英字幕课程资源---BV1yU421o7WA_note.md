@@ -1,6 +1,6 @@
-![](img/bdbae7ae5c71e625838160bc7faad558_0.png)
-
 # 课程 P20：高斯判别分析（单变量）📊
+
+![](img/bdbae7ae5c71e625838160bc7faad558_0.png)
 
 ![](img/bdbae7ae5c71e625838160bc7faad558_2.png)
 

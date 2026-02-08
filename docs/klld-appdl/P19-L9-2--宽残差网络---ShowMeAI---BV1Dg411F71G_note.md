@@ -1,6 +1,6 @@
-![](img/23afc7fa5a9ddb9cd512265d9b7f1f0b_1.png)
-
 # 🧠 课程 P19：L9.2 - 宽残差网络
+
+![](img/23afc7fa5a9ddb9cd512265d9b7f1f0b_1.png)
 
 在本节课中，我们将学习宽残差网络（Wide Residual Networks, WRNs）的核心概念。我们将探讨如何通过增加网络的宽度而非深度来提升性能，并理解其背后的设计原理与实验验证。
 

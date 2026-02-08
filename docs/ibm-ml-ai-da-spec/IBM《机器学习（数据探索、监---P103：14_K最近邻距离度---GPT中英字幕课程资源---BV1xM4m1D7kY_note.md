@@ -1,6 +1,6 @@
-![](img/6932be13c31400e38fbef4fe378b451b_1.png)
-
 # 机器学习课程 P103：K最近邻距离度量 📏
+
+![](img/6932be13c31400e38fbef4fe378b451b_1.png)
 
 ![](img/6932be13c31400e38fbef4fe378b451b_3.png)
 

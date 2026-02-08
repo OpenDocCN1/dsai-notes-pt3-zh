@@ -1,6 +1,6 @@
-![](img/531f4c47c5deb023c0aee4cdba92524a_1.png)
-
 # 卷积神经网络教程 P5：第3周 - 卷积神经网络 🧠
+
+![](img/531f4c47c5deb023c0aee4cdba92524a_1.png)
 
 ![](img/531f4c47c5deb023c0aee4cdba92524a_3.png)
 

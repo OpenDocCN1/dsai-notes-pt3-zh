@@ -1,6 +1,6 @@
-![](img/f75816e32539b63ac59bf25994edd58d_0.png)
-
 # 课程17：简单API 第1部分 🚀
+
+![](img/f75816e32539b63ac59bf25994edd58d_0.png)
 
 在本节课中，我们将学习应用程序接口，简称API。我们将探讨API是什么、API库、REST API（包括请求和响应），并通过一个使用Pycoin Gecko的实例来加深理解。
 

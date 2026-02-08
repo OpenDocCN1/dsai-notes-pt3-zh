@@ -1,10 +1,10 @@
-![](img/5289e8520d74fc4c3d52bc47334a8937_0.png)
-
 # 课程名称：LangChain 微调 ChatGPT 提示词 RAG 模型应用 Agent 生成式 AI - P61：4.SC-Laurence_L3_v04.zh
 
-![](img/5289e8520d74fc4c3d52bc47334a8937_2.png)
+![](img/5289e8520d74fc4c3d52bc47334a8937_0.png)
 
 ## 概述 📋
+
+![](img/5289e8520d74fc4c3d52bc47334a8937_2.png)
 
 ![](img/5289e8520d74fc4c3d52bc47334a8937_4.png)
 

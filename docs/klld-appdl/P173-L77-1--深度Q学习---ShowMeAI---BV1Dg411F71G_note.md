@@ -1,8 +1,8 @@
+# 🎮 课程 P173：L77.1 - 深度Q学习
+
 ![](img/60db3c473f9dfbd767eaf55bb020b22a_1.png)
 
 ![](img/60db3c473f9dfbd767eaf55bb020b22a_3.png)
-
-# 🎮 课程 P173：L77.1 - 深度Q学习
 
 ![](img/60db3c473f9dfbd767eaf55bb020b22a_5.png)
 

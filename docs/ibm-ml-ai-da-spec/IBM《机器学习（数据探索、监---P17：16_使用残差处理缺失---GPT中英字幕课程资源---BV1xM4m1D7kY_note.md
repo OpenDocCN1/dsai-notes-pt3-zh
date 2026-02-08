@@ -1,6 +1,6 @@
-![](img/a33ffcfbadedf1ac8049973076f948d4_0.png)
-
 # 机器学习课程 P17：使用残差处理缺失值和异常值 📊
+
+![](img/a33ffcfbadedf1ac8049973076f948d4_0.png)
 
 ![](img/a33ffcfbadedf1ac8049973076f948d4_2.png)
 

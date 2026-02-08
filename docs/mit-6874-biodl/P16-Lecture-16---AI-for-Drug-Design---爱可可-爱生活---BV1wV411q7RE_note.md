@@ -1,8 +1,8 @@
+# 🧪 课程16：AI药物设计
+
 ![](img/264caf3b0c488a7079dc74e96830fb4f_0.png)
 
 ![](img/264caf3b0c488a7079dc74e96830fb4f_2.png)
-
-# 🧪 课程16：AI药物设计
 
 ![](img/264caf3b0c488a7079dc74e96830fb4f_4.png)
 

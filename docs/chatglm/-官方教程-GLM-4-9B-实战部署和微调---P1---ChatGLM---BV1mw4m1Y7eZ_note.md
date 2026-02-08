@@ -1,6 +1,6 @@
-![](img/4d13edbd47db261637678d5c7b6a739c_1.png)
-
 # 🚀 官方教程：GLM-4-9B 实战部署和微调 - P1
+
+![](img/4d13edbd47db261637678d5c7b6a739c_1.png)
 
 ![](img/4d13edbd47db261637678d5c7b6a739c_3.png)
 

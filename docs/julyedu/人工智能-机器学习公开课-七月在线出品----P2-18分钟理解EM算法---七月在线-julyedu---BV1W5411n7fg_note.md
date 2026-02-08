@@ -1,6 +1,6 @@
-![](img/cca8618f372ec1a13daa93cb8454ea66_0.png)
-
 # 人工智能—机器学习公开课（七月在线出品） - P2：18分钟理解EM算法
+
+![](img/cca8618f372ec1a13daa93cb8454ea66_0.png)
 
 ![](img/cca8618f372ec1a13daa93cb8454ea66_0.png)
 

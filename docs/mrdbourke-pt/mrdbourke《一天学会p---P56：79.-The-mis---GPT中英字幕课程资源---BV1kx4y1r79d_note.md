@@ -1,6 +1,6 @@
-![](img/f1c4c1677dab72d0c1c1147d6bab0081_0.png)
-
 # 课程 79：缺失的一环：非线性 🧩
+
+![](img/f1c4c1677dab72d0c1c1147d6bab0081_0.png)
 
 ![](img/f1c4c1677dab72d0c1c1147d6bab0081_2.png)
 

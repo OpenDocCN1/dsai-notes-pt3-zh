@@ -1,6 +1,6 @@
-![](img/aaa011e1dc72912baa590f68c0c043cd_1.png)
-
 # PyTorch 进阶学习讲座！P7：L7 - TorchText 🎼
+
+![](img/aaa011e1dc72912baa590f68c0c043cd_1.png)
 
 在本节课中，我们将学习 PyTorch 文本处理库 TorchText 在 2020 年的主要更新。我们将了解 TorchText 如何加速 NLP 研究、支持从研究到生产的转化，并探索其提供的新数据集、数据处理管道以及与 NLP 相关的新模块。
 

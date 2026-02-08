@@ -1,6 +1,6 @@
-![](img/bb62afea1f41dc8b70a5ccf587ce444b_0.png)
-
 # TensorFlow初学者教程 P1：L1- 安装与环境配置 🛠️
+
+![](img/bb62afea1f41dc8b70a5ccf587ce444b_0.png)
 
 在本节课中，我们将学习如何为TensorFlow配置开发环境。TensorFlow是一个由谷歌开发的端到端开源机器学习与深度学习平台，是最受欢迎的深度学习框架之一。我们将从基础安装开始，并介绍如何配置GPU支持。
 

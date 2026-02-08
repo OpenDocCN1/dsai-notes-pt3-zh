@@ -1,6 +1,6 @@
-![](img/e397dafe2290c08be55c621b4940569f_0.png)
-
 # 课程P9：音频研究中的Transformer应用 🎵
+
+![](img/e397dafe2290c08be55c621b4940569f_0.png)
 
 ![](img/e397dafe2290c08be55c621b4940569f_2.png)
 

@@ -1,6 +1,6 @@
-![](img/e973b83e1babc963d0d6504ca497ee4d_1.png)
-
 # PySpark 大数据处理入门，3：L3- Pyspark DataFrames 处理缺失值 🧹
+
+![](img/e973b83e1babc963d0d6504ca497ee4d_1.png)
 
 ![](img/e973b83e1babc963d0d6504ca497ee4d_1.png)
 

@@ -1,6 +1,6 @@
-![](img/7556aa9d3aaadd6cda3f5bfe8ada3945_0.png)
-
 # 课程P65：4-残差连接方法解读 🧠
+
+![](img/7556aa9d3aaadd6cda3f5bfe8ada3945_0.png)
 
 ![](img/7556aa9d3aaadd6cda3f5bfe8ada3945_2.png)
 

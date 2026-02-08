@@ -1,6 +1,6 @@
-![](img/f22da757bc04ffc169cb557cfc4a6368_1.png)
-
 # 课程 P15：CS 285 第5讲第1部分 - 策略梯度基础 🧠
+
+![](img/f22da757bc04ffc169cb557cfc4a6368_1.png)
 
 ![](img/f22da757bc04ffc169cb557cfc4a6368_3.png)
 

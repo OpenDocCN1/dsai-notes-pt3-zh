@@ -1,8 +1,8 @@
+# 课程 P52：16.4 - 图神经网络的鲁棒性 🛡️
+
 ![](img/ad4ff451bd70e9be667ac9b15ae54cef_0.png)
 
 ![](img/ad4ff451bd70e9be667ac9b15ae54cef_1.png)
-
-# 课程 P52：16.4 - 图神经网络的鲁棒性 🛡️
 
 ![](img/ad4ff451bd70e9be667ac9b15ae54cef_3.png)
 

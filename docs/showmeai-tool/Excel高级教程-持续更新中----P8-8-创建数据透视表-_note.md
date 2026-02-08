@@ -1,6 +1,6 @@
-![](img/0f792ae8690d5c7e0534af8ca3c54600_0.png)
-
 # Excel高级教程（持续更新中） - P8：8）创建数据透视表 📊
+
+![](img/0f792ae8690d5c7e0534af8ca3c54600_0.png)
 
 ![](img/0f792ae8690d5c7e0534af8ca3c54600_0.png)
 

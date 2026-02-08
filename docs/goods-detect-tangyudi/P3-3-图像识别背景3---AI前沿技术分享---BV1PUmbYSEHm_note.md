@@ -1,8 +1,8 @@
+# 图像识别背景3 - AI前沿技术分享 - P3 🖼️
+
 ![](img/0cbfd8e13fa46536f8f4deebb52f7dcf_0.png)
 
 ![](img/0cbfd8e13fa46536f8f4deebb52f7dcf_2.png)
-
-# 图像识别背景3 - AI前沿技术分享 - P3 🖼️
 
 ![](img/0cbfd8e13fa46536f8f4deebb52f7dcf_4.png)
 

@@ -1,6 +1,6 @@
-![](img/eb14a75b1d7a71931d5b18ff6fb92479_0.png)
-
 # 课程 P1：你必须了解RWKV 🚀，以及Transformer为何存在局限
+
+![](img/eb14a75b1d7a71931d5b18ff6fb92479_0.png)
 
 ![](img/eb14a75b1d7a71931d5b18ff6fb92479_2.png)
 

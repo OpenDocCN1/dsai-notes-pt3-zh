@@ -1,6 +1,6 @@
-![](img/c5feeafac651b357124dc1270cf31c84_0.png)
-
 # 课程 P26：L7.4 - 异常处理 🛡️
+
+![](img/c5feeafac651b357124dc1270cf31c84_0.png)
 
 ![](img/c5feeafac651b357124dc1270cf31c84_0.png)
 

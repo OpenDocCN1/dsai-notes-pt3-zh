@@ -1,8 +1,8 @@
+# 课程09c：平滑样条 📈
+
 ![](img/3df0cb1889f7c63565c820cc8cfbd79e_1.png)
 
 ![](img/3df0cb1889f7c63565c820cc8cfbd79e_3.png)
-
-# 课程09c：平滑样条 📈
 
 ![](img/3df0cb1889f7c63565c820cc8cfbd79e_5.png)
 

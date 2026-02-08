@@ -1,6 +1,6 @@
-![](img/8d894cd4727459da3321eca39e5241b4_1.png)
-
 # 课程 06：使用 ImageFolder 加载图像并转换为张量 📸➡️🔢
+
+![](img/8d894cd4727459da3321eca39e5241b4_1.png)
 
 ## 概述
 在本节课中，我们将学习如何使用 PyTorch 的 `torchvision.datasets.ImageFolder` 类，将存储在标准图像分类格式文件夹中的图像数据加载并转换为模型所需的张量格式。我们将结合之前学到的数据变换（transforms）知识，创建一个可直接用于训练的数据集。

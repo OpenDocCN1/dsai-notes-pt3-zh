@@ -1,6 +1,6 @@
-![](img/321dfcc24456f2c479328def63705ddb_0.png)
-
 # IBM应用人工智能（从0开始搭建AI机器人）｜第20课：REST API HTTP请求 第2部分 🚀
+
+![](img/321dfcc24456f2c479328def63705ddb_0.png)
 
 ![](img/321dfcc24456f2c479328def63705ddb_1.png)
 

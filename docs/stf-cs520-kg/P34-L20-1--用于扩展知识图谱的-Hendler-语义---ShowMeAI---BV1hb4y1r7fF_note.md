@@ -1,6 +1,6 @@
-![](img/1cb8403eff00d402f7d6615f4247fbf5_0.png)
-
 # 知识图谱课程 P34：L20.1 - 用于扩展知识图谱的 Hendler 语义 🧠
+
+![](img/1cb8403eff00d402f7d6615f4247fbf5_0.png)
 
 ![](img/1cb8403eff00d402f7d6615f4247fbf5_2.png)
 

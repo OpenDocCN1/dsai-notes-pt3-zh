@@ -1,8 +1,8 @@
+# 课程P30：10.3 - 知识图谱补全 🧠
+
 ![](img/0c0f05d0d59f2d758b1f36ecb6db46f9_1.png)
 
 ![](img/0c0f05d0d59f2d758b1f36ecb6db46f9_2.png)
-
-# 课程P30：10.3 - 知识图谱补全 🧠
 
 ![](img/0c0f05d0d59f2d758b1f36ecb6db46f9_4.png)
 

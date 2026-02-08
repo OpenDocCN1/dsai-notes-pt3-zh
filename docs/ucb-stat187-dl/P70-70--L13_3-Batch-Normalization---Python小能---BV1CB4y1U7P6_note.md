@@ -1,6 +1,6 @@
-![](img/58805f05a96ee6fc5aba26f4fad76eca_1.png)
-
 # 课程 P70：70. L13_3 批量归一化 🧠
+
+![](img/58805f05a96ee6fc5aba26f4fad76eca_1.png)
 
 ![](img/58805f05a96ee6fc5aba26f4fad76eca_2.png)
 

@@ -1,6 +1,6 @@
-![](img/0a5b9f65914db2e13c4a03ea2a25a6e4_1.png)
-
 # 🎬 P18：L18- 深度学习中的视频处理
+
+![](img/0a5b9f65914db2e13c4a03ea2a25a6e4_1.png)
 
 ![](img/0a5b9f65914db2e13c4a03ea2a25a6e4_3.png)
 

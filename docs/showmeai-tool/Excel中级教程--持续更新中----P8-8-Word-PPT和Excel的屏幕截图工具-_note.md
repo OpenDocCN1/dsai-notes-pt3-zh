@@ -1,6 +1,6 @@
-![](img/c9f198c70a23d98da6f60d5ef6e59dd1_0.png)
-
 # Excel中级教程 (P8) 📸：Word、PPT和Excel的屏幕截图工具
+
+![](img/c9f198c70a23d98da6f60d5ef6e59dd1_0.png)
 
 ![](img/c9f198c70a23d98da6f60d5ef6e59dd1_0.png)
 

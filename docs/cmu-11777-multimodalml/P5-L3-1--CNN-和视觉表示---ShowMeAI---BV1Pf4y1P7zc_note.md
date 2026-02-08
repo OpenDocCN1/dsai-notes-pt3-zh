@@ -1,8 +1,8 @@
+# 课程P5：L3.1 - CNN与视觉表示 👁️📊
+
 ![](img/5dc6f5ea5413d8023c7a9c596fd24ba9_0.png)
 
 ![](img/5dc6f5ea5413d8023c7a9c596fd24ba9_2.png)
-
-# 课程P5：L3.1 - CNN与视觉表示 👁️📊
 
 ![](img/5dc6f5ea5413d8023c7a9c596fd24ba9_4.png)
 

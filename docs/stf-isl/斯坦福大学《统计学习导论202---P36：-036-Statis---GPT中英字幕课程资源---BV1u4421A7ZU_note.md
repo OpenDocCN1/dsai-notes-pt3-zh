@@ -1,10 +1,10 @@
+# 课程36：统计学习中的自助法（Bootstrap）📊
+
 ![](img/650dc0cb172779c47d5376c05cfd0752_0.png)
 
 ![](img/650dc0cb172779c47d5376c05cfd0752_2.png)
 
 ![](img/650dc0cb172779c47d5376c05cfd0752_4.png)
-
-# 课程36：统计学习中的自助法（Bootstrap）📊
 
 ![](img/650dc0cb172779c47d5376c05cfd0752_6.png)
 

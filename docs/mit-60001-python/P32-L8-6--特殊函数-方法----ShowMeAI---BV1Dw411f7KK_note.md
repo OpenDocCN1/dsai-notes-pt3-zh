@@ -1,6 +1,6 @@
-![](img/fe1eb7bfed9e9f5723bbaaec50897e9d_0.png)
-
 # 🚗 Python课程 P32：L8.6 - 特殊函数(方法)
+
+![](img/fe1eb7bfed9e9f5723bbaaec50897e9d_0.png)
 
 ![](img/fe1eb7bfed9e9f5723bbaaec50897e9d_0.png)
 

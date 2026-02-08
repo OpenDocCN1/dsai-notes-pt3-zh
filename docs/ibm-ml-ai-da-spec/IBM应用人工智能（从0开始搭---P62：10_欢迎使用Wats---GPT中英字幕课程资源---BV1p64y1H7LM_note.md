@@ -1,6 +1,6 @@
-![](img/dd9d1a09d6cedb5d5a50fd93a27c0a3f_0.png)
-
 # 课程10：欢迎使用Watson Assistant 🤖
+
+![](img/dd9d1a09d6cedb5d5a50fd93a27c0a3f_0.png)
 
 在本节课中，我们将学习如何开始使用IBM Watson Assistant。我们将了解其核心概念，并动手创建你的第一个虚拟助手“动作”，最后学习如何与团队分享并进行测试。
 

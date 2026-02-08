@@ -1,6 +1,6 @@
-![](img/8d156c8da3c8c444b2856a055bfb63b2_0.png)
-
 # 人工智能—计算广告公开课（七月在线出品） - P4：Lookalike相似人群拓展项目实战 🎯
+
+![](img/8d156c8da3c8c444b2856a055bfb63b2_0.png)
 
 ![](img/8d156c8da3c8c444b2856a055bfb63b2_2.png)
 

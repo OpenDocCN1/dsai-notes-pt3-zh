@@ -1,8 +1,8 @@
+# 🎮 课程9：游戏博弈1 - Minimax与Alpha-beta剪枝
+
 ![](img/145fbaf36d1a2c061739104c6d40f7dd_1.png)
 
 ![](img/145fbaf36d1a2c061739104c6d40f7dd_2.png)
-
-# 🎮 课程9：游戏博弈1 - Minimax与Alpha-beta剪枝
 
 在本节课中，我们将学习如何为双人、零和、回合制、完全可观察的游戏（如国际象棋）进行建模和求解。我们将介绍游戏树、Minimax算法及其变体，并探讨如何通过评估函数和Alpha-beta剪枝来提高计算效率。
 

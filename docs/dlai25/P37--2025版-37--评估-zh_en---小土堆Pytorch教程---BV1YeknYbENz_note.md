@@ -1,6 +1,6 @@
-![](img/d5a9ce4e2619923ffc40039078612ff2_1.png)
-
 # P37：【2025版】37. 评估GAN 🧐 - 小土堆Pytorch教程
+
+![](img/d5a9ce4e2619923ffc40039078612ff2_1.png)
 
 ![](img/d5a9ce4e2619923ffc40039078612ff2_3.png)
 

@@ -1,6 +1,6 @@
-![](img/74b92060700d5193b9b6a2aa5dec1e8f_0.png)
-
 # LangChain 微调ChatGPT提示词 RAG模型应用 agent 生成式AI - P44：3——输入评估：审查 🔍
+
+![](img/74b92060700d5193b9b6a2aa5dec1e8f_0.png)
 
 在本节课中，我们将学习如何评估和管理用户输入，以确保AI系统的安全与负责任使用。我们将重点介绍两种核心策略：使用OpenAI的Moderation API进行内容审核，以及通过特定提示词策略来检测和防止“提示词注入”。
 

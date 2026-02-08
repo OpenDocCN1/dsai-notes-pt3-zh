@@ -1,6 +1,6 @@
-![](img/797f4cc0ad75088c1560e826b4d80aeb_0.png)
-
 # Excel中级教程 - P66：使用XLOOKUP函数 🔍
+
+![](img/797f4cc0ad75088c1560e826b4d80aeb_0.png)
 
 在本节课中，我们将学习如何在Microsoft Excel中使用功能强大的XLOOKUP函数。XLOOKUP是VLOOKUP和HLOOKUP函数的现代替代品，它更灵活、更直观，能够解决许多传统查找函数的局限性。
 

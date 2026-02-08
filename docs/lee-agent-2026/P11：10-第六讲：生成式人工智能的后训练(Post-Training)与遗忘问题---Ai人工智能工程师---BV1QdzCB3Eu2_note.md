@@ -1,6 +1,6 @@
-![](img/f0e0b36cca23bb7b34f2029a0b2d3010_1.png)
-
 # 课程11：生成式人工智能的后训练与遗忘问题 🧠
+
+![](img/f0e0b36cca23bb7b34f2029a0b2d3010_1.png)
 
 ![](img/f0e0b36cca23bb7b34f2029a0b2d3010_3.png)
 

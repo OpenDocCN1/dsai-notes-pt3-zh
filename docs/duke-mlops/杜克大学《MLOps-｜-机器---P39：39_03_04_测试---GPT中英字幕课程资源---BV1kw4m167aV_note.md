@@ -1,6 +1,6 @@
-![](img/440a8821c0977eaf5df2a0606f39ac24_1.png)
-
 # 课程 P39：Python 测试规范与 PyTest 入门 🧪
+
+![](img/440a8821c0977eaf5df2a0606f39ac24_1.png)
 
 在本节课中，我们将学习 Python 中的测试规范，了解标准库 `unittest` 的基本用法及其局限性，并重点介绍更受推荐的测试框架 `PyTest` 的优势和基本使用规范。
 

@@ -1,8 +1,8 @@
+# 🧠 课程 P32：L17.2 - XNOR网络详解
+
 ![](img/dcea48a3ac4055614224c1aca4422e5b_0.png)
 
 ![](img/dcea48a3ac4055614224c1aca4422e5b_2.png)
-
-# 🧠 课程 P32：L17.2 - XNOR网络详解
 
 ![](img/dcea48a3ac4055614224c1aca4422e5b_4.png)
 

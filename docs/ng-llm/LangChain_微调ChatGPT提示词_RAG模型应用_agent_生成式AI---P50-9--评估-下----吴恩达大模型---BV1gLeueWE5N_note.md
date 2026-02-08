@@ -1,6 +1,6 @@
-![](img/fb4a12c038212d712f383682c358b312_0.png)
-
 # LangChain微调ChatGPT提示词、RAG模型应用与Agent生成式AI - 课程50：评估（下）🔍
+
+![](img/fb4a12c038212d712f383682c358b312_0.png)
 
 ## 概述
 

@@ -1,8 +1,8 @@
+# 课程 P9：策略梯度 II 🚀
+
 ![](img/1fcfb2b1a734d2bef494c700e33de5f3_0.png)
 
 ![](img/1fcfb2b1a734d2bef494c700e33de5f3_2.png)
-
-# 课程 P9：策略梯度 II 🚀
 
 在本节课中，我们将继续深入探讨策略梯度方法。我们将学习如何通过引入基线（Baseline）和优势函数（Advantage Function）来降低策略梯度估计的方差，并讨论如何通过选择更新步长来保证策略的单调改进。课程内容将涵盖从理论推导到实际算法（如Vanilla Policy Gradient和Actor-Critic方法）的完整流程。
 

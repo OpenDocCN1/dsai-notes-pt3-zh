@@ -1,6 +1,6 @@
-![](img/f720d66f49fae41d670aae65c8eaadee_1.png)
-
 # PySpark 大数据处理入门，6：L6- PySpark MLlib 简介 🚀
+
+![](img/f720d66f49fae41d670aae65c8eaadee_1.png)
 
 在本节课中，我们将要学习 PySpark 的机器学习库 MLlib。我们将了解其两种主要 API，并通过一个简单的线性回归示例，演示如何使用 DataFrame API 来构建和评估一个机器学习模型。
 

@@ -1,6 +1,6 @@
-![](img/caba28d7676c25dbda8d624c235720e2_0.png)
-
 # Python 3全系列基础教程，P19：19）函数和参数 🧩
+
+![](img/caba28d7676c25dbda8d624c235720e2_0.png)
 
 ![](img/caba28d7676c25dbda8d624c235720e2_0.png)
 

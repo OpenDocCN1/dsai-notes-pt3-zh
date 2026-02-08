@@ -1,6 +1,6 @@
-![](img/8ed346adb329c03e2ebdb3ea7990dd18_0.png)
-
 # 斯坦福大学《AI觉醒：对经济和社会的影响》课程 - P34：创新困境 🚀
+
+![](img/8ed346adb329c03e2ebdb3ea7990dd18_0.png)
 
 ![](img/8ed346adb329c03e2ebdb3ea7990dd18_2.png)
 

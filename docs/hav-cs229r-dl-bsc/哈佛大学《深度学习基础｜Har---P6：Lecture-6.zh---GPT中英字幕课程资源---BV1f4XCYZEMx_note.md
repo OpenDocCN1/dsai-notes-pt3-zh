@@ -1,3 +1,5 @@
+# 哈佛大学《深度学习基础》课程笔记 - 第6讲：因果性与公平性 🔍⚖️
+
 ![](img/b8e1eeb69d52226e0f8f3a5404af68aa_0.png)
 
 ![](img/b8e1eeb69d52226e0f8f3a5404af68aa_2.png)
@@ -11,8 +13,6 @@
 ![](img/b8e1eeb69d52226e0f8f3a5404af68aa_10.png)
 
 ![](img/b8e1eeb69d52226e0f8f3a5404af68aa_12.png)
-
-# 哈佛大学《深度学习基础》课程笔记 - 第6讲：因果性与公平性 🔍⚖️
 
 ![](img/b8e1eeb69d52226e0f8f3a5404af68aa_14.png)
 

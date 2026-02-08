@@ -1,6 +1,6 @@
-![](img/7ace8d9e4b70979d0fcf0ecd7d960c99_1.png)
-
 # 课程12：生成对抗网络的缺点 🧐
+
+![](img/7ace8d9e4b70979d0fcf0ecd7d960c99_1.png)
 
 ![](img/7ace8d9e4b70979d0fcf0ecd7d960c99_3.png)
 

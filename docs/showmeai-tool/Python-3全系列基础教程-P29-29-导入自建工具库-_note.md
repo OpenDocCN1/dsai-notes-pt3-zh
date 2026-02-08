@@ -1,6 +1,6 @@
-![](img/f7373098dc4fb9ed5c845771e433d5ec_0.png)
-
 # Python 3全系列基础教程，P29：导入自建工具库 📦
+
+![](img/f7373098dc4fb9ed5c845771e433d5ec_0.png)
 
 ![](img/f7373098dc4fb9ed5c845771e433d5ec_0.png)
 

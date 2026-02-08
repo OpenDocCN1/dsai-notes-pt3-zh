@@ -1,6 +1,6 @@
-![](img/4644295cbde4dcca62d1025060ea6c5b_1.png)
-
 # 课程P50：5-特征向量生成 📊
+
+![](img/4644295cbde4dcca62d1025060ea6c5b_1.png)
 
 ![](img/4644295cbde4dcca62d1025060ea6c5b_3.png)
 

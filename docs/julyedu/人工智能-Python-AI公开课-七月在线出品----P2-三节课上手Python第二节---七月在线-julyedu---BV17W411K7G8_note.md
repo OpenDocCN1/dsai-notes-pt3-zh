@@ -1,8 +1,8 @@
+# 🐍 人工智能—Python AI公开课（七月在线出品） - P2：三节课上手Python第二节
+
 ![](img/fe835b0a2aa000823ea87911b98d27ef_0.png)
 
 ![](img/fe835b0a2aa000823ea87911b98d27ef_2.png)
-
-# 🐍 人工智能—Python AI公开课（七月在线出品） - P2：三节课上手Python第二节
 
 ![](img/fe835b0a2aa000823ea87911b98d27ef_4.png)
 

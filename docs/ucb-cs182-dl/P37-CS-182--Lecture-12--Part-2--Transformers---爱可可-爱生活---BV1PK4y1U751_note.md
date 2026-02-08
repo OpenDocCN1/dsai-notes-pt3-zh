@@ -1,6 +1,6 @@
-![](img/8af4c16a8f1435202cba9d29855458bc_1.png)
-
 # 课程 P37：CS 182 第12讲 第2部分 - Transformer 详解 🧠
+
+![](img/8af4c16a8f1435202cba9d29855458bc_1.png)
 
 ![](img/8af4c16a8f1435202cba9d29855458bc_3.png)
 

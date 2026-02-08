@@ -1,6 +1,6 @@
-![](img/231bca62d9ca50ecad8086e6c9a7ac72_0.png)
-
 # PyTorch深度学习入门课程 #73：使用nn.Sequential重构模型与探索内部机制 🔍
+
+![](img/231bca62d9ca50ecad8086e6c9a7ac72_0.png)
 
 在本节课中，我们将学习如何使用PyTorch的`nn.Sequential`模块来重构之前创建的神经网络模型，并深入探索模型内部的参数结构。我们将比较`nn.Sequential`与子类化`nn.Module`两种构建模型方式的异同，并理解模型初始化时随机参数的含义。
 

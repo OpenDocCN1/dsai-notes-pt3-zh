@@ -1,6 +1,6 @@
-![](img/7519f00da13fffe23c8b15d94d5d720d_1.png)
-
 # 课程 P69：69. L13_2 Python中的Inception 🧠
+
+![](img/7519f00da13fffe23c8b15d94d5d720d_1.png)
 
 在本节课中，我们将学习如何在Python中实现一个Inception网络模块。我们将从理解Inception块的基本结构开始，逐步构建一个完整的网络，并观察其在实际数据集上的运行效果。
 

@@ -1,8 +1,8 @@
+# 课程 P14：5.1 - 消息传递与节点分类 🧠
+
 ![](img/aaf282fcfe5501dfd361d70b98dd64be_1.png)
 
 ![](img/aaf282fcfe5501dfd361d70b98dd64be_2.png)
-
-# 课程 P14：5.1 - 消息传递与节点分类 🧠
 
 ![](img/aaf282fcfe5501dfd361d70b98dd64be_4.png)
 

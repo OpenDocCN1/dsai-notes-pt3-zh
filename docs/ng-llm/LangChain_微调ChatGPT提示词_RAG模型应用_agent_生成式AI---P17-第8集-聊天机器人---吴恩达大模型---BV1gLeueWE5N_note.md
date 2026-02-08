@@ -1,8 +1,8 @@
+# LangChain 微调ChatGPT提示词 RAG模型应用 agent 生成式AI - P17：第8集 聊天机器人 🤖
+
 ![](img/4ee0d715c8ac1e68d3ab5051d5440971_0.png)
 
 ![](img/4ee0d715c8ac1e68d3ab5051d5440971_2.png)
-
-# LangChain 微调ChatGPT提示词 RAG模型应用 agent 生成式AI - P17：第8集 聊天机器人 🤖
 
 ![](img/4ee0d715c8ac1e68d3ab5051d5440971_4.png)
 

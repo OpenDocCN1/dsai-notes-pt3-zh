@@ -1,6 +1,6 @@
-![](img/956a2e074cf4f6a0c302ede4f0be3678_1.png)
-
 # 机器学习课程 P62：训练集与测试集分割实验（第一部分）📊
+
+![](img/956a2e074cf4f6a0c302ede4f0be3678_1.png)
 
 ![](img/956a2e074cf4f6a0c302ede4f0be3678_3.png)
 

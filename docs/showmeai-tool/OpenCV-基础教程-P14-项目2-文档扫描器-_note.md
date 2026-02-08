@@ -1,10 +1,10 @@
+# OpenCV 基础教程，P14：项目2：文档扫描器 📄
+
 ![](img/04f37d9e927ad86517b1e6fa084d48b2_0.png)
 
 ![](img/04f37d9e927ad86517b1e6fa084d48b2_1.png)
 
 ![](img/04f37d9e927ad86517b1e6fa084d48b2_2.png)
-
-# OpenCV 基础教程，P14：项目2：文档扫描器 📄
 
 ![](img/04f37d9e927ad86517b1e6fa084d48b2_0.png)
 

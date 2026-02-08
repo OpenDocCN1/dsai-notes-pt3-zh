@@ -1,3 +1,5 @@
+# 课程 P42：CS 285 第10讲，第3部分 - 轨迹优化与线性二次调节器 (LQR) 🚀
+
 ![](img/dca975c57ee7e31d5bbfb3959315f2dd_1.png)
 
 ![](img/dca975c57ee7e31d5bbfb3959315f2dd_3.png)
@@ -5,8 +7,6 @@
 ![](img/dca975c57ee7e31d5bbfb3959315f2dd_5.png)
 
 ![](img/dca975c57ee7e31d5bbfb3959315f2dd_7.png)
-
-# 课程 P42：CS 285 第10讲，第3部分 - 轨迹优化与线性二次调节器 (LQR) 🚀
 
 ![](img/dca975c57ee7e31d5bbfb3959315f2dd_9.png)
 

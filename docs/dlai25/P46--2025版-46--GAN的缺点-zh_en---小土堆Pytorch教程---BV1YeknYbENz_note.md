@@ -1,6 +1,6 @@
-![](img/d9f85fc227ae06a89c376dd170d55660_1.png)
-
 # P46：GAN的缺点 🧐
+
+![](img/d9f85fc227ae06a89c376dd170d55660_1.png)
 
 ![](img/d9f85fc227ae06a89c376dd170d55660_3.png)
 

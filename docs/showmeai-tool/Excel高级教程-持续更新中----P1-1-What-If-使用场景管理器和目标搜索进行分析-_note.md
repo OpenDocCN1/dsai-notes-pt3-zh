@@ -1,6 +1,6 @@
-![](img/241bc608b4f8dc5791ee9b1b08667ad4_0.png)
-
 # Excel高级教程（持续更新中） - P1：假设分析之情景管理器与目标搜索 🔍
+
+![](img/241bc608b4f8dc5791ee9b1b08667ad4_0.png)
 
 ![](img/241bc608b4f8dc5791ee9b1b08667ad4_0.png)
 

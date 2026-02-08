@@ -1,6 +1,6 @@
-![](img/3a662d2ccf5ce137c1313fc44d7c5a0c_0.png)
-
 # OpenCV 基础教程 P5：第2章：基础函数 🛠️
+
+![](img/3a662d2ccf5ce137c1313fc44d7c5a0c_0.png)
 
 ![](img/3a662d2ccf5ce137c1313fc44d7c5a0c_1.png)
 

@@ -1,6 +1,6 @@
-![](img/9a5a4bf0fb96963fc1cb5e68edbadc3b_1.png)
-
 # 课程 P11：迈向AI驱动的3D内容创作 🚀
+
+![](img/9a5a4bf0fb96963fc1cb5e68edbadc3b_1.png)
 
 ![](img/9a5a4bf0fb96963fc1cb5e68edbadc3b_3.png)
 

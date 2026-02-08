@@ -1,6 +1,6 @@
-![](img/a63c58fa742a253a442ad2ec2eda1686_0.png)
-
 # 课程 P97：模型量化技术详解 🚀
+
+![](img/a63c58fa742a253a442ad2ec2eda1686_0.png)
 
 ![](img/a63c58fa742a253a442ad2ec2eda1686_2.png)
 

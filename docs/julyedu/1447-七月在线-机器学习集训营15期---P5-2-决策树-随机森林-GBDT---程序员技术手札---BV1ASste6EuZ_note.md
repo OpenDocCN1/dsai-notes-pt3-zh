@@ -1,6 +1,6 @@
-![](img/b9eae516af5cdb175d1e0993413e8b35_0.png)
-
 # 机器学习集训营第15期 - P5：决策树、随机森林与GBDT 🌲
+
+![](img/b9eae516af5cdb175d1e0993413e8b35_0.png)
 
 ![](img/b9eae516af5cdb175d1e0993413e8b35_2.png)
 

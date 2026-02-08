@@ -1,6 +1,6 @@
-![](img/ec0da32f5989dea3cef0adc42607500f_0.png)
-
 # 吴恩达《AI for Good专业课程》第17课：评估阶段 📊
+
+![](img/ec0da32f5989dea3cef0adc42607500f_0.png)
 
 ![](img/ec0da32f5989dea3cef0adc42607500f_2.png)
 

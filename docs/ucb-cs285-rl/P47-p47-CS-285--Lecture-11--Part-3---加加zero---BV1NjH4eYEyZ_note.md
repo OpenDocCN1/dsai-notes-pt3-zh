@@ -1,6 +1,6 @@
-![](img/e8d3580fc142affae6b03a765db92523_1.png)
-
 # 课程 P47：基于模型的强化学习中的不确定性感知模型 🧠
+
+![](img/e8d3580fc142affae6b03a765db92523_1.png)
 
 ![](img/e8d3580fc142affae6b03a765db92523_3.png)
 

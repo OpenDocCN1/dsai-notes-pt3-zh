@@ -1,8 +1,8 @@
+# OpenCV 基础教程 P11：第8章：轮廓与形状检测 🔍
+
 ![](img/f0258ec39c3f39fcba3cbd8d5e72e07e_0.png)
 
 ![](img/f0258ec39c3f39fcba3cbd8d5e72e07e_1.png)
-
-# OpenCV 基础教程 P11：第8章：轮廓与形状检测 🔍
 
 ![](img/f0258ec39c3f39fcba3cbd8d5e72e07e_0.png)
 

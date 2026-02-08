@@ -1,6 +1,6 @@
-![](img/4b1f13eed31a98f5ac7efe1c7dd96373_0.png)
-
 # 斯坦福大学《自然语言理解》课程笔记 P17：信息检索评估指标 📊
+
+![](img/4b1f13eed31a98f5ac7efe1c7dd96373_0.png)
 
 ![](img/4b1f13eed31a98f5ac7efe1c7dd96373_2.png)
 

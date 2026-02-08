@@ -1,6 +1,6 @@
-![](img/62ed1b58741ca3588da1eb98b48fe392_0.png)
-
 # Excel高级教程（持续更新中） - P21：21）使用 IF 和 COUNTIF 函数创建交互式工作表 📝
+
+![](img/62ed1b58741ca3588da1eb98b48fe392_0.png)
 
 ![](img/62ed1b58741ca3588da1eb98b48fe392_0.png)
 

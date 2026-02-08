@@ -1,8 +1,8 @@
+# 课程06：判别分析与朴素贝叶斯分类器 📊
+
 ![](img/d194df07a854c29ad12dbefd4185dbe5_1.png)
 
 ![](img/d194df07a854c29ad12dbefd4185dbe5_2.png)
-
-# 课程06：判别分析与朴素贝叶斯分类器 📊
 
 ![](img/d194df07a854c29ad12dbefd4185dbe5_3.png)
 

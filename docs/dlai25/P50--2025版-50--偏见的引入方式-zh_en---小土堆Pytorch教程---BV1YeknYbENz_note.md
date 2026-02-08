@@ -1,6 +1,6 @@
-![](img/eccbe8f7653afad24b5776e12c1b33bc_1.png)
-
 # 🧠 P50：【2025版】50. 偏见的引入方式
+
+![](img/eccbe8f7653afad24b5776e12c1b33bc_1.png)
 
 ![](img/eccbe8f7653afad24b5776e12c1b33bc_3.png)
 

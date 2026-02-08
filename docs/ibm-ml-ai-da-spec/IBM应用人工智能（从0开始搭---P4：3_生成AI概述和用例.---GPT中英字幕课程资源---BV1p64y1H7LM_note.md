@@ -1,8 +1,8 @@
+# IBM应用人工智能（从0开始搭建AI机器人）｜课程P4：生成式AI概述与用例 🧠
+
 ![](img/9a0e54b9d88e5d0bd786ab51f1947eeb_0.png)
 
 ![](img/9a0e54b9d88e5d0bd786ab51f1947eeb_1.png)
-
-# IBM应用人工智能（从0开始搭建AI机器人）｜课程P4：生成式AI概述与用例 🧠
 
 ![](img/9a0e54b9d88e5d0bd786ab51f1947eeb_3.png)
 

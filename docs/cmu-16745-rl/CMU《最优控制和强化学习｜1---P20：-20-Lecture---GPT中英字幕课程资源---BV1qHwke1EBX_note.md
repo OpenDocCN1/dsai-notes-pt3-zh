@@ -1,3 +1,5 @@
+# 课程20：卡尔曼滤波器与对偶性 🧮
+
 ![](img/3a7b2613b4fef5801213b5050cebfaf2_1.png)
 
 ![](img/3a7b2613b4fef5801213b5050cebfaf2_3.png)
@@ -23,8 +25,6 @@
 ![](img/3a7b2613b4fef5801213b5050cebfaf2_20.png)
 
 ![](img/3a7b2613b4fef5801213b5050cebfaf2_22.png)
-
-# 课程20：卡尔曼滤波器与对偶性 🧮
 
 ![](img/3a7b2613b4fef5801213b5050cebfaf2_24.png)
 

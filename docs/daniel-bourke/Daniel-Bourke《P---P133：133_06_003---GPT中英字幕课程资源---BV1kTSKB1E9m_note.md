@@ -1,6 +1,6 @@
-![](img/6880b3084a9bed02ac29325e60bc10fd_0.png)
-
 # PyTorch深度学习课程 第133课：下载披萨牛排寿司图像自定义数据集 🍕🥩🍣
+
+![](img/6880b3084a9bed02ac29325e60bc10fd_0.png)
 
 ![](img/6880b3084a9bed02ac29325e60bc10fd_2.png)
 

@@ -1,10 +1,10 @@
+# 课程 8b：向前逐步选择法 📈
+
 ![](img/5b1ef7b1f5affc37f07abcf5e971a807_0.png)
 
 ![](img/5b1ef7b1f5affc37f07abcf5e971a807_2.png)
 
 ![](img/5b1ef7b1f5affc37f07abcf5e971a807_4.png)
-
-# 课程 8b：向前逐步选择法 📈
 
 ![](img/5b1ef7b1f5affc37f07abcf5e971a807_5.png)
 

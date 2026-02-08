@@ -1,10 +1,10 @@
+# 课程 P30：一次搞懂 RAG 评估 📊
+
 ![](img/ee577fdb34a41a2b92108e2e8e2f801b_1.png)
 
 ![](img/ee577fdb34a41a2b92108e2e8e2f801b_3.png)
 
 ![](img/ee577fdb34a41a2b92108e2e8e2f801b_5.png)
-
-# 课程 P30：一次搞懂 RAG 评估 📊
 
 ![](img/ee577fdb34a41a2b92108e2e8e2f801b_7.png)
 

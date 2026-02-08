@@ -1,6 +1,6 @@
-![](img/8b402e64488ae1df1afd7d444297ca79_1.png)
-
 # 课程 P58：TensorFlow Transform 详解 🛠️
+
+![](img/8b402e64488ae1df1afd7d444297ca79_1.png)
 
 在本节课中，我们将深入学习 TensorFlow Transform（TFT）这一工具。我们将探讨它的工作原理、核心优势以及如何在实际的机器学习流水线中应用它进行大规模数据预处理。
 

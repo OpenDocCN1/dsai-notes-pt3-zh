@@ -1,6 +1,6 @@
-![](img/d79ec12cd82ce038fb6b6a27b6d6d892_0.png)
-
 # PyTorch深度学习课程 - P72：114. 详解 nn.Conv2d 与 nn.MaxPool2d 🧠
+
+![](img/d79ec12cd82ce038fb6b6a27b6d6d892_0.png)
 
 在本节课中，我们将深入学习PyTorch中两个关键的卷积神经网络层：`nn.Conv2d` 和 `nn.MaxPool2d`。我们将通过代码实践，一步步理解它们的工作原理、参数设置以及如何影响数据的形状。我们将复现CNN Explainer网站上的Tiny VGG架构，并使用虚拟数据来验证我们的理解。
 

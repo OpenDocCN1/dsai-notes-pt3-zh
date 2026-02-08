@@ -1,8 +1,8 @@
+# 课程01：AI人工智能入门学习路线图 🗺️
+
 ![](img/69d61adaabb9a98932873f2a30a791ec_0.png)
 
 ![](img/69d61adaabb9a98932873f2a30a791ec_2.png)
-
-# 课程01：AI人工智能入门学习路线图 🗺️
 
 ![](img/69d61adaabb9a98932873f2a30a791ec_4.png)
 

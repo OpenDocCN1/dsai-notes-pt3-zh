@@ -1,6 +1,6 @@
-![](img/c5c822f7af97f79a0eb1a7597357edca_1.png)
-
 # 课程 P15：面向地球科学的Python API 🌍
+
+![](img/c5c822f7af97f79a0eb1a7597357edca_1.png)
 
 在本节课中，我们将学习Descartes Labs公司如何构建一个统一的Python API，用于高效访问和处理海量地球空间数据。我们将了解其背后的动机、核心功能，并通过一个实际案例演示其强大能力。
 

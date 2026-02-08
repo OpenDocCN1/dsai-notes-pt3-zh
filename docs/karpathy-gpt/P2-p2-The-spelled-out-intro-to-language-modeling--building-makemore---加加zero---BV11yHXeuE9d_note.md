@@ -1,3 +1,5 @@
+# P2：语言模型详解：构建MakeMore 🧠
+
 ![](img/9b0f3ae8b78024dba93e80534d70c09b_1.png)
 
 ![](img/9b0f3ae8b78024dba93e80534d70c09b_3.png)
@@ -9,8 +11,6 @@
 ![](img/9b0f3ae8b78024dba93e80534d70c09b_8.png)
 
 ![](img/9b0f3ae8b78024dba93e80534d70c09b_10.png)
-
-# P2：语言模型详解：构建MakeMore 🧠
 
 ![](img/9b0f3ae8b78024dba93e80534d70c09b_12.png)
 

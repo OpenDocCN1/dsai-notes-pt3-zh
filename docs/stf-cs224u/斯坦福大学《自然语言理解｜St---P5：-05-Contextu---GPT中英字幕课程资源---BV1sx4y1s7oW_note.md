@@ -1,6 +1,6 @@
-![](img/03be3df35ea5005712aad48be164de1a_0.png)
-
 # 斯坦福大学《自然语言理解》课程笔记 P5：上下文词表示（第二部分）—— Transformer 架构 🧠
+
+![](img/03be3df35ea5005712aad48be164de1a_0.png)
 
 ![](img/03be3df35ea5005712aad48be164de1a_2.png)
 

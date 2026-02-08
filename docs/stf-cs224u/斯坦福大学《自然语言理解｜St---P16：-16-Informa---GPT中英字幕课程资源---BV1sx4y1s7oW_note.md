@@ -1,6 +1,6 @@
-![](img/010cbf97bef74082f9fe6403b4bfddea_0.png)
-
 # 斯坦福大学《自然语言理解》课程笔记 P16：经典信息检索（第二部分）🔍
+
+![](img/010cbf97bef74082f9fe6403b4bfddea_0.png)
 
 ![](img/010cbf97bef74082f9fe6403b4bfddea_2.png)
 

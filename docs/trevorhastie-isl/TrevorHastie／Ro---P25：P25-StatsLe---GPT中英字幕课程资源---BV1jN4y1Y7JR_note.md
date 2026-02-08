@@ -1,6 +1,6 @@
-![](img/c86edfc5418fe3d38620250de9e815d5_0.png)
-
 # 课程07：交叉验证与自助法 🎯
+
+![](img/c86edfc5418fe3d38620250de9e815d5_0.png)
 
 ![](img/c86edfc5418fe3d38620250de9e815d5_2.png)
 

@@ -1,6 +1,6 @@
-![](img/6555305ddf39c2af9b9a178efd4e55f3_0.png)
-
 # 斯坦福大学《自然语言理解》课程笔记 P36：因果抽象与互换干预分析 🧠
+
+![](img/6555305ddf39c2af9b9a178efd4e55f3_0.png)
 
 ![](img/6555305ddf39c2af9b9a178efd4e55f3_2.png)
 

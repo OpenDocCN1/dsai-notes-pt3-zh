@@ -1,6 +1,6 @@
-![](img/f9f0b8f72820ce6b57ac2756c1b4c59f_0.png)
-
 # 机器学习工程生产实践（MLOps）课程笔记 P131：模型服务基础设施简介 🏗️
+
+![](img/f9f0b8f72820ce6b57ac2756c1b4c59f_0.png)
 
 ![](img/f9f0b8f72820ce6b57ac2756c1b4c59f_2.png)
 

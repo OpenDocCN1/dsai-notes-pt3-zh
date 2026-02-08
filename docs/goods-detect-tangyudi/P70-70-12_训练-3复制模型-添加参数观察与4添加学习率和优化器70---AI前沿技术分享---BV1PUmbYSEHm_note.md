@@ -1,6 +1,6 @@
-![](img/3ae7c20434d5bdaccc018126fcc39f0f_1.png)
-
 # 课程 P70：多GPU训练模型复制与优化器配置 🚀
+
+![](img/3ae7c20434d5bdaccc018126fcc39f0f_1.png)
 
 ![](img/3ae7c20434d5bdaccc018126fcc39f0f_3.png)
 

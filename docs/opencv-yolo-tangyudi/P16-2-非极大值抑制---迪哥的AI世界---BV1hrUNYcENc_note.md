@@ -1,6 +1,6 @@
-![](img/1b97f3ed37206fe7ee002fe884cfe251_0.png)
-
 # 课程P16：2-非极大值抑制 🎯
+
+![](img/1b97f3ed37206fe7ee002fe884cfe251_0.png)
 
 ![](img/1b97f3ed37206fe7ee002fe884cfe251_2.png)
 

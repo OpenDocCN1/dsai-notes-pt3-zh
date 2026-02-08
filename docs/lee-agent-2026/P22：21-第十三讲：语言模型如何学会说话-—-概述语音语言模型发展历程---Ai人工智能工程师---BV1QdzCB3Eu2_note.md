@@ -1,6 +1,6 @@
-![](img/f88fbf51e2e266c1433fc03d86fea7be_1.png)
-
 # 课程13：语言模型如何学会说话 — 语音语言模型发展概述 🗣️
+
+![](img/f88fbf51e2e266c1433fc03d86fea7be_1.png)
 
 ![](img/f88fbf51e2e266c1433fc03d86fea7be_3.png)
 

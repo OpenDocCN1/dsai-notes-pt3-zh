@@ -1,6 +1,6 @@
-![](img/8d2abcff9615719e8e93a963bc2d3771_0.png)
-
 # 课程 P10：L2.4- 加权的最小编辑距离 🧮
+
+![](img/8d2abcff9615719e8e93a963bc2d3771_0.png)
 
 ![](img/8d2abcff9615719e8e93a963bc2d3771_0.png)
 

@@ -1,6 +1,6 @@
-![](img/5f9ba3f233c67e7567855eebbdfe21dd_0.png)
-
 # 课程 P70：L11.8 - 评估对话系统 📊
+
+![](img/5f9ba3f233c67e7567855eebbdfe21dd_0.png)
 
 ![](img/5f9ba3f233c67e7567855eebbdfe21dd_0.png)
 

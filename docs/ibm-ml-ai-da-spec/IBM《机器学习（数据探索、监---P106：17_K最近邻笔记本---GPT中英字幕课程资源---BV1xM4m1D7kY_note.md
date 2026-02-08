@@ -1,6 +1,6 @@
-![](img/d87d0b9b639520ef6954b0ebfea015b0_0.png)
-
 # 机器学习课程 17：K最近邻算法实践（第一部分）📊
+
+![](img/d87d0b9b639520ef6954b0ebfea015b0_0.png)
 
 ![](img/d87d0b9b639520ef6954b0ebfea015b0_2.png)
 

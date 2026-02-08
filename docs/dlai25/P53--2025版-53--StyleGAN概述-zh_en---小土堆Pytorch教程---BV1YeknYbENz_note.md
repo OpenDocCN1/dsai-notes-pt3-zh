@@ -1,6 +1,6 @@
-![](img/0ce5e0432b36bdda7e29649bf0a47549_0.png)
-
 # P53：StyleGAN概述 🎨
+
+![](img/0ce5e0432b36bdda7e29649bf0a47549_0.png)
 
 ![](img/0ce5e0432b36bdda7e29649bf0a47549_2.png)
 

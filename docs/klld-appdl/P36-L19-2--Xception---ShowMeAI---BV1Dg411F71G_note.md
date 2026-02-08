@@ -1,6 +1,6 @@
-![](img/415cf461e0f0094dc29dc2aeb8057216_1.png)
-
 # 🧠 课程 P36：L19.2 - Xception 架构详解
+
+![](img/415cf461e0f0094dc29dc2aeb8057216_1.png)
 
 在本节课中，我们将学习 Xception 网络架构。Xception 是 Inception 架构的一种极端简化形式，其核心思想是深度可分离卷积。我们将从 Inception 模块的简化开始，逐步推导出深度可分离卷积，并了解 Xception 的整体网络结构及其性能表现。
 

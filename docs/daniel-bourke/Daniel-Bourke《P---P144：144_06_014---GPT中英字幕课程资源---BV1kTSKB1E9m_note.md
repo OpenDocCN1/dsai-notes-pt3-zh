@@ -1,6 +1,6 @@
-![](img/bc13f0e1922ba220fe78ffe4fd4ed21a_0.png)
-
 # PyTorch 深度学习课程 第144课：从零编写PyTorch自定义数据集类 📁
+
+![](img/bc13f0e1922ba220fe78ffe4fd4ed21a_0.png)
 
 在本节课中，我们将学习如何通过继承 `torch.utils.data.Dataset` 类，从零开始构建一个自定义的PyTorch数据集类。我们将复现 `torchvision.datasets.ImageFolder` 的核心功能，并理解其内部工作机制。
 

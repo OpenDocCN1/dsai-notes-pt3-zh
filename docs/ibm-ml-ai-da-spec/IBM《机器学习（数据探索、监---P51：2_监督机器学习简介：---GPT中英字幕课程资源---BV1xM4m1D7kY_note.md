@@ -1,6 +1,6 @@
-![](img/2d2be6fee23bf01ce7c75314878a1c4d_1.png)
-
 # 机器学习课程 P51：监督机器学习简介（第二部分）🔍
+
+![](img/2d2be6fee23bf01ce7c75314878a1c4d_1.png)
 
 ![](img/2d2be6fee23bf01ce7c75314878a1c4d_3.png)
 

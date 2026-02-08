@@ -1,6 +1,6 @@
-![](img/ee8b3e4d42ee82516ef1fc26ea7d4a36_0.png)
-
 # Excel中级教程 - P36：使用新的IFS函数 📊
+
+![](img/ee8b3e4d42ee82516ef1fc26ea7d4a36_0.png)
 
 ![](img/ee8b3e4d42ee82516ef1fc26ea7d4a36_0.png)
 

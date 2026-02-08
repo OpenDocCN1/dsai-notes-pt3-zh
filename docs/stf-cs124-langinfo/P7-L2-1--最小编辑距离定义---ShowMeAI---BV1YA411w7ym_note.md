@@ -1,6 +1,6 @@
-![](img/c61a8a821b47354d49f9ca3e2e197ce3_0.png)
-
 # 课程 P7：L2.1 - 最小编辑距离定义 📏
+
+![](img/c61a8a821b47354d49f9ca3e2e197ce3_0.png)
 
 ![](img/c61a8a821b47354d49f9ca3e2e197ce3_2.png)
 

@@ -1,8 +1,8 @@
+# 课程 P14：L8.2 - 深度生成模型 🧠
+
 ![](img/d5e5f010bbf85f2dbcc1cafefb74f76c_1.png)
 
 ![](img/d5e5f010bbf85f2dbcc1cafefb74f76c_3.png)
-
-# 课程 P14：L8.2 - 深度生成模型 🧠
 
 ![](img/d5e5f010bbf85f2dbcc1cafefb74f76c_5.png)
 

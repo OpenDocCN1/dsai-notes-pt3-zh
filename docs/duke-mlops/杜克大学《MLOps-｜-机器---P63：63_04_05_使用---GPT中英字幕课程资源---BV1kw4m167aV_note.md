@@ -1,8 +1,8 @@
+# 杜克大学《MLOps ｜ 机器学习运维（Python基础）》 - P63：使用pandas应用函数 🐼
+
 ![](img/fe4881e684b3b9b817be11aca7d6870c_0.png)
 
 ![](img/fe4881e684b3b9b817be11aca7d6870c_2.png)
-
-# 杜克大学《MLOps ｜ 机器学习运维（Python基础）》 - P63：使用pandas应用函数 🐼
 
 在本节课中，我们将要学习如何在pandas中应用自定义函数来操作数据，这是pandas数据处理与纯Python循环处理数据的一个关键区别。
 

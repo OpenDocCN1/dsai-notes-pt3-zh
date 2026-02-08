@@ -1,6 +1,6 @@
-![](img/1e3b90c365322377e7236b2a3cbdbfc8_1.png)
-
 # 课程1：启动Turi Create与加载SFrame 🚀
+
+![](img/1e3b90c365322377e7236b2a3cbdbfc8_1.png)
 
 在本节课中，我们将学习如何启动Turi Create（原GraphLab Create）并加载SFrame，这是处理大规模表格数据的核心工具。我们将通过简单的步骤，了解如何导入库、加载数据以及查看数据的基本信息。
 

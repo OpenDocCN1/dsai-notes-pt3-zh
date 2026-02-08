@@ -1,6 +1,6 @@
-![](img/5a711e1ce6c01c135ce40c0cad2ae85b_1.png)
-
 # 课程9：机器学习的可解释性（第一部分） 🧠
+
+![](img/5a711e1ce6c01c135ce40c0cad2ae85b_1.png)
 
 ![](img/5a711e1ce6c01c135ce40c0cad2ae85b_3.png)
 

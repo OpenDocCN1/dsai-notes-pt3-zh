@@ -1,16 +1,16 @@
+# LangChain 微调ChatGPT提示词 RAG模型应用 agent 生成式AI - P2：2-为什么要微调 🎯
+
 ![](img/5f94026aeaa256766103d6bad461c9a7_1.png)
 
 ![](img/5f94026aeaa256766103d6bad461c9a7_3.png)
 
-# LangChain 微调ChatGPT提示词 RAG模型应用 agent 生成式AI - P2：2-为什么要微调 🎯
+## 概述
 
 ![](img/5f94026aeaa256766103d6bad461c9a7_5.png)
 
 ![](img/5f94026aeaa256766103d6bad461c9a7_7.png)
 
 ![](img/5f94026aeaa256766103d6bad461c9a7_9.png)
-
-## 概述
 
 ![](img/5f94026aeaa256766103d6bad461c9a7_11.png)
 

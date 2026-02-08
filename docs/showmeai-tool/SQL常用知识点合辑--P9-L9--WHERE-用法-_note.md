@@ -1,6 +1,6 @@
-![](img/ff2e7e12377dd7f5a0561f67e97f91d5_0.png)
-
 # SQL常用知识点合辑——P9：L9- WHERE 子句用法 🔍
+
+![](img/ff2e7e12377dd7f5a0561f67e97f91d5_0.png)
 
 ![](img/ff2e7e12377dd7f5a0561f67e97f91d5_0.png)
 

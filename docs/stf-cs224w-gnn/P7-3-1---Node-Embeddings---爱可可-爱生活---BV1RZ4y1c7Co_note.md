@@ -1,8 +1,8 @@
+# 课程P7：3.1 - 节点嵌入 🧩
+
 ![](img/f0284d0effafa9c831fab56e96560119_0.png)
 
 ![](img/f0284d0effafa9c831fab56e96560119_1.png)
-
-# 课程P7：3.1 - 节点嵌入 🧩
 
 ![](img/f0284d0effafa9c831fab56e96560119_3.png)
 

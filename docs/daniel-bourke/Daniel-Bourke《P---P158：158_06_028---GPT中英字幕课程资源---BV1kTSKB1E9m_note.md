@@ -1,6 +1,6 @@
-![](img/dc5f478980a4ce82388cceb6c262852e_0.png)
-
 # PyTorch深度学习课程 第158讲：为模型1创建增强训练数据集与DataLoader 📊
+
+![](img/dc5f478980a4ce82388cceb6c262852e_0.png)
 
 ![](img/dc5f478980a4ce82388cceb6c262852e_2.png)
 

@@ -1,6 +1,6 @@
-![](img/438feefa179c2152feb595f14f8d6f66_0.png)
-
 # P66：用于匿名的GAN 🎭
+
+![](img/438feefa179c2152feb595f14f8d6f66_0.png)
 
 ![](img/438feefa179c2152feb595f14f8d6f66_2.png)
 

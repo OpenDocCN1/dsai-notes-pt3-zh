@@ -1,6 +1,6 @@
-![](img/d914dc99e8c253198f1db2b0e8e9082b_0.png)
-
 # 吴恩达《Jupyter AI：在笔记本中进行人工智能编程》课程 - P1：课程介绍 🚀
+
+![](img/d914dc99e8c253198f1db2b0e8e9082b_0.png)
 
 ![](img/d914dc99e8c253198f1db2b0e8e9082b_0.png)
 

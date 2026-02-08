@@ -1,6 +1,6 @@
-![](img/a0d5fbccacedac99c7c86786cc409248_0.png)
-
 # 课程名称：产业数据要素流通与应用论坛精华解读 🎤
+
+![](img/a0d5fbccacedac99c7c86786cc409248_0.png)
 
 ![](img/a0d5fbccacedac99c7c86786cc409248_2.png)
 

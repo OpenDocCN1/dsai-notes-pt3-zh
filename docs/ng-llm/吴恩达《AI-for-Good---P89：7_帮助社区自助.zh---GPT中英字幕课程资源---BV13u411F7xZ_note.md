@@ -1,6 +1,6 @@
-![](img/ff36b224d6181bf10fd11c91997b605b_0.png)
-
 # 吴恩达《AI for Good专业课程》第89课：AI与灾难管理中的社区自助 🆘
+
+![](img/ff36b224d6181bf10fd11c91997b605b_0.png)
 
 ![](img/ff36b224d6181bf10fd11c91997b605b_2.png)
 

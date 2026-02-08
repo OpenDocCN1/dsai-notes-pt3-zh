@@ -1,6 +1,6 @@
-![](img/b5c7979b89d2ed0a892e01617de652a5_0.png)
-
 # 斯坦福大学《自然语言理解》课程 P31：DynaSent 数据集与行为评估结论 🧠
+
+![](img/b5c7979b89d2ed0a892e01617de652a5_0.png)
 
 ![](img/b5c7979b89d2ed0a892e01617de652a5_2.png)
 

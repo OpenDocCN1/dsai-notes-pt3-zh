@@ -1,8 +1,8 @@
+# 课程 P19：L12.2 - 知识图谱介绍 🧠
+
 ![](img/c01231ddf1e8ac1f89418ffad2be8d46_1.png)
 
 ![](img/c01231ddf1e8ac1f89418ffad2be8d46_3.png)
-
-# 课程 P19：L12.2 - 知识图谱介绍 🧠
 
 ![](img/c01231ddf1e8ac1f89418ffad2be8d46_5.png)
 

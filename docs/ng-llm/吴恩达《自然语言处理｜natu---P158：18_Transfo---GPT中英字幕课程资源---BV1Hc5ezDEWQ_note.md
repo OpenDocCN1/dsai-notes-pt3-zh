@@ -1,6 +1,6 @@
-![](img/c5b3631dd80184f19a3c3ab074fe530f_0.png)
-
 # 课程 P158：Transformer 应用 🚀
+
+![](img/c5b3631dd80184f19a3c3ab074fe530f_0.png)
 
 在本节课中，我们将学习 Transformer 模型在自然语言处理（NLP）及其他领域的广泛应用。我们将了解其最流行的应用场景，并深入探讨几个强大的 Transformer 模型，特别是 T5 模型的多任务处理能力。
 

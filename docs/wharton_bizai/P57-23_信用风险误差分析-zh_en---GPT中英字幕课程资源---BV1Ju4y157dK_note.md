@@ -1,6 +1,6 @@
-![](img/fe40e67f334ba13f5829d48d0aeae1c0_1.png)
-
 # 课程 P57：信用风险模型误差分析 📊
+
+![](img/fe40e67f334ba13f5829d48d0aeae1c0_1.png)
 
 ![](img/fe40e67f334ba13f5829d48d0aeae1c0_3.png)
 

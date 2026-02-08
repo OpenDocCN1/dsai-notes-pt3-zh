@@ -1,8 +1,8 @@
+# 课程 P32：4-选修-RNN-2 🧠
+
 ![](img/ced1679c67fc03cf9be276c4d7199aaa_1.png)
 
 ![](img/ced1679c67fc03cf9be276c4d7199aaa_3.png)
-
-# 课程 P32：4-选修-RNN-2 🧠
 
 ![](img/ced1679c67fc03cf9be276c4d7199aaa_5.png)
 

@@ -1,8 +1,8 @@
+# 人工智能—Python AI公开课（七月在线出品） - P3：三节课上手Python第三节 🧮
+
 ![](img/a79305cd5f95cc3ad6cdf604ba8828e8_0.png)
 
 ![](img/a79305cd5f95cc3ad6cdf604ba8828e8_2.png)
-
-# 人工智能—Python AI公开课（七月在线出品） - P3：三节课上手Python第三节 🧮
 
 在本节课中，我们将要学习Python科学计算的核心库NumPy和Pandas的简介，并重点使用NumPy来计算一个Softmax函数。我们将从NumPy的基础概念讲起，逐步深入到数组操作和运算，最后通过一个实践项目来巩固所学知识。
 

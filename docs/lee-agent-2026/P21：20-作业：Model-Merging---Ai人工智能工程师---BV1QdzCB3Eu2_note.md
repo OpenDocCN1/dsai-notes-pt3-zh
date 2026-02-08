@@ -1,6 +1,6 @@
-![](img/2174fc5cde14effc2b599c8711fcb733_0.png)
-
 # 课程名称：机器学习2025 - 作业九：模型融合 (Model Merging) 🧩
+
+![](img/2174fc5cde14effc2b599c8711fcb733_0.png)
 
 ## 概述
 

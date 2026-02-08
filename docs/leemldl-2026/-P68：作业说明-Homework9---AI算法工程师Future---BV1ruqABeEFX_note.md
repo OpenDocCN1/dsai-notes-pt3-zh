@@ -1,6 +1,6 @@
-![](img/c840d1dce9861f720017e3ecd1b3fd5d_1.png)
-
 # 课程名称：李宏毅机器学习系统课程 - 作业九说明 🧠📚
+
+![](img/c840d1dce9861f720017e3ecd1b3fd5d_1.png)
 
 ![](img/c840d1dce9861f720017e3ecd1b3fd5d_3.png)
 

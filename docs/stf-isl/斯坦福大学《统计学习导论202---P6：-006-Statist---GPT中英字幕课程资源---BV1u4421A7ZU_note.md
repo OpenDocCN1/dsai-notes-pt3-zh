@@ -1,6 +1,6 @@
-![](img/c893a9b88386476da3cd847f886fc63d_1.png)
-
 # 课程P6：维度与结构化模型 📊
+
+![](img/c893a9b88386476da3cd847f886fc63d_1.png)
 
 ![](img/c893a9b88386476da3cd847f886fc63d_2.png)
 

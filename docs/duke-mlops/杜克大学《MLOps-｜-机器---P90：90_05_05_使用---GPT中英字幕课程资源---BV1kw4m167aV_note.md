@@ -1,6 +1,6 @@
-![](img/2c979ab660b0112958811826b19ebae2_1.png)
-
 # 课程 P90：使用 FastAPI 构建机器学习 API 🚀
+
+![](img/2c979ab660b0112958811826b19ebae2_1.png)
 
 在本节课中，我们将学习如何使用 FastAPI 构建一个真实的机器学习 API。我们将结合 Hugging Face Transformers 库加载一个文本生成模型，并通过 API 端点提供服务。
 

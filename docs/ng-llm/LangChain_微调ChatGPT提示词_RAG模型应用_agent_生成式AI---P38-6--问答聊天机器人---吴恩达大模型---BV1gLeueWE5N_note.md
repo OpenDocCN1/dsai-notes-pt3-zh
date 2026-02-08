@@ -1,6 +1,6 @@
-![](img/8fdba8c04f845e8d78897dbf4b174b32_0.png)
-
 # LangChain 微调ChatGPT提示词 RAG模型应用 agent 生成式AI - P38：6——问答聊天机器人 🤖
+
+![](img/8fdba8c04f845e8d78897dbf4b174b32_0.png)
 
 ![](img/8fdba8c04f845e8d78897dbf4b174b32_2.png)
 

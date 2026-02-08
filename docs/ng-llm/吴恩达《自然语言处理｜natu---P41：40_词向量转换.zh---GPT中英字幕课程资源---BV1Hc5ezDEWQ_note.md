@@ -1,6 +1,6 @@
-![](img/3efc34c9f43c78c23ea55afbb9fef1db_0.png)
-
 # 课程名称：自然语言处理｜P41：词向量转换 🔄
+
+![](img/3efc34c9f43c78c23ea55afbb9fef1db_0.png)
 
 ## 概述
 

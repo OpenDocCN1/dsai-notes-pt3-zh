@@ -1,6 +1,6 @@
-![](img/6fbdd9fc0b04b73ae0d20c6c33bb49bb_1.png)
-
 # 李宏毅2024春《生成式人工智能导论》 - P22：第11讲：大型语言模型在「想」什么呢？ — 浅谈大型语言模型的可解释性 🧠
+
+![](img/6fbdd9fc0b04b73ae0d20c6c33bb49bb_1.png)
 
 ![](img/6fbdd9fc0b04b73ae0d20c6c33bb49bb_3.png)
 

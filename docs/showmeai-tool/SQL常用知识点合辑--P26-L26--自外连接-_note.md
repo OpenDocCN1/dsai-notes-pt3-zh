@@ -1,6 +1,6 @@
-![](img/1dbca701ee2f5a521a87b8d364fbbbac_0.png)
-
 # SQL常用知识点合辑——P26：L26- 自外连接 🔗
+
+![](img/1dbca701ee2f5a521a87b8d364fbbbac_0.png)
 
 ![](img/1dbca701ee2f5a521a87b8d364fbbbac_0.png)
 

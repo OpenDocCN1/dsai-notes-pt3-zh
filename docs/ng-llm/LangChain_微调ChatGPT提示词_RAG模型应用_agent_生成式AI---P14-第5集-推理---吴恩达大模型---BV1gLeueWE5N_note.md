@@ -1,6 +1,6 @@
-![](img/9109840d3d4818ef403e55e2f2abf2a9_0.png)
-
 # LangChain 微调ChatGPT提示词 RAG模型应用 agent 生成式AI - P14：第5集 推理 🧠
+
+![](img/9109840d3d4818ef403e55e2f2abf2a9_0.png)
 
 ![](img/9109840d3d4818ef403e55e2f2abf2a9_1.png)
 

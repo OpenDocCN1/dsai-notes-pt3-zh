@@ -1,6 +1,6 @@
-![](img/9fce78fa689658d721aa1eb6b45568e2_0.png)
-
 # PyTorch 深度学习入门课程｜第32课：PyTorch张量与NumPy 🔄
+
+![](img/9fce78fa689658d721aa1eb6b45568e2_0.png)
 
 在本节课中，我们将学习如何在PyTorch张量和NumPy数组之间进行转换。这是深度学习工作流中一个非常常见的操作，因为数据通常以NumPy数组的形式开始，而PyTorch模型则需要张量作为输入。
 

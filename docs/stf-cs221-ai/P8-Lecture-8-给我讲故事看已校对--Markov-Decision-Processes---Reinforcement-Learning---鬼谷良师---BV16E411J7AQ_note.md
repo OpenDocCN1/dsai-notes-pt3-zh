@@ -1,3 +1,5 @@
+# 🎓 课程 P8：强化学习入门
+
 ![](img/507801c8ad3c850ac8b72feb7c5233a4_1.png)
 
 ![](img/507801c8ad3c850ac8b72feb7c5233a4_3.png)
@@ -5,8 +7,6 @@
 ![](img/507801c8ad3c850ac8b72feb7c5233a4_5.png)
 
 ![](img/507801c8ad3c850ac8b72feb7c5233a4_7.png)
-
-# 🎓 课程 P8：强化学习入门
 
 ![](img/507801c8ad3c850ac8b72feb7c5233a4_9.png)
 

@@ -1,6 +1,6 @@
-![](img/4d7d1bf6a498bad0b6e44499d89ce625_0.png)
-
 # 斯坦福大学《统计学习导论》课程笔记 P23：二次判别分析与朴素贝叶斯 📊
+
+![](img/4d7d1bf6a498bad0b6e44499d89ce625_0.png)
 
 ![](img/4d7d1bf6a498bad0b6e44499d89ce625_2.png)
 

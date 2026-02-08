@@ -1,6 +1,6 @@
-![](img/2a4ca045a3df91c8c73fdfc25abc133a_0.png)
-
 # 课程11：离线训练回顾、近似与聚合 🧠
+
+![](img/2a4ca045a3df91c8c73fdfc25abc133a_0.png)
 
 ![](img/2a4ca045a3df91c8c73fdfc25abc133a_2.png)
 

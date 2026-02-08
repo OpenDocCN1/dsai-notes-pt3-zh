@@ -1,6 +1,6 @@
-![](img/5ca9d51f5765bdb8de679343b81a1ff3_1.png)
-
 # 课程P6：深度学习新前沿 🚀
+
+![](img/5ca9d51f5765bdb8de679343b81a1ff3_1.png)
 
 ![](img/5ca9d51f5765bdb8de679343b81a1ff3_3.png)
 

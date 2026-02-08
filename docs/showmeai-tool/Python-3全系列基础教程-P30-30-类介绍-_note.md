@@ -1,6 +1,6 @@
-![](img/8f475afeed4834135683e6ace5e6dd24_0.png)
-
 # Python 3全系列基础教程，P30：30）类介绍 🐱
+
+![](img/8f475afeed4834135683e6ace5e6dd24_0.png)
 
 ![](img/8f475afeed4834135683e6ace5e6dd24_2.png)
 

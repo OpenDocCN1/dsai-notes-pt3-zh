@@ -1,6 +1,6 @@
-![](img/a4395abc66a18231996b3ac5ab5de3d4_1.png)
-
 # 课程 P4：使用 Rapids 进行 GPU 加速的 Python 数据分析 🚀
+
+![](img/a4395abc66a18231996b3ac5ab5de3d4_1.png)
 
 ![](img/a4395abc66a18231996b3ac5ab5de3d4_3.png)
 

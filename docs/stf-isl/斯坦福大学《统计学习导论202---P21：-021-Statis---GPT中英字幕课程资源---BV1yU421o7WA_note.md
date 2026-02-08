@@ -1,6 +1,6 @@
-![](img/e4cc8eded1bb677789d2159da3d0142e_0.png)
-
 # 课程21：多元高斯判别分析 📊
+
+![](img/e4cc8eded1bb677789d2159da3d0142e_0.png)
 
 ![](img/e4cc8eded1bb677789d2159da3d0142e_2.png)
 

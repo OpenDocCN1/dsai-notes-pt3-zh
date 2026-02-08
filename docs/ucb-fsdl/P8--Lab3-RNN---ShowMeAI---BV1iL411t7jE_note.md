@@ -1,8 +1,8 @@
+# 📘 课程 P8：【Lab3】RNN 序列模型
+
 ![](img/db4d111aa29162d767e0e8bbe6c8599b_0.png)
 
 ![](img/db4d111aa29162d767e0e8bbe6c8599b_1.png)
-
-# 📘 课程 P8：【Lab3】RNN 序列模型
 
 ![](img/db4d111aa29162d767e0e8bbe6c8599b_3.png)
 

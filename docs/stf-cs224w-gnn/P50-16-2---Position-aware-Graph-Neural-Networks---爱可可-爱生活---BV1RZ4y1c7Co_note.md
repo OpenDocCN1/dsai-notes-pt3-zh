@@ -1,6 +1,6 @@
-![](img/6cb9fe7827cdb22834997a3c01e3c32c_0.png)
-
 # 课程 P50：16.2 - 位置感知图神经网络 🧠📍
+
+![](img/6cb9fe7827cdb22834997a3c01e3c32c_0.png)
 
 ![](img/6cb9fe7827cdb22834997a3c01e3c32c_1.png)
 

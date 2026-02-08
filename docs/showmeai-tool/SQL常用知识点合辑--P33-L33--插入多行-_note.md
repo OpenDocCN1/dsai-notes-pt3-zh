@@ -1,6 +1,6 @@
-![](img/2cd7cd85a2ac13b9ae45113f35ad6b73_0.png)
-
 # SQL常用知识点合辑——P33：L33- 插入多行 📥
+
+![](img/2cd7cd85a2ac13b9ae45113f35ad6b73_0.png)
 
 ![](img/2cd7cd85a2ac13b9ae45113f35ad6b73_0.png)
 

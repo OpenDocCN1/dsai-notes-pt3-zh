@@ -1,6 +1,6 @@
-![](img/5bae738c993b21b068114ef5b48ebf0c_1.png)
-
 # 课程名称：李宏毅机器学习课程 - P74：自监督学习模型BERT的三个故事 🧠
+
+![](img/5bae738c993b21b068114ef5b48ebf0c_1.png)
 
 ![](img/5bae738c993b21b068114ef5b48ebf0c_3.png)
 

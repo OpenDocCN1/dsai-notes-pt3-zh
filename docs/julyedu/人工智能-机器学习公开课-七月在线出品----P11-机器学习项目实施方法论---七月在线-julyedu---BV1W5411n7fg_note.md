@@ -1,8 +1,8 @@
+# 人工智能—机器学习公开课（P11）：机器学习项目实施方法论 🧠
+
 ![](img/2a4c746f196e3fc467d4f2ae53fefefe_0.png)
 
 ![](img/2a4c746f196e3fc467d4f2ae53fefefe_2.png)
-
-# 人工智能—机器学习公开课（P11）：机器学习项目实施方法论 🧠
 
 ![](img/2a4c746f196e3fc467d4f2ae53fefefe_0.png)
 

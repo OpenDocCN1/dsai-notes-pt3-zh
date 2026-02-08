@@ -1,6 +1,6 @@
-![](img/7c9cde7419cd5ccaaa7e02943dd416e4_1.png)
-
 # PyTorch 进阶学习讲座！P8：L8 - TorchVision 🎯
+
+![](img/7c9cde7419cd5ccaaa7e02943dd416e4_1.png)
 
 在本节课中，我们将学习 TorchVision 库。TorchVision 是 PyTorch 生态系统中的一个重要组成部分，专门用于简化计算机视觉任务。我们将了解它的核心功能、最新特性以及如何利用它从研究快速过渡到生产环境。
 

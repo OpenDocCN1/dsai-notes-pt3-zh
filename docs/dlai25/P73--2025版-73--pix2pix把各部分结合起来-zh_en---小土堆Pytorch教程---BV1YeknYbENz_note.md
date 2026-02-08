@@ -1,6 +1,6 @@
-![](img/df0622c2a881e7225c7c1759d561a3f7_0.png)
-
 # P73：pix2pix图像翻译教程 🎨
+
+![](img/df0622c2a881e7225c7c1759d561a3f7_0.png)
 
 ![](img/df0622c2a881e7225c7c1759d561a3f7_2.png)
 
