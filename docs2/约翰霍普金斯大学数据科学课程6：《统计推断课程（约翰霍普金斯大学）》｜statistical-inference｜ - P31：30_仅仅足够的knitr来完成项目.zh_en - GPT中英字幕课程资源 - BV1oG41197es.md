@@ -1,0 +1,91 @@
+# 约翰霍普金斯大学数据科学课程6：《统计推断课程（约翰霍普金斯大学）》｜statistical-inference｜ - P31：30_仅仅足够的knitr来完成项目.zh_en - GPT中英字幕课程资源 - BV1oG41197es
+
+Hi， everyone。 This is a two minute tutorial on using knitter。
+
+ You'll need a little bit of knitter to create your R project that you will hand in as part of the assignments。
+
+ So let's I've got our studio open here。 Hopefully you can see it。 and'm going to go file。 So alt F。
+
+
+
+![](img/a5e4f87fc0469e31ad71e80a448559ea_1.png)
+
+![](img/a5e4f87fc0469e31ad71e80a448559ea_2.png)
+
+And new file。 And then as you look， there's all these different options here and probably。
+
+I'm in our studio， by the way， and。There's all these different options here。
+
+You want to go down to our markdown。
+
+![](img/a5e4f87fc0469e31ad71e80a448559ea_4.png)
+
+There we go， and it actually populates a。Simple knitter document， so。Let me edit the title。
+
+ I just wanna say， this is a。Is a test knitter document。Okay， and then there's a bunch of text there。
+
+ And then it shows you the R。Command our commands here。 So what you need is you need three little。
+
+Forward。H I don't know if these are right tick marks here or right quotation marks。嗯。You know。
+
+ once slanted from the upper left to the lower right。 So the key。
+
+ least on my keyboard that's right below escape。And then， you need。If you put an r here。
+
+In this little area， it will。Youll execute our code。
+
+And a comma after the R will open up a bunch of options。 So there's a ton of knitter options。
+
+ but cache tells R whether or not to keep it。嗯。Probably the most useful ones for me。
+
+Eval tells whether or not it should evaluate the code。
+
+ Sometimes you might just want to show code in your document。嗯。These are all figure things。
+
+Result sels。 So the so you can have results as marked up， which shows syntax highlighting as is。
+
+Hide will hide the results， and I find that most most useful。
+
+ probably the other one that's most useful for me is echocho。
+
+ so you have echo is true or false echo true shows the code and then also shows the results of the code。
+
+ Echo false does not show the code。Okay， so any rate， so here is our。
+
+Here's our examples here here it gives an example of a plot too， so plot cars。
+
+
+
+![](img/a5e4f87fc0469e31ad71e80a448559ea_6.png)
+
+Okay， so let's save this up， it I need to save it to something。 So let's call it test。 RM D。
+
+
+
+![](img/a5e4f87fc0469e31ad71e80a448559ea_8.png)
+
+![](img/a5e4f87fc0469e31ad71e80a448559ea_9.png)
+
+Okay。And then， I go。Conl。 well， so I need to make sure that。That knitter is is loaded， but actually。
+
+ there's a little button right here that you can just do。 I'm on this tiny computer。
+
+ so it's hard to see， but you can just actually click knit HTMLMl right there and there it'll knit it。
+
+ And there you can see how kind of what it looks like。
+
+
+
+![](img/a5e4f87fc0469e31ad71e80a448559ea_11.png)
+
+ar。And it， and it creates an Hm L document。 So if I were， for example， to do D in R。
+
+ you can see that it's created this。Test dot H T M L document。 that that's a。
+
+ that's just a standard H T L document。 You could do browse do URL browse URL， browse URL。
+
+Test dot H T M， L， and I'll bring up。It'll bring up a browser window within in， within it。 Okay。
+
+ so that's knitter in a nutshell。
+
+![](img/a5e4f87fc0469e31ad71e80a448559ea_13.png)
