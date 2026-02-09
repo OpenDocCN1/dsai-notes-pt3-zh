@@ -1,0 +1,77 @@
+# 谷歌数据分析师第三课《为数据探索做准备》data-preparation（中英字幕）deepseek - P1：01_01_01_数据探索入门.zh_en - GPT中英字幕课程资源 - BV19X4y1n7Xd
+
+![](img/6697ba8ffa671f341252648ac00b14de_0.png)
+
+🎼Picture this you're working on a project， you've asked all the right questions。
+
+ applied structured thinking and you're completely in sync with your stakeholders you're off to a great start。
+
+ but there's another step in the process preparing the data correctly This is where understanding the different types of data and data structures comes in knowing this lets you figure out what type of data is right for the question you're answering plus you'll gain practical skills about how to extract。
+
+ use， organize and protect your data。Hey， my name is Hallie and I'm an analytical lead at Google。
+
+ I work with companies in the healthcare industry， I'm so excited to welcome you to this course。
+
+ you've been building up your data analyst skills in lots of different ways so far。
+
+ you've learned how to ask the right questions， define the problem and present your analysis in a way that matches up with the needs of your stakeholders In other words。
+
+ you've learned how to tell a story using data。😊，Now we'll learn more about the data that you'll need to tell the best story possible。
+
+ but before we do that， I'd love to tell you my story。
+
+ I use analytics to help healthcare companies develop digital marketing solutions that make their business and their brand stronger。
+
+ My team and I find business and media opportunities based on the latest industry and data insights。
+
+ I've been working in healthcare for about five years， and it's great。
+
+ I really enjoy being able to use data to help spark change in such an important industry。😊。
+
+As you'll discover in this course， data can be the main character in a very powerful story。
+
+ I absolutely love using analysis to tell that story in a way that's compelling and informative。😊。
+
+Here's a real life example of how I've used data to tell a story in my job we analyze Medicare enrollment data over time and make connections to how people research Medicare plans on Google as people 65 and older become more informed decision makers for their health。
+
+ I use the data to learn if there's an increase in Medicare enrollments and what part Google searches play if there is an increase in demand。
+
+Now it's very important that I make sure the data is relevant and valid。
+
+ I also have to pay attention to questions around access and equity while maintaining the privacy of those conducting searches。
+
+ the happy ending of my story is that the data in my findings is useful to medical professionals and their patients。
+
+ There's so much useful data out there and you're building the skills you'll need to find and use the right data in the best way In this course。
+
+ you'll continue sharpening those skills。😊，So you've already heard a lot about the data analysis process steps。
+
+ ask， prepare， process， analyze， share and act。 Now it's time to learn how to prepare the data you'll learn to identify how data is generated and collected and you'll explore different formats。
+
+ types and structures of data Well make sure you know how to choose and use data thatll help you understand and respond to a business problem。
+
+And because not all data fits each need， you'll learn how to analyze data for bias and credibility。
+
+ We'll also explore what clean data means。 But wait， there's more。
+
+ You'll also get up close and personal with databases。
+
+ We cover what they are and how analysts use them。 You'll even get to extract your own data from a database using a couple of tools that you're already familiar with。
+
+ Spreadsheets and SQL。😊。
+
+![](img/6697ba8ffa671f341252648ac00b14de_2.png)
+
+🎼The key here is patience， like anything worth doing。 this will take time and practice。
+
+ and I'll be with you every step of the way。 Still with me。 Great。
+
+ The last few things we'll cover are the basics of data organization and the process of protecting your data。
+
+ Data works best when it's organized。 And if you're organizing your data， you'll want to protect it。
+
+ too。 I'll show you how to do both and apply it to your own analysis。
+
+ I' am so excited to help you write your own personal story as you continue exploring the world of data analytics。
+
+ So let's do it。😊。
