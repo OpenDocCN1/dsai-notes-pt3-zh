@@ -1,0 +1,67 @@
+# 谷歌数据分析师第四课《从脏数据到干净数据的处理》process-data（中英字幕）deepseek翻译 - P28：28_04_01_验证并报告结果.zh_en - GPT中英字幕课程资源 - BV19m4y1J7dG
+
+![](img/43236c8a78b92adb082b34e0fbec12ff_0.png)
+
+Hi there， great to have you back。You've been learning a lot about the importance of clean data and explored some tools and strategies to help you throughout the cleaning process。
+
+In these videos， we'll be covering the next step in the process。
+
+ verifying and reporting on the integrity of your clean data。
+
+Verification is a process to confirm that a data cleaning effort was well executed and the resulting data is accurate and reliable。
+
+It involves rechecking your clean data set， doing some manual cleanups if needed。
+
+ and taking a moment to sit back and really think about the original purpose of the project。That way。
+
+ you can be confident that the data you collected is credible and appropriate for your purposes。
+
+Making sure your data is properly verified is so important because it allows you to double check that the work you did to clean up your data was thorough and accurate。
+
+For example， you might have referenced an incorrect cell phone number or accidentally keyed in a typo。
+
+Verification lets you catch mistakes before you begin analysis。Without it。
+
+ any insights you gain from analysis can't be trusted for decision making。
+
+ you might even risk misrepresenting populations or damaging the outcome of a product that you're actually trying to improve。
+
+I remember working on a project where I thought the data I had was sparkling clean because I'd use all the right tools and processes。
+
+But when I went through the steps to verify the data's integrity。
+
+ I discovered a semicolon that I had forgotten to remove。Sounds like a really tiny error I know。
+
+ but if I hadn't caught the semicolon during verification and removed it。
+
+ it would have led to some big changes in my results。And that， of course。
+
+ could have LED to different business decisions。 So there is an example of why verification is so crucial。
+
+ But thats not all。 The other big part of the verification process is reporting on your efforts。
+
+Open communication is a lifeline for any data analytics project。
+
+And reports are a super effective way to show your team that you're being 100% transparent about your data cleaning。
+
+Reporting is also a great opportunity to show stakeholders that you're accountable。
+
+ build trust with your team， and make sure you're all in the same page about important project details。
+
+Coming up， you'll learn different strategies for reporting like creating data cleaning reports。
+
+ documenting your cleaning process， and using something called the change log。
+
+A change log is a file containing a chronologically ordered list of modifications made to a project。
+
+It's usually organized by version and includes the date followed by a list of added。
+
+ improved and removed features。
+
+![](img/43236c8a78b92adb082b34e0fbec12ff_2.png)
+
+Change logs are very useful for keeping track of how a data set evolved over the course of a project they're also another great way to communicate and report on data to others。
+
+Along the way， you'll also see some examples of how a verification and reporting can help you avoid repeating mistakes and save you and your team time。
+
+Ready to get started， let's go。
