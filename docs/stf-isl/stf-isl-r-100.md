@@ -1,4 +1,4 @@
-# 100：错误发现率与Benjamini-Hochberg方法 🧪
+# R 版 100：错误发现率与Benjamini-Hochberg方法 🧪
 
 ![](img/58817370e1b151fd2fb54af9b14eafd4_0.png)
 

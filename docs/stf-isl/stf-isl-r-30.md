@@ -1,4 +1,4 @@
-# 30：统计学习中的Bootstrap方法 🚀
+# R 版 30：统计学习中的Bootstrap方法 🚀
 
 ![](img/a3eab1bc152e63176a3db3154cd63589_0.png)
 

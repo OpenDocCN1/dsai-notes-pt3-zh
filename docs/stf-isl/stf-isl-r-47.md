@@ -1,4 +1,4 @@
-# 47：Ridge回归与Lasso回归 🧮
+# R 版 47：Ridge回归与Lasso回归 🧮
 
 ![](img/224d11c6a786e44214c5c144022b1600_0.png)
 

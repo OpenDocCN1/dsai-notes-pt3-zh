@@ -1,4 +1,4 @@
-# 6.R.2：前向逐步回归 📈
+# R 版 45：前向逐步回归 📈
 
 ![](img/f66ac6b65a8a7c4793f408f46ac5f8bc_0.png)
 
@@ -72,29 +72,29 @@ summary(forward_fit)
 3.  **在验证集上计算预测误差**：对每个大小的模型，计算其在验证集上的均方根误差。
 
 ```r
-# 1. 设置随机种子以保证结果可重现
+# R 版 1. 设置随机种子以保证结果可重现
 set.seed(1)
 
-# 2. 创建训练集索引（假设数据有263行）
+# R 版 2. 创建训练集索引（假设数据有263行）
 train <- sample(seq(263), 180, replace = FALSE)
 
-# 3. 在训练集上运行前向逐步回归
+# R 版 3. 在训练集上运行前向逐步回归
 forward_fit_train <- regsubsets(Salary ~ ., data = hitters[train, ], nvmax = 19, method = "forward")
 
-# 4. 准备验证集的设计矩阵
+# R 版 4. 准备验证集的设计矩阵
 test_mat <- model.matrix(Salary ~ ., data = hitters[-train, ])
 
-# 5. 初始化向量存储验证误差
+# R 版 5. 初始化向量存储验证误差
 val_errors <- rep(NA, 19)
 
-# 6. 循环计算每个大小模型的验证误差
+# R 版 6. 循环计算每个大小模型的验证误差
 for(i in 1:19) {
     coefi <- coef(forward_fit_train, id = i) # 获取第i个模型的系数
     pred <- test_mat[, names(coefi)] %*% coefi # 矩阵乘法得到预测值
     val_errors[i] <- mean((hitters$Salary[-train] - pred)^2) # 计算均方误差
 }
 
-# 7. 绘制验证均方根误差图
+# R 版 7. 绘制验证均方根误差图
 plot(sqrt(val_errors), ylab = "Root MSE", xlab = "Number of Variables", type = "b")
 ```
 

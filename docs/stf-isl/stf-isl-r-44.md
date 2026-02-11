@@ -1,4 +1,4 @@
-# 斯坦福大学《统计学习导论》课程笔记 P44：RStudio中的Markdown与最优子集回归 📊
+# R 版 44：RStudio中的Markdown与最优子集回归 📊
 
 ![](img/7bb54d1b6071b6f203f6f5eec8e4901b_0.png)
 

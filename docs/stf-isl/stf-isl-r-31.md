@@ -1,4 +1,4 @@
-# 31：深入理解Bootstrap方法 🚀
+# R 版 31：深入理解Bootstrap方法 🚀
 
 ![](img/6ea83c86047240156f2d45da2ca1565f_1.png)
 
