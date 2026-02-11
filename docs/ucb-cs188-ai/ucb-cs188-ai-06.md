@@ -1,4 +1,4 @@
-# 课程 P6：布尔可满足性与DPLL算法 🧠
+# 6：布尔可满足性与DPLL算法 🧠
 
 ![](img/f857dbfb5876c8fe015c3f975ccf4fa9_1.png)
 

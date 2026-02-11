@@ -1,4 +1,4 @@
-# 课程 P9：[CS188 SP23] 第八讲 - CSPs II 🧩
+# 9：CSPs II 🧩
 
 ![](img/2b1226df156e64bc4a80ed1056bb4f47_1.png)
 
