@@ -1,4 +1,4 @@
-# 课程 P4：L4.1 - 应用Cypher进行图谱查询 🗺️
+# 4：L4.1 - 应用Cypher进行图谱查询 🗺️
 
 ![](img/80baa7abe27be0c83b172a06c1d0833a_0.png)
 
