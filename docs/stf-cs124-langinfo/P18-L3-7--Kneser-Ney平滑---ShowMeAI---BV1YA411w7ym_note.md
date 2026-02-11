@@ -1,4 +1,4 @@
-# 📚 课程 P18：L3.7 - Kneser-Ney 平滑
+# 十八：L3.7 - Kneser-Ney 平滑 📚 
 
 ![](img/ae336573e2f3d2ae250cb5506dcd2cbb_0.png)
 
