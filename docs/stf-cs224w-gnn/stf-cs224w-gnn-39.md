@@ -1,4 +1,4 @@
-# 课程 P39：13.3 - Louvain 算法 🧩
+# 39：13.3 - Louvain 算法 🧩
 
 ![](img/67caff93b51aab42c180788969c88e2c_0.png)
 

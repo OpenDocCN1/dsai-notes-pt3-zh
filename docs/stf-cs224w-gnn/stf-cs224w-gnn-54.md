@@ -1,4 +1,4 @@
-# 课程 P54：17.2 - GraphSAGE 邻域采样 🧠
+# 54：17.2 - GraphSAGE 邻域采样 🧠
 
 ![](img/facb865f5da38d4b60f0caf8ea2f387f_0.png)
 
