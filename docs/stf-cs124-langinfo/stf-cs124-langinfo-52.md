@@ -1,4 +1,4 @@
-# 📚 课程 P52：L8.6 - Word2Vec 详解
+# 52：L8.6 - Word2Vec 详解 📚 
 
 ![](img/30a156b0e11cfb71bcfbd45b9c7cb4de_0.png)
 

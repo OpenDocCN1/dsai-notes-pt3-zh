@@ -1,4 +1,4 @@
-# 📚 课程 P51：L8.5 - TF-IDF 详解
+# 51：L8.5 - TF-IDF 详解 📚 
 
 ![](img/72dec0bbc8d7ebc750a45b793907b50f_0.png)
 
