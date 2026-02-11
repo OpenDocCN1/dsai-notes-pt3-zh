@@ -1,4 +1,4 @@
-# 斯坦福 CS336 课程笔记：第12讲 - 评估 (Evaluation) 🧪
+# 12：评估 (Evaluation) 🧪
 
 ![](img/56d35df73a2d6b7afce0a5d3923839f0_0.png)
 

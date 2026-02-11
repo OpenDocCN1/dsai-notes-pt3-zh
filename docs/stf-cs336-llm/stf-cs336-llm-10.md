@@ -1,4 +1,4 @@
-# 课程10：推理 (Inference) 🚀
+# 10：推理 (Inference) 🚀
 
 ![](img/c98d9c805c36342a031b8933c292d7aa_0.png)
 

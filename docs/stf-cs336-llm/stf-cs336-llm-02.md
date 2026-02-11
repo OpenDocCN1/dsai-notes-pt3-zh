@@ -1,4 +1,4 @@
-# 课程 2：PyTorch 高阶技巧与训练资源核算 🧮
+#  2：PyTorch 高阶技巧与训练资源核算 🧮
 
 ![](img/cb3e28cbcccad7697c5f36cd5c09d9e3_0.png)
 
