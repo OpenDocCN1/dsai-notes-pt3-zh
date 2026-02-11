@@ -1,4 +1,4 @@
-# 斯坦福大学《机器学习》课程第16讲：K-means、GMM与EM算法 🎯
+# 机器学习 16：K-means、GMM与EM算法 🎯
 
 ![](img/6fb4265906c20474390ac7febbcb8f91_0.png)
 

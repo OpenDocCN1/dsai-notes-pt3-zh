@@ -1,4 +1,4 @@
-# 斯坦福大学《机器学习理论》课程笔记 - P12：神经正切核 (Neural Tangent Kernel) 🧠
+# 机器学习理论 12：神经正切核 (Neural Tangent Kernel) 🧠
 
 ![](img/3c83dff355af15bf5e184aa89cc361fa_0.png)
 

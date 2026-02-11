@@ -1,4 +1,4 @@
-# 斯坦福大学《机器学习理论》课程笔记 - P5：Rademacher复杂度与经验Rademacher复杂度 📚
+# 机器学习理论 5：Rademacher复杂度与经验Rademacher复杂度 📚
 
 ![](img/241d77704cbdc07667493012533ea69e_0.png)
 

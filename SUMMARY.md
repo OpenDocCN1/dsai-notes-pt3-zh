@@ -81,7 +81,7 @@
 +   [斯坦福 CS224n 自然语言处理 2025 笔记](docs/stf-cs224n-nlp-2025/README.md)
 +   [斯坦福 CS224U 自然语言理解笔记](docs/stf-cs224u-nlu/README.md)
 +   [斯坦福 CS224W 图机器学习笔记](docs/stf-cs224w-gnn/README.md)
-+   [斯坦福 CS229 机器学习 2024 笔记](docs/stf-cs229-ml-2024/README.md)
++   [斯坦福 CS229/M 机器学习 2024 笔记](docs/stf-cs229-ml-2024/README.md)
 +   [斯坦福 CS231n 卷积神经网络中文讲义](docs/stf-cs231n-cv/README.md)
 +   [斯坦福 CS231 机器视觉进阶课程笔记](docs/stf-cs231n-cv-plus/README.md)
 +   [斯坦福 CS234 强化学习笔记](docs/stf-cs234-rl/README.md)

@@ -1,4 +1,4 @@
-# 斯坦福大学《机器学习》课程第17讲：因子分析与ELBO 🧠
+# 机器学习 17：因子分析与ELBO 🧠
 
 ![](img/c4a4cf8b3f0bb98cd87dd1c0cd8bdcde_0.png)
 
