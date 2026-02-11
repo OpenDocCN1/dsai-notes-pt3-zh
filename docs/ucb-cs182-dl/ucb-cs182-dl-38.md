@@ -1,4 +1,4 @@
-# 课程 P38：CS 182- 第12讲 - 第3部分 - Transformer模型 🧠
+# 38：CS 182- 第12讲 - 第3部分 - Transformer模型 🧠
 
 ![](img/4250a76ff001d1c12130b3c36ee066bc_1.png)
 

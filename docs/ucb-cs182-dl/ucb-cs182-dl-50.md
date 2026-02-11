@@ -1,4 +1,4 @@
-# 🧠 课程 P50：CS 182 第16讲 第3部分 - Actor-Critic 与 Q-Learning
+# 50：CS 182 第16讲 第3部分 - Actor-Critic 与 Q-Learning 🧠
 
 ![](img/14b08f711bd7ad8e47671a8bd51f7bd3_1.png)
 

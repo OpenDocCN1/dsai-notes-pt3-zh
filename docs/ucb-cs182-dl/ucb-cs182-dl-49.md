@@ -1,4 +1,4 @@
-# 🧠 课程 P49：CS 182 第 16 讲 - 第二部分：Actor-Critic 与 Q-Learning
+# 49：CS 182 第 16 讲 - 第二部分：Actor-Critic 与 Q-Learning 🧠
 
 在本节课中，我们将学习如何从 Actor-Critic 方法出发，进一步构建完全基于值函数和 Q 函数的强化学习算法，最终引出经典的 Q-Learning 方法。我们将探讨如何省略显式的策略网络，直接利用值函数进行决策，并理解从动态规划到无模型 Q-Learning 的演变过程。
 
