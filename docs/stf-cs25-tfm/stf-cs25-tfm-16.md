@@ -1,4 +1,4 @@
-# 斯坦福 GPT/Transformer 原理介绍 - P16：常识推理 🧠
+# 16：常识推理 🧠
 
 ![](img/f6064823a2db16085967ebdd0dffc7e6_0.png)
 

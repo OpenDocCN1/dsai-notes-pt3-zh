@@ -1,4 +1,4 @@
-# 课程 P11：11. 变压器（Transformer）介绍 🧠
+# 11：11. 变压器（Transformer）介绍 🧠
 
 ![](img/c0ab12f5375bf7d79cfc3dbecdf3007c_0.png)
 

@@ -1,4 +1,4 @@
-# 课程 P2：GPT模型的发展与Transformer的应用 🚀
+# 2：GPT模型的发展与Transformer的应用 🚀
 
 ![](img/542291b724ae1b1a3bd31a38e9d3acdc_0.png)
 

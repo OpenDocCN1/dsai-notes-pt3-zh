@@ -1,4 +1,4 @@
-# CS25 课程 P1：改变 NLP、CV、RL 的深度学习模型 🚀
+# 1：改变 NLP、CV、RL 的深度学习模型 🚀
 
 ![](img/5ecc633c0934862bc1bde6086b437e97_0.png)
 

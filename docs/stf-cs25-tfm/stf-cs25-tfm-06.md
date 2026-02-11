@@ -1,4 +1,4 @@
-# 课程 P6：DeepMind 的 Perceiver 和 Perceiver IO 新数据家族架构 🧠
+# 6：DeepMind 的 Perceiver 和 Perceiver IO 新数据家族架构 🧠
 
 ![](img/1222cb1eda9b25cb98d5ff5f1d8e043f_0.png)
 

@@ -1,4 +1,4 @@
-# 课程 P8：Transformer 电路、诱导头与上下文学习 🧠
+# 8：Transformer 电路、诱导头与上下文学习 🧠
 
 ![](img/ee54ecf5185d58647f4bc57e2de3efea_0.png)
 
