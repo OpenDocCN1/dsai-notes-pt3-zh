@@ -1,4 +1,4 @@
-# 斯坦福大学《统计学习导论2023Python版》课程笔记 - P39：Bootstrap方法 I 📊
+# 39：Bootstrap方法 I 📊
 
 在本节课中，我们将要学习Bootstrap方法。Bootstrap在某些方面与交叉验证类似，但它是一个更通用的过程。我们将展示如何使用Bootstrap来衡量一个复杂统计量的方差。
 

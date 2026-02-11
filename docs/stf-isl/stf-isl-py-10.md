@@ -1,4 +1,4 @@
-# 课程 P10：Python 数据类型、数组与基础 I 🐍
+# 10：Python 数据类型、数组与基础 I 🐍
 
 ![](img/0542adabbcc6bda226038a3788f7c3ca_0.png)
 
@@ -38,7 +38,7 @@ Python 是一种非常流行的编程语言。本实验将介绍 Python 中的�
 
 ![](img/0542adabbcc6bda226038a3788f7c3ca_17.png)
 
-## Python 基本对象类型
+## ython 基本对象类型
 
 与大多数编程语言一样，Python 也有不同的对象类型。我们将主要关注数值对象，但 Python 本身是一种通用语言，因此存在许多标准类型的对象。
 

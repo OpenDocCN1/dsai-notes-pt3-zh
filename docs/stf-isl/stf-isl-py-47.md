@@ -1,4 +1,4 @@
-# 课程 P47：📊 岭回归与Lasso的调参选择
+# 47：📊 岭回归与Lasso的调参选择
 
 在本节课中，我们将学习如何为岭回归（Ridge Regression）和Lasso回归选择合适的调优参数（Tuning Parameter），特别是参数 λ（lambda）。我们将重点讨论为什么交叉验证（Cross-Validation）是完成此任务的最佳方法，并通过实例展示其应用过程。
 

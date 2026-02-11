@@ -1,4 +1,4 @@
-# 课程06：逐步回归与模型选择 📊
+# 06：逐步回归与模型选择 📊
 
 ![](img/e1b6be5dec17a2a491f863f7d7858d99_1.png)
 
@@ -241,7 +241,7 @@ plt.errorbar(steps, cv_mse_mean, yerr=cv_mse_std, fmt='ro-', capsize=5, label='5
 # X_train, X_val, y_train, y_val = train_test_split(X, y, test_size=0.2, random_state=42)
 # ... 在X_train上拟合路径，并在X_val上计算每一步的MSE
 # val_mse = [...]
-# plt.plot(steps, val_mse, 'g^--', label='Validation Set MSE')
+# lt.plot(steps, val_mse, 'g^--', label='Validation Set MSE')
 
 plt.xlabel('Number of Features')
 plt.ylabel('Mean Squared Error')
