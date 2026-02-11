@@ -1,4 +1,4 @@
-# 课程P7：L3-循环神经网络 🧠
+# 7：L3-循环神经网络 🧠
 
 ![](img/da83df0daffa4a637e808b8d8dbe5fde_1.png)
 

@@ -1,4 +1,4 @@
-# 课程 P10：【Lab4】Transformers 应用 🧠
+# 10：【Lab4】Transformers 应用 🧠
 
 ![](img/392cf1605a1627f98975b05d76f36c39_0.png)
 
