@@ -1,4 +1,4 @@
-# 课程P6：生成模型、GAN、VAE与表征学习 🧠
+# 6：生成模型、GAN、VAE与表征学习 🧠
 
 ![](img/e8d4e92eab64c0ad91f8fa5773adbcf4_0.png)
 
