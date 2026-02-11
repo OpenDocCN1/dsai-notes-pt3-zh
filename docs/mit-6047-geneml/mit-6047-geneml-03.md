@@ -1,4 +1,4 @@
-# 🧬 P3：L3 - 局部对齐、哈希与BLAST对齐分数
+# 3：L3 - 局部对齐、哈希与BLAST对齐分数 🧬
 
 ![](img/813f1585b8c307bec15ceba197df5cdc_0.png)
 

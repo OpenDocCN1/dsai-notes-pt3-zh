@@ -1,4 +1,4 @@
-# 🧬 P7：L7 - RNA折叠、RNA世界与RNA结构
+# 7：L7 - RNA折叠、RNA世界与RNA结构 🧬
 
 ![](img/86313510d4a7e67544952e7f2b24284e_0.png)
 

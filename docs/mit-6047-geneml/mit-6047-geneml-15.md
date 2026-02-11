@@ -1,4 +1,4 @@
-# 课程 P15：L15 - eQTLs 表达数量性状位点 🧬
+# 15：L15 - eQTLs 表达数量性状位点 🧬
 
 ![](img/f6c1f98516aed0cca560c4c7ddbaf421_0.png)
 

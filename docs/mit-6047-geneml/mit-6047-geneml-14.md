@@ -1,4 +1,4 @@
-# 🧬 P14：L14 - GWAS与疾病解析
+# 14：L14 - GWAS与疾病解析 🧬
 
 ![](img/43bfb233b4b2eb17ff72bf7b1d7bdab7_0.png)
 

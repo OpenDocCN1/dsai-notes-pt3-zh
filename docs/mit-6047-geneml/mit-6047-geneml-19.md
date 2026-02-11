@@ -1,4 +1,4 @@
-# 课程 P19：L19- 系统发育学 🧬
+# 19：L19- 系统发育学 🧬
 
 ![](img/c1207a727dfcbbeea5dbba6f9c7fe44e_0.png)
 
