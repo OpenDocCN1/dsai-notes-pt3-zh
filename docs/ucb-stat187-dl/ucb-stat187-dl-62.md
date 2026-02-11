@@ -1,4 +1,4 @@
-# 课程 P62：62. 使用 Python 实现 LeNet 🐍
+# 62：使用 Python 实现 LeNet 🐍
 
 ![](img/fc4140cce2065d9f074ce7c9f1ebb253_1.png)
 

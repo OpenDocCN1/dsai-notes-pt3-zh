@@ -1,4 +1,4 @@
-# 课程 P25：25. 使用Gluon实现Softmax分类 🧠
+# 25：使用Gluon实现Softmax分类 🧠
 
 ![](img/3d5258cea0f9674e8d2d959edb3b6f07_1.png)
 

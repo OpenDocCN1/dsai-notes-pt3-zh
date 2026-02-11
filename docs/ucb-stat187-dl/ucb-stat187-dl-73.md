@@ -1,4 +1,4 @@
-# 课程 P73：73. L13_6 使用 Python 实现 ResNet 🧠
+# 73：L13_6 使用 Python 实现 ResNet 🧠
 
 ![](img/c5a1c991efbc247567454acd2edc2f8e_1.png)
 

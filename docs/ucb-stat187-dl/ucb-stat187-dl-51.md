@@ -1,4 +1,4 @@
-# 课程 P51：使用GPU 🚀
+# 51：使用GPU 🚀
 
 ![](img/c6f8dda003bcfa78d8be55514125e277_1.png)
 

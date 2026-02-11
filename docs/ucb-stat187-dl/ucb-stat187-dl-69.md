@@ -1,4 +1,4 @@
-# 课程 P69：69. L13_2 Python中的Inception 🧠
+# 69：L13_2 Python中的Inception 🧠
 
 ![](img/7519f00da13fffe23c8b15d94d5d720d_1.png)
 

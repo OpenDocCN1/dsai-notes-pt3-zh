@@ -1,4 +1,4 @@
-# 课程P85：在Python中实现风格迁移 🎨
+# 85：在Python中实现风格迁移 🎨
 
 ![](img/80cdb8bbe6f555d815077d45fc396c37_1.png)
 

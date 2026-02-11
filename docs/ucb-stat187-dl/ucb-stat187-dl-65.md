@@ -1,4 +1,4 @@
-# 课程 P65：65. L12_6 VGG 在 Python 中 🧠
+# 65：L12_6 VGG 在 Python 中 🧠
 
 ![](img/5f66fea605ac011e5279e75c34059f15_1.png)
 

@@ -1,4 +1,4 @@
-# 课程 P24：24. Python中的Softmax分类 🧮
+# 24：Python中的Softmax分类 🧮
 
 ![](img/4552b5a5a8ccd94394a3a3a1aa5c198e_1.png)
 

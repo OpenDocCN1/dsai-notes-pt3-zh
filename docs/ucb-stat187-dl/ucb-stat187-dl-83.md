@@ -1,4 +1,4 @@
-# 课程P83：Python中的微调 🐕🔧
+# 83：Python中的微调 🐕🔧
 
 ![](img/1739d641dd4a44aeff1198ab5c59d941_1.png)
 

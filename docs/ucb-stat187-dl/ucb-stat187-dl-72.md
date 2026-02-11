@@ -1,4 +1,4 @@
-# 课程 P72：72. L13_5 ResNet（残差网络）🚀
+# 72：L13_5 ResNet（残差网络）🚀
 
 ![](img/d12a011fddab3a49c8c5c057047767ab_1.png)
 

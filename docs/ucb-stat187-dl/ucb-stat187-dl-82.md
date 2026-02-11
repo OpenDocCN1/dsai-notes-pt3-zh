@@ -1,4 +1,4 @@
-# 课程P82：微调（Fine-Tuning）详解 🎯
+# 82：微调（Fine-Tuning）详解 🎯
 
 ![](img/49c134bb92d7ee64208221fdfcedcc44_1.png)
 

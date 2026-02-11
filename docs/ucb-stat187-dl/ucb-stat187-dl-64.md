@@ -1,4 +1,4 @@
-# 课程 P64：64. 使用 Python 实现 AlexNet 🚀
+# 64：使用 Python 实现 AlexNet 🚀
 
 在本节课中，我们将学习如何使用 Python 和 MXNet 框架来实现经典的 AlexNet 网络，并将其应用于 Fashion-MNIST 数据集。我们将从网络结构定义开始，逐步讲解数据加载、模型训练和评估的完整流程。
 

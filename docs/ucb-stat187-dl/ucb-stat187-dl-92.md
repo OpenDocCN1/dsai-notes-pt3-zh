@@ -1,4 +1,4 @@
-# 课程 P92：在 Python 中实现 SSD 🚀
+# 92：在 Python 中实现 SSD 🚀
 
 ![](img/0fc7e5b120cae5df269185702791a06e_1.png)
 

@@ -1,4 +1,4 @@
-# 课程 P32：32. L7_4 Dropout 🧠
+# 32：L7_4 Dropout 🧠
 
 ![](img/defc3a1b12b8631f55c631a8baabe4cc_1.png)
 

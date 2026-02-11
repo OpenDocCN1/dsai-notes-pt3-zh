@@ -1,4 +1,4 @@
-# 课程 P68：Inception (GoogLeNet) 详解 🧠
+# 68：Inception (GoogLeNet) 详解 🧠
 
 ![](img/f57f0863d1c95cd73b1e143121f6ca35_1.png)
 

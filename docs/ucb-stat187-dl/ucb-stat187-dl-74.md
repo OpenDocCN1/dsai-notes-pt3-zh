@@ -1,4 +1,4 @@
-# 课程 P74：超越ResNet 🚀
+# 74：超越ResNet 🚀
 
 在本节课中，我们将学习ResNet之后的一些重要神经网络架构变体。我们将探讨ResNeXt、DenseNet、SENet和ShuffleNet等模型的核心思想，了解它们如何通过改进网络结构来提升性能或效率。
 

@@ -1,4 +1,4 @@
-# 课程 P78：Python 中的混合化 🚀
+# 78：Python 中的混合化 🚀
 
 ![](img/51e689b9fd720f52d52ecec55198d75e_1.png)
 

@@ -1,4 +1,4 @@
-# 目标检测入门：SSD与YOLO 🎯
+# 90：目标检测入门：SSD与YOLO 🎯
 
 在本节课中，我们将学习两种经典的单阶段目标检测算法：SSD（Single Shot MultiBox Detector）和YOLO（You Only Look Once）。我们将重点理解它们的基本思想、核心区别以及各自的优缺点。
 

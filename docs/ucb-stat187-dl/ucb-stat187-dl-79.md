@@ -1,4 +1,4 @@
-# 课程 P79：Python 中的多 GPU 训练 🚀
+# 79：Python 中的多 GPU 训练 🚀
 
 ![](img/d99e6bf1ed51a9c7bb38968cebcfc976_1.png)
 
