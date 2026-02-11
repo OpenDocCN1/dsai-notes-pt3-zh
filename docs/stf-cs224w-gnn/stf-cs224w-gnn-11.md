@@ -1,4 +1,4 @@
-# 课程P11：4.2 - PageRank 如何求解？ 🔍
+# 11：4.2 - PageRank 如何求解？ 🔍
 
 ![](img/15499ad75943b605580f48dfb89d3ecc_0.png)
 

@@ -1,4 +1,4 @@
-# 深度学习基础教程 P18：6.2 - Basics of Deep Learning 🧠
+# 18：6.2 - Basics of Deep Learning 🧠
 
 ![](img/e0f616af2aef1208597cb6ad61dcc18c_0.png)
 
