@@ -1,4 +1,4 @@
-# 87：生存分析实验 - 脑癌数据 I 🧠
+# Python 版 87：生存分析实验 - 脑癌数据 I 🧠
 
 在本节课中，我们将学习生存分析的基本方法。生存分析用于研究事件发生的时间，例如癌症患者的死亡时间或文档的发表时间。我们将重点学习如何绘制**Kaplan-Meier曲线**以及拟合**Cox比例风险模型**，这些方法专门用于处理包含**删失数据**（即研究结束时事件尚未发生或个体提前退出研究的数据）的时间数据。
 
@@ -246,19 +246,19 @@ cph_simple.print_summary()
 以下是拟合多变量Cox模型的步骤：
 
 ```python
-# 1. 处理缺失值
+# Python 版 1. 处理缺失值
 brain_cancer_complete = brain_cancer.dropna(subset=['diagnosis'])
 
 ![](img/9e8fa5abf576119342092ae9e255339c_76.png)
 
-# 2. 使用patsy创建设计矩阵（自动处理分类变量）
+# Python 版 2. 使用patsy创建设计矩阵（自动处理分类变量）
 y, X = dmatrices('time + status ~ diagnosis + ki + sex + gv', data=brain_cancer_complete, return_type='dataframe')
 # 注意：`y` 是一个包含‘time’和‘status’两列的DataFrame
 survival_data = pd.concat([X, y], axis=1)
 
 ![](img/9e8fa5abf576119342092ae9e255339c_77.png)
 
-# 3. 拟合Cox模型
+# Python 版 3. 拟合Cox模型
 cph_full = CoxPHFitter()
 cph_full.fit(survival_data, duration_col='time', event_col='status')
 cph_full.print_summary()

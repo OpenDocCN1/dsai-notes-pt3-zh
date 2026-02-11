@@ -1,4 +1,4 @@
-# 36：统计学习中的自助法（Bootstrap）📊
+# Python 版 36：统计学习中的自助法（Bootstrap）📊
 
 ![](img/650dc0cb172779c47d5376c05cfd0752_0.png)
 

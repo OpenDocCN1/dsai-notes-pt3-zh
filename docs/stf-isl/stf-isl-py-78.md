@@ -1,4 +1,4 @@
-# 78：插值与双重下降 🧠
+# Python 版 78：插值与双重下降 🧠
 
 ![](img/a474fad08a0a4dfc1bcc22e46bbf0f0e_1.png)
 

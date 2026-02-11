@@ -1,4 +1,4 @@
-# 65：基于树的方法 I 实验 🧪🌳
+# Python 版 65：基于树的方法 I 实验 🧪🌳
 
 ![](img/de4cbbc52fcbbb3d2d9e04cc43bc3ec8_1.png)
 

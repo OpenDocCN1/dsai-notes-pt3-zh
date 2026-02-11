@@ -1,4 +1,4 @@
-# 37：深入理解自助法 (Bootstrap) 📊
+# Python 版 37：深入理解自助法 (Bootstrap) 📊
 
 ![](img/d536039e26475343b5ebaf339ab7bb44_1.png)
 

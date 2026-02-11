@@ -1,4 +1,4 @@
-# 10：Python 数据类型、数组与基础 I 🐍
+# Python 版 10：Python 数据类型、数组与基础 I 🐍
 
 ![](img/0542adabbcc6bda226038a3788f7c3ca_0.png)
 

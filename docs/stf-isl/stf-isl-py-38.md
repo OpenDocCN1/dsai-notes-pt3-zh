@@ -1,4 +1,4 @@
-# 38：交叉验证 I 📊
+# Python 版 38：交叉验证 I 📊
 
 ![](img/9152fbe8ee52f140cdf3808f3b2ef145_1.png)
 

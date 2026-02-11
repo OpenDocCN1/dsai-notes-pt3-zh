@@ -1,4 +1,4 @@
-# 103：错误发现率与Benjamini-Hochberg方法 📊
+# Python 版 103：错误发现率与Benjamini-Hochberg方法 📊
 
 ![](img/9fc2e2adf9b250245c7f9b2e83407ea0_0.png)
 

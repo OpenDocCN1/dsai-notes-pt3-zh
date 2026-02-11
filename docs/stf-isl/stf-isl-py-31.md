@@ -1,4 +1,4 @@
-# 31：使用Scikit-learn实现线性判别分析(LDA)与相关分类器 🧠
+# Python 版 31：使用Scikit-learn实现线性判别分析(LDA)与相关分类器 🧠
 
 在本节课中，我们将学习如何使用Python的Scikit-learn库实现线性判别分析（LDA）以及其他几种分类器，包括二次判别分析（QDA）、朴素贝叶斯（Naive Bayes）和K近邻（KNN）。我们将从逻辑回归过渡到Scikit-learn的分类器，并学习其通用的拟合与预测模式。
 

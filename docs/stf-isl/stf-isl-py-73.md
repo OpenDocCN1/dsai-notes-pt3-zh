@@ -1,4 +1,4 @@
-# 73：卷积神经网络 (CNNs) 🧠
+# Python 版 73：卷积神经网络 (CNNs) 🧠
 
 ![](img/c1703e185402e8eebcc97f945077d1e2_1.png)
 

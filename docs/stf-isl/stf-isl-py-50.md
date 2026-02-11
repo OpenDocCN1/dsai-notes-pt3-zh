@@ -1,4 +1,4 @@
-# 06：逐步回归与模型选择 📊
+# Python 版 06：逐步回归与模型选择 📊
 
 ![](img/e1b6be5dec17a2a491f863f7d7858d99_1.png)
 
@@ -174,20 +174,20 @@ print("使用C_p选择的特征索引:", np.where(selected_features_cp)[0])
 3.  计算每一步的平均交叉验证均方误差（CV MSE）及其标准误。
 
 ```python
-# 1. 拟合完整路径
+# Python 版 1. 拟合完整路径
 strategy_full = SequentialFeatureSelector(LinearRegression(),
                                           direction='forward',
                                           n_features_to_select=X.shape[1]) # 选择所有特征
 selector_full = strategy_full.fit(X, y)
 
-# 2. 获取每一步的预测值（在训练集上）
+# Python 版 2. 获取每一步的预测值（在训练集上）
 y_pred_path = selector_full.transform(X) # 这是一个逐步包含特征的预测矩阵
 
 ![](img/e1b6be5dec17a2a491f863f7d7858d99_52.png)
 
 ![](img/e1b6be5dec17a2a491f863f7d7858d99_54.png)
 
-# 3. 进行5折交叉验证，获取每一步的CV预测
+# Python 版 3. 进行5折交叉验证，获取每一步的CV预测
 kf = KFold(n_splits=5, shuffle=True, random_state=1)
 y_cv_pred = cross_val_predict(strategy_full, X, y, cv=kf)
 
@@ -195,7 +195,7 @@ y_cv_pred = cross_val_predict(strategy_full, X, y, cv=kf)
 
 ![](img/e1b6be5dec17a2a491f863f7d7858d99_57.png)
 
-# 4. 计算每一步的CV MSE
+# Python 版 4. 计算每一步的CV MSE
 cv_mse_per_fold = []
 for i in range(y_cv_pred.shape[1]): # 遍历每一步（每一列）
     mse_fold = []
