@@ -1,4 +1,4 @@
-# 斯坦福大学《自然语言理解》课程笔记 P9：上下文词表示 Part 6 - RoBERTa 🤖
+# 9：上下文词表示 Part 6 - RoBERTa 🤖
 
 ![](img/6af5d0f58586e839527360e552bd630f_0.png)
 
