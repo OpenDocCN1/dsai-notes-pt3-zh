@@ -1,4 +1,4 @@
-# 课程 P12：快速强化学习 II 🚀
+# 12：快速强化学习 II 🚀
 
 ![](img/dd3d90b32ca727decf2aefee2351f66e_1.png)
 
