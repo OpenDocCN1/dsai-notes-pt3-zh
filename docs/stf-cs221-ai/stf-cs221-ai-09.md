@@ -1,4 +1,4 @@
-# 🎮 课程9：游戏博弈1 - Minimax与Alpha-beta剪枝
+# 9：游戏博弈1 - Minimax与Alpha-beta剪枝 🎮 
 
 ![](img/145fbaf36d1a2c061739104c6d40f7dd_1.png)
 
