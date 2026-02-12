@@ -1,4 +1,4 @@
-# 密歇根大学《给所有人的Python课》课程3：《使用Python访问Web数据》｜python-network-data｜ - P1：01_01_01_欢迎来到课程 🎬
+# 3：《使用Python访问Web数据》｜python-network-data｜ - P1：01_01_01_欢迎来到课程 🎬
 
 ## 概述
 

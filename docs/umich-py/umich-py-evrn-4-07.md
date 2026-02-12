@@ -1,4 +1,4 @@
-# 密歇根大学《给所有人的Python课》课程4：《使用数据库进行Python编程》｜python-databases｜ - P7：07_01_01_面向对象定义与术语 🧩
+# 4：《使用数据库进行Python编程》｜python-databases｜ - P7：07_01_01_面向对象定义与术语 🧩
 
 ![](img/16760b2195c40003b5dcbf5f6cff2b3c_0.png)
 

@@ -1,4 +1,4 @@
-# 密歇根大学《给所有人的Python课》课程3：《使用Python访问Web数据》｜P12：超文本传输协议（HTTP）🌐
+# 3：《使用Python访问Web数据》｜P12：超文本传输协议（HTTP）🌐
 
 ![](img/3d53bed529dcc72c0b99cff3033778fc_0.png)
 

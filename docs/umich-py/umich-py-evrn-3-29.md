@@ -1,4 +1,4 @@
-# 密歇根大学《给所有人的Python课》课程3：《使用Python访问Web数据》｜P29：XML模式 📝
+# 3：《使用Python访问Web数据》｜P29：XML模式 📝
 
 ![](img/6f4ccda118d050f0aae2f9bf7a421446_0.png)
 

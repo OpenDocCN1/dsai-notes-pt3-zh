@@ -1,4 +1,4 @@
-# 密歇根大学《给所有人的Python课》课程1：《编程入门指南（使用Python进行开发）》｜P9：完成Hello World作业演示 🖨️
+# 1：《编程入门指南（使用Python进行开发）》｜P9：完成Hello World作业演示 🖨️
 
 ![](img/1bd7d25fc81ea9bf0a9d59688d8b0294_0.png)
 

@@ -1,4 +1,4 @@
-# 密歇根大学《给所有人的Python课》课程4：《使用数据库进行Python编程》｜python-databases｜ - P8：08_01_02_首个类与对象 🐍
+# 4：《使用数据库进行Python编程》｜python-databases｜ - P8：08_01_02_首个类与对象 🐍
 
 ![](img/c9e347f8d90a67f417d662afef1782f6_0.png)
 

@@ -1,4 +1,4 @@
-# 密歇根大学《给所有人的Python课》课程3：《使用Python访问Web数据》｜P14：使用开发者控制台探索HTTP 🔍
+# 3：《使用Python访问Web数据》｜P14：使用开发者控制台探索HTTP 🔍
 
 ![](img/8a4f47037cb3d77132901d490a797ac9_0.png)
 

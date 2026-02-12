@@ -1,4 +1,4 @@
-# 密歇根大学《给所有人的Python课》课程3：《使用Python访问Web数据》｜P19：Unicode字符与字符串 🧩
+# 3：《使用Python访问Web数据》｜P19：Unicode字符与字符串 🧩
 
 ![](img/3db17008d3fe4c546efce0cd179c006e_0.png)
 

@@ -1,4 +1,4 @@
-# 密歇根大学《给所有人的Python课》课程2：《Python数据结构》｜P25：字典 🗂️
+# 2：《Python数据结构》｜P25：字典 🗂️
 
 ![](img/59c9eb37e4baa74125914f5fec1cc3c2_0.png)
 

@@ -1,4 +1,4 @@
-# 🐍 密歇根大学《给所有人的Python课》课程2：《Python数据结构》｜P9：在Windows 10上安装Python并编写第一个程序
+# 🐍 2：《Python数据结构》｜P9：在Windows 10上安装Python并编写第一个程序
 
 在本节课中，我们将学习如何在Windows 10操作系统上安装Python编程语言，安装一个简单的文本编辑器，并运行你的第一个Python程序。整个过程分为三个主要步骤：下载安装Python、安装文本编辑器Brackets，以及创建并运行一个简单的脚本。
 

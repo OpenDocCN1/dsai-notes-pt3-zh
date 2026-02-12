@@ -1,4 +1,4 @@
-# 密歇根大学《给所有人的Python课》课程5：《毕业项目：使用Python检索、处理和可视化数据》｜P21：21_06_02_访谈-Nathaniel Borenstein（MIME协议之父）🧑💻
+# 5：《毕业项目：使用Python检索、处理和可视化数据》｜P21：21_06_02_访谈-Nathaniel Borenstein（MIME协议之父）🧑💻
 
 ## 概述
 

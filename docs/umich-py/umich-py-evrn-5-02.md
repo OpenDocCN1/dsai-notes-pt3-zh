@@ -1,4 +1,4 @@
-# 密歇根大学《给所有人的Python课》课程5：《毕业项目：使用Python检索、处理和可视化数据》｜python-data-visualization｜ - P2：02_01_02_Unicode字符与字符串 📚
+# 5：《毕业项目：使用Python检索、处理和可视化数据》｜python-data-visualization｜ - P2：02_01_02_Unicode字符与字符串 📚
 
 ![](img/d2b9777283ea1ec3922ab425fd237131_0.png)
 

@@ -1,4 +1,4 @@
-# 密歇根大学《给所有人的Python课》课程4：《使用数据库进行Python编程》｜python-databases｜ - P2：02_01_05_Unicode字符与字符串 📚
+# 4：《使用数据库进行Python编程》｜python-databases｜ - P2：02_01_05_Unicode字符与字符串 📚
 
 ![](img/58fff89b3d07d792e8a103e3faa3176e_0.png)
 

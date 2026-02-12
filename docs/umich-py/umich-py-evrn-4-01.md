@@ -1,4 +1,4 @@
-# 密歇根大学《给所有人的Python课》课程4：《使用数据库进行Python编程》｜python-databases｜ 🗄️
+# 4：《使用数据库进行Python编程》｜python-databases｜ 🗄️
 
 ![](img/51863e1cfac839d0f94ce262c2f46bf2_0.png)
 
