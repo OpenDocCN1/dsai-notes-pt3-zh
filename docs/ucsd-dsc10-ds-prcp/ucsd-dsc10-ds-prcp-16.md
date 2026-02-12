@@ -1,4 +1,4 @@
-# 📊 课程16：统计推断与自助法 (Bootstrapping)
+# 16：统计推断与自助法 (Bootstrapping) 📊
 
 ![](img/89e6fbc7e193200a4bca8355de92aab1_0.png)
 

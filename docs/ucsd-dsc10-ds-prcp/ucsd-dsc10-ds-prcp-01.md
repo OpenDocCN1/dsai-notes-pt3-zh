@@ -1,4 +1,4 @@
-# 📘 课程 1：数据科学导论与 Python 基础
+#  1：数据科学导论与 Python 基础 📘
 
 ![](img/3faa1221a160f774adb9ae58fe4e8343_1.png)
 
