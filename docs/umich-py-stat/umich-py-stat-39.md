@@ -1,5 +1,4 @@
-# 课程名称：使用Python的统计学（理解并可视化数据、因果推断、建模）｜Statistics with Python
-## 课程编号：P39：5_Python统计生态再探 🐍📊
+# 39：Python统计生态再探 🐍📊
 
 ![](img/c2aaabe0438489b344584daa049ce7a8_1.png)
 

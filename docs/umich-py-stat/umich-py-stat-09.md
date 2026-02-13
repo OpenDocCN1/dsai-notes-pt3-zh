@@ -1,4 +1,4 @@
-# 课程09：Jupyter Notebook入门（选读）📓
+# 9：Jupyter Notebook入门（选读）📓
 
 ![](img/43425442556fb7617451a0f9dd7ffd92_1.png)
 

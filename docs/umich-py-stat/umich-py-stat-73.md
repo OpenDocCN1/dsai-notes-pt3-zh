@@ -1,4 +1,4 @@
-# 课程7：Python统计生态概览 🐍📊
+# 73：Python统计生态概览 🐍📊
 
 ![](img/6aceca5e584f098a280be279b5dbda51_1.png)
 
