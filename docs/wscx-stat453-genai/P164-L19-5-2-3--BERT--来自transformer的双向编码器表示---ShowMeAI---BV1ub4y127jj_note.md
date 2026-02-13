@@ -1,4 +1,4 @@
-# 🧠 P164：L19.5.2.3 - BERT：来自Transformer的双向编码器表示
+# P164：L19.5.2.3 - BERT：来自Transformer的双向编码器表示 🧠
 
 在本节课中，我们将学习BERT模型。BERT是“Bidirectional Encoder Representations from Transformers”的缩写，由谷歌研究团队于2018年提出。它的核心创新在于其**双向**特性，能够同时利用上下文信息进行预训练，这使其在多项自然语言处理任务上取得了突破性进展。
 

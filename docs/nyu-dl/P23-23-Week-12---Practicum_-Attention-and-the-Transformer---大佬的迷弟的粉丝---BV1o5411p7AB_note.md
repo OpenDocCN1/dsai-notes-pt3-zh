@@ -1,4 +1,4 @@
-# 🧠 P23：注意力机制与Transformer架构详解
+# P23：注意力机制与Transformer架构详解 🧠
 
 ![](img/b1565e545859d605f78676b79c4ce848_1.png)
 

@@ -1,4 +1,4 @@
-# 🧠 课程 P88：L11.7 - PyTorch 中的权重初始化
+# 课程 P88：L11.7 - PyTorch 中的权重初始化 🧠
 
 ![](img/e469d62e1d1be8c23d51c4572ac513ec_1.png)
 

@@ -1,4 +1,4 @@
-# 📊 数据可视化神器 Tableau！P9：在 Tableau 中创建新视图
+# 数据可视化神器 Tableau！P9：在 Tableau 中创建新视图 📊
 
 ![](img/c3650f5386fb2ff3f4543fd84c2180d4_1.png)
 

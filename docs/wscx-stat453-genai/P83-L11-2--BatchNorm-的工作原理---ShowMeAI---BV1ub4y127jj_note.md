@@ -1,4 +1,4 @@
-# 📚 课程 P83：L11.2 - BatchNorm 的工作原理
+# 课程 P83：L11.2 - BatchNorm 的工作原理 📚
 
 ![](img/3df80e31d97767fe8d752cb737fe5b1e_1.png)
 

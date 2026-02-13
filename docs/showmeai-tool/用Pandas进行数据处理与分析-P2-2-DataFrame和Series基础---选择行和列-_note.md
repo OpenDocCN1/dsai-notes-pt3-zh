@@ -1,4 +1,4 @@
-# 📊 用Pandas进行数据处理与分析！P2：DataFrame和Series基础 - 选择行和列
+# 用Pandas进行数据处理与分析！P2：DataFrame和Series基础 - 选择行和列 📊
 
 在本节课中，我们将要学习Pandas的两个核心数据类型：**DataFrame**和**Series**。我们将重点探讨如何从这两种数据结构中选择特定的行和列，这是进行数据操作和分析的基础。
 

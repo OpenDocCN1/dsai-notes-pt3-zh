@@ -1,4 +1,4 @@
-# 📊 课程 P3：为 plotly.py 添加 ipywidgets 支持
+# 课程 P3：为 plotly.py 添加 ipywidgets 支持 📊
 
 ![](img/79d72b306b7a0e079da4e1ec991ba409_1.png)
 

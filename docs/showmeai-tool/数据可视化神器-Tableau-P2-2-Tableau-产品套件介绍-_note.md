@@ -1,4 +1,4 @@
-# 📊 数据可视化神器 Tableau！P2：Tableau 产品套件介绍
+# 数据可视化神器 Tableau！P2：Tableau 产品套件介绍 📊
 
 ![](img/ad13eef316705bda2e297b95df2e7067_0.png)
 

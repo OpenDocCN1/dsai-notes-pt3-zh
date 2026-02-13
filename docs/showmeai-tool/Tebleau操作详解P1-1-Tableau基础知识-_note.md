@@ -1,4 +1,4 @@
-# 📊 Tableau操作详解 P1：基础知识入门
+# Tableau操作详解 P1：基础知识入门 📊
 
 ![](img/42617beed230109fc6b0358beca3faa9_0.png)
 

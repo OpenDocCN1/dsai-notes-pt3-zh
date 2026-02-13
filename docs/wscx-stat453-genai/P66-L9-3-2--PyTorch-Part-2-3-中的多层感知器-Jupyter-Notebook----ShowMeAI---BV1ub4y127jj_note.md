@@ -1,4 +1,4 @@
-# 🧠 PyTorch 教程 P66：L9.3.2 - 多层感知器实现（Jupyter Notebook）
+# PyTorch 教程 P66：L9.3.2 - 多层感知器实现（Jupyter Notebook） 🧠
 
 在本节课中，我们将学习如何使用 PyTorch 实现一个多层感知器（MLP），并将其应用于 MNIST 手写数字分类任务。我们将重点关注 MLP 与之前学习的 Softmax 回归在代码结构上的关键区别，并理解如何构建包含隐藏层的神经网络。
 

@@ -1,4 +1,4 @@
-# 📊 绘图必备Matplotlib，P3：使用虚拟环境或Colab设置Python环境
+# 绘图必备Matplotlib，P3：使用虚拟环境或Colab设置Python环境 📊
 
 在本节课中，我们将学习如何为Matplotlib绘图项目设置Python环境。我们将介绍两种主流方法：使用Conda创建本地虚拟环境，以及使用Google Colab这一云端平台。无论你是初学者还是希望保持环境整洁的开发者，都能找到适合自己的方案。
 

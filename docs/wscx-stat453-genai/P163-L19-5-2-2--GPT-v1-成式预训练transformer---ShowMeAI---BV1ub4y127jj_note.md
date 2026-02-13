@@ -1,4 +1,4 @@
-# 🧠 课程 P163：L19.5.2.2 - GPT-v1：生成式预训练Transformer
+# 课程 P163：L19.5.2.2 - GPT-v1：生成式预训练Transformer 🧠
 
 ![](img/b8ed1df0a67d243d8aabf5ee1cdc42f8_1.png)
 

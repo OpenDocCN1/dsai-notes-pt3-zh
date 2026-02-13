@@ -1,4 +1,4 @@
-# 📊 Matplotlib 入门教程 P9：Matplotlib 剖析
+# Matplotlib 入门教程 P9：Matplotlib 剖析 📊
 
 在本节课中，我们将学习 Matplotlib 库的基础知识。Matplotlib 是一个用于创建高质量图形的 Python 库，广泛应用于科学计算和数据可视化领域。我们将从基本概念开始，逐步深入到更高级的功能。
 

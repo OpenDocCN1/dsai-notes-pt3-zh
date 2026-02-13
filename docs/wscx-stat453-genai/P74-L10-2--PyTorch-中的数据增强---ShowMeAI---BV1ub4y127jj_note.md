@@ -1,4 +1,4 @@
-# 📊 P74：L10.2 - PyTorch 中的数据增强
+# P74：L10.2 - PyTorch 中的数据增强 📊
 
 ![](img/2226582f096640d251beb9915a5ab0bd_1.png)
 

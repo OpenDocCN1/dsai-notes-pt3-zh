@@ -1,4 +1,4 @@
-# 🐍 P20：面向数据科学家的Cython教程
+# P20：面向数据科学家的Cython教程 🐍
 
 ![](img/b8d9e1d8490d7c84cfc812d37b0318c6_1.png)
 

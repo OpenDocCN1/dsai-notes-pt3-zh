@@ -1,4 +1,4 @@
-# 📚 深度学习课程 P85：L11.4 - 为什么 BatchNorm 有效
+# 深度学习课程 P85：L11.4 - 为什么 BatchNorm 有效 📚
 
 ![](img/ddf5484a85844b4b00ff0a05549f327c_1.png)
 

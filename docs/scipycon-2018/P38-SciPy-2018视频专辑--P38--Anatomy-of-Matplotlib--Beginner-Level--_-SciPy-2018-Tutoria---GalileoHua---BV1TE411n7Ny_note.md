@@ -1,4 +1,4 @@
-# 📊 Matplotlib 入门教程：解剖 Matplotlib (P38)
+# Matplotlib 入门教程：解剖 Matplotlib (P38) 📊
 
 ![](img/961a47906e9bd3c88bf7714f01a6d1b4_1.png)
 

@@ -1,4 +1,4 @@
-# 🤖 Transformers 原理细节及NLP任务应用！P36：L6.4- Lewis的在线直播讲解
+# Transformers 原理细节及NLP任务应用！P36：L6.4- Lewis的在线直播讲解 🤖
 
 在本节课中，我们将把前两章学到的所有组件结合起来，学习如何使用 Hugging Face 生态系统进行模型训练。我们将从回顾开始，然后深入探讨数据集库（`datasets`）的使用、训练器（`Trainer`）API，并最终通过编写自定义训练循环来理解其内部机制，同时介绍用于分布式训练的 `accelerate` 库。
 
