@@ -1,4 +1,4 @@
-# 课程 22：DataFrame 合并技术 📊
+# 22：DataFrame 合并技术 📊
 
 ![](img/e1c830e67337f7f7103fcddb518c878c_0.png)
 

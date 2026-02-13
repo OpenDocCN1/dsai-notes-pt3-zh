@@ -1,4 +1,4 @@
-# 课程名称：密歇根大学《Python用于数据科学实践》第21课 - Pandas绘图方法 📊
+# 51：Pandas绘图方法 📊
 
 ![](img/31bf2af1a647aae0a92a16220ca7e97e_0.png)
 

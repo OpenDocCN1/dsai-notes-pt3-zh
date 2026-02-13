@@ -1,4 +1,4 @@
-# 课程二：Python数据科学应用 🚀
+# 30：Python数据科学应用 🚀
 
 ![](img/8d45ee14f7b3566a23031b49ed22feee_0.png)
 

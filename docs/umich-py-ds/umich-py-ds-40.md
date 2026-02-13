@@ -1,5 +1,4 @@
-# 课程名称：Python用于数据科学实践（1-3课／共5课）｜Applied Data Science with Python
-## 课程编号：P40 - Matplotlib基础绘图 🎨
+# 40：Matplotlib基础绘图 🎨
 
 ![](img/c32357305e4e6d2f017bd48ad0a5793f_0.png)
 

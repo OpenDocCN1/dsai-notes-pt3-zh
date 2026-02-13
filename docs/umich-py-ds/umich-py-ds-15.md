@@ -1,4 +1,4 @@
-# 密歇根大学《Python用于数据科学实践》第14课：Series查询方法 🐼
+# 15：Series查询方法 🐼
 
 ![](img/79ce57b793ef0d8cf4f29cca91bafc28_0.png)
 

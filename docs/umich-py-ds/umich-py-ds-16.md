@@ -1,4 +1,4 @@
-# 课程1.3：Pandas核心数据结构DataFrame详解 📊
+# 16：Pandas核心数据结构DataFrame详解 📊
 
 ![](img/309f32f1d9f76278d5aff0b2b66f8ab6_0.png)
 

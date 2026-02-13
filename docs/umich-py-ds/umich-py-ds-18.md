@@ -1,4 +1,4 @@
-# 课程三：DataFrame查询技术 🎯
+# 18：DataFrame查询技术 🎯
 
 ![](img/cb6f365b597b787e932799aafdf6aa79_0.png)
 

@@ -1,4 +1,4 @@
-# 📊 课程名称：Python用于数据科学实践（第3课）｜设计思维工具（Alberto Cairo）
+# 33：设计思维工具（Alberto Cairo） 📊
 
 ![](img/1613064619e871fcb37a1bc865dc5558_0.png)
 

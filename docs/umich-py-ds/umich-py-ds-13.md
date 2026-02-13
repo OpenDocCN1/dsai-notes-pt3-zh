@@ -1,4 +1,4 @@
-# 课程1.3：Pandas库入门 🐼
+# 13：Pandas库入门 🐼
 
 ![](img/f57c193992dfd97819ba0f2ea70443c1_0.png)
 

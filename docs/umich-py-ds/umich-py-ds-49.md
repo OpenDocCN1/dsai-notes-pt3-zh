@@ -1,4 +1,4 @@
-# 课程三：Python数据科学应用 🎬 第19讲：动画制作
+# 49：动画制作 🎬
 
 ![](img/8c12f1ac5fcd77effe20bd8abeff37e6_0.png)
 

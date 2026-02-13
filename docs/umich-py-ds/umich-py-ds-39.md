@@ -1,4 +1,4 @@
-# 📊 课程名称：Python用于数据科学实践（第3课）｜Matplotlib架构解析
+# 39：Matplotlib架构解析 📊
 
 ![](img/64a8b7d9e40315839bd7107cb578fe4d_0.png)
 

@@ -1,4 +1,4 @@
-# 课程1-3：Python CSV文件读写与数据汇总 📊
+# 7：Python CSV文件读写与数据汇总 📊
 
 ![](img/39d414e1f6f9bd1abb4c822f0ef01362_0.png)
 

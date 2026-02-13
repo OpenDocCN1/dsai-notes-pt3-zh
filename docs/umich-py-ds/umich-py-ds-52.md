@@ -1,4 +1,4 @@
-# 课程名称：Python用于数据科学实践 - 第22课：Seaborn可视化库 📊
+# 52：Seaborn可视化库 📊
 
 ![](img/6131cad8ae8aff0720c5f3b14b2f2ef4_0.png)
 

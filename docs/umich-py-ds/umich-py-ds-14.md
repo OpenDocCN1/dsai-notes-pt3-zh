@@ -1,4 +1,4 @@
-# 课程1.3：探索Pandas Series数据结构 📊
+# 14：探索Pandas Series数据结构 📊
 
 ![](img/410fc39deb750116e46c04f7907b9175_0.png)
 

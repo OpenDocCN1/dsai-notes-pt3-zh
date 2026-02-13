@@ -1,4 +1,4 @@
-# 课程1：Python类型与序列 🐍
+# 5：Python类型与序列 🐍
 
 ![](img/016588a788d7e26902a4ddead3ff561b_0.png)
 

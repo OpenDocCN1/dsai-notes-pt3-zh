@@ -1,5 +1,4 @@
-# 课程1-3：Python数据科学实践 🐍
-## 第8讲：Matplotlib入门 📊
+# 38：Matplotlib入门 📊
 
 在本节课中，我们将学习如何使用Python的Matplotlib工具包创建基本图表。我们将从了解Matplotlib的架构开始，然后逐步学习如何绘制散点图、折线图和条形图。
 

@@ -1,4 +1,4 @@
-# 课程名称：Python用于数据科学实践（1-3课／共5课）｜第10讲：Python Lambda表达式与列表推导式 🐍✨
+# 10：Python Lambda表达式与列表推导式 🐍✨
 
 ![](img/517a3eebb3eb0142bbe29e7ff92052f3_0.png)
 

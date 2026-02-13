@@ -1,5 +1,4 @@
-# 课程名称：Python用于数据科学实践（第1-3课／共5课）｜Applied Data Science with Python
-## 课程编号：P36 - 6_图形启发式：谎言因子与火花线（Edward Tufte）📊
+# 36：图形启发式：谎言因子与火花线（Edward Tufte）📊
 
 ![](img/c0a38836fb74ece4e640babea9cd01c6_0.png)
 

@@ -1,4 +1,4 @@
-# 课程三：Pandas 日期与时间功能详解 📅
+# 27：Pandas 日期与时间功能详解 📅
 
 ![](img/b07b1d12cdb13a8edc4e48e903d76a66_0.png)
 

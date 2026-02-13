@@ -1,4 +1,4 @@
-# 课程 24：分组聚合 (GroupBy) 📊
+# 24：分组聚合 (GroupBy) 📊
 
 ![](img/63bf43c5f0710cea0bb09955489fd7c6_0.png)
 

@@ -1,5 +1,4 @@
-# 课程名称：Python用于数据科学实践（第9课）🚀
-## 核心概念：Python高级对象与映射
+# 9：Python高级对象与映射
 
 ![](img/fa4d41a3f80a094d10efd581e29fc9f9_0.png)
 

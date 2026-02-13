@@ -1,5 +1,4 @@
-# 课程名称：Python用于数据科学实践（1-3课／共5课）｜Applied Data Science with Python
-## 课程编号：P35 - 图形启发式：图表垃圾（Edward Tufte）📊
+# 35：图形启发式：图表垃圾（Edward Tufte）📊
 
 ![](img/6d432a90902e242672b3cfc50b8f903c_0.png)
 

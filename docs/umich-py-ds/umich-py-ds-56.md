@@ -1,4 +1,4 @@
-# 课程一：Python数据科学专项课程更新说明 📢
+# 56：Python数据科学专项课程更新说明 📢
 
 ![](img/e01a38dc731ebf55ea7262e09fcc6f2f_0.png)
 

@@ -1,4 +1,4 @@
-# 课程1：Python用于数据科学实践 - P32：Christopher Brooks教授介绍 👨‍🏫
+# 32：Christopher Brooks教授介绍 👨‍🏫
 
 ![](img/8a5c8369fc180c7e774e1d4b9da6b79c_0.png)
 

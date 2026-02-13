@@ -1,4 +1,4 @@
-# 课程1-3：DataFrame索引与数据加载 📊
+# 17：DataFrame索引与数据加载 📊
 
 ![](img/428f689b21b3c554a400d6ea143f65d1_0.png)
 

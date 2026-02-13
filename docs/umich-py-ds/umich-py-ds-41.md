@@ -1,5 +1,4 @@
-# 课程名称：Python用于数据科学实践（第1-3课／共5课）｜Applied Data Science with Python
-## 课程编号：P41 - 11_散点图绘制 🎯
+# 41：散点图绘制 🎯
 
 ![](img/1b4510e29b348194f1aaa543da9ed448_0.png)
 

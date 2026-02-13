@@ -1,5 +1,4 @@
-# 课程名称：Python用于数据科学实践（第3课）｜Applied Data Science with Python
-## 课程编号：P47 - 17_箱线图绘制 📊
+# 47：箱线图绘制 📊
 
 ![](img/52d017e808bd4e76ca531e3e17b0cfb4_0.png)
 
