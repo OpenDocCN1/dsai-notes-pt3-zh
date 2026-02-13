@@ -1,5 +1,4 @@
-# 课程名称：Python用于数据科学实践（1-3课／共5课）｜Applied Data Science with Python
-## 课程编号：P80 - 回归模型评估 📊
+# 80：回归模型评估 📊
 
 ![](img/75bd81c29ad063d258bf0dfff3f5bc61_0.png)
 

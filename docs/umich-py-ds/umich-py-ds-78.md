@@ -1,5 +1,4 @@
-# 课程名称：Python用于数据科学实践（1-3课／共5课）｜Applied Data Science with Python
-## 第78讲：精确率-召回率与ROC曲线 📊
+# 78：精确率-召回率与ROC曲线 📊
 
 ![](img/d3d2209a25b16f1edaff59caea1e50a3_0.png)
 
