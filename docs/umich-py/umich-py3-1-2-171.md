@@ -1,4 +1,4 @@
-# 课程1：Python 3编程 - P171：在云端运行Python 🚀
+# 171：在云端运行Python 🚀
 
 ![](img/e32b03b50c8101ae8a1409fce3050f26_0.png)
 

@@ -1,4 +1,4 @@
-# Python 3 编程（课程1、2）｜第58课：使用 `assert` 进行自动化测试 🧪
+# 58课：使用 `assert` 进行自动化测试 🧪
 
 ![](img/525156e5a118c8ffdc5934cfbd971caa_0.png)
 

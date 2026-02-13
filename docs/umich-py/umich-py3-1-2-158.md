@@ -1,4 +1,4 @@
-# Python 3 编程（课程1、2）｜第70课：`sort`与`sorted`方法调用 📊
+# 70课：`sort`与`sorted`方法调用 📊
 
 ![](img/8418dd703685ac760c5a68c837af0fdc_0.png)
 

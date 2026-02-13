@@ -1,4 +1,4 @@
-# 课程1：Python 3 编程（第二版） 🐍
+# 2：Python 3 编程（第二版） 🐍
 
 ![](img/dccbefa48c4d44706c969fa98e43e2f1_0.png)
 

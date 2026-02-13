@@ -1,4 +1,4 @@
-# 课程1：Python 3编程 - P169：在Mac上安装本地Python与VS Code 🍎💻
+# 169：在Mac上安装本地Python与VS Code 🍎💻
 
 ![](img/cc4dc82b1f0583418b8b8a3f8638baf9_0.png)
 

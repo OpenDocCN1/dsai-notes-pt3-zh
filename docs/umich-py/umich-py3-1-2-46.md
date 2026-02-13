@@ -1,4 +1,4 @@
-# Python 3 编程（课程1、2）｜第46课：range函数详解 🐍
+# 46课：range函数详解 🐍
 
 ![](img/7df4e807aaaf16c050e2e4f48bec64db_0.png)
 

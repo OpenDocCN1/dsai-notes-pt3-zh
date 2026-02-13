@@ -1,4 +1,4 @@
-# 课程1：Python 3编程 - P41：字符串的`split`与`join`方法 🧩
+# 41：字符串的`split`与`join`方法 🧩
 
 ![](img/b158234d2da4865f27f84c17975178e5_0.png)
 

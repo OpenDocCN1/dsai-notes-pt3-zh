@@ -1,4 +1,4 @@
-# 课程1：Python 3编程 - P170：VS Code使用指南 🛠️
+# 170：VS Code使用指南 🛠️
 
 ![](img/d9764afdd3dcb2181fe5a6e1a383f804_0.png)
 

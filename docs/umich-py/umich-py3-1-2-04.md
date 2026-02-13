@@ -1,4 +1,4 @@
-# 课程1：Python编程入门指南 🐍
+# 4：Python编程入门指南 🐍
 
 ![](img/3ad20bbb6eefc9d42e6ee787fc9d2260_0.png)
 
