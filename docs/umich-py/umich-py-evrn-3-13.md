@@ -1,4 +1,4 @@
-# 3：《使用Python访问Web数据》｜P13：13_03_03_实战示例_套接字 🖥️
+# 每个人的 Python 第三部分 13：13_03_03_实战示例_套接字 🖥️
 
 在本节课中，我们将要学习如何使用Python的`socket`库来手动模拟浏览器，通过HTTP协议从网络服务器获取数据。我们将通过一个具体的代码示例，展示如何建立网络连接、发送HTTP请求以及接收响应数据。
 
@@ -48,23 +48,23 @@
 ```python
 import socket
 
-# 创建一个套接字对象
+# 每个人的 Python 第三部分 创建一个套接字对象
 mysock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-# 连接到目标服务器的80端口
+# 每个人的 Python 第三部分 连接到目标服务器的80端口
 mysock.connect(('data.pr4e.org', 80))
-# 准备HTTP GET命令，并进行编码
+# 每个人的 Python 第三部分 准备HTTP GET命令，并进行编码
 cmd = 'GET http://data.pr4e.org/romeo.txt HTTP/1.0\r\n\r\n'.encode()
-# 通过套接字发送命令
+# 每个人的 Python 第三部分 通过套接字发送命令
 mysock.send(cmd)
 
-# 循环接收服务器返回的数据
+# 每个人的 Python 第三部分 循环接收服务器返回的数据
 while True:
     data = mysock.recv(512) # 每次最多接收512字节
     if len(data) < 1: # 如果接收不到数据，说明传输结束
         break
     print(data.decode(), end='') # 将接收的字节数据解码为字符串并打印
 
-# 关闭套接字连接
+# 每个人的 Python 第三部分 关闭套接字连接
 mysock.close()
 ```
 

@@ -1,4 +1,4 @@
-# 3：《使用Python访问Web数据》｜P12：超文本传输协议（HTTP）🌐
+# 每个人的 Python 第三部分 12：超文本传输协议（HTTP）🌐
 
 ![](img/3d53bed529dcc72c0b99cff3033778fc_0.png)
 
@@ -114,22 +114,22 @@ GET /page1.html HTTP/1.0
 ```python
 import socket
 
-# 创建套接字（一个“门”）
+# 每个人的 Python 第三部分 创建套接字（一个“门”）
 mysock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-# 连接到服务器的80端口
+# 每个人的 Python 第三部分 连接到服务器的80端口
 mysock.connect(('data.pr4e.org', 80))
-# 准备并发送GET请求字符串，注意末尾有两个换行符 \n\n
+# 每个人的 Python 第三部分 准备并发送GET请求字符串，注意末尾有两个换行符 \n\n
 cmd = 'GET http://data.pr4e.org/page1.htm HTTP/1.0\r\n\r\n'.encode()
 mysock.send(cmd)
 
-# 循环接收数据
+# 每个人的 Python 第三部分 循环接收数据
 while True:
     data = mysock.recv(512)  # 每次最多接收512字节
     if len(data) < 1:        # 如果没有数据，表示传输结束
         break
     print(data.decode(), end='')  # 解码并打印数据
 
-# 关闭套接字，释放资源
+# 每个人的 Python 第三部分 关闭套接字，释放资源
 mysock.close()
 ```
 

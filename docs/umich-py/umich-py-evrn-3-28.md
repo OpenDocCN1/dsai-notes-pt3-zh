@@ -1,4 +1,4 @@
-# 课程3：《使用Python访问Web数据》｜第28讲：可扩展标记语言XML 📖
+# 每个人的 Python 第三部分 28：可扩展标记语言XML 📖
 
 ![](img/45234ecef94751e341711babe3f8ea8c_0.png)
 

@@ -1,4 +1,4 @@
-# 课程3：《使用Python访问Web数据》｜第37讲：JSON的发现之旅 🧩
+# 每个人的 Python 第三部分 37：JSON的发现之旅 🧩
 
 在本节课中，我们将跟随道格拉斯·克罗克福德的访谈，了解JSON（JavaScript Object Notation）这一关键数据交换格式的发现过程、设计理念及其重要性。JSON如今已成为Web数据交换的基石。
 

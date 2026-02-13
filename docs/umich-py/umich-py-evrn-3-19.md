@@ -1,4 +1,4 @@
-# 3：《使用Python访问Web数据》｜P19：Unicode字符与字符串 🧩
+# 每个人的 Python 第三部分 19：Unicode字符与字符串 🧩
 
 ![](img/3db17008d3fe4c546efce0cd179c006e_0.png)
 
@@ -96,16 +96,16 @@ UTF-8有一个关键优势：它与ASCII编码完全兼容。纯ASCII文本在UT
 默认情况下，这两个方法都假设使用 **UTF-8** 编码，这涵盖了绝大多数情况。
 
 ```python
-# 示例：网络通信中的编码与解码
-# 假设我们从网络接收到字节数据
+# 每个人的 Python 第三部分 示例：网络通信中的编码与解码
+# 每个人的 Python 第三部分 假设我们从网络接收到字节数据
 data_from_network = b'Hello World'  # 这是一个 bytes 对象
 
-# 1. 解码：将字节转换为内部字符串 (bytes -> str)
+# 每个人的 Python 第三部分 1. 解码：将字节转换为内部字符串 (bytes -> str)
 internal_string = data_from_network.decode('utf-8') # 通常可省略 'utf-8'
 print(internal_string)  # 输出：Hello World
 print(type(internal_string)) # 输出：<class 'str'>
 
-# 2. 编码：准备发送字符串到网络 (str -> bytes)
+# 每个人的 Python 第三部分 2. 编码：准备发送字符串到网络 (str -> bytes)
 message_to_send = "你好，世界"
 external_bytes = message_to_send.encode('utf-8') # 通常可省略 'utf-8'
 print(external_bytes)  # 输出：b'\xe4\xbd\xa0\xe5\xa5\xbd\xef\xbc\x8c\xe4\xb8\x96\xe7\x95\x8c'

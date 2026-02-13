@@ -1,4 +1,4 @@
-# 课程3：《使用Python访问Web数据》｜P23：实战示例_BeautifulSoup 🧑‍💻
+# 每个人的 Python 第三部分 23：实战示例_BeautifulSoup 🧑‍💻
 
 ## 概述
 
@@ -33,7 +33,7 @@ from bs4 import BeautifulSoup
 ```python
 import ssl
 
-# 忽略SSL证书错误
+# 每个人的 Python 第三部分 忽略SSL证书错误
 ctx = ssl.create_default_context()
 ctx.check_hostname = False
 ctx.verify_mode = ssl.CERT_NONE

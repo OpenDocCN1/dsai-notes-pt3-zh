@@ -1,4 +1,4 @@
-# 1：《编程入门指南（使用Python进行开发）》｜P15：在Python中编写注释 📝
+# 每个人的 Python 第一部分 15：在Python中编写注释 📝
 
 ![](img/3ae86b8d6ce2e35451d08b999586fe96_0.png)
 
@@ -15,9 +15,9 @@
 在Python中，你可以在一行代码前加上井号（`#`）来将其转换为注释。
 
 ```python
-# 这是一个注释，Python会忽略这一行
+# 每个人的 Python 第一部分 这是一个注释，Python会忽略这一行
 print("这行代码会执行")
-# print("这行被注释的代码不会执行")
+# 每个人的 Python 第一部分 print("这行被注释的代码不会执行")
 ```
 
 有时，你会为了调试而添加一些代码。当你不再需要这些调试代码时，你可以用井号将其注释掉，而不是直接删除。这样，如果你未来需要重新启用它，只需移除井号即可。这是一种“开关”代码行的便捷方法。
@@ -27,7 +27,7 @@ print("这行代码会执行")
 以下是我们在课程中反复使用的“词频统计”程序，我为其添加了四段注释：
 
 ```python
-# 获取文件名并打开文件
+# 每个人的 Python 第一部分 获取文件名并打开文件
 fname = input('Enter the file name: ')
 try:
     fhand = open(fname)
@@ -35,7 +35,7 @@ except:
     print('File cannot be opened:', fname)
     exit()
 
-# 统计词频（创建直方图）
+# 每个人的 Python 第一部分 统计词频（创建直方图）
 counts = dict()
 for line in fhand:
     words = line.split()
@@ -45,7 +45,7 @@ for line in fhand:
         else:
             counts[word] += 1
 
-# 打印结果
+# 每个人的 Python 第一部分 打印结果
 print(counts)
 ```
 

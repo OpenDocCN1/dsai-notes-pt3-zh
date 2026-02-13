@@ -1,4 +1,4 @@
-# 1：《编程入门指南（使用Python进行开发）》｜P7：Python基本要素 🐍
+# 每个人的 Python 第一部分 7：Python基本要素 🐍
 
 ![](img/ced80e006e90f4fa2b8c6ffbc9d5253c_0.png)
 

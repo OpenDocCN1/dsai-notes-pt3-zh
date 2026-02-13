@@ -1,4 +1,4 @@
-# 📚 课程2：《Python数据结构》｜ P32：元组（Tuples）详解
+# 每个人的 Python 第二部分 32：元组（Tuples）详解 📚
 
 ![](img/0b5cf3e81e92b1566f4805dcebd917e7_0.png)
 
@@ -44,19 +44,19 @@ for item in x:
 
 **示例：列表是可变的，而元组和字符串不可变**
 ```python
-# 列表是可变的
+# 每个人的 Python 第二部分 列表是可变的
 my_list = [9, 8, 7]
 my_list[2] = 6  # 成功，列表变为 [9, 8, 6]
 
-# 字符串是不可变的
+# 每个人的 Python 第二部分 字符串是不可变的
 my_str = 'abc'
-# my_str[2] = 'd'  # 这行代码会引发 TypeError
+# 每个人的 Python 第二部分 my_str[2] = 'd'  # 这行代码会引发 TypeError
 
 ![](img/0b5cf3e81e92b1566f4805dcebd917e7_7.png)
 
-# 元组是不可变的
+# 每个人的 Python 第二部分 元组是不可变的
 my_tuple = (5, 4, 3)
-# my_tuple[2] = 0  # 这行代码会引发 TypeError
+# 每个人的 Python 第二部分 my_tuple[2] = 0  # 这行代码会引发 TypeError
 ```
 
 因为元组不可变，Python可以更高效地存储它们，不需要预留额外的内存空间来应对可能的修改。这也意味着许多用于修改列表的方法（如 `append()`, `extend()`, `reverse()`, `sort()`）在元组上不可用。
@@ -75,7 +75,7 @@ my_tuple = (5, 4, 3)
 
 **示例：元组解包**
 ```python
-# 将元组 (4, ‘Fred‘) 解包并赋值给 x 和 y
+# 每个人的 Python 第二部分 将元组 (4, ‘Fred‘) 解包并赋值给 x 和 y
 (x, y) = (4, ‘Fred‘)
 print(x)  # 输出: 4
 print(y)  # 输出: Fred
@@ -84,8 +84,8 @@ print(y)  # 输出: Fred
 
 需要注意的是，赋值语句两侧的结构必须匹配。如果右侧是一个元组，左侧也必须是一个包含相同数量变量的元组结构。
 ```python
-# 这会引发错误，因为左右结构不匹配
-# (a, b) = 9
+# 每个人的 Python 第二部分 这会引发错误，因为左右结构不匹配
+# 每个人的 Python 第二部分 (a, b) = 9
 ```
 
 我们在遍历字典的 `.items()` 方法时，已经不知不觉地使用了这个特性。`.items()` 返回一个由 (键, 值) 元组组成的列表。
@@ -131,10 +131,10 @@ print((‘Jones‘, ‘Sally‘) > (‘Adams‘, ‘Sam‘))  # 输出: True，�
 **示例：按键顺序遍历字典**
 ```python
 d = {‘a‘: 10, ‘b‘: 1, ‘c‘: 22}
-# 对 items() 的结果排序，得到一个按键排序的 (键, 值) 列表
+# 每个人的 Python 第二部分 对 items() 的结果排序，得到一个按键排序的 (键, 值) 列表
 for key, value in sorted(d.items()):
     print(key, value)
-# 输出顺序将是 a, b, c
+# 每个人的 Python 第二部分 输出顺序将是 a, b, c
 ```
 
 ![](img/0b5cf3e81e92b1566f4805dcebd917e7_13.png)
@@ -146,21 +146,21 @@ for key, value in sorted(d.items()):
 ```python
 d = {‘a‘: 10, ‘b‘: 1, ‘c‘: 22}
 
-# 步骤1：创建 (值, 键) 元组列表
+# 每个人的 Python 第二部分 步骤1：创建 (值, 键) 元组列表
 temp = list()
 for key, value in d.items():
     new_tuple = (value, key)  # 注意顺序：值在前，键在后
     temp.append(new_tuple)
-# 此时 temp 是 [(10, ‘a‘), (1, ‘b‘), (22, ‘c‘)]
+# 每个人的 Python 第二部分 此时 temp 是 [(10, ‘a‘), (1, ‘b‘), (22, ‘c‘)]
 
-# 步骤2：排序，reverse=True 表示降序
+# 每个人的 Python 第二部分 步骤2：排序，reverse=True 表示降序
 temp = sorted(temp, reverse=True)
-# 排序后 temp 是 [(22, ‘c‘), (10, ‘a‘), (1, ‘b‘)]
+# 每个人的 Python 第二部分 排序后 temp 是 [(22, ‘c‘), (10, ‘a‘), (1, ‘b‘)]
 
-# 步骤3：遍历并输出，注意顺序又变回了 (键, 值)
+# 每个人的 Python 第二部分 步骤3：遍历并输出，注意顺序又变回了 (键, 值)
 for value, key in temp:
     print(key, value)
-# 输出顺序将是 c, a, b
+# 每个人的 Python 第二部分 输出顺序将是 c, a, b
 ```
 
 ---
@@ -179,7 +179,7 @@ for value, key in temp:
 
 **示例代码**：
 ```python
-# 1. 构建词频字典
+# 每个人的 Python 第二部分 1. 构建词频字典
 fhand = open(‘romeo.txt‘)
 counts = dict()
 for line in fhand:
@@ -187,7 +187,7 @@ for line in fhand:
     for word in words:
         counts[word] = counts.get(word, 0) + 1
 
-# 2. 转换为 (次数, 单词) 列表并排序
+# 每个人的 Python 第二部分 2. 转换为 (次数, 单词) 列表并排序
 lst = list()
 for key, val in counts.items():
     newtup = (val, key)  # 创建 (值, 键) 元组
@@ -195,7 +195,7 @@ for key, val in counts.items():
 
 lst = sorted(lst, reverse=True)  # 降序排序
 
-# 3. 使用切片获取前10个，并格式化输出
+# 每个人的 Python 第二部分 3. 使用切片获取前10个，并格式化输出
 for val, key in lst[:10]:  # lst[:10] 获取前10个元素
     print(key, val)
 ```
@@ -205,7 +205,7 @@ for val, key in lst[:10]:  # lst[:10] 获取前10个元素
 **代码进阶（使用列表推导式）**：
 上述转换和排序过程可以用一行“列表推导式”更简洁地完成。列表推导式是创建列表的一种强大而简洁的方式。
 ```python
-# 与上面代码块中第2、3步等效的一行代码
+# 每个人的 Python 第二部分 与上面代码块中第2、3步等效的一行代码
 print(sorted([(v, k) for k, v in counts.items()], reverse=True)[:10])
 ```
 这行代码做了以下几件事：

@@ -1,4 +1,4 @@
-# 课程2：《Python数据结构》｜第11课：在Mac上安装Python并编写程序 🍎💻
+# 每个人的 Python 第二部分 11：在Mac上安装Python并编写程序 🍎💻
 
 在本节课中，我们将学习如何在Mac电脑上安装Python，并配置一个合适的代码编辑器来编写和运行你的第一个Python程序。
 
@@ -76,20 +76,20 @@ Mac自带的“文本编辑”应用不适合编程，因为它默认保存为RT
 ![](img/4365e5f0ef0a44be84cc9d900ea0e3ec_5.png)
 
 ```bash
-# 打印当前工作目录
+# 每个人的 Python 第二部分 打印当前工作目录
 pwd
 
 ![](img/4365e5f0ef0a44be84cc9d900ea0e3ec_7.png)
 
-# 切换到桌面（假设你想在桌面创建文件夹）
+# 每个人的 Python 第二部分 切换到桌面（假设你想在桌面创建文件夹）
 cd ~/Desktop
 
 ![](img/4365e5f0ef0a44be84cc9d900ea0e3ec_9.png)
 
-# 创建一个名为‘py4e’的文件夹
+# 每个人的 Python 第二部分 创建一个名为‘py4e’的文件夹
 mkdir py4e
 
-# 进入新创建的文件夹
+# 每个人的 Python 第二部分 进入新创建的文件夹
 cd py4e
 ```
 

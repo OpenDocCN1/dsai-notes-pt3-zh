@@ -1,4 +1,4 @@
-# 3：《使用Python访问Web数据》｜P3：Windows 10 安装Python并编写程序 🖥️
+# 每个人的 Python 第三部分 3：Windows 10 安装Python并编写程序 🖥️
 
 在本节课中，我们将学习如何在 Windows 10 系统上安装 Python 编程语言，安装一个简单的文本编辑器，并运行你的第一个 Python 程序。
 

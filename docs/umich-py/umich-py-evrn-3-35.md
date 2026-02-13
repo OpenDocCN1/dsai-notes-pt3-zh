@@ -1,4 +1,4 @@
-# 课程3：《使用Python访问Web数据》｜第35讲：JavaScript对象表示法（JSON）📘
+# 每个人的 Python 第三部分 35：JavaScript对象表示法（JSON）📘
 
 ![](img/fbe769bbe253565c03046a23c32abf72_0.png)
 

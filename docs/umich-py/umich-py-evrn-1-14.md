@@ -1,4 +1,4 @@
-# 1：《编程入门指南（使用Python进行开发）》｜P14：变量类型 🧮
+# 每个人的 Python 第一部分 14：变量类型 🧮
 
 ![](img/c9ee4d26f5b3f0cb54d56146e15e790b_0.png)
 
@@ -15,11 +15,11 @@ Python不仅会跟踪变量中存储的值，还会跟踪这个值的**类型**�
 以下是一个简单的例子，展示了`+`运算符在不同类型下的行为：
 
 ```python
-# 当操作数是整数时，+ 执行加法
+# 每个人的 Python 第一部分 当操作数是整数时，+ 执行加法
 ddd = 1 + 4
 print(dddd)  # 输出：5
 
-# 当操作数是字符串时，+ 执行拼接
+# 每个人的 Python 第一部分 当操作数是字符串时，+ 执行拼接
 eee = ‘hello’ + ‘ there’
 print(eee)  # 输出：‘hello there’
 ```
@@ -82,13 +82,13 @@ print(type(1))  # 输出：<class ‘int’>
 以下是类型转换的示例：
 
 ```python
-# 将整数转换为浮点数
+# 每个人的 Python 第一部分 将整数转换为浮点数
 i = 42
 f = float(i)
 print(f)  # 输出：42.0
 print(type(f))  # 输出：<class ‘float’>
 
-# 将字符串转换为整数
+# 每个人的 Python 第一部分 将字符串转换为整数
 sval = ‘123’
 ival = int(sval)
 print(type(ival))  # 输出：<class ‘int’>

@@ -1,4 +1,4 @@
-# 课程3：《使用Python访问Web数据》｜第11章：正则表达式入门 🧩
+# 每个人的 Python 第三部分 7：正则表达式入门 🧩
 
 ![](img/250f441fc41b0d877f6b59250a6146ad_0.png)
 
@@ -70,7 +70,7 @@
 首先，我们看一段使用字符串方法`find()`的代码：
 
 ```python
-# 使用字符串的 find 方法
+# 每个人的 Python 第三部分 使用字符串的 find 方法
 if line.find('From:') >= 0:
     print(line)
 ```
@@ -82,7 +82,7 @@ if line.find('From:') >= 0:
 ```python
 import re
 
-# 使用正则表达式的 search 方法
+# 每个人的 Python 第三部分 使用正则表达式的 search 方法
 if re.search('From:', line):
     print(line)
 ```
@@ -102,7 +102,7 @@ if re.search('From:', line):
 我们可以使用字符串的`startswith()`方法来检查行首：
 
 ```python
-# 使用字符串的 startswith 方法
+# 每个人的 Python 第三部分 使用字符串的 startswith 方法
 if line.startswith('From:'):
     print(line)
 ```
@@ -112,7 +112,7 @@ if line.startswith('From:'):
 ```python
 import re
 
-# 使用正则表达式匹配行首
+# 每个人的 Python 第三部分 使用正则表达式匹配行首
 if re.search('^From:', line):
     print(line)
 ```

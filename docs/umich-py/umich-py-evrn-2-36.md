@@ -1,4 +1,4 @@
-# 课程2：《Python数据结构》｜ 第36讲：JSON - JavaScript对象表示法 🗂️
+# 每个人的 Python 第二部分 36：JSON - JavaScript对象表示法 🗂️
 
 在本节课中，我们将学习JSON（JavaScript Object Notation），这是一种轻量级的数据交换格式。我们将了解它的起源、设计理念以及它为何在Web开发中变得如此重要。
 

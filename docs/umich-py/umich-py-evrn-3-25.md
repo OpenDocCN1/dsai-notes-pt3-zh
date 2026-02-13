@@ -1,4 +1,4 @@
-# 3：《使用Python访问Web数据》｜P25：特别访谈 - 蒂姆·伯纳斯-李谈万维网的发明 🌐
+# 每个人的 Python 第三部分 25：特别访谈 - 蒂姆·伯纳斯-李谈万维网的发明 🌐
 
 ## 概述
 
@@ -33,7 +33,7 @@
 这个概念可以类比为我们编写网络程序时的基础：
 
 ```python
-# 当我们使用 `requests` 库访问一个URL时，我们“假定”底层的TCP/IP网络、HTTP协议是存在的、可工作的。
+# 每个人的 Python 第三部分 当我们使用 `requests` 库访问一个URL时，我们“假定”底层的TCP/IP网络、HTTP协议是存在的、可工作的。
 import requests
 response = requests.get('https://api.example.com/data')  # 我们假定网络连接和协议会正常工作
 ```

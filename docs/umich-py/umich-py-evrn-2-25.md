@@ -1,4 +1,4 @@
-# 2：《Python数据结构》｜P25：字典 🗂️
+# 每个人的 Python 第二部分 25：字典 🗂️
 
 ![](img/59c9eb37e4baa74125914f5fec1cc3c2_0.png)
 
@@ -16,7 +16,7 @@
 
 **核心概念**：字典由**键值对**组成。
 ```python
-# 字典的基本结构
+# 每个人的 Python 第二部分 字典的基本结构
 {key1: value1, key2: value2, key3: value3}
 ```
 
@@ -37,14 +37,14 @@
 让我们看一个具体的代码示例来对比：
 
 ```python
-# 列表示例
+# 每个人的 Python 第二部分 列表示例
 lst = []
 lst.append(21)
 lst.append(183)
 lst[0] = 23
 print(lst)  # 输出: [23, 183]
 
-# 字典示例
+# 每个人的 Python 第二部分 字典示例
 dct = {}
 dct[‘age’] = 21
 dct[‘course’] = 183

@@ -1,4 +1,4 @@
-# 3：《使用Python访问Web数据》｜P41：实战示例 - 使用OpenStreetMap API进行地理编码 🗺️
+# 每个人的 Python 第三部分 41：实战示例 - 使用OpenStreetMap API进行地理编码 🗺️
 
 在本节课中，我们将学习如何使用Python和OpenStreetMap的API进行地理编码。地理编码是指将文本形式的地址（例如“Ann Arbor, Michigan”）转换为精确的地理位置坐标（纬度和经度）。我们将通过一个实际的代码示例，一步步解析如何从网络API获取并处理JSON数据。
 

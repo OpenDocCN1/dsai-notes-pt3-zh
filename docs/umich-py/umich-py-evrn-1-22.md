@@ -1,4 +1,4 @@
-# 1：《编程入门指南（使用Python进行开发）》｜P22：22_06_01_使用函数 👨‍💻
+# 每个人的 Python 第一部分 22：22_06_01_使用函数 👨‍💻
 
 ![](img/f6ee03f263cf3fb3ebdca65b3201d2a7_0.png)
 
@@ -143,7 +143,7 @@ result = 2 * float('3') + 1
 ```python
 sval = '123'
 print(type(sval))  # <class 'str'>
-# print(sval + 1)   # 错误！不能将字符串与整数相加
+# 每个人的 Python 第一部分 print(sval + 1)   # 错误！不能将字符串与整数相加
 
 ival = int(sval)
 print(type(ival))  # <class 'int'>
@@ -155,7 +155,7 @@ print(ival + 1)    # 输出：124
 函数也可能执行失败：
 
 ```python
-# int('hello Bob')  # 这会导致程序崩溃 (ValueError)
+# 每个人的 Python 第一部分 int('hello Bob')  # 这会导致程序崩溃 (ValueError)
 ```
 
 如果我们尝试 `int('hello Bob')`，`int` 函数内部的代码无法将字符串转换为整数，因此函数本身会“崩溃”（引发异常），导致我们的程序也停止运行。

@@ -1,4 +1,4 @@
-# 课程3：《使用Python访问Web数据》｜第30讲：解析XML 📂
+# 每个人的 Python 第三部分 30：解析XML 📂
 
 ![](img/2664b5a4b605f395a2c17cf3700e711b_0.png)
 

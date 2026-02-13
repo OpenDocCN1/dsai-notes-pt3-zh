@@ -1,4 +1,4 @@
-# 3：《使用Python访问Web数据》｜P29：XML模式 📝
+# 每个人的 Python 第三部分 29：XML模式 📝
 
 ![](img/6f4ccda118d050f0aae2f9bf7a421446_0.png)
 

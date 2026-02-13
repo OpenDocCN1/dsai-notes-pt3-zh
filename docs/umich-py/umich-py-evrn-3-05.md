@@ -1,4 +1,4 @@
-# 课程3：《使用Python访问Web数据》｜第5课：在Macintosh上安装Python并编写程序 🍎💻
+# 每个人的 Python 第三部分 5：在Macintosh上安装Python并编写程序 🍎💻
 
 ## 概述
 
@@ -65,17 +65,17 @@ python3 --version
 ![](img/188b56a7289f9a197239a780d5c19d03_6.png)
 
 ```bash
-# 切换到桌面目录
+# 每个人的 Python 第三部分 切换到桌面目录
 cd ~/Desktop
 
 ![](img/188b56a7289f9a197239a780d5c19d03_8.png)
 
 ![](img/188b56a7289f9a197239a780d5c19d03_10.png)
 
-# 创建一个名为“py4e”的文件夹
+# 每个人的 Python 第三部分 创建一个名为“py4e”的文件夹
 mkdir py4e
 
-# 进入新创建的文件夹
+# 每个人的 Python 第三部分 进入新创建的文件夹
 cd py4e
 ```
 

@@ -1,4 +1,4 @@
-# 课程3：《使用Python访问Web数据》｜P40：使用应用程序编程接口 📡
+# 每个人的 Python 第三部分 40：使用应用程序编程接口 📡
 
 ![](img/0a56a2e22e431606cb96b665640343f9_0.png)
 
@@ -66,7 +66,7 @@
 import urllib.request, urllib.parse, urllib.error
 import json
 
-# 服务基础URL
+# 每个人的 Python 第三部分 服务基础URL
 serviceurl = 'http://py4e-data.dr-chuck.net/geojson?'
 
 while True:

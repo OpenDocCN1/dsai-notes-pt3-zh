@@ -1,4 +1,4 @@
-# 课程2：《Python数据结构》｜P26：使用字典计数 📊
+# 每个人的 Python 第二部分 26：使用字典计数 📊
 
 ![](img/7211d04d409ba17f662d825066ce681c_0.png)
 
@@ -65,7 +65,7 @@ for name in names:
         counts[name] = counts[name] + 1
 
 print(counts)
-# 输出：{'Csev': 2, 'Chen': 2, 'Gen': 1}
+# 每个人的 Python 第二部分 输出：{'Csev': 2, 'Chen': 2, 'Gen': 1}
 ```
 
 这段代码可以处理任意长度的列表，并准确生成每个姓名的出现次数统计。
@@ -93,7 +93,7 @@ for name in names:
     counts[name] = counts.get(name, 0) + 1
 
 print(counts)
-# 输出：{'Csev': 2, 'Chen': 2, 'Gen': 1}
+# 每个人的 Python 第二部分 输出：{'Csev': 2, 'Chen': 2, 'Gen': 1}
 ```
 
 在这行核心代码 `counts[name] = counts.get(name, 0) + 1` 中：

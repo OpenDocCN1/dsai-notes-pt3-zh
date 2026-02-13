@@ -1,4 +1,4 @@
-# 1：《编程入门指南（使用Python进行开发）》｜P30：查找最小值 🔍
+# 每个人的 Python 第一部分 30：查找最小值 🔍
 
 ![](img/0e3cf5370b945e60f0378a2bfd8b4b52_0.png)
 
@@ -75,15 +75,15 @@ print('Smallest:', smallest)
 
 示例：
 ```python
-# 正确：检查变量是否为 None
+# 每个人的 Python 第一部分 正确：检查变量是否为 None
 if smallest is None:
     ...
 
-# 正确：检查变量是否不是 None
+# 每个人的 Python 第一部分 正确：检查变量是否不是 None
 if smallest is not None:
     ...
 
-# 通常对于值比较，使用 ==
+# 每个人的 Python 第一部分 通常对于值比较，使用 ==
 if value == 10:
     ...
 ```

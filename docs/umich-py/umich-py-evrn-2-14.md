@@ -1,4 +1,4 @@
-# 密歇根大学《Python数据结构》课程2-14：文件处理 📂
+# 每个人的 Python 第二部分 14：文件处理 📂
 
 ![](img/2b3269d805d590a0fdf7b21665b2fe42_0.png)
 
@@ -159,7 +159,7 @@ except:
     print('文件无法打开：', fname)
     quit() # 退出程序，避免继续执行
 
-# 如果文件成功打开，继续处理
+# 每个人的 Python 第二部分 如果文件成功打开，继续处理
 count = 0
 for line in file_handle:
     if line.startswith('Subject:'):

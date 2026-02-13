@@ -1,4 +1,4 @@
-# 📁 密歇根大学《Python数据结构》课程 2-13：文件操作入门
+# 每个人的 Python 第二部分 13：文件操作入门 📁
 
 ![](img/b439688faaa5532cadc21f1454078075_0.png)
 
@@ -37,7 +37,7 @@ file_handle = open('inbox.txt')
 如果你直接打印这个文件句柄，看到的不是文件内容，而是关于这个连接的一些信息：
 ```python
 print(file_handle)
-# 输出类似：<_io.TextIOWrapper name='inbox.txt' mode='r' encoding='UTF-8'>
+# 每个人的 Python 第二部分 输出类似：<_io.TextIOWrapper name='inbox.txt' mode='r' encoding='UTF-8'>
 ```
 输出告诉我们这是一个文件对象，处于读取模式，并使用UTF-8编码解读数据。
 
@@ -55,12 +55,12 @@ print(file_handle)
 ```python
 stuff = 'X\nY'
 print(stuff)
-# 输出：
-# X
-# Y
+# 每个人的 Python 第二部分 输出：
+# 每个人的 Python 第二部分 X
+# 每个人的 Python 第二部分 Y
 
 print(len(stuff))
-# 输出：3
+# 每个人的 Python 第二部分 输出：3
 ```
 字符串`‘X\nY’`打印出来是两行，但它的长度是3个字符（‘X‘, ‘\n‘, ‘Y‘），而不是4个。这证明了`\n`是一个单独的字符。
 

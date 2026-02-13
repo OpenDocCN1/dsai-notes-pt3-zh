@@ -1,4 +1,4 @@
-# 3：《使用Python访问Web数据》｜python-network-data｜ - P2：02_01_01_欢迎使用Python_Guido_van_Rossum
+# 每个人的 Python 第三部分 2：02_01_01_欢迎使用Python_Guido_van_Rossum
 
 ## 🎤 课程概述
 
