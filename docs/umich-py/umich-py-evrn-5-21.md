@@ -1,4 +1,4 @@
-# 5：《毕业项目：使用Python检索、处理和可视化数据》｜P21：21_06_02_访谈-Nathaniel Borenstein（MIME协议之父）🧑💻
+# 每个人的 Python 第五部分 21：21_06_02_访谈-Nathaniel Borenstein（MIME协议之父）🧑💻
 
 ## 概述
 

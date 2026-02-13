@@ -1,4 +1,4 @@
-# 5：《毕业项目：使用Python检索、处理和可视化数据》｜P5：05_02_01_PageRank算法概述 📊
+# 每个人的 Python 第五部分 5：05_02_01_PageRank算法概述 📊
 
 ![](img/d535f200617e3d54da2c89f5ed8c9f57_0.png)
 

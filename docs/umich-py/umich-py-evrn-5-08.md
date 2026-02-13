@@ -1,4 +1,4 @@
-# 5：《毕业项目：使用Python检索、处理和可视化数据》｜P8：PageRank可视化实例演练 🎯
+# 每个人的 Python 第五部分 8：PageRank可视化实例演练 🎯
 
 ## 概述
 
@@ -13,7 +13,7 @@
 以下是`spdump.py`脚本的核心功能，它负责执行SQL查询并打印排名靠前的页面。
 
 ```python
-# 连接数据库并创建游标
+# 每个人的 Python 第五部分 连接数据库并创建游标
 cur.execute('''SELECT COUNT(from_id) AS inbound, old_rank, new_rank, id, url
                  FROM pages JOIN links ON pages.id = links.to_id
                  WHERE html IS NOT NULL AND error IS NULL
@@ -42,7 +42,7 @@ cur.execute('''SELECT COUNT(from_id) AS inbound, old_rank, new_rank, id, url
 这个脚本执行一个更复杂的SQL查询，连接多个表，并筛选出PageRank值最高的一些节点。
 
 ```python
-# 执行查询，获取高排名的页面和链接关系
+# 每个人的 Python 第五部分 执行查询，获取高排名的页面和链接关系
 cur.execute('''SELECT DISTINCT from_id, to_id FROM links''')
 links = list(cur.fetchall())
 ```

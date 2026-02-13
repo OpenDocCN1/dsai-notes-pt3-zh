@@ -1,4 +1,4 @@
-# 5：《毕业项目：使用Python检索、处理和可视化数据》｜python-data-visualization｜ - P2：02_01_02_Unicode字符与字符串 📚
+# 每个人的 Python 第五部分 2：02_01_02_Unicode字符与字符串 📚
 
 ![](img/d2b9777283ea1ec3922ab425fd237131_0.png)
 
@@ -93,14 +93,14 @@ UTF-8的优势在于：
 以下是关键的操作：
 
 ```python
-# 从外部接收字节数据，解码为字符串
+# 每个人的 Python 第五部分 从外部接收字节数据，解码为字符串
 external_bytes_data = b'...'  # 例如从socket.recv()获得
 internal_string = external_bytes_data.decode()  # 默认使用 UTF-8 解码
 
-# 准备向外部发送数据，将字符串编码为字节
+# 每个人的 Python 第五部分 准备向外部发送数据，将字符串编码为字节
 internal_string = "Hello World"
 external_bytes_data = internal_string.encode()  # 默认使用 UTF-8 编码
-# 然后发送 external_bytes_data，例如使用 socket.send()
+# 每个人的 Python 第五部分 然后发送 external_bytes_data，例如使用 socket.send()
 ```
 
 *   **`.decode()`** 是 `bytes` 对象的方法，用于将字节序列转换为字符串。默认编码是UTF-8，这涵盖了绝大多数情况（包括纯ASCII，因为UTF-8兼容ASCII）。

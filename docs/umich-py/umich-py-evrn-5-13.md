@@ -1,4 +1,4 @@
-# 5：《毕业项目：使用Python检索、处理和可视化数据》｜P13：Gmane系统介绍 📧
+# 每个人的 Python 第五部分 13：Gmane系统介绍 📧
 
 ![](img/1fbdb08f221a4012217f51fbbf04c986_0.png)
 
