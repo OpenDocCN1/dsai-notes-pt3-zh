@@ -1,4 +1,4 @@
-# 4：《使用数据库进行Python编程》｜python-databases｜ - P2：02_01_05_Unicode字符与字符串 📚
+# 每个人的 Python 第四部分 2：Unicode字符与字符串 📚
 
 ![](img/58fff89b3d07d792e8a103e3faa3176e_0.png)
 

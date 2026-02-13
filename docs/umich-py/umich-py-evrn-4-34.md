@@ -1,4 +1,4 @@
-# 4：《使用数据库进行Python编程》｜P34：34_05_02_附加访谈：Richard Stallman谈自由软件基金会 🗽💻
+# 每个人的 Python 第四部分 34：34_05_02_附加访谈：Richard Stallman谈自由软件基金会 🗽💻
 
 ## 概述
 

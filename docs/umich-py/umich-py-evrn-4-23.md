@@ -1,4 +1,4 @@
-# 4：《使用数据库进行Python编程》｜P23：实战示例：tracks.py程序 📂
+# 每个人的 Python 第四部分 23：实战示例：tracks.py程序 📂
 
 ![](img/328a55af607248a550615fd51e572b82_1.png)
 
@@ -81,12 +81,12 @@ cur.execute('DROP TABLE IF EXISTS Track')
 
 ![](img/328a55af607248a550615fd51e572b82_32.png)
 
-# 创建新表
+# 每个人的 Python 第四部分 创建新表
 cur.execute('''CREATE TABLE Artist (
     id  INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,
     name    TEXT UNIQUE
 )''')
-# ... 创建Album和Track表的语句
+# 每个人的 Python 第四部分 ... 创建Album和Track表的语句
 ```
 
 ## 读取与解析CSV数据

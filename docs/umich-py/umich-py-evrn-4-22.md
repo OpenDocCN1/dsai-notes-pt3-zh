@@ -1,4 +1,4 @@
-# 4：《使用数据库进行Python编程》｜ P22：22_03_04_通过JOIN重构数据 🧩
+# 每个人的 Python 第四部分 22：22_03_04_通过JOIN重构数据 🧩
 
 ![](img/74782a092fe9d635efffd4ae9cefeca8_0.png)
 

@@ -1,4 +1,4 @@
-# 4：《使用数据库进行Python编程》｜python-databases｜ - P5：05_01_03_Macintosh系统使用Python与编写程序 🍎
+# 每个人的 Python 第四部分 5：05_01_03_Macintosh系统使用Python与编写程序 🍎
 
 在本节课中，我们将学习如何在Macintosh系统上下载并安装Python 3，以及如何编写并运行你的第一个Python程序。
 

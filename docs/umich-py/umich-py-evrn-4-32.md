@@ -1,4 +1,4 @@
-# 4：《使用数据库进行Python编程》｜P32：实战示例：地理数据处理 🌍
+# 每个人的 Python 第四部分 32：实战示例：地理数据处理 🌍
 
 ## 概述
 
@@ -69,7 +69,7 @@ CREATE TABLE IF NOT EXISTS Locations (address TEXT, geodata TEXT)
 import json
 js = json.loads(geodata_str) # geodata_str是从数据库读取的JSON字符串
 
-# 假设返回的JSON结构包含一个‘features‘数组
+# 每个人的 Python 第四部分 假设返回的JSON结构包含一个‘features‘数组
 if ‘features‘ in js and len(js[‘features‘]) > 0:
     lon = js[‘features‘][0][‘geometry‘][‘coordinates‘][0]
     lat = js[‘features‘][0][‘geometry‘][‘coordinates‘][1]
