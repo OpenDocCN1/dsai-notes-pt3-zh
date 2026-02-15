@@ -1,0 +1,86 @@
+# 吴恩达最新《面向每个人的生成式AI》Generative AI for Everyone（中英字幕） - P29：29_03_03_负责任AI.zh_en - GPT中英字幕课程资源 - BV11G411X7nZ
+
+![](img/fc0d6bb1f1a0f0decaaff96c3395b123_0.png)
+
+Responsible AI refers to developing and using AI in ways that are ethical。
+
+ trustworthy and socially responsible。Loss of developers。
+
+ businesses and governments care about this and have been having conversations and also been working hard to make sure that AI is built and used responsibly。
+
+Because of all this attention and effort on responsible AI。
+
+ we've actually made quite a lot of progress on this in the last few years with， for example。
+
+ many governments and companies publishing frameworks for responsible AI。
+
+But a lot of work still remains。 Let's take a look at what responsible AI means。
+
+While we're still figuring out a lot of details of how to build responsible AI。
+
+ some common themes have emerged， these are some of。
+
+ I think the key dimensions of implementing responsible AI。
+
+First is fairness to ensure that AI doesn't perpetuate or amplify biases。
+
+Transparency to make sure AI systems and the decisions are understandable to the stakeholders and the people impacted。
+
+Privacy， protecting user data and ensuring confidentiality， security。
+
+ safeguarding AI systems for malicious attacks， and lastly， ethical use。
+
+ ensuring the AI is used for beneficial purposes。 One of the challenges of these dimensions or these principles is that the implementation is not always straightforward。
+
+ For example， for I think at least a couple thousand years now。
+
+ humanity has been debating what is ethical and what is not ethical， there is unfortunately。
+
+ no clear mathematical definition of ethical versus unethical behavior。 although， of course。
+
+ there are many clear cut cases as well。 but that's why for individuals， organizations。
+
+ even countries to adopt responsible AI， there are certain emerging best practices to hope have the discussion and debate that will lead to better and more responsible decisions。
+
+ even when sometimes the right thing to do could be ambiguous。 I want to share a few tips first。
+
+I think it is important to build a culture that encourages discussion and debate on ethical issues So if someone on your team has a concern about the use of response AI。
+
+ it'd be great if they have the freedom to raise that issue to enable the team to maybe make a better decision Second tip is to brainstorm either by yourself or with your team or with an even broader group of stakeholders how things could go wrong。
+
+ I found on many projects that this brainstorming can help identify potential problems and allow the team to mitigate them in advance。
+
+ A checklist for brainstorming could be the five dimensions I described on the previous slide could the AI system have issues with fairness。
+
+ transparency， privacy， security or ethical use For example， on some of the projects I've worked on。
+
+ my team has brainstorm in events if the L we deployed could have fairness issues such as if it might exhibit some of the biases that you saw earlier in this course。
+
+Finally， I encourage you to work with a diverse team and include perspectives from all stakeholders impacted by the AI system。
+
+For many projects， seeking a diverse set of opinions。
+
+ as well speaking with people that could be quite different than myself has allowed my team to understand better the impact of an AI system and LED us to make better decisions。
+
+ For example， building systems in healthcare， I found that talking to patients and doctors gave perspectives different than mine and really changed the direction we took our projects in and working on retail applications。
+
+ talking to some of the customers， as was a sellers gave my team new ideas that we wouldn't have had otherwise。
+
+ And I think this pattern is true for many projects。
+
+
+
+![](img/fc0d6bb1f1a0f0decaaff96c3395b123_2.png)
+
+If you work in a specific industry such as healthcare or finance or media or tech。
+
+ there may be emerging best practices for responsible AI specific to your industry that could be useful to consult as well as you embark on your project。
+
+I think we all want to use AI to make people better off there have been a few times that I've code projects that I assessed to be financially sound on ethical grounds。
+
+As you decide what to work on and what not to work on。
+
+ I hope you keep on considering responsible AI and only work on projects that you think are ethical and that make people better off。
+
+And now we're approaching the end of this course， let's go to the next video to see a summary of what weve covered。
+
