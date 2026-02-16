@@ -1,4 +1,4 @@
-# 课程名称：SQL基础操作 - 第29课：CREATE TABLE与INSERT INTO 🗂️
+# 29：CREATE TABLE与INSERT INTO 🗂️
 
 在本节课中，我们将学习如何使用SQL语句创建新表（CREATE TABLE）以及如何向表中插入数据（INSERT INTO）。这是构建和管理数据库的基础。
 

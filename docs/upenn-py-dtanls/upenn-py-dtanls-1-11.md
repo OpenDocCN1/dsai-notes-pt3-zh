@@ -1,4 +1,4 @@
-# 课程P11：Codio平台SQL作业实践指南 🗂️
+# 11：Codio平台SQL作业实践指南 🗂️
 
 ![](img/aeefa4a4c5b3ea01feb37745832899e8_0.png)
 

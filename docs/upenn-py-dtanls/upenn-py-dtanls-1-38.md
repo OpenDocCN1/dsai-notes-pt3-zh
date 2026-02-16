@@ -1,4 +1,4 @@
-# 课程 P38：Codio平台Jupyter Notebook作业指南 📘
+# 38：Codio平台Jupyter Notebook作业指南 📘
 
 ![](img/c899e1364fa104c179d8f429c3cbd78b_0.png)
 
