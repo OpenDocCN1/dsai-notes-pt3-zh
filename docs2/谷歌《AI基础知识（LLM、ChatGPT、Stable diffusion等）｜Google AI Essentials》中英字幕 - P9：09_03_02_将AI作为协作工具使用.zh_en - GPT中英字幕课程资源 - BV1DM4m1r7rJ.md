@@ -1,0 +1,71 @@
+# 谷歌《AI基础知识（LLM、ChatGPT、Stable diffusion等）｜Google AI Essentials》中英字幕 - P9：09_03_02_将AI作为协作工具使用.zh_en - GPT中英字幕课程资源 - BV1DM4m1r7rJ
+
+![](img/9c5bb74e7b28d35c642a29583bd0a4fe_0.png)
+
+Ever wondered how to turn your busy workday into an orderly operation。
+
+ Let's consider the incredible ways AI can enhance your day to day processes。When we use AI at work。
+
+ embracing a people first strategy is essential。AI enhances our unique human skills and simplifies many of the tasks that we perform。
+
+Essentially， AI augments our own capabilities。 In this context。
+
+ AI augmentation refers to the process of using AI to improve a work product。
+
+ whether by making it easier to do or higher in quality。 For example。
+
+ Think of your own job or a job you might have held in the past。Like mine。
+
+ your job probably consists of a variety of tasks and duties。Some of the tasks might be simple。
+
+ like manually responding to routine questions over email。 Other tasks might be more complex。
+
+ like brainstorming new ideas of coworkers。 AI can help you with many of these things by augmenting the work you do。
+
+ helping you complete the task quicker and more efficiently。
+
+Another way AI can help you to do your work is through automation。
+
+ AI automation refers to the process of using AI to accomplish tasks without any action on the user's part。
+
+ For example， maybe a customer support representative receives hundreds of emails every day from customers asking for help。
+
+ They might spend a lot of time reading each email and typing responses one at a time。
+
+Using an AI tool， they could automatically sort incoming emails by priority for emails with low priority。
+
+ They could use AI to draft replies with some guidance from other customer support agents or training data containing past replies。
+
+ the AI could learn to quickly generate quality email responses。By automating this task。
+
+ the representative could then focus on high priority messages。
+
+ like ones reporting complex issues that require personal attention。
+
+Striking the right balance between augmentation and automation takes time。
+
+ practice and thoughtful consideration。 Suful businesses can set themselves apart by applying a people first approach to AI and their products。
+
+ services and jobs。 Think of AI as a collaborative workspace that thrives on diverse perspectives。
+
+ Consider a public relations professional who wants to use AI to assist in the creation of press releases。
+
+😊，To make sure they get an optimal result， they need to provide human oversight of the AI tool。
+
+But it shouldn't stop there。It's essential that they also collaborate with other members of their team。
+
+ such as managers who can coordinate resources for the project。
+
+ members of the editorial team to ensure that the releases are representative of the brand's voice and guidance from the legal department to ensure appropriate rules and regulations are followed。
+
+Everyone has to cooperate to integrate AI successfully and to make sure the tools' generated output meets expectations。
+
+ Integrating AI at work must be an inclusive process。
+
+ It requires diverse perspectives from people across different roles and departments to achieve the best results。
+
+ It's critical to learn and adapt as AI is introduced into the workplace。
+
+By taking the time to understand AI and how it can provide benefits in your work。
+
+You can effectively contribute to the discussion。
