@@ -1,0 +1,61 @@
+# 谷歌《AI基础知识（LLM、ChatGPT、Stable diffusion等）｜Google AI Essentials》中英字幕 - P47：8_04_02_谷歌人工智能要点课程结语.zh_en - GPT中英字幕课程资源 - BV1DM4m1r7rJ
+
+![](img/9e65fa15c8bc5d30c888a08eb77031a9_0.png)
+
+Congratulations on completing this course。 It's great that you've taken the time to learn about AI and the possibilities for incorporating into your work。
+
+ We explored so many different concepts related to AI。 First， we explored the basics of AI。
+
+ We covered some foundational AI concepts such as what AI is and how it works and we discussed the capabilities and limitations of AI in the workplace。
+
+ Next， we discussed ways to apply AI to work tasks。
+
+ We covered the basics of an AI model and how it's trained on large amounts of data to accomplish a wide variety of tasks。
+
+ and we discussed a variety of common applications for AI tools。😊。
+
+
+
+![](img/9e65fa15c8bc5d30c888a08eb77031a9_2.png)
+
+![](img/9e65fa15c8bc5d30c888a08eb77031a9_3.png)
+
+Then we explored how to help increase productivity。
+
+ optimize workflow and solve problems in the workplace with AI tools。
+
+ and we covered the importance of human involvement and judgment when using AI tools in your work。
+
+ including practicing personal responsibility with any AI augmented task。After that。
+
+ we went over how to write effective prompts。 We examined how large language models produce output。
+
+ We also discussed how writing clear and specific prompts is an important part of prompt engineering。
+
+ as well as how to analyze output and revise prompts as necessary。
+
+Then we talked about how to use AI responsibly。 We covered common risks and unfair biases that are inherent to AI tools and how to mitigate them。
+
+ We also went over potential social harms and security repercussions of using AI in the workplace。
+
+Finally， we learned some strategies for staying current with AI。
+
+ We explored how to evaluate AI tools for the workplace and took inspiration from how others are innovating with AI in different industries。
+
+ We also identified ways to leverage AI in the workplace。😊，Where you go next is up to you。
+
+ You might schedule a regular networking chat with others in your industry to learn about the latest advancements in AI。
+
+ You can advocate for responsible AI practices at your company。
+
+Maybe you focus more closely on certain aspects of AI。
+
+ such as how to best integrate multimodal models or the latest research techniques for engineering prompts。
+
+ Or you might start leveraging AI in your day to day work。
+
+ using tools introduced in this course or new AI tools that you identify。
+
+ No matter what your next step is， I'm proud of you for taking this course and learning more about AI。
+
+😊。
