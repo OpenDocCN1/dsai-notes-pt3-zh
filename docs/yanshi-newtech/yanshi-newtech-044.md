@@ -1,4 +1,4 @@
-# 课程8：GPS与AGPS技术详解 📡
+# 44：GPS与AGPS技术详解 📡
 
 ![](img/c981850bc2f761c8494f7bddd7ba49c6_0.png)
 

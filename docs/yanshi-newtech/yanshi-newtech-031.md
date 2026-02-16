@@ -1,4 +1,4 @@
-# 课程 30：5.2 Storm 应用 🌀
+# 31：5.2 Storm 应用 🌀
 
 ![](img/86ebed0679a31a6f013cbb625df3c8eb_0.png)
 

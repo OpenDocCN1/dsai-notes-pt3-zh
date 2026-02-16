@@ -1,4 +1,4 @@
-# 课程P4：主要大数据公司概览（Oracle, HPE, Splunk, Accenture, Dell, Teradata）📊
+# 4：主要大数据公司概览（Oracle, HPE, Splunk, Accenture, Dell, Teradata）📊
 
 ![](img/3a1c87c5e9b1deac6b14018d6cef41df_0.png)
 
