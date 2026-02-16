@@ -1,4 +1,4 @@
-# 延世大学《新兴技术从智能手机到物联网再到大数据》课程 - P24：Spark SQL 与 Spark GraphX 🚀
+# 24：Spark SQL 与 Spark GraphX 🚀
 
 ![](img/793a6d7be830c6ac4d5aa2e605651a01_1.png)
 

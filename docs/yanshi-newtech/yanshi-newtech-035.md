@@ -1,4 +1,4 @@
-# 延世大学《新兴技术从智能手机到物联网再到大数据》课程 - P35：IBM SPSS Statistics 项目实践 🧮
+# 35：IBM SPSS Statistics 项目实践 🧮
 
 ![](img/eb40802100dacdb3cd75fd98e7c06d02_0.png)
 

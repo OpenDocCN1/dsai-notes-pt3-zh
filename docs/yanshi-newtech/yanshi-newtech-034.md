@@ -1,4 +1,4 @@
-# 延世大学《新兴技术从智能手机到物联网再到大数据》课程 - P34：5.5 Storm Trident 🌀
+# 34：5.5 Storm Trident 🌀
 
 在本节课中，我们将学习Storm Trident，这是一个构建在Apache Storm之上的高级抽象框架，用于实现高效的实时批处理。
 

@@ -1,4 +1,4 @@
-# 延世大学《新兴技术从智能手机到物联网再到大数据》课程 - P15：Apache Spark 详解 🚀
+# 15：Apache Spark 详解 🚀
 
 ![](img/be7793f5e09d66a2a1f1e16a4a0eacec_0.png)
 

@@ -1,4 +1,4 @@
-# 延世大学《新兴技术从智能手机到物联网再到大数据》 - P12：Hadoop与SQL、RDBMS、RDSMS的比较 🆚
+# 12：Hadoop与SQL、RDBMS、RDSMS的比较 🆚
 
 ![](img/e234016834881d85ccf9fc58ff9907e3_0.png)
 

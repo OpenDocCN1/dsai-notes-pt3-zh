@@ -1,4 +1,4 @@
-# 延世大学《新兴技术从智能手机到物联网再到大数据》课程 - P149：26_5.3 YouTube的MPEG-DASH（第1部分）📺
+# 149：26_5.3 YouTube的MPEG-DASH（第1部分）📺
 
 ![](img/e4b88e0cfda4ef3e1aa1fa2c92cff81c_0.png)
 

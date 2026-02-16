@@ -1,4 +1,4 @@
-# 延世大学《新兴技术：从智能手机到物联网再到大数据》课程 - P114：42_5.7 IaaS、PaaS、SaaS 🚀
+# 114：42_5.7 IaaS、PaaS、SaaS 🚀
 
 ![](img/63a3836ef946f15bb739c7c3d384edb2_0.png)
 

@@ -1,4 +1,4 @@
-# 延世大学《新兴技术：从智能手机到物联网再到大数据》课程 - P55：19_4.4 LTE-Advanced（第1部分）📡
+# 55：19_4.4 LTE-Advanced（第1部分）📡
 
 ![](img/088ae6d2d6f3cde5cf7d317bb441bcda_0.png)
 

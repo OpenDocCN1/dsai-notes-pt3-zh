@@ -1,4 +1,4 @@
-# 延世大学《新兴技术从智能手机到物联网再到大数据》 - P10：MapReduce与RDBMS的比较 📊
+# 10：MapReduce与RDBMS的比较 📊
 
 ![](img/c0b0f8cb16a7521c2ccb76aa09716ce6_0.png)
 

@@ -1,4 +1,4 @@
-# 课程31：Android演进（第2部分） 📱
+# 67：Android演进（第2部分） 📱
 
 ![](img/6ff0f6936a61478ca11deea5dd16ef90_0.png)
 

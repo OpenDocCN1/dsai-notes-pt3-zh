@@ -1,4 +1,4 @@
-# 延世大学《新兴技术从智能手机到物联网再到大数据》课程 - P14：Hadoop与Hadoop YARN的比较 🆚
+# 14：Hadoop与Hadoop YARN的比较 🆚
 
 ![](img/271823f55276a87ae5af598fcf84b35d_0.png)
 

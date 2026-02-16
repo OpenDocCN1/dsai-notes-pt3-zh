@@ -1,4 +1,4 @@
-# 延世大学《新兴技术从智能手机到物联网再到大数据》 - P23：Spark YARN 🚀
+# 23：Spark YARN 🚀
 
 ![](img/e99d4eb71fbc4a072fbc6387f30f5694_0.png)
 
