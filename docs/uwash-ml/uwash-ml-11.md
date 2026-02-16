@@ -1,4 +1,4 @@
-# 课程1：启动与使用Jupyter Notebook 🚀
+# 11：启动与使用Jupyter Notebook 🚀
 
 ![](img/144a8af988a32a6d89b4aa41831d5e1f_1.png)
 

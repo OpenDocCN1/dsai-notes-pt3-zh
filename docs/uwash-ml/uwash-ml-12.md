@@ -1,4 +1,4 @@
-# 课程1：Python变量创建 🐍
+# 12：Python变量创建 🐍
 
 ![](img/5a6ceebff3f5c45f1614ed7f8bacdd36_1.png)
 

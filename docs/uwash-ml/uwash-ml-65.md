@@ -1,4 +1,4 @@
-# 64讲：K-means聚类算法 🧩
+# 64：K-means聚类算法 🧩
 
 ![](img/ebf90a3be201e35efce6927993d7d2b2_1.png)
 

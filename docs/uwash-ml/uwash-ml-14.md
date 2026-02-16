@@ -1,4 +1,4 @@
-# 课程1.4：在Python中创建函数和lambda表达式 🐍
+# 14：在Python中创建函数和lambda表达式 🐍
 
 ![](img/b20415d4b696c30f903b986cabf7f18c_1.png)
 

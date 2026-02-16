@@ -1,4 +1,4 @@
-# 18讲：使用apply进行数据转换 📊
+# 18：使用apply进行数据转换 📊
 
 ![](img/56ddd7e08a6064a45bbf77e317e5bd1e_1.png)
 
