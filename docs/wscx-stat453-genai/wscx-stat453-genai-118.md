@@ -1,4 +1,4 @@
-# P118：L14.3.2.2 - PyTorch 中的 ResNet-34 实现 🧠
+# 118：L14.3.2.2 - PyTorch 中的 ResNet-34 实现 🧠
 
 ![](img/6fc0b4c4fba26a77a100c96c79d18809_1.png)
 

@@ -1,4 +1,4 @@
-# P46：L6.4 - 使用 PyTorch 训练 ADALINE 🧠
+# 46：L6.4 - 使用 PyTorch 训练 ADALINE 🧠
 
 ![](img/13f8af674fef34195c068fc27c3da2eb_1.png)
 

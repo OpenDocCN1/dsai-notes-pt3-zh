@@ -1,4 +1,4 @@
-# P109：L13.9.3 - PyTorch 中的 AlexNet 🧠
+# 109：L13.9.3 - PyTorch 中的 AlexNet 🧠
 
 ![](img/eafc166425d5eda00acc7c3a2db181bf_1.png)
 

@@ -1,4 +1,4 @@
-# 课程 P80：L10.5.4 - PyTorch 中的 Dropout 🧠
+# 80：L10.5.4 - PyTorch 中的 Dropout 🧠
 
 ![](img/3c5cd0a856eb936b143add6a293ab378_1.png)
 

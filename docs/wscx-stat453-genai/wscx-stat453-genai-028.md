@@ -1,4 +1,4 @@
-# 课程 P28：L4.2 - PyTorch 中的张量 🧮
+# 28：L4.2 - PyTorch 中的张量 🧮
 
 ![](img/db65af7a751ae4149ef2c60f90bc066c_1.png)
 

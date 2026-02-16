@@ -1,4 +1,4 @@
-# 课程 P40：L5.8 - Adaline 代码示例 📘
+# 40：L5.8 - Adaline 代码示例 📘
 
 ![](img/5ca7be5140adcc9be61cf008e9bde772_1.png)
 

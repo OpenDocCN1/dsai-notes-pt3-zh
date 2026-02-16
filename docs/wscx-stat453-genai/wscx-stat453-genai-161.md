@@ -1,4 +1,4 @@
-# 课程 P161：L19.5.1 - Transformer 架构详解 🧠
+# 161：L19.5.1 - Transformer 架构详解 🧠
 
 ![](img/99c7b906c554ca30fdea5e0e60f01967_1.png)
 

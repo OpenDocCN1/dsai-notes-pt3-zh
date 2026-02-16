@@ -1,4 +1,4 @@
-# 课程 P60：L8.9 - 使用 PyTorch 的 Softmax 回归代码示例 📚
+# 60：L8.9 - 使用 PyTorch 的 Softmax 回归代码示例 📚
 
 在本节课中，我们将学习如何从零开始实现 Softmax 回归模型，并使用向量化形式展示其工作原理。我们还将使用 PyTorch 的高级 API 实现相同的模型，并最终在 MNIST 数据集上应用 Softmax 回归。
 

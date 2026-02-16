@@ -1,4 +1,4 @@
-# P152：L18.6 - 在 PyTorch 中实现生成人脸图像的 DCGAN 🎨
+# 152：L18.6 - 在 PyTorch 中实现生成人脸图像的 DCGAN 🎨
 
 ![](img/ee921d44bc17001fe894df15e01e9953_1.png)
 

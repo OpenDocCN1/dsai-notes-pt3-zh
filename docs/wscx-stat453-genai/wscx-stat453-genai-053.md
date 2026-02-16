@@ -1,4 +1,4 @@
-# 机器学习课程 P53：L8.3 - Logistic 回归损失导数和训练 🧮
+# 53：L8.3 - Logistic 回归损失导数和训练 🧮
 
 ![](img/e27658390d5d2e3c3ac7e6c8b59df939_1.png)
 

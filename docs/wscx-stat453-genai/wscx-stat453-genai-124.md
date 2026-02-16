@@ -1,4 +1,4 @@
-# P124：L14.6.2 - PyTorch 中的迁移学习 🚀
+# 124：L14.6.2 - PyTorch 中的迁移学习 🚀
 
 ![](img/61c6df0b6f418da1af685e9b610e3dd0_1.png)
 

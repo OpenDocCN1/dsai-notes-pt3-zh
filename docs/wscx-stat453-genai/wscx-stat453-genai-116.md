@@ -1,4 +1,4 @@
-# 课程 P116：L14.3.1.2 - PyTorch 中的 VGG16 🏗️
+# 116：L14.3.1.2 - PyTorch 中的 VGG16 🏗️
 
 ![](img/9c0c719111bb824ca05ef070abb9e2b7_0.png)
 

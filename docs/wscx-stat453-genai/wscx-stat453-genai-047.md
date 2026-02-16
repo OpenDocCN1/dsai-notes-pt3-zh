@@ -1,4 +1,4 @@
-# 课程 P47：L6.5 - 深入了解 PyTorch API 🧠
+# 47：L6.5 - 深入了解 PyTorch API 🧠
 
 ![](img/80d91185d87ba37f6d819e7249f6c5a1_1.png)
 

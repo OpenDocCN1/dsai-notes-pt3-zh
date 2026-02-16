@@ -1,4 +1,4 @@
-# P162：L19.5.2.1 - 一些流行的Transformer模型：BERT、GPT与BART【概述】 🧠
+# 162：L19.5.2.1 - 一些流行的Transformer模型：BERT、GPT与BART【概述】 🧠
 
 在本节课中，我们将学习基于Transformer架构的几种流行模型，包括BERT、GPT和BART。我们将了解它们的基本思想、核心差异以及它们如何利用自注意力和自监督学习来取得成功。
 

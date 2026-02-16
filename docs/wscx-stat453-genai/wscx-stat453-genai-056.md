@@ -1,4 +1,4 @@
-# 课程 P56：L8.6 - 多项 Logistic 回归 / Softmax 回归 📊
+# 56：L8.6 - 多项 Logistic 回归 / Softmax 回归 📊
 
 ![](img/7bddc4e3a5fe43463115092b77a6bea5_1.png)
 

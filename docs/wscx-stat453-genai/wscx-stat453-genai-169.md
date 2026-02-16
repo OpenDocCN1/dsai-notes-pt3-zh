@@ -1,4 +1,4 @@
-# 课程 P169：L19.6 - 基于 PyTorch 的 DistilBERT 电影评论分类器 🎬
+# 169：L19.6 - 基于 PyTorch 的 DistilBERT 电影评论分类器 🎬
 
 在本节课中，我们将学习如何使用 Hugging Face 的 Transformers 库，基于预训练的 DistilBERT 模型来构建一个电影评论情感分类器。我们将通过代码实践，了解如何加载预训练模型、进行下游任务的微调，并将其性能与我们之前学习的 LSTM 模型进行对比。
 

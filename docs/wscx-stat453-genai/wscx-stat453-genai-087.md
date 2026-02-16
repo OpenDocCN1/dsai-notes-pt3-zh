@@ -1,4 +1,4 @@
-# 深度学习教程 P87：L11.6 - Xavier Glorot 与 Kaiming He 初始化 🧠
+# 87：L11.6 - Xavier Glorot 与 Kaiming He 初始化 🧠
 
 ![](img/56116244f36bd69a28d42e7729f21f2b_1.png)
 

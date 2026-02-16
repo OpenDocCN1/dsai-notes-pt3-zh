@@ -1,4 +1,4 @@
-# 课程 P31：L4.5 - PyTorch 中的全连接（线性）层 📚
+# 31：L4.5 - PyTorch 中的全连接（线性）层 📚
 
 ![](img/4b942bcc44a75ebfe6655aa5c8e647f3_1.png)
 

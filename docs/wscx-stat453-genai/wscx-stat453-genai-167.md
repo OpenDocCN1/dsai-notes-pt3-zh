@@ -1,4 +1,4 @@
-# 课程 P167：L19.5.2.6 - BART：结合双向与自回归 Transformer 🤖
+# 167：L19.5.2.6 - BART：结合双向与自回归 Transformer 🤖
 
 ![](img/50bdc4c07944a3d458b08422d300e1cb_1.png)
 

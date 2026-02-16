@@ -1,4 +1,4 @@
-# 课程 P168：L19.5.2.7 - Transformers的近期增长趋势 📈
+# 168：L19.5.2.7 - Transformers的近期增长趋势 📈
 
 ![](img/a58e5758d0f6f3be21406cf6ac746ae4_1.png)
 

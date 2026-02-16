@@ -1,4 +1,4 @@
-# 课程 P43：L6.1 - 深入了解 PyTorch 🧠
+# 43：L6.1 - 深入了解 PyTorch 🧠
 
 ![](img/df64c01e86becadcbbda644f3a466dc1_1.png)
 

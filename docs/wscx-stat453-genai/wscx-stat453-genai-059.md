@@ -1,4 +1,4 @@
-# 课程 P59：L8.8 - 梯度下降的 Softmax 回归导数 🧮
+# 59：L8.8 - 梯度下降的 Softmax 回归导数 🧮
 
 ![](img/b02122f1679baef683a96fc84b18da8b_1.png)
 
