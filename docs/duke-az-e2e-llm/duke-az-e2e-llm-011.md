@@ -1,4 +1,4 @@
-# Azure的端到端LLMs：P11：使用GitHub进行自动化与部署 🚀
+# 11：使用GitHub进行自动化与部署 🚀
 
 ![](img/77910cd73c747c58c13cd0c00e00b495_0.png)
 

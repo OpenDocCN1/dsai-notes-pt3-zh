@@ -1,4 +1,4 @@
-# Azure的端到端LLMs：P12：设置Azure组件 🛠️
+# 12：设置Azure组件 🛠️
 
 ![](img/f7cd27b661d6e517856c739085e42346_0.png)
 
