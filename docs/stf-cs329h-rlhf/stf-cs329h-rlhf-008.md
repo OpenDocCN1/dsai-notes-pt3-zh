@@ -1,4 +1,4 @@
-# 基于人类偏好的机器学习：P8：嘉宾讲座 - Joseph Jay Williams
+# 8：嘉宾讲座 - Joseph Jay Williams
 
 ![](img/c7f26b46694aa7a13c13a5a5f1cf2929_0.png)
 
