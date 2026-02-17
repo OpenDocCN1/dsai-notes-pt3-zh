@@ -1,0 +1,7 @@
++   [MIT 6.S184 扩散模型笔记](README.md)
++   [流匹配与扩散模型：1：生成式AI与随机微分方程 🎯](《流匹配与扩散模型｜6.S18---P1：Lecture_01---Generative_AI_w---GPT中英字幕课程资源---BV1gc8Ez8EFL_note.md)
++   [流匹配与扩散模型：2：构建训练目标 🎯](《流匹配与扩散模型｜6.S18---P2：Lecture_02---Constructing_a_---GPT中英字幕课程资源---BV1gc8Ez8EFL_note.md)
++   [流匹配与扩散模型｜6.S184：3：训练流与扩散模型](《流匹配与扩散模型｜6.S18---P3：Lecture_03---Training_Flow_a---GPT中英字幕课程资源---BV1gc8Ez8EFL_note.md)
++   [流匹配与扩散模型｜6.S184：4：构建图像生成器](《流匹配与扩散模型｜6.S18---P4：Lecture_04---Building_an_Ima---GPT中英字幕课程资源---BV1gc8Ez8EFL_note.md)
++   [流匹配与扩散模型：5：机器人学中的扩散模型 🦾](《流匹配与扩散模型｜6.S18---P5：Lecture_05---Diffusion_for_R---GPT中英字幕课程资源---BV1gc8Ez8EFL_note.md)
++   [流匹配与扩散模型｜6.S184：6：蛋白质生成的扩散模型](《流匹配与扩散模型｜6.S18---P6：Lecture_06---Diffusion_for_P---GPT中英字幕课程资源---BV1gc8Ez8EFL_note.md)
