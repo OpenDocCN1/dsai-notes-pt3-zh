@@ -1,4 +1,7 @@
 +   [Andrej Karpathy 视频笔记](README.md)
++   [大语言模型介绍：1：大语言模型是什么？🚀](Andrej Karpathy_note.md)
++   [软件正在改变（再次）：1：软件范式演进与LLM操作系统](Andrej_Karpathy---P1---GPT中英字幕课程资源---BV19fgrzJEGh_note.md)
++   [人工智能与智能体：1：我们是在召唤幽灵，而不是建造动物](Andrej_Karpathy---P1---GPT中英字幕课程资源---BV1dsFKz8EiG_note.md)
 +   [复现GPT-2 (124M版本)：1：从零开始复现GPT-2](Andrej《复现GPT-2(---P1---GPT中英字幕课程资源---BV1cR54zaE6p_note.md)
 +   [大语言模型实用指南：1：大语言模型生态系统与基础交互 🧠](Andrej《我如何使用大语言---P1---GPT中英字幕课程资源---BV1KbXQY8ELj_note.md)
 +   [构建GPT分词器：1：分词器概述与动机](Andrej《构建GPT分词器---P1---GPT中英字幕课程资源---BV1DXL3z6Efu_note.md)
