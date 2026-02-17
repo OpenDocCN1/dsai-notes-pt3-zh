@@ -1,4 +1,4 @@
-# 课程 P3：Geomstats - 机器学习中的黎曼几何 Python 包 🧮
+# 3：Geomstats - 机器学习中的黎曼几何 Python 包 🧮
 
 ![](img/da91ecadf40cdd1c47d6363d58def18c_1.png)
 

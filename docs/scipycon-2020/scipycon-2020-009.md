@@ -1,4 +1,4 @@
-# 课程 P9：Pandera - Pandas DataFrame 的统计式数据验证 🧪
+# 9：Pandera - Pandas DataFrame 的统计式数据验证 🧪
 
 在本课程中，我们将学习如何使用 Pandera 库对 Pandas DataFrame 进行统计式数据验证。我们将探讨数据验证的理论基础、Pandera 的核心概念，并通过一个真实世界的数据集案例来演示其应用。
 
