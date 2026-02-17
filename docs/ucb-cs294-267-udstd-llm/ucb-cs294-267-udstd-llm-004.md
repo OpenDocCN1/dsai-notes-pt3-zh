@@ -1,4 +1,4 @@
-# 理解大语言模型：P4：Eric Wallace - 语言模型中的记忆问题
+# 4：Eric Wallace - 语言模型中的记忆问题
 
 ![](img/b533aa322e1aca914d5932c3a45de934_0.png)
 
