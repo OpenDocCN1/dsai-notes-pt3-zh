@@ -1,4 +1,4 @@
-# 本地大型语言模型入门：P6：使用 Cosmopolitan 构建短语生成器 🛠️
+# 6：使用 Cosmopolitan 构建短语生成器 🛠️
 
 ![](img/b18e94bb957c3d2ec6b3d3ba558d0779_0.png)
 

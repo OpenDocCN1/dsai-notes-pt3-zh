@@ -1,4 +1,4 @@
-# Llamafile教程：P3：使用Llamafile API 🚀
+# 3：使用Llamafile API 🚀
 
 ![](img/9cce03d6d5e24e4df6e3e6b79d674bc3_0.png)
 

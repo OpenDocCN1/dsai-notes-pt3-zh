@@ -1,4 +1,4 @@
-# Llamafile入门：P5：使用Cosmopolitan构建便携式二进制文件
+# 5：使用Cosmopolitan构建便携式二进制文件
 
 ![](img/0ba52ef75bc3bc02dab594c237dc7114_0.png)
 

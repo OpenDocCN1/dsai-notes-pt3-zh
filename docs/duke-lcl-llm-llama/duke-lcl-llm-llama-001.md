@@ -1,4 +1,4 @@
-# 本地大型语言模型入门：P1：0_与您的导师 Alfredo Deza 会面
+# 1：0_与您的导师 Alfredo Deza 会面
 
 ![](img/f9a0a4e160599bfb501140472fb58164_0.png)
 

@@ -1,4 +1,4 @@
-# 本地大型语言模型入门：P2：1_Llamafile 概述
+# 2：1_Llamafile 概述
 
 ![](img/b5bdfacbc75de8caf563aa5868c03acd_0.png)
 

@@ -1,4 +1,4 @@
-# 本地大型语言模型入门：P7：开始使用 Llamafile 🚀
+# 7：开始使用 Llamafile 🚀
 
 ![](img/da03fe291ba8a49d4816e9ab29313747_0.png)
 
