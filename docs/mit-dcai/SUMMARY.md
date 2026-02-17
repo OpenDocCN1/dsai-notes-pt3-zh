@@ -1,0 +1,8 @@
++   [MIT 数据中心人工智能笔记](README.md)
++   [数据中心人工智能导论：1：数据中心AI vs. 模型中心AI](《数据中心人工智能导论｜Int---P1：Lecture_1__D---GPT中英字幕课程资源---BV1wvhczTETR_note.md)
++   [数据中心人工智能导论：2：标签错误与置信学习](《数据中心人工智能导论｜Int---P2：Lecture_2__L---GPT中英字幕课程资源---BV1wvhczTETR_note.md)
++   [数据中心人工智能导论：3：高级置信学习、大语言模型与生成式AI应用](《数据中心人工智能导论｜Int---P3：Lecture_3__A---GPT中英字幕课程资源---BV1wvhczTETR_note.md)
++   [数据中心人工智能导论：4：类别不平衡、离群值与分布偏移](《数据中心人工智能导论｜Int---P4：Lecture_4__C---GPT中英字幕课程资源---BV1wvhczTETR_note.md)
++   [数据中心人工智能导论：第5讲：数据集创建与整理](《数据中心人工智能导论｜Int---P5：Lecture_5__D---GPT中英字幕课程资源---BV1wvhczTETR_note.md)
++   [数据中心人工智能导论：6：以数据为中心的机器学习模型评估](《数据中心人工智能导论｜Int---P6：Lecture_6__D---GPT中英字幕课程资源---BV1wvhczTETR_note.md)
++   [数据中心人工智能导论：7：大语言模型的数据整理](《数据中心人工智能导论｜Int---P7：Lecture_7__D---GPT中英字幕课程资源---BV1wvhczTETR_note.md)
