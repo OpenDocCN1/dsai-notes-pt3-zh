@@ -1,4 +1,4 @@
-# ChatGPT 示教：P2：人工智能与ChatGPT简介
+# ChatGPT 示教：2：人工智能与ChatGPT简介
 
 ![](img/1987f44623b2a1922d37f93a82025baf_0.png)
 

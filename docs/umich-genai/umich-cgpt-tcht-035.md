@@ -1,4 +1,4 @@
-# ChatGPT 示教：P35：AI在自助建议中的应用 🧠
+# ChatGPT 示教：35：AI在自助建议中的应用 🧠
 
 ![](img/d652e083d05f2298ea7d78b6fe82cdbe_0.png)
 

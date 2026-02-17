@@ -1,4 +1,4 @@
-# ChatGPT 示教：P6：ChatGPT拟人化输出的利弊
+# ChatGPT 示教：6：ChatGPT拟人化输出的利弊
 
 ![](img/cf7f933290e27dc71e98fe5067e4767d_1.png)
 

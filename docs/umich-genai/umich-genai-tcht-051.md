@@ -1,4 +1,4 @@
-# 生成式AI示教：P51：ChatGPT的未来发展 🚀
+# 生成式 AI 示教：51：ChatGPT的未来发展 🚀
 
 ![](img/afa587abe930c1c6177f94ae4bf4b027_0.png)
 

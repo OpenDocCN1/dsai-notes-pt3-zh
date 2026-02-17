@@ -1,4 +1,4 @@
-# 生成式AI示教：P16：可选ChatGPT示例：复杂数学问题 🧮
+# 生成式 AI 示教：16：可选ChatGPT示例：复杂数学问题 🧮
 
 ![](img/dca48109bcaedb3b5cfc22f563b8534a_0.png)
 

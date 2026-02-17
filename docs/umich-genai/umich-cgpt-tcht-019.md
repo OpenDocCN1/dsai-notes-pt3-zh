@@ -1,4 +1,4 @@
-# ChatGPT 示教：P19：输出内容所有权与货币化 💰
+# ChatGPT 示教：19：输出内容所有权与货币化 💰
 
 ![](img/7cd78094f40eacfb285565a61aefdc15_0.png)
 

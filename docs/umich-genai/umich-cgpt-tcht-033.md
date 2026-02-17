@@ -1,4 +1,4 @@
-# ChatGPT 示教｜ChatGPT Teach-Out：P33：教育领域：质疑与否定
+# ChatGPT 示教：33：教育领域：质疑与否定
 
 ![](img/2f3e7a6d61171821db1de4946dc97703_1.png)
 

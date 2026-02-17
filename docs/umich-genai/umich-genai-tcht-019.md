@@ -1,4 +1,4 @@
-# 生成式 AI 示教：P19：可选 ChatGPT 示例：龙与地下城角色背景设定 🎭
+# 生成式 AI 示教：19：可选 ChatGPT 示例：龙与地下城角色背景设定 🎭
 
 ![](img/efbfa29ae8c889b0cec1ab872a1a4f7c_0.png)
 

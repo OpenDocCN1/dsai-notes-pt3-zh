@@ -1,4 +1,4 @@
-# ChatGPT 示教｜ChatGPT Teach-Out：P24：ChatGPT的短期与长期经济影响 📈
+# ChatGPT 示教：24：ChatGPT的短期与长期经济影响 📈
 
 在本节课中，我们将探讨以ChatGPT为代表的生成式AI技术对经济产生的短期与长期影响。我们将分析其对就业市场的重塑、生产力的提升以及个人技能的增强作用。
 

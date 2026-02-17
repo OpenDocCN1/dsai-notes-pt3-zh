@@ -1,4 +1,4 @@
-# ChatGPT 示教｜ChatGPT Teach-Out：P34：ChatGPT的未来发展 🚀
+# ChatGPT 示教：34：ChatGPT的未来发展 🚀
 
 ![](img/78e93a9855dc30055c52baf25c8f96ee_0.png)
 

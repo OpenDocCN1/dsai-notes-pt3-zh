@@ -1,4 +1,4 @@
-# ChatGPT 示教｜ChatGPT Teach-Out：P9：选修：ChatGPT示例-复杂数学题
+# ChatGPT 示教：9：选修：ChatGPT示例-复杂数学题
 
 ![](img/f8802ef91d5347c86663be075042e19c_0.png)
 

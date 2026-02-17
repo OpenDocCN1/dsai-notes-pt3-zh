@@ -1,4 +1,4 @@
-# ChatGPT 示教｜ChatGPT Teach-Out：P13：剽窃与引用规范 📚
+# ChatGPT 示教：13：剽窃与引用规范 📚
 
 ![](img/1eee88c1b298f4177e17dd4fa80c666e_0.png)
 

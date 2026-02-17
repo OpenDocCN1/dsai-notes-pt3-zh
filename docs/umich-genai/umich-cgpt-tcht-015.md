@@ -1,4 +1,4 @@
-# ChatGPT 示教｜ChatGPT Teach-Out：P15：ChatGPT的公平使用
+# ChatGPT 示教：15：ChatGPT的公平使用
 
 ![](img/75fd90df1787f36a96a2be3e252f468d_0.png)
 

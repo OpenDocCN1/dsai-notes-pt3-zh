@@ -1,4 +1,4 @@
-# ChatGPT 示教：P37：ChatGPT现场研讨会实录
+# ChatGPT 示教：37：ChatGPT现场研讨会实录
 
 ![](img/6829e7c3abe88b1a6fc665feb61c47ce_0.png)
 

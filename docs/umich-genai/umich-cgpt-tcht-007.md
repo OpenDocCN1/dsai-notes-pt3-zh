@@ -1,4 +1,4 @@
-# ChatGPT 示教｜ChatGPT Teach-Out：P7：如何编写优质ChatGPT提示
+# ChatGPT 示教：7：如何编写优质ChatGPT提示
 
 ![](img/6b2efe49cf773ce6bc29c0961e8b0655_1.png)
 

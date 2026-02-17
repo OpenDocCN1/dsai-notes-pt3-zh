@@ -1,4 +1,4 @@
-# ChatGPT 示教｜ChatGPT Teach-Out：P31：AI在医疗实践与教育中的应用 🏥🤖
+# ChatGPT 示教：31：AI在医疗实践与教育中的应用 🏥🤖
 
 ![](img/671a7b08e6f0898a5eeb845761b49b90_0.png)
 

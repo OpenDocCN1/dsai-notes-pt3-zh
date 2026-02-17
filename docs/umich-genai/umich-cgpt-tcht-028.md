@@ -1,4 +1,4 @@
-# ChatGPT 示教｜ChatGPT Teach-Out：P28：教育领域影响
+# ChatGPT 示教：28：教育领域影响
 
 ![](img/e2151dc9a3c546d213244c6d7351450b_0.png)
 

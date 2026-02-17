@@ -1,4 +1,4 @@
-# 密歇根大学《Python程序员的羊驼》课程｜Llama2 for Python Programmers：P11：控制模型输出 🎛️
+# Python程序员的羊驼：11：控制模型输出 🎛️
 
 ![](img/a6ac90b6acf2929fd67f9d3d670ab82b_0.png)
 

@@ -1,4 +1,4 @@
-# ChatGPT 示教｜ChatGPT Teach-Out：P20：不同形式AI的应用影响 🧠
+# ChatGPT 示教：20：不同形式AI的应用影响 🧠
 
 ![](img/898f012a413747155dcafacdf76d700d_0.png)
 

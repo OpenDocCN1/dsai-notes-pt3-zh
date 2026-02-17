@@ -1,4 +1,4 @@
-# ChatGPT 示教：P36：AI技术的未来机遇 🚀
+# ChatGPT 示教：36：AI技术的未来机遇 🚀
 
 ![](img/e98721d01f7a8fd871ae0f629b0e6e09_0.png)
 

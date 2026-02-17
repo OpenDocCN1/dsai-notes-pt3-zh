@@ -1,4 +1,4 @@
-# 密歇根大学《Python程序员的羊驼》课程｜Llama2 for Python Programmers：P8：选择参数 🎛️
+# Python程序员的羊驼：8：选择参数 🎛️
 
 ![](img/319a4f8396e420eeab56ef8ed4510f7e_0.png)
 

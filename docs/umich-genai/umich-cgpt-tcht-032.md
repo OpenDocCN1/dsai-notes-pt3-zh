@@ -1,4 +1,4 @@
-# ChatGPT 示教：P32：ChatGPT通过认证考试的影响 📚
+# ChatGPT 示教：32：ChatGPT通过认证考试的影响 📚
 
 ![](img/250a5ebe4faed795d8381621f643867e_0.png)
 

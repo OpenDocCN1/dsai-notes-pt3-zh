@@ -1,4 +1,4 @@
-# ChatGPT 示教｜ChatGPT Teach-Out：P16：道德与非道德应用场景
+# ChatGPT 示教：16：道德与非道德应用场景
 
 ![](img/d8e147f7e8a1ac3663352c57c875acc2_0.png)
 

@@ -1,4 +1,4 @@
-# ChatGPT 示教｜ChatGPT Teach-Out：P4：ChatGPT的感知准确性 🔍
+# ChatGPT 示教：4：ChatGPT的感知准确性 🔍
 
 ![](img/431713c5a4049cfb8d56ae1e0502b193_0.png)
 

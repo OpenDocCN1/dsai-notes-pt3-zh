@@ -1,4 +1,4 @@
-# ChatGPT 示教｜ChatGPT Teach-Out：P26：对AI的经济应对措施 💼
+# ChatGPT 示教：26：对AI的经济应对措施 💼
 
 ![](img/a34d134123e56dc45b713b8e3b64d090_0.png)
 

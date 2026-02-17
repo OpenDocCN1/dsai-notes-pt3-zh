@@ -1,4 +1,4 @@
-# ChatGPT 示教：P8：选修：ChatGPT 示例 - 简单数学题 🧮
+# ChatGPT 示教：8：选修：ChatGPT 示例 - 简单数学题 🧮
 
 ![](img/c4d958af9dcf3cbb13d839d86cf2b686_0.png)
 

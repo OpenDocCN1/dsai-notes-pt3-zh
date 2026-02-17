@@ -1,4 +1,4 @@
-# 密歇根大学《Python程序员的羊驼》课程｜Llama2 for Python Programmers：P9：8_羊驼2的聊天和对话
+# Python程序员的羊驼：9：8_羊驼2的聊天和对话
 
 ![](img/5edc834cf07280ec7f392292a68df07d_0.png)
 

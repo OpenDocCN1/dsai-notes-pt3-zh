@@ -1,4 +1,4 @@
-# ChatGPT 示教｜ChatGPT Teach-Out：P17：ChatGPT的局限性
+# ChatGPT 示教：17：ChatGPT的局限性
 
 ![](img/11b142160fd3b8341c1d4dbddf56f43d_0.png)
 

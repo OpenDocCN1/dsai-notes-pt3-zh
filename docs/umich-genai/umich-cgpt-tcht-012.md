@@ -1,4 +1,4 @@
-# ChatGPT 示教｜ChatGPT Teach-Out：P12：选修：ChatGPT示例-龙与地下城角色背景
+# ChatGPT 示教：12：选修：ChatGPT示例-龙与地下城角色背景
 
 ![](img/45d37046b640fffb2c4bfe94f410c95b_0.png)
 

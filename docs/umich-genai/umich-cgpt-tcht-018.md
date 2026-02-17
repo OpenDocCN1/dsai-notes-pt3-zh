@@ -1,4 +1,4 @@
-# ChatGPT 示教：P18：应对ChatGPT的负面影响
+# ChatGPT 示教：18：应对ChatGPT的负面影响
 
 ![](img/6538699256fbc69136614ad498a88461_0.png)
 

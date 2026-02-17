@@ -1,4 +1,4 @@
-# 生成式AI基础知识：P7：优化ChatGPT的提示词策略 💡
+# 生成式AI基础知识：7：优化ChatGPT的提示词策略 💡
 
 ![](img/211e1bc616df385ac1dfc157a404c8b2_1.png)
 

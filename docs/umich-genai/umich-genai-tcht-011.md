@@ -1,4 +1,4 @@
-# 生成式 AI 示教：P11：ChatGPT类人化应答的利弊分析
+# 生成式 AI 示教：11：ChatGPT类人化应答的利弊分析
 
 ![](img/7ba31d3e09a7911cea8191b7ffb68014_1.png)
 

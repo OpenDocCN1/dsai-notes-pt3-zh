@@ -1,4 +1,4 @@
-# ChatGPT 示教｜ChatGPT Teach-Out：P5：ChatGPT类人输出的影响
+# ChatGPT 示教：5：ChatGPT类人输出的影响
 
 ![](img/f55e58c76ed971e03e93a6fd788cb746_0.png)
 

@@ -1,4 +1,4 @@
-# Python程序员的羊驼：P2：什么是Llama 2，一个开源的大型语言模型
+# Python程序员的羊驼：2：什么是Llama 2，一个开源的大型语言模型
 
 ![](img/0de1c1743ec9cacedba7a208324ce28c_0.png)
 

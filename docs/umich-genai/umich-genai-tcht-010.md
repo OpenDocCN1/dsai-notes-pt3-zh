@@ -1,4 +1,4 @@
-# 生成式AI示教：P10：ChatGPT类人化输出的影响 🧠
+# 生成式 AI 示教：10：ChatGPT类人化输出的影响 🧠
 
 ![](img/581bba2a9bdbf5e82e75905fde3cb2a7_0.png)
 

@@ -1,4 +1,4 @@
-# ChatGPT 示教｜ChatGPT Teach-Out：P27：人力资本影响 👥
+# ChatGPT 示教：27：人力资本影响 👥
 
 ![](img/042cb230417b38c916392af883e14a5c_1.png)
 
