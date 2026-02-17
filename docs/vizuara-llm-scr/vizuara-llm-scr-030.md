@@ -1,4 +1,4 @@
-# 从零开始搭建大语言模型：P30：加载OpenAI GPT-2预训练权重
+# 30：加载OpenAI GPT-2预训练权重
 
 ![](img/53915cdb9afe31a7e9d0015987ec20ce_0.png)
 

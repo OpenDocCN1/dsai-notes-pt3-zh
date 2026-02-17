@@ -1,4 +1,4 @@
-# 从零开始搭建大语言模型：P21：-23-编写完整的LLM Transformer Block
+# 21：-23-编写完整的LLM Transformer Block
 
 ![](img/9b79b6905784dd5547673ec07960bbc2_0.png)
 

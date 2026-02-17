@@ -1,4 +1,4 @@
-# 从零开始搭建大语言模型：P27：温度缩放（Temperature Scaling）在大语言模型中的应用
+# 27：温度缩放（Temperature Scaling）在大语言模型中的应用
 
 ![](img/c76a287e7a176986ee4a2b31f723d6e0_0.png)
 

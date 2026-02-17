@@ -1,4 +1,4 @@
-# 从零开始搭建大语言模型：04：什么是Transformer？ 🤖
+# 04：什么是Transformer？ 🤖
 
 ![](img/e632b549c754e8bfbc0f602431182932_0.png)
 

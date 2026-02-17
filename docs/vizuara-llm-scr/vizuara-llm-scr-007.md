@@ -1,4 +1,4 @@
-# 从零开始搭建大语言模型：07：用Python从零编写LLM分词器
+# 07：用Python从零编写LLM分词器
 
 ![](img/ac97afae2c5d48a3870dece18900a6c7_0.png)
 
