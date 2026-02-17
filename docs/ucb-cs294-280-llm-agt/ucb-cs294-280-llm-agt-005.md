@@ -1,4 +1,4 @@
-# 高级大语言模型智能体：CS 194 294-280 (Advanced LLM Agents) 2025：P5：Lecture 5, Charles Sutton
+# 5：Lecture 5, Charles Sutton
 
 ![](img/45e47edbfdb513df96f2c25bfc77cbd4_1.png)
 

@@ -1,4 +1,4 @@
-# 高级大语言模型智能体：CS 194 294-280 (Advanced LLM Agents) 2025：P8：Lecture 8, Thomas Hubert
+# 8：Lecture 8, Thomas Hubert
 
 ## 概述
 在本节课中，我们将学习Thomas Hubert关于AlphaProof项目的分享。我们将探讨形式化数学的兴起、强化学习的经验教训，以及这两者如何结合催生了AlphaProof。我们将了解AlphaProof如何在国际数学奥林匹克竞赛中取得成绩，并展望其在未来数学研究中的潜力。

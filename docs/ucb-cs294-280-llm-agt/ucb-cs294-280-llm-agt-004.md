@@ -1,4 +1,4 @@
-# 高级大语言模型智能体：CS 194 294-280 (Advanced LLM Agents) 2025：P4：Lecture 4, Hanna Hajishirzi
+# 4：Lecture 4, Hanna Hajishirzi
 
 在本节课中，我们将学习如何构建和训练能够进行复杂推理的大语言模型。我们将重点探讨Hanna Hajishirzi教授分享的关于提升语言模型推理能力的三个正交方向：预训练、后训练和推理时优化。课程将涵盖数据混合、算法选择以及如何通过开放研究推动模型能力的发展。
 
