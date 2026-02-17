@@ -62,7 +62,7 @@
 +   [鹿特丹大学 Facebook 案例分析笔记](docs/ltd-fb-csstd/README.md)
 +   [其它](docs/misc/README.md)
 +   [MIT 18.06 线性代数笔记](docs/mit-18.06-linalg-notes/README.md)
-+   [应用微积分（MIT 18.013A）](docs/mit-18013a/README.md)
++   [应用微积分（MIT 18.013A）](docs/mit-18013a-adv-calc/README.md)
 +   [MIT 18.03 面向初学者的微积分](docs/mit-1803-calc4b/README.md)
 +   [MIT 6.0001 Python 入门笔记](docs/mit-60001-python/README.md)
 +   [MIT 6.034 人工智能笔记](docs/mit-6034-ai/README.md)
