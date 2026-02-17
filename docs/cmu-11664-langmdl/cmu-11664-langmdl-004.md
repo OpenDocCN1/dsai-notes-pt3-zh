@@ -1,4 +1,4 @@
-# 语言建模的推断算法：P4：Beam Search及其变体 🧠
+# 4：Beam Search及其变体 🧠
 
 ![](img/fe07f44c93f189a603cbd3aa5363e242_1.png)
 
