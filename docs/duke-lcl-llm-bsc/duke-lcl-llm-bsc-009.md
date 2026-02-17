@@ -1,4 +1,4 @@
-# 本地大语言模型的基础：P9：开始使用Llamafile 🚀
+# 9：开始使用Llamafile 🚀
 
 ![](img/2c13a64d7b91b212aca506945691fa5f_0.png)
 

@@ -1,4 +1,4 @@
-# 本地大语言模型的基础：P20：在AWS GPU上调用Rust Candle（第一部分）
+# 20：在AWS GPU上调用Rust Candle（第一部分）
 
 ![](img/e673408bf5c7259e55eef3ea4835e307_0.png)
 

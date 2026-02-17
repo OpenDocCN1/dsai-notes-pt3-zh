@@ -1,4 +1,4 @@
-# 本地大语言模型的基础：P11：Candle框架的Hello World示例 🚀
+# 11：Candle框架的Hello World示例 🚀
 
 ![](img/bd094e36d6a60d51c35f3860992b7a20_0.png)
 

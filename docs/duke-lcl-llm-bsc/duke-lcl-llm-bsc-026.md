@@ -1,4 +1,4 @@
-# 本地大语言模型的基础：P26：开始使用Lorax与SkyPilot 🚀
+# 26：开始使用Lorax与SkyPilot 🚀
 
 ![](img/3ef4df032663e20fabd2778c41fdfc18_0.png)
 

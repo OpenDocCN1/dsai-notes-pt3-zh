@@ -1,4 +1,4 @@
-# 本地大语言模型的基础：P27：使用Ludwig微调Mistral-7B模型 🚀
+# 27：使用Ludwig微调Mistral-7B模型 🚀
 
 ![](img/248a7f70127f3d3ab99d64ec2e745e28_0.png)
 

@@ -1,4 +1,4 @@
-# 本地大语言模型的基础：P13：使用Whisper与Candle进行转录 🎙️➡️📝
+# 13：使用Whisper与Candle进行转录 🎙️➡️📝
 
 ![](img/6bb44a0a6674282e4f6527ea93bfefc0_0.png)
 

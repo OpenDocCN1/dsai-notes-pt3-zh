@@ -1,4 +1,4 @@
-# 本地大语言模型的基础：P12：探索StarCoder的Rust实现 🚀
+# 12：探索StarCoder的Rust实现 🚀
 
 ![](img/d8fd6f331e68b19fdcb59c6253dbf9e0_0.png)
 

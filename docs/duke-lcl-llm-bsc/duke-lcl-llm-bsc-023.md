@@ -1,4 +1,4 @@
-# 本地大语言模型的基础：P23：用Rust实现ELO评分系统 🦀
+# 23：用Rust实现ELO评分系统 🦀
 
 ![](img/7cf4e751f7bf3bd19ffc4d5be0f54c4c_0.png)
 

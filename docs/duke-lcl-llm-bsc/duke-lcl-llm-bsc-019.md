@@ -1,4 +1,4 @@
-# 本地大语言模型的基础：P19：19_01_05_StarCoder聊天循环
+# 19：19_01_05_StarCoder聊天循环
 
 ![](img/2318a6b47b662fcb903379dddc0cfeeb_0.png)
 

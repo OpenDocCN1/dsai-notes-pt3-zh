@@ -1,4 +1,4 @@
-# 本地大语言模型的基础：P15：Rust在LLM中的应用 🦀
+# 15：Rust在LLM中的应用 🦀
 
 ![](img/bf374be71dc63828979d4f7e44a6aff0_0.png)
 
