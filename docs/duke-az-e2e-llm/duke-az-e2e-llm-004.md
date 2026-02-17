@@ -1,4 +1,4 @@
-# Azure的端到端 LLMs：P4：04_01_04_创建Azure OpenAI服务资源
+# 4：04_01_04_创建Azure OpenAI服务资源
 
 ![](img/a5f3be3a8e1e062ad76acef0ffa8e524_0.png)
 

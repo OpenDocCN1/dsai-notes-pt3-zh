@@ -1,4 +1,4 @@
-# Azure的端到端 LLMs：P6：使用密钥和终结点 🔑
+# 6：使用密钥和终结点 🔑
 
 ![](img/2eecccf8a4dc50062e4d7dec88cd2f0e_0.png)
 

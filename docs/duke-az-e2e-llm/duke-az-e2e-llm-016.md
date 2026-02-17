@@ -1,4 +1,4 @@
-# Azure端到端LLMs：P16：在Azure中使用GitHub Actions 🚀
+# 16：在Azure中使用GitHub Actions 🚀
 
 ![](img/e058cb96d147d547f14dbf9ef3d462dc_0.png)
 

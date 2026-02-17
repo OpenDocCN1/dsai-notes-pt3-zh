@@ -1,4 +1,4 @@
-# Azure的端到端 LLMs：P13：在Azure OpenAI中使用RAG 🧠
+# 13：在Azure OpenAI中使用RAG 🧠
 
 ![](img/f52e12d73b32d377eeaa8aad17547cf7_0.png)
 

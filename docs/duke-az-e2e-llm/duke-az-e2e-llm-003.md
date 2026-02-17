@@ -1,4 +1,4 @@
-# Azure的端到端 LLMs：P3：获取Azure OpenAI服务访问权限 🔑
+# 3：获取Azure OpenAI服务访问权限 🔑
 
 ![](img/502a2866260a65dd24f7d1fc7447d81b_0.png)
 

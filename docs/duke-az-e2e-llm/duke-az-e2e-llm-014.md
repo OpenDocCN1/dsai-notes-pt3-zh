@@ -1,4 +1,4 @@
-# 端到端 LLMs 与 Azure：P14：应用程序概述 🚀
+# 14：应用程序概述 🚀
 
 ![](img/ce823be868b7ee2aafed1ae6b253b225_0.png)
 

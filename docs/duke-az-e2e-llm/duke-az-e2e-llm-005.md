@@ -1,4 +1,4 @@
-# Azure的端到端 LLMs：P5：部署OpenAI模型 🚀
+# 5：部署OpenAI模型 🚀
 
 ![](img/5c95fd6602074189bbeea3e10a4dd6f0_0.png)
 

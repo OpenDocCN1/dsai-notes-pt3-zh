@@ -1,4 +1,4 @@
-# Azure的端到端 LLMs：P10：Azure AI搜索概述 🧠
+# 10：Azure AI搜索概述 🧠
 
 ![](img/c2b6a0dafba97bb5fd783b7c071425ff_0.png)
 
