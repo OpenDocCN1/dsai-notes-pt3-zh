@@ -1,4 +1,4 @@
-# 大语言模型智能体：第3讲：未来AI应用与AutoGen框架 🚀
+# 3：未来AI应用与AutoGen框架 🚀
 
 ![](img/218fa2376164df67d5acb40dd1edc810_0.png)
 
