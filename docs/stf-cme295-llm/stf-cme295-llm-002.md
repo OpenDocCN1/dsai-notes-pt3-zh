@@ -1,4 +1,4 @@
-# Transformers 与大语言模型：第2讲：基于Transformer的模型与技巧 🧠
+# 2：基于Transformer的模型与技巧 🧠
 
 ![](img/16b9afb0854c80218ed525af96633b3c_0.png)
 

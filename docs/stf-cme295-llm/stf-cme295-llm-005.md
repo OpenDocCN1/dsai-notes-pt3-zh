@@ -1,4 +1,4 @@
-# Transformers与大语言模型：课程5：LLM调优
+# 5：LLM调优
 
 ![](img/291b4e8fcf6fdbc88d6b80474e370e55_0.png)
 

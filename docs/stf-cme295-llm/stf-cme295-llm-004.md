@@ -1,4 +1,4 @@
-# Transformers 和大语言模型：4：LLM 训练
+# 4：LLM 训练
 
 ![](img/42d73069266124f6e40a857b01ad5ce9_0.png)
 

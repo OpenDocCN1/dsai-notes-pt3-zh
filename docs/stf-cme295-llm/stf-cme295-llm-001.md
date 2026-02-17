@@ -1,4 +1,4 @@
-# 斯坦福大学《Transformers 和大语言模型》课程：1：Transformer 架构入门 🚀
+# 1：Transformer 架构入门 🚀
 
 ![](img/b6d33425d2c68b1b82e4d9d39e67fb64_0.png)
 
