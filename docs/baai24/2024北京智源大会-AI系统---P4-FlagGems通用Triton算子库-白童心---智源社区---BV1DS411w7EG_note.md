@@ -1,4 +1,4 @@
-# 课程名称：AI系统 - P4：FlagGems通用Triton算子库 🧠
+# 2024北京智源大会-AI系统---P4-FlagGems通用Triton算子库-白童心---智源社区---BV1DS411w7EG
 
 ![](img/1673cf8008d0c20b93aa48c97170fe3b_0.png)
 

@@ -1,4 +1,4 @@
-# 课程名称：多模态感知与生成圆桌讨论 🧠🎨  
+# 2024北京智源大会-多模态模型---P6-圆桌讨论--Multimodal-Perception-and-Generation---智源社区---BV1sT421a7FU
 课程编号：P6  
 
 ## 概述  

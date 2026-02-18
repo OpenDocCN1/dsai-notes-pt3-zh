@@ -1,4 +1,4 @@
-# 课程名称：AI系统 - P2：解锁AI潜力：AI框架与硬件加速器的连接挑战 🚀
+# 2024北京智源大会-AI系统---P2-Unlocking-Al-Potential-David-Edelsohn---智源社区---BV1DS411w7EG
 
 ## 概述
 

@@ -1,4 +1,4 @@
-# 课程名称：多模态模型 - 从“语言优先”到“现实世界优先”的智能构建方法 🧠
+# 2024北京智源大会-多模态模型---P5-A-Real-World-Approach-to-Intelligence-肖特特---智源社区---BV1sT421a7FU
 
 ![](img/5bdad4e6246c78b7b0c06444789d8201_1.png)
 

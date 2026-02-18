@@ -1,4 +1,4 @@
-# 课程名称：智慧医疗与生物系统 - P7：硅试验的挑战与机遇 🧪
+# 2024北京智源大会-智慧医疗和生物系统-影像-功能与仿真---P7-On-trials-and-tribulations--Alejandro-Frangi---智源社区---BV1VW421R7HV
 
 ![](img/b64af7dead723371b8a24edebf60460d_1.png)
 
