@@ -1,4 +1,4 @@
-# 课程 P7：L7 - 网格 🏁
+# 7：L7 - 网格 🏁
 
 ![](img/a11ef5fc5931cd2afecc0136fc8b19ba_0.png)
 
