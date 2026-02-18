@@ -1,4 +1,4 @@
-# DeepMindxUCL《强化学习》课程笔记 - P12：深度强化学习 #1 🧠
+# 12：深度强化学习 #1 🧠
 
 ![](img/fe0a4b414b91e3cc6196fff0fe616bb9_1.png)
 

@@ -1,4 +1,4 @@
-# DeepMindxUCL《强化学习｜Reinforcement Learning 2021》课程笔记 - P13：深度强化学习 #2 🧠
+# 13：深度强化学习 #2 🧠
 
 ## 概述
 

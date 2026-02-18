@@ -1,4 +1,4 @@
-# DeepMindxUCL《强化学习｜Reinforcement Learning 2021》课程笔记 - P7：函数近似 🧠
+# 07：函数近似 🧠
 
 ![](img/8dbeb433c92453817aeaec8559a4dae0_1.png)
 
