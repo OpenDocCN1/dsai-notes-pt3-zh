@@ -1,4 +1,4 @@
-# AI基础：ChatGPT的提示词工程｜P1：欢迎来到ChatGPT与RACCA基础
+# 1：欢迎来到ChatGPT与RACCA基础
 
 ![](img/2022a6ab1cea814b2e10dec1ff55b451_0.png)
 

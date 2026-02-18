@@ -1,4 +1,4 @@
-# AI基础：ChatGPT的提示词工程｜AI Foundations： Prompt Engineering with ChatGPT：P4：3_欢迎来到模块2
+# 4：3_欢迎来到模块2
 
 ![](img/fec4b37ca9be4c87c501efcaced6d209_0.png)
 
