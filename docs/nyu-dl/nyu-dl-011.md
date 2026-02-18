@@ -1,4 +1,4 @@
-# 课程 P11：RNN 与 LSTM 架构详解 🧠
+# 11：RNN 与 LSTM 架构详解 🧠
 
 ![](img/80f5b7140e8351d6bb32dba35e0e14b6_1.png)
 

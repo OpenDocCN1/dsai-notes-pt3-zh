@@ -1,4 +1,4 @@
-# 课程 P31：有监督与自监督迁移学习（使用 PyTorch Lightning）🚀
+# 31：有监督与自监督迁移学习（使用 PyTorch Lightning）🚀
 
 在本节课中，我们将学习迁移学习的概念，并分别在有监督和自监督的背景下，使用 PyTorch Lightning 和 PyTorch Lightning Bolts 库进行实践。迁移学习在数据不足或计算资源有限时非常有用，它能帮助我们利用预训练模型来加速新任务的训练过程。
 
