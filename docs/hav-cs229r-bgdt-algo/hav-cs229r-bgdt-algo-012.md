@@ -1,4 +1,4 @@
-# 哈佛大学《大数据算法》课程笔记 - 第12讲：Johnson-Lindenstrauss引理的下界与超越最坏情况分析 🎯
+# 12：Johnson-Lindenstrauss引理的下界与超越最坏情况分析 🎯
 
 ![](img/6d08241d3b14a6d8b602bdf899fba024_0.png)
 

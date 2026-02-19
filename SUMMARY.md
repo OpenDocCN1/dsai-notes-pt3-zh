@@ -36,7 +36,7 @@
 +   [FreeCodeCamp 大语言模型训练营笔记](docs/fcc-llm-bc/README.md)
 +   [谷歌人工智能、机器学习、数据科学专项笔记](docs/ggl-ai-ml-ds-spec/README.md)
 +   [唐宇迪商品检测课程笔记](docs/goods-detect-tangyudi/README.md)
-+   [哈佛 CS220r 大数据算法笔记](docs/hav-cs229r-bgdt-algo/README.md)
++   [哈佛 CS229r 大数据算法笔记](docs/hav-cs229r-bgdt-algo/README.md)
 +   [哈佛 CS229r 深度学习基础笔记](docs/hav-cs229r-dl-bsc/README.md)
 +   [哈佛 CS249r：机器学习系统](docs/hav-cs249r-mlsys/README.md)
 +   [哈佛 CS109 数据科学导论](docs/hvd-cs109-intd-ds/README.md)

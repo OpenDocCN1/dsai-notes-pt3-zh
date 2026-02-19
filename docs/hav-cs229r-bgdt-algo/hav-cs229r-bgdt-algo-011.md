@@ -1,4 +1,4 @@
-# 哈佛大学《大数据算法》课程第11讲：Johnson-Lindenstrauss引理与Hanson-Wright不等式 🎯
+# 11：Johnson-Lindenstrauss引理与Hanson-Wright不等式 🎯
 
 ![](img/2b749523baa57994804cfd2970711a58_0.png)
 
