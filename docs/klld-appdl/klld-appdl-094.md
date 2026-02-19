@@ -1,4 +1,4 @@
-# 📦 课程 P94：PointNet 点云处理入门
+# 94：PointNet 点云处理入门 📦
 
 ![](img/1d849f30409116bf76e57eeb29176049_0.png)
 

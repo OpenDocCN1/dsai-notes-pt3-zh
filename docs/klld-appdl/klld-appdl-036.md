@@ -1,4 +1,4 @@
-# 🧠 课程 P36：L19.2 - Xception 架构详解
+# 36：L19.2 - Xception 架构详解 🧠
 
 ![](img/415cf461e0f0094dc29dc2aeb8057216_1.png)
 

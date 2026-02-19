@@ -1,4 +1,4 @@
-# 🧠 课程 P125：XLNet 详解
+# 125：XLNet 详解 🧠
 
 ![](img/febdb3415c12e7ec45618b5dc4aaced7_1.png)
 

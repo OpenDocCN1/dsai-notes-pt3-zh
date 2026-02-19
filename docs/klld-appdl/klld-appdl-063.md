@@ -1,4 +1,4 @@
-# 课程 P63：L30.3 - DeepLab 🧠
+# 63：L30.3 - DeepLab 🧠
 
 ![](img/ca705cddd608659356300fa580b109b6_0.png)
 

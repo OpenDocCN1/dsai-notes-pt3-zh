@@ -1,4 +1,4 @@
-# 🧠 课程 P22：Inception-V4 架构详解
+# 22：Inception-V4 架构详解 🧠
 
 ![](img/9b4025d3b7645dbcbf5e8c5af24c99c4_1.png)
 

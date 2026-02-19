@@ -1,4 +1,4 @@
-# P24：L12- 空间变换网络 (Spatial Transformer Networks) 🧠
+# 24：L12- 空间变换网络 (Spatial Transformer Networks) 🧠
 
 ![](img/569fe3fa9d202755b3f1eadc78ccb047_1.png)
 

@@ -1,4 +1,4 @@
-# 🎤 课程 P170：L76.1 - Listen, Attend, and Spell 教程
+# 170：L76.1 - Listen, Attend, and Spell 教程 🎤
 
 在本节课中，我们将学习语音识别中的数据增强技术，并比较两种主流的语音识别模型架构：基于CTC损失的模型和基于注意力机制的编码器-解码器模型（如Listen, Attend, and Spell）。我们将探讨这些方法的核心思想、实现方式以及各自的优缺点。
 

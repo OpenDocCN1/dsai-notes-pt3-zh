@@ -1,4 +1,4 @@
-# 课程 P131：看图说话 (Show, Attend and Tell) 🖼️➡️🗣️
+# 131：看图说话 (Show, Attend and Tell) 🖼️➡️🗣️
 
 ![](img/617262a339eed8504a813be6f1cd053e_1.png)
 

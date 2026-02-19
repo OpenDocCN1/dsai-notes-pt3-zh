@@ -1,4 +1,4 @@
-# 🧠 课程 P124：Transformer-XL 详解
+# 124：Transformer-XL 详解 🧠
 
 ![](img/310d4b6aae011608c0ce022e5ed37f42_1.png)
 

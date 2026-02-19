@@ -1,4 +1,4 @@
-# 🧠 课程 P23：L11 - 压缩与激活网络 (Squeeze-and-Excitation Networks)
+# 23：L11 - 压缩与激活网络 (Squeeze-and-Excitation Networks) 🧠
 
 ![](img/2a478ccbde3374f78e207ac29ff6f98a_0.png)
 

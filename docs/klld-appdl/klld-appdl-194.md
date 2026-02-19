@@ -1,4 +1,4 @@
-# 课程 P194：L84.3 - Node2Vec介绍 🧠
+# 194：L84.3 - Node2Vec介绍 🧠
 
 ![](img/235bb4a9c2f36844ac72a4bb52edc5c0_1.png)
 

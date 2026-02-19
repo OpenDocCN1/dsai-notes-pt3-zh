@@ -1,4 +1,4 @@
-# 🧠 课程 P69：L32.4 - DeepLab v3+ 教程
+# 69：L32.4 - DeepLab v3+ 教程 🧠
 
 ![](img/cb931a2ed6f7a1d3a42ba1a442427ebd_0.png)
 

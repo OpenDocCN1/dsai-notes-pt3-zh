@@ -1,4 +1,4 @@
-# 深度学习课程 P4：L2.2 - AlexNet 🚀
+# 4：L2.2 - AlexNet 🚀
 
 ![](img/ef9b7ff6d046985c2ea9219405f57291_1.png)
 

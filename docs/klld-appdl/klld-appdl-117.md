@@ -1,4 +1,4 @@
-# 课程 P117：L56.1 - Transformer 详解 🧠
+# 117：L56.1 - Transformer 详解 🧠
 
 ![](img/0742c4aa7d6a1671d75fcda440e69880_1.png)
 

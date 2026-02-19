@@ -1,4 +1,4 @@
-# P104：L49.3- 基于CNNs的文本分类 📚
+# 104：L49.3- 基于CNNs的文本分类 📚
 
 ![](img/c9fccec2ae021cc45ce8a733d70e3bd0_1.png)
 

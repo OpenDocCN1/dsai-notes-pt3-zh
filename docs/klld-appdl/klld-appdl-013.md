@@ -1,4 +1,4 @@
-# 🧠 课程 P13：L6.2 - Kaiming 参数初始化
+# 13：L6.2 - Kaiming 参数初始化 🧠
 
 ![](img/2a83c3d6bd56a9e9b9fc12c277006098_0.png)
 

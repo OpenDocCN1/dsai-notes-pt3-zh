@@ -1,4 +1,4 @@
-# 🧠 课程 P9：L4.3 - GoogLeNet 与 Inception 模块详解
+# 9：L4.3 - GoogLeNet 与 Inception 模块详解 🧠
 
 ![](img/c53323974854ad9abb40546a34fc5897_0.png)
 

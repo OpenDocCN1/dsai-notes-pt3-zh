@@ -1,4 +1,4 @@
-# 课程 P108：L51.2 - ULMFiT 🧠
+# 108：L51.2 - ULMFiT 🧠
 
 ![](img/c209a5bff13c89ee02574bbc09911728_1.png)
 

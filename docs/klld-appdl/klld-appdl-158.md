@@ -1,4 +1,4 @@
-# 课程 P158：L71.3 - StarGAN 🎭
+# 158：L71.3 - StarGAN 🎭
 
 ![](img/b8f655546a3b0ab5133331aef4a90880_1.png)
 

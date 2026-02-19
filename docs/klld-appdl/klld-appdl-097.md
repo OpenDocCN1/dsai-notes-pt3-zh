@@ -1,4 +1,4 @@
-# 📚 课程 P97：L44&L45 - Word2Vec 教程
+# 97：L44&L45 - Word2Vec 教程 📚
 
 ![](img/3af37363bce22bd9f19e01e133462843_1.png)
 

@@ -1,4 +1,4 @@
-# 🎯 课程 P81：L37.2 - Mask R-CNN 详解
+# 81：L37.2 - Mask R-CNN 详解 🎯
 
 ![](img/9760beb5cb06ed7466335b85b9010ba1_1.png)
 

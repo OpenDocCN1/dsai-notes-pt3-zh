@@ -1,4 +1,4 @@
-# 课程 P84：L39.1 - SSD 目标检测 🎯
+# 84：L39.1 - SSD 目标检测 🎯
 
 在本节课中，我们将学习 SSD（Single Shot MultiBox Detector）目标检测算法。我们将了解 SSD 如何结合 YOLO 的速度与 Faster R-CNN 的精度，并通过多尺度特征图预测大量边界框来实现这一目标。
 

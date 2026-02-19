@@ -1,4 +1,4 @@
-# 神经网络架构搜索 (NAS) 课程 P40：L20.2 - AmoebaNet-A 🧬
+# 40：神经网络架构搜索 (NAS)  - AmoebaNet-A 🧬
 
 ![](img/0d67faca807dfaf500a3d3e6f905ed13_0.png)
 

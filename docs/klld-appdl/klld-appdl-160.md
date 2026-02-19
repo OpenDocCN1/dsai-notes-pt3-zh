@@ -1,4 +1,4 @@
-# P160：L72.2 - CTC算法详解 🧠
+# 160：L72.2 - CTC算法详解 🧠
 
 ![](img/f82f906f1a4affba647cce4cb17d818a_1.png)
 

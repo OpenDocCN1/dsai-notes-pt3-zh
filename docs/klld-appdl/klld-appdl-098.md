@@ -1,4 +1,4 @@
-# 课程 P98：L46.1 - Word2vec 详解 🧠
+# 98：L46.1 - Word2vec 详解 🧠
 
 在本节课中，我们将学习 Word2vec 的核心概念，这是一种将单词表示为向量的技术。我们将重点介绍两种主要模型：Skip-gram 和 Continuous Bag of Words，并解释它们的工作原理、优缺点以及实际应用。
 

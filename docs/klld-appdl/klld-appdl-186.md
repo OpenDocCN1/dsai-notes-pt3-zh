@@ -1,4 +1,4 @@
-# 🎮 课程 P186：AlphaGo Zero 核心原理详解
+# 186：AlphaGo Zero 核心原理详解 🎮
 
 ![](img/fdd669f8d3741107b15ba3fc69e1b27d_1.png)
 

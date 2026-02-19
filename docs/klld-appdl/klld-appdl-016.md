@@ -1,4 +1,4 @@
-# 课程 P16：L8.1 - Inception-V3 [续] 🧠
+# 16：L8.1 - Inception-V3 [续] 🧠
 
 ![](img/f4b93c38cb2648887cbd799201d326a5_0.png)
 

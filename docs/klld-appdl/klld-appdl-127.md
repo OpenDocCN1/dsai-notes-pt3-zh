@@ -1,4 +1,4 @@
-# 课程 P127：L60.2 - GPT-3 🤖
+# 127：L60.2 - GPT-3 🤖
 
 ![](img/1be330b1fcfcb6b59dcb50714f3dddd8_1.png)
 

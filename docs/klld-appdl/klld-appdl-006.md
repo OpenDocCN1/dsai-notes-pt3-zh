@@ -1,4 +1,4 @@
-# 🧠 课程 P6：L3.2 - Network in Network 详解
+# 6：L3.2 - Network in Network 详解 🧠
 
 ![](img/bfecd65cbcef25806c305b49184bf6df_1.png)
 

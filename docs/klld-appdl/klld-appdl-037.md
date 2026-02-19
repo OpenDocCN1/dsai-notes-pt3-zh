@@ -1,4 +1,4 @@
-# 🚀 课程 P37：MobileNetV2 详解
+# 37：MobileNetV2 详解 🚀
 
 ![](img/71c16285620ea7fb65e093b615ad5e63_0.png)
 

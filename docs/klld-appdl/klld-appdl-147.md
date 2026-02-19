@@ -1,4 +1,4 @@
-# 课程 P147：L68.1 - Wasserstein GAN 🧠
+# 147：L68.1 - Wasserstein GAN 🧠
 
 在本节课中，我们将要学习Wasserstein GAN（WGAN）的基本概念。我们将从回顾传统GAN及其面临的挑战开始，然后深入探讨Wasserstein距离（又称推土机距离）的数学定义和直观理解，最后介绍如何通过Kantorovich-Rubinstein对偶定理将其转化为一个可计算、可优化的目标函数。
 

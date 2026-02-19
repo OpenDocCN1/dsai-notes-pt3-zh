@@ -1,4 +1,4 @@
-# 📚 课程 P95：L43.2 - PointNet++ 详解
+# 95：L43.2 - PointNet++ 详解 📚
 
 ![](img/6176fd6dfaa6ed9b50166f1a4bd69ed4_1.png)
 

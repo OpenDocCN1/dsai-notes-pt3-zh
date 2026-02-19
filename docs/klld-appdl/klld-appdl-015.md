@@ -1,4 +1,4 @@
-# 课程 P15：L7.2 - Inception-V3 详解 🧠
+# 15：L7.2 - Inception-V3 详解 🧠
 
 在本节课中，我们将深入学习 Inception-V3 网络架构。Inception-V3 是 Google 团队在原始 Inception 网络基础上进行多项重要改进的模型。我们将重点解析其核心模块设计、计算优化策略以及整体架构的演变。
 
