@@ -1,4 +1,4 @@
-+   [Andrej Karpathy 视频笔记](docs/andrej/README.md)
++   [Karpathy GPT 教程笔记](docs/andrej/README.md)
 +   [ASU 人工智能基础笔记](docs/asu-ai-bsc/README.md)
 +   [ASU Python 笔记](docs/asu-py/README.md)
 +   [ASU 强化学习笔记](docs/asu-rl/README.md)
@@ -45,7 +45,6 @@
 +   [约翰霍普金斯神经网络基础笔记](docs/jhu-nn-bsc/README.md)
 +   [七月在线公开课笔记](docs/julyedu/README.md)
 +   [KAIST CS492C/D 扩散模型笔记](docs/kaist-cs492cd-diffmdl/README.md)
-+   [Karpathy GPT 教程笔记](docs/karpathy-gpt/README.md)
 +   [科罗拉多应用深度学习笔记](docs/klld-appdl/README.md)
 +   [李宏毅 AI Agent 笔记 2026](docs/lee-agent-2026/README.md)
 +   [李宏毅生成式人工智能导论笔记 2024](docs/lee-genai-2024/README.md)

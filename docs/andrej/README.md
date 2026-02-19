@@ -1,1 +1,1 @@
-# Andrej Karpathy 视频笔记
+# Karpathy GPT 教程笔记
