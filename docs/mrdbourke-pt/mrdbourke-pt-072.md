@@ -1,4 +1,4 @@
-# PyTorch深度学习课程 - P72：114. 详解 nn.Conv2d 与 nn.MaxPool2d 🧠
+# 72：114. 详解 nn.Conv2d 与 nn.MaxPool2d 🧠
 
 ![](img/d79ec12cd82ce038fb6b6a27b6d6d892_0.png)
 

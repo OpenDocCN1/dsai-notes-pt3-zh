@@ -1,4 +1,4 @@
-# 课程 P27：访问 GPU 🚀
+#  27：访问 GPU 🚀
 
 ![](img/9ca7a9d0d82ab9aa12529fe17abbe39a_1.png)
 

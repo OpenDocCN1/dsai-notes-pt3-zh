@@ -1,4 +1,4 @@
-# PyTorch深度学习课程 03：PyTorch计算机视觉入门 🖼️
+# 62：PyTorch计算机视觉入门 🖼️
 
 ![](img/ecf6a9e406aac3709f935758c56c0ffa_1.png)
 

@@ -1,4 +1,4 @@
-# 课程 26：PyTorch 可复现性 🎲
+#  26：PyTorch 可复现性 🎲
 
 ![](img/a2ed02bf7b4c7b9fae9b05e5fae0b329_0.png)
 

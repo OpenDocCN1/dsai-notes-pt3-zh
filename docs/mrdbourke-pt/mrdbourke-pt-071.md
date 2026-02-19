@@ -1,4 +1,4 @@
-# PyTorch深度学习课程 - 第71课：编写CNN模型 🧠
+# 71：编写CNN模型 🧠
 
 ![](img/16b6c758de51211fb165c676afb96b5a_0.png)
 

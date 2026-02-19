@@ -1,4 +1,4 @@
-# PyTorch深度学习课程 第87课：使用torchinfo获取模型摘要 📊
+# 87：使用torchinfo获取模型摘要 📊
 
 ![](img/808e59e1b564969f1d9f284cdfd46895_0.png)
 

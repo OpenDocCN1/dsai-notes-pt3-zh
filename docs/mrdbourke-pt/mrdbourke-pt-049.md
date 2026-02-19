@@ -1,7 +1,7 @@
+# 49：使用 torch.nn.Sequential 构建模型 🧱
+
 ![](img/02da7141cc23ac85ba7ca2afcd6093e5_0.png)
 
-# 课程名称：使用 torch.nn.Sequential 构建模型 🧱
-## 课程编号：P49-68
 
 在本节课中，我们将学习如何使用 PyTorch 的 `torch.nn.Sequential` 模块来构建神经网络模型。这是一种比手动子类化 `nn.Module` 更简洁、更直观的模型构建方法，尤其适用于结构简单的层叠式网络。
 
