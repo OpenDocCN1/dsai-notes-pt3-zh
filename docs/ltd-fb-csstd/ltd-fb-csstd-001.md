@@ -1,4 +1,4 @@
-# 课程 P1：声誉危机？Facebook 遇上剑桥分析公司 🎭
+# 1：声誉危机？Facebook 遇上剑桥分析公司 🎭
 
 ![](img/ef9535ad4e749f7571aea045f3fc2288_0.png)
 
