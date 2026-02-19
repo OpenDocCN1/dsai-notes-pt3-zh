@@ -1,4 +1,4 @@
-# 扩散模型和应用：P18：嘉宾讲座2 - Jiaming Song - Dream Machine：视频基础模型 🎬
+# 扩散模型和应用：19：嘉宾讲座2 - Jiaming Song - Dream Machine：视频基础模型 🎬
 
 ![](img/bbd4b3f0a6f1dd2af947c4498cdf34f2_0.png)
 

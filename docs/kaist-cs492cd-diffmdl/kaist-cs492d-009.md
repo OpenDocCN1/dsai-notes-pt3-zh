@@ -1,4 +1,4 @@
-# 扩散和流模型：10：流匹配 1 (Diffusion and Flow Models, Fall 2025, KAIST)
+# 扩散和流模型：10：流匹配 1
 
 ![](img/834c749ebbfc16d110ec28b290b92d7c_0.png)
 

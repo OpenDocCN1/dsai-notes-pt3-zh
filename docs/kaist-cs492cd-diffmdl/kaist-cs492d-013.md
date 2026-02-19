@@ -1,4 +1,4 @@
-# 扩散与流模型：P13：嘉宾讲座1_ Subham Sahoo (Diffusion and Flow Models, Fall 2025, KAIST)
+# 扩散与流模型：14：嘉宾讲座1_ Subham Sahoo 
 
 ![](img/f895efd7ace36f3c112746ac2f3e5fec_1.png)
 

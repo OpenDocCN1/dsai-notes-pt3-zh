@@ -1,4 +1,4 @@
-# 扩散和流模型：P15：嘉宾讲座2 - Philipp Henzler (3D生成模型综述)
+# 扩散和流模型：16：嘉宾讲座2 - Philipp Henzler (3D生成模型综述)
 
 ![](img/c9002ee7ab54093eeedee435bbbd0108_1.png)
 

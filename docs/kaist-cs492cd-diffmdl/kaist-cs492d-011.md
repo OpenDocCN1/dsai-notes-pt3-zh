@@ -1,4 +1,4 @@
-# 扩散与流模型：第12讲：推理时间引导生成 1 (Diffusion and Flow Models, F - GPT中英字幕课程资源 - BV1CKpvz1EH5)
+# 扩散与流模型：12：推理时间引导生成 1
 
 ![](img/e09040905732c878aea4609f763f5138_0.png)
 

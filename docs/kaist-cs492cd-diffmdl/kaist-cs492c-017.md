@@ -1,4 +1,4 @@
-# 扩散模型与应用：P17：嘉宾讲座1 - Or Patashnik - 注意力层的威力 🧠
+# 扩散模型与应用：18：嘉宾讲座1 - Or Patashnik - 注意力层的威力 🧠
 
 ![](img/e3adc2493c4c45b9fbb1d74f4480ff82_1.png)
 
