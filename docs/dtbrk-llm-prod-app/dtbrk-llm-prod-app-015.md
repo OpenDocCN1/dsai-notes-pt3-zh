@@ -1,4 +1,4 @@
-# 15：-15-LLM Module 1 - Applications with LLMs _ 1.6 提示词
+# 15：提示词
 
 ![](img/49b82e450436ff03945a64a3e28ee5ae_0.png)
 

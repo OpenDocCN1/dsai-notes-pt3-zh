@@ -1,4 +1,4 @@
-# 14：-14-LLM Module 1 - Applications with LLMs _ 1.5 NLP 任务
+# 14：NLP 任务
 
 ![](img/57bd0ad2315bb477afca2ab3e48f6860_0.png)
 

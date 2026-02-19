@@ -1,4 +1,4 @@
-# 1：Hugging Face 简介与核心组件 🚀
+# 12：Hugging Face 简介与核心组件 🚀
 
 ![](img/71314df0521d8be9d4a065108c7fae82_0.png)
 

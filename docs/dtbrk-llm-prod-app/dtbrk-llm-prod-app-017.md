@@ -1,4 +1,4 @@
-# Large Language Models： Application through Production：P17：1.8 总结
+# 17：总结
 
 ![](img/a0e44ead20652bb73054a5b8001d69ae_1.png)
 
