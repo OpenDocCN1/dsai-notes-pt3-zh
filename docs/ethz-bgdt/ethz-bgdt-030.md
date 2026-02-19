@@ -1,4 +1,4 @@
-# 大数据课程 - ETH Zurich - Fall 2024 - P30：Spark (2/4) 🚀
+# 30：Spark (2/4) 🚀
 
 ![](img/9f09d3833e3dfa77d4e32936c5ea786f_1.png)
 

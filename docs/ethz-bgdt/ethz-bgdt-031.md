@@ -1,4 +1,4 @@
-# 大数据课程 - 第31讲：Spark (3/4) 🚀
+# 31：Spark (3/4) 🚀
 
 ![](img/2cddd2779ce203202a37adedfb3ca6a8_1.png)
 

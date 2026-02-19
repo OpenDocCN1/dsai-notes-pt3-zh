@@ -1,4 +1,4 @@
-# 大数据课程 - 第26讲：MapReduce (1/3) 🗺️➡️🧮
+# 26：MapReduce (1/3) 🗺️➡️🧮
 
 ![](img/27e09de1b0b08dfa6f3d737cd87d9a56_1.png)
 

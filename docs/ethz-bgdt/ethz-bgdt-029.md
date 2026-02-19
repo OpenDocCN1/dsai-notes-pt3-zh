@@ -1,4 +1,4 @@
-# 大数据课程 - 第29讲：从MapReduce到Spark (1/4) 🚀
+# 29：从MapReduce到Spark (1/4) 🚀
 
 ![](img/b5deb0735fb5b8164c2721dfff60a544_1.png)
 
