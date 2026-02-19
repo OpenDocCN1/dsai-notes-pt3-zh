@@ -1,4 +1,4 @@
-# EPFL《机器学习｜Machine Learning Course CS-433 fall 2020-2021》课程笔记 - P23：神经网络训练与反向传播算法 🧠
+# 23：神经网络训练与反向传播算法 🧠
 
 ![](img/f36baea2054ac6327a723e1f776df24c_1.png)
 
