@@ -1,4 +1,4 @@
-# 课程 P13：L10 - BERT变种 🧠
+# 13：L10 - BERT变种 🧠
 
 在本节课中，我们将学习四种对原始BERT模型的重要改进。这些改进分别来自RoBERTa、Transformer-XL、ELECTRA和ALBERT论文，它们从训练策略、模型架构和效率等方面提升了BERT的性能。
 

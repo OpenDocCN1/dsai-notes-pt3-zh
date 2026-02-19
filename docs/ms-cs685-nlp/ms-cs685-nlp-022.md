@@ -1,4 +1,4 @@
-# 📚 课程 P22：考试复习课
+# 22：考试复习课 📚
 
 ![](img/4e6ad4fc6fb2f665fbc2cdce5bd4ea15_1.png)
 

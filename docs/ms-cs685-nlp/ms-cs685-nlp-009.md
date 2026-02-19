@@ -1,4 +1,4 @@
-# 课程 P9：L7.1 - NLP 的迁移学习 📚
+# 9：L7.1 - NLP 的迁移学习 📚
 
 ![](img/f1591e808e9bc70bdffc1770f073cdfc_1.png)
 
