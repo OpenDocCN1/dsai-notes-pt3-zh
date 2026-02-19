@@ -1,4 +1,4 @@
-# Large Language Models： Application through Production： 4.4： 微调之小样本学习 🧠
+# 42： 微调之小样本学习 🧠
 
 ![](img/62bd9575effb53a3e8130fb5fa503840_1.png)
 

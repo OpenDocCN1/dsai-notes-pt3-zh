@@ -1,4 +1,4 @@
-# 4：4.11 嘉宾讲座：LangChain创始人Harrison Chase - 评估LLM链与智能体
+# 49：嘉宾讲座：LangChain创始人Harrison Chase - 评估LLM链与智能体
 
 ![](img/3ca0077f127c9bd2b14ce0664e9d95e4_0.png)
 

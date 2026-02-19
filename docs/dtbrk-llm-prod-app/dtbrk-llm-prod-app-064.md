@@ -1,4 +1,4 @@
-# LLMOps：6.4：LLMOps 与传统 MLOps 的对比 🧩
+# 64：LLMOps 与传统 MLOps 的对比 🧩
 
 ![](img/bb5d53c4a46bb188bded17ef2fba4750_0.png)
 

@@ -1,4 +1,4 @@
-# Large Language Models： Application through Production： 6： LLMOps 细节详解
+# 65： LLMOps 细节详解
 
 ![](img/4aa3958c31ec9df0a78d50068e5f841c_0.png)
 

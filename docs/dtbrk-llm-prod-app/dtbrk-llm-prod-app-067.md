@@ -1,4 +1,4 @@
-# Large Language Models： Application through Production： 6.7： Notebook 演示
+# 67： Notebook 演示
 
 ![](img/1a05dc05f6252edba68bb8769c9c6ec5_0.png)
 

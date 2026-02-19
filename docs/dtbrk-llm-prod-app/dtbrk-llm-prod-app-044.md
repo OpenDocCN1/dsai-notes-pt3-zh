@@ -1,4 +1,4 @@
-# Large Language Models： Application through Production： 4： 4.6 微调： 将LLM作为服务使用
+# 44：微调： 将LLM作为服务使用
 
 ![](img/39a9bd23d2948f971f7e48b909aefe12_0.png)
 

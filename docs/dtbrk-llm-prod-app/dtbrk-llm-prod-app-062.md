@@ -1,4 +1,4 @@
-# 课程6：LLMOps：6.2 模块概述 🚀
+# 62：LLMOps：6.2 模块概述 🚀
 
 ![](img/4dedf8aae88f6b88c6ab90c47c5150e3_0.png)
 

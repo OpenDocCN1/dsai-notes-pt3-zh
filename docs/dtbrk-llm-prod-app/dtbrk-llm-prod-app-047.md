@@ -1,4 +1,4 @@
-# Large Language Models： Application through Production： 4.9： 评估大语言模型 🧐
+# 47： 评估大语言模型 🧐
 
 ![](img/e22fad90cc3bbdd4aae1ac738a34f485_0.png)
 
