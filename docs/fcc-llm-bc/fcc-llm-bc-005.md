@@ -1,4 +1,4 @@
-# LLM训练营：P5：项目实战演练 - AskFSDL Discord Bot
+# 5：项目实战演练 - AskFSDL Discord Bot
 
 ![](img/e7e22aaa8cc6d46d8673de82a33dc5b1_1.png)
 

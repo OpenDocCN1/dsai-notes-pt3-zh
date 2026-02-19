@@ -1,4 +1,4 @@
-# LLM训练营：P9：与OpenAI产品副总裁Peter Welinder的炉边谈话
+# 9：与OpenAI产品副总裁Peter Welinder的炉边谈话
 
 ![](img/f73bf0b4279d5d8dff14515edc5b2183_1.png)
 

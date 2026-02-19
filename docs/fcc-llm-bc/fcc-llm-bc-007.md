@@ -1,4 +1,4 @@
-# LLM训练营：P7：LLMOps
+# 7：LLMOps
 
 ![](img/90499cb4cec0fd1ebfff8315d4ee1d59_1.png)
 
