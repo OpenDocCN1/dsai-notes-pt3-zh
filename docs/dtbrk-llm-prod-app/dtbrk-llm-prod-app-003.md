@@ -1,4 +1,4 @@
-# 3：-03-LLM Module 0 - Introduction _ 0.3 入门知识
+# 3：入门知识
 
 ![](img/359d889a0e7921cf84ccc4bdf62bcc20_0.png)
 

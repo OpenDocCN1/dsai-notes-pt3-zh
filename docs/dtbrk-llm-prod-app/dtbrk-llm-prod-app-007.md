@@ -1,4 +1,4 @@
-# 7：-07-LLM Module 0 - Introduction _ 0.7 总结
+# 7：总结
 
 ![](img/b84fff61b3f3a5d10c3be95bf48df7ef_0.png)
 

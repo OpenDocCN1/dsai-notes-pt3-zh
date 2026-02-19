@@ -1,4 +1,4 @@
-# 5：-05-LLM Module 0 - Introduction _ 0.5 分词
+# 5：分词
 
 ![](img/8928f0b7c42f6010ff0ba374769ec136_0.png)
 

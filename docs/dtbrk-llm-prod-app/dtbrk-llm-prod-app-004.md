@@ -1,4 +1,4 @@
-# 4：0-LLM Module 0 - Introduction _ 0.4 语言模型
+# 4：语言模型
 
 ![](img/cdc7e1ef38884d7947cf77edfa786aa3_1.png)
 
