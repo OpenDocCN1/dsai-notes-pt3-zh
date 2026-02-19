@@ -1,4 +1,4 @@
-# Large Language Models： Application through Production： 2： 2.8.1 Notebook 演示第一部分 🧠
+# 26：Notebook 演示第一部分 🧠
 
 ![](img/93c74fa0086d51804cddf3cae9143914_0.png)
 

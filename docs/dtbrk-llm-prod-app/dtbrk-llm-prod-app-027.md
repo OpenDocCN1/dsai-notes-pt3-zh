@@ -1,4 +1,4 @@
-# 27：2.8.2 Notebook 演示第二部分
+# 27：Notebook 演示第二部分
 
 ![](img/c651de7f42593e4e4165f489e73c1531_0.png)
 

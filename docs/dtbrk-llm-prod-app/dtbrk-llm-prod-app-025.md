@@ -1,4 +1,4 @@
-# Large Language Models： Application through Production： 2： 2.7 总结
+# 25：总结
 
 ![](img/e658b20f42002bbf2554c998970e245d_0.png)
 

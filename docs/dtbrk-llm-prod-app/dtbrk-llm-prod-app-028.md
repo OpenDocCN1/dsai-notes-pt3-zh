@@ -1,4 +1,4 @@
-# LM02A：2.9 Notebook Demo - 使用Pinecone向量数据库 🗄️
+# 28：Notebook Demo - 使用Pinecone向量数据库 🗄️
 
 在本节课程中，我们将学习如何使用一个名为Pinecone的云端向量数据库。我们将通过两种不同的方法，将新闻文章数据转换为向量并存储到Pinecone中，然后进行相似性搜索查询。
 

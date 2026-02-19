@@ -1,4 +1,4 @@
-# Large Language Models： Application through Production： 3.7.2： Notebook Demo Part 2
+# 37： Notebook Demo Part 2
 
 ![](img/cf75f461bd75a6ce4d2aa6d6e2fc6bc3_0.png)
 

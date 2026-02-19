@@ -1,4 +1,4 @@
-# LM02B：2.10 Notebook 演示 Weaviate 🧠
+# 29：Notebook 演示 Weaviate 🧠
 
 ![](img/a830e3d47f741758971a56c2befb6a6e_0.png)
 
