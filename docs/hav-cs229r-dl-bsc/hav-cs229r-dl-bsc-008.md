@@ -1,4 +1,4 @@
-# 课程名称：哈佛大学《深度学习基础｜Harvard CS229br Foundations of Deep Learning 2021》中英字幕（claude-3.7-s - P8：Sham lecture.zh_en - GPT中英字幕课程资源 - BV1f4XCYZEMx）
+# 8：强化学习
 
 ## 概述
 
