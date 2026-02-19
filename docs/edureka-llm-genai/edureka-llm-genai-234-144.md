@@ -1,4 +1,4 @@
-# 生成式AI与LLMs：第3课：GitHub Copilot用户界面与功能 🚀
+# 第3课：GitHub Copilot用户界面与功能 🚀
 
 ![](img/8b9e8c10e2baa26e8fd61af8c84ad06e_0.png)
 

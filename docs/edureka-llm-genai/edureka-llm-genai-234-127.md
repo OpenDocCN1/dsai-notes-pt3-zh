@@ -1,4 +1,4 @@
-# 生成式AI与LLMs：第2课：Midjourney的起源与发展 🎨
+# 第2课：Midjourney的起源与发展 🎨
 
 ![](img/11beda0c4e844f6e033629a5fe5a6975_0.png)
 

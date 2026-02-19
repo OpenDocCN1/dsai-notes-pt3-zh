@@ -1,4 +1,4 @@
-# 生成式AI与LLMs：第2课：LangChain的工作原理
+# 第2课：LangChain的工作原理
 
 ![](img/bd0d55f9291550a34854e72fe4808d67_1.png)
 

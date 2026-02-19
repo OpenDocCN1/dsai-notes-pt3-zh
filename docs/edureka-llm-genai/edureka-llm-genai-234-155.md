@@ -1,4 +1,4 @@
-# 生成式AI与LLMs：第3课：Google Bard入门指南 🧠
+# 第3课：Google Bard入门指南 🧠
 
 ![](img/c905970f167d129c86d4324b728a3ada_1.png)
 

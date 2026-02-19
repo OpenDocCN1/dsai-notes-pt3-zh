@@ -1,4 +1,4 @@
-# 生成式AI与LLMs：第4课：GitHub Copilot用户界面与功能演示 🚀
+# 第4课：GitHub Copilot用户界面与功能演示 🚀
 
 在本节课中，我们将学习GitHub Copilot的用户界面及其核心功能，并通过实际演示了解它如何辅助编程。
 

@@ -1,4 +1,4 @@
-# 生成式AI与LLMs：第2课：OpenCV的应用 🖼️
+# 第2课：OpenCV的应用 🖼️
 
 ![](img/61e19b61deee2fb1920da3075f630188_1.png)
 

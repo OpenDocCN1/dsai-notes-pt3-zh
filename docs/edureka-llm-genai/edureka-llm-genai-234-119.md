@@ -1,4 +1,4 @@
-生成式AI与LLMs：第2课：什么是OpenCV 🖼️
+第2课：什么是OpenCV 🖼️
 
 ![](img/93f39abc92160f9c41641447df1715d2_1.png)
 

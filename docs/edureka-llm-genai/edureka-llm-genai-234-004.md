@@ -1,4 +1,4 @@
-生成式AI与LLMs：第3课：生成式AI vs 生成式AI模型 🧠
+第3课：生成式AI vs 生成式AI模型 🧠
 
 ![](img/59c3ccb00d580ed0691ed84c8dee5e7e_1.png)
 

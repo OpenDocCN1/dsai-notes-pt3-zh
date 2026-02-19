@@ -1,4 +1,4 @@
-# 生成式AI与LLMs：第2课：Transformer的工作原理 🧠
+# 第2课：Transformer的工作原理 🧠
 
 ![](img/a537d07002765d56367d530fa3008c42_0.png)
 

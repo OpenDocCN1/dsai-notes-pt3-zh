@@ -1,4 +1,4 @@
-# 生成式AI与LLMs：P129：Midjourney订阅指南
+# P129：Midjourney订阅指南
 
 ![](img/e82498714660ad179b84242396323a12_0.png)
 

@@ -1,4 +1,4 @@
-生成式AI与LLMs：第2课：LLM性能比较
+第2课：LLM性能比较
 
 ![](img/5725dc581bf59e6c33b93fe9cc66f3e4_0.png)
 

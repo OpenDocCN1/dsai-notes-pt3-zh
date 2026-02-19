@@ -1,4 +1,4 @@
-# 生成式AI与LLMs：2.5：基于Transformer的能量条件生成模型
+# 2.5：基于Transformer的能量条件生成模型
 
 ![](img/08d60280cbeabd29bf55bffc4976a380_0.png)
 

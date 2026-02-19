@@ -1,4 +1,4 @@
-生成式人工智能与LLMs：第1课：Scikit-learn中的计数向量化
+第1课：Scikit-learn中的计数向量化
 
 ![](img/8f357c8e54e4cee9cde54b12451365d0_1.png)
 

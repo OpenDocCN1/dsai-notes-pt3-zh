@@ -1,4 +1,4 @@
-# 生成式AI与LLMs：2：Midjourney账户设置
+# 2：Midjourney账户设置
 
 ![](img/c140426a0bd76f7f71f89a657ab65f2d_0.png)
 

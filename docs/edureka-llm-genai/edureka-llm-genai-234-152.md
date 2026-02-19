@@ -1,4 +1,4 @@
-# 生成式AI与LLMs：第2课：GitHub Copilot故障排除技巧 🛠️
+# 第2课：GitHub Copilot故障排除技巧 🛠️
 
 在本节课中，我们将学习与GitHub Copilot相关的故障排除技巧。通过本节内容，你将能够理解并应用多种解决GitHub Copilot常见问题的方法。
 

@@ -1,4 +1,4 @@
-# 生成式AI与LLMs：P161：Codeium工具介绍 🚀
+# P161：Codeium工具介绍 🚀
 
 ![](img/c939ca54470322a8c02cd2160083d3bb_1.png)
 

@@ -1,4 +1,4 @@
-# 生成式AI与LLMs：第2课：如何使用OpenCV加载图像 🖼️
+# 第2课：如何使用OpenCV加载图像 🖼️
 
 ![](img/cf88a07aa9e7aba66d15cf1e1ccba58e_1.png)
 

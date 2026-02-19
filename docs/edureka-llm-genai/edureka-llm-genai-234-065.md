@@ -1,4 +1,4 @@
-生成式AI与LLMs：P65：基于组件方法的优势 🧱
+P65：基于组件方法的优势 🧱
 
 ![](img/2eb7e2caf6e4e5c8ec207a0eb28c2c1b_1.png)
 

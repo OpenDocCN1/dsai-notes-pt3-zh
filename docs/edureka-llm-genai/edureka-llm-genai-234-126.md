@@ -1,4 +1,4 @@
-# 生成式AI与LLMs：2.3：解密Midjourney 🧙‍♂️
+# 2.3：解密Midjourney 🧙‍♂️
 
 ![](img/b4b6cb5d4df2144e82c2831f54bf1d60_0.png)
 
