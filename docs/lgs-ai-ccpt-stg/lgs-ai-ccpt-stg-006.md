@@ -1,4 +1,4 @@
-# 课程名称：AI概念和策略｜AI Concepts and Strategy - P6：实验室介绍 🧪
+# 6：实验室介绍 🧪
 
 ![](img/ff5f13866e3b1a72c8b19cec1bde7a1b_0.png)
 
