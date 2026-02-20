@@ -1,4 +1,4 @@
-# 74：LangChain的工作原理
+# 第二三四部分 74：LangChain的工作原理
 
 ![](img/bd0d55f9291550a34854e72fe4808d67_1.png)
 

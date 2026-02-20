@@ -1,4 +1,4 @@
-# 114：使用ChatGPT API开发聊天机器人 🚀
+# 第二三四部分 114：使用ChatGPT API开发聊天机器人 🚀
 
 在本节课中，我们将学习如何利用OpenAI的ChatGPT API来构建一个属于自己的聊天机器人。我们将从理解核心概念开始，逐步深入到具体的代码实现。
 
@@ -36,7 +36,7 @@
 import openai
 import os
 
-# 从环境变量中读取API密钥
+# 第二三四部分 从环境变量中读取API密钥
 openai.api_key = os.getenv("OPENAI_API_KEY")
 ```
 
@@ -78,7 +78,7 @@ def chat_with_gpt(user_input, conversation_history=[]):
 最后，我们可以创建一个简单的循环来运行我们的聊天机器人：
 
 ```python
-# 初始化对话历史
+# 第二三四部分 初始化对话历史
 history = []
 
 print("聊天机器人已启动！输入‘退出’来结束对话。")

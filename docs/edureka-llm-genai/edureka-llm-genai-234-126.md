@@ -1,4 +1,4 @@
-# 126：解密Midjourney 🧙‍♂️
+# 第二三四部分 126：解密Midjourney 🧙‍♂️
 
 ![](img/b4b6cb5d4df2144e82c2831f54bf1d60_0.png)
 

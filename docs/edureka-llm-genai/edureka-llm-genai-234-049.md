@@ -1,4 +1,4 @@
-# 49：线性变换与Softmax函数
+# 第二三四部分 49：线性变换与Softmax函数
 
 在本节课中，我们将学习Transformer解码器中的两个核心组件：线性变换与Softmax函数。我们将了解它们如何协同工作，将编码后的信息转化为下一个单词的预测概率。
 
@@ -95,7 +95,7 @@
 
 **代码示例（束搜索简化逻辑）**：
 ```python
-# 伪代码示例
+# 第二三四部分 伪代码示例
 def beam_search(model, input_sequence, beam_width=5):
     candidates = [(input_sequence, 0)] # (序列， 总对数概率)
     for step in range(max_length):

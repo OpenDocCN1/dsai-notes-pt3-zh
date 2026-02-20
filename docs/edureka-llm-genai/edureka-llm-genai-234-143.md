@@ -1,4 +1,4 @@
-# 143：GitHub Copilot的安装与设置
+# 第二三四部分 143：GitHub Copilot的安装与设置
 
 在本节课中，我们将学习如何安装和设置GitHub Copilot，并了解其支持的集成开发环境。
 

@@ -1,4 +1,4 @@
-# 85：使用LangChain构建RAG模型（续）
+# 第二三四部分 85：使用LangChain构建RAG模型（续）
 
 ![](img/418ca3da7982fad43e0ddc6947c5a74f_0.png)
 

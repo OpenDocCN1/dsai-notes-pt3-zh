@@ -1,4 +1,4 @@
-# 128：Midjourney账户设置
+# 第二三四部分 128：Midjourney账户设置
 
 ![](img/c140426a0bd76f7f71f89a657ab65f2d_0.png)
 

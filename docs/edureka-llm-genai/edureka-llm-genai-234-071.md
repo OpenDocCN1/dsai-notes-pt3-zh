@@ -1,4 +1,4 @@
-# 71：检索增强生成（RAG）的工作原理 🧠
+# 第二三四部分 71：检索增强生成（RAG）的工作原理 🧠
 
 ![](img/69c404d6cf6240750681add7b05d3f65_1.png)
 
@@ -52,7 +52,7 @@ RAG的核心思想是让生成模型在创作时，能够参考外部知识库�
 
 **代码逻辑示意**：
 ```python
-# 伪代码示意
+# 第二三四部分 伪代码示意
 enhanced_prompt = original_prompt + retrieved_facts
 generated_story = llm.generate(enhanced_prompt)
 ```

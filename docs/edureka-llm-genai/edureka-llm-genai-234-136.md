@@ -1,4 +1,4 @@
-# 136：使用Midjourney参数指南 🎨
+# 第二三四部分 136：使用Midjourney参数指南 🎨
 
 ![](img/e0c230373c3ec8bbf3fcae83f1480103_1.png)
 

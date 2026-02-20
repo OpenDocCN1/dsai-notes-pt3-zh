@@ -1,4 +1,4 @@
-# 43：使用特定指令微调LLM 🎯
+# 第二三四部分 43：使用特定指令微调LLM 🎯
 
 ![](img/5351b00b9c08cc88e02693b630f7ba26_0.png)
 
@@ -45,24 +45,24 @@
 以下是一个使用特定指令进行微调的代码示例框架：
 
 ```python
-# 示例：使用任务特定提示词进行微调
-# 假设我们使用一个预训练的文本生成模型
+# 第二三四部分 示例：使用任务特定提示词进行微调
+# 第二三四部分 假设我们使用一个预训练的文本生成模型
 from transformers import AutoModelForCausalLM, AutoTokenizer, TrainingArguments, Trainer
 
-# 1. 加载预训练模型和分词器
+# 第二三四部分 1. 加载预训练模型和分词器
 model_name = "gpt2"
 model = AutoModelForCausalLM.from_pretrained(model_name)
 tokenizer = AutoTokenizer.from_pretrained(model_name)
 
-# 2. 准备带有特定指令的训练数据
-# 例如，每条数据都包含一个引导模型生成特定风格文本的提示词
+# 第二三四部分 2. 准备带有特定指令的训练数据
+# 第二三四部分 例如，每条数据都包含一个引导模型生成特定风格文本的提示词
 train_data = [
     {"prompt": "以正式商务风格写一封邮件：", "completion": "尊敬的[收件人姓名]..."},
     {"prompt": "用轻松幽默的语气描述夏天：", "completion": "夏天就像个热情似火的朋友..."},
     # ... 更多示例
 ]
 
-# 3. 对数据进行分词处理
+# 第二三四部分 3. 对数据进行分词处理
 def tokenize_function(examples):
     # 将提示词和补全文本拼接后进行分词
     texts = [p + c for p, c in zip(examples["prompt"], examples["completion"])]
@@ -70,7 +70,7 @@ def tokenize_function(examples):
 
 tokenized_datasets = tokenize_function(train_data)
 
-# 4. 定义训练参数，包含特定微调目标相关的设置
+# 第二三四部分 4. 定义训练参数，包含特定微调目标相关的设置
 training_args = TrainingArguments(
     output_dir="./results",
     learning_rate=5e-5,
@@ -79,7 +79,7 @@ training_args = TrainingArguments(
     # 可以在此处设置与任务相关的特定参数，如权重衰减、预热步数等
 )
 
-# 5. 创建Trainer并开始微调
+# 第二三四部分 5. 创建Trainer并开始微调
 trainer = Trainer(
     model=model,
     args=training_args,

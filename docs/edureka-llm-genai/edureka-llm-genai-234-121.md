@@ -1,4 +1,4 @@
-# 121：如何使用OpenCV加载图像 🖼️
+# 第二三四部分 121：如何使用OpenCV加载图像 🖼️
 
 ![](img/cf88a07aa9e7aba66d15cf1e1ccba58e_1.png)
 
@@ -54,7 +54,7 @@ else:
 在某些环境中，如Google Colab，传统的OpenCV图像显示函数（如`cv2.imshow`）不受支持。以下代码提供了一种在Colab笔记本中内联显示图像的兼容方法。
 
 ```python
-# 适用于 Google Colab
+# 第二三四部分 适用于 Google Colab
 from google.colab.patches import cv2_imshow
 
 if image is not None:

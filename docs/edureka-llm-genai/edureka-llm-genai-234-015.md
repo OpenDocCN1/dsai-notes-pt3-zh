@@ -1,4 +1,4 @@
-# 15：探索性数据分析演示
+# 第二三四部分 15：探索性数据分析演示
 
 ![](img/19551fbead4605cec90f3bc34a33fd84_0.png)
 
@@ -15,7 +15,7 @@
 以下是用于理解分类列唯一值的代码：
 
 ```python
-# 检查分类列的唯一值
+# 第二三四部分 检查分类列的唯一值
 categorical_columns = ['gender', 'item_purchased', 'category', 'location', 'size']
 for col in categorical_columns:
     unique_vals = df[col].unique()
@@ -54,10 +54,10 @@ for col in categorical_columns:
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-# 选择要可视化的数值列
+# 第二三四部分 选择要可视化的数值列
 numerical_columns = ['age', 'purchase_amount', 'review_rating', 'previous_purchases']
 
-# 创建子图
+# 第二三四部分 创建子图
 fig, axes = plt.subplots(2, 2, figsize=(12, 10))
 axes = axes.ravel()
 
@@ -110,7 +110,7 @@ plt.show()
 ![](img/19551fbead4605cec90f3bc34a33fd84_21.png)
 
 ```python
-# 检查缺失值
+# 第二三四部分 检查缺失值
 missing_values = df.isnull().sum()
 print("缺失值统计:")
 print(missing_values)
@@ -127,7 +127,7 @@ print(missing_values)
 现在，你可以使用以下代码检查数据类型验证：
 
 ```python
-# 验证数据类型
+# 第二三四部分 验证数据类型
 data_types = df.dtypes
 print("各列数据类型:")
 print(data_types)
@@ -166,12 +166,12 @@ print(data_types)
 以下是按季节和购买物品分组并统计出现次数的代码：
 
 ```python
-# 按季节和物品分组，统计购买次数
+# 第二三四部分 按季节和物品分组，统计购买次数
 popular_items_by_season = df.groupby(['season', 'item_purchased']).size().reset_index(name='count')
 
 ![](img/19551fbead4605cec90f3bc34a33fd84_31.png)
 
-# 找出每个季节最受欢迎的物品
+# 第二三四部分 找出每个季节最受欢迎的物品
 most_popular_by_season = popular_items_by_season.loc[popular_items_by_season.groupby('season')['count'].idxmax()]
 print(most_popular_by_season)
 ```

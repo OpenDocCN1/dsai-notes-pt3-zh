@@ -1,4 +1,4 @@
-# 12：利用ChatGPT学习Python数据科学
+# 第二三四部分 12：利用ChatGPT学习Python数据科学
 
 ![](img/c19217bef19aa266b1cda5b474d3d069_0.png)
 

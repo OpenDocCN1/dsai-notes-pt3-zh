@@ -1,4 +1,4 @@
-# 50：其他领域的下一个词预测
+# 第二三四部分 50：其他领域的下一个词预测
 
 ![](img/a785a6f3d4300a84728e56ff62baf4ab_0.png)
 
@@ -23,10 +23,10 @@
 ![](img/a785a6f3d4300a84728e56ff62baf4ab_4.png)
 
 ```python
-# 模型根据已有代码上下文预测下一个token
+# 第二三四部分 模型根据已有代码上下文预测下一个token
 context = "def calculate_sum(a, b):"
 predicted_token = model.predict_next_token(context)
-# 可能的预测输出: "return"
+# 第二三四部分 可能的预测输出: "return"
 ```
 
 ![](img/a785a6f3d4300a84728e56ff62baf4ab_5.png)

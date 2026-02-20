@@ -1,4 +1,4 @@
-# 13：使用生成式AI进行可视化 📊
+# 第二三四部分 13：使用生成式AI进行可视化 📊
 
 ## 概述
 在本节课中，我们将学习如何利用生成式AI进行数据可视化。我们将重点介绍使用ChatGPT将原始数据转化为生动的图表和图形，从而揭示数据中的趋势、模式和故事。
@@ -86,7 +86,7 @@ ChatGPT可能会生成类似以下的Python代码（以著名的Iris数据集为
 ![](img/cc65f1696fe6bd6d4c3293d39dcb4613_26.png)
 
 ```python
-# 示例代码片段：加载数据并创建散点图矩阵
+# 第二三四部分 示例代码片段：加载数据并创建散点图矩阵
 import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
@@ -98,12 +98,12 @@ from sklearn.datasets import load_iris
 
 ![](img/cc65f1696fe6bd6d4c3293d39dcb4613_29.png)
 
-# 加载数据
+# 第二三四部分 加载数据
 iris = load_iris()
 df = pd.DataFrame(iris.data, columns=iris.feature_names)
 df['target'] = iris.target
 
-# 创建散点图矩阵
+# 第二三四部分 创建散点图矩阵
 sns.pairplot(df, hue='target', palette='viridis')
 plt.suptitle('Iris数据集特征关系散点图矩阵', y=1.02)
 plt.show()

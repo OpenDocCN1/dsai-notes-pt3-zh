@@ -1,4 +1,4 @@
-# 11：使用ChatGPT生成代码
+# 第二三四部分 11：使用ChatGPT生成代码
 
 在本节课中，我们将学习手动编码与使用ChatGPT进行AI辅助编码的核心区别。我们将通过具体示例，直观地比较两种方式在时间、效率和过程上的差异。
 
@@ -31,7 +31,7 @@
 def calculate_square(number):
     return number ** 2
 
-# 测试函数
+# 第二三四部分 测试函数
 result = calculate_square(2)
 print(result)  # 输出：4
 ```
@@ -67,7 +67,7 @@ def calculate_square(number):
     """
     return number * number
 
-# 示例用法
+# 第二三四部分 示例用法
 print(calculate_square(5))  # 输出：25
 ```
 使用ChatGPT完成此任务仅需几秒钟。它不仅提供了功能代码，还包含了清晰的文档注释。
@@ -129,7 +129,7 @@ def calculate_average_grade():
     except ValueError:
         print("输入错误！请确保输入的是有效数字。")
 
-# 运行程序
+# 第二三四部分 运行程序
 if __name__ == "__main__":
     calculate_average_grade()
 ```

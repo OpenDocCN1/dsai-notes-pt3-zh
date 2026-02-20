@@ -1,4 +1,4 @@
-# 6：基于Transformer的能量条件生成模型
+# 第二三四部分 6：基于Transformer的能量条件生成模型
 
 ![](img/08d60280cbeabd29bf55bffc4976a380_0.png)
 

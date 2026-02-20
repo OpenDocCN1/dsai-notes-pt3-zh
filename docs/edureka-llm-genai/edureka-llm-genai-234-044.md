@@ -1,4 +1,4 @@
-# 44：微调演示 🎬
+# 第二三四部分 44：微调演示 🎬
 
 ![](img/a07934e321a2e6dea43864e4f1fd407c_0.png)
 
@@ -52,7 +52,7 @@ print(response.choices[0].message.content)
 
 ```python
 user_message = input("请输入您的问题：")
-# ... 其余代码使用 user_message 作为用户输入
+# 第二三四部分 ... 其余代码使用 user_message 作为用户输入
 ```
 
 这样，模型就能动态响应用户提出的各种问题。

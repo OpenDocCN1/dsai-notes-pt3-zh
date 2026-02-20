@@ -1,4 +1,4 @@
-# 149：GitHub Copilot的挑战与局限性 🧠
+# 第二三四部分 149：GitHub Copilot的挑战与局限性 🧠
 
 在本节课中，我们将探讨使用GitHub Copilot时可能遇到的挑战与局限性，并了解如何应对这些情况。
 
