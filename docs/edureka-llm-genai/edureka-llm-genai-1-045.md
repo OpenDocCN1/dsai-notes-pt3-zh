@@ -1,4 +1,4 @@
-# 45：定义序列模型层 🧠
+# 第一部分 45：定义序列模型层 🧠
 
 ![](img/4bd8a893f4e646cc673bb75126bb6eee_0.png)
 
@@ -24,23 +24,23 @@ TensorFlow中的`Sequential`类代表了最简单的神经网络模型形式，�
 import tensorflow as tf
 from tensorflow.keras import layers
 
-# 定义输入形状，例如长度为10的向量
+# 第一部分 定义输入形状，例如长度为10的向量
 input_shape = (10,)
 
-# 创建一个顺序模型
+# 第一部分 创建一个顺序模型
 model = tf.keras.Sequential()
 
 ![](img/4bd8a893f4e646cc673bb75126bb6eee_4.png)
 
-# 添加第一层：具有64个神经元（单元）的全连接层，使用ReLU激活函数，并指定输入形状
+# 第一部分 添加第一层：具有64个神经元（单元）的全连接层，使用ReLU激活函数，并指定输入形状
 model.add(layers.Dense(64, activation='relu', input_shape=input_shape))
 
-# 添加第二层：具有32个神经元的全连接层，使用ReLU激活函数
+# 第一部分 添加第二层：具有32个神经元的全连接层，使用ReLU激活函数
 model.add(layers.Dense(32, activation='relu'))
 
 ![](img/4bd8a893f4e646cc673bb75126bb6eee_6.png)
 
-# 添加第三层：具有1个神经元的全连接层，使用Sigmoid激活函数，常用于二元分类任务
+# 第一部分 添加第三层：具有1个神经元的全连接层，使用Sigmoid激活函数，常用于二元分类任务
 model.add(layers.Dense(1, activation='sigmoid'))
 ```
 
@@ -56,13 +56,13 @@ model.add(layers.Dense(1, activation='sigmoid'))
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense
 
-# 创建一个顺序模型
+# 第一部分 创建一个顺序模型
 model = Sequential()
 
-# 添加第一个全连接层：10个单元，输入维度为784
+# 第一部分 添加第一个全连接层：10个单元，输入维度为784
 model.add(Dense(10, input_dim=784))
 
-# 添加第二个全连接层：10个单元，使用batch_input_shape参数指定输入形状
+# 第一部分 添加第二个全连接层：10个单元，使用batch_input_shape参数指定输入形状
 model.add(Dense(10, batch_input_shape=(None, 784)))
 ```
 

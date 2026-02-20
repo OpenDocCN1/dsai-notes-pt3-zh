@@ -1,4 +1,4 @@
-# 28：回归问题演示 🧪
+# 第一部分 28：回归问题演示 🧪
 
 在本节课中，我们将学习一个简单的线性回归问题演示。我们将通过生成合成数据、训练模型、评估模型性能并进行可视化，来理解机器学习中回归问题的基本流程。
 
@@ -130,7 +130,7 @@ print(f'R平方分数 (R²): {r2}')
 ```python
 plt.figure(figsize=(12, 4))
 
-# 子图1：原始数据与回归线
+# 第一部分 子图1：原始数据与回归线
 plt.subplot(1, 2, 1)
 plt.scatter(X, y, label='原始数据')
 plt.plot(X, model.predict(X), color='red', label='回归线')
@@ -139,7 +139,7 @@ plt.ylabel('y')
 plt.title('线性回归拟合')
 plt.legend()
 
-# 子图2：实际值与预测值对比
+# 第一部分 子图2：实际值与预测值对比
 plt.subplot(1, 2, 2)
 plt.scatter(y_test, y_pred)
 plt.plot([y_test.min(), y_test.max()], [y_test.min(), y_test.max()], 'k--', lw=2)

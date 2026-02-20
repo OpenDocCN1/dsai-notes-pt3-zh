@@ -1,4 +1,4 @@
-# 116：停用词 🛑
+# 第一部分 116：停用词 🛑
 
 ![](img/088c0cc64ed21a6b52ffd1e8d2a7e313_0.png)
 
@@ -42,20 +42,20 @@
 ![](img/088c0cc64ed21a6b52ffd1e8d2a7e313_7.png)
 
 ```python
-# 1. 导入必要的库和模块
+# 第一部分 1. 导入必要的库和模块
 import nltk
 from nltk.corpus import stopwords
 
-# 2. 下载停用词语料库（如果尚未下载）
+# 第一部分 2. 下载停用词语料库（如果尚未下载）
 nltk.download('stopwords')
 
-# 3. 获取英语停用词列表
+# 第一部分 3. 获取英语停用词列表
 english_stop_words = stopwords.words('english')
 
-# 4. 计算停用词总数
+# 第一部分 4. 计算停用词总数
 stop_words_count = len(english_stop_words)
 
-# 5. 打印结果
+# 第一部分 5. 打印结果
 print("英语停用词列表：", english_stop_words)
 print("停用词总数：", stop_words_count)
 ```

@@ -1,4 +1,4 @@
-# 108：分词的用途 🧩
+# 第一部分 108：分词的用途 🧩
 
 在本节课中，我们将要学习分词（Tokenization）在自然语言处理中的核心用途。分词是将文本分解成更小单元（如单词或子词）的过程，它是许多NLP任务的基础。我们将逐一探讨分词在文本预处理、信息检索、机器翻译、情感分析、文本摘要和词性标注等任务中的具体应用。
 
@@ -22,7 +22,7 @@
 ```python
 import re
 text = "Hello, World! Let's learn NLP."
-# 简单分词（按空格和标点分割）
+# 第一部分 简单分词（按空格和标点分割）
 tokens = re.findall(r'\b\w+\b', text.lower())
 print(tokens)  # 输出: ['hello', 'world', 'let', 's', 'learn', 'nlp']
 ```

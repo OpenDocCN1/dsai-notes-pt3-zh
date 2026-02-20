@@ -1,4 +1,4 @@
-# 61：如何使用Adam优化器 🚀
+# 第一部分 61：如何使用Adam优化器 🚀
 
 ![](img/11f18bd6ba974a8d1a18ff08ce774e1b_0.png)
 
@@ -45,7 +45,7 @@ model = keras.Sequential([
     keras.layers.Dense(output_dim, activation='softmax')
 ])
 
-# 配置Adam优化器，可调整学习率、beta1、beta2等参数
+# 第一部分 配置Adam优化器，可调整学习率、beta1、beta2等参数
 optimizer = keras.optimizers.Adam(learning_rate=0.001, beta_1=0.9, beta_2=0.999, epsilon=1e-07)
 ```
 
@@ -80,11 +80,11 @@ history = model.fit(x_train, y_train,
 
 **代码示例：**
 ```python
-# 评估模型
+# 第一部分 评估模型
 test_loss, test_accuracy = model.evaluate(x_test, y_test)
 print(f"Test Loss: {test_loss}, Test Accuracy: {test_accuracy}")
 
-# 进行预测
+# 第一部分 进行预测
 predictions = model.predict(new_data)
 ```
 

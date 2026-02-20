@@ -1,4 +1,4 @@
-# 105：访问NLTK语料库 📚
+# 第一部分 105：访问NLTK语料库 📚
 
 ![](img/9ff2357ae6e5cab4e996d363ec71e5b1_0.png)
 
@@ -41,12 +41,12 @@ import nltk
 nltk.download('wordnet')
 from nltk.corpus import wordnet
 
-# 检索与“car”相关的同义词集
+# 第一部分 检索与“car”相关的同义词集
 synsets = wordnet.synsets('car')
 for s in synsets:
     print(s.definition())
 
-# 打印特定词义的示例
+# 第一部分 打印特定词义的示例
 print(wordnet.synset('car.n.01').examples())
 ```
 
@@ -72,11 +72,11 @@ print(wordnet.synset('car.n.01').examples())
 nltk.download('brown')
 from nltk.corpus import brown
 
-# 获取语料库中的所有类别
+# 第一部分 获取语料库中的所有类别
 categories = brown.categories()
 print(categories)
 
-# 获取‘news’类别中的单词
+# 第一部分 获取‘news’类别中的单词
 words = brown.words(categories='news')
 print(words[:50]) # 打印前50个单词
 ```
@@ -112,15 +112,15 @@ print(words[:50]) # 打印前50个单词
 nltk.download('movie_reviews')
 from nltk.corpus import movie_reviews
 
-# 获取语料库中的类别（情感）
+# 第一部分 获取语料库中的类别（情感）
 categories = movie_reviews.categories()
 print(categories) # 输出: ['neg', 'pos']
 
-# 获取正面和负面评论的文件ID列表
+# 第一部分 获取正面和负面评论的文件ID列表
 fileids_pos = movie_reviews.fileids('pos')
 fileids_neg = movie_reviews.fileids('neg')
 
-# 访问特定评论中的单词
+# 第一部分 访问特定评论中的单词
 words_positive = movie_reviews.words(fileids_pos[0]) # 第一篇正面评论
 words_negative = movie_reviews.words(fileids_neg[0]) # 第一篇负面评论
 

@@ -1,4 +1,4 @@
-# 4：AI学科的各种应用 🚀
+# 第一部分 4：AI学科的各种应用 🚀
 
 ![](img/b5936be3b755ae2d172516143d95e415_0.png)
 
@@ -46,7 +46,7 @@ AI技术赋能医疗专业人员做出更精准的诊断，为患者量身定制
 这些技术使自动驾驶汽车能够感知环境、做出决策、安全导航，并与道路上的其他车辆及行人互动，从而为实现更安全、更高效的交通系统做出贡献。其核心流程可以概括为：
 
 ```python
-# 简化的自动驾驶感知-决策循环
+# 第一部分 简化的自动驾驶感知-决策循环
 while vehicle_is_running:
     sensor_data = capture_environment() # 计算机视觉感知环境
     processed_data = ml_model_analyze(sensor_data) # 机器学习分析数据

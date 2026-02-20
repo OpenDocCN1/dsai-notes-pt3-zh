@@ -1,4 +1,4 @@
-# 81：保存和加载模型演示 💾
+# 第一部分 81：保存和加载模型演示 💾
 
 ![](img/4ac584cb0266e891e866be51a63581af_0.png)
 
@@ -31,14 +31,14 @@ from tensorflow import keras
 这段代码加载了MNIST数据集，其中包含手写数字图像及其对应的标签。
 
 ```python
-# 加载MNIST数据集
+# 第一部分 加载MNIST数据集
 (train_images, train_labels), (test_images, test_labels) = keras.datasets.mnist.load_data()
 
-# 归一化像素值到0-1范围
+# 第一部分 归一化像素值到0-1范围
 train_images = train_images / 255.0
 test_images = test_images / 255.0
 
-# 为图像添加通道维度，并转换为float32类型
+# 第一部分 为图像添加通道维度，并转换为float32类型
 train_images = train_images[..., np.newaxis].astype(np.float32)
 test_images = test_images[..., np.newaxis].astype(np.float32)
 ```

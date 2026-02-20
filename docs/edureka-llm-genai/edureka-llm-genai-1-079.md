@@ -1,4 +1,4 @@
-# 79：保存和加载模型的重要性 🚀
+# 第一部分 79：保存和加载模型的重要性 🚀
 
 ![](img/0234540fcd83fbb64a5994f897a7baf5_1.png)
 
@@ -34,10 +34,10 @@
 在代码层面，保存和加载模型通常非常简单。以下是一个概念性的示例：
 
 ```python
-# 保存模型
+# 第一部分 保存模型
 model.save('my_model.h5')
 
-# 在另一个程序或会话中加载模型
+# 第一部分 在另一个程序或会话中加载模型
 from tensorflow import keras
 loaded_model = keras.models.load_model('my_model.h5')
 ```

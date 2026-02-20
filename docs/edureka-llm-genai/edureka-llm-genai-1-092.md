@@ -1,4 +1,4 @@
-# 92：基于序列的模型
+# 第一部分 92：基于序列的模型
 
 在本节课中，我们将要学习卷积神经网络中的基于序列的模型。我们将了解其基本概念、工作原理以及应用场景。
 
@@ -33,10 +33,10 @@ CNN中的基于序列模型使CNN架构能够适应序列数据处理，使其�
 以下是处理文本序列的一个简化代码概念：
 
 ```python
-# 伪代码示例：使用一维卷积处理文本序列
-# 假设我们有一个词嵌入序列 input_sequence，形状为 [batch_size, sequence_length, embedding_dim]
+# 第一部分 伪代码示例：使用一维卷积处理文本序列
+# 第一部分 假设我们有一个词嵌入序列 input_sequence，形状为 [batch_size, sequence_length, embedding_dim]
 conv_layer = Conv1D(filters=64, kernel_size=3, activation='relu')
-# 卷积层在序列长度维度上进行滑动窗口操作，提取局部特征
+# 第一部分 卷积层在序列长度维度上进行滑动窗口操作，提取局部特征
 output_features = conv_layer(input_sequence)
 ```
 

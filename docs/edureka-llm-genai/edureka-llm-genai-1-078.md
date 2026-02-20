@@ -1,4 +1,4 @@
-# 78：猫狗分类演示III 🐱🐶
+# 第一部分 78：猫狗分类演示III 🐱🐶
 
 在本节中，我们将继续探索猫狗图像分类项目。上一节我们介绍了模型训练过程，本节中我们来看看如何可视化训练历史、使用训练好的模型进行预测，以及如何保存模型和构建更高级的卷积神经网络。
 
@@ -7,10 +7,10 @@
 以下代码块用于可视化模型的训练历史，通过绘制每个训练周期（epoch）的准确率和损失指标来帮助我们分析模型性能。它使用 Matplotlib 进行绘图。
 
 ```python
-# 打印训练历史字典的键，以识别可用的指标
+# 第一部分 打印训练历史字典的键，以识别可用的指标
 print(history.history.keys())
 
-# 绘制训练和验证集的准确率与损失曲线
+# 第一部分 绘制训练和验证集的准确率与损失曲线
 plt.plot(history.history['accuracy'])
 plt.plot(history.history['val_accuracy'])
 plt.title('Model Accuracy')
@@ -45,18 +45,18 @@ plt.show()
 以下代码段加载图像、对其进行预处理，并使用训练好的模型进行预测。
 
 ```python
-# 从指定路径加载图像
+# 第一部分 从指定路径加载图像
 img_path = 'path/to/your/image.jpg'
 img = image.load_img(img_path, target_size=(150, 150))
 
-# 将图像转换为数组并扩展维度
+# 第一部分 将图像转换为数组并扩展维度
 img_array = image.img_to_array(img)
 img_array = np.expand_dims(img_array, axis=0)
 img_array /= 255.0  # 归一化
 
 ![](img/4a3ffacfbb654dc2bd8e84348ed7d1e8_6.png)
 
-# 使用模型进行预测
+# 第一部分 使用模型进行预测
 prediction = model.predict(img_array)
 print(prediction)
 
@@ -64,13 +64,13 @@ print(prediction)
 
 ![](img/4a3ffacfbb654dc2bd8e84348ed7d1e8_8.png)
 
-# 根据预测结果输出类别
+# 第一部分 根据预测结果输出类别
 if prediction[0] > 0.5:
     print("这是一只狗。")
 else:
     print("这是一只猫。")
 
-# 使用Matplotlib显示加载的图像
+# 第一部分 使用Matplotlib显示加载的图像
 plt.imshow(img)
 plt.axis('off')
 plt.show()
@@ -95,12 +95,12 @@ plt.show()
 ![](img/4a3ffacfbb654dc2bd8e84348ed7d1e8_14.png)
 
 ```python
-# 保存模型架构为JSON
+# 第一部分 保存模型架构为JSON
 model_json = model.to_json()
 with open("model2.json", "w") as json_file:
     json_file.write(model_json)
 
-# 保存模型权重为HDF5
+# 第一部分 保存模型权重为HDF5
 model.save_weights("first_try.h5")
 print("模型已保存到磁盘。")
 ```
@@ -121,12 +121,12 @@ print("模型已保存到磁盘。")
 from tensorflow.keras.applications import VGG16
 from tensorflow.keras import layers, models
 
-# 加载预训练的VGG16模型，不包括顶部分类层
+# 第一部分 加载预训练的VGG16模型，不包括顶部分类层
 base_model = VGG16(weights='imagenet', include_top=False, input_shape=(150, 150, 3))
 
 ![](img/4a3ffacfbb654dc2bd8e84348ed7d1e8_19.png)
 
-# 冻结前15层
+# 第一部分 冻结前15层
 for layer in base_model.layers[:15]:
     layer.trainable = False
 
@@ -134,7 +134,7 @@ for layer in base_model.layers[:15]:
 
 ![](img/4a3ffacfbb654dc2bd8e84348ed7d1e8_21.png)
 
-# 在基础模型上添加自定义层
+# 第一部分 在基础模型上添加自定义层
 model = models.Sequential()
 model.add(base_model)
 model.add(layers.Flatten())

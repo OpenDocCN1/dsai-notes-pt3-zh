@@ -1,4 +1,4 @@
-# 95：LSTM的类型
+# 第一部分 95：LSTM的类型
 
 ![](img/62277b25145d2f8bd94776ef27497568_0.png)
 
@@ -20,7 +20,7 @@
 
 **核心概念**：一个标准的LSTM层可以抽象为处理序列并输出隐藏状态的过程。
 ```python
-# 伪代码示例：单层LSTM
+# 第一部分 伪代码示例：单层LSTM
 lstm_layer = LSTM(units=128) # 定义一个具有128个单元的LSTM层
 output = lstm_layer(input_sequence) # 处理输入序列
 ```
@@ -35,7 +35,7 @@ output = lstm_layer(input_sequence) # 处理输入序列
 
 **核心概念**：堆叠LSTM由多个LSTM层垂直堆叠而成，每一层接收前一层的输出作为输入，并将其输出传递给下一层，从而使模型能够学习输入数据的层次化表示。
 ```python
-# 伪代码示例：堆叠LSTM
+# 第一部分 伪代码示例：堆叠LSTM
 model = Sequential()
 model.add(LSTM(units=128, return_sequences=True)) # 第一层，返回序列以供下一层使用
 model.add(LSTM(units=64)) # 第二层
@@ -51,7 +51,7 @@ model.add(LSTM(units=64)) # 第二层
 
 **核心概念**：双向LSTM由两个独立的LSTM层组成。一层按时间顺序（正向）处理序列，另一层按时间逆序（反向）处理序列。最终的输出通常是这两个方向输出的结合。
 ```python
-# 伪代码示例：双向LSTM
+# 第一部分 伪代码示例：双向LSTM
 model = Sequential()
 model.add(Bidirectional(LSTM(units=128), input_shape=(timesteps, features)))
 ```
@@ -66,7 +66,7 @@ model.add(Bidirectional(LSTM(units=128), input_shape=(timesteps, features)))
 
 **核心概念**：CNN-LSTM先使用CNN层从输入中提取空间或局部特征，然后将这些特征序列输入到LSTM层中，以捕获时间上的依赖关系。
 ```python
-# 伪代码示例：CNN-LSTM（用于视频帧序列）
+# 第一部分 伪代码示例：CNN-LSTM（用于视频帧序列）
 model = Sequential()
 model.add(TimeDistributed(Conv2D(...))) # 对每一帧图像应用CNN
 model.add(TimeDistributed(Flatten())) # 展平特征

@@ -1,4 +1,4 @@
-# 71：展平层 📏
+# 第一部分 71：展平层 📏
 
 ![](img/f3d93435cdd2a069c33b0ab8d6e50feb_0.png)
 
@@ -63,9 +63,9 @@
 **`Flattened_Vector = reshape(Pooled_Feature_Maps, [-1, height * width * channels])`**
 或者用简单的伪代码描述这个过程：
 ```python
-# 假设 pooled_features 是一个三维数组，形状为 (4, 4, 32)
+# 第一部分 假设 pooled_features 是一个三维数组，形状为 (4, 4, 32)
 flattened_output = pooled_features.reshape(-1, 4 * 4 * 32)
-# 现在 flattened_output 是一个形状为 (1, 512) 的一维向量
+# 第一部分 现在 flattened_output 是一个形状为 (1, 512) 的一维向量
 ```
 
 ![](img/f3d93435cdd2a069c33b0ab8d6e50feb_24.png)

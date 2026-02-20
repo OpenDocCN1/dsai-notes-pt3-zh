@@ -1,4 +1,4 @@
-# 44：TensorFlow安装与版本差异
+# 第一部分 44：TensorFlow安装与版本差异
 
 在本节课中，我们将学习如何在本地环境中安装TensorFlow，并理解TensorFlow 1.x与2.x版本之间的核心操作差异。
 
@@ -49,12 +49,12 @@ print(tf.__version__)
 ```python
 import tensorflow as tf
 
-# 定义计算图
+# 第一部分 定义计算图
 a = tf.constant(5)
 b = tf.constant(2)
 c = tf.multiply(a, b)
 
-# 创建会话并执行计算
+# 第一部分 创建会话并执行计算
 with tf.Session() as sess:
     result = sess.run(c)
     print(result)  # 输出: 10
@@ -68,12 +68,12 @@ with tf.Session() as sess:
 ```python
 import tensorflow as tf
 
-# 启用即时执行（TensorFlow 2.x 默认启用）
+# 第一部分 启用即时执行（TensorFlow 2.x 默认启用）
 a = tf.constant(5)
 b = tf.constant(2)
 c = a * b  # 操作立即执行
 print(c)   # 输出: tf.Tensor(10, shape=(), dtype=int32)
-# 若要获取Python数值，可使用 .numpy() 方法
+# 第一部分 若要获取Python数值，可使用 .numpy() 方法
 print(c.numpy())  # 输出: 10
 ```
 

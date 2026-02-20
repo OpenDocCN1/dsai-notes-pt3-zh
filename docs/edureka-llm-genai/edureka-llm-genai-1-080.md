@@ -1,4 +1,4 @@
-# 80：保存和加载模型 🧠💾
+# 第一部分 80：保存和加载模型 🧠💾
 
 在本节课中，我们将要学习机器学习工作流程中一个至关重要的环节：如何保存训练好的模型，并在需要时重新加载它。掌握这项技能可以避免重复训练，节省大量时间和计算资源。
 
@@ -48,12 +48,12 @@
 
 **TensorFlow/Keras:**
 ```python
-# 保存整个模型
+# 第一部分 保存整个模型
 model.save('my_model.h5')  # 保存为 HDF5 格式
-# 或
+# 第一部分 或
 model.save('my_saved_model')  # 保存为 SavedModel 格式（目录）
 
-# 加载模型
+# 第一部分 加载模型
 loaded_model = tf.keras.models.load_model('my_model.h5')
 ```
 
@@ -61,10 +61,10 @@ loaded_model = tf.keras.models.load_model('my_model.h5')
 ```python
 import joblib
 
-# 保存模型
+# 第一部分 保存模型
 joblib.dump(model, 'my_model.pkl')
 
-# 加载模型
+# 第一部分 加载模型
 loaded_model = joblib.load('my_model.pkl')
 ```
 

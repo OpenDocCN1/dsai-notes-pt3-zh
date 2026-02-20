@@ -1,4 +1,4 @@
-# 16：无监督机器学习的市场细分策略 🎯
+# 第一部分 16：无监督机器学习的市场细分策略 🎯
 
 在本节课中，我们将一起探索机器学习的迷人世界，并学习自然语言处理的基础概念。我们将重点了解**无监督学习**，特别是它在市场细分策略中的应用。课程结束时，你将能够理解并解释市场细分、描述无监督学习的基础知识、区分其与监督学习的不同，并能利用无监督学习来识别市场细分中的客户群体。
 
@@ -66,7 +66,7 @@
 在Python中，使用`scikit-learn`库可以轻松实现K-Means聚类：
 ```python
 from sklearn.cluster import KMeans
-# 假设 `customer_data` 是包含客户特征的DataFrame
+# 第一部分 假设 `customer_data` 是包含客户特征的DataFrame
 kmeans = KMeans(n_clusters=5, random_state=42)
 customer_segments = kmeans.fit_predict(customer_data)
 ```

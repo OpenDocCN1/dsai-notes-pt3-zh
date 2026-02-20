@@ -1,4 +1,4 @@
-# 1：词频演示II
+# 第一部分 1：词频演示II
 
 在本节课中，我们将学习如何将一组文档转换为词频矩阵。我们将通过一个具体的例子，演示如何从文档中提取词汇表，并计算每个文档中每个词汇的出现次数，最终使用代码实现这一过程。
 
@@ -65,7 +65,7 @@ from sklearn.feature_extraction.text import CountVectorizer
 
 ![](img/22858c44e53fb9a3da29f1d398ba8689_3.png)
 
-# 定义文档
+# 第一部分 定义文档
 documents = [
     "this is the first document",
     "this document is the second document",
@@ -73,17 +73,17 @@ documents = [
     "is this the first document"
 ]
 
-# 创建 CountVectorizer 实例
+# 第一部分 创建 CountVectorizer 实例
 vectorizer = CountVectorizer()
 
-# 学习词汇表并转换文档为词频矩阵
+# 第一部分 学习词汇表并转换文档为词频矩阵
 X = vectorizer.fit_transform(documents)
 
-# 将稀疏矩阵转换为密集数组并打印
+# 第一部分 将稀疏矩阵转换为密集数组并打印
 print("词-文档矩阵：")
 print(X.toarray())
 
-# 打印词汇表（特征名称）
+# 第一部分 打印词汇表（特征名称）
 print("\n词汇表（特征名）：")
 print(vectorizer.get_feature_names_out())
 ```

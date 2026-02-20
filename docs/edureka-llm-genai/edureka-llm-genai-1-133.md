@@ -1,4 +1,4 @@
-# 1.3：逆文档频率（IDF）示例 📊
+# 第一部分 1.3：逆文档频率（IDF）示例 📊
 
 在本节课中，我们将学习如何通过一个具体示例来计算逆文档频率（IDF）。我们将从上一节讨论的IDF概念出发，通过手动计算和代码实现两种方式，深入理解IDF如何量化词语在文档集合中的重要性。
 
@@ -44,7 +44,7 @@ IDF的计算公式为：
 ```python
 from sklearn.feature_extraction.text import TfidfVectorizer
 
-# 定义文档
+# 第一部分 定义文档
 documents = [
     "The car is driven on the road.",
     "The truck is driven on the highway."
@@ -54,13 +54,13 @@ documents = [
 
 ![](img/b88ac1418bb1dd4486f344863b616131_6.png)
 
-# 实例化TF-IDF向量化器
+# 第一部分 实例化TF-IDF向量化器
 vectorizer = TfidfVectorizer()
 
-# 对文档进行拟合和转换，计算TF-IDF矩阵
+# 第一部分 对文档进行拟合和转换，计算TF-IDF矩阵
 tfidf_matrix = vectorizer.fit_transform(documents)
 
-# 打印TF-IDF矩阵（稠密格式以便查看）
+# 第一部分 打印TF-IDF矩阵（稠密格式以便查看）
 print("TF-IDF Matrix:")
 print(tfidf_matrix.toarray())
 print("\nFeature Names (Vocabulary):")
@@ -80,7 +80,7 @@ print(vectorizer.get_feature_names_out())
 ![](img/b88ac1418bb1dd4486f344863b616131_11.png)
 
 ```python
-# 获取并打印每个词语的IDF值
+# 第一部分 获取并打印每个词语的IDF值
 print("\nIDF values for each term:")
 idf_values = vectorizer.idf_
 feature_names = vectorizer.get_feature_names_out()

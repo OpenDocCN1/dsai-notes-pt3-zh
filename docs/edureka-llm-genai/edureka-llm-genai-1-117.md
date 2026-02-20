@@ -1,4 +1,4 @@
-# 117：停用词演示 🧹
+# 第一部分 117：停用词演示 🧹
 
 ![](img/1a5a97a84bd2b74d7a0a50cb59257062_1.png)
 
@@ -89,20 +89,20 @@ gold_word_tokenized = ['This', 'is', 'a', 'sample', 'sentence', 'with', 'punctua
 ```python
 import re
 
-# 定义停用词列表和标点符号模式
+# 第一部分 定义停用词列表和标点符号模式
 stop_words_list = ['the', 'and', 'of', 'in', 'a', 'is', 'as', 'it']
 punctuation_pattern = re.compile(r'[^\w\s]')
 
-# 初始化列表，用于存储处理后的单词
+# 第一部分 初始化列表，用于存储处理后的单词
 post_punctuation = []
 
-# 遍历每个词元，移除标点
+# 第一部分 遍历每个词元，移除标点
 for word in gold_word_tokenized:
     cleaned_word = punctuation_pattern.sub('', word)
     if cleaned_word:  # 如果清洗后的单词非空
         post_punctuation.append(cleaned_word)
 
-# 从清洗后的列表中移除停用词
+# 第一部分 从清洗后的列表中移除停用词
 final_filtered = [word for word in post_punctuation if word.lower() not in stop_words_list]
 
 print(final_filtered)
