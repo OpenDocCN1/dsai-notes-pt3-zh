@@ -1,4 +1,4 @@
-# 第33课：PyTorch可复现性（消除随机性）🎯
+# 33：PyTorch可复现性（消除随机性）🎯
 
 ![](img/17c993448bdbc1ce1b49d52f4e6be29f_0.png)
 

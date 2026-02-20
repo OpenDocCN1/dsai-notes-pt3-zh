@@ -1,4 +1,4 @@
-# 课程 07：将模型训练代码转为 Python 脚本 🚀
+# 174：将模型训练代码转为 Python 脚本 🚀
 
 ![](img/89a176f11ccadcc3c2a1c7f654ce16fe_0.png)
 

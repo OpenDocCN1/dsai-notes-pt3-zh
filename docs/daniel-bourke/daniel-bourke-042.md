@@ -1,4 +1,4 @@
-# 课程 042：创建首个 PyTorch 线性回归模型 🧠
+# 42：创建首个 PyTorch 线性回归模型 🧠
 
 ![](img/24a8728cfc250f1ccef3a2062fc6e412_0.png)
 

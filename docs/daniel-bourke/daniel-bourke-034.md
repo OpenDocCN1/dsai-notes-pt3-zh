@@ -1,4 +1,4 @@
-# 课程 34：PyTorch GPU 访问方式详解 🚀
+#  34：PyTorch GPU 访问方式详解 🚀
 
 ![](img/b55b6015ca3e43fe10fe2c01694335db_0.png)
 

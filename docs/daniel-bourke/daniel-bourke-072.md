@@ -1,4 +1,4 @@
-# 课程 072：神经网络可视化 🧠
+# 72：神经网络可视化 🧠
 
 ![](img/7a591a800b3aff45fa5ad89862b21f13_0.png)
 
@@ -29,9 +29,9 @@
 
 我们刚刚构建了什么？查看我们的模型代码：
 ```python
-# 第一层：输入特征2，输出特征5
+# 一层：输入特征2，输出特征5
 self.layer_1 = nn.Linear(in_features=2, out_features=5)
-# 第二层：输入特征5，输出特征1
+# 二层：输入特征5，输出特征1
 self.layer_2 = nn.Linear(in_features=5, out_features=1)
 ```
 这与我们在 Playground 中构建的模型完全相同。

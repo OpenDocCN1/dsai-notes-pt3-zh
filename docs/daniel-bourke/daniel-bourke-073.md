@@ -1,4 +1,4 @@
-# PyTorch深度学习入门课程 #73：使用nn.Sequential重构模型与探索内部机制 🔍
+# 73：使用nn.Sequential重构模型与探索内部机制 🔍
 
 ![](img/231bca62d9ca50ecad8086e6c9a7ac72_0.png)
 

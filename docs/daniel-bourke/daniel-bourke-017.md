@@ -1,4 +1,4 @@
-# PyTorch 深度学习课程 第17课：PyTorch 张量入门 🧮
+# 17：PyTorch 张量入门 🧮
 
 ![](img/1ff206bae4c68b0d48640f15fb029a2c_0.png)
 

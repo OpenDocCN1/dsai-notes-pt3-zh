@@ -1,4 +1,4 @@
-# 065：PyTorch机器学习分类导论 🧠
+# 65：PyTorch机器学习分类导论 🧠
 
 ![](img/91d64423e288feaf813bc95a013f0d18_0.png)
 

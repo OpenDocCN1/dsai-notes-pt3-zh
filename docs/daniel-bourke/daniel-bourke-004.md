@@ -1,4 +1,4 @@
-# 第4课：ZTM社区资源指南 🎁
+# 4：ZTM社区资源指南 🎁
 
 ![](img/faa6c4b1387f694d491a4c562edbabde_0.png)
 

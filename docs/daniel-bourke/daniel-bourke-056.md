@@ -1,4 +1,4 @@
-# PyTorch深度学习入门课程 #56：加载PyTorch模型代码实现 🚀
+# 56：加载PyTorch模型代码实现 🚀
 
 ![](img/f7765e995b1cad9b71703ce43a4898c4_0.png)
 

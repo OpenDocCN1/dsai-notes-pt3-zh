@@ -1,4 +1,4 @@
-# 06：从零构建TinyVGG模型 🧠
+# 150：从零构建TinyVGG模型 🧠
 
 ![](img/7e68ed82599b6f42452c2947fb44aabd_0.png)
 

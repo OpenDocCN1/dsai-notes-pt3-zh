@@ -1,4 +1,4 @@
-# 06：使用Torchinfo获取模型摘要 📊
+# 152：使用Torchinfo获取模型摘要 📊
 
 ![](img/003bbce08929fda5b0f349a80df6e86d_0.png)
 

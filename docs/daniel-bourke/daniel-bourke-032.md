@@ -1,4 +1,4 @@
-# PyTorch 深度学习入门课程｜第32课：PyTorch张量与NumPy 🔄
+# 32：PyTorch张量与NumPy 🔄
 
 ![](img/9fce78fa689658d721aa1eb6b45568e2_0.png)
 

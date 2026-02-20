@@ -1,4 +1,4 @@
-# 第104课：将数据集转换为DataLoader 📚
+# 104：将数据集转换为DataLoader 📚
 
 ![](img/542357475afcf9f3a85837ea9af0485d_0.png)
 

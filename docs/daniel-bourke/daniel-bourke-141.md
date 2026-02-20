@@ -1,4 +1,4 @@
-# 06：将图像数据集转换为PyTorch DataLoader 🚀
+# 141：将图像数据集转换为PyTorch DataLoader 🚀
 
 ![](img/4090390f27fdfd2a821e4d9ddae6ccea_0.png)
 

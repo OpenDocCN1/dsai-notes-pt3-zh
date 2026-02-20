@@ -1,4 +1,4 @@
-# PyTorch深度学习入门课程 #49：PyTorch训练流程步骤与原理 🚀
+# 49：PyTorch训练流程步骤与原理 🚀
 
 ![](img/27b04f96bbb9d14e8584bc66c2c23fa9_0.png)
 

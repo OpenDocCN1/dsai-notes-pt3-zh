@@ -1,4 +1,4 @@
-# PyTorch 深度学习课程 第144课：从零编写PyTorch自定义数据集类 📁
+# 144：从零编写PyTorch自定义数据集类 📁
 
 ![](img/bc13f0e1922ba220fe78ffe4fd4ed21a_0.png)
 

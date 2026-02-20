@@ -1,4 +1,4 @@
-# 课程 4.3：首个非线性模型的预测与评估 📊
+#  87：首个非线性模型的预测与评估 📊
 
 在本节课中，我们将学习如何对我们刚刚训练好的首个非线性模型进行预测和评估。我们将通过可视化手段来直观地理解模型的性能，并将其与之前的纯线性模型进行比较。
 
@@ -56,12 +56,12 @@ import matplotlib.pyplot as plt
 # 设置图形大小
 plt.figure(figsize=(12, 6))
 
-# 第一个子图：训练数据上的决策边界
+# 一个子图：训练数据上的决策边界
 plt.subplot(1, 2, 1)
 plt.title("Train Data Decision Boundary")
 plot_decision_boundary(model_3, X_train, y_train)
 
-# 第二个子图：测试数据上的决策边界
+# 二个子图：测试数据上的决策边界
 plt.subplot(1, 2, 2)
 plt.title("Test Data Decision Boundary")
 plot_decision_boundary(model_3, X_test, y_test)

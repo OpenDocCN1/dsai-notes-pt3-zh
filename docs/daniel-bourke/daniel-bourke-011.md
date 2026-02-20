@@ -1,4 +1,4 @@
-# PyTorch深度学习入门课程 第11课：PyTorch简介与优势 🚀
+# 11：PyTorch简介与优势 🚀
 
 ![](img/1610f8a415ab53dab481aa57c183f0dd_1.png)
 

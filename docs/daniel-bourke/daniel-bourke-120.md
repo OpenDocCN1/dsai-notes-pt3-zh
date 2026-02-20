@@ -1,4 +1,4 @@
-# 120课：逐步解析MaxPool2D层 🧠
+# 120：逐步解析MaxPool2D层 🧠
 
 ![](img/a2cf2cb046fa81c76b0d101a6ddb3e79_0.png)
 

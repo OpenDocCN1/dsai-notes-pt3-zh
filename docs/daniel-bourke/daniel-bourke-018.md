@@ -1,4 +1,4 @@
-# PyTorch 深度学习课程 018：创建随机张量 🔢
+# 18：创建随机张量 🔢
 
 ![](img/f403edcb28e64aaf52a901c83abe5fbe_0.png)
 

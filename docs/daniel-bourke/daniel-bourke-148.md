@@ -1,4 +1,4 @@
-# 06：探索Torchvision最先进的数据增强技术 🚀
+# 148：探索Torchvision最先进的数据增强技术 🚀
 
 ![](img/abc2badd8713baf862fe95b0edadf8ff_0.png)
 
