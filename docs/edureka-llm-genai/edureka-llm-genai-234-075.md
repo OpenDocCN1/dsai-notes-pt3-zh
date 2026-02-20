@@ -1,4 +1,4 @@
-# LangChain教程：第3：LangChain工作原理续
+# 75：LangChain工作原理续
 
 ![](img/8ea068a2783c8c9f0ab51633c4fedf08_1.png)
 

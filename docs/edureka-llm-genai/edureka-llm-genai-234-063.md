@@ -1,4 +1,4 @@
-# 生成式AI架构与应用开发：P63：LangChain的价值主张
+# 63：LangChain的价值主张
 
 ![](img/c2b5180b79e89e362aebdf13f7152832_0.png)
 

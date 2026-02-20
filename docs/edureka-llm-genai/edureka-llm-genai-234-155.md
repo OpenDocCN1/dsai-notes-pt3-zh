@@ -1,4 +1,4 @@
-# 3：Google Bard入门指南 🧠
+# 155：Google Bard入门指南 🧠
 
 ![](img/c905970f167d129c86d4324b728a3ada_1.png)
 

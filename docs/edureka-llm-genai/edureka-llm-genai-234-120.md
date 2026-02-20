@@ -1,4 +1,4 @@
-# 13：OpenCV库的安装 🛠️
+# 120：OpenCV库的安装 🛠️
 
 ![](img/1ec4ca495696d09eb1e24bf1698a5d81_1.png)
 

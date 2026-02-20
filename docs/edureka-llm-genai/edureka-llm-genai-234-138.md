@@ -1,4 +1,4 @@
-# 3：使用Midjourney修改图像 🖼️
+# 138：使用Midjourney修改图像 🖼️
 
 ![](img/941e111b63cb3ee2c5ad359191004642_1.png)
 

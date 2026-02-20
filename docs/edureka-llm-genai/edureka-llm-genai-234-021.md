@@ -1,4 +1,4 @@
-生成式AI基础：第2：基本GAN架构
+# 21：基本GAN架构
 
 ![](img/8ec059c3bbda80a1f821dd5ecb816681_0.png)
 

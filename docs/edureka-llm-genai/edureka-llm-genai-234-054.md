@@ -1,4 +1,4 @@
-# 2：Transformer的工作原理 🧠
+# 54：Transformer的工作原理 🧠
 
 ![](img/a537d07002765d56367d530fa3008c42_0.png)
 

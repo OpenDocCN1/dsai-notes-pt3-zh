@@ -1,4 +1,4 @@
-# 通过LLMs学习生成式AI：4：LLM扩展 🚀
+# 41：LLM扩展 🚀
 
 ![](img/8a512dcecb3307a7b0ce51ca12146bc2_0.png)
 

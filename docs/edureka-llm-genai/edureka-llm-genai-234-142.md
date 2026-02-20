@@ -1,4 +1,4 @@
-# 2：ChatGPT与GitHub Copilot对比 🆚
+# 142：ChatGPT与GitHub Copilot对比 🆚
 
 ![](img/5e1ea70e14b91ec1339dfab2d2db1bdf_1.png)
 
