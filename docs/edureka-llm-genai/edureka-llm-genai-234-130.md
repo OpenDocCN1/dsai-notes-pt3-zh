@@ -1,4 +1,4 @@
-# 第23课：Midjourney版本解释第一部分 🎨
+# 23：Midjourney版本解释第一部分 🎨
 
 在本节课中，我们将学习如何创建并使用自己的Midjourney Discord服务器，并初步了解Midjourney的图像生成过程及其版本概念。
 

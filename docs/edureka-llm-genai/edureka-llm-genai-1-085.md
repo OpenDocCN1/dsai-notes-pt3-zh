@@ -1,4 +1,4 @@
-# 第1课：LSTM中的门控机制 🚪
+# 85：LSTM中的门控机制 🚪
 
 ![](img/fc4e72f2db769e6f94dea9472f7d77b7_1.png)
 

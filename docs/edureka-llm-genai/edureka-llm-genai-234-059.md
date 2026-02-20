@@ -1,4 +1,4 @@
-# 生成式AI与LLMs应用开发：第2课：使用LangChain开发LLM应用
+# 生成式AI与LLMs应用开发：第2：使用LangChain开发LLM应用
 
 ![](img/703830dac4e480865ce3861e66a3c01f_0.png)
 

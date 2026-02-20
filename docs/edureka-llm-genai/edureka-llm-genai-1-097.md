@@ -1,4 +1,4 @@
-# 第1课：卷积神经网络LSTM 🧠
+# 97：卷积神经网络LSTM 🧠
 
 ![](img/ffa9a06400af7e729034704ad0fdfa2d_1.png)
 

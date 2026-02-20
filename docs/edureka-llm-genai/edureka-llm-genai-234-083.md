@@ -1,4 +1,4 @@
-# 生成式AI架构与应用开发：第3课：使用LangChain和RAG构建聊天机器人
+# 生成式AI架构与应用开发：第3：使用LangChain和RAG构建聊天机器人
 
 ![](img/c65125ff6e77bf1ead46f77be1d34ac7_0.png)
 

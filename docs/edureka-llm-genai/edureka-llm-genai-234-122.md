@@ -1,4 +1,4 @@
-# 第2课：使用OpenCV重塑、调整大小和灰度化图像 🖼️
+# 2：使用OpenCV重塑、调整大小和灰度化图像 🖼️
 
 ![](img/0bccad5da1b0b3bddae6aec7d28f8673_1.png)
 

@@ -1,4 +1,4 @@
-# LangChain教程：第29课：现成的链
+# LangChain教程：第29：现成的链
 
 ![](img/b900dcdd5254418fcaea2debac3d7e14_0.png)
 

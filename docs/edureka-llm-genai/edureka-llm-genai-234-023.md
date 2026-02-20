@@ -1,4 +1,4 @@
-生成式对抗网络：第2课：BigGAN与GAN变体总结
+生成式对抗网络：第2：BigGAN与GAN变体总结
 
 ![](img/f44e7db6eb6643965a6cd69150dd8a25_0.png)
 

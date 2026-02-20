@@ -1,4 +1,4 @@
-# 第13课：OpenCV库的安装 🛠️
+# 13：OpenCV库的安装 🛠️
 
 ![](img/1ec4ca495696d09eb1e24bf1698a5d81_1.png)
 

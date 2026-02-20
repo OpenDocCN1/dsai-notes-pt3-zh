@@ -1,4 +1,4 @@
-# 第4课：Writesonic产品详解 🖼️
+# 4：Writesonic产品详解 🖼️
 
 在本节课程中，我们将深入探索Writesonic平台，特别是其图像生成功能“Photosonic”。我们将学习如何通过优化提示词来生成更符合预期的图像，并对比Writesonic与另一款工具Copy.ai的异同，以帮助你根据需求选择合适的工具。
 

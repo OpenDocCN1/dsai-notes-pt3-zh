@@ -1,4 +1,4 @@
-# 第2课：使用LangChain构建和部署LLM驱动的应用
+# 2：使用LangChain构建和部署LLM驱动的应用
 
 ![](img/61ffafe9abc951040d96b1c80a637e3a_0.png)
 

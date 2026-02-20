@@ -1,4 +1,4 @@
-生成式AI与LLMs入门：第2课：GitHub Copilot的工作原理 🧠
+生成式AI与LLMs入门：第2：GitHub Copilot的工作原理 🧠
 
 在本节课中，我们将深入探索GitHub Copilot的内部工作机制。我们将了解它如何分析代码、生成建议，以及如何通过用户反馈不断进化，从而提升开发者的生产力。
 

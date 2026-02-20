@@ -1,4 +1,4 @@
-# 第2课：Transformer架构详解 🧠
+# 2：Transformer架构详解 🧠
 
 ![](img/30f767cb75fb43b6a1818c720975453a_0.png)
 

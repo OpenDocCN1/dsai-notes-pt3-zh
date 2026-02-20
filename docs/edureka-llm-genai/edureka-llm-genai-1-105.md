@@ -1,4 +1,4 @@
-# 机器学习与NLP基础：第1课：访问NLTK语料库 📚
+# 105：访问NLTK语料库 📚
 
 ![](img/9ff2357ae6e5cab4e996d363ec71e5b1_0.png)
 
