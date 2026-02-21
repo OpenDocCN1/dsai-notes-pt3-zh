@@ -1,4 +1,4 @@
-# 机器学习导论：18：自动微分与Transformer架构
+# 18：自动微分与Transformer架构
 
 ![](img/77a316dae6ecb4db0bde50dafaf2d05f_1.png)
 

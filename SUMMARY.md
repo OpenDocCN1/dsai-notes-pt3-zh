@@ -7,6 +7,7 @@
 +   [Bourne 机器学习和数据科学笔记](docs/bourne-ml-ds/README.md)
 +   [辛辛那提 MATH100/101 微积分笔记](docs/ccnt-math100-calc/README.md)
 +   [ChatGLM 直播笔记](docs/chatglm/README.md)
++   [CMU 10-301 机器学习导论笔记](docs/cmu-10301-mlintro/README.md)
 +   [CMU 10-414 深度学习系统笔记](docs/cmu-10414-dlsys/README.md)
 +   [CMU 10-423 生成式人工智能笔记](docs/cmu-10423-genai/README.md)
 +   [CMU 11-411 自然语言处理笔记](docs/cmu-11411-nlp/README.md)

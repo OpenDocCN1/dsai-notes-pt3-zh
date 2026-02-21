@@ -1,4 +1,4 @@
-# 机器学习导论：第6章：Google Colab 环境配置教程 🚀
+# 44：Google Colab 环境配置教程 🚀
 
 ![](img/822accb73c92019b3b2a3bf8668a3643_0.png)
 

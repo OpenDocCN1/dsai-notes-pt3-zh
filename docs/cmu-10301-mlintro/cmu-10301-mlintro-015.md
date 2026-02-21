@@ -1,4 +1,4 @@
-# 机器学习导论：15：PAC学习、MLE与MAP
+# 15：PAC学习、MLE与MAP
 
 ![](img/67da55c34ebbf0a4f5cf2f2803dff61d_1.png)
 
