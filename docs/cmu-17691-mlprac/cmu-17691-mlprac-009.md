@@ -1,4 +1,4 @@
-# 机器学习实践：02：使用 Docker Compose 编排 Airflow 数据管道
+# 09：使用 Docker Compose 编排 Airflow 数据管道
 
 ![](img/ce38838bd1264b152b88a78816a035e9_1.png)
 
