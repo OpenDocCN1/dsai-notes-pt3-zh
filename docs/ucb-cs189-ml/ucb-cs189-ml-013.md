@@ -1,4 +1,4 @@
-# 机器学习导论：L13：t-SNE降维教程 🧠
+# 13：t-SNE降维教程 🧠
 
 ![](img/ce58c91accce581e0ee75b6a28d1e75d_1.png)
 

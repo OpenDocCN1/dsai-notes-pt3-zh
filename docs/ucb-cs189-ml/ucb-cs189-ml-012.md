@@ -1,4 +1,4 @@
-# 机器学习导论：L12：降维与PCA
+# 12：降维与PCA
 
 ![](img/ab47e4cdce8bf9bf897e019cbe4b43d7_1.png)
 

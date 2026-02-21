@@ -1,4 +1,4 @@
-# 机器学习导论：L11：注意力机制与Transformer模型
+# 11：注意力机制与Transformer模型
 
 ![](img/3a5cbeb296aaba2dd3ead30e7a9376fb_1.png)
 
