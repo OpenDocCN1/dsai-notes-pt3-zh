@@ -1,4 +1,4 @@
-# 机器学习导论：06：集成树方法：Bagging与随机森林 🌲
+# 06：集成树方法：Bagging与随机森林 🌲
 
 ![](img/b8d703def7d2e449cce71632ecbcc90c_1.png)
 

@@ -10,6 +10,7 @@
 +   [CMU 10-301 机器学习导论笔记](docs/cmu-10301-mlintro/README.md)
 +   [CMU 10-414 深度学习系统笔记](docs/cmu-10414-dlsys/README.md)
 +   [CMU 10-423 生成式人工智能笔记](docs/cmu-10423-genai/README.md)
++   [CMU 10-701 机器学习导论笔记](docs/cmu-10701-mlintro/README.md)
 +   [CMU 11-411 自然语言处理笔记](docs/cmu-11411-nlp/README.md)
 +   [CMU 11-664 语言建模的推断算法笔记](docs/cmu-11664-langmdl/README.md)
 +   [CMU 11-711 高级自然语言处理笔记](docs/cmu-11711-adv-nlp/README.md)
