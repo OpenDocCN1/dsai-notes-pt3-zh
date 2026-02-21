@@ -1,4 +1,4 @@
-# CMU《机器学习实践｜17-691 Machine Learning in Practice 2023》：什么是好的机器学习产品？
+# 2：什么是好的机器学习产品？
 
 ![](img/35a252dbe4e10c4b445e313f5ad696ce_1.png)
 

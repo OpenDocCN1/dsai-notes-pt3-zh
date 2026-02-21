@@ -1,4 +1,4 @@
-# CMU《机器学习实践｜17-691 Machine Learning in Practice 2023》中英字幕 p03 [P3]Lecture 03- How and ML Project Works_2.zh_en [BV18TUQBJEfH_p3]
+# 3：How and ML Project Works
 
 ![](img/e9884ebbf6550bf2755f676ba38d3e04_1.png)
 

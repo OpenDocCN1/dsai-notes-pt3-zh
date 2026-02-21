@@ -1,4 +1,4 @@
-# CMU《机器学习实践｜17-691 Machine Learning in Practice 2023》：第8章：Docker简介
+# 8：Docker简介
 
 ![](img/74727bf8a578ef2ab220ae1addb35d92_1.png)
 

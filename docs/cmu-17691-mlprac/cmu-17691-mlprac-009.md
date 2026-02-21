@@ -1,4 +1,4 @@
-# CMU《机器学习实践｜17-691 Machine Learning in Practice 2023》中英字幕 p09 [P9]Recitation 02_2.zh_en [BV18TUQBJEfH_p9]
+# 9：Recitation
 
 ![](img/ce38838bd1264b152b88a78816a035e9_1.png)
 

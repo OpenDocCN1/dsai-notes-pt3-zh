@@ -1,4 +1,4 @@
-# CMU《机器学习实践｜17-691 Machine Learning in Practice 2023》中英字幕 p06 [P6]Lecture 6- Deployment and Monitoring.zh_en [BV18TUQBJEfH_p6]
+# 6：Deployment and Monitoring
 
 ![](img/dcf02bc72dc78dcdb583f4ca260e29e3_1.png)
 

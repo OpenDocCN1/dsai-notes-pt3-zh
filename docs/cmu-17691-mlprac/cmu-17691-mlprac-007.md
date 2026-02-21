@@ -1,4 +1,4 @@
-# CMU《机器学习实践｜17-691 Machine Learning in Practice 2023》中英字幕 p07 [P7]Lecture 7- 测试和可解释性_2.zh_en [BV18TUQBJEfH_p7]
+# 7：测试和可解释性
 
 ![](img/8519e462228a6cbf15c384fa68b04cb4_1.png)
 

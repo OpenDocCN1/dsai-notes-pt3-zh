@@ -1,4 +1,4 @@
-# CMU《机器学习实践｜17-691 Machine Learning in Practice 2023》中英字幕 p05 [P5]Lecture 5- (Teams) Tools and Infrastructure_2.zh_en [BV18TUQBJEfH_p5]
+# 5： (Teams) Tools and Infrastructure
 
 ![](img/87ae7099e010578824815555ae60df3c_1.png)
 

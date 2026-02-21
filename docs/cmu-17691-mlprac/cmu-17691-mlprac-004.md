@@ -1,4 +1,4 @@
-# CMU《机器学习实践｜17-691 Machine Learning in Practice 2023》中英字幕 p04 [P4]Lecture 04- Do you even ML bro-_2.zh_en [BV18TUQBJEfH_p4]
+# 4：Do you even ML bro
 
 ![](img/217f6763a0d4ac18b13caaa5049a9d2c_1.png)
 

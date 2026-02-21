@@ -1,4 +1,4 @@
-# CMU《机器学习实践｜17-691 Machine Learning in Practice 2023》中英字幕 p01 [P1]Lecture 01- What are we doing here
+# 1：What are we doing here
 
 ![](img/ad4cd51a79d7f8e24e23ad04c5ed8966_1.png)
 
