@@ -1,5 +1,5 @@
 +   [USC CSCE585 机器学习系统笔记](README.md)
-+   [3.1：感知机与逻辑回归 🧠](usc-csce585-mlsys-001.md)
++   [1.1：感知机与逻辑回归 🧠](usc-csce585-mlsys-001.md)
 +   [2.1：为机器学习设计计算机系统 🖥️](usc-csce585-mlsys-002.md)
 +   [2.2：为机器学习设计计算机系统](usc-csce585-mlsys-003.md)
 +   [2.3：为机器学习设计计算机系统](usc-csce585-mlsys-004.md)
