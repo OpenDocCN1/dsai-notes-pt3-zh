@@ -1,4 +1,4 @@
-# 机器学习：21：马尔可夫链蒙特卡洛 (MCMC) II 🎲
+# 21：马尔可夫链蒙特卡洛 (MCMC) II 🎲
 
 ![](img/bbefebd3becee1608cf1a82b4b4e5391_1.png)
 

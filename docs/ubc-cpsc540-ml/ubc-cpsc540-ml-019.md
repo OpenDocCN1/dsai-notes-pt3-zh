@@ -1,4 +1,4 @@
-# 机器学习：19：深度学习 II，谷歌自编码器与Dropout
+# 19：深度学习 II，谷歌自编码器与Dropout
 
 ![](img/e8666b17cabecd32a18481c7de9c7ae9_1.png)
 
