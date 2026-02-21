@@ -15,6 +15,7 @@
 +   [CMU 11-777 多模态机器学习笔记](docs/cmu-11777-multimodalml/README.md)
 +   [CMU 11-785 深度学习导论笔记](docs/cmu-11785-dl/README.md)
 +   [CMU 16-745 最优控制与强化学习笔记](docs/cmu-16745-rl/README.md)
++   [CMU 17-691 机器学习实践笔记](docs/cmu-17691-mlprac/README.md)
 +   [康奈尔 CS6785 深度生成式模型笔记](docs/crnl-cs6785-dpgen/README.md)
 +   [Daniel Bourke PyTorch 深度学习笔记](docs/daniel-bourke/README.md)
 +   [DeepMind 强化学习笔记](docs/deepmind-rl/README.md)
