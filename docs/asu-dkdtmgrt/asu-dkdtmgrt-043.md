@@ -1,4 +1,4 @@
-# 黑暗数据迁移与架构：5：ULEADD的个人效用 🧠
+# 5：ULEADD的个人效用 🧠
 
 ![](img/edda6b785729e066a28d34a3d3e3e4a2_1.png)
 
