@@ -1,4 +1,4 @@
-# 6：直方图
+# 21：直方图
 
 ![](img/556ebccfc7e6aff01b7c7963e3fffb92_0.png)
 

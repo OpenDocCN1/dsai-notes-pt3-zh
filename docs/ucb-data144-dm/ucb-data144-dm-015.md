@@ -1,4 +1,4 @@
-# 数据挖掘和分析：15：表格构建与Minard示例 📊
+# 15：表格构建与Minard示例 📊
 
 ![](img/bab4edfd0a05047a0937740a2f0a95ab_1.png)
 
