@@ -1,4 +1,4 @@
-# 实用数据科学与MATLAB：1.6：MATLAB数据类型
+# 16：MATLAB数据类型
 
 ![](img/61f54bc0cd3a798c048924d0f9321a0d_1.png)
 

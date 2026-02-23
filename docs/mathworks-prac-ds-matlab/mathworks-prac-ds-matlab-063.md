@@ -1,4 +1,4 @@
-# 实用数据科学与MATLAB：23：标准化数据 📊
+# 23：标准化数据 📊
 
 ![](img/b5a5bcdc71adab8b0923ea5e66ad6dee_1.png)
 

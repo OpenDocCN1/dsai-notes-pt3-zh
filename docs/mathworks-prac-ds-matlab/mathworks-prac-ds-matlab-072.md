@@ -1,4 +1,4 @@
-# 实用数据科学与MATLAB：32：降维与PCA介绍
+# 32：降维与PCA介绍
 
 ![](img/c992a86a122026e9fe76abb5d0bfeef2_1.png)
 

@@ -1,4 +1,4 @@
-实用数据科学与MATLAB：P02：使用MATLAB进行探索性数据分析概述 🎯
+# 2：使用MATLAB进行探索性数据分析概述 🎯
 
 ![](img/6eb6d539c0fccc066fea7ff19958a287_1.png)
 

@@ -1,4 +1,4 @@
-# 实用数据科学与MATLAB：0：课程概述 🎼
+# 0：课程概述 🎼
 
 ![](img/0208e094d6cbda5c66ea77caee7a28fd_1.png)
 

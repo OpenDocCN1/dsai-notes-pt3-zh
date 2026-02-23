@@ -1,4 +1,4 @@
-# 实用数据科学与MATLAB：13：MATLAB如何表示数据 🎼
+# 14：MATLAB如何表示数据 🎼
 
 ![](img/86128664f49a1fff35507548f7fbba3e_1.png)
 

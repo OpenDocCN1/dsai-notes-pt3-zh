@@ -1,4 +1,4 @@
-实用数据科学与MATLAB：1：教师介绍 👨‍🏫
+1：教师介绍 👨‍🏫
 
 ![](img/a3f399955caacc8ecda70d7b31cfcd5c_1.png)
 

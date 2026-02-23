@@ -1,4 +1,4 @@
-# 实用数据科学与MATLAB：P05：MATLAB作为数据科学工具 🛠️
+# 5：MATLAB作为数据科学工具 🛠️
 
 ![](img/bfb591d5114faa1dfbf72a113731a502_1.png)
 
