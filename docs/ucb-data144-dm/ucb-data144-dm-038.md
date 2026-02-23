@@ -56,15 +56,15 @@ def simulate_one_roll():
 results = np.array([])
 print("初始结果数组:", results)
 
-# 第一次模拟并追加结果
+# 一次模拟并追加结果
 results = np.append(results, simulate_one_roll())
 print("第一次模拟后:", results)
 
-# 第二次模拟并追加结果
+# 二次模拟并追加结果
 results = np.append(results, simulate_one_roll())
 print("第二次模拟后:", results)
 
-# 第三次模拟并追加结果
+# 三次模拟并追加结果
 results = np.append(results, simulate_one_roll())
 print("第三次模拟后:", results)
 ```

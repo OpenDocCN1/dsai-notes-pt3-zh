@@ -1,4 +1,4 @@
-# 数据挖掘与分析：第58讲：Bootstrap估计方法
+# 58：Bootstrap估计方法
 
 ![](img/b6579c386e31dc0e0b233ca170c2592f_0.png)
 

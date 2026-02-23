@@ -1,4 +1,4 @@
-# 数据挖掘与分析：第5讲：Python编程基础与Jupyter Notebook使用 🐍
+# 5：Python编程基础与Jupyter Notebook使用 🐍
 
 在本节课中，我们将学习Python编程语言的基础知识以及如何在Jupyter Notebook环境中进行数据科学操作。课程内容涵盖Python的基本表达式、算术运算规则以及Jupyter Notebook的核心操作。我们将通过简单的示例和练习，帮助你快速掌握这些基础概念。
 
