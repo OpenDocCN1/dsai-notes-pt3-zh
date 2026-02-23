@@ -1,4 +1,4 @@
-# 计算统计学：18：Tidyverse 与 Tibbles 入门 🧹
+# 18：Tidyverse 与 Tibbles 入门 🧹
 
 ![](img/147bf40ce2b71d5e5d089a9b696e91b5_1.png)
 

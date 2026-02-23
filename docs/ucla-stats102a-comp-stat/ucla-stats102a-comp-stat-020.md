@@ -1,4 +1,4 @@
-# 计算统计学：20：dplyr - select, filter, mutate 🛠️
+# 20：dplyr - select, filter, mutate 🛠️
 
 ![](img/52b5c2834ed0e35c48082d7333ad79da_1.png)
 

@@ -1,4 +1,4 @@
-# 计算统计学：06：R语言中的NA、Null、NaN与向量循环使用规则 🧮
+# 06：R语言中的NA、Null、NaN与向量循环使用规则 🧮
 
 ![](img/8aa17a7b7c9228e85cf52c79fca5d5a0_1.png)
 

@@ -1,4 +1,4 @@
-# 计算统计学：03：配置RStudio与故障排除 🛠️
+# 03：配置RStudio与故障排除 🛠️
 
 ![](img/3972f11f7ae9a1b32ed490cf975fc9e2_1.png)
 

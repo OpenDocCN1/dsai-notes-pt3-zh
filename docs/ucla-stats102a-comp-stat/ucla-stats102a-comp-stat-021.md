@@ -1,4 +1,4 @@
-# 计算统计学：21：dplyr - group_by 与 summarise
+# 21：dplyr - group_by 与 summarise
 
 ![](img/e2d153985124daa8b124f865ce6ba989_1.png)
 
