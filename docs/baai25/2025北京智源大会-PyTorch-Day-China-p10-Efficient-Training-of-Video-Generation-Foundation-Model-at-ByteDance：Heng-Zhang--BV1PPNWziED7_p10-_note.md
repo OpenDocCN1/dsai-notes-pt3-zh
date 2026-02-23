@@ -1,4 +1,4 @@
-# PyTorch Day China 2025：P10：字节跳动视频生成基础模型的高效训练
+# PyTorch-Day-China-p10-Efficient-Training-of-Video-Generation-Foundation-Model-at-ByteDance：Heng-Zhang
 
 在本节课中，我们将学习字节跳动在视频生成基础模型大规模、高性能训练方面的实践经验。我们将从背景介绍开始，逐步深入到模型架构、训练流程优化以及大规模训练系统中的关键技术挑战与解决方案。
 

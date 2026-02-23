@@ -1,4 +1,4 @@
-# 大语言模型强化学习框架：P04：Verl - 一个面向智能体任务的开源大规模LLM RL框架
+# PyTorch-Day-China-p04-verl--An-Open-Source-Large-Scale-LLM-RL-Framework-for-Agentic-Tasks：Yuxuan-Tong
 
 在本节课中，我们将要学习 **Verl**，这是一个专为智能体任务设计的开源、大规模语言模型强化学习框架。我们将探讨其设计动机、核心架构、关键特性以及未来发展方向。
 

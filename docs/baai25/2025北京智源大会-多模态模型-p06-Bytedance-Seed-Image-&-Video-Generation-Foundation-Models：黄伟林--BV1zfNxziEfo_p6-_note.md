@@ -1,4 +1,4 @@
-# 多模态模型：p06：字节跳动Seed-图像与视频生成基础模型
+# 多模态模型-p06-Bytedance-Seed-Image-&-Video-Generation-Foundation-Models：黄伟林
 
 ![](img/b0e1346e965f7d45736d824aacf84ffa_1.png)
 

@@ -1,4 +1,4 @@
-# PyTorch中国社区建设：第1章：社区本地化与互动 📚
+# PyTorch-Day-China-p05-PyTorch-in-China--Community-Growth,-Localization,-and-Interaction：Zesheng-Zong
 
 在本节课中，我们将学习PyTorch在中国社区的本地化建设、资源提供以及未来愿景。我们将了解为何需要建立本地化社区，当前可用的资源，以及如何参与其中。
 

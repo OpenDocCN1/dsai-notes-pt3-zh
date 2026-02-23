@@ -1,4 +1,4 @@
-# PyTorch编译优化实战：第1章：不同场景下的torch.compile实践与优化 🚀
+# PyTorch-Day-China-p11-torch.compile-Practice-and-Optimization-in-Different-Scenarios：Yichen-Yan
 
 在本节课中，我们将学习如何在实际生产环境中应用和优化PyTorch的`torch.compile`功能。我们将探讨从理想环境到复杂生产系统所面临的挑战，并提供具体的解决方案和优化策略。
 

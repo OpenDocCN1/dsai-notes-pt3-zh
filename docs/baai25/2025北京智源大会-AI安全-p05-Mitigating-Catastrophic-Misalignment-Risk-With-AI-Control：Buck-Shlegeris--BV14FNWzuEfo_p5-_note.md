@@ -1,4 +1,4 @@
-# AI安全：05：通过AI控制缓解灾难性错位风险
+# AI安全-p05-Mitigating-Catastrophic-Misalignment-Risk-With-AI-Control：Buck-Shlegeris
 
 ![](img/88ee4b0cdeef7a4bf1f8ca74996fdb46_1.png)
 

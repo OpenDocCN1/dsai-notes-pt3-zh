@@ -1,4 +1,4 @@
-# 人工智能：第2章：从AI for Science到AI for Industry的实践与思考 🚀
+# 从AI-for-Science到AI-for-Industry-p02-从AI-for-Science到AI-for-Industry-实践与思考：程建军
 
 在本节课中，我们将学习中国移动副总经理程建军先生分享的关于人工智能如何从科学研究（AI for Science）走向产业应用（AI for Industry）的实践与思考。我们将探讨两者之间的关系、面临的挑战以及构建连接桥梁的关键工作。
 

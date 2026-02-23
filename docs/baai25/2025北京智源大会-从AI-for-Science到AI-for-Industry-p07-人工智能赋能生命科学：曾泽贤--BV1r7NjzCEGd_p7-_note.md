@@ -1,4 +1,4 @@
-# 人工智能赋能生命科学：07：现状、挑战与未来展望 🧬
+# 从AI-for-Science到AI-for-Industry-p07-人工智能赋能生命科学：曾泽贤
 
 ![](img/304349943853a59ea15b87ae5ca0c7fe_1.png)
 

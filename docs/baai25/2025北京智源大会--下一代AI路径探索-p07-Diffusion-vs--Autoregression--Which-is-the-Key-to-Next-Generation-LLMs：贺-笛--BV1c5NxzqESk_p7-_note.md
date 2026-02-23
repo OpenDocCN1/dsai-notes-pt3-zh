@@ -1,4 +1,4 @@
-# 大语言模型技术：07：扩散模型与自回归模型，谁才是下一代LLMs的关键？🧐
+# 下一代AI路径探索-p07-Diffusion-vs--Autoregression--Which-is-the-Key-to-Next-Generation-LLMs：贺-笛
 
 ![](img/8a7c8177e80243cce493855d597d0309_1.png)
 

@@ -1,4 +1,4 @@
-# Triton算子运行时优化实战：P06：FlagGems 算子运行时优化实战
+# 特色活动：AI-开源项目-Tech-Tutorial-系列活动-p06-FlagGems-算子运行时优化实战：陈飞宇
 
 ## 概述
 

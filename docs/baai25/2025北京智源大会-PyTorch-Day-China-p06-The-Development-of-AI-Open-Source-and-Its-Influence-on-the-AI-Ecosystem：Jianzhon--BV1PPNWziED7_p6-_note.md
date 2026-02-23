@@ -1,4 +1,4 @@
-# AI开源发展与生态影响：01：课程概述
+# PyTorch-Day-China-p06-The-Development-of-AI-Open-Source-and-Its-Influence-on-the-AI-Ecosystem：Jianzhon
 
 在本节课中，我们将学习AI开源技术的发展历程，以及它如何深刻影响并塑造整个AI生态系统。课程内容将分为两个主要部分：首先，我们将回顾大模型与开源AI的关键发展节点；其次，我们将探讨这些发展对技术生态、应用形态和基础设施带来的变革性影响。
 

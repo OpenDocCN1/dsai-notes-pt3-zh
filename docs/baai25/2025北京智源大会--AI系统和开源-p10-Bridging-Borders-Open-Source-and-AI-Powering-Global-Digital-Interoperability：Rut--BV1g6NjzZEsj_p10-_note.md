@@ -1,4 +1,4 @@
-# 开源与AI：P10：跨越边界——开源与AI赋能全球数字互操作性
+# AI系统和开源-p10-Bridging-Borders-Open-Source-and-AI-Powering-Global-Digital-Interoperability：Rut
 
 ![](img/d361f2f6a6768810bf469a7f80168700_1.png)
 

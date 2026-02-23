@@ -1,4 +1,4 @@
-# PyTorch生态与昇腾NPU集成：第1部分：三方设备接入机制与上游生态进展 🚀
+# PyTorch-Day-China-p12-PyTorch-in-Production-Boosting-LLM-Training-and-Inferencing-on-Ascend-NPU：Jiawei
 
 在本节课中，我们将学习华为工程师分享的关于PyTorch生态与昇腾NPU集成的核心内容。第一部分将重点介绍PyTorch上游社区为支持硬件多样性所做的关键工作，特别是三方设备接入机制。
 

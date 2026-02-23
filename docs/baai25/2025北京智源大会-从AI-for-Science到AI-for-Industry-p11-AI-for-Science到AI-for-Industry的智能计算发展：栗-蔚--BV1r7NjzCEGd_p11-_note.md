@@ -1,4 +1,4 @@
-# 2025北京智源大会：P11：从AI for Science到AI for Industry的智能计算发展 🚀
+# 从AI-for-Science到AI-for-Industry-p11-AI-for-Science到AI-for-Industry的智能计算发展：栗-蔚
 
 在本节课中，我们将学习智能计算如何作为关键驱动力，推动AI从科学研究（AI for Science）走向产业应用（AI for Industry）。我们将探讨计算范式的转变、行业应用现状，以及支撑这一发展的技术架构与挑战。
 

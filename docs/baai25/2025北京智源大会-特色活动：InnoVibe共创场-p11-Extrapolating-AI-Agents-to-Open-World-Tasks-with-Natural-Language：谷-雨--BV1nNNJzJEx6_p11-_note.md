@@ -1,4 +1,4 @@
-# AI智能体：P11：使用自然语言将AI智能体泛化至开放世界任务
+# 特色活动：InnoVibe共创场-p11-Extrapolating-AI-Agents-to-Open-World-Tasks-with-Natural-Language：谷-雨
 
 在本节课中，我们将学习如何利用自然语言帮助AI智能体（Agent）处理开放世界中的多样化任务。我们将探讨传统强化学习方法的局限性，并理解自然语言如何为目标空间提供结构，并为策略学习提供先验知识，从而实现更高效的泛化。
 

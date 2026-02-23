@@ -1,4 +1,4 @@
-# 开源AI与开放标准：架构未来 🚀
+# AI系统和开源-p08-Architecting-the-Future-Open-Source-AI-and-Open-Standards-at-the-Core-of-Intelli
 
 ## 概述
 在本节课中，我们将学习开源AI与开放标准的核心概念。我们将探讨开源AI的现状、面临的挑战，以及如何通过“模型开放框架”和“开放模型许可证”来定义和促进真正的开放性。课程内容将帮助初学者理解开源AI生态系统的重要性以及如何正确参与其中。

@@ -1,4 +1,4 @@
-# AI与科学的共生未来：05：Drug-the-Whole-Genome：后AlphaFold时代的AI药物研发
+# AI与科学的共生未来-p05-Drug-the-Whole-Genome：后AlphaFold时代的AI药物研发：兰艳艳
 
 在本节课中，我们将学习兰艳艳研究员分享的关于后AlphaFold时代AI药物研发的最新工作。我们将了解一个名为DrugCLIP的下一代大规模药物虚拟筛选引擎，它如何利用AI技术，特别是对比学习，来加速和革新药物发现过程，并探索其对整个基因组进行药物筛选的潜力。
 

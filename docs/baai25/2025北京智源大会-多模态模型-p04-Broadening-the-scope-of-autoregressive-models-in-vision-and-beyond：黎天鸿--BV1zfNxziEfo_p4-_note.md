@@ -1,4 +1,4 @@
-# 视觉自回归模型：P04：拓宽自回归模型在视觉及其他领域的应用范围 🚀
+# 多模态模型-p04-Broadening-the-scope-of-autoregressive-models-in-vision-and-beyond：黎天鸿
 
 ![](img/035a9632af3b8c87558635dfca1d58de_1.png)
 

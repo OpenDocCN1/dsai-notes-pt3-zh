@@ -1,4 +1,4 @@
-# PyTorch Day China 2025：P15：FlagTree - 统一AI编译器：门春雷
+# PyTorch-Day-China-p15-FlagTree--Unified-AI-Compiler-for-Diverse-AI-Chips：Chunlei-Men
 
 ## 概述
 在本节课程中，我们将学习由智源研究院（BAAI）门春雷分享的 **FlagTree** 项目。这是一个旨在为多样化AI芯片提供统一编译解决方案的开源AI编译器。我们将了解其设计动机、技术架构、核心特性以及如何解决当前AI芯片生态中的挑战。
@@ -164,7 +164,7 @@
 我们进行了基准测试，分别统计了 **Clone** 时间和 **Wrapper** 时间，并在 `add` 和 `sum` 这两个算子上，对比了多种实现方式。
 
 从结果可以看出：
-*   **Wrapper 层面**：PyTorch 自身的 C++ 实现 (`libtorch`) 与 Triton 的 Python 调用 (`torch_onnx`) 耗时接近。
+*   **Wrapper 层面**：yTorch 自身的 C++ 实现 (`libtorch`) 与 Triton 的 Python 调用 (`torch_onnx`) 耗时接近。
 *   **关键对比**：Triton Python 调用 (`torch_onnx`) 与我们用 C++ 重构后的实现 (`triton_cpp`) 对比，耗时降低了数倍量级。
 *   **封装成算子后**：将优化后的实现封装成可调用的算子 (`torch_ops`)，耗时也降低了数倍量级。
 

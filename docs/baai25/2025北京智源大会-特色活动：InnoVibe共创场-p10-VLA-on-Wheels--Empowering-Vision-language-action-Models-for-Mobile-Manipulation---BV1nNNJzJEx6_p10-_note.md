@@ -1,4 +1,4 @@
-# 机器人移动操作：P10：赋能视觉-语言-动作模型进行移动操作
+# 特色活动：InnoVibe共创场-p10-VLA-on-Wheels--Empowering-Vision-language-action-Models-for-Mobile-Manipulation-
 
 在本节课中，我们将学习如何将视觉-语言-动作模型应用于移动操作任务。我们将探讨传统方法的局限性，并介绍一种新的框架，通过优化机器人的站立位置和运动规划，来提升移动操作的成功率。
 

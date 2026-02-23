@@ -1,4 +1,4 @@
-# Triton编程技巧和性能优化实战：p05：Flash MQA 算子优化实践
+# 特色活动：AI-开源项目-Tech-Tutorial-系列活动-p05-Triton-编程技巧和性能优化实战：李之昕
 
 ## 概述
 在本节课中，我们将学习如何利用 Triton 语言对 Flash MQA（Multi-Query Attention）算子进行性能优化。我们将以 Flash MQA 算法为例，介绍在 Triton 编程中提升计算效率的几种核心技巧，包括并行度调整、内存访问优化以及利用 Triton 的高级特性。

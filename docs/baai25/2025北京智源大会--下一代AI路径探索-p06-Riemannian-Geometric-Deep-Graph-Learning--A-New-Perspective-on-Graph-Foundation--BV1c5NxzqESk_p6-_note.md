@@ -1,4 +1,4 @@
-# 图神经网络与黎曼几何：第6章：图基础模型的新视角
+# 下一代AI路径探索-p06-Riemannian-Geometric-Deep-Graph-Learning--A-New-Perspective-on-Graph-Foundation
 
 在本章中，我们将探讨一种全新的视角——利用黎曼几何进行图深度学习。我们将看到，与传统的欧式空间方法相比，黎曼空间如何更好地捕捉图的内在结构，并提升图基础模型的泛化能力。
 

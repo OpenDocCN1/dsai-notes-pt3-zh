@@ -1,4 +1,4 @@
-# PyTorch分布式训练教程：第13讲：Galvatron - 高效大规模模型自动分布式训练系统
+# PyTorch-Day-China-p13-Galvatron--An-Automatic-Distributed-Training-System-for-Efficient-Large-Scale-Tr
 
 在本节课中，我们将深入探讨Galvatron系统，这是一个基于PyTorch原生构建的自动分布式训练系统，旨在高效处理大规模模型。我们将了解其核心特性、工作原理以及如何简化分布式训练流程。
 

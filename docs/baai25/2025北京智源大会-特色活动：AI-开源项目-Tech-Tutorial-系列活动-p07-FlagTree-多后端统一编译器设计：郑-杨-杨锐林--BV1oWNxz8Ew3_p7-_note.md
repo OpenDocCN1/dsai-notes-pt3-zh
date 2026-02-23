@@ -1,4 +1,4 @@
-# AI开源项目Tech Tutorial：P07：FlagTree多后端统一编译器设计 🚀
+# 特色活动：AI-开源项目-Tech-Tutorial-系列活动-p07-FlagTree-多后端统一编译器设计：郑-杨-杨锐林
 
 在本教程中，我们将学习智源研究院AI编译研发工程师杨锐林分享的FlagTree多后端统一编译器的设计理念。我们将了解FlagTree是什么、AI芯片如何接入、基于Triton-Shared的FIR层优化以及项目的未来愿景。
 

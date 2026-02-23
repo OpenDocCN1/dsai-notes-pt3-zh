@@ -1,4 +1,4 @@
-# KTransformers：P16：释放CPU-GPU混合推理在MoE模型中的全部潜力 🚀
+# PyTorch-Day-China-p16-KTransformers--Unleashing-the-Full-Potential-of-CPU-GPU-Hybrid-Inference-for-MoE
 
 在本节课中，我们将学习KTransformers库如何通过创新的CPU-GPU混合推理策略，显著降低运行大型稀疏专家混合模型的门槛和成本。我们将探讨其设计理念、关键技术优化以及未来的应用方向。
 

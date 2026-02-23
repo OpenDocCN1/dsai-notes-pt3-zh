@@ -1,6 +1,6 @@
-# PyTorch基金会介绍：P01：欢迎致辞与开幕演讲
+# PyTorch-Day-China-p01-Welcome-&-Opening-Remarks：Matt-White
 
-在本节课中，我们将学习PyTorch基金会的最新使命、组织结构、新项目以及未来发展规划。内容基于Matt White在2025北京智源大会-PyTorch Day China上的开幕致辞整理而成。
+在本节课中，我们将学习PyTorch基金会的最新使命、组织结构、新项目以及未来发展规划。内容基于Matt White在PyTorch Day China上的开幕致辞整理而成。
 
 大家好，欢迎来到首届PyTorch Day China。非常感谢各位的到来。
 
@@ -30,7 +30,7 @@
 
 ![](img/e2cab18e09f56d3b91e6169bba97365d_3.png)
 
-## 重要公告：PyTorch成为伞形基金会 ☂️
+## 重要公告：yTorch成为伞形基金会 ☂️
 
 接下来，我将与大家分享几项公告。你可能已经听说，**PyTorch现在是一个伞形基金会了**。这意味着什么？
 

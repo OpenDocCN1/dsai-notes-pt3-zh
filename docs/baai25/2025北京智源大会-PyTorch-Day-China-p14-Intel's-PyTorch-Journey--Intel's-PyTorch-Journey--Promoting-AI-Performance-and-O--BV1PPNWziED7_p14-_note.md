@@ -1,4 +1,4 @@
-# PyTorch优化教程：1：英特尔在PyTorch生态中的贡献概述
+# PyTorch-Day-China-p14-Intel's-PyTorch-Journey--Intel's-PyTorch-Journey--Promoting-AI-Performance-and-O
 
 ![](img/d18dd3a4abcf1665016a09ddb61f3301_1.png)
 

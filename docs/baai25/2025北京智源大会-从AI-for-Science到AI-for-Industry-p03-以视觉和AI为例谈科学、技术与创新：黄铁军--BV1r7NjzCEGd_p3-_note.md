@@ -1,4 +1,4 @@
-# 人工智能与创新思维：第1讲：科学、技术与创新的再思考
+# 从AI-for-Science到AI-for-Industry-p03-以视觉和AI为例谈科学、技术与创新：黄铁军
 
 ![](img/18d3e9d3c0259ab2f4a7c55ee45586b2_1.png)
 

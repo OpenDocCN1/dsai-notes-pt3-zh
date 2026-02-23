@@ -1,4 +1,4 @@
-# AGI价值对齐：P02：AGI应对齐何种价值观
+# 青年科学家发展与创新动能论坛-p02-Which-Values-Should-AGI-Be-Aligned-To：Richard-Ngo
 
 ![](img/ad7852f10d8959e4c9c38c475f9feb65_1.png)
 

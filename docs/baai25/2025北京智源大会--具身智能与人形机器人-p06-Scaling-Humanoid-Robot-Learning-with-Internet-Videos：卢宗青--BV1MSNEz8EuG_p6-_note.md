@@ -1,4 +1,4 @@
-# 具身智能与人形机器人：06：利用互联网视频扩展人形机器人学习
+# 具身智能与人形机器人-p06-Scaling-Humanoid-Robot-Learning-with-Internet-Videos：卢宗青
 
 ![](img/e7408f7c98cc5e019f5b09bdeffa0a22_1.png)
 

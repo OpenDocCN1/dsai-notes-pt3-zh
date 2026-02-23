@@ -1,4 +1,4 @@
-# PyTorch模型压缩工具包：P09：基于torch.fx与torch_musa的压缩工具包
+# PyTorch-Day-China-p09-A-torch.fx-Based-Compression-Toolkit-Empowered-by-torch_musa：Fan-Mo
 
 在本节课中，我们将学习一个基于PyTorch FX和torch_musa的模型压缩工具包。我们将了解其设计原理、核心组件以及未来的发展方向。
 
@@ -29,7 +29,7 @@ device = torch.device("musa")
 
 ---
 
-## 2️⃣ 第二部分：PyTorch IR与量化方法
+## 2️⃣ 第二部分：yTorch IR与量化方法
 
 ![](img/7c57d5da2161b421a3c0d93c2cdbf61f_5.png)
 

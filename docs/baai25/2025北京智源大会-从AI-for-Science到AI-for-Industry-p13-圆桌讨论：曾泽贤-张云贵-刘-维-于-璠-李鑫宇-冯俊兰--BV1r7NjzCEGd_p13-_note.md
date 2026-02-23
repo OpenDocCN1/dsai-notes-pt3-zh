@@ -1,4 +1,4 @@
-# AI for Science 到 AI for Industry：圆桌讨论：从科研到产业的挑战与机遇
+# 从AI-for-Science到AI-for-Industry-p13-圆桌讨论：曾泽贤-张云贵-刘-维-于-璠-李鑫宇-冯俊兰
 
 在本节圆桌讨论中，我们将聆听来自学术界与产业界的多位专家，围绕如何将AI for Science的成果有效转化为AI for Industry的实践所展开的深度对话。我们将探讨当前面临的核心挑战，包括资金、数据、人才与组织模式，并展望未来的发展路径。
 

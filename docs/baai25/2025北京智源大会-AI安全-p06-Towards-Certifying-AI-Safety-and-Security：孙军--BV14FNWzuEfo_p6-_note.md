@@ -1,4 +1,4 @@
-# AI安全认证：P06：迈向可认证的AI安全与保障
+# AI安全-p06-Towards-Certifying-AI-Safety-and-Security：孙军
 
 ![](img/7eb7cae78254a92c0167b8e5794cd5d2_1.png)
 

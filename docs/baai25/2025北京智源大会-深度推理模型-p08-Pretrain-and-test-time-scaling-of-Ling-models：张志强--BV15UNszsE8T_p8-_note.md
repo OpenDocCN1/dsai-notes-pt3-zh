@@ -1,4 +1,4 @@
-# 深度推理模型：p08：预训练与推理时缩放定律研究
+# 深度推理模型-p08-Pretrain-and-test-time-scaling-of-Ling-models：张志强
 
 ![](img/3cc090d554a088e3e125508eff0e0c37_1.png)
 

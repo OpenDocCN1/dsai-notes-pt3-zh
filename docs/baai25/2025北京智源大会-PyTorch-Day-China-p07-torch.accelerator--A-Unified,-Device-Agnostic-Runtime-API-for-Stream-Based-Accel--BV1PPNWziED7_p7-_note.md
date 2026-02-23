@@ -1,4 +1,4 @@
-# PyTorch 教程：07：torch.accelerator - 面向流式加速器的统一、设备无关运行时API
+# PyTorch-Day-China-p07-torch.accelerator--A-Unified,-Device-Agnostic-Runtime-API-for-Stream-Based-Accel
 
 在本节课中，我们将要学习 PyTorch 2.6 版本中引入的一个新特性：`torch.accelerator`。这是一个旨在简化跨不同硬件后端（如 CUDA、XPU、MPS 等）编程的统一运行时 API。我们将了解它解决的问题、核心设计理念以及如何使用它来编写设备无关的代码。
 

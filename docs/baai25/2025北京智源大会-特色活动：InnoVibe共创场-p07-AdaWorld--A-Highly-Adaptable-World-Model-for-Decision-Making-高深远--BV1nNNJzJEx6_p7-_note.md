@@ -1,4 +1,4 @@
-# 世界模型与决策：07：AdaWorld - 一个用于决策的高适应性世界模型 🧠
+# 特色活动：InnoVibe共创场-p07-AdaWorld--A-Highly-Adaptable-World-Model-for-Decision-Making-高深远
 
 在本节课中，我们将学习高深远博士介绍的“AdaWorld”工作。这是一个高度自适应的世界模型，旨在让AI系统能够像人类一样，仅通过少量交互就快速理解并适应新的决策环境。
 

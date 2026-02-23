@@ -1,4 +1,4 @@
-# 人工智能模型共享平台：第3章：深入探索Hugging Face Hub 🚀
+# PyTorch-Day-China-p03-Diving-in-Hugging-Face-Hub;-Share-Your-Model-Weights-on-the-#1-AI-Hub,-Home-of-7
 
 在本节课中，我们将深入探索Hugging Face Hub。这是一个领先的AI社区平台，你可以在此分享和发现模型权重。我们将了解其核心功能、如何利用它，以及它如何成为开源AI生态系统的中心。
 
