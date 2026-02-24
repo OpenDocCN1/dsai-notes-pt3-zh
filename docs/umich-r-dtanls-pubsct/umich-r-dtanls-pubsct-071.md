@@ -1,4 +1,4 @@
-# 公共部门的R数据分析：27：图形启发式：冗余图表元素（Edward Tufte理论）📊
+# 27：图形启发式：冗余图表元素（Edward Tufte理论）📊
 
 ![](img/4f9f70c876fd5811f2a0916eecb8f45f_0.png)
 

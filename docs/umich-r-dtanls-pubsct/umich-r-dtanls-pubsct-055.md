@@ -1,4 +1,4 @@
-# 公共部门的R数据分析（基础、数据探索、决策支持）：11：公共卫生公平性重要性：Joneigh Khaldun博士访谈 🩺
+# 11：公共卫生公平性重要性：Joneigh Khaldun博士访谈 🩺
 
 ![](img/f33eb5b9bfc2ef278c72912a9229f0a4_0.png)
 

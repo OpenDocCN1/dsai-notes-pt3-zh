@@ -1,4 +1,4 @@
-# 公共部门的R数据分析（基础、数据探索、决策支持）：40：公共卫生数据日常应用：Joneigh Khaldun访谈
+# 40：公共卫生数据日常应用：Joneigh Khaldun访谈
 
 ![](img/7554f3e258706f847d04ca28baba0b8c_0.png)
 

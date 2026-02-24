@@ -1,4 +1,4 @@
-# 公共部门的R数据分析：26：图形启发式：数据墨水比（Edward Tufte理论）📊
+# 26：图形启发式：数据墨水比（Edward Tufte理论）📊
 
 ![](img/6a58e63eacb6eced121e48deab3097a3_0.png)
 

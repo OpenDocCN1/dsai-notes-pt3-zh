@@ -1,4 +1,4 @@
-# 公共部门的R数据分析：3：ggplot基础绘图入门 🎨
+# 3：ggplot基础绘图入门 🎨
 
 ![](img/d9ed143faa326a5f75f12ab1aaa24267_0.png)
 

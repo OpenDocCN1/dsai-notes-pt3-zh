@@ -1,4 +1,4 @@
-# 公共部门的R数据分析：27：dplyr数据操作：数据探索（tidyverse应用）📊
+# 27：dplyr数据操作：数据探索（tidyverse应用）📊
 
 ![](img/f1d1b2040ef73460c0ccaf9b064ef6f4_0.png)
 
