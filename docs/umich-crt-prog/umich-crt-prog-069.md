@@ -1,4 +1,4 @@
-# 创造性编程：21：Python类编写指南 🚗
+# 21：Python类编写指南 🚗
 
 ![](img/62c6b0a5baaaeef759c2ec0098f76b12_0.png)
 

@@ -1,4 +1,4 @@
-# 密歇根大学《创造性编程》：第37节：使用DB Browser探索数据库 🗄️
+# 37：使用DB Browser探索数据库 🗄️
 
 ![](img/d362c8d517e49b25bad6c9de966b2ece_0.png)
 

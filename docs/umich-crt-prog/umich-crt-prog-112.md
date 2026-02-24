@@ -1,4 +1,4 @@
-# 创造性编程：24：VS Code调试实践 🐛
+# 24：VS Code调试实践 🐛
 
 ![](img/83c02ead8ee1703699d21fa6b7fbafe3_0.png)
 

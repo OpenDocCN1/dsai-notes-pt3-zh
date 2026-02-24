@@ -1,4 +1,4 @@
-# 创造性编程：42：使用Python查询数据 📊
+# 42：使用Python查询数据 📊
 
 ![](img/96e65a4ac3a4bb7f9894a2cee474efb4_0.png)
 

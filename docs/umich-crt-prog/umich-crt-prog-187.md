@@ -1,4 +1,4 @@
-# 创造性编程：54：Matplotlib基础 📊
+# 54：Matplotlib基础 📊
 
 ![](img/7d13706aa791227537b5c4fcc6d1a61c_0.png)
 

@@ -1,4 +1,4 @@
-# 创造性编程：10：Turtle绘图入门 🐢
+# 10：Turtle绘图入门 🐢
 
 ![](img/7ebe53100798cd91041c59bf0cb81e0a_0.png)
 

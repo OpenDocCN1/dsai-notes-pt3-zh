@@ -1,4 +1,4 @@
-# 创造性编程：15：修复Turtle错误2 🐢
+# 15：修复Turtle错误2 🐢
 
 ![](img/5a1bc9fa8b299d3686b6b61f3c07c70f_0.png)
 

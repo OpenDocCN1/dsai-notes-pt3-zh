@@ -1,4 +1,4 @@
-# 创造性编程：176：Python实现SQL操作 🐍💾
+# 43：Python实现SQL操作 🐍💾
 
 ![](img/796f73d372cad3efb0084795cc36e0f1_0.png)
 

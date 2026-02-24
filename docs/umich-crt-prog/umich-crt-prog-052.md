@@ -1,4 +1,4 @@
-# 创造性编程：4：POGIL角色解析 🧩
+# 4：POGIL角色解析 🧩
 
 ![](img/f8185b9e23aa838ab994ce7e6a5bb5a2_0.png)
 

@@ -1,4 +1,4 @@
-# 创造性编程：36：DB Browser下载教程 🛠️
+# 36：DB Browser下载教程 🛠️
 
 ![](img/dbc160575b646cf985b9f8c485894142_0.png)
 

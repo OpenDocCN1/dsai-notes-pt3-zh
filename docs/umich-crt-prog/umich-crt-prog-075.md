@@ -1,4 +1,4 @@
-# 创造性编程：27：创建NumGuess类 🎲
+# 27：创建NumGuess类 🎲
 
 ![](img/e1584f92de8db471ea94b20df3a0ab21_0.png)
 

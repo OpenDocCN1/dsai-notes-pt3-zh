@@ -1,4 +1,4 @@
-# 密歇根大学《创造性编程》课程：P50：Python是什么 🐍
+# 2：Python是什么 🐍
 
 ![](img/6f8bab755b98762222daeb43bde8b257_0.png)
 

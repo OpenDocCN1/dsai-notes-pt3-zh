@@ -1,4 +1,4 @@
-# 创造性编程：34：`search`与`find_all`的区别 🔍
+# 34：`search`与`find_all`的区别 🔍
 
 ![](img/220f5a3efba4635955a9773afb932db4_0.png)
 

@@ -1,4 +1,4 @@
-# 创造性编程：1：Python是什么 🐍
+# 2：Python是什么 🐍
 
 ![](img/3ab69bb7b7432be2312cd0206c808fbc_0.png)
 

@@ -1,4 +1,4 @@
-# 创造性编程：47：Twitter爬虫代码实现 🕷️
+# 47：Twitter爬虫代码实现 🕷️
 
 ![](img/95ad2c0111ce22d455cfcf79b35334ae_0.png)
 

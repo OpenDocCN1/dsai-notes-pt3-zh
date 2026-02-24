@@ -1,4 +1,4 @@
-# 创造性编程：44：fetchone与fetchall应用 🐍
+# 44：fetchone与fetchall应用 🐍
 
 ![](img/6a62cc22e9457f664514586bde691636_0.png)
 

@@ -1,4 +1,4 @@
-# 创造性编程：14：Beautiful Soup入门 🍲
+# 14：Beautiful Soup入门 🍲
 
 ![](img/bfc313f35513c653f7e5a9a1d784ac6f_0.png)
 

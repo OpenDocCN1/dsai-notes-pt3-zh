@@ -1,4 +1,4 @@
-# 创造性编程：12：try-except异常处理 🛡️
+# 12：try-except异常处理 🛡️
 
 ![](img/7ef5bca5d630eea420aecd84efef57c2_0.png)
 

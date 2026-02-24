@@ -1,4 +1,4 @@
-# 创造性编程：38：DB Browser中的SQL基础 🗄️
+# 38：DB Browser中的SQL基础 🗄️
 
 ![](img/3ec911078a1d2007d29a284314566460_0.png)
 

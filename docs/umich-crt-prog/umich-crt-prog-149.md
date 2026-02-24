@@ -1,4 +1,4 @@
-# 创造性编程：149：`find`与`find_all`方法对比 🔍
+# 16：`find`与`find_all`方法对比 🔍
 
 在本节课中，我们将学习Beautiful Soup库中两个最常用的方法：`find`和`find_all`。我们将通过一个具体的HTML示例，清晰地展示它们的功能差异和使用场景。
 

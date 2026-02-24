@@ -1,4 +1,4 @@
-# 密歇根大学《创造性编程》： 1.3： Python是什么 🐍
+#  3： Python是什么 🐍
 
 ![](img/a3d2a3b4f4384a9e7175c3dadfc4f99f_0.png)
 

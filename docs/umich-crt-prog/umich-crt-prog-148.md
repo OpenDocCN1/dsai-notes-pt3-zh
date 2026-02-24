@@ -1,4 +1,4 @@
-# 创造性编程：15：Beautiful Soup章节阅读指南 📖
+# 15：Beautiful Soup章节阅读指南 📖
 
 ![](img/9bf23bcc8126bbc647e30c95e5abb24b_0.png)
 

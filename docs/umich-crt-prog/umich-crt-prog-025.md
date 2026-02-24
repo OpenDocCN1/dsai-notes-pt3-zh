@@ -1,4 +1,4 @@
-# 创造性编程：25：解决 `first_half` 问题 🧩
+# 25：解决 `first_half` 问题 🧩
 
 ![](img/56c12a8a7958da9ed9c741aa8548bc56_0.png)
 

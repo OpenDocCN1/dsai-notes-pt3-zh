@@ -1,4 +1,4 @@
-# 创造性编程：37：Python继承实现 🐍
+# 37：Python继承实现 🐍
 
 ![](img/7e6b91f84cee322a84f6e927ef59255f_0.png)
 

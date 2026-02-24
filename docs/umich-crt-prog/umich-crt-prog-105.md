@@ -1,4 +1,4 @@
-# 创造性编程：17：修复get_total_for_year函数 🛠️
+# 17：修复get_total_for_year函数 🛠️
 
 ![](img/35548243c996700eaa3c7c2588816825_0.png)
 

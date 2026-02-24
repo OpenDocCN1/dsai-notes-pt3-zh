@@ -1,4 +1,4 @@
-# 创造性编程：第12章：Turtle基础操作 🐢
+# 12：Turtle基础操作 🐢
 
 ![](img/750a65a1c5c0262b28df1dff0e5b434f_0.png)
 

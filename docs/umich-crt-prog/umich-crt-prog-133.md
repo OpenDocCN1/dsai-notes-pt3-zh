@@ -1,4 +1,4 @@
-# 创造性编程：0：遇见Barb Ericson博士 👩‍🏫
+# 0：遇见Barb Ericson博士 👩‍🏫
 
 ![](img/465efb0a8d4334d0ebdebc1a163cb90a_0.png)
 

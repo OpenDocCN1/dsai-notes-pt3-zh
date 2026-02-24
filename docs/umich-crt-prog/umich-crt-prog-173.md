@@ -1,4 +1,4 @@
-# 创造性编程：173：Python执行SQL语句教程 🐍
+# 40：Python执行SQL语句教程 🐍
 
 ![](img/ce40dc26e9b2fefdc8282d4ae7952be9_0.png)
 
