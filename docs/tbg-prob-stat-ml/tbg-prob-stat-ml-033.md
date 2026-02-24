@@ -1,4 +1,4 @@
-# 概率和统计机器学习：30：Isomap算法详解 🗺️
+# 30：Isomap算法详解 🗺️
 
 ![](img/69fd1c8d6fec825ad96aef4b537392f9_1.png)
 

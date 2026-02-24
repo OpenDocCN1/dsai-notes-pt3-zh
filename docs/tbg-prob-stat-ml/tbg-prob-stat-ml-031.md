@@ -1,4 +1,4 @@
-# 概率和统计机器学习：28：随机投影与Johnson-Lindenstrauss定理
+# 28：随机投影与Johnson-Lindenstrauss定理
 
 ![](img/a13891f336c85b4497309931aa2a1211_1.png)
 

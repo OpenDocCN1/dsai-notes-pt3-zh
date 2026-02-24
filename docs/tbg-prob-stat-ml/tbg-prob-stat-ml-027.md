@@ -1,4 +1,4 @@
-# 概率和统计机器学习：24：Boosting 🚀
+# 24：Boosting 🚀
 
 ![](img/7ca3c724f7ebf876f7ea9bb88f3154bc_0.png)
 

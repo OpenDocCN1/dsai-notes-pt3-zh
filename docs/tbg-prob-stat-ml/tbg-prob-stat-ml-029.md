@@ -1,4 +1,4 @@
-# 概率和统计机器学习：26：核主成分分析 (Kernel PCA) 🧠
+# 26：核主成分分析 (Kernel PCA) 🧠
 
 ![](img/b8dc91b7a4ec00a10bd63a7288cd767f_1.png)
 
