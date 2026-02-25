@@ -1,4 +1,4 @@
-+   [斯坦福 CSS146S 现代软件开发笔记](README.md)
++   [斯坦福 CS146S 现代软件开发笔记](README.md)
 +   [01：大型语言模型与AI开发入门](stf-cs146s-mdn-sw-dev-001.md)
 +   [02：将LLM转变为自主执行者 🧠➡️🤖](stf-cs146s-mdn-sw-dev-002.md)
 +   [03：自主 AI 编码代理的深度解析 🚀](stf-cs146s-mdn-sw-dev-003.md)
