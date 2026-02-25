@@ -44,6 +44,7 @@
 +   [课程总结 🎉](docs/dlai-diffmdl-wk/README.md)
 +   [DeepLearningAI 深度学习 2025 笔记](docs/dlai-dl-25/README.md)
 +   [总结 🎯](docs/dlai-dspy/README.md)
++   [数据分析基础 🎯](docs/dlai-dtanls-bsc/README.md)
 +   [DLAI 数据工程导论笔记](docs/dlai-dtengi-intro/README.md)
 +   [从入门到进阶 🚀](docs/dlai-dtengi-mdl/README.md)
 +   [DLAI 数据输入输出预处理笔记](docs/dlai-dtio-preprroc/README.md)
