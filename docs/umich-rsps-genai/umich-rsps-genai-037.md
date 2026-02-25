@@ -1,4 +1,4 @@
-# 负责任生成式AI简介：7：Susannah Shattuck访谈：生成式AI治理重要性
+# 7：Susannah Shattuck访谈：生成式AI治理重要性
 
 ![](img/4e160e56a955bd370a17ebccad4bf0cd_0.png)
 
