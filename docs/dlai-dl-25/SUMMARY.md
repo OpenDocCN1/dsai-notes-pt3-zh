@@ -1,4 +1,4 @@
-+   [DeepLearningAI 2025 笔记](README.md)
++   [DeepLearningAI 深度学习 2025 笔记](README.md)
 +   [2：生成式模型 🎨](dlai25-002.md)
 +   [3：真实生活中的GAN 🎭](dlai25-003.md)
 +   [4：4.GAN背后的直觉 🧠](dlai25-004.md)
