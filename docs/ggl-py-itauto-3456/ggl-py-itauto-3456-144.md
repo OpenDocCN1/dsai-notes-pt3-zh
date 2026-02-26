@@ -1,4 +1,4 @@
-# 144：什么是Puppet？🤖
+#  144：什么是Puppet？🤖
 
 ![](img/570ee73b623da1e57d8944e7b6d8c595_0.png)
 

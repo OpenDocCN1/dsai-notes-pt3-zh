@@ -1,4 +1,4 @@
-# 166：从故障中恢复 🛠️
+#  166：从故障中恢复 🛠️
 ## 课程编号：Google IT Automation with Python - P166
 
 ![](img/db4245bb44798149ffdd13114bd4599f_0.png)

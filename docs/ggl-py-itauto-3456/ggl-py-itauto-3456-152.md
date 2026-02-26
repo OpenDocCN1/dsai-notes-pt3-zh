@@ -1,4 +1,4 @@
-# 152：本地应用Puppet规则 🛠️
+#  152：本地应用Puppet规则 🛠️
 
 ![](img/e2bfee343af0ef22f9c2670bbac51003_0.png)
 

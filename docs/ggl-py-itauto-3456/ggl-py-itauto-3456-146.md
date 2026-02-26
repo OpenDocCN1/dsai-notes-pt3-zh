@@ -1,4 +1,4 @@
-# 146：Puppet类 🧩
+#  146：Puppet类 🧩
 
 ![](img/e6bd28d281c4b1ba5b9262e249cdc4ec_0.png)
 

@@ -1,4 +1,4 @@
-# 096：调试Python程序崩溃 🐛
+#  096：调试Python程序崩溃 🐛
 
 ![](img/e7de66f31ee695a0de136ad07e9b416c_0.png)
 

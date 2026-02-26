@@ -1,4 +1,4 @@
-# 040：Git变基操作详解 🔄
+#  040：Git变基操作详解 🔄
 
 ![](img/eaa6cdde37ffbbc69b57f82c2f2550bf_0.png)
 

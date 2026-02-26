@@ -1,4 +1,4 @@
-# 155：Puppet 节点管理 🎯
+#  155：Puppet 节点管理 🎯
 
 ![](img/35dee0a5a8b72a7b16119f99950ab5c0_0.png)
 

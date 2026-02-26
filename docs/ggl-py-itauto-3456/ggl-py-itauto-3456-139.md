@@ -1,4 +1,4 @@
-# 139：GCP 上的 Kubernetes 🚀
+#  139：GCP 上的 Kubernetes 🚀
 
 ![](img/9b2d5cbd3881919cb5a65f149df6cbb0_0.png)
 

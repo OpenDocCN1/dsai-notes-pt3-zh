@@ -1,4 +1,4 @@
-# 124：使用GCP Web界面创建新虚拟机 🖥️
+#  124：使用GCP Web界面创建新虚拟机 🖥️
 
 ![](img/ff88c9193babc54d2ef37f70f0adf4b4_0.png)
 

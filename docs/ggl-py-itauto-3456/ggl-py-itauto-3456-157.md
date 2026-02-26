@@ -1,4 +1,4 @@
-# 157：设置Puppet客户端与服务器 🚀
+#  157：设置Puppet客户端与服务器 🚀
 
 ![](img/b3f8a50284acad450fb7ee7578f834cd_0.png)
 
