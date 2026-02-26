@@ -173,6 +173,7 @@
 +   [谷歌数据分析 VI 笔记](docs/ggl-dtanls-6/README.md)
 +   [谷歌数据分析 VII 笔记](docs/ggl-dtanls-7/README.md)
 +   [谷歌数据分析 VIII 笔记](docs/ggl-dtanls-8/README.md)
++   [谷歌生成式人工智能笔记](docs/ggl-genai/README.md)
 +   [唐宇迪商品检测课程笔记](docs/goods-detect-tangyudi/README.md)
 +   [GPUMODE CUDA 笔记](docs/gpu-mode-cuda/README.md)
 +   [哈佛 CS229r 大数据算法笔记](docs/hav-cs229r-bgdt-algo/README.md)
