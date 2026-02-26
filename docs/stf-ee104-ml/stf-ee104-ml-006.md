@@ -1,4 +1,4 @@
-# 斯坦福大学《机器学习｜Stanford EE104 Introduction to Machine Learning 2020》deepseek翻译 p06 Lecture 8 - non quadratic losses.zh_en -BV1utzNYqEkr_p6-
+#  006：斯坦福大学《机器学习｜Stanford EE104 Introduction to Machine Learning 2020》deepseek翻译 p06 Lecture 8 - non quadratic losses.zh_en -BV1utzNYqEkr_p6-
 
 ![](img/7eef875d7fbb4eed18e9eb1896c04a36_0.png)
 

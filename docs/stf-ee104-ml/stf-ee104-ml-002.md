@@ -1,4 +1,4 @@
-# 斯坦福大学《机器学习｜Stanford EE104 Introduction to Machine Learning 2020》deepseek翻译 p02 Lecture - 2 overview.zh_en -BV1utzNYqEkr_p2-
+#  002：斯坦福大学《机器学习｜Stanford EE104 Introduction to Machine Learning 2020》deepseek翻译 p02 Lecture - 2 overview.zh_en -BV1utzNYqEkr_p2-
 
 ![](img/ebba49bc590dd0c39e72ede25832b351_0.png)
 

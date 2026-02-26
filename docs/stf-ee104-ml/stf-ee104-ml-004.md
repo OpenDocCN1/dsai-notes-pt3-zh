@@ -1,4 +1,4 @@
-# 斯坦福大学《机器学习｜Stanford EE104 Introduction to Machine Learning 2020》deepseek翻译 p04 Lecture 4 - validation.zh_en -BV1utzNYqEkr_p4-
+#  004：斯坦福大学《机器学习｜Stanford EE104 Introduction to Machine Learning 2020》deepseek翻译 p04 Lecture 4 - validation.zh_en -BV1utzNYqEkr_p4-
 
 ![](img/6ab4e081b89af7ef14edc78604c79dc1_0.png)
 

@@ -1,4 +1,4 @@
-# 斯坦福大学《机器学习｜Stanford EE104 Introduction to Machine Learning 2020》deepseek翻译 p14 Lecture 16 - probabilistic classification.zh_en -BV1utzNYqEkr_p14-
+#  014：斯坦福大学《机器学习｜Stanford EE104 Introduction to Machine Learning 2020》deepseek翻译 p14 Lecture 16 - probabilistic classification.zh_en -BV1utzNYqEkr_p14-
 
 ![](img/1120d176e99f4b71f2cd0a64b9eebc8b_0.png)
 

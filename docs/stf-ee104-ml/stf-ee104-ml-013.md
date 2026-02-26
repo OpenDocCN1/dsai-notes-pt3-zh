@@ -1,4 +1,4 @@
-# 斯坦福大学《机器学习｜Stanford EE104 Introduction to Machine Learning 2020》deepseek翻译 p13 Lecture 15 - 多类分类.zh_en -BV1utzNYqEkr_p13-
+#  013：斯坦福大学《机器学习｜Stanford EE104 Introduction to Machine Learning 2020》deepseek翻译 p13 Lecture 15 - 多类分类.zh_en -BV1utzNYqEkr_p13-
 
 ![](img/991363932b72f04d9be3b2949b136f7d_0.png)
 

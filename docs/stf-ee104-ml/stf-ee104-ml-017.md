@@ -1,4 +1,4 @@
-# 斯坦福大学《机器学习｜Stanford EE104 Introduction to Machine Learning 2020》deepseek翻译 p17 Lecture 19 - 主成分分析.zh_en -BV1utzNYqEkr_p17-
+#  017：斯坦福大学《机器学习｜Stanford EE104 Introduction to Machine Learning 2020》deepseek翻译 p17 Lecture 19 - 主成分分析.zh_en -BV1utzNYqEkr_p17-
 
 ![](img/e448ae7b4f1e3047a64b4e959a38a2c6_0.png)
 

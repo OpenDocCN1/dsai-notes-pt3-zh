@@ -1,4 +1,4 @@
-# 斯坦福大学《机器学习｜Stanford EE104 Introduction to Machine Learning 2020》教程 p01：课程信息
+#  001：课程信息
 
 ![](img/c757917ce7618d1c95580470cadf6588_0.png)
 

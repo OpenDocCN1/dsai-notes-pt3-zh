@@ -1,4 +1,4 @@
-# 斯坦福大学《机器学习｜Stanford EE104 Introduction to Machine Learning 2020》deepseek翻译 p08 Lecture 10 - 非二次正则化.zh_en -BV1utzNYqEkr_p8-
+#  008：斯坦福大学《机器学习｜Stanford EE104 Introduction to Machine Learning 2020》deepseek翻译 p08 Lecture 10 - 非二次正则化.zh_en -BV1utzNYqEkr_p8-
 
 ![](img/dab0567361de7d7adc366588b099ca4f_0.png)
 

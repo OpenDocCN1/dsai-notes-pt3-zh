@@ -1,4 +1,4 @@
-# 斯坦福大学《机器学习｜Stanford EE104 Introduction to Machine Learning 2020》deepseek翻译 p12 Lecture 14 - 布尔分类.zh_en -BV1utzNYqEkr_p12-
+#  012：斯坦福大学《机器学习｜Stanford EE104 Introduction to Machine Learning 2020》deepseek翻译 p12 Lecture 14 - 布尔分类.zh_en -BV1utzNYqEkr_p12-
 
 ![](img/53ef428888b18b190ee0822993e48576_0.png)
 

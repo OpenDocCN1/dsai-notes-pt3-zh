@@ -1,4 +1,4 @@
-# 斯坦福大学《机器学习｜Stanford EE104 Introduction to Machine Learning 2020》deepseek翻译 p15 Lecture 17-erm for probabilistic classif..zh_en -BV1utzNYqEkr_p15-
+#  015：斯坦福大学《机器学习｜Stanford EE104 Introduction to Machine Learning 2020》deepseek翻译 p15 Lecture 17-erm for probabilistic classif..zh_en -BV1utzNYqEkr_p15-
 
 ![](img/97ab80677fa3667e6544df9bbaf632d7_0.png)
 

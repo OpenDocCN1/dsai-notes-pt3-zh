@@ -1,4 +1,4 @@
-# 斯坦福大学《机器学习｜Stanford EE104 Introduction to Machine Learning 2020》deepseek翻译 p10 Lecture 12 - classifiers.zh_en -BV1utzNYqEkr_p10-
+#  010：斯坦福大学《机器学习｜Stanford EE104 Introduction to Machine Learning 2020》deepseek翻译 p10 Lecture 12 - classifiers.zh_en -BV1utzNYqEkr_p10-
 
 ![](img/4791d972dc1f7ccea49d75ca32c0827a_0.png)
 
