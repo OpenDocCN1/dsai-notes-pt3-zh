@@ -1,1 +1,1 @@
-# 6.课程总结 🎉
+# DLAI Pydantic 笔记
