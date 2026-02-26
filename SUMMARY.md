@@ -166,6 +166,7 @@
 +   [哈佛 CS249r：机器学习系统](docs/hav-cs249r-mlsys/README.md)
 +   [哈佛 CS109 数据科学导论](docs/hvd-cs109-intd-ds/README.md)
 +   [哈佛 CS109 数据科学导论第二版](docs/hvd-cs109-intd-ds-2e/README.md)
++   [IBM 人工智能机器人笔记](docs/ibm-ai-rbt/README.md)
 +   [IBM 数据分析师 I 笔记](docs/ibm-dtanls/README.md)
 +   [IBM 数据分析师 II 笔记](docs/ibm-dtanls2/README.md)
 +   [IBM 数据分析师 III 笔记](docs/ibm-dtanls3/README.md)
