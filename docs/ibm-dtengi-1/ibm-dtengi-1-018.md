@@ -1,4 +1,4 @@
-# IBM数据工程专业证书 课程11：《使用Spark和Hadoop进行大数据介绍》｜ 第18讲：Apache Spark中的数据并行扩展 🚀
+# 018：Apache Spark中的数据并行扩展 🚀
 
 ![](img/c956cbf7bbb520c39c36834f3b575dae_0.png)
 

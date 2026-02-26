@@ -1,4 +1,4 @@
-# IBM数据工程专业证书 课程11：《使用Spark和Hadoop进行大数据介绍》｜P15：为什么使用Apache Spark 🚀
+# 015：为什么使用Apache Spark 🚀
 
 ![](img/d733d8313b7089cc3611845bb10c86fc_0.png)
 

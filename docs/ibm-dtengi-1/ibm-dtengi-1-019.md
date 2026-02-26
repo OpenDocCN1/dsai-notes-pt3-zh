@@ -1,4 +1,4 @@
-# IBM数据工程专业证书 课程11：《使用Spark和Hadoop进行大数据介绍》｜P19：DataFrame与SparkSQL 🚀
+# 019：DataFrame与SparkSQL 🚀
 
 ![](img/3dfd41b88382aa05737d94dabd5fcbaa_0.png)
 

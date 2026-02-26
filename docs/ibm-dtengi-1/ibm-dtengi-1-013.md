@@ -1,4 +1,4 @@
-# IBM数据工程专业证书 课程11：《使用Spark和Hadoop进行大数据介绍》｜ 第13课：Hive入门 🐝
+# 013：Hive入门 🐝
 
 ![](img/fd0e0d8982df56ddb82585dccdc2c894_0.png)
 

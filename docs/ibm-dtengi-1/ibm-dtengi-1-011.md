@@ -1,4 +1,4 @@
-# IBM数据工程专业证书 课程11：《使用Spark和Hadoop进行大数据介绍》｜ P11：Hadoop生态系统 🏗️
+# 011：Hadoop生态系统 🏗️
 
 ![](img/747506369ddbcfe78f98e4cbfd07f60c_0.png)
 

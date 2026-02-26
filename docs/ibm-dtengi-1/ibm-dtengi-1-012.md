@@ -1,4 +1,4 @@
-# IBM数据工程专业证书 课程11：《使用Spark和Hadoop进行大数据介绍》｜ P12：Hadoop分布式文件系统（HDFS）详解 🗂️
+# 012：Hadoop分布式文件系统（HDFS）详解 🗂️
 
 ![](img/4c90d63ae29fa14f629c217855b7d5ef_0.png)
 

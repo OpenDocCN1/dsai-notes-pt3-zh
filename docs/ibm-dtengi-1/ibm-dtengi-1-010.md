@@ -1,4 +1,4 @@
-# IBM数据工程专业证书 课程11：《使用Spark和Hadoop进行大数据介绍》｜P10：MapReduce简介 🗺️➡️📊
+# 010：MapReduce简介 🗺️➡️📊
 
 ![](img/44e248622766c5d8474ae96e24dc5056_0.png)
 
