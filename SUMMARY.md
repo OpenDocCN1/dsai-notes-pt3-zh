@@ -170,6 +170,7 @@
 +   [IBM 数据分析师 II 笔记](docs/ibm-dtanls2/README.md)
 +   [IBM 数据分析师 III 笔记](docs/ibm-dtanls3/README.md)
 +   [IBM 生成式人工智能基础笔记](docs/ibm-genai-bsc/README.md)
++   [IBM 生成式人工智能工程 Flask 笔记](docs/ibm-genai-engi-flask/README.md)
 +   [IBM 生成式人工智能工程入门笔记](docs/ibm-genai-engi-intro/README.md)
 +   [IBM 人力资源的生成式人工智能笔记](docs/ibm-genai-hr/README.md)
 +   [IBM 机器学习、数据探索、监督学习笔记](docs/ibm-ml-eda-sup/README.md)
