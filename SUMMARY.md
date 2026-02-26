@@ -77,6 +77,7 @@
 +   [DLAI Gradio 笔记](docs/dlai-gradio/README.md)
 +   [DLAI GRPO 大模型强化微调笔记](docs/dlai-grpo-llm-rft/README.md)
 +   [DLAI Haystack 笔记](docs/dlai-haystk/README.md)
++   [DLAI HuggingFace 开源模型笔记](docs/dlai-hf-osmdl/README.md)
 +   [DLAI 大模型高效笔记](docs/dlai-hieff-sve-llm/README.md)
 +   [DLAI Jamba 笔记](docs/dlai-jamba/README.md)
 +   [探索股票市场数据](docs/dlai-jptai/README.md)

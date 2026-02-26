@@ -1,4 +1,4 @@
-# Hugging Face开源模型：P9：目标检测 🎯
+# 009：目标检测 🎯
 
 ![](img/904b131b94f40a51c0dfe9cff001e295_1.png)
 

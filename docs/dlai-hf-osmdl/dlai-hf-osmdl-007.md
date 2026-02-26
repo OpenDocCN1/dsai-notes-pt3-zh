@@ -1,4 +1,4 @@
-# 自动语音识别：P7：使用Hugging Face进行语音转文字 📝
+# 007：使用Hugging Face进行语音转文字 📝
 
 ![](img/d43ce8e35bfcb901a560c69ef72cdb1e_1.png)
 
