@@ -181,6 +181,7 @@
 +   [IBM 数据工程 VIII 笔记](docs/ibm-dtengi-8/README.md)
 +   [IBM 数据工程 IX 笔记](docs/ibm-dtengi-9/README.md)
 +   [IBM 数据科学 I 笔记](docs/ibm-dtsci-1/README.md)
++   [IBM 数据科学 X 笔记](docs/ibm-dtsci-10/README.md)
 +   [IBM 数据科学 II 笔记](docs/ibm-dtsci-2/README.md)
 +   [IBM 数据科学 III 笔记](docs/ibm-dtsci-3/README.md)
 +   [IBM 数据科学 IV 笔记](docs/ibm-dtsci-4/README.md)
