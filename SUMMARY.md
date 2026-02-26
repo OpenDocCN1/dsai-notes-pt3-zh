@@ -294,6 +294,7 @@
 +   [斯坦福 CS330 深度多任务与元学习笔记](docs/stf-cs330-metalrn/README.md)
 +   [斯坦福 CS336 从零构建大语言模型笔记](docs/stf-cs336-llm/README.md)
 +   [斯坦福 CS520 知识图谱课程笔记](docs/stf-cs520-kg/README.md)
++   [斯坦福 EE104 机器学习笔记](docs/stf-ee104-ml/README.md)
 +   [斯坦福 ENGR108 矩阵论与应用线性代数笔记](docs/stf-engr108-linalg/README.md)
 +   [斯坦福博弈论笔记](docs/stf-gmtry/README.md)
 +   [斯坦福统计学习导论笔记](docs/stf-isl/README.md)
