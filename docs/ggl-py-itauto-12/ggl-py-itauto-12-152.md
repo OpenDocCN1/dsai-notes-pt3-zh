@@ -1,4 +1,4 @@
-# 152：Bash脚本中的while循环 🌀
+#  152：Bash脚本中的while循环 🌀
 
 ![](img/4857aa4b27405d0e1d56f8922a2f6961_0.png)
 

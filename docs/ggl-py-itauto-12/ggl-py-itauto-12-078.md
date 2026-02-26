@@ -1,4 +1,4 @@
-# 078：在 Windows 上配置 Python 环境 🛠️
+#  078：在 Windows 上配置 Python 环境 🛠️
 
 ![](img/c678b81b5f6c691e834440a6a34b033e_1.png)
 

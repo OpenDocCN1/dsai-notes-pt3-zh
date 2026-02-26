@@ -1,4 +1,4 @@
-# 012：用Python作为计算器 🧮
+#  012：用Python作为计算器 🧮
 
 ![](img/0ee128f9bdb4138d7adf4c6de7eb78e1_0.png)
 

@@ -1,4 +1,4 @@
-# 008：Python与IT的相关性 🐍
+#  008：Python与IT的相关性 🐍
 
 ![](img/44360c901bc00f25790c5e61b04b7ef0_0.png)
 

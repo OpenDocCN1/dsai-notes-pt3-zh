@@ -1,4 +1,4 @@
-# 079：在macOS上配置Python环境（可选） 🍎
+#  079：在macOS上配置Python环境（可选） 🍎
 
 ![](img/ed8c7bad37ca0159c67b6cab86a0c1af_1.png)
 

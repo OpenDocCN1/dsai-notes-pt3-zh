@@ -1,4 +1,4 @@
-# 026：Python代码风格指南 🎨
+#  026：Python代码风格指南 🎨
 
 ![](img/7271da70a18ef1eb0c2b7943deecbc17_0.png)
 

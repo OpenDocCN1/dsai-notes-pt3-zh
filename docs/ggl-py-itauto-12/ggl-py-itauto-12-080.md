@@ -1,4 +1,4 @@
-# 080：在 Linux 上配置 Python 环境（可选） 🐧
+#  080：在 Linux 上配置 Python 环境（可选） 🐧
 
 ![](img/36e2a5cce5e653ae97ad0d3302da9c29_1.png)
 

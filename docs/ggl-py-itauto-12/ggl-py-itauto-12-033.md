@@ -1,4 +1,4 @@
-# 033：为什么我喜欢 Python 🐍
+#  033：为什么我喜欢 Python 🐍
 
 ![](img/25e7292afa422342ecd683156df34ebe_0.png)
 

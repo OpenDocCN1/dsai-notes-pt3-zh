@@ -1,4 +1,4 @@
-# 155：选择 Bash 还是 Python？🤔
+#  155：选择 Bash 还是 Python？🤔
 
 ![](img/bede2344d388e3d723afd83d3b921c9f_0.png)
 

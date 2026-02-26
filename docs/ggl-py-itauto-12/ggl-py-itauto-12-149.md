@@ -1,4 +1,4 @@
-# 149：Google IT Automation with Python 第75课 - 创建Bash脚本 🐚
+#  149：Google IT Automation with Python 第75课 - 创建Bash脚本 🐚
 
 ![](img/8fc7e118651985d8a2258d1be2ce635f_0.png)
 

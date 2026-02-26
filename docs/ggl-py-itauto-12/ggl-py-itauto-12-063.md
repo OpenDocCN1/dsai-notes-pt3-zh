@@ -1,4 +1,4 @@
-# 063：Python字典与列表对比指南 📚
+#  063：Python字典与列表对比指南 📚
 
 ![](img/db8e041edf2c60d6d81d9b3b63bc7ebb_0.png)
 

@@ -1,4 +1,4 @@
-# 041：Python中的for循环 🔄
+#  041：Python中的for循环 🔄
 
 ![](img/a55549544386b7dfc5e76aa4987b0172_0.png)
 

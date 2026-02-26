@@ -1,4 +1,4 @@
-# 153：Bash脚本中的for循环 🚀
+#  153：Bash脚本中的for循环 🚀
 
 ![](img/8b3dfec580d5fb8970b3bbc21174d49c_0.png)
 

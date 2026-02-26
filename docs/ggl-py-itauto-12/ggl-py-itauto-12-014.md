@@ -1,4 +1,4 @@
-# 014：🚀 使用命令行与IDLE编写Python脚本
+#  014：🚀 使用命令行与IDLE编写Python脚本
 
 ![](img/8f3fc136cba2f12ed176abe59c661234_0.png)
 

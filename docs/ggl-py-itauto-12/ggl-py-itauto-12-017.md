@@ -1,4 +1,4 @@
-# 017：使用 VS Code 进行 Python 开发 🛠️
+#  017：使用 VS Code 进行 Python 开发 🛠️
 
 ![](img/106171ebaf9a4db9b64a4044f016e905_0.png)
 

@@ -1,4 +1,4 @@
-# 145：基本 Linux 命令 🐧
+#  145：基本 Linux 命令 🐧
 
 ![](img/efe80589cd6ae6d1b221debe41142c97_0.png)
 

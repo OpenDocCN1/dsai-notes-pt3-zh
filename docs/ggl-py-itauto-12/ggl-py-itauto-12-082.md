@@ -1,4 +1,4 @@
-# 082：如何运行Python脚本 🚀
+#  082：如何运行Python脚本 🚀
 
 ![](img/eebd8dfeff567e125132d388d991a5e7_1.png)
 

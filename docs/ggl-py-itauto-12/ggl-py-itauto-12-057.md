@@ -1,4 +1,4 @@
-# 057：Python中的列表与元组 🧩
+#  057：Python中的列表与元组 🧩
 
 ![](img/f2cdf1573bd65793929e6cb01fae73b3_0.png)
 

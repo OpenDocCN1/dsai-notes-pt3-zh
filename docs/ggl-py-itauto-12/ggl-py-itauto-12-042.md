@@ -1,4 +1,4 @@
-# 042：更多for循环示例 🔄
+#  042：更多for循环示例 🔄
 
 ![](img/9dca8ab5bb347df94f2dd49d2bbf5aaf_0.png)
 

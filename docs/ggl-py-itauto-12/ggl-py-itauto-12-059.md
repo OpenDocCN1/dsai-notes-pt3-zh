@@ -1,4 +1,4 @@
-# 059：Python列表推导式 🧠
+#  059：Python列表推导式 🧠
 
 ![](img/b565ec776968fc3e7bc04545cb9fb786_0.png)
 

@@ -1,4 +1,4 @@
-# 049：Python基础数据结构介绍 🧱
+#  049：Python基础数据结构介绍 🧱
 
 ![](img/1e1fa522434c26a2cae1de46d1c147f9_1.png)
 

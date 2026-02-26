@@ -1,4 +1,4 @@
-# 050：Python字符串基础入门 🧵
+#  050：Python字符串基础入门 🧵
 
 ![](img/11f353bc99d0c5481c00e2adc2a760ef_0.png)
 

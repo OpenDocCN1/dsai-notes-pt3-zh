@@ -1,4 +1,4 @@
-# 044：Python for循环中的常见错误 🐍
+#  044：Python for循环中的常见错误 🐍
 
 ![](img/be99118bd83e6d7a58d7d53e81608c3b_0.png)
 

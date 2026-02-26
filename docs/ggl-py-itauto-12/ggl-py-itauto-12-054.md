@@ -1,4 +1,4 @@
-# 054：Python字符串格式化 📝
+#  054：Python字符串格式化 📝
 
 ![](img/ccc0d220c610ccbc7b5cb0edd1b0067f_0.png)
 
