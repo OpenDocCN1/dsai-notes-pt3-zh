@@ -158,7 +158,7 @@
 +   [fast.ai 数值线性代数讲义中文版 v2](docs/fastai-num-linalg-v2/README.md)
 +   [fast.ai v3 深度学习笔记](docs/fastai-v3-dl/README.md)
 +   [FreeCodeCamp 大语言模型训练营笔记](docs/fcc-llm-bc/README.md)
-+   [谷歌人工智能、机器学习、数据科学专项笔记](docs/ggl-ai-ml-ds-spec/README.md)
++   [谷歌数据分析 I 笔记](docs/ggl-dtanls-1/README.md)
 +   [唐宇迪商品检测课程笔记](docs/goods-detect-tangyudi/README.md)
 +   [GPUMODE CUDA 笔记](docs/gpu-mode-cuda/README.md)
 +   [哈佛 CS229r 大数据算法笔记](docs/hav-cs229r-bgdt-algo/README.md)
