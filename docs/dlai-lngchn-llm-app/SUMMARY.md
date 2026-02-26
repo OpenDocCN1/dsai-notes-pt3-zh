@@ -1,4 +1,4 @@
-+   [总结 🎓](README.md)
++   [DLAI Langchain 大语言模型应用笔记](README.md)
 +   [001：课程介绍 🚀](dlai-lngchn-llm-app-001.md)
 +   [002：核心构建模块 🧱](dlai-lngchn-llm-app-002.md)
 +   [003：加载与准备数据 📚](dlai-lngchn-llm-app-003.md)

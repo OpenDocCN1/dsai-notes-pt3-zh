@@ -1,4 +1,4 @@
-+   [README](README.md)
++   [智源大会 2024 会议笔记](README.md)
 +   [2024北京智源大会-AI系统---P1-论坛背景与嘉宾介绍-林咏华---智源社区---BV1DS411w7EG](2024北京智源大会-AI系统---P1-论坛背景与嘉宾介绍-林咏华---智源社区---BV1DS411w7EG_note.md)
 +   [2024北京智源大会-AI系统---P10-网络驱动的大规模AI训练--阿里云可预期网络HPN7---智源社区---BV1DS411w7EG](2024北京智源大会-AI系统---P10-网络驱动的大规模AI训练--阿里云可预期网络HPN7---智源社区---BV1DS411w7EG_note.md)
 +   [2024北京智源大会-AI系统---P2-Unlocking-Al-Potential-David-Edelsohn---智源社区---BV1DS411w7EG](2024北京智源大会-AI系统---P2-Unlocking-Al-Potential-David-Edelsohn---智源社区---BV1DS411w7EG_note.md)
