@@ -1,4 +1,4 @@
-+   [9.课程总结](README.md)
++   [DLAI Nvidia Nemo 笔记](README.md)
 +   [001：课程介绍 🚀](dlai-nvnemo-001.md)
 +   [002：课程概述与核心挑战 🎯](dlai-nvnemo-002.md)
 +   [003：创建你的第一个NAT工作流 🚀](dlai-nvnemo-003.md)

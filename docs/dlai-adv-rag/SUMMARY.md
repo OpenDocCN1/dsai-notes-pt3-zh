@@ -1,4 +1,4 @@
-+   [构建高级RAG应用 - 终篇与结论 🎯](README.md)
++   [DLAI 高级 RAG 笔记](README.md)
 +   [001：开篇与介绍 🎬](dlai-adv-rag-001.md)
 +   [002：构建高级RAG应用 🚀](dlai-adv-rag-002.md)
 +   [003：RAG指标三元组 (RAG Triad) 📊](dlai-adv-rag-003.md)

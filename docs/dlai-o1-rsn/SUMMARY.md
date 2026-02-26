@@ -1,4 +1,4 @@
-+   [结论](README.md)
++   [DLAI o1 推理笔记](README.md)
 +   [001：课程介绍 🧠](dlai-o1-rsn-001.md)
 +   [002：o1模型介绍 🧠](dlai-o1-rsn-002.md)
 +   [003：o1模型提示四原则 🧠](dlai-o1-rsn-003.md)

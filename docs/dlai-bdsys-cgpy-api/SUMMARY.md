@@ -1,4 +1,4 @@
-+   [课程总结与回顾 🎓](README.md)
++   [DLAI ChatGPT API 系统构建笔记](README.md)
 +   [001：课程概述](dlai-bdsys-cgpy-api-001.md)
 +   [002：大语言模型工作原理与API基础](dlai-bdsys-cgpy-api-002.md)
 +   [003：评估输入任务](dlai-bdsys-cgpy-api-003.md)

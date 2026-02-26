@@ -1,4 +1,4 @@
-+   [总结 🎯](README.md)
++   [DLAI 智能体语义搜索笔记](README.md)
 +   [001：课程概述 🚀](dlai-aiagt-semcch-001.md)
 +   [002：语义缓存概述 🧠](dlai-aiagt-semcch-002.md)
 +   [003：构建你的第一个语义缓存 🧠](dlai-aiagt-semcch-003.md)

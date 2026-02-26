@@ -1,4 +1,4 @@
-+   [总结](README.md)
++   [DLAI LLMOps 自动测试笔记](README.md)
 +   [001：课程介绍 🚀](dlai-llmops-autotst-001.md)
 +   [002：持续集成简介 🚀](dlai-llmops-autotst-002.md)
 +   [003：自动化评估概述 🧪](dlai-llmops-autotst-003.md)

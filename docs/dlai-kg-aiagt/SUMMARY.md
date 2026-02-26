@@ -1,4 +1,4 @@
-+   [课程总结 🎓](README.md)
++   [DLAI 知识图谱智能体笔记](README.md)
 +   [001：课程介绍 🧠](dlai-kg-aiagt-001.md)
 +   [002：知识图谱基础 🧠](dlai-kg-aiagt-002.md)
 +   [003：API知识图谱构建 🧱](dlai-kg-aiagt-003.md)

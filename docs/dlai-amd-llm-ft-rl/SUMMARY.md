@@ -1,4 +1,4 @@
-+   [7.基础设施-(第二部分)](README.md)
++   [DLAI 大模型微调和强化学习笔记](README.md)
 +   [001：课程概述与核心概念 🎯](dlai-amd-llm-ft-rl-001.md)
 +   [002：背景知识](dlai-amd-llm-ft-rl-002.md)
 +   [003：后训练（微调与强化学习）在LLM训练中的位置](dlai-amd-llm-ft-rl-003.md)

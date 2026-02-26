@@ -1,4 +1,4 @@
-+   [总结 🎉](README.md)
++   [DLAI 视觉模型提示词工程笔记](README.md)
 +   [001：课程介绍 🎯](dlai-vismdl-pmt-engi-001.md)
 +   [002：课程概述 🎯](dlai-vismdl-pmt-engi-002.md)
 +   [003：图像分割模型（SAM）入门教程 🖼️](dlai-vismdl-pmt-engi-003.md)

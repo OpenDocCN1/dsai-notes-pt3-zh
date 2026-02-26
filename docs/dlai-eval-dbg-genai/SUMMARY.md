@@ -1,4 +1,4 @@
-+   [06_结论](README.md)
++   [DLAI 生成式人工智能评估和调试笔记](README.md)
 +   [001：课程介绍 🎯](dlai-eval-dbg-genai-001.md)
 +   [002：01_Weights & Biases 简介 🚀](dlai-eval-dbg-genai-002.md)
 +   [003：02_训练笔记本的插装](dlai-eval-dbg-genai-003.md)

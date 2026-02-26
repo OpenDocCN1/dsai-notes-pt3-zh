@@ -1,4 +1,4 @@
-+   [总结](README.md)
++   [DLAI Langchain 长期记忆笔记](README.md)
 +   [001：构建具备长期记忆的自主智能体 🧠](dlai-lngchn-lntm-mem-001.md)
 +   [002：智能体记忆简介 🧠](dlai-lngchn-lntm-mem-002.md)
 +   [003：构建基础邮件助手](dlai-lngchn-lntm-mem-003.md)

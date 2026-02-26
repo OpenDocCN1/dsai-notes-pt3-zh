@@ -1,4 +1,4 @@
-+   [课程总结](README.md)
++   [DLAI Langchain 函数工具笔记](README.md)
 +   [001：课程介绍 🚀](dlai-lngchn-fntl-001.md)
 +   [002：OpenAI函数调用详解 🧠](dlai-lngchn-fntl-002.md)
 +   [003：LangChain表达式语言（LCEL）详解 🚀](dlai-lngchn-fntl-003.md)

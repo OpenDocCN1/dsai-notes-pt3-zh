@@ -1,4 +1,4 @@
-+   [总结 🎯](README.md)
++   [DLAI DSPy 笔记](README.md)
 +   [001：引言 🚀](dlai-dspy-001.md)
 +   [002：DSPy框架介绍 🚀](dlai-dspy-002.md)
 +   [003：签名与模块 🧩](dlai-dspy-003.md)

@@ -1,4 +1,4 @@
-+   [总结](README.md)
++   [DLAI 设备人工智能笔记](README.md)
 +   [001：课程概述 🚀](dlai-dvc-ai-001.md)
 +   [002：为何选择设备端AI？🤔](dlai-dvc-ai-002.md)
 +   [003：3.L2 在设备端部署分割模型 🚀](dlai-dvc-ai-003.md)

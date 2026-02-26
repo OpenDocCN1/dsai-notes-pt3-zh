@@ -1,4 +1,4 @@
-+   [总结 🎯](README.md)
++   [DLAI 大模型高效笔记](README.md)
 +   [001：引言 🎯](dlai-hieff-sve-llm-001.md)
 +   [002：文本生成 🧠](dlai-hieff-sve-llm-002.md)
 +   [003：L2-批处理 🚀](dlai-hieff-sve-llm-003.md)

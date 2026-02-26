@@ -1,4 +1,4 @@
-+   [8.课程总结 🎉](README.md)
++   [DLAI Haystack 笔记](README.md)
 +   [001：课程介绍 🚀](dlai-haystk-001.md)
 +   [002：Haystack核心构建模块 🧱](dlai-haystk-002.md)
 +   [003：构建自定义RAG管道 🛠️](dlai-haystk-003.md)

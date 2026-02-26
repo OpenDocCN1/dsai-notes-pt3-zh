@@ -1,4 +1,4 @@
-+   [总结与展望 🎉](README.md)
++   [DLAI ChatGPT 开发笔记](README.md)
 +   [001：课程介绍与核心概念 🎯](dlai-cgpt-dev-001.md)
 +   [002：提示工程核心原则与策略 🚀](dlai-cgpt-dev-002.md)
 +   [003：迭代式提示开发 🔄](dlai-cgpt-dev-003.md)

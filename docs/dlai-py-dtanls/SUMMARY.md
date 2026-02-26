@@ -1,4 +1,4 @@
-+   [Python数据分析（第3课）｜Python for Data Analytics](README.md)
++   [DLAI Python 数据分析笔记](README.md)
 +   [001：Python数据分析入门 🐍📊](dlai-py-dtanls-001.md)
 +   [002：生成式AI在本课程中的角色 🤖](dlai-py-dtanls-002.md)
 +   [003：Python数据分析基础 🐍](dlai-py-dtanls-003.md)

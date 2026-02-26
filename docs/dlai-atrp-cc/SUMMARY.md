@@ -1,4 +1,4 @@
-+   [总结与展望 🎯](README.md)
++   [DLAI ClaudeCode 笔记](README.md)
 +   [001：1.介绍](dlai-atrp-cc-001.md)
 +   [002：什么是 Claude Code](dlai-atrp-cc-002.md)
 +   [003：项目设置与代码库理解 🚀](dlai-atrp-cc-003.md)

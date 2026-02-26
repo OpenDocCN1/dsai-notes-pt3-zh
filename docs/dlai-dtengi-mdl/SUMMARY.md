@@ -1,4 +1,4 @@
-+   [从入门到进阶 🚀](README.md)
++   [DLAI 数据工程建模笔记](README.md)
 +   [001：数据工程（数据建模、转换和服务）第4课，完结｜课程概述与欢迎 🎉](dlai-dtengi-mdl-001.md)
 +   [002：数据建模概览 🗺️](dlai-dtengi-mdl-002.md)
 +   [003：概念性、逻辑性与物理性数据建模 📊](dlai-dtengi-mdl-003.md)

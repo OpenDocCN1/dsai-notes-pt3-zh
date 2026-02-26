@@ -1,4 +1,4 @@
-+   [总结与展望 🎯](README.md)
++   [DLAI AutoGen 智能体设计模式笔记](README.md)
 +   [001：课程介绍](dlai-autogen-aiagt-dsnptn-001.md)
 +   [002：多智能体对话与单口喜剧示例](dlai-autogen-aiagt-dsnptn-002.md)
 +   [003：顺序对话与客户引导](dlai-autogen-aiagt-dsnptn-003.md)

@@ -1,4 +1,4 @@
-+   [7. 总结 🎓](README.md)
++   [DLAI Langchain ChatGPT 数据笔记](README.md)
 +   [001：大语言模型微调之道 🚀](dlai-lngchn-dt-cgpt-001.md)
 +   [002：2-为什么要微调 🎯](dlai-lngchn-dt-cgpt-002.md)
 +   [003：3-微调在训练过程中的位置 🧠](dlai-lngchn-dt-cgpt-003.md)

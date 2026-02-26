@@ -1,4 +1,4 @@
-+   [AI与灾难管理 🆘 - 第3周及课程总结](README.md)
++   [DLAI 商品人工智能笔记](README.md)
 +   [001：欢迎来到“AI for Good”专业课程 🎉](dlai-ai4gd-001.md)
 +   [002：什么是“AI为善”？🤖](dlai-ai4gd-002.md)
 +   [003：吴恩达《AI for Good专业课程》P3 🎯](dlai-ai4gd-003.md)

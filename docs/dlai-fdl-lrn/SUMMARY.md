@@ -1,4 +1,4 @@
-+   [课程总结与展望 🎯](README.md)
++   [DLAI 联邦学习笔记](README.md)
 +   [001：课程介绍与动机 🎯](dlai-fdl-lrn-001.md)
 +   [002：为什么需要联邦学习 🧠](dlai-fdl-lrn-002.md)
 +   [003：联邦训练流程 🚀](dlai-fdl-lrn-003.md)

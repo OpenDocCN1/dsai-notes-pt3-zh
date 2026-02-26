@@ -1,4 +1,4 @@
-+   [数据分析基础 🎯](README.md)
++   [DLAI 数据分析基础笔记](README.md)
 +   [001：欢迎学习数据分析 📊](dlai-dtanls-bsc-001.md)
 +   [002：生成式AI在数据分析中的应用 🚀](dlai-dtanls-bsc-002.md)
 +   [003：数据分析基础 - 模块1 简介 🧭](dlai-dtanls-bsc-003.md)

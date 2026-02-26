@@ -1,4 +1,4 @@
-+   [总结 🎉](README.md)
++   [DLAI 知识图谱 RAG 笔记](README.md)
 +   [001：引言 🚀](dlai-kgrag-001.md)
 +   [002：知识图谱基础 🔍](dlai-kgrag-002.md)
 +   [003：使用Cypher查询知识图谱 🧠](dlai-kgrag-003.md)

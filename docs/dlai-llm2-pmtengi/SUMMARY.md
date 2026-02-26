@@ -1,4 +1,4 @@
-+   [课程总结 🎉](README.md)
++   [DLAI Llama2 提示词工程笔记](README.md)
 +   [001：课程介绍 🚀](dlai-llm2-pmtengi-001.md)
 +   [002：Llama模型概述 🦙](dlai-llm2-pmtengi-002.md)
 +   [003：开始使用Llama2模型 🚀](dlai-llm2-pmtengi-003.md)

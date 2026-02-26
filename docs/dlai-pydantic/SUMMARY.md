@@ -1,4 +1,4 @@
-+   [6.课程总结 🎉](README.md)
++   [DLAI Pydantic 笔记](README.md)
 +   [001：欢迎来到LLM工作流的Pydantic课程 🎉](dlai-pydantic-001.md)
 +   [002：课程介绍 🎯](dlai-pydantic-002.md)
 +   [003：Pydantic 模型基础 🧱](dlai-pydantic-003.md)

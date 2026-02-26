@@ -1,4 +1,4 @@
-+   [总结与展望 🎉](README.md)
++   [DLAI 大模型格式化输出笔记](README.md)
 +   [001：课程介绍](dlai-llm-fmt-opt-001.md)
 +   [002：结构化输出生成简介 🧠](dlai-llm-fmt-opt-002.md)
 +   [003：如何使用结构化输出](dlai-llm-fmt-opt-003.md)

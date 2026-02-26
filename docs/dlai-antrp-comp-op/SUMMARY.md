@@ -1,4 +1,4 @@
-+   [8. 结论 🎯](README.md)
++   [DLAI Anthropic 计算机操作笔记](README.md)
 +   [001：课程介绍](dlai-antrp-comp-op-001.md)
 +   [002：课程概述 🚀](dlai-antrp-comp-op-002.md)
 +   [003：API基础](dlai-antrp-comp-op-003.md)

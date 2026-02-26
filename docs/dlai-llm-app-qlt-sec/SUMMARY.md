@@ -1,4 +1,4 @@
-+   [06_结论](README.md)
++   [DLAI 大模型应用质量与安全笔记](README.md)
 +   [001：课程介绍与概述](dlai-llm-app-qlt-sec-001.md)
 +   [002：01_概述 🎯](dlai-llm-app-qlt-sec-002.md)
 +   [003：幻觉检测 🧠](dlai-llm-app-qlt-sec-003.md)

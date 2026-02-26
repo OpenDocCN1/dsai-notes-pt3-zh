@@ -1,4 +1,4 @@
-+   [总结 🎯](README.md)
++   [DLAI 智能体评估笔记](README.md)
 +   [001：课程概述 🎯](dlai-eval-ai-agt-001.md)
 +   [002：大语言模型时代的评估 🧠](dlai-eval-ai-agt-002.md)
 +   [003：分解智能体 🧠](dlai-eval-ai-agt-003.md)

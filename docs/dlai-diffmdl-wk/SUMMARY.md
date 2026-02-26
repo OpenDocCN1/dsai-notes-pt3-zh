@@ -1,4 +1,4 @@
-+   [课程总结 🎉](README.md)
++   [DLAI 扩散模型工作原理笔记](README.md)
 +   [001：课程介绍 🎬](dlai-diffmdl-wk-001.md)
 +   [002：扩散模型基础直觉](dlai-diffmdl-wk-002.md)
 +   [003：采样过程详解 🧪](dlai-diffmdl-wk-003.md)

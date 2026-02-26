@@ -1,4 +1,4 @@
-+   [课程总结与后续资源 🎓](README.md)
++   [DLAI 大模型语义搜索笔记](README.md)
 +   [001：课程介绍 🎯](dlai-llm-semsch-001.md)
 +   [002：关键词搜索](dlai-llm-semsch-002.md)
 +   [003：词嵌入（Embeddings）入门](dlai-llm-semsch-003.md)

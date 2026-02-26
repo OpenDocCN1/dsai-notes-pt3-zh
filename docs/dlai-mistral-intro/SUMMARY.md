@@ -1,4 +1,4 @@
-+   [总结 🎯](README.md)
++   [DLAI Mistral 入门笔记](README.md)
 +   [001：引言 🚀](dlai-mistral-intro-001.md)
 +   [002：模型概览 🧠](dlai-mistral-intro-002.md)
 +   [003：提示工程基础 🚀](dlai-mistral-intro-003.md)

@@ -1,4 +1,4 @@
-+   [模型检查与调试 🔍](README.md)
++   [DLAI PyTorch 深度学习笔记](README.md)
 +   [001：欢迎与课程概述](dlai-ptdl-001.md)
 +   [002：为什么选择PyTorch 🚀](dlai-ptdl-002.md)
 +   [003：神经网络的构建模块 🧱](dlai-ptdl-003.md)

@@ -1,4 +1,4 @@
-+   [结论 🎯](README.md)
++   [DLAI 碳意识笔记](README.md)
 +   [001：课程介绍 🌱](dlai-cbn-awr-001.md)
 +   [002：机器学习的碳足迹 🌱](dlai-cbn-awr-002.md)
 +   [003：探索电网碳强度 🌍](dlai-cbn-awr-003.md)

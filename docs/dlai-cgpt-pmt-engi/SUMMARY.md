@@ -1,4 +1,4 @@
-+   [总结与展望](README.md)
++   [DLAI ChatGPT 提示词工程笔记](README.md)
 +   [001：第1集 引言 🎬](dlai-cgpt-pmt-engi-001.md)
 +   [002：第2集 📝 提示指南](dlai-cgpt-pmt-engi-002.md)
 +   [003：迭代开发提示词 🚀](dlai-cgpt-pmt-engi-003.md)

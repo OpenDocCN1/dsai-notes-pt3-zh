@@ -1,4 +1,4 @@
-+   [总结 🎯](README.md)
++   [DLAI Gemini 多模态模型提示词笔记](README.md)
 +   [001：课程介绍与概览 🚀](dlai-gmn-mtmdl-pmt-001.md)
 +   [002：Gemini模型家族概览 🧠](dlai-gmn-mtmdl-pmt-002.md)
 +   [003：提示与参数控制 🎛️](dlai-gmn-mtmdl-pmt-003.md)

@@ -1,4 +1,4 @@
-+   [SC-GCP_Conclusion](README.md)
++   [DLAI VertexAI 笔记](README.md)
 +   [001：课程介绍与概述 🚀](dlai-vtx-ai-001.md)
 +   [002：动手实践文本嵌入](dlai-vtx-ai-002.md)
 +   [003：理解文本嵌入的工作原理 🧠](dlai-vtx-ai-003.md)

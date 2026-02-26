@@ -1,4 +1,4 @@
-+   [【LangChain大模型应用开发】课程总结 🎓](README.md)
++   [DLAI Langchian 大模型应用开发笔记](README.md)
 +   [001：LangChain 简介 🚀](dlai-lngchn-llm-appdev-001.md)
 +   [002：模型、提示与输出解析](dlai-lngchn-llm-appdev-002.md)
 +   [003：记忆 🧠](dlai-lngchn-llm-appdev-003.md)

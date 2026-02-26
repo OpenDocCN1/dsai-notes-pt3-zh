@@ -1,4 +1,4 @@
-+   [如何设置本地Airflow环境 🛠️](README.md)
++   [DLAI 生成式人工智能工作流笔记](README.md)
 +   [001：课程介绍 🎬](dlai-genai-wkfl-001.md)
 +   [002：从笔记本到流水线 🚀](dlai-genai-wkfl-002.md)
 +   [003：构建你的 RAG 原型应用 🧪](dlai-genai-wkfl-003.md)

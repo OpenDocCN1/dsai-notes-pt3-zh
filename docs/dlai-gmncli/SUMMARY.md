@@ -1,4 +1,4 @@
-+   [10. 课程总结 🎓](README.md)
++   [DLAI GeminiCLI 笔记](README.md)
 +   [001：课程介绍 🚀](dlai-gmncli-001.md)
 +   [002：什么是Gemini CLI 🚀](dlai-gmncli-002.md)
 +   [003：3. 初识 Gemini CLI 🚀](dlai-gmncli-003.md)

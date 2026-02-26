@@ -1,4 +1,4 @@
-+   [课程总结 🎓](README.md)
++   [DLAI 大模型操作系统笔记](README.md)
 +   [001：课程介绍 🧠](dlai-llm-os-001.md)
 +   [002：从零实现自编辑记忆](dlai-llm-os-002.md)
 +   [003：MemGPT 🧠](dlai-llm-os-003.md)

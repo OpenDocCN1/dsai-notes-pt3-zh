@@ -1,4 +1,4 @@
-+   [课程总结 🎓](README.md)
++   [DLAI 智能体笔记](README.md)
 +   [001：欢迎与课程概述 🚀](dlai-aiagt-001.md)
 +   [002：什么是代理式AI 🤖](dlai-aiagt-002.md)
 +   [003：模块1-5｜代理的自主程度 🎯](dlai-aiagt-003.md)

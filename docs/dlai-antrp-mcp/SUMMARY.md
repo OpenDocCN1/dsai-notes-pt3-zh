@@ -1,4 +1,4 @@
-+   [总结与展望 🎯](README.md)
++   [DLAI Anthropic MCP 笔记](README.md)
 +   [001：1.课程介绍](dlai-antrp-mcp-001.md)
 +   [002：为什么需要MCP？ 🤔](dlai-antrp-mcp-002.md)
 +   [003：MCP架构详解 🏗️](dlai-antrp-mcp-003.md)

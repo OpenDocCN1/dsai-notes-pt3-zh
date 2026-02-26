@@ -1,4 +1,4 @@
-+   [HuggingFace总结与展望 🚀](README.md)
++   [DLAI Gradio 笔记](README.md)
 +   [001：课程介绍与Gradio概述 🚀](dlai-gradio-001.md)
 +   [002：构建两个NLP应用](dlai-gradio-002.md)
 +   [003：构建图像描述应用 📸](dlai-gradio-003.md)

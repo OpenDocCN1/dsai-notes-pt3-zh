@@ -1,4 +1,4 @@
-+   [总结 🎯](README.md)
++   [DLAI 安全人工智能笔记](README.md)
 +   [001：课程介绍 🛡️](dlai-gdrls-sfai-001.md)
 +   [002：RAG应用的常见故障模式 🍕](dlai-gdrls-sfai-002.md)
 +   [003：什么是Guardrails？🛡️](dlai-gdrls-sfai-003.md)

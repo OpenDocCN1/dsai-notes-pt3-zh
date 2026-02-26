@@ -1,4 +1,4 @@
-+   [总结 🎯](README.md)
++   [DLAI 大模型微调笔记](README.md)
 +   [001：介绍 🧠](dlai-llm-ft-001.md)
 +   [002：为什么要微调？ 🤔](dlai-llm-ft-002.md)
 +   [003：微调在训练过程中的位置 📍](dlai-llm-ft-003.md)

@@ -1,4 +1,4 @@
-+   [总结 🎉](README.md)
++   [DLAI 大模型函数调用与结构化数据提取笔记](README.md)
 +   [001：函数调用与结构化数据提取简介 🚀](dlai-llm-fncl-strc-dt-ext-001.md)
 +   [002：函数调用入门](dlai-llm-fncl-strc-dt-ext-002.md)
 +   [003：3.函数调用](dlai-llm-fncl-strc-dt-ext-003.md)

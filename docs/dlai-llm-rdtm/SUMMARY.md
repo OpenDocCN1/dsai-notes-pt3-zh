@@ -1,4 +1,4 @@
-+   [总结与后续步骤 🎯](README.md)
++   [DLAI 大模型红队笔记](README.md)
 +   [001：课程介绍 🚀](dlai-llm-rdtm-001.md)
 +   [002：LLM应用漏洞概述 🛡️](dlai-llm-rdtm-002.md)
 +   [003：3.L2_红队测试LLMs 🛡️](dlai-llm-rdtm-003.md)

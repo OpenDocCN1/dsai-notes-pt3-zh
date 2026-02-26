@@ -1,4 +1,4 @@
-+   [总结 🎯](README.md)
++   [DLAI RLHF 笔记](README.md)
 +   [001：课程介绍](dlai-rlhf-001.md)
 +   [002：RLHF工作原理概述 🧠](dlai-rlhf-002.md)
 +   [003：RL训练数据集准备 📊](dlai-rlhf-003.md)
