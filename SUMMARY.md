@@ -288,6 +288,7 @@
 +   [斯坦福 CS234 强化学习笔记](docs/stf-cs234-rl/README.md)
 +   [斯坦福 cs234 强化学习中文讲义](docs/stf-cs234-rl-notes/README.md)
 +   [斯坦福 CS236 深度生成模型笔记](docs/stf-cs236-genai/README.md)
++   [斯坦福 CS246 大数据挖掘笔记](docs/stf-cs246-dtmn/README.md)
 +   [斯坦福 CS25 Transformer 原理笔记](docs/stf-cs25-tfm/README.md)
 +   [斯坦福大学 CS323 人工智能觉醒笔记](docs/stf-cs323-ai-awkn/README.md)
 +   [斯坦福 CS329H 基于人类偏好的机器学习笔记](docs/stf-cs329h-rlhf/README.md)
