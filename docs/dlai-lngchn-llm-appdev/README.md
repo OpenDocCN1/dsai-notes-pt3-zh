@@ -1,1 +1,1 @@
-# 【LangChain大模型应用开发】课程总结 🎓
+# DLAI Langchian 大模型应用开发笔记
