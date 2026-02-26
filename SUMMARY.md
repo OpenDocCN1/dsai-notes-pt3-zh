@@ -167,6 +167,7 @@
 +   [谷歌高级数据分析 V 笔记](docs/ggl-adv-dtanls-5/README.md)
 +   [谷歌高级数据分析 VI 笔记](docs/ggl-adv-dtanls-6/README.md)
 +   [谷歌高级数据分析 VII 笔记](docs/ggl-adv-dtanls-7/README.md)
++   [谷歌人工智能基础知识笔记](docs/ggl-ai-fund/README.md)
 +   [谷歌数据分析 I 笔记](docs/ggl-dtanls-1/README.md)
 +   [谷歌数据分析 II 笔记](docs/ggl-dtanls-2/README.md)
 +   [谷歌数据分析 III 笔记](docs/ggl-dtanls-3/README.md)
