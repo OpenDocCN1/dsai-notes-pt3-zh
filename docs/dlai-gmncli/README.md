@@ -1,1 +1,1 @@
-# 10. 课程总结 🎓
+# DLAI GeminiCLI 笔记
