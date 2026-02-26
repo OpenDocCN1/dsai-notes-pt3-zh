@@ -174,6 +174,8 @@
 +   [IBM 数据工程 II 笔记](docs/ibm-dtengi-2/README.md)
 +   [IBM 数据工程 III 笔记](docs/ibm-dtengi-3/README.md)
 +   [IBM 数据工程 IV 笔记](docs/ibm-dtengi-4/README.md)
++   [IBM 数据工程 V 笔记](docs/ibm-dtengi-5/README.md)
++   [IBM 数据工程 VI 笔记](docs/ibm-dtengi-6/README.md)
 +   [IBM 生成式人工智能基础笔记](docs/ibm-genai-bsc/README.md)
 +   [IBM 生成式人工智能工程 Flask 笔记](docs/ibm-genai-engi-flask/README.md)
 +   [IBM 生成式人工智能工程入门笔记](docs/ibm-genai-engi-intro/README.md)
