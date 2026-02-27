@@ -240,6 +240,7 @@
 +   [MIT 18.06 线性代数笔记](docs/mit-18.06-linalg-notes/README.md)
 +   [应用微积分（MIT 18.013A）](docs/mit-18013a-adv-calc/README.md)
 +   [MIT 18.03 面向初学者的微积分](docs/mit-1803-calc4b/README.md)
++   [MIT 21M.383 计算音乐学笔记](docs/mit-21m383-comp-msc/README.md)
 +   [MIT 6.0001：Python 计算和编程入门第三版](docs/mit-60001-intr-comp-prog-py/README.md)
 +   [MIT 6.0001 Python 入门笔记](docs/mit-60001-python/README.md)
 +   [MIT 6.034 人工智能笔记](docs/mit-6034-ai/README.md)
