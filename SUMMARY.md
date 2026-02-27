@@ -286,6 +286,7 @@
 +   [斯坦福 CS229/M 机器学习 2024 笔记](docs/stf-cs229-ml-2024/README.md)
 +   [斯坦福 CS230 深度学习笔记](docs/stf-cs230-dl/README.md)
 +   [斯坦福 CS231n 卷积神经网络中文讲义](docs/stf-cs231n-cv/README.md)
++   [斯坦福 CS231n 计算机视觉 2025 笔记](docs/stf-cs231n-cv-2025/README.md)
 +   [斯坦福 CS231 机器视觉进阶课程笔记](docs/stf-cs231n-cv-plus/README.md)
 +   [斯坦福 CS234 强化学习笔记](docs/stf-cs234-rl/README.md)
 +   [斯坦福 cs234 强化学习中文讲义](docs/stf-cs234-rl-notes/README.md)
