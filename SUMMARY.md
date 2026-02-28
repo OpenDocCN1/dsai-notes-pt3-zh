@@ -152,6 +152,7 @@
 +   [杜克大学本地大模型 Llama 笔记](docs/duke-lcl-llm-llama/README.md)
 +   [杜克大学大规模数据科学笔记](docs/duke-lgscl-ds/README.md)
 +   [杜克大学大语言模型实践笔记](docs/duke-llm-prac/README.md)
++   [杜克大学机器学习笔记](docs/duke-ml/README.md)
 +   [杜克大学 MLOps 笔记](docs/duke-mlops/README.md)
 +   [杜克大学 Python 实践笔记](docs/duke-prac-py/README.md)
 +   [杜克大学 Python、Bash、SQL 专项笔记](docs/duke-py-bash-sql/README.md)
