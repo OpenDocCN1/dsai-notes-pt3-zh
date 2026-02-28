@@ -81,7 +81,7 @@
 +   [DLAI HuggingFace 开源模型笔记](docs/dlai-hf-osmdl/README.md)
 +   [DLAI 大模型高效笔记](docs/dlai-hieff-sve-llm/README.md)
 +   [DLAI Jamba 笔记](docs/dlai-jamba/README.md)
-+   [探索股票市场数据](docs/dlai-jptai/README.md)
++   [DLAI JupyterAI 笔记](docs/dlai-jptai/README.md)
 +   [DLAI 知识图谱智能体笔记](docs/dlai-kg-aiagt/README.md)
 +   [DLAI Kaggle 和 Gemini 笔记](docs/dlai-kgl-gmn/README.md)
 +   [DLAI 知识图谱 RAG 笔记](docs/dlai-kgrag/README.md)
