@@ -1,4 +1,4 @@
-+   [杜克大学 R 数据分析笔记](README.md)
++   [杜克大学商业分析笔记](README.md)
 +   [001：关于本专业课程 🚀](duke-biz-anls-001.md)
 +   [002：课程引言 🎯](duke-biz-anls-002.md)
 +   [003：指标如何帮助我们提出正确问题 📊](duke-biz-anls-003.md)
