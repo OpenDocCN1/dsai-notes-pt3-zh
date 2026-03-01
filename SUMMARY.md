@@ -241,6 +241,7 @@
 +   [JHU 数据科学与高级统计学笔记](docs/jhu-ds-adv-stat/README.md)
 +   [JHU  R 数据科学笔记](docs/jhu-ds-r/README.md)
 +   [JHU 数据科学统计机器学习笔记](docs/jhu-ds-stat-ml/README.md)
++   [JHU 数据科学与时间决策笔记](docs/jhu-ds-tm-dsc/README.md)
 +   [JHU Hadoop 笔记](docs/jhu-hdp/README.md)
 +   [JHU 大规模数据库笔记](docs/jhu-lgscl-db/README.md)
 +   [JHU 神经网络基础笔记](docs/jhu-nn-bsc/README.md)
