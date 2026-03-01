@@ -1,4 +1,4 @@
-# 课程名称：Excel商业分析｜Business Analytics with Excel： Elementary to Advanced - P5：BN书店案例
+# 005：BN书店案例
 
 ## 📚 概述
 

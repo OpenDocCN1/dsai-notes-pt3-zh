@@ -1,4 +1,4 @@
-# 课程名称：Excel商业分析｜Business Analytics with Excel： Elementary to Advanced
+# 011： Elementary to Advanced
 ## 课程编号：P11 - 公交问题 🚌
 
 在本节课中，我们将学习如何运用线性规划解决一个复杂的实际问题——公交问题。我们将通过约翰霍普金斯大学在巴尔的摩市设立三所特许学校的案例，学习如何建模、设置变量、定义约束并最终使用Excel Solver找到最优解。

@@ -1,4 +1,4 @@
-# 课程名称：Excel商业分析｜Business Analytics with Excel： Elementary to Advanced
+# 007： Elementary to Advanced
 ## 课程编号：P7 - 净现值示例：地鼠制药 📊
 
 在本节课中，我们将学习如何使用Excel的NPV（净现值）函数，并基于NPV计算来决定一个产品是否值得投资。

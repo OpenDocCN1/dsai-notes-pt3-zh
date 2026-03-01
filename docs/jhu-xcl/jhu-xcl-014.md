@@ -1,4 +1,4 @@
-# 课程名称：Excel商业分析｜Business Analytics with Excel： Elementary to Advanced
+# 014： Elementary to Advanced
 ## 课程编号：P14
 ### 章节标题：🚀 新员工分配问题
 

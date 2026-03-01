@@ -1,4 +1,4 @@
-# 课程名称：Excel商业分析｜Business Analytics with Excel： Elementary to Advanced
+# 003： Elementary to Advanced
 ## 课程编号：P3-2 木工书架公司 📊
 
 在本节课中，我们将学习如何为一家名为“木工书架公司”的企业建立财务模型。我们将重点掌握Excel中的绝对引用技巧，并学习如何根据成本增长率创建成本预测表和图表。

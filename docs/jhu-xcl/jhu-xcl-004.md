@@ -1,4 +1,4 @@
-# 课程名称：Excel商业分析｜Business Analytics with Excel： Elementary to Advanced
+# 004： Elementary to Advanced
 ## 课程编号：P4 - 优质毛衣公司案例建模 🧮
 
 在本节课中，我们将学习如何为“优质毛衣公司”建立一个财务模型。我们将使用Excel来模拟公司的成本和收入，并学习如何使用**数据表**和**单变量求解**这两个强大的工具来分析关键业务问题，例如盈亏平衡点。

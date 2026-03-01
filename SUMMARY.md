@@ -243,6 +243,7 @@
 +   [约翰霍普金斯神经网络基础笔记](docs/jhu-nn-bsc/README.md)
 +   [JHU R 数据可视化笔记](docs/jhu-r-dtviz/README.md)
 +   [JHU R 编程笔记](docs/jhu-r-prog/README.md)
++   [JHU Excel 笔记](docs/jhu-xcl/README.md)
 +   [七月在线公开课笔记](docs/julyedu/README.md)
 +   [KAIST CS492C/D 扩散模型笔记](docs/kaist-cs492cd-diffmdl/README.md)
 +   [科罗拉多应用深度学习笔记](docs/klld-appdl/README.md)
