@@ -238,6 +238,7 @@
 +   [JHU 数据科学 VII 笔记](docs/jhu-ds-7/README.md)
 +   [JHU 数据科学 VIII 笔记](docs/jhu-ds-8/README.md)
 +   [JHU 数据科学 IX 笔记](docs/jhu-ds-9/README.md)
++   [JHU 数据科学与高级统计学笔记](docs/jhu-ds-adv-stat/README.md)
 +   [JHU  R 数据科学笔记](docs/jhu-ds-r/README.md)
 +   [JHU 数据科学统计机器学习笔记](docs/jhu-ds-stat-ml/README.md)
 +   [JHU Hadoop 笔记](docs/jhu-hdp/README.md)
