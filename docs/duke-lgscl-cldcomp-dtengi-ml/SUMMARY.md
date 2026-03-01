@@ -1,4 +1,4 @@
-+   [杜克大学大规模云计算笔记](README.md)
++   [杜克大学大规模云计算、数据工程与机器学习笔记](README.md)
 +   [001：讲师介绍](duke-cldcomp-001.md)
 +   [002：课程介绍 🎯](duke-cldcomp-002.md)
 +   [003：实验环境配置 🛠️](duke-cldcomp-003.md)
