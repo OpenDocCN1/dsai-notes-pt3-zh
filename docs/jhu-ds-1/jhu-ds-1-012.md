@@ -1,4 +1,4 @@
-# 课程1：《数据科学家工具》｜P12：GitHub与Git入门教程 🚀
+#  012：GitHub与Git入门教程 🚀
 
 在本节课中，我们将学习如何注册GitHub账户、熟悉GitHub网站的基本功能、安装并配置Git。这些步骤是为后续将GitHub和Git与RStudio链接所做的必要准备。
 
