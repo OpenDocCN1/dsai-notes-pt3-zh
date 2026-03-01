@@ -1,0 +1,407 @@
+# 041：日期与时间 📅⏰
+
+![](img/462a3a46cf76a9da15cafbb4c33e42db_0.png)
+
+![](img/462a3a46cf76a9da15cafbb4c33e42db_2.png)
+
+![](img/462a3a46cf76a9da15cafbb4c33e42db_3.png)
+
+![](img/462a3a46cf76a9da15cafbb4c33e42db_4.png)
+
+在本节课中，我们将学习R语言中日期和时间的表示与处理方法。这是一个特殊且重要的主题，R有专门的类来处理它们，并能支持算术运算和数据分析。
+
+## 概述：R中的日期与时间类
+
+![](img/462a3a46cf76a9da15cafbb4c33e42db_6.png)
+
+![](img/462a3a46cf76a9da15cafbb4c33e42db_7.png)
+
+![](img/462a3a46cf76a9da15cafbb4c33e42db_8.png)
+
+![](img/462a3a46cf76a9da15cafbb4c33e42db_9.png)
+
+![](img/462a3a46cf76a9da15cafbb4c33e42db_10.png)
+
+![](img/462a3a46cf76a9da15cafbb4c33e42db_11.png)
+
+R使用特殊的数据类来表示日期和时间。这与我们之前学过的列表、字符向量、数值向量等数据类型类似，是另一种数据类别。
+
+![](img/462a3a46cf76a9da15cafbb4c33e42db_12.png)
+
+![](img/462a3a46cf76a9da15cafbb4c33e42db_13.png)
+
+日期由 **`Date`** 类表示。时间则由两个独立的类表示：**`POSIXct`** 和 **`POSIXlt`**。
+
+*   **`Date`** 类：仅表示日期（年、月、日），不包含具体时间。可以将其理解为“年月日”格式。
+*   **`POSIXct`** 和 **`POSIXlt`** 类：用于表示日期和时间。
+
+![](img/462a3a46cf76a9da15cafbb4c33e42db_15.png)
+
+![](img/462a3a46cf76a9da15cafbb4c33e42db_16.png)
+
+![](img/462a3a46cf76a9da15cafbb4c33e42db_17.png)
+
+![](img/462a3a46cf76a9da15cafbb4c33e42db_18.png)
+
+![](img/462a3a46cf76a9da15cafbb4c33e42db_19.png)
+
+![](img/462a3a46cf76a9da15cafbb4c33e42db_20.png)
+
+## 日期（Date类）的表示与转换
+
+![](img/462a3a46cf76a9da15cafbb4c33e42db_21.png)
+
+![](img/462a3a46cf76a9da15cafbb4c33e42db_22.png)
+
+![](img/462a3a46cf76a9da15cafbb4c33e42db_23.png)
+
+![](img/462a3a46cf76a9da15cafbb4c33e42db_24.png)
+
+在R内部，日期存储为自 **1970年1月1日** 以来的天数。时间则存储为自 **1970年1月1日** 以来的秒数。了解这些底层细节有助于理解计算原理，但在日常使用中并非必需。
+
+![](img/462a3a46cf76a9da15cafbb4c33e42db_26.png)
+
+将字符转换为日期最常用的函数是 **`as.Date()`**。
+
+```r
+# 将字符转换为日期
+x <- as.Date("1970-01-01")
+x
+```
+
+![](img/462a3a46cf76a9da15cafbb4c33e42db_28.png)
+
+![](img/462a3a46cf76a9da15cafbb4c33e42db_29.png)
+
+![](img/462a3a46cf76a9da15cafbb4c33e42db_30.png)
+
+![](img/462a3a46cf76a9da15cafbb4c33e42db_31.png)
+
+![](img/462a3a46cf76a9da15cafbb4c33e42db_32.png)
+
+![](img/462a3a46cf76a9da15cafbb4c33e42db_33.png)
+
+![](img/462a3a46cf76a9da15cafbb4c33e42db_34.png)
+
+打印`x`时，它会显示为类似“1970-01-01”的字符串，但这只是特殊的打印方式，其本质是`Date`类对象。
+
+![](img/462a3a46cf76a9da15cafbb4c33e42db_35.png)
+
+![](img/462a3a46cf76a9da15cafbb4c33e42db_36.png)
+
+```r
+# 查看对象的内部存储形式
+unclass(x)
+# 输出为 0，因为1970-01-01是基准日
+```
+
+![](img/462a3a46cf76a9da15cafbb4c33e42db_38.png)
+
+![](img/462a3a46cf76a9da15cafbb4c33e42db_39.png)
+
+![](img/462a3a46cf76a9da15cafbb4c33e42db_40.png)
+
+![](img/462a3a46cf76a9da15cafbb4c33e42db_41.png)
+
+如果日期是1970-01-02，`unclass()`会得到1，表示基准日后一天。1970年之前的日期则以负数表示。
+
+![](img/462a3a46cf76a9da15cafbb4c33e42db_42.png)
+
+## 时间（POSIXct与POSIXlt类）
+
+时间有两种表示类型：
+*   **`POSIXct`**：在内部存储为一个很大的整数（自1970-01-01起的秒数）。它非常实用，例如在数据框中存储时间，因为它本质上是一个大整数向量。
+*   **`POSIXlt`**：在内部存储为一个列表。它包含关于时间的更多有用信息，例如星期几、一年中的第几天、月份等。
+
+![](img/462a3a46cf76a9da15cafbb4c33e42db_44.png)
+
+![](img/462a3a46cf76a9da15cafbb4c33e42db_45.png)
+
+![](img/462a3a46cf76a9da15cafbb4c33e42db_46.png)
+
+R提供了一些通用函数，可以应用于`Date`、`POSIXct`和`POSIXlt`对象：
+
+![](img/462a3a46cf76a9da15cafbb4c33e42db_47.png)
+
+![](img/462a3a46cf76a9da15cafbb4c33e42db_48.png)
+
+![](img/462a3a46cf76a9da15cafbb4c33e42db_49.png)
+
+![](img/462a3a46cf76a9da15cafbb4c33e42db_50.png)
+
+![](img/462a3a46cf76a9da15cafbb4c33e42db_51.png)
+
+![](img/462a3a46cf76a9da15cafbb4c33e42db_52.png)
+
+![](img/462a3a46cf76a9da15cafbb4c33e42db_53.png)
+
+以下是几个常用函数：
+*   `weekdays()`：返回日期是星期几。
+*   `months()`：返回日期所在的月份。
+*   `quarters()`：返回日期所在的季度（如“Q1”代表1-3月）。
+
+![](img/462a3a46cf76a9da15cafbb4c33e42db_54.png)
+
+![](img/462a3a46cf76a9da15cafbb4c33e42db_55.png)
+
+## 时间类的操作与转换
+
+![](img/462a3a46cf76a9da15cafbb4c33e42db_57.png)
+
+![](img/462a3a46cf76a9da15cafbb4c33e42db_58.png)
+
+![](img/462a3a46cf76a9da15cafbb4c33e42db_59.png)
+
+![](img/462a3a46cf76a9da15cafbb4c33e42db_60.png)
+
+![](img/462a3a46cf76a9da15cafbb4c33e42db_61.png)
+
+你可以使用`as.POSIXlt()`或`as.POSIXct()`函数在`POSIXlt`和`POSIXct`类型之间进行转换。
+
+![](img/462a3a46cf76a9da15cafbb4c33e42db_63.png)
+
+`Sys.time()`函数可以获取系统当前时间。
+
+![](img/462a3a46cf76a9da15cafbb4c33e42db_65.png)
+
+![](img/462a3a46cf76a9da15cafbb4c33e42db_66.png)
+
+![](img/462a3a46cf76a9da15cafbb4c33e42db_67.png)
+
+![](img/462a3a46cf76a9da15cafbb4c33e42db_69.png)
+
+```r
+# 获取当前系统时间（默认为POSIXct格式）
+t <- Sys.time()
+t
+# 输出格式类似 "2023-10-27 14:30:15 EST"
+```
+
+![](img/462a3a46cf76a9da15cafbb4c33e42db_71.png)
+
+![](img/462a3a46cf76a9da15cafbb4c33e42db_72.png)
+
+你可以将其转换为`POSIXlt`格式，它是一个列表，包含多个时间组件。
+
+![](img/462a3a46cf76a9da15cafbb4c33e42db_74.png)
+
+![](img/462a3a46cf76a9da15cafbb4c33e42db_75.png)
+
+![](img/462a3a46cf76a9da15cafbb4c33e42db_76.png)
+
+```r
+# 转换为POSIXlt格式
+p <- as.POSIXlt(t)
+names(unclass(p))
+# 会列出列表中的元素名，如：sec, min, hour, mday, mon, year, wday, yday, isdst
+```
+
+![](img/462a3a46cf76a9da15cafbb4c33e42db_78.png)
+
+![](img/462a3a46cf76a9da15cafbb4c33e42db_79.png)
+
+![](img/462a3a46cf76a9da15cafbb4c33e42db_80.png)
+
+例如，提取秒数：
+```r
+p$sec
+# 输出秒数（可能包含小数）
+```
+
+![](img/462a3a46cf76a9da15cafbb4c33e42db_82.png)
+
+![](img/462a3a46cf76a9da15cafbb4c33e42db_83.png)
+
+![](img/462a3a46cf76a9da15cafbb4c33e42db_84.png)
+
+对于`POSIXct`对象，直接使用`$`操作符会报错，因为它不是列表结构。需要先转换为`POSIXlt`。
+
+![](img/462a3a46cf76a9da15cafbb4c33e42db_85.png)
+
+![](img/462a3a46cf76a9da15cafbb4c33e42db_86.png)
+
+```r
+unclass(t) # 查看POSIXct的内部大整数
+# as.POSIXlt(t)$sec # 正确提取秒数的方法
+```
+
+![](img/462a3a46cf76a9da15cafbb4c33e42db_88.png)
+
+![](img/462a3a46cf76a9da15cafbb4c33e42db_89.png)
+
+![](img/462a3a46cf76a9da15cafbb4c33e42db_90.png)
+
+![](img/462a3a46cf76a9da15cafbb4c33e42db_91.png)
+
+![](img/462a3a46cf76a9da15cafbb4c33e42db_92.png)
+
+## 从字符串解析时间：strptime函数
+
+`strptime()`函数可以将特定格式的字符字符串转换为时间对象。它使用**格式字符串**来指定输入字符串的样式。
+
+![](img/462a3a46cf76a9da15cafbb4c33e42db_94.png)
+
+![](img/462a3a46cf76a9da15cafbb4c33e42db_95.png)
+
+![](img/462a3a46cf76a9da15cafbb4c33e42db_96.png)
+
+![](img/462a3a46cf76a9da15cafbb4c33e42db_97.png)
+
+![](img/462a3a46cf76a9da15cafbb4c33e42db_98.png)
+
+格式字符串由`%`加字母组成，例如：
+*   `%B`：非缩写月份名（如January）
+*   `%d`：月份中的天数
+*   `%Y`：四位数的年份
+*   `%H`：小时（24小时制）
+*   `%M`：分钟
+
+![](img/462a3a46cf76a9da15cafbb4c33e42db_100.png)
+
+![](img/462a3a46cf76a9da15cafbb4c33e42db_101.png)
+
+![](img/462a3a46cf76a9da15cafbb4c33e42db_102.png)
+
+```r
+# 将特定格式的字符串转换为时间
+x <- c("January 10, 2012 10:40", "December 9, 2012 9:10")
+strptime(x, "%B %d, %Y %H:%M")
+```
+
+![](img/462a3a46cf76a9da15cafbb4c33e42db_103.png)
+
+![](img/462a3a46cf76a9da15cafbb4c33e42db_104.png)
+
+![](img/462a3a46cf76a9da15cafbb4c33e42db_106.png)
+
+转换后，对象通常是`POSIXlt`格式。如果不记得格式代码，可以随时查阅`?strptime`帮助页面。
+
+![](img/462a3a46cf76a9da15cafbb4c33e42db_108.png)
+
+![](img/462a3a46cf76a9da15cafbb4c33e42db_109.png)
+
+## 日期与时间的运算
+
+![](img/462a3a46cf76a9da15cafbb4c33e42db_111.png)
+
+![](img/462a3a46cf76a9da15cafbb4c33e42db_112.png)
+
+![](img/462a3a46cf76a9da15cafbb4c33e42db_113.png)
+
+一旦数据被转换为日期或时间格式，就可以对它们进行运算，这非常方便。
+
+![](img/462a3a46cf76a9da15cafbb4c33e42db_115.png)
+
+![](img/462a3a46cf76a9da15cafbb4c33e42db_116.png)
+
+![](img/462a3a46cf76a9da15cafbb4c33e42db_117.png)
+
+![](img/462a3a46cf76a9da15cafbb4c33e42db_118.png)
+
+可以进行加减、比较等操作：
+```r
+x <- as.Date("2012-03-01")
+y <- as.Date("2012-02-28")
+x - y
+# 计算日期差
+```
+
+![](img/462a3a46cf76a9da15cafbb4c33e42db_120.png)
+
+![](img/462a3a46cf76a9da15cafbb4c33e42db_121.png)
+
+需要注意的是，不能直接混合不同类的对象进行运算。例如，不能直接用`Date`对象减去`POSIXlt`对象，需要先统一类型。
+
+![](img/462a3a46cf76a9da15cafbb4c33e42db_123.png)
+
+![](img/462a3a46cf76a9da15cafbb4c33e42db_124.png)
+
+![](img/462a3a46cf76a9da15cafbb4c33e42db_125.png)
+
+![](img/462a3a46cf76a9da15cafbb4c33e42db_126.png)
+
+```r
+x <- as.Date("2012-01-01")
+y <- as.POSIXlt("2012-12-22 10:40:00")
+# x - y # 会报错
+as.POSIXlt(x) - y # 先转换，再计算
+```
+
+## 处理特殊时间情况
+
+![](img/462a3a46cf76a9da15cafbb4c33e42db_128.png)
+
+![](img/462a3a46cf76a9da15cafbb4c33e42db_129.png)
+
+![](img/462a3a46cf76a9da15cafbb4c33e42db_130.png)
+
+![](img/462a3a46cf76a9da15cafbb4c33e42db_131.png)
+
+![](img/462a3a46cf76a9da15cafbb4c33e42db_132.png)
+
+使用日期时间类的一大优势是，R会自动处理闰年、闰秒、夏令时和时区等复杂情况。
+
+![](img/462a3a46cf76a9da15cafbb4c33e42db_134.png)
+
+例如，2012年是闰年，2月有29天：
+```r
+# 闰年示例
+x <- as.Date("2012-03-01")
+y <- as.Date("2012-02-28")
+x - y
+# 结果会是2天（因为中间有2月29日），而不是平年的1天。
+```
+
+![](img/462a3a46cf76a9da15cafbb4c33e42db_135.png)
+
+![](img/462a3a46cf76a9da15cafbb4c33e42db_136.png)
+
+![](img/462a3a46cf76a9da15cafbb4c33e42db_137.png)
+
+![](img/462a3a46cf76a9da15cafbb4c33e42db_139.png)
+
+![](img/462a3a46cf76a9da15cafbb4c33e42db_140.png)
+
+时区差异也会被正确处理：
+```r
+# 时区示例
+x <- Sys.time()
+y <- as.POSIXct(x, tz = "GMT") # 转换为格林威治时间
+x - y
+# 计算时区差
+```
+
+## 总结与拓展
+
+本节课我们一起学习了R语言中处理日期和时间的基础知识。
+
+![](img/462a3a46cf76a9da15cafbb4c33e42db_142.png)
+
+![](img/462a3a46cf76a9da15cafbb4c33e42db_143.png)
+
+![](img/462a3a46cf76a9da15cafbb4c33e42db_144.png)
+
+![](img/462a3a46cf76a9da15cafbb4c33e42db_145.png)
+
+总结如下：
+1.  R有特殊的类来表示日期和时间，以便进行数值和统计计算。
+2.  日期使用 **`Date`** 类。
+3.  时间使用 **`POSIXct`** 或 **`POSIXlt`** 类。
+4.  可以使用 `strptime()`、`as.Date()`、`as.POSIXlt()` 和 `as.POSIXct()` 函数将字符串转换为日期或时间对象。
+5.  日期时间对象支持算术和比较运算，并能自动处理闰年、时区等复杂情况。
+
+![](img/462a3a46cf76a9da15cafbb4c33e42db_146.png)
+
+![](img/462a3a46cf76a9da15cafbb4c33e42db_147.png)
+
+![](img/462a3a46cf76a9da15cafbb4c33e42db_148.png)
+
+![](img/462a3a46cf76a9da15cafbb4c33e42db_149.png)
+
+![](img/462a3a46cf76a9da15cafbb4c33e42db_150.png)
+
+![](img/462a3a46cf76a9da15cafbb4c33e42db_151.png)
+
+![](img/462a3a46cf76a9da15cafbb4c33e42db_152.png)
+
+此外，许多绘图函数（如`plot()`）能够识别日期时间对象，并自动以合适的方式格式化坐标轴（例如时间轴）。你可以尝试使用日期时间数据绘图，观察其效果。
