@@ -227,6 +227,8 @@
 +   [IBM 机器学习、数据探索、监督学习笔记](docs/ibm-ml-eda-sup/README.md)
 +   [IBM 机器学习、无监督学习、深度学习、强化学习笔记](docs/ibm-ml-unsup-dl-rl/README.md)
 +   [特伦多人工智能基础笔记](docs/ittlt-ai-fund/README.md)
++   [JHU 数据科学 VII 笔记](docs/jhu-ds-7/README.md)
++   [JHU 数据科学 VIII 笔记](docs/jhu-ds-8/README.md)
 +   [JHU 数据科学 IX 笔记](docs/jhu-ds-9/README.md)
 +   [约翰霍普金斯神经网络基础笔记](docs/jhu-nn-bsc/README.md)
 +   [七月在线公开课笔记](docs/julyedu/README.md)
