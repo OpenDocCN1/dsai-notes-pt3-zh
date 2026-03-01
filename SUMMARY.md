@@ -240,6 +240,8 @@
 +   [JHU 数据科学统计机器学习笔记](docs/jhu-ds-stat-ml/README.md)
 +   [JHU 大规模数据库笔记](docs/jhu-lgscl-db/README.md)
 +   [约翰霍普金斯神经网络基础笔记](docs/jhu-nn-bsc/README.md)
++   [JHU R 数据可视化笔记](docs/jhu-r-dtviz/README.md)
++   [JHU R 编程笔记](docs/jhu-r-prog/README.md)
 +   [七月在线公开课笔记](docs/julyedu/README.md)
 +   [KAIST CS492C/D 扩散模型笔记](docs/kaist-cs492cd-diffmdl/README.md)
 +   [科罗拉多应用深度学习笔记](docs/klld-appdl/README.md)
