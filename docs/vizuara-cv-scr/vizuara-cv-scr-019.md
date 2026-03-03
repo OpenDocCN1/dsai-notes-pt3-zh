@@ -1,4 +1,4 @@
-# 计算机视觉：P19：从零开始用PyTorch实现Vision Transformer 🚀
+#  019：从零开始用PyTorch实现Vision Transformer 🚀
 
 在本节课中，我们将从零开始，使用PyTorch实现一个简单的Vision Transformer模型。我们不会使用任何预训练架构，所有代码都将由我们自己定义。我们将使用一些实用的PyTorch库来简化流程，但模型的训练将完全从零开始。为了简化任务，我们将使用著名的MNIST手写数字数据集，将其作为一个10分类问题来处理。
 

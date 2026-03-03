@@ -1,4 +1,4 @@
-# 计算机视觉从零开始：01：卷积、池化与AlexNet
+#  001：卷积、池化与AlexNet
 
 ![](img/b40fdf2bbb177d8ec5137df468d5ae84_0.png)
 

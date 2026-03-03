@@ -1,4 +1,4 @@
-# 计算机视觉从零开始：P22：使用R-CNN、Fast R-CNN和Faster R-CNN进行目标检测 🎯
+#  022：使用R-CNN、Fast R-CNN和Faster R-CNN进行目标检测 🎯
 
 在本节课中，我们将学习目标检测领域的一个里程碑系列模型：R-CNN及其演进版本。我们将从最基础的想法出发，理解为什么需要“区域提议”，并详细探讨R-CNN、Fast R-CNN和Faster R-CNN的工作原理。课程内容将尽可能简单直白，确保初学者能够跟上。
 

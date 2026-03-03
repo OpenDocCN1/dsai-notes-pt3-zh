@@ -1,4 +1,4 @@
-# 计算机视觉从零开始：P18：Vision Transformer (ViT) 入门 🧠
+#  018：Vision Transformer (ViT) 入门 🧠
 
 ![](img/672972937b1281d79facb8d4b6bfedcf_0.png)
 

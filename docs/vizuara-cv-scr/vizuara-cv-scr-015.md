@@ -1,4 +1,4 @@
-# 计算机视觉从零开始：P15：DenseNet与EfficientNet - CNN的持续进化之路 🚀
+#  015：DenseNet与EfficientNet - CNN的持续进化之路 🚀
 
 ![](img/4568e4ed831f94b6a2021b478ed7c3a4_0.png)
 

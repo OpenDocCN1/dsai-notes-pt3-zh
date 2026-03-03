@@ -1,4 +1,4 @@
-# 计算机视觉从零开始：第11-12章：GoogleNet（又名Inception V1）｜ 在ImageNet挑战赛中排名第一的传奇CNN模型 🏆
+#  011：GoogleNet（又名Inception V1）｜ 在ImageNet挑战赛中排名第一的传奇CNN模型 🏆
 
 ![](img/2c1bc183a243154a9579fab1e8dfece1_1.png)
 
