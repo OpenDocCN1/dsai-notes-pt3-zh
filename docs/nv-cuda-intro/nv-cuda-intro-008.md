@@ -1,4 +1,4 @@
-# CUDA入门课：08：GPU性能分析 🚀
+# 008：GPU性能分析 🚀
 
 ![](img/d1983a94a27ae1efd2dd2a759deeee67_0.png)
 

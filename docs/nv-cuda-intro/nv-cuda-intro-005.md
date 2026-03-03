@@ -1,4 +1,4 @@
-# CUDA入门课：05：Atomics, Reductions, Warp Shuffle 🧮
+# 005：Atomics, Reductions, Warp Shuffle 🧮
 
 在本节课中，我们将学习CUDA编程中的三个核心概念：原子操作、归约操作和Warp洗牌操作。这些技术对于解决需要线程间协作和数据共享的并行计算问题至关重要。
 

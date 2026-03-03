@@ -1,4 +1,4 @@
-# NVIDIA官方CUDA入门课程：第1章：CUDA C++基础
+# 001：CUDA C++基础
 
 ![](img/9398a1ee8247c4bc64ea8a9bce78f231_0.png)
 

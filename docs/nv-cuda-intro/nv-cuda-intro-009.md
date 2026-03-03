@@ -1,4 +1,4 @@
-# CUDA入门课：09：Cooperative Groups 🚀
+# 009：Cooperative Groups 🚀
 
 ![](img/562cda975a36aa9244f9b24a16eb1cea_1.png)
 

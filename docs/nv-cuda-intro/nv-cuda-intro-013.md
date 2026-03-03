@@ -1,4 +1,4 @@
-# NVIDIA官方课程：CUDA入门课：13：CUDA Graphs 🚀
+# 013：CUDA Graphs 🚀
 
 在本节课中，我们将要学习CUDA Graphs，这是CUDA中一项用于提升性能的特性。我们将专注于其核心概念，帮助初学者理解如何利用CUDA Graphs来优化程序执行。
 

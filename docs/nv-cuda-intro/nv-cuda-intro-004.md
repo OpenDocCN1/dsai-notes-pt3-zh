@@ -1,4 +1,4 @@
-# CUDA入门课：04：CUDA基础优化第二部分
+# 004：CUDA基础优化第二部分
 
 ![](img/711c7bfd7cea98554fe46f7a51c7072c_0.png)
 
