@@ -1,4 +1,4 @@
-# 稀疏Transformer：P59：《稀疏性在扩展Transformer中已足够（又名Terraformer）》｜机器学习研究论文解读
+# 059：《稀疏性在扩展Transformer中已足够（又名Terraformer）》｜机器学习研究论文解读
 
 ## 概述
 在本节课中，我们将学习一篇名为《稀疏性在扩展Transformer中已足够》的研究论文。该论文由华沙大学、谷歌研究和OpenAI的研究人员共同完成。论文的核心是提出了一套构建模块，将稀疏性引入Transformer架构，从而创建了名为“扩展Transformer”的模型。随后，论文进一步引入了额外特性，将扩展Transformer升级为“Terraformer”。这两种模型在“非批处理解码”（即单样本推理）方面速度极快，同时保持了与标准Transformer相当的性能。我们将深入探讨其架构、实现原理以及带来的显著效率提升。

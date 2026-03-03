@@ -1,4 +1,4 @@
-# Mixup：超越经验风险最小化：P13：论文解析 📄
+# 013：论文解析 📄
 
 ![](img/dfe2fe2923bc8ac8cb7c90bdde53a05f_1.png)
 

@@ -1,4 +1,4 @@
-# DeBERTa论文精读：P121：采用解耦注意力机制的增强型BERT解码
+# 021：采用解耦注意力机制的增强型BERT解码
 
 在本节课中，我们将学习一篇名为“DeBERTa: Decoding-enhanced BERT with Disentangled Attention”的论文。这篇由微软研究人员提出的工作，对著名的BERT语言模型及其变体RoBERTa进行了两项关键改进。我们将详细探讨这两项改进的原理及其带来的效果。
 

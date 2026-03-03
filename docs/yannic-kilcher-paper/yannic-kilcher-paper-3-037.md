@@ -1,4 +1,4 @@
-# 强化学习经典论文解读：P137：奖励就够了（Reward is Enough）
+# 037：奖励就够了（Reward is Enough）
 
 在本节课中，我们将一起学习由David Silver、Satinder Singh、Doina Precup和Richard Sutton撰写的论文《Reward is Enough》。这篇论文提出了一个核心假设：在足够复杂的环境中，最大化奖励是驱动智能行为出现的充分条件。我们将探讨这个假设的含义、其背后的推理，以及它对实现通用人工智能的启示。
 

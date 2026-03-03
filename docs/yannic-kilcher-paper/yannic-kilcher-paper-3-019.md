@@ -1,4 +1,4 @@
-# TransGAN：P119：两个Transformer构成一个强大的GAN 🧠
+# 019：两个Transformer构成一个强大的GAN 🧠
 
 ![](img/319e251b3df63126658a89ca72911788_1.png)
 

@@ -1,4 +1,4 @@
-# 端到端对抗性文本转语音：P29：论文详解 🎤
+# 029：论文详解 🎤
 
 在本节课中，我们将学习一篇名为《端到端对抗性文本转语音》的论文。这篇论文由Jeff Donahue、Sander Dieleman、Mikołaj Bińkowski、Erich Elsen和Karen Simonyan（主要来自DeepMind）撰写。我们将探讨该模型如何直接从文本或音素生成原始语音音频，而无需任何中间监督表示，并解决其中的对齐和对抗训练等核心挑战。
 

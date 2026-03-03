@@ -1,4 +1,4 @@
-# MLOps 自动化：P127：基于 Git 的 CI/CD 应用
+# 027：基于 Git 的 CI/CD 应用
 
 ![](img/c5afba6cbb1fb1e87b7fe622cae60cb8_0.png)
 

@@ -1,4 +1,4 @@
-# 经典论文领读：P44：RepNet：计算视频中的重复次数
+# 044：计算视频中的重复次数
 
 在本节课中，我们将要学习一篇名为《Counting Out Time: Class Agnostic Video Repetition Counting in the Wild》的论文。这篇论文由谷歌研究院和DeepMind的研究人员提出，旨在解决一个有趣的问题：如何让AI自动检测视频中是否有重复动作，并精确计算出该动作重复了多少次。我们将从问题定义、解决方案、模型架构到数据集构建，系统地解析这篇论文。
 

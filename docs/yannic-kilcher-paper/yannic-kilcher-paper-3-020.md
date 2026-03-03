@@ -1,4 +1,4 @@
-# 强化学习经典论文精读：P120：Dreamer v2：通过离散世界模型掌握Atari游戏
+# 020：通过离散世界模型掌握Atari游戏
 
 在本节课中，我们将要学习一篇名为《Mastering Atari with Discrete World Models》的论文，它介绍了Dreamer v2算法。该算法通过一种新颖的“世界模型”，在Atari游戏上实现了高效的强化学习，并超越了当时许多先进的模型。
 

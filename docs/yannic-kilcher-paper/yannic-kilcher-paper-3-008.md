@@ -1,4 +1,4 @@
-# AI经典论文领读：P108：DeepMind AlphaFold 2全面解析
+# 008：DeepMind AlphaFold 2全面解析
 
 ## 概述
 在本节课中，我们将学习DeepMind的AlphaFold 2系统。该系统在蛋白质结构预测领域取得了革命性突破，解决了困扰生物学界长达50年的重大挑战。我们将从理解蛋白质折叠问题本身开始，回顾AlphaFold 1的核心思想，并基于现有信息探讨AlphaFold 2可能的技术飞跃。

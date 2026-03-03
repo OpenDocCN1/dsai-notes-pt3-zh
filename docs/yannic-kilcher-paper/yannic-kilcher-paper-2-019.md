@@ -1,4 +1,4 @@
-# 目标检测：P19：DETR：基于Transformer的端到端目标检测 🎯
+# 019：基于Transformer的端到端目标检测 🎯
 
 ![](img/7f227b8033b60d6f6a87f44cc61a4de9_1.png)
 

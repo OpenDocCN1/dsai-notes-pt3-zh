@@ -1,4 +1,4 @@
-# AI经典论文领读：P199：RWKV：为Transformer时代重塑RNN（论文详解）📚
+# 098：为Transformer时代重塑RNN（论文详解）📚
 
 在本节课中，我们将要学习一篇名为“RWKV：为Transformer时代重塑RNN”的论文。RWKV是一个独特的模型架构，它试图结合Transformer和循环神经网络（RNN）的优点。我们将探讨其设计原理、核心机制以及它如何解决现有模型的一些关键瓶颈。
 

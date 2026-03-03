@@ -1,4 +1,4 @@
-# AI经典论文领读：P113：Switch Transformers：通过简单高效的稀疏性扩展到万亿参数模型
+# 013：通过简单高效的稀疏性扩展到万亿参数模型
 
 在本节课中，我们将学习一篇来自Google Brain的重要论文《Switch Transformers: Scaling to Trillion Parameter Models with Simple and Efficient Sparsity》。这篇论文提出了一种名为Switch Transformer的新架构，旨在以稀疏的方式将模型参数规模扩展到万亿级别，同时保持前向传播的计算量基本不变。我们将探讨其核心思想、工作原理以及它如何融入当前大型语言模型的发展图景。
 

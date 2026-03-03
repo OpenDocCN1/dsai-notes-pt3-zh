@@ -1,4 +1,4 @@
-# 深度网络即是核机器：P116：论文解析 🧠
+# 016：论文解析 🧠
 
 在本节课中，我们将学习一篇由Pedro Domingos撰写的论文《Every Model Learned by Gradient Descent Is Approximately a Kernel Machine》。这篇论文在理论层面建立了梯度下降学习模型（如深度神经网络）与核机器（例如支持向量机中使用的技术）之间的联系。我们将解析其核心论点、证明思路，并探讨其对理解深度学习本质的意义。
 

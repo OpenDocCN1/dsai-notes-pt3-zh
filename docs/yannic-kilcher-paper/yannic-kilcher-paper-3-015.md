@@ -1,4 +1,4 @@
-# AI经典论文领读：P115：反馈式Transformer：用反馈记忆解决Transformer的若干局限性（技术解析）
+# 015：用反馈记忆解决Transformer的若干局限性（技术解析）
 
 在本节课中，我们将要学习一篇名为《反馈式Transformer》的论文。这篇论文由Facebook AI Research的Angela Fan、Thibaut Lavril、Ari Holtzman和Sumit Chopra共同撰写。我们将探讨它如何通过引入“反馈记忆”机制，来解决传统Transformer模型在解码时存在的一些局限性。
 

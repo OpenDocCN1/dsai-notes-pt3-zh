@@ -1,4 +1,4 @@
-# AI经典论文领读：P190：颠覆性的突破！DeepMind AlphaTensor技术解析
+# 090：颠覆性的突破！DeepMind AlphaTensor技术解析
 
 ## 概述
 

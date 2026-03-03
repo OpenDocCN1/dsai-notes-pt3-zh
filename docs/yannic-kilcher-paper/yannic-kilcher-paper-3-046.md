@@ -1,4 +1,4 @@
-# 经典论文领读：P146：ALiBi - 短训练长测试：线性偏置注意力机制实现输入长度外推 🚀
+# 046：线性偏置注意力机制实现输入长度外推 🚀
 
 在本节课中，我们将要学习一篇名为《Train Short, Test Long: Attention with Linear Biases Enables Input Length Extrapolation》的论文，它也被称为ALiBi。这篇论文由Ofir Press、Noam A. Smith和Mike Lewis提出。其核心思想是，用一种新的、非常简单的系统来替代Transformer中的位置编码或位置嵌入，从而使这些Transformer能够在推理时外推到比训练时长得多的序列上。这意味着你可以在较短的序列上进行训练，而在推理时，即使序列长度远超训练长度，性能也不会下降。这种外推能力可以从2倍延伸到10倍甚至更长。
 

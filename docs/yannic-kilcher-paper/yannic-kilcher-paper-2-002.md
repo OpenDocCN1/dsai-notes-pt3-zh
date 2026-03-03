@@ -1,4 +1,4 @@
-# AI经典论文领读：P2：Jukebox音乐生成模型（论文解读）
+# 002：Jukebox音乐生成模型（论文解读）
 
 ![](img/4ea3a2f65a8a29da70ade8223cfcd52c_0.png)
 

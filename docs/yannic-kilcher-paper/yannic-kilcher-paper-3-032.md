@@ -1,4 +1,4 @@
-# 自监督视觉Transformer：P132：DINO：自监督视觉Transformer中的新兴特性（Facebook AI研究解析）🎯
+# 032：自监督视觉Transformer中的新兴特性（Facebook AI研究解析）🎯
 
 ## 概述
 在本节课中，我们将要学习一篇由Facebook AI Research发表的论文《Emerging Properties in Self-Supervised Vision Transformers》。这篇论文介绍了一种名为DINO（self-**Di**stillation with **N**o labels）的自监督学习方法，用于训练视觉Transformer模型。该方法无需任何人工标注，就能让模型学习到极具表现力的视觉特征，甚至能自动关注图像中的关键物体。

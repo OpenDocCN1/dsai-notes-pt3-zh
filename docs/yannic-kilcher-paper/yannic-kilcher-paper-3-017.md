@@ -1,4 +1,4 @@
-# 经典论文领读：P117：Nyströmformer：基于Nyström方法的自注意力近似算法
+# 017：基于Nyström方法的自注意力近似算法
 
 ![](img/35ad7f0539be3a3f94f43308cd53724c_1.png)
 
