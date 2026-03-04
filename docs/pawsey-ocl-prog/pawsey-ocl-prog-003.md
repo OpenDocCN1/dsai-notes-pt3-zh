@@ -1,4 +1,4 @@
-# OpenCL编程：P03：在Setonix超算上使用OpenCL
+# 003：在Setonix超算上使用OpenCL
 
 ![](img/fb9c72999b634c0a5a063538f1719bc4_0.png)
 

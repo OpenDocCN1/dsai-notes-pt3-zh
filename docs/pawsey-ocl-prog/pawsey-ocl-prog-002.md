@@ -1,4 +1,4 @@
-# OpenCL编程：P02：OpenCL - 第一天，第二部分 - OpenCL简介与练习
+# 002：OpenCL - 第一天，第二部分 - OpenCL简介与练习
 
 ![](img/5bfc396db260ff8fa2f15cbb391248fa_0.png)
 

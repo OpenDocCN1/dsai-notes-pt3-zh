@@ -1,4 +1,4 @@
-# OpenCL编程：第3天：优化OpenCL内核（第一部分）
+# 011：优化OpenCL内核（第一部分）
 
 ![](img/2080f5f0f18419df48b7efac70e273d4_0.png)
 

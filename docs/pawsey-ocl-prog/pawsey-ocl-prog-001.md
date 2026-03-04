@@ -1,4 +1,4 @@
-# OpenCL编程：P01：OpenCL简介
+# 001：OpenCL简介
 
 ![](img/e97e22085012008f6108e58d2d367333_0.png)
 
