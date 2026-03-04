@@ -337,6 +337,7 @@
 +   [斯坦福 CS109：计算机科学家的概率论](docs/stf-cs109-prob-cs/README.md)
 +   [斯坦福 CS124 从信息到语言课程笔记](docs/stf-cs124-langinfo/README.md)
 +   [斯坦福 CS146S 现代软件开发笔记](docs/stf-cs146s-mdn-sw-dev/README.md)
++   [斯坦福 CS149 并行计算笔记](docs/stf-cs149-prll-comp/README.md)
 +   [斯坦福 CS221 人工智能导论笔记](docs/stf-cs221-ai/README.md)
 +   [斯坦福 CS224d 自然语言处理讲义 2017](docs/stf-cs224d-nlp-2017/README.md)
 +   [斯坦福 CS224n 自然语言处理笔记 2017](docs/stf-cs224n-nlp-2017/README.md)

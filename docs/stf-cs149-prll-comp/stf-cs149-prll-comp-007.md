@@ -1,4 +1,4 @@
-# 并行计算 CS149 2023：第7讲：GPU架构与CUDA编程 🚀
+# 007：GPU架构与CUDA编程 🚀
 
 ![](img/6b7aeb9b955d92c3fa06da9151c168aa_0.png)
 
