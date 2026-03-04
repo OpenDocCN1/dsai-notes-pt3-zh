@@ -1,4 +1,4 @@
-# LangChain 教程：P13：LangGraph 规划智能体 🧠
+# 013：LangGraph 规划智能体 🧠
 
 ![](img/0bf4459b1e63df6a638c19c6f9ca232a_1.png)
 

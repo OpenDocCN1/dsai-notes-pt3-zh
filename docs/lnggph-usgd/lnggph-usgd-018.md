@@ -1,4 +1,4 @@
-# LangGraph 使用指南：P18-P19：在 LangGraph Cloud 中构建 MemGPT Discord 代理
+# 018：在 LangGraph Cloud 中构建 MemGPT Discord 代理
 
 ## 概述
 在本节课中，我们将学习如何使用 LangGraph 构建一个受 MemGPT 论文启发的智能代理。这个代理将具备管理自身记忆的能力，包括核心记忆和语义记忆，并最终将其部署到 Discord 服务器上，使其能够与用户持续互动并学习用户的偏好。

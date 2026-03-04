@@ -1,4 +1,4 @@
-# LangChain 教程：P22-P24：LangGraph 功能 API 概览 🚀
+# 022：LangGraph 功能 API 概览 🚀
 
 在本节课中，我们将学习 LangGraph 功能 API 的核心概念。我们将从一个简单的、不使用任何框架的 Python 智能体开始，逐步引入 LangGraph 的功能，展示如何通过添加少量装饰器代码，为你的应用获得持久化、流式处理、调试和部署等强大能力。
 
