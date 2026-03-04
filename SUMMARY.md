@@ -278,6 +278,7 @@
 +   [罗格斯大学生成式 AI 与政府财务报告笔记](docs/lgs-genai-gov-fin-rpt/README.md)
 +   [大模型 Agent 论文翻译](docs/llm-agent/README.md)
 +   [大语言模型系列综述](docs/llm-survey/README.md)
++   [Langchain 初学者入门 2025 笔记](docs/lngchn-bgr-intro-2025/README.md)
 +   [Langchian RAG 官方教程笔记](docs/lngchn-rag/README.md)
 +   [Langchain 官方使用指南笔记](docs/lngchn-usgd/README.md)
 +   [LangGraph 官方使用指南笔记](docs/lnggph-usgd/README.md)
