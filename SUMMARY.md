@@ -308,6 +308,7 @@
 +   [MIT 6.S183 扩散模型笔记](docs/mit-6s183-diffmdl/README.md)
 +   [MIT 6.S184 扩散模型笔记](docs/mit-6s184-diffmdl/README.md)
 +   [MIT 6.S897 医疗机器学习 2019 中文笔记](docs/mit-6s897-medml/README.md)
++   [MIT 7.91J 计算生物学笔记](docs/mit-791j-comp-bio/README.md)
 +   [MIT 数据中心人工智能笔记](docs/mit-dcai/README.md)
 +   [MIT MAS.S60 如何用 AI 做任何事情笔记](docs/mit-mass60-hwtai/README.md)
 +   [慕尼黑工大高级深度学习机器视觉笔记](docs/mnh-adl4cv/README.md)
