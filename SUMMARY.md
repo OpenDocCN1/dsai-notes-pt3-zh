@@ -428,6 +428,7 @@
 +   [UCLA Stats102A 计算统计学笔记](docs/ucla-stats102a-comp-stat/README.md)
 +   [UCSD COGS108 数据科学实战中文笔记](docs/ucsd-cogs108-notes/README.md)
 +   [UCSD DSC10 数据科学原理笔记](docs/ucsd-dsc10-ds-prcp/README.md)
++   [UIUC 商业分析笔记](docs/uiuc-biz-anls/README.md)
 +   [UIUC CS357 数值方法 I 中文教科书](docs/uiuc-cs357-nummtd1/README.md)
 +   [密西根大学创意工作的人工智能笔记](docs/umich-ai-crt-wk/README.md)
 +   [密西根大学 AI 数据分析笔记](docs/umich-ai-dtanls/README.md)
