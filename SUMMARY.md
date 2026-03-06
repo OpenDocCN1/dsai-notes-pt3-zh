@@ -355,6 +355,7 @@
 +   [ScipyCon 2020 笔记](docs/scipycon-2020/README.md)
 +   [Sebastian Rasch 从零开始的大语言模型笔记](docs/sebastian-rasch-llm-scr/README.md)
 +   [ShowMeAI 人工智能工具笔记](docs/showmeai-tool/README.md)
++   [上海科大 CS121 并行计算笔记](docs/shtech-cs121-prll-comp/README.md)
 +   [斯坦福人工智能研讨会 2023 笔记](docs/stf-ai-smst-2023/README.md)
 +   [斯坦福 CME295 大语言模型笔记](docs/stf-cme295-llm/README.md)
 +   [斯坦福 CS109：计算机科学家的概率论](docs/stf-cs109-prob-cs/README.md)
