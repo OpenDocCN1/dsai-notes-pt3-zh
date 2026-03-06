@@ -1,4 +1,5 @@
 +   [阿尔伯塔完整强化学习系统笔记](docs/albt-cmpl-rlsys/README.md)
++   [阿尔伯塔函数近似的预测控制笔记](docs/albt-prod-ctrl-func-appx/README.md)
 +   [阿尔伯塔基于样本的学习方法笔记](docs/albt-smpbs-lrn-mtd/README.md)
 +   [AlgoLab 计算几何笔记](docs/algolab-comp-geo/README.md)
 +   [阿尔托 CSE4740 联邦学习笔记](docs/alt-cse4740-fedlrn/README.md)
