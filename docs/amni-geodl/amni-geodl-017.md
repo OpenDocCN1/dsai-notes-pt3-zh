@@ -1,4 +1,4 @@
-# 几何深度学习：P17：研讨会5（AlphaFold）-拉斯·贝茨
+# 017：研讨会5（AlphaFold）-拉斯·贝茨
 
 ![](img/f50cfca06309a726c985e79b445b49da_1.png)
 
