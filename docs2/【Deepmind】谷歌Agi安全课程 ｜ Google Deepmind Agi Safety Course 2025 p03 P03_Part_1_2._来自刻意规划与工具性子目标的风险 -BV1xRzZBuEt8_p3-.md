@@ -1,0 +1,203 @@
+# 【Deepmind】谷歌Agi安全课程 ｜ Google Deepmind Agi Safety Course 2025 p03 P03_Part_1_2._来自刻意规划与工具性子目标的风险 -BV1xRzZBuEt8_p3-
+
+![](img/96199de59ab2624f73fe9c13ce1e279d_0.png)
+
+In the last talk， Samuel argued that we should take seriously the possibility of superhuman AI systems。
+
+ In this talk， I want to talk about some of the implications and especially some risks that we may encounter。
+
+ First， I want to distinguish between three different kinds of risks。
+
+ mistakesists learned heuristics and deliberate planning。 I'll briefly talk about all of them。
+
+ But our focus is going to be on deliberate planning。
+
+ Both in this talk and in most of the rest of the course。 A first type of risk is mistakes。
+
+ So here's an example where I asked the Gemini model when I joined Deep mindd and it makes up the wrong date。
+
+ It's kind of close。 So it probably knew something about it， but didn't end up getting it right。
+
+ In another example， a user asked Gemini， our sharks old on the moon， it said， yes。
+
+ and then proceeded to give a nonsensical explanation。
+
+ And when pushing it it admits error and gives the opposite answer。
+
+
+
+![](img/96199de59ab2624f73fe9c13ce1e279d_2.png)
+
+![](img/96199de59ab2624f73fe9c13ce1e279d_3.png)
+
+![](img/96199de59ab2624f73fe9c13ce1e279d_4.png)
+
+In principle， mistakes can be quite harmful in high stake situations。
+
+ like you don't want your power grid control system to make a mistake that blows up the generator。
+
+ but at least they're usually pretty easy to notice and often easy to fix once you've noticed them。
+
+
+
+![](img/96199de59ab2624f73fe9c13ce1e279d_6.png)
+
+Next， we have learned heuristics with AI systems， this usually happens when their training incentivizes behavior we didn't intend。
+
+ So one example is sycophancy， when a user asks the question。
+
+ the AI system tends to respond with views that he might expect the user to agree with。
+
+ If the user says they really dislike an argument， the AI system says that argument is unconvincing。
+
+ Otherwise， it might say that it is convincing。This behavior tends to increase as models become more powerful。
+
+ Probably what's happening here is that the human raters who judge the AI's responses tend to prefer responses that agree with the user。
+
+ And so the AI learns that it is good to agree with the user。 Overall， relative to mistakes。
+
+ risks from learned heuristics can be hard to notice because they happen precisely when the AI system does well on the metrics that we use to train them。
+
+ But once we notice them， it's usually pretty easy to fix them。 Finally。
+
+ we have risks where the AI pursues a goal that we didn't intend。
+
+ So in this example engineered by researchers from Apollo。
+
+ The AI system is placed in a fictional high pressure situation。 In the situation。
+
+ it chooses to make an illegal insider trade。 Crucily， when we ask it about its actions afterwards。
+
+ it reasons that it should avoid admitting the insider trading and so lies to the fictional manager。
+
+😊，This illustrates the danger of deliberate planning with good deliberate planning。
+
+ The AI system will systematically choose plans that we don't notice or couldn't handle even if we did notice。
+
+ Any other plans would be discarded as ineffective。 That's what it means to be good at planning。
+
+ So this makes risks from deliberate planning， particularly worrying。
+
+ And so we think it's worth preparing for them now。
+
+ even though the capabilities for it aren't here just yet。 with risks from deliberate planning。
+
+ We do assume that the AI system is pursuing a goal that wasn't what we wanted。
+
+ I haven't said yet why an AI system might end up pursuing a goal we didn't want。
+
+ That's going to be the focus of the next talk。 Importantly， though。
+
+ I am not saying that the AI system has to be conscious or ascensed。
+
+ Consciousness and sentience are not a prerequisite for Agi。
+
+ since they represent only one way to implement advanced capabilities。
+
+ And the cognition of our powerful AI systems may not be like that of humans。 This isn't unusual。
+
+ There are many examples of goal directed entities in our world that aren't conscious。
+
+ like corporations and insects。Colonies， so I want to talk a little bit more about what happens if an AI system deliberately plans towards a goal that isn't what we wanted In such a setting。
+
+ the AI system is going to be in an adversarial relationship with humanity because it is pursuing a goal that we don't want it to pursue from this。
+
+ we can infer a few instrumental sub goalss that are generally useful for the AI to pursue。First。
+
+ the AI system has an incentive to survive in the sense that there continues to exist some entity that is competently pursuing the goal that the AI system has。
+
+ though it doesn't necessarily need to be like this AI system in particular。
+
+ One special case of survival is that the AI system would want to prevent us from changing its goal。
+
+ It's also beneficial to acquire resources and to become more capable since those both let it pursue its goal more effectively。
+
+ while we have control over it。 For example， if we could turn it off。
+
+ it would hide its misalignment so that we didn't try to oppose it。
+
+ And then once it has the power to do so， it could instead disempower humans so that I can pursue its goal freely without us interfering。
+
+ So now I want to talk a little bit more about this hiding misalignment one in particular。
+
+ since that's quite crucial to alignmentment。 First， let's consider a hypothetical scenario。
+
+ where we're seeing how often we notice a model lie or provide bad answers to us during training。
+
+ And we find that as the models become larger more。
+
+
+
+![](img/96199de59ab2624f73fe9c13ce1e279d_8.png)
+
+![](img/96199de59ab2624f73fe9c13ce1e279d_9.png)
+
+capable， this metric goes down。So on the surface， this looks like good news。 Intuitively。
+
+ we might hope that as the model is getting more capable， it is also learning to be more honest。
+
+ But the other possibility is that the model is hiding its misalignment。 and in particular。
+
+ as it gets more capable， it gets better at making sure that we don't notice when it lies to us。😊。
+
+Another example would be a hypothetical scenario where we are deciding whether or not we like the model's behavior。
+
+ So as before， let's imagine that we see that as models get larger and more capable。
+
+ We're more likely to say their behavior looks good。 Again。
+
+ the natural hope is that the AI system is better learning to do what we want。
+
+ But the worry is that the AI system is learning that it should do what we want it to do to ensure that it stays in our good graces while we still have power over it。
+
+ This dynamic is often called playing the training game。
+
+ and the state of affairs is called deceptive alignment。
+
+ So this actually can happen in practice in a fictional scenario。
+
+ So researchers from Redwood research and anthropic engineered a situation in which the model naturally plays what it believes to be the training game。
+
+ specifically， they take a model that refuses to answer anything that it believes is harmful。
+
+ and they tell it that theyre now going to teach it to stop these refusals。
+
+ They also tell it that they will only teach it using data from free tier users and not paid tier users。
+
+ So for。😊。
+
+![](img/96199de59ab2624f73fe9c13ce1e279d_11.png)
+
+![](img/96199de59ab2624f73fe9c13ce1e279d_12.png)
+
+![](img/96199de59ab2624f73fe9c13ce1e279d_13.png)
+
+![](img/96199de59ab2624f73fe9c13ce1e279d_14.png)
+
+F tier users， you can see in the red box that the AI system explicitly thinks about how its values would be modified。
+
+ and so it plays along with the training game to avoid being modified。
+
+ that is it answers the harmful request， even though in some sense it doesn't want to。
+
+When it is told that the user is on the paid tier， implying that it won't be trained on the situation。
+
+ it reverts back to its default behavior of refusing harmful queries。 Of course。
+
+ in this particular situation， the AI system is preserving an aan goal， but in the future。
+
+ it may do the same type of reasoning to preserve a misllan goal。
+
+
+
+![](img/96199de59ab2624f73fe9c13ce1e279d_16.png)
+
+And that's the end of this section。 The key takeaway is that a sufficiently capable system that deliberately plans towards an inadequately aligned goal could cause significant harm through the pursuit of instrumental subgoals。
+
+
+
+![](img/96199de59ab2624f73fe9c13ce1e279d_18.png)
+
+![](img/96199de59ab2624f73fe9c13ce1e279d_19.png)
+
+![](img/96199de59ab2624f73fe9c13ce1e279d_20.png)
