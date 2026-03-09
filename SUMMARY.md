@@ -6,6 +6,7 @@
 +   [Amni 几何深度学习笔记](docs/amni-geodl/README.md)
 +   [Karpathy GPT 教程笔记](docs/andrej/README.md)
 +   [ASU 人工智能基础笔记](docs/asu-ai-bsc/README.md)
++   [ASU CSE579 知识表示与推理笔记](docs/asu-cse579-knlg-rprs-csl/README.md)
 +   [ASU 黑暗数据迁移笔记](docs/asu-dkdtmgrt/README.md)
 +   [ASU Python 笔记](docs/asu-py/README.md)
 +   [ASU 强化学习笔记](docs/asu-rl/README.md)
