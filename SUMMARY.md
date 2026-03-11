@@ -468,6 +468,7 @@
 +   [密西根大学创造性编程笔记](docs/umich-crt-prog/README.md)
 +   [密西根大学数据科学与分析笔记](docs/umich-ds-anls/README.md)
 +   [密西根大学数据科学伦理笔记](docs/umich-ds-eth/README.md)
++   [密西根大学 EECS492 人工智能编程笔记](docs/umich-eecs492-aiprog/README.md)
 +   [密西根大学 EECS498-007 深度学习计算机视觉笔记](docs/umich-eecs498-007-dlcv/README.md)
 +   [密西根大学生成式人工智能笔记](docs/umich-genai/README.md)
 +   [密西根大学生成式人工智能作为学习和设计伙伴笔记](docs/umich-genai-lrn-dsn-ptnr/README.md)
