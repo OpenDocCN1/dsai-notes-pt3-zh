@@ -386,6 +386,7 @@
 +   [ShowMeAI 人工智能工具笔记](docs/showmeai-tool/README.md)
 +   [上海科大 CS121 并行计算笔记](docs/shtech-cs121-prll-comp/README.md)
 +   [斯坦福人工智能研讨会 2023 笔记](docs/stf-ai-smst-2023/README.md)
++   [斯坦福 CME213 并行计算导论笔记](docs/stf-cme213-prll-comp-intro/README.md)
 +   [斯坦福 CME295 大语言模型笔记](docs/stf-cme295-llm/README.md)
 +   [斯坦福 CS109：计算机科学家的概率论](docs/stf-cs109-prob-cs/README.md)
 +   [斯坦福 CS124 从信息到语言课程笔记](docs/stf-cs124-langinfo/README.md)
