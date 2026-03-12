@@ -492,6 +492,7 @@
 +   [宾夕法尼亚大学 Python 数据分析笔记](docs/upenn-py-dtanls/README.md)
 +   [宾夕法尼亚大学运用数据笔记](docs/upenn-usdt/README.md)
 +   [USC CSCE585 机器学习系统笔记](docs/usc-csce585-mlsys/README.md)
++   [USF MSAN602 程序员的机器学习笔记](docs/usf-msan602-ml-prog/README.md)
 +   [USF MSDS501 计算数据科学中文讲义](docs/usf-msds501-notes/README.md)
 +   [华盛顿大学数据驱动的机器学习控制笔记](docs/uwash-dtdvn-ctrl-ml/README.md)
 +   [华盛顿大学机器学习笔记](docs/uwash-ml/README.md)
