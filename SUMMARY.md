@@ -511,6 +511,7 @@
 +   [WAIC 2024 笔记](docs/waic24/README.md)
 +   [WAIC 2025 会议笔记](docs/waic25/README.md)
 +   [沃顿商学院商业人工智能笔记](docs/wharton_bizai/README.md)
++   [威斯康星 CS220 数据编程笔记](docs/wscs-cs220-dtprog/README.md)
 +   [威斯康星 STAT453 生成式人工智能笔记](docs/wscs-stat453-genai/README.md)
 +   [Yannic Kilcher 论文解读笔记](docs/yannic-kilcher-paper/README.md)
 +   [延世大学新兴技术笔记](docs/yanshi-newtech/README.md)
