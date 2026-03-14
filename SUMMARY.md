@@ -13,7 +13,6 @@
 +   [加州理工量子计算笔记](docs/caltech-qcomp/README.md)
 +   [剑桥信息论、模式识别与神经网络笔记](docs/camb-infothr-pr-nn/README.md)
 +   [辛辛那提 MATH100/101 微积分笔记](docs/ccnt-math100-calc/README.md)
-+   [CMU 机器学习数据库研讨会 2023 笔记](docs/cmu-mldb-sem-2023/README.md)
 +   [康奈尔大学 CS4780 智能系统机器学习笔记](docs/crnl-cs4780-ml-intlsys/README.md)
 +   [康奈尔 CS5787 应用机器学习笔记](docs/crnl-cs5787-appml/README.md)
 +   [康奈尔 CS6785 深度生成式模型笔记](docs/crnl-cs6785-dpgen/README.md)
