@@ -1,1 +1,0 @@
-# RayiYanuTTara OpenCL 编程笔记
