@@ -103,6 +103,7 @@
 +   [纽约大学深度学习笔记](docs/nyu-dl/README.md)
 +   [纽约大学金融机器学习笔记](docs/nyu-finml/README.md)
 +   [纽约大学地理深度学习笔记](docs/nyu-gdl/README.md)
++   [纽约大学婴儿意识笔记](docs/nyu-inft-cscs/README.md)
 +   [纽约大学机器学习笔记](docs/nyu-ml/README.md)
 +   [牛津深度学习笔记](docs/oxf-dl/README.md)
 +   [米兰理工人工智能概述笔记](docs/polimi-ai-ovvw/README.md)
