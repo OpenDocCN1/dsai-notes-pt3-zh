@@ -52,6 +52,7 @@
 +   [哈佛机器学习几何笔记](docs/hav-ml-geo/README.md)
 +   [Hhu Dusseldorf 表示学习笔记](docs/hhu-dusseldorf-rprs-lrn/README.md)
 +   [HKUST 数据分析基础笔记](docs/hkust-dtanls-fund/README.md)
++   [HKUST 数据挖掘知识发现笔记](docs/hkust-dtmn/README.md)
 +   [HKUST Spark 大数据笔记](docs/hkust-spk-bgdt/README.md)
 +   [哈佛 CS109 数据科学导论](docs/hvd-cs109-intd-ds/README.md)
 +   [哈佛 CS109 数据科学导论第二版](docs/hvd-cs109-intd-ds-2e/README.md)
