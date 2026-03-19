@@ -1,7 +1,0 @@
-+   [MIT RES.EC-001 机器学习公平性笔记](README.md)
-+   [002：课程介绍与动机](mit-resec001-ml-frns-002.md)
-+   [003：美国国际开发署适用性使用框架](mit-resec001-ml-frns-003.md)
-+   [004：太阳能照明示例](mit-resec001-ml-frns-004.md)
-+   [006：受保护属性与“通过无意识实现公平”](mit-resec001-ml-frns-006.md)
-+   [007：缓解 UCI 成人数据集中的性别偏见](mit-resec001-ml-frns-007.md)
-+   [009：识别并缓解自然语言处理中的非预期人口统计偏见](mit-resec001-ml-frns-009.md)
