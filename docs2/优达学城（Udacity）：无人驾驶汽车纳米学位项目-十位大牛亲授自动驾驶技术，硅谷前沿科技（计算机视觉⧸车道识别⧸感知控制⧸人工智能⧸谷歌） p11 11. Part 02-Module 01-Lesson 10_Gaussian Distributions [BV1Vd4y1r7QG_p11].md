@@ -1,0 +1,5 @@
+# 优达学城（Udacity）：无人驾驶汽车纳米学位项目-十位大牛亲授自动驾驶技术，硅谷前沿科技（计算机视觉⧸车道识别⧸感知控制⧸人工智能⧸谷歌） p11 11. Part 02-Module 01-Lesson 10_Gaussian Distributions [BV1Vd4y1r7QG_p11]
+
+Okay now we're going dive in and learn about Gaussians K Gas lived about 200 years ago measured the country and 22 maps and in doing so had to confront this situation if it was making small but significant measurement errors so these measurements wouldn't quite fit together So he invented a way to characterize measurement errors that looks like this bell curve you might have seen before that's called a Gaussian and that concept has been essential to statistics for over 200 years and it's really fundamental to self-diving cars but rather than justlectly the math or we're can do with you we're going let you play with data you're going to take lots of lots of small probabilities and things and add up and compute them mean and what comes out we look surprisingly like this bell shape curve。
+
+😊，So let's dive in。
