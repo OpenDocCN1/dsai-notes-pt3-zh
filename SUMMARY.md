@@ -82,6 +82,7 @@
 +   [JHU 数据科学与时间决策笔记](docs/jhu-ds-tm-dsc/README.md)
 +   [JHU 数据科学素养笔记](docs/jhu-dt-ltrc/README.md)
 +   [JHU 高管数据科学笔记](docs/jhu-exe-ds/README.md)
++   [JHU GPU 编程笔记](docs/jhu-gpu-prog/README.md)
 +   [JHU Hadoop 笔记](docs/jhu-hdp/README.md)
 +   [JHU 大规模数据库笔记](docs/jhu-lgscl-db/README.md)
 +   [JHU 神经网络基础笔记](docs/jhu-nn-bsc/README.md)
