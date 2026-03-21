@@ -39,6 +39,7 @@
 +   [杜克大学 R 语言数据科学笔记](docs/duke-r-ds/README.md)
 +   [杜克大学 R 数据分析笔记](docs/duke-r-dtanls/README.md)
 +   [杜克大学可解释人工智能笔记](docs/duke-xai/README.md)
++   [ETHZ 科学与工程的人工智能笔记](docs/ethz-ai-sci-engi/README.md)
 +   [ETHZ 大数据笔记](docs/ethz-bgdt/README.md)
 +   [ETHZ 工程师大数据笔记](docs/ethz-engi-bgdt/README.md)
 +   [ETHZ 异构系统编程笔记](docs/ethz-hetsys-prog/README.md)
