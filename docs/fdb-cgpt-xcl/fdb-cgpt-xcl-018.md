@@ -1,4 +1,4 @@
-# ChatGPT与Excel：P18：使用ChatGPT批量双向校验Excel公式的扩展性与准确性
+# 018：使用ChatGPT批量双向校验Excel公式的扩展性与准确性
 
 ![](img/a299c5ba141073b7c8491955c41cf506_0.png)
 

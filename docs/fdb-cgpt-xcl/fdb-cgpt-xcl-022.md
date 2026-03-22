@@ -1,4 +1,4 @@
-# ChatGPT与Excel：P22：在ChatGPT指导下创建Excel可视化图表 📊
+# 022：在ChatGPT指导下创建Excel可视化图表 📊
 
 ![](img/a94a693abb0f433506d4d4f06d62f189_0.png)
 

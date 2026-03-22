@@ -1,4 +1,4 @@
-# ChatGPT与Excel： P8：利用ChatGPT实现数据转换与筛选方法 🧠➡️💻
+# 008：利用ChatGPT实现数据转换与筛选方法 🧠➡️💻
 
 ![](img/35a6b6ba03b75b99fcfc5e090de177a4_0.png)
 

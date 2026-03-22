@@ -1,4 +1,4 @@
-# ChatGPT与Excel：P6：提升决策能力：Excel数据分析的可追溯性与可复现性
+# 006：Excel数据分析的可追溯性与可复现性
 
 ![](img/25cda04d697a9e69cf45438f435a2fd7_1.png)
 

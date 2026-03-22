@@ -1,4 +1,4 @@
-# ChatGPT与Excel：P13：通过ChatGPT多模态提示设计Excel电子表格 🖼️➡️📊
+# 013：通过ChatGPT多模态提示设计Excel电子表格 🖼️➡️📊
 
 ![](img/ea012354af4ee642c119bab65e450361_0.png)
 

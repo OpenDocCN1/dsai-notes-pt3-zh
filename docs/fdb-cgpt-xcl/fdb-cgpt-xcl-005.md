@@ -1,4 +1,4 @@
-# ChatGPT与Excel：P5：通过提问让ChatGPT协助调试数据分析问题 🔍
+# 005：通过提问让ChatGPT协助调试数据分析问题 🔍
 
 ![](img/9fc20f85eabca9ed43164c549449a302_0.png)
 

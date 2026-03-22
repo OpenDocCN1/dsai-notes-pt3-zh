@@ -1,4 +1,4 @@
-# ChatGPT与Excel： P16：ChatGPT如何进行数值计算与数据分析
+# 016：ChatGPT如何进行数值计算与数据分析
 
 ![](img/9ecced8ca75367ba1b8b9d9cc6ff5378_0.png)
 

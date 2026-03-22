@@ -1,4 +1,4 @@
-# ChatGPT与Excel： P20： 更优可视化：利用ChatGPT快速生成Excel图表原型 📊
+# 020：利用ChatGPT快速生成Excel图表原型 📊
 
 ![](img/81600e365a333bdb4084a5630aca3432_0.png)
 

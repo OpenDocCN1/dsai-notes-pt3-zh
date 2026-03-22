@@ -1,4 +1,4 @@
-# ChatGPT与Excel数据分析：P10：用数据讲故事 📖
+# 010：用数据讲故事 📖
 
 ![](img/684b2de4d44abfdc5d80c844afcffe11_0.png)
 

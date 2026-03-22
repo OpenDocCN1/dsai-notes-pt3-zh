@@ -1,4 +1,4 @@
-# 生成式AI战略领导者：P48：增强智能的ACHIEVE框架 🧠
+# 048：增强智能的ACHIEVE框架 🧠
 
 ![](img/cf566bf653269f6e2b5e0a9fd297e0d5_0.png)
 

@@ -1,4 +1,4 @@
-# ChatGPT与Excel：P12：通过与ChatGPT对话设计和创建Excel电子表格
+# 012：通过与ChatGPT对话设计和创建Excel电子表格
 
 ![](img/c86197b41e4dda88abb31dc82c2661f4_0.png)
 

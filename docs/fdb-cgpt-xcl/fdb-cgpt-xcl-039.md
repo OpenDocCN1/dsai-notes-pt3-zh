@@ -1,4 +1,4 @@
-# ChatGPT与Excel：AI增强的数据分析与洞察：04：根提示词 🔑
+# 039：根提示词 🔑
 
 ![](img/9a82a5b96e4f24c4eb2f3ee61aceed82_0.png)
 

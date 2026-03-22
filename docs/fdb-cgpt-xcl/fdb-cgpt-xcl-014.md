@@ -1,4 +1,4 @@
-# ChatGPT与Excel：P14：使用ChatGPT创建Excel公式 🧮
+# 014：使用ChatGPT创建Excel公式 🧮
 
 ![](img/14ba2a200c126ac5dc817127af69a4ea_0.png)
 

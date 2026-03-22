@@ -1,4 +1,4 @@
-# ChatGPT与Excel：P23：速度技巧：用ChatGPT快速构建Excel可视化图表
+# 023：用ChatGPT快速构建Excel可视化图表
 
 ![](img/edf7297dbf516b4b8ec7571d33412ede_0.png)
 

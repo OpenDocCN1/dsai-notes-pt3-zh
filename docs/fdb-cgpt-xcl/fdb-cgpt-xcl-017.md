@@ -1,4 +1,4 @@
-# ChatGPT与Excel：AI增强的数据分析与洞察：P17：使用ChatGPT对Excel公式进行双向稳健性准确性检查 🔍
+# 017：使用ChatGPT对Excel公式进行双向稳健性准确性检查 🔍
 
 ![](img/83c94d17b7d84d76f985870a004970db_0.png)
 

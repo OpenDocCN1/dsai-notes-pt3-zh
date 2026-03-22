@@ -1,4 +1,4 @@
-# ChatGPT与Excel：AI增强的数据分析与洞察：P19：使用ChatGPT创建Excel测试用例的稳健性测试
+# 019：使用ChatGPT创建Excel测试用例的稳健性测试
 
 ![](img/ef1993769b611292a08cb1b3bed235cf_0.png)
 

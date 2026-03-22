@@ -1,4 +1,4 @@
-# ChatGPT与Excel：AI增强的数据分析与洞察：P24：双重校验：用ChatGPT对Excel可视化图表进行双向检查 👁️
+# 024：用ChatGPT对Excel可视化图表进行双向检查 👁️
 
 ![](img/a3aa40298334646086cbcc44c65aaa80_0.png)
 

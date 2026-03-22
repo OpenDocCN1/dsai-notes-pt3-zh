@@ -1,4 +1,4 @@
-# ChatGPT与Excel：P15：使用ChatGPT在Excel中创建VBA脚本
+# 015：使用ChatGPT在Excel中创建VBA脚本
 
 ![](img/1dc2ae5989af20658bc1efb23a699ad7_0.png)
 
