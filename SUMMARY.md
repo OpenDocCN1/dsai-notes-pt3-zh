@@ -21,6 +21,7 @@
 +   [康奈尔大学 CS4780 智能系统机器学习笔记](docs/crnl-cs4780-ml-intlsys/README.md)
 +   [康奈尔 CS5787 应用机器学习笔记](docs/crnl-cs5787-appml/README.md)
 +   [康奈尔 CS6785 深度生成式模型笔记](docs/crnl-cs6785-dpgen/README.md)
++   [康奈尔 CS8850 高级机器学习笔记](docs/crnl-cs8850-adv-ml/README.md)
 +   [康奈尔 ECE5545 机器学习硬件系统笔记](docs/crnl-ece5545-ml-hw-sys/README.md)
 +   [杜克大学 Python 应用数据工程笔记](docs/duke-app-py-dtengi/README.md)
 +   [杜克大学 Azure 端到端大模型笔记](docs/duke-az-e2e-llm/README.md)
