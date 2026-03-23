@@ -1,4 +1,6 @@
 +   [帝国理工机器学习线性代数笔记](README.md)
++   [001：线性代数介绍 🧮](icl-ml-linalg-001.md)
++   [002：线性代数的动机](icl-ml-linalg-002.md)
 +   [003：掌握向量](icl-ml-linalg-003.md)
 +   [004：向量的运算](icl-ml-linalg-004.md)
 +   [005：课程概述与向量基础](icl-ml-linalg-005.md)
