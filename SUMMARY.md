@@ -4,6 +4,7 @@
 +   [阿尔伯塔基于样本的学习方法笔记](docs/albt-smpbs-lrn-mtd/README.md)
 +   [阿尔伯塔时间序列分析笔记](docs/albt-ts-anls/README.md)
 +   [阿尔托 CSE4740 联邦学习笔记](docs/alt-cse4740-fedlrn/README.md)
++   [AmirhosseinKazemnejad 强化学习与大模型笔记](docs/amirhossein-kazemnejad-rl-llm/README.md)
 +   [Amni 几何深度学习笔记](docs/amni-geodl/README.md)
 +   [ASU 人工智能基础笔记](docs/asu-ai-bsc/README.md)
 +   [ASU CSE579 知识表示与推理笔记](docs/asu-cse579-knlg-rprs-csl/README.md)
