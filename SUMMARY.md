@@ -184,6 +184,7 @@
 +   [华盛顿大学数据驱动的机器学习控制笔记](docs/uwash-dtdvn-ctrl-ml/README.md)
 +   [华盛顿大学机器学习笔记](docs/uwash-ml/README.md)
 +   [华盛顿大学神经科学导论笔记](docs/uwash-neusci-intro/README.md)
++   [华盛顿大学 T81-559 生成式人工智能应用笔记](docs/uwash-t81559-genai-app/README.md)
 +   [VT CS4624：Python 机器学习在线指南](docs/vt-cs4624-pyml/README.md)
 +   [沃顿商学院商业人工智能笔记](docs/wharton_bizai/README.md)
 +   [威斯康星 CS220 数据编程笔记](docs/wscs-cs220-dtprog/README.md)
