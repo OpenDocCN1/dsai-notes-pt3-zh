@@ -191,3 +191,4 @@
 +   [威斯康星 STAT453 生成式人工智能笔记](docs/wscs-stat453-genai/README.md)
 +   [滑铁卢优化技术笔记](docs/wtl-opti-tech/README.md)
 +   [延世大学新兴技术笔记](docs/yanshi-newtech/README.md)
++   [阿姆斯特丹量子计算讲义](docs/阿姆斯特丹量子计算讲义/README.md)
