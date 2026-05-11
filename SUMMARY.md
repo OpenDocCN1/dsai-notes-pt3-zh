@@ -1,3 +1,4 @@
++   [AAAI 2019 会议笔记](docs/AAAI_2019_笔记/README.md)
 +   [阿尔伯塔完整强化学习系统笔记](docs/albt-cmpl-rlsys/README.md)
 +   [阿尔伯塔函数近似的预测控制笔记](docs/albt-prod-ctrl-func-appx/README.md)
 +   [阿尔伯塔强化学习笔记](docs/albt-rl/README.md)
