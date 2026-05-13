@@ -195,6 +195,7 @@
 +   [威斯康星 STAT453 生成式人工智能笔记](docs/wscs-stat453-genai/README.md)
 +   [滑铁卢优化技术笔记](docs/wtl-opti-tech/README.md)
 +   [延世大学新兴技术笔记](docs/yanshi-newtech/README.md)
++   [加州理工 CS219 量子计算讲义](docs/加州理工_CS219_量子计算讲义/README.md)
 +   [哈佛 CS229R 大数据算法讲义](docs/哈佛_CS229R_大数据算法讲义/README.md)
 +   [哥大 CS4705 自然语言处理讲义](docs/哥大_CS4705_自然语言处理讲义/README.md)
 +   [哥大 E6998 面向自然语言处理的机器学习讲义](docs/哥大_E6998_面向自然语言处理的机器学习讲义/README.md)
