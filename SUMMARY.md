@@ -130,6 +130,7 @@
 +   [普林斯顿 ECE524 强化学习基础笔记](docs/prct-ece524-rlfund/README.md)
 +   [普渡大学深度学习优化笔记](docs/prd-dl-opti/README.md)
 +   [卡塔尔大学 CMPS497 深度学习笔记](docs/qtr-cmps497-dl/README.md)
++   [2019年强化学习与决策会议笔记](docs/RLDM_2019 笔记/README.md)
 +   [纽约石溪大学 CSE519 数据科学笔记](docs/sbu-cse519-ds/README.md)
 +   [上海科大 CS121 并行计算笔记](docs/shtech-cs121-prll-comp/README.md)
 +   [图宾根深度学习笔记](docs/tbg-dl/README.md)
