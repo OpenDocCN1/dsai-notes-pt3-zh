@@ -58,6 +58,7 @@
 +   [哈佛 CS229r 大数据算法笔记](docs/hav-cs229r-bgdt-algo/README.md)
 +   [哈佛 CS229r 深度学习基础笔记](docs/hav-cs229r-dl-bsc/README.md)
 +   [哈佛 CS249r：机器学习系统](docs/hav-cs249r-mlsys/README.md)
++   [哈佛 CS249r：机器学习系统第二卷](docs/hav-cs249r-mlsys-vol2/README.md)
 +   [哈佛机器学习几何笔记](docs/hav-ml-geo/README.md)
 +   [Hhu Dusseldorf 表示学习笔记](docs/hhu-dusseldorf-rprs-lrn/README.md)
 +   [HKUST 数据分析基础笔记](docs/hkust-dtanls-fund/README.md)
