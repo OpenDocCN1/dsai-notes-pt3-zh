@@ -1,0 +1,77 @@
+
+
+# 数据挖掘的“十大”最具影响力的算法
+
+- C4.5
+- k-means
+- SVM: 支持向量机
+- Apriori
+- EM: 期望最大化
+- PageRank
+- AdaBoost
+- KNN: k-最近邻
+- Naïve Bayes: 朴素贝叶斯
+- CART: 分类和回归树
+
+![](img/6d25e92eb0bd56a22c311279c19b06b4_1310_0.png)
+
+## 使用EM算法的模糊聚类
+### 使用EM算法的模糊聚类
+
+![](img/6d25e92eb0bd56a22c311279c19b06b4_1311_0.png)
+
+| Iteration | E-step | M-step |
+|---|---|---|
+| 1 | $M^T=\begin{bmatrix}1&0&0.48&0.42&0.41&0.47\\0&1&0.52&0.58&0.59&0.53\end{bmatrix}$ | $c_1=(8.47,5.12)$<br>$c_2=(10.42,8.99)$ |
+| 2 | $M^T=\begin{bmatrix}0.73&0.49&0.91&0.26&0.33&0.42\\0.27&0.51&0.09&0.74&0.67&0.58\end{bmatrix}$ | $c_1=(8.51,6.11)$<br>$c_2=(14.42,8.69)$ |
+| 3 | $M^T=\begin{bmatrix}0.80&0.76&0.99&0.02&0.14&0.23\\0.20&0.24&0.01&0.98&0.86&0.77\end{bmatrix}$ | $c_1=(6.40,6.24)$<br>$c_2=(16.55,8.64)$ |
+
+- 计算两个模糊聚类，随机选择 $c_1=a$ and $c_2=b$
+- **1st E-step期望步**: assign o to $c_1$, w. wt = $\frac{1}{dist(o,c_1)^2}$
+  - $w_{c,c_1}=\frac{41}{45+41}=0.48$
+  - $\frac{1/dist(o,c_1)^2}{1/dist(o,c_1)^2+1/dist(o,c_2)^2}=\frac{dist(o,c_2)^2}{dist(o,c_1)^2+dist(o,c_2)^2}$
+- **1st M-step最大化步**: recalculate the centroids according to the partition matrix, minimizing the sum of squared error (SSE)
+- Iteratively calculate this until the cluster centers converge or the change is small enough
+
+$$c_j=\frac{\sum_{\text{each point }o}w_{o,c_j}^2o}{\sum_{\text{each point }o}w_{o,c_j}^2}$$
+
+$$c_1=\left(\frac{1^2\times3+0^2\times4+0.48^2\times9+0.42^2\times14+0.41^2\times18+0.47^2\times21}{1^2+0^2+0.48^2+0.42^2+0.41^2+0.47^2},\frac{1^2\times3+0^2\times10+0.48^2\times6+0.42^2\times8+0.41^2\times11+0.47^2\times7}{1^2+0^2+0.48^2+0.42^2+0.41^2+0.47^2}\right)=(8.47,5.12)$$
+
+## 单变量高斯混合模型
+### 使用EM算法的概率模型的聚类
+
+O = {o₁, ..., oₙ} (n observed objects), Θ = {θ₁, ..., θₖ} (parameters of the k distributions), and Pⱼ(oᵢ | θⱼ) is the probability that oᵢ is generated from the j-th distribution using parameter θⱼ, we have
+
+$P(o_i\mid\Theta)=\sum_{j=1}^{k}\omega_jP_j(o_i\mid\Theta_j)$　　　$P(\mathbf{O}\mid\Theta)=\prod_{i=1}^{n}\sum_{j=1}^{k}\omega_jP_j(o_i\mid\boldsymbol{\omega}_j)$
+
+- **Univariate Gaussian mixture model**
+  - Assume the probability density function of each cluster follows a 1-d Gaussian distribution. Suppose that there are k clusters.
+  - The probability density function of each cluster are centered at μⱼ with standard deviation σⱼ, θⱼ = (μⱼ, σⱼ), we have
+
+$P(o_i\mid\Theta_j)=\frac{1}{\sqrt{2\pi}\sigma_j}e^{-\frac{(o_i-\mu_j)^2}{2\sigma_j^2}}$　　　$P(o_i\mid\Theta)=\sum_{j=1}^{k}\frac{1}{\sqrt{2\pi}\sigma_j}e^{-\frac{(o_i-\mu_j)^2}{2\sigma_j^2}}$
+
+$P(\mathbf{O}\mid\Theta)=\prod_{i=1}^{n}\sum_{j=1}^{k}\frac{1}{\sqrt{2\pi}\sigma_j}e^{-\frac{(o_i-\mu_j)^2}{2\sigma_j^2}}$
+
+## 使用EM计算混合模型
+### 使用EM算法的概率模型的聚类
+
+- Given n objects O = {o₁, ..., oₙ}, we want to mine a set of parameters Θ = {θ₁, ..., θₖ} s.t., P(O|Θ) is maximized, where θⱼ = (μⱼ, σⱼ) are the mean and standard deviation of the j-th univariate Gaussian distribution
+- We initially assign random values to parameters θⱼ, then iteratively conduct the E- and M- steps until converge or sufficiently small change
+- At the E-step, for each object oᵢ, calculate the probability that oᵢ belongs to each distribution,
+  $$P(Θ_j|o_i, Θ) = \frac{P(o_i|Θ_j)}{\sum_{l=1}^{k} P(o_i|Θ_l)}$$
+
+- At the M-step, adjust the parameters θⱼ = (μⱼ, σⱼ) so that the expected likelihood P(O|Θ) is maximized
+  $$\mu_j = \sum_{i=1}^{n} o_i \frac{P(Θ_j|o_i, Θ)}{\sum_{l=1}^{n} P(Θ_j|o_l, Θ)} = \frac{\sum_{i=1}^{n} o_i P(Θ_j|o_i, Θ)}{\sum_{i=1}^{n} P(Θ_j|o_i, Θ)}\quad \sigma_j = \sqrt{\frac{\sum_{i=1}^{n} P(Θ_j|o_i, Θ)(o_i - u_j)^2}{\sum_{i=1}^{n} P(Θ_j|o_i, Θ)}}$$
+
+## 混合模型的优点和缺点
+
+- **Strength**
+  - Mixture models are more general than partitioning and fuzzy clustering
+  - Clusters can be characterized by a small number of parameters
+  - The results may satisfy the statistical assumptions of the generative models
+- **Weakness**
+  - Converge to local optimal (overcome: run multi-times w. random initialization)
+  - Computationally expensive if the number of distributions is large, or the data set contains very few observed data points
+  - Need large data sets
+  - Hard to estimate the number of clusters
+

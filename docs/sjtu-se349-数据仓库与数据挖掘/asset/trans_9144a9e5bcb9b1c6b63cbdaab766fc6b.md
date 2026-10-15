@@ -1,0 +1,193 @@
+
+
+## Watch Out : Is every “data mining”?
+什么不是数据挖掘？
+
+- 基于数据仓库的OLAP系统
+  — OLAP系统专注于数据的汇总，而数据挖掘系统可以对数据进行多种复杂的处理。
+- 机器学习系统，专家系统，数据统计分析系统
+  — 这些系统所处理的数据容量往往很有限。
+- 信息系统
+  — 专注于数据的查询处理。
+- 相比于上述系统，数据挖掘系统关注更广的范围，是一个多学科的融合
+
+## 典型数据挖掘系统的体系结构
+
+![](img/6d25e92eb0bd56a22c311279c19b06b4_141_0.png)
+
+## 视角1:Knowledge Discovery 知识发现（KDD）过程
+
+观点1: 把数据挖掘看成KDD的一个部分； 观点2: 把数据挖掘看成KDD的同义词
+
+数据挖掘：
+KDD的核心
+
+Evaluation & Presentation
+评估和表示
+
+DATA MINING
+数据挖掘
+
+Pattern
+模式
+
+Data Task-relevant
+提取任务相关数据
+
+Data Warehouse
+数据仓库
+
+Data Cleaning
+清理
+
+Data Selection
+选择
+
+Data Integration
+集成
+
+Databases 数据库
+
+Knowledge
+
+## 视角1： Knowledge Discovery 知识发现（KDD）过程
+
+观点1：把数据挖掘看成KDD的一个部分；观点2：把数据挖掘看成KDD的同义词
+
+- **Cleaning 数据清理**（可能占全部工作的60%！）
+  — 消除噪声和不一致数据
+- **Integration 数据集成**
+  — 多种数据源可以组合在一起
+- **Selection 数据选择**
+  — 从数据库中提取与分析任务相关的数据
+- **Transaction 数据变换**
+  — 汇总或聚集操作，把数据变换和统一为适合挖掘的形式
+- **Mining 数据挖掘**
+  — 智能方法提取模式
+- **Evaluation 模式评估**
+  — 兴趣度度量
+- **Presentation 知识表示**
+  — 向用户通过可视化技术和知识表现技术来展现挖掘的知识
+
+## 视角2： A Typical View from ML and Statistics
+
+Input Data → Data Pre-Processing → Data Mining → Post-Processing → Pattern Information Knowledge
+
+- Data integration
+- Normalization
+- Feature selection
+- Dimension reduction
+
+- Pattern discovery
+- Association & correlation
+- Classification
+- Clustering
+- Outlier analysis
+- ... ... ... ...
+
+- Pattern evaluation
+- Pattern selection
+- Pattern interpretation
+- Pattern visualization
+
+This is a view from typical machine learning and statistics communities
+
+## 数据挖掘与统计学的关系
+
+## 数据挖掘与统计学具有天然联系
+
+统计学研究数据的收集、分析、解释和表示
+
+## 统计模型可以是数据挖掘任务的结果
+
+统计模型是一组数学函数，它们用随机变量及其概率分布刻画目标类对象的行为，统计模型广泛用于对数据和数据类建模
+
+## 数据挖掘任务也可以建立在统计模型之上
+
+在大数据库中挖掘模式时，数据挖掘过程可使用统计模型来帮助识别数据中的噪声和缺失值
+
+## 对于从数据中挖掘各种模式，以及理解产生和影响这些模式的潜在机制，统计学是有用的
+
+推理统计学（或预测统计学）用某种方式对数据建模，解释观测中的随机性和确定性，并用来提取关于所考察的过程或总体的结论
+
+## 统计学方法也可以用来验证数据挖掘结果
+
+例如，建立分类或预测模型之后，应该使用统计假设检验来验证模型。统计假设检验（有时称做证实数据分析）使用实验数据进行统计判决。如果结果不大可能随机出现，则称它为统计显著的。如果分类或预测模型有效，则该模型的描述统计址将增强模型的可靠性。
+
+## 在数据挖掘中使用统计学方法并不简单
+
+一个巨大的挑战是如何把统计学方法用于大型数据集，许多统计学方法都具有很高的计算复杂度，当这些方法应用于分布在多个逻辑或物理站点上的大型数据集时，应该小心地设计和调整算法，以降低计算开销。
+
+## 数据挖掘与机器学习的关系
+
+- 机器学习考察计算机如何基于数据学习（或提高它们的性能），其主要研究领域之一是，计算机程序基于数据自动地学习识别复杂的模式，并做出智能的决策。
+  
+- 例如，一个典型的机器学习问题是为计算机编制程序，使之从一组实例学习之后，能够自动地识别邮件上的手写邮政编码
+
+- 机器学习是一个快速成长的学科，有很多与数据挖掘高度相关的、经典的机器学习问题
+  
+- 有监督学习
+  
+  基本上是分类的同义词。学习中的监督来自训练数据集中标记的实例。例如，在邮政编码识别问题中，一组手写邮政编码图像与其对应的机器可读的转换物用作训练实例，监督分类模型的学习。
+  
+- 监督学习
+  
+  本质上是聚类的同义词。学习过程是无监督的，因为输入实例没有类标记。典型地，我们可以使用聚类发现数据中的类。例如，一个无监督学习方法可以取一个手写数字图像集合作为输入。假设它找出了10个数据簇，这些簇可以分别对应于0 ~ 9这10个不同的数字。然而，由于训练数据并无标记，因此学习到的模型并不能告诉我们所发现的簇的语义。
+
+- 数据挖掘与机器学习的不同
+  
+  对于分类和聚类任务，机器学习研究通常关注模型的准确率
+  
+  除准确率之外，数据挖掘研究非常强调挖掘方法在大型数据集上的有效性和可伸缩性，以及处理复杂数据类型的方法，开发新的、非传统的方法
+
+## Which View Do You Prefer?
+
+- Which view do you prefer?
+  - KDD vs. ML/Stat. vs. Business Intelligence
+  - Depending on the data, applications, and your focus
+
+## 数据库系统研究与数据挖掘
+
+- 许多数据挖掘任务都需要处理大型数据集，甚至是处理实时的快速流数据，数据挖掘可以很好地利用可伸缩的数据库技术，以便获得在大型数据集上的高效率和可伸缩性
+
+数据库系统研究关注为单位和最终用户创建、维护和使用数据库。特别是，数据库系统研究者们已经建立了数据建模、查询语言、查询处理与优化方法、数据存储以及索引和存取方法的公认原则。数据库系统因其在处理非常大的、相对结构化的数据集方面的高度可伸缩性而闻名。
+
+- 数据挖掘任务也可以用来扩充已有数据库系统的能力，以便满足高端用户复杂的数据分析需求
+
+新的数据库系统使用数据仓库和数据挖掘机制，已经在数据库的数据上建立了系统的数据分析能力
+
+## Chapter 1. Introduction 引言
+
+- Why Data Mining
+- What is Data Mining
+- What kinds of Data
+- What kinds of Patterns
+- What kinds of Technologies
+- What kinds of Application
+- Major Issues
+- Summary
+
+- 为什么进行数据挖掘？
+- 什么是数据挖掘？
+- 可以挖掘什么类型的数据？
+- 可以挖掘什么类型的模式？
+- 使用什么技术？
+- 面向什么类型的应用？
+- 数据挖掘的主要问题
+- 小结
+
+## Data Mining: On What Kinds of Data?
+
+## 1. Database-oriented data sets and applications
+
+- **Database-oriented data sets and applications**
+  面向数据库的数据集和应用
+- **Relational database, data warehouse, transactional database**
+  关系数据库
+  数据仓库
+  事务数据库
+- **Object-relational databases, Heterogeneous databases and legacy databases**
+  对象关系数据库
+  异构数据库
+  历史数据库
+

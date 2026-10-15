@@ -1,0 +1,4743 @@
+- pgno: 0
+  md: '# Architecture of Enterprise Applications 0
+
+    Overview
+
+
+    Haopeng Chen
+
+
+    REliable, INtelligent and Scalable Systems Group (REINS)
+
+
+    Shanghai Jiao Tong University
+
+
+    Shanghai, China
+
+
+    http://reins.se.sjtu.edu.cn/~chenhp
+
+
+    e-mail: chen-hp@sjtu.edu.cn'
+  merge: -1
+  img_proc: false
+- pgno: 1
+  md: '+   - Overview of enterprise applications 1
+
+    +     - The features of enterprise applications
+
+    +     - Java EE
+
+    +   - Development of server-side component 2-3
+
+    +     - RMI、JNDI
+
+    +     - Session Bean
+
+    +     - Stateful and Stateless
+
+    +     - Resource creation and Injection
+
+    +   - Security 4-6
+
+    +     - Encryption and decryption of binary code
+
+    +     - Authentication and authorization
+
+    +     - Signature of code
+
+    +     - Encryption and decryption, HTTP+SSL
+
+    +     - SSO + Kerberos + CAS
+
+    +   - Transaction 7
+
+    +     - Delimited the transaction, transaction attribute
+
+    +     - Distributed transaction
+
+    +     - Two-phase commit protocol'
+  merge: -1
+  img_proc: false
+- pgno: 2
+  md: '+   - Messaging 8
+
+    +     - Message oriented Middleware
+
+    +     - Asynchronous communication
+
+    +     - Message-driven Bean
+
+
+    +   - Development of RIA 9-12
+
+    +     - Ajax and JS Library: jQuery
+
+    +     - JavaServer Faces, JSON processing, and Java Web Start
+
+    +     - WebSocket, Security: Cross-domain script assault, SQL injection assault
+
+    +     - Flex and HTML5
+
+
+    +   - Optimization 13-15
+
+    +     - Memory DB: Redis
+
+    +     - Distributed cache: memcached
+
+    +     - Clustering and Load Balancing
+
+    +     - Internationalization
+
+    +     - AOP
+
+
+    +   - Development of Web Service 16-17
+
+    +     - Soap web service
+
+    +     - Restful web service and WSDL 2.0'
+  merge: -1
+  img_proc: false
+- pgno: 3
+  md: '+   - Workflow and SOA  18-19
+
+    +     - Workflow: jbpm
+
+    +     - SOA: JBoss
+
+    +   - Searching  20
+
+    +     - Full-text searching: Lucene
+
+    +   - Distributed infrastructure: Hadoop  21-23
+
+    +     - HDFS, MapReduce, Zoo Keeper
+
+    +     - HBase, NoSQL applications, and Chubby Server
+
+    +     - Hive and data mining
+
+    +   - Others  24
+
+    +     - Python Django
+
+    +     - NodeJS
+
+    +     - Spark
+
+    +     - ...'
+  merge: -1
+  img_proc: false
+- pgno: 4
+  md: '# Exams and Scores
+
+
+    +   - Exams – 50%
+
+    +     - Final exam 40%
+
+    +     - Quizzes 10%
+
+    +   - Project – 50%
+
+    +     - 4 iterations  3*10%
+
+    +       - Every 4 weeks to commit an up-to-date version
+
+    +     - Final check  20%
+
+    +       - Oral defense in the 16th week
+
+    +   - Requirement:
+
+    +     - To develop a web application: Book store.
+
+    +     - User management: registration, login/logout, remove, query
+
+    +     - Book selling: the registered users can browse the Books, add them to the
+    shopping cart, and pay for them.
+
+    +     - Sales statistics: by user, by day/month/year, by catergories
+
+    +     - We will publish the specific requirements in every class.'
+  merge: -1
+  img_proc: false
+- pgno: 5
+  md: '+   - Schedule
+
+    +     - Weekly: Friday 08:00-09:40 东中院2-102
+
+    +     - Biweekly: Wednesday 08:00-09:40 东中院2-102
+
+    +     - Office hour: Wednesday 14:00-16:00 Software Building 1111
+
+
+    +   - TA
+
+    +     - 张祺智 mclaren1992@163.com
+
+
+    +   - Textbook
+
+    +     - No textbook
+
+    +     - References will be given in classes
+
+
+    +   - Website
+
+    +     - http://reins.se.sjtu.edu.cn/courses/se343-spring-2015'
+  merge: -1
+  img_proc: false
+- pgno: 6
+  md: '# Architecture of Enterprise Applications 1
+
+    Overview of Enterprise Applications
+
+
+    Haopeng Chen
+
+
+    REliable, INtelligent and Scalable Systems Group (REINS)
+
+
+    Shanghai Jiao Tong University
+
+
+    Shanghai, China
+
+
+    http://reins.se.sjtu.edu.cn/~chenhp
+
+
+    e-mail: chen-hp@sjtu.edu.cn'
+  merge: -1
+  img_proc: false
+- pgno: 7
+  md: '+   - Enterprise applications often have complex data -- and lots of it --
+    to work on, together with business rules that fail all tests of logical reasoning.
+
+    +     - Other terms for enterprise applications include “information systems"
+
+    +     - Enterprise applications include payroll, patient records, shipping tracking,
+    cost analysis, credit scoring, insurance, supply chain, accounting, customer service,
+    and foreign exchange trading.
+
+    +     - Enterprise applications don''t include automobile fuel injection, word
+    processors, elevator controllers, chemical plant controllers, telephone switches,
+    operating systems, compilers, and games.'
+  merge: -1
+  img_proc: false
+- pgno: 8
+  md: '# What is Enterprise Application
+
+
+    +   - Enterprise applications
+
+    +     - usually involve persistent data
+
+    +     - usually have a lot of data
+
+    +     - usually many people access data concurrently
+
+    +     - usually have a lot of user interface screens
+
+    +     - usually they need to integrate with other enterprise applications scattered
+    around the enterprise
+
+    +     - conceptual dissonance with the data
+
+    +     - complex business "illogic"'
+  merge: -1
+  img_proc: false
+- pgno: 9
+  md: '+   - An enterprise system is one that has the following qualities:
+
+    +     - Shares some or all of the resources used by the application
+
+    +     - Is intended for internal use
+
+    +     - Must work within existing architecture
+
+    +     - Will be deployed and supported by internal IT staff
+
+    +     - Requires greater robustness, both in terms of exception-handling and scalability
+
+    +     - Must fail gracefully
+
+    +     - Must gracefully handle evolution over time'
+  merge: -1
+  img_proc: false
+- pgno: 10
+  md: '# Higher technical complexity
+
+
+    +   - Embedded, real-time, distributed, fault-tolerant
+
+    +   - Custom, unprecedented, architecture reengineering
+
+    +   - High performance
+
+
+    An average software project
+
+    5-10 people
+
+    3-9 month duration
+
+    3-5 external interfaces
+
+    Some unknowns & risks
+
+
+    # Lower management complexity
+
+
+    +   - Small scale
+
+    +   - Informal
+
+    +   - Single stakeholder
+
+    +   - "Products"
+
+
+    # Higher management complexity
+
+
+    +   - Large scale
+
+    +   - Contractual
+
+    +   - Many stake holders
+
+    +   - "Projects"
+
+
+    # Lower technical complexity
+
+
+    +   - Mostly 4GL, or component-based
+
+    +   - Application reengineering
+
+    +   - Interactive performance
+
+
+    Embedded Automotive Software
+
+
+    Commercial Compiler
+
+
+    CASE Tool
+
+
+    Telecom Switch
+
+
+    Defense Weapon System
+
+
+    National Air Traffic Control System
+
+
+    Large-Scale Organization/Entity Simulation
+
+
+    Small Scientific Simulation
+
+
+    IS Application Distributed Objects (Order Entry)
+
+
+    IS Application GUI/RDB (Order Entry)
+
+
+    Business Spreadsheet
+
+
+    Enterprise IS (Family of IS Applications)
+
+
+    Defense MIS System'
+  merge: -1
+  img_proc: false
+- pgno: 11
+  md: '# What is web application ?
+
+
+    +   - Web applications are
+
+    +     - computer programs allowing website visitors to submit and retrieve data
+    to/from a database over the Internet using their preferred web browser.
+
+
+    ![](bbox=[0.062, 0.331, 0.921, 0.932])'
+  merge: -1
+  img_proc: false
+- pgno: 12
+  md: '# What is web application ?
+
+
+    Company Network
+
+
+    Internet
+
+
+    Router
+
+
+    Firewall
+
+
+    Switch
+
+
+    Wireless Access Point
+
+
+    User Submits Shopping Cart Order on Website
+
+
+    Web Servers
+
+
+    Web Application Server
+
+
+    STOP
+
+
+    Database Servers
+
+
+    Database
+
+
+    # Flow
+
+
+    +   1. User submits shopping cart order on Website via port 80/443.
+
+    +   2. Web Server receives shopping cart data from User and sends it to the Web
+    Application Server.
+
+    +   3. Web Application Server receives data from Web Server and sends it to the
+    Database Server. Database is also updated.
+
+    +   4. Web Application Server dynamically generates a web page and sends it to
+    the Web Server.
+
+    +   5. Web Server sends the generated page to the User informing him of his successful
+    transaction.
+
+
+    # Legend
+
+
+    +   Data exchanged between User and Web Server via port 80/443.
+
+    +   Data exchanged between Web Server, Web Application Server, Database Server
+    and Database.
+
+    +   Two-Way traffic between User and Web Server.
+
+    +   User does not have access to any network asset beyond the Web Server.'
+  merge: -1
+  img_proc: false
+- pgno: 13
+  md: '+   - Traditional web client server interaction model
+
+    +     - User enters interacts with a web page
+
+    +     - Browser sends data to web server
+
+    +     - Server sends data back to browser
+
+    +     - Browser receives the data and updates the page
+
+    +     - Page refresh may be intrusive and irritating'
+  merge: -1
+  img_proc: false
+- pgno: 14
+  md: '+   - JavaScript is used extensively in the browser
+
+    +   - Single web-page applications are possible
+
+    +     - Entire page need not be refreshed
+
+    +     - Browser interacts with server by sending and receiving small chunks of
+    data
+
+    +     - These update individual components or data items on a page
+
+    +     - This is also known as AJAX (misleading but widely used term) (Asynchronous
+    JavaScript and XML)
+
+    +   - Two advantages
+
+    +     - Speed: fewer data items are exchanged
+
+    +       - Faster network transfer, less work for server and browser
+
+    +     - Smoother experience for user – less clunky'
+  merge: -1
+  img_proc: false
+- pgno: 15
+  md: '+   - The Java EE application parts shown in left figure are presented in Java
+    EE Components.
+
+    +     - Client-tier components
+
+    +       - run on the client machine.
+
+    +     - Web-tier components
+
+    +       - run on the Java EE server.
+
+    +     - Business-tier components
+
+    +       - run on the Java EE server.
+
+    +     - Enterprise information system (EIS)-tier software
+
+    +       - runs on the EIS server.
+
+
+    ![](bbox=[0.48, 0.24, 0.99, 0.9])'
+  merge: -1
+  img_proc: false
+- pgno: 16
+  md: '+   - The Java EE application parts shown in left figure are presented in Java
+    EE Components.
+
+    +     - Client-tier components
+
+    +       - run on the client machine.
+
+    +     - Web-tier components
+
+    +       - run on the Java EE server.
+
+    +     - Business-tier components
+
+    +       - run on the Java EE server.
+
+    +     - Enterprise information system (EIS)-tier software
+
+    +       - runs on the EIS server.
+
+
+    ![](bbox=[0.48, 0.27, 0.98, 0.86])'
+  merge: -1
+  img_proc: false
+- pgno: 17
+  md: '# Containers
+
+
+    +   - are the interface between a component and the low-level platform-specific
+    functionality that supports the component.
+
+    +   - Before it can be executed, a web, enterprise bean, or application client
+    component must be assembled into a Java EE module and deployed into its container.
+
+    +   - Container settings customize the underlying support provided by the Java
+    EE server, including such services as
+
+    +     - Security
+
+    +     - Transaction management
+
+    +     - Java Naming and Directory Interface (JNDI) API lookups,
+
+    +     - and remote connectivity.'
+  merge: -1
+  img_proc: false
+- pgno: 18
+  md: '# Java EE Platform
+
+
+    +   - Container types
+
+
+    ![](bbox=[0.264, 0.247, 0.734, 0.925])'
+  merge: -1
+  img_proc: false
+- pgno: 19
+  md: '+   - Container types
+
+
+    ![](bbox=[0.18, 0.35, 0.88, 0.78])'
+  merge: -1
+  img_proc: false
+- pgno: 20
+  md: 'Java EE APIs in the Web Container
+
+
+    ![](bbox=[0.09, 0.32, 0.48, 0.82])
+
+
+    ![](bbox=[0.56, 0.32, 0.92, 0.82])'
+  merge: -1
+  img_proc: false
+- pgno: 21
+  md: <!-- no content -->
+  merge: -1
+  img_proc: false
+- pgno: 22
+  md: '# Java EE Platform
+
+
+    +   - Java EE APIs in the Application Client Container
+
+
+    ![](bbox=[0.282, 0.299, 0.72, 0.826])
+
+
+    New in Java EE 7'
+  merge: -1
+  img_proc: false
+- pgno: 23
+  md: '+   - Technologies required by Java EE platform:
+
+    +     - Enterprise JavaBeans Technology
+
+    +       - session bean
+
+    +       - message-driven bean
+
+    +     - Java Servlet Technology
+
+    +     - JavaServer Faces Technology
+
+    +     - JavaServer Pages Technology
+
+    +     - JavaServer Pages Standard Tag Library
+
+    +     - Java Persistence API
+
+    +     - Java Transaction API
+
+    +     - Java API for RESTful Web Services
+
+    +     - Managed Beans
+
+    +     - Contexts and Dependency Injection for Java EE
+
+    +     - (to be continued)'
+  merge: -1
+  img_proc: false
+- pgno: 24
+  md: '+   Technologies required by Java EE platform:
+
+    +   - Dependency Injection for Java
+
+    +   - Bean Validation
+
+    +   - Java Message Service API
+
+    +   - Java EE Connector Architecture
+
+    +   - JavaMail API
+
+    +   - Java Authorization Contract for Containers
+
+    +   - Java Authentication Service Provider Interface for Containers
+
+    +   - Java API for WebSocket
+
+    +   - Java API for JSON Processing
+
+    +   - Concurrency Utilities for Java EE
+
+    +   - Batch Applications for the Java Platform'
+  merge: -1
+  img_proc: false
+- pgno: 25
+  md: '+   - Java EE 7 APIs in the Java Platform, Standard Edition 7
+
+    +     - Java Database Connectivity API
+
+    +     - Java Naming and Directory Interface API
+
+    +     - JavaBeans Activation Framework
+
+    +     - Java API for XML Processing
+
+    +     - Java Architecture for XML Binding
+
+    +     - Java API for XML Web Services
+
+    +     - SOAP with Attachments API for Java
+
+    +     - Java Authentication and Authorization Service
+
+    +     - Common Annotations for the Java Platform'
+  merge: -1
+  img_proc: false
+- pgno: 26
+  md: '+   - Java EE without EJB
+
+    +     - Spring – IoC
+
+    +     - Struts – MVC
+
+    +     - Hibernate – ORM
+
+    +     - LAMP: Linux+Apache+Mysql/MariaDB+Perl/PHP/Python'
+  merge: -1
+  img_proc: false
+- pgno: 27
+  md: '# References
+
+
+    +   - Web Applications: What are They? What of Them?
+
+    +     - [http://www.acunetix.com/websitesecurity/web-applications/](http://www.acunetix.com/websitesecurity/web-applications/)
+
+    +   - The Java EE 7 Tutorial
+
+    +     - [http://docs.oracle.com/javaee/7/tutorial/doc/javaeetutorial7.pdf](http://docs.oracle.com/javaee/7/tutorial/doc/javaeetutorial7.pdf)'
+  merge: -1
+  img_proc: false
+- pgno: 28
+  md: '# Thank You!'
+  merge: -1
+  img_proc: false
+- pgno: 29
+  md: '# Architecture of Enterprise Applications 2
+
+    Server Component – Distributed Object
+
+
+    Haopeng Chen
+
+
+    REliable, INtelligent and Scalable Systems Group (REINS)
+
+
+    Shanghai Jiao Tong University
+
+
+    Shanghai, China
+
+
+    http://reins.se.sjtu.edu.cn/~chenhp
+
+
+    e-mail: chen-hp@sjtu.edu.cn'
+  merge: -1
+  img_proc: false
+- pgno: 30
+  md: '# Contents
+
+
+    +   - The roles of client and server
+
+    +   - Remote method calls
+
+    +   - The RMI programming model
+
+    +   - Parameters and return values in remote methods
+
+    +   - Remote object activation
+
+    +   - Web services'
+  merge: -1
+  img_proc: false
+- pgno: 31
+  md: '# The Roles of Client and Server
+
+
+    +   - The basic idea behind all distributed programming is simple.
+
+    +     - A client computer makes a request and sends the request data across a
+    network to a server.
+
+    +     - The server processes the request and sends back a response for the client
+    to analyze.
+
+
+    ![](bbox=[0.57, 0.28, 0.93, 0.86])'
+  merge: -1
+  img_proc: false
+- pgno: 32
+  md: '+   - What we want is a mechanism
+
+    +     - by which the client programmer makes a regular method call, without worrying
+    about sending data across the network or parsing the response.
+
+    +     - The solution is to install a proxy object on the client.
+
+
+    ![](bbox=[0.22, 0.48, 0.88, 0.92])'
+  merge: -1
+  img_proc: false
+- pgno: 33
+  md: '+   - How do the proxies communicate with each other?
+
+    +     - The Java RMI technology
+
+    +     - The Common Object Request Broker Architecture (CORBA)
+
+    +     - The web services architecture
+
+
+    ![](bbox=[0.22, 0.45, 0.8, 0.92])'
+  merge: -1
+  img_proc: false
+- pgno: 34
+  md: '+   - Stubs and Parameter Marshalling
+
+
+    ```
+
+    Warehouse centralWarehouse = get stub object;
+
+    double price = centralWarehouse.getPrice("Blackwell Toaster");
+
+    ```
+
+
+    ![](bbox=[0.2, 0.35, 0.85, 0.88])'
+  merge: -1
+  img_proc: false
+- pgno: 35
+  md: '# Remote Method Calls
+
+
+    +   - Stubs and Parameter Marshalling
+
+    +     ```
+
+    +     Warehouse centralWarehouse = get stub object;
+
+    +     double price = centralWarehouse.getPrice("Blackwell Toaster");
+
+    +     ```
+
+    +   - The stub method on the client builds an information block that consists
+    of
+
+    +     - An identifier of the remote object to be used.
+
+    +     - A description of the method to be called.
+
+    +     - The parameters.
+
+    +   - The stub then sends this information to the server.
+
+    +   - On the server side, a receiver object performs the following actions:
+
+    +     - It locates the remote object to be called.
+
+    +     - It calls the desired method, passing the supplied parameters.
+
+    +     - It captures the return value or exception of the call.
+
+    +     - It sends a package consisting of the marshalled return data back to the
+    stub on the client.'
+  merge: -1
+  img_proc: false
+- pgno: 36
+  md: "# Interfaces and Implementations\n\n```\nimport java.rmi.*;\npublic interface\
+    \ Warehouse extends Remote\n{\n    double getPrice(String description) throws\
+    \ RemoteException;\n}\n```\n\n+   - Interfaces for remote objects must always\
+    \ extend the Remote interface defined in the java.rmi package.\n+   - All the\
+    \ methods in those interfaces must also declare that they will throw a RemoteException."
+  merge: -1
+  img_proc: false
+- pgno: 37
+  md: "# The RMI Programming Model\n\n+   - On the server side, you must provide the\
+    \ implementation of the remote interface\n\n```\npublic class WarehouseImpl extends\
+    \ UnicastRemoteObject implements Warehouse\n{\n    private Map<String, Double>\
+    \ prices;\n\n    public WarehouseImpl() throws RemoteException\n    {\n      \
+    \  prices = new HashMap<>();\n        prices.put(\"Blackwell Toaster\", 24.95);\n\
+    \        prices.put(\"ZapXpress Microwave Oven\", 49.95);\n    }\n    public double\
+    \ getPrice(String description) throws RemoteException\n    {\n        Double price\
+    \ = prices.get(description);\n        return price == null ? 0 : price;\n    }\n\
+    }\n```"
+  merge: -1
+  img_proc: false
+- pgno: 38
+  md: "+   - The RMI Registry\n+     - The first remote object is a bootstrap registry\
+    \ service.\n+     - RMI URLs :\n+       rmi://regserver.mycompany.com:1099/central_warehouse\n\
+    \n+   - Here is the code for\n+     - registering a WarehouseImpl object with\
+    \ the RMI registry on the same server:\n\n```\nWarehouseImpl centralWarehouse\
+    \ = new WarehouseImpl();\nContext namingContext = new InitialContext();\nnamingContext.bind(\"\
+    rmi:central_warehouse\",\n    centralWarehouse);\n```"
+  merge: -1
+  img_proc: false
+- pgno: 39
+  md: '# Java Naming and Directory Interface
+
+
+    Java Application
+
+
+    JNDI API
+
+
+    Naming Manager
+
+
+    JNDI SPI
+
+
+    +   - LDAP
+
+    +   - DNS
+
+    +   - NIS
+
+    +   - NDS
+
+    +   - RMI
+
+    +   - CORBA
+
+
+    JNDI Implementation Possibilities
+
+
+    Problems
+
+
+    Javadoc
+
+
+    Declaration
+
+
+    JNDI Explorer
+
+
+    127.0.0.2:1099
+
+
+    HAPartition
+
+
+    DefaultPartition
+
+
+    queue
+
+
+    inQueue
+
+
+    OutQueue
+
+
+    TradeBrokerQueue
+
+
+    topic
+
+
+    TradeStreamerTopic'
+  merge: -1
+  img_proc: false
+- pgno: 40
+  md: '+   - On Server-side
+
+    +     Context ctx = new InitialContext();
+
+    +     ctx.bind("jdbc/AcmeDB", vds);
+
+    +     ctx.rebind("jdbc/ZenithDB", vds);
+
+    +   - On Client-side
+
+    +     Context ctx = new InitialContext();
+
+    +     DataSource ds = (DataSource)ctx.lookup("jdbc/ZenithDB");'
+  merge: -1
+  img_proc: false
+- pgno: 41
+  md: "# The RMI Programming Model\n\n+   - The Server-side program\n\n```\npublic\
+    \ class WarehouseServer\n{\n    public static void main(String[] args) throws\n\
+    \        RemoteException, NamingException\n    {\n        System.out.println(\"\
+    Constructing server implementation...\");\n        WarehouseImpl centralWarehouse\
+    \ = new WarehouseImpl();\n\n        System.out.println(\"Binding server implementation\
+    \ to registry...\");\n        Context namingContext = new InitialContext();\n\
+    \        namingContext.bind(\"rmi:central_warehouse\", centralWarehouse);\n\n\
+    \        System.out.println(\"Waiting for invocations from clients...\");\n  \
+    \  }\n}\n```"
+  merge: -1
+  img_proc: false
+- pgno: 42
+  md: '+   - The Client-side Program
+
+
+    ![](bbox=[0.17, 0.27, 0.86, 0.88])'
+  merge: -1
+  img_proc: false
+- pgno: 43
+  md: "# The RMI Programming Model\n\n# The Client-side Program\n\n```\n```java\n\
+    public class WarehouseClient\n{\n    public static void main(String[] args) throws\n\
+    \                                      NamingException, RemoteException\n    {\n\
+    \        Context namingContext = new InitialContext();\n\n        String url =\
+    \ \"rmi://localhost/central_warehouse\";\n        Warehouse centralWarehouse =\
+    \ (Warehouse) namingContext.lookup(url);\n\n        String descr = \"Blackwell\
+    \ Toaster\";\n        double price = centralWarehouse.getPrice(descr);\n     \
+    \   System.out.println(descr + \": \" + price);\n    }\n}\n```\n```"
+  merge: -1
+  img_proc: false
+- pgno: 44
+  md: '+   - Deploying the Program
+
+
+    ![](bbox=[0.09, 0.26, 0.92, 0.86])'
+  merge: -1
+  img_proc: false
+- pgno: 45
+  md: '# The RMI Programming Model
+
+
+    +   - Running the Program
+
+    +     - Add ClassDir to CLASSPATH
+
+    +     - For example: E:\Projects\JavaEE\rmiserver\bin
+
+    +     - Create a jndi.properties file, and copy it into /Server and /Client class
+    dir.
+
+    +       java naming.factory.initial=com.sun.jndi.rmi.registry.RegistryContextFactory
+
+    +       java naming.provider.url=rmi://localhost:1099
+
+    +     - Run the rmiregistry in a windows console
+
+    +     - Run the WarehouseServer in another windows console, you will see:
+
+    +       Constructing server implementation...
+
+    +       Binding server implementation to registry...
+
+    +       Waiting for invocations from clients...
+
+    +     - Run the WarehouseClient in the third windows console, you will see:
+
+    +       RMI registry bindings: central_warehouse
+
+    +       Blackwell Toaster: 24.95'
+  merge: -1
+  img_proc: false
+- pgno: 46
+  md: '+   - There are two mechanisms for transferring values between virtual machines.
+
+    +     - Objects of classes that implement the `Remote` interface are transferred
+    as remote references.
+
+    +     - Objects of classes that implement the `Serializable` interface but not
+    the `Remote` interface are copied using serialization.'
+  merge: -1
+  img_proc: false
+- pgno: 47
+  md: "```\npublic interface Warehouse extends Remote\n{\n    double getPrice(String\
+    \ description) throws RemoteException;\n    Product getProduct(List<String> keywords)\
+    \ throws RemoteException;\n}\n```\n\n![](bbox=[0.24, 0.38, 0.82, 0.93])"
+  merge: -1
+  img_proc: false
+- pgno: 48
+  md: "```\npublic class Product implements Serializable\n{\n    private String description;\n\
+    \    private double price;\n    private Warehouse location;\n\n    public Product(String\
+    \ description, double price)\n    {\n        this.description = description;\n\
+    \        this.price = price;\n    }\n\n    public String getDescription() { return\
+    \ description; }\n\n    public double getPrice() { return price; }\n\n    public\
+    \ Warehouse getLocation() { return location; }\n\n    public void setLocation(Warehouse\
+    \ location) {\n        this.location = location;\n    }\n}\n```"
+  merge: -1
+  img_proc: false
+- pgno: 49
+  md: "# Transferring Nonremote Objects\n\n```\npublic class Book extends Product\n\
+    {\n    private String isbn;\n\n    public Book(String title, String isbn, double\
+    \ price)\n    {\n        super(title, price);\n        this.isbn = isbn;\n   \
+    \ }\n\n    public String getDescription()\n    {\n        return super.getDescription()\
+    \ + \" \" + isbn;\n    }\n}\n```"
+  merge: -1
+  img_proc: false
+- pgno: 50
+  md: "```\npublic class WarehouseImpl extends UnicastRemoteObject implements Warehouse\n\
+    {\n    private Map<String, Product> products;\n    private Warehouse backup;\n\
+    \n    public WarehouseImpl(Warehouse backup) throws RemoteException\n    {\n \
+    \       products = new HashMap<>();\n        this.backup = backup;\n    }\n\n\
+    \    public void add(String keyword, Product product)\n    {\n        product.setLocation(this);\n\
+    \        products.put(keyword, product);\n    }\n}\n```"
+  merge: -1
+  img_proc: false
+- pgno: 51
+  md: "# Transferring Nonremote Objects\n\n```\npublic double getPrice(String description)\
+    \ throws RemoteException {\n    for (Product p : products.values())\n        if\
+    \ (p.getDescription().equals(description)) return p.getPrice();\n    if (backup\
+    \ == null) return 0;\n    else return backup.getPrice(description);\n}\npublic\
+    \ Product getProduct(List<String> keywords) throws RemoteException {\n    for\
+    \ (String keyword : keywords) {\n        Product p = products.get(keyword);\n\
+    \        if (p != null) return p;\n    }\n    if (backup != null)\n        return\
+    \ backup.getProduct(keywords);\n    else if (products.values().size() > 0)\n \
+    \       return products.values().iterator().next();\n    else\n        return\
+    \ null;\n}\n```"
+  merge: -1
+  img_proc: false
+- pgno: 52
+  md: "# Transferring Nonremote Objects\n\n```\n```java\npublic class WarehouseServer\n\
+    {\n    public static void main(String[] args) throws RemoteException, NamingException\n\
+    \    {\n        System.out.println(\"Constructing server implementation...\");\n\
+    \        WarehouseImpl backupWarehouse = new WarehouseImpl(null);\n        WarehouseImpl\
+    \ centralWarehouse = new WarehouseImpl(backupWarehouse);\n\n        centralWarehouse.add(\"\
+    toaster\", new Product(\"Blackwell Toaster\", 23.95));\n        backupWarehouse.add(\"\
+    java\", new Book(\"Core Java vol. 2\", \"0132354799\", 44.95));\n\n        System.out.println(\"\
+    Binding server implementation to registry...\");\n        Context namingContext\
+    \ = new InitialContext();\n        namingContext.bind(\"rmi:central_warehouse\"\
+    , centralWarehouse);\n\n        System.out.println(\"Waiting for invocations from\
+    \ clients...\");\n    }\n}\n```\n```"
+  merge: -1
+  img_proc: false
+- pgno: 53
+  md: "# Transferring Nonremote Objects\n\n```\n```java\npublic class WarehouseClient\n\
+    {\n    public static void main(String[] args) throws NamingException, RemoteException\n\
+    \    {\n        Context namingContext = new InitialContext();\n\n        System.out.print(\"\
+    RMI registry bindings: \");\n        NamingEnumeration<NameClassPair> e = namingContext.list(\"\
+    rmi://localhost/\");\n        while (e.hasMore())\n            System.out.println(e.next().getName());\n\
+    \n        String url = \"rmi://localhost:1099/central_warehouse\";\n        Warehouse\
+    \ centralWarehouse = (Warehouse) namingContext.lookup(url);\n\n        Scanner\
+    \ in = new Scanner(System.in);\n        System.out.print(\"Enter keywords: \"\
+    );\n        List<String> keywords = Arrays.asList(in.nextLine().split(\"\\\\s+\"\
+    ));\n        Product prod = centralWarehouse.getProduct(keywords);\n\n       \
+    \ System.out.println(prod.getDescription() + \": \" + prod.getPrice());\n    }\n\
+    }\n```\n```"
+  merge: -1
+  img_proc: false
+- pgno: 54
+  md: '# Running the Program
+
+
+    +   - Add ClassDir to CLASSPATH
+
+    +   - For example: E:\Projects\JavaEE\WareHouseServer\bin
+
+    +   - Create a jndi.properties file, and copy it into /Server and /Client class
+    dir.
+
+    +     java naming.factory.initial=com.sun.jndi.rmi.registry.RegistryContextFactory
+
+    +     java naming.provider.url=rmi://localhost:1099
+
+    +   - Run the rmiregistry in a windows console
+
+    +   - Run the WarehouseServer in another windows console, you will see:
+
+    +     Constructing server implementation...
+
+    +     Binding server implementation to registry...
+
+    +     Waiting for invocations from clients...
+
+    +   - Run the WarehouseClient in the third windows console, you will see:
+
+    +     RMI registry bindings: central_warehouse
+
+    +     Enter Keywords:'
+  merge: -1
+  img_proc: false
+- pgno: 55
+  md: '+   - **The activation mechanism**
+
+    +     - lets you delay the object construction so that a remote object is only
+    constructed when at least one client invokes a remote method on it.
+
+    +     ```
+
+    +     class WarehouseImpl extends
+
+    +     Activatable implements Warehouse { . . . }
+
+    +     ```
+
+    +   - **You must provide a constructor that takes two parameters:**
+
+    +     - An activation ID (which you simply pass to the superclass constructor).
+
+    +     - A single object containing all construction information, wrapped in a
+    MarshalledObject.'
+  merge: -1
+  img_proc: false
+- pgno: 56
+  md: "```\npublic interface Warehouse extends Remote{\n    double getPrice(String\
+    \ description) throws RemoteException;\n}\n\npublic class WarehouseImpl extends\
+    \ Activatable implements Warehouse\n{\n    private Map<String, Double> prices;\n\
+    \    public WarehouseImpl(ActivationID id,\n                        MarshalledObject<Map<String,\
+    \ Double>> param)\n        throws RemoteException, ClassNotFoundException, IOException\n\
+    \    {\n        super(id, 0);\n        prices = param.get();\n        System.out.println(\"\
+    Warehouse implementation constructed.\");\n    }\n    public double getPrice(String\
+    \ description) throws RemoteException\n    {\n        Double price = prices.get(description);\n\
+    \        return price == null ? 0 : price;\n    }\n}\n```"
+  merge: -1
+  img_proc: false
+- pgno: 57
+  md: "# Remote Object Activation\n\n```\npublic class WarehouseActivator\n{\n   \
+    \ public static void main(String[] args) throws RemoteException, NamingException,\n\
+    \        ActivationException, IOException\n    {\n        System.out.println(\"\
+    Constructing activation descriptors...\");\n\n        Properties props = new Properties();\n\
+    \        props.put(\"java.security.policy\",\n            new File(\"server.policy\"\
+    ).getCanonicalPath());\n\n        ActivationGroupDesc group = new ActivationGroupDesc(props,\
+    \ null);\n        ActivationGroupID id = ActivationGroup.getSystem().registerGroup(group);\n\
+    \n        Map<String, Double> prices = new HashMap<>();\n        prices.put(\"\
+    Blackwell Toaster\", 24.95);\n        prices.put(\"ZapXpress Microwave Oven\"\
+    , 49.95);\n\n        MarshalledObject<Map<String, Double>> param =\n         \
+    \   new MarshalledObject<Map<String, Double>>(prices);\n\n        String codebase\
+    \ = \"http://localhost:8080/\";\n```"
+  merge: -1
+  img_proc: false
+- pgno: 58
+  md: "```\nActivationDesc desc = new ActivationDesc(id,\n    \"WarehouseImpl\", codebase,\
+    \ param);\n\nWarehouse centralWarehouse = (Warehouse) Activatable.register(desc);\n\
+    \nSystem.out.println(\"Binding activable implementation to registry...\");\nContext\
+    \ namingContext = new InitialContext();\nnamingContext.bind(\"rmi:central_warehouse\"\
+    , centralWarehouse);\nSystem.out.println(\"Exiting...\");\n}\n}\n```\n\n+   -\
+    \ Serverpolicy\n+     grant\n+     {\n+       permission java.security.AllPermission;\n\
+    +     };\n\n![](bbox=[0.57, 0.57, 0.95, 0.83])"
+  merge: -1
+  img_proc: false
+- pgno: 59
+  md: "```\npublic class WarehouseClient\n{\n    public static void main(String[]\
+    \ args) throws NamingException, RemoteException\n    {\n        Context namingContext\
+    \ = new InitialContext();\n\n        System.out.print(\"RMI registry bindings:\
+    \ \");\n        Enumeration<NameClassPair> e = namingContext.list(\"rmi://localhost/\"\
+    );\n        while (e.hasMoreElements())\n            System.out.println(e.nextElement().getName());\n\
+    \n        String url = \"rmi://localhost/central_warehouse\";\n        Warehouse\
+    \ centralWarehouse = (Warehouse) namingContext.lookup(url);\n\n        String\
+    \ descr = \"ZapXpress Microwave Oven\";//\"Blackwell Toaster\";\n        double\
+    \ price = centralWarehouse.getPrice(descr);\n        System.out.println(descr\
+    \ + \": \" + price);\n    }\n}\n```"
+  merge: -1
+  img_proc: false
+- pgno: 60
+  md: "# Remote Object Activation\n\n+   - `Client.policy`\n+   \n+     ```\n+   \
+    \  grant\n+     {\n+         permission com.sun.rmi.rmid.ExecPermission\n+   \
+    \          \"${java.home}${/}bin${/}java\";\n+         permission com.sun.rmi.rmid.ExecOptionPermission\n\
+    +             \"-Djava.security.policy=*\";\n+     };\n+     ```\n\n+   - `rmid.policy`\n\
+    +   \n+     ```\n+     grant\n+     {\n+         permission com.sun.rmi.rmid.ExecPermission\n\
+    +             \"${java.home}${/}bin${/}java\";\n+         permission com.sun.rmi.rmid.ExecOptionPermission\n\
+    +             \"-Djava.security.policy=*\";\n+     };\n+     ```\n\n+   - Copy\
+    \ the `rmid.policy` to `java.home/bin`\n\n![](bbox=[0.573, 0.602, 0.951, 0.873])"
+  merge: -1
+  img_proc: false
+- pgno: 61
+  md: '# Remote Object Activation
+
+
+    +   1. Compile all source files.
+
+    +   2. Start the RMI registry with rmiregistry
+
+    +   3. Start the RMI activation daemon with
+
+    +      `rmid -J-Djava.security.policy=rmid.policy`
+
+    +   4. Run the activation program from the server directory.
+
+    +      `java -Djava.rmi.server.codebase=http://localhost:8080/WarehouseActivator`
+
+    +   5. Run the client program from the client directory.
+
+    +      `java -Djava.security.manager -Djava.security.policy=client.policy WarehouseClient`
+
+
+    ![](bbox=[0.72, 0.51, 0.95, 0.86])'
+  merge: -1
+  img_proc: false
+- pgno: 62
+  md: '# New Dynamic Web Project
+
+
+    # Dynamic Web Project
+
+
+    Create a standalone Dynamic Web project or add it to a new or existing Enterprise
+    Application.
+
+
+    Project name: WarehouseWebService
+
+
+    Project location
+
+
+    Use default location
+
+
+    Location: EA\Projects\JavaEE\WarehouseWebService
+
+
+    Target runtime
+
+
+    Apache Tomcat v7.0
+
+
+    New Runtime...
+
+
+    Dynamic web module version
+
+
+    3.0
+
+
+    Configuration
+
+
+    Default Configuration for Apache Tomcat v7.0
+
+
+    Modify...
+
+
+    A good starting point for working with Apache Tomcat v7.0 runtime. Additional
+    facets can later be installed to add new functionality to the project.
+
+
+    # EAR membership
+
+
+    Add project to an EAR
+
+
+    EAR project name: EAR
+
+
+    New Project...
+
+
+    # Working sets
+
+
+    Add project to working sets
+
+
+    Working sets
+
+
+    Select...
+
+
+    < Back   Next >   Finish   Cancel'
+  merge: -1
+  img_proc: false
+- pgno: 63
+  md: "# Web Services\n\n```\n```java\nimport java.util.*;\nimport javax.jws.*;\n\n\
+    @WebService\npublic class Warehouse {\n    public Warehouse() {\n        prices\
+    \ = new HashMap<String, Double>();\n        prices.put(\"Blackwell Toaster\",\
+    \ 24.95);\n        prices.put(\"ZapXpress Microwave Oven\", 49.95);\n    }\n\n\
+    \    public double getPrice(@WebParam(name=\"description\") String description)\n\
+    \    {\n        Double price = prices.get(description);\n        return price\
+    \ == null ? 0 : price;\n    }\n\n    private Map<String, Double> prices;\n}\n\
+    ```\n```"
+  merge: -1
+  img_proc: false
+- pgno: 64
+  md: '# Web Services
+
+
+    Select a service implementation or definition and move the sliders to set the
+    level of service and client generation.
+
+
+    Web service type:
+
+
+    Bottom up Java bean Web Service
+
+
+    Service implementation:
+
+
+    Warehouse
+
+
+    Start service
+
+
+    Configuration:
+
+
+    Server runtime: Tomcat v7.0 Server
+
+
+    Web service runtime: Apache Axis
+
+
+    Service project: WarehouseWS
+
+
+    Client type:
+
+
+    Java Proxy
+
+
+    Develop client
+
+
+    Configuration:
+
+
+    Server runtime: Tomcat v7.0 Server
+
+
+    Web service runtime: Apache Axis
+
+
+    Client project: WarehouseWSClient
+
+
+    Publish the Web service
+
+
+    Monitor the Web service
+
+
+    Overwrite files without warning
+
+
+    < Back
+
+
+    Next >
+
+
+    Finish
+
+
+    Cancel'
+  merge: -1
+  img_proc: false
+- pgno: 65
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 66
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 67
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 68
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 69
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 70
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 71
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 72
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 73
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 74
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 75
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 76
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 77
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 78
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 79
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 80
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 81
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 82
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 83
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 84
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 85
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 86
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 87
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 88
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 89
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 90
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 91
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 92
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 93
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 94
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 95
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 96
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 97
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 98
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 99
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 100
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 101
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 102
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 103
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 104
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 105
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 106
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 107
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 108
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 109
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 110
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 111
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 112
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 113
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 114
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 115
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 116
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 117
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 118
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 119
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 120
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 121
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 122
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 123
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 124
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 125
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 126
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 127
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 128
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 129
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 130
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 131
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 132
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 133
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 134
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 135
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 136
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 137
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 138
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 139
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 140
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 141
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 142
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 143
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 144
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 145
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 146
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 147
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 148
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 149
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 150
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 151
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 152
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 153
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 154
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 155
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 156
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 157
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 158
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 159
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 160
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 161
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 162
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 163
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 164
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 165
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 166
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 167
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 168
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 169
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 170
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 171
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 172
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 173
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 174
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 175
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 176
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 177
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 178
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 179
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 180
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 181
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 182
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 183
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 184
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 185
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 186
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 187
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 188
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 189
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 190
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 191
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 192
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 193
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 194
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 195
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 196
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 197
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 198
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 199
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 200
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 201
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 202
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 203
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 204
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 205
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 206
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 207
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 208
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 209
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 210
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 211
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 212
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 213
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 214
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 215
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 216
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 217
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 218
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 219
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 220
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 221
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 222
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 223
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 224
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 225
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 226
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 227
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 228
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 229
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 230
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 231
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 232
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 233
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 234
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 235
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 236
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 237
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 238
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 239
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 240
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 241
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 242
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 243
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 244
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 245
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 246
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 247
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 248
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 249
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 250
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 251
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 252
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 253
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 254
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 255
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 256
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 257
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 258
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 259
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 260
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 261
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 262
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 263
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 264
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 265
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 266
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 267
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 268
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 269
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 270
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 271
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 272
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 273
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 274
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 275
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 276
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 277
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 278
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 279
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 280
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 281
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 282
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 283
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 284
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 285
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 286
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 287
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 288
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 289
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 290
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 291
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 292
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 293
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 294
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 295
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 296
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 297
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 298
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 299
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 300
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 301
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 302
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 303
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 304
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 305
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 306
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 307
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 308
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 309
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 310
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 311
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 312
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 313
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 314
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 315
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 316
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 317
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 318
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 319
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 320
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 321
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 322
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 323
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 324
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 325
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 326
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 327
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 328
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 329
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 330
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 331
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 332
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 333
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 334
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 335
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 336
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 337
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 338
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 339
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 340
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 341
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 342
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 343
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 344
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 345
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 346
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 347
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 348
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 349
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 350
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 351
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 352
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 353
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 354
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 355
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 356
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 357
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 358
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 359
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 360
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 361
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 362
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 363
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 364
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 365
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 366
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 367
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 368
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 369
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 370
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 371
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 372
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 373
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 374
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 375
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 376
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 377
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 378
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 379
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 380
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 381
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 382
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 383
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 384
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 385
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 386
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 387
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 388
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 389
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 390
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 391
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 392
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 393
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 394
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 395
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 396
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 397
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 398
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 399
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 400
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 401
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 402
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 403
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 404
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 405
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 406
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 407
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 408
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 409
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 410
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 411
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 412
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 413
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 414
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 415
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 416
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 417
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 418
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 419
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 420
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 421
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 422
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 423
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 424
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 425
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 426
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 427
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 428
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 429
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 430
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 431
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 432
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 433
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 434
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 435
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 436
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 437
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 438
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 439
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 440
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 441
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 442
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 443
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 444
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 445
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 446
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 447
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 448
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 449
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 450
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 451
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 452
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 453
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 454
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 455
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 456
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 457
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 458
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 459
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 460
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 461
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 462
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 463
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 464
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 465
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 466
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 467
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 468
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 469
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 470
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 471
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 472
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 473
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 474
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 475
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 476
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 477
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 478
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 479
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 480
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 481
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 482
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 483
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 484
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 485
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 486
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 487
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 488
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 489
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 490
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 491
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 492
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 493
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 494
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 495
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 496
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 497
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 498
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 499
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 500
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 501
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 502
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 503
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 504
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 505
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 506
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 507
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 508
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 509
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 510
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 511
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 512
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 513
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 514
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 515
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 516
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 517
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 518
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 519
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 520
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 521
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 522
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 523
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 524
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 525
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 526
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 527
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 528
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 529
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 530
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 531
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 532
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 533
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 534
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 535
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 536
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 537
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 538
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 539
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 540
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 541
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 542
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 543
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 544
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 545
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 546
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 547
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 548
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 549
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 550
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 551
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 552
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 553
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 554
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 555
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 556
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 557
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 558
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 559
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 560
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 561
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 562
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 563
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 564
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 565
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 566
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 567
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 568
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 569
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 570
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 571
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 572
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 573
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 574
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 575
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 576
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 577
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 578
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 579
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 580
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 581
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 582
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 583
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 584
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 585
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 586
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 587
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 588
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 589
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 590
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 591
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 592
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 593
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 594
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 595
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 596
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 597
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 598
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 599
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 600
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 601
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 602
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 603
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 604
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 605
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 606
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 607
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 608
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 609
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 610
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 611
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 612
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 613
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 614
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 615
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 616
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 617
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 618
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 619
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 620
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 621
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 622
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 623
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 624
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 625
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 626
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 627
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 628
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 629
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 630
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 631
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 632
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 633
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 634
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 635
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 636
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 637
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 638
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 639
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 640
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 641
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 642
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 643
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 644
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 645
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 646
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 647
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 648
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 649
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 650
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 651
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 652
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 653
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 654
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 655
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 656
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 657
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 658
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 659
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 660
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 661
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 662
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 663
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 664
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 665
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 666
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 667
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 668
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 669
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 670
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 671
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 672
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 673
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 674
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 675
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 676
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 677
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 678
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 679
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 680
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 681
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 682
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 683
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 684
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 685
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 686
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 687
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 688
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 689
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 690
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 691
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 692
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 693
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 694
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 695
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 696
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 697
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 698
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 699
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 700
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 701
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 702
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 703
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 704
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 705
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 706
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 707
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 708
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 709
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 710
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 711
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 712
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 713
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 714
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 715
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 716
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 717
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 718
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 719
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 720
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 721
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 722
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 723
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 724
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 725
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 726
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 727
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 728
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 729
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 730
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 731
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 732
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 733
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 734
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 735
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 736
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 737
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 738
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 739
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 740
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 741
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 742
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 743
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 744
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 745
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 746
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 747
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 748
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 749
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 750
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 751
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 752
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 753
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 754
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 755
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 756
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 757
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 758
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 759
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 760
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 761
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 762
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 763
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 764
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 765
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 766
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 767
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 768
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 769
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 770
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 771
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 772
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 773
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 774
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 775
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 776
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 777
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 778
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 779
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 780
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 781
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 782
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 783
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 784
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 785
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 786
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 787
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 788
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 789
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 790
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 791
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 792
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 793
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 794
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 795
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 796
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 797
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 798
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 799
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 800
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 801
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 802
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 803
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 804
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 805
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 806
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 807
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 808
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 809
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 810
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 811
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 812
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 813
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 814
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 815
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 816
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 817
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 818
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 819
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 820
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 821
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 822
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 823
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 824
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 825
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 826
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 827
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 828
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 829
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 830
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 831
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 832
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 833
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 834
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 835
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 836
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 837
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 838
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 839
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 840
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 841
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 842
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 843
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 844
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 845
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 846
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 847
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 848
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 849
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 850
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 851
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 852
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 853
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 854
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 855
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 856
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 857
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 858
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 859
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 860
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 861
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 862
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 863
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 864
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 865
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 866
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 867
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 868
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 869
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 870
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 871
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 872
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 873
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 874
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 875
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 876
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 877
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 878
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 879
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 880
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 881
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 882
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 883
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 884
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 885
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 886
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 887
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 888
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 889
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 890
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 891
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 892
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 893
+  md: ''
+  merge: -1
+  img_proc: false
+- pgno: 894
+  md: ''
+  merge: -1
+  img_proc: false

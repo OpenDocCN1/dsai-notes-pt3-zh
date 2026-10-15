@@ -1,0 +1,147 @@
+
+
+## 3.3 流程建模规范
+
+### Seven Process Modeling Guidelines 7PMG
+
+- G1: Use as few elements in the model as possible
+- G2: Minimize the routing paths per element.
+- G3: Use one start and one end event.
+- G4: Model as structured as possible.
+- G5: Avoid OR routing elements.
+- G6: Use verb-object activity labels.
+- G7: Decompose the model if it has more than 50 elements.
+
+### G3: Use one start and one end event.
+
+- Low error probability.
+- Workflow engines.
+
+### G4: Model as structured as possible.
+
+- as formulas with balanced brackets
+
+### G5: Avoid OR routing elements.
+
+![](img/9d75eecf8b59f35a7bd6d5d5336e2c43_86_0.png)
+
+### G6: Use verb-object activity labels.
+
+- Verb-object style("Inform complainant") VS. Action-noun labels (e.g. "Complaint analysis").
+
+### G7: Decompose the model if it has more than 50 elements.
+
+- For models with more than 50 elements the error probability tends to be higher than 50%.
+
+## 4 小结
+
+- 企业业务模型具有层次性、多视角、复杂相关性等特点；业务建模就是描述企业应用的标准规范手段，基于模型开发及实施企业信息系统是软件工程的基本要求，也是业务应用的要求。
+- 目前存在许多建模方法和建模技术，很多方法与技术是互补的。应根据不同的信息系统特点，按照方法、体系、工具的层次选择模型。
+- 业务流程描述时要强调与组织的关联，分析时要专注于核心增值业务的描述和改进。
+
+## 信息系统分析与设计
+
+### Lecture2
+
+### 基于状态的流程建模
+
+蔡鸿明
+
+hmcai@sjtu.edu.cn
+
+软件学院信息系统技术实验室
+
+lst.sjtu.edu.cn
+
+### agenda
+
+- 1. Petri网概述
+- 2. Petri网理论
+  - 2.1 经典Petri网
+  - 2.2 Petri网的形式化
+  - 2.3 高阶Petri网
+- 3. 基于Petri网的过程建模
+- 4. 建模实例及讨论
+- 5. 小结
+
+## 1 Petri网概述
+
+经典的Petri网是由德国 Carl Adam Petri 在 1962 年的博士论文《Kommunikation mit Automaten》中提出的。他发现当时的已有计算机理论如自动机和形式语言不适合描述物理系统，于是就提出了 Petri 网。
+
+Petri网是完全从过程的角度出发为复杂系统的描述与分析设计提供的一种有效的建模工具，能自然的描述并发、冲突、同步、资源争用等系统特性。
+
+Petri网发展也经历了三个阶段。最先集中在孤立网系统研究；1970年至1985年，开始通用网系统研究，但主要被用于理论界；自从80年代中期后，实际的应用越来越多，这主要是由于引入高阶Petri网和许多工具。
+
+### Carl Adam Petri
+
+![](img/9d75eecf8b59f35a7bd6d5d5336e2c43_93_0.png)
+
+- Petri's work significantly advanced the fields of parallel computing and distributed computing, and it helped define the modern studies of complex systems and workflow management. His contributions have been in the broader area of network theory which includes coordination models and theories of interaction, and eventually led to the formal study of software connectors.
+- In 2008 he got the IEEE Computer Pioneer Award (2008). He was a member of the Academia Europaea since 1989.
+
+From Wikipedia
+
+- 离散事件动态系统的研究自20世纪80年代后发展较快。针对各层次不同角度的问题提出了多种理论模型和分析技术。它们已开始在许多技术领域得到应用，并被认为是大型复杂信息处理和控制系统分析和设计的重要理论基础。
+- Petri网具有严格的数学基础和规范化语义，作为DEDS的描述工具，可描述异步、同步、并行逻辑关系，是描述、分析和控制DEDS的最有效和应用最广泛的方法；
+- Petri网、有限自动机、形式语言等模型可以很好地描述这种逻辑层次的分析和综合问题。
+
+## Petri网主要用途
+
+主要用途包括：
+
+- 系统仿真：系统分析与评估的系统仿真。
+- 数学分析：可通过结构变化描述系统的变化，支持DEDS形式的数学描述与分析；
+- 系统性能分析：如制造系统设备使用率、生产率、可靠性等。
+- 系统控制：直接从可视化模型中产生DEDS监控编码，进行系统实施控制。
+- 还可以转化为其它的DEDS模型，如马尔可夫链等。
+
+## Petri网在计算机及软件工程中可以应用到：
+
+- 工作流建模及管理
+- 软件设计（尤其是模型驱动设计）
+- 数据分析
+- 并行程序设计
+- 协议验证
+- ...等。
+
+## 从建模角度
+
+- Petri网是完全从过程的角度出发为复杂系统的描述与分析设计提供的一种有效的建模工具；
+- 能自然的描述并发、冲突、同步、资源争用等系统特性，并带有执行控制机制，同时还具备形式化步骤及数学图论相支持的理论严密性。
+- Petri网的图形表达的直观性和便于编程实现的技术特点，使得它已经成为目前工作流建模的主要工具之一。
+- 从建模角度——可视化图形描述却被形式化数学方法支持；
+- 研究领域趋向认为Petri网是所有流程定义语言之母；
+
+## agenda
+
+- 1. Petri网概述
+- 2. Petri网理论
+  - 2.1 经典Petri网
+  - 2.2 Petri网的形式化
+  - 2.3 高阶Petri网
+- 3. 基于Petri网的过程建模
+- 4. 建模实例及讨论
+- 5. 小结
+
+### 2.1 经典Petri网
+
+Petri网观点可简单地归纳为两个基本概念：
+
+- 事件和条件，许多系统均可从事件与条件的观点去建模；
+- 系统状态可描述为一组条件，条件就是系统状态的谓词或逻辑描述；
+- 事件是系统状态改变的原因，事件的出现是由系统状态控制的；
+- 前条件：由于事件是动作，所以它可以发生。为了使事件发生，必须使某些条件成立，这种条件称为事件的前条件；
+- 后条件：事件的发生可能破坏前条件而使另外的条件成立，这种条件称为事件的后条件。
+
+## Petri网的结构
+
+经典的Petri网主要是由库所（place）以及转移（transition）构成的网络。
+
+![](img/9d75eecf8b59f35a7bd6d5d5336e2c43_102_0.png)
+
+连接（Connection）是库所和转移之间的有向弧，具有方向。
+
+托肯（Token）是动态对象。
+
+Petri网的状态由分布在库所中的托肯决定。
+
