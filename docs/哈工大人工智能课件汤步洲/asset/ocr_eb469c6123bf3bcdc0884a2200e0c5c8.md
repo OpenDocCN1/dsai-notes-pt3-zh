@@ -1,0 +1,10 @@
+# Bayes’ Nets
+
++   - Representation
++   - Conditional Independences
++   - Probabilistic Inference
++     - Enumeration (exact, exponential complexity)
++     - Variable elimination (exact, worst-case exponential complexity, often better)
++     - Inference is NP-complete
++     - Sampling (approximate)
++   - Learning Bayes’ Nets from Data

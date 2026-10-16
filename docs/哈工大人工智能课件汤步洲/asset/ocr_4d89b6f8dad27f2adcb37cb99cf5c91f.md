@@ -1,0 +1,1 @@
+# Thus Far: Multiple Join, Multiple Eliminate (= Inference by Enumeration)
