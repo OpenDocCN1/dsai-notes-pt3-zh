@@ -1,0 +1,35 @@
+令 $u(\tau) = -R^{-1}(\tau)B^{T}(\tau)\bar{P}(\tau)x(\tau)$ （并没有令其为最优控制）
+
+因： $\frac{d}{d\tau}[x^{T}(\tau)\bar{P}(\tau)x(\tau)]$ （（6.3-1）代入）→
+$= \dot{x}^{T}(\tau)\bar{P}(\tau)x(\tau)+x^{T}(\tau)\dot{\bar{P}}(\tau)x(\tau)+x^{T}(\tau)\bar{P}(\tau)\dot{x}(\tau)$
+$= x^{T}(\tau)[\dot{P}(\tau)+A^{T}(\tau)\bar{P}(\tau)+\bar{P}(\tau)A(\tau)-2\bar{P}(\tau)R^{-1}(\tau)B^{T}(\tau)\bar{P}(\tau)]x(\tau)$ （6.3-10）
+
+将 $u(\tau)=-R^{-1}(\tau)B^{T}(\tau)\bar{P}(\tau)x(\tau)$ 及式(6.3-10)代入式(6.3-2)，及考虑式(6.3-3)
+$J[x(t),u(\bullet),t,T]=\int_{t}^{T}[x^{T}(\tau)Q(\tau)x(\tau)+u^{T}(\tau)R(\tau)u(\tau)]d\tau$ （只考虑 $\tau\in[t,T]$）
+$=\int_{t}^{T}-\frac{d}{d\tau}[x^{T}(\tau)\bar{P}(\tau)x(\tau)]d\tau$
+$=x^{T}(t)\bar{P}(t)x(t)-x^{T}(T)\bar{P}(T)x(T)$ （6.3-11）
+$=x^{T}(t)\bar{P}(t)x(t)$
+
+因此有： $\lim_{T\to\infty}J[x(t),u(t),t,T]\le x^{T}(t)\bar{P}(t)x(t)$ （6.3-12）
+
+另有： $x^{T}(t)\bar{P}(t)x(t)=J^{*}[x(t),t,T]$
+$\le J[x(t),u(\bullet),t,T]$
+
+因此有： $\lim_{T\to\infty}J[x(t),u(\bullet),t,T]\ge x^{T}(t)\bar{P}(t)x(t)$ （6.3-13）
+
+由式(6.3-10)及式(6.3-10)有 $\lim_{T\to\infty}J[x(t),u(\bullet),t,T]=x^{T}(t)\bar{P}(t)x(t)$ （6.3-14）
+
+因尚末证明 $U(\tau)=-R^{-1}(\tau)B^{T}(\tau)\bar{P}(\tau)X(\tau)$ 为最优控制
+
+故有 $J^{*}[x(t),t,\infty]\le J[x(t),u(\bullet),t,\infty]$ （6.3-15）
+
+假设式(6.3-15)中严格不等式成立，即 $J^{*}[x(t),t,\infty]<J[x(t),u(\bullet),t,\infty]$ （6.3-16）
+
+则存在一个不同于 $u(\tau)$ 的 $u_{1}(\tau)$ 使 $\lim_{T\to\infty}J[x(t),u_{1}(\tau),t,T]=J^{*}[x(t),t,\infty]$ （6.3-17）
+
+又由式(6.3-14)有 $\lim_{T\to\infty}J^{*}[x(t),t,T]=J[x(t),u(\bullet),t,\infty]$ （6.3-18）
+
+故由(6.3-16),(6.3-17)有 $\lim_{T\to\infty}J[x(t),u_{1}(\bullet),t,T]<\lim_{T\to\infty}J^{*}[x(t),t,T]$ （6.3-19）
+
+即对相当大的 $T$ 的要求 $J[x(t),u_{1}(\bullet),t,T]<J^{*}[x(t),t,T]$ （6.3-20）
+成立
