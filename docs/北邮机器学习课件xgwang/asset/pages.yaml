@@ -1,0 +1,5918 @@
+- pgno: 0
+  md: '# Machine Learning Basics
+
+
+    Xiaogang Wang
+
+
+    xgwang@ee.cuhk.edu.hk
+
+
+    January 5, 2015'
+  merge: -1
+  img_proc: true
+- pgno: 1
+  md: '# Machine Learning
+
+
+    $x \rightarrow f(x) \rightarrow y$
+
+
+    Class label (Classification)
+
+
+    Real-valued vector (Regression)
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_1_0.png)
+
+
+    Object recognition
+
+
+    {dog, cat, horse, flower, ...}
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_1_1.png)
+
+
+    Super resolution
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_1_2.png)
+
+
+    Low-resolution image
+
+
+    High-resolution image'
+  merge: -1
+  img_proc: true
+- pgno: 2
+  md: '# Classification
+
+
+    +   - $f(x)$ predicts the category that $x$ belongs to
+
+    +     $f : \mathcal{R}^D \to \{1,\dots,K\}$
+
+    +   - $f(x)$ is decided by the decision boundary
+
+    +   - As an variant, $f$ can also predict the probability distribution over classes
+    given $x$, $f(x) = P(y|x)$. The category is predicted as $y^* = \arg\max_k P(y
+    = k|x)$
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_2_0.png)
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_2_1.png)
+
+
+    > (Duda et al. Pattern Classification 2000)'
+  merge: -1
+  img_proc: true
+- pgno: 3
+  md: "# Regression\n\n+   - Predict real-valued output\n+   \n+     f : ℝ^D → ℝ^M\n\
+    +   - Example: linear regression\n+   \n+     y = w^T x = Σ_{d=1}^D w_d x_d +\
+    \ w_0\n\n![](img/a04b187c89c5018c5ef6132980e27196_3_0.png)\n\n> (Bengio et al.\
+    \ Deep Learning 2014)"
+  merge: -1
+  img_proc: true
+- pgno: 4
+  md: '# Training
+
+
+    +   - Training: estimate the parameters of f from {(x_i^(train), y_i^(train))}
+
+    +     - Decision boundary, parameters of P(y|x), and w in linear regression
+
+    +   - Optimize an objective function on the training set. It is a performance
+    measure on the training set and could be different from that on the test set.
+
+
+    均方误差
+
+
+    +   - Mean squared error (MSE) for linear regression
+
+    +     MSE_train = 1/N Σ_i || w^T x_i^(train) - y_i^(train) ||_2^2
+
+
+    交叉熵
+
+
+    +   - Cross entropy (CE) for classification
+
+    +     CE_train = 1/N Σ_i log P(y = y_i^(train) | x_i^(train))
+
+
+    Why not use classification errors #{ f(x_i^(train)) ≠ y_i^(train) }?'
+  merge: -1
+  img_proc: true
+- pgno: 5
+  md: '# Optimization
+
+
+    +   - The choice of the objective function should be good for optimization
+
+    +   - Take linear regression as an example
+
+
+    ∇_w MSE^(train) = 0
+
+    ⇒ ∇_w || X^(train) w − y^(train) ||_2^2 = 0
+
+    w = (X^(train)ᵀ X^(train))⁻¹ X^(train)ᵀ y^(train)
+
+    where X^(train) = [x₁^(train), …, x_N^(train)] and y^(train) = [y₁^(train), …,
+    y_N^(train)].'
+  merge: -1
+  img_proc: true
+- pgno: 6
+  md: '# Generalization
+
+
+    +   - We care more about the performance of the model on new, previously unseen
+    examples
+
+    +   - The training examples usually cannot cover all the possible input configurations,
+    so the learner has to generalize from the training examples to new cases
+
+    +   - Generalization error: the expected error over ALL examples
+
+    +   - To obtain theoretical guarantees about generalization of a machine learning
+    algorithm, we assume all the samples are drawn from a distribution p(x, y), and
+    calculate generalization error (GE) of a prediction function f by taking expectation
+    over p(x, y)
+
+
+    GE_f = ∫_{x,y} p(x,y) Error(f(x), y)'
+  merge: -1
+  img_proc: true
+- pgno: 7
+  md: "# Generalization\n\n+   - However, in practice, $p(\\mathbf{x}, y)$ is unknow.\
+    \ We assess the generalization performance with a test set $\\{\\mathbf{x}_i^{(\\\
+    text{test})}, y_i^{(\\text{test})}\\}$\n+   \n+     $\\text{Performance}_{\\text{test}}\
+    \ = \\frac{1}{M} \\sum_{i=1}^{M} \\text{Error}(f(\\mathbf{x}_i^{(\\text{test})}),\
+    \ y_i^{(\\text{test})})$\n\n+   - We hope that both test examples and training\
+    \ examples are drawn from $p(\\mathbf{x}, y)$ of interest, although it is unknown"
+  merge: -1
+  img_proc: true
+- pgno: 8
+  md: <!-- no content -->
+  merge: -1
+  img_proc: true
+- pgno: 9
+  md: '# Underfitting
+
+
+    +   - The learner cannot find a solution that fits training examples well
+
+    +     - For example, use linear regression to fit training examples {x_i^(train),
+    y_i^(train)} where y_i^(train) is an quadratic function of x_i^(train)
+
+    +   - Underfitting means the learner cannot capture some important aspects of
+    the data
+
+    +   - Reasons for underfitting happening
+
+    +     - Model is not rich enough
+
+    +     - Difficult to find the global optimum of the objective function on the
+    training set or easy to get stuck at local minimum
+
+    +     - Limitation on the computation resources (not enough training iterations
+    of an iterative optimization procedure)
+
+    +   - Underfitting commonly happens in deep learning with large scale training
+    data and could be even a more serious problem than overfitting in some cases'
+  merge: -1
+  img_proc: true
+- pgno: 10
+  md: '# Overfitting
+
+
+    +   - The learner fits the training data well, but loses the ability to generalize
+    well, i.e. it has small training error but larger generalization error
+
+    +   - A learner with large capacity tends to overfit
+
+    +     - The family of functions is too large (compared with the size of the training
+    data) and it contains many functions which all fit the training data well.
+
+    +     - Without sufficient data, the learner cannot distinguish which one is most
+    appropriate and would make an arbitrary choice among these apparently good solutions
+
+    +     - A separate validation set helps to choose a more appropriate one
+
+    +     - In most cases, data is contaminated by noise. The learner with large capacity
+    tends to describe random errors or noise instead of the underlying models of data
+    (classes).
+
+
+    在大多数情况下，数据受到噪声的污染。容量大的模型倾向于描述随机误差或噪声，而不是数据（类）的底层模型。'
+  merge: -1
+  img_proc: true
+- pgno: 11
+  md: '# Overfitting
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_11_0.png)
+
+
+    Overly complex models lead to complicated decision boundaries. It leads to perfect
+    classification on the training examples, but would lead to poor performance on
+    new examples.
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_11_1.png)
+
+
+    The decision boundary might represent the optimal tradeoff between performance
+    on the training set and simplicity of classifier, therefore giving highest accuracy
+    on new examples.
+
+
+    > (Duda et al. Pattern Classification 2000)'
+  merge: -1
+  img_proc: true
+- pgno: 12
+  md: '机器学习的基本要素是模型容量和泛化之间的权衡。
+
+
+    +   - The fundamental element of machine learning is the trade-off between capacity
+    and generalization
+
+    +   - Occam’s Razor states that among competing functions that could explains
+    the training data, one should choose the “simpler” one. Simplicity is the opposite
+    of capacity.
+
+    +   - Occam’s Razor suggests us pick the family of functions just enough large
+    enough to leave only one choice that fits well the data.'
+  merge: -1
+  img_proc: true
+- pgno: 13
+  md: '# Optimal capacity
+
+
+    +   - Difference between training error and generalization error increases with
+    the capacity of the learner
+
+    +   - Generalization error is a U-shaped function of capacity
+
+    +   - Optimal capacity is associated with the transition from underfitting to
+    overfitting
+
+    +     - One can use a validation set to monitor generalization error empirically
+
+    +   - Optimal capacity should increase with the number of training examples'
+  merge: -1
+  img_proc: true
+- pgno: 14
+  md: '![](img/a04b187c89c5018c5ef6132980e27196_14_0.png)
+
+
+    Typical relationship between capacity and both training and generalization (or
+    test) error. As capacity increases, training error can be reduced, but the optimism
+    (difference between training and generalization error) increases. At some point,
+    the increase in optimism is larger than the decrease in training error (typically
+    when the training error is low and cannot go much lower), and we enter the overfitting
+    regime, where capacity is too large, above the optimal capacity. Before reaching
+    optimal capacity, we are in the underfitting regime.
+
+
+    > (Bengio et al. Deep Learning 2014)'
+  merge: -1
+  img_proc: true
+- pgno: 15
+  md: '# Optimal capacity
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_15_0.png)
+
+
+    As the number of training examples increases, optimal capacity (bold black) increases
+    (we can afford a bigger and more flexible model), and the associated generalization
+    error (green bold) would decrease, eventually reaching the (non-parametric) asymptotic
+    error (green dashed line). If capacity was fixed (parametric setting), increasing
+    the number of training examples would also decrease generalization error (top
+    red curve), but not as fast, and training error would slowly increase (bottom
+    red curve), so that both would meet at an asymptotic value (dashed red line) corresponding
+    to the best achievable solution in some class of learned functions.
+
+
+    > (Bengio et al. Deep Learning 2014)'
+  merge: -1
+  img_proc: true
+- pgno: 16
+  md: '# Exercise question
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_16_0.png)
+
+
+    +   - In the figure above, the training data (10 black dots) were selected from
+    a quadratic function plus Gaussian noise, i.e., f(x) = w2 x² + w1 x + b + ε where
+    ρ(ε) = N(0, σ²). The degree-10 polynomial fits the data perfectly. Which learner
+    should be chosen in order to better predict new examples? The second-order function
+    or the 10th degree function?
+
+    +   - If the ten training examples were generated from a 10th degree polynomial
+    plus Gaussian noise, which learned should be chosen?
+
+    +   - If the one million training examples were generated from a quadratic function
+    plus Gaussian noise, which learned should be chosen?'
+  merge: -1
+  img_proc: true
+- pgno: 17
+  md: '# How to reduce capacity?
+
+
+    +   - Reduce the number of features
+
+    +   - Reduce the number of **independent parameters**
+
+    +   - Reduce the network size of deep models
+
+    +   - Reduce the number of training iterations
+
+    +   - Add regularization to the learner
+
+    +   - . . .'
+  merge: -1
+  img_proc: true
+- pgno: 18
+  md: '# Curse of dimensionality
+
+
+    +   Why do we need to reduce the dimensionality of the feature space?
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_18_0.png)
+
+
+    Scatter plot of the training data of three classes. Two features are used. The
+    goal is to classify the new testing point denoted by ''x''.
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_18_1.png)
+
+
+    The feature space is uniformly divided into cells. A cell is labeled as a class,
+    if the majority of training examples in that cell are from that class. The testing
+    point is classified according to the label of the cell where it falls in.
+
+
+    > (Duda et al. Pattern Classification 2000)'
+  merge: -1
+  img_proc: true
+- pgno: 19
+  md: '# Curse of dimensionality
+
+
+    +   - The more training samples in each cell, the more robust the classifier
+
+    +   - The number of cells grows exponentially with the dimensionality of the feature
+    space. If each dimension is divided into three intervals, the number of cells
+    is $N = 3^n$
+
+    +   - Some cells are empty when the number of cells is very large!
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_19_0.png)
+
+
+    > (Duda et al. Pattern Classification 2000)'
+  merge: -1
+  img_proc: true
+- pgno: 20
+  md: '# Regularization
+
+
+    +   - Equivalent to imposing a preference over the set of functions that a learner
+    can obtain as a solution
+
+    +   - In Bayesian learning, it is reflected as a prior probability distribution
+    over the space of functions (or equivalently their parameters) that the learn
+    can assess
+
+    +   - Regularization prevents overfitting by adding penalty for complexity
+
+    +   - Training a classifier/regressor is to minimize
+
+    +     Prediction error on the training set + regularization
+
+    +   - Examples
+
+    +     - The objective function for linear regression becomes
+
+    +       MSE_train + regularization = 1/N Σ_i (w^T x_i^(train) - y_i^(train))^2
+    + λ ||w||_2^2
+
+    +   - Multi-task learning, transfer learning, dropout, sparsity, pre-training'
+  merge: -1
+  img_proc: true
+- pgno: 21
+  md: <!-- no content -->
+  merge: -1
+  img_proc: true
+- pgno: 22
+  md: 'bias(θ̂) = E(θ̂) − θ
+
+
+    where expectation is over all the train sets of size n sampled from the underlying
+    distribution
+
+
+    +   - An estimator is called unbiased if E(θ̂) = θ
+
+    +   - Example: Gaussian distribution. p(x_i; θ) = N(θ, Σ) and the estimator is
+    θ̂ = 1/n Σ_{i=1}^n x_i^{(train)}
+
+
+    E(θ̂) = E[ 1/n Σ_{i=1}^n x_i^{(train)} ] = 1/n Σ_{i=1}^n E[ x_i^{(train)} ] =
+    1/n Σ_{i=1}^n θ = θ'
+  merge: -1
+  img_proc: true
+- pgno: 23
+  md: <!-- no content -->
+  merge: -1
+  img_proc: true
+- pgno: 24
+  md: '# Function space
+
+
+    Function family of the learner
+
+
+    Variation of f̂
+
+
+    A learner with lower capacity
+
+
+    # Function space
+
+
+    Function family of the learner
+
+
+    Variation of f̂
+
+
+    A learner with larger capacity
+
+
+    # Function space
+
+
+    Function family of the learner
+
+
+    Variation of f̂
+
+
+    A better designed learner'
+  merge: -1
+  img_proc: true
+- pgno: 25
+  md: '# Summary: issues to be concerned in machine learning
+
+
+    +   - Effective optimization methods and models to address the underfitting problem
+
+    +   - How to balance the trade-off between capacity and generalization?
+
+    +   - How to effectively reduce capacity (which means also reducing estimation
+    variance) without increasing the bias much?
+
+    +   - For machine learning with big training data, how to effectively increase
+    capacity to cover or get closer to the true function to be estimated?'
+  merge: -1
+  img_proc: true
+- pgno: 26
+  md: '# Open discussion
+
+
+    +   - Why does deep learning have different behavior than other machine learning
+    methods for large scale training?
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_26_0.png)'
+  merge: -1
+  img_proc: true
+- pgno: 27
+  md: '# Discriminative model
+
+
+    +   - Directly model $P(y|x)$ and decision boundaries
+
+    +   - Learn the discriminative functions $g_k(x)$
+
+    +     $$y = \arg\max_k g_k(x)$$
+
+    +   - In the linear case, $g_k(x) = w_k^T x$
+
+    +   - $P(y|x)$ can be estimated from the linear discriminant functions
+
+    +     $$P(y = j|x) = \frac{e^{w_j^T x}}{\sum_{k=1}^K e^{w_k^T x}}$$
+
+    +     It is also called softmax function
+
+    +   - Examples: SVM, boosting, K-nearest-neighbor'
+  merge: -1
+  img_proc: true
+- pgno: 28
+  md: '# Discriminative model
+
+
+    +   - It is easier for discriminative models to fit data
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_28_0.png)'
+  merge: -1
+  img_proc: true
+- pgno: 29
+  md: "# Discriminative model\n\n+   Parameter θ = {w_k} can be estimated from maximizing\
+    \ the data likelihood\n+   \n+   θ̂ = arg max_θ P(D_n|θ) = arg max_θ ∏_{i=1}^n\
+    \ P(y_i^{(train)} | x_n^{(train)}, θ)\n\n+   Maximum a posteriori (MAP) estimation\n\
+    +   \n+   θ = arg max_θ p(θ|D_n) = arg max_θ log P(D_n|θ) + log p(θ)\n\n+   According\
+    \ to the Bayes' rule, i.e., p(θ|D_n) = P(D_n|θ)p(θ)/P(D_n).\n+   \n+   θ = arg\
+    \ max_θ log P(D_n|θ) + log p(θ)\n\n+   θ = arg max_θ Σ_{i=1}^n log P(y_n^{(train)}\
+    \ | x_n^{(train)}, θ) + log p(θ)\n\n+   prior p(θ) corresponds to a regularizer,\
+    \ e.g.\n+   \n+   p(θ) = e^{-λ||θ||^2}"
+  merge: -1
+  img_proc: true
+- pgno: 30
+  md: "# Generative model\n\n+   - Estimate the underlying class conditional probability\
+    \ densities p(x|y = k) and then construct the classifier using the Bayesian decision\
+    \ theory\n+   \n+     $P(y = k|x) = \\frac{p(x|y = k)P(y = k)}{p(x)} = \\frac{p(x|y\
+    \ = k)P(y = k)}{\\sum_{k'=1}^{K} p(x|y = k')P(y = k')}$\n+   \n+   - p(x|y) and\
+    \ P(y) are parameterized by θ\n+   \n+   - Prior P(y) can be used to model the\
+    \ dependency among predictions, such as the segmentation labels of pixels or predictions\
+    \ of speech sequences.\n+   \n+   - It is more difficult to model class conditional\
+    \ probability densities. However, it also adds stronger regularization to model\
+    \ fitting, since the learned model not only needs to predict class labels but\
+    \ also generate the input data.\n+   \n+   - It is easier to add domain knowledge\
+    \ when designing the models of p(x|y)"
+  merge: -1
+  img_proc: true
+- pgno: 31
+  md: '# Supervised and unsupervised learning
+
+
+    +   - Supervised learning: the goal is to use input-label pairs, (x, y) to learn
+    a function f that predicts a label (or a distribution over labels) given the input,
+    ŷ = f(x)
+
+    +   - Unsupervised learning: no label or other target is provided. The data consists
+    of a set of examples x and the objective is to learn about the statistical structure
+    of x itself.
+
+    +   - Weakly supervised learning: the training data contains (x, y) pairs as in
+    supervised learning, but the labels y are either unreliably present (i.e. with
+    missing values) or noisy (i.e. where the label given is not the true label)'
+  merge: -1
+  img_proc: true
+- pgno: 32
+  md: '# Unsupervised learning
+
+
+    +   - Find the “best” representation of data that reserves as much information
+    about **x** as possible while being “simpler” than **x**
+
+    +     Taking linear case as an example
+
+
+    $$\tilde{x}=a_0+\sum_{i=1}^{d''}a_i e_i$$
+
+
+    +   - Lower dimensional representation: $d'' < d$
+
+    +   - Sparse representation: the number of non-zero $a_i$ is small
+
+    +   - Independent representation: disentangle the sources of variations underlying
+    the data distributions such that the dimensions of the representation are statistically
+    independent, i.e. $a_i$ and $a_j$ are statistically independent
+
+
+    +   - Deep learning is to learn data representation, but in a nonlinear and hierarchical
+    way'
+  merge: -1
+  img_proc: true
+- pgno: 33
+  md: '# Principal Component Analysis (PCA)
+
+
+    +   - There are n d-dimensional samples x₁, ..., xₙ.
+
+    +   - PCA seeks a principal subspace spanned by d′ (d′ < d) orthonormal vectors
+    e₁, ..., e_d′, such that
+
+    +     - the projected samples (x̂_k = a₀ + Σ_{i=1}^{d′} a_{ki} e_i) onto this
+    subspace has maximum variance; or equivalently
+
+    +     - the mean squared distance between the samples and their projections are
+    minimized.
+
+    +   - The projections {a_{ki}} are uncorrelated (i.e. independent if data distribution
+    is assumed as Gaussian distribution)
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_33_0.png)
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_33_1.png)'
+  merge: -1
+  img_proc: true
+- pgno: 34
+  md: '# Formulation of PCA
+
+
+    or
+
+
+    arg max_{ {e_i} } sum_{k=1}^{n} || x̃_k - x̄ ||^2
+
+
+    arg min_{ {e_i} } sum_{k=1}^{n} || x_k - x̃_k ||^2
+
+
+    ( || x_k - x̄ ||^2 = || x_k - x̃_k ||^2 + || x̃_k - x̄ ||^2 )'
+  merge: -1
+  img_proc: true
+- pgno: 35
+  md: '# Zero- and One-Dimensional Representations by PCA
+
+
+    zero-dimensional representation: use a single vector x₀ to represent all the samples
+    and minimize the squared-error function
+
+
+    J₀(x₀) = Σₖ=1ⁿ ||x₀ − xₖ||²
+
+
+    The solution is x₀ = x̄ = 1/n Σₖ=1ⁿ xₖ
+
+
+    One-dimensional representation: project the data to a line running through the
+    sample mean, x̃ₖ = x̄ + aₖ₁ e₁ and minimize the squared-error criterion function
+
+
+    J₁(a₁₁, ..., aₙ₁, e₁) = Σₖ=1ⁿ ||x̃ₖ − xₖ||²'
+  merge: -1
+  img_proc: true
+- pgno: 36
+  md: '# Find the Principal Components $a_{k1}$
+
+
+    $J_1(a_{11},\dots,a_{n1},\mathbf{e}_1)$
+
+    $= \sum_{k=1}^{n} \|\bar{\mathbf{x}} + a_{k1}\mathbf{e}_1 - \mathbf{x}_k\|^2 =
+    \sum_{k=1}^{n} \|a_{k1}\mathbf{e}_1 - (\mathbf{x}_k - \bar{\mathbf{x}})\|^2$
+
+    $= \sum_{k=1}^{n} a_{k1}^2 \|\mathbf{e}_1\|^2 - 2 \sum_{k=1}^{n} a_{k1}\mathbf{e}_1^t(\mathbf{x}_k
+    - \bar{\mathbf{x}}) + \sum_{k=1}^{n} \|\mathbf{x}_k - \bar{\mathbf{x}}\|^2$
+
+
+    Since $\mathbf{e}_1$ is a unit vector, $\|\mathbf{e}_1\| = 1$. To minimize $J_1$,
+    set $\frac{\partial J_1}{\partial a_{k1}} = 0$ and we have
+
+    $a_{k1} = \mathbf{e}_1^t(\mathbf{x}_k - \bar{\mathbf{x}})$
+
+
+    +   - We obtain a least-squares solution by projecting the vector $\mathbf{x}_k$
+    onto the line in the direction of $\mathbf{e}_1$ passing through the mean.'
+  merge: -1
+  img_proc: true
+- pgno: 37
+  md: '# Find the Optimal Projection Direction e₁
+
+
+    J₁(e₁) = ∑_{k=1}^{n} a_{k1}² − 2 ∑_{k=1}^{n} a_{k1}² + ∑_{k=1}^{n} ||x_k − x̄||²
+
+    = − ∑_{k=1}^{n} [e₁ᵀ(x_k − x̄)]² + ∑_{k=1}^{n} ||x_k − x̄||²
+
+    = − ∑_{k=1}^{n} e₁ᵀ(x_k − x̄)(x_k − x̄)ᵀ e₁ + ∑_{k=1}^{n} ||x_k − x̄||²
+
+    = − e₁ᵀ S_e₁ + ∑_{k=1}^{n} ||x_k − x̄||²'
+  merge: -1
+  img_proc: true
+- pgno: 38
+  md: '# Find the Optimal Projection Direction $e_1$
+
+
+    +   - $S = \sum_{k=1}^{n}(x_k-\bar{x})(x_k-\bar{x})^t$ is the scatter matrix
+
+    +   - $e_1^t S e_1 = \sum_{k=1}^{n} a_k^2 \left(\sum_{k=1}^{n} a_k = 0\right)$
+    is the variance of the projected data
+
+    +   - The vector $e_1$ that minimizes $J_1$ also maximizes $e_1^t S e_1$, subject
+    to the constraint that $\|e_1\| = 1$'
+  merge: -1
+  img_proc: true
+- pgno: 39
+  md: <!-- no content -->
+  merge: -1
+  img_proc: true
+- pgno: 40
+  md: '# Find the Optimal Projection Direction $e_1$
+
+
+    +   - Use the method of Lagrange multipliers to maximize the $e_1^tSe_1$ subject
+    to the constraint that $\|e_1\|=1$,\n\n  $u=e_1^tSe_1-\lambda(e_1^te_1-1)$,\n\n  $\frac{\partial
+    u}{\partial e_1}=2Se_1-2\lambda e_1=0$.
+
+
+    +   - Setting the gradient vector equal to zero, we see that $e_1$ must be an
+    eigenvector of the scatter matrix\n\n  $Se_1=\lambda e_1$
+
+
+    +   - Since $e_1^tSe_1=\lambda e_1^te_1=\lambda$, to maximize $e_1^tSe_1$, we
+    select the eigenvector with the largest eigenvalue'
+  merge: -1
+  img_proc: true
+- pgno: 41
+  md: '# d''-Dimensional Representation by PCA
+
+
+    +   - d′–dimensional representation: $\mathbf{\tilde{x}}_k = \mathbf{\bar{x}}
+    + \sum_{i=1}^{d''} a_{ki} \mathbf{e}_i$
+
+    +   - Mean-squared criterion function:
+
+    +     $$J_{d''} = \sum_{k=1}^{n} \left\| \left( \mathbf{\bar{x}} + \sum_{i=1}^{d''}
+    a_{ki} \mathbf{e}_i \right) - \mathbf{x}_k \right\|^2$$
+
+    +   - Define additional principal components in an incremental fashion by choosing
+    each new direction minimizing $J$ amongst all possible directions orthogonal to
+    those already considered
+
+    +   - To minimize $J_{d''}$, $\mathbf{e}_1, \dots, \mathbf{e}_{d''}$ are the $d''$
+    eigenvectors of the scatter matrix with the largest eigenvalues. $a_{ki}$ are
+    the principal components of samples.'
+  merge: -1
+  img_proc: true
+- pgno: 42
+  md: "# d'-Dimensional Representation by PCA\n\n+   - Since the scatter matrix is\
+    \ real and symmetric, its eigenvectors are orthogonal and its eigenvalues are\
+    \ nonnegative.\n\n+   - The squared error:\n+   \n+   $$J_{d'} = -\\sum_{i=1}^{d'}\
+    \ \\lambda_i + \\sum_{k=1}^{n} \\|\\mathbf{x}_k - \\bar{\\mathbf{x}}\\|^2$$\n\
+    +   \n+   $$J_d = 0 \\Rightarrow \\sum_{k=1}^{n} \\|\\mathbf{x}_k - \\bar{\\mathbf{x}}\\\
+    |^2 = \\sum_{i=1}^{d} \\lambda_i$$\n+   \n+   $$J_{d'} = \\sum_{i=d'+1}^{d} \\\
+    lambda_i$$"
+  merge: -1
+  img_proc: true
+- pgno: 43
+  md: '# Variance of Data Captured by the PCA Subspace
+
+
+    +   - The variance of data projected onto the first $d''$ eigenvectors is $\sum_{i=1}^{d''}
+    \lambda_i$
+
+    +   - Measure how much variance has been captured by the first $d''$ eigenvectors:
+
+    +     $$\frac{\sum_{i=1}^{d''} \lambda_i}{\sum_{j=1}^{d} \lambda_j}$$'
+  merge: -1
+  img_proc: true
+- pgno: 44
+  md: "# Covariance Matrix of Principal Components\n\n+   - The correlation between\
+    \ projections on $e_i$ and $e_j$ $(i \\ne j)$ is\n+   \n+     $$\\sum_{k=1}^{n}\
+    \ a_{ki}a_{kj}=\\sum_{k=1}^{n}e_i^T(\\mathbf{x}_k-\\bar{\\mathbf{x}})(\\mathbf{x}_k-\\\
+    bar{\\mathbf{x}})^Te_j=e_i^TSe_j=\\lambda_j e_i^Te_j=0$$\n\n+   - The covariance\
+    \ matrix of samples in the PCA subspace is\n+   \n+     $\\operatorname{diag}[\\\
+    lambda_1,\\ldots,\\lambda_d]$"
+  merge: -1
+  img_proc: true
+- pgno: 45
+  md: '# Summary of PCA
+
+
+    +   - The principal subspace is spanned by $d''$ orthonormal vectors $\mathbf{e}_1,\ldots,\mathbf{e}_{d''}$,
+    which are computed as the $d''$ eigenvectors of the scatter matrix $\mathbf{S}$
+    with the largest eigenvalues $\lambda_1,\ldots,\lambda_{d''}$.
+
+    +   - The principal components $a_{ki}$ of the samples are computed as $a_{ki}=\mathbf{e}_i^T(\mathbf{x}_k-\bar{\mathbf{x}})$.
+
+    +   - The variance of the projected samples onto this principal subspace is $\sum_{i=1}^{d''}\lambda_i$.
+
+    +   - The mean squared distance between the samples and their projections are
+    $\sum_{i=d''+1}^{d}\lambda_i$.
+
+    +   - PCA disentangles the factors of variation underlying the data, assuming
+    such variation is a Gaussian distribution.
+
+    +   - We are interested in learning representations that disentangle more complicated
+    forms of feature dependencies'
+  merge: -1
+  img_proc: true
+- pgno: 46
+  md: '# Smoothness Prior
+
+
+    +   - Shallow models assume smoothness prior on the prediction function to be
+    learned, i.e.
+
+    +     $$f^*(\mathbf{x}) \approx f^*(\mathbf{x}+\epsilon)$$
+
+    +     where $\epsilon$ is a small change.
+
+
+    +   - K-nearest neighbor predictors assume piecewise constant
+
+    +     - For classification and $K = 1$, $f(x)$ is the output class associated
+    with the nearest neighbor of $x$ in the training set
+
+    +     - For regression, $f(x)$ is the average of the outputs associated with the
+    $K$ nearest neighbors of $x$
+
+    +     - The number of distinguishable regions cannot be more than the number of
+    training examples
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_46_0.png)
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_46_1.png)'
+  merge: -1
+  img_proc: true
+- pgno: 47
+  md: '# Interpolation with Kernel
+
+
+    f(x) = b + Σ_{i=1}^{n} α_i K(x, x_i)
+
+
+    K is a kernel function, e.g., the Gaussian kernel
+
+
+    K(u, v) = N(u − v, 0, σ²)
+
+
+    +   - b and α_i can be learned by SVM
+
+    +   - Treat each x_i is a template and the kernel function as a similarity function
+    that matches a template and a test example
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_47_0.png)'
+  merge: -1
+  img_proc: true
+- pgno: 48
+  md: '# Local Representation
+
+
+    +   - One can think of the training samples as control knots which locally specify
+    the shape of the prediction function
+
+
+    +   - The smoothness prior only allows the learner to generalize locally. If $(\mathbf{x}_i,
+    y_i)$ is a supervised training example and $\mathbf{x}_i$ is a near neighbor of
+    $\mathbf{x}$, we expect that $f(\mathbf{x}) \approx y_i$. Better generalization
+    can be obtained with more neighbors.
+
+
+    +   - To distinguish $O(N)$ regions in the input space, shallow models require
+    $O(N)$ examples (and typically there are $O(N)$ parameters associated with the
+    $O(N)$ regions).
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_48_0.png)'
+  merge: -1
+  img_proc: true
+- pgno: 49
+  md: '# Local Representation
+
+
+    +   - If the function is complex, more regions and more training samples are required.
+
+    +   - The representation learned by deep models can be generalized non-locally
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_49_0.png)'
+  merge: -1
+  img_proc: true
+- pgno: 50
+  md: 'Yoshua Bengio, Ian Goodfellow and Aaron Courville, Chapter 1 "Machine Learning
+    Basics" in "Deep Learning," Book in preparation for MIT Press, 2014.
+
+
+    http://www.iro.umontreal.ca/~bengioy/dlbook'
+  merge: -1
+  img_proc: true
+- pgno: 51
+  md: '# MultiLayer Neural Networks
+
+
+    Xiaogang Wang
+
+
+    xgwong@ee.cuhk.edu.hk
+
+
+    January 18, 2015'
+  merge: -1
+  img_proc: true
+- pgno: 52
+  md: <!-- no content -->
+  merge: -1
+  img_proc: true
+- pgno: 53
+  md: '# History of neural network
+
+
+    +   - Pioneering work on the mathematical model of neural networks
+
+    +     - McCulloch and Pitts 1943
+
+    +     - Include recurrent and non-recurrent (with "circles") networks
+
+    +     - Use thresholding function as nonlinear activation
+
+    +     - No learning
+
+
+    +   - Early works on learning neural networks
+
+    +     - Starting from Rosenblatt 1958
+
+    +     - Using thresholding function as nonlinear activation prevented computing
+    derivatives with the chain rule, and so errors could not be propagated back to
+    guide the computation of gradients
+
+
+    +   - Backpropagation was developed in several steps since 1960
+
+    +     - The key idea is to use the chain rule to calculate derivatives
+
+    +     - It was reflected in multiple works, earliest from the field of control'
+  merge: -1
+  img_proc: true
+- pgno: 54
+  md: '# History of neural network
+
+
+    +   - Standard backpropagation for neural networks
+
+    +     - Rumelhart, Hinton, and Williams, *Nature* 1986. Clearly appreciated the
+    power of backpropagation and demonstrated it on key tasks, and applied it to pattern
+    recognition generally
+
+    +     - In 1985, Yann LeCun independently developed a learning algorithm for three-layer
+    networks in which target values were propagated, rather than derivatives. In 1986,
+    he proved that it was equivalent to standard backpropagation
+
+
+    +   - Prove the universal expressive power of three-layer neural networks
+
+    +     - Hecht-Nielsen 1989
+
+
+    +   - Convolutional neural network
+
+    +     - Introduced by Kunihiko Fukushima in 1980
+
+    +     - Improved by LeCun, Bottou, Bengio, and Haffner in 1998'
+  merge: -1
+  img_proc: true
+- pgno: 55
+  md: '# History of neural network
+
+
+    +   Deep belief net (DBN)
+
+
+    +   Hinton, Osindero, and Tech 2006
+
+
+    +   Auto encoder
+
+
+    +   Hinton and Salakhutdinov 2006 (Science)
+
+
+    +   Deep learning
+
+
+    +   Hinton. Learning multiple layers of representations. Trends in Cognitive Sciences,
+    2007.
+
+
+    +   Unsupervised multilayer pre-training + supervised fine-tuning (BP)
+
+
+    +   Large-scale deep learning in speech recognition
+
+
+    +   Geoff Hinton and Li Deng started this research at Microsoft Research Redmond
+    in late 2009
+
+
+    +   Generative DBN pre-training was not necessary
+
+
+    +   Success was achieved by large-scale training data + large deep neural network
+    (DNN) with large, context-dependent output layers'
+  merge: -1
+  img_proc: true
+- pgno: 56
+  md: '# History of neural network
+
+
+    +   - Unsupervised deep learning from large scale images
+
+    +     - Andrew Ng et al. 2011
+
+    +     - Unsupervised feature learning
+
+    +     - 16000 CPUs
+
+    +   - Large-scale supervised deep learning in ImageNet image classification
+
+    +     - Krizhevsky, Sutskever, and Hinton 2012
+
+    +     - Supervised learning with convolutional neural network
+
+    +     - No unsupervised pre-training'
+  merge: -1
+  img_proc: true
+- pgno: 57
+  md: '# Two-layer neural networks model linear classifiers
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_57_0.png)
+
+
+    (Duda et al. Pattern Classification 2000)
+
+
+    g(x) = f(∑_{i=1}^{d} x_i w_i + w_0) = f(w'' x)
+
+
+    f(s) = { 1, if s ≥ 0 ; -1, if s < 0 }'
+  merge: -1
+  img_proc: true
+- pgno: 58
+  md: '# Two-layer neural networks model linear classifiers
+
+
+    +   - A linear classifier cannot solve the simple exclusive-OR problem
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_58_0.png)'
+  merge: -1
+  img_proc: true
+- pgno: 59
+  md: '# Add a hidden layer to model nonlinear classifiers
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_59_0.png)
+
+
+    (Duda et al. Pattern Classification 2000)'
+  merge: -1
+  img_proc: true
+- pgno: 60
+  md: '# Three-layer neural network
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_60_0.png)
+
+
+    For C-class classification problem, the target vectors are represented as
+
+    (1...0...0)
+
+    ...
+
+    (0...1...0)
+
+    ...
+
+    (0...0...1)'
+  merge: -1
+  img_proc: true
+- pgno: 61
+  md: "# Three-layer neural network\n\n+   - Net activation: each hidden unit j computes\
+    \ the weighted sum of its inputs\n+   \n+     $net_j = \\sum_{i=1}^{d} x_i w_{ij}\
+    \ + w_{j0} = \\sum_{i=0}^{d} x_i w_{ij} = w_j^T x$\n\n+   - Activation function:\
+    \ each hidden unit emits an output that is a nonlinear function of its activation\n\
+    +   \n+     $y_j = f(net_j)$\n+   \n+     $f(net) = Sgn(net) = \\begin{cases}\
+    \ 1, & \\text{if } net \\ge 0 \\\\ -1, & \\text{if } net < 0 \\end{cases}$\n\n\
+    There are multiple choices of the activation function as long as they are continuous\
+    \ and differentiable almost everywhere. Activation functions could be different\
+    \ for different nodes."
+  merge: -1
+  img_proc: true
+- pgno: 62
+  md: '# Three-layer neural network
+
+
+    +   Net activation of an output unit k
+
+
+    net_k = Σ_{i=1}^{n_h} y_i w_{kj} + w_{k0} = Σ_{j=0}^{n_h} y_j w_{kj} = w_k^T y
+
+
+    +   Output unit emits
+
+
+    z_k = f(net_k)
+
+
+    +   The output of the neural network is equivalent to a set of discriminant functions
+
+
+    g_k(x) = z_k = f( Σ_{j=1}^{n_h} w_{kj} f( Σ_{i=1}^{d} w_{ji} x_i + w_{j0} ) +
+    w_{k0} )'
+  merge: -1
+  img_proc: true
+- pgno: 63
+  md: '# Expressive power of a three-layer neural network
+
+
+    +   - It can represent **any** discriminant function
+
+    +   - However, the number of hidden units required can be very large...
+
+    +   - Most widely used pattern recognition models (such as SVM, boosting, and
+    KNN) can be approximated as neural networks with one or two hidden layers. They
+    are called models with shallow architectures.
+
+    +   - Shallow models divide the feature space into regions and match templates
+    in local regions. O(N) parameters are needed to represent N regions.
+
+    +   - Deep architecture: the number of hidden nodes can be reduced exponentially
+    with more layers for certain problems.'
+  merge: -1
+  img_proc: true
+- pgno: 64
+  md: '# Expressive power of a three-layer neural network
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_64_0.png)
+
+
+    KNN
+
+    input x
+
+    hidden d(x, x_i)
+
+    output g(x)=label
+
+    j = argmin_i d(x, x_i)
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_64_1.png)
+
+
+    SVM
+
+    input x
+
+    hidden K(x, x_i)
+
+    output g(x)=b + sum_i a_i K(x, x_i)
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_64_2.png)'
+  merge: -1
+  img_proc: true
+- pgno: 65
+  md: <!-- no content -->
+  merge: -1
+  img_proc: true
+- pgno: 66
+  md: '# Backpropagation
+
+
+    +   - The most general method for supervised training of multilayer neural network
+
+    +   - Present an input pattern and change the network parameters to bring the
+    actual outputs closer to the target values
+
+    +   - Learn the input-to-hidden and hidden-to-output weights
+
+    +   - However, there is no explicit teacher to state what the hidden unit’s output
+    should be. Backpropagation calculates an effective error for each hidden unit,
+    and thus derive a learning rule for the input-to-hidden weights.'
+  merge: -1
+  img_proc: true
+- pgno: 67
+  md: <!-- no content -->
+  merge: -1
+  img_proc: true
+- pgno: 68
+  md: '# Training error
+
+
+    J(W) = 1/2 Σ_{k=1}^c (t_k - z_k)^2 = 1/2 ||t - z||^2
+
+
+    +   - Differentiable
+
+    +   - There are other choices, such as cross entropy
+
+
+    J(W) = - Σ_{k=1}^c t_k log(z_k)
+
+
+    Both {z_k} and {t_k} are probability distributions.'
+  merge: -1
+  img_proc: true
+- pgno: 69
+  md: "# Gradient descent\n\n+   - Weights are initialized with random values, and\
+    \ then are changed in a direction reducing the error\n+   \n+     Δw = -η ∂J/∂W\n\
+    +   \n+     or in component form\n+   \n+     Δw_pq = -η ∂J/∂w_pq\n+   \n+   \
+    \  where η is the learning rate.\n\n+   - Iterative update\n+   \n+     w(m +\
+    \ 1) = w(m) + Δw(m)"
+  merge: -1
+  img_proc: true
+- pgno: 70
+  md: '# Hidden-to-output weights $w_{kj}$
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_70_0.png)
+
+
+    Group truth
+
+
+    $z_k = f(net_k)$
+
+
+    $net_k = \sum_{j=1}^{n_H} y_j w_{jk} + w_{k0}$
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_70_1.png)'
+  merge: -1
+  img_proc: true
+- pgno: 71
+  md: '# Hidden-to-output weights $w_{kj}$
+
+
+    $\frac{\partial J}{\partial w_{kj}} = \frac{\partial J}{\partial net_k}\frac{\partial
+    net_k}{\partial w_{kj}} = -\delta_k \frac{\partial net_k}{\partial w_{kj}}$
+
+
+    +   Sensitivity of unit $k$
+
+    +   $\delta_k = -\frac{\partial J}{\partial net_k} = -\frac{\partial J}{\partial
+    z_k}\frac{\partial z_k}{\partial net_k} = (t_k - z_k)f''(net_k)$
+
+    +   Describe how the overall error changes with the unit''s net activation.
+
+
+    +   Weight update rule. Since $\partial net_k / \partial w_{kj} = y_j,$
+
+    +   $\Delta w_{kj} = \eta \delta_k y_j = \eta (t_k - z_k)f''(net_k) y_j.$'
+  merge: -1
+  img_proc: true
+- pgno: 72
+  md: <!-- no content -->
+  merge: -1
+  img_proc: true
+- pgno: 73
+  md: '# Activation function
+
+
+    +   - Popular choice of f(·)
+
+    +     - Softmax: mostly used as output non-linearity for predicting discrete probabilities
+
+    +       $$f(s_k) = \frac{e^{s_k}}{\sum_{k''=1}^{C} e^{s_{k''}}}$$
+
+    +     - Maxout: it generalizes the rectifier assuming there are multiple net activations
+
+    +       $$f(s_1, \dots, s_n) = \max_i (s_i)$$'
+  merge: -1
+  img_proc: true
+- pgno: 74
+  md: <!-- no content -->
+  merge: -1
+  img_proc: true
+- pgno: 75
+  md: '# Example 2
+
+
+    +   - Choose cross entropy as training error measurement and softmax as activation
+    function at the output layer
+
+    +   - Sensitivity \(\delta_k = -t_k(z_k - 1)\) (how to get it?)
+
+    +   - \(\delta_k\) is large if error is large, even if \(z_k\) gets close to 0
+
+    +   - Softmax leads to sparser output'
+  merge: -1
+  img_proc: true
+- pgno: 76
+  md: '# Input-to-hidden weights
+
+
+    Group truth
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_76_0.png)
+
+
+    $y_j = f(net_j)$
+
+
+    $net_j = \sum_{i=1}^{d} x_i w_{ji} + w_{j0}$'
+  merge: -1
+  img_proc: true
+- pgno: 77
+  md: '# Input-to-hidden weights
+
+
+    ∂J/∂w_ij = ∂J/∂y_j ∂y_j/∂net_j ∂net_j/∂w_ij
+
+
+    +   - How the hidden unit output y_j affects the error at each output unit
+
+
+    ∂J/∂y_j = ∂/∂y_j [ 1/2 Σ_{k=1}^c (t_k - z_k)^2 ]
+
+
+    = - Σ_{k=1}^c (t_k - z_k) ∂z_k/∂y_j
+
+
+    = - Σ_{k=1}^c (t_k - z_k) ∂z_k/∂net_k ∂net_k/∂y_j
+
+
+    = - Σ_{k=1}^c (t_k - z_k) f''(net_k) w_kj = Σ_{k=1}^c δ_k w_kj'
+  merge: -1
+  img_proc: true
+- pgno: 78
+  md: "# Input-to-hidden weights\n\n+   - Sensitivity for a hidden unit $j$\n+   \n\
+    +     $$\\delta_j=-\\frac{\\partial J}{\\partial net_j}=-\\frac{\\partial J}{\\\
+    partial y_j}\\frac{\\partial y_j}{\\partial net_j}=f'(net_j)\\sum_{k=1}^{c}w_{kj}\\\
+    delta_k$$\n\n+   - $\\sum_{k=1}^{c}w_{kj}\\delta_k$ is the effective error for\
+    \ hidden unit $j$\n\n+   - Weight update rule. Since $\\partial net_j/\\partial\
+    \ w_{ij}=x_i$,\n+   \n+     $$\\Delta w_{ij}=\\eta x_i\\delta_j=\\eta f'(net_j)\\\
+    left[\\sum_{k=1}^{c}w_{kj}\\delta_k\\right]x_i$$"
+  merge: -1
+  img_proc: true
+- pgno: 79
+  md: '# Error backpropagation
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_79_0.png)
+
+
+    (Duda et al. Pattern Classification 2000) The sensitivity at a hidden unit is
+    proportional to the weighted sum of the sensitivities at the output units:
+
+
+    $\delta_j = f''(net_j)\sum_{k=1}^{c} w_{kj}\delta_k$. The output unit sensitivities
+    are thus propagated “back” to the hidden units.'
+  merge: -1
+  img_proc: true
+- pgno: 80
+  md: "# Stochastic gradient descent\n\n+   - Given $n$ training samples, our target\
+    \ function can be expressed as\n+   \n+   $$J(w) = \\sum_{p=1}^{n} J_p(w)$$\n\n\
+    +   - Batch gradient descent\n+   \n+   $$w \\leftarrow w - \\eta \\sum_{p=1}^{n}\
+    \ \\nabla J_p(w)$$\n\n+   - In some cases, evaluating the sum-gradient may be\
+    \ computationally expensive. Stochastic gradient descent samples a subset of summand\
+    \ functions at every step. This is very effective in the case of large-scale machine\
+    \ learning problems. In stochastic gradient descent, the true gradient of $J(w)$\
+    \ is approximated by a gradient at a single example (or a mini-batch of samples):\n\
+    +   \n+   $$w \\leftarrow w - \\eta \\nabla J_p(w)$$"
+  merge: -1
+  img_proc: true
+- pgno: 81
+  md: '# Stochastic backpropagation
+
+
+    # Algorithm 1 (Stochastic backpropagation)
+
+
+    ```
+
+    1 begin initialize network topology (# hidden units), w, criterion θ, η, m ← 0
+
+    2 do m ← m + 1
+
+    3 X^m ← randomly chosen pattern
+
+    4 w_ij ← w_ij + ηδ_j x_i; w_jk ← w_jk + ηδ_k y_j
+
+    5 until ΔJ(w) < θ
+
+    6 return w
+
+    7 end
+
+    ```
+
+
+    > (Duda et al. Pattern Classification 2000)
+
+
+    +   - In stochastic training, a weight update may reduce the error on the single
+    pattern being presented, yet increase the error on the full training set.'
+  merge: -1
+  img_proc: true
+- pgno: 82
+  md: <!-- no content -->
+  merge: -1
+  img_proc: true
+- pgno: 83
+  md: <!-- no content -->
+  merge: -1
+  img_proc: true
+- pgno: 84
+  md: '# Summary
+
+
+    +   - Stochastic learning
+
+    +     - Estimate of the gradient is noisy, and the weights may not move precisely
+    down the gradient at each iteration
+
+    +     - Faster than batch learning, especially when training data has redundancy
+
+    +     - Noise often results in better solutions
+
+    +     - The weights fluctuate and it may not fully converge to a local minimum
+
+    +   - Batch learning
+
+    +     - Conditions of convergence are well understood
+
+    +     - Some acceleration techniques only operate in batch learning
+
+    +     - Theoretical analysis of the weight dynamics and convergence rates are
+    simpler'
+  merge: -1
+  img_proc: true
+- pgno: 85
+  md: <!-- no content -->
+  merge: -1
+  img_proc: true
+- pgno: 86
+  md: '# Learning curve on the training set
+
+
+    +   - The average training error typically decreases with the number of epochs
+    and reaches an asymptotic value
+
+    +   - This asymptotic value could be high if underfitting happens. The reasons
+    could be
+
+    +     - The classification problem is difficult (Bayes error is high) and there
+    are a large number of training samples
+
+    +     - The expressive power of the network is not enough (the numbers of weights,
+    layers and nodes in each layer)
+
+    +     - Bad initialization and get stuck at local minimum (pre-training for better
+    initialization)
+
+    +   - If the learning rate is low, the training error tends to decrease monotonically,
+    but converges slowly. If the learning rate is high, the training error may oscillate.'
+  merge: -1
+  img_proc: true
+- pgno: 87
+  md: '# Learning curve on the test and validation set
+
+
+    +   - The average error on the validation or test set is virtually always higher
+    than on the training set. It could increase or oscillate when **overfitting**
+    happen. The reasons could be
+
+    +     - Training samples are not enough
+
+    +     - The expressive power of the network is too high
+
+    +     - Bad initialization and get stuck at local minimum (pre-training for better
+    initialization)
+
+    +   - Stop training at a minimum of the error on the validation set'
+  merge: -1
+  img_proc: true
+- pgno: 88
+  md: <!-- no content -->
+  merge: -1
+  img_proc: true
+- pgno: 89
+  md: '# BP is an application of the chain rule
+
+
+    ∂C(g(θ))/∂θ = ∂C(g(θ))/∂g(θ) ∂g(θ)/∂θ
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_89_0.png)
+
+
+    Δz = ∂z/∂y Δy
+
+    Δy = ∂y/∂x Δx
+
+    Δz = ∂z/∂y ∂y/∂x Δx
+
+    ∂z/∂x = ∂z/∂y ∂y/∂x
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_89_1.png)
+
+
+    ∂z/∂x = Σ_{i=1}^n ∂z/∂y_i ∂y_i/∂x
+
+
+    > (Bengio et al. Deep Learning 2014)'
+  merge: -1
+  img_proc: true
+- pgno: 90
+  md: "# Flow graph forward computation\n\n+   - $u_1, \\dots, u_N$ are the nodes\
+    \ with defined partial orders\n+   - $a_i = (u_j)_{j \\in \\text{parents}(i)}$\
+    \ is the set of parents of node $u_i$, and $u_i = f_i(a_i)$\n\n![](img/a04b187c89c5018c5ef6132980e27196_90_0.png)\n\
+    \n```\nfor i = 1...M do\n  u_i <- x_i\nend for\nfor i = M + 1...N do\n  a_i <-\
+    \ {u_j}_{j \\in parents(i)}\n  u_i <- f_i(a_i)\nend for\nreturn u_N\n```\n\n>\
+    \ (Bengio et al. Deep Learning 2014)"
+  merge: -1
+  img_proc: true
+- pgno: 91
+  md: "# BP on a flow graph\n\n```\n∂loss/∂x_N ← 1\nfor j = N − 1 down to 1 do\n \
+    \ ∂loss/∂x_j ← Σ_{k ∈ parents(j)} ∂loss/∂x_k · ∂x_k/∂x_j\nend for\nreturn {∂loss/∂x_i}_{i=1}^M\n\
+    ```\n\n> (Bengio et al. Deep Learning 2014)\n\n∂u_N/∂w_i = ∂u_N/∂u_j · ∂u_j/∂net_j\
+    \ · ∂net_j/∂w_i = ∂u_N/∂u_j · ∂u_j/∂net_j · f'(net_j) u_i\n\n+   - BP has optimal\
+    \ computational complexity in the sense that there is no algorithm that can compute\
+    \ the gradient faster (in the O(·) sense)\n+   - It is an application of the principles\
+    \ of dynamic programming"
+  merge: -1
+  img_proc: true
+- pgno: 92
+  md: <!-- no content -->
+  merge: -1
+  img_proc: true
+- pgno: 93
+  md: '# Nonlinear feature mapping
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_93_0.png)
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_93_1.png)
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_93_2.png)
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_93_3.png)
+
+
+    (a) 2-2-1 backpropagation network and the four patterns of the XOR problem
+
+
+    (b) Outputs of the hidden units for each of the four patterns; these outputs move
+    across the y1-y2-space as the network learns
+
+
+    (c) Learning curves of individual patterns and total error as a function of epoch
+
+
+    > (Duda et al. Pattern Classification 2000)'
+  merge: -1
+  img_proc: true
+- pgno: 94
+  md: '# Nonlinear feature mapping
+
+
+    +   - The multilayer neural networks provide nonlinear mapping of the input to
+    the feature representation at the hidden units
+
+    +   - With small initial weights, the net activation of each hidden unit is small,
+    and thus the linear portion of their activation function is used. Such a linear
+    transformation from x to y leaves the patterns linearly inseparable in the XOR
+    problem.
+
+    +   - As learning progresses and the input-to-hidden weights increase in magnitude,
+    the nonlinearities of the hidden units warp and distort the mapping from input
+    to the hidden unit space
+
+    +   - The linear decision boundary at the end of learning found by the hidden-to-output
+    weights is shown by the straight dashed line; the nonlinearly separable problem
+    at the inputs is transformed into a linearly separable at the hidden units'
+  merge: -1
+  img_proc: true
+- pgno: 95
+  md: '# Nonlinear feature mapping
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_95_0.png)
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_95_1.png)
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_95_2.png)
+
+
+    > (Duda et al. Pattern Classification 2000)
+
+
+    +   - The expressive power of the 2-2-1 network is not high enough to separate
+    all the seven patterns, even after the global minimum error is reached by training.
+
+    +   - These patterns can be separated by increasing one more hidden unit to enhance
+    the expressive power.'
+  merge: -1
+  img_proc: true
+- pgno: 96
+  md: '# Filter learning
+
+
+    +   - The input-to-hidden weights at a single hidden unit describe the input patterns
+    that leads to maximum activation of that hidden unit, analogous to a "matched
+    filter"
+
+    +   - Hidden units find feature groupings useful for the linear classifier implemented
+    by the hidden-to-output layer weights
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_96_0.png)
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_96_1.png)
+
+
+    (Duda et al. Pattern Classification 2000)'
+  merge: -1
+  img_proc: true
+- pgno: 97
+  md: <!-- no content -->
+  merge: -1
+  img_proc: true
+- pgno: 98
+  md: '# A recommended sigmoid function for activation function
+
+
+    激活函数
+
+
+    ```
+
+    f(x) = 1.79159 \frac{e^{\frac{3}{2}x} - e^{-\frac{3}{2}x}}{e^{\frac{3}{2}x} +
+    e^{-\frac{3}{2}x}}
+
+    ```
+
+
+    f(±1) = ±1, liner in the range of -1 < x < 1, f''(x) has extrema near x = ±1.
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_98_0.png)
+
+
+    > Y. LeCun, Generalization and network design strategies. Proc. Int''l Cibt. Cinectulbusn
+    ub Oerseoctuve, 1988.'
+  merge: -1
+  img_proc: true
+- pgno: 99
+  md: '# Desirable properties of activation functions
+
+
+    +   - Must be nonlinear: otherwise it is equivalent to a linear classifier
+
+    +   - Its output has maximum and minimum value: keep the weights and activations
+    bounded and keep training time limited
+
+    +     - Desirable property when the output is meant to represent a probability
+
+    +     - Desirable property for models of biological neural networks, where the
+    output represents a neural firing rate
+
+    +     - May not be desirable in networks for regression, where a wide dynamic
+    range may be required
+
+    +   - Continuous and differentiable almost everywhere
+
+    +   - Monotonicity: otherwise it introduces additional local extrema in the error
+    surface
+
+    +   - Linearity for a small value of net, which will enable the system to implement
+    a linear model if adequate for yielding low error'
+  merge: -1
+  img_proc: true
+- pgno: 100
+  md: '# Desirable properties of activation functions
+
+
+    +   - The average of the outputs at a node is close to zero because these outputs
+    are the inputs to the next layer
+
+    +   - The variance of the outputs at a node is also 1.'
+  merge: -1
+  img_proc: true
+- pgno: 101
+  md: '# Global versus local representations
+
+
+    +   - Tanh function (shifting the center of sigmoid to 0) has all the properties
+    above
+
+    +     - It has large response for input in a large range. Any particular input
+    x is likely to yield activity through several hidden units. This affords a distributed
+    or global representation of the input.
+
+    +     - If hidden units have activation functions that have significant response
+    only for input within a small range, then an input x generally leads to fewer
+    hidden units being active - a local representation.
+
+    +   - Distributed representations are superior because more of the data influences
+    the posteriors at any given input region.
+
+    +   - The global representation can be better achieved with more layers'
+  merge: -1
+  img_proc: true
+- pgno: 102
+  md: '# Global versus local representations
+
+
+    Global representation
+
+
+    Local representation
+
+
+    Oriental face
+
+
+    Occidental face
+
+
+    Big nose? (1/0)
+
+
+    Blue eyes? (1/0)
+
+
+    Yellow skin? (1/0)
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_102_0.png)
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_102_1.png)
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_102_2.png)'
+  merge: -1
+  img_proc: true
+- pgno: 103
+  md: '# Choosing target values
+
+
+    +   - Avoid setting the target values as the sigmoid''s asymptotes
+
+    +     - Since the target values can only be achieved asymptotically, it drives
+    the output and therefore the weights to be very large, which the sigmoid derivative
+    is close to zero. So the weights may become stuck.
+
+    +     - When the outputs saturate, the network gives no indication of confidence
+    level. Large weights fore all outputs to the tails of the sigmoid instead of being
+    close to decision boundary.
+
+    +   - Insure that the node is not restricted to only the linear part of the sigmoid
+
+    +   - Choose target values at the point of the maximum second derivative on the
+    sigmoid so as to avoid saturating the output units'
+  merge: -1
+  img_proc: true
+- pgno: 104
+  md: <!-- no content -->
+  merge: -1
+  img_proc: true
+- pgno: 105
+  md: <!-- no content -->
+  merge: -1
+  img_proc: true
+- pgno: 106
+  md: '# Reading materials
+
+
+    +   - R. O. Duda, P. E. Hart, and D. G. Stork, "Pattern Classification," Chapter
+    6, 2000.
+
+    +   - Y. Bengio, I. J. GoodFellow, and A. Courville, "Feedforward Deep Networks,"
+    Chapter 6 in "Deep Learning", Book in preparation for MIT Press, 2014.'
+  merge: -1
+  img_proc: true
+- pgno: 107
+  md: '# Reference
+
+
+    +   - W. S. McCulloch and W. Pitts. A logical calculus of ideas immanent in nervous
+    activity. *Bulletin of Mathematical Biophysics*, 5:115-133, 1943.
+
+    +   - F. Rosenblatt. The perceptron: A probabilistic model for information storage
+    and organization in the brain. *Psychological Review*, 65:386-408, 1958.
+
+    +   - D. Rumelhart, G. E. Hinton, and R. J. Williams. Learning internal representations
+    by back-propagating errors. *Nature*, 323:533-536, 1986.
+
+    +   - Y. LeCun. A learning scheme for asymmetric threshold networks. In *Proceedings
+    of Cognitiva 85*, pages 599-604, Paris, France, 1985.
+
+    +   - Y. LeCun. Learning processes in an asymmetric threshold network. In Elie
+    Bienenstock, Francoise Fogelman-Soulie, and Gerard Weisbuch, editors, *Disor-
+    dered systems and biological organization*, pages 233-240, Les Houches, France,
+    1986. Springer-Verlag.
+
+    +   - R. Hecht-Nielsen. Theory of the backpropagation neural network. In *Proceedings
+    of the IEEE International Joint Conference on Neural Networks, Vol. 1*, pages
+    593-605, 1989.'
+  merge: -1
+  img_proc: true
+- pgno: 108
+  md: '# Reference
+
+
+    +   - K. Fukushima. Neocognitron: A self-organizing neural network model for a
+    mechanism of pattern recognition unaffected by shift in position. *Biological
+    Cybernetics*, 36(4): 93-202, 1980.
+
+    +   - Y. LeCun, L. Bottou, Y. Bengio, and P. Haffner. Gradient-based learning
+    applied to document recognition. *Proceedings of the IEEE* 86 (11): 2278-2324,
+    1998.
+
+    +   - G. E. Hinton, S. Osindero, and Y. W. Teh. A fast learning algorithm for
+    deep belief nets. *Neural Computation*, 18:1527-1554, 2006.
+
+    +   - G. E. Hinton, and R. R. Salakhutdinov. Reducing the dimensionality of data
+    with neural networks. *Science*, 313:504-507, 2006.
+
+    +   - G. E. Hinton. Learning multiple layers of representation. *Trends in Cognitive
+    Sciences*, Vol. 11, pp. 428-434, 2007.'
+  merge: -1
+  img_proc: true
+- pgno: 109
+  md: '# Autoencoder
+
+
+    Xiaogang Wang
+
+
+    xgwang@ee.cuhk.edu.hk
+
+
+    February 14, 2015'
+  merge: -1
+  img_proc: true
+- pgno: 110
+  md: '# Outline
+
+
+    +   1. Autoencoder
+
+    +   2. Regularized autoencoders
+
+    +   3. Multimodal autoencoders'
+  merge: -1
+  img_proc: true
+- pgno: 111
+  md: <!-- no content -->
+  merge: -1
+  img_proc: true
+- pgno: 112
+  md: <!-- no content -->
+  merge: -1
+  img_proc: true
+- pgno: 113
+  md: <!-- no content -->
+  merge: -1
+  img_proc: true
+- pgno: 114
+  md: '# Deep autoencoder
+
+
+    Stack multiple encoders (and their corresponding decoders)
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_114_0.png)'
+  merge: -1
+  img_proc: true
+- pgno: 115
+  md: <!-- no content -->
+  merge: -1
+  img_proc: true
+- pgno: 116
+  md: '# Comparison of methods of compressing images
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_116_0.png)
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_116_1.png)'
+  merge: -1
+  img_proc: true
+- pgno: 117
+  md: <!-- no content -->
+  merge: -1
+  img_proc: true
+- pgno: 118
+  md: <!-- no content -->
+  merge: -1
+  img_proc: true
+- pgno: 119
+  md: '# Predictive Sparse Decomposition
+
+
+    +   - Sparse coding
+
+    +     - Solving the encoder $f_0$ is non-trivial because of $L_1$ minimization
+    and entails an iterative optimization
+
+    +     - $y^* = f_0(x) = \arg\min_y \|x - Wy\|_2^2 + \lambda\|y\|_1$
+
+    +     - $J_{SC} = \sum_n \|x^{(n)} - Wy^{(n)}\|_2^2$
+
+
+    +   - Predictive sparse decomposition
+
+    +     - Approximation to sparse coding
+
+    +     - Add sparse penalty to auto-encoder
+
+    +     - Replace the costly and highly non-linear encoding step by a fast non-iterative
+    approximation
+
+
+    The training criterion is simultaneously optimized with respect to the hidden
+    codes (representation) $y^{(n)}$ and with respect to the parameters $\theta$
+
+
+    $J_{PSD} = \sum_n \lambda\|y^{(n)}\|_1 + \|x^{(n)} - Wy^{(n)}\|_2^2 + \|y^{(n)}
+    - f_0(x^{(n)})\|_2^2$
+
+
+    $f_0(x^{(n)}) = \sigma(b + W^T x^{(n)})$'
+  merge: -1
+  img_proc: true
+- pgno: 120
+  md: '# Multimodal deep learning
+
+
+    +   - Ngiam et al. ICML''11 (audio-visual speech recognition)
+
+    +   - Multimodal fusion: data from all modalities is available at all phases
+
+    +   - Cross modality learning: data from multiple modalities is available only
+    during feature learning; during supervised training and testing, only data from
+    a single modality is provided. The aim is to learn better single modality representations
+    given unlabeled data from multiple modalities.
+
+    +   - Matching across different modalities
+
+    +   - A direct approach is to train a RBM over the concatenated audio and video
+    data. Limited as a shallow model, it is hard for a RBM to learn the highly nonlinear
+    correlations and form multimodal representations
+
+    +   - It was found that learning a shallow bimodal RBM results in hidden units
+    that have strong connections to variables from individual modality but few units
+    that connect across the modalities.
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_120_0.png)
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_120_1.png)
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_120_2.png)'
+  merge: -1
+  img_proc: true
+- pgno: 121
+  md: '# Multimodal deep learning
+
+
+    +   - Bimodal DBN: greedily layerwise training a RBM over the pre-trained layers
+    for each modality: by representing the data through learned multilayer representations,
+    it can be easier for the model to learn higher-order correlations across modalities.
+    In (d), the first layer representations correspond to phonemes and visemes and
+    the second layer models the relationships between them.
+
+
+    +   - Problems
+
+    +     - It is possible for the model to find representations such that some hidden
+    units are tuned only for audio while others are tuned only for video
+
+    +     - It is not applicable in a cross modality learning setting where only one
+    modality is present during supervised training and testing.
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_121_0.png)
+
+
+    (d) Bimodal DBN'
+  merge: -1
+  img_proc: true
+- pgno: 122
+  md: '# Multimodal deep auto-encoder
+
+
+    +   - In (a), the deep auto-encoder is trained to reconstruct both modalities
+    when given only video data and thus discovers correlations across the modalities.
+
+    +   - Initialize the deep autoencoder with the bimodal DBN weights and discard
+    any weights that are no longer present. The middle layer can be used as the new
+    feature representation.
+
+    +   - Model (a) is used when only a single modality is present at supervised training
+    and testing
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_122_0.png)
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_122_1.png)'
+  merge: -1
+  img_proc: true
+- pgno: 123
+  md: <!-- no content -->
+  merge: -1
+  img_proc: true
+- pgno: 124
+  md: '# Multimodal deep auto-encoder
+
+
+    For image segmentation: Luo et al. CVPR''12
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_124_0.png)'
+  merge: -1
+  img_proc: true
+- pgno: 125
+  md: '# Reading materials
+
+
+    +   - G. E. Hinton and R. R. Salakhutdinov, “Reducing the Dimensionality of Data
+    with Neural Networks,” Science, Vol. 313, pp. 504-507, July 2006.
+
+    +   - K. Kavukcuoglu, M. Ranzato, and Y. LeCun, “Fast Inference in Sparse Coding
+    Algorithms with Applications to Object Recognition,” CBLL-TR-2008-12-01, NYU,
+    2008.
+
+    +   - J. Ngiam, A. Khosla, M. Kim, J. Nam, H. Lee, and A. Y. Ng, “Multimodal Deep
+    Learning,” ICML 2011.
+
+    +   - P. Luo, X. Wang, and X. Tang, “Hierarchical Face Parsing via Deep Learning,”
+    CVPR 2012.'
+  merge: -1
+  img_proc: true
+- pgno: 126
+  md: <!-- no content -->
+  merge: -1
+  img_proc: true
+- pgno: 127
+  md: '# Outline
+
+
+    +   1. HMM
+
+    +      - Markov Models
+
+    +      - Hidden Markov Model
+
+    +   2. Recurrent neural networks
+
+    +      - Recurrent neural networks
+
+    +      - BP on RNN
+
+    +      - Variants of RNN
+
+    +   3. Long Short-Term Memory recurrent networks
+
+    +      - Challenge of long-term dependency
+
+    +      - Combine short and long paths
+
+    +      - Long short-term memory net
+
+    +   4. Applications'
+  merge: -1
+  img_proc: true
+- pgno: 128
+  md: <!-- no content -->
+  merge: -1
+  img_proc: true
+- pgno: 129
+  md: '# Modeling sequential data
+
+
+    +   - Sample data sequences from a certain distribution
+
+    +     $P(x_1,\dots,x_T)$
+
+    +   - Generate natural sentences to describe an image
+
+    +     $P(y_1,\dots,y_T\mid I)$
+
+    +   - Activity recognition from a video sequence
+
+    +     $P(y\mid x_1,\dots,x_T)$
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_129_0.png)'
+  merge: -1
+  img_proc: true
+- pgno: 130
+  md: <!-- no content -->
+  merge: -1
+  img_proc: true
+- pgno: 131
+  md: '# Modeling sequential data
+
+
+    +   - Generate natural sentences to describe a video
+
+    +     $P(Y_1,\dots,Y_T \mid X_1,\dots,X_T)$
+
+    +   - Language translation
+
+    +     $P(Y_1,\dots,Y_T \mid X_1,\dots,X_T)$
+
+
+    Ulrich UNK, membre du conseil d’ administration du constructeur automobile Audi
+    , affirme qu’ il s’ agit d’ une pratique courante depuis des années que les téléphones
+    portables puissent être collectés avant les réunions du conseil d’ administration
+    afin qu’ ils ne soient pas utilisés comme appareils d’ écoute à distance.
+
+
+    Ulrich Hackenberg, membre du conseil d’ administration du constructeur automobile
+    Audi , déclare que la collecte des téléphones portables avant les réunions du
+    conseil , afin qu’ ils ne puissent pas être utilisés comme appareils d’ écoute
+    à distance , est une pratique courante depuis des années .'
+  merge: -1
+  img_proc: true
+- pgno: 132
+  md: '# Modeling sequential data
+
+
+    +   - Use the chain rule to express the joint distribution for a sequence of observations
+
+    +     $p(\mathbf{x}_1,\dots,\mathbf{x}_T)=\prod_{t=1}^{T} p(\mathbf{x}_t|\mathbf{x}_1,\dots,\mathbf{x}_{t-1})$
+
+
+    +   - Impractical to consider general dependence of future dependence on all previous
+    observations $p(\mathbf{x}_t|\mathbf{x}_{t-1},\dots,\mathbf{x}_0)$
+
+
+    +   - Complexity would grow without limit as the number of observations increases
+
+
+    +   - It is expected that recent observations are more informative than more historical
+    observations in predicting future values'
+  merge: -1
+  img_proc: true
+- pgno: 133
+  md: '# Markov models
+
+
+    +   - Markov models assume dependence on most recent observations
+
+    +   - First-order Markov model
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_133_0.png)
+
+
+    +   - Second-order Markov model
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_133_1.png)'
+  merge: -1
+  img_proc: true
+- pgno: 134
+  md: <!-- no content -->
+  merge: -1
+  img_proc: true
+- pgno: 135
+  md: '# Parameters of HMM
+
+
+    +   - Initial state parameters $P(h_t = \omega_i) = \pi_i, \sum_i \pi_i = 1$
+
+    +   - Transition probabilities $P(h_t = \omega_j | h_{t-1} = \omega_i) = a_{ij},
+    \sum_j a_{ij} = 1$. A = [a_{ij}] is transition matrix
+
+    +   - Emission probabilities $p(x_t | h_t)$
+
+    +     - If $x_t$ is a single discrete variable, $x_t = x_i \in \{v_1, ..., v_m\}$,
+    $P(x_t = v_k | z_t = \omega_j) = b_{jk}, \sum_k b_{jk} = 1$
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_135_0.png)'
+  merge: -1
+  img_proc: true
+- pgno: 136
+  md: "# Parameters of HMM\n\n+   - **Evaluation problem**: determine the probability\
+    \ that a particular data sequence x₁, ..., x_T was generated by that model,\n\
+    +   \n+     P(x₁, ..., x_T)\n+   - **Decoding problem**: given a set of observations\
+    \ x₁, ..., x_T, determine the most likely sequence of hidden states h₁, ..., h_T\
+    \ that lead to the observations\n+   \n+     (h₁*, ..., h_T*) = argmax_{h₁,...,h_T}\
+    \ P(h₁, ..., h_T | x₁, ..., x_T)\n+   - **Learning problem**: given a set of training\
+    \ observations of visible variables, without knowing the hidden variables, determine\
+    \ the parameters of HMM.\n+   \n+     θ* = P(x₁, ..., x_T; θ)"
+  merge: -1
+  img_proc: true
+- pgno: 137
+  md: '# Recurrent neural networks (RNN)
+
+
+    +   - While HMM is a generative model RNN is a discriminative model
+
+    +   - Model a dynamic system driven by an external signal x_t
+
+    +   - h_t = F_θ(h_{t-1}, x_t)
+
+    +   - h_t contains information about the whole past sequence. The equation above
+    implicitly defines a function which maps the whole past sequence (x_1, ..., x_t)
+    to the current state h_t = G_θ(x_1, ..., x_t)
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_137_0.png)
+
+
+    Left: physical implementation of RNN, seen as a circuit. The black square indicates
+    a delay of 1 time step. Right: the same seen as an unfolded flow graph, where
+    each node is now associated with a particular time instance.'
+  merge: -1
+  img_proc: true
+- pgno: 138
+  md: '# Recurrent neural networks (RNN)
+
+
+    +   - The summary is lossy, since it maps an arbitrary length sequence (x₁, …,
+    xₜ) to a fixed length vector hₜ. Depending on the training criterion, hₜ keeps
+    some important aspects of the past sequence.
+
+    +   - Sharing parameters: the same weights are used for different instances of
+    the artificial neurons at different time steps
+
+    +   - Share a similar idea with CNN: replacing a fully connected network with
+    local connections with parameter sharing
+
+    +   - It allows to apply the network to input sequences of different lengths and
+    predict sequences of different lengths
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_138_0.png)'
+  merge: -1
+  img_proc: true
+- pgno: 139
+  md: <!-- no content -->
+  merge: -1
+  img_proc: true
+- pgno: 140
+  md: '# A vanilla RNN to predict sequences from input
+
+
+    P(y₁, ..., y_T | x₁, ..., x_T)
+
+
+    +   - Forward propagation equations, assuming that hyperbolic tangent non-linearities
+    are used in the hidden units and softmax is used for output for classification
+    problems
+
+
+    h_t = tanh(W_in x_t + W_hh h_{t-1} + b_h)
+
+
+    z_t = softmax(W_hz h_t + b_z)
+
+
+    p(y_t = c) = z_{t,c}
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_140_0.png)'
+  merge: -1
+  img_proc: true
+- pgno: 141
+  md: <!-- no content -->
+  merge: -1
+  img_proc: true
+- pgno: 142
+  md: "# Backpropagation on RNN\n\n+   - Review BP on flow graph\n\n![](img/a04b187c89c5018c5ef6132980e27196_142_0.png)\n\
+    \n```\n∂loss/∂w ← 1\nfor j = N − 1 down to 1 do\n  ∂u_j/∂w ← Σ_{k∈parents(j)}\
+    \ (∂u_k/∂u_j) (∂u_k/∂w) / ∂u_j\nend for\nreturn (∂u_N/∂w)^M_{j=1}\n```\n\n> (Bengio\
+    \ et al. Deep Learning 2014)\n\n∂u_j/∂w_i = ∂u_j/∂a_i · ∂a_i/∂net_i · ∂net_i/∂w_i"
+  merge: -1
+  img_proc: true
+- pgno: 143
+  md: '# Gradients on W_hz and b_z
+
+
+    ∂L/∂z_t = 1,  ∂L/∂z_t = ∂L/∂L_t ∂L_t/∂z_t = ∂L_t/∂z_t
+
+
+    ∂L/∂W_hz = Σ_t ∂L_t/∂z_t ∂z_t/∂W_hz    ∂L/∂b_z = Σ_t ∂L_t/∂z_t ∂z_t/∂b_z
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_143_0.png)'
+  merge: -1
+  img_proc: true
+- pgno: 144
+  md: '# Gradients on W_hh and W_xh
+
+
+    ∂L/∂W_hh = Σ_t ∂L/∂h_t ∂h_t/∂W_hh
+
+
+    ∂L/∂h_t = ∂L/∂h_{t+1} ∂h_{t+1}/∂h_t + ∂L/∂z_t ∂z_t/∂h_t
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_144_0.png)'
+  merge: -1
+  img_proc: true
+- pgno: 145
+  md: <!-- no content -->
+  merge: -1
+  img_proc: true
+- pgno: 146
+  md: '# Network with output recurrence
+
+
+    Memory is from the prediction of the previous target, which limits its expressive
+    power but makes it easier to train
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_146_0.png)'
+  merge: -1
+  img_proc: true
+- pgno: 147
+  md: '# Generative RNN modeling P(x₁, ..., x_T)
+
+
+    +   - It can generate sequences from this distribution
+
+    +   - At the training stage, each x_t of the observed sequence serves both as
+    input (for the current time step) and as target (for the previous time step)
+
+    +   - The output z_t encodes the parameters of a conditional distribution P(x_{t+1}|x₁,
+    ..., x_t) = P(x_{t+1}|z_t) for x_{t+1} given the past sequence x₁, ..., x_t
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_147_0.png)'
+  merge: -1
+  img_proc: true
+- pgno: 148
+  md: '# Generative RNN modeling P(x₁, ..., x_T)
+
+
+    Cost function: negative log-likelihood of x, L = Σ_t L_t
+
+
+    P(x) = P(x₁, ..., x_T) = ∏_{t=1}^T P(x_t | x₁, ..., x_{t-1})
+
+
+    L_t = - log P(x_t | x₁, ..., x_{t-1})
+
+
+    In generative mode, x_{t+1} is sampled from the conditional distribution P(x_{t+1}
+    | x₁, ..., x_t) = P(x_{t+1} | z_t) (dashed arrows) and then that generated sample
+    x_{t+1} is fed back as input for computing the next state h_{t+1}
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_148_0.png)'
+  merge: -1
+  img_proc: true
+- pgno: 149
+  md: '# Generative RNN modeling P(x₁, ..., x_T)
+
+
+    +   - If RNN is used to generate sequences, one must also incorporate in the output
+    information allowing to stochastically decide when to stop generating new output
+    elements
+
+    +   - In the case when the output is a symbol taken from a vocabulary, one can
+    add a special symbol corresponding to the end of a sequence
+
+    +   - One could also directly directly model the length T of the sequence through
+    some parametric distribution. P(x₁, ..., x_T) is decomposed into
+
+
+    P(x₁...x_T) = P(x₁...x_T | T) P(T)'
+  merge: -1
+  img_proc: true
+- pgno: 150
+  md: '# RCNNs to represent conditional distributions P(y|x)
+
+
+    +   - If x is a fixed-sized vector, we can simply make it an extra input of the
+    RNN that generates the y sequence. Some common ways of providing the extra input
+
+    +     - as an extra input at each time step, or
+
+    +     - as the initial state h₀, or
+
+    +     - both
+
+    +   - Example: generate caption for an image
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_150_0.png)'
+  merge: -1
+  img_proc: true
+- pgno: 151
+  md: '# RCNNs to represent conditional distributions P(y|x)
+
+
+    +   - The input x is a sequence of the same length as the output sequence y
+
+    +   - Removing the dash lines, it assumes y_i are independent of each other when
+    the past input sequence is given, i.e. P(y_i|y_1,...,y_{i-1},x_1,...,x_{i-1})
+    = P(y_i|x_i,...,x_{i-1})
+
+    +   - Without the conditional independence assumption, add the dash lines and
+    the prediction of y_{t-1} is based on both the past x''s and past y''s
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_151_0.png)'
+  merge: -1
+  img_proc: true
+- pgno: 152
+  md: '# Bidirectional RNNs
+
+
+    +   - In some applications, we want to output at time t a prediction regarding
+    an output which may depend on the whole input sequence
+
+    +     - In speech recognition, the correct interpretation of the current sound
+    as a phoneme may depend on the next few phonemes because co-articulation and may
+    depend on the next few words because of the linguistic dependencies between words
+
+    +   - Bidirectional recurrent neural network was proposed to address such need
+
+    +   - It combines a forward-going RNN and a backward-going RNN
+
+    +   - The idea can be extended to 2D input with four RNN going in four directions'
+  merge: -1
+  img_proc: true
+- pgno: 153
+  md: '# Bidirectional RNNs
+
+
+    g_t summaries the information from the past sequence, and h_t summaries the information
+    from the future sequence
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_153_0.png)'
+  merge: -1
+  img_proc: true
+- pgno: 154
+  md: '# Plateaus and cliffs
+
+
+    +   - The error surfaces of training deep neural networks include local minima,
+    plateaus (regions where error varies only slightly as a function of weights),
+    and cliffs (regions where the gradients rise sharply)
+
+    +   - Plateaus and cliffs are more important barriers to training neural networks
+    than local minima
+
+    +     - It is very difficult (or slow) to effectively update the parameters in
+    plateaus
+
+    +     - When the parameters approach a cliff region, the gradient update step
+    can move the learner towards a very bad configuration, ruining much progress made
+    during recent training iterations.
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_154_0.png)
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_154_1.png)'
+  merge: -1
+  img_proc: true
+- pgno: 155
+  md: '# Vanishing and exploding gradients
+
+
+    +   - Training a very deep net makes the problem even more serious, since after
+    BP through many layers, the gradients become either very small or very large
+
+    +   - RNN can be treated as a deep net when modeling long term dependency
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_155_0.png)'
+  merge: -1
+  img_proc: true
+- pgno: 156
+  md: '# Vanishing and exploding gradients
+
+
+    +   - In very deep nets and recurrent nets, the final output is composed of a
+    large number of non-linear transformations
+
+    +   - Even though each of these non-linear stages may be relatively smooth, their
+    composition is going to be much “more non-linear”, in the sense that the derivatives
+    through the whole composition will tend to be either very small or very large,
+    with more ups and downs
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_156_0.png)
+
+
+    When composing many non-linearities (like the activation non-linearity in a deep
+    or recurrent neural network), the result is highly non-linear, typically with
+    most of the values associated with a tiny derivative, some values with a large
+    derivative, and many ups and downs (not shown here)'
+  merge: -1
+  img_proc: true
+- pgno: 157
+  md: '# Vanishing and exploding gradients
+
+
+    This arises because the Jacobian (matrix of derivatives) of a composition is the
+    product of the Jacobian of each stage, i.e. if
+
+
+    f = f_T ∘ f_{T-1} ∘ ... ∘ f_2 ∘ f_1
+
+
+    The Jacobian matrix of derivatives of f(x) with respect to its input vector x
+    is
+
+
+    f'' = f''_T f''_{T-1} ... f''_1
+
+
+    where
+
+
+    f'' = ∂f(x)/∂x
+
+
+    and
+
+
+    f''_i = ∂f_i(α_i)/∂α_i
+
+
+    where α_i = f_{i-1}(f_{i-2}(... f_2(f_1(x))...)), i.e. composition has been replaced
+    by matrix multiplication'
+  merge: -1
+  img_proc: true
+- pgno: 158
+  md: '# Vanishing and exploding gradients
+
+
+    +   - In the scalar case, we can imagine that multiplying many numbers together
+    tends to be either very large or very small
+
+    +   - In the special case where all the numbers in the product have the same value
+    α, this is obvious, since α^T goes to 0 if α < 1 and to ∞ if α > 1 as T increases
+
+    +   - The more general case of non-identical numbers be understood by taking the
+    logarithm of these numbers, considering them to be random, and computing the variance
+    of the sum of these logarithms. Although some cancellation can happen, the variance
+    grows with T. If those numbers are independent, it grows linearly with T, which
+    means that the product grows roughly as e^T.
+
+    +   - This analysis can be generalized to the case of multiplying square matrices'
+  merge: -1
+  img_proc: true
+- pgno: 159
+  md: "# Difficulty of Learning Long-Term Dependencies\n\n+   - Consider the gradient\
+    \ of a loss $L_T$ at time $T$ with respect to the parameter $\theta$ of the recurrent\
+    \ function $F_\theta$\n+     $h_t = F_\theta(h_{t-1}, x_t)$\n+     $\\frac{\\\
+    partial L_T}{\\partial \\theta} = \\sum_{t=1}^{T} \\frac{\\partial L_T}{\\partial\
+    \ h_T} \\frac{\\partial h_T}{\\partial h_t} \\frac{\\partial F_\theta(h_{t-1},\
+    \ x_t)}{\\partial \\theta}$\n+     $\\frac{\\partial L_T}{\\partial h_T} \\frac{\\\
+    partial h_T}{\\partial h_t} \\frac{\\partial F_\theta(h_{t-1}, x_t)}{\\partial\
+    \ \\theta}$ encodes long-term dependency when $T - t$ is large\n\n![](img/a04b187c89c5018c5ef6132980e27196_159_0.png)"
+  merge: -1
+  img_proc: true
+- pgno: 160
+  md: '# Difficulty of Learning Long-Term Dependencies
+
+
+    ∂h_T/∂h_t = ∂h_T/∂h_{T-1} ∂h_{T-1}/∂h_{T-2} ... ∂h_{t+1}/∂h_t
+
+
+    +   - Each layer-wise Jacobian ∂h_{t+1}/∂h_t is the product of two matrices: (a)
+    the recurrent matrix W and (b) the diagonal matrix whose entries are the derivatives
+    of the non-linearities associated with the hidden units, which vary depending
+    on the time step. This makes it likely that successive Jacobians have similar
+    eigenvectors, making the product of these Jacobians explode or vanish even faster
+
+
+    +   - ∂h_T/∂h_t is a weighted sum of terms over spans T − t, with weights that
+    are exponentially smaller (or larger) for long-term dependencies relating the
+    state at t to the state at T
+
+
+    +   - The signal about long term dependencies will tend to be hidden by the smallest
+    fluctuations arising from short-term dependencies'
+  merge: -1
+  img_proc: true
+- pgno: 161
+  md: '# Combine short and long paths in unfolded flow graph
+
+
+    +   - Longer-delay connections allow to connect the past states to future states
+    through short paths
+
+    +   - Gradients will vanish exponentially with respect to the number of time steps
+
+    +   - If we have recurrent connections with a time-delay of D, the instead of
+    the vanishing or explosion going as O(λ^T) over T steps (where λ is largest eigenvalue
+    of the Jacobians ∂h_t/∂h_{t-1}), the unfolded recurrent network now has paths
+    through which gradients grow as O(λ^{T/D}) because the number of effective steps
+    is T/D
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_161_0.png)'
+  merge: -1
+  img_proc: true
+- pgno: 162
+  md: '# Leaky units with self-connections
+
+
+    h_{t+1} = (1 - 1/τ) h_t + 1/τ tanh(W_{xh} x_t + W_{hh} h_t + b_h)
+
+
+    +   - The new value of the state h_{t+1} is a combination of linear and non-linear
+    parts of h_t
+
+    +   - The errors are easier to be back propagated through the paths of red lines,
+    which are linear
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_162_0.png)'
+  merge: -1
+  img_proc: true
+- pgno: 163
+  md: '# Leaky units with self-connections
+
+
+    +   - When τ = 1, there is no linear self-recurrence, only the nonlinear update
+    which we can find in ordinary recurrent networks
+
+    +   - When τ > 1, this linear recurrence allows gradients to propagate more easily.
+    When τ is large, the state changes very slowly, integrating the past values associated
+    with the input sequence
+
+    +   - τ controls the rate of forgetting old states. It can be viewed as a smooth
+    variant of the idea of the previous model
+
+    +   - By associating different time scales τ with different units, one obtains
+    different paths corresponding to different forgetting rates
+
+    +   - Those time constants can be fixed manually or can be learned as free parameters'
+  merge: -1
+  img_proc: true
+- pgno: 164
+  md: <!-- no content -->
+  merge: -1
+  img_proc: true
+- pgno: 165
+  md: "# Long Short-Term Memory (LSTM) net\n\nf_t = σ(W_fx x_t + W_fh h_{t-1} + b_f),\
+    \ i_t = σ(W_ix x_t + W_ih h_{t-1} + b_i),\n o_t = σ(W_ox x_t + W_oh h_{t-1} +\
+    \ b_o)\n g_t = tanh(W_gx x_t + W_gh h_{t-1} + b_g), c_t = f_t ⊙ c_{t-1} + i_t\
+    \ ⊙ g_t\n h_t = o_t ⊙ tanh(c_t), z_t = softmax(W_z h_t + b_z)\n\n![](img/a04b187c89c5018c5ef6132980e27196_165_0.png)"
+  merge: -1
+  img_proc: true
+- pgno: 166
+  md: '# Long Short-Term Memory (LSTM) net
+
+
+    +   - The core of LSTM is a memory cell c_t which encodes, at every time step,
+    the knowledge of the inputs that have been observed up to that step.
+
+    +   - The memory cell c_t has the same inputs (h_{t-1} and x_t) and outputs (h_t)
+    as a normal recurrent network, but has more parameters and a system of gating
+    units that controls the flow of information
+
+    +   - c_t has a linear self-connection similar to the leaky units, but the self-connection
+    weight is controlled by a forget gate unit f_t, that sets this weight to a value
+    between 0 and 1 via a sigmoid unit
+
+    +     f_t = σ(W_f x_t + W_h f_{t-1} h_{t-1} + b_f)
+
+    +   - The input gate unit i_t is computed similarly to the forget gate, but with
+    its own parameters
+
+    +   - The output h_t of the LSTM cell can also be shut off, via the output gate
+    o_t (h_t = o_t ⊙ tanh(c_t)), which is also a sigmoid unit for gating
+
+    +     o_t = σ(W_o x_t + W_h o_{t-1} h_{t-1} + b_o)'
+  merge: -1
+  img_proc: true
+- pgno: 167
+  md: <!-- no content -->
+  merge: -1
+  img_proc: true
+- pgno: 168
+  md: '# Long Short-Term Memory (LSTM) net
+
+
+    +   - (c): Depth can also be added in the hidden-to-output transform
+
+    +   - (d): A hierarchy of RNNs, which can be stacked on top of each other
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_168_0.png)'
+  merge: -1
+  img_proc: true
+- pgno: 169
+  md: '# Sequence-to-sequence language translation
+
+
+    +   - Sutskever, Vinyals, and Le NIPS 2014
+
+    +   - Model $P(Y_1,\dots,Y_T|X_1,\dots,X_T)$. The input and output sequences have
+    different lengths, are not aligned, and even do not have monotonic relationship
+
+    +   - Use one LSTM to read the input sequence $(x_1,\dots,x_T)$, one timestep
+    at a time, to obtain a large fixed-dimensional vector representation $v$, which
+    is given by the last hidden state of the LSTM
+
+    +   - Then conditioned on $v$, a second LSTM generates the output sequence $(y_1,\dots,y_T)$
+    and computes its probability
+
+
+    $p(y_1,\dots,y_T|v)=\prod_{t=1}^{T''}p(y_t|v,y_1,\dots,y_{t-1})$
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_169_0.png)
+
+
+    The model reads an input sentence "ABC" and produces "WXYZ" as the output sentence.
+    The model stops making predictions after outputting the end-of-sentence token.'
+  merge: -1
+  img_proc: true
+- pgno: 170
+  md: '# Sequence-to-sequence language translation
+
+
+    +   It requires each sentence ends with a special end-of-sequence symbol "<EOS>",
+    which enables the model to define a distribution over sequences of all possible
+    lengths
+
+
+    +   It is valuable to reverse the order of the words of the input sequence. For
+    example, instead of mapping the sentence a, b, c to the sentence α, β, γ, the
+    LSTM is asked to map c, b, a to α, β, γ, where α, β, γ is the translation of a,
+    b, c. This way, a is in close proximity to α, b is fairly close to β, and so on,
+    a fact that makes it easy for stochastic gradient descent to "establish communication"
+    between the input and the output. It introduces many short term dependencies in
+    the data that make the optimization problem much easier.'
+  merge: -1
+  img_proc: true
+- pgno: 171
+  md: '# Sequence-to-sequence language translation
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_171_0.png)
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_171_1.png)
+
+
+    The figure shows a 2-dimensional PCA projection of the LSTM hidden states that
+    are obtained after processing the phrases in the figures. The phrases are clustered
+    by meaning, which in these examples is primarily a function of word order, which
+    would be difficult to capture with a bag-of-words model. The figure clearly shows
+    that the representations are sensitive to the order of words, while being fairly
+    insensitive to the replacement of an active voice with a passive voice.'
+  merge: -1
+  img_proc: true
+- pgno: 172
+  md: '# Sequence-to-sequence language translation
+
+
+    +   - LSTM can correctly translate very long sentences
+
+
+    | Type | Sentence |
+
+    |------|----------|
+
+    | Our model | Ulrich UNK, membre du conseil d’administration du constructeur automobile
+    Audi, affirme qu’il y a déjà une pratique courante depuis des années pour que
+    les téléphones portables ne soient pas éteints, d’après la FCC. « Si l’innovation
+    portait les antennes relais du constructeur automobile était qu’ils ne soient
+    pas utilisés comme appareils d’écoute à distance. |
+
+    | Truth | Ulrich Hackenberg, membre du conseil d’administration du constructeur
+    automobile Audi, déclare que la collecte des téléphones portables avant les trajets
+    du conseil, afin qu’ils ne soient pas utilisés comme appareils d’écoute à distance,
+    est une pratique courante depuis des années. |
+
+    | Our model | « Les téléphones cellulaires, qui sont vraiment une question, non
+    seulement parce qu’ils pourraient potentiellement causer des interférences avec
+    les appareils de navigation, mais aussi parce qu’ils pourraient interférer avec
+    les tours de téléphone cellulaire lorsqu’ils sont dans l’air », dit UNK. |
+
+    | Truth | « Les téléphones portables sont véritablement un problème, non seulement
+    parce qu’ils pourraient éventuellement créer des interférences avec les instruments
+    de navigation, mais aussi parce qu’ils pourraient interférer avec les antennes
+    relais de téléphone mobile si ils sont utilisés à bord », a déclaré Rosenber.
+    |
+
+    | Our model | Avec la création, il y a un « sentiment de violence contre le corps
+    d’un être cher » qui sera réduit à une pile de cendres », en très peu de temps,
+    au lieu d’un processus de décomposition, qui accompagnera les phases du deuil.
+    |
+
+    | Truth | Il y a, avec la création, « une violence faite au corps aimé » qui va
+    être « réduit à un tas de cendres » en très peu de temps, et non après un processus
+    de décomposition, qui accompagnera les phases du deuil. |'
+  merge: -1
+  img_proc: true
+- pgno: 173
+  md: '# Generate image caption
+
+
+    +   - Vinyals et al. arXiv 2014
+
+    +   - Use a CNN as an image encoder and transform it to a fixed-length vector
+
+    +   - It is used as the initial hidden state of a "decoder" RNN that generates
+    the target sequence
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_173_0.png)'
+  merge: -1
+  img_proc: true
+- pgno: 174
+  md: '# Generate image caption
+
+
+    +   - The learning process is to maximize the probability of the correct description
+    given the image
+
+
+    θ* = arg max Σ_{(I,S)} log P(S|I; θ)
+
+
+    log P(S|I) = Σ_{t=0}^{N} log P(S_t | S_0, ..., S_{t-1})
+
+
+    I is an image and S is its correct description
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_174_0.png)'
+  merge: -1
+  img_proc: true
+- pgno: 175
+  md: '# Generate image caption
+
+
+    +   - Denote by S₀ a special start work and by S_N a special stop word
+
+    +   - Both the image and the words are mapped to the same space, the image by
+    using CNN, the words by using word embedding W_e
+
+    +   - The image I is only input once at t = 1 to inform the LSTM about the image
+    contents
+
+    +   - Sampling: sample the first word according to P₁, then provide the corresponding
+    embedding as input and sample P₂, continuing like this until it samples the special
+    end-of-sentence token
+
+
+    x₋₁ = CNN(I)
+
+
+    x_t = W_e S_t, t ∈ {0, ..., N − 1}
+
+
+    P_{t+1} = LSTM(x_t), t ∈ {0, ..., N − 1}
+
+
+    L(I, S) = Σ_{t=1}^{N} log P_t(S_t)'
+  merge: -1
+  img_proc: true
+- pgno: 176
+  md: '# Translate videos to sentences
+
+
+    +   - Venugopalan et al. arXiv 2014
+
+    +   - The challenge is to capture the joint dependencies of a sequence of frames
+    and a corresponding sequence of words
+
+    +   - Previous works simplified the problem by detecting a fixed set of semantic
+    roles, such as subject, verb, and object, as an intermediate representation and
+    adopted oversimplified rigid sentence templates.
+
+
+    Input video:
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_176_0.png)
+
+
+    Machine output: A cat is playing with toy.
+
+
+    Humans: A Ferret and cat fighting with each other. / A cat and a ferret are playing.
+    / A kitten and a ferret are playfully wrestling.'
+  merge: -1
+  img_proc: true
+- pgno: 177
+  md: <!-- no content -->
+  merge: -1
+  img_proc: true
+- pgno: 178
+  md: '# Translate videos to sentences
+
+
+    +   - Use CNN to convert a video to a fixed length representation vector v
+
+    +   - Use RNN to decode the vector into a sentence just like language translation
+
+    +   - Use two layers of LSTMs (one LSTM stacked on top of another)
+
+
+    p(y₁, …, y_T | v) = ∏_{t=1}^T p(y_t | v, y₁, …, y_{t-1})'
+  merge: -1
+  img_proc: true
+- pgno: 179
+  md: '# Translate videos to sentences
+
+
+    FGM: factor graph model, using templates to generate sentences
+
+    YT_LSTM trained on the YouTube video dataset
+
+    YT_C_LSTM with pre-training on the Coco image dataset
+
+    YT_CF_LSTM with pre-training on the CoCo and Flickr image datasets
+
+    GT: Ground truth from human description
+
+
+    FGM: A person is playing a guitar in the ...
+
+    YT: A group of performing on stage.
+
+    YT_C: A man is jumping on a pole.
+
+    GT: A man working on a high building.
+
+
+    FGM: A person playing a guitar in the house.
+
+    YT: A man is walking.
+
+    YT_C: A man is doing a woman.
+
+    GT: A man is doing algebraic equations on a white board.
+
+
+    FGM: A group of people riding the horse
+
+    YT: A group of young
+
+    YT_C: A group of elephants are walking
+
+    GT: An elephant leads. It''s young.
+
+
+    FGM: A person playing the goal of the
+
+    YT: A player playing in a goal.
+
+    YT_C: A man playing a soccer ball.
+
+    GT: A soccer player is want to
+
+    YT: Two teams are playing soccer.
+
+
+    FGM: A person is running a race on the
+
+    YT: A group of people
+
+    YT_C: A group of people are running.
+
+    GT: Eight men are running race on a field.
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_179_0.png)'
+  merge: -1
+  img_proc: true
+- pgno: 180
+  md: <!-- no content -->
+  merge: -1
+  img_proc: true
+- pgno: 181
+  md: <!-- no content -->
+  merge: -1
+  img_proc: true
+- pgno: 182
+  md: '# Outline
+
+
+    +   1. Optimization Basics
+
+    +   2. Optimization of training deep neural networks
+
+    +   3. Multi-GPU Training'
+  merge: -1
+  img_proc: true
+- pgno: 183
+  md: <!-- no content -->
+  merge: -1
+  img_proc: true
+- pgno: 184
+  md: '# Local minimum, local maximum, and saddle points
+
+
+    +   - When \(\nabla J(\theta)=0\), the gradient provides no information about
+    which direction to move
+
+    +   - Points at \(\nabla J(\theta)=0\) are known as **critical points** or **stationary
+    points**
+
+    +   - A local minimum is a point where \(J(\theta)\) is lower than at all neighboring
+    points, so it is no longer possible to decrease \(J(\theta)\) by making infinitesimal
+    steps
+
+    +   - A local maximum is a point where \(J(\theta)\) is higher than at all neighboring
+    points, so it is no longer possible to increase \(J(\theta)\) by making infinitesimal
+    steps
+
+    +   - Some critical points are neither maxima nor minima. These are known as **saddle
+    points**
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_184_0.png)'
+  merge: -1
+  img_proc: true
+- pgno: 185
+  md: '# Local minimum, local maximum, and saddle points
+
+
+    +   - In the context of deep learning, we optimize functions that may have many
+    local minima that are not optimal, and many saddle points surrounded by very flat
+    regions. All of this makes optimization very difficult, especially when the input
+    to the function is multidimensional.
+
+    +   - We therefore usually settle for finding a value of J that is very low, but
+    not necessarily minimal in any formal sense.
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_185_0.png)'
+  merge: -1
+  img_proc: true
+- pgno: 186
+  md: '# Jacobian matrix and Hessian matrix
+
+
+    +   - Jacobian matrix contains all of the partial derivatives of all the elements
+    of a vector-valued function
+
+    +   - Function f : R^m → R^n, then the Jacobian matrix J ∈ R^{n×m} of f is defined
+    such that J_{ij} = ∂/∂x_j f(x)_i
+
+    +   - The second derivative ∂²/∂x_i∂x_j f tells us how the first derivative will
+    change as we vary the input. It is useful for determining whether a critical point
+    is a local maximum, local minimum, or saddle point.
+
+    +     - f''(x) = 0 and f''''(x) > 0: local minimum
+
+    +     - f''(x) = 0 and f''''(x) < 0: local maximum
+
+    +     - f''(x) = 0 and f''''(x) = 0: saddle point or a part of a flat region
+
+    +   - Hessian matrix contains all of the second derivatives of the function
+
+    +     H(f)(x)_{ij} = ∂²/∂x_i∂x_j f(x)'
+  merge: -1
+  img_proc: true
+- pgno: 187
+  md: <!-- no content -->
+  merge: -1
+  img_proc: true
+- pgno: 188
+  md: '# Jacobian matrix and Hessian matrix
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_188_0.png)'
+  merge: -1
+  img_proc: true
+- pgno: 189
+  md: "# Hessian matrix\n\n+   Condition number: consider the function f(x) = A⁻¹x.\
+    \ When A ∈ Rⁿˣⁿ has an eigenvalue decomposition, its condition number\n+   \n\
+    +   maxᵢ,ⱼ |λᵢ / λⱼ|\n+   \n+   i.e. the ratio of the magnitude of the largest\
+    \ and smallest eigenvalue. When this number is large, matrix inversion is particularly\
+    \ sensitive to error in the input\n\n+   The Hessian can also be useful for understanding\
+    \ the performance of gradient descent. When the Hessian has a poor condition number,\
+    \ gradient descent performs poorly. This is because in one direction, the derivative\
+    \ increases rapidly, while in another direction, it increases slowly. Gradient\
+    \ descent is unaware of this change in the derivative so it does not know that\
+    \ it needs to explore preferentially in the direction where the derivative remains\
+    \ negative for longer."
+  merge: -1
+  img_proc: true
+- pgno: 190
+  md: '# Hessian matrix
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_190_0.png)
+
+
+    Gradient descent fails to exploit the curvature information contained in Hessian.
+    Here we use gradient descent on a quadratic function whose Hessian matrix has
+    condition number 5. The red lines indicate the path followed by gradient descent.
+    This very elongated quadratic function resembles a long canyon. Gradient descent
+    wastes time repeatedly descending canyon walls, because they are the steepest
+    feature. Because the step size is somewhat too large, it has a tendency to overshoot
+    the bottom of the function and thus needs to descend the opposite canyon wall
+    on the next iteration. The large positive eigenvalue of the Hessian corresponding
+    to the eigenvector pointed in this direction indicates that this directional derivative
+    is rapidly increasing, so an optimization algorithm based on the Hessian could
+    predict that the steepest direction is not actually a promising search direction
+    in this context.'
+  merge: -1
+  img_proc: true
+- pgno: 191
+  md: "# Second-order optimization methods\n\n+   - Gradient descent uses only the\
+    \ gradient and is called first-order optimization. Optimization algorithms such\
+    \ as Newton's method that also use the Hessian matrix are called second-order\
+    \ optimization algorithms.\n\n+   - Update with Newton's method\n+   \n+     $\\\
+    mathbf{x}^* = \\mathbf{x}_0 - H(f)(\\mathbf{x}_0)^{-1} \\nabla_x f(\\mathbf{x}_0)$\n\
+    \nWhen the function can be locally approximated as quadratic, iteratively updating\
+    \ the approximation and jumping to the minimum of the approximation can reach\
+    \ the critical point much faster than gradient descent would.\n\n+   - In many\
+    \ other fields, the dominant approach to optimization is to design optimization\
+    \ algorithms for a limited family of functions.\n\n+   - The family of functions\
+    \ used in deep learning is quite complicated and complex"
+  merge: -1
+  img_proc: true
+- pgno: 192
+  md: "# Stochastic gradient descent\n\n+   - Given $n$ training samples, our target\
+    \ function can be expressed as\n+   \n+     $$J(w) = \\sum_{p=1}^{n} J_p(w)$$\n\
+    \n+   - Batch gradient descent\n+   \n+     $$w \\leftarrow w - \\eta \\sum_{p=1}^{n}\
+    \ \\nabla J_p(w)$$\n\n+   - In some cases, evaluating the sum-gradient may be\
+    \ computationally expensive. Stochastic gradient descent samples a subset of summand\
+    \ functions at every step. This is very effective in the case of large-scale machine\
+    \ learning problems. In stochastic gradient descent, the true gradient of $J(w)$\
+    \ is approximated by a gradient at a single example (or a mini-batch of samples):\n\
+    +   \n+     $$w \\leftarrow w - \\eta \\nabla J_p(w)$$"
+  merge: -1
+  img_proc: true
+- pgno: 193
+  md: '# Stochastic backpropagation
+
+
+    # Algorithm 1 (Stochastic backpropagation)
+
+
+    ```
+
+    1 begin initialize network topology (# hidden units), w, criterion θ, η, m ← 0
+
+    2 do m ← m + 1
+
+    3 x^m ← randomly chosen pattern
+
+    4 w_ij ← w_ij + η ∂J/∂w_ij; w_jk ← w_jk + η ∂J/∂w_jk
+
+    5 until ∇J(w) < θ
+
+    6 return w
+
+    7 end
+
+    ```
+
+
+    In stochastic training, a weight update may reduce the error on the single pattern
+    being presented, yet increase the error on the full training set.'
+  merge: -1
+  img_proc: true
+- pgno: 194
+  md: '# Mini-batch based stochastic gradient descent
+
+
+    +   - Divide the training set into mini-batches.
+
+    +   - In each epoch, randomly permute mini-batches and take a mini-batch sequentially
+    to approximate the gradient
+
+    +     - One epoch corresponds to a single presentations of all patterns in the
+    training set
+
+    +   - The estimated gradient at each iteration is more reliable
+
+    +   - Start with a small batch size and increase the size as training proceeds'
+  merge: -1
+  img_proc: true
+- pgno: 195
+  md: '# Batch backpropagation
+
+
+    # Algorithm 2 (Batch backpropagation)
+
+
+    ```
+
+    1 begin initialize network topology (# hidden units), w, criterion θ, η, r ← 0
+
+    2 do r ← r + 1 (increment epoch)
+
+    3 m ← 0; Δwij ← 0; Δwjk ← 0
+
+    4 do m ← m + 1
+
+    5 x^m ← select pattern
+
+    6 Δwij ← Δwij + ηδj x_i; Δwjk ← Δwjk + ηδk y_j
+
+    7 until m = n
+
+    8 wij ← wij + Δwij; wjk ← wjk + Δwjk
+
+    9 until ∇J[w] < θ
+
+    10 return w
+
+    11 end
+
+    ```'
+  merge: -1
+  img_proc: true
+- pgno: 196
+  md: '# Summary
+
+
+    +   - **Stochastic learning**
+
+    +     - Estimate of the gradient is noisy, and the weights may not move precisely
+    down the gradient at each iteration
+
+    +     - Faster than batch learning, especially when training data has redundancy
+
+    +     - Noise often results in better solutions
+
+    +     - The weights fluctuate and it may not fully converge to a local minimum
+
+    +   - **Batch learning**
+
+    +     - Conditions of convergence are well understood
+
+    +     - Some acceleration techniques only operate in batch learning
+
+    +     - Theoretical analysis of the weight dynamics and convergence rates are
+    simpler'
+  merge: -1
+  img_proc: true
+- pgno: 197
+  md: '# Plot learning curves on the training and validation sets
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_197_0.png)
+
+
+    Plot the average error per pattern (i.e. 1/n ∑_p J_p) versus the number of epochs.'
+  merge: -1
+  img_proc: true
+- pgno: 198
+  md: '# Learning curve on the training set
+
+
+    +   - The average training error typically decreases with the number of epochs
+    and reaches an asymptotic value
+
+    +   - This asymptotic value could be high if underfitting happens. The reasons
+    could be
+
+    +     - The classification problem is difficult (Bayes error is high) and there
+    are a large number of training samples
+
+    +     - The expressive power of the network is not enough (the numbers of weights,
+    layers and nodes in each layer)
+
+    +     - Bad initialization and get stuck at local minimum (pre-training for better
+    initialization)
+
+    +   - If the learning rate is low, the training error tends to decrease monotonically,
+    but converges slowly. If the learning rate is high, the training error may oscillate.'
+  merge: -1
+  img_proc: true
+- pgno: 199
+  md: '# Learning curve on the test and validation set
+
+
+    The average error on the validation or test set is virtually always higher than
+    on the training set. It could increase or oscillate when **overfitting** happen.
+    The reasons could be
+
+
+    +   - Training samples are not enough
+
+    +   - The expressive power of the network is too high
+
+    +   - Bad initialization and get stuck at local minimum (pre-training for better
+    initialization)
+
+
+    Stop training at a minimum of the error on the validation set'
+  merge: -1
+  img_proc: true
+- pgno: 200
+  md: '# Data augmentation
+
+
+    +   - If the training set is small, one call synthesize some training samples
+    by adding Gaussian noise to real training samples
+
+    +   - Domain knowledge can be used to synthesize training samples. For example,
+    in image classification, more training images can be synthesized by translation,
+    scaling, and rotation.'
+  merge: -1
+  img_proc: true
+- pgno: 201
+  md: '# Normalizing input
+
+
+    +   - If the dynamic range of one input feature is much larger than others, during
+    training, the network will mainly adjust weights on this feature while ignore
+    others
+
+    +   - We do not want to prefer one feature over others just because they differ
+    solely measured units
+
+    +   - To avoid such difficulty, the input patterns should be shifted so that the
+    average over the training set of each feature is zero, and then be scaled to have
+    the same variance as 1 in each feature
+
+    +   - Input variables should be uncorrelated if possible
+
+    +     - If inputs are uncorrelated then it is possible to solve for the value
+    of one weight without any concern for other weights
+
+    +     - With correlated inputs, one must solve for multiple weights simultaneously,
+    which is a much harder problem
+
+    +     - PCA can be used to remove linear correlations in inputs'
+  merge: -1
+  img_proc: true
+- pgno: 202
+  md: '# Shuffling the training samples
+
+
+    打乱训练集
+
+
+    +   - Networks learn the fastest from the most unexpected sample
+
+    +   - Shuffle the training set so that successive training examples never (rarely)
+    belong to the same class
+
+    +   - Present input examples that produce a large error more frequently than examples
+    that produce a small error
+
+    +     - This technique applied to data containing outliers can be disastrous because
+    outliers can produce large errors yet should not be presented frequently'
+  merge: -1
+  img_proc: true
+- pgno: 203
+  md: <!-- no content -->
+  merge: -1
+  img_proc: true
+- pgno: 204
+  md: '# Error surfaces
+
+
+    +   - Backpropagation is based on gradient descent and tries to find the minimum
+    point of the error surface **J(w)**
+
+    +   - Generally speaking, it is unlikely to find the global minimum since the
+    error surface is usually very complex
+
+    +   - Backpropagation stops at local minimum and plateaus (regions where error
+    varies only slightly as a function of weights)
+
+    +   - Therefore, it is important to find a good initialization for backpropagation
+    (through pre-training)
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_204_0.png)'
+  merge: -1
+  img_proc: true
+- pgno: 205
+  md: '# Learning rate
+
+
+    +   - Decrease the learning rate when the weight vector "oscillates" and increase
+    it when the weight vector follows a steady direction
+
+    +   - One can choose a different learning rate for each weights, so that all the
+    weights in the network converge roughly at the same speed
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_205_0.png)
+
+
+    Gradient descent in a 1D quadratic criterion with different learning rates. The
+    optimal learning rate is found by η_opt = (∂²J / ∂w²)⁻¹.'
+  merge: -1
+  img_proc: true
+- pgno: 206
+  md: <!-- no content -->
+  merge: -1
+  img_proc: true
+- pgno: 207
+  md: '# Learning rate
+
+
+    +   - Example of linear network trained in a batch mode.
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_207_0.png)'
+  merge: -1
+  img_proc: true
+- pgno: 208
+  md: '# Learning rate
+
+
+    +   - Stochastic learning with η = 0.2
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_208_0.png)
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_208_1.png)'
+  merge: -1
+  img_proc: true
+- pgno: 209
+  md: "# Incorporation of momentum\n\n+   - Error surfaces often have plateaus where\
+    \ there are \"to many\" weights (especially when the number of layers is large)\
+    \ and thus the error depends only weakly upon any one of them.\n\n+   - Include\
+    \ some fraction α of the previous weight update in stochastic backpropagation\n\
+    +   \n+   **w(m + 1) = w(m) + (1 − α)Δw_bp(m) + αΔw(m − 1)**\n+   \n+   where\
+    \ Δw_bp(m) is the change in w(m) that would be called for by the backpropagation\
+    \ algorithm\n+   \n+   **Δw(m) = w(m) − w(m − 1)**\n\n+   - Allow the network\
+    \ to learn more quickly when plateaus in the error surface exists"
+  merge: -1
+  img_proc: true
+- pgno: 210
+  md: '# Incorporation of momentum
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_210_0.png)'
+  merge: -1
+  img_proc: true
+- pgno: 211
+  md: '# Plateaus and cliffs
+
+
+    +   - The error surfaces of training deep neural networks include local minima,
+    plateaus (regions where error varies only slightly as a function of weights),
+    and cliffs (regions where the gradients rise sharply)
+
+    +   - Plateaus and cliffs are more important barriers to training neural networks
+    than local minima
+
+    +     - It is very difficult (or slow) to effectively update the parameters in
+    plateaus
+
+    +     - When the parameters approach a cliff region, the gradient update step
+    can move the learner towards a very bad configuration, ruining much progress made
+    during recent training iterations.
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_211_0.png)
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_211_1.png)'
+  merge: -1
+  img_proc: true
+- pgno: 212
+  md: "# Higher-order nonlinearities\n\n+   • Second-order methods or momentum assume\
+    \ quadratic shape around the minimum. They increase the size of steps in the low-curvature\
+    \ directions and decrease the sizes of steps in the high-curvature directions\
+    \ (the steep sides of the valley)\n+   \n+   • When training deep models, higher\
+    \ order derivatives introduce a lot more non-linearity, which often does not have\
+    \ nice symmetrical shapes that the second-order “valley” picture builds in our\
+    \ mind\n\n![](img/a04b187c89c5018c5ef6132980e27196_212_0.png)"
+  merge: -1
+  img_proc: true
+- pgno: 213
+  md: '# Gradient clipping
+
+
+    +   To address the presence of cliffs, a useful heuristic is to clip the magnitude
+    of the gradient, only keeping its direction if its magnitude is below a threshold
+    (which is a hyper-parameter). This helps to avoid the destructive big moves which
+    would happen when approaching the cliff, either from above or below.
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_213_0.png)'
+  merge: -1
+  img_proc: true
+- pgno: 214
+  md: '# Vanishing and exploding gradients
+
+
+    梯度消失/爆炸问题
+
+
+    +   - Training a very deep net makes the problem even more serious, since after
+    BP through many layers, the gradients become either very small or very large
+
+    +   - In very deep nets and recurrent nets, the final output is composed of a
+    large number of non-linear transformations
+
+    +   - Even though each of these non-linear stages may be relatively smooth, their
+    composition is going to be much "more non-linear", in the sense that the derivatives
+    through the whole composition will tend to be either very small or very large,
+    with more ups and downs
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_214_0.png)
+
+
+    When composing many non-linearities (like the activation non-linearity in a deep
+    or recurrent neural network), the result is highly non-linear, typically with
+    most of the values associated with a tiny derivative, some values with a large
+    derivative, and many ups and downs (not shown here)'
+  merge: -1
+  img_proc: true
+- pgno: 215
+  md: '# Vanishing and exploding gradients
+
+
+    This arises because the Jacobian (matrix of derivatives) of a composition is the
+    product of the Jacobian of each stage, i.e. if
+
+
+    \[
+
+    f = f_T \circ f_{T-1} \circ \ldots \circ f_2 \circ f_1
+
+    \]
+
+
+    The Jacobian matrix of derivatives of \(f(x)\) with respect to its input vector
+    \(x\) is
+
+
+    \[
+
+    f'' = f''_T f''_{T-1} \ldots f''_2 f''_1
+
+    \]
+
+
+    where
+
+
+    \[
+
+    f'' = \frac{\partial f(x)}{\partial x}
+
+    \]
+
+
+    and
+
+
+    \[
+
+    f''_t = \frac{\partial f_t(\alpha_t)}{\partial \alpha_t}
+
+    \]
+
+
+    where \(\alpha_t = f_{t-1}(f_{t-2}(\ldots f_2(f_1(x))\ldots))\), i.e. composition
+    has been replaced by matrix multiplication'
+  merge: -1
+  img_proc: true
+- pgno: 216
+  md: '# Vanishing and exploding gradients
+
+
+    +   - In the scalar case, we can imagine that multiplying many numbers together
+    tends to be either very large or very small
+
+    +   - In the special case where all the numbers in the product have the same value
+    \(\alpha\), this is obvious, since \(\alpha^T\) goes to 0 if \(\alpha < 1\) and
+    to ∞ if \(\alpha > 1\) as \(T\) increases
+
+    +   - The more general case of non-identical numbers can be understood by taking
+    the logarithm of these numbers, considering them to be random, and computing the
+    variance of the sum of these logarithms. Although some cancellation can happen,
+    the variance grows with \(T\). If those numbers are independent, it grows linearly
+    with \(T\), which means that the product grows roughly as \(e^T\).
+
+    +   - This analysis can be generalized to the case of multiplying square matrices'
+  merge: -1
+  img_proc: true
+- pgno: 217
+  md: '# Why need multi-GPU?
+
+
+    +   - Further speed-up
+
+    +   - The memory size of a single GPU is limited
+
+    +     - GeForce GTX 670: 2GB
+
+    +     - TITAN: 6GB
+
+    +     - TITAN X: 12GB
+
+    +     - Tesla K40: 12GB
+
+    +     - Tesla K80: two K40
+
+    +   - Train bigger model
+
+    +   - Data parallelism
+
+    +   - Model parallelism'
+  merge: -1
+  img_proc: true
+- pgno: 218
+  md: '# Cost of using multi-GPU
+
+
+    +   - Synchronization
+
+    +   - Communication overhead
+
+    +     - Communication between GPUs in the same server
+
+    +     - Communication between GPU servers'
+  merge: -1
+  img_proc: true
+- pgno: 219
+  md: '# Data parallelism
+
+
+    +   - The mini-batch is split across several GPUs. Each GPU is responsible computing
+    gradients with respect to all model parameters, but does so using a subset of
+    the samples in the mini-batch
+
+    +   - The model (parameters) has a complete (same) copy in each GPU
+
+    +   - The gradients computed from multiple GPUs are averaged to update parameters
+    in both GPUs
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_219_0.png)'
+  merge: -1
+  img_proc: true
+- pgno: 220
+  md: '# Drawbacks of data parallelism
+
+
+    +   - Require considerable communication between GPUs, since each GPU must communicate
+    both gradients and parameter values on every update step
+
+    +   - Each GPU must use a large number of samples to effectively utilize the highly
+    parallel device; thus, the mini-batch size effectively gets multiplied by the
+    number of GPUs, hampering convergence'
+  merge: -1
+  img_proc: true
+- pgno: 221
+  md: '# Model parallelism
+
+
+    +   - Consist of splitting an individual network''s computation across multiple
+    GPUs
+
+    +   - For instance, convolutional layer with N filters can be run on two GPUs,
+    each of which convolves its input with N/2 filters
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_221_0.png)
+
+
+    The architecture is split into two columns which make easier to split computation
+    across the two GPUs'
+  merge: -1
+  img_proc: true
+- pgno: 222
+  md: '# Model parallelism
+
+
+    +   - A mini batch has the same copy in each GPU
+
+    +   - GPUs have to be synchronized and communicate at every layer if computing
+    gradients in a GPU requires outputs of all the feature maps at the lower layer
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_222_0.png)'
+  merge: -1
+  img_proc: true
+- pgno: 223
+  md: '# Model parallelism
+
+
+    +   - Krizhevsky et al. customized the architecture of the network to better leverage
+    model parallelism: the architecture consists of two "columns" each allocated on
+    one GPU
+
+    +   - Columns have cross connections only at one intermediate layer and at the
+    very top fully connected layers
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_223_0.png)
+
+
+    A. Krizhevsky, I. Sutskever, and G. Hinton, "ImageNet classification with deep
+    convolutional neural networks," in NIPS, 2012.'
+  merge: -1
+  img_proc: true
+- pgno: 224
+  md: '# Model parallelism
+
+
+    +   - While model parallelism is more difficult to implement, it has two potential
+    advantages relative to data parallelism
+
+    +     - It may require less communication bandwidth when the cross connections
+    involve small intermediate feature maps
+
+    +     - It allows the instantiation of models that are too big for a single GPU''s
+    memory'
+  merge: -1
+  img_proc: true
+- pgno: 225
+  md: '# Hybrid data and model parallelism
+
+
+    +   - Data and model parallelism can be hybridized.
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_225_0.png)
+
+
+    Examples of how model and data parallelism can be combined in order to make effective
+    use of 4 GPUs'
+  merge: -1
+  img_proc: true
+- pgno: 226
+  md: '# Hybrid data and model parallelism
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_226_0.png)
+
+
+    Test error on ImageNet as a function of time using different forms of parallelism.
+    All experiments used the same mini-batch size (256) and ran for 100 epochs (here
+    showing only the first 10 for clarity of visualization) with the same architecture
+    and the same hyper-parameter setting as in Alex net. If plotted against number
+    of weight updates, all these curves would almost perfectly coincide.'
+  merge: -1
+  img_proc: true
+- pgno: 227
+  md: '# Hybrid data and model parallelism
+
+
+    | Configuration | Time to complete 100 epochs |
+
+    |---|---|
+
+    | 1 GPU | 10.5 days |
+
+    | 2 GPUs Model parallelism | 6.6 days |
+
+    | 2 GPUs Data parallelism | 7 days |
+
+    | 4 GPUs Data parallelism | 7.2 days |
+
+    | 4 GPUs model + data parallelism | 4.8 days |'
+  merge: -1
+  img_proc: true
+- pgno: 228
+  md: '# Distributed computation with CPU cores
+
+
+    +   - Model parallelism: Only those nodes with edges that cross partition boundaries
+    will need to have their state transmitted between machines. Even in cases where
+    a node has multiple edges crossing a partition boundary, its state is only sent
+    to the machine on the other side of that boundary once.
+
+    +   - Within each partition, computation for individual nodes will the be parallelized
+    across all available CPU cores
+
+    +   - It requires data synchronization and data transfer between machines during
+    both training and inference
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_228_0.png)'
+  merge: -1
+  img_proc: true
+- pgno: 229
+  md: '# Distributed computation with CPU cores
+
+
+    +   - Models with local connectivity structures tend to be more amendable to extensive
+    distribution than fully-connected structures, given their lower communication
+    requirements
+
+    +   - Models with a large number of parameters or high computational demands typically
+    benefit from access to more CPUs and memory, up to the point where communication
+    costs dominate
+
+    +   - It means that the speedup cannot keep increasing with infinite number of
+    machines
+
+    +   - The typical cause of less-than-ideal speedup is variance in processing times
+    across the different machines, leading to many machines waiting for the single
+    slowest machine to finish a given phase of computation'
+  merge: -1
+  img_proc: true
+- pgno: 230
+  md: '# Reading Materials
+
+
+    +   - R. O. Duda, P. E. Hart, and D. G. Stork, “Pattern Classification,” Chapter
+    6, 2000.
+
+    +   - Y. LeCun, L. Bottou, G. B. Orr, and K. Muller, “Efficient BackProp,” Technical
+    Report, 1998.
+
+    +   - Y. Bengio, I. J. Goodfellow and A. Courville, “Numerical Computation” in
+    “Deep Learning”, Book in preparation for MIT Press
+
+    +   - Y. Bengio, I. J. Goodfellow and A. Courville, “Numerical Optimization” in
+    “Deep Learning”, Book in preparation for MIT Press
+
+    +   - O. Yadan, K. Adams, Y. Taigman, and M. Ranzato, “Multi-GPU Training of ConvNets”,
+    arXiv:1312.583, 2014
+
+    +   - J. Dean, G. S. Corrado, R. Monga, and K. Chen, “Large Scale Distributed
+    Deep Networks,” NIPS 2012'
+  merge: -1
+  img_proc: true
+- pgno: 231
+  md: '# Deep domain adaptation
+
+
+    From: Deep Visual Domain Adaptation: a Survey
+
+
+    Mei Wang
+
+
+    Beijing University of Posts and Telecommunications
+
+
+    2018.12.28'
+  merge: -1
+  img_proc: true
+- pgno: 232
+  md: '# Why do we need transfer learning
+
+
+    Machine do have its weakness, it has no ability to "transfer learning". The trained
+    models can not be adopted in different related scenarios, for example AlphaGo
+    can''t play Chinese chess.
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_232_0.png)
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_232_1.png)
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_232_2.png)
+
+
+    Slide credit: Qiang Yang'
+  merge: -1
+  img_proc: true
+- pgno: 233
+  md: '# Why do we need transfer learning
+
+
+    In the human evolution, the ability of transfer learning is very important. We
+    can extend learned knowledge to other scenarios. For example, after learning riding
+    bicycles, it is very easy to ride motorcycles.
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_233_0.png)
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_233_1.png)
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_233_2.png)
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_233_3.png)
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_233_4.png)
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_233_5.png)'
+  merge: -1
+  img_proc: true
+- pgno: 234
+  md: '# Why do we need transfer learning
+
+
+    Although, deep learning has achieved great success in many tasks, it is non-trivial
+    to address these problems in application:
+
+
+    +   1. Small data
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_234_0.png)
+
+
+    +   2. Reliability
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_234_1.png)
+
+
+    +   3. Personality
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_234_2.png)'
+  merge: -1
+  img_proc: true
+- pgno: 235
+  md: '# What is transfer learning?
+
+
+    +   - Traditional deep learning when training and testing share similar distribution:
+
+
+    Empirical Risk: min 1/n Σ_{i=1}^n L(x_i, y_i, θ)
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_235_0.png)'
+  merge: -1
+  img_proc: true
+- pgno: 236
+  md: '# What is transfer learning?
+
+
+    Given a source domain $D_S$ and learning task $T_S$, a target domain $D_T$ and
+    learning task $T_T$, transfer learning aims to help improve the learning of the
+    target predictive function $f_T(\cdot)$ in $D_T$ using the knowledge in $D_S$
+    and $T_S$, where $D_S \neq D_T$, or $T_S \neq T_T$.
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_236_0.png)'
+  merge: -1
+  img_proc: true
+- pgno: 237
+  md: '# # What is domain adaptation?
+
+
+    +   **Domain adaptation:**
+
+    +   - Source domain: abundant amount of labeled data.
+
+    +   - Target domain: few or no labeled data.
+
+    +   - Same tasks, but different data distribution.
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_237_0.png)
+
+
+    > [1] Pan S J, Yang Q. A survey on transfer learning[J]. IEEE Transactions on
+    knowledge and data engineering, 2010, 22(10): 1345-1359.'
+  merge: -1
+  img_proc: true
+- pgno: 238
+  md: '# What is domain adaptation?
+
+
+    Due to many factors (e.g., illumination, pose, and image quality), there is always
+    a **distribution change or domain shift** between two domains that can degrade
+    the performance.
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_238_0.png)
+
+
+    [2] M. Wang and W. Deng. *Deep visual domain adaptation: A survey*. Neurocomputing,
+    312:135–153, 2018.'
+  merge: -1
+  img_proc: true
+- pgno: 239
+  md: '# What is domain adaptation?
+
+
+    Due to distribution change or domain shift between two domains, the classifier
+    learned for the source domain can not be applied to the target domain.
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_239_0.png)
+
+
+    # SVHN→MNIST
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_239_1.png)
+
+
+    (a) non-adapted
+
+
+    # SVHN→MNIST
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_239_2.png)
+
+
+    (a) adapted'
+  merge: -1
+  img_proc: true
+- pgno: 240
+  md: '# What is domain adaptation?
+
+
+    +   - **Supervised DA**, a small amount of labeled target data are present. However,
+    the labeled data are commonly not sufficient for tasks.
+
+    +   - **Semi-supervised DA**, both limited labeled data and redundant unlabeled
+    data in the target domain are available in the training stage, which allows the
+    networks to learn the structure information of the target domain.
+
+    +   - **Unsupervised DA**, no labeled but sufficient unlabeled target domain data
+    are observable when training the network.
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_240_0.png)'
+  merge: -1
+  img_proc: true
+- pgno: 241
+  md: '# The key of transfer learning
+
+
+    The key element of transfer learning is to discover the commonness between the
+    two fields. Once this commonness is discovered, transfer learning becomes easy.
+    We call this commonness as common features in machine learning.
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_241_0.png)
+
+
+    VS
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_241_1.png)
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_241_2.png)'
+  merge: -1
+  img_proc: true
+- pgno: 242
+  md: "# Shallow domain adaptation\n\n+   - **Traditional deep learning**\n+   \n\
+    +     min 1/n Σ_{i=1}^n L(x_i, y_i, θ)\n+   - **Feature adaptation**\n+   \n+\
+    \     min 1/n Σ_{i=1}^n L(φ(x_i^s), y_i^s, θ)\n+   - **Instance adaptation**\n\
+    +   \n+     min 1/n Σ_{i=1}^n w_i L(x_i^s, y_i^s, θ)\n+   - **Model adaptation**\n\
+    +   \n+     min 1/n Σ_{i=1}^n L(x_i^s, y_i^s, θ)\n\nSlide credit: Meina Kan\n\n\
+    > [1] Pan S J, Yang Q. A survey on transfer learning[J]. IEEE Transactions on\
+    \ knowledge and data engineering, 2010, 22(10): 1345-1359."
+  merge: -1
+  img_proc: true
+- pgno: 243
+  md: '# Deep visual domain adaptation: A survey
+
+
+    fine-tuning the deep network with labeled or unlabeled target data to diminish
+    the domain shift
+
+
+    using domain discriminators to encourage domain confusion through an adversarial
+    objective
+
+
+    using the data reconstruction as an auxiliary task to ensure feature invariance
+
+
+    # Discrepancy-based DA
+
+
+    # Adversarial-based DA
+
+
+    # Reconstruction-based DA
+
+
+    +   - class criterion
+
+    +   - architecture criterion
+
+    +   - statistic criterion
+
+    +   - geometric criterion
+
+
+    +   - generative models
+
+    +   - non-generative models
+
+
+    +   - encoder-decoder reconstruction
+
+    +   - adversarial reconstruction
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_243_0.png)
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_243_1.png)
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_243_2.png)
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_243_3.png)'
+  merge: -1
+  img_proc: true
+- pgno: 244
+  md: <!-- no content -->
+  merge: -1
+  img_proc: true
+- pgno: 245
+  md: '# Supervised DA method: fine-tune
+
+
+    It showed how transferability is negatively affected by two distinct issues: optimization
+    difficulties related to splitting networks in the middle of fragiley co-adapted
+    layers and the specialization of higher layer features to the original task at
+    the expense of performance on the target task.
+
+
+    |  | The size of target dataset |  |  |
+
+    |  | Low | Medium | High |
+
+    | The distance between domains | Low | Freeze | freeze or tune | Tune |
+
+    |  | Medium | freeze or tune | Tune | Tune |
+
+    |  | High | freeze or tune | Tune | Tune |
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_245_0.png)
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_245_1.png)'
+  merge: -1
+  img_proc: true
+- pgno: 246
+  md: '# Unsupervised DA
+
+
+    +   - Traditional deep learning
+
+    +     $$\min \frac{1}{n}\sum_{i=1}^{n} L(x_i, y_i, \theta)$$
+
+
+    +   - Feature adaptation
+
+    +     $$\min \frac{1}{n}\sum_{i=1}^{n} L(\phi(x_i^s), y_i^s, \theta)$$
+
+
+    +   - Instance adaptation
+
+    +     $$\min \frac{1}{n}\sum_{i=1}^{n} w_i L(x_i^s, y_i^s, \theta)$$
+
+
+    +   - Model adaptation
+
+    +     $$\min \frac{1}{n}\sum_{i=1}^{n} L(x_i^s, y_i^s, \theta)$$
+
+
+    +   - KL divergence:
+
+    +     $$KL(P,Q)=\sum_i P(i)\log\frac{P(i)}{Q(i)}$$
+
+
+    +   - MMD:
+
+    +     $$MMD^2(\mathcal{D}_s,\mathcal{D}_t)=\left\|\frac{1}{M}\sum_{i=1}^{M}\phi(x_i^s)-\frac{1}{N}\sum_{i=1}^{N}\phi(x_i^t)\right\|_{\mathcal{H}}^2$$
+
+
+    +   - $\mathcal{H}$-divergence:
+
+    +     $$\hat{d}_\mathcal{A}=2(1-2\varepsilon)$$
+
+
+    +   - Wasserstein distance (Earth mover distance)
+
+    +     $$W(P_1,P_2)=\inf_{\gamma\sim\prod(P_1,P_2)}\mathbb{E}_{(x,y)\sim\gamma}[||x-y||]$$'
+  merge: -1
+  img_proc: true
+- pgno: 247
+  md: '# Unsupervised DA method
+
+
+    Most deep DA methods try to learn more transferable representations through mapping
+    both domains into a domain-invariant feature space, and then directly apply the
+    classifier learned from only source labels to target domain.
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_247_0.png)
+
+
+    Some papers explore domain-invariant feature spaces by minimizing some measures
+    of domain discrepancy such as statistic loss, adversarial loss and reconstruction
+    loss'
+  merge: -1
+  img_proc: true
+- pgno: 248
+  md: <!-- no content -->
+  merge: -1
+  img_proc: true
+- pgno: 249
+  md: '# Unsupervised DA method: DDC (1.1)
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_249_0.png)
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_249_1.png)
+
+
+    | Method | A → W | D → W | W → D | Average |
+
+    |---|---:|---:|---:|---:|
+
+    | GEK(PLS,PCA) [16] | 15.0 ± 0.4 | 44.6 ± 0.3 | 49.7 ± 0.5 | 36.4 |
+
+    | SA [13] | 15.3 | 50.1 | 56.9 | 40.8 |
+
+    | DA-NBNN [3] | 23.3 ± 2.7 | 67.2 ± 1.9 | 67.4 ± 3.0 | 52.6 |
+
+    | DLID [8] | 26.1 | 68.9 | 84.9 | 60.0 |
+
+    | DeCAF6 S [11] | 52.2 ± 1.7 | 91.5 ± 1.5 | — | — |
+
+    | DaNN [14] | 35.0 ± 0.2 | 70.5 ± 0.0 | 74.3 ± 0.0 | 59.9 |
+
+    | **Ours** | **59.4 ± 0.8** | **92.5 ± 0.3** | **91.7 ± 0.8** | **81.2** |
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_249_2.png)'
+  merge: -1
+  img_proc: true
+- pgno: 250
+  md: '# Unsupervised DA method: DAN (1.2)
+
+
+    DAN that matches the shift in marginal distributions across domains by adding
+    multiple adaptation layers and exploring multiple kernels, assuming that the conditional
+    distributions remain unchanged.
+
+
+    Adapting a single layer cannot undo the dataset bias between the source and the
+    target, since there are other layers that are not transferable. The multiple kernels
+    with different bandwidths can match both the low-order moments and high-order
+    moments to minimize the domain discrepancy.
+
+
+    𝒦 = { k = Σ_{u=1}^{m} β_u k_u : Σ_{u=1}^{m} β_u = 1, β_u ≥ 0, ∀u }
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_250_0.png)
+
+
+    > [5] M. Long , Y. Cao , J. Wang , M. Jordan , Learning transferable features
+    with deep adaptation networks, in ICML, 2015, pp. 97–105 .'
+  merge: -1
+  img_proc: true
+- pgno: 251
+  md: '# Unsupervised DA method: RTN (1.3)
+
+
+    min 1/n Σ_{i=1}^n L(x_i^s, y_i^s, θ)
+
+
+    Since deep features eventually transition from general to specific along the network:
+    (1) fully connected layers fc6–fc8 are tailored to model task-specific structures,
+    hence they are not safely transferable and should be adapted with MK-MMD minimization;
+    (2) supervised classifiers are not safely transferable, hence they are bridged
+    by the residual layers fc9–fc10 such that f_S(x) = f_T(x) + Δf(f_T(x)).
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_251_0.png)
+
+
+    Instead of using the residual block to model the feature mapping, we use it to
+    bridge the source classifier f_S(x) and target classifier f_T(x) by x ≜ f_T(x),
+    H(x) ≜ f_S(x), and F(x) ≜ Δf(f_T(x))
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_251_1.png)
+
+
+    > [6] M. Long , H. Zhu , J. Wang , M.I. Jordan , Unsupervised domain adaptation
+    with residual transfer networks, in NIPS, 2016, pp. 136–144 .'
+  merge: -1
+  img_proc: true
+- pgno: 252
+  md: '# Unsupervised DA method: JAN (1.4)
+
+
+    Transfer learning will become more challenging as domains may change by the joint
+    distributions P(X,Y) of input features X and output labels Y. The distribution
+    shifts may stem from the marginal distributions P(X), the conditional distributions
+    P(Y|X), or both.
+
+
+    Kernel embeddings can be readily generalized to joint distributions of two or
+    more variables using tensor product feature spaces.
+
+
+    C_{X^{1:m}}(P) \triangleq \mathbb{E}_{X^{1:m}}[\otimes_{\ell=1}^{m}\phi^{\ell}(X^{\ell})]
+    = \int_{\times_{\ell=1}^{m}\Omega^{\ell}} (\otimes_{\ell=1}^{m}\phi^{\ell}(x^{\ell}))
+    dP(x^{1},...,x^{m})
+
+
+    D_{\mathcal{L}}(P,Q) \triangleq \|C_{Z^{s,1:|\mathcal{L}|}}(P) - C_{Z^{t,1:|\mathcal{L}|}}(Q)\|_{\otimes_{\ell=1}^{|\mathcal{L}|}\mathcal{H}^{\ell}}^{2}
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_252_0.png)
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_252_1.png)
+
+
+    (a) Joint Adaptation Network (JAN)
+
+
+    (b) Adversarial Joint Adaptation Network (JAN-A)
+
+
+    > [7] M. Long, J. Wang, and M. I. Jordan. Deep transfer learning with joint adaptation
+    networks. arXiv preprint arXiv:1605.06636, 2016.'
+  merge: -1
+  img_proc: true
+- pgno: 253
+  md: '# Unsupervised DA method: JAN (1.4)
+
+
+    Table 1. Classification accuracy (%) on Office-31 dataset for unsupervised domain
+    adaptation (AlexNet and ResNet)
+
+
+    | Method | A → W | D → W | W → D | A → D | D → A | W → A | Avg |
+
+    |---|---|---|---|---|---|---|---|
+
+    | AlexNet (Krizhevsky et al., 2012) | 61.6±0.5 | 95.4±0.3 | 99.0±0.2 | 63.8±0.5
+    | 51.1±0.6 | 49.8±0.4 | 70.1 |
+
+    | TCA (Pan et al., 2011) | 61.0±0.0 | 93.2±0.0 | 95.2±0.0 | 60.8±0.0 | 51.6±0.0
+    | 50.9±0.0 | 68.8 |
+
+    | GFK (Gong et al., 2012) | 60.4±0.0 | 95.6±0.0 | 95.0±0.0 | 60.6±0.0 | 52.4±0.0
+    | 48.1±0.0 | 68.7 |
+
+    | DDC (Tzeng et al., 2014) | 61.8±0.4 | 95.0±0.5 | 98.5±0.4 | 64.4±0.3 | 52.1±0.6
+    | 52.2±0.4 | 70.6 |
+
+    | DAN (Long et al., 2015) | 68.5±0.5 | 96.0±0.3 | 99.0±0.3 | 67.0±0.4 | 54.0±0.5
+    | 53.1±0.5 | 72.9 |
+
+    | RTN (Long et al., 2016) | 73.3±0.3 | 96.8±0.2 | 99.6±0.1 | 71.0±0.2 | 50.5±0.3
+    | 51.0±0.1 | 73.7 |
+
+    | RevGrad (Ganin & Lempitsky, 2015) | 73.0±0.5 | 96.4±0.3 | 99.2±0.3 | 72.3±0.3
+    | 53.4±0.4 | 51.2±0.5 | 74.3 |
+
+    | JAN (ours) | 74.9±0.3 | 96.6±0.2 | 99.5±0.2 | 71.8±0.2 | 58.3±0.3 | 55.0±0.4
+    | 76.0 |
+
+    | JAN-A (ours) | 75.2±0.4 | 96.6±0.2 | 99.6±0.1 | 72.8±0.3 | 57.5±0.2 | 56.3±0.2
+    | 76.3 |
+
+    | ResNet (He et al., 2016) | 68.4±0.2 | 96.7±0.1 | 99.3±0.1 | 68.9±0.2 | 62.5±0.3
+    | 60.7±0.3 | 76.1 |
+
+    | TCA (Pan et al., 2011) | 72.7±0.0 | 96.7±0.0 | 99.6±0.0 | 74.1±0.0 | 61.7±0.0
+    | 60.9±0.0 | 77.6 |
+
+    | GFK (Gong et al., 2012) | 72.8±0.0 | 95.0±0.0 | 98.2±0.0 | 74.5±0.0 | 63.4±0.0
+    | 61.0±0.0 | 77.5 |
+
+    | DDC (Tzeng et al., 2014) | 75.6±0.2 | 96.0±0.2 | 98.2±0.1 | 76.5±0.3 | 62.2±0.4
+    | 61.5±0.5 | 78.3 |
+
+    | DAN (Long et al., 2015) | 80.5±0.4 | 97.1±0.2 | 99.6±0.1 | 78.6±0.2 | 63.6±0.3
+    | 62.8±0.2 | 80.4 |
+
+    | RTN (Long et al., 2016) | 84.5±0.2 | 96.8±0.1 | 99.4±0.1 | 77.5±0.3 | 66.2±0.2
+    | 64.8±0.3 | 81.6 |
+
+    | RevGrad (Ganin & Lempitsky, 2015) | 82.0±0.4 | 96.9±0.2 | 99.1±0.1 | 79.7±0.4
+    | 68.2±0.4 | 67.4±0.5 | 82.2 |
+
+    | JAN (ours) | 85.4±0.3 | 97.4±0.2 | 99.8±0.2 | 84.7±0.3 | 68.6±0.3 | 70.0±0.4
+    | 84.3 |
+
+    | JAN-A (ours) | 86.0±0.4 | 96.7±0.3 | 99.7±0.1 | 85.1±0.4 | 69.2±0.4 | 70.7±0.5
+    | 84.6 |'
+  merge: -1
+  img_proc: true
+- pgno: 254
+  md: "# Unsupervised domain adaptation\n\n+   - Traditional deep learning\n+   \n\
+    +     min 1/n Σᵢ=1ⁿ L(xᵢ, yᵢ, θ)\n\n+   - Feature adaptation\n+   \n+     min\
+    \ 1/n Σᵢ=1ⁿ L(φ(xᵢˢ), yᵢˢ, θ)\n\n+   - Instance adaptation\n+   \n+     min 1/n\
+    \ Σᵢ=1ⁿ wᵢ L(xᵢˢ, yᵢˢ, θ)\n\n+   - Model adaptation\n+   \n+     min 1/n Σᵢ=1ⁿ\
+    \ L(xᵢˢ, yᵢˢ, θ)\n\n+   - KL divergence:\n+     KL(P, Q) = Σᵢ P(i) log P(i)/Q(i)\n\
+    \n+   - MMD:\n+     MMD²(Dₛ, Dₜ)\n+     = || 1/M Σᵢ=1ᴹ φ(xᵢˢ) - 1/N Σᵢ=1ᴺ φ(xᵢᵗ)\
+    \ ||²_ℋ\n\n+   - ℋ-divergence:\n+     d̂_A = 2(1-2ε)\n\n+   - Wasserstein distance\
+    \ (Earth mover distance)\n+     W(P₁, P₂) = inf\n+     γ∼Π(P₁,P₂) \U0001D53C₍ₓ,ᵧ₎∼γ[||x\
+    \ - y||]"
+  merge: -1
+  img_proc: true
+- pgno: 255
+  md: '# Unsupervised DA method: RevGrad (2.1)
+
+
+    The domain-adversarial neural network (DANN) integrated a gradient reversal layer
+    (GRL) to train a feature extractor by maximizing the domain classifier loss and
+    simultaneously minimizing the label predictor loss.
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_255_0.png)
+
+
+    [8] Y. Ganin , V. Lempitsky , Unsupervised domain adaptation by backpropagation,
+    in ICML, 2015, pp. 1180–1189 .'
+  merge: -1
+  img_proc: true
+- pgno: 256
+  md: "# Unsupervised DA method: RevGrad (2.1)\n\n# 1 Max-min optimization\n\nE(θ_f,\
+    \ θ_y, θ_d) = Σ_{i=1..N \\ d_i=0} L_y(G_y(G_f(x_i; θ_f); θ_y), y_i) - λ Σ_{i=1..N}\
+    \ L_d(G_d(G_f(x_i; θ_f); θ_d), y_i) = Σ_{i=1..N \\ d_i=0} L_y^i(θ_f, θ_y) - λ\
+    \ Σ_{i=1..N} L_d^i(θ_f, θ_d)  (1)\n\n(θ̂_f, θ̂_y) = arg min_{θ_f, θ_y} E(θ_f,\
+    \ θ_y, θ̂_d)  (2)\nθ̂_d = arg max_{θ_d} E(θ̂_f, θ̂_y, θ_d).  (3)\n\n# 2 Gradient\
+    \ reversal layer\n\nÊ(θ_f, θ_y, θ_d) = Σ_{i=1..N \\ d_i=0} L_y(G_y(G_f(x_i; θ_f);\
+    \ θ_y), y_i) + Σ_{i=1..N} L_d(G_d(R_λ(G_f(x_i; θ_f)); θ_d), y_i)  (9)\n\nR_λ(x)\
+    \ = x\n dR_λ / dx = -λ I\n\n![](img/a04b187c89c5018c5ef6132980e27196_256_0.png)"
+  merge: -1
+  img_proc: true
+- pgno: 257
+  md: '# Unsupervised DA method: RevGrad (2.1)
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_257_0.png)
+
+
+    | METHOD | SOURCE | MNIST\nTARGET MNIST-M | SYN NUMBERS\nTARGET SVHN | SVHN\nTARGET
+    MNIST | SYN SIGNS\nTARGET GTSRB |
+
+    |---|---|---|---|---|---|
+
+    | SOURCE ONLY |  | .5749 | .8665 | .5919 | .7400 |
+
+    | SA (FERNANDO ET AL., 2013) |  | .6078 (7.9%) | .8672 (1.3%) | .6157 (5.9%) |
+    .7635 (9.1%) |
+
+    | PROPOSED APPROACH |  | .8149 (57.9%) | .9048 (66.1%) | .7107 (29.3%) | .8866
+    (56.7%) |
+
+    | TRAIN ON TARGET |  | .9891 | .9244 | .9951 | .9987 |
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_257_1.png)'
+  merge: -1
+  img_proc: true
+- pgno: 258
+  md: '# Unsupervised DA method: iCAN (2.2)
+
+
+    Collaborative and Adversarial Network (CAN) through domain-collaborative and domain
+    adversarial training of neural networks.
+
+
+    +   - Domain informative representations: from lower blocks through collaborative
+    learning
+
+    +   - Domain uninformative representations: from higher blocks through adversarial
+    learning.
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_258_0.png)
+
+
+    1 min_{θ,w} (1/N) Σ_{i=1}^N L_D(D(F(x_i; θ); w), d_i)
+
+    2 max_θ min_w (1/N) Σ_{i=1}^N L_D(D(F(x_i; θ); w), d_i)
+
+    3 min_{Θ_F, λ} L_CAN = Σ_{k=1}^{m-1} λ_k min_{w_k} L_D(θ_k, w_k) + λ_m min_{w_m}
+    L_D(θ_m, w_m), s.t. Σ_{k=1}^{m-1} λ_k = λ_0, |λ_k| ≤ λ_0
+
+
+    > [9] W. Zhang, W. Ouyang, W. Li, and D. Xu. Collaborative and adversarial network
+    for unsupervised domain adaptation. In CVPR, pages 3801–3809, 2018.'
+  merge: -1
+  img_proc: true
+- pgno: 259
+  md: '# Unsupervised DA method: MADA (2.3)
+
+
+    The difficulty of domain adaptation:
+
+
+    +   - target label space is only a subspace of the source label space.
+
+    +   - discriminative structures may be mixed up or falsely aligned across domains.
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_259_0.png)
+
+
+    > [10] Z. Pei, Z. Cao, M. Long, and J. Wang. Multi-adversarial domain adaptation.
+    In AAAI Conference on Artificial Intelligence, 2018'
+  merge: -1
+  img_proc: true
+- pgno: 260
+  md: '# Unsupervised DA method: MADA (2.3) min 1/n Σ_{i=1}^n w_i L(x_i^s, y_i^s,
+    θ)
+
+
+    A multi-adversarial domain adaptation (MADA) approach captures multimode structures
+    enable fine-grained alignment of different data distributions based on multiple
+    domain discriminators.
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_260_0.png)
+
+
+    it is a natural idea to use ŷ_i as the probability to indicate how much each data
+    point x_i should be attended to the K domain discriminators G_d^k. The attention
+    of each point x_i to a domain discriminator G_d^k can be modeled by weighting
+    its features G_f(x_i) with probability ŷ_ik.
+
+
+    C(θ_f, θ_y, θ_d^{k|K}=1) = 1/n_s Σ_{x_i∈D_s} L_y(G_y(G_f(x_i)), y_i) - λ/n Σ_{k=1}^K
+    Σ_{x_i∈D} L_d^k(G_d^k(ŷ_i^k G_f(x_i)), d_i)
+
+
+    (θ̂_f, θ̂_y) = arg min_{θ_f, θ_y} C(θ_f, θ_y, θ_d^{k|K=1}), (θ̂_d^1, ..., θ̂_d^K)
+    = arg max_{θ_d^1, ..., θ_d^K} C(θ_f, θ_y, θ_d^{k|K=1})'
+  merge: -1
+  img_proc: true
+- pgno: 261
+  md: '# Unsupervised DA method: MADA (2.3)
+
+
+    **Table 1: Accuracy (%) on *Office-31* for unsupervised domain adaptation (AlexNet
+    and ResNet)**
+
+
+    | Method | A → W | D → W | W → D | A → D | D → A | W → A | Avg |
+
+    |---|---:|---:|---:|---:|---:|---:|---:|
+
+    | AlexNet (Krizhevsky, Sutskever, and Hinton 2012) | 60.6±0.4 | 95.4±0.2 | 99.0±0.1
+    | 64.2±0.3 | 45.5±0.5 | 48.3±0.5 | 68.8 |
+
+    | TCA (Pan et al. 2011) | 59.0±0.0 | 90.2±0.0 | 88.2±0.0 | 57.8±0.0 | 51.6±0.0
+    | 47.9±0.0 | 65.8 |
+
+    | GFK (Gong et al. 2012) | 58.4±0.0 | 93.6±0.0 | 91.0±0.0 | 58.6±0.0 | 52.4±0.0
+    | 46.1±0.0 | 66.7 |
+
+    | DDC (Tzeng et al. 2014) | 61.0±0.5 | 95.0±0.3 | 98.5±0.3 | 64.9±0.4 | 47.2±0.5
+    | 49.4±0.4 | 69.3 |
+
+    | DAN (Long et al. 2015) | 68.5±0.3 | 96.0±0.1 | 99.0±0.1 | 66.8±0.2 | 50.0±0.4
+    | 49.8±0.3 | 71.7 |
+
+    | RTN (Long et al. 2016) | 73.3±0.2 | 96.8±0.2 | 99.6±0.1 | 71.0±0.2 | 50.5±0.3
+    | 51.0±0.1 | 73.7 |
+
+    | RevGrad (Ganin and Lempitsky 2015) | 73.0±0.5 | 96.4±0.3 | 99.2±0.3 | 72.3±0.3
+    | 52.4±0.4 | 50.4±0.5 | 74.1 |
+
+    | **MADA** | **78.5±0.2** | **99.8±0.1** | **100.0±0.0** | **74.1±0.1** | **56.0±0.2**
+    | **54.5±0.3** | **77.1** |
+
+    | ResNet (He et al. 2016) | 68.4±0.2 | 96.7±0.1 | 99.3±0.1 | 68.9±0.2 | 62.5±0.3
+    | 60.7±0.3 | 76.1 |
+
+    | TCA (Pan et al. 2011) | 74.7±0.0 | 96.7±0.0 | 99.6±0.0 | 76.1±0.0 | 63.7±0.0
+    | 62.9±0.0 | 79.3 |
+
+    | GFK (Gong et al. 2012) | 74.8±0.2 | 95.0±0.0 | 98.2±0.0 | 76.5±0.0 | 65.4±0.0
+    | 63.0±0.0 | 78.8 |
+
+    | DDC (Tzeng et al. 2014) | 75.8±0.2 | 95.0±0.2 | 98.2±0.1 | 77.5±0.3 | 67.4±0.4
+    | 64.0±0.5 | 79.7 |
+
+    | DAN (Long et al. 2015) | 83.8±0.4 | 96.8±0.2 | 99.5±0.1 | 78.4±0.2 | 66.7±0.3
+    | 62.7±0.2 | 81.3 |
+
+    | RTN (Long et al. 2016) | 84.5±0.2 | 96.8±0.1 | 99.4±0.1 | 77.5±0.3 | 66.2±0.2
+    | 64.8±0.3 | 81.6 |
+
+    | RevGrad (Ganin and Lempitsky 2015) | 82.0±0.4 | 96.9±0.2 | 99.1±0.1 | 79.7±0.4
+    | 68.2±0.4 | **67.4±0.5** | 82.2 |
+
+    | **MADA** | **90.0±0.1** | **97.4±0.1** | **99.6±0.1** | **87.8±0.2** | **70.3±0.3**
+    | 66.4±0.3 | **85.2** |
+
+
+    **Table 3: Accuracy (%) on *Office-31* for domain adaptation from 31 classes to
+    25 classes (AlexNet)**
+
+
+    | Method | A → W | D → W | W → D | A → D | D → A | W → A | Avg |
+
+    |---|---:|---:|---:|---:|---:|---:|---:|
+
+    | AlexNet (Krizhevsky, Sutskever, and Hinton 2012) | 58.2±0.4 | 95.9±0.2 | 99.0±0.1
+    | 60.4±0.3 | 49.8±0.5 | 47.3±0.5 | 68.4 |
+
+    | RevGrad (Ganin and Lempitsky 2015) | 65.1±0.5 | 91.7±0.3 | 97.1±0.3 | 60.6±0.3
+    | 42.1±0.4 | 42.9±0.5 | 66.6 |
+
+    | **MADA** | **70.8±0.2** | **96.6±0.1** | **99.5±0.3** | **69.6±0.1** | **51.4±0.2**
+    | **54.2±0.3** | **73.7** |'
+  merge: -1
+  img_proc: true
+- pgno: 262
+  md: '# Unsupervised DA method: Weighted Adversarial Nets (2.4)
+
+
+    The importance weighted adversarial nets-based partial domain adaptation method
+    can identify the source samples that are potentially from the outlier classes
+    and, at the same time, reduce the shift of shared classes between domains.
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_262_0.png)
+
+
+    The intuition of the weighting scheme is that if the activation of the first domain
+    classifier is large, the sample can be almost perfectly discriminated from the
+    target domain by the discriminator.
+
+
+    1
+
+    D(z) = p(y = 1|z) = σ(α(z))
+
+    \tilde{w}(z) = 1 - D^*(z) = 1 / (p_s(z)/p_t(z) + 1)
+
+
+    2
+
+    min_{F_t} max_{D_0} L_w(D_0, F_s, F_t) = E_{x~p_s(x)}[w(z) log D_0(F_s(x))] +
+    E_{x~p_t(x)}[log(1 - D_0(F_t(x)))]
+
+
+    > [11] Zhang J, Ding Z, Li W, et al. Importance Weighted Adversarial Nets for
+    Partial Domain Adaptation. In CVPR. 2018: 8156-8164.'
+  merge: -1
+  img_proc: true
+- pgno: 263
+  md: '# Unsupervised DA method: DRCN (3.1)
+
+
+    The model is optimized through multitask learning, that is, jointly learns the
+    (supervised) source label prediction and the (unsupervised) target data reconstruction
+    tasks. The aim is that the encoding shared representation should learn the commonality
+    between those tasks that provides useful information for cross-domain object recognition
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_263_0.png)
+
+
+    ℒ_c^{n_s}({Θ_enc, Θ_lab}) := Σ_{i=1}^{n_s} ℓ_c (f_c(x_i^s; {Θ_enc, Θ_lab}), y_i^s),
+
+    ℒ_r^{n_t}({Θ_enc, Θ_dec}) := Σ_{j=1}^{n_t} ℓ_r (f_r(x_j^t; {Θ_enc, Θ_dec}), x_j^t)
+
+
+    > [12] M. Ghifary , W.B. Kleijn , M. Zhang , D. Balduzzi , W. Li , Deep reconstruction–classification
+    networks for unsupervised domain adaptation, in ECCV, Springer, 2016, pp. 597–613'
+  merge: -1
+  img_proc: true
+- pgno: 264
+  md: '# Unsupervised DA method: DSN (3.2)
+
+
+    DSNs explicitly and jointly model both private and shared components of the domain
+    representations. The private component of the representation is specific to a
+    single domain and the shared component of the representation is shared by both
+    domains.
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_264_0.png)
+
+
+    > [13] K. Bousmalis , G. Trigeorgis , N. Silberman , D. Krishnan , D. Erhan ,
+    Domain separation networks, in NIPS, 2016, pp. 343–351 .'
+  merge: -1
+  img_proc: true
+- pgno: 265
+  md: "# Unsupervised DA method: DSN (3.2)\n\nDSNs explicitly and jointly model both\
+    \ private and shared components of the domain representations. The private component\
+    \ of the representation is specific to a single domain and the shared component\
+    \ of the representation is shared by both domains.\n\n![](img/a04b187c89c5018c5ef6132980e27196_265_0.png)\n\
+    \n1  L_task = - sum_{i=0}^{N_s} y_i^s · log ŷ_i^s\n2  L_recon = sum_{i=1}^{N_s}\
+    \ L_si_mse(x_i^s, x̂_i^s) + sum_{i=1}^{N_t} L_si_mse(x_i^t, x̂_i^t)\n   L_si_mse(x,\
+    \ x̂) = 1/k ||x - x̂||_2^2 - 1/(k^2) ([x - x̂]·1_k)^2\n3  L_difference = ||H_c^T\
+    \ H_p^s||_F^2 + ||H_c^T H_p^t||_F^2\n4  L_similarity^DANN = sum_{i=0}^{N_s+N_t}\
+    \ { d_i log d̂_i + (1 - d_i) log(1 - d̂_i) }\n   L_similarity^MMD = 1/(N^s)^2\
+    \ sum_{i,j=0}^{N^s} κ(h_{ci}^s, h_{cj}^s) - 2/(N^s N^t) sum_{i,j=0}^{N^s,N^t}\
+    \ κ(h_{ci}^s, h_{cj}^t) + 1/(N^t)^2 sum_{i,j=0}^{N^t} κ(h_{ci}^t, h_{cj}^t)"
+  merge: -1
+  img_proc: true
+- pgno: 266
+  md: '# Unsupervised DA method: DSN (3.2)
+
+
+    Table 1: Mean classification accuracy (%) for the unsupervised domain adaptation
+    scenarios we evaluated all the methods on. We have replicated the experiments
+    from Ganin et al. [8] and in parentheses we show the results reported in their
+    paper. The “Source–only” and “Target–only” rows are the results on the target
+    domain when using no domain adaptation and training only on the source or the
+    target domain respectively. The results that perform best in each domain adaptation
+    task are in bold font.
+
+
+    | Model | MNIST to MNIST-M | Synth Digits to SVHN | SVHN to MNIST | Synth Signs
+    to GTSRB |
+
+    |---|---|---|---|---|
+
+    | Source-only | 56.6 (52.2) | 86.7 (86.7) | 59.2 (54.9) | 85.1 (79.0) |
+
+    | CORAL [27] | 57.7 | 85.2 | 63.1 | 86.9 |
+
+    | MMD [30, 18] | 76.9 | 88.0 | 71.1 | 91.1 |
+
+    | DANN [8] | 77.4 (76.6) | 90.3 (91.0) | 70.7 (73.8) | 92.9 (88.6) |
+
+    | DSN w/ MMD (ours) | 80.5 | 88.5 | 72.2 | 92.6 |
+
+    | DSN w/ DANN (ours) | 83.2 | 91.2 | 82.7 | 93.1 |
+
+    | Target-only | 98.7 | 92.4 | 99.5 | 99.8 |'
+  merge: -1
+  img_proc: true
+- pgno: 267
+  md: "# Unsupervised DA method: Tri-training (4.1)\n\nTri-training method use three\
+    \ networks asymmetrically to generate pseudo labels. By asymmetric, two networks\
+    \ are used to label unlabeled target samples and one network is trained by the\
+    \ samples to obtain target discriminative representations.\n\n![](img/a04b187c89c5018c5ef6132980e27196_267_0.png)\n\
+    \nŷ: Pseudo-label for target sample  \nS: source samples  \nT₁: pseudo-labeled\
+    \ target samples  \nY: Label for source sample\n\nF: shared network  \nF₁, F₂:\
+    \ Labeling networks  \nFₜ: Target specific network\n\nObjective for category loss\n\
+    \nP₁ → L(p₁, y) or L(p₁, ŷ)  \nP₂ → L(p₂, y) or L(p₂, ŷ)  \nPₜ → L(pₜ, ŷ)\n\n\
+    [14] Saito K, Ushiku Y, Harada T. Asymmetric tri-training for unsupervised domain\
+    \ adaptation. In ICML 2017."
+  merge: -1
+  img_proc: true
+- pgno: 268
+  md: '# # Unsupervised DA method: EHTS+APA (4.2)
+
+
+    Firstly, an Easy-to-Hard Transfer Strategy (EHTS) progressively selects reliable
+    pseudo-labeled target samples with cross-domain similarity measurements.
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_268_0.png)
+
+
+    The source prototype is a mean vector of the embedded source samples in each class
+
+
+    $$c_k^S = \frac{1}{N_s^k}\sum_{(x_i^s,y_i^s)\in D_s^k}G(x_i^s).$$
+
+
+    It uses a similarity measurement to cluster unlabeled target sample to the corresponding
+    source prototypes
+
+
+    $$\psi(x_j^t)=CS(G(x_j^t),c_k^S),\ k=\{1,2,\ldots,C\}$$
+
+
+    $$\tau=\frac{1}{1+e^{-\mu\cdot(m+1)}}-0.01,$$
+
+
+    > [15] Chen C, Xie W, Xu T, et al. Progressive Feature Alignment for Unsupervised
+    Domain Adaptation. arXiv preprint arXiv:1811.08585, 2018.'
+  merge: -1
+  img_proc: true
+- pgno: 269
+  md: '# Unsupervised DA method: EHTS+APA (4.2)
+
+
+    Adaptive Prototype Alignment (APA) is proposed to align the source and target
+    prototypes for each category. Rather than back-propagating the category loss for
+    target samples based on pseudo-labeled samples, our work statistically align the
+    cross-domain class distributions based on the source samples and the selected
+    pseudo-labeled target samples.
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_269_0.png)
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_269_1.png)
+
+
+    G-Feature extractor F-Label predictor D-Domain discriminator
+
+
+    # 1.Initial global prototypes
+
+
+    c_k^{T}(0) = 1 / D̂_t^k Σ_{(x_j^t, y_j^t) ∈ D̂_t^k} G(x_j^t)
+
+
+    # 2. Updated prototypes
+
+
+    ρ_t = CS(c_k^{T}(I), c_k^{T}(I-1)), c_k^{T}(I) ← ρ_t 2^{t/I} c_k^{T}(I) + (1 -
+    ρ_t^2) c_k^{T}(I-1)
+
+
+    # 3. Prototypes align
+
+
+    L_apa(θ_g) = Σ_{k=1}^{C} d(c_k^{S}(I), c_k^{T}(I))'
+  merge: -1
+  img_proc: true
+- pgno: 270
+  md: '# Deep visual domain adaptation: A survey
+
+
+    # 1 One-step DA
+
+
+    | | | Supervised DA | Unsupervised DA |
+
+    |---|---|---|---|
+
+    | Discrepancy-based DA | Class criterion | √ |  |
+
+    |  | Statistic criterion |  | √ |
+
+    |  | Architecture criterion | √ | √ |
+
+    |  | Geometric criterion | √ |  |
+
+    | Adversarial-based DA | Generative model |  | √ |
+
+    |  | Non-generative model |  | √ |
+
+    | Reconstruction-based DA | Encoder-decoder model |  | √ |
+
+    |  | Adversarial model |  | √ |
+
+
+    # 3 Heterogeneous DA
+
+
+    # 4.2. Heterogeneous domain adaptation
+
+
+    In heterogeneous DA, the feature spaces of the source and target domains are not
+    the same, Xs ≠ Xt, and the feature spaces may also differ. According to the difference
+    of feature spaces, heterogeneous DA can be divided into two scenarios. In one
+    scenario, the source and target domains contain images, and the divergence of
+    feature spaces is caused by different sensory devices (e.g., visual, infrared
+    (NIR) or RGB vs. depth) and different sketches vs. photos). In the other scenario,
+    the difference is due to the difference of media in source and target domain (e.g.,
+    t
+
+
+    # 2 Multi-step DA
+
+
+    # 5. Multi-step domain adaptation
+
+
+    For multi-step DA, the selection of the intermediate domain is problem specific,
+    and different problems may have different strategies.'
+  merge: -1
+  img_proc: true
+- pgno: 271
+  md: '# Application of domain adaptation
+
+
+    # 1 Image classification
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_271_0.png)
+
+
+    # 2 Face recognition
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_271_1.png)
+
+
+    # 3 Object detection
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_271_2.png)
+
+
+    # 4 Semantic segmentation
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_271_3.png)
+
+
+    # 5 Person re-identification
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_271_4.png)
+
+
+    # 6 Image-to-image translation
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_271_5.png)'
+  merge: -1
+  img_proc: true
+- pgno: 272
+  md: '# Face recognition
+
+
+    In 2014, DeepFace and DeepID achieved state-of-the-art accuracy, and research
+    focus has shifted to deep-learning-based approaches. As the representation pipeline
+    becomes deeper and deeper, the LFW (Labeled Face in-the-Wild) performance steadily
+    improves from around 60% to above 90%, while deep learning boosts the performance
+    to 99.80% in only three years.
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_272_0.png)'
+  merge: -1
+  img_proc: true
+- pgno: 273
+  md: '# Face recognition
+
+
+    # Algorithms
+
+
+    # Data
+
+
+    # Scenes
+
+
+    # Face recognition
+
+
+    # Cross-factor FR
+
+
+    # Heterogeneous FR
+
+
+    # Multiple (or single) media FR
+
+
+    # FR in industry
+
+
+    # Real World Scenes
+
+
+    2014
+
+
+    2015
+
+
+    2016
+
+
+    2017
+
+
+    2018
+
+
+    Deepface
+
+    (softmax)
+
+
+    FaceNet
+
+    (triplet loss)
+
+
+    VGGface
+
+    (triplet softmax)
+
+
+    TPE
+
+    (triplet loss)
+
+
+    L-softmax
+
+    (large margin)
+
+
+    Center loss
+
+    (center loss)
+
+
+    A-softmax
+
+    (large margin)
+
+
+    Normface
+
+    (feature normalization)
+
+
+    Arcface
+
+    (large margin)
+
+
+    AMS loss
+
+    (large margin)
+
+
+    DeepID
+
+    (softmax)
+
+
+    DeepID2+
+
+    (contrastive loss)
+
+
+    DeepID3
+
+    (contrastive loss)
+
+
+    TSF
+
+    (triplet loss)
+
+
+    Range loss
+
+
+    L2 softmax
+
+    (feature normalization)
+
+
+    CoCo loss
+
+    (feature normalization)
+
+
+    Cosface
+
+    (large margin)
+
+
+    vMF loss
+
+    (weight and feature normalization)
+
+
+    Center invariant loss
+
+    (center loss)
+
+
+    Marginal loss
+
+
+    DeepID2
+
+    (contrastive loss)
+
+
+    > [16] M. Wang and W. Deng. Deep face recognition: A survey. arXiv preprint arXiv:1804.06655,
+    2018. 1, 2, 3
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_273_0.png)'
+  merge: -1
+  img_proc: true
+- pgno: 274
+  md: '# Background
+
+
+    More and more people find that a problematic issue, namely racial bias, has always
+    been concealed in the previous studies due to biased benchmarks but explicitly
+    degrades the performance in realistic FR systems.
+
+
+    1 Amazon’s Rekognition Tool incorrectly matched 28 U.S. congressmen with criminals,
+    especially non-Caucasian people.
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_274_0.png)
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_274_1.png)
+
+
+    2 The accuracies of 3 commercial gender classification algorithms drop largely
+    on darker female faces.
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_274_2.png)
+
+
+    3 MIT Technology Reviewer suggested that racial bias in databases will reflect
+    in algorithms, hence the performances of FR systems depend on the race.
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_274_3.png)
+
+
+    > [17]Wang M, Deng W, Hu J, et al. Racial Faces in-the-Wild: Reducing Racial Bias
+    by Deep Unsupervised Domain Adaptation. arXiv preprint arXiv:1812.00194, 2018.'
+  merge: -1
+  img_proc: true
+- pgno: 275
+  md: '# # Blocks
+
+
+    > > So little testing information available makes it hard to measure the racial
+    bias in existing FR algorithms and there has yet to be a comprehensive study that
+    investigates how deep FR algorithms are affected by it.
+
+
+    | Train/Test | Database | Caucasian | Asian | Indian | African |
+
+    |---|---|---:|---:|---:|---:|
+
+    | train | CASIA-WebFace [17] | 84.5 | 2.6 | 1.6 | 11.3 |
+
+    | train | VGGFace2 [18] | 74.2 | 6.0 | 4.0 | 15.8 |
+
+    | train | MS-Celeb-1M [19] | 76.3 | 6.6 | 2.6 | 14.5 |
+
+    | test | LFW [20] | 69.9 | 13.2 | 2.9 | 14.0 |
+
+    | test | IJB-A [21] | 66.0 | 9.8 | 7.2 | 17.0 |
+
+    | test | RFW | 25.0 | 25.0 | 25.0 | 25.0 |
+
+
+    [18] D. Yi, Z. Lei, S. Liao, and S. Z. Li. Learning face representation from scratch.
+    arXiv preprint arXiv:1411.7923, 2014.
+
+    [19] Q. Cao, L. Shen, W. Xie, O. M. Parkhi, and A. Zisserman. Vggface2: A dataset
+    for recognising faces across pose and age. arXiv preprint arXiv:1710.08092, 2017.
+
+    [20] Y. Guo, L. Zhang, Y. Hu, X. He, and J. Gao. Ms-celeb-1m: A dataset and benchmark
+    for large-scale face recognition. In ECCV, pages 87–102. Springer, 2016.
+
+    [21] G. B. Huang, M. Ramesh, T. Berg, and E. Learned-Miller. Labeled faces in
+    the wild: A database for studying face recognition in unconstrained environments.
+    Technical report, Technical Report 07-49, University of Massachusetts, Amherst,
+    2007.
+
+    [22] B. F. Klare, B. Klein, E. Taborsky, A. Blanton, J. Cheney, K. Allen, P. Grother,
+    A. Mah, and A. K. Jain. Pushing the frontiers of unconstrained face detection
+    and recognition: Iarpa janus benchmark a. In CVPR, pages 1931–1939, 2015.
+
+
+    [17] Wang M, Deng W, Hu J, et al. Racial Faces in-the-Wild: Reducing Racial Bias
+    by Deep Unsupervised Domain Adaptation. arXiv preprint arXiv:1812.00194, 2018.'
+  merge: -1
+  img_proc: true
+- pgno: 276
+  md: '# Racial Faces in-the-Wild (RFW)
+
+
+    Racial Faces in-the-Wild (RFW) is a large-scale face database for studying racial
+    bias in face recognition which has two important uses:
+
+
+    +   - **Measure racial bias of FR algorithms**. Four testing subsets, namely Caucasian,
+    Asian, Indian and African, are constructed, and each contains about 3000 individuals
+    with 6000 image pairs for face verification.
+
+
+    +   - **Reduce racial bias by transfer learning**. Four training subsets are offered
+    as well. The Caucasian subset consists of about 500K labeled images of 10k identities
+    and other-race subsets contain 50K unlabeled images, respectively.
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_276_0.png)
+
+
+    > [17]Wang M, Deng W, Hu J, et al. Racial Faces in-the-Wild: Reducing Racial Bias
+    by Deep Unsupervised Domain Adaptation. arXiv preprint arXiv:1812.00194, 2018.'
+  merge: -1
+  img_proc: true
+- pgno: 277
+  md: '# Collection process
+
+
+    We estimate the race of images in MS-Celeb-1M using Face++ API and select about
+    625K images of 25K celebrities of different races to construct a new RFW database.
+    The collection process is as following:
+
+
+    # 1 Race detection
+
+
+    For each identity in MS-Celeb-1M, it will be selected only if almost images are
+    estimated as the same race by Face++ API.
+
+
+    # 2 Data re-cleaning
+
+
+    We manually remove outlier faces for each identity as well as outlier identities
+    for each race manually.
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_277_0.png)
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_277_1.png)'
+  merge: -1
+  img_proc: true
+- pgno: 278
+  md: '# Collection process
+
+
+    We estimate the race of images in MS-Celeb-1M using Face++ API and select about
+    625K images of 25K celebrities of different races to construct a new RFW database.
+    The collection process is as following:
+
+
+    # 3 Testing set construction
+
+
+    For each identity A, we randomly select one positive pair {Ai, Aj} from 50% of
+    pairs with smaller cosine; and we randomly select one negative pair {Ai, Bj} from
+    1% of pairs with larger cosine similarity
+
+
+    # 4 Training set construction
+
+
+    | Subsets | Train | Train | Test | Test |
+
+    |---|---|---|---|---|
+
+    |  | #subjects | #Images | #subjects | #Images |
+
+    | Caucasian | 10000 | 468139 | 2959 | 10196 |
+
+    | Indian | - | 52285 | 2984 | 10308 |
+
+    | Asian | - | 54188 | 2492 | 9688 |
+
+    | African | - | 50588 | 2995 | 10415 |
+
+
+    Table 1. The number of identities and images in RFW
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_278_0.png)
+
+
+    > [17]Wang M, Deng W, Hu J, et al. Racial Faces in-the-Wild: Reducing Racial Bias
+    by Deep Unsupervised Domain Adaptation. arXiv preprint arXiv:1812.00194, 2018.'
+  merge: -1
+  img_proc: true
+- pgno: 279
+  md: "# Statistics and analyses\n\n**We construct our testing set similar to LFW.\
+    \ Besides,**\n\n+   - RFW considers both the **large intra-class variance** and\
+    \ the **small inter-class variance** simultaneously to get close to more realistic\
+    \ scenarios.\n+   - Four testing subsets ensure to **exclude other factors (e.g.\
+    \ pose, age and gender)** except for race which can cause difference.\n\n![](img/a04b187c89c5018c5ef6132980e27196_279_0.png)\n\
+    \n**Figure 1.** The pose (yaw and pitch), age and gender distribution of four\
+    \ testing subsets\n\n![](img/a04b187c89c5018c5ef6132980e27196_279_1.png)\n\n**Figure\
+    \ 2.** The pose and age gap distribution of RFW and LFW\n\n> From Fig. 1, there\
+    \ are no large differences in pose, age and gender distribution between Caucasian,\
+    \ Indian and Asian testing sets. African set has a smaller age gap and the least\
+    \ females which makes Africans are easier to be recognized.\n> \n> From Fig. 2,\
+    \ Compared to LFW, the pose and age gap of positive pairs in RFW are larger which\
+    \ shows we successfully add variations to intra-class.\n\n[17] Wang M, Deng W,\
+    \ Hu J, et al. Racial Faces in-the-Wild: Reducing Racial Bias by Deep Unsupervised\
+    \ Domain Adaptation. arXiv preprint arXiv:1812.00194, 2018."
+  merge: -1
+  img_proc: true
+- pgno: 280
+  md: '# Statistics and analyses
+
+
+    We construct our testing set similar to LFW. Besides,
+
+
+    +   - RFW considers both the large intra-class variance and the small inter-class
+    variance simultaneously to get close to more realistic scenarios.
+
+    +   - Four testing subsets ensure to exclude other factors (e.g. pose, age and
+    gender) except for race which can cause difference.
+
+
+    # Difficult positive pairs in RFW
+
+
+    # Difficult negative pairs in RFW
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_280_0.png)
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_280_1.png)
+
+
+    Figure 3. Examples of difficult pairs in RFW dataset, which challenge the recognizer
+    by the pose, age, expression and make-up variations of same people and the similar
+    appearance of different people.
+
+
+    > [17] Wang M, Deng W, Hu J, et al. Racial Faces in-the-Wild: Reducing Racial
+    Bias by Deep Unsupervised Domain Adaptation. arXiv preprint arXiv:1812.00194,
+    2018.'
+  merge: -1
+  img_proc: true
+- pgno: 281
+  md: '# Domain gap
+
+
+    Through experiments on our RFW, we first prove that:
+
+
+    +   - From results of average faces, T-SNE and distribution discrepancy measured
+    by MMD, there is domain gap between Caucasians and other races.
+
+    +   - FR systems indeed work unequally well for different races (racial bias);
+    the deep models trained on the current benchmarks do not perform well on non-Caucasian
+    faces (other-race effect).
+
+
+    # 1 Image level
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_281_0.png)
+
+
+    # 2 Feature level
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_281_1.png)
+
+
+    (a) The feature space of four testing subsets visualized by t-SNE. Each dot color
+    represents an image belong to Caucasian, Indian, Asian or African. (b) The distribution
+    discrepancy measured by MMD. ''Ca'', ''As'', ''In'' and ''Af'' represent Caucasian,
+    Asian, Indian and African, respectively. ''Ca-As'' represents the distribution
+    discrepancy between Caucasian and Asian, and so on'
+  merge: -1
+  img_proc: true
+- pgno: 282
+  md: '# # Racial bias
+
+
+    **Through experiments on our RFW, we first prove that:**
+
+
+    - From results of average faces, T-SNE and distribution discrepancy measured by
+    MMD, there is domain gap between Caucasian and other race.
+
+    - FR systems indeed work unequally well for different races (**racial bias**);
+    the deep models trained on the current benchmarks do not perform well on non-Caucasian
+    faces (**other-race effect**).
+
+
+    **Table 2. Face Verification Accuracy (%) on RFW dataset**
+
+
+    | Category | Model | LFW | Caucasian | Indian | Asian | African |
+
+    |---|---|---:|---:|---:|---:|---:|
+
+    | Algorithms | Center-loss | 98.75 | 87.18 | 81.92 | 79.32 | 78.00 |
+
+    | Algorithms | SphereFace | 99.27 | 90.80 | 87.02 | 82.95 | 82.28 |
+
+    | Algorithms | ArcFace | 99.40 | 92.15 | 88.00 | 83.98 | 84.93 |
+
+    | Algorithms | VGGFace2 | 99.30 | 89.90 | 86.13 | 84.93 | 83.38 |
+
+    | Algorithms | **Mean** | **99.18** | **90.01** | **85.77** | **82.80** | **82.15**
+    |
+
+    | Commercial APIs | Face++ | 97.03 | 93.90 | 88.55 | 92.47 | 87.50 |
+
+    | Commercial APIs | Baidu | 98.67 | 89.13 | 86.53 | 90.27 | 77.97 |
+
+    | Commercial APIs | Amazon | 98.50 | 90.45 | 87.20 | 84.87 | 86.27 |
+
+    | Commercial APIs | Microsoft | 98.22 | 87.60 | 82.83 | 79.67 | 75.83 |
+
+    | Commercial APIs | **Mean** | **98.11** | **90.27** | **86.28** | **86.82** |
+    **81.89** |
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_282_0.png)
+
+
+    > [17] Wang M, Deng W, Hu J, et al. Racial Faces in-the-Wild: Reducing Racial
+    Bias by Deep Unsupervised Domain Adaptation. arXiv preprint arXiv:1812.00194,
+    2018.'
+  merge: -1
+  img_proc: true
+- pgno: 283
+  md: <!-- no content -->
+  merge: -1
+  img_proc: true
+- pgno: 284
+  md: '# Related works
+
+
+    [1] Pan S J, Yang Q. A survey on transfer learning[J]. IEEE Transactions on knowledge
+    and data engineering, 2010, 22(10): 1345-1359.
+
+
+    [2] M. Wang and W. Deng. Deep visual domain adaptation: A survey. Neurocomputing,
+    312:135 – 153, 2018.
+
+
+    [3] J. Yosinski , J. Clune , Y. Bengio , H. Lipson , How transferable are features
+    in deep neural networks? In NIPS, 2014, pp. 3320–3328 .
+
+
+    [4] Tzeng, E., Hoffman, J., Zhang, N., Saenko, K., and Darrell, T. Deep domain
+    confusion: Maximizing for domain invariance. CoRR, abs/1412.3474, 2014.
+
+
+    [5] M. Long , Y. Cao , J. Wang , M. Jordan , Learning transferable features with
+    deep adaptation networks, in ICML, 2015, pp. 97–105 .
+
+
+    [6] M. Long , H. Zhu , J. Wang , M.I. Jordan , Unsupervised domain adaptation
+    with residual transfer networks, in NIPS, 2016, pp. 136–144 .
+
+
+    [7] M. Long, J. Wang, and M. I. Jordan. Deep transfer learning with joint adaptation
+    networks. arXiv preprint arXiv:1605.06636, 2016.
+
+
+    [8] Y. Ganin , V. Lempitsky , Unsupervised domain adaptation by backpropagation,
+    in ICML, 2015, pp. 1180–1189 .
+
+
+    [9] W. Zhang, W. Ouyang, W. Li, and D. Xu. Collaborative and adversarial network
+    for unsupervised domain adaptation. In CVPR, pages 3801–3809, 2018.
+
+
+    [10] Z. Pei, Z. Cao, M. Long, and J. Wang. Multi-adversarial domain adaptation.
+    In AAAI Conference on Artificial Intelligence, 2018
+
+
+    [11] Zhang J, Ding Z, Li W, et al. Importance Weighted Adversarial Nets for Partial
+    Domain Adaptation. In CVPR. 2018: 8156-8164.
+
+
+    [12] M. Ghifary , W.B. Kleijn , M. Zhang , D. Balduzzi , W. Li , Deep reconstruction–classification
+    networks for unsupervised domain adaptation, in ECCV, Springer, 2016, pp. 597–613
+
+
+    [13] K. Bousmalis , G. Trigeorgis , N. Silberman , D. Krishnan , D. Erhan , Domain
+    sep- aration networks, in NIPS, 2016, pp. 343–351 .'
+  merge: -1
+  img_proc: true
+- pgno: 285
+  md: '# Related works
+
+
+    [14] Saito K, Ushiku Y, Harada T. Asymmetric tri-training for unsupervised domain
+    adaptation. In ICML 2017.
+
+
+    [15] Chen C, Xie W, Xu T, et al. Progressive Feature Alignment for Unsupervised
+    Domain Adaptation. arXiv preprint arXiv:1811.08585, 2018.
+
+
+    [16] M. Wang and W. Deng. Deep face recognition: A survey. arXiv preprint arXiv:1804.06655,
+    2018. 1, 2, 3
+
+
+    [17] Wang M, Deng W, Hu J, et al. Racial Faces in-the-Wild: Reducing Racial Bias
+    by Deep Unsupervised Domain Adaptation. arXiv preprint arXiv:1812.00194, 2018.
+
+
+    [18] D. Yi, Z. Lei, S. Liao, and S. Z. Li. Learning face representation from scratch.
+    arXiv preprint arXiv:1411.7923, 2014.
+
+
+    [19] Q. Cao, L. Shen, W. Xie, O. M. Parkhi, and A. Zisserman. Vggface2: A dataset
+    for recognising faces across pose and age. arXiv preprint arXiv:1710.08092, 2017.
+
+
+    [20] Y. Guo, L. Zhang, Y. Hu, X. He, and J. Gao. Ms-celeb-1m: A dataset and benchmark
+    for large-scale face recognition. In ECCV, pages 87–102. Springer, 2016.
+
+
+    [21] G. B. Huang, M. Ramesh, T. Berg, and E. Learned-Miller. Labeled faces in
+    the wild: A database for studying face recognition in unconstrained environments.
+    Technical report, Technical Report 07-49, University of Massachusetts, Amherst,
+    2007
+
+
+    [22] B. F. Klare, B. Klein, E. Taborsky, A. Blanton, J. Cheney, K. Allen, P. Grother,
+    A. Mah, and A. K. Jain. Pushing the frontiers of unconstrained face detection
+    and recognition: Iarpa janus benchmark a. In CVPR, pages 1931–1939, 2015.
+
+
+    [23] A. Nech and I. Kemelmacher-Shlizerman. Level playing field for million scale
+    face recognition. In CVPR, pages 3406–3415. IEEE, 2017.'
+  merge: -1
+  img_proc: true
+- pgno: 286
+  md: '# PyTorch
+
+
+    +   - 上手简单
+
+    +   - 调试方便
+
+    +   - 文档友好'
+  merge: -1
+  img_proc: true
+- pgno: 287
+  md: '# 用PyTorch进行人脸分类
+
+
+    +   - 任务： 正确分类10M人脸图片，包含100K人
+
+    +   - 步骤
+
+    +     - 1.准备数据集
+
+    +     - 2.搭建网络
+
+    +     - 3.编写训练、验证代码'
+  merge: -1
+  img_proc: true
+- pgno: 288
+  md: '# 数据集
+
+
+    +   - torchvision.datasets
+
+    +     - MNIST
+
+    +     - Fashion-MNIST
+
+    +     - EMNIST
+
+    +     - COCO
+
+    +     - LSUN
+
+    +     - ImageFolder
+
+    +     - DatasetFolder
+
+    +     - Imagenet-12
+
+    +     - CIFAR
+
+    +     - STL10
+
+    +     - SVHN
+
+    +     - PhotoTour
+
+
+    ```
+
+    root/dog/xxx.png
+
+    root/dog/xxy.png
+
+    root/dog/xxz.png
+
+
+    root/cat/123.png
+
+    root/cat/nsdf3.png
+
+    root/cat/asd932_.png
+
+    ```
+
+
+    +   - MS-Celeb1M
+
+    +     - ID1
+
+    +     - ID2
+
+    +       - 1.jpg
+
+    +       - 2.jpg
+
+    +       - 3.jpg'
+  merge: -1
+  img_proc: true
+- pgno: 289
+  md: "# 数据集-ImageFolder\n\n```\nimport torch\nimport torchvision.datasets as datasets\n\
+    import torchvision.transforms as transforms\n\ntraindir = '/ssd/Dataset/MS-Celeb-1M'\n\
+    normalize = transforms.Normalize(mean=[0.485, 0.456, 0.406])\ntrain_dataset =\
+    \ datasets.ImageFolder(\n    traindir,\n    transforms.Compose([\n        transforms.Resize(224),\n\
+    \        transforms.CenterCrop(224),\n        transforms.RandomHorizontalFlip(),\n\
+    \        transforms.ToTensor(),\n        normalize,\n    ])\n\n```"
+  merge: -1
+  img_proc: true
+- pgno: 290
+  md: <!-- no content -->
+  merge: -1
+  img_proc: true
+- pgno: 291
+  md: "# # 搭建网络-ResNet\n\n+   - torchvision.models\n+     - VGG\n+     - ResNet\n\
+    +     - Alexnet\n\n```\n```python\n# 载入现有网络\nnet = torchvision.models.resnet34(pretrained=False)\n\
+    # 重写最后一层Fc\nnet.fc = torch.nn.Linear(512, 100000, bias=False)\n\n# loss公式 以及 更新器\n\
+    criterion = torch.nn.CrossEntropyLoss()\noptimizer = torch.optim.SGD(net.parameters(),\
+    \ args.lr,\n                            momentum=args.momentum,\n            \
+    \                weight_decay=args.weight_decay)\n```\n```"
+  merge: -1
+  img_proc: true
+- pgno: 292
+  md: "# 编写训练代码\n\n```\n26 # 数据读取器\n27 train_loader = torch.utils.data.DataLoader(\n\
+    28     train_dataset, batch_size=args.batch_size, shuffle=(train_sampler is None),\n\
+    29     num_workers=args.workers, pin_memory=True, sampler=train_sampler)\n30 \n\
+    31 # 开始训练\n32 for epoch in range(args.start_epoch, args.epochs):\n33     # 训练模式\n\
+    34     net.train()\n35     for i, (input, target) in enumerate(train_loader):\n\
+    36         # 前向传递, 计算Loss\n37         output = net(input)\n38         loss = crite\n\
+    39         # 反向传导, 更新参数\n40         optimizer.zero_grad()\n41         loss.backward()\n\
+    42         optimizer.step()\n```"
+  merge: -1
+  img_proc: true
+- pgno: 293
+  md: '# 资源
+
+
+    +   - 官方文档: https://pytorch.org/docs/stable/index.html
+
+    +   - 官方论坛: https://discuss.pytorch.org/
+
+    +     - Bug
+
+    +     - Method
+
+    +   - GitHub: https://github.com/pytorch/
+
+    +     - Code
+
+    +     - Example'
+  merge: -1
+  img_proc: true
+- pgno: 294
+  md: '![](img/a04b187c89c5018c5ef6132980e27196_294_0.png)
+
+
+    # TensorFlow'
+  merge: -1
+  img_proc: true
+- pgno: 295
+  md: '# Contents
+
+
+    +   1. 基本概念
+
+    +   2. 例程解析
+
+    +   3. 特征'
+  merge: -1
+  img_proc: true
+- pgno: 296
+  md: '# 01 基本概念
+
+
+    # 数据流图（tf.Graph）
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_296_0.png)
+
+
+    +   - Tensorflow是基于图（Graph）的计算系统。\n- 图的节点则是由操作（Operation）来构成的，而图的各个节点之间则是由张量（Tensor）作为边来连接在一起的。\n-
+    数据流图表示计算指令之间的依赖关系和组合的方式，包含图结构的信息。\n- 在构建数据流图时并不会真的触发计算。\n- 数据流图的好处在于合理安排各个操作之间的并行或顺次执行，协同不同的底层设备，避免冗余操作。'
+  merge: -1
+  img_proc: true
+- pgno: 297
+  md: '# 01 基本概念
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_297_0.png)
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_297_1.png)
+
+
+    张量（tf.Tensor）
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_297_2.png)
+
+
+    +   - **dtype**: tf.float32、tf.int8等, 数据类型
+
+    +   - **Shape**: (n1, n2, n3), 数据形状
+
+    +   - **Name**: tensor1, 数据名称
+
+    +   - **Op**: 该tensor的来源操作
+
+    +   - **Graph**: 该tensor属于的图
+
+    +   - ...
+
+
+    +   ◆ 万物皆张量
+
+    +   ◆ 张量包括常数\变量\占位符等
+
+    +   ◆ 涉及到数据都是张量'
+  merge: -1
+  img_proc: true
+- pgno: 298
+  md: '# 01 基本概念
+
+
+    操作（tf.Operation）
+
+
+    tf.add
+
+
+    tf.subtract
+
+
+    tf.multiply
+
+
+    tf.divide
+
+
+    tf.layer.conv2d
+
+
+    Image
+
+    Convolved Feature
+
+
+    接收零个或者多个Tensor对象作为输入，然后产生零个或者多个Tensor对象作为输出。'
+  merge: -1
+  img_proc: true
+- pgno: 299
+  md: '# 01 基本概念
+
+
+    # 会话（tf.Session）
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_299_0.png)
+
+
+    +   - 图构建完成后要通过会话实现计算。
+
+    +   - 拥有具体的物理资源(如cpu、gpu)
+
+    +   - 提供了Operation执行和Tensor求值的环境
+
+    +   - 在计算Graph时,并不一定是Graph中的所有节点都被计算了,而是指定的计算节点或者该节点的输出结果被需要时'
+  merge: -1
+  img_proc: true
+- pgno: 300
+  md: '# 01 基本概念
+
+
+    可视化（tensorboard）
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_300_0.png)
+
+
+    ![](img/a04b187c89c5018c5ef6132980e27196_300_1.png)
+
+
+    数据流图、绘制分析图、显示附加数据等。'
+  merge: -1
+  img_proc: true
+- pgno: 301
+  md: "# 01 基本概念\n\n# 整体流程\n\n+   1. 创建图(Graph)  \n+   2. *创建占位符(Placeholder)  \n\
+    +   3. 为图添加操作(Operation)  \n+   4. 创建会话  \n+   5. 实现计算\n\n![](img/a04b187c89c5018c5ef6132980e27196_301_0.png)"
+  merge: -1
+  img_proc: true
+- pgno: 302
+  md: '# 02 例程解析
+
+
+    ```
+
+    ```python
+
+    # 导入模块
+
+    import numpy as np
+
+    import tensorflow as tf
+
+    ```
+
+    ```'
+  merge: -1
+  img_proc: true
+- pgno: 303
+  md: '# 02 例程解析
+
+
+    ```
+
+    # 导入模块
+
+    import numpy as np
+
+    import tensorflow as tf
+
+    # 准备学习数据
+
+    train_X = np.random.normal(1, 5, 200) # 输入特征
+
+    train_Y = 0.5*train_X+2+np.random.normal(0, 1, 200) # 学习目标
+
+    L = len(train_X) # 样本量
+
+    # 定义学习超参数
+
+    epoch = 200 # 纪元数（使用所有学习数据一次为1纪元）
+
+    learn_rate = 0.005 # 学习速度
+
+    ```'
+  merge: -1
+  img_proc: true
+- pgno: 304
+  md: "# 02 例程解析\n\n```\n# 准备学习数据\ntrain_X = np.random.normal(1, 5, 200) # 输入特征\n\
+    train_Y = 0.5*train_X+2+np.random.normal(0,1,200) # 学习目标\nL = len(train_X) # 样本量\n\
+    # 定义学习超参数\nepoch = 200 # 纪元数（使用所有学习数据一次为1纪元）\nlearn_rate = 0.005 # 学习速度\n# 定义数据流图\n\
+    temp_graph = tf.Graph()\nwith temp_graph.as_default():\n    X = tf.placeholder(tf.float32)\
+    \ # 定义张量占位符\n    Y = tf.placeholder(tf.float32)\n    k = tf.Variable(np.random.randn(),\
+    \ dtype=tf.float32)\n    b = tf.Variable(0, dtype=tf.float32) # 定义变量\n    linear_model\
+    \ = k*X+b # 线性模型\n    cost = tf.reduce_mean(tf.square(linear_model - Y)) # 代价函数\n\
+    \    optimizer = tf.train.GradientDescentOptimizer(learning_rate=learn_rate) #\
+    \ 梯度下降算法\n    train_step = optimizer.minimize(cost) # 最小化代价函数\n    init = tf.global_variables_initializer()\
+    \ # 使用变量全局初始化选项\n```"
+  merge: -1
+  img_proc: true
+- pgno: 305
+  md: "![](img/a04b187c89c5018c5ef6132980e27196_305_0.png)\n\n# 02 例程解析\n\n```\n#\
+    \ 定义数据流图\ntemp_graph = tf.Graph()\nwith temp_graph.as_default():\n    X = tf.placeholder(tf.float32)\
+    \ # 定义张量占位符\n    Y = tf.placeholder(tf.float32)\n    k = tf.Variable(np.random.randn(),\
+    \ dtype=tf.float32)\n    b = tf.Variable(0, dtype=tf.float32) # 定义变量\n    linear_model\
+    \ = k*X+b # 线性模型\n    cost = tf.reduce_mean(tf.square(linear_model - Y)) # 代价函数\n\
+    \    optimizer = tf.train.GradientDescentOptimizer(learning_rate=learn_rate) #\
+    \ 梯度下降算法\n    train_step = optimizer.minimize(cost) # 最小化代价函数\n    init = tf.global_variables_initializer()\
+    \ # 使用变量全局初始化选项\n# 创建会话\n```\n\n```\nwith tf.Session(graph=temp_graph) as sess:\n\
+    \    sess.run(init) # 变量初始化\n    for i in range(epoch):\n        sess.run(train_step,\
+    \ feed_dict={X: train_X, Y: train_Y}) # 运行 “最小化代价函数”\n        temp_cost = sess.run(cost,\
+    \ feed_dict={X: train_X, Y: train_Y}) # 代价函数\n```"
+  merge: -1
+  img_proc: true
+- pgno: 306
+  md: '# 03 用法特点
+
+
+    +   1. 高度灵活(相对于Caffe): Python \ 完备的基本操作 \
+
+    +   2. 自动求微分: 定义模型 -> 结合损失函数
+
+    +   3. 多语言支持: Python \ C++ ...
+
+    +   4. Keras: 第三方API
+
+    +   5. 支持分布式
+
+    +   6. 可移植性: PC \ 服务器 \ 手机...'
+  merge: -1
+  img_proc: true
