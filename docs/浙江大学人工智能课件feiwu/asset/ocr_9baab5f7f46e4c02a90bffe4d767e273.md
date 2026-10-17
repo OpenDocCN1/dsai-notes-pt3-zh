@@ -1,0 +1,16 @@
+# # Vanilla RNN vs LSTM
+
+# # Vanilla RNN Gradient Flow
+
+![](bbox=[0.023, 0.383, 0.977, 0.633])
+
+Computing gradient of h₀ involves many factors of W (and repeated tanh)
+
+Largest singular value > 1: Exploding gradients
+
+Largest singular value < 1: Vanishing gradients
+
+Change RNN architecture
+
+> > Bengio et al. "Learning long-term dependencies with gradient descent is difficult", IEEE Transactions on Neural Networks, 1994
+> > Pascanu et al. "On the difficulty of training recurrent neural networks", ICML 2013

@@ -1,0 +1,19 @@
+# # Update of W<sub>1~4</sub>
+
+# ## 1. Gradient Computation
+
+\(\delta_1 = \frac{\partial Error}{\partial w_1} = \frac{\partial Error}{\partial o_1} * \frac{\partial o_1}{\partial w_1} + \frac{\partial Error}{\partial o_2} * \frac{\partial o_2}{\partial w_1}\)
+
+\(= \frac{\partial Error}{\partial o_1} * \frac{\partial o_1}{\partial ln_{o_1}} * \frac{\partial ln_{o_1}}{\partial h_1} * \frac{\partial h_1}{\partial ln_{h_1}} * \frac{\partial ln_{h_1}}{\partial w_1} + \frac{\partial Error}{\partial o_2} * \frac{\partial o_2}{\partial ln_{o_2}} * \frac{\partial ln_{o_2}}{\partial h_1} * \frac{\partial h_1}{\partial ln_{h_1}} * \frac{\partial ln_{h_1}}{\partial w_1}\)
+
+where,
+
+\(\frac{\partial Error}{\partial o_1} = z_1 - o_1\)
+
+\(\frac{\partial o_1}{\partial ln_{o_1}} = o_1 * (1 - o_1) \quad \frac{\partial ln_{o_1}}{\partial h_1} = w_5\)
+
+\(\frac{\partial h_1}{\partial ln_{h_1}} = h_1 * (1 - h_1)\)
+
+\(\frac{\partial ln_{h_1}}{\partial w_1} = x_1\)
+
+![](bbox=[0.008, 0.521, 0.551, 0.938])

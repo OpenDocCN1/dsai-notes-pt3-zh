@@ -1,0 +1,9 @@
+# Figure 1.14 Illustration of the likelihood function for a Gaussian distribution, shown by the red curve. Here the black points denote a data set of values {_x<sub>n</sub>_}, and the likelihood function given by (1.53) corresponds to the product of the blue values. Maximizing the likelihood involves adjusting the mean and variance of the Gaussian so as to maximize this product.
+
+![](bbox=[0.529, 0.121, 0.806, 0.396])
+
+Now suppose that we have a data set of observations **x** = (_x_<sub>1</sub>_,...,x<sub>N</sub>_)<sup>T</sup>, representing _N_ observations of the scalar variable _x_. Note that we are using the typeface **x** to distinguish this from a single observation of the vector-valued variable (_x_<sub>1</sub>_,...,x<sub>D</sub>_)<sup>T</sup>, which we denote by **x**. We shall suppose that the observations are drawn independently from a Gaussian distribution whose mean μ and variance σ<sup>2</sup> are unknown, and we would like to determine these parameters from the data set. Data points that are drawn independently from the same distribution are said to be _independent_ and _identically distributed_, which is often abbreviated to i.i.d. We have seen that the joint probability of two independent events is given by the product of the marginal probabilities for each event separately. Because our data set **x** is i.i.d., we can therefore write the probability of the data set, given μ and σ<sup>2</sup>, in the form
+
+\(p(\mathbf{x}|\mu,\sigma^2)=\prod_{n=1}^N\mathcal{N}\left(x_n|\mu,\sigma^2\right).\) (1.53)
+
+When viewed as a function of μ and σ<sup>2</sup>, this is the likelihood function for the Gaussian and is interpreted diagrammatically in Figure 1.14.

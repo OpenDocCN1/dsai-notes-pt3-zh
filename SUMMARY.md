@@ -225,6 +225,7 @@
 +   [普林斯顿 COS521 高级算法设计讲义](docs/普林斯顿_COS521_高级算法设计讲义/README.md)
 +   [普林斯顿 COS598D 克服机器学习中的艰难性讲义](docs/普林斯顿_COS598D_克服机器学习中的艰难性讲义/README.md)
 +   [杜克 STA561 概率机器学习讲义](docs/杜克_STA561_概率机器学习讲义/README.md)
++   [浙江大学人工智能课件（FeiWu）](docs/浙江大学人工智能课件feiwu/README.md)
 +   [滑铁卢 CO781 量子算法讲义](docs/滑铁卢_CO781_量子算法讲义/README.md)
 +   [达特茅斯概率导论](docs/达特茅斯概率导论/README.md)
 +   [阿姆斯特丹量子计算讲义](docs/阿姆斯特丹量子计算讲义/README.md)

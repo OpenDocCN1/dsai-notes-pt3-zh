@@ -1,0 +1,7 @@
+# # Adversarial Search
+
++   - We have more competitive environments, in which the agents’ goals are in **conflict**, giving rise to **adversarial search** problems—often known as games.
+
+Adversarial search = Game playing against an opponent
+
+What To Do When Your “Solution” is Somebody Else’s Failure

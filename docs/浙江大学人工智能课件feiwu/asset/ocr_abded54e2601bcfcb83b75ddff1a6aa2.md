@@ -1,0 +1,23 @@
+# (e) After expanding Fagaras
+
+# (f) After expanding Pitesti
+
+# Figure 3.24 Stages in an A* search for Bucharest. Nodes are labeled with _f_=_g_+_h_. The _h_ values are the straight-line distances to Bucharest taken from Figure 3.22.
+
+![](bbox=[0.024, 0.217, 0.508, 0.752])
+
+![](bbox=[0.543, 0.145, 0.976, 0.574])
+
+| Arad | 366 | Mehadia | 241 |
+|---|---|---|---|
+| Bucharest | 0 | Neamt | 234 |
+| Craiova | 160 | Oradea | 380 |
+| Drobeta | 242 | Pitesti | 100 |
+| Eforie | 161 | Rimnicu Vilcea | 193 |
+| Fagaras | 176 | Sibiu | 253 |
+| Giurgiu | 77 | Timisoara | 329 |
+| Hirsova | 151 | Urziceni | 80 |
+| Iasi | 226 | Vaslui | 199 |
+| Lugoj | 244 | Zerind | 374 |
+
+# Figure 3.22 Values of _h_<sub>SLD</sub>—straight-line distances to Bucharest.

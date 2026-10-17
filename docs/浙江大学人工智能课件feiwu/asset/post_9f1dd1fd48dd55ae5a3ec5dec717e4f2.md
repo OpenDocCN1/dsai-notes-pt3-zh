@@ -1,0 +1,90 @@
+
+
+## Backpropagation
+
+- Gradient descent:
+
+$$\frac{df(x)}{dx}=\lim_{h\to0}\frac{f(x+h)-f(x)}{h}$$
+
+![](img/c69bfdf1f6addd09d49cae0440fcc5c7_1134_0.png)
+
+- Computational graph:
+
+![](img/c69bfdf1f6addd09d49cae0440fcc5c7_1134_1.png)
+
+## What is a computational graph?
+
+- Computational graph is a kind of descriptive language,
+  - Can represent an arbitrary mathematical computation as a graph,
+  - usually is a directed acyclic graph (DAG).
+  - Each node represents an operator or a variable/input
+  - E.g. e = (a + b) * (b + 1)
+
+![](img/c69bfdf1f6addd09d49cae0440fcc5c7_1135_0.png)
+
+http://colah.github.io/posts/2015-08-Backprop/
+
+## Why use a computational graph in DL?
+
+- Two key strengths of computational graphs:
+  - Allow simple functions to be combined to form quite complex models
+    - A wide range of neural network models can be created by defining computational graphs consisting of simple, primitive operations.
+  - Enable **automatic differentiation**
+    - Automatic differentiation is a technique for calculating derivatives in computational graphs: once the graph has been defined using underlying primitive operations, derivatives are calculated automatically based on “local” derivatives of these operations.
+    - Gradient-based learning algorithms can be used to train NN, providing that the gradient of the loss function with respect to the parameters can be calculated efficiently.
+
+## Computational Graphs: A Formal Definition
+
+**Definition (Computational Graphs)** _A computational graph is a_ 6 _- tuple_ \(\langle n, l, E, u^1 \dots u^n, d^1 \dots d^n, f^{l+1} \dots f^n \rangle\)
+
+_where:_
+
+- _n is an integer specifying the number of vertices in the graph._
+- _l is an integer such that_ \(1 \leq l \leq n\) _that pecifies the number of leaves in the graph._
+
+- _E_: The set of edges in the computational graph. For each \((j, i) \in E\) we have _j < i_ (the graph is topologically ordered), \(j \in \{1 \dots (n-1)\}\), and \(i \in \{(l+1) \dots n\}\).
+- _u<sup>i</sup>_ for \(i \in \{1 \dots n\}\) is the variable associated with vertex _i_ in the graph.
+- _d<sup>i</sup>_ for \(i \in \{1 \dots n\}\) is the dimensionality for each variable, that is, \(u^i \in \mathbb{R}^{d^i}\).
+- _f<sup>i</sup>_ for \(i \in \{(l+1) \dots n\}\) is the local function for vertex _i_ in the graph
+- \(\alpha^i\) for \(i \in \{(l+1) \dots n\}\) is defined as \(\alpha^i = \langle u^j | (j, i) \in E\rangle\), i.e., \(\alpha^i\) contains all input values for vertex _i_.
+
+## Forward/backward computation
+
+- Once a graph is constructed, we can easily perform forward and backward computation to calculate derivatives
+
+- **Forward computation:**
+  - Traverse the graph in a *topological order*, and fill a value of every node (compute the loss)
+
+- **Backward computation (backpropagation):**
+  - Traverse the graph in a reverse order, and calculate derivatives at each node
+  - automatically done if we know the derivative of the function at each node (auto differentiation)
+
+## Forward/backward computation
+
+- Topological order
+  - Defined on a directed acyclic graph (DAG)
+  - Traverse every node so that it’s parent has been always previously visited
+  - There are several algorithms to do this.
+
+![](img/c69bfdf1f6addd09d49cae0440fcc5c7_1141_0.png)
+
+## Backward computation
+
+![](img/c69bfdf1f6addd09d49cae0440fcc5c7_1143_0.png)
+
+- **Goal:** Fill value $d_a$ at each node $a$
+- $d_a = \frac{\partial l}{\partial a}$: derivative of loss with respect to $a$
+- In general: $d_a = \sum_{c_i \in \pi_a^{-1}} d_{c_i} \cdot \frac{\partial f_{c_i}}{\partial a}$
+- In this case:
+  $$d_a = d_{c_1}\frac{\partial f_{c_1}}{\partial a} + d_{c_2}\frac{\partial f_{c_2}}{\partial a}$$
+
+## Backpropagation
+
+### Compound expressions with chain rule
+
+Lets now start to consider more complicated expressions that involve multiple composed functions, such as \( f(x, y, z) = (x + y)z \). This expression is still simple enough to differentiate directly, but we’ll take a particular approach to it that will be helpful with understanding the intuition behind backpropagation. In particular, note that this expression can be broken down into two expressions: \( q = x + y \) and \( f = qz \). Moreover, we know how to compute the derivatives of both expressions separately, as seen in the previous section. \( f \) is just multiplication of \( q \) and \( z \), so \( \frac{\partial f}{\partial q} = z \), \( \frac{\partial f}{\partial z} = q \), and \( q \) is addition of \( x \) and \( y \) so \( \frac{\partial q}{\partial x} = 1 \), \( \frac{\partial q}{\partial y} = 1 \). However, we don’t necessarily care about the gradient on the intermediate value \( q \) - the value of \( \frac{\partial f}{\partial q} \) is not useful. Instead, we are ultimately interested in the gradient of \( f \) with respect to its inputs \( x, y, z \). The **chain rule** tells us that the correct way to “chain” these gradient expressions together is through multiplication. For example, \( \frac{\partial f}{\partial x} = \frac{\partial f}{\partial q} \frac{\partial q}{\partial x} \). In practice this is simply a multiplication of the two numbers that hold the two gradients. Lets see this with an example:
+
+![](img/c69bfdf1f6addd09d49cae0440fcc5c7_1144_0.png)
+
+The real-valued “circuit” on left shows the visual representation of the computation. The **forward pass** computes values from inputs to output (shown in green). The **backward pass** then performs backpropagation which starts at the end and recursively applies the chain rule to compute the gradients (shown in red) all the way to the inputs of the circuit. The gradients can be thought of as flowing backwards through the circuit.
+

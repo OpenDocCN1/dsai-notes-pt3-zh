@@ -1,0 +1,15 @@
+# # Breadth-first search: another version
+
+generalSearch(problem, queue)
+# of nodes tested: 5, expanded: 5
+
+| expnd. node | nodes list   |
+|-------------|--------------|
+|             | {S}          |
+| S           | {A,B,C}      |
+| A           | {B,C,D,E}    |
+| B           | {C,D,E,G}    |
+| C           | {D,E,G,F}    |
+| D not goal  | {E,G,F,H}    |
+
+![](bbox=[0.502, 0.294, 0.902, 0.844])

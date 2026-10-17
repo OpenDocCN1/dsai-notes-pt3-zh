@@ -1,0 +1,9 @@
+# # Heuristic Functions
+
+# ## Generating admissible heuristics from relaxed problems
+
+We have seen that both *h₁* (misplaced tiles) and *h₂* (Manhattan distance) are fairly good heuristics for the 8-puzzle and that *h₂* is better. How might one come up with *h₂*? Is it possible for a computer to invent such a heuristic mechanically?
+
+*h₁* and *h₂* are estimates of the remaining path length for the 8-puzzle, but they are also perfectly accurate path lengths for *simplified versions* of the puzzle. If the rules of the puzzle were changed so that a tile could move anywhere instead of just to the adjacent empty square, then *h₁* would give the exact number of steps in the shortest solution. Similarly, if a tile could move one square in any direction, even onto an occupied square, then *h₂* would give the exact number of steps in the shortest solution. A problem with fewer restrictions on the actions is called a *relaxed problem*. The state-space graph of the relaxed problem is a *supergraph* of the original state space because the removal of restrictions creates added edges in the graph.
+
+Because the relaxed problem adds edges to the state space, any optimal solution in the original problem is, by definition, also a solution in the relaxed problem, but the relaxed problem may have better solutions if the added edges provide short cuts. Hence, the *cost of an optimal solution to a relaxed problem is an admissible heuristic for the original problem*. Furthermore, because the derived heuristic is an exact cost for the relaxed problem, it must obey the triangle inequality and is therefore consistent (see page 95).

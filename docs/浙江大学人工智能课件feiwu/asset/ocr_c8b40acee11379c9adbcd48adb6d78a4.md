@@ -1,0 +1,15 @@
+# # Backpropagation
+
+Backpropagation: a simple example
+
+f(x, y, z) = (x + y)z
+
+e.g. x = -2, y = 5, z = -4
+
+q = x + y  ∂q/∂x = 1, ∂q/∂y = 1
+
+f = qz  ∂f/∂q = z, ∂f/∂z = q
+
+Want: ∂f/∂x, ∂f/∂y, ∂f/∂z
+
+![](bbox=[0.489, 0.314, 0.989, 0.646])
