@@ -103,15 +103,15 @@ print(coef_table)
 
 上一节我们手动计算了所有统计量。本节中，我们来看看如何使用R内置的`lm()`函数轻松完成相同的分析，并验证我们的手动计算结果。
 
+
+![](img/a34521fde647d5bdc7f2a97094f61eae_2.png)
+
 ```r
 # 使用lm()函数拟合线性模型
 fit <- lm(y ~ x)
 
 # 获取模型的详细摘要，其中包含系数表
 summary_fit <- summary(fit)
-
-![](img/a34521fde647d5bdc7f2a97094f61eae_2.png)
-
 # 提取并打印系数表
 print(summary_fit$coefficients)
 ```

@@ -68,14 +68,14 @@ e_i = Y_i - \hat{Y}_i
 
 ![](img/76972bc98e91a2564b96a78380a6119d_29.png)
 
-```r
-# 加载数据
-data(swiss)
 
 ![](img/76972bc98e91a2564b96a78380a6119d_31.png)
 
 ![](img/76972bc98e91a2564b96a78380a6119d_32.png)
 
+```r
+# 加载数据
+data(swiss)
 # 拟合包含所有预测变量的线性模型
 fit <- lm(Fertility ~ ., data = swiss)
 ```
@@ -90,12 +90,12 @@ fit <- lm(Fertility ~ ., data = swiss)
 
 ![](img/76972bc98e91a2564b96a78380a6119d_37.png)
 
-```r
-# 设置图形参数，将所有图放在一页
-par(mfrow = c(2, 2))
 
 ![](img/76972bc98e91a2564b96a78380a6119d_38.png)
 
+```r
+# 设置图形参数，将所有图放在一页
+par(mfrow = c(2, 2))
 # 绘制诊断图
 plot(fit)
 ```

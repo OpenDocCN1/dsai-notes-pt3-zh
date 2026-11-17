@@ -72,11 +72,11 @@ CodeBuild通过一个名为 `buildspec.yml` 的YAML文件来定义构建的各�
 
 我们需要在项目根目录创建此文件。以下是其基本结构：
 
-```yaml
-version: 0.2
 
 ![](img/79226208ff337a7992b7d265f23352fc_10.png)
 
+```yaml
+version: 0.2
 phases:
   install:
     commands:

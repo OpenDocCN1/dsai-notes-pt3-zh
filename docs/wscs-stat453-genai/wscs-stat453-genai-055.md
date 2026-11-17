@@ -48,14 +48,14 @@
 
 ![](img/eb410a541f0e309c0b9d6e6b05498cf9_32.png)
 
+
+![](img/eb410a541f0e309c0b9d6e6b05498cf9_34.png)
+
 ```python
 import numpy as np
 import matplotlib.pyplot as plt
 import torch
 import torch.nn as nn
-
-![](img/eb410a541f0e309c0b9d6e6b05498cf9_34.png)
-
 # 加载一个简单的二分类玩具数据集
 # 这里使用 numpy 生成数据，实际中可以从文件加载
 X_train, y_train = ... # 训练数据
@@ -287,11 +287,6 @@ class LogisticRegressionPyTorch(nn.Module):
 
 ![](img/eb410a541f0e309c0b9d6e6b05498cf9_141.png)
 
-```python
-# 初始化模型、损失函数和优化器
-model = LogisticRegressionPyTorch(num_features)
-criterion = nn.BCELoss(reduction='sum')  # 二元交叉熵损失，等价于负对数似然
-optimizer = torch.optim.SGD(model.parameters(), lr=0.1)
 
 ![](img/eb410a541f0e309c0b9d6e6b05498cf9_143.png)
 
@@ -305,6 +300,11 @@ optimizer = torch.optim.SGD(model.parameters(), lr=0.1)
 
 ![](img/eb410a541f0e309c0b9d6e6b05498cf9_152.png)
 
+```python
+# 初始化模型、损失函数和优化器
+model = LogisticRegressionPyTorch(num_features)
+criterion = nn.BCELoss(reduction='sum')  # 二元交叉熵损失，等价于负对数似然
+optimizer = torch.optim.SGD(model.parameters(), lr=0.1)
 # 训练循环
 for epoch in range(epochs):
     # 前向传播

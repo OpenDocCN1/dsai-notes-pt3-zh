@@ -119,14 +119,14 @@ def train(model, x_train, y_train, epochs, learning_rate, batch_size):
 
 我们定义一个继承自 `torch.nn.Module` 的类。在 `__init__` 中，我们使用 `nn.Linear` 层来计算净输入。
 
-```python
-import torch.nn as nn
-import torch.nn.functional as F
 
 ![](img/7df04f90925eeb810ea669cb8002200f_7.png)
 
 ![](img/7df04f90925eeb810ea669cb8002200f_8.png)
 
+```python
+import torch.nn as nn
+import torch.nn.functional as F
 class SoftmaxRegressionPyTorch(nn.Module):
     def __init__(self, num_features, num_classes):
         super().__init__()

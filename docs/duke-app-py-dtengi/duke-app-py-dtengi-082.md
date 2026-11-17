@@ -32,18 +32,18 @@ Hugging Face提供了详细的教程，指导我们如何完成这个过程。�
 
 以下是微调过程的关键步骤代码概览：
 
+
+![](img/652627dc162f3ca87084dbf72fc3a9fe_2.png)
+
+
+![](img/652627dc162f3ca87084dbf72fc3a9fe_3.png)
+
 ```python
 # 1. 导入必要的库
 from transformers import AutoTokenizer, AutoModelForSequenceClassification
 from datasets import load_dataset, load_metric
-
-![](img/652627dc162f3ca87084dbf72fc3a9fe_2.png)
-
 # 2. 加载数据集
 dataset = load_dataset("glue", "mrpc")
-
-![](img/652627dc162f3ca87084dbf72fc3a9fe_3.png)
-
 # 3. 加载分词器并处理数据
 tokenizer = AutoTokenizer.from_pretrained("bert-base-cased")
 def tokenize_function(examples):

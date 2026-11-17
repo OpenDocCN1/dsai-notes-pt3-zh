@@ -104,15 +104,15 @@ print(model.chat_format)
 
 让我们看一个多轮对话的例子。
 
+
+![](img/5edc834cf07280ec7f392292a68df07d_15.png)
+
 ```python
 # 继续之前的对话，添加用户追问
 messages.append({
     “role”: “user”,
     “content”: “你确定这是正确的吗？我以为地球是太阳系的第三颗行星。”
 })
-
-![](img/5edc834cf07280ec7f392292a68df07d_15.png)
-
 # 再次获取模型回复
 response = model.create_chat_completion(messages)
 print(response)

@@ -130,15 +130,15 @@ attributes(data$species)
 
 ![](img/c923bcf857ded57d67324c14e0c8c13f_46.png)
 
+
+![](img/c923bcf857ded57d67324c14e0c8c13f_48.png)
+
 ```r
 # 方法1：使用dplyr计算频率后，用fct_reorder排序
 data <- data %>%
   group_by(species) %>%
   mutate(frequency = n()) %>%
   ungroup()
-
-![](img/c923bcf857ded57d67324c14e0c8c13f_48.png)
-
 data$species <- fct_reorder(data$species, data$frequency)
 # 注意：fct_reorder默认是升序（从小到大）
 

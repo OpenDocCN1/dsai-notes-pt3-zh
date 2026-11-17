@@ -118,10 +118,6 @@ public sealed class MyCustomEffectRenderer : PostProcessEffectRenderer<MyCustomE
 
 ![](img/9a6bfcd9ed6c501a9ca7627f2e52a5c6_13.png)
 
-```hlsl
-// 声明深度法线纹理
-TEXTURE2D(_CameraDepthNormalsTexture);
-SAMPLER(sampler_CameraDepthNormalsTexture);
 
 ![](img/9a6bfcd9ed6c501a9ca7627f2e52a5c6_14.png)
 
@@ -129,6 +125,10 @@ SAMPLER(sampler_CameraDepthNormalsTexture);
 
 ![](img/9a6bfcd9ed6c501a9ca7627f2e52a5c6_18.png)
 
+```hlsl
+// 声明深度法线纹理
+TEXTURE2D(_CameraDepthNormalsTexture);
+SAMPLER(sampler_CameraDepthNormalsTexture);
 // 在片段着色器中
 float4 depthnormal = SAMPLE_TEXTURE2D(_CameraDepthNormalsTexture, sampler_CameraDepthNormalsTexture, i.texcoord);
 // 解码深度值 (0到1范围，1为远平面)

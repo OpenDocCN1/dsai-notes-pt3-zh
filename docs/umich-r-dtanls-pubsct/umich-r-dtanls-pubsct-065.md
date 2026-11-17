@@ -95,6 +95,12 @@ ggplot(filtered_data, aes(x = mode, y = total_effort)) +
 
 以下是创建并排比较图的步骤：
 
+
+![](img/067fb0ac116a262d56154d005ca47dfa_26.png)
+
+
+![](img/067fb0ac116a262d56154d005ca47dfa_28.png)
+
 ```r
 # 存储分组数据
 plot_data <- filtered_data
@@ -104,17 +110,11 @@ p1 <- ggplot(plot_data, aes(x = mode, y = total_effort)) +
   geom_boxplot() +
   scale_y_continuous(labels = label_comma()) + # 此时scales包已加载，可直接调用
   theme(legend.position = "bottom")
-
-![](img/067fb0ac116a262d56154d005ca47dfa_26.png)
-
 # 创建小提琴图
 p2 <- ggplot(plot_data, aes(x = mode, y = total_effort)) +
   geom_violin() +
   scale_y_continuous(labels = label_comma()) +
   theme(legend.position = "bottom")
-
-![](img/067fb0ac116a262d56154d005ca47dfa_28.png)
-
 # 使用cowplot包并排显示
 library(cowplot)
 plot_grid(p1, p2, labels = c("Box Plot", "Violin Plot"))

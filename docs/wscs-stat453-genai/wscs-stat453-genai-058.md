@@ -239,8 +239,6 @@ loss_per_sample = -torch.sum(one_hot * torch.log(softmax_activations + 1e-8), di
 
 以下是使用 `CrossEntropyLoss` 的示例：
 
-```python
-import torch.nn as nn
 
 ![](img/14371a06bf9967fe12243d8bb8196325_139.png)
 
@@ -250,14 +248,16 @@ import torch.nn as nn
 
 ![](img/14371a06bf9967fe12243d8bb8196325_143.png)
 
-# 创建损失函数实例，默认 reduction='mean' 会计算所有样本损失的平均值
-loss_fn = nn.CrossEntropyLoss(reduction='none') # 设置为 ‘none‘ 以获取每个样本的损失
-losses = loss_fn(net_inputs, labels) # net_inputs 是原始净输入，labels 是类别索引（非OneHot）
 
 ![](img/14371a06bf9967fe12243d8bb8196325_145.png)
 
 ![](img/14371a06bf9967fe12243d8bb8196325_146.png)
 
+```python
+import torch.nn as nn
+# 创建损失函数实例，默认 reduction='mean' 会计算所有样本损失的平均值
+loss_fn = nn.CrossEntropyLoss(reduction='none') # 设置为 ‘none‘ 以获取每个样本的损失
+losses = loss_fn(net_inputs, labels) # net_inputs 是原始净输入，labels 是类别索引（非OneHot）
 # 如果想使用默认的均值损失，可以这样写
 loss_fn_mean = nn.CrossEntropyLoss() # 默认 reduction='mean'
 total_loss = loss_fn_mean(net_inputs, labels)

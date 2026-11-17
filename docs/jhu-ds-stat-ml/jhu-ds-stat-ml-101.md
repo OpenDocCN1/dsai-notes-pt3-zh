@@ -101,12 +101,12 @@ p + geom_point(aes(x=Petal.Width, y=Petal.Length, col=Species), size=5, shape=4,
 
 最后，我们在测试集上进行预测并评估模型性能：
 
-```r
-# 在测试集上预测
-pred <- predict(modFit, testing)
 
 ![](img/955371e92a9bf5cd6464ae41741ecf0b_18.png)
 
+```r
+# 在测试集上预测
+pred <- predict(modFit, testing)
 # 创建混淆矩阵查看预测准确性
 confusionMatrix(pred, testing$Species)
 

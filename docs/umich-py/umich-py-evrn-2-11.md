@@ -75,17 +75,17 @@ Mac自带的“文本编辑”应用不适合编程，因为它默认保存为RT
 
 ![](img/4365e5f0ef0a44be84cc9d900ea0e3ec_5.png)
 
-```bash
-# 每个人的 Python 第二部分 打印当前工作目录
-pwd
 
 ![](img/4365e5f0ef0a44be84cc9d900ea0e3ec_7.png)
 
-# 每个人的 Python 第二部分 切换到桌面（假设你想在桌面创建文件夹）
-cd ~/Desktop
 
 ![](img/4365e5f0ef0a44be84cc9d900ea0e3ec_9.png)
 
+```bash
+# 每个人的 Python 第二部分 打印当前工作目录
+pwd
+# 每个人的 Python 第二部分 切换到桌面（假设你想在桌面创建文件夹）
+cd ~/Desktop
 # 每个人的 Python 第二部分 创建一个名为‘py4e’的文件夹
 mkdir py4e
 

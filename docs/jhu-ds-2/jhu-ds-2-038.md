@@ -117,12 +117,12 @@ make.power <- function(n) {
 
 ![](img/e648c4e2da59bc8f1aac20de0dcb4731_43.png)
 
-```r
-cube <- make.power(3)   # 创建一个计算立方的函数
-square <- make.power(2) # 创建一个计算平方的函数
 
 ![](img/e648c4e2da59bc8f1aac20de0dcb4731_44.png)
 
+```r
+cube <- make.power(3)   # 创建一个计算立方的函数
+square <- make.power(2) # 创建一个计算平方的函数
 cube(3)   # 返回 27 (3^3)
 square(3) # 返回 9 (3^2)
 ```
@@ -197,15 +197,9 @@ get("n", environment(cube))
 
 ![](img/e648c4e2da59bc8f1aac20de0dcb4731_72.png)
 
-```r
-y <- 10
 
 ![](img/e648c4e2da59bc8f1aac20de0dcb4731_74.png)
 
-f <- function(x) {
-  y <- 2
-  y^2 + g(x)
-}
 
 ![](img/e648c4e2da59bc8f1aac20de0dcb4731_75.png)
 
@@ -217,6 +211,12 @@ f <- function(x) {
 
 ![](img/e648c4e2da59bc8f1aac20de0dcb4731_79.png)
 
+```r
+y <- 10
+f <- function(x) {
+  y <- 2
+  y^2 + g(x)
+}
 g <- function(x) {
   x * y
 }

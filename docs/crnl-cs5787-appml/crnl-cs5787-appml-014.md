@@ -54,6 +54,9 @@ y = w_0 + w_1 * x + w_2 * x^2 + ... + w_d * x^d
 
 ![](img/9ff65c49ee9114c8e6f5a111dbb89781_21.png)
 
+
+![](img/9ff65c49ee9114c8e6f5a111dbb89781_23.png)
+
 ```python
 from sklearn.preprocessing import PolynomialFeatures
 from sklearn.linear_model import LinearRegression
@@ -61,9 +64,6 @@ from sklearn.linear_model import LinearRegression
 # 创建多项式特征
 poly_features = PolynomialFeatures(degree=d)
 X_poly = poly_features.fit_transform(X_train)
-
-![](img/9ff65c49ee9114c8e6f5a111dbb89781_23.png)
-
 # 在多项式特征上拟合线性回归模型
 model = LinearRegression()
 model.fit(X_poly, y_train)

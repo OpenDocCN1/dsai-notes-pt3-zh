@@ -91,11 +91,14 @@ print(x)
 3.  添加一条红色水平线表示理论期望值（`p = 0.5`）。
 4.  在图中添加文本注释，显示最终的样本均值、期望值和样本量。
 
-```r
-library(ggplot2)
 
 ![](img/b58469f8788d1efc6f9083a388c759cd_32.png)
 
+
+![](img/b58469f8788d1efc6f9083a388c759cd_34.png)
+
+```r
+library(ggplot2)
 plot_coin_tosses <- function(n=30, p=0.5) {
   # 获取抛硬币数据
   coin_tosses <- toss_coin(n, p)
@@ -118,9 +121,6 @@ plot_coin_tosses <- function(n=30, p=0.5) {
                     color = "darkgreen", size = 5)
   return(p)
 }
-
-![](img/b58469f8788d1efc6f9083a388c759cd_34.png)
-
 # 生成并显示图形
 plot_coin_tosses(30)
 ```
@@ -242,16 +242,11 @@ plot(freq_table_large, main = "10,000次双骰儿实验点数分布",
 
 ![](img/b58469f8788d1efc6f9083a388c759cd_71.png)
 
-```r
-# 设置模拟参数
-num_simulations <- 10000  # 模拟实验的次数
-sample_sizes <- c(1, 2, 10, 30) # 每次实验掷骰子的数量k
 
 ![](img/b58469f8788d1efc6f9083a388c759cd_73.png)
 
 ![](img/b58469f8788d1efc6f9083a388c759cd_74.png)
 
-par(mfrow = c(2, 2)) # 将画布分为2x2的子图
 
 ![](img/b58469f8788d1efc6f9083a388c759cd_76.png)
 
@@ -261,6 +256,11 @@ par(mfrow = c(2, 2)) # 将画布分为2x2的子图
 
 ![](img/b58469f8788d1efc6f9083a388c759cd_80.png)
 
+```r
+# 设置模拟参数
+num_simulations <- 10000  # 模拟实验的次数
+sample_sizes <- c(1, 2, 10, 30) # 每次实验掷骰子的数量k
+par(mfrow = c(2, 2)) # 将画布分为2x2的子图
 for (k in sample_sizes) {
   # 对每次模拟实验：掷k个骰子，计算其平均值
   sample_means <- replicate(num_simulations, mean(roll_die(k)))

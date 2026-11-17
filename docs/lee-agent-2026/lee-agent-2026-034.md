@@ -107,11 +107,14 @@
 
 ![](img/b0e47fb6e7d3e22a873f362445767ef9_47.png)
 
-```python
-from langchain.schema import Document
 
 ![](img/b0e47fb6e7d3e22a873f362445767ef9_49.png)
 
+
+![](img/b0e47fb6e7d3e22a873f362445767ef9_51.png)
+
+```python
+from langchain.schema import Document
 # 示例文档数据
 docs = [
     Document(
@@ -128,9 +131,6 @@ docs = [
     ),
     # ... 可以添加更多文档
 ]
-
-![](img/b0e47fb6e7d3e22a873f362445767ef9_51.png)
-
 # 定义元数据字段信息
 metadata_field_info = [
     AttributeInfo(
@@ -163,14 +163,14 @@ metadata_field_info = [
 
 ![](img/b0e47fb6e7d3e22a873f362445767ef9_59.png)
 
+
+![](img/b0e47fb6e7d3e22a873f362445767ef9_61.png)
+
 ```python
 from langchain.vectorstores import Chroma
 from langchain.embeddings import OpenAIEmbeddings
 from langchain.retrievers.self_query.base import SelfQueryRetriever
 from langchain.chat_models import ChatOpenAI
-
-![](img/b0e47fb6e7d3e22a873f362445767ef9_61.png)
-
 # 1. 创建向量存储
 vectorstore = Chroma.from_documents(docs, OpenAIEmbeddings())
 
@@ -271,6 +271,9 @@ print(structured_query)
 
 ![](img/b0e47fb6e7d3e22a873f362445767ef9_83.png)
 
+
+![](img/b0e47fb6e7d3e22a873f362445767ef9_85.png)
+
 ```python
 # 在创建检索器时启用 limit 功能
 retriever_with_limit = SelfQueryRetriever.from_llm(
@@ -280,9 +283,6 @@ retriever_with_limit = SelfQueryRetriever.from_llm(
     metadata_field_info=metadata_field_info,
     enable_limit=True, # 启用 limit 功能
 )
-
-![](img/b0e47fb6e7d3e22a873f362445767ef9_85.png)
-
 # 查询评分高于8的电影，但只返回1个结果
 docs_result = retriever_with_limit.get_relevant_documents("Show me one movie with rating above 8")
 # 即使有多部电影评分高于8，也只会返回1份文档

@@ -88,15 +88,15 @@ model = models.resnet50(pretrained=True)
 
 ![](img/f8f008e2808f19882aa25f551e7c2493_39.png)
 
+
+![](img/f8f008e2808f19882aa25f551e7c2493_41.png)
+
 ```python
 # 定义数据转换
 transform = transforms.Compose([
     transforms.ToTensor(),
     transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5)) # 归一化到[-1, 1]
 ])
-
-![](img/f8f008e2808f19882aa25f551e7c2493_41.png)
-
 # 加载 CIFAR-10 数据集
 trainset = torchvision.datasets.CIFAR10(root='./data', train=True, download=True, transform=transform)
 trainloader = torch.utils.data.DataLoader(trainset, batch_size=32, shuffle=True)

@@ -18,6 +18,9 @@ Airflow是一个工作流管理平台，专门用于管理被称为工作流的�
 
 以下是一个定义Airflow有向无环图（即DAG）的Python文件示例：
 
+
+![](img/20ec6d969bb931fdc3649f35127d3417_3.png)
+
 ```python
 from airflow import DAG
 from airflow.operators.python_operator import PythonOperator
@@ -26,9 +29,6 @@ from datetime import datetime
 # 定义一个简单的Python函数
 def my_function(my_argument):
     return f"Hello {my_argument}"
-
-![](img/20ec6d969bb931fdc3649f35127d3417_3.png)
-
 # 定义DAG
 with DAG(
     'my_dag',  # DAG名称

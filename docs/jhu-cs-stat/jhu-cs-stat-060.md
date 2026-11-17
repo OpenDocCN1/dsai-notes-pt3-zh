@@ -35,12 +35,27 @@ print(result)  # 输出应接近0.95
 
 为了更直观地理解数值积分的过程，我们可以创建一个可视化图形。以下代码将绘制正态分布曲线，并高亮显示黎曼和中的一个矩形。
 
-```r
-# 加载ggplot2库用于绘图
-library(ggplot2)
 
 ![](img/4930c7043debccb1a1d9c7741dd3d7ed_6.png)
 
+
+![](img/4930c7043debccb1a1d9c7741dd3d7ed_8.png)
+
+![](img/4930c7043debccb1a1d9c7741dd3d7ed_9.png)
+
+
+![](img/4930c7043debccb1a1d9c7741dd3d7ed_10.png)
+
+![](img/4930c7043debccb1a1d9c7741dd3d7ed_12.png)
+
+
+![](img/4930c7043debccb1a1d9c7741dd3d7ed_14.png)
+
+![](img/4930c7043debccb1a1d9c7741dd3d7ed_16.png)
+
+```r
+# 加载ggplot2库用于绘图
+library(ggplot2)
 # 设置参数
 f <- dnorm
 a <- -1.96
@@ -51,30 +66,15 @@ x <- seq(a, b - dx, by=dx)
 
 # 创建数据框
 df <- data.frame(x = x, y = f(x))
-
-![](img/4930c7043debccb1a1d9c7741dd3d7ed_8.png)
-
-![](img/4930c7043debccb1a1d9c7741dd3d7ed_9.png)
-
 # 创建绘图
 p <- ggplot() +
   stat_function(fun = dnorm, args = list(mean=0, sd=1), color="blue") +
   geom_rect(data=df, aes(xmin=x, xmax=x+dx, ymin=0, ymax=y), fill="red", alpha=0.3) +
   labs(title="数值积分可视化 (黎曼和)", x="x", y="密度 f(x)") +
   theme_minimal()
-
-![](img/4930c7043debccb1a1d9c7741dd3d7ed_10.png)
-
-![](img/4930c7043debccb1a1d9c7741dd3d7ed_12.png)
-
 # 高亮第7个矩形（可选）
 highlight_rect <- 7
 p <- p + geom_rect(data=df[highlight_rect, ], aes(xmin=x, xmax=x+dx, ymin=0, ymax=y), fill="green", alpha=0.7)
-
-![](img/4930c7043debccb1a1d9c7741dd3d7ed_14.png)
-
-![](img/4930c7043debccb1a1d9c7741dd3d7ed_16.png)
-
 print(p)
 ```
 
@@ -118,6 +118,13 @@ print(expected_value)  # 结果应接近7
 
 ![](img/4930c7043debccb1a1d9c7741dd3d7ed_26.png)
 
+
+![](img/4930c7043debccb1a1d9c7741dd3d7ed_27.png)
+
+![](img/4930c7043debccb1a1d9c7741dd3d7ed_28.png)
+
+![](img/4930c7043debccb1a1d9c7741dd3d7ed_29.png)
+
 ```r
 # 创建计算期望值的通用函数
 EX <- function(density_func, ...) {
@@ -129,13 +136,6 @@ EX <- function(density_func, ...) {
   result <- integrate(f, lower = -Inf, upper = Inf)
   return(result$value)  # 返回积分值
 }
-
-![](img/4930c7043debccb1a1d9c7741dd3d7ed_27.png)
-
-![](img/4930c7043debccb1a1d9c7741dd3d7ed_28.png)
-
-![](img/4930c7043debccb1a1d9c7741dd3d7ed_29.png)
-
 # 使用函数计算期望值
 mean_norm <- EX(dnorm, mean = 7)
 print(mean_norm)
@@ -182,6 +182,9 @@ E_transform <- function(g, density_func, ...) {
 
 矩母函数是概率论中的一个核心概念，定义为 **M(t) = E[e^(tX)]**。我们可以用上面的函数来计算它。
 
+
+![](img/4930c7043debccb1a1d9c7741dd3d7ed_39.png)
+
 ```r
 # 定义矩母函数计算函数
 moment_gen <- function(t, density_func, ...) {
@@ -190,9 +193,6 @@ moment_gen <- function(t, density_func, ...) {
   }
   return(E_transform(g, density_func, ...))
 }
-
-![](img/4930c7043debccb1a1d9c7741dd3d7ed_39.png)
-
 # 计算正态分布(mean=5, sd=3)在t=0.1时的矩母函数值
 mgf_value <- moment_gen(t = 0.1, dnorm, mean = 5, sd = 3)
 print(mgf_value)
@@ -202,14 +202,14 @@ print(mgf_value)
 
 矩母函数之所以强大，是因为它的各阶导数在t=0处的值给出了分布的各阶矩。特别地，一阶矩是期望值，二阶矩与方差有关。
 
+
+![](img/4930c7043debccb1a1d9c7741dd3d7ed_43.png)
+
 ```r
 # 计算一阶矩（期望值）的另一种方法：使用矩母函数在t=0处的导数
 # 数值求导计算一阶矩
 first_moment <- E_transform(function(x) { x }, dnorm, mean=5, sd=3)
 print(first_moment)  # 应等于5
-
-![](img/4930c7043debccb1a1d9c7741dd3d7ed_43.png)
-
 # 我们也可以将期望值函数与矩的概念统一命名
 E <- function(density_func, ...) {
   EX(density_func, ...)
@@ -232,6 +232,9 @@ print(E(dnorm, mean=5, sd=3))
 
 ![](img/4930c7043debccb1a1d9c7741dd3d7ed_47.png)
 
+
+![](img/4930c7043debccb1a1d9c7741dd3d7ed_49.png)
+
 ```r
 # 计算方差函数
 variance <- function(density_func, ...) {
@@ -243,9 +246,6 @@ variance <- function(density_func, ...) {
   var <- second_moment - mu^2
   return(var)
 }
-
-![](img/4930c7043debccb1a1d9c7741dd3d7ed_49.png)
-
 # 计算正态分布(mean=5, sd=3)的方差
 var_norm <- variance(dnorm, mean=5, sd=3)
 print(var_norm)  # 应等于9 (即3^2)

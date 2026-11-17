@@ -16,12 +16,12 @@
 
 假设你将使用OpenAI提供的大型语言模型，例如GPT-4或更高版本。以下代码从环境变量中读取认证密钥。如果你在协作环境（如Google Colab）中工作，也可以从平台提供的密钥管理工具中获取。
 
-```python
-import os
-from google.colab import userdata
 
 ![](img/7440a7bb924f22bc6b1050959dcdaf11_6.png)
 
+```python
+import os
+from google.colab import userdata
 # 从环境变量或Colab Secrets获取API密钥
 api_key = os.getenv("OPENAI_API_KEY") or userdata.get('OPENAI_API_KEY')
 ```
@@ -50,13 +50,13 @@ api_key = os.getenv("OPENAI_API_KEY") or userdata.get('OPENAI_API_KEY')
 
 ![](img/7440a7bb924f22bc6b1050959dcdaf11_16.png)
 
+
+![](img/7440a7bb924f22bc6b1050959dcdaf11_17.png)
+
 ```python
 from langchain.output_parsers import CommaSeparatedListOutputParser
 from langchain.prompts import PromptTemplate
 from langchain.llms import OpenAI
-
-![](img/7440a7bb924f22bc6b1050959dcdaf11_17.png)
-
 # 初始化解析器和模型
 output_parser = CommaSeparatedListOutputParser()
 llm = OpenAI(api_key=api_key)
@@ -109,12 +109,12 @@ print(result)
 
 以下是一个解析JSON结果的示例。我们要求模型将输入的单词翻译成三种语言，并以JSON格式返回。
 
-```python
-from langchain.output_parsers import StructuredOutputParser, ResponseSchema
-from langchain.prompts import PromptTemplate
 
 ![](img/7440a7bb924f22bc6b1050959dcdaf11_29.png)
 
+```python
+from langchain.output_parsers import StructuredOutputParser, ResponseSchema
+from langchain.prompts import PromptTemplate
 # 定义期望的JSON响应结构
 response_schemas = [
     ResponseSchema(name="language", description="用户输入的语言"),
@@ -163,6 +163,9 @@ LangChain还提供了查询Pandas DataFrame的功能。理论上，你可以直�
 
 ![](img/7440a7bb924f22bc6b1050959dcdaf11_38.png)
 
+
+![](img/7440a7bb924f22bc6b1050959dcdaf11_40.png)
+
 ```python
 import pandas as pd
 from langchain.agents import create_pandas_dataframe_agent
@@ -170,9 +173,6 @@ from langchain.agents import create_pandas_dataframe_agent
 # 加载数据集
 df = pd.read_csv('https://raw.githubusercontent.com/mwaskom/seaborn-data/master/iris.csv')
 print(df.head())
-
-![](img/7440a7bb924f22bc6b1050959dcdaf11_40.png)
-
 # 创建Pandas代理
 agent = create_pandas_dataframe_agent(llm, df, verbose=True)
 
@@ -193,16 +193,19 @@ print(response)
 
 ![](img/7440a7bb924f22bc6b1050959dcdaf11_45.png)
 
-```python
-from langchain.output_parsers import DatetimeOutputParser
-from langchain.prompts import PromptTemplate
 
 ![](img/7440a7bb924f22bc6b1050959dcdaf11_46.png)
 
-output_parser = DatetimeOutputParser()
 
 ![](img/7440a7bb924f22bc6b1050959dcdaf11_48.png)
 
+
+![](img/7440a7bb924f22bc6b1050959dcdaf11_50.png)
+
+```python
+from langchain.output_parsers import DatetimeOutputParser
+from langchain.prompts import PromptTemplate
+output_parser = DatetimeOutputParser()
 # 创建提示模板
 template = "回答用户的问题：\n{question}\n{format_instructions}"
 prompt = PromptTemplate.from_template(
@@ -212,9 +215,6 @@ prompt = PromptTemplate.from_template(
 
 # 打印完整的提示词以查看格式
 print(prompt.format(question="某个事件发生在何时？"))
-
-![](img/7440a7bb924f22bc6b1050959dcdaf11_50.png)
-
 # 构建链
 chain = prompt | llm | output_parser
 ```

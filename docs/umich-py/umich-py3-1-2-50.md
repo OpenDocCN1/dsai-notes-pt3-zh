@@ -62,12 +62,12 @@ print(total)
 
 以下是带有描述性文本的改进代码：
 
-```python
-total = 0
-print("循环开始前，total =", total)
 
 ![](img/39b4d25f4bbee5de70d2e45e87df8caf_2.png)
 
+```python
+total = 0
+print("循环开始前，total =", total)
 for num in range(10):
     print("--- 新的一次迭代 ---")
     print("当前 num 的值是：", num)

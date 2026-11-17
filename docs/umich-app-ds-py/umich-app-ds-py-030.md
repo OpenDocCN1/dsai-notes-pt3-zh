@@ -106,6 +106,9 @@ plt.show()
 
 假设我们想高亮显示网络中成本最高（权重大于770）的边，并为洛杉矶和纽约市添加标签。
 
+
+![](img/dccc2c77bd10ae31b5203b92eeb7e21c_5.png)
+
 ```python
 # 找出成本大于770的边
 high_cost_edges = [(u, v) for u, v, d in G.edges(data=True) if d['weight'] > 770]
@@ -120,9 +123,6 @@ nx.draw_networkx_edges(G, pos, edgelist=high_cost_edges, edge_color='red', width
 # 为特定城市添加标签
 labels = {'Los Angeles': 'LA', 'New York City': 'NYC'}
 nx.draw_networkx_labels(G, pos, labels=labels, font_size=12, font_color='darkred')
-
-![](img/dccc2c77bd10ae31b5203b92eeb7e21c_5.png)
-
 plt.axis('off')
 plt.tight_layout()
 plt.show()

@@ -68,6 +68,9 @@
 
 以下是创建图表的R代码步骤：
 
+
+![](img/fdbce39ad029b7f2e3a5ddc13d658510_5.png)
+
 ```r
 # 加载数据
 library(UsingR)
@@ -94,9 +97,6 @@ g <- g + geom_abline(intercept = 0, slope = 1, colour = "black")
 # 添加坐标轴
 g <- g + geom_hline(yintercept = 0)
 g <- g + geom_vline(xintercept = 0)
-
-![](img/fdbce39ad029b7f2e3a5ddc13d658510_5.png)
-
 # 添加两条回归线
 # 1. 以父亲身高预测儿子身高 (y ~ x)
 g <- g + geom_abline(intercept = 0, slope = rho, colour = "blue", size = 1.5)

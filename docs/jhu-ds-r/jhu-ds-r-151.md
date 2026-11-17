@@ -28,15 +28,15 @@
 
 ![](img/de29ed08a3d0b162efdb4de56247d3f8_6.png)
 
+
+![](img/de29ed08a3d0b162efdb4de56247d3f8_8.png)
+
 ```r
 ---
 title: "我的第一个 knitr 文档"
 ---
 
 这是一些文本。
-
-![](img/de29ed08a3d0b162efdb4de56247d3f8_8.png)
-
 以下是一个代码块：
 
 ```{r}

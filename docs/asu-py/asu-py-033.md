@@ -167,8 +167,6 @@ finally:
 
 ![](img/d901016903a1bbb0caeb320d9a3167f1_82.png)
 
-```python
-import sys
 
 ![](img/d901016903a1bbb0caeb320d9a3167f1_84.png)
 
@@ -176,12 +174,14 @@ import sys
 
 ![](img/d901016903a1bbb0caeb320d9a3167f1_87.png)
 
-my_list = [‘a‘, 0, 2]
 
 ![](img/d901016903a1bbb0caeb320d9a3167f1_89.png)
 
 ![](img/d901016903a1bbb0caeb320d9a3167f1_90.png)
 
+```python
+import sys
+my_list = [‘a‘, 0, 2]
 for item in my_list:
     try:
         print(f"当前项是：{item}")

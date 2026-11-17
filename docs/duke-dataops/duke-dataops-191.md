@@ -24,15 +24,15 @@ Hugging Face Spaces 提供了一种简便的方式，可以直接在你的个人
 
 以下是在本地环境中运行热狗分类器的核心代码：
 
+
+![](img/5c62f0a1ee5c6f5ff301638dc1db708f_4.png)
+
 ```python
 import gradio as gr
 from transformers import pipeline
 
 # 加载预训练的热狗分类管道
 classifier = pipeline("image-classification", model="julien-c/hotdog-not-hotdog")
-
-![](img/5c62f0a1ee5c6f5ff301638dc1db708f_4.png)
-
 def classify_image(image):
     result = classifier(image)
     return result[0]['label']
@@ -48,15 +48,15 @@ interface.launch()
 
 接下来，我们看看另一个演示：文本生成。这个例子非常简单，代码如下：
 
+
+![](img/5c62f0a1ee5c6f5ff301638dc1db708f_6.png)
+
 ```python
 from transformers import pipeline
 import gradio as gr
 
 # 定义文本生成模型
 generator = pipeline('text-generation', model='gpt2')
-
-![](img/5c62f0a1ee5c6f5ff301638dc1db708f_6.png)
-
 def predict(prompt):
     # 使用模型生成文本
     completion = generator(prompt)[0]['generated_text']

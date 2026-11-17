@@ -12,15 +12,15 @@
 
 首先，我们需要加载数据集并进行初步观察。我们将使用来自ISLR包的`Wage`数据集，该数据集包含了美国中大西洋地区一群男性的工资信息。
 
+
+![](img/5f85d2bc687de5ef6ebb5d4960648f1a_5.png)
+
 ```r
 # 加载必要的包和数据
 library(ISLR)
 library(ggplot2)
 library(caret)
 data(Wage)
-
-![](img/5f85d2bc687de5ef6ebb5d4960648f1a_5.png)
-
 # 将预测目标变量‘logwage’分离出来，以便后续分析
 Wage <- subset(Wage, select = -c(logwage))
 ```
@@ -118,13 +118,13 @@ model <- train(wage ~ age + jobclass + education,
 
 首先，绘制拟合值与残差的关系图。理想情况下，残差应随机分布在0线附近。
 
+
+![](img/5f85d2bc687de5ef6ebb5d4960648f1a_17.png)
+
 ```r
 # 计算训练集的预测值和残差
 train_pred <- predict(model, newdata = training)
 train_resid <- training$wage - train_pred
-
-![](img/5f85d2bc687de5ef6ebb5d4960648f1a_17.png)
-
 # 绘制拟合值 vs 残差图
 ggplot(data = NULL, aes(x = train_pred, y = train_resid)) +
   geom_point() +

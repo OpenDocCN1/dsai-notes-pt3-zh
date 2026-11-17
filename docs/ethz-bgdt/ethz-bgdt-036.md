@@ -261,9 +261,6 @@ db.scientists.find({ "publications": { $gte: 100 } })
 
 **处理嵌套字段**
 使用点号(`.`)来导航嵌套结构。
-```javascript
-// 正确：查找 name 对象下 first 字段为 “Albert” 的文档
-db.scientists.find({ "name.first": "Albert" })
 
 ![](img/4c66387789767a8ec0c70211308ff733_116.png)
 
@@ -275,6 +272,9 @@ db.scientists.find({ "name.first": "Albert" })
 
 ![](img/4c66387789767a8ec0c70211308ff733_121.png)
 
+```javascript
+// 正确：查找 name 对象下 first 字段为 “Albert” 的文档
+db.scientists.find({ "name.first": "Albert" })
 // 错误：这要求整个 name 字段的值完全等于 {“first”: “Albert”} 这个对象
 db.scientists.find({ "name": { "first": "Albert" } })
 ```
@@ -420,12 +420,6 @@ db.scientists.insertOne({
 ![](img/4c66387789767a8ec0c70211308ff733_176.png)
 
 **更新文档**
-```javascript
-// 更新多个文档
-db.scientists.updateMany(
-  { “century”: “20th” },
-  { $inc: { “publications”: 20 } } // 将 publications 字段增加20
-)
 
 ![](img/4c66387789767a8ec0c70211308ff733_178.png)
 
@@ -437,6 +431,12 @@ db.scientists.updateMany(
 
 ![](img/4c66387789767a8ec0c70211308ff733_184.png)
 
+```javascript
+// 更新多个文档
+db.scientists.updateMany(
+  { “century”: “20th” },
+  { $inc: { “publications”: 20 } } // 将 publications 字段增加20
+)
 // 更新一个文档
 db.scientists.updateOne({ “last”: “Curie” }, { $set: { “nobelPrizes”: 2 } })
 ```
@@ -450,12 +450,12 @@ db.scientists.updateOne({ “last”: “Curie” }, { $set: { “nobelPrizes”
 ![](img/4c66387789767a8ec0c70211308ff733_189.png)
 
 **删除文档**
-```javascript
-// 删除多个文档
-db.scientists.deleteMany({ “century”: “5th” })
 
 ![](img/4c66387789767a8ec0c70211308ff733_191.png)
 
+```javascript
+// 删除多个文档
+db.scientists.deleteMany({ “century”: “5th” })
 // 删除一个文档
 db.scientists.deleteOne({ “last”: “SomeName” })
 ```

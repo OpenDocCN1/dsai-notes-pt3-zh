@@ -317,10 +317,6 @@ plt.legend()
 
 ![](img/fad61f97b3873030b4ecc4e46949214e_145.png)
 
-```python
-import pandas as pd
-import seaborn as sns
-import matplotlib.pyplot as plt
 
 ![](img/fad61f97b3873030b4ecc4e46949214e_147.png)
 
@@ -328,20 +324,24 @@ import matplotlib.pyplot as plt
 
 ![](img/fad61f97b3873030b4ecc4e46949214e_150.png)
 
-# 1. 读取数据
-data = pd.read_csv(‘data.csv‘)
 
 ![](img/fad61f97b3873030b4ecc4e46949214e_152.png)
 
 ![](img/fad61f97b3873030b4ecc4e46949214e_154.png)
 
-# 2. 使用Seaborn创建箱线图
-sns.boxplot(x=‘category_column‘, y=‘value_column‘, data=data)
 
 ![](img/fad61f97b3873030b4ecc4e46949214e_156.png)
 
 ![](img/fad61f97b3873030b4ecc4e46949214e_158.png)
 
+```python
+import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+# 1. 读取数据
+data = pd.read_csv(‘data.csv‘)
+# 2. 使用Seaborn创建箱线图
+sns.boxplot(x=‘category_column‘, y=‘value_column‘, data=data)
 # 3. 使用Matplotlib进行装饰
 plt.title(‘箱线图标题‘)
 plt.xlabel(‘X轴标签‘)

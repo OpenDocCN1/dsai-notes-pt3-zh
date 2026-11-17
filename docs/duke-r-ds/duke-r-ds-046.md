@@ -46,6 +46,11 @@ loans <- loan_full_schema %>%
 
 接下来，让我们初步探索数据，了解典型贷款利率和借款人的特征。
 
+
+![](img/71bdd42addeb2b7e64495d46e6af7d8e_3.png)
+
+![](img/71bdd42addeb2b7e64495d46e6af7d8e_4.png)
+
 ```r
 # 查看典型贷款利率
 summary(loans$interest_rate)
@@ -53,11 +58,6 @@ mean(loans$interest_rate)
 median(loans$interest_rate)
 min(loans$interest_rate)
 max(loans$interest_rate)
-
-![](img/71bdd42addeb2b7e64495d46e6af7d8e_3.png)
-
-![](img/71bdd42addeb2b7e64495d46e6af7d8e_4.png)
-
 # 可视化利率分布
 ggplot(loans, aes(x = interest_rate)) +
   geom_histogram(binwidth = 1, fill = "steelblue", color = "white") +

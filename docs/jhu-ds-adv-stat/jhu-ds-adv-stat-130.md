@@ -71,13 +71,13 @@
 
 最后，我们将通过一个简单的编码练习来创建并观察标准化残差。以下是使用 R 语言的示例代码框架：
 
+
+![](img/d118c66d78fc7611bbf6ce70e07afaa5_7.png)
+
 ```r
 # 假设我们已有线性模型对象 `model`
 # 计算普通残差
 raw_residuals <- residuals(model)
-
-![](img/d118c66d78fc7611bbf6ce70e07afaa5_7.png)
-
 # 获取帽子矩阵
 hat_matrix <- lm.influence(model)$hat
 

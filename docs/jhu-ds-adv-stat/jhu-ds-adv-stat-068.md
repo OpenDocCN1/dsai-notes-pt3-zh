@@ -89,13 +89,13 @@
 4.  检验统计量 `U` 可以通过 `R_A` 计算得出。`U` 值衡量了 `A` 组数据相对于 `B` 组数据的“领先”程度。
 5.  将观测到的 `U` 值与零假设（两组分布相同）下的理论分布进行比较，得到 P 值。
 
+
+![](img/9223bc7bdf335ee2290968eb7588dcc4_13.png)
+
 ```python
 # 伪代码示例：曼-惠特尼 U 检验逻辑
 import numpy as np
 from scipy.stats import mannwhitneyu
-
-![](img/9223bc7bdf335ee2290968eb7588dcc4_13.png)
-
 # 假设 group_A 和 group_B 是两个独立样本的数据
 group_A = np.array([...])
 group_B = np.array([...])

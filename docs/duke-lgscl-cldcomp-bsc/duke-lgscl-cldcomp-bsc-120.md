@@ -133,13 +133,13 @@ async fn main() -> std::io::Result<()> {
 
 为了便于管理和记录构建步骤，可以添加一个 `Makefile`。
 
-```makefile
-.PHONY: run build deploy clean
 
 ![](img/2db2b5617642e0efe1098497dd52340c_4.png)
 
 ![](img/2db2b5617642e0efe1098497dd52340c_5.png)
 
+```makefile
+.PHONY: run build deploy clean
 run:
     cargo run
 

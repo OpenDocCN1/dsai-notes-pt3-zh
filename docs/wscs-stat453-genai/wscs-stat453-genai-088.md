@@ -49,12 +49,12 @@ def kaiming_uniform_(tensor, a=math.sqrt(5)):
 ![](img/e469d62e1d1be8c23d51c4572ac513ec_11.png)
 
 **代码示例：手动应用 Kaiming Uniform 初始化（针对 ReLU）**
-```python
-import torch.nn as nn
-import torch.nn.init as init
 
 ![](img/e469d62e1d1be8c23d51c4572ac513ec_13.png)
 
+```python
+import torch.nn as nn
+import torch.nn.init as init
 # 假设 `model` 是你的神经网络
 for m in model.modules():
     if isinstance(m, nn.Linear):

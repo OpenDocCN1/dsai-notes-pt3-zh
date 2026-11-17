@@ -135,12 +135,12 @@ for(pos in my_break_positions) {
 ![](img/c55d5529c5d942b95e0e2a5e44dc671e_21.png)
 
 以下是手动创建图例的代码示例：
-```r
-# 1. 移除所有图例
-theme(legend.position = "none")
 
 ![](img/c55d5529c5d942b95e0e2a5e44dc671e_23.png)
 
+```r
+# 1. 移除所有图例
+theme(legend.position = "none")
 # 2. 添加“是/否”文本
 annotate("text", x = 4.5, y = -2500, label = "Yes", color = "black")
 annotate("text", x = 3.5, y = -2500, label = "No", color = "black")
@@ -160,19 +160,19 @@ annotate("rect", xmin = 3.3, xmax = 3.7, ymin = -2600, ymax = -2400,
 最后，我们将所有优化步骤整合到一段代码中。注意，ggplot的标题和副标题不会自动换行，需要手动插入换行符 `\n`。
 
 以下是最终代码的核心结构：
+
+![](img/c55d5529c5d942b95e0e2a5e44dc671e_27.png)
+
+
+![](img/c55d5529c5d942b95e0e2a5e44dc671e_29.png)
+
 ```r
 # 定义颜色和参数
 my_colors <- c("#FFCB05", "#00274C")
 tick_positions <- c(...) # 刻度线位置
-
-![](img/c55d5529c5d942b95e0e2a5e44dc671e_27.png)
-
 # 构建基础图表
 base_plot <- ggplot(data, aes(x = age_group, y = count, fill = interaction(gender, response))) +
   geom_col()
-
-![](img/c55d5529c5d942b95e0e2a5e44dc671e_29.png)
-
 # 添加手动绘制的刻度线
 for(pos in tick_positions) {
   base_plot <- base_plot + geom_vline(xintercept = pos, color = "white")

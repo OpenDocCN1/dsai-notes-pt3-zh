@@ -72,14 +72,14 @@ g + geom_point(aes(color = bmicat)) +
 *   **映射到变量**：如果你希望点的属性根据数据中的变量而变化（如按BMI类别着色），则必须将该属性包裹在 `aes()` 函数内，例如 `aes(color = bmicat)`。
 
 以下代码对比了这两种方式：
-```r
-# 方式一：颜色设为常量（所有点为钢蓝色）
-g + geom_point(color = "steelblue", size = 4, alpha = 0.5)
 
 ![](img/d4fd8ab64e00c96ca6f1834d11055b66_4.png)
 
 ![](img/d4fd8ab64e00c96ca6f1834d11055b66_5.png)
 
+```r
+# 方式一：颜色设为常量（所有点为钢蓝色）
+g + geom_point(color = "steelblue", size = 4, alpha = 0.5)
 # 方式二：颜色映射到变量（按bmicat着色）
 g + geom_point(aes(color = bmicat), size = 4, alpha = 0.5)
 ```

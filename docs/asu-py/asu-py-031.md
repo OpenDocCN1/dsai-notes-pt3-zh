@@ -81,24 +81,16 @@
 
 ![](img/ab43e980e58650597cd3fbecf11ca75c_43.png)
 
-```python
-# 1. 打开文件。需要将引号内的路径替换为你的文件实际路径。
-f = open("/content/Moby Dick.txt", "r")
 
 ![](img/ab43e980e58650597cd3fbecf11ca75c_45.png)
 
 ![](img/ab43e980e58650597cd3fbecf11ca75c_47.png)
 
-# 2. 读取文件全部内容到一个变量中。
-file_text = f.read()
 
 ![](img/ab43e980e58650597cd3fbecf11ca75c_49.png)
 
 ![](img/ab43e980e58650597cd3fbecf11ca75c_51.png)
 
-# 3. 打印文件内容。
-print("--- File Contents ---")
-print(file_text)
 
 ![](img/ab43e980e58650597cd3fbecf11ca75c_53.png)
 
@@ -106,6 +98,14 @@ print(file_text)
 
 ![](img/ab43e980e58650597cd3fbecf11ca75c_55.png)
 
+```python
+# 1. 打开文件。需要将引号内的路径替换为你的文件实际路径。
+f = open("/content/Moby Dick.txt", "r")
+# 2. 读取文件全部内容到一个变量中。
+file_text = f.read()
+# 3. 打印文件内容。
+print("--- File Contents ---")
+print(file_text)
 # 4. 关闭文件连接。
 f.close()
 ```
@@ -140,9 +140,6 @@ f.close()
 
 ![](img/ab43e980e58650597cd3fbecf11ca75c_70.png)
 
-```python
-# 1. 打开文件。
-f = open("/content/Moby Dick.txt", "r")
 
 ![](img/ab43e980e58650597cd3fbecf11ca75c_72.png)
 
@@ -150,13 +147,21 @@ f = open("/content/Moby Dick.txt", "r")
 
 ![](img/ab43e980e58650597cd3fbecf11ca75c_76.png)
 
-# 2. 按行读取文件，得到一个列表。
-lines = f.readlines()
 
 ![](img/ab43e980e58650597cd3fbecf11ca75c_78.png)
 
 ![](img/ab43e980e58650597cd3fbecf11ca75c_80.png)
 
+
+![](img/ab43e980e58650597cd3fbecf11ca75c_82.png)
+
+![](img/ab43e980e58650597cd3fbecf11ca75c_84.png)
+
+```python
+# 1. 打开文件。
+f = open("/content/Moby Dick.txt", "r")
+# 2. 按行读取文件，得到一个列表。
+lines = f.readlines()
 # 3. 使用循环遍历每一行。
 for i in range(len(lines)):
     # 4. 如果索引是1（即第二行），则跳过。
@@ -164,11 +169,6 @@ for i in range(len(lines)):
         continue
     # 5. 打印其他行。
     print(lines[i])
-
-![](img/ab43e980e58650597cd3fbecf11ca75c_82.png)
-
-![](img/ab43e980e58650597cd3fbecf11ca75c_84.png)
-
 # 6. 关闭文件连接。
 f.close()
 ```
@@ -203,31 +203,21 @@ f.close()
 
 ![](img/ab43e980e58650597cd3fbecf11ca75c_99.png)
 
-```python
-# 1. 打开并读取文件。
-f = open("/content/Moby Dick.txt", "r")
-file_text = f.read()
 
 ![](img/ab43e980e58650597cd3fbecf11ca75c_101.png)
 
 ![](img/ab43e980e58650597cd3fbecf11ca75c_103.png)
 
-# 2. 将文本按空格分割成单词列表。
-words = file_text.split()
 
 ![](img/ab43e980e58650597cd3fbecf11ca75c_105.png)
 
 ![](img/ab43e980e58650597cd3fbecf11ca75c_107.png)
 
-# 3. 初始化计数器。
-count = 0
 
 ![](img/ab43e980e58650597cd3fbecf11ca75c_109.png)
 
 ![](img/ab43e980e58650597cd3fbecf11ca75c_111.png)
 
-# 4. 请求用户输入要查找的单词。
-target_word = input("Please enter the word you would like to count: ")
 
 ![](img/ab43e980e58650597cd3fbecf11ca75c_113.png)
 
@@ -235,17 +225,11 @@ target_word = input("Please enter the word you would like to count: ")
 
 ![](img/ab43e980e58650597cd3fbecf11ca75c_116.png)
 
-# 5. 遍历单词列表进行统计。
-for word in words:
-    if word == target_word:
-        count = count + 1
 
 ![](img/ab43e980e58650597cd3fbecf11ca75c_118.png)
 
 ![](img/ab43e980e58650597cd3fbecf11ca75c_120.png)
 
-# 6. 输出统计结果。
-print(f"You have {count} occurrences of the word '{target_word}'.")
 
 ![](img/ab43e980e58650597cd3fbecf11ca75c_122.png)
 
@@ -253,6 +237,22 @@ print(f"You have {count} occurrences of the word '{target_word}'.")
 
 ![](img/ab43e980e58650597cd3fbecf11ca75c_124.png)
 
+```python
+# 1. 打开并读取文件。
+f = open("/content/Moby Dick.txt", "r")
+file_text = f.read()
+# 2. 将文本按空格分割成单词列表。
+words = file_text.split()
+# 3. 初始化计数器。
+count = 0
+# 4. 请求用户输入要查找的单词。
+target_word = input("Please enter the word you would like to count: ")
+# 5. 遍历单词列表进行统计。
+for word in words:
+    if word == target_word:
+        count = count + 1
+# 6. 输出统计结果。
+print(f"You have {count} occurrences of the word '{target_word}'.")
 # 7. 关闭文件。
 f.close()
 ```

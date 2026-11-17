@@ -183,6 +183,9 @@ for model in models:
 
 ![](img/1f13c5381a687bb7f0ec0f29820f4097_6.png)
 
+
+![](img/1f13c5381a687bb7f0ec0f29820f4097_8.png)
+
 ```python
 # download_model.py
 import os
@@ -191,9 +194,6 @@ import mlflow
 # 设置Databricks追踪URI和令牌
 os.environ['DATABRICKS_HOST'] = 'https://your-workspace.cloud.databricks.com'
 os.environ['DATABRICKS_TOKEN'] = 'your-personal-access-token'
-
-![](img/1f13c5381a687bb7f0ec0f29820f4097_8.png)
-
 model_name = "text-only-fake-news"
 model_version = "1" # 或 "latest"
 
@@ -205,6 +205,9 @@ print(f"Model downloaded to: {local_path}")
 
 ### 3. 构建FastAPI微服务
 下载模型后，我们创建一个简单的FastAPI应用来提供预测服务。
+
+
+![](img/1f13c5381a687bb7f0ec0f29820f4097_10.png)
 
 ```python
 # main.py
@@ -240,9 +243,6 @@ async def predict(request: PredictionRequest):
         return {"input_text": request.text, "prediction": result, "prediction_value": int(prediction[0])}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
-
-![](img/1f13c5381a687bb7f0ec0f29820f4097_10.png)
-
 @app.get("/")
 async def root():
     return {"message": "Fake News Prediction API is running. Go to /docs for interactive API documentation."}

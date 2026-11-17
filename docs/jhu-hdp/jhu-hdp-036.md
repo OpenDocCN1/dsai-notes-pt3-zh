@@ -66,6 +66,11 @@ Hadoop Java API中有一个名为`compression`的包，它定义了一个名为`
 
 让我们通过一个程序片段来理解。假设有一个名为`HDFSCompression.java`的程序，其中最重要的部分是处理输出流：
 
+
+![](img/46068e2e714d2d7b11f5c0f3a0df8c33_5.png)
+
+![](img/46068e2e714d2d7b11f5c0f3a0df8c33_7.png)
+
 ```java
 // ... 获取文件系统等前期代码
 FSDataOutputStream fsDataOutputStream = fs.create(outputPath); // 这是要写入压缩数据的输出流，但还不是压缩输出流
@@ -74,11 +79,6 @@ FSDataOutputStream fsDataOutputStream = fs.create(outputPath); // 这是要写�
 CompressionCodec codec = new GzipCodec();
 // 使用编解码器创建压缩输出流
 CompressionOutputStream compressedOutputStream = codec.createOutputStream(fsDataOutputStream);
-
-![](img/46068e2e714d2d7b11f5c0f3a0df8c33_5.png)
-
-![](img/46068e2e714d2d7b11f5c0f3a0df8c33_7.png)
-
 // 现在，使用IOUtils工具类复制数据
 IOUtils.copyBytes(fsDataInputStream, compressedOutputStream, conf);
 // ... 关闭流等后续代码

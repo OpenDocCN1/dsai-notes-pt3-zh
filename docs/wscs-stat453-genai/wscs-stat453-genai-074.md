@@ -29,13 +29,13 @@
 
 在PyTorch中，数据增强可以通过 `torchvision.transforms` 模块方便地实现。以下是一个为MNIST数据集定义训练时数据增强流程的示例：
 
-```python
-import torchvision.transforms as transforms
 
 ![](img/2226582f096640d251beb9915a5ab0bd_7.png)
 
 ![](img/2226582f096640d251beb9915a5ab0bd_8.png)
 
+```python
+import torchvision.transforms as transforms
 training_transforms = transforms.Compose([
     transforms.Resize((32, 32)),          # 1. 调整大小
     transforms.RandomCrop((28, 28)),      # 2. 随机裁剪

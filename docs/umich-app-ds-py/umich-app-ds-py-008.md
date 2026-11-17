@@ -23,16 +23,16 @@
 
 例如，对于句子 “Children shouldn’t drink a sugary drink before bed.”：
 
-```python
-import nltk
-sentence = "Children shouldn't drink a sugary drink before bed."
-tokens = nltk.word_tokenize(sentence)
-# tokens: ['Children', 'should', "n't", 'drink', 'a', 'sugary', 'drink', 'before', 'bed', '.']
 
 ![](img/5db6e720fbd92617abaf0be1a03cbd39_5.png)
 
 ![](img/5db6e720fbd92617abaf0be1a03cbd39_6.png)
 
+```python
+import nltk
+sentence = "Children shouldn't drink a sugary drink before bed."
+tokens = nltk.word_tokenize(sentence)
+# tokens: ['Children', 'should', "n't", 'drink', 'a', 'sugary', 'drink', 'before', 'bed', '.']
 pos_tags = nltk.pos_tag(tokens)
 # pos_tags: [('Children', 'NNS'), ('should', 'MD'), ("n't", 'RB'), ('drink', 'VB'), ('a', 'DT'), ('sugary', 'JJ'), ('drink', 'NN'), ('before', 'IN'), ('bed', 'NN'), ('.', '.')]
 ```

@@ -115,17 +115,11 @@ print(df.tail()) # 查看最后5行数据
 
 ![](img/5ca7be5140adcc9be61cf008e9bde772_67.png)
 
-```python
-# 构建特征矩阵X和标签向量y
-X = df[['x1', 'x2']].values
-y = df['y'].values
 
 ![](img/5ca7be5140adcc9be61cf008e9bde772_69.png)
 
 ![](img/5ca7be5140adcc9be61cf008e9bde772_71.png)
 
-X_tensor = torch.tensor(X, dtype=torch.float32)
-y_tensor = torch.tensor(y, dtype=torch.float32).view(-1, 1) # 确保y是列向量
 
 ![](img/5ca7be5140adcc9be61cf008e9bde772_73.png)
 
@@ -133,10 +127,6 @@ y_tensor = torch.tensor(y, dtype=torch.float32).view(-1, 1) # 确保y是列向�
 
 ![](img/5ca7be5140adcc9be61cf008e9bde772_77.png)
 
-# 生成随机索引以打乱数据
-indices = torch.randperm(len(X_tensor))
-X_shuffled = X_tensor[indices]
-y_shuffled = y_tensor[indices]
 
 ![](img/5ca7be5140adcc9be61cf008e9bde772_79.png)
 
@@ -148,17 +138,27 @@ y_shuffled = y_tensor[indices]
 
 ![](img/5ca7be5140adcc9be61cf008e9bde772_87.png)
 
+
+![](img/5ca7be5140adcc9be61cf008e9bde772_89.png)
+
+![](img/5ca7be5140adcc9be61cf008e9bde772_91.png)
+
+```python
+# 构建特征矩阵X和标签向量y
+X = df[['x1', 'x2']].values
+y = df['y'].values
+X_tensor = torch.tensor(X, dtype=torch.float32)
+y_tensor = torch.tensor(y, dtype=torch.float32).view(-1, 1) # 确保y是列向量
+# 生成随机索引以打乱数据
+indices = torch.randperm(len(X_tensor))
+X_shuffled = X_tensor[indices]
+y_shuffled = y_tensor[indices]
 # 按7:3比例划分训练集和测试集
 train_size = int(0.7 * len(X_shuffled))
 X_train = X_shuffled[:train_size]
 y_train = y_shuffled[:train_size]
 X_test = X_shuffled[train_size:]
 y_test = y_shuffled[train_size:]
-
-![](img/5ca7be5140adcc9be61cf008e9bde772_89.png)
-
-![](img/5ca7be5140adcc9be61cf008e9bde772_91.png)
-
 # 标准化特征（零均值，单位方差）
 X_mean = X_train.mean(dim=0)
 X_std = X_train.std(dim=0)
@@ -282,6 +282,24 @@ class LinearRegressionGD:
 
 ![](img/5ca7be5140adcc9be61cf008e9bde772_150.png)
 
+
+![](img/5ca7be5140adcc9be61cf008e9bde772_152.png)
+
+![](img/5ca7be5140adcc9be61cf008e9bde772_154.png)
+
+![](img/5ca7be5140adcc9be61cf008e9bde772_156.png)
+
+![](img/5ca7be5140adcc9be61cf008e9bde772_158.png)
+
+
+![](img/5ca7be5140adcc9be61cf008e9bde772_160.png)
+
+![](img/5ca7be5140adcc9be61cf008e9bde772_161.png)
+
+![](img/5ca7be5140adcc9be61cf008e9bde772_162.png)
+
+![](img/5ca7be5140adcc9be61cf008e9bde772_163.png)
+
 ```python
 def train(model, X_train, y_train, epochs=100, learning_rate=0.01):
     cost_history = []
@@ -305,27 +323,9 @@ def train(model, X_train, y_train, epochs=100, learning_rate=0.01):
             print(f'Epoch {epoch+1:3d}/{epochs} | Loss: {loss.item():.2f}')
 
     return cost_history
-
-![](img/5ca7be5140adcc9be61cf008e9bde772_152.png)
-
-![](img/5ca7be5140adcc9be61cf008e9bde772_154.png)
-
-![](img/5ca7be5140adcc9be61cf008e9bde772_156.png)
-
-![](img/5ca7be5140adcc9be61cf008e9bde772_158.png)
-
 # 实例化并训练模型
 model = LinearRegressionGD(num_features=2)
 cost_history = train(model, X_train, y_train, epochs=100, learning_rate=0.1)
-
-![](img/5ca7be5140adcc9be61cf008e9bde772_160.png)
-
-![](img/5ca7be5140adcc9be61cf008e9bde772_161.png)
-
-![](img/5ca7be5140adcc9be61cf008e9bde772_162.png)
-
-![](img/5ca7be5140adcc9be61cf008e9bde772_163.png)
-
 # 绘制损失下降曲线
 plt.plot(cost_history)
 plt.xlabel('Epoch')
@@ -374,11 +374,6 @@ plt.show()
 
 ![](img/5ca7be5140adcc9be61cf008e9bde772_190.png)
 
-```python
-def evaluate_mse(model, X, y):
-    y_pred = model.forward(X)
-    mse = torch.mean((y.view(-1) - y_pred) ** 2)
-    return mse.item()
 
 ![](img/5ca7be5140adcc9be61cf008e9bde772_192.png)
 
@@ -392,10 +387,6 @@ def evaluate_mse(model, X, y):
 
 ![](img/5ca7be5140adcc9be61cf008e9bde772_201.png)
 
-train_mse = evaluate_mse(model, X_train, y_train)
-test_mse = evaluate_mse(model, X_test, y_test)
-print(f'Training MSE: {train_mse:.2f}')
-print(f'Test MSE: {test_mse:.2f}')
 
 ![](img/5ca7be5140adcc9be61cf008e9bde772_203.png)
 
@@ -403,6 +394,15 @@ print(f'Test MSE: {test_mse:.2f}')
 
 ![](img/5ca7be5140adcc9be61cf008e9bde772_206.png)
 
+```python
+def evaluate_mse(model, X, y):
+    y_pred = model.forward(X)
+    mse = torch.mean((y.view(-1) - y_pred) ** 2)
+    return mse.item()
+train_mse = evaluate_mse(model, X_train, y_train)
+test_mse = evaluate_mse(model, X_test, y_test)
+print(f'Training MSE: {train_mse:.2f}')
+print(f'Test MSE: {test_mse:.2f}')
 # 打印模型学到的参数
 print(f'Model weights: {model.weights.view(-1).tolist()}')
 print(f'Model bias: {model.bias.item()}')
@@ -430,13 +430,6 @@ print(f'Model bias: {model.bias.item()}')
 
 ![](img/5ca7be5140adcc9be61cf008e9bde772_221.png)
 
-```python
-# 计算解析解
-X_train_np = X_train.numpy()
-y_train_np = y_train.numpy().reshape(-1, 1)
-# 为X添加一列1，用于计算偏置项
-X_b = np.c_[np.ones((X_train_np.shape[0], 1)), X_train_np]
-weights_analytic = np.linalg.inv(X_b.T.dot(X_b)).dot(X_b.T).dot(y_train_np)
 
 ![](img/5ca7be5140adcc9be61cf008e9bde772_223.png)
 
@@ -444,6 +437,13 @@ weights_analytic = np.linalg.inv(X_b.T.dot(X_b)).dot(X_b.T).dot(y_train_np)
 
 ![](img/5ca7be5140adcc9be61cf008e9bde772_227.png)
 
+```python
+# 计算解析解
+X_train_np = X_train.numpy()
+y_train_np = y_train.numpy().reshape(-1, 1)
+# 为X添加一列1，用于计算偏置项
+X_b = np.c_[np.ones((X_train_np.shape[0], 1)), X_train_np]
+weights_analytic = np.linalg.inv(X_b.T.dot(X_b)).dot(X_b.T).dot(y_train_np)
 print(f'Analytic solution weights: {weights_analytic[1:].flatten()}')
 print(f'Analytic solution bias: {weights_analytic[0].item()}')
 ```
@@ -494,12 +494,6 @@ print(f'Analytic solution bias: {weights_analytic[0].item()}')
 
 ![](img/5ca7be5140adcc9be61cf008e9bde772_260.png)
 
-```python
-# 数据准备（使用二分类鸢尾花数据）
-from sklearn.datasets import load_iris
-iris = load_iris()
-X = iris.data[50:150, :2]  # 只取前两维特征和中间两类
-y = iris.target[50:150] - 1 # 将标签转换为0和1
 
 ![](img/5ca7be5140adcc9be61cf008e9bde772_262.png)
 
@@ -513,6 +507,12 @@ y = iris.target[50:150] - 1 # 将标签转换为0和1
 
 ![](img/5ca7be5140adcc9be61cf008e9bde772_272.png)
 
+```python
+# 数据准备（使用二分类鸢尾花数据）
+from sklearn.datasets import load_iris
+iris = load_iris()
+X = iris.data[50:150, :2]  # 只取前两维特征和中间两类
+y = iris.target[50:150] - 1 # 将标签转换为0和1
 # ... (数据转换为张量、划分、标准化的步骤与之前类似)
 ```
 
@@ -612,13 +612,6 @@ Adaline训练完成后，我们需要使用阈值函数将其连续输出转换�
 
 ![](img/5ca7be5140adcc9be61cf008e9bde772_314.png)
 
-```python
-def predict_class(model, X, threshold=0.5):
-    # 获取连续预测值
-    y_pred = model.forward(X)
-    # 应用阈值函数
-    class_labels = torch.where(y_pred > threshold, torch.ones_like(y_pred), torch.zeros_like(y_pred))
-    return class_labels
 
 ![](img/5ca7be5140adcc9be61cf008e9bde772_316.png)
 
@@ -630,34 +623,41 @@ def predict_class(model, X, threshold=0.5):
 
 ![](img/5ca7be5140adcc9be61cf008e9bde772_322.png)
 
-def accuracy(y_true, y_pred):
-    # 计算预测准确的百分比
-    correct = (y_true.view(-1) == y_pred).float()
-    return correct.mean().item()
 
 ![](img/5ca7be5140adcc9be61cf008e9bde772_324.png)
 
-# 训练模型
-adaline_model = LinearRegressionGD(num_features=2) # 使用相同的模型类
-cost_history_sgd = train_sgd(adaline_model, X_train, y_train, epochs=100, learning_rate=0.01)
 
 ![](img/5ca7be5140adcc9be61cf008e9bde772_326.png)
 
-# 预测并计算准确率
-y_train_pred = predict_class(adaline_model, X_train)
-y_test_pred = predict_class(adaline_model, X_test)
 
 ![](img/5ca7be5140adcc9be61cf008e9bde772_328.png)
 
 ![](img/5ca7be5140adcc9be61cf008e9bde772_330.png)
 
-train_acc = accuracy(y_train, y_train_pred)
-test_acc = accuracy(y_test, y_test_pred)
 
 ![](img/5ca7be5140adcc9be61cf008e9bde772_332.png)
 
 ![](img/5ca7be5140adcc9be61cf008e9bde772_334.png)
 
+```python
+def predict_class(model, X, threshold=0.5):
+    # 获取连续预测值
+    y_pred = model.forward(X)
+    # 应用阈值函数
+    class_labels = torch.where(y_pred > threshold, torch.ones_like(y_pred), torch.zeros_like(y_pred))
+    return class_labels
+def accuracy(y_true, y_pred):
+    # 计算预测准确的百分比
+    correct = (y_true.view(-1) == y_pred).float()
+    return correct.mean().item()
+# 训练模型
+adaline_model = LinearRegressionGD(num_features=2) # 使用相同的模型类
+cost_history_sgd = train_sgd(adaline_model, X_train, y_train, epochs=100, learning_rate=0.01)
+# 预测并计算准确率
+y_train_pred = predict_class(adaline_model, X_train)
+y_test_pred = predict_class(adaline_model, X_test)
+train_acc = accuracy(y_train, y_train_pred)
+test_acc = accuracy(y_test, y_test_pred)
 print(f'Training Accuracy: {train_acc * 100:.1f}%')
 print(f'Test Accuracy: {test_acc * 100:.1f}%')
 ```

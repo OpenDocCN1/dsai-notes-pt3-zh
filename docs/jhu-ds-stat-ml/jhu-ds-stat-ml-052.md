@@ -54,6 +54,12 @@
 1.  加载必要的R包和数据。
 2.  使用`ggplot2`创建散点图并添加回归线。
 
+
+![](img/79138de84ba6cadde4dd08db2956f744_12.png)
+
+
+![](img/79138de84ba6cadde4dd08db2956f744_14.png)
+
 ```r
 # 加载UsingR包和钻石数据集
 library(UsingR)
@@ -61,16 +67,10 @@ data(diamond)
 
 # 加载ggplot2用于绘图
 library(ggplot2)
-
-![](img/79138de84ba6cadde4dd08db2956f744_12.png)
-
 # 创建散点图基础图层
 g <- ggplot(data = diamond, aes(x = carat, y = price)) +
   xlab("Mass (carats)") +
   ylab("Price (Singapore dollars)")
-
-![](img/79138de84ba6cadde4dd08db2956f744_14.png)
-
 # 添加数据点
 g <- g + geom_point(colour = "black", alpha = 0.2)
 

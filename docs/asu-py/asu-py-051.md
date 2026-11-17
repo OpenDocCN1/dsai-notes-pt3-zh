@@ -44,6 +44,9 @@
 
 ![](img/41c529273c67e4074b899759efc41124_14.png)
 
+
+![](img/41c529273c67e4074b899759efc41124_16.png)
+
 ```python
 import turtle
 
@@ -51,9 +54,6 @@ import turtle
 t = turtle.Turtle()
 # 前进 200 像素
 t.forward(200)
-
-![](img/41c529273c67e4074b899759efc41124_16.png)
-
 # 保持窗口打开
 turtle.done()
 ```
@@ -68,19 +68,11 @@ turtle.done()
 
 以下是绘制一个边长为 100 像素的正方形的代码：
 
-```python
-import turtle
-
-t = turtle.Turtle()
-t.pensize(4)  # 设置画笔粗细
 
 ![](img/41c529273c67e4074b899759efc41124_20.png)
 
 ![](img/41c529273c67e4074b899759efc41124_21.png)
 
-for _ in range(4):
-    t.forward(100)
-    t.left(90)  # 左转 90 度
 
 ![](img/41c529273c67e4074b899759efc41124_22.png)
 
@@ -88,6 +80,14 @@ for _ in range(4):
 
 ![](img/41c529273c67e4074b899759efc41124_24.png)
 
+```python
+import turtle
+
+t = turtle.Turtle()
+t.pensize(4)  # 设置画笔粗细
+for _ in range(4):
+    t.forward(100)
+    t.left(90)  # 左转 90 度
 turtle.done()
 ```
 
@@ -101,13 +101,13 @@ turtle.done()
 
 ![](img/41c529273c67e4074b899759efc41124_28.png)
 
-```python
-import turtle
 
 ![](img/41c529273c67e4074b899759efc41124_30.png)
 
 ![](img/41c529273c67e4074b899759efc41124_32.png)
 
+```python
+import turtle
 t = turtle.Turtle()
 t.pensize(4)
 t.color("red", "yellow")  # 设置边框色和填充色
@@ -170,15 +170,15 @@ turtle.done()
 
 ![](img/41c529273c67e4074b899759efc41124_41.png)
 
+
+![](img/41c529273c67e4074b899759efc41124_43.png)
+
 ```python
 import turtle
 
 t = turtle.Turtle()
 t.speed(0)  # 设置最快绘制速度
 t.pensize(2)
-
-![](img/41c529273c67e4074b899759efc41124_43.png)
-
 for i in range(18):
     # 绘制一个正方形
     for _ in range(4):

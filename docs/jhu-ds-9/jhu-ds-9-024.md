@@ -14,6 +14,9 @@
 
 以下是一个简单的代码示例，它使用钻石数据集创建了一个基础的ggplot散点图：
 
+
+![](img/edceeed8475328722c0c7ba559645382_2.png)
+
 ```r
 # 加载必要的库
 library(ggplot2)
@@ -22,9 +25,6 @@ library(plotly)
 # 使用ggplot2创建散点图
 p <- ggplot(diamonds, aes(x = carat, y = price)) +
   geom_point()
-
-![](img/edceeed8475328722c0c7ba559645382_2.png)
-
 # 显示静态的ggplot图形
 print(p)
 ```

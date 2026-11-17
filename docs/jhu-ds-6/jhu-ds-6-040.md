@@ -198,16 +198,16 @@ observed_stat <- mean(y[group == "B"]) - mean(y[group == "C"])
 
 ![](img/7ecd1e1f172ac4d9773aa2dfb595acc7_98.png)
 
-```r
-# 设置置换次数
-n_perm <- 10000
-# 初始化一个向量来存储每次置换的统计量
-perm_stats <- numeric(n_perm)
 
 ![](img/7ecd1e1f172ac4d9773aa2dfb595acc7_100.png)
 
 ![](img/7ecd1e1f172ac4d9773aa2dfb595acc7_101.png)
 
+```r
+# 设置置换次数
+n_perm <- 10000
+# 初始化一个向量来存储每次置换的统计量
+perm_stats <- numeric(n_perm)
 # 进行置换
 for(i in 1:n_perm) {
   # 随机打乱组别标签
@@ -231,15 +231,15 @@ for(i in 1:n_perm) {
 
 ![](img/7ecd1e1f172ac4d9773aa2dfb595acc7_110.png)
 
-```r
-# 计算P值：置换统计量中，绝对值大于等于观察统计量绝对值的比例
-# (此处假设备择假设为“均值不相等”，即双尾检验)
-p_value <- mean(abs(perm_stats) >= abs(observed_stat))
 
 ![](img/7ecd1e1f172ac4d9773aa2dfb595acc7_111.png)
 
 ![](img/7ecd1e1f172ac4d9773aa2dfb595acc7_113.png)
 
+```r
+# 计算P值：置换统计量中，绝对值大于等于观察统计量绝对值的比例
+# (此处假设备择假设为“均值不相等”，即双尾检验)
+p_value <- mean(abs(perm_stats) >= abs(observed_stat))
 # 绘制置换分布直方图
 hist(perm_stats, main = "Permutation Null Distribution", xlab = "Difference in Means (B - C)")
 # 在图上添加观察到的统计量位置

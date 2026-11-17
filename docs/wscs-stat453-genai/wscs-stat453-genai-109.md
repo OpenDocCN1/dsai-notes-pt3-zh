@@ -125,13 +125,13 @@ test_transform = transforms.Compose([
 
 ![](img/eafc166425d5eda00acc7c3a2db181bf_67.png)
 
-```python
-import torch.nn as nn
 
 ![](img/eafc166425d5eda00acc7c3a2db181bf_69.png)
 
 ![](img/eafc166425d5eda00acc7c3a2db181bf_70.png)
 
+```python
+import torch.nn as nn
 class AlexNet(nn.Module):
     def __init__(self, num_classes=10):
         super(AlexNet, self).__init__()

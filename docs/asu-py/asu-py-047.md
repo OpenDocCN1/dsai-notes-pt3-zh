@@ -82,11 +82,11 @@ root.mainloop()
 
 ![](img/febc0c28696b1d082df0a6f5d2dc1b17_7.png)
 
-```python
-from tkinter import *
 
 ![](img/febc0c28696b1d082df0a6f5d2dc1b17_9.png)
 
+```python
+from tkinter import *
 def welcome_message():
     print('Welcome to Python')
 
@@ -276,6 +276,9 @@ root.mainloop()
 
 以下是创建简单菜单栏的代码：
 
+
+![](img/febc0c28696b1d082df0a6f5d2dc1b17_17.png)
+
 ```python
 from tkinter import *
 
@@ -302,9 +305,6 @@ file_menu.add_command(label='Exit', command=root.quit)
 help_menu = Menu(menubar, tearoff=0)
 menubar.add_cascade(label='Help', menu=help_menu)
 help_menu.add_command(label='About', command=do_nothing)
-
-![](img/febc0c28696b1d082df0a6f5d2dc1b17_17.png)
-
 root.mainloop()
 ```
 
@@ -364,6 +364,9 @@ root.mainloop()
 
 以下代码演示了如何绑定并响应不同的鼠标事件：
 
+
+![](img/febc0c28696b1d082df0a6f5d2dc1b17_21.png)
+
 ```python
 from tkinter import *
 
@@ -375,9 +378,6 @@ def button_released(event):
 
 def entered_window(event):
     status.set('Mouse entered the window')
-
-![](img/febc0c28696b1d082df0a6f5d2dc1b17_21.png)
-
 def exited_window(event):
     status.set('Mouse exited the window')
 

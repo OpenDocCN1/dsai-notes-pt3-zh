@@ -59,9 +59,6 @@ mnist_train.csv
 
 ![](img/363ca9888bed55788c258cb6b3103f4e_30.png)
 
-```python
-from PIL import Image
-import matplotlib.pyplot as plt
 
 ![](img/363ca9888bed55788c258cb6b3103f4e_32.png)
 
@@ -69,15 +66,18 @@ import matplotlib.pyplot as plt
 
 ![](img/363ca9888bed55788c258cb6b3103f4e_35.png)
 
-# 打开一张图像
-img = Image.open('mnist_train/0.png')
-print(f'图像尺寸: {img.size}')  # 输出: (28, 28)
-print(f'图像模式: {img.mode}')  # 输出: L (灰度图)
 
 ![](img/363ca9888bed55788c258cb6b3103f4e_37.png)
 
 ![](img/363ca9888bed55788c258cb6b3103f4e_38.png)
 
+```python
+from PIL import Image
+import matplotlib.pyplot as plt
+# 打开一张图像
+img = Image.open('mnist_train/0.png')
+print(f'图像尺寸: {img.size}')  # 输出: (28, 28)
+print(f'图像模式: {img.mode}')  # 输出: L (灰度图)
 # 显示图像
 plt.imshow(img, cmap='binary')
 plt.show()
@@ -91,8 +91,6 @@ plt.show()
 
 ![](img/363ca9888bed55788c258cb6b3103f4e_42.png)
 
-```python
-import pandas as pd
 
 ![](img/363ca9888bed55788c258cb6b3103f4e_44.png)
 
@@ -102,6 +100,8 @@ import pandas as pd
 
 ![](img/363ca9888bed55788c258cb6b3103f4e_49.png)
 
+```python
+import pandas as pd
 # 加载 CSV 文件
 df_train = pd.read_csv('mnist_train.csv')
 print(df_train.head())
@@ -139,10 +139,6 @@ PyTorch 的数据加载需要两个核心部分：`Dataset` 和 `DataLoader`。`
 
 ![](img/363ca9888bed55788c258cb6b3103f4e_73.png)
 
-```python
-import torch
-from torch.utils.data import Dataset
-from PIL import Image
 
 ![](img/363ca9888bed55788c258cb6b3103f4e_75.png)
 
@@ -156,6 +152,10 @@ from PIL import Image
 
 ![](img/363ca9888bed55788c258cb6b3103f4e_84.png)
 
+```python
+import torch
+from torch.utils.data import Dataset
+from PIL import Image
 class MyDataset(Dataset):
     def __init__(self, csv_path, img_dir, transform=None):
         """
@@ -218,22 +218,22 @@ class MyDataset(Dataset):
 
 创建好 `Dataset` 后，我们就可以用它来实例化 `DataLoader`。在将图像输入神经网络之前，通常需要进行一些预处理，例如转换为张量（Tensor）和归一化。我们可以使用 `torchvision.transforms` 来定义这些变换。
 
-```python
-from torchvision import transforms
 
 ![](img/363ca9888bed55788c258cb6b3103f4e_102.png)
 
 ![](img/363ca9888bed55788c258cb6b3103f4e_104.png)
 
-# 定义一个简单的变换：将图像转换为张量（同时自动除以255进行归一化）
-transform = transforms.Compose([
-    transforms.ToTensor()
-])
 
 ![](img/363ca9888bed55788c258cb6b3103f4e_105.png)
 
 ![](img/363ca9888bed55788c258cb6b3103f4e_106.png)
 
+```python
+from torchvision import transforms
+# 定义一个简单的变换：将图像转换为张量（同时自动除以255进行归一化）
+transform = transforms.Compose([
+    transforms.ToTensor()
+])
 # 创建训练、验证和测试数据集实例
 train_dataset = MyDataset(csv_path='mnist_train.csv',
                           img_dir='mnist_train',
@@ -250,18 +250,9 @@ test_dataset = MyDataset(csv_path='mnist_test.csv',
 
 现在，我们可以使用这些数据集来创建 `DataLoader`。
 
-```python
-from torch.utils.data import DataLoader
 
 ![](img/363ca9888bed55788c258cb6b3103f4e_108.png)
 
-BATCH_SIZE = 32
-
-train_loader = DataLoader(dataset=train_dataset,
-                          batch_size=BATCH_SIZE,
-                          shuffle=True,
-                          num_workers=0,  # 对于MNIST这样的小数据集，设为0以避免潜在问题
-                          drop_last=True)
 
 ![](img/363ca9888bed55788c258cb6b3103f4e_110.png)
 
@@ -271,10 +262,6 @@ train_loader = DataLoader(dataset=train_dataset,
 
 ![](img/363ca9888bed55788c258cb6b3103f4e_114.png)
 
-val_loader = DataLoader(dataset=val_dataset,
-                        batch_size=BATCH_SIZE,
-                        shuffle=False,
-                        num_workers=0)
 
 ![](img/363ca9888bed55788c258cb6b3103f4e_116.png)
 
@@ -284,6 +271,19 @@ val_loader = DataLoader(dataset=val_dataset,
 
 ![](img/363ca9888bed55788c258cb6b3103f4e_122.png)
 
+```python
+from torch.utils.data import DataLoader
+BATCH_SIZE = 32
+
+train_loader = DataLoader(dataset=train_dataset,
+                          batch_size=BATCH_SIZE,
+                          shuffle=True,
+                          num_workers=0,  # 对于MNIST这样的小数据集，设为0以避免潜在问题
+                          drop_last=True)
+val_loader = DataLoader(dataset=val_dataset,
+                        batch_size=BATCH_SIZE,
+                        shuffle=False,
+                        num_workers=0)
 test_loader = DataLoader(dataset=test_dataset,
                          batch_size=BATCH_SIZE,
                          shuffle=False,
@@ -378,13 +378,13 @@ print(f'一个批次的标签形状: {targets.shape}')    # 输出: torch.Size([
 
 ![](img/363ca9888bed55788c258cb6b3103f4e_171.png)
 
-```python
-import torch.nn as nn
 
 ![](img/363ca9888bed55788c258cb6b3103f4e_173.png)
 
 ![](img/363ca9888bed55788c258cb6b3103f4e_175.png)
 
+```python
+import torch.nn as nn
 class MultilayerPerceptron(nn.Module):
     def __init__(self, num_features, num_hidden, num_classes):
         super().__init__()
@@ -415,18 +415,9 @@ class MultilayerPerceptron(nn.Module):
 
 ![](img/363ca9888bed55788c258cb6b3103f4e_185.png)
 
-```python
-import torch.optim as optim
-from helper_train import train_model # 假设训练循环封装在 helper_train.py 中
-from helper_evaluate import compute_accuracy # 假设准确率计算封装在 helper_evaluate.py 中
 
 ![](img/363ca9888bed55788c258cb6b3103f4e_187.png)
 
-# 超参数设置
-RANDOM_SEED = 123
-BATCH_SIZE = 32
-NUM_EPOCHS = 10
-LEARNING_RATE = 0.1
 
 ![](img/363ca9888bed55788c258cb6b3103f4e_189.png)
 
@@ -434,16 +425,9 @@ LEARNING_RATE = 0.1
 
 ![](img/363ca9888bed55788c258cb6b3103f4e_193.png)
 
-# 设置随机种子以保证结果可复现
-torch.manual_seed(RANDOM_SEED)
 
 ![](img/363ca9888bed55788c258cb6b3103f4e_195.png)
 
-# 初始化模型、损失函数和优化器
-model = MultilayerPerceptron(num_features=28*28, num_hidden=100, num_classes=10)
-model = model.to(device)
-optimizer = optim.SGD(model.parameters(), lr=LEARNING_RATE)
-criterion = nn.CrossEntropyLoss()
 
 ![](img/363ca9888bed55788c258cb6b3103f4e_197.png)
 
@@ -453,6 +437,22 @@ criterion = nn.CrossEntropyLoss()
 
 ![](img/363ca9888bed55788c258cb6b3103f4e_202.png)
 
+```python
+import torch.optim as optim
+from helper_train import train_model # 假设训练循环封装在 helper_train.py 中
+from helper_evaluate import compute_accuracy # 假设准确率计算封装在 helper_evaluate.py 中
+# 超参数设置
+RANDOM_SEED = 123
+BATCH_SIZE = 32
+NUM_EPOCHS = 10
+LEARNING_RATE = 0.1
+# 设置随机种子以保证结果可复现
+torch.manual_seed(RANDOM_SEED)
+# 初始化模型、损失函数和优化器
+model = MultilayerPerceptron(num_features=28*28, num_hidden=100, num_classes=10)
+model = model.to(device)
+optimizer = optim.SGD(model.parameters(), lr=LEARNING_RATE)
+criterion = nn.CrossEntropyLoss()
 # 开始训练
 train_losses, val_losses, train_accs, val_accs = train_model(
     model=model,
@@ -482,8 +482,6 @@ train_losses, val_losses, train_accs, val_accs = train_model(
 
 ![](img/363ca9888bed55788c258cb6b3103f4e_214.png)
 
-```python
-from helper_plotting import plot_training_loss, plot_accuracy
 
 ![](img/363ca9888bed55788c258cb6b3103f4e_216.png)
 
@@ -493,6 +491,8 @@ from helper_plotting import plot_training_loss, plot_accuracy
 
 ![](img/363ca9888bed55788c258cb6b3103f4e_221.png)
 
+```python
+from helper_plotting import plot_training_loss, plot_accuracy
 plot_training_loss(train_losses, val_losses)
 plot_accuracy(train_accs, val_accs)
 ```
@@ -507,8 +507,6 @@ plot_accuracy(train_accs, val_accs)
 
 ![](img/363ca9888bed55788c258cb6b3103f4e_229.png)
 
-```python
-from helper_plotting import show_examples
 
 ![](img/363ca9888bed55788c258cb6b3103f4e_231.png)
 
@@ -518,6 +516,8 @@ from helper_plotting import show_examples
 
 ![](img/363ca9888bed55788c258cb6b3103f4e_235.png)
 
+```python
+from helper_plotting import show_examples
 show_examples(model, test_loader, device)
 ```
 该函数会显示一批测试图像，并在每张图下方标注模型的预测结果（P）和真实标签（T）。

@@ -40,19 +40,19 @@
 
 ![](img/67de3d55d7e82eff355ac3da2c771807_15.png)
 
-```r
-library(caret)
-data(spam)
 
 ![](img/67de3d55d7e82eff355ac3da2c771807_16.png)
 
 ![](img/67de3d55d7e82eff355ac3da2c771807_17.png)
 
-# 基于结果变量 type 进行划分，75% 数据用于训练，25% 用于测试
-intrain <- createDataPartition(y = spam$type, p = 0.75, list = FALSE)
 
 ![](img/67de3d55d7e82eff355ac3da2c771807_19.png)
 
+```r
+library(caret)
+data(spam)
+# 基于结果变量 type 进行划分，75% 数据用于训练，25% 用于测试
+intrain <- createDataPartition(y = spam$type, p = 0.75, list = FALSE)
 # 创建训练集和测试集
 training <- spam[intrain, ]
 testing <- spam[-intrain, ]
@@ -90,9 +90,6 @@ testing <- spam[-intrain, ]
 
 ![](img/67de3d55d7e82eff355ac3da2c771807_31.png)
 
-```r
-# 创建10折交叉验证的索引，以列表形式返回
-folds <- createFolds(y = spam$type, k = 10, list = TRUE, returnTrain = TRUE)
 
 ![](img/67de3d55d7e82eff355ac3da2c771807_33.png)
 
@@ -100,6 +97,9 @@ folds <- createFolds(y = spam$type, k = 10, list = TRUE, returnTrain = TRUE)
 
 ![](img/67de3d55d7e82eff355ac3da2c771807_35.png)
 
+```r
+# 创建10折交叉验证的索引，以列表形式返回
+folds <- createFolds(y = spam$type, k = 10, list = TRUE, returnTrain = TRUE)
 # 检查第一折的样本数量
 length(folds[[1]])
 ```

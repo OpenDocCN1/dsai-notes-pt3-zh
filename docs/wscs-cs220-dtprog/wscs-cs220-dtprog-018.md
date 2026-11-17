@@ -75,6 +75,9 @@ my_tuple = (200, 300, 400)
 ![](img/48fd548bbcb689acca24e4e314236c72_5.png)
 
 **与列表的对比**：
+
+![](img/48fd548bbcb689acca24e4e314236c72_7.png)
+
 ```python
 my_list = [200, 300, 400]
 my_tuple = (200, 300, 400)
@@ -82,9 +85,6 @@ my_tuple = (200, 300, 400)
 # 都可以通过索引访问
 x = my_list[1]   # x = 300
 y = my_tuple[1]  # y = 300
-
-![](img/48fd548bbcb689acca24e4e314236c72_7.png)
-
 # 列表可以修改
 my_list[0] = 99   # 成功，my_list 变为 [99, 300, 400]
 
@@ -169,6 +169,9 @@ print(alice.age)  # 输出：31
 
 由于多个引用可以指向同一个对象，Python 提供了 `is` 运算符来检查两个引用是否指向**内存中的同一个对象**。这与 `==` 运算符不同，`==` 检查的是两个对象的**值**是否相等。
 
+
+![](img/48fd548bbcb689acca24e4e314236c72_9.png)
+
 ```python
 list_a = [1, 2, 3]
 list_b = [1, 2, 3]  # 创建了一个值相同的新列表对象
@@ -178,9 +181,6 @@ print(list_a == list_b)  # True，值相等
 print(list_a is list_b)  # False，不是同一个对象
 
 print(list_a is list_c)  # True，指向同一个对象
-
-![](img/48fd548bbcb689acca24e4e314236c72_9.png)
-
 # 修改 list_a 会影响 list_c
 list_a.append(4)
 print(list_c)  # 输出：[1, 2, 3, 4]
@@ -200,12 +200,12 @@ if my_var is None:
 
 在Python中，函数参数的传递本质上是**传递引用**。这意味着，如果你向函数传递了一个可变对象（如列表），并在函数内部修改了它，那么这个修改会影响到函数外部的原始对象。
 
-```python
-def add_exclamation(items):
-    items.append(“!“)  # 这会修改传入的列表对象本身
 
 ![](img/48fd548bbcb689acca24e4e314236c72_11.png)
 
+```python
+def add_exclamation(items):
+    items.append(“!“)  # 这会修改传入的列表对象本身
 my_words = [“hello“, “world“]
 add_exclamation(my_words)
 print(my_words)  # 输出：[‘hello‘, ‘world‘, ‘!‘] 原始列表被改变了！

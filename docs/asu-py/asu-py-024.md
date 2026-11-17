@@ -176,23 +176,23 @@ print(random.randint(-7, 3))
 
 ![](img/a0955aa450094094ac09560f3cc61bcf_74.png)
 
+
+![](img/a0955aa450094094ac09560f3cc61bcf_76.png)
+
+
+![](img/a0955aa450094094ac09560f3cc61bcf_77.png)
+
+![](img/a0955aa450094094ac09560f3cc61bcf_78.png)
+
 ```python
 import random
 
 # 从列表中随机选取元素
 my_list = [11, 24, 23, 30]
 print("随机选取的列表元素:", random.choice(my_list))
-
-![](img/a0955aa450094094ac09560f3cc61bcf_76.png)
-
 # 从元组中随机选取元素
 my_tuple = (1.5, 2.7, 3.9, 4.2)
 print("随机选取的元组元素:", random.choice(my_tuple))
-
-![](img/a0955aa450094094ac09560f3cc61bcf_77.png)
-
-![](img/a0955aa450094094ac09560f3cc61bcf_78.png)
-
 # 从字符串中随机选取字符
 my_string = "Python"
 print("随机选取的字符:", random.choice(my_string))

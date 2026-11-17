@@ -14,12 +14,12 @@
 
 我们可以创建一个变量，让它指向一个函数。这类似于让一个变量指向一个列表。
 
-```python
-def say_hi():
-    return "hi"
 
 ![](img/4f3b3f0f5776bb4f233c8e51bcbd293a_1.png)
 
+```python
+def say_hi():
+    return "hi"
 F = say_hi  # 变量F现在引用了函数say_hi
 G = F       # 变量G也引用了同一个函数对象
 ```

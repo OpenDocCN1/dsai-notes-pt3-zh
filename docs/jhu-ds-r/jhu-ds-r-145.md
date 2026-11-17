@@ -48,6 +48,9 @@
 
 以下是在RStudio中调整缩进和查看边距的示例。
 
+
+![](img/d6a024415e30c848c84b73ae0d69d5b8_8.png)
+
 ```r
 # 初始代码：缩进为1个空格，难以阅读
 my_function <- function(x) {
@@ -57,9 +60,6 @@ print("Positive")
 print("Non-positive")
 }
 }
-
-![](img/d6a024415e30c848c84b73ae0d69d5b8_8.png)
-
 # 在RStudio中，通过“Preferences” -> “Code Editing”可以调整：
 # 1. 将“Tab width”设置为4或8（推荐至少4个空格）。
 # 2. 确保“Show margin”已勾选，并设置为80字符。

@@ -49,6 +49,9 @@
 
 现在，让我们开始动手操作。首先，我们需要导入必要的模块并连接到数据库文件。
 
+
+![](img/687f127ae8881642e80e63779312314a_5.png)
+
 ```python
 import sqlite3
 import pandas as pd
@@ -57,9 +60,6 @@ import os
 # 1. 确保数据库文件存在
 db_path = 'bus.db'
 assert os.path.exists(db_path), f"文件 {db_path} 不存在"
-
-![](img/687f127ae8881642e80e63779312314a_5.png)
-
 # 2. 创建数据库连接对象
 conn = sqlite3.connect(db_path)
 print(conn)  # 确认连接对象已创建

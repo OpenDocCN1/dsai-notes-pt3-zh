@@ -20,13 +20,13 @@
 
 ![](img/490c3579935204fb8f88e52548e70eb9_8.png)
 
+
+![](img/490c3579935204fb8f88e52548e70eb9_10.png)
+
 ```r
 # 加载所需包
 library(ggplot2)
 library(maps)
-
-![](img/490c3579935204fb8f88e52548e70eb9_10.png)
-
 # 创建日本空白地图
 japan_map <- map_data("world", region = "Japan")
 ggplot() +

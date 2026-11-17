@@ -43,6 +43,9 @@ for item in x:
 元组与列表的一个核心区别在于**不可变性**。这意味着一旦创建，元组的内容就无法被修改、添加或删除。字符串也具有同样的特性。
 
 **示例：列表是可变的，而元组和字符串不可变**
+
+![](img/0b5cf3e81e92b1566f4805dcebd917e7_7.png)
+
 ```python
 # 每个人的 Python 第二部分 列表是可变的
 my_list = [9, 8, 7]
@@ -51,9 +54,6 @@ my_list[2] = 6  # 成功，列表变为 [9, 8, 6]
 # 每个人的 Python 第二部分 字符串是不可变的
 my_str = 'abc'
 # 每个人的 Python 第二部分 my_str[2] = 'd'  # 这行代码会引发 TypeError
-
-![](img/0b5cf3e81e92b1566f4805dcebd917e7_7.png)
-
 # 每个人的 Python 第二部分 元组是不可变的
 my_tuple = (5, 4, 3)
 # 每个人的 Python 第二部分 my_tuple[2] = 0  # 这行代码会引发 TypeError

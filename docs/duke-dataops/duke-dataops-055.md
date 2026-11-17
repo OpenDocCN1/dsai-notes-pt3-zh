@@ -70,6 +70,11 @@ cargo new hello
 为了进一步提升开发体验，尤其是在使用多种语言时保持工作流一致，我们可以引入一个Makefile。
 
 以下是一个示例Makefile的内容，它定义了一些常用任务：
+
+![](img/ed4ac675204814f45db8a1d46b241d4d_9.png)
+
+![](img/ed4ac675204814f45db8a1d46b241d4d_10.png)
+
 ```makefile
 .PHONY: help format lint test run release
 help:
@@ -85,11 +90,6 @@ format:
 
 lint:
 	cargo clippy
-
-![](img/ed4ac675204814f45db8a1d46b241d4d_9.png)
-
-![](img/ed4ac675204814f45db8a1d46b241d4d_10.png)
-
 test:
 	cargo test
 

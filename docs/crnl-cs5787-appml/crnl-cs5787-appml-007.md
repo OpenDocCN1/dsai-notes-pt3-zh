@@ -73,14 +73,14 @@
     同样，我们希望最小化这个差值。
 
 **代码示例**：
+
+![](img/ba1d10f894103b5243dd5f5d9047ea27_20.png)
+
 ```python
 from sklearn.metrics import mean_squared_error, mean_absolute_error
 
 y_true = [3, -0.5, 2, 7]
 y_pred = [2.5, 0.0, 2, 8]
-
-![](img/ba1d10f894103b5243dd5f5d9047ea27_20.png)
-
 mse = mean_squared_error(y_true, y_pred)  # 输出：0.375
 mae = mean_absolute_error(y_true, y_pred) # 输出：0.5
 ```
@@ -99,13 +99,13 @@ mae = mean_absolute_error(y_true, y_pred) # 输出：0.5
 
 **代码示例**：
 在Scikit-learn库中，`LinearRegression` 类内部使用了一个优化算法（基于最小二乘法）来解决均方误差最小化问题。
-```python
-from sklearn.linear_model import LinearRegression
 
 ![](img/ba1d10f894103b5243dd5f5d9047ea27_28.png)
 
 ![](img/ba1d10f894103b5243dd5f5d9047ea27_30.png)
 
+```python
+from sklearn.linear_model import LinearRegression
 # 假设 X_train, y_train 是我们的训练数据
 model = LinearRegression()  # 定义模型类（线性模型）和优化器
 model.fit(X_train, y_train) # 执行优化，找到最优参数θ
@@ -118,16 +118,16 @@ model.fit(X_train, y_train) # 执行优化，找到最优参数θ
 
 现在，我们可以将这三个组件组合起来，在糖尿病数据集上运行一个完整的学习算法。
 
-```python
-# 1. 准备数据（模型类、目标函数和优化器的输入）
-X_train = ... # 训练集特征
-y_train = ... # 训练集目标值
-X_test = ...  # 测试集特征（新患者）
 
 ![](img/ba1d10f894103b5243dd5f5d9047ea27_34.png)
 
 ![](img/ba1d10f894103b5243dd5f5d9047ea27_35.png)
 
+```python
+# 1. 准备数据（模型类、目标函数和优化器的输入）
+X_train = ... # 训练集特征
+y_train = ... # 训练集目标值
+X_test = ...  # 测试集特征（新患者）
 # 2. 定义并运行学习算法（包含三大组件）
 from sklearn.linear_model import LinearRegression
 algorithm = LinearRegression() # 实例化算法（内含模型类、MSE目标、优化器）

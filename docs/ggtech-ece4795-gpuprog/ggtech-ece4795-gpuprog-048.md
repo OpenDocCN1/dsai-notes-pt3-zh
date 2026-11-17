@@ -97,11 +97,6 @@ GBufferOutput frag (Varyings input)
 
 以下是其核心逻辑：
 
-```hlsl
-// 声明G缓冲区纹理和深度纹理
-TEXTURE2D(_GBuffer0); SAMPLER(sampler_GBuffer0); // 反照率
-TEXTURE2D(_GBuffer1); SAMPLER(sampler_GBuffer1); // 法线
-TEXTURE2D_FLOAT(_CameraDepthTexture); SAMPLER(sampler_CameraDepthTexture); // 深度
 
 ![](img/f9d0e178c4cdc3794399473e1d60d236_14.png)
 
@@ -109,16 +104,24 @@ TEXTURE2D_FLOAT(_CameraDepthTexture); SAMPLER(sampler_CameraDepthTexture); // �
 
 ![](img/f9d0e178c4cdc3794399473e1d60d236_16.png)
 
-// 顶点着色器（绘制全屏四边形）
-float4 vert (float3 vertex : POSITION) : SV_POSITION
-{
-    return float4(vertex, 1.0);
-}
 
 ![](img/f9d0e178c4cdc3794399473e1d60d236_18.png)
 
 ![](img/f9d0e178c4cdc3794399473e1d60d236_19.png)
 
+
+![](img/f9d0e178c4cdc3794399473e1d60d236_21.png)
+
+```hlsl
+// 声明G缓冲区纹理和深度纹理
+TEXTURE2D(_GBuffer0); SAMPLER(sampler_GBuffer0); // 反照率
+TEXTURE2D(_GBuffer1); SAMPLER(sampler_GBuffer1); // 法线
+TEXTURE2D_FLOAT(_CameraDepthTexture); SAMPLER(sampler_CameraDepthTexture); // 深度
+// 顶点着色器（绘制全屏四边形）
+float4 vert (float3 vertex : POSITION) : SV_POSITION
+{
+    return float4(vertex, 1.0);
+}
 // 片段着色器
 float4 frag (float4 positionCS : SV_POSITION) : SV_Target
 {
@@ -148,9 +151,6 @@ float4 frag (float4 positionCS : SV_POSITION) : SV_Target
     // 5. 输出最终颜色
     return float4(diffuse * albedo, 1.0);
 }
-
-![](img/f9d0e178c4cdc3794399473e1d60d236_21.png)
-
 // 从深度值重建世界空间位置的函数
 float3 SampleDepthAsWorldPosition(float2 uv, float depth)
 {

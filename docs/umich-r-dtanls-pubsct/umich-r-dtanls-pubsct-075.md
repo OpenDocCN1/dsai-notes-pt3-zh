@@ -115,12 +115,12 @@ ggplot(non_boat_data, aes(x = factor(month, levels = 1:12), y = total_effort, fi
 2.  将`facet_wrap`改为`facet_grid`。
 3.  指定行方向为年份，列方向为模式。
 
-```r
-selected_years_data <- non_boat_data %>%
-  filter(year %in% c(2015, 2017, 2019))
 
 ![](img/88f5d39b314b9fadd54dbd12ce3fcfda_14.png)
 
+```r
+selected_years_data <- non_boat_data %>%
+  filter(year %in% c(2015, 2017, 2019))
 ggplot(selected_years_data, aes(x = factor(month, levels = 1:12), y = total_effort)) +
   geom_col() +
   facet_grid(rows = vars(year), cols = vars(mode)) +

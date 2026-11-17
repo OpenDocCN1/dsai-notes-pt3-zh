@@ -33,13 +33,13 @@
 5.  **分析结果**：利用这B个统计量的值来近似原统计量的抽样分布，进而计算标准误或置信区间。
 
 **核心代码逻辑**（伪代码）：
+
+![](img/a7d68bce22ecd6e7f8f88093ef2019e2_8.png)
+
 ```r
 B <- 10000 # 重抽样次数
 n <- length(原始数据)
 bootstrap_stats <- numeric(B) # 存储B个统计量结果
-
-![](img/a7d68bce22ecd6e7f8f88093ef2019e2_8.png)
-
 for (i in 1:B) {
   # 有放回地抽取n个观测值
   resample <- sample(原始数据, size = n, replace = TRUE)
@@ -70,25 +70,38 @@ for (i in 1:B) {
 
 ![](img/a7d68bce22ecd6e7f8f88093ef2019e2_13.png)
 
-```r
-# 假设 x 已包含儿子的身高数据，n = length(x)
-B <- 10000 # 设定自助法重抽样次数
 
 ![](img/a7d68bce22ecd6e7f8f88093ef2019e2_15.png)
 
 ![](img/a7d68bce22ecd6e7f8f88093ef2019e2_17.png)
 
+
+![](img/a7d68bce22ecd6e7f8f88093ef2019e2_19.png)
+
+![](img/a7d68bce22ecd6e7f8f88093ef2019e2_21.png)
+
+
+![](img/a7d68bce22ecd6e7f8f88093ef2019e2_23.png)
+
+![](img/a7d68bce22ecd6e7f8f88093ef2019e2_25.png)
+
+
+![](img/a7d68bce22ecd6e7f8f88093ef2019e2_27.png)
+
+
+![](img/a7d68bce22ecd6e7f8f88093ef2019e2_29.png)
+
+![](img/a7d68bce22ecd6e7f8f88093ef2019e2_31.png)
+
+```r
+# 假设 x 已包含儿子的身高数据，n = length(x)
+B <- 10000 # 设定自助法重抽样次数
 # 方法一：使用循环（清晰易懂）
 bootstrap_medians <- numeric(B)
 for (i in 1:B) {
   resample <- sample(x, size = n, replace = TRUE)
   bootstrap_medians[i] <- median(resample)
 }
-
-![](img/a7d68bce22ecd6e7f8f88093ef2019e2_19.png)
-
-![](img/a7d68bce22ecd6e7f8f88093ef2019e2_21.png)
-
 # 方法二：向量化操作（更高效）
 # 一次性抽取所有样本
 all_samples <- sample(x, size = n * B, replace = TRUE)
@@ -96,26 +109,13 @@ all_samples <- sample(x, size = n * B, replace = TRUE)
 resample_matrix <- matrix(all_samples, nrow = B, ncol = n)
 # 按行计算中位数
 bootstrap_medians <- apply(resample_matrix, 1, median)
-
-![](img/a7d68bce22ecd6e7f8f88093ef2019e2_23.png)
-
-![](img/a7d68bce22ecd6e7f8f88093ef2019e2_25.png)
-
 # 计算中位数的标准误估计
 standard_error <- sd(bootstrap_medians)
 print(paste("估计的标准误:", standard_error))
-
-![](img/a7d68bce22ecd6e7f8f88093ef2019e2_27.png)
-
 # 计算95%自助法置信区间（百分位数法）
 confidence_interval <- quantile(bootstrap_medians, probs = c(0.025, 0.975))
 print("95% 置信区间（百分位数法）:")
 print(confidence_interval)
-
-![](img/a7d68bce22ecd6e7f8f88093ef2019e2_29.png)
-
-![](img/a7d68bce22ecd6e7f8f88093ef2019e2_31.png)
-
 # 绘制自助法中位数的分布直方图（强烈推荐）
 library(ggplot2)
 plot_data <- data.frame(Medians = bootstrap_medians)

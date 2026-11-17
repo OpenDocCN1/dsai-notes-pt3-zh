@@ -68,6 +68,13 @@ for i in range(1, 6):
 
 ![](img/eced15ae083f0b432916eb5729f4aa21_25.png)
 
+
+![](img/eced15ae083f0b432916eb5729f4aa21_27.png)
+
+![](img/eced15ae083f0b432916eb5729f4aa21_28.png)
+
+![](img/eced15ae083f0b432916eb5729f4aa21_29.png)
+
 ```
 外层循环计数: 1
   内层循环计数: 1
@@ -80,13 +87,6 @@ for i in range(1, 6):
   内层循环计数: 2
   ...
   内层循环计数: 10
-
-![](img/eced15ae083f0b432916eb5729f4aa21_27.png)
-
-![](img/eced15ae083f0b432916eb5729f4aa21_28.png)
-
-![](img/eced15ae083f0b432916eb5729f4aa21_29.png)
-
 ... (以此类推，直到外层循环计数为5)
 ```
 

@@ -179,13 +179,13 @@ env.render() # 可视化
 
 以下是训练模拟器网络的核心代码结构：
 
+
+![](img/7e912af13be2d5ea35ea005d087a22be_83.png)
+
 ```python
 # 伪代码示例：训练模拟器
 simulator_net = SimulatorNet(input_dim=7, hidden_dim=45, output_dim=6)
 optimizer = torch.optim.Adam(simulator_net.parameters())
-
-![](img/7e912af13be2d5ea35ea005d087a22be_83.png)
-
 for episode in range(num_episodes):
     state = env.random_state()
     for step in range(steps_per_episode):

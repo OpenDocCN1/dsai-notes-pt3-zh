@@ -124,14 +124,14 @@ def tsp_random_greedy(cities_list, num_simulations=100):
 
 同样，我们也将这个解决方案构建成一个强大的命令行工具。用户可以指定任意城市列表和模拟运行次数。
 
-```bash
-# 使用内置的美国城市列表运行100次模拟
-$ ./tsp_solver simulate --count 100
 
 ![](img/1b4182f62d7dd2b9e2351b522514d295_19.png)
 
 ![](img/1b4182f62d7dd2b9e2351b522514d295_21.png)
 
+```bash
+# 使用内置的美国城市列表运行100次模拟
+$ ./tsp_solver simulate --count 100
 # 使用自定义城市列表运行50次模拟
 $ ./tsp_solver custom Boston "New York" Chicago "Los Angeles" --count 50
 ```

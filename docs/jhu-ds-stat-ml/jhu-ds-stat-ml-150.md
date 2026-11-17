@@ -10,12 +10,12 @@
 
 首先，我们需要加载Swirl包并启动它。以下是启动Swirl的基本步骤：
 
-```r
-# 加载swirl包
-library(swirl)
 
 ![](img/e1cc0412c8029c1d9edc8978de66307e_3.png)
 
+```r
+# 加载swirl包
+library(swirl)
 # 启动swirl
 swirl()
 ```

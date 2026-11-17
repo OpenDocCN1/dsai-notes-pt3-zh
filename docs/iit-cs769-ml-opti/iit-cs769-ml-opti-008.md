@@ -66,12 +66,12 @@ def convert_to_lower(text):
 
 ![](img/f18966fb0d0bd1b69cb671210459d7ba_16.png)
 
-```python
-import torch
-import spear_ml
 
 ![](img/f18966fb0d0bd1b69cb671210459d7ba_18.png)
 
+```python
+import torch
+import spear_ml
 # 保存模型检查点，num_checkpoints 由用户决定
 def save_checkpoints(model, path, num_checkpoints=5):
     # ... 保存逻辑
@@ -85,11 +85,11 @@ def save_checkpoints(model, path, num_checkpoints=5):
 
 ![](img/f18966fb0d0bd1b69cb671210459d7ba_20.png)
 
-```python
-import os
 
 ![](img/f18966fb0d0bd1b69cb671210459d7ba_22.png)
 
+```python
+import os
 log_dir = './logs'
 result_dir = './results'
 os.makedirs(log_dir, exist_ok=True)

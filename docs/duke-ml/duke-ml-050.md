@@ -56,11 +56,11 @@ vector = embedding(“king”) - embedding(“man”) + embedding(“woman”)
 3.  **模型结构**：构建一个简单的网络，例如嵌入层后接一个全局池化层（如平均池化），然后连接全连接层进行二分类。
 4.  **训练与评估**：使用交叉熵损失和优化器进行训练，并在验证集上评估模型性能。
 
-```python
-import torch.nn as nn
 
 ![](img/bfda3d9568c87f1f22c2142ec5f45dc9_5.png)
 
+```python
+import torch.nn as nn
 class SentimentClassifier(nn.Module):
     def __init__(self, vocab_size, embed_dim, num_classes):
         super().__init__()

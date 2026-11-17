@@ -48,13 +48,9 @@
 
 现在，让我们实际生成两个文本的词嵌入，并观察其特点。
 
-```python
-from langchain.embeddings import OpenAIEmbeddings
 
 ![](img/b95a1272b3979f7081f949e084c8e015_14.png)
 
-# 初始化嵌入模型
-embedding_model = OpenAIEmbeddings(model="text-embedding-3-small")
 
 ![](img/b95a1272b3979f7081f949e084c8e015_15.png)
 
@@ -64,6 +60,13 @@ embedding_model = OpenAIEmbeddings(model="text-embedding-3-small")
 
 ![](img/b95a1272b3979f7081f949e084c8e015_18.png)
 
+
+![](img/b95a1272b3979f7081f949e084c8e015_20.png)
+
+```python
+from langchain.embeddings import OpenAIEmbeddings
+# 初始化嵌入模型
+embedding_model = OpenAIEmbeddings(model="text-embedding-3-small")
 # 创建两个文本
 text1 = "dog"
 text2 = "A machine that helps people cut grass."
@@ -71,9 +74,6 @@ text2 = "A machine that helps people cut grass."
 # 生成嵌入向量
 embedding1 = embedding_model.embed_query(text1)
 embedding2 = embedding_model.embed_query(text2)
-
-![](img/b95a1272b3979f7081f949e084c8e015_20.png)
-
 # 打印嵌入向量的长度
 print(f"‘{text1}’ 的嵌入向量长度: {len(embedding1)}")
 print(f"‘{text2}’ 的嵌入向量长度: {len(embedding2)}")
@@ -118,20 +118,20 @@ print(f"‘dog’的嵌入向量（前10维）: {embedding1[:10]}")
 
 ![](img/b95a1272b3979f7081f949e084c8e015_34.png)
 
-```python
-import numpy as np
-from numpy.linalg import norm
 
 ![](img/b95a1272b3979f7081f949e084c8e015_36.png)
 
+
+![](img/b95a1272b3979f7081f949e084c8e015_38.png)
+
+```python
+import numpy as np
+from numpy.linalg import norm
 def cosine_similarity(vec_a, vec_b):
     """计算两个向量的余弦相似度"""
     vec_a = np.array(vec_a)
     vec_b = np.array(vec_b)
     return np.dot(vec_a, vec_b) / (norm(vec_a) * norm(vec_b))
-
-![](img/b95a1272b3979f7081f949e084c8e015_38.png)
-
 # 计算相似度
 similarity = cosine_similarity(embedding1, embedding2)
 print(f"‘dog’ 与 ‘A machine that helps people cut grass.’ 的余弦相似度: {similarity:.4f}")
@@ -151,6 +151,14 @@ print(f"‘dog’ 与 ‘A machine that helps people cut grass.’ 的余弦相�
 
 ![](img/b95a1272b3979f7081f949e084c8e015_44.png)
 
+
+![](img/b95a1272b3979f7081f949e084c8e015_46.png)
+
+![](img/b95a1272b3979f7081f949e084c8e015_48.png)
+
+
+![](img/b95a1272b3979f7081f949e084c8e015_50.png)
+
 ```python
 def compare_strings(str1, str2, model):
     """比较两个字符串的语义相似度"""
@@ -163,16 +171,8 @@ def compare_strings(str1, str2, model):
 str_a = “A device with blades to cut plants.”
 str_b = “A machine that helps people cut grass.”
 str_c = “An airplane.”
-
-![](img/b95a1272b3979f7081f949e084c8e015_46.png)
-
-![](img/b95a1272b3979f7081f949e084c8e015_48.png)
-
 sim_ab = compare_strings(str_a, str_b, embedding_model)
 sim_ac = compare_strings(str_a, str_c, embedding_model)
-
-![](img/b95a1272b3979f7081f949e084c8e015_50.png)
-
 print(f"‘{str_a}’ 与 ‘{str_b}’ 的相似度: {sim_ab:.4f}”)
 print(f"‘{str_a}’ 与 ‘{str_c}’ 的相似度: {sim_ac:.4f}”)
 ```

@@ -71,15 +71,15 @@ pX = np.angle(X)
 
 我们编写一个新的脚本，用于读取一个音频文件，选取其中一段，并对其进行加窗和频谱分析。
 
+
+![](img/e86a11ea75c5947861086924c2e99317_3.png)
+
 ```python
 import numpy as np
 from scipy.fftpack import fft
 import sys
 sys.path.append(‘../software/models/‘) # 添加工具包路径
 from utilFunctions import wavread
-
-![](img/e86a11ea75c5947861086924c2e99317_3.png)
-
 # 定义参数
 M = 501 # 窗口大小（样本数）
 N = 1024 # FFT大小（2的幂）

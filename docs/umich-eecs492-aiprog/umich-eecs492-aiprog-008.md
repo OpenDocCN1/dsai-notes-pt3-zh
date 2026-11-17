@@ -54,6 +54,14 @@ f(x + yi) = (x + yi)² - (x + yi) + 1
 
 ![](img/45e75ed8e55918c5c5d191222bec8fee_13.png)
 
+
+![](img/45e75ed8e55918c5c5d191222bec8fee_15.png)
+
+
+![](img/45e75ed8e55918c5c5d191222bec8fee_17.png)
+
+![](img/45e75ed8e55918c5c5d191222bec8fee_19.png)
+
 ```matlab
 % 检查并加载符号计算包（Octave需要）
 if ~exist(‘OCTAVE_VERSION’, ‘builtin’)
@@ -61,9 +69,6 @@ if ~exist(‘OCTAVE_VERSION’, ‘builtin’)
 else
     pkg load symbolic % Octave需要手动加载
 end
-
-![](img/45e75ed8e55918c5c5d191222bec8fee_15.png)
-
 % 定义符号变量
 syms x y real
 % 定义复数 z 和函数 f(z)
@@ -83,11 +88,6 @@ fprintf(‘虚部 b = %s\n’, str_b);
 [X, Y] = meshgrid(linspace(-2, 2, 50), linspace(-2, 2, 50));
 A = eval(subs(a, {x, y}, {X, Y}));
 B = eval(subs(b, {x, y}, {X, Y}));
-
-![](img/45e75ed8e55918c5c5d191222bec8fee_17.png)
-
-![](img/45e75ed8e55918c5c5d191222bec8fee_19.png)
-
 % 图1：三维曲面图
 figure(‘Position’, [100 100 1200 500])
 subplot(1,2,1)

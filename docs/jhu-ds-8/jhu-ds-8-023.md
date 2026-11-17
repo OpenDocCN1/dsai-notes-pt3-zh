@@ -255,10 +255,6 @@ Pr(X | Y = k) ≈ Pr(X1 | Y = k) * Pr(X2 | Y = k) * ... * Pr(Xp | Y = k)
 
 首先，我们加载必要的库并准备数据，将数据划分为训练集和测试集。
 
-```r
-library(ggplot2)
-library(caret)
-data(iris)
 
 ![](img/e71a0e51ccbbfdf9785ca9f5c2dc8558_114.png)
 
@@ -266,6 +262,10 @@ data(iris)
 
 ![](img/e71a0e51ccbbfdf9785ca9f5c2dc8558_116.png)
 
+```r
+library(ggplot2)
+library(caret)
+data(iris)
 # 创建训练集和测试集
 set.seed(123)
 inTrain <- createDataPartition(y=iris$Species, p=0.7, list=FALSE)
@@ -310,15 +310,15 @@ modNb <- train(Species ~ ., data=training, method="nb")
 
 ![](img/e71a0e51ccbbfdf9785ca9f5c2dc8558_131.png)
 
-```r
-# 预测
-predLda <- predict(modLda, testing)
-predNb <- predict(modNb, testing)
 
 ![](img/e71a0e51ccbbfdf9785ca9f5c2dc8558_132.png)
 
 ![](img/e71a0e51ccbbfdf9785ca9f5c2dc8558_133.png)
 
+```r
+# 预测
+predLda <- predict(modLda, testing)
+predNb <- predict(modNb, testing)
 # 比较两个模型的预测结果
 table(predLda, predNb)
 ```

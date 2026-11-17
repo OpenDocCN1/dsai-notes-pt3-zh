@@ -102,11 +102,11 @@ predictions = adjusted_weights * X_transformed
 ![](img/4320b856dc6e031ff054234b8d9a8d0a_17.png)
 
 **代码表示**：
-```python
-import torch.nn as nn
 
 ![](img/4320b856dc6e031ff054234b8d9a8d0a_19.png)
 
+```python
+import torch.nn as nn
 # 创建一个嵌入层，num_embeddings为类别数，embedding_dim为输出维度
 embedding_layer = nn.Embedding(num_embeddings, embedding_dim)
 # 输入是类别索引的列表

@@ -54,6 +54,9 @@ congress_summary <- data %>%
 接着，我们创建一个堆叠条形图来展示每年各党派的席位数量，并添加一条代表众议院多数席位门槛（217席）的水平线。
 
 **代码示例**：
+
+![](img/c4dcf9718444b06f4f2ea17693de6245_1.png)
+
 ```r
 library(ggplot2)
 library(gganimate)
@@ -64,9 +67,6 @@ static_plot <- ggplot(congress_summary, aes(x = year, y = seats, fill = party)) 
   labs(title = "Party Seats in Congress by Year",
        x = "Year",
        y = "Number of Seats")
-
-![](img/c4dcf9718444b06f4f2ea17693de6245_1.png)
-
 # 使用 transition_time 创建动画
 animated_plot <- static_plot +
   transition_time(year) +

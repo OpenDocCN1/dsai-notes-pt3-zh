@@ -24,14 +24,14 @@
 
 ![](img/37752e25380dacd3a400858e09ee6586_13.png)
 
-```r
-# 清除当前环境中的所有变量
-rm(list = ls())
 
 ![](img/37752e25380dacd3a400858e09ee6586_15.png)
 
 ![](img/37752e25380dacd3a400858e09ee6586_16.png)
 
+```r
+# 清除当前环境中的所有变量
+rm(list = ls())
 # 加载自定义函数和所需包
 source("Stat_tools.R")
 ```
@@ -424,16 +424,16 @@ setdiff(S, A)
 
 ![](img/37752e25380dacd3a400858e09ee6586_224.png)
 
-```r
-# 方法1：使用probspace函数明确指定概率
-S_die <- 1:6
-P <- rep(1/6, times = 6)
-prob_space1 <- probspace(S_die, probs = P)
 
 ![](img/37752e25380dacd3a400858e09ee6586_226.png)
 
 ![](img/37752e25380dacd3a400858e09ee6586_228.png)
 
+```r
+# 方法1：使用probspace函数明确指定概率
+S_die <- 1:6
+P <- rep(1/6, times = 6)
+prob_space1 <- probspace(S_die, probs = P)
 # 方法2：直接使用rolldie并设置makespace=TRUE，这是最简洁的方式
 prob_space2 <- rolldie(times = 1, makespace = TRUE)
 prob_space2
@@ -459,11 +459,6 @@ prob_space2
 
 ![](img/37752e25380dacd3a400858e09ee6586_242.png)
 
-```r
-# 创建一个不公平的硬币，正面朝上概率0.7，反面0.3
-unfair_coin <- tosscoin(times = 1, makespace = TRUE)
-probs(unfair_coin) <- c(0.7, 0.3)
-unfair_coin
 
 ![](img/37752e25380dacd3a400858e09ee6586_244.png)
 
@@ -475,6 +470,11 @@ unfair_coin
 
 ![](img/37752e25380dacd3a400858e09ee6586_251.png)
 
+```r
+# 创建一个不公平的硬币，正面朝上概率0.7，反面0.3
+unfair_coin <- tosscoin(times = 1, makespace = TRUE)
+probs(unfair_coin) <- c(0.7, 0.3)
+unfair_coin
 # 或者使用iidspace函数直接创建（例如抛三次这种不公平硬币）
 iidspace(c("H", "T"), ntrials = 3, probs = c(0.7, 0.3))
 ```
@@ -559,9 +559,6 @@ event_sum7 <- subset(S_two_dice, X1 + X2 == 7)
 
 ![](img/37752e25380dacd3a400858e09ee6586_302.png)
 
-```r
-# 方法1：概率求和
-sum(event_sum7$probs)
 
 ![](img/37752e25380dacd3a400858e09ee6586_304.png)
 
@@ -571,8 +568,6 @@ sum(event_sum7$probs)
 
 ![](img/37752e25380dacd3a400858e09ee6586_310.png)
 
-# 方法2：计数法
-nrow(event_sum7) / nrow(S_two_dice)
 
 ![](img/37752e25380dacd3a400858e09ee6586_312.png)
 
@@ -582,6 +577,11 @@ nrow(event_sum7) / nrow(S_two_dice)
 
 ![](img/37752e25380dacd3a400858e09ee6586_318.png)
 
+```r
+# 方法1：概率求和
+sum(event_sum7$probs)
+# 方法2：计数法
+nrow(event_sum7) / nrow(S_two_dice)
 # 方法3：使用prob函数（最直接）
 prob(S_two_dice, event = X1 + X2 == 7)
 ```

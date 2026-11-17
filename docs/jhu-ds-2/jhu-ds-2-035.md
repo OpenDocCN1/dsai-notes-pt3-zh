@@ -144,19 +144,11 @@ R函数参数可以通过**位置**或**名称**进行匹配。这在编写函�
 
 ![](img/2446f2807d74f0c227acb7eb3aea29f6_60.png)
 
-```r
-# 模拟一些数据：100个正态随机变量，无缺失值
-mydata <- rnorm(100)
 
 ![](img/2446f2807d74f0c227acb7eb3aea29f6_61.png)
 
 ![](img/2446f2807d74f0c227acb7eb3aea29f6_62.png)
 
-# 示例1：仅按位置传递数据（未命名参数）
-sd(mydata)
-
-# 示例2：按名称传递数据
-sd(x = mydata)
 
 ![](img/2446f2807d74f0c227acb7eb3aea29f6_64.png)
 
@@ -170,13 +162,9 @@ sd(x = mydata)
 
 ![](img/2446f2807d74f0c227acb7eb3aea29f6_69.png)
 
-# 示例3：按名称传递两个参数
-sd(x = mydata, na.rm = FALSE)
 
 ![](img/2446f2807d74f0c227acb7eb3aea29f6_70.png)
 
-# 示例4：即使顺序颠倒，按名称传递也能正确匹配
-sd(na.rm = FALSE, x = mydata)
 
 ![](img/2446f2807d74f0c227acb7eb3aea29f6_72.png)
 
@@ -186,6 +174,18 @@ sd(na.rm = FALSE, x = mydata)
 
 ![](img/2446f2807d74f0c227acb7eb3aea29f6_75.png)
 
+```r
+# 模拟一些数据：100个正态随机变量，无缺失值
+mydata <- rnorm(100)
+# 示例1：仅按位置传递数据（未命名参数）
+sd(mydata)
+
+# 示例2：按名称传递数据
+sd(x = mydata)
+# 示例3：按名称传递两个参数
+sd(x = mydata, na.rm = FALSE)
+# 示例4：即使顺序颠倒，按名称传递也能正确匹配
+sd(na.rm = FALSE, x = mydata)
 # 示例5：混合匹配（命名一个，另一个按位置）
 sd(na.rm = FALSE, mydata)
 ```
@@ -226,9 +226,6 @@ sd(na.rm = FALSE, mydata)
 
 ![](img/2446f2807d74f0c227acb7eb3aea29f6_90.png)
 
-```r
-# 不推荐的混淆写法（仅作演示）：
-lm(data = mydata, 1:100, model = FALSE, y ~ x)
 
 ![](img/2446f2807d74f0c227acb7eb3aea29f6_91.png)
 
@@ -244,6 +241,9 @@ lm(data = mydata, 1:100, model = FALSE, y ~ x)
 
 ![](img/2446f2807d74f0c227acb7eb3aea29f6_97.png)
 
+```r
+# 不推荐的混淆写法（仅作演示）：
+lm(data = mydata, 1:100, model = FALSE, y ~ x)
 # 更常见和清晰的写法：
 lm(y ~ x, mydata, 1:100, model = FALSE)
 ```

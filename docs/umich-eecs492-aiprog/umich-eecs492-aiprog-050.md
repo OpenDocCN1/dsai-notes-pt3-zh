@@ -72,13 +72,13 @@ string”””
 加法 `+` 用于连接两个序列。
 乘法 `*` 用于重复序列多次。
 
+
+![](img/dd5cdb68e84c4a5f5cd6b5428c5d23bd_3.png)
+
 ```python
 list1 = [1, 2]
 list2 = [3, 4]
 result_list = list1 + list2  # 结果为 [1, 2, 3, 4]
-
-![](img/dd5cdb68e84c4a5f5cd6b5428c5d23bd_3.png)
-
 tuple1 = (‘a’, ‘b’)
 result_tuple = tuple1 * 3  # 结果为 (‘a’, ‘b’, ‘a’, ‘b’, ‘a’, ‘b’)
 

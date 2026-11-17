@@ -10,11 +10,11 @@
 
 以下是建立数据库连接并创建一个游标对象的基本步骤：
 
-```python
-import sqlite3
 
 ![](img/e99b3406bea788e8c878c2decb8fb789_0.png)
 
+```python
+import sqlite3
 # 连接到数据库（如果不存在则会自动创建）
 connection = sqlite3.connect('my_database.db')
 

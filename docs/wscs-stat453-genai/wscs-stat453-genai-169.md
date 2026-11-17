@@ -124,16 +124,11 @@ from torch.utils.data import Dataset, DataLoader
 
 ![](img/154b688314fa0550cc46ed42fc16e4d9_63.png)
 
-```python
-# 加载预训练分词器
-tokenizer = DistilBertTokenizer.from_pretrained('distilbert-base-uncased')
 
 ![](img/154b688314fa0550cc46ed42fc16e4d9_65.png)
 
 ![](img/154b688314fa0550cc46ed42fc16e4d9_67.png)
 
-# 对文本进行编码
-encodings = tokenizer(list(train_texts), truncation=True, padding=True, max_length=512)
 
 ![](img/154b688314fa0550cc46ed42fc16e4d9_68.png)
 
@@ -141,6 +136,11 @@ encodings = tokenizer(list(train_texts), truncation=True, padding=True, max_leng
 
 ![](img/154b688314fa0550cc46ed42fc16e4d9_72.png)
 
+```python
+# 加载预训练分词器
+tokenizer = DistilBertTokenizer.from_pretrained('distilbert-base-uncased')
+# 对文本进行编码
+encodings = tokenizer(list(train_texts), truncation=True, padding=True, max_length=512)
 # 构建 PyTorch Dataset
 class ReviewDataset(Dataset):
     def __init__(self, encodings, labels):
@@ -200,14 +200,9 @@ Transformer 模型的训练通常分为两步：首先在大规模无标签数�
 
 ![](img/154b688314fa0550cc46ed42fc16e4d9_101.png)
 
-```python
-# 加载预训练模型
-model = DistilBertForSequenceClassification.from_pretrained('distilbert-base-uncased', num_labels=2)
 
 ![](img/154b688314fa0550cc46ed42fc16e4d9_103.png)
 
-# 使用支持权重衰减的 AdamW 优化器
-optimizer = torch.optim.AdamW(model.parameters(), lr=5e-5)
 
 ![](img/154b688314fa0550cc46ed42fc16e4d9_105.png)
 
@@ -215,6 +210,11 @@ optimizer = torch.optim.AdamW(model.parameters(), lr=5e-5)
 
 ![](img/154b688314fa0550cc46ed42fc16e4d9_107.png)
 
+```python
+# 加载预训练模型
+model = DistilBertForSequenceClassification.from_pretrained('distilbert-base-uncased', num_labels=2)
+# 使用支持权重衰减的 AdamW 优化器
+optimizer = torch.optim.AdamW(model.parameters(), lr=5e-5)
 # 使用线性学习率调度器
 from transformers import get_linear_schedule_with_warmup
 scheduler = get_linear_schedule_with_warmup(optimizer, num_warmup_steps=0, num_training_steps=len(train_dataloader)*epochs)

@@ -35,6 +35,9 @@
 
 ![](img/2dbcef40600388c1fee4519d156a3432_12.png)
 
+
+![](img/2dbcef40600388c1fee4519d156a3432_14.png)
+
 ```r
 # 示例代码：找出高度相关的变量对
 library(caret)
@@ -45,9 +48,6 @@ data(spam)
 inTrain <- createDataPartition(y=spam$type, p=0.75, list=FALSE)
 training <- spam[inTrain,]
 testing <- spam[-inTrain,]
-
-![](img/2dbcef40600388c1fee4519d156a3432_14.png)
-
 # 计算预测变量的相关系数矩阵（排除结果变量第58列）
 M <- abs(cor(training[,-58]))
 # 将对角线设为0

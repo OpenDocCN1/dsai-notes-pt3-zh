@@ -146,9 +146,6 @@
 
 ![](img/0a37e72411670233119c62225af1c1fa_85.png)
 
-```r
-# 假设 x 是包含儿子身高的向量
-# n <- length(x)  # 观测值数量
 
 ![](img/0a37e72411670233119c62225af1c1fa_87.png)
 
@@ -158,7 +155,6 @@
 
 ![](img/0a37e72411670233119c62225af1c1fa_92.png)
 
-B <- 10000  # 自举重抽样次数
 
 ![](img/0a37e72411670233119c62225af1c1fa_94.png)
 
@@ -166,13 +162,6 @@ B <- 10000  # 自举重抽样次数
 
 ![](img/0a37e72411670233119c62225af1c1fa_98.png)
 
-# 方法1：逐步演示
-# 从x中有放回地抽取 n*B 次
-resamples <- sample(x, n*B, replace = TRUE)
-# 将结果排列成矩阵，每行是一个自举样本
-resamples_matrix <- matrix(resamples, nrow = B, ncol = n)
-# 对每一行（即每个自举样本）计算中位数
-boot_medians <- apply(resamples_matrix, 1, median)
 
 ![](img/0a37e72411670233119c62225af1c1fa_99.png)
 
@@ -180,8 +169,6 @@ boot_medians <- apply(resamples_matrix, 1, median)
 
 ![](img/0a37e72411670233119c62225af1c1fa_103.png)
 
-# 计算中位数的标准误
-standard_error <- sd(boot_medians)  # 例如：0.08473
 
 ![](img/0a37e72411670233119c62225af1c1fa_104.png)
 
@@ -189,8 +176,6 @@ standard_error <- sd(boot_medians)  # 例如：0.08473
 
 ![](img/0a37e72411670233119c62225af1c1fa_107.png)
 
-# 计算95%自举置信区间
-confidence_interval <- quantile(boot_medians, c(0.025, 0.975))
 
 ![](img/0a37e72411670233119c62225af1c1fa_109.png)
 
@@ -200,6 +185,21 @@ confidence_interval <- quantile(boot_medians, c(0.025, 0.975))
 
 ![](img/0a37e72411670233119c62225af1c1fa_113.png)
 
+```r
+# 假设 x 是包含儿子身高的向量
+# n <- length(x)  # 观测值数量
+B <- 10000  # 自举重抽样次数
+# 方法1：逐步演示
+# 从x中有放回地抽取 n*B 次
+resamples <- sample(x, n*B, replace = TRUE)
+# 将结果排列成矩阵，每行是一个自举样本
+resamples_matrix <- matrix(resamples, nrow = B, ncol = n)
+# 对每一行（即每个自举样本）计算中位数
+boot_medians <- apply(resamples_matrix, 1, median)
+# 计算中位数的标准误
+standard_error <- sd(boot_medians)  # 例如：0.08473
+# 计算95%自举置信区间
+confidence_interval <- quantile(boot_medians, c(0.025, 0.975))
 # 绘制自举中位数的分布直方图 (使用ggplot2)
 library(ggplot2)
 g <- ggplot(data.frame(medians = boot_medians), aes(x = medians))

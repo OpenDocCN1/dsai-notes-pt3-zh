@@ -18,21 +18,21 @@
 
 以下是加载数据和查看变量分布的一个例子：
 
+
+![](img/8a2ea851bd370c3a67d2ecab3aa97577_5.png)
+
+
+![](img/8a2ea851bd370c3a67d2ecab3aa97577_7.png)
+
 ```r
 # 加载必要的包和数据
 library(caret)
 library(kernlab)
 data(spam)
-
-![](img/8a2ea851bd370c3a67d2ecab3aa97577_5.png)
-
 # 分割数据为训练集和测试集
 inTrain <- createDataPartition(y=spam$type, p=0.75, list=FALSE)
 training <- spam[inTrain,]
 testing <- spam[-inTrain,]
-
-![](img/8a2ea851bd370c3a67d2ecab3aa97577_7.png)
-
 # 查看一个变量的分布
 hist(training$capitalAve, main="", xlab="连续大写字母的平均长度")
 ```
@@ -70,14 +70,14 @@ hist(training$capitalAve, main="", xlab="连续大写字母的平均长度")
 
 ![](img/8a2ea851bd370c3a67d2ecab3aa97577_17.png)
 
-```r
-# 对训练集预测变量进行预处理（不包括第58列的结果变量）
-preObj <- preProcess(training[,-58], method=c("center", "scale"))
 
 ![](img/8a2ea851bd370c3a67d2ecab3aa97577_18.png)
 
 ![](img/8a2ea851bd370c3a67d2ecab3aa97577_20.png)
 
+```r
+# 对训练集预测变量进行预处理（不包括第58列的结果变量）
+preObj <- preProcess(training[,-58], method=c("center", "scale"))
 # 应用预处理转换到训练集
 trainCapAveS <- predict(preObj, training[,-58])$capitalAve
 

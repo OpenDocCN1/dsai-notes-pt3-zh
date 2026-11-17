@@ -63,12 +63,12 @@ print(completion['choices'][0]['text'])
 
 ![](img/a785e31d0c8171f667a92fa1dc7aca20_13.png)
 
-```python
-temperatures = [0, 0.5, 1]
-prompt = "The sky is"
 
 ![](img/a785e31d0c8171f667a92fa1dc7aca20_15.png)
 
+```python
+temperatures = [0, 0.5, 1]
+prompt = "The sky is"
 for temp in temperatures:
     print(f"\n--- Temperature: {temp} ---")
     for _ in range(3):  # 每个温度生成3个补全

@@ -111,14 +111,14 @@ public class WordCountMapper extends Mapper<LongWritable, Text, Text, IntWritabl
 
 接下来，我们实现 Reducer 类。
 
+
+![](img/dabf8fbd66b4008b772730bd8b7bb38c_17.png)
+
 ```java
 import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Reducer;
 import java.io.IOException;
-
-![](img/dabf8fbd66b4008b772730bd8b7bb38c_17.png)
-
 public class WordCountReducer extends Reducer<Text, IntWritable, Text, IntWritable> {
     private IntWritable result = new IntWritable();
 

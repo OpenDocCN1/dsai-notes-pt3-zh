@@ -148,6 +148,13 @@ Inception 模块给出的答案是：**全部使用**。
 ![](img/c53323974854ad9abb40546a34fc5897_90.png)
 
 **代码概念描述**：
+
+![](img/c53323974854ad9abb40546a34fc5897_92.png)
+
+![](img/c53323974854ad9abb40546a34fc5897_94.png)
+
+![](img/c53323974854ad9abb40546a34fc5897_96.png)
+
 ```python
 # 假设输入通道数为 in_channels
 # 1. 1x1 卷积降维分支
@@ -161,13 +168,6 @@ branch3 = Conv5x5(reduced_channels, out_channels_5x5)(branch3)
 # 4. 池化分支（池化后也接1x1卷积调整通道数）
 branch4 = MaxPool3x3(stride=1)(input)
 branch4 = Conv1x1(in_channels, out_channels_pool)(branch4)
-
-![](img/c53323974854ad9abb40546a34fc5897_92.png)
-
-![](img/c53323974854ad9abb40546a34fc5897_94.png)
-
-![](img/c53323974854ad9abb40546a34fc5897_96.png)
-
 # 最终输出拼接
 output = concatenate([branch1, branch2, branch3, branch4], axis=channel_axis)
 ```

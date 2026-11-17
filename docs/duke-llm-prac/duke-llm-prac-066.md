@@ -99,6 +99,11 @@ print(merged_df.head())
 1.  删除多余的列，例如 `timestamp_x` 和 `timestamp_y`。
 2.  按照 `id`、`question`、`answer`、`question_votes`、`answer_votes` 的顺序重新排列列。
 
+
+![](img/fbcaa709ae8a24f632ed4ec7702a290e_1.png)
+
+![](img/fbcaa709ae8a24f632ed4ec7702a290e_3.png)
+
 ```python
 # 删除多余的列
 columns_to_drop = [‘timestamp_x’, ‘timestamp_y’, ‘Unnamed: 0’]
@@ -107,11 +112,6 @@ merged_df.drop(columns=columns_to_drop, axis=1, inplace=True)
 # 重新排列列的顺序
 desired_order = [‘id’, ‘question’, ‘answer’, ‘question_votes’, ‘answer_votes’]
 merged_df = merged_df[desired_order]
-
-![](img/fbcaa709ae8a24f632ed4ec7702a290e_1.png)
-
-![](img/fbcaa709ae8a24f632ed4ec7702a290e_3.png)
-
 print(merged_df.head())
 ```
 

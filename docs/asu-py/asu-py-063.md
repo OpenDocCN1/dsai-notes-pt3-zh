@@ -192,9 +192,6 @@ cancer_data = datasets.load_breast_cancer()
 
 ![](img/8c50ef80b9855d550ad96c543ec3e866_81.png)
 
-```python
-X = cancer_data.data  # 特征
-y = cancer_data.target  # 目标标签
 
 ![](img/8c50ef80b9855d550ad96c543ec3e866_83.png)
 
@@ -202,6 +199,9 @@ y = cancer_data.target  # 目标标签
 
 ![](img/8c50ef80b9855d550ad96c543ec3e866_86.png)
 
+```python
+X = cancer_data.data  # 特征
+y = cancer_data.target  # 目标标签
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
 ```
 
@@ -252,13 +252,13 @@ svm_model.fit(X_train, y_train)       # 训练模型
 
 ![](img/8c50ef80b9855d550ad96c543ec3e866_106.png)
 
-```python
-y_pred = svm_model.predict(X_test)  # 预测
 
 ![](img/8c50ef80b9855d550ad96c543ec3e866_108.png)
 
 ![](img/8c50ef80b9855d550ad96c543ec3e866_109.png)
 
+```python
+y_pred = svm_model.predict(X_test)  # 预测
 accuracy = accuracy_score(y_test, y_pred)  # 计算准确率
 print(f"模型准确率: {accuracy:.2%}")
 ```

@@ -23,6 +23,9 @@
 
 以下是实现此操作的代码：
 
+
+![](img/2da3834103990dee471bd25b1358e5e1_4.png)
+
 ```r
 # 过滤数据
 lake_michigan_shanty <- data %>%
@@ -31,9 +34,6 @@ lake_michigan_shanty <- data %>%
 # 计算并打印五数概括
 five_num_summary <- fivenum(lake_michigan_shanty$effort)
 print(five_num_summary)
-
-![](img/2da3834103990dee471bd25b1358e5e1_4.png)
-
 # 绘制箱线图
 ggplot(lake_michigan_shanty, aes(x = lake, y = effort)) +
   geom_boxplot() +

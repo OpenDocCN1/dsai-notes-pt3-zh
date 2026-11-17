@@ -69,12 +69,6 @@
 
 ![](img/c028db28d3f5b2504af7451bd64b01b2_41.png)
 
-```python
-# 1. 打开源文件并读取内容
-f = open(r‘你的文件路径\MobyDick.txt‘, ‘r‘)
-file_text = f.read()
-print("这是《白鲸记》第一章的节选：")
-print(file_text)
 
 ![](img/c028db28d3f5b2504af7451bd64b01b2_43.png)
 
@@ -82,15 +76,21 @@ print(file_text)
 
 ![](img/c028db28d3f5b2504af7451bd64b01b2_47.png)
 
-# 2. 创建新文件并写入内容
-f_write = open(‘updated_text.txt‘, ‘w‘)
-f_write.write(file_text)
-f_write.close()
 
 ![](img/c028db28d3f5b2504af7451bd64b01b2_49.png)
 
 ![](img/c028db28d3f5b2504af7451bd64b01b2_50.png)
 
+```python
+# 1. 打开源文件并读取内容
+f = open(r‘你的文件路径\MobyDick.txt‘, ‘r‘)
+file_text = f.read()
+print("这是《白鲸记》第一章的节选：")
+print(file_text)
+# 2. 创建新文件并写入内容
+f_write = open(‘updated_text.txt‘, ‘w‘)
+f_write.write(file_text)
+f_write.close()
 # 3. 验证新文件内容
 f_updated = open(‘updated_text.txt‘, ‘r‘)
 updated_data = f_updated.read()
@@ -161,8 +161,6 @@ f_updated.close()
 
 ![](img/c028db28d3f5b2504af7451bd64b01b2_85.png)
 
-```python
-import os
 
 ![](img/c028db28d3f5b2504af7451bd64b01b2_87.png)
 
@@ -170,19 +168,11 @@ import os
 
 ![](img/c028db28d3f5b2504af7451bd64b01b2_90.png)
 
-# 1. 读取原文件内容并备份
-f = open(r‘你的文件路径\MobyDick.txt‘, ‘r‘)
-file_text = f.read()
-f.close()
 
 ![](img/c028db28d3f5b2504af7451bd64b01b2_92.png)
 
 ![](img/c028db28d3f5b2504af7451bd64b01b2_94.png)
 
-# 2. 将内容写入一个临时新文件
-f_new = open(‘new_file.txt‘, ‘w‘)
-f_new.write(file_text)
-f_new.close()
 
 ![](img/c028db28d3f5b2504af7451bd64b01b2_96.png)
 
@@ -192,8 +182,6 @@ f_new.close()
 
 ![](img/c028db28d3f5b2504af7451bd64b01b2_101.png)
 
-# 3. 删除原文件
-os.remove(‘MobyDick.txt‘)
 
 ![](img/c028db28d3f5b2504af7451bd64b01b2_103.png)
 
@@ -201,6 +189,18 @@ os.remove(‘MobyDick.txt‘)
 
 ![](img/c028db28d3f5b2504af7451bd64b01b2_106.png)
 
+```python
+import os
+# 1. 读取原文件内容并备份
+f = open(r‘你的文件路径\MobyDick.txt‘, ‘r‘)
+file_text = f.read()
+f.close()
+# 2. 将内容写入一个临时新文件
+f_new = open(‘new_file.txt‘, ‘w‘)
+f_new.write(file_text)
+f_new.close()
+# 3. 删除原文件
+os.remove(‘MobyDick.txt‘)
 # 4. 将临时文件重命名为新名称
 os.rename(‘new_file.txt‘, ‘MobyDick1.txt‘)
 ```

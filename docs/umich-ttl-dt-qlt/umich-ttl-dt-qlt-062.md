@@ -43,12 +43,12 @@ sum(apipop$enroll) # 计算总注册学生数
 
 现在，让我们为两阶段整群样本创建调查设计对象并进行估计。
 
-```r
-# 为两阶段整群样本指定调查设计
-dclus2 <- svydesign(id = ~dnum + snum, fpc = ~fpc1 + fpc2, data = apiclus2)
 
 ![](img/1545b93b233ec16d3279e08688b396a3_3.png)
 
+```r
+# 为两阶段整群样本指定调查设计
+dclus2 <- svydesign(id = ~dnum + snum, fpc = ~fpc1 + fpc2, data = apiclus2)
 # 查看设计摘要
 summary(dclus2)
 

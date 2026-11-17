@@ -67,15 +67,15 @@ A*搜索因其高效和最优性，被广泛应用于各种需要路径查找的
 
 ![](img/08de709a4f10d7d64667ec45b5998c56_11.png)
 
+
+![](img/08de709a4f10d7d64667ec45b5998c56_13.png)
+
 ```python
 # 示例：广度优先搜索（BFS）框架
 frontier = Queue()  # 创建一个先进先出（FIFO）队列作为边界
 frontier.put(start_node)
 visited = set()     # 记录已访问节点，防止重复探索
 visited.add(start_node)
-
-![](img/08de709a4f10d7d64667ec45b5998c56_13.png)
-
 while not frontier.empty():
     current = frontier.get()
     for next_node in neighbors(current):  # 获取当前节点的所有后继节点

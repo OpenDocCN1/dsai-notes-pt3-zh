@@ -158,6 +158,9 @@ car_df = pd.read_csv('car.data')
 
 ![](img/e364fa9e4347dee9913bb0c156837310_52.png)
 
+
+![](img/e364fa9e4347dee9913bb0c156837310_54.png)
+
 ```python
 # 使用LabelEncoder转换特征
 le = preprocessing.LabelEncoder()
@@ -168,9 +171,6 @@ persons = le.fit_transform(list(car_df["persons"]))
 lug_boot = le.fit_transform(list(car_df["lug_boot"]))
 safety = le.fit_transform(list(car_df["safety"]))
 cls = le.fit_transform(list(car_df["class"]))
-
-![](img/e364fa9e4347dee9913bb0c156837310_54.png)
-
 # 定义特征X和目标y
 X = list(zip(buying, maint, door, persons, lug_boot, safety))
 y = list(cls)

@@ -53,13 +53,13 @@ docker run -p 4000:3000 flowise
 在 Flowise 工作流界面的右上角，点击 **API Endpoint**，可以查看集成的代码片段。Flowise 提供了多种调用方式，包括 JavaScript 和 Python。  
 
 以下是通过 Python 调用 API 的示例代码：  
-```python
-import requests
 
 ![](img/b8d68c10b5d2d4496b09bb305075149d_9.png)
 
 ![](img/b8d68c10b5d2d4496b09bb305075149d_11.png)
 
+```python
+import requests
 def answer_flowise_uniswap_question(question):
     url = "http://localhost:4000/api/v1/prediction/your-workflow-id"
     payload = {"question": question}

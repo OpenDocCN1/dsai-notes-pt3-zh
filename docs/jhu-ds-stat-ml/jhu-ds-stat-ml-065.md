@@ -75,12 +75,12 @@ Swiss <- Swiss %>%
 
 理论部分可能有些抽象，接下来我们通过实际代码来运行这些模型，这会让理解变得更加直观。
 
-```r
-# 拟合模型1
-fit1 <- lm(Fertility ~ Agriculture, data = Swiss)
 
 ![](img/b43aec7c27649f101f9bd986c6ae9a98_18.png)
 
+```r
+# 拟合模型1
+fit1 <- lm(Fertility ~ Agriculture, data = Swiss)
 # 拟合模型2
 fit2 <- lm(Fertility ~ Agriculture + CatholicBin, data = Swiss)
 

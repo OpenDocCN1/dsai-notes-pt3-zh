@@ -173,12 +173,12 @@ fancyRpartPlot(modFit$finalModel)
 
 使用训练好的模型对测试集进行预测。
 
-```r
-# 对测试集进行预测
-predictions <- predict(modFit, newdata=testing)
 
 ![](img/6b3303db703b36426d9e6943c73927c9_30.png)
 
+```r
+# 对测试集进行预测
+predictions <- predict(modFit, newdata=testing)
 # 查看预测结果
 print(predictions)
 

@@ -75,6 +75,9 @@
 
 以下是一个简单的代码示例，展示如何在 PyTorch 中使用转置卷积并验证输出尺寸：
 
+
+![](img/f6ece4a4e04cc1291f324880b28ecff0_16.png)
+
 ```python
 import torch
 import torch.nn as nn
@@ -85,9 +88,6 @@ transpose_conv = nn.ConvTranspose2d(in_channels=1, out_channels=1, kernel_size=3
 
 # 创建一个 2x2 的模拟输入 (batch_size=1, channels=1, height=2, width=2)
 input_tensor = torch.randn(1, 1, 2, 2)
-
-![](img/f6ece4a4e04cc1291f324880b28ecff0_16.png)
-
 # 前向传播
 output_tensor = transpose_conv(input_tensor)
 

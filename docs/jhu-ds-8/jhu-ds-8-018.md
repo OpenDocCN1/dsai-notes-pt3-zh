@@ -10,14 +10,14 @@
 
 首先，我们需要加载数据集和必要的R包。
 
+
+![](img/8ff3b8acf043449b9d3e0111a661c235_3.png)
+
 ```r
 # 加载数据集和包
 library(ISLR)
 library(ggplot2)
 library(caret)
-
-![](img/8ff3b8acf043449b9d3e0111a661c235_3.png)
-
 # 加载工资数据，并排除我们试图预测的变量（log wage）以进行探索
 data(Wage)
 Wage <- subset(Wage, select = -logwage)

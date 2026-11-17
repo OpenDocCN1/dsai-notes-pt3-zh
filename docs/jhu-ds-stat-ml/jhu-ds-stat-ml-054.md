@@ -12,14 +12,14 @@
 
 首先，我们加载钻石数据集并拟合一个简单的线性回归模型，其中价格（`price`）是因变量，克拉数（`carat`）是自变量。
 
+
+![](img/4dc297a94997574f6616ef63f54b360a_4.png)
+
 ```r
 # 定义变量以简化代码
 y <- diamonds$price
 x <- diamonds$carat
 n <- length(y)
-
-![](img/4dc297a94997574f6616ef63f54b360a_4.png)
-
 # 拟合线性模型
 fit1 <- lm(y ~ x)
 

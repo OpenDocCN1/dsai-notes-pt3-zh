@@ -165,12 +165,12 @@ Vulkan提供了不同的同步原语：
 
 ![](img/6cb40ed497ae887648330cfbd738ac69_62.png)
 
-```cpp
-// 提交计算工作，并关联一个栅栏
-vkQueueSubmit(computeQueue, 1, &submitInfo, computeFence);
 
 ![](img/6cb40ed497ae887648330cfbd738ac69_64.png)
 
+```cpp
+// 提交计算工作，并关联一个栅栏
+vkQueueSubmit(computeQueue, 1, &submitInfo, computeFence);
 // 在下一轮迭代中，等待栅栏完成
 vkWaitForFences(device, 1, &computeFence, VK_TRUE, UINT64_MAX);
 vkResetFences(device, 1, &computeFence); // 重置栅栏状态
@@ -206,16 +206,16 @@ vkResetFences(device, 1, &computeFence); // 重置栅栏状态
 
 ![](img/6cb40ed497ae887648330cfbd738ac69_72.png)
 
-```cpp
-// 计算队列提交信息，设置完成后发出信号的信号量
-VkSubmitInfo computeSubmitInfo{};
-computeSubmitInfo.signalSemaphoreCount = 1;
-computeSubmitInfo.pSignalSemaphores = &computeFinishedSemaphore;
 
 ![](img/6cb40ed497ae887648330cfbd738ac69_74.png)
 
 ![](img/6cb40ed497ae887648330cfbd738ac69_76.png)
 
+```cpp
+// 计算队列提交信息，设置完成后发出信号的信号量
+VkSubmitInfo computeSubmitInfo{};
+computeSubmitInfo.signalSemaphoreCount = 1;
+computeSubmitInfo.pSignalSemaphores = &computeFinishedSemaphore;
 // 图形队列提交信息，设置需要等待的信号量及等待阶段
 VkSubmitInfo graphicsSubmitInfo{};
 graphicsSubmitInfo.waitSemaphoreCount = 1;

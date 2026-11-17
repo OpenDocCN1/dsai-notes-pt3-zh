@@ -47,9 +47,6 @@ data(spam)
 
 ![](img/8d59a5f602d892489b2bfc7aa92e9925_17.png)
 
-```r
-# 创建训练集索引
-inTrain <- createDataPartition(y=spam$type, p=0.75, list=FALSE)
 
 ![](img/8d59a5f602d892489b2bfc7aa92e9925_18.png)
 
@@ -59,6 +56,9 @@ inTrain <- createDataPartition(y=spam$type, p=0.75, list=FALSE)
 
 ![](img/8d59a5f602d892489b2bfc7aa92e9925_21.png)
 
+```r
+# 创建训练集索引
+inTrain <- createDataPartition(y=spam$type, p=0.75, list=FALSE)
 # 定义训练集和测试集
 training <- spam[inTrain, ]
 testing <- spam[-inTrain, ]
@@ -227,13 +227,13 @@ modelFit2 <- train(type ~ ., data=training, method="glm", trControl = fitControl
 
 ![](img/8d59a5f602d892489b2bfc7aa92e9925_69.png)
 
+
+![](img/8d59a5f602d892489b2bfc7aa92e9925_70.png)
+
 ```r
 # 设置全局随机种子以获得可重复结果
 set.seed(12345)
 modelFit2 <- train(type ~ ., data=training, method="glm")
-
-![](img/8d59a5f602d892489b2bfc7aa92e9925_70.png)
-
 # 重置种子并再次拟合，将得到完全相同的结果
 set.seed(12345)
 modelFit3 <- train(type ~ ., data=training, method="glm")

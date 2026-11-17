@@ -74,6 +74,11 @@ system_prompt = """
 
 我们可以使用标准的`pytest`框架来编写这些测试。
 
+
+![](img/ffac4e915eef8334a4abcd6dfd2df8fc_3.png)
+
+![](img/ffac4e915eef8334a4abcd6dfd2df8fc_4.png)
+
 ```python
 import cv2
 import numpy as np
@@ -88,11 +93,6 @@ def test_clip_partial_out_of_bounds():
     # 测试用例2：部分超出边界
     # ... 具体测试代码
     pass
-
-![](img/ffac4e915eef8334a4abcd6dfd2df8fc_3.png)
-
-![](img/ffac4e915eef8334a4abcd6dfd2df8fc_4.png)
-
 def test_clip_completely_out_of_bounds():
     # 测试用例3：完全超出边界
     # ... 具体测试代码

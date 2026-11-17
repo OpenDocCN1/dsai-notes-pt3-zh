@@ -80,12 +80,12 @@ end
 ![](img/57849339d0242f7be48b634abbebaac3_20.png)
 
 在命令窗口中，我们可以像使用内置函数一样调用 `ssum`：
-```matlab
->> result = ssum(10)
-result = 385
 
 ![](img/57849339d0242f7be48b634abbebaac3_22.png)
 
+```matlab
+>> result = ssum(10)
+result = 385
 >> result = ssum(100)
 result = 338350
 ```

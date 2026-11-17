@@ -16,11 +16,11 @@
 
 以下是创建图并添加节点的代码：
 
-```rust
-use petgraph::graph::UnGraph;
 
 ![](img/bb48a0d1cc64aea5770e1858f3ba5577_2.png)
 
+```rust
+use petgraph::graph::UnGraph;
 let mut graph = UnGraph::<&str, i32>::new_undirected();
 
 let belem_tower = graph.add_node("Belem Tower");

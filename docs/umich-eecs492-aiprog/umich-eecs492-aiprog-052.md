@@ -114,6 +114,11 @@ class Polynomial:
 
 ![](img/adeac8a6ff985a68af1da7fa51440eb9_17.png)
 
+
+![](img/adeac8a6ff985a68af1da7fa51440eb9_19.png)
+
+![](img/adeac8a6ff985a68af1da7fa51440eb9_20.png)
+
 ```python
 # 创建第一个对象，使用默认系数
 poly1 = Polynomial()
@@ -132,11 +137,6 @@ print(“poly2.degree():”, poly2.degree())  # 输出: 3
 
 # 检查创建的多项式数量
 print(“\nNumber of polynomials created:”, Polynomial.count)  # 输出: 2
-
-![](img/adeac8a6ff985a68af1da7fa51440eb9_19.png)
-
-![](img/adeac8a6ff985a68af1da7fa51440eb9_20.png)
-
 # 删除一个对象
 del poly1
 print(“After deletion, count:”, Polynomial.count)  # 输出: 1
@@ -165,14 +165,14 @@ print(“\nEvaluation of poly2 at”, x_vals, “:”, values)
 
 让我们看一个例子，创建一个 `Quadratic`（二次多项式）子类，它继承自 `Polynomial` 父类。
 
+
+![](img/adeac8a6ff985a68af1da7fa51440eb9_26.png)
+
 ```python
 from utility_poly import *  # 导入一个包含独立`roots`函数的工具模块
 
 class Polynomial:
     # ... (父类定义与之前相同，略) ...
-
-![](img/adeac8a6ff985a68af1da7fa51440eb9_26.png)
-
 class Quadratic(Polynomial):  # Quadratic 继承自 Polynomial
     def __init__(self, coeff, power_decrease=1):
         super().__init__(coeff)  # 调用父类的初始化方法
@@ -196,13 +196,13 @@ class Quadratic(Polynomial):  # Quadratic 继承自 Polynomial
 *   `degree` 方法被重写，对于二次多项式直接返回 2，而不是通过计算系数长度得到。
 
 使用子类：
+
+![](img/adeac8a6ff985a68af1da7fa51440eb9_30.png)
+
 ```python
 # 创建一个二次多项式对象，系数按幂次递减排列 (2x^2 -3x + 1)
 quad1 = Quadratic([2, -3, 1], power_decrease=1)
 print(“Roots (power_decrease=1):”, quad1.roots())
-
-![](img/adeac8a6ff985a68af1da7fa51440eb9_30.png)
-
 # 创建另一个对象，系数按幂次递增排列 (1 -3x + 2x^2)
 quad2 = Quadratic([1, -3, 2], power_decrease=0)
 print(“Roots (power_decrease=0):”, quad2.roots())

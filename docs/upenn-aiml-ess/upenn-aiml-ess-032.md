@@ -29,11 +29,11 @@
 
 以下是用Python实现贪婪最佳优先搜索的简化代码框架：
 
-```python
-import heapq
 
 ![](img/c863f2dd3334d89f477ff71a2ecb1005_1.png)
 
+```python
+import heapq
 def greedy_best_first_search(start, goal, heuristic, get_neighbors):
     frontier = []  # 优先队列
     heapq.heappush(frontier, (heuristic(start, goal), start))

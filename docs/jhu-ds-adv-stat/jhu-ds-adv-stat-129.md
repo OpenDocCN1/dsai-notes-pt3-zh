@@ -33,12 +33,12 @@ fit <- lm(mpg ~ disp + hp, data = mtcars)
 
 为了绘制三维图形，我们需要加载`rgl`包。请注意，`rgl`包需要本地图形硬件的支持，因此你需要在本地R环境中运行此代码，无法在网页版的RStudio服务器上执行。
 
-```r
-# 加载rgl包
-library(rgl)
 
 ![](img/ca83df0bf8e8336d2239d1baf8afed87_8.png)
 
+```r
+# 加载rgl包
+library(rgl)
 # 打开一个新的3D绘图窗口
 open3d()
 ```
@@ -91,15 +91,15 @@ ellipse3d(fit, level = 0.95, col = "red", alpha = 0.5, aspect = TRUE)
 
 首先，我们需要获取模型的关键参数：
 
+
+![](img/ca83df0bf8e8336d2239d1baf8afed87_21.png)
+
 ```r
 # 获取系数估计值向量 beta_hat
 beta <- coef(fit)
 
 # 获取系数估计的方差-协方差矩阵 Sigma
 sigma <- vcov(fit)
-
-![](img/ca83df0bf8e8336d2239d1baf8afed87_21.png)
-
 # 获取样本量 n 和预测变量个数 p
 n <- nrow(model.matrix(fit))
 p <- ncol(model.matrix(fit))

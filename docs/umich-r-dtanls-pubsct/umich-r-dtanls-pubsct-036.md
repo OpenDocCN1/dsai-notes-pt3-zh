@@ -116,14 +116,14 @@ data <- data %>%
 
 接着，我们可以计算被抚养人口和工作年龄人口的数量，然后计算比率。
 
+
+![](img/748ff24a3f1b8cdfa82f59c0fe589cb3_14.png)
+
 ```r
 # 方法一：分步计算
 n_dep <- data %>%
   filter(dependent == TRUE) %>%
   nrow()
-
-![](img/748ff24a3f1b8cdfa82f59c0fe589cb3_14.png)
-
 n_total <- nrow(data)
 n_work <- n_total - n_dep
 

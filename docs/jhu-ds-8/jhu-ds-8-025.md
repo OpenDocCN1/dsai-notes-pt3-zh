@@ -43,6 +43,9 @@
 ![](img/1a48a8aab646ab89f68bdbf3d2fe5717_13.png)
 
 **数据准备代码**：
+
+![](img/1a48a8aab646ab89f68bdbf3d2fe5717_15.png)
+
 ```r
 # 假设df是包含wage和其他变量的数据框
 # 移除log wage列
@@ -53,9 +56,6 @@ set.seed(123)
 trainIndex <- createDataPartition(df$wage, p = .6, list = FALSE)
 train <- df[ trainIndex,]
 temp <- df[-trainIndex,]
-
-![](img/1a48a8aab646ab89f68bdbf3d2fe5717_15.png)
-
 testIndex <- createDataPartition(temp$wage, p = .5, list = FALSE)
 test <- temp[ testIndex,]
 validation <- temp[-testIndex,]
@@ -68,12 +68,12 @@ validation <- temp[-testIndex,]
 ![](img/1a48a8aab646ab89f68bdbf3d2fe5717_17.png)
 
 **构建模型代码**：
-```r
-# 模型1: 广义线性模型 (GLM)
-model1 <- train(wage ~ ., data = train, method = "glm")
 
 ![](img/1a48a8aab646ab89f68bdbf3d2fe5717_18.png)
 
+```r
+# 模型1: 广义线性模型 (GLM)
+model1 <- train(wage ~ ., data = train, method = "glm")
 # 模型2: 随机森林
 model2 <- train(wage ~ ., data = train, method = "rf")
 ```
@@ -86,6 +86,9 @@ model2 <- train(wage ~ ., data = train, method = "rf")
 ![](img/1a48a8aab646ab89f68bdbf3d2fe5717_20.png)
 
 **模型堆叠代码**：
+
+![](img/1a48a8aab646ab89f68bdbf3d2fe5717_22.png)
+
 ```r
 # 在测试集上进行预测
 pred1 <- predict(model1, newdata = test)
@@ -93,9 +96,6 @@ pred2 <- predict(model2, newdata = test)
 
 # 创建用于堆叠的新数据框
 stackData <- data.frame(pred1, pred2, wage = test$wage)
-
-![](img/1a48a8aab646ab89f68bdbf3d2fe5717_22.png)
-
 # 拟合组合模型（例如线性回归）
 combinedModel <- lm(wage ~ pred1 + pred2, data = stackData)
 ```
@@ -103,19 +103,19 @@ combinedModel <- lm(wage ~ pred1 + pred2, data = stackData)
 最后，我们在未参与任何模型训练的验证集上评估性能。分别计算单一模型和组合模型的预测误差（如均方根误差RMSE）。
 
 **验证评估**：
+
+![](img/1a48a8aab646ab89f68bdbf3d2fe5717_24.png)
+
+
+![](img/1a48a8aab646ab89f68bdbf3d2fe5717_26.png)
+
 ```r
 # 在验证集上进行预测
 val_pred1 <- predict(model1, newdata = validation)
 val_pred2 <- predict(model2, newdata = validation)
-
-![](img/1a48a8aab646ab89f68bdbf3d2fe5717_24.png)
-
 # 使用组合模型对验证集的预测结果进行“再预测”
 val_stackData <- data.frame(pred1 = val_pred1, pred2 = val_pred2)
 final_pred <- predict(combinedModel, newdata = val_stackData)
-
-![](img/1a48a8aab646ab89f68bdbf3d2fe5717_26.png)
-
 # 计算误差
 error1 <- RMSE(val_pred1, validation$wage)
 error2 <- RMSE(val_pred2, validation$wage)

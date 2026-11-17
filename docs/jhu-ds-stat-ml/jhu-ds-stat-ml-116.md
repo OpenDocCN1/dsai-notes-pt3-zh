@@ -10,15 +10,15 @@
 
 首先，我们回顾一下默认的即时响应行为。以下代码创建了一个简单的应用，其中滑块的值会即时影响输出。
 
+
+![](img/674734d67f23935d4fcede867c78e2f6_1.png)
+
 ```r
 # 用户界面定义
 ui <- fluidPage(
   sliderInput("n", "样本数量", 1, 100, 50),
   plotOutput("hist")
 )
-
-![](img/674734d67f23935d4fcede867c78e2f6_1.png)
-
 # 服务器逻辑定义
 server <- function(input, output) {
   output$hist <- renderPlot({

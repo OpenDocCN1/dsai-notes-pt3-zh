@@ -294,6 +294,11 @@ int MPI_Barrier(MPI_Comm comm)
 3.  **结果散播**：根进程使用 `MPI_Scatter` 将完整的向量 `y` 分发给所有进程，使每个进程获得最终结果中属于自己的那一部分。
 
 **代码框架**：
+
+![](img/b86ffbf11a59eb7f2efdfca6f383fe37_55.png)
+
+![](img/b86ffbf11a59eb7f2efdfca6f383fe37_57.png)
+
 ```c
 // 假设每个进程拥有：局部矩阵 A_local[n][n_local]，局部向量 x_local[n_local]
 // 目标：计算 y_local[n_local]
@@ -312,11 +317,6 @@ for (int i = 0; i < n; i++) {
 
 // 2. 全局归约：将所有进程的 partial_y 求和到根进程的 y 中
 MPI_Reduce(partial_y, y, n, MPI_DOUBLE, MPI_SUM, 0, MPI_COMM_WORLD);
-
-![](img/b86ffbf11a59eb7f2efdfca6f383fe37_55.png)
-
-![](img/b86ffbf11a59eb7f2efdfca6f383fe37_57.png)
-
 // 3. 结果散播：根进程将 y 散播到所有进程的 y_local 中
 MPI_Scatter(y, n_local, MPI_DOUBLE, y_local, n_local, MPI_DOUBLE, 0, MPI_COMM_WORLD);
 ```

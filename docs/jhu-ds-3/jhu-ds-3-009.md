@@ -364,14 +364,14 @@ merge(DT1, DT2) # 基于键x快速合并DT1和DT2
 
 ![](img/ae3bcb4937e6ac3242e5b0aa5a0f9106_141.png)
 
+
+![](img/ae3bcb4937e6ac3242e5b0aa5a0f9106_143.png)
+
 ```r
 # 创建一个大型临时文件并写入数据
 DF <- data.frame(x=rnorm(1e6), y=rnorm(1e6))
 file <- tempfile()
 write.table(DF, file=file, row.names=FALSE, col.names=TRUE, sep="\t", quote=FALSE)
-
-![](img/ae3bcb4937e6ac3242e5b0aa5a0f9106_143.png)
-
 # 使用fread快速读取
 system.time(DT <- fread(file))
 ```

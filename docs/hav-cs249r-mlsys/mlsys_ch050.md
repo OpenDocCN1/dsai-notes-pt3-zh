@@ -264,10 +264,11 @@ dtype('uint8')
 
 让我们获取一个测试图像。你可以从你的电脑传输它或下载一个用于测试。让我们首先在我们的工作目录下创建一个文件夹：
 
+wget https://upload.wikimedia.org/wikipedia/commons/3/3a/Cat03.jpg
+
 ```py
 mkdir images
 cd images
-wget https://upload.wikimedia.org/wikipedia/commons/3/3a/Cat03.jpg
 ```
 
 让我们加载并显示图像：

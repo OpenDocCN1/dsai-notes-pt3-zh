@@ -76,14 +76,17 @@
 
 以下是调用情感分析的核心代码示例：
 
+
+![](img/9630e4395c6fcc2385d2456b62a5f595_14.png)
+
+
+![](img/9630e4395c6fcc2385d2456b62a5f595_16.png)
+
 ```python
 import boto3
 
 # 创建Comprehend客户端
 client = boto3.client('comprehend')
-
-![](img/9630e4395c6fcc2385d2456b62a5f595_14.png)
-
 # 定义要分析的文本
 text = "This is a great day."
 
@@ -92,9 +95,6 @@ response = client.detect_sentiment(
     Text=text,
     LanguageCode='en'
 )
-
-![](img/9630e4395c6fcc2385d2456b62a5f595_16.png)
-
 # 查看响应结果
 print(response['Sentiment'])
 ```

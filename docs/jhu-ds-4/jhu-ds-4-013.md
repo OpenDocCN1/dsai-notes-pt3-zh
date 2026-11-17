@@ -217,12 +217,6 @@ plot(x, z, pch = 19) # 第二个图在下方
 
 ![](img/2e242979b22f728c29eb9560843afdd8_90.png)
 
-```r
-# 生成包含组别的数据
-set.seed(123)
-x <- rnorm(100)
-y <- x + rnorm(100, sd = 0.5)
-g <- factor(rep(c(“Male”, “Female”), each = 50), labels = c(“Male”, “Female”))
 
 ![](img/2e242979b22f728c29eb9560843afdd8_92.png)
 
@@ -230,6 +224,12 @@ g <- factor(rep(c(“Male”, “Female”), each = 50), labels = c(“Male”, 
 
 ![](img/2e242979b22f728c29eb9560843afdd8_95.png)
 
+```r
+# 生成包含组别的数据
+set.seed(123)
+x <- rnorm(100)
+y <- x + rnorm(100, sd = 0.5)
+g <- factor(rep(c(“Male”, “Female”), each = 50), labels = c(“Male”, “Female”))
 # 建立空图形框架
 plot(x, y, type = “n”, xlab = “X”, ylab = “Y”)
 # 添加男性数据点（绿色）

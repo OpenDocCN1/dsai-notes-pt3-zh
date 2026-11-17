@@ -113,14 +113,14 @@ Greenbush Donuts,0,2
 
 以下是完整的程序代码，它结合了CSV处理和命令行参数。
 
-```python
-import csv
-import sys
 
 ![](img/4aa7dd075dbc47c16a081c8c6295aae1_1.png)
 
 ![](img/4aa7dd075dbc47c16a081c8c6295aae1_3.png)
 
+```python
+import csv
+import sys
 # --- 粘贴 process_csv 函数 ---
 def process_csv(filename):
     example_file = open(filename, encoding='utf-8')

@@ -56,13 +56,13 @@ ggplot(data, aes(x=type, y=log_capital_avg)) + geom_boxplot()
 
 以下是实现这一过程的代码框架：
 
+
+![](img/547c5a2fbfe9e83dc1515de17539f994_15.png)
+
 ```r
 # 初始化一个向量来存储交叉验证误差
 cv_errors <- numeric(ncol(training_set) - 1) # 假设最后一列是响应变量‘type’
 predictor_names <- names(training_set)[-ncol(training_set)]
-
-![](img/547c5a2fbfe9e83dc1515de17539f994_15.png)
-
 for (i in seq_along(predictor_names)) {
   # 为每个预测变量构建公式
   formula <- as.formula(paste("type ~", predictor_names[i]))

@@ -62,13 +62,21 @@
 
 ![](img/b2ba8df9507e13fa8c4c4cdafe6eb19c_21.png)
 
-```python
-import numpy as np
 
 ![](img/b2ba8df9507e13fa8c4c4cdafe6eb19c_23.png)
 
 ![](img/b2ba8df9507e13fa8c4c4cdafe6eb19c_24.png)
 
+
+![](img/b2ba8df9507e13fa8c4c4cdafe6eb19c_26.png)
+
+
+![](img/b2ba8df9507e13fa8c4c4cdafe6eb19c_28.png)
+
+![](img/b2ba8df9507e13fa8c4c4cdafe6eb19c_30.png)
+
+```python
+import numpy as np
 # 定义激活函数（Sigmoid）
 def sigmoid(z):
     return 1 / (1 + np.exp(-z))
@@ -78,9 +86,6 @@ def sigmoid(z):
 W = np.random.randn(3, 2)
 # 输出层：1个神经元，接收3维输入（来自隐藏层）
 V = np.random.randn(1, 3)
-
-![](img/b2ba8df9507e13fa8c4c4cdafe6eb19c_26.png)
-
 # 前向传播函数
 def forward(x):
     # 隐藏层计算
@@ -88,11 +93,6 @@ def forward(x):
     # 输出层计算（此处假设为回归，不使用激活函数）
     y_hat = np.dot(V, h)
     return y_hat
-
-![](img/b2ba8df9507e13fa8c4c4cdafe6eb19c_28.png)
-
-![](img/b2ba8df9507e13fa8c4c4cdafe6eb19c_30.png)
-
 # 示例输入
 x = np.array([0.5, -1.2])
 output = forward(x)

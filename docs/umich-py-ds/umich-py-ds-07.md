@@ -126,6 +126,9 @@ print(classes)
 3.  累加高速公路MPG值并计数。
 4.  计算平均值并存储。
 
+
+![](img/39d414e1f6f9bd1abb4c822f0ef01362_2.png)
+
 ```python
 avg_hwy_by_class = []
 
@@ -138,9 +141,6 @@ for v_class in classes:
             count += 1
     avg_hwy = sum_hwy / count
     avg_hwy_by_class.append((v_class, avg_hwy))
-
-![](img/39d414e1f6f9bd1abb4c822f0ef01362_2.png)
-
 # 按MPG从低到高排序
 avg_hwy_by_class.sort(key=lambda x: x[1])
 print(avg_hwy_by_class)

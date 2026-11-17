@@ -65,15 +65,9 @@
 为了便于反复测试和修改代码，程序在开始时会删除所有已存在的表，然后重新创建它们。这样能确保每次运行时都从一个干净的状态开始。
 
 以下是初始化数据库的代码逻辑：
-```python
-conn = sqlite3.connect('trackdb.sqlite')
-cur = conn.cursor()
 
 ![](img/328a55af607248a550615fd51e572b82_29.png)
 
-cur.execute('DROP TABLE IF EXISTS Artist')
-cur.execute('DROP TABLE IF EXISTS Album')
-cur.execute('DROP TABLE IF EXISTS Track')
 
 ![](img/328a55af607248a550615fd51e572b82_30.png)
 
@@ -81,6 +75,12 @@ cur.execute('DROP TABLE IF EXISTS Track')
 
 ![](img/328a55af607248a550615fd51e572b82_32.png)
 
+```python
+conn = sqlite3.connect('trackdb.sqlite')
+cur = conn.cursor()
+cur.execute('DROP TABLE IF EXISTS Artist')
+cur.execute('DROP TABLE IF EXISTS Album')
+cur.execute('DROP TABLE IF EXISTS Track')
 # 每个人的 Python 第四部分 创建新表
 cur.execute('''CREATE TABLE Artist (
     id  INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,
@@ -116,12 +116,12 @@ cur.execute('''CREATE TABLE Artist (
 ![](img/328a55af607248a550615fd51e572b82_43.png)
 
 在开发初期，可以先打印出这些解析后的字段，以确认数据读取和解析是否正确。
-```python
-if len(pieces) < 6:
-    continue
 
 ![](img/328a55af607248a550615fd51e572b82_45.png)
 
+```python
+if len(pieces) < 6:
+    continue
 name = pieces[0]
 artist = pieces[1]
 album = pieces[2]

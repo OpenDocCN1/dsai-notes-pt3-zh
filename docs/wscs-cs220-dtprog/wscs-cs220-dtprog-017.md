@@ -113,11 +113,11 @@ JSON（JavaScript Object Notation）是一种轻量级的数据交换格式。�
 ![](img/c9292ef10030e2f9795ad628feb7e0b4_3.png)
 
 **读取JSON文件函数：**
-```python
-import json
 
 ![](img/c9292ef10030e2f9795ad628feb7e0b4_5.png)
 
+```python
+import json
 def read_json_file(path):
     with open(path, 'r', encoding='utf-8') as f:
         return json.load(f)

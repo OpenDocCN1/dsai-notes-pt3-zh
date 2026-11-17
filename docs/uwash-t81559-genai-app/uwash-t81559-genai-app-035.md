@@ -36,12 +36,12 @@
 
 ![](img/ef5047614921ee5e056baa4370c388b5_3.png)
 
-```python
-# 示例：使用LangChain连接本地LM Studio服务器
-from langchain.llms import OpenAI
 
 ![](img/ef5047614921ee5e056baa4370c388b5_5.png)
 
+```python
+# 示例：使用LangChain连接本地LM Studio服务器
+from langchain.llms import OpenAI
 # 将基础URL指向本地LM Studio服务器
 llm = OpenAI(openai_api_base="http://localhost:1234/v1", openai_api_key="not-needed")
 response = llm("Hello, world!")

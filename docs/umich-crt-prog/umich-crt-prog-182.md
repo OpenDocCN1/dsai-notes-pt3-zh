@@ -22,6 +22,9 @@
 
 以下是实现上述步骤的核心代码：
 
+
+![](img/6c4856607fd08533b976e7d62f648bd8_3.png)
+
 ```python
 import sqlite3
 import os
@@ -38,9 +41,6 @@ cur = conn.cursor()
 cur.execute(‘SELECT * FROM people LIMIT 5’)
 people_data = cur.fetchall()
 print(“People Table:”, people_data)
-
-![](img/6c4856607fd08533b976e7d62f648bd8_3.png)
-
 # 执行JOIN查询
 cur.execute(‘’’
     SELECT *

@@ -1235,9 +1235,10 @@ cd /Documents/YOLO
 
 并在终端（CLI）上运行从 Ultralytics 网站下载的图像的推理，使用 YOLOV8n 模型（家族中最小的模型）：
 
+     source='https://ultralytics.com/images/bus.jpg'
+
 ```py
 yolo predict model='yolov8n' \
-     source='https://ultralytics.com/images/bus.jpg'
 ```
 
 > YOLO 模型家族使用 COCO 数据集预训练。

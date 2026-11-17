@@ -10,12 +10,12 @@
 
 首先，我们从一个带有侧边栏的默认主题开始。以下是创建一个包含标签页的 UI 的代码示例。请注意，我们可以在单个面板内使用标签页，也可以将其与侧边栏布局结合。
 
-```r
-# 加载 shiny 库
-library(shiny)
 
 ![](img/9ab9c978bba314a0ff52c74d2cf4dbdb_3.png)
 
+```r
+# 加载 shiny 库
+library(shiny)
 # 定义用户界面
 ui <- fluidPage(
   sidebarLayout(

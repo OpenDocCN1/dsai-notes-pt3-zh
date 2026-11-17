@@ -74,6 +74,14 @@ print(model.chat_format)
 
 让我们看一个多轮对话的例子：
 
+
+![](img/a2278c78577ba613e03ffc799f20a52b_12.png)
+
+![](img/a2278c78577ba613e03ffc799f20a52b_13.png)
+
+
+![](img/a2278c78577ba613e03ffc799f20a52b_15.png)
+
 ```python
 # 初始化对话历史
 messages = [
@@ -85,17 +93,9 @@ messages = [
 response1 = model.create_chat_completion(messages=messages)
 assistant_reply1 = response1['choices'][0]['message']['content']
 print(f"助手: {assistant_reply1}")
-
-![](img/a2278c78577ba613e03ffc799f20a52b_12.png)
-
-![](img/a2278c78577ba613e03ffc799f20a52b_13.png)
-
 # 将助手的回复加入历史，然后提出新问题
 messages.append({"role": "assistant", "content": assistant_reply1})
 messages.append({"role": "user", "content": "你确定吗？我记得地球是太阳系的第三颗行星。"})
-
-![](img/a2278c78577ba613e03ffc799f20a52b_15.png)
-
 # 第二轮对话
 response2 = model.create_chat_completion(messages=messages)
 assistant_reply2 = response2['choices'][0]['message']['content']

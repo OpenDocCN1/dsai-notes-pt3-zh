@@ -63,14 +63,14 @@ NVIDIA近期发布了基于Hopper架构的H100 GPU。与上一代A100相比，H1
 ![](img/a81237bbdc071e2cb7be0f2da02642aa_21.png)
 
 在代码中，使用PyTorch时，通过 `tensor.to(device)` 命令（如 `tensor.to(‘cuda:1’)`）可以方便地在设备间移动数据。一个简单的模型并行代码示例如下：
+
+![](img/a81237bbdc071e2cb7be0f2da02642aa_23.png)
+
 ```python
 # 将网络的第一部分放在GPU0上
 net1.to(‘cuda:0’)
 # 将网络的第二部分放在GPU1上
 net2.to(‘cuda:1’)
-
-![](img/a81237bbdc071e2cb7be0f2da02642aa_23.png)
-
 # 前向传播
 input = input.to(‘cuda:0’)
 intermediate = net1(input)

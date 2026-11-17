@@ -83,11 +83,6 @@ $$
 ![](img/c61dde3d5249f575b3f67d25bba5fca4_23.png)
 
 用代码表示其计算逻辑如下：
-```python
-def partial_derivative_x(f, x, y):
-    # 将y视为常数，对x求导
-    h = 1e-5 # 一个极小的数，用于数值近似
-    return (f(x + h, y) - f(x, y)) / h
 
 ![](img/c61dde3d5249f575b3f67d25bba5fca4_24.png)
 
@@ -95,6 +90,11 @@ def partial_derivative_x(f, x, y):
 
 ![](img/c61dde3d5249f575b3f67d25bba5fca4_27.png)
 
+```python
+def partial_derivative_x(f, x, y):
+    # 将y视为常数，对x求导
+    h = 1e-5 # 一个极小的数，用于数值近似
+    return (f(x + h, y) - f(x, y)) / h
 def f(x, y):
     return x**2 + 3*x*y + y**3
 

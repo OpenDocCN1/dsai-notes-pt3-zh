@@ -195,10 +195,6 @@ Spark程序的逻辑通常遵循以下模式：
 
 ![](img/b5deb0735fb5b8164c2721dfff60a544_113.png)
 
-```python
-# 1. 创建RDD (Creation)
-# 将一个本地Python列表并行化为一个RDD，此时并未真正分发数据
-rdd1 = sc.parallelize(["hello world", "hi"])
 
 ![](img/b5deb0735fb5b8164c2721dfff60a544_115.png)
 
@@ -210,9 +206,6 @@ rdd1 = sc.parallelize(["hello world", "hi"])
 
 ![](img/b5deb0735fb5b8164c2721dfff60a544_122.png)
 
-# 2. 转换RDD (Transformation)
-# 使用flatMap转换，将每个字符串拆分为单词。此时仍是惰性计算
-rdd2 = rdd1.flatMap(lambda line: line.split(" "))
 
 ![](img/b5deb0735fb5b8164c2721dfff60a544_124.png)
 
@@ -234,6 +227,13 @@ rdd2 = rdd1.flatMap(lambda line: line.split(" "))
 
 ![](img/b5deb0735fb5b8164c2721dfff60a544_135.png)
 
+```python
+# 1. 创建RDD (Creation)
+# 将一个本地Python列表并行化为一个RDD，此时并未真正分发数据
+rdd1 = sc.parallelize(["hello world", "hi"])
+# 2. 转换RDD (Transformation)
+# 使用flatMap转换，将每个字符串拆分为单词。此时仍是惰性计算
+rdd2 = rdd1.flatMap(lambda line: line.split(" "))
 # 3. 行动操作 (Action)
 # countByValue是一个行动操作，它会触发前面所有转换的实际执行
 # 结果会返回到驱动程序并打印出来

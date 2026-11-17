@@ -91,22 +91,22 @@ XML标签是Claude大模型世界中用于结构化提示词、指导模型如�
 
 ![](img/eccecdbf3da5a6cd999968de627a3a6a_43.png)
 
-```python
-from langchain_community.document_loaders import PyPDFLoader
-from langchain_openai import OpenAIEmbeddings
-from langchain_community.vectorstores import FAISS
-from langchain.text_splitter import RecursiveCharacterTextSplitter
 
 ![](img/eccecdbf3da5a6cd999968de627a3a6a_45.png)
 
-# 1. 加载并拆分PDF文档
-loader = PyPDFLoader(“esop_agent.pdf”)
-documents = loader.load_and_split()
 
 ![](img/eccecdbf3da5a6cd999968de627a3a6a_47.png)
 
 ![](img/eccecdbf3da5a6cd999968de627a3a6a_49.png)
 
+```python
+from langchain_community.document_loaders import PyPDFLoader
+from langchain_openai import OpenAIEmbeddings
+from langchain_community.vectorstores import FAISS
+from langchain.text_splitter import RecursiveCharacterTextSplitter
+# 1. 加载并拆分PDF文档
+loader = PyPDFLoader(“esop_agent.pdf”)
+documents = loader.load_and_split()
 # 2. 创建向量存储
 embeddings = OpenAIEmbeddings()
 vectorstore = FAISS.from_documents(documents, embeddings)
@@ -125,22 +125,22 @@ Agent需要通过工具（Tools）来执行具体任务。我们创建一个简�
 
 ![](img/eccecdbf3da5a6cd999968de627a3a6a_57.png)
 
-```python
-from langchain.tools import tool
 
 ![](img/eccecdbf3da5a6cd999968de627a3a6a_59.png)
 
 ![](img/eccecdbf3da5a6cd999968de627a3a6a_61.png)
 
+
+![](img/eccecdbf3da5a6cd999968de627a3a6a_63.png)
+
+```python
+from langchain.tools import tool
 @tool
 def esop_agent_search(query: str) -> str:
     """在ESOP Agent知识库中搜索相关信息。"""
     docs = vectorstore.similarity_search(query, k=3)
     content = “\n\n”.join([doc.page_content for doc in docs])
     return content
-
-![](img/eccecdbf3da5a6cd999968de627a3a6a_63.png)
-
 # 定义工具集
 tools = [esop_agent_search]
 ```
@@ -166,12 +166,12 @@ tools = [esop_agent_search]
 
 ![](img/eccecdbf3da5a6cd999968de627a3a6a_75.png)
 
-```python
-from langchain import hub
-from langchain.agents import XMLAgent
 
 ![](img/eccecdbf3da5a6cd999968de627a3a6a_77.png)
 
+```python
+from langchain import hub
+from langchain.agents import XMLAgent
 # 从LangChain Hub拉取XML Agent对话提示词模板
 prompt = hub.pull(“hwchase17/xml-agent-convo”)
 ```
@@ -189,29 +189,29 @@ prompt = hub.pull(“hwchase17/xml-agent-convo”)
 
 ![](img/eccecdbf3da5a6cd999968de627a3a6a_85.png)
 
-```python
-from langchain_anthropic import ChatAnthropic
 
 ![](img/eccecdbf3da5a6cd999968de627a3a6a_87.png)
 
-# 初始化Claude模型（这里使用Sonnet，平衡速度与性能）
-llm = ChatAnthropic(model=“claude-3-sonnet-20240229”)
 
 ![](img/eccecdbf3da5a6cd999968de627a3a6a_89.png)
 
 ![](img/eccecdbf3da5a6cd999968de627a3a6a_91.png)
 
+
+![](img/eccecdbf3da5a6cd999968de627a3a6a_93.png)
+
+![](img/eccecdbf3da5a6cd999968de627a3a6a_95.png)
+
+```python
+from langchain_anthropic import ChatAnthropic
+# 初始化Claude模型（这里使用Sonnet，平衡速度与性能）
+llm = ChatAnthropic(model=“claude-3-sonnet-20240229”)
 # 辅助函数：将Agent的中间步骤转换为XML格式
 def convert_intermediate_steps(intermediate_steps):
     log = “”
     for action, observation in intermediate_steps:
         log += f”<tool>{action.tool}</tool><tool_input>{action.tool_input}</tool_input><observation>{observation}</observation>”
     return log
-
-![](img/eccecdbf3da5a6cd999968de627a3a6a_93.png)
-
-![](img/eccecdbf3da5a6cd999968de627a3a6a_95.png)
-
 # 辅助函数：将聊天记忆转换为字符串
 def memory_to_string(memory):
     return “\n”.join([f”{‘Human’ if isinstance(msg, HumanMessage) else ‘AI’}: {msg.content}” for msg in memory])
@@ -227,18 +227,23 @@ def memory_to_string(memory):
 
 ![](img/eccecdbf3da5a6cd999968de627a3a6a_101.png)
 
+
+![](img/eccecdbf3da5a6cd999968de627a3a6a_103.png)
+
+
+![](img/eccecdbf3da5a6cd999968de627a3a6a_105.png)
+
+
+![](img/eccecdbf3da5a6cd999968de627a3a6a_107.png)
+
+![](img/eccecdbf3da5a6cd999968de627a3a6a_109.png)
+
 ```python
 from langchain.agents import AgentExecutor, create_xml_agent
 from langchain.memory import ConversationBufferWindowMemory
 from langchain.schema import HumanMessage, AIMessage
-
-![](img/eccecdbf3da5a6cd999968de627a3a6a_103.png)
-
 # 1. 创建Agent
 agent = create_xml_agent(llm, tools, prompt)
-
-![](img/eccecdbf3da5a6cd999968de627a3a6a_105.png)
-
 # 2. 创建记忆组件（只保留最近5轮对话）
 memory = ConversationBufferWindowMemory(k=5, return_messages=True)
 
@@ -251,11 +256,6 @@ agent_executor = AgentExecutor(
     return_intermediate_steps=True, # 返回中间步骤，便于调试
     handle_parsing_errors=True
 )
-
-![](img/eccecdbf3da5a6cd999968de627a3a6a_107.png)
-
-![](img/eccecdbf3da5a6cd999968de627a3a6a_109.png)
-
 # 4. 封装聊天函数
 def chat(question: str):
     # 将记忆转换为字符串，以便嵌入提示词

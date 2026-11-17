@@ -35,6 +35,9 @@ with open('stock.txt', 'r') as file:
 一旦我们将CSV文件解析为列表，就可以进一步处理数据。例如，我们可以计算股票的平均收盘价，或找出最高和最低的股价。
 
 以下是计算平均收盘价的示例代码：
+
+![](img/13328569b14ae085819c941f840776dd_3.png)
+
 ```python
 closing_prices = []
 with open('stock.txt', 'r') as file:
@@ -42,9 +45,6 @@ with open('stock.txt', 'r') as file:
         values = line.strip().split(',')
         closing_price = float(values[4])  # 假设收盘价在第5列
         closing_prices.append(closing_price)
-
-![](img/13328569b14ae085819c941f840776dd_3.png)
-
 average_close = sum(closing_prices) / len(closing_prices)
 print(f"平均收盘价: {average_close}")
 ```

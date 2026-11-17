@@ -79,6 +79,9 @@
 
 一个典型的转换流程代码如下：
 
+
+![](img/8802ff0cab42689fd168e625e4e6fb94_19.png)
+
 ```python
 # 假设已安装 onnx 和 coremltools 库
 import onnx
@@ -89,9 +92,6 @@ import coremltools
 
 # 2. 使用工具将其转换为ONNX格式
 # onnx_model = onnx.utils.convert_model(original_model)
-
-![](img/8802ff0cab42689fd168e625e4e6fb94_19.png)
-
 # 3. 保存ONNX模型
 # onnx.save_model(onnx_model, "converted_model.onnx")
 ```

@@ -52,10 +52,6 @@
 
 ![](img/bb670bc78b38a2fb439576d2910375f8_35.png)
 
-```r
-# 清除全局变量和图形
-rm(list=ls())
-graphics.off()
 
 ![](img/bb670bc78b38a2fb439576d2910375f8_37.png)
 
@@ -65,6 +61,10 @@ graphics.off()
 
 ![](img/bb670bc78b38a2fb439576d2910375f8_43.png)
 
+```r
+# 清除全局变量和图形
+rm(list=ls())
+graphics.off()
 # 加载自定义工具库（需确保已安装gRain库）
 source("stat_tools.R")
 ```
@@ -140,10 +140,6 @@ temperature <- CPT(values = c(0.1, 0.4, 0.4, 0.1),
 
 ![](img/bb670bc78b38a2fb439576d2910375f8_86.png)
 
-```r
-# 定义天气变量
-weather <- CPT(values = c(0.1, 0.5, 0.4),
-               levels = c("rainy", "cloudy", "sunny"))
 
 ![](img/bb670bc78b38a2fb439576d2910375f8_88.png)
 
@@ -151,12 +147,6 @@ weather <- CPT(values = c(0.1, 0.5, 0.4),
 
 ![](img/bb670bc78b38a2fb439576d2910375f8_91.png)
 
-# 定义雨伞变量（条件于天气）
-umbrella <- CPT(values = c(0.8, 0.2,  # 下雨时，雨伞打开的概率为80%，关闭为20%
-                           0.1, 0.9,  # 多云时
-                           0.01, 0.99), # 晴天时
-                levels = c("open", "closed"),
-                given = "weather")
 
 ![](img/bb670bc78b38a2fb439576d2910375f8_93.png)
 
@@ -166,6 +156,16 @@ umbrella <- CPT(values = c(0.8, 0.2,  # 下雨时，雨伞打开的概率为80%�
 
 ![](img/bb670bc78b38a2fb439576d2910375f8_98.png)
 
+```r
+# 定义天气变量
+weather <- CPT(values = c(0.1, 0.5, 0.4),
+               levels = c("rainy", "cloudy", "sunny"))
+# 定义雨伞变量（条件于天气）
+umbrella <- CPT(values = c(0.8, 0.2,  # 下雨时，雨伞打开的概率为80%，关闭为20%
+                           0.1, 0.9,  # 多云时
+                           0.01, 0.99), # 晴天时
+                levels = c("open", "closed"),
+                given = "weather")
 # 定义外套变量（条件于天气和温度）
 # 外套类型：无、雨衣、薄外套、厚外套
 jacket <- CPT(values = c(0.01, 0.8, 0.15, 0.04,  # 温度<40，下雨
@@ -231,9 +231,6 @@ var_list <- list(temperature = temperature,
 
 ![](img/bb670bc78b38a2fb439576d2910375f8_134.png)
 
-```r
-# 编译条件概率表列表
-prob_list <- compileCPT(var_list)
 
 ![](img/bb670bc78b38a2fb439576d2910375f8_136.png)
 
@@ -241,6 +238,9 @@ prob_list <- compileCPT(var_list)
 
 ![](img/bb670bc78b38a2fb439576d2910375f8_140.png)
 
+```r
+# 编译条件概率表列表
+prob_list <- compileCPT(var_list)
 # 打印编译后的网络结构，以验证R语言是否正确理解了我们的系统
 print(prob_list)
 ```
@@ -290,9 +290,6 @@ summary(prob_list)
 
 ![](img/bb670bc78b38a2fb439576d2910375f8_168.png)
 
-```r
-# 从概率列表创建图模型（贝叶斯网络）
-graphical_model <- grain(prob_list)
 
 ![](img/bb670bc78b38a2fb439576d2910375f8_169.png)
 
@@ -304,8 +301,6 @@ graphical_model <- grain(prob_list)
 
 ![](img/bb670bc78b38a2fb439576d2910375f8_176.png)
 
-# 为图形模型命名
-GN1 <- graphical_model
 
 ![](img/bb670bc78b38a2fb439576d2910375f8_178.png)
 
@@ -313,6 +308,11 @@ GN1 <- graphical_model
 
 ![](img/bb670bc78b38a2fb439576d2910375f8_181.png)
 
+```r
+# 从概率列表创建图模型（贝叶斯网络）
+graphical_model <- grain(prob_list)
+# 为图形模型命名
+GN1 <- graphical_model
 # 绘制网络图
 plot(GN1)
 ```
@@ -363,10 +363,6 @@ print(joint_dist)
 
 ![](img/bb670bc78b38a2fb439576d2910375f8_207.png)
 
-```r
-# 计算‘外套’变量的边际概率分布
-marginal_jacket <- querygrain(GN1, nodes = "jacket", type = "marginal")
-print(marginal_jacket)
 
 ![](img/bb670bc78b38a2fb439576d2910375f8_208.png)
 
@@ -376,6 +372,10 @@ print(marginal_jacket)
 
 ![](img/bb670bc78b38a2fb439576d2910375f8_212.png)
 
+```r
+# 计算‘外套’变量的边际概率分布
+marginal_jacket <- querygrain(GN1, nodes = "jacket", type = "marginal")
+print(marginal_jacket)
 # 计算‘雨伞’变量的边际概率分布
 marginal_umbrella <- querygrain(GN1, nodes = "umbrella", type = "marginal")
 print(marginal_umbrella)
@@ -404,11 +404,6 @@ print(marginal_umbrella)
 
 ![](img/bb670bc78b38a2fb439576d2910375f8_226.png)
 
-```r
-# 设置证据：假设我们观察到温度>80度且天气晴朗
-GN1_evidence <- setEvidence(GN1,
-                            nodes = c("temperature", "weather"),
-                            states = c(">80", "sunny"))
 
 ![](img/bb670bc78b38a2fb439576d2910375f8_228.png)
 
@@ -420,8 +415,6 @@ GN1_evidence <- setEvidence(GN1,
 
 ![](img/bb670bc78b38a2fb439576d2910375f8_234.png)
 
-# 获取当前设置的证据，以确认其已被使用
-getEvidence(GN1_evidence)
 
 ![](img/bb670bc78b38a2fb439576d2910375f8_236.png)
 
@@ -429,6 +422,13 @@ getEvidence(GN1_evidence)
 
 ![](img/bb670bc78b38a2fb439576d2910375f8_239.png)
 
+```r
+# 设置证据：假设我们观察到温度>80度且天气晴朗
+GN1_evidence <- setEvidence(GN1,
+                            nodes = c("temperature", "weather"),
+                            states = c(">80", "sunny"))
+# 获取当前设置的证据，以确认其已被使用
+getEvidence(GN1_evidence)
 # 在给定证据的条件下，重新计算‘外套’的边际概率
 marginal_jacket_given_evidence <- querygrain(GN1_evidence, nodes = "jacket", type = "marginal")
 print(marginal_jacket_given_evidence)

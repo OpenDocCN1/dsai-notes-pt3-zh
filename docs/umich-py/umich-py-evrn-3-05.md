@@ -64,14 +64,14 @@ python3 --version
 
 ![](img/188b56a7289f9a197239a780d5c19d03_6.png)
 
-```bash
-# 每个人的 Python 第三部分 切换到桌面目录
-cd ~/Desktop
 
 ![](img/188b56a7289f9a197239a780d5c19d03_8.png)
 
 ![](img/188b56a7289f9a197239a780d5c19d03_10.png)
 
+```bash
+# 每个人的 Python 第三部分 切换到桌面目录
+cd ~/Desktop
 # 每个人的 Python 第三部分 创建一个名为“py4e”的文件夹
 mkdir py4e
 

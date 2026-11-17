@@ -79,13 +79,13 @@ G = 1 / (s * (s^2 + s + 1));
 ![](img/decdd66b7504779c7cd5d8fb3aa9ddbd_10.png)
 
 **代码结构示意：**
+
+![](img/decdd66b7504779c7cd5d8fb3aa9ddbd_12.png)
+
 ```matlab
 % 定义优化问题
 fun = @(K) PIDtest(G, dt, K); % 目标函数，仅依赖于K
 nvars = 3; % 优化变量个数（Kp, Ki, Kd）
-
-![](img/decdd66b7504779c7cd5d8fb3aa9ddbd_12.png)
-
 % 设置遗传算法选项
 options = optimoptions('ga', 'PopulationSize', 25, 'MaxGenerations', 10, ...);
 

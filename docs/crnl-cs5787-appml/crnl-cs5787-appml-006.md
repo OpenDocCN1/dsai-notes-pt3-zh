@@ -30,14 +30,14 @@
 我们将继续使用UCI糖尿病数据集作为贯穿本节的示例。该数据集包含多名患者的记录，每条记录包含多项测量值，例如生理指标。之前我们重点关注了BMI，但实际上该数据集中还有其他有用的测量值。
 
 以下是加载和查看该数据集描述的代码：
+
+![](img/f2e09eba317b8eb9a1c7ebabb2294634_13.png)
+
 ```python
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 from sklearn import datasets
-
-![](img/f2e09eba317b8eb9a1c7ebabb2294634_13.png)
-
 # 加载糖尿病数据集
 diabetes = datasets.load_diabetes()
 print(diabetes.DESCR)
@@ -142,13 +142,13 @@ df[‘old_man‘] = (df[‘sex‘] > 0) & (df[‘age‘] > threshold_value)
 ![](img/f2e09eba317b8eb9a1c7ebabb2294634_45.png)
 
 我们可以通过设定阈值，将回归问题转化为分类问题。例如，将糖尿病风险高于150的定义为“高风险”，否则为“低风险”。以下是使用逻辑回归算法（尽管名字叫“回归”，但它是一种分类算法）在这个二分类数据集上进行训练和预测的示例：
-```python
-from sklearn.linear_model import LogisticRegression
 
 ![](img/f2e09eba317b8eb9a1c7ebabb2294634_47.png)
 
 ![](img/f2e09eba317b8eb9a1c7ebabb2294634_48.png)
 
+```python
+from sklearn.linear_model import LogisticRegression
 # 假设 X 是特征， y_binary 是二值化（高风险/低风险）后的标签
 model = LogisticRegression()
 model.fit(X, y_binary)

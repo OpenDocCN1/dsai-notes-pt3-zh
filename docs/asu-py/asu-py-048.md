@@ -30,6 +30,9 @@
 
 ![](img/671a251d805056fd2917592c8410d147_11.png)
 
+
+![](img/671a251d805056fd2917592c8410d147_13.png)
+
 ```python
 import tkinter as tk
 from tkinter import messagebox
@@ -38,9 +41,6 @@ root = tk.Tk()
 root.geometry("400x400")
 root.title("简单待办列表")
 root.config(bg="green")
-
-![](img/671a251d805056fd2917592c8410d147_13.png)
-
 frame = tk.Frame(root)
 frame.pack()
 ```
@@ -104,23 +104,23 @@ listbox.pack(side=tk.LEFT, fill=tk.BOTH)
 
 ![](img/671a251d805056fd2917592c8410d147_31.png)
 
-```python
-tasks = ["制作我的列表"]
 
 ![](img/671a251d805056fd2917592c8410d147_33.png)
 
-for item in tasks:
-    listbox.insert(tk.END, item)
 
 ![](img/671a251d805056fd2917592c8410d147_35.png)
 
 ![](img/671a251d805056fd2917592c8410d147_37.png)
 
-scrollbar = tk.Scrollbar(frame)
-scrollbar.pack(side=tk.RIGHT, fill=tk.BOTH)
 
 ![](img/671a251d805056fd2917592c8410d147_39.png)
 
+```python
+tasks = ["制作我的列表"]
+for item in tasks:
+    listbox.insert(tk.END, item)
+scrollbar = tk.Scrollbar(frame)
+scrollbar.pack(side=tk.RIGHT, fill=tk.BOTH)
 listbox.config(yscrollcommand=scrollbar.set)
 scrollbar.config(command=listbox.yview)
 ```
@@ -170,6 +170,9 @@ entry.pack(pady=20)
 
 ![](img/671a251d805056fd2917592c8410d147_55.png)
 
+
+![](img/671a251d805056fd2917592c8410d147_57.png)
+
 ```python
 add_button = tk.Button(
     root,
@@ -180,9 +183,6 @@ add_button = tk.Button(
     command=insert_task
 )
 add_button.pack(pady=10)
-
-![](img/671a251d805056fd2917592c8410d147_57.png)
-
 delete_button = tk.Button(
     root,
     text="删除任务",
@@ -214,6 +214,9 @@ delete_button.pack()
 
 现在，我们来定义当按钮被点击时实际执行的函数。
 
+
+![](img/671a251d805056fd2917592c8410d147_66.png)
+
 ```python
 def insert_task():
     task = entry.get()
@@ -222,9 +225,6 @@ def insert_task():
         entry.delete(0, tk.END)
     else:
         messagebox.showwarning("警告", "请输入任务内容。")
-
-![](img/671a251d805056fd2917592c8410d147_66.png)
-
 def delete_task():
     try:
         selected_task_index = listbox.curselection()[0]

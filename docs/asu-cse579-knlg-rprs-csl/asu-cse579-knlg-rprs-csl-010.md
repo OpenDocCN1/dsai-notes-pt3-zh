@@ -126,11 +126,11 @@ reachable(V) :- reachable(U), cycle(U, V). % 递归定义可达性
 
 假设我们通过 `cost(V1, V2, C)` 给出了边的成本。
 
-```prolog
-% 包含上述哈密顿回路的所有编码...
 
 ![](img/8659593a3c88cfb4d24c238ce2c1a077_26.png)
 
+```prolog
+% 包含上述哈密顿回路的所有编码...
 % 优化：最小化回路的总成本
 #minimize { C, V, U : cycle(V, U), cost(V, U, C) }.
 ```
@@ -150,6 +150,9 @@ reachable(V) :- reachable(U), cycle(U, V). % 递归定义可达性
 
 以下是数独问题的ASP编码。使用 `cell(R, C, N)` 表示第 `R` 行、第 `C` 列的数字是 `N`。
 
+
+![](img/8659593a3c88cfb4d24c238ce2c1a077_32.png)
+
 ```prolog
 % 定义数字
 number(1..9).
@@ -160,9 +163,6 @@ number(1..9).
 % 测试部分1：行和列约束
 :- number(R), number(C1), number(C2), C1 < C2, cell(R, C1, N), cell(R, C2, N). % 行内无重复
 :- number(C), number(R1), number(R2), R1 < R2, cell(R1, C, N), cell(R2, C, N). % 列内无重复
-
-![](img/8659593a3c88cfb4d24c238ce2c1a077_32.png)
-
 % 测试部分2：3x3宫格约束（一种编码方式）
 :- number(R1), number(R2), number(C1), number(C2), number(N),
     R1 != R2, C1 != C2,

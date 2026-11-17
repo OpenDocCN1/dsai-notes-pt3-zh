@@ -46,14 +46,14 @@
 ![](img/3f1750505378c5e3325bcd7d42d70320_15.png)
 
 具体过程可以用以下伪代码表示：
-```python
-# 1. 加载在ImageNet上预训练的模型（如ResNet, VGG）
-pretrained_model = load_pretrained_model('imagenet')
 
 ![](img/3f1750505378c5e3325bcd7d42d70320_17.png)
 
 ![](img/3f1750505378c5e3325bcd7d42d70320_18.png)
 
+```python
+# 1. 加载在ImageNet上预训练的模型（如ResNet, VGG）
+pretrained_model = load_pretrained_model('imagenet')
 # 2. 冻结大部分底层参数，保留其学到的通用特征
 for param in pretrained_model.early_layers.parameters():
     param.requires_grad = False

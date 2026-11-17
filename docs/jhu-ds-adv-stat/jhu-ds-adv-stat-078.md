@@ -59,15 +59,15 @@ colMeans(X_c)
 1.  首先，使用 `apply` 函数计算数据矩阵 `X` 每一列的均值。
 2.  然后，使用 `sweep` 函数，从 `X` 的每一列中减去对应的均值。
 
+
+![](img/239454122abb204bff3321c2659692f5_1.png)
+
 ```r
 # 使用 apply 计算列均值
 col_means <- apply(X, 2, mean)
 
 # 使用 sweep 从每一列中减去其均值 (MARGIN=2 表示按列操作)
 X_c2 <- sweep(X, 2, col_means)
-
-![](img/239454122abb204bff3321c2659692f5_1.png)
-
 # 再次检查列均值
 colMeans(X_c2)
 ```

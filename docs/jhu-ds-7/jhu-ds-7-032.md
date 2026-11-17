@@ -85,9 +85,6 @@ y <- x1 + rnorm(n)
 
 ![](img/849e472ba79624ded97b40e4795fbbf3_30.png)
 
-```r
-# 加载必要的包
-library(car)
 
 ![](img/849e472ba79624ded97b40e4795fbbf3_32.png)
 
@@ -99,9 +96,6 @@ library(car)
 
 ![](img/849e472ba79624ded97b40e4795fbbf3_38.png)
 
-# 使用瑞士生育率数据，拟合包含所有变量的模型
-data(swiss)
-fit <- lm(Fertility ~ ., data = swiss)
 
 ![](img/849e472ba79624ded97b40e4795fbbf3_40.png)
 
@@ -111,6 +105,12 @@ fit <- lm(Fertility ~ ., data = swiss)
 
 ![](img/849e472ba79624ded97b40e4795fbbf3_43.png)
 
+```r
+# 加载必要的包
+library(car)
+# 使用瑞士生育率数据，拟合包含所有变量的模型
+data(swiss)
+fit <- lm(Fertility ~ ., data = swiss)
 # 计算方差膨胀因子
 vif(fit)
 # 更直观地查看对标准误的膨胀影响（取平方根）
@@ -265,11 +265,6 @@ sqrt(vif(fit))
 
 ![](img/849e472ba79624ded97b40e4795fbbf3_113.png)
 
-```r
-# 使用瑞士数据，假设我们关注Agriculture的影响
-fit1 <- lm(Fertility ~ Agriculture, data = swiss)
-fit2 <- lm(Fertility ~ Agriculture + Examination + Education, data = swiss)
-fit3 <- lm(Fertility ~ Agriculture + Examination + Education + Catholic + Infant.Mortality, data = swiss)
 
 ![](img/849e472ba79624ded97b40e4795fbbf3_115.png)
 
@@ -285,6 +280,11 @@ fit3 <- lm(Fertility ~ Agriculture + Examination + Education + Catholic + Infant
 
 ![](img/849e472ba79624ded97b40e4795fbbf3_121.png)
 
+```r
+# 使用瑞士数据，假设我们关注Agriculture的影响
+fit1 <- lm(Fertility ~ Agriculture, data = swiss)
+fit2 <- lm(Fertility ~ Agriculture + Examination + Education, data = swiss)
+fit3 <- lm(Fertility ~ Agriculture + Examination + Education + Catholic + Infant.Mortality, data = swiss)
 # 使用anova函数进行嵌套模型比较
 anova(fit1, fit2, fit3)
 ```

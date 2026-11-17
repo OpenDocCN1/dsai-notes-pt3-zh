@@ -20,6 +20,9 @@
 
 ![](img/2c6443cb0cc17de9e47e3d2e85086a2e_6.png)
 
+
+![](img/2c6443cb0cc17de9e47e3d2e85086a2e_8.png)
+
 ```python
 # 安装必要的库
 !pip install langchain langchain-openai
@@ -27,9 +30,6 @@
 # 导入库并设置API密钥
 import os
 from google.colab import userdata
-
-![](img/2c6443cb0cc17de9e47e3d2e85086a2e_8.png)
-
 # 从Colab Secrets获取密钥
 os.environ["OPENAI_API_KEY"] = userdata.get('OPENAI_API_KEY')
 ```
@@ -55,12 +55,12 @@ os.environ["OPENAI_API_KEY"] = userdata.get('OPENAI_API_KEY')
 
 以下是一个简单的对话流程示例：
 
-```python
-from langchain_openai import ChatOpenAI
-from langchain.schema import SystemMessage, HumanMessage, AIMessage
 
 ![](img/2c6443cb0cc17de9e47e3d2e85086a2e_15.png)
 
+```python
+from langchain_openai import ChatOpenAI
+from langchain.schema import SystemMessage, HumanMessage, AIMessage
 # 初始化模型，推荐使用成本效益高的 gpt-4o-mini
 llm = ChatOpenAI(model="gpt-4o-mini")
 
@@ -108,9 +108,6 @@ print(f"使用的总令牌数：{response.response_metadata['token_usage']['tota
 2.  将AI的回复（`AIMessage`）添加到消息列表中。
 3.  接着添加新的人类消息，然后再次调用模型。
 
-```python
-# 接上例，将AI的回复加入历史
-messages.append(response)
 
 ![](img/2c6443cb0cc17de9e47e3d2e85086a2e_28.png)
 
@@ -120,6 +117,9 @@ messages.append(response)
 
 ![](img/2c6443cb0cc17de9e47e3d2e85086a2e_31.png)
 
+```python
+# 接上例，将AI的回复加入历史
+messages.append(response)
 # 添加新的人类消息，进行追问
 messages.append(HumanMessage(content="你确定吗？我听说因为某些原因改名了，就像伊斯坦布尔和君士坦丁堡那样。"))
 
@@ -151,20 +151,20 @@ print(response2.content)
 
 ![](img/2c6443cb0cc17de9e47e3d2e85086a2e_41.png)
 
-```python
-from langchain.prompts import PromptTemplate
 
 ![](img/2c6443cb0cc17de9e47e3d2e85086a2e_42.png)
 
 ![](img/2c6443cb0cc17de9e47e3d2e85086a2e_43.png)
 
+
+![](img/2c6443cb0cc17de9e47e3d2e85086a2e_45.png)
+
+```python
+from langchain.prompts import PromptTemplate
 # 定义一个提示模板，其中 {topic} 和 {language} 是占位符
 title_template = PromptTemplate.from_template(
     "请为关于{topic}的博客文章生成一个标题，使用{language}语言。"
 )
-
-![](img/2c6443cb0cc17de9e47e3d2e85086a2e_45.png)
-
 # 使用具体值填充模板
 filled_prompt = title_template.format(topic="数据科学家的宠物", language="英语")
 print(filled_prompt)
@@ -210,13 +210,22 @@ print(response.content)
 
 ![](img/2c6443cb0cc17de9e47e3d2e85086a2e_59.png)
 
-```python
-from langchain.chains import LLMChain
 
 ![](img/2c6443cb0cc17de9e47e3d2e85086a2e_60.png)
 
 ![](img/2c6443cb0cc17de9e47e3d2e85086a2e_61.png)
 
+
+![](img/2c6443cb0cc17de9e47e3d2e85086a2e_63.png)
+
+![](img/2c6443cb0cc17de9e47e3d2e85086a2e_64.png)
+
+![](img/2c6443cb0cc17de9e47e3d2e85086a2e_65.png)
+
+![](img/2c6443cb0cc17de9e47e3d2e85086a2e_66.png)
+
+```python
+from langchain.chains import LLMChain
 # 第一步：生成标题的链
 title_prompt = PromptTemplate.from_template("为关于{topic}的博客文章想一个吸引人的标题。")
 title_chain = LLMChain(llm=llm, prompt=title_prompt)
@@ -229,15 +238,6 @@ blog_chain = LLMChain(llm=llm, prompt=blog_prompt)
 # 运行链：先生成标题，再根据标题写文章
 generated_title = title_chain.run(topic="摄影")
 print(f"生成的标题：{generated_title}")
-
-![](img/2c6443cb0cc17de9e47e3d2e85086a2e_63.png)
-
-![](img/2c6443cb0cc17de9e47e3d2e85086a2e_64.png)
-
-![](img/2c6443cb0cc17de9e47e3d2e85086a2e_65.png)
-
-![](img/2c6443cb0cc17de9e47e3d2e85086a2e_66.png)
-
 blog_post = blog_chain.run(title=generated_title)
 print(f"撰写的文章：\n{blog_post}")
 ```

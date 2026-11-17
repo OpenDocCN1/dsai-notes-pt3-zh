@@ -75,6 +75,11 @@ touch Makefile requirements.txt hello.py test_hello.py
 
 Makefile可以极大地简化开发流程。以下是一个示例Makefile，包含了安装、测试、代码格式化和代码检查等常用任务：
 
+
+![](img/b474a0e6453db60c238a6d55d6be3b12_9.png)
+
+![](img/b474a0e6453db60c238a6d55d6be3b12_11.png)
+
 ```makefile
 install:
     pip install --upgrade pip
@@ -82,11 +87,6 @@ install:
 
 test:
     python -m pytest -vvs
-
-![](img/b474a0e6453db60c238a6d55d6be3b12_9.png)
-
-![](img/b474a0e6453db60c238a6d55d6be3b12_11.png)
-
 lint:
     pylint --disable=C0114,C0116 *.py
 
@@ -166,13 +166,13 @@ Pytest使得编写测试变得非常简单。测试文件通常以 `test_` 开�
 
 ![](img/b474a0e6453db60c238a6d55d6be3b12_40.png)
 
-```python
-from hello import more_hello
 
 ![](img/b474a0e6453db60c238a6d55d6be3b12_42.png)
 
 ![](img/b474a0e6453db60c238a6d55d6be3b12_44.png)
 
+```python
+from hello import more_hello
 def test_more_hello():
     assert "hi" == more_hello()
 ```
@@ -203,14 +203,14 @@ make test
 *   **代码检查**：使用 `pylint` 或 `flake8` 检查代码风格和潜在错误。
 *   **代码格式化**：使用 `black` 自动格式化代码，保持团队代码风格一致。
 
-```bash
-# 运行代码检查
-make lint
 
 ![](img/b474a0e6453db60c238a6d55d6be3b12_56.png)
 
 ![](img/b474a0e6453db60c238a6d55d6be3b12_58.png)
 
+```bash
+# 运行代码检查
+make lint
 # 运行代码格式化
 make format
 
@@ -254,15 +254,15 @@ GitHub Actions是一个与GitHub深度集成的CI/CD平台。我们可以在项�
 
 ![](img/b474a0e6453db60c238a6d55d6be3b12_70.png)
 
-```yaml
-name: Python application test with Github Actions
 
 ![](img/b474a0e6453db60c238a6d55d6be3b12_72.png)
 
-on: [push]
 
 ![](img/b474a0e6453db60c238a6d55d6be3b12_74.png)
 
+```yaml
+name: Python application test with Github Actions
+on: [push]
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -333,10 +333,6 @@ GitHub Actions可以为项目生成状态徽章，显示构建状态。将其添
 
 ![](img/b474a0e6453db60c238a6d55d6be3b12_99.png)
 
-```bash
-# 克隆代码仓库
-git clone <repository-url>
-cd <project-directory>
 
 ![](img/b474a0e6453db60c238a6d55d6be3b12_101.png)
 
@@ -344,6 +340,10 @@ cd <project-directory>
 
 ![](img/b474a0e6453db60c238a6d55d6be3b12_105.png)
 
+```bash
+# 克隆代码仓库
+git clone <repository-url>
+cd <project-directory>
 # 运行完整测试流程
 make all
 ```
@@ -378,11 +378,11 @@ make all
 
 ![](img/b474a0e6453db60c238a6d55d6be3b12_127.png)
 
-```yaml
-version: 0.2
 
 ![](img/b474a0e6453db60c238a6d55d6be3b12_129.png)
 
+```yaml
+version: 0.2
 phases:
   install:
     commands:
@@ -498,6 +498,11 @@ Fixture是Pytest的一个强大功能，用于提供测试所需的固定环境�
 
 以下是一个Fixture示例，它为一个简单的“姓名”函数提供测试数据：
 
+
+![](img/b474a0e6453db60c238a6d55d6be3b12_171.png)
+
+![](img/b474a0e6453db60c238a6d55d6be3b12_173.png)
+
 ```python
 import pytest
 
@@ -508,11 +513,6 @@ def name_bob():
 @pytest.fixture
 def name_sally():
     return "Sally"
-
-![](img/b474a0e6453db60c238a6d55d6be3b12_171.png)
-
-![](img/b474a0e6453db60c238a6d55d6be3b12_173.png)
-
 def test_my_name_bob(name_bob):
     from greeting import my_name
     assert f"My name is {name_bob}" == my_name(name_bob)
@@ -542,16 +542,16 @@ Fixture使测试代码更清晰、更易于维护，并且可以复用。
 
 首先，创建一个简单的Flask应用 `web.py`：
 
-```python
-from flask import Flask, jsonify
-from mylib.m_change import change
 
 ![](img/b474a0e6453db60c238a6d55d6be3b12_187.png)
 
-app = Flask(__name__)
 
 ![](img/b474a0e6453db60c238a6d55d6be3b12_189.png)
 
+```python
+from flask import Flask, jsonify
+from mylib.m_change import change
+app = Flask(__name__)
 @app.route('/')
 def index():
     return jsonify({"hello": "Bob"})
@@ -607,13 +607,16 @@ def test_change(client):
 
 ![](img/b474a0e6453db60c238a6d55d6be3b12_197.png)
 
+
+![](img/b474a0e6453db60c238a6d55d6be3b12_199.png)
+
+
+![](img/b474a0e6453db60c238a6d55d6be3b12_201.png)
+
 ```python
 #!/usr/bin/env python
 import click
 from mylib.m_change import change
-
-![](img/b474a0e6453db60c238a6d55d6be3b12_199.png)
-
 @click.command()
 @click.option('--amount', prompt='Amount', help='Amount for change calculation.')
 def make_change(amount):
@@ -622,9 +625,6 @@ def make_change(amount):
     click.echo(click.style(f"Change for ${amount}:", fg='red'))
     for coin, number in result.items():
         click.echo(click.style(f"{number} {coin}", fg='green'))
-
-![](img/b474a0e6453db60c238a6d55d6be3b12_201.png)
-
 if __name__ == '__main__':
     make_change()
 ```

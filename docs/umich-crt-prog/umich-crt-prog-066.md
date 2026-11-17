@@ -74,6 +74,9 @@ triangle(alicia, length=20)
 
 以下是绘制一系列三角形的示例：
 
+
+![](img/b61c129b2c397e392517fe46027ff59b_3.png)
+
 ```python
 import turtle
 
@@ -86,9 +89,6 @@ alicia = turtle.Turtle()
 
 # 绘制第一个三角形
 triangle(alicia, 50)
-
-![](img/b61c129b2c397e392517fe46027ff59b_3.png)
-
 # 抬起画笔，移动到新位置
 alicia.penup()
 alicia.forward(80)

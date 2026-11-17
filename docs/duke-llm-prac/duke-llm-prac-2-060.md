@@ -35,24 +35,24 @@ aws dynamodb create-table \
 创建表之后，下一步是将样本数据加载到表中。项目中提供了一个JSON文件（`records.json`），其中包含了要插入的数据记录。
 
 以下是使用Python Boto3 SDK执行批量写入操作的示例代码：
+
+![](img/e3a6f039c4f891151e35dd0023484b31_2.png)
+
+![](img/e3a6f039c4f891151e35dd0023484b31_3.png)
+
+
+![](img/e3a6f039c4f891151e35dd0023484b31_4.png)
+
+![](img/e3a6f039c4f891151e35dd0023484b31_5.png)
+
 ```python
 import boto3
 import json
 
 dynamodb = boto3.resource('dynamodb')
 table = dynamodb.Table('YourTableName')
-
-![](img/e3a6f039c4f891151e35dd0023484b31_2.png)
-
-![](img/e3a6f039c4f891151e35dd0023484b31_3.png)
-
 with open('records.json') as f:
     records = json.load(f)
-
-![](img/e3a6f039c4f891151e35dd0023484b31_4.png)
-
-![](img/e3a6f039c4f891151e35dd0023484b31_5.png)
-
 with table.batch_writer() as batch:
     for item in records:
         batch.put_item(Item=item)

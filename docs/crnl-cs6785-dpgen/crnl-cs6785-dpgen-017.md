@@ -253,9 +253,6 @@
 ![](img/efacaa41a9b1dd88577527a2fdf4d965_143.png)
 
 **LDA的生成故事（伪代码）：**
-```
-对于每个主题 k in [1, K]:
-    从狄利克雷分布中抽取一个主题-词汇分布 β_k
 
 ![](img/efacaa41a9b1dd88577527a2fdf4d965_145.png)
 
@@ -265,6 +262,9 @@
 
 ![](img/efacaa41a9b1dd88577527a2fdf4d965_150.png)
 
+```
+对于每个主题 k in [1, K]:
+    从狄利克雷分布中抽取一个主题-词汇分布 β_k
 对于每个文档 d in [1, D]:
     从狄利克雷分布中抽取一个文档-主题分布 θ_d
     对于文档 d 中的每个词汇位置 n in [1, N_d]:
@@ -707,10 +707,6 @@ LDA是概率推理的一个绝佳实例：我们将感兴趣的量定义为模�
 
 ![](img/efacaa41a9b1dd88577527a2fdf4d965_410.png)
 
-```python
-# 假设有 K 个主题， V 个词汇， D 个文档， N_d 是文档d的词汇数
-phi = Dirichlet(concentration=tf.ones([K, V]) / K)  # 主题-词汇分布
-theta = Dirichlet(concentration=tf.ones([D, K]) / K) # 文档-主题分布
 
 ![](img/efacaa41a9b1dd88577527a2fdf4d965_412.png)
 
@@ -730,6 +726,10 @@ theta = Dirichlet(concentration=tf.ones([D, K]) / K) # 文档-主题分布
 
 ![](img/efacaa41a9b1dd88577527a2fdf4d965_422.png)
 
+```python
+# 假设有 K 个主题， V 个词汇， D 个文档， N_d 是文档d的词汇数
+phi = Dirichlet(concentration=tf.ones([K, V]) / K)  # 主题-词汇分布
+theta = Dirichlet(concentration=tf.ones([D, K]) / K) # 文档-主题分布
 z = Categorical(probs=tf.gather(theta, doc_indices)) # 每个词汇的主题分配
 w = Categorical(probs=tf.gather(phi, z))             # 观测到的词汇
 ```

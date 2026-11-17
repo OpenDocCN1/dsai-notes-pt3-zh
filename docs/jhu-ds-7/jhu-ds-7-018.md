@@ -71,15 +71,15 @@
 
 以下是关键的R代码步骤：
 
+
+![](img/4624749abdf4bf52773b2de9883a6c3a_6.png)
+
 ```r
 # 拟合线性模型
 fit <- lm(price ~ mass, data = diamond)
 
 # 创建一个密集的x值网格用于预测
 newx <- data.frame(mass = seq(min(diamond$mass), max(diamond$mass), length = 100))
-
-![](img/4624749abdf4bf52773b2de9883a6c3a_6.png)
-
 # 预测回归线值及其置信区间
 pred_conf <- predict(fit, newdata = newx, interval = "confidence")
 

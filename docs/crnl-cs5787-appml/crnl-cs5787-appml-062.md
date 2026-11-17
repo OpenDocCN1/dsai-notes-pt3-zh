@@ -58,12 +58,12 @@
 
 ![](img/c77e7ed64deb6f266884422e4a951a6b_26.png)
 
-```python
-import numpy as np
-import matplotlib.pyplot as plt
 
 ![](img/c77e7ed64deb6f266884422e4a951a6b_28.png)
 
+```python
+import numpy as np
+import matplotlib.pyplot as plt
 # 生成混合高斯数据
 np.random.seed(0)
 n_samples = 20

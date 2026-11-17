@@ -89,6 +89,8 @@ def render_chapter(chapter_title):
 
 最后，将所有生成的文本和图像整合到Markdown格式中，并转换为PDF。
 
+book_content += f'![Book Cover](data:image/png;base64,{encoded_string})\n\n'
+
 ```python
 import base64
 from markdown2 import markdown
@@ -100,8 +102,6 @@ book_content = f"# {book_title}\n\n## Synopsis\n\n{book_synopsis}\n\n"
 # 添加封面图像（Base64编码嵌入）
 with open(cover_image_file, "rb") as image_file:
     encoded_string = base64.b64encode(image_file.read()).decode()
-book_content += f'![Book Cover](data:image/png;base64,{encoded_string})\n\n'
-
 # 添加目录
 book_content += "## Table of Contents\n\n"
 for title in chapter_titles:

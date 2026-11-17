@@ -51,6 +51,9 @@ no2_cat <- cut(no2, breaks = cutpoints)
 
 以下是构建该图形的完整代码：
 
+
+![](img/07414c05f05d6d8f60a416aec440ac1c_1.png)
+
 ```r
 # 创建 ggplot 对象，设置基本美学映射
 p <- ggplot(data, aes(x = pm25, y = nocturnal_symptoms))
@@ -60,9 +63,6 @@ p <- p + geom_point(alpha = 0.3)
 
 # 添加分面：按 BMI 类别和 NO2 类别分面
 p <- p + facet_wrap(~ bmi_cat + no2_cat)
-
-![](img/07414c05f05d6d8f60a416aec440ac1c_1.png)
-
 # 添加平滑曲线（线性回归），并关闭置信区间
 p <- p + geom_smooth(method = "lm", se = FALSE)
 

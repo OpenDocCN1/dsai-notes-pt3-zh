@@ -59,8 +59,6 @@
 
 ![](img/0eae15c402c45839b1040c363e408177_2.png)
 
-```python
-import json
 
 ![](img/0eae15c402c45839b1040c363e408177_4.png)
 
@@ -68,6 +66,8 @@ import json
 
 ![](img/0eae15c402c45839b1040c363e408177_8.png)
 
+```python
+import json
 def lambda_handler(event, context):
     # 检查事件中是否包含‘name’字段，且其值是否为‘Marco’
     if ‘name‘ in event and event[‘name‘] == ‘Marco‘:

@@ -50,11 +50,6 @@
 
 以下是导入必要库和准备数据的代码：
 
-```python
-import torch
-import torch.nn as nn
-import torch.nn.functional as F
-from torchvision import datasets, transforms
 
 ![](img/6fc0b4c4fba26a77a100c96c79d18809_26.png)
 
@@ -68,6 +63,11 @@ from torchvision import datasets, transforms
 
 ![](img/6fc0b4c4fba26a77a100c96c79d18809_31.png)
 
+```python
+import torch
+import torch.nn as nn
+import torch.nn.functional as F
+from torchvision import datasets, transforms
 # 使用 MNIST 数据集，因其简单，适合作为概念验证
 transform = transforms.Compose([transforms.ToTensor()])
 train_dataset = datasets.MNIST(root='./data', train=True, download=True, transform=transform)
@@ -168,6 +168,9 @@ class ResidualBlock(nn.Module):
 
 ![](img/6fc0b4c4fba26a77a100c96c79d18809_74.png)
 
+
+![](img/6fc0b4c4fba26a77a100c96c79d18809_76.png)
+
 ```python
 class SimpleResNet(nn.Module):
     def __init__(self, num_classes=10):
@@ -188,9 +191,6 @@ class SimpleResNet(nn.Module):
         x = x.view(x.size(0), -1)  # 展平
         x = self.linear(x)
         return x
-
-![](img/6fc0b4c4fba26a77a100c96c79d18809_76.png)
-
 # 训练模型（此处省略训练循环细节）
 model = SimpleResNet()
 # ... 训练代码 ...

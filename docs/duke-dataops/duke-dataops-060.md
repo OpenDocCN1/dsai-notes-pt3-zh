@@ -94,10 +94,11 @@ GitHub Actions的一个优点是每个步骤都是独立且清晰的。我们可
 ![](img/be08e3bc546a79bd8c455923795ff902_9.png)
 
 我们可以复制徽章的Markdown代码，并将其添加到项目的README文件中，例如：
+[![CI Status](https://github.com/your-username/repo-name/actions/workflows/rust.yml/badge.svg)](https://github.com/your-username/repo-name/actions)
+
 ```markdown
 # GitHub Actions Rust CI 示例
 这是一个使用GitHub Actions测试Rust代码的CI流水线示例。
-[![CI Status](https://github.com/your-username/repo-name/actions/workflows/rust.yml/badge.svg)](https://github.com/your-username/repo-name/actions)
 ```
 
 ![](img/be08e3bc546a79bd8c455923795ff902_11.png)

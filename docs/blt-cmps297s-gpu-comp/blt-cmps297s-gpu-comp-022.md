@@ -63,6 +63,9 @@ __global__ void bfs_kernel(...) {
 
 ![](img/d4537e5532734bbdad21de8bd7c07dd7_15.png)
 
+
+![](img/d4537e5532734bbdad21de8bd7c07dd7_17.png)
+
 ```cpp
 // 使用动态并行的BFS内核代码片段
 __global__ void bfs_parent_kernel(...) {
@@ -81,9 +84,6 @@ __global__ void bfs_parent_kernel(...) {
         }
     }
 }
-
-![](img/d4537e5532734bbdad21de8bd7c07dd7_17.png)
-
 // 子内核，每个线程处理一个邻居
 __global__ void bfs_child_kernel(..., int start, int num_neighbors, ...) {
     int i = threadIdx.x + blockIdx.x * blockDim.x; // 子线程索引

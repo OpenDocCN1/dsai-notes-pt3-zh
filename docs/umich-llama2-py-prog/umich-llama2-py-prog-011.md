@@ -97,11 +97,11 @@ model.detokenize(input_ids)
 
 为了查看最有可能的下一个标记，我们可以进行如下操作：
 
-```python
-import numpy as np
 
 ![](img/760fe5813abde0f834d80d1f9d717237_20.png)
 
+```python
+import numpy as np
 # 获取logits的绝对值并排序，找出最接近零的5个值
 abs_logits = np.abs(logits)
 top_indices = np.argsort(abs_logits)[-5:]  # 最接近零的5个索引

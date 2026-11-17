@@ -24,17 +24,17 @@
 
 ![](img/71446122301a99671edf94032ddd2f7d_12.png)
 
-```r
-# 加载数据
-data(swiss)
 
 ![](img/71446122301a99671edf94032ddd2f7d_14.png)
 
-# 使用lm函数拟合模型
-fit <- lm(Fertility ~ ., data = swiss)
 
 ![](img/71446122301a99671edf94032ddd2f7d_16.png)
 
+```r
+# 加载数据
+data(swiss)
+# 使用lm函数拟合模型
+fit <- lm(Fertility ~ ., data = swiss)
 # 查看模型摘要
 summary(fit)
 ```

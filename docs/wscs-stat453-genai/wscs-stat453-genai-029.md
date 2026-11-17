@@ -95,15 +95,15 @@ result = X @ w  # 结果是一个一维张量
 
 ![](img/6d8321c29b1417add7d341b99982892a_18.png)
 
+
+![](img/6d8321c29b1417add7d341b99982892a_19.png)
+
 ```python
 # 一个 2x3 的矩阵
 matrix = torch.tensor([[4, 5, 6],
                        [7, 8, 9]])
 # 一个一维向量
 vector = torch.tensor([1, 2, 3])
-
-![](img/6d8321c29b1417add7d341b99982892a_19.png)
-
 # 广播发生：vector 被隐式复制，仿佛变成了一个 2x3 的矩阵
 # [[1, 2, 3],
 #  [1, 2, 3]]

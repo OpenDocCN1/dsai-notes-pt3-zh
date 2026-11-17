@@ -53,13 +53,13 @@ class Dog:
 最后，我们来探讨一下类继承。继承允许我们定义一个类（子类）来继承另一个类（父类）的属性和方法。这有助于代码重用和建立清晰的层次关系。
 
 以下是类继承的基本语法：
+
+![](img/c6bb15c68489d270ee92f2b2373b995a_4.png)
+
 ```python
 class ParentClass:
     # 父类的属性和方法
     pass
-
-![](img/c6bb15c68489d270ee92f2b2373b995a_4.png)
-
 class ChildClass(ParentClass):
     # 子类可以拥有自己独有的属性和方法，也可以重写父类的方法
     pass

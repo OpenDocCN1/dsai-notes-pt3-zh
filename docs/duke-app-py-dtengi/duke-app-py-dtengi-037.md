@@ -146,6 +146,9 @@ touch Makefile
 
 以下是一个简单的 `Makefile` 示例，包含安装依赖、测试、代码格式化等常用任务。
 
+
+![](img/cc8a9d3d32954533385a20313b85cdcf_12.png)
+
 ```makefile
 install:
     pip install --upgrade pip
@@ -153,9 +156,6 @@ install:
 
 test:
     pytest
-
-![](img/cc8a9d3d32954533385a20313b85cdcf_12.png)
-
 format:
     black .
 

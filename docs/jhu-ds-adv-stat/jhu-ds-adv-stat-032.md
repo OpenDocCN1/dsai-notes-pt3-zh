@@ -104,6 +104,9 @@ qnorm(0.95)
 让我们用图形来可视化这个计算。这里是我的RStudio窗口，提醒我们标准正态的95%分位数大约是1.645。我们用qnorm函数计算。让我们可视化它。
 
 **R代码：**
+
+![](img/4f6d2a6913830d7bcb024f13a8624131_1.png)
+
 ```r
 # 创建绘图点
 x <- seq(-3, 3, length=1000)
@@ -114,9 +117,6 @@ plot(x, y, type="l", lwd=2, main="标准正态分布与5%上尾区域", xlab="Z�
 x_shade <- seq(qnorm(0.95), 3, length=100)
 y_shade <- dnorm(x_shade)
 polygon(c(x_shade, rev(x_shade)), c(y_shade, rep(0, length(y_shade))), col="salmon")
-
-![](img/4f6d2a6913830d7bcb024f13a8624131_1.png)
-
 # 添加分位数线
 abline(v=qnorm(0.95), lty=2, col="blue")
 text(qnorm(0.95), 0.2, "Z = 1.645", pos=4, col="blue")

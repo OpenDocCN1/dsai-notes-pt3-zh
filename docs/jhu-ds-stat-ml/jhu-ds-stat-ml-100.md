@@ -45,6 +45,9 @@
 
 ![](img/8d1d14a46c8b1bb5eba9b2e93c933bd3_14.png)
 
+
+![](img/8d1d14a46c8b1bb5eba9b2e93c933bd3_16.png)
+
 ```r
 # 加载数据
 library(ElemStatLearn)
@@ -55,9 +58,6 @@ ozone <- ozone[order(ozone$ozone), ]
 
 # 创建一个矩阵来存储多次重采样拟合的预测结果
 ll <- matrix(NA, nrow=10, ncol=155)
-
-![](img/8d1d14a46c8b1bb5eba9b2e93c933bd3_16.png)
-
 # 进行10次自助重采样和模型拟合
 for(i in 1:10){
     # 1. 有放回地重采样
@@ -135,15 +135,15 @@ for(i in 1:10){
 
 ![](img/8d1d14a46c8b1bb5eba9b2e93c933bd3_36.png)
 
-```r
-# 创建预测变量数据框和结果变量
-predictors = data.frame(ozone=ozone$ozone)
-temperature = ozone$temperature
 
 ![](img/8d1d14a46c8b1bb5eba9b2e93c933bd3_38.png)
 
 ![](img/8d1d14a46c8b1bb5eba9b2e93c933bd3_39.png)
 
+```r
+# 创建预测变量数据框和结果变量
+predictors = data.frame(ozone=ozone$ozone)
+temperature = ozone$temperature
 # 使用bag函数进行装袋
 treebag <- bag(predictors, temperature, B = 10,
                 bagControl = bagControl(fit = ctreeBag$fit,

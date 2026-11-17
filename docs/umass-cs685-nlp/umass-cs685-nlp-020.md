@@ -195,9 +195,6 @@ for sent in sentences:
 
 ![](img/1bffdc57c2785e5647c824db2af3396b_100.png)
 
-```python
-import torch
-import torch.nn as nn
 
 ![](img/1bffdc57c2785e5647c824db2af3396b_102.png)
 
@@ -205,6 +202,9 @@ import torch.nn as nn
 
 ![](img/1bffdc57c2785e5647c824db2af3396b_106.png)
 
+```python
+import torch
+import torch.nn as nn
 class SelfAttentionNN(nn.Module):
     def __init__(self, vocab_size, embed_dim, num_classes):
         super(SelfAttentionNN, self).__init__()

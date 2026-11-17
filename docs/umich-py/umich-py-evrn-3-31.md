@@ -68,11 +68,14 @@ print('Attr:', tree.find('email').get('hide'))
 
 ![](img/a3be2258acd75c8b43e0e53eecc4742b_15.png)
 
-```python
-import xml.etree.ElementTree as ET
 
 ![](img/a3be2258acd75c8b43e0e53eecc4742b_17.png)
 
+
+![](img/a3be2258acd75c8b43e0e53eecc4742b_18.png)
+
+```python
+import xml.etree.ElementTree as ET
 input = '''
 <users>
   <user x="2">
@@ -84,9 +87,6 @@ input = '''
     <name>Brent</name>
   </user>
 </users>'''
-
-![](img/a3be2258acd75c8b43e0e53eecc4742b_18.png)
-
 stuff = ET.fromstring(input)
 lst = stuff.findall('users/user')
 print('User count:', len(lst))

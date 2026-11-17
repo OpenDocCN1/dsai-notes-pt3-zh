@@ -20,15 +20,15 @@ Clingo程序的核心是计算稳定模型。你需要将问题编码为逻辑�
 
 ![](img/f361e716b1ab1bc106fbcac368311971_1.png)
 
+
+![](img/f361e716b1ab1bc106fbcac368311971_3.png)
+
 ```prolog
 % 事实：城市及其温度
 temp(austin, 98).
 temp(houston, 96).
 temp(phoenix, 105).
 temp(chicago, 85).
-
-![](img/f361e716b1ab1bc106fbcac368311971_3.png)
-
 % 规则：如果城市C的温度T1高于奥斯汀的温度T2，则C是温暖城市。
 warm(C) :- temp(C, T1), temp(austin, T2), T1 > T2.
 ```
@@ -75,6 +75,11 @@ high_temp(T) :- temp(C, T), city(C), not temp(C, 95). % 假设我们定义了cit
 
 以下是定义子女、祖父母、兄弟姐妹和祖先关系的示例程序：
 
+
+![](img/f361e716b1ab1bc106fbcac368311971_7.png)
+
+![](img/f361e716b1ab1bc106fbcac368311971_9.png)
+
 ```prolog
 % 事实：父母关系
 parent(ann, bob).
@@ -89,11 +94,6 @@ grandparent(X, Z) :- parent(X, Y), parent(Y, Z).
 
 % 规则：兄弟姐妹关系（需排除自身）
 sibling(X, Y) :- parent(P, X), parent(P, Y), X != Y.
-
-![](img/f361e716b1ab1bc106fbcac368311971_7.png)
-
-![](img/f361e716b1ab1bc106fbcac368311971_9.png)
-
 % 规则：祖先关系（递归定义）
 ancestor(X, Y) :- parent(X, Y).                 % 基础情况：父母是祖先
 ancestor(X, Z) :- parent(X, Y), ancestor(Y, Z). % 递归情况
@@ -156,15 +156,15 @@ prime(I) :- number(I), not composite(I).
 
 以下是计算阶乘的程序：
 
+
+![](img/f361e716b1ab1bc106fbcac368311971_17.png)
+
 ```prolog
 % 基础情况：0的阶乘是1
 factorial(0, 1).
 
 % 递归情况：(N+1)的阶乘等于N的阶乘乘以(N+1)
 factorial(N+1, F * (N+1)) :- factorial(N, F), N >= 0.
-
-![](img/f361e716b1ab1bc106fbcac368311971_17.png)
-
 % 投影：只显示一元形式的阶乘结果
 fact(N, F) :- factorial(N, F).
 #show fact/2.

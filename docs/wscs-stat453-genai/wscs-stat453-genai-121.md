@@ -20,11 +20,11 @@
 
 ![](img/01aeb81254f41e05749e6dc46c33a23a_5.png)
 
-```python
-import torch.nn as nn
 
 ![](img/01aeb81254f41e05749e6dc46c33a23a_6.png)
 
+```python
+import torch.nn as nn
 class AllConvNet(nn.Module):
     def __init__(self, num_classes=10):
         super(AllConvNet, self).__init__()

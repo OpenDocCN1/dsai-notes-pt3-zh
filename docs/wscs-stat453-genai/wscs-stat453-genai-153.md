@@ -106,12 +106,15 @@ PyTorch 在 `torch.nn` 模块中提供了 `Transformer` 类，以及相关的 `T
 
 以下是一个高度简化的示例框架，展示了关键组成部分：
 
-```python
-import torch
-import torch.nn as nn
 
 ![](img/821c6a0e498995258a60a276c6a09a5c_17.png)
 
+
+![](img/821c6a0e498995258a60a276c6a09a5c_18.png)
+
+```python
+import torch
+import torch.nn as nn
 # 定义一个简单的转换器模型
 class SimpleTransformer(nn.Module):
     def __init__(self, num_tokens, d_model, nhead, num_encoder_layers):
@@ -129,9 +132,6 @@ class SimpleTransformer(nn.Module):
         output = self.transformer_encoder(src)
         output = self.fc_out(output)
         return output # 预测每个位置的下一个token
-
-![](img/821c6a0e498995258a60a276c6a09a5c_18.png)
-
 # 实例化模型、定义损失函数和优化器
 model = SimpleTransformer(num_tokens=10000, d_model=512, nhead=8, num_encoder_layers=6)
 criterion = nn.CrossEntropyLoss()

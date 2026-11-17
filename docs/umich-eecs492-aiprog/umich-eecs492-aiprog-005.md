@@ -136,6 +136,11 @@ check = D * invD; % 应近似等于单位矩阵
 Matlab中最常用的绘图命令是 `plot`，用于创建二维线图。基本语法是 `plot(X1, Y1, LineSpec1, X2, Y2, LineSpec2, ...)`，可以在一张图上绘制多条曲线。
 
 以下是一个绘图脚本示例 (`figure_plot.m`)：
+
+![](img/0332c045855b9fbe7a7eccefdc5a13cb_25.png)
+
+![](img/0332c045855b9fbe7a7eccefdc5a13cb_27.png)
+
 ```matlab
 close all; % 关闭所有图形窗口
 clear; clc; % 清空工作区和命令窗口
@@ -153,11 +158,6 @@ figure; % 新建图形窗口
 plot(x1, y1, '-ro', 'LineWidth', 2); % 红色实线，圆圈标记，线宽2
 hold on; % 保持当前图形，以便添加新曲线
 plot(x2, y2, '-b', 'LineWidth', 2); % 蓝色实线，线宽2
-
-![](img/0332c045855b9fbe7a7eccefdc5a13cb_25.png)
-
-![](img/0332c045855b9fbe7a7eccefdc5a13cb_27.png)
-
 % 添加图例和标签
 legend('cos(x)', 'sin(x)');
 xlabel('x');

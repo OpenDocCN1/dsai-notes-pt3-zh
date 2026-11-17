@@ -46,6 +46,9 @@
 
 ![](img/0fa3e450e3b7e9bc8c55f7d40ae594fc_12.png)
 
+
+![](img/0fa3e450e3b7e9bc8c55f7d40ae594fc_14.png)
+
 ```scala
 // 读取学生数据并转换为元组
 val studentRDD = sc.textFile("hdfs://.../student.dat")
@@ -53,9 +56,6 @@ val studentTupleRDD = studentRDD.map(line => {
     val fields = line.split("\\|")
     (fields(0)， (fields(1)， fields(2)， fields(3)， fields(4)))
 })
-
-![](img/0fa3e450e3b7e9bc8c55f7d40ae594fc_14.png)
-
 // 读取成绩数据并转换为(学生ID， 分数)元组
 val scoreRDD = sc.textFile("hdfs://.../score.dat")
 val scoreTupleRDD = scoreRDD.map(line => {

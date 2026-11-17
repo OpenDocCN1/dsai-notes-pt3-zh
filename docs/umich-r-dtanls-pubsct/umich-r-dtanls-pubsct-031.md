@@ -65,14 +65,14 @@ data %>%
 
 以下是一个演示分组元数据及取消分组的例子：
 
+
+![](img/5877034da64f37431a0957742b826ce1_6.png)
+
 ```r
 # 对数据进行分组并查看其属性
 grouped_data <- data %>%
   mutate(sex_cat = ifelse(cellsex == 1, "男性", "女性")) %>%
   group_by(sex_cat)
-
-![](img/5877034da64f37431a0957742b826ce1_6.png)
-
 # 查看分组后数据框的属性（包含分组信息）
 attributes(grouped_data)
 

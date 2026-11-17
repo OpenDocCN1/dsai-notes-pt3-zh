@@ -56,14 +56,14 @@ output_parser = StructuredOutputParser.from_response_schemas(response_schemas)
 
 ![](img/45c4163eb91d4d3d2bea901415075ca4_13.png)
 
+
+![](img/45c4163eb91d4d3d2bea901415075ca4_15.png)
+
 ```python
 from langchain.prompts import PromptTemplate
 
 # 获取格式指令字符串，它会被自动插入到提示中
 format_instructions = output_parser.get_format_instructions()
-
-![](img/45c4163eb91d4d3d2bea901415075ca4_15.png)
-
 # 创建提示模板
 prompt_template = PromptTemplate(
     template="请尽可能准确地回答问题。\n{format_instructions}\n问题：{question}",
@@ -82,19 +82,19 @@ prompt_template = PromptTemplate(
 
 以下是构建和运行处理链的代码：
 
-```python
-from langchain.chat_models import ChatOpenAI
-from langchain.chains import LLMChain
 
 ![](img/45c4163eb91d4d3d2bea901415075ca4_19.png)
 
 ![](img/45c4163eb91d4d3d2bea901415075ca4_20.png)
 
-# 初始化大模型（这里使用 OpenAI 的 GPT-4）
-llm = ChatOpenAI(model_name="gpt-4", temperature=0)
 
 ![](img/45c4163eb91d4d3d2bea901415075ca4_21.png)
 
+```python
+from langchain.chat_models import ChatOpenAI
+from langchain.chains import LLMChain
+# 初始化大模型（这里使用 OpenAI 的 GPT-4）
+llm = ChatOpenAI(model_name="gpt-4", temperature=0)
 # 构建处理链
 chain = LLMChain(llm=llm, prompt=prompt_template, output_parser=output_parser)
 
@@ -137,19 +137,19 @@ translation_parser = StructuredOutputParser.from_response_schemas(translation_sc
 
 ![](img/45c4163eb91d4d3d2bea901415075ca4_27.png)
 
-```python
-translation_format_instructions = translation_parser.get_format_instructions()
 
 ![](img/45c4163eb91d4d3d2bea901415075ca4_29.png)
 
+
+![](img/45c4163eb91d4d3d2bea901415075ca4_31.png)
+
+```python
+translation_format_instructions = translation_parser.get_format_instructions()
 translation_prompt = PromptTemplate(
     template="请检测以下文本的语言，并将其翻译成指定的语言。\n{format_instructions}\n文本：{text}",
     input_variables=["text"],
     partial_variables={"format_instructions": translation_format_instructions}
 )
-
-![](img/45c4163eb91d4d3d2bea901415075ca4_31.png)
-
 translation_chain = LLMChain(llm=llm, prompt=translation_prompt, output_parser=translation_parser)
 ```
 

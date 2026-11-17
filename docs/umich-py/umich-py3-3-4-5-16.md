@@ -68,15 +68,15 @@ Python 的 `copy` 模块中有一个 `deepcopy` 函数，它可以为任意嵌�
 
 以下是使用 `deepcopy` 的示例：
 
+
+![](img/fa2c32fb0412db43961abb73db6e03cb_2.png)
+
 ```python
 import copy
 
 original = [['canines', ['dogs', 'puppies']], ['felines', ['cats', 'kittens']]]
 shallow_copy = original[:]          # 浅拷贝
 deep_copy = copy.deepcopy(original) # 深拷贝
-
-![](img/fa2c32fb0412db43961abb73db6e03cb_2.png)
-
 # 修改原始数据
 original.append('hi there')
 original[0].append(['marsupials'])

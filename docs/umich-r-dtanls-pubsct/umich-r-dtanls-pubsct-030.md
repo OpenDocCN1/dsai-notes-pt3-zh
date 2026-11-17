@@ -38,6 +38,9 @@ re.export <- read.spss("path/to/your/data.sav", to.data.frame = TRUE)
 
 让我们查看这些不同数值的频率。以下是检查不同类别观测数量的方法：
 
+
+![](img/0e96cb3ee6c0907ed4f1d4cba7b7eaab_11.png)
+
 ```r
 # 检查年龄在1到100之间的观测数
 data %>% filter(LC_FIRST >= 1 & LC_FIRST <= 100) %>% nrow()
@@ -50,9 +53,6 @@ data %>% filter(LC_FIRST == 999) %>% nrow()
 
 # 检查缺失值（NA）的观测数
 data %>% filter(is.na(LC_FIRST)) %>% nrow()
-
-![](img/0e96cb3ee6c0907ed4f1d4cba7b7eaab_11.png)
-
 # 检查数据集总行数
 nrow(data)
 ```
@@ -63,6 +63,11 @@ nrow(data)
 
 ![](img/0e96cb3ee6c0907ed4f1d4cba7b7eaab_13.png)
 
+
+![](img/0e96cb3ee6c0907ed4f1d4cba7b7eaab_15.png)
+
+![](img/0e96cb3ee6c0907ed4f1d4cba7b7eaab_16.png)
+
 ```r
 # 方法一：使用一个大的布尔掩码进行筛选
 bad_data <- data %>%
@@ -70,11 +75,6 @@ bad_data <- data %>%
          !(LC_FIRST == 777) &
          !(LC_FIRST == 999) &
          !is.na(LC_FIRST))
-
-![](img/0e96cb3ee6c0907ed4f1d4cba7b7eaab_15.png)
-
-![](img/0e96cb3ee6c0907ed4f1d4cba7b7eaab_16.png)
-
 # 方法二：使用管道进行迭代筛选（更易读）
 bad_data <- data %>%
   filter(!(LC_FIRST >= 1 & LC_FIRST <= 100)) %>%

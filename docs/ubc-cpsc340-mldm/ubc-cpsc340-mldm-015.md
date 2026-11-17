@@ -46,10 +46,6 @@ A = \sigma_1 u_1 v_1^T + \sigma_2 u_2 v_2^T + \dots + \sigma_r u_r v_r^T
 
 ![](img/37206d1c5fd21c12982fc9b9033ac97e_21.png)
 
-```python
-import numpy as np
-from scipy import misc
-import matplotlib.pyplot as plt
 
 ![](img/37206d1c5fd21c12982fc9b9033ac97e_23.png)
 
@@ -57,6 +53,16 @@ import matplotlib.pyplot as plt
 
 ![](img/37206d1c5fd21c12982fc9b9033ac97e_26.png)
 
+
+![](img/37206d1c5fd21c12982fc9b9033ac97e_28.png)
+
+
+![](img/37206d1c5fd21c12982fc9b9033ac97e_30.png)
+
+```python
+import numpy as np
+from scipy import misc
+import matplotlib.pyplot as plt
 # 1. 读取图像并转换为灰度矩阵
 img = misc.imread(‘your_image.jpg‘, mode=‘L‘) # ‘L‘ 表示灰度模式
 M, N = img.shape
@@ -71,14 +77,8 @@ K = 20
 U_k = U[:, :K]
 Sigma_k = Sigma[:K, :K]
 Vt_k = Vt[:K, :]
-
-![](img/37206d1c5fd21c12982fc9b9033ac97e_28.png)
-
 # 4. 重建压缩后的图像
 img_compressed = U_k @ Sigma_k @ Vt_k
-
-![](img/37206d1c5fd21c12982fc9b9033ac97e_30.png)
-
 # 5. 显示原图与压缩图
 plt.subplot(1,2,1); plt.imshow(img, cmap=‘gray‘); plt.title(‘Original‘)
 plt.subplot(1,2,2); plt.imshow(img_compressed, cmap=‘gray‘); plt.title(‘Compressed (K=‘+str(K)+‘)‘)

@@ -76,6 +76,15 @@ WebGPU的设计考虑了Web环境的安全性、隐私性和跨平台需求，�
 
 ![](img/20cb9720d4b8b89b9cfd6e59e05c448f_39.png)
 
+
+![](img/20cb9720d4b8b89b9cfd6e59e05c448f_41.png)
+
+![](img/20cb9720d4b8b89b9cfd6e59e05c448f_43.png)
+
+![](img/20cb9720d4b8b89b9cfd6e59e05c448f_45.png)
+
+![](img/20cb9720d4b8b89b9cfd6e59e05c448f_47.png)
+
 ```javascript
 // 初始化随机向量和标量
 function initSaxpy(size) {
@@ -89,15 +98,6 @@ function initSaxpy(size) {
     }
     return { size, a, x, y, z };
 }
-
-![](img/20cb9720d4b8b89b9cfd6e59e05c448f_41.png)
-
-![](img/20cb9720d4b8b89b9cfd6e59e05c448f_43.png)
-
-![](img/20cb9720d4b8b89b9cfd6e59e05c448f_45.png)
-
-![](img/20cb9720d4b8b89b9cfd6e59e05c448f_47.png)
-
 // CPU版本SAXPY
 function cpuSaxpy(size, a, x, y, z) {
     for (let i = 0; i < size; i++) {
@@ -300,9 +300,6 @@ const computePipeline = device.createComputePipeline({
 
 ![](img/20cb9720d4b8b89b9cfd6e59e05c448f_53.png)
 
-```javascript
-// 1. 创建命令编码器
-const encoder = device.createCommandEncoder({ label: 'SAXPY encoder' });
 
 ![](img/20cb9720d4b8b89b9cfd6e59e05c448f_55.png)
 
@@ -310,6 +307,30 @@ const encoder = device.createCommandEncoder({ label: 'SAXPY encoder' });
 
 ![](img/20cb9720d4b8b89b9cfd6e59e05c448f_59.png)
 
+
+![](img/20cb9720d4b8b89b9cfd6e59e05c448f_61.png)
+
+![](img/20cb9720d4b8b89b9cfd6e59e05c448f_63.png)
+
+![](img/20cb9720d4b8b89b9cfd6e59e05c448f_64.png)
+
+
+![](img/20cb9720d4b8b89b9cfd6e59e05c448f_66.png)
+
+![](img/20cb9720d4b8b89b9cfd6e59e05c448f_68.png)
+
+![](img/20cb9720d4b8b89b9cfd6e59e05c448f_70.png)
+
+
+![](img/20cb9720d4b8b89b9cfd6e59e05c448f_72.png)
+
+![](img/20cb9720d4b8b89b9cfd6e59e05c448f_74.png)
+
+![](img/20cb9720d4b8b89b9cfd6e59e05c448f_76.png)
+
+```javascript
+// 1. 创建命令编码器
+const encoder = device.createCommandEncoder({ label: 'SAXPY encoder' });
 // 2. 开始计算通道（Compute Pass）
 const pass = encoder.beginComputePass({ label: 'SAXPY compute pass' });
 pass.setPipeline(computePipeline);
@@ -324,35 +345,14 @@ const stagingBuffer = device.createBuffer({
     size: zBuffer.size,
     usage: GPUBufferUsage.MAP_READ | GPUBufferUsage.COPY_DST,
 });
-
-![](img/20cb9720d4b8b89b9cfd6e59e05c448f_61.png)
-
-![](img/20cb9720d4b8b89b9cfd6e59e05c448f_63.png)
-
-![](img/20cb9720d4b8b89b9cfd6e59e05c448f_64.png)
-
 // 4. 复制结果到暂存缓冲区
 encoder.copyBufferToBuffer(
     zBuffer, 0,        // 源缓冲区
     stagingBuffer, 0,  // 目标缓冲区
     zBuffer.size
 );
-
-![](img/20cb9720d4b8b89b9cfd6e59e05c448f_66.png)
-
-![](img/20cb9720d4b8b89b9cfd6e59e05c448f_68.png)
-
-![](img/20cb9720d4b8b89b9cfd6e59e05c448f_70.png)
-
 // 5. 提交命令到GPU队列执行
 device.queue.submit([encoder.finish()]);
-
-![](img/20cb9720d4b8b89b9cfd6e59e05c448f_72.png)
-
-![](img/20cb9720d4b8b89b9cfd6e59e05c448f_74.png)
-
-![](img/20cb9720d4b8b89b9cfd6e59e05c448f_76.png)
-
 // 6. 将暂存缓冲区映射到CPU并读取数据
 await stagingBuffer.mapAsync(GPUMapMode.READ);
 const zResult = new Float32Array(stagingBuffer.getMappedRange().slice());

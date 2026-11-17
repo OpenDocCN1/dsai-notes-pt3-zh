@@ -105,11 +105,11 @@ public class Configuration1 {
 
 ![](img/3ceca9f2ba930f4e017e529675038c9d_9.png)
 
-```java
-import org.apache.hadoop.conf.Configuration;
 
 ![](img/3ceca9f2ba930f4e017e529675038c9d_10.png)
 
+```java
+import org.apache.hadoop.conf.Configuration;
 public class Configuration3 {
     static {
         // 在静态初始化块中注册默认资源

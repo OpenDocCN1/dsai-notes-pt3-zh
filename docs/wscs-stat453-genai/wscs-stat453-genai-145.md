@@ -75,21 +75,21 @@ def compute_average_faces(images, labels, feature_index, encoder):
 
 得到平均向量后，我们计算它们的差值，这个差值向量就指向了从“非微笑”到“微笑”的方向。
 
-```python
-# 计算微笑差异向量
-smile_vector, no_smile_vector = compute_average_faces(..., feature_index=31, ...) # 31对应微笑属性
-difference_vector = smile_vector - no_smile_vector
 
 ![](img/ee666c6018756e5084ebb2ab7329b7da_17.png)
 
 ![](img/ee666c6018756e5084ebb2ab7329b7da_19.png)
 
-# 对单张图像进行操作
-original_image = ...
-original_latent = encoder(original_image)
 
 ![](img/ee666c6018756e5084ebb2ab7329b7da_21.png)
 
+```python
+# 计算微笑差异向量
+smile_vector, no_smile_vector = compute_average_faces(..., feature_index=31, ...) # 31对应微笑属性
+difference_vector = smile_vector - no_smile_vector
+# 对单张图像进行操作
+original_image = ...
+original_latent = encoder(original_image)
 # 应用潜在空间算术
 alpha = 2.0  # 控制微笑程度
 new_latent = original_latent + alpha * difference_vector
@@ -145,17 +145,11 @@ diff_vec = smile_vec - no_smile_vec
 
 接着，我们选取一张测试图像，通过调整`α`值来改变其微笑程度。
 
-```python
-# 选取一张图像
-test_img, _ = next(iter(dataloader))
-test_img = test_img[0:1]  # 取第一张
 
 ![](img/ee666c6018756e5084ebb2ab7329b7da_38.png)
 
 ![](img/ee666c6018756e5084ebb2ab7329b7da_40.png)
 
-# 编码到潜在空间
-z_original = model.encoder(test_img)
 
 ![](img/ee666c6018756e5084ebb2ab7329b7da_42.png)
 
@@ -163,6 +157,12 @@ z_original = model.encoder(test_img)
 
 ![](img/ee666c6018756e5084ebb2ab7329b7da_45.png)
 
+```python
+# 选取一张图像
+test_img, _ = next(iter(dataloader))
+test_img = test_img[0:1]  # 取第一张
+# 编码到潜在空间
+z_original = model.encoder(test_img)
 # 尝试不同的alpha值
 alphas = [-3, -1.5, 0, 1.5, 3]
 modified_images = []

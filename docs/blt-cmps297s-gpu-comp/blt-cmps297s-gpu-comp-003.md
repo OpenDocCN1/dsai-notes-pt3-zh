@@ -16,14 +16,14 @@
 
 以下是配置一个二维网格的示例代码：
 
-```cpp
-// 定义每个线程块的维度：32x32 个线程
-dim3 numThreadsPerBlock(32, 32); // z维度默认为1
 
 ![](img/efca0f9f3448fd2be3ffe506fa0fb9d9_3.png)
 
 ![](img/efca0f9f3448fd2be3ffe506fa0fb9d9_5.png)
 
+```cpp
+// 定义每个线程块的维度：32x32 个线程
+dim3 numThreadsPerBlock(32, 32); // z维度默认为1
 // 计算网格中线程块的数量
 int width = 1024; // 图像宽度
 int height = 768; // 图像高度
@@ -207,13 +207,13 @@ __global__ void rgbToGrayKernel(unsigned char* red, unsigned char* green,
 
 ![](img/efca0f9f3448fd2be3ffe506fa0fb9d9_89.png)
 
-```cpp
-#define BLUR_SIZE 1 // 模糊半径，例如1表示3x3区域
 
 ![](img/efca0f9f3448fd2be3ffe506fa0fb9d9_91.png)
 
 ![](img/efca0f9f3448fd2be3ffe506fa0fb9d9_93.png)
 
+```cpp
+#define BLUR_SIZE 1 // 模糊半径，例如1表示3x3区域
 __global__ void blurKernel(unsigned char* image, unsigned char* blurred,
                            int width, int height) {
     // 计算线程对应的输出像素位置

@@ -64,6 +64,9 @@ ggplot(fishing_data, aes(x = as.factor(year), y = hours)) +
 
 点图将每个观测值显示为一个点。以下是创建叠加点图的代码示例：
 
+
+![](img/3a56af09793ed30ad47e7346595398b0_12.png)
+
 ```r
 library(cowplot)
 
@@ -74,9 +77,6 @@ p_box <- ggplot(fishing_data, aes(x = as.factor(year), y = hours)) +
 # 创建叠加了点图的版本
 p_dot <- p_box +
   geom_dotplot(binaxis = "y", stackdir = "center", dotsize = 0.5)
-
-![](img/3a56af09793ed30ad47e7346595398b0_12.png)
-
 # 并排显示两个图表
 plot_grid(p_box, p_dot, labels = c("A", "B"))
 ```

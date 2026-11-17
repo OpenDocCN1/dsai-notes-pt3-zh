@@ -68,6 +68,9 @@ space.mainloop()
 
 以下是同时设置两种颜色的代码示例：
 
+
+![](img/bcdae144263a93306b77aa9eefa94cc7_3.png)
+
 ```python
 import turtle
 
@@ -81,9 +84,6 @@ t1.color("green", "yellow")
 t1.begin_fill()
 t1.circle(50)
 t1.end_fill()
-
-![](img/bcdae144263a93306b77aa9eefa94cc7_3.png)
-
 space.mainloop()
 ```
 

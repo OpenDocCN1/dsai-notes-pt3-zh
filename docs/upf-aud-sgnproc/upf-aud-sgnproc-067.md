@@ -64,6 +64,16 @@ Essentia 是一个用于音频分析和音乐信息检索的开源 C++ 库。它
 
 以下是一个计算音频文件 MFCC 特征的 Python 脚本的核心部分：
 
+
+![](img/645823a764ea92b1fdccb5c3dc4535b6_21.png)
+
+![](img/645823a764ea92b1fdccb5c3dc4535b6_23.png)
+
+
+![](img/645823a764ea92b1fdccb5c3dc4535b6_25.png)
+
+![](img/645823a764ea92b1fdccb5c3dc4535b6_27.png)
+
 ```python
 import essentia.standard as es
 import numpy as np
@@ -78,18 +88,8 @@ mfcc = es.MFCC(numberCoefficients=13, inputSize=frameSize/2 + 1)
 # 加载音频文件
 loader = es.MonoLoader(filename='your_audio_file.wav', sampleRate=44100)
 audio = loader()
-
-![](img/645823a764ea92b1fdccb5c3dc4535b6_21.png)
-
-![](img/645823a764ea92b1fdccb5c3dc4535b6_23.png)
-
 # 初始化输出数组
 mfccs = []
-
-![](img/645823a764ea92b1fdccb5c3dc4535b6_25.png)
-
-![](img/645823a764ea92b1fdccb5c3dc4535b6_27.png)
-
 # 逐帧处理音频
 for frame in es.FrameGenerator(audio, frameSize=frameSize, hopSize=hopSize):
     windowed_frame = window(frame)

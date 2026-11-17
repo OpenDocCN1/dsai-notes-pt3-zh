@@ -204,13 +204,13 @@ big_dt[, .N, by = x]
 
 ![](img/26cfcb0c4412a535f619286d65eef174_65.png)
 
+
+![](img/26cfcb0c4412a535f619286d65eef174_67.png)
+
 ```r
 # 创建一个临时文件并写入大数据框
 temp_file <- tempfile()
 write.table(big_df, file = temp_file, row.names = FALSE, col.names = TRUE, sep = "\t", quote = FALSE)
-
-![](img/26cfcb0c4412a535f619286d65eef174_67.png)
-
 # 使用 fread 快速读入
 system.time(dt <- fread(temp_file))
 ```

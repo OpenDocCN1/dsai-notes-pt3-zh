@@ -218,16 +218,16 @@ class Truck(Vehicle):
 
 ![](img/abfb53213e7895e945b2354984480484_99.png)
 
-```python
-# 创建 Car 对象
-my_car = Car("Corolla", "blue")
-print(my_car.details())
-print()  # 打印空行分隔
 
 ![](img/abfb53213e7895e945b2354984480484_100.png)
 
 ![](img/abfb53213e7895e945b2354984480484_102.png)
 
+```python
+# 创建 Car 对象
+my_car = Car("Corolla", "blue")
+print(my_car.details())
+print()  # 打印空行分隔
 # 创建 Truck 对象
 my_truck = Truck("Titan", "black")
 print(my_truck.details())
@@ -243,15 +243,15 @@ print(my_truck.details())
 
 ![](img/abfb53213e7895e945b2354984480484_109.png)
 
-```
-Name: Corolla, Color: blue
-Gears: Maximum number of gears is 6.
-Speed: Top speed is 140.
 
 ![](img/abfb53213e7895e945b2354984480484_111.png)
 
 ![](img/abfb53213e7895e945b2354984480484_113.png)
 
+```
+Name: Corolla, Color: blue
+Gears: Maximum number of gears is 6.
+Speed: Top speed is 140.
 Name: Titan, Color: black
 Gears: Maximum number of gears is 8.
 Speed: Top speed is 120.

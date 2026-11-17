@@ -128,6 +128,9 @@ hive
 
 以下是一些基本操作示例：
 
+
+![](img/dc797d8e3be38ad809df14fafd4d4efe_16.png)
+
 ```sql
 -- 显示所有数据库
 SHOW DATABASES;
@@ -137,9 +140,6 @@ CREATE DATABASE mydb;
 
 -- 使用某个数据库
 USE mydb;
-
-![](img/dc797d8e3be38ad809df14fafd4d4efe_16.png)
-
 -- 创建表
 CREATE TABLE users (id INT, name STRING);
 ```

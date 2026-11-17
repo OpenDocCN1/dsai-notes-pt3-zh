@@ -96,6 +96,13 @@ t检验功效的计算逻辑与我们之前讨论的正态分布情况非常相�
 
 ![](img/2c3aaa7f71c697014579a0dd985e48b6_49.png)
 
+
+![](img/2c3aaa7f71c697014579a0dd985e48b6_51.png)
+
+![](img/2c3aaa7f71c697014579a0dd985e48b6_52.png)
+
+![](img/2c3aaa7f71c697014579a0dd985e48b6_53.png)
+
 ```r
 # 计算功效
 # delta：均值差 (μₐ - μ₀)
@@ -104,13 +111,6 @@ t检验功效的计算逻辑与我们之前讨论的正态分布情况非常相�
 # type：检验类型（"one.sample" 单样本）
 # alternative：单侧检验（"one.sided"）
 # sig.level：显著性水平（默认0.05）
-
-![](img/2c3aaa7f71c697014579a0dd985e48b6_51.png)
-
-![](img/2c3aaa7f71c697014579a0dd985e48b6_52.png)
-
-![](img/2c3aaa7f71c697014579a0dd985e48b6_53.png)
-
 power.t.test(n = 16, delta = 2, sd = 4, type = "one.sample", alternative = "one.sided")$power
 ```
 运行上述代码将返回功效值，例如 **0.6**（60%）。
@@ -155,13 +155,13 @@ power.t.test(n = 16, delta = 100, sd = 200, ...)$power  # 效应量 = 100/200 = 
 
 ![](img/2c3aaa7f71c697014579a0dd985e48b6_74.png)
 
+
+![](img/2c3aaa7f71c697014579a0dd985e48b6_76.png)
+
 ```r
 # 计算所需样本量
 # 指定期望的功效（power = 0.8）
 # 函数将返回所需的样本量 n
-
-![](img/2c3aaa7f71c697014579a0dd985e48b6_76.png)
-
 result <- power.t.test(delta = 0.5, sd = 1, power = 0.8,
                        type = "one.sample", alternative = "one.sided")
 n_required <- result$n

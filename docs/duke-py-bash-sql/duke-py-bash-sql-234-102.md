@@ -79,6 +79,9 @@ for elem in specific_elements:
 3.  将解析后的数据插入到表中。
 4.  提交更改并关闭连接。
 
+
+![](img/b13544181383a1515ddc8def9caf7afc_3.png)
+
 ```python
 import sqlite3
 
@@ -100,9 +103,6 @@ data_to_save = [(‘标题1‘, ‘内容1‘), (‘标题2‘, ‘内容2‘)]
 
 # 插入数据
 cursor.executemany(‘INSERT INTO articles (title, content) VALUES (?, ?)‘, data_to_save)
-
-![](img/b13544181383a1515ddc8def9caf7afc_3.png)
-
 # 提交并关闭
 conn.commit()
 conn.close()

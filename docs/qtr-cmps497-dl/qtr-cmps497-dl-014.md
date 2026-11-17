@@ -65,13 +65,16 @@
 
 ![](img/da628f06a4af524063dcf657f6eded04_3.png)
 
+
+![](img/da628f06a4af524063dcf657f6eded04_5.png)
+
+
+![](img/da628f06a4af524063dcf657f6eded04_7.png)
+
 ```python
 import torch
 import torch.nn as nn
 import torch.optim as optim
-
-![](img/da628f06a4af524063dcf657f6eded04_5.png)
-
 # 1. 定义网络模型（计算图）
 class SimpleNN(nn.Module):
     def __init__(self, input_dim=40, hidden_dim=100, output_dim=10):
@@ -92,9 +95,6 @@ class SimpleNN(nn.Module):
 model = SimpleNN()
 criterion = nn.CrossEntropyLoss()  # 多分类交叉熵损失
 optimizer = optim.SGD(model.parameters(), lr=0.1)  # 随机梯度下降，学习率0.1
-
-![](img/da628f06a4af524063dcf657f6eded04_7.png)
-
 # 3. 模拟训练循环（此处为示意，无真实数据）
 for step in range(6000):
     # 假设我们已有数据加载器 (dataloader)

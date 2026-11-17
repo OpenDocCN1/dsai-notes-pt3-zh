@@ -135,10 +135,6 @@ df.to_csv('processed_data.csv')
 ![](img/0c600e7b694888fe3d43b47092387f1d_60.png)
 
 核心是使用`nbval`插件来测试笔记本。`nbval`会执行笔记本中的每个代码单元格，确保没有错误。一个简单的测试脚本如下：
-```python
-import sys
-import os
-import subprocess
 
 ![](img/0c600e7b694888fe3d43b47092387f1d_62.png)
 
@@ -148,6 +144,10 @@ import subprocess
 
 ![](img/0c600e7b694888fe3d43b47092387f1d_68.png)
 
+```python
+import sys
+import os
+import subprocess
 # 要测试的笔记本路径
 notebook_path = ‘你的笔记本.ipynb’
 

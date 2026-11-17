@@ -78,12 +78,12 @@ epilogue ::= "ANSWER: " [A-Z]
 ![](img/8e8c8ede4e42b70e7fa7badd134abe2a_15.png)
 
 以下是关键代码示例（概念性代码）：
-```python
-# 加载模型
-model = Llama(model_path="llama-2-7b.gguf", n_ctx=2048)
 
 ![](img/8e8c8ede4e42b70e7fa7badd134abe2a_17.png)
 
+```python
+# 加载模型
+model = Llama(model_path="llama-2-7b.gguf", n_ctx=2048)
 # 定义你的提示词（包含少量示例）
 prompt = """What is the capital of France?
 A) London

@@ -82,6 +82,9 @@
 ![](img/2c2ccaab633972a42411063faa7d7c3c_11.png)
 
 以下是R代码：
+
+![](img/2c2ccaab633972a42411063faa7d7c3c_13.png)
+
 ```r
 # 给定数据
 sd <- 105.977
@@ -91,9 +94,6 @@ S2 <- sd^2
 
 # 计算卡方分位数
 quantiles <- qchisq(c(alpha/2, 1-alpha/2), df = n-1)
-
-![](img/2c2ccaab633972a42411063faa7d7c3c_13.png)
-
 # 构建方差置信区间
 ci_var <- ( (n-1) * S2 ) / quantiles
 ci_var <- rev(ci_var) # 调整为从小到大

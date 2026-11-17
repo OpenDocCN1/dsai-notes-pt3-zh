@@ -38,6 +38,9 @@
 ### 主渲染通道（计算最终颜色）
 这个通道负责计算最终呈现在屏幕上的像素颜色，并加入阴影判断。
 
+
+![](img/8b26138cc9a09f3c8b547806a43322e0_17.png)
+
 ```hlsl
 // 定义从世界空间转换到光源裁剪空间的矩阵
 float4x4 _WorldToShadow;
@@ -53,9 +56,6 @@ float3 shadowCoord = mul(_WorldToShadow, float4(i.worldPos, 1.0)).xyz;
 
 // 使用深度比较采样器查询阴影贴图
 float shadowAttenuation = SAMPLE_TEXTURE2D_SHADOW(_ShadowMap, sampler_ShadowMap, shadowCoord.xyz);
-
-![](img/8b26138cc9a09f3c8b547806a43322e0_17.png)
-
 // 将阴影衰减因子应用于最终颜色计算
 float3 finalColor = (diffuseLight * _Color.rgb) * shadowAttenuation;
 ```
@@ -71,11 +71,6 @@ float3 finalColor = (diffuseLight * _Color.rgb) * shadowAttenuation;
 
 ![](img/8b26138cc9a09f3c8b547806a43322e0_21.png)
 
-```hlsl
-// 使用特定的LightMode标签，标识此通道用于渲染阴影
-#pragma vertex vert
-#pragma fragment frag
-#pragma multi_compile _ _SHADOWS_DEPTH
 
 ![](img/8b26138cc9a09f3c8b547806a43322e0_23.png)
 
@@ -83,6 +78,16 @@ float3 finalColor = (diffuseLight * _Color.rgb) * shadowAttenuation;
 
 ![](img/8b26138cc9a09f3c8b547806a43322e0_26.png)
 
+
+![](img/8b26138cc9a09f3c8b547806a43322e0_28.png)
+
+![](img/8b26138cc9a09f3c8b547806a43322e0_30.png)
+
+```hlsl
+// 使用特定的LightMode标签，标识此通道用于渲染阴影
+#pragma vertex vert
+#pragma fragment frag
+#pragma multi_compile _ _SHADOWS_DEPTH
 // 顶点着色器：将顶点位置转换到光源裁剪空间，并应用阴影偏移（Bias）
 Varyings vert(Attributes input)
 {
@@ -93,11 +98,6 @@ Varyings vert(Attributes input)
     output.positionCS.z += _ShadowBias;
     return output;
 }
-
-![](img/8b26138cc9a09f3c8b547806a43322e0_28.png)
-
-![](img/8b26138cc9a09f3c8b547806a43322e0_30.png)
-
 // 片段着色器：无需输出颜色，只需保证深度值写入深度缓冲区
 half4 frag(Varyings input) : SV_Target
 {
@@ -123,13 +123,6 @@ half4 frag(Varyings input) : SV_Target
 ### 初始化与资源管理
 脚本开始部分定义了渲染阴影所需的资源。
 
-```csharp
-// 声明阴影贴图渲染纹理
-private RenderTexture shadowMapTexture;
-// 定义着色器属性标识符，用于高效传递数据
-private static int shadowMapTextureId = Shader.PropertyToID("_ShadowMap");
-private static int worldToShadowMatrixId = Shader.PropertyToID("_WorldToShadow");
-private static int shadowBiasId = Shader.PropertyToID("_ShadowBias");
 
 ![](img/8b26138cc9a09f3c8b547806a43322e0_38.png)
 
@@ -147,6 +140,13 @@ private static int shadowBiasId = Shader.PropertyToID("_ShadowBias");
 
 ![](img/8b26138cc9a09f3c8b547806a43322e0_47.png)
 
+```csharp
+// 声明阴影贴图渲染纹理
+private RenderTexture shadowMapTexture;
+// 定义着色器属性标识符，用于高效传递数据
+private static int shadowMapTextureId = Shader.PropertyToID("_ShadowMap");
+private static int worldToShadowMatrixId = Shader.PropertyToID("_WorldToShadow");
+private static int shadowBiasId = Shader.PropertyToID("_ShadowBias");
 // 在渲染开始时创建阴影贴图
 shadowMapTexture = new RenderTexture(1024, 1024, 16, RenderTextureFormat.Shadowmap);
 shadowMapTexture.filterMode = FilterMode.Bilinear;

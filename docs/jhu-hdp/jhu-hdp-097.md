@@ -75,6 +75,12 @@ Spark Streaming的数据可以从多种来源摄取，例如Kafka、Flume、HDFS
 
 ![](img/2c9bf0a3681d08b1ef6af4753009e9b2_18.png)
 
+
+![](img/2c9bf0a3681d08b1ef6af4753009e9b2_20.png)
+
+
+![](img/2c9bf0a3681d08b1ef6af4753009e9b2_22.png)
+
 ```python
 from pyspark import SparkContext
 from pyspark.streaming import StreamingContext
@@ -83,9 +89,6 @@ from pyspark.streaming import StreamingContext
 sc = SparkContext("yarn", "StreamingExample")
 # 创建StreamingContext，批处理间隔为1秒
 ssc = StreamingContext(sc, 1)
-
-![](img/2c9bf0a3681d08b1ef6af4753009e9b2_20.png)
-
 # 创建指向特定主机和端口的DStream
 lines = ssc.socketTextStream("localhost", 9999)
 # 对每行数据进行处理（例如单词计数）
@@ -93,9 +96,6 @@ counts = lines.flatMap(lambda line: line.split(" ")) \
               .map(lambda word: (word, 1)) \
               .reduceByKey(lambda a, b: a+b)
 counts.pprint()
-
-![](img/2c9bf0a3681d08b1ef6af4753009e9b2_22.png)
-
 # 启动流计算
 ssc.start()
 ssc.awaitTermination()

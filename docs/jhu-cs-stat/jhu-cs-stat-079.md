@@ -168,9 +168,6 @@ summary(dtmcA)
 
 ![](img/da0b05abf2a3bf634634f0f0ac840150_82.png)
 
-```r
-# 加载diagram包
-library(diagram)
 
 ![](img/da0b05abf2a3bf634634f0f0ac840150_84.png)
 
@@ -178,6 +175,9 @@ library(diagram)
 
 ![](img/da0b05abf2a3bf634634f0f0ac840150_87.png)
 
+```r
+# 加载diagram包
+library(diagram)
 # 绘制转移概率矩阵图
 plotmat(t(TM), # 转置矩阵以匹配分析习惯
         name = states,
@@ -387,15 +387,15 @@ TM_2
 
 ![](img/da0b05abf2a3bf634634f0f0ac840150_202.png)
 
-```r
-# 计算四天后的状态分布（从晴天开始）
-state_after_4days_from_sunny <- initial_state %*% (TM %^% 4)
-state_after_4days_from_sunny
 
 ![](img/da0b05abf2a3bf634634f0f0ac840150_204.png)
 
 ![](img/da0b05abf2a3bf634634f0f0ac840150_206.png)
 
+```r
+# 计算四天后的状态分布（从晴天开始）
+state_after_4days_from_sunny <- initial_state %*% (TM %^% 4)
+state_after_4days_from_sunny
 # 或者直接查看四步转移矩阵，它包含了所有初始状态的可能性
 TM_4 <- TM %^% 4
 TM_4

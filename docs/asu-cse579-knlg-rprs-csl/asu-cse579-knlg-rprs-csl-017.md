@@ -149,14 +149,14 @@
 理论之后，我们来看看实践。Alchemy 是一个用于马尔可夫逻辑网络的软件包。以下是一个简单的学习示例文件结构：
 
 **模型文件 (`model.mln`)**：
+
+![](img/a88dda8dc03a808270c1ba4578bce03e_40.png)
+
 ```
 // 声明谓词和常量
 Person = {Alice, Bob, Charlie}
 Smokes(Person)
 Cancer(Person)
-
-![](img/a88dda8dc03a808270c1ba4578bce03e_40.png)
-
 // 定义待学习权重的公式
 w1 Smokes(x)
 w2 Smokes(x) => Cancer(x)

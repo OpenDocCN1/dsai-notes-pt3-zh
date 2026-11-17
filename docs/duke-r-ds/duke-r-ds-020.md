@@ -176,6 +176,11 @@ population_filtered %>%
 
 ![](img/314c85a69ee60489170d89153cdcc883_13.png)
 
+
+![](img/314c85a69ee60489170d89153cdcc883_15.png)
+
+![](img/314c85a69ee60489170d89153cdcc883_16.png)
+
 ```r
 final_plot <- population_filtered %>%
   ggplot(aes(x = year, y = population, color = country_name, shape = country_name)) +
@@ -197,11 +202,6 @@ final_plot <- population_filtered %>%
     y = "Population (in millions)",
     caption = "Data Source: World Bank"
   )
-
-![](img/314c85a69ee60489170d89153cdcc883_15.png)
-
-![](img/314c85a69ee60489170d89153cdcc883_16.png)
-
 print(final_plot)
 ```
 

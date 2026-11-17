@@ -24,12 +24,12 @@
 
 以下是核心的Java代码框架：
 
-```java
-Connection conn = DriverManager.getConnection(databaseURL);
-conn.setAutoCommit(false); // 开始事务
 
 ![](img/78d4555575c5ad83b21b37360a10bed0_3.png)
 
+```java
+Connection conn = DriverManager.getConnection(databaseURL);
+conn.setAutoCommit(false); // 开始事务
 try {
     // 执行多个SQL操作，例如：
     // statement.executeUpdate("UPDATE ...");

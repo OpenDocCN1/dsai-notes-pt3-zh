@@ -111,14 +111,14 @@ torch.save(scheduler.state_dict(), ‘scheduler.pt‘)
 
 ![](img/5a3e0422b6af2773919fc4e6fa067d70_34.png)
 
+
+![](img/5a3e0422b6af2773919fc4e6fa067d70_36.png)
+
 ```python
 # 1. 重新初始化模型结构
 model = MyModelClass() # 使用与保存时相同的模型类
 optimizer = torch.optim.SGD(model.parameters(), lr=0.01, momentum=0.9)
 scheduler = torch.optim.lr_scheduler.StepLR(optimizer, step_size=30)
-
-![](img/5a3e0422b6af2773919fc4e6fa067d70_36.png)
-
 # 2. 加载保存的状态
 model.load_state_dict(torch.load(‘model.pt‘))
 optimizer.load_state_dict(torch.load(‘optimizer.pt‘))

@@ -81,15 +81,15 @@
 ![](img/626b88a94bfb8da22ca1aa77becbc3f6_26.png)
 
 以下是 `Makefile` 的核心内容：
+
+![](img/626b88a94bfb8da22ca1aa77becbc3f6_28.png)
+
 ```makefile
 install:
     pip install -r requirements.txt
 
 lint:
     pylint --disable=R,C hello.py
-
-![](img/626b88a94bfb8da22ca1aa77becbc3f6_28.png)
-
 test:
     python -m pytest -v --cov=hello test_hello.py
 

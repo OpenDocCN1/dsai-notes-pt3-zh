@@ -52,11 +52,6 @@ LeNet-5 是一个经典的卷积神经网络架构，最初设计用于手写字
 
 首先，我们导入必要的库并设置环境。以下代码完成了随机种子设置、数据转换定义和数据加载器创建。
 
-```python
-import torch
-import torch.nn as nn
-import torch.optim as optim
-from torchvision import datasets, transforms
 
 ![](img/413981c97e7749afa7cd0c7e98bbfe1e_16.png)
 
@@ -64,11 +59,19 @@ from torchvision import datasets, transforms
 
 ![](img/413981c97e7749afa7cd0c7e98bbfe1e_18.png)
 
-# 设置随机种子以保证CPU上的可重复性（GPU上某些算法可能非确定性）
-torch.manual_seed(1)
 
 ![](img/413981c97e7749afa7cd0c7e98bbfe1e_20.png)
 
+
+![](img/413981c97e7749afa7cd0c7e98bbfe1e_22.png)
+
+```python
+import torch
+import torch.nn as nn
+import torch.optim as optim
+from torchvision import datasets, transforms
+# 设置随机种子以保证CPU上的可重复性（GPU上某些算法可能非确定性）
+torch.manual_seed(1)
 # 定义数据转换
 # 1. 将28x28的MNIST图像调整为32x32以匹配LeNet-5输入
 # 2. 转换为张量
@@ -78,9 +81,6 @@ transform = transforms.Compose([
     transforms.ToTensor(),
     transforms.Normalize((0.5,), (0.5,))
 ])
-
-![](img/413981c97e7749afa7cd0c7e98bbfe1e_22.png)
-
 # 加载MNIST数据集
 train_dataset = datasets.MNIST(root='./data', train=True, download=True, transform=transform)
 test_dataset = datasets.MNIST(root='./data', train=False, download=True, transform=transform)
@@ -156,14 +156,14 @@ class LeNet5(nn.Module):
 
 定义好模型后，我们需要实例化它，并将其移动到可用的计算设备（GPU或CPU）上。
 
-```python
-# 实例化模型
-model = LeNet5(grayscale=True, num_classes=10)
 
 ![](img/413981c97e7749afa7cd0c7e98bbfe1e_33.png)
 
 ![](img/413981c97e7749afa7cd0c7e98bbfe1e_35.png)
 
+```python
+# 实例化模型
+model = LeNet5(grayscale=True, num_classes=10)
 # 检查是否有可用的GPU，并设置设备
 device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
 model.to(device)
@@ -178,9 +178,6 @@ print(f‘Using device: {device}’)
 
 ![](img/413981c97e7749afa7cd0c7e98bbfe1e_39.png)
 
-```python
-criterion = nn.CrossEntropyLoss()  # 交叉熵损失函数，适用于多分类
-optimizer = optim.SGD(model.parameters(), lr=0.01, momentum=0.9)  # 带动量的随机梯度下降
 
 ![](img/413981c97e7749afa7cd0c7e98bbfe1e_41.png)
 
@@ -188,6 +185,9 @@ optimizer = optim.SGD(model.parameters(), lr=0.01, momentum=0.9)  # 带动量的
 
 ![](img/413981c97e7749afa7cd0c7e98bbfe1e_43.png)
 
+```python
+criterion = nn.CrossEntropyLoss()  # 交叉熵损失函数，适用于多分类
+optimizer = optim.SGD(model.parameters(), lr=0.01, momentum=0.9)  # 带动量的随机梯度下降
 # 可选：学习率调度器，用于在训练过程中动态调整学习率
 scheduler = optim.lr_scheduler.StepLR(optimizer, step_size=5, gamma=0.1)
 ```
@@ -209,6 +209,9 @@ scheduler = optim.lr_scheduler.StepLR(optimizer, step_size=5, gamma=0.1)
 ![](img/413981c97e7749afa7cd0c7e98bbfe1e_51.png)
 
 ![](img/413981c97e7749afa7cd0c7e98bbfe1e_53.png)
+
+
+![](img/413981c97e7749afa7cd0c7e98bbfe1e_55.png)
 
 ```python
 def train_model(model, train_loader, criterion, optimizer, scheduler=None, num_epochs=10):
@@ -245,9 +248,6 @@ def train_model(model, train_loader, criterion, optimizer, scheduler=None, num_e
         # 更新学习率（如果使用了调度器）
         if scheduler:
             scheduler.step()
-
-![](img/413981c97e7749afa7cd0c7e98bbfe1e_55.png)
-
 # 开始训练
 train_model(model, train_loader, criterion, optimizer, scheduler, num_epochs=10)
 ```
@@ -280,6 +280,19 @@ train_model(model, train_loader, criterion, optimizer, scheduler, num_epochs=10)
 
 ![](img/413981c97e7749afa7cd0c7e98bbfe1e_71.png)
 
+
+![](img/413981c97e7749afa7cd0c7e98bbfe1e_73.png)
+
+![](img/413981c97e7749afa7cd0c7e98bbfe1e_75.png)
+
+
+![](img/413981c97e7749afa7cd0c7e98bbfe1e_77.png)
+
+![](img/413981c97e7749afa7cd0c7e98bbfe1e_79.png)
+
+
+![](img/413981c97e7749afa7cd0c7e98bbfe1e_81.png)
+
 ```python
 def evaluate_model(model, test_loader):
     model.eval()  # 将模型设置为评估模式
@@ -295,18 +308,8 @@ def evaluate_model(model, test_loader):
     test_acc = 100. * correct / total
     print(f‘Test Accuracy: {test_acc:.2f}%’)
     return test_acc
-
-![](img/413981c97e7749afa7cd0c7e98bbfe1e_73.png)
-
-![](img/413981c97e7749afa7cd0c7e98bbfe1e_75.png)
-
 # 评估模型
 test_accuracy = evaluate_model(model, test_loader)
-
-![](img/413981c97e7749afa7cd0c7e98bbfe1e_77.png)
-
-![](img/413981c97e7749afa7cd0c7e98bbfe1e_79.png)
-
 # 可视化一些预测结果
 import matplotlib.pyplot as plt
 def show_examples(model, test_loader, num_examples=10):
@@ -328,9 +331,6 @@ def show_examples(model, test_loader, num_examples=10):
         ax.set_title(f‘P:{preds[idx].item()} T:{labels[idx].item()}’)
         ax.axis('off')
     plt.show()
-
-![](img/413981c97e7749afa7cd0c7e98bbfe1e_81.png)
-
 show_examples(model, test_loader)
 ```
 

@@ -141,9 +141,6 @@ ozone <- ozone[order(ozone$ozone), ]
 
 ![](img/95a50204d20243034e521f58eb1fcdf2_66.png)
 
-```r
-# 初始化一个矩阵来存储来自不同自助样本的预测
-ll <- matrix(NA, nrow=10, ncol=155)
 
 ![](img/95a50204d20243034e521f58eb1fcdf2_68.png)
 
@@ -153,6 +150,9 @@ ll <- matrix(NA, nrow=10, ncol=155)
 
 ![](img/95a50204d20243034e521f58eb1fcdf2_72.png)
 
+```r
+# 初始化一个矩阵来存储来自不同自助样本的预测
+ll <- matrix(NA, nrow=10, ncol=155)
 # 进行10次自助采样和模型拟合
 for(i in 1:10){
     # 1. 有放回地随机抽样
@@ -304,14 +304,14 @@ lines(1:155, bagged_pred, col="red", lwd=2)
 
 ![](img/95a50204d20243034e521f58eb1fcdf2_126.png)
 
+
+![](img/95a50204d20243034e521f58eb1fcdf2_128.png)
+
 ```r
 library(caret)
 # 准备预测变量和结果变量
 predictors <- data.frame(ozone=ozone$ozone)
 temperature <- ozone$temperature
-
-![](img/95a50204d20243034e521f58eb1fcdf2_128.png)
-
 # 使用bag函数进行装袋
 treebag <- bag(predictors, temperature, B = 10,
                 bagControl = bagControl(fit = ctreeBag$fit,

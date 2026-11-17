@@ -213,6 +213,17 @@ sum(p_adj_bh < 0.05) # 也应为0或极少
 **场景二：部分有真实关联**
 我们模拟1000个数据集，其中前500个 `y` 与 `x` 独立（`β=0`），后500个 `y = 2*x + error`（`β=2`）。
 
+
+![](img/db4010549bc249d335ec5a9e8fff2c12_70.png)
+
+![](img/db4010549bc249d335ec5a9e8fff2c12_72.png)
+
+
+![](img/db4010549bc249d335ec5a9e8fff2c12_73.png)
+
+
+![](img/db4010549bc249d335ec5a9e8fff2c12_75.png)
+
 ```r
 # 模拟部分有真实关联的数据
 set.seed(456)
@@ -220,11 +231,6 @@ m <- 1000
 half <- m/2
 p_values <- numeric(m)
 truth <- rep(c(0, 2), each = half) # 前500为0，后500为2
-
-![](img/db4010549bc249d335ec5a9e8fff2c12_70.png)
-
-![](img/db4010549bc249d335ec5a9e8fff2c12_72.png)
-
 for (i in 1:m) {
   x <- rnorm(100)
   if (i <= half) {
@@ -235,14 +241,8 @@ for (i in 1:m) {
   fit <- lm(y ~ x)
   p_values[i] <- summary(fit)$coefficients[2, 4]
 }
-
-![](img/db4010549bc249d335ec5a9e8fff2c12_73.png)
-
 # 不校正的结果
 table(Truth = truth, Significant_NoCorrection = p_values < 0.05)
-
-![](img/db4010549bc249d335ec5a9e8fff2c12_75.png)
-
 # 邦费罗尼校正的结果
 p_adj_bonf <- p.adjust(p_values, method = "bonferroni")
 table(Truth = truth, Significant_Bonferroni = p_adj_bonf < 0.05)

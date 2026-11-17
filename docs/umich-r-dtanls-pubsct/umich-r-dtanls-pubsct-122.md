@@ -12,13 +12,13 @@
 
 首先，我们需要加载必要的R包并导入数据集。数据集包含了西西里岛在实施人群层面健康干预措施前后，每月急性冠状动脉事件的数量。
 
+
+![](img/4eaa6b7b70b408696c944f32a9204412_3.png)
+
 ```r
 # 使用pacman包便捷地加载所需包
 if (!require("pacman")) install.packages("pacman")
 pacman::p_load(tidyverse, gt, gtsummary)
-
-![](img/4eaa6b7b70b408696c944f32a9204412_3.png)
-
 # 读取CSV格式的数据集
 data <- read.csv("your_data_file.csv")
 ```

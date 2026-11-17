@@ -84,12 +84,12 @@ mn + c(-1, 1) * qt(.975, n-1) * s / sqrt(n)
 1.  直接对差异向量进行单样本 t 检验。
 2.  使用公式语法并指定 `paired = TRUE` 参数。
 
-```r
-# 方法一：对差异向量做检验
-t.test(difference)
 
 ![](img/9e0c404442996cb86ef8c51e8883b8bd_17.png)
 
+```r
+# 方法一：对差异向量做检验
+t.test(difference)
 # 方法二：使用公式，指定配对
 t.test(extra ~ group, data = sleep, paired = TRUE)
 ```

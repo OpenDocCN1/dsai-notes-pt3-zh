@@ -10,13 +10,13 @@
 
 首先，我们从钻石数据集中创建一个基础的ggplot散点图，展示克拉重量与价格的关系。
 
+
+![](img/b1ef85e443ada38d47127e666c5ed218_2.png)
+
 ```r
 # 加载必要的库
 library(ggplot2)
 library(plotly)
-
-![](img/b1ef85e443ada38d47127e666c5ed218_2.png)
-
 # 使用diamonds数据集创建ggplot对象
 p <- ggplot(diamonds, aes(x = carat, y = price)) +
   geom_point()

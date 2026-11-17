@@ -39,14 +39,14 @@ print(x)  # 错误：NameError: name 'x' is not defined
 
 每次调用函数时，都会为其创建一个全新的帧（frame），其中的局部变量也是全新的，不会保留上一次调用的值。
 
+
+![](img/1dd2d4d5aeedb1ffc400d0fee090f655_1.png)
+
 ```python
 def count():
     x = 1
     x += 1
     print(x)
-
-![](img/1dd2d4d5aeedb1ffc400d0fee090f655_1.png)
-
 count()  # 输出：2
 count()  # 输出：2 （不是3）
 ```

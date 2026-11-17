@@ -94,20 +94,20 @@ print(response.choices[0].message.content)
 1.  确保已安装LangChain的OpenAI集成包：`pip install langchain-openai`
 2.  在初始化`ChatOpenAI`时，将`base_url`指向Mistral AI的API端点，并设置对应的模型名称。
 
-```python
-from langchain_openai import ChatOpenAI
 
 ![](img/2408182d10091c69bebcccb4a5e3d597_18.png)
 
+
+![](img/2408182d10091c69bebcccb4a5e3d597_20.png)
+
+```python
+from langchain_openai import ChatOpenAI
 # 使用ChatOpenAI类，但配置为调用Mistral AI的API
 llm = ChatOpenAI(
     base_url="https://api.mistral.ai/v1",
     model="mistral-tiny",
     api_key="your_mistral_api_key"
 )
-
-![](img/2408182d10091c69bebcccb4a5e3d597_20.png)
-
 # 后续调用方式与使用OpenAI模型完全相同
 response = llm.invoke("将‘I love programming’翻译成法语。")
 print(response.content)

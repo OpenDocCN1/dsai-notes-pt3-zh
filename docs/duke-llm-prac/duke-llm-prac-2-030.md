@@ -57,6 +57,9 @@ logger = logging.getLogger(__name__)
 
 ![](img/91735dec7c258cee4c1f7c2d60d06411_5.png)
 
+
+![](img/91735dec7c258cee4c1f7c2d60d06411_6.png)
+
 ```python
 # 定义任务函数
 def process_csv():
@@ -67,9 +70,6 @@ def process_csv():
     # 处理数据，例如返回前10行
     result = df.head(10)
     return result
-
-![](img/91735dec7c258cee4c1f7c2d60d06411_6.png)
-
 # 创建任务实例
 pandas_task = PythonVirtualenvOperator(
     task_id='process_csv_task',

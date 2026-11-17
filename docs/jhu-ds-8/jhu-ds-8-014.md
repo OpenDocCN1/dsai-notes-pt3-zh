@@ -273,17 +273,17 @@ trainCapAveS <- predict(preObj, training[, -58])$capitalAve
 ![](img/331e2c03d6610c5e390221b70ce3805d_113.png)
 
 **代码示例**：
+
+![](img/331e2c03d6610c5e390221b70ce3805d_115.png)
+
+![](img/331e2c03d6610c5e390221b70ce3805d_116.png)
+
 ```r
 set.seed(13343)
 # 人为制造一些缺失值
 training$capAve <- training$capitalAve
 selectNA <- rbinom(dim(training)[1], size=1, prob=0.05)==1
 training$capAve[selectNA] <- NA
-
-![](img/331e2c03d6610c5e390221b70ce3805d_115.png)
-
-![](img/331e2c03d6610c5e390221b70ce3805d_116.png)
-
 # 使用 KNN 插补
 preObj <- preProcess(training[, -58], method="knnImpute")
 capAve <- predict(preObj, training[, -58])$capAve

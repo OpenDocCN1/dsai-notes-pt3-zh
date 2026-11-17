@@ -95,6 +95,9 @@ float4 _MainLightColor;
 为了同时支持方向光和点光源，我们需要引入一个编译开关。我们使用 `shader_feature` 来定义一个关键字 `_LIGHT_TYPE_POINT`，用于在材质面板上选择光源类型。
 
 以下是处理不同光源类型的核心逻辑代码片段：
+
+![](img/02305ff23130c177d89eb6490e6341d1_35.png)
+
 ```hlsl
 #ifdef _LIGHT_TYPE_POINT
     // 处理点光源：从URP的附加光源数据中获取信息
@@ -107,9 +110,6 @@ float4 _MainLightColor;
     float4 lightPositionWS = _MainLightPosition;
     float3 lightColor = _MainLightColor.rgb;
 #endif
-
-![](img/02305ff23130c177d89eb6490e6341d1_35.png)
-
 // 统一计算光照方向
 float3 lightDir;
 if (lightPositionWS.w == 0.0) {

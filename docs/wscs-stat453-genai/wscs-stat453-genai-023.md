@@ -443,20 +443,20 @@ class Perceptron:
 
 ![](img/1a656ff047ac6e99feba246a18f06448_203.png)
 
-```python
-ppn = Perceptron(num_features=2)
-ppn.train(X_train, y_train, epochs=5)
 
 ![](img/1a656ff047ac6e99feba246a18f06448_205.png)
 
 ![](img/1a656ff047ac6e99feba246a18f06448_207.png)
 
-print('Model parameters:')
-print('  Weights:', ppn.weights)
-print('  Bias:', ppn.bias)
 
 ![](img/1a656ff047ac6e99feba246a18f06448_209.png)
 
+```python
+ppn = Perceptron(num_features=2)
+ppn.train(X_train, y_train, epochs=5)
+print('Model parameters:')
+print('  Weights:', ppn.weights)
+print('  Bias:', ppn.bias)
 train_acc = ppn.evaluate(X_train, y_train)
 test_acc = ppn.evaluate(X_test, y_test)
 print(f'Train accuracy: {train_acc*100:.2f}%')
@@ -488,12 +488,6 @@ print(f'Test accuracy: {test_acc*100:.2f}%')
 
 ![](img/1a656ff047ac6e99feba246a18f06448_220.png)
 
-```python
-# 计算决策边界线的两个端点
-x_min = -2
-x_max = 2
-w1, w2 = ppn.weights
-b = ppn.bias
 
 ![](img/1a656ff047ac6e99feba246a18f06448_221.png)
 
@@ -501,13 +495,19 @@ b = ppn.bias
 
 ![](img/1a656ff047ac6e99feba246a18f06448_224.png)
 
-x1 = np.array([x_min, x_max])
-x2 = -(w1 * x1 + b) / w2
 
 ![](img/1a656ff047ac6e99feba246a18f06448_226.png)
 
 ![](img/1a656ff047ac6e99feba246a18f06448_228.png)
 
+```python
+# 计算决策边界线的两个端点
+x_min = -2
+x_max = 2
+w1, w2 = ppn.weights
+b = ppn.bias
+x1 = np.array([x_min, x_max])
+x2 = -(w1 * x1 + b) / w2
 # 绘图
 plt.scatter(X_train[y_train==0, 0], X_train[y_train==0, 1], label='class 0', marker='o')
 plt.scatter(X_train[y_train==1, 0], X_train[y_train==1, 1], label='class 1', marker='s')

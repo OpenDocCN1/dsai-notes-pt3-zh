@@ -122,6 +122,9 @@ f = d.to(torch.float64)
 
 要检查你的 PyTorch 是否支持 GPU 并利用它，可以这样做：
 
+
+![](img/db65af7a751ae4149ef2c60f90bc066c_19.png)
+
 ```python
 # 检查 GPU 是否可用
 print(torch.cuda.is_available())
@@ -131,9 +134,6 @@ if torch.cuda.is_available():
     device = torch.device("cuda:0")  # 使用第一个 GPU
     b_gpu = b.to(device)
     print(b_gpu)
-
-![](img/db65af7a751ae4149ef2c60f90bc066c_19.png)
-
 # 将张量移回 CPU
 b_cpu = b_gpu.to("cpu")
 ```

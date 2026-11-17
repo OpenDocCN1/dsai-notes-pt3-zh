@@ -40,6 +40,9 @@ LangChain框架提供了一系列组件来实现这些功能。
 !pip install langchain openai chromadb tiktoken
 ```
 
+
+![](img/14bba133e4fced7122ed0310466701ba_3.png)
+
 ```python
 # 导入必要的库
 from langchain.retrievers import ContextualCompressionRetriever
@@ -53,9 +56,6 @@ from langchain.document_loaders import TextLoader
 # 加载文档（示例使用 Paul Graham 的文章）
 loader = TextLoader("./paul_graham_essay.txt")
 documents = loader.load()
-
-![](img/14bba133e4fced7122ed0310466701ba_3.png)
-
 # 文档分割
 text_splitter = CharacterTextSplitter(chunk_size=1000, chunk_overlap=0)
 texts = text_splitter.split_documents(documents)

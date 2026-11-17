@@ -181,6 +181,16 @@ for epoch in range(num_epochs):
 
 ![](img/e78d7fe1f7db346873b2f000afef5642_36.png)
 
+
+![](img/e78d7fe1f7db346873b2f000afef5642_38.png)
+
+![](img/e78d7fe1f7db346873b2f000afef5642_40.png)
+
+
+![](img/e78d7fe1f7db346873b2f000afef5642_42.png)
+
+![](img/e78d7fe1f7db346873b2f000afef5642_44.png)
+
 ```python
 class DenoisingAutoencoder(nn.Module):
     def __init__(self, input_dim=784, hidden_dim=500):
@@ -201,19 +211,9 @@ class DenoisingAutoencoder(nn.Module):
         h = self.encoder(x_noisy)
         x_hat = self.decoder(h)
         return x_hat
-
-![](img/e78d7fe1f7db346873b2f000afef5642_38.png)
-
-![](img/e78d7fe1f7db346873b2f000afef5642_40.png)
-
 # 训练过程类似，但输入是 x_noisy，目标是原始 x
 model_dae = DenoisingAutoencoder(hidden_dim=500)
 optimizer_dae = optim.Adam(model_dae.parameters(), lr=0.001)
-
-![](img/e78d7fe1f7db346873b2f000afef5642_42.png)
-
-![](img/e78d7fe1f7db346873b2f000afef5642_44.png)
-
 for epoch in range(num_epochs):
     for data in train_loader:
         img, _ = data

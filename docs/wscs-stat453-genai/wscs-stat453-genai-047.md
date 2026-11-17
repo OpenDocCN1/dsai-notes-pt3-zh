@@ -24,13 +24,13 @@
 
 ![](img/80d91185d87ba37f6d819e7249f6c5a1_10.png)
 
-```python
-import torch.nn as nn
 
 ![](img/80d91185d87ba37f6d819e7249f6c5a1_12.png)
 
 ![](img/80d91185d87ba37f6d819e7249f6c5a1_13.png)
 
+```python
+import torch.nn as nn
 class MultiLayerPerceptron(nn.Module):
     def __init__(self, input_size, hidden_size, num_classes):
         super().__init__()
@@ -65,11 +65,14 @@ class MultiLayerPerceptron(nn.Module):
 
 ![](img/80d91185d87ba37f6d819e7249f6c5a1_17.png)
 
-```python
-import torch
 
 ![](img/80d91185d87ba37f6d819e7249f6c5a1_19.png)
 
+
+![](img/80d91185d87ba37f6d819e7249f6c5a1_21.png)
+
+```python
+import torch
 # 设置随机种子以确保可复现性
 torch.manual_seed(123)
 
@@ -79,9 +82,6 @@ model = MultiLayerPerceptron(input_size=784, hidden_size=128, num_classes=10)
 # 指定运行设备（CPU 或 GPU）
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 model.to(device)
-
-![](img/80d91185d87ba37f6d819e7249f6c5a1_21.png)
-
 # 设置优化器，传入需要更新的模型参数
 optimizer = torch.optim.SGD(model.parameters(), lr=0.01)
 ```

@@ -100,15 +100,15 @@ for param in model.parameters():
 ![](img/61c6df0b6f418da1af685e9b610e3dd0_46.png)
 
 以下是解冻并替换输出层的代码：
-```python
-# 解冻最后两个全连接层（索引1和3）
-model.classifier[1].requires_grad = True
-model.classifier[3].requires_grad = True
 
 ![](img/61c6df0b6f418da1af685e9b610e3dd0_48.png)
 
 ![](img/61c6df0b6f418da1af685e9b610e3dd0_50.png)
 
+```python
+# 解冻最后两个全连接层（索引1和3）
+model.classifier[1].requires_grad = True
+model.classifier[3].requires_grad = True
 # 替换最后的输出层，因为ImageNet有1000类，而CIFAR-10只有10类
 model.classifier[6] = torch.nn.Linear(4096, 10)
 ```

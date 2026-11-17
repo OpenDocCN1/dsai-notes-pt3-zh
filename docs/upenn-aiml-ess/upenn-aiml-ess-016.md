@@ -92,13 +92,13 @@ Python支持多重继承，即一个子类可以继承自多个父类。这允�
 
 ![](img/b9a6d85a6f21e7e17602ee2c504392b3_3.png)
 
+
+![](img/b9a6d85a6f21e7e17602ee2c504392b3_5.png)
+
 ```python
 class A:
     def foo(self):
         print("A's foo")
-
-![](img/b9a6d85a6f21e7e17602ee2c504392b3_5.png)
-
 class B:
     def bar(self):
         print("B's bar")

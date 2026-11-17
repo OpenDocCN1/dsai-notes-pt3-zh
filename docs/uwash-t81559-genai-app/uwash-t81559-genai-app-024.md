@@ -45,6 +45,9 @@ llm = OpenAI()
 
 它将处理的不是我输入的“hello”这个词，而是LLM对“hello”的响应，并翻转其大小写，正如您在那里所看到的。
 
+
+![](img/d44e8adbfaf152964f41b7017956bdf9_10.png)
+
 ```python
 # 示例：使用Lambda创建简单的解析器
 from langchain.schema.runnable import RunnableLambda
@@ -54,9 +57,6 @@ def swap_case(text: str) -> str:
 
 # 将函数包装为RunnableLambda
 case_swapper = RunnableLambda(swap_case)
-
-![](img/d44e8adbfaf152964f41b7017956bdf9_10.png)
-
 # 在链中使用
 chain = llm | case_swapper
 result = chain.invoke("hello")
@@ -92,13 +92,16 @@ result = chain.invoke("hello")
 
 ![](img/d44e8adbfaf152964f41b7017956bdf9_20.png)
 
+
+![](img/d44e8adbfaf152964f41b7017956bdf9_22.png)
+
+
+![](img/d44e8adbfaf152964f41b7017956bdf9_24.png)
+
 ```python
 # 示例：通过继承基类创建自定义解析器
 from langchain.schema import BaseOutputParser
 from typing import Any
-
-![](img/d44e8adbfaf152964f41b7017956bdf9_22.png)
-
 class BooleanOutputParser(BaseOutputParser[bool]):
     """自定义解析器，将‘是/否’类字符串解析为布尔值。"""
 
@@ -114,9 +117,6 @@ class BooleanOutputParser(BaseOutputParser[bool]):
             return False
         else:
             raise ValueError(f"无法将‘{text}’解析为布尔值。")
-
-![](img/d44e8adbfaf152964f41b7017956bdf9_24.png)
-
 # 使用自定义解析器
 parser = BooleanOutputParser()
 print(parser.parse("yes"))  # 输出: True
@@ -153,12 +153,12 @@ print(parser.parse("NO"))   # 输出: False
 
 接着，利用这个功能，我们可以创建代码输出解析器，它将使用我们刚刚构建的那个移除器。当我向它提出这类请求时，您将只得到纯代码文本作为返回。
 
-```python
-# 示例：创建提取Python代码的解析器
-import re
 
 ![](img/d44e8adbfaf152964f41b7017956bdf9_39.png)
 
+```python
+# 示例：创建提取Python代码的解析器
+import re
 def extract_python_code(text: str) -> str:
     """从文本中提取Python代码块。"""
     # 匹配Markdown代码块或直接以`import`或`def`等开头的代码行

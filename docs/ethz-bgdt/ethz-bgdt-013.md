@@ -226,9 +226,6 @@ Hadoop提供了一个通用的文件系统Shell命令 `hadoop fs`，它支持多
 
 以下是常用命令示例：
 
-```
-# 列出HDFS根目录下的文件 (默认连接到配置的HDFS)
-hadoop fs -ls /
 
 ![](img/0c45e3714c00aeb6c77282fe9841df55_90.png)
 
@@ -238,8 +235,6 @@ hadoop fs -ls /
 
 ![](img/0c45e3714c00aeb6c77282fe9841df55_93.png)
 
-# 在HDFS上创建一个新目录
-hadoop fs -mkdir /user/bigdata
 
 ![](img/0c45e3714c00aeb6c77282fe9841df55_95.png)
 
@@ -251,8 +246,6 @@ hadoop fs -mkdir /user/bigdata
 
 ![](img/0c45e3714c00aeb6c77282fe9841df55_101.png)
 
-# 从本地文件系统复制文件到HDFS
-hadoop fs -copyFromLocal localfile.txt /user/bigdata/
 
 ![](img/0c45e3714c00aeb6c77282fe9841df55_103.png)
 
@@ -262,8 +255,6 @@ hadoop fs -copyFromLocal localfile.txt /user/bigdata/
 
 ![](img/0c45e3714c00aeb6c77282fe9841df55_108.png)
 
-# 从HDFS复制文件到本地文件系统
-hadoop fs -copyToLocal /user/bigdata/hdfsfile.txt ./
 
 ![](img/0c45e3714c00aeb6c77282fe9841df55_110.png)
 
@@ -275,13 +266,22 @@ hadoop fs -copyToLocal /user/bigdata/hdfsfile.txt ./
 
 ![](img/0c45e3714c00aeb6c77282fe9841df55_114.png)
 
-# 查看HDFS上的文件内容
-hadoop fs -cat /user/bigdata/hdfsfile.txt
 
 ![](img/0c45e3714c00aeb6c77282fe9841df55_115.png)
 
 ![](img/0c45e3714c00aeb6c77282fe9841df55_116.png)
 
+```
+# 列出HDFS根目录下的文件 (默认连接到配置的HDFS)
+hadoop fs -ls /
+# 在HDFS上创建一个新目录
+hadoop fs -mkdir /user/bigdata
+# 从本地文件系统复制文件到HDFS
+hadoop fs -copyFromLocal localfile.txt /user/bigdata/
+# 从HDFS复制文件到本地文件系统
+hadoop fs -copyToLocal /user/bigdata/hdfsfile.txt ./
+# 查看HDFS上的文件内容
+hadoop fs -cat /user/bigdata/hdfsfile.txt
 # 删除HDFS上的文件或目录
 hadoop fs -rm -r /user/bigdata/olddir
 ```

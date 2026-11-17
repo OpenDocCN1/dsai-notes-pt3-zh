@@ -154,12 +154,12 @@ plt.show()
 让我们将决策树应用于之前使用过的乳腺癌数据集，并观察特征重要性。
 
 以下是应用于乳腺癌数据集的示例代码框架：
-```python
-from sklearn.datasets import load_breast_cancer
-from sklearn.tree import DecisionTreeClassifier
 
 ![](img/1fda5ed7095b54e23c6e6eaf9741e5a9_6.png)
 
+```python
+from sklearn.datasets import load_breast_cancer
+from sklearn.tree import DecisionTreeClassifier
 cancer = load_breast_cancer()
 X_train, X_test, y_train, y_test = train_test_split(cancer.data, cancer.target, random_state=0)
 

@@ -55,22 +55,22 @@ ggplot(data, aes(x = x_var, y = y_var)) +
 
 ![](img/46abfa62716ebe446950a1d684de1d26_27.png)
 
-```r
-# 创建示例数据
-library(tidyverse)
 
 ![](img/46abfa62716ebe446950a1d684de1d26_29.png)
 
 ![](img/46abfa62716ebe446950a1d684de1d26_30.png)
 
+
+![](img/46abfa62716ebe446950a1d684de1d26_32.png)
+
+```r
+# 创建示例数据
+library(tidyverse)
 kids_data <- tibble(
   kid = c("Nick", "Jessica", "Justin", "Brandy", "Kelly", "Enrique"),
   hours_played = c(40, 35, 25, 20, 10, 5),
   high_score = c(175, 85, 50, 25, 30, 10)
 )
-
-![](img/46abfa62716ebe446950a1d684de1d26_32.png)
-
 # 创建基础散点图
 ggplot(kids_data, aes(x = hours_played, y = high_score)) +
   geom_point()

@@ -147,15 +147,15 @@ q4_answer
 *   **使用“脚手架”打印语句**：在关键位置插入 `print` 语句，输出变量状态，帮助定位错误。调试完成后记得移除它们。
 *   **函数化以复用代码**：正如我们在 `find_rooms_with_keyword` 函数中所做的那样，将通用逻辑封装成函数。问题5和问题6同样需要查找包含不同关键词的房间名，只需用不同的参数调用此函数即可，避免了代码重复和潜在的错误。
 
-```python
-# 解决问题5：查找包含“dream room”的房间名
-q5_answer = find_rooms_with_keyword("dream room")
-q5_answer
 
 ![](img/de7c008bb45c415fa7f919f1c19d0448_5.png)
 
 ![](img/de7c008bb45c415fa7f919f1c19d0448_7.png)
 
+```python
+# 解决问题5：查找包含“dream room”的房间名
+q5_answer = find_rooms_with_keyword("dream room")
+q5_answer
 # 解决问题6：查找包含“free wifi”的房间名
 q6_answer = find_rooms_with_keyword("free wifi")
 q6_answer

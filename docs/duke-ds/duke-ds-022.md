@@ -69,12 +69,12 @@ python --version
 
 接下来，安装Python包管理工具`pip`（如果尚未安装），然后使用`pip`安装本作业所需的`oauth2`库。
 
-```bash
-# 安装pip（如果需要）
-sudo apt-get install python-pip
 
 ![](img/72f4cf7d45fc263205b33e5c86942698_15.png)
 
+```bash
+# 安装pip（如果需要）
+sudo apt-get install python-pip
 # 使用pip安装oauth2库
 pip install oauth2
 ```

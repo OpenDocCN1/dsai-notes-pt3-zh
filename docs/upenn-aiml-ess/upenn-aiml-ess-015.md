@@ -39,15 +39,15 @@ def function_name(arg1, arg2):
 Java和Python之间一个有趣的差异是，Python允许方法拥有多个返回值。在Java中，从函数返回多个值的唯一方法是创建一个专门为此目的设计的对象。在Python中，你可以通过在 `return` 语句后用逗号分隔列出所有值来轻松返回多个值。这会自动将你返回的不同值打包成一个元组。因此，具有多个返回值的函数的返回类型是一个元组。
 
 **代码示例：**
+
+![](img/ac52ccad2b59e62e76c06399ee7d6214_5.png)
+
 ```python
 def get_user_info():
     name = "Alice"
     age = 30
     city = "New York"
     return name, age, city  # 返回一个元组
-
-![](img/ac52ccad2b59e62e76c06399ee7d6214_5.png)
-
 # 调用函数并解包返回值
 user_name, user_age, user_city = get_user_info()
 ```
@@ -103,6 +103,9 @@ print_everything(*my_list)
 以下是两种可以将关键字参数传递到使用 `**kwargs` 定义的函数中的方法示例：你可以直接传递带有关键字及其值的参数，或者可以传入一个字典。类似于使用 `*` 符号解包传递给使用 `*args` 的函数的列表，你可以使用双星号 `**` 来解包传递给使用 `**kwargs` 的函数的字典。
 
 **代码示例：**
+
+![](img/ac52ccad2b59e62e76c06399ee7d6214_13.png)
+
 ```python
 def print_info(**kwargs):
     for key, value in kwargs.items():
@@ -110,9 +113,6 @@ def print_info(**kwargs):
 
 # 调用方式一：直接传入关键字参数
 print_info(name="Alice", age=30, city="NYC")
-
-![](img/ac52ccad2b59e62e76c06399ee7d6214_13.png)
-
 # 调用方式二：传入一个字典并使用 ** 解包
 my_dict = {"job": "Engineer", "hobby": "Reading"}
 print_info(**my_dict)
@@ -127,11 +127,11 @@ print_info(**my_dict)
 Python在使用变量方面相当宽松。你可以定义一个函数并引用一个未在函数作用域内定义的变量。在这种情况下，函数会看到该变量的最新值。例如，在函数 `add` 中，我引用了一个变量 `i`，该变量未在函数本身内定义，而是在我代码的其他地方定义。当我更新 `i` 时，即使传入相同的值，函数 `add` 的输出也会不同，因为 `i` 在我代码的不同位置被赋予了不同的值。因此，函数看到的是 `i` 的最新值。
 
 **代码示例：**
-```python
-i = 5
 
 ![](img/ac52ccad2b59e62e76c06399ee7d6214_17.png)
 
+```python
+i = 5
 def add(a, b):
     return a + b + i  # 使用了全局变量 i
 

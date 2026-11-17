@@ -36,6 +36,9 @@
 
 以下是如何在Spark中实现前缀和算法：
 
+
+![](img/93e99b54566e7687d89e73c68317583b_1.png)
+
 ```python
 # 假设 rdd 是输入的RDD
 # 第一阶段：计算每个分区的和
@@ -48,9 +51,6 @@ for s in partition_sums:
     prefix_sums_at_partition_level.append(current_sum)
     current_sum += s
 # prefix_sums_at_partition_level 现在存储了每个分区应开始的偏移量
-
-![](img/93e99b54566e7687d89e73c68317583b_1.png)
-
 # 第二阶段：并行计算每个分区内的前缀和，并加上偏移量
 def add_prefix(iter):
     # 这里需要一个闭包或广播变量来获取 prefix_sums_at_partition_level

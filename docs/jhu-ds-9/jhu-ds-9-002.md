@@ -155,9 +155,6 @@ Shiny本身免费，但托管可能需要成本。以下是几种部署选项：
 
 ![](img/0919e267c0e73cea8c3077237e638084_68.png)
 
-```r
-# 安装Shiny包
-install.packages("shiny")
 
 ![](img/0919e267c0e73cea8c3077237e638084_69.png)
 
@@ -171,6 +168,9 @@ install.packages("shiny")
 
 ![](img/0919e267c0e73cea8c3077237e638084_74.png)
 
+```r
+# 安装Shiny包
+install.packages("shiny")
 # 加载Shiny包
 library(shiny)
 ```

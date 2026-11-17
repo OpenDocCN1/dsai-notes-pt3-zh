@@ -154,9 +154,6 @@ floor_division = 5 // 2
 
 ![](img/54f2c3b39e35705ff95edcaa7aedebf2_68.png)
 
-```python
-num1 = 200
-num2 = 10
 
 ![](img/54f2c3b39e35705ff95edcaa7aedebf2_69.png)
 
@@ -164,6 +161,9 @@ num2 = 10
 
 ![](img/54f2c3b39e35705ff95edcaa7aedebf2_71.png)
 
+```python
+num1 = 200
+num2 = 10
 sum = num1 + num2
 difference = num1 - num2
 product = num1 * num2

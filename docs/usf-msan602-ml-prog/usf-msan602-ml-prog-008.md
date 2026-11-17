@@ -169,15 +169,15 @@ print(f"准确率: {accuracy:.4f}")  # 输出大约为 0.918
 
 我们将创建一个PyTorch模块，手动定义权重矩阵、偏置向量和前向传播过程。
 
-```python
-import torch
-import torch.nn as nn
-import math
 
 ![](img/90e568ed4cc37fee2eb48e57d7d63fd1_31.png)
 
 ![](img/90e568ed4cc37fee2eb48e57d7d63fd1_33.png)
 
+```python
+import torch
+import torch.nn as nn
+import math
 class LogisticRegression(nn.Module):
     def __init__(self):
         super().__init__()  # 必须首先初始化父类

@@ -48,10 +48,6 @@ multiplyNumbers <- function(numbers1 = 1:10, numbers2 = 1:10) {
 
 首先，确保已加载必要的库。然后，调用`multiplyNumbers`函数。
 
-```r
-# 加载库
-library(shiny)
-library(miniUI)
 
 ![](img/640b4f554efa76d3177b1cdbe89f4ea2_3.png)
 
@@ -59,6 +55,10 @@ library(miniUI)
 
 ![](img/640b4f554efa76d3177b1cdbe89f4ea2_5.png)
 
+```r
+# 加载库
+library(shiny)
+library(miniUI)
 # 运行小工具
 multiplyNumbers(numbers1 = 1:10, numbers2 = 1:10)
 ```

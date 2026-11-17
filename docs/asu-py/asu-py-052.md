@@ -42,11 +42,11 @@
 
 ![](img/aaa5288cd226de18f448c013aab78e23_14.png)
 
-```python
-import tkinter as tk
 
 ![](img/aaa5288cd226de18f448c013aab78e23_16.png)
 
+```python
+import tkinter as tk
 i = 1
 j = 1
 

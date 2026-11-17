@@ -56,21 +56,21 @@ class Fruit:
 
 ![](img/e149be637eb644059570ffb8fb33667b_24.png)
 
-```python
-class Apple(Fruit):
-    def calories(self):
-        print("苹果有 95 卡路里")
 
 ![](img/e149be637eb644059570ffb8fb33667b_26.png)
 
 ![](img/e149be637eb644059570ffb8fb33667b_27.png)
 
-class Orange(Fruit):
-    def calories(self):
-        print("橙子有 45 卡路里")
 
 ![](img/e149be637eb644059570ffb8fb33667b_29.png)
 
+```python
+class Apple(Fruit):
+    def calories(self):
+        print("苹果有 95 卡路里")
+class Orange(Fruit):
+    def calories(self):
+        print("橙子有 45 卡路里")
 class Banana(Fruit):
     def calories(self):
         print("香蕉有 105 卡路里")
@@ -97,15 +97,15 @@ def fruit_calories(fruit):
 
 ![](img/e149be637eb644059570ffb8fb33667b_38.png)
 
-```python
-a1 = Apple()
-b1 = Banana()
-o1 = Orange()
 
 ![](img/e149be637eb644059570ffb8fb33667b_39.png)
 
 ![](img/e149be637eb644059570ffb8fb33667b_41.png)
 
+```python
+a1 = Apple()
+b1 = Banana()
+o1 = Orange()
 fruit_calories(a1)  # 输出：苹果有 95 卡路里
 fruit_calories(b1)  # 输出：香蕉有 105 卡路里
 fruit_calories(o1)  # 输出：橙子有 45 卡路里
@@ -155,6 +155,9 @@ class Car:
 
 ![](img/e149be637eb644059570ffb8fb33667b_53.png)
 
+
+![](img/e149be637eb644059570ffb8fb33667b_55.png)
+
 ```python
 class Car:
     def __init__(self, *args):
@@ -167,9 +170,6 @@ class Car:
         elif len(args) == 2:
             self.color = args[0]
             self.type = args[1]
-
-![](img/e149be637eb644059570ffb8fb33667b_55.png)
-
 # 使用示例
 c1 = Car()          # color=None, type="unknown"
 c2 = Car("blue")    # color="blue", type="unknown"
@@ -196,15 +196,15 @@ c3 = Car("red", "Ford") # color="red", type="Ford"
 
 以下是方法重写的示例：
 
-```python
-class Grandmother:
-    def get_name(self):
-        return "Grandma Smith"
 
 ![](img/e149be637eb644059570ffb8fb33667b_66.png)
 
 ![](img/e149be637eb644059570ffb8fb33667b_67.png)
 
+```python
+class Grandmother:
+    def get_name(self):
+        return "Grandma Smith"
 class Mother(Grandmother):
     def get_name(self):
         # 使用 super() 调用父类的方法，并在此基础上修改

@@ -57,14 +57,14 @@ glimpse(df_cans)
 
 我将随机选取第一个垃圾桶，筛选出11月27日的数据，并用 `ggplot` 绘图。
 
+
+![](img/64de176f42160c6e568ad99c5f964212_4.png)
+
 ```r
 library(lubridate)
 # 示例：查看特定垃圾桶某一天的满溢度变化
 sample_can <- df_fills %>%
   filter(meID == "某个ID", date(recorded_datetime) == ymd("2017-11-27"))
-
-![](img/64de176f42160c6e568ad99c5f964212_4.png)
-
 ggplot(sample_can, aes(x = recorded_datetime, y = calculated_percent_full)) +
   geom_line() +
   labs(title = "单日垃圾桶满溢度变化", x = "时间", y = "满溢度 (%)")

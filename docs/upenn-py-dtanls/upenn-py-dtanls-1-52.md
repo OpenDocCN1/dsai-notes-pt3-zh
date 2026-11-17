@@ -38,17 +38,17 @@ hour_score_df = pd.DataFrame(data)
 
 ![](img/c036f1e45022d35d76e27c3fc8b7c16f_5.png)
 
-```python
-import seaborn as sns
-import matplotlib.pyplot as plt
 
 ![](img/c036f1e45022d35d76e27c3fc8b7c16f_7.png)
 
-# 使用 lmplot 绘制散点图
-sns.lmplot(x='hours_studied', y='exam_score', data=hour_score_df)
 
 ![](img/c036f1e45022d35d76e27c3fc8b7c16f_9.png)
 
+```python
+import seaborn as sns
+import matplotlib.pyplot as plt
+# 使用 lmplot 绘制散点图
+sns.lmplot(x='hours_studied', y='exam_score', data=hour_score_df)
 # 设置坐标轴标签和标题
 plt.xlabel('Hours Studied')
 plt.ylabel('Exam Score')

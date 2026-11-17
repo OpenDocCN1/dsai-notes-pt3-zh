@@ -87,15 +87,15 @@ custom_function()
 
 让我们修改函数，使其返回我们计算的长度和宽度值。
 
+
+![](img/2b00146f3c87bc0e8f8d8491b4d9c2e9_13.png)
+
 ```r
 custom_function <- function() {
   length <- nrow(data)
   width <- ncol(data)
   return(c(length, width))
 }
-
-![](img/2b00146f3c87bc0e8f8d8491b4d9c2e9_13.png)
-
 # 调用函数
 custom_function()
 ```

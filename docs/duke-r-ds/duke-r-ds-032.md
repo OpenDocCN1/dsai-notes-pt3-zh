@@ -40,12 +40,12 @@ library(glue)
 
 我们的目标是爬取前5页的数据。以下是构建这5个URL列表的方法：
 
-```r
-# 定义要爬取的页码
-page_nos <- 1:5
 
 ![](img/166ae8dbf280bd8bda435b47cbbad240_11.png)
 
+```r
+# 定义要爬取的页码
+page_nos <- 1:5
 # 使用glue包动态生成完整的URL列表
 base_url <- "https://example.com/page/"
 urls <- glue("{base_url}{page_nos}")

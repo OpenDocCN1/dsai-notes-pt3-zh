@@ -115,14 +115,14 @@ conn.commit()
 
 以下是查询并打印结果的代码：
 
+
+![](img/50f5ae07ec41f4a1e860e13e01d7c51e_13.png)
+
 ```python
 sqlstr = 'SELECT email, count FROM Counts ORDER BY count DESC LIMIT 10'
 
 for row in cur.execute(sqlstr):
     print(str(row[0]), row[1])
-
-![](img/50f5ae07ec41f4a1e860e13e01d7c51e_13.png)
-
 cur.close()
 ```
 

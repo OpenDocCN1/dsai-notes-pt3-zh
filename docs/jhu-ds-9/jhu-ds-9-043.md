@@ -101,6 +101,12 @@ new_lesson("我的第一课", "我的Swirl课程")
 
 课程的核心逻辑都定义在 `lesson.yaml` 文件中。你需要编辑这个文件来添加课程内容。以下是一个简单的 `lesson.yaml` 文件结构示例：
 
+
+![](img/86a052badf106871ba57ee1da59f3aad_32.png)
+
+
+![](img/86a052badf106871ba57ee1da59f3aad_34.png)
+
 ```yaml
 - Class: meta
   Course: 我的Swirl课程
@@ -108,14 +114,8 @@ new_lesson("我的第一课", "我的Swirl课程")
   Author: 你的名字
   Type: Standard
   Output: 控制台
-
-![](img/86a052badf106871ba57ee1da59f3aad_32.png)
-
 - Class: text
   Output: 欢迎来到我的第一课！我们将学习基础操作。
-
-![](img/86a052badf106871ba57ee1da59f3aad_34.png)
-
 - Class: cmd_question
   Output: 请计算 3 乘以 4 的结果。
   CorrectAnswer: 12

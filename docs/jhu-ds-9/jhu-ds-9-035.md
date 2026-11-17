@@ -18,10 +18,11 @@
 
 以下是定义自定义图标并应用到地图上的代码：
 
+  iconUrl = "https://example.com/hopkins_logo.png", # 图标URL
+
 ```r
 # 定义自定义图标（此处以约翰霍普金斯大学徽标为例）
 hopkinsIcon <- makeIcon(
-  iconUrl = "https://example.com/hopkins_logo.png", # 图标URL
   iconWidth = 30, iconHeight = 30, # 图标尺寸
   iconAnchorX = 15, iconAnchorY = 30 # 图标锚点（与标记点的对齐位置）
 )

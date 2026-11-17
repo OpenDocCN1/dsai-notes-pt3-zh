@@ -276,6 +276,11 @@ vkCreateShaderModule(device, &createInfo, nullptr, &shaderModule);
 ![](img/3a23afc523800bfaacb053f8b5862fcf_84.png)
 
 **创建管线布局与管线**：管线布局组合了该管线将使用的所有描述符集布局。最后，将所有状态信息填入 `VkGraphicsPipelineCreateInfo` 来创建图形管线。
+
+![](img/3a23afc523800bfaacb053f8b5862fcf_86.png)
+
+![](img/3a23afc523800bfaacb053f8b5862fcf_88.png)
+
 ```cpp
 VkPipelineLayout pipelineLayout;
 VkPipelineLayoutCreateInfo pipelineLayoutInfo{};
@@ -283,11 +288,6 @@ pipelineLayoutInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_LAYOUT_CREATE_INFO;
 pipelineLayoutInfo.setLayoutCount = 1;
 pipelineLayoutInfo.pSetLayouts = &descriptorSetLayout;
 vkCreatePipelineLayout(device, &pipelineLayoutInfo, nullptr, &pipelineLayout);
-
-![](img/3a23afc523800bfaacb053f8b5862fcf_86.png)
-
-![](img/3a23afc523800bfaacb053f8b5862fcf_88.png)
-
 VkGraphicsPipelineCreateInfo pipelineInfo{};
 pipelineInfo.sType = VK_STRUCTURE_TYPE_GRAPHICS_PIPELINE_CREATE_INFO;
 pipelineInfo.stageCount = 2; // 顶点和片段着色器阶段

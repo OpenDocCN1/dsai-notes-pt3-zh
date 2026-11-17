@@ -29,6 +29,9 @@
 
 以下是使用FGSM攻击生成对抗样本的核心代码示例。代码位于 `craft_adversarial_examples.py` 文件中。
 
+
+![](img/09e398825fd4b53d090941d6a8fa9b74_2.png)
+
 ```python
 # 导入必要的库和攻击模块
 from art.attacks.evasion import FastGradientMethod
@@ -40,9 +43,6 @@ model = ... # 加载你的模型
 
 # 创建攻击实例
 attack = FastGradientMethod(estimator=classifier, eps=0.25)
-
-![](img/09e398825fd4b53d090941d6a8fa9b74_2.png)
-
 # 生成对抗样本
 x_test_adv = attack.generate(x=x_test)
 ```

@@ -121,18 +121,21 @@ class SimpleConversation:
 
 ![](img/80e87b75f632c1213742c31f7d3f48c8_28.png)
 
-```python
-# 创建一个对话实例
-conv = SimpleConversation()
 
 ![](img/80e87b75f632c1213742c31f7d3f48c8_30.png)
 
-# 第一轮对话
-print(conv.chat("Hello"))
-# 输出: Hello! How can I assist you today?
 
 ![](img/80e87b75f632c1213742c31f7d3f48c8_32.png)
 
+
+![](img/80e87b75f632c1213742c31f7d3f48c8_34.png)
+
+```python
+# 创建一个对话实例
+conv = SimpleConversation()
+# 第一轮对话
+print(conv.chat("Hello"))
+# 输出: Hello! How can I assist you today?
 # 第二轮对话
 print(conv.chat("What is my name?"))
 # 输出: I'm sorry, I don't have that information. You haven't told me your name yet.
@@ -140,9 +143,6 @@ print(conv.chat("What is my name?"))
 # 第三轮对话：提供信息
 print(conv.chat("Oh, sorry. My name is Jeff."))
 # 输出: Nice to meet you, Jeff! How can I help you?
-
-![](img/80e87b75f632c1213742c31f7d3f48c8_34.png)
-
 # 第四轮对话：验证记忆
 print(conv.chat("What is my name?"))
 # 输出: Your name is Jeff.
@@ -150,19 +150,19 @@ print(conv.chat("What is my name?"))
 
 如示例所示，模型在被告知名字后，能够在后续对话中正确回忆。我们也可以使用系统提示来约束对话主题。
 
-```python
-# 创建一个专注于华盛顿大学的对话助手
-washu_bot = SimpleConversation(system_prompt="You are BearBot, a helpful assistant that only answers questions about Washington University.")
 
 ![](img/80e87b75f632c1213742c31f7d3f48c8_36.png)
 
 ![](img/80e87b75f632c1213742c31f7d3f48c8_37.png)
 
-print(washu_bot.chat("What is my name?"))
-# 模型可能不会回答名字问题，而是引导回华盛顿大学主题。
 
 ![](img/80e87b75f632c1213742c31f7d3f48c8_39.png)
 
+```python
+# 创建一个专注于华盛顿大学的对话助手
+washu_bot = SimpleConversation(system_prompt="You are BearBot, a helpful assistant that only answers questions about Washington University.")
+print(washu_bot.chat("What is my name?"))
+# 模型可能不会回答名字问题，而是引导回华盛顿大学主题。
 print(washu_bot.chat("What's the tallest building in the world?"))
 # 模型会将其理解为询问华盛顿大学校园内的建筑。
 ```

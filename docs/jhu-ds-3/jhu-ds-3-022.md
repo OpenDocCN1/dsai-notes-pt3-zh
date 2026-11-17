@@ -220,11 +220,6 @@ sub("_", "", names(reviews))
 
 ![](img/a5ca6491b12470ff23d861e542e7b24f_59.png)
 
-```r
-testName <- "this_is_a_test"
-# 只替换第一个下划线
-sub("_", "", testName)
-# 输出: "thisis_a_test"
 
 ![](img/a5ca6491b12470ff23d861e542e7b24f_60.png)
 
@@ -234,6 +229,11 @@ sub("_", "", testName)
 
 ![](img/a5ca6491b12470ff23d861e542e7b24f_63.png)
 
+```r
+testName <- "this_is_a_test"
+# 只替换第一个下划线
+sub("_", "", testName)
+# 输出: "thisis_a_test"
 # 替换所有下划线
 gsub("_", "", testName)
 # 输出: "thisisatest"

@@ -214,11 +214,6 @@
 
 ![](img/443ef12ddaca7b7d4661a06bab6aa2bc_110.png)
 
-```r
-# 拟合三个嵌套线性模型
-fit1 <- lm(Fertility ~ Agriculture, data = swiss)
-fit3 <- lm(Fertility ~ Agriculture + Examination + Education, data = swiss)
-fit5 <- lm(Fertility ~ Agriculture + Examination + Education + Catholic + Infant.Mortality, data = swiss)
 
 ![](img/443ef12ddaca7b7d4661a06bab6aa2bc_111.png)
 
@@ -236,6 +231,11 @@ fit5 <- lm(Fertility ~ Agriculture + Examination + Education + Catholic + Infant
 
 ![](img/443ef12ddaca7b7d4661a06bab6aa2bc_119.png)
 
+```r
+# 拟合三个嵌套线性模型
+fit1 <- lm(Fertility ~ Agriculture, data = swiss)
+fit3 <- lm(Fertility ~ Agriculture + Examination + Education, data = swiss)
+fit5 <- lm(Fertility ~ Agriculture + Examination + Education + Catholic + Infant.Mortality, data = swiss)
 # 使用anova函数进行嵌套模型比较
 anova(fit1, fit3, fit5)
 ```

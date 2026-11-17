@@ -67,8 +67,9 @@ YAML 文件中的每一行都对应界面中的一个步骤。首先是设置任
 
 为项目添加状态徽章是一个好做法。在构建主页面，点击“创建状态徽章”图标，然后复制徽章的 Markdown 代码。将其添加到项目的 `README.md` 文件中。
 
-```markdown
 ![Build Status](https://github.com/your-username/your-repo/actions/workflows/main.yml/badge.svg)
+
+```markdown
 ```
 
 添加后，徽章会显示每次操作的结果（通过或失败）。这是基于 SaaS 的持续集成系统的一个非常有用的功能。

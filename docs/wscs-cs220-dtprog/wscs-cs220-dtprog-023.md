@@ -22,14 +22,14 @@
 
 首先，我们来看看程序的核心代码结构：
 
+
+![](img/dabdf1973156fbf4fa52c2ecb35d6528_9.png)
+
 ```python
 import math
 
 def pizza_size(radius):
     return math.pi * radius ** 2
-
-![](img/dabdf1973156fbf4fa52c2ecb35d6528_9.png)
-
 def slice_size(radius, slice_count):
     total_size = pizza_size(radius)
     return total_size * (1 / slice_count)

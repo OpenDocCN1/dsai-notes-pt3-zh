@@ -83,13 +83,13 @@ sum(e * x)           # 应接近0
 
 ![](img/8ece94babfd1c8012331681ad0a16442_25.png)
 
+
+![](img/8ece94babfd1c8012331681ad0a16442_26.png)
+
 ```r
 # 绘制散点图与回归线
 plot(x, y, main = "钻石价格 vs 克拉数", xlab = "克拉数", ylab = "价格")
 abline(fit, lwd = 2, col = "blue")
-
-![](img/8ece94babfd1c8012331681ad0a16442_26.png)
-
 # 添加残差线段
 for (i in 1:n) {
   segments(x[i], y[i], x[i], y_hat[i], col = "red", lwd = 1)
@@ -146,14 +146,14 @@ abline(h = 0, lty = 2, col = "gray")
 
 假设真实关系为 `y = x + ε`，其中误差的标准差随x增大而增大。
 
+
+![](img/8ece94babfd1c8012331681ad0a16442_36.png)
+
 ```r
 # 生成异方差数据
 set.seed(123)
 x <- runif(100, 0, 3)
 y <- x + rnorm(100, sd = 0.1 * x)
-
-![](img/8ece94babfd1c8012331681ad0a16442_36.png)
-
 # 拟合线性模型
 fit_hetero <- lm(y ~ x)
 

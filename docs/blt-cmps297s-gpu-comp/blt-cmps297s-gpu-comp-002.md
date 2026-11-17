@@ -138,10 +138,6 @@ cudaFree(z_d);
 
 ![](img/8d35d538943219e48d439ec958f88b53_42.png)
 
-```c
-// 将数据从主机复制到设备
-cudaMemcpy(x_d, x, n * sizeof(float), cudaMemcpyHostToDevice);
-cudaMemcpy(y_d, y, n * sizeof(float), cudaMemcpyHostToDevice);
 
 ![](img/8d35d538943219e48d439ec958f88b53_44.png)
 
@@ -149,10 +145,14 @@ cudaMemcpy(y_d, y, n * sizeof(float), cudaMemcpyHostToDevice);
 
 ![](img/8d35d538943219e48d439ec958f88b53_47.png)
 
-// ... 执行GPU计算 ...
 
 ![](img/8d35d538943219e48d439ec958f88b53_49.png)
 
+```c
+// 将数据从主机复制到设备
+cudaMemcpy(x_d, x, n * sizeof(float), cudaMemcpyHostToDevice);
+cudaMemcpy(y_d, y, n * sizeof(float), cudaMemcpyHostToDevice);
+// ... 执行GPU计算 ...
 // 将结果从设备复制回主机
 cudaMemcpy(z, z_d, n * sizeof(float), cudaMemcpyDeviceToHost);
 ```
@@ -195,14 +195,14 @@ cudaMemcpy(z, z_d, n * sizeof(float), cudaMemcpyDeviceToHost);
 
 以下是如何启动内核的代码示例。我们假设有一个名为`vecAddKernel`的内核函数来执行并行向量加法。
 
+
+![](img/8d35d538943219e48d439ec958f88b53_73.png)
+
 ```c
 // 定义每个块的线程数
 const int threadsPerBlock = 512;
 // 计算需要的块数（向上取整）
 int blocks = (n + threadsPerBlock - 1) / threadsPerBlock;
-
-![](img/8d35d538943219e48d439ec958f88b53_73.png)
-
 // 启动内核
 vecAddKernel<<<blocks, threadsPerBlock>>>(x_d, y_d, z_d, n);
 ```

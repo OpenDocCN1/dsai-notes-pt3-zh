@@ -178,13 +178,9 @@ def subgradient_descent(X, y, lambda_reg, learning_rate=0.01, iterations=1000):
 
 优化完成后，我们可以可视化决策边界，以验证模型是否能够正确分类数据并保持较大的间隔。
 
-```python
-import matplotlib.pyplot as plt
 
 ![](img/f25e5d2e2ea4fdb53605eb9882eae806_34.png)
 
-# 假设 X 和 y 是训练数据
-theta_optimal = subgradient_descent(X, y, lambda_reg=0.1)
 
 ![](img/f25e5d2e2ea4fdb53605eb9882eae806_36.png)
 
@@ -192,6 +188,10 @@ theta_optimal = subgradient_descent(X, y, lambda_reg=0.1)
 
 ![](img/f25e5d2e2ea4fdb53605eb9882eae806_39.png)
 
+```python
+import matplotlib.pyplot as plt
+# 假设 X 和 y 是训练数据
+theta_optimal = subgradient_descent(X, y, lambda_reg=0.1)
 # 绘制数据点和决策边界
 plt.scatter(X[:, 0], X[:, 1], c=y, cmap='bwr')
 x_boundary = np.linspace(X[:, 0].min(), X[:, 0].max(), 100)

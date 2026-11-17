@@ -37,13 +37,13 @@ Wo = gram(sys, 'o'); % 可观性格拉姆矩阵
 2.  分别通过可控性和可观性格拉姆矩阵的平方根映射这个圆。
 3.  绘制得到的椭圆，通常用红色代表可控性椭圆，蓝色代表可观性椭圆。
 
+
+![](img/fe65987e5b5462bf49ec89d2026a9f98_2.png)
+
 ```matlab
 % 定义单位圆上的点
 theta = linspace(0, 2*pi, 100);
 circle = [cos(theta); sin(theta)];
-
-![](img/fe65987e5b5462bf49ec89d2026a9f98_2.png)
-
 % 映射到可控性椭圆
 sqrtWc = sqrtm(Wc);
 controllability_ellipse = sqrtWc * circle;

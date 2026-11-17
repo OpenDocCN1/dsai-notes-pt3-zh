@@ -88,6 +88,9 @@ print(parent_docs[5].page_content[:500]) # 查看一个分块的内容
 
 我们需要一个向量存储来存放子块的嵌入向量，一个文档存储来存放原始的父文档分块。
 
+
+![](img/ca229e15e4c58ca5794e949567a35cd4_9.png)
+
 ```python
 # 创建向量存储（使用Chroma和OpenAI嵌入模型）
 vectorstore = Chroma(
@@ -97,9 +100,6 @@ vectorstore = Chroma(
 
 # 创建内存文档存储
 store = InMemoryStore()
-
-![](img/ca229e15e4c58ca5794e949567a35cd4_9.png)
-
 # 为每个父文档分块生成唯一ID
 id_key = "doc_id"
 doc_ids = [str(uuid4()) for _ in parent_docs]
@@ -108,6 +108,12 @@ doc_ids = [str(uuid4()) for _ in parent_docs]
 ### 创建多向量检索器并处理文档
 
 现在创建 `MultiVectorRetriever`，并处理文档以建立父子块关联。
+
+
+![](img/ca229e15e4c58ca5794e949567a35cd4_11.png)
+
+
+![](img/ca229e15e4c58ca5794e949567a35cd4_13.png)
 
 ```python
 # 创建多向量检索器
@@ -119,9 +125,6 @@ retriever = MultiVectorRetriever(
 
 # 定义子文档拆分器（更小的块）
 child_splitter = RecursiveCharacterTextSplitter(chunk_size=400)
-
-![](img/ca229e15e4c58ca5794e949567a35cd4_11.png)
-
 # 为每个父文档分块创建子文档，并关联元数据
 sub_docs = []
 for i, doc in enumerate(parent_docs):
@@ -130,9 +133,6 @@ for i, doc in enumerate(parent_docs):
     for _doc in _sub_docs:
         _doc.metadata[id_key] = _id # 关键：在元数据中记录父文档ID
     sub_docs.extend(_sub_docs)
-
-![](img/ca229e15e4c58ca5794e949567a35cd4_13.png)
-
 # 将子文档嵌入并存入向量存储
 retriever.vectorstore.add_documents(sub_docs)
 # 将父文档存入文档存储

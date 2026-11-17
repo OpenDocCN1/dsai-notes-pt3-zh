@@ -79,10 +79,11 @@ fn load_model_from_efs() {
 
 为了方便测试，可以创建一个`Makefile`：
 
+          --data-ascii '{"image_url": "https://example.com/cat.jpg"}'
+
 ```makefile
 invoke:
     cargo lambda invoke --remote \
-          --data-ascii '{"image_url": "https://example.com/cat.jpg"}'
 ```
 
 这个命令会打包你的Rust代码，部署到Lambda，并发送一个测试事件来触发函数执行，从而验证整个流程。

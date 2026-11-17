@@ -98,9 +98,6 @@ require(plotly)
 
 ![](img/96054e5d30077d8d2825c5417edda6c4_25.png)
 
-```r
-# 加载数据
-data(mtcars)
 
 ![](img/96054e5d30077d8d2825c5417edda6c4_26.png)
 
@@ -108,17 +105,20 @@ data(mtcars)
 
 ![](img/96054e5d30077d8d2825c5417edda6c4_28.png)
 
+
+![](img/96054e5d30077d8d2825c5417edda6c4_29.png)
+
+![](img/96054e5d30077d8d2825c5417edda6c4_30.png)
+
+```r
+# 加载数据
+data(mtcars)
 # 使用plot_ly创建散点图
 p <- plot_ly(data = mtcars,
              x = ~wt,        # 指定x轴为车重
              y = ~mpg,       # 指定y轴为每加仑英里数
              type = 'scatter', # 图表类型为散点图
              mode = 'markers') # 模式为标记点
-
-![](img/96054e5d30077d8d2825c5417edda6c4_29.png)
-
-![](img/96054e5d30077d8d2825c5417edda6c4_30.png)
-
 # 显示图表
 p
 ```

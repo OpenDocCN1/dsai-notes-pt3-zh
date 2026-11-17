@@ -43,12 +43,12 @@ format:
 
 以下是一个基于Python的`Dockerfile`示例：
 
-```dockerfile
-# 使用官方Python 3.8镜像作为基础
-FROM public.ecr.aws/lambda/python:3.8
 
 ![](img/5d82beaacb76ea836f465674d19e1260_4.png)
 
+```dockerfile
+# 使用官方Python 3.8镜像作为基础
+FROM public.ecr.aws/lambda/python:3.8
 # 设置工作目录
 WORKDIR /var/task
 

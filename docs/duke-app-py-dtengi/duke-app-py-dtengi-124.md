@@ -76,6 +76,9 @@ plt.show()
 
 以下是一个结合了Seaborn绘图和Matplotlib定制的完整示例：
 
+
+![](img/6bd3cacbeebe7a99f23d94405e3f22fb_2.png)
+
 ```python
 # 使用Seaborn创建基础图表
 ax = sns.countplot(data=econ_df2, x='chart_type')
@@ -83,9 +86,6 @@ ax = sns.countplot(data=econ_df2, x='chart_type')
 # 使用Matplotlib进行深度定制
 ax.set_xlabel('')  # 将X轴标签设为空字符串
 ax.set_title('Chart Type Distribution', fontsize=14)
-
-![](img/6bd3cacbeebe7a99f23d94405e3f22fb_2.png)
-
 # 显示图表
 plt.tight_layout()
 plt.show()

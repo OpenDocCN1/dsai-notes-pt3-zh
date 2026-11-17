@@ -151,10 +151,6 @@ for (unsigned int tile = 0; tile < (N / TILE_DIM); ++tile) {
 ![](img/3b83afc778a0465a3d1b03e67ec73347_37.png)
 
 **步骤3：协作加载数据到共享内存**
-```c
-// 每个线程加载一个元素到共享内存中
-int row = blockIdx.y * blockDim.y + threadIdx.y;
-int col = blockIdx.x * blockDim.x + threadIdx.x;
 
 ![](img/3b83afc778a0465a3d1b03e67ec73347_39.png)
 
@@ -164,8 +160,6 @@ int col = blockIdx.x * blockDim.x + threadIdx.x;
 
 ![](img/3b83afc778a0465a3d1b03e67ec73347_44.png)
 
-As[threadIdx.y][threadIdx.x] = A[row * N + (tile * TILE_DIM + threadIdx.x)];
-Bs[threadIdx.y][threadIdx.x] = B[(tile * TILE_DIM + threadIdx.y) * N + col];
 
 ![](img/3b83afc778a0465a3d1b03e67ec73347_46.png)
 
@@ -183,6 +177,12 @@ Bs[threadIdx.y][threadIdx.x] = B[(tile * TILE_DIM + threadIdx.y) * N + col];
 
 ![](img/3b83afc778a0465a3d1b03e67ec73347_60.png)
 
+```c
+// 每个线程加载一个元素到共享内存中
+int row = blockIdx.y * blockDim.y + threadIdx.y;
+int col = blockIdx.x * blockDim.x + threadIdx.x;
+As[threadIdx.y][threadIdx.x] = A[row * N + (tile * TILE_DIM + threadIdx.x)];
+Bs[threadIdx.y][threadIdx.x] = B[(tile * TILE_DIM + threadIdx.y) * N + col];
 __syncthreads(); // 确保所有线程都完成加载
 ```
 *   线程根据其在线程块内的位置（`threadIdx`），负责加载输入块中对应位置的一个元素。

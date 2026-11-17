@@ -58,6 +58,9 @@ Lattice系统拥有所谓的“面板函数”。当您创建多面板图时，�
 
 ![](img/ecb915b2ce20736acbe8827f0909e8e8_22.png)
 
+
+![](img/ecb915b2ce20736acbe8827f0909e8e8_23.png)
+
 ```r
 # 生成模拟数据
 set.seed(123)
@@ -66,9 +69,6 @@ y <- x + rnorm(100, sd = 0.5)
 group <- factor(rep(c("Group 1", "Group 2"), each = 50))
 # 修改第二组数据，使其无线性关系
 y[51:100] <- rnorm(50, mean = 0, sd = 0.5)
-
-![](img/ecb915b2ce20736acbe8827f0909e8e8_23.png)
-
 # 使用xyplot创建基础多面板图
 library(lattice)
 xyplot(y ~ x | group)
@@ -84,6 +84,9 @@ xyplot(y ~ x | group)
 
 ![](img/ecb915b2ce20736acbe8827f0909e8e8_28.png)
 
+
+![](img/ecb915b2ce20736acbe8827f0909e8e8_29.png)
+
 ```r
 # 自定义面板函数，添加中位线
 my_panel <- function(x, y, ...) {
@@ -92,9 +95,6 @@ my_panel <- function(x, y, ...) {
   # 然后添加一条水平虚线，表示y的中位数
   panel.abline(h = median(y, na.rm = TRUE), lty = 2, col = "red")
 }
-
-![](img/ecb915b2ce20736acbe8827f0909e8e8_29.png)
-
 # 应用自定义面板函数
 xyplot(y ~ x | group, panel = my_panel)
 ```

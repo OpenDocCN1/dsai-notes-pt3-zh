@@ -229,14 +229,9 @@ class Car:
 
 现在，我们可以创建对象并操作其属性：
 
-```python
-ford = Car(2021, 130) # 调用 __init__，创建对象并初始化
-chevy = Car(2019, 110)
 
 ![](img/dafd4a623b7cae339ab51b1c7c69c71d_132.png)
 
-print(ford.get_speed()) # 输出: 130
-print(chevy.get_speed()) # 输出: 110
 
 ![](img/dafd4a623b7cae339ab51b1c7c69c71d_133.png)
 
@@ -250,6 +245,11 @@ print(chevy.get_speed()) # 输出: 110
 
 ![](img/dafd4a623b7cae339ab51b1c7c69c71d_138.png)
 
+```python
+ford = Car(2021, 130) # 调用 __init__，创建对象并初始化
+chevy = Car(2019, 110)
+print(ford.get_speed()) # 输出: 130
+print(chevy.get_speed()) # 输出: 110
 ford.set_speed(120) # 修改 ford 的速度
 print(ford.get_speed()) # 输出: 120
 ```
@@ -407,10 +407,6 @@ class BankAccount:
 
 ![](img/dafd4a623b7cae339ab51b1c7c69c71d_211.png)
 
-```python
-# 使用默认值创建账户
-account1 = BankAccount()
-print(account1) # 输出: Name: Unknown, Acc#: 1234, Balance: $0.0
 
 ![](img/dafd4a623b7cae339ab51b1c7c69c71d_213.png)
 
@@ -418,14 +414,18 @@ print(account1) # 输出: Name: Unknown, Acc#: 1234, Balance: $0.0
 
 ![](img/dafd4a623b7cae339ab51b1c7c69c71d_215.png)
 
-# 使用具体参数创建账户
-account2 = BankAccount(“Tim”, 5678, 1000.0)
-print(account2) # 输出: Name: Tim, Acc#: 5678, Balance: $1000.0
 
 ![](img/dafd4a623b7cae339ab51b1c7c69c71d_217.png)
 
 ![](img/dafd4a623b7cae339ab51b1c7c69c71d_218.png)
 
+```python
+# 使用默认值创建账户
+account1 = BankAccount()
+print(account1) # 输出: Name: Unknown, Acc#: 1234, Balance: $0.0
+# 使用具体参数创建账户
+account2 = BankAccount(“Tim”, 5678, 1000.0)
+print(account2) # 输出: Name: Tim, Acc#: 5678, Balance: $1000.0
 account2.deposit(500)
 print(account2.get_balance()) # 输出: 1500.0
 ```

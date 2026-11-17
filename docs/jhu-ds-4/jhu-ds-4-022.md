@@ -61,12 +61,12 @@ data$NO2_tertile <- cut(data$logNO2, cutpoints)
 
 以下是构建该图表的代码分解：
 
-```r
-# 初始化ggplot对象并设置基本美学映射
-p <- ggplot(data, aes(x = pm25, y = nocturnalsympt))
 
 ![](img/ef39b262c233a1cc7537cf1ca7fac542_1.png)
 
+```r
+# 初始化ggplot对象并设置基本美学映射
+p <- ggplot(data, aes(x = pm25, y = nocturnalsympt))
 # 添加散点图层，并设置透明度以观察点密度
 p <- p + geom_point(alpha = 0.3)
 

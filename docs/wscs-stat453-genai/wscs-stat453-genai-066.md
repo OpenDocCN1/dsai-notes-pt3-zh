@@ -16,11 +16,6 @@
 
 首先，我们需要导入必要的库并设置一些超参数。以下是代码的初始部分。
 
-```python
-import torch
-import torch.nn as nn
-import torch.nn.functional as F
-from torchvision import datasets, transforms
 
 ![](img/6785be20b4e65afee85a3f103de7402c_7.png)
 
@@ -30,6 +25,11 @@ from torchvision import datasets, transforms
 
 ![](img/6785be20b4e65afee85a3f103de7402c_10.png)
 
+```python
+import torch
+import torch.nn as nn
+import torch.nn.functional as F
+from torchvision import datasets, transforms
 # 超参数设置
 batch_size = 100
 num_epochs = 100
@@ -135,6 +135,11 @@ class MultilayerPerceptron(nn.Module):
 
 ![](img/6785be20b4e65afee85a3f103de7402c_37.png)
 
+
+![](img/6785be20b4e65afee85a3f103de7402c_39.png)
+
+![](img/6785be20b4e65afee85a3f103de7402c_40.png)
+
 ```python
 # 初始化模型
 input_size = 28 * 28  # MNIST 图像尺寸
@@ -142,11 +147,6 @@ hidden_size = 100     # 隐藏层神经元数量，这是一个可调整的超�
 num_classes = 10      # 输出类别数（数字0-9）
 
 model = MultilayerPerceptron(input_size, hidden_size, num_classes)
-
-![](img/6785be20b4e65afee85a3f103de7402c_39.png)
-
-![](img/6785be20b4e65afee85a3f103de7402c_40.png)
-
 # 定义损失函数和优化器
 criterion = nn.CrossEntropyLoss()  # 内部已包含 LogSoftmax
 optimizer = torch.optim.SGD(model.parameters(), lr=0.1)
@@ -204,13 +204,13 @@ def compute_loss(data_loader, model):
 
 ![](img/6785be20b4e65afee85a3f103de7402c_61.png)
 
-```python
-train_losses = []
 
 ![](img/6785be20b4e65afee85a3f103de7402c_63.png)
 
 ![](img/6785be20b4e65afee85a3f103de7402c_64.png)
 
+```python
+train_losses = []
 for epoch in range(num_epochs):
     for i, (images, labels) in enumerate(train_loader):
         # 前向传播

@@ -127,11 +127,11 @@ Delete操作用于删除表中的行或特定单元格。删除也是以行为�
 ![](img/2b9b9c03bce4697e46d5f2eedceabcf1_6.png)
 
 **代码示例：删除数据**
-```java
-import org.apache.hadoop.hbase.client.Delete;
 
 ![](img/2b9b9c03bce4697e46d5f2eedceabcf1_8.png)
 
+```java
+import org.apache.hadoop.hbase.client.Delete;
 // 删除整行
 Delete delete = new Delete(toBytes("row_key_1"));
 table.delete(delete);

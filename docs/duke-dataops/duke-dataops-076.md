@@ -94,6 +94,9 @@ pub fn random_fruit() -> Fruit {
 
 接着，创建 `src/main.rs` 文件，定义Web服务的路由。
 
+
+![](img/619973d394e16b470c915fb24e8f0b1c_4.png)
+
 ```rust
 use actix_web::{get, App, HttpResponse, HttpServer, Responder};
 use web_docker::random_fruit;
@@ -108,9 +111,6 @@ async fn index() -> impl Responder {
 async fn health() -> impl Responder {
     HttpResponse::Ok().body("OK")
 }
-
-![](img/619973d394e16b470c915fb24e8f0b1c_4.png)
-
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
     HttpServer::new(|| {

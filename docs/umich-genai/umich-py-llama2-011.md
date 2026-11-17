@@ -12,12 +12,12 @@
 
 首先，我们将像往常一样加载和配置模型。这里使用的是基础模型 `noncha`。
 
-```python
-# 加载和配置模型的代码示例
-from llama_cpp import Llama
 
 ![](img/a6ac90b6acf2929fd67f9d3d670ab82b_4.png)
 
+```python
+# 加载和配置模型的代码示例
+from llama_cpp import Llama
 llm = Llama(model_path="./models/noncha.gguf")
 ```
 
@@ -126,11 +126,11 @@ model.detokenize(input_ids)
 
 请记住，当你看到字符串输出时，它实际上是倒序的：最可能的标记是最后一个。所以我们可以使用 NumPy 语法对最后五个项目进行切片来反转它们。
 
-```python
-import numpy as np
 
 ![](img/a6ac90b6acf2929fd67f9d3d670ab82b_22.png)
 
+```python
+import numpy as np
 # 获取最可能的五个标记
 top_indices = np.argsort(np.abs(logits))[-5:]
 top_tokens = [model.detokenize([idx]) for idx in top_indices[::-1]]  # 反转顺序

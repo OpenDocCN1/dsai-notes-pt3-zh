@@ -125,6 +125,9 @@ g <- function(x) {
 
 ![](img/59d323213e076deff65c80bf2b8b3a35_11.png)
 
+
+![](img/59d323213e076deff65c80bf2b8b3a35_13.png)
+
 ```r
 g <- function(x) {
   a <- 3
@@ -132,9 +135,6 @@ g <- function(x) {
 }
 
 g(2) # 报错：找不到对象 'y'
-
-![](img/59d323213e076deff65c80bf2b8b3a35_13.png)
-
 y <- 3
 g(2) # 返回 8
 ```

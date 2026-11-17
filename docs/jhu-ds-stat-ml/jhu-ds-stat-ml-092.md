@@ -20,15 +20,15 @@
 
 首先，加载必要的R包和数据，并划分训练集与测试集。
 
-```r
-library(caret)
-library(kernlab)
-data(spam)
 
 ![](img/ded4b3078209b70e883bf30445fcb622_9.png)
 
 ![](img/ded4b3078209b70e883bf30445fcb622_10.png)
 
+```r
+library(caret)
+library(kernlab)
+data(spam)
 set.seed(123)
 inTrain <- createDataPartition(y=spam$type, p=0.75, list=FALSE)
 training <- spam[inTrain, ]

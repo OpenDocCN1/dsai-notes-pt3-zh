@@ -66,22 +66,22 @@ CUDA支持创建多维网格（一维、二维或三维）。这简化了多维�
 
 ![](img/20daff6152991c4e587c4c7e35605976_25.png)
 
-```cpp
-// 定义每个线程块的维度（例如 32x32 线程）
-dim3 numThreadsPerBlock(32, 32); // Z维度默认为1
 
 ![](img/20daff6152991c4e587c4c7e35605976_27.png)
 
 ![](img/20daff6152991c4e587c4c7e35605976_29.png)
 
+
+![](img/20daff6152991c4e587c4c7e35605976_31.png)
+
+```cpp
+// 定义每个线程块的维度（例如 32x32 线程）
+dim3 numThreadsPerBlock(32, 32); // Z维度默认为1
 // 计算网格的维度（线程块的数量）
 // 假设图像宽度为 `width`，高度为 `height`
 int numBlocksX = (width + numThreadsPerBlock.x - 1) / numThreadsPerBlock.x;
 int numBlocksY = (height + numThreadsPerBlock.y - 1) / numThreadsPerBlock.y;
 dim3 numBlocks(numBlocksX, numBlocksY);
-
-![](img/20daff6152991c4e587c4c7e35605976_31.png)
-
 // 启动内核
 rgbToGrayKernel<<<numBlocks, numThreadsPerBlock>>>(...);
 ```

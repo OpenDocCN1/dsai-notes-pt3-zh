@@ -44,12 +44,6 @@ for (int i = 0; i < n; i++) {
 ![](img/14e88fa3bece47823cac167515ef8a0e_5.png)
 
 **顺序扫描**的伪代码如下：
-```cpp
-// 包含式扫描
-Y[0] = X[0];
-for (int i = 1; i < n; i++) {
-    Y[i] = Y[i-1] + X[i]; // 使用加法运算符
-}
 
 ![](img/14e88fa3bece47823cac167515ef8a0e_7.png)
 
@@ -65,6 +59,12 @@ for (int i = 1; i < n; i++) {
 
 ![](img/14e88fa3bece47823cac167515ef8a0e_17.png)
 
+```cpp
+// 包含式扫描
+Y[0] = X[0];
+for (int i = 1; i < n; i++) {
+    Y[i] = Y[i-1] + X[i]; // 使用加法运算符
+}
 // 排除式扫描
 Y[0] = 0; // 单位元
 for (int i = 1; i < n; i++) {

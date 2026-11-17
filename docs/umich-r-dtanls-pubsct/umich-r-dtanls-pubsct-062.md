@@ -14,13 +14,13 @@
 
 首先，我们照例加载必要的R包并导入数据。我们将使用`tidyverse`、`janitor`和`tidyr`。
 
+
+![](img/c5264686d1aac29a3dcc6acc1c68d1ea_6.png)
+
 ```r
 library(tidyverse)
 library(janitor)
 library(tidyr)
-
-![](img/c5264686d1aac29a3dcc6acc1c68d1ea_6.png)
-
 fish_data <- read_csv("your_data.csv") %>%
   clean_names()
 ```

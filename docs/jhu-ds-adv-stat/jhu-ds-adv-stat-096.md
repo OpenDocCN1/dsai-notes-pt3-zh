@@ -14,12 +14,12 @@
 
 首先，我们需要加载数据并创建设计矩阵`X`和响应向量`y`。设计矩阵`X`需要包含一个截距项。
 
-```r
-# 加载swiss数据集
-data(swiss)
 
 ![](img/43040a969a57c066c2c4b4627ba0583b_5.png)
 
+```r
+# 加载swiss数据集
+data(swiss)
 # 创建设计矩阵X，包含截距项和所有预测变量
 X <- cbind(1, as.matrix(swiss[, -1]))
 # 查看X的前10行
@@ -46,12 +46,12 @@ y <- swiss$Fertility
 
 接下来，我们将在R中手动实现这个公式。
 
-```r
-# 计算 XᵀX
-xtx <- t(X) %*% X
 
 ![](img/43040a969a57c066c2c4b4627ba0583b_17.png)
 
+```r
+# 计算 XᵀX
+xtx <- t(X) %*% X
 # 计算 (XᵀX)⁻¹ Xᵀy
 # 方法一：直接求逆矩阵
 beta_hat <- solve(xtx) %*% t(X) %*% y

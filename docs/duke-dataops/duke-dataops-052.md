@@ -153,6 +153,15 @@ if __name__ == '__main__':
 
 我们创建一个新的Streamlit应用文件 `code_gen_web_app.py`。其核心是提供一个文本输入框供用户描述需求，并选择一个目标语言，然后调用我们的库来生成并显示代码。
 
+
+![](img/4453d35498bdfd5cfb13d03c5fdc52e2_36.png)
+
+![](img/4453d35498bdfd5cfb13d03c5fdc52e2_37.png)
+
+![](img/4453d35498bdfd5cfb13d03c5fdc52e2_39.png)
+
+![](img/4453d35498bdfd5cfb13d03c5fdc52e2_41.png)
+
 ```python
 # code_gen_web_app.py
 import streamlit as st
@@ -164,15 +173,6 @@ st.write('输入您的需求，选择语言，即可自动生成代码。')
 # 用户输入
 user_input = st.text_area("描述您想要的功能：", "例如：创建一个函数，计算列表的平均值")
 language = st.selectbox("选择编程语言：", ["Python", "JavaScript", "SQL", "Java"])
-
-![](img/4453d35498bdfd5cfb13d03c5fdc52e2_36.png)
-
-![](img/4453d35498bdfd5cfb13d03c5fdc52e2_37.png)
-
-![](img/4453d35498bdfd5cfb13d03c5fdc52e2_39.png)
-
-![](img/4453d35498bdfd5cfb13d03c5fdc52e2_41.png)
-
 if st.button('生成代码'):
     with st.spinner('正在生成代码，请稍候...'):
         try:

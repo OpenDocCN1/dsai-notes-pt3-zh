@@ -61,12 +61,12 @@
 ![](img/e03851d19ee3cb3043bd494d3a1a3ab0_11.png)
 
 **代码示意（PyTorch）**：
-```python
-# 空间Dropout2d
-torch.nn.Dropout2d(p=0.5)
 
 ![](img/e03851d19ee3cb3043bd494d3a1a3ab0_12.png)
 
+```python
+# 空间Dropout2d
+torch.nn.Dropout2d(p=0.5)
 # 批归一化2d
 torch.nn.BatchNorm2d(num_features)
 ```

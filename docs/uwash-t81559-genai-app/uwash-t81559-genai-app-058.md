@@ -54,15 +54,15 @@ const recordAudio = () => {
 
 现在，我们使用Python代码来调用上述录制功能，并设置录制时长为5秒。
 
+
+![](img/fa08f03ca9f0723264caefd42d35094f_3.png)
+
 ```python
 import openai
 import time
 
 # 设置OpenAI API密钥
 openai.api_key = '你的API密钥'
-
-![](img/fa08f03ca9f0723264caefd42d35094f_3.png)
-
 # 录制5秒音频的示例调用
 print("开始录制5秒音频...")
 # 此处应调用上述JavaScript录音函数

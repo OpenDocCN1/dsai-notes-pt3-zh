@@ -50,15 +50,15 @@ langchain template new <your-template-name>
 ![](img/ff9ffbc787426e2c98293e8087a26062_25.png)
 
 以下是初始 `chain.py` 可能包含的核心代码结构：
-```python
-from langchain.prompts import PromptTemplate
-from langchain.chat_models import ChatOpenAI
-from langchain.schema.runnable import RunnableSequence
 
 ![](img/ff9ffbc787426e2c98293e8087a26062_27.png)
 
 ![](img/ff9ffbc787426e2c98293e8087a26062_29.png)
 
+```python
+from langchain.prompts import PromptTemplate
+from langchain.chat_models import ChatOpenAI
+from langchain.schema.runnable import RunnableSequence
 prompt = PromptTemplate.from_template("You are a helpful assistant. {text}")
 model = ChatOpenAI()
 chain = prompt | model
@@ -88,6 +88,24 @@ chain = prompt | model
 ![](img/ff9ffbc787426e2c98293e8087a26062_44.png)
 
 以下是实现该功能的核心代码逻辑：
+
+![](img/ff9ffbc787426e2c98293e8087a26062_46.png)
+
+
+![](img/ff9ffbc787426e2c98293e8087a26062_48.png)
+
+![](img/ff9ffbc787426e2c98293e8087a26062_50.png)
+
+
+![](img/ff9ffbc787426e2c98293e8087a26062_52.png)
+
+![](img/ff9ffbc787426e2c98293e8087a26062_54.png)
+
+
+![](img/ff9ffbc787426e2c98293e8087a26062_56.png)
+
+![](img/ff9ffbc787426e2c98293e8087a26062_58.png)
+
 ```python
 import os
 from langchain.document_loaders import PyPDFLoader
@@ -99,28 +117,15 @@ from langchain.chat_models import ChatOpenAI
 from langchain.prompts import ChatPromptTemplate
 from langchain.schema.output_parser import StrOutputParser
 from langchain.schema.runnable import RunnablePassthrough
-
-![](img/ff9ffbc787426e2c98293e8087a26062_46.png)
-
 # 1. 加载并处理PDF
 pdf_path = os.getenv("PDF_PATH")
 loader = PyPDFLoader(pdf_path)
 documents = loader.load()
 text_splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=200)
 splits = text_splitter.split_documents(documents)
-
-![](img/ff9ffbc787426e2c98293e8087a26062_48.png)
-
-![](img/ff9ffbc787426e2c98293e8087a26062_50.png)
-
 # 2. 创建向量存储和检索器
 vectorstore = Chroma.from_documents(documents=splits, embedding=OpenAIEmbeddings())
 retriever = MultiVectorRetriever(vectorstore=vectorstore)
-
-![](img/ff9ffbc787426e2c98293e8087a26062_52.png)
-
-![](img/ff9ffbc787426e2c98293e8087a26062_54.png)
-
 # 3. 构建提示词和链
 template = """基于以下上下文信息回答问题：
 {context}
@@ -128,11 +133,6 @@ template = """基于以下上下文信息回答问题：
 """
 prompt = ChatPromptTemplate.from_template(template)
 model = ChatOpenAI()
-
-![](img/ff9ffbc787426e2c98293e8087a26062_56.png)
-
-![](img/ff9ffbc787426e2c98293e8087a26062_58.png)
-
 chain = (
     {"context": retriever, "question": RunnablePassthrough()}
     | prompt

@@ -76,13 +76,13 @@
 我们使用一个公开的贷款申请数据集。首先，我们按常规流程训练一个信用风险预测模型。然后，我们不仅仅查看它在整个测试集上的AUC（假设为0.8），而是进行深入的切片分析。
 
 例如，我们可以编写R代码来执行以下分析：
+
+![](img/419bd95961e9aafd11a4e650443d6c72_15.png)
+
 ```r
 # 假设 `test_data` 包含测试数据和预测结果，`gender` 是性别列
 # 计算整体性能
 overall_auc <- calculate_auc(test_data$label, test_data$prediction_score)
-
-![](img/419bd95961e9aafd11a4e650443d6c72_15.png)
-
 # 按性别切片分析
 male_data <- subset(test_data, gender == "male")
 female_data <- subset(test_data, gender == "female")

@@ -94,23 +94,23 @@
 
 ![](img/c4a3de00b52e1f048a6362f2ffa7a8cd_49.png)
 
-```python
-# 示例1：使用花括号创建集合，并观察自动去重
-set1 = {11, 11, 22, 33, 44}
-print(set1)  # 输出：{33, 11, 44, 22} （顺序可能不同，且第二个11被移除）
 
 ![](img/c4a3de00b52e1f048a6362f2ffa7a8cd_51.png)
 
 ![](img/c4a3de00b52e1f048a6362f2ffa7a8cd_53.png)
 
-# 示例2：使用set()构造函数创建集合
-set2 = set((1, 2, 3))
-print(set2)  # 输出：{1, 2, 3}
 
 ![](img/c4a3de00b52e1f048a6362f2ffa7a8cd_54.png)
 
 ![](img/c4a3de00b52e1f048a6362f2ffa7a8cd_56.png)
 
+```python
+# 示例1：使用花括号创建集合，并观察自动去重
+set1 = {11, 11, 22, 33, 44}
+print(set1)  # 输出：{33, 11, 44, 22} （顺序可能不同，且第二个11被移除）
+# 示例2：使用set()构造函数创建集合
+set2 = set((1, 2, 3))
+print(set2)  # 输出：{1, 2, 3}
 # 示例3：使用set()将列表转换为集合
 set3 = set([1, 2, 3])
 print(set3)  # 输出：{1, 2, 3}
@@ -220,10 +220,6 @@ for person in people:
 
 ![](img/c4a3de00b52e1f048a6362f2ffa7a8cd_113.png)
 
-```python
-# 初始集合
-my_set = {11, 22, 33, 44, 55}
-print("初始集合:", my_set)
 
 ![](img/c4a3de00b52e1f048a6362f2ffa7a8cd_115.png)
 
@@ -231,25 +227,16 @@ print("初始集合:", my_set)
 
 ![](img/c4a3de00b52e1f048a6362f2ffa7a8cd_118.png)
 
-# 1. 使用 add() 添加元素
-my_set.add(66)
-print("添加66后:", my_set)  # 66被随机插入到某个位置
 
 ![](img/c4a3de00b52e1f048a6362f2ffa7a8cd_120.png)
 
 ![](img/c4a3de00b52e1f048a6362f2ffa7a8cd_121.png)
 
-# 2. 使用 update() 添加多个元素
-my_set.update([77, 88, 99])
-print("更新[77,88,99]后:", my_set)
 
 ![](img/c4a3de00b52e1f048a6362f2ffa7a8cd_123.png)
 
 ![](img/c4a3de00b52e1f048a6362f2ffa7a8cd_125.png)
 
-# 3. 使用 remove() 移除指定元素
-my_set.remove(77)
-print("移除77后:", my_set)
 
 ![](img/c4a3de00b52e1f048a6362f2ffa7a8cd_127.png)
 
@@ -257,13 +244,26 @@ print("移除77后:", my_set)
 
 ![](img/c4a3de00b52e1f048a6362f2ffa7a8cd_131.png)
 
+
+![](img/c4a3de00b52e1f048a6362f2ffa7a8cd_133.png)
+
+```python
+# 初始集合
+my_set = {11, 22, 33, 44, 55}
+print("初始集合:", my_set)
+# 1. 使用 add() 添加元素
+my_set.add(66)
+print("添加66后:", my_set)  # 66被随机插入到某个位置
+# 2. 使用 update() 添加多个元素
+my_set.update([77, 88, 99])
+print("更新[77,88,99]后:", my_set)
+# 3. 使用 remove() 移除指定元素
+my_set.remove(77)
+print("移除77后:", my_set)
 # 4. 使用 pop() 移除一个元素（随机，但常是“第一个”）
 popped_item = my_set.pop()
 print(f"被pop的元素是: {popped_item}")
 print("pop后:", my_set)
-
-![](img/c4a3de00b52e1f048a6362f2ffa7a8cd_133.png)
-
 # 5. 使用 clear() 清空集合
 my_set.clear()
 print("清空后:", my_set)  # 输出：set()
@@ -320,14 +320,9 @@ print("清空后:", my_set)  # 输出：set()
 
 ![](img/c4a3de00b52e1f048a6362f2ffa7a8cd_156.png)
 
-```python
-set_a = {11, 22, 33, 44, 55}
-set_b = {11, 33, 55, 77, 99}
 
 ![](img/c4a3de00b52e1f048a6362f2ffa7a8cd_158.png)
 
-print("集合A:", set_a)
-print("集合B:", set_b)
 
 ![](img/c4a3de00b52e1f048a6362f2ffa7a8cd_160.png)
 
@@ -335,8 +330,6 @@ print("集合B:", set_b)
 
 ![](img/c4a3de00b52e1f048a6362f2ffa7a8cd_162.png)
 
-# 并集
-print("A和B的并集:", set_a.union(set_b))  # 输出：{33, 99, 11, 44, 77, 22, 55}
 
 ![](img/c4a3de00b52e1f048a6362f2ffa7a8cd_163.png)
 
@@ -344,8 +337,6 @@ print("A和B的并集:", set_a.union(set_b))  # 输出：{33, 99, 11, 44, 77, 22
 
 ![](img/c4a3de00b52e1f048a6362f2ffa7a8cd_166.png)
 
-# 交集
-print("A和B的交集:", set_a.intersection(set_b))  # 输出：{33, 11, 55}
 
 ![](img/c4a3de00b52e1f048a6362f2ffa7a8cd_168.png)
 
@@ -353,15 +344,11 @@ print("A和B的交集:", set_a.intersection(set_b))  # 输出：{33, 11, 55}
 
 ![](img/c4a3de00b52e1f048a6362f2ffa7a8cd_171.png)
 
-# 差集 (A - B)
-print("A和B的差集(A-B):", set_a.difference(set_b))  # 输出：{44, 22}
 
 ![](img/c4a3de00b52e1f048a6362f2ffa7a8cd_173.png)
 
 ![](img/c4a3de00b52e1f048a6362f2ffa7a8cd_175.png)
 
-# 对称差集
-print("A和B的对称差集:", set_a.symmetric_difference(set_b))  # 输出：{99, 44, 22, 77}
 
 ![](img/c4a3de00b52e1f048a6362f2ffa7a8cd_176.png)
 
@@ -369,14 +356,9 @@ print("A和B的对称差集:", set_a.symmetric_difference(set_b))  # 输出：{9
 
 ![](img/c4a3de00b52e1f048a6362f2ffa7a8cd_179.png)
 
-# 是否无交集
-print("A和B是否无交集:", set_a.isdisjoint(set_b))  # 输出：False
 
 ![](img/c4a3de00b52e1f048a6362f2ffa7a8cd_181.png)
 
-# 子集与超集检查
-print("A是B的子集吗:", set_a.issubset(set_b))  # 输出：False
-print("A是B的超集吗:", set_a.issuperset(set_b))  # 输出：False
 
 ![](img/c4a3de00b52e1f048a6362f2ffa7a8cd_182.png)
 
@@ -384,6 +366,24 @@ print("A是B的超集吗:", set_a.issuperset(set_b))  # 输出：False
 
 ![](img/c4a3de00b52e1f048a6362f2ffa7a8cd_185.png)
 
+```python
+set_a = {11, 22, 33, 44, 55}
+set_b = {11, 33, 55, 77, 99}
+print("集合A:", set_a)
+print("集合B:", set_b)
+# 并集
+print("A和B的并集:", set_a.union(set_b))  # 输出：{33, 99, 11, 44, 77, 22, 55}
+# 交集
+print("A和B的交集:", set_a.intersection(set_b))  # 输出：{33, 11, 55}
+# 差集 (A - B)
+print("A和B的差集(A-B):", set_a.difference(set_b))  # 输出：{44, 22}
+# 对称差集
+print("A和B的对称差集:", set_a.symmetric_difference(set_b))  # 输出：{99, 44, 22, 77}
+# 是否无交集
+print("A和B是否无交集:", set_a.isdisjoint(set_b))  # 输出：False
+# 子集与超集检查
+print("A是B的子集吗:", set_a.issubset(set_b))  # 输出：False
+print("A是B的超集吗:", set_a.issuperset(set_b))  # 输出：False
 # 安全移除元素
 set_a.discard(55)
 print("从A中discard 55后:", set_a)
@@ -429,8 +429,6 @@ print("从A中discard 55后:", set_a)
 
 ![](img/c4a3de00b52e1f048a6362f2ffa7a8cd_208.png)
 
-```python
-numbers_set = {11, 22, 44, 55, 33}
 
 ![](img/c4a3de00b52e1f048a6362f2ffa7a8cd_210.png)
 
@@ -438,6 +436,8 @@ numbers_set = {11, 22, 44, 55, 33}
 
 ![](img/c4a3de00b52e1f048a6362f2ffa7a8cd_214.png)
 
+```python
+numbers_set = {11, 22, 44, 55, 33}
 print("集合:", numbers_set)
 print("元素个数:", len(numbers_set))      # 输出：5
 print("最大值:", max(numbers_set))        # 输出：55

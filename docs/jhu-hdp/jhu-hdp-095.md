@@ -160,11 +160,11 @@ libraryDependencies += "org.apache.spark" %% "spark-core" % "1.6.3"
 ```
 
 **Scala 应用程序示例（词频统计）**：
-```scala
-import org.apache.spark.{SparkConf, SparkContext}
 
 ![](img/af4e862a370f9a5c738a382c8a8ff7c1_31.png)
 
+```scala
+import org.apache.spark.{SparkConf, SparkContext}
 object SimpleApp {
   def main(args: Array[String]) {
     val conf = new SparkConf().setAppName("WordCount")

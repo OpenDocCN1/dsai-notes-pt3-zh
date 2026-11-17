@@ -103,6 +103,20 @@ plot(x, y, pch = 4)   # 叉号
 
 我们可以为图形添加标题、文本标签、图例和拟合线。
 
+
+![](img/ec070404409333e5202691c7692e9cc1_22.png)
+
+![](img/ec070404409333e5202691c7692e9cc1_24.png)
+
+![](img/ec070404409333e5202691c7692e9cc1_25.png)
+
+
+![](img/ec070404409333e5202691c7692e9cc1_27.png)
+
+![](img/ec070404409333e5202691c7692e9cc1_28.png)
+
+![](img/ec070404409333e5202691c7692e9cc1_30.png)
+
 ```r
 # 重新生成数据并绘制基础图形
 x <- rnorm(100)
@@ -114,22 +128,8 @@ title("这是我的散点图")
 
 # 在指定坐标添加文本
 text(-2, -2, "这是一个标签")
-
-![](img/ec070404409333e5202691c7692e9cc1_22.png)
-
-![](img/ec070404409333e5202691c7692e9cc1_24.png)
-
-![](img/ec070404409333e5202691c7692e9cc1_25.png)
-
 # 添加图例
 legend("topleft", legend = "数据点", pch = 20)
-
-![](img/ec070404409333e5202691c7692e9cc1_27.png)
-
-![](img/ec070404409333e5202691c7692e9cc1_28.png)
-
-![](img/ec070404409333e5202691c7692e9cc1_30.png)
-
 # 拟合线性模型并添加回归线
 fit <- lm(y ~ x)
 abline(fit, col = "blue", lwd = 3)  # lwd 控制线宽
@@ -212,23 +212,11 @@ plot(y, x, main = "右下")
 
 ![](img/ec070404409333e5202691c7692e9cc1_55.png)
 
-```r
-# 生成包含分组信息的数据
-set.seed(123)
-x <- rnorm(100)
-y <- x + rnorm(100, sd = 0.5)
-# 创建分组变量（50个男性，50个女性）
-g <- factor(rep(c("male", "female"), each = 50), labels = c("男性", "女性"))
 
 ![](img/ec070404409333e5202691c7692e9cc1_57.png)
 
 ![](img/ec070404409333e5202691c7692e9cc1_58.png)
 
-# 第一步：建立空的绘图区域 (type = "n")
-plot(x, y, type = "n", xlab = "X", ylab = "Y", main = "按性别分组")
-
-# 第二步：添加男性数据点（绿色）
-points(x[g == "男性"], y[g == "男性"], col = "green", pch = 19)
 
 ![](img/ec070404409333e5202691c7692e9cc1_60.png)
 
@@ -240,11 +228,23 @@ points(x[g == "男性"], y[g == "男性"], col = "green", pch = 19)
 
 ![](img/ec070404409333e5202691c7692e9cc1_65.png)
 
-# 第三步：添加女性数据点（蓝色）
-points(x[g == "女性"], y[g == "女性"], col = "blue", pch = 19)
 
 ![](img/ec070404409333e5202691c7692e9cc1_67.png)
 
+```r
+# 生成包含分组信息的数据
+set.seed(123)
+x <- rnorm(100)
+y <- x + rnorm(100, sd = 0.5)
+# 创建分组变量（50个男性，50个女性）
+g <- factor(rep(c("male", "female"), each = 50), labels = c("男性", "女性"))
+# 第一步：建立空的绘图区域 (type = "n")
+plot(x, y, type = "n", xlab = "X", ylab = "Y", main = "按性别分组")
+
+# 第二步：添加男性数据点（绿色）
+points(x[g == "男性"], y[g == "男性"], col = "green", pch = 19)
+# 第三步：添加女性数据点（蓝色）
+points(x[g == "女性"], y[g == "女性"], col = "blue", pch = 19)
 # 可以添加图例
 legend("topleft", legend = c("男性", "女性"), col = c("green", "blue"), pch = 19)
 ```

@@ -42,18 +42,18 @@ test_data, test_labels = load_test_data()
 
 ![](img/6ed7ec3b5a290e24941a489e80202c72_7.png)
 
-```python
-from spear.labeling import PreLabels
 
 ![](img/6ed7ec3b5a290e24941a489e80202c72_9.png)
 
+
+![](img/6ed7ec3b5a290e24941a489e80202c72_11.png)
+
+```python
+from spear.labeling import PreLabels
 # 为测试数据和未标注数据创建PreLabels对象
 # 注意：测试数据需要传入真实标签，未标注数据则不需要
 test_pre_labels = PreLabels(test_data, gold_labels=test_labels)
 unlabeled_pre_labels = PreLabels(unlabeled_data)
-
-![](img/6ed7ec3b5a290e24941a489e80202c72_11.png)
-
 # 生成Pickle和JSON文件（JSON文件只需生成一次）
 test_pre_labels.generate_pickle_file(‘test.pkl’)
 unlabeled_pre_labels.generate_pickle_file(‘unlabeled.pkl’)
@@ -64,11 +64,11 @@ unlabeled_pre_labels.generate_json_file(‘unlabeled.json’)
 
 生成必要的文件后，我们可以使用`CAGE`类来获取最终的聚合标签。
 
-```python
-from spear.cage import CAGE
 
 ![](img/6ed7ec3b5a290e24941a489e80202c72_13.png)
 
+```python
+from spear.cage import CAGE
 # 声明CAGE类，L是标注函数的总数
 cage = CAGE(L=num_labeling_functions)
 ```
@@ -150,11 +150,11 @@ unlabeled_pre_labels.generate_pickle_file(‘unlabeled.pkl’)
 
 声明`JointLearning`类并开始训练。
 
-```python
-from spear.joint_learning import JointLearning
 
 ![](img/6ed7ec3b5a290e24941a489e80202c72_28.png)
 
+```python
+from spear.joint_learning import JointLearning
 # 创建联合学习对象，feature_model可以是’nn’（神经网络）或’lr’（逻辑回归）
 jl = JointLearning(feature_model=‘nn’)
 ```

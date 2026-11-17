@@ -10,6 +10,9 @@
 
 首先，我们需要导入必要的库并清理数据。我们将使用`tidyverse`和`janitor`包，并按照作业中的参数过滤数据，以获取印度的预期寿命数据。
 
+
+![](img/7c4090ebdb6a24bb09d5e6bd410d79fa_1.png)
+
 ```r
 # 加载必要的库
 library(tidyverse)
@@ -18,9 +21,6 @@ library(janitor)
 # 导入并清理数据
 data <- read_csv("your_data_file.csv") %>%
   clean_names()
-
-![](img/7c4090ebdb6a24bb09d5e6bd410d79fa_1.png)
-
 # 过滤数据：所有地区、所有种族、所有居住类型、出生时预期寿命、国家为印度
 filtered_data <- data %>%
   filter(region == 0, ethnicity == 0, age == 0, type_lt_foreign_residents == 0, country == "India")

@@ -44,21 +44,21 @@ Spark官方文档建议使用**累加器**来解决这类跨节点的共享变�
 
 累加器是一种只能通过**关联且可交换**操作进行“累加”的变量。它由驱动程序通过 `SparkContext.accumulator(initialValue)` 创建。这明确告知Spark，这是一个特殊的累加器变量，而不是普通的全局变量。
 
+
+![](img/1e0122614f2db54017c0378fa96df921_5.png)
+
+
+![](img/1e0122614f2db54017c0378fa96df921_7.png)
+
 ```python
 from pyspark import SparkContext
 sc = SparkContext()
 
 counter = sc.accumulator(0)
 rdd = sc.parallelize(range(10))
-
-![](img/1e0122614f2db54017c0378fa96df921_5.png)
-
 def increment_counter(x):
     global counter
     counter += x  # 这里使用的是Spark重载的 `+=` 操作符
-
-![](img/1e0122614f2db54017c0378fa96df921_7.png)
-
 rdd.foreach(increment_counter)
 print(counter.value)  # 输出正确的累加结果 45
 ```

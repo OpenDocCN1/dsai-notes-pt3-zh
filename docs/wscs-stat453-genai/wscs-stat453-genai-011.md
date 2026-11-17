@@ -65,12 +65,12 @@
 
 我实现了一个之前提到过的**LeNet-5**网络。在PyTorch中，实现这个相当复杂的卷积网络实际上只需要几行代码。当然，训练模型还需要更多代码，但其实并不复杂。在本课程后续，我们将逐步详细讲解。现在你无需理解其工作原理，我只想展示代码其实并不复杂。
 
-```python
-# 这是一个简化的LeNet-5模型结构示例
-import torch.nn as nn
 
 ![](img/d6ac347be1187ec863956beee49c53c0_3.png)
 
+```python
+# 这是一个简化的LeNet-5模型结构示例
+import torch.nn as nn
 class LeNet5(nn.Module):
     def __init__(self):
         super(LeNet5, self).__init__()

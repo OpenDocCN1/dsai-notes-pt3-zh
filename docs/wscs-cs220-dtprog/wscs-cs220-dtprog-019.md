@@ -282,6 +282,9 @@ deep_copy = copy.deepcopy(original)
 
 浅拷贝只复制第一层，深拷贝复制所有层。如果想精确复制到第N层，可以组合使用浅拷贝和循环。
 
+
+![](img/02a9bfd4fcc8929b9a0331d228f60aa1_23.png)
+
 ```python
 import copy
 
@@ -292,9 +295,6 @@ original = [{‘name‘: ‘A‘, ‘score‘: 88}, {‘name‘: ‘B‘, ‘sco
 
 # 1. 浅拷贝第一层（列表）
 custom_copy = copy.copy(original)
-
-![](img/02a9bfd4fcc8929b9a0331d228f60aa1_23.png)
-
 # 2. 遍历列表，深拷贝第二层（每个字典）
 for i in range(len(original)):
     custom_copy[i] = copy.deepcopy(original[i])
@@ -309,6 +309,9 @@ for i in range(len(original)):
 
 ### 场景一：仅读取数据 -> 使用引用复制
 **任务：** 查找最高分，不修改数据。
+
+![](img/02a9bfd4fcc8929b9a0331d228f60aa1_27.png)
+
 ```python
 def max_score(people_list):
     highest = None
@@ -316,9 +319,6 @@ def max_score(people_list):
         if highest is None or person[‘score‘] > highest:
             highest = person[‘score‘]
     return highest
-
-![](img/02a9bfd4fcc8929b9a0331d228f60aa1_27.png)
-
 players = [{‘name‘: ‘A‘, ‘score‘: 88}, ...]
 highest = max_score(players)  # 传递引用，高效安全
 ```

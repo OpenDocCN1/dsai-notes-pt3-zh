@@ -83,15 +83,15 @@ NUM_CLASSES = 2
 
 ![](img/49104266c97f1f4f9793724450b9f7d0_50.png)
 
+
+![](img/49104266c97f1f4f9793724450b9f7d0_52.png)
+
 ```python
 import pandas as pd
 import torch
 import torchtext
 from torchtext.legacy import data
 import spacy
-
-![](img/49104266c97f1f4f9793724450b9f7d0_52.png)
-
 # 下载并加载数据集
 df = pd.read_csv('imdb_dataset.csv')
 # 为保持代码一致性，重命名列
@@ -148,11 +148,6 @@ df = df.rename(columns={df.columns[0]: TEXT_COLUMN_NAME, df.columns[1]: LABEL_CO
 
 ![](img/49104266c97f1f4f9793724450b9f7d0_87.png)
 
-```python
-# 加载 SpaCy 英语分词器
-spacy_en = spacy.load('en_core_web_sm')
-def tokenizer(text):
-    return [tok.text for tok in spacy_en.tokenizer(text)]
 
 ![](img/49104266c97f1f4f9793724450b9f7d0_89.png)
 
@@ -162,6 +157,11 @@ def tokenizer(text):
 
 ![](img/49104266c97f1f4f9793724450b9f7d0_95.png)
 
+```python
+# 加载 SpaCy 英语分词器
+spacy_en = spacy.load('en_core_web_sm')
+def tokenizer(text):
+    return [tok.text for tok in spacy_en.tokenizer(text)]
 # 定义字段
 TEXT = data.Field(tokenize=tokenizer, lower=True, include_lengths=False)
 LABEL = data.LabelField(dtype=torch.long)
@@ -248,10 +248,6 @@ print(f'测试集: {len(test_data)}')
 ![](img/49104266c97f1f4f9793724450b9f7d0_140.png)
 
 以下是构建词汇表的步骤：
-```python
-# 基于训练集构建词汇表，并限制最常出现的20000个词
-TEXT.build_vocab(train_data, max_size=VOCAB_SIZE)
-LABEL.build_vocab(train_data)
 
 ![](img/49104266c97f1f4f9793724450b9f7d0_142.png)
 
@@ -259,6 +255,10 @@ LABEL.build_vocab(train_data)
 
 ![](img/49104266c97f1f4f9793724450b9f7d0_146.png)
 
+```python
+# 基于训练集构建词汇表，并限制最常出现的20000个词
+TEXT.build_vocab(train_data, max_size=VOCAB_SIZE)
+LABEL.build_vocab(train_data)
 print(f"词汇表大小: {len(TEXT.vocab)}")
 print(f"类别: {LABEL.vocab.stoi}")
 ```
@@ -298,8 +298,6 @@ print(f"类别: {LABEL.vocab.stoi}")
 
 ![](img/49104266c97f1f4f9793724450b9f7d0_174.png)
 
-```python
-device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
 ![](img/49104266c97f1f4f9793724450b9f7d0_176.png)
 
@@ -315,6 +313,8 @@ device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
 ![](img/49104266c97f1f4f9793724450b9f7d0_187.png)
 
+```python
+device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 train_loader, valid_loader, test_loader = data.BucketIterator.splits(
     (train_data, valid_data, test_data),
     batch_size=BATCH_SIZE,
@@ -381,8 +381,6 @@ for batch in train_loader:
 ![](img/49104266c97f1f4f9793724450b9f7d0_223.png)
 
 以下是模型的定义：
-```python
-import torch.nn as nn
 
 ![](img/49104266c97f1f4f9793724450b9f7d0_225.png)
 
@@ -394,6 +392,15 @@ import torch.nn as nn
 
 ![](img/49104266c97f1f4f9793724450b9f7d0_233.png)
 
+
+![](img/49104266c97f1f4f9793724450b9f7d0_235.png)
+
+![](img/49104266c97f1f4f9793724450b9f7d0_237.png)
+
+![](img/49104266c97f1f4f9793724450b9f7d0_238.png)
+
+```python
+import torch.nn as nn
 class RNNClassifier(nn.Module):
     def __init__(self, vocab_size, embed_dim, hidden_dim, output_dim):
         super().__init__()
@@ -410,13 +417,6 @@ class RNNClassifier(nn.Module):
         hidden = hidden.squeeze(0) # 形状: (batch_size, hidden_dim)
         logits = self.fc(hidden) # 形状: (batch_size, output_dim)
         return logits
-
-![](img/49104266c97f1f4f9793724450b9f7d0_235.png)
-
-![](img/49104266c97f1f4f9793724450b9f7d0_237.png)
-
-![](img/49104266c97f1f4f9793724450b9f7d0_238.png)
-
 model = RNNClassifier(len(TEXT.vocab), EMBEDDING_DIM, HIDDEN_DIM, NUM_CLASSES).to(device)
 ```
 在 `forward` 函数中，我们只使用了 LSTM 最后一个时间步的隐藏状态（`hidden`），然后通过一个全连接层得到分类逻辑值（logits）。这是一种典型的“多对一”处理方式。
@@ -460,10 +460,6 @@ model = RNNClassifier(len(TEXT.vocab), EMBEDDING_DIM, HIDDEN_DIM, NUM_CLASSES).t
 ![](img/49104266c97f1f4f9793724450b9f7d0_266.png)
 
 以下是训练和评估函数：
-```python
-import torch.optim as optim
-criterion = nn.CrossEntropyLoss()
-optimizer = optim.Adam(model.parameters(), lr=LEARNING_RATE)
 
 ![](img/49104266c97f1f4f9793724450b9f7d0_268.png)
 
@@ -471,11 +467,6 @@ optimizer = optim.Adam(model.parameters(), lr=LEARNING_RATE)
 
 ![](img/49104266c97f1f4f9793724450b9f7d0_271.png)
 
-def compute_accuracy(preds, y):
-    _, predicted = torch.max(preds, 1)
-    correct = (predicted == y).float()
-    acc = correct.sum() / len(correct)
-    return acc
 
 ![](img/49104266c97f1f4f9793724450b9f7d0_273.png)
 
@@ -487,6 +478,15 @@ def compute_accuracy(preds, y):
 
 ![](img/49104266c97f1f4f9793724450b9f7d0_279.png)
 
+```python
+import torch.optim as optim
+criterion = nn.CrossEntropyLoss()
+optimizer = optim.Adam(model.parameters(), lr=LEARNING_RATE)
+def compute_accuracy(preds, y):
+    _, predicted = torch.max(preds, 1)
+    correct = (predicted == y).float()
+    acc = correct.sum() / len(correct)
+    return acc
 def train(model, iterator, optimizer, criterion):
     model.train()
     epoch_loss = 0
@@ -552,6 +552,15 @@ def train(model, iterator, optimizer, criterion):
 ![](img/49104266c97f1f4f9793724450b9f7d0_311.png)
 
 以下是一个预测函数：
+
+![](img/49104266c97f1f4f9793724450b9f7d0_313.png)
+
+![](img/49104266c97f1f4f9793724450b9f7d0_315.png)
+
+![](img/49104266c97f1f4f9793724450b9f7d0_317.png)
+
+![](img/49104266c97f1f4f9793724450b9f7d0_318.png)
+
 ```python
 def predict_sentiment(model, sentence, text_field, label_field, device):
     model.eval()
@@ -565,15 +574,6 @@ def predict_sentiment(model, sentence, text_field, label_field, device):
     # 获取正面情感的概率（假设索引1对应正面）
     positive_prob = probabilities[0][label_field.vocab.stoi['1']].item()
     return positive_prob
-
-![](img/49104266c97f1f4f9793724450b9f7d0_313.png)
-
-![](img/49104266c97f1f4f9793724450b9f7d0_315.png)
-
-![](img/49104266c97f1f4f9793724450b9f7d0_317.png)
-
-![](img/49104266c97f1f4f9793724450b9f7d0_318.png)
-
 # 示例
 sentence = "This is such an awesome movie, I really love it! 😊"
 prob = predict_sentiment(model, sentence, TEXT, LABEL, device)

@@ -33,15 +33,15 @@
 概念可能比看起来复杂，让我们通过代码示例来验证第一种方法。
 
 以下是全连接层的设置：
+
+![](img/1d35b1664d39b2ece6898b81db03493f_5.png)
+
 ```python
 # 定义输入 (1, 2, 3, 4)，并重塑为卷积网络常用的格式 (N, C, H, W)
 inputs = torch.tensor([1, 2, 3, 4], dtype=torch.float32).view(1, 1, 2, 2)
 
 # 定义全连接层
 fc_layer = nn.Linear(4, 2)
-
-![](img/1d35b1664d39b2ece6898b81db03493f_5.png)
-
 # 手动设置权重和偏置以便比较
 weights = torch.tensor([[1, 2, 3, 4],  # W1 (绿色)
                         [5, 6, 7, 8]]) # W2 (黄色)
@@ -55,6 +55,9 @@ print(fc_output)  # 输出结果例如：tensor([[14., 19.]])
 ```
 
 现在，我们用卷积层实现相同的功能：
+
+![](img/1d35b1664d39b2ece6898b81db03493f_7.png)
+
 ```python
 # 定义卷积层：1个输入通道，2个输出通道（两个核），核大小2x2
 conv_layer = nn.Conv2d(in_channels=1, out_channels=2, kernel_size=2)
@@ -63,9 +66,6 @@ conv_layer = nn.Conv2d(in_channels=1, out_channels=2, kernel_size=2)
 conv_weights = weights.view(2, 1, 2, 2)
 conv_layer.weight.data = conv_weights
 conv_layer.bias.data = bias
-
-![](img/1d35b1664d39b2ece6898b81db03493f_7.png)
-
 # 计算卷积层输出
 conv_output = conv_layer(inputs)
 print(conv_output)  # 输出形状为 (1, 2, 1, 1)，数值与全连接层结果相同
@@ -99,15 +99,15 @@ print(conv_output)  # 输出形状为 (1, 2, 1, 1)，数值与全连接层结果
 如果你不相信，这里还有另一个例子。
 
 以下是第二种方法的代码实现（使用4输入通道的卷积）：
+
+![](img/1d35b1664d39b2ece6898b81db03493f_22.png)
+
 ```python
 # 将输入视为4个通道的1x1“图像”
 inputs_stacked = torch.tensor([1, 2, 3, 4], dtype=torch.float32).view(1, 4, 1, 1)
 
 # 定义卷积层：4个输入通道，2个输出通道，核大小1x1
 conv_layer_stacked = nn.Conv2d(in_channels=4, out_channels=2, kernel_size=1)
-
-![](img/1d35b1664d39b2ece6898b81db03493f_22.png)
-
 # 注意：权重需要对应新的形状。这里为了比较，我们使用变换后的相同权重。
 # 实际上，一个4输入通道、1x1的卷积核等价于一个在特定位置上的全连接计算。
 # 为了精确匹配原全连接层，需要精心设置权重值。

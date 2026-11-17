@@ -108,16 +108,19 @@ TDR_age <- function(df, lower_age, upper_age) {
 
 以下是四个专用函数的定义：
 
-```r
-# 1. 标准总抚养比 (TDR)
-TDR <- function(df) {
-  TDR_age(df, lower_age = 14, upper_age = 65)
-}
 
 ![](img/8b048183f50d60834abcabf181421a3f_25.png)
 
 ![](img/8b048183f50d60834abcabf181421a3f_26.png)
 
+
+![](img/8b048183f50d60834abcabf181421a3f_28.png)
+
+```r
+# 1. 标准总抚养比 (TDR)
+TDR <- function(df) {
+  TDR_age(df, lower_age = 14, upper_age = 65)
+}
 # 2. Filin-Kainsky 年龄调整总抚养比
 FNK_age_adjusted <- function(df) {
   TDR_age(df, lower_age = 18, upper_age = 65)
@@ -127,9 +130,6 @@ FNK_age_adjusted <- function(df) {
 FNK_elderly <- function(df) {
   TDR_age(df, lower_age = NULL, upper_age = 65)
 }
-
-![](img/8b048183f50d60834abcabf181421a3f_28.png)
-
 # 4. 儿童抚养比
 FNK_child <- function(df) {
   TDR_age(df, lower_age = 18, upper_age = NULL)

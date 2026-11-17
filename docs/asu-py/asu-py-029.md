@@ -160,14 +160,14 @@ print(dictionary2)  # 输出: {'Bob': 100, 'Sam': 200, 'Tina': 150, 'Lisa': 300}
 ![](img/15469a17a96dec6561027007374299d7_92.png)
 
 **方法一：使用 `for` 循环**
-```python
-names = ['Bob', 'Sam', 'Tina', 'Tammy']
-degrees = ['Computer Science', 'Electrical Engineering', 'Biomedical Engineering', 'Mechanical Engineering']
 
 ![](img/15469a17a96dec6561027007374299d7_94.png)
 
 ![](img/15469a17a96dec6561027007374299d7_96.png)
 
+```python
+names = ['Bob', 'Sam', 'Tina', 'Tammy']
+degrees = ['Computer Science', 'Electrical Engineering', 'Biomedical Engineering', 'Mechanical Engineering']
 dictionary3 = {}
 for i in range(len(names)):
     dictionary3[names[i]] = degrees[i]
@@ -241,10 +241,6 @@ print(dictionary1['last_name'])   # 输出: Simpson
 
 ### 添加或更新键值对
 向字典中添加新元素或修改现有元素的值非常简单。
-```python
-# 添加新的键值对
-dictionary1['age'] = 23
-print(dictionary1)  # 输出包含 age: 23
 
 ![](img/15469a17a96dec6561027007374299d7_138.png)
 
@@ -254,6 +250,10 @@ print(dictionary1)  # 输出包含 age: 23
 
 ![](img/15469a17a96dec6561027007374299d7_143.png)
 
+```python
+# 添加新的键值对
+dictionary1['age'] = 23
+print(dictionary1)  # 输出包含 age: 23
 # 更新已存在的键的值
 dictionary1['age'] = 19  # 将年龄从23更正为19
 print(dictionary1)

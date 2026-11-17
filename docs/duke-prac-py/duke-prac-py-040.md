@@ -119,6 +119,9 @@ print(total)
 5.  掌握了确保循环终止的两种常见策略：依赖用户输入或依赖内部逻辑条件。
 
 核心概念可以总结为以下代码结构：
+
+![](img/a590d077668bbf8b1579e7d859c1b7c7_4.png)
+
 ```python
 # 初始化变量
 largest = 0
@@ -131,9 +134,6 @@ while num >= 0:
         largest = num
     # 获取下一个输入
     num = float(input("Enter a number: "))
-
-![](img/a590d077668bbf8b1579e7d859c1b7c7_4.png)
-
 # 输出结果
 print("The largest number is:", largest)
 ```

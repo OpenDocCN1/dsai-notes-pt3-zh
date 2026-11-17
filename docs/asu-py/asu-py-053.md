@@ -30,11 +30,11 @@
 
 首先，我们需要初始化 `Turtle` 环境并设置绘图窗口。以下是设置窗口的代码：
 
-```python
-import turtle
 
 ![](img/55ca089ade19b80bae914b090a947cc2_12.png)
 
+```python
+import turtle
 # 设置窗口大小和标题
 window = turtle.Screen()
 window.setup(width=400, height=500)
@@ -64,6 +64,9 @@ window.bgcolor("light blue")
 
 ![](img/55ca089ade19b80bae914b090a947cc2_24.png)
 
+
+![](img/55ca089ade19b80bae914b090a947cc2_26.png)
+
 ```python
 # 创建海龟对象
 cursor = turtle.Turtle()
@@ -71,9 +74,6 @@ cursor = turtle.Turtle()
 def move_forward():
     """按下‘上’键时，海龟向前移动10个单位"""
     cursor.forward(10)
-
-![](img/55ca089ade19b80bae914b090a947cc2_26.png)
-
 def turn_left():
     """按下‘左’键时，海龟左转45度"""
     cursor.left(45)
@@ -107,15 +107,15 @@ def quit_program():
 
 ![](img/55ca089ade19b80bae914b090a947cc2_34.png)
 
+
+![](img/55ca089ade19b80bae914b090a947cc2_36.png)
+
 ```python
 # 将按键与函数绑定
 window.onkeypress(move_forward, "Up")
 window.onkeypress(turn_left, "Left")
 window.onkeypress(turn_right, "Right")
 window.onkeypress(quit_program, "q")
-
-![](img/55ca089ade19b80bae914b090a947cc2_36.png)
-
 # 启动监听，这是关键步骤
 window.listen()
 ```

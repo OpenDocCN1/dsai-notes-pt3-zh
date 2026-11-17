@@ -135,15 +135,6 @@ h_i = \sigma \left( W \cdot \left( \frac{1}{d_i} \sum_{j \in \mathcal{N}(i) \cup
 
 ![](img/4e33b1d5559572f479b37419f9532505_59.png)
 
-```python
-import os
-os.environ['DGLBACKEND'] = 'pytorch'
-import dgl
-import torch
-import torch.nn as nn
-import torch.nn.functional as F
-import networkx as nx
-import matplotlib.pyplot as plt
 
 ![](img/4e33b1d5559572f479b37419f9532505_61.png)
 
@@ -153,6 +144,15 @@ import matplotlib.pyplot as plt
 
 ![](img/4e33b1d5559572f479b37419f9532505_67.png)
 
+```python
+import os
+os.environ['DGLBACKEND'] = 'pytorch'
+import dgl
+import torch
+import torch.nn as nn
+import torch.nn.functional as F
+import networkx as nx
+import matplotlib.pyplot as plt
 # 创建一个迷你图分类数据集
 from dgl.data import MiniGCDataset
 dataset = MiniGCDataset(num_graphs=100, min_num_v=10, max_num_v=20)
@@ -285,6 +285,26 @@ class GatedGCN(nn.Module):
 
 以下是标准的训练和评估函数。
 
+
+![](img/4e33b1d5559572f479b37419f9532505_101.png)
+
+![](img/4e33b1d5559572f479b37419f9532505_103.png)
+
+![](img/4e33b1d5559572f479b37419f9532505_105.png)
+
+![](img/4e33b1d5559572f479b37419f9532505_107.png)
+
+![](img/4e33b1d5559572f479b37419f9532505_109.png)
+
+
+![](img/4e33b1d5559572f479b37419f9532505_111.png)
+
+![](img/4e33b1d5559572f479b37419f9532505_113.png)
+
+![](img/4e33b1d5559572f479b37419f9532505_115.png)
+
+![](img/4e33b1d5559572f479b37419f9532505_117.png)
+
 ```python
 def train(model, optimizer, g, h, e, labels):
     model.train()
@@ -302,29 +322,9 @@ def evaluate(model, g, h, e, labels):
         _, predicted = torch.max(logits, 1)
         correct = (predicted == labels).sum().item()
         return correct / labels.size(0)
-
-![](img/4e33b1d5559572f479b37419f9532505_101.png)
-
-![](img/4e33b1d5559572f479b37419f9532505_103.png)
-
-![](img/4e33b1d5559572f479b37419f9532505_105.png)
-
-![](img/4e33b1d5559572f479b37419f9532505_107.png)
-
-![](img/4e33b1d5559572f479b37419f9532505_109.png)
-
 # 初始化模型、优化器
 model = GatedGCN(input_dim=1, hidden_dim=64, output_dim=8, num_layers=3)
 optimizer = torch.optim.Adam(model.parameters(), lr=0.001)
-
-![](img/4e33b1d5559572f479b37419f9532505_111.png)
-
-![](img/4e33b1d5559572f479b37419f9532505_113.png)
-
-![](img/4e33b1d5559572f479b37419f9532505_115.png)
-
-![](img/4e33b1d5559572f479b37419f9532505_117.png)
-
 # 假设 dataloader 能提供批处理后的图数据 (batched_graph), 节点特征 h, 边特征 e, 标签 labels
 for epoch in range(50):
     total_loss = 0

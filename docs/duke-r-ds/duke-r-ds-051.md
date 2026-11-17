@@ -251,6 +251,11 @@ bind_rows(custom_errors, full_errors)
 
 接下来，我们将两个模型的ROC曲线绘制在同一张图上，进行直观比较。
 
+
+![](img/3ed7f5518e04ae3b1ae86595a1589f98_10.png)
+
+![](img/3ed7f5518e04ae3b1ae86595a1589f98_11.png)
+
 ```r
 # 为ROC曲线数据添加模型标识
 forested_custom_roc <- forested_custom_roc %>% mutate(model = "Custom")
@@ -258,11 +263,6 @@ forested_full_roc <- forested_full_roc %>% mutate(model = "Full")
 
 # 合并ROC曲线数据并绘图
 combined_roc <- bind_rows(forested_custom_roc, forested_full_roc)
-
-![](img/3ed7f5518e04ae3b1ae86595a1589f98_10.png)
-
-![](img/3ed7f5518e04ae3b1ae86595a1589f98_11.png)
-
 combined_roc_plot <- ggplot(combined_roc, aes(x = 1 - specificity,
                                               y = sensitivity,
                                               color = model)) +

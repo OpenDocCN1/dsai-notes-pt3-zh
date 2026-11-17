@@ -26,11 +26,11 @@ model = AutoModelForCausalLM.from_pretrained(
 
 接下来，我们准备一个简单的示例数据来理解如何计算对数概率。
 
-```python
-from transformers import AutoTokenizer
 
 ![](img/d02571479e786eb95b2441c98cd25afc_5.png)
 
+```python
+from transformers import AutoTokenizer
 tokenizer = AutoTokenizer.from_pretrained(model_name)
 texts = ["Hello world", "How are you"]
 inputs = tokenizer(texts, padding=True, return_tensors="pt").to("cuda")
@@ -280,11 +280,6 @@ def compute_policy_loss(inputs, policy_model, ref_model, total_response_tokens, 
 
 ![](img/d02571479e786eb95b2441c98cd25afc_69.png)
 
-```python
-# 初始化模型和优化器
-policy_model = AutoModelForCausalLM.from_pretrained(...)
-ref_model = AutoModelForCausalLM.from_pretrained(...)
-optimizer = torch.optim.Adam(policy_model.parameters(), lr=1e-6)
 
 ![](img/d02571479e786eb95b2441c98cd25afc_71.png)
 
@@ -308,9 +303,6 @@ optimizer = torch.optim.Adam(policy_model.parameters(), lr=1e-6)
 
 ![](img/d02571479e786eb95b2441c98cd25afc_90.png)
 
-# 初始化VLLM推理引擎
-from vllm import LLM
-inference_engine = LLM(model="path/to/model", ...)
 
 ![](img/d02571479e786eb95b2441c98cd25afc_92.png)
 
@@ -320,6 +312,14 @@ inference_engine = LLM(model="path/to/model", ...)
 
 ![](img/d02571479e786eb95b2441c98cd25afc_97.png)
 
+```python
+# 初始化模型和优化器
+policy_model = AutoModelForCausalLM.from_pretrained(...)
+ref_model = AutoModelForCausalLM.from_pretrained(...)
+optimizer = torch.optim.Adam(policy_model.parameters(), lr=1e-6)
+# 初始化VLLM推理引擎
+from vllm import LLM
+inference_engine = LLM(model="path/to/model", ...)
 for iteration in range(total_iterations):
     # 1. 采样提示
     prompts = sample_prompts(dataset, batch_size)

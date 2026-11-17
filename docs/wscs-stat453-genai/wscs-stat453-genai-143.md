@@ -50,11 +50,6 @@
 
 ![](img/571a6f32a80cb0c70d0d2b425fa84956_30.png)
 
-```python
-import torch
-import torch.nn as nn
-import torch.optim as optim
-from torchvision import datasets, transforms
 
 ![](img/571a6f32a80cb0c70d0d2b425fa84956_32.png)
 
@@ -64,6 +59,11 @@ from torchvision import datasets, transforms
 
 ![](img/571a6f32a80cb0c70d0d2b425fa84956_37.png)
 
+```python
+import torch
+import torch.nn as nn
+import torch.optim as optim
+from torchvision import datasets, transforms
 # 超参数设置
 batch_size = 256
 learning_rate = 0.0005
@@ -223,15 +223,6 @@ class ConvVAE(nn.Module):
 
 ![](img/571a6f32a80cb0c70d0d2b425fa84956_98.png)
 
-```python
-def loss_function(recon_x, x, mu, logvar):
-    # 重建损失 (MSE)
-    reconstruction_loss = nn.functional.mse_loss(recon_x, x, reduction='sum')
-    # KL散度损失
-    kl_divergence = -0.5 * torch.sum(1 + logvar - mu.pow(2) - logvar.exp())
-    # 总损失
-    total_loss = reconstruction_loss + kl_divergence
-    return total_loss, reconstruction_loss, kl_divergence
 
 ![](img/571a6f32a80cb0c70d0d2b425fa84956_100.png)
 
@@ -241,9 +232,6 @@ def loss_function(recon_x, x, mu, logvar):
 
 ![](img/571a6f32a80cb0c70d0d2b425fa84956_106.png)
 
-# 初始化模型、优化器
-model = ConvVAE(latent_dim=2).to(device)
-optimizer = optim.Adam(model.parameters(), lr=learning_rate)
 
 ![](img/571a6f32a80cb0c70d0d2b425fa84956_108.png)
 
@@ -251,6 +239,18 @@ optimizer = optim.Adam(model.parameters(), lr=learning_rate)
 
 ![](img/571a6f32a80cb0c70d0d2b425fa84956_112.png)
 
+```python
+def loss_function(recon_x, x, mu, logvar):
+    # 重建损失 (MSE)
+    reconstruction_loss = nn.functional.mse_loss(recon_x, x, reduction='sum')
+    # KL散度损失
+    kl_divergence = -0.5 * torch.sum(1 + logvar - mu.pow(2) - logvar.exp())
+    # 总损失
+    total_loss = reconstruction_loss + kl_divergence
+    return total_loss, reconstruction_loss, kl_divergence
+# 初始化模型、优化器
+model = ConvVAE(latent_dim=2).to(device)
+optimizer = optim.Adam(model.parameters(), lr=learning_rate)
 # 训练循环
 for epoch in range(epochs):
     model.train()
@@ -335,18 +335,9 @@ for epoch in range(epochs):
 
 ![](img/571a6f32a80cb0c70d0d2b425fa84956_157.png)
 
-```python
-import matplotlib.pyplot as plt
-import numpy as np
 
 ![](img/571a6f32a80cb0c70d0d2b425fa84956_159.png)
 
-# 1. 查看原始图像与重建图像
-model.eval()
-with torch.no_grad():
-    data, _ = next(iter(train_loader))
-    data = data[:8].to(device)
-    recon, _, _, _ = model(data)
 
 ![](img/571a6f32a80cb0c70d0d2b425fa84956_161.png)
 
@@ -356,6 +347,45 @@ with torch.no_grad():
 
 ![](img/571a6f32a80cb0c70d0d2b425fa84956_166.png)
 
+
+![](img/571a6f32a80cb0c70d0d2b425fa84956_168.png)
+
+![](img/571a6f32a80cb0c70d0d2b425fa84956_169.png)
+
+![](img/571a6f32a80cb0c70d0d2b425fa84956_171.png)
+
+![](img/571a6f32a80cb0c70d0d2b425fa84956_173.png)
+
+
+![](img/571a6f32a80cb0c70d0d2b425fa84956_175.png)
+
+![](img/571a6f32a80cb0c70d0d2b425fa84956_176.png)
+
+![](img/571a6f32a80cb0c70d0d2b425fa84956_178.png)
+
+![](img/571a6f32a80cb0c70d0d2b425fa84956_180.png)
+
+![](img/571a6f32a80cb0c70d0d2b425fa84956_182.png)
+
+
+![](img/571a6f32a80cb0c70d0d2b425fa84956_184.png)
+
+![](img/571a6f32a80cb0c70d0d2b425fa84956_185.png)
+
+![](img/571a6f32a80cb0c70d0d2b425fa84956_186.png)
+
+
+![](img/571a6f32a80cb0c70d0d2b425fa84956_188.png)
+
+```python
+import matplotlib.pyplot as plt
+import numpy as np
+# 1. 查看原始图像与重建图像
+model.eval()
+with torch.no_grad():
+    data, _ = next(iter(train_loader))
+    data = data[:8].to(device)
+    recon, _, _, _ = model(data)
 # 绘制对比图
 fig, axes = plt.subplots(2, 8, figsize=(16, 4))
 for i in range(8):
@@ -366,15 +396,6 @@ for i in range(8):
 axes[0, 0].set_ylabel('Original')
 axes[1, 0].set_ylabel('Reconstructed')
 plt.show()
-
-![](img/571a6f32a80cb0c70d0d2b425fa84956_168.png)
-
-![](img/571a6f32a80cb0c70d0d2b425fa84956_169.png)
-
-![](img/571a6f32a80cb0c70d0d2b425fa84956_171.png)
-
-![](img/571a6f32a80cb0c70d0d2b425fa84956_173.png)
-
 # 2. 可视化潜在空间
 def plot_latent_space(model, data_loader, device):
     model.eval()
@@ -397,25 +418,7 @@ def plot_latent_space(model, data_loader, device):
     plt.ylabel('Latent Dim 2')
     plt.title('VAE Latent Space')
     plt.show()
-
-![](img/571a6f32a80cb0c70d0d2b425fa84956_175.png)
-
-![](img/571a6f32a80cb0c70d0d2b425fa84956_176.png)
-
-![](img/571a6f32a80cb0c70d0d2b425fa84956_178.png)
-
-![](img/571a6f32a80cb0c70d0d2b425fa84956_180.png)
-
-![](img/571a6f32a80cb0c70d0d2b425fa84956_182.png)
-
 plot_latent_space(model, train_loader, device)
-
-![](img/571a6f32a80cb0c70d0d2b425fa84956_184.png)
-
-![](img/571a6f32a80cb0c70d0d2b425fa84956_185.png)
-
-![](img/571a6f32a80cb0c70d0d2b425fa84956_186.png)
-
 # 3. 从潜在空间采样生成新图像
 def sample_from_vae(model, num_samples=10, latent_dim=2):
     model.eval()
@@ -424,9 +427,6 @@ def sample_from_vae(model, num_samples=10, latent_dim=2):
         z = torch.randn(num_samples, latent_dim).to(device)
         samples = model.decode(z).cpu()
     return samples
-
-![](img/571a6f32a80cb0c70d0d2b425fa84956_188.png)
-
 samples = sample_from_vae(model, num_samples=10)
 # 绘制生成的图像
 fig, axes = plt.subplots(1, 10, figsize=(15, 2))
