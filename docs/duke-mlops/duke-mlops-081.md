@@ -66,7 +66,6 @@ pip install -r requirements.txt
 
 ## 验证安装结果
 
-![](img/c6d1bb3b86d1c01bf8eb075432f2e4d4_3.png)
 
 安装完成后，我们可以验证这些包是否已成功安装并可用。
 

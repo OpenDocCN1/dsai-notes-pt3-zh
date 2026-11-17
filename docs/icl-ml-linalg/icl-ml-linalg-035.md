@@ -1,6 +1,5 @@
 # 035：总结
 
-![](img/d8506dc5fdd36ac2d8d2aaa8332f2a0c_0.png)
 
 ![](img/d8506dc5fdd36ac2d8d2aaa8332f2a0c_0.png)
 

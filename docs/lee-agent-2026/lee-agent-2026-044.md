@@ -18,7 +18,6 @@
 
 ## 准备工作：获取PlayHT服务
 
-![](img/d3cae080952eca2efd302f3ba2c1abcb_5.png)
 
 ![](img/d3cae080952eca2efd302f3ba2c1abcb_7.png)
 

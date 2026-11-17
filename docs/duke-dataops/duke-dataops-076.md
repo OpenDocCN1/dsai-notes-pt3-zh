@@ -17,7 +17,6 @@ mkdir web_docker
 cd web_docker
 ```
 
-![](img/619973d394e16b470c915fb24e8f0b1c_2.png)
 
 接下来，创建App Engine的配置文件 `app.yaml`。这个文件用于告知App Engine我们的部署配置。
 
@@ -95,7 +94,6 @@ pub fn random_fruit() -> Fruit {
 接着，创建 `src/main.rs` 文件，定义Web服务的路由。
 
 
-![](img/619973d394e16b470c915fb24e8f0b1c_4.png)
 
 ```rust
 use actix_web::{get, App, HttpResponse, HttpServer, Responder};
@@ -130,15 +128,12 @@ async fn main() -> std::io::Result<()> {
 
 运行以下命令启动服务：
 
-![](img/619973d394e16b470c915fb24e8f0b1c_6.png)
 
 ```bash
 cargo run
 ```
 
-![](img/619973d394e16b470c915fb24e8f0b1c_7.png)
 
-![](img/619973d394e16b470c915fb24e8f0b1c_8.png)
 
 服务启动后，可以通过浏览器访问 `http://localhost:8080` 来验证。页面应显示“Welcome! Random fruit: [随机水果名]”。访问 `http://localhost:8080/health` 应返回“OK”。
 

@@ -10,9 +10,7 @@
 
 在边缘机器学习领域，每家主要的科技公司都提供了自己的硬件推理解决方案。
 
-![](img/8802ff0cab42689fd168e625e4e6fb94_2.png)
 
-![](img/8802ff0cab42689fd168e625e4e6fb94_3.png)
 
 ![](img/8802ff0cab42689fd168e625e4e6fb94_4.png)
 
@@ -57,7 +55,6 @@
 
 ![](img/8802ff0cab42689fd168e625e4e6fb94_12.png)
 
-![](img/8802ff0cab42689fd168e625e4e6fb94_10.png)
 
 ![](img/8802ff0cab42689fd168e625e4e6fb94_14.png)
 
@@ -117,7 +114,6 @@ import coremltools
 
 在 Xcode 项目中，你可以直接使用转换后的 `.mlmodel` 文件，并通过 Vision 框架方便地调用。
 
-![](img/8802ff0cab42689fd168e625e4e6fb94_23.png)
 
 ---
 

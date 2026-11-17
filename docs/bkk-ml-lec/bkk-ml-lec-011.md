@@ -1,6 +1,5 @@
 # 011：定理证明的机器学习
 
-![](img/d7fac5102ab0ac024c9fa5c5a88f3781_0.png)
 
 ![](img/d7fac5102ab0ac024c9fa5c5a88f3781_0.png)
 
@@ -256,6 +255,5 @@ Hammers 在尝试“敲定”证明时，会调用 SMT 求解器。它们尝试�
 
 好了，如果有人有任何问题，我很乐意回答。谢谢。
 
-![](img/d7fac5102ab0ac024c9fa5c5a88f3781_2.png)
 
 ![](img/d7fac5102ab0ac024c9fa5c5a88f3781_2.png)

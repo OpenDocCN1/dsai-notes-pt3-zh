@@ -1,6 +1,5 @@
 # 127：超越CLIP - BLIP、BLIP-2和CoCA
 
-![](img/c862f8f95b354c8cb5f456c03b8fed1f_0.png)
 
 ![](img/c862f8f95b354c8cb5f456c03b8fed1f_0.png)
 
@@ -128,6 +127,5 @@ CoCA模型的目标是统一不同的范式，即他们试图引入一种方法�
 
 这些模型代表了视觉语言领域从单一对比学习到多任务统一、从全参数微调到高效利用冻结大模型的重要发展路径。
 
-![](img/c862f8f95b354c8cb5f456c03b8fed1f_2.png)
 
 ![](img/c862f8f95b354c8cb5f456c03b8fed1f_2.png)

@@ -4,7 +4,6 @@
 
 在本节课中，我们将通过两个具体的例子来学习如何编写Dockerfile，并了解如何构建和运行Docker镜像。
 
-![](img/217cbe9f068a0b3cca49eb0ee9809b68_2.png)
 
 ---
 

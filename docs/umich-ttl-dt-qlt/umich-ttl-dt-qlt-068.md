@@ -106,7 +106,6 @@ msno.heatmap(df)
 
 ![](img/1cbb2a565537a3d280448f9f29b56b3d_11.png)
 
-![](img/1cbb2a565537a3d280448f9f29b56b3d_12.png)
 
 ![](img/1cbb2a565537a3d280448f9f29b56b3d_13.png)
 

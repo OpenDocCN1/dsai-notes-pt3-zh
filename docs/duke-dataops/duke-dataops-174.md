@@ -10,9 +10,7 @@
 
 我们将使用Hugging Face的`datasets`库。这里可以看到，我将使用我账户中的`winebradance`数据集。我将点击这个数据集，它非常方便。我真的很喜欢它。它包含了我们所需的所有示例。
 
-![](img/aba5c3cbc6e371013b29d20e953ef7e6_2.png)
 
-![](img/aba5c3cbc6e371013b29d20e953ef7e6_3.png)
 
 我们本质上需要从`datasets`导入`load_dataset`来获取这些数据。你必须确保已经通过`pip install datasets`安装了`datasets`库。我已经完成了这一步。
 

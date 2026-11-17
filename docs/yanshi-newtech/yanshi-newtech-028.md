@@ -1,6 +1,5 @@
 # 28：27_4.2 Spark ML算法（第2部分）📚
 
-![](img/6e1c4de16cf7e6df46dd1450964db925_0.png)
 
 ![](img/6e1c4de16cf7e6df46dd1450964db925_0.png)
 
@@ -66,6 +65,5 @@
 
 以下是我使用的参考文献，我推荐给你，谢谢。
 
-![](img/6e1c4de16cf7e6df46dd1450964db925_2.png)
 
 ![](img/6e1c4de16cf7e6df46dd1450964db925_2.png)

@@ -215,10 +215,8 @@
 
 今天就到这里。我们周五见。非常感谢。
 
-![](img/ac133b78cf42a7477128b111e2f0f0a8_2.png)
 
 ![](img/ac133b78cf42a7477128b111e2f0f0a8_2.png)
 
-![](img/ac133b78cf42a7477128b111e2f0f0a8_3.png)
 
 ![](img/ac133b78cf42a7477128b111e2f0f0a8_3.png)

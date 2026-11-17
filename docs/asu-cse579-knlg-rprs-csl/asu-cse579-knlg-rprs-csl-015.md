@@ -1,6 +1,5 @@
 # 015：马尔可夫逻辑网络（二）与推理
 
-![](img/9c3dbf5d56bc6f89bea5bcccd6ee87b7_1.png)
 
 在本节课中，我们将学习马尔可夫逻辑的另一种表示方法——将其视为马尔可夫网络的模板。如果时间允许，我们还将初步探讨马尔可夫逻辑网络中的推理问题。
 
@@ -10,33 +9,24 @@
 
 马尔可夫逻辑网络（MLN）本质上是一组带权值的一阶逻辑公式。当我们讨论“实例化”时，指的是将公式中的变量替换为常量，从而得到没有变量的基础公式。为了定义概率，我们需要假设底层的赫布兰德论域是有限的。实际上，存在允许无限论域的马尔可夫逻辑版本，但本课程不涉及。
 
-![](img/9c3dbf5d56bc6f89bea5bcccd6ee87b7_3.png)
 
-![](img/9c3dbf5d56bc6f89bea5bcccd6ee87b7_5.png)
 
 一个解释的权值定义为指数化的加权和：`exp(Σ_i w_i * n_i(x))`，其中 `w_i` 是第 `i` 个公式的权值，`n_i(x)` 是该解释下第 `i` 个公式为真的基础实例数量。
 
-![](img/9c3dbf5d56bc6f89bea5bcccd6ee87b7_7.png)
 
 让我们回到之前的例子来加深理解。
 
 ## 示例分析
 
-![](img/9c3dbf5d56bc6f89bea5bcccd6ee87b7_9.png)
 
-![](img/9c3dbf5d56bc6f89bea5bcccd6ee87b7_11.png)
 
 我们有两个公式：
 1.  `∀x Smokes(x) ⇒ Cancer(x)`，权值 `w = 1.5`
 2.  `∀x∀y Friends(x, y) ⇒ (Smokes(x) ⇔ Smokes(y))`，权值 `w = 1.1`
 
-![](img/9c3dbf5d56bc6f89bea5bcccd6ee87b7_13.png)
 
-![](img/9c3dbf5d56bc6f89bea5bcccd6ee87b7_15.png)
 
-![](img/9c3dbf5d56bc6f89bea5bcccd6ee87b7_17.png)
 
-![](img/9c3dbf5d56bc6f89bea5bcccd6ee87b7_19.png)
 
 假设有两个常量：`Anna (A)` 和 `Bob (B)`。将公式实例化后，我们得到6个基础公式。
 
@@ -45,9 +35,7 @@
 *   `Smokes(A)` 为假，`Smokes(B)` 为真。
 *   `Cancer(A)` 和 `Cancer(B)` 都为假。
 
-![](img/9c3dbf5d56bc6f89bea5bcccd6ee87b7_21.png)
 
-![](img/9c3dbf5d56bc6f89bea5bcccd6ee87b7_23.png)
 
 我们需要计算这个解释 `I` 的权值。为此，我们检查 `I` 满足哪些基础公式：
 *   公式1的实例 `Smokes(A) ⇒ Cancer(A)`：满足。
@@ -56,30 +44,21 @@
 
 因此，解释 `I` 的权值为：`exp(1.5 * 1 + 1.1 * 1 + 1.1 * 1) = exp(3.7)`。这只是64个可能解释中的一个。将所有可能解释的权值求和，就得到了归一化因子 `Z`（或称配分函数）。
 
-![](img/9c3dbf5d56bc6f89bea5bcccd6ee87b7_25.png)
 
-![](img/9c3dbf5d56bc6f89bea5bcccd6ee87b7_27.png)
 
 让我们再做一个小练习。考虑另一个解释 `I2`：
 *   `Friends(A, B)` 为真，但 `Friends(B, A)` 为假。
 *   `Smokes(A)` 和 `Smokes(B)` 都为假。
 *   `Cancer(A)` 为假，但 `Cancer(B)` 为真。
 
-![](img/9c3dbf5d56bc6f89bea5bcccd6ee87b7_29.png)
 
-![](img/9c3dbf5d56bc6f89bea5bcccd6ee87b7_31.png)
 
-![](img/9c3dbf5d56bc6f89bea5bcccd6ee87b7_33.png)
 
-![](img/9c3dbf5d56bc6f89bea5bcccd6ee87b7_34.png)
 
 计算 `I2` 的权值。检查发现，它满足公式1的两个实例，以及公式2的四个实例。因此，其权值为 `exp(1.5*2 + 1.1*4) = exp(3.0 + 4.4) = exp(7.4)`。这比第一个解释的权值更高。值得注意的是，在这个解释中，`B` 不吸烟却患有癌症，这揭示了当前模型可能存在一些不合理之处，我们将在后续讨论LPMN时重新审视这个问题。
 
-![](img/9c3dbf5d56bc6f89bea5bcccd6ee87b7_36.png)
 
-![](img/9c3dbf5d56bc6f89bea5bcccd6ee87b7_38.png)
 
-![](img/9c3dbf5d56bc6f89bea5bcccd6ee87b7_40.png)
 
 以上是从逻辑角度看待马尔可夫逻辑。接下来，我们将从概率图模型的角度来审视它。
 
@@ -89,9 +68,7 @@
 
 在马尔可夫网络（对数线性模型）中，概率定义为：`P(x) = (1/Z) * exp(Σ_i w_i * f_i(x))`，其中特征函数 `f_i(x)` 通常是二值的（0或1）。在马尔可夫逻辑中，我们用逻辑公式来定义这些特征。
 
-![](img/9c3dbf5d56bc6f89bea5bcccd6ee87b7_42.png)
 
-![](img/9c3dbf5d56bc6f89bea5bcccd6ee87b7_43.png)
 
 具体构建步骤如下：
 1.  **给定**：一个马尔可夫逻辑网络（一组带权一阶公式）和一个常量集合（代表个体）。
@@ -99,23 +76,17 @@
 3.  **创建边与团**：对于每个基础公式（由原始公式实例化而来），将其包含的所有基础原子两两连接，形成一个完全子图（团）。每个团对应一个特征。
 4.  **定义特征与权值**：每个团的特征函数值，等于该基础公式在其对应的解释下是否为真（1或0）。该团的权值就是原始一阶公式的权值 `w_i`。
 
-![](img/9c3dbf5d56bc6f89bea5bcccd6ee87b7_45.png)
 
 这样，整个网络的概率分布就与之前逻辑视角下的定义一致了：`P(x) = (1/Z) * exp(Σ_i w_i * n_i(x))`，这里 `n_i(x)` 就是第 `i` 个公式所有为真的基础实例的数量之和，它等于所有对应团的特征值之和。
 
 让我们用之前的例子来演示如何构建马尔可夫网络。
 
-![](img/9c3dbf5d56bc6f89bea5bcccd6ee87b7_47.png)
 
-![](img/9c3dbf5d56bc6f89bea5bcccd6ee87b7_48.png)
 
 ### 示例：构建马尔可夫网络
 
-![](img/9c3dbf5d56bc6f89bea5bcccd6ee87b7_50.png)
 
-![](img/9c3dbf5d56bc6f89bea5bcccd6ee87b7_51.png)
 
-![](img/9c3dbf5d56bc6f89bea5bcccd6ee87b7_52.png)
 
 我们有常量 `A` 和 `B`。基础原子有：
 *   来自谓词 `Smokes` 和 `Cancer`：`Smokes(A)`, `Cancer(A)`, `Smokes(B)`, `Cancer(B)`
@@ -140,7 +111,6 @@
 
 对于第二个解释 `I2`，计算过程类似，得到总权重和 `3.0 + 4.4 = 7.4`，未归一化概率为 `exp(7.4)`。
 
-![](img/9c3dbf5d56bc6f89bea5bcccd6ee87b7_54.png)
 
 归一化概率需要计算配分函数 `Z`，即对所有可能解释（本例中为2^8=256种原子赋值组合）的未归一化概率求和。这在规模较大时是不可行的，因此我们需要更高效的推理方法。
 
@@ -166,15 +136,11 @@ MAP推理的目标是：`argmax_y P(y | x)`。根据条件概率定义和马尔�
 
 #### 求解算法：MaxWalkSAT
 
-![](img/9c3dbf5d56bc6f89bea5bcccd6ee87b7_56.png)
 
 加权最大可满足性问题可以用**MaxWalkSAT**算法求解。它是**WalkSAT**算法的扩展，后者用于求解（非加权）最大可满足性问题。
 
-![](img/9c3dbf5d56bc6f89bea5bcccd6ee87b7_58.png)
 
-![](img/9c3dbf5d56bc6f89bea5bcccd6ee87b7_60.png)
 
-![](img/9c3dbf5d56bc6f89bea5bcccd6ee87b7_62.png)
 
 以下是WalkSAT算法的基本步骤：
 1.  随机初始化所有变量的真值赋值。
@@ -184,7 +150,6 @@ MAP推理的目标是：`argmax_y P(y | x)`。根据条件概率定义和马尔�
     c. 以概率 `p`：随机翻转 `C` 中的一个变量的值。
     d. 以概率 `1-p`：遍历 `C` 中的每个变量，计算翻转该变量后新赋值满足的子句数量。选择能使满足子句数量**增加最多**（或减少最少）的变量进行翻转。
 
-![](img/9c3dbf5d56bc6f89bea5bcccd6ee87b7_64.png)
 
 MaxWalkSAT与之类似，只是在步骤c和d中，优化的目标从“满足的子句数量”变成了“满足的子句的权值之和”。
 
@@ -198,7 +163,6 @@ MaxWalkSAT与之类似，只是在步骤c和d中，优化的目标从“满足�
 
 我们还初步探讨了马尔可夫逻辑网络中的推理任务，重点介绍了**MAP推理**，并将其归结为**加权最大可满足性问题**。我们了解了用于求解该问题的**MaxWalkSAT**随机算法的基本思想。
 
-![](img/9c3dbf5d56bc6f89bea5bcccd6ee87b7_66.png)
 
 ![](img/9c3dbf5d56bc6f89bea5bcccd6ee87b7_68.png)
 

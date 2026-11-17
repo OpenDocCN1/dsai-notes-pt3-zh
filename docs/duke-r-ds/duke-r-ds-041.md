@@ -1,6 +1,5 @@
 #  041：鱼类建模 🐟
 
-![](img/b8ef594598636ba17456a92284cef2db_0.png)
 
 ![](img/b8ef594598636ba17456a92284cef2db_1.png)
 
@@ -15,7 +14,6 @@ library(tidyverse)
 library(tidymodels)
 ```
 
-![](img/b8ef594598636ba17456a92284cef2db_3.png)
 
 我们将使用的数据来自Kaggle，这是一个流行的机器学习和预测建模竞赛平台。让我们从本课程的GitHub仓库读取数据并查看其结构。
 
@@ -48,19 +46,14 @@ ggplot(data = fish, aes(x = height, y = weight)) +
        y = "重量 (克)")
 ```
 
-![](img/b8ef594598636ba17456a92284cef2db_5.png)
 
 这段代码创建了一个散点图，其中高度在x轴，重量在y轴。我们可以看到一个正相关关系，并且数据点似乎分成了两个簇，这可能与鱼的种类有关。
 
-![](img/b8ef594598636ba17456a92284cef2db_7.png)
 
-![](img/b8ef594598636ba17456a92284cef2db_8.png)
 
 为了更清晰地量化这种关系，我们可以在图上添加一条最佳拟合直线。
 
-![](img/b8ef594598636ba17456a92284cef2db_10.png)
 
-![](img/b8ef594598636ba17456a92284cef2db_11.png)
 
 ```r
 ggplot(data = fish, aes(x = height, y = weight)) +

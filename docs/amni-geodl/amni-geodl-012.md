@@ -60,7 +60,6 @@ data = Data(x=x, edge_index=edge_index)
 
 ---
 
-![](img/03c9a545b3f31f25eeacc7f23a6479ea_12.png)
 
 ## 未来研究方向与挑战 🔮
 

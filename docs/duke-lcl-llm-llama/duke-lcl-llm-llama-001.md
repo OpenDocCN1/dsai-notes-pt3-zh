@@ -1,6 +1,5 @@
 # 1：0_与您的导师 Alfredo Deza 会面
 
-![](img/f9a0a4e160599bfb501140472fb58164_0.png)
 
 ![](img/f9a0a4e160599bfb501140472fb58164_0.png)
 

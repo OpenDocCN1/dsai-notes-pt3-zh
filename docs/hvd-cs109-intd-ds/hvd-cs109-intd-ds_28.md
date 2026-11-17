@@ -79,7 +79,6 @@ Teams |> filter(yearID %in% 1962:2001) |>
  geom_point(alpha = 0.5)
 ```
 
-![](img/31ab46a45fa55554e57e6874dfe053e1.png)
 
 图表显示了一个强烈的关联：全垒打数更多的球队往往得分更多。现在让我们考察盗垒数和得分之间的关系：
 
@@ -90,7 +89,6 @@ Teams |> filter(yearID %in% 1962:2001) |>
  geom_point(alpha = 0.5)
 ```
 
-![](img/88bf204546e5815908967b8a9ecf0394.png)
 
 这里关系并不那么明显。最后，让我们考察 BB 和得分之间的关系：
 
@@ -101,7 +99,6 @@ Teams |> filter(yearID %in% 1962:2001) |>
  geom_point(alpha = 0.5)
 ```
 
-![](img/fc78b3e7291dc2ae2ad95a13c3fc32ac.png)
 
 这里我们又看到了一个明显的关联。但这是否意味着增加一个球队的 BB 数**导致**得分增加？在这本书中你学到的最重要的教训之一是**关联并不等同于因果关系**。
 
@@ -114,7 +111,6 @@ Teams |> filter(yearID %in% 1962:2001 ) |>
  geom_point(alpha = 0.5)
 ```
 
-![](img/da070b5ec298c7756e8282075c8d248e.png)
 
 我们知道全垒打会导致得分，因为正如“全垒打”这个名字所暗示的，当一名球员击出全垒打时，他们至少能保证得到一分。这可能是因为全垒打也会导致 BB，这使得 BB 看起来像导致得分的原因？当这种情况发生时，我们称之为**混杂**，这是我们将在本章中了解更多的重要概念。
 
@@ -133,7 +129,6 @@ p <- Teams |> filter(yearID %in% 1962:2001 ) |>
 p
 ```
 
-![](img/caeff824c1417a376deb31d52e9c9c34.png)
 
 qq 图证实了正态近似在这里是有用的：
 
@@ -147,7 +142,6 @@ Teams |> filter(yearID %in% 1962:2001 ) |>
  facet_wrap(~z_HR) 
 ```
 
-![](img/e0f151f96c90be8b48bcfb10e564ecd6.png)
 
 现在我们已经准备好使用线性回归来预测如果知道一支球队击出的全垒打数，该球队将得分多少。我们只需要计算五个总结统计量：
 
@@ -174,7 +168,6 @@ reg_line <- summary_stats |> summarize(slope = r*s_R/s_HR,
 p + geom_abline(intercept = reg_line$intercept, slope = reg_line$slope)
 ```
 
-![](img/50887b189442ad076514663ca32288a5.png)
 
 很快我们将学习 R 函数，如`lm`，这些函数使拟合回归线变得容易得多。另一个例子是**ggplot2**函数`geom_smooth`，它计算并添加回归线到图中，并附带置信区间，我们稍后也会学习。我们使用`method = "lm"`参数，它代表*线性模型*，这是即将到来的章节的标题。因此，我们可以将上面的代码简化如下：
 
@@ -288,7 +281,6 @@ dat |>
 #> `geom_smooth()` using formula = 'y ~ x'
 ```
 
-![](img/375bf78afde6244e68912da0302461ad.png)
 
 在这种情况下，斜率与原始值变化不大：
 
@@ -514,7 +506,6 @@ galton_heights |> ggplot(aes(son, father)) +
 #> `geom_smooth()` using formula = 'y ~ x'
 ```
 
-![](img/86d75725da1a78a1377c3c10c2ad06bb.png)
 
 R 函数 `predict` 以 `lm` 对象为输入并返回预测。如果需要，它还提供了构建置信区间所需的标准误差和其他信息：
 
@@ -704,7 +695,6 @@ dat |>
 #> to see where this warning was generated.
 ```
 
-![图片](img/c1ed2665538e30e8cba6fce736305a94.png)
 
 现在我们回到讨论我们的原始任务，即确定斜率是否发生变化。我们刚刚制作的图表，使用`summarize`和`tidy`，显示置信区间重叠，这提供了一个很好的视觉确认，即我们的假设斜率没有变化是安全的。
 
@@ -848,7 +838,6 @@ teams_data %>% filter(yearID == 2002) %>%
  geom_abline()
 ```
 
-![](img/85fa3561507ae58a9e901bf33fc007ee.png)
 
 我们的模式表现相当不错，正如观察到的点与预测图中的点接近于身份线的事实所证明的那样。
 
@@ -893,7 +882,6 @@ players$R_hat = predict(fit, newdata = players)
 qplot(R_hat, data = players, binwidth = 0.5, color = I("black"))
 ```
 
-![](img/e2b5822059485892f862fdaf6468136d.png)
 
 ### 18.7.1 添加薪资和职位信息
 
@@ -1072,7 +1060,6 @@ falling_object |>
  xlab("Time in seconds")
 ```
 
-![](img/eccb6f1cfb24ddd39bef21af604a8519.png)
 
 伽利略不知道确切的方程式，但通过观察上面的图表，他推断出位置应该遵循抛物线，我们可以写成这样：
 

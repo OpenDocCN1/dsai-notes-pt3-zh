@@ -51,7 +51,6 @@ ENTRYPOINT ["web-docker"]
 
 ![](img/ee03b0656462db643dccd1f616e7e483_8.png)
 
-![](img/ee03b0656462db643dccd1f616e7e483_9.png)
 
 ```rust
 // 在 lib.rs 中
@@ -62,7 +61,6 @@ pub fn random_fruit() -> &‘static str {
 }
 ```
 
-![](img/ee03b0656462db643dccd1f616e7e483_11.png)
 
 ![](img/ee03b0656462db643dccd1f616e7e483_12.png)
 

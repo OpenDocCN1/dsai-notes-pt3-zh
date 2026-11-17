@@ -41,7 +41,6 @@ Cargo是Rust内置的包管理器，它将管理应用程序的依赖关系。�
 cargo run --example
 ```
 
-![](img/4761727ad7a4741a203c790a2b337d55_2.png)
 
 ## 总结
 

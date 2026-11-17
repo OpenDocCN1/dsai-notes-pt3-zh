@@ -24,15 +24,11 @@
 *   **Core ML**：苹果设备的原生格式，可直接从Google AutoML导出。
 *   **Coral**：谷歌专为边缘AI设计的硬件平台及其模型格式。
 
-![](img/00eb09c89e9cead813efa69c14465817_2.png)
 
-![](img/00eb09c89e9cead813efa69c14465817_3.png)
 
-![](img/00eb09c89e9cead813efa69c14465817_5.png)
 
 ## TensorFlow Lite 工作流程
 
-![](img/00eb09c89e9cead813efa69c14465817_7.png)
 
 现在，让我们简要看一下TensorFlow Lite工作流程。其核心思想非常简单：
 
@@ -118,7 +114,6 @@ cd tflite/python/examples/classification
 bash install_requirements.sh  # 具体脚本名可能不同，请参考仓库说明
 ```
 
-![](img/00eb09c89e9cead813efa69c14465817_17.png)
 
 在运行任何代码前，最好先查看一下脚本内容。我们可以用 `vim` 或 `cat` 查看 `classify_image.py` 脚本。它会加载标签文件、初始化TFLite解释器（该解释器会与Edge TPU硬件通信），然后解析参数并输出预测结果。这是一个很好的示例，你可以修改它以适应自己的需求。
 
@@ -136,7 +131,6 @@ python3 classify_image.py \
   --input images/parrot.jpg
 ```
 
-![](img/00eb09c89e9cead813efa69c14465817_23.png)
 
 如果一切设置正确，脚本将输出预测结果，例如“猩猩金刚鹦鹉”，并给出77%的置信度。
 
@@ -146,23 +140,18 @@ python3 classify_image.py \
 
 ### 步骤4：深入探索与自定义
 
-![](img/00eb09c89e9cead813efa69c14465817_29.png)
 
-![](img/00eb09c89e9cead813efa69c14465817_31.png)
 
 我们可以进一步探索。在 `models` 目录下，有使用的模型文件和 `inat_bird_labels.txt` 标签文件。查看标签文件，可以看到它能识别许多种鸟类。
 
-![](img/00eb09c89e9cead813efa69c14465817_33.png)
 
 为了更深入地理解系统如何工作，我们可以从网上下载一张标签列表中鸟类的图片（例如“美洲崖燕”）进行测试。
 
-![](img/00eb09c89e9cead813efa69c14465817_35.png)
 
 1.  从维基百科下载美洲崖燕的图片，保存到桌面。
 2.  将图片移动到示例的 `images` 目录下，并重命名为简单的名称（如 `cliff_swallow.jpg`）。
 3.  修改运行命令，指定新的图片路径和对应的标签文件，再次运行分类脚本。
 
-![](img/00eb09c89e9cead813efa69c14465817_37.png)
 
 ```bash
 python3 classify_image.py \
@@ -173,19 +162,14 @@ python3 classify_image.py \
 
 脚本成功预测出“崖燕”，置信度为82%。这展示了Coral Edge TPU芯片强大的本地推理能力。
 
-![](img/00eb09c89e9cead813efa69c14465817_39.png)
 
-![](img/00eb09c89e9cead813efa69c14465817_41.png)
 
 ### 步骤5：使用其他预训练模型
 
 更强大的是，我们不仅可以使用AutoML训练的模型，还可以使用来自TensorFlow Hub等社区的预训练模型。
 
-![](img/00eb09c89e9cead813efa69c14465817_43.png)
 
-![](img/00eb09c89e9cead813efa69c14465817_45.png)
 
-![](img/00eb09c89e9cead813efa69c14465817_47.png)
 
 1.  访问TensorFlow Hub或Coral官方模型库。
 2.  找到一个预训练模型（例如，一个植物分类模型或通用的MobileNet模型），并下载其TFLite格式文件（注意选择适用于Coral Edge TPU的量化版本）。
@@ -196,7 +180,6 @@ python3 classify_image.py \
 
 ![](img/00eb09c89e9cead813efa69c14465817_49.png)
 
-![](img/00eb09c89e9cead813efa69c14465817_51.png)
 
 ![](img/00eb09c89e9cead813efa69c14465817_53.png)
 

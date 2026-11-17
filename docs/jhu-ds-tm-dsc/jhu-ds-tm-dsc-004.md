@@ -81,9 +81,7 @@
 
 ![](img/50f8e7ebb7ddd029ba3d733c33b23c03_12.png)
 
-![](img/50f8e7ebb7ddd029ba3d733c33b23c03_13.png)
 
-![](img/50f8e7ebb7ddd029ba3d733c33b23c03_14.png)
 
 **Z = log( (x - 1/2) / (1/p - 1/2) )**
 

@@ -1,6 +1,5 @@
 # 014：通过优化将SMPL模型适配到IMU数据
 
-![](img/bb796bffc17332031d5fa9f7f8f21a15_0.png)
 
 ![](img/bb796bffc17332031d5fa9f7f8f21a15_0.png)
 
@@ -87,7 +86,6 @@
 
 ## 总结
 
-![](img/bb796bffc17332031d5fa9f7f8f21a15_4.png)
 
 本节课我们一起学习了如何通过优化将SMPL模型适配到稀疏IMU数据。核心在于：
 1.  使用包含方向、加速度和先验的优化目标。
@@ -98,6 +96,5 @@
 
 ![](img/bb796bffc17332031d5fa9f7f8f21a15_6.png)
 
-![](img/bb796bffc17332031d5fa9f7f8f21a15_8.png)
 
 ![](img/bb796bffc17332031d5fa9f7f8f21a15_8.png)

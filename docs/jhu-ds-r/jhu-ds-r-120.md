@@ -34,7 +34,6 @@ g + geom_point() + geom_smooth(method = "lm")
 
 要添加分面，我们使用 `facet_grid()` 函数。其基本语法使用波浪号 `~` 来分隔变量，格式为 `facet_grid(行变量 ~ 列变量)`。
 
-![](img/112dd73aebdcad3ae0b29380026ec9e0_1.png)
 
 如果我们只想根据一个变量（例如 `bmi_cat`，包含“正常体重”和“超重”两个水平）进行分面，可以这样写：
 
@@ -104,7 +103,6 @@ g + geom_point() + geom_smooth(method = "lm", size = 4, linetype = 3, se = FALSE
 
 ---
 
-![](img/112dd73aebdcad3ae0b29380026ec9e0_3.png)
 
 ### 更改整体主题
 
@@ -114,7 +112,6 @@ g + geom_point() + geom_smooth(method = "lm", size = 4, linetype = 3, se = FALSE
 g + geom_point() + geom_smooth(method = "lm") + theme_bw(base_family = "Times")
 ```
 
-![](img/112dd73aebdcad3ae0b29380026ec9e0_5.png)
 
 此外，你还可以通过 `base_family` 等参数修改字体。上面的代码将图形主题改为黑白，并将字体设置为 Times New Roman（一种衬线字体）。
 
@@ -130,9 +127,7 @@ g + geom_point() + geom_smooth(method = "lm") + theme_bw(base_family = "Times")
     *   在 `geom_*` 函数中设置常量或通过 `aes()` 映射变量来改变颜色、大小等美学属性。
     *   使用 `theme_bw()` 等函数更改图形的整体主题和外观。
 
-![](img/112dd73aebdcad3ae0b29380026ec9e0_7.png)
 
-![](img/112dd73aebdcad3ae0b29380026ec9e0_8.png)
 
 ![](img/112dd73aebdcad3ae0b29380026ec9e0_9.png)
 

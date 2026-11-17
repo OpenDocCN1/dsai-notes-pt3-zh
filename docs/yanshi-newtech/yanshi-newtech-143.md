@@ -1,6 +1,5 @@
 # 143：20_4.3 YouTube 🎬
 
-![](img/8be8bf42e901c5006c67304ffb297dc5_0.png)
 
 ![](img/8be8bf42e901c5006c67304ffb297dc5_0.png)
 
@@ -70,10 +69,8 @@ YouTube早期的视频技术基于**Adobe Flash Player插件**。用户需要在
 
 这些是我使用的参考资料，推荐给你。
 
-![](img/8be8bf42e901c5006c67304ffb297dc5_2.png)
 
 ![](img/8be8bf42e901c5006c67304ffb297dc5_2.png)
 
-![](img/8be8bf42e901c5006c67304ffb297dc5_3.png)
 
 ![](img/8be8bf42e901c5006c67304ffb297dc5_3.png)

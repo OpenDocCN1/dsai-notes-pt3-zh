@@ -73,7 +73,6 @@ def predict(body: TextRequest):
 
 ## 运行与测试应用
 
-![](img/2c979ab660b0112958811826b19ebae2_3.png)
 
 代码编写完成后，我们需要运行服务器并进行测试。
 
@@ -83,7 +82,6 @@ def predict(body: TextRequest):
 uvicorn main:app --host 0.0.0.0 --port 8000
 ```
 
-![](img/2c979ab660b0112958811826b19ebae2_5.png)
 
 启动时，Hugging Face 会自动下载指定的 `gpt2` 模型。启动成功后，FastAPI 会自动生成交互式 API 文档。
 
@@ -100,7 +98,6 @@ uvicorn main:app --host 0.0.0.0 --port 8000
 
 ## 总结
 
-![](img/2c979ab660b0112958811826b19ebae2_7.png)
 
 本节课中我们一起学习了如何使用 FastAPI 构建一个完整的机器学习 API。我们实现了以下关键步骤：
 

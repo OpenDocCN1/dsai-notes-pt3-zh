@@ -19,7 +19,6 @@
 
 ***
 
-![](img/56cccbdfa5e5fd9dcc7fc6d8077d406c_1.png)
 
 ## 进击的巨人：模型规模的膨胀 🏗️
 
@@ -37,7 +36,6 @@ BERT是一个参数量非常庞大的模型，具体有 **3.4亿（340 million�
 
 以下是模型参数量增长的一个简要对比，我们用角色的身高来形象化地表示参数量：
 
-![](img/56cccbdfa5e5fd9dcc7fc6d8077d406c_3.png)
 
 *   **ELMo**：参数量为 **94 million**。
 *   **BERT**：参数量为 **340 million**（设定其身高为1米作为基准）。
@@ -53,7 +51,6 @@ BERT是一个参数量非常庞大的模型，具体有 **3.4亿（340 million�
 
 然而，GPT-3也并非终点。目前已知的最大模型之一是 **Switch Transformer**，其参数量达到了 **1.6 trillion（1.6万亿）**，这又比GPT-3大了近10倍。
 
-![](img/56cccbdfa5e5fd9dcc7fc6d8077d406c_7.png)
 
 ***
 

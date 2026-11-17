@@ -1,36 +1,28 @@
 # 010：caret软件包入门指南
 
-![](img/7cda350d68a336aa4f7f01f54eb9e001_1.png)
 
 在本节课中，我们将学习R语言中一个非常实用的前端软件包——**caret**。该软件包封装了众多预测算法和工具，为机器学习流程提供了一个统一、便捷的框架。
 
 ---
 
-![](img/7cda350d68a336aa4f7f01f54eb9e001_3.png)
 
 ## 概述 📋
 
-![](img/7cda350d68a336aa4f7f01f54eb9e001_5.png)
 
 caret软件包的核心目标是简化R中各种机器学习算法的应用过程。它提供了一个统一的接口，使得数据预处理、模型训练、验证和评估等步骤更加标准化和易于操作。
 
 您可以通过访问其官方网站或直接搜索“caret R package”来找到并获取这个软件包。
 
-![](img/7cda350d68a336aa4f7f01f54eb9e001_7.png)
 
 ---
 
-![](img/7cda350d68a336aa4f7f01f54eb9e001_9.png)
 
-![](img/7cda350d68a336aa4f7f01f54eb9e001_10.png)
 
 ## caret软件包的主要功能 ⚙️
 
-![](img/7cda350d68a336aa4f7f01f54eb9e001_12.png)
 
 caret软件包内置了多种功能，旨在支持完整的机器学习工作流。
 
-![](img/7cda350d68a336aa4f7f01f54eb9e001_13.png)
 
 以下是其主要功能列表：
 
@@ -41,7 +33,6 @@ caret软件包内置了多种功能，旨在支持完整的机器学习工作流
 
 ---
 
-![](img/7cda350d68a336aa4f7f01f54eb9e001_15.png)
 
 ## 为什么需要caret？ 🤔
 
@@ -57,15 +48,12 @@ caret软件包提供了一个统一的框架，允许您仅使用一个函数进
 
 ---
 
-![](img/7cda350d68a336aa4f7f01f54eb9e001_17.png)
 
-![](img/7cda350d68a336aa4f7f01f54eb9e001_18.png)
 
 ## 一个快速示例 🚀
 
 前面我们了解了caret的必要性，现在通过一个具体示例来演示其基本用法。后续课程会深入细节。
 
-![](img/7cda350d68a336aa4f7f01f54eb9e001_20.png)
 
 首先，我们加载caret软件包以及`kernlab`包以获取垃圾邮件数据集。
 
@@ -79,15 +67,12 @@ data(spam)
 
 首先，将数据集划分为训练集和测试集。我们将使用`createDataPartition`函数，并计划用大约75%的数据训练模型，25%的数据进行测试。
 
-![](img/7cda350d68a336aa4f7f01f54eb9e001_22.png)
 
 ```r
 inTrain <- createDataPartition(y=spam$type, p=0.75, list=FALSE)
 ```
 
-![](img/7cda350d68a336aa4f7f01f54eb9e001_23.png)
 
-![](img/7cda350d68a336aa4f7f01f54eb9e001_24.png)
 
 然后，利用`inTrain`对象将数据子集化为训练数据和测试数据。
 
@@ -98,19 +83,14 @@ testing <- spam[-inTrain, ]
 
 这样，我们就得到了专门用于训练和测试的数据子集，整个过程通过简单的接口完成。
 
-![](img/7cda350d68a336aa4f7f01f54eb9e001_26.png)
 
 ### 2. 训练模型
 
-![](img/7cda350d68a336aa4f7f01f54eb9e001_27.png)
 
-![](img/7cda350d68a336aa4f7f01f54eb9e001_28.png)
 
-![](img/7cda350d68a336aa4f7f01f54eb9e001_29.png)
 
 接下来，使用caret包中的`train`命令来拟合一个模型。这里我们尝试预测`type`变量，使用公式`type ~ .`表示使用数据框中的所有其他变量来预测`type`。我们指定在之前创建的`training`数据集上构建模型，并选择要使用的方法，例如`glm`。
 
-![](img/7cda350d68a336aa4f7f01f54eb9e001_30.png)
 
 ```r
 modelFit <- train(type ~ ., data=training, method=“glm”)
@@ -120,9 +100,7 @@ modelFit <- train(type ~ ., data=training, method=“glm”)
 
 ### 3. 检查模型与预测
 
-![](img/7cda350d68a336aa4f7f01f54eb9e001_32.png)
 
-![](img/7cda350d68a336aa4f7f01f54eb9e001_33.png)
 
 拟合模型后，我们可以查看模型细节。方法是查看模型拟合对象的`finalModel`组件。
 
@@ -132,7 +110,6 @@ modelFit$finalModel
 
 这将显示该GLM模型的实际拟合值。
 
-![](img/7cda350d68a336aa4f7f01f54eb9e001_35.png)
 
 然后，可以使用`predict`命令对新样本进行预测。得益于统一框架，我们只需键入`predict`，传入从caret的`train`函数获得的模型拟合对象以及想要预测的数据（本例中是测试数据`testing`）。
 
@@ -158,33 +135,22 @@ confusionMatrix(predictions, testing$type)
 
 `confusionMatrix`函数封装了评估模型拟合时可能需要的多种准确性度量指标。
 
-![](img/7cda350d68a336aa4f7f01f54eb9e001_37.png)
 
-![](img/7cda350d68a336aa4f7f01f54eb9e001_38.png)
 
-![](img/7cda350d68a336aa4f7f01f54eb9e001_39.png)
 
 ---
 
-![](img/7cda350d68a336aa4f7f01f54eb9e001_40.png)
 
-![](img/7cda350d68a336aa4f7f01f54eb9e001_41.png)
 
-![](img/7cda350d68a336aa4f7f01f54eb9e001_42.png)
 
-![](img/7cda350d68a336aa4f7f01f54eb9e001_43.png)
 
 ## 延伸学习 📚
 
-![](img/7cda350d68a336aa4f7f01f54eb9e001_44.png)
 
-![](img/7cda350d68a336aa4f7f01f54eb9e001_45.png)
 
-![](img/7cda350d68a336aa4f7f01f54eb9e001_46.png)
 
 本节课我们一起学习了caret软件包的基本应用。本课程将涵盖大量关于如何实际应用caret包的内容。
 
-![](img/7cda350d68a336aa4f7f01f54eb9e001_47.png)
 
 此外，以下资源也非常有用：
 *   caret官方教程非常详尽，可以覆盖本课程未涉及的内容。
@@ -192,13 +158,10 @@ confusionMatrix(predictions, testing$type)
 
 ---
 
-![](img/7cda350d68a336aa4f7f01f54eb9e001_49.png)
 
 ## 总结 ✨
 
-![](img/7cda350d68a336aa4f7f01f54eb9e001_50.png)
 
-![](img/7cda350d68a336aa4f7f01f54eb9e001_51.png)
 
 ![](img/7cda350d68a336aa4f7f01f54eb9e001_52.png)
 

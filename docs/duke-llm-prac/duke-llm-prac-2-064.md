@@ -48,7 +48,6 @@ clean_dataset >> persist_dataset
 
 ---
 
-![](img/67f8dbdc39cd15c1e8f5889ea12402f8_3.png)
 
 ![](img/67f8dbdc39cd15c1e8f5889ea12402f8_4.png)
 

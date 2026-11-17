@@ -1,6 +1,5 @@
 # 016：奖励假说 🎯
 
-![](img/f18703fc582aab8ca0e1b5c55d877a93_0.png)
 
 ![](img/f18703fc582aab8ca0e1b5c55d877a93_1.png)
 

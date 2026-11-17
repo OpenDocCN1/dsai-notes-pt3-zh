@@ -2,7 +2,6 @@
 
 ![](img/c38023fbd00a47935ea5fb0a278c6105_0.png)
 
-![](img/c38023fbd00a47935ea5fb0a278c6105_2.png)
 
 在本节课中，我们将学习如何使用HBase的交互式Shell。HBase Shell是一个基于JRuby的命令行工具，它允许我们直接与HBase数据库进行交互，执行创建表、插入数据、查询、更新和删除等操作。通过本节的学习，你将掌握使用HBase Shell进行基本数据操作和管理的方法。
 
@@ -85,7 +84,6 @@ put 'blog', 'mat001', 'info:title', 'Elephants'
 
 在HBase中，`put` 命令也用于更新数据。其原理是插入一个具有新时间戳的单元格。HBase会为每个列族保留指定数量的版本（如之前设置的3个）。
 
-![](img/c38023fbd00a47935ea5fb0a278c6105_4.png)
 
 例如，更新 `Michelle004` 的博客日期：
 ```shell
@@ -122,7 +120,6 @@ delete 'blog', 'Bob003', 'info:date'
 
 ## 总结
 
-![](img/c38023fbd00a47935ea5fb0a278c6105_8.png)
 
 ![](img/c38023fbd00a47935ea5fb0a278c6105_10.png)
 

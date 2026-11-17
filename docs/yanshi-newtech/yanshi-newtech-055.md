@@ -1,6 +1,5 @@
 # 55：19_4.4 LTE-Advanced（第1部分）📡
 
-![](img/088ae6d2d6f3cde5cf7d317bb441bcda_0.png)
 
 ![](img/088ae6d2d6f3cde5cf7d317bb441bcda_0.png)
 
@@ -78,19 +77,16 @@ CoMP技术中，“多点”可能带连字符也可能不带，在各种文档�
 
 ![](img/088ae6d2d6f3cde5cf7d317bb441bcda_4.png)
 
-![](img/088ae6d2d6f3cde5cf7d317bb441bcda_2.png)
 
 这些是我使用的参考文献，也推荐给你。谢谢。
 
 
 
-![](img/088ae6d2d6f3cde5cf7d317bb441bcda_6.png)
 
 ![](img/088ae6d2d6f3cde5cf7d317bb441bcda_7.png)
 
 ![](img/088ae6d2d6f3cde5cf7d317bb441bcda_4.png)
 
-![](img/088ae6d2d6f3cde5cf7d317bb441bcda_6.png)
 
 ![](img/088ae6d2d6f3cde5cf7d317bb441bcda_7.png)
 

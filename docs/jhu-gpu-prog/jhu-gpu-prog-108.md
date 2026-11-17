@@ -2,11 +2,9 @@
 
 在本节课中，我们将要学习NVBLAS的语法。NVBLAS是一个基于cuBLAS构建的库，它本身又建立在cuBLAS XT之上，后者是cuBLAS的多GPU版本。这意味着NVBLAS天然支持多GPU计算，并提供了与cuBLAS相同的1级到3级函数支持。
 
-![](img/ecce393f0d030d44e76a9ca5b2cc85e0_1.png)
 
 ## NVBLAS的架构基础
 
-![](img/ecce393f0d030d44e76a9ca5b2cc85e0_3.png)
 
 上一节我们介绍了NVBLAS的基本概念，本节中我们来看看它的具体架构。NVBLAS建立在cuBLAS XT之上，而cuBLAS XT是cuBLAS的多GPU版本。因此，NVBLAS内置了多GPU支持。没有cuBLAS，就没有NVBLAS。
 

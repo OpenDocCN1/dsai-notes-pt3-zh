@@ -2,63 +2,49 @@
 
 在本节课中，我们将要学习能够使用外部工具的生成式人工智能模型。我们将通过分析New Bing、WebGPT和Toolformer等具体实例，来理解这些模型如何通过“文字接龙”的方式，自主决定并调用搜索引擎、计算器等工具来完成任务。
 
-![](img/2782eae0250ef2239b6c9bd636caf2cc_1.png)
 
 ## 概述：什么是“能够使用工具的AI”？
 
-![](img/2782eae0250ef2239b6c9bd636caf2cc_3.png)
 
 传统的语言模型仅能根据其训练数据生成文本。而“能够使用工具的AI”则更进一步，它们被训练成可以识别在何种情境下需要调用外部工具（如搜索引擎、计算器），并将工具的返回结果整合到自己的回答中，从而提供更准确、更有时效性的信息。
 
 上一节我们介绍了基础的语言模型，本节中我们来看看它们如何通过“使用工具”来增强自身能力。
 
-![](img/2782eae0250ef2239b6c9bd636caf2cc_5.png)
 
 ## New Bing 实测与特性 🧪
 
-![](img/2782eae0250ef2239b6c9bd636caf2cc_7.png)
 
 New Bing是微软推出的、集成了GPT-4模型的AI助手。其最显著的特性是能够联网搜索。
 
 ### 启动与界面
 
-![](img/2782eae0250ef2239b6c9bd636caf2cc_9.png)
 
 在Bing首页点击“聊天”选项即可开启界面。其界面与ChatGPT非常相似，用户可在下方输入问题。
 
 
 
-![](img/2782eae0250ef2239b6c9bd636caf2cc_1.png)
 
-![](img/2782eae0250ef2239b6c9bd636caf2cc_11.png)
 
 ### 联网搜索功能
 
 New Bing与ChatGPT最核心的不同在于其具备联网搜索能力。当用户提出问题时，模型会自行判断是否需要搜索。
 
-![](img/2782eae0250ef2239b6c9bd636caf2cc_13.png)
 
 例如，当询问“李宏毅是谁”时，模型会显示“正在搜寻李宏毅”，代表其将关键词提交至搜索引擎（如Bing）获取资料。
 
 
 
-![](img/2782eae0250ef2239b6c9bd636caf2cc_15.png)
 
-![](img/2782eae0250ef2239b6c9bd636caf2cc_3.png)
 
 随后，模型会生成答案，并附上引用来源（Reference），告知用户信息的出处。
 
 
 
-![](img/2782eae0250ef2239b6c9bd636caf2cc_5.png)
 
-![](img/2782eae0250ef2239b6c9bd636caf2cc_17.png)
 
 ### 搜索时机的自主性
 
-![](img/2782eae0250ef2239b6c9bd636caf2cc_19.png)
 
-![](img/2782eae0250ef2239b6c9bd636caf2cc_21.png)
 
 何时进行搜索完全由模型自主决定，具有一定随机性。
 
@@ -66,17 +52,13 @@ New Bing与ChatGPT最核心的不同在于其具备联网搜索能力。当用�
 
 
 
-![](img/2782eae0250ef2239b6c9bd636caf2cc_23.png)
 
-![](img/2782eae0250ef2239b6c9bd636caf2cc_7.png)
 
 但用同样的问题再次提问，模型可能不进行搜索，直接开始游戏对话。这说明其输出具有随机性。
 
 
 
-![](img/2782eae0250ef2239b6c9bd636caf2cc_9.png)
 
-![](img/2782eae0250ef2239b6c9bd636caf2cc_25.png)
 
 ### 复杂指令与潜在错误
 
@@ -84,45 +66,34 @@ New Bing与ChatGPT最核心的不同在于其具备联网搜索能力。当用�
 
 
 
-![](img/2782eae0250ef2239b6c9bd636caf2cc_11.png)
 
 然而，即使联网搜索，模型仍可能产生错误。在生成的回答中，它错误地声称“李宏毅（教授）曾在Google工作过”，并附上了引用，但所引用的网页（维基百科、个人网站）中并无此信息。
 
 
 
-![](img/2782eae0250ef2239b6c9bd636caf2cc_27.png)
-
-![](img/2782eae0250ef2239b6c9bd636caf2cc_13.png)
 
 
 
-![](img/2782eae0250ef2239b6c9bd636caf2cc_15.png)
 
 
 
-![](img/2782eae0250ef2239b6c9bd636caf2cc_17.png)
 
 
 
-![](img/2782eae0250ef2239b6c9bd636caf2cc_19.png)
 
 
 
-![](img/2782eae0250ef2239b6c9bd636caf2cc_21.png)
 
 
 
-![](img/2782eae0250ef2239b6c9bd636caf2cc_29.png)
 
-![](img/2782eae0250ef2239b6c9bd636caf2cc_23.png)
+
 
 这个例子表明，联网模型并非简单“抄写”网页内容，它仍会基于获取的信息进行“生成”，因此存在犯错的可能。
 
 
 
-![](img/2782eae0250ef2239b6c9bd636caf2cc_31.png)
 
-![](img/2782eae0250ef2239b6c9bd636caf2cc_25.png)
 
 ## WebGPT：使用搜索引擎的GPT 🔍
 
@@ -142,9 +113,7 @@ WebGPT的核心思想是，**使用搜索引擎也是一种特殊的“文字接
 
 
 
-![](img/2782eae0250ef2239b6c9bd636caf2cc_29.png)
 
-![](img/2782eae0250ef2239b6c9bd636caf2cc_33.png)
 
 6.  **点选与收藏**：模型可继续生成 `[Quote]` 符号和一个数字（如 `2`），代表点开第2篇文章。然后生成 `[Keep]` 符号，将这篇文章的**特定段落**收藏起来，以备后用。
 7.  **多次搜索**：模型可重复以上步骤进行多次搜索。
@@ -152,31 +121,23 @@ WebGPT的核心思想是，**使用搜索引擎也是一种特殊的“文字接
 
 
 
-![](img/2782eae0250ef2239b6c9bd636caf2cc_34.png)
-
-![](img/2782eae0250ef2239b6c9bd636caf2cc_31.png)
 
 
 
-![](img/2782eae0250ef2239b6c9bd636caf2cc_36.png)
-
-![](img/2782eae0250ef2239b6c9bd636caf2cc_33.png)
 
 
 
-![](img/2782eae0250ef2239b6c9bd636caf2cc_34.png)
 
 
 
-![](img/2782eae0250ef2239b6c9bd636caf2cc_36.png)
 
-![](img/2782eae0250ef2239b6c9bd636caf2cc_38.png)
+
+
 
 > **注**：引用的生成很可能也是模型学习的结果，而非简单规则匹配。
 
 
 
-![](img/2782eae0250ef2239b6c9bd636caf2cc_38.png)
 
 ### 如何训练WebGPT？
 
@@ -187,37 +148,27 @@ WebGPT的核心思想是，**使用搜索引擎也是一种特殊的“文字接
 
 
 
-![](img/2782eae0250ef2239b6c9bd636caf2cc_40.png)
 
-![](img/2782eae0250ef2239b6c9bd636caf2cc_40.png)
 
-![](img/2782eae0250ef2239b6c9bd636caf2cc_42.png)
 
 3.  **强化学习**：进一步通过人类反馈进行强化学习，优化模型表现。
 
 
 
-![](img/2782eae0250ef2239b6c9bd636caf2cc_42.png)
 
 
 
-![](img/2782eae0250ef2239b6c9bd636caf2cc_44.png)
-
-![](img/2782eae0250ef2239b6c9bd636caf2cc_44.png)
 
 
 
-![](img/2782eae0250ef2239b6c9bd636caf2cc_46.png)
 
-![](img/2782eae0250ef2239b6c9bd636caf2cc_46.png)
+
 
 ### WebGPT运作实例
 
-![](img/2782eae0250ef2239b6c9bd636caf2cc_48.png)
 
 以下是WebGPT回答“哪一条河比较长，尼罗河还是扬子江？”的简化步骤：
 
-![](img/2782eae0250ef2239b6c9bd636caf2cc_50.png)
 
 *   搜索“尼罗河 vs 扬子江”，点选文章，收藏相关段落。
 *   搜索“尼罗河 长度”，点选文章，收藏相关段落。
@@ -226,81 +177,56 @@ WebGPT的核心思想是，**使用搜索引擎也是一种特殊的“文字接
 
 
 
-![](img/2782eae0250ef2239b6c9bd636caf2cc_48.png)
 
 
 
-![](img/2782eae0250ef2239b6c9bd636caf2cc_52.png)
-
-![](img/2782eae0250ef2239b6c9bd636caf2cc_54.png)
-
-![](img/2782eae0250ef2239b6c9bd636caf2cc_50.png)
 
 
 
-![](img/2782eae0250ef2239b6c9bd636caf2cc_56.png)
-
-![](img/2782eae0250ef2239b6c9bd636caf2cc_52.png)
 
 
 
-![](img/2782eae0250ef2239b6c9bd636caf2cc_58.png)
-
-![](img/2782eae0250ef2239b6c9bd636caf2cc_54.png)
 
 
 
-![](img/2782eae0250ef2239b6c9bd636caf2cc_60.png)
-
-![](img/2782eae0250ef2239b6c9bd636caf2cc_62.png)
-
-![](img/2782eae0250ef2239b6c9bd636caf2cc_56.png)
 
 
 
-![](img/2782eae0250ef2239b6c9bd636caf2cc_64.png)
-
-![](img/2782eae0250ef2239b6c9bd636caf2cc_66.png)
-
-![](img/2782eae0250ef2239b6c9bd636caf2cc_58.png)
 
 
 
-![](img/2782eae0250ef2239b6c9bd636caf2cc_68.png)
-
-![](img/2782eae0250ef2239b6c9bd636caf2cc_60.png)
 
 
 
-![](img/2782eae0250ef2239b6c9bd636caf2cc_70.png)
-
-![](img/2782eae0250ef2239b6c9bd636caf2cc_72.png)
-
-![](img/2782eae0250ef2239b6c9bd636caf2cc_62.png)
 
 
 
-![](img/2782eae0250ef2239b6c9bd636caf2cc_64.png)
 
 
 
-![](img/2782eae0250ef2239b6c9bd636caf2cc_66.png)
 
 
 
-![](img/2782eae0250ef2239b6c9bd636caf2cc_68.png)
 
 
 
-![](img/2782eae0250ef2239b6c9bd636caf2cc_70.png)
 
 
 
-![](img/2782eae0250ef2239b6c9bd636caf2cc_72.png)
+
+
+
+
+
+
+
+
+
+
+
 
 ## Toolformer：使用多种工具的模型 🧰
 
-![](img/2782eae0250ef2239b6c9bd636caf2cc_74.png)
 
 Meta在2023年提出的 **Toolformer** 模型更进一步，它不仅能搜索，还能调用计算器、翻译系统等多种工具。
 
@@ -317,17 +243,13 @@ Meta在2023年提出的 **Toolformer** 模型更进一步，它不仅能搜索�
 
 
 
-![](img/2782eae0250ef2239b6c9bd636caf2cc_76.png)
 
-![](img/2782eae0250ef2239b6c9bd636caf2cc_74.png)
 
 ### 无需大量人工标注的训练方法
 
-![](img/2782eae0250ef2239b6c9bd636caf2cc_78.png)
 
 Toolformer的创新在于其训练方法，它无需大量人类示范。以下是其关键步骤：
 
-![](img/2782eae0250ef2239b6c9bd636caf2cc_80.png)
 
 **第一步：利用语言模型自生成候选数据**
 *   给一个基础语言模型（如GPT）少量示例，示范如何在句子中插入API调用指令（如 `[QA(“问题”)]`）。
@@ -335,11 +257,9 @@ Toolformer的创新在于其训练方法，它无需大量人类示范。以下�
 
 
 
-![](img/2782eae0250ef2239b6c9bd636caf2cc_76.png)
 
 
 
-![](img/2782eae0250ef2239b6c9bd636caf2cc_78.png)
 
 **第二步：筛选有效数据**
 *   对于每一条候选数据，计算两个概率：
@@ -349,13 +269,10 @@ Toolformer的创新在于其训练方法，它无需大量人类示范。以下�
 
 
 
-![](img/2782eae0250ef2239b6c9bd636caf2cc_82.png)
-
-![](img/2782eae0250ef2239b6c9bd636caf2cc_80.png)
 
 
 
-![](img/2782eae0250ef2239b6c9bd636caf2cc_82.png)
+
 
 ### Toolformer的实验结果
 
@@ -366,7 +283,6 @@ Toolformer的创新在于其训练方法，它无需大量人类示范。以下�
 
 
 
-![](img/2782eae0250ef2239b6c9bd636caf2cc_84.png)
 
 ## 总结 📝
 

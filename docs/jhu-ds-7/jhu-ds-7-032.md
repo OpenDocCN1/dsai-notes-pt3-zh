@@ -35,75 +35,47 @@ y <- x1 + rnorm(n)
 
 当 `x2` 和 `x3` 与 `x1` 独立时，包含它们对 `x1` 系数估计的标准误影响微乎其微。然而，如果我们让 `x2` 和 `x3` 依赖于 `x1`（例如 `x2 = x1 + rnorm(n)`），重复上述模拟，会发现 `x1` 系数的标准误显著增大，有时甚至膨胀数倍。
 
-![](img/849e472ba79624ded97b40e4795fbbf3_1.png)
 
-![](img/849e472ba79624ded97b40e4795fbbf3_3.png)
 
 **结论**：包含与核心变量高度相关的冗余变量，会严重增加其系数估计的不确定性（方差）。例如，在模型中同时放入舒张压和收缩压（两者高度相关），若不必要，会不当地增大舒张压效应的标准误。
 
-![](img/849e472ba79624ded97b40e4795fbbf3_4.png)
 
-![](img/849e472ba79624ded97b40e4795fbbf3_6.png)
 
-![](img/849e472ba79624ded97b40e4795fbbf3_7.png)
 
-![](img/849e472ba79624ded97b40e4795fbbf3_8.png)
 
 ---
 
 ## 方差膨胀因子
 
-![](img/849e472ba79624ded97b40e4795fbbf3_10.png)
 
 我们无法直接获知真实的误差方差，但可以通过比较来评估方差膨胀的程度。一个常用的指标是**方差膨胀因子**。
 
-![](img/849e472ba79624ded97b40e4795fbbf3_12.png)
 
-![](img/849e472ba79624ded97b40e4795fbbf3_14.png)
 
-![](img/849e472ba79624ded97b40e4795fbbf3_16.png)
 
-![](img/849e472ba79624ded97b40e4795fbbf3_18.png)
 
 **方差膨胀因子** 衡量了当前模型中某个系数的方差，与所有其他变量均与该变量**不相关**的理想情况下方差的比值。其公式基于线性代数推导，但在实践中，我们通常使用统计软件直接计算。
 
-![](img/849e472ba79624ded97b40e4795fbbf3_20.png)
 
-![](img/849e472ba79624ded97b40e4795fbbf3_22.png)
 
-![](img/849e472ba79624ded97b40e4795fbbf3_23.png)
 
 以下是使用R语言计算VIF的步骤：
 
-![](img/849e472ba79624ded97b40e4795fbbf3_25.png)
-
-![](img/849e472ba79624ded97b40e4795fbbf3_26.png)
-
-![](img/849e472ba79624ded97b40e4795fbbf3_27.png)
-
-![](img/849e472ba79624ded97b40e4795fbbf3_28.png)
-
-![](img/849e472ba79624ded97b40e4795fbbf3_30.png)
 
 
-![](img/849e472ba79624ded97b40e4795fbbf3_32.png)
-
-![](img/849e472ba79624ded97b40e4795fbbf3_34.png)
-
-![](img/849e472ba79624ded97b40e4795fbbf3_35.png)
-
-![](img/849e472ba79624ded97b40e4795fbbf3_37.png)
-
-![](img/849e472ba79624ded97b40e4795fbbf3_38.png)
 
 
-![](img/849e472ba79624ded97b40e4795fbbf3_40.png)
 
-![](img/849e472ba79624ded97b40e4795fbbf3_41.png)
 
-![](img/849e472ba79624ded97b40e4795fbbf3_42.png)
 
-![](img/849e472ba79624ded97b40e4795fbbf3_43.png)
+
+
+
+
+
+
+
+
 
 ```r
 # 加载必要的包
@@ -117,11 +89,8 @@ vif(fit)
 sqrt(vif(fit))
 ```
 
-![](img/849e472ba79624ded97b40e4795fbbf3_45.png)
 
-![](img/849e472ba79624ded97b40e4795fbbf3_46.png)
 
-![](img/849e472ba79624ded97b40e4795fbbf3_47.png)
 
 对于VIF结果的解读：
 *   **VIF = 1**：表示该变量与其他变量完全不相关，是理想情况。
@@ -130,110 +99,68 @@ sqrt(vif(fit))
 
 在瑞士数据中，`Examination`和`Education`的VIF很高，因为它们测量的是相似的概念（教育水平），彼此高度相关。而`Infant.Mortality`的VIF接近1，说明它与其他变量基本无关。
 
-![](img/849e472ba79624ded97b40e4795fbbf3_49.png)
 
-![](img/849e472ba79624ded97b40e4795fbbf3_50.png)
 
-![](img/849e472ba79624ded97b40e4795fbbf3_51.png)
 
-![](img/849e472ba79624ded97b40e4795fbbf3_52.png)
 
-![](img/849e472ba79624ded97b40e4795fbbf3_53.png)
 
-![](img/849e472ba79624ded97b40e4795fbbf3_54.png)
 
-![](img/849e472ba79624ded97b40e4795fbbf3_56.png)
 
 ---
 
-![](img/849e472ba79624ded97b40e4795fbbf3_57.png)
 
-![](img/849e472ba79624ded97b40e4795fbbf3_59.png)
 
-![](img/849e472ba79624ded97b40e4795fbbf3_60.png)
 
 ## 对残差方差估计的影响
 
 除了回归系数，模型选择还会影响另一个重要参数——**残差方差σ²**的估计。
 
-![](img/849e472ba79624ded97b40e4795fbbf3_62.png)
 
-![](img/849e472ba79624ded97b40e4795fbbf3_63.png)
 
-![](img/849e472ba79624ded97b40e4795fbbf3_64.png)
 
-![](img/849e472ba79624ded97b40e4795fbbf3_65.png)
 
-![](img/849e472ba79624ded97b40e4795fbbf3_66.png)
 
-![](img/849e472ba79624ded97b40e4795fbbf3_67.png)
 
-![](img/849e472ba79624ded97b40e4795fbbf3_68.png)
 
-![](img/849e472ba79624ded97b40e4795fbbf3_69.png)
 
-![](img/849e472ba79624ded97b40e4795fbbf3_70.png)
 
 以下是其影响规律：
 1.  **模型欠拟合**（遗漏重要变量）：残差方差估计是**有偏的**。因为被遗漏变量的系统性影响被错误地归入了随机误差。
 2.  **模型正确拟合或过拟合**（包含不必要变量）：残差方差估计是**无偏的**。
     *   但是，如果包含了不必要变量，方差估计本身的**变异性（方差）会增大**，使得估计更不可靠。
 
-![](img/849e472ba79624ded97b40e4795fbbf3_72.png)
 
-![](img/849e472ba79624ded97b40e4795fbbf3_74.png)
 
-![](img/849e472ba79624ded97b40e4795fbbf3_76.png)
 
-![](img/849e472ba79624ded97b40e4795fbbf3_78.png)
 
 **核心规律总结**：对于参数估计（无论是回归系数β还是残差方差σ²），遗漏变量导致**偏差**，而包含冗余变量导致**方差增大/估计精度下降**。这再次凸显了良好实验设计（如随机化）的重要性，因为它能平衡已知和未知的混杂因素，减少对复杂模型调整的依赖。
 
-![](img/849e472ba79624ded97b40e4795fbbf3_80.png)
 
-![](img/849e472ba79624ded97b40e4795fbbf3_81.png)
 
-![](img/849e472ba79624ded97b40e4795fbbf3_83.png)
 
-![](img/849e472ba79624ded97b40e4795fbbf3_84.png)
 
 ---
 
 ## 自动化模型选择与嵌套模型
 
-![](img/849e472ba79624ded97b40e4795fbbf3_86.png)
 
-![](img/849e472ba79624ded97b40e4795fbbf3_87.png)
 
-![](img/849e472ba79624ded97b40e4795fbbf3_88.png)
 
-![](img/849e472ba79624ded97b40e4795fbbf3_89.png)
 
-![](img/849e472ba79624ded97b40e4795fbbf3_90.png)
 
-![](img/849e472ba79624ded97b40e4795fbbf3_91.png)
 
 当变量很多，特别是考虑交互项和多项式时，模型选择的空间会爆炸式增长。完全的自动化搜索（如基于AIC、BIC）更属于机器学习的范畴。对于解释性回归，我们通常依赖分析者、数据和科学背景之间的交互。
 
-![](img/849e472ba79624ded97b40e4795fbbf3_93.png)
 
-![](img/849e472ba79624ded97b40e4795fbbf3_94.png)
 
-![](img/849e472ba79624ded97b40e4795fbbf3_95.png)
 
-![](img/849e472ba79624ded97b40e4795fbbf3_96.png)
 
-![](img/849e472ba79624ded97b40e4795fbbf3_97.png)
 
-![](img/849e472ba79624ded97b40e4795fbbf3_98.png)
 
 有一种自动化策略在特定场景下非常有用：**嵌套模型比较**。
 
-![](img/849e472ba79624ded97b40e4795fbbf3_100.png)
 
-![](img/849e472ba79624ded97b40e4795fbbf3_101.png)
 
-![](img/849e472ba79624ded97b40e4795fbbf3_102.png)
 
 当我们特别关心某一个核心变量（如处理效应）时，可以构建一系列模型：
 1.  仅包含核心变量。
@@ -243,42 +170,25 @@ sqrt(vif(fit))
 
 每个后续模型都完全包含了前一个模型的变量，这就是“嵌套”关系。我们可以使用**似然比检验（F检验）** 来评估新增的一组变量是否提供了显著额外的解释力。
 
-![](img/849e472ba79624ded97b40e4795fbbf3_104.png)
 
-![](img/849e472ba79624ded97b40e4795fbbf3_105.png)
 
-![](img/849e472ba79624ded97b40e4795fbbf3_106.png)
 
-![](img/849e472ba79624ded97b40e4795fbbf3_107.png)
 
-![](img/849e472ba79624ded97b40e4795fbbf3_108.png)
 
-![](img/849e472ba79624ded97b40e4795fbbf3_109.png)
 
-![](img/849e472ba79624ded97b40e4795fbbf3_110.png)
 
-![](img/849e472ba79624ded97b40e4795fbbf3_111.png)
 
-![](img/849e472ba79624ded97b40e4795fbbf3_112.png)
 
 以下是使用R进行嵌套模型比较的示例：
 
-![](img/849e472ba79624ded97b40e4795fbbf3_113.png)
 
 
-![](img/849e472ba79624ded97b40e4795fbbf3_115.png)
 
-![](img/849e472ba79624ded97b40e4795fbbf3_116.png)
 
-![](img/849e472ba79624ded97b40e4795fbbf3_117.png)
 
-![](img/849e472ba79624ded97b40e4795fbbf3_118.png)
 
-![](img/849e472ba79624ded97b40e4795fbbf3_119.png)
 
-![](img/849e472ba79624ded97b40e4795fbbf3_120.png)
 
-![](img/849e472ba79624ded97b40e4795fbbf3_121.png)
 
 ```r
 # 使用瑞士数据，假设我们关注Agriculture的影响
@@ -289,17 +199,12 @@ fit3 <- lm(Fertility ~ Agriculture + Examination + Education + Catholic + Infant
 anova(fit1, fit2, fit3)
 ```
 
-![](img/849e472ba79624ded97b40e4795fbbf3_122.png)
 
-![](img/849e472ba79624ded97b40e4795fbbf3_123.png)
 
-![](img/849e472ba79624ded97b40e4795fbbf3_125.png)
 
 `anova`函数的结果会列出模型的残差平方和、自由度，并计算F统计量和p值，从而判断每次新增的变量集是否显著改善了模型。
 
-![](img/849e472ba79624ded97b40e4795fbbf3_127.png)
 
-![](img/849e472ba79624ded97b40e4795fbbf3_128.png)
 
 ![](img/849e472ba79624ded97b40e4795fbbf3_129.png)
 

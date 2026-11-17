@@ -1,6 +1,5 @@
 # 085：梯度下降及其变体 - 第二部分
 
-![](img/dbb43acb3984c71cb9ea7aedf1f31986_0.png)
 
 ![](img/dbb43acb3984c71cb9ea7aedf1f31986_0.png)
 
@@ -100,6 +99,5 @@ Adam算法因其良好的实践效果，已成为训练神经网络的首选优�
 
 建议阅读《深度学习》书籍第8章的相关部分，以及斯坦福CS231n课程中关于优化算法的讲座。
 
-![](img/dbb43acb3984c71cb9ea7aedf1f31986_2.png)
 
 ![](img/dbb43acb3984c71cb9ea7aedf1f31986_2.png)

@@ -166,7 +166,6 @@ Edge Impulse 建议对象的大小应该相似，且不要重叠，以获得更�
 
 在本节中，选择**颜色深度**为`灰度`，适合与 FOMO 模型一起使用，并保存`参数`。
 
-![图片](img/file430.png)
 
 Studio 会自动移动到下一个部分，即“生成特征”，在这里所有样本都将进行预处理，从而生成包含单个<semantics><mrow><mn>96</mn><mo>×</mo><mn>96</mn><mo>×</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">96\times 96\times 1</annotation></semantics>图像或 9,216 个特征的数据库。
 
@@ -224,7 +223,6 @@ FOMO 将图像转换为灰度，并使用 8 的因子将其划分为像素块。
 
 前往 EI Studio 中的`实时分类`部分，并使用*webUSB*连接您的 Nicla Vision：
 
-![](img/file435.png)
 
 连接后，您可以使用 Nicla 捕获实际图像，以便在 Edge Impulse Studio 上由训练模型进行测试。
 

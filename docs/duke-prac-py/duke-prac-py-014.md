@@ -143,7 +143,6 @@ print("Your " + pet + " is about " + str(age_in_human_years) + " years old in hu
 *   使用 **`str()`** 函数将数字转换回字符串以便打印。
 *   通过添加清晰的**提示信息**（如“(decimal)”）来优化用户体验，减少输入错误。
 
-![](img/00982f5f0bf58bce0de12350ae808c24_2.png)
 
 ![](img/00982f5f0bf58bce0de12350ae808c24_3.png)
 

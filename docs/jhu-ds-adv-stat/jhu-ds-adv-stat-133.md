@@ -22,7 +22,6 @@ e_i (PRESS) = y_i - ŷ_i(-i)
 
 ---
 
-![](img/cdebecb7a3097d36e94365fb2280593d_1.png)
 
 ## 2. 核心技巧：矩阵分块与Sherman-Morrison-Woodbury定理
 
@@ -65,11 +64,9 @@ H_ii = z_i^T (X^T X)^{-1} z_i
 
 ---
 
-![](img/cdebecb7a3097d36e94365fb2280593d_3.png)
 
 ## 4. 推导PRESS残差的简化公式
 
-![](img/cdebecb7a3097d36e94365fb2280593d_5.png)
 
 我们的目标是计算 `ŷ_i(-i)`。根据定义：
 ```
@@ -97,9 +94,7 @@ H_ii = z_i^T (X^T X)^{-1} z_i
 
 将 `ŷ_i(-i)` 的简化公式代入PRESS残差的定义，我们得到：
 
-![](img/cdebecb7a3097d36e94365fb2280593d_7.png)
 
-![](img/cdebecb7a3097d36e94365fb2280593d_9.png)
 
 **PRESS残差最终公式：**
 ```

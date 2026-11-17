@@ -19,7 +19,6 @@
 *   `git stash`：将当前未提交的更改临时保存起来。
 *   `git merge`：将指定分支的更改合并到当前分支。
 
-![](img/84d58d87805b9b20d9efa003115db3fa_3.png)
 
 ---
 
@@ -31,13 +30,10 @@ git init
 ```
 这个命令会在当前目录创建一个新的Git仓库。
 
-![](img/84d58d87805b9b20d9efa003115db3fa_5.png)
 
-![](img/84d58d87805b9b20d9efa003115db3fa_6.png)
 
 初始化后，我们可以使用`git status`来查看仓库状态。默认情况下，Git会创建一个名为`master`的主分支。此时，你会看到还没有任何提交，并且有一个名为`hello.py`的未跟踪文件。
 
-![](img/84d58d87805b9b20d9efa003115db3fa_8.png)
 
 为了开始跟踪这个文件，我们使用`git add`命令：
 ```bash
@@ -45,9 +41,7 @@ git add hello.py
 ```
 执行后，该文件已被添加到暂存区，等待下一次提交。
 
-![](img/84d58d87805b9b20d9efa003115db3fa_10.png)
 
-![](img/84d58d87805b9b20d9efa003115db3fa_12.png)
 
 ![](img/84d58d87805b9b20d9efa003115db3fa_14.png)
 
@@ -65,13 +59,11 @@ git log
 
 ---
 
-![](img/84d58d87805b9b20d9efa003115db3fa_16.png)
 
 ![](img/84d58d87805b9b20d9efa003115db3fa_17.png)
 
 如果我们修改了`hello.py`文件，然后运行`git status`，Git会提示该文件已被修改。
 
-![](img/84d58d87805b9b20d9efa003115db3fa_19.png)
 
 在提交之前，我们可以使用`git diff`来查看具体修改了哪些内容：
 ```bash
@@ -94,11 +86,9 @@ git commit -m “更新问候语” hello.py
 
 ![](img/84d58d87805b9b20d9efa003115db3fa_23.png)
 
-![](img/84d58d87805b9b20d9efa003115db3fa_24.png)
 
 ---
 
-![](img/84d58d87805b9b20d9efa003115db3fa_25.png)
 
 在协作项目中，最佳实践是在独立的分支上进行工作。我们可以使用`git checkout`命令创建并切换到一个新分支：
 ```bash
@@ -106,20 +96,16 @@ git checkout -b new-feature
 ```
 使用`git branch`命令可以查看所有分支，并确认当前所在的分支。
 
-![](img/84d58d87805b9b20d9efa003115db3fa_27.png)
 
-![](img/84d58d87805b9b20d9efa003115db3fa_29.png)
 
 在新分支上，我们可以自由地进行修改和提交。这些更改只会影响当前分支。
 
-![](img/84d58d87805b9b20d9efa003115db3fa_31.png)
 
 要查看当前分支与`master`分支的差异，可以运行：
 ```bash
 git diff master
 ```
 
-![](img/84d58d87805b9b20d9efa003115db3fa_33.png)
 
 ![](img/84d58d87805b9b20d9efa003115db3fa_34.png)
 

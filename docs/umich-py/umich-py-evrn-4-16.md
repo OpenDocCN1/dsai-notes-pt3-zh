@@ -2,25 +2,20 @@
 
 在本节课中，我们将学习一个完整的实战示例：如何利用Python和SQLite数据库来统计邮件文件中发件人的出现频率。我们将通过分析代码，理解如何连接数据库、执行SQL命令以及高效地处理数据。
 
-![](img/50f5ae07ec41f4a1e860e13e01d7c51e_1.png)
 
 ---
 
-![](img/50f5ae07ec41f4a1e860e13e01d7c51e_3.png)
 
 ## 概述
 
-![](img/50f5ae07ec41f4a1e860e13e01d7c51e_5.png)
 
 我们将要分析的脚本 `emaildb.py` 是一个简洁而强大的示例，它展示了使用Python操作SQLite数据库的核心流程。这个程序会读取一个邮件文件（如 `mbox-short.txt`），提取每封邮件的发件人地址，并使用数据库来记录每个地址出现的次数。通过这个例子，我们可以将数据库操作的精髓提炼出来。
 
-![](img/50f5ae07ec41f4a1e860e13e01d7c51e_7.png)
 
 ---
 
 ## 代码结构与数据库连接
 
-![](img/50f5ae07ec41f4a1e860e13e01d7c51e_9.png)
 
 首先，我们导入必要的库并建立与数据库的连接。在数据库编程中，连接分为两步：建立连接和创建游标。
 
@@ -66,7 +61,6 @@ CREATE TABLE Counts (email TEXT, count INTEGER)
     *   如果地址不存在（查询返回 `None`），则执行 `INSERT` 语句，将计数初始化为1。
     *   如果地址已存在，则执行 `UPDATE` 语句，将其计数直接加1。**这是一种更优的“原子操作”**，避免了先读取再更新的竞态条件风险。
 
-![](img/50f5ae07ec41f4a1e860e13e01d7c51e_11.png)
 
 ```python
 fname = input('Enter file name: ')
@@ -116,7 +110,6 @@ conn.commit()
 以下是查询并打印结果的代码：
 
 
-![](img/50f5ae07ec41f4a1e860e13e01d7c51e_13.png)
 
 ```python
 sqlstr = 'SELECT email, count FROM Counts ORDER BY count DESC LIMIT 10'
@@ -130,29 +123,22 @@ cur.close()
 
 ---
 
-![](img/50f5ae07ec41f4a1e860e13e01d7c51e_15.png)
 
 ## 运行示例与数据查看
 
-![](img/50f5ae07ec41f4a1e860e13e01d7c51e_17.png)
 
-![](img/50f5ae07ec41f4a1e860e13e01d7c51e_19.png)
 
 运行程序后，它会处理指定的邮件文件，并将结果存储在 `emaildb.sqlite` 数据库文件中。
 
 我们可以使用如 **DB Browser for SQLite** 这样的图形化工具打开这个 `.sqlite` 文件，直观地查看 `Counts` 表中的数据。这验证了我们的程序不仅计算了结果，还将数据持久化保存了下来。
 
-![](img/50f5ae07ec41f4a1e860e13e01d7c51e_21.png)
 
-![](img/50f5ae07ec41f4a1e860e13e01d7c51e_23.png)
 
 这个示例的巧妙之处在于，虽然本次我们每次运行都重建了表，但只需稍作修改（例如移除 `DROP TABLE` 语句），数据库就可以在多次程序运行之间保留历史数据，实现数据的累积统计。
 
-![](img/50f5ae07ec41f4a1e860e13e01d7c51e_25.png)
 
 ---
 
-![](img/50f5ae07ec41f4a1e860e13e01d7c51e_27.png)
 
 ## 总结
 

@@ -1,37 +1,30 @@
 # 011：数据过滤、选择、重编码、重命名与管道操作 📊➡️🔧
 
-![](img/5f0d5f7968792936beecd1769972acdd_0.png)
 
 在本节课中，我们将学习如何使用 `dplyr` 包中的核心函数对数据进行操作，包括筛选行、选择列、重编码变量、重命名列，以及如何利用管道操作符 `%>%` 将这些步骤流畅地串联起来。
 
-![](img/5f0d5f7968792936beecd1769972acdd_2.png)
 
 ---
 
-![](img/5f0d5f7968792936beecd1769972acdd_4.png)
 
 ## 数据过滤
 
-![](img/5f0d5f7968792936beecd1769972acdd_5.png)
 
 上一节我们介绍了数据导入与初步查看。本节中，我们来看看如何从数据集中提取满足特定条件的子集，这被称为“过滤”。
 
 过滤操作使用 `filter()` 函数，它根据指定的逻辑条件筛选出数据框（tibble）中符合条件的行。
 
-![](img/5f0d5f7968792936beecd1769972acdd_7.png)
 
 **公式**：`filter(data, condition)`
 
 以下是一个过滤操作的示例。假设我们想从调查数据中提取所有女性受访者的数据。在数据中，性别变量 `gender` 的编码为：1 代表男性，2 代表女性。
 
-![](img/5f0d5f7968792936beecd1769972acdd_9.png)
 
 ```r
 # 从 CCES 数据集中过滤出所有女性受访者
 women <- filter(CCES, gender == 2)
 ```
 
-![](img/5f0d5f7968792936beecd1769972acdd_11.png)
 
 我们可以使用 `dim()` 函数检查新数据集的大小，确认它只包含女性受访者。
 
@@ -39,15 +32,12 @@ women <- filter(CCES, gender == 2)
 dim(women)
 ```
 
-![](img/5f0d5f7968792936beecd1769972acdd_13.png)
 
-![](img/5f0d5f7968792936beecd1769972acdd_14.png)
 
 ---
 
 ## 添加多个过滤条件
 
-![](img/5f0d5f7968792936beecd1769972acdd_16.png)
 
 我们可以通过逻辑运算符组合多个条件。例如，如果我们想进一步筛选出“坚定的共和党女性”，就需要同时满足两个条件：性别为女，且政党认同为共和党。
 
@@ -59,7 +49,6 @@ dim(women)
 *   `&`：与（同时满足）
 *   `|`：或（满足其一）
 
-![](img/5f0d5f7968792936beecd1769972acdd_18.png)
 
 ```r
 # 过滤出性别为女性且政党认同为共和党（PID7 > 4）的受访者
@@ -69,11 +58,9 @@ dim(republican_women)
 
 ---
 
-![](img/5f0d5f7968792936beecd1769972acdd_20.png)
 
 ## 选择特定列
 
-![](img/5f0d5f7968792936beecd1769972acdd_22.png)
 
 过滤行之后，我们可能只对数据集中的某几列感兴趣。这时可以使用 `select()` 函数来选择特定的列。
 
@@ -81,7 +68,6 @@ dim(republican_women)
 
 例如，从 `republican_women` 数据集中，我们只选择教育程度（`educ`）和就业状态（`employ`）这两列。
 
-![](img/5f0d5f7968792936beecd1769972acdd_24.png)
 
 ```r
 # 从 republican_women 数据集中选择 educ 和 employ 列
@@ -89,23 +75,18 @@ selected_data <- select(republican_women, educ, employ)
 head(selected_data)
 ```
 
-![](img/5f0d5f7968792936beecd1769972acdd_25.png)
 
 运行后，新的 `selected_data` 对象将只包含我们指定的两列数据。
 
 ---
 
-![](img/5f0d5f7968792936beecd1769972acdd_27.png)
 
-![](img/5f0d5f7968792936beecd1769972acdd_28.png)
 
 ## 重编码变量值
 
-![](img/5f0d5f7968792936beecd1769972acdd_29.png)
 
 有时，我们需要更改变量中值的表示方式，使其更易读或符合分析需求。这可以通过 `recode()` 函数或 `mutate()` 与 `case_when()` 的组合来实现。
 
-![](img/5f0d5f7968792936beecd1769972acdd_31.png)
 
 假设我们想将教育程度 `educ` 的数值编码（如1，2，3...）转换为更具描述性的标签（如“高中以下”，“高中”等）。
 

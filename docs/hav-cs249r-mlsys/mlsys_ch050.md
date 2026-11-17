@@ -1324,7 +1324,6 @@ def image_classification(
 
 并使用不同的图像和 int8 量化模型（**160x160 alpha =1.0**）进行测试。
 
-![](img/file845.png)
 
 让我们下载一个较小的模型，例如为[Nicla Vision Lab](https://studio.edgeimpulse.com/public/353482/live)（int8 量化模型，96x96，alpha = 0.1）训练的模型作为测试。我们可以使用相同的函数：
 

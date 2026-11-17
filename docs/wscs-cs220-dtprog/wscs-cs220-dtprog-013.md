@@ -116,7 +116,6 @@ Greenbush Donuts,0,2
 
 ![](img/4aa7dd075dbc47c16a081c8c6295aae1_1.png)
 
-![](img/4aa7dd075dbc47c16a081c8c6295aae1_3.png)
 
 ```python
 import csv

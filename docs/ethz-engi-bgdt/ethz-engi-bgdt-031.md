@@ -2,7 +2,6 @@
 
 在本节课中，我们将学习如何查询树形结构数据，特别是使用JSONiq语言。我们将了解其数据模型、基本语法和核心操作，并理解为何它比传统SQL更适合处理半结构化数据。
 
-![](img/bdcb06b5e2f9d7fdc513c7de7f12aa61_1.png)
 
 ---
 
@@ -29,9 +28,7 @@ JSONiq操作的基本单位是**序列**。一个序列是一个有序、扁平�
 
 JSONiq使用点号 `.` 来导航对象中的属性，使用双括号 `[[ ... ]]` 来展开数组。这类似于许多编程语言中访问字典和列表的方式。
 
-![](img/bdcb06b5e2f9d7fdc513c7de7f12aa61_3.png)
 
-![](img/bdcb06b5e2f9d7fdc513c7de7f12aa61_4.png)
 
 以下是一个导航示例：
 ```jsoniq
@@ -57,9 +54,7 @@ json-file(“data.json”)[$$.code = “CH”].name
 *   `distinct-values($sequence)`：返回序列中去重后的值。
 *   `count($sequence)`：返回序列中的项数。
 
-![](img/bdcb06b5e2f9d7fdc513c7de7f12aa61_10.png)
 
-![](img/bdcb06b5e2f9d7fdc513c7de7f12aa61_12.png)
 
 以下是一个数据发现查询示例，用于找出数据集中所有不同的`type`值：
 ```jsoniq
@@ -87,7 +82,6 @@ JSONiq支持丰富的运算：
     *   当对序列进行比较时，执行的是**存在量化**。即，如果能在左序列和右序列中各找到一个项满足比较条件，则返回 `true`。例如：`(1, 2, 3) = 3` 返回 `true`。`(1, 2) > (5, 6)` 返回 `false`。
 *   **逻辑运算**：`and`, `or`, `not`。
 
-![](img/bdcb06b5e2f9d7fdc513c7de7f12aa61_14.png)
 
 ---
 

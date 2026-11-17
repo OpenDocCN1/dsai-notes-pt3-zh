@@ -1,6 +1,5 @@
 # 006：模仿学习 🚗
 
-![](img/f2262ba78fd13bc5f9feb65b9a2179cf_1.png)
 
 ![](img/f2262ba78fd13bc5f9feb65b9a2179cf_3.png)
 

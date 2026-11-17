@@ -2,13 +2,10 @@
 
 ![](img/b368b0e565bf6e82fc81d4f00451cf1f_0.png)
 
-![](img/b368b0e565bf6e82fc81d4f00451cf1f_2.png)
 
 在本节课中，我们将学习 Hadoop 2 的核心组件——YARN 的架构。我们将了解构成 YARN 的各个组件、它们的功能职责以及它们之间的交互过程。
 
-![](img/b368b0e565bf6e82fc81d4f00451cf1f_4.png)
 
-![](img/b368b0e565bf6e82fc81d4f00451cf1f_5.png)
 
 ## 从 Hadoop 1 到 Hadoop 2 的演进
 
@@ -18,15 +15,11 @@
 
 然而，Hadoop 2.X 引入了一个新的中间层——YARN 层。这个新层将资源管理与应用程序框架分离开来，使得 Hadoop 能够支持除 MapReduce 之外的其他计算框架。
 
-![](img/b368b0e565bf6e82fc81d4f00451cf1f_7.png)
 
-![](img/b368b0e565bf6e82fc81d4f00451cf1f_8.png)
 
 ## Hadoop 1 经典架构回顾
 
-![](img/b368b0e565bf6e82fc81d4f00451cf1f_10.png)
 
-![](img/b368b0e565bf6e82fc81d4f00451cf1f_11.png)
 
 在 Hadoop 1 中，我们采用的是主从架构。主节点上运行着 **JobTracker** 守护进程，而从节点上运行着 **TaskTracker** 守护进程。
 
@@ -34,7 +27,6 @@
 *   **JobTracker**：接收客户端提交的作业，将作业分解成多个任务，并根据数据位置将任务分配给各个 TaskTracker。
 *   **TaskTracker**：与 JobTracker 通信，接收任务，并启动独立的 JVM 进程（如 Map 任务或 Reduce 任务）来执行这些任务。
 
-![](img/b368b0e565bf6e82fc81d4f00451cf1f_13.png)
 
 在这种架构中，JobTracker 同时负责**资源调度**和**作业/任务管理**，这导致了可扩展性和灵活性的限制。
 
@@ -42,9 +34,7 @@
 
 Hadoop 2 用一组新的守护进程取代了旧的 JobTracker 和 TaskTracker，它们分别是 **ResourceManager** 和 **NodeManager**。
 
-![](img/b368b0e565bf6e82fc81d4f00451cf1f_15.png)
 
-![](img/b368b0e565bf6e82fc81d4f00451cf1f_17.png)
 
 关键的变化在于职责的分离：
 *   **ResourceManager**：作为主节点，**只负责集群资源的全局调度**。
@@ -73,9 +63,7 @@ Hadoop 2 用一组新的守护进程取代了旧的 JobTracker 和 TaskTracker�
 
 ResourceManager 是 YARN 的主守护进程，整个集群中只有一个实例。
 
-![](img/b368b0e565bf6e82fc81d4f00451cf1f_19.png)
 
-![](img/b368b0e565bf6e82fc81d4f00451cf1f_20.png)
 
 它的主要职责是：
 *   **调度**：它是集群资源的最终仲裁者，负责将容器资源分配给各个 ApplicationMaster。
@@ -92,9 +80,7 @@ NodeManager 是运行在每个从节点上的守护进程，是 ResourceManager 
 
 #### ApplicationMaster
 
-![](img/b368b0e565bf6e82fc81d4f00451cf1f_22.png)
 
-![](img/b368b0e565bf6e82fc81d4f00451cf1f_23.png)
 
 ApplicationMaster 是每个应用程序的“管家”。每当客户端提交一个作业（如一个 MapReduce 作业），就会为该作业启动一个专属的 ApplicationMaster。
 
@@ -113,7 +99,6 @@ ApplicationMaster 本身也是一个运行在容器中的特殊进程，通常�
 
 理解了各个组件后，我们来看看它们是如何协作完成一个作业的。以下是简化的执行步骤：
 
-![](img/b368b0e565bf6e82fc81d4f00451cf1f_25.png)
 
 1.  **提交应用**：客户端向 ResourceManager 提交应用程序。
 2.  **启动 AM**：ResourceManager 找到一个 NodeManager，并指令它为该应用启动一个 ApplicationMaster 容器。
@@ -125,7 +110,6 @@ ApplicationMaster 本身也是一个运行在容器中的特殊进程，通常�
 
 ## YARN 服务管理与应用提交
 
-![](img/b368b0e565bf6e82fc81d4f00451cf1f_27.png)
 
 ### 启动与停止守护进程
 
@@ -136,9 +120,7 @@ ApplicationMaster 本身也是一个运行在容器中的特殊进程，通常�
 
 ### 提交 YARN 应用
 
-![](img/b368b0e565bf6e82fc81d4f00451cf1f_29.png)
 
-![](img/b368b0e565bf6e82fc81d4f00451cf1f_31.png)
 
 使用 `yarn` 命令提交应用程序，基本格式如下：
 ```bash
@@ -149,11 +131,9 @@ yarn jar <jar文件路径> <应用程序主类> [参数...]
 yarn jar /usr/local/hadoop/share/hadoop/mapreduce/hadoop-mapreduce-examples-*.jar wordcount /input /output
 ```
 
-![](img/b368b0e565bf6e82fc81d4f00451cf1f_33.png)
 
 ### Web 管理界面
 
-![](img/b368b0e565bf6e82fc81d4f00451cf1f_35.png)
 
 YARN 提供了 Web 界面用于监控：
 *   **ResourceManager Web UI**：默认运行在 `http://<rm-host>:8088`。可以查看所有应用程序的状态、集群资源使用情况等。
@@ -161,7 +141,6 @@ YARN 提供了 Web 界面用于监控：
 
 ## 总结
 
-![](img/b368b0e565bf6e82fc81d4f00451cf1f_37.png)
 
 ![](img/b368b0e565bf6e82fc81d4f00451cf1f_39.png)
 

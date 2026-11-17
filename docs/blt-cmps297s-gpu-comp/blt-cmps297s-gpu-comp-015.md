@@ -1,6 +1,5 @@
 # GPU计算：15：排序
 
-![](img/fa5c4ccd173ce13f38f29f47826212d2_0.png)
 
 ![](img/fa5c4ccd173ce13f38f29f47826212d2_0.png)
 

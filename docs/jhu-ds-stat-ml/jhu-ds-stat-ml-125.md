@@ -16,14 +16,12 @@ Plotly 是一个用于创建和分享可视化作品的网络应用程序。它�
 
 安装 Plotly 的方法与安装其他 R 包类似。以下是安装和加载 Plotly 的代码：
 
-![](img/cc58ecdb7c38ec67b8a5cf3be6b5d74d_1.png)
 
 ```r
 install.packages("plotly")
 library(plotly)
 ```
 
-![](img/cc58ecdb7c38ec67b8a5cf3be6b5d74d_3.png)
 
 安装完成后，您可以通过 `library(plotly)` 或 `require(plotly)` 加载该库。
 
@@ -72,13 +70,10 @@ Plotly 提供了多种分享图表的方式：
 1. **通过 Plotly 平台分享**：您可以将图表上传到 Plotly 平台，并生成一个可分享的链接。Plotly 提供免费和付费选项，付费选项支持私有图表和用户认证等功能。
 2. **导出为 HTML 文件**：您可以将图表导出为独立的 HTML 文件，并将其嵌入到自己的网页中，无需依赖 Plotly 平台。
 
-![](img/cc58ecdb7c38ec67b8a5cf3be6b5d74d_5.png)
 
 无论选择哪种方式，Plotly 都能帮助您轻松分享和展示可视化作品。
 
-![](img/cc58ecdb7c38ec67b8a5cf3be6b5d74d_6.png)
 
-![](img/cc58ecdb7c38ec67b8a5cf3be6b5d74d_7.png)
 
 ---
 

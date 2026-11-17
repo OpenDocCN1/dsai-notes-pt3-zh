@@ -15,7 +15,6 @@
 我们可以创建一个变量，让它指向一个函数。这类似于让一个变量指向一个列表。
 
 
-![](img/4f3b3f0f5776bb4f233c8e51bcbd293a_1.png)
 
 ```python
 def say_hi():
@@ -145,11 +144,9 @@ print(int_list)  # 输出: [1, 234, 56]
 
 `map(func, iterable)` 会对可迭代对象中的每个元素应用函数 `func`。
 
-![](img/4f3b3f0f5776bb4f233c8e51bcbd293a_3.png)
 
 ## 实用案例：自定义排序
 
-![](img/4f3b3f0f5776bb4f233c8e51bcbd293a_5.png)
 
 列表的 `.sort()` 方法和内置的 `sorted()` 函数都接受一个 `key` 参数。这个参数需要传入一个函数，该函数用于从每个元素中提取用于比较的“键”。
 
@@ -157,7 +154,6 @@ print(int_list)  # 输出: [1, 234, 56]
 
 假设我们有一个（名， 姓）的元组列表，想按姓氏排序。
 
-![](img/4f3b3f0f5776bb4f233c8e51bcbd293a_7.png)
 
 ```python
 names = [("Catherine", "Baker"), ("Alice", "Clark"), ("Bob", "Adams")]

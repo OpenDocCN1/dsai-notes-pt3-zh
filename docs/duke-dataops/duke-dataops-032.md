@@ -4,9 +4,7 @@
 
 在本节课中，我们将学习如何使用 AWS Step Functions 来编排和协调多个 AWS Lambda 函数，从而构建一个简单的数据处理工作流。我们将通过一个“Marco Polo”的示例，直观地理解 Step Functions 的工作原理和优势。
 
-![](img/306a7c2f2b6a7b2175908256d6f8220e_2.png)
 
-![](img/306a7c2f2b6a7b2175908256d6f8220e_3.png)
 
 ---
 
@@ -95,7 +93,6 @@ def lambda_handler(event, context):
 
 通过 Step Functions 的可视化界面，我们可以清晰地看到每个步骤的输入和输出，这正是其强大的监控和调试能力。
 
-![](img/306a7c2f2b6a7b2175908256d6f8220e_10.png)
 
 ---
 

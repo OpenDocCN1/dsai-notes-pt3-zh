@@ -107,9 +107,7 @@ E(y, z) = (y1 - g1(z))^2 + (y2 - g2(z))^2
 
 ![](img/d9ad197e0b98cd1787bda72919c20615_10.png)
 
-![](img/d9ad197e0b98cd1787bda72919c20615_11.png)
 
-![](img/d9ad197e0b98cd1787bda72919c20615_12.png)
 
 ![](img/d9ad197e0b98cd1787bda72919c20615_13.png)
 
@@ -117,15 +115,10 @@ E(y, z) = (y1 - g1(z))^2 + (y2 - g2(z))^2
 
 ![](img/d9ad197e0b98cd1787bda72919c20615_15.png)
 
-![](img/d9ad197e0b98cd1787bda72919c20615_16.png)
 
-![](img/d9ad197e0b98cd1787bda72919c20615_17.png)
 
-![](img/d9ad197e0b98cd1787bda72919c20615_18.png)
 
-![](img/d9ad197e0b98cd1787bda72919c20615_19.png)
 
-![](img/d9ad197e0b98cd1787bda72919c20615_20.png)
 
 ![](img/d9ad197e0b98cd1787bda72919c20615_21.png)
 

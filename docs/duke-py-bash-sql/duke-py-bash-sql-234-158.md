@@ -1,6 +1,5 @@
 #  158：部署容器化.NET 6 API
 
-![](img/207dd75f5bbdc2288944805b0f4c8de2_0.png)
 
 ![](img/207dd75f5bbdc2288944805b0f4c8de2_0.png)
 

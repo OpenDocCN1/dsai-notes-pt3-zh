@@ -1,6 +1,5 @@
 # 22：Inception-V4 架构详解 🧠
 
-![](img/9b4025d3b7645dbcbf5e8c5af24c99c4_1.png)
 
 在本节课中，我们将学习 Inception-V4 网络架构。Inception-V4 是 Inception 系列的第四个重要版本，它在 Inception-V3 的基础上进行了多项改进，并引入了残差连接（ResNet）的思想，以提升训练效率和模型性能。
 
@@ -12,7 +11,6 @@
 
 Inception-V4 的宏观结构如下：
 
-![](img/9b4025d3b7645dbcbf5e8c5af24c99c4_3.png)
 
 *   输入图像尺寸为 **299×299×3**（高×宽×通道）。
 *   首先经过一个 **Stem** 模块，输出尺寸变为 **35×35×384**。
@@ -24,35 +22,25 @@ Inception-V4 的宏观结构如下：
 *   最后进行全局平均池化，得到 **1536** 维的特征向量。
 *   应用 **Dropout**（保留率为 80%）后，通过 **Softmax** 层输出分类结果。
 
-![](img/9b4025d3b7645dbcbf5e8c5af24c99c4_5.png)
 
 为了理解这个结构，我们需要明确几个核心模块：**Stem**、**Inception 模块** 和 **Reduction 模块**。
 
-![](img/9b4025d3b7645dbcbf5e8c5af24c99c4_7.png)
 
-![](img/9b4025d3b7645dbcbf5e8c5af24c99c4_9.png)
 
 ---
 
-![](img/9b4025d3b7645dbcbf5e8c5af24c99c4_11.png)
 
-![](img/9b4025d3b7645dbcbf5e8c5af24c99c4_13.png)
 
 ## 🌱 Stem 模块详解
 
-![](img/9b4025d3b7645dbcbf5e8c5af24c99c4_15.png)
 
-![](img/9b4025d3b7645dbcbf5e8c5af24c99c4_17.png)
 
 Stem 模块是网络的起始部分，负责对输入图像进行初步的特征提取和降维。Inception-V4 和 Inception-ResNet-V2 使用了相同的 Stem 结构。
 
-![](img/9b4025d3b7645dbcbf5e8c5af24c99c4_19.png)
 
-![](img/9b4025d3b7645dbcbf5e8c5af24c99c4_21.png)
 
 以下是 Stem 模块的主要操作流程：
 
-![](img/9b4025d3b7645dbcbf5e8c5af24c99c4_23.png)
 
 1.  输入图像经过一个步长为 2 的 **3×3 卷积**（使用 Valid Padding），通道数变为 32。
 2.  再进行一次 **3×3 卷积**，通道数变为 64。
@@ -62,65 +50,46 @@ Stem 模块是网络的起始部分，负责对输入图像进行初步的特征
 6.  再进行一次 **3×3 卷积**，并与池化结果拼接。
 7.  最终输出尺寸为 **35×35×384**（对于 Inception-ResNet-V1，此处为 256 通道）。
 
-![](img/9b4025d3b7645dbcbf5e8c5af24c99c4_25.png)
 
-![](img/9b4025d3b7645dbcbf5e8c5af24c99c4_27.png)
 
 Stem 模块通过一系列卷积和池化操作，高效地将高分辨率输入转换为更紧凑的特征表示。
 
-![](img/9b4025d3b7645dbcbf5e8c5af24c99c4_29.png)
 
-![](img/9b4025d3b7645dbcbf5e8c5af24c99c4_31.png)
 
 ---
 
-![](img/9b4025d3b7645dbcbf5e8c5af24c99c4_33.png)
 
 ## 🧩 Inception 模块与残差连接
 
-![](img/9b4025d3b7645dbcbf5e8c5af24c99c4_35.png)
 
-![](img/9b4025d3b7645dbcbf5e8c5af24c99c4_37.png)
 
 在 Inception-V4 中，标准的 Inception 模块（如 Inception-A）延续了之前的设计思想，使用不同尺度的卷积核并行处理特征，例如包含 **平均池化**、**1×1 卷积** 等分支。
 
-![](img/9b4025d3b7645dbcbf5e8c5af24c99c4_39.png)
 
-![](img/9b4025d3b7645dbcbf5e8c5af24c99c4_41.png)
 
 然而，关键的改进在于引入了残差网络（ResNet）的思想，形成了 **Inception-ResNet** 变体。
 
-![](img/9b4025d3b7645dbcbf5e8c5af24c99c4_43.png)
 
-![](img/9b4025d3b7645dbcbf5e8c5af24c99c4_45.png)
 
 以下是 Inception-ResNet 模块的核心特点：
 
-![](img/9b4025d3b7645dbcbf5e8c5af24c99c4_47.png)
 
-![](img/9b4025d3b7645dbcbf5e8c5af24c99c4_49.png)
 
 *   在标准的 Inception 模块计算后，将输入通过一个 **1×1 卷积**（用于调整通道数）后，与模块的输出直接相加。
 *   这个相加操作发生在 **ReLU 激活函数** 之前，构成了一个残差连接。
 *   公式可以简化为：`输出 = ReLU(Inception(输入) + 1x1_Conv(输入))`。
 
-![](img/9b4025d3b7645dbcbf5e8c5af24c99c4_51.png)
 
-![](img/9b4025d3b7645dbcbf5e8c5af24c99c4_53.png)
 
 对于 Inception-ResNet-V2，其架构与 V1 类似，主要区别在于部分模块的通道数更多（例如 Stem 输出为 384 而非 256）。残差连接的引入使得网络训练更稳定、收敛更快。
 
-![](img/9b4025d3b7645dbcbf5e8c5af24c99c4_55.png)
 
-![](img/9b4025d3b7645dbcbf5e8c5af24c99c4_57.png)
 
 ---
 
-![](img/9b4025d3b7645dbcbf5e8c5af24c99c4_59.png)
 
 ## 📉 Reduction 模块
 
-![](img/9b4025d3b7645dbcbf5e8c5af24c99c4_61.png)
 
 ![](img/9b4025d3b7645dbcbf5e8c5af24c99c4_63.png)
 

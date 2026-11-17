@@ -1,52 +1,40 @@
 # 010：Tidyverse中的数据导入与结构 📊
 
-![](img/2dc84ede57d9a1f6d4d7ab0099100a09_0.png)
 
 在本节课中，我们将学习如何使用Tidyverse包导入数据并查看其结构。我们将从安装和加载必要的R包开始，然后导入一个示例数据集，并了解Tidyverse中特有的数据结构——Tibble。
 
-![](img/2dc84ede57d9a1f6d4d7ab0099100a09_2.png)
 
 ---
 
-![](img/2dc84ede57d9a1f6d4d7ab0099100a09_4.png)
 
 ## 安装与加载Tidyverse包
 
 首先，我们需要安装并加载所需的R包。
 
-![](img/2dc84ede57d9a1f6d4d7ab0099100a09_6.png)
 
-![](img/2dc84ede57d9a1f6d4d7ab0099100a09_7.png)
 
 全球的软件开发者为R编写了数百个有用的包，这些包是可以通过R下载的函数集合。
 
-![](img/2dc84ede57d9a1f6d4d7ab0099100a09_9.png)
 
 这些包包含了数千个不同的函数，可用于数据整理和可视化。
 
-![](img/2dc84ede57d9a1f6d4d7ab0099100a09_10.png)
 
 其中最常用和有用的包之一是Tidyverse。因此，我们首先使用`install.packages`函数来安装它。
 
-![](img/2dc84ede57d9a1f6d4d7ab0099100a09_12.png)
 
 ```r
 install.packages("tidyverse")
 ```
 
-![](img/2dc84ede57d9a1f6d4d7ab0099100a09_13.png)
 
 安装好这个包后，你可以使用`library(tidyverse)`来加载它。
 
-![](img/2dc84ede57d9a1f6d4d7ab0099100a09_15.png)
 
 你不需要每次打开RStudio时都重新安装这个包，只需在第一次使用它时，或者在你电脑上重新安装或更新R时进行安装。
 
 ---
 
-![](img/2dc84ede57d9a1f6d4d7ab0099100a09_17.png)
 
-![](img/2dc84ede57d9a1f6d4d7ab0099100a09_18.png)
 
 ## 准备示例数据集
 
@@ -54,13 +42,10 @@ install.packages("tidyverse")
 
 我从中选取了调查中的几个问题。
 
-![](img/2dc84ede57d9a1f6d4d7ab0099100a09_20.png)
 
-![](img/2dc84ede57d9a1f6d4d7ab0099100a09_21.png)
 
 为了进一步说明你在许多情况下可能用于数据整理的过程，我提供了一个代码簿，解释了调查问题中不同回复的含义。
 
-![](img/2dc84ede57d9a1f6d4d7ab0099100a09_23.png)
 
 这确实是查找数据的理想情况：它是一个矩形的电子表格，并附有解释所有不同数据含义的代码簿。
 
@@ -68,9 +53,7 @@ install.packages("tidyverse")
 
 同时打开代码簿，熟悉调查的问题及其对不同回复的编码方式。
 
-![](img/2dc84ede57d9a1f6d4d7ab0099100a09_25.png)
 
-![](img/2dc84ede57d9a1f6d4d7ab0099100a09_26.png)
 
 理解数据的文档和代码簿对于正确组织和使用数据至关重要。
 
@@ -86,29 +69,23 @@ install.packages("tidyverse")
 setwd("/path/to/your/data")
 ```
 
-![](img/2dc84ede57d9a1f6d4d7ab0099100a09_28.png)
 
 现在，从一开始，我们就开始与标准的Base R方法分道扬镳，转而使用Tidyverse工具。
 
 Tidyverse包含一个名为`read_csv`的命令，它是`read.csv`函数的替代品。
 
-![](img/2dc84ede57d9a1f6d4d7ab0099100a09_30.png)
 
-![](img/2dc84ede57d9a1f6d4d7ab0099100a09_31.png)
 
 `read_csv`读取CSV文件的方式与`read.csv`非常相似，但输出略有不同。
 
 `read_csv`产生的是一个称为**Tibble**的东西，而不是数据框。
 
-![](img/2dc84ede57d9a1f6d4d7ab0099100a09_33.png)
 
 ---
 
-![](img/2dc84ede57d9a1f6d4d7ab0099100a09_35.png)
 
 ## 理解Tibble
 
-![](img/2dc84ede57d9a1f6d4d7ab0099100a09_36.png)
 
 Tibble有点像数据框的一个专门版本，它与Tidyverse配合得很好，并具有几个理想的特性。
 

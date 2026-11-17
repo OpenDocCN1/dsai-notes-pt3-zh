@@ -1,6 +1,5 @@
 # 66：30_5.3 Android演进（第1部分）📱
 
-![](img/8e4ce126cde497cd67015ef3f7ea7c76_0.png)
 
 ![](img/8e4ce126cde497cd67015ef3f7ea7c76_0.png)
 

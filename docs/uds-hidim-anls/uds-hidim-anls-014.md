@@ -1,6 +1,5 @@
 # 014：Marchenko-Pastur定律与Stieltjes反演公式的证明 🧮
 
-![](img/e14aec84f2349fa3c517b16c74360c0f_0.png)
 
 ![](img/e14aec84f2349fa3c517b16c74360c0f_2.png)
 

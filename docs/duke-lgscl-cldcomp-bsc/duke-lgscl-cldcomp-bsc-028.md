@@ -112,11 +112,9 @@ git push
 
 ![](img/bd550697dce7c415e44e398ef59ee987_9.png)
 
-![](img/bd550697dce7c415e44e398ef59ee987_10.png)
 
 ## 配置 GitHub Actions 进行多版本测试
 
-![](img/bd550697dce7c415e44e398ef59ee987_11.png)
 
 上一节我们完成了代码的本地适配和提交，本节中我们来看看如何利用 GitHub Actions 的强大功能，自动测试项目在多个 Python 版本下的兼容性。
 
@@ -162,9 +160,7 @@ jobs:
 
 ![](img/bd550697dce7c415e44e398ef59ee987_17.png)
 
-![](img/bd550697dce7c415e44e398ef59ee987_18.png)
 
-![](img/bd550697dce7c415e44e398ef59ee987_19.png)
 
 ## 总结
 
@@ -175,7 +171,6 @@ jobs:
 4.  **提交代码并配置 Git**，将修改推送到远程仓库。
 5.  **配置 GitHub Actions**，创建并行工作流来同时测试项目在 Python 3.8 和 Python 3.5 下的运行情况。
 
-![](img/bd550697dce7c415e44e398ef59ee987_21.png)
 
 ![](img/bd550697dce7c415e44e398ef59ee987_22.png)
 

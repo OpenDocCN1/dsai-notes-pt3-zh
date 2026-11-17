@@ -27,7 +27,6 @@ model = "gpt-4o-mini"
 system_prompt = "你是一个协助写书的助手。"
 ```
 
-![](img/c919462e485d525d0d18f346fa02646b_1.png)
 
 ### 2. 生成书名与概要
 

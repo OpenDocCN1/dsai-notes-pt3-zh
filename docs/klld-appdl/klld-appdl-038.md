@@ -1,142 +1,88 @@
 # 38：L19.4 - ShuffleNet 详解 🃏
 
-![](img/c7cbc2eaf9a47d6f2348cc75e773b4a5_1.png)
 
-![](img/c7cbc2eaf9a47d6f2348cc75e773b4a5_3.png)
 
-![](img/c7cbc2eaf9a47d6f2348cc75e773b4a5_5.png)
 
-![](img/c7cbc2eaf9a47d6f2348cc75e773b4a5_7.png)
 
 在本节课中，我们将要学习 ShuffleNet 的核心思想与实现。这是一种专为计算资源受限环境（如移动设备、机器人）设计的高效网络结构，其核心在于通过**通道混洗**操作，在保持分组卷积计算效率的同时，促进不同通道组间的信息交流。
 
-![](img/c7cbc2eaf9a47d6f2348cc75e773b4a5_9.png)
 
 ---
 
-![](img/c7cbc2eaf9a47d6f2348cc75e773b4a5_11.png)
 
-![](img/c7cbc2eaf9a47d6f2348cc75e773b4a5_13.png)
 
 ## 分组卷积的信息隔离问题
 
-![](img/c7cbc2eaf9a47d6f2348cc75e773b4a5_15.png)
 
-![](img/c7cbc2eaf9a47d6f2348cc75e773b4a5_17.png)
 
 上一节我们介绍了分组卷积，本节中我们来看看其潜在问题。分组卷积将输入通道分成独立的组进行处理。
 
-![](img/c7cbc2eaf9a47d6f2348cc75e773b4a5_19.png)
 
-![](img/c7cbc2eaf9a47d6f2348cc75e773b4a5_21.png)
 
-![](img/c7cbc2eaf9a47d6f2348cc75e773b4a5_23.png)
 
-![](img/c7cbc2eaf9a47d6f2348cc75e773b4a5_1.png)
 
-![](img/c7cbc2eaf9a47d6f2348cc75e773b4a5_25.png)
 
 假设输入有若干通道。如果进行分组卷积，卷积操作将在不同的通道组上独立进行。
 
-![](img/c7cbc2eaf9a47d6f2348cc75e773b4a5_27.png)
 
-![](img/c7cbc2eaf9a47d6f2348cc75e773b4a5_29.png)
 
-![](img/c7cbc2eaf9a47d6f2348cc75e773b4a5_3.png)
 
-![](img/c7cbc2eaf9a47d6f2348cc75e773b4a5_31.png)
 
-![](img/c7cbc2eaf9a47d6f2348cc75e773b4a5_33.png)
 
 这样得到的特征图与输入是独立的。如果再进行一次分组卷积，特征图之间依然没有信息交流。
 
-![](img/c7cbc2eaf9a47d6f2348cc75e773b4a5_35.png)
 
-![](img/c7cbc2eaf9a47d6f2348cc75e773b4a5_37.png)
 
-![](img/c7cbc2eaf9a47d6f2348cc75e773b4a5_5.png)
 
-![](img/c7cbc2eaf9a47d6f2348cc75e773b4a5_39.png)
 
-![](img/c7cbc2eaf9a47d6f2348cc75e773b4a5_41.png)
 
-![](img/c7cbc2eaf9a47d6f2348cc75e773b4a5_43.png)
 
 这会导致不同组的通道之间完全不“沟通”。虽然这在多GPU并行计算时有益，但从数学角度看，这会丢失信息。因为某一组输入中的重要信息，可能对另一组输出的特征至关重要。
 
-![](img/c7cbc2eaf9a47d6f2348cc75e773b4a5_45.png)
 
-![](img/c7cbc2eaf9a47d6f2348cc75e773b4a5_47.png)
 
 ---
 
-![](img/c7cbc2eaf9a47d6f2348cc75e773b4a5_49.png)
 
-![](img/c7cbc2eaf9a47d6f2348cc75e773b4a5_51.png)
 
-![](img/c7cbc2eaf9a47d6f2348cc75e773b4a5_53.png)
 
 ## 通道混洗的解决方案
 
-![](img/c7cbc2eaf9a47d6f2348cc75e773b4a5_55.png)
 
-![](img/c7cbc2eaf9a47d6f2348cc75e773b4a5_57.png)
 
 为了解决信息隔离问题，需要在分组卷积后混合通道信息。一种直观的方法是在第一次分组卷积后，手动将不同组的通道重新排列组合，再进行下一次分组卷积。
 
-![](img/c7cbc2eaf9a47d6f2348cc75e773b4a5_59.png)
 
-![](img/c7cbc2eaf9a47d6f2348cc75e773b4a5_61.png)
 
-![](img/c7cbc2eaf9a47d6f2348cc75e773b4a5_7.png)
 
-![](img/c7cbc2eaf9a47d6f2348cc75e773b4a5_63.png)
 
-![](img/c7cbc2eaf9a47d6f2348cc75e773b4a5_65.png)
 
-![](img/c7cbc2eaf9a47d6f2348cc75e773b4a5_67.png)
 
 例如，将第一组的部分通道分配到第二组，第二组的分配到第三组，以此类推。这样，第二次分组卷积的输入就包含了来自之前不同组的混合信息。
 
-![](img/c7cbc2eaf9a47d6f2348cc75e773b4a5_69.png)
 
-![](img/c7cbc2eaf9a47d6f2348cc75e773b4a5_71.png)
 
-![](img/c7cbc2eaf9a47d6f2348cc75e773b4a5_9.png)
 
-![](img/c7cbc2eaf9a47d6f2348cc75e773b4a5_73.png)
 
-![](img/c7cbc2eaf9a47d6f2348cc75e773b4a5_75.png)
 
 然而，这种手动分配在实现上并不高效。更高效的做法是引入一个固定的**通道混洗**操作。
 
-![](img/c7cbc2eaf9a47d6f2348cc75e773b4a5_77.png)
 
-![](img/c7cbc2eaf9a47d6f2348cc75e773b4a5_79.png)
 
 ---
 
-![](img/c7cbc2eaf9a47d6f2348cc75e773b4a5_81.png)
 
-![](img/c7cbc2eaf9a47d6f2348cc75e773b4a5_83.png)
 
-![](img/c7cbc2eaf9a47d6f2348cc75e773b4a5_85.png)
 
 ## 通道混洗的高效实现
 
-![](img/c7cbc2eaf9a47d6f2348cc75e773b4a5_87.png)
 
-![](img/c7cbc2eaf9a47d6f2348cc75e773b4a5_89.png)
 
 高效的实现方式是：先进行一次常规的分组卷积，然后对输出的通道进行“混洗”，再进行下一次分组卷积。
 
-![](img/c7cbc2eaf9a47d6f2348cc75e773b4a5_91.png)
 
-![](img/c7cbc2eaf9a47d6f2348cc75e773b4a5_93.png)
 
-![](img/c7cbc2eaf9a47d6f2348cc75e773b4a5_11.png)
 
-![](img/c7cbc2eaf9a47d6f2348cc75e773b4a5_95.png)
 
 混洗操作在数学上等价于之前描述的复杂手动分配，但实现起来非常简单且计算代价极低。
 
@@ -166,7 +112,6 @@ x = x.reshape(batch_size, g*n, h, w)
 
 了解了核心的混洗操作后，我们来看 ShuffleNet 的具体构建块。其基本单元借鉴了残差连接的思想。
 
-![](img/c7cbc2eaf9a47d6f2348cc75e773b4a5_13.png)
 
 以下是 ShuffleNet 单元的结构步骤：
 

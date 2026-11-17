@@ -2,9 +2,7 @@
 
 ![](img/0abaf10d5c12893d45b9a3465abdb6e9_0.png)
 
-![](img/0abaf10d5c12893d45b9a3465abdb6e9_2.png)
 
-![](img/0abaf10d5c12893d45b9a3465abdb6e9_4.png)
 
 ![](img/0abaf10d5c12893d45b9a3465abdb6e9_5.png)
 
@@ -40,7 +38,6 @@
 
 ![](img/0abaf10d5c12893d45b9a3465abdb6e9_13.png)
 
-![](img/0abaf10d5c12893d45b9a3465abdb6e9_14.png)
 
 ---
 
@@ -133,9 +130,7 @@ docker push <account-id>.dkr.ecr.<region>.amazonaws.com/fastapi-mlops:latest
 
 最后，在App Runner中创建第二个服务，指向 `fastapi-mlops` 仓库，并同样启用持续部署。部署完成后，我们就拥有了两个独立运行的机器学习微服务端点。
 
-![](img/0abaf10d5c12893d45b9a3465abdb6e9_24.png)
 
-![](img/0abaf10d5c12893d45b9a3465abdb6e9_25.png)
 
 ---
 
@@ -150,15 +145,12 @@ docker push <account-id>.dkr.ecr.<region>.amazonaws.com/fastapi-mlops:latest
 
 对于第二个服务（假新闻检测），FastAPI通常会生成交互式API文档（Swagger UI）。我们直接访问服务URL的 `/docs` 路径，在网页界面中输入示例文本（如“aliens are coming”）并执行，即可看到预测结果（如“Fake news”）。
 
-![](img/0abaf10d5c12893d45b9a3465abdb6e9_27.png)
 
 在App Runner的控制台，我们可以查看每个服务的调用指标（如请求次数、延迟）和CloudWatch日志，确认服务正在被成功调用并运行。
 
-![](img/0abaf10d5c12893d45b9a3465abdb6e9_29.png)
 
 ---
 
-![](img/0abaf10d5c12893d45b9a3465abdb6e9_31.png)
 
 ![](img/0abaf10d5c12893d45b9a3465abdb6e9_33.png)
 

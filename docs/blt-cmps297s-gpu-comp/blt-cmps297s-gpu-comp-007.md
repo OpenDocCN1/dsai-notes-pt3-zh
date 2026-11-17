@@ -57,7 +57,6 @@
     nvprof --metrics all -o metrics.prof ./vector_add
     ```
 
-![](img/e33fb80a3ca94fb7c9eb0a68d4ec2856_10.png)
 
 ## 使用 NVIDIA Visual Profiler (nvvp) 进行可视化分析
 

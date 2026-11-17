@@ -1,6 +1,5 @@
 #  064：Linux文本处理优势 🚀
 
-![](img/09e2e36b98cf9c99df90aaf52db4ebe4_0.png)
 
 ![](img/09e2e36b98cf9c99df90aaf52db4ebe4_1.png)
 

@@ -14,7 +14,6 @@
 
 代码运行需要一些时间。启动后，我们将访问一个本地服务器。
 
-![](img/8af5f8ae9268406768e7dd73d8bc44ba_1.png)
 
 应用界面如下所示。您可以输入贷款金额（例如默认的$7.5万）、年利率（5%）和贷款年限（30年），然后计算分期偿还表。
 
@@ -42,7 +41,6 @@
 
 我们的示例不是会话。如果您点击浏览器刷新，所有已保存的计算结果都会消失。
 
-![](img/8af5f8ae9268406768e7dd73d8bc44ba_3.png)
 
 ![](img/8af5f8ae9268406768e7dd73d8bc44ba_3.png)
 
@@ -77,7 +75,6 @@ def calculate_amortization(loan_amount, annual_rate, years):
     *   检查 `st.session_state.calculations` 列表，如果其中有保存的历史计算，则用子标题“已保存贷款”将其以DataFrame表格形式展示出来。
     *   提供下载CSV和清除状态（清空列表）的选项。
 
-![](img/8af5f8ae9268406768e7dd73d8bc44ba_5.png)
 
 ## 总结
 

@@ -12,7 +12,6 @@
 
 Flowise 是一个基于 LangChain 的开源可视化工具，用于构建大语言模型工作流。它支持通过无代码方式创建复杂的 AI 应用。  
 
-![](img/b8d68c10b5d2d4496b09bb305075149d_3.png)
 
 以下是运行 Flowise 的两种方式：  
 1. 通过 npm 安装开发包运行。  
@@ -43,20 +42,16 @@ docker run -p 4000:3000 flowise
 
 ---
 
-![](img/b8d68c10b5d2d4496b09bb305075149d_5.png)
 
 ## 3. 获取 Flowise 的 API 接口 🌉  
 接下来，我们需要获取 Flowise 工作流的 API 接口，以便通过代码调用。  
 
-![](img/b8d68c10b5d2d4496b09bb305075149d_7.png)
 
 在 Flowise 工作流界面的右上角，点击 **API Endpoint**，可以查看集成的代码片段。Flowise 提供了多种调用方式，包括 JavaScript 和 Python。  
 
 以下是通过 Python 调用 API 的示例代码：  
 
-![](img/b8d68c10b5d2d4496b09bb305075149d_9.png)
 
-![](img/b8d68c10b5d2d4496b09bb305075149d_11.png)
 
 ```python
 import requests
@@ -67,7 +62,6 @@ def answer_flowise_uniswap_question(question):
     return response.json()
 ```  
 
-![](img/b8d68c10b5d2d4496b09bb305075149d_13.png)
 
 ---
 

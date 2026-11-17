@@ -4,7 +4,6 @@
 
 在本节课中，我们将学习如何创建一个Scrapy Spider，用于从网页中提取结构化数据。我们将通过一个具体的例子，从目标网站抓取CVE漏洞信息，并详细讲解代码的编写和执行过程。
 
-![](img/033eab6a05a77637530f7c62c1888708_2.png)
 
 ---
 
@@ -29,7 +28,6 @@ for child in response.xpath('//table'):
 
 现在，我们有了目标表格`table`，可以遍历其中的每一行：
 
-![](img/033eab6a05a77637530f7c62c1888708_4.png)
 
 ```python
 for row in table.xpath('tr'):
@@ -43,7 +41,6 @@ for row in table.xpath('tr'):
 
 ---
 
-![](img/033eab6a05a77637530f7c62c1888708_6.png)
 
 ## 运行Scrapy Spider
 
@@ -65,7 +62,6 @@ scrapy crawl CVE
 
 命令执行后，会有大量输出，并且运行速度很快。我们需要向上滚动查看输出内容。
 
-![](img/033eab6a05a77637530f7c62c1888708_10.png)
 
 ---
 
@@ -85,7 +81,6 @@ scrapy crawl CVE
 
 ## 总结
 
-![](img/033eab6a05a77637530f7c62c1888708_15.png)
 
 ![](img/033eab6a05a77637530f7c62c1888708_16.png)
 

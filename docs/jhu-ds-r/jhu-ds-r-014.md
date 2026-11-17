@@ -48,7 +48,6 @@ git commit -m "initial commit"
 
 此时，我们已经创建了一个R项目，并将其与Git版本控制系统关联。下一步是将其与GitHub链接。
 
-![](img/2abc9438ef16a2f580761901d1c296b1_4.png)
 
 为此，请访问 GitHub.com 并创建一个新的仓库。确保仓库名称与你的R项目名称**完全一致**，并且**不要**初始化README文件、.gitignore文件或许可证。
 

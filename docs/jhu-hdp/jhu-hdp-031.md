@@ -4,7 +4,6 @@
 
 在本节课中，我们将学习如何使用Java API来操作HDFS文件系统。我们将概述关键的Java API包和类，并了解API如何向客户端传递警告、错误和异常信息。
 
-![](img/4d08fa2f8b5bdbc112fa2abac56a9e96_2.png)
 
 ---
 
@@ -91,11 +90,9 @@ Hadoop提供了多个具体的文件系统类。
 
 如果方法返回`false`该怎么办？你当然可以查看NameNode日志文件，看看是否有任何特定信息可供参考。
 
-![](img/4d08fa2f8b5bdbc112fa2abac56a9e96_4.png)
 
 ---
 
-![](img/4d08fa2f8b5bdbc112fa2abac56a9e96_5.png)
 
 ## 高级抽象：文件操作与Globbing
 
@@ -105,7 +102,6 @@ Hadoop提供了多个具体的文件系统类。
 
 HDFS还支持一个称为“Globbing”的概念。Globbing是一种文件匹配模式概念，在Unix shell中经常使用。HDFS支持POSIX文件匹配模式，当然在此基础上还增加了大括号支持。这是一种通过使用模式遍历文件子集的好技术。如果你不知道什么是glob模式，你可能想在Google上阅读更多相关内容，网上有很多关于此的教程。
 
-![](img/4d08fa2f8b5bdbc112fa2abac56a9e96_7.png)
 
 HDFS支持多种glob模式。
 
@@ -131,7 +127,6 @@ HDFS支持许多glob概念。再次强调，如果你不理解Globbing，请参�
 
 让我们快速看一下`hadoop.configuration`包。它包含`Configuration`类。注意，`Configuration`是一个具有名称、值和`final`元素（指示属性是否可以更改）的属性。有像`addDefaultResource`（我们看过的静态方法）这样的方法，还有我们看过的`dumpConfiguration`方法。
 
-![](img/4d08fa2f8b5bdbc112fa2abac56a9e96_9.png)
 
 让我们回过头来看看`FileSystem`包。在`FileSystem`包中，有`FileSystem`类，它是一个抽象的基类。有几个类实现或扩展了`FileSystem`类，比如`S3FileSystem`、`NativeS3FileSystem`或`RawLocalFileSystem`。然后是`FileStatus`类，它提供文件信息，例如文件长度、文件所有者、文件路径、文件权限。我们还提到了`GlobFilter`概念，所以这是支持GlobFilter概念的`GlobFilter`类。
 

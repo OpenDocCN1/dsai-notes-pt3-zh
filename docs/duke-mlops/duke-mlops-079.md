@@ -65,11 +65,9 @@ python script.py argument1 argument2
 
 再次强调，你需要使用 `if __name__ == "__main__":` 这个条件。这样，只有当脚本在终端作为命令行工具运行时，才会触发相应的代码逻辑，从而避免副作用。如果你是在导入这段代码，你可以安全地导入 `formatter` 甚至 `main` 函数而不会产生任何副作用。但如果你在命令行运行此脚本，这个条件就会被触发。
 
-![](img/9ea88d44f3acce1e1df4ef505d74e24a_3.png)
 
 ## 运行示例
 
-![](img/9ea88d44f3acce1e1df4ef505d74e24a_4.png)
 
 现在，我们将在终端中使用Python 3运行 `jformat.py` 脚本，并传入示例JSON文件。
 

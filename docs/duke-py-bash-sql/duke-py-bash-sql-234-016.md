@@ -1,6 +1,5 @@
 #  016：创建SSH密钥并与GitHub配合使用 🔑
 
-![](img/3c0a3c840bd749b0a6e244bd52b70305_0.png)
 
 ![](img/3c0a3c840bd749b0a6e244bd52b70305_1.png)
 
@@ -45,11 +44,9 @@ cat ~/.ssh/id_rsa.pub
 
 ![](img/3c0a3c840bd749b0a6e244bd52b70305_7.png)
 
-![](img/3c0a3c840bd749b0a6e244bd52b70305_8.png)
 
 ## 将公钥添加到GitHub账户
 
-![](img/3c0a3c840bd749b0a6e244bd52b70305_9.png)
 
 现在，我们需要让GitHub知道这个公钥属于你。以下是添加公钥到GitHub的步骤：
 
@@ -63,7 +60,6 @@ cat ~/.ssh/id_rsa.pub
 
 添加成功后，你的本地环境就获得了访问GitHub仓库的权限。
 
-![](img/3c0a3c840bd749b0a6e244bd52b70305_11.png)
 
 ## 测试SSH连接
 
@@ -71,7 +67,6 @@ cat ~/.ssh/id_rsa.pub
 
 你可以使用 `history` 命令查看之前输入过的命令，这对于重复长命令非常方便。找到之前尝试克隆仓库时使用的 `git clone` 命令，通常可以通过输入 `!1` 来执行历史记录中的第一条命令。
 
-![](img/3c0a3c840bd749b0a6e244bd52b70305_13.png)
 
 现在，再次尝试克隆你的GitHub仓库：
 ```bash

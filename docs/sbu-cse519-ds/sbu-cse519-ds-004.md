@@ -17,13 +17,9 @@
 
 通常，较小的 `k` 值（如 `k=1`）在处理高维数据时表现更好。你可以在作业中尝试调整这个参数。
 
-![](img/afecbe46c3e767c09b3d06de1bdd257b_1.png)
 
-![](img/afecbe46c3e767c09b3d06de1bdd257b_2.png)
 
-![](img/afecbe46c3e767c09b3d06de1bdd257b_3.png)
 
-![](img/afecbe46c3e767c09b3d06de1bdd257b_5.png)
 
 ## 维度缩减
 
@@ -43,7 +39,6 @@
 
 ## 总结
 
-![](img/afecbe46c3e767c09b3d06de1bdd257b_7.png)
 
 ![](img/afecbe46c3e767c09b3d06de1bdd257b_9.png)
 

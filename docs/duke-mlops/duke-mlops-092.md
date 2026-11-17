@@ -8,7 +8,6 @@
 
 上一节我们介绍了构建机器学习API的目标，本节中我们来看看两个核心工具：Flask和FastAPI。它们都是用于构建Web API的Python框架，但在设计哲学和功能上有所不同。
 
-![](img/d8df4f9297fb6fab3cb1a2b681f53c8d_0.png)
 
 以下是它们的一些主要特点：
 

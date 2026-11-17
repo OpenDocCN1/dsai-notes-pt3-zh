@@ -1,6 +1,5 @@
 #  014：Python中的while循环 🔄
 
-![](img/5f154fbdaa5ffc0b3aaeafc9128e0824_0.png)
 
 在本节课中，我们将要学习Python中`while`循环的语法。我们将了解`break`语句的用法，并重点探讨提供和保证循环退出条件的重要性。
 

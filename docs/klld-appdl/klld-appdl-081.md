@@ -1,6 +1,5 @@
 # 81：L37.2 - Mask R-CNN 详解 🎯
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_1.png)
 
 在本节课中，我们将学习 Mask R-CNN，这是一种结合了目标检测与语义分割的强大模型，用于实现实例分割任务。我们将探讨其核心思想、网络结构、损失函数设计以及关键改进点。
 
@@ -18,25 +17,15 @@
 
 
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_3.png)
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_3.png)
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_4.png)
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_5.png)
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_4.png)
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_6.png)
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_7.png)
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_5.png)
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_6.png)
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_7.png)
 
 
 
@@ -44,45 +33,25 @@
 
 
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_9.png)
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_10.png)
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_11.png)
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_12.png)
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_13.png)
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_9.png)
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_10.png)
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_14.png)
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_11.png)
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_12.png)
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_15.png)
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_13.png)
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_14.png)
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_15.png)
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_16.png)
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_16.png)
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_17.png)
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_17.png)
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_18.png)
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_18.png)
 
 
 
@@ -98,53 +67,29 @@
 
 
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_20.png)
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_21.png)
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_20.png)
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_22.png)
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_21.png)
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_22.png)
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_23.png)
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_23.png)
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_24.png)
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_24.png)
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_25.png)
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_26.png)
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_25.png)
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_27.png)
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_28.png)
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_29.png)
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_26.png)
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_30.png)
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_31.png)
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_27.png)
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_28.png)
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_29.png)
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_30.png)
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_31.png)
 
 
 
@@ -156,115 +101,69 @@
 
 ## 🎯 Mask 分支与损失函数
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_33.png)
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_34.png)
 
 现在，Mask 的损失是什么？你将有一个 Mask 分支，它将输出一个 **K × M²** 维的输出。
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_35.png)
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_36.png)
 
 那么 **K** 是什么？K 是类别的数量，例如人、猫、狗、背景等。那是你的类别。然后你将输出一个分辨率为 **M × M** 的掩码，这就是你得到 **K × M × M** 的原因。所以那将是你的 **K × M²** 维向量。
 
 
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_37.png)
-
-![](img/9760beb5cb06ed7466335b85b9010ba1_38.png)
-
-![](img/9760beb5cb06ed7466335b85b9010ba1_39.png)
-
-![](img/9760beb5cb06ed7466335b85b9010ba1_33.png)
-
-![](img/9760beb5cb06ed7466335b85b9010ba1_40.png)
-
-![](img/9760beb5cb06ed7466335b85b9010ba1_41.png)
-
-![](img/9760beb5cb06ed7466335b85b9010ba1_34.png)
-
-![](img/9760beb5cb06ed7466335b85b9010ba1_42.png)
-
-![](img/9760beb5cb06ed7466335b85b9010ba1_35.png)
-
-![](img/9760beb5cb06ed7466335b85b9010ba1_36.png)
-
-![](img/9760beb5cb06ed7466335b85b9010ba1_37.png)
-
-![](img/9760beb5cb06ed7466335b85b9010ba1_38.png)
-
-![](img/9760beb5cb06ed7466335b85b9010ba1_39.png)
-
-![](img/9760beb5cb06ed7466335b85b9010ba1_40.png)
-
-![](img/9760beb5cb06ed7466335b85b9010ba1_41.png)
-
-![](img/9760beb5cb06ed7466335b85b9010ba1_42.png)
 
 
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_44.png)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 任务是什么？掩码是什么？你将使用**逐像素 Sigmoid** 函数。在你这里的那个边界框中，对于每个像素（总共有 M² 个），第 K 个物体要么存在，要么不存在。所以这些是独立的任务。如果第 K 个物体存在，它不会增加或减少另一个物体存在或不存在的概率。所以这些是**二分类**任务，这就是为什么你使用 Sigmoid 函数，而不是 Softmax。
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_45.png)
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_46.png)
 
 然后，一旦你完成了，你将得到掩码的平均二元交叉熵损失。
 
 
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_47.png)
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_48.png)
 
 但还有一个关键点：在训练期间，你不希望边界框中不存在的物体通过梯度影响你的参数。这就是为什么你只关注你的感兴趣区域，即对应的真实类别（小写 k，不是大写 K）。
 
 
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_49.png)
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_50.png)
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_51.png)
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_44.png)
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_52.png)
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_53.png)
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_45.png)
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_46.png)
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_47.png)
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_48.png)
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_49.png)
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_55.png)
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_50.png)
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_56.png)
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_57.png)
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_58.png)
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_51.png)
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_59.png)
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_60.png)
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_52.png)
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_53.png)
 
 
 
@@ -280,37 +179,23 @@
 
 
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_62.png)
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_63.png)
 
 有任何关于这个问题的问题吗？所以思路是，我们知道如何解决分类问题，我们知道如何放置边界框，现在我们知道如何为每个边界框进行分割。我强烈建议你搜索这篇论文，并在 YouTube 上观看一些关于它能做什么的优秀视频。
 
 
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_64.png)
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_65.png)
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_55.png)
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_66.png)
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_67.png)
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_68.png)
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_56.png)
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_69.png)
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_57.png)
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_58.png)
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_59.png)
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_60.png)
 
 
 
@@ -324,45 +209,25 @@
 
 
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_62.png)
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_71.png)
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_72.png)
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_63.png)
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_73.png)
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_74.png)
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_64.png)
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_75.png)
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_76.png)
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_65.png)
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_77.png)
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_78.png)
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_66.png)
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_79.png)
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_80.png)
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_81.png)
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_67.png)
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_82.png)
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_68.png)
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_69.png)
 
 
 
@@ -374,53 +239,29 @@
 
 
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_71.png)
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_72.png)
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_73.png)
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_74.png)
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_84.png)
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_75.png)
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_85.png)
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_86.png)
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_87.png)
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_76.png)
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_88.png)
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_89.png)
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_77.png)
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_90.png)
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_91.png)
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_78.png)
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_92.png)
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_93.png)
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_79.png)
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_94.png)
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_96.png)
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_80.png)
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_81.png)
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_82.png)
 
 
 
@@ -434,47 +275,26 @@
 
 
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_84.png)
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_85.png)
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_98.png)
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_99.png)
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_86.png)
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_100.png)
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_101.png)
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_87.png)
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_102.png)
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_103.png)
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_88.png)
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_104.png)
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_105.png)
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_89.png)
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_106.png)
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_107.png)
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_90.png)
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_91.png)
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_92.png)
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_93.png)
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_94.png)
 
 
 
@@ -482,7 +302,6 @@
 
 
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_96.png)
 
 
 
@@ -490,49 +309,31 @@
 
 
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_109.png)
 
 你或者找到每个区间的最大值，或者取平均值。所以现在你没有牺牲这些边界框的位置。
 
 
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_110.png)
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_111.png)
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_112.png)
 
 一切都清楚了吗？有任何问题吗？所以我们有两个问题需要解决：一个是你的掩码损失是什么，另一个是如何解决这些位置不准确的问题。你的边界框对于分割任务来说不够准确（它们对于边界框预测任务是准确的，但对于分割任务来说位置不够准确）。这就是你如何解决这两个问题：你现在知道了掩码的损失是什么；你现在知道需要用另一个操作替换你的 RoI 池化，你可以称之为 RoI Align。现在你解决了这两个问题。
 
 
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_113.png)
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_114.png)
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_98.png)
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_115.png)
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_116.png)
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_99.png)
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_100.png)
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_101.png)
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_102.png)
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_103.png)
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_104.png)
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_105.png)
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_106.png)
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_107.png)
 
 
 
@@ -546,17 +347,11 @@
 
 
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_109.png)
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_110.png)
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_111.png)
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_112.png)
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_113.png)
 
-![](img/9760beb5cb06ed7466335b85b9010ba1_114.png)
 
 ![](img/9760beb5cb06ed7466335b85b9010ba1_115.png)
 

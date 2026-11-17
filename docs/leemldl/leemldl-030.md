@@ -65,15 +65,12 @@
 
 **关键点**：每次参数更新后，必须用**新的策略**重新收集数据。这是因为数据是由旧策略 `θ_i` 产生的，它只反映了旧策略的经验。新策略 `θ_{i+1}` 的行为模式可能不同，旧数据不一定适用于评估新策略。
 
-![](img/66272bd4ff2f16e0e536ae51adaadf00_1.png)
 
 ---
 
-![](img/66272bd4ff2f16e0e536ae51adaadf00_3.png)
 
 ## 🔄 On-policy 与 Off-policy 学习
 
-![](img/66272bd4ff2f16e0e536ae51adaadf00_5.png)
 
 根据用于训练的策略和用于收集数据的策略是否相同，可以分为两种学习方式。
 
@@ -90,9 +87,7 @@
 
 **比喻**：向经验丰富的人（行为策略）学习，但要考虑自身条件（目标策略）的差异，不能完全照搬。
 
-![](img/66272bd4ff2f16e0e536ae51adaadf00_7.png)
 
-![](img/66272bd4ff2f16e0e536ae51adaadf00_8.png)
 
 ---
 
@@ -100,75 +95,49 @@
 
 在训练过程中，策略的**随机性**（探索）至关重要。
 
-![](img/66272bd4ff2f16e0e536ae51adaadf00_10.png)
 
-![](img/66272bd4ff2f16e0e536ae51adaadf00_12.png)
 
-![](img/66272bd4ff2f16e0e536ae51adaadf00_13.png)
 
 *   **为什么需要探索？**：如果策略的探索性不足，某些动作可能永远不被尝试，我们就无法知道这些动作的好坏。例如，如果智能体从未尝试“开火”，它就永远学不会这个关键动作。
 *   **如何促进探索？**：
     *   在策略网络的输出概率分布上，鼓励其**熵**更大（更均匀）。
     *   直接在策略网络的参数上添加**噪声**，使每次互动产生不同的行为。
 
-![](img/66272bd4ff2f16e0e536ae51adaadf00_15.png)
 
-![](img/66272bd4ff2f16e0e536ae51adaadf00_17.png)
 
-![](img/66272bd4ff2f16e0e536ae51adaadf00_19.png)
 
-![](img/66272bd4ff2f16e0e536ae51adaadf00_21.png)
 
-![](img/66272bd4ff2f16e0e536ae51adaadf00_23.png)
 
-![](img/66272bd4ff2f16e0e536ae51adaadf00_24.png)
 
 只有充分探索环境，才能收集到多样化的数据，从而学习到全面而鲁棒的策略。
 
-![](img/66272bd4ff2f16e0e536ae51adaadf00_25.png)
 
-![](img/66272bd4ff2f16e0e536ae51adaadf00_26.png)
 
-![](img/66272bd4ff2f16e0e536ae51adaadf00_28.png)
 
-![](img/66272bd4ff2f16e0e536ae51adaadf00_30.png)
 
-![](img/66272bd4ff2f16e0e536ae51adaadf00_32.png)
 
-![](img/66272bd4ff2f16e0e536ae51adaadf00_34.png)
 
 ---
 
-![](img/66272bd4ff2f16e0e536ae51adaadf00_36.png)
 
-![](img/66272bd4ff2f16e0e536ae51adaadf00_38.png)
 
-![](img/66272bd4ff2f16e0e536ae51adaadf00_40.png)
 
-![](img/66272bd4ff2f16e0e536ae51adaadf00_42.png)
 
-![](img/66272bd4ff2f16e0e536ae51adaadf00_44.png)
 
 ## 📝 总结
 
-![](img/66272bd4ff2f16e0e536ae51adaadf00_46.png)
 
-![](img/66272bd4ff2f16e0e536ae51adaadf00_48.png)
 
 本节课中我们一起学习了强化学习的策略梯度方法。
 
-![](img/66272bd4ff2f16e0e536ae51adaadf00_50.png)
 
 1.  我们首先探讨了**如何评估动作好坏**的几种方式，从简单的即时奖励到更合理的折扣累积奖励，并强调了标准化的重要性。
 2.  接着，我们梳理了 **Policy Gradient 的基本算法流程**，理解了其“收集数据 -> 评估 -> 更新 -> 重新收集”的循环特点，并解释了为何需要频繁重新收集数据。
 3.  然后，我们区分了 **On-policy 和 Off-policy** 学习，并介绍了PPO这类Off-policy方法能提高数据利用率。
 4.  最后，我们指出了**探索**在训练中的关键作用，没有充分的探索，智能体可能无法发现最优策略。
 
-![](img/66272bd4ff2f16e0e536ae51adaadf00_51.png)
 
-![](img/66272bd4ff2f16e0e536ae51adaadf00_52.png)
 
-![](img/66272bd4ff2f16e0e536ae51adaadf00_54.png)
 
 ![](img/66272bd4ff2f16e0e536ae51adaadf00_55.png)
 

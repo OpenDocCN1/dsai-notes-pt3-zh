@@ -1,6 +1,5 @@
 # 大型语言模型实践（高级数据工程、AWS、Databricks和本地LLM）：P175：74_04_07_AWS GPU上调用Rust Candle框架（下）
 
-![](img/f0bb50bea0a49f02e60fcd513711444f_0.png)
 
 ![](img/f0bb50bea0a49f02e60fcd513711444f_0.png)
 
@@ -40,11 +39,9 @@
 
 我们可以通过查看项目的 `Cargo.toml` 文件来验证这一点，其中定义了可用的特性。
 
-![](img/f0bb50bea0a49f02e60fcd513711444f_6.png)
 
 ![](img/f0bb50bea0a49f02e60fcd513711444f_6.png)
 
-![](img/f0bb50bea0a49f02e60fcd513711444f_7.png)
 
 ![](img/f0bb50bea0a49f02e60fcd513711444f_7.png)
 
@@ -68,7 +65,6 @@
 
 😊
 
-![](img/f0bb50bea0a49f02e60fcd513711444f_9.png)
 
 ## 总结
 

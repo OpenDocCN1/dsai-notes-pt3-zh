@@ -94,11 +94,9 @@ GAN训练极具挑战性，常面临模式崩溃（mode collapse）、训练不�
 
 ## 总结与展望
 
-![](img/03a3d066fb6f7c03ef3aa39a1645a98b_5.png)
 
 本节课我们一起学习了生成模型中两个至关重要的范式：
 
-![](img/03a3d066fb6f7c03ef3aa39a1645a98b_7.png)
 
 ![](img/03a3d066fb6f7c03ef3aa39a1645a98b_9.png)
 

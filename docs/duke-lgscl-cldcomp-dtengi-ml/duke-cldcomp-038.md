@@ -142,7 +142,6 @@ def test_cli_not_marco():
 一个基本的GitHub Actions工作流配置文件（`.github/workflows/python-app.yml`）如下：
 
 
-![](img/b5fe0c4c4138a14247b5cec6bdc8597d_7.png)
 
 ![](img/b5fe0c4c4138a14247b5cec6bdc8597d_9.png)
 

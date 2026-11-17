@@ -1,6 +1,5 @@
 #  059：高斯分布初探
 
-![](img/2f0e5a4b30abc3df21e4d24eb80b58b1_0.png)
 
 ![](img/2f0e5a4b30abc3df21e4d24eb80b58b1_1.png)
 

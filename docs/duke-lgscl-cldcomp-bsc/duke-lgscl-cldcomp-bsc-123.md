@@ -24,11 +24,9 @@ Lambda函数每次被调用时，都会生成日志。在Lambda控制台的“�
 3.  在“监控”选项卡下，点击“查看CloudWatch中的日志”。
 4.  在打开的CloudWatch Logs界面中，可以根据时间戳查看最新的日志流，这是调试Lambda函数的有效方法。
 
-![](img/ae4a7c9e3f2f9ea31cdc07f585d1f2b5_1.png)
 
 ![](img/ae4a7c9e3f2f9ea31cdc07f585d1f2b5_1.png)
 
-![](img/ae4a7c9e3f2f9ea31cdc07f585d1f2b5_2.png)
 
 ![](img/ae4a7c9e3f2f9ea31cdc07f585d1f2b5_2.png)
 

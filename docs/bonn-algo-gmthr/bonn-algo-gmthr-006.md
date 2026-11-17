@@ -1,6 +1,5 @@
 # 006：拥塞博弈中纯纳什均衡的复杂性
 
-![](img/7a76d13b6c400afd9f24c6a3ae3dcab0_0.png)
 
 ![](img/7a76d13b6c400afd9f24c6a3ae3dcab0_0.png)
 
@@ -42,7 +41,6 @@
 
 *   一组实例，记为 **I_Π**。
 
-![](img/7a76d13b6c400afd9f24c6a3ae3dcab0_2.png)
 
 ---
 

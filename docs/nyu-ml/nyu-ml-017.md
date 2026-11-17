@@ -10,11 +10,9 @@
 
 ![](img/9fed235363d0c644e589f0fa78df029d_6.png)
 
-![](img/9fed235363d0c644e589f0fa78df029d_8.png)
 
 ---
 
-![](img/9fed235363d0c644e589f0fa78df029d_10.png)
 
 ## 概述
 
@@ -80,13 +78,11 @@
 
 如何评估一个预测分布 `P_hat(y|x)` 的好坏？一个标准方法是使用**似然**。
 
-![](img/9fed235363d0c644e589f0fa78df029d_16.png)
 
 ![](img/9fed235363d0c644e589f0fa78df029d_18.png)
 
 ![](img/9fed235363d0c644e589f0fa78df029d_19.png)
 
-![](img/9fed235363d0c644e589f0fa78df029d_20.png)
 
 **定义**：对于观测到的数据集 `D = {(x_i, y_i)}`，预测分布 `P_hat` 的似然是 `P_hat` 分配给这些数据的概率（或概率密度）的乘积：
 `L(P_hat; D) = ∏_i P_hat(y_i | x_i)`

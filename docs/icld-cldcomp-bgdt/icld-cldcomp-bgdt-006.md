@@ -100,7 +100,6 @@ w_new = w_old - learning_rate * gradient_of_loss_function
 
 ## 总结
 
-![](img/c81cf7cbeb6c1881b01c01e228b964c9_3.png)
 
 ![](img/c81cf7cbeb6c1881b01c01e228b964c9_4.png)
 

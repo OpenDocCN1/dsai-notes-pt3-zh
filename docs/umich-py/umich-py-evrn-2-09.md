@@ -10,7 +10,6 @@
 
 进入网站后，导航至“Downloads”（下载）区域，选择适用于Windows系统的Python版本进行下载。
 
-![](img/3d35934207f8cac11bdfa7dc518c7fe8_1.png)
 
 下载完成后，运行安装程序。请注意，在Windows系统上进行安装操作，可能需要管理员账户权限。
 
@@ -24,13 +23,11 @@ python --version
 ```
 此命令用于检查已安装的Python版本。如果安装成功，命令行将显示当前的Python版本号。
 
-![](img/3d35934207f8cac11bdfa7dc518c7fe8_3.png)
 
 ![](img/3d35934207f8cac11bdfa7dc518c7fe8_3.png)
 
 此外，你还可以直接在命令行中输入 `python` 来启动Python交互式解释器。这是一个可以即时执行Python代码的环境。
 
-![](img/3d35934207f8cac11bdfa7dc518c7fe8_5.png)
 
 在解释器中，输入你的第一行代码：
 ```python
@@ -61,7 +58,6 @@ print("hello world")
 
 访问Brackets官方网站下载安装程序。
 
-![](img/3d35934207f8cac11bdfa7dc518c7fe8_10.png)
 
 ![](img/3d35934207f8cac11bdfa7dc518c7fe8_10.png)
 
@@ -73,15 +69,11 @@ print("hello world")
 
 ![](img/3d35934207f8cac11bdfa7dc518c7fe8_12.png)
 
-![](img/3d35934207f8cac11bdfa7dc518c7fe8_15.png)
 
 安装完成后，启动Brackets。
 
-![](img/3d35934207f8cac11bdfa7dc518c7fe8_16.png)
 
 ![](img/3d35934207f8cac11bdfa7dc518c7fe8_14.png)
-![](img/3d35934207f8cac11bdfa7dc518c7fe8_15.png)
-![](img/3d35934207f8cac11bdfa7dc518c7fe8_16.png)
 
 启动后，你可以先关闭欢迎界面。现在，我们将创建一个新的Python文件。
 
@@ -89,7 +81,6 @@ print("hello world")
 
 ## 第三步：创建并运行你的第一个Python程序
 
-![](img/3d35934207f8cac11bdfa7dc518c7fe8_18.png)
 
 在Brackets中，点击“File”（文件）菜单，选择“New”（新建）来创建一个新文件。
 
@@ -98,44 +89,30 @@ print("hello world")
 print("Hello world")
 ```
 
-![](img/3d35934207f8cac11bdfa7dc518c7fe8_20.png)
 
-![](img/3d35934207f8cac11bdfa7dc518c7fe8_18.png)
 
-![](img/3d35934207f8cac11bdfa7dc518c7fe8_22.png)
 
 接下来，需要保存这个文件。点击“File”菜单，选择“Save”（保存）。
 
-![](img/3d35934207f8cac11bdfa7dc518c7fe8_24.png)
 
 为了管理方便，建议为Python项目创建一个专门的文件夹。例如，在桌面上新建一个文件夹，将其命名为 `Py4E`（Python for Everybody的缩写）。
 
-![](img/3d35934207f8cac11bdfa7dc518c7fe8_20.png)
 
 你会看到在桌面上出现了名为“Py4E”的文件夹。
 
-![](img/3d35934207f8cac11bdfa7dc518c7fe8_26.png)
 
-![](img/3d35934207f8cac11bdfa7dc518c7fe8_22.png)
 
-![](img/3d35934207f8cac11bdfa7dc518c7fe8_27.png)
 
 在保存文件对话框中，导航到这个新创建的 `Py4E` 文件夹。将文件命名为 `hello.py`。注意，`.py` 扩展名非常重要，它告诉系统这是一个Python文件。
 
-![](img/3d35934207f8cac11bdfa7dc518c7fe8_29.png)
 
-![](img/3d35934207f8cac11bdfa7dc518c7fe8_24.png)
 
 保存后，Brackets会自动识别 `.py` 后缀并进行语法高亮显示，这让代码更易读。
 
-![](img/3d35934207f8cac11bdfa7dc518c7fe8_26.png)
-![](img/3d35934207f8cac11bdfa7dc518c7fe8_27.png)
 
 现在，打开文件资源管理器，进入桌面上的 `Py4E` 文件夹，确认 `hello.py` 文件已存在。
 
-![](img/3d35934207f8cac11bdfa7dc518c7fe8_31.png)
 
-![](img/3d35934207f8cac11bdfa7dc518c7fe8_29.png)
 
 最后，我们需要通过命令行来运行这个程序。重新打开命令提示符。
 
@@ -145,20 +122,14 @@ print("Hello world")
 *   `dir` 命令用于列出当前目录下的文件和文件夹。
 *   如果你不确定当前所在位置，可以输入 `cd` 命令本身，它会显示当前工作目录的完整路径。
 
-![](img/3d35934207f8cac11bdfa7dc518c7fe8_33.png)
 
 根据你的实际情况，使用 `cd` 命令进入 `Py4E` 文件夹。例如，如果你的文件保存在 `C:\Users\[你的用户名]\Desktop\Py4E`，则需相应切换目录。
 
-![](img/3d35934207f8cac11bdfa7dc518c7fe8_34.png)
 
-![](img/3d35934207f8cac11bdfa7dc518c7fe8_31.png)
 
 进入正确的目录后，使用 `dir` 命令确认能看到 `hello.py` 文件。
 
-![](img/3d35934207f8cac11bdfa7dc518c7fe8_33.png)
-![](img/3d35934207f8cac11bdfa7dc518c7fe8_34.png)
 
-![](img/3d35934207f8cac11bdfa7dc518c7fe8_36.png)
 
 现在，运行你的程序。在命令提示符中输入：
 ```bash
@@ -166,10 +137,7 @@ python hello.py
 ```
 按下回车。
 
-![](img/3d35934207f8cac11bdfa7dc518c7fe8_37.png)
 
-![](img/3d35934207f8cac11bdfa7dc518c7fe8_36.png)
-![](img/3d35934207f8cac11bdfa7dc518c7fe8_37.png)
 
 如果一切正常，你将在命令行中看到输出结果：
 ```

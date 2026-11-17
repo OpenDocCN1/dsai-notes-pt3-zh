@@ -2,15 +2,10 @@
 
 ![](img/c923bcf857ded57d67324c14e0c8c13f_0.png)
 
-![](img/c923bcf857ded57d67324c14e0c8c13f_1.png)
 
-![](img/c923bcf857ded57d67324c14e0c8c13f_3.png)
 
-![](img/c923bcf857ded57d67324c14e0c8c13f_4.png)
 
-![](img/c923bcf857ded57d67324c14e0c8c13f_5.png)
 
-![](img/c923bcf857ded57d67324c14e0c8c13f_6.png)
 
 在本节课中，我们将学习R语言中一个重要的数据类型——**因子**。因子是处理分类数据的关键，尤其在数据可视化中扮演着核心角色。我们将通过分析美国西雅图市的宠物许可证数据，来理解因子的概念、创建方法以及在`ggplot2`绘图中的应用。
 
@@ -20,7 +15,6 @@
 
 首先，我们引入一个有趣的数据集——西雅图市的宠物许可证数据。这类市政数据的公开化是全球趋势，为数据分析师提供了丰富的研究材料。我们的目标是探索这些数据，并利用因子变量来更好地理解和展示它。
 
-![](img/c923bcf857ded57d67324c14e0c8c13f_10.png)
 
 ![](img/c923bcf857ded57d67324c14e0c8c13f_11.png)
 
@@ -170,7 +164,6 @@ data$species <- fct_infreq(data$species)
 
 ![](img/c923bcf857ded57d67324c14e0c8c13f_58.png)
 
-![](img/c923bcf857ded57d67324c14e0c8c13f_59.png)
 
 ![](img/c923bcf857ded57d67324c14e0c8c13f_60.png)
 

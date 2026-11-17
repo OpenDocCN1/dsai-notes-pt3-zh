@@ -4,7 +4,6 @@
 
 ---
 
-![](img/bade02eab65b3b45eb8e3dbba9a314e7_1.png)
 
 ## 激活Google Cloud Shell
 
@@ -19,7 +18,6 @@
 *   输入命令 `terraform` 来检查安装情况。
 *   该命令会显示所有可用选项，确认Terraform已就绪。
 
-![](img/bade02eab65b3b45eb8e3dbba9a314e7_3.png)
 
 接下来，我们需要创建一个存储虚拟机配置的空文件。
 
@@ -50,7 +48,6 @@
 
 ## 初始化与规划
 
-![](img/bade02eab65b3b45eb8e3dbba9a314e7_5.png)
 
 保存配置后，我们回到终端窗口。接下来，我们需要初始化Terraform工作目录。
 
@@ -74,9 +71,7 @@
 
 Terraform会再次显示执行计划，并询问是否继续。输入 `yes` 来批准执行。
 
-![](img/bade02eab65b3b45eb8e3dbba9a314e7_7.png)
 
-![](img/bade02eab65b3b45eb8e3dbba9a314e7_7.png)
 
 系统可能会要求授权此次API调用。授权后，Terraform将通过GCP API在后台为我们创建资源。这体现了基础设施即代码在简化部署流程和确保可重复性方面的巨大价值。
 
@@ -86,15 +81,12 @@ Terraform会再次显示执行计划，并询问是否继续。输入 `yes` 来�
 
 虚拟机创建成功后，我们如何找到它呢？
 
-![](img/bade02eab65b3b45eb8e3dbba9a314e7_9.png)
 
-![](img/bade02eab65b3b45eb8e3dbba9a314e7_10.png)
 
 我们可以返回GCP控制台查看。
 
 *   进入 **Compute Engine** -> **VM instances** 页面。
 
-![](img/bade02eab65b3b45eb8e3dbba9a314e7_9.png)
 ![](img/bade02eab65b3b45eb8e3dbba9a314e7_10.png)
 
 在实例列表中，可以看到名为“terraform”的虚拟机正在运行，其区域、IP地址等信息均与我们的配置一致。如果需要，我们还可以通过浏览器窗口SSH连接到该虚拟机进行操作。

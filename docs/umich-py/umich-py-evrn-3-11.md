@@ -43,7 +43,6 @@
 
 上一节我们了解了套接字和端口的概念。本节中我们来看看如何用Python代码实现它。
 
-![](img/4ca10f4a782235559ee8c075176bb3dc_6.png)
 
 Python的强大之处在于，它用极简的代码封装了底层数百万行的网络通信逻辑。建立一个套接字连接只需要三行Python代码。
 
@@ -59,7 +58,6 @@ import socket
 mysock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 ```
 
-![](img/4ca10f4a782235559ee8c075176bb3dc_8.png)
 
 最后，我们调用`connect`方法来建立实际的连接。我们需要传入两个参数：想要连接的主机（域名）和端口号。这就像拨打电话。
 
@@ -86,7 +84,6 @@ mysock.connect(('data.pr4e.org', 80))
 
 通过这样的“发送-接收”循环，我们就可以与网络另一端的应用程序进行完整的对话，获取所需的数据。
 
-![](img/4ca10f4a782235559ee8c075176bb3dc_10.png)
 
 ---
 

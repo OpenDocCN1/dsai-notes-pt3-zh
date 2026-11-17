@@ -1,8 +1,6 @@
 # 003：体积的集中现象
 
-![](img/9f1027d8a1c40eaccb24060323b9d770_0.png)
 
-![](img/9f1027d8a1c40eaccb24060323b9d770_2.png)
 
 ![](img/9f1027d8a1c40eaccb24060323b9d770_4.png)
 

@@ -10,7 +10,6 @@
 
 ---
 
-![](img/ba28596a9ae2d51415c771c2c8b36cc2_1.png)
 
 ## 第一步：下载并安装 Python
 
@@ -68,7 +67,6 @@
 
 ![](img/ba28596a9ae2d51415c771c2c8b36cc2_11.png)
 
-![](img/ba28596a9ae2d51415c771c2c8b36cc2_12.png)
 
 市面上有许多优秀的编辑器，例如 VS Code。本教程将使用 Brackets，因为它简单、开源，且兼容 Windows、Mac 和 Linux 系统。
 
@@ -79,17 +77,14 @@
 ![](img/ba28596a9ae2d51415c771c2c8b36cc2_6.png)
 ![](img/ba28596a9ae2d51415c771c2c8b36cc2_8.png)
 
-![](img/ba28596a9ae2d51415c771c2c8b36cc2_14.png)
 
 安装完成后，启动 Brackets。
 
 ---
 
-![](img/ba28596a9ae2d51415c771c2c8b36cc2_16.png)
 
 ## 第四步：创建并运行第一个 Python 程序
 
-![](img/ba28596a9ae2d51415c771c2c8b36cc2_18.png)
 
 现在，我们将使用 Brackets 创建你的第一个 Python 程序文件。
 
@@ -100,17 +95,13 @@
     ```
 3.  点击 `File` 菜单，选择 `Save`（保存）来保存这个文件。
 
-![](img/ba28596a9ae2d51415c771c2c8b36cc2_20.png)
 
 ![](img/ba28596a9ae2d51415c771c2c8b36cc2_10.png)
 ![](img/ba28596a9ae2d51415c771c2c8b36cc2_11.png)
-![](img/ba28596a9ae2d51415c771c2c8b36cc2_12.png)
 
 在保存时，请遵循以下步骤选择合适的保存位置和文件名：
 
-![](img/ba28596a9ae2d51415c771c2c8b36cc2_22.png)
 
-![](img/ba28596a9ae2d51415c771c2c8b36cc2_23.png)
 
 以下是保存文件的具体步骤：
 
@@ -119,19 +110,11 @@
 3.  进入这个新创建的 `Py4E` 文件夹。
 4.  将你的文件命名为 `hello.py`。注意，`.py` 扩展名非常重要，它告诉系统和编辑器这是一个 Python 文件。
 
-![](img/ba28596a9ae2d51415c771c2c8b36cc2_25.png)
 
-![](img/ba28596a9ae2d51415c771c2c8b36cc2_14.png)
-![](img/ba28596a9ae2d51415c771c2c8b36cc2_16.png)
-![](img/ba28596a9ae2d51415c771c2c8b36cc2_18.png)
-![](img/ba28596a9ae2d51415c771c2c8b36cc2_20.png)
 
 保存后，Brackets 会识别 `.py` 后缀并自动进行语法高亮显示，使代码更易读。
 
-![](img/ba28596a9ae2d51415c771c2c8b36cc2_22.png)
-![](img/ba28596a9ae2d51415c771c2c8b36cc2_23.png)
 
-![](img/ba28596a9ae2d51415c771c2c8b36cc2_27.png)
 
 现在，通过文件管理器查看 `Py4E` 文件夹，你应该能看到 `hello.py` 文件。
 
@@ -141,9 +124,7 @@
 
 ## 第五步：在终端中运行程序
 
-![](img/ba28596a9ae2d51415c771c2c8b36cc2_29.png)
 
-![](img/ba28596a9ae2d51415c771c2c8b36cc2_30.png)
 
 最后一步是打开终端（命令提示符），导航到程序所在的目录并运行它。
 
@@ -160,14 +141,8 @@
     python hello.py
     ```
 
-![](img/ba28596a9ae2d51415c771c2c8b36cc2_32.png)
 
-![](img/ba28596a9ae2d51415c771c2c8b36cc2_33.png)
 
-![](img/ba28596a9ae2d51415c771c2c8b36cc2_27.png)
-![](img/ba28596a9ae2d51415c771c2c8b36cc2_29.png)
-![](img/ba28596a9ae2d51415c771c2c8b36cc2_30.png)
-![](img/ba28596a9ae2d51415c771c2c8b36cc2_32.png)
 ![](img/ba28596a9ae2d51415c771c2c8b36cc2_33.png)
 
 运行后，命令提示符窗口应该会显示输出结果：`Hello World`。

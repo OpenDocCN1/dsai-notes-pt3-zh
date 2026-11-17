@@ -1,14 +1,11 @@
 # 050：Reducer并行机制 🚀
 
-![](img/8e2271d52c980a61946e76b3d51f6a9c_0.png)
 
-![](img/8e2271d52c980a61946e76b3d51f6a9c_2.png)
 
 在本节课中，我们将学习Hadoop MapReduce作业中Reducer并行性的实现与控制方式。我们将探讨如何设置多个Reducer，以及这如何影响作业的执行和输出。
 
 ## 概述
 
-![](img/8e2271d52c980a61946e76b3d51f6a9c_4.png)
 
 MapReduce编程模型的核心思想是将大规模数据处理任务分解为可并行执行的Map和Reduce阶段。默认情况下，一个作业只有一个Reducer。然而，通过配置，我们可以启动多个Reducer并行工作，这可以显著提高处理速度。本节将详细解释Reducer并行机制的工作原理、配置方法及其对输出的影响。
 
@@ -26,22 +23,18 @@ MapReduce编程模型的核心思想是将大规模数据处理任务分解为�
 
 你可以配置一个、两个、十五个甚至零个Reducer。到目前为止，我们看到的例子都只有一个Reducer。现在，我们讨论如何配置多个Reducer。
 
-![](img/8e2271d52c980a61946e76b3d51f6a9c_6.png)
 
 如果你有多个Reducer，例如三个Reducer并行运行，Shuffle和Sort框架会保证两件事：
 
 1.  **没有两个Reducer会看到相同的键。**
 2.  **呈现给一个Reducer的所有键都是按排序顺序排列的。**
 
-![](img/8e2271d52c980a61946e76b3d51f6a9c_8.png)
 
-![](img/8e2271d52c980a61946e76b3d51f6a9c_9.png)
 
 这意味着，如果你有两个Reducer，它们将看到不同的键集合。同时，当一个Reducer接收其键值对（实际上是键和对应的值列表）时，这些键是按顺序提供的。
 
 让我们看一个并行执行的例子。假设有三个Map任务（Map Task 1, 2, 3）处理不同的分片。每个Map任务顺序处理记录并生成键值对。不同的Map任务可能生成相同的键（例如，K1）。
 
-![](img/8e2271d52c980a61946e76b3d51f6a9c_11.png)
 
 现在，假设我们有两个Reducer任务（Reducer Task 1和2）在运行。框架保证没有两个Reducer会看到相同的键。因此，Reducer 1可能只看到键K2、K4和K5，而Reducer 2看到键K1和K3。同时，Reducer接收到的键是按顺序排列的（例如，K2先于K4，K4先于K5）。
 
@@ -57,7 +50,6 @@ MapReduce编程模型的核心思想是将大规模数据处理任务分解为�
 
 `Job`类有一个便捷方法 `setNumReduceTasks`，它接受一个整数参数。你可以在提交作业之前，使用Job对象调用此方法来设置Reducer的数量。
 
-![](img/8e2271d52c980a61946e76b3d51f6a9c_13.png)
 
 ```java
 Job job = Job.getInstance(conf, "word count");
@@ -66,7 +58,6 @@ job.setNumReduceTasks(3); // 设置为3个Reducer
 // ... 提交作业 ...
 ```
 
-![](img/8e2271d52c980a61946e76b3d51f6a9c_15.png)
 
 **重要提示**：必须在提交作业**之前**设置Reducer数量，否则可能不生效或抛出`IllegalStateException`异常。
 
@@ -96,9 +87,7 @@ Job job = Job.getInstance(conf, "word count");
 
 ## 零个Reducer的特殊情况
 
-![](img/8e2271d52c980a61946e76b3d51f6a9c_17.png)
 
-![](img/8e2271d52c980a61946e76b3d51f6a9c_19.png)
 
 你也可以将Reducer的数量设置为零。这意味着作业将不运行任何Reducer。
 

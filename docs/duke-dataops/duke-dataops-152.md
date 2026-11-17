@@ -57,9 +57,7 @@ mlflow server \
 
 ## 注册模型与注意事项
 
-![](img/3cc50c2a1926f6af32f723b8c7100bde_5.png)
 
-![](img/3cc50c2a1926f6af32f723b8c7100bde_6.png)
 
 你可以使用 `mlflow.register_model` 来注册一个模型。这个函数会创建一个新的注册模型记录。如果模型名称已存在，操作会失败，因为它要求名称唯一。因此，务必注意你使用的名称。
 

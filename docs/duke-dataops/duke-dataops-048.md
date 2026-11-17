@@ -8,7 +8,6 @@
 
 ![](img/db96c4622a9b6711f23cd66fadc96eab_2.png)
 
-![](img/db96c4622a9b6711f23cd66fadc96eab_4.png)
 
 我们将首先介绍GitHub Copilot，展示其核心功能。接着，我们将切换到Amazon CodeWhisperer，进行类似的任务演示。通过对比，我们可以了解两者在代码生成速度、准确性、集成体验等方面的差异。
 

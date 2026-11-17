@@ -10,13 +10,11 @@
 
 在默认的工作流程中，我们使用 R 函数来插入 HTML 元素。Shiny 包含了绝大多数标准的 HTML 标签函数。
 
-![](img/9771a0dcecf4f35640db31eef5a41b8b_1.png)
 
 例如，所有标题标签（H1 到 H6）、段落标签、超链接、`div` 和 `span` 等常见标签都有对应的函数。
 
 你可以通过运行 `?builder` 来查看完整的可用 HTML 标签函数列表。
 
-![](img/9771a0dcecf4f35640db31eef5a41b8b_3.png)
 
 ---
 
@@ -24,7 +22,6 @@
 
 以下是一个简单的 UI 代码示例，展示了如何使用不同的 HTML 标签函数。
 
-![](img/9771a0dcecf4f35640db31eef5a41b8b_5.png)
 
 ```r
 # 在 ui.R 的 fluidPage 或 sidebarLayout 函数内
@@ -42,9 +39,7 @@ code("这是用于显示代码的等宽字体文本。")
 *   `em()` 函数创建强调文本（通常显示为斜体）。
 *   `code()` 函数创建等宽字体的文本，适用于显示代码。
 
-![](img/9771a0dcecf4f35640db31eef5a41b8b_7.png)
 
-![](img/9771a0dcecf4f35640db31eef5a41b8b_8.png)
 
 ![](img/9771a0dcecf4f35640db31eef5a41b8b_9.png)
 
@@ -58,9 +53,7 @@ code("这是用于显示代码的等宽字体文本。")
 
 运行应用后，在浏览器中打开它，然后使用浏览器的“查看页面源代码”功能（通常是右键点击页面并选择相应选项，或按 `Ctrl+U`）。
 
-![](img/9771a0dcecf4f35640db31eef5a41b8b_11.png)
 
-![](img/9771a0dcecf4f35640db31eef5a41b8b_12.png)
 
 在源代码中，你可以看到：
 *   Shiny 加载的 JavaScript 库和 CSS 样式表（如 Twitter Bootstrap），它们负责页面的样式和交互功能。

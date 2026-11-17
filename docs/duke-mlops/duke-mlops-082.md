@@ -30,7 +30,6 @@ def main():
 
 ---
 
-![](img/15488ca843d85bb72248496fef5dc5e1_3.png)
 
 ## 添加位置参数
 
@@ -50,7 +49,6 @@ def main(path):
 
 ---
 
-![](img/15488ca843d85bb72248496fef5dc5e1_5.png)
 
 ## 增强参数：指定类型和验证
 
@@ -76,13 +74,10 @@ def main(path):
 
 在 Click 中，我们使用 `@click.option()` 装饰器来添加标志或选项。这与位置参数 `argument` 不同。
 
-![](img/15488ca843d85bb72248496fef5dc5e1_7.png)
 
-![](img/15488ca843d85bb72248496fef5dc5e1_8.png)
 
 以下是添加 `--sort` 标志的方法：
 
-![](img/15488ca843d85bb72248496fef5dc5e1_9.png)
 
 ```python
 @click.command()

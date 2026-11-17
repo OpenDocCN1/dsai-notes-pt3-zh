@@ -56,11 +56,9 @@ torchvision
 
 ![](img/17ea62b55e1b9e4235fa46348d53c87b_11.png)
 
-![](img/17ea62b55e1b9e4235fa46348d53c87b_12.png)
 
 ---
 
-![](img/17ea62b55e1b9e4235fa46348d53c87b_13.png)
 
 ## 本地运行与测试
 

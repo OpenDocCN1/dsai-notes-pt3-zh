@@ -1,6 +1,5 @@
 # 大型语言模型实践（高级数据工程、AWS、Databricks和本地LLM）：P82：AWS Bedrock CLI 演示 🚀
 
-![](img/07abbb9457bfe15a6066e93c15882a9c_0.png)
 
 在本节课中，我们将学习如何通过 Rust 编程语言和 AWS SDK 来与 Amazon Bedrock 服务进行交互。我们将从查看 AWS 控制台界面开始，然后逐步编写一个简单的 Rust 程序来列出 Bedrock 中所有可用的基础模型。
 
@@ -16,7 +15,6 @@
 
 除了控制台，另一种与 Bedrock 交互的方式是使用 Rust 语言。接下来，我们将看到如何使用 AWS SDK for Bedrock。
 
-![](img/07abbb9457bfe15a6066e93c15882a9c_2.png)
 
 ![](img/07abbb9457bfe15a6066e93c15882a9c_2.png)
 
@@ -98,6 +96,5 @@ cargo run | less
 
 如果你计划将 Rust 作为主要接口，它在无服务器运行时（如 AWS Lambda、App Runner，甚至 Fargate）中会运行得非常好。由于 Rust 的高效性，并且它是 AWS 平台最新的通用 SDK，因此在大语言模型的新世界中具有巨大潜力。
 
-![](img/07abbb9457bfe15a6066e93c15882a9c_4.png)
 
 ![](img/07abbb9457bfe15a6066e93c15882a9c_4.png)

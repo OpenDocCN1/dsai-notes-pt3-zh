@@ -1,8 +1,6 @@
 # 9：L7.1 - NLP 的迁移学习 📚
 
-![](img/f1591e808e9bc70bdffc1770f073cdfc_1.png)
 
-![](img/f1591e808e9bc70bdffc1770f073cdfc_3.png)
 
 在本节课中，我们将要学习自然语言处理中的迁移学习概念。我们将从传统的静态词向量方法开始，逐步探讨如何利用大规模预训练语言模型来提升下游任务的性能，并介绍其中的核心思想与关键模型。
 
@@ -32,9 +30,7 @@ playing, games, played, players, football, multiplayer...
 
 这种上下文化词表示的思想，是后续迁移学习方法的关键基础。
 
-![](img/f1591e808e9bc70bdffc1770f073cdfc_5.png)
 
-![](img/f1591e808e9bc70bdffc1770f073cdfc_7.png)
 
 ---
 
@@ -44,11 +40,8 @@ playing, games, played, players, football, multiplayer...
 
 ### 阶段一：完全从零开始训练 🏗️
 
-![](img/f1591e808e9bc70bdffc1770f073cdfc_9.png)
 
-![](img/f1591e808e9bc70bdffc1770f073cdfc_11.png)
 
-![](img/f1591e808e9bc70bdffc1770f073cdfc_13.png)
 
 在这个阶段（大约2013年左右），我们使用一个循环神经网络来处理句子，例如 “this movie is great”。模型的输入是每个词的词向量，最终隐藏状态通过一个softmax层来预测情感标签（正面/负面）。
 
@@ -66,7 +59,6 @@ playing, games, played, players, football, multiplayer...
 1.  使用诸如 Word2Vec 或 GloVe 等自监督目标，在大量无标签数据上**预训练词向量** `C_i`。
 2.  在下游任务模型中，使用这些预训练的词向量作为输入，而模型的其他参数（`W_h`, `W_e`, `W_o`）仍然**从零开始训练**。
 
-![](img/f1591e808e9bc70bdffc1770f073cdfc_15.png)
 
 这种方法为模型提供了一些来自外部大规模语料库的语言知识。然而，它仍然存在显著缺陷：词向量是**静态**的，每个词类型只有一个向量，与上下文无关。模型的其他部分（如RNN）仍需从有限的标注数据中学习如何组合这些词向量，并承担起根据上下文消歧的重任。
 
@@ -86,23 +78,17 @@ playing, games, played, players, football, multiplayer...
 
 我们不仅可以使用语言模型的隐藏状态，还可以直接**将语言模型的参数**（如RNN中的 `W_h` 和 `W_e`）**初始化**到下游任务模型中。
 
-![](img/f1591e808e9bc70bdffc1770f073cdfc_17.png)
 
-![](img/f1591e808e9bc70bdffc1770f073cdfc_18.png)
 
 具体到情感分析例子：
 1.  使用预训练语言模型的参数（包括词向量和组合网络参数）来**初始化**情感分析RNN模型。
 2.  只有最后的softmax分类层权重 `W_o` 需要**从零开始随机初始化**，因为语言模型的输出维度（词汇表大小）与情感分析的标签数（如2个）不同。
 
-![](img/f1591e808e9bc70bdffc1770f073cdfc_20.png)
 
-![](img/f1591e808e9bc70bdffc1770f073cdfc_22.png)
 
 然后，我们使用下游任务的标注数据，通过反向传播来**微调**所有这些参数（包括从语言模型继承来的参数）。这个过程被称为**微调**。
 
-![](img/f1591e808e9bc70bdffc1770f073cdfc_24.png)
 
-![](img/f1591e808e9bc70bdffc1770f073cdfc_26.png)
 
 这种共享并微调大部分模型参数的做法，是当前NLP研究的主流范式，由BERT等模型推广开来。
 
@@ -110,7 +96,6 @@ playing, games, played, players, football, multiplayer...
 
 ## ELMo：深度上下文化词表示
 
-![](img/f1591e808e9bc70bdffc1770f073cdfc_28.png)
 
 ELMo 是首个成功展示通过使用语言模型能大幅提升多种NLP任务性能的工作之一。其核心创新在于使用了**双向**语言模型来获取上下文信息。
 

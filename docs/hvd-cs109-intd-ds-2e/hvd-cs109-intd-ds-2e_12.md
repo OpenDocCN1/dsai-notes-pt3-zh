@@ -29,7 +29,6 @@ ggplot2**对初学者来说容易的另一个原因是它的默认行为是精�
 
 我们将构建一个图表，总结美国谋杀数据集，看起来像这样：
 
-![](img/f9836dd5abbd3c9ab678d6592c08ba56.png)
 
 我们可以清楚地看到各州在人口规模和谋杀总数上的差异。不出所料，我们还看到谋杀总数与人口规模之间存在明显的关联。位于虚线灰色线上的州具有与美国平均相同的谋杀率。四个地理区域用颜色表示，这描绘了大多数南部州的谋杀率高于平均水平。
 
@@ -126,7 +125,6 @@ p
 murders |> ggplot() + geom_point(aes(population/10⁶, total))
 ```
 
-![](img/727b943e6f1c51b8201736ea1fba19a6.png)*  *我们没有使用`x`和`y`来定义参数，因为帮助文件显示这些是前两个预期的参数。
 
 添加此层时，默认定义了刻度和标签。像 **dplyr** 函数一样，`aes` 也使用数据组件中的变量名：我们可以使用 `population` 和 `total`，而无需将它们作为 `murders$population` 和 `murders$total` 调用。从数据组件中识别变量的行为是 `aes` 特有的。对于 `ggplot2` 函数中的 `aes` 之外的函数，如果您尝试访问 `population` 或 `total` 的值，您将收到一个错误。
 
@@ -142,7 +140,6 @@ murders |> ggplot() +
  geom_text(aes(population/10⁶, total, label = abb))
 ```
 
-![](img/1135c8ab7fa28b44089aa13be6be5bb0.png)*  *作为一个与变量名相关的 `aes` 独特行为的例子，请注意，如果添加的层是 `geom_text(aes(population/10⁶, total), label = abb)`，由于 `abb` 现在不在 `aes` 的调用中，它不是我们工作区中的对象，而是 `ggplot` 对象数据组件中的变量名，我们将会得到一个错误。
 
 ## 8.6 全局美学映射
 
@@ -167,7 +164,6 @@ murders |> ggplot(aes(population/10⁶, total)) +
 #>   containing a single row.
 ```
 
-![](img/55e973bb1aac36b48a8bd9c1ae5a0141.png)*  *显然，第二次调用 `geom_text` 没有使用 `population` 和 `total`。
 
 ## 8.7 非美学参数
 
@@ -179,7 +175,6 @@ murders |> ggplot(aes(population/10⁶, total)) +
  geom_text(aes(label = abb), nudge_x = 1.5)
 ```
 
-![](img/1f9a4c25435073d295c98f9063342ca0.png)*  *在第 8.12 节中，我们学习了一种更好的方法来确保我们可以看到点和标签。
 
 ## 8.8 将类别作为颜色
 
@@ -190,7 +185,6 @@ murders |> ggplot(aes(population/10⁶, total)) +
  geom_point(aes(color = region), size = 3) 
 ```
 
-![](img/2fe97ce4b0bf3cf74701709596519e22.png)*  *注意`geom_point`自动为每个类别分配不同的颜色，并添加了图例！图例通常是想要的，但为了避免添加图例，我们可以设置`geom_point`参数`show.legend = FALSE`。
 
 注意，`color`也是**ggplot2**函数中的非美学参数，包括`geom_point`。此参数不是用来将颜色映射到类别，而是用来改变所有点的颜色。例如，如果我们想让所有点都是蓝色，我们会将层改为`geom_point(col = "blue", size = 3)`。
 
@@ -199,7 +193,6 @@ murders |> ggplot(aes(population/10⁶, total)) +
  geom_point(color = "blue", size = 3) 
 ```
 
-![](img/5ad26da2d8e759096d04a5daa2827356.png)
 
 ## 8.9 更新 ggplot 对象
 
@@ -234,7 +227,6 @@ p3 <- p2 + scale_x_log10() + scale_y_log10()
 p3
 ```
 
-![](img/9693453a6ff454325e6b3521445851b5.png)*  *请注意，**ggplot2** 提供了巨大的灵活性，尤其是在 scales 函数方面。我们只介绍了许多可用功能中的一个。在本书的后续章节中，我们将提供与我们的可视化相关的示例。然而，为了熟悉这些函数，我们建议您查阅 ggplot2 的速查表或根据具体需求进行网络搜索。
 
 ## 8.11 注释
 
@@ -250,7 +242,6 @@ p4 <- p3 + labs(title = "US Gun Murders in 2010",
 p4
 ```
 
-![](img/b2233a6ee18e8b56e4e76dc7d0777ca1.png)*  *我们期望的最终图表包括一条代表整个国家平均谋杀率的线。一旦我们确定每百万的比率是 $r$，所需的线由以下公式定义：$y = r x$，其中 $y$ 和 $x$ 是我们的坐标轴：总谋杀数和百万人口，分别。在对数尺度上，这条线变为：$\log(y) = \log(r) + \log(x)$，这是一条斜率为 1，截距为 $\log(r)$ 的线。我们可以使用以下方法计算 `r`：
 
 ```r
 r <- murders |> 
@@ -266,7 +257,6 @@ p5 <- p4 +
 p5
 ```
 
-![](img/4fd2cbac2db0b511d3c280257ffcc17b.png)*  *请注意，一旦我们有了斜率，`geom_abline` 函数不会使用数据对象中的任何映射。
 
 我们几乎完成了！我们只需添加对样式的可选更改。
 
@@ -315,7 +305,6 @@ library(ggrepel)
  theme_economist()
 ```
 
-![](img/5168f5e7cb9157f8cf04b21c3a778a9c.png)
 
 ## 8.14 几何形状
 

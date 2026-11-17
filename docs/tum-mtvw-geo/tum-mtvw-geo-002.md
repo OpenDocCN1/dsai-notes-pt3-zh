@@ -26,7 +26,6 @@
 
 ![](img/0dbb1b9e4132a4c21ac776eccbf73d2d_1.png)
 
-![](img/0dbb1b9e4132a4c21ac776eccbf73d2d_2.png)
 
 给定一组向量 **S = {v₁, v₂, ..., vₖ}**，它们的**张成空间**是所有可能的线性组合构成的集合：
 **span(S) = { α₁v₁ + α₂v₂ + ... + αₖvₖ | αᵢ ∈ R }**
@@ -47,7 +46,6 @@
 
 ## 内积、范数与度量
 
-![](img/0dbb1b9e4132a4c21ac776eccbf73d2d_4.png)
 
 ![](img/0dbb1b9e4132a4c21ac776eccbf73d2d_6.png)
 

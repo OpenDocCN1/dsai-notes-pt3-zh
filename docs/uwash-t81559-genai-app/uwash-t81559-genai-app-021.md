@@ -4,7 +4,6 @@
 
 ---
 
-![](img/45c4163eb91d4d3d2bea901415075ca4_1.png)
 
 上一节我们介绍了解析大模型输出的需求，本节中我们来看看具体的实现步骤。
 
@@ -19,15 +18,12 @@ import os
 os.environ['OPENAI_API_KEY'] = 'your-api-key-here'
 ```
 
-![](img/45c4163eb91d4d3d2bea901415075ca4_3.png)
 
 ---
 
-![](img/45c4163eb91d4d3d2bea901415075ca4_5.png)
 
 接下来，我们将定义一个响应模式。这本质上是一个蓝图，用于指定我们希望从大模型获得的结构化输出格式。
 
-![](img/45c4163eb91d4d3d2bea901415075ca4_7.png)
 
 以下是定义响应模式的代码示例：
 
@@ -42,11 +38,8 @@ response_schemas = [answer_schema, source_schema]
 output_parser = StructuredOutputParser.from_response_schemas(response_schemas)
 ```
 
-![](img/45c4163eb91d4d3d2bea901415075ca4_9.png)
 
-![](img/45c4163eb91d4d3d2bea901415075ca4_10.png)
 
-![](img/45c4163eb91d4d3d2bea901415075ca4_11.png)
 
 ---
 
@@ -54,10 +47,8 @@ output_parser = StructuredOutputParser.from_response_schemas(response_schemas)
 
 以下是设置提示模板的步骤：
 
-![](img/45c4163eb91d4d3d2bea901415075ca4_13.png)
 
 
-![](img/45c4163eb91d4d3d2bea901415075ca4_15.png)
 
 ```python
 from langchain.prompts import PromptTemplate
@@ -74,7 +65,6 @@ prompt_template = PromptTemplate(
 
 现在，让我们剖析一下这个完整的提示。当我们提出一个问题时，LangChain 会将格式指令填充到提示中。这些指令明确要求输出必须是 JSON 格式，并包含 `answer` 和 `source` 字段。
 
-![](img/45c4163eb91d4d3d2bea901415075ca4_17.png)
 
 ---
 
@@ -83,12 +73,9 @@ prompt_template = PromptTemplate(
 以下是构建和运行处理链的代码：
 
 
-![](img/45c4163eb91d4d3d2bea901415075ca4_19.png)
-
-![](img/45c4163eb91d4d3d2bea901415075ca4_20.png)
 
 
-![](img/45c4163eb91d4d3d2bea901415075ca4_21.png)
+
 
 ```python
 from langchain.chat_models import ChatOpenAI
@@ -111,7 +98,6 @@ print(f"来源：{parsed_result['source']}")
 - **答案**：Python 编程语言于 1991 年推出。
 - **来源**：维基百科关于 Python 编程语言的条目。
 
-![](img/45c4163eb91d4d3d2bea901415075ca4_23.png)
 
 ---
 
@@ -119,7 +105,6 @@ print(f"来源：{parsed_result['source']}")
 
 以下是实现多语言翻译的示例：
 
-![](img/45c4163eb91d4d3d2bea901415075ca4_25.png)
 
 首先，定义包含检测语言和多个翻译字段的响应模式：
 
@@ -135,13 +120,10 @@ translation_parser = StructuredOutputParser.from_response_schemas(translation_sc
 
 然后，创建相应的提示模板和处理链：
 
-![](img/45c4163eb91d4d3d2bea901415075ca4_27.png)
 
 
-![](img/45c4163eb91d4d3d2bea901415075ca4_29.png)
 
 
-![](img/45c4163eb91d4d3d2bea901415075ca4_31.png)
 
 ```python
 translation_format_instructions = translation_parser.get_format_instructions()
@@ -155,7 +137,6 @@ translation_chain = LLMChain(llm=llm, prompt=translation_prompt, output_parser=t
 
 现在，我们可以用不同语言提问：
 
-![](img/45c4163eb91d4d3d2bea901415075ca4_33.png)
 
 ```python
 # 示例 1：英语输入

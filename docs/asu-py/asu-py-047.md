@@ -8,7 +8,6 @@
 
 图形用户界面允许用户以更直观、交互的方式与程序进行互动，而不是像我们之前那样使用命令行提示符。到目前为止，我们主要使用Colab作为编程工具，但为了更高效地运行图形界面程序，我们将切换到像Spyder这样的集成开发环境。
 
-![](img/febc0c28696b1d082df0a6f5d2dc1b17_1.png)
 
 我们将导入Tkinter工具来构建图形界面。今天我们将学习的组件包括文本标签、按钮、下拉菜单、滚动条等。
 
@@ -38,7 +37,6 @@ root.mainloop()
 *   `label1.pack()` 将标签组件添加到窗口中。
 *   `root.mainloop()` 启动事件循环，使窗口持续运行，直到用户关闭它。
 
-![](img/febc0c28696b1d082df0a6f5d2dc1b17_3.png)
 
 ---
 
@@ -46,7 +44,6 @@ root.mainloop()
 
 上一节我们创建了基础窗口和标签，本节中我们来看看如何定制标签的外观，例如修改字体、大小和颜色。
 
-![](img/febc0c28696b1d082df0a6f5d2dc1b17_5.png)
 
 我们可以对标签进行多种修改。以下代码展示了如何创建两个具有不同样式的标签：
 
@@ -80,10 +77,8 @@ root.mainloop()
 
 以下是创建多个按钮并控制其位置的示例：
 
-![](img/febc0c28696b1d082df0a6f5d2dc1b17_7.png)
 
 
-![](img/febc0c28696b1d082df0a6f5d2dc1b17_9.png)
 
 ```python
 from tkinter import *
@@ -120,7 +115,6 @@ root.mainloop()
 
 ## 使用文本框获取用户输入📝
 
-![](img/febc0c28696b1d082df0a6f5d2dc1b17_11.png)
 
 图形界面的一个重要功能是获取用户输入，这可以通过文本框实现。本节我们将学习如何创建文本框，并读取其中的内容。
 
@@ -158,7 +152,6 @@ root.mainloop()
 
 ---
 
-![](img/febc0c28696b1d082df0a6f5d2dc1b17_13.png)
 
 ## 界面布局管理📐
 
@@ -203,7 +196,6 @@ label7.pack(side=RIGHT)
 root.mainloop()
 ```
 
-![](img/febc0c28696b1d082df0a6f5d2dc1b17_15.png)
 
 在这段代码中：
 *   `fill=X` 让标签填充整个水平宽度。
@@ -277,7 +269,6 @@ root.mainloop()
 以下是创建简单菜单栏的代码：
 
 
-![](img/febc0c28696b1d082df0a6f5d2dc1b17_17.png)
 
 ```python
 from tkinter import *
@@ -356,7 +347,6 @@ root.mainloop()
 
 ---
 
-![](img/febc0c28696b1d082df0a6f5d2dc1b17_19.png)
 
 ## 处理鼠标事件🎯
 
@@ -365,7 +355,6 @@ root.mainloop()
 以下代码演示了如何绑定并响应不同的鼠标事件：
 
 
-![](img/febc0c28696b1d082df0a6f5d2dc1b17_21.png)
 
 ```python
 from tkinter import *
@@ -459,7 +448,6 @@ Tkinter通过`messagebox`模块提供了多种标准对话框。
 
 以下是使用不同类型对话框的示例：
 
-![](img/febc0c28696b1d082df0a6f5d2dc1b17_23.png)
 
 ```python
 from tkinter import *

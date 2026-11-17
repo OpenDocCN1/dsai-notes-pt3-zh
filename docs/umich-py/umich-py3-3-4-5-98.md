@@ -1,10 +1,8 @@
 # 密歇根大学《Python3编程》课程3、4、5｜P98：41_04_07_结语：高级函数进阶 🎓
 
-![](img/36e53fb9acc1fd43a7124d0fc1eeb46a_0.png)
 
 ![](img/36e53fb9acc1fd43a7124d0fc1eeb46a_0.png)
 
-![](img/36e53fb9acc1fd43a7124d0fc1eeb46a_1.png)
 
 ![](img/36e53fb9acc1fd43a7124d0fc1eeb46a_1.png)
 

@@ -1,6 +1,5 @@
 #  079：使用SageMaker Studio Lab 🧪
 
-![](img/f6fd01152a79fc3b6b23d32ebec3addb_0.png)
 
 在本节课中，我们将要学习如何使用Amazon SageMaker Studio Lab。这是一个免费的机器学习项目原型开发环境，基于Jupyter Notebook，并提供了CPU和GPU选项。我们将探索其界面、功能，并学习如何利用它来运行和实验Hugging Face的预训练模型。
 
@@ -99,7 +98,6 @@ print(result)
 
 这些任务都可以在SageMaker Studio Lab的GPU支持下快速运行，让用户直观体验Transformer模型的能力。
 
-![](img/f6fd01152a79fc3b6b23d32ebec3addb_4.png)
 
 ---
 
@@ -121,6 +119,5 @@ aws s3 ls
 
 本节课中我们一起学习了如何使用Amazon SageMaker Studio Lab这个强大的免费工具。我们从其界面和基本功能开始，学习了如何通过终端管理环境并监控GPU资源。接着，我们动手实践，运行了Hugging Face的教程，并使用`transformers`库的`pipeline`接口体验了情感分析、文本生成等多种机器学习任务。最后，我们了解了它与AWS服务的集成潜力。SageMaker Studio Lab是一个极佳的实验环境，能有效帮助初学者和开发者原型化机器学习想法，并为后续部署到AWS云平台打下基础。
 
-![](img/f6fd01152a79fc3b6b23d32ebec3addb_8.png)
 
 ![](img/f6fd01152a79fc3b6b23d32ebec3addb_8.png)

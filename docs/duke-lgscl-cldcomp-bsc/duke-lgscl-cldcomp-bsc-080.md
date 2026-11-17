@@ -77,7 +77,6 @@ source ~/.venv/bin/activate
 git clone <你的仓库URL>
 ```
 
-![](img/2cafe37a88a829da6b88adc16e5b8ea5_4.png)
 
 ![](img/2cafe37a88a829da6b88adc16e5b8ea5_5.png)
 
@@ -127,7 +126,6 @@ cargo run
 
 ![](img/2cafe37a88a829da6b88adc16e5b8ea5_10.png)
 
-![](img/2cafe37a88a829da6b88adc16e5b8ea5_11.png)
 
 它编译并输出了我们的“Hello, world!”。如果我们想查看该项目的结构，可以看到这是一个非常简单的“Hello World”文件。如果我想要添加依赖项，例如GCP SDK，我可以在这里的`Cargo.toml`文件中完成。
 

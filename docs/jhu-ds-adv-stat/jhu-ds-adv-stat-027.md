@@ -63,7 +63,6 @@ conf_interval <- quantile(medians, c(0.025, 0.975))
 
 ## 总结
 
-![](img/80f983511943334a18ef600ca225dcde_1.png)
 
 ![](img/80f983511943334a18ef600ca225dcde_3.png)
 

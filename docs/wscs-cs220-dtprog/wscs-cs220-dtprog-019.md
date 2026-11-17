@@ -54,7 +54,6 @@
 | **是否可创建新类型** | False         | False          | True                    | True                  |
 | **是否可命名字段**   | False         | False          | True                    | True                  |
 
-![](img/02a9bfd4fcc8929b9a0331d228f60aa1_1.png)
 
 **关键点解析：**
 *   **预安装**：指是否随Python标准库一起提供，无需额外安装。
@@ -93,14 +92,12 @@ append_number(my_list)
 print(my_list)  # 输出：[1, 2, 3, 42]
 ```
 
-![](img/02a9bfd4fcc8929b9a0331d228f60aa1_3.png)
 
 **过程解析：**
 1.  调用 `append_number(my_list)` 时，形参 `some_list` 被赋值为实参 `my_list` 的引用。
 2.  因此，`some_list` 和 `my_list` 指向同一个列表对象。
 3.  在函数内部通过 `some_list` 修改列表，函数外部的 `my_list` 也会反映这个变化。
 
-![](img/02a9bfd4fcc8929b9a0331d228f60aa1_5.png)
 
 **重要结论：** 在Python中，赋值 (`=`) 和参数传递创建的都是**引用副本**，而非对象副本。
 
@@ -108,7 +105,6 @@ print(my_list)  # 输出：[1, 2, 3, 42]
 
 既然赋值不创建新对象，那么何时才会创建新对象呢？本节我们来看看哪些操作会真正在堆上创建新对象。
 
-![](img/02a9bfd4fcc8929b9a0331d228f60aa1_7.png)
 
 **会创建新对象的操作（产生独立数据）：**
 *   **字面量创建**：`[]`, `{}`, `()`, `""`, `123`
@@ -146,7 +142,6 @@ z.append(4)
 *   `y` --> **另一个**列表对象 `[1, 2, 3]`
 *   `z` --> 与 `x` 指向**同一个**列表对象 `[1, 2, 3, 4]`
 
-![](img/02a9bfd4fcc8929b9a0331d228f60aa1_9.png)
 
 **练习题3：**
 ```python
@@ -156,7 +151,6 @@ x = nums2.pop()
 ```
 **关键点：** `nums2.pop()` 返回被移除的元素 `2` 并赋值给 `x`，同时原地修改 `nums1` 和 `nums2` 共同指向的列表。
 
-![](img/02a9bfd4fcc8929b9a0331d228f60aa1_11.png)
 
 **练习题4：**
 ```python
@@ -191,13 +185,11 @@ nums.append(f(nums))
 3.  函数返回 `1`。
 4.  `nums.append(1)` 将 `1` 追加到列表末尾，列表最终变为 `[2, 3, 1]`。
 
-![](img/02a9bfd4fcc8929b9a0331d228f60aa1_13.png)
 
 ## 记录类（Record Class）示例
 
 我们之前介绍了 `namedtuple`，现在看看它的可变版本——记录类。它结合了定义新类型和可变性的优点。
 
-![](img/02a9bfd4fcc8929b9a0331d228f60aa1_15.png)
 
 ```python
 from recordclass import recordclass
@@ -240,7 +232,6 @@ print(x is y)  # False，可能是两个不同的对象（取决于Python实现�
 ```
 **注意：** 驻留是解释器的内部优化行为，不应在编程中依赖 `is` 进行值比较，而应始终使用 `==`。
 
-![](img/02a9bfd4fcc8929b9a0331d228f60aa1_17.png)
 
 ## 数据复制：浅拷贝与深拷贝
 
@@ -263,7 +254,6 @@ shallow_copy = copy.copy(original)  # 或 original[:] 对于列表
 # shallow_copy 是一个新列表，但它的两个元素指向与原列表相同的两个字典
 ```
 
-![](img/02a9bfd4fcc8929b9a0331d228f60aa1_19.png)
 
 ### 3. 深拷贝（Deep Copy）
 创建**新对象**，并递归地复制所有嵌套的可变对象。生成一个完全独立的副本。
@@ -274,7 +264,6 @@ deep_copy = copy.deepcopy(original)
 # deep_copy 是一个新列表，它的两个元素也是全新的字典对象
 ```
 
-![](img/02a9bfd4fcc8929b9a0331d228f60aa1_21.png)
 
 **深度（Depth）概念：** 指从顶层变量访问到目标数据需要经过的引用层级。深拷贝会复制所有深度的数据。
 
@@ -283,7 +272,6 @@ deep_copy = copy.deepcopy(original)
 浅拷贝只复制第一层，深拷贝复制所有层。如果想精确复制到第N层，可以组合使用浅拷贝和循环。
 
 
-![](img/02a9bfd4fcc8929b9a0331d228f60aa1_23.png)
 
 ```python
 import copy
@@ -301,7 +289,6 @@ for i in range(len(original)):
 ```
 经过上述操作，`custom_copy` 是一个新列表，其中的每个字典也是新字典，但字典内的字符串（如 `‘A‘`）可能仍与原始对象共享（因为字符串不可变，共享是安全且高效的）。
 
-![](img/02a9bfd4fcc8929b9a0331d228f60aa1_25.png)
 
 ## 拷贝方式的选择与应用场景
 
@@ -310,7 +297,6 @@ for i in range(len(original)):
 ### 场景一：仅读取数据 -> 使用引用复制
 **任务：** 查找最高分，不修改数据。
 
-![](img/02a9bfd4fcc8929b9a0331d228f60aa1_27.png)
 
 ```python
 def max_score(people_list):

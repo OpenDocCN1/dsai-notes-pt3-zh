@@ -1,10 +1,7 @@
 #  078：认识课程讲师诺亚·吉夫特 👨‍🏫
 
-![](img/cd280811a3f3543e4bf14b8accbcbbbc_0.png)
 
-![](img/cd280811a3f3543e4bf14b8accbcbbbc_1.png)
 
-![](img/cd280811a3f3543e4bf14b8accbcbbbc_0.png)
 
 ![](img/cd280811a3f3543e4bf14b8accbcbbbc_1.png)
 

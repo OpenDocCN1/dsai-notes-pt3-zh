@@ -40,7 +40,6 @@ jupyter notebook
 
 ## 总结
 
-![](img/7e33dbfa41d7d26172b78cfceac465b1_6.png)
 
 ![](img/7e33dbfa41d7d26172b78cfceac465b1_7.png)
 

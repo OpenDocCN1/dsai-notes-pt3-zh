@@ -4,42 +4,29 @@
 
 ## 学生项目展示
 
-![](img/c8bc2c339aa7328daf70f6f6aa76b35c_1.png)
 
-![](img/c8bc2c339aa7328daf70f6f6aa76b35c_2.png)
 
-![](img/c8bc2c339aa7328daf70f6f6aa76b35c_3.png)
 
 上一节我们介绍了课程背景，本节中我们来看看学生们在过去一周里完成的一些出色工作。其中许多项目已经在互联网上广泛传播。
 
 以下是几个值得关注的示例：
 
 *   **Tyler的可视化项目**：Tyler创建了一个合成数据集，其中自变量是X和Y坐标，因变量是颜色。他首先构建了一个决策树模型，并成功绘制了其决策边界。接着，他通过重采样生成了多棵树，并可视化展示了**装袋法（Bagging）** 和随机森林的平均效果。这个项目通过图像直观地解释了复杂的集成学习概念。
-    ![](img/c8bc2c339aa7328daf70f6f6aa76b35c_1.png)
     ![](img/c8bc2c339aa7328daf70f6f6aa76b35c_2.png)
     ![](img/c8bc2c339aa7328d8af70f6f6aa76b35c_3.png)
 
 *   **Jason的Parfit库**：Jason创建了一个名为Parfit的新库，用于**并行化拟合多个模型以进行超参数选择**。该库提供了清晰的API，并采用了我们几周前学习的正确验证集技术。其代码简洁、文档完善，便于他人使用。
 
-![](img/c8bc2c339aa7328daf70f6f6aa76b35c_5.png)
 
 *   **Vannay的组合应用**：Vannay将Parfit库与上节课学习的加速SGD分类方法相结合，使用Parfit来寻找SGD逻辑回归的最佳参数。
 
-![](img/c8bc2c339aa7328daf70f6f6aa76b35c_7.png)
 
-![](img/c8bc2c339aa7328daf70f6f6aa76b35c_8.png)
 
-![](img/c8bc2c339aa7328daf70f6f6aa76b35c_10.png)
 
-![](img/c8bc2c339aa7328daf70f6f6aa76b35c_12.png)
 
 *   **Prince的随机森林解读**：Prince总结并详细解释了随机森林的各种解读方法（如特征重要性、树解释器），并提供了从零实现的代码。他还展示了如何将树解释器的输出与另一位学生Chris构建的瀑布图包结合，进行可视化。
-    ![](img/c8bc2c339aa7328daf70f6f6aa76b35c_5.png)
 
 *   **Devveche的Kaggle内核**：Devveche在一个极具挑战性的Kaggle竞赛（检测冰山与船只）中，处理了难以可视化的双通道卫星雷达数据。他推导了雷达散射公式，并编写代码重建了3D冰山或船只图像，然后构建神经网络进行解读。
-    ![](img/c8bc2c339aa7328daf70f6f6aa76b35c_7.png)
-    ![](img/c8bc2c339aa7328daf70f6f6aa76b35c_8.png)
-    ![](img/c8bc2c339aa7328daf70f6f6aa76b35c_10.png)
 
 这些项目表明，将所学知识付诸实践并分享给社区，是巩固学习和获得反馈的极佳方式。
 
@@ -106,11 +93,8 @@ preds = net2(x_var) # 调用网络，执行前向传播
 
 ### 扩展：添加隐藏层
 
-![](img/c8bc2c339aa7328daf70f6f6aa76b35c_14.png)
 
-![](img/c8bc2c339aa7328daf70f6f6aa76b35c_16.png)
 
-![](img/c8bc2c339aa7328daf70f6f6aa76b35c_18.png)
 
 将逻辑回归扩展为具有一个隐藏层的神经网络非常简单。只需在`nn.Sequential`中添加更多的线性层和非线性激活函数（如ReLU）。
 

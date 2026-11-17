@@ -2,17 +2,12 @@
 
 在本节课中，我们将要学习 PyTorch 中自动微分的基本概念。我们将了解计算图是如何构建的，以及如何使用 `autograd` API 来计算梯度。这些知识是理解后续模型训练的基础。
 
-![](img/e96b383625fca09e0a7df74bab6e9989_1.png)
 
-![](img/e96b383625fca09e0a7df74bab6e9989_2.png)
 
-![](img/e96b383625fca09e0a7df74bab6e9989_3.png)
 
 ---
 
-![](img/e96b383625fca09e0a7df74bab6e9989_5.png)
 
-![](img/e96b383625fca09e0a7df74bab6e9989_7.png)
 
 上一节我们介绍了计算图的概念，本节中我们来看看如何在 PyTorch 中具体实现它。
 
@@ -38,7 +33,6 @@ a = F.relu(z)
 
 当我们运行上述代码时，PyTorch 会在后台创建一个类似下图的内部计算图。
 
-![](img/e96b383625fca09e0a7df74bab6e9989_1.png)
 
 ---
 
@@ -81,11 +75,9 @@ grad_w_custom = torch.autograd.grad(outputs=a_custom, inputs=w, retain_graph=Tru
 
 ---
 
-![](img/e96b383625fca09e0a7df74bab6e9989_9.png)
 
 本节课中我们一起学习了 PyTorch 自动微分的核心机制。我们了解到：
 
-![](img/e96b383625fca09e0a7df74bab6e9989_11.png)
 
 1.  通过设置 `requires_grad=True` 来声明需要计算梯度的张量。
 2.  PyTorch 会为此自动构建计算图。

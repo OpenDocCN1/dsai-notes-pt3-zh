@@ -1,6 +1,5 @@
 #  127：Azure认证简介 🎓
 
-![](img/97ae74dd1ae2f94f0669dd245e48bc81_0.png)
 
 ![](img/97ae74dd1ae2f94f0669dd245e48bc81_1.png)
 

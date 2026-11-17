@@ -1,6 +1,5 @@
 # 1：L1 - 深度学习计算机视觉介绍 🧠
 
-![](img/a2347d4c85f317ca53ca8da032360a6c_0.png)
 
 ![](img/a2347d4c85f317ca53ca8da032360a6c_0.png)
 
@@ -70,6 +69,5 @@
 
 好的，下节课见。
 
-![](img/a2347d4c85f317ca53ca8da032360a6c_2.png)
 
 ![](img/a2347d4c85f317ca53ca8da032360a6c_2.png)

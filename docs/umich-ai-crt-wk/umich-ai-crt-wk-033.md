@@ -43,7 +43,6 @@ Shimon使用的隐马尔可夫模型是这类系统的一个复杂得多的变�
 
 ---
 
-![](img/8724e62fb8b2c297aa3a6ef6db9eb0d3_3.png)
 
 ![](img/8724e62fb8b2c297aa3a6ef6db9eb0d3_4.png)
 

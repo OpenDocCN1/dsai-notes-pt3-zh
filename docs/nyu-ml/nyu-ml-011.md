@@ -1,6 +1,5 @@
 # 11：分类决策树与优化理论回顾 🌳
 
-![](img/87d31aa83b168b3b70a725b27b58fb7a_1.png)
 
 ![](img/87d31aa83b168b3b70a725b27b58fb7a_2.png)
 
@@ -32,7 +31,6 @@ $$k(m) = \arg\max_k \hat{p}_{mk}$$
 
 ![](img/87d31aa83b168b3b70a725b27b58fb7a_4.png)
 
-![](img/87d31aa83b168b3b70a725b27b58fb7a_6.png)
 
 以下是几种常见的节点不纯度度量（以二分类为例，其中 $p$ 是正类样本比例）：
 *   **误分类错误率**： $1 - \max(p, 1-p)$
@@ -46,9 +44,7 @@ $$\text{不纯度} = \frac{n_L}{n_L + n_R} \cdot \text{不纯度}(R_L) + \frac{n
 
 我们遍历所有可能的特征和分割点，选择使该加权不纯度最小的分割。
 
-![](img/87d31aa83b168b3b70a725b27b58fb7a_8.png)
 
-![](img/87d31aa83b168b3b70a725b27b58fb7a_10.png)
 
 关于寻找分割点的技巧：对于连续特征，我们只需要在训练样本在该特征上的取值之间进行检查，因为在这些值之间移动分割点不会改变训练数据的划分结果。
 
@@ -92,7 +88,6 @@ $$p^* = \min_w \max_{\lambda \geq 0} L(w, \lambda)$$
 
 ![](img/87d31aa83b168b3b70a725b27b58fb7a_20.png)
 
-![](img/87d31aa83b168b3b70a725b27b58fb7a_22.png)
 
 交换最小化和最大化的顺序，得到对偶问题：
 $$d^* = \max_{\lambda \geq 0} \min_w L(w, \lambda)$$
@@ -110,13 +105,10 @@ $$\lambda^* (\Omega(w^*) - R) = 0$$
 
 这意味着，如果约束不是紧的（即 $\Omega(w^*) < R$），则必有 $\lambda^* = 0$；如果 $\lambda^* > 0$，则约束必是紧的（即 $\Omega(w^*) = R$）。
 
-![](img/87d31aa83b168b3b70a725b27b58fb7a_24.png)
 
 ---
 
-![](img/87d31aa83b168b3b70a725b27b58fb7a_26.png)
 
-![](img/87d31aa83b168b3b70a725b27b58fb7a_28.png)
 
 ## 总结
 

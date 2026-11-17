@@ -1,90 +1,55 @@
 # 114：L54.2 - 字节对编码（BPE）详解 🧩
 
-![](img/8180bfe6a9e9bf5f58c1be893aad1086_1.png)
 
 在本节课中，我们将要学习一种名为**字节对编码（Byte Pair Encoding, BPE）**的自然语言处理技术。BPE是一种用于创建子词单元的数据压缩算法，它能有效解决机器翻译等任务中因未知词过多而导致翻译质量下降的问题。我们将从BPE的基本概念出发，通过一个具体例子来理解其工作原理，并探讨它在实际应用中的优势。
 
-![](img/8180bfe6a9e9bf5f58c1be893aad1086_2.png)
 
-![](img/8180bfe6a9e9bf5f58c1be893aad1086_3.png)
 
-![](img/8180bfe6a9e9bf5f58c1be893aad1086_4.png)
 
-![](img/8180bfe6a9e9bf5f58c1be893aad1086_5.png)
 
-![](img/8180bfe6a9e9bf5f58c1be893aad1086_6.png)
 
-![](img/8180bfe6a9e9bf5f58c1be893aad1086_7.png)
 
-![](img/8180bfe6a9e9bf5f58c1be893aad1086_8.png)
 
-![](img/8180bfe6a9e9bf5f58c1be893aad1086_9.png)
 
-![](img/8180bfe6a9e9bf5f58c1be893aad1086_10.png)
 
 ---
 
-![](img/8180bfe6a9e9bf5f58c1be893aad1086_11.png)
 
 ## 什么是字节对编码（BPE）？🤔
 
-![](img/8180bfe6a9e9bf5f58c1be893aad1086_13.png)
 
 上一节我们提到了未知词对翻译质量的影响。本节中，我们来看看BPE如何解决这个问题。
 
-![](img/8180bfe6a9e9bf5f58c1be893aad1086_14.png)
 
-![](img/8180bfe6a9e9bf5f58c1be893aad1086_15.png)
 
-![](img/8180bfe6a9e9bf5f58c1be893aad1086_16.png)
 
-![](img/8180bfe6a9e9bf5f58c1be893aad1086_17.png)
 
-![](img/8180bfe6a9e9bf5f58c1be893aad1086_18.png)
 
-![](img/8180bfe6a9e9bf5f58c1be893aad1086_19.png)
 
-![](img/8180bfe6a9e9bf5f58c1be893aad1086_20.png)
 
-![](img/8180bfe6a9e9bf5f58c1be893aad1086_21.png)
 
-![](img/8180bfe6a9e9bf5f58c1be893aad1086_22.png)
 
 BPE是一种古老的**数据压缩算法**。在自然语言处理（NLP）或机器翻译的上下文中，一个“字节”通常指代一个**字符**或一串字符序列。BPE的核心思想是：**迭代地将序列中出现频率最高的字符对（或字节对）替换为一个新的、未使用过的符号**。通过这种方式，我们可以将字符合并，形成有意义的子词单元。这些子词单元不一定需要具备传统词典中的含义，只要它们对任务（如翻译）有用即可。
 
-![](img/8180bfe6a9e9bf5f58c1be893aad1086_23.png)
 
-![](img/8180bfe6a9e9bf5f58c1be893aad1086_24.png)
 
-![](img/8180bfe6a9e9bf5f58c1be893aad1086_26.png)
 
 ---
 
-![](img/8180bfe6a9e9bf5f58c1be893aad1086_27.png)
 
-![](img/8180bfe6a9e9bf5f58c1be893aad1086_28.png)
 
-![](img/8180bfe6a9e9bf5f58c1be893aad1086_29.png)
 
 ## BPE算法流程与示例 📝
 
 理解了BPE的基本概念后，本节我们通过一个具体例子来演示其算法流程。
 
-![](img/8180bfe6a9e9bf5f58c1be893aad1086_31.png)
 
-![](img/8180bfe6a9e9bf5f58c1be893aad1086_32.png)
 
-![](img/8180bfe6a9e9bf5f58c1be893aad1086_33.png)
 
-![](img/8180bfe6a9e9bf5f58c1be893aad1086_34.png)
 
-![](img/8180bfe6a9e9bf5f58c1be893aad1086_35.png)
 
-![](img/8180bfe6a9e9bf5f58c1be893aad1086_36.png)
 
-![](img/8180bfe6a9e9bf5f58c1be893aad1086_37.png)
 
-![](img/8180bfe6a9e9bf5f58c1be893aad1086_38.png)
 
 假设我们有一个小型词典，包含以下单词及其在语料库中的出现频率：
 *   `low`: 出现 5 次
@@ -92,13 +57,9 @@ BPE是一种古老的**数据压缩算法**。在自然语言处理（NLP）或�
 *   `newest`: 出现 6 次
 *   `widest`: 出现 3 次
 
-![](img/8180bfe6a9e9bf5f58c1be893aad1086_39.png)
 
-![](img/8180bfe6a9e9bf5f58c1be893aad1086_40.png)
 
-![](img/8180bfe6a9e9bf5f58c1be893aad1086_41.png)
 
-![](img/8180bfe6a9e9bf5f58c1be893aad1086_42.png)
 
 首先，我们在每个单词的字符间添加空格，并在末尾添加一个特殊的“词尾”符号（例如 `</w>`）。处理后的初始状态如下：
 
@@ -109,49 +70,31 @@ n e w e s t </w>
 w i d e s t </w>
 ```
 
-![](img/8180bfe6a9e9bf5f58c1be893aad1086_44.png)
 
-![](img/8180bfe6a9e9bf5f58c1be893aad1086_45.png)
 
-![](img/8180bfe6a9e9bf5f58c1be893aad1086_46.png)
 
-![](img/8180bfe6a9e9bf5f58c1be893aad1086_47.png)
 
-![](img/8180bfe6a9e9bf5f58c1be893aad1086_48.png)
 
-![](img/8180bfe6a9e9bf5f58c1be893aad1086_49.png)
 
-![](img/8180bfe6a9e9bf5f58c1be893aad1086_50.png)
 
-![](img/8180bfe6a9e9bf5f58c1be893aad1086_51.png)
 
 以下是BPE算法的核心步骤：
 
-![](img/8180bfe6a9e9bf5f58c1be893aad1086_52.png)
 
-![](img/8180bfe6a9e9bf5f58c1be893aad1086_53.png)
 
-![](img/8180bfe6a9e9bf5f58c1be893aad1086_54.png)
 
-![](img/8180bfe6a9e9bf5f58c1be893aad1086_55.png)
 
 1.  **统计频率**：统计所有相邻字符对的出现频率。
 2.  **合并最高频对**：找到出现频率最高的字符对，将它们合并成一个新的符号。
 3.  **重复迭代**：重复步骤1和2，直到达到预设的合并次数（这是一个超参数）。
 
-![](img/8180bfe6a9e9bf5f58c1be893aad1086_57.png)
 
-![](img/8180bfe6a9e9bf5f58c1be893aad1086_58.png)
 
-![](img/8180bfe6a9e9bf5f58c1be893aad1086_59.png)
 
-![](img/8180bfe6a9e9bf5f58c1be893aad1086_60.png)
 
 让我们手动模拟这个过程：
 
-![](img/8180bfe6a9e9bf5f58c1be893aad1086_61.png)
 
-![](img/8180bfe6a9e9bf5f58c1be893aad1086_62.png)
 
 *   **第一轮合并**：统计发现，字符对 `e` 和 `s`（即 `es`）总共出现了 9 次（在 `newest` 和 `widest` 中），频率最高。我们将其合并为 `es`。
     ```
@@ -178,41 +121,25 @@ w i d e s t </w>
 
 经过多轮合并（次数由我们设定），我们最终会得到一个新的子词词典，例如：`low`, `low er</w>`, `new est</w>`, `wid est</w>`。这些子词单元就可以作为我们模型的新“词汇”进行词嵌入训练。
 
-![](img/8180bfe6a9e9bf5f58c1be893aad1086_64.png)
 
-![](img/8180bfe6a9e9bf5f58c1be893aad1086_65.png)
 
-![](img/8180bfe6a9e9bf5f58c1be893aad1086_66.png)
 
-![](img/8180bfe6a9e9bf5f58c1be893aad1086_67.png)
 
-![](img/8180bfe6a9e9bf5f58c1be893aad1086_68.png)
 
-![](img/8180bfe6a9e9bf5f58c1be893aad1086_69.png)
 
-![](img/8180bfe6a9e9bf5f58c1be893aad1086_70.png)
 
-![](img/8180bfe6a9e9bf5f58c1be893aad1086_71.png)
 
 ---
 
-![](img/8180bfe6a9e9bf5f58c1be893aad1086_72.png)
 
-![](img/8180bfe6a9e9bf5f58c1be893aad1086_73.png)
 
-![](img/8180bfe6a9e9bf5f58c1be893aad1086_74.png)
 
-![](img/8180bfe6a9e9bf5f58c1be893aad1086_75.png)
 
 ## 如何处理未知词？❓
 
-![](img/8180bfe6a9e9bf5f58c1be893aad1086_77.png)
 
-![](img/8180bfe6a9e9bf5f58c1be893aad1086_78.png)
 
-![](img/8180bfe6a9e9bf5f58c1be893aad1086_79.png)
 
-![](img/8180bfe6a9e9bf5f58c1be893aad1086_80.png)
 
 ![](img/8180bfe6a9e9bf5f58c1be893aad1086_81.png)
 

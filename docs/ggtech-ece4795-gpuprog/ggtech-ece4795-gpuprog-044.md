@@ -119,7 +119,6 @@ public sealed class MyCustomEffectRenderer : PostProcessEffectRenderer<MyCustomE
 ![](img/9a6bfcd9ed6c501a9ca7627f2e52a5c6_13.png)
 
 
-![](img/9a6bfcd9ed6c501a9ca7627f2e52a5c6_14.png)
 
 ![](img/9a6bfcd9ed6c501a9ca7627f2e52a5c6_16.png)
 

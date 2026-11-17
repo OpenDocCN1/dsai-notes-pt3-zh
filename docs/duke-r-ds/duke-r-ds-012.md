@@ -1,6 +1,5 @@
 #  012：星球大战角色分析 🎬
 
-![](img/64940811f5165d7b4e9baf42a853954b_0.png)
 
 ![](img/64940811f5165d7b4e9baf42a853954b_1.png)
 
@@ -25,14 +24,12 @@ glimpse(starwars)
 
 以下是初始代码，它绘制了角色的体重（`mass`）与身高（`height`）的关系：
 
-![](img/64940811f5165d7b4e9baf42a853954b_3.png)
 
 ```r
 ggplot(data = starwars, aes(x = height, y = mass)) +
   geom_point()
 ```
 
-![](img/64940811f5165d7b4e9baf42a853954b_4.png)
 
 我们需要将性别（`gender`）变量映射到颜色（`color`）美学属性上。由于这是将数据框中的一列映射到图表的美学元素，因此代码应放在`aes()`函数内。
 
@@ -60,7 +57,6 @@ ggplot(data = starwars, aes(x = height, y = mass)) +
 
 现在我们已经创建了基本的图表，接下来需要为其添加清晰的标签，使图表更易读。这个练习要求我们为图表添加标题、坐标轴标签，并更新图例标题。
 
-![](img/64940811f5165d7b4e9baf42a853954b_6.png)
 
 我们基于练习一的图表（按性别着色）进行添加。在ggplot2中，使用`+`操作符来叠加图层，`labs()`函数用于添加标签。
 
@@ -75,7 +71,6 @@ ggplot(data = starwars, aes(x = height, y = mass, color = gender)) +
   )
 ```
 
-![](img/64940811f5165d7b4e9baf42a853954b_8.png)
 
 在迭代构建可视化图表时，查阅数据文档很重要。例如，我们从帮助文档得知`height`以厘米为单位，`mass`是体重（千克）。我们根据这些信息更新了坐标轴标签。同样，要修改图例标题，需要在`labs()`函数中引用对应的美学映射名称（这里是`color`）。
 

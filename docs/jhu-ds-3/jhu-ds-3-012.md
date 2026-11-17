@@ -1,24 +1,17 @@
 # 012：从网络读取数据 🌐
 
-![](img/638f563f38e8b3eb4d0f7c21d2a22ad8_0.png)
 
-![](img/638f563f38e8b3eb4d0f7c21d2a22ad8_2.png)
 
 在本节课中，我们将要学习如何从网络上读取数据。网络数据来源广泛，本节课将主要聚焦于从网站中抓取数据，并简要介绍如何使用API以及进行身份验证。后续会有专门的课程深入讲解API部分。
 
-![](img/638f563f38e8b3eb4d0f7c21d2a22ad8_3.png)
 
-![](img/638f563f38e8b3eb4d0f7c21d2a22ad8_4.png)
 
 ## 什么是网络抓取？🕸️
 
 上一节我们介绍了课程概述，本节中我们来看看网络抓取的具体定义。
 
-![](img/638f563f38e8b3eb4d0f7c21d2a22ad8_6.png)
 
-![](img/638f563f38e8b3eb4d0f7c21d2a22ad8_7.png)
 
-![](img/638f563f38e8b3eb4d0f7c21d2a22ad8_8.png)
 
 网络抓取是指通过编程方式从网站的HTML代码或URL中提取数据。这是一种获取数据的有效方式。
 
@@ -26,60 +19,43 @@
 
 ## 网络抓取的注意事项 ⚠️
 
-![](img/638f563f38e8b3eb4d0f7c21d2a22ad8_10.png)
 
-![](img/638f563f38e8b3eb4d0f7c21d2a22ad8_11.png)
 
 了解了网络抓取的基本概念后，我们需要注意一些重要事项。
 
 许多，甚至可以说几乎所有网站，都包含你可能希望通过编程方式读取的信息。然而，在某些情况下，这可能会违反网站的服务条款。
 
-![](img/638f563f38e8b3eb4d0f7c21d2a22ad8_13.png)
 
 以下是需要注意的关键点：
 *   一些网站明确声明不希望被爬取。如果你尝试抓取这些网站的数据，将自行承担风险。
 *   如果你尝试过快地读取过多页面，一个非常常见的后果是你的IP地址可能会被封锁。
 *   如果你从网站读取了大量专有信息，可能会遇到更大的麻烦。
 
-![](img/638f563f38e8b3eb4d0f7c21d2a22ad8_15.png)
 
-![](img/638f563f38e8b3eb4d0f7c21d2a22ad8_16.png)
 
 因此，在决定从网站抓取数据时，需要谨慎。但总体而言，这仍然是一种快速收集大量数据的好方法。
 
-![](img/638f563f38e8b3eb4d0f7c21d2a22ad8_17.png)
 
-![](img/638f563f38e8b3eb4d0f7c21d2a22ad8_18.png)
 
 ## 示例：从Google Scholar抓取数据 📚
 
 在了解了注意事项后，我们来看一个具体的例子：如何从我的Google Scholar页面编程提取数据。
 
-![](img/638f563f38e8b3eb4d0f7c21d2a22ad8_20.png)
 
-![](img/638f563f38e8b3eb4d0f7c21d2a22ad8_21.png)
 
-![](img/638f563f38e8b3eb4d0f7c21d2a22ad8_22.png)
 
-![](img/638f563f38e8b3eb4d0f7c21d2a22ad8_23.png)
 
 这个页面展示了我发表的论文信息以及被引用次数，这是学术界关心的一类数据。
 
 ### 方法一：使用 `readLines` 和连接
 
-![](img/638f563f38e8b3eb4d0f7c21d2a22ad8_25.png)
 
-![](img/638f563f38e8b3eb4d0f7c21d2a22ad8_26.png)
 
-![](img/638f563f38e8b3eb4d0f7c21d2a22ad8_27.png)
 
-![](img/638f563f38e8b3eb4d0f7c21d2a22ad8_28.png)
 
 首先，我们将使用 `readLines` 命令从互联网获取数据。这是一种方法。
 
-![](img/638f563f38e8b3eb4d0f7c21d2a22ad8_29.png)
 
-![](img/638f563f38e8b3eb4d0f7c21d2a22ad8_30.png)
 
 以下是操作步骤：
 1.  使用 `url()` 函数打开到特定URL的连接。你需要传入你想建立连接的URL名称。
@@ -99,23 +75,15 @@
 
 ### 方法二：使用 `XML` 包解析
 
-![](img/638f563f38e8b3eb4d0f7c21d2a22ad8_32.png)
 
-![](img/638f563f38e8b3eb4d0f7c21d2a22ad8_33.png)
 
 处理上述问题的一种方法是使用我们之前见过的 `XML` 包。
 
-![](img/638f563f38e8b3eb4d0f7c21d2a22ad8_34.png)
 
-![](img/638f563f38e8b3eb4d0f7c21d2a22ad8_35.png)
 
-![](img/638f563f38e8b3eb4d0f7c21d2a22ad8_36.png)
 
-![](img/638f563f38e8b3eb4d0f7c21d2a22ad8_37.png)
 
-![](img/638f563f38e8b3eb4d0f7c21d2a22ad8_38.png)
 
-![](img/638f563f38e8b3eb4d0f7c21d2a22ad8_39.png)
 
 我们可以使用相同的URL，利用 `XML` 包并再次解析HTML，使用 `htmlTreeParse` 获取完整的结构。
 ```r
@@ -131,13 +99,9 @@ xpathSApply(html, "//title", xmlValue)
 xpathSApply(html, "//td[@id='col-citedby']", xmlValue)
 ```
 
-![](img/638f563f38e8b3eb4d0f7c21d2a22ad8_40.png)
 
-![](img/638f563f38e8b3eb4d0f7c21d2a22ad8_41.png)
 
-![](img/638f563f38e8b3eb4d0f7c21d2a22ad8_42.png)
 
-![](img/638f563f38e8b3eb4d0f7c21d2a22ad8_44.png)
 
 ## 方法三：使用 `httr` 包进行GET请求 🔌
 
@@ -163,33 +127,21 @@ parsedHtml <- htmlParse(content2, asText = TRUE)
 xpathSApply(parsedHtml, "//title", xmlValue)
 ```
 
-![](img/638f563f38e8b3eb4d0f7c21d2a22ad8_46.png)
 
-![](img/638f563f38e8b3eb4d0f7c21d2a22ad8_47.png)
 
-![](img/638f563f38e8b3eb4d0f7c21d2a22ad8_48.png)
 
 ## 处理需要身份验证的网站 🔑
 
-![](img/638f563f38e8b3eb4d0f7c21d2a22ad8_49.png)
 
-![](img/638f563f38e8b3eb4d0f7c21d2a22ad8_50.png)
 
-![](img/638f563f38e8b3eb4d0f7c21d2a22ad8_51.png)
 
-![](img/638f563f38e8b3eb4d0f7c21d2a22ad8_52.png)
 
-![](img/638f563f38e8b3eb4d0f7c21d2a22ad8_53.png)
 
-![](img/638f563f38e8b3eb4d0f7c21d2a22ad8_54.png)
 
 以上就是使用 `GET` 进行与 `XML` 包类似操作的方法。在某些情况下，你可能需要处理更复杂的事情。
 
-![](img/638f563f38e8b3eb4d0f7c21d2a22ad8_55.png)
 
-![](img/638f563f38e8b3eb4d0f7c21d2a22ad8_56.png)
 
-![](img/638f563f38e8b3eb4d0f7c21d2a22ad8_57.png)
 
 如果你用浏览器导航到这个网页，会发现它需要输入用户名和密码。如果我仅尝试使用 `httr` 包中的 `GET` 命令获取该页面，会得到一个状态码为401的响应，这是因为我没有通过身份验证，无法登录。
 
@@ -205,15 +157,10 @@ names(pg2)
 content(pg2)
 ```
 
-![](img/638f563f38e8b3eb4d0f7c21d2a22ad8_59.png)
 
-![](img/638f563f38e8b3eb4d0f7c21d2a22ad8_60.png)
 
-![](img/638f563f38e8b3eb4d0f7c21d2a22ad8_61.png)
 
-![](img/638f563f38e8b3eb4d0f7c21d2a22ad8_62.png)
 
-![](img/638f563f38e8b3eb4d0f7c21d2a22ad8_63.png)
 
 ## 使用句柄保持认证状态 💾
 
@@ -227,33 +174,22 @@ pg3 <- GET(handle = google, path = "/")
 pg4 <- GET(handle = google, path = "search")
 ```
 
-![](img/638f563f38e8b3eb4d0f7c21d2a22ad8_65.png)
 
-![](img/638f563f38e8b3eb4d0f7c21d2a22ad8_66.png)
 
-![](img/638f563f38e8b3eb4d0f7c21d2a22ad8_67.png)
 
-![](img/638f563f38e8b3eb4d0f7c21d2a22ad8_68.png)
 
-![](img/638f563f38e8b3eb4d0f7c21d2a22ad8_69.png)
 
 ## 总结与进一步学习资源 📖
 
-![](img/638f563f38e8b3eb4d0f7c21d2a22ad8_70.png)
 
-![](img/638f563f38e8b3eb4d0f7c21d2a22ad8_71.png)
 
 本节课中我们一起学习了从网络读取数据的几种核心方法。
 
 R-bloggers网站有很多关于如何从网络抓取数据的好例子。如果你去R-bloggers上搜索“web scraping”，你将能够找到所有这些教程。`httr` 包的帮助文件也包含许多有用的示例，主要是玩具示例。如果你将这些与R-bloggers上更实用的例子结合起来，可以学到很多东西。此外，请关注后续关于API的课程，以了解如何以编程方式与网站的API进行交互。
 
-![](img/638f563f38e8b3eb4d0f7c21d2a22ad8_73.png)
 
-![](img/638f563f38e8b3eb4d0f7c21d2a22ad8_74.png)
 
-![](img/638f563f38e8b3eb4d0f7c21d2a22ad8_75.png)
 
-![](img/638f563f38e8b3eb4d0f7c21d2a22ad8_76.png)
 
 ![](img/638f563f38e8b3eb4d0f7c21d2a22ad8_77.png)
 

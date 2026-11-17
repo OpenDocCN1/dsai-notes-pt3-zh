@@ -43,11 +43,8 @@
 
 ---
 
-![](img/648c8a5e5fe9fb498d9ba9efd144cdf8_2.png)
 
-![](img/648c8a5e5fe9fb498d9ba9efd144cdf8_3.png)
 
-![](img/648c8a5e5fe9fb498d9ba9efd144cdf8_4.png)
 
 ## 构建Docker容器 🐳
 
@@ -79,9 +76,7 @@
 
 我们首先在本地创建虚拟环境、安装依赖并运行应用，验证了核心功能的正确性。接着，我们使用Docker命令构建了容器镜像，并通过端口映射在容器中运行了该应用，最终确认了容器化版本与本地版本功能一致。
 
-![](img/648c8a5e5fe9fb498d9ba9efd144cdf8_6.png)
 
-![](img/648c8a5e5fe9fb498d9ba9efd144cdf8_7.png)
 
 ![](img/648c8a5e5fe9fb498d9ba9efd144cdf8_8.png)
 

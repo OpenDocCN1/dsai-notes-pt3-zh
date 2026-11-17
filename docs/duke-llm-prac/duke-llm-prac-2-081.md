@@ -1,6 +1,5 @@
 # 大型语言模型实践（高级数据工程、AWS、Databricks和本地LLM）：P81：15_01_03_AWS Bedrock知识代理演示
 
-![](img/b8f0eb6d04dde35ab78ae461230dea2d_0.png)
 
 ![](img/b8f0eb6d04dde35ab78ae461230dea2d_0.png)
 
@@ -49,6 +48,5 @@
 
 本节课中，我们一起学习了如何在AWS Bedrock上配置和使用知识库。我们了解了如何设置数据源和向量引擎，测试了基础的检索功能，并最终结合Claude模型实现了检索增强生成。这项技术使你能够利用自有数据来增强大型语言模型的能力，确保其回答既具有生成模型的流畅性，又具备特定领域数据的准确性和相关性。
 
-![](img/b8f0eb6d04dde35ab78ae461230dea2d_2.png)
 
 ![](img/b8f0eb6d04dde35ab78ae461230dea2d_2.png)

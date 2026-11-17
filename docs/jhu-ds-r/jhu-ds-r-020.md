@@ -55,9 +55,7 @@ R会立即在下一行显示结果 `[1] 2`。恭喜，你的R环境已经搭建�
 
 ## 总结
 
-![](img/3d0893f739e21cade92f4aeefc143a47_2.png)
 
-![](img/3d0893f739e21cade92f4aeefc143a47_3.png)
 
 ![](img/3d0893f739e21cade92f4aeefc143a47_4.png)
 

@@ -4,65 +4,49 @@
 
 
 
-![](img/7a358eb1fbc52ac771b9ed996063deb1_1.png)
 
 欢迎来到我们的R语言Shiny与仪表盘课程。
 
 
 
-![](img/7a358eb1fbc52ac771b9ed996063deb1_1.png)
 
-![](img/7a358eb1fbc52ac771b9ed996063deb1_3.png)
 
 这是一个令人兴奋的机会，你可以借此练习已经掌握的技能，并提升与他人分享可视化成果的能力。
 
 
 
-![](img/7a358eb1fbc52ac771b9ed996063deb1_4.png)
-
-![](img/7a358eb1fbc52ac771b9ed996063deb1_3.png)
-
-![](img/7a358eb1fbc52ac771b9ed996063deb1_4.png)
 
 
 
-![](img/7a358eb1fbc52ac771b9ed996063deb1_6.png)
+
+
 
 ## 课程结构与目标 🎯
 
 上一节我们进行了课程欢迎，本节中我们来看看课程的具体安排。
 
-![](img/7a358eb1fbc52ac771b9ed996063deb1_8.png)
 
 本课程的前两周将介绍Shiny。
 
 
 
-![](img/7a358eb1fbc52ac771b9ed996063deb1_6.png)
 
 Shiny是一个用于让你的R图形变得**交互式**的工具。你很快会在接下来的视频中看到许多相关示例。
 
 
 
-![](img/7a358eb1fbc52ac771b9ed996063deb1_10.png)
 
-![](img/7a358eb1fbc52ac771b9ed996063deb1_11.png)
 
-![](img/7a358eb1fbc52ac771b9ed996063deb1_8.png)
 
 本课程的目标是让你能够搭建并运行Shiny应用。我希望你能将自己的可视化成果放入Shiny应用程序中。本课程旨在提供一份简洁实用的指南。
 
 
 
-![](img/7a358eb1fbc52ac771b9ed996063deb1_10.png)
-
-![](img/7a358eb1fbc52ac771b9ed996063deb1_13.png)
-
-![](img/7a358eb1fbc52ac771b9ed996063deb1_11.png)
 
 
 
-![](img/7a358eb1fbc52ac771b9ed996063deb1_14.png)
+
+
 
 ## 关于Shiny的学习路径 📈
 
@@ -70,49 +54,34 @@ Shiny是一个用于让你的R图形变得**交互式**的工具。你很快会�
 
 
 
-![](img/7a358eb1fbc52ac771b9ed996063deb1_13.png)
 
-![](img/7a358eb1fbc52ac771b9ed996063deb1_14.png)
 
-![](img/7a358eb1fbc52ac771b9ed996063deb1_16.png)
 
 此外，由于Shiny的学习曲线可能有些陡峭，特别是对于R语言的新用户。拥有一份像本课程试图提供的实用指南，将为你打下必要的基础。随着你经验增长并产生更多需求，你可以在此基础上深入研究该工具更高级的功能。
 
 
 
-![](img/7a358eb1fbc52ac771b9ed996063deb1_17.png)
 
-![](img/7a358eb1fbc52ac771b9ed996063deb1_16.png)
 
-![](img/7a358eb1fbc52ac771b9ed996063deb1_18.png)
 
-![](img/7a358eb1fbc52ac771b9ed996063deb1_17.png)
 
-![](img/7a358eb1fbc52ac771b9ed996063deb1_18.png)
 
-![](img/7a358eb1fbc52ac771b9ed996063deb1_20.png)
 
 因此，我们将向你介绍参考资料，这些资料能让你真正掌握Shiny的所有要素，并提供一些实用示例。
 
 
 
-![](img/7a358eb1fbc52ac771b9ed996063deb1_21.png)
 
-![](img/7a358eb1fbc52ac771b9ed996063deb1_20.png)
 
-![](img/7a358eb1fbc52ac771b9ed996063deb1_21.png)
 
-![](img/7a358eb1fbc52ac771b9ed996063deb1_23.png)
 
 但这里的重点确实是为你打下基础，以便你未来能够进行一些自主学习。
 
 
 
-![](img/7a358eb1fbc52ac771b9ed996063deb1_23.png)
 
 
 
-![](img/7a358eb1fbc52ac771b9ed996063deb1_25.png)
 
 ## 仪表盘制作 🖥️
 
@@ -120,95 +89,67 @@ Shiny是一个用于让你的R图形变得**交互式**的工具。你很快会�
 
 
 
-![](img/7a358eb1fbc52ac771b9ed996063deb1_27.png)
 
-![](img/7a358eb1fbc52ac771b9ed996063deb1_25.png)
 
-![](img/7a358eb1fbc52ac771b9ed996063deb1_28.png)
 
 我们将使用`flexdashboard`包，它本质上是我们R Markdown报告的一个特殊模板，就像我们过去所做的那样。
 
 
 
-![](img/7a358eb1fbc52ac771b9ed996063deb1_30.png)
 
-![](img/7a358eb1fbc52ac771b9ed996063deb1_27.png)
 
-![](img/7a358eb1fbc52ac771b9ed996063deb1_28.png)
 
 我们还将向你展示如何将Shiny集成到仪表盘中。
 
 
 
-![](img/7a358eb1fbc52ac771b9ed996063deb1_32.png)
 
-![](img/7a358eb1fbc52ac771b9ed996063deb1_30.png)
 
 和Shiny一样，`flexdashboard`也是一个非常强大的包，我们不会逐一介绍其每一项功能。
 
 
 
-![](img/7a358eb1fbc52ac771b9ed996063deb1_34.png)
 
-![](img/7a358eb1fbc52ac771b9ed996063deb1_32.png)
 
-![](img/7a358eb1fbc52ac771b9ed996063deb1_35.png)
 
 我们会让你快速上手，确保你掌握基本的布局，然后根据需要，你将能够使用更高级的工具。
 
 
 
-![](img/7a358eb1fbc52ac771b9ed996063deb1_34.png)
 
-![](img/7a358eb1fbc52ac771b9ed996063deb1_35.png)
 
 
 
 ## 课程作业与展望 📚
 
-![](img/7a358eb1fbc52ac771b9ed996063deb1_37.png)
 
 展望本课程，你应该注意到，第一次同伴互评作业相当直接，目的依然是确保你能搭建和运行Shiny。但第二次和第三次作业则复杂得多，因为你已经掌握了许多技能，我希望给你一个展示它们的机会。
 
 
 
-![](img/7a358eb1fbc52ac771b9ed996063deb1_38.png)
 
-![](img/7a358eb1fbc52ac771b9ed996063deb1_37.png)
 
-![](img/7a358eb1fbc52ac771b9ed996063deb1_39.png)
 
-![](img/7a358eb1fbc52ac771b9ed996063deb1_40.png)
 
-![](img/7a358eb1fbc52ac771b9ed996063deb1_38.png)
 
-![](img/7a358eb1fbc52ac771b9ed996063deb1_39.png)
 
-![](img/7a358eb1fbc52ac771b9ed996063deb1_40.png)
 
 但是，如果你将作业分解开，并仔细查看视频中以及随附代码中提供的示例，你所需的一切都会在那里，你的任务就是将它们组合起来。
 
 
 
-![](img/7a358eb1fbc52ac771b9ed996063deb1_42.png)
 
-![](img/7a358eb1fbc52ac771b9ed996063deb1_42.png)
 
 这是一门非常令人兴奋的课程，在短短几周内你将学到很多。到课程结束时，你将具备良好的基础，能够在下一门课程中为你的毕业设计完成一个原创项目。你也将能够用制作动态可视化的能力给你的朋友和同事留下深刻印象。
 
 
 
-![](img/7a358eb1fbc52ac771b9ed996063deb1_44.png)
-
-![](img/7a358eb1fbc52ac771b9ed996063deb1_45.png)
-
-![](img/7a358eb1fbc52ac771b9ed996063deb1_46.png)
 
 
 
-![](img/7a358eb1fbc52ac771b9ed996063deb1_44.png)
 
-![](img/7a358eb1fbc52ac771b9ed996063deb1_45.png)
+
+
 
 ## 总结
 

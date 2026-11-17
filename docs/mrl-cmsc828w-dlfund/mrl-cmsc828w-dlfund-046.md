@@ -1,8 +1,6 @@
 # 046：AI与虚假信息在选举中的风险
 
-![](img/77571b2c5b166ddce96f77d2c6357bdd_0.png)
 
-![](img/77571b2c5b166ddce96f77d2c6357bdd_1.png)
 
 ![](img/77571b2c5b166ddce96f77d2c6357bdd_3.png)
 

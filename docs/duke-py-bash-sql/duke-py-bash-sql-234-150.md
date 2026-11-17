@@ -1,6 +1,5 @@
 #  150：微服务的优势解析 🚀
 
-![](img/c5080c9f2bd6476a6cce66a6c74062ca_0.png)
 
 ![](img/c5080c9f2bd6476a6cce66a6c74062ca_1.png)
 

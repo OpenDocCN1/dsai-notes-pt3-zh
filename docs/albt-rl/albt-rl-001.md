@@ -1,10 +1,7 @@
 强化学习专项课程：P1-01：专业介绍
 
-![](img/cb58bc26a33e5fdc0ddd94354653640a_0.png)
 
-![](img/cb58bc26a33e5fdc0ddd94354653640a_0.png)
 
-![](img/cb58bc26a33e5fdc0ddd94354653640a_1.png)
 
 ![](img/cb58bc26a33e5fdc0ddd94354653640a_1.png)
 

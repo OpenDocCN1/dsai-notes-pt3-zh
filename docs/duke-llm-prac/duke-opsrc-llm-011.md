@@ -34,7 +34,6 @@
 
 ## 总结与核心价值
 
-![](img/ef8fe2f3eb53ff5eb52e133d066807f1_2.png)
 
 ![](img/ef8fe2f3eb53ff5eb52e133d066807f1_3.png)
 

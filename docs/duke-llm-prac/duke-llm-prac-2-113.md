@@ -1,6 +1,5 @@
 # 大型语言模型实践（高级数据工程、AWS、Databricks和本地LLM）：P113：12_01_04_安装和使用RStudio版Databricks 🖥️➡️📊
 
-![](img/4102c9ccc0a355cf882e050833795d6b_0.png)
 
 ![](img/4102c9ccc0a355cf882e050833795d6b_0.png)
 
@@ -84,7 +83,6 @@ system(“databricks clusters list”, intern = TRUE)
 
 执行后，我们应该能在输出列表中看到 `my_r_cluster`。事实上，查询结果确实显示该集群正在运行。这证明通过R语言远程管理Databricks基础设施是完全可行的。
 
-![](img/4102c9ccc0a355cf882e050833795d6b_2.png)
 
 ## 总结
 

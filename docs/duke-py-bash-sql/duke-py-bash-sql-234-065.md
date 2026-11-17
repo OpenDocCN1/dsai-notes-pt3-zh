@@ -1,6 +1,5 @@
 #  065：Linux中grep、cut、sort与unique使用 🛠️
 
-![](img/1a4aaaca864fd59d93f90dda6ec42e9d_0.png)
 
 ![](img/1a4aaaca864fd59d93f90dda6ec42e9d_1.png)
 

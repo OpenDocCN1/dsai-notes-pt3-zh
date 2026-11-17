@@ -1,6 +1,5 @@
 # 第二三部分 20：创建混淆矩阵 📊
 
-![](img/4da85706d86c65b7b21636aa7625c232_0.png)
 
 在本节课中，我们将学习如何创建和解读混淆矩阵。当我们的模型特征维度较高，难以直接可视化决策边界时，混淆矩阵是一个强大的工具，可以帮助我们直观地评估分类模型的预测结果。
 
@@ -24,11 +23,9 @@ train_conf_matrix = confusion_matrix(y_train_true, y_train_pred, labels=classifi
 test_conf_matrix = confusion_matrix(y_test_true, y_test_pred, labels=classifier.classes_)
 ```
 
-![](img/4da85706d86c65b7b21636aa7625c232_2.png)
 
 ## 可视化混淆矩阵
 
-![](img/4da85706d86c65b7b21636aa7625c232_4.png)
 
 构造好混淆矩阵后，我们可以使用`ConfusionMatrixDisplay`方法将其可视化。
 
@@ -50,7 +47,6 @@ test_conf_matrix = confusion_matrix(y_test_true, y_test_pred, labels=classifier.
 
 这些指标可以通过Scikit-learn的`classification_report`方法轻松获取。
 
-![](img/4da85706d86c65b7b21636aa7625c232_6.png)
 
 以下是生成分类报告的代码示例：
 ```python

@@ -52,7 +52,6 @@ az webapp up --name my-genai-app --resource-group myResourceGroup
 *   **测试API端点**：使用工具（如`curl`或Postman）向我们的API发送一个测试请求。
 *   **验证响应**：确保API返回了预期的、由AI模型生成的响应内容。
 
-![](img/61e7ca476b2b7dc1f66869570dc90fdc_1.png)
 
 ![](img/61e7ca476b2b7dc1f66869570dc90fdc_1.png)
 

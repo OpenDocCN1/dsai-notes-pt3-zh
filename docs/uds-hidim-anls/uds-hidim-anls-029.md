@@ -1,10 +1,7 @@
 # 029：自由概率理论与非线性问题的线性化
 
-![](img/c33d11bdac4c4ac334fc9dea95db81f7_0.png)
 
-![](img/c33d11bdac4c4ac334fc9dea95db81f7_2.png)
 
-![](img/c33d11bdac4c4ac334fc9dea95db81f7_0.png)
 
 ![](img/c33d11bdac4c4ac334fc9dea95db81f7_4.png)
 

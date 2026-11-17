@@ -1,6 +1,5 @@
 #  008：Python中的表达式语句 🐍
 
-![](img/a12b1354bce581f3a8e3a700c9d11fa3_0.png)
 
 在本节课中，我们将学习如何安装和运行IPython，使用IPython交互式shell来运行代码，并执行Python的表达式语句。
 

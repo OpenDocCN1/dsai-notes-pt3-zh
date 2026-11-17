@@ -1,6 +1,5 @@
 # 大型语言模型实践（高级数据工程、AWS、Databricks和本地LLM）：P157：56_03_02_Python实现ELO算法
 
-![](img/aaec031554c2dfa91e7eae079d26b6ee_0.png)
 
 ![](img/aaec031554c2dfa91e7eae079d26b6ee_0.png)
 

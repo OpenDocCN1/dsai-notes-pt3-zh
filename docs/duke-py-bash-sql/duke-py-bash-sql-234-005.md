@@ -1,6 +1,5 @@
 #  005：Linux Shell简介 🐧
 
-![](img/8015f22860d1712df03a5fb2a56d0d9b_0.png)
 
 ![](img/8015f22860d1712df03a5fb2a56d0d9b_1.png)
 

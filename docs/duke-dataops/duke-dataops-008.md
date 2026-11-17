@@ -1,6 +1,5 @@
 #  008：微服务运维化
 
-![](img/7fa6dc6678def0dcb52cec3923255526_0.png)
 
 ![](img/7fa6dc6678def0dcb52cec3923255526_0.png)
 

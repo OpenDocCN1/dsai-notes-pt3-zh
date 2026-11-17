@@ -16,7 +16,6 @@ CUFFT的操作并非简单的函数调用，因此拥有清晰的数据抽象非
 
 那么，如果你拥有多个GPU呢？我们之前已经有所涉及。所有支持多GPU的函数都以`cufftXt`开头。例如，`cufftXtMakePlanMany`函数，它允许你在多个GPU上进行批处理。这在多GPU环境中几乎是必须的。
 
-![](img/198af7dbbf4bec9e05fe0d356fbe04c2_1.png)
 
 ## 输入输出数据布局
 

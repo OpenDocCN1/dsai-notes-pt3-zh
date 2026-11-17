@@ -1,6 +1,5 @@
 # 20：多变量箱线图拓展
 
-![](img/3a56af09793ed30ad47e7346595398b0_0.png)
 
 ## 概述
 
@@ -90,7 +89,6 @@ plot_grid(p_box, p_dot, labels = c("A", "B"))
 
 ## 总结
 
-![](img/3a56af09793ed30ad47e7346595398b0_14.png)
 
 ![](img/3a56af09793ed30ad47e7346595398b0_15.png)
 

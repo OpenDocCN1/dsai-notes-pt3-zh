@@ -1,6 +1,5 @@
 #  030：威斯康星大学Nora Cate Schaeffer教授访谈：招募与访谈
 
-![](img/a541b8fe343619febadec1895dc6e63e_0.png)
 
 ![](img/a541b8fe343619febadec1895dc6e63e_0.png)
 

@@ -1,6 +1,5 @@
 # 014：C语言实验项目结构 🧪
 
-![](img/f7ccc694beab481bf5cfa063c50320d8_1.png)
 
 在本节课中，我们将学习约翰霍普金斯大学GPU编程课程中C语言实验项目的结构。我们将打开项目目录，逐一查看其中的关键文件，并理解每个示例代码的功能。
 
@@ -103,7 +102,6 @@
 
 两个 `execute` 函数（`execute_threads_with_atomic_bool` 和 `execute_with_atomic_thread_fence`）根据传入的线程数量变量，并行执行其关联的 `do_work` 函数。
 
-![](img/f7ccc694beab481bf5cfa063c50320d8_3.png)
 
 ![](img/f7ccc694beab481bf5cfa063c50320d8_3.png)
 

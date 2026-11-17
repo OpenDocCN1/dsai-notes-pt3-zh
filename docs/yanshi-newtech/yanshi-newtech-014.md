@@ -1,10 +1,8 @@
 # 14：Hadoop与Hadoop YARN的比较 🆚
 
-![](img/271823f55276a87ae5af598fcf84b35d_0.png)
 
 ![](img/271823f55276a87ae5af598fcf84b35d_0.png)
 
-![](img/271823f55276a87ae5af598fcf84b35d_2.png)
 
 在本节课中，我们将深入探讨Hadoop，并将其运行机制与Hadoop YARN系统进行比较。
 
@@ -16,11 +14,9 @@
 
 ## Hadoop经典架构示例
 
-![](img/271823f55276a87ae5af598fcf84b35d_4.png)
 
 上一节我们介绍了Hadoop的基本概念，本节中我们来看看其经典架构的工作流程。
 
-![](img/271823f55276a87ae5af598fcf84b35d_2.png)
 
 在这个示例中，客户端1向HDFS提交了应用1，以执行MapReduce操作。
 
@@ -36,9 +32,7 @@
 
 在继续之前，我们需要理解什么是JVM，因为它在Hadoop任务执行中扮演着关键角色。
 
-![](img/271823f55276a87ae5af598fcf84b35d_4.png)
 
-![](img/271823f55276a87ae5af598fcf84b35d_6.png)
 
 并行处理基于同时控制多个进程来操作。为了解释JVM是什么，让我们深入了解Java。Java是Oracle公司持有的商标。
 
@@ -57,7 +51,6 @@
 
 了解了经典Hadoop架构后，现在我们来看看基于YARN的现代Hadoop架构是如何工作的。
 
-![](img/271823f55276a87ae5af598fcf84b35d_6.png)
 
 以下是YARN架构的工作步骤：
 
@@ -99,9 +92,7 @@ YARN架构设计包含了强大的容错能力。
 
 ## 参考资料
 
-![](img/271823f55276a87ae5af598fcf84b35d_8.png)
 
-![](img/271823f55276a87ae5af598fcf84b35d_8.png)
 
 以下是我使用的参考资料，也推荐给你。
 

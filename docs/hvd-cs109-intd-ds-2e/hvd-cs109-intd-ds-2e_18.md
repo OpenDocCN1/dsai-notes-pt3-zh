@@ -51,7 +51,6 @@ polls_us_election_2016 |> filter(pollster == "Ipsos" & state == "U.S.") |>
  geom_line()
 ```
 
-![](img/4ba78583565a53cee24781d862265b26.png)*  *特别注意的是，月份名称被显示出来，这是一个非常方便的功能。
 
 ## 13.2 lubridate 包
 

@@ -95,11 +95,9 @@ plt.show()
 
 保存的PNG图像文件可以方便地用于提交作业、打印或包含在报告中。
 
-![](img/a4b1bed0d66f00f09a4a1ae042a535c4_5.png)
 
 ---
 
-![](img/a4b1bed0d66f00f09a4a1ae042a535c4_7.png)
 
 ## 总结
 

@@ -1,10 +1,7 @@
 # 015：TD学习的重要性
 
-![](img/8457974d53793520ffc8f42ab8d3f67d_0.png)
 
-![](img/8457974d53793520ffc8f42ab8d3f67d_1.png)
 
-![](img/8457974d53793520ffc8f42ab8d3f67d_0.png)
 
 ![](img/8457974d53793520ffc8f42ab8d3f67d_1.png)
 

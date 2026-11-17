@@ -1,6 +1,5 @@
 # 31：L18.3 - Actor-Critic 概述 🎯
 
-![](img/aaa46bbeefbff26dd59c0470f7f37a3d_1.png)
 
 在本节课中，我们将学习强化学习中的 **Actor-Critic** 方法。我们将首先介绍 **Critic** 的概念及其作用，然后讲解如何训练 Critic，最后探讨如何将 Critic 与 Actor 结合，以更有效地训练智能体。
 
@@ -12,17 +11,14 @@ Critic 的核心任务是评估一个 Actor 的好坏。具体来说，给定一
 
 Critic 有多种形式。有些 Critic 仅根据当前状态进行判断，有些则同时考虑状态和 Actor 采取的动作。为了更具体地理解，我们将介绍一个在实际作业中会用到的重要概念：**价值函数（Value Function）**。
 
-![](img/aaa46bbeefbff26dd59c0470f7f37a3d_3.png)
 
 ### 价值函数（Value Function）
 
-![](img/aaa46bbeefbff26dd59c0470f7f37a3d_5.png)
 
 价值函数用 **V^θ(s)** 表示。其输入是状态 **s**（例如当前游戏画面），输出是一个标量值。上标 θ 表示这个价值函数是针对参数为 θ 的特定 Actor 进行评估的。
 
 这个标量值的含义是：当 Actor θ 观察到状态 **s** 后，预期能获得的 **折现累积奖励（Discounted Cumulative Reward）**。折现累积奖励的计算公式为：
 
-![](img/aaa46bbeefbff26dd59c0470f7f37a3d_7.png)
 
 **G = R_t + γR_{t+1} + γ²R_{t+2} + ...**
 
@@ -79,13 +75,11 @@ MC 和 TD 方法基于不同的假设，即使对同一组数据，计算出的�
 
 这个公式直接计算了执行动作 **a_t** 所带来的期望奖励增量，是 Actor-Critic 方法中常用的核心公式。
 
-![](img/aaa46bbeefbff26dd59c0470f7f37a3d_9.png)
 
 ---
 
 ## 实用技巧：网络参数共享 💡
 
-![](img/aaa46bbeefbff26dd59c0470f7f37a3d_11.png)
 
 在实现 Actor-Critic 时，Actor 和 Critic 都是神经网络，且输入相同（都是状态 **s**）。因此，一个实用的技巧是让它们共享前面的网络层（例如用于处理图像输入的卷积层），只在最后的分支上产生不同的输出：
 *   Actor 分支输出每个动作的概率分布。
@@ -93,7 +87,6 @@ MC 和 TD 方法基于不同的假设，即使对同一组数据，计算出的�
 
 这样做可以有效减少参数量，并让特征提取更高效。
 
-![](img/aaa46bbeefbff26dd59c0470f7f37a3d_13.png)
 
 ---
 
@@ -110,7 +103,6 @@ MC 和 TD 方法基于不同的假设，即使对同一组数据，计算出的�
 3.  如何利用 Critic 计算 **优势函数（A_t）**，从而更有效地训练 Actor。
 4.  Actor-Critic 的实用实现技巧：**网络参数共享**。
 
-![](img/aaa46bbeefbff26dd59c0470f7f37a3d_15.png)
 
 ![](img/aaa46bbeefbff26dd59c0470f7f37a3d_16.png)
 

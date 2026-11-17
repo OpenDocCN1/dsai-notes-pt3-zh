@@ -6,7 +6,6 @@
 
 ## 概述
 
-![](img/ac0144951f5acbecff6d25b189f870a2_1.png)
 
 Pandas 模块提供了多种数据分析工具，它可以连接并与数据库交互，也能读写 Excel 文件和 CSV 文件。导入 Pandas 模块后，我们可以使用 `read_csv` 方法将 CSV 文件读取到一个数据框中。
 
@@ -20,7 +19,6 @@ Pandas 模块提供了多种数据分析工具，它可以连接并与数据库�
 
 以下是数据集中各个 CSV 文件的说明。
 
-![](img/ac0144951f5acbecff6d25b189f870a2_3.png)
 
 ### 产品文件 (`products.csv`)
 此文件包含所购产品的信息。
@@ -57,7 +55,6 @@ Pandas 模块提供了多种数据分析工具，它可以连接并与数据库�
 
 ---
 
-![](img/ac0144951f5acbecff6d25b189f870a2_5.png)
 
 ## 加载与读取数据
 
@@ -68,7 +65,6 @@ import pandas as pd
 df = pd.read_csv('products.csv')
 ```
 
-![](img/ac0144951f5acbecff6d25b189f870a2_7.png)
 
 我们可以看到 `df` 的类型是一个数据框。
 
@@ -107,7 +103,6 @@ df.dtypes
 ### Pandas 数据类型简介
 以下是一个描述数据框中可存储的不同数据类型的实用表格。
 
-![](img/ac0144951f5acbecff6d25b189f870a2_9.png)
 
 *   **`object`**: Python 字符串或混合类型，包含文本或混合的数字与非数字值。
 *   **`int64`**: Python `int` 或整数。
@@ -120,7 +115,6 @@ df.dtypes
 ### 获取数值摘要
 `describe` 方法为数据框中的数值提供各种汇总统计信息。
 
-![](img/ac0144951f5acbecff6d25b189f870a2_11.png)
 
 ```python
 df.describe()
@@ -140,7 +134,6 @@ df.head()      # 显示前5行
 df.head(50)    # 显示前50行
 ```
 
-![](img/ac0144951f5acbecff6d25b189f870a2_13.png)
 
 ### 查看尾部数据
 `tail` 方法默认显示数据的最后五行。如果提供参数，它将显示最后给定数量的行。
@@ -150,7 +143,6 @@ df.tail()      # 显示最后5行
 df.tail(50)    # 显示最后50行
 ```
 
-![](img/ac0144951f5acbecff6d25b189f870a2_15.png)
 
 ### 查看随机样本
 `sample` 方法返回给定数量的随机行。

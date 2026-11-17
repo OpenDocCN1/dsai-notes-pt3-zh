@@ -6,7 +6,6 @@
 
 在本节课中，我们将学习如何在Windows操作系统上安装Python编程语言，以及如何安装并配置一个名为Visual Studio Code（VS Code）的集成开发环境（IDE），以便在本地计算机上编写和运行Python代码。
 
-![](img/2d254542b3f1432d1a87e14cb0cde896_2.png)
 
 ![](img/2d254542b3f1432d1a87e14cb0cde896_3.png)
 

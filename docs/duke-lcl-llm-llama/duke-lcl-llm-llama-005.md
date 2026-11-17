@@ -11,7 +11,6 @@ Cosmopolitan是一个C语言库，它使得用C编写的程序能够像Java一�
 ## 准备工作
 要开始使用Cosmopolitan，首先需要下载并解压其发布版本。解压后，你会找到一个名为`cosmocc`的编译器，我们将使用它来编译我们的程序。
 
-![](img/0ba52ef75bc3bc02dab594c237dc7114_2.png)
 
 ## 第一个示例：Hello World
 让我们从一个简单的“Hello World”程序开始，了解基本的编译和运行流程。
@@ -82,16 +81,13 @@ Cosmopolitan是一个C语言库，它使得用C编写的程序能够像Java一�
 
 这个例子展示了如何构建一个包含条件逻辑的便携式程序。
 
-![](img/0ba52ef75bc3bc02dab594c237dc7114_4.png)
 
 ## Cosmopolitan与Llamafile的关系
 我们之所以要深入了解Cosmopolitan，是因为它是Llamafile项目的核心与灵魂。
 
-![](img/0ba52ef75bc3bc02dab594c237dc7114_5.png)
 
 Llamafile是一个让你能够运行和分发大型语言模型的工具。Cosmopolitan库是其实现跨平台便携性的关键组件。有时，深入底层原理，亲自体验其核心库的工作方式，并围绕它构建一些东西，能让你在未来更深刻地体会到Llamafile设计的优雅之处。
 
-![](img/0ba52ef75bc3bc02dab594c237dc7114_7.png)
 
 ![](img/0ba52ef75bc3bc02dab594c237dc7114_8.png)
 

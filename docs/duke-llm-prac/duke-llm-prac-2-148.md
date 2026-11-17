@@ -1,6 +1,5 @@
 # 大型语言模型实践（高级数据工程、AWS、Databricks和本地LLM）：P148：47_02_07_连接配置最佳实践
 
-![](img/e3225a3a8df5ec626bfea3048d783a82_0.png)
 
 ![](img/e3225a3a8df5ec626bfea3048d783a82_0.png)
 

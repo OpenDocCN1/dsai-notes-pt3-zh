@@ -1,14 +1,11 @@
 # 027：期望Sarsa的通用性
 
-![](img/e5005edfdcf2cee6355335e46dd75cc8_0.png)
 
-![](img/e5005edfdcf2cee6355335e46dd75cc8_0.png)
 
 在本节课中，我们将要学习期望Sarsa算法与Q学习算法之间的关系。我们将看到期望Sarsa如何在不使用重要性采样的情况下进行离策略学习，并解释它如何推广了Q学习算法。
 
 到目前为止，我们已经学习了三种用于控制的时序差分算法：Sarsa、Q学习和期望Sarsa。其中，Sarsa和期望Sarsa都近似于同一个贝尔曼方程。现在，让我们来看看期望Sarsa与Q学习有何关联。
 
-![](img/e5005edfdcf2cee6355335e46dd75cc8_2.png)
 
 ## 期望Sarsa的离策略学习能力
 
@@ -37,7 +34,6 @@
 
 可以看到，此时两者的更新目标完全一致。
 
-![](img/e5005edfdcf2cee6355335e46dd75cc8_4.png)
 
 ![](img/e5005edfdcf2cee6355335e46dd75cc8_4.png)
 

@@ -14,13 +14,11 @@
 
 以下是具体步骤：
 
-![](img/49980d42fac25c45a951ceb76e50c0ac_3.png)
 
 1.  加载长颈鹿评论数据集。
 2.  调用之前训练好的 `sentiment_model`。
 3.  使用模型的 `.predict()` 方法，并设置 `output_type='probability'` 参数，以获得更精细的情感概率预测，而不仅仅是0或1的分类结果。
 
-![](img/49980d42fac25c45a951ceb76e50c0ac_5.png)
 
 ```python
 # 应用模型预测情感概率

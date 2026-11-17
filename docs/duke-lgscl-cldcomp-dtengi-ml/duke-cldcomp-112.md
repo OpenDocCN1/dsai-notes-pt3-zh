@@ -1,6 +1,5 @@
 #  112：什么是云自动机器学习
 
-![](img/9a2deeaac6fa11f8d2d0860560db5162_0.png)
 
 ![](img/9a2deeaac6fa11f8d2d0860560db5162_0.png)
 

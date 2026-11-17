@@ -45,7 +45,6 @@ while i <= n:
     i += 1
 ```
 
-![](img/d5fdf0fb52d6f00813cb990e2d81c9ee_3.png)
 
 **分析步骤：**
 1.  找到循环条件（`while`语句）。

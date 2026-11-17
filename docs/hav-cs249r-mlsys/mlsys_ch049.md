@@ -160,7 +160,6 @@ Raspberry Pi 上的嵌入式 Linux 提供了一个功能齐全的操作系统，
 
     +   **对于 Raspi-Zero**：例如，您可以选择：`Raspberry Pi OS Lite (64-bit)`。
 
-![img](img/file780.png)
 
 > 由于其减少的 SDRAM（512 MB），Raspi-Zero 推荐的操作系统是 32 位版本。但是，为了运行一些机器学习模型，例如 Ultralytics 的 YOLOv8，我们应该使用 64 位版本。尽管 Raspi-Zero 可以运行*桌面*，但我们将选择 LITE 版本（无桌面）以减少常规操作所需的 RAM。
 
@@ -543,11 +542,9 @@ rpicam-jpeg --output test_cli_camera.jpg --width 640 --height 480
 
     +   使用箭头键导航到 `接口选项`。
 
-![](img/file804.png)
 
 +   选择 `VNC` 并选择 `Yes` 以启用 VNC 服务器。
 
-![](img/file805.png)
 
 +   当提示时，退出配置工具，并保存更改。
 

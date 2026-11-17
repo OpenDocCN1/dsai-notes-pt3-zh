@@ -1,24 +1,17 @@
 # 008：逻辑回归 🧠
 
-![](img/90e568ed4cc37fee2eb48e57d7d63fd1_0.png)
 
-![](img/90e568ed4cc37fee2eb48e57d7d63fd1_2.png)
 
-![](img/90e568ed4cc37fee2eb48e57d7d63fd1_4.png)
 
 在本节课中，我们将要学习逻辑回归，这是神经网络的基础构建模块。我们将从使用高级库构建一个简单的模型开始，然后逐步深入，最终从零开始实现我们自己的逻辑回归模型。通过这个过程，你将理解神经网络背后的核心数学原理。
 
 ---
 
-![](img/90e568ed4cc37fee2eb48e57d7d63fd1_6.png)
 
 ## 从决策树到神经网络 🌳➡️🧠
 
-![](img/90e568ed4cc37fee2eb48e57d7d63fd1_8.png)
 
-![](img/90e568ed4cc37fee2eb48e57d7d63fd1_10.png)
 
-![](img/90e568ed4cc37fee2eb48e57d7d63fd1_11.png)
 
 上一节我们介绍了决策树集成方法（如随机森林）的局限性。本节中我们来看看为什么我们需要转向神经网络。
 
@@ -81,17 +74,12 @@ x_train = (x_train - train_mean) / train_std
 x_valid = (x_valid - train_mean) / train_std  # 关键：使用训练集的均值和标准差
 ```
 
-![](img/90e568ed4cc37fee2eb48e57d7d63fd1_13.png)
 
-![](img/90e568ed4cc37fee2eb48e57d7d63fd1_15.png)
 
 **重要原则**：任何应用于训练集的预处理变换（标准化、分类编码、缺失值填充），都必须以完全相同的方式应用于验证集和测试集，以确保数据含义的一致性。
 
-![](img/90e568ed4cc37fee2eb48e57d7d63fd1_17.png)
 
-![](img/90e568ed4cc37fee2eb48e57d7d63fd1_19.png)
 
-![](img/90e568ed4cc37fee2eb48e57d7d63fd1_21.png)
 
 ---
 
@@ -115,7 +103,6 @@ net = nn.Sequential(
 
 接下来，我们定义损失函数和优化器，并训练模型：
 
-![](img/90e568ed4cc37fee2eb48e57d7d63fd1_23.png)
 
 ```python
 from fastai import *
@@ -159,20 +146,15 @@ print(f"准确率: {accuracy:.4f}")  # 输出大约为 0.918
 
 对于多分类（如MNIST），我们使用**分类交叉熵**。它相当于对每个类别进行二元交叉熵计算，然后求和。在实践中，我们通常将标签进行**独热编码**，然后计算预测概率分布与真实分布之间的交叉熵。
 
-![](img/90e568ed4cc37fee2eb48e57d7d63fd1_25.png)
 
-![](img/90e568ed4cc37fee2eb48e57d7d63fd1_27.png)
 
 ### 2. 手动定义模型层
 
-![](img/90e568ed4cc37fee2eb48e57d7d63fd1_29.png)
 
 我们将创建一个PyTorch模块，手动定义权重矩阵、偏置向量和前向传播过程。
 
 
-![](img/90e568ed4cc37fee2eb48e57d7d63fd1_31.png)
 
-![](img/90e568ed4cc37fee2eb48e57d7d63fd1_33.png)
 
 ```python
 import torch

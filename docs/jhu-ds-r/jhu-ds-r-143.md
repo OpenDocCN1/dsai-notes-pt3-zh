@@ -4,7 +4,6 @@
 
 ---
 
-![](img/93ac7eaca777d9cc92ed238a74fac03c_1.png)
 
 ## 概述
 
@@ -12,7 +11,6 @@
 
 ---
 
-![](img/93ac7eaca777d9cc92ed238a74fac03c_3.png)
 
 ## 探索性数据分析 🔍
 
@@ -22,13 +20,11 @@
 
 以下是探索性数据分析的几个关键步骤：
 
-![](img/93ac7eaca777d9cc92ed238a74fac03c_7.png)
 
 1.  **查看数据摘要**：了解数据的基本结构和变量类型。
 2.  **检查缺失数据**：确认是否存在缺失值及其原因。
 3.  **创建探索性图表**：通过可视化理解数据分布和关系。
 
-![](img/93ac7eaca777d9cc92ed238a74fac03c_9.png)
 
 我们的数据集来自UCI机器学习仓库，包含4600封电子邮件和58个变量。这些变量大多是邮件中特定单词的出现频率。
 
@@ -54,7 +50,6 @@ plot(log10(trainingData$capitalAve + 1), col = trainingData$type)
 
 ---
 
-![](img/93ac7eaca777d9cc92ed238a74fac03c_11.png)
 
 ## 统计预测与建模 📈
 
@@ -62,7 +57,6 @@ plot(log10(trainingData$capitalAve + 1), col = trainingData$type)
 
 在本例中，我们将采用一个简单的建模方法：为数据集中的每个变量单独拟合一个逻辑回归模型，以预测邮件是否为垃圾邮件。
 
-![](img/93ac7eaca777d9cc92ed238a74fac03c_13.png)
 
 以下是建模步骤：
 
@@ -86,7 +80,6 @@ bestPredictor <- colnames(predictors)[bestPredictorIndex]
 
 分析发现，预测变量`charDollar`（邮件中美元符号的数量）的单变量模型交叉验证错误率最低。因此，我们选择它来构建最终模型。
 
-![](img/93ac7eaca777d9cc92ed238a74fac03c_15.png)
 
 我们使用训练数据重新拟合这个最佳单变量逻辑回归模型，然后将其应用于独立的测试数据集进行预测。逻辑回归模型输出的是邮件为垃圾邮件的概率（介于0和1之间）。我们设定一个阈值（例如0.5），将概率高于此值的邮件分类为垃圾邮件。
 
@@ -99,13 +92,11 @@ predictedClass <- ifelse(predictedProb > 0.5, "spam", "nonspam")
 
 通过比较预测分类和测试集中的真实分类，我们可以计算模型的错误率。在本例中，分类错误率约为22%。
 
-![](img/93ac7eaca777d9cc92ed238a74fac03c_17.png)
 
 ---
 
 ## 结果解释 🧠
 
-![](img/93ac7eaca777d9cc92ed238a74fac03c_19.png)
 
 得到分析结果后，需要用恰当的语言进行解释，避免超出分析本身的范围。在预测性建模中，应使用“预测”、“相关”、“可能与结果相关联”等描述性语言。
 

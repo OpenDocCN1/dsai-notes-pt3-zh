@@ -1,6 +1,5 @@
 #  001：时间中的决策｜专项课程导论
 
-![](img/750f5a1212ec216ededc3574756afba6_0.png)
 
 ![](img/750f5a1212ec216ededc3574756afba6_0.png)
 

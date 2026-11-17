@@ -1,6 +1,5 @@
 # 45：Pandora 推荐系统与机器学习应用 🎵
 
-![](img/a63ceec66cc04d98ed1931758605ad7d_1.png)
 
 ![](img/a63ceec66cc04d98ed1931758605ad7d_2.png)
 

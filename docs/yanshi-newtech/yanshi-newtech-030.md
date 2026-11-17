@@ -14,7 +14,6 @@ Apache Storm 用于实时流处理，其处理延迟可以低至微秒级别。�
 
 许多应用场景使用 Spark Streaming 的微批次处理（最小可达0.5秒）就足以进行分析。然而，像股票市场交易、自动驾驶系统控制等应用需要比半秒更快的服务。在这些场景下，Spark Streaming 的速度可能不够快，因此就需要引入 Apache Storm。
 
-![](img/06658435de1763b7adb42b12c0ea2199_2.png)
 
 我们将学习 Storm 以及 Storm Trident。Storm Trident 也使用微批次处理，类似于 Spark Streaming，但它们的特性有所不同。Spark Streaming 基于批次和微批次，而 Storm 基于**元组**，这些元组可以非常小。在 Storm Trident 中，一组元组可以组成一个微批次。简而言之，Spark 使用批次和微批次，而 Storm 和 Storm Trident 使用元组以及由元组组成的微批次。接下来我们将深入探讨这些细节。
 
@@ -75,7 +74,6 @@ Storm 的核心特征是基于拓扑，使用 Spout 和 Bolt 形成有向无环�
 
 ## 总结
 
-![](img/06658435de1763b7adb42b12c0ea2199_4.png)
 
 ![](img/06658435de1763b7adb42b12c0ea2199_5.png)
 

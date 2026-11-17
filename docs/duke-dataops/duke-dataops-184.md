@@ -34,7 +34,6 @@ az ad sp create-for-rbac --name myMLServicePrincipal --role contributor --scopes
 
 以下是工作流的核心步骤：
 
-![](img/c7693f84626b5f9da162fe649f9650aa_2.png)
 
 1.  **构建Docker镜像**：工作流会基于项目中的Dockerfile构建一个新的容器镜像。
 2.  **登录并推送至Azure容器注册表**：使用之前设置的 `ACR_USERNAME` 和 `ACR_PASSWORD` 密钥，将构建好的镜像推送到指定的Azure容器注册表。**关键点**：在构建命令中，必须明确指定注册表的地址（例如 `demo.azurecr.io`），否则Docker会默认推送到Docker Hub。
@@ -54,9 +53,7 @@ az ad sp create-for-rbac --name myMLServicePrincipal --role contributor --scopes
 - 更新容器的资源分配（例如，设置为2个CPU核心和4GB内存）。
 - 最终，将容器应用的镜像更新为我们刚推送的新版本。
 
-![](img/c7693f84626b5f9da162fe649f9650aa_4.png)
 
-![](img/c7693f84626b5f9da162fe649f9650aa_5.png)
 
 ---
 
@@ -84,11 +81,8 @@ az containerapp logs show --name demo-container --resource-group demo-container 
 
 ## 总结 📝
 
-![](img/c7693f84626b5f9da162fe649f9650aa_7.png)
 
-![](img/c7693f84626b5f9da162fe649f9650aa_8.png)
 
-![](img/c7693f84626b5f9da162fe649f9650aa_9.png)
 
 ![](img/c7693f84626b5f9da162fe649f9650aa_11.png)
 

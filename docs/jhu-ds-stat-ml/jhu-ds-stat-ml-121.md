@@ -50,7 +50,6 @@ multiplyNumbers <- function(numbers1, numbers2) {
 
 现在，让我们运行这个函数，看看它的实际效果。
 
-![](img/b3ffc846127791c0a1252b7c89a85752_1.png)
 
 首先，确保已加载 `shiny` 和 `miniUI` 库。然后定义 `multiplyNumbers` 函数。
 
@@ -59,15 +58,11 @@ multiplyNumbers <- function(numbers1, numbers2) {
 multiplyNumbers(numbers1 = 1:10, numbers2 = 1:10)
 ```
 
-![](img/b3ffc846127791c0a1252b7c89a85752_3.png)
 
-![](img/b3ffc846127791c0a1252b7c89a85752_4.png)
 
-![](img/b3ffc846127791c0a1252b7c89a85752_5.png)
 
 执行上述调用后，会弹出一个交互窗口。
 
-![](img/b3ffc846127791c0a1252b7c89a85752_6.png)
 
 以下是操作步骤：
 1.  在第一个下拉框中选择一个数字（例如 4）。
@@ -80,7 +75,6 @@ multiplyNumbers(numbers1 = 1:10, numbers2 = 1:10)
 
 ---
 
-![](img/b3ffc846127791c0a1252b7c89a85752_8.png)
 
 ![](img/b3ffc846127791c0a1252b7c89a85752_9.png)
 

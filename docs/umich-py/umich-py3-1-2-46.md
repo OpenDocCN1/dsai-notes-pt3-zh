@@ -44,7 +44,6 @@ my_list = list(range(5))
 print(my_list)  # 输出: [0, 1, 2, 3, 4]
 ```
 
-![](img/7df4e807aaaf16c050e2e4f48bec64db_3.png)
 
 ## 在累加模式中使用range函数
 

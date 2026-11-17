@@ -1,6 +1,5 @@
 # 016：信号加噪声定理的证明 🧮
 
-![](img/c9a8d5ad68a8cfbe3a44693a1a9576fb_0.png)
 
 ![](img/c9a8d5ad68a8cfbe3a44693a1a9576fb_2.png)
 

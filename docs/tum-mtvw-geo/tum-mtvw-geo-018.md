@@ -1,6 +1,5 @@
 # 018：变分多视图重建（第一部分）🚀
 
-![](img/3bab5f3ced627b132681a0cf3a04c9bb_1.png)
 
 在本节课中，我们将要学习变分方法在多视图三维重建中的应用。我们将探讨如何将三维重建问题表述为一个在无限维空间（即所有可能表面的空间）中的能量最小化问题，并介绍不同的表面表示方法及其优缺点。
 
@@ -8,7 +7,6 @@
 
 ![](img/3bab5f3ced627b132681a0cf3a04c9bb_3.png)
 
-![](img/3bab5f3ced627b132681a0cf3a04c9bb_4.png)
 
 ## 变分方法简介
 
@@ -123,19 +121,14 @@
 
 ![](img/3bab5f3ced627b132681a0cf3a04c9bb_6.png)
 
-![](img/3bab5f3ced627b132681a0cf3a04c9bb_8.png)
 
-![](img/3bab5f3ced627b132681a0cf3a04c9bb_10.png)
 
 ---
 
-![](img/3bab5f3ced627b132681a0cf3a04c9bb_12.png)
 
 ![](img/3bab5f3ced627b132681a0cf3a04c9bb_13.png)
 
-![](img/3bab5f3ced627b132681a0cf3a04c9bb_14.png)
 
-![](img/3bab5f3ced627b132681a0cf3a04c9bb_16.png)
 
 ![](img/3bab5f3ced627b132681a0cf3a04c9bb_18.png)
 

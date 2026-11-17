@@ -18,7 +18,6 @@ library(tidyverse)
 
 `ggplot2`中的“gg”代表“图形语法”，其灵感来源于Leland Wilkinson的著作《图形语法》。学习该包及其函数的实用资源是其官方网站：`ggplot2.tidyverse.org`。
 
-![](img/201893a9cd5eb4a8b3176f34abdfb949_6.png)
 
 `ggplot2`的代码结构通常遵循以下模式：
 1.  `ggplot()`函数，指定数据和美学映射。
@@ -155,7 +154,6 @@ ggplot(data = penguins, mapping = aes(x = bill_depth_mm, y = bill_length_mm, col
 
 在R语言中，通常可以省略函数前两个参数的名称。对于`ggplot()`函数，这两个参数是`data`和`mapping`。因此，更常见的简洁写法如下：
 
-![](img/201893a9cd5eb4a8b3176f34abdfb949_12.png)
 
 ```r
 ggplot(penguins, aes(x = bill_depth_mm, y = bill_length_mm, color = species)) +

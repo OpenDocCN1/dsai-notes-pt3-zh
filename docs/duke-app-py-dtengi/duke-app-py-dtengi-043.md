@@ -121,7 +121,6 @@
 *   `pylint`: 用于代码风格和静态检查。
 *   `black`: 用于自动格式化代码。
 
-![](img/49dbae96a6a51096a792e8e24e6b48f1_38.png)
 
 以下是完善项目的步骤：
 1.  在`requirements.txt`中添加这些开发依赖。
@@ -135,13 +134,11 @@
 
 ## 设置持续集成（CI）
 
-![](img/49dbae96a6a51096a792e8e24e6b48f1_44.png)
 
 ![](img/49dbae96a6a51096a792e8e24e6b48f1_46.png)
 
 最后，我们可以使用Github Actions为项目设置持续集成（CI）流水线。这样，每次代码推送都会自动运行代码检查、测试和格式化验证。
 
-![](img/49dbae96a6a51096a792e8e24e6b48f1_48.png)
 
 以下是设置CI的步骤：
 1.  在项目根目录的`.github/workflows/`路径下创建一个YAML文件（例如`ci.yml`）。
@@ -155,11 +152,8 @@
 4.  根据CI运行的反馈（例如Python版本不匹配、未使用的导入等）调整代码和配置。
 5.  CI通过后，可以创建一个状态徽章（Status Badge），添加到项目的README文件中，直观地展示构建状态。
 
-![](img/49dbae96a6a51096a792e8e24e6b48f1_50.png)
 
-![](img/49dbae96a6a51096a792e8e24e6b48f1_52.png)
 
-![](img/49dbae96a6a51096a792e8e24e6b48f1_54.png)
 
 ![](img/49dbae96a6a51096a792e8e24e6b48f1_56.png)
 

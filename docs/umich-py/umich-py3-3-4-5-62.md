@@ -2,7 +2,6 @@
 
 ![](img/440ff6467770bce736139ada46dd67c7_0.png)
 
-![](img/440ff6467770bce736139ada46dd67c7_1.png)
 
 在本节课中，我们将学习如何使用Jupyter Notebook这一新的Python代码执行环境。Jupyter Notebook是一种交互式编程工具，它允许我们将代码、文本和可视化内容整合在一个文档中。课程中的可选实验和最终评估都将使用Jupyter Notebook，因此熟悉它非常重要。
 

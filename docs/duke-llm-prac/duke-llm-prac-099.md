@@ -1,6 +1,5 @@
 # 大型语言模型实践：1：引言与Azure机器学习概述
 
-![](img/4d17b5e299fbfb38d3bcd576029c51b4_0.png)
 
 ![](img/4d17b5e299fbfb38d3bcd576029c51b4_0.png)
 

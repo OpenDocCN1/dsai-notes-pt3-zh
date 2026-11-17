@@ -1,8 +1,6 @@
 #  8：什么是人工智能？🤖
 
-![](img/ee781fa2fb686ca55c4114d5072758f4_0.png)
 
-![](img/ee781fa2fb686ca55c4114d5072758f4_1.png)
 
 ![](img/ee781fa2fb686ca55c4114d5072758f4_2.png)
 

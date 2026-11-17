@@ -1,6 +1,5 @@
 # 20：带控制的全状态模型系统辨识
 
-![](img/f0e79c387f8c877b537ec6df4eb18bac_0.png)
 
 ![](img/f0e79c387f8c877b537ec6df4eb18bac_0.png)
 

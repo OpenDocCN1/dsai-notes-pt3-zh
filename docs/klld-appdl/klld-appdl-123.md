@@ -2,31 +2,20 @@
 
 在本节课中，我们将深入探讨如何对BERT模型进行剖析与优化，从而引出ALBERT模型。我们将学习ALBERT通过哪些关键技术来减少模型参数量、提升训练效率，并最终在保持甚至提升性能的同时，实现模型轻量化。
 
-![](img/06fd7623a5e6e1751abd3be2364437ad_1.png)
 
-![](img/06fd7623a5e6e1751abd3be2364437ad_2.png)
 
-![](img/06fd7623a5e6e1751abd3be2364437ad_3.png)
 
-![](img/06fd7623a5e6e1751abd3be2364437ad_4.png)
 
 ## 1. 剖析BERT模型参数构成
 
-![](img/06fd7623a5e6e1751abd3be2364437ad_5.png)
 
-![](img/06fd7623a5e6e1751abd3be2364437ad_6.png)
 
-![](img/06fd7623a5e6e1751abd3be2364437ad_7.png)
 
-![](img/06fd7623a5e6e1751abd3be2364437ad_8.png)
 
-![](img/06fd7623a5e6e1751abd3be2364437ad_9.png)
 
-![](img/06fd7623a5e6e1751abd3be2364437ad_10.png)
 
 上一节我们介绍了BERT模型的基本架构。本节中，我们来看看BERT模型的主要参数来源，以便理解后续的优化方向。
 
-![](img/06fd7623a5e6e1751abd3be2364437ad_11.png)
 
 BERT模型的核心参数主要分布在以下几个部分：
 *   **词汇表嵌入层**：词汇表大小 `V`（通常约30k）乘以嵌入维度 `H`。
@@ -36,33 +25,21 @@ BERT模型的核心参数主要分布在以下几个部分：
 
 ## 2. ALBERT的核心优化策略：分解嵌入参数
 
-![](img/06fd7623a5e6e1751abd3be2364437ad_13.png)
 
 为了提升BERT的效率，ALBERT提出了第一个核心优化：**分解嵌入参数**。
 
-![](img/06fd7623a5e6e1751abd3be2364437ad_14.png)
 
-![](img/06fd7623a5e6e1751abd3be2364437ad_15.png)
 
-![](img/06fd7623a5e6e1751abd3be2364437ad_16.png)
 
-![](img/06fd7623a5e6e1751abd3be2364437ad_17.png)
 
-![](img/06fd7623a5e6e1751abd3be2364437ad_18.png)
 
-![](img/06fd7623a5e6e1751abd3be2364437ad_19.png)
 
-![](img/06fd7623a5e6e1751abd3be2364437ad_20.png)
 
 在原始BERT中，嵌入层直接将词汇表映射到隐藏维度 `H`，参数量为 `V * H`。ALBERT引入一个更小的嵌入维度 `E`，先将词汇表映射到 `E`，再通过一个线性层将 `E` 投影到 `H`。
 
-![](img/06fd7623a5e6e1751abd3be2364437ad_21.png)
 
-![](img/06fd7623a5e6e1751abd3be2364437ad_22.png)
 
-![](img/06fd7623a5e6e1751abd3be2364437ad_23.png)
 
-![](img/06fd7623a5e6e1751abd3be2364437ad_24.png)
 
 **公式表示如下：**
 `原始BERT嵌入：Embedding = V * H`
@@ -75,33 +52,21 @@ BERT模型的核心参数主要分布在以下几个部分：
 
 ## 3. 跨层参数共享
 
-![](img/06fd7623a5e6e1751abd3be2364437ad_26.png)
 
-![](img/06fd7623a5e6e1751abd3be2364437ad_27.png)
 
-![](img/06fd7623a5e6e1751abd3be2364437ad_28.png)
 
-![](img/06fd7623a5e6e1751abd3be2364437ad_29.png)
 
 上一节我们通过分解嵌入减少了部分参数。本节中，我们来看看ALBERT另一个大幅减少参数的策略：**跨层参数共享**。
 
-![](img/06fd7623a5e6e1751abd3be2364437ad_30.png)
 
-![](img/06fd7623a5e6e1751abd3be2364437ad_31.png)
 
-![](img/06fd7623a5e6e1751abd3be2364437ad_32.png)
 
-![](img/06fd7623a5e6e1751abd3be2364437ad_33.png)
 
-![](img/06fd7623a5e6e1751abd3be2364437ad_34.png)
 
-![](img/06fd7623a5e6e1751abd3be2364437ad_35.png)
 
 在原始BERT中，`L` 层Transformer编码器的参数是独立的。ALBERT提出在所有编码器层之间共享参数，这意味着所有层使用相同的权重矩阵。
 
-![](img/06fd7623a5e6e1751abd3be2364437ad_36.png)
 
-![](img/06fd7623a5e6e1751abd3be2364437ad_37.png)
 
 以下是参数共享的几种方式研究：
 *   **全部共享**：共享所有参数（自注意力 + 前馈网络）。
@@ -113,31 +78,19 @@ BERT模型的核心参数主要分布在以下几个部分：
 
 ## 4. 句子顺序预测任务
 
-![](img/06fd7623a5e6e1751abd3be2364437ad_39.png)
 
-![](img/06fd7623a5e6e1751abd3be2364437ad_40.png)
 
-![](img/06fd7623a5e6e1751abd3be2364437ad_41.png)
 
-![](img/06fd7623a5e6e1751abd3be2364437ad_42.png)
 
-![](img/06fd7623a5e6e1751abd3be2364437ad_43.png)
 
-![](img/06fd7623a5e6e1751abd3be2364437ad_44.png)
 
 除了结构优化，ALBERT还改进了BERT的预训练任务，用**句子顺序预测** 替代了**下一句预测**。
 
-![](img/06fd7623a5e6e1751abd3be2364437ad_45.png)
 
-![](img/06fd7623a5e6e1751abd3be2364437ad_46.png)
 
-![](img/06fd7623a5e6e1751abd3be2364437ad_47.png)
 
-![](img/06fd7623a5e6e1751abd3be2364437ad_48.png)
 
-![](img/06fd7623a5e6e1751abd3be2364437ad_49.png)
 
-![](img/06fd7623a5e6e1751abd3be2364437ad_50.png)
 
 在BERT中，下一句预测任务的正例是文档中连续的两个句子，负例是随机抽取的两个不相关句子。ALBERT认为这个任务过于简单。句子顺序预测任务则设计如下：
 *   **正例**：文档中连续的两个句子（顺序正确）。
@@ -147,25 +100,16 @@ SOP任务迫使模型学习更细微的句子间连贯性和逻辑关系，是�
 
 ## 5. 优化效果与模型规模对比
 
-![](img/06fd7623a5e6e1751abd3be2364437ad_52.png)
 
-![](img/06fd7623a5e6e1751abd3be2364437ad_53.png)
 
-![](img/06fd7623a5e6e1751abd3be2364437ad_54.png)
 
 综合运用以上策略后，ALBERT在参数量和模型规模上产生了显著变化。
 
-![](img/06fd7623a5e6e1751abd3be2364437ad_55.png)
 
-![](img/06fd7623a5e6e1751abd3be2364437ad_56.png)
 
-![](img/06fd7623a5e6e1751abd3be2364437ad_57.png)
 
-![](img/06fd7623a5e6e1751abd3be2364437ad_58.png)
 
-![](img/06fd7623a5e6e1751abd3be2364437ad_59.png)
 
-![](img/06fd7623a5e6e1751abd3be2364437ad_60.png)
 
 以下是BERT与ALBERT的模型规模对比示例（数值为示意）：
 *   **BERT-Base**: 参数约1.1亿

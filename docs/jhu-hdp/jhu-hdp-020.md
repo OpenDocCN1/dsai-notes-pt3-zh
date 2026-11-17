@@ -28,7 +28,6 @@
 
 为了安装Hadoop，我们不会依赖任何专有软件（如Cloudera Manager）或开源工具（如Ambari）。我们将进行纯手动的安装，一切从零开始。这将让我们更好地了解底层发生了什么，这对你来说将是一次宝贵的学习经历。
 
-![](img/0c36a8d85fd1473baa20264207d4448e_5.png)
 
 一旦安装Hadoop，需要对其进行配置。Hadoop可以配置为以下三种模式之一运行：
 
@@ -114,7 +113,6 @@ sudo apt install openssh-server
     ```
     首次连接时会询问是否信任主机指纹，输入 `yes`。之后应能无需密码登录。输入 `exit` 退出。
 
-![](img/0c36a8d85fd1473baa20264207d4448e_9.png)
 
 ![](img/0c36a8d85fd1473baa20264207d4448e_11.png)
 
@@ -220,7 +218,6 @@ echo $PATH
 
 为NameNode、Secondary NameNode和DataNode创建数据存储目录。
 
-![](img/0c36a8d85fd1473baa20264207d4448e_13.png)
 
 ```bash
 sudo mkdir -p /usr/local/hadoop/data/nn  # NameNode
@@ -313,7 +310,6 @@ Hadoop提供了Web界面来监控集群状态。
     hdfs dfs -copyFromLocal ~/Downloads/2701-0.txt /input/moby-dick.txt
     ```
 
-![](img/0c36a8d85fd1473baa20264207d4448e_15.png)
 
 3.  验证文件是否已上传：
     ```bash
@@ -336,7 +332,6 @@ yarn jar $HADOOP_HOME/share/hadoop/mapreduce/hadoop-mapreduce-examples-3.3.1.jar
 
 作业完成后，查看输出结果。
 
-![](img/0c36a8d85fd1473baa20264207d4448e_17.png)
 
 ```bash
 hdfs dfs -cat /output/part-r-00000 | head -20
@@ -350,13 +345,10 @@ hdfs dfs -cat /output/part-r-00000 | grep -i “whale”
 
 同样，你可以在NameNode的Web界面中看到新生成的 `/output` 目录及其中的结果文件。
 
-![](img/0c36a8d85fd1473baa20264207d4448e_19.png)
 
-![](img/0c36a8d85fd1473baa20264207d4448e_21.png)
 
 ---
 
-![](img/0c36a8d85fd1473baa20264207d4448e_23.png)
 
 ## （附加）安装NetBeans IDE（可选）
 

@@ -1,90 +1,56 @@
 # 022：可重复研究核对表第2部分 📋
 
-![](img/5730ca2ee02c56bbcf727d0a90a744b0_0.png)
 
 在本节课中，我们将继续学习可重复研究核对表，重点探讨如何通过自动化、版本控制和记录软件环境来确保数据分析的可重复性。
 
-![](img/5730ca2ee02c56bbcf727d0a90a744b0_2.png)
 
-![](img/5730ca2ee02c56bbcf727d0a90a744b0_3.png)
 
-![](img/5730ca2ee02c56bbcf727d0a90a744b0_4.png)
 
-![](img/5730ca2ee02c56bbcf727d0a90a744b0_5.png)
 
-![](img/5730ca2ee02c56bbcf727d0a90a744b0_6.png)
 
-![](img/5730ca2ee02c56bbcf727d0a90a744b0_7.png)
 
-![](img/5730ca2ee02c56bbcf727d0a90a744b0_8.png)
 
-![](img/5730ca2ee02c56bbcf727d0a90a744b0_9.png)
 
-![](img/5730ca2ee02c56bbcf727d0a90a744b0_10.png)
 
 ---
 
-![](img/5730ca2ee02c56bbcf727d0a90a744b0_11.png)
 
-![](img/5730ca2ee02c56bbcf727d0a90a744b0_12.png)
 
-![](img/5730ca2ee02c56bbcf727d0a90a744b0_13.png)
 
 ## 自动化一切操作 🤖
 
 上一节我们介绍了可重复研究的基本概念，本节中我们来看看如何通过自动化来避免手动操作带来的问题。
 
-![](img/5730ca2ee02c56bbcf727d0a90a744b0_15.png)
 
-![](img/5730ca2ee02c56bbcf727d0a90a744b0_16.png)
 
-![](img/5730ca2ee02c56bbcf727d0a90a744b0_17.png)
 
-![](img/5730ca2ee02c56bbcf727d0a90a744b0_18.png)
 
-![](img/5730ca2ee02c56bbcf727d0a90a744b0_19.png)
 
-![](img/5730ca2ee02c56bbcf727d0a90a744b0_20.png)
 
-![](img/5730ca2ee02c56bbcf727d0a90a744b0_21.png)
 
 手动操作的“解药”是，你应该尝试教会计算机去执行你即将要做的任何事情。核心思想是，你应该尽可能自动化分析过程中的所有操作。特别是处理数据的部分，你应该始终尝试教会计算机来完成。
 
-![](img/5730ca2ee02c56bbcf727d0a90a744b0_22.png)
 
-![](img/5730ca2ee02c56bbcf727d0a90a744b0_23.png)
 
-![](img/5730ca2ee02c56bbcf727d0a90a744b0_24.png)
 
-![](img/5730ca2ee02c56bbcf727d0a90a744b0_25.png)
 
-![](img/5730ca2ee02c56bbcf727d0a90a744b0_26.png)
 
 这样做有两个主要原因：
 1.  如果你能教会计算机执行任务，你就拥有了明确、具体的操作指令，数据分析中就没有模糊不清的空间。因为计算机通常不接受模糊的指令，它需要精确的编程指令。
 2.  当你向计算机发出指令时，本质上是在精确地写下你的意图和执行方法，而这正是可重复性的定义。
 
-![](img/5730ca2ee02c56bbcf727d0a90a744b0_28.png)
 
-![](img/5730ca2ee02c56bbcf727d0a90a744b0_29.png)
 
-![](img/5730ca2ee02c56bbcf727d0a90a744b0_30.png)
 
 因此，如果你能教会计算机，这几乎在很大程度上保证了你的操作是可重复的。即使某个操作你只打算做一次，尝试教会计算机去做也是有益的。这可能涉及使用不同的编程语言，例如R或其他语言。虽然编程可能需要更长时间，但从长远来看，它会通过确保你所做的一切都是可重复的来回报你。
 
 以下是一个简单的自动化示例，它演示了如何用代码替代手动操作：
 
-![](img/5730ca2ee02c56bbcf727d0a90a744b0_32.png)
 
-![](img/5730ca2ee02c56bbcf727d0a90a744b0_33.png)
 
-![](img/5730ca2ee02c56bbcf727d0a90a744b0_34.png)
 
-![](img/5730ca2ee02c56bbcf727d0a90a744b0_35.png)
 
-![](img/5730ca2ee02c56bbcf727d0a90a744b0_36.png)
 
-![](img/5730ca2ee02c56bbcf727d0a90a744b0_37.png)
 
 ```r
 # 使用R的download.file函数自动下载数据
@@ -92,17 +58,11 @@ download.file(url = "http://archive.ics.uci.edu/ml/machine-learning-databases/00
               destfile = "./project_data/bike_sharing_data.zip")
 ```
 
-![](img/5730ca2ee02c56bbcf727d0a90a744b0_38.png)
 
-![](img/5730ca2ee02c56bbcf727d0a90a744b0_39.png)
 
-![](img/5730ca2ee02c56bbcf727d0a90a744b0_40.png)
 
-![](img/5730ca2ee02c56bbcf727d0a90a744b0_41.png)
 
-![](img/5730ca2ee02c56bbcf727d0a90a744b0_42.png)
 
-![](img/5730ca2ee02c56bbcf727d0a90a744b0_43.png)
 
 这个例子有几个优点：
 *   **明确的URL**：数据的确切来源被指定，没有歧义。
@@ -111,23 +71,14 @@ download.file(url = "http://archive.ics.uci.edu/ml/machine-learning-databases/00
 
 只要使用R且网络地址未变，任何人都可以执行这段完全相同的代码来下载相同的数据。当然，你无法控制网站本身的变化，但在你能力范围内，尽可能多地使用此类代码（如`download.file`函数）将大大提高可重复性。
 
-![](img/5730ca2ee02c56bbcf727d0a90a744b0_45.png)
 
-![](img/5730ca2ee02c56bbcf727d0a90a744b0_46.png)
 
-![](img/5730ca2ee02c56bbcf727d0a90a744b0_47.png)
 
-![](img/5730ca2ee02c56bbcf727d0a90a744b0_48.png)
 
-![](img/5730ca2ee02c56bbcf727d0a90a744b0_49.png)
 
-![](img/5730ca2ee02c56bbcf727d0a90a744b0_50.png)
 
-![](img/5730ca2ee02c56bbcf727d0a90a744b0_51.png)
 
-![](img/5730ca2ee02c56bbcf727d0a90a744b0_52.png)
 
-![](img/5730ca2ee02c56bbcf727d0a90a744b0_53.png)
 
 ---
 
@@ -135,35 +86,23 @@ download.file(url = "http://archive.ics.uci.edu/ml/machine-learning-databases/00
 
 另一个通用建议是使用某种版本控制软件。在本系列课程中，我们主要关注Git，它是一个非常优秀的版本控制软件，通常与GitHub或Bitbucket等网站结合使用，用于发布代码和项目。
 
-![](img/5730ca2ee02c56bbcf727d0a90a744b0_55.png)
 
-![](img/5730ca2ee02c56bbcf727d0a90a744b0_56.png)
 
-![](img/5730ca2ee02c56bbcf727d0a90a744b0_57.png)
 
-![](img/5730ca2ee02c56bbcf727d0a90a744b0_58.png)
 
-![](img/5730ca2ee02c56bbcf727d0a90a744b0_59.png)
 
 在数据分析项目中使用版本控制系统时，需要记住其主要特点是：它有助于让你“慢下来”。这听起来可能像件坏事，但“慢下来”通常是好的。因为当你对一个项目充满热情并急于开始分析时，你可能会直接动手处理数据，而没有记录下发生了什么。版本控制软件会促使你停下来，思考已经完成的工作和所做的更改，然后将更改提交到代码仓库，从而留下记录。
 
 这对于数据分析非常有用，因为你拥有了工作日志，记录了你的探索路径和发现。如果你想回溯，可以轻松返回，并查看你当时发现了什么。例如，在探索性分析过程中，如果你发现了有趣的东西，你会有一个历史记录来展示你是如何到达那里的。
 
-![](img/5730ca2ee02c56bbcf727d0a90a744b0_61.png)
 
-![](img/5730ca2ee02c56bbcf727d0a90a744b0_62.png)
 
-![](img/5730ca2ee02c56bbcf727d0a90a744b0_63.png)
 
-![](img/5730ca2ee02c56bbcf727d0a90a744b0_64.png)
 
-![](img/5730ca2ee02c56bbcf727d0a90a744b0_65.png)
 
 当然，像Git这样的软件可以用来跟踪和标记项目的快照，可以回滚到旧版本等。这些功能在版本控制系统中都是标准的。因此，建议你在推进项目时，以小块的形式添加更改，而不是一次性提交大量文件。将分析分解为逻辑片段并逐一提交，这将有助于你阅读历史记录并理解过去所做的工作。
 
-![](img/5730ca2ee02c56bbcf727d0a90a744b0_66.png)
 
-![](img/5730ca2ee02c56bbcf727d0a90a744b0_67.png)
 
 ---
 
@@ -188,33 +127,21 @@ download.file(url = "http://archive.ics.uci.edu/ml/machine-learning-databases/00
 sessionInfo()
 ```
 
-![](img/5730ca2ee02c56bbcf727d0a90a744b0_69.png)
 
-![](img/5730ca2ee02c56bbcf727d0a90a744b0_70.png)
 
-![](img/5730ca2ee02c56bbcf727d0a90a744b0_71.png)
 
-![](img/5730ca2ee02c56bbcf727d0a90a744b0_72.png)
 
-![](img/5730ca2ee02c56bbcf727d0a90a744b0_73.png)
 
 该函数的输出会显示R版本、操作系统、区域设置、已加载的基础包和附加包等信息。虽然这只是整个软件环境的一小部分，但拥有这种详细信息通常非常有用。
 
 ---
 
-![](img/5730ca2ee02c56bbcf727d0a90a744b0_75.png)
 
-![](img/5730ca2ee02c56bbcf727d0a90a744b0_76.png)
 
-![](img/5730ca2ee02c56bbcf727d0a90a744b0_77.png)
 
-![](img/5730ca2ee02c56bbcf727d0a90a744b0_78.png)
 
-![](img/5730ca2ee02c56bbcf727d0a90a744b0_79.png)
 
-![](img/5730ca2ee02c56bbcf727d0a90a744b0_80.png)
 
-![](img/5730ca2ee02c56bbcf727d0a90a744b0_81.png)
 
 ![](img/5730ca2ee02c56bbcf727d0a90a744b0_82.png)
 

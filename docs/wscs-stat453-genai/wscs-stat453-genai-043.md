@@ -1,6 +1,5 @@
 # 43：L6.1 - 深入了解 PyTorch 🧠
 
-![](img/df64c01e86becadcbbda644f3a466dc1_1.png)
 
 在本节课中，我们将要学习 PyTorch 的更多信息，包括其核心概念、优势、安装方法以及如何获取更多学习资源。PyTorch 是本课程及未来项目中会频繁使用的深度学习库，了解其背景和特性将帮助你更高效地使用它。
 
@@ -20,7 +19,6 @@ PyTorch 最初使用了大量 Torch 7 的代码，但后来逐渐被重写的代
 
 一个编程框架可以通过抽象所有复杂性来变得易于使用，但如果过于简化并提供固定的构建模块，在进行自定义研究（例如开发自己的网络层）时就会变得困难。PyTorch 在这两者之间取得了平衡。
 
-![](img/df64c01e86becadcbbda644f3a466dc1_3.png)
 
 ## 核心特性 ⚙️
 
@@ -32,7 +30,6 @@ PyTorch 最初使用了大量 Torch 7 的代码，但后来逐渐被重写的代
 
 ## 性能与实现 🚀
 
-![](img/df64c01e86becadcbbda644f3a466dc1_5.png)
 
 PyTorch 的大部分底层代码是用 C++ 和 CUDA 编写的，这就是为什么它比普通的 Python 代码高效得多。
 
@@ -43,7 +40,6 @@ Python 更像是包裹在 C++ 和 CUDA 代码之上的“可用性粘合剂”�
 
 ## 为何选择 PyTorch 而非 NumPy？ 🤔
 
-![](img/df64c01e86becadcbbda644f3a466dc1_7.png)
 
 既然 PyTorch 和 NumPy 如此相似，我们为什么选择 PyTorch 呢？原因如下：
 
@@ -64,7 +60,6 @@ Python 更像是包裹在 C++ 和 CUDA 代码之上的“可用性粘合剂”�
 
 ## 学习资源与社区 📚
 
-![](img/df64c01e86becadcbbda644f3a466dc1_9.png)
 
 PyTorch 拥有丰富的学习资源和活跃的社区：
 
@@ -72,15 +67,12 @@ PyTorch 拥有丰富的学习资源和活跃的社区：
 *   **PyTorch 书籍**：有一本名为《Deep Learning with PyTorch》的书籍，作者包括 Eli Stevens、Luca Antiga 和 Thomas Viehmann。网站上提供免费在线阅读版本。
 *   **讨论论坛**：PyTorch 拥有一个非常友好和活跃的社区。如果你遇到深入的技术问题，可以在官方论坛提问，通常能很快得到解答。
 
-![](img/df64c01e86becadcbbda644f3a466dc1_11.png)
 
 ## 总结 🎯
 
-![](img/df64c01e86becadcbbda644f3a466dc1_13.png)
 
 本节课中，我们一起学习了 PyTorch 的核心概念、历史、特性以及其相对于 NumPy 的优势。我们还了解了其高性能背后的实现原理，获得了安装指南，并探索了进一步学习的宝贵资源。
 
-![](img/df64c01e86becadcbbda644f3a466dc1_15.png)
 
 ![](img/df64c01e86becadcbbda644f3a466dc1_17.png)
 

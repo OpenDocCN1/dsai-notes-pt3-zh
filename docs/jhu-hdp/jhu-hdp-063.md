@@ -2,7 +2,6 @@
 
 ![](img/b6eaf44c7de136fed4307065f0be23af_0.png)
 
-![](img/b6eaf44c7de136fed4307065f0be23af_2.png)
 
 在本节课中，我们将学习11种Hadoop MapReduce开发中常见的反模式。对于每一种反模式，我们都会探讨其问题所在以及如何避免它们。理解这些反模式有助于编写更高效、更健壮的大数据处理程序。
 
@@ -68,9 +67,7 @@ Hadoop中默认的Reducer数量是1，而开发者常常忘记这一点。如果
 
 ---
 
-![](img/b6eaf44c7de136fed4307065f0be23af_4.png)
 
-![](img/b6eaf44c7de136fed4307065f0be23af_5.png)
 
 ## 通过爬取Hadoop UI界面进行监控
 
@@ -102,7 +99,6 @@ Hadoop中默认的Reducer数量是1，而开发者常常忘记这一点。如果
 
 ## 仅使用Java进行MapReduce编程
 
-![](img/b6eaf44c7de136fed4307065f0be23af_7.png)
 
 在过去的四周里，我们一直在讨论用Java进行MapReduce编程。Java无疑是一门强大的语言，但有时也显得冗长。
 
@@ -129,7 +125,6 @@ Hadoop中默认的Reducer数量是1，而开发者常常忘记这一点。如果
 
 ## 总结
 
-![](img/b6eaf44c7de136fed4307065f0be23af_11.png)
 
 ![](img/b6eaf44c7de136fed4307065f0be23af_13.png)
 

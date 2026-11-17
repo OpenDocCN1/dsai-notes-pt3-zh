@@ -43,7 +43,6 @@ JOIN datasetA BY join_key, datasetB BY join_key;
 *   **Shuffle阶段**：这些键值对被混洗并跨网络传输。
 *   **Reduce阶段**：具有相同键的所有元组汇聚到同一个Reducer，最终生成连接后的元组。
 
-![](img/32980709555893950eb6efed9f1f9766_3.png)
 
 因此，这个操作符本质上并非二元操作。它只是处理与各自连接键相关联的元组，并将它们全部通过网络进行混洗。
 

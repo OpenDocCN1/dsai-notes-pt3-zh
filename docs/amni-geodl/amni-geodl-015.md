@@ -73,9 +73,7 @@ CNN的结构通常包括：输入层、多个应用滤波器的隐藏层、池�
 
 ![](img/8b78a02d2a1a235e2f50b14a5db5456d_9.png)
 
-![](img/8b78a02d2a1a235e2f50b14a5db5456d_11.png)
 
-![](img/8b78a02d2a1a235e2f50b14a5db5456d_13.png)
 
 ![](img/8b78a02d2a1a235e2f50b14a5db5456d_15.png)
 

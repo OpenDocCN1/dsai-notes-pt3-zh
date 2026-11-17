@@ -42,7 +42,6 @@ Grantquist和Kovar（1997）指出，尽管联邦统计机构将大量预算用�
 
 ![](img/0e3e0cbc293c8c856bb84f4c59124234_13.png)
 
-![](img/0e3e0cbc293c8c856bb84f4c59124234_14.png)
 
 ![](img/0e3e0cbc293c8c856bb84f4c59124234_16.png)
 

@@ -112,7 +112,6 @@ curl -X POST \
   https://<your-function-app-name>.azurewebsites.net/api/tokenize
 ```
 
-![](img/959f830bd63f5fca5bc7b1288370e9fc_2.png)
 
 ![](img/959f830bd63f5fca5bc7b1288370e9fc_3.png)
 

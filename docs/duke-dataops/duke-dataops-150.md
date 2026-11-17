@@ -26,7 +26,6 @@
 
 ## 连接MLflow与Azure Machine Learning
 
-![](img/3a88c5dac2b54540be15a5e5519fa845_2.png)
 
 接下来，我们看看如何将MLflow连接到另一个流行的服务——Azure Machine Learning。这使你能够利用Azure ML的工作区和模型注册中心。
 

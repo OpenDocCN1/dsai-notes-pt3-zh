@@ -1,6 +1,5 @@
 # 大型语言模型实践（高级数据工程、AWS、Databricks和本地LLM）：P143：42_02_02_使用Unity Catalog实现统一数据访问 🗂️
 
-![](img/6c3fd1d5d1523e9cc632a4cb3c814250_0.png)
 
 在本节课中，我们将学习Databricks Unity Catalog的核心概念与架构。Unity Catalog是一个统一的数据治理解决方案，它提供了跨多个Databricks工作区的集中式访问控制、审计、数据血缘和数据发现能力。
 
@@ -36,7 +35,6 @@ Databricks Unity Catalog提供了跨一个甚至多个Databricks工作区的集�
 4.  **发现与组织**：提供可搜索的目录，便于数据发现，并支持浏览器和REST API。
 5.  **多云友好**：您甚至可以跨多个云供应商实现此功能，并进行联合以实现统一访问。
 
-![](img/6c3fd1d5d1523e9cc632a4cb3c814250_2.png)
 
 ## 总结
 

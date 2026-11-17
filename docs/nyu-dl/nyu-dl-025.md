@@ -58,13 +58,9 @@ h_i = \sigma \left( W \cdot \left( \frac{1}{d_i} \sum_{j \in \mathcal{N}(i) \cup
 
 ![](img/4e33b1d5559572f479b37419f9532505_15.png)
 
-![](img/4e33b1d5559572f479b37419f9532505_17.png)
 
-![](img/4e33b1d5559572f479b37419f9532505_19.png)
 
-![](img/4e33b1d5559572f479b37419f9532505_21.png)
 
-![](img/4e33b1d5559572f479b37419f9532505_23.png)
 
 1.  **节点更新**：对于节点 \( v \)，其新表示 \( h_v \) 是自身特征和邻居特征的加权和。
     \[
@@ -72,9 +68,7 @@ h_i = \sigma \left( W \cdot \left( \frac{1}{d_i} \sum_{j \in \mathcal{N}(i) \cup
     \]
     其中 \( A, B \) 是可学习的权重矩阵，\( f \) 是激活函数（如 ReLU），\( \eta_{vu} \) 是门控权重。
 
-![](img/4e33b1d5559572f479b37419f9532505_25.png)
 
-![](img/4e33b1d5559572f479b37419f9532505_27.png)
 
 ![](img/4e33b1d5559572f479b37419f9532505_29.png)
 
@@ -82,7 +76,6 @@ h_i = \sigma \left( W \cdot \left( \frac{1}{d_i} \sum_{j \in \mathcal{N}(i) \cup
 
 ![](img/4e33b1d5559572f479b37419f9532505_33.png)
 
-![](img/4e33b1d5559572f479b37419f9532505_35.png)
 
 2.  **边表示与门控**：边 \( e_{vu} \) 的表示 \( e_{vu} \) 由其两端节点特征计算得出，并用于计算门控 \( \eta_{vu} \)。
     \[
@@ -95,11 +88,9 @@ h_i = \sigma \left( W \cdot \left( \frac{1}{d_i} \sum_{j \in \mathcal{N}(i) \cup
 
 ![](img/4e33b1d5559572f479b37419f9532505_37.png)
 
-![](img/4e33b1d5559572f479b37419f9532505_39.png)
 
 ![](img/4e33b1d5559572f479b37419f9532505_41.png)
 
-![](img/4e33b1d5559572f479b37419f9532505_43.png)
 
 3.  **边更新**：边的表示也会随着网络层数更新，通常包含一个残差连接。
     \[
@@ -176,7 +167,6 @@ dataset = MiniGCDataset(num_graphs=100, min_num_v=10, max_num_v=20)
 
 ![](img/4e33b1d5559572f479b37419f9532505_79.png)
 
-![](img/4e33b1d5559572f479b37419f9532505_81.png)
 
 ```python
 class GatedGCNLayer(nn.Module):
@@ -233,7 +223,6 @@ class GatedGCNLayer(nn.Module):
             return h, e
 ```
 
-![](img/4e33b1d5559572f479b37419f9532505_83.png)
 
 ### 3. 构建完整的 Gated GCN 模型
 
@@ -273,15 +262,11 @@ class GatedGCN(nn.Module):
 
 ![](img/4e33b1d5559572f479b37419f9532505_91.png)
 
-![](img/4e33b1d5559572f479b37419f9532505_93.png)
 
-![](img/4e33b1d5559572f479b37419f9532505_95.png)
 
 ### 4. 训练与评估循环
 
-![](img/4e33b1d5559572f479b37419f9532505_97.png)
 
-![](img/4e33b1d5559572f479b37419f9532505_99.png)
 
 以下是标准的训练和评估函数。
 
@@ -290,20 +275,13 @@ class GatedGCN(nn.Module):
 
 ![](img/4e33b1d5559572f479b37419f9532505_103.png)
 
-![](img/4e33b1d5559572f479b37419f9532505_105.png)
-
-![](img/4e33b1d5559572f479b37419f9532505_107.png)
-
-![](img/4e33b1d5559572f479b37419f9532505_109.png)
 
 
-![](img/4e33b1d5559572f479b37419f9532505_111.png)
 
-![](img/4e33b1d5559572f479b37419f9532505_113.png)
 
-![](img/4e33b1d5559572f479b37419f9532505_115.png)
 
-![](img/4e33b1d5559572f479b37419f9532505_117.png)
+
+
 
 ```python
 def train(model, optimizer, g, h, e, labels):
@@ -342,7 +320,6 @@ for epoch in range(50):
 
 ![](img/4e33b1d5559572f479b37419f9532505_123.png)
 
-![](img/4e33b1d5559572f479b37419f9532505_125.png)
 
 ## 核心概念总结
 

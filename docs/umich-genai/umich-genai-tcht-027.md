@@ -1,6 +1,5 @@
 # 生成式 AI 示教：27：深度伪造技术
 
-![](img/4dce54e751d27b1b868f34025a53ece8_0.png)
 
 ![](img/4dce54e751d27b1b868f34025a53ece8_0.png)
 

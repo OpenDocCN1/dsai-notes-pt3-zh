@@ -101,7 +101,6 @@ GitHub Actions的一个优点是每个步骤都是独立且清晰的。我们可
 这是一个使用GitHub Actions测试Rust代码的CI流水线示例。
 ```
 
-![](img/be08e3bc546a79bd8c455923795ff902_11.png)
 
 ![](img/be08e3bc546a79bd8c455923795ff902_12.png)
 

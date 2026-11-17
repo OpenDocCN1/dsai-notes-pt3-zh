@@ -1,6 +1,5 @@
 # 大型语言模型实践（高级数据工程、AWS、Databricks和本地LLM）：P84：18_01_07_Rust Axum贪婪硬币微服务组件架构图
 
-![](img/3f37e14799497ff39974ba827af319f6_0.png)
 
 ![](img/3f37e14799497ff39974ba827af319f6_0.png)
 
@@ -58,7 +57,6 @@ fn make_change(amount: i32) -> HashMap<Coin, i32> {
 
 它在生成式AI领域也能很好地工作，因为你可以直接代理到某些GenAI服务，例如使用RAG（检索增强生成）的服务。这个RAG服务可以很好地集成到你的微服务架构中。
 
-![](img/3f37e14799497ff39974ba827af319f6_2.png)
 
 ## 总结
 

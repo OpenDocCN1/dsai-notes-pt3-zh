@@ -2,13 +2,9 @@
 
 ![](img/c52935b00c3d9eb0f7e105248a32fb22_0.png)
 
-![](img/c52935b00c3d9eb0f7e105248a32fb22_2.png)
 
-![](img/c52935b00c3d9eb0f7e105248a32fb22_4.png)
 
-![](img/c52935b00c3d9eb0f7e105248a32fb22_5.png)
 
-![](img/c52935b00c3d9eb0f7e105248a32fb22_7.png)
 
 在本节课中，我们将学习如何将机器学习模型容器化，并利用AWS服务将其部署为可扩展的微服务。我们将通过两个具体示例，演示从构建Docker镜像到使用AWS App Runner进行持续部署的完整流程。
 
@@ -28,13 +24,9 @@
 
 ---
 
-![](img/c52935b00c3d9eb0f7e105248a32fb22_16.png)
 
-![](img/c52935b00c3d9eb0f7e105248a32fb22_18.png)
 
-![](img/c52935b00c3d9eb0f7e105248a32fb22_19.png)
 
-![](img/c52935b00c3d9eb0f7e105248a32fb22_20.png)
 
 ## 容器化流程详解
 
@@ -125,19 +117,15 @@ docker push <account-id>.dkr.ecr.<region>.amazonaws.com/fastapi-mlops:latest
 
 ![](img/c52935b00c3d9eb0f7e105248a32fb22_29.png)
 
-![](img/c52935b00c3d9eb0f7e105248a32fb22_31.png)
 
 ## 核心架构与不同来源的模型
 
 通过以上实践，我们构建了一个灵活的MLOps部署架构。其核心流程可以概括为：**无论模型来自何处，最终都被封装进容器，推送到注册表，并由托管服务（如App Runner）部署为微服务**。
 
-![](img/c52935b00c3d9eb0f7e105248a32fb22_33.png)
 
 模型的来源可以多种多样，主要分为以下四种方式：
 
-![](img/c52935b00c3d9eb0f7e105248a32fb22_35.png)
 
-![](img/c52935b00c3d9eb0f7e105248a32fb22_37.png)
 
 以下是不同模型来源的对比：
 *   **下载预训练模型**：从模型中心（如TensorFlow Hub、Hugging Face）直接下载现成模型，进行微调或不微调直接使用。这是快速启动项目的方式。
@@ -155,7 +143,6 @@ docker push <account-id>.dkr.ecr.<region>.amazonaws.com/fastapi-mlops:latest
 
 ## 总结
 
-![](img/c52935b00c3d9eb0f7e105248a32fb22_43.png)
 
 ![](img/c52935b00c3d9eb0f7e105248a32fb22_44.png)
 

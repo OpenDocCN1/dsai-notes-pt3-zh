@@ -12,12 +12,9 @@
 
 ![](img/53b73ebb6a65b9a8198fe03d2e96130f_0.png)
 
-![](img/53b73ebb6a65b9a8198fe03d2e96130f_3.png)
 
 代码存放在GitHub仓库中。任何代码变更都会触发GCP Cloud Build环境，进而自动将更新部署到容器即服务（CaaS）平台Cloud Run上。Rust作为一种微服务框架，能够实现低内存、高性能的计算。我们的目标是构建一个能够随代码更新而持续推送到生产环境的流程。
 
-![](img/53b73ebb6a65b9a8198fe03d2e96130f_2.png)
-![](img/53b73ebb6a65b9a8198fe03d2e96130f_3.png)
 
 ## 开始构建
 
@@ -27,7 +24,6 @@
 
 接下来，我们选择“创建新的Cloud Run应用”。在模板选择步骤，可以选择任意模板，因为后续我们会修改代码。这里选择Go模板作为起点。创建应用后，可以根据习惯更改编辑器的颜色主题，例如选择深色主题。然后，打开一个新的终端。
 
-![](img/53b73ebb6a65b9a8198fe03d2e96130f_5.png)
 
 ## 准备项目环境
 
@@ -47,7 +43,6 @@
 
 ![](img/53b73ebb6a65b9a8198fe03d2e96130f_7.png)
 ![](img/53b73ebb6a65b9a8198fe03d2e96130f_8.png)
-![](img/53b73ebb6a65b9a8198fe03d2e96130f_9.png)
 
 我们将Go的Dockerfile替换为Rust的Dockerfile。这个Dockerfile定义了一个简单的构建过程：创建二进制文件，将其推入一个精简的容器，并从8080端口暴露服务。
 
@@ -57,7 +52,6 @@
 
 ![](img/53b73ebb6a65b9a8198fe03d2e96130f_8.png)
 
-![](img/53b73ebb6a65b9a8198fe03d2e96130f_9.png)
 
 接下来，我们需要获取Rust的源代码文件。我们将进入源代码目录，并创建`lib.rs`和`main.rs`文件。
 
@@ -65,7 +59,6 @@
 
 ![](img/53b73ebb6a65b9a8198fe03d2e96130f_11.png)
 ![](img/53b73ebb6a65b9a8198fe03d2e96130f_12.png)
-![](img/53b73ebb6a65b9a8198fe03d2e96130f_13.png)
 ![](img/53b73ebb6a65b9a8198fe03d2e96130f_14.png)
 ![](img/53b73ebb6a65b9a8198fe03d2e96130f_15.png)
 
@@ -86,7 +79,6 @@ cargo new web-docker
 touch src/lib.rs
 ```
 
-![](img/53b73ebb6a65b9a8198fe03d2e96130f_13.png)
 
 ![](img/53b73ebb6a65b9a8198fe03d2e96130f_14.png)
 
@@ -105,10 +97,8 @@ touch src/lib.rs
 
 `lib.rs`文件中的代码则负责生成随机水果的逻辑。
 
-![](img/53b73ebb6a65b9a8198fe03d2e96130f_17.png)
 
 ![](img/53b73ebb6a65b9a8198fe03d2e96130f_20.png)
-![](img/53b73ebb6a65b9a8198fe03d2e96130f_21.png)
 
 ![](img/53b73ebb6a65b9a8198fe03d2e96130f_18.png)
 
@@ -122,13 +112,11 @@ touch src/lib.rs
 
 ![](img/53b73ebb6a65b9a8198fe03d2e96130f_21.png)
 
-![](img/53b73ebb6a65b9a8198fe03d2e96130f_23.png)
 
 我们将依赖项内容复制并粘贴到项目的`Cargo.toml`文件中。
 
 ![](img/53b73ebb6a65b9a8198fe03d2e96130f_23.png)
 
-![](img/53b73ebb6a65b9a8198fe03d2e96130f_25.png)
 
 ![](img/53b73ebb6a65b9a8198fe03d2e96130f_25.png)
 
@@ -140,7 +128,6 @@ touch src/lib.rs
 
 部署过程非常直接。在编辑器中，找到Cloud Run图标，点击“上传到Cloud Run”。
 
-![](img/53b73ebb6a65b9a8198fe03d2e96130f_27.png)
 
 系统将开始分析工作空间、构建容器化应用，并将其推送到生产环境。按照部署向导完成所有必要步骤后，服务就会部署成功。
 
@@ -150,17 +137,13 @@ touch src/lib.rs
 
 打开一个新终端，使用`curl`命令访问该URL，可以验证服务是否正在运行。例如，访问`/fruit`端点，它会随机返回一个水果名称。这表明我们的容器化微服务已在生产环境成功运行。
 
-![](img/53b73ebb6a65b9a8198fe03d2e96130f_27.png)
 
-![](img/53b73ebb6a65b9a8198fe03d2e96130f_29.png)
 
 ## 配置持续交付
 
 整个流程始于GitHub，代码存储在那里。当需要实现持续交付时，可以配置Cloud Build流程。Cloud Build会监听代码仓库的变更，并自动将更新部署到生产环境，从而实现持续交付。
 
-![](img/53b73ebb6a65b9a8198fe03d2e96130f_31.png)
 
-![](img/53b73ebb6a65b9a8198fe03d2e96130f_29.png)
 
 ## 总结
 

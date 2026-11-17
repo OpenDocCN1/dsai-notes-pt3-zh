@@ -1,6 +1,5 @@
 # 025：投票机制
 
-![](img/2d5f0937bfbd712bd09ac2c7cfd55f66_0.png)
 
 ![](img/2d5f0937bfbd712bd09ac2c7cfd55f66_0.png)
 
@@ -32,7 +31,6 @@
 
 ---
 
-![](img/2d5f0937bfbd712bd09ac2c7cfd55f66_2.png)
 
 ![](img/2d5f0937bfbd712bd09ac2c7cfd55f66_2.png)
 

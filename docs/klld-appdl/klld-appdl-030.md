@@ -1,229 +1,132 @@
 # 30：L16 - 深度压缩 [续] 🗜️ 🧠
 
-![](img/6551d0e6d3bbafb876cfbf10ae87a455_1.png)
 
-![](img/6551d0e6d3bbafb876cfbf10ae87a455_2.png)
 
-![](img/6551d0e6d3bbafb876cfbf10ae87a455_3.png)
 
-![](img/6551d0e6d3bbafb876cfbf10ae87a455_4.png)
 
-![](img/6551d0e6d3bbafb876cfbf10ae87a455_5.png)
 
-![](img/6551d0e6d3bbafb876cfbf10ae87a455_6.png)
 
-![](img/6551d0e6d3bbafb876cfbf10ae87a455_7.png)
 
-![](img/6551d0e6d3bbafb876cfbf10ae87a455_8.png)
 
-![](img/6551d0e6d3bbafb876cfbf10ae87a455_9.png)
 
 在本节课中，我们将继续学习深度压缩技术。我们将详细探讨剪枝、量化和哈夫曼编码这三种核心方法，了解它们如何协同工作，以显著减少神经网络模型的大小，同时尽可能保持其预测精度。
 
-![](img/6551d0e6d3bbafb876cfbf10ae87a455_11.png)
 
-![](img/6551d0e6d3bbafb876cfbf10ae87a455_12.png)
 
-![](img/6551d0e6d3bbafb876cfbf10ae87a455_13.png)
 
-![](img/6551d0e6d3bbafb876cfbf10ae87a455_14.png)
 
-![](img/6551d0e6d3bbafb876cfbf10ae87a455_15.png)
 
-![](img/6551d0e6d3bbafb876cfbf10ae87a455_16.png)
 
 上一节我们介绍了深度压缩的基本概念，本节中我们将深入探讨其具体实现细节。
 
-![](img/6551d0e6d3bbafb876cfbf10ae87a455_17.png)
 
-![](img/6551d0e6d3bbafb876cfbf10ae87a455_18.png)
 
-![](img/6551d0e6d3bbafb876cfbf10ae87a455_19.png)
 
-![](img/6551d0e6d3bbafb876cfbf10ae87a455_20.png)
 
 ## 1. 剪枝（Pruning）回顾与索引存储优化
 
-![](img/6551d0e6d3bbafb876cfbf10ae87a455_22.png)
 
-![](img/6551d0e6d3bbafb876cfbf10ae87a455_23.png)
 
-![](img/6551d0e6d3bbafb876cfbf10ae87a455_24.png)
 
-![](img/6551d0e6d3bbafb876cfbf10ae87a455_25.png)
 
-![](img/6551d0e6d3bbafb876cfbf10ae87a455_26.png)
 
-![](img/6551d0e6d3bbafb876cfbf10ae87a455_27.png)
 
-![](img/6551d0e6d3bbafb876cfbf10ae87a455_28.png)
 
-![](img/6551d0e6d3bbafb876cfbf10ae87a455_29.png)
 
-![](img/6551d0e6d3bbafb876cfbf10ae87a455_30.png)
 
-![](img/6551d0e6d3bbafb876cfbf10ae87a455_31.png)
 
-![](img/6551d0e6d3bbafb876cfbf10ae87a455_32.png)
 
-![](img/6551d0e6d3bbafb876cfbf10ae87a455_33.png)
 
 上一节我们介绍了剪枝，其核心思想是神经网络通常存在参数冗余，许多权重值接近零。我们可以将这些接近零的权重强制设置为零，这个过程称为剪枝。剪枝后，权重矩阵会变得稀疏。
 
 对于稀疏矩阵，我们可以使用高效的稀疏线性代数进行计算，并使用压缩格式（如压缩稀疏行 CSR 或压缩稀疏列 CSC）进行存储。存储所需的数据量大致与非零元素的数量成正比，而非矩阵的总大小 `n²`。
 
-![](img/6551d0e6d3bbafb876cfbf10ae87a455_35.png)
 
-![](img/6551d0e6d3bbafb876cfbf10ae87a455_36.png)
 
-![](img/6551d0e6d3bbafb876cfbf10ae87a455_37.png)
 
-![](img/6551d0e6d3bbafb876cfbf10ae87a455_38.png)
 
-![](img/6551d0e6d3bbafb876cfbf10ae87a455_39.png)
 
-![](img/6551d0e6d3bbafb876cfbf10ae87a455_40.png)
 
-![](img/6551d0e6d3bbafb876cfbf10ae87a455_41.png)
 
-![](img/6551d0e6d3bbafb876cfbf10ae87a455_42.png)
 
-![](img/6551d0e6d3bbafb876cfbf10ae87a455_43.png)
 
-![](img/6551d0e6d3bbafb876cfbf10ae87a455_44.png)
 
-![](img/6551d0e6d3bbafb876cfbf10ae87a455_45.png)
 
-![](img/6551d0e6d3bbafb876cfbf10ae87a455_46.png)
 
 然而，存储稀疏矩阵时，除了存储非零值本身，还需要存储它们的位置索引。为了进一步优化，我们可以存储索引的差值，而非绝对位置。
 
-![](img/6551d0e6d3bbafb876cfbf10ae87a455_48.png)
 
-![](img/6551d0e6d3bbafb876cfbf10ae87a455_49.png)
 
 以下是存储索引差值的具体方法：
 
-![](img/6551d0e6d3bbafb876cfbf10ae87a455_50.png)
 
-![](img/6551d0e6d3bbafb876cfbf10ae87a455_51.png)
 
-![](img/6551d0e6d3bbafb876cfbf10ae87a455_52.png)
 
-![](img/6551d0e6d3bbafb876cfbf10ae87a455_53.png)
 
-![](img/6551d0e6d3bbafb876cfbf10ae87a455_54.png)
 
-![](img/6551d0e6d3bbafb876cfbf10ae87a455_55.png)
 
-![](img/6551d0e6d3bbafb876cfbf10ae87a455_56.png)
 
-![](img/6551d0e6d3bbafb876cfbf10ae87a455_57.png)
 
 *   对于卷积层，我们使用 8 位来存储索引差值。
 *   对于全连接层，我们使用 5 位来存储索引差值。
 
-![](img/6551d0e6d3bbafb876cfbf10ae87a455_59.png)
 
-![](img/6551d0e6d3bbafb876cfbf10ae87a455_60.png)
 
-![](img/6551d0e6d3bbafb876cfbf10ae87a455_61.png)
 
-![](img/6551d0e6d3bbafb876cfbf10ae87a455_62.png)
 
-![](img/6551d0e6d3bbafb876cfbf10ae87a455_63.png)
 
-![](img/6551d0e6d3bbafb876cfbf10ae87a455_64.png)
 
-![](img/6551d0e6d3bbafb876cfbf10ae87a455_65.png)
 
 这意味着索引差值必须小于 `2^8 = 256`（卷积层）或 `2^5 = 32`（全连接层）。如果两个非零元素之间的索引差值超过了这个限制，我们就在中间插入一个“填充零”，然后重新开始计算差值。
 
-![](img/6551d0e6d3bbafb876cfbf10ae87a455_66.png)
 
-![](img/6551d0e6d3bbafb876cfbf10ae87a455_67.png)
 
-![](img/6551d0e6d3bbafb876cfbf10ae87a455_68.png)
 
 **示例**：
 假设我们有一个数组，第一个非零元素在位置 0（值 3.4），下一个在位置 4。差值 4 小于 8，可以直接存储 4。
 再下一个非零元素在位置 15。差值 15-4=11 大于 8。因此，我们在位置 4+8=12 处插入一个填充零，然后存储下一个非零元素（位置15）与这个填充零位置（位置12）的差值，即 3。
 
-![](img/6551d0e6d3bbafb876cfbf10ae87a455_70.png)
 
-![](img/6551d0e6d3bbafb876cfbf10ae87a455_71.png)
 
-![](img/6551d0e6d3bbafb876cfbf10ae87a455_72.png)
 
-![](img/6551d0e6d3bbafb876cfbf10ae87a455_73.png)
 
-![](img/6551d0e6d3bbafb876cfbf10ae87a455_74.png)
 
-![](img/6551d0e6d3bbafb876cfbf10ae87a455_75.png)
 
-![](img/6551d0e6d3bbafb876cfbf10ae87a455_76.png)
 
-![](img/6551d0e6d3bbafb876cfbf10ae87a455_77.png)
 
-![](img/6551d0e6d3bbafb876cfbf10ae87a455_78.png)
 
-![](img/6551d0e6d3bbafb876cfbf10ae87a455_79.png)
 
-![](img/6551d0e6d3bbafb876cfbf10ae87a455_80.png)
 
-![](img/6551d0e6d3bbafb876cfbf10ae87a455_81.png)
 
 这样，我们通过存储索引差值而非绝对位置，更高效地利用了内存。解码时，每当遇到一个填充零，我们就知道下一个索引值是当前索引加上最大值（8或32）再加上存储的差值。
 
-![](img/6551d0e6d3bbafb876cfbf10ae87a455_83.png)
 
-![](img/6551d0e6d3bbafb876cfbf10ae87a455_84.png)
 
 这种方法的效率取决于非零元素的分布。在最坏情况下可能效率不高，但在平均情况下能有效节省存储空间。
 
-![](img/6551d0e6d3bbafb876cfbf10ae87a455_85.png)
 
-![](img/6551d0e6d3bbafb876cfbf10ae87a455_86.png)
 
-![](img/6551d0e6d3bbafb876cfbf10ae87a455_87.png)
 
-![](img/6551d0e6d3bbafb876cfbf10ae87a455_88.png)
 
-![](img/6551d0e6d3bbafb876cfbf10ae87a455_89.png)
 
-![](img/6551d0e6d3bbafb876cfbf10ae87a455_90.png)
 
-![](img/6551d0e6d3bbafb876cfbf10ae87a455_91.png)
 
-![](img/6551d0e6d3bbafb876cfbf10ae87a455_92.png)
 
-![](img/6551d0e6d3bbafb876cfbf10ae87a455_93.png)
 
 ## 2. 量化（Quantization）与权重共享
 
-![](img/6551d0e6d3bbafb876cfbf10ae87a455_95.png)
 
-![](img/6551d0e6d3bbafb876cfbf10ae87a455_96.png)
 
-![](img/6551d0e6d3bbafb876cfbf10ae87a455_97.png)
 
-![](img/6551d0e6d3bbafb876cfbf10ae87a455_98.png)
 
-![](img/6551d0e6d3bbafb876cfbf10ae87a455_99.png)
 
-![](img/6551d0e6d3bbafb876cfbf10ae87a455_100.png)
 
 剪枝可以带来约 9 到 13 倍的压缩率。量化则能带来更显著的提升，其核心思想是**权重共享**。
 
-![](img/6551d0e6d3bbafb876cfbf10ae87a455_101.png)
 
-![](img/6551d0e6d3bbafb876cfbf10ae87a455_102.png)
 
-![](img/6551d0e6d3bbafb876cfbf10ae87a455_103.png)
 
-![](img/6551d0e6d3bbafb876cfbf10ae87a455_104.png)
 
-![](img/6551d0e6d3bbafb876cfbf10ae87a455_105.png)
 
 权重共享在深度学习中很常见，例如卷积操作就是在空间上共享权重。量化的权重共享是指：将数值相近的权重分组，并用一个共同的“中心值”来代表该组所有权重。
 

@@ -72,7 +72,6 @@ shinyApp(ui = ui, server = server)
 *   **函数参数与逗号**：`submitButton()` 和其他输入函数一样，是 `fluidPage()` 的一个参数。必须确保在每个函数调用后加上逗号，否则代码会报错。集成开发环境（如 RStudio）通常会通过红色“X”标记提示此类语法错误。
 *   **提交按钮的状态**：`submitButton()` 会创建一个名为 `submit` 的输入变量，你可以在服务器函数中通过 `input$submit` 来引用它。这个值在按钮被点击时会发生变化，你可以利用它来编写条件逻辑。
 
-![](img/674734d67f23935d4fcede867c78e2f6_8.png)
 
 ## 总结
 

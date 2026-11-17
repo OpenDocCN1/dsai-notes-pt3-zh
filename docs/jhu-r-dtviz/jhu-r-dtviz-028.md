@@ -1,32 +1,22 @@
 # 028：注释（第一部分） 📝
 
-![](img/46abfa62716ebe446950a1d684de1d26_0.png)
 
-![](img/46abfa62716ebe446950a1d684de1d26_2.png)
 
-![](img/46abfa62716ebe446950a1d684de1d26_4.png)
 
 在本节课中，我们将学习如何在ggplot2绘图中直接添加文本注释。这是提升图表信息传达能力的重要技巧。
 
-![](img/46abfa62716ebe446950a1d684de1d26_6.png)
 
 上一节我们介绍了使用颜色、更改坐标轴标签等方式对图形进行基础调整。本节中，我们来看看如何通过`geom_text()`函数在图形上直接绘制文本。
 
-![](img/46abfa62716ebe446950a1d684de1d26_8.png)
 
-![](img/46abfa62716ebe446950a1d684de1d26_9.png)
 
 ## 核心概念：`geom_text()`函数
 
-![](img/46abfa62716ebe446950a1d684de1d26_11.png)
 
-![](img/46abfa62716ebe446950a1d684de1d26_12.png)
 
 `geom_text()`函数与之前创建散点图时使用的`geom_point()`函数非常相似。本质上，它是将散点图中每个数据点替换为对应的文本标签。
 
-![](img/46abfa62716ebe446950a1d684de1d26_14.png)
 
-![](img/46abfa62716ebe446950a1d684de1d26_15.png)
 
 其基本语法结构如下：
 ```r
@@ -35,33 +25,23 @@ ggplot(data, aes(x = x_var, y = y_var)) +
   geom_text(aes(label = text_var))
 ```
 
-![](img/46abfa62716ebe446950a1d684de1d26_17.png)
 
-![](img/46abfa62716ebe446950a1d684de1d26_19.png)
 
 ## 实践演练：创建带标签的散点图
 
-![](img/46abfa62716ebe446950a1d684de1d26_20.png)
 
-![](img/46abfa62716ebe446950a1d684de1d26_22.png)
 
 让我们通过一个虚构的数据集来演示其用法。假设我们想绘制一个关于玩《俄罗斯方块》游戏时长与个人最高得分关系的散点图。
 
-![](img/46abfa62716ebe446950a1d684de1d26_23.png)
 
-![](img/46abfa62716ebe446950a1d684de1d26_25.png)
 
 以下是创建数据框和基础图形的步骤：
 
-![](img/46abfa62716ebe446950a1d684de1d26_27.png)
 
 
-![](img/46abfa62716ebe446950a1d684de1d26_29.png)
-
-![](img/46abfa62716ebe446950a1d684de1d26_30.png)
 
 
-![](img/46abfa62716ebe446950a1d684de1d26_32.png)
+
 
 ```r
 # 创建示例数据
@@ -76,23 +56,16 @@ ggplot(kids_data, aes(x = hours_played, y = high_score)) +
   geom_point()
 ```
 
-![](img/46abfa62716ebe446950a1d684de1d26_33.png)
 
-![](img/46abfa62716ebe446950a1d684de1d26_35.png)
 
 ## 添加文本标签
 
-![](img/46abfa62716ebe446950a1d684de1d26_36.png)
 
-![](img/46abfa62716ebe446950a1d684de1d26_38.png)
 
-![](img/46abfa62716ebe446950a1d684de1d26_39.png)
 
 现在，我们希望在数据点上添加玩家的名字作为标签。
 
-![](img/46abfa62716ebe446950a1d684de1d26_41.png)
 
-![](img/46abfa62716ebe446950a1d684de1d26_42.png)
 
 以下是添加`geom_text()`的方法：
 ```r
@@ -101,7 +74,6 @@ ggplot(kids_data, aes(x = hours_played, y = high_score)) +
   geom_text(aes(label = kid))
 ```
 
-![](img/46abfa62716ebe446950a1d684de1d26_44.png)
 
 运行上述代码后，你会发现文本标签与数据点完全重叠，导致图表难以阅读。
 

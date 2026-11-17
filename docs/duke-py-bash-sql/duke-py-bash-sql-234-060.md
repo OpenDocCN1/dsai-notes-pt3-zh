@@ -1,6 +1,5 @@
 #  060：Linux文件与目录移动
 
-![](img/702f4445bc0630362b4dad984609803e_0.png)
 
 ![](img/702f4445bc0630362b4dad984609803e_1.png)
 
@@ -84,7 +83,6 @@ rsync -av food/ newspot/food/
 
 ## 总结
 
-![](img/702f4445bc0630362b4dad984609803e_3.png)
 
 ![](img/702f4445bc0630362b4dad984609803e_4.png)
 

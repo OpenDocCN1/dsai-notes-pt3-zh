@@ -1,6 +1,5 @@
 #  017：使用SSH连接AWS云远程服务器 🖥️➡️☁️
 
-![](img/c5de7b9ccd70a8c2004ffdc7a650cf29_0.png)
 
 ![](img/c5de7b9ccd70a8c2004ffdc7a650cf29_1.png)
 
@@ -22,7 +21,6 @@
 
 ![](img/c5de7b9ccd70a8c2004ffdc7a650cf29_5.png)
 
-![](img/c5de7b9ccd70a8c2004ffdc7a650cf29_6.png)
 
 上一节我们确认了本地与远程环境的差异，本节中我们来看看如何为远程服务器打开连接端口。
 

@@ -368,7 +368,6 @@ SAheart |>
  geom_point()
 ```
 
-![](img/ce4e11cf9fef0d8a851627c1e5c13f92.png)*  *这表明逻辑回归模型：
 
 $$ \log\left\{\frac{\Pr(Y_i=1)}{1 - \Pr(Y_i=1)}\right\} = \beta_0 + \beta_1 x_i $$ 其中 $Y_i$ 是冠心病的一个指标，$x_i$ 代表个体 $i$ 的年龄。$\beta_1$ 的估计值转换为 *优势比*。$\exp(\beta_1)$ 表示年龄每增加一岁，心脏病优势增加的乘性因子。
 

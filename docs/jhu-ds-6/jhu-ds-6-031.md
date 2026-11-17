@@ -8,7 +8,6 @@
 
 ![](img/a5e4f87fc0469e31ad71e80a448559ea_1.png)
 
-![](img/a5e4f87fc0469e31ad71e80a448559ea_2.png)
 
 ## 创建R Markdown文件
 
@@ -19,7 +18,6 @@
 ![](img/a5e4f87fc0469e31ad71e80a448559ea_4.png)
 
 ![](img/a5e4f87fc0469e31ad71e80a448559ea_1.png)
-![](img/a5e4f87fc0469e31ad71e80a448559ea_2.png)
 
 选择后，RStudio会自动生成一个包含示例内容的基本R Markdown文档模板。
 
@@ -58,24 +56,19 @@ summary(cars)
 
 模板中已包含一个绘制图形的示例代码块 `plot(cars)`。
 
-![](img/a5e4f87fc0469e31ad71e80a448559ea_6.png)
 
 ## 保存与编译文档
 
-![](img/a5e4f87fc0469e31ad71e80a448559ea_6.png)
 
 编辑完成后，需要保存文件。点击 **File** -> **Save As**，将文件命名为例如 `test.Rmd`。
 
-![](img/a5e4f87fc0469e31ad71e80a448559ea_8.png)
 
 ![](img/a5e4f87fc0469e31ad71e80a448559ea_8.png)
-![](img/a5e4f87fc0469e31ad71e80a448559ea_9.png)
 
 ![](img/a5e4f87fc0469e31ad71e80a448559ea_9.png)
 
 保存后，即可编译文档。在RStudio中，点击 **Knit** 按钮（通常显示为“Knit to HTML”），knitr便会开始处理文档。
 
-![](img/a5e4f87fc0469e31ad71e80a448559ea_11.png)
 
 处理完成后，RStudio会生成一个同名的HTML文件（如 `test.html`），并在预览窗格中打开它。这个HTML文件就是你的最终报告。
 
@@ -91,7 +84,6 @@ browseURL(“test.html”)
 
 执行此命令后，系统默认浏览器会打开并显示你的knitr报告。
 
-![](img/a5e4f87fc0469e31ad71e80a448559ea_13.png)
 
 ## 总结
 

@@ -1,6 +1,5 @@
 # 大型语言模型实践：P104：总结与部署要点
 
-![](img/5ba7c556ebed5cae85438cf30a994b46_0.png)
 
 ![](img/5ba7c556ebed5cae85438cf30a994b46_0.png)
 

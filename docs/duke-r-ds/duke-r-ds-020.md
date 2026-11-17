@@ -25,9 +25,7 @@ population <- read_csv("https://central_repository_url/population_data.csv")
 
 查看数据的前几行，我们可以看到数据结构：包含国家名称、国家代码以及从`2000`到`2023`的多个列。
 
-![](img/314c85a69ee60489170d89153cdcc883_3.png)
 
-![](img/314c85a69ee60489170d89153cdcc883_4.png)
 
 ```r
 head(population)
@@ -37,9 +35,7 @@ head(population)
 
 我们的目标是重现一个折线图。该图表的X轴是年份，Y轴是人口（以百万计），并且用不同的颜色和形状区分美国、印度和中国这三个国家。
 
-![](img/314c85a69ee60489170d89153cdcc883_6.png)
 
-![](img/314c85a69ee60489170d89153cdcc883_7.png)
 
 这意味着，为了使用`ggplot2`绘图，我们的数据框需要包含三个核心变量：`year`（年份）、`population`（人口）和`country_name`（国家名称）。
 
@@ -120,9 +116,7 @@ population_filtered %>%
   )
 ```
 
-![](img/314c85a69ee60489170d89153cdcc883_9.png)
 
-![](img/314c85a69ee60489170d89153cdcc883_10.png)
 
 ### 3. 手动设置颜色
 
@@ -172,14 +166,10 @@ population_filtered %>%
 
 最后，将图例移动到图表顶部，并通过在`scale_color_manual`和`scale_shape_manual`中设置`name = NULL`来移除图例标题。
 
-![](img/314c85a69ee60489170d89153cdcc883_12.png)
-
-![](img/314c85a69ee60489170d89153cdcc883_13.png)
 
 
-![](img/314c85a69ee60489170d89153cdcc883_15.png)
 
-![](img/314c85a69ee60489170d89153cdcc883_16.png)
+
 
 ```r
 final_plot <- population_filtered %>%

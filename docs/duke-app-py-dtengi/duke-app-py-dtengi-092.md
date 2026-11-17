@@ -1,6 +1,5 @@
 #  092：在Cloud9中用C#语言构建微服务
 
-![](img/03a9b031ae2dc18ee3bba873e2041347_0.png)
 
 ## 概述
 在本节课中，我们将学习如何利用AWS云服务构建一个完整的、容器化的.NET微服务开发与部署工作流。我们将使用Cloud9作为云端开发环境，将应用容器化后推送到Elastic Container Registry (ECR)，并通过App Runner进行自动化部署，最后使用Cloud Shell进行测试。
@@ -17,7 +16,6 @@
 ## 项目准备与环境设置
 上一节我们介绍了整体工作流，本节中我们来看看具体的项目和环境设置。
 
-![](img/03a9b031ae2dc18ee3bba873e2041347_2.png)
 
 ![](img/03a9b031ae2dc18ee3bba873e2041347_2.png)
 
@@ -59,7 +57,6 @@ curl “http://localhost:5000/hello?name=Bob”
 ## 推送镜像到ECR
 本地测试成功后，下一步是将镜像推送到Amazon Elastic Container Registry (ECR)。
 
-![](img/03a9b031ae2dc18ee3bba873e2041347_4.png)
 
 ![](img/03a9b031ae2dc18ee3bba873e2041347_4.png)
 
@@ -67,7 +64,6 @@ curl “http://localhost:5000/hello?name=Bob”
 
 通常，推送命令序列如下：
 
-![](img/03a9b031ae2dc18ee3bba873e2041347_6.png)
 
 ```bash
 # 1. 登录ECR
@@ -92,7 +88,6 @@ docker push <account-id>.dkr.ecr.<region>.amazonaws.com/test:latest
 ## 使用Cloud Shell进行最终测试
 服务部署完成后，我们需要进行最终测试。这里我们使用另一个云服务——Cloud Shell。
 
-![](img/03a9b031ae2dc18ee3bba873e2041347_8.png)
 
 在Cloud Shell中，我们可以直接运行curl命令，指向App Runner提供的服务URL：
 
@@ -107,6 +102,5 @@ curl “https://<your-app-runner-url>/hello?name=Bob”
 ## 总结
 本节课中，我们一起学习了如何利用AWS的云原生服务构建完整的.NET微服务流水线。我们使用**Cloud9**作为云端IDE进行开发，将应用**容器化**后推送到**ECR**进行存储，通过**App Runner**实现自动化部署，并最终使用**Cloud Shell**验证服务。这个工作流提供了一个无缝、高性能的端到端开发与部署环境，无需任何本地基础设施干预。对于.NET开发者而言，尝试这套流程将极大地提升开发效率和部署灵活性。
 
-![](img/03a9b031ae2dc18ee3bba873e2041347_10.png)
 
 ![](img/03a9b031ae2dc18ee3bba873e2041347_10.png)

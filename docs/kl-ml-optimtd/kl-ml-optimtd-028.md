@@ -67,9 +67,7 @@
 *   求解带等式约束的二次优化问题，并获得闭式解。
 *   构建更高效的优化算法（共轭梯度法）。
 
-![](img/ac0d9d682d8b345eca316fe1f61b5f4f_1.png)
 
-![](img/ac0d9d682d8b345eca316fe1f61b5f4f_3.png)
 
 ![](img/ac0d9d682d8b345eca316fe1f61b5f4f_4.png)
 

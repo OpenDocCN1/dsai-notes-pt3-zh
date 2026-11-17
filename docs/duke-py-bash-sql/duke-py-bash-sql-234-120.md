@@ -1,6 +1,5 @@
 #  120：VSCode与MySQL集成回顾 🧑‍💻
 
-![](img/f059fd06afb5553103867d70767405dd_0.png)
 
 ![](img/f059fd06afb5553103867d70767405dd_1.png)
 

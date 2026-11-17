@@ -33,11 +33,9 @@ for q, a in questions_and_answers:
 
 ![](img/40778e0f08d9c1b13ca2e1a1bb2b1008_1.png)
 
-![](img/40778e0f08d9c1b13ca2e1a1bb2b1008_2.png)
 
 ---
 
-![](img/40778e0f08d9c1b13ca2e1a1bb2b1008_3.png)
 
 接下来，我们需要将格式化后的数据写入一个JSONL文件，这是提交给OpenAI的标准格式。
 

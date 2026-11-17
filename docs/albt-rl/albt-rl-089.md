@@ -1,6 +1,5 @@
 # 089：利用强化学习为AI智能体构建知识 🧠
 
-![](img/07dde0c26d2fd3d87bc3311e0c2ae113_0.png)
 
 ![](img/07dde0c26d2fd3d87bc3311e0c2ae113_1.png)
 

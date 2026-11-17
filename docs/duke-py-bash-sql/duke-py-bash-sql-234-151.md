@@ -90,9 +90,7 @@ all: install lint test format
 
 ![](img/6c8dcab98411e1cfdd04fed1a311baba_4.png)
 
-![](img/6c8dcab98411e1cfdd04fed1a311baba_5.png)
 
-![](img/6c8dcab98411e1cfdd04fed1a311baba_6.png)
 
 当你将包含问题的代码推送到GitHub后，持续集成的威力就显现出来了。
 
@@ -101,13 +99,10 @@ all: install lint test format
 3.  此时，你甚至不需要打开本地开发环境。可以直接在GitHub的网页界面上编辑有问题的文件，删除或修复错误的代码行，然后再次提交。
 4.  新的提交会再次触发自动化构建。这一次，所有步骤（安装、检查、测试、格式化）都会顺利通过，构建状态将显示为成功的绿色对勾。
 
-![](img/6c8dcab98411e1cfdd04fed1a311baba_8.png)
 
 这个过程完美展示了持续集成如何作为一个“机器人质检员”，持续监控代码质量，并在问题引入时立即给出反馈，从而确保主分支的代码始终处于健康状态。
 
-![](img/6c8dcab98411e1cfdd04fed1a311baba_9.png)
 
-![](img/6c8dcab98411e1cfdd04fed1a311baba_11.png)
 
 ## 课程总结
 
@@ -115,7 +110,6 @@ all: install lint test format
 
 我们首先理解了CI的核心价值：通过自动化测试、代码检查和格式化，在代码合并前持续保证质量。接着，我们剖析了一个标准的CI项目结构，其核心是**Makefile**和**自动化工作流配置**（如GitHub Actions）。通过实战，我们在开发环境中运行了CI步骤，并故意引入错误以观察自动化流程如何捕获问题。最后，我们见证了代码推送后，构建服务器如何自动执行“质检”任务，并在发现问题时快速反馈。
 
-![](img/6c8dcab98411e1cfdd04fed1a311baba_13.png)
 
 ![](img/6c8dcab98411e1cfdd04fed1a311baba_14.png)
 

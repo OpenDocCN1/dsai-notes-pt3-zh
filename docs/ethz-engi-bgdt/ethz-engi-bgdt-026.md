@@ -1,8 +1,6 @@
 #  026：Spark (5/5) - 局限性与总结 🧠
 
-![](img/0ccf873205d186dd77168d711d25a22a_1.png)
 
-![](img/0ccf873205d186dd77168d711d25a22a_2.png)
 
 在本节课中，我们将要学习Spark SQL的强大功能及其在处理结构化数据时的优势，同时也会探讨其局限性，特别是在处理嵌套和异构数据时遇到的挑战。
 
@@ -14,71 +12,47 @@
 
 我们通过引入DataFrame解决了这个问题，并同时提升了性能和效率。DataFrame适用于RDD中的数据基本上是JSON对象，并且这些对象遵循相同模式的情况。DataFrame带来了两个主要好处：首先，它们占用的磁盘和内存空间更少（例如，以列式存储）；其次，它们非常直观，是关系表的泛化形式，但可以嵌套。DataFrame支持类似SQL的高级声明式查询语言，如 `SELECT ... FROM ... WHERE ... GROUP BY ... HAVING ... ORDER BY ... LIMIT ...`，并且我们知道 `GROUP BY` 和 `ORDER BY` 操作会在集群中引发数据混洗。
 
-![](img/0ccf873205d186dd77168d711d25a22a_4.png)
 
-![](img/0ccf873205d186dd77168d711d25a22a_6.png)
 
 到目前为止，一切都很顺利。但现在，我想展示这个方案的局限性。了解一个方案在何处开始失效，何时会变慢或难以使用，是非常重要的。
 
-![](img/0ccf873205d186dd77168d711d25a22a_8.png)
 
 ## Spark SQL的扩展：处理嵌套数据
 
-![](img/0ccf873205d186dd77168d711d25a22a_10.png)
 
-![](img/0ccf873205d186dd77168d711d25a22a_12.png)
 
-![](img/0ccf873205d186dd77168d711d25a22a_14.png)
 
 Spark SQL在大多数情况下（约80%）表现优异，但在某些情况下会变得繁琐。
 
-![](img/0ccf873205d186dd77168d711d25a22a_16.png)
 
 首先，DataFrame可以嵌套。例如，一个DataFrame的列可以是一个字符串数组。这不再是传统意义上的扁平关系表，但它仍然是一个有效的DataFrame，代表了一组符合相同JSON模式的对象。
 
-![](img/0ccf873205d186dd77168d711d25a22a_18.png)
 
-![](img/0ccf873205d186dd77168d711d25a22a_19.png)
 
 我们可以用SQL查询它，但SQL最初并非为嵌套数据设计。因此，像Spark SQL这样的系统扩展了语言以处理数组和对象。
 
-![](img/0ccf873205d186dd77168d711d25a22a_21.png)
 
-![](img/0ccf873205d186dd77168d711d25a22a_23.png)
 
-![](img/0ccf873205d186dd77168d711d25a22a_24.png)
 
-![](img/0ccf873205d186dd77168d711d25a22a_26.png)
 
 ### 处理数组：EXPLODE函数
 
-![](img/0ccf873205d186dd77168d711d25a22a_28.png)
 
-![](img/0ccf873205d186dd77168d711d25a22a_30.png)
 
-![](img/0ccf873205d186dd77168d711d25a22a_31.png)
 
-![](img/0ccf873205d186dd77168d711d25a22a_33.png)
 
 以下是处理数组列的核心扩展功能之一：
 
-![](img/0ccf873205d186dd77168d711d25a22a_35.png)
 
-![](img/0ccf873205d186dd77168d711d25a22a_36.png)
 
-![](img/0ccf873205d186dd77168d711d25a22a_38.png)
 
 ```sql
 SELECT name, explode(countries) AS country FROM people_df;
 ```
 
-![](img/0ccf873205d186dd77168d711d25a22a_39.png)
 
-![](img/0ccf873205d186dd77168d711d25a22a_40.png)
 
-![](img/0ccf873205d186dd77168d711d25a22a_42.png)
 
-![](img/0ccf873205d186dd77168d711d25a22a_43.png)
 
 `EXPLODE` 函数可以作用于一个字符串数组列。它会“展开”数组，将每个元素分离出来，每个元素单独成一行。同时，原始行的其他列会被复制到每个新生成的行中。
 
@@ -92,7 +66,6 @@ SELECT name, explode(countries) AS country FROM people_df;
 
 ### 多层嵌套的挑战
 
-![](img/0ccf873205d186dd77168d711d25a22a_45.png)
 
 当数据具有多层嵌套时，例如“人员”包含“大洲”列表，而每个“大洲”又包含“国家”列表，情况会变得更复杂。
 
@@ -100,19 +73,13 @@ SELECT name, explode(countries) AS country FROM people_df;
 
 虽然这种方法可行，但你会感觉到语言并非为此设计，实现起来显得笨拙和复杂。
 
-![](img/0ccf873205d186dd77168d711d25a22a_47.png)
 
 ### 处理对象：点号表示法
 
-![](img/0ccf873205d186dd77168d711d25a22a_49.png)
 
-![](img/0ccf873205d186dd77168d711d25a22a_50.png)
 
-![](img/0ccf873205d186dd77168d711d25a22a_51.png)
 
-![](img/0ccf873205d186dd77168d711d25a22a_52.png)
 
-![](img/0ccf873205d186dd77168d711d25a22a_53.png)
 
 对于嵌套对象（在DataFrame中表现为结构体类型），Spark SQL采用了类似Python或Java的点号表示法来访问内部字段。
 
@@ -122,19 +89,15 @@ SELECT name, explode(countries) AS country FROM people_df;
 SELECT name.first, name.last FROM people_df;
 ```
 
-![](img/0ccf873205d186dd77168d711d25a22a_55.png)
 
 这样，我们就能处理数组和对象了，尽管过程可能有些令人头疼，但终究是可行的。
 
-![](img/0ccf873205d186dd77168d711d25a22a_57.png)
 
-![](img/0ccf873205d186dd77168d711d25a22a_59.png)
 
 ## Spark SQL的极限：异构数据
 
 现在，让我们探讨真正让Spark SQL“停止工作”的情况：异构数据。
 
-![](img/0ccf873205d186dd77168d711d25a22a_61.png)
 
 想象一下，你有一个JSON数据集，但其模式不一致，无法放入一个统一的DataFrame。这种情况是真实存在的，例如一家公司拥有30年的日志数据，但日志格式每5年或10年就改变一次。
 
@@ -150,7 +113,6 @@ SELECT name.first, name.last FROM people_df;
 
 Spark把处理数据异构性的复杂性抛回给了用户。当数据存在嵌套时，Spark SQL尚可应对（尽管头疼）；但当数据变得异构时，问题就变得非常严重且难以管理。
 
-![](img/0ccf873205d186dd77168d711d25a22a_63.png)
 
 **核心要点**：SQL是为表格设计的。要处理这种树状、异构的复杂数据，我们需要其他能够理解树形结构的查询语言。
 
@@ -158,16 +120,12 @@ Spark把处理数据异构性的复杂性抛回给了用户。当数据存在嵌
 
 最后，需要了解的是，DataFrame在底层会被Spark自动转换为RDD执行。但你也可以显式地进行转换。
 
-![](img/0ccf873205d186dd77168d711d25a22a_65.png)
 
-![](img/0ccf873205d186dd77168d711d25a22a_67.png)
 
-![](img/0ccf873205d186dd77168d711d25a22a_69.png)
 
 *   **DataFrame 转 RDD**：你可以将一个DataFrame转换为一个由行（Row）对象组成的RDD。
 *   **RDD 转 DataFrame**：你也可以将一个RDD转换为DataFrame，但这需要你提供一个模式（Schema）。Spark在从CSV或JSON读取数据时可以自动推断模式，但对于一个任意的RDD，你需要明确指定其结构。
 
-![](img/0ccf873205d186dd77168d711d25a22a_70.png)
 
 ## 总结与问答环节
 
@@ -178,11 +136,8 @@ Spark把处理数据异构性的复杂性抛回给了用户。当数据存在嵌
 2.  数据清洗本身是一个重要的步骤，而Spark SQL在清洗高度异构的原始数据时可能不是最合适的工具。
 3.  关于 `LATERAL VIEW`，可以将其虚拟表理解为跨整个数据列的单一表（当数据同构时），也可以理解为每个单元格内都有一个独立的表（当数据异构时）。前者更高效易用，后者则复杂且许多系统不支持。
 
-![](img/0ccf873205d186dd77168d711d25a22a_72.png)
 
-![](img/0ccf873205d186dd77168d711d25a22a_74.png)
 
-![](img/0ccf873205d186dd77168d711d25a22a_76.png)
 
 ![](img/0ccf873205d186dd77168d711d25a22a_78.png)
 

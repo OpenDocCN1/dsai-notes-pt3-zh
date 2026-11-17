@@ -32,7 +32,6 @@ lspci | grep --color -i vga
 
 通过管道将 `lspci` 的输出传递给 `grep` 命令，现在您就只得到了显示GPU硬件规格所需的输出。
 
-![](img/9c5e900906d9bfc56f4ac10a08e9671b_1.png)
 
 ## 厂商专用分析工具 🏭
 

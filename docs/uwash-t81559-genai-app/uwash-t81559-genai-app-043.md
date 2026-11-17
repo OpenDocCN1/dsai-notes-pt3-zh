@@ -78,7 +78,6 @@ Pandas DataFrame能与StreamLit完美配合，`st.dataframe()`可以将其以交
 
 运行代码后，我们启动StreamLit服务器并通过隧道在Colab中访问它。应用程序界面如下：
 
-![](img/f4944963d96150a7d73402fb6666a3fd_1.png)
 
 ![](img/f4944963d96150a7d73402fb6666a3fd_1.png)
 

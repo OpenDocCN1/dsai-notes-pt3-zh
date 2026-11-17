@@ -1,180 +1,109 @@
 # 40：神经网络架构搜索 (NAS)  - AmoebaNet-A 🧬
 
-![](img/0d67faca807dfaf500a3d3e6f905ed13_0.png)
 
-![](img/0d67faca807dfaf500a3d3e6f905ed13_2.png)
 
-![](img/0d67faca807dfaf500a3d3e6f905ed13_4.png)
 
-![](img/0d67faca807dfaf500a3d3e6f905ed13_6.png)
 
-![](img/0d67faca807dfaf500a3d3e6f905ed13_8.png)
 
-![](img/0d67faca807dfaf500a3d3e6f905ed13_10.png)
 
-![](img/0d67faca807dfaf500a3d3e6f905ed13_12.png)
 
 在本节课中，我们将学习如何使用**进化算法**进行神经网络架构搜索。我们将重点介绍AmoebaNet-A论文中提出的“正则化进化”方法，该方法结合了随机搜索和选择机制，以高效地发现高性能的神经网络架构。
 
-![](img/0d67faca807dfaf500a3d3e6f905ed13_14.png)
 
-![](img/0d67faca807dfaf500a3d3e6f905ed13_16.png)
 
-![](img/0d67faca807dfaf500a3d3e6f905ed13_18.png)
 
-![](img/0d67faca807dfaf500a3d3e6f905ed13_20.png)
 
-![](img/0d67faca807dfaf500a3d3e6f905ed13_22.png)
 
 上一节我们介绍了使用强化学习（策略梯度）进行架构搜索。本节中，我们来看看另一种无需梯度的优化方法：进化算法。
 
-![](img/0d67faca807dfaf500a3d3e6f905ed13_24.png)
 
-![](img/0d67faca807dfaf500a3d3e6f905ed13_26.png)
 
-![](img/0d67faca807dfaf500a3d3e6f905ed13_28.png)
 
-![](img/0d67faca807dfaf500a3d3e6f905ed13_30.png)
 
 ## 优化器选择与搜索空间
 
-![](img/0d67faca807dfaf500a3d3e6f905ed13_32.png)
 
-![](img/0d67faca807dfaf500a3d3e6f905ed13_34.png)
 
-![](img/0d67faca807dfaf500a3d3e6f905ed13_36.png)
 
-![](img/0d67faca807dfaf500a3d3e6f905ed13_38.png)
 
 首先需要注意的是，架构搜索的优化器必须是**无梯度**的。因此，无法使用基于梯度的优化方法。
 
-![](img/0d67faca807dfaf500a3d3e6f905ed13_40.png)
 
-![](img/0d67faca807dfaf500a3d3e6f905ed13_42.png)
 
-![](img/0d67faca807dfaf500a3d3e6f905ed13_44.png)
 
-![](img/0d67faca807dfaf500a3d3e6f905ed13_46.png)
 
 以下是几种可行的无梯度优化策略：
 *   **随机搜索**
 *   **强化学习**
 *   **进化算法**
 
-![](img/0d67faca807dfaf500a3d3e6f905ed13_48.png)
 
-![](img/0d67faca807dfaf500a3d3e6f905ed13_50.png)
 
-![](img/0d67faca807dfaf500a3d3e6f905ed13_52.png)
 
-![](img/0d67faca807dfaf500a3d3e6f905ed13_54.png)
 
-![](img/0d67faca807dfaf500a3d3e6f905ed13_56.png)
 
 网格搜索不适用，因为它会遭遇**维度灾难**。
 
-![](img/0d67faca807dfaf500a3d3e6f905ed13_58.png)
 
-![](img/0d67faca807dfaf500a3d3e6f905ed13_60.png)
 
-![](img/0d67faca807dfaf500a3d3e6f905ed13_62.png)
 
-![](img/0d67faca807dfaf500a3d3e6f905ed13_64.png)
 
 我们将沿用之前定义的搜索空间，该空间包含**普通单元**和**缩减单元**。我们的目标是寻找最佳的单元结构，这与之前的目标一致。
 
-![](img/0d67faca807dfaf500a3d3e6f905ed13_66.png)
 
-![](img/0d67faca807dfaf500a3d3e6f905ed13_68.png)
 
-![](img/0d67faca807dfaf500a3d3e6f905ed13_70.png)
 
-![](img/0d67faca807dfaf500a3d3e6f905ed13_72.png)
 
-![](img/0d67faca807dfaf500a3d3e6f905ed13_74.png)
 
 ## 架构决策与进化算法原理
 
-![](img/0d67faca807dfaf500a3d3e6f905ed13_76.png)
 
-![](img/0d67faca807dfaf500a3d3e6f905ed13_78.png)
 
-![](img/0d67faca807dfaf500a3d3e6f905ed13_80.png)
 
-![](img/0d67faca807dfaf500a3d3e6f905ed13_82.png)
 
 现在的问题是，如何优化这些架构？我们需要做的决策包括：
 *   连接来自哪里
 *   使用何种操作
 *   选择拼接还是相加操作
 
-![](img/0d67faca807dfaf500a3d3e6f905ed13_84.png)
 
-![](img/0d67faca807dfaf500a3d3e6f905ed13_86.png)
 
-![](img/0d67faca807dfaf500a3d3e6f905ed13_88.png)
 
-![](img/0d67faca807dfaf500a3d3e6f905ed13_90.png)
 
-![](img/0d67faca807dfaf500a3d3e6f905ed13_92.png)
 
 这些决策是按顺序做出的。例如，必须先为第二个模块做出选择，第三个模块的输入才可能来自第二个操作的结果。
 
-![](img/0d67faca807dfaf500a3d3e6f905ed13_94.png)
 
-![](img/0d67faca807dfaf500a3d3e6f905ed13_96.png)
 
-![](img/0d67faca807dfaf500a3d3e6f905ed13_98.png)
 
-![](img/0d67faca807dfaf500a3d3e6f905ed13_100.png)
 
-![](img/0d67faca807dfaf500a3d3e6f905ed13_102.png)
 
 **进化**的本质非常简单：**随机搜索 + 选择**。先进行随机搜索，然后选择表现最好的个体保留下来，淘汰或替换表现最差的个体。表现最佳的个体被选中，这就是进化的工作方式。
 
-![](img/0d67faca807dfaf500a3d3e6f905ed13_104.png)
 
-![](img/0d67faca807dfaf500a3d3e6f905ed13_106.png)
 
-![](img/0d67faca807dfaf500a3d3e6f905ed13_108.png)
 
-![](img/0d67faca807dfaf500a3d3e6f905ed13_110.png)
 
-![](img/0d67faca807dfaf500a3d3e6f905ed13_112.png)
 
 ## 正则化进化算法详解
 
-![](img/0d67faca807dfaf500a3d3e6f905ed13_114.png)
 
-![](img/0d67faca807dfaf500a3d3e6f905ed13_116.png)
 
-![](img/0d67faca807dfaf500a3d3e6f905ed13_118.png)
 
-![](img/0d67faca807dfaf500a3d3e6f905ed13_120.png)
 
-![](img/0d67faca807dfaf500a3d3e6f905ed13_122.png)
 
 我们将使用**正则化进化**算法。该算法并不复杂。
 
-![](img/0d67faca807dfaf500a3d3e6f905ed13_124.png)
 
-![](img/0d67faca807dfaf500a3d3e6f905ed13_126.png)
 
-![](img/0d67faca807dfaf500a3d3e6f905ed13_128.png)
 
-![](img/0d67faca807dfaf500a3d3e6f905ed13_130.png)
 
 算法开始时，在时间0有一个空的**种群**和一个**历史记录**列表。在代码中，它们可以被实现为列表或队列。
 
-![](img/0d67faca807dfaf500a3d3e6f905ed13_132.png)
 
-![](img/0d67faca807dfaf500a3d3e6f905ed13_134.png)
 
-![](img/0d67faca807dfaf500a3d3e6f905ed13_136.png)
 
-![](img/0d67faca807dfaf500a3d3e6f905ed13_138.png)
 
-![](img/0d67faca807dfaf500a3d3e6f905ed13_140.png)
 
 以下是算法的具体步骤：
 

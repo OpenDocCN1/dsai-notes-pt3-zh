@@ -1,6 +1,5 @@
 # 98：MLOps 重型与轻型工作流对比 🏗️ vs. 🚀
 
-![](img/a030a5d68fdb13963afccaa8d24c2687_0.png)
 
 ![](img/a030a5d68fdb13963afccaa8d24c2687_1.png)
 

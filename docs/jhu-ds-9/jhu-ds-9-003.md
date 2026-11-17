@@ -8,9 +8,7 @@
 
 你需要一个相对较新版本的RStudio。开始创建应用最简单的方式是：点击 **File** -> **New File** -> **Shiny Web App**。
 
-![](img/9c95308d8b232b5cd94da53605312903_1.png)
 
-![](img/9c95308d8b232b5cd94da53605312903_2.png)
 
 点击后会弹出一个对话框，你可以为应用命名，例如 `my_app`。接着，你可以选择将文件组织在单个文件中，或者分为两个文件：`ui.R` 和 `server.R`。我们讨论过并将继续讨论后一种方式。
 
@@ -26,11 +24,9 @@
 
 ## 理解 `ui.R` 文件
 
-![](img/9c95308d8b232b5cd94da53605312903_6.png)
 
 在 `ui.R` 文件中，关键是需要调用 `shinyUI` 函数。你需要加载 `shiny` 库，并且这个 `shinyUI` 函数将控制用户界面。
 
-![](img/9c95308d8b232b5cd94da53605312903_8.png)
 
 ```r
 library(shiny)
@@ -61,14 +57,12 @@ server <- function(input, output) {
 
 默认情况下，`fluidPage` 包含一个主面板和一个侧边栏面板。这里我们使用 `sidebarLayout` 来指定布局。
 
-![](img/9c95308d8b232b5cd94da53605312903_10.png)
 
 ![](img/9c95308d8b232b5cd94da53605312903_11.png)
 
 *   `sidebarPanel` 定义了侧边栏中将出现的内容。`h3` 是HTML的三级标题，意味着比 `h2` 小，比 `h1` 更小。这里它显示 “Sidebar Text”。
 *   `mainPanel` 定义了右侧的主面板内容。同样使用 `h3` 标题，显示 “Main Panel Text”。
 
-![](img/9c95308d8b232b5cd94da53605312903_13.png)
 
 因此，`sidebarLayout` 表示在流体页面中，我们将采用侧边栏布局：左侧用于导航等，右侧是显示主要内容的主面板。
 
@@ -78,15 +72,11 @@ server <- function(input, output) {
 
 ![](img/9c95308d8b232b5cd94da53605312903_15.png)
 
-![](img/9c95308d8b232b5cd94da53605312903_16.png)
 
 ## 运行Shiny应用
 
-![](img/9c95308d8b232b5cd94da53605312903_17.png)
 
-![](img/9c95308d8b232b5cd94da53605312903_18.png)
 
-![](img/9c95308d8b232b5cd94da53605312903_19.png)
 
 有两种方式可以运行应用。
 
@@ -94,13 +84,10 @@ server <- function(input, output) {
 
 运行后，你将看到应用元素：“Data Science FTW” 显示在标题位置，“Sidebar Text” 在侧边栏，“Main Panel Text” 在主面板。这就是我们在采用侧边栏布局的流体页面中的三个元素。
 
-![](img/9c95308d8b232b5cd94da53605312903_21.png)
 
 另一种运行方式是，首先切换到包含 `ui.R` 和 `server.R` 文件的目录。你可以使用快捷键 **Alt + S + W + Enter**，或者点击 **Session** -> **Set Working Directory** -> **To Source File Location**。然后，在控制台输入 `runApp()` 并执行。
 
-![](img/9c95308d8b232b5cd94da53605312903_22.png)
 
-![](img/9c95308d8b232b5cd94da53605312903_23.png)
 
 你也可以在 `runApp()` 函数中直接指定应用的路径，这样你甚至不需要切换到该目录。注意，它是在RStudio内部运行的。RStudio启动了一个本地网页来显示HTML页面。
 

@@ -4,7 +4,6 @@
 
 ![](img/ccd447fa75f181625bab62026a7e7d44_2.png)
 
-![](img/ccd447fa75f181625bab62026a7e7d44_4.png)
 
 在本节课中，我们将跟随MIT的Antoni Rosinol博士，探讨如何将经典的SLAM（同时定位与建图）技术提升至3D空间感知的层次。我们将了解其核心工作Kimera，一个能够从RGB-D和IMU数据生成稠密3D度量语义地图的系统，并进一步探索其扩展——3D动态场景图，这是一种包含高级语义和拓扑信息的环境表示方法。
 
@@ -12,13 +11,9 @@
 
 ![](img/ccd447fa75f181625bab62026a7e7d44_8.png)
 
-![](img/ccd447fa75f181625bab62026a7e7d44_9.png)
 
-![](img/ccd447fa75f181625bab62026a7e7d44_11.png)
 
-![](img/ccd447fa75f181625bab62026a7e7d44_12.png)
 
-![](img/ccd447fa75f181625bab62026a7e7d44_13.png)
 
 ![](img/ccd447fa75f181625bab62026a7e7d44_15.png)
 

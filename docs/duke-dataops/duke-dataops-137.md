@@ -1,6 +1,5 @@
 #  137：进阶Azure ML与MLOps概念
 
-![](img/8dfe870a39cba6c45d0742753ae90562_0.png)
 
 ![](img/8dfe870a39cba6c45d0742753ae90562_1.png)
 

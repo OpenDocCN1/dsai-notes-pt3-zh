@@ -184,7 +184,6 @@
 
 好了，让我们以一些进一步阅读的指引来结束本单元。如果你对卡尔曼滤波器的技术细节更感兴趣，维基百科当然是一个很好的资源。但也有这本由Forsyth和Ponce所著的《Computer Vision: A Modern Approach》一书，其第17章对跟踪和卡尔曼滤波器有很好的介绍。
 
-![](img/ccc2202074fe9cf1240a816bcf82e6b9_5.png)
 
 ![](img/ccc2202074fe9cf1240a816bcf82e6b9_5.png)
 

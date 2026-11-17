@@ -19,7 +19,6 @@
 *   **`hwy`**: 高速公路油耗（英里/加仑）。
 *   **`drv`**: 驱动类型（前驱`f`、后驱`r`、四驱`4`）。
 
-![](img/e7b9d11154252f91a15372beeb48f2f1_1.png)
 
 ### 基础散点图
 
@@ -31,13 +30,11 @@ qplot(x = displ, y = hwy, data = mpg)
 
 生成的图形与基础绘图系统不同：它有灰色背景和白色网格线，数据点是实心圆，并且坐标轴带有自动标签。
 
-![](img/e7b9d11154252f91a15372beeb48f2f1_1.png)
 
 ### 按子组着色
 
 上一节我们绘制了基础图形，本节中我们来看看如何通过颜色区分数据中的不同子组。我们可以根据汽车的驱动类型（`drv`）为数据点着色。
 
-![](img/e7b9d11154252f91a15372beeb48f2f1_3.png)
 
 ```r
 qplot(x = displ, y = hwy, data = mpg, color = drv)
@@ -45,9 +42,7 @@ qplot(x = displ, y = hwy, data = mpg, color = drv)
 
 代码中，`color = drv` 表示将 `drv` 变量的不同水平映射为不同颜色。图形会自动为前驱（绿色）、后驱（蓝色）和四驱（红色）分配颜色并添加图例。从图中可以看出，前驱车油耗最高，四驱车最低。
 
-![](img/e7b9d11154252f91a15372beeb48f2f1_3.png)
 
-![](img/e7b9d11154252f91a15372beeb48f2f1_5.png)
 
 ### 添加平滑曲线
 
@@ -59,9 +54,7 @@ qplot(x = displ, y = hwy, data = mpg, geom = c("point", "smooth"))
 
 参数 `geom = c("point", "smooth")` 表示在图形上同时添加点和平滑线。图中的蓝色曲线展示了整体趋势，灰色阴影区域代表其95%的置信区间。
 
-![](img/e7b9d11154252f91a15372beeb48f2f1_7.png)
 
-![](img/e7b9d11154252f91a15372beeb48f2f1_5.png)
 
 ### 分组直方图
 
@@ -73,7 +66,6 @@ qplot(x = hwy, data = mpg, fill = drv)
 
 当只指定一个变量（`x = hwy`）时，`qplot` 默认生成直方图。`fill = drv` 参数会根据 `drv` 变量用不同颜色填充直方图的各个部分，从而直观地比较不同驱动类型的油耗分布。
 
-![](img/e7b9d11154252f91a15372beeb48f2f1_7.png)
 
 ### 使用分面
 
@@ -91,9 +83,7 @@ qplot(x = hwy, data = mpg, facets = drv ~ .)
 *   `facets = . ~ drv`：右侧变量决定列数。这里 `.` 表示只有一行，`drv` 有三个水平，因此生成一行三列的散点图。
 *   `facets = drv ~ .`：左侧变量决定行数。这里 `drv` 决定有三行，`.` 表示只有一列，因此生成三行一列的直方图。
 
-![](img/e7b9d11154252f91a15372beeb48f2f1_9.png)
 
-![](img/e7b9d11154252f91a15372beeb48f2f1_9.png)
 
 ---
 
@@ -116,9 +106,7 @@ qplot(x = logeno, data = maacs)
 
 从直方图可以看出，`logeno` 的分布似乎存在两个甚至三个峰值。
 
-![](img/e7b9d11154252f91a15372beeb48f2f1_11.png)
 
-![](img/e7b9d11154252f91a15372beeb48f2f1_11.png)
 
 ### 按过敏状态分组
 
@@ -128,15 +116,12 @@ qplot(x = logeno, data = maacs)
 qplot(x = logeno, data = maacs, fill = mopos)
 ```
 
-![](img/e7b9d11154252f91a15372beeb48f2f1_13.png)
 
 图中蓝色（过敏阳性）的条形整体略高于红色（过敏阴性），这表明对小鼠过敏的儿童平均肺部炎症水平可能更高。
 
-![](img/e7b9d11154252f91a15372beeb48f2f1_13.png)
 
 ### 密度平滑曲线
 
-![](img/e7b9d11154252f91a15372beeb48f2f1_15.png)
 
 另一种可视化一维数据分布的方法是使用密度平滑曲线。以下是分别绘制整体和按组划分的密度曲线的方法。
 
@@ -149,7 +134,6 @@ qplot(x = logeno, data = maacs, geom = "density", color = mopos)
 
 在按组着色的图中，可以清晰地看到两个峰值大致对应了过敏阳性和阴性两组儿童，这比直方图更直观地揭示了双峰结构与过敏状态的关系。
 
-![](img/e7b9d11154252f91a15372beeb48f2f1_15.png)
 
 ### 散点图与分组
 
@@ -169,9 +153,7 @@ qplot(x = logpm25, y = logeno, data = maacs, shape = mopos)
 qplot(x = logpm25, y = logeno, data = maacs, color = mopos)
 ```
 
-![](img/e7b9d11154252f91a15372beeb48f2f1_17.png)
 
-![](img/e7b9d11154252f91a15372beeb48f2f1_17.png)
 
 ### 添加线性趋势线并分面
 
@@ -185,7 +167,6 @@ qplot(x = logpm25, y = logeno, data = maacs, color = mopos, geom = c("point", "s
 qplot(x = logpm25, y = logeno, data = maacs, facets = . ~ mopos, geom = c("point", "smooth"), method = "lm")
 ```
 
-![](img/e7b9d11154252f91a15372beeb48f2f1_19.png)
 
 在代码中，`method = "lm"` 指定使用线性模型进行平滑。从结果可以看出，在不过敏的儿童中（红色/左侧面板），两者关系微弱且可能为负相关；而在过敏的儿童中（蓝色/右侧面板），则呈现轻微的上升趋势。
 

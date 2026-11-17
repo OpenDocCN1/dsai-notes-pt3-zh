@@ -127,7 +127,6 @@ ggplot(data, aes(x=PM10, y=Mortality)) +
 
 ---
 
-![](img/0e363beadf46f5228a318723cd43d4f4_5.png)
 
 ![](img/0e363beadf46f5228a318723cd43d4f4_6.png)
 

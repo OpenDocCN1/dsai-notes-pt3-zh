@@ -1,6 +1,5 @@
 # 007：函数
 
-![](img/c4cd0d96b3ad697fedca72a20ee8f79f_1.png)
 
 ![](img/c4cd0d96b3ad697fedca72a20ee8f79f_3.png)
 

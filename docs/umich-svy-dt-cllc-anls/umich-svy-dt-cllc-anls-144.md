@@ -1,6 +1,5 @@
 #  144：回归插补法 🧩
 
-![](img/e8947bdab3b5ab6293f35c229f8f9118_0.png)
 
 ![](img/e8947bdab3b5ab6293f35c229f8f9118_1.png)
 

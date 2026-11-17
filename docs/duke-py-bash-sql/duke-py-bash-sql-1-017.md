@@ -10,9 +10,7 @@
 
 序列是**有序的、有限的数据集合**。
 
-![](img/ab2399477d56e3a2655ec933e4dfee47_1.png)
 
-![](img/ab2399477d56e3a2655ec933e4dfee47_1.png)
 
 ![](img/ab2399477d56e3a2655ec933e4dfee47_3.png)
 
@@ -23,9 +21,7 @@ Python中主要的序列类型包括：
 
 ![](img/ab2399477d56e3a2655ec933e4dfee47_5.png)
 
-![](img/ab2399477d56e3a2655ec933e4dfee47_3.png)
 
-![](img/ab2399477d56e3a2655ec933e4dfee47_7.png)
 
 此外，还有：
 *   **二进制字符串** (`bytes`, `bytearray`)
@@ -188,6 +184,5 @@ print(seq * 4)  # 输出: [1, 2, 1, 2, 1, 2, 1, 2]
 
 现在，你应该尝试自己创建一些序列并练习这些操作，以加深理解。
 
-![](img/ab2399477d56e3a2655ec933e4dfee47_9.png)
 
 ![](img/ab2399477d56e3a2655ec933e4dfee47_9.png)

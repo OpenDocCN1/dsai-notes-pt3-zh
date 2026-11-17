@@ -31,15 +31,10 @@
 
 ---
 
-![](img/83ce094cc625bf4f6e6f0cc06fe34cb2_1.png)
 
-![](img/83ce094cc625bf4f6e6f0cc06fe34cb2_2.png)
 
-![](img/83ce094cc625bf4f6e6f0cc06fe34cb2_3.png)
 
-![](img/83ce094cc625bf4f6e6f0cc06fe34cb2_4.png)
 
-![](img/83ce094cc625bf4f6e6f0cc06fe34cb2_6.png)
 
 ## 实践案例：前院的蚊子
 
@@ -47,15 +42,11 @@
 
 然后，我提出了一个自己也不知道确切答案、信息也不充分的问题：“我的前院大概生活着多少只蚊子？”
 
-![](img/83ce094cc625bf4f6e6f0cc06fe34cb2_8.png)
 
-![](img/83ce094cc625bf4f6e6f0cc06fe34cb2_9.png)
 
-![](img/83ce094cc625bf4f6e6f0cc06fe34cb2_10.png)
 
 模型遵循了认知验证模式，生成了一系列附加问题。以下是它提出的问题：
 
-![](img/83ce094cc625bf4f6e6f0cc06fe34cb2_11.png)
 
 ![](img/83ce094cc625bf4f6e6f0cc06fe34cb2_12.png)
 

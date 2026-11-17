@@ -1,6 +1,5 @@
 # 80：L10.5.4 - PyTorch 中的 Dropout 🧠
 
-![](img/3c5cd0a856eb936b143add6a293ab378_1.png)
 
 在本节课中，我们将学习如何在 PyTorch 中实际实现和应用 Dropout 技术。我们将从理解“反转 Dropout”的概念开始，然后通过代码示例展示如何在神经网络中添加 Dropout 层，并讨论相关的实践技巧。
 
@@ -20,7 +19,6 @@
 
 ---
 
-![](img/3c5cd0a856eb936b143add6a293ab378_3.png)
 
 ## 在 PyTorch 中使用 Dropout
 
@@ -51,19 +49,15 @@ class MLPWithDropout(nn.Module):
 *   **输出层**：我们通常不对输出层使用 Dropout，因为丢弃代表类别标签的神经元没有意义。
 *   **丢弃概率**：`drop_prob` 是一个可以调节的超参数。不同层可以使用不同的丢弃概率。
 
-![](img/3c5cd0a856eb936b143add6a293ab378_5.png)
 
 ---
 
 ## 训练与评估模式的切换
 
-![](img/3c5cd0a856eb936b143add6a293ab378_7.png)
 
 在 PyTorch 中使用 Dropout 时，一个至关重要的步骤是正确切换模型的模式。
 
-![](img/3c5cd0a856eb936b143add6a293ab378_8.png)
 
-![](img/3c5cd0a856eb936b143add6a293ab378_9.png)
 
 我们必须使用 `model.train()` 和 `model.eval()` 来明确告知模型当前是处于训练模式还是评估（测试）模式。这是因为 `nn.Dropout` 层的行为会随模式不同而改变：
 *   在训练模式 (`model.train()`) 下，Dropout 层会按照设定的概率随机丢弃神经元。
@@ -71,13 +65,9 @@ class MLPWithDropout(nn.Module):
 
 这是一个良好的编程实践，即使不使用 Dropout，也建议在训练和评估时进行模式切换，以避免其他具有不同训练/评估行为的层（如 BatchNorm）出现意外结果。
 
-![](img/3c5cd0a856eb936b143add6a293ab378_11.png)
 
-![](img/3c5cd0a856eb936b143add6a293ab378_12.png)
 
-![](img/3c5cd0a856eb936b143add6a293ab378_13.png)
 
-![](img/3c5cd0a856eb936b143add6a293ab378_14.png)
 
 ---
 
@@ -87,9 +77,7 @@ class MLPWithDropout(nn.Module):
 
 基于此，我们可以总结出一些实践技巧：
 
-![](img/3c5cd0a856eb936b143add6a293ab378_16.png)
 
-![](img/3c5cd0a856eb936b143add6a293ab378_17.png)
 
 *   **何时使用**：如果模型没有出现过拟合，则没有必要使用 Dropout。建议先训练一个基线模型观察其表现。
 *   **模型容量**：Dropout 的提出者建议，如果模型未过拟合，可以尝试增加模型容量（更多参数），使其先有过拟合的倾向，然后再加入 Dropout 来进行正则化。这通常比直接使用一个不会过拟合的小模型性能更好。
@@ -97,17 +85,13 @@ class MLPWithDropout(nn.Module):
 
 ---
 
-![](img/3c5cd0a856eb936b143add6a293ab378_19.png)
 
-![](img/3c5cd0a856eb936b143add6a293ab378_20.png)
 
-![](img/3c5cd0a856eb936b143add6a293ab378_22.png)
 
 ## 相关概念：DropConnect
 
 在听课时你可能已经想到一个相关的思路：既然可以随机丢弃激活值，那么是否可以随机丢弃权重呢？
 
-![](img/3c5cd0a856eb936b143add6a293ab378_24.png)
 
 这个想法已经被研究并称为 **DropConnect**。它可以看作是 Dropout 的一种泛化。在 DropConnect 中，随机被设置为零的是层之间的权重，而不是神经元的输出。如果将一个神经元的所有输入权重都丢弃，其效果就等同于丢弃该神经元（即 Dropout）。
 
@@ -115,13 +99,11 @@ class MLPWithDropout(nn.Module):
 
 ---
 
-![](img/3c5cd0a856eb936b143add6a293ab378_26.png)
 
 ## 总结与延伸阅读
 
 本节课中我们一起学习了如何在 PyTorch 中实现和使用 Dropout。
 
-![](img/3c5cd0a856eb936b143add6a293ab378_28.png)
 
 1.  我们了解了**反转 Dropout** 的概念及其优势。
 2.  我们掌握了使用 `nn.Dropout` 模块在神经网络中添加 Dropout 层的**代码实现**，并注意了其放置位置和模式切换。

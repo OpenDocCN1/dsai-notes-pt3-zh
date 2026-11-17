@@ -6,7 +6,6 @@
 
 ---
 
-![](img/ca229e15e4c58ca5794e949567a35cd4_3.png)
 
 ## 概述
 
@@ -22,7 +21,6 @@
 
 这三种方法的共同点是：**向量存储中保存的是衍生内容（子块、摘要或问题）的向量，并通过元数据关联到原始的、更大的文档分块**。检索时，先找到相似的衍生内容，再通过元数据定位到原始文档，从而为答案生成提供更丰富的上下文。
 
-![](img/ca229e15e4c58ca5794e949567a35cd4_5.png)
 
 ### 1. 更小的分块
 
@@ -54,7 +52,6 @@
 
 接下来我们回到 Python Notebook，看看如何具体实现“更小的分块”这种方式。
 
-![](img/ca229e15e4c58ca5794e949567a35cd4_7.png)
 
 ### 环境准备与文档加载
 
@@ -89,7 +86,6 @@ print(parent_docs[5].page_content[:500]) # 查看一个分块的内容
 我们需要一个向量存储来存放子块的嵌入向量，一个文档存储来存放原始的父文档分块。
 
 
-![](img/ca229e15e4c58ca5794e949567a35cd4_9.png)
 
 ```python
 # 创建向量存储（使用Chroma和OpenAI嵌入模型）
@@ -110,10 +106,8 @@ doc_ids = [str(uuid4()) for _ in parent_docs]
 现在创建 `MultiVectorRetriever`，并处理文档以建立父子块关联。
 
 
-![](img/ca229e15e4c58ca5794e949567a35cd4_11.png)
 
 
-![](img/ca229e15e4c58ca5794e949567a35cd4_13.png)
 
 ```python
 # 创建多向量检索器
@@ -139,11 +133,9 @@ retriever.vectorstore.add_documents(sub_docs)
 retriever.docstore.mset(list(zip(doc_ids, parent_docs)))
 ```
 
-![](img/ca229e15e4c58ca5794e949567a35cd4_15.png)
 
 ### 进行检索与问答
 
-![](img/ca229e15e4c58ca5794e949567a35cd4_17.png)
 
 检索器构建完成后，我们可以进行相似性查询并构建一个完整的问答链。
 

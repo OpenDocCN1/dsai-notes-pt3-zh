@@ -37,7 +37,6 @@
 
 ![](img/553b0d1675e4ed622fa6d47d0e2b2ac8_3.png)
 
-![](img/553b0d1675e4ed622fa6d47d0e2b2ac8_4.png)
 
 首先，在AWS控制台中导航到EC2服务，然后在左侧菜单中找到“Spot Requests”（竞价请求）并点击“Request Spot Instances”（请求竞价实例）。
 
@@ -94,7 +93,6 @@
 
 ---
 
-![](img/553b0d1675e4ed622fa6d47d0e2b2ac8_8.png)
 
 ## 清理资源
 

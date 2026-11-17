@@ -6,11 +6,9 @@
 
 ## 通过Catalog Explorer添加文档
 
-![](img/2bf219807f40ad6296e26263fa6d806b_2.png)
 
 上一节我们介绍了课程概述，本节中我们来看看如何通过图形界面为数据表添加注释。
 
-![](img/2bf219807f40ad6296e26263fa6d806b_4.png)
 
 首先，我们打开Catalog Explorer。这里有一个名为“height_weight”的表格，其当前注释显示为“this is a table comment”。我们将修改这个注释。
 
@@ -28,9 +26,7 @@
 
 我们可以在Databricks中创建一个SQL查询来修改表格属性。具体方法是使用 `ALTER TABLE` 语句来设置表格的注释属性。
 
-![](img/2bf219807f40ad6296e26263fa6d806b_6.png)
 
-![](img/2bf219807f40ad6296e26263fa6d806b_7.png)
 
 以下是实现此操作的SQL代码示例：
 ```sql

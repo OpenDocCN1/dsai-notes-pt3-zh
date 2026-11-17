@@ -6,7 +6,6 @@
 
 ## 创建自定义工具 🛠️
 
-![](img/eb370d0d31ba76471a459af22a63f73c_1.png)
 
 上一节我们介绍了智能体的基本概念，本节中我们来看看如何创建自定义工具。工具允许智能体与外部世界交互，例如搜索引擎或机器人控制面板。
 
@@ -24,19 +23,16 @@ class BigRedButtonTool(BaseTool):
             return "未执行任何操作。"
 ```
 
-![](img/eb370d0d31ba76471a459af22a63f73c_3.png)
 
 在这个工具中，我们定义了一个名为 `big_red_button` 的工具。当智能体调用该工具并传递值 `"push"` 时，工具会返回按钮被按下并发出红光的反馈。
 
 ---
 
-![](img/eb370d0d31ba76471a459af22a63f73c_5.png)
 
 ## 构建机器人控制工具 🤖
 
 接下来，我们将构建一个更复杂的工具来控制一个简单的机器人（小车）。这个机器人具有位置坐标（X, Y）和方向，并且可以执行移动和转向操作。
 
-![](img/eb370d0d31ba76471a459af22a63f73c_7.png)
 
 以下是机器人控制工具的核心代码结构：
 
@@ -70,9 +66,7 @@ class RobotCar:
         return f"向右转90度。当前方向: {self.direction}"
 ```
 
-![](img/eb370d0d31ba76471a459af22a63f73c_9.png)
 
-![](img/eb370d0d31ba76471a459af22a63f73c_10.png)
 
 在这个机器人控制工具中，我们定义了三个基本操作：
 - **移动向前**：根据当前方向移动一个单位。
@@ -81,17 +75,14 @@ class RobotCar:
 
 ---
 
-![](img/eb370d0d31ba76471a459af22a63f73c_12.png)
 
 ## 控制面板工具 🎮
 
-![](img/eb370d0d31ba76471a459af22a63f73c_14.png)
 
 为了让智能体能够控制机器人，我们需要创建一个控制面板工具。这个工具将机器人的操作封装成智能体可以调用的功能。
 
 以下是控制面板工具的实现：
 
-![](img/eb370d0d31ba76471a459af22a63f73c_16.png)
 
 ```python
 class ControlPanelTool(BaseTool):
@@ -124,9 +115,7 @@ class ControlPanelTool(BaseTool):
 
 现在，我们将测试智能体如何使用这些工具来执行任务。我们将指导智能体控制机器人移动成一个矩形。
 
-![](img/eb370d0d31ba76471a459af22a63f73c_18.png)
 
-![](img/eb370d0d31ba76471a459af22a63f73c_20.png)
 
 以下是测试智能体执行矩形移动的步骤：
 
@@ -136,7 +125,6 @@ class ControlPanelTool(BaseTool):
    control_panel = ControlPanelTool(robot)
    ```
 
-![](img/eb370d0d31ba76471a459af22a63f73c_22.png)
 
 2. **定义任务指令**：
    - 向前移动4步。
@@ -174,9 +162,7 @@ class ControlPanelTool(BaseTool):
 
 ---
 
-![](img/eb370d0d31ba76471a459af22a63f73c_24.png)
 
-![](img/eb370d0d31ba76471a459af22a63f73c_25.png)
 
 ## 总结 📚
 

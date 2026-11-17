@@ -154,7 +154,6 @@ def write_json_file(path, data):
 3.  使用 `read_json_file` 函数读取数据。
 4.  使用Python内置的 `sum()` 函数计算列表总和并打印。
 
-![](img/c9292ef10030e2f9795ad628feb7e0b4_12.png)
 
 核心代码逻辑如下：
 ```python

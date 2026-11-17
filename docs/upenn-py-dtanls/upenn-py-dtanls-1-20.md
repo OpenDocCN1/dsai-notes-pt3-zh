@@ -57,13 +57,11 @@
 *   `location`：店铺的地理位置或地址。
 *   `manager`：店铺的负责人。
 
-![](img/5d4986f752c5221fbf44d21591c0fc9e_1.png)
 
 ---
 
 ![](img/5d4986f752c5221fbf44d21591c0fc9e_1.png)
 
-![](img/5d4986f752c5221fbf44d21591c0fc9e_2.png)
 
 ![](img/5d4986f752c5221fbf44d21591c0fc9e_2.png)
 

@@ -1,6 +1,5 @@
 # 115：Shiny 应用中的反应式表达式 🧪
 
-![](img/85b8f0c61aba653906e2abb540d776fd_0.png)
 
 在本节课中，我们将学习如何在 Shiny 应用中创建和使用**反应式表达式**。我们将通过一个具体的例子，展示如何根据用户输入动态更新图表和预测值，并理解 Shiny 中用户界面与服务器逻辑的交互方式。
 
@@ -41,15 +40,12 @@ shinyUI(fluidPage(
 *   `checkboxInput` 创建了两个复选框，用于控制是否在图表中显示对应模型的拟合线。
 *   `mainPanel` 中的 `plotOutput` 和 `textOutput` 指定了服务器端需要生成并返回的图表和文本内容。
 
-![](img/85b8f0c61aba653906e2abb540d776fd_2.png)
 
 ---
 
 ## 服务器端逻辑与数据处理
 
-![](img/85b8f0c61aba653906e2abb540d776fd_4.png)
 
-![](img/85b8f0c61aba653906e2abb540d776fd_5.png)
 
 用户界面负责收集输入和展示输出，而所有计算和数据处理都在服务器端完成。现在，让我们深入服务器端的代码。
 
@@ -78,7 +74,6 @@ shinyServer(function(input, output) {
 
 以下是创建反应式预测值的代码：
 
-![](img/85b8f0c61aba653906e2abb540d776fd_7.png)
 
 ```r
   # 反应式表达式：根据输入值进行预测
@@ -95,13 +90,11 @@ shinyServer(function(input, output) {
   })
 ```
 
-![](img/85b8f0c61aba653906e2abb540d776fd_9.png)
 
 `reactive({...})` 块定义了一个反应式表达式。当用户移动滑块时，`input$sliderMPG` 的值改变，这会触发 `model1pred` 和 `model2pred` 重新计算预测值。
 
 ---
 
-![](img/85b8f0c61aba653906e2abb540d776fd_11.png)
 
 ## 生成动态输出
 
@@ -142,7 +135,6 @@ shinyServer(function(input, output) {
 
 接着，我们生成文本预测输出：
 
-![](img/85b8f0c61aba653906e2abb540d776fd_13.png)
 
 ```r
   output$pred1 <- renderText({
@@ -159,7 +151,6 @@ shinyServer(function(input, output) {
 
 ---
 
-![](img/85b8f0c61aba653906e2abb540d776fd_15.png)
 
 ## 应用运行与交互
 

@@ -64,29 +64,18 @@
 
 正如这个例子所示，提示词也可以作为向大型语言模型提供新信息和更新信息的一种方式。
 
-![](img/f05eda46421f2ba1766aea14c67e67c9_1.png)
 
-![](img/f05eda46421f2ba1766aea14c67e67c9_2.png)
 
-![](img/f05eda46421f2ba1766aea14c67e67c9_3.png)
 
-![](img/f05eda46421f2ba1766aea14c67e67c9_4.png)
 
-![](img/f05eda46421f2ba1766aea14c67e67c9_5.png)
 
-![](img/f05eda46421f2ba1766aea14c67e67c9_6.png)
 
-![](img/f05eda46421f2ba1766aea14c67e67c9_7.png)
 
-![](img/f05eda46421f2ba1766aea14c67e67c9_8.png)
 
 ---
 
-![](img/f05eda46421f2ba1766aea14c67e67c9_9.png)
 
-![](img/f05eda46421f2ba1766aea14c67e67c9_10.png)
 
-![](img/f05eda46421f2ba1766aea14c67e67c9_11.png)
 
 ![](img/f05eda46421f2ba1766aea14c67e67c9_13.png)
 

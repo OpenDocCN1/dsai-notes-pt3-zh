@@ -1,6 +1,5 @@
 # 021：ggplot2 第4部分 📊
 
-![](img/d4fd8ab64e00c96ca6f1834d11055b66_0.png)
 
 在本节课中，我们将学习如何为 `ggplot2` 图形添加平滑曲线、分面以及如何自定义图形的各种元素，如颜色、标签和主题。这些技巧能帮助你更清晰地展示数据中的模式和关系。
 
@@ -28,7 +27,6 @@ g + geom_point() + geom_smooth(method = "lm")
 
 分面功能允许我们根据某个分类变量（如BMI类别）将数据拆分到多个子图中进行比较。这有助于观察不同组别间的关系是否一致。
 
-![](img/d4fd8ab64e00c96ca6f1834d11055b66_2.png)
 
 要添加分面，可以使用 `facet_grid()` 函数。其基本语法使用波浪号 `~` 来分隔变量，格式为 `facet_grid(行变量 ~ 列变量)`。
 
@@ -73,9 +71,7 @@ g + geom_point(aes(color = bmicat)) +
 
 以下代码对比了这两种方式：
 
-![](img/d4fd8ab64e00c96ca6f1834d11055b66_4.png)
 
-![](img/d4fd8ab64e00c96ca6f1834d11055b66_5.png)
 
 ```r
 # 方式一：颜色设为常量（所有点为钢蓝色）
@@ -84,23 +80,15 @@ g + geom_point(color = "steelblue", size = 4, alpha = 0.5)
 g + geom_point(aes(color = bmicat), size = 4, alpha = 0.5)
 ```
 
-![](img/d4fd8ab64e00c96ca6f1834d11055b66_6.png)
 
-![](img/d4fd8ab64e00c96ca6f1834d11055b66_7.png)
 
-![](img/d4fd8ab64e00c96ca6f1834d11055b66_8.png)
 
-![](img/d4fd8ab64e00c96ca6f1834d11055b66_9.png)
 
-![](img/d4fd8ab64e00c96ca6f1834d11055b66_10.png)
 
-![](img/d4fd8ab64e00c96ca6f1834d11055b66_11.png)
 
 ### 自定义平滑曲线
 
-![](img/d4fd8ab64e00c96ca6f1834d11055b66_12.png)
 
-![](img/d4fd8ab64e00c96ca6f1834d11055b66_13.png)
 
 你也可以自定义平滑曲线的外观。在 `geom_smooth()` 函数中，可以调整线条粗细、线型和是否显示置信区间。
 
@@ -110,23 +98,15 @@ g + geom_point() + geom_smooth(method = "lm", size = 2, linetype = 3, se = FALSE
 ```
 其中，`se = FALSE` 表示不绘制置信区间。
 
-![](img/d4fd8ab64e00c96ca6f1834d11055b66_15.png)
 
-![](img/d4fd8ab64e00c96ca6f1834d11055b66_16.png)
 
-![](img/d4fd8ab64e00c96ca6f1834d11055b66_17.png)
 
-![](img/d4fd8ab64e00c96ca6f1834d11055b66_18.png)
 
-![](img/d4fd8ab64e00c96ca6f1834d11055b66_19.png)
 
-![](img/d4fd8ab64e00c96ca6f1834d11055b66_20.png)
 
 ### 更改整体主题
 
-![](img/d4fd8ab64e00c96ca6f1834d11055b66_21.png)
 
-![](img/d4fd8ab64e00c96ca6f1834d11055b66_22.png)
 
 `ggplot2` 提供了预设主题来快速改变图形的整体风格。默认主题是 `theme_gray()`（灰色背景）。如果你偏好更简洁的风格，可以使用 `theme_bw()`（黑白主题）。
 
@@ -137,13 +117,9 @@ g + geom_point() + geom_smooth(method = "lm") + theme_bw(base_family = "Times")
 
 ## 总结 📝
 
-![](img/d4fd8ab64e00c96ca6f1834d11055b66_24.png)
 
-![](img/d4fd8ab64e00c96ca6f1834d11055b66_25.png)
 
-![](img/d4fd8ab64e00c96ca6f1834d11055b66_26.png)
 
-![](img/d4fd8ab64e00c96ca6f1834d11055b66_27.png)
 
 本节课中我们一起学习了 `ggplot2` 的几个高级功能：
 1.  使用 `geom_smooth()` 添加平滑曲线来揭示数据趋势，并可以选择 `loess` 或线性回归模型。
@@ -154,15 +130,10 @@ g + geom_point() + geom_smooth(method = "lm") + theme_bw(base_family = "Times")
     *   在 `geom_smooth()` 中自定义线条外观。
     *   使用 `theme_bw()` 等预设主题或 `theme()` 函数来改变图形的整体样式。
 
-![](img/d4fd8ab64e00c96ca6f1834d11055b66_28.png)
 
-![](img/d4fd8ab64e00c96ca6f1834d11055b66_29.png)
 
-![](img/d4fd8ab64e00c96ca6f1834d11055b66_30.png)
 
-![](img/d4fd8ab64e00c96ca6f1834d11055b66_31.png)
 
-![](img/d4fd8ab64e00c96ca6f1834d11055b66_32.png)
 
 ![](img/d4fd8ab64e00c96ca6f1834d11055b66_33.png)
 

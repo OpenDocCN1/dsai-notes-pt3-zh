@@ -12,7 +12,6 @@ Docker镜像是容器运行的基础。`docker build` 是构建镜像最常用�
 
 上一节我们介绍了构建镜像的基本概念，本节中我们来看看具体的构建命令 `docker build`。
 
-![](img/1f2fee4babca9c7acbf0679642047100_2.png)
 
 `docker build` 命令使用一个 Dockerfile 和一个构建上下文来创建 Docker 镜像。Dockerfile 是一个包含用于构建镜像的指令的文件。默认情况下，Docker 期望该文件名为 `Dockerfile`，但也可以使用其他文件名，并通过 `-f` 标志在构建时指定。
 

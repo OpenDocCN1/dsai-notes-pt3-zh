@@ -1,6 +1,5 @@
 #  026：减半二氧化碳排放 📊
 
-![](img/cefd51c0256634e89904bc6fcac3ea88_0.png)
 
 ![](img/cefd51c0256634e89904bc6fcac3ea88_1.png)
 
@@ -10,11 +9,9 @@
 
 我们将使用来自 Gapminder.org 的数据。该网站提出了一个问题：“如果从今天起将二氧化碳年净排放量减半，全球平均气温会如何变化？”选项包括：下降、保持不变、持续上升。许多人对此存在误解。我们的目标是复现网站上展示各国回答情况的堆叠条形图。
 
-![](img/cefd51c0256634e89904bc6fcac3ea88_3.png)
 
 ## 数据准备
 
-![](img/cefd51c0256634e89904bc6fcac3ea88_5.png)
 
 首先，我们需要加载并查看数据。数据已保存为 CSV 文件，包含八个国家对于“非常错误”、“错误”和“正确”三个选项的回答百分比。
 
@@ -59,9 +56,7 @@ ggplot(co2_emissions_longer, aes(x = percentage, y = country, fill = answer_type
 
 我们的目标图形中，答案类型的顺序是“非常错误”、“错误”、“正确”，而国家的顺序也是特定的。我们需要使用 `forcats` 包的功能来调整因子水平顺序。
 
-![](img/cefd51c0256634e89904bc6fcac3ea88_7.png)
 
-![](img/cefd51c0256634e89904bc6fcac3ea88_8.png)
 
 以下是调整答案类型顺序的步骤：
 
@@ -133,7 +128,6 @@ print(final_plot)
 
 ## 总结
 
-![](img/cefd51c0256634e89904bc6fcac3ea88_10.png)
 
 ![](img/cefd51c0256634e89904bc6fcac3ea88_11.png)
 

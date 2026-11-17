@@ -8,9 +8,7 @@
 
 ## 何时使用自定义渲染管线
 
-![](img/80e032ea806fedca76c496b4455b4e0c_1.png)
 
-![](img/80e032ea806fedca76c496b4455b4e0c_2.png)
 
 如果你正在开发游戏，通常不建议从零开始编写脚本化渲染管线，除非你有非常特殊或独特的渲染需求。建议选择通用渲染管线或高清渲染管线。
 
@@ -27,7 +25,6 @@
 *   **高级案例**：Unite Copenhagen 2019上的《Battleplanet: Judgment Day》演讲。其中展示的一些效果很难在内置管线中实现。
 *   **实战分享**：Mark Mayers向波士顿Unity小组分享的游戏《Deis》相关内容。其中涉及的技术在内置管线中极难实现。
 
-![](img/80e032ea806fedca76c496b4455b4e0c_4.png)
 
 ![](img/80e032ea806fedca76c496b4455b4e0c_5.png)
 

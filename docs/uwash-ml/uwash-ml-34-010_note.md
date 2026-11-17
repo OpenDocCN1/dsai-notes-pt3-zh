@@ -47,7 +47,6 @@
 **score = Σ (word_coefficient_i)**
 **ŷ = +1 if score > 0, else ŷ = -1**
 
-![](img/7f0e94951c7a08e68d3195391c274bcc_5.png)
 
 ---
 

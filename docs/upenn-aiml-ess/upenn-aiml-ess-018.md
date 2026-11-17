@@ -38,7 +38,6 @@ array = np.array([1, 2, 3])  # 使用别名np调用函数
 
 上一节我们介绍了导入模块的基本语法，本节中我们来看看一个使用别名的具体例子。
 
-![](img/069510bd69ab3a0d37a9c6c22469a720_1.png)
 
 ## 使用别名导入：以`queue`模块为例
 
@@ -58,7 +57,6 @@ while not pq.empty():
 
 ## 导入自定义文件
 
-![](img/069510bd69ab3a0d37a9c6c22469a720_3.png)
 
 除了导入外部开发的模块，你还可以导入自己编写的Python文件。
 
@@ -84,7 +82,6 @@ import importlib
 importlib.reload(homework1)  # 重新加载 homework1 模块
 ```
 
-![](img/069510bd69ab3a0d37a9c6c22469a720_5.png)
 
 ## 使用Pip安装第三方包
 

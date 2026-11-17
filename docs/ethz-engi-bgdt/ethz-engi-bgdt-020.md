@@ -4,15 +4,12 @@
 
 ## 物理架构与执行流程
 
-![](img/5f47a1a0dc35dc2b0906d93b7685dacc_1.png)
 
 上一节我们介绍了 MapReduce 的逻辑模型（Map-Shuffle-Reduce）。本节中我们来看看它的物理架构是如何实现这一模型的。
 
 MapReduce 采用集中式架构，类似于 HDFS 和 HBase。其核心思想是 **将计算带到数据所在之处**。
 
-![](img/5f47a1a0dc35dc2b0906d93b7685dacc_3.png)
 
-![](img/5f47a1a0dc35dc2b0906d93b7685dacc_4.png)
 
 *   **主节点**：运行着 HDFS 的 NameNode 进程和 MapReduce 的 JobTracker 进程，负责协调整个作业。
 *   **工作节点**：每个节点运行着 HDFS 的 DataNode 进程（存储数据块）和 MapReduce 的 TaskTracker 进程（执行具体的 Map 和 Reduce 任务）。
@@ -31,9 +28,7 @@ MapReduce 采用集中式架构，类似于 HDFS 和 HBase。其核心思想是 
 
 MapReduce 处理的一切都是键值对。但原始数据（如文本、数据库表）并非天然以键值对形式存在。那么，如何映射呢？
 
-![](img/5f47a1a0dc35dc2b0906d93b7685dacc_6.png)
 
-![](img/5f47a1a0dc35dc2b0906d93b7685dacc_7.png)
 
 好消息是，MapReduce 框架或相关库提供了便捷的方式来完成这种转换。其核心思想是：**任何数据集都可以被看作记录的集合，而每条记录都可以被映射为一个键值对**。
 

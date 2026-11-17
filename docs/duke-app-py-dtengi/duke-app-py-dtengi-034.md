@@ -37,9 +37,7 @@
 
 运行示例代码后，系统会使用一个经典数据集创建训练和测试数据。当模型开始训练时，MLflow会自动记录实验过程。
 
-![](img/a1ab1c1ea94859204f9a05029cfee6ad_2.png)
 
-![](img/a1ab1c1ea94859204f9a05029cfee6ad_4.png)
 
 ## 在Databricks中查看追踪结果
 

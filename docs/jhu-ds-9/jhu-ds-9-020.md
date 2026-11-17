@@ -1,18 +1,14 @@
 # 020：Plotly 散点图进阶教程
 
-![](img/f0f0030c61e3e39b482b7192a011b612_0.png)
 
 在本节课中，我们将学习如何使用Plotly创建和定制散点图。散点图是数据可视化中最常见的图表类型之一，Plotly提供了丰富的选项来增强其表现力。我们将涵盖如何通过颜色、大小和三维空间来展示更多数据维度，并最终生成可交互的网页图表。
 
-![](img/f0f0030c61e3e39b482b7192a011b612_2.png)
 
 ---
 
-![](img/f0f0030c61e3e39b482b7192a011b612_3.png)
 
 ## 🎨 使用颜色区分数据点
 
-![](img/f0f0030c61e3e39b482b7192a011b612_5.png)
 
 上一节我们介绍了基础散点图的创建。本节中，我们来看看如何通过改变数据点的颜色来展示额外的分类或连续变量。
 
@@ -26,7 +22,6 @@
 plot_ly(data = mtcars, x = ~wt, y = ~mpg, color = ~as.factor(cyl), type = "scatter", mode = "markers")
 ```
 
-![](img/f0f0030c61e3e39b482b7192a011b612_8.png)
 
 ![](img/f0f0030c61e3e39b482b7192a011b612_9.png)
 
@@ -48,7 +43,6 @@ plot_ly(data = mtcars, x = ~wt, y = ~mpg, color = ~as.factor(cyl), type = "scatt
 plot_ly(data = mtcars, x = ~wt, y = ~mpg, color = ~disp, type = "scatter", mode = "markers")
 ```
 
-![](img/f0f0030c61e3e39b482b7192a011b612_15.png)
 
 Plotly能够智能识别`disp`是连续变量，并自动应用连续的颜色渐变。图表右侧会显示对应的颜色梯度图例。
 
@@ -64,7 +58,6 @@ Plotly能够智能识别`disp`是连续变量，并自动应用连续的颜色�
 
 ![](img/f0f0030c61e3e39b482b7192a011b612_19.png)
 
-![](img/f0f0030c61e3e39b482b7192a011b612_21.png)
 
 ```r
 plot_ly(data = mtcars, x = ~wt, y = ~mpg, color = ~as.factor(cyl), size = ~hp, type = "scatter", mode = "markers")
@@ -82,7 +75,6 @@ plot_ly(data = mtcars, x = ~wt, y = ~mpg, color = ~as.factor(cyl), size = ~hp, t
 
 二维散点图的维度是有限的。为了展示更多变量，我们可以创建三维散点图。
 
-![](img/f0f0030c61e3e39b482b7192a011b612_26.png)
 
 以下是创建一个虚构数据集并绘制三维散点图的步骤：
 
@@ -99,13 +91,11 @@ plot_ly(data = mtcars, x = ~wt, y = ~mpg, color = ~as.factor(cyl), size = ~hp, t
 
 这段代码会生成一个可交互的三维散点图。`x`、`y`、`z`参数分别对应三个坐标轴。我们再次使用`color`参数，为数据点根据`temp`变量添加了颜色渐变，图表侧面会显示对应的颜色图例。Plotly利用WebGL技术来实现网页中的交互式3D图形。
 
-![](img/f0f0030c61e3e39b482b7192a011b612_28.png)
 
 ---
 
 ## 📝 课后练习
 
-![](img/f0f0030c61e3e39b482b7192a011b612_30.png)
 
 我们已经介绍了足够多的Plotly散点图功能，可以帮助你入门。
 

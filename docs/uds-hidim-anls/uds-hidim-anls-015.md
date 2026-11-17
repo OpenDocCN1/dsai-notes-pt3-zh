@@ -1,6 +1,5 @@
 # 015：尖峰信号加噪声模型
 
-![](img/ca25fa97caccf1ee202db89e8066c30d_0.png)
 
 ![](img/ca25fa97caccf1ee202db89e8066c30d_2.png)
 

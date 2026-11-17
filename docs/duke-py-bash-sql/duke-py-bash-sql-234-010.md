@@ -1,6 +1,5 @@
 #  010：Linux常用终端命令 🐧
 
-![](img/0c4aaef19ee8302e9732cb2eec3ad2b2_0.png)
 
 ![](img/0c4aaef19ee8302e9732cb2eec3ad2b2_1.png)
 
@@ -90,9 +89,7 @@ ls -l
 
 ## 向专家学习
 
-![](img/0c4aaef19ee8302e9732cb2eec3ad2b2_5.png)
 
-![](img/0c4aaef19ee8302e9732cb2eec3ad2b2_6.png)
 
 成为专家的一个好方法是学习优秀开源项目的实践。例如，查看官方Python Docker镜像的Dockerfile，你会发现其中大量使用了我们刚才练习过的命令（如 `rm -rf`），以及 `&&` 这样的逻辑操作符（表示前一个命令成功后才执行下一个）。通过研究这些成熟项目的脚本，你可以学到很多Bash编程的最佳实践。
 

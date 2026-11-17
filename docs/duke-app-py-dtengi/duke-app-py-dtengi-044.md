@@ -30,7 +30,6 @@
 
 当Cloud 9环境启动后，我立即在终端中输入 `ssh-keygen -t rsa` 来生成SSH密钥。然后，我将公钥复制并添加到刚才在GitHub创建的密钥中。
 
-![](img/50c9f232ee944eb90aa3fc906bfa4e50_4.png)
 
 ![](img/50c9f232ee944eb90aa3fc906bfa4e50_12.png)
 
@@ -40,7 +39,6 @@
 
 ![](img/50c9f232ee944eb90aa3fc906bfa4e50_16.png)
 
-![](img/50c9f232ee944eb90aa3fc906bfa4e50_6.png)
 
 ![](img/50c9f232ee944eb90aa3fc906bfa4e50_18.png)
 
@@ -52,7 +50,6 @@
 
 现在，我可以看到我们所有的代码。接下来，我会立即运行 `make install` 或直接运行 `make all` 命令，它会执行安装、测试、代码格式化等一系列步骤。这能确保在新环境中一切运行正常，没有意外。这就是测试、代码规范和持续集成的优势——它减少了工作量，而非增加。
 
-![](img/50c9f232ee944eb90aa3fc906bfa4e50_8.png)
 
 运行顺利，代码还进行了一些格式化调整。我将这些更改提交到Git仓库：`git add .`， `git commit -m “Initial commit”`。提交信息可以随意一些，因为我们只是在测试。
 
@@ -62,7 +59,6 @@
 
 现在，我需要创建一个Dockerfile和一个Web服务。我可以从我的GitHub其他项目中找一个FastAPI模板，因为很多代码是样板文件，重用模板是个好主意。
 
-![](img/50c9f232ee944eb90aa3fc906bfa4e50_26.png)
 
 ![](img/50c9f232ee944eb90aa3fc906bfa4e50_10.png)
 
@@ -72,7 +68,6 @@
 
 ![](img/50c9f232ee944eb90aa3fc906bfa4e50_30.png)
 
-![](img/50c9f232ee944eb90aa3fc906bfa4e50_12.png)
 
 Dockerfile的基本逻辑是：使用基础镜像，创建一个应用目录，将我们的代码复制进去，安装依赖，然后运行。这是一个简单的容器化过程。
 
@@ -80,17 +75,14 @@ Dockerfile的基本逻辑是：使用基础镜像，创建一个应用目录，�
 
 接下来，我创建Web服务的主文件 `main.py`。同样，我可以从其他项目复制一个FastAPI模板代码。
 
-![](img/50c9f232ee944eb90aa3fc906bfa4e50_34.png)
 
 ![](img/50c9f232ee944eb90aa3fc906bfa4e50_14.png)
 
 模板中导入了FastAPI和Uvicorn。我将应用命名为“Hello NLP”。现在需要构建核心逻辑，并正确导入我们的NLP库。这时，我们之前构建的命令行工具就派上用场了，因为它清楚地告诉我们该如何导入。
 
-![](img/50c9f232ee944eb90aa3fc906bfa4e50_36.png)
 
 我修改端点函数，让它接收一个字符串参数，比如叫 `wiki_phrase`。函数描述为“从Wikipedia名称生成名词短语”。函数内部直接调用我们NLP库中的 `get_phrases(name)` 函数。由于大部分工作已经完成，这里代码会很简单。
 
-![](img/50c9f232ee944eb90aa3fc906bfa4e50_38.png)
 
 ![](img/50c9f232ee944eb90aa3fc906bfa4e50_40.png)
 
@@ -106,7 +98,6 @@ Dockerfile的基本逻辑是：使用基础镜像，创建一个应用目录，�
 
 ![](img/50c9f232ee944eb90aa3fc906bfa4e50_46.png)
 
-![](img/50c9f232ee944eb90aa3fc906bfa4e50_16.png)
 
 ![](img/50c9f232ee944eb90aa3fc906bfa4e50_48.png)
 
@@ -122,9 +113,7 @@ Dockerfile的基本逻辑是：使用基础镜像，创建一个应用目录，�
 
 服务启动后，我可以测试它。默认有一个 `/` 根路径返回“Hello NLP”。我们创建的端点是 `/wiki_phrases/{name}`。为了测试，我需要知道Wikipedia的页面命名格式。例如，“Los_Angeles_Lakers”可能带有下划线。我们可以先简单测试一下。
 
-![](img/50c9f232ee944eb90aa3fc906bfa4e50_58.png)
 
-![](img/50c9f232ee944eb90aa3fc906bfa4e50_60.png)
 
 访问 `/docs` 路径，这是FastAPI自动生成的交互式API文档（Swagger UI）。这是一个杀手级功能。我可以在UI中点击我们的端点，选择“Try it out”，输入“Los_Angeles_Lakers”并执行。如果一切正常，应该能返回生成的短语。
 
@@ -150,7 +139,6 @@ Dockerfile的基本逻辑是：使用基础镜像，创建一个应用目录，�
 3.  为镜像打上ECR仓库的标签：`docker tag nlp-wikipedia-fastapi:latest <仓库URI>:latest`
 4.  推送镜像：`docker push <仓库URI>:latest`
 
-![](img/50c9f232ee944eb90aa3fc906bfa4e50_66.png)
 
 ![](img/50c9f232ee944eb90aa3fc906bfa4e50_22.png)
 
@@ -166,7 +154,6 @@ Dockerfile的基本逻辑是：使用基础镜像，创建一个应用目录，�
 
 在AWS控制台找到App Runner服务，点击“Create service”。选择源为“Container registry”，然后选择“Amazon ECR”。浏览并选择我们刚刚创建的 `nlp-wikipedia-fastapi` 镜像。
 
-![](img/50c9f232ee944eb90aa3fc906bfa4e50_24.png)
 
 部署设置有两个选项：手动和自动。自动部署非常方便，它意味着如果我将来更新了代码并推送了新镜像，构建系统（如AWS CodeBuild或GitHub Actions）可以自动触发部署。对于演示，我选择手动部署。
 
@@ -174,7 +161,6 @@ Dockerfile的基本逻辑是：使用基础镜像，创建一个应用目录，�
 
 配置服务名称，例如 `nlp-wikipedia-fastapi`。需要配置端口映射，我们的容器暴露的是8080端口，所以这里填8080。可以配置自动扩缩容、健康检查、安全网络和可观测性工具。对于演示，默认设置即可。
 
-![](img/50c9f232ee944eb90aa3fc906bfa4e50_74.png)
 
 ![](img/50c9f232ee944eb90aa3fc906bfa4e50_26.png)
 
@@ -188,7 +174,6 @@ Dockerfile的基本逻辑是：使用基础镜像，创建一个应用目录，�
 
 在等待部署的同时，我们可以在本地验证容器。在Cloud 9中运行 `docker images` 列出镜像，找到我们刚构建的镜像ID。然后使用 `docker run -p 8080:8080 <镜像ID>` 在本地运行容器。通过Cloud 9的预览功能，可以像之前一样测试本地容器，访问 `/docs` 并尝试调用接口。
 
-![](img/50c9f232ee944eb90aa3fc906bfa4e50_80.png)
 
 ![](img/50c9f232ee944eb90aa3fc906bfa4e50_28.png)
 
@@ -204,13 +189,11 @@ Dockerfile的基本逻辑是：使用基础镜像，创建一个应用目录，�
 
 ![](img/50c9f232ee944eb90aa3fc906bfa4e50_88.png)
 
-![](img/50c9f232ee944eb90aa3fc906bfa4e50_90.png)
 
 ![](img/50c9f232ee944eb90aa3fc906bfa4e50_30.png)
 
 修改Dockerfile后，需要重新构建、标记并推送镜像到ECR。这正体现了拥有一个自动化构建服务器的价值。我们手动执行这些命令。
 
-![](img/50c9f232ee944eb90aa3fc906bfa4e50_92.png)
 
 ## 重新部署并验证 ✅
 

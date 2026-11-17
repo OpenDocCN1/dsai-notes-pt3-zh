@@ -1,6 +1,5 @@
 #  047：什么是DataOps
 
-![](img/e7dbd4b19c31f1999778e9c16fce3bbb_0.png)
 
 ![](img/e7dbd4b19c31f1999778e9c16fce3bbb_0.png)
 

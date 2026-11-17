@@ -210,7 +210,6 @@ print("同一个核 w 滑过整个信号，实现了参数共享。")
 
 ![](img/0c6dd4d81d2ea78c0d60e50780cd5590_8.png)
 
-![](img/0c6dd4d81d2ea78c0d60e50780cd5590_9.png)
 
 ![](img/0c6dd4d81d2ea78c0d60e50780cd5590_10.png)
 

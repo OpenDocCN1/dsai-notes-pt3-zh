@@ -1,6 +1,5 @@
 # 大型语言模型实践（高级数据工程、AWS、Databricks和本地LLM）：P134：33_02_09_Vacuum与垃圾回收 🧹
 
-![](img/63120314f40cada1104477cc1edaf5b3_0.png)
 
 在本节课中，我们将要学习Delta Lake中的Vacuum（清理）与垃圾回收（Garbage Collection）操作。这些是管理Delta表、优化存储和性能的重要维护任务。
 
@@ -71,6 +70,5 @@ AS SELECT * FROM `/path/to/original/table`;
 
 本节课中我们一起学习了Delta Lake的维护操作。我们首先了解了如何区分Delta表与非Delta表。接着，掌握了通过创建副本将现有表转换为Delta Lake表的方法。最后，我们学习了两个核心维护命令：`OPTIMIZE`用于优化性能和垃圾回收，`VACUUM`用于根据保留策略清理旧数据以节省存储空间。定期执行这些操作是管理Delta Lake表、保证其高效运行的重要环节。
 
-![](img/63120314f40cada1104477cc1edaf5b3_2.png)
 
 ![](img/63120314f40cada1104477cc1edaf5b3_2.png)

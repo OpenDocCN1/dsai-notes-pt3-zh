@@ -75,7 +75,6 @@
 
 ![](img/5059d53d810c5ea84d0fa5f36faae2b3_9.png)
 
-![](img/5059d53d810c5ea84d0fa5f36faae2b3_10.png)
 
 ![](img/5059d53d810c5ea84d0fa5f36faae2b3_11.png)
 

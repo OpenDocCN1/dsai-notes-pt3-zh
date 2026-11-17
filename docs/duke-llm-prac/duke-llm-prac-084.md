@@ -56,9 +56,7 @@ Azure机器学习是一项云服务，用于加速和管理机器学习项目生
 
 ## 总结
 
-![](img/83fcc5df2cd8768a252b1101c9f42ff7_2.png)
 
-![](img/83fcc5df2cd8768a252b1101c9f42ff7_3.png)
 
 ![](img/83fcc5df2cd8768a252b1101c9f42ff7_5.png)
 

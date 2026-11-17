@@ -1,6 +1,5 @@
 # 137：系统辨识与最优控制 🚁
 
-![](img/4dfe0adb24a185ad1651897469c7eead_0.png)
 
 ![](img/4dfe0adb24a185ad1651897469c7eead_1.png)
 

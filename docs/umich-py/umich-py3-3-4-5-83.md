@@ -106,6 +106,5 @@ class Student(Person):
 
 ---
 
-![](img/40694c3e6bb07fb694d23560ee7747ce_3.png)
 
 ![](img/40694c3e6bb07fb694d23560ee7747ce_3.png)

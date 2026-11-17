@@ -1,22 +1,17 @@
 # 006：读取Excel文件 📊
 
-![](img/1cfa8e6e2b42c4fa5f6e8c23cb2e0804_0.png)
 
 在本节课中，我们将学习如何在R语言中读取和处理Excel文件。尽管一些数据科学家对Excel文件持有偏见，但Excel仍然是目前最广泛使用的数据共享格式之一。这主要是因为许多人习惯于使用电子表格来收集、录入和共享数据，无论是在商业应用还是科学研究中。随着像Google表格这类在线协作工具的出现，这一趋势更加明显。
 
 对于使用R这类脚本语言进行数据分析的你来说，关键是要能够从这些文件中提取数据，以便进行后续的分析和处理。
 
-![](img/1cfa8e6e2b42c4fa5f6e8c23cb2e0804_2.png)
 
 ## 下载Excel文件
 
-![](img/1cfa8e6e2b42c4fa5f6e8c23cb2e0804_3.png)
 
-![](img/1cfa8e6e2b42c4fa5f6e8c23cb2e0804_4.png)
 
 上一节我们介绍了如何下载通用文件，本节中我们来看看如何下载一个具体的Excel文件。我们将回到巴尔的摩摄像头数据集作为例子。
 
-![](img/1cfa8e6e2b42c4fa5f6e8c23cb2e0804_6.png)
 
 首先，我们需要从指定网址下载Excel版本的数据。请注意，文件的URL可能有所不同，你需要从网站上获取正确的链接。我们将文件下载为 `.xlsx` 格式，这是Excel文件的标准扩展名。
 
@@ -33,13 +28,10 @@ dateDownloaded <- date()
 
 代码中，`download.file` 函数不关心文件类型，它只是将文件下载到你指定的本地文件名中。同时，记录下载时间是一个好习惯，可以让你知道分析是何时进行的。
 
-![](img/1cfa8e6e2b42c4fa5f6e8c23cb2e0804_8.png)
 
 ## 使用 `xlsx` 包读取数据
 
-![](img/1cfa8e6e2b42c4fa5f6e8c23cb2e0804_9.png)
 
-![](img/1cfa8e6e2b42c4fa5f6e8c23cb2e0804_10.png)
 
 文件下载完成后，我们需要将其读入R环境中进行分析。我们将使用 `xlsx` 包来完成这个任务。虽然也有其他包如 `XLConnect` 可供选择，它们可能提供更灵活的接口，但 `xlsx` 包对于基础操作来说简单易用。
 
@@ -61,7 +53,6 @@ cameraData <- read.xlsx("./data/cameras.xlsx", sheetIndex=1, header=TRUE)
 
 ## 读取特定行与列
 
-![](img/1cfa8e6e2b42c4fa5f6e8c23cb2e0804_12.png)
 
 ![](img/1cfa8e6e2b42c4fa5f6e8c23cb2e0804_13.png)
 

@@ -31,9 +31,7 @@ with DAG(
 
 一个推荐的验证方法是直接使用Python解释器执行DAG文件。这能快速检查文件是否存在语法错误或导入模块缺失等问题。
 
-![](img/201cbe21817f8358180f3d7cdbbfbcf2_2.png)
 
-![](img/201cbe21817f8358180f3d7cdbbfbcf2_3.png)
 
 **操作命令：**
 ```bash
@@ -46,9 +44,7 @@ python pandas_example.py
 
 确认文件语法无误后，可以使用Airflow命令行工具验证DAG及其任务是否被正确识别。
 
-![](img/201cbe21817f8358180f3d7cdbbfbcf2_5.png)
 
-![](img/201cbe21817f8358180f3d7cdbbfbcf2_6.png)
 
 **操作命令：**
 ```bash
@@ -68,7 +64,6 @@ airflow tasks test pandas_tutorial virtualenv_python 2021-12-12
 
 以下是执行此测试时会发生的事情：
 
-![](img/201cbe21817f8358180f3d7cdbbfbcf2_8.png)
 
 1.  **创建虚拟环境**：任务会首先创建一个独立的Python虚拟环境。
 2.  **安装依赖**：在虚拟环境中安装任务所需的依赖包（例如`pandas==2.0.1`）。
@@ -100,7 +95,6 @@ if not is_virtualenv_installed:
 
 ## 总结
 
-![](img/201cbe21817f8358180f3d7cdbbfbcf2_10.png)
 
 ![](img/201cbe21817f8358180f3d7cdbbfbcf2_11.png)
 

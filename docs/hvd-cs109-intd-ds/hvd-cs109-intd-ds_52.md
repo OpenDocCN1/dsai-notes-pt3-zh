@@ -22,7 +22,6 @@
 
 1.  一旦启动终端，你会看到一个类似这样的控制台：
 
-![](img/76ad97e5444cfe53d301596e2af94486.png)
 
 1.  你可能已经安装了 Git。一种检查方法是通过输入以下内容来请求版本：
 
@@ -56,7 +55,6 @@ git --version
 
 1.  首先在浏览器中搜索 *Git for Windows* 并点击来自 *git-scm.com* 的链接。
 
-![](img/c0f91ab26dcc1627bd4194c5c49773a0.png)
 
 1.  这将带您到 *下载 Git* 页面，您可以从该页面下载 *最新维护版本*：
 
@@ -68,17 +66,13 @@ git --version
 
 1.  在安装步骤之一中，您将被要求选择 Git 的默认编辑器。除非您已经是 *vi* 或 *vim* 用户，否则我们建议不要选择 *vim*，它可能是默认选项。如果您在提供的选项中不认识您熟悉的编辑器，我们建议您选择 *nano* 作为 Git 的默认编辑器，因为它最容易学习：
 
-![图片](img/8d831bad51fd62461d6d34f7679d9aaa.png)
 
 1.  下一个安装决策实际上是一个 **重要** 的决策。此安装过程安装 Git Bash。我们建议您选择 *从 Windows 命令提示符安装 Git 和可选的 Unix 工具*，这样您就可以在 RStudio 中学习 Unix。然而，如果您这样做，**一些在您的 Windows 命令行上运行的命令将停止工作**。如果您不使用您的 Windows 命令行，那么这应该不会是问题。此外，大多数，如果不是所有，这些 Windows 命令行都有一个 Unix 等价物，您现在可以使用。
 
-![图片](img/9f39a55463dd37ab44636282444ae01a.png)
 
 1.  您现在可以继续选择默认选项。
 
-![图片](img/dd43b561e7aa6ac495f97f8907137747.png)![图片](img/8f112e4cf68e9ef2c34087d8ed20f903.png)![图片](img/d9cfa8427a664ec9c0f015391221cd04.png)
 
-![图片](img/21bd2fca89d3ea875943338aa3cedf09.png)![图片](img/5e370231e2e0cc79e85832e222eb5264.png)
 
 您现在已在 Windows 上安装了 Git。
 
@@ -88,11 +82,9 @@ git --version
 
 要通过 RStudio 访问终端，我们需要更改一个首选项，以便 Git Bash 成为 RStudio 中的默认 Unix shell。在 RStudio 中，转到首选项（位于文件下拉菜单下），然后选择 *终端*，然后选择 *Git Bash*：
 
-![图片](img/5688eefb2dfae0ad4c16425eb06d973e.png)
 
 要检查您实际上是否在 RStudio 中使用 Git Bash，您可以在 RStudio 中打开一个 *新终端*：
 
-![图片](img/c034726c5c3754794eaa9c116924756e.png)
 
 它应该看起来像这样：
 

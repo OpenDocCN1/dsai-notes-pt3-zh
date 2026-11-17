@@ -6,7 +6,6 @@
 
 ## 概述
 
-![](img/d227f3079f1db5641d1726c42e1fb024_2.png)
 
 MapReduce是一个用于在商用硬件上并行处理大量数据的编程模型。它源自函数式编程，其核心思想是将数据处理过程分解为**Map（映射）**和**Reduce（归约）**两个阶段。开发者只需编写这两个函数，框架便会自动处理分布式计算中的复杂性，如任务调度、容错和数据同步。
 
@@ -14,19 +13,15 @@ MapReduce是一个用于在商用硬件上并行处理大量数据的编程模�
 
 MapReduce是一个用于在多个节点上并行处理海量数据的精确模型。它源自函数式编程。从字面上看，“MapReduce”由两个词组成：**Map**和**Reduce**。在函数式编程语言中，Map和Reduce是两种特殊的函数，我们稍后会详细讨论。因此，MapReduce在某种程度上是函数式编程与分布式编程的结合。使用MapReduce框架，开发者编写Map函数和Reduce函数，正是这些函数被应用于输入数据。
 
-![](img/d227f3079f1db5641d1726c42e1fb024_4.png)
 
 MapReduce编程可以用多种语言实现。Java是首选语言，因为有原生的Java API可用。但你也可以使用称为**MapReduce Pipes**的工具在C++中进行MapReduce编程。此外，你还可以使用**Hadoop Streaming**或**MapReduce Streaming**在Ruby、Python、Perl等语言中进行MapReduce编程。
 
 MapReduce技术基于谷歌的MapReduce论文。让我们快速浏览一下这篇论文。
 
-![](img/d227f3079f1db5641d1726c42e1fb024_2.png)
 
-![](img/d227f3079f1db5641d1726c42e1fb024_6.png)
 
 这篇论文由Jeffrey Dean和Sanjay Ghemawat撰写。我强烈建议你访问这个URL，快速阅读并了解其大意。虽然我们将在本课程中深入探讨这个架构的细节，但先看看这篇论文是个好主意。你可以看到输入如何被分割成多个分片，以及运行的不同工作器任务（即Map任务）。在Shuffle和Sort发生的屏障之后，是运行的Reduce任务，最终输出结果。我们在Hadoop中的整个架构，即Hadoop MapReduce框架，就是基于这篇论文构建的。
 
-![](img/d227f3079f1db5641d1726c42e1fb024_8.png)
 
 ## MapReduce框架与YARN的关系
 
@@ -34,7 +29,6 @@ MapReduce技术基于谷歌的MapReduce论文。让我们快速浏览一下这�
 
 MapReduce内置于Hadoop中，并随Hadoop一起分发。MapReduce的配置是可调的。如果你还记得，Hadoop是高度可配置的，MapReduce作为一个框架也是可配置的。MapReduce的XML配置文件是`mapred-default.xml`和`mapred-site.xml`。`mapred-default.xml`包含了所有MapReduce属性的默认值，它是Hadoop jar文件的一部分，默认加载。`mapred-site.xml`是你覆盖所有想要修改的属性的文件，它被放置在Hadoop的安装目录`/etc/hadoop`下。让我们看看`mapred-default.xml`配置，了解其中有哪些不同的属性。
 
-![](img/d227f3079f1db5641d1726c42e1fb024_6.png)
 
 我正在查看Hadoop文档。如果你向左滚动，可以看到`mapred-default.xml`。它列出了所有属性及其默认值和描述。如你所见，这里有很多属性，你可以根据需要覆盖它们。
 
@@ -77,23 +71,18 @@ MapReduce非常适合并行处理大量数据，但别忘了它是一个面向�
 ![](img/d227f3079f1db5641d1726c42e1fb024_11.png)
 
 ![](img/d227f3079f1db5641d1726c42e1fb024_10.png)
-![](img/d227f3079f1db5641d1726c42e1fb024_11.png)
 
 例如，客户端是一个打包为Jar文件的Java程序。一个作业就像跨15个文件运行词频统计。假设我们下载了15本小说，我们想找出所有不同书籍中独特的单词，并统计这些不同单词的数量。一个任务基本上就是一个MapReduce任务。这15个输入文件至少会转换为15个Map任务，每个文件成为一个Map任务。如果文件足够大，文件可能会被分解为多个块，每个块将作为单独的任务运行。我们现在先简化一下：15个文件，15个任务。然后，在Reduce方面，会有一定数量的Reduce任务运行。默认情况下，只有一个Reducer，但我们可以自定义Reducer的数量，这将在我们学习MapReduce编程和高级MapReduce编程时讨论。
 
-![](img/d227f3079f1db5641d1726c42e1fb024_13.png)
 
-![](img/d227f3079f1db5641d1726c42e1fb024_13.png)
 
 每个任务至少被尝试执行一次。如果任务崩溃，它可能会被尝试执行多次。任务崩溃的原因有很多：可能因为收到了错误的输入。你甚至可以配置MapReduce框架，比如说：“我有10亿条记录，即使有1%的记录出错也没关系。”你可以配置为，如果有一部分或一定比例的记录是坏的，就忽略它。我想在这里强调的是，一个任务可以被尝试执行多次。
 
 ## YARN上的MapReduce架构
 
-![](img/d227f3079f1db5641d1726c42e1fb024_15.png)
 
 现在，让我们看看YARN上的MapReduce架构。如果你看这张图，它看起来和你之前看到的非常相似，这是有意为之的。它看起来像YARN架构，原因是我要将MapReduce架构集成到YARN架构之上。
 
-![](img/d227f3079f1db5641d1726c42e1fb024_15.png)
 
 如果你还记得，在YARN架构中，可以有一个客户端，客户端向ResourceManager提交一个应用程序。ResourceManager随后启动一个Application Master作为进程或容器来执行客户端提交的作业。在MapReduce的情况下，Application Master实际上就是一个MR作业。想一想，Application Master实际上与ResourceManager通信，作为通信的一部分，它应该协商资源。换句话说，它将请求它需要的容器，以便执行任务。
 
@@ -115,7 +104,6 @@ YARN上的MapReduce框架还引入了一个新的守护进程，称为**作业�
 
 还有一个作业历史服务器控制台可供你使用。控制台的默认端口是19888。因为作业历史服务器在本地运行，你可以访问`localhost:19888`来查看作业的历史记录。现在，让我们登录到我们的虚拟机，启动作业历史服务器，启动一个MapReduce作业，并观察整个流程。
 
-![](img/d227f3079f1db5641d1726c42e1fb024_17.png)
 
 好的，我已经以`hdadmin`用户身份登录到我的Hadoop服务器虚拟机。让我执行`jps`命令。我的NameNode正在运行，Secondary NameNode正在运行，DataNode也在运行，这是我的HDFS架构。然后，我的NodeManager和ResourceManager也从我的YARN架构中运行。现在是我启动历史服务器的时候了。启动历史服务器的方法是：`mr-jobhistory-daemon.sh start historyserver`。这应该会为我启动历史服务器。
 
@@ -123,21 +111,17 @@ YARN上的MapReduce框架还引入了一个新的守护进程，称为**作业�
 
 我已经在这里标记了历史服务器。19888，这是历史服务器。这里是我到目前为止运行的所有作业。这些是所有不同的作业，它正在跟踪我运行过的所有作业。让我把它设置为显示100条。现在让我开始一个作业。
 
-![](img/d227f3079f1db5641d1726c42e1fb024_17.png)
 
-![](img/d227f3079f1db5641d1726c42e1fb024_19.png)
 
 启动一个作业。好的，这是将要执行MapReduce的YARN作业。点击它。它在那里，作业正在运行。让我看看是否有作业ID。这里有一个作业ID：`job_1305_0001`。好的，让我们返回并刷新。它在那里：`job_1305_0001`，所以这是作业ID。
 
 我可以点击作业，它会给我作业的详细信息。这是应用程序特定的，它会告诉我运行了多少个Mapper，多少个Reducer。点击Map，它会给你那个特定Map任务的详细信息。请注意，这与ResourceManager的管理控制台不同。让我转到ResourceManager的管理控制台。
 
-![](img/d227f3079f1db5641d1726c42e1fb024_19.png)
 
 这是ResourceManager的管理控制台。让我刷新一下。从ResourceManager的角度来看，有一个应用程序被启动，它被赋予了一个ID：`application_..._0001`。如果你想知道这个数字是什么，它是基于ResourceManager的启动时间的。这就是这里的数字。然后`0001`是序列号。下一个作业将是`0002`，然后是`0003`，依此类推。所以这是ResourceManager对客户端提交的特定作业（或应用程序）的看法。
 
 但它随后启动了Application Master，也就是一个MR作业。这个MR作业与作业历史服务器通信以获取有关MR作业本身的信息，这是另一个不同的控制台，就是这里的这个。
 
-![](img/d227f3079f1db5641d1726c42e1fb024_21.png)
 
 它也有一个ID，而且它的ID非常相似。它是`job`而不是`application`，后面跟着ResourceManager启动时的一个数字（即时间戳），然后是与之关联的编号。好的，你现在明白这个意思了。
 

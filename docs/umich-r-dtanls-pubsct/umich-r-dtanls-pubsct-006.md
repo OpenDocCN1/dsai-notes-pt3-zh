@@ -1,6 +1,5 @@
 # 6：政府官僚机构组织架构 🏛️
 
-![](img/456a57930bcd62feacc5eb4ca835feaf_0.png)
 
 ![](img/456a57930bcd62feacc5eb4ca835feaf_2.png)
 

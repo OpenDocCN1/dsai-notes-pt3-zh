@@ -1,6 +1,5 @@
 # 7：数据可视化在公共管理中的战略价值 📊
 
-![](img/d263d4ecdbd8e365dbedeb10bec9351b_0.png)
 
 ![](img/d263d4ecdbd8e365dbedeb10bec9351b_0.png)
 
@@ -46,7 +45,6 @@
 
 ![](img/d263d4ecdbd8e365dbedeb10bec9351b_9.png)
 
-![](img/d263d4ecdbd8e365dbedeb10bec9351b_10.png)
 
 ![](img/d263d4ecdbd8e365dbedeb10bec9351b_5.png)
 ![](img/d263d4ecdbd8e365dbedeb10bec9351b_6.png)
@@ -65,7 +63,6 @@
 
 ![](img/d263d4ecdbd8e365dbedeb10bec9351b_12.png)
 ![](img/d263d4ecdbd8e365dbedeb10bec9351b_13.png)
-![](img/d263d4ecdbd8e365dbedeb10bec9351b_14.png)
 
 ## 总结
 

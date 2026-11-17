@@ -9,7 +9,6 @@
 
 ## 从Hugging Face下载模型
 
-![](img/1aba5c3464368d8ca9ee2d4d2b17c1ef_2.png)
 
 上一节我们介绍了课程目标。本节中，我们来看看如何从Hugging Face Hub获取模型。
 

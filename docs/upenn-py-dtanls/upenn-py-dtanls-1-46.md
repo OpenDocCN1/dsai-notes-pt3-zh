@@ -8,15 +8,12 @@
 
 ## 创建新列
 
-![](img/a74f8f3672067ffe7076d460589f579d_1.png)
 
 在DataFrame中创建新列非常简单，只需为新列指定一个唯一的名称并为其赋值即可。
 
-![](img/a74f8f3672067ffe7076d460589f579d_2.png)
 
 例如，以下代码演示了创建新列的基本方法：
 
-![](img/a74f8f3672067ffe7076d460589f579d_3.png)
 
 ```python
 df['new_column'] = some_value

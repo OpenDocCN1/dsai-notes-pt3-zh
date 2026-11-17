@@ -2,7 +2,6 @@
 
 ![](img/5c40f2bec3213282e5d6b0ced6fdb617_0.png)
 
-![](img/5c40f2bec3213282e5d6b0ced6fdb617_1.png)
 
 ![](img/5c40f2bec3213282e5d6b0ced6fdb617_3.png)
 
@@ -83,7 +82,6 @@ Desner在2015年讨论了大数据分析中，假设选择对数据分析方法�
 
 ![](img/5c40f2bec3213282e5d6b0ced6fdb617_30.png)
 
-![](img/5c40f2bec3213282e5d6b0ced6fdb617_31.png)
 
 ![](img/5c40f2bec3213282e5d6b0ced6fdb617_32.png)
 

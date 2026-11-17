@@ -34,11 +34,9 @@
 dates <- c("2023-01-01", "2023-01-02", "2023-01-03", "2023-01-04")
 ```
 
-![](img/43e0f9abe207d23c8c4ae622b59d5db0_2.png)
 
 然后，我们将其与一组任意变量值组合。
 
-![](img/43e0f9abe207d23c8c4ae622b59d5db0_4.png)
 
 ```r
 values <- c(10, 15, 13, 18)
@@ -92,7 +90,6 @@ print(date_diff) # 输出：Time difference of 3 days
 
 ## 总结 📝
 
-![](img/43e0f9abe207d23c8c4ae622b59d5db0_6.png)
 
 本节课我们一起学习了如何处理 R 中的日期数据。简而言之，`lubridate` 让日期信息的处理变得简单得多。
 

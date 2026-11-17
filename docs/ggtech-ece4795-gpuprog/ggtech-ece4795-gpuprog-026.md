@@ -126,7 +126,6 @@ tangentNormal.z = sqrt(1 - saturate(dot(tangentNormal.xy, tangentNormal.xy)));
 
 使用从顶点着色器插值并重新归一化后的TBN向量构建矩阵，将切线空间法线变换到世界空间。
 
-![](img/7a574a7776c3c3db4782a912b5d305ed_1.png)
 
 ```hlsl
 // 重新归一化插值后的TBN向量
@@ -143,7 +142,6 @@ float3 worldNormalPerturbed = normalize(mul(TBN, tangentNormal));
 
 使用扰动后的世界空间法线进行漫反射光照计算。光照计算部分与之前课程类似，需要处理方向光和点光的差异。
 
-![](img/7a574a7776c3c3db4782a912b5d305ed_3.png)
 
 ```hlsl
 // 计算指向光源的向量并归一化用于点积计算

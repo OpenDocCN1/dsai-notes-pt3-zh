@@ -1,6 +1,5 @@
 #  63：两独立样本均值比较实例 📊
 
-![](img/5a3e1da26d763ad01ee66f4a1dc61e66_0.png)
 
 ![](img/5a3e1da26d763ad01ee66f4a1dc61e66_2.png)
 

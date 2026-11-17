@@ -57,7 +57,6 @@ ratio_enrollment <- sum(clean_df$enrollment_male) / sum(clean_df$enrollment_fema
 
 ---
 
-![](img/2dd891dd2b8e47cef5ef6828086219df_6.png)
 
 ![](img/2dd891dd2b8e47cef5ef6828086219df_7.png)
 

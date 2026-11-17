@@ -82,7 +82,6 @@
 
 ## 总结📚
 
-![](img/613ee616e3f7996b81d4e55d2c29bebe_11.png)
 
 ![](img/613ee616e3f7996b81d4e55d2c29bebe_12.png)
 

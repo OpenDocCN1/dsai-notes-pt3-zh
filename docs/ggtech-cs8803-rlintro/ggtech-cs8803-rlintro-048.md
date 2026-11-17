@@ -6,7 +6,6 @@
 
 ## 添加动作与定义转移函数
 
-![](img/7aadd9fe7354a3194753d2e5869fb57c_1.png)
 
 要为领域对象添加动作，我们可以使用图定义域类（`GraphDefinedDomain`）内置的方法 `setTransition`。此方法用于同时定义MDP的动作集合和转移概率函数。
 
@@ -27,12 +26,8 @@ setTransition(int fromStateID, int actionID, int toStateID, double probability)
 
 回顾我们的状态图，假设我们想定义动作 `A`，该动作将我们从状态 `0` 转移到状态 `1`。
 
-![](img/7aadd9fe7354a3194753d2e5869fb57c_3.png)
-![](img/7aadd9fe7354a3194753d2e5869fb57c_4.png)
 
-![](img/7aadd9fe7354a3194753d2e5869fb57c_3.png)
 
-![](img/7aadd9fe7354a3194753d2e5869fb57c_4.png)
 
 我们可以调用 `setTransition` 方法，并传入以下参数：
 *   `0`：作为起始状态（我们离开的状态）的ID。
@@ -45,10 +40,7 @@ setTransition(int fromStateID, int actionID, int toStateID, double probability)
 setTransition(0, 0, 1, 1.0);
 ```
 
-![](img/7aadd9fe7354a3194753d2e5869fb57c_6.png)
 
-![](img/7aadd9fe7354a3194753d2e5869fb57c_6.png)
-![](img/7aadd9fe7354a3194753d2e5869fb57c_8.png)
 
 ![](img/7aadd9fe7354a3194753d2e5869fb57c_8.png)
 

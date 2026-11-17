@@ -1,6 +1,5 @@
 #  005：通过条件梯度进行结构化机器学习训练
 
-![](img/70eecca146fdac3ec4ded68a94482cb8_0.png)
 
 ![](img/70eecca146fdac3ec4ded68a94482cb8_0.png)
 

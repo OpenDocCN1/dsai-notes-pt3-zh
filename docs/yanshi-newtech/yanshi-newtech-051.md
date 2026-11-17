@@ -1,6 +1,5 @@
 # 51：15_4.1 移动通信切换 📶
 
-![](img/dd19fc849c28f082e17b6aeebe6ecdba_0.png)
 
 ![](img/dd19fc849c28f082e17b6aeebe6ecdba_0.png)
 
@@ -12,9 +11,7 @@
 
 
 
-![](img/dd19fc849c28f082e17b6aeebe6ecdba_2.png)
 
-![](img/dd19fc849c28f082e17b6aeebe6ecdba_2.png)
 
 首先，我们来了解下行链路和上行链路。下行链路是指信号从基站传输到移动设备。基站通常位于建筑物的顶部，站体本身很高，或者安装在屋顶等能提供广阔区域良好接收的位置。由于基站通常比用户位置更高，因此可以这样理解：下行链路是从基站到移动用户。
 
@@ -24,9 +21,7 @@
 
 
 
-![](img/dd19fc849c28f082e17b6aeebe6ecdba_4.png)
 
-![](img/dd19fc849c28f082e17b6aeebe6ecdba_4.png)
 
 当用户从蓝色小区移动到橙色小区边缘时，主要有两种切换方式。
 
@@ -38,17 +33,14 @@
 
 
 
-![](img/dd19fc849c28f082e17b6aeebe6ecdba_6.png)
 
 以上是我所参考的资料。基于这些信息，我们将在接下来的课程中深入探讨4G和5G技术。谢谢。
 
 
 
-![](img/dd19fc849c28f082e17b6aeebe6ecdba_8.png)
 
 ---
 
-![](img/dd19fc849c28f082e17b6aeebe6ecdba_6.png)
 
 **本节课总结**
 

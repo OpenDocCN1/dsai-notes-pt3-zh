@@ -1,6 +1,5 @@
 # 3：发现数据实例 📊
 
-![](img/ef32cde49cc8f60daf3a992dc9fbb8d4_0.png)
 
 在本节课中，我们将学习“发现数据”这一概念。我们将了解政府机构、大型组织如何利用那些并非为特定研究目的而主动收集，但已存在于其他流程中的数据，并探讨使用这类数据时面临的挑战。
 
@@ -20,21 +19,15 @@
 
 链接可在我们的课程页面找到。以下是我刚才提到的消费者价格指数的一个例子。
 
-![](img/ef32cde49cc8f60daf3a992dc9fbb8d4_4.png)
 
-![](img/ef32cde49cc8f60daf3a992dc9fbb8d4_2.png)
 
 这是一个来自荷兰交通环路的例子，以及与之相应的参考文献，你可以从我们的网站访问。
 
-![](img/ef32cde49cc8f60daf3a992dc9fbb8d4_6.png)
 
-![](img/ef32cde49cc8f60daf3a992dc9fbb8d4_4.png)
 
 同样来自荷兰，还有将社交媒体情绪与荷兰消费者情绪会计调查相匹配的例子。
 
-![](img/ef32cde49cc8f60daf3a992dc9fbb8d4_6.png)
 
-![](img/ef32cde49cc8f60daf3a992dc9fbb8d4_8.png)
 
 ![](img/ef32cde49cc8f60daf3a992dc9fbb8d4_8.png)
 

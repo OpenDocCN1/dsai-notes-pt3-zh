@@ -431,7 +431,6 @@ pca <- prcomp(mnist$train$images)
 plot(pca$sdev²/sum(pca$sdev²), xlab = "PC", ylab = "Variance explained")
 ```
 
-![图片](img/8e2977fdfe97603208dd9f859d032909.png)*  *我们可以看到前几个 PC 已经解释了大部分的变异性。此外，仅通过查看前两个 PC，我们已看到有关标签的信息。这里是一个 500 个数字的随机样本：
 
 ![图片](img/f9b52f9cb048800c1f5d18ed216c3bf4.png)
 

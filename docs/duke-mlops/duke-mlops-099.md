@@ -1,6 +1,5 @@
 # 99：MLOps需求层次 🏗️
 
-![](img/cbae6307c3b329e094441c351d85eec1_0.png)
 
 ![](img/cbae6307c3b329e094441c351d85eec1_1.png)
 

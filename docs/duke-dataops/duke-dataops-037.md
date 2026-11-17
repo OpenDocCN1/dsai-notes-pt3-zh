@@ -6,7 +6,6 @@
 
 ## 从函数化逻辑开始
 
-![](img/0c74ea4148a8aac793c01c832a3340a2_2.png)
 
 ![](img/0c74ea4148a8aac793c01c832a3340a2_4.png)
 
@@ -204,7 +203,6 @@ Python Fire是一个来自Google的库，用于创建命令行工具，其简单
 
 现在，仅从这一个功能测试，我们就获得了88%的测试覆盖率。
 
-![](img/0c74ea4148a8aac793c01c832a3340a2_34.png)
 
 ![](img/0c74ea4148a8aac793c01c832a3340a2_35.png)
 
@@ -238,9 +236,7 @@ Python Fire是一个来自Google的库，用于创建命令行工具，其简单
 
 ## 总结
 
-![](img/0c74ea4148a8aac793c01c832a3340a2_49.png)
 
-![](img/0c74ea4148a8aac793c01c832a3340a2_51.png)
 
 ![](img/0c74ea4148a8aac793c01c832a3340a2_53.png)
 

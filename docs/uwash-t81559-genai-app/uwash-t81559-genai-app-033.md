@@ -4,9 +4,7 @@
 
 ---
 
-![](img/fd7ebbb8d755687e72a062b844b1041b_1.png)
 
-![](img/fd7ebbb8d755687e72a062b844b1041b_3.png)
 
 ## 平台简介
 
@@ -16,7 +14,6 @@ Kaggle本质上是数据科学家、机器学习与人工智能从业者的“�
 
 以下是Kaggle主页的示例：
 
-![](img/fd7ebbb8d755687e72a062b844b1041b_1.png)
 
 您可以点击“Your Profile”查看个人资料。注册Kaggle后，您将拥有个人资料。完成本课程作业需要注册Kaggle账号。
 
@@ -38,7 +35,6 @@ Kaggle本质上是数据科学家、机器学习与人工智能从业者的“�
 
 本课程将使用深度学习相关的竞赛。本学期竞赛的具体数据集尚未发布，但内容将围绕生成式AI展开。
 
-![](img/fd7ebbb8d755687e72a062b844b1041b_5.png)
 
 以下是往届竞赛的一个例子：所有图像均由**稳定扩散**模型生成。该模型属于生成式AI范畴，通过输入提示词生成图像。
 
@@ -49,19 +45,15 @@ prompt = "a portrait of a person, {age} years old, {ethnicity}, {gender}"
 
 在该竞赛中，参赛者的任务是预测生成人物的年龄。提示词中包含了年龄信息。模型能生成不同年龄、性别和种族的人物，但在处理婴儿或90岁以上人物时效果有限。
 
-![](img/fd7ebbb8d755687e72a062b844b1041b_7.png)
 
 生成图像时还应用了内容过滤器，以过滤掉不适当的内容，确保所有图像符合基本内容标准。
 
-![](img/fd7ebbb8d755687e72a062b844b1041b_9.png)
 
 ---
 
 ## 数据与提交
 
-![](img/fd7ebbb8d755687e72a062b844b1041b_11.png)
 
-![](img/fd7ebbb8d755687e72a062b844b1041b_12.png)
 
 在竞赛页面，您可以下载数据集并查看排行榜。排行榜展示了所有参赛团队的成绩。本课程竞赛的优胜者不会获得奖金，但可能获得优质的推荐信。
 
@@ -71,7 +63,6 @@ prompt = "a portrait of a person, {age} years old, {ethnicity}, {gender}"
 
 以下是Notebook的界面示意图：
 
-![](img/fd7ebbb8d755687e72a062b844b1041b_14.png)
 
 ---
 
@@ -81,7 +72,6 @@ prompt = "a portrait of a person, {age} years old, {ethnicity}, {gender}"
 
 Kaggle提供完整的数据集，包含特征X和标签Y。平台将数据划分为训练集和测试集。
 
-![](img/fd7ebbb8d755687e72a062b844b1041b_14.png)
 
 **数据划分公式**：
 ```

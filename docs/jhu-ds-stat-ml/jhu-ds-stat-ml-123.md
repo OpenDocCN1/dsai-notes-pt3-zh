@@ -32,19 +32,16 @@ suppressPackageStartupMessages(library(GoogleVis))
 7 bananas  2010     East    97       78     19 2010-12-31
 ```
 
-![](img/c206e018b27d18724c2b77fd48e9038b_3.png)
 
 数据框包含了水果种类、年份、地区、销售额、支出、利润和日期等信息。要创建动态图，你的数据最好也组织成类似的格式。
 
 现在，我们运行以下代码来生成动态图：
 
-![](img/c206e018b27d18724c2b77fd48e9038b_5.png)
 
 ```r
 M <- gvisMotionChart(fruits, idvar="fruit", timevar="year")
 ```
 
-![](img/c206e018b27d18724c2b77fd48e9038b_7.png)
 
 我们将 `gvisMotionChart` 函数的输出赋值给变量 `M`。要查看图表，只需输入：
 

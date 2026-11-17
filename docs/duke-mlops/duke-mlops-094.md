@@ -1,6 +1,5 @@
 # 94：MLOps 背景与核心理念 🧠
 
-![](img/78188343bd176a8837ec91aef533bbb8_0.png)
 
 ![](img/78188343bd176a8837ec91aef533bbb8_1.png)
 

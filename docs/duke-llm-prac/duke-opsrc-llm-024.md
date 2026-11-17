@@ -19,7 +19,6 @@ cosmocc -o [输出文件名] [源代码.c文件]
 
 ## 第一步：创建并编译“Hello World”程序
 
-![](img/0b97774b1ffa20821da4fb52ddcf0b55_2.png)
 
 上一节我们介绍了Cosmopolitan的基本概念，本节中我们来看看如何用它编译一个最简单的程序。
 
@@ -100,9 +99,7 @@ int main(int argc, char *argv[]) {
 ```
 终端将输出类似的使用说明：`Usage: ./marco_polo Marco`。
 
-![](img/0b97774b1ffa20821da4fb52ddcf0b55_4.png)
 
-![](img/0b97774b1ffa20821da4fb52ddcf0b55_5.png)
 
 ---
 
@@ -110,7 +107,6 @@ int main(int argc, char *argv[]) {
 
 本节课中我们一起学习了如何使用Cosmopolitan库来构建便携式二进制文件。我们从最简单的“Hello World”程序开始，逐步过渡到一个能处理命令行参数的“Marco Polo”程序，实践了编译和运行的全过程。
 
-![](img/0b97774b1ffa20821da4fb52ddcf0b55_7.png)
 
 ![](img/0b97774b1ffa20821da4fb52ddcf0b55_8.png)
 

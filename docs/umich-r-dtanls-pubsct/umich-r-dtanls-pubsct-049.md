@@ -1,6 +1,5 @@
 # 5：ggplot功能深度探索 🎨
 
-![](img/83df7b3fdfcd050a5110d63a125e7ec6_1.png)
 
 ![](img/83df7b3fdfcd050a5110d63a125e7ec6_3.png)
 
@@ -102,7 +101,6 @@ ggplot(data = license_data, aes(x = license_issue_date, y = license_number)) +
 
 ## 总结
 
-![](img/83df7b3fdfcd050a5110d63a125e7ec6_25.png)
 
 ![](img/83df7b3fdfcd050a5110d63a125e7ec6_26.png)
 

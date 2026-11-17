@@ -32,7 +32,6 @@
 
 以下是另一个说明，虽然有点难以直观理解，但让我尝试解释一下这里发生了什么。这是Hea等人在VLDB 2010会议上的一项非常出色的工作，围绕这项工作有一系列论文。他们试图可视化可能的查询计划空间。
 
-![](img/0608869b369dd5fd66af0ff413a8cb5a_3.png)
 
 这里的两个坐标轴都是针对同一个查询的，但查询的参数在变化。实际上，这涉及供应商账户余额和某种扩展价格参数。他们改变了查询中这些参数的值。想象一下，语法相同，都是`SELECT * FROM something WHERE some condition = extended price AND some other condition = account balance`，仅仅通过调整这两个“旋钮”，你就得到了由优化器选择的不同计划的丰富图谱。
 
@@ -44,7 +43,6 @@
 
 ---
 
-![](img/0608869b369dd5fd66af0ff413a8cb5a_5.png)
 
 ![](img/0608869b369dd5fd66af0ff413a8cb5a_7.png)
 

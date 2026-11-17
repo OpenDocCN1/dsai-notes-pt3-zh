@@ -56,7 +56,6 @@ Candle 与其他工具（如 Rut Bt）不同，它让你拥有一个单一的可
 
 ![](img/70bda40adf55d0e0941d54e1e2f4c953_6.png)
 
-![](img/70bda40adf55d0e0941d54e1e2f4c953_7.png)
 
 ## 总结
 

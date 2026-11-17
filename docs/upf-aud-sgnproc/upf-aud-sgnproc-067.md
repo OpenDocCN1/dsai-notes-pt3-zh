@@ -6,43 +6,33 @@
 
 Essentia 是一个用于音频分析和音乐信息检索的开源 C++ 库。它提供了大量算法和工具，可以方便地提取音频特征，并支持 Python 包装器，使得在 Python 环境中调用 C++ 库变得简单高效。本节课将指导您完成 Essentia 的安装过程，并通过一个计算 MFCC（梅尔频率倒谱系数）的示例来展示其基本用法。
 
-![](img/645823a764ea92b1fdccb5c3dc4535b6_1.png)
 
 ## 安装 Essentia
 
-![](img/645823a764ea92b1fdccb5c3dc4535b6_3.png)
 
 上一节我们介绍了 Essentia 的基本概念，本节中我们来看看如何安装它。
 
-![](img/645823a764ea92b1fdccb5c3dc4535b6_5.png)
 
 首先，访问 Essentia 的官方网站 [essentia.upf.edu](http://essentia.upf.edu)，您可以在其中找到文档、下载链接以及其他相关信息。Essentia 的源代码托管在 GitHub 上。
 
-![](img/645823a764ea92b1fdccb5c3dc4535b6_7.png)
 
-![](img/645823a764ea92b1fdccb5c3dc4535b6_9.png)
 
 以下是安装步骤：
 
-![](img/645823a764ea92b1fdccb5c3dc4535b6_11.png)
 
-![](img/645823a764ea92b1fdccb5c3dc4535b6_13.png)
 
 1.  **克隆仓库**：使用 Git 克隆 Essentia 的源代码仓库到本地计算机。
     ```bash
     git clone https://github.com/MTG/essentia.git
     ```
 
-![](img/645823a764ea92b1fdccb5c3dc4535b6_15.png)
 
-![](img/645823a764ea92b1fdccb5c3dc4535b6_17.png)
 
 2.  **安装依赖**：Essentia 依赖于一些其他库，如 FFTW 和 FFmpeg。在 Ubuntu 系统中，可以使用以下命令安装这些依赖。
     ```bash
     sudo apt-get install build-essential libyaml-dev libfftw3-dev libavcodec-dev libavformat-dev libavutil-dev libavresample-dev python-dev libsamplerate0-dev libtag1-dev
     ```
 
-![](img/645823a764ea92b1fdccb5c3dc4535b6_19.png)
 
 3.  **配置和编译**：进入 Essentia 目录，运行配置和编译命令。
     ```bash
@@ -65,14 +55,10 @@ Essentia 是一个用于音频分析和音乐信息检索的开源 C++ 库。它
 以下是一个计算音频文件 MFCC 特征的 Python 脚本的核心部分：
 
 
-![](img/645823a764ea92b1fdccb5c3dc4535b6_21.png)
-
-![](img/645823a764ea92b1fdccb5c3dc4535b6_23.png)
 
 
-![](img/645823a764ea92b1fdccb5c3dc4535b6_25.png)
 
-![](img/645823a764ea92b1fdccb5c3dc4535b6_27.png)
+
 
 ```python
 import essentia.standard as es
@@ -115,7 +101,6 @@ mfccs = np.array(mfccs)
 ```
 该命令会生成一个包含所有分析结果的 JSON 文件。
 
-![](img/645823a764ea92b1fdccb5c3dc4535b6_29.png)
 
 ## 总结
 

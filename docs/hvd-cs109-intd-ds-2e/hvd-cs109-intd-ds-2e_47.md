@@ -19,7 +19,6 @@ income <- 10^(rnorm(n, log10(45000), log10(3)))
 hist(income/10³, nclass = 1000)
 ```
 
-![](img/1f3bd8a7997031d5d498f4c62a641857.png)*  *总体中位数是：
 
 ```r
 median(income)

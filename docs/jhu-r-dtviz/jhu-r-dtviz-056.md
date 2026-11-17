@@ -10,19 +10,15 @@
 
 这实际上非常简单，就像将Shiny集成到普通的R Markdown报告中一样容易。
 
-![](img/8a1ed7cc12767b02dbd94e138501d765_3.png)
 
-![](img/8a1ed7cc12767b02dbd94e138501d765_4.png)
 
 我们将通过创建一个新的仪表板来演示这个过程。
 
 ## 创建新仪表板
 
-![](img/8a1ed7cc12767b02dbd94e138501d765_6.png)
 
 首先，在你的RStudio中创建一个新的Flexdashboard文档，并将其保存在你电脑的某个位置。
 
-![](img/8a1ed7cc12767b02dbd94e138501d765_8.png)
 
 ## 配置仪表板
 
@@ -40,11 +36,9 @@ data(mtcars)
 
 现在，我们来修改布局。将第一列重命名为“input”。
 
-![](img/8a1ed7cc12767b02dbd94e138501d765_10.png)
 
 请记住，你可以随意命名行和列，关键是在名称后面加上一行破折号来创建该列。
 
-![](img/8a1ed7cc12767b02dbd94e138501d765_12.png)
 
 在“input”列名之后，添加属性`.sidebar`。
 
@@ -52,7 +46,6 @@ data(mtcars)
 
 ## 添加交互控件
 
-![](img/8a1ed7cc12767b02dbd94e138501d765_14.png)
 
 接下来，将这个面板的标题改为“用户输入”。
 
@@ -66,7 +59,6 @@ radioButtons("cyl", "选择气缸数：",
              selected = 4)
 ```
 
-![](img/8a1ed7cc12767b02dbd94e138501d765_16.png)
 
 ## 创建交互式图形
 
@@ -100,7 +92,6 @@ renderPlotly({
 
 ## 总结
 
-![](img/8a1ed7cc12767b02dbd94e138501d765_21.png)
 
 本节课中，我们一起学习了如何将Shiny的交互能力与Plotly的动态可视化结合到Flexdashboard中。通过添加`runtime: shiny`、设计带侧边栏的布局、嵌入Shiny控件（如`radioButtons`）以及使用`renderPlotly`创建响应式图形，我们成功构建了一个交互式数据仪表板。最后，我们了解到包含Shiny内容的仪表板需要发布到`shinyapps.io`这类支持Shiny的服务器。
 

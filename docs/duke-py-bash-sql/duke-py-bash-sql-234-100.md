@@ -73,6 +73,5 @@ SELECT name, surname FROM people WHERE name LIKE '%s___'
 
 ---
 
-![](img/eea7026f5d8140021b7e7ee284540a49_2.png)
 
 ![](img/eea7026f5d8140021b7e7ee284540a49_2.png)

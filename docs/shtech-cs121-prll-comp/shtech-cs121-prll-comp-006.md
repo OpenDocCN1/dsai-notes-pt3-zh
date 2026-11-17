@@ -2,7 +2,6 @@
 
 在本节课中，我们将深入学习MPI中的集体通信操作，以及一些高级特性，如自定义数据类型、通信器管理和虚拟拓扑。我们将通过具体的例子和代码片段来理解这些概念，并学习如何将它们应用到实际问题中，例如矩阵向量乘法。
 
-![](img/b86ffbf11a59eb7f2efdfca6f383fe37_1.png)
 
 ---
 
@@ -16,7 +15,6 @@
 
 集体通信是指在一组进程（一个通信器内）之间进行的协调通信例程。与点对点通信不同，集体通信通常涉及通信器中的所有进程。
 
-![](img/b86ffbf11a59eb7f2efdfca6f383fe37_3.png)
 
 集体通信主要分为三种类型：
 *   **一对多**：一个进程与多个其他进程通信。
@@ -25,7 +23,6 @@
 
 一种简单的实现集体通信的方法是使用多个点对点通信。例如，要实现广播，发送进程可以向其他每个进程单独发送消息。但这效率不高，因为单个进程需要承担所有工作。MPI库提供了更高效的内部实现。
 
-![](img/b86ffbf11a59eb7f2efdfca6f383fe37_5.png)
 
 在MPI 1和2中，集体通信操作是**阻塞**的。在MPI 3中，引入了非阻塞的集体通信操作。
 
@@ -35,7 +32,6 @@
 
 与点对点通信一样，集体通信也需要指定进行通信的进程组（通信器）。
 
-![](img/b86ffbf11a59eb7f2efdfca6f383fe37_7.png)
 
 以下是我们将要详细探讨的几种主要集体通信原语，我们可以通过视觉化表示来理解它们。假设有P个进程，用网格的行表示不同进程，列表示来自不同进程的数据。
 
@@ -68,13 +64,10 @@ MPI_Bcast(&value, 1, MPI_INT, 0, MPI_COMM_WORLD);
 
 ---
 
-![](img/b86ffbf11a59eb7f2efdfca6f383fe37_9.png)
 
 ### 归约
 
-![](img/b86ffbf11a59eb7f2efdfca6f383fe37_11.png)
 
-![](img/b86ffbf11a59eb7f2efdfca6f383fe37_12.png)
 
 归约操作将来自通信器中所有进程的数据，通过某种运算（如求和、求积、求最大值等）组合起来，并将结果存储在指定的目标进程中。
 
@@ -92,9 +85,7 @@ int MPI_Reduce(const void *sendbuf, void *recvbuf, int count, MPI_Datatype datat
 
 与广播类似，所有进程都调用 `MPI_Reduce`。根进程收集并组合数据，其他进程则发送其本地数据。
 
-![](img/b86ffbf11a59eb7f2efdfca6f383fe37_14.png)
 
-![](img/b86ffbf11a59eb7f2efdfca6f383fe37_15.png)
 
 **示例**：假设有4个进程，每个进程有一个包含两个整数的向量。使用 `MPI_SUM` 归约到进程0。
 *   进程0数据: `[5, 1]`
@@ -105,13 +96,11 @@ int MPI_Reduce(const void *sendbuf, void *recvbuf, int count, MPI_Datatype datat
 
 **特殊操作 `MPI_MAXLOC`**：此操作返回最大值及其所在进程的秩。对于上述数据，对第一个元素使用 `MPI_MAXLOC`，结果可能是一个结构体 `{max_value=7, rank=2}`。
 
-![](img/b86ffbf11a59eb7f2efdfca6f383fe37_17.png)
 
 ---
 
 ### 全归约
 
-![](img/b86ffbf11a59eb7f2efdfca6f383fe37_19.png)
 
 全归约与归约类似，区别在于**所有**进程都会收到归约后的结果，而不仅仅是根进程。因此，函数签名中不需要指定 `root` 参数。
 
@@ -151,17 +140,13 @@ int MPI_Scan(const void *sendbuf, void *recvbuf, int count, MPI_Datatype datatyp
 
 ---
 
-![](img/b86ffbf11a59eb7f2efdfca6f383fe37_21.png)
 
 ### 聚集
 
 聚集操作是散播的逆操作。每个进程拥有自己的数据，这些数据被收集到指定的目标进程中。
 
-![](img/b86ffbf11a59eb7f2efdfca6f383fe37_23.png)
 
-![](img/b86ffbf11a59eb7f2efdfca6f383fe37_24.png)
 
-![](img/b86ffbf11a59eb7f2efdfca6f383fe37_26.png)
 
 **MPI_Gather** 函数原型：
 ```c
@@ -173,9 +158,7 @@ int MPI_Gather(const void *sendbuf, int sendcount, MPI_Datatype sendtype, void *
 *   `recvcount`: 根进程期望从**每个进程**接收的数据项数量（通常等于 `sendcount`）。
 *   `root`: 目标进程的秩。
 
-![](img/b86ffbf11a59eb7f2efdfca6f383fe37_28.png)
 
-![](img/b86ffbf11a59eb7f2efdfca6f383fe37_29.png)
 
 所有进程调用 `MPI_Gather`。根进程收集数据，其他进程发送数据。
 
@@ -191,7 +174,6 @@ int MPI_Allgather(const void *sendbuf, int sendcount, MPI_Datatype sendtype, voi
 ```
 *   `recvbuf`: **所有**进程都需要提供的接收缓冲区，大小需能容纳来自所有进程的数据。
 
-![](img/b86ffbf11a59eb7f2efdfca6f383fe37_31.png)
 
 ---
 
@@ -210,7 +192,6 @@ int MPI_Scatter(const void *sendbuf, int sendcount, MPI_Datatype sendtype, void 
 
 ---
 
-![](img/b86ffbf11a59eb7f2efdfca6f383fe37_33.png)
 
 ### 向量散播
 
@@ -233,7 +214,6 @@ int MPI_Scatterv(const void *sendbuf, const int sendcounts[], const int displs[]
 
 在全到全操作中，每个进程都向所有其他进程发送数据，同时也从所有其他进程接收数据。可以理解为每个进程都执行了一次散播。
 
-![](img/b86ffbf11a59eb7f2efdfca6f383fe37_35.png)
 
 **MPI_Alltoall** 函数原型：
 ```c
@@ -244,11 +224,9 @@ int MPI_Alltoall(const void *sendbuf, int sendcount, MPI_Datatype sendtype, void
 *   `recvbuf`: 接收缓冲区，将从所有进程接收数据，按源进程秩排列。
 *   `recvcount`: 从**每个**其他进程接收的数据项数量。
 
-![](img/b86ffbf11a59eb7f2efdfca6f383fe37_37.png)
 
 ---
 
-![](img/b86ffbf11a59eb7f2efdfca6f383fe37_39.png)
 
 ### 向量全到全
 
@@ -256,17 +234,13 @@ int MPI_Alltoall(const void *sendbuf, int sendcount, MPI_Datatype sendtype, void
 
 ---
 
-![](img/b86ffbf11a59eb7f2efdfca6f383fe37_41.png)
 
 ### 屏障
 
 屏障操作用于同步一个通信器中的所有进程。调用 `MPI_Barrier` 的进程将在此处阻塞，直到通信器内的**所有**进程都调用了该函数，然后它们才能继续执行后续代码。
 
-![](img/b86ffbf11a59eb7f2efdfca6f383fe37_43.png)
 
-![](img/b86ffbf11a59eb7f2efdfca6f383fe37_45.png)
 
-![](img/b86ffbf11a59eb7f2efdfca6f383fe37_47.png)
 
 **MPI_Barrier** 函数原型：
 ```c
@@ -276,13 +250,10 @@ int MPI_Barrier(MPI_Comm comm)
 
 **注意**：必须确保所有进程最终都能到达屏障，否则程序将永远等待。
 
-![](img/b86ffbf11a59eb7f2efdfca6f383fe37_49.png)
 
 ---
 
-![](img/b86ffbf11a59eb7f2efdfca6f383fe37_51.png)
 
-![](img/b86ffbf11a59eb7f2efdfca6f383fe37_53.png)
 
 ## 应用实例：矩阵向量乘法
 
@@ -295,9 +266,7 @@ int MPI_Barrier(MPI_Comm comm)
 
 **代码框架**：
 
-![](img/b86ffbf11a59eb7f2efdfca6f383fe37_55.png)
 
-![](img/b86ffbf11a59eb7f2efdfca6f383fe37_57.png)
 
 ```c
 // 假设每个进程拥有：局部矩阵 A_local[n][n_local]，局部向量 x_local[n_local]
@@ -321,7 +290,6 @@ MPI_Reduce(partial_y, y, n, MPI_DOUBLE, MPI_SUM, 0, MPI_COMM_WORLD);
 MPI_Scatter(y, n_local, MPI_DOUBLE, y_local, n_local, MPI_DOUBLE, 0, MPI_COMM_WORLD);
 ```
 
-![](img/b86ffbf11a59eb7f2efdfca6f383fe37_59.png)
 
 ---
 
@@ -367,7 +335,6 @@ MPI允许用户定义自己的数据类型，以便于发送结构体或非连�
     MPI_Type_commit(&particle_type);
     ```
 
-![](img/b86ffbf11a59eb7f2efdfca6f383fe37_61.png)
 
 使用完派生数据类型后，应使用 `MPI_Type_free` 释放。
 
@@ -392,7 +359,6 @@ MPI_Comm_rank(new_comm, &new_rank);
 
 ### 虚拟拓扑
 
-![](img/b86ffbf11a59eb7f2efdfca6f383fe37_63.png)
 
 虚拟拓扑允许用户为进程定义逻辑布局（如网格、环面、图），以匹配算法的通信模式。这有助于MPI运行时将进程映射到物理处理器拓扑上，优化通信性能。
 
@@ -414,9 +380,7 @@ MPI_Cart_shift(cart_comm, 1, 1, &left, &right); // 维度1（X方向）的邻居
 
 ---
 
-![](img/b86ffbf11a59eb7f2efdfca6f383fe37_65.png)
 
-![](img/b86ffbf11a59eb7f2efdfca6f383fe37_66.png)
 
 ## MPI版本演进
 
@@ -424,7 +388,6 @@ MPI_Cart_shift(cart_comm, 1, 1, &left, &right); // 维度1（X方向）的邻居
 *   **MPI-2**: 增加了动态进程创建、跨通信器的集体操作、并行I/O、**单边通信**（RMA - Remote Memory Access）。
 *   **MPI-3**: 引入了非阻塞集体操作、改进的单边通信、更好的多线程支持。
 
-![](img/b86ffbf11a59eb7f2efdfca6f383fe37_68.png)
 
 单边通信允许一个进程直接访问另一个进程的内存，而无需目标进程显式调用接收函数，为某些编程模式提供了更大的灵活性。
 

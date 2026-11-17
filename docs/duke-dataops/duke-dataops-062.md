@@ -87,7 +87,6 @@ pub fn find_duplicates(checksums: HashMap<String, Vec<String>>) -> Vec<Vec<Strin
 
 ## 总结
 
-![](img/96ebbb388f5e506a33e26a7ef1c1e1e5_7.png)
 
 ![](img/96ebbb388f5e506a33e26a7ef1c1e1e5_8.png)
 

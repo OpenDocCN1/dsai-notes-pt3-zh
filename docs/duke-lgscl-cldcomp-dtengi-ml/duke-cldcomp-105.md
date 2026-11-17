@@ -1,6 +1,5 @@
 #  105：Azure 无代码机器学习实战
 
-![](img/f5a7ec3f246dda65553ab8ddf89c7356_0.png)
 
 ![](img/f5a7ec3f246dda65553ab8ddf89c7356_2.png)
 
@@ -8,7 +7,6 @@
 
 上一节我们介绍了AWS和GCP的无代码工具，本节中我们来看看微软Azure平台提供了哪些强大的同类解决方案。
 
-![](img/f5a7ec3f246dda65553ab8ddf89c7356_4.png)
 
 ![](img/f5a7ec3f246dda65553ab8ddf89c7356_6.png)
 

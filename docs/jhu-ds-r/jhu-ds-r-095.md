@@ -2,7 +2,6 @@
 
 在本节课中，我们将学习如何在R语言中编辑和清理文本变量。数据清洗的一个常见步骤是处理格式混乱的文本变量，例如变量名或数据值中可能包含多余的空格、句点或下划线。我们将学习如何通过编程方式操作这些文本，以获得整洁、规范的变量名和数据集内容。
 
-![](img/ddfe7a8b3e4345898c4b8f83de3f3c9c_1.png)
 
 ---
 
@@ -14,7 +13,6 @@
 
 在R中，可以使用 `tolower()` 函数来实现这一点。该函数接收一个字符向量，并返回一个所有字母均为小写的版本。
 
-![](img/ddfe7a8b3e4345898c4b8f83de3f3c9c_3.png)
 
 **代码示例：**
 ```r
@@ -23,13 +21,10 @@ names(cameraData) <- tolower(names(cameraData))
 
 如果需要将字母全部转换为大写，也可以使用对应的 `toupper()` 函数。
 
-![](img/ddfe7a8b3e4345898c4b8f83de3f3c9c_5.png)
 
 ---
 
-![](img/ddfe7a8b3e4345898c4b8f83de3f3c9c_7.png)
 
-![](img/ddfe7a8b3e4345898c4b8f83de3f3c9c_8.png)
 
 ## 拆分包含分隔符的变量名
 
@@ -44,9 +39,7 @@ splitNames <- strsplit(names(cameraData), "\\.")
 
 执行后，`splitNames` 是一个列表。例如，原始变量名 `location.1` 会被拆分为 `"location"` 和 `"1"` 两个部分。
 
-![](img/ddfe7a8b3e4345898c4b8f83de3f3c9c_10.png)
 
-![](img/ddfe7a8b3e4345898c4b8f83de3f3c9c_11.png)
 
 ---
 
@@ -56,7 +49,6 @@ splitNames <- strsplit(names(cameraData), "\\.")
 
 列表可以包含多种类型的元素。我们可以通过索引或名称来访问列表中的元素。
 
-![](img/ddfe7a8b3e4345898c4b8f83de3f3c9c_13.png)
 
 **代码示例：**
 ```r
@@ -74,7 +66,6 @@ myList[[1]][1]     # 提取第一个元素中的第一个值
 
 我们可以编写一个简单的函数来提取列表每个元素的第一个部分，然后使用 `sapply()` 函数将其应用到整个列表上。
 
-![](img/ddfe7a8b3e4345898c4b8f83de3f3c9c_15.png)
 
 **代码示例：**
 ```r
@@ -82,7 +73,6 @@ firstElement <- function(x){x[1]}
 names(cameraData) <- sapply(splitNames, firstElement)
 ```
 
-![](img/ddfe7a8b3e4345898c4b8f83de3f3c9c_17.png)
 
 这样，变量名 `location.1` 就变成了 `location`，句点被成功移除。
 
@@ -96,7 +86,6 @@ names(cameraData) <- sapply(splitNames, firstElement)
 
 `sub()` 函数可以用于替换字符串中**第一个**匹配到的模式。`gsub()` 函数则用于替换字符串中**所有**匹配到的模式。
 
-![](img/ddfe7a8b3e4345898c4b8f83de3f3c9c_19.png)
 
 以下是具体操作步骤：
 
@@ -116,11 +105,9 @@ names(cameraData) <- sapply(splitNames, firstElement)
 
 ---
 
-![](img/ddfe7a8b3e4345898c4b8f83de3f3c9c_21.png)
 
 ## 在数据中搜索特定值
 
-![](img/ddfe7a8b3e4345898c4b8f83de3f3c9c_22.png)
 
 有时，我们需要在变量中搜索包含特定文本的行。例如，在摄像头数据中，找出所有交叉路口包含 `"Alameda"` 的记录。
 
@@ -146,7 +133,6 @@ names(cameraData) <- sapply(splitNames, firstElement)
 cameraData_Alameda <- cameraData[grepl("Alameda", cameraData$intersection), ]
 ```
 
-![](img/ddfe7a8b3e4345898c4b8f83de3f3c9c_24.png)
 
 此外，将 `grep()` 的参数 `value` 设置为 `TRUE`，可以直接返回匹配的文本值，而不是索引。
 
@@ -164,7 +150,6 @@ length(grep("JeffStreet", cameraData$intersection)) == 0
 
 ---
 
-![](img/ddfe7a8b3e4345898c4b8f83de3f3c9c_26.png)
 
 ## 其他有用的字符串函数
 
@@ -188,7 +173,6 @@ length(grep("JeffStreet", cameraData$intersection)) == 0
     paste0("Hello", "World") # 返回 "HelloWorld"（无分隔符）
     ```
 
-![](img/ddfe7a8b3e4345898c4b8f83de3f3c9c_28.png)
 
 *   **`str_trim()`** (来自 `stringr` 包)：去除字符串开头和结尾的空格。
     ```r

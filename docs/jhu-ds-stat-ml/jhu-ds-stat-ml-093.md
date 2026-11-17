@@ -2,11 +2,9 @@
 
 在本节课中，我们将学习如何通过绘制数据来理解预测变量（特征）的分布、相互关系以及它们与预测目标（如工资）之间的关联。这是构建机器学习算法或预测模型前至关重要的一步，能帮助我们洞察数据模式、发现潜在问题并指导后续建模。
 
-![](img/e8ba1d9990cb25937fa79dde0dc33be0_1.png)
 
 ---
 
-![](img/e8ba1d9990cb25937fa79dde0dc33be0_3.png)
 
 ## 数据介绍与准备
 
@@ -32,11 +30,9 @@ summary(Wage)
 
 ---
 
-![](img/e8ba1d9990cb25937fa79dde0dc33be0_5.png)
 
 ## 划分训练集与测试集
 
-![](img/e8ba1d9990cb25937fa79dde0dc33be0_7.png)
 
 在开始任何数据探索之前，我们必须先将数据划分为训练集和测试集。这是为了防止信息从测试集“泄露”到模型构建过程中，从而避免过拟合。我们将仅使用训练集进行探索性分析。
 
@@ -66,7 +62,6 @@ featurePlot(x = training[, c("age", "education", "jobclass")],
             plot = "pairs")
 ```
 
-![](img/e8ba1d9990cb25937fa79dde0dc33be0_9.png)
 
 这张图虽然信息密集，但能帮助我们初步发现趋势。例如，我们可能观察到教育程度与工资之间存在明显的正相关关系。
 
@@ -81,14 +76,12 @@ qplot(age, wage, data = training)
 
 从图中我们可能发现一个异常模式：在高工资区域聚集了一组与主体趋势不同的点。为了探究原因，我们可以用颜色根据`jobclass`（工作类别）来区分这些点。
 
-![](img/e8ba1d9990cb25937fa79dde0dc33be0_11.png)
 
 ```r
 # 用工作类别着色
 qplot(age, wage, colour = jobclass, data = training)
 ```
 
-![](img/e8ba1d9990cb25937fa79dde0dc33be0_13.png)
 
 着色后，我们发现那些高工资的异常点大多来自“信息类”工作，而“工业类”工作的工资普遍较低。这解释了数据中的分组现象，并提示`jobclass`可能是一个重要的预测变量。
 
@@ -102,7 +95,6 @@ qplot(age, wage, colour = education, data = training) +
   geom_smooth(method = 'lm', formula = y ~ x)
 ```
 
-![](img/e8ba1d9990cb25937fa79dde0dc33be0_15.png)
 
 这张图显示了不同教育水平的人群，其年龄与工资的关系线（斜率）可能不同，这暗示了交互作用的存在。
 
@@ -114,7 +106,6 @@ qplot(age, wage, colour = education, data = training) +
 
 ### 数据分箱
 
-![](img/e8ba1d9990cb25937fa79dde0dc33be0_17.png)
 
 我们可以使用`Hmisc`包中的`cut2`函数，基于分位数将连续变量切割成几个组。
 
@@ -124,7 +115,6 @@ training$wageCut <- cut2(training$wage, g = 3) # 分为3组
 table(training$wageCut)
 ```
 
-![](img/e8ba1d9990cb25937fa79dde0dc33be0_19.png)
 
 ### 箱线图
 
@@ -138,7 +128,6 @@ qplot(wageCut, age, data = training, geom = c("boxplot"))
 
 ### 结合原始数据点
 
-![](img/e8ba1d9990cb25937fa79dde0dc33be0_21.png)
 
 箱线图有时会掩盖数据点的真实数量。我们可以将原始数据点（经过轻微抖动以避免重叠）叠加在箱线图上。
 
@@ -156,7 +145,6 @@ grid.arrange(p1, p2, ncol = 2)
 
 ## 交叉表与比例
 
-![](img/e8ba1d9990cb25937fa79dde0dc33be0_23.png)
 
 使用分箱后的变量，我们可以创建交叉表来量化不同类别之间的关系。
 
@@ -175,7 +163,6 @@ prop.table(t1, 1)
 
 ## 密度图
 
-![](img/e8ba1d9990cb25937fa79dde0dc33be0_25.png)
 
 密度图是展示连续变量分布的另一种强大工具，特别适合比较多个组的分布。
 

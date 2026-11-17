@@ -36,7 +36,6 @@
 
 ---
 
-![](img/3d8be26fe89b0f63dc4e2c9cabfdf3b2_2.png)
 
 ![](img/3d8be26fe89b0f63dc4e2c9cabfdf3b2_3.png)
 

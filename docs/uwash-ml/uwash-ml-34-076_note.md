@@ -70,12 +70,9 @@
 
 ![](img/b489d05aa81bcc078d94c4c6361df0d8_9.png)
 ![](img/b489d05aa81bcc078d94c4c6361df0d8_10.png)
-![](img/b489d05aa81bcc078d94c4c6361df0d8_12.png)
-![](img/b489d05aa81bcc078d94c4c6361df0d8_14.png)
 
 ---
 
-![](img/b489d05aa81bcc078d94c4c6361df0d8_12.png)
 
 ![](img/b489d05aa81bcc078d94c4c6361df0d8_14.png)
 

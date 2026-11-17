@@ -2,7 +2,6 @@
 
 在本节课中，我们将学习如何将一个已经存在但尚未使用版本控制的R项目，纳入Git版本控制并与GitHub关联。我们还将回顾如何克隆一个已存在于GitHub上的项目到本地。
 
-![](img/3520d55a6ce9cd4f9de4d4e2987c29ad_1.png)
 
 ---
 
@@ -70,7 +69,6 @@ git push -u origin main
 
 ## 克隆现有的GitHub项目到本地
 
-![](img/3520d55a6ce9cd4f9de4d4e2987c29ad_7.png)
 
 如果存在一个他人正在开发的项目，你需要参与贡献，你可以将现有项目链接到你的RStudio。这遵循与上一课完全相同的前提：克隆一个GitHub仓库到本地计算机。
 
@@ -87,7 +85,6 @@ git push -u origin main
 
 ## 总结
 
-![](img/3520d55a6ce9cd4f9de4d4e2987c29ad_9.png)
 
 ![](img/3520d55a6ce9cd4f9de4d4e2987c29ad_10.png)
 

@@ -1,19 +1,16 @@
 # 098：使用多个协变量进行回归预测 📈
 
-![](img/5f85d2bc687de5ef6ebb5d4960648f1a_1.png)
 
 在本节课中，我们将学习如何使用包含多个协变量的回归模型进行预测。更重要的是，我们将探索一个数据集，并尝试识别哪些预测变量对于构建预测模型最为关键。
 
 ---
 
-![](img/5f85d2bc687de5ef6ebb5d4960648f1a_3.png)
 
 ## 数据加载与初步探索
 
 首先，我们需要加载数据集并进行初步观察。我们将使用来自ISLR包的`Wage`数据集，该数据集包含了美国中大西洋地区一群男性的工资信息。
 
 
-![](img/5f85d2bc687de5ef6ebb5d4960648f1a_5.png)
 
 ```r
 # 加载必要的包和数据
@@ -29,7 +26,6 @@ Wage <- subset(Wage, select = -c(logwage))
 
 ---
 
-![](img/5f85d2bc687de5ef6ebb5d4960648f1a_7.png)
 
 ## 划分训练集与测试集
 
@@ -45,13 +41,11 @@ testing <- Wage[-trainIndex, ]
 
 上一节我们介绍了数据的基本情况，本节中我们来看看如何通过可视化进行深入探索。
 
-![](img/5f85d2bc687de5ef6ebb5d4960648f1a_9.png)
 
 ---
 
 ## 探索性数据分析
 
-![](img/5f85d2bc687de5ef6ebb5d4960648f1a_11.png)
 
 以下是几种探索数据关系的方法：
 
@@ -74,7 +68,6 @@ ggplot(training, aes(x = age, y = wage)) +
 
 为了探究这些离群点的成因，我们可以用其他变量为散点图上色。例如，用`jobclass`（工作类别）着色后，我们发现高工资点大多属于“信息类”工作。
 
-![](img/5f85d2bc687de5ef6ebb5d4960648f1a_13.png)
 
 ```r
 # 用工作类别着色
@@ -110,7 +103,6 @@ model <- train(wage ~ age + jobclass + education,
 
 ---
 
-![](img/5f85d2bc687de5ef6ebb5d4960648f1a_15.png)
 
 ## 模型诊断与残差分析
 
@@ -119,7 +111,6 @@ model <- train(wage ~ age + jobclass + education,
 首先，绘制拟合值与残差的关系图。理想情况下，残差应随机分布在0线附近。
 
 
-![](img/5f85d2bc687de5ef6ebb5d4960648f1a_17.png)
 
 ```r
 # 计算训练集的预测值和残差
@@ -141,7 +132,6 @@ ggplot(data = training, aes(x = train_pred, y = train_resid, color = race)) +
   geom_point()
 ```
 
-![](img/5f85d2bc687de5ef6ebb5d4960648f1a_19.png)
 
 另一种有用的方法是绘制残差与数据**索引**（即数据行的原始顺序）的关系图。如果残差在索引的某个区间呈现趋势或聚集，则暗示数据可能按时间、年龄等连续变量排序，而该变量未被纳入模型。
 
@@ -157,7 +147,6 @@ ggplot(data = NULL, aes(x = seq_along(train_resid), y = train_resid)) +
 
 模型构建完成后，我们在测试集上评估其表现。
 
-![](img/5f85d2bc687de5ef6ebb5d4960648f1a_21.png)
 
 ```r
 # 在测试集上进行预测
@@ -175,7 +164,6 @@ ggplot(data = NULL, aes(x = testing$wage, y = test_pred)) +
 
 ## 使用所有变量进行建模
 
-![](img/5f85d2bc687de5ef6ebb5d4960648f1a_23.png)
 
 如果你希望一次性使用所有可用变量进行建模，可以在公式中使用点号`.`。
 
@@ -186,7 +174,6 @@ model_all <- train(wage ~ ., data = training, method = "lm")
 
 这通常能捕获更多变异，但可能包含不必要或冗余的变量。
 
-![](img/5f85d2bc687de5ef6ebb5d4960648f1a_25.png)
 
 ---
 

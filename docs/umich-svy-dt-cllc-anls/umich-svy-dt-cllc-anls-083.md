@@ -50,7 +50,6 @@
 
 ![](img/5c70a3d3a7f5da678d38c68704be84b6_26.png)
 
-![](img/5c70a3d3a7f5da678d38c68704be84b6_48.png)
 
 ![](img/5c70a3d3a7f5da678d38c68704be84b6_28.png)
 

@@ -2,7 +2,6 @@
 
 ![](img/8c12f1ac5fcd77effe20bd8abeff37e6_0.png)
 
-![](img/8c12f1ac5fcd77effe20bd8abeff37e6_2.png)
 
 在本节课中，我们将学习如何使用Matplotlib库创建动态图表。我们将从静态图像转向动画，探索如何通过逐步采样来可视化数据分布的形成过程。
 

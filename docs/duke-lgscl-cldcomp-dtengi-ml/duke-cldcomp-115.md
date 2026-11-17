@@ -1,6 +1,5 @@
 #  115：Azure机器学习工作室简介 🧠
 
-![](img/1b0dadc5122f50b93225a554c2d7628e_0.png)
 
 在本节课中，我们将学习Azure机器学习工作室（Azure Machine Learning Studio）的基本界面和核心功能。这是一个功能丰富的平台，用于构建和部署机器学习模型，尤其适合自动化机器学习（AutoML）任务。
 

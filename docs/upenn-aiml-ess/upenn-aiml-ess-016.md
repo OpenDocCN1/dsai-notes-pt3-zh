@@ -177,7 +177,6 @@ lift_off(plane)  # 输出：Airplane flying
 
 ## 总结
 
-![](img/b9a6d85a6f21e7e17602ee2c504392b3_7.png)
 
 ![](img/b9a6d85a6f21e7e17602ee2c504392b3_8.png)
 

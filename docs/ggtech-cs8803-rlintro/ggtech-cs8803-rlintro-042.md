@@ -4,19 +4,15 @@
 
 BURLAP使用面向对象范式来表示马尔可夫决策过程。
 
-![](img/0088abe79fa8863b94dc74c4f200ca28_1.png)
 
 以下是关于如何使用该库表示和创建MDP的简要概述。
 
-![](img/0088abe79fa8863b94dc74c4f200ca28_2.png)
 
 在BURLAP中，整个MDP由一个**域**对象表示。
 
 
 
-![](img/0088abe79fa8863b94dc74c4f200ca28_1.png)
 
-![](img/0088abe79fa8863b94dc74c4f200ca28_2.png)
 
 上一节我们了解了MDP在BURLAP中的基本表示形式。接下来，我们看看如何具体创建这些域对象。
 
@@ -30,7 +26,6 @@ BURLAP使用面向对象范式来表示马尔可夫决策过程。
 
 向下滚动直到找到**DomainGenerator**。注意**DomainGenerator**是斜体显示的。
 
-![](img/0088abe79fa8863b94dc74c4f200ca28_4.png)
 
 这表明它是一个接口。如果你点击左侧的**DomainGenerator**链接。
 

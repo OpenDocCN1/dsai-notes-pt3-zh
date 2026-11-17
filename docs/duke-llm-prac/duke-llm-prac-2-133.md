@@ -1,16 +1,13 @@
 # 大型语言模型实践（高级数据工程、AWS、Databricks和本地LLM）：P133：32_02_08_Delta Live端到端示例
 
-![](img/453b3bed4c12576f23ab2abc3aadf2d1_0.png)
 
 在本节课中，我们将通过一个端到端的示例，学习如何在Databricks工作流界面中使用Delta Live表。我们将重点关注其数据质量监控、管道可观测性以及调度功能。
 
-![](img/453b3bed4c12576f23ab2abc3aadf2d1_1.png)
 
 ## 工作流界面中的Delta Live表示例
 
 上一节我们介绍了Delta Live表的基本概念，本节中我们来看看一个具体的运行示例。
 
-![](img/453b3bed4c12576f23ab2abc3aadf2d1_0.png)
 
 ![](img/453b3bed4c12576f23ab2abc3aadf2d1_1.png)
 

@@ -61,7 +61,6 @@ head(web_content)  # 查看前几行（通常是HTML代码）
 
 ## 总结
 
-![](img/dd446049ca28b606f7c75082b42195b0_2.png)
 
 ![](img/dd446049ca28b606f7c75082b42195b0_3.png)
 

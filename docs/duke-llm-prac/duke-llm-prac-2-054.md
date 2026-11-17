@@ -1,6 +1,5 @@
 # 大型语言模型实践（高级数据工程、AWS、Databricks和本地LLM）：P54：学习用于DynamoDB开发的AWS CloudShell 🐚
 
-![](img/f3746f9c021a1e31432e45c80a8376c1_0.png)
 
 在本节课中，我们将要学习AWS CloudShell，这是一个在开发和配置工作中常被忽视但功能强大的工具。我们将探索如何利用它来高效地管理Python环境、以编程方式操作AWS服务（如DynamoDB），并通过自定义别名来优化工作流程。
 
@@ -36,7 +35,6 @@ AWS CloudShell是AWS控制台内嵌的一个被严重低估的开发和配置资
 
 ---
 
-![](img/f3746f9c021a1e31432e45c80a8376c1_2.png)
 
 ![](img/f3746f9c021a1e31432e45c80a8376c1_2.png)
 

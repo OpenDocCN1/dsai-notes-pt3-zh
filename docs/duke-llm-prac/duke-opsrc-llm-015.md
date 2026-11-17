@@ -1,6 +1,5 @@
 # 开源大语言模型方案：P15：15_01_08_总结_1
 
-![](img/ba28edb2ec217708ce3c7b75f3595e0e_0.png)
 
 ![](img/ba28edb2ec217708ce3c7b75f3595e0e_0.png)
 

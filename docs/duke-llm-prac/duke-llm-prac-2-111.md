@@ -1,6 +1,5 @@
 # 大型语言模型实践（高级数据工程、AWS、Databricks和本地LLM）：P111：10_01_02：为Databricks配置IntelliJ与Go环境 🛠️
 
-![](img/eb553caa6d89d230bd602bdf665db793_0.png)
 
 ![](img/eb553caa6d89d230bd602bdf665db793_0.png)
 
@@ -117,6 +116,5 @@ Cluster: JobCluster-1 (ID: 2345-678901-bcde23)
 
 本节课中我们一起学习了如何在IntelliJ环境中为Databricks配置Go语言开发环境。我们完成了从创建项目、初始化模块、添加SDK依赖、编写代码到最终运行程序的完整流程。可以看到，使用Go语言操作Databricks SDK实际上非常直接。Go语言具有强大的优势，并且对Databricks SDK有良好的支持。如果你需要为团队提供一个可以部署到Kubernetes或无服务器平台、并与Databricks通信的二进制文件，Go是一个相当不错的解决方案。
 
-![](img/eb553caa6d89d230bd602bdf665db793_2.png)
 
 ![](img/eb553caa6d89d230bd602bdf665db793_2.png)

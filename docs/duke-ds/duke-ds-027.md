@@ -15,7 +15,6 @@
 
 以下引文来自Ted Codd关于数据库的原始论文，它延续了上一节中Kurt Monash引文的观点，强调了关系型数据库的核心动机：
 
-![](img/aa0387bac09d01a85cd438efa2446055_3.png)
 
 ![](img/aa0387bac09d01a85cd438efa2446055_4.png)
 

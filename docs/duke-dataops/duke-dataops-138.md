@@ -1,6 +1,5 @@
 #  138：探索Azure ML命令行
 
-![](img/9a810e74f9589381ba541e538b7571e9_0.png)
 
 ![](img/9a810e74f9589381ba541e538b7571e9_0.png)
 
@@ -87,7 +86,6 @@ az ml model list --help
 az ml model list --output table
 ```
 
-![](img/9a810e74f9589381ba541e538b7571e9_5.png)
 
 ![](img/9a810e74f9589381ba541e538b7571e9_5.png)
 

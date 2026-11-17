@@ -46,7 +46,6 @@ html = urlopen(url, context=ctx).read()
 
 ---
 
-![](img/5ba050af7d33ef72ed73450dedcb634a_1.png)
 
 ## 解析HTML并提取链接
 
@@ -54,9 +53,7 @@ html = urlopen(url, context=ctx).read()
 
 首先，我们使用`urllib`获取网页的全部HTML内容，并将其作为一个完整的字符串读入。然后，将这个“原始”的HTML字符串传递给BeautifulSoup进行解析。
 
-![](img/5ba050af7d33ef72ed73450dedcb634a_3.png)
 
-![](img/5ba050af7d33ef72ed73450dedcb634a_4.png)
 
 关键代码如下：
 ```python
@@ -81,13 +78,10 @@ tags = soup('a')
 
 我们将使用一个`for`循环来遍历`tags`列表中的每一个标签。
 
-![](img/5ba050af7d33ef72ed73450dedcb634a_6.png)
 
-![](img/5ba050af7d33ef72ed73450dedcb634a_8.png)
 
 在循环中，我们主要关注每个`<a>`标签的`href`属性，它包含了链接的目标地址。
 
-![](img/5ba050af7d33ef72ed73450dedcb634a_10.png)
 
 以下是遍历并打印所有链接的代码：
 ```python
@@ -108,7 +102,6 @@ for tag in tags:
 ```
 程序会输出该页面上找到的所有链接。
 
-![](img/5ba050af7d33ef72ed73450dedcb634a_12.png)
 
 接着，我们尝试一个HTTPS页面，例如密歇根大学的官网：
 ```

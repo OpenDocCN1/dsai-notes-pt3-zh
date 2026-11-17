@@ -1,6 +1,5 @@
 # 048：MapReduce 程序开发步骤 📝
 
-![](img/dabf8fbd66b4008b772730bd8b7bb38c_0.png)
 
 在本节课中，我们将学习如何编写一个完整的 MapReduce 程序。我们将通过一个经典的“词频统计”问题，一步步地讲解从问题分析、设计到代码实现、配置和运行的完整流程。
 
@@ -8,9 +7,7 @@
 
 ## 问题场景与设计思路
 
-![](img/dabf8fbd66b4008b772730bd8b7bb38c_2.png)
 
-![](img/dabf8fbd66b4008b772730bd8b7bb38c_3.png)
 
 为了学习编写 MapReduce 程序的步骤，我们从一个具体的问题场景入手。
 
@@ -25,11 +22,8 @@
 
 ### 作业输入与输出设计
 
-![](img/dabf8fbd66b4008b772730bd8b7bb38c_5.png)
 
-![](img/dabf8fbd66b4008b772730bd8b7bb38c_6.png)
 
-![](img/dabf8fbd66b4008b772730bd8b7bb38c_8.png)
 
 以下是作业输入与输出的设计细节：
 
@@ -57,15 +51,12 @@
 
 ## 程序实现步骤
 
-![](img/dabf8fbd66b4008b772730bd8b7bb38c_10.png)
 
-![](img/dabf8fbd66b4008b772730bd8b7bb38c_11.png)
 
 现在我们已经完成了整体设计，接下来开始实现。编写 MapReduce 程序通常包含以下六个步骤：
 
 以下是实现 MapReduce 程序的六个核心步骤：
 
-![](img/dabf8fbd66b4008b772730bd8b7bb38c_13.png)
 
 1.  **实现 Mapper 类**
 2.  **实现 Reducer 类**
@@ -105,14 +96,12 @@ public class WordCountMapper extends Mapper<LongWritable, Text, Text, IntWritabl
 }
 ```
 
-![](img/dabf8fbd66b4008b772730bd8b7bb38c_15.png)
 
 ### 步骤二：实现 Reducer 类
 
 接下来，我们实现 Reducer 类。
 
 
-![](img/dabf8fbd66b4008b772730bd8b7bb38c_17.png)
 
 ```java
 import org.apache.hadoop.io.IntWritable;
@@ -136,9 +125,7 @@ public class WordCountReducer extends Reducer<Text, IntWritable, Text, IntWritab
 }
 ```
 
-![](img/dabf8fbd66b4008b772730bd8b7bb38c_19.png)
 
-![](img/dabf8fbd66b4008b772730bd8b7bb38c_20.png)
 
 ### 步骤三：配置 Job 对象（驱动类）
 
@@ -192,17 +179,13 @@ public class WordCount {
 }
 ```
 
-![](img/dabf8fbd66b4008b772730bd8b7bb38c_22.png)
 
-![](img/dabf8fbd66b4008b772730bd8b7bb38c_24.png)
 
 ### 步骤四与五：编译与打包
 
 完成代码编写后，需要编译并打包。
 
-![](img/dabf8fbd66b4008b772730bd8b7bb38c_26.png)
 
-![](img/dabf8fbd66b4008b772730bd8b7bb38c_28.png)
 
 以下是编译和打包的注意事项：
 
@@ -211,7 +194,6 @@ public class WordCount {
 
 ### 步骤六：运行作业
 
-![](img/dabf8fbd66b4008b772730bd8b7bb38c_30.png)
 
 打包完成后，即可提交作业到 Hadoop 集群运行。推荐使用 `yarn` 命令，因为它会自动设置 Hadoop 所需的类路径。
 
@@ -229,14 +211,12 @@ yarn jar wordcount.jar WordCount /IN /OUT
 
 ## 查看运行结果
 
-![](img/dabf8fbd66b4008b772730bd8b7bb38c_32.png)
 
 作业成功运行后，可以查看输出结果。
 
 1.  **成功标记**：输出目录（如 `/OUT`）下会生成一个名为 `_SUCCESS` 的空文件，标志着作业成功完成。
 2.  **结果文件**：实际结果保存在以 `part-r-` 开头的文件中（例如 `part-r-00000`）。文件数量等于 Reducer 的数量（默认一个）。每个文件内包含由制表符分隔的键值对（单词和计数）。
 
-![](img/dabf8fbd66b4008b772730bd8b7bb38c_34.png)
 
 ![](img/dabf8fbd66b4008b772730bd8b7bb38c_36.png)
 

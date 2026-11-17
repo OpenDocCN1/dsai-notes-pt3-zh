@@ -48,9 +48,7 @@ generator = pipeline('text-generation', model='gpt2')
 
 终端中显示的所有交互日志，都基于已下载并运行在应用内部的475MB模型文件。这就是“模型与应用程序共存”的含义。
 
-![](img/31a369cc42149195a45eebb5a4ec4452_5.png)
 
-![](img/31a369cc42149195a45eebb5a4ec4452_6.png)
 
 ![](img/31a369cc42149195a45eebb5a4ec4452_7.png)
 
@@ -67,7 +65,6 @@ generator = pipeline('text-generation', model='gpt2')
 
 ![](img/31a369cc42149195a45eebb5a4ec4452_9.png)
 
-![](img/31a369cc42149195a45eebb5a4ec4452_10.png)
 
 ![](img/31a369cc42149195a45eebb5a4ec4452_11.png)
 

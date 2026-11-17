@@ -50,7 +50,6 @@ submitButton("submit") # "submit"是按钮的ID
 
 ## 效果演示
 
-![](img/2c24f443dfba27e5fbaf610805944efc_8.png)
 
 修改代码并运行应用后，界面将出现一个“提交”按钮。
 *   此时，调整滑块值，输出不会立即改变。

@@ -6,19 +6,15 @@
 
 我的名字是布兰登·克劳斯基，我是这门“如何运用数据”课程的讲师。
 
-![](img/3bdb621cae434dfdd5e92420ebd8e96c_1.png)
 
-![](img/3bdb621cae434dfdd5e92420ebd8e96c_2.png)
 
 关于我的背景：我最初是一名音乐家，随后在广播和音频制作领域工作。
 
-![](img/3bdb621cae434dfdd5e92420ebd8e96c_3.png)
 
 我的编程经验始于Adobe Flash，我曾使用该工具为大型制药公司开发一个实时网络会议平台。
 
 我于2009年左右从宾夕法尼亚大学获得了计算机与信息技术硕士学位。
 
-![](img/3bdb621cae434dfdd5e92420ebd8e96c_5.png)
 
 ![](img/3bdb621cae434dfdd5e92420ebd8e96c_6.png)
 

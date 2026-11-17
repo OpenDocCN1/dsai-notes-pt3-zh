@@ -1,6 +1,5 @@
 # 014：VCG机制
 
-![](img/c0db26d7ee01a0c932a0d4cb4689ee9d_0.png)
 
 ![](img/c0db26d7ee01a0c932a0d4cb4689ee9d_0.png)
 

@@ -42,7 +42,6 @@ Seeed Studio XIAOML Kit 提供了一套以[XIAO ESP32-S3 Sense](https://www.seee
 
 首先，通过 USB-C 将 XIAOML Kit（或仅将 XIAO ESP32S3 Sense 从扩展板断开）连接到电脑，然后打开 [SenseCraft AI 工作空间](https://sensecraft.seeed.cc/ai/device/local/32) 以连接它。
 
-![图片](img/file541.png)
 
 连接后，选择 `[选择模型...]` 选项，并在搜索窗口中输入：“*人物分类*”。从可用选项中选择在 MobileNet V2 上训练的模型（将鼠标移过模型将打开一个弹出窗口，显示其主要特性）。
 
@@ -156,7 +155,6 @@ Seeed Studio XIAOML Kit 提供了一套以[XIAO ESP32-S3 Sense](https://www.seee
 
 SenseCraft AI 将带我们到**视觉工作区**选项卡。`确认`部署，选择端口，并`连接`。
 
-![](img/file559.png)
 
 模型将被烧录到设备中。自动重置后，模型将在设备上开始运行。在设备日志中，我们可以看到推理的**延迟约为 426 毫秒**，加上**预处理大约 110 毫秒**，对应于**每秒 1.8 帧（FPS）**。
 
@@ -216,7 +214,6 @@ SenseCraft AI 将带我们到**视觉工作区**选项卡。`确认`部署，选
 
 接下来，转到**数据获取**部分，在那里选择`+ 添加数据`。将弹出一个弹出窗口。选择`上传数据`。
 
-![](img/file567.png)
 
 选择后，将弹出一个新的弹出窗口，要求更新数据。
 

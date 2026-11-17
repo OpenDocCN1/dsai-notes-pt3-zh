@@ -55,7 +55,6 @@ AWS提供对原始计算资源（如虚拟机、存储、网络）的直接访�
 
 ---
 
-![](img/9b81ce355e5aa1bfee39ac731339fa95_3.png)
 
 ![](img/9b81ce355e5aa1bfee39ac731339fa95_5.png)
 

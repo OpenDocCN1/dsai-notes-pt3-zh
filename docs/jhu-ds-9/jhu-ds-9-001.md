@@ -1,6 +1,5 @@
 # 001：欢迎 👋
 
-![](img/dbf42824c28d1b348cf37d74acb08dd7_0.png)
 
 ![](img/dbf42824c28d1b348cf37d74acb08dd7_0.png)
 

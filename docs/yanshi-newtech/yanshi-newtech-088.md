@@ -51,9 +51,7 @@ Arduino 物理计算平台采用了 ATmega AVR 系列产品，例如 ATmega328P 
 
 这些参数展示了物联网硬件中吸引人的流行配置。
 
-![](img/e101f95a4c0b038df332dbc244e44b7f_2.png)
 
-![](img/e101f95a4c0b038df332dbc244e44b7f_4.png)
 
 ---
 
@@ -96,7 +94,6 @@ BeagleBoard 是由德州仪器（Texas Instruments）生产的开源单板计算
 *   包含 **PRU（可编程实时单元）**，用于确定性延迟（如每条指令 5 纳秒）和对延迟敏感的应用，这非常吸引人。
 *   包含具有图像和 3D 图形处理能力的增强型处理器。
 
-![](img/e101f95a4c0b038df332dbc244e44b7f_4.png)
 
 ---
 

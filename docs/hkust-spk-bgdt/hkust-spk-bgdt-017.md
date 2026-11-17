@@ -6,9 +6,7 @@
 
 在讨论图算法之前，我们需要介绍一个专门为图处理设计的库。图数据有其独特的特性，仅使用RDD或DataFrame难以轻松处理。Spark有自己的库叫GraphX。GraphX构建在RDD之上，属于旧模型。这个趋势与MLlib类似，旧版本基于RDD，而新版本基于Spark SQL的DataFrame，因为后者在灵活性和性能方面更具优势。基于Spark SQL的机器学习库要好得多。
 
-![](img/ecfac87b25f36b9fe7b7b45e84405f6b_1.png)
 
-![](img/ecfac87b25f36b9fe7b7b45e84405f6b_3.png)
 
 实际上，GraphX也面临同样的情况。然而，我不太清楚原因，他们还没有这样做。GraphX仍然是一个直接构建在RDD之上的库，因此在性能和灵活性方面都不是很好。此外，它只支持Scala，没有Python接口。
 
@@ -16,7 +14,6 @@
 
 阅读文档时，他们提到最终计划是将GraphFrames集成到Spark中。但目前它们仍然是分开的。GraphFrames完全构建在DataFrame之上，没有对Spark内核做任何修改。这意味着，如果升级Spark，GraphFrames仍然可以工作。GraphFrames实际上适用于任何版本的Spark SQL。另一个好处是，当Spark SQL，特别是优化器，有任何进一步的改进时，所有好处都会被GraphFrames继承。然而，如果使用GraphX，则无法获得这些特性。
 
-![](img/ecfac87b25f36b9fe7b7b45e84405f6b_5.png)
 
 这就是为什么我们要使用GraphFrames。GraphFrames也有Python接口，这非常好。
 
@@ -44,7 +41,6 @@
 
 创建顶点DataFrame和边DataFrame后，你可以通过调用graphframes包的构造函数来创建GraphFrame，向其提供顶点DataFrame和边DataFrame。`g`将是一个GraphFrame。`g.vertices`和`g.edges`是GraphFrame的成员。它们仍然是常规的DataFrame，这意味着你可以在它们上应用任何标准的DataFrame操作。例如，你可以使用`show()`。
 
-![](img/ecfac87b25f36b9fe7b7b45e84405f6b_7.png)
 
 ![](img/ecfac87b25f36b9fe7b7b45e84405f6b_9.png)
 
@@ -52,11 +48,9 @@
 
 因为边也有可选列，你可以做更复杂的查询，比如这个。这将计算`c`的关注者数量。条件是`dst`是`'c'`，并且`relationship`是`'follow'`，然后进行计数。确实，`c`有两个关注者：`b`和`f`。
 
-![](img/ecfac87b25f36b9fe7b7b45e84405f6b_11.png)
 
 当然，这只是使用标准的DataFrame API。GraphFrames包有一些额外的特性。例如，它有`outDegrees`方法，可以给出所有顶点的出度。`outDegrees`本身是另一个DataFrame，包含两列：`id`和`outDegree`。类似地，`inDegrees`可以列出所有顶点的入度。
 
-![](img/ecfac87b25f36b9fe7b7b45e84405f6b_12.png)
 
 但如前所述，GraphFrames是在DataFrame之上实现的。因此，`outDegrees`和`inDegrees`实际上都被翻译成标准的DataFrame API。更准确地说，它们都没有被物化。当你创建GraphFrame时，这两个表实际上没有被计算。这实际上是有道理的，因为为什么要在你真正需要它们之前计算呢？这仍然遵循Spark通用的惰性计算思想。
 
@@ -70,11 +64,9 @@
 
 GraphFrames提供的另一个有用特性是图的`triplets`视图。这给出了图的完整画面，包括所有结构信息以及任何附加属性。它逐一列出所有边，除了ID，还列出所有附加列。现在你可以获得关于每条边的完整信息。
 
-![](img/ecfac87b25f36b9fe7b7b45e84405f6b_14.png)
 
 当然，这有很多冗余。例如，`a`出现了两次，这意味着所有其他实际列也被复制了。因此，默认情况下，`triplets`视图最初也没有被物化。当你对这个`triplets`视图调用一个操作时，它会执行一系列连接操作。例如，它将边DataFrame与顶点DataFrame连接，以检索所有这些附加列。你可以查看`g.triplets.explain()`来了解。你可以看到它是一系列连接，至少有两个连接，因为每条边有两个顶点。为了检索源顶点的其他属性，检索目标顶点的其他信息，这需要两次连接。
 
-![](img/ecfac87b25f36b9fe7b7b45e84405f6b_15.png)
 
 ## 使用Motif进行模式查找 🔍
 

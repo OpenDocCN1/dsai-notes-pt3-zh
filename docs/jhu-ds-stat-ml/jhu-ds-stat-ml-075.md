@@ -1,74 +1,46 @@
 # 075：逻辑回归 (第1部分) - 二分类数据的广义线性模型
 
-![](img/ebbfc8df46dec27b4c9cd55bdc056eaa_1.png)
 
-![](img/ebbfc8df46dec27b4c9cd55bdc056eaa_2.png)
 
-![](img/ebbfc8df46dec27b4c9cd55bdc056eaa_4.png)
 
-![](img/ebbfc8df46dec27b4c9cd55bdc056eaa_5.png)
 
-![](img/ebbfc8df46dec27b4c9cd55bdc056eaa_6.png)
 
-![](img/ebbfc8df46dec27b4c9cd55bdc056eaa_7.png)
 
 在本节课中，我们将学习如何处理结果为二元（0或1）随机变量的数据。这类数据在分析中非常常见，例如在生物统计学中，我们经常进行生存分析，研究结束时个体是存活还是死亡。我们将通过一个具体例子——预测橄榄球队的胜负——来理解逻辑回归的核心概念。
 
-![](img/ebbfc8df46dec27b4c9cd55bdc056eaa_8.png)
 
-![](img/ebbfc8df46dec27b4c9cd55bdc056eaa_9.png)
 
-![](img/ebbfc8df46dec27b4c9cd55bdc056eaa_11.png)
 
-![](img/ebbfc8df46dec27b4c9cd55bdc056eaa_12.png)
 
 ---
 
-![](img/ebbfc8df46dec27b4c9cd55bdc056eaa_14.png)
 
-![](img/ebbfc8df46dec27b4c9cd55bdc056eaa_15.png)
 
-![](img/ebbfc8df46dec27b4c9cd55bdc056eaa_16.png)
 
 ## 🎯 线性回归的局限性
 
-![](img/ebbfc8df46dec27b4c9cd55bdc056eaa_18.png)
 
 上一节我们介绍了二元数据的特点。本节中我们来看看，为什么直接使用线性回归来建模这类数据可能存在问题。
 
-![](img/ebbfc8df46dec27b4c9cd55bdc056eaa_20.png)
 
-![](img/ebbfc8df46dec27b4c9cd55bdc056eaa_21.png)
 
-![](img/ebbfc8df46dec27b4c9cd55bdc056eaa_22.png)
 
-![](img/ebbfc8df46dec27b4c9cd55bdc056eaa_24.png)
 
-![](img/ebbfc8df46dec27b4c9cd55bdc056eaa_25.png)
 
 如果我们试图用线性回归模型来预测乌鸦队获胜的概率（将结果编码为1和0），模型的基本假设可能无法满足。通常，线性回归假设误差项服从高斯分布，但对于只能取0或1的结果变量，这一假设并不成立。
 
-![](img/ebbfc8df46dec27b4c9cd55bdc056eaa_27.png)
 
 这并不意味着用线性模型拟合二元数据是绝对错误的，它有时可以作为快速分析的初步步骤。但更严谨的做法是使用逻辑回归模型。
 
-![](img/ebbfc8df46dec27b4c9cd55bdc056eaa_28.png)
 
-![](img/ebbfc8df46dec27b4c9cd55bdc056eaa_29.png)
 
-![](img/ebbfc8df46dec27b4c9cd55bdc056eaa_30.png)
 
-![](img/ebbfc8df46dec27b4c9cd55bdc056eaa_31.png)
 
 以下是在R中拟合线性回归的示例输出，它试图用斜率来估计乌鸦队获胜的概率。然而，这种模型可能会产生负值或大于1的概率估计值。
 
-![](img/ebbfc8df46dec27b4c9cd55bdc056eaa_33.png)
 
-![](img/ebbfc8df46dec27b4c9cd55bdc056eaa_34.png)
 
-![](img/ebbfc8df46dec27b4c9cd55bdc056eaa_35.png)
 
-![](img/ebbfc8df46dec27b4c9cd55bdc056eaa_37.png)
 
 ```r
 # 示例：线性回归拟合（不推荐用于二元结果）
@@ -76,35 +48,24 @@ lm_model <- lm(ravenWinNum ~ ravenScore, data = ravens_data)
 summary(lm_model)
 ```
 
-![](img/ebbfc8df46dec27b4c9cd55bdc056eaa_38.png)
 
-![](img/ebbfc8df46dec27b4c9cd55bdc056eaa_39.png)
 
 ---
 
-![](img/ebbfc8df46dec27b4c9cd55bdc056eaa_41.png)
 
-![](img/ebbfc8df46dec27b4c9cd55bdc056eaa_42.png)
 
-![](img/ebbfc8df46dec27b4c9cd55bdc056eaa_43.png)
 
-![](img/ebbfc8df46dec27b4c9cd55bdc056eaa_44.png)
 
-![](img/ebbfc8df46dec27b4c9cd55bdc056eaa_45.png)
 
-![](img/ebbfc8df46dec27b4c9cd55bdc056eaa_46.png)
 
-![](img/ebbfc8df46dec27b4c9cd55bdc056eaa_48.png)
 
 ## 🔄 从概率到比值比
 
-![](img/ebbfc8df46dec27b4c9cd55bdc056eaa_50.png)
 
 鉴于线性回归的局限性，一个更好的方法是建模**比值比**。
 
 首先，我们来定义几个核心概念。设乌鸦队获胜的概率为 \( p \)。
 
-![](img/ebbfc8df46dec27b4c9cd55bdc056eaa_52.png)
 
 *   **比值比** 定义为：\( \text{Odds} = \frac{p}{1 - p} \)
 *   反之，**概率** 可以从比值比推导：\( p = \frac{\text{Odds}}{1 + \text{Odds}} \)
@@ -125,7 +86,6 @@ p = \frac{e^{\beta_0 + \beta_1 x}}{1 + e^{\beta_0 + \beta_1 x}}
 
 ---
 
-![](img/ebbfc8df46dec27b4c9cd55bdc056eaa_54.png)
 
 ## 📈 逻辑回归系数的解释
 
@@ -140,11 +100,9 @@ p = \frac{e^{\beta_0 + \beta_1 x}}{1 + e^{\beta_0 + \beta_1 x}}
 
 如果模型中包含多个预测变量（如是否为主场），那么 \( e^{\beta_1} \) 的解释需要在**保持其他变量不变**的前提下进行，这与多元线性回归的解释原则一致。
 
-![](img/ebbfc8df46dec27b4c9cd55bdc056eaa_56.png)
 
 ---
 
-![](img/ebbfc8df46dec27b4c9cd55bdc056eaa_58.png)
 
 ## 🏇 比值比的历史与直觉
 
@@ -169,7 +127,6 @@ p = \frac{e^{\beta_0 + \beta_1 x}}{1 + e^{\beta_0 + \beta_1 x}}
 4.  **系数解释**：逻辑回归的系数 \( \beta_1 \) 可以解释为预测变量每增加一个单位，结果的对数比值比的变化量；其指数 \( e^{\beta_1} \) 是具有更直观意义的**比值比**。
 5.  **历史背景**：比值比的概念源于公平博弈的设定，有助于我们理解其现实含义。
 
-![](img/ebbfc8df46dec27b4c9cd55bdc056eaa_60.png)
 
 ![](img/ebbfc8df46dec27b4c9cd55bdc056eaa_62.png)
 

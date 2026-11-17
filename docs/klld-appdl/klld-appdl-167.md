@@ -2,29 +2,18 @@
 
 在本节课中，我们将对长短时记忆网络进行系统性的研究。我们将回顾其核心结构，并深入探讨一篇论文，该论文对LSTM的八个主要变体在三个代表性任务上进行了大规模分析，以揭示哪些组件对模型性能至关重要。
 
-![](img/d095b69795fc4a6c6a754e9ff7cf9277_1.png)
 
-![](img/d095b69795fc4a6c6a754e9ff7cf9277_2.png)
 
-![](img/d095b69795fc4a6c6a754e9ff7cf9277_3.png)
 
-![](img/d095b69795fc4a6c6a754e9ff7cf9277_4.png)
 
-![](img/d095b69795fc4a6c6a754e9ff7cf9277_5.png)
 
 ---
 
-![](img/d095b69795fc4a6c6a754e9ff7cf9277_6.png)
 
-![](img/d095b69795fc4a6c6a754e9ff7cf9277_7.png)
 
-![](img/d095b69795fc4a6c6a754e9ff7cf9277_8.png)
 
-![](img/d095b69795fc4a6c6a754e9ff7cf9277_9.png)
 
-![](img/d095b69795fc4a6c6a754e9ff7cf9277_10.png)
 
-![](img/d095b69795fc4a6c6a754e9ff7cf9277_11.png)
 
 ## 概述与背景
 
@@ -32,37 +21,23 @@
 
 这篇论文将对LSTM的八个不同主要变体在三个代表性任务上进行大规模分析：语音识别、手写识别和复调音乐建模。
 
-![](img/d095b69795fc4a6c6a754e9ff7cf9277_13.png)
 
-![](img/d095b69795fc4a6c6a754e9ff7cf9277_14.png)
 
-![](img/d095b69795fc4a6c6a754e9ff7cf9277_15.png)
 
-![](img/d095b69795fc4a6c6a754e9ff7cf9277_16.png)
 
-![](img/d095b69795fc4a6c6a754e9ff7cf9277_17.png)
 
-![](img/d095b69795fc4a6c6a754e9ff7cf9277_18.png)
 
 ---
 
-![](img/d095b69795fc4a6c6a754e9ff7cf9277_19.png)
 
-![](img/d095b69795fc4a6c6a754e9ff7cf9277_20.png)
 
-![](img/d095b69795fc4a6c6a754e9ff7cf9277_21.png)
 
-![](img/d095b69795fc4a6c6a754e9ff7cf9277_22.png)
 
 ## LSTM 标准结构回顾
 
-![](img/d095b69795fc4a6c6a754e9ff7cf9277_24.png)
 
-![](img/d095b69795fc4a6c6a754e9ff7cf9277_25.png)
 
-![](img/d095b69795fc4a6c6a754e9ff7cf9277_26.png)
 
-![](img/d095b69795fc4a6c6a754e9ff7cf9277_27.png)
 
 首先，让我们回顾一下我们目前使用的LSTM类型。在时间步 **t**，你有一个输入向量 **x_t**，其大小为 **M**。LSTM块有一个隐藏大小 **n**。
 
@@ -72,33 +47,22 @@
 
 此外，还有**对角矩阵**形式的**窥视孔权重**（peephole weights），可以将其视为向量。根据本文的大规模分析，这些权重实际上并不关键，可以移除。偏置项 **b** 也存在。
 
-![](img/d095b69795fc4a6c6a754e9ff7cf9277_29.png)
 
-![](img/d095b69795fc4a6c6a754e9ff7cf9277_30.png)
 
-![](img/d095b69795fc4a6c6a754e9ff7cf9277_31.png)
 
 我们有两个函数：
 *   激活函数 **g**：用于输入单元状态（通常为 `tanh`）。
 *   **σ**：用于门控单元（sigmoid函数）。
 
-![](img/d095b69795fc4a6c6a754e9ff7cf9277_32.png)
 
-![](img/d095b69795fc4a6c6a754e9ff7cf9277_33.png)
 
-![](img/d095b69795fc4a6c6a754e9ff7cf9277_34.png)
 
-![](img/d095b69795fc4a6c6a754e9ff7cf9277_35.png)
 
-![](img/d095b69795fc4a6c6a754e9ff7cf9277_36.png)
 
-![](img/d095b69795fc4a6c6a754e9ff7cf9277_37.png)
 
-![](img/d095b69795fc4a6c6a754e9ff7cf9277_38.png)
 
 在时间步 **t**，我们接收输入 **x_t** 和上一个输出 **h_{t-1}**。计算过程如下：
 
-![](img/d095b69795fc4a6c6a754e9ff7cf9277_39.png)
 
 1.  **输入调制**：`z̄_t = W_z * x_t + R_z * h_{t-1} + b_z`，然后 `z_t = g(z̄_t)`。
 2.  **输入门**：`i_t = σ(W_i * x_t + R_i * h_{t-1} + b_i)`。
@@ -107,21 +71,14 @@
 5.  **输出门**：`o_t = σ(W_o * x_t + R_o * h_{t-1} + b_o)`。
 6.  **最终输出**：`h_t = g(c_t) ⊙ o_t`。
 
-![](img/d095b69795fc4a6c6a754e9ff7cf9277_41.png)
 
-![](img/d095b69795fc4a6c6a754e9ff7cf9277_42.png)
 
 ---
 
-![](img/d095b69795fc4a6c6a754e9ff7cf9277_43.png)
 
-![](img/d095b69795fc4a6c6a754e9ff7cf9277_44.png)
 
-![](img/d095b69795fc4a6c6a754e9ff7cf9277_45.png)
 
-![](img/d095b69795fc4a6c6a754e9ff7cf9277_46.png)
 
-![](img/d095b69795fc4a6c6a754e9ff7cf9277_47.png)
 
 ## LSTM 的八个主要变体
 
@@ -130,23 +87,15 @@
 *   **遗忘门**至关重要，不能移除。
 *   记忆单元的**激活函数 g** 也非常重要，移除会导致性能下降。
 
-![](img/d095b69795fc4a6c6a754e9ff7cf9277_49.png)
 
-![](img/d095b69795fc4a6c6a754e9ff7cf9277_50.png)
 
-![](img/d095b69795fc4a6c6a754e9ff7cf9277_51.png)
 
-![](img/d095b69795fc4a6c6a754e9ff7cf9277_52.png)
 
-![](img/d095b69795fc4a6c6a754e9ff7cf9277_53.png)
 
-![](img/d095b69795fc4a6c6a754e9ff7cf9277_54.png)
 
 基于标准LSTM，可以通过移除或修改组件来定义八个变体。以下是这些变体的描述：
 
-![](img/d095b69795fc4a6c6a754e9ff7cf9277_55.png)
 
-![](img/d095b69795fc4a6c6a754e9ff7cf9277_56.png)
 
 1.  **无输入门**：将输入门 `i_t` 恒设为 1。
 2.  **无遗忘门**：将遗忘门 `f_t` 恒设为 1（即记住过去的一切）。
@@ -159,19 +108,13 @@
 
 ---
 
-![](img/d095b69795fc4a6c6a754e9ff7cf9277_58.png)
 
-![](img/d095b69795fc4a6c6a754e9ff7cf9277_59.png)
 
-![](img/d095b69795fc4a6c6a754e9ff7cf9277_60.png)
 
-![](img/d095b69795fc4a6c6a754e9ff7cf9277_61.png)
 
 ## 实验设计与数据集
 
-![](img/d095b69795fc4a6c6a754e9ff7cf9277_62.png)
 
-![](img/d095b69795fc4a6c6a754e9ff7cf9277_63.png)
 
 ![](img/d095b69795fc4a6c6a754e9ff7cf9277_64.png)
 

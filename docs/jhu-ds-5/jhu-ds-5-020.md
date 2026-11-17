@@ -14,11 +14,9 @@ RPubs是RStudio提供的一项免费服务，允许用户将R Markdown文档编�
 
 ## 注册RPubs账户
 
-![](img/ea9e7c284bfaad5b091ce9f0bd34946d_1.png)
 
 使用RPubs的第一步是注册一个账户。
 
-![](img/ea9e7c284bfaad5b091ce9f0bd34946d_3.png)
 
 以下是注册步骤：
 1.  访问 [rpubs.com](https://rpubs.com/)。
@@ -49,7 +47,6 @@ summary(model)
 
 ---
 
-![](img/ea9e7c284bfaad5b091ce9f0bd34946d_5.png)
 
 ## 发布到RPubs
 
@@ -67,7 +64,6 @@ summary(model)
 
 ---
 
-![](img/ea9e7c284bfaad5b091ce9f0bd34946d_7.png)
 
 ## 分享与管理已发布内容
 

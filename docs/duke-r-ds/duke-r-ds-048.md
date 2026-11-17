@@ -1,6 +1,5 @@
 #  048：构建垃圾邮件过滤器 📧
 
-![](img/52deb085a3d5f0c1df0970f3b0907cbb_0.png)
 
 ![](img/52deb085a3d5f0c1df0970f3b0907cbb_1.png)
 
@@ -10,9 +9,7 @@
 
 首先，我们需要加载必要的R包和数据。数据来源于David Diaz（OpenIntro教材作者之一）在2012年前三个月的收件箱邮件，所有个人身份信息均已移除。
 
-![](img/52deb085a3d5f0c1df0970f3b0907cbb_3.png)
 
-![](img/52deb085a3d5f0c1df0970f3b0907cbb_4.png)
 
 我们将使用 `tidyverse` 包进行数据处理和可视化，使用 `tidymodels` 包进行建模，数据则来自 `openintro` 包。
 
@@ -117,9 +114,7 @@ ggplot(email_numeric, aes(x = exclaim_mess, y = spam_numeric)) +
 通过求解 \( p \)，我们可以得到概率预测公式：
 \[ p = \frac{e^{\beta_0 + \beta_1 \times \text{exclaim\_mess}}}{1 + e^{\beta_0 + \beta_1 \times \text{exclaim\_mess}}} \]
 
-![](img/52deb085a3d5f0c1df0970f3b0907cbb_6.png)
 
-![](img/52deb085a3d5f0c1df0970f3b0907cbb_7.png)
 
 ### 拟合单预测变量模型
 
@@ -141,13 +136,11 @@ tidy(log_fit)
 
 假设我们收到一封包含10个感叹号的邮件，我们想预测它是垃圾邮件的概率。
 
-![](img/52deb085a3d5f0c1df0970f3b0907cbb_9.png)
 
 在数学上，我们将 `exclaim_mess = 10` 代入上述模型计算对数优势比，然后通过公式转换为概率 \( p \)。
 
 在R中，我们可以使用 `predict()` 函数更简便地完成：
 
-![](img/52deb085a3d5f0c1df0970f3b0907cbb_11.png)
 
 ```r
 # 1. 创建包含新观测的数据框

@@ -1,6 +1,5 @@
 #  022：配置Bashrc文件 🛠️
 
-![](img/31c7462b06d94dfe496e91d290923efe_0.png)
 
 ![](img/31c7462b06d94dfe496e91d290923efe_1.png)
 
@@ -10,7 +9,6 @@
 
 上一节我们介绍了Shell环境的基础知识，本节中我们来看看`.bashrc`文件的核心概念。`.bashrc`文件是Bash Shell的配置文件，它就像一棵树的根基。在不同的云Shell环境中，例如AWS CloudShell、GitHub Codespaces、Azure Cloud Shell和Google Cloud Shell，都使用`.bashrc`文件来配置环境。每个环境还会在此基础上添加自己特有的“秘方”以适应其独特需求。我们将主要关注AWS CloudShell环境，但也会简要展示其他环境，以说明一旦掌握`.bashrc`文件的配置，就能将其应用于所有环境。此外，如果你使用的是macOS等操作系统，同样可以应用这些技巧。
 
-![](img/31c7462b06d94dfe496e91d290923efe_3.png)
 
 ## 在AWS CloudShell中开始配置 🚀
 
@@ -102,7 +100,6 @@ source ~/venv/bin/activate
 
 保存`.bashrc`后，打开新的终端标签页。提示符会改变，并且使用`which python`命令可以确认当前Python解释器来自虚拟环境。
 
-![](img/31c7462b06d94dfe496e91d290923efe_7.png)
 
 ## 跨云环境的一致性验证 ☁️
 

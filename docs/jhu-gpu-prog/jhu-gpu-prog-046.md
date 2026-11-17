@@ -75,7 +75,6 @@ struct ImagePixel {
 
 ---
 
-![](img/e5a44c52ea5347245dd54303970624bc_1.png)
 
 ![](img/e5a44c52ea5347245dd54303970624bc_2.png)
 

@@ -2,7 +2,6 @@
 
 ![](img/1a66db1f6552214e72df20f6fc5a0c44_0.png)
 
-![](img/1a66db1f6552214e72df20f6fc5a0c44_1.png)
 
 ![](img/1a66db1f6552214e72df20f6fc5a0c44_3.png)
 
@@ -105,7 +104,6 @@ Data Miner 会自动分析网页结构并生成一个“配方”（recipe），
 
 ![](img/1a66db1f6552214e72df20f6fc5a0c44_36.png)
 
-![](img/1a66db1f6552214e72df20f6fc5a0c44_37.png)
 
 ![](img/1a66db1f6552214e72df20f6fc5a0c44_38.png)
 

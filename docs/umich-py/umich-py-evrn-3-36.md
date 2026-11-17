@@ -11,21 +11,16 @@
 
 ---
 
-![](img/a78b522e354242cfe02964eb2523d02d_1.png)
 
-![](img/a78b522e354242cfe02964eb2523d02d_2.png)
 
 ## 示例一：解析JSON对象（字典）🔍
 
-![](img/a78b522e354242cfe02964eb2523d02d_3.png)
 
 上一节我们介绍了JSON的基本概念。本节中，我们来看看如何解析一个JSON对象，它对应Python中的字典。
 
 首先，我们需要导入Python内置的`json`模块。然后，我们使用一个三引号字符串来存储一段JSON数据。
 
-![](img/a78b522e354242cfe02964eb2523d02d_5.png)
 
-![](img/a78b522e354242cfe02964eb2523d02d_6.png)
 
 ```python
 import json
@@ -44,9 +39,7 @@ data = '''
 '''
 ```
 
-![](img/a78b522e354242cfe02964eb2523d02d_8.png)
 
-![](img/a78b522e354242cfe02964eb2523d02d_9.png)
 
 这段JSON看起来很像Python的字典，由键值对组成。其中，`"phone"`和`"email"`的值本身又是另一个字典（在JSON中称为对象）。
 
@@ -60,18 +53,14 @@ info = json.loads(data)
 
 以下是访问嵌套字典中数据的示例：
 
-![](img/a78b522e354242cfe02964eb2523d02d_11.png)
 
-![](img/a78b522e354242cfe02964eb2523d02d_12.png)
 
 ```python
 print('Name:', info["name"])
 print('Hide:', info["email"]["hide"])
 ```
 
-![](img/a78b522e354242cfe02964eb2523d02d_13.png)
 
-![](img/a78b522e354242cfe02964eb2523d02d_14.png)
 
 运行这段代码，会输出：
 ```
@@ -83,19 +72,14 @@ Hide: yes
 
 ## 示例二：解析JSON数组（列表）📝
 
-![](img/a78b522e354242cfe02964eb2523d02d_16.png)
 
-![](img/a78b522e354242cfe02964eb2523d02d_17.png)
 
-![](img/a78b522e354242cfe02964eb2523d02d_18.png)
 
 在第一个示例中，我们处理了JSON对象。现在，让我们看看如何处理JSON数组，它在Python中对应列表。
 
-![](img/a78b522e354242cfe02964eb2523d02d_20.png)
 
 以下代码定义了一个包含JSON数组的字符串。这个数组里有两个对象。
 
-![](img/a78b522e354242cfe02964eb2523d02d_22.png)
 
 ```python
 import json
@@ -119,17 +103,13 @@ input = '''
 info = json.loads(input)
 ```
 
-![](img/a78b522e354242cfe02964eb2523d02d_24.png)
 
-![](img/a78b522e354242cfe02964eb2523d02d_25.png)
 
 现在，`info`是一个列表。我们可以获取它的长度，并遍历其中的元素（每个元素都是一个字典）。
 
-![](img/a78b522e354242cfe02964eb2523d02d_26.png)
 
 以下是遍历列表并提取信息的代码：
 
-![](img/a78b522e354242cfe02964eb2523d02d_28.png)
 
 ```python
 print('User count:', len(info))
@@ -140,7 +120,6 @@ for item in info:
     print('Attribute', item['x'])
 ```
 
-![](img/a78b522e354242cfe02964eb2523d02d_30.png)
 
 运行这段代码，会输出：
 ```
@@ -155,11 +134,9 @@ Attribute 7
 
 与XML不同，JSON没有“属性”的概念，所有数据都以键值对的形式存在，结构更简单直接。
 
-![](img/a78b522e354242cfe02964eb2523d02d_32.png)
 
 ---
 
-![](img/a78b522e354242cfe02964eb2523d02d_33.png)
 
 ## 总结 🎯
 

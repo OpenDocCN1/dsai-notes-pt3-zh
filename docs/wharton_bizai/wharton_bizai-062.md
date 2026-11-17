@@ -1,8 +1,6 @@
 # 62：Visa与CyberSource中的AI应用 🏦🤖
 
-![](img/494b2951fa831dc0eef0d5b1267f04e4_1.png)
 
-![](img/494b2951fa831dc0eef0d5b1267f04e4_2.png)
 
 在本节课中，我们将通过Visa战略与企业发展和CyberSource总经理Carli Jake的访谈，了解人工智能和机器学习在支付与反欺诈领域的实际应用。我们将探讨AI如何解决复杂的商业问题，以及数据、模型和商业背景在其中的关键作用。
 

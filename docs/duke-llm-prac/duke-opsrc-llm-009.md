@@ -20,7 +20,6 @@ else:
     优先评估小型模型
 ```
 
-![](img/f0ac96c9d4dc0327d83421c17d1a7c10_1.png)
 
 ![](img/f0ac96c9d4dc0327d83421c17d1a7c10_1.png)
 

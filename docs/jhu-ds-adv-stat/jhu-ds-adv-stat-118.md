@@ -16,7 +16,6 @@ $$
 
 上一节我们介绍了标准正态分布，本节中我们来看看更一般的情况。一个随机变量X服从非标准正态分布，如果它可以表示为：
 
-![](img/e2e5ef1ac281b6ac1c655c15ba573b8a_1.png)
 
 $$
 X = \mu + \sigma Z
@@ -38,9 +37,7 @@ $$
 
 理解了单变量正态分布后，我们现在将其扩展到多维情况。一个n维向量Z服从多元标准正态分布，如果其联合概率密度函数满足：
 
-![](img/e2e5ef1ac281b6ac1c655c15ba573b8a_3.png)
 
-![](img/e2e5ef1ac281b6ac1c655c15ba573b8a_4.png)
 
 $$
 f(\mathbf{z}) = (2\pi)^{-n/2} e^{-\frac{\|\mathbf{z}\|^2}{2}}
@@ -62,9 +59,7 @@ $$
 
 其中，Z是多元标准正态向量，μ是均值向量，Σ是协方差矩阵，Σ^(1/2)是Σ的Cholesky分解矩阵。
 
-![](img/e2e5ef1ac281b6ac1c655c15ba573b8a_6.png)
 
-![](img/e2e5ef1ac281b6ac1c655c15ba573b8a_7.png)
 
 根据这个定义，我们可以推导出X的期望和方差：
 *   期望：`E[X] = μ`
@@ -78,7 +73,6 @@ $$
 
 我们通常记作：
 
-![](img/e2e5ef1ac281b6ac1c655c15ba573b8a_9.png)
 
 $$
 \mathbf{X} \sim N(\boldsymbol{\mu}, \boldsymbol{\Sigma})

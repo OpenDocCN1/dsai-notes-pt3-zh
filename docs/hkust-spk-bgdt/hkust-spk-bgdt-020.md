@@ -10,7 +10,6 @@ Spark Streaming是Spark用于处理实时数据流的组件。与批处理不同
 
 Spark Streaming的核心思想是将数据流视为一系列连续的RDD，称为**离散化流**。其基本公式可以表示为：
 
-![](img/5bb3bdc2cf3fc3cab7326657680cb694_1.png)
 
 ```
 DStream = Seq[RDD[T]]
@@ -46,15 +45,11 @@ ssc = StreamingContext(sc, 5)
 
 ### 2. 定义输入源
 
-![](img/5bb3bdc2cf3fc3cab7326657680cb694_7.png)
 
-![](img/5bb3bdc2cf3fc3cab7326657680cb694_9.png)
 
-![](img/5bb3bdc2cf3fc3cab7326657680cb694_10.png)
 
 接下来，我们需要定义数据流的来源。Spark Streaming支持多种输入源，如Kafka、Flume、HDFS以及本例中使用的网络套接字。
 
-![](img/5bb3bdc2cf3fc3cab7326657680cb694_12.png)
 
 ```python
 # 创建一个DStream，表示从本地主机9999端口接收的数据流
@@ -80,11 +75,9 @@ pairs = words.map(lambda word: (word, 1))
 word_counts_per_batch = pairs.reduceByKey(lambda x, y: x + y)
 ```
 
-![](img/5bb3bdc2cf3fc3cab7326657680cb694_14.png)
 
 **重要说明**：这些操作（`flatMap`, `map`, `reduceByKey`）都是**转换**操作。它们定义了计算逻辑，但并不会立即执行。在流处理中，我们称输出操作为“输出操作”而非“动作”，因为它们也不触发计算，只是定义了结果的输出方式。
 
-![](img/5bb3bdc2cf3fc3cab7326657680cb694_16.png)
 
 ### 4. 定义输出并启动应用
 

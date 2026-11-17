@@ -117,7 +117,6 @@ pip freeze > requirements.txt
 
 ---
 
-![](img/08744a96800dcab9645844067dd9e9d2_4.png)
 
 ## 停用虚拟环境 🛑
 
@@ -129,7 +128,6 @@ pip freeze > requirements.txt
 deactivate
 ```
 
-![](img/08744a96800dcab9645844067dd9e9d2_6.png)
 
 现在，我们回到了共享的全局用户环境中。
 
@@ -139,7 +137,6 @@ deactivate
 
 本节课中，我们一起学习了Python虚拟环境的完整使用流程。
 
-![](img/08744a96800dcab9645844067dd9e9d2_8.png)
 
 我们首先了解了为什么需要虚拟环境，然后逐步实践了如何创建项目目录、使用`venv`模块创建虚拟环境、通过`source`命令激活环境、在环境中使用`pip`安装包，以及最后使用`deactivate`命令退出环境。
 

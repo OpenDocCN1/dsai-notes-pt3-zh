@@ -1,6 +1,5 @@
 #  085：讲师介绍
 
-![](img/80ab9ab89baf914f470b3e5c2d352a8b_0.png)
 
 ![](img/80ab9ab89baf914f470b3e5c2d352a8b_0.png)
 

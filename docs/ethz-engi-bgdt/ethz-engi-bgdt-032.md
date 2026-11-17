@@ -1,12 +1,10 @@
 #  032：查询树（3/4） 🧩
 
-![](img/31677262b4dbd40508e25ed033aded39_1.png)
 
 在本节课中，我们将深入学习JSONiq查询语言的核心概念，特别是如何构建复杂的表达式、理解FLWOR表达式以及执行关系型操作。我们将通过具体的例子和公式来阐明这些概念，确保即使是初学者也能跟上。
 
 ---
 
-![](img/31677262b4dbd40508e25ed033aded39_3.png)
 
 ## 概述
 
@@ -20,7 +18,6 @@
 
 在JSONiq中，你可以将任何表达式嵌套在任何其他表达式中。最坏的情况是组合出的表达式没有意义，你会得到一个错误。但原则上，你可以在任何表达式中嵌套任何其他表达式。
 
-![](img/31677262b4dbd40508e25ed033aded39_5.png)
 
 以下是一个复杂表达式的例子：
 ```jsoniq
@@ -33,11 +30,8 @@
 4.  `.a` 尝试从数组元素中提取键 `"a"` 的值。由于数组元素是数字（1, 2, 4），没有 `"a"` 键，因此这一步对每个元素都返回空序列。
 5.  最终结果是三个空序列的序列。
 
-![](img/31677262b4dbd40508e25ed033aded39_7.png)
 
-![](img/31677262b4dbd40508e25ed033aded39_9.png)
 
-![](img/31677262b4dbd40508e25ed033aded39_11.png)
 
 你可以像解数学公式一样，逐步计算这个表达式。
 
@@ -108,7 +102,6 @@ $github-archive.payload.commits[[0]].author.email
 ```
 `[[0]]` 获取每个提交数组的第一个元素（即第一次提交），然后提取其作者邮箱。
 
-![](img/31677262b4dbd40508e25ed033aded39_13.png)
 
 ---
 
@@ -132,7 +125,6 @@ return {"id": $event.id, "commits": $nb-commits}
 ```
 这个查询遍历每个事件，计算其提交数量，并返回一个只包含ID和提交数量的新对象列表。
 
-![](img/31677262b4dbd40508e25ed033aded39_15.png)
 
 ---
 
@@ -177,27 +169,19 @@ return {"number": $x, "square": $square}
 *   `return` 子句基于最终的流生成输出序列。
 这种实现方式使得JSONiq能够利用Spark等引擎高效处理海量数据。
 
-![](img/31677262b4dbd40508e25ed033aded39_17.png)
 
-![](img/31677262b4dbd40508e25ed033aded39_18.png)
 
-![](img/31677262b4dbd40508e25ed033aded39_20.png)
 
 ---
 
-![](img/31677262b4dbd40508e25ed033aded39_22.png)
 
-![](img/31677262b4dbd40508e25ed033aded39_24.png)
 
-![](img/31677262b4dbd40508e25ed033aded39_26.png)
 
-![](img/31677262b4dbd40508e25ed033aded39_28.png)
 
 ## 在JSONiq中实现关系代数
 
 JSONiq足够强大，可以支持完整的关系代数操作。假设我们有两个类表结构的JSON集合：
 
-![](img/31677262b4dbd40508e25ed033aded39_30.png)
 
 **产品 (products.json)**:
 ```json
@@ -211,7 +195,6 @@ JSONiq足够强大，可以支持完整的关系代数操作。假设我们有�
 ```
 以下是各种关系操作在JSONiq中的实现：
 
-![](img/31677262b4dbd40508e25ed033aded39_32.png)
 
 **选择 (Selection)** - 使用 `where`：
 ```jsoniq
@@ -260,7 +243,6 @@ return {"type": $p.type, "country": $s.country}
 ```
 如果某个产品没有对应的商店，`$s` 会被绑定为空序列，在结果中 `country` 字段会显示为 `null`。
 
-![](img/31677262b4dbd40508e25ed033aded39_34.png)
 
 **反规范化/嵌套连接 (Denormalization/Nested Join)**：
 ```jsoniq
@@ -275,19 +257,15 @@ return {
 
 **关于 `$$`**：在过滤谓词（如 `[$$.store eq $s.id]`）中，`$$` 代表当前正在被过滤的序列中的“上下文项”。它避免了为简单的lambda函数显式定义变量。
 
-![](img/31677262b4dbd40508e25ed033aded39_36.png)
 
 ---
 
 ## 类型系统与数据验证
 
-![](img/31677262b4dbd40508e25ed033aded39_38.png)
 
 JSONiq拥有丰富的类型系统，可用于数据验证。
 
-![](img/31677262b4dbd40508e25ed033aded39_40.png)
 
-![](img/31677262b4dbd40508e25ed033aded39_42.png)
 
 **类型声明与检查**：
 ```jsoniq
@@ -301,7 +279,6 @@ let $events as object* := json-file($path)[]
 *   `array+`：1个或多个数组（`+` 表示至少一个）。
 *   `object*`：0个或多个对象（`*` 表示任意数量）。
 
-![](img/31677262b4dbd40508e25ed033aded39_44.png)
 
 **类型测试与转换**：
 ```jsoniq
@@ -310,7 +287,6 @@ $value castable as double     -- 测试$value能否转换为double
 $value cast as double         -- 将$value转换为double
 ```
 
-![](img/31677262b4dbd40508e25ed033aded39_46.png)
 
 **使用模式验证数据**：
 在清理数据后，可以定义模式并验证输出，这通常会将其转换为更高效的数据帧格式。
@@ -329,35 +305,23 @@ validate type local:histogram {
 ```
 验证后的结果可以高效地保存为Parquet、CSV等格式。
 
-![](img/31677262b4dbd40508e25ed033aded39_48.png)
 
-![](img/31677262b4dbd40508e25ed033aded39_50.png)
 
-![](img/31677262b4dbd40508e25ed033aded39_52.png)
 
-![](img/31677262b4dbd40508e25ed033aded39_53.png)
 
 ---
 
-![](img/31677262b4dbd40508e25ed033aded39_55.png)
 
-![](img/31677262b4dbd40508e25ed033aded39_56.png)
 
 ## 查询执行内部原理 ⚙️
 
-![](img/31677262b4dbd40508e25ed033aded39_58.png)
 
 最后，我们简要了解JSONiq查询是如何被执行的。这个过程对用户透明，但有助于理解其能力。
 
-![](img/31677262b4dbd40508e25ed033aded39_60.png)
 
-![](img/31677262b4dbd40508e25ed033aded39_61.png)
 
-![](img/31677262b4dbd40508e25ed033aded39_62.png)
 
-![](img/31677262b4dbd40508e25ed033aded39_63.png)
 
-![](img/31677262b4dbd40508e25ed033aded39_64.png)
 
 1.  **解析 (Parsing)**：查询文本首先被解析成**抽象语法树**，这是查询在内存中的结构表示。
 2.  **编译 (Compilation)**：AST被转换为**表达式树**，其中每个节点对应一个JSONiq表达式（如函数调用、操作符）。
@@ -374,13 +338,9 @@ validate type local:histogram {
 
 ## 总结
 
-![](img/31677262b4dbd40508e25ed033aded39_66.png)
 
-![](img/31677262b4dbd40508e25ed033aded39_67.png)
 
-![](img/31677262b4dbd40508e25ed033aded39_68.png)
 
-![](img/31677262b4dbd40508e25ed033aded39_69.png)
 
 本节课中我们一起深入学习了JSONiq查询语言。
 *   我们掌握了如何像组合乐高积木一样，将基础表达式嵌套成复杂的查询。

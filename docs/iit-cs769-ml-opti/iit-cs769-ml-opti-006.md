@@ -1,6 +1,5 @@
 # 006：凸函数进一步性质与机器学习应用
 
-![](img/82c7a9b9549b8bcf741b333abab98bbd_0.png)
 
 ![](img/82c7a9b9549b8bcf741b333abab98bbd_1.png)
 

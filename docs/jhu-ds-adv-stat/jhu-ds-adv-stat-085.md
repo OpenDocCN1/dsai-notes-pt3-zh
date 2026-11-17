@@ -8,7 +8,6 @@
 
 首先，我们使用钻石数据集。设 `y` 为价格，`x` 为克拉值。
 
-![](img/2e40ce198ac18d4b967b383826bcdbe4_1.png)
 
 ```r
 # 假设数据已加载
@@ -23,7 +22,6 @@ y_c <- y - mean(y)
 x_c <- x - mean(x)
 ```
 
-![](img/2e40ce198ac18d4b967b383826bcdbe4_3.png)
 
 现在，我们可以拟合一个以 `y` 为结果变量、`x` 为预测变量的线性回归模型。
 
@@ -40,7 +38,6 @@ abline(fit, col = "red")
 
 从生成的散点图可以看到，回归线很好地拟合了数据点。
 
-![](img/2e40ce198ac18d4b967b383826bcdbe4_5.png)
 
 ---
 
@@ -48,11 +45,9 @@ abline(fit, col = "red")
 
 上一节我们拟合了模型并绘制了回归线。本节中，我们来验证回归系数的理论计算公式。
 
-![](img/2e40ce198ac18d4b967b383826bcdbe4_7.png)
 
 根据理论，斜率 `beta` 的计算公式为：
 
-![](img/2e40ce198ac18d4b967b383826bcdbe4_8.png)
 
 **beta = cor(y, x) * (sd(y) / sd(x))**
 
@@ -67,7 +62,6 @@ beta_from_model <- coef(fit)[2] # 提取模型中的斜率系数
 
 同样，截距 `alpha` 的计算公式为：
 
-![](img/2e40ce198ac18d4b967b383826bcdbe4_10.png)
 
 **alpha = mean(y) - beta * mean(x)**
 
@@ -78,7 +72,6 @@ alpha_calculated <- mean(y) - beta_calculated * mean(x)
 alpha_from_model <- coef(fit)[1] # 提取模型中的截距系数
 ```
 
-![](img/2e40ce198ac18d4b967b383826bcdbe4_12.png)
 
 例如，计算结果可能显示截距约为 -259.6，这与模型输出的结果一致。
 

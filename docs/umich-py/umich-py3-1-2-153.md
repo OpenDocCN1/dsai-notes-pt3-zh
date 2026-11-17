@@ -6,7 +6,6 @@
 
 ---
 
-![](img/aafa5b36ac68eaf1008b68b52e8c2fa9_2.png)
 
 ## 概述
 

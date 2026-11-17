@@ -66,7 +66,6 @@
 
 创建Release后，GitHub Actions会自动开始运行发布工作流。
 
-![](img/2c5a4c5da5ce8d7d27d973b27b938163_4.png)
 
 ![](img/2c5a4c5da5ce8d7d27d973b27b938163_5.png)
 
@@ -81,11 +80,8 @@
 
 ---
 
-![](img/2c5a4c5da5ce8d7d27d973b27b938163_7.png)
 
-![](img/2c5a4c5da5ce8d7d27d973b27b938163_8.png)
 
-![](img/2c5a4c5da5ce8d7d27d973b27b938163_9.png)
 
 ![](img/2c5a4c5da5ce8d7d27d973b27b938163_10.png)
 

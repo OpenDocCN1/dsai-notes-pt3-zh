@@ -28,9 +28,7 @@ Hadoop序列化的基础是`Writable`接口。如果一个类实现了`Writable`
 *   `readFields(DataInput in)`: 从输入流中读取数据来填充对象字段。
 *   `write(DataOutput out)`: 将对象的状态写入输出流。
 
-![](img/2c6a148f5ebbeb5d14b0a956ad8cedba_2.png)
 
-![](img/2c6a148f5ebbeb5d14b0a956ad8cedba_3.png)
 
 以下是这两个方法的示意代码：
 ```java
@@ -84,11 +82,9 @@ public interface Writable {
     在`compareTo`方法中，我们比较当前对象和参数对象的这个距离值。
 5.  **辅助方法**：实现`toString()`方法用于友好显示，重写`equals()`和`hashCode()`方法也是良好实践。
 
-![](img/2c6a148f5ebbeb5d14b0a956ad8cedba_5.png)
 
 ## 序列化对象到HDFS文件
 
-![](img/2c6a148f5ebbeb5d14b0a956ad8cedba_7.png)
 
 现在我们已经有了可序列化的`Point3D`类，接下来看看如何将它的实例写入HDFS文件。
 

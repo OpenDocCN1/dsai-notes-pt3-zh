@@ -61,7 +61,6 @@ square_udf = udf(square, IntegerType())
 
 PySpark Pandas API解决了这个问题。只要在Databricks Runtime 10.0或更高版本上运行，您就可以使用它。
 
-![](img/e3c82f8734100442563b91e5d77f0d5b_4.png)
 
 ```python
 import pyspark.pandas as ps
@@ -69,9 +68,7 @@ import pyspark.pandas as ps
 
 它的优势在于，其使用方式与您熟悉的Pandas非常相似，但幕后却在分布式处理数据，从而能够随数据规模扩展。
 
-![](img/e3c82f8734100442563b91e5d77f0d5b_6.png)
 
-![](img/e3c82f8734100442563b91e5d77f0d5b_7.png)
 
 ### 实践对比：Pandas vs PySpark Pandas
 

@@ -2,7 +2,6 @@
 
 ![](img/8b26138cc9a09f3c8b547806a43322e0_1.png)
 
-![](img/8b26138cc9a09f3c8b547806a43322e0_3.png)
 
 ![](img/8b26138cc9a09f3c8b547806a43322e0_4.png)
 
@@ -22,9 +21,7 @@
 
 对于方向光，我们使用正交投影来模拟从无限远处平行照射的光源视角。
 
-![](img/8b26138cc9a09f3c8b547806a43322e0_10.png)
 
-![](img/8b26138cc9a09f3c8b547806a43322e0_11.png)
 
 ![](img/8b26138cc9a09f3c8b547806a43322e0_12.png)
 
@@ -72,7 +69,6 @@ float3 finalColor = (diffuseLight * _Color.rgb) * shadowAttenuation;
 ![](img/8b26138cc9a09f3c8b547806a43322e0_21.png)
 
 
-![](img/8b26138cc9a09f3c8b547806a43322e0_23.png)
 
 ![](img/8b26138cc9a09f3c8b547806a43322e0_24.png)
 
@@ -164,7 +160,6 @@ CommandBuffer.SetGlobalTexture(shadowMapTextureId, shadowMapTexture);
 
 ![](img/8b26138cc9a09f3c8b547806a43322e0_52.png)
 
-![](img/8b26138cc9a09f3c8b547806a43322e0_53.png)
 
 ![](img/8b26138cc9a09f3c8b547806a43322e0_55.png)
 

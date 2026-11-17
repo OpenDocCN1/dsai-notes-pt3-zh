@@ -4,33 +4,25 @@
 
 在本节课中，我们将学习如何将Shiny应用程序集成到R Markdown文件中。这是一种分享交互式数据分析结果的便捷方式，它结合了R Markdown的报告生成能力和Shiny的交互性。
 
-![](img/aab610f3d0f864de0df648822ce3b4af_2.png)
 
 ---
 
-![](img/aab610f3d0f864de0df648822ce3b4af_4.png)
 
-![](img/aab610f3d0f864de0df648822ce3b4af_6.png)
 
 ## 概述
 
 上一节我们介绍了如何创建和发布独立的Shiny应用。本节中，我们来看看如何将Shiny的交互式组件嵌入到R Markdown报告中，从而创建一份包含动态图表和控件的可共享文档。
 
-![](img/aab610f3d0f864de0df648822ce3b4af_8.png)
 
-![](img/aab610f3d0f864de0df648822ce3b4af_9.png)
 
 ## 创建Shiny R Markdown文件
 
-![](img/aab610f3d0f864de0df648822ce3b4af_11.png)
 
-![](img/aab610f3d0f864de0df648822ce3b4af_12.png)
 
 首先，我们需要创建一个支持Shiny的R Markdown文件。
 
 以下是具体步骤：
 
-![](img/aab610f3d0f864de0df648822ce3b4af_14.png)
 
 1.  在RStudio中，点击 `File` -> `New File` -> `R Markdown...`。
 2.  在弹出的窗口中，选择 `Shiny` 作为文档类型。

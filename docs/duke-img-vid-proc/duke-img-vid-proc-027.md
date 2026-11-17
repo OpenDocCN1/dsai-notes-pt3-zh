@@ -13,12 +13,10 @@
 noisy_image = imnoise(original_image, 'salt & pepper', 0.09);
 ```
 
-![](img/1ee08ce69453cc40f8388000a8de8b49_1.png)
 
 ## 应用中值滤波
 接下来，我们对添加了噪声的图像应用中值滤波。这里使用了一个3x3的滤波窗口。中值滤波能有效去除椒盐噪声，但通常会使图像变得略微模糊。
 
-![](img/1ee08ce69453cc40f8388000a8de8b49_2.png)
 
 ![](img/1ee08ce69453cc40f8388000a8de8b49_4.png)
 

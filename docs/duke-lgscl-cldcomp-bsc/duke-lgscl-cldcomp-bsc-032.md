@@ -6,7 +6,6 @@
 ## 启动与探索Cloud Shell
 上一节我们介绍了云平台的基本概念，本节中我们来看看如何启动并使用Google Cloud Shell。
 
-![](img/fc6b049d57d5f404e2a18345edb29c27_1.png)
 
 这是Google Cloud Platform控制台。与其他云平台类似，它也提供了一个Cloud Shell环境。对于Python开发者，尤其是在该云平台上开始工作时，我推荐使用这个环境。你可以通过点击控制台右上角的图标并选择“激活Cloud Shell”来找到它。
 
@@ -19,7 +18,6 @@
 *   运行 `python` 命令，启动Python解释器。注意，当前环境可能默认是Python 2。
 *   运行 `python3` 命令，检查是否安装了Python 3。
 
-![](img/fc6b049d57d5f404e2a18345edb29c27_3.png)
 
 ## 配置Python开发环境
 了解了基本环境后，接下来我们需要配置一个独立的Python开发环境。
@@ -30,7 +28,6 @@
 1.  运行命令 `virtualenv ~/.gcp-cloud` 来创建一个名为 `.gcp-cloud` 的隐藏虚拟环境。
 2.  运行命令 `source ~/.gcp-cloud/bin/activate` 来激活这个虚拟环境。
 
-![](img/fc6b049d57d5f404e2a18345edb29c27_5.png)
 
 ## 从GitHub克隆并运行项目
 环境配置好后，我们就可以开始实际的开发工作了。下一步通常是获取代码并运行它。
@@ -45,7 +42,6 @@
 
 现在，如何运行这些代码呢？因为我喜欢使用Makefile，所以可以输入 `make install` 命令。这个命令会检查并安装任何需要的新软件包。系统会开始安装这些更新。
 
-![](img/fc6b049d57d5f404e2a18345edb29c27_7.png)
 
 ## 使用云端集成开发环境
 如果你不太喜欢在命令行中完成所有工作或使用命令行编辑器，Cloud Shell还提供了一个完整的IDE。

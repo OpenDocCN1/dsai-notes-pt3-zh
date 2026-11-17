@@ -1,12 +1,10 @@
 # 应对颠覆：工作场所的生成式人工智能：1：0_系列概述课程简介
 
-![](img/ec98fccc3bbcdded00e5f17664e33d23_0.png)
 
 ![](img/ec98fccc3bbcdded00e5f17664e33d23_0.png)
 
 大家好，我是乔希·帕索克，是密歇根大学传播、媒体与政治学教授。
 
-![](img/ec98fccc3bbcdded00e5f17664e33d23_2.png)
 
 欢迎来到《生成式人工智能预测颠覆》。这是四门系列课程中的第一门课程。
 
@@ -87,16 +85,13 @@
 *   认识大型语言模型的**功能**和**缺点**。
 *   认识到人工智能使用的质量取决于提示，并能实施一些基本的**提示工程**策略。
 
-![](img/ec98fccc3bbcdded00e5f17664e33d23_10.png)
 
 非常高兴你能加入我们的课程，希望你觉得它有价值。
 
 ![](img/ec98fccc3bbcdded00e5f17664e33d23_10.png)
 
-![](img/ec98fccc3bbcdded00e5f17664e33d23_12.png)
 
 ![](img/ec98fccc3bbcdded00e5f17664e33d23_12.png)
 
-![](img/ec98fccc3bbcdded00e5f17664e33d23_13.png)
 
 ![](img/ec98fccc3bbcdded00e5f17664e33d23_13.png)

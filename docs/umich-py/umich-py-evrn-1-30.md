@@ -1,6 +1,5 @@
 # 每个人的 Python 第一部分 30：查找最小值 🔍
 
-![](img/0e3cf5370b945e60f0378a2bfd8b4b52_0.png)
 
 ![](img/0e3cf5370b945e60f0378a2bfd8b4b52_0.png)
 

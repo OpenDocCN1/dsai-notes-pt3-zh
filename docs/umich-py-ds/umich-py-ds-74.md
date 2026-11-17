@@ -1,6 +1,5 @@
 # 74：19_独热编码（选修）📊
 
-![](img/6f9053f1e7aea486ea651801afa6c06f_0.png)
 
 ![](img/6f9053f1e7aea486ea651801afa6c06f_0.png)
 

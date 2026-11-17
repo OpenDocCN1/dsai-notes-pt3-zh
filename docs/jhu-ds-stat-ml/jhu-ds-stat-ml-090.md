@@ -1,10 +1,8 @@
 # 090：Caret 包 🧰
 
-![](img/bae1c819bd62bb5d4a31b4e0e38b4d0f_1.png)
 
 在本节课中，我们将要学习 R 语言中一个非常实用的前端包——Caret 包。Caret 包封装了许多预测算法和工具，为数据预处理、模型训练、验证和比较提供了一个统一的框架，极大地简化了机器学习的工作流程。
 
-![](img/bae1c819bd62bb5d4a31b4e0e38b4d0f_3.png)
 
 ## 概述与功能
 
@@ -17,7 +15,6 @@ Caret 包是一个功能强大的工具集，其核心目标是统一 R 语言�
 *   **模型训练与预测**：使用 `train` 和 `predict` 函数来创建训练集、训练预测模型，并将其应用于新数据集。
 *   **模型比较**：使用 `confusionMatrix` 函数来评估模型在新数据集上的表现，并提供多种准确性度量指标。
 
-![](img/bae1c819bd62bb5d4a31b4e0e38b4d0f_5.png)
 
 ## 统一的算法接口
 
@@ -25,7 +22,6 @@ R 语言内置了大量的机器学习算法，从经典的统计学习方法（
 
 例如，考虑以下不同的预测算法类：从线性判别分析到提升法。对于每一种算法，在 R 中创建的对象（例如 `obj`）可能属于不同的类（如 `lda`、`glm`）。当我们对这些对象使用 `predict` 函数进行预测时，每次都需要传递略有不同的参数。
 
-![](img/bae1c819bd62bb5d4a31b4e0e38b4d0f_7.png)
 
 ```r
 # 不同算法预测示例
@@ -47,7 +43,6 @@ library(kernlab) # 包含 spam 数据集
 data(spam)
 ```
 
-![](img/bae1c819bd62bb5d4a31b4e0e38b4d0f_9.png)
 
 ### 1. 数据分割
 
@@ -68,7 +63,6 @@ testing <- spam[-inTrain, ]
 
 ### 2. 训练模型
 
-![](img/bae1c819bd62bb5d4a31b4e0e38b4d0f_11.png)
 
 接下来，我们使用 `train` 函数来拟合一个模型。
 
@@ -85,7 +79,6 @@ modelFit <- train(type ~ ., data = training, method = "glm")
 
 ### 3. 查看模型与预测
 
-![](img/bae1c819bd62bb5d4a31b4e0e38b4d0f_13.png)
 
 模型训练完成后，我们可以查看最终的模型参数，并使用它对新数据进行预测。
 
@@ -96,7 +89,6 @@ modelFit <- train(type ~ ., data = training, method = "glm")
 modelFit$finalModel
 ```
 
-![](img/bae1c819bd62bb5d4a31b4e0e38b4d0f_15.png)
 
 要对新样本进行预测，只需使用统一的 `predict` 函数，传入模型对象和测试数据。
 
@@ -120,9 +112,7 @@ confusionMatrix(predictions, testing$type)
 
 ## 延伸学习资源
 
-![](img/bae1c819bd62bb5d4a31b4e0e38b4d0f_17.png)
 
-![](img/bae1c819bd62bb5d4a31b4e0e38b4d0f_18.png)
 
 本节课我们一起学习了 Caret 包的基本使用方法。关于 Caret 包的更多高级功能和细节，本课程后续会继续介绍。此外，以下资源也非常有用：
 

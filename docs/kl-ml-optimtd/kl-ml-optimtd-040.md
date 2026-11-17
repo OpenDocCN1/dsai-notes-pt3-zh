@@ -1,8 +1,6 @@
 # 040：随机优化 🎲
 
-![](img/27cec084e292179f9e352b4c0a3a60dc_0.png)
 
-![](img/27cec084e292179f9e352b4c0a3a60dc_2.png)
 
 ![](img/27cec084e292179f9e352b4c0a3a60dc_4.png)
 

@@ -63,9 +63,7 @@ jupyter notebook
 ```
 执行此命令后，PowerShell窗口会开始运行Jupyter服务，并自动在你的默认浏览器中打开一个本地网页（地址通常是 `http://localhost:8888`）。**请勿关闭这个PowerShell窗口**，否则Jupyter服务会停止。
 
-![](img/d0391fe0f3ef20ed3b6f6862035526d1_17.png)
 
-![](img/d0391fe0f3ef20ed3b6f6862035526d1_18.png)
 
 在Jupyter的网页界面中，你可以看到 `P1` 文件夹里的文件。要创建一个新的Python笔记本，请点击右上角的“New”按钮，然后选择“Python 3”。
 
@@ -79,11 +77,9 @@ jupyter notebook
 
 根据项目说明，第一个问题（Q1）要求你复制一段代码并运行。在Jupyter笔记本的第一个单元格中，粘贴提供的代码（以 `# Q1` 开头的部分），然后按 `Shift + Enter` 执行该单元格。你应该会看到输出“Hello world”。
 
-![](img/d0391fe0f3ef20ed3b6f6862035526d1_22.png)
 
 **核心概念**：测试脚本通过搜索特定的标记（如 `# Q1`）来定位你的答案，并根据对应单元格的输出或变量值进行评分。
 
-![](img/d0391fe0f3ef20ed3b6f6862035526d1_24.png)
 
 ![](img/d0391fe0f3ef20ed3b6f6862035526d1_26.png)
 

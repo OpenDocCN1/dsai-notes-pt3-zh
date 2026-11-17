@@ -212,9 +212,7 @@ streamlit run code_gen_web_app.py --server.enableCORS false
 
 ## 总结
 
-![](img/4453d35498bdfd5cfb13d03c5fdc52e2_61.png)
 
-![](img/4453d35498bdfd5cfb13d03c5fdc52e2_63.png)
 
 ![](img/4453d35498bdfd5cfb13d03c5fdc52e2_65.png)
 

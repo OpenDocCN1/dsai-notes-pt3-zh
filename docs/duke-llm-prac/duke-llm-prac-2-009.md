@@ -1,6 +1,5 @@
 # 大型语言模型实践（高级数据工程、AWS、Databricks和本地LLM）：P9：09_01_02：引言_2
 
-![](img/f42b40f2492e5e2d1e54d97ed5f26e0b_0.png)
 
 ![](img/f42b40f2492e5e2d1e54d97ed5f26e0b_0.png)
 

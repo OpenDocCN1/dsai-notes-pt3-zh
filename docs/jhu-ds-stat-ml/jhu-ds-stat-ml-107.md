@@ -2,7 +2,6 @@
 
 在本节课中，我们将学习**无监督预测**的概念。与之前讨论的监督学习不同，无监督预测在开始时没有已知的标签。我们将探索如何通过聚类发现数据中的潜在分组，为这些分组命名，并构建预测模型来对新数据进行分类。
 
-![](img/e0ff0b74846fde0e832aeb298754bbdc_1.png)
 
 ---
 
@@ -18,11 +17,8 @@
 
 以下是进行无监督预测的基本步骤。
 
-![](img/e0ff0b74846fde0e832aeb298754bbdc_3.png)
 
-![](img/e0ff0b74846fde0e832aeb298754bbdc_4.png)
 
-![](img/e0ff0b74846fde0e832aeb298754bbdc_5.png)
 
 ### 1. 数据准备与聚类
 
@@ -39,7 +35,6 @@ K均值聚类的基本思想是将数据划分为指定数量（例如3个）的
 
 聚类完成后，我们可以将结果可视化，并尝试解释每个簇的含义。
 
-![](img/e0ff0b74846fde0e832aeb298754bbdc_7.png)
 
 ```r
 # 为不同聚类分配颜色并绘图
@@ -48,11 +43,9 @@ plot(iris[, 1:2], col = kmeans_result$cluster)
 
 通常，得到的聚类可能与真实的类别标签相似，但这并非必然。为聚类赋予有意义的名称通常是分析中最困难的部分之一。
 
-![](img/e0ff0b74846fde0e832aeb298754bbdc_9.png)
 
 ### 3. 构建预测模型
 
-![](img/e0ff0b74846fde0e832aeb298754bbdc_11.png)
 
 一旦我们有了聚类标签，就可以将其视为新的“结果”变量。接下来，我们使用整个课程中学到的算法（如分类树）来构建一个预测模型，将预测变量与这个新创建的聚类变量关联起来。
 
@@ -64,7 +57,6 @@ tree_model <- rpart(cluster ~ ., data = training_data_with_clusters)
 
 ### 4. 评估与预测
 
-![](img/e0ff0b74846fde0e832aeb298754bbdc_13.png)
 
 我们可以在训练集上评估模型的性能，然后将其应用于新的测试数据集进行预测。
 
@@ -76,13 +68,10 @@ train_predictions <- predict(tree_model, training_data, type = "class")
 test_predictions <- predict(tree_model, newdata = test_data, type = "class")
 ```
 
-![](img/e0ff0b74846fde0e832aeb298754bbdc_15.png)
 
-![](img/e0ff0b74846fde0e832aeb298754bbdc_16.png)
 
 在测试集上，我们通常不知道真实标签，但为了评估，我们可以与已知的真实物种进行比较。这个过程混合了聚类构建和预测建模的误差，因此颇具挑战性。
 
-![](img/e0ff0b74846fde0e832aeb298754bbdc_18.png)
 
 ---
 
@@ -98,9 +87,7 @@ test_predictions <- predict(tree_model, newdata = test_data, type = "class")
 
 ## 总结
 
-![](img/e0ff0b74846fde0e832aeb298754bbdc_20.png)
 
-![](img/e0ff0b74846fde0e832aeb298754bbdc_21.png)
 
 ![](img/e0ff0b74846fde0e832aeb298754bbdc_22.png)
 

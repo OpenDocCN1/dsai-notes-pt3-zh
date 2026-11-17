@@ -1,6 +1,5 @@
 #  054：使用 locate 命令查找文件 🔍
 
-![](img/9fc0f6009b5ed4119a241cc3eb289558_0.png)
 
 ![](img/9fc0f6009b5ed4119a241cc3eb289558_1.png)
 

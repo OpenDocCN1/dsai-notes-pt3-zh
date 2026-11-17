@@ -41,7 +41,6 @@
 
 ![](img/7ece520824f8709ad0f0a8a4bf5c91c7_8.png)
 
-![](img/7ece520824f8709ad0f0a8a4bf5c91c7_3.png)
 *变分自编码器结构*
 
 ---
@@ -68,7 +67,6 @@ KL散度项的作用至关重要：
 
 下图展示了损失函数中各项对潜在空间“气泡”的影响：
 
-![](img/7ece520824f8709ad0f0a8a4bf5c91c7_6.png)
 *损失函数各项的作用*
 
 ---
@@ -109,7 +107,6 @@ KL散度项的作用至关重要：
 
 ## VAE 作为生成模型
 
-![](img/7ece520824f8709ad0f0a8a4bf5c91c7_18.png)
 
 ![](img/7ece520824f8709ad0f0a8a4bf5c91c7_20.png)
 
@@ -121,9 +118,7 @@ KL散度项的作用至关重要：
 
 ![](img/7ece520824f8709ad0f0a8a4bf5c91c7_26.png)
 
-![](img/7ece520824f8709ad0f0a8a4bf5c91c7_28.png)
 
-![](img/7ece520824f8709ad0f0a8a4bf5c91c7_30.png)
 
 下图展示了从随机潜在变量生成图像的过程：
 
@@ -131,54 +126,38 @@ KL散度项的作用至关重要：
 
 ![](img/7ece520824f8709ad0f0a8a4bf5c91c7_34.png)
 
-![](img/7ece520824f8709ad0f0a8a4bf5c91c7_28.png)
 *从随机潜在变量生成图像*
 
 ![](img/7ece520824f8709ad0f0a8a4bf5c91c7_36.png)
 
 ![](img/7ece520824f8709ad0f0a8a4bf5c91c7_38.png)
 
-![](img/7ece520824f8709ad0f0a8a4bf5c91c7_40.png)
 
-![](img/7ece520824f8709ad0f0a8a4bf5c91c7_42.png)
 
 此外，VAE的连续潜在空间允许我们在不同数字之间进行平滑插值。例如，在潜在空间中，从数字“3”对应的点线性插值到数字“8”对应的点，解码器会产生一系列从“3”渐变到“8”的合理图像。
 
-![](img/7ece520824f8709ad0f0a8a4bf5c91c7_44.png)
 
-![](img/7ece520824f8709ad0f0a8a4bf5c91c7_46.png)
 
-![](img/7ece520824f8709ad0f0a8a4bf5c91c7_48.png)
 
 下图展示了在潜在空间中进行插值的效果：
 
-![](img/7ece520824f8709ad0f0a8a4bf5c91c7_50.png)
 
-![](img/7ece520824f8709ad0f0a8a4bf5c91c7_52.png)
 
-![](img/7ece520824f8709ad0f0a8a4bf5c91c7_44.png)
 *潜在空间插值（从数字5到数字4）*
 
-![](img/7ece520824f8709ad0f0a8a4bf5c91c7_54.png)
 
-![](img/7ece520824f8709ad0f0a8a4bf5c91c7_56.png)
 
-![](img/7ece520824f8709ad0f0a8a4bf5c91c7_58.png)
 
 ![](img/7ece520824f8709ad0f0a8a4bf5c91c7_48.png)
 *潜在空间插值（从数字3到数字8）*
 
-![](img/7ece520824f8709ad0f0a8a4bf5c91c7_60.png)
 
-![](img/7ece520824f8709ad0f0a8a4bf5c91c7_62.png)
 
 ![](img/7ece520824f8709ad0f0a8a4bf5c91c7_64.png)
 
 ---
 
-![](img/7ece520824f8709ad0f0a8a4bf5c91c7_66.png)
 
-![](img/7ece520824f8709ad0f0a8a4bf5c91c7_68.png)
 
 ## 可视化潜在空间
 
@@ -186,7 +165,6 @@ KL散度项的作用至关重要：
 
 ![](img/7ece520824f8709ad0f0a8a4bf5c91c7_70.png)
 
-![](img/7ece520824f8709ad0f0a8a4bf5c91c7_72.png)
 
 下图展示了训练不同阶段潜在空间的结构变化：
 
@@ -205,16 +183,13 @@ KL散度项的作用至关重要：
 
 ![](img/7ece520824f8709ad0f0a8a4bf5c91c7_84.png)
 
-![](img/7ece520824f8709ad0f0a8a4bf5c91c7_86.png)
 
 ![](img/7ece520824f8709ad0f0a8a4bf5c91c7_88.png)
 
 ![](img/7ece520824f8709ad0f0a8a4bf5c91c7_68.png)
 *潜在空间可视化（epoch 5）*
 
-![](img/7ece520824f8709ad0f0a8a4bf5c91c7_90.png)
 
-![](img/7ece520824f8709ad0f0a8a4bf5c91c7_92.png)
 
 ![](img/7ece520824f8709ad0f0a8a4bf5c91c7_74.png)
 *潜在空间可视化（epoch 10）*

@@ -24,9 +24,7 @@
 
 ## 第一阶段：可重启的数据获取 (`geoload.py`)
 
-![](img/0451a04077e7af87413ce640004e17d7_3.png)
 
-![](img/0451a04077e7af87413ce640004e17d7_5.png)
 
 这个阶段的目标是可靠地获取数据。我们使用一个代理API来简化访问，但该API有严格的速率限制，因此我们的代码必须能够处理中断并从断点恢复。
 
@@ -76,7 +74,6 @@ if ‘features‘ in js and len(js[‘features‘]) > 0:
     name = js[‘features‘][0][‘properties‘].get(‘display_name‘, ‘N/A‘)
 ```
 
-![](img/0451a04077e7af87413ce640004e17d7_7.png)
 
 程序的工作流程如下：
 1.  打开同一个SQLite数据库 (`geodata.sqlite`)。
@@ -95,7 +92,6 @@ var myData = [
 ];
 ```
 
-![](img/0451a04077e7af87413ce640004e17d7_9.png)
 
 ## 可视化结果
 

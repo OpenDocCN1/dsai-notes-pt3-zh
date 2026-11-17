@@ -18,7 +18,6 @@
 
 ---
 
-![](img/f4ebb921e9bc316a45d2d81e5b60c515_5.png)
 
 ![](img/f4ebb921e9bc316a45d2d81e5b60c515_6.png)
 

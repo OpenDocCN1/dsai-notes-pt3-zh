@@ -105,6 +105,5 @@ print(name)      # 输出: Alfredo
 
 ---
 
-![](img/fb0f6311f0a2dc28accbec8c61ae2f76_3.png)
 
 ![](img/fb0f6311f0a2dc28accbec8c61ae2f76_3.png)

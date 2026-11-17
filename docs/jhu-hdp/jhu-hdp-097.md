@@ -1,18 +1,14 @@
 # 097：Spark附加组件详解 🚀
 
-![](img/2c9bf0a3681d08b1ef6af4753009e9b2_0.png)
 
-![](img/2c9bf0a3681d08b1ef6af4753009e9b2_2.png)
 
 在本节课中，我们将学习Spark生态系统中的几个重要附加组件。这些组件主要用于数据科学活动，包括Spark SQL、Spark Streaming、GraphX和Spark MLlib。我们将从高层次了解它们的功能和用途，为后续深入学习数据科学课程打下基础。
 
-![](img/2c9bf0a3681d08b1ef6af4753009e9b2_4.png)
 
 上一节我们介绍了Spark的核心概念，本节中我们来看看Spark为更高级的数据处理和分析任务提供的扩展功能。
 
 ---
 
-![](img/2c9bf0a3681d08b1ef6af4753009e9b2_6.png)
 
 ## Spark SQL 📊
 
@@ -20,7 +16,6 @@ Spark SQL是一个模块，它在RDD的函数式编程API之上引入了关系�
 
 这与Hive在Hadoop之上提供的功能非常相似。Spark SQL使用名为**DataFrame**的API。DataFrame是一个用于Spark SQL处理的新API，它最初构建在RDD之上，但现在已转向主要使用DataFrame。
 
-![](img/2c9bf0a3681d08b1ef6af4753009e9b2_8.png)
 
 DataFrame与RDD的主要区别在于，RDD存在**数据类型擦除**问题，它不理解数据类型和字段名称，你只能通过类似`x[1]`或`_1`的索引来引用字段。而DataFrame可以使用命名的字段或列名，这正是你能在基于DataFrame构建的Spark SQL中使用类似SQL语法的原因。
 
@@ -28,7 +23,6 @@ Spark SQL的基础建立在DataFrame之上。DataFrame本质上是一个**分布
 
 这项技术的灵感来源于Python中的**Pandas**和R语言中的**data.frame**。
 
-![](img/2c9bf0a3681d08b1ef6af4753009e9b2_10.png)
 
 以下是Spark SQL的一个Java示例：
 
@@ -45,7 +39,6 @@ df.registerTempTable("people");
 DataFrame results = sqlContext.sql("SELECT name FROM people WHERE age > 20");
 ```
 
-![](img/2c9bf0a3681d08b1ef6af4753009e9b2_12.png)
 
 ---
 
@@ -55,7 +48,6 @@ Spark Streaming用于处理实时流入的数据。在大数据应用中，数�
 
 在Hadoop生态中，有Apache Storm用于流处理。在Spark中，则有Spark Streaming。它扩展了核心API以支持流处理，目标是能够在Spark平台上构建一个完全分布式、容错的实时处理引擎。
 
-![](img/2c9bf0a3681d08b1ef6af4753009e9b2_14.png)
 
 但需要记住的关键点是，Spark Streaming本质上仍是**微批处理**。其思想是：输入数据流持续进入，Spark Streaming将其按特定时间窗口（例如2秒）切分成小批次。每个批次的数据会被收集起来，进行计算，并将结果输出。因此，你是在持续地对多个微批次进行计算。
 
@@ -63,7 +55,6 @@ Spark Streaming的数据可以从多种来源摄取，例如Kafka、Flume、HDFS
 
 处理逻辑可以使用我们之前学过的所有转换和行动操作来表达。批处理窗口可以小至**500毫秒**。你需要确保有足够的硬件资源在窗口时间内完成处理，否则会出现延迟。
 
-![](img/2c9bf0a3681d08b1ef6af4753009e9b2_16.png)
 
 以下是Spark Streaming的两个用例：
 1.  **实时页面热度分析**：用户点击网站链接产生的页面浏览量被送入Kafka队列，Spark Streaming读取这些数据，实时统计热门页面，帮助分析师了解当前网站上受欢迎的内容。
@@ -73,13 +64,10 @@ Spark Streaming的数据可以从多种来源摄取，例如Kafka、Flume、HDFS
 
 以下是一个Python的Spark Streaming示例，它从网络套接字读取数据流：
 
-![](img/2c9bf0a3681d08b1ef6af4753009e9b2_18.png)
 
 
-![](img/2c9bf0a3681d08b1ef6af4753009e9b2_20.png)
 
 
-![](img/2c9bf0a3681d08b1ef6af4753009e9b2_22.png)
 
 ```python
 from pyspark import SparkContext
@@ -103,15 +91,12 @@ ssc.awaitTermination()
 
 ---
 
-![](img/2c9bf0a3681d08b1ef6af4753009e9b2_24.png)
 
 ## GraphX 🕸️
 
-![](img/2c9bf0a3681d08b1ef6af4753009e9b2_26.png)
 
 GraphX是构建在Spark之上的图处理引擎，类似于Hadoop生态中的Apache Giraph。它通过引入一个新的**图抽象API**扩展了Spark RDD。
 
-![](img/2c9bf0a3681d08b1ef6af4753009e9b2_28.png)
 
 其核心思想是将数据表示为**顶点**和**边**。每个顶点代表一个数据实体（例如一个人），每条边代表实体之间的关系（例如合作、指导）。一旦数据以这种形式表示，就可以在其上执行各种图计算算法。
 
@@ -126,15 +111,12 @@ GraphX是构建在Spark之上的图处理引擎，类似于Hadoop生态中的Apa
 
 ## Spark MLlib 🤖
 
-![](img/2c9bf0a3681d08b1ef6af4753009e9b2_30.png)
 
 MLlib是Spark生态系统中的机器学习库，类似于Hadoop中的Apache Mahout。它使得大规模机器学习应用变得容易。
 
-![](img/2c9bf0a3681d08b1ef6af4753009e9b2_31.png)
 
 MLlib内置了许多经典算法。它最初基于RDD，在Spark 2.0版本中，正在向基于DataFrame的API迁移。
 
-![](img/2c9bf0a3681d08b1ef6af4753009e9b2_33.png)
 
 MLlib提供的算法和功能包括：
 *   **分类算法**（如逻辑回归）
@@ -145,13 +127,10 @@ MLlib提供的算法和功能包括：
 *   **特征转换与ML管道**（构建处理流水线）
 *   **基础统计功能**
 
-![](img/2c9bf0a3681d08b1ef6af4753009e9b2_35.png)
 
 ---
 
-![](img/2c9bf0a3681d08b1ef6af4753009e9b2_37.png)
 
-![](img/2c9bf0a3681d08b1ef6af4753009e9b2_38.png)
 
 ## 总结
 
@@ -162,7 +141,6 @@ MLlib提供的算法和功能包括：
 *   **GraphX** 专门用于图结构数据的处理和分析，适用于社交网络、推荐系统等领域。
 *   **Spark MLlib** 提供了丰富的可扩展机器学习算法库。
 
-![](img/2c9bf0a3681d08b1ef6af4753009e9b2_40.png)
 
 ![](img/2c9bf0a3681d08b1ef6af4753009e9b2_41.png)
 

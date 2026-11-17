@@ -1,8 +1,6 @@
 # 5：无处不在的人工智能应用 🚀
 
-![](img/11cbeaf1cf353a828cbab7367d5ff215_0.png)
 
-![](img/11cbeaf1cf353a828cbab7367d5ff215_1.png)
 
 ## 概述
 

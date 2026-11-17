@@ -44,16 +44,12 @@ multiplyNumbers <- function(numbers1 = 1:10, numbers2 = 1:10) {
 
 现在，让我们运行这个函数，看看它的实际效果。
 
-![](img/640b4f554efa76d3177b1cdbe89f4ea2_1.png)
 
 首先，确保已加载必要的库。然后，调用`multiplyNumbers`函数。
 
 
-![](img/640b4f554efa76d3177b1cdbe89f4ea2_3.png)
 
-![](img/640b4f554efa76d3177b1cdbe89f4ea2_4.png)
 
-![](img/640b4f554efa76d3177b1cdbe89f4ea2_5.png)
 
 ```r
 # 加载库
@@ -69,7 +65,6 @@ multiplyNumbers(numbers1 = 1:10, numbers2 = 1:10)
 
 ---
 
-![](img/640b4f554efa76d3177b1cdbe89f4ea2_7.png)
 
 ![](img/640b4f554efa76d3177b1cdbe89f4ea2_8.png)
 

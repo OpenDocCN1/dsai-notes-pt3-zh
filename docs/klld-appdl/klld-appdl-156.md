@@ -10,17 +10,11 @@ StyleGAN 的核心目标是生成高分辨率、逼真的图像，并实现对�
 
 传统生成对抗网络（GAN）的生成流程如下：从正态分布采样潜在编码 `Z`，归一化后通过全连接层，接着进行像素归一化（Pixel Norm），然后通过转置卷积（Transpose Convolution）逐步上采样，直到生成最终分辨率的图像。
 
-![](img/62c3b8ff873c9664ac8df08e15026566_1.png)
 
-![](img/62c3b8ff873c9664ac8df08e15026566_2.png)
 
-![](img/62c3b8ff873c9664ac8df08e15026566_3.png)
 
-![](img/62c3b8ff873c9664ac8df08e15026566_4.png)
 
-![](img/62c3b8ff873c9664ac8df08e15026566_5.png)
 
-![](img/62c3b8ff873c9664ac8df08e15026566_6.png)
 
 **公式表示传统流程：**
 ```
@@ -34,19 +28,14 @@ for each layer:
 Image = Output(H)
 ```
 
-![](img/62c3b8ff873c9664ac8df08e15026566_7.png)
 
-![](img/62c3b8ff873c9664ac8df08e15026566_8.png)
 
 这种方法的问题是，潜在编码 `Z` 的表示是纠缠的，难以通过修改 `Z` 的特定维度来独立控制生成图像的属性（如改变发型）。
 
 StyleGAN 的解决方案是引入一个中间潜在空间 `W`。`W` 由一个映射网络（Mapping Network）从 `Z` 变换而来，其分布可以更复杂。生成器不再直接使用 `Z`，而是使用 `W` 来控制图像的风格。
 
-![](img/62c3b8ff873c9664ac8df08e15026566_10.png)
 
-![](img/62c3b8ff873c9664ac8df08e15026566_11.png)
 
-![](img/62c3b8ff873c9664ac8df08e15026566_12.png)
 
 **公式表示 StyleGAN 的映射：**
 ```
@@ -55,85 +44,52 @@ W = MappingNetwork(Z)  # 通过全连接网络学习复杂分布
 Image = SynthesisNetwork(W, noise)  # 合成网络使用 W 和噪声生成图像
 ```
 
-![](img/62c3b8ff873c9664ac8df08e15026566_13.png)
 
-![](img/62c3b8ff873c9664ac8df08e15026566_14.png)
 
-![](img/62c3b8ff873c9664ac8df08e15026566_15.png)
 
-![](img/62c3b8ff873c9664ac8df08e15026566_16.png)
 
-![](img/62c3b8ff873c9664ac8df08e15026566_17.png)
 
-![](img/62c3b8ff873c9664ac8df08e15026566_18.png)
 
-![](img/62c3b8ff873c9664ac8df08e15026566_19.png)
 
-![](img/62c3b8ff873c9664ac8df08e15026566_20.png)
 
 ## StyleGAN 合成网络架构
 
-![](img/62c3b8ff873c9664ac8df08e15026566_21.png)
 
-![](img/62c3b8ff873c9664ac8df08e15026566_23.png)
 
 现在，让我们详细解析 StyleGAN 的合成网络（Synthesis Network）`G`。该网络以风格向量 `W` 和噪声作为输入，生成最终图像。我们将参考以下架构图进行说明。
 
-![](img/62c3b8ff873c9664ac8df08e15026566_24.png)
 
-![](img/62c3b8ff873c9664ac8df08e15026566_25.png)
 
-![](img/62c3b8ff873c9664ac8df08e15026566_26.png)
 
-![](img/62c3b8ff873c9664ac8df08e15026566_23.png)
 
-![](img/62c3b8ff873c9664ac8df08e15026566_28.png)
 
 ### 初始常量输入
 
-![](img/62c3b8ff873c9664ac8df08e15026566_29.png)
 
-![](img/62c3b8ff873c9664ac8df08e15026566_30.png)
 
-![](img/62c3b8ff873c9664ac8df08e15026566_31.png)
 
-![](img/62c3b8ff873c9664ac8df08e15026566_32.png)
 
-![](img/62c3b8ff873c9664ac8df08e15026566_33.png)
 
 合成网络以一个可训练的常量张量开始，其尺寸为 `4x4x512`。这是网络的起点。
 
 ### 自适应实例归一化（AdaIN）
 
-![](img/62c3b8ff873c9664ac8df08e15026566_35.png)
 
 网络的核心操作是自适应实例归一化（Adaptive Instance Normalization, AdaIN）。实例归一化（Instance Normalization）是批归一化（Batch Normalization）在批大小为 1 时的特例。
 
-![](img/62c3b8ff873c9664ac8df08e15026566_36.png)
 
-![](img/62c3b8ff873c9664ac8df08e15026566_37.png)
 
-![](img/62c3b8ff873c9664ac8df08e15026566_38.png)
 
-![](img/62c3b8ff873c9664ac8df08e15026566_39.png)
 
-![](img/62c3b8ff873c9664ac8df08e15026566_40.png)
 
-![](img/62c3b8ff873c9664ac8df08e15026566_41.png)
 
-![](img/62c3b8ff873c9664ac8df08e15026566_42.png)
 
-![](img/62c3b8ff873c9664ac8df08e15026566_43.png)
 
 给定一个特征图张量 `X`，其形状为 `[C, H, W]`（C 为通道数，H 为高度，W 为宽度）。对于每个通道 `i`，我们计算该通道上所有像素的均值 `μ_i` 和标准差 `σ_i`。
 
-![](img/62c3b8ff873c9664ac8df08e15026566_44.png)
 
-![](img/62c3b8ff873c9664ac8df08e15026566_45.png)
 
-![](img/62c3b8ff873c9664ac8df08e15026566_46.png)
 
-![](img/62c3b8ff873c9664ac8df08e15026566_48.png)
 
 **实例归一化公式：**
 ```
@@ -151,29 +107,18 @@ X_AdaIN = y_s * X_norm + y_b
 ```
 其中，`y_s` 和 `y_b` 是由 `W` 通过一个全连接层（A）生成的向量，它们控制了该层特征的风格。
 
-![](img/62c3b8ff873c9664ac8df08e15026566_50.png)
 
-![](img/62c3b8ff873c9664ac8df08e15026566_51.png)
 
-![](img/62c3b8ff873c9664ac8df08e15026566_52.png)
 
-![](img/62c3b8ff873c9664ac8df08e15026566_53.png)
 
-![](img/62c3b8ff873c9664ac8df08e15026566_54.png)
 
-![](img/62c3b8ff873c9664ac8df08e15026566_55.png)
 
 ### 风格向量的注入
 
-![](img/62c3b8ff873c9664ac8df08e15026566_56.png)
 
-![](img/62c3b8ff873c9664ac8df08e15026566_57.png)
 
-![](img/62c3b8ff873c9664ac8df08e15026566_58.png)
 
-![](img/62c3b8ff873c9664ac8df08e15026566_59.png)
 
-![](img/62c3b8ff873c9664ac8df08e15026566_60.png)
 
 `y_s` 和 `y_b` 来自哪里？它们由映射网络输出的风格向量 `W` 经过一个仿射变换（全连接层）生成。该变换输出一个维度为 `2C` 的向量，前半部分作为 `y_s`，后半部分作为 `y_b`。
 
@@ -187,31 +132,19 @@ y_b = affine_output[C:]  # 偏置项，维度 [C]
 
 通过这种方式，`W` 控制了生成图像的风格，并且在不同网络层注入不同的 `(y_s, y_b)` 对，可以控制不同层次的视觉特征（如整体结构、姿态、细节纹理）。
 
-![](img/62c3b8ff873c9664ac8df08e15026566_62.png)
 
-![](img/62c3b8ff873c9664ac8df08e15026566_63.png)
 
-![](img/62c3b8ff873c9664ac8df08e15026566_64.png)
 
-![](img/62c3b8ff873c9664ac8df08e15026566_65.png)
 
-![](img/62c3b8ff873c9664ac8df08e15026566_66.png)
 
 ### 噪声的注入
 
-![](img/62c3b8ff873c9664ac8df08e15026566_67.png)
 
-![](img/62c3b8ff873c9664ac8df08e15026566_68.png)
 
-![](img/62c3b8ff873c9664ac8df08e15026566_69.png)
 
-![](img/62c3b8ff873c9664ac8df08e15026566_70.png)
 
-![](img/62c3b8ff873c9664ac8df08e15026566_71.png)
 
-![](img/62c3b8ff873c9664ac8df08e15026566_72.png)
 
-![](img/62c3b8ff873c9664ac8df08e15026566_73.png)
 
 除了风格控制，StyleGAN 还注入了噪声以增加生成图像的细节和随机性。噪声 `N` 从标准正态分布中采样，形状与当前特征图的空间尺寸相同（如 `H x W`）。
 
@@ -225,31 +158,19 @@ X_with_noise = X_AdaIN + Noise_Scaled  # 将噪声加到特征图上
 
 噪声的加入为图像提供了细微的随机变化，例如发丝的纹理、皮肤毛孔等。
 
-![](img/62c3b8ff873c9664ac8df08e15026566_75.png)
 
-![](img/62c3b8ff873c9664ac8df08e15026566_76.png)
 
-![](img/62c3b8ff873c9664ac8df08e15026566_77.png)
 
-![](img/62c3b8ff873c9664ac8df08e15026566_78.png)
 
-![](img/62c3b8ff873c9664ac8df08e15026566_79.png)
 
 ## 网络流程总结
 
-![](img/62c3b8ff873c9664ac8df08e15026566_80.png)
 
-![](img/62c3b8ff873c9664ac8df08e15026566_81.png)
 
-![](img/62c3b8ff873c9664ac8df08e15026566_82.png)
 
-![](img/62c3b8ff873c9664ac8df08e15026566_83.png)
 
-![](img/62c3b8ff873c9664ac8df08e15026566_84.png)
 
-![](img/62c3b8ff873c9664ac8df08e15026566_85.png)
 
-![](img/62c3b8ff873c9664ac8df08e15026566_86.png)
 
 以下是合成网络 `G` 的简化流程：
 
@@ -263,57 +184,36 @@ X_with_noise = X_AdaIN + Noise_Scaled  # 将噪声加到特征图上
 
 这种设计使得生成器具有更线性的结构，潜在空间 `W` 的不同维度对图像特征的影响更加解耦和可解释。
 
-![](img/62c3b8ff873c9664ac8df08e15026566_88.png)
 
-![](img/62c3b8ff873c9664ac8df08e15026566_89.png)
 
-![](img/62c3b8ff873c9664ac8df08e15026566_90.png)
 
-![](img/62c3b8ff873c9664ac8df08e15026566_91.png)
 
-![](img/62c3b8ff873c9664ac8df08e15026566_92.png)
 
 ## 训练技巧与特性
 
-![](img/62c3b8ff873c9664ac8df08e15026566_93.png)
 
-![](img/62c3b8ff873c9664ac8df08e15026566_94.png)
 
-![](img/62c3b8ff873c9664ac8df08e15026566_95.png)
 
-![](img/62c3b8ff873c9664ac8df08e15026566_96.png)
 
-![](img/62c3b8ff873c9664ac8df08e15026566_97.png)
 
-![](img/62c3b8ff873c9664ac8df08e15026566_98.png)
 
 ### 混合正则化
 
 在训练过程中，StyleGAN 使用了混合正则化（Mixing Regularization）。具体做法是：采样两个潜在编码 `Z1` 和 `Z2`，通过映射网络得到 `W1` 和 `W2`。在合成网络中，随机选择一个切换点，该点之前的部分使用 `W1`，之后的部分使用 `W2`。这有助于防止网络过度依赖相邻层风格之间的相关性，增强了风格控制的独立性。
 
-![](img/62c3b8ff873c9664ac8df08e15026566_100.png)
 
 ### 截断技巧
 
-![](img/62c3b8ff873c9664ac8df08e15026566_101.png)
 
-![](img/62c3b8ff873c9664ac8df08e15026566_102.png)
 
-![](img/62c3b8ff873c9664ac8df08e15026566_103.png)
 
-![](img/62c3b8ff873c9664ac8df08e15026566_104.png)
 
-![](img/62c3b8ff873c9664ac8df08e15026566_105.png)
 
-![](img/62c3b8ff873c9664ac8df08e15026566_106.png)
 
-![](img/62c3b8ff873c9664ac8df08e15026566_107.png)
 
 在 BigGAN 中，我们学习了截断技巧（Truncation Trick），通过对潜在编码 `Z` 进行截断来权衡生成图像的质量与多样性。在 StyleGAN 中，由于 `W` 的分布复杂，截断操作在 `W` 空间进行。
 
-![](img/62c3b8ff873c9664ac8df08e15026566_108.png)
 
-![](img/62c3b8ff873c9664ac8df08e15026566_109.png)
 
 ![](img/62c3b8ff873c9664ac8df08e15026566_110.png)
 

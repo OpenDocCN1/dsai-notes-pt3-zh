@@ -10,7 +10,6 @@
 
 我们还查看了Microsoft Learn平台。此处引入Microsoft Learn，是因为它是一个非常优质且可靠的资源。在你学习本课程内容以及未来寻求更多细节或了解技术更新时，都可以利用Microsoft Learn来推进学习。技术发展日新月异，该平台能帮助你紧跟变化。
 
-![](img/5d7ff98029a3e17eff63b3de79bc0fae_1.png)
 
 ![](img/5d7ff98029a3e17eff63b3de79bc0fae_1.png)
 

@@ -128,7 +128,6 @@ spec:
     kubectl apply -f nginx-service.yaml
     ```
 
-![](img/cd50fb81a0d696a1e11099c04a583c3b_1.png)
 
 4.  **访问应用**：获取Service的外部访问地址（例如使用`kubectl get svc`查看`CLUSTER-IP`或在云环境中查看`EXTERNAL-IP`），然后在浏览器中访问该IP地址，你应该能看到Nginx的欢迎页面。
 

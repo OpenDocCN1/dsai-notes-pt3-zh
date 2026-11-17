@@ -77,7 +77,6 @@ doc_term_matrix = [
 
 ---
 
-![](img/a39571040668bca0c35d24a3dca8888a_3.png)
 
 ![](img/a39571040668bca0c35d24a3dca8888a_4.png)
 

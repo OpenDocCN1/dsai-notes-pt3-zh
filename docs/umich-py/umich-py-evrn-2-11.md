@@ -53,11 +53,9 @@ python3 --version
 
 Mac自带的“文本编辑”应用不适合编程，因为它默认保存为RTF格式。我们需要一个专业的代码编辑器。
 
-![](img/4365e5f0ef0a44be84cc9d900ea0e3ec_1.png)
 
 如果你已经有喜欢的编辑器（如VS Code、Sublime Text等），可以继续使用。对于初学者，我们推荐使用Brackets，因为它简单、免费、开源，且支持Mac、Windows和Linux系统。
 
-![](img/4365e5f0ef0a44be84cc9d900ea0e3ec_3.png)
 
 以下是安装Brackets的步骤：
 1.  访问 [brackets.io](http://brackets.io) 下载Mac版本。
@@ -73,13 +71,10 @@ Mac自带的“文本编辑”应用不适合编程，因为它默认保存为RT
 
 首先，我们需要在终端中创建一个专门存放代码的目录，并进入该目录：
 
-![](img/4365e5f0ef0a44be84cc9d900ea0e3ec_5.png)
 
 
-![](img/4365e5f0ef0a44be84cc9d900ea0e3ec_7.png)
 
 
-![](img/4365e5f0ef0a44be84cc9d900ea0e3ec_9.png)
 
 ```bash
 # 每个人的 Python 第二部分 打印当前工作目录
@@ -103,11 +98,8 @@ cd py4e
 
 最后，回到终端。确保你仍在 `py4e` 目录下，然后运行你的程序：
 
-![](img/4365e5f0ef0a44be84cc9d900ea0e3ec_11.png)
 
-![](img/4365e5f0ef0a44be84cc9d900ea0e3ec_12.png)
 
-![](img/4365e5f0ef0a44be84cc9d900ea0e3ec_13.png)
 
 ```bash
 python3 hello.py

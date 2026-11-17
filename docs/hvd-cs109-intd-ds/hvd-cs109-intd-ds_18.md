@@ -101,7 +101,6 @@ filter(gapminder, year == 1962) |>
  geom_point()
 ```
 
-![](img/acb05e17ecb899dee94eb2dffc2d3299.png)
 
 大多数点都落在了两个截然不同的类别中：
 
@@ -134,7 +133,6 @@ filter(gapminder, year%in%c(1962, 2012)) |>
  facet_grid(year~continent)
 ```
 
-![](img/849d5adf4fdcb660c5d2ff71d9bde70e.png)
 
 我们可以看到每个大陆/年份对的图表。然而，这只是一个示例，比我们想要的要多，我们想要的只是比较 1962 年和 2012 年。在这种情况下，只有一个变量，我们使用 `.` 来让分面知道我们不是使用其中一个变量：
 
@@ -163,7 +161,6 @@ gapminder |>
  facet_wrap(~year) 
 ```
 
-![](img/0665a8b344aade1ef7012ea81674a3bc.png)
 
 这个图表清楚地显示了大多数亚洲国家比欧洲国家改善得更快。
 
@@ -178,7 +175,6 @@ filter(gapminder, year%in%c(1962, 2012)) |>
  facet_wrap(. ~ year, scales = "free")
 ```
 
-![](img/9cd29b748f8207bb2da83752b41f3f5b.png)
 
 在上面的图表中，我们必须特别注意范围，才能注意到右侧的图表有更长的预期寿命。
 
@@ -195,7 +191,6 @@ gapminder |>
  geom_point()
 ```
 
-![图片](img/0f8c632ec5bc7efe78f7e8f879323bb6.png)
 
 我们可以看到，趋势根本不是线性的。相反，在 20 世纪 60 年代和 70 年代期间有一个急剧的下降，低于 2。然后趋势在 20 世纪 90 年代回到 2 并稳定下来。
 
@@ -208,7 +203,6 @@ gapminder |>
  geom_line()
 ```
 
-![图片](img/fbcd7528162f4a71b99ae4c7828f4ad0.png)
 
 当我们观察两个国家时，这一点尤其有用。如果我们对数据进行子集化，包括一个来自欧洲和一个来自亚洲的国家，然后调整上面的代码：
 
@@ -220,7 +214,6 @@ gapminder |> filter(country %in% countries) |>
  geom_line()
 ```
 
-![图片](img/18eeb689997a8cffc529cc2e025279c7.png)
 
 不幸的是，这不是我们想要的图表。不是每个国家都有一条线，而是两个国家的点都被连接起来。这实际上是预期的，因为我们没有告诉`ggplot`我们想要两条分开的线。为了让`ggplot`知道需要制作两条分别的曲线，我们将每个点分配到一个`group`中，每个国家一个：
 
@@ -232,7 +225,6 @@ gapminder |> filter(country %in% countries & !is.na(fertility)) |>
  geom_line()
 ```
 
-![图片](img/554bca2c1d6bc7e92f336daf29721f50.png)
 
 但哪条线对应哪个国家呢？我们可以用颜色来区分。使用`color`参数为不同的国家分配不同颜色的一个有用副作用是数据会自动分组：
 
@@ -244,7 +236,6 @@ gapminder |> filter(country %in% countries & !is.na(fertility)) |>
  geom_line()
 ```
 
-![图片](img/90b583a2cce8b795cd80d740ca24e0d5.png)
 
 该图清楚地显示了韩国的生育率在 20 世纪 60 年代和 70 年代急剧下降，到 1990 年与德国的生育率相似。
 
@@ -264,7 +255,6 @@ gapminder |>
  theme(legend.position = "none")
 ```
 
-![图片](img/6d0822113258637232069fb2096c8561.png)
 
 这个图表清楚地显示了预期寿命的提高是如何随着生育率的下降而发生的。在 1960 年，德国人的预期寿命比韩国人长 15 年，尽管到 2010 年这个差距已经完全消失。它展示了在过去 40 年里许多非西方国家所取得的进步。
 
@@ -292,7 +282,6 @@ gapminder |>
  geom_histogram(binwidth = 1, color = "black")
 ```
 
-![](img/da4c1134d5158d414b91cf422f41f101.png)
 
 我们使用`color = "black"`参数来绘制边界，并清楚地区分各个区间。
 
@@ -309,7 +298,6 @@ gapminder |>
  geom_histogram(binwidth = 1, color = "black")
 ```
 
-![](img/d6bb0065d46fef0ecaa6b4176d29255d.png)
 
 从某种意义上说，这为中等和低收入国家提供了一个*近距离*的观察。
 
@@ -341,7 +329,6 @@ gapminder |>
  geom_histogram(binwidth = 0.5, color = "black")
 ```
 
-![图片](img/add21d76b27dbb9a1b85c1a2729aca74.png)
 
 在上面，我们可以很快地看到国家人口介于十万和一百亿之间。
 
@@ -367,7 +354,6 @@ gapminder |>
  scale_x_continuous(trans = "log2")
 ```
 
-![图片](img/42ba5332a2cdfea28b4ed5ec5506d2e0.png)
 
 注意，10 为底的对数变换有自己的函数：`scale_x_log10()`，但目前 2 为底没有，尽管我们可以轻松地定义自己的。
 
@@ -394,7 +380,6 @@ gapminder |>
  scale_x_continuous(trans = "log2") 
 ```
 
-![图片](img/fcc8af23d7d4032b5dc109ccf12a12f4.png)
 
 我们已经可以看到确实存在“西方与其它”的二分性：我们看到两个明显的组，富裕组由北美、北欧和西欧、新西兰和澳大利亚组成。我们根据这个观察结果定义组：
 
@@ -438,7 +423,6 @@ p <- gapminder |>
 p
 ```
 
-![图片](img/a52b6221e2c8a9156867ea87c7c18210.png)
 
 箱线图有一个局限性，即通过将数据总结为五个数字，我们可能会错过数据的重要特征。避免这种情况的一种方法是通过显示数据。
 
@@ -465,7 +449,6 @@ p <- gapminder |>
 p  + geom_density_ridges() 
 ```
 
-![图片](img/6e95e02d67b66bdf967128e1105b6b9d.png)
 
 注意，我们必须反转用于箱线图的`x`和`y`。一个有用的`geom_density_ridges`参数是`scale`，它允许你确定重叠的程度，其中`scale = 1`表示没有重叠，更大的值会导致更多的重叠。
 
@@ -475,7 +458,6 @@ p  + geom_density_ridges()
 p + geom_density_ridges(jittered_points = TRUE)
 ```
 
-![图片](img/9878a65e099866c933f37bddf334f158.png)
 
 默认情况下，点的长度是抖动的，不应以任何方式解释。为了显示数据点，但又不使用抖动，我们可以使用以下代码来添加所谓的数据的*毛刷表示*。
 
@@ -486,7 +468,6 @@ p + geom_density_ridges(jittered_points = TRUE,
  point_alpha = 1, alpha = 0.7)
 ```
 
-![图片](img/0cedaa53f42219e85171495faa92f887.png)
 
 ### 10.7.3 示例：1970 年与 2010 年的收入分布
 
@@ -505,7 +486,6 @@ gapminder |>
  facet_grid(year ~ west)
 ```
 
-![图片](img/158242e39beb6a925a4ae7f93741f36c.png)
 
 在我们解释这个图的发现之前，我们注意到 2010 年的直方图中代表的国家比 1970 年多：总计数更大。一个原因是几个国家在 1970 年之后成立。例如，苏联在 20 世纪 90 年代分裂成几个国家。另一个原因是 2010 年有更多国家的数据可用。
 
@@ -527,7 +507,6 @@ country_list <- intersect(country_list_1, country_list_2)
 
 让我们重新制作这张图表，但只针对这个子集，只需在`filter`函数中简单添加`country %in% country_list`：
 
-![图片](img/c9e22cfd8d6d4f1dea53b9d1cf611ec8.png)
 
 现在，我们看到富裕国家变得更富裕了，但从百分比来看，贫穷国家似乎改善得更多。特别是，我们看到每天收入超过 16 美元的发展中国家比例显著增加。
 
@@ -544,7 +523,6 @@ gapminder |>
  facet_grid(. ~ year)
 ```
 
-![图片](img/16f576b01264d0a92ead8f94656e7bf6.png)
 
 在这里，我们暂停一下，介绍另一个强大的**ggplot2**功能。因为我们想比较每个地区的前后情况，所以对于每个地区的 1970 年箱线图和 2010 年箱线图并排显示将非常方便。一般来说，当数据并排绘制时，比较更容易。
 
@@ -561,7 +539,6 @@ gapminder |>
  xlab("") 
 ```
 
-![图片](img/af0a8f9cf73b3ba01a5a6d050ae8e268.png)
 
 最后，我们指出，如果我们最感兴趣的是比较前后值，那么绘制百分比增长可能更有意义。我们还没有准备好学习如何编写这段代码，但以下是图表可能的样子：
 
@@ -604,7 +581,6 @@ gapminder |>
  facet_grid(year ~ .)
 ```
 
-![图片](img/892a1f0a0e32472ba3c46193c1985e7a.png)
 
 这使得看起来每个组中都有相同数量的国家。要改变这一点，我们需要学习如何使用 `geom_density` 函数访问计算变量。
 
@@ -640,7 +616,6 @@ p + geom_density(alpha = 0.2) +
 #> to see where this warning was generated.
 ```
 
-![图片](img/a621cf5fb70b0454e615e1cd0e43af6e.png)
 
 如果我们想让密度更平滑，我们可以使用 `bw` 参数，这样每个密度的带宽都是相同的。我们在尝试了几个值之后选择了 0.75。
 
@@ -648,7 +623,6 @@ p + geom_density(alpha = 0.2) +
 p + geom_density(alpha = 0.2, bw = 0.75) + facet_grid(year ~ .)
 ```
 
-![图片](img/20ba574ea4e4813ca1cdb7871805b25e.png)
 
 这个图表现在非常清楚地显示了正在发生的事情。发展中国家的分布正在变化。出现了一个新的模式，由那些差距缩小最多的国家组成。
 
@@ -663,7 +637,6 @@ gapminder |>
  facet_grid(. ~ year)
 ```
 
-![图片](img/47495f3932986a2af1dd086b64a507d0.png)
 
 另一种实现方式是将密度堆叠在彼此之上：
 
@@ -679,7 +652,6 @@ gapminder |>
  facet_grid(year ~ .) 
 ```
 
-![图片](img/95cb08bd59c487c424866a4455e42a73.png)
 
 在这里，我们可以清楚地看到东亚、拉丁美洲和其他地区的分布如何明显向右移动。而撒哈拉以南非洲保持停滞。
 
@@ -689,7 +661,6 @@ gapminder |>
 
 最后一点，我们注意到这些分布对每个国家都给予相同的权重。所以，如果大多数人口正在改善，但居住在一个非常大的国家，例如中国，我们可能不会重视这一点。实际上，我们可以使用 `weight` 映射参数来加权平滑密度。然后图表看起来是这样的：
 
-![图片](img/224a08a4949701349f26f31e0937e33d.png)
 
 这个特定的图表非常清楚地显示了收入分配差距是如何随着大多数穷人仍然留在撒哈拉以南非洲而缩小的。
 
@@ -699,7 +670,6 @@ gapminder |>
 
 我们定义了更多地区，并比较了这些地区的平均值：
 
-![图表](img/59c7752ee06cbbb7104b52baee6d2d2a.png)
 
 这两个变量之间的关系几乎是完美的线性关系，图表显示了巨大的差异。在西方，婴儿死亡率不到 0.5%，而在撒哈拉以南非洲，这个比率超过 6%！
 

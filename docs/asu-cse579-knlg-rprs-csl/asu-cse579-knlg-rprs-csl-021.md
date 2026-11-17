@@ -72,9 +72,7 @@ H_i :- B_i, not on_i.
 :~ on_i. [1@1]
 ```
 
-![](img/d779df1fc9ce9ab7bde6d5616ebcb7f2_1.png)
 
-![](img/d779df1fc9ce9ab7bde6d5616ebcb7f2_3.png)
 
 ### 翻译示例
 

@@ -6,7 +6,6 @@
 
 ---
 
-![](img/472686aca96920762bf76cfb3bc360b2_2.png)
 
 ![](img/472686aca96920762bf76cfb3bc360b2_3.png)
 
@@ -16,7 +15,6 @@ AWS CloudShell是一个基于浏览器的命令行界面，用于访问AWS资源
 
 ![](img/472686aca96920762bf76cfb3bc360b2_5.png)
 
-![](img/472686aca96920762bf76cfb3bc360b2_6.png)
 
 ![](img/472686aca96920762bf76cfb3bc360b2_7.png)
 
@@ -43,9 +41,7 @@ AWS CloudShell是一个基于浏览器的命令行界面，用于访问AWS资源
 
 ---
 
-![](img/472686aca96920762bf76cfb3bc360b2_12.png)
 
-![](img/472686aca96920762bf76cfb3bc360b2_13.png)
 
 ## 界面操作与多任务处理 🖥️
 

@@ -1,10 +1,8 @@
 # 139：16_3.6 ORB算法 🎯
 
-![](img/2e3ad72aba9e98237dc91f692ec957a1_0.png)
 
 ![](img/2e3ad72aba9e98237dc91f692ec957a1_0.png)
 
-![](img/2e3ad72aba9e98237dc91f692ec957a1_2.png)
 
 在本节课中，我们将要学习ORB算法。ORB算法是一种结合了FAST特征点检测与BRIEF描述子的特征提取与描述技术，因其高效性在实时应用中非常流行。
 
@@ -29,7 +27,6 @@ ORB代表Oriented FAST and Rotated BRIEF。该算法是FAST特征检测技术与
 
 ## ORB算法流程
 
-![](img/2e3ad72aba9e98237dc91f692ec957a1_4.png)
 
 了解了ORB的优势后，我们来看看它的具体工作流程。ORB的处理过程遵循一个清晰的步骤序列。
 
@@ -41,7 +38,6 @@ ORB代表Oriented FAST and Rotated BRIEF。该算法是FAST特征检测技术与
 5.  **方向计算**：为每个关键点计算主方向，以实现旋转不变性。
 6.  **旋转BRIEF描述**：使用计算出的方向信息，生成旋转不变的BRIEF描述子。
 
-![](img/2e3ad72aba9e98237dc91f692ec957a1_4.png)
 
 
 
@@ -85,6 +81,5 @@ FAST特征检测使用FAST角点检测器来定位关键点。因为采用了FAS
 
 
 
-![](img/2e3ad72aba9e98237dc91f692ec957a1_6.png)
 
 ![](img/2e3ad72aba9e98237dc91f692ec957a1_6.png)

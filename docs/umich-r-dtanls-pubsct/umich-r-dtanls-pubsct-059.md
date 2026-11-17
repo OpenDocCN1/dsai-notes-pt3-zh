@@ -45,11 +45,9 @@ ggplot(data, aes(x = height_cm)) +
 ```
 运行上述代码后，我们得到了第一个直方图。控制台输出显示，`ggplot2`默认使用了30个箱。图中显示，我们数据中的绝大多数人身高在150到180厘米之间（大约5到6英尺），这看起来是合理的。
 
-![](img/63483f3e19f775a406bef09afefcecf8_8.png)
 
 ![](img/63483f3e19f775a406bef09afefcecf8_0.png)
 
-![](img/63483f3e19f775a406bef09afefcecf8_10.png)
 
 在180厘米标记附近有一个很小的条带，显示那里的人数要少得多。这揭示了直方图最大的挑战之一：**箱宽的选择会改变图表的外观，有时会产生误导**。
 
@@ -89,7 +87,6 @@ ggplot(data, aes(x = height_cm)) +
   geom_density() +
   labs(title = "身高核密度估计", x = "身高 (厘米)", y = "密度")
 ```
-![](img/63483f3e19f775a406bef09afefcecf8_4.png)
 
 我们可以看到在那些常见的报告数字（如160厘米）周围有明显的尖峰。你会注意到X轴与直方图相同（单位是厘米），但Y轴非常不同。
 
@@ -128,7 +125,6 @@ left_column <- plot_grid(plot1, plot2, plot3, nrow = 3)
 combined_plot <- plot_grid(left_column, plot4, ncol = 2, rel_widths = c(1, 2))
 print(combined_plot)
 ```
-![](img/63483f3e19f775a406bef09afefcecf8_6.png)
 
 ![](img/63483f3e19f775a406bef09afefcecf8_18.png)
 
@@ -142,6 +138,5 @@ print(combined_plot)
 
 ![](img/63483f3e19f775a406bef09afefcecf8_21.png)
 
-![](img/63483f3e19f775a406bef09afefcecf8_22.png)
 
 ![](img/63483f3e19f775a406bef09afefcecf8_8.png)

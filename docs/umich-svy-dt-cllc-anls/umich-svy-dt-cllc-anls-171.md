@@ -24,11 +24,8 @@
 
 **重要提示**：但这仅是本项研究中的情况，并不意味着在所有研究中都是如此。
 
-![](img/d3265b5273d34f2a1b7b0efaca9137bd_1.png)
 
-![](img/d3265b5273d34f2a1b7b0efaca9137bd_1.png)
 
-![](img/d3265b5273d34f2a1b7b0efaca9137bd_2.png)
 
 ![](img/d3265b5273d34f2a1b7b0efaca9137bd_2.png)
 

@@ -1,8 +1,6 @@
 # 002：从零实现RL for LLM
 
-![](img/d02571479e786eb95b2441c98cd25afc_1.png)
 
-![](img/d02571479e786eb95b2441c98cd25afc_3.png)
 
 在本节课中，我们将开始实现之前解释的所有目标函数。我们将从加载模型、计算对数概率开始，逐步构建完整的强化学习训练循环。
 
@@ -27,7 +25,6 @@ model = AutoModelForCausalLM.from_pretrained(
 接下来，我们准备一个简单的示例数据来理解如何计算对数概率。
 
 
-![](img/d02571479e786eb95b2441c98cd25afc_5.png)
 
 ```python
 from transformers import AutoTokenizer
@@ -52,7 +49,6 @@ labels[attention_mask == 0] = -100
 
 ## 计算对数概率
 
-![](img/d02571479e786eb95b2441c98cd25afc_7.png)
 
 现在我们已经准备好了数据，接下来看看如何计算模型生成特定标记序列的对数概率。
 
@@ -75,9 +71,7 @@ shift_logits = logits[..., :-1, :].contiguous()
 
 接下来，我们计算对数概率。为了提高数值稳定性，我们使用 `log_softmax`。
 
-![](img/d02571479e786eb95b2441c98cd25afc_9.png)
 
-![](img/d02571479e786eb95b2441c98cd25afc_11.png)
 
 ```python
 log_probs = torch.nn.functional.log_softmax(shift_logits, dim=-1)
@@ -101,25 +95,16 @@ selected_log_probs = selected_log_probs * label_mask
 
 在实际训练中，数据来自VLLM生成的轨迹。我们需要将这些轨迹转换为模型输入。
 
-![](img/d02571479e786eb95b2441c98cd25afc_13.png)
 
-![](img/d02571479e786eb95b2441c98cd25afc_15.png)
 
 以下是准备模型输入的函数，它处理查询、响应和优势值。
 
-![](img/d02571479e786eb95b2441c98cd25afc_17.png)
 
-![](img/d02571479e786eb95b2441c98cd25afc_18.png)
 
-![](img/d02571479e786eb95b2441c98cd25afc_19.png)
 
-![](img/d02571479e786eb95b2441c98cd25afc_21.png)
 
-![](img/d02571479e786eb95b2441c98cd25afc_23.png)
 
-![](img/d02571479e786eb95b2441c98cd25afc_25.png)
 
-![](img/d02571479e786eb95b2441c98cd25afc_26.png)
 
 ```python
 def prepare_model_inputs(query_token_ids, response_token_ids, advantages, device="cuda"):
@@ -168,25 +153,17 @@ def prepare_model_inputs(query_token_ids, response_token_ids, advantages, device
     }
 ```
 
-![](img/d02571479e786eb95b2441c98cd25afc_28.png)
 
-![](img/d02571479e786eb95b2441c98cd25afc_29.png)
 
-![](img/d02571479e786eb95b2441c98cd25afc_31.png)
 
 ## 计算策略损失
 
-![](img/d02571479e786eb95b2441c98cd25afc_33.png)
 
-![](img/d02571479e786eb95b2441c98cd25afc_35.png)
 
-![](img/d02571479e786eb95b2441c98cd25afc_36.png)
 
-![](img/d02571479e786eb95b2441c98cd25afc_38.png)
 
 现在我们已经能够计算对数概率并准备数据，接下来实现完整的策略损失函数。
 
-![](img/d02571479e786eb95b2441c98cd25afc_40.png)
 
 策略损失由两部分组成：策略梯度项和KL散度惩罚项。
 
@@ -201,11 +178,8 @@ def prepare_model_inputs(query_token_ids, response_token_ids, advantages, device
 
 以下是计算策略损失的函数实现。
 
-![](img/d02571479e786eb95b2441c98cd25afc_42.png)
 
-![](img/d02571479e786eb95b2441c98cd25afc_44.png)
 
-![](img/d02571479e786eb95b2441c98cd25afc_46.png)
 
 ```python
 def compute_policy_loss(inputs, policy_model, ref_model, total_response_tokens, temperature=1.0, kl_coef=0.01):
@@ -246,7 +220,6 @@ def compute_policy_loss(inputs, policy_model, ref_model, total_response_tokens, 
 
 我们已经有了损失函数，现在可以构建完整的训练循环了。
 
-![](img/d02571479e786eb95b2441c98cd25afc_48.png)
 
 训练循环的主要步骤包括：
 1.  从数据集中采样提示。
@@ -256,61 +229,35 @@ def compute_policy_loss(inputs, policy_model, ref_model, total_response_tokens, 
 5.  执行梯度累积和优化步骤。
 6.  更新VLLM中的模型权重。
 
-![](img/d02571479e786eb95b2441c98cd25afc_50.png)
 
-![](img/d02571479e786eb95b2441c98cd25afc_52.png)
 
-![](img/d02571479e786eb95b2441c98cd25afc_54.png)
 
-![](img/d02571479e786eb95b2441c98cd25afc_56.png)
 
 以下是训练循环的核心代码结构。
 
-![](img/d02571479e786eb95b2441c98cd25afc_58.png)
-
-![](img/d02571479e786eb95b2441c98cd25afc_60.png)
-
-![](img/d02571479e786eb95b2441c98cd25afc_62.png)
-
-![](img/d02571479e786eb95b2441c98cd25afc_63.png)
-
-![](img/d02571479e786eb95b2441c98cd25afc_65.png)
-
-![](img/d02571479e786eb95b2441c98cd25afc_67.png)
-
-![](img/d02571479e786eb95b2441c98cd25afc_69.png)
 
 
-![](img/d02571479e786eb95b2441c98cd25afc_71.png)
-
-![](img/d02571479e786eb95b2441c98cd25afc_73.png)
-
-![](img/d02571479e786eb95b2441c98cd25afc_75.png)
-
-![](img/d02571479e786eb95b2441c98cd25afc_77.png)
-
-![](img/d02571479e786eb95b2441c98cd25afc_78.png)
-
-![](img/d02571479e786eb95b2441c98cd25afc_80.png)
-
-![](img/d02571479e786eb95b2441c98cd25afc_82.png)
-
-![](img/d02571479e786eb95b2441c98cd25afc_84.png)
-
-![](img/d02571479e786eb95b2441c98cd25afc_86.png)
-
-![](img/d02571479e786eb95b2441c98cd25afc_88.png)
-
-![](img/d02571479e786eb95b2441c98cd25afc_90.png)
 
 
-![](img/d02571479e786eb95b2441c98cd25afc_92.png)
 
-![](img/d02571479e786eb95b2441c98cd25afc_93.png)
 
-![](img/d02571479e786eb95b2441c98cd25afc_95.png)
 
-![](img/d02571479e786eb95b2441c98cd25afc_97.png)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 ```python
 # 初始化模型和优化器
@@ -351,11 +298,9 @@ for iteration in range(total_iterations):
     inference_engine.wake_up()
 ```
 
-![](img/d02571479e786eb95b2441c98cd25afc_99.png)
 
 ## 实验与想法
 
-![](img/d02571479e786eb95b2441c98cd25afc_101.png)
 
 在实现完整的训练流程后，我们可以尝试一些改进想法：
 
@@ -367,29 +312,18 @@ for iteration in range(total_iterations):
 6.  **提示工程**：尝试不同的提示模板，观察对推理过程出现的影响。
 7.  **离线更新**：实现PPO风格的裁剪目标函数，比较在线和离线更新的效果。
 
-![](img/d02571479e786eb95b2441c98cd25afc_103.png)
 
-![](img/d02571479e786eb95b2441c98cd25afc_104.png)
 
-![](img/d02571479e786eb95b2441c98cd25afc_105.png)
 
-![](img/d02571479e786eb95b2441c98cd25afc_106.png)
 
 ## 总结
 
-![](img/d02571479e786eb95b2441c98cd25afc_108.png)
 
-![](img/d02571479e786eb95b2441c98cd25afc_110.png)
 
-![](img/d02571479e786eb95b2441c98cd25afc_112.png)
 
-![](img/d02571479e786eb95b2441c98cd25afc_113.png)
 
-![](img/d02571479e786eb95b2441c98cd25afc_115.png)
 
-![](img/d02571479e786eb95b2441c98cd25afc_117.png)
 
-![](img/d02571479e786eb95b2441c98cd25afc_118.png)
 
 ![](img/d02571479e786eb95b2441c98cd25afc_119.png)
 

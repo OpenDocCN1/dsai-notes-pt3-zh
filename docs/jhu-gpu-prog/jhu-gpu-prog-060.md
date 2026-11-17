@@ -25,7 +25,6 @@
 *   `threads_per_block`：每个块的线程数（强制范围32到1024）。
 *   `kernel_type`：内核类型，可选值为 `global`、`constant`、`shared`、`register`。
 
-![](img/5d9a93672124ef795b9bb057ef1e5b03_3.png)
 
 **注意**：请避免修改任何打印语句，否则可能导致作业评分失败。你可以添加调试用的打印语句，但最终输出格式应大致如下模式：`part ID, elements, threads, kernel`。此输出将被解析为CSV文件。
 

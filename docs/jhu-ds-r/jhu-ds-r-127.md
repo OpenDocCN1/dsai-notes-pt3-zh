@@ -1,18 +1,13 @@
 # 127：降维技术（第一部分）🔍
 
-![](img/de57e047906edcca3ad9b6acdb7dfb67_1.png)
 
-![](img/de57e047906edcca3ad9b6acdb7dfb67_2.png)
 
 在本节课中，我们将学习两种重要的降维技术：主成分分析和奇异值分解。这两种方法在探索性数据分析阶段和正式建模阶段都非常有用。我们将重点讨论它们在探索性分析中的应用，并深入理解其背后的基本原理。
 
 ## 无模式数据的探索 🔎
 
-![](img/de57e047906edcca3ad9b6acdb7dfb67_4.png)
 
-![](img/de57e047906edcca3ad9b6acdb7dfb67_5.png)
 
-![](img/de57e047906edcca3ad9b6acdb7dfb67_6.png)
 
 首先，我们来看一个没有明显模式的数据集。以下代码生成一个随机正态分布数据的矩阵：
 
@@ -22,9 +17,7 @@ dataMatrix <- matrix(rnorm(400), nrow=40)
 image(1:10, 1:40, t(dataMatrix)[, nrow(dataMatrix):1])
 ```
 
-![](img/de57e047906edcca3ad9b6acdb7dfb67_8.png)
 
-![](img/de57e047906edcca3ad9b6acdb7dfb67_9.png)
 
 生成的矩阵图像显示，数据看起来非常嘈杂，没有明显的模式，这符合我们对随机数据的预期。
 
@@ -32,33 +25,24 @@ image(1:10, 1:40, t(dataMatrix)[, nrow(dataMatrix):1])
 
 我们可以对数据框的行和列分别进行层次聚类分析。在R语言中，使用 `heatmap` 函数可以轻松实现这一点：
 
-![](img/de57e047906edcca3ad9b6acdb7dfb67_11.png)
 
-![](img/de57e047906edcca3ad9b6acdb7dfb67_12.png)
 
-![](img/de57e047906edcca3ad9b6acdb7dfb67_13.png)
 
-![](img/de57e047906edcca3ad9b6acdb7dfb67_14.png)
 
 ```r
 heatmap(dataMatrix)
 ```
 
-![](img/de57e047906edcca3ad9b6acdb7dfb67_16.png)
 
 运行后，我们会在矩阵的顶部和左侧看到树状图。然而，由于数据本身没有内在的有趣模式，聚类分析的结果也没有显示出明显的分组结构。
 
-![](img/de57e047906edcca3ad9b6acdb7dfb67_18.png)
 
-![](img/de57e047906edcca3ad9b6acdb7dfb67_19.png)
 
 ## 引入模式后的数据变化 📊
 
-![](img/de57e047906edcca3ad9b6acdb7dfb67_21.png)
 
 现在，我们尝试在数据集中添加一个模式。以下代码通过一个循环，随机选择一些行，并在这些行的部分列上添加一个偏移量：
 
-![](img/de57e047906edcca3ad9b6acdb7dfb67_23.png)
 
 ```r
 set.seed(678910)
@@ -80,17 +64,12 @@ heatmap(dataMatrix)
 
 可以清晰地看到，顶部的树状图（基于列的聚类）将10列明确地分成了两个簇：左侧5列和右侧5列。然而，行的聚类结果仍然不明确，因为行方向上没有添加系统性模式。
 
-![](img/de57e047906edcca3ad9b6acdb7dfb67_25.png)
 
-![](img/de57e047906edcca3ad9b6acdb7dfb67_26.png)
 
-![](img/de57e047906edcca3ad9b6acdb7dfb67_27.png)
 
 ## 通过边际均值观察模式 📈
 
-![](img/de57e047906edcca3ad9b6acdb7dfb67_29.png)
 
-![](img/de57e047906edcca3ad9b6acdb7dfb67_30.png)
 
 为了更细致地观察行和列的模式，我们可以查看行和列的边际均值。
 
@@ -109,7 +88,6 @@ heatmap(dataMatrix)
 1.  **变量压缩（统计视角）**：当我们拥有大量变量时，希望创建一组数量更少的新变量。这组新变量应满足两个条件：一是彼此不相关（代表数据中不同类型的变化）；二是能够尽可能多地解释原始数据集中的变异性。主成分分析是解决这一问题的常用方法。
 2.  **数据压缩（矩阵视角）**：如果将所有变量放在一个矩阵中，我们希望找到一个由更少变量构成的、秩更低的矩阵，这个矩阵能以较小的信息损失来近似表示原始数据。奇异值分解是理解和解决这一问题的关键工具。
 
-![](img/de57e047906edcca3ad9b6acdb7dfb67_32.png)
 
 ## 奇异值分解与主成分分析 🧮
 

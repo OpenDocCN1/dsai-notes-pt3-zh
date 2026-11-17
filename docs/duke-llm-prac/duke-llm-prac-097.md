@@ -50,7 +50,6 @@ response = openai.ChatCompletion.create(
 
 ## 何时选择Azure机器学习服务
 
-![](img/30ff9fd7b6f0835bc9dccd8e842b50b3_3.png)
 
 那么，在什么情况下不应该使用Azure OpenAI服务或Azure OpenAI Studio呢？当你需要更多定制化能力时，Azure机器学习服务是更合适的选择。
 
@@ -67,7 +66,6 @@ response = openai.ChatCompletion.create(
 
 本节课中我们一起学习了Azure OpenAI服务与Azure机器学习服务的关键差异。**Azure OpenAI服务**的核心优势在于**速度与简便性**，它提供预构建的OpenAI模型，能够实现秒级部署和即时API调用，无需管理底层计算资源。而**Azure机器学习服务**则提供了**高度的灵活性与控制权**，适用于需要使用自定义模型、第三方模型或需要完全控制训练和推理基础设施的场景。
 
-![](img/30ff9fd7b6f0835bc9dccd8e842b50b3_5.png)
 
 ![](img/30ff9fd7b6f0835bc9dccd8e842b50b3_6.png)
 

@@ -48,7 +48,6 @@ polls_us_election_2016 |> filter(pollster == "Ipsos" & state =="U.S.") |>
  geom_line()
 ```
 
-![](img/b01836f6eaa69eb9c9fc742a4e1ed7f9.png)
 
 特别注意，月份名称被显示出来，这是一个非常方便的功能。
 

@@ -1,6 +1,5 @@
 # 28：L4.2 - PyTorch 中的张量 🧮
 
-![](img/db65af7a751ae4149ef2c60f90bc066c_1.png)
 
 在本节课中，我们将要学习如何在 PyTorch 中操作张量。如果你熟悉 NumPy，你会发现使用 PyTorch 的张量非常简单，因为两者的操作几乎完全相同。
 
@@ -10,7 +9,6 @@
 
 需要注意的是，PyTorch 中还有两个相关的调用：`torch.Tensor`（大写 T）和 `torch.tensor`（小写 t）。`torch.tensor` 是一个函数，它在内部调用 `torch.Tensor`，但会进行额外的输入检查以确保数据格式正确。因此，在实践中，推荐使用 `torch.tensor` 函数。
 
-![](img/db65af7a751ae4149ef2c60f90bc066c_3.png)
 
 ## 创建张量
 
@@ -18,7 +16,6 @@
 
 在 NumPy 中，我们这样创建：
 
-![](img/db65af7a751ae4149ef2c60f90bc066c_5.png)
 
 ```python
 import numpy as np
@@ -29,7 +26,6 @@ print(a.shape)  # 输出：(3,)
 
 在 PyTorch 中，我们这样创建：
 
-![](img/db65af7a751ae4149ef2c60f90bc066c_7.png)
 
 ```python
 import torch
@@ -73,7 +69,6 @@ b_numpy = b.numpy()
     *   `float32`（单精度）：32 位浮点数。
     *   `float64`（双精度）：64 位浮点数。
 
-![](img/db65af7a751ae4149ef2c60f90bc066c_9.png)
 
 在深度学习中，`float32` 是默认和推荐的选择，因为它在 GPU 上运行更快，且精度足够。`float16` 有时用于混合精度训练以节省内存。
 
@@ -85,13 +80,11 @@ b_numpy = b.numpy()
 *   `torch.float64` 或 `torch.double` 对应 `float64`。
 *   `torch.float16` 或 `torch.half` 对应 `float16`。
 
-![](img/db65af7a751ae4149ef2c60f90bc066c_11.png)
 
 ## 指定与转换数据类型
 
 你可以在创建张量时指定数据类型：
 
-![](img/db65af7a751ae4149ef2c60f90bc066c_13.png)
 
 ```python
 c = torch.tensor([1., 2., 3.], dtype=torch.float64)  # 创建双精度张量
@@ -106,7 +99,6 @@ e = d.double()               # 转换为 torch.float64
 f = d.to(torch.float64)
 ```
 
-![](img/db65af7a751ae4149ef2c60f90bc066c_15.png)
 
 ## 为什么使用 PyTorch？
 
@@ -118,12 +110,10 @@ f = d.to(torch.float64)
 
 ## 使用 GPU
 
-![](img/db65af7a751ae4149ef2c60f90bc066c_17.png)
 
 要检查你的 PyTorch 是否支持 GPU 并利用它，可以这样做：
 
 
-![](img/db65af7a751ae4149ef2c60f90bc066c_19.png)
 
 ```python
 # 检查 GPU 是否可用
@@ -151,7 +141,6 @@ conda install pytorch torchvision torchaudio cpuonly -c pytorch
 
 ## 总结
 
-![](img/db65af7a751ae4149ef2c60f90bc066c_21.png)
 
 ![](img/db65af7a751ae4149ef2c60f90bc066c_23.png)
 

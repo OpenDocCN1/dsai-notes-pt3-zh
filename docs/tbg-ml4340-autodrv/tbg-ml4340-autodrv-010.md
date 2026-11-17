@@ -10,7 +10,6 @@
 
 ## 视觉抽象的重要性
 
-![](img/1a15474ed4afcdc1276d6e0c4b12522a_3.png)
 
 ![](img/1a15474ed4afcdc1276d6e0c4b12522a_5.png)
 

@@ -29,9 +29,7 @@
 *   输入分片3
 *   输入分片4
 
-![](img/a4d1545df233a68cb60e59fbc5f7ad62_5.png)
 
-![](img/a4d1545df233a68cb60e59fbc5f7ad62_7.png)
 
 每个分片由一个Mapper处理：
 *   Mapper1 处理 输入分片1
@@ -90,9 +88,7 @@ Mapper的输出被序列化后，首先放入一个**内存缓冲区**，而不�
 *   框架可能会判断在某些情况下运行组合器并不高效，从而选择不运行它。
 *   即使使用了组合器，Mapper的最终输出中，同一个键仍可能出现多次（因为组合器是分批次处理缓冲区的）。例如，一个Mapper可能最终输出 `C, 9` 和 `C, 16` 两个记录，它们会在Reducer端再次被合并。
 
-![](img/a4d1545df233a68cb60e59fbc5f7ad62_9.png)
 
-![](img/a4d1545df233a68cb60e59fbc5f7ad62_10.png)
 
 因此，**组合器并不能保证每个键在Map端只输出一个记录**，它只是进行局部聚合以减少数据传输量。
 
@@ -134,7 +130,6 @@ public class WordCountCombiner extends Reducer<Text, IntWritable, Text, IntWrita
 
 ---
 
-![](img/a4d1545df233a68cb60e59fbc5f7ad62_12.png)
 
 ## 如何为作业设置组合器？
 
@@ -149,7 +144,6 @@ job.setReducerClass(WordCountReducer.class);
 ...
 ```
 
-![](img/a4d1545df233a68cb60e59fbc5f7ad62_14.png)
 
 ---
 

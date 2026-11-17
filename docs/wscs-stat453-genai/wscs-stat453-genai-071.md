@@ -10,13 +10,11 @@ PyTorch官方发布了一篇[文章](https://pytorch.org/blog/pytorch-1.8-releas
 
 以下是三个我个人认为最值得关注的新特性：
 
-![](img/c90346fb7fe09d21c2cb8bbf34c9dd33_1.png)
 
 1.  **对AMD GPU的原生支持**：通过名为ROCm的库（类似于NVIDIA的CUDA），现在可以更方便地使用AMD显卡进行深度学习计算。虽然之前也有支持，但需要自行编译PyTorch，过程繁琐。现在，安装程序菜单中直接提供了预编译的二进制文件，使得在Linux系统上的安装更加便捷（目前仅支持Linux，但预计macOS和Windows的支持也会很快跟进）。
 2.  **无需外部库的模型并行训练**：上周我们讨论了FairScale和Microsoft DeepSpeed等用于跨多个GPU分布模型的库。PyTorch本身已有`DataParallel`和`DistributedDataParallel`用于数据并行（即分割批次）。新版本引入了更便捷的功能，可以将单个过大的模型拆分到多个GPU上运行，而无需依赖外部库。
 3.  **`torch.linalg`线性代数模块的扩展**：新增了许多通常只在NumPy中才有的线性代数函数，例如计算行列式或特征值。这减少了我们在训练神经网络时在NumPy和PyTorch之间切换的频率，使工作流程更加顺畅。
 
-![](img/c90346fb7fe09d21c2cb8bbf34c9dd33_3.png)
 
 > 注：安装CUDA版本的PyTorch时，它会捆绑自己的CUDA工具包，这简化了安装过程，但也是安装包体积（现在约2.48 GB）较大的原因之一。
 
@@ -28,13 +26,10 @@ PyTorch官方发布了一篇[文章](https://pytorch.org/blog/pytorch-1.8-releas
 
 这种方法的主要缺点是GPU利用率低。如下图所示，在任一时刻，只有一个GPU在工作，其他GPU处于空闲状态（图中曲线下的区域），造成了资源浪费。
 
-![](img/c90346fb7fe09d21c2cb8bbf34c9dd33_5.png)
 
 改进的方法是使用**微批次（Micro-batches）**的流水线执行。如下图所示，系统将一个小批次拆分成多个微批次。当第一个微批次在GPU 1上计算时，第二个微批次可以开始在GPU 0上计算，依此类推。这样实现了部分操作的并行，提高了GPU利用率。尽管图中仍有所谓的“气泡（Bubble）”代表空闲时间，但这比传统模型并行效率更高。
 
-![](img/c90346fb7fe09d21c2cb8bbf34c9dd33_5.png)
 
-![](img/c90346fb7fe09d21c2cb8bbf34c9dd33_5.png)
 
 > 更多关于流水线并行的细节，可以参考[这篇论文](https://arxiv.org/abs/1811.06965)的介绍。
 
@@ -44,7 +39,6 @@ PyTorch官方发布了一篇[文章](https://pytorch.org/blog/pytorch-1.8-releas
 
 以下是实现的核心步骤：
 
-![](img/c90346fb7fe09d21c2cb8bbf34c9dd33_7.png)
 
 1.  **定义模型块**：将VGG16网络划分为多个块（Block），每个块包含卷积层、ReLU激活函数和池化层。
     ```python
@@ -79,7 +73,6 @@ PyTorch官方发布了一篇[文章](https://pytorch.org/blog/pytorch-1.8-releas
     loss = criterion(output.local_value(), labels)
     ```
 
-![](img/c90346fb7fe09d21c2cb8bbf34c9dd33_9.png)
 
 完整的可运行代码示例已分享在[GitHub](https://github.com/rasbt/pytorch-pipeline-example)上。在实际测试中，这种方法的训练速度比单GPU训练慢约一倍，但其核心目的**不是加速**，而是**使得训练超出单GPU内存容量的大型模型成为可能**，这对于大型模型研究非常有用。
 
@@ -89,9 +82,7 @@ PyTorch官方发布了一篇[文章](https://pytorch.org/blog/pytorch-1.8-releas
 
 这个数据集模仿了经典MNIST的格式（10个类别，约数万张训练图像），但内容是关于病毒/恶意软件的。研究人员将恶意软件文件（如.exe）的二进制信息转换为灰度图像（例如，通过中间表示或校验和生成JPEG图像），然后使用卷积网络进行分类。其中一类是“良性软件”（如PuTTY终端程序），其余九类是不同类型的恶意软件。
 
-![](img/c90346fb7fe09d21c2cb8bbf34c9dd33_11.png)
 
-![](img/c90346fb7fe09d21c2cb8bbf34c9dd33_11.png)
 
 这种将非图像数据（如代码、文本）转换为图像格式以供卷积网络处理的想法很有创意。虽然不确定这是否是最优表示方法，但论文报告了不错的分类性能，为模型测试提供了一个新的有趣方向。
 
@@ -103,7 +94,6 @@ PyTorch官方发布了一篇[文章](https://pytorch.org/blog/pytorch-1.8-releas
 
 ### 第一步：深入理解你的数据
 
-![](img/c90346fb7fe09d21c2cb8bbf34c9dd33_13.png)
 
 在应用任何模型之前，请先彻底审视你的数据。
 
@@ -143,7 +133,6 @@ for epoch in range(num_epochs):
 ```
 理论上，模型应该能迅速将这个极小批次的损失降到接近0。如果做不到，很可能代码存在以下问题：
 
-![](img/c90346fb7fe09d21c2cb8bbf34c9dd33_15.png)
 
 以下是常见的调试检查点：
 
@@ -166,9 +155,7 @@ for epoch in range(num_epochs):
 
 最后，也是最具实践指导意义的部分，我们系统性地学习了一篇关于**神经网络训练与调试技巧**的文章。其核心思想可以归纳为三个步骤：1) **深入理解数据**，检查质量、平衡性和来源；2) **科学评估任务难度**，通过建立随机预测器、多数类预测器和简单模型（如逻辑回归）基线来设定合理的性能期望；3) **有效进行模型调试**，特别是通过“过拟合一个小批次”的技巧来快速定位代码中的问题，并逐一排查学习率、梯度、损失函数输入等常见陷阱。
 
-![](img/c90346fb7fe09d21c2cb8bbf34c9dd33_17.png)
 
-![](img/c90346fb7fe09d21c2cb8bbf34c9dd33_18.png)
 
 ![](img/c90346fb7fe09d21c2cb8bbf34c9dd33_19.png)
 

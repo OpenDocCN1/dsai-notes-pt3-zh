@@ -67,13 +67,9 @@
 
 ![](img/a7c48cb5ebfe53422f91d669f66f849b_7.png)
 
-![](img/a7c48cb5ebfe53422f91d669f66f849b_8.png)
 
-![](img/a7c48cb5ebfe53422f91d669f66f849b_9.png)
 
-![](img/a7c48cb5ebfe53422f91d669f66f849b_10.png)
 
-![](img/a7c48cb5ebfe53422f91d669f66f849b_11.png)
 
 ![](img/a7c48cb5ebfe53422f91d669f66f849b_12.png)
 
@@ -81,7 +77,6 @@
 
 ![](img/a7c48cb5ebfe53422f91d669f66f849b_14.png)
 
-![](img/a7c48cb5ebfe53422f91d669f66f849b_15.png)
 
 ![](img/a7c48cb5ebfe53422f91d669f66f849b_16.png)
 
@@ -90,35 +85,26 @@
 2.  **过参数化的价值**：尽管可能导致过拟合，但过参数化模型更易于优化和调试。
 3.  **正则化**：通过为参数添加先验、限制函数空间或修改学习算法，来约束模型复杂度，从而对抗过拟合、提升泛化能力的核心技术。
 
-![](img/a7c48cb5ebfe53422f91d669f66f849b_17.png)
 
 ![](img/a7c48cb5ebfe53422f91d669f66f849b_18.png)
 
 ![](img/a7c48cb5ebfe53422f91d669f66f849b_19.png)
 
-![](img/a7c48cb5ebfe53422f91d669f66f849b_20.png)
 
-![](img/a7c48cb5ebfe53422f91d669f66f849b_21.png)
 
 ![](img/a7c48cb5ebfe53422f91d669f66f849b_22.png)
 
 ![](img/a7c48cb5ebfe53422f91d669f66f849b_23.png)
 
-![](img/a7c48cb5ebfe53422f91d669f66f849b_24.png)
 
-![](img/a7c48cb5ebfe53422f91d669f66f849b_25.png)
 
-![](img/a7c48cb5ebfe53422f91d669f66f849b_26.png)
 
 ![](img/a7c48cb5ebfe53422f91d669f66f849b_27.png)
 
-![](img/a7c48cb5ebfe53422f91d669f66f849b_28.png)
 
 ![](img/a7c48cb5ebfe53422f91d669f66f849b_29.png)
 
-![](img/a7c48cb5ebfe53422f91d669f66f849b_30.png)
 
-![](img/a7c48cb5ebfe53422f91d669f66f849b_31.png)
 
 ![](img/a7c48cb5ebfe53422f91d669f66f849b_32.png)
 

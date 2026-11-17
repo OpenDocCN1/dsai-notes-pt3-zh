@@ -2,9 +2,7 @@
 
 ![](img/58bc13fbc03b029ced95aa9ae57bbe3f_1.png)
 
-![](img/58bc13fbc03b029ced95aa9ae57bbe3f_2.png)
 
-![](img/58bc13fbc03b029ced95aa9ae57bbe3f_3.png)
 
 ![](img/58bc13fbc03b029ced95aa9ae57bbe3f_4.png)
 
@@ -12,11 +10,8 @@
 
 ![](img/58bc13fbc03b029ced95aa9ae57bbe3f_6.png)
 
-![](img/58bc13fbc03b029ced95aa9ae57bbe3f_7.png)
 
-![](img/58bc13fbc03b029ced95aa9ae57bbe3f_8.png)
 
-![](img/58bc13fbc03b029ced95aa9ae57bbe3f_10.png)
 
 ---
 
@@ -36,9 +31,7 @@
 
 首先，我们来看第一个积分：
 
-![](img/58bc13fbc03b029ced95aa9ae57bbe3f_20.png)
 
-![](img/58bc13fbc03b029ced95aa9ae57bbe3f_21.png)
 
 ![](img/58bc13fbc03b029ced95aa9ae57bbe3f_22.png)
 
@@ -58,13 +51,10 @@
 
 ![](img/58bc13fbc03b029ced95aa9ae57bbe3f_30.png)
 
-![](img/58bc13fbc03b029ced95aa9ae57bbe3f_31.png)
 
 **核心步骤：**
 
-![](img/58bc13fbc03b029ced95aa9ae57bbe3f_33.png)
 
-![](img/58bc13fbc03b029ced95aa9ae57bbe3f_35.png)
 
 ![](img/58bc13fbc03b029ced95aa9ae57bbe3f_37.png)
 
@@ -77,7 +67,6 @@
     du = -dx
     \]
 
-![](img/58bc13fbc03b029ced95aa9ae57bbe3f_39.png)
 
 ![](img/58bc13fbc03b029ced95aa9ae57bbe3f_40.png)
 
@@ -88,9 +77,7 @@
     \]
     这里出现了一个问题：被积函数中还有一个 `x` 无法直接用 `du` 表示。
 
-![](img/58bc13fbc03b029ced95aa9ae57bbe3f_41.png)
 
-![](img/58bc13fbc03b029ced95aa9ae57bbe3f_42.png)
 
 ![](img/58bc13fbc03b029ced95aa9ae57bbe3f_44.png)
 
@@ -106,7 +93,6 @@
 
 ![](img/58bc13fbc03b029ced95aa9ae57bbe3f_45.png)
 
-![](img/58bc13fbc03b029ced95aa9ae57bbe3f_46.png)
 
 ![](img/58bc13fbc03b029ced95aa9ae57bbe3f_48.png)
 
@@ -136,13 +122,10 @@
     -\frac{2}{5} (1 - x)^{5/2} + \frac{2}{7} (1 - x)^{7/2} + C
     \]
 
-![](img/58bc13fbc03b029ced95aa9ae57bbe3f_54.png)
 
-![](img/58bc13fbc03b029ced95aa9ae57bbe3f_55.png)
 
 ---
 
-![](img/58bc13fbc03b029ced95aa9ae57bbe3f_56.png)
 
 ![](img/58bc13fbc03b029ced95aa9ae57bbe3f_57.png)
 
@@ -150,19 +133,16 @@
 
 ![](img/58bc13fbc03b029ced95aa9ae57bbe3f_60.png)
 
-![](img/58bc13fbc03b029ced95aa9ae57bbe3f_61.png)
 
 ## 🔄 过渡到第二个例子
 
 ![](img/58bc13fbc03b029ced95aa9ae57bbe3f_63.png)
 
-![](img/58bc13fbc03b029ced95aa9ae57bbe3f_64.png)
 
 ![](img/58bc13fbc03b029ced95aa9ae57bbe3f_65.png)
 
 在上一个例子中，我们通过将多余的 `x` 项用 `u` 表示（即 `x = 1 - u`）解决了问题。这种方法被称为“回代”。接下来，我们看一个分母换元的例子，它同样需要回代技巧。
 
-![](img/58bc13fbc03b029ced95aa9ae57bbe3f_67.png)
 
 ![](img/58bc13fbc03b029ced95aa9ae57bbe3f_68.png)
 
@@ -170,47 +150,35 @@
 
 ---
 
-![](img/58bc13fbc03b029ced95aa9ae57bbe3f_71.png)
 
-![](img/58bc13fbc03b029ced95aa9ae57bbe3f_72.png)
 
-![](img/58bc13fbc03b029ced95aa9ae57bbe3f_74.png)
 
 ## 🧩 示例二：分母换元与回代
 
-![](img/58bc13fbc03b029ced95aa9ae57bbe3f_76.png)
 
-![](img/58bc13fbc03b029ced95aa9ae57bbe3f_77.png)
 
 现在，我们来看第二个积分：
 
-![](img/58bc13fbc03b029ced95aa9ae57bbe3f_78.png)
 
 ![](img/58bc13fbc03b029ced95aa9ae57bbe3f_80.png)
 
-![](img/58bc13fbc03b029ced95aa9ae57bbe3f_81.png)
 
 \[
 \int \frac{x^2 + 4}{x + 2} \, dx
 \]
 
-![](img/58bc13fbc03b029ced95aa9ae57bbe3f_83.png)
 
 ![](img/58bc13fbc03b029ced95aa9ae57bbe3f_84.png)
 
-![](img/58bc13fbc03b029ced95aa9ae57bbe3f_85.png)
 
-![](img/58bc13fbc03b029ced95aa9ae57bbe3f_86.png)
 
 这个积分的形式提示我们，可以尝试令 `u` 等于分母。
 
 ![](img/58bc13fbc03b029ced95aa9ae57bbe3f_88.png)
 
-![](img/58bc13fbc03b029ced95aa9ae57bbe3f_89.png)
 
 **核心步骤：**
 
-![](img/58bc13fbc03b029ced95aa9ae57bbe3f_91.png)
 
 ![](img/58bc13fbc03b029ced95aa9ae57bbe3f_92.png)
 
@@ -240,7 +208,6 @@
 
 ![](img/58bc13fbc03b029ced95aa9ae57bbe3f_99.png)
 
-![](img/58bc13fbc03b029ced95aa9ae57bbe3f_100.png)
 
 3.  **回代求解**：
     从 `u = x + 2` 反解出 `x`：
@@ -263,11 +230,8 @@
     \int \frac{u^2 - 4u}{u} \, du = \int (u - 4) \, du
     \]
 
-![](img/58bc13fbc03b029ced95aa9ae57bbe3f_105.png)
 
-![](img/58bc13fbc03b029ced95aa9ae57bbe3f_106.png)
 
-![](img/58bc13fbc03b029ced95aa9ae57bbe3f_107.png)
 
 ![](img/58bc13fbc03b029ced95aa9ae57bbe3f_108.png)
 
@@ -290,7 +254,6 @@
     \]
     可以展开，但当前形式已足够。
 
-![](img/58bc13fbc03b029ced95aa9ae57bbe3f_114.png)
 
 ![](img/58bc13fbc03b029ced95aa9ae57bbe3f_115.png)
 
@@ -300,7 +263,6 @@
 
 ![](img/58bc13fbc03b029ced95aa9ae57bbe3f_117.png)
 
-![](img/58bc13fbc03b029ced95aa9ae57bbe3f_118.png)
 
 ![](img/58bc13fbc03b029ced95aa9ae57bbe3f_120.png)
 
@@ -308,7 +270,6 @@
 
 ## 📝 本节课总结
 
-![](img/58bc13fbc03b029ced95aa9ae57bbe3f_122.png)
 
 在本节课中，我们一起学习了换元积分法中的“回代”技巧。
 
@@ -316,13 +277,11 @@
 *   然后将这些 `x` 项用 `u` 表示，从而将整个被积函数转化为关于 `u` 的表达式。
 *   完成关于 `u` 的积分后，切记最后一步是将结果中的 `u` 再代换回关于 `x` 的表达式。
 
-![](img/58bc13fbc03b029ced95aa9ae57bbe3f_124.png)
 
 ![](img/58bc13fbc03b029ced95aa9ae57bbe3f_125.png)
 
 ![](img/58bc13fbc03b029ced95aa9ae57bbe3f_126.png)
 
-![](img/58bc13fbc03b029ced95aa9ae57bbe3f_127.png)
 
 ![](img/58bc13fbc03b029ced95aa9ae57bbe3f_128.png)
 

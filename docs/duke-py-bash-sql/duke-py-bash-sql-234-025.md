@@ -1,6 +1,5 @@
 #  025：什么是Shell变量 🐚
 
-![](img/2bd2c1aa5d802dc65d1f4fda430a287b_0.png)
 
 ![](img/2bd2c1aa5d802dc65d1f4fda430a287b_1.png)
 

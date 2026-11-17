@@ -10,9 +10,7 @@
 
 市场上有多种压缩算法，它们都遵循一种称为“空间-时间权衡”的原则。有些算法在压缩和解压缩速度上更快，但生成的文件可能占用更多空间；而另一些算法压缩速度可能较慢，但最终占用的磁盘空间更小。
 
-![](img/46068e2e714d2d7b11f5c0f3a0df8c33_2.png)
 
-![](img/46068e2e714d2d7b11f5c0f3a0df8c33_3.png)
 
 压缩有多种文件格式，例如：`T F`、`自实`、`Bs of2`、`LG`、`snappy`等。需要明确的是，**数据压缩不是数据加密**，它们是两个不同的概念。尽管两者都可能生成二进制格式，但本质不同。
 
@@ -67,9 +65,7 @@ Hadoop Java API中有一个名为`compression`的包，它定义了一个名为`
 让我们通过一个程序片段来理解。假设有一个名为`HDFSCompression.java`的程序，其中最重要的部分是处理输出流：
 
 
-![](img/46068e2e714d2d7b11f5c0f3a0df8c33_5.png)
 
-![](img/46068e2e714d2d7b11f5c0f3a0df8c33_7.png)
 
 ```java
 // ... 获取文件系统等前期代码
@@ -101,9 +97,7 @@ IOUtils.copyBytes(fsDataInputStream, compressedOutputStream, conf);
 
 以下是一个解压缩程序的示例片段：
 
-![](img/46068e2e714d2d7b11f5c0f3a0df8c33_9.png)
 
-![](img/46068e2e714d2d7b11f5c0f3a0df8c33_10.png)
 
 ```java
 // ... 获取文件系统等前期代码

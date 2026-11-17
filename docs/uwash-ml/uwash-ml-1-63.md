@@ -16,7 +16,6 @@
 
 ---
 
-![](img/cad49cc59ed2912cd62f8f61163d5375_3.png)
 
 ![](img/cad49cc59ed2912cd62f8f61163d5375_4.png)
 

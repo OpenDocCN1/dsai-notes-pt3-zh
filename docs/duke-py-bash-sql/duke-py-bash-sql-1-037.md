@@ -8,7 +8,6 @@
 
 ## 创建Dask数据框
 
-![](img/ad171ac29698d85a21ae4054caddefdc_1.png)
 
 让我们来看一个Dask数据框的例子。
 
@@ -41,7 +40,6 @@ result = dask_df.std().compute()
 
 例如，我们可以对两列求和，然后计算差值。
 
-![](img/ad171ac29698d85a21ae4054caddefdc_3.png)
 
 ```python
 sum_diff = (dask_df['A'] + dask_df['B']).sum() - (dask_df['A'] - dask_df['B']).sum()
@@ -74,7 +72,6 @@ Dask也提供了可视化这个图的能力。
 *   **pandas vs NumPy**：这取决于数据的性质。如果你的数据都是同一数据类型（例如数值型），并且需要进行高效运算（尤其是需要将数据表示为高维矩阵的运算），那么NumPy是更好的选择。另一方面，如果你处理的是包含不同数据类型的表格数据，那么pandas可能更适合，特别是当你只是进行简单分析或准备可视化时。
 *   **PySpark vs Dask**：这取决于企业环境。Spark是一个更成熟的产品，拥有更大的生态系统、支持和文档。如果你的企业已经在使用Spark，或者非常关注产品的成熟度，那么PySpark可能是更好的选择。另一方面，Dask是Python原生的，允许你充分利用pandas和NumPy数据框及数组的全部功能。如果你正在启动一个新项目，并且希望整个数据管道都使用Python，那么Dask是一个很好的选择。
 
-![](img/ad171ac29698d85a21ae4054caddefdc_5.png)
 
 ## 总结
 

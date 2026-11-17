@@ -1,6 +1,5 @@
 #  164：使用Click构建命令行工具 🛠️
 
-![](img/2da1d1798fb69c2454368b8d7fdcd4fe_0.png)
 
 ![](img/2da1d1798fb69c2454368b8d7fdcd4fe_1.png)
 

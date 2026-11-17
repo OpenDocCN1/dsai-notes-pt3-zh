@@ -127,7 +127,6 @@ macro_f1 = f1_score(y_true, y_pred, average='macro')
 
 ---
 
-![](img/b40249dd0ed52f671b2eb323fe84166a_2.png)
 
 现在我们已经了解了如何计算这些指标，接下来让我们看看如何使用它们来进行模型选择。
 

@@ -4,7 +4,6 @@
 
 在本节课中，我们将学习Apache Storm中的核心组件：喷口（Spout）和流（Stream）。我们将探讨数据如何被拉取、处理，以及如何通过不同的分组策略在分布式拓扑中高效流动。
 
-![](img/cc14fdfede841d1d0a6ef42c8f2efa88_2.png)
 
 ---
 
@@ -14,7 +13,6 @@ Apache Storm是一个分布式实时计算系统，用于处理高速数据流�
 
 ---
 
-![](img/cc14fdfede841d1d0a6ef42c8f2efa88_4.png)
 
 ## 喷口的数据流拉取过程
 

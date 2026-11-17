@@ -25,25 +25,17 @@
 
 让我解释一下什么是子目录。在Jupyter中点击“文件”->“打开”，会列出当前笔记本所在目录的所有文件。我可以在这里创建一个子目录。
 
-![](img/37bd002fa209aa62b98cc735d1ca6c6c_3.png)
 
-![](img/37bd002fa209aa62b98cc735d1ca6c6c_3.png)
 
 我将它命名为 `data`。
 
-![](img/37bd002fa209aa62b98cc735d1ca6c6c_5.png)
 
-![](img/37bd002fa209aa62b98cc735d1ca6c6c_5.png)
 
-![](img/37bd002fa209aa62b98cc735d1ca6c6c_7.png)
 
 然后，我把 `olympics.csv` 文件放入那个目录。在这个界面中，我无法拖拽，必须显式地移动它。
 
-![](img/37bd002fa209aa62b98cc735d1ca6c6c_9.png)
 
-![](img/37bd002fa209aa62b98cc735d1ca6c6c_7.png)
 
-![](img/37bd002fa209aa62b98cc735d1ca6c6c_9.png)
 
 现在，在 `data` 目录（文件夹）中，就有了 `olympics.csv` 文件。如果我回到Python代码，尝试打开 `olympics.csv`，现在会失败，因为该文件不在顶级目录中。
 
@@ -92,6 +84,5 @@ output_file = open(‘data/reduced_olympics.csv‘, ‘w‘)
 
 ---
 
-![](img/37bd002fa209aa62b98cc735d1ca6c6c_11.png)
 
 ![](img/37bd002fa209aa62b98cc735d1ca6c6c_11.png)

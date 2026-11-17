@@ -1,162 +1,98 @@
 # 124：Transformer-XL 详解 🧠
 
-![](img/310d4b6aae011608c0ce022e5ed37f42_1.png)
 
-![](img/310d4b6aae011608c0ce022e5ed37f42_2.png)
 
 在本节课中，我们将学习 Transformer-XL 模型。Transformer-XL 旨在解决标准 Transformer 模型在处理长文本时上下文长度固定的限制。我们将回顾标准 Transformer 的局限性，然后详细探讨 Transformer-XL 如何通过引入片段递归机制和相对位置编码来扩展上下文长度，从而更有效地进行语言建模。
 
-![](img/310d4b6aae011608c0ce022e5ed37f42_3.png)
 
-![](img/310d4b6aae011608c0ce022e5ed37f42_4.png)
 
-![](img/310d4b6aae011608c0ce022e5ed37f42_5.png)
 
-![](img/310d4b6aae011608c0ce022e5ed37f42_6.png)
 
-![](img/310d4b6aae011608c0ce022e5ed37f42_7.png)
 
-![](img/310d4b6aae011608c0ce022e5ed37f42_8.png)
 
-![](img/310d4b6aae011608c0ce022e5ed37f42_9.png)
 
-![](img/310d4b6aae011608c0ce022e5ed37f42_10.png)
 
 ---
 
 ## 🔍 回顾标准 Transformer 的局限性
 
-![](img/310d4b6aae011608c0ce022e5ed37f42_12.png)
 
-![](img/310d4b6aae011608c0ce022e5ed37f42_13.png)
 
-![](img/310d4b6aae011608c0ce022e5ed37f42_14.png)
 
-![](img/310d4b6aae011608c0ce022e5ed37f42_15.png)
 
-![](img/310d4b6aae011608c0ce022e5ed37f42_16.png)
 
-![](img/310d4b6aae011608c0ce022e5ed37f42_17.png)
 
-![](img/310d4b6aae011608c0ce022e5ed37f42_18.png)
 
 上一节我们介绍了 Transformer 模型的基础。本节中，我们来看看它在处理长序列时面临的核心问题：**固定的上下文长度**。
 
 在语言建模任务中，给定一段文本（语料库），模型的目标是根据过去的词语预测下一个词语。无论使用何种模型（如 LSTM、RNN、GRU 或 Transformer 的解码器部分），其本质都是将过去的上下文信息编码为一个固定大小的隐藏状态。
 
-![](img/310d4b6aae011608c0ce022e5ed37f42_20.png)
 
-![](img/310d4b6aae011608c0ce022e5ed37f42_21.png)
 
-![](img/310d4b6aae011608c0ce022e5ed37f42_22.png)
 
-![](img/310d4b6aae011608c0ce022e5ed37f42_23.png)
 
 对于 Transformer 的解码器部分，在训练阶段，模型以片段形式处理文本。例如，给定输入 `[x1, x2, x3, x4]`，模型需要预测 `[x2, x3, x4, x5]`。由于使用了掩码注意力机制，每个位置只能关注它之前的位置（即 `x3` 能关注 `x1, x2`，`x4` 能关注 `x1, x2, x3`）。
 
-![](img/310d4b6aae011608c0ce022e5ed37f42_24.png)
 
-![](img/310d4b6aae011608c0ce022e5ed37f42_25.png)
 
-![](img/310d4b6aae011608c0ce022e5ed37f42_26.png)
 
-![](img/310d4b6aae011608c0ce022e5ed37f42_27.png)
 
-![](img/310d4b6aae011608c0ce022e5ed37f42_28.png)
 
-![](img/310d4b6aae011608c0ce022e5ed37f42_29.png)
 
-![](img/310d4b6aae011608c0ce022e5ed37f42_30.png)
 
-![](img/310d4b6aae011608c0ce022e5ed37f42_31.png)
 
 然而，在评估（推理）阶段，问题出现了。当模型预测完 `x5` 后，要预测 `x6` 时，其有效的上下文仅为 `[x2, x3, x4, x5]`，`x1` 的信息被“遗忘”了。预测 `x7` 时，上下文变为 `[x3, x4, x5, x6]`，`x1` 和 `x2` 的信息都丢失了。
 
 **核心问题公式化**：标准 Transformer 的上下文长度在训练和评估时都被限制为预定义的片段长度 `L`。这限制了模型利用更长距离依赖关系的能力。
 
-![](img/310d4b6aae011608c0ce022e5ed37f42_33.png)
 
-![](img/310d4b6aae011608c0ce022e5ed37f42_34.png)
 
-![](img/310d4b6aae011608c0ce022e5ed37f42_35.png)
 
-![](img/310d4b6aae011608c0ce022e5ed37f42_36.png)
 
 ---
 
-![](img/310d4b6aae011608c0ce022e5ed37f42_37.png)
 
-![](img/310d4b6aae011608c0ce022e5ed37f42_38.png)
 
-![](img/310d4b6aae011608c0ce022e5ed37f42_39.png)
 
-![](img/310d4b6aae011608c0ce022e5ed37f42_40.png)
 
-![](img/310d4b6aae011608c0ce022e5ed37f42_41.png)
 
-![](img/310d4b6aae011608c0ce022e5ed37f42_42.png)
 
-![](img/310d4b6aae011608c0ce022e5ed37f42_43.png)
 
-![](img/310d4b6aae011608c0ce022e5ed37f42_44.png)
 
 ## 🚀 Transformer-XL 的核心思想
 
 为了解决上述限制，Transformer-XL 的核心目标是：**扩展上下文长度，使其超越单个片段的限制**。“XL”即代表“eXtra Long”。
 
-![](img/310d4b6aae011608c0ce022e5ed37f42_46.png)
 
-![](img/310d4b6aae011608c0ce022e5ed37f42_47.png)
 
-![](img/310d4b6aae011608c0ce022e5ed37f42_48.png)
 
-![](img/310d4b6aae011608c0ce022e5ed37f42_49.png)
 
-![](img/310d4b6aae011608c0ce022e5ed37f42_50.png)
 
-![](img/310d4b6aae011608c0ce022e5ed37f42_51.png)
 
 其核心创新在于引入了**片段递归机制**。简单来说，在处理当前片段时，模型不仅使用当前片段的信息，还会**缓存并重用**之前片段的隐藏状态，从而构建一个更长的有效上下文。
 
-![](img/310d4b6aae011608c0ce022e5ed37f42_52.png)
 
-![](img/310d4b6aae011608c0ce022e5ed37f42_53.png)
 
-![](img/310d4b6aae011608c0ce022e5ed37f42_54.png)
 
-![](img/310d4b6aae011608c0ce022e5ed37f42_55.png)
 
-![](img/310d4b6aae011608c0ce022e5ed37f42_56.png)
 
-![](img/310d4b6aae011608c0ce022e5ed37f42_57.png)
 
 ---
 
 ## ⚙️ 片段递归机制详解
 
-![](img/310d4b6aae011608c0ce022e5ed37f42_59.png)
 
-![](img/310d4b6aae011608c0ce022e5ed37f42_60.png)
 
-![](img/310d4b6aae011608c0ce022e5ed37f42_61.png)
 
-![](img/310d4b6aae011608c0ce022e5ed37f42_62.png)
 
-![](img/310d4b6aae011608c0ce022e5ed37f42_63.png)
 
-![](img/310d4b6aae011608c0ce022e5ed37f42_64.png)
 
-![](img/310d4b6aae011608c0ce022e5ed37f42_65.png)
 
-![](img/310d4b6aae011608c0ce022e5ed37f42_66.png)
 
-![](img/310d4b6aae011608c0ce022e5ed37f42_67.png)
 
 让我们通过数学形式来理解这个机制。
 
-![](img/310d4b6aae011608c0ce022e5ed37f42_68.png)
 
-![](img/310d4b6aae011608c0ce022e5ed37f42_69.png)
 
 假设我们将长文本划分为连续的片段。设：
 *   `τ` 表示第几个片段。
@@ -165,31 +101,19 @@
 
 在标准 Transformer 中，处理 `S_(τ+1)` 时，会完全忽略 `S_τ` 的信息。在 Transformer-XL 中，我们改变了这一点。
 
-![](img/310d4b6aae011608c0ce022e5ed37f42_71.png)
 
-![](img/310d4b6aae011608c0ce022e5ed37f42_72.png)
 
-![](img/310d4b6aae011608c0ce022e5ed37f42_73.png)
 
-![](img/310d4b6aae011608c0ce022e5ed37f42_74.png)
 
-![](img/310d4b6aae011608c0ce022e5ed37f42_75.png)
 
-![](img/310d4b6aae011608c0ce022e5ed37f42_76.png)
 
-![](img/310d4b6aae011608c0ce022e5ed37f42_77.png)
 
-![](img/310d4b6aae011608c0ce022e5ed37f42_78.png)
 
-![](img/310d4b6aae011608c0ce022e5ed37f42_79.png)
 
-![](img/310d4b6aae011608c0ce022e5ed37f42_80.png)
 
 **以下是关键步骤**：
 
-![](img/310d4b6aae011608c0ce022e5ed37f42_81.png)
 
-![](img/310d4b6aae011608c0ce022e5ed37f42_83.png)
 
 1.  **缓存历史隐藏状态**：在处理片段 `S_τ` 时，我们保留其最后一层（或所有层）的隐藏状态序列 `H_τ^n`（`n` 表示层数）。我们将其称为“记忆”（Memory）。
 2.  **与当前片段拼接**：当处理下一个片段 `S_(τ+1)` 时，我们将从“记忆”中获取的上一片段的隐藏状态 `H_τ^n`，与当前片段的初始输入（或上一层的输出）进行拼接。
@@ -204,31 +128,19 @@
 
 通过这种方式，在处理片段 `S_(τ+1)` 时，模型能够“看到” `S_τ` 中的信息。同理，处理 `S_(τ+2)` 时，它能“看到” `S_(τ+1)` 和 `S_τ` 的信息。如此递归，模型的有效上下文长度可以远远超过单个片段长度 `L`，理论上只受“记忆”大小 `M` 的限制。
 
-![](img/310d4b6aae011608c0ce022e5ed37f42_85.png)
 
-![](img/310d4b6aae011608c0ce022e5ed37f42_86.png)
 
-![](img/310d4b6aae011608c0ce022e5ed37f42_87.png)
 
-![](img/310d4b6aae011608c0ce022e5ed37f42_88.png)
 
-![](img/310d4b6aae011608c0ce022e5ed37f42_89.png)
 
-![](img/310d4b6aae011608c0ce022e5ed37f42_90.png)
 
 ---
 
-![](img/310d4b6aae011608c0ce022e5ed37f42_91.png)
 
-![](img/310d4b6aae011608c0ce022e5ed37f42_92.png)
 
-![](img/310d4b6aae011608c0ce022e5ed37f42_93.png)
 
-![](img/310d4b6aae011608c0ce022e5ed37f42_94.png)
 
-![](img/310d4b6aae011608c0ce022e5ed37f42_95.png)
 
-![](img/310d4b6aae011608c0ce022e5ed37f42_96.png)
 
 ![](img/310d4b6aae011608c0ce022e5ed37f42_98.png)
 

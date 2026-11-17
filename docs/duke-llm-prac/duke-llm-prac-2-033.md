@@ -1,6 +1,5 @@
 # 大型语言模型实践（高级数据工程、AWS、Databricks和本地LLM）：P33：33_02_09_总结_2
 
-![](img/7ee04fbe9db722f44ea2aeadc561a613_0.png)
 
 ![](img/7ee04fbe9db722f44ea2aeadc561a613_0.png)
 

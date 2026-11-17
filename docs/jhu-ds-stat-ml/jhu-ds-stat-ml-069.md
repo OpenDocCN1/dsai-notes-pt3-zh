@@ -1,32 +1,23 @@
 # 069：残差与诊断（第二部分）🔍
 
-![](img/ee3b321db204cd4503e82e3bc825ea3c_1.png)
 
-![](img/ee3b321db204cd4503e82e3bc825ea3c_3.png)
 
 在本节课中，我们将深入探讨线性回归模型中的异常值和杠杆点。我们将学习如何更精确地识别和处理这些点，并介绍一系列诊断工具来评估它们对模型的影响。
 
-![](img/ee3b321db204cd4503e82e3bc825ea3c_5.png)
 
 ---
 
-![](img/ee3b321db204cd4503e82e3bc825ea3c_7.png)
 
-![](img/ee3b321db204cd4503e82e3bc825ea3c_8.png)
 
 ## 概述
 
-![](img/ee3b321db204cd4503e82e3bc825ea3c_9.png)
 
-![](img/ee3b321db204cd4503e82e3bc825ea3c_10.png)
 
 上一节我们介绍了残差的基本概念。本节中，我们将学习如何更系统地诊断异常值和杠杆点，并理解它们对回归模型的具体影响。
 
 ## 异常值与杠杆点的精确定义
 
-![](img/ee3b321db204cd4503e82e3bc825ea3c_12.png)
 
-![](img/ee3b321db204cd4503e82e3bc825ea3c_13.png)
 
 ![](img/ee3b321db204cd4503e82e3bc825ea3c_14.png)
 

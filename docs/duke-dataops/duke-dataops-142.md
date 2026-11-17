@@ -1,10 +1,7 @@
 #  142：认识你的课程讲师 🧑‍🏫
 
-![](img/2ff5ee4e2534475d0a469ca9c1e90585_0.png)
 
-![](img/2ff5ee4e2534475d0a469ca9c1e90585_1.png)
 
-![](img/2ff5ee4e2534475d0a469ca9c1e90585_0.png)
 
 ![](img/2ff5ee4e2534475d0a469ca9c1e90585_1.png)
 

@@ -45,7 +45,6 @@ YARN的设计旨在提供企业级的数据处理平台，其核心能力包括�
 
 ## 第三部分：MapReduce在YARN上的集成 🔗
 
-![](img/70a39687674718d18c3be6793bcda726_2.png)
 
 前面我们介绍了YARN作为通用资源管理平台的能力，本节中我们来看看经典的MapReduce框架如何“构建”在YARN之上。
 
@@ -56,7 +55,6 @@ YARN的设计旨在提供企业级的数据处理平台，其核心能力包括�
 4.  获得资源后，MRAppMaster与对应的NodeManager通信，在容器中启动MapTask或ReduceTask。
 5.  MRAppMaster监控所有任务的执行状态，并在任务失败时重新申请资源运行。
 
-![](img/70a39687674718d18c3be6793bcda726_4.png)
 
 这个过程可以用一个简单的代码逻辑表示：
 ```java

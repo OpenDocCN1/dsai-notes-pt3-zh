@@ -1,6 +1,5 @@
 # 010：量子隐形传态
 
-![](img/172df7b9513cbb5bf8958bb589be2d0f_0.png)
 
 ![](img/172df7b9513cbb5bf8958bb589be2d0f_0.png)
 

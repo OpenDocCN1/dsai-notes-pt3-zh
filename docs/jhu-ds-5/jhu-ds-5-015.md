@@ -6,33 +6,21 @@
 
 ## 什么是 knitr？ 🛠️
 
-![](img/f89244350bc5f7a1098588c3f7abe7ac_1.png)
 
-![](img/f89244350bc5f7a1098588c3f7abe7ac_2.png)
 
-![](img/f89244350bc5f7a1098588c3f7abe7ac_3.png)
 
-![](img/f89244350bc5f7a1098588c3f7abe7ac_4.png)
 
 **knitr** 是一个可以帮助你制作可重复文档的工具。
 
-![](img/f89244350bc5f7a1098588c3f7abe7ac_5.png)
 
-![](img/f89244350bc5f7a1098588c3f7abe7ac_6.png)
 
-![](img/f89244350bc5f7a1098588c3f7abe7ac_7.png)
 
-![](img/f89244350bc5f7a1098588c3f7abe7ac_8.png)
 
-![](img/f89244350bc5f7a1098588c3f7abe7ac_9.png)
 
 具体来说，knitr 是一个由爱荷华州立大学研究生 **Yihui Xie** 编写的 R 语言包。它可以从 **CRAN** 获取。如果你使用 **RStudio**，knitr 已经内置其中，并与图形用户界面集成，因此无需单独安装。
 
-![](img/f89244350bc5f7a1098588c3f7abe7ac_10.png)
 
-![](img/f89244350bc5f7a1098588c3f7abe7ac_11.png)
 
-![](img/f89244350bc5f7a1098588c3f7abe7ac_12.png)
 
 在文档语言方面，knitr 支持 **R Markdown**、**LaTeX** 和 **HTML** 这三种常用语言。它可以导出为 **PDF** 和 **HTML** 格式，也可以通过 **Pandoc** 等外部工具导出为其他格式。正如刚才提到的，为了方便用户，它已直接集成到 RStudio 中。
 
@@ -42,36 +30,24 @@
 
 要使用 knitr，你需要满足以下几个条件：
 
-![](img/f89244350bc5f7a1098588c3f7abe7ac_14.png)
 
-![](img/f89244350bc5f7a1098588c3f7abe7ac_15.png)
 
-![](img/f89244350bc5f7a1098588c3f7abe7ac_16.png)
 
 *   **一个较新版本的 R**：这是运行 knitr 的基础环境。
 *   **一个文本编辑器**：你可以使用 RStudio 自带的编辑器，或者任何其他文本编辑器。
 *   **一些支持包**：这些包可以从 CRAN 获取。如果你使用 `install.packages()` 函数，它们会自动下载。
 *   **掌握三种文档语言之一的知识**：你需要了解 **Markdown**、**LaTeX** 或 **HTML** 中的至少一种。本教程将重点介绍 **Markdown**，因为它是一种相对简单易懂的语言。
 
-![](img/f89244350bc5f7a1098588c3f7abe7ac_17.png)
 
-![](img/f89244350bc5f7a1098588c3f7abe7ac_18.png)
 
-![](img/f89244350bc5f7a1098588c3f7abe7ac_19.png)
 
-![](img/f89244350bc5f7a1098588c3f7abe7ac_20.png)
 
-![](img/f89244350bc5f7a1098588c3f7abe7ac_21.png)
 
 ---
 
-![](img/f89244350bc5f7a1098588c3f7abe7ac_22.png)
 
-![](img/f89244350bc5f7a1098588c3f7abe7ac_23.png)
 
-![](img/f89244350bc5f7a1098588c3f7abe7ac_24.png)
 
-![](img/f89244350bc5f7a1098588c3f7abe7ac_25.png)
 
 ## 什么是 Markdown？ ✍️
 
@@ -83,33 +59,21 @@ Markdown 的目的就是简化这一切，使其易于阅读。它只包含少�
 
 ---
 
-![](img/f89244350bc5f7a1098588c3f7abe7ac_27.png)
 
-![](img/f89244350bc5f7a1098588c3f7abe7ac_28.png)
 
-![](img/f89244350bc5f7a1098588c3f7abe7ac_29.png)
 
-![](img/f89244350bc5f7a1098588c3f7abe7ac_30.png)
 
 ## knitr 适合做什么？ 👍
 
-![](img/f89244350bc5f7a1098588c3f7abe7ac_31.png)
 
-![](img/f89244350bc5f7a1098588c3f7abe7ac_32.png)
 
-![](img/f89244350bc5f7a1098588c3f7abe7ac_33.png)
 
-![](img/f89244350bc5f7a1098588c3f7abe7ac_34.png)
 
-![](img/f89244350bc5f7a1098588c3f7abe7ac_35.png)
 
 在创建可重复文档方面，我个人认为 knitr 非常适合以下场景：
 
-![](img/f89244350bc5f7a1098588c3f7abe7ac_36.png)
 
-![](img/f89244350bc5f7a1098588c3f7abe7ac_37.png)
 
-![](img/f89244350bc5f7a1098588c3f7abe7ac_38.png)
 
 *   **手册**：如果你想指导他人如何使用某个软件。
 *   **短篇或中篇技术文档**：用于解释某些技术概念。
@@ -117,15 +81,11 @@ Markdown 的目的就是简化这一切，使其易于阅读。它只包含少�
 *   **报告**：报告尤其有用。例如，如果你需要每周基于某个数据库或数据集生成报告（比如在研究项目中，受试者不断加入，你需要每周生成包含研究摘要统计数据的报告），这类“动态”文档非常实用。因为你可以在生成文档时重新计算所有摘要统计数据，无需手动计算再单独插入报告。
 *   **数据预处理**：在预处理数据以创建干净数据集时，创建一个 knitr 类型的文档通常很有用。该文档可以记录你对数据集所做的所有操作（例如，删除异常值、填补缺失数据、转换变量等）。在这种 knitr 风格的文档中，你可以同时说明你做了什么，并在代码中实际执行这些操作。
 
-![](img/f89244350bc5f7a1098588c3f7abe7ac_40.png)
 
 ---
 
-![](img/f89244350bc5f7a1098588c3f7abe7ac_41.png)
 
-![](img/f89244350bc5f7a1098588c3f7abe7ac_42.png)
 
-![](img/f89244350bc5f7a1098588c3f7abe7ac_43.png)
 
 ## knitr 不适合做什么？ 👎
 
@@ -137,25 +97,16 @@ Markdown 的目的就是简化这一切，使其易于阅读。它只包含少�
 
 ---
 
-![](img/f89244350bc5f7a1098588c3f7abe7ac_45.png)
 
-![](img/f89244350bc5f7a1098588c3f7abe7ac_46.png)
 
-![](img/f89244350bc5f7a1098588c3f7abe7ac_47.png)
 
-![](img/f89244350bc5f7a1098588c3f7abe7ac_48.png)
 
-![](img/f89244350bc5f7a1098588c3f7abe7ac_49.png)
 
 ## 总结 📚
 
-![](img/f89244350bc5f7a1098588c3f7abe7ac_50.png)
 
-![](img/f89244350bc5f7a1098588c3f7abe7ac_51.png)
 
-![](img/f89244350bc5f7a1098588c3f7abe7ac_52.png)
 
-![](img/f89244350bc5f7a1098588c3f7abe7ac_53.png)
 
 ![](img/f89244350bc5f7a1098588c3f7abe7ac_54.png)
 

@@ -1,6 +1,5 @@
 # 每个人的 Python 第五部分 1：引言-欢迎来到课程 🎓
 
-![](img/7a4a08122e153eabe1efc0379a011f74_0.png)
 
 ![](img/7a4a08122e153eabe1efc0379a011f74_0.png)
 

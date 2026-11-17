@@ -1,10 +1,7 @@
 # 021：查询处理示例 📊
 
-![](img/a71efe4b7bb8d4f8eb6ec58ec3e4ae20_1.png)
 
-![](img/a71efe4b7bb8d4f8eb6ec58ec3e4ae20_2.png)
 
-![](img/a71efe4b7bb8d4f8eb6ec58ec3e4ae20_4.png)
 
 在本节课中，我们将通过一个具体的例子来学习查询处理。我们将分析一个简单的查询，并探讨如何通过不同的关系代数表达式来优化查询计划，以及如何在分布式数据库系统中评估不同策略的成本。
 
@@ -12,9 +9,7 @@
 
 ## 概述
 
-![](img/a71efe4b7bb8d4f8eb6ec58ec3e4ae20_6.png)
 
-![](img/a71efe4b7bb8d4f8eb6ec58ec3e4ae20_7.png)
 
 查询处理是数据库系统的核心功能之一。它涉及将用户的高级查询（如SQL语句）转换为一系列可以在数据库上执行的低级操作。优化查询处理可以显著提高数据库的性能。本节课我们将通过一个简单的连接查询示例，来理解查询优化的基本概念和方法。
 
@@ -30,11 +25,8 @@ WHERE employee.emp_no = assignment.emp_no
 AND assignment.responsibility = 'manager';
 ```
 
-![](img/a71efe4b7bb8d4f8eb6ec58ec3e4ae20_9.png)
 
-![](img/a71efe4b7bb8d4f8eb6ec58ec3e4ae20_10.png)
 
-![](img/a71efe4b7bb8d4f8eb6ec58ec3e4ae20_11.png)
 
 ## 关系代数表达式
 
@@ -44,16 +36,12 @@ AND assignment.responsibility = 'manager';
 
 以下是三种等价但执行策略不同的关系代数表达式：
 
-![](img/a71efe4b7bb8d4f8eb6ec58ec3e4ae20_13.png)
 
 1.  **基础表达式**：首先计算`employee`和`assignment`表的笛卡尔积，然后应用选择条件（员工号相等且职责为经理），最后投影出员工姓名。
     *   **公式**：`π_name(σ_responsibility='manager' ∧ employee.emp_no=assignment.emp_no(employee × assignment))`
 
-![](img/a71efe4b7bb8d4f8eb6ec58ec3e4ae20_15.png)
 
-![](img/a71efe4b7bb8d4f8eb6ec58ec3e4ae20_16.png)
 
-![](img/a71efe4b7bb8d4f8eb6ec58ec3e4ae20_18.png)
 
 2.  **优化表达式A**：将选择条件`σ_responsibility='manager'`下推到`assignment`表上，先过滤出经理任务，再进行连接和投影。这减少了连接操作的数据量。
     *   **公式**：`π_name(σ_employee.emp_no=assignment.emp_no(employee × σ_responsibility='manager'(assignment)))`
@@ -65,9 +53,7 @@ AND assignment.responsibility = 'manager';
 
 ## 集中式与分布式系统的挑战
 
-![](img/a71efe4b7bb8d4f8eb6ec58ec3e4ae20_20.png)
 
-![](img/a71efe4b7bb8d4f8eb6ec58ec3e4ae20_22.png)
 
 在集中式数据库系统中，从众多可能的查询计划中找到最优解本身就是一个非常复杂（NP难）的问题。随着查询涉及的表和条件增多，可能的查询计划数量会呈指数级增长。
 
@@ -75,11 +61,8 @@ AND assignment.responsibility = 'manager';
 
 ## 分布式查询计划成本估算示例
 
-![](img/a71efe4b7bb8d4f8eb6ec58ec3e4ae20_24.png)
 
-![](img/a71efe4b7bb8d4f8eb6ec58ec3e4ae20_26.png)
 
-![](img/a71efe4b7bb8d4f8eb6ec58ec3e4ae20_27.png)
 
 为了量化不同查询计划的优劣，我们需要进行成本估算。成本通常包括**I/O代价**（读写元组）和**通信代价**（传输数据）。
 
@@ -99,9 +82,7 @@ AND assignment.responsibility = 'manager';
 4.  将连接结果（各约10条）发送到站点5。
 5.  在站点5合并结果。
 
-![](img/a71efe4b7bb8d4f8eb6ec58ec3e4ae20_29.png)
 
-![](img/a71efe4b7bb8d4f8eb6ec58ec3e4ae20_31.png)
 
 以下是详细的成本计算：
 
@@ -115,7 +96,6 @@ AND assignment.responsibility = 'manager';
 *   在站点5合并结果：`10 + 10 = 20`
 *   **总资源代价**：`1000 + 200 + 20 + 40 + 200 + 20 + 20 = 1500`
 
-![](img/a71efe4b7bb8d4f8eb6ec58ec3e4ae20_33.png)
 
 **响应时间估算（考虑并行操作）：**
 *   并行读取`assignment`分片：`max(500, 500) * 1 = 500`
@@ -134,11 +114,8 @@ AND assignment.responsibility = 'manager';
 2.  在站点5重组完整的`employee`表和`assignment`表。
 3.  在站点5执行完整的查询：先过滤`assignment`，再与`employee`连接，最后投影。
 
-![](img/a71efe4b7bb8d4f8eb6ec58ec3e4ae20_35.png)
 
-![](img/a71efe4b7bb8d4f8eb6ec58ec3e4ae20_36.png)
 
-![](img/a71efe4b7bb8d4f8eb6ec58ec3e4ae20_37.png)
 
 以下是详细的成本计算：
 
@@ -160,13 +137,9 @@ AND assignment.responsibility = 'manager';
     *   连接操作：`8000`
 *   **总响应时间**：`500 + 5000 + 500 + 1000 + 8000 = 15000`
 
-![](img/a71efe4b7bb8d4f8eb6ec58ec3e4ae20_39.png)
 
-![](img/a71efe4b7bb8d4f8eb6ec58ec3e4ae20_40.png)
 
-![](img/a71efe4b7bb8d4f8eb6ec58ec3e4ae20_41.png)
 
-![](img/a71efe4b7bb8d4f8eb6ec58ec3e4ae20_42.png)
 
 ## 对比与总结
 
@@ -177,11 +150,8 @@ AND assignment.responsibility = 'manager';
 | **总资源代价** | **1500** 单位 | 25800 单位 | 策略一节省约94%的资源 |
 | **响应时间** | **~770** 单位 | 15000 单位 | 策略一快约95% |
 
-![](img/a71efe4b7bb8d4f8eb6ec58ec3e4ae20_44.png)
 
-![](img/a71efe4b7bb8d4f8eb6ec58ec3e4ae20_45.png)
 
-![](img/a71efe4b7bb8d4f8eb6ec58ec3e4ae20_46.png)
 
 **本节课中我们一起学习了：**
 1.  一个查询可以对应多个等价的关系代数表达式，形成不同的查询执行计划。
@@ -190,9 +160,7 @@ AND assignment.responsibility = 'manager';
 4.  利用统计数据（如表大小、选择率）进行成本估算是查询优化的基础。准确的估算有助于系统选择高效的查询计划，避免低效计划。
 5.  本例证明，通过在数据源附近提前过滤减少数据传输量，通常能极大提升分布式查询的性能。
 
-![](img/a71efe4b7bb8d4f8eb6ec58ec3e4ae20_48.png)
 
-![](img/a71efe4b7bb8d4f8eb6ec58ec3e4ae20_50.png)
 
 ![](img/a71efe4b7bb8d4f8eb6ec58ec3e4ae20_52.png)
 

@@ -1,16 +1,13 @@
 # 11：Python数值数据类型详解 🧮
 
-![](img/bfb5b3cf794c0c7d5c384d59db4fba4f_0.png)
 
 在本节课中，我们将学习Python中的三种数值数据类型：整数、浮点数和复数。理解这些基础类型是进行数学运算和数据处理的第一步。
 
-![](img/bfb5b3cf794c0c7d5c384d59db4fba4f_2.png)
 
 ## 概述
 
 我们将依次介绍整数、浮点数和复数的定义、特点及在Python中的表示方法。每种数据类型都有其特定的规则和用途。
 
-![](img/bfb5b3cf794c0c7d5c384d59db4fba4f_4.png)
 
 ## 整数（Integers）
 

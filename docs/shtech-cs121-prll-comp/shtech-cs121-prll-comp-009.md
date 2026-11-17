@@ -147,7 +147,6 @@ for (int i = 0; i < n; i++) {
 
 ---
 
-![](img/4461f9c958b0bd3401ff6c159d4164ed_5.png)
 
 ![](img/4461f9c958b0bd3401ff6c159d4164ed_6.png)
 

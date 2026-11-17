@@ -1,6 +1,5 @@
 # 1：0_介绍 📚
 
-![](img/54180592142dc2d3a143b2ed4e4d41f1_0.png)
 
 ![](img/54180592142dc2d3a143b2ed4e4d41f1_0.png)
 
@@ -12,7 +11,6 @@
 
 ## 课程内容详解
 
-![](img/54180592142dc2d3a143b2ed4e4d41f1_2.png)
 
 ### 市场与行业分析 🏢
 
@@ -28,7 +26,6 @@
 
 
 
-![](img/54180592142dc2d3a143b2ed4e4d41f1_2.png)
 
 上一节我们介绍了市场格局，本节中我们来看看未来的潜力。我们还将探讨未来在软件、专业服务和硬件方面的潜在增长趋势。
 
@@ -51,13 +48,11 @@
 *   **Velocity（速度）**：数据生成和处理的速度。
 *   **Veracity（准确性）**：数据的质量和可信度。
 
-![](img/54180592142dc2d3a143b2ed4e4d41f1_4.png)
 
 我们将探讨企业如何利用这些特性来获得竞争优势。
 
 ### Apache开源技术栈 🛠️
 
-![](img/54180592142dc2d3a143b2ed4e4d41f1_6.png)
 
 然后，我们将进入Apache开源应用程序的世界，主要包括Hadoop、Spark和Storm。
 
@@ -65,37 +60,30 @@
 
 我们将更深入地研究Hadoop，特别是MapReduce和HDFS技术。
 
-![](img/54180592142dc2d3a143b2ed4e4d41f1_8.png)
 
 此外，我们还会了解Mahout、Flume、HBase和Hive，以及它们如何支持基于Hadoop的运算。
 
 
 
-![](img/54180592142dc2d3a143b2ed4e4d41f1_4.png)
 
 我们将详细研究Hadoop中的MapReduce和分布式文件系统，并了解这些运算的处理过程。
 
 
 
-![](img/54180592142dc2d3a143b2ed4e4d41f1_10.png)
 
-![](img/54180592142dc2d3a143b2ed4e4d41f1_6.png)
 
 我们还将研究集群操作，了解名称节点、数据节点、作业跟踪器和任务跟踪器如何协同工作，以处理和调度整体的大数据分析任务。
 
 
 
-![](img/54180592142dc2d3a143b2ed4e4d41f1_8.png)
 
 接下来，我们将探讨Hadoop YARN。我们将分析这些组件块如何设置、它们之间的管理关系以及启动顺序等细节。
 
 
 
-![](img/54180592142dc2d3a143b2ed4e4d41f1_10.png)
 
 ### 深入Apache Spark 💥
 
-![](img/54180592142dc2d3a143b2ed4e4d41f1_12.png)
 
 之后，我们将聚焦Apache Spark。我们将关注其核心，以及内存设备（如内存、SSD和HDD）的作用。
 
@@ -115,7 +103,6 @@ Spark支持多种编程语言的API，主要包括：
 
 我们也将学习集群管理技术，包括Hadoop YARN、Standalone模式和Mesos。
 
-![](img/54180592142dc2d3a143b2ed4e4d41f1_12.png)
 
 我们会关注周边的支持技术，如YARN、ZooKeeper，并了解数据库管理系统，如HDFS、Kafka、Cassandra等。
 
@@ -127,17 +114,13 @@ Spark支持多种编程语言的API，主要包括：
 
 我们也会研究Spark的Standalone模式，了解这些组件块如何创建及其功能；同时探讨Mesos如何作为集群管理方案来运作Spark。
 
-![](img/54180592142dc2d3a143b2ed4e4d41f1_14.png)
 
 我们还将查看Spark在YARN集群模式下的功能块形成、设置方式以及它们如何协同工作。
 
 
 
-![](img/54180592142dc2d3a143b2ed4e4d41f1_15.png)
 
-![](img/54180592142dc2d3a143b2ed4e4d41f1_14.png)
 
-![](img/54180592142dc2d3a143b2ed4e4d41f1_15.png)
 
 ### 流处理技术与应用 🌊
 
@@ -145,33 +128,25 @@ Spark支持多种编程语言的API，主要包括：
 
 此外，对于以极快速度流入的在线销售数据，可以通过Kafka传递；实体百货店的销售记录也可以通过Flume纳入Spark Streaming进行处理。我们将进一步探讨这些细节。
 
-![](img/54180592142dc2d3a143b2ed4e4d41f1_17.png)
 
-![](img/54180592142dc2d3a143b2ed4e4d41f1_17.png)
 
 然后，我们将深入了解Storm的细节。Storm能对系统做出更快的响应，它采用了一种由Spouts和Bolts组成的架构，其中Supervisor由ZooKeeper和Nimbus节点管理。
 
 
 
-![](img/54180592142dc2d3a143b2ed4e4d41f1_19.png)
 
 我们将看到Twitter过去如何使用Hadoop来分析其系统并支持用户服务。
 
 
 
-![](img/54180592142dc2d3a143b2ed4e4d41f1_19.png)
 
-![](img/54180592142dc2d3a143b2ed4e4d41f1_21.png)
 
 我们也将了解Apache Storm目前如何被Twitter用来支持其服务。
 
 
 
-![](img/54180592142dc2d3a143b2ed4e4d41f1_21.png)
 
-![](img/54180592142dc2d3a143b2ed4e4d41f1_23.png)
 
-![](img/54180592142dc2d3a143b2ed4e4d41f1_23.png)
 
 以及股票市场操作如何利用Storm来快速适应股票市场内部的新变化。
 
@@ -185,7 +160,6 @@ Spark支持多种编程语言的API，主要包括：
 
 
 
-![](img/54180592142dc2d3a143b2ed4e4d41f1_25.png)
 
 ## 总结
 
@@ -197,6 +171,5 @@ Spark支持多种编程语言的API，主要包括：
 
 
 
-![](img/54180592142dc2d3a143b2ed4e4d41f1_27.png)
 
 ![](img/54180592142dc2d3a143b2ed4e4d41f1_27.png)

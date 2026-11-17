@@ -6,15 +6,12 @@
 
 ## 程序目标与初始代码
 
-![](img/f9ea860979f535f7dddf7bc97ff65e81_1.png)
 
 我们的目标是：打开一个文件，逐行读取，找到以“From ”开头的行，并打印出该行的第三个单词。
 
-![](img/f9ea860979f535f7dddf7bc97ff65e81_3.png)
 
 初始代码如下：
 
-![](img/f9ea860979f535f7dddf7bc97ff65e81_5.png)
 
 ```python
 fhand = open('mbox-short.txt')
@@ -35,31 +32,25 @@ for line in fhand:
 6.  如果不是，则跳过该行（`continue`）。
 7.  如果是，则打印第三个单词（`words[2]`）。
 
-![](img/f9ea860979f535f7dddf7bc97ff65e81_7.png)
 
 ---
 
-![](img/f9ea860979f535f7dddf7bc97ff65e81_9.png)
 
 ## 第一次运行与错误分析
 
 当我们运行这个程序时，它并没有成功。程序输出了一个错误信息（Traceback）。
 
-![](img/f9ea860979f535f7dddf7bc97ff65e81_11.png)
 
 **关键点**：错误信息指向了 `if words[0] != ‘From’:` 这一行。然而，仔细观察会发现，程序实际上成功处理了第一行数据（打印出了“Sat”），然后才在后续的某一行崩溃。这说明问题并不直接出在这行代码的语法上，而是与程序运行时的数据状态有关。
 
-![](img/f9ea860979f535f7dddf7bc97ff65e81_13.png)
 
 ---
 
 ## 调试：添加打印语句定位问题
 
-![](img/f9ea860979f535f7dddf7bc97ff65e81_15.png)
 
 为了找出程序在哪一行数据上崩溃，我们在关键操作前添加打印语句，以观察程序运行时的状态。
 
-![](img/f9ea860979f535f7dddf7bc97ff65e81_17.png)
 
 我们修改代码，在拆分单词后立即打印出 `words` 列表：
 
@@ -95,9 +86,7 @@ for line in fhand:
 
 这个修改后，程序就能顺利运行完毕，不再崩溃。
 
-![](img/f9ea860979f535f7dddf7bc97ff65e81_19.png)
 
-![](img/f9ea860979f535f7dddf7bc97ff65e81_20.png)
 
 ### 方案二：更严格的守护
 
@@ -112,9 +101,7 @@ for line in fhand:
 
 ---
 
-![](img/f9ea860979f535f7dddf7bc97ff65e81_22.png)
 
-![](img/f9ea860979f535f7dddf7bc97ff65e81_23.png)
 
 ## 进阶：使用复合逻辑的守护模式
 
@@ -122,9 +109,7 @@ for line in fhand:
 
 我们可以将“跳过空行”和“跳过非‘From’开头的行”这两个条件合并：
 
-![](img/f9ea860979f535f7dddf7bc97ff65e81_25.png)
 
-![](img/f9ea860979f535f7dddf7bc97ff65e81_26.png)
 
 ```python
     if len(words) < 3 or words[0] != 'From':

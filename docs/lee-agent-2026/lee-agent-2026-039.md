@@ -8,7 +8,6 @@
 
 ## 概述
 
-![](img/57c8801a2285b2c7cf0a5a92c75cd48d_3.png)
 
 上一节我们介绍了 OpenAI Realtime API 的基本概念和消息交互流程。本节中，我们来看看如何将这些技术整合到一个实际的 Web 应用中。
 
@@ -38,11 +37,9 @@
 
 ## 服务端代码解析
 
-![](img/57c8801a2285b2c7cf0a5a92c75cd48d_9.png)
 
 服务端的核心逻辑在 `src/index.ts` 文件中。它创建了一个 WebSocket 端点，并实例化了 `OpenAIVoiceRealtimeAgent`。
 
-![](img/57c8801a2285b2c7cf0a5a92c75cd48d_11.png)
 
 这个 `OpenAIVoiceRealtimeAgent` 类定义在 `src/lib/` 目录下，其核心是管理一个到 OpenAI Realtime API 的 WebSocket 连接。连接在智能体初始化时建立，需要指定 API 密钥和模型等参数。
 
@@ -66,11 +63,9 @@ Realtime API 定义了多种客户端和服务端事件。为了正确处理音�
 
 ### 工具集成
 
-![](img/57c8801a2285b2c7cf0a5a92c75cd48d_13.png)
 
 项目集成了两个工具（Tools）来增强助手的能力：
 
-![](img/57c8801a2285b2c7cf0a5a92c75cd48d_15.png)
 
 1.  **加法工具**：一个简单的演示工具，用于将两个数字相加。
 2.  **Tavily 搜索工具**：这是一个标准的 LangChain Tool 实现。它允许助手在回答问题时调用 Tavily 搜索引擎获取实时信息。此功能依赖于正确的 `TAVILY_API_KEY` 配置。
@@ -111,7 +106,6 @@ Realtime API 定义了多种客户端和服务端事件。为了正确处理音�
 
 ![](img/57c8801a2285b2c7cf0a5a92c75cd48d_21.png)
 
-![](img/57c8801a2285b2c7cf0a5a92c75cd48d_23.png)
 
 ## 总结
 

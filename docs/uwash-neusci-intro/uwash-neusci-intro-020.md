@@ -14,7 +14,6 @@
 
 ![](img/cb393aa563d4cf7f90fcb9277cd609f0_1.png)
 
-![](img/cb393aa563d4cf7f90fcb9277cd609f0_2.png)
 
 ![](img/cb393aa563d4cf7f90fcb9277cd609f0_4.png)
 
@@ -30,9 +29,7 @@
 
 ![](img/cb393aa563d4cf7f90fcb9277cd609f0_5.png)
 
-![](img/cb393aa563d4cf7f90fcb9277cd609f0_7.png)
 
-![](img/cb393aa563d4cf7f90fcb9277cd609f0_8.png)
 
 ![](img/cb393aa563d4cf7f90fcb9277cd609f0_9.png)
 
@@ -46,9 +43,7 @@
 
 ![](img/cb393aa563d4cf7f90fcb9277cd609f0_11.png)
 
-![](img/cb393aa563d4cf7f90fcb9277cd609f0_7.png)
 
-![](img/cb393aa563d4cf7f90fcb9277cd609f0_8.png)
 
 ![](img/cb393aa563d4cf7f90fcb9277cd609f0_9.png)
 
@@ -58,7 +53,6 @@
 
 
 
-![](img/cb393aa563d4cf7f90fcb9277cd609f0_11.png)
 
 他们进行了一个经典的小鼠行为实验，测试小鼠对视觉和听觉刺激的反应。传统的数据分析方法是，在恰好植入探针的脑区寻找视觉或听觉刺激表征的签名。而这项研究的妙处在于，利用宽场钙成像，他们可以无偏地监测整个大脑皮层表面，而不仅限于单个或少数几个脑区。此外，他们也不局限于记录可产生动作电位的细胞，而是可以观察所有细胞的整体平均活动。
 
@@ -68,7 +62,6 @@
 
 
 
-![](img/cb393aa563d4cf7f90fcb9277cd609f0_13.png)
 
 ![](img/cb393aa563d4cf7f90fcb9277cd609f0_13.png)
 

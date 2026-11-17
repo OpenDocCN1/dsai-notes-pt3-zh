@@ -8,7 +8,6 @@
 
 ## 导入与初始化ArgumentParser
 
-![](img/8de77e55b4be09f2911be1c7f5601b5f_3.png)
 
 上一节我们介绍了命令行工具的基本概念，本节中我们来看看如何开始使用`argparse`。
 

@@ -4,9 +4,7 @@
 
 ## 创建R Markdown文档
 
-![](img/16ac7db9b1d327d77d04defbb501f788_1.png)
 
-![](img/16ac7db9b1d327d77d04defbb501f788_2.png)
 
 上一节我们介绍了knitr的基本概念，本节中我们来看看如何创建一个R Markdown文档。
 
@@ -14,8 +12,6 @@
 
 ![](img/16ac7db9b1d327d77d04defbb501f788_4.png)
 
-![](img/16ac7db9b1d327d77d04defbb501f788_1.png)
-![](img/16ac7db9b1d327d77d04defbb501f788_2.png)
 
 此时，RStudio会弹出一个新文档，其中包含一个简单的R Markdown模板。你可以编辑标题，例如将其改为“这是一个测试knitr文档”。
 
@@ -47,7 +43,6 @@
 ![](img/16ac7db9b1d327d77d04defbb501f788_8.png)
 ![](img/16ac7db9b1d327d77d04defbb501f788_9.png)
 
-![](img/16ac7db9b1d327d77d04defbb501f788_6.png)
 
 保存后，点击RStudio中的“Knit”按钮（通常显示为“Knit HTML”或一个编织图案的图标），knitr就会开始编译文档。
 
@@ -55,7 +50,6 @@
 
 ![](img/16ac7db9b1d327d77d04defbb501f788_9.png)
 
-![](img/16ac7db9b1d327d77d04defbb501f788_11.png)
 
 编译过程会执行文档中的所有R代码块，并将结果与文本内容合并，最终生成一个独立的输出文件（如HTML文档）。
 
@@ -72,7 +66,6 @@ browseURL("test.html")
 
 这将在你的默认浏览器中打开生成的HTML文档。
 
-![](img/16ac7db9b1d327d77d04defbb501f788_13.png)
 
 ![](img/16ac7db9b1d327d77d04defbb501f788_13.png)
 

@@ -1,207 +1,135 @@
 # 34：L18.2 - MobileNets 🚀
 
-![](img/0cc356f61032df3edcec8162c48c1c13_0.png)
 
-![](img/0cc356f61032df3edcec8162c48c1c13_2.png)
 
-![](img/0cc356f61032df3edcec8162c48c1c13_4.png)
 
-![](img/0cc356f61032df3edcec8162c48c1c13_6.png)
 
-![](img/0cc356f61032df3edcec8162c48c1c13_8.png)
 
 在本节课中，我们将要学习 MobileNets，这是一种专为移动和嵌入式设备设计的高效卷积神经网络架构。我们将深入探讨其核心思想、计算成本分析以及如何通过深度可分离卷积显著降低模型的计算复杂度和参数量。
 
-![](img/0cc356f61032df3edcec8162c48c1c13_10.png)
 
-![](img/0cc356f61032df3edcec8162c48c1c13_12.png)
 
 ---
 
-![](img/0cc356f61032df3edcec8162c48c1c13_14.png)
 
-![](img/0cc356f61032df3edcec8162c48c1c13_16.png)
 
 ## 概述 📋
 
-![](img/0cc356f61032df3edcec8162c48c1c13_18.png)
 
-![](img/0cc356f61032df3edcec8162c48c1c13_20.png)
 
 到目前为止，我们已经学习了几种模型压缩与加速的方法，包括知识蒸馏、剪枝、量化以及 SqueezeNet。本节我们将介绍 MobileNets，它提出了一种新颖的深度可分离卷积操作，能有效减少标准卷积的计算负担。
 
-![](img/0cc356f61032df3edcec8162c48c1c13_22.png)
 
-![](img/0cc356f61032df3edcec8162c48c1c13_24.png)
 
-![](img/0cc356f61032df3edcec8162c48c1c13_26.png)
 
 ---
 
-![](img/0cc356f61032df3edcec8162c48c1c13_28.png)
 
-![](img/0cc356f61032df3edcec8162c48c1c13_30.png)
 
 ## 标准卷积的计算成本分析
 
-![](img/0cc356f61032df3edcec8162c48c1c13_32.png)
 
-![](img/0cc356f61032df3edcec8162c48c1c13_34.png)
 
-![](img/0cc356f61032df3edcec8162c48c1c13_36.png)
 
 在深入 MobileNets 之前，我们先回顾一下标准卷积的计算成本。
 
-![](img/0cc356f61032df3edcec8162c48c1c13_38.png)
 
-![](img/0cc356f61032df3edcec8162c48c1c13_40.png)
 
-![](img/0cc356f61032df3edcec8162c48c1c13_42.png)
 
 假设输入特征图的尺寸为 `Df × Df × M`，其中 `Df` 是空间分辨率，`M` 是输入通道数。输出特征图的尺寸为 `Df × Df × N`（假设步长为1且进行了适当填充以保持分辨率不变）。卷积核的尺寸为 `Dk × Dk × M × N`。
 
-![](img/0cc356f61032df3edcec8162c48c1c13_44.png)
 
-![](img/0cc356f61032df3edcec8162c48c1c13_46.png)
 
-![](img/0cc356f61032df3edcec8162c48c1c13_48.png)
 
 **标准卷积的计算成本公式**为：
 `计算成本 = Dk × Dk × M × N × Df × Df`
 
-![](img/0cc356f61032df3edcec8162c48c1c13_50.png)
 
-![](img/0cc356f61032df3edcec8162c48c1c13_52.png)
 
 这个公式源于我们需要对输出特征图中的每个点（`Df × Df × N`）进行计算，而每个点的计算又涉及卷积核（`Dk × Dk × M`）与输入局部区域的点积。
 
-![](img/0cc356f61032df3edcec8162c48c1c13_54.png)
 
-![](img/0cc356f61032df3edcec8162c48c1c13_56.png)
 
 ---
 
-![](img/0cc356f61032df3edcec8162c48c1c13_58.png)
 
-![](img/0cc356f61032df3edcec8162c48c1c13_60.png)
 
-![](img/0cc356f61032df3edcec8162c48c1c13_62.png)
 
 ## 深度可分离卷积：核心思想 💡
 
-![](img/0cc356f61032df3edcec8162c48c1c13_64.png)
 
-![](img/0cc356f61032df3edcec8162c48c1c13_66.png)
 
 为了降低计算成本，MobileNets 将标准卷积分解为两个更轻量的操作：深度卷积（Depthwise Convolution）和逐点卷积（Pointwise Convolution）。
 
-![](img/0cc356f61032df3edcec8162c48c1c13_68.png)
 
-![](img/0cc356f61032df3edcec8162c48c1c13_70.png)
 
-![](img/0cc356f61032df3edcec8162c48c1c13_72.png)
 
 ### 1. 深度卷积
 
-![](img/0cc356f61032df3edcec8162c48c1c13_74.png)
 
-![](img/0cc356f61032df3edcec8162c48c1c13_76.png)
 
 深度卷积对每个输入通道独立进行空间卷积，**不混合通道信息**。其卷积核尺寸为 `Dk × Dk × 1 × M`（实际上是为每个输入通道分配一个 `Dk × Dk` 的滤波器）。
 
-![](img/0cc356f61032df3edcec8162c48c1c13_78.png)
 
-![](img/0cc356f61032df3edcec8162c48c1c13_80.png)
 
-![](img/0cc356f61032df3edcec8162c48c1c13_82.png)
 
 **深度卷积的计算成本公式**为：
 `计算成本（深度） = Dk × Dk × M × Df × Df`
 
-![](img/0cc356f61032df3edcec8162c48c1c13_84.png)
 
-![](img/0cc356f61032df3edcec8162c48c1c13_86.png)
 
 与标准卷积相比，我们移除了与输出通道数 `N` 相关的计算循环。
 
-![](img/0cc356f61032df3edcec8162c48c1c13_88.png)
 
-![](img/0cc356f61032df3edcec8162c48c1c13_90.png)
 
-![](img/0cc356f61032df3edcec8162c48c1c13_92.png)
 
 ### 2. 逐点卷积
 
-![](img/0cc356f61032df3edcec8162c48c1c13_94.png)
 
-![](img/0cc356f61032df3edcec8162c48c1c13_96.png)
 
-![](img/0cc356f61032df3edcec8162c48c1c13_98.png)
 
 深度卷积的输出通道间是独立的。为了融合通道信息并生成所需的输出维度 `N`，我们使用一个 `1 × 1` 的卷积（即逐点卷积）。
 
-![](img/0cc356f61032df3edcec8162c48c1c13_100.png)
 
-![](img/0cc356f61032df3edcec8162c48c1c13_102.png)
 
-![](img/0cc356f61032df3edcec8162c48c1c13_104.png)
 
 **逐点卷积的计算成本公式**为：
 `计算成本（逐点） = 1 × 1 × M × N × Df × Df = M × N × Df × Df`
 
-![](img/0cc356f61032df3edcec8162c48c1c13_106.png)
 
-![](img/0cc356f61032df3edcec8162c48c1c13_108.png)
 
 ### 3. 总成本与节省
 
-![](img/0cc356f61032df3edcec8162c48c1c13_110.png)
 
-![](img/0cc356f61032df3edcec8162c48c1c13_112.png)
 
 **深度可分离卷积的总计算成本**是两者之和：
 `总成本 = Dk × Dk × M × Df × Df + M × N × Df × Df`
 
-![](img/0cc356f61032df3edcec8162c48c1c13_114.png)
 
-![](img/0cc356f61032df3edcec8162c48c1c13_116.png)
 
-![](img/0cc356f61032df3edcec8162c48c1c13_118.png)
 
 与标准卷积成本 `Dk × Dk × M × N × Df × Df` 相比，其计算量减少的**比例**约为：
 `1/N + 1/(Dk²)`
 
-![](img/0cc356f61032df3edcec8162c48c1c13_120.png)
 
-![](img/0cc356f61032df3edcec8162c48c1c13_122.png)
 
-![](img/0cc356f61032df3edcec8162c48c1c13_124.png)
 
 当使用常见的 `3×3` 卷积核（`Dk=3`）且输出通道数 `N` 较大时，计算量可以**减少大约8到9倍**。
 
-![](img/0cc356f61032df3edcec8162c48c1c13_126.png)
 
-![](img/0cc356f61032df3edcec8162c48c1c13_128.png)
 
-![](img/0cc356f61032df3edcec8162c48c1c13_130.png)
 
 ---
 
-![](img/0cc356f61032df3edcec8162c48c1c13_132.png)
 
-![](img/0cc356f61032df3edcec8162c48c1c13_134.png)
 
 ## 视觉化理解与架构对比
 
-![](img/0cc356f61032df3edcec8162c48c1c13_136.png)
 
-![](img/0cc356f61032df3edcec8162c48c1c13_138.png)
 
-![](img/0cc356f61032df3edcec8162c48c1c13_140.png)
 
 上一节我们分析了公式，本节我们来看看其视觉化表示。
 
-![](img/0cc356f61032df3edcec8162c48c1c13_142.png)
 
 *   **标准卷积**：一次性使用 `N` 个尺寸为 `Dk × Dk × M` 的滤波器，同时进行空间滤波和通道混合。
 *   **深度可分离卷积**：
@@ -235,19 +163,14 @@
 
 可以说，MobileNets 提供了一种更彻底地将通道维度和空间维度计算分离的方法。
 
-![](img/0cc356f61032df3edcec8162c48c1c13_144.png)
 
 ---
 
-![](img/0cc356f61032df3edcec8162c48c1c13_146.png)
 
-![](img/0cc356f61032df3edcec8162c48c1c13_148.png)
 
 ## 总结 🎯
 
-![](img/0cc356f61032df3edcec8162c48c1c13_150.png)
 
-![](img/0cc356f61032df3edcec8162c48c1c13_152.png)
 
 ![](img/0cc356f61032df3edcec8162c48c1c13_154.png)
 

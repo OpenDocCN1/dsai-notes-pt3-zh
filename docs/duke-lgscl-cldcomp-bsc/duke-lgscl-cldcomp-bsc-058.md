@@ -24,9 +24,7 @@ cdk --version
 
 确认版本无误后，接下来我们将参考一个官方的 AWS 研讨会内容来初始化项目结构。我们将复制相关命令来创建一个工作目录。
 
-![](img/fbb906a4721b1b3c3ff1f6418c0e65bb_3.png)
 
-![](img/fbb906a4721b1b3c3ff1f6418c0e65bb_4.png)
 
 ```bash
 mkdir cdk-workshop && cd cdk-workshop
@@ -95,7 +93,6 @@ def handler(event, context):
 
 ---
 
-![](img/fbb906a4721b1b3c3ff1f6418c0e65bb_12.png)
 
 ## 集成 Lambda 到 CDK 栈
 
@@ -132,7 +129,6 @@ cdk diff
 
 由于这是我们第一次部署，应该会显示许多即将创建的变更。确认无误后，就可以进行部署了。
 
-![](img/fbb906a4721b1b3c3ff1f6418c0e65bb_14.png)
 
 ---
 

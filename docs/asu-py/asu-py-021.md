@@ -1,10 +1,7 @@
 # 21：嵌套循环结构实现 🔄
 
-![](img/eced15ae083f0b432916eb5729f4aa21_0.png)
 
-![](img/eced15ae083f0b432916eb5729f4aa21_2.png)
 
-![](img/eced15ae083f0b432916eb5729f4aa21_4.png)
 
 在本节课中，我们将学习嵌套循环的概念，并通过一个演示来理解其工作原理。我们将看到如何在一个循环内部放置另一个循环，并观察它们的执行顺序。
 
@@ -20,33 +17,24 @@ for outer_item in outer_sequence:
         # 内层循环体
 ```
 
-![](img/eced15ae083f0b432916eb5729f4aa21_6.png)
 
 请注意，可以使用 `break` 语句来提前终止循环。
 
-![](img/eced15ae083f0b432916eb5729f4aa21_8.png)
 
-![](img/eced15ae083f0b432916eb5729f4aa21_9.png)
 
 ## 嵌套循环演示
 
 现在，让我们通过一个具体的例子来理解嵌套循环的执行流程。
 
-![](img/eced15ae083f0b432916eb5729f4aa21_11.png)
 
-![](img/eced15ae083f0b432916eb5729f4aa21_12.png)
 
-![](img/eced15ae083f0b432916eb5729f4aa21_13.png)
 
 假设我们想让外层循环遍历数字1到5，而内层循环遍历数字1到10。
 
-![](img/eced15ae083f0b432916eb5729f4aa21_15.png)
 
-![](img/eced15ae083f0b432916eb5729f4aa21_16.png)
 
 以下是实现此功能的代码：
 
-![](img/eced15ae083f0b432916eb5729f4aa21_18.png)
 
 ```python
 for i in range(1, 6):
@@ -56,24 +44,16 @@ for i in range(1, 6):
     print()  # 打印一个空行，使输出更清晰
 ```
 
-![](img/eced15ae083f0b432916eb5729f4aa21_19.png)
 
-![](img/eced15ae083f0b432916eb5729f4aa21_20.png)
 
-![](img/eced15ae083f0b432916eb5729f4aa21_22.png)
 
 运行这段程序后，输出结果将如下所示：
 
-![](img/eced15ae083f0b432916eb5729f4aa21_24.png)
-
-![](img/eced15ae083f0b432916eb5729f4aa21_25.png)
 
 
-![](img/eced15ae083f0b432916eb5729f4aa21_27.png)
 
-![](img/eced15ae083f0b432916eb5729f4aa21_28.png)
 
-![](img/eced15ae083f0b432916eb5729f4aa21_29.png)
+
 
 ```
 外层循环计数: 1
@@ -92,11 +72,8 @@ for i in range(1, 6):
 
 让我们详细解析执行过程：
 
-![](img/eced15ae083f0b432916eb5729f4aa21_31.png)
 
-![](img/eced15ae083f0b432916eb5729f4aa21_32.png)
 
-![](img/eced15ae083f0b432916eb5729f4aa21_33.png)
 
 1.  **第一次外层迭代**：`i` 的值为1。程序打印“外层循环计数: 1”。
 2.  **进入内层循环**：随后，程序进入内层 `for` 循环。`j` 的值从1开始，一直迭代到10。在此期间，程序会连续打印10行“内层循环计数: j”。
@@ -106,13 +83,9 @@ for i in range(1, 6):
 
 通过这个例子，你可以清晰地看到，**外层循环每执行一次，内层循环就会完整地执行其所有迭代**。
 
-![](img/eced15ae083f0b432916eb5729f4aa21_35.png)
 
-![](img/eced15ae083f0b432916eb5729f4aa21_36.png)
 
-![](img/eced15ae083f0b432916eb5729f4aa21_37.png)
 
-![](img/eced15ae083f0b432916eb5729f4aa21_38.png)
 
 ## 总结
 

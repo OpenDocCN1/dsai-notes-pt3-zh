@@ -1,40 +1,27 @@
 # 039：根提示词 🔑
 
-![](img/9a82a5b96e4f24c4eb2f3ee61aceed82_0.png)
 
-![](img/9a82a5b96e4f24c4eb2f3ee61aceed82_2.png)
 
 在本节课中，我们将要学习一个核心概念：**根提示词**。我们将了解它是什么，它如何影响与大语言模型的整个对话，以及如何利用它来定制AI的行为和设定安全边界。
 
-![](img/9a82a5b96e4f24c4eb2f3ee61aceed82_3.png)
 
-![](img/9a82a5b96e4f24c4eb2f3ee61aceed82_4.png)
 
-![](img/9a82a5b96e4f24c4eb2f3ee61aceed82_5.png)
 
 ## 概述
 
-![](img/9a82a5b96e4f24c4eb2f3ee61aceed82_7.png)
 
 我们已经看到提示词如何被用来“编程”大语言模型，使其自动为我们完成有趣的任务。我们也了解到，提示词可以被预先设定，从而影响后续对话的走向。它们成为了一种指导大语言模型行为的基本规则。
 
 ## 什么是根提示词？🤔
 
-![](img/9a82a5b96e4f24c4eb2f3ee61aceed82_9.png)
 
-![](img/9a82a5b96e4f24c4eb2f3ee61aceed82_10.png)
 
 在许多情况下，存在一个对用户隐藏的**根提示词**。你将要使用的各种工具本质上都内置了根提示词，它们为大语言模型及其与用户的交互定义了基本规则。
 
-![](img/9a82a5b96e4f24c4eb2f3ee61aceed82_11.png)
 
-![](img/9a82a5b96e4f24c4eb2f3ee61aceed82_12.png)
 
-![](img/9a82a5b96e4f24c4eb2f3ee61aceed82_13.png)
 
-![](img/9a82a5b96e4f24c4eb2f3ee61aceed82_14.png)
 
-![](img/9a82a5b96e4f24c4eb2f3ee61aceed82_15.png)
 
 这些规则的目的包括：
 *   确保大语言模型不说任何冒犯性言论。
@@ -42,15 +29,11 @@
 *   建议适当的行动。
 *   为我们的交互设定基本准则，或引导模型执行特定任务。
 
-![](img/9a82a5b96e4f24c4eb2f3ee61aceed82_16.png)
 
-![](img/9a82a5b96e4f24c4eb2f3ee61aceed82_18.png)
 
 例如，我们可能希望确保模型在输出时，总是尝试提供最有帮助的内容。
 
-![](img/9a82a5b96e4f24c4eb2f3ee61aceed82_20.png)
 
-![](img/9a82a5b96e4f24c4eb2f3ee61aceed82_21.png)
 
 ## 根提示词的作用示例
 

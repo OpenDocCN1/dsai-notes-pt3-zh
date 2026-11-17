@@ -1,6 +1,5 @@
 # 2：1_Llamafile 概述
 
-![](img/b5bdfacbc75de8caf563aa5868c03acd_0.png)
 
 ![](img/b5bdfacbc75de8caf563aa5868c03acd_0.png)
 

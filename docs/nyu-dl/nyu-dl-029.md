@@ -91,7 +91,6 @@
 
 ![](img/bb303e6bd2ce61b2618b7c50f74c9469_14.png)
 
-![](img/bb303e6bd2ce61b2618b7c50f74c9469_15.png)
 
 ![](img/bb303e6bd2ce61b2618b7c50f74c9469_16.png)
 
@@ -101,19 +100,13 @@
 
 ![](img/bb303e6bd2ce61b2618b7c50f74c9469_19.png)
 
-![](img/bb303e6bd2ce61b2618b7c50f74c9469_20.png)
 
-![](img/bb303e6bd2ce61b2618b7c50f74c9469_21.png)
 
-![](img/bb303e6bd2ce61b2618b7c50f74c9469_22.png)
 
 ![](img/bb303e6bd2ce61b2618b7c50f74c9469_23.png)
 
-![](img/bb303e6bd2ce61b2618b7c50f74c9469_24.png)
 
-![](img/bb303e6bd2ce61b2618b7c50f74c9469_25.png)
 
-![](img/bb303e6bd2ce61b2618b7c50f74c9469_26.png)
 
 ![](img/bb303e6bd2ce61b2618b7c50f74c9469_27.png)
 

@@ -2,7 +2,6 @@
 
 ![](img/dc797d8e3be38ad809df14fafd4d4efe_0.png)
 
-![](img/dc797d8e3be38ad809df14fafd4d4efe_2.png)
 
 ![](img/dc797d8e3be38ad809df14fafd4d4efe_4.png)
 
@@ -10,7 +9,6 @@
 
 ## 概述
 
-![](img/dc797d8e3be38ad809df14fafd4d4efe_6.png)
 
 Hive 的安装和配置过程主要分为几个步骤：下载安装包、解压安装、设置环境变量、配置元数据存储以及启动 Hive 命令行界面。我们将使用内置的 Derby 数据库作为元数据存储，以简化配置过程。
 
@@ -112,17 +110,14 @@ Hive 会通过这个变量找到 Hadoop 的配置，从而知道如何与 HDFS �
 
 现在，所有准备工作已经就绪，可以启动 Hive 命令行界面（CLI）了。确保 Hadoop 的所有守护进程（如 NameNode, DataNode, ResourceManager）已经启动。
 
-![](img/dc797d8e3be38ad809df14fafd4d4efe_10.png)
 
 在终端中直接输入 `hive` 命令：
 
-![](img/dc797d8e3be38ad809df14fafd4d4efe_12.png)
 
 ```bash
 hive
 ```
 
-![](img/dc797d8e3be38ad809df14fafd4d4efe_14.png)
 
 如果一切配置正确，你将看到 Hive 的命令行提示符 `hive>`。在这个界面中，你可以执行 HiveQL 语句，就像在传统的 SQL 解释器中一样。
 

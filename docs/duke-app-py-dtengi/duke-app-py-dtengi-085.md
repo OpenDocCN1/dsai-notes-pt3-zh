@@ -105,7 +105,6 @@ Kubernetes官方文档中有一个名为“Hello Minikube”的教程，指导�
 
 以下是清理环境的步骤：
 
-![](img/4a7b8ab6b0c34dc18f28e9e54e7b22ad_12.png)
 
 1.  删除创建的服务：
     ```bash

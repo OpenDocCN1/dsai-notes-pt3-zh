@@ -1,6 +1,5 @@
 #  041：Bash数据截断
 
-![](img/8059a3cf20c7f62210594faa990c88db_0.png)
 
 ![](img/8059a3cf20c7f62210594faa990c88db_1.png)
 

@@ -1,6 +1,5 @@
 # 大型语言模型实践（高级数据工程、AWS、Databricks和本地LLM）：P160：59_03_05_Julia实现ELO算法
 
-![](img/db2f4b6885b73c863ae7e523d83a52fd_0.png)
 
 ![](img/db2f4b6885b73c863ae7e523d83a52fd_0.png)
 
@@ -91,6 +90,5 @@ println("$(fighter2.name): $(fighter2.rating)")
 
 本节课中我们一起学习了如何使用Julia语言实现ELO评分算法。我们从定义表示选手的可变结构体`Fighter`开始，然后实现了包含ELO核心公式的`update_rating`函数，最后模拟了一场UFC比赛并观察了评分的变化。通过这个实践，我们不仅理解了ELO算法的基本原理，也领略了Julia语言在类型安全、代码清晰度和交互式数据科学工作流方面的优势。在构建数据科学和机器学习解决方案时，Julia是一个强大而现代的工具。
 
-![](img/db2f4b6885b73c863ae7e523d83a52fd_2.png)
 
 ![](img/db2f4b6885b73c863ae7e523d83a52fd_2.png)

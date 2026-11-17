@@ -1,6 +1,5 @@
 #  020：Bash Shell环境配置简介 🐚
 
-![](img/3c12491a1d81aaa6ab7362ccc5694f42_0.png)
 
 ![](img/3c12491a1d81aaa6ab7362ccc5694f42_1.png)
 

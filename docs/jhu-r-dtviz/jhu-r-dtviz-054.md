@@ -1,6 +1,5 @@
 # 054：使用 Flexdashboard 制作仪表板
 
-![](img/4d7999c053065277a9f366c5d5f9544e_0.png)
 
 在本节课中，我们将学习如何使用 R 包 `flexdashboard` 来创建和分享数据可视化仪表板。`flexdashboard` 是一种特殊的 R Markdown 报告格式，它允许你将不同的图表和表格排列成仪表板风格的文档。这对于展示和分享你的分析成果非常有用。
 
@@ -12,7 +11,6 @@
 
 在 RStudio 的控制台中运行以下代码：
 
-![](img/4d7999c053065277a9f366c5d5f9544e_2.png)
 
 ```r
 install.packages("flexdashboard")
@@ -20,11 +18,9 @@ install.packages("flexdashboard")
 
 安装完成后，在 RStudio 中点击 `File` -> `New File` -> `R Markdown...`。在弹出的窗口中，选择 `From Template`，然后点击 `Flex Dashboard`。
 
-![](img/4d7999c053065277a9f366c5d5f9544e_4.png)
 
 ![](img/4d7999c053065277a9f366c5d5f9544e_8.png)
 
-![](img/4d7999c053065277a9f366c5d5f9544e_9.png)
 
 当你以这种方式创建新项目时，`.Rmd` 文件会打开，其中已经包含了一个仪表板模板。为了演示，你可以将这个 `.Rmd` 文件保存到电脑的某个位置。
 
@@ -36,21 +32,16 @@ install.packages("flexdashboard")
 
 ![](img/4d7999c053065277a9f366c5d5f9544e_8.png)
 
-![](img/4d7999c053065277a9f366c5d5f9544e_9.png)
 
 与任何其他 R Markdown 文件一样，如果你需要导入数据，请确保将 `.Rmd` 文件与你将要导入的 CSV 文件放在同一个文件夹中。
 
-![](img/4d7999c053065277a9f366c5d5f9544e_11.png)
 
 在本演示中，我们不会导入任何外部数据，但请记住这一点以备将来使用。保存文件后，点击 `Knit` 按钮。你会看到它生成了一个包含三个内容占位符的空白仪表板。
 
-![](img/4d7999c053065277a9f366c5d5f9544e_11.png)
 
-![](img/4d7999c053065277a9f366c5d5f9544e_15.png)
 
 这是一个 HTML 文件，你可以在文件资源管理器或 Finder 中找到它，并在网页浏览器中打开。
 
-![](img/4d7999c053065277a9f366c5d5f9544e_13.png)
 
 ---
 
@@ -76,11 +67,9 @@ ggplot(mtcars, aes(x = wt, y = mpg)) + geom_point()
 ggplot(mtcars, aes(x = factor(cyl))) + geom_bar()
 ```
 
-![](img/4d7999c053065277a9f366c5d5f9544e_19.png)
 
 在 “Chart C” 的代码块中，创建一个关于马力的箱线图。
 
-![](img/4d7999c053065277a9f366c5d5f9544e_21.png)
 
 ```r
 ggplot(mtcars, aes(y = hp)) + geom_boxplot()
@@ -88,21 +77,14 @@ ggplot(mtcars, aes(y = hp)) + geom_boxplot()
 
 我们暂时不关心如何美化或格式化这些图表，因为本演示的重点是如何将内容放入仪表板的不同组件中。
 
-![](img/4d7999c053065277a9f366c5d5f9544e_23.png)
 
-![](img/4d7999c053065277a9f366c5d5f9544e_24.png)
 
-![](img/4d7999c053065277a9f366c5d5f9544e_23.png)
 
-![](img/4d7999c053065277a9f366c5d5f9544e_24.png)
 
-![](img/4d7999c053065277a9f366c5d5f9544e_25.png)
 
-![](img/4d7999c053065277a9f366c5d5f9544e_25.png)
 
 你还可以继续更改仪表板的标题。对于制作基本的静态可视化图表来说，这非常简单。现在，点击 `Knit` 来查看最终效果。
 
-![](img/4d7999c053065277a9f366c5d5f9544e_27.png)
 
 ![](img/4d7999c053065277a9f366c5d5f9544e_27.png)
 
@@ -114,7 +96,6 @@ ggplot(mtcars, aes(y = hp)) + geom_boxplot()
 
 ## 🧱 布局：列与行
 
-![](img/4d7999c053065277a9f366c5d5f9544e_31.png)
 
 仪表板的布局通过 YAML 头部和 Markdown 语法控制。在模板中，布局默认是按列组织的。
 
@@ -128,15 +109,11 @@ Column {data-width=350}
 
 宽度是相对的，你可以设置任意总和，仪表板会根据相对大小分配不同的组件。你可以在列内通过使用三级标题（三个井号 `###` 后跟图表标题）来指定不同的框。在此列中，每个图表将垂直显示。
 
-![](img/4d7999c053065277a9f366c5d5f9544e_33.png)
 
-![](img/4d7999c053065277a9f366c5d5f9544e_33.png)
 
-![](img/4d7999c053065277a9f366c5d5f9544e_34.png)
 
 如果你想切换到行方向，这也很容易做到。只需转到 YAML 头部，将方向改为 `rows`。
 
-![](img/4d7999c053065277a9f366c5d5f9544e_36.png)
 
 ```yaml
 orientation: rows
@@ -154,9 +131,7 @@ Row {data-height=350}
 
 你需要尝试调整高度和宽度值，以最适合你的图形。找到合适的值很大程度上是一个反复试验的过程，因此你需要积累一些经验。
 
-![](img/4d7999c053065277a9f366c5d5f9544e_40.png)
 
-![](img/4d7999c053065277a9f366c5d5f9544e_41.png)
 
 ![](img/4d7999c053065277a9f366c5d5f9544e_40.png)
 

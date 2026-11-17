@@ -10,7 +10,6 @@
 
 上一节我们介绍了课程目标，本节中我们来看看有哪些可用的免费云端 GPU 资源。
 
-![](img/d7c7154ac9fc0d0d61b5e647f19bec0d_1.png)
 
 我发现了一个名为“Deep learning in the cloud”的优秀 GitHub 仓库。该仓库的贡献者和维护者整理了一份非常棒的列表，列出了所有可用于在云端训练深度神经网络的不同工具。它们中的大多数都支持 GPU，这正是其核心价值所在。
 
@@ -21,13 +20,10 @@
 
 对于在校学生，还有一些额外的特别优惠，值得关注。
 
-![](img/d7c7154ac9fc0d0d61b5e647f19bec0d_3.png)
 
 ## 🛠️ 使用 Google Colab
 
-![](img/d7c7154ac9fc0d0d61b5e647f19bec0d_5.png)
 
-![](img/d7c7154ac9fc0d0d61b5e647f19bec0d_6.png)
 
 上一节我们了解了可用的资源，本节中我们来看看如何具体使用 Google Colab。
 
@@ -35,19 +31,15 @@
 
 首先，点击链接打开一个新的 Colab 笔记本环境。这是一个基于笔记本的环境，易于使用，并且可以直接在界面中查看代码运行结果。不过，当代码变得复杂时，拥有 Python 脚本的云端环境可能更合适。你可以探索列表并选择最适合你课程项目的环境，没有强制要求。
 
-![](img/d7c7154ac9fc0d0d61b5e647f19bec0d_8.png)
 
 ### 启用 GPU
 
-![](img/d7c7154ac9fc0d0d61b5e647f19bec0d_10.png)
 
 一个重要的步骤是启用 GPU 支持。为此，你需要转到“运行时”菜单，选择“更改运行时类型”，然后在“硬件加速器”下拉菜单中选择“GPU”。你也可以选择 TPU，但对于本课程，我推荐使用 GPU。
 
-![](img/d7c7154ac9fc0d0d61b5e647f19bec0d_12.png)
 
 选择完成后，我们可以检查 PyTorch 是否可用，并确认 GPU 已被识别。
 
-![](img/d7c7154ac9fc0d0d61b5e647f19bec0d_14.png)
 
 ```python
 import torch
@@ -55,13 +47,10 @@ print(torch.__version__)
 print(torch.cuda.is_available())
 ```
 
-![](img/d7c7154ac9fc0d0d61b5e647f19bec0d_16.png)
 
-![](img/d7c7154ac9fc0d0d61b5e647f19bec0d_18.png)
 
 如果 `torch.cuda.is_available()` 返回 `False`，请确保你已在运行时设置中正确选择了 GPU。
 
-![](img/d7c7154ac9fc0d0d61b5e647f19bec0d_19.png)
 
 ### 打开和运行笔记本
 
@@ -75,7 +64,6 @@ Colab 预装了许多 Python 包，但并非全部。如果遇到“ModuleNotFou
 
 我们可以使用感叹号 `!` 来执行终端命令：
 
-![](img/d7c7154ac9fc0d0d61b5e647f19bec0d_21.png)
 
 ```bash
 !pip install watermark
@@ -95,7 +83,6 @@ Colab 预装了许多 Python 包，但并非全部。如果遇到“ModuleNotFou
 
 以下是挂载 Google Drive 的代码：
 
-![](img/d7c7154ac9fc0d0d61b5e647f19bec0d_23.png)
 
 ```python
 from google.colab import drive

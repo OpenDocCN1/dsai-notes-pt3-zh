@@ -253,7 +253,6 @@ print(all_student_classes)
 print(all_student_classes.loc[‘Kelly‘])
 ```
 
-![](img/79ce57b793ef0d8cf4f29cca91bafc28_3.png)
 
 ![](img/79ce57b793ef0d8cf4f29cca91bafc28_3.png)
 
@@ -269,6 +268,5 @@ print(all_student_classes.loc[‘Kelly‘])
 
 Series对象还有许多我们未讨论到的方法，但掌握了这些基础知识后，我们将继续讨论pandas的二维数据结构：DataFrame。DataFrame与Series对象非常相似，但包含多列数据，是在清洗和聚合数据时你将花费大部分时间处理的结构。
 
-![](img/79ce57b793ef0d8cf4f29cca91bafc28_5.png)
 
 ![](img/79ce57b793ef0d8cf4f29cca91bafc28_5.png)

@@ -1,6 +1,5 @@
 # 013：总结
 
-![](img/8bed223cfa24fdecf1b192e6932c8b85_0.png)
 
 ![](img/8bed223cfa24fdecf1b192e6932c8b85_0.png)
 

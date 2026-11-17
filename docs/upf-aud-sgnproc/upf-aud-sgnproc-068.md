@@ -1,16 +1,12 @@
 # 068：Freesound API 使用指南 🎵
 
-![](img/ef3def53e29bb0dca57f3a69d4ad53b7_1.png)
 
 在本节课中，我们将学习如何通过编程方式访问和分析声音集合，这是进行声音描述、比较和分类的基础。为此，我们将重点介绍 **Freesound API**，这是一个强大的工具，允许我们以程序化的方式查询和获取Freesound数据库中的声音及其分析数据。
 
 ## 什么是API？🔌
 
-![](img/ef3def53e29bb0dca57f3a69d4ad53b7_3.png)
 
-![](img/ef3def53e29bb0dca57f3a69d4ad53b7_5.png)
 
-![](img/ef3def53e29bb0dca57f3a69d4ad53b7_6.png)
 
 API（应用程序编程接口）本质上是一种协议。对于Web API而言，它基于HTTP协议，允许我们通过发送特定的HTTP请求来查询数据库中的内容，而无需使用网页界面。这为我们以编程方式处理声音数据提供了可能。
 
@@ -22,7 +18,6 @@ API（应用程序编程接口）本质上是一种协议。对于Web API而言�
 
 但API的功能远不止于此。我们还可以基于声音的内容进行分析搜索，例如，根据其低层级声学特征进行筛选。
 
-![](img/ef3def53e29bb0dca57f3a69d4ad53b7_8.png)
 
 以下是一个API调用的示例URL，它展示了如何获取特定声音ID的完整信息摘要：
 ```
@@ -38,7 +33,6 @@ https://freesound.org/apiv2/sounds/<sound_id>/
 
 库的核心文件是 `freesound.py`，它定义了一系列用于执行API查询的类和方法。此外，`examples.py` 文件提供了实用的代码示例，展示了如何获取声音信息、分析数据或查找相似声音。
 
-![](img/ef3def53e29bb0dca57f3a69d4ad53b7_10.png)
 
 以下是一个基础的使用示例代码框架：
 ```python
@@ -58,19 +52,15 @@ mfccs = analysis.lowlevel.mfcc.mean
 print(mfccs)
 ```
 
-![](img/ef3def53e29bb0dca57f3a69d4ad53b7_12.png)
 
-![](img/ef3def53e29bb0dca57f3a69d4ad53b7_13.png)
 
 ## 实战：下载并分析声音集合 💻
 
-![](img/ef3def53e29bb0dca57f3a69d4ad53b7_15.png)
 
 在本次课程的作业中，我们提供了一个实用的Python脚本，用于简化从Freesound下载声音集合的过程。
 
 该脚本的核心是一个 `download_sounds_freesound` 函数。你可以通过指定查询文本、标签、时长范围、API密钥、存储目录、结果数量和文件格式来调用它。
 
-![](img/ef3def53e29bb0dca57f3a69d4ad53b7_17.png)
 
 例如，以下代码会下载符合条件的前20个“bassoon”声音：
 ```python
@@ -88,7 +78,6 @@ sound_download.download_sounds_freesound(query=“bassoon”，
 
 ## 可视化与分析 📊
 
-![](img/ef3def53e29bb0dca57f3a69d4ad53b7_19.png)
 
 下载声音集合后，我们可以使用作业中提供的另一个分析脚本进行探索。其中一个函数可以将所有声音的指定特征在二维平面上可视化。
 
@@ -102,9 +91,7 @@ sa.plot_features(“./tmp”， descriptors=[0， 12])
 
 ## 总结与资源 📚
 
-![](img/ef3def53e29bb0dca57f3a69d4ad53b7_21.png)
 
-![](img/ef3def53e29bb0dca57f3a69d4ad53b7_23.png)
 
 本节课我们一起学习了Freesound API的核心用途和基本操作方法。我们了解到，API是程序化访问大规模声音数据库的关键。通过Python客户端库，我们可以方便地搜索、下载声音并获取其丰富的分析特征，进而为声音的分类、聚类和描述等任务奠定基础。
 

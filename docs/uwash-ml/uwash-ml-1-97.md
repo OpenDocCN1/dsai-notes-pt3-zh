@@ -42,7 +42,6 @@
 
 SuperVision团队使用了深度神经网络，并取得了相对于竞争对手的巨大优势。
 
-![](img/cffeeab9b8058de5e2572af1b3cce341_5.png)
 
 ![](img/cffeeab9b8058de5e2572af1b3cce341_5.png)
 
@@ -54,7 +53,6 @@ SuperVision团队使用了深度神经网络，并取得了相对于竞争对手
 
 SuperVision团队赢得比赛的神经网络被称为 **AlexNet**。
 
-![](img/cffeeab9b8058de5e2572af1b3cce341_7.png)
 
 以下是该网络的关键信息：
 *   **网络结构**：包含 **8层**。

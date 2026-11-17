@@ -80,7 +80,6 @@ def weighted_average_score(user_history, target_item, cooccurrence_matrix):
 
 以下是该方法的主要问题：
 
-![](img/8aa92dfe1430b479cef62626e4894ba5_9.png)
 
 *   **缺乏上下文信息**：它没有直接利用诸如一天中的时间、用户地理位置等上下文信息。
 *   **忽略用户与商品特征**：该方法在构建共现矩阵时将所有用户和商品混在一起考虑，没有利用用户年龄、性别或商品类别、价格等特征信息来驱动推荐。

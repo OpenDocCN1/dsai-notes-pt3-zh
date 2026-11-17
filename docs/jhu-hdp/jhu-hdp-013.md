@@ -30,7 +30,6 @@
 
 ![](img/5cd892f64bb0ce43956d4b6510917e35_3.png)
 
-![](img/5cd892f64bb0ce43956d4b6510917e35_5.png)
 
 访问 `incubator.apache.org`，你可以看到所有正在孵化的项目列表。其中一些项目与Hadoop紧密相关，例如用于交互式查询的Drill、用于流处理的Storm、以及高级语言Tez等。定期浏览这个页面，有助于你了解生态系统的最新动态。
 
@@ -38,19 +37,15 @@
 
 在分类的基础上，我们选取几个最具代表性的项目进行更详细的介绍。
 
-![](img/5cd892f64bb0ce43956d4b6510917e35_7.png)
 
 ### Hive 🐝
 
-![](img/5cd892f64bb0ce43956d4b6510917e35_9.png)
 
 Hive起源于Facebook。其动机是让非Java开发人员（如数据科学家）能够轻松访问HDFS中的数据。用户使用一种类似SQL的语言——**HiveQL**来表达查询，Hive会将其转换为MapReduce代码执行。Hive要求数据具有模式（Schema），你可以通过类似 `CREATE TABLE` 的语法在Hive中定义，也可以使用Avro等序列化格式，将模式信息直接存储在数据文件中。
 
 ### Pig 🐷
 
-![](img/5cd892f64bb0ce43956d4b6510917e35_11.png)
 
-![](img/5cd892f64bb0ce43956d4b6510917e35_13.png)
 
 Pig起源于Yahoo。其动机同样是简化数据科学家对HDFS中数据的访问。用户使用一种数据流语言——**Pig Latin**来编写加载、转换和存储数据的脚本，这些脚本同样会被转换成MapReduce作业。与Hive相比，Pig对模式的要求更灵活，有“Pig吃一切”的说法，意味着它能处理有模式或无模式的数据。Pig被认为比Hive更强大，能够编写更复杂的数据处理脚本。
 
@@ -74,17 +69,13 @@ Zookeeper是一个集中式服务，用于维护集群的配置信息、实现�
 
 Avro起源于Cloudera，旨在提供比Thrift或Protocol Buffers更好的数据序列化方案。它是一个富含数据结构的库，允许以紧凑的二进制格式存储数据，并使用JSON定义数据模式。Avro的一个关键特性是**将数据模式与数据本身存储在一起**，这使得Pig、Hive等工具能更容易地读取和理解数据。
 
-![](img/5cd892f64bb0ce43956d4b6510917e35_15.png)
 
 ### Oozie ⏰
 
-![](img/5cd892f64bb0ce43956d4b6510917e35_17.png)
 
 Oozie起源于Yahoo。Yahoo集群中每天运行着成千上万的作业，需要一种机制来管理和触发这些作业。Oozie就是一个工作流协调器，允许你基于时间（类似Cron）或数据可用性来触发Hadoop作业，从而管理复杂的工作流。工作流通常用**有向无环图（DAG）** 来描述。
 
-![](img/5cd892f64bb0ce43956d4b6510917e35_19.png)
 
-![](img/5cd892f64bb0ce43956d4b6510917e35_21.png)
 
 ### Mahout 🐘
 
@@ -94,9 +85,7 @@ Mahout是一个基于Java、构建在Hadoop MapReduce之上的机器学习库。
 
 Ambari起源于Hortonworks。它是一个基于Web的GUI工具，用于供应、管理和监控Apache Hadoop集群。你可以通过它选择要在集群上安装的服务（如Hive、Pig等），并集中管理所有服务。Ambari的诞生源于Hortonworks希望提供一个完全开源的管理和监控工具，这与一些商业发行版采用专有管理软件的策略不同。
 
-![](img/5cd892f64bb0ce43956d4b6510917e35_23.png)
 
-![](img/5cd892f64bb0ce43956d4b6510917e35_25.png)
 
 ## 总结
 

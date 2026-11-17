@@ -1,6 +1,5 @@
 # 006：归约
 
-![](img/9c52650575b48e82a1082de0754c6c06_0.png)
 
 ![](img/9c52650575b48e82a1082de0754c6c06_0.png)
 
@@ -139,6 +138,5 @@ __global__ void reduction_kernel(int* input, int* partial_sums, int n) {
 
 归约的实现拥有巨大的优化空间，不同的库和编译器会自动探索各种代码变体以适应特定硬件架构。掌握这些基础技术，是编写高性能GPU程序的关键一步。
 
-![](img/9c52650575b48e82a1082de0754c6c06_2.png)
 
 ![](img/9c52650575b48e82a1082de0754c6c06_2.png)

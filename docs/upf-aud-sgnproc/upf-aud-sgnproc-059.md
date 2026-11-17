@@ -1,14 +1,9 @@
 # 059：采用HPS的变形技术 🎵
 
-![](img/b92fcb7507137cabdb729cf1ae40edb7_0.png)
 
-![](img/b92fcb7507137cabdb729cf1ae40edb7_2.png)
 
-![](img/b92fcb7507137cabdb729cf1ae40edb7_4.png)
 
-![](img/b92fcb7507137cabdb729cf1ae40edb7_5.png)
 
-![](img/b92fcb7507137cabdb729cf1ae40edb7_6.png)
 
 在本节课中，我们将学习如何使用谐波加随机模型进行声音变形。我们将通过分析小提琴和女高音两种声音，并演示如何在这两种声音的参数之间进行插值，来实现不同于短时傅里叶变换的变形效果。
 
@@ -54,21 +49,14 @@
     *   让所有参数都从声音A（0时刻）线性过渡到声音B（1时刻），则会实现一个完整的声音变形过程。
 6.  应用变形并试听结果。可以观察到，由于模型参数是独立插值的，变形过程可能产生非常平滑或具有特定艺术效果的过渡，这与基于STFT的频谱直接混合有本质区别。
 
-![](img/b92fcb7507137cabdb729cf1ae40edb7_8.png)
 
-![](img/b92fcb7507137cabdb729cf1ae40edb7_9.png)
 
-![](img/b92fcb7507137cabdb729cf1ae40edb7_10.png)
 
 ## 总结 📝
 
-![](img/b92fcb7507137cabdb729cf1ae40edb7_12.png)
 
-![](img/b92fcb7507137cabdb729cf1ae40edb7_13.png)
 
-![](img/b92fcb7507137cabdb729cf1ae40edb7_14.png)
 
-![](img/b92fcb7507137cabdb729cf1ae40edb7_16.png)
 
 ![](img/b92fcb7507137cabdb729cf1ae40edb7_17.png)
 

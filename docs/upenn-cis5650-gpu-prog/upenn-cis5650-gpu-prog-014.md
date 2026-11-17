@@ -2,11 +2,9 @@
 
 ![](img/20cb9720d4b8b89b9cfd6e59e05c448f_1.png)
 
-![](img/20cb9720d4b8b89b9cfd6e59e05c448f_3.png)
 
 在本节课中，我们将学习如何将一个简单的CUDA计算任务——SAXPY（单精度a乘X加Y）——移植到WebGPU平台上。我们将通过对比CUDA和WebGPU的API，理解图形API如何用于通用计算，并亲自动手实现一个完整的WebGPU计算流程。
 
-![](img/20cb9720d4b8b89b9cfd6e59e05c448f_5.png)
 
 ![](img/20cb9720d4b8b89b9cfd6e59e05c448f_7.png)
 
@@ -28,9 +26,7 @@ WebGPU的设计考虑了Web环境的安全性、隐私性和跨平台需求，�
 
 ## 项目结构与CPU基准实现 💻
 
-![](img/20cb9720d4b8b89b9cfd6e59e05c448f_13.png)
 
-![](img/20cb9720d4b8b89b9cfd6e59e05c448f_15.png)
 
 我们的教程将遵循一个清晰的流程。首先，我们设置一个简单的HTML页面作为包装器，并实现CPU版本的SAXPY作为验证基准。
 
@@ -54,7 +50,6 @@ WebGPU的设计考虑了Web环境的安全性、隐私性和跨平台需求，�
 
 ![](img/20cb9720d4b8b89b9cfd6e59e05c448f_19.png)
 
-![](img/20cb9720d4b8b89b9cfd6e59e05c448f_21.png)
 
 ![](img/20cb9720d4b8b89b9cfd6e59e05c448f_23.png)
 
@@ -64,20 +59,13 @@ WebGPU的设计考虑了Web环境的安全性、隐私性和跨平台需求，�
 
 ![](img/20cb9720d4b8b89b9cfd6e59e05c448f_27.png)
 
-![](img/20cb9720d4b8b89b9cfd6e59e05c448f_29.png)
-
-![](img/20cb9720d4b8b89b9cfd6e59e05c448f_31.png)
-
-![](img/20cb9720d4b8b89b9cfd6e59e05c448f_33.png)
-
-![](img/20cb9720d4b8b89b9cfd6e59e05c448f_35.png)
-
-![](img/20cb9720d4b8b89b9cfd6e59e05c448f_37.png)
-
-![](img/20cb9720d4b8b89b9cfd6e59e05c448f_39.png)
 
 
-![](img/20cb9720d4b8b89b9cfd6e59e05c448f_41.png)
+
+
+
+
+
 
 ![](img/20cb9720d4b8b89b9cfd6e59e05c448f_43.png)
 
@@ -301,28 +289,18 @@ const computePipeline = device.createComputePipeline({
 ![](img/20cb9720d4b8b89b9cfd6e59e05c448f_53.png)
 
 
-![](img/20cb9720d4b8b89b9cfd6e59e05c448f_55.png)
-
-![](img/20cb9720d4b8b89b9cfd6e59e05c448f_57.png)
-
-![](img/20cb9720d4b8b89b9cfd6e59e05c448f_59.png)
 
 
-![](img/20cb9720d4b8b89b9cfd6e59e05c448f_61.png)
-
-![](img/20cb9720d4b8b89b9cfd6e59e05c448f_63.png)
-
-![](img/20cb9720d4b8b89b9cfd6e59e05c448f_64.png)
 
 
-![](img/20cb9720d4b8b89b9cfd6e59e05c448f_66.png)
-
-![](img/20cb9720d4b8b89b9cfd6e59e05c448f_68.png)
-
-![](img/20cb9720d4b8b89b9cfd6e59e05c448f_70.png)
 
 
-![](img/20cb9720d4b8b89b9cfd6e59e05c448f_72.png)
+
+
+
+
+
+
 
 ![](img/20cb9720d4b8b89b9cfd6e59e05c448f_74.png)
 
@@ -379,7 +357,6 @@ console.log(`WebGPU SAXPY ${success ? '成功' : '失败'}`);
 
 ![](img/20cb9720d4b8b89b9cfd6e59e05c448f_82.png)
 
-![](img/20cb9720d4b8b89b9cfd6e59e05c448f_84.png)
 
 ![](img/20cb9720d4b8b89b9cfd6e59e05c448f_86.png)
 
@@ -393,9 +370,7 @@ console.log(`WebGPU SAXPY ${success ? '成功' : '失败'}`);
 
 ![](img/20cb9720d4b8b89b9cfd6e59e05c448f_93.png)
 
-![](img/20cb9720d4b8b89b9cfd6e59e05c448f_94.png)
 
-![](img/20cb9720d4b8b89b9cfd6e59e05c448f_95.png)
 
 ![](img/20cb9720d4b8b89b9cfd6e59e05c448f_97.png)
 
@@ -413,7 +388,6 @@ console.log(`WebGPU SAXPY ${success ? '成功' : '失败'}`);
 
 ![](img/20cb9720d4b8b89b9cfd6e59e05c448f_108.png)
 
-![](img/20cb9720d4b8b89b9cfd6e59e05c448f_110.png)
 
 1.  **工作组数量限制**： WebGPU对每个维度上可调度的工作组数量有上限（例如65535）。对于大规模计算，可能需要使用多维调度（2D/3D dispatch）来规避。
     ```javascript

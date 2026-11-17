@@ -111,7 +111,6 @@ Bender 和 Koller 在论文《Climbing towards NLU: On Meaning, Form, and Unders
 
 本节课我们一起学习了 GPT-3 这一划时代的巨型语言模型。我们回顾了其惊人的模型与数据规模，重点理解了它如何通过“上下文学习”的新范式，在零样本、单样本和少样本设置下执行多种任务，并在某些任务上取得了媲美甚至超越传统微调方法的性能。
 
-![](img/be8c6dd2131bcd4f5bfcdfd11ac53b6b_4.png)
 
 ![](img/be8c6dd2131bcd4f5bfcdfd11ac53b6b_6.png)
 

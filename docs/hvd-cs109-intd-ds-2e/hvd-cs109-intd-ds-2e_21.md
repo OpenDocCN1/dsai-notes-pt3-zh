@@ -1078,7 +1078,6 @@ gapminder |>
  geom_line()
 ```
 
-![](img/efabee861dc07fe5d8b3732c7b70d2f1.png)*  *我们可以看到图例占据了大部分的绘图区域，因为我们有四个国家名称超过 12 个字符。我们可以使用`case_when`函数来重命名这些级别：
 
 ```r
 x <- levels(gapminder$country)

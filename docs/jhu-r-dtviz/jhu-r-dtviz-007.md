@@ -16,7 +16,6 @@ R可以导入多种不同类型的数据，但一种非常常见的矩形数据�
 
 如果你还没有这样做，请暂停视频，下载文件，将其放在计算机上，然后返回。
 
-![](img/48fd70514126ebac8d11a80cadce44f8_1.png)
 
 现在，你可能想用电子表格软件（如Microsoft Excel）打开CSV文件，查看一下它的内容。
 
@@ -73,16 +72,12 @@ write.csv(my_data, "C:/Users/YourName/Documents/new_data_file.csv")
 
 你可以使用 `getwd()` 命令找出当前的工作目录是什么。
 
-![](img/48fd70514126ebac8d11a80cadce44f8_6.png)
 
 你也可以使用 `setwd()` 命令设置工作目录，同样需要指定计算机上的确切文件路径。
 
-![](img/48fd70514126ebac8d11a80cadce44f8_7.png)
 
 RStudio还提供了一个方便的选项，允许你通过顶部菜单栏设置工作目录。如果你转到 **Session > Set Working Directory > Choose Directory**，你可以浏览到你的`.CSV`文件所在的文件夹，或者你想要设置工作目录的位置。
 
-![](img/48fd70514126ebac8d11a80cadce44f8_6.png)
-![](img/48fd70514126ebac8d11a80cadce44f8_7.png)
 
 当你这样做时，R会自动将相应的 `setwd()` 代码放入你的控制台。
 
@@ -94,7 +89,6 @@ RStudio还提供了一个方便的选项，允许你通过顶部菜单栏设置�
 
 如果你设置了工作目录，那么你只需要在 `read.csv` 或 `write.csv` 命令中使用文件名，而不需要使用完整的目录路径。
 
-![](img/48fd70514126ebac8d11a80cadce44f8_9.png)
 
 ![](img/48fd70514126ebac8d11a80cadce44f8_9.png)
 

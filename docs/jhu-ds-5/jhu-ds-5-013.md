@@ -72,13 +72,11 @@ pairs(airquality)
 ```
 ```
 
-![](img/87ad2faeab2bf97ed9dc81f7d13c7816_6.png)
 
 ## 编译并查看结果
 
 保存文件（快捷键 `Cmd+S` 或 `Ctrl+S`），然后再次点击 `Knit` 按钮进行编译。
 
-![](img/87ad2faeab2bf97ed9dc81f7d13c7816_6.png)
 
 编译后的报告将依次显示：
 1.  我们添加的标题和文本。
@@ -89,7 +87,6 @@ pairs(airquality)
 
 为了展示更完整的分析流程，我们接下来添加一个线性回归模型。
 
-![](img/87ad2faeab2bf97ed9dc81f7d13c7816_8.png)
 
 在图表之后，我们添加第三个 R 代码块来拟合一个模型，探究臭氧浓度与风速、太阳辐射和温度的关系。
 
@@ -105,13 +102,10 @@ summary(fit)
 
 保存并再次编译文档。
 
-![](img/87ad2faeab2bf97ed9dc81f7d13c7816_10.png)
 
 在生成的 HTML 报告中，回归模型的代码和详细结果（包括系数、标准误和 P 值等）会紧跟在散点图矩阵之后。结果显示，风速、太阳辐射和温度这三个变量都与臭氧浓度显著相关。
 
-![](img/87ad2faeab2bf97ed9dc81f7d13c7816_10.png)
 
-![](img/87ad2faeab2bf97ed9dc81f7d13c7816_11.png)
 
 ## 其他格式元素
 
@@ -128,11 +122,9 @@ summary(fit)
 
 保存并编译后，你会在报告底部看到一个带项目符号的列表。
 
-![](img/87ad2faeab2bf97ed9dc81f7d13c7816_13.png)
 
 此外，你还可以在 R Markdown 中嵌入原始 HTML、LaTeX 数学公式（通过 knitr 包支持）等高级内容，以满足更复杂的排版需求。
 
-![](img/87ad2faeab2bf97ed9dc81f7d13c7816_13.png)
 
 ---
 
@@ -147,6 +139,5 @@ summary(fit)
 
 R Markdown 的核心优势在于将数据分析的代码、结果与说明文字无缝整合在一个可重复执行的文档中。你现在可以打开 RStudio，尝试创建和编辑你的第一个 R Markdown 文件了。
 
-![](img/87ad2faeab2bf97ed9dc81f7d13c7816_15.png)
 
 ![](img/87ad2faeab2bf97ed9dc81f7d13c7816_15.png)

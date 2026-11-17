@@ -10,7 +10,6 @@
 
 我们知道MapReduce支持多任务处理，即同一台机器上运行多个进程来完成一个作业，甚至支持多台机器协同工作的架构。但是，多线程呢？本节我们将探讨何时以及如何在MapReduce中利用多线程的优势。
 
-![](img/a2158a3afe91bd27079aea569c2f3d47_2.png)
 
 ![](img/a2158a3afe91bd27079aea569c2f3d47_3.png)
 
@@ -22,11 +21,9 @@
 
 默认情况下，Mapper是单线程的。每个Mapper在一个JVM中运行，并创建一个Mapper实例。输入分片中的记录会**一次一条**地传递给Mapper。
 
-![](img/a2158a3afe91bd27079aea569c2f3d47_5.png)
 
 让我来解释一下。你之前见过这个图表：假设我们的输入被分解为四个输入分片（Input Split 1, 2, 3, 4）。每个分片对应一个Mapper（Mapper 1, 2, 3, 4）。我们知道这四个Mapper是并行工作的，但**在一个Mapper内部，记录是按顺序处理的**。这实际上是由一个叫做“记录读取器”的组件完成的。记录读取器负责一次将一条记录传递给Mapper，以便Mapper进行处理并生成输出。
 
-![](img/a2158a3afe91bd27079aea569c2f3d47_7.png)
 
 ---
 
@@ -52,11 +49,9 @@ Hadoop框架提供了一个名为`MultithreadedMapper`的类，它扩展了标�
 
 以下是编写多线程Mapper的步骤，稍后我们将通过一个词频统计的例子来演示其用途和实现方法。
 
-![](img/a2158a3afe91bd27079aea569c2f3d47_9.png)
 
 要编写多线程Mapper，你需要确保编写一个**线程安全**的Map类。线程安全意味着实例变量需要同步，静态变量也应该同步。
 
-![](img/a2158a3afe91bd27079aea569c2f3d47_11.png)
 
 你还需要将Mapper设置为多线程Mapper。在编写单线程Mapper（默认情况）时，你编写自己的Mapper类并将其设置为Mapper类。但在使用多线程Mapper时，你实际设置为Mapper类的是`MultithreadedMapper`类。那么，你编写的线程安全Map类如何设置呢？
 

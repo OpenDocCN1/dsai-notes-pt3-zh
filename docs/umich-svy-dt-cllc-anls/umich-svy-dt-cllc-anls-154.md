@@ -1,6 +1,5 @@
 #  154：多阶段抽样
 
-![](img/157a277d1e1d6f4887cae60efa4bf9c7_0.png)
 
 ![](img/157a277d1e1d6f4887cae60efa4bf9c7_2.png)
 

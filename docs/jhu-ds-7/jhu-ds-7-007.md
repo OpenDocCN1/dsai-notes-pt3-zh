@@ -1,6 +1,5 @@
 # 007：线性最小二乘法编码示例 📊
 
-![](img/696fdc8cdc714ad3c05f6482992bade5_1.png)
 
 在本节课中，我们将通过一个具体的R语言编码示例，深入理解线性最小二乘法的计算过程。我们将使用高尔顿父母与子女身高数据集，手动计算回归系数，并与R内置的`lm`函数结果进行对比验证。
 
@@ -18,7 +17,6 @@ g <- ggplot(Galton, aes(x = parent, y = child)) + geom_point()
 print(g)
 ```
 
-![](img/696fdc8cdc714ad3c05f6482992bade5_1.png)
 
 上图展示了父母身高（x轴）与子女身高（y轴）之间的关系。
 
@@ -49,7 +47,6 @@ c(beta0, beta1)
 
 为了验证我们手动计算的正确性，现在使用R内置的线性模型函数 `lm` 进行拟合。
 
-![](img/696fdc8cdc714ad3c05f6482992bade5_3.png)
 
 以下是使用 `lm` 函数进行线性回归的代码：
 ```r
@@ -59,11 +56,9 @@ coef(fit)
 ```
 运行后，你会发现 `coef(fit)` 输出的截距和斜率与我们手动计算的 `c(beta0, beta1)` 结果完全一致（例如23.94和0.6463），这证实了我们的公式和计算是正确的。
 
-![](img/696fdc8cdc714ad3c05f6482992bade5_5.png)
 
 ## 反转X与Y的关系
 
-![](img/696fdc8cdc714ad3c05f6482992bade5_6.png)
 
 一个有趣的现象是，如果我们交换自变量和因变量的角色，公式依然成立，但形式会发生变化。
 
@@ -82,9 +77,6 @@ coef(fit_rev)
 ```
 对比 `c(beta0_rev, beta1_rev)` 和 `coef(fit_rev)`，两者结果依然相同，这证明了公式的普适性。
 
-![](img/696fdc8cdc714ad3c05f6482992bade5_3.png)
-![](img/696fdc8cdc714ad3c05f6482992bade5_5.png)
-![](img/696fdc8cdc714ad3c05f6482992bade5_6.png)
 
 ## 中心化数据与过原点回归
 
@@ -98,7 +90,6 @@ yc <- y - mean(y) # 中心化的Y
 xc <- x - mean(x) # 中心化的X
 ```
 
-![](img/696fdc8cdc714ad3c05f6482992bade5_8.png)
 
 然后，计算过原点回归的斜率。其公式为：`β₁_origin = sum(yc * xc) / sum(xc^2)`
 ```r
@@ -115,9 +106,7 @@ coef(lm(yc ~ xc - 1))
 ```
 你会发现，`beta1_origin`、`coef(lm(y ~ x))[2]` 和 `coef(lm(yc ~ xc - 1))` 这三个值是完全相同的。代码中的 `-1` 即表示在 `lm` 公式中移除截距项。
 
-![](img/696fdc8cdc714ad3c05f6482992bade5_8.png)
 
-![](img/696fdc8cdc714ad3c05f6482992bade5_10.png)
 
 ## 标准化与相关系数
 
@@ -138,10 +127,7 @@ c(cor(y, x), cor(yn, xn), coef(lm(yn ~ xn))[2])
 ```
 执行后，你会看到输出的三个数值完全相同。这证实了对于标准化后的数据，皮尔逊相关系数 `cor(yn, xn)` 就等于回归模型的斜率估计值。
 
-![](img/696fdc8cdc714ad3c05f6482992bade5_12.png)
 
-![](img/696fdc8cdc714ad3c05f6482992bade5_10.png)
-![](img/696fdc8cdc714ad3c05f6482992bade5_12.png)
 
 ## 在图形中添加回归线
 
@@ -158,7 +144,6 @@ g + geom_smooth(method = "lm", formula = y ~ x)
 ```
 `geom_smooth(method = "lm")` 层会自动拟合数据并绘制回归线。默认情况下，它还会添加回归线的置信区间带（图中灰色阴影区域），这很好地展示了估计的不确定性，我们将在后续课程中讨论其生成原理。
 
-![](img/696fdc8cdc714ad3c05f6482992bade5_14.png)
 
 ![](img/696fdc8cdc714ad3c05f6482992bade5_14.png)
 

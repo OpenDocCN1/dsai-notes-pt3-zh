@@ -6,7 +6,6 @@
 
 ## 🚀 创建新演示文稿
 
-![](img/53bcbff20a9992b8ef07130c19fa3435_1.png)
 
 上一节我们介绍了R Markdown的基本概念，本节中我们来看看如何实际操作，创建一个新的演示文稿。
 
@@ -18,9 +17,7 @@
 
 你也可以使用快捷键 `Alt + F`，然后按 `N`，再按 `R` 来快速创建。
 
-![](img/53bcbff20a9992b8ef07130c19fa3435_1.png)
 
-![](img/53bcbff20a9992b8ef07130c19fa3435_3.png)
 
 ## ⚙️ 配置演示文稿选项
 
@@ -30,7 +27,6 @@
 *   **Author**: 输入作者姓名。
 *   **Default Output Format**: 选择输出格式。这里提供了多种演示文稿样式。
 
-![](img/53bcbff20a9992b8ef07130c19fa3435_3.png)
 
 对于输出格式，我们暂时选择默认的 **ioslides_presentation**。这是一种源自Google演示文稿的幻灯片格式。如果你想输出PDF，需要在系统上安装LaTeX环境（如Windows的MikTeX，macOS的MacTeX，Linux的TeX Live），这将在后续课程中介绍。
 
@@ -53,7 +49,6 @@
 
 保存后，R Markdown引擎会开始运行，处理文件中的代码和文本，并最终在预览窗口生成一个名为 `my fancy presentation` 的HTML幻灯片。
 
-![](img/53bcbff20a9992b8ef07130c19fa3435_5.png)
 
 ![](img/53bcbff20a9992b8ef07130c19fa3435_9.png)
 
@@ -70,7 +65,6 @@
 
 完成这个练习后，我们就可以继续学习如何为演示文稿添加具体内容了。
 
-![](img/53bcbff20a9992b8ef07130c19fa3435_11.png)
 
 ## ✅ 总结
 

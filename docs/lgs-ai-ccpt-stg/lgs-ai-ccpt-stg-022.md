@@ -1,6 +1,5 @@
 # 22：基础模型与大型语言模型 🧠
 
-![](img/be0967e2c1db12a40ec00e2306d8d9b3_0.png)
 
 ![](img/be0967e2c1db12a40ec00e2306d8d9b3_1.png)
 

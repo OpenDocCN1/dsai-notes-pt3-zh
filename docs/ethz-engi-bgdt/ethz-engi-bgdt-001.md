@@ -91,11 +91,9 @@
 
 ### 2. 数据多样性 (Variety)
 
-![](img/a9ddeca8b32ceb00a23cf591aece9ad7_22.png)
 
 数据可以有多种形态：
 
-![](img/a9ddeca8b32ceb00a23cf591aece9ad7_24.png)
 
 *   **表格 (Tables)**：传统的关系型数据。
 *   **树形 (Trees)**：如JSON、XML文档。

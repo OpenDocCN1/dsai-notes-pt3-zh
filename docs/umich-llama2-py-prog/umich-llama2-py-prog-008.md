@@ -8,7 +8,6 @@
 
 我们已经讨论了大语言模型（特别是Llama 2）的一些基本原理，以及它们如何作为非确定性的概率机器，基于预训练的权重来预测词元序列。
 
-![](img/5b1eef7b4d8e509e8779af2c763fe1ce_2.png)
 
 如果我们愿意，实际上可以通过在加载模型时进行配置，来观察Llama.cpp中这种选择的部分内部运作。这在部署中并不常见，但对于更好地理解如何改变模型行为非常有帮助。
 
@@ -35,7 +34,6 @@ print(response)
 
 然后，我们从输出内容对象中提取响应并打印出来。
 
-![](img/5b1eef7b4d8e509e8779af2c763fe1ce_4.png)
 
 各个词元的概率实际上位于`completion_logprobs`对象中。由于所有内容都是类型化字典，我们可以直接从条目中取出这个`logprobs`。
 
@@ -77,11 +75,8 @@ print(response)
 
 这里我有一个完全相同的查询，但将温度设置为0.5。
 
-![](img/5b1eef7b4d8e509e8779af2c763fe1ce_8.png)
 
-![](img/5b1eef7b4d8e509e8779af2c763fe1ce_9.png)
 
-![](img/5b1eef7b4d8e509e8779af2c763fe1ce_10.png)
 
 ```python
 output = llm("Q: What is 1+1? A:", max_tokens=16, temperature=0.5, logprobs=3)
@@ -117,7 +112,6 @@ output = llm("Q: What is 1+1? A:", max_tokens=16, temperature=0.9, top_k=2, logp
 
 我们还有另一个可用于调整的变量，称为**top-p**。这个变量稍微复杂一些。
 
-![](img/5b1eef7b4d8e509e8779af2c763fe1ce_14.png)
 
 它根据词元的累积概率分布来约束候选词元集。它是一个从0到1的浮点数，其中1代表词汇表中的所有可能词元。
 
@@ -133,11 +127,9 @@ output = llm("Q: What is 1+1? A:", max_tokens=16, temperature=0.9, top_k=2, logp
 output = llm("Q: What is 1+1? A:", max_tokens=16, top_p=0.01, logprobs=3)
 ```
 
-![](img/5b1eef7b4d8e509e8779af2c763fe1ce_16.png)
 
 运行这个。
 
-![](img/5b1eef7b4d8e509e8779af2c763fe1ce_17.png)
 
 如此小的top-p导致的结果是，候选选择集非常小，因此集合中任何给定选择的概率可能会有很大差异。然而，保留在候选集中的词元会被重新加权，然后温度参数决定某个候选词元被选中的可能性。
 

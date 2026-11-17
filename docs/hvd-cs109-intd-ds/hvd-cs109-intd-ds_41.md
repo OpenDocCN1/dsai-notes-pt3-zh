@@ -19,7 +19,6 @@ data("polls_2008")
 qplot(day, margin, data = polls_2008)
 ```
 
-![图片](img/33c753cc76e5495db280338fe5afd9ce.png)
 
 对于这个例子，不要把它看作是一个预测问题。相反，我们只是对选举结束后趋势的形状感兴趣。
 
@@ -33,7 +32,6 @@ $$ Y_i = f(x_i) + \varepsilon_i $$
 #> `geom_smooth()` using formula = 'y ~ x'
 ```
 
-![图片](img/b86b677a5e00ed50e6453bd37a154533.png)
 
 我们看到的线似乎并不能很好地描述趋势。例如，在 9 月 4 日（第-62 天），共和党全国代表大会举行，数据表明这给了约翰·麦凯恩在民调中的提升。然而，回归线并没有捕捉到这种潜在的趋势。为了更清楚地看到*拟合不足*，我们注意到高于拟合线（蓝色）和低于拟合线（红色）的点在每天并不是均匀分布的。因此，我们需要一个更灵活的替代方法。
 
@@ -195,7 +193,6 @@ polls_2008 |> mutate(smooth_1 = fit_1$fitted, smooth_2 = fit_2$fitted) |>
  geom_line(aes(day, smooth_2), color="orange", lty = 1) 
 ```
 
-![图片](img/cd627b0229463290f99e237385bb7bd4.png)
 
 `degree = 2` 给我们带来了更多波动的结果。我们实际上更喜欢 `degree = 1`，因为它不太容易受到这种噪声的影响。
 
@@ -209,7 +206,6 @@ polls_2008 |> ggplot(aes(day, margin)) +
  geom_smooth(method = loess)
 ```
 
-![图片](img/d880e16a0c76802e566627e94edeec45.png)
 
 但要注意默认参数，因为它们很少是最优的。然而，你可以方便地更改它们：
 

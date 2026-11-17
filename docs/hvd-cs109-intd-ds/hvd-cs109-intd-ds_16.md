@@ -25,7 +25,6 @@ R 中创建图表的许多其他方法都是可用的。实际上，R 的基本�
 
 我们将构建一个总结美国谋杀数据集的图表，看起来像这样：
 
-![图片](img/8e3e305141e862980406e5311f56daef.png)
 
 我们可以清楚地看到各州在人口规模和谋杀总数上的差异。不出所料，我们还看到了谋杀总数和人口规模之间的明显关系。位于虚线灰色线上的州具有与美国平均相同的谋杀率。四个地理区域用颜色表示，这描绘了大多数南部州的谋杀率高于平均水平。
 
@@ -140,7 +139,6 @@ murders |> ggplot() +
 p + geom_point(aes(population/10⁶, total))
 ```
 
-![图片](img/386827274d3fa4320b91fc25872c63c9.png)
 
 添加此层时，刻度和标签默认定义。与 **dplyr** 函数一样，`aes` 也使用对象组件中的变量名称：我们可以使用 `population` 和 `total`，而无需将它们作为 `murders$population` 和 `murders$total` 调用。从数据组件中识别变量的行为对 `aes` 来说是相当具体的。在大多数函数中，如果您尝试在 `aes` 之外访问 `population` 或 `total` 的值，您将收到错误。
 
@@ -155,7 +153,6 @@ p + geom_point(aes(population/10⁶, total)) +
  geom_text(aes(population/10⁶, total, label = abb))
 ```
 
-![](img/33d613ec9b953d3a3c5eb4189aaa53d8.png)
 
 我们已经成功地为图表添加了第二层。
 
@@ -182,7 +179,6 @@ p + geom_point(aes(population/10⁶, total), size = 3) +
  geom_text(aes(population/10⁶, total, label = abb))
 ```
 
-![](img/8828f704be1c414e5cf4e07c634fac08.png)
 
 `size`不是一个映射：映射使用特定观察的数据，需要包含在`aes()`中，而我们要影响所有点相同方式的操作则不需要包含在`aes`中。
 
@@ -193,7 +189,6 @@ p + geom_point(aes(population/10⁶, total), size = 3) +
  geom_text(aes(population/10⁶, total, label = abb), nudge_x = 1.5)
 ```
 
-![](img/025635373efb57faa8137bf99d36d570.png)
 
 这样做更易于阅读。在 8.11 节中，我们了解到一种更好的确保我们可以看到点和标签的方法。
 
@@ -229,7 +224,6 @@ p + geom_point(size = 3) +
  geom_text(aes(x = 10, y = 800, label = "Hello there!"))
 ```
 
-![](img/73ad88f042857bc6a8cf74fdc7178246.png)
 
 明显地，第二个`geom_text`调用没有使用`population`和`total`。
 
@@ -244,7 +238,6 @@ p + geom_point(size = 3) +
  scale_y_continuous(trans = "log10") 
 ```
 
-![](img/923b8abe8cb2ecb7de56db357f0dfcc5.png)
 
 因为我们现在处于对数尺度，所以 *nudge* 必须更小。
 
@@ -271,7 +264,6 @@ p + geom_point(size = 3) +
  ggtitle("US Gun Murders in 2010")
 ```
 
-![](img/17c21a7b69cbbfa52d068ebd5f9894e8.png)
 
 我们几乎完成了！我们剩下要做的就是添加颜色、图例以及可选的样式更改。
 
@@ -295,7 +287,6 @@ p <-  murders |> ggplot(aes(population/10⁶, total, label = abb)) +
 p + geom_point(size = 3, color ="blue")
 ```
 
-![](img/f8a48d7321d07cc6a1c5c7e86d901543.png)
 
 当然，这并不是我们想要的。我们想要根据地理区域分配颜色。**ggplot2** 的一个很好的默认行为是，如果我们将一个分类变量分配给颜色，它将自动为每个类别分配不同的颜色，并添加一个图例。
 
@@ -305,7 +296,6 @@ p + geom_point(size = 3, color ="blue")
 p + geom_point(aes(col=region), size = 3)
 ```
 
-![](img/538e41381f4fec10745c98cfdc5cf936.png)
 
 `x` 和 `y` 映射是从 `p` 中继承的，因此我们不需要重新定义它们。我们还把 `aes` 移到第一个参数，因为在这个函数调用中期望映射在那里。
 
@@ -330,7 +320,6 @@ p + geom_point(aes(col=region), size = 3) +
  geom_abline(intercept = log10(r))
 ```
 
-![图片](img/b72572cca75cb99fdb04e2edb051cb9f.png)
 
 在这里，`geom_abline`没有使用数据对象中的任何信息。
 

@@ -1,16 +1,13 @@
 # 151：创建你的第一个 Swirl 交互式教程 🎯
 
-![](img/95ef96e8f680c713f45e2c897e5be9a1_1.png)
 
 在本节课中，我们将学习如何使用 `swirlify` 包来创建自己的 Swirl 交互式课程和课程单元。你将了解课程的基本结构、如何编写不同类型的题目，以及如何测试和运行你的课程。
 
-![](img/95ef96e8f680c713f45e2c897e5be9a1_3.png)
 
 ---
 
 ## 1. 准备工作与环境设置
 
-![](img/95ef96e8f680c713f45e2c897e5be9a1_5.png)
 
 首先，你需要加载 `swirlify` 包。这个包是创建和管理 Swirl 课程的核心工具。
 
@@ -18,7 +15,6 @@
 library(swirlify)
 ```
 
-![](img/95ef96e8f680c713f45e2c897e5be9a1_7.png)
 
 Swirl 始终知晓你的当前工作目录。为了组织课程文件，建议设置一个专门的工作目录。例如，可以在桌面上创建一个名为 `courses` 的文件夹来存放和开发课程。
 
@@ -28,17 +24,13 @@ setwd("~/Desktop/courses")
 
 ---
 
-![](img/95ef96e8f680c713f45e2c897e5be9a1_9.png)
 
 ## 2. 创建新课程与新课程单元
 
-![](img/95ef96e8f680c713f45e2c897e5be9a1_11.png)
 
-![](img/95ef96e8f680c713f45e2c897e5be9a1_13.png)
 
 上一节我们设置了工作目录，本节中我们来看看如何创建一个全新的课程和课程单元。
 
-![](img/95ef96e8f680c713f45e2c897e5be9a1_15.png)
 
 你可以使用 `new_lesson` 函数来开始编写新的 Swirl 课程和课程单元。你需要为课程单元和课程本身命名。
 
@@ -56,14 +48,12 @@ new_lesson(lesson_name = "Lesson1", course_name = "My First Course")
 
 以下是创建的主要文件：
 
-![](img/95ef96e8f680c713f45e2c897e5be9a1_17.png)
 
 *   **`customTests.R`**：你可以在此文件中指定用于测试题目答案正确性的自定义函数。我们稍后会讨论答案测试。
 *   **`dependson.txt`**：这是一个文本文件，用于列出课程开始前 Swirl 需要检查并确保已安装的 R 包名称。
 *   **`initLesson.R`**：这是一个 R 脚本。你在此脚本中编写的任何代码都将在课程单元开始前执行。例如，你可以在此加载数据，或创建学生将在课程中使用的函数。
 *   **`lesson.yaml`**：这就是我们在 RStudio 中看到的 YAML 文件，是课程内容的核心。
 
-![](img/95ef96e8f680c713f45e2c897e5be9a1_18.png)
 
 我喜欢使用 RStudio 编写 Swirl 课程，因为将文本编辑器和 R 控制台并排放在同一屏幕上对我很有效。我推荐使用 RStudio，但不同的人有不同的工作流程。
 
@@ -75,15 +65,11 @@ new_lesson(lesson_name = "Lesson1", course_name = "My First Course")
 
 你可以在一节课中包含多种不同类型的题目。最简单的一种是“信息类题目”。
 
-![](img/95ef96e8f680c713f45e2c897e5be9a1_20.png)
 
 执行 `wq_message()` 函数，然后转到 `lesson.yaml` 文件，你会看到它添加了一个信息类题目的模板。
 
-![](img/95ef96e8f680c713f45e2c897e5be9a1_21.png)
 
-![](img/95ef96e8f680c713f45e2c897e5be9a1_22.png)
 
-![](img/95ef96e8f680c713f45e2c897e5be9a1_23.png)
 
 我将编辑这个信息类题目，写上：“欢迎来到课程单元 1”。这样，一个简单的信息类题目就写好了。
 
@@ -91,9 +77,7 @@ new_lesson(lesson_name = "Lesson1", course_name = "My First Course")
 
 ## 5. 添加题目：命令类题目
 
-![](img/95ef96e8f680c713f45e2c897e5be9a1_25.png)
 
-![](img/95ef96e8f680c713f45e2c897e5be9a1_26.png)
 
 接下来，我将添加另一个题目，这次是一个“命令类题目”。
 
@@ -109,17 +93,14 @@ new_lesson(lesson_name = "Lesson1", course_name = "My First Course")
 
 然后，我将给用户一个非常简单的提示，说：“只需输入 2 + 2”。
 
-![](img/95ef96e8f680c713f45e2c897e5be9a1_28.png)
 
 ---
 
 ## 6. 管理课程清单
 
-![](img/95ef96e8f680c713f45e2c897e5be9a1_30.png)
 
 我已经编写了一些题目，现在可以开始测试这个课程单元了。
 
-![](img/95ef96e8f680c713f45e2c897e5be9a1_31.png)
 
 每当你向课程中添加一个课程单元后，都应将其添加到所谓的“课程清单”中。你可以使用 `add_to_manifest()` 函数轻松完成此操作。
 
@@ -127,29 +108,24 @@ new_lesson(lesson_name = "Lesson1", course_name = "My First Course")
 
 ---
 
-![](img/95ef96e8f680c713f45e2c897e5be9a1_33.png)
 
 ## 7. 测试与运行课程
 
 我已经将此课程单元添加到了清单中。现在让我们来测试这个课程单元。
 
-![](img/95ef96e8f680c713f45e2c897e5be9a1_35.png)
 
 首先，为了检查课程单元的基本格式，我将使用 `test_lesson()` 函数。如果没有收到任何警告或消息，则意味着该课程单元通过了 `swirlify` 附带的一些格式检查。
 
 接着，我想在 Swirl 中实际使用这个课程单元。我将使用 `demo_lesson()` 函数。如你所见，这将直接带我们进入正在编写的课程单元，而无需经过 Swirl 的菜单。
 
-![](img/95ef96e8f680c713f45e2c897e5be9a1_37.png)
 
 第一题是：“欢迎来到课程单元 1”。第二题是：“使用加号运算符将 2 和 2 相加”。我输入 `2 + 2`，然后课程单元结束。
 
 ---
 
-![](img/95ef96e8f680c713f45e2c897e5be9a1_39.png)
 
 ## 总结
 
-![](img/95ef96e8f680c713f45e2c897e5be9a1_40.png)
 
 ![](img/95ef96e8f680c713f45e2c897e5be9a1_42.png)
 

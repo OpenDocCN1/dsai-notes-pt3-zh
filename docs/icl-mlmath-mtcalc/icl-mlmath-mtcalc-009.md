@@ -1,6 +1,5 @@
 # 009：驯服野兽
 
-![](img/ea0158edad76267c5b4f131b941e816a_0.png)
 
 ![](img/ea0158edad76267c5b4f131b941e816a_0.png)
 

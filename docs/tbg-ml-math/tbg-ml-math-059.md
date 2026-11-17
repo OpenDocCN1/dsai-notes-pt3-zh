@@ -1,22 +1,16 @@
 # 059：条件概率
 
-![](img/54deb7fd0df4ec6a42e184802efb7bf0_0.png)
 
 在本节课中，我们将要学习概率论中的一个核心概念——条件概率。条件概率用于描述在已知某个事件已经发生的前提下，另一个事件发生的概率。我们将通过掷骰子的例子来直观理解这个概念，并学习其数学定义和符号表示。
 
 ## 条件概率的直观理解
 
-![](img/54deb7fd0df4ec6a42e184802efb7bf0_2.png)
 
 上一节我们介绍了概率的基本概念。本节中我们来看看条件概率。条件概率是概率论中的关键概念之一，它用于描述在已知另一个事件已经发生的条件下，某个事件发生的概率。
 
-![](img/54deb7fd0df4ec6a42e184802efb7bf0_3.png)
 
-![](img/54deb7fd0df4ec6a42e184802efb7bf0_4.png)
 
-![](img/54deb7fd0df4ec6a42e184802efb7bf0_5.png)
 
-![](img/54deb7fd0df4ec6a42e184802efb7bf0_6.png)
 
 例如，考虑掷两个骰子求点数之和。如果你已经知道第一个骰子的点数是1，那么最终的点数之和就不可能达到12。因为第二个骰子的点数范围是1到6，所以总和最多只能达到7。
 
@@ -24,67 +18,47 @@
 
 ## 事件运算符号
 
-![](img/54deb7fd0df4ec6a42e184802efb7bf0_8.png)
 
-![](img/54deb7fd0df4ec6a42e184802efb7bf0_9.png)
 
 在正式开始之前，我想再介绍一个之前未提及的符号，因为后续会频繁使用。
 
-![](img/54deb7fd0df4ec6a42e184802efb7bf0_10.png)
 
-![](img/54deb7fd0df4ec6a42e184802efb7bf0_11.png)
 
-![](img/54deb7fd0df4ec6a42e184802efb7bf0_12.png)
 
-![](img/54deb7fd0df4ec6a42e184802efb7bf0_13.png)
 
 我们经常会讨论两个事件的概率。设A和B是σ-代数中的两个元素（即两个事件）。我们想讨论它们的交集 `A ∩ B` 的概率。
 
-![](img/54deb7fd0df4ec6a42e184802efb7bf0_15.png)
 
 `P(A ∩ B)` 直观上表示事件A和事件B同时发生的概率。假设这是我们的样本空间Ω，这是事件A，这是事件B。它们的交集就是中间重叠的部分。一个样本点属于交集，当且仅当它既属于A也属于B。
 
-![](img/54deb7fd0df4ec6a42e184802efb7bf0_16.png)
 
 理解这个符号非常重要。交集符号 `∩` 表示逻辑“与”（and）。
 
-![](img/54deb7fd0df4ec6a42e184802efb7bf0_18.png)
 
-![](img/54deb7fd0df4ec6a42e184802efb7bf0_19.png)
 
 当然，我们还有并集 `A ∪ B`，其概率 `P(A ∪ B)` 表示事件A或事件B发生的概率。用图形表示，第一个是A与B的交集，而A或B的并集则是包含A和B在内的整个区域。它可以是A或B中的任何一个，甚至可以同时包含交集中的部分，但整体上代表A或B发生。
 
-![](img/54deb7fd0df4ec6a42e184802efb7bf0_21.png)
 
 ## 条件概率的定义
 
-![](img/54deb7fd0df4ec6a42e184802efb7bf0_23.png)
 
 现在，我们正式引入条件概率的定义。
 
-![](img/54deb7fd0df4ec6a42e184802efb7bf0_24.png)
 
-![](img/54deb7fd0df4ec6a42e184802efb7bf0_25.png)
 
 设 `(Ω, A, P)` 是一个概率空间，`B ∈ A` 是一个事件，且 `P(B) > 0`。那么，在给定事件B发生的条件下，事件A发生的**条件概率**定义为：
 
-![](img/54deb7fd0df4ec6a42e184802efb7bf0_27.png)
 
-![](img/54deb7fd0df4ec6a42e184802efb7bf0_29.png)
 
 `P(A | B) = P(A ∩ B) / P(B)`
 
-![](img/54deb7fd0df4ec6a42e184802efb7bf0_30.png)
 
 这个公式可以理解为：在事件B发生的“新世界”里，事件A发生的概率，等于A和B同时发生的概率（`P(A ∩ B)`）占事件B发生的概率（`P(B)`）的比例。
 
-![](img/54deb7fd0df4ec6a42e184802efb7bf0_32.png)
 
-![](img/54deb7fd0df4ec6a42e184802efb7bf0_34.png)
 
 ## 总结
 
-![](img/54deb7fd0df4ec6a42e184802efb7bf0_36.png)
 
 ![](img/54deb7fd0df4ec6a42e184802efb7bf0_38.png)
 

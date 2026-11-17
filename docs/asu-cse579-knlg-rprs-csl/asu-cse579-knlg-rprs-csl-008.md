@@ -18,10 +18,8 @@ Clingo程序的核心是计算稳定模型。你需要将问题编码为逻辑�
 
 让我们重温一个简单例子，该程序用于找出比奥斯汀市更温暖的城市。
 
-![](img/f361e716b1ab1bc106fbcac368311971_1.png)
 
 
-![](img/f361e716b1ab1bc106fbcac368311971_3.png)
 
 ```prolog
 % 事实：城市及其温度
@@ -58,7 +56,6 @@ high_temp(T) :- temp(C, T), not temp(C, 95).
 
 变量 `T` 出现在 `temp(C, T)` 和 `not temp(C, 95)` 中，但后者因为前面有 `not`，所以不是正原子。因此，`T` 没有出现在正原子中，此规则不安全。
 
-![](img/f361e716b1ab1bc106fbcac368311971_5.png)
 
 安全性的直观意义在于，它能保证程序在实例化（ grounding ）后只生成有限多条命题规则。不安全的程序可能导致无限多的实例化规则，使得Clingo无法求解。修复方法通常是为变量指定一个有限的范围，例如：
 
@@ -76,9 +73,7 @@ high_temp(T) :- temp(C, T), city(C), not temp(C, 95). % 假设我们定义了cit
 以下是定义子女、祖父母、兄弟姐妹和祖先关系的示例程序：
 
 
-![](img/f361e716b1ab1bc106fbcac368311971_7.png)
 
-![](img/f361e716b1ab1bc106fbcac368311971_9.png)
 
 ```prolog
 % 事实：父母关系
@@ -99,11 +94,8 @@ ancestor(X, Y) :- parent(X, Y).                 % 基础情况：父母是祖先
 ancestor(X, Z) :- parent(X, Y), ancestor(Y, Z). % 递归情况
 ```
 
-![](img/f361e716b1ab1bc106fbcac368311971_11.png)
 
-![](img/f361e716b1ab1bc106fbcac368311971_13.png)
 
-![](img/f361e716b1ab1bc106fbcac368311971_15.png)
 
 运行此程序，Clingo将计算出所有的子女、祖父母、兄弟姐妹和祖先关系。
 
@@ -157,7 +149,6 @@ prime(I) :- number(I), not composite(I).
 以下是计算阶乘的程序：
 
 
-![](img/f361e716b1ab1bc106fbcac368311971_17.png)
 
 ```prolog
 % 基础情况：0的阶乘是1
@@ -170,9 +161,7 @@ fact(N, F) :- factorial(N, F).
 #show fact/2.
 ```
 
-![](img/f361e716b1ab1bc106fbcac368311971_19.png)
 
-![](img/f361e716b1ab1bc106fbcac368311971_21.png)
 
 ## 总结
 

@@ -22,7 +22,6 @@ WebGL 是 WebGPU 的前身，它基于 OpenGL ES，而 OpenGL 的设计理念可
 
 ![](img/27abea06e675c0ec2dc4e187af5c1777_9.png)
 
-![](img/27abea06e675c0ec2dc4e187af5c1777_11.png)
 
 ![](img/27abea06e675c0ec2dc4e187af5c1777_13.png)
 
@@ -47,7 +46,6 @@ WebGL 是 WebGPU 的前身，它基于 OpenGL ES，而 OpenGL 的设计理念可
 
 这些“显式”API 的设计更贴近现代 GPU 的并行架构，能提供更好的性能和更低的开销。Web 平台需要跟上这一趋势，因此 WebGPU 应运而生。它是一个全新的、跨浏览器的 API，旨在抽象 Metal、D3D12 和 Vulkan，同时更好地融入 Web 平台和 JavaScript 生态。
 
-![](img/27abea06e675c0ec2dc4e187af5c1777_28.png)
 
 ![](img/27abea06e675c0ec2dc4e187af5c1777_30.png)
 
@@ -58,9 +56,7 @@ WebGL 是 WebGPU 的前身，它基于 OpenGL ES，而 OpenGL 的设计理念可
 *   更灵活的 Canvas 集成
 *   更完善的错误提示和调试功能
 
-![](img/27abea06e675c0ec2dc4e187af5c1777_32.png)
 
-![](img/27abea06e675c0ec2dc4e187af5c1777_34.png)
 
 最重要的是，它移除了 OpenGL 中复杂的全局状态机，使得 API 更易于学习和使用。
 
@@ -111,7 +107,6 @@ const vertexBuffer = device.createBuffer({
 device.queue.writeBuffer(vertexBuffer, 0, vertices);
 ```
 
-![](img/27abea06e675c0ec2dc4e187af5c1777_40.png)
 
 ![](img/27abea06e675c0ec2dc4e187af5c1777_42.png)
 
@@ -178,17 +173,13 @@ device.queue.submit([commandBuffer]);
 
 ## 数据绑定：如何将资源传递给着色器 🔗
 
-![](img/27abea06e675c0ec2dc4e187af5c1777_46.png)
 
-![](img/27abea06e675c0ec2dc4e187af5c1777_48.png)
 
 上一节我们介绍了如何配置管线并发出绘制命令。本节中我们来看看如何将缓冲区、纹理等资源（数据）传递到着色器中供其使用。
 
-![](img/27abea06e675c0ec2dc4e187af5c1777_50.png)
 
 ![](img/27abea06e675c0ec2dc4e187af5c1777_52.png)
 
-![](img/27abea06e675c0ec2dc4e187af5c1777_54.png)
 
 ![](img/27abea06e675c0ec2dc4e187af5c1777_56.png)
 
@@ -215,15 +206,11 @@ device.queue.submit([commandBuffer]);
 
 ![](img/27abea06e675c0ec2dc4e187af5c1777_69.png)
 
-![](img/27abea06e675c0ec2dc4e187af5c1777_71.png)
 
 ![](img/27abea06e675c0ec2dc4e187af5c1777_73.png)
 
-![](img/27abea06e675c0ec2dc4e187af5c1777_75.png)
 
-![](img/27abea06e675c0ec2dc4e187af5c1777_77.png)
 
-![](img/27abea06e675c0ec2dc4e187af5c1777_79.png)
 
 **1. 创建绑定组布局 (`Bind Group Layout`)**：
 它定义了着色器中一个绑定组（`@group`）的结构，即每个绑定槽（`@binding`）期望的资源类型（如只读缓冲区、可写存储纹理等）。
@@ -245,7 +232,6 @@ const bindGroupLayout = device.createBindGroupLayout({
 });
 ```
 
-![](img/27abea06e675c0ec2dc4e187af5c1777_81.png)
 
 **2. 创建绑定组 (`Bind Group`)**：
 它根据布局，将具体的资源（如缓冲区对象、纹理视图）绑定到对应的槽位上。
@@ -260,7 +246,6 @@ const bindGroup = device.createBindGroup({
 });
 ```
 
-![](img/27abea06e675c0ec2dc4e187af5c1777_83.png)
 
 在渲染通道中，你只需设置整个绑定组即可：
 ```javascript
@@ -276,13 +261,10 @@ renderPass.setBindGroup(0, bindGroup);
 
 ## 调试与最佳实践 🐛
 
-![](img/27abea06e675c0ec2dc4e187af5c1777_89.png)
 
-![](img/27abea06e675c0ec2dc4e187af5c1777_91.png)
 
 掌握了基本绘制和数据绑定后，开发中难免会遇到问题。本节我们来看看 WebGPU 提供的调试工具和一些性能优化的最佳实践。
 
-![](img/27abea06e675c0ec2dc4e187af5c1777_93.png)
 
 ### 调试 (`Debugging`)
 WebGPU 设计了比 WebGL 更友好的错误信息。当验证失败时，浏览器会提供包含上下文信息的错误，指出问题出在哪个调用、哪个资源上。
@@ -322,9 +304,7 @@ commandEncoder.popDebugGroup(); // ‘Main Render Loop’
 const pipeline = await device.createRenderPipelineAsync({...});
 ```
 
-![](img/27abea06e675c0ec2dc4e187af5c1777_95.png)
 
-![](img/27abea06e675c0ec2dc4e187af5c1777_97.png)
 
 ![](img/27abea06e675c0ec2dc4e187af5c1777_99.png)
 

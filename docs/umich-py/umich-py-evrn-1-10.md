@@ -29,9 +29,7 @@
 
 ## 总结
 
-![](img/faaf953bfdea1c85c8f3ca9efa9fbf53_1.png)
 
-![](img/faaf953bfdea1c85c8f3ca9efa9fbf53_2.png)
 
 ![](img/faaf953bfdea1c85c8f3ca9efa9fbf53_3.png)
 

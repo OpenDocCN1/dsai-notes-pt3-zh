@@ -1,6 +1,5 @@
 # 大型语言模型实践（高级数据工程、AWS、Databricks和本地LLM）：P174：73_04_06_AWS GPU上调用Rust Candle框架（上）🚀
 
-![](img/afebcb04326102ae37d91a8e09e20505_0.png)
 
 ![](img/afebcb04326102ae37d91a8e09e20505_0.png)
 
@@ -48,7 +47,6 @@
 
 ![](img/afebcb04326102ae37d91a8e09e20505_4.png)
 
-![](img/afebcb04326102ae37d91a8e09e20505_8.png)
 
 ![](img/afebcb04326102ae37d91a8e09e20505_5.png)
 

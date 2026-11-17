@@ -62,7 +62,6 @@ print(counts)
 
 ## 总结 🎯
 
-![](img/3ae86b8d6ce2e35451d08b999586fe96_2.png)
 
 ![](img/3ae86b8d6ce2e35451d08b999586fe96_3.png)
 

@@ -57,7 +57,6 @@ STORE D INTO 'output';
 
 下图展示了Pig性能与手写MapReduce代码的对比：
 
-![](img/3e87821735ea11a84bb10f529cb614d3_3.png)
 
 从图中可以看到一个清晰的模式：
 *   **2008年9月**发布的Pig初始版本，其速度远慢于直接手写的MapReduce代码。

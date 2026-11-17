@@ -58,7 +58,6 @@
 
 ![](img/167ff403fde6068981e22130dcf39eab_22.png)
 
-![](img/167ff403fde6068981e22130dcf39eab_24.png)
 
 ![](img/167ff403fde6068981e22130dcf39eab_26.png)
 
@@ -155,7 +154,6 @@
 
 ![](img/167ff403fde6068981e22130dcf39eab_35.png)
 
-![](img/167ff403fde6068981e22130dcf39eab_37.png)
 
 ![](img/167ff403fde6068981e22130dcf39eab_38.png)
 
@@ -168,9 +166,7 @@
             assert 2 == add(1, 1)
         ```
 
-![](img/167ff403fde6068981e22130dcf39eab_40.png)
 
-![](img/167ff403fde6068981e22130dcf39eab_42.png)
 
 ![](img/167ff403fde6068981e22130dcf39eab_44.png)
 
@@ -187,7 +183,6 @@ source .venv/bin/activate
 # 激活后，安装的包将仅限于此项目
 ```
 
-![](img/167ff403fde6068981e22130dcf39eab_48.png)
 
 ![](img/167ff403fde6068981e22130dcf39eab_50.png)
 
@@ -204,7 +199,6 @@ source .venv/bin/activate
 
 ![](img/167ff403fde6068981e22130dcf39eab_54.png)
 
-![](img/167ff403fde6068981e22130dcf39eab_56.png)
 
 ![](img/167ff403fde6068981e22130dcf39eab_58.png)
 
@@ -226,7 +220,6 @@ source .venv/bin/activate
 
 ![](img/167ff403fde6068981e22130dcf39eab_62.png)
 
-![](img/167ff403fde6068981e22130dcf39eab_64.png)
 
 ![](img/167ff403fde6068981e22130dcf39eab_65.png)
 
@@ -306,7 +299,6 @@ source .venv/bin/activate
 
 上一节我们创建了可复用的函数，本节中我们来看看如何为其添加命令行界面，使其成为易用的工具。
 
-![](img/167ff403fde6068981e22130dcf39eab_77.png)
 
 ![](img/167ff403fde6068981e22130dcf39eab_78.png)
 
@@ -425,7 +417,6 @@ def test_cli():
 ### 概述
 我们将使用 `FastAPI` 框架快速构建一个RESTful API，它能够提供与命令行工具相同的功能，并通过Swagger UI自动生成交互式文档。
 
-![](img/167ff403fde6068981e22130dcf39eab_112.png)
 
 ![](img/167ff403fde6068981e22130dcf39eab_114.png)
 
@@ -501,11 +492,9 @@ curl -X POST "http://localhost:8080/wiki/" \
 
 ![](img/167ff403fde6068981e22130dcf39eab_130.png)
 
-![](img/167ff403fde6068981e22130dcf39eab_132.png)
 
 上一节我们创建了Web服务，本节中我们来看看如何将其打包成容器，并部署到云平台，实现持续交付。
 
-![](img/167ff403fde6068981e22130dcf39eab_134.png)
 
 ![](img/167ff403fde6068981e22130dcf39eab_135.png)
 
@@ -597,7 +586,6 @@ AWS App Runner是一项完全托管的服务，可以自动从容器仓库部署
 5.  **服务化**：使用FastAPI将函数快速转变为拥有自动文档的Web API，使其可通过网络调用。
 6.  **产品化**：通过Docker容器化应用，并利用AWS ECR和App Runner将其部署到云端，实现了完整的持续交付流水线。
 
-![](img/167ff403fde6068981e22130dcf39eab_151.png)
 
 ![](img/167ff403fde6068981e22130dcf39eab_153.png)
 

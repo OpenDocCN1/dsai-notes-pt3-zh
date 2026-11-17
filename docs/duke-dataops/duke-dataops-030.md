@@ -10,7 +10,6 @@
 
 ---
 
-![](img/c69c2827ef557f53110b1f0442e58f81_5.png)
 
 ![](img/c69c2827ef557f53110b1f0442e58f81_6.png)
 
@@ -48,17 +47,14 @@
 *   `DATABRICKS_SERVER_HOSTNAME`: 服务器主机名。
 *   `DATABRICKS_TOKEN`: 你的个人访问令牌。
 
-![](img/c69c2827ef557f53110b1f0442e58f81_13.png)
 
 配置完成后，启动Codespaces环境，它将自动加载这些机密。
 
 ---
 
-![](img/c69c2827ef557f53110b1f0442e58f81_15.png)
 
 ## 验证连接：使用Databricks CLI
 
-![](img/c69c2827ef557f53110b1f0442e58f81_17.png)
 
 环境启动后，首先使用Databricks命令行工具验证连接是否成功。
 
@@ -76,19 +72,15 @@ databricks fs ls
 
 ---
 
-![](img/c69c2827ef557f53110b1f0442e58f81_19.png)
 
 ## 使用Python SDK进行管理操作
 
-![](img/c69c2827ef557f53110b1f0442e58f81_21.png)
 
-![](img/c69c2827ef557f53110b1f0442e58f81_23.png)
 
 除了CLI，我们还可以使用Python SDK（`databricks-sdk`）以编程方式管理Databricks。这更适合集成到自动化脚本或应用程序中。
 
 ![](img/c69c2827ef557f53110b1f0442e58f81_25.png)
 
-![](img/c69c2827ef557f53110b1f0442e58f81_27.png)
 
 首先，确保已安装必要的Python包。在`requirements.txt`文件中应包含：
 ```txt

@@ -78,7 +78,6 @@ galton_heights |> summarize(r = cor(father, son)) |> pull(r)
 
 要看到不同 $\rho$ 值的数据看起来是什么样子，这里有六个成对数值的例子，其相关性从 -0.9 到 0.99：
 
-![图片](img/27347fed9dab43c36628d916d89e6a43.png)
 
 ### 17.2.1 样本相关性是随机变量
 
@@ -106,7 +105,6 @@ R <- replicate(B, {
 qplot(R, geom = "histogram", binwidth = 0.05, color = I("black"))
 ```
 
-![图片](img/90e114fe5ba730e80480b917c6584784.png)
 
 我们看到 `R` 的期望值是人口相关性：
 
@@ -134,7 +132,6 @@ ggplot(aes(sample=R), data = data.frame(R)) +
  geom_abline(intercept = mean(R), slope = sqrt((1-mean(R)²)/(N-2)))
 ```
 
-![图片](img/c147facb988e6a21c3d6bf6030b11b10.png)
 
 如果你增加 $N$，你会看到分布收敛到正态分布。
 
@@ -202,11 +199,9 @@ galton_heights |> mutate(father_strata = factor(round(father))) |>
  geom_point()
 ```
 
-![](img/047e6fe49a5dfbe90622e22d8a0d7b8b.png)
 
 并不令人惊讶，这些群体的中心随着身高的增加而增加。此外，这些中心似乎遵循线性关系。以下我们绘制了每个群体的平均值。如果我们考虑到这些平均值是具有标准误的随机变量，数据与这些点遵循直线是一致的：
 
-![](img/e4a898fdcfdf5a58c84bb05a37956a79.png)
 
 这些条件平均值遵循一条线的事实并非巧合。在下一节中，我们解释了这些平均值遵循的线就是我们所说的*回归线*，它提高了我们估计的精度。然而，并不是总是适合用回归线来估计条件期望，所以我们还描述了高尔顿使用回归线的理论依据。
 

@@ -71,7 +71,6 @@ prompt = """
 
 ## 总结
 
-![](img/ef70515aed7930886e6f425426bcf3e5_2.png)
 
 ![](img/ef70515aed7930886e6f425426bcf3e5_3.png)
 

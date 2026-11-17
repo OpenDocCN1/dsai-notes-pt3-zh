@@ -4,7 +4,6 @@
 
 ---
 
-![](img/a19198f94c037d87e6a3fd5000af5607_1.png)
 
 ## 概述
 
@@ -16,19 +15,16 @@
 5.  学习如何运行Spark Shell进行交互式操作。
 6.  学习如何使用Spark Submit提交批处理应用。
 
-![](img/a19198f94c037d87e6a3fd5000af5607_3.png)
 
 ---
 
 ## 下载与安装Spark
 
-![](img/a19198f94c037d87e6a3fd5000af5607_5.png)
 
 Spark是Apache的开源项目。我们可以从其官方网站下载。
 
 以下是下载和安装Spark的步骤：
 
-![](img/a19198f94c037d87e6a3fd5000af5607_7.png)
 
 1.  **访问下载页面**：打开浏览器，访问 `spark.apache.org`，点击“Download”链接，或直接访问下载存档页面。
 2.  **选择版本**：本教程使用Spark 2.4.4版本。请确保下载与你的Hadoop版本兼容的Spark。
@@ -40,11 +36,9 @@ cd /usr/local/hadoop
 tar -zxvf ~/Downloads/spark-2.4.4-bin-without-hadoop.tgz
 ```
 
-![](img/a19198f94c037d87e6a3fd5000af5607_9.png)
 
 解压后，你将在 `/usr/local/hadoop/` 目录下看到一个名为 `spark-2.4.4-bin-without-hadoop` 的文件夹。
 
-![](img/a19198f94c037d87e6a3fd5000af5607_11.png)
 
 ---
 
@@ -52,7 +46,6 @@ tar -zxvf ~/Downloads/spark-2.4.4-bin-without-hadoop.tgz
 
 上一节我们完成了Spark的安装，本节我们来查看其目录结构，了解各个文件夹的作用。
 
-![](img/a19198f94c037d87e6a3fd5000af5607_13.png)
 
 进入Spark安装目录，你会看到以下主要文件夹：
 
@@ -70,57 +63,41 @@ tar -zxvf ~/Downloads/spark-2.4.4-bin-without-hadoop.tgz
 
 了解这些目录有助于后续的配置和问题排查。
 
-![](img/a19198f94c037d87e6a3fd5000af5607_15.png)
 
 ---
 
-![](img/a19198f94c037d87e6a3fd5000af5607_16.png)
 
-![](img/a19198f94c037d87e6a3fd5000af5607_18.png)
 
-![](img/a19198f94c037d87e6a3fd5000af5607_19.png)
 
 ## 配置Spark环境变量
 
 为了让系统识别Spark命令，我们需要设置环境变量。
 
-![](img/a19198f94c037d87e6a3fd5000af5607_21.png)
 
 编辑用户主目录下的 `.bash_profile` 或 `.bashrc` 文件，添加以下内容：
 
-![](img/a19198f94c037d87e6a3fd5000af5607_23.png)
 
 ```bash
 export SPARK_HOME=/usr/local/hadoop/spark-2.4.4-bin-without-hadoop
 export PATH=$PATH:$SPARK_HOME/bin
 ```
 
-![](img/a19198f94c037d87e6a3fd5000af5607_25.png)
 
-![](img/a19198f94c037d87e6a3fd5000af5607_26.png)
 
-![](img/a19198f94c037d87e6a3fd5000af5607_28.png)
 
 *   `SPARK_HOME`：指向Spark的安装目录。
 *   `PATH`：将Spark的 `bin` 目录加入系统路径，这样你就可以在终端直接运行 `spark-shell` 和 `spark-submit` 命令。
 
-![](img/a19198f94c037d87e6a3fd5000af5607_30.png)
 
-![](img/a19198f94c037d87e6a3fd5000af5607_32.png)
 
-![](img/a19198f94c037d87e6a3fd5000af5607_34.png)
 
-![](img/a19198f94c037d87e6a3fd5000af5607_36.png)
 
 保存文件后，执行 `source ~/.bash_profile` 使配置生效。
 
-![](img/a19198f94c037d87e6a3fd5000af5607_38.png)
 
 ---
 
-![](img/a19198f94c037d87e6a3fd5000af5607_40.png)
 
-![](img/a19198f94c037d87e6a3fd5000af5607_42.png)
 
 ## 配置Spark以集成Hadoop
 
@@ -148,9 +125,7 @@ export PATH=$PATH:$SPARK_HOME/bin
 
 完成这些配置后，Spark就知道了如何连接到现有的Hadoop集群。
 
-![](img/a19198f94c037d87e6a3fd5000af5607_44.png)
 
-![](img/a19198f94c037d87e6a3fd5000af5607_46.png)
 
 ---
 
@@ -202,7 +177,6 @@ Spark本身运行在JVM上，但为了使用Scala语言编写和编译Spark应�
 
 确保Hadoop的所有守护进程（NameNode, DataNode, ResourceManager等）已经启动。然后，在终端直接输入：
 
-![](img/a19198f94c037d87e6a3fd5000af5607_48.png)
 
 ```bash
 spark-shell
@@ -232,7 +206,6 @@ wordCountsRDD.saveAsTextFile(“hdfs://localhost:9000/output“)
 
 除了交互模式，我们更常使用 `spark-submit` 来提交打包好的应用程序JAR包。
 
-![](img/a19198f94c037d87e6a3fd5000af5607_50.png)
 
 以下是使用 `spark-submit` 的几种常见模式：
 
@@ -241,25 +214,20 @@ wordCountsRDD.saveAsTextFile(“hdfs://localhost:9000/output“)
     spark-submit --master local --driver-memory 600m /path/to/your-app.jar
     ```
 
-![](img/a19198f94c037d87e6a3fd5000af5607_52.png)
 
-![](img/a19198f94c037d87e6a3fd5000af5607_54.png)
 
 2.  **YARN客户端模式**：Driver程序运行在提交任务的客户端机器上，但任务执行在YARN集群中。
     ```bash
     spark-submit --master yarn --deploy-mode client --num-executors 2 --driver-memory 600m --executor-memory 600m /path/to/your-app.jar
     ```
 
-![](img/a19198f94c037d87e6a3fd5000af5607_56.png)
 
-![](img/a19198f94c037d87e6a3fd5000af5607_58.png)
 
 3.  **YARN集群模式**：Driver程序也运行在YARN集群的某个容器中，客户端在提交任务后可以断开。
     ```bash
     spark-submit --master yarn --deploy-mode cluster --num-executors 2 --driver-memory 600m --executor-memory 600m /path/to/your-app.jar
     ```
 
-![](img/a19198f94c037d87e6a3fd5000af5607_60.png)
 
 **关键参数说明**：
 *   `--master`：指定运行模式（`local`, `yarn`）。
@@ -267,31 +235,24 @@ wordCountsRDD.saveAsTextFile(“hdfs://localhost:9000/output“)
 *   `--num-executors`：指定执行器数量。
 *   `--driver-memory`, `--executor-memory`：设置驱动器和执行器的内存。
 
-![](img/a19198f94c037d87e6a3fd5000af5607_62.png)
 
 通过切换这些参数，你可以灵活地在不同环境下运行Spark应用。
 
 ---
 
-![](img/a19198f94c037d87e6a3fd5000af5607_64.png)
 
-![](img/a19198f94c037d87e6a3fd5000af5607_66.png)
 
 ## 总结
 
 在本节课中，我们一起学习了Spark环境的完整配置与运行流程。
 
-![](img/a19198f94c037d87e6a3fd5000af5607_68.png)
 
 我们首先从官网下载并安装了指定版本的Spark，并了解了其目录结构。接着，我们通过配置环境变量和 `spark-env.sh` 文件，成功将Spark集成到已有的Hadoop YARN环境中。为了支持Scala开发，我们还下载并安装了Scala语言和SBT构建工具。
 
-![](img/a19198f94c037d87e6a3fd5000af5607_70.png)
 
-![](img/a19198f94c037d87e6a3fd5000af5607_72.png)
 
 最后，我们实践了Spark的两种主要运行方式：使用 `spark-shell` 进行交互式数据操作，以及使用 `spark-submit` 以本地、YARN客户端、YARN集群等多种模式提交打包好的应用程序。
 
-![](img/a19198f94c037d87e6a3fd5000af5607_74.png)
 
 ![](img/a19198f94c037d87e6a3fd5000af5607_76.png)
 

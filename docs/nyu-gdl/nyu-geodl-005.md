@@ -146,7 +146,6 @@ node_outputs = shared_MLP(node_features) # 对每个节点应用相同的MLP
 
 ![](img/d8e0fb535e5e4d6d63811cc1ba564082_8.png)
 
-![](img/d8e0fb535e5e4d6d63811cc1ba564082_9.png)
 
 ![](img/d8e0fb535e5e4d6d63811cc1ba564082_10.png)
 

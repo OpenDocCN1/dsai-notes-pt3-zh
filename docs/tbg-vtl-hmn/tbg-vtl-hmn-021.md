@@ -1,6 +1,5 @@
 # 021：神经隐式与基于点的服装模型 - 第一部分
 
-![](img/a0c0a56fabab2913b2d98dd477f0d80f_0.png)
 
 ![](img/a0c0a56fabab2913b2d98dd477f0d80f_0.png)
 

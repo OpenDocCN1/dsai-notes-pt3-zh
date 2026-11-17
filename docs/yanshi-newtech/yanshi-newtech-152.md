@@ -28,7 +28,6 @@
 
 我们将从CDN LCCF开始。它控制整个内容分发过程，并拥有CDN的所有内容ID。
 
-![](img/f786020ede8ab73717dcebfd1506d960_4.png)
 
 *   **CDN LCCF**： 控制整个内容分发过程，并拥有CDN的所有内容ID。
 *   **CCF**： 集群控制功能，控制多个CDPF，并保存集群的内容ID。
@@ -38,7 +37,6 @@
 
 在这些集群的底部，可以认为有多个用户，但图中未画出。可以看到C（用户）连接到CDN LCCF，CDN LCCF连接到每个集群的CCF。每个集群有一个CCF。CCF连接到集群内的CDPF，每个CCF连接多个CDPF。
 
-![](img/f786020ede8ab73717dcebfd1506d960_4.png)
 
 上一节我们介绍了分层CDN的架构和核心模块，本节中我们来看看内容分发的三种具体流程。
 
@@ -103,10 +101,8 @@
 
 这些是我使用的参考文献，我推荐给你，谢谢。
 
-![](img/f786020ede8ab73717dcebfd1506d960_6.png)
 
 ![](img/f786020ede8ab73717dcebfd1506d960_6.png)
 
-![](img/f786020ede8ab73717dcebfd1506d960_7.png)
 
 ![](img/f786020ede8ab73717dcebfd1506d960_7.png)

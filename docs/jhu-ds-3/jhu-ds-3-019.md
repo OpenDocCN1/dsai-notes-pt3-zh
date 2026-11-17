@@ -1,6 +1,5 @@
 # 019：使用dplyr管理数据框
 
-![](img/349d617597b382aae07d78d5c1107c78_0.png)
 
 ![](img/349d617597b382aae07d78d5c1107c78_0.png)
 
@@ -127,6 +126,5 @@ mutate(data_frame, new_column = expression_based_on_old_columns)
 
 所有这些函数都遵循一致的语法：第一个参数是数据框，操作结果返回一个新的数据框。掌握这些基础函数，能让你以更高效、更可读的方式管理和转换数据，为后续的数据分析打下坚实基础。
 
-![](img/349d617597b382aae07d78d5c1107c78_2.png)
 
 ![](img/349d617597b382aae07d78d5c1107c78_2.png)

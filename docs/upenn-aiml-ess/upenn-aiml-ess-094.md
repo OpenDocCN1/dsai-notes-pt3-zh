@@ -1,6 +1,5 @@
 # 00：深度学习基础入门 🧠
 
-![](img/ded982bd9cee31150c72863746ef8bda_0.png)
 
 ![](img/ded982bd9cee31150c72863746ef8bda_1.png)
 

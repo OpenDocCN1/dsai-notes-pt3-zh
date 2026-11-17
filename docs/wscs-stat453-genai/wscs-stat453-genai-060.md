@@ -16,7 +16,6 @@
 
 以下是实现所需的一些辅助函数：
 
-![](img/7df04f90925eeb810ea669cb8002200f_1.png)
 
 *   `to_onehot`：将类别标签转换为独热编码格式。
 *   `softmax`：实现 Softmax 函数。
@@ -26,7 +25,6 @@
 
 ### 1.1 定义模型类
 
-![](img/7df04f90925eeb810ea669cb8002200f_3.png)
 
 与逻辑回归类似，我们首先定义一个类。在 `__init__` 构造函数中，我们初始化权重和偏置。
 
@@ -38,7 +36,6 @@ class SoftmaxRegression:
         self.bias = torch.zeros(num_classes) # 偏置向量：H 维
 ```
 
-![](img/7df04f90925eeb810ea669cb8002200f_5.png)
 
 这里，`H` 是类别数量，`M` 是特征数量。权重 `self.weights` 是一个 `H x M` 的矩阵，偏置 `self.bias` 是一个 `H` 维的向量。
 
@@ -120,9 +117,7 @@ def train(model, x_train, y_train, epochs, learning_rate, batch_size):
 我们定义一个继承自 `torch.nn.Module` 的类。在 `__init__` 中，我们使用 `nn.Linear` 层来计算净输入。
 
 
-![](img/7df04f90925eeb810ea669cb8002200f_7.png)
 
-![](img/7df04f90925eeb810ea669cb8002200f_8.png)
 
 ```python
 import torch.nn as nn
@@ -144,11 +139,9 @@ class SoftmaxRegressionPyTorch(nn.Module):
         return logits, probas
 ```
 
-![](img/7df04f90925eeb810ea669cb8002200f_10.png)
 
 `F` 是 `torch.nn.functional` 的常用别名，它提供了各种神经网络函数，如 `softmax`。
 
-![](img/7df04f90925eeb810ea669cb8002200f_12.png)
 
 ### 2.2 训练模型
 

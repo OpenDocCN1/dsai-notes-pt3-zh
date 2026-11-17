@@ -1,6 +1,5 @@
 # 007：直方图
 
-![](img/bd886cd9601a1ad69d42fde54a83d93b_0.png)
 
 ![](img/bd886cd9601a1ad69d42fde54a83d93b_0.png)
 
@@ -141,6 +140,5 @@ __global__ void histogram_privatized(int *input, int *global_hist, int size) {
 
 直方图计算是许多应用中的基础操作，理解其并行实现和优化技巧对于编写高效的GPU程序至关重要。
 
-![](img/bd886cd9601a1ad69d42fde54a83d93b_2.png)
 
 ![](img/bd886cd9601a1ad69d42fde54a83d93b_2.png)

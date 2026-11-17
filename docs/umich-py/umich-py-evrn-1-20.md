@@ -138,7 +138,6 @@ else:
     print(‘Not a number’)
 ```
 
-![](img/c1d140add3019bac83c0243fa500667b_2.png)
 
 **运行场景一（用户输入数字）：**
 1.  用户输入：`42`

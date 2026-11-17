@@ -1,8 +1,6 @@
 # 1：政策定义及其重要性 📚
 
-![](img/fbc08e5a5c49ee0a02b9e0bc02f376e4_0.png)
 
-![](img/fbc08e5a5c49ee0a02b9e0bc02f376e4_1.png)
 
 在本节课中，我们将要学习公共政策的基本概念，包括其定义、不同类型以及为何它在公共部门工作中至关重要。理解政策是进行有效政策分析的第一步。
 
@@ -59,7 +57,6 @@
 
 ![](img/fbc08e5a5c49ee0a02b9e0bc02f376e4_15.png)
 
-![](img/fbc08e5a5c49ee0a02b9e0bc02f376e4_16.png)
 
 ![](img/fbc08e5a5c49ee0a02b9e0bc02f376e4_17.png)
 

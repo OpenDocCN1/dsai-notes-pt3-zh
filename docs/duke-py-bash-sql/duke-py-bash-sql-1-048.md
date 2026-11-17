@@ -18,7 +18,6 @@ Git版本控制系统是一个**分布式版本控制系统**。这意味着你�
 
 首先，访问 [github.com](https://github.com) 并注册一个免费账户。
 
-![](img/2c1f3879ead03be09bba8bafe5dbcf9e_1.png)
 
 ![](img/2c1f3879ead03be09bba8bafe5dbcf9e_1.png)
 
@@ -63,12 +62,9 @@ git clone <仓库URL>
 git push origin main
 ```
 
-![](img/2c1f3879ead03be09bba8bafe5dbcf9e_5.png)
-![](img/2c1f3879ead03be09bba8bafe5dbcf9e_6.png)
 
 现在，如果我们切换回GitHub页面，可以看到有了一次新的提交，这正是我们在本地终端中进行的提交。我们可以查看文件，确认我们的更改已被添加。
 
-![](img/2c1f3879ead03be09bba8bafe5dbcf9e_5.png)
 
 ![](img/2c1f3879ead03be09bba8bafe5dbcf9e_6.png)
 
@@ -78,13 +74,8 @@ git push origin main
 
 你也可以直接在GitHub网页上修改文件并提交更改，通常需要为其提供一个提交信息。
 
-![](img/2c1f3879ead03be09bba8bafe5dbcf9e_8.png)
 
-![](img/2c1f3879ead03be09bba8bafe5dbcf9e_8.png)
-![](img/2c1f3879ead03be09bba8bafe5dbcf9e_10.png)
-![](img/2c1f3879ead03be09bba8bafe5dbcf9e_11.png)
 
-![](img/2c1f3879ead03be09bba8bafe5dbcf9e_10.png)
 
 ![](img/2c1f3879ead03be09bba8bafe5dbcf9e_11.png)
 
@@ -94,9 +85,7 @@ git push origin main
 git pull origin main
 ```
 
-![](img/2c1f3879ead03be09bba8bafe5dbcf9e_13.png)
 
-![](img/2c1f3879ead03be09bba8bafe5dbcf9e_13.png)
 
 现在，如果我们查看本地的README文件，可以看到我们在GitHub上所做的更改已经被拉取到了本地仓库中。
 

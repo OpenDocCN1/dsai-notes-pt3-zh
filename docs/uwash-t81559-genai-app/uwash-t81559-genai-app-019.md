@@ -17,9 +17,7 @@ from utility import chat
 
 ---
 
-![](img/16a287ad89d17822f0e504f3a7201d8b_1.png)
 
-![](img/16a287ad89d17822f0e504f3a7201d8b_2.png)
 
 ### 使用固定窗口缓冲记忆
 
@@ -32,9 +30,7 @@ conversation = chat.ChatConversation(memory_type='fixed_window')
 
 接着，我们创建第二个会话实例，并将第一个会话的状态加载进去，以演示持久化功能。
 
-![](img/16a287ad89d17822f0e504f3a7201d8b_4.png)
 
-![](img/16a287ad89d17822f0e504f3a7201d8b_5.png)
 
 ```python
 # 创建第二个会话并加载之前的状态
@@ -42,50 +38,39 @@ new_conversation = chat.ChatConversation()
 new_conversation.load_state(conversation.save_state())
 ```
 
-![](img/16a287ad89d17822f0e504f3a7201d8b_6.png)
 
-![](img/16a287ad89d17822f0e504f3a7201d8b_7.png)
 
 加载后，第二个会话能记住第一个会话中提到的信息，例如我最喜欢的颜色。我们也可以查看历史记录来验证这一点。
 
-![](img/16a287ad89d17822f0e504f3a7201d8b_9.png)
 
 ---
 
-![](img/16a287ad89d17822f0e504f3a7201d8b_11.png)
 
 ### 使用总结性记忆
 
 我们也可以将这个工具与总结性记忆一起使用。创建两个会话的方式与之前类似，但这里我们使用的是总结性记忆。
 
-![](img/16a287ad89d17822f0e504f3a7201d8b_13.png)
 
 ```python
 # 创建使用总结性记忆的会话
 summary_conversation = chat.ChatConversation(memory_type='summarization')
 ```
 
-![](img/16a287ad89d17822f0e504f3a7201d8b_14.png)
 
 我们向会话提供各种信息，例如我告诉它我的狗的名字。即使在我加载会话状态后，它仍然记得我的狗叫Hickory，尽管中间穿插了许多无关的信息。我们同样可以查看被截断和总结后的历史记录。
 
-![](img/16a287ad89d17822f0e504f3a7201d8b_16.png)
 
 ---
 
-![](img/16a287ad89d17822f0e504f3a7201d8b_18.png)
 
 ### 回滚与再生功能
 
 回滚和再生功能相当实用。以下是它们的工作方式：
 
-![](img/16a287ad89d17822f0e504f3a7201d8b_20.png)
 
-![](img/16a287ad89d17822f0e504f3a7201d8b_21.png)
 
 首先，我告诉机器人我的名字是Jeff，并且我喜欢咖啡。
 
-![](img/16a287ad89d17822f0e504f3a7201d8b_22.png)
 
 ```python
 conversation.tell("My name is Jeff.")

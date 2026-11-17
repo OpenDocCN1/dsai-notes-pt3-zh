@@ -6,11 +6,9 @@
 
 ## 查看DBFS中的数据
 
-![](img/95a82c2b5be41f698ef0b96db4dc6f52_2.png)
 
 首先，我们需要了解如何查看已存在于DBFS中但尚未在Catalog中注册为表的数据。通过导航到DBFS，我们可以浏览文件系统并找到目标数据文件。例如，我们可能发现一个CSV文件存储在路径 `dbfs:/FileStore/tables/height_weight.csv` 中，但它尚未出现在Catalog Explorer的列表里。
 
-![](img/95a82c2b5be41f698ef0b96db4dc6f52_4.png)
 
 上一节我们介绍了如何定位DBFS中的文件，本节中我们来看看如何将这些文件注册为正式的表。
 
@@ -21,9 +19,7 @@
 1.  打开Databricks工作区中的SQL编辑器。
 2.  编写一个创建表的SQL查询。关键是指定正确的文件路径和格式。
 
-![](img/95a82c2b5be41f698ef0b96db4dc6f52_6.png)
 
-![](img/95a82c2b5be41f698ef0b96db4dc6f52_8.png)
 
 以下是创建表的核心SQL语法示例：
 ```sql

@@ -1,6 +1,5 @@
 # 3：风险分解与正则化 🧠
 
-![](img/4e43eb5d01ffd7bcdfbbc08b055bcf2a_1.png)
 
 ![](img/4e43eb5d01ffd7bcdfbbc08b055bcf2a_2.png)
 
@@ -113,9 +112,7 @@
 
 ## 正则化：控制假设空间的实用方法
 
-![](img/4e43eb5d01ffd7bcdfbbc08b055bcf2a_15.png)
 
-![](img/4e43eb5d01ffd7bcdfbbc08b055bcf2a_16.png)
 
 上一节我们介绍了通过选择不同大小的假设空间来权衡误差。在实践中，一种非常有效且常用的方法是**正则化**。
 
@@ -148,9 +145,7 @@
 `min_w [ (1/n) Σ (y_i - w^T x_i)^2 + λ * ||w||_2^2 ]`
 其中 `||w||_2^2 = Σ w_j^2` 是系数向量的L2范数平方。
 
-![](img/4e43eb5d01ffd7bcdfbbc08b055bcf2a_18.png)
 
-![](img/4e43eb5d01ffd7bcdfbbc08b055bcf2a_19.png)
 
 **效果**：
 *   惩罚项 `λ * ||w||_2^2` 会倾向于让系数 `w` 整体变小，但通常不会恰好为0。

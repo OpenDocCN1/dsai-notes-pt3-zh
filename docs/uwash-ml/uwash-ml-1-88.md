@@ -12,7 +12,6 @@
 
 在推荐系统的场景下，我们的训练数据是用户-产品评分表。
 
-![](img/0e6cf628ea9410f119aada9ebc42c75d_3.png)
 
 ![](img/0e6cf628ea9410f119aada9ebc42c75d_3.png)
 

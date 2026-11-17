@@ -63,7 +63,6 @@ Pig的一个关键特点是 **“读时模式”（Schema-on-Read）** ，这与
 
 ---
 
-![](img/6a34bf4eeb9807c7bdeaaefe221e4a76_3.png)
 
 ![](img/6a34bf4eeb9807c7bdeaaefe221e4a76_4.png)
 

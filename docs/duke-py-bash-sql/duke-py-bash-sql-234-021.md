@@ -1,6 +1,5 @@
 #  021：Shell配置文件解析 🐚
 
-![](img/1c5cfe3dd3f6dfc5b8f77f41293b1051_0.png)
 
 ![](img/1c5cfe3dd3f6dfc5b8f77f41293b1051_1.png)
 

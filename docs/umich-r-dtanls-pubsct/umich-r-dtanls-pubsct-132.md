@@ -1,6 +1,5 @@
 # 8：人口偏差测量实证研究 📊
 
-![](img/9a685ed5f52c69dac8ae91165fdc7bb5_0.png)
 
 ![](img/9a685ed5f52c69dac8ae91165fdc7bb5_1.png)
 

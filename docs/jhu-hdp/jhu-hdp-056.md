@@ -41,11 +41,9 @@ Hadoop框架提供了多种内置的度量指标作为计数器。例如，你�
 
 如果内置计数器不能满足你的应用程序需求，你可以创建自己的、特定于应用程序的计数器。使用这些自定义计数器，你可以在Mapper、Combiner和Reducer类中递增它们。框架会准确汇总各个阶段的所有计数并生成总计。例如，如果你有15个Mapper，并且在Mapper阶段添加了这些计数器，框架会确保将所有不同的Mapper计数器聚合在一起，以便在作业历史服务器中显示最终总数，或者你也可以通过API访问它。
 
-![](img/09947d42a575163a784b694d238bde84_2.png)
 
 ---
 
-![](img/09947d42a575163a784b694d238bde84_3.png)
 
 ## 如何实现用户自定义计数器？
 
@@ -95,7 +93,6 @@ public class WordCountReducerWithCounterTech1 extends Reducer<Text, IntWritable,
 }
 ```
 
-![](img/09947d42a575163a784b694d238bde84_5.png)
 
 **技术二（使用枚举，类型安全）：**
 ```java
@@ -115,7 +112,6 @@ public class WordCountReducerWithCounterTech2 extends Reducer<Text, IntWritable,
 
 作业完成后，你可以通过Java API检索计数器，例如将其打印出来或存储到数据库中。使用作业对象的 `getCounters` 方法可以获取一个包含所有计数器的 `Counters` 对象，然后遍历并打印它们。
 
-![](img/09947d42a575163a784b694d238bde84_7.png)
 
 以下是一个示例程序片段，展示了如何在作业完成后检索并打印计数器：
 
@@ -138,11 +134,9 @@ if (success) {
 }
 ```
 
-![](img/09947d42a575163a784b694d238bde84_9.png)
 
 ---
 
-![](img/09947d42a575163a784b694d238bde84_11.png)
 
 ## 演示：运行带计数器的作业
 

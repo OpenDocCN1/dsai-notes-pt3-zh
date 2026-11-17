@@ -1,34 +1,26 @@
 # 6：Python解释器原理 🐍
 
-![](img/d9fc60302066e8621821ee5c55be1ac0_0.png)
 
 在本节课中，我们将要学习Python解释器的基本概念以及如何在本地安装Python。理解解释器是学习Python编程的重要一步，它帮助我们理解代码是如何被计算机执行的。
 
-![](img/d9fc60302066e8621821ee5c55be1ac0_2.png)
 
 ## 什么是Python解释器？🤔
 
-![](img/d9fc60302066e8621821ee5c55be1ac0_4.png)
 
-![](img/d9fc60302066e8621821ee5c55be1ac0_5.png)
 
 上一节我们介绍了本节课的主题，本节中我们来看看Python解释器的具体定义。
 
 Python解释器本质上是一个运行Python代码的程序。
 
-![](img/d9fc60302066e8621821ee5c55be1ac0_7.png)
 
-![](img/d9fc60302066e8621821ee5c55be1ac0_8.png)
 
 可以使用的解释器版本是**Python 3**或**Python**，具体取决于您计算机上安装的版本。
 
-![](img/d9fc60302066e8621821ee5c55be1ac0_10.png)
 
 拥有Python解释器的最大优势是，您可以直接与解释器交互，通过输入Python代码并立即运行它。
 
 ## 如何在本地安装Python 💻
 
-![](img/d9fc60302066e8621821ee5c55be1ac0_12.png)
 
 ![](img/d9fc60302066e8621821ee5c55be1ac0_13.png)
 

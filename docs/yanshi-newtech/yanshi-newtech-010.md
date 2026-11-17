@@ -1,6 +1,5 @@
 # 10：MapReduce与RDBMS的比较 📊
 
-![](img/c0b0f8cb16a7521c2ccb76aa09716ce6_0.png)
 
 ![](img/c0b0f8cb16a7521c2ccb76aa09716ce6_0.png)
 
@@ -8,7 +7,6 @@
 
 ## RDBMS的特点 🔍
 
-![](img/c0b0f8cb16a7521c2ccb76aa09716ce6_2.png)
 
 RDBMS代表关系型数据库管理系统。它具备一些特定的特征。
 
@@ -30,7 +28,6 @@ MapReduce是处理大规模数据集的一种编程模型。
 
 ## 核心应用场景对比 🎯
 
-![](img/c0b0f8cb16a7521c2ccb76aa09716ce6_4.png)
 
 上一节我们分别介绍了RDBMS和MapReduce的特点，本节中我们来看看它们各自最适合的应用场景。
 
@@ -51,7 +48,6 @@ MapReduce则更适用于“一次写入，多次读取”的基于批处理的�
 *   **数据完整性**：RDBMS的数据完整性高，而MapReduce较低。但另一方面，MapReduce着眼于整个数据集的整体结构。
 *   **可扩展性**：RDBMS的可扩展性是非线性的，而MapReduce是线性的。
 
-![](img/c0b0f8cb16a7521c2ccb76aa09716ce6_4.png)
 
 ## 数据类型：结构化、半结构化与非结构化 📁
 
@@ -79,6 +75,5 @@ MapReduce拥有一个线性可扩展的编程模型，这是MapReduce和Hadoop�
 
 这些是我使用的参考资料，我推荐给你。
 
-![](img/c0b0f8cb16a7521c2ccb76aa09716ce6_6.png)
 
 ![](img/c0b0f8cb16a7521c2ccb76aa09716ce6_6.png)

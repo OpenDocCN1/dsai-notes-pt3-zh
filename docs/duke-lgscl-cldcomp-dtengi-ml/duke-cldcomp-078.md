@@ -83,7 +83,6 @@ curl http://localhost:8081
 
 本节课中我们一起学习了如何整合多种工具快速构建一个数据服务原型。我们首先使用SQL从MySQL中查询并导出清洗过的数据到CSV文件。然后，仅利用Python的标准库（`csv`、`http.server`、`json`）就创建了一个能够提供JSON API的简易Web服务器。
 
-![](img/44112619b0976ec66f3f7c94b0cf8fd9_3.png)
 
 ![](img/44112619b0976ec66f3f7c94b0cf8fd9_4.png)
 

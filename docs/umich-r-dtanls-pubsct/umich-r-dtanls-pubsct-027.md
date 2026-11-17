@@ -14,7 +14,6 @@
 
 ![](img/f1d1b2040ef73460c0ccaf9b064ef6f4_6.png)
 
-![](img/f1d1b2040ef73460c0ccaf9b064ef6f4_7.png)
 
 Tidyverse包含八个“有主见”的R包，它们扩展了基础R的功能。之所以称为“有主见”，是因为它们要求用户遵循其提供的编程接口和数据分析风格。以下是Tidyverse的核心包：
 

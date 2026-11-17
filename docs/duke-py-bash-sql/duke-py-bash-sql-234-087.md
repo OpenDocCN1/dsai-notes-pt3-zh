@@ -24,7 +24,6 @@ cursor = connection.cursor()
 
 ---
 
-![](img/e99b3406bea788e8c878c2decb8fb789_1.png)
 
 ## 创建表与插入数据
 

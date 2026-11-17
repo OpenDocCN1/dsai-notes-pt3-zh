@@ -4,7 +4,6 @@
 
 ---
 
-![](img/449249c65bdec26e1de5250aa4489cb9_1.png)
 
 ## 什么是网络爬虫？ 🕸️
 
@@ -26,7 +25,6 @@
 
 我们将首先使用`readLines`命令从互联网获取数据。这是一种方法。
 
-![](img/449249c65bdec26e1de5250aa4489cb9_3.png)
 
 以下是具体步骤：
 
@@ -45,13 +43,10 @@ close(con)
 
 查看我们收集到的HTML代码，它会像这样显示：一个很长的大字符串。你可以指定`readLines`读取的行数，但输出仍然会以这种未格式化的方式呈现，阅读起来有些困难。
 
-![](img/449249c65bdec26e1de5250aa4489cb9_5.png)
 
 ---
 
-![](img/449249c65bdec26e1de5250aa4489cb9_6.png)
 
-![](img/449249c65bdec26e1de5250aa4489cb9_7.png)
 
 ## 使用XML包解析HTML 🧩
 
@@ -65,7 +60,6 @@ url <- "http://scholar.google.com/citations?user=HI-I6C0AAAAJ"
 html <- htmlTreeParse(url, useInternalNodes = TRUE)
 ```
 
-![](img/449249c65bdec26e1de5250aa4489cb9_9.png)
 
 然后，如果我想要获取页面的标题，可以查找`<title>`标签内的节点。或者，我可以通过查看表格的特定元素来获取论文的被引用次数。
 
@@ -80,9 +74,7 @@ xpathSApply(html, "//title", xmlValue)
 
 ## 使用httr包获取数据 🔗
 
-![](img/449249c65bdec26e1de5250aa4489cb9_11.png)
 
-![](img/449249c65bdec26e1de5250aa4489cb9_12.png)
 
 另一种获取数据的方法是使用`GET`命令，它来自`httr`包。
 
@@ -96,9 +88,7 @@ html2 <- GET(url)
 
 现在，我需要从那个HTML页面中提取内容。我使用`content`函数将其作为文本（一个大文本字符串）提取出来。
 
-![](img/449249c65bdec26e1de5250aa4489cb9_14.png)
 
-![](img/449249c65bdec26e1de5250aa4489cb9_15.png)
 
 ```r
 content2 <- content(html2, as = "text")
@@ -143,13 +133,10 @@ content(pg2)
 
 ---
 
-![](img/449249c65bdec26e1de5250aa4489cb9_17.png)
 
 ## 使用句柄管理会话 🎪
 
-![](img/449249c65bdec26e1de5250aa4489cb9_18.png)
 
-![](img/449249c65bdec26e1de5250aa4489cb9_19.png)
 
 确保使用句柄，因为如果你使用句柄，你可以在多次访问网站时保存身份验证状态。
 
@@ -164,7 +151,6 @@ pg1 <- GET(handle = google, path = "/")
 pg2 <- GET(handle = google, path = "search")
 ```
 
-![](img/449249c65bdec26e1de5250aa4489cb9_21.png)
 
 ---
 
@@ -176,7 +162,6 @@ R-bloggers网站有很多关于如何从网络抓取数据的好例子。如果�
 
 此外，请关注后续关于API的课程，以了解如何以编程方式与网站的API进行交互。
 
-![](img/449249c65bdec26e1de5250aa4489cb9_23.png)
 
 ---
 

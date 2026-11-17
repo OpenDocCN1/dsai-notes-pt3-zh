@@ -4,7 +4,6 @@
 
 我们将使用 `caret` 包中的函数，并以垃圾邮件数据集为例进行演示。
 
-![](img/f6e92013874d412dcb0e06aafb49f7bf_1.png)
 
 ---
 
@@ -46,7 +45,6 @@ testing <- spam[-intrain, ]
 
 ## 为交叉验证创建K折
 
-![](img/f6e92013874d412dcb0e06aafb49f7bf_3.png)
 
 在模型训练阶段，我们经常使用交叉验证来评估模型性能。本节我们将学习如何将训练集进一步分割为K个折（fold）。
 
@@ -73,7 +71,6 @@ length(folds[[1]])
 
 每个折包含的样本数大致相等，确保了交叉验证的均衡性。
 
-![](img/f6e92013874d412dcb0e06aafb49f7bf_5.png)
 
 ---
 
@@ -85,7 +82,6 @@ length(folds[[1]])
 
 执行自助法重采样的代码如下：
 
-![](img/f6e92013874d412dcb0e06aafb49f7bf_7.png)
 
 ```r
 # 执行有放回的重复抽样，创建10个自助样本
@@ -105,7 +101,6 @@ head(resamples[[1]], 10)
 
 ---
 
-![](img/f6e92013874d412dcb0e06aafb49f7bf_9.png)
 
 ## 时间序列数据切片
 
@@ -128,11 +123,9 @@ time_slices <- createTimeSlices(y = time, initialWindow = 20, horizon = 10, fixe
 *   `horizon = 10` 定义每个测试切片包含紧随其后的10个时间点。
 *   `fixedWindow = TRUE` 表示训练窗口大小固定。
 
-![](img/f6e92013874d412dcb0e06aafb49f7bf_11.png)
 
 生成的 `time_slices` 是一个列表，包含 `train` 和 `test` 两个子列表，分别存储了各个切片的索引。
 
-![](img/f6e92013874d412dcb0e06aafb49f7bf_12.png)
 
 ---
 

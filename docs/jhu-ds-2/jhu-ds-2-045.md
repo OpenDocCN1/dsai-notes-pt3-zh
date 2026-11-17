@@ -1,52 +1,37 @@
 # 045：循环函数 tapply 🧮
 
-![](img/28fdee01a38b611b32ff131d45bb6bd7_0.png)
 
-![](img/28fdee01a38b611b32ff131d45bb6bd7_1.png)
 
 在本节课中，我们将要学习R语言中一个非常实用的循环函数：`tapply`。这个函数主要用于对向量的子集应用某个函数，例如计算不同组别的均值或标准差等汇总统计量。
 
 ## 概述 📋
 
-![](img/28fdee01a38b611b32ff131d45bb6bd7_3.png)
 
 `tapply` 函数的核心思想是：你有一个向量（通常是数值型向量），并且你想对这个向量中不同的“组”或“子集”分别计算某个汇总统计量。为了实现这一点，你需要另一个长度相同的向量（通常是因子变量）来标识原始向量中每个元素属于哪个组。
 
-![](img/28fdee01a38b611b32ff131d45bb6bd7_4.png)
 
-![](img/28fdee01a38b611b32ff131d45bb6bd7_5.png)
 
-![](img/28fdee01a38b611b32ff131d45bb6bd7_6.png)
 
-![](img/28fdee01a38b611b32ff131d45bb6bd7_7.png)
 
 上一节我们介绍了`sapply`和`lapply`，本节中我们来看看如何对分组数据进行操作。
 
-![](img/28fdee01a38b611b32ff131d45bb6bd7_8.png)
 
 ## `tapply` 函数的基本原理
 
-![](img/28fdee01a38b611b32ff131d45bb6bd7_10.png)
 
-![](img/28fdee01a38b611b32ff131d45bb6bd7_11.png)
 
 `tapply` 函数的基本语法结构如下：
 
-![](img/28fdee01a38b611b32ff131d45bb6bd7_13.png)
 
 ```r
 tapply(X, INDEX, FUN, ..., simplify = TRUE)
 ```
 
-![](img/28fdee01a38b611b32ff131d45bb6bd7_14.png)
 
-![](img/28fdee01a38b611b32ff131d45bb6bd7_15.png)
 
 以下是各个参数的含义：
 
-![](img/28fdee01a38b611b32ff131d45bb6bd7_17.png)
 
-![](img/28fdee01a38b611b32ff131d45bb6bd7_18.png)
 
 *   **`X`**： 一个向量，通常是数值型向量，是你想要处理的数据。
 *   **`INDEX`**： 一个因子或可以转换为因子的列表，其长度必须与 `X` 相同。它定义了 `X` 中每个元素所属的组。
@@ -58,13 +43,9 @@ tapply(X, INDEX, FUN, ..., simplify = TRUE)
 
 让我们通过一个具体的例子来理解 `tapply` 的用法。
 
-![](img/28fdee01a38b611b32ff131d45bb6bd7_20.png)
 
-![](img/28fdee01a38b611b32ff131d45bb6bd7_21.png)
 
-![](img/28fdee01a38b611b32ff131d45bb6bd7_22.png)
 
-![](img/28fdee01a38b611b32ff131d45bb6bd7_23.png)
 
 首先，我们创建一个包含三组数据的向量 `x`：
 ```r
@@ -73,7 +54,6 @@ x <- c(rnorm(10), runif(10), rnorm(10, 1))
 ```
 这个向量包含：10个标准正态随机数、10个均匀分布随机数、以及10个均值为1的正态随机数。
 
-![](img/28fdee01a38b611b32ff131d45bb6bd7_24.png)
 
 接着，我们需要创建一个因子变量来标识每个数据点属于哪一组。这里我们使用 `gl()` 函数来生成因子：
 ```r
@@ -94,13 +74,9 @@ tapply(x, f, mean)
 
 `simplify` 参数控制着返回结果的格式。默认情况下（`simplify = TRUE`），如果可能，结果会被简化为一个数组（例如向量或矩阵）。
 
-![](img/28fdee01a38b611b32ff131d45bb6bd7_26.png)
 
-![](img/28fdee01a38b611b32ff131d45bb6bd7_27.png)
 
-![](img/28fdee01a38b611b32ff131d45bb6bd7_28.png)
 
-![](img/28fdee01a38b611b32ff131d45bb6bd7_29.png)
 
 如果我们设置 `simplify = FALSE`，`tapply` 将始终返回一个列表：
 ```r
@@ -109,19 +85,13 @@ tapply(x, f, mean, simplify = FALSE)
 ```
 此时，返回的是一个包含三个元素的列表，每个元素对应一个组的均值。
 
-![](img/28fdee01a38b611b32ff131d45bb6bd7_30.png)
 
-![](img/28fdee01a38b611b32ff131d45bb6bd7_31.png)
 
-![](img/28fdee01a38b611b32ff131d45bb6bd7_32.png)
 
-![](img/28fdee01a38b611b32ff131d45bb6bd7_33.png)
 
-![](img/28fdee01a38b611b32ff131d45bb6bd7_34.png)
 
 ## 应用更复杂的函数
 
-![](img/28fdee01a38b611b32ff131d45bb6bd7_35.png)
 
 `tapply` 不仅可以应用像 `mean` 这样返回单个值的函数，也可以应用返回多个值的函数。
 
@@ -132,17 +102,12 @@ tapply(x, f, range)
 ```
 `range` 函数会返回一个包含两个元素的向量（最小值和最大值）。因此，上述代码的结果可能是一个矩阵（如果 `simplify = TRUE`），其中每一列代表一个组，两行分别是最小值和最大值；或者是一个列表（如果 `simplify = FALSE`），列表中的每个元素是一个长度为2的向量。
 
-![](img/28fdee01a38b611b32ff131d45bb6bd7_37.png)
 
-![](img/28fdee01a38b611b32ff131d45bb6bd7_38.png)
 
-![](img/28fdee01a38b611b32ff131d45bb6bd7_39.png)
 
-![](img/28fdee01a38b611b32ff131d45bb6bd7_40.png)
 
 ## 总结 🎯
 
-![](img/28fdee01a38b611b32ff131d45bb6bd7_41.png)
 
 本节课中我们一起学习了 `tapply` 函数。我们了解到：
 
@@ -152,11 +117,8 @@ tapply(x, f, range)
 4.  `simplify` 参数可以控制返回结果是简化的数组还是列表。
 5.  它是处理分组数据并计算汇总统计量的一个强大而高效的工具。
 
-![](img/28fdee01a38b611b32ff131d45bb6bd7_43.png)
 
-![](img/28fdee01a38b611b32ff131d45bb6bd7_44.png)
 
-![](img/28fdee01a38b611b32ff131d45bb6bd7_45.png)
 
 ![](img/28fdee01a38b611b32ff131d45bb6bd7_46.png)
 

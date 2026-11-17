@@ -1,12 +1,9 @@
 # 9：Python变量与数据类型 🐍
 
-![](img/c93c42bbb7ef54bb8d82494ad326f9e0_0.png)
 
-![](img/c93c42bbb7ef54bb8d82494ad326f9e0_2.png)
 
 在本节课中，我们将学习Python中的变量与数据类型。理解数据类型是编程的基础，它决定了数据在程序中的存储方式和可执行的操作。
 
-![](img/c93c42bbb7ef54bb8d82494ad326f9e0_4.png)
 
 ## 概述
 
@@ -18,33 +15,23 @@
 
 Python支持的基本数据类型包括整数、浮点数、复数、字符串和布尔值。内置数据类型则更广泛，包括二进制类型、布尔类型、集合类型、映射类型、序列类型、数值类型和文本类型。为了简化，我们的演示将重点介绍基本数据类型。
 
-![](img/c93c42bbb7ef54bb8d82494ad326f9e0_6.png)
 
-![](img/c93c42bbb7ef54bb8d82494ad326f9e0_7.png)
 
-![](img/c93c42bbb7ef54bb8d82494ad326f9e0_8.png)
 
 ## 基本数据类型详解
 
-![](img/c93c42bbb7ef54bb8d82494ad326f9e0_9.png)
 
-![](img/c93c42bbb7ef54bb8d82494ad326f9e0_11.png)
 
 上一节我们介绍了数据类型的整体概念，本节中我们来看看几种具体的基本数据类型。
 
-![](img/c93c42bbb7ef54bb8d82494ad326f9e0_13.png)
 
-![](img/c93c42bbb7ef54bb8d82494ad326f9e0_15.png)
 
 ### 整数
 
 整数是一种存储数字的数据类型，其范围大约从-2,147,483,647到2,147,483,647。整数没有小数部分。整数字面量或变量是`int`类的对象。
 
-![](img/c93c42bbb7ef54bb8d82494ad326f9e0_17.png)
 
-![](img/c93c42bbb7ef54bb8d82494ad326f9e0_18.png)
 
-![](img/c93c42bbb7ef54bb8d82494ad326f9e0_19.png)
 
 **公式示例：**
 ```
@@ -63,7 +50,6 @@ y = 1.6754
 
 ### 复数
 
-![](img/c93c42bbb7ef54bb8d82494ad326f9e0_21.png)
 
 复数由两个实数构成，包含一个实部和一个虚部。在Python中，虚部通过在数字后添加`j`或`J`来表示。
 
@@ -72,21 +58,15 @@ y = 1.6754
 z = 3 + 6j
 ```
 
-![](img/c93c42bbb7ef54bb8d82494ad326f9e0_23.png)
 
-![](img/c93c42bbb7ef54bb8d82494ad326f9e0_24.png)
 
-![](img/c93c42bbb7ef54bb8d82494ad326f9e0_25.png)
 
 ### 字符串
 
-![](img/c93c42bbb7ef54bb8d82494ad326f9e0_27.png)
 
 字符串是表示Unicode字符的字节序列。它是一个或多个字符的集合，可以用单引号、双引号或三引号括起来。Python中没有单独的字符数据类型，一个字符就是长度为1的字符串。
 
-![](img/c93c42bbb7ef54bb8d82494ad326f9e0_29.png)
 
-![](img/c93c42bbb7ef54bb8d82494ad326f9e0_30.png)
 
 **公式示例：**
 ```
@@ -94,7 +74,6 @@ name = "Ad"
 greeting = 'Hello World'
 ```
 
-![](img/c93c42bbb7ef54bb8d82494ad326f9e0_32.png)
 
 ![](img/c93c42bbb7ef54bb8d82494ad326f9e0_34.png)
 

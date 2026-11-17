@@ -1,6 +1,5 @@
 #  014：SSH入门 🔐
 
-![](img/2bc361a23de7e094b6b7168ef17d4628_0.png)
 
 ![](img/2bc361a23de7e094b6b7168ef17d4628_1.png)
 

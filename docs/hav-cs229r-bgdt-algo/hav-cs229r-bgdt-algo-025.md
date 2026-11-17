@@ -2,23 +2,17 @@
 
 ![](img/6ccff1c5380e3d2ba59fa6fe8c96d86e_0.png)
 
-![](img/6ccff1c5380e3d2ba59fa6fe8c96d86e_2.png)
 
 在本节课中，我们将要学习大规模并行计算模型，特别是MapReduce模型。我们将探讨如何在此模型下设计高效算法，并分析其资源使用情况。课程将涵盖排序、最小生成树和三角形计数等经典问题的MapReduce解决方案。
 
 ---
 
-![](img/6ccff1c5380e3d2ba59fa6fe8c96d86e_4.png)
 
-![](img/6ccff1c5380e3d2ba59fa6fe8c96d86e_6.png)
 
-![](img/6ccff1c5380e3d2ba59fa6fe8c96d86e_8.png)
 
-![](img/6ccff1c5380e3d2ba59fa6fe8c96d86e_10.png)
 
 ## 模型介绍：MapReduce
 
-![](img/6ccff1c5380e3d2ba59fa6fe8c96d86e_12.png)
 
 上一节我们介绍了大规模并行计算的背景，本节中我们来看看一个具体且广泛应用的模型——MapReduce。
 
@@ -34,11 +28,9 @@ MapReduce是一个用于处理海量数据集的编程模型。计算被分解�
         emit(new_key, new_value)
     ```
 
-![](img/6ccff1c5380e3d2ba59fa6fe8c96d86e_14.png)
 
 2.  **Shuffle阶段**：此阶段对程序员透明，由系统内部处理。系统将所有在Map阶段输出的项，根据其键进行分组。具有相同键的项会被发送到同一个Reducer。
 
-![](img/6ccff1c5380e3d2ba59fa6fe8c96d86e_16.png)
 
 3.  **Reduce阶段**：每个Reducer接收一个键 `K` 和与该键关联的一系列值 `[V1, V2, ..., Vr]`。Reducer对这些值进行计算，并输出一组新的项。
 
@@ -48,11 +40,9 @@ MapReduce是一个用于处理海量数据集的编程模型。计算被分解�
 *   所有机器的总内存使用量远小于 `n^2`，理想情况下接近线性。
 *   总工作量或最大单机工作量较小。
 
-![](img/6ccff1c5380e3d2ba59fa6fe8c96d86e_18.png)
 
 ---
 
-![](img/6ccff1c5380e3d2ba59fa6fe8c96d86e_20.png)
 
 ## 算法示例一：排序 (TeraSort)
 
@@ -60,11 +50,9 @@ MapReduce是一个用于处理海量数据集的编程模型。计算被分解�
 
 该算法的核心思想是，如果我们有 `P` 台机器，我们希望将最小的 `n/P` 个元素发送到机器1，第二小的 `n/P` 个元素发送到机器2，依此类推。每台机器在本地对自己的数据进行排序，最后将所有结果串联起来。
 
-![](img/6ccff1c5380e3d2ba59fa6fe8c96d86e_22.png)
 
 问题在于我们不知道这些分界点具体是哪些元素。解决方案是通过采样来近似地找到这些分界点。
 
-![](img/6ccff1c5380e3d2ba59fa6fe8c96d86e_24.png)
 
 以下是TeraSort算法的两轮伪代码描述：
 
@@ -90,9 +78,7 @@ MapReduce是一个用于处理海量数据集的编程模型。计算被分解�
 
 ---
 
-![](img/6ccff1c5380e3d2ba59fa6fe8c96d86e_26.png)
 
-![](img/6ccff1c5380e3d2ba59fa6fe8c96d86e_28.png)
 
 ## 算法示例二：最小生成树 (MST)
 

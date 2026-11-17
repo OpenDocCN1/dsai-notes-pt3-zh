@@ -66,7 +66,6 @@ obama_tfidf_table = obama[['tfidf']].stack('tfidf', new_column_name=['word', 'tf
 
 ## 总结
 
-![](img/43940345057ba959d8547ef69d145b29_3.png)
 
 ![](img/43940345057ba959d8547ef69d145b29_4.png)
 

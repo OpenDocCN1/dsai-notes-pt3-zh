@@ -91,9 +91,7 @@
 
 ## 总结
 
-![](img/3d083c925ec31a63d27b44f8eb0e1057_13.png)
 
-![](img/3d083c925ec31a63d27b44f8eb0e1057_14.png)
 
 ![](img/3d083c925ec31a63d27b44f8eb0e1057_15.png)
 

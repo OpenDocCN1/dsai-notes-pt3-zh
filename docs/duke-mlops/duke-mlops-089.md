@@ -76,7 +76,6 @@ uvicorn main:app --host 0.0.0.0
 
 执行后，滚动到“Responses”部分查看结果。
 
-![](img/89942b6fc4548a54a10ca3d014ade34d_6.png)
 
 1.  **响应体（Response body）**：你会看到响应体是“2022”。这是因为`%Y`在Python的`strftime`格式中代表完整的年份。
 2.  **cURL命令（curl command）**：文档还提供了完整的cURL命令，方便你在其他地方测试这个API。
@@ -89,7 +88,6 @@ uvicorn main:app --host 0.0.0.0
 
 ## 总结
 
-![](img/89942b6fc4548a54a10ca3d014ade34d_8.png)
 
 ![](img/89942b6fc4548a54a10ca3d014ade34d_9.png)
 

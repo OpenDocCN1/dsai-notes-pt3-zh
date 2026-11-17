@@ -14,7 +14,6 @@
 
 ![](img/20917ecba83f8c97dffdb81be3fc13cf_3.png)
 
-![](img/20917ecba83f8c97dffdb81be3fc13cf_5.png)
 
 我们将其称为搜索的复杂度。
 

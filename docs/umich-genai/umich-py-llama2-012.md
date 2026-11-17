@@ -108,7 +108,6 @@ epilogue ::= "ANSWER: " [A-Z]
 
 ## 在Llama CPP中使用语法
 
-![](img/d7a78e0462dd63d2fcf07bdc19703845_17.png)
 
 现在我们已经定义了语法，让我们看看如何在Llama CPP中使用它。
 
@@ -126,7 +125,6 @@ epilogue ::= "ANSWER: " [A-Z]
 
 ## 语法的工作原理
 
-![](img/d7a78e0462dd63d2fcf07bdc19703845_19.png)
 
 现在你知道了如何使用语法来强制Llama2产生某种输出，我们应该谈谈它的底层工作原理。
 

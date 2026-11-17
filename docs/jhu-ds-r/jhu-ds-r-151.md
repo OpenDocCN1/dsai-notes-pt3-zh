@@ -1,6 +1,5 @@
 # 151：创建基础 knitr 文档 🧑‍💻
 
-![](img/de29ed08a3d0b162efdb4de56247d3f8_0.png)
 
 在本节课中，我们将学习如何使用 RStudio 创建一个基础的 knitr 文档。我们将了解 R Markdown 文档的基本结构，如何嵌入和运行 R 代码，以及如何将文档编译成可读的输出格式（如 HTML）。
 
@@ -8,13 +7,10 @@
 
 ## 🛠️ 在 RStudio 中创建新文档
 
-![](img/de29ed08a3d0b162efdb4de56247d3f8_2.png)
 
 上一节我们介绍了 knitr 的基本概念，本节中我们来看看如何实际操作。在 RStudio 中创建 knitr 文档是最简单的方法之一。
 
-![](img/de29ed08a3d0b162efdb4de56247d3f8_3.png)
 
-![](img/de29ed08a3d0b162efdb4de56247d3f8_4.png)
 
 在 RStudio 左上角点击“新建文档”按钮，你会看到多个选项。选择“R Markdown”选项，即可创建一个新的 R Markdown 文件。
 
@@ -26,10 +22,8 @@
 
 以下是 R Markdown 文档的一个基本示例。R Markdown 本质上是嵌入了 R 代码的 Markdown 格式。
 
-![](img/de29ed08a3d0b162efdb4de56247d3f8_6.png)
 
 
-![](img/de29ed08a3d0b162efdb4de56247d3f8_8.png)
 
 ```r
 ---
@@ -54,7 +48,6 @@ mean(x)
 
 在 R Markdown 中，代码块用于嵌入和执行 R 代码。以下是关于代码块的关键点：
 
-![](img/de29ed08a3d0b162efdb4de56247d3f8_10.png)
 
 *   **代码块起始**：代码块以三个反引号（```）开始，后跟花括号 `{r}`。这表示一个 R 代码块的开始。
 *   **代码块结束**：代码块以三个反引号（```）结束。
@@ -66,9 +59,7 @@ mean(x)
 
 ## 🏷️ 代码块命名与输出控制
 
-![](img/de29ed08a3d0b162efdb4de56247d3f8_12.png)
 
-![](img/de29ed08a3d0b162efdb4de56247d3f8_13.png)
 
 代码块可以拥有名称，并且可以控制其输出是否在最终文档中显示。
 
@@ -77,7 +68,6 @@ mean(x)
 
 ---
 
-![](img/de29ed08a3d0b162efdb4de56247d3f8_15.png)
 
 ## ⚙️ 编译文档生成输出
 
@@ -88,7 +78,6 @@ mean(x)
 2.  将代码的输出结果嵌入到文档中。
 3.  将整个文档转换为 HTML 网页。
 
-![](img/de29ed08a3d0b162efdb4de56247d3f8_17.png)
 
 如果你不使用 RStudio，也可以通过 R 命令来完成这个过程：
 ```r
@@ -115,13 +104,10 @@ browseURL("your_document.html") # 在浏览器中打开
 ```
 这就是 `mean(x)` 函数的计算结果。
 
-![](img/de29ed08a3d0b162efdb4de56247d3f8_19.png)
 
-![](img/de29ed08a3d0b162efdb4de56247d3f8_20.png)
 
 ---
 
-![](img/de29ed08a3d0b162efdb4de56247d3f8_21.png)
 
 ![](img/de29ed08a3d0b162efdb4de56247d3f8_22.png)
 

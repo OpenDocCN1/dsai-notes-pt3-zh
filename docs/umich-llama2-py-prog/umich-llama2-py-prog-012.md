@@ -79,7 +79,6 @@ epilogue ::= "ANSWER: " [A-Z]
 
 以下是关键代码示例（概念性代码）：
 
-![](img/8e8c8ede4e42b70e7fa7badd134abe2a_17.png)
 
 ```python
 # 加载模型
@@ -114,7 +113,6 @@ output = model.create_completion(
 ```
 当模型运行时，Llama CPP会在后台根据语法规则，将不符合当前语法位置的token的logits（概率分数）设置为负无穷大，从而确保模型只能从符合语法的token中进行选择。
 
-![](img/8e8c8ede4e42b70e7fa7badd134abe2a_19.png)
 
 ## 语法的工作原理与局限性
 

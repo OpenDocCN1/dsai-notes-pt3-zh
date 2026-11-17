@@ -4,11 +4,9 @@
 
 ## 概述
 
-![](img/43dcacc04fbf2a0b52b4c504a4083e5f_1.png)
 
 上一节我们介绍了牛顿迭代法的基本思想。本节中，我们来看看如何结合霍纳法，在Python中高效地实现求解多项式零点的算法。我们将从回顾牛顿-霍纳法的原理开始，然后逐步编写Python代码，并与MATLAB版本进行对比。
 
-![](img/43dcacc04fbf2a0b52b4c504a4083e5f_3.png)
 
 ## 牛顿-霍纳法原理回顾
 
@@ -18,7 +16,6 @@ $$
 x_{n+1} = x_n - \frac{f(x_n)}{f'(x_n)}
 $$
 
-![](img/43dcacc04fbf2a0b52b4c504a4083e5f_5.png)
 
 在每次迭代中，我们需要计算多项式 $P(x)$ 在点 $x_n$ 处的值及其导数值 $P'(x_n)$。
 
@@ -28,11 +25,9 @@ $$
 P(x) = (x - x_0)Q(x) + R
 $$
 
-![](img/43dcacc04fbf2a0b52b4c504a4083e5f_7.png)
 
 根据多项式余数定理，当我们在 $x_0$ 处求值时，$R = P(x_0)$。同时，$P(x)$ 在 $x_0$ 处的导数 $P'(x_0)$ 等于商式 $Q(x)$ 在 $x_0$ 处的值 $Q(x_0)$。
 
-![](img/43dcacc04fbf2a0b52b4c504a4083e5f_9.png)
 
 因此，通过一次霍纳法计算，我们可以在同一点 $x_0$ 同时得到 $P(x_0)$ 和 $P'(x_0)$ 的值，这正是牛顿迭代所需的。
 
@@ -40,7 +35,6 @@ $$
 
 现在，我们将使用牛顿法和霍纳法在Python中实现代码，以寻找多项式 $P(x) = x^4 - 3x^3 - 15x^2 + 19x + 30$ 的一个零点近似解。
 
-![](img/43dcacc04fbf2a0b52b4c504a4083e5f_11.png)
 
 首先，我们可以利用Python的`numpy`库来方便地处理多项式。`numpy`的设计借鉴了MATLAB，旨在提供类似的便捷性，并被大多数科学计算Python包（如SciPy、Pandas、Matplotlib）所使用。因此，如果你理解MATLAB，Python会很容易上手。
 
@@ -104,15 +98,12 @@ print(f"迭代次数: {num_iters}")
 
 ## 与MATLAB代码对比
 
-![](img/43dcacc04fbf2a0b52b4c504a4083e5f_13.png)
 
 为了加深理解，我们将Python实现与之前章节中的MATLAB代码进行对比。
 
 以下是MATLAB中的`newton_horner`函数核心部分：
 
-![](img/43dcacc04fbf2a0b52b4c504a4083e5f_15.png)
 
-![](img/43dcacc04fbf2a0b52b4c504a4083e5f_17.png)
 
 ```matlab
 function [x, n_iter] = newton_horner(quot, x0, tol, max_iter)
@@ -132,7 +123,6 @@ function [x, n_iter] = newton_horner(quot, x0, tol, max_iter)
 end
 ```
 
-![](img/43dcacc04fbf2a0b52b4c504a4083e5f_19.png)
 
 以及调用方式：
 

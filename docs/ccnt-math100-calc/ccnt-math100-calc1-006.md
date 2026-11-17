@@ -4,42 +4,26 @@
 
 ## 📊 概述：极限法则的直观理解
 
-![](img/59f2bf28883bbc37fd4b29c942fe25b0_1.png)
 
 假设我们有两个不同函数的和，例如 **B^x + x³**，并且我们想求当 **x** 趋近于某个特定值时的极限。我们能否利用这是一个“和”的事实来帮助我们呢？
 
-![](img/59f2bf28883bbc37fd4b29c942fe25b0_2.png)
 
-![](img/59f2bf28883bbc37fd4b29c942fe25b0_3.png)
 
-![](img/59f2bf28883bbc37fd4b29c942fe25b0_4.png)
 
-![](img/59f2bf28883bbc37fd4b29c942fe25b0_5.png)
 
 为了探索这个问题，让我们看一个具体的例子。这里有一个函数 **F(x)** 和一个函数 **G(x)**。下图绘制了由这两个函数构建的新函数 **F(x) + G(x)**。
 
-![](img/59f2bf28883bbc37fd4b29c942fe25b0_6.png)
 
-![](img/59f2bf28883bbc37fd4b29c942fe25b0_7.png)
 
-![](img/59f2bf28883bbc37fd4b29c942fe25b0_1.png)
-![](img/59f2bf28883bbc37fd4b29c942fe25b0_2.png)
-![](img/59f2bf28883bbc37fd4b29c942fe25b0_3.png)
-![](img/59f2bf28883bbc37fd4b29c942fe25b0_4.png)
-![](img/59f2bf28883bbc37fd4b29c942fe25b0_5.png)
-![](img/59f2bf28883bbc37fd4b29c942fe25b0_6.png)
 ![](img/59f2bf28883bbc37fd4b29c942fe25b0_7.png)
 
 例如，取 **x = 0** 时，**F(0) = 0**，**G(0) = 2**，那么 **F(0) + G(0) = 2**。从图像上看，**F(x) + G(x)** 在 **x=0** 处的高度确实是 **2**，这验证了我们的理解。
 
-![](img/59f2bf28883bbc37fd4b29c942fe25b0_9.png)
 
 ![](img/59f2bf28883bbc37fd4b29c942fe25b0_9.png)
-![](img/59f2bf28883bbc37fd4b29c942fe25b0_10.png)
 ![](img/59f2bf28883bbc37fd4b29c942fe25b0_12.png)
 ![](img/59f2bf28883bbc37fd4b29c942fe25b0_13.png)
 
-![](img/59f2bf28883bbc37fd4b29c942fe25b0_10.png)
 
 ## 🔍 具体分析：和的极限
 
@@ -49,23 +33,17 @@
 
 首先，我们来看函数 **F(x)** 在 **x → 0.5** 时的极限。从图像上看，这个极限值似乎是 **0.5**。
 
-![](img/59f2bf28883bbc37fd4b29c942fe25b0_13.png)
 
-![](img/59f2bf28883bbc37fd4b29c942fe25b0_15.png)
 
-![](img/59f2bf28883bbc37fd4b29c942fe25b0_15.png)
 
 因此，我们可以写出：
 > **lim (x→0.5) F(x) = 0.5**
 
-![](img/59f2bf28883bbc37fd4b29c942fe25b0_17.png)
 
 接下来，我们看函数 **G(x)** 在 **x → 0.5** 时的极限。从图像上看，这个极限值似乎是 **2**。
 
 ![](img/59f2bf28883bbc37fd4b29c942fe25b0_17.png)
-![](img/59f2bf28883bbc37fd4b29c942fe25b0_19.png)
 
-![](img/59f2bf28883bbc37fd4b29c942fe25b0_19.png)
 
 因此，我们可以写出：
 > **lim (x→0.5) G(x) = 2**
@@ -77,9 +55,7 @@
 ![](img/59f2bf28883bbc37fd4b29c942fe25b0_23.png)
 
 ![](img/59f2bf28883bbc37fd4b29c942fe25b0_21.png)
-![](img/59f2bf28883bbc37fd4b29c942fe25b0_23.png)
 
-![](img/59f2bf28883bbc37fd4b29c942fe25b0_25.png)
 
 因此，我们可以写出：
 > **lim (x→0.5) [F(x) + G(x)] = 2.5**
@@ -90,7 +66,6 @@
 
 ![](img/59f2bf28883bbc37fd4b29c942fe25b0_27.png)
 
-![](img/59f2bf28883bbc37fd4b29c942fe25b0_28.png)
 
 ![](img/59f2bf28883bbc37fd4b29c942fe25b0_29.png)
 
@@ -98,13 +73,10 @@
 
 ![](img/59f2bf28883bbc37fd4b29c942fe25b0_30.png)
 
-![](img/59f2bf28883bbc37fd4b29c942fe25b0_25.png)
 ![](img/59f2bf28883bbc37fd4b29c942fe25b0_27.png)
-![](img/59f2bf28883bbc37fd4b29c942fe25b0_28.png)
 ![](img/59f2bf28883bbc37fd4b29c942fe25b0_29.png)
 ![](img/59f2bf28883bbc37fd4b29c942fe25b0_30.png)
 
-![](img/59f2bf28883bbc37fd4b29c942fe25b0_32.png)
 
 ## ⚠️ 重要前提：极限必须存在
 
@@ -119,21 +91,15 @@
 
 ![](img/59f2bf28883bbc37fd4b29c942fe25b0_35.png)
 
-![](img/59f2bf28883bbc37fd4b29c942fe25b0_36.png)
 
 现在，如果我们尝试应用“和的极限等于极限的和”这个法则，我们会得到：
 > **lim (x→0) (1/x) + lim (x→0) (-1/x)**
 
-![](img/59f2bf28883bbc37fd4b29c942fe25b0_38.png)
 
 问题在于，**lim (x→0) (1/x)** 和 **lim (x→0) (-1/x)** 这两个极限**都不存在**。函数 **y = 1/x** 在 **x=0** 处有一个垂直渐近线，极限值趋于无穷大，不是一个确定的数。
 
-![](img/59f2bf28883bbc37fd4b29c942fe25b0_32.png)
 ![](img/59f2bf28883bbc37fd4b29c942fe25b0_34.png)
 ![](img/59f2bf28883bbc37fd4b29c942fe25b0_35.png)
-![](img/59f2bf28883bbc37fd4b29c942fe25b0_36.png)
-![](img/59f2bf28883bbc37fd4b29c942fe25b0_38.png)
-![](img/59f2bf28883bbc37fd4b29c942fe25b0_40.png)
 
 ![](img/59f2bf28883bbc37fd4b29c942fe25b0_40.png)
 
@@ -157,13 +123,11 @@
 
 ![](img/59f2bf28883bbc37fd4b29c942fe25b0_42.png)
 
-![](img/59f2bf28883bbc37fd4b29c942fe25b0_43.png)
 
 3.  **乘法法则（积的极限）**
     两个函数之积的极限，等于它们各自极限的积。
     > **lim [f(x) * g(x)] = lim f(x) * lim g(x)**
 
-![](img/59f2bf28883bbc37fd4b29c942fe25b0_44.png)
 
 ![](img/59f2bf28883bbc37fd4b29c942fe25b0_45.png)
 
@@ -172,8 +136,6 @@
     > **lim [f(x) / g(x)] = lim f(x) / lim g(x)， 其中 lim g(x) ≠ 0**
 
 ![](img/59f2bf28883bbc37fd4b29c942fe25b0_42.png)
-![](img/59f2bf28883bbc37fd4b29c942fe25b0_43.png)
-![](img/59f2bf28883bbc37fd4b29c942fe25b0_44.png)
 ![](img/59f2bf28883bbc37fd4b29c942fe25b0_45.png)
 
 ## 🎯 课程总结

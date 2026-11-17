@@ -2,15 +2,12 @@
 
 在本节课中，我们将要学习 Python 中一个核心概念：**类**。类是面向对象编程的基石，它允许我们将数据和功能捆绑在一起。我们将从定义一个简单的类开始，逐步学习如何创建对象、定义方法，并最终探索如何通过继承来复用和扩展已有的类。
 
-![](img/adeac8a6ff985a68af1da7fa51440eb9_1.png)
 
 ---
 
-![](img/adeac8a6ff985a68af1da7fa51440eb9_3.png)
 
 ## 1. 什么是类？🧱
 
-![](img/adeac8a6ff985a68af1da7fa51440eb9_5.png)
 
 上一节我们介绍了编程的基本概念，本节中我们来看看 Python 中的类。
 
@@ -25,7 +22,6 @@
 
 这实际上是一种实现要求，因此你必须按照这种方式来实现类。
 
-![](img/adeac8a6ff985a68af1da7fa51440eb9_7.png)
 
 ---
 
@@ -61,7 +57,6 @@ class Polynomial:
 
 ## 3. 类属性与更多方法 ⚙️
 
-![](img/adeac8a6ff985a68af1da7fa51440eb9_9.png)
 
 现在，我们尝试定义一个功能更丰富的多项式类。
 
@@ -100,24 +95,18 @@ class Polynomial:
 
 通过这种方式，你可以在类中定义全局变量、执行不同的初始化、添加删除操作以及其他自定义方法。
 
-![](img/adeac8a6ff985a68af1da7fa51440eb9_11.png)
 
-![](img/adeac8a6ff985a68af1da7fa51440eb9_13.png)
 
 ---
 
-![](img/adeac8a6ff985a68af1da7fa51440eb9_15.png)
 
 ## 4. 使用类：示例演示 💻
 
 让我们看看如何使用上面定义的类。
 
-![](img/adeac8a6ff985a68af1da7fa51440eb9_17.png)
 
 
-![](img/adeac8a6ff985a68af1da7fa51440eb9_19.png)
 
-![](img/adeac8a6ff985a68af1da7fa51440eb9_20.png)
 
 ```python
 # 创建第一个对象，使用默认系数
@@ -157,16 +146,13 @@ print(“\nEvaluation of poly2 at”, x_vals, “:”, values)
 
 被继承的类称为**父类**（或基类），新创建的类称为**子类**。子类可以继承父类的所有属性和方法，同时也可以定义自己特有的属性和方法，甚至可以**重写**父类的方法。
 
-![](img/adeac8a6ff985a68af1da7fa51440eb9_22.png)
 
 类可以导入外部已实现的函数来定义自己的方法。
 
-![](img/adeac8a6ff985a68af1da7fa51440eb9_24.png)
 
 让我们看一个例子，创建一个 `Quadratic`（二次多项式）子类，它继承自 `Polynomial` 父类。
 
 
-![](img/adeac8a6ff985a68af1da7fa51440eb9_26.png)
 
 ```python
 from utility_poly import *  # 导入一个包含独立`roots`函数的工具模块
@@ -186,7 +172,6 @@ class Quadratic(Polynomial):  # Quadratic 继承自 Polynomial
         return 2  # 对于二次多项式，次数总是2
 ```
 
-![](img/adeac8a6ff985a68af1da7fa51440eb9_28.png)
 
 代码解析：
 *   `class Quadratic(Polynomial):` 表示 `Quadratic` 是 `Polynomial` 的子类。
@@ -197,7 +182,6 @@ class Quadratic(Polynomial):  # Quadratic 继承自 Polynomial
 
 使用子类：
 
-![](img/adeac8a6ff985a68af1da7fa51440eb9_30.png)
 
 ```python
 # 创建一个二次多项式对象，系数按幂次递减排列 (2x^2 -3x + 1)
@@ -212,11 +196,9 @@ print(“Roots (power_decrease=0):”, quad2.roots())
 
 ## 6. 总结与最佳实践 📝
 
-![](img/adeac8a6ff985a68af1da7fa51440eb9_32.png)
 
 本节课中我们一起学习了 Python 类的核心概念和使用方法。
 
-![](img/adeac8a6ff985a68af1da7fa51440eb9_34.png)
 
 关于 Python 类的实现，有以下几点最终建议：
 1.  **模块化设计优先**：与其它编程语言一样，在实现之前应进行良好的模块化设计。将整体操作分解为多个函数，每个函数负责一部分操作。
@@ -226,7 +208,6 @@ print(“Roots (power_decrease=0):”, quad2.roots())
 
 尝试聪明地使用类，你就能成为一名优秀的程序员。
 
-![](img/adeac8a6ff985a68af1da7fa51440eb9_36.png)
 
 ![](img/adeac8a6ff985a68af1da7fa51440eb9_38.png)
 

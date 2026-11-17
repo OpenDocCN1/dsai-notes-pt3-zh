@@ -1,6 +1,5 @@
 # 大型语言模型实践：P141：总结与部署
 
-![](img/bcdb792f85b5d8e1e56fc23de8a6e2bf_0.png)
 
 ![](img/bcdb792f85b5d8e1e56fc23de8a6e2bf_0.png)
 

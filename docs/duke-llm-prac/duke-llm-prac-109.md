@@ -1,6 +1,5 @@
 # 大型语言模型实践（高级数据工程、AWS、Databricks和本地LLM）：P109：08_01_09_过滤集群列表
 
-![](img/834ce942b4b2a448b803c99500a0f3ef_0.png)
 
 ![](img/834ce942b4b2a448b803c99500a0f3ef_0.png)
 

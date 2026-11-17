@@ -1,6 +1,5 @@
 # 008：立体视觉
 
-![](img/75a24f95aa35ad1d7dc9443c07ee213a_0.png)
 
 ![](img/75a24f95aa35ad1d7dc9443c07ee213a_0.png)
 
@@ -105,12 +104,10 @@
 
 在下一课中，我们将学习更多关于视差生成算法的知识，并使用Python和OpenCV展示如何从立体图像对计算视差的完整示例。
 
-![](img/75a24f95aa35ad1d7dc9443c07ee213a_2.png)
 
 ![](img/75a24f95aa35ad1d7dc9443c07ee213a_2.png)
 
 我们下次见。
 
-![](img/75a24f95aa35ad1d7dc9443c07ee213a_4.png)
 
 ![](img/75a24f95aa35ad1d7dc9443c07ee213a_4.png)

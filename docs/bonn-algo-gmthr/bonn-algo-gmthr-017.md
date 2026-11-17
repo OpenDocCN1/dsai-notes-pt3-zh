@@ -1,6 +1,5 @@
 # 017：简单组合拍卖
 
-![](img/7351eb5a50153fedbb67d7cb50aad47b_0.png)
 
 ![](img/7351eb5a50153fedbb67d7cb50aad47b_0.png)
 

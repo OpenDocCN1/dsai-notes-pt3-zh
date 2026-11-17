@@ -1,6 +1,5 @@
 # 007：高斯随机向量非线性集中性的证明 🧮
 
-![](img/3d5c7cd202ec59cde2ac1fa1b062caf9_0.png)
 
 ![](img/3d5c7cd202ec59cde2ac1fa1b062caf9_2.png)
 

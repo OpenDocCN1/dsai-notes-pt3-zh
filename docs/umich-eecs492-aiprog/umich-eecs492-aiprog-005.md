@@ -10,7 +10,6 @@ Matlab是“矩阵实验室”的缩写。它是一种多范式的数值计算�
 
 在Matlab中，你可以进行矩阵操作、函数和数据绘图、算法实现、创建用户界面，并可以调用其他语言（如C、C++、C#、Java、Fortran和Python）。Matlab尤其擅长矩阵操作和符号计算，可以说是最方便学习和使用的计算机语言之一。
 
-![](img/0332c045855b9fbe7a7eccefdc5a13cb_1.png)
 
 学习任何编程语言，都需要掌握四个基本组成部分：
 *   **循环**：处理重复操作。
@@ -20,21 +19,17 @@ Matlab是“矩阵实验室”的缩写。它是一种多范式的数值计算�
 
 ---
 
-![](img/0332c045855b9fbe7a7eccefdc5a13cb_3.png)
 
 ## Matlab或Octave简介 🔄
 
-![](img/0332c045855b9fbe7a7eccefdc5a13cb_5.png)
 
 Octave是Matlab的一个免费替代品。在大多数情况下，Matlab程序可以在Octave中运行而无需修改。虽然两者并非完全相同，但对于初学者级别的任务，它们基本兼容。
 
-![](img/0332c045855b9fbe7a7eccefdc5a13cb_7.png)
 
 ---
 
 ## 向量和矩阵 📊
 
-![](img/0332c045855b9fbe7a7eccefdc5a13cb_9.png)
 
 最基本操作是输入向量和矩阵。在Matlab的命令窗口中，你会看到提示符 `>>`。在Octave中，提示符是 `octave:1>`。
 
@@ -44,14 +39,12 @@ A = [1, 2; 3, 4]
 ```
 这将创建一个2x2的矩阵A。行与行之间用分号 `;` 或换行分隔，行内的元素用逗号 `,` 或空格分隔。
 
-![](img/0332c045855b9fbe7a7eccefdc5a13cb_11.png)
 
 以下是更多示例：
 *   `v = [1; 2; 3]` 创建一个列向量（垂直向量）。
 *   `w = [5, 6, 7]` 创建一个行向量（水平向量）。
 *   `M = [2, 1; 1, 2]` 创建一个2x2矩阵。
 
-![](img/0332c045855b9fbe7a7eccefdc5a13cb_13.png)
 
 逗号和分号也可以用于在同一行组合多个命令。如果在命令末尾使用分号，Matlab会执行该命令但**不打印输出**。
 
@@ -85,7 +78,6 @@ M = [M; r3]; % 在底部添加新行，扩展为3x3矩阵
 
 ---
 
-![](img/0332c045855b9fbe7a7eccefdc5a13cb_15.png)
 
 ## 访问矩阵元素与运算 🔢
 
@@ -121,15 +113,11 @@ invD = inv(D); % D的逆矩阵
 check = D * invD; % 应近似等于单位矩阵
 ```
 
-![](img/0332c045855b9fbe7a7eccefdc5a13cb_17.png)
 
-![](img/0332c045855b9fbe7a7eccefdc5a13cb_19.png)
 
 ---
 
-![](img/0332c045855b9fbe7a7eccefdc5a13cb_21.png)
 
-![](img/0332c045855b9fbe7a7eccefdc5a13cb_23.png)
 
 ## 使用Matlab绘图 📈
 
@@ -137,9 +125,7 @@ Matlab中最常用的绘图命令是 `plot`，用于创建二维线图。基本�
 
 以下是一个绘图脚本示例 (`figure_plot.m`)：
 
-![](img/0332c045855b9fbe7a7eccefdc5a13cb_25.png)
 
-![](img/0332c045855b9fbe7a7eccefdc5a13cb_27.png)
 
 ```matlab
 close all; % 关闭所有图形窗口
@@ -167,9 +153,7 @@ grid on; % 显示网格
 ```
 运行此脚本（在编辑器点击运行或按F5）将生成一个显示余弦和正弦曲线的图形。
 
-![](img/0332c045855b9fbe7a7eccefdc5a13cb_29.png)
 
-![](img/0332c045855b9fbe7a7eccefdc5a13cb_31.png)
 
 对于更高级的可视化，Matlab还提供：
 *   `contour`：绘制等高线图。
@@ -178,15 +162,12 @@ grid on; % 显示网格
 
 ---
 
-![](img/0332c045855b9fbe7a7eccefdc5a13cb_33.png)
 
-![](img/0332c045855b9fbe7a7eccefdc5a13cb_35.png)
 
 ## 获取帮助 ℹ️
 
 Matlab功能强大且文档齐全。要了解任何命令的用法，可以使用 `help` 命令。
 
-![](img/0332c045855b9fbe7a7eccefdc5a13cb_37.png)
 
 例如，在命令窗口输入：
 ```matlab
@@ -196,7 +177,6 @@ help plot
 
 ---
 
-![](img/0332c045855b9fbe7a7eccefdc5a13cb_39.png)
 
 ![](img/0332c045855b9fbe7a7eccefdc5a13cb_41.png)
 

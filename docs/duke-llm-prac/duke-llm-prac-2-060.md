@@ -36,14 +36,10 @@ aws dynamodb create-table \
 
 以下是使用Python Boto3 SDK执行批量写入操作的示例代码：
 
-![](img/e3a6f039c4f891151e35dd0023484b31_2.png)
-
-![](img/e3a6f039c4f891151e35dd0023484b31_3.png)
 
 
-![](img/e3a6f039c4f891151e35dd0023484b31_4.png)
 
-![](img/e3a6f039c4f891151e35dd0023484b31_5.png)
+
 
 ```python
 import boto3

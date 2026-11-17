@@ -2,7 +2,6 @@
 
 ![](img/28745bcdee553fb6bc47ef9304cda3eb_0.png)
 
-![](img/28745bcdee553fb6bc47ef9304cda3eb_1.png)
 
 在本节课中，我们将学习如何通过正则化、决策树剪枝和神经网络Dropout等技术来减少模型过拟合，确保模型的泛化能力。这些技术是机器学习模型开发中平衡偏差与方差的关键艺术。
 
@@ -57,7 +56,6 @@ Dropout特征的一个良好值是0.3或30%。显然，Dropout会导致神经网
 
 ## 总结
 
-![](img/28745bcdee553fb6bc47ef9304cda3eb_3.png)
 
 ![](img/28745bcdee553fb6bc47ef9304cda3eb_4.png)
 

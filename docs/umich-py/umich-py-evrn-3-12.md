@@ -67,7 +67,6 @@ http://www.chuck.com/page1.html
 
 这个过程被称为**请求-响应周期**。虽然你只看到“点击 -> 新页面”，但背后发生了很多事情。
 
-![](img/3d53bed529dcc72c0b99cff3033778fc_14.png)
 
 ## HTTP标准：RFC
 

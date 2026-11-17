@@ -4,19 +4,13 @@
 
 ---
 
-![](img/5f96424698b3a3a9b83dd6de57caaf62_1.png)
 
-![](img/5f96424698b3a3a9b83dd6de57caaf62_2.png)
 
-![](img/5f96424698b3a3a9b83dd6de57caaf62_3.png)
 
-![](img/5f96424698b3a3a9b83dd6de57caaf62_4.png)
 
-![](img/5f96424698b3a3a9b83dd6de57caaf62_5.png)
 
 ## 🔍 问题背景：从配对数据到非配对数据
 
-![](img/5f96424698b3a3a9b83dd6de57caaf62_6.png)
 
 上一节我们介绍了基于配对数据的图像转换任务，即每个输入图像都有一个明确对应的输出图像作为标签。
 
@@ -26,29 +20,18 @@
 *   改变照片的艺术风格（如转换为莫奈风格）。
 *   进行季节转换（夏转冬，冬转夏），这对自动驾驶等领域的模拟训练很有用。
 
-![](img/5f96424698b3a3a9b83dd6de57caaf62_8.png)
 
-![](img/5f96424698b3a3a9b83dd6de57caaf62_9.png)
 
-![](img/5f96424698b3a3a9b83dd6de57caaf62_10.png)
 
-![](img/5f96424698b3a3a9b83dd6de57caaf62_11.png)
 
-![](img/5f96424698b3a3a9b83dd6de57caaf62_12.png)
 
 ---
 
-![](img/5f96424698b3a3a9b83dd6de57caaf62_13.png)
 
-![](img/5f96424698b3a3a9b83dd6de57caaf62_14.png)
 
-![](img/5f96424698b3a3a9b83dd6de57caaf62_15.png)
 
-![](img/5f96424698b3a3a9b83dd6de57caaf62_16.png)
 
-![](img/5f96424698b3a3a9b83dd6de57caaf62_17.png)
 
-![](img/5f96424698b3a3a9b83dd6de57caaf62_18.png)
 
 ## 🏗️ 网络架构：两个生成器与两个判别器
 
@@ -61,33 +44,21 @@
 
 这个架构的目标是学习两个域（X和Y）之间的图像分布映射。
 
-![](img/5f96424698b3a3a9b83dd6de57caaf62_20.png)
 
-![](img/5f96424698b3a3a9b83dd6de57caaf62_21.png)
 
-![](img/5f96424698b3a3a9b83dd6de57caaf62_22.png)
 
-![](img/5f96424698b3a3a9b83dd6de57caaf62_23.png)
 
-![](img/5f96424698b3a3a9b83dd6de57caaf62_24.png)
 
 ---
 
-![](img/5f96424698b3a3a9b83dd6de57caaf62_25.png)
 
-![](img/5f96424698b3a3a9b83dd6de57caaf62_26.png)
 
-![](img/5f96424698b3a3a9b83dd6de57caaf62_27.png)
 
-![](img/5f96424698b3a3a9b83dd6de57caaf62_28.png)
 
-![](img/5f96424698b3a3a9b83dd6de57caaf62_29.png)
 
-![](img/5f96424698b3a3a9b83dd6de57caaf62_30.png)
 
 ## ⚖️ 核心约束：循环一致性损失
 
-![](img/5f96424698b3a3a9b83dd6de57caaf62_31.png)
 
 如果没有配对数据，我们如何确保生成器G和F学习到有意义的映射，而不是随意生成无关图像呢？答案是引入**循环一致性**约束。
 
@@ -97,33 +68,21 @@
 *   **前向循环一致性**：`F(G(X)) ≈ X`
 *   **后向循环一致性**：`G(F(Y)) ≈ Y`
 
-![](img/5f96424698b3a3a9b83dd6de57caaf62_33.png)
 
-![](img/5f96424698b3a3a9b83dd6de57caaf62_34.png)
 
-![](img/5f96424698b3a3a9b83dd6de57caaf62_35.png)
 
-![](img/5f96424698b3a3a9b83dd6de57caaf62_36.png)
 
-![](img/5f96424698b3a3a9b83dd6de57caaf62_37.png)
 
 通过强制实施这个约束，我们就在两个非配对的图像集合之间建立了“虚拟”的配对关系，从而引导生成器学习正确的映射。
 
-![](img/5f96424698b3a3a9b83dd6de57caaf62_38.png)
 
-![](img/5f96424698b3a3a9b83dd6de57caaf62_39.png)
 
-![](img/5f96424698b3a3a9b83dd6de57caaf62_40.png)
 
-![](img/5f96424698b3a3a9b83dd6de57caaf62_41.png)
 
-![](img/5f96424698b3a3a9b83dd6de57caaf62_42.png)
 
-![](img/5f96424698b3a3a9b83dd6de57caaf62_43.png)
 
 ---
 
-![](img/5f96424698b3a3a9b83dd6de57caaf62_44.png)
 
 ## 📝 损失函数与训练过程
 
@@ -136,40 +95,27 @@ CycleGAN的总损失函数由三部分组成：
     这里使用了**最小二乘损失**（LSGAN），而非原始GAN的交叉熵损失，在实践中效果更好。
 *   同理，对于生成器F和判别器Dx，在X域上也有一个对称的对抗损失 `L_GAN(F, Dx, Y, X)`。
 
-![](img/5f96424698b3a3a9b83dd6de57caaf62_46.png)
 
-![](img/5f96424698b3a3a9b83dd6de57caaf62_47.png)
 
-![](img/5f96424698b3a3a9b83dd6de57caaf62_48.png)
 
-![](img/5f96424698b3a3a9b83dd6de57caaf62_49.png)
 
-![](img/5f96424698b3a3a9b83dd6de57caaf62_50.png)
 
 **2. 循环一致性损失**
 这是CycleGAN的核心，用于保证转换的可逆性。通常使用L1损失来衡量重建误差。
 *   `L_cyc(G, F) = E_x~p_data(x)[||F(G(x)) - x||_1] + E_y~p_data(y)[||G(F(y)) - y||_1]`
 
-![](img/5f96424698b3a3a9b83dd6de57caaf62_51.png)
 
-![](img/5f96424698b3a3a9b83dd6de57caaf62_52.png)
 
-![](img/5f96424698b3a3a9b83dd6de57caaf62_53.png)
 
-![](img/5f96424698b3a3a9b83dd6de57caaf62_54.png)
 
-![](img/5f96424698b3a3a9b83dd6de57caaf62_55.png)
 
-![](img/5f96424698b3a3a9b83dd6de57caaf62_56.png)
 
 **3. 总损失**
 将上述损失加权求和，得到最终要优化的目标：
 `L(G, F, Dx, Dy) = L_GAN(G, Dy, X, Y) + L_GAN(F, Dx, Y, X) + λ * L_cyc(G, F)`
 其中，λ是一个超参数，用于控制循环一致性损失的重要性。
 
-![](img/5f96424698b3a3a9b83dd6de57caaf62_57.png)
 
-![](img/5f96424698b3a3a9b83dd6de57caaf62_59.png)
 
 训练过程就是交替优化判别器（最大化其区分能力）和生成器（最小化总损失，以生成既逼真又符合循环一致性的图像）。
 

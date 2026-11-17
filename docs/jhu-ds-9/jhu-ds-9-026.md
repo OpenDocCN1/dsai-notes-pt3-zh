@@ -1,30 +1,20 @@
 # 026：使用R Markdown创建可重现演示文稿 📊
 
-![](img/3e3e8d8c12ccf245aabebb43d852e2f9_0.png)
 
 在本节课中，我们将学习如何使用R Markdown创建可重现的演示文稿。我们将探讨其核心概念、优势，并通过示例了解其工作流程。
 
-![](img/3e3e8d8c12ccf245aabebb43d852e2f9_2.png)
 
-![](img/3e3e8d8c12ccf245aabebb43d852e2f9_3.png)
 
-![](img/3e3e8d8c12ccf245aabebb43d852e2f9_4.png)
 
-![](img/3e3e8d8c12ccf245aabebb43d852e2f9_5.png)
 
 ---
 
 上一节我们介绍了本课程的主题。本节中，我们来看看R Markdown的基本概念及其在创建可重现文档中的重要性。
 
-![](img/3e3e8d8c12ccf245aabebb43d852e2f9_7.png)
 
-![](img/3e3e8d8c12ccf245aabebb43d852e2f9_8.png)
 
-![](img/3e3e8d8c12ccf245aabebb43d852e2f9_9.png)
 
-![](img/3e3e8d8c12ccf245aabebb43d852e2f9_10.png)
 
-![](img/3e3e8d8c12ccf245aabebb43d852e2f9_11.png)
 
 R Markdown内置于RStudio中，它允许你从R内部创建文档（特别是HTML文档）。其核心机制是将分析过程中的**代码**、**代码运行结果**、**图表**等所有内容，整合到一个文档中。
 
@@ -35,13 +25,10 @@ R Markdown内置于RStudio中，它允许你从R内部创建文档（特别是HT
 ```
 当渲染（Knit）文档时，引擎会执行代码块并将结果嵌入到最终输出中。
 
-![](img/3e3e8d8c12ccf245aabebb43d852e2f9_13.png)
 
-![](img/3e3e8d8c12ccf245aabebb43d852e2f9_14.png)
 
 ---
 
-![](img/3e3e8d8c12ccf245aabebb43d852e2f9_15.png)
 
 传统的工作流程存在一些问题，R Markdown旨在解决它们。
 
@@ -52,25 +39,17 @@ R Markdown内置于RStudio中，它允许你从R内部创建文档（特别是HT
 
 这种方式会导致**版本控制困难**，并且接收你文件的人**无法重现**其中的图表和计算结果。
 
-![](img/3e3e8d8c12ccf245aabebb43d852e2f9_17.png)
 
 相比之下，使用R Markdown生成文档是更好的方式，它关注**可重现性**，并为生成演示文稿提供了**一致且自动化的结构**。
 
-![](img/3e3e8d8c12ccf245aabebb43d852e2f9_18.png)
 
-![](img/3e3e8d8c12ccf245aabebb43d852e2f9_19.png)
 
-![](img/3e3e8d8c12ccf245aabebb43d852e2f9_20.png)
 
-![](img/3e3e8d8c12ccf245aabebb43d852e2f9_21.png)
 
-![](img/3e3e8d8c12ccf245aabebb43d852e2f9_22.png)
 
 ---
 
-![](img/3e3e8d8c12ccf245aabebb43d852e2f9_23.png)
 
-![](img/3e3e8d8c12ccf245aabebb43d852e2f9_24.png)
 
 R Markdown在创建周期性或自动化报告方面尤其有用。
 
@@ -78,9 +57,7 @@ R Markdown在创建周期性或自动化报告方面尤其有用。
 
 因此，将R Markdown视为创建**周期性演示文稿**或**自动化演示文稿**的有效工具。
 
-![](img/3e3e8d8c12ccf245aabebb43d852e2f9_26.png)
 
-![](img/3e3e8d8c12ccf245aabebb43d852e2f9_27.png)
 
 ---
 
@@ -90,13 +67,10 @@ R Markdown在创建周期性或自动化报告方面尤其有用。
 
 拥有一份**内嵌了代码的文档**，能极大提升文档的可重现性。虽然它并非完美（可能涉及外部文件、计算架构差异等），但它在创建更可重现的结果方面迈出了一大步。
 
-![](img/3e3e8d8c12ccf245aabebb43d852e2f9_29.png)
 
-![](img/3e3e8d8c12ccf245aabebb43d852e2f9_30.png)
 
 ---
 
-![](img/3e3e8d8c12ccf245aabebb43d852e2f9_31.png)
 
 如果你学习过数据科学专项课程中的《可重现研究》课程，可能已对这部分内容有所了解。本课程将主要聚焦于**演示文稿的创建**，因为我们视本课程为“产品”课程——你生成的演示文稿就是你为产品所做的“推介”，我们希望这个“推介”能以可重现的格式创建。
 
@@ -104,7 +78,6 @@ R Markdown在创建周期性或自动化报告方面尤其有用。
 
 ---
 
-![](img/3e3e8d8c12ccf245aabebb43d852e2f9_33.png)
 
 ![](img/3e3e8d8c12ccf245aabebb43d852e2f9_34.png)
 

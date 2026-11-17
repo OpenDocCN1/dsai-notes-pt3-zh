@@ -74,16 +74,11 @@ AR系统主要由内容提供方和基于服务器的系统构成。
 
 ---
 
-![](img/b4106069ddac08dfe2fe1da84f46a553_2.png)
 
 以上是我所使用的参考资料，推荐给你。谢谢。
 
-![](img/b4106069ddac08dfe2fe1da84f46a553_2.png)
 
-![](img/b4106069ddac08dfe2fe1da84f46a553_4.png)
 
-![](img/b4106069ddac08dfe2fe1da84f46a553_4.png)
 
-![](img/b4106069ddac08dfe2fe1da84f46a553_5.png)
 
 ![](img/b4106069ddac08dfe2fe1da84f46a553_5.png)

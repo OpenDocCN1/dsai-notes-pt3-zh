@@ -47,7 +47,6 @@ Google Colab 是一个在线集成开发环境，也被称为在线编程工具�
 
 以下是使用 Google Colab 的基本步骤：
 
-![](img/512b39129aaf9c6dd71e6e21410f9152_1.png)
 
 1.  **登录账户**：确保你已登录 Gmail 账户。如果没有，需要先创建一个。
 2.  **创建新笔记本**：点击 `File` -> `New notebook`，或直接在欢迎页面点击 `New notebook`。
@@ -57,7 +56,6 @@ Google Colab 是一个在线集成开发环境，也被称为在线编程工具�
 
 ---
 
-![](img/512b39129aaf9c6dd71e6e21410f9152_3.png)
 
 ## 演示：创建第一个程序 🎬
 
@@ -75,11 +73,9 @@ Google Colab 是一个在线集成开发环境，也被称为在线编程工具�
     *   或者，将光标置于单元格内，按键盘上的 `Ctrl + Enter`。
 6.  运行后，单元格下方会立即显示输出：`Hello World 😊`。
 
-![](img/512b39129aaf9c6dd71e6e21410f9152_5.png)
 
 恭喜！你已经在 Google Colab 中成功编写并运行了第一个程序。
 
-![](img/512b39129aaf9c6dd71e6e21410f9152_7.png)
 
 如果你想在本地（例如使用 Visual Studio Code）运行此程序，可以点击 `File` -> `Download` -> `Download .py`，将脚本下载为 `.py` 文件，然后在本地机器上运行。
 
@@ -87,9 +83,7 @@ Google Colab 是一个在线集成开发环境，也被称为在线编程工具�
 
 ## 总结 📝
 
-![](img/512b39129aaf9c6dd71e6e21410f9152_9.png)
 
-![](img/512b39129aaf9c6dd71e6e21410f9152_10.png)
 
 ![](img/512b39129aaf9c6dd71e6e21410f9152_12.png)
 

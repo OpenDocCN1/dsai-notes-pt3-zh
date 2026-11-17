@@ -4,17 +4,13 @@
 
 ## 概述
 
-![](img/dabdf1973156fbf4fa52c2ecb35d6528_1.png)
 
-![](img/dabdf1973156fbf4fa52c2ecb35d6528_3.png)
 
 程序错误主要分为两类：运行时错误和语义错误。运行时错误会导致程序立即停止（崩溃），而语义错误则会让程序产生看似合理但实际错误的结果。本节课的目标是学习如何将危险的语义错误转化为更容易调试的运行时错误，以及如何捕获和处理预期的异常，提升程序的健壮性。
 
-![](img/dabdf1973156fbf4fa52c2ecb35d6528_5.png)
 
 ---
 
-![](img/dabdf1973156fbf4fa52c2ecb35d6528_7.png)
 
 ## 引入示例：披萨分析程序 🍕
 
@@ -23,7 +19,6 @@
 首先，我们来看看程序的核心代码结构：
 
 
-![](img/dabdf1973156fbf4fa52c2ecb35d6528_9.png)
 
 ```python
 import math
@@ -46,7 +41,6 @@ if __name__ == “__main__”:
     main()
 ```
 
-![](img/dabdf1973156fbf4fa52c2ecb35d6528_11.png)
 
 上一节我们介绍了程序的基本功能，本节中我们来看看用户可能输入哪些“坏数据”导致程序出错。
 
@@ -60,7 +54,6 @@ if __name__ == “__main__”:
 
 ---
 
-![](img/dabdf1973156fbf4fa52c2ecb35d6528_13.png)
 
 ## 让程序“崩溃”更多：使用 `assert` 语句 💥
 
@@ -82,13 +75,11 @@ assert radius > 0, “披萨直径必须为正数”
 assert slices > 0, “切片数量必须为正整数”
 ```
 
-![](img/dabdf1973156fbf4fa52c2ecb35d6528_15.png)
 
 添加后，当输入负直径或非正切片数时，程序会主动崩溃并显示我们指定的错误信息，从而将语义错误转化为了运行时错误。
 
 ---
 
-![](img/dabdf1973156fbf4fa52c2ecb35d6528_17.png)
 
 ## 让程序“崩溃”更少：使用 `try...except` 结构 🛡️
 
@@ -123,7 +114,6 @@ except (ValueError, IndexError) as e:
 
 在披萨程序中，我们可以这样改进输入处理部分：
 
-![](img/dabdf1973156fbf4fa52c2ecb35d6528_19.png)
 
 ```python
 try:
@@ -137,7 +127,6 @@ except (ValueError, IndexError) as e:
 
 这样，程序只会捕获因用户输入格式问题引发的`ValueError`（如非数字转换）和`IndexError`（如缺少逗号），而其他类型的错误（如我们代码本身的bug）则会导致程序正常崩溃，便于我们调试。
 
-![](img/dabdf1973156fbf4fa52c2ecb35d6528_21.png)
 
 ---
 
@@ -145,13 +134,10 @@ except (ValueError, IndexError) as e:
 
 除了使用`assert`，我们还可以使用`raise`语句主动抛出（引发）一个指定类型的异常，并附带自定义的错误信息。这比通用的`AssertionError`能提供更精确的错误上下文。
 
-![](img/dabdf1973156fbf4fa52c2ecb35d6528_23.png)
 
 `raise`语句的语法是：`raise 异常类型(“错误信息”)`。
 
-![](img/dabdf1973156fbf4fa52c2ecb35d6528_25.png)
 
-![](img/dabdf1973156fbf4fa52c2ecb35d6528_27.png)
 
 例如，在披萨程序中替换`assert`：
 ```python
@@ -163,11 +149,9 @@ if slices <= 0:
     raise ValueError(“切片数量必须为正整数”)
 ```
 
-![](img/dabdf1973156fbf4fa52c2ecb35d6528_29.png)
 
 然后，我们可以在调用此函数的地方，用更具体的`except ValueError:`来捕获这个异常并进行相应处理。
 
-![](img/dabdf1973156fbf4fa52c2ecb35d6528_31.png)
 
 ---
 
@@ -180,13 +164,11 @@ Python内置了许多异常类型，它们形成了一个层次结构。最顶�
 *   捕获`Exception`比只写`except:`更具体，因为它不会捕获`KeyboardInterrupt`。
 *   最佳实践是捕获最具体的异常类型（如`ValueError`），避免隐藏意料之外的错误。
 
-![](img/dabdf1973156fbf4fa52c2ecb35d6528_33.png)
 
 ---
 
 ## 总结
 
-![](img/dabdf1973156fbf4fa52c2ecb35d6528_35.png)
 
 本节课中我们一起学习了Python错误处理的核心概念：
 1.  **使用`assert`**：在开发阶段主动检查程序状态，将潜在的语义错误转化为运行时错误，使问题更容易暴露。

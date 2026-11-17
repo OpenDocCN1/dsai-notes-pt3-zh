@@ -42,7 +42,6 @@ LOAD DATA INPATH ‘<hdfs_file_path>’ INTO TABLE posts;
 
 ## 选项三：使用外部表指向现有数据
 
-![](img/e694b2357b0e00ffb0877036fc672932_6.png)
 
 前面两种方法都涉及数据的复制操作。现在，我们来看第三种更高效的方法：创建外部表来指向 HDFS 中已存在的数据，而无需进行数据复制。
 
@@ -51,7 +50,6 @@ LOAD DATA INPATH ‘<hdfs_file_path>’ INTO TABLE posts;
 1.  首先，确认数据已存在于 HDFS 的特定目录中，例如 `/bdp/hive/posts`。
 2.  在 Hive 中，使用以下命令创建外部表：
 
-![](img/e694b2357b0e00ffb0877036fc672932_8.png)
 
 ```sql
 CREATE EXTERNAL TABLE posts (
@@ -63,9 +61,7 @@ FIELDS TERMINATED BY ‘,’ -- 根据你的数据格式修改
 LOCATION ‘/bdp/hive/posts’;
 ```
 
-![](img/e694b2357b0e00ffb0877036fc672932_10.png)
 
-![](img/e694b2357b0e00ffb0877036fc672932_12.png)
 
 `LOCATION` 子句指明了数据所在的 HDFS 目录。创建完成后，你可以直接查询这张表，Hive 会自动读取指定位置的数据。
 

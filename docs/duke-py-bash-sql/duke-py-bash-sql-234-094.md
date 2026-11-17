@@ -1,6 +1,5 @@
 #  094：在Python中创建与连接SQLite数据库
 
-![](img/361ed541961470d8e41ad22f77c291ed_0.png)
 
 ![](img/361ed541961470d8e41ad22f77c291ed_0.png)
 

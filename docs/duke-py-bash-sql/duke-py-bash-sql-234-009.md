@@ -1,6 +1,5 @@
 #  009：编写Hello World Bash脚本 🐚
 
-![](img/6eb6ed0ec124bfdb59c4ea18a0c57dc8_0.png)
 
 ![](img/6eb6ed0ec124bfdb59c4ea18a0c57dc8_1.png)
 
@@ -50,11 +49,9 @@ echo "Hello World"
 
 创建并编写好脚本后，它默认是不可执行的。我们需要修改文件的权限，使其可以被运行。
 
-![](img/6eb6ed0ec124bfdb59c4ea18a0c57dc8_5.png)
 
 ### 查看当前权限
 
-![](img/6eb6ed0ec124bfdb59c4ea18a0c57dc8_6.png)
 
 在修改权限前，可以使用 `ls -l` 命令查看文件的详细权限信息。
 ```bash

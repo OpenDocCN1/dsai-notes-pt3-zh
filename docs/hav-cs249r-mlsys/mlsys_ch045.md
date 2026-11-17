@@ -68,7 +68,6 @@ SenseCraft Web Toolkit 是基于 Himax AI Web Toolkit 的，它可以从 [这里
 
 +   连接 XIAO 后，选择如下：
 
-![图片](img/file709.png)
 
 +   选择设备/端口，然后按 `[连接]`：
 
@@ -214,7 +213,6 @@ YOLOV8 姿态模型使用[COCO-Pose 数据集](https://docs.ultralytics.com/data
 
 在 SenseCraft AI Studio 上：让我们打开标签页 [训练](https://sensecraft.seeed.cc/ai/training)：
 
-![图片](img/file727.png)
 
 如果有 WebCam，默认情况下训练一个`分类`模型。让我们选择 Grove Vision AI V2。按下绿色按钮`[连接]`，将出现一个弹出窗口。选择相应的端口，然后按蓝色按钮 `[连接]`。
 

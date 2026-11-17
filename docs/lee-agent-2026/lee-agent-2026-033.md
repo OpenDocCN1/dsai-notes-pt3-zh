@@ -22,14 +22,11 @@ LangChain CLI是LangChain的命令行工具，它能帮助我们快速创建和�
 
 首先，我们需要安装LangChain命令行工具。以下是安装步骤：
 
-![](img/917d757caffc013da86eb71b74acdb16_7.png)
 
-![](img/917d757caffc013da86eb71b74acdb16_9.png)
 
 1.  打开终端或命令提示符。
 2.  执行以下pip安装命令：
 
-![](img/917d757caffc013da86eb71b74acdb16_11.png)
 
 ```bash
 pip install langchain-cli
@@ -47,28 +44,23 @@ pip install langchain-cli
 
 ![](img/917d757caffc013da86eb71b74acdb16_15.png)
 
-![](img/917d757caffc013da86eb71b74acdb16_17.png)
 
 1.  使用 `langchain app` 命令创建一个新应用。我们将应用命名为 `my_app`：
 
-![](img/917d757caffc013da86eb71b74acdb16_19.png)
 
 ```bash
 langchain app my_app
 ```
 
-![](img/917d757caffc013da86eb71b74acdb16_21.png)
 
 2.  创建过程中，CLI会询问是否要添加额外的包（即模板）。初次创建时可以选择跳过。
 3.  创建完成后，进入应用目录查看结构：
 
-![](img/917d757caffc013da86eb71b74acdb16_23.png)
 
 ```bash
 cd my_app
 ```
 
-![](img/917d757caffc013da86eb71b74acdb16_25.png)
 
 ![](img/917d757caffc013da86eb71b74acdb16_27.png)
 
@@ -88,7 +80,6 @@ cd my_app
 
 以下是具体操作步骤：
 
-![](img/917d757caffc013da86eb71b74acdb16_31.png)
 
 1.  **添加模板**：在应用根目录下，运行以下命令来添加模板。根据环境管理方式，可能需要使用 `poetry run` 前缀。
 
@@ -107,7 +98,6 @@ poetry run langchain app add paris-speak
 export OPENAI_API_KEY="你的OpenAI API密钥"
 ```
 
-![](img/917d757caffc013da86eb71b74acdb16_35.png)
 
 6.  **启动应用**：配置好环境变量后，使用以下命令启动应用：
 
@@ -131,7 +121,6 @@ poetry run langchain serve
 
 ![](img/917d757caffc013da86eb71b74acdb16_41.png)
 
-![](img/917d757caffc013da86eb71b74acdb16_43.png)
 
 1.  **停止当前应用**：在终端中按 `Ctrl+C` 停止正在运行的应用服务。
 2.  **添加新模板**：运行以下命令添加 `csv-agent` 模板：
@@ -140,12 +129,10 @@ poetry run langchain serve
 poetry run langchain app add csv-agent
 ```
 
-![](img/917d757caffc013da86eb71b74acdb16_45.png)
 
 3.  **集成代码**：同样，复制CLI提示的代码段，并将其添加到 `app/server.py` 文件中，为应用增加一个新的 `/csv-agent` 路由。
 4.  **重启应用**：再次运行启动命令：
 
-![](img/917d757caffc013da86eb71b74acdb16_47.png)
 
 ```bash
 poetry run langchain serve

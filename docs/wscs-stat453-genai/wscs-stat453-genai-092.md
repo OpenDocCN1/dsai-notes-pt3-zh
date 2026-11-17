@@ -1,6 +1,5 @@
 # 92：L12.2 - PyTorch 中的学习率调度器 📚
 
-![](img/16a73732b5dc404fdee7ea2860473d02_1.png)
 
 在本节课中，我们将要学习如何在 PyTorch 中实现学习率衰减。我们将从手动实现开始，然后介绍 PyTorch 内置的调度器，并探讨一种在实践中非常有效的学习率调整策略。最后，我们还会学习如何保存和加载模型，以便复用训练结果。
 
@@ -22,7 +21,6 @@ def adjust_learning_rate(optimizer, epoch, initial_lr, decay_rate):
 
 这段代码定义了一个函数，它检查当前 epoch 数。如果 epoch 数是 10 的倍数，它会遍历优化器中的所有参数组，并将每个参数组的学习率乘以衰减率的相应次方。这种实现方式考虑了优化器可能为不同参数组设置不同学习率的情况。
 
-![](img/16a73732b5dc404fdee7ea2860473d02_3.png)
 
 在训练循环中，你可以在每个 epoch 结束后调用此函数。
 
@@ -35,17 +33,14 @@ for epoch in range(num_epochs):
 
 然而，手动实现比较繁琐。接下来，我们将看看如何使用 PyTorch 内置的工具来简化这个过程。
 
-![](img/16a73732b5dc404fdee7ea2860473d02_5.png)
 
 ---
 
-![](img/16a73732b5dc404fdee7ea2860473d02_7.png)
 
 ## 🧰 使用 PyTorch 内置调度器
 
 PyTorch 在 `torch.optim.lr_scheduler` 模块中提供了多种学习率调度器。使用它们通常只需要两个步骤：初始化和在训练循环中调用 `.step()`。
 
-![](img/16a73732b5dc404fdee7ea2860473d02_9.png)
 
 以下是使用 `ExponentialLR` 调度器的示例：
 
@@ -72,27 +67,22 @@ for epoch in range(num_epochs):
 
 首先，我们像往常一样初始化模型和优化器。然后，我们创建一个调度器实例，并将优化器传递给它。参数 `gamma` 是每个 epoch 后学习率相乘的因子。在训练循环中，我们在每个 epoch 结束后调用 `scheduler.step()`，学习率就会自动按指数规律衰减。
 
-![](img/16a73732b5dc404fdee7ea2860473d02_11.png)
 
 你可以在 [PyTorch 官方文档](https://pytorch.org/docs/stable/optim.html#how-to-adjust-learning-rate) 中找到所有可用的调度器。
 
 ---
 
-![](img/16a73732b5dc404fdee7ea2860473d02_13.png)
 
-![](img/16a73732b5dc404fdee7ea2860473d02_15.png)
 
 ## ⭐ 一种有效的实践策略：在误差平台期降低学习率
 
 除了标准的指数衰减，还有一种在实践中非常有效的策略。这种策略不按固定周期衰减学习率，而是在模型性能（如验证集准确率）停止提升（即达到“平台期”）时，将学习率大幅降低（例如除以10）。
 
-![](img/16a73732b5dc404fdee7ea2860473d02_17.png)
 
 这种方法在2016年提出 ResNet 的论文中被使用。其核心思想是：使用 SGD 优化器，初始学习率设为 0.1（这对 SGD 来说较大）。当训练损失或验证误差在一段时间内不再显著下降时，就将学习率除以 10。这通常配合权重衰减（L2正则化）和动量一起使用。
 
 在 PyTorch 中，我们可以使用 `ReduceLROnPlateau` 调度器来实现这一策略。
 
-![](img/16a73732b5dc404fdee7ea2860473d02_19.png)
 
 ```python
 from torch.optim.lr_scheduler import ReduceLROnPlateau
@@ -114,11 +104,8 @@ for epoch in range(num_epochs):
     scheduler.step(val_acc)
 ```
 
-![](img/16a73732b5dc404fdee7ea2860473d02_21.png)
 
-![](img/16a73732b5dc404fdee7ea2860473d02_23.png)
 
-![](img/16a73732b5dc404fdee7ea2860473d02_25.png)
 
 这里，`mode='max'` 表示我们监控的指标（验证准确率）是越大越好。`factor=0.1` 指定了衰减因子。`patience=3` 意味着如果准确率连续 3 个 epoch 没有提升，就触发学习率衰减。根据经验，基于验证集准确率来调整学习率通常效果很好。
 
@@ -128,7 +115,6 @@ for epoch in range(num_epochs):
 
 在使用调度器或长时间训练模型时，保存和加载模型至关重要。这可以避免重复训练，也便于后续继续训练或部署。
 
-![](img/16a73732b5dc404fdee7ea2860473d02_27.png)
 
 PyTorch 推荐的方式是保存模型的 `state_dict`（状态字典），它包含了模型的所有可学习参数。
 

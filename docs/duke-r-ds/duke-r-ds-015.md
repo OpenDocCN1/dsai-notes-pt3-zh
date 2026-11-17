@@ -30,9 +30,7 @@ glimpse(penguins)
 
 ### 绘制直方图
 
-![](img/56890e68e6443c941c5231fac49b1dff_3.png)
 
-![](img/56890e68e6443c941c5231fac49b1dff_4.png)
 
 我们使用`ggplot2`绘制体重的直方图。
 
@@ -42,15 +40,11 @@ ggplot(data = penguins, aes(x = body_mass_g)) +
   geom_histogram()
 ```
 
-![](img/56890e68e6443c941c5231fac49b1dff_6.png)
 
 运行代码后，我们会得到一个直方图，并看到两条警告信息。一条提示移除了2行包含缺失值（NA）的数据；另一条提示默认使用了`bins = 30`来划分数据区间，并建议我们手动选择更合适的区间宽度（带宽）。
 
-![](img/56890e68e6443c941c5231fac49b1dff_7.png)
 
-![](img/56890e68e6443c941c5231fac49b1dff_9.png)
 
-![](img/56890e68e6443c941c5231fac49b1dff_10.png)
 
 选择带宽是科学与艺术的结合。我们可以尝试不同的值，例如1000、10、100或150，观察图形变化，并选择在数据背景下有意义的、易于解释的整数值（如100）。
 
@@ -64,11 +58,9 @@ ggplot(data = penguins, aes(x = body_mass_g)) +
 
 ### 绘制箱线图
 
-![](img/56890e68e6443c941c5231fac49b1dff_12.png)
 
 接下来，我们绘制同一变量（体重）的箱线图。
 
-![](img/56890e68e6443c941c5231fac49b1dff_13.png)
 
 ```r
 # 绘制体重箱线图
@@ -76,13 +68,11 @@ ggplot(data = penguins, aes(x = body_mass_g)) +
   geom_boxplot()
 ```
 
-![](img/56890e68e6443c941c5231fac49b1dff_15.png)
 
 箱线图能更清晰地显示中位数（约4000克）、四分位距（箱体的宽度）以及数据的范围。图中未显示异常值。
 
 ### 判断分布形态
 
-![](img/56890e68e6443c941c5231fac49b1dff_17.png)
 
 基于直方图和箱线图，判断以下关于分布形态的陈述是否正确：
 
@@ -104,15 +94,12 @@ ggplot(data = penguins, aes(x = body_mass_g)) +
 
 双变量分析探索两个变量之间的关系。现在我们分析体重如何随物种变化。
 
-![](img/56890e68e6443c941c5231fac49b1dff_19.png)
 
 ### 分面直方图
 
-![](img/56890e68e6443c941c5231fac49b1dff_21.png)
 
 首先，我们创建一个包含物种信息的直方图，并使用`fill`美学映射为不同物种着色。
 
-![](img/56890e68e6443c941c5231fac49b1dff_23.png)
 
 ```r
 # 按物种填充颜色的直方图
@@ -120,7 +107,6 @@ ggplot(data = penguins, aes(x = body_mass_g, fill = species)) +
   geom_histogram(binwidth = 100)
 ```
 
-![](img/56890e68e6443c941c5231fac49b1dff_25.png)
 
 由于条形重叠，难以看清。我们可以使用`facet_wrap`将不同物种的直方图分开显示，并排成一列以便比较。
 

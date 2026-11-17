@@ -64,7 +64,6 @@ system_prompt = """
 
 让我们测试上面生成的`safe_clip`函数。我们考虑以下几种边界情况：
 
-![](img/ffac4e915eef8334a4abcd6dfd2df8fc_1.png)
 
 以下是需要测试的几种关键场景：
 1.  **完全在边界内裁剪**：裁剪区域完全位于原图内部。
@@ -75,9 +74,7 @@ system_prompt = """
 我们可以使用标准的`pytest`框架来编写这些测试。
 
 
-![](img/ffac4e915eef8334a4abcd6dfd2df8fc_3.png)
 
-![](img/ffac4e915eef8334a4abcd6dfd2df8fc_4.png)
 
 ```python
 import cv2

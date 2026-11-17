@@ -4,19 +4,14 @@
 
 ## 模型选择：DALL-E与Stable Diffusion
 
-![](img/e3d64faacf2539d4c899113f9b6fe32a_1.png)
 
-![](img/e3d64faacf2539d4c899113f9b6fe32a_2.png)
 
 上一节我们介绍了生成式AI的基本概念，本节中我们来看看具体的图像生成模型。DALL-E并非唯一的选择，Stable Diffusion也是一个强大的模型。
 
-![](img/e3d64faacf2539d4c899113f9b6fe32a_4.png)
 
-![](img/e3d64faacf2539d4c899113f9b6fe32a_6.png)
 
 对于Stable Diffusion，它允许你运行多种模型，并且可以解除DALL-E施加的一些内容限制。DALL-E不会为你生成某些特定类型的图像，具体内容请自行想象。
 
-![](img/e3d64faacf2539d4c899113f9b6fe32a_8.png)
 
 ## 环境设置与API调用
 
@@ -24,7 +19,6 @@
 
 以下是设置环境的关键步骤：
 
-![](img/e3d64faacf2539d4c899113f9b6fe32a_10.png)
 
 1.  首先，需要获取并配置OpenAI API密钥。我在课程早期提到过这一点，你需要将密钥妥善保管在此处。
 2.  代码启动后，它会自动安装所有必需的软件。
@@ -32,25 +26,21 @@
 
 ## DALL-E版本对比：DALL-E 2 与 DALL-E 3
 
-![](img/e3d64faacf2539d4c899113f9b6fe32a_12.png)
 
 现在让我们深入了解一下DALL-E。DALL-E有两个主要版本：版本2和版本3。虽然存在版本1，但我并未过多接触，我主要从Stable Diffusion和DALL-E 2开始使用。
 
-![](img/e3d64faacf2539d4c899113f9b6fe32a_13.png)
 
 以下是两个版本的核心区别：
 
 *   **DALL-E 3**：生成的图像最先进、最逼真。它增强了文本理解能力，能更好地扩展提示词描述。它与ChatGPT的集成也更深入，在ChatGPT中调用时，后台通常就是在使用DALL-E 3。
 *   **DALL-E 2**：具备全部功能特性。目前DALL-E 3尚未完全继承DALL-E 2的所有功能。在下一部分讨论修改现有图像时，我们会看到DALL-E 2有许多功能尚未添加到DALL-E 3中。
 
-![](img/e3d64faacf2539d4c899113f9b6fe32a_15.png)
 
 具体功能可用性对比如下：
 *   **从零创建图像**：DALL-E 2 和 DALL-E 3 均支持。
 *   **通过“局部重绘”编辑图像**：仅 DALL-E 2 支持。
 *   **生成图像变体**：仅 DALL-E 2 支持。
 
-![](img/e3d64faacf2539d4c899113f9b6fe32a_17.png)
 
 技术发展日新月异，到本学期结束时，DALL-E 3可能就会支持这些功能。如果本视频已发布约一年，请务必核实最新情况。
 
@@ -81,13 +71,10 @@ for i, image_data in enumerate(response['data']):
     # 下载或显示图像的代码...
 ```
 
-![](img/e3d64faacf2539d4c899113f9b6fe32a_19.png)
 
-![](img/e3d64faacf2539d4c899113f9b6fe32a_21.png)
 
 代码执行后，你可以看到生成的猫的图片。互联网上，猫的图片和视频总是备受喜爱。
 
-![](img/e3d64faacf2539d4c899113f9b6fe32a_23.png)
 
 ## 使用DALL-E 3与提示词工程
 
@@ -99,17 +86,13 @@ for i, image_data in enumerate(response['data']):
 
 如果要求生成不当内容，通常会收到类似错误：“您的请求因我们的安全系统策略而被拒绝……”。
 
-![](img/e3d64faacf2539d4c899113f9b6fe32a_25.png)
 
 ## 图像下载
 
-![](img/e3d64faacf2539d4c899113f9b6fe32a_26.png)
 
-![](img/e3d64faacf2539d4c899113f9b6fe32a_28.png)
 
 你可以下载任何生成的图像，只需输入文件名并运行相应代码即可下载。
 
-![](img/e3d64faacf2539d4c899113f9b6fe32a_30.png)
 
 ## 课程总结
 

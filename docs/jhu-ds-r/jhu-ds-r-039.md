@@ -65,7 +65,6 @@ head(x)
 
 ## 总结
 
-![](img/a53cf4576aec028dca3fc9bd5cfa1df0_2.png)
 
 ![](img/a53cf4576aec028dca3fc9bd5cfa1df0_3.png)
 

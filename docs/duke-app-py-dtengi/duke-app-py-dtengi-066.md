@@ -4,7 +4,6 @@
 
 在本节课中，我们将学习如何使用Docker容器来运行一个数据库服务。我们将以PostgreSQL为例，演示如何拉取镜像、运行容器、设置环境变量、映射端口、挂载数据卷，并最终连接到容器内的数据库执行操作。这种方法允许你在本地运行数据库，而无需在主机上直接安装它。
 
-![](img/e33f8765befd0bfe71743ffa7aada1fe_2.png)
 
 ---
 
@@ -82,7 +81,6 @@ SELECT * FROM test_table;
 
 容器仍在后台运行。最后，我们可以查看一下本地创建的数据卷。
 
-![](img/e33f8765befd0bfe71743ffa7aada1fe_4.png)
 
 ```bash
 docker volume ls

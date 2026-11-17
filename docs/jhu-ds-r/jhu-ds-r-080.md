@@ -1,6 +1,5 @@
 # 080：读取 XML 文件
 
-![](img/3e7371a0d52093d8233744c4812dbce6_0.png)
 
 在本节课中，我们将学习如何读取和处理 XML 文件。XML 是一种广泛用于存储和传输结构化数据的标记语言，在网页抓取和网络 API 数据获取中尤为常见。
 
@@ -12,9 +11,7 @@ XML 代表可扩展标记语言。它常用于存储结构化数据，在互联�
 
 提取 HTML 和 XML 是大多数网页抓取工作的基础。
 
-![](img/3e7371a0d52093d8233744c4812dbce6_2.png)
 
-![](img/3e7371a0d52093d8233744c4812dbce6_3.png)
 
 一个 XML 文件包含两个主要部分：**标记** 和 **内容**。标记是为文本提供结构的标签，而内容则是标签之间的实际文本。
 
@@ -38,7 +35,6 @@ XML 代表可扩展标记语言。它常用于存储结构化数据，在互联�
 
 如果你想了解更多关于 XML 的知识，可以查阅维基百科上关于 XML 的条目，内容非常全面。
 
-![](img/3e7371a0d52093d8233744c4812dbce6_5.png)
 
 ---
 
@@ -52,13 +48,11 @@ XML 代表可扩展标记语言。它常用于存储结构化数据，在互联�
 
 ---
 
-![](img/3e7371a0d52093d8233744c4812dbce6_7.png)
 
 ## 📥 在 R 中读取 XML 文件
 
 你可以使用 `XML` 包将 XML 文件读入 R。
 
-![](img/3e7371a0d52093d8233744c4812dbce6_9.png)
 
 首先，加载 `XML` 包，然后使用 `xmlTreeParse` 函数来解析指定的 XML 文件。这个函数会将文档加载到 R 的内存中，以便后续解析和访问其不同部分。
 
@@ -76,7 +70,6 @@ doc <- xmlTreeParse(fileUrl, useInternalNodes = TRUE)
 
 首先，我们可以查看**根节点**，它是整个文档的包装元素。使用 `xmlRoot` 函数可以获取它。
 
-![](img/3e7371a0d52093d8233744c4812dbce6_11.png)
 
 ```r
 rootNode <- xmlRoot(doc)
@@ -88,7 +81,6 @@ rootNode <- xmlRoot(doc)
 xmlName(rootNode)
 ```
 
-![](img/3e7371a0d52093d8233744c4812dbce6_13.png)
 
 我们还可以查看根节点下所有嵌套元素的名称，这能告诉我们文档的整体结构。例如，根节点包装了整个“早餐菜单”，而菜单中包含五个用 `<food>` 元素包装的早餐项目。
 
@@ -98,11 +90,9 @@ names(rootNode)
 
 ---
 
-![](img/3e7371a0d52093d8233744c4812dbce6_15.png)
 
 ## 🔍 提取特定元素
 
-![](img/3e7371a0d52093d8233744c4812dbce6_16.png)
 
 接下来，我们可以像访问 R 中的列表一样，直接访问 XML 文档的特定部分。
 
@@ -112,7 +102,6 @@ names(rootNode)
 rootNode[[1]]
 ```
 
-![](img/3e7371a0d52093d8233744c4812dbce6_18.png)
 
 如果你想进一步深入，提取第一个食物项的第一个子元素（例如名称），可以继续使用子集索引。
 
@@ -122,13 +111,11 @@ rootNode[[1]][[1]]
 
 ---
 
-![](img/3e7371a0d52093d8233744c4812dbce6_20.png)
 
 ## 🔄 程序化提取内容
 
 你可以使用 `xpathSApply` 函数程序化地提取文件的不同部分。
 
-![](img/3e7371a0d52093d8233744c4812dbce6_22.png)
 
 将解析后的 XML 对象传递给该函数，并指定要应用的函数（如 `xmlValue`）。默认情况下，它会递归地获取文档中每个被标记元素的值，最终将所有文本内容拼接在一起。
 
@@ -147,9 +134,7 @@ xpathSApply(rootNode, "//name", xmlValue)
 *   `/node`：获取顶层节点。
 *   `//node`：获取任何层级的节点。
 
-![](img/3e7371a0d52093d8233744c4812dbce6_24.png)
 
-![](img/3e7371a0d52093d8233744c4812dbce6_25.png)
 
 例如，要提取菜单上所有项目的名称和价格，可以这样做：
 
@@ -165,7 +150,6 @@ itemPrices <- xpathSApply(rootNode, "//price", xmlValue)
 
 ## 🌐 实战：从网页抓取数据
 
-![](img/3e7371a0d52093d8233744c4812dbce6_27.png)
 
 为了展示一个更复杂的例子，我们将从一个实际网页（巴尔的摩乌鸦队的主页）抓取数据。
 
@@ -184,13 +168,10 @@ doc <- htmlTreeParse(fileUrl, useInternal = TRUE)
 scores <- xpathSApply(doc, "//li[@class='score']", xmlValue)
 ```
 
-![](img/3e7371a0d52093d8233744c4812dbce6_29.png)
 
-![](img/3e7371a0d52093d8233744c4812dbce6_30.png)
 
 同样地，我们可以提取队伍名称，它们位于 `class` 属性为 “team-name” 的列表项中：
 
-![](img/3e7371a0d52093d8233744c4812dbce6_32.png)
 
 ```r
 teams <- xpathSApply(doc, "//li[@class='team-name']", xmlValue)
@@ -200,17 +181,12 @@ teams <- xpathSApply(doc, "//li[@class='team-name']", xmlValue)
 
 ---
 
-![](img/3e7371a0d52093d8233744c4812dbce6_34.png)
 
 ## 📚 总结与延伸阅读
 
-![](img/3e7371a0d52093d8233744c4812dbce6_35.png)
 
-![](img/3e7371a0d52093d8233744c4812dbce6_36.png)
 
-![](img/3e7371a0d52093d8233744c4812dbce6_37.png)
 
-![](img/3e7371a0d52093d8233744c4812dbce6_38.png)
 
 本节课简要介绍了 XML、R 中的 `XML` 包以及相关概念。
 

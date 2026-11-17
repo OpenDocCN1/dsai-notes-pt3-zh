@@ -1,6 +1,5 @@
 #  001：Python、Bash与SQL概述 🚀
 
-![](img/e64f256e84c540514043b3c68f197c4c_0.png)
 
 ![](img/e64f256e84c540514043b3c68f197c4c_0.png)
 

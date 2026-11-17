@@ -1,6 +1,5 @@
 #  127：覆盖问题 📊
 
-![](img/ebd1fc3ea9f937a295e7de7dd7b28be5_0.png)
 
 ![](img/ebd1fc3ea9f937a295e7de7dd7b28be5_1.png)
 

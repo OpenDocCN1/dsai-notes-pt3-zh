@@ -1,6 +1,5 @@
 # 089：使用Java API实现HBase增删改查 📚
 
-![](img/2b9b9c03bce4697e46d5f2eedceabcf1_0.png)
 
 在本节课中，我们将学习如何使用HBase的Java原生API来操作和查询HBase表。HBase本身是用Java编写的，因此它提供了功能强大的Java原生API，支持以编程方式对基于行的表进行数据操作。我们将重点介绍如何执行增删改查（CRUD）操作以及扫描操作。
 
@@ -46,13 +45,11 @@ HTable table = new HTable(config, "your_table_name");
 
 创建HTable实例是一个开销较大的操作，因为它需要扫描元数据表并与HMaster通信。建议每个线程创建一个HTable实例并尽可能重用。HTable不是线程安全的，每个线程应持有自己的HTable对象实例。
 
-![](img/2b9b9c03bce4697e46d5f2eedceabcf1_2.png)
 
 ## 3. 执行数据操作 🔄
 
 上一节我们介绍了如何建立与HBase表的连接，本节中我们来看看如何使用Java API进行核心的数据操作。
 
-![](img/2b9b9c03bce4697e46d5f2eedceabcf1_4.png)
 
 ### 插入（Put）操作
 
@@ -124,11 +121,9 @@ scanner.close();
 
 Delete操作用于删除表中的行或特定单元格。删除也是以行为单位进行的。
 
-![](img/2b9b9c03bce4697e46d5f2eedceabcf1_6.png)
 
 **代码示例：删除数据**
 
-![](img/2b9b9c03bce4697e46d5f2eedceabcf1_8.png)
 
 ```java
 import org.apache.hadoop.hbase.client.Delete;
@@ -150,7 +145,6 @@ table.delete(specificDelete);
 
 所有操作执行完毕后，必须关闭HTable对象以释放网络连接和缓冲区等资源。建议使用 `try-finally` 块或Java 7的 `try-with-resources` 语句来确保资源被正确关闭。
 
-![](img/2b9b9c03bce4697e46d5f2eedceabcf1_10.png)
 
 **代码示例：使用try-with-resources**
 ```java
@@ -166,7 +160,6 @@ try (HTable table = new HTable(config, "table_name")) {
 
 为了成功编译和运行HBase Java程序，需要进行正确的项目配置。
 
-![](img/2b9b9c03bce4697e46d5f2eedceabcf1_12.png)
 
 以下是配置项目类路径的关键步骤：
 1.  **添加HBase库**：将 `$HBASE_HOME/lib` 目录下的所有JAR文件添加到项目的构建路径中。

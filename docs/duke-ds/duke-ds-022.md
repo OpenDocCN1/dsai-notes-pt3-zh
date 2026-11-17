@@ -8,9 +8,7 @@
 
 上一节我们介绍了作业的整体目标，本节中我们来看看如何设置一个包含Python和Git的环境，以便获取起始代码。
 
-![](img/72f4cf7d45fc263205b33e5c86942698_1.png)
 
-![](img/72f4cf7d45fc263205b33e5c86942698_3.png)
 
 你可以使用任何可访问的环境（Mac、Linux或Windows），也可以选择使用课程提供的虚拟机。本教程将使用虚拟机进行演示。
 
@@ -35,9 +33,7 @@
 
 在虚拟机终端中，使用以下命令克隆仓库。仓库URL可以在作业说明页面找到。
 
-![](img/72f4cf7d45fc263205b33e5c86942698_9.png)
 
-![](img/72f4cf7d45fc263205b33e5c86942698_10.png)
 
 ```bash
 git clone [GitHub仓库URL]
@@ -70,7 +66,6 @@ python --version
 接下来，安装Python包管理工具`pip`（如果尚未安装），然后使用`pip`安装本作业所需的`oauth2`库。
 
 
-![](img/72f4cf7d45fc263205b33e5c86942698_15.png)
 
 ```bash
 # 安装pip（如果需要）
@@ -81,11 +76,9 @@ pip install oauth2
 
 如果环境已预装这些组件，相应步骤可以跳过。
 
-![](img/72f4cf7d45fc263205b33e5c86942698_17.png)
 
 ---
 
-![](img/72f4cf7d45fc263205b33e5c86942698_19.png)
 
 ## 🔑 第四步：连接Twitter API
 
@@ -95,7 +88,6 @@ pip install oauth2
 
 以下是创建应用程序的步骤：
 
-![](img/72f4cf7d45fc263205b33e5c86942698_21.png)
 
 1.  点击“Create New App”按钮。
 2.  填写应用程序详情：
@@ -111,11 +103,9 @@ pip install oauth2
 *   **Consumer Key (API Key)** 和 **Consumer Secret (API Secret)**
 *   **Access Token** 和 **Access Token Secret**（可能需要点击“Create my access token”按钮生成）
 
-![](img/72f4cf7d45fc263205b33e5c86942698_23.png)
 
 请妥善保存这四组密钥，下一步将用到它们。
 
-![](img/72f4cf7d45fc263205b33e5c86942698_25.png)
 
 ---
 
@@ -133,11 +123,9 @@ access_token_key = "你的Access Token"
 access_token_secret = "你的Access Token Secret"
 ```
 
-![](img/72f4cf7d45fc263205b33e5c86942698_27.png)
 
 使用从Twitter开发者页面复制的密钥，分别替换上述四个变量的值。
 
-![](img/72f4cf7d45fc263205b33e5c86942698_29.png)
 
 保存文件后，你可以运行该脚本测试连接是否成功。
 
@@ -145,25 +133,20 @@ access_token_secret = "你的Access Token Secret"
 python twitter_stream.py
 ```
 
-![](img/72f4cf7d45fc263205b33e5c86942698_31.png)
 
 如果配置正确，终端将开始实时显示Twitter流数据。按 `Ctrl+C` 可以停止流。
 
-![](img/72f4cf7d45fc263205b33e5c86942698_33.png)
 
 ---
 
-![](img/72f4cf7d45fc263205b33e5c86942698_35.png)
 
 ## 💾 第六步：收集样本数据
 
 测试成功后，下一步是运行脚本一段时间，以收集用于后续分析的样本推文数据。
 
-![](img/72f4cf7d45fc263205b33e5c86942698_37.png)
 
 根据作业要求，让脚本运行约3分钟，并将输出重定向（管道）到一个JSON文件中。
 
-![](img/72f4cf7d45fc263205b33e5c86942698_39.png)
 
 ```bash
 # 运行脚本并将输出保存到 output.json 文件
@@ -172,9 +155,7 @@ python twitter_stream.py > output.json
 
 让命令运行足够的时间（约3分钟），然后按 `Ctrl+C` 终止。此时，当前目录下会生成一个包含推文数据的 `output.json` 文件。
 
-![](img/72f4cf7d45fc263205b33e5c86942698_41.png)
 
-![](img/72f4cf7d45fc263205b33e5c86942698_42.png)
 
 （可选）你也可以修改 `twitter_stream.py` 文件，使用Twitter搜索API来收集包含特定关键词的推文，而不仅仅是样本流。
 

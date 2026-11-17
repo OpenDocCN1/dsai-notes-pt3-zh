@@ -1,210 +1,130 @@
 # 125：XLNet 详解 🧠
 
-![](img/febdb3415c12e7ec45618b5dc4aaced7_1.png)
 
-![](img/febdb3415c12e7ec45618b5dc4aaced7_2.png)
 
-![](img/febdb3415c12e7ec45618b5dc4aaced7_3.png)
 
-![](img/febdb3415c12e7ec45618b5dc4aaced7_4.png)
 
 在本节课中，我们将学习 XLNet 模型。XLNet 是一种基于 Transformer 架构的先进语言模型，它巧妙地融合了自回归模型（如 GPT）和自编码模型（如 BERT）的核心思想。我们将探讨其设计动机、核心原理以及它是如何克服现有模型局限性的。
 
-![](img/febdb3415c12e7ec45618b5dc4aaced7_5.png)
 
-![](img/febdb3415c12e7ec45618b5dc4aaced7_6.png)
 
-![](img/febdb3415c12e7ec45618b5dc4aaced7_7.png)
 
-![](img/febdb3415c12e7ec45618b5dc4aaced7_8.png)
 
-![](img/febdb3415c12e7ec45618b5dc4aaced7_9.png)
 
-![](img/febdb3415c12e7ec45618b5dc4aaced7_10.png)
 
-![](img/febdb3415c12e7ec45618b5dc4aaced7_11.png)
 
-![](img/febdb3415c12e7ec45618b5dc4aaced7_12.png)
 
 ---
 
-![](img/febdb3415c12e7ec45618b5dc4aaced7_14.png)
 
-![](img/febdb3415c12e7ec45618b5dc4aaced7_15.png)
 
-![](img/febdb3415c12e7ec45618b5dc4aaced7_16.png)
 
-![](img/febdb3415c12e7ec45618b5dc4aaced7_17.png)
 
-![](img/febdb3415c12e7ec45618b5dc4aaced7_18.png)
 
 ## 1. 背景与动机
 
 上一节我们介绍了 Transformer 及其变体。本节中，我们来看看 XLNet 如何整合两种主流语言建模思想。
 
-![](img/febdb3415c12e7ec45618b5dc4aaced7_20.png)
 
-![](img/febdb3415c12e7ec45618b5dc4aaced7_21.png)
 
-![](img/febdb3415c12e7ec45618b5dc4aaced7_22.png)
 
-![](img/febdb3415c12e7ec45618b5dc4aaced7_23.png)
 
 我们有两种主要的语言模型：
 *   **自回归模型**：例如 GPT，它基于上文预测下一个词。其目标是建模序列的联合概率，通常使用链式法则按顺序分解。
 *   **自编码模型**：例如 BERT，它通过掩码部分输入词，然后基于上下文预测这些被掩码的词。这被称为“去噪自编码”。
 
-![](img/febdb3415c12e7ec45618b5dc4aaced7_24.png)
 
-![](img/febdb3415c12e7ec45618b5dc4aaced7_25.png)
 
-![](img/febdb3415c12e7ec45618b5dc4aaced7_26.png)
 
-![](img/febdb3415c12e7ec45618b5dc4aaced7_27.png)
 
-![](img/febdb3415c12e7ec45618b5dc4aaced7_28.png)
 
-![](img/febdb3415c12e7ec45618b5dc4aaced7_29.png)
 
-![](img/febdb3415c12e7ec45618b5dc4aaced7_30.png)
 
 这两种方法各有优缺点。
 
 以下是自回归模型和自编码模型的核心目标公式：
 
-![](img/febdb3415c12e7ec45618b5dc4aaced7_32.png)
 
-![](img/febdb3415c12e7ec45618b5dc4aaced7_33.png)
 
-![](img/febdb3415c12e7ec45618b5dc4aaced7_34.png)
 
-![](img/febdb3415c12e7ec45618b5dc4aaced7_35.png)
 
-![](img/febdb3415c12e7ec45618b5dc4aaced7_36.png)
 
-![](img/febdb3415c12e7ec45618b5dc4aaced7_37.png)
 
 **自回归模型目标**：
 `P(句子) = ∏ P(词_t | 词_<t)`
 
-![](img/febdb3415c12e7ec45618b5dc4aaced7_38.png)
 
-![](img/febdb3415c12e7ec45618b5dc4aaced7_39.png)
 
-![](img/febdb3415c12e7ec45618b5dc4aaced7_40.png)
 
-![](img/febdb3415c12e7ec45618b5dc4aaced7_41.png)
 
-![](img/febdb3415c12e7ec45618b5dc4aaced7_42.png)
 
-![](img/febdb3415c12e7ec45618b5dc4aaced7_43.png)
 
 **自编码模型目标**：
 `最大化 log P(被掩码词 | 被破坏的句子)`
 
 ---
 
-![](img/febdb3415c12e7ec45618b5dc4aaced7_45.png)
 
-![](img/febdb3415c12e7ec45618b5dc4aaced7_46.png)
 
-![](img/febdb3415c12e7ec45618b5dc4aaced7_47.png)
 
-![](img/febdb3415c12e7ec45618b5dc4aaced7_48.png)
 
-![](img/febdb3415c12e7ec45618b5dc4aaced7_49.png)
 
-![](img/febdb3415c12e7ec45618b5dc4aaced7_50.png)
 
-![](img/febdb3415c12e7ec45618b5dc4aaced7_51.png)
 
-![](img/febdb3415c12e7ec45618b5dc4aaced7_52.png)
 
-![](img/febdb3415c12e7ec45618b5dc4aaced7_53.png)
 
 ## 2. 现有模型的局限性
 
-![](img/febdb3415c12e7ec45618b5dc4aaced7_54.png)
 
-![](img/febdb3415c12e7ec45618b5dc4aaced7_55.png)
 
-![](img/febdb3415c12e7ec45618b5dc4aaced7_56.png)
 
 理解了两类模型的基本原理后，我们来看看它们各自存在的问题。
 
 **自回归模型（如GPT）的缺点**：
 *   在分解联合概率时，无论是前向分解（从左到右）还是后向分解（从右到左），都只是众多可能排列中的一种特定顺序，并无特殊优势。模型性能可能受限于这种固定的分解顺序。
 
-![](img/febdb3415c12e7ec45618b5dc4aaced7_58.png)
 
-![](img/febdb3415c12e7ec45618b5dc4aaced7_59.png)
 
-![](img/febdb3415c12e7ec45618b5dc4aaced7_60.png)
 
-![](img/febdb3415c12e7ec45618b5dc4aaced7_61.png)
 
-![](img/febdb3415c12e7ec45618b5dc4aaced7_62.png)
 
-![](img/febdb3415c12e7ec45618b5dc4aaced7_63.png)
 
-![](img/febdb3415c12e7ec45618b5dc4aaced7_64.png)
 
-![](img/febdb3415c12e7ec45618b5dc4aaced7_65.png)
 
-![](img/febdb3415c12e7ec45618b5dc4aaced7_66.png)
 
-![](img/febdb3415c12e7ec45618b5dc4aaced7_67.png)
 
-![](img/febdb3415c12e7ec45618b5dc4aaced7_68.png)
 
 **自编码模型（如BERT）的缺点**：
 1.  **预训练与微调的不一致**：在预训练阶段，模型会看到特殊的 `[MASK]` 标记，但在下游任务微调时，这个标记不会出现，导致数据分布存在差异。
 2.  **强独立性假设**：BERT 在预测多个被掩码的词时，假设这些预测在给定上下文条件下是相互独立的。这在实际语言中往往不成立。
 
-![](img/febdb3415c12e7ec45618b5dc4aaced7_69.png)
 
 ---
 
-![](img/febdb3415c12e7ec45618b5dc4aaced7_71.png)
 
-![](img/febdb3415c12e7ec45618b5dc4aaced7_72.png)
 
 ## 3. XLNet 的核心思想：排列语言建模
 
-![](img/febdb3415c12e7ec45618b5dc4aaced7_73.png)
 
-![](img/febdb3415c12e7ec45618b5dc4aaced7_74.png)
 
-![](img/febdb3415c12e7ec45618b5dc4aaced7_75.png)
 
-![](img/febdb3415c12e7ec45618b5dc4aaced7_76.png)
 
-![](img/febdb3415c12e7ec45618b5dc4aaced7_77.png)
 
-![](img/febdb3415c12e7ec45618b5dc4aaced7_78.png)
 
-![](img/febdb3415c12e7ec45618b5dc4aaced7_79.png)
 
-![](img/febdb3415c12e7ec45618b5dc4aaced7_80.png)
 
-![](img/febdb3415c12e7ec45618b5dc4aaced7_81.png)
 
-![](img/febdb3415c12e7ec45618b5dc4aaced7_82.png)
 
 为了解决上述问题，XLNet 提出了**排列语言建模** 的核心思想。
 
-![](img/febdb3415c12e7ec45618b5dc4aaced7_84.png)
 
-![](img/febdb3415c12e7ec45618b5dc4aaced7_85.png)
 
 关键洞察是：自回归模型中的链式法则，其因式分解顺序可以是任意的排列。如果我们能考虑所有可能的排列顺序，模型就能学习到更丰富的上下文依赖关系。
 
 **XLNet 的目标函数**：
 `最大化 E_{z∼所有排列} [ ∑_{t=1}^{T} log P(词_{z_t} | 词_{z_{<t}}) ]`
 
-![](img/febdb3415c12e7ec45618b5dc4aaced7_87.png)
 
-![](img/febdb3415c12e7ec45618b5dc4aaced7_88.png)
 
 ![](img/febdb3415c12e7ec45618b5dc4aaced7_89.png)
 

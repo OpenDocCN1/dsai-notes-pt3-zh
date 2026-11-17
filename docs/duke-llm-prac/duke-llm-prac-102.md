@@ -1,10 +1,7 @@
 # 大型语言模型实践（高级数据工程、AWS、Databricks和本地LLM）：P102：01_01_01：认识你的课程讲师诺亚·吉夫特 👨‍🏫
 
-![](img/82c09994c0212a5b49e3d4b3e40dfb0e_0.png)
 
-![](img/82c09994c0212a5b49e3d4b3e40dfb0e_1.png)
 
-![](img/82c09994c0212a5b49e3d4b3e40dfb0e_0.png)
 
 ![](img/82c09994c0212a5b49e3d4b3e40dfb0e_1.png)
 

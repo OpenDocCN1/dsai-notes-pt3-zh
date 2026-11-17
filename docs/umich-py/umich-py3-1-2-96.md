@@ -104,6 +104,5 @@ open('/user/P.Resnk/My files/All projects/my data/data2.txt', 'r')
 
 下次见。
 
-![](img/a01e1090a36203ae3990af912ee629de_3.png)
 
 ![](img/a01e1090a36203ae3990af912ee629de_3.png)

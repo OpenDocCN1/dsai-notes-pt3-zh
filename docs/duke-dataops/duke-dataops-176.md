@@ -1,6 +1,5 @@
 #  176：在Azure中检查Hugging Face数据集
 
-![](img/d61cca4c7c1c0490819318ce7254ca0e_0.png)
 
 ![](img/d61cca4c7c1c0490819318ce7254ca0e_0.png)
 
@@ -30,6 +29,5 @@
 
 本节课中，我们一起学习了如何在Azure机器学习工作室中对数据集进行探索性工作。我们查看了数据的外观，学习了如何与之交互，并了解了我们将要处理的数据类型。所有这些数据都来源于Hugging Face平台。
 
-![](img/d61cca4c7c1c0490819318ce7254ca0e_2.png)
 
 ![](img/d61cca4c7c1c0490819318ce7254ca0e_2.png)

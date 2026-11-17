@@ -2,19 +2,13 @@
 
 在本节课中，我们将学习 Deep Speech 这一用于语音识别的神经网络架构。我们将从输入输出定义开始，逐步解析其网络结构，并讨论训练、解码以及实际应用效果。
 
-![](img/faf34092641a92d64ad5d017ffde67cb_1.png)
 
-![](img/faf34092641a92d64ad5d017ffde67cb_2.png)
 
-![](img/faf34092641a92d64ad5d017ffde67cb_3.png)
 
-![](img/faf34092641a92d64ad5d017ffde67cb_4.png)
 
 ---
 
-![](img/faf34092641a92d64ad5d017ffde67cb_5.png)
 
-![](img/faf34092641a92d64ad5d017ffde67cb_6.png)
 
 ## 📊 概述与问题定义
 
@@ -22,29 +16,19 @@
 
 语音识别任务的目标是：输入一个语音的梅尔频谱图（Mel Spectrogram），输出对应的文本转录。
 
-![](img/faf34092641a92d64ad5d017ffde67cb_8.png)
 
-![](img/faf34092641a92d64ad5d017ffde67cb_9.png)
 
-![](img/faf34092641a92d64ad5d017ffde67cb_10.png)
 
-![](img/faf34092641a92d64ad5d017ffde67cb_11.png)
 
 *   **输入 X**：语音的梅尔频谱图，它是一个时间序列，长度为 T。序列中的每个元素 `X_t` 是一个向量，代表在时间点 t 上，各个频率区间的能量（功率）。
 *   **输出 Y**：对应的文本标签。
 *   **数据集**：由许多（语音，标签）对组成。
 
-![](img/faf34092641a92d64ad5d017ffde67cb_12.png)
 
-![](img/faf34092641a92d64ad5d017ffde67cb_13.png)
 
-![](img/faf34092641a92d64ad5d017ffde67cb_14.png)
 
-![](img/faf34092641a92d64ad5d017ffde67cb_15.png)
 
-![](img/faf34092641a92d64ad5d017ffde67cb_16.png)
 
-![](img/faf34092641a92d64ad5d017ffde67cb_17.png)
 
 模型在每个时间步 t 会输出一个概率分布 `P(C_t)`，其中 `C_t` 的可能取值包括：
 *   字母 A 到 Z
@@ -52,7 +36,6 @@
 *   撇号（apostrophe）
 *   空白（blank，表示该时间步没有输出字符）
 
-![](img/faf34092641a92d64ad5d017ffde67cb_18.png)
 
 ---
 
@@ -60,34 +43,22 @@
 
 Deep Speech 模型结合了卷积神经网络（CNN）和循环神经网络（RNN）。其核心思想是，先使用卷积层捕捉局部上下文信息，再使用双向RNN捕捉长距离时序依赖，最后通过全连接层输出字符概率。
 
-![](img/faf34092641a92d64ad5d017ffde67cb_20.png)
 
-![](img/faf34092641a92d64ad5d017ffde67cb_21.png)
 
-![](img/faf34092641a92d64ad5d017ffde67cb_22.png)
 
-![](img/faf34092641a92d64ad5d017ffde67cb_23.png)
 
 以下是该架构的主要组成部分：
 
-![](img/faf34092641a92d64ad5d017ffde67cb_24.png)
 
-![](img/faf34092641a92d64ad5d017ffde67cb_25.png)
 
-![](img/faf34092641a92d64ad5d017ffde67cb_26.png)
 
-![](img/faf34092641a92d64ad5d017ffde67cb_27.png)
 
-![](img/faf34092641a92d64ad5d017ffde67cb_28.png)
 
 1.  **第一层：上下文卷积层**
     第一层是一个卷积层，用于捕捉输入频谱图的局部上下文。例如，对于时间点 `X_t`，该层会考虑其前后若干个时间步（如前后各两步）的上下文窗口。实现上，可以将这个上下文窗口展平为一个长向量，然后通过一个全连接层（或视为一个卷积核）进行处理。公式上，这可以表示为对局部窗口 `X_{t-c:t+c}` 的线性变换。
 
-![](img/faf34092641a92d64ad5d017ffde67cb_29.png)
 
-![](img/faf34092641a92d64ad5d017ffde67cb_30.png)
 
-![](img/faf34092641a92d64ad5d017ffde67cb_31.png)
 
 2.  **中间层：堆叠的全连接/1x1卷积层**
     接下来的若干层可以看作是全连接层或 1x1 卷积层。每一层的计算可以表示为：
@@ -102,33 +73,21 @@ Deep Speech 模型结合了卷积神经网络（CNN）和循环神经网络（RN
     `P(C_t = k | X) = softmax(W_{out} * H_t^{bi} + b_{out})`
     其中 `k` 属于字符集（包括字母、空格、撇号和空白）。
 
-![](img/faf34092641a92d64ad5d017ffde67cb_33.png)
 
-![](img/faf34092641a92d64ad5d017ffde67cb_34.png)
 
 ---
 
-![](img/faf34092641a92d64ad5d017ffde67cb_35.png)
 
-![](img/faf34092641a92d64ad5d017ffde67cb_36.png)
 
-![](img/faf34092641a92d64ad5d017ffde67cb_37.png)
 
-![](img/faf34092641a92d64ad5d017ffde67cb_38.png)
 
-![](img/faf34092641a92d64ad5d017ffde67cb_39.png)
 
-![](img/faf34092641a92d64ad5d017ffde67cb_40.png)
 
 ## ⚙️ 训练、解码与数据集
 
-![](img/faf34092641a92d64ad5d017ffde67cb_41.png)
 
-![](img/faf34092641a92d64ad5d017ffde67cb_42.png)
 
-![](img/faf34092641a92d64ad5d017ffde67cb_43.png)
 
-![](img/faf34092641a92d64ad5d017ffde67cb_44.png)
 
 了解了架构后，我们来看看如何训练和使用这个模型。
 
@@ -142,15 +101,10 @@ Deep Speech 模型结合了卷积神经网络（CNN）和循环神经网络（RN
 `Score = log(P_{CTC}) + α * log(P_{LM}) + β * (单词数量惩罚项)`
 其中 `α` 和 `β` 是用于平衡各项权重的超参数。
 
-![](img/faf34092641a92d64ad5d017ffde67cb_46.png)
 
-![](img/faf34092641a92d64ad5d017ffde67cb_47.png)
 
-![](img/faf34092641a92d64ad5d017ffde67cb_48.png)
 
-![](img/faf34092641a92d64ad5d017ffde67cb_49.png)
 
-![](img/faf34092641a92d64ad5d017ffde67cb_50.png)
 
 ### 常用数据集
 以下是语音识别领域一些常用的数据集：
@@ -159,21 +113,14 @@ Deep Speech 模型结合了卷积神经网络（CNN）和循环神经网络（RN
 *   **Fisher**：规模更大的电话对话数据集。
 *   **LibriSpeech**：基于公共领域有声读物的数据集。
 
-![](img/faf34092641a92d64ad5d017ffde67cb_51.png)
 
-![](img/faf34092641a92d64ad5d017ffde67cb_52.png)
 
-![](img/faf34092641a92d64ad5d017ffde67cb_53.png)
 
-![](img/faf34092641a92d64ad5d017ffde67cb_54.png)
 
-![](img/faf34092641a92d64ad5d017ffde67cb_55.png)
 
 数据集的规模从数百小时到数千小时不等，更大的数据通常有助于训练出更鲁棒的模型。
 
-![](img/faf34092641a92d64ad5d017ffde67cb_56.png)
 
-![](img/faf34092641a92d64ad5d017ffde67cb_57.png)
 
 ---
 
@@ -181,11 +128,8 @@ Deep Speech 模型结合了卷积神经网络（CNN）和循环神经网络（RN
 
 Deep Speech 架构在多个数据集上取得了优异的性能。特别是在包含背景噪音的复杂场景（如 Fisher 数据集）中，Deep Speech 的表现优于传统的基于高斯混合模型-隐马尔可夫模型（GMM-HMM）的方法，也优于单纯的 CNN-HMM 混合模型。
 
-![](img/faf34092641a92d64ad5d017ffde67cb_59.png)
 
-![](img/faf34092641a92d64ad5d017ffde67cb_60.png)
 
-![](img/faf34092641a92d64ad5d017ffde67cb_61.png)
 
 ![](img/faf34092641a92d64ad5d017ffde67cb_62.png)
 

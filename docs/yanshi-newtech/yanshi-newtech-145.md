@@ -1,6 +1,5 @@
 # 145：22_5.1 流媒体网络与技术（第1部分）📺
 
-![](img/e28959aedd46d1ded5da68aaca7387a4_0.png)
 
 ![](img/e28959aedd46d1ded5da68aaca7387a4_0.png)
 

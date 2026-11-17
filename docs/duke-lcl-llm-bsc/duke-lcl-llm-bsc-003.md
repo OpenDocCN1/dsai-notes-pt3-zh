@@ -1,6 +1,5 @@
 # 3：03_01_02：课程介绍
 
-![](img/4c1d70efcde80976888cabf45cf87f35_0.png)
 
 ![](img/4c1d70efcde80976888cabf45cf87f35_0.png)
 

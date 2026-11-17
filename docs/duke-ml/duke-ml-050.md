@@ -2,7 +2,6 @@
 
 在本节课中，我们将学习如何使用PyTorch进行自然语言处理。我们将介绍词嵌入的概念，探索预训练的词嵌入模型，并构建一个简单的神经网络来预测电影评论的情感。最后，我们会简要概述PyTorch中的循环神经网络。
 
-![](img/bfda3d9568c87f1f22c2142ec5f45dc9_0.png)
 
 ---
 
@@ -14,7 +13,6 @@
 
 其核心思想是，语义相近的单词在向量空间中的位置也相近。这可以用一个简单的公式来描述：如果单词A和单词B语义相似，那么它们的词嵌入向量 `embedding(A)` 和 `embedding(B)` 之间的余弦相似度会很高。
 
-![](img/bfda3d9568c87f1f22c2142ec5f45dc9_2.png)
 
 ```python
 # 示例：计算两个词向量的余弦相似度
@@ -22,7 +20,6 @@ import torch.nn.functional as F
 similarity = F.cosine_similarity(embedding_A, embedding_B, dim=0)
 ```
 
-![](img/bfda3d9568c87f1f22c2142ec5f45dc9_3.png)
 
 接下来，我们将探索如何使用预训练的词嵌入模型。
 
@@ -57,7 +54,6 @@ vector = embedding(“king”) - embedding(“man”) + embedding(“woman”)
 4.  **训练与评估**：使用交叉熵损失和优化器进行训练，并在验证集上评估模型性能。
 
 
-![](img/bfda3d9568c87f1f22c2142ec5f45dc9_5.png)
 
 ```python
 import torch.nn as nn

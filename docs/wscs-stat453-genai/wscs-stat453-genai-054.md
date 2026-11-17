@@ -4,7 +4,6 @@
 
 ---
 
-![](img/c56a2035cc8f7b9e12f5cbdda3fecb67_1.png)
 
 ## Logits：网络净输入
 
@@ -18,15 +17,10 @@
 
 以下是Logits与Sigmoid函数关系的图示说明：
 
-![](img/c56a2035cc8f7b9e12f5cbdda3fecb67_1.png)
 
-![](img/c56a2035cc8f7b9e12f5cbdda3fecb67_3.png)
 
-![](img/c56a2035cc8f7b9e12f5cbdda3fecb67_3.png)
 
-![](img/c56a2035cc8f7b9e12f5cbdda3fecb67_5.png)
 
-![](img/c56a2035cc8f7b9e12f5cbdda3fecb67_5.png)
 
 ---
 
@@ -40,9 +34,7 @@
 
 以下是交叉熵与负对数似然等价性的图示说明：
 
-![](img/c56a2035cc8f7b9e12f5cbdda3fecb67_7.png)
 
-![](img/c56a2035cc8f7b9e12f5cbdda3fecb67_8.png)
 
 为了更清晰地总结这两个概念，以下是关键点列表：
 
@@ -55,7 +47,6 @@
 
 本节课中我们一起学习了深度学习中的两个核心术语：**Logits** 和 **交叉熵**。我们明确了Logits即网络最后一层的净输入，而交叉熵则是我们熟悉的负对数似然损失在深度学习领域的常用名称。
 
-![](img/c56a2035cc8f7b9e12f5cbdda3fecb67_7.png)
 
 ![](img/c56a2035cc8f7b9e12f5cbdda3fecb67_8.png)
 

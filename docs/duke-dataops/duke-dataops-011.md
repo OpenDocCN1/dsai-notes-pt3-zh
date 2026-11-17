@@ -46,9 +46,7 @@ App Runner的一个优点是管理方便。你可以看到我这里已经运行�
 
 同样很棒的是，我可以在URL后加上`/docs`路径。FastAPI内置了Swagger文档，我可以在这里直接测试API。点击“Try it out”，输入两个数字（比如2和2），然后执行。它会给出对应的curl命令、请求URL和响应详情等非常有用的信息。这对于构建数据工程或机器学习API非常方便。同样，我也可以直接测试`/hello`路由。
 
-![](img/b5a9abae9e13955a6d53ca844ac787d1_5.png)
 
-![](img/b5a9abae9e13955a6d53ca844ac787d1_6.png)
 
 ![](img/b5a9abae9e13955a6d53ca844ac787d1_8.png)
 

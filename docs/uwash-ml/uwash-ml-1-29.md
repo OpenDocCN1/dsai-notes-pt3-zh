@@ -43,7 +43,6 @@ train_data, test_data = sales.random_split(0.8, seed=0)
 
 ---
 
-![](img/ff606757a35048bce8752f1c4cf92a64_3.png)
 
 ## 本节总结
 

@@ -6,45 +6,27 @@
 
 
 
-![](img/af030a8abd07ead0ea37c2ba8f1de101_1.png)
 
-![](img/af030a8abd07ead0ea37c2ba8f1de101_2.png)
 
-![](img/af030a8abd07ead0ea37c2ba8f1de101_3.png)
 
-![](img/af030a8abd07ead0ea37c2ba8f1de101_1.png)
 
-![](img/af030a8abd07ead0ea37c2ba8f1de101_4.png)
 
-![](img/af030a8abd07ead0ea37c2ba8f1de101_2.png)
 
-![](img/af030a8abd07ead0ea37c2ba8f1de101_3.png)
 
-![](img/af030a8abd07ead0ea37c2ba8f1de101_5.png)
 
-![](img/af030a8abd07ead0ea37c2ba8f1de101_4.png)
 
-![](img/af030a8abd07ead0ea37c2ba8f1de101_5.png)
 
 这个过程涉及**工程、数据、增强、分析、信息、情报和决策**。在初始的工程阶段需要大量工作，但随着流程推进，数据被不断提炼和优化，信息变得更丰富，情报变得更精准，最终才能用于做出最优决策。
 
 
 
-![](img/af030a8abd07ead0ea37c2ba8f1de101_7.png)
 
-![](img/af030a8abd07ead0ea37c2ba8f1de101_8.png)
 
-![](img/af030a8abd07ead0ea37c2ba8f1de101_7.png)
 
-![](img/af030a8abd07ead0ea37c2ba8f1de101_8.png)
 
-![](img/af030a8abd07ead0ea37c2ba8f1de101_9.png)
 
-![](img/af030a8abd07ead0ea37c2ba8f1de101_9.png)
 
-![](img/af030a8abd07ead0ea37c2ba8f1de101_10.png)
 
-![](img/af030a8abd07ead0ea37c2ba8f1de101_10.png)
 
 上一节我们了解了数据质量管理的整体流程，本节中我们来看看衡量数据质量的具体维度。数据质量包含六个核心维度。
 
@@ -60,13 +42,9 @@
 
 
 
-![](img/af030a8abd07ead0ea37c2ba8f1de101_12.png)
 
-![](img/af030a8abd07ead0ea37c2ba8f1de101_12.png)
 
-![](img/af030a8abd07ead0ea37c2ba8f1de101_13.png)
 
-![](img/af030a8abd07ead0ea37c2ba8f1de101_13.png)
 
 理解了数据质量的维度后，我们来看看实施数据质量管理能带来哪些实际益处。数据质量管理能带来显著的效益。
 
@@ -82,11 +60,8 @@
 
 
 
-![](img/af030a8abd07ead0ea37c2ba8f1de101_15.png)
 
-![](img/af030a8abd07ead0ea37c2ba8f1de101_16.png)
 
-![](img/af030a8abd07ead0ea37c2ba8f1de101_15.png)
 
 ![](img/af030a8abd07ead0ea37c2ba8f1de101_16.png)
 

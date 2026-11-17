@@ -1,6 +1,5 @@
 #  121：执行MySQL查询的挑战与解决方案
 
-![](img/c6b515aa84ae290bd37e4cc6894e7613_0.png)
 
 ![](img/c6b515aa84ae290bd37e4cc6894e7613_1.png)
 

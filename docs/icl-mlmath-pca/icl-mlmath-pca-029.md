@@ -1,6 +1,5 @@
 # 029：高维PCA
 
-![](img/92b704636940694cfb85ac1fc02fb1ff_0.png)
 
 ![](img/92b704636940694cfb85ac1fc02fb1ff_0.png)
 

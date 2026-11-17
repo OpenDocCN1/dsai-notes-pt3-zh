@@ -1,6 +1,5 @@
 #  032：爬取多个电商页面
 
-![](img/166ae8dbf280bd8bda435b47cbbad240_0.png)
 
 ![](img/166ae8dbf280bd8bda435b47cbbad240_1.png)
 
@@ -24,24 +23,20 @@ library(glue)
 
 ---
 
-![](img/166ae8dbf280bd8bda435b47cbbad240_5.png)
 
 ## 构建多页URL列表
 
 上一节我们介绍了如何从单个页面爬取数据。本节中，我们来看看如何系统地访问多个页面。观察目标网站可以发现，不同页面的URL遵循一个简单的模式：基础URL后附加 `/page/{页码}`。
 
-![](img/166ae8dbf280bd8bda435b47cbbad240_7.png)
 
 例如：
 - 第2页: `https://example.com/page/2`
 - 第3页: `https://example.com/page/3`
 
-![](img/166ae8dbf280bd8bda435b47cbbad240_9.png)
 
 我们的目标是爬取前5页的数据。以下是构建这5个URL列表的方法：
 
 
-![](img/166ae8dbf280bd8bda435b47cbbad240_11.png)
 
 ```r
 # 定义要爬取的页码
@@ -111,9 +106,7 @@ print(test_page1)
 
 手动对每个URL调用函数是低效的。我们需要一种方法，能自动将 `scrape_items` 函数应用到 `urls` 列表中的每一个元素上。在R中，我们可以使用 `purrr` 包中的 `map` 函数来实现这种迭代操作。
 
-![](img/166ae8dbf280bd8bda435b47cbbad240_13.png)
 
-![](img/166ae8dbf280bd8bda435b47cbbad240_14.png)
 
 `map` 函数的基本思想是：对列表中的每个元素应用指定的函数。
 

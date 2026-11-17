@@ -1,6 +1,5 @@
 # 016：嵌套字典
 
-![](img/606efba190dace90c7c705fbac9aeeff_1.png)
 
 在本节课中，我们将深入学习字典，特别是如何将不同的数据结构组合在一起，例如将列表放入字典中，或者创建字典的列表。我们将探讨更多字典操作，并介绍嵌套数据结构的概念及其常见应用场景。
 
@@ -18,11 +17,9 @@
 
 ### 长度、成员检查和遍历
 
-![](img/606efba190dace90c7c705fbac9aeeff_3.png)
 
 与列表类似，字典也支持 `len` 函数、`in` 关键字和 `for` 循环。但需要注意的是，`in` 关键字检查的是键（Key）而非值（Value）。
 
-![](img/606efba190dace90c7c705fbac9aeeff_5.png)
 
 **示例代码：**
 ```python
@@ -34,7 +31,6 @@ for key in num_words:
     print(key, num_words[key]) # 依次输出键值对
 ```
 
-![](img/606efba190dace90c7c705fbac9aeeff_7.png)
 
 ### 提取键和值
 
@@ -47,13 +43,11 @@ keys_list = list(num_words.keys())    # 转换为列表: [0, 1, 2, 3]
 values_list = list(num_words.values()) # 转换为列表: ["zero", "one", "two", "three"]
 ```
 
-![](img/606efba190dace90c7c705fbac9aeeff_9.png)
 
 ### 使用默认值的 `get` 和 `pop`
 
 当尝试访问字典中不存在的键时，直接索引会导致 `KeyError`。`get` 和 `pop` 方法允许指定默认值，避免程序崩溃。
 
-![](img/606efba190dace90c7c705fbac9aeeff_11.png)
 
 **示例代码：**
 ```python
@@ -62,15 +56,11 @@ print(suffix.get(4, "th"))  # 输出: "th"
 print(suffix.pop(0, "th"))  # 输出: "th"，字典不变
 ```
 
-![](img/606efba190dace90c7c705fbac9aeeff_13.png)
 
-![](img/606efba190dace90c7c705fbac9aeeff_15.png)
 
 ---
 
-![](img/606efba190dace90c7c705fbac9aeeff_17.png)
 
-![](img/606efba190dace90c7c705fbac9aeeff_19.png)
 
 ## 嵌套数据结构
 
@@ -80,7 +70,6 @@ print(suffix.pop(0, "th"))  # 输出: "th"，字典不变
 
 一个常见用例是将CSV文件转换为字典的列表，其中每个字典代表一行数据，键是列标题，值是对应的数据。
 
-![](img/606efba190dace90c7c705fbac9aeeff_21.png)
 
 **示例代码：**
 ```python
@@ -144,7 +133,6 @@ for year in sorted(averages.keys()):
 
 ### 灵活的数据表示
 
-![](img/606efba190dace90c7c705fbac9aeeff_23.png)
 
 使用字典的列表可以避免硬编码列索引，使代码更易读和维护。例如，直接通过列名访问数据，而无需记住列的位置。
 
@@ -155,7 +143,6 @@ speed = data[0]['speed']
 location = data[0]['location']
 ```
 
-![](img/606efba190dace90c7c705fbac9aeeff_25.png)
 
 ---
 

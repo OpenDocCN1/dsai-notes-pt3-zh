@@ -1,6 +1,5 @@
 # 60：优质研究问题对可靠推断的重要性 🔍
 
-![](img/fb246316c9aa7d99f63ff53e8ccc5fb6_0.png)
 
 ![](img/fb246316c9aa7d99f63ff53e8ccc5fb6_2.png)
 

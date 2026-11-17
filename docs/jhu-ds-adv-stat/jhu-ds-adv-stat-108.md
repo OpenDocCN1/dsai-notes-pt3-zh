@@ -4,7 +4,6 @@
 
 ## 概述
 
-![](img/4b49ffb62dbbdedd6cd92dcbb6032ef0_1.png)
 
 我们将使用瑞士数据集，以生育率（Fertility）作为响应变量Y，其他变量（农业、考试、教育、天主教徒、婴儿死亡率）作为预测变量矩阵X。我们将通过三种不同的方法计算主成分：`prcomp`函数、相关矩阵的特征值分解以及奇异值分解（SVD），并验证它们的一致性。最后，我们将展示如何使用主成分进行回归分析。
 
@@ -33,9 +32,7 @@ n <- nrow(X)
 pca_prcomp <- prcomp(X, scale. = TRUE)
 ```
 
-![](img/4b49ffb62dbbdedd6cd92dcbb6032ef0_7.png)
 
-![](img/4b49ffb62dbbdedd6cd92dcbb6032ef0_8.png)
 
 我们可以绘制累积特征值图，以查看每个主成分解释的方差比例。
 
@@ -49,11 +46,9 @@ plot(cumulative_variance, type="b", xlab="主成分数量", ylab="累积解释�
 
 ## 通过相关矩阵的特征值分解进行PCA
 
-![](img/4b49ffb62dbbdedd6cd92dcbb6032ef0_10.png)
 
 我们也可以直接对相关矩阵进行特征值分解来实现PCA。这能让我们更深入地理解其数学原理。
 
-![](img/4b49ffb62dbbdedd6cd92dcbb6032ef0_11.png)
 
 ```r
 # 计算X的相关矩阵

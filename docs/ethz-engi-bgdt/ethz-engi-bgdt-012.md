@@ -1,32 +1,24 @@
 #  012：宽列存储 (1/3) 🗄️
 
-![](img/db206d824ec5065a5472e7d8a0aa8aae_1.png)
 
-![](img/db206d824ec5065a5472e7d8a0aa8aae_3.png)
 
 在本节课中，我们将学习宽列存储，这是一种用于存储海量结构化或半结构化数据的关键技术。我们将从逻辑模型开始，了解其与传统数据库的区别，并初步探索其物理架构。
 
 ## 概述
 
-![](img/db206d824ec5065a5472e7d8a0aa8aae_5.png)
 
-![](img/db206d824ec5065a5472e7d8a0aa8aae_7.png)
 
-![](img/db206d824ec5065a5472e7d8a0aa8aae_8.png)
 
 我们已经学习了如何将数据（如XML、JSON、CSV文件）存储到S3、Azure Blob或HDFS等分布式文件系统中。现在，我们将探讨一种更结构化的存储方式——宽列存储。它看起来像一个巨大的表格，能够高效地存储数十亿行、数百万列的数据，并支持随机访问和更新。本节课将重点介绍其逻辑模型和核心概念。
 
-![](img/db206d824ec5065a5472e7d8a0aa8aae_10.png)
 
 ## 逻辑模型：从规范化到反规范化
 
 上一节我们介绍了如何将数据以文件形式存储。本节中我们来看看如何通过“反规范化”来构建一个巨大的表格，以优化查询性能。
 
-![](img/db206d824ec5065a5472e7d8a0aa8aae_12.png)
 
 在传统的关系型数据库（如PostgreSQL）中，我们遵循规范化原则，将数据拆分到多个表中，并通过连接操作来组合数据。然而，连接操作在分布式环境下成本高昂，因为它需要在集群节点间移动大量数据。
 
-![](img/db206d824ec5065a5472e7d8a0aa8aae_14.png)
 
 宽列存储的核心思想是**反规范化**。我们通过将多个小表合并成一个大表来避免连接操作。虽然这会引入数据冗余，但换来了查询性能的巨大提升。这正是“大表”名称的由来。
 
@@ -39,27 +31,18 @@
     *   单表: `(1, a, X), (1, a, Y), (2, b, Z)`
     *   数据已预连接，无需额外JOIN。
 
-![](img/db206d824ec5065a5472e7d8a0aa8aae_16.png)
 
-![](img/db206d824ec5065a5472e7d8a0aa8aae_18.png)
 
-![](img/db206d824ec5065a5472e7d8a0aa8aae_20.png)
 
-![](img/db206d824ec5065a5472e7d8a0aa8aae_21.png)
 
 ## 宽列存储的核心概念
 
-![](img/db206d824ec5065a5472e7d8a0aa8aae_23.png)
 
-![](img/db206d824ec5065a5472e7d8a0aa8aae_25.png)
 
 了解了反规范化的思想后，我们来具体看看宽列存储的逻辑模型是如何定义的。
 
-![](img/db206d824ec5065a5472e7d8a0aa8aae_27.png)
 
-![](img/db206d824ec5065a5472e7d8a0aa8aae_28.png)
 
-![](img/db206d824ec5065a5472e7d8a0aa8aae_30.png)
 
 宽列存储的逻辑视图是一个巨大的稀疏表格。它具有以下核心组成部分：
 
@@ -78,23 +61,17 @@
 
 **代码描述**：在HBase Shell中，插入数据的命令类似于 `put ‘table_name‘, ‘row1‘, ‘cf1:colA‘, ‘value1‘`。
 
-![](img/db206d824ec5065a5472e7d8a0aa8aae_32.png)
 
 ## 数据操作接口
 
-![](img/db206d824ec5065a5472e7d8a0aa8aae_34.png)
 
 现在我们已经知道了数据如何组织，接下来看看能对它们进行哪些操作。宽列存储通常提供四种基本操作：
 
-![](img/db206d824ec5065a5472e7d8a0aa8aae_36.png)
 
 以下是主要的API操作：
 
-![](img/db206d824ec5065a5472e7d8a0aa8aae_38.png)
 
-![](img/db206d824ec5065a5472e7d8a0aa8aae_40.png)
 
-![](img/db206d824ec5065a5472e7d8a0aa8aae_42.png)
 
 1.  **Get**：根据指定的行键，快速读取一行或其中部分列族的数据。这实现了高效的随机访问。
     *   *示例*：获取 `Row ID = 0xa1` 的所有数据。
@@ -104,9 +81,7 @@
     *   *示例*：扫描 `Row ID` 从 `10` 到 `16` 的所有行，仅读取 `cf2` 列族。
 4.  **Delete**：删除指定行，或删除某行中特定列族/列的数据。
 
-![](img/db206d824ec5065a5472e7d8a0aa8aae_44.png)
 
-![](img/db206d824ec5065a5472e7d8a0aa8aae_46.png)
 
 ## 物理架构初探
 
@@ -120,11 +95,8 @@
 
 一个`Region`和一个`列族`的交集，称为一个 **`Store`**。`Store`是数据持久化的基本单元。每个`Store`包含一个特定行键范围和特定列族的所有数据。
 
-![](img/db206d824ec5065a5472e7d8a0aa8aae_48.png)
 
-![](img/db206d824ec5065a5472e7d8a0aa8aae_49.png)
 
-![](img/db206d824ec5065a5472e7d8a0aa8aae_51.png)
 
 架构上，与HDFS类似，采用主从模式：
 *   **HMaster**：主节点，负责管理元数据（如表创建）、分配Region给具体的Region Server，以及负载均衡和故障恢复。
@@ -132,69 +104,43 @@
 
 **关键点**：数据实际存储在HDFS上。Region Server只管理数据的访问和缓存，持久化层由HDFS保证可靠性和可用性。因此，当一个Region Server故障时，HMaster可以将其负责的Region重新分配给其他健康的Region Server，而数据不会丢失。
 
-![](img/db206d824ec5065a5472e7d8a0aa8aae_53.png)
 
-![](img/db206d824ec5065a5472e7d8a0aa8aae_54.png)
 
-![](img/db206d824ec5065a5472e7d8a0aa8aae_56.png)
 
-![](img/db206d824ec5065a5472e7d8a0aa8aae_58.png)
 
-![](img/db206d824ec5065a5472e7d8a0aa8aae_59.png)
 
 ## 数据持久化与版本控制
 
 最后，我们来了解数据是如何最终落到磁盘上的。每个`Store`中的数据会持久化到HDFS上的一种特定格式文件中，称为 **`HFile`**。
 
-![](img/db206d824ec5065a5472e7d8a0aa8aae_61.png)
 
-![](img/db206d824ec5065a5472e7d8a0aa8aae_63.png)
 
 在`HFile`内部，数据按**单元格**的字典序（Row ID， 列族， 列， 时间戳）排列存储。每个单元格包含其坐标信息和二进制值。
 
-![](img/db206d824ec5065a5472e7d8a0aa8aae_65.png)
 
-![](img/db206d824ec5065a5472e7d8a0aa8aae_67.png)
 
-![](img/db206d824ec5065a5472e7d8a0aa8aae_68.png)
 
-![](img/db206d824ec5065a5472e7d8a0aa8aae_70.png)
 
 此外，HBase支持**多版本控制**。每次对单元格执行`Put`操作，都会生成一个新的版本（带时间戳）。默认情况下，读取会获取最新版本的数据，但也可以读取历史版本。在`HFile`中，同一单元格的多个版本按时间戳倒序排列（最新的在前）。
 
-![](img/db206d824ec5065a5472e7d8a0aa8aae_72.png)
 
-![](img/db206d824ec5065a5472e7d8a0aa8aae_74.png)
 
-![](img/db206d824ec5065a5472e7d8a0aa8aae_75.png)
 
-![](img/db206d824ec5065a5472e7d8a0aa8aae_76.png)
 
-![](img/db206d824ec5065a5472e7d8a0aa8aae_77.png)
 
-![](img/db206d824ec5065a5472e7d8a0aa8aae_78.png)
 
 **公式描述**：一个单元格的逻辑标识可表示为：`(RowKey, ColumnFamily:ColumnName, Timestamp) -> Value`。
 
-![](img/db206d824ec5065a5472e7d8a0aa8aae_80.png)
 
-![](img/db206d824ec5065a5472e7d8a0aa8aae_82.png)
 
-![](img/db206d824ec5065a5472e7d8a0aa8aae_83.png)
 
-![](img/db206d824ec5065a5472e7d8a0aa8aae_85.png)
 
-![](img/db206d824ec5065a5472e7d8a0aa8aae_87.png)
 
 ## 总结
 
-![](img/db206d824ec5065a5472e7d8a0aa8aae_89.png)
 
-![](img/db206d824ec5065a5472e7d8a0aa8aae_91.png)
 
-![](img/db206d824ec5065a5472e7d8a0aa8aae_92.png)
 
-![](img/db206d824ec5065a5472e7d8a0aa8aae_94.png)
 
 ![](img/db206d824ec5065a5472e7d8a0aa8aae_96.png)
 

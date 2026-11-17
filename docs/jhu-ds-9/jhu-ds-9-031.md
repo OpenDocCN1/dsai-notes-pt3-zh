@@ -1,6 +1,5 @@
 # 031：R Markdown 图表与发布 🚀
 
-![](img/148e95a137d8799092c7459ddd86daff_0.png)
 
 ![](img/148e95a137d8799092c7459ddd86daff_2.png)
 
@@ -34,7 +33,6 @@ plot(cars$weight, cars$mpg, xlab = "Weight", ylab = "Miles Per Gallon")
 
 ![](img/148e95a137d8799092c7459ddd86daff_12.png)
 
-![](img/148e95a137d8799092c7459ddd86daff_13.png)
 
 大多数时候，我们希望在最终报告中只展示图表，而不显示生成它的代码。这可以通过设置代码块的 `echo` 参数来实现。
 
@@ -79,7 +77,6 @@ GitHub Pages是GitHub提供的一项免费服务，可以将仓库中的特定�
 
 例如，讲师Sean Cross的课程幻灯片就托管在他的GitHub Pages上。通过访问特定的URL，可以直接在浏览器中浏览渲染好的HTML演示文稿，而不是查看源代码。
 
-![](img/148e95a137d8799092c7459ddd86daff_18.png)
 
 这种方式与我们日常的数据科学工作流（使用Git进行代码管理）完美契合，使得分享和展示成果变得非常顺畅。
 

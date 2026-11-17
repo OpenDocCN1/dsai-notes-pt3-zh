@@ -1,8 +1,6 @@
 # 029：System R*算法 🧠
 
-![](img/fc97e0d97f6b86936bf35d0a0f4be135_0.png)
 
-![](img/fc97e0d97f6b86936bf35d0a0f4be135_2.png)
 
 在本节课中，我们将学习分布式数据库系统System R*中用于执行表连接操作的优化算法。我们将重点探讨两种基本的数据传输策略，并学习如何通过成本模型计算和比较不同策略的开销，以选择最优的执行计划。
 
@@ -28,7 +26,6 @@
 其成本计算公式如下：
 `总成本 = (读取R表所有行的CPU成本) + (传输整个R表到S站点的网络成本) + (在S站点读取匹配行的CPU成本)`
 
-![](img/fc97e0d97f6b86936bf35d0a0f4be135_4.png)
 
 具体公式为：
 `Cost₁ = (card(R) * T_cpu) + (size(R) * T_net) + (card(R) * s * T_cpu)`
@@ -75,7 +72,6 @@
 `Cost₃ = (card(R) * T_cpu) + (card(R) * length(a) * T_net) + (card(R) * s * T_cpu) + (card(R) * s * length(S) * T_net)`
 其中，`length(a)` 是连接列a的长度，`length(S)` 是表S中一行的长度。
 
-![](img/fc97e0d97f6b86936bf35d0a0f4be135_6.png)
 
 ---
 

@@ -31,7 +31,6 @@
 
 ![](img/0dda42e400ade6a2e9819f214134a391_5.png)
 
-![](img/0dda42e400ade6a2e9819f214134a391_7.png)
 
 首先，需要安装Ollama来管理本地模型。根据你的操作系统，执行相应的安装命令。
 
@@ -45,17 +44,13 @@ ollama pull llama2:7b-chat
 
 ![](img/0dda42e400ade6a2e9819f214134a391_11.png)
 
-![](img/0dda42e400ade6a2e9819f214134a391_13.png)
 
 首次下载可能需要一些时间。模型下载完毕后，即可在本地使用。
 
-![](img/0dda42e400ade6a2e9819f214134a391_15.png)
 
-![](img/0dda42e400ade6a2e9819f214134a391_17.png)
 
 ### 2. 创建LangChain应用并添加模板
 
-![](img/0dda42e400ade6a2e9819f214134a391_19.png)
 
 确保已安装LangChain命令行工具。然后，创建一个新的应用。
 
@@ -67,7 +62,6 @@ ollama pull llama2:7b-chat
 langchain app create privacy-app
 ```
 
-![](img/0dda42e400ade6a2e9819f214134a391_25.png)
 
 进入应用目录后，添加实现本地化RAG的模板。
 
@@ -93,7 +87,6 @@ langchain app add rag-chroma-private
 
 其核心流程可以用以下伪代码表示：
 
-![](img/0dda42e400ade6a2e9819f214134a391_33.png)
 
 ```python
 # 加载文档

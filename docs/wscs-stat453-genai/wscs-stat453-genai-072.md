@@ -60,7 +60,6 @@
 
 ## 总结 🏁
 
-![](img/65c5564e26cf163264a8daac3215caba_1.png)
 
 ![](img/65c5564e26cf163264a8daac3215caba_2.png)
 

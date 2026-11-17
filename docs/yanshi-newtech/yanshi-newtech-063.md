@@ -1,6 +1,5 @@
 # 63：27_5.1 iOS演进（第1部分）📱
 
-![](img/e41a251ebacd25e73be870c5e93a9288_0.png)
 
 ![](img/e41a251ebacd25e73be870c5e93a9288_0.png)
 

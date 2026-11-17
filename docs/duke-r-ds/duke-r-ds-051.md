@@ -1,6 +1,5 @@
 #  051：森林分类 🌲
 
-![](img/3ed7f5518e04ae3b1ae86595a1589f98_0.png)
 
 ![](img/3ed7f5518e04ae3b1ae86595a1589f98_1.png)
 
@@ -86,9 +85,7 @@ print(exploratory_plot)
 
 这个可视化帮助我们直观理解了预测变量与结果之间可能存在的关系。
 
-![](img/3ed7f5518e04ae3b1ae86595a1589f98_3.png)
 
-![](img/3ed7f5518e04ae3b1ae86595a1589f98_4.png)
 
 ---
 
@@ -218,9 +215,7 @@ forested_full_roc <- roc_curve(forested_full_aug,
                                .pred_yes)
 ```
 
-![](img/3ed7f5518e04ae3b1ae86595a1589f98_6.png)
 
-![](img/3ed7f5518e04ae3b1ae86595a1589f98_8.png)
 
 ---
 
@@ -252,9 +247,7 @@ bind_rows(custom_errors, full_errors)
 接下来，我们将两个模型的ROC曲线绘制在同一张图上，进行直观比较。
 
 
-![](img/3ed7f5518e04ae3b1ae86595a1589f98_10.png)
 
-![](img/3ed7f5518e04ae3b1ae86595a1589f98_11.png)
 
 ```r
 # 为ROC曲线数据添加模型标识
@@ -288,11 +281,9 @@ print(combined_roc_plot)
 
 ---
 
-![](img/3ed7f5518e04ae3b1ae86595a1589f98_13.png)
 
 ## 总结
 
-![](img/3ed7f5518e04ae3b1ae86595a1589f98_14.png)
 
 本节课中，我们一起完成了一个完整的逻辑回归分类项目。我们学习了：
 

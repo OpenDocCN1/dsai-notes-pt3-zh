@@ -53,9 +53,7 @@ __global__ void naiveTransposeKernel(const float* input, float* output, int widt
 
 ![](img/bb4f2a016824f794f04b491deb09f3dd_23.png)
 
-![](img/bb4f2a016824f794f04b491deb09f3dd_25.png)
 
-![](img/bb4f2a016824f794f04b491deb09f3dd_27.png)
 
 ### 优化步骤一：引入共享内存
 
@@ -134,7 +132,6 @@ __shared__ float tile[TILE_DIM][TILE_DIM + 1]; // 添加填充以消除存储体
 
 ![](img/bb4f2a016824f794f04b491deb09f3dd_50.png)
 
-![](img/bb4f2a016824f794f04b491deb09f3dd_52.png)
 
 ![](img/bb4f2a016824f794f04b491deb09f3dd_53.png)
 
@@ -227,7 +224,6 @@ for (int stride = 1; stride < blockDim.x; stride *= 2) {
 
 首先，用更高效的索引计算替换昂贵的模运算`%`。
 
-![](img/bb4f2a016824f794f04b491deb09f3dd_88.png)
 
 ![](img/bb4f2a016824f794f04b491deb09f3dd_90.png)
 
@@ -250,7 +246,6 @@ for (int stride = 1; stride < blockDim.x; stride *= 2) {
 
 ![](img/bb4f2a016824f794f04b491deb09f3dd_96.png)
 
-![](img/bb4f2a016824f794f04b491deb09f3dd_98.png)
 
 ![](img/bb4f2a016824f794f04b491deb09f3dd_100.png)
 
@@ -315,7 +310,6 @@ __syncthreads();
 
 ![](img/bb4f2a016824f794f04b491deb09f3dd_124.png)
 
-![](img/bb4f2a016824f794f04b491deb09f3dd_126.png)
 
 ![](img/bb4f2a016824f794f04b491deb09f3dd_128.png)
 

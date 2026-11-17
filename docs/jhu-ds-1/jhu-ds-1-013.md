@@ -18,69 +18,49 @@
 
 ## 第一步：在RStudio中链接Git
 
-![](img/64dbe0ec1509a869a0b3cc6e8df9df37_1.png)
 
 上一节我们介绍了Git和GitHub的基本概念，本节中我们来看看如何在RStudio中配置Git。
 
-![](img/64dbe0ec1509a869a0b3cc6e8df9df37_2.png)
 
 首先，打开RStudio，进入顶部菜单栏的 **Tools**， 然后选择 **Global Options**， 接着点击 **Git/SVN**。
 
-![](img/64dbe0ec1509a869a0b3cc6e8df9df37_3.png)
 
-![](img/64dbe0ec1509a869a0b3cc6e8df9df37_4.png)
 
 有时，RStudio自动检测到的Git可执行文件路径可能不正确。你需要确认`Git.exe`是否位于RStudio指定的目录中。如果路径错误，请将其修改为正确的路径。确认无误后，点击 **OK** 或 **Apply**。
 
-![](img/64dbe0ec1509a869a0b3cc6e8df9df37_5.png)
 
 至此，RStudio与Git已成功链接。
 
 
 
-![](img/64dbe0ec1509a869a0b3cc6e8df9df37_6.png)
 
-![](img/64dbe0ec1509a869a0b3cc6e8df9df37_1.png)
 
-![](img/64dbe0ec1509a869a0b3cc6e8df9df37_2.png)
 
-![](img/64dbe0ec1509a869a0b3cc6e8df9df37_3.png)
 
-![](img/64dbe0ec1509a869a0b3cc6e8df9df37_4.png)
 
-![](img/64dbe0ec1509a869a0b3cc6e8df9df37_5.png)
 
-![](img/64dbe0ec1509a869a0b3cc6e8df9df37_6.png)
 
-![](img/64dbe0ec1509a869a0b3cc6e8df9df37_8.png)
 
 ---
 
-![](img/64dbe0ec1509a869a0b3cc6e8df9df37_9.png)
 
 ## 第二步：创建SSH密钥并链接GitHub
 
-![](img/64dbe0ec1509a869a0b3cc6e8df9df37_10.png)
 
 现在，我们需要让GitHub认识来自RStudio的“你”。这通过创建一对SSH密钥来实现。
 
 在同一个RStudio选项窗口中，点击 **Create RSA Key**。创建完成后，点击 **Close**。
 
-![](img/64dbe0ec1509a869a0b3cc6e8df9df37_12.png)
 
 接着，再次在同一窗口中点击 **View public key**， 复制弹出的那串数字和字母组合。关闭此窗口。
 
-![](img/64dbe0ec1509a869a0b3cc6e8df9df37_13.png)
 
 你已创建了一个专属的密钥对。我们将把公钥提供给GitHub，这样当你从RStudio提交更改时，GitHub就能识别你的身份。
 
 
 
-![](img/64dbe0ec1509a869a0b3cc6e8df9df37_8.png)
 
-![](img/64dbe0ec1509a869a0b3cc6e8df9df37_9.png)
 
-![](img/64dbe0ec1509a869a0b3cc6e8df9df37_10.png)
 
 以下是具体操作步骤：
 
@@ -92,29 +72,21 @@
 6.  在“Key”框中，粘贴你刚从RStudio复制的公钥。
 7.  输入你的GitHub密码以确认添加。
 
-![](img/64dbe0ec1509a869a0b3cc6e8df9df37_15.png)
 
-![](img/64dbe0ec1509a869a0b3cc6e8df9df37_16.png)
 
 现在，RStudio与GitHub已通过SSH密钥建立链接。
 
 
 
-![](img/64dbe0ec1509a869a0b3cc6e8df9df37_17.png)
 
-![](img/64dbe0ec1509a869a0b3cc6e8df9df37_12.png)
 
-![](img/64dbe0ec1509a869a0b3cc6e8df9df37_18.png)
 
-![](img/64dbe0ec1509a869a0b3cc6e8df9df37_13.png)
 
 ---
 
-![](img/64dbe0ec1509a869a0b3cc6e8df9df37_20.png)
 
 ## 第三步：创建GitHub仓库并链接到RStudio项目
 
-![](img/64dbe0ec1509a869a0b3cc6e8df9df37_21.png)
 
 链接建立后，我们可以创建一个GitHub仓库，并在RStudio中打开它。
 
@@ -126,25 +98,15 @@
 
 
 
-![](img/64dbe0ec1509a869a0b3cc6e8df9df37_15.png)
 
-![](img/64dbe0ec1509a869a0b3cc6e8df9df37_16.png)
 
-![](img/64dbe0ec1509a869a0b3cc6e8df9df37_17.png)
 
-![](img/64dbe0ec1509a869a0b3cc6e8df9df37_18.png)
 
-![](img/64dbe0ec1509a869a0b3cc6e8df9df37_23.png)
 
-![](img/64dbe0ec1509a869a0b3cc6e8df9df37_24.png)
 
-![](img/64dbe0ec1509a869a0b3cc6e8df9df37_20.png)
 
-![](img/64dbe0ec1509a869a0b3cc6e8df9df37_25.png)
 
-![](img/64dbe0ec1509a869a0b3cc6e8df9df37_21.png)
 
-![](img/64dbe0ec1509a869a0b3cc6e8df9df37_26.png)
 
 然后，在RStudio中创建关联项目：
 1.  在RStudio中，点击 **File** -> **New Project**。
@@ -158,27 +120,19 @@
 
 
 
-![](img/64dbe0ec1509a869a0b3cc6e8df9df37_23.png)
 
-![](img/64dbe0ec1509a869a0b3cc6e8df9df37_24.png)
 
-![](img/64dbe0ec1509a869a0b3cc6e8df9df37_25.png)
 
-![](img/64dbe0ec1509a869a0b3cc6e8df9df37_26.png)
 
-![](img/64dbe0ec1509a869a0b3cc6e8df9df37_28.png)
 
 ---
 
-![](img/64dbe0ec1509a869a0b3cc6e8df9df37_29.png)
 
 ## 第四步：创建文件并提交到GitHub
 
-![](img/64dbe0ec1509a869a0b3cc6e8df9df37_30.png)
 
 现在，让我们在项目中创建一个新文件，并体验完整的版本控制流程。
 
-![](img/64dbe0ec1509a869a0b3cc6e8df9df37_31.png)
 
 首先，创建一个R脚本：
 1.  点击 **File** -> **New File** -> **R Script**。
@@ -191,17 +145,11 @@
 
 
 
-![](img/64dbe0ec1509a869a0b3cc6e8df9df37_28.png)
 
-![](img/64dbe0ec1509a869a0b3cc6e8df9df37_29.png)
 
-![](img/64dbe0ec1509a869a0b3cc6e8df9df37_33.png)
 
-![](img/64dbe0ec1509a869a0b3cc6e8df9df37_34.png)
 
-![](img/64dbe0ec1509a869a0b3cc6e8df9df37_30.png)
 
-![](img/64dbe0ec1509a869a0b3cc6e8df9df37_31.png)
 
 保存后，查看RStudio界面右上方的 **Git** 标签页（通常在Environment标签页旁边）。你应该能看到刚刚创建的文件。
 
@@ -213,17 +161,11 @@
 
 
 
-![](img/64dbe0ec1509a869a0b3cc6e8df9df37_33.png)
 
-![](img/64dbe0ec1509a869a0b3cc6e8df9df37_36.png)
 
-![](img/64dbe0ec1509a869a0b3cc6e8df9df37_34.png)
 
-![](img/64dbe0ec1509a869a0b3cc6e8df9df37_37.png)
 
-![](img/64dbe0ec1509a869a0b3cc6e8df9df37_36.png)
 
-![](img/64dbe0ec1509a869a0b3cc6e8df9df37_37.png)
 
 到目前为止，你已完成创建文件、保存、暂存和本地提交。根据版本控制流程，下一步是将更改推送到远程仓库。
 
@@ -233,17 +175,11 @@
 
 
 
-![](img/64dbe0ec1509a869a0b3cc6e8df9df37_39.png)
 
-![](img/64dbe0ec1509a869a0b3cc6e8df9df37_39.png)
 
-![](img/64dbe0ec1509a869a0b3cc6e8df9df37_40.png)
 
-![](img/64dbe0ec1509a869a0b3cc6e8df9df37_40.png)
 
-![](img/64dbe0ec1509a869a0b3cc6e8df9df37_41.png)
 
-![](img/64dbe0ec1509a869a0b3cc6e8df9df37_41.png)
 
 ---
 
@@ -257,18 +193,11 @@
 
 
 
-![](img/64dbe0ec1509a869a0b3cc6e8df9df37_43.png)
 
-![](img/64dbe0ec1509a869a0b3cc6e8df9df37_43.png)
 
-![](img/64dbe0ec1509a869a0b3cc6e8df9df37_44.png)
 
-![](img/64dbe0ec1509a869a0b3cc6e8df9df37_44.png)
 
-![](img/64dbe0ec1509a869a0b3cc6e8df9df37_45.png)
 
-![](img/64dbe0ec1509a869a0b3cc6e8df9df37_45.png)
 
-![](img/64dbe0ec1509a869a0b3cc6e8df9df37_46.png)
 
 ![](img/64dbe0ec1509a869a0b3cc6e8df9df37_46.png)

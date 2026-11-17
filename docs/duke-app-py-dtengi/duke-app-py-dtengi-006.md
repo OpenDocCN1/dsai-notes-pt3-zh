@@ -1,6 +1,5 @@
 #  006：弹性分布式数据集(RDD)简介
 
-![](img/40bacab6870ee79f5d8cc30f6ab4e020_0.png)
 
 ![](img/40bacab6870ee79f5d8cc30f6ab4e020_0.png)
 

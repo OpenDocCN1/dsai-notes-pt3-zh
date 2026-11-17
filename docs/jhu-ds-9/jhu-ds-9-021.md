@@ -4,7 +4,6 @@
 
 在本节课中，我们将要学习如何使用Plotly库创建交互式折线图。我们将从绘制一个简单的时间序列图开始，然后进阶到绘制包含多条线的股票市场指数图。过程中会涉及数据格式的转换，这是使用Plotly绘制多线图的关键步骤。
 
-![](img/7e035afdb67c17387b7961625844d16d_2.png)
 
 ## 绘制简单时间序列图
 
@@ -12,7 +11,6 @@
 
 ![](img/7e035afdb67c17387b7961625844d16d_4.png)
 
-![](img/7e035afdb67c17387b7961625844d16d_5.png)
 
 首先，我们使用一个名为 `AirPassengers` 的数据集，它记录了多年的航空乘客数量。这是一个时间序列数据，每个数据点对应一个年份。
 
@@ -20,7 +18,6 @@
 
 ![](img/7e035afdb67c17387b7961625844d16d_7.png)
 
-![](img/7e035afdb67c17387b7961625844d16d_8.png)
 
 ```r
 plot_ly(x = time(AirPassengers), y = AirPassengers, type = 'scatter', mode = 'lines')
@@ -30,7 +27,6 @@ plot_ly(x = time(AirPassengers), y = AirPassengers, type = 'scatter', mode = 'li
 
 ![](img/7e035afdb67c17387b7961625844d16d_10.png)
 
-![](img/7e035afdb67c17387b7961625844d16d_11.png)
 
 ## 创建多线股票市场指数图
 
@@ -42,11 +38,9 @@ plot_ly(x = time(AirPassengers), y = AirPassengers, type = 'scatter', mode = 'li
 
 ![](img/7e035afdb67c17387b7961625844d16d_15.png)
 
-![](img/7e035afdb67c17387b7961625844d16d_16.png)
 
 以下是准备数据所需的步骤和命令：
 
-![](img/7e035afdb67c17387b7961625844d16d_18.png)
 
 1.  首先，将 `EuStockMarkets` 时间序列对象转换为数据框。
 2.  然后，使用 `tidyr` 包的 `gather()` 函数将数据从宽格式转换为长格式。这会将所有指数的列名（如DAX, SMI）合并为一个名为“index”的因子变量，并将对应的指数值合并到“price”列中。
@@ -54,7 +48,6 @@ plot_ly(x = time(AirPassengers), y = AirPassengers, type = 'scatter', mode = 'li
 
 以下是完成上述数据转换的代码：
 
-![](img/7e035afdb67c17387b7961625844d16d_20.png)
 
 ```r
 library(plotly)
@@ -72,9 +65,7 @@ stocks <- stocks %>%
 stocks$time <- rep(time(EuStockMarkets), times = 4)
 ```
 
-![](img/7e035afdb67c17387b7961625844d16d_22.png)
 
-![](img/7e035afdb67c17387b7961625844d16d_24.png)
 
 数据准备完成后，就可以使用Plotly绘制多线图了。
 

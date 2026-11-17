@@ -1,6 +1,5 @@
 # 004：GPU内存层次结构
 
-![](img/63742c3f4c92a1dcedcc7a6d474fc808_0.png)
 
 ![](img/63742c3f4c92a1dcedcc7a6d474fc808_0.png)
 
@@ -187,6 +186,5 @@ __global__ void matrixMulTiled(float* A, float* B, float* C, int M, int N, int K
 
 最后，我们简要提及了NVIDIA H100架构在内存层次方面的新特性，如线程块簇和直接内存复制。要了解更多细节，建议阅读《Programming Massively Parallel Processors》第5章，或观看本讲的长版本视频。
 
-![](img/63742c3f4c92a1dcedcc7a6d474fc808_2.png)
 
 ![](img/63742c3f4c92a1dcedcc7a6d474fc808_2.png)

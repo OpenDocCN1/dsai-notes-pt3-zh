@@ -4,13 +4,9 @@
 
 ## LSTM 类回顾 🔄
 
-![](img/c36ddb5a550ae3b5fe75c08c784a6c89_1.png)
 
-![](img/c36ddb5a550ae3b5fe75c08c784a6c89_2.png)
 
-![](img/c36ddb5a550ae3b5fe75c08c784a6c89_3.png)
 
-![](img/c36ddb5a550ae3b5fe75c08c784a6c89_4.png)
 
 上一节我们介绍了 RNN 的基本概念，本节中我们来看看 PyTorch 中 `LSTM` 类的具体细节。我们之前在实现用于分类的 RNN 时使用过这个类。
 
@@ -24,7 +20,6 @@
 lstm = nn.LSTM(input_size=10, hidden_size=20, num_layers=2)
 ```
 
-![](img/c36ddb5a550ae3b5fe75c08c784a6c89_6.png)
 
 在使用时，`LSTM` 接收两个输入：
 1.  输入序列 `input`。
@@ -36,9 +31,7 @@ lstm = nn.LSTM(input_size=10, hidden_size=20, num_layers=2)
 
 为了更直观地理解，可以参考下图，它展示了多层 LSTM 中数据（输入、状态、输出）的流动过程：
 
-![](img/c36ddb5a550ae3b5fe75c08c784a6c89_8.png)
 
-![](img/c36ddb5a550ae3b5fe75c08c784a6c89_8.png)
 
 在上图中，底部是输入序列，黄色部分代表初始状态 `(h0, c0)`。网络可以有多层（图中为3层）。输出包括每个时间步的输出（右侧）以及最后一个时间步的最终状态 `(hn, cn)`。这些最终状态可以被传递给另一个 RNN 以处理后续序列。
 
@@ -50,13 +43,10 @@ lstm = nn.LSTM(input_size=10, hidden_size=20, num_layers=2)
 *   `LSTM` 类：一次处理整个序列（或多个时间步），并可堆叠多层。
 *   `LSTMCell` 类：一次只处理**一个时间步**的输入，并且**只代表单层**。如果需要多层，需要手动堆叠多个 `LSTMCell`。
 
-![](img/c36ddb5a550ae3b5fe75c08c784a6c89_10.png)
 
 下图展示了 `LSTMCell` 在一个时间步内的计算过程，它对应上图中红色框内的单个计算单元：
 
-![](img/c36ddb5a550ae3b5fe75c08c784a6c89_12.png)
 
-![](img/c36ddb5a550ae3b5fe75c08c784a6c89_12.png)
 
 `LSTMCell` 接收当前时间步的输入、上一个时间步的隐藏状态和细胞状态，然后输出当前时间步的输出、以及传递给下一个时间步的新的隐藏状态和细胞状态。
 
@@ -64,11 +54,9 @@ lstm = nn.LSTM(input_size=10, hidden_size=20, num_layers=2)
 
 ## 应用场景：多对多架构 ➡️➡️
 
-![](img/c36ddb5a550ae3b5fe75c08c784a6c89_14.png)
 
 我们实现的字符 RNN 属于“多对多”（Many-to-Many）的序列生成模型，即根据前面的字符序列预测下一个字符。
 
-![](img/c36ddb5a550ae3b5fe75c08c784a6c89_16.png)
 
 以下是另一种重要的“多对多”架构：
 *   **语言翻译**：将一种语言的序列转换为另一种语言的序列。PyTorch 官方提供了关于此的精彩教程，如果你感兴趣，可以自行查阅学习。
@@ -79,10 +67,7 @@ lstm = nn.LSTM(input_size=10, hidden_size=20, num_layers=2)
 
 本节课我们一起学习了 PyTorch 中 `LSTM` 和 `LSTMCell` 的核心概念与区别。下一节课，我们将运用这些知识，实际动手编写代码，使用 `LSTMCell` 类来构建一个能够生成新文本的字符级 RNN 模型。
 
-![](img/c36ddb5a550ae3b5fe75c08c784a6c89_18.png)
 
-![](img/c36ddb5a550ae3b5fe75c08c784a6c89_20.png)
 
-![](img/c36ddb5a550ae3b5fe75c08c784a6c89_21.png)
 
 ![](img/c36ddb5a550ae3b5fe75c08c784a6c89_20.png)

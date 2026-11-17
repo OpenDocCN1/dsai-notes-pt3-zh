@@ -1,10 +1,8 @@
 #  129：编程示例 - 创建置信椭球体 🎯
 
-![](img/ca83df0bf8e8336d2239d1baf8afed87_1.png)
 
 在本节课中，我们将学习如何使用R语言和`rgl`包，为一个多元线性回归模型的系数创建三维置信椭球体。我们将通过一个具体的例子，即使用`mtcars`数据集，以每加仑英里数（mpg）为因变量，排量（disp）和马力（hp）为自变量，来演示整个过程。
 
-![](img/ca83df0bf8e8336d2239d1baf8afed87_3.png)
 
 ---
 
@@ -18,9 +16,7 @@
 
 首先，我们使用`mtcars`数据集拟合一个线性模型。模型的因变量是`mpg`（每加仑英里数），自变量是`disp`（排量）和`hp`（马力）。
 
-![](img/ca83df0bf8e8336d2239d1baf8afed87_5.png)
 
-![](img/ca83df0bf8e8336d2239d1baf8afed87_6.png)
 
 ```r
 # 拟合线性模型
@@ -34,7 +30,6 @@ fit <- lm(mpg ~ disp + hp, data = mtcars)
 为了绘制三维图形，我们需要加载`rgl`包。请注意，`rgl`包需要本地图形硬件的支持，因此你需要在本地R环境中运行此代码，无法在网页版的RStudio服务器上执行。
 
 
-![](img/ca83df0bf8e8336d2239d1baf8afed87_8.png)
 
 ```r
 # 加载rgl包
@@ -43,9 +38,7 @@ library(rgl)
 open3d()
 ```
 
-![](img/ca83df0bf8e8336d2239d1baf8afed87_9.png)
 
-![](img/ca83df0bf8e8336d2239d1baf8afed87_10.png)
 
 执行`open3d()`后，会弹出一个新的三维图形窗口，你可以调整其大小。
 
@@ -53,20 +46,17 @@ open3d()
 
 ## 方法一：使用ellipse3d函数直接绘制
 
-![](img/ca83df0bf8e8336d2239d1baf8afed87_12.png)
 
 `ellipse3d`函数可以方便地从拟合的模型对象中提取前三个系数，并自动生成它们的联合置信椭球体。
 
 以下是具体步骤和代码：
 
-![](img/ca83df0bf8e8336d2239d1baf8afed87_14.png)
 
 ```r
 # 使用ellipse3d函数绘制置信椭球体
 ellipse3d(fit, level = 0.95, col = "red", alpha = 0.5, aspect = TRUE)
 ```
 
-![](img/ca83df0bf8e8336d2239d1baf8afed87_15.png)
 
 **代码解释**：
 *   `fit`: 我们之前拟合的线性模型对象。
@@ -77,13 +67,10 @@ ellipse3d(fit, level = 0.95, col = "red", alpha = 0.5, aspect = TRUE)
 
 运行后，三维窗口中会出现一个红色的半透明椭球体。它的三个轴分别代表模型的截距、`disp`的系数和`hp`的系数。这个椭球体定义了这三个系数真实值的一个95%联合置信区域。
 
-![](img/ca83df0bf8e8336d2239d1baf8afed87_17.png)
 
-![](img/ca83df0bf8e8336d2239d1baf8afed87_18.png)
 
 ---
 
-![](img/ca83df0bf8e8336d2239d1baf8afed87_19.png)
 
 ## 方法二：根据定义手动计算并绘制
 
@@ -92,7 +79,6 @@ ellipse3d(fit, level = 0.95, col = "red", alpha = 0.5, aspect = TRUE)
 首先，我们需要获取模型的关键参数：
 
 
-![](img/ca83df0bf8e8336d2239d1baf8afed87_21.png)
 
 ```r
 # 获取系数估计值向量 beta_hat
@@ -117,11 +103,9 @@ r <- 3 # 我们关注的系数维度（截距、disp、hp）
 A <- sigma * (r * (n - p) / (p * (n - r)) * qf(0.95, r, n - p))
 ```
 
-![](img/ca83df0bf8e8336d2239d1baf8afed87_23.png)
 
 现在，我们使用计算出的矩阵 `A` 和系数估计 `beta` 来绘制椭球体。
 
-![](img/ca83df0bf8e8336d2239d1baf8afed87_24.png)
 
 ```r
 # 手动绘制置信椭球体

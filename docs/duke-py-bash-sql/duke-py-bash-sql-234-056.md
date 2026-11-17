@@ -1,6 +1,5 @@
 #  056：使用xargs扩展Linux搜索能力
 
-![](img/74233d420164a465b46a30eb9a3add6e_0.png)
 
 ![](img/74233d420164a465b46a30eb9a3add6e_1.png)
 

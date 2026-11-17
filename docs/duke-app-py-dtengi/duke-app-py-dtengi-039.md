@@ -96,15 +96,11 @@ format:
 all: install lint test format
 ```
 
-![](img/b474a0e6453db60c238a6d55d6be3b12_13.png)
 
 使用 `make` 命令可以查看所有可用的任务：
 
-![](img/b474a0e6453db60c238a6d55d6be3b12_15.png)
 
-![](img/b474a0e6453db60c238a6d55d6be3b12_17.png)
 
-![](img/b474a0e6453db60c238a6d55d6be3b12_19.png)
 
 ```bash
 make
@@ -112,9 +108,7 @@ make
 
 ### 管理项目依赖
 
-![](img/b474a0e6453db60c238a6d55d6be3b12_21.png)
 
-![](img/b474a0e6453db60c238a6d55d6be3b12_23.png)
 
 在 `requirements.txt` 文件中，我们列出项目所需的包。对于测试项目，至少需要 `pytest`。此外，还可以添加其他有用的工具：
 
@@ -138,15 +132,12 @@ make install
 
 ![](img/b474a0e6453db60c238a6d55d6be3b12_27.png)
 
-![](img/b474a0e6453db60c238a6d55d6be3b12_29.png)
 
-![](img/b474a0e6453db60c238a6d55d6be3b12_31.png)
 
 ![](img/b474a0e6453db60c238a6d55d6be3b12_33.png)
 
 `iPython` 是一个强大的交互式Python shell，非常适合在编写正式测试前调试代码或进行原型设计。
 
-![](img/b474a0e6453db60c238a6d55d6be3b12_35.png)
 
 ```python
 # 在iPython中导入模块并测试功能
@@ -164,10 +155,8 @@ Pytest使得编写测试变得非常简单。测试文件通常以 `test_` 开�
 
 ![](img/b474a0e6453db60c238a6d55d6be3b12_39.png)
 
-![](img/b474a0e6453db60c238a6d55d6be3b12_40.png)
 
 
-![](img/b474a0e6453db60c238a6d55d6be3b12_42.png)
 
 ![](img/b474a0e6453db60c238a6d55d6be3b12_44.png)
 
@@ -255,7 +244,6 @@ GitHub Actions是一个与GitHub深度集成的CI/CD平台。我们可以在项�
 ![](img/b474a0e6453db60c238a6d55d6be3b12_70.png)
 
 
-![](img/b474a0e6453db60c238a6d55d6be3b12_72.png)
 
 
 ![](img/b474a0e6453db60c238a6d55d6be3b12_74.png)
@@ -325,7 +313,6 @@ GitHub Actions可以为项目生成状态徽章，显示构建状态。将其添
 
 ![](img/b474a0e6453db60c238a6d55d6be3b12_93.png)
 
-![](img/b474a0e6453db60c238a6d55d6be3b12_95.png)
 
 持续集成的目标是确保代码在任何新环境中都能轻松运行。我们可以在AWS CloudShell或Cloud9等云环境中快速验证。
 
@@ -334,7 +321,6 @@ GitHub Actions可以为项目生成状态徽章，显示构建状态。将其添
 ![](img/b474a0e6453db60c238a6d55d6be3b12_99.png)
 
 
-![](img/b474a0e6453db60c238a6d55d6be3b12_101.png)
 
 ![](img/b474a0e6453db60c238a6d55d6be3b12_103.png)
 
@@ -352,7 +338,6 @@ make all
 
 ![](img/b474a0e6453db60c238a6d55d6be3b12_109.png)
 
-![](img/b474a0e6453db60c238a6d55d6be3b12_111.png)
 
 ![](img/b474a0e6453db60c238a6d55d6be3b12_113.png)
 
@@ -364,7 +349,6 @@ make all
 
 ![](img/b474a0e6453db60c238a6d55d6be3b12_119.png)
 
-![](img/b474a0e6453db60c238a6d55d6be3b12_121.png)
 
 ![](img/b474a0e6453db60c238a6d55d6be3b12_123.png)
 
@@ -664,13 +648,10 @@ def test_cli_change(runner):
 
 ![](img/b474a0e6453db60c238a6d55d6be3b12_207.png)
 
-![](img/b474a0e6453db60c238a6d55d6be3b12_209.png)
 
-![](img/b474a0e6453db60c238a6d55d6be3b12_211.png)
 
 ![](img/b474a0e6453db60c238a6d55d6be3b12_213.png)
 
-![](img/b474a0e6453db60c238a6d55d6be3b12_215.png)
 
 在本节课中，我们一起学习了如何从零开始构建一个具备完整测试能力的Python项目。我们从搭建本地开发环境开始，使用了云开发平台和虚拟环境。然后，我们配置了持续集成系统，包括GitHub Actions和AWS CodeBuild，实现了自动化测试和矩阵测试。接着，我们深入探索了Pytest的高级功能，如Fixture、调试和测试选择。最后，我们将所学应用于一个真实的项目，成功测试了Python库、Flask Web应用和Click命令行工具，并建立了完整的CI/CD流水线。
 

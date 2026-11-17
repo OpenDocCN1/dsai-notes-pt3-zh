@@ -1,6 +1,5 @@
 # GPU计算｜CMPS 297S396AA：15：排序算法
 
-![](img/f47048401e1670b81d6d76fecdebb0f2_0.png)
 
 ![](img/f47048401e1670b81d6d76fecdebb0f2_0.png)
 
@@ -123,6 +122,5 @@
 
 理解这些排序算法的并行化策略及其优化，对于在GPU上实现高性能计算至关重要。
 
-![](img/f47048401e1670b81d6d76fecdebb0f2_2.png)
 
 ![](img/f47048401e1670b81d6d76fecdebb0f2_2.png)

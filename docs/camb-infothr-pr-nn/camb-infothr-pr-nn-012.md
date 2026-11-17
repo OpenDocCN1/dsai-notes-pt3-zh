@@ -4,11 +4,8 @@
 
 ![](img/317eb0f6cf250f9e5fd06fd0ae98a71c_2.png)
 
-![](img/317eb0f6cf250f9e5fd06fd0ae98a71c_4.png)
 
-![](img/317eb0f6cf250f9e5fd06fd0ae98a71c_5.png)
 
-![](img/317eb0f6cf250f9e5fd06fd0ae98a71c_7.png)
 
 ![](img/317eb0f6cf250f9e5fd06fd0ae98a71c_9.png)
 
@@ -92,7 +89,6 @@ Gibbs 采样是另一种 MCMC 方法，特别适用于多变量问题。它基�
 
 ![](img/317eb0f6cf250f9e5fd06fd0ae98a71c_17.png)
 
-![](img/317eb0f6cf250f9e5fd06fd0ae98a71c_19.png)
 
 ![](img/317eb0f6cf250f9e5fd06fd0ae98a71c_21.png)
 

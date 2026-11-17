@@ -27,9 +27,7 @@ Nsight Graphics主要有两个核心功能：
 
 ![](img/496db206779fbd8c3e4f6920c270de8a_8.png)
 
-![](img/496db206779fbd8c3e4f6920c270de8a_9.png)
 
-![](img/496db206779fbd8c3e4f6920c270de8a_11.png)
 
 ## 帧调试器深度解析 🔍
 

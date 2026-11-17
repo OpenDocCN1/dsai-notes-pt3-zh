@@ -37,7 +37,6 @@ T = (1, 2, 3)
 
 一个元素的元组可以这样定义。
 
-![](img/dd5cdb68e84c4a5f5cd6b5428c5d23bd_1.png)
 
 ```python
 single_element_tuple = (1,)
@@ -73,7 +72,6 @@ string”””
 乘法 `*` 用于重复序列多次。
 
 
-![](img/dd5cdb68e84c4a5f5cd6b5428c5d23bd_3.png)
 
 ```python
 list1 = [1, 2]
@@ -98,11 +96,9 @@ A.append(4)
 print(B)  # 输出 [1, 2, 3, 4]，B 也随之改变
 ```
 
-![](img/dd5cdb68e84c4a5f5cd6b5428c5d23bd_5.png)
 
 要创建真正的独立副本，需要进行深拷贝。
 
-![](img/dd5cdb68e84c4a5f5cd6b5428c5d23bd_7.png)
 
 ## 循环与迭代 🔄
 
@@ -114,7 +110,6 @@ for i in range(8):
     print(i)  # 输出 0, 1, 2, 3, 4, 5, 6, 7
 ```
 
-![](img/dd5cdb68e84c4a5f5cd6b5428c5d23bd_9.png)
 
 使用 `len()` 函数可以获取列表的长度。
 
@@ -125,20 +120,17 @@ length = len(my_list)  # length 的值为 4
 
 在迭代中，可以这样使用：
 
-![](img/dd5cdb68e84c4a5f5cd6b5428c5d23bd_11.png)
 
 ```python
 for i in range(len(my_list)):
     print(my_list[i])
 ```
 
-![](img/dd5cdb68e84c4a5f5cd6b5428c5d23bd_13.png)
 
 ### 深拷贝与浅拷贝
 
 之前提到，简单的赋值是引用。要创建完全独立的新对象，需要使用深拷贝。
 
-![](img/dd5cdb68e84c4a5f5cd6b5428c5d23bd_15.png)
 
 ```python
 from copy import deepcopy
@@ -213,7 +205,6 @@ help(my_function)  # 会显示上面的文档字符串
 b, c = c, b  # 交换 b 和 c 的值
 ```
 
-![](img/dd5cdb68e84c4a5f5cd6b5428c5d23bd_17.png)
 
 在其他语言中，这通常不允许，需要借助一个临时变量。
 
@@ -225,7 +216,6 @@ b = 2.0    # b 是浮点数 (float)
 c = a + b  # c 是浮点数 6.0，整数 a 被转换为浮点数进行运算
 ```
 
-![](img/dd5cdb68e84c4a5f5cd6b5428c5d23bd_19.png)
 
 可以使用 `type()` 函数检查变量的类型。
 
@@ -238,7 +228,6 @@ print(type(b))  # 输出 <class ‘float’>
 
 Python 集合 (`set`) 是一个无序且不包含重复元素的集合。
 
-![](img/dd5cdb68e84c4a5f5cd6b5428c5d23bd_21.png)
 
 ```python
 A = {1, 2, 2, 3, 4}
@@ -302,7 +291,6 @@ city = input(“Enter your city: “)
 print(“You entered:”, city)
 ```
 
-![](img/dd5cdb68e84c4a5f5cd6b5428c5d23bd_23.png)
 
 ## 函数与循环实战 🚀
 
@@ -310,7 +298,6 @@ print(“You entered:”, city)
 
 我们定义一个函数 `get_cubes`，它接受一个数字 `n` 作为输入。
 
-![](img/dd5cdb68e84c4a5f5cd6b5428c5d23bd_25.png)
 
 ```python
 def get_cubes(n):
@@ -320,11 +307,9 @@ def get_cubes(n):
     return cubes
 ```
 
-![](img/dd5cdb68e84c4a5f5cd6b5428c5d23bd_26.png)
 
 为了让这个函数可以独立运行，我们通常使用 `if __name__ == ‘__main__’:` 这个条件。当这个 `.py` 文件被直接运行时，`__name__` 的值是 `’__main__’`，下面的代码块会被执行。如果它被作为模块导入到其他文件，则不会执行。
 
-![](img/dd5cdb68e84c4a5f5cd6b5428c5d23bd_28.png)
 
 ```python
 if __name__ == ‘__main__’:
@@ -333,19 +318,15 @@ if __name__ == ‘__main__’:
     print(“The cubes are:”, result)
 ```
 
-![](img/dd5cdb68e84c4a5f5cd6b5428c5d23bd_30.png)
 
 ### 从其他文件调用函数
 
-![](img/dd5cdb68e84c4a5f5cd6b5428c5d23bd_32.png)
 
 我们可以在另一个 Python 文件中导入并使用 `get_cubes` 函数。
 
-![](img/dd5cdb68e84c4a5f5cd6b5428c5d23bd_34.png)
 
 创建一个新文件，例如 `caller.py`：
 
-![](img/dd5cdb68e84c4a5f5cd6b5428c5d23bd_36.png)
 
 ```python
 # 从 get_cubes.py 文件中导入所有内容（包括 get_cubes 函数）
@@ -356,13 +337,10 @@ my_cubes = get_cubes(5)
 print(“Cubes from 1 to 5 are:”, my_cubes)
 ```
 
-![](img/dd5cdb68e84c4a5f5cd6b5428c5d23bd_38.png)
 
 当运行 `caller.py` 时，`get_cubes.py` 中的 `if __name__ == ‘__main__’:` 代码块不会被执行，只有 `get_cubes` 函数被导入和使用。
 
-![](img/dd5cdb68e84c4a5f5cd6b5428c5d23bd_40.png)
 
-![](img/dd5cdb68e84c4a5f5cd6b5428c5d23bd_42.png)
 
 ---
 

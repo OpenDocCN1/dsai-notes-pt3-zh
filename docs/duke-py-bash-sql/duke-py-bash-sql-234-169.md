@@ -1,6 +1,5 @@
 #  169：Python Setuptools实战 🛠️
 
-![](img/d1ccf98fcf0bc2684c867caa5a007846_0.png)
 
 ![](img/d1ccf98fcf0bc2684c867caa5a007846_1.png)
 

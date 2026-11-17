@@ -1,6 +1,5 @@
 # 4：3_创建Llamafile
 
-![](img/a82ff06b40a19f9a72e54b80382a7b3b_0.png)
 
 ![](img/a82ff06b40a19f9a72e54b80382a7b3b_0.png)
 
@@ -79,6 +78,5 @@ llamafile-convert your-model-file.gguf
 
 总而言之，Llamafile以其简单易用、兼容性强和功能全面的特点，极大地降低了在本地设备上运行大型语言模型的门槛，是探索和实践本地AI的强大工具。
 
-![](img/a82ff06b40a19f9a72e54b80382a7b3b_2.png)
 
 ![](img/a82ff06b40a19f9a72e54b80382a7b3b_2.png)

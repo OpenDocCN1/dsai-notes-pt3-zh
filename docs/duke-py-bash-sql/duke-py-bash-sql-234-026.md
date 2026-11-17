@@ -1,6 +1,5 @@
 #  026：在交互式提示符中导出Shell变量
 
-![](img/12f1d58080aaaacd5cb3034f279785f7_0.png)
 
 ![](img/12f1d58080aaaacd5cb3034f279785f7_1.png)
 

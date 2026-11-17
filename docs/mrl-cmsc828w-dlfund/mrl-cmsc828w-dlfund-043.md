@@ -1,8 +1,6 @@
 # 043：分层视觉变换器
 
-![](img/abba944d19404e4cf075db69bcb65c84_0.png)
 
-![](img/abba944d19404e4cf075db69bcb65c84_0.png)
 
 在本节课中，我们将探讨视觉变换器（Vision Transformers）面临的一个关键问题：**分辨率限制**。我们将分析这个问题产生的原因，并介绍一种解决方案——**分层视觉变换器**（Hierarchical Vision Transformers）的核心思想。
 
@@ -40,7 +38,6 @@
 
 具体而言，该论文提出的方法是从**4x4的图像块**开始。
 
-![](img/abba944d19404e4cf075db69bcb65c84_2.png)
 
 ![](img/abba944d19404e4cf075db69bcb65c84_2.png)
 

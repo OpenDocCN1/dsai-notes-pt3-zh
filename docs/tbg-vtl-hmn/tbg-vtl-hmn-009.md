@@ -1,6 +1,5 @@
 # 009：模型训练及将SMPL适配到扫描数据
 
-![](img/a4cbacef45857561425e2c241d0ec62f_0.png)
 
 ![](img/a4cbacef45857561425e2c241d0ec62f_0.png)
 
@@ -96,6 +95,5 @@
 
 这些内容基于2016年《Learning Human Shapes in Motion》教程，幻灯片特别感谢Javier Romero。
 
-![](img/a4cbacef45857561425e2c241d0ec62f_2.png)
 
 ![](img/a4cbacef45857561425e2c241d0ec62f_2.png)

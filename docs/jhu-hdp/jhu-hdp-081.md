@@ -10,17 +10,14 @@
 
 ## 关系型联结运算符概述
 
-![](img/1c456e22a8b9aad2a571f13d27bb6a31_4.png)
 
 Pig 提供了两种关系型联结运算符。第一种是 `JOIN`，它类似于传统关系型数据库和 Hive 中的联结操作，允许你将两个数据集合并。你可以执行内联结或外联结，而外联结又分为左外联结、右外联结和全外联结三种变体。
 
-![](img/1c456e22a8b9aad2a571f13d27bb6a31_6.png)
 
 第二种运算符是 `CROSS`，它允许你在两个不同的数据集之间执行笛卡尔积，你可以将其理解为矩阵的乘法运算。
 
 ---
 
-![](img/1c456e22a8b9aad2a571f13d27bb6a31_8.png)
 
 ## Pig 中的 JOIN 操作
 
@@ -62,23 +59,18 @@ DUMP user_info;
 user_info_multi = JOIN posts BY (user, date), likes BY (user, date);
 ```
 
-![](img/1c456e22a8b9aad2a571f13d27bb6a31_10.png)
 
 这意味着只有当两个数据集中的用户ID和日期都匹配时，记录才会被联结。根据示例数据，可能只有一条记录满足条件。
 
-![](img/1c456e22a8b9aad2a571f13d27bb6a31_12.png)
 
-![](img/1c456e22a8b9aad2a571f13d27bb6a31_14.png)
 
 ---
 
-![](img/1c456e22a8b9aad2a571f13d27bb6a31_16.png)
 
 ## 外联结操作
 
 上一节我们介绍了内联结，本节中我们来看看外联结。Pig 支持三种类型的外联结：左外联结、右外联结和全外联结。
 
-![](img/1c456e22a8b9aad2a571f13d27bb6a31_18.png)
 
 ### 左外联结
 
@@ -91,17 +83,14 @@ user_info_left = JOIN posts BY user LEFT, likes BY user;
 DUMP user_info_left;
 ```
 
-![](img/1c456e22a8b9aad2a571f13d27bb6a31_20.png)
 
 执行后，`posts` 数据集中的所有用户（1, 2, 4, 5）都会出现。用户1、2、4会与 `likes` 中的匹配记录联结，而用户5没有匹配项，其对应的 `likes` 字段将为空。
 
-![](img/1c456e22a8b9aad2a571f13d27bb6a31_22.png)
 
 ### 右外联结
 
 右外联结与左外联结相反。第二个数据集（右侧）的所有行都会被包含在结果中，无论它们在第一个数据集中是否有匹配项。对于没有匹配的行，来自第一个数据集的列将被设置为空。
 
-![](img/1c456e22a8b9aad2a571f13d27bb6a31_24.png)
 
 以下是右外联结的示例脚本：
 
@@ -110,7 +99,6 @@ user_info_right = JOIN posts BY user RIGHT, likes BY user;
 DUMP user_info_right;
 ```
 
-![](img/1c456e22a8b9aad2a571f13d27bb6a31_26.png)
 
 执行后，`likes` 数据集中的所有用户（1, 2, 3, 4）都会出现。用户1、2、4会与 `posts` 中的匹配记录联结，而用户3没有匹配项，其对应的 `posts` 字段将为空。
 
@@ -120,7 +108,6 @@ DUMP user_info_right;
 
 以下是全外联结的示例脚本：
 
-![](img/1c456e22a8b9aad2a571f13d27bb6a31_28.png)
 
 ```pig
 user_info_full = JOIN posts BY user FULL, likes BY user;
@@ -129,9 +116,7 @@ DUMP user_info_full;
 
 执行后，结果将包含所有五个用户（1, 2, 3, 4, 5）的记录，并在没有匹配的地方填充空值。
 
-![](img/1c456e22a8b9aad2a571f13d27bb6a31_30.png)
 
-![](img/1c456e22a8b9aad2a571f13d27bb6a31_32.png)
 
 ---
 
@@ -163,7 +148,6 @@ DUMP X;
     hadoop fs -cat /pig/blog_data/user_likes.txt
     ```
 
-![](img/1c456e22a8b9aad2a571f13d27bb6a31_34.png)
 
 2.  进入 Pig Grunt shell：
     ```bash

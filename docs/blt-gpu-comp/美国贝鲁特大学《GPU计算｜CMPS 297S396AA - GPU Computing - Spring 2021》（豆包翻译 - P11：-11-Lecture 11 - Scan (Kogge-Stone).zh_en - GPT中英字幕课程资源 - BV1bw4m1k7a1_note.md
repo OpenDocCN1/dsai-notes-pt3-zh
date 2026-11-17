@@ -244,7 +244,6 @@ for (int i = 1; i < n; i++) {
 
 ![](img/14e88fa3bece47823cac167515ef8a0e_116.png)
 
-![](img/14e88fa3bece47823cac167515ef8a0e_118.png)
 
 *   **顺序扫描**：对于 `n` 个元素，需要 `n-1` 次加法操作。时间复杂度为 **O(n)**。
 *   **Kogge-Stone 并行扫描**：分析其操作总数。对于 `n` 个元素，有 `log n` 轮。总操作数约为 `n * log n - n`。时间复杂度为 **O(n log n)**。

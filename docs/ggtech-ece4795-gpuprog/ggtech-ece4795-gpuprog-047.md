@@ -12,9 +12,7 @@
 
 ## 概述
 
-![](img/f0cc8c2988d242419b30e5af2caeb26e_5.png)
 
-![](img/f0cc8c2988d242419b30e5af2caeb26e_6.png)
 
 ![](img/f0cc8c2988d242419b30e5af2caeb26e_7.png)
 

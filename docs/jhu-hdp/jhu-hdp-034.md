@@ -17,7 +17,6 @@
 *   **删除目录/文件**：使用 `FileSystem.delete(Path, boolean)` 方法，其中布尔值参数表示是否递归删除。
 *   **列出目录内容**：使用 `FileSystem.listStatus(Path)` 方法，它返回一个 `FileStatus` 对象数组。
 
-![](img/78e5db47090b5fc4e7e1052854475c99_2.png)
 
 ---
 

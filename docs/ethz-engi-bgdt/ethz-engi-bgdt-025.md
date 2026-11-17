@@ -1,6 +1,5 @@
 #  025：Spark (4/5) - 数据框架与Spark SQL 🚀
 
-![](img/0523b274af023a6c51cb198c8d8dcf59_1.png)
 
 在本节课中，我们将完成Spark章节的学习，并开始探讨数据框架（DataFrames）和Spark SQL。我们将了解为何需要这些概念，以及它们如何使大数据处理变得更高效、更易用。
 
@@ -12,17 +11,12 @@
 
 ---
 
-![](img/0523b274af023a6c51cb198c8d8dcf59_3.png)
 
-![](img/0523b274af023a6c51cb198c8d8dcf59_5.png)
 
-![](img/0523b274af023a6c51cb198c8d8dcf59_7.png)
 
 ## Spark核心概念回顾
 
-![](img/0523b274af023a6c51cb198c8d8dcf59_9.png)
 
-![](img/0523b274af023a6c51cb198c8d8dcf59_10.png)
 
 上一节我们介绍了Spark的基本模型。现在我们来快速回顾一下。
 
@@ -30,61 +24,41 @@
 1.  Spark可以处理任意类型的集合，而不仅仅是键值对。
 2.  Spark的计算过程由一个**有向无环图（DAG）**表示，图中的每个节点称为一个**弹性分布式数据集（RDD）**，它是分布在集群中的不可变数据集合。
 
-![](img/0523b274af023a6c51cb198c8d8dcf59_12.png)
 
-![](img/0523b274af023a6c51cb198c8d8dcf59_14.png)
 
 Spark采用**惰性求值**。只有当需要某个RDD的结果（即触发一个**动作**，如保存或打印）时，才会计算整个依赖链。
 
-![](img/0523b274af023a6c51cb198c8d8dcf59_16.png)
 
-![](img/0523b274af023a6c51cb198c8d8dcf59_17.png)
 
-![](img/0523b274af023a6c51cb198c8d8dcf59_19.png)
 
-![](img/0523b274af023a6c51cb198c8d8dcf59_21.png)
 
-![](img/0523b274af023a6c51cb198c8d8dcf59_23.png)
 
 在物理执行层面，Spark会进行优化。当连续的**转换**操作（如`map`、`filter`）之间没有数据混洗（Shuffle）需求时（即**窄依赖**），它们会被合并到一个**阶段（Stage）**中。这样，数据可以在每个分区内被连续处理，中间结果无需物化，从而提升效率。
 
-![](img/0523b274af023a6c51cb198c8d8dcf59_25.png)
 
-![](img/0523b274af023a6c51cb198c8d8dcf59_26.png)
 
-![](img/0523b274af023a6c51cb198c8d8dcf59_28.png)
 
 相反，当操作需要数据混洗时（如`groupBy`、`sort`，即**宽依赖**），就会产生新的阶段。混洗开销很大，但有时可以避免，例如，如果输入数据已经按照后续操作所需的方式进行了预分区。
 
-![](img/0523b274af023a6c51cb198c8d8dcf59_30.png)
 
 ---
 
 ## 性能优化：持久化RDD
 
-![](img/0523b274af023a6c51cb198c8d8dcf59_32.png)
 
-![](img/0523b274af023a6c51cb198c8d8dcf59_34.png)
 
-![](img/0523b274af023a6c51cb198c8d8dcf59_35.png)
 
-![](img/0523b274af023a6c51cb198c8d8dcf59_36.png)
 
 考虑以下场景：我们有一个复杂的RDD依赖图，需要从图中三个不同的RDD触发动作（例如，写入HDFS、打印到屏幕、计数）。如果每次动作都从头计算其所有上游依赖，效率会很低，因为许多中间计算是重复的。
 
 这里的瓶颈在于，多个动作共享同一个上游RDD。解决方案是利用RDD的**弹性**特性：我们可以将关键的中间RDD**持久化**在内存或磁盘中。
 
-![](img/0523b274af023a6c51cb198c8d8dcf59_38.png)
 
-![](img/0523b274af023a6c51cb198c8d8dcf59_40.png)
 
-![](img/0523b274af023a6c51cb198c8d8dcf59_41.png)
 
-![](img/0523b274af023a6c51cb198c8d8dcf59_43.png)
 
 在代码中，你可以调用`persist()`或`cache()`方法来标记一个RDD，请求Spark保留其计算结果。这样，当后续动作需要该RDD时，Spark可以直接复用已存储的数据，而无需重新计算。即使内存不足，Spark也会优先处理，最坏情况也只是回退到重新计算，而不会导致作业失败。
 
-![](img/0523b274af023a6c51cb198c8d8dcf59_45.png)
 
 ---
 
@@ -102,15 +76,11 @@ Spark可以自动从多种数据源（如CSV、JSON Lines）推断模式并创�
 
 ---
 
-![](img/0523b274af023a6c51cb198c8d8dcf59_47.png)
 
 ## Spark SQL 与执行优化
 
-![](img/0523b274af023a6c51cb198c8d8dcf59_49.png)
 
-![](img/0523b274af023a6c51cb198c8d8dcf59_51.png)
 
-![](img/0523b274af023a6c51cb198c8d8dcf59_53.png)
 
 使用Spark SQL时，你只需编写标准的SQL语句（`SELECT ... FROM ... WHERE ... GROUP BY ... ORDER BY ...`）。Spark会在底层自动将其转换为优化的RDD操作执行计划。
 
@@ -129,27 +99,18 @@ ORDER BY country
 
 ---
 
-![](img/0523b274af023a6c51cb198c8d8dcf59_55.png)
 
 ## 数据类型与局限
 
-![](img/0523b274af023a6c51cb198c8d8dcf59_57.png)
 
-![](img/0523b274af023a6c51cb198c8d8dcf59_59.png)
 
-![](img/0523b274af023a6c51cb198c8d8dcf59_61.png)
 
-![](img/0523b274af023a6c51cb198c8d8dcf59_62.png)
 
-![](img/0523b274af023a6c51cb198c8d8dcf59_63.png)
 
 DataFrame支持丰富的数据类型，包括基本类型（整型、字符串、布尔型等）和复杂类型（数组、结构体）。这些类型与其他系统（如Python、Java、JSON Schema）中的类型有直接的对应关系，学习起来并不陌生。
 
-![](img/0523b274af023a6c51cb198c8d8dcf59_65.png)
 
-![](img/0523b274af023a6c51cb198c8d8dcf59_66.png)
 
-![](img/0523b274af023a6c51cb198c8d8dcf59_67.png)
 
 尽管DataFrame和Spark SQL非常强大，但它们并非万能。它们主要针对结构化或半结构化数据的批处理查询进行了优化。对于某些复杂的、非结构化的数据处理逻辑，或者需要更细粒度控制的场景，可能仍需回归到RDD API。
 
@@ -157,11 +118,8 @@ DataFrame支持丰富的数据类型，包括基本类型（整型、字符串�
 
 ## 总结
 
-![](img/0523b274af023a6c51cb198c8d8dcf59_69.png)
 
-![](img/0523b274af023a6c51cb198c8d8dcf59_71.png)
 
-![](img/0523b274af023a6c51cb198c8d8dcf59_73.png)
 
 本节课中我们一起学习了：
 1.  **任务调度优化**：通过设置多于槽位数量的任务来平衡负载。
@@ -171,9 +129,7 @@ DataFrame支持丰富的数据类型，包括基本类型（整型、字符串�
 5.  **Spark SQL**：使用声明式的SQL语言进行数据查询，Spark会自动进行优化（如利用预分区减少混洗）。
 6.  **数据类型**：了解了DataFrame支持的类型系统及其与其他编程语言的对应关系。
 
-![](img/0523b274af023a6c51cb198c8d8dcf59_75.png)
 
-![](img/0523b274af023a6c51cb198c8d8dcf59_76.png)
 
 ![](img/0523b274af023a6c51cb198c8d8dcf59_78.png)
 

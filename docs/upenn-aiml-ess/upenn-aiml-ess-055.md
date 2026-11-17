@@ -4,11 +4,9 @@
 
 ## 高斯分布的定义与参数
 
-![](img/102e02b9089750d4f6f00c2cdedaea45_1.png)
 
 上一节我们介绍了概率分布的基本概念，本节中我们来看看最经典的高斯分布。
 
-![](img/102e02b9089750d4f6f00c2cdedaea45_3.png)
 
 高斯分布通过其概率密度函数（PDF）定义。其PDF公式如下：
 
@@ -31,15 +29,10 @@ $$
 
 标准高斯分布的PDF公式简化为：
 
-![](img/102e02b9089750d4f6f00c2cdedaea45_5.png)
 
-![](img/102e02b9089750d4f6f00c2cdedaea45_6.png)
 
-![](img/102e02b9089750d4f6f00c2cdedaea45_7.png)
 
-![](img/102e02b9089750d4f6f00c2cdedaea45_8.png)
 
-![](img/102e02b9089750d4f6f00c2cdedaea45_9.png)
 
 $$
 \phi(z) = \frac{1}{\sqrt{2\pi}} e^{-\frac{z^2}{2}}
@@ -47,7 +40,6 @@ $$
 
 在本课程中，我们将始终使用 $Z$ 来表示服从标准高斯分布的随机变量，即 $Z \sim \mathcal{N}(0, 1)$。而 $z$ 则用于表示该随机变量的某个具体取值（实现值）。
 
-![](img/102e02b9089750d4f6f00c2cdedaea45_11.png)
 
 一个重要的关系是，**任何高斯分布都可以表示为标准高斯分布的线性变换**。具体公式如下：
 
@@ -57,11 +49,8 @@ X = \mu + \sigma Z
 $$
 这意味着，一个一般的高斯随机变量 $X$，可以通过对标准高斯变量 $Z$ 进行缩放（乘以 $\sigma$）和平移（加上 $\mu$）得到。请记住这个关系，我们将在后续章节中用到它。
 
-![](img/102e02b9089750d4f6f00c2cdedaea45_13.png)
 
-![](img/102e02b9089750d4f6f00c2cdedaea45_14.png)
 
-![](img/102e02b9089750d4f6f00c2cdedaea45_15.png)
 
 ## 累积分布函数与Z值
 
@@ -69,7 +58,6 @@ $$
 
 首先，是标准高斯分布的**累积分布函数（CDF）**。我们使用 $\Phi(z)$ 来表示它：
 
-![](img/102e02b9089750d4f6f00c2cdedaea45_17.png)
 
 $$
 \Phi(z) = P(Z \leq z) = \int_{-\infty}^{z} \frac{1}{\sqrt{2\pi}} e^{-\frac{t^2}{2}} dt
@@ -79,22 +67,17 @@ $$
 
 其次，是一个称为 **$z_{\alpha}$ 值**（或Z值）的关键概念。以下是它的定义：
 
-![](img/102e02b9089750d4f6f00c2cdedaea45_19.png)
 
-![](img/102e02b9089750d4f6f00c2cdedaea45_20.png)
 
-![](img/102e02b9089750d4f6f00c2cdedaea45_21.png)
 
 $z_{\alpha}$ 是实数轴上的一个点，满足标准高斯随机变量 $Z$ 取值大于 $z_{\alpha}$ 的概率恰好为 $\alpha$。用公式表达为：
 $$
 P(Z > z_{\alpha}) = \alpha
 $$
 
-![](img/102e02b9089750d4f6f00c2cdedaea45_23.png)
 
 从图形上理解，在标准高斯PDF曲线下，$z_{\alpha}$ 点右侧的尾部面积正好等于 $\alpha$。
 
-![](img/102e02b9089750d4f6f00c2cdedaea45_24.png)
 
 由于PDF曲线下的总面积为1，$z_{\alpha}$ 点左侧的面积就是 $1 - \alpha$。因此，$z_{\alpha}$ 值与CDF函数 $\Phi$ 存在一个简单的关系：
 $$
@@ -108,9 +91,7 @@ $$
 
 ---
 
-![](img/102e02b9089750d4f6f00c2cdedaea45_26.png)
 
-![](img/102e02b9089750d4f6f00c2cdedaea45_28.png)
 
 ![](img/102e02b9089750d4f6f00c2cdedaea45_29.png)
 

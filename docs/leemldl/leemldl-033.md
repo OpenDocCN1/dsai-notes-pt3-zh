@@ -1,6 +1,5 @@
 # 33：L18.5 - 从示范中学习：逆向增强式学习 🧠
 
-![](img/79f6df3507453b8b07d974182217ee95_1.png)
 
 在本节课中，我们将要学习当增强式学习（Reinforcement Learning）环境中没有明确的奖励（Reward）时，如何通过专家的示范来训练智能体（Agent）。我们将重点介绍两种方法：行为克隆（Behavior Cloning）和逆向增强式学习（Inverse Reinforcement Learning）。
 
@@ -98,7 +97,6 @@ loss = MSE(a_t, \hat{a}_t)  # 均方误差损失
 
 ---
 
-![](img/79f6df3507453b8b07d974182217ee95_9.png)
 
 ## 常见问题解答
 
@@ -107,7 +105,6 @@ A: **可以**。因为IRL的本质是学习奖励函数，而非单纯模仿动�
 
 ---
 
-![](img/79f6df3507453b8b07d974182217ee95_11.png)
 
 ## 总结 🎯
 

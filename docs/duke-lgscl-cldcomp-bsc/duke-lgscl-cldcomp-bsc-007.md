@@ -51,7 +51,6 @@ Gist是GitHub提供的一项功能，专门用于分享单文件或少量文件�
 
 接下来，让我们深入了解第三种强大的工具：Jupyter Colab。
 
-![](img/046bf9eaa3b401db8fe976d10b7308fb_1.png)
 
 Jupyter Colab是Google提供的托管版Jupyter Notebook服务。它允许你创建包含可执行代码、可视化结果和格式化文本的交互式文档，非常适合进行复杂的数据分析、机器学习项目演示或技术教程。
 

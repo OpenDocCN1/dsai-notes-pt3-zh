@@ -57,9 +57,7 @@ P(X = x) = \frac{\lambda^x e^{-\lambda}}{x!}
     \]
     这通过二项分布公式计算得出，概率约为12.3%。
 
-![](img/0f741bf37018147d53b2a0e428a299a9_1.png)
 
-![](img/0f741bf37018147d53b2a0e428a299a9_2.png)
 
 2.  **泊松分布近似计算**：
     参数 \( \lambda = n p = 500 \times 0.01 = 5 \)。
@@ -70,13 +68,10 @@ P(X = x) = \frac{\lambda^x e^{-\lambda}}{x!}
 
 ***
 
-![](img/0f741bf37018147d53b2a0e428a299a9_4.png)
 
-![](img/0f741bf37018147d53b2a0e428a299a9_6.png)
 
 ## 📚 课程总结
 
-![](img/0f741bf37018147d53b2a0e428a299a9_8.png)
 
 ![](img/0f741bf37018147d53b2a0e428a299a9_9.png)
 

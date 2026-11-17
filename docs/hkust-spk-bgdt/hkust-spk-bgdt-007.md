@@ -2,11 +2,9 @@
 
 在本节课中，我们将要学习Spark编程中一个非常重要的概念——**闭包**。我们将通过具体的例子来理解闭包是什么，为什么它会导致程序行为与预期不符，以及如何正确地处理它。
 
-![](img/1e0122614f2db54017c0378fa96df921_1.png)
 
 ## 概述
 
-![](img/1e0122614f2db54017c0378fa96df921_3.png)
 
 闭包是Spark（以及许多并行编程平台）中的一个核心概念。它指的是在执行分布式计算任务时，需要打包并发送到各个工作节点（Executor）的一组变量和函数。理解闭包对于编写正确、高效的Spark程序至关重要。
 
@@ -45,10 +43,8 @@ Spark官方文档建议使用**累加器**来解决这类跨节点的共享变�
 累加器是一种只能通过**关联且可交换**操作进行“累加”的变量。它由驱动程序通过 `SparkContext.accumulator(initialValue)` 创建。这明确告知Spark，这是一个特殊的累加器变量，而不是普通的全局变量。
 
 
-![](img/1e0122614f2db54017c0378fa96df921_5.png)
 
 
-![](img/1e0122614f2db54017c0378fa96df921_7.png)
 
 ```python
 from pyspark import SparkContext
@@ -139,7 +135,6 @@ pi = 4.0 * count / n
 
 **解决方案**：使用 `mapPartitionsWithIndex` 为每个分区设置不同的随机数种子。
 
-![](img/1e0122614f2db54017c0378fa96df921_9.png)
 
 ```python
 import random
@@ -165,7 +160,6 @@ pi = 4.0 * count / n
 
 `mapPartitionsWithIndex(func)` 允许我们在每个分区上执行函数 `func`，并且该函数接收两个参数：分区索引 `idx` 和包含该分区所有数据的迭代器 `iterator`。通过将分区索引加入到种子中，我们确保了不同分区使用不同的随机数流。
 
-![](img/1e0122614f2db54017c0378fa96df921_11.png)
 
 **`mapPartitions` 系列函数**：当需要对整个分区进行操作，而非单个元素时，`mapPartitions` 和 `mapPartitionsWithIndex` 非常有用。它们提供了更粗粒度的控制，常用于初始化分区级别的资源（如数据库连接）或执行分区级别的算法。
 

@@ -2,7 +2,6 @@
 
 在本节课中，我们将学习如何将多层感知器（MLP）的训练代码组织成更模块化、可维护的脚本形式。我们将介绍如何使用独立的设置文件、辅助函数文件以及主训练脚本，来构建一个适合大型项目的代码结构。
 
-![](img/b6d69566a43e53c76bb416d3aee91911_1.png)
 
 ---
 
@@ -107,9 +106,7 @@ python train_model.py --settings_path ./settings.yaml --results_path ./results
 
 ![](img/b6d69566a43e53c76bb416d3aee91911_11.png)
 
-![](img/b6d69566a43e53c76bb416d3aee91911_13.png)
 
-![](img/b6d69566a43e53c76bb416d3aee91911_15.png)
 
 ---
 

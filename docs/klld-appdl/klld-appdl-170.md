@@ -10,21 +10,14 @@
 
 
 
-![](img/97ae0ae2802d96e3ee3809e98aa0bca6_1.png)
 
-![](img/97ae0ae2802d96e3ee3809e98aa0bca6_2.png)
 
-![](img/97ae0ae2802d96e3ee3809e98aa0bca6_3.png)
 
 以下是几种常见的语音数据增强方法：
 
-![](img/97ae0ae2802d96e3ee3809e98aa0bca6_4.png)
 
-![](img/97ae0ae2802d96e3ee3809e98aa0bca6_5.png)
 
-![](img/97ae0ae2802d96e3ee3809e98aa0bca6_6.png)
 
-![](img/97ae0ae2802d96e3ee3809e98aa0bca6_7.png)
 
 *   **时间扭曲**：选取若干个锚点，然后随机地将其他所有点向左或向右移动。本质上就是选取一个点并将其左右移动，并相应地调整其他点。这可以通过TensorFlow中的`sparse_image_warp`来实现，即对你的图像（此处指对数频谱图）进行扭曲。
 *   **频率掩码**：想象一个频率轴，然后掩码其中的一部分。
@@ -32,29 +25,17 @@
 
 
 
-![](img/97ae0ae2802d96e3ee3809e98aa0bca6_8.png)
 
-![](img/97ae0ae2802d96e3ee3809e98aa0bca6_1.png)
 
-![](img/97ae0ae2802d96e3ee3809e98aa0bca6_2.png)
 
-![](img/97ae0ae2802d96e3ee3809e98aa0bca6_3.png)
 
-![](img/97ae0ae2802d96e3ee3809e98aa0bca6_10.png)
 
-![](img/97ae0ae2802d96e3ee3809e98aa0bca6_4.png)
 
-![](img/97ae0ae2802d96e3ee3809e98aa0bca6_11.png)
 
-![](img/97ae0ae2802d96e3ee3809e98aa0bca6_12.png)
 
-![](img/97ae0ae2802d96e3ee3809e98aa0bca6_13.png)
 
-![](img/97ae0ae2802d96e3ee3809e98aa0bca6_5.png)
 
-![](img/97ae0ae2802d96e3ee3809e98aa0bca6_6.png)
 
-![](img/97ae0ae2802d96e3ee3809e98aa0bca6_7.png)
 
 ![](img/97ae0ae2802d96e3ee3809e98aa0bca6_8.png)
 

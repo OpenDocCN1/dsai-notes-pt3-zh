@@ -18,7 +18,6 @@
 import graphlab
 ```
 
-![](img/1e3b90c365322377e7236b2a3cbdbfc8_5.png)
 
 执行上述代码后，Turi Create的所有工具，包括SFrame和机器学习算法，便可供我们使用。
 

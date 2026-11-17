@@ -63,9 +63,7 @@ orthogonal_loss = torch.norm(W @ W.T - I, p='fro')
 
 ---
 
-![](img/3dc77924e5ffec64836b3008e0326b61_1.png)
 
-![](img/3dc77924e5ffec64836b3008e0326b61_2.png)
 
 ## 📊 截断技巧的效果分析
 

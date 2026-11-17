@@ -35,13 +35,10 @@
 *   进入该目录。
 *   创建一个空的 `Dockerfile` 文件。
 
-![](img/55a2433b6a279de923279dad8d1ea0b9_4.png)
 
 ## 编写Dockerfile
 
-![](img/55a2433b6a279de923279dad8d1ea0b9_6.png)
 
-![](img/55a2433b6a279de923279dad8d1ea0b9_8.png)
 
 Dockerfile是构建容器的蓝图。我们将使用Alpine Linux作为基础镜像，因为它非常小巧。
 
@@ -51,7 +48,6 @@ Dockerfile是构建容器的蓝图。我们将使用Alpine Linux作为基础镜�
 
 我们将创建一个简单的Bash脚本作为我们的“应用”，并将其添加到容器中。
 
-![](img/55a2433b6a279de923279dad8d1ea0b9_14.png)
 
 以下是创建应用脚本和Dockerfile的步骤：
 *   创建一个名为 `message` 的可执行Bash脚本。

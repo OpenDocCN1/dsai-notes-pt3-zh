@@ -1,6 +1,5 @@
 # 大型语言模型实践（高级数据工程、AWS、Databricks和本地LLM）：P122：21_01_05_查询外部数据源
 
-![](img/d9ef4b9cb0f17bf993e846cbcffda0a1_0.png)
 
 ![](img/d9ef4b9cb0f17bf993e846cbcffda0a1_0.png)
 
@@ -52,6 +51,5 @@ Databricks的集成能力不仅限于数据接入，还覆盖了完整的数据�
 *   在SQL编辑器中直接查询数据。
 *   直接进入机器学习流程，运行自动化实验。
 
-![](img/d9ef4b9cb0f17bf993e846cbcffda0a1_2.png)
 
 ![](img/d9ef4b9cb0f17bf993e846cbcffda0a1_2.png)

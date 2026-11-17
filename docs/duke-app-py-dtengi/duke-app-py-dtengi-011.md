@@ -1,6 +1,5 @@
 #  011：什么是Snowflake ❄️
 
-![](img/38be99e1747c773ba1ee73c3db77b82d_0.png)
 
 在本节课中，我们将介绍Snowflake。我们将概述Snowflake的整体架构，包括其数据库存储层、计算层和云服务层。
 

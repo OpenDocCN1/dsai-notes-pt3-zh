@@ -66,11 +66,8 @@ for epoch in range(num_epochs):
         theta = theta - learning_rate * grad
 ```
 
-![](img/72011fad5f33edffa261d91fa9c14c1b_1.png)
 
-![](img/72011fad5f33edffa261d91fa9c14c1b_3.png)
 
-![](img/72011fad5f33edffa261d91fa9c14c1b_5.png)
 
 ![](img/72011fad5f33edffa261d91fa9c14c1b_6.png)
 

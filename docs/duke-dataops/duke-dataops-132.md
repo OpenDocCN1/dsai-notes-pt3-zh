@@ -2,7 +2,6 @@
 
 在本节课中，我们将学习Azure机器学习平台的核心组件及其与机器学习运维（MLOps）的关系。我们将了解Azure ML Studio提供的服务，并初步探索开放数据集和软件开发工具包（SDK）的使用。
 
-![](img/1fd26a3666b1eb8d3d047c6019a82ce7_0.png)
 
 ![](img/1fd26a3666b1eb8d3d047c6019a82ce7_1.png)
 

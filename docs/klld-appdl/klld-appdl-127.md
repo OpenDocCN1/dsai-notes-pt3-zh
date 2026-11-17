@@ -1,107 +1,68 @@
 # 127：L60.2 - GPT-3 🤖
 
-![](img/1be330b1fcfcb6b59dcb50714f3dddd8_1.png)
 
 在本节课中，我们将要学习 GPT-3 的核心思想，理解它与传统微调方法的区别，并探讨其“上下文学习”的能力。我们还将分析其巨大参数规模背后的原因，并了解其局限性，从而引出对多模态学习的需求。
 
-![](img/1be330b1fcfcb6b59dcb50714f3dddd8_2.png)
 
-![](img/1be330b1fcfcb6b59dcb50714f3dddd8_3.png)
 
-![](img/1be330b1fcfcb6b59dcb50714f3dddd8_4.png)
 
-![](img/1be330b1fcfcb6b59dcb50714f3dddd8_5.png)
 
-![](img/1be330b1fcfcb6b59dcb50714f3dddd8_6.png)
 
-![](img/1be330b1fcfcb6b59dcb50714f3dddd8_7.png)
 
-![](img/1be330b1fcfcb6b59dcb50714f3dddd8_8.png)
 
-![](img/1be330b1fcfcb6b59dcb50714f3dddd8_9.png)
 
-![](img/1be330b1fcfcb6b59dcb50714f3dddd8_10.png)
 
 上一节我们介绍了 GPT-2 的“零样本”和“少样本”学习能力。本节中，我们来看看 GPT-3 如何将这一思想推向极致。
 
-![](img/1be330b1fcfcb6b59dcb50714f3dddd8_11.png)
 
 ## 传统微调 vs. GPT-3 的上下文学习
 
 传统的自然语言处理模型遵循“预训练-微调”范式。以下是其工作流程：
 
-![](img/1be330b1fcfcb6b59dcb50714f3dddd8_13.png)
 
-![](img/1be330b1fcfcb6b59dcb50714f3dddd8_14.png)
 
-![](img/1be330b1fcfcb6b59dcb50714f3dddd8_15.png)
 
-![](img/1be330b1fcfcb6b59dcb50714f3dddd8_16.png)
 
-![](img/1be330b1fcfcb6b59dcb50714f3dddd8_17.png)
 
-![](img/1be330b1fcfcb6b59dcb50714f3dddd8_18.png)
 
-![](img/1be330b1fcfcb6b59dcb50714f3dddd8_19.png)
 
 1.  **预训练**：在一个大型通用语料库上训练一个基础语言模型（例如 BERT 类模型）。
 2.  **微调**：针对特定的下游任务（如翻译），使用该任务的标注数据对预训练模型进行参数更新。
 
-![](img/1be330b1fcfcb6b59dcb50714f3dddd8_20.png)
 
-![](img/1be330b1fcfcb6b59dcb50714f3dddd8_21.png)
 
 这个过程可以看作是一种“软条件化”。数据输入后，模型通过梯度下降算法更新其内部参数。
 
-![](img/1be330b1fcfcb6b59dcb50714f3dddd8_23.png)
 
-![](img/1be330b1fcfcb6b59dcb50714f3dddd8_24.png)
 
-![](img/1be330b1fcfcb6b59dcb50714f3dddd8_25.png)
 
-![](img/1be330b1fcfcb6b59dcb50714f3dddd8_26.png)
 
 **公式表示**：`θ_new = θ_old - η * ∇L(θ_old; batch_data)`
 
 其中 `θ` 是模型参数，`η` 是学习率，`L` 是损失函数。
 
-![](img/1be330b1fcfcb6b59dcb50714f3dddd8_28.png)
 
-![](img/1be330b1fcfcb6b59dcb50714f3dddd8_29.png)
 
 然而，GPT-3 采取了一种截然不同的路径。它完全摒弃了针对每个任务进行微调的做法。
 
-![](img/1be330b1fcfcb6b59dcb50714f3dddd8_30.png)
 
-![](img/1be330b1fcfcb6b59dcb50714f3dddd8_31.png)
 
-![](img/1be330b1fcfcb6b59dcb50714f3dddd8_32.png)
 
-![](img/1be330b1fcfcb6b59dcb50714f3dddd8_33.png)
 
-![](img/1be330b1fcfcb6b59dcb50714f3dddd8_34.png)
 
-![](img/1be330b1fcfcb6b59dcb50714f3dddd8_35.png)
 
-![](img/1be330b1fcfcb6b59dcb50714f3dddd8_36.png)
 
-![](img/1be330b1fcfcb6b59dcb50714f3dddd8_37.png)
 
-![](img/1be330b1fcfcb6b59dcb50714f3dddd8_38.png)
 
 ## GPT-3 的核心：上下文学习
 
-![](img/1be330b1fcfcb6b59dcb50714f3dddd8_39.png)
 
 GPT-3 的理念是“上下文学习”。模型在预训练后，参数被永久固定，不再更新。当需要解决一个新任务时，我们通过输入文本来“硬条件化”模型。
 
 以下是其工作原理：
 
-![](img/1be330b1fcfcb6b59dcb50714f3dddd8_41.png)
 
-![](img/1be330b1fcfcb6b59dcb50714f3dddd8_42.png)
 
-![](img/1be330b1fcfcb6b59dcb50714f3dddd8_43.png)
 
 ![](img/1be330b1fcfcb6b59dcb50714f3dddd8_44.png)
 

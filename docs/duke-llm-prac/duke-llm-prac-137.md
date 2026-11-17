@@ -10,9 +10,7 @@
 
 整个流程始于用户的查询。通常，查询会直接发送给应用框架，然后由框架调用机器学习模型（如大型语言模型）来生成回答。但在RAG架构中，流程有所不同。
 
-![](img/c9915d607a58a2abcac682f4c96c8d01_1.png)
 
-![](img/c9915d607a58a2abcac682f4c96c8d01_2.png)
 
 ### 第一步：接收查询
 用户提出一个问题，例如：“昨天的天气怎么样？” 这个问题首先被发送到应用框架。
@@ -31,13 +29,10 @@ search_results = vector_database.search(user_query)
 ### 第三步：数据库检索与返回上下文
 向量数据库执行相似性搜索，从存储的文档或数据中找出与查询最相关的信息。例如，它可能检索到“昨天本地气温为25度，晴朗”这条记录。
 
-![](img/c9915d607a58a2abcac682f4c96c8d01_4.png)
 
-![](img/c9915d607a58a2abcac682f4c96c8d01_5.png)
 
 检索到的信息（我们称之为“上下文”）会返回给应用框架，而不是直接给用户。
 
-![](img/c9915d607a58a2abcac682f4c96c8d01_7.png)
 
 ### 第四步：构建增强提示
 应用框架现在同时拥有了原始的用户查询和从数据库检索到的相关上下文。它会将这两者组合起来，构建成一个**增强的提示**，准备发送给大型语言模型。
@@ -45,11 +40,8 @@ search_results = vector_database.search(user_query)
 这个过程可以概括为：
 **最终提示 = 用户查询 + 检索到的上下文**
 
-![](img/c9915d607a58a2abcac682f4c96c8d01_9.png)
 
-![](img/c9915d607a58a2abcac682f4c96c8d01_10.png)
 
-![](img/c9915d607a58a2abcac682f4c96c8d01_11.png)
 
 ### 第五步：模型生成最终回答
 这个包含了“答案线索”的增强提示被发送给大型语言模型。此时，模型的任务不再是凭空生成答案，而是像一个“开卷考试”的学生——它已经拿到了“参考答案”（即检索到的上下文），只需要将这些信息组织成流畅、自然的语言。
@@ -58,9 +50,7 @@ search_results = vector_database.search(user_query)
 
 ---
 
-![](img/c9915d607a58a2abcac682f4c96c8d01_13.png)
 
-![](img/c9915d607a58a2abcac682f4c96c8d01_14.png)
 
 ## 流程优势与特点
 
@@ -73,13 +63,10 @@ search_results = vector_database.search(user_query)
 
 ---
 
-![](img/c9915d607a58a2abcac682f4c96c8d01_16.png)
 
 ## 总结
 
-![](img/c9915d607a58a2abcac682f4c96c8d01_17.png)
 
-![](img/c9915d607a58a2abcac682f4c96c8d01_18.png)
 
 ![](img/c9915d607a58a2abcac682f4c96c8d01_19.png)
 

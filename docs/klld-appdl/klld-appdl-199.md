@@ -1,116 +1,72 @@
 # 199：图同构网络 (GIN) 🧠
 
-![](img/12a6cee460e9fab33903e95e7ff14b22_1.png)
 
-![](img/12a6cee460e9fab33903e95e7ff14b22_2.png)
 
-![](img/12a6cee460e9fab33903e95e7ff14b22_3.png)
 
-![](img/12a6cee460e9fab33903e95e7ff14b22_4.png)
 
 在本节课中，我们将学习一篇理论性论文，它帮助我们理解并回答一个核心问题：图神经网络（GNN）的能力究竟有多强？我们已经介绍了多种不同的图神经网络，现在来看看它们在实践中的表现能力。
 
-![](img/12a6cee460e9fab33903e95e7ff14b22_5.png)
 
-![](img/12a6cee460e9fab33903e95e7ff14b22_6.png)
 
-![](img/12a6cee460e9fab33903e95e7ff14b22_7.png)
 
-![](img/12a6cee460e9fab33903e95e7ff14b22_8.png)
 
-![](img/12a6cee460e9fab33903e95e7ff14b22_9.png)
 
 ## 图与图神经网络任务 📊
 
-![](img/12a6cee460e9fab33903e95e7ff14b22_11.png)
 
-![](img/12a6cee460e9fab33903e95e7ff14b22_12.png)
 
 我们有一个图，它包含一组顶点（节点）和一组边。每个节点可能具有初始特征。图上的任务主要有两种：
 
-![](img/12a6cee460e9fab33903e95e7ff14b22_13.png)
 
-![](img/12a6cee460e9fab33903e95e7ff14b22_14.png)
 
-![](img/12a6cee460e9fab33903e95e7ff14b22_15.png)
 
-![](img/12a6cee460e9fab33903e95e7ff14b22_16.png)
 
 *   **节点分类**：为每个节点预测一个关联的标签。通常，我们只有部分节点的标签，其余节点没有标签，这构成了我们讨论过的半监督学习框架。
 *   **图分类**：数据可以是多个独立的图。我们有一组图，每个图对应一个标签。任务是为每个图预测其对应的标签。这需要为整个图生成一个单一的表示向量。
 
 ## 图神经网络通用框架 🔄
 
-![](img/12a6cee460e9fab33903e95e7ff14b22_18.png)
 
-![](img/12a6cee460e9fab33903e95e7ff14b22_19.png)
 
-![](img/12a6cee460e9fab33903e95e7ff14b22_20.png)
 
-![](img/12a6cee460e9fab33903e95e7ff14b22_21.png)
 
-![](img/12a6cee460e9fab33903e95e7ff14b22_22.png)
 
-![](img/12a6cee460e9fab33903e95e7ff14b22_23.png)
 
-![](img/12a6cee460e9fab33903e95e7ff14b22_24.png)
 
 图神经网络通常通过 K 层迭代（K 次消息传递）来工作。我们用 k 表示层数。其通用框架如下：
 
-![](img/12a6cee460e9fab33903e95e7ff14b22_25.png)
 
-![](img/12a6cee460e9fab33903e95e7ff14b22_26.png)
 
-![](img/12a6cee460e9fab33903e95e7ff14b22_27.png)
 
-![](img/12a6cee460e9fab33903e95e7ff14b22_28.png)
 
-![](img/12a6cee460e9fab33903e95e7ff14b22_30.png)
 
 1.  **聚合**：对于图中的每个节点，查看其邻居节点。每个邻居节点都带有来自上一层的表示。使用一个聚合函数，将这些邻居的表示合并为一个与当前节点相关的单一向量。
 2.  **组合**：将当前节点在上一层的表示，与上一步聚合得到的邻居表示，通过一个组合函数结合起来，生成该节点在下一层的新表示。
 
 这个过程不断重复。在第一层，节点的初始表示就是其原始特征。
 
-![](img/12a6cee460e9fab33903e95e7ff14b22_32.png)
 
-![](img/12a6cee460e9fab33903e95e7ff14b22_33.png)
 
-![](img/12a6cee460e9fab33903e95e7ff14b22_34.png)
 
-![](img/12a6cee460e9fab33903e95e7ff14b22_35.png)
 
-![](img/12a6cee460e9fab33903e95e7ff14b22_36.png)
 
 对于图分类任务，我们需要一个代表整个图的单一向量。这通过一个**读出**操作实现，例如简单的最大池化、平均池化或求和操作。读出操作会查看图中所有节点的最终表示（或中间层表示），并以某种方式将它们组合起来。
 
-![](img/12a6cee460e9fab33903e95e7ff14b22_37.png)
 
-![](img/12a6cee460e9fab33903e95e7ff14b22_38.png)
 
-![](img/12a6cee460e9fab33903e95e7ff14b22_39.png)
 
-![](img/12a6cee460e9fab33903e95e7ff14b22_40.png)
 
-![](img/12a6cee460e9fab33903e95e7ff14b22_41.png)
 
-![](img/12a6cee460e9fab33903e95e7ff14b22_42.png)
 
-![](img/12a6cee460e9fab33903e95e7ff14b22_43.png)
 
 ## 经典GNN实例回顾 📝
 
 以下是几个经典图神经网络中聚合与组合函数的具体例子：
 
-![](img/12a6cee460e9fab33903e95e7ff14b22_45.png)
 
-![](img/12a6cee460e9fab33903e95e7ff14b22_46.png)
 
-![](img/12a6cee460e9fab33903e95e7ff14b22_47.png)
 
-![](img/12a6cee460e9fab33903e95e7ff14b22_48.png)
 
-![](img/12a6cee460e9fab33903e95e7ff14b22_49.png)
 
 *   **GraphSAGE**：
     *   聚合函数：首先将邻居节点的表示乘以一个矩阵并通过非线性激活函数，然后在邻居集合上进行最大池化。
@@ -118,134 +74,83 @@
 *   **图卷积网络 (GCN)**：
     *   它将聚合与组合合并为一步：查看节点及其邻居的上一轮表示，对这些表示进行简单平均，然后乘以一个矩阵并应用非线性激活函数。
 
-![](img/12a6cee460e9fab33903e95e7ff14b22_50.png)
 
-![](img/12a6cee460e9fab33903e95e7ff14b22_51.png)
 
-![](img/12a6cee460e9fab33903e95e7ff14b22_52.png)
 
-![](img/12a6cee460e9fab33903e95e7ff14b22_53.png)
 
-![](img/12a6cee460e9fab33903e95e7ff14b22_54.png)
 
-![](img/12a6cee460e9fab33903e95e7ff14b22_55.png)
 
-![](img/12a6cee460e9fab33903e95e7ff14b22_56.png)
 
 ## 图同构网络 (GIN) 介绍 🚀
 
-![](img/12a6cee460e9fab33903e95e7ff14b22_58.png)
 
 上一节我们回顾了经典的GNN模型，本节中我们来看看一个理论上更强大的模型——图同构网络。
 
-![](img/12a6cee460e9fab33903e95e7ff14b22_59.png)
 
-![](img/12a6cee460e9fab33903e95e7ff14b22_60.png)
 
-![](img/12a6cee460e9fab33903e95e7ff14b22_61.png)
 
-![](img/12a6cee460e9fab33903e95e7ff14b22_62.png)
 
-![](img/12a6cee460e9fab33903e95e7ff14b22_63.png)
 
-![](img/12a6cee460e9fab33903e95e7ff14b22_64.png)
 
-![](img/12a6cee460e9fab33903e95e7ff14b22_65.png)
 
-![](img/12a6cee460e9fab33903e95e7ff14b22_66.png)
 
 GIN 的工作原理如下：它仍然查看一个节点及其邻居的上一轮表示，然后将它们**求和**。与简单求和不同的是，它会对节点自身的表示乘以一个可学习的系数 `(1 + ε)`。公式如下：
 
-![](img/12a6cee460e9fab33903e95e7ff14b22_68.png)
 
-![](img/12a6cee460e9fab33903e95e7ff14b22_69.png)
 
 `h_v^(k) = MLP^(k)( (1 + ε^(k)) * h_v^(k-1) + Σ_(u ∈ N(v)) h_u^(k-1) )`
 
-![](img/12a6cee460e9fab33903e95e7ff14b22_71.png)
 
-![](img/12a6cee460e9fab33903e95e7ff14b22_72.png)
 
-![](img/12a6cee460e9fab33903e95e7ff14b22_73.png)
 
-![](img/12a6cee460e9fab33903e95e7ff14b22_74.png)
 
-![](img/12a6cee460e9fab33903e95e7ff14b22_75.png)
 
 其中，`MLP` 是一个多层感知机（可以是深层网络），`ε` 是一个可学习的小数或固定值。这个公式是 GraphSAGE 和 GCN 中操作的一种泛化。在 GCN 中，你只有一层线性变换，而 GIN 中的 MLP 可以是多层，至少两层。
 
 对于图级别的表示，GIN 可以在**每一层**都进行读出操作。例如，对第 0 层、第 1 层直到第 K 层的所有节点表示分别进行求和或池化，然后将这些各层的图表示**拼接**起来，作为整个图的最终表示。
 
-![](img/12a6cee460e9fab33903e95e7ff14b22_77.png)
 
-![](img/12a6cee460e9fab33903e95e7ff14b22_78.png)
 
-![](img/12a6cee460e9fab33903e95e7ff14b22_79.png)
 
-![](img/12a6cee460e9fab33903e95e7ff14b22_80.png)
 
-![](img/12a6cee460e9fab33903e95e7ff14b22_81.png)
 
-![](img/12a6cee460e9fab33903e95e7ff14b22_82.png)
 
-![](img/12a6cee460e9fab33903e95e7ff14b22_83.png)
 
-![](img/12a6cee460e9fab33903e95e7ff14b22_84.png)
 
 ## GIN 与 WL 同构测试的等价性 ⚖️
 
-![](img/12a6cee460e9fab33903e95e7ff14b22_85.png)
 
-![](img/12a6cee460e9fab33903e95e7ff14b22_86.png)
 
-![](img/12a6cee460e9fab33903e95e7ff14b22_87.png)
 
-![](img/12a6cee460e9fab33903e95e7ff14b22_88.png)
 
-![](img/12a6cee460e9fab33903e95e7ff14b22_90.png)
 
-![](img/12a6cee460e9fab33903e95e7ff14b22_91.png)
 
 理论证明，图同构网络的判别和表示能力与 **Weisfeiler-Lehman (WL) 同构测试** 等价。WL 测试是解决“两个图在拓扑结构上是否相同”这一问题的经典方法。
 
-![](img/12a6cee460e9fab33903e95e7ff14b22_93.png)
 
-![](img/12a6cee460e9fab33903e95e7ff14b22_95.png)
 
-![](img/12a6cee460e9fab33903e95e7ff14b22_96.png)
 
 WL 测试的步骤如下：
 1.  **聚合**：聚合每个节点及其邻居的标签。
 2.  **哈希**：将聚合后的标签哈希映射为一个唯一的新标签。
 这个过程与图神经网络的操作非常相似。算法会迭代进行。如果在某个迭代步骤，两个图中节点的标签集合出现不同，算法就会判定这两个图是**非同构**的。
 
-![](img/12a6cee460e9fab33903e95e7ff14b22_97.png)
 
-![](img/12a6cee460e9fab33903e95e7ff14b22_98.png)
 
-![](img/12a6cee460e9fab33903e95e7ff14b22_100.png)
 
-![](img/12a6cee460e9fab33903e95e7ff14b22_101.png)
 
-![](img/12a6cee460e9fab33903e95e7ff14b22_102.png)
 
 关于“GIN 的能力与 WL 测试等价”这一结论的证明，其概要分为两步：
 1.  证明图神经网络在区分图结构方面，**至多**与 WL 测试一样强大。
 2.  证明在**某些温和条件下**，基于邻居聚合和读出操作的图神经网络（特别是 GIN）**可以达到** WL 测试的判别能力。
 
-![](img/12a6cee460e9fab33903e95e7ff14b22_103.png)
 
-![](img/12a6cee460e9fab33903e95e7ff14b22_105.png)
 
-![](img/12a6cee460e9fab33903e95e7ff14b22_106.png)
 
-![](img/12a6cee460e9fab33903e95e7ff14b22_107.png)
 
 这意味着，如果两个图 G1 和 G2 是非同构的，那么一个满足条件的 GNN 能够将 G1 和 G2 映射到不同的嵌入向量，同时 WL 测试也能判定它们非同构。
 
-![](img/12a6cee460e9fab33903e95e7ff14b22_109.png)
 
-![](img/12a6cee460e9fab33903e95e7ff14b22_110.png)
 
 ![](img/12a6cee460e9fab33903e95e7ff14b22_111.png)
 

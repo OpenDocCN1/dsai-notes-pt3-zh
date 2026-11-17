@@ -8,9 +8,7 @@
 
 在介绍Pregel模型之前，我们先了解GraphFrames提供的另一个基础操作：`aggregateMessages`。它允许我们沿着图的边在顶点之间传递消息，并对发送到同一顶点的消息进行聚合。
 
-![](img/29bd05cf664bfa9062a60d9715525956_1.png)
 
-![](img/29bd05cf664bfa9062a60d9715525956_3.png)
 
 以下是使用`aggregateMessages`的一个示例。假设我们想计算每个顶点的所有邻居的年龄总和。
 

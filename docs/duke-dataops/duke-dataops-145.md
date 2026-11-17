@@ -1,6 +1,5 @@
 #  145：跟踪服务器UI介绍
 
-![](img/9d9be4b5bb149e6e4b4dc860b0afa730_0.png)
 
 ![](img/9d9be4b5bb149e6e4b4dc860b0afa730_0.png)
 

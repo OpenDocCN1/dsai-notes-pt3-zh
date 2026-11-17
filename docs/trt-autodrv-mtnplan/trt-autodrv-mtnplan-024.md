@@ -1,6 +1,5 @@
 # 024：行为规划高级方法
 
-![](img/7e52c8cd35ea798c505a2d36f2c0c2ea_0.png)
 
 ![](img/7e52c8cd35ea798c505a2d36f2c0c2ea_0.png)
 
@@ -60,11 +59,9 @@
 
 我们介绍了基于有限状态机规划的一些问题，并提出了多种解决行为规划问题复杂性的高级方法。
 
-![](img/7e52c8cd35ea798c505a2d36f2c0c2ea_2.png)
 
 ![](img/7e52c8cd35ea798c505a2d36f2c0c2ea_2.png)
 
-![](img/7e52c8cd35ea798c505a2d36f2c0c2ea_3.png)
 
 ![](img/7e52c8cd35ea798c505a2d36f2c0c2ea_3.png)
 

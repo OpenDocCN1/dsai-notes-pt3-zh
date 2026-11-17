@@ -29,13 +29,10 @@
 
 ## 二维线程块与二维网格
 
-![](img/ed3fcf8ae29ee298e6067ebcfd1ff243_1.png)
 
 接下来，我们看一个更通用的例子：线程块和网格都采用二维布局。
 
-![](img/ed3fcf8ae29ee298e6067ebcfd1ff243_3.png)
 
-![](img/ed3fcf8ae29ee298e6067ebcfd1ff243_3.png)
 
 实际上，即使你声明网格是 `1 x 1`，它在技术上也是二维的。这里的线程块采用了二维布局。
 
@@ -51,11 +48,9 @@
 
 现在，让我们进入最复杂的例子：线程块和网格都采用三维布局。
 
-![](img/ed3fcf8ae29ee298e6067ebcfd1ff243_5.png)
 
 在主机代码中，你将网格和线程块都定义为 `dim3` 类型，并指定为三维。例如，网格可以是 `2 x 2 x 2`，而每个线程块可以是 `16 x 16 x 16`。
 
-![](img/ed3fcf8ae29ee298e6067ebcfd1ff243_5.png)
 
 在设备代码中，定义块索引现在需要包含Z维度的索引作为乘数。
 
@@ -82,11 +77,8 @@ int threadGlobalIdZ = blockOffsetZ + threadIdx.z;
 
 你可能需要花时间理解它，或者找到一种对你而言更易读的写法，并在整个编程过程中坚持使用。
 
-![](img/ed3fcf8ae29ee298e6067ebcfd1ff243_7.png)
 
-![](img/ed3fcf8ae29ee298e6067ebcfd1ff243_9.png)
 
-![](img/ed3fcf8ae29ee298e6067ebcfd1ff243_7.png)
 
 ## 总结
 

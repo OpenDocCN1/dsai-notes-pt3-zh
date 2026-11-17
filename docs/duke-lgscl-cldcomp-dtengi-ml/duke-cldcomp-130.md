@@ -8,7 +8,6 @@
 
 上一节我们概述了AI API的用途与优势，本节中我们来看看具体的学习目标。
 
-![](img/e5fbcd8b58b54fd42eca81cfa5dd3bf6_2.png)
 
 在本课程中，我们将学习如何组合使用AI应用来构建解决方案，并了解诸如AWS Comprehend和AWS Rekognition等服务。
 

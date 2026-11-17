@@ -1,6 +1,5 @@
 #  008：Linux Shell环境对比 🖥️
 
-![](img/a1d1a91b08884dcd24ebbd9cee55f50e_0.png)
 
 ![](img/a1d1a91b08884dcd24ebbd9cee55f50e_1.png)
 
@@ -8,7 +7,6 @@
 
 ![](img/a1d1a91b08884dcd24ebbd9cee55f50e_3.png)
 
-![](img/a1d1a91b08884dcd24ebbd9cee55f50e_4.png)
 
 ---
 
@@ -32,19 +30,16 @@
 
 ![](img/a1d1a91b08884dcd24ebbd9cee55f50e_6.png)
 
-![](img/a1d1a91b08884dcd24ebbd9cee55f50e_8.png)
 
 ---
 
 ## 云端Shell环境
 
-![](img/a1d1a91b08884dcd24ebbd9cee55f50e_10.png)
 
 ![](img/a1d1a91b08884dcd24ebbd9cee55f50e_11.png)
 
 了解了本地环境后，我们来看看云端环境。所有主流云服务提供商（如AWS、Google Cloud、Azure）都提供了类似的云端Shell环境。这对于在对应云平台上进行开发和操作非常方便。
 
-![](img/a1d1a91b08884dcd24ebbd9cee55f50e_13.png)
 
 ![](img/a1d1a91b08884dcd24ebbd9cee55f50e_14.png)
 
@@ -65,7 +60,6 @@
     *   **Google Cloud Shell**：可以使用 `gcloud` 开头的系列命令管理资源。
     *   **Azure Cloud Shell**：可以使用 `az` 开头的系列命令与各项服务交互。
 
-![](img/a1d1a91b08884dcd24ebbd9cee55f50e_18.png)
 
 **关键在于**：一旦你掌握了Bash，你就掌握了驾驭多种云环境和本地环境的钥匙。它们虽然预装工具不同，但核心的Shell操作逻辑是相通的。
 

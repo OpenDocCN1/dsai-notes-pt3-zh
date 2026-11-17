@@ -1,10 +1,7 @@
 # 012：利用函数逼近进行预测和控制
 
-![](img/ab4d84630c6d6b6b5790d7b7a062c701_0.png)
 
-![](img/ab4d84630c6d6b6b5790d7b7a062c701_1.png)
 
-![](img/ab4d84630c6d6b6b5790d7b7a062c701_0.png)
 
 ![](img/ab4d84630c6d6b6b5790d7b7a062c701_1.png)
 

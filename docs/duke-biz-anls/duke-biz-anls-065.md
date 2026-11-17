@@ -45,31 +45,22 @@
 
 在加权组合中，应该存在一些点，其方差比任何一只股票单独持有时的方差都要低。因此，就这条线的斜率而言，加权组合可能更具吸引力。
 
-![](img/04988ba08cabfed2cb2badeb84d8996d_5.png)
 
-![](img/04988ba08cabfed2cb2badeb84d8996d_7.png)
 
 这条线的斜率相对于任何其他线的斜率，当然也相对于到达这些原始点的线的斜率。
 
-![](img/04988ba08cabfed2cb2badeb84d8996d_9.png)
 
 ## 夏普比率
 
-![](img/04988ba08cabfed2cb2badeb84d8996d_11.png)
 
 那么，我们优化的是什么？我们优化的是一个叫做**夏普比率**的东西，这在第一门课程中讨论过。
 
-![](img/04988ba08cabfed2cb2badeb84d8996d_12.png)
 
-![](img/04988ba08cabfed2cb2badeb84d8996d_14.png)
 
 夏普比率的公式是：
 
-![](img/04988ba08cabfed2cb2badeb84d8996d_16.png)
 
-![](img/04988ba08cabfed2cb2badeb84d8996d_18.png)
 
-![](img/04988ba08cabfed2cb2badeb84d8996d_20.png)
 
 `Sharpe Ratio = (E(Rp) - Rf) / σp`
 
@@ -82,7 +73,6 @@
 
 ![](img/04988ba08cabfed2cb2badeb84d8996d_24.png)
 
-![](img/04988ba08cabfed2cb2badeb84d8996d_26.png)
 
 我已经重新绘制了我们的图表以便有更多空间。我们的无风险利率是1%。我们感兴趣的是确定这两种股票的最佳加权组合，使得从无风险利率出发的这条线的斜率达到最大。
 
@@ -92,7 +82,6 @@
 
 ## 应用公式与求解
 
-![](img/04988ba08cabfed2cb2badeb84d8996d_28.png)
 
 这个斜率的名字就是夏普比率。它等于我们的预期投资组合回报减去无风险回报，再除以我们投资组合回报的标准差。
 
@@ -106,25 +95,19 @@
 
 ## 使用求解器
 
-![](img/04988ba08cabfed2cb2badeb84d8996d_30.png)
 
 这是一个非常适合使用 **Microsoft Excel 求解器** 来解决的问题。
 
-![](img/04988ba08cabfed2cb2badeb84d8996d_31.png)
 
 我们将其设置为在改变其中一个权重（另一个权重可以设置为 `1 - w1`）的情况下，找到这个夏普比率值的最大值。
 
-![](img/04988ba08cabfed2cb2badeb84d8996d_33.png)
 
 我们将权重约束在0到1之间，并且总和为1。
 
-![](img/04988ba08cabfed2cb2badeb84d8996d_35.png)
 
-![](img/04988ba08cabfed2cb2badeb84d8996d_36.png)
 
 然后，Microsoft 求解器将直接为我们输出答案。
 
-![](img/04988ba08cabfed2cb2badeb84d8996d_38.png)
 
 如果我们回到图表，会发现正确答案是权重约为0.525（股票一）和0.475（股票二）。这将为我们带来投资组合标准差为5.05%，而我们投资组合的预期回报将等于10.9%，从而给出这条线的斜率为1.97。
 

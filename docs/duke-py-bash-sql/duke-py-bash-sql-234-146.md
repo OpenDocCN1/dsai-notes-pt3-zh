@@ -1,6 +1,5 @@
 #  146：AWS SageMaker 导论 🚀
 
-![](img/00f2b1932868284e7aad95f4d81cdf24_0.png)
 
 ![](img/00f2b1932868284e7aad95f4d81cdf24_1.png)
 
@@ -12,7 +11,6 @@
 
 上一节我们介绍了SageMaker的基本概念，本节中我们来看看如何访问和设置它。
 
-![](img/00f2b1932868284e7aad95f4d81cdf24_3.png)
 
 登录AWS控制台后，可以通过搜索找到SageMaker服务。
 

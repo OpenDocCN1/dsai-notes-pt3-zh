@@ -1,6 +1,5 @@
 # 109：Shiny 入门 1 🚀
 
-![](img/ecb71b2e5384adf1cfe2b349c38c403c_1.png)
 
 在本节课中，我们将要学习 Shiny 的基础知识。Shiny 是 R 语言中的一个 Web 应用开发框架，它允许我们仅使用 R 语言来创建交互式的数据产品。我们将了解 Shiny 的核心概念、基本结构以及如何开始构建你的第一个 Shiny 应用。
 
@@ -31,7 +30,6 @@ Shiny 使用了 Bootstrap 前端框架（与统计学中的“Bootstrap”重采
 *   **CSS**：控制网页的样式和外观。
 *   **JavaScript**：为网页添加交互性和动态行为。
 
-![](img/ecb71b2e5384adf1cfe2b349c38c403c_3.png)
 
 最重要的是，先完成一些 HTML 基础学习。
 
@@ -49,25 +47,21 @@ library(shiny)
 ```
 在开始本课程之前，你也可以考虑先阅读 RStudio 官方的 Shiny 教程。本讲座的大部分内容将围绕该教程展开。
 
-![](img/ecb71b2e5384adf1cfe2b349c38c403c_5.png)
 
 ---
 
 ## Shiny 应用的基本结构
 
-![](img/ecb71b2e5384adf1cfe2b349c38c403c_7.png)
 
 一个 Shiny 项目需要两个核心文件：
 1.  **`ui.R`**：这个文件定义了**用户界面**，它决定了你的应用看起来是什么样子。
 2.  **`server.R`**：这个文件定义了**服务器逻辑**，它控制你的应用具体做什么。
 
-![](img/ecb71b2e5384adf1cfe2b349c38c403c_9.png)
 
 这两个文件共同构成了一个完整的 Shiny 应用。`ui.R` 负责布局和输入输出控件，而 `server.R` 则包含响应这些输入、进行计算并更新输出的 R 代码。
 
 ---
 
-![](img/ecb71b2e5384adf1cfe2b349c38c403c_11.png)
 
 ![](img/ecb71b2e5384adf1cfe2b349c38c403c_13.png)
 

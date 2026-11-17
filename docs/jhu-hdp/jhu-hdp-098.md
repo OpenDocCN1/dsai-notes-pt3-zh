@@ -2,25 +2,19 @@
 
 在本节课中，我们将对 Spark 框架的核心内容进行总结。我们将回顾 Spark 的概述、架构、运行模式、环境搭建以及核心编程概念，帮助你巩固对 Spark 的理解。
 
-![](img/fe1eebb5ff9aa2434a6c61557383afba_1.png)
 
 ---
 
-![](img/fe1eebb5ff9aa2434a6c61557383afba_2.png)
 
-![](img/fe1eebb5ff9aa2434a6c61557383afba_3.png)
 
-![](img/fe1eebb5ff9aa2434a6c61557383afba_4.png)
 
 ## Spark 概述回顾
 
-![](img/fe1eebb5ff9aa2434a6c61557383afba_5.png)
 
 上一节我们介绍了 Spark 的基本概念，本节中我们来回顾其核心特性。
 
 Spark 是一个**快速集群计算框架**，它内置了数据处理引擎。集群计算体现在它拥有自己的调度器，并能与其他调度器协同工作。数据处理则由 Spark 引擎本身完成。
 
-![](img/fe1eebb5ff9aa2434a6c61557383afba_7.png)
 
 我们了解到，Spark 支持**迭代处理**和**交互式处理**。因为它将所有数据保存在内存中，你可以持续地对这些存储在**弹性分布式数据集**中的数据应用函数。
 
@@ -34,25 +28,18 @@ Spark 是一个**快速集群计算框架**，它内置了数据处理引擎。�
 
 市场上有多种 Spark 发行版。经典的大数据 Hadoop 发行版通常将 Spark 作为其引擎之一。此外，还有专注于 Spark 的 Databricks 公司，它与其他公司合作，为它们的大数据平台提供 Spark 引擎。
 
-![](img/fe1eebb5ff9aa2434a6c61557383afba_9.png)
 
-![](img/fe1eebb5ff9aa2434a6c61557383afba_10.png)
 
-![](img/fe1eebb5ff9aa2434a6c61557383afba_11.png)
 
 ---
 
-![](img/fe1eebb5ff9aa2434a6c61557383afba_12.png)
 
-![](img/fe1eebb5ff9aa2434a6c61557383afba_13.png)
 
-![](img/fe1eebb5ff9aa2434a6c61557383afba_14.png)
 
 ## Spark 架构核心
 
 在 Spark 架构部分，我们学习了几个关键组件。
 
-![](img/fe1eebb5ff9aa2434a6c61557383afba_16.png)
 
 **RDD** 是主要组件，即**弹性分布式数据集**。其核心思想是从某种数据源加载数据，并将数据以分布式集合的形式保存在多台机器上。
 
@@ -86,19 +73,15 @@ Spark 可以运行在**交互模式**下，允许你通过命令行界面与 Spa
 
 在设置和运行 Spark 部分，我们学习了如何在环境中下载和安装 Spark。
 
-![](img/fe1eebb5ff9aa2434a6c61557383afba_18.png)
 
 我们下载了一个能与现有 Hadoop 部署协同工作的 Spark 版本。因为我们已安装了自己的 Hadoop，所以我们下载了不包含 Hadoop 的 Spark 版本，并将其与现有 Hadoop 集成。
 
-![](img/fe1eebb5ff9aa2434a6c61557383afba_20.png)
 
 在此过程中，我们配置了 Spark 使其知道 Hadoop 的位置，同时也配置了 Hadoop 使其知道 Spark 的位置。
 
-![](img/fe1eebb5ff9aa2434a6c61557383afba_21.png)
 
 我们还下载并安装了 Scala 和 SBT，以便构建基于 Scala 的应用程序。在实践演示部分，我们展示了几个如何操作的例子。
 
-![](img/fe1eebb5ff9aa2434a6c61557383afba_23.png)
 
 ![](img/fe1eebb5ff9aa2434a6c61557383afba_24.png)
 

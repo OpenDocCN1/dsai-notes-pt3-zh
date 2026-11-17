@@ -1,6 +1,5 @@
 # 20：在AWS GPU上调用Rust Candle（第一部分）
 
-![](img/e673408bf5c7259e55eef3ea4835e307_0.png)
 
 ![](img/e673408bf5c7259e55eef3ea4835e307_0.png)
 
@@ -46,19 +45,16 @@
 
 ![](img/e673408bf5c7259e55eef3ea4835e307_4.png)
 
-![](img/e673408bf5c7259e55eef3ea4835e307_5.png)
 
 另一件需要做的事情是克隆Hugging Face的代码仓库。你需要前往代码页面，通过HTTPS方式克隆到本地。
 
 ![](img/e673408bf5c7259e55eef3ea4835e307_2.png)
 
-![](img/e673408bf5c7259e55eef3ea4835e307_7.png)
 
 ![](img/e673408bf5c7259e55eef3ea4835e307_3.png)
 
 ![](img/e673408bf5c7259e55eef3ea4835e307_4.png)
 
-![](img/e673408bf5c7259e55eef3ea4835e307_5.png)
 
 ![](img/e673408bf5c7259e55eef3ea4835e307_8.png)
 

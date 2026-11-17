@@ -2,7 +2,6 @@
 
 ![](img/5bdf10db9c84d54e803114c54351f82b_0.png)
 
-![](img/5bdf10db9c84d54e803114c54351f82b_2.png)
 
 ## 概述
 
@@ -34,7 +33,6 @@
 
 ![](img/5bdf10db9c84d54e803114c54351f82b_4.png)
 
-![](img/5bdf10db9c84d54e803114c54351f82b_6.png)
 
 ---
 
@@ -44,7 +42,6 @@ SELECT语句用于从Hive表中查询记录，它与SQL 92标准非常相似，�
 
 以下是SELECT语句的基本用法：
 
-![](img/5bdf10db9c84d54e803114c54351f82b_8.png)
 
 *   **选择特定列**：你可以使用 `SELECT expression1, expression2, expression3 FROM table_name`，其中表达式基本上是列名或列表达式。
 *   **带WHERE条件**：你可以使用 `SELECT ... FROM ... WHERE ...` 来筛选记录。
@@ -52,7 +49,6 @@ SELECT语句用于从Hive表中查询记录，它与SQL 92标准非常相似，�
 *   **分组**：你可以使用 `SELECT ... FROM ... GROUP BY ...` 对结果进行分组。
 *   **选择所有列**：你可以使用 `SELECT * FROM table_name` 选择所有列。如果你还记得，执行 `SELECT *` 不会运行MapReduce作业，因为它认为这是一个简单的扫描操作，所以它只是扫描表并输出结果。
 
-![](img/5bdf10db9c84d54e803114c54351f82b_10.png)
 
 ---
 
@@ -101,9 +97,7 @@ Hive还支持一种机制来提供用户定义函数。如果你不喜欢这里�
 
 ---
 
-![](img/5bdf10db9c84d54e803114c54351f82b_12.png)
 
-![](img/5bdf10db9c84d54e803114c54351f82b_13.png)
 
 ## 总结
 

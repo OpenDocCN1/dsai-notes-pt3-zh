@@ -4,11 +4,9 @@
 
 ---
 
-![](img/f45ad0e32877adde4c5c968b48fb7654_1.png)
 
 ## 应用结构与UI设计
 
-![](img/f45ad0e32877adde4c5c968b48fb7654_2.png)
 
 首先，我们来看用户界面（UI）部分的代码结构。UI定义了应用的布局和用户看到的元素。
 
@@ -24,7 +22,6 @@
 
 服务器函数接收`input`和`output`两个列表。我们首先创建一个反应式表达式`model`，它依赖于用户通过`brush1`框选的数据。
 
-![](img/f45ad0e32877adde4c5c968b48fb7654_4.png)
 
 ```
 model <- reactive({
@@ -40,13 +37,10 @@ model <- reactive({
 2.  如果选中的点少于两个，则返回`NULL`。
 3.  否则，使用`lm`函数为选中的点拟合一个线性模型（`Volume ~ Girth`）。
 
-![](img/f45ad0e32877adde4c5c968b48fb7654_6.png)
 
 然后，我们定义输出内容：
 
-![](img/f45ad0e32877adde4c5c968b48fb7654_8.png)
 
-![](img/f45ad0e32877adde4c5c968b48fb7654_9.png)
 
 *   `output$slopeOut` 和 `output$intOut`：这两个输出分别使用`renderText`来渲染文本。它们检查`model()`的结果。如果模型为`NULL`，则显示“No model found”；否则，从模型系数中提取并显示斜率或截距。
 *   `output$plot1`：这是主要的图形输出，使用`renderPlot`创建。
@@ -64,7 +58,6 @@ output$plot1 <- renderPlot({
 
 这段代码首先绘制完整的`trees`数据集散点图。然后，通过检查`model()`是否存在，来决定是否在图上添加一条蓝色的回归线。这条线仅基于当前被框选的数据点绘制。
 
-![](img/f45ad0e32877adde4c5c968b48fb7654_13.png)
 
 ## 运行与交互演示
 

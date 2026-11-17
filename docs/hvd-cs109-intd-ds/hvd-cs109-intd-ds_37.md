@@ -100,7 +100,6 @@ campaign_tweets |>
  labs(x = "Hour of day (EST)", y = "% of tweets", color = "")
 ```
 
-![](img/92468109c8f162b7fa1ed2ed881aaa75.png)
 
 我们注意到，在早上 6 点到 8 点之间，安卓的峰值很大。这些模式似乎存在明显差异。因此，我们将假设两个不同的实体正在使用这两个设备。
 
@@ -474,7 +473,6 @@ log_or |>
  coord_flip() 
 ```
 
-![](img/aae0c58bc3def999a6d10176878985a3.png)
 
 我们看到，厌恶、愤怒、负面、悲伤和恐惧情感与 Android 的关联难以仅用偶然来解释。与原始关于夸张推文的声明一致，与情感不相关的单词与 iPhone 源有很强的关联。
 

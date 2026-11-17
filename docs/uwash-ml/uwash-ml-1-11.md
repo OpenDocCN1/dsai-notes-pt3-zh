@@ -1,6 +1,5 @@
 # 第一部分 11：启动与使用Jupyter Notebook 🚀
 
-![](img/144a8af988a32a6d89b4aa41831d5e1f_1.png)
 
 在本节课中，我们将学习两种用于编程机器学习算法和数据科学的强大工具：**Python编程语言**和**Jupyter Notebook**。我们将从启动Jupyter Notebook开始，逐步了解其界面和基本功能，并编写第一个Python程序。
 
@@ -31,15 +30,12 @@
 
 界面顶部是笔记本的标题，你可以点击它进行修改。例如，我们可以将其改为“Getting started with Python Notebook”。
 
-![](img/144a8af988a32a6d89b4aa41831d5e1f_8.png)
 
-![](img/144a8af988a32a6d89b4aa41831d5e1f_6.png)
 
 这个笔记本就像一个Python控制台，但它允许你保存生成的页面，并在其中包含文本和图像。顶部菜单栏提供了保存、加载、编辑、复制和添加新单元格等功能。
 
 ---
 
-![](img/144a8af988a32a6d89b4aa41831d5e1f_8.png)
 
 ## 编写第一个Python程序
 

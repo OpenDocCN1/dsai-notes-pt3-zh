@@ -1,6 +1,5 @@
 # 开源大语言模型方案：P19：使用Rust BERT进行命名实体识别
 
-![](img/4c313acfce51c140d3e47549eac4b6f7_0.png)
 
 ![](img/4c313acfce51c140d3e47549eac4b6f7_0.png)
 
@@ -107,7 +106,6 @@ fn main() -> anyhow::Result<()> {
 
 这实际上是一个相当有说服力的理由，让你考虑使用像 Rust 这样的语言。使用 Rust BERT 可以让你以一种非常快速、简单的方式来处理模型，从而能够做像命名实体识别这样有趣的事情。
 
-![](img/4c313acfce51c140d3e47549eac4b6f7_2.png)
 
 ![](img/4c313acfce51c140d3e47549eac4b6f7_2.png)
 

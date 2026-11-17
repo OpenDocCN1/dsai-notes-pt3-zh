@@ -2,7 +2,6 @@
 
 ![](img/c0b121d272b363a3cd7752cce010275a_0.png)
 
-![](img/c0b121d272b363a3cd7752cce010275a_2.png)
 
 在本节课中，我们将登录虚拟机，从管理员视角和文件系统交互视角，通过内置的Hadoop命令来实践HDFS架构。目标是让你对HDFS架构有实际的理解。
 
@@ -32,7 +31,6 @@ ls -l /usr/local/hadoop/data/nn
 
 ## 配置与启动守护进程
 
-![](img/c0b121d272b363a3cd7752cce010275a_4.png)
 
 NameNode如何知道在哪里存储元数据？答案在配置文件中。让我们查看HDFS的配置文件：
 ```bash
@@ -41,7 +39,6 @@ cat hdfs-site.xml
 ```
 在这个配置文件中，我们指定了NameNode存储元数据的位置、Secondary NameNode存储文件系统镜像的位置，以及DataNode存储实际数据块的位置。
 
-![](img/c0b121d272b363a3cd7752cce010275a_6.png)
 
 现在，我们可以启动HDFS守护进程。启动所有守护进程的命令是：
 ```bash
@@ -123,24 +120,20 @@ hadoop-daemon.sh stop datanode
 
 ---
 
-![](img/c0b121d272b363a3cd7752cce010275a_8.png)
 
 ## 通过Web控制台查看信息
 
 HDFS提供了Web管理控制台，方便我们直观地查看集群状态。NameNode的Web界面通常运行在 `http://<namenode-host>:50070`。
 
-![](img/c0b121d272b363a3cd7752cce010275a_10.png)
 
 在控制台中，你可以：
 *   查看集群概况，如配置容量、使用情况等。
 *   浏览HDFS文件系统。
 *   查看文件的详细信息，例如一个文件被分成了哪些块（Block）。对于小于64MB的文件，通常只有一个块；对于大文件，你可以看到多个块的信息。
 
-![](img/c0b121d272b363a3cd7752cce010275a_12.png)
 
 ---
 
-![](img/c0b121d272b363a3cd7752cce010275a_14.png)
 
 ## 总结
 

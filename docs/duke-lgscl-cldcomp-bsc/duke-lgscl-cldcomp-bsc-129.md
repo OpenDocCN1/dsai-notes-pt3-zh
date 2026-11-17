@@ -47,7 +47,6 @@ class WebsiteUser(HttpUser):
 
 ![](img/fca1462b75b615ed47fec4277db22a42_7.png)
 
-![](img/fca1462b75b615ed47fec4277db22a42_8.png)
 
 *   **Number of users**：要模拟的用户总数。
 *   **Spawn rate**：每秒启动的用户数。

@@ -1,6 +1,5 @@
 # 59：L8.8 - 梯度下降的 Softmax 回归导数 🧮
 
-![](img/b02122f1679baef683a96fc84b18da8b_1.png)
 
 在本节课中，我们将要学习如何计算 Softmax 回归的梯度，即损失函数相对于权重和偏置单元的导数。掌握这些导数后，我们就能使用梯度下降或随机梯度下降来训练 Softmax 回归分类器。我们将首先介绍其核心概念，然后通过代码实现来验证其工作原理。
 
@@ -8,7 +7,6 @@
 
 上一节我们介绍了 Softmax 回归的基本形式。本节中我们来看看其梯度计算的核心概念。Softmax 回归的学习规则与之前讨论的 Adaline 和逻辑回归分类器在概念上是相同的，因为它仍然是一个单层神经网络。
 
-![](img/b02122f1679baef683a96fc84b18da8b_3.png)
 
 我们首先需要的是损失函数相对于某个权重 \( w_{ij} \) 的偏导数，或者更一般地，损失函数相对于整个权重向量的梯度。我们同样需要计算损失函数相对于偏置单元的偏导数。有了这些偏导数，我们就可以使用随机梯度下降来更新权重，这与我们在 Adaline、线性回归和逻辑回归中的做法一致。
 
@@ -16,7 +14,6 @@
 
 为了更直观地理解，我们可以查看 Softmax 回归的计算图。请注意，这并非多层神经网络（我们将在下一讲讨论），它仍然只有一层，没有隐藏层。图中将净输入和激活函数作为中间步骤明确画出，这有助于理解。在 Softmax 激活中，每个输出单元的激活值都依赖于所有的净输入，因为存在归一化过程。
 
-![](img/b02122f1679baef683a96fc84b18da8b_5.png)
 
 ## 多元链式法则的应用 🔗
 
@@ -26,7 +23,6 @@
 
 接下来，我们将逐步推导这些项。
 
-![](img/b02122f1679baef683a96fc84b18da8b_7.png)
 
 ### 1. 损失函数对激活的导数 📉
 
@@ -47,7 +43,6 @@ L = -\sum_{j=1}^{H} y_j \log(a_j)
 
 这部分计算稍复杂，但遵循明确的数学规则。我们需要计算 \( \frac{\partial a_1}{\partial z_1} \) 和 \( \frac{\partial a_2}{\partial z_1} \)。
 
-![](img/b02122f1679baef683a96fc84b18da8b_9.png)
 
 **对于 \( \frac{\partial a_1}{\partial z_1} \)**：
 Softmax 函数为 \( a_1 = \frac{e^{z_1}}{\sum_{k=1}^{H} e^{z_k}} \)。这是一个商的形式，我们使用**商的求导法则**。令 \( f = e^{z_1} \)，\( g = \sum_{k=1}^{H} e^{z_k} \)。
@@ -74,7 +69,6 @@ Softmax 函数为 \( a_1 = \frac{e^{z_1}}{\sum_{k=1}^{H} e^{z_k}} \)。这是一
 
 ## 组合结果与简化公式 ✨
 
-![](img/b02122f1679baef683a96fc84b18da8b_11.png)
 
 现在，我们将所有部分组合起来，计算 \( \frac{\partial L}{\partial w_{1,2}} \)：
 
@@ -82,7 +76,6 @@ Softmax 函数为 \( a_1 = \frac{e^{z_1}}{\sum_{k=1}^{H} e^{z_k}} \)。这是一
 \frac{\partial L}{\partial w_{1,2}} = \left( \frac{\partial L}{\partial a_1} \cdot \frac{\partial a_1}{\partial z_1} + \frac{\partial L}{\partial a_2} \cdot \frac{\partial a_2}{\partial z_1} \right) \cdot \frac{\partial z_1}{\partial w_{1,2}}
 \]
 
-![](img/b02122f1679baef683a96fc84b18da8b_13.png)
 
 代入我们推导出的各项：
 - \( \frac{\partial L}{\partial a_1} = -\frac{y_1}{a_1} \)
@@ -91,7 +84,6 @@ Softmax 函数为 \( a_1 = \frac{e^{z_1}}{\sum_{k=1}^{H} e^{z_k}} \)。这是一
 - \( \frac{\partial a_2}{\partial z_1} = -a_1 a_2 \)
 - \( \frac{\partial z_1}{\partial w_{1,2}} = x_2 \)
 
-![](img/b02122f1679baef683a96fc84b18da8b_15.png)
 
 进行代数和化简（过程略），一个非常简洁的结果出现了：
 \[
@@ -102,7 +94,6 @@ Softmax 函数为 \( a_1 = \frac{e^{z_1}}{\sum_{k=1}^{H} e^{z_k}} \)。这是一
 
 ## 矩阵形式表示 🧩
 
-![](img/b02122f1679baef683a96fc84b18da8b_17.png)
 
 最后，我们可以用更紧凑的线性代数形式来书写这个学习规则。对于所有权重矩阵 \( \mathbf{W} \)，损失函数的梯度可以写为：
 \[
@@ -117,7 +108,6 @@ Softmax 函数为 \( a_1 = \frac{e^{z_1}}{\sum_{k=1}^{H} e^{z_k}} \)。这是一
 
 ## 总结 🎯
 
-![](img/b02122f1679baef683a96fc84b18da8b_19.png)
 
 ![](img/b02122f1679baef683a96fc84b18da8b_21.png)
 

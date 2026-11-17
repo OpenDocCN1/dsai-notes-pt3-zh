@@ -1,8 +1,6 @@
 # 059：使用准确率作为性能指标的问题 ⚠️
 
-![](img/a3dacabca63387e22e9f8094252c8ebe_0.png)
 
-![](img/a3dacabca63387e22e9f8094252c8ebe_2.png)
 
 ![](img/a3dacabca63387e22e9f8094252c8ebe_4.png)
 

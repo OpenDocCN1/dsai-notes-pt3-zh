@@ -1,72 +1,50 @@
 # 扩散模型和应用：19：嘉宾讲座2 - Jiaming Song - Dream Machine：视频基础模型 🎬
 
-![](img/bbd4b3f0a6f1dd2af947c4498cdf34f2_0.png)
 
-![](img/bbd4b3f0a6f1dd2af947c4498cdf34f2_2.png)
 
 ![](img/bbd4b3f0a6f1dd2af947c4498cdf34f2_4.png)
 
-![](img/bbd4b3f0a6f1dd2af947c4498cdf34f2_6.png)
 
-![](img/bbd4b3f0a6f1dd2af947c4498cdf34f2_7.png)
 
 ![](img/bbd4b3f0a6f1dd2af947c4498cdf34f2_8.png)
 
-![](img/bbd4b3f0a6f1dd2af947c4498cdf34f2_9.png)
 
 ![](img/bbd4b3f0a6f1dd2af947c4498cdf34f2_10.png)
 
 ![](img/bbd4b3f0a6f1dd2af947c4498cdf34f2_12.png)
 
-![](img/bbd4b3f0a6f1dd2af947c4498cdf34f2_14.png)
 
 ![](img/bbd4b3f0a6f1dd2af947c4498cdf34f2_15.png)
 
 ![](img/bbd4b3f0a6f1dd2af947c4498cdf34f2_16.png)
 
-![](img/bbd4b3f0a6f1dd2af947c4498cdf34f2_17.png)
 
-![](img/bbd4b3f0a6f1dd2af947c4498cdf34f2_18.png)
 
-![](img/bbd4b3f0a6f1dd2af947c4498cdf34f2_20.png)
 
-![](img/bbd4b3f0a6f1dd2af947c4498cdf34f2_21.png)
 
-![](img/bbd4b3f0a6f1dd2af947c4498cdf34f2_22.png)
 
-![](img/bbd4b3f0a6f1dd2af947c4498cdf34f2_23.png)
 
-![](img/bbd4b3f0a6f1dd2af947c4498cdf34f2_25.png)
 
-![](img/bbd4b3f0a6f1dd2af947c4498cdf34f2_26.png)
 
-![](img/bbd4b3f0a6f1dd2af947c4498cdf34f2_28.png)
 
 在本节课中，我们将学习Luma AI公司开发的Dream Machine视频生成模型。我们将探讨其背后的技术原理，特别是如何利用大规模视频数据训练模型，使其具备理解深度、光影、物理动态乃至因果关系的“涌现”能力。课程将从公司背景、技术挑战讲起，逐步深入到扩散模型、注意力机制以及视频模型在3D/4D生成中的应用前景。
 
 ---
 
-![](img/bbd4b3f0a6f1dd2af947c4498cdf34f2_30.png)
 
 ## 公司背景与动机 🏢
 
-![](img/bbd4b3f0a6f1dd2af947c4498cdf34f2_32.png)
 
-![](img/bbd4b3f0a6f1dd2af947c4498cdf34f2_34.png)
 
 上一节我们介绍了Dream Machine生成的令人印象深刻的视频。本节中，我们来看看开发该模型的Luma AI公司的背景及其转向视频模型的动机。
 
-![](img/bbd4b3f0a6f1dd2af947c4498cdf34f2_36.png)
 
-![](img/bbd4b3f0a6f1dd2af947c4498cdf34f2_38.png)
 
 Luma最初致力于3D内容创作，例如场景捕捉（Scene Capture）和3D生成工具Genie。这些技术依赖于多视角图像重建（如NeRF、Gaussian Splatting）来创建交互式3D内容。
 
-![](img/bbd4b3f0a6f1dd2af947c4498cdf34f2_40.png)
 
 然而，团队很快意识到3D数据存在根本性的可扩展性问题。
 
-![](img/bbd4b3f0a6f1dd2af947c4498cdf34f2_42.png)
 
 ![](img/bbd4b3f0a6f1dd2af947c4498cdf34f2_44.png)
 
@@ -78,78 +56,52 @@ Luma最初致力于3D内容创作，例如场景捕捉（Scene Capture）和3D�
 *   **数据创建难度**：用手机拍摄图像或视频非常容易。但创建3D数据需要专业设备、人工采集（如雇佣人员多角度扫描物体）或艺术家创作，过程复杂且成本高昂。
 *   **算法可扩展性**：当前的3D重建算法（如NeRF）需要对每个场景进行独立的优化求解，这个过程计算密集，难以规模化。
 
-![](img/bbd4b3f0a6f1dd2af947c4498cdf34f2_48.png)
 
 因此，尽管3D生成需求明确，但数据和算法的限制使得纯3D路径难以实现大规模突破。这促使Luma将目光投向了视频。
 
-![](img/bbd4b3f0a6f1dd2af947c4498cdf34f2_50.png)
 
 ---
 
-![](img/bbd4b3f0a6f1dd2af947c4498cdf34f2_52.png)
 
 ![](img/bbd4b3f0a6f1dd2af947c4498cdf34f2_54.png)
 
-![](img/bbd4b3f0a6f1dd2af947c4498cdf34f2_55.png)
 
-![](img/bbd4b3f0a6f1dd2af947c4498cdf34f2_56.png)
 
-![](img/bbd4b3f0a6f1dd2af947c4498cdf34f2_57.png)
 
 ## 核心AI范式：从自回归到扩散模型 🤖
 
-![](img/bbd4b3f0a6f1dd2af947c4498cdf34f2_59.png)
 
-![](img/bbd4b3f0a6f1dd2af947c4498cdf34f2_60.png)
 
-![](img/bbd4b3f0a6f1dd2af947c4498cdf34f2_61.png)
 
-![](img/bbd4b3f0a6f1dd2af947c4498cdf34f2_62.png)
 
 ![](img/bbd4b3f0a6f1dd2af947c4498cdf34f2_63.png)
 
-![](img/bbd4b3f0a6f1dd2af947c4498cdf34f2_65.png)
 
-![](img/bbd4b3f0a6f1dd2af947c4498cdf34f2_66.png)
 
-![](img/bbd4b3f0a6f1dd2af947c4498cdf34f2_67.png)
 
-![](img/bbd4b3f0a6f1dd2af947c4498cdf34f2_68.png)
 
-![](img/bbd4b3f0a6f1dd2af947c4498cdf34f2_69.png)
 
-![](img/bbd4b3f0a6f1dd2af947c4498cdf34f2_70.png)
 
-![](img/bbd4b3f0a6f1dd2af947c4498cdf34f2_71.png)
 
-![](img/bbd4b3f0a6f1dd2af947c4498cdf34f2_72.png)
 
 在深入视频模型之前，我们需要理解当前生成式AI的两大核心范式。
 
-![](img/bbd4b3f0a6f1dd2af947c4498cdf34f2_74.png)
 
 ![](img/bbd4b3f0a6f1dd2af947c4498cdf34f2_76.png)
 
-![](img/bbd4b3f0a6f1dd2af947c4498cdf34f2_77.png)
 
 ![](img/bbd4b3f0a6f1dd2af947c4498cdf34f2_78.png)
 
-![](img/bbd4b3f0a6f1dd2af947c4498cdf34f2_80.png)
 
-![](img/bbd4b3f0a6f1dd2af947c4498cdf34f2_82.png)
 
-![](img/bbd4b3f0a6f1dd2af947c4498cdf34f2_83.png)
 
 **自回归模型**（如大型语言模型LLM）通过“预测下一个词元（token）”来学习。其公式可以简化为：
 `P(x_t | x_<t)`，即在给定前文序列 `x_<t` 的条件下，预测下一个词元 `x_t` 的概率分布。虽然自回归在文本上取得了巨大成功，但对于图像、视频等连续信号，其表现通常不如扩散模型。
 
 ![](img/bbd4b3f0a6f1dd2af947c4498cdf34f2_85.png)
 
-![](img/bbd4b3f0a6f1dd2af947c4498cdf34f2_86.png)
 
-![](img/bbd4b3f0a6f1dd2af947c4498cdf34f2_87.png)
 
-![](img/bbd4b3f0a6f1dd2af947c4498cdf34f2_88.png)
 
 ![](img/bbd4b3f0a6f1dd2af947c4498cdf34f2_89.png)
 
@@ -157,11 +109,8 @@ Luma最初致力于3D内容创作，例如场景捕捉（Scene Capture）和3D�
 
 ![](img/bbd4b3f0a6f1dd2af947c4498cdf34f2_91.png)
 
-![](img/bbd4b3f0a6f1dd2af947c4498cdf34f2_92.png)
 
-![](img/bbd4b3f0a6f1dd2af947c4498cdf34f2_93.png)
 
-![](img/bbd4b3f0a6f1dd2af947c4498cdf34f2_95.png)
 
 ![](img/bbd4b3f0a6f1dd2af947c4498cdf34f2_97.png)
 
@@ -169,11 +118,8 @@ Luma最初致力于3D内容创作，例如场景捕捉（Scene Capture）和3D�
 
 ![](img/bbd4b3f0a6f1dd2af947c4498cdf34f2_99.png)
 
-![](img/bbd4b3f0a6f1dd2af947c4498cdf34f2_100.png)
 
-![](img/bbd4b3f0a6f1dd2af947c4498cdf34f2_101.png)
 
-![](img/bbd4b3f0a6f1dd2af947c4498cdf34f2_102.png)
 
 ![](img/bbd4b3f0a6f1dd2af947c4498cdf34f2_103.png)
 
@@ -185,15 +131,10 @@ Luma最初致力于3D内容创作，例如场景捕捉（Scene Capture）和3D�
 
 ![](img/bbd4b3f0a6f1dd2af947c4498cdf34f2_107.png)
 
-![](img/bbd4b3f0a6f1dd2af947c4498cdf34f2_109.png)
 
-![](img/bbd4b3f0a6f1dd2af947c4498cdf34f2_110.png)
 
-![](img/bbd4b3f0a6f1dd2af947c4498cdf34f2_111.png)
 
-![](img/bbd4b3f0a6f1dd2af947c4498cdf34f2_112.png)
 
-![](img/bbd4b3f0a6f1dd2af947c4498cdf34f2_113.png)
 
 ![](img/bbd4b3f0a6f1dd2af947c4498cdf34f2_115.png)
 
@@ -205,53 +146,34 @@ Luma最初致力于3D内容创作，例如场景捕捉（Scene Capture）和3D�
     `x_t = sqrt(alpha_t) * x_0 + sqrt(1 - alpha_t) * epsilon`, 其中 `epsilon ~ N(0, I)`
 2.  **反向过程（去噪）**：模型学习从噪声 `x_t` 中预测出干净图像 `x_0`（或直接预测所添加的噪声 `epsilon`）。模型在训练时知道当前的噪声水平 `t`，从而在不同噪声强度下进行去噪。
 
-![](img/bbd4b3f0a6f1dd2af947c4498cdf34f2_119.png)
 
 ![](img/bbd4b3f0a6f1dd2af947c4498cdf34f2_121.png)
 
-![](img/bbd4b3f0a6f1dd2af947c4498cdf34f2_123.png)
 
 ![](img/bbd4b3f0a6f1dd2af947c4498cdf34f2_124.png)
 
-![](img/bbd4b3f0a6f1dd2af947c4498cdf34f2_125.png)
 
-![](img/bbd4b3f0a6f1dd2af947c4498cdf34f2_126.png)
 
-![](img/bbd4b3f0a6f1dd2af947c4498cdf34f2_128.png)
 
-![](img/bbd4b3f0a6f1dd2af947c4498cdf34f2_129.png)
 
-![](img/bbd4b3f0a6f1dd2af947c4498cdf34f2_130.png)
 
-![](img/bbd4b3f0a6f1dd2af947c4498cdf34f2_132.png)
 
 扩散模型通过解决这个去噪任务，避免了自回归模型在连续数据上离散化的困难，被证明是图像和视频生成的强大基础。
 
-![](img/bbd4b3f0a6f1dd2af947c4498cdf34f2_134.png)
 
-![](img/bbd4b3f0a6f1dd2af947c4498cdf34f2_136.png)
 
-![](img/bbd4b3f0a6f1dd2af947c4498cdf34f2_138.png)
 
-![](img/bbd4b3f0a6f1dd2af947c4498cdf34f2_140.png)
 
-![](img/bbd4b3f0a6f1dd2af947c4498cdf34f2_142.png)
 
-![](img/bbd4b3f0a6f1dd2af947c4498cdf34f2_143.png)
 
 ![](img/bbd4b3f0a6f1dd2af947c4498cdf34f2_144.png)
 
 ---
 
-![](img/bbd4b3f0a6f1dd2af947c4498cdf34f2_146.png)
 
-![](img/bbd4b3f0a6f1dd2af947c4498cdf34f2_147.png)
 
-![](img/bbd4b3f0a6f1dd2af947c4498cdf34f2_148.png)
 
-![](img/bbd4b3f0a6f1dd2af947c4498cdf34f2_149.png)
 
-![](img/bbd4b3f0a6f1dd2af947c4498cdf34f2_150.png)
 
 ![](img/bbd4b3f0a6f1dd2af947c4498cdf34f2_151.png)
 
@@ -259,23 +181,18 @@ Luma最初致力于3D内容创作，例如场景捕捉（Scene Capture）和3D�
 
 ![](img/bbd4b3f0a6f1dd2af947c4498cdf34f2_154.png)
 
-![](img/bbd4b3f0a6f1dd2af947c4498cdf34f2_156.png)
 
 ## 多模态学习的基石：注意力机制 🔗
 
-![](img/bbd4b3f0a6f1dd2af947c4498cdf34f2_158.png)
 
-![](img/bbd4b3f0a6f1dd2af947c4498cdf34f2_159.png)
 
 ![](img/bbd4b3f0a6f1dd2af947c4498cdf34f2_161.png)
 
-![](img/bbd4b3f0a6f1dd2af947c4498cdf34f2_162.png)
 
 ![](img/bbd4b3f0a6f1dd2af947c4498cdf34f2_164.png)
 
 扩散模型如此强大的一个关键因素是**注意力机制**，它使得模型能够学习不同模态（如文本和图像）之间的关联。
 
-![](img/bbd4b3f0a6f1dd2af947c4498cdf34f2_166.png)
 
 在一个多模态数据样本中（例如，文本“柯基犬玩喷火喇叭”和对应的图像），注意力机制的工作原理如下：
 *   文本词元作为**查询（Query）**。
@@ -284,13 +201,9 @@ Luma最初致力于3D内容创作，例如场景捕捉（Scene Capture）和3D�
 
 这种**交叉注意力**是Stable Diffusion等文生图模型的核心组件之一，它允许文本条件有效地引导图像生成。此外，**自注意力**让模型能够理解图像内部或视频帧之间的关系。
 
-![](img/bbd4b3f0a6f1dd2af947c4498cdf34f2_168.png)
 
-![](img/bbd4b3f0a6f1dd2af947c4498cdf34f2_170.png)
 
-![](img/bbd4b3f0a6f1dd2af947c4498cdf34f2_172.png)
 
-![](img/bbd4b3f0a6f1dd2af947c4498cdf34f2_174.png)
 
 ![](img/bbd4b3f0a6f1dd2af947c4498cdf34f2_175.png)
 
@@ -298,9 +211,7 @@ Luma最初致力于3D内容创作，例如场景捕捉（Scene Capture）和3D�
 
 ---
 
-![](img/bbd4b3f0a6f1dd2af947c4498cdf34f2_177.png)
 
-![](img/bbd4b3f0a6f1dd2af947c4498cdf34f2_178.png)
 
 ![](img/bbd4b3f0a6f1dd2af947c4498cdf34f2_179.png)
 
@@ -308,37 +219,23 @@ Luma最初致力于3D内容创作，例如场景捕捉（Scene Capture）和3D�
 
 ![](img/bbd4b3f0a6f1dd2af947c4498cdf34f2_182.png)
 
-![](img/bbd4b3f0a6f1dd2af947c4498cdf34f2_183.png)
 
-![](img/bbd4b3f0a6f1dd2af947c4498cdf34f2_184.png)
 
-![](img/bbd4b3f0a6f1dd2af947c4498cdf34f2_185.png)
 
-![](img/bbd4b3f0a6f1dd2af947c4498cdf34f2_186.png)
 
-![](img/bbd4b3f0a6f1dd2af947c4498cdf34f2_187.png)
 
 ![](img/bbd4b3f0a6f1dd2af947c4498cdf34f2_188.png)
 
-![](img/bbd4b3f0a6f1dd2af947c4498cdf34f2_190.png)
 
-![](img/bbd4b3f0a6f1dd2af947c4498cdf34f2_192.png)
 
-![](img/bbd4b3f0a6f1dd2af947c4498cdf34f2_193.png)
 
 ## 从图像到3D：指令微调的力量 🎯
 
-![](img/bbd4b3f0a6f1dd2af947c4498cdf34f2_195.png)
 
-![](img/bbd4b3f0a6f1dd2af947c4498cdf34f2_196.png)
 
-![](img/bbd4b3f0a6f1dd2af947c4498cdf34f2_197.png)
 
-![](img/bbd4b3f0a6f1dd2af947c4498cdf34f2_198.png)
 
-![](img/bbd4b3f0a6f1dd2af947c4498cdf34f2_200.png)
 
-![](img/bbd4b3f0a6f1dd2af947c4498cdf34f2_201.png)
 
 ![](img/bbd4b3f0a6f1dd2af947c4498cdf34f2_203.png)
 
@@ -346,7 +243,6 @@ Luma最初致力于3D内容创作，例如场景捕捉（Scene Capture）和3D�
 
 ![](img/bbd4b3f0a6f1dd2af947c4498cdf34f2_205.png)
 
-![](img/bbd4b3f0a6f1dd2af947c4498cdf34f2_206.png)
 
 这个想法借鉴了大语言模型的成功经验：先在大规模、质量一般的文本数据上预训练一个基础模型，然后在较小规模、但质量更高的指令-回答数据对上对其进行微调，模型就能学会遵循指令。
 

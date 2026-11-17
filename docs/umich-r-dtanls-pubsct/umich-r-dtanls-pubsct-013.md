@@ -119,7 +119,6 @@ print(is.na(x))  # 输出: TRUE
 
 ## 总结
 
-![](img/98a8346e18e33282d3b24aba1fed3355_25.png)
 
 ![](img/98a8346e18e33282d3b24aba1fed3355_26.png)
 

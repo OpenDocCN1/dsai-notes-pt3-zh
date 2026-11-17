@@ -1,6 +1,5 @@
 # 005：在Windows中设置工作目录 🖥️
 
-![](img/c00dae4146216be0c2f6dbb6ebef0bd2_0.png)
 
 ![](img/c00dae4146216be0c2f6dbb6ebef0bd2_0.png)
 
@@ -87,6 +86,5 @@ source("mycode.R")
 
 掌握这些技能将为后续的数据探索和分析工作打下坚实的基础。
 
-![](img/c00dae4146216be0c2f6dbb6ebef0bd2_2.png)
 
 ![](img/c00dae4146216be0c2f6dbb6ebef0bd2_2.png)

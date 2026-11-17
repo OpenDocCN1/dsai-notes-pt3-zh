@@ -1,6 +1,5 @@
 #  013：Python中的条件语句 🐍
 
-![](img/c4daeb1d8295a5c4af7b5b3cbf7d2d00_0.png)
 
 在本节课中，我们将要学习Python中条件语句的语法。具体内容包括：`if`语句、`else`关键字、`elif`代码块以及`match`语句。
 

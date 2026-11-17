@@ -6,7 +6,6 @@
 
 ## 什么是 R Markdown？ 🤔
 
-![](img/2ae9a5664e69db311d066b39dcacfe33_1.png)
 
 上一节我们介绍了课程背景，本节中我们来看看 R Markdown 是什么。
 

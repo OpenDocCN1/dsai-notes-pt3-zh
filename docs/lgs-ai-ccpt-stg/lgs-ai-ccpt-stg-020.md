@@ -1,8 +1,6 @@
 # 20：AI科学vs哲学：智能的力量 🤖🧠
 
-![](img/fa4157e23ca86ecc6163d300664ac99a_0.png)
 
-![](img/fa4157e23ca86ecc6163d300664ac99a_1.png)
 
 ![](img/fa4157e23ca86ecc6163d300664ac99a_2.png)
 

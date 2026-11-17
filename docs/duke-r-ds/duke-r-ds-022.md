@@ -1,6 +1,5 @@
 #  022：大洲人口 🌍📊
 
-![](img/9830de7d7d62590f84c1b0e006cda01a_0.png)
 
 ![](img/9830de7d7d62590f84c1b0e006cda01a_1.png)
 
@@ -134,9 +133,7 @@ ggplot(p_summary) +
 
 ## 美化图表
 
-![](img/9830de7d7d62590f84c1b0e006cda01a_3.png)
 
-![](img/9830de7d7d62590f84c1b0e006cda01a_4.png)
 
 最后，我们对图表进行美化，使其更接近目标样式：
 1.  使用 `theme_minimal()` 改变主题。
@@ -160,13 +157,10 @@ ggplot(p_summary) +
 
 渲染整个文档以确保没有错误，并且可视化效果良好。
 
-![](img/9830de7d7d62590f84c1b0e006cda01a_6.png)
 
 ## 总结
 
-![](img/9830de7d7d62590f84c1b0e006cda01a_8.png)
 
-![](img/9830de7d7d62590f84c1b0e006cda01a_9.png)
 
 ![](img/9830de7d7d62590f84c1b0e006cda01a_10.png)
 

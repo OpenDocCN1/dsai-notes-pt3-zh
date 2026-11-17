@@ -1,6 +1,5 @@
 # 每个人的 Python 第四部分 1：使用数据库进行Python编程  🗄️
 
-![](img/51863e1cfac839d0f94ce262c2f46bf2_0.png)
 
 ![](img/51863e1cfac839d0f94ce262c2f46bf2_0.png)
 

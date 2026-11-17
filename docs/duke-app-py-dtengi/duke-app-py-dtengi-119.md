@@ -10,7 +10,6 @@
 
 首先，我们需要加载必要的库并读取数据。数据来源于Siena College Research Institute关于美国总统的排名数据，包含20个维度的评分。
 
-![](img/26a4efb636ca13ed2095abaf18a7803c_2.png)
 
 ```python
 import pandas as pd
@@ -141,7 +140,6 @@ plt.tight_layout()
 plt.show()
 ```
 
-![](img/26a4efb636ca13ed2095abaf18a7803c_4.png)
 
 ## 总结
 

@@ -6,31 +6,20 @@
 
 ## 概述
 
-![](img/03cbbc2a7d2c5f3d23a03221d94aa1f3_1.png)
 
-![](img/03cbbc2a7d2c5f3d23a03221d94aa1f3_2.png)
 
-![](img/03cbbc2a7d2c5f3d23a03221d94aa1f3_3.png)
 
-![](img/03cbbc2a7d2c5f3d23a03221d94aa1f3_4.png)
 
-![](img/03cbbc2a7d2c5f3d23a03221d94aa1f3_5.png)
 
 之前我们学习了如何处理多个图。现在，我们将回到处理单个图的任务上，例如节点分类或链接预测。此时，你可能会遇到一个问题：你的图可能是动态的，会不断增长（例如社交网络中新用户的加入）。这种情况被称为 **归纳式（Inductive）** 学习。而我们之前学过的方法主要针对 **直推式（Transductive）** 学习，即假设图结构是固定不变的。GraphSAGE 的目标是开发能够同时处理这两种情况的方法。
 
-![](img/03cbbc2a7d2c5f3d23a03221d94aa1f3_6.png)
 
-![](img/03cbbc2a7d2c5f3d23a03221d94aa1f3_7.png)
 
-![](img/03cbbc2a7d2c5f3d23a03221d94aa1f3_8.png)
 
-![](img/03cbbc2a7d2c5f3d23a03221d94aa1f3_9.png)
 
-![](img/03cbbc2a7d2c5f3d23a03221d94aa1f3_10.png)
 
 例如，引文网络和评分数据可能是直推式的，而蛋白质相互作用网络则可能是归纳式的。
 
-![](img/03cbbc2a7d2c5f3d23a03221d94aa1f3_12.png)
 
 ---
 
@@ -43,35 +32,23 @@ GraphSAGE 的目标是为图中的节点生成低维向量表示（嵌入），�
 2.  **聚合（Aggregate）**：聚合邻居信息，生成该节点的单一向量表示。
 3.  **预测**：利用生成的向量进行标签预测等下游任务。
 
-![](img/03cbbc2a7d2c5f3d23a03221d94aa1f3_14.png)
 
-![](img/03cbbc2a7d2c5f3d23a03221d94aa1f3_15.png)
 
 节点可以拥有特征，这些特征可以是文本属性、节点度数，甚至是独热编码（One-hot）向量。
 
-![](img/03cbbc2a7d2c5f3d23a03221d94aa1f3_16.png)
 
-![](img/03cbbc2a7d2c5f3d23a03221d94aa1f3_17.png)
 
-![](img/03cbbc2a7d2c5f3d23a03221d94aa1f3_18.png)
 
-![](img/03cbbc2a7d2c5f3d23a03221d94aa1f3_19.png)
 
-![](img/03cbbc2a7d2c5f3d23a03221d94aa1f3_20.png)
 
 ---
 
-![](img/03cbbc2a7d2c5f3d23a03221d94aa1f3_21.png)
 
-![](img/03cbbc2a7d2c5f3d23a03221d94aa1f3_22.png)
 
-![](img/03cbbc2a7d2c5f3d23a03221d94aa1f3_23.png)
 
-![](img/03cbbc2a7d2c5f3d23a03221d94aa1f3_24.png)
 
 ## 算法流程详解 ⚙️
 
-![](img/03cbbc2a7d2c5f3d23a03221d94aa1f3_25.png)
 
 从宏观上看，GraphSAGE 的工作流程如下：你有一个包含许多节点的图，每个节点都有一些特征。你设定一个参数 K，决定聚合多少跳（hop）以内的邻居信息。算法中包含可学习的权重矩阵和非线性激活函数，这是神经网络能够学习的关键。此外，你需要定义一个可微分的聚合器函数。
 
@@ -87,31 +64,20 @@ GraphSAGE 的目标是为图中的节点生成低维向量表示（嵌入），�
 
 如果 K=2，这意味着一个节点的最终表示融合了其两跳以内所有邻居的信息。这个过程与我们之前学过的图卷积网络（GCN）有相似之处，都是通过聚合邻居信息来更新节点表示。
 
-![](img/03cbbc2a7d2c5f3d23a03221d94aa1f3_27.png)
 
-![](img/03cbbc2a7d2c5f3d23a03221d94aa1f3_28.png)
 
-![](img/03cbbc2a7d2c5f3d23a03221d94aa1f3_29.png)
 
-![](img/03cbbc2a7d2c5f3d23a03221d94aa1f3_30.png)
 
-![](img/03cbbc2a7d2c5f3d23a03221d94aa1f3_31.png)
 
 ---
 
-![](img/03cbbc2a7d2c5f3d23a03221d94aa1f3_32.png)
 
-![](img/03cbbc2a7d2c5f3d23a03221d94aa1f3_33.png)
 
-![](img/03cbbc2a7d2c5f3d23a03221d94aa1f3_34.png)
 
-![](img/03cbbc2a7d2c5f3d23a03221d94aa1f3_35.png)
 
-![](img/03cbbc2a7d2c5f3d23a03221d94aa1f3_36.png)
 
 ## 聚合器函数 🔄
 
-![](img/03cbbc2a7d2c5f3d23a03221d94aa1f3_37.png)
 
 GraphSAGE 的关键创新在于提出了新的聚合器函数。我们之前见过简单的**均值聚合器**，其操作类似于 GCN：先对自身和邻居的表示取平均，然后乘以权重矩阵，最后应用非线性激活。
 
@@ -125,35 +91,23 @@ GraphSAGE 论文中引入了一种新的 **池化聚合器（Pooling Aggregator�
 `AGGREGATE_{pool} = max({σ(W * h_i + b), for each neighbor i})`
 其中，`σ` 是非线性激活函数，`W` 和 `b` 是可学习参数，`max` 是逐元素取最大值操作。
 
-![](img/03cbbc2a7d2c5f3d23a03221d94aa1f3_39.png)
 
 ---
 
-![](img/03cbbc2a7d2c5f3d23a03221d94aa1f3_40.png)
 
-![](img/03cbbc2a7d2c5f3d23a03221d94aa1f3_41.png)
 
-![](img/03cbbc2a7d2c5f3d23a03221d94aa1f3_42.png)
 
-![](img/03cbbc2a7d2c5f3d23a03221d94aa1f3_43.png)
 
-![](img/03cbbc2a7d2c5f3d23a03221d94aa1f3_44.png)
 
 ## 如何保持图结构？ 🕸️
 
-![](img/03cbbc2a7d2c5f3d23a03221d94aa1f3_45.png)
 
-![](img/03cbbc2a7d2c5f3d23a03221d94aa1f3_46.png)
 
-![](img/03cbbc2a7d2c5f3d23a03221d94aa1f3_47.png)
 
-![](img/03cbbc2a7d2c5f3d23a03221d94aa1f3_48.png)
 
 为了在嵌入中保持图的结构信息，GraphSAGE 在训练时采用了一种基于**负采样（Negative Sampling）** 的无监督损失函数。
 
-![](img/03cbbc2a7d2c5f3d23a03221d94aa1f3_49.png)
 
-![](img/03cbbc2a7d2c5f3d23a03221d94aa1f3_50.png)
 
 其思想是：
 *   **正样本**：对于每个节点，与其直接相连的邻居节点被视为正样本。算法会提高这些节点对之间表示向量的相似度。
@@ -165,7 +119,6 @@ GraphSAGE 论文中引入了一种新的 **池化聚合器（Pooling Aggregator�
 `L = -log(σ(z_u^T * z_v)) - Q * E_{v_n ~ P_n} [log(σ(-z_u^T * z_{v_n}))]`
 其中，`z` 是节点嵌入，`(u, v)` 是正样本对，`v_n` 是从负采样分布 `P_n` 中采样的 Q 个负样本节点。
 
-![](img/03cbbc2a7d2c5f3d23a03221d94aa1f3_52.png)
 
 ![](img/03cbbc2a7d2c5f3d23a03221d94aa1f3_53.png)
 

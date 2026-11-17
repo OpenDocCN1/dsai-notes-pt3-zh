@@ -153,6 +153,5 @@
 
 ---
 
-![](img/61ad2eba8e9a78ddf4839f902c302b49_3.png)
 
 ![](img/61ad2eba8e9a78ddf4839f902c302b49_3.png)

@@ -10,30 +10,21 @@ SpecAugment 直接在语音的梅尔频谱图上进行操作，通过三种主�
 
 首先，我们来看第一种增强方法：时间扭曲。其核心思想是在频谱图上选取几个锚点，然后随机移动其中一个点，从而在时间维度上扭曲语音信号。
 
-![](img/6eaeb94bacae4f8d3d1b3b1bb6170842_1.png)
 
-![](img/6eaeb94bacae4f8d3d1b3b1bb6170842_2.png)
 
-![](img/6eaeb94bacae4f8d3d1b3b1bb6170842_3.png)
 
 以下是时间扭曲的实现步骤：
 
-![](img/6eaeb94bacae4f8d3d1b3b1bb6170842_4.png)
 
-![](img/6eaeb94bacae4f8d3d1b3b1bb6170842_5.png)
 
-![](img/6eaeb94bacae4f8d3d1b3b1bb6170842_6.png)
 
 1.  在频谱图上选取六个锚点。
 2.  随机选择其中一个锚点。
 3.  将该锚点在时间轴上向左或向右随机移动一定距离。
 4.  移动的距离 `w` 是一个超参数，从均匀分布 `Uniform(0, W)` 中随机采样。
 
-![](img/6eaeb94bacae4f8d3d1b3b1bb6170842_7.png)
 
-![](img/6eaeb94bacae4f8d3d1b3b1bb6170842_8.png)
 
-![](img/6eaeb94bacae4f8d3d1b3b1bb6170842_9.png)
 
 在实现上，例如在 TensorFlow 中，可以使用 `sparse_image_warp` 函数来方便地应用这种扭曲。
 
@@ -50,39 +41,27 @@ SpecAugment 直接在语音的梅尔频谱图上进行操作，通过三种主�
 用公式表示，即对频谱图 `S` 进行操作：
 `S[f0:f0+F, :] = 0`
 
-![](img/6eaeb94bacae4f8d3d1b3b1bb6170842_11.png)
 
-![](img/6eaeb94bacae4f8d3d1b3b1bb6170842_12.png)
 
 ## 时间掩码
 
-![](img/6eaeb94bacae4f8d3d1b3b1bb6170842_13.png)
 
-![](img/6eaeb94bacae4f8d3d1b3b1bb6170842_14.png)
 
-![](img/6eaeb94bacae4f8d3d1b3b1bb6170842_15.png)
 
 接下来是第三种增强方法：时间掩码。其原理与频率掩码类似，但操作方向是在时间维度上。
 
-![](img/6eaeb94bacae4f8d3d1b3b1bb6170842_16.png)
 
-![](img/6eaeb94bacae4f8d3d1b3b1bb6170842_17.png)
 
-![](img/6eaeb94bacae4f8d3d1b3b1bb6170842_18.png)
 
 以下是时间掩码的实现细节：
 
-![](img/6eaeb94bacae4f8d3d1b3b1bb6170842_19.png)
 
-![](img/6eaeb94bacae4f8d3d1b3b1bb6170842_20.png)
 
-![](img/6eaeb94bacae4f8d3d1b3b1bb6170842_21.png)
 
 *   确定要遮蔽的时间帧数量 `T`，这是一个超参数。
 *   随机选择一个起始时间点 `t0`。
 *   将从 `t0` 开始的连续 `T` 个时间帧的值置为零或某个极小值。
 
-![](img/6eaeb94bacae4f8d3d1b3b1bb6170842_22.png)
 
 用公式表示，即对频谱图 `S` 进行操作：
 `S[:, t0:t0+T] = 0`
@@ -105,17 +84,12 @@ SpecAugment 直接在语音的梅尔频谱图上进行操作，通过三种主�
 *   `mT`：时间掩码的应用次数。
 *   `p`：应用某种掩码的概率。
 
-![](img/6eaeb94bacae4f8d3d1b3b1bb6170842_24.png)
 
-![](img/6eaeb94bacae4f8d3d1b3b1bb6170842_25.png)
 
-![](img/6eaeb94bacae4f8d3d1b3b1bb6170842_26.png)
 
-![](img/6eaeb94bacae4f8d3d1b3b1bb6170842_27.png)
 
 通过组合这些操作，我们可以生成多种增强后的频谱图样本，从而有效扩充训练数据集。
 
-![](img/6eaeb94bacae4f8d3d1b3b1bb6170842_28.png)
 
 ![](img/6eaeb94bacae4f8d3d1b3b1bb6170842_29.png)
 

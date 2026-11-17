@@ -2,7 +2,6 @@
 
 ![](img/796f73d372cad3efb0084795cc36e0f1_0.png)
 
-![](img/796f73d372cad3efb0084795cc36e0f1_1.png)
 
 在本节课中，我们将学习如何使用Python来执行SQL数据库操作。我们将涵盖建立连接、创建表、插入数据以及查询数据等核心步骤，并介绍如何安全地执行这些操作。
 
@@ -68,7 +67,6 @@ cur = conn.cursor()
     conn.close()
     ```
 
-![](img/796f73d372cad3efb0084795cc36e0f1_3.png)
 
 ![](img/796f73d372cad3efb0084795cc36e0f1_4.png)
 

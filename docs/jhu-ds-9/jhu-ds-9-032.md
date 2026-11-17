@@ -24,10 +24,8 @@ install.packages("leaflet")
 
 以下是创建一张基础世界地图的代码：
 
-![](img/af88618cf8866b96b26eec3a008ffe65_3.png)
 
 
-![](img/af88618cf8866b96b26eec3a008ffe65_5.png)
 
 ```r
 library(leaflet)
@@ -47,9 +45,7 @@ m
 上面简洁的代码与下面这段更传统的代码完全等效：
 
 
-![](img/af88618cf8866b96b26eec3a008ffe65_9.png)
 
-![](img/af88618cf8866b96b26eec3a008ffe65_10.png)
 
 ```r
 library(leaflet)

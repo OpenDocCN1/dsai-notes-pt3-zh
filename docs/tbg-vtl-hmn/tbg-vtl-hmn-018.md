@@ -1,6 +1,5 @@
 # 018：基于顶点的服装表示与注册
 
-![](img/5079b41551c9ea7ef2c5a3b72d7fb5e7_0.png)
 
 ![](img/5079b41551c9ea7ef2c5a3b72d7fb5e7_0.png)
 
@@ -101,6 +100,5 @@ ClothCap工作的输入是一系列由4D扫描仪捕捉的运动中的三维扫�
 
 ---
 
-![](img/5079b41551c9ea7ef2c5a3b72d7fb5e7_2.png)
 
 ![](img/5079b41551c9ea7ef2c5a3b72d7fb5e7_2.png)

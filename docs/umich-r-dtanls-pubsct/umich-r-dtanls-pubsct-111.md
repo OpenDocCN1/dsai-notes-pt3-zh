@@ -60,7 +60,6 @@
 
 ![](img/01d9c08c6f1fdc00be79187518ff19a7_12.png)
 
-![](img/01d9c08c6f1fdc00be79187518ff19a7_5.png)
 
 ![](img/01d9c08c6f1fdc00be79187518ff19a7_14.png)
 

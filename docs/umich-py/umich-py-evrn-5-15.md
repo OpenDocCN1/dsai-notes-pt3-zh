@@ -10,19 +10,13 @@
 
 我们已经运行了`gmane.py`脚本，成功抓取了约60，000封邮件数据，并存放在`content.sqlite`数据库中。通过数据库浏览器，我们可以看到每条记录都包含邮件头、主题、发件人地址和邮件正文等原始信息。
 
-![](img/9cd60d122c11bbd1e95321fd294df8d5_1.png)
 
-![](img/9cd60d122c11bbd1e95321fd294df8d5_2.png)
 
-![](img/9cd60d122c11bbd1e95321fd294df8d5_3.png)
 
-![](img/9cd60d122c11bbd1e95321fd294df8d5_5.png)
 
-![](img/9cd60d122c11bbd1e95321fd294df8d5_6.png)
 
 ## 数据清洗与建模脚本：`gmodel.py`
 
-![](img/9cd60d122c11bbd1e95321fd294df8d5_7.png)
 
 现在，我们将重点分析数据清洗和建模的核心脚本`gmodel.py`。这个脚本的任务是读取原始的`content.sqlite`，经过一系列处理后，生成一个规范化的`index.sqlite`数据库。
 
@@ -50,21 +44,16 @@
 
 运行`gmodel.py`脚本需要约3分钟来处理60，000封邮件。虽然需要计算时间进行压缩，但最终得到的`index.sqlite`数据库体积更小，结构更清晰。
 
-![](img/9cd60d122c11bbd1e95321fd294df8d5_9.png)
 
-![](img/9cd60d122c11bbd1e95321fd294df8d5_11.png)
 
-![](img/9cd60d122c11bbd1e95321fd294df8d5_13.png)
 
 处理完成后，我们比较两个数据库：
 *   `content.sqlite`：约1.2GB，包含原始、未规范化的数据。
 *   `index.sqlite`：约263MB，是一个完全规范化的数据库，文本内容已被压缩。
 
-![](img/9cd60d122c11bbd1e95321fd294df8d5_14.png)
 
 在数据库浏览器中查看`index.sqlite`，可以看到规范化的表结构以及高效的外键关联。虽然邮件头和正文因压缩而无法直接阅读，但这种设计极大地节省了存储空间并提升了后续数据读取和分析的速度。
 
-![](img/9cd60d122c11bbd1e95321fd294df8d5_16.png)
 
 ![](img/9cd60d122c11bbd1e95321fd294df8d5_17.png)
 

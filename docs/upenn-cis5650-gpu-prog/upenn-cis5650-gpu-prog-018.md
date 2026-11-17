@@ -22,9 +22,7 @@
 
 ![](img/6cb40ed497ae887648330cfbd738ac69_10.png)
 
-![](img/6cb40ed497ae887648330cfbd738ac69_12.png)
 
-![](img/6cb40ed497ae887648330cfbd738ac69_14.png)
 
 以下是构建图形管道命令缓冲区的核心代码示例：
 
@@ -149,7 +147,6 @@ Vulkan提供了不同的同步原语：
 
 ![](img/6cb40ed497ae887648330cfbd738ac69_54.png)
 
-![](img/6cb40ed497ae887648330cfbd738ac69_56.png)
 
 ![](img/6cb40ed497ae887648330cfbd738ac69_58.png)
 
@@ -194,7 +191,6 @@ vkResetFences(device, 1, &computeFence); // 重置栅栏状态
 
 信号量主要用于管理GPU到GPU的同步，尤其是在**不同队列之间**。例如，如果我们希望图形队列等待计算队列完成工作，就需要使用信号量。
 
-![](img/6cb40ed497ae887648330cfbd738ac69_68.png)
 
 与栅栏类似，信号量也有已发出信号和未发出信号的状态。在向队列提交工作时，可以指定一个信号量，当该提交中的所有操作完成时，该信号量会被发出信号。同时，可以指定某个阶段等待该信号量被发出信号后再继续。
 
@@ -209,7 +205,6 @@ vkResetFences(device, 1, &computeFence); // 重置栅栏状态
 
 ![](img/6cb40ed497ae887648330cfbd738ac69_74.png)
 
-![](img/6cb40ed497ae887648330cfbd738ac69_76.png)
 
 ```cpp
 // 计算队列提交信息，设置完成后发出信号的信号量
@@ -323,7 +318,6 @@ dependency.dstAccessMask = VK_ACCESS_DEPTH_STENCIL_ATTACHMENT_READ_BIT;
 
 事件提供了更精细的控制，允许你在管道屏障之间执行一些工作。你可以设置一个事件，执行一些工作，然后等待该事件。不过，事件的使用相对复杂，在此不做深入讨论。
 
-![](img/6cb40ed497ae887648330cfbd738ac69_109.png)
 
 ## 资源销毁与调试 🗑️
 

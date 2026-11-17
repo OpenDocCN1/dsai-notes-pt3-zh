@@ -4,13 +4,10 @@
 
 ## 概述
 
-![](img/8a2ea851bd370c3a67d2ecab3aa97577_1.png)
 
-![](img/8a2ea851bd370c3a67d2ecab3aa97577_2.png)
 
 上一节我们介绍了数据探索的重要性。本节中，我们来看看如何对预测变量进行预处理。预处理对于基于模型的算法（如线性判别分析、朴素贝叶斯、线性回归等）尤其重要，因为这些算法对数据的分布和尺度较为敏感。通过预处理，我们可以使数据更符合算法的假设，从而获得更好的预测结果。
 
-![](img/8a2ea851bd370c3a67d2ecab3aa97577_3.png)
 
 ## 为何需要预处理？🔍
 
@@ -19,10 +16,8 @@
 以下是加载数据和查看变量分布的一个例子：
 
 
-![](img/8a2ea851bd370c3a67d2ecab3aa97577_5.png)
 
 
-![](img/8a2ea851bd370c3a67d2ecab3aa97577_7.png)
 
 ```r
 # 加载必要的包和数据
@@ -41,7 +36,6 @@ hist(training$capitalAve, main="", xlab="连续大写字母的平均长度")
 
 该变量的均值约为4.7，但标准差非常大，表明其变异性极高。因此，我们可能需要进行预处理，以防止机器学习算法被其偏斜和高变异性所误导。
 
-![](img/8a2ea851bd370c3a67d2ecab3aa97577_9.png)
 
 ## 标准化变量 📏
 
@@ -50,7 +44,6 @@ hist(training$capitalAve, main="", xlab="连续大写字母的平均长度")
 **标准化公式**：
 `标准化值 = (原始值 - 均值) / 标准差`
 
-![](img/8a2ea851bd370c3a67d2ecab3aa97577_11.png)
 
 执行此操作后，变量的均值将变为0，标准差将变为1。这可以显著减少我们之前看到的变异性，并在一定程度上统一变量的尺度。
 
@@ -60,20 +53,14 @@ hist(training$capitalAve, main="", xlab="连续大写字母的平均长度")
 
 `caret` 包中的 `preProcess` 函数可以自动完成许多标准化工作。
 
-![](img/8a2ea851bd370c3a67d2ecab3aa97577_13.png)
 
 以下是使用 `preProcess` 函数进行中心化和缩放的示例：
 
-![](img/8a2ea851bd370c3a67d2ecab3aa97577_15.png)
-
-![](img/8a2ea851bd370c3a67d2ecab3aa97577_16.png)
-
-![](img/8a2ea851bd370c3a67d2ecab3aa97577_17.png)
 
 
-![](img/8a2ea851bd370c3a67d2ecab3aa97577_18.png)
 
-![](img/8a2ea851bd370c3a67d2ecab3aa97577_20.png)
+
+
 
 ```r
 # 对训练集预测变量进行预处理（不包括第58列的结果变量）
@@ -86,17 +73,13 @@ mean(trainCapAveS) # 应接近0
 sd(trainCapAveS)   # 应接近1
 ```
 
-![](img/8a2ea851bd370c3a67d2ecab3aa97577_22.png)
 
-![](img/8a2ea851bd370c3a67d2ecab3aa97577_23.png)
 
 `preProcess` 函数可以执行许多过去需要手动完成的预处理技术。
 
 ## 将预处理应用于测试集 🔄
 
-![](img/8a2ea851bd370c3a67d2ecab3aa97577_25.png)
 
-![](img/8a2ea851bd370c3a67d2ecab3aa97577_26.png)
 
 我们可以使用在训练集上创建的预处理对象，将相同的转换应用于测试集。
 
@@ -111,15 +94,11 @@ sd(testCapAveS)
 
 在预处理后的测试集数据中，任何变量的均值都不会恰好等于0，标准差也不会恰好等于1，但由于我们使用了训练集的值进行标准化，它们应该接近这些值。
 
-![](img/8a2ea851bd370c3a67d2ecab3aa97577_28.png)
 
 ## 在 `train` 函数中直接预处理 🚀
 
-![](img/8a2ea851bd370c3a67d2ecab3aa97577_29.png)
 
-![](img/8a2ea851bd370c3a67d2ecab3aa97577_30.png)
 
-![](img/8a2ea851bd370c3a67d2ecab3aa97577_31.png)
 
 你还可以将预处理命令作为参数直接传递给 `caret` 包中的 `train` 函数。
 
@@ -136,19 +115,13 @@ modelFit
 
 ## 其他类型的转换：Box-Cox 变换 📈
 
-![](img/8a2ea851bd370c3a67d2ecab3aa97577_33.png)
 
-![](img/8a2ea851bd370c3a67d2ecab3aa97577_34.png)
 
-![](img/8a2ea851bd370c3a67d2ecab3aa97577_35.png)
 
-![](img/8a2ea851bd370c3a67d2ecab3aa97577_36.png)
 
-![](img/8a2ea851bd370c3a67d2ecab3aa97577_37.png)
 
 除了中心化和缩放，你还可以使用其他类型的转换。Box-Cox 变换就是一组转换方法，它试图将连续数据转换为更接近正态分布的数据，这是通过最大似然估计一组特定参数来实现的。
 
-![](img/8a2ea851bd370c3a67d2ecab3aa97577_38.png)
 
 以下是应用 Box-Cox 变换的示例：
 
@@ -171,7 +144,6 @@ qqnorm(trainCapAveS)
 
 以下是使用 K-最近邻插补的步骤：
 
-![](img/8a2ea851bd370c3a67d2ecab3aa97577_40.png)
 
 1.  在数据中随机创建一些缺失值以进行演示。
 2.  使用 `preProcess` 函数进行 K-最近邻插补。
@@ -196,9 +168,7 @@ imputed <- capAve[selectNA]
 quantile(truth - imputed) # 查看差值分位数
 ```
 
-![](img/8a2ea851bd370c3a67d2ecab3aa97577_42.png)
 
-![](img/8a2ea851bd370c3a67d2ecab3aa97577_43.png)
 
 通过比较插补值与原始值，我们可以评估插补的效果。通常，差值应接近0，表明插补效果良好。
 
@@ -215,9 +185,7 @@ quantile(truth - imputed) # 查看差值分位数
 
 ## 总结
 
-![](img/8a2ea851bd370c3a67d2ecab3aa97577_45.png)
 
-![](img/8a2ea851bd370c3a67d2ecab3aa97577_46.png)
 
 本节课中，我们一起学习了预测变量的基本预处理技术。我们探讨了为何需要预处理，介绍了标准化变量（中心化和缩放）的方法，并演示了如何使用 `caret` 包的 `preProcess` 函数自动化这一过程。我们还了解了如何将预处理对象应用于测试集，以及在 `train` 函数中直接集成预处理步骤。此外，我们介绍了 Box-Cox 变换来处理偏斜数据，以及使用 K-最近邻插补来处理缺失值。最后，我们强调了保持训练集与测试集预处理一致性的核心原则。掌握这些预处理技能，将为构建更稳健、更准确的机器学习模型奠定坚实基础。
 

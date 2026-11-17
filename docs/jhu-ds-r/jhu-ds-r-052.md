@@ -28,11 +28,9 @@
 
 我们将从一个非常简单的函数开始：将两个数字相加。这个函数没有复杂的实际用途，但它能清晰地展示R函数的基本语法、如何指定参数以及如何返回值。
 
-![](img/92bfcb568763c8fb1dcbdbf9beeaa98c_4.png)
 
 以下是创建该函数的步骤：
 
-![](img/92bfcb568763c8fb1dcbdbf9beeaa98c_6.png)
 
 1.  使用 `function` 指令定义函数。
 2.  为函数指定两个参数，例如 `x` 和 `y`。
@@ -63,9 +61,7 @@ add2 <- function(x, y) {
 2.  在函数体内，创建一个逻辑向量，判断 `x` 中哪些元素大于 `n`。
 3.  使用这个逻辑向量对 `x` 进行子集筛选，返回符合条件的元素。
 
-![](img/92bfcb568763c8fb1dcbdbf9beeaa98c_8.png)
 
-![](img/92bfcb568763c8fb1dcbdbf9beeaa98c_10.png)
 
 以下是该函数的代码：
 
@@ -76,7 +72,6 @@ above <- function(x, n) {
 }
 ```
 
-![](img/92bfcb568763c8fb1dcbdbf9beeaa98c_12.png)
 
 调用这个函数时，你需要提供向量和阈值。例如：
 ```r
@@ -91,7 +86,6 @@ above(x, 12)
 
 修改后的函数代码如下：
 
-![](img/92bfcb568763c8fb1dcbdbf9beeaa98c_14.png)
 
 ```r
 above <- function(x, n = 10) {
@@ -133,7 +127,6 @@ columnmean <- function(y) {
 
 在计算均值时，数据中可能存在缺失值（NA）。R的 `mean` 函数有一个 `na.rm` 参数，用于指定是否在计算前移除缺失值。我们可以为我们的函数也添加这个功能。
 
-![](img/92bfcb568763c8fb1dcbdbf9beeaa98c_16.png)
 
 1.  在函数参数中添加 `removeNA`，并设置默认值为 `TRUE`。
 2.  在循环内部调用 `mean` 函数时，将 `removeNA` 参数的值传递给它。

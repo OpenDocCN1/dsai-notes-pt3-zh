@@ -1,6 +1,5 @@
 # 大型语言模型实践（高级数据工程、AWS、Databricks和本地LLM）：P6：06_01_06_RabbitMQ的用例 🐇
 
-![](img/e78408070af2270ba000ccbbe8526b81_0.png)
 
 ![](img/e78408070af2270ba000ccbbe8526b81_0.png)
 

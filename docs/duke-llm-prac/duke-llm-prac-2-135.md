@@ -1,6 +1,5 @@
 # 大型语言模型实践（高级数据工程、AWS、Databricks和本地LLM）：P135：34_02_03_使用作业编排工作负载
 
-![](img/f29164bece5f3a7273cd91b00b7f48d7_0.png)
 
 ![](img/f29164bece5f3a7273cd91b00b7f48d7_0.png)
 

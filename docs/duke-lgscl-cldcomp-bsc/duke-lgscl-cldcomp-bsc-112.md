@@ -81,17 +81,14 @@ def make_change(request):
 
 测试成功后，函数将返回计算结果，例如 `{"quarters": 5, "dimes": 0, "nickels": 1, "pennies": 4}`。我们可以尝试输入不同的金额进行多次测试，以验证其功能。
 
-![](img/a6b99e843175d584f34f21a7c95650c0_1.png)
 
 ## 通过命令行调用函数
 
 除了在 Web 控制台测试，我们还可以通过命令行工具调用此函数。这展示了 Cloud Functions 如何集成到自动化工作流中。
 
-![](img/a6b99e843175d584f34f21a7c95650c0_3.png)
 
 以下是使用 `gcloud` 命令行工具调用函数的步骤：
 
-![](img/a6b99e843175d584f34f21a7c95650c0_4.png)
 
 1.  打开 Cloud Shell。
 2.  使用以下命令格式调用函数，并传递 `amount` 参数：
@@ -106,11 +103,9 @@ def make_change(request):
 
 由于我们的函数配置了 HTTP 触发器且允许未经身份验证的调用，因此任何能访问互联网的设备都可以通过 HTTP POST 请求来调用它。
 
-![](img/a6b99e843175d584f34f21a7c95650c0_6.png)
 
 以下是使用 `curl` 命令从外部调用的方法：
 
-![](img/a6b99e843175d584f34f21a7c95650c0_7.png)
 
 1.  在函数详情页找到并复制其触发 URL。
 2.  在命令行中使用 `curl` 命令向该 URL 发送 POST 请求和 JSON 数据：

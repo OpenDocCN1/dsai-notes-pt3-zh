@@ -1,6 +1,5 @@
 # 大型语言模型实践（高级数据工程、AWS、Databricks和本地LLM）：P130：29_02_05_持续管道与触发式管道对比
 
-![](img/1886ff8305918ebee12e041fba8a6e57_0.png)
 
 ![](img/1886ff8305918ebee12e041fba8a6e57_0.png)
 

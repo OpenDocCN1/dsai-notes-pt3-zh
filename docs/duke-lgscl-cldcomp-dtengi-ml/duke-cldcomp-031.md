@@ -34,7 +34,6 @@
 
 ## 配置GitHub Actions实现CI/CD 🔄
 
-![](img/626b88a94bfb8da22ca1aa77becbc3f6_6.png)
 
 上一节我们搭建了云端开发环境，本节中我们来看看如何配置自动化构建流程。
 
@@ -62,13 +61,10 @@
 
 ![](img/626b88a94bfb8da22ca1aa77becbc3f6_14.png)
 
-![](img/626b88a94bfb8da22ca1aa77becbc3f6_16.png)
 
 上一节我们的CI流程因缺少文件而失败，本节中我们来完善项目的基础结构。
 
-![](img/626b88a94bfb8da22ca1aa77becbc3f6_18.png)
 
-![](img/626b88a94bfb8da22ca1aa77becbc3f6_20.png)
 
 现在，我需要回到Codespaces环境中，创建项目所需的基础文件，以便 `make install` 能够成功执行。
 
@@ -78,7 +74,6 @@
 
 ![](img/626b88a94bfb8da22ca1aa77becbc3f6_24.png)
 
-![](img/626b88a94bfb8da22ca1aa77becbc3f6_26.png)
 
 以下是 `Makefile` 的核心内容：
 
@@ -189,7 +184,6 @@ def test_search():
 
 ![](img/626b88a94bfb8da22ca1aa77becbc3f6_30.png)
 
-![](img/626b88a94bfb8da22ca1aa77becbc3f6_31.png)
 
 ## 体验CI/CD的价值：拦截错误代码 🚨
 

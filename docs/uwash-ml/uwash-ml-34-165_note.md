@@ -20,7 +20,6 @@
 
 ![](img/9f98b5d21bee6d74f51fa20b334ae3d8_3.png)
 
-![](img/9f98b5d21bee6d74f51fa20b334ae3d8_4.png)
 
 ---
 

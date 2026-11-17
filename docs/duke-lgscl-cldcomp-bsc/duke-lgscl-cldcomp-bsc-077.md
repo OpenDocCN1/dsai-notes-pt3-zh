@@ -22,7 +22,6 @@
 gcloud compute instances create gce-lab --machine-type n1-standard-2 --zone us-central1-a
 ```
 
-![](img/f1a09e1b08e3e57088fe6b89dd4372d8_1.png)
 
 *   **`gcloud compute instances create gce-lab`**: 这是创建虚拟机实例的核心命令，`gce-lab`是我们为实例指定的名称。
 *   **`--machine-type n1-standard-2`**: 此参数定义了虚拟机的规格，`n1-standard-2`代表一种标准配置的机型。
@@ -48,7 +47,6 @@ gcloud compute instances create gce-lab --machine-type n1-standard-2 --zone us-c
 apt-get update
 ```
 
-![](img/f1a09e1b08e3e57088fe6b89dd4372d8_3.png)
 
 接下来，我们安装Nginx Web服务器。在Ubuntu系统中，我们使用`apt-get`包管理器来安装软件。安装Nginx的命令是：
 

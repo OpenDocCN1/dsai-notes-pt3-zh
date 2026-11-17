@@ -91,10 +91,8 @@ def lambda_handler(event, context):
 
 本节课中我们一起学习了AWS Step Functions的核心用法。我们了解到，Step Functions是编排Lambda函数构建复杂工作流的强大工具。通过“Hello World”示例，我们学会了创建、执行和调试状态机的基本方法。通过“Marco Polo”示例，我们进一步掌握了如何设计让数据在不同状态间传递的工作流，并利用可视化工具进行高效的故障排查。总之，Step Functions是学习Lambda函数组合和构建健壮无服务器应用的重要途径。
 
-![](img/989f7bec68b6ac460911340439ce8895_1.png)
 
 ![](img/989f7bec68b6ac460911340439ce8895_1.png)
 
-![](img/989f7bec68b6ac460911340439ce8895_2.png)
 
 ![](img/989f7bec68b6ac460911340439ce8895_2.png)

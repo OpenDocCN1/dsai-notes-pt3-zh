@@ -1,6 +1,5 @@
 # 049：构建自己的Shiny应用程序 🛠️
 
-![](img/1ae94ec7d2f45ad8eea34d8a0f902d25_1.png)
 
 ## 概述
 

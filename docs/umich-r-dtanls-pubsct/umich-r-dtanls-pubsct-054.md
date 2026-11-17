@@ -69,7 +69,6 @@
 
 ![](img/ef9a787b3b36d939769b07e42bba1654_16.png)
 
-![](img/ef9a787b3b36d939769b07e42bba1654_17.png)
 
 ![](img/ef9a787b3b36d939769b07e42bba1654_18.png)
 

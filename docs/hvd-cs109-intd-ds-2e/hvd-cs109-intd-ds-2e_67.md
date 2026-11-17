@@ -116,7 +116,6 @@ $$ \log\frac{p(\mathbf{x})}{1-p(\mathbf{x})} = \beta_0 + \beta_1 x_1 + \beta_2 x
 
 我们已经将真实的 $p(\mathbf{x})$ 存储在`mnist_27`中，可以将其作为图像绘制。我们绘制一条曲线，将 $p(\mathbf{x}) > 0.5$ 的 $\mathbf{x}$ 值与 $p(\mathbf{x}) < 0.5$ 的 $\mathbf{x}$ 值分开：
 
-![](img/2877590c71ff929da2167887ad18e5e3.png)
 
 要开始理解回归的局限性，首先要注意，因为 $p(\mathbf{x}) = 0.5 \iff \log p(\mathbf{x})/(1-p(\mathbf{x})) = 0$，使用 GLM $\hat{p}(\mathbf{x})$，由 $p(\mathbf{x}) = 0.5$ 定义的边界必须满足：
 
@@ -138,7 +137,6 @@ $$ \hat{\beta}_0 + \hat{\beta}_1 x_1 + \hat{\beta}_2 x_2 = 0 \implies x_2 = -\ha
 polls_2008 |> ggplot(aes(day, margin)) + geom_point()
 ```
 
-![图片](img/479d1cbf716d71f6cb543eec9fb47a3e.png)**  **稍后我们将学习如何将平滑思想扩展到更高维度。
 
 在民调示例中，不要将其视为预测问题。相反，我们只是对学习趋势的形状感兴趣，一旦我们有了所有数据。
 
@@ -150,7 +148,6 @@ $$ Y_i = f(x_i) + \varepsilon_i $$
 
 让我们首先使用回归，因为这是我们迄今为止学到的唯一适用于此类数据的方法。以下是我们的估计：
 
-![图片](img/c9784dcc56df03f05fa10b75fc70ab5d.png)
 
 拟合的回归线似乎并不能很好地描述趋势。例如，在 9 月 4 日（第-62 天），共和党全国代表大会举行，数据表明这给了约翰·麦凯恩在民调中的提升。然而，回归线并没有捕捉到这种潜在的趋势。为了更清楚地看到** **拟合不足** **，我们注意到位于拟合线（蓝色）上方的点以及位于下方的点（红色）在每天并不是均匀分布的。因此，我们需要一个替代的、更灵活的方法。
 
@@ -307,7 +304,6 @@ fit_2 <- loess(margin ~ day, span = span, data = polls_2008)
  geom_line(aes(day, smooth_2), color = "orange", lty = 1) 
 ```
 
-![](img/4ea5fc0f23c8e9c0c5f38c0a20906041.png)*  *`degree = 2`给我们带来了更多波动的结果。一般来说，我们实际上更喜欢`degree = 1`，因为它不太容易受到这种噪声的影响。
 
 ### 注意默认平滑参数
 
@@ -319,7 +315,6 @@ polls_2008 |> ggplot(aes(day, margin)) +
  geom_smooth(method = loess, formula = y ~ x)
 ```
 
-![](img/d0602050c455106cbf394a3df6133e46.png)*  *但是要注意默认参数，因为它们很少是最优的。然而，你可以方便地更改。例如，使用`loess`你可以使用以下代码：
 
 ```r
 polls_2008 |> ggplot(aes(day, margin)) +

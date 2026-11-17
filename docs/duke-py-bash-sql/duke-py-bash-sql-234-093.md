@@ -1,6 +1,5 @@
 #  093：什么是SQLite 🗄️
 
-![](img/6341c4677eedb27daff7a9478673f0a4_0.png)
 
 ![](img/6341c4677eedb27daff7a9478673f0a4_1.png)
 

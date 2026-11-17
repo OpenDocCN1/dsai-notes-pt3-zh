@@ -6,11 +6,9 @@
 
 ---
 
-![](img/d44e8adbfaf152964f41b7017956bdf9_1.png)
 
 ### 创建自定义输出解析器的两种方法
 
-![](img/d44e8adbfaf152964f41b7017956bdf9_2.png)
 
 自定义输出解析器主要有两种创建方式。
 
@@ -21,9 +19,7 @@
 
 ---
 
-![](img/d44e8adbfaf152964f41b7017956bdf9_4.png)
 
-![](img/d44e8adbfaf152964f41b7017956bdf9_5.png)
 
 ### 方法一：使用RunnableLambda
 
@@ -37,16 +33,13 @@ llm = OpenAI()
 
 接下来，我创建一个输出解析器，其功能基本上是翻转文本的大小写。例如，“Hello World”会变成“hELLO wORLD”。
 
-![](img/d44e8adbfaf152964f41b7017956bdf9_7.png)
 
-![](img/d44e8adbfaf152964f41b7017956bdf9_8.png)
 
 我只需为其创建解析函数，然后调用Python标准函数 `swapcase()`。您可以看到，我只需将我的输出传递给它。因为我本质上传递的是一个名为 `parse` 的Lambda函数体。然后，我们可以用“hello”来调用这个大语言模型。
 
 它将处理的不是我输入的“hello”这个词，而是LLM对“hello”的响应，并翻转其大小写，正如您在那里所看到的。
 
 
-![](img/d44e8adbfaf152964f41b7017956bdf9_10.png)
 
 ```python
 # 示例：使用Lambda创建简单的解析器
@@ -68,21 +61,16 @@ result = chain.invoke("hello")
 
 ### 方法二：继承基类
 
-![](img/d44e8adbfaf152964f41b7017956bdf9_12.png)
 
-![](img/d44e8adbfaf152964f41b7017956bdf9_13.png)
 
 如果您想从基类继承，当然也可以这样做。
 
-![](img/d44e8adbfaf152964f41b7017956bdf9_14.png)
 
 这里我创建了一个名为 `BooleanOutputParser` 的解析器，它继承自LangChain内置的 `BaseOutputParser` 基类，并指定我们期望处理布尔值。
 
-![](img/d44e8adbfaf152964f41b7017956bdf9_16.png)
 
 这是一个用于解释“是/否”字符串与布尔值的自定义解析器。
 
-![](img/d44e8adbfaf152964f41b7017956bdf9_18.png)
 
 我们定义真值和假值。它通过去除空白字符来清理文本，然后确保值符合预期。
 
@@ -90,13 +78,10 @@ result = chain.invoke("hello")
 
 它非常适应，能够处理所有可能表示真或假的不同类型的值。
 
-![](img/d44e8adbfaf152964f41b7017956bdf9_20.png)
 
 
-![](img/d44e8adbfaf152964f41b7017956bdf9_22.png)
 
 
-![](img/d44e8adbfaf152964f41b7017956bdf9_24.png)
 
 ```python
 # 示例：通过继承基类创建自定义解析器
@@ -123,38 +108,30 @@ print(parser.parse("yes"))  # 输出: True
 print(parser.parse("NO"))   # 输出: False
 ```
 
-![](img/d44e8adbfaf152964f41b7017956bdf9_26.png)
 
 ---
 
-![](img/d44e8adbfaf152964f41b7017956bdf9_28.png)
 
 ### 应用：提取Python代码
 
 接下来，我们将看一个剥离非Python文本的例子。这有时会很有用。
 
-![](img/d44e8adbfaf152964f41b7017956bdf9_30.png)
 
 例如，如果我要求它使用蒙特卡洛方法计算π的值，它通常会在代码前加上一大堆前言，然后才是Python代码。
 
-![](img/d44e8adbfaf152964f41b7017956bdf9_31.png)
 
 您可能希望有一种方法来剥离那段前言文本。
 
-![](img/d44e8adbfaf152964f41b7017956bdf9_33.png)
 
 这里，我们基本上会找到其中所有的Python代码块，并移除其他所有内容。
 
-![](img/d44e8adbfaf152964f41b7017956bdf9_35.png)
 
 然后您可以看到我们这里的示例：它只抓取嵌入的Python文本，并移除其他所有内容。
 
-![](img/d44e8adbfaf152964f41b7017956bdf9_37.png)
 
 接着，利用这个功能，我们可以创建代码输出解析器，它将使用我们刚刚构建的那个移除器。当我向它提出这类请求时，您将只得到纯代码文本作为返回。
 
 
-![](img/d44e8adbfaf152964f41b7017956bdf9_39.png)
 
 ```python
 # 示例：创建提取Python代码的解析器
@@ -174,7 +151,6 @@ code_chain = llm | code_extractor
 code_result = code_chain.invoke("Write a Python function to calculate factorial.")
 ```
 
-![](img/d44e8adbfaf152964f41b7017956bdf9_41.png)
 
 ![](img/d44e8adbfaf152964f41b7017956bdf9_42.png)
 

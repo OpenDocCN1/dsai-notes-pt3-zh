@@ -1,6 +1,5 @@
 # 24：带控制的库普曼系统辨识
 
-![](img/24bd002d1159d6ad98e0648fa1b65ccf_0.png)
 
 ![](img/24bd002d1159d6ad98e0648fa1b65ccf_0.png)
 

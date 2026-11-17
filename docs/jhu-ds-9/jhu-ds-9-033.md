@@ -30,7 +30,6 @@ myMap <- leaflet() %>%
 
 以下是添加一个标记点的代码：
 
-![](img/be290bd310f3fc138ad34d7a9a59f093_3.png)
 
 ```r
 myMap <- myMap %>%

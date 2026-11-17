@@ -16,6 +16,5 @@
 
 让我们从泛化开始。由于图神经网络将在此扮演重要角色，让我快速回顾一下什么是图神经网络。
 
-![](img/d9cba8170ceaa95f0091e4addab5ca50_2.png)
 
 ![](img/d9cba8170ceaa95f0091e4addab5ca50_2.png)

@@ -10,7 +10,6 @@
 
 ---
 
-![](img/77aea5f73ed012ecf87474dc720a9a6b_1.png)
 
 ## 命名空间的用途与类比 🔗
 
@@ -18,7 +17,6 @@
 
 可以将XML命名空间理解为Python中的模块导入。
 
-![](img/77aea5f73ed012ecf87474dc720a9a6b_3.png)
 
 *   **带前缀的命名空间** 类似于 `import pandas as pd`。在XML中，我们声明一个前缀（如 `m:`）并将其绑定到一个唯一的URI（如MathML的命名空间）。
     ```xml
@@ -35,13 +33,10 @@
 
 添加命名空间后，XML处理器可以依据该命名空间对应的模式（Schema）来验证文档结构的正确性，我们将在后续课程中详细学习。
 
-![](img/77aea5f73ed012ecf87474dc720a9a6b_5.png)
 
 ---
 
-![](img/77aea5f73ed012ecf87474dc720a9a6b_7.png)
 
-![](img/77aea5f73ed012ecf87474dc720a9a6b_9.png)
 
 ## 命名空间的实际应用示例 🌐
 
@@ -63,7 +58,6 @@
 </html>
 ```
 
-![](img/77aea5f73ed012ecf87474dc720a9a6b_11.png)
 
 *   整个文档默认命名空间是XHTML。
 *   `<math>` 元素及其子元素则位于MathML的命名空间中。
@@ -73,15 +67,11 @@
 
 ## 推荐的命名空间使用模式 ✅
 
-![](img/77aea5f73ed012ecf87474dc720a9a6b_13.png)
 
 为了避免混乱，请遵循以下清晰的模式：
 
-![](img/77aea5f73ed012ecf87474dc720a9a6b_15.png)
 
-![](img/77aea5f73ed012ecf87474dc720a9a6b_16.png)
 
-![](img/77aea5f73ed012ecf87474dc720a9a6b_18.png)
 
 以下是几种清晰且推荐的命名空间使用方式：
 
@@ -92,17 +82,14 @@
 
 **切勿**在同一个文档中为同一个命名空间使用多个不同的前缀，或随意混合默认命名空间和前缀命名空间，这会导致代码难以理解和维护。
 
-![](img/77aea5f73ed012ecf87474dc720a9a6b_20.png)
 
 ---
 
 ## 实用工具：Oxygen XML Editor 🛠️
 
-![](img/77aea5f73ed012ecf87474dc720a9a6b_22.png)
 
 处理XML时，一个强大的编辑器非常有用。苏黎世联邦理工学院为学生提供了 **Oxygen XML Editor** 的站点许可证。
 
-![](img/77aea5f73ed012ecf87474dc720a9a6b_24.png)
 
 你可以从IT商店（itshop.ethz.ch）免费下载。它不仅能高亮显示语法，还能：
 *   检查XML的格式是否良好（Well-formedness）。
@@ -110,31 +97,20 @@
 
 ---
 
-![](img/77aea5f73ed012ecf87474dc720a9a6b_26.png)
 
-![](img/77aea5f73ed012ecf87474dc720a9a6b_27.png)
 
-![](img/77aea5f73ed012ecf87474dc720a9a6b_28.png)
 
-![](img/77aea5f73ed012ecf87474dc720a9a6b_29.png)
 
 ## 在XML中表示数据表 📊
 
-![](img/77aea5f73ed012ecf87474dc720a9a6b_30.png)
 
-![](img/77aea5f73ed012ecf87474dc720a9a6b_31.png)
 
-![](img/77aea5f73ed012ecf87474dc720a9a6b_32.png)
 
-![](img/77aea5f73ed012ecf87474dc720a9a6b_34.png)
 
 理解了语法和工具后，我们来看看如何用XML表示关系型数据。
 
-![](img/77aea5f73ed012ecf87474dc720a9a6b_35.png)
 
-![](img/77aea5f73ed012ecf87474dc720a9a6b_36.png)
 
-![](img/77aea5f73ed012ecf87474dc720a9a6b_37.png)
 
 一个简单的销售数据表：
 
@@ -142,19 +118,13 @@
 | :------ | :---- | :------- | :------- |
 | Apple   | 5     | Alice    | 10       |
 
-![](img/77aea5f73ed012ecf87474dc720a9a6b_39.png)
 
-![](img/77aea5f73ed012ecf87474dc720a9a6b_40.png)
 
-![](img/77aea5f73ed012ecf87474dc720a9a6b_41.png)
 
-![](img/77aea5f73ed012ecf87474dc720a9a6b_42.png)
 
-![](img/77aea5f73ed012ecf87474dc720a9a6b_43.png)
 
 在XML中，通常按行进行嵌套表示，并使用复数/单数形式来区分集合与个体：
 
-![](img/77aea5f73ed012ecf87474dc720a9a6b_45.png)
 
 ```xml
 <sales> <!-- 表名（复数），表示整个数据集 -->
@@ -168,31 +138,21 @@
 </sales>
 ```
 
-![](img/77aea5f73ed012ecf87474dc720a9a6b_47.png)
 
 ---
 
-![](img/77aea5f73ed012ecf87474dc720a9a6b_48.png)
 
-![](img/77aea5f73ed012ecf87474dc720a9a6b_49.png)
 
-![](img/77aea5f73ed012ecf87474dc720a9a6b_51.png)
 
 ## 在XML中表示嵌套数据 🌲
 
-![](img/77aea5f73ed012ecf87474dc720a9a6b_53.png)
 
-![](img/77aea5f73ed012ecf87474dc720a9a6b_54.png)
 
 对于嵌套数据（例如，一个订单包含多个商品项），XML通过多层嵌套元素来自然地表示：
 
-![](img/77aea5f73ed012ecf87474dc720a9a6b_56.png)
 
-![](img/77aea5f73ed012ecf87474dc720a9a6b_57.png)
 
-![](img/77aea5f73ed012ecf87474dc720a9a6b_58.png)
 
-![](img/77aea5f73ed012ecf87474dc720a9a6b_59.png)
 
 ```xml
 <table>
@@ -212,21 +172,16 @@
 </table>
 ```
 
-![](img/77aea5f73ed012ecf87474dc720a9a6b_60.png)
 
-![](img/77aea5f73ed012ecf87474dc720a9a6b_62.png)
 
 这种结构对应了JSON中的对象内嵌数组，或数据模型中的树形结构，是CSV等扁平格式无法直接表达的。
 
 ---
 
-![](img/77aea5f73ed012ecf87474dc720a9a6b_64.png)
 
 ## XML vs. JSON vs. YAML ⚖️
 
-![](img/77aea5f73ed012ecf87474dc720a9a6b_66.png)
 
-![](img/77aea5f73ed012ecf87474dc720a9a6b_68.png)
 
 作为计算机科学家，不应武断地认为某种格式更好，而应根据使用场景选择。
 
@@ -255,7 +210,6 @@
 4.  如何将**表格数据**和**嵌套数据**转换为XML格式。
 5.  对 **XML、JSON和YAML** 进行了比较，明确了它们各自适用的场景，核心在于根据数据特性（是文档文本还是业务记录）和生态系统需求来选择。
 
-![](img/77aea5f73ed012ecf87474dc720a9a6b_70.png)
 
 ![](img/77aea5f73ed012ecf87474dc720a9a6b_71.png)
 

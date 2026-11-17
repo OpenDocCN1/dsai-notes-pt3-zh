@@ -1,6 +1,5 @@
 #  049：Python与Pandas数据工程总结 🎯
 
-![](img/9ce7bdc17ab084ac51373bfd61d8d77a_0.png)
 
 ![](img/9ce7bdc17ab084ac51373bfd61d8d77a_0.png)
 
@@ -21,7 +20,6 @@
 *   **Pandas库应用**：理解了如何使用Pandas进行数据加载、清洗、转换和分析。核心操作通常涉及类似 `df = pd.read_csv(‘data.csv’)` 的代码。
 *   **开发工具使用**：熟悉了在命令行中使用Vim编辑器以及在集成开发环境（IDE）中使用Visual Studio Code进行高效开发。
 
-![](img/9ce7bdc17ab084ac51373bfd61d8d77a_2.png)
 
 ![](img/9ce7bdc17ab084ac51373bfd61d8d77a_2.png)
 

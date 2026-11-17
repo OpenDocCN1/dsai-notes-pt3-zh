@@ -1,6 +1,5 @@
 #  018：整洁数据 📊
 
-![](img/84ef6a92b664f9f5ffe9fea49798fc2f_0.png)
 
 ![](img/84ef6a92b664f9f5ffe9fea49798fc2f_2.png)
 

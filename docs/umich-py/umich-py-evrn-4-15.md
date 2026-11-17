@@ -6,7 +6,6 @@
 
 ---
 
-![](img/b9e53038202246cff237270f9af9bfe5_2.png)
 
 ## 启动SQLite Browser并创建数据库
 
@@ -59,7 +58,6 @@ CREATE TABLE users (
 
 ---
 
-![](img/b9e53038202246cff237270f9af9bfe5_10.png)
 
 ![](img/b9e53038202246cff237270f9af9bfe5_12.png)
 
@@ -71,7 +69,6 @@ CREATE TABLE users (
 
 以下是插入数据的SQL语句：
 
-![](img/b9e53038202246cff237270f9af9bfe5_16.png)
 
 ![](img/b9e53038202246cff237270f9af9bfe5_18.png)
 

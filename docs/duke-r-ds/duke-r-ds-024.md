@@ -1,6 +1,5 @@
 #  024：这是我的类型 🧩
 
-![](img/6425b20b95e02bc21997eaf72eba0e8f_0.png)
 
 ![](img/6425b20b95e02bc21997eaf72eba0e8f_1.png)
 
@@ -46,7 +45,6 @@ typeof(vec1) # 输出："character"
 
 ---
 
-![](img/6425b20b95e02bc21997eaf72eba0e8f_3.png)
 
 ## 示例二：运算结果与字符的混合
 

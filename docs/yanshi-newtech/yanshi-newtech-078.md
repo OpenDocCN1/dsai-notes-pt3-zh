@@ -1,6 +1,5 @@
 # 78：6_1.2 物联网产品和服务（第1部分）📡
 
-![](img/002de280efe2f33f3a388cc61fa8fa3c_0.png)
 
 ![](img/002de280efe2f33f3a388cc61fa8fa3c_0.png)
 
@@ -42,17 +41,13 @@ Android Things最初支持Raspberry Pi 3和Intel Edison进行产品原型开发�
 
 Android操作系统架构如图所示。观察整体结构，图中**Things Support Library**是一个库，其中包含了所有基于物联网的Android Things函数和过程。如果你需要基于上层的应用或旁边的Google服务，或者Java API框架，或者通过上下层架构与原生C/C++库交互来实现某些功能，这个库就位于Android操作系统（基于Linux内核）的分层架构中。
 
-![](img/002de280efe2f33f3a388cc61fa8fa3c_2.png)
 
-![](img/002de280efe2f33f3a388cc61fa8fa3c_2.png)
 
 这一层为你提供了所需的详细功能和特性，用以开发非常高效的物联网技术。这些技术能与你的Android智能手机完美协作，因为它们基于相同的操作系统，并且拥有已经以高效节能和速度优化的方式集成在操作系统中的特殊功能和技术（两者都基于Linux内核）。
 
 请注意，关于Android操作系统的更深入细节，不在本课程中讲解，而是在我的另一门关于智能设备和移动新兴技术的课程中。在那门课里，我会详细讨论iOS和Android操作系统。这是“从智能手机到物联网再到大数据”这个更大专业方向的一部分。我建议你去学习那门课程，以更深入地研究强大且广泛使用的Android操作系统。
 
-![](img/002de280efe2f33f3a388cc61fa8fa3c_4.png)
 
-![](img/002de280efe2f33f3a388cc61fa8fa3c_4.png)
 
 进一步来看，Things Support Library API主要基于几个API单元：
 

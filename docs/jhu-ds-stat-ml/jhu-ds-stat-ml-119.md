@@ -8,11 +8,9 @@
 
 上一节我们介绍了Shiny应用的基本结构。本节中我们来看看如何利用`brush`功能实现用户与图形的动态交互。这是一个展示Shiny核心优势的绝佳例子，尤其对于数据分析师而言，交互式图形是Shiny的一个关键功能。
 
-![](img/ae594ba211ddc96475b75990b2f53134_1.png)
 
 ## 用户界面（UI）设计
 
-![](img/ae594ba211ddc96475b75990b2f53134_2.png)
 
 以下是UI部分的关键组件。UI负责定义应用的布局和输入输出元素。
 
@@ -58,7 +56,6 @@ output$intOut <- renderText({
 })
 ```
 
-![](img/ae594ba211ddc96475b75990b2f53134_4.png)
 
 *   `renderText({…})`: 告诉Shiny这是一个需要动态渲染的文本块。
 *   `if (is.null(model()))`: 检查模型是否存在。如果模型为`NULL`（例如未框选或框选点不足），则显示“No model found”。
@@ -66,7 +63,6 @@ output$intOut <- renderText({
 
 最后，我们定义图形输出`output$plot1`。
 
-![](img/ae594ba211ddc96475b75990b2f53134_6.png)
 
 ```r
 output$plot1 <- renderPlot({
@@ -77,7 +73,6 @@ output$plot1 <- renderPlot({
 })
 ```
 
-![](img/ae594ba211ddc96475b75990b2f53134_7.png)
 
 *   `renderPlot({…})`: 告诉Shiny这是一个需要动态渲染的图形。
 *   `plot(…)`: 绘制`trees`数据集的完整散点图。
@@ -89,13 +84,10 @@ output$plot1 <- renderPlot({
 
 ![](img/ae594ba211ddc96475b75990b2f53134_9.png)
 
-![](img/ae594ba211ddc96475b75990b2f53134_11.png)
 
-![](img/ae594ba211ddc96475b75990b2f53134_1.png)
 
 当用户用鼠标在散点图上框选一组数据点时（例如下图中高亮的点），应用会立即响应。
 
-![](img/ae594ba211ddc96475b75990b2f53134_2.png)
 
 它会执行以下操作：
 1.  提取被框选的点。
@@ -105,7 +97,6 @@ output$plot1 <- renderPlot({
 
 用户可以尝试框选不同的数据子集（如边缘的点、中心的点或几乎所有点），每次框选都会触发一次模型重拟合和图形更新，从而直观地观察不同数据子集对模型参数的影响。
 
-![](img/ae594ba211ddc96475b75990b2f53134_13.png)
 
 ## 总结
 

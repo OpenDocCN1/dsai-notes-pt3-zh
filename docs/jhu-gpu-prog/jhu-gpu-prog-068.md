@@ -40,15 +40,12 @@ cudaGetDeviceCount(&deviceCount);
 
 下图展示了多GPU编程中设备选择、通信与数据拷贝的流程：
 
-![](img/2aa1bfda224142517c54a29a338b4bee_1.png)
 
 下图进一步说明了在启用对等访问后，GPU间直接进行数据拷贝的路径：
 
-![](img/2aa1bfda224142517c54a29a338b4bee_2.png)
 
 ## 总结
 
-![](img/2aa1bfda224142517c54a29a338b4bee_1.png)
 
 ![](img/2aa1bfda224142517c54a29a338b4bee_2.png)
 

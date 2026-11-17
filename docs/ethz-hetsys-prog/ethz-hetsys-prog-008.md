@@ -1,6 +1,5 @@
 # 008：卷积
 
-![](img/8bcba5c9ff0708a3c5c46f97f131ca55_0.png)
 
 ![](img/8bcba5c9ff0708a3c5c46f97f131ca55_0.png)
 

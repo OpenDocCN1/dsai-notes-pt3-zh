@@ -110,7 +110,6 @@ pub fn initialize_database() -> Result<Connection> {
 
 ![](img/07335f4d74a51d2dca424389160f117c_2.png)
 
-![](img/07335f4d74a51d2dca424389160f117c_3.png)
 
 查询SQLite数据库在Rust中非常简单，代码看起来很像Python：
 
@@ -221,7 +220,6 @@ async fn main() -> Result<()> {
 
 本节课中，我们一起学习了如何利用Rust构建一个完整的MLOps应用。我们从解释Rust在性能、能效和“生产优先”理念上的优势开始，然后设计了一个用于分析海量歌曲歌词的系统架构。通过动手实践，我们逐步实现了SQLite数据库的初始化、歌词文件的读取，并最终集成了Hugging Face的零样本分类模型。
 
-![](img/07335f4d74a51d2dca424389160f117c_7.png)
 
 ![](img/07335f4d74a51d2dca424389160f117c_8.png)
 

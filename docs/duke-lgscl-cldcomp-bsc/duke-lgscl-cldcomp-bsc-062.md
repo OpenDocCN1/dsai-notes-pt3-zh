@@ -14,7 +14,6 @@
 
 首先，我们进入Azure DevOps的组织界面。我选择了一个名为 `flaskml-deploy` 的预设项目。
 
-![](img/4b91cdd66c296f8a63c43bce7efa6f93_1.png)
 
 接下来，查看“流水线”部分。可以看到最近运行过的应用记录。点击记录中的链接，可以跳转到关联的GitHub仓库。这证实了该应用已与Azure流水线服务成功连接。
 
@@ -44,7 +43,6 @@
 
 
 
-![](img/4b91cdd66c296f8a63c43bce7efa6f93_3.png)
 
 ![](img/4b91cdd66c296f8a63c43bce7efa6f93_3.png)
 
@@ -93,7 +91,6 @@
 
 
 
-![](img/4b91cdd66c296f8a63c43bce7efa6f93_8.png)
 
 ![](img/4b91cdd66c296f8a63c43bce7efa6f93_11.png)
 

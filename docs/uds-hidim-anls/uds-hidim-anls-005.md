@@ -1,6 +1,5 @@
 # 005：高斯随机向量范数的指数集中性
 
-![](img/da5e0c808da818d2dad945110fba8c86_0.png)
 
 ![](img/da5e0c808da818d2dad945110fba8c86_0.png)
 

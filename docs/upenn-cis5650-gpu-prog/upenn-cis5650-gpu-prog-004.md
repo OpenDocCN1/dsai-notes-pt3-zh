@@ -10,11 +10,8 @@
 
 ---
 
-![](img/0fffef76cafb255ef64c2303232fa23a_7.png)
 
-![](img/0fffef76cafb255ef64c2303232fa23a_9.png)
 
-![](img/0fffef76cafb255ef64c2303232fa23a_11.png)
 
 ## 概述 📋
 
@@ -26,7 +23,6 @@
 
 一份优秀的README是项目的门面，尤其对于求职者而言，它能有效向招聘经理和工程师展示你的技术能力和项目成果。
 
-![](img/0fffef76cafb255ef64c2303232fa23a_13.png)
 
 ### README的核心作用
 

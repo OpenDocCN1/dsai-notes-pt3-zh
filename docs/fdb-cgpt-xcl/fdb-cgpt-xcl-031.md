@@ -69,9 +69,7 @@
 
 这时，提示词又扮演了另一个角色：**提供新信息**。我们可以将模型训练后发生的事件或它未掌握的私有数据通过提示词提供给模型。例如，我们可以粘贴范德堡大学2022年官方发布的录取数据，然后提问，模型便能基于我们提供的新信息进行推理和回答。
 
-![](img/e0ecbd4de12162604ff713e5d8a717ca_1.png)
 
-![](img/e0ecbd4de12162604ff713e5d8a717ca_2.png)
 
 **核心操作**：
 ```python
@@ -83,25 +81,16 @@ user_prompt = """
 response = chatgpt.generate(user_prompt)
 ```
 
-![](img/e0ecbd4de12162604ff713e5d8a717ca_3.png)
 
-![](img/e0ecbd4de12162604ff713e5d8a717ca_4.png)
 
-![](img/e0ecbd4de12162604ff713e5d8a717ca_5.png)
 
-![](img/e0ecbd4de12162604ff713e5d8a717ca_6.png)
 
-![](img/e0ecbd4de12162604ff713e5d8a717ca_7.png)
 
-![](img/e0ecbd4de12162604ff713e5d8a717ca_8.png)
 
-![](img/e0ecbd4de12162604ff713e5d8a717ca_9.png)
 
 ---
 
-![](img/e0ecbd4de12162604ff713e5d8a717ca_10.png)
 
-![](img/e0ecbd4de12162604ff713e5d8a717ca_11.png)
 
 ![](img/e0ecbd4de12162604ff713e5d8a717ca_13.png)
 

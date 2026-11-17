@@ -1,6 +1,5 @@
 # 75：L34.2 - R-CNN 详解 🧠
 
-![](img/758b12bcaa664c3a0ec80f98ec88573e_1.png)
 
 在本节课中，我们将要学习目标检测领域的一个里程碑式算法——R-CNN。我们将详细拆解其多阶段流程，理解其如何利用卷积神经网络进行目标检测，并探讨其训练与推理过程中的关键步骤。
 
@@ -19,21 +18,16 @@ R-CNN并非一个端到端的单一算法，而是一个多阶段的系统。我
 3.  **目标分类**：使用分类器（如SVM）判断区域中是否存在特定类别的目标。
 4.  **边界框回归**：微调候选框的位置，使其更精确地贴合目标。
 
-![](img/758b12bcaa664c3a0ec80f98ec88573e_3.png)
 
 接下来，我们将逐一深入每个阶段。
 
 ---
 
-![](img/758b12bcaa664c3a0ec80f98ec88573e_5.png)
 
 ## 📦 阶段一：区域提议
 
-![](img/758b12bcaa664c3a0ec80f98ec88573e_6.png)
 
-![](img/758b12bcaa664c3a0ec80f98ec88573e_7.png)
 
-![](img/758b12bcaa664c3a0ec80f98ec88573e_8.png)
 
 首先，R-CNN需要一个外部算法来生成**区域提议**。这与深度学习无关，是一个相对廉价的计算过程。
 
@@ -43,27 +37,17 @@ R-CNN并非一个端到端的单一算法，而是一个多阶段的系统。我
 
 
 
-![](img/758b12bcaa664c3a0ec80f98ec88573e_10.png)
 
-![](img/758b12bcaa664c3a0ec80f98ec88573e_11.png)
 
-![](img/758b12bcaa664c3a0ec80f98ec88573e_12.png)
 
-![](img/758b12bcaa664c3a0ec80f98ec88573e_13.png)
 
 ---
 
-![](img/758b12bcaa664c3a0ec80f98ec88573e_14.png)
 
-![](img/758b12bcaa664c3a0ec80f98ec88573e_15.png)
 
-![](img/758b12bcaa664c3a0ec80f98ec88573e_16.png)
 
-![](img/758b12bcaa664c3a0ec80f98ec88573e_17.png)
 
-![](img/758b12bcaa664c3a0ec80f98ec88573e_18.png)
 
-![](img/758b12bcaa664c3a0ec80f98ec88573e_19.png)
 
 ## 🖼️ 阶段二：特征提取
 
@@ -71,45 +55,30 @@ R-CNN并非一个端到端的单一算法，而是一个多阶段的系统。我
 
 变形后，图像被送入一个预训练的CNN（如AlexNet）中。CNN在这里充当**特征提取器**的角色。
 
-![](img/758b12bcaa664c3a0ec80f98ec88573e_21.png)
 
 对于训练数据集中的每张图像，我们会生成成千上万个特征向量。每个候选区域经过CNN前向传播后，会输出一个固定维度的特征向量，例如AlexNet会输出一个4096维的特征向量。
 
-![](img/758b12bcaa664c3a0ec80f98ec88573e_22.png)
 
-![](img/758b12bcaa664c3a0ec80f98ec88573e_23.png)
 
-![](img/758b12bcaa664c3a0ec80f98ec88573e_24.png)
 
-![](img/758b12bcaa664c3a0ec80f98ec88573e_25.png)
 
-![](img/758b12bcaa664c3a0ec80f98ec88573e_26.png)
 
-![](img/758b12bcaa664c3a0ec80f98ec88573e_27.png)
 
 以下是经过变形处理后的部分示例：
 
 
 
-![](img/758b12bcaa664c3a0ec80f98ec88573e_28.png)
 
-![](img/758b12bcaa664c3a0ec80f98ec88573e_29.png)
 
-![](img/758b12bcaa664c3a0ec80f98ec88573e_30.png)
 
-![](img/758b12bcaa664c3a0ec80f98ec88573e_31.png)
 
 可以看到，由于区域提议框的局限性，变形后的图像可能只聚焦于物体的某个局部（如自行车的车轮、飞机的一部分）。
 
-![](img/758b12bcaa664c3a0ec80f98ec88573e_33.png)
 
 ---
 
-![](img/758b12bcaa664c3a0ec80f98ec88573e_34.png)
 
-![](img/758b12bcaa664c3a0ec80f98ec88573e_35.png)
 
-![](img/758b12bcaa664c3a0ec80f98ec88573e_36.png)
 
 ## 🧠 阶段三：目标分类
 
@@ -117,31 +86,20 @@ R-CNN并非一个端到端的单一算法，而是一个多阶段的系统。我
 
 例如，对于PASCAL VOC数据集（包含20个目标类别），就需要训练21个SVM分类器（20个物体类别 + 1个背景类别）。每个SVM的任务是判断给定的特征向量是否属于其对应的类别（例如，“是飞机”或“不是飞机”）。
 
-![](img/758b12bcaa664c3a0ec80f98ec88573e_38.png)
 
-![](img/758b12bcaa664c3a0ec80f98ec88573e_39.png)
 
-![](img/758b12bcaa664c3a0ec80f98ec88573e_40.png)
 
 假设我们已经训练好了SVM分类器。在推理时，区域提议步骤会为每张图像生成约2000个候选区域。我们无法将所有区域都报告给用户，因此需要进行筛选。
 
-![](img/758b12bcaa664c3a0ec80f98ec88573e_41.png)
 
-![](img/758b12bcaa664c3a0ec80f98ec88573e_42.png)
 
-![](img/758b12bcaa664c3a0ec80f98ec88573e_43.png)
 
-![](img/758b12bcaa664c3a0ec80f98ec88573e_44.png)
 
-![](img/758b12bcaa664c3a0ec80f98ec88573e_45.png)
 
-![](img/758b12bcaa664c3a0ec80f98ec88573e_46.png)
 
 这里使用**贪婪非极大值抑制**算法进行筛选。该算法依赖于SVM为每个区域给出的置信度分数。
 
-![](img/758b12bcaa664c3a0ec80f98ec88573e_47.png)
 
-![](img/758b12bcaa664c3a0ec80f98ec88573e_48.png)
 
 以下是NMS的简化过程：
 1.  选择一个类别（例如“船”）。
@@ -156,31 +114,19 @@ R-CNN并非一个端到端的单一算法，而是一个多阶段的系统。我
 
 ---
 
-![](img/758b12bcaa664c3a0ec80f98ec88573e_50.png)
 
-![](img/758b12bcaa664c3a0ec80f98ec88573e_51.png)
 
-![](img/758b12bcaa664c3a0ec80f98ec88573e_52.png)
 
-![](img/758b12bcaa664c3a0ec80f98ec88573e_53.png)
 
-![](img/758b12bcaa664c3a0ec80f98ec88573e_54.png)
 
-![](img/758b12bcaa664c3a0ec80f98ec88573e_55.png)
 
 ## 🏋️ 阶段四：训练过程
 
-![](img/758b12bcaa664c3a0ec80f98ec88573e_56.png)
 
-![](img/758b12bcaa664c3a0ec80f98ec88573e_57.png)
 
-![](img/758b12bcaa664c3a0ec80f98ec88573e_58.png)
 
-![](img/758b12bcaa664c3a0ec80f98ec88573e_59.png)
 
-![](img/758b12bcaa664c3a0ec80f98ec88573e_60.png)
 
-![](img/758b12bcaa664c3a0ec80f98ec88573e_61.png)
 
 现在，我们来看看如何训练R-CNN中的各个组件。这里主要涉及**迁移学习**。
 
@@ -193,17 +139,11 @@ R-CNN并非一个端到端的单一算法，而是一个多阶段的系统。我
 
 在微调时，我们在CNN末尾接上一个**21路分类层**（对应20类物体+背景），并使用交叉熵损失函数进行训练。这样做的目的并非直接使用这个分类器，而是为了让CNN提取的特征更适应我们的目标检测数据集。
 
-![](img/758b12bcaa664c3a0ec80f98ec88573e_63.png)
 
-![](img/758b12bcaa664c3a0ec80f98ec88573e_64.png)
 
-![](img/758b12bcaa664c3a0ec80f98ec88573e_65.png)
 
-![](img/758b12bcaa664c3a0ec80f98ec88573e_66.png)
 
-![](img/758b12bcaa664c3a0ec80f98ec88573e_67.png)
 
-![](img/758b12bcaa664c3a0ec80f98ec88573e_68.png)
 
 **2. 训练SVM分类器**
 SVM的训练数据也需要通过IoU来构建：
@@ -211,21 +151,14 @@ SVM的训练数据也需要通过IoU来构建：
 *   **负样本**：与所有真实标注框IoU都很低的区域（明确为背景）。
 *   **忽略样本**：IoU处于中间地带的区域（不参与训练）。
 
-![](img/758b12bcaa664c3a0ec80f98ec88573e_69.png)
 
-![](img/758b12bcaa664c3a0ec80f98ec88573e_70.png)
 
-![](img/758b12bcaa664c3a0ec80f98ec88573e_71.png)
 
-![](img/758b12bcaa664c3a0ec80f98ec88573e_72.png)
 
-![](img/758b12bcaa664c3a0ec80f98ec88573e_73.png)
 
-![](img/758b12bcaa664c3a0ec80f98ec88573e_74.png)
 
 使用从微调后的CNN提取的特征，我们可以为每个类别训练一个线性的SVM分类器。
 
-![](img/758b12bcaa664c3a0ec80f98ec88573e_76.png)
 
 ![](img/758b12bcaa664c3a0ec80f98ec88573e_77.png)
 

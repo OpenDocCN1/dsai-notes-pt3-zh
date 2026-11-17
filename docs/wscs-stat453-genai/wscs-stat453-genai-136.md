@@ -1,16 +1,12 @@
 # 136：L16.4 - PyTorch 中的卷积自动编码器 🧠
 
-![](img/f7a8252ead9e202d89946be554f92300_1.png)
 
 在本节课中，我们将学习如何在 PyTorch 中实现一个卷积自动编码器。我们将从导入必要的库开始，逐步构建模型，并最终训练它来重建手写数字图像。通过这个过程，你将理解自动编码器的核心组件：编码器和解码器，以及它们如何协同工作来学习数据的压缩表示。
 
-![](img/f7a8252ead9e202d89946be554f92300_2.png)
 
-![](img/f7a8252ead9e202d89946be554f92300_3.png)
 
 ---
 
-![](img/f7a8252ead9e202d89946be554f92300_5.png)
 
 ## 环境准备与数据加载
 
@@ -26,11 +22,8 @@ import matplotlib.pyplot as plt
 
 接下来，我们定义数据加载器。与分类任务不同，自动编码器通常只使用训练集，因为我们关注的是输入与重建输出之间的差异，而不是分类精度。
 
-![](img/f7a8252ead9e202d89946be554f92300_7.png)
 
-![](img/f7a8252ead9e202d89946be554f92300_9.png)
 
-![](img/f7a8252ead9e202d89946be554f92300_11.png)
 
 ```python
 # 定义数据转换
@@ -47,13 +40,10 @@ train_loader = torch.utils.data.DataLoader(train_dataset, batch_size=32, shuffle
 
 ## 构建卷积自动编码器模型
 
-![](img/f7a8252ead9e202d89946be554f92300_13.png)
 
 上一节我们介绍了数据准备，本节中我们来看看如何构建模型。我们将模型分为编码器和解码器两个独立的 `Sequential` 模块，这有助于后续将它们作为特征提取器和图像生成器单独使用。
 
-![](img/f7a8252ead9e202d89946be554f92300_15.png)
 
-![](img/f7a8252ead9e202d89946be554f92300_17.png)
 
 以下是模型的核心结构定义：
 
@@ -96,11 +86,8 @@ class ConvAutoencoder(nn.Module):
         return decoded
 ```
 
-![](img/f7a8252ead9e202d89946be554f92300_19.png)
 
-![](img/f7a8252ead9e202d89946be554f92300_21.png)
 
-![](img/f7a8252ead9e202d89946be554f92300_23.png)
 
 **核心概念解释**：
 *   **编码器**：通过一系列卷积层逐步减少空间尺寸并增加通道数，最后通过一个全连接层将数据压缩到一个低维的**潜在空间向量**（本例中为2维）。公式可以表示为：`z = encoder(x)`。
@@ -111,21 +98,15 @@ class ConvAutoencoder(nn.Module):
 
 ## 训练模型
 
-![](img/f7a8252ead9e202d89946be554f92300_25.png)
 
-![](img/f7a8252ead9e202d89946be554f92300_27.png)
 
 模型构建完成后，我们需要定义训练循环。自动编码器的训练目标是最小化重建图像与原始图像之间的差异。
 
-![](img/f7a8252ead9e202d89946be554f92300_29.png)
 
-![](img/f7a8252ead9e202d89946be554f92300_31.png)
 
 以下是训练过程的关键步骤：
 
-![](img/f7a8252ead9e202d89946be554f92300_33.png)
 
-![](img/f7a8252ead9e202d89946be554f92300_35.png)
 
 1.  **定义损失函数和优化器**：我们使用均方误差损失来衡量重建误差，并使用 Adam 优化器。
     ```python
@@ -134,7 +115,6 @@ class ConvAutoencoder(nn.Module):
     optimizer = optim.Adam(model.parameters())
     ```
 
-![](img/f7a8252ead9e202d89946be554f92300_37.png)
 
 2.  **训练循环**：在每个批次中，我们将图像输入编码器，获取重建图像，计算损失，并反向传播更新权重。
     ```python
@@ -158,22 +138,17 @@ class ConvAutoencoder(nn.Module):
             print(f'Epoch [{epoch+1}/{num_epochs}], Loss: {running_loss/len(train_loader):.4f}')
     ```
 
-![](img/f7a8252ead9e202d89946be554f92300_39.png)
 
-![](img/f7a8252ead9e202d89946be554f92300_40.png)
 
 3.  **开始训练**：我们运行训练循环20个周期。
     ```python
     train_autoencoder(model, train_loader, criterion, optimizer, num_epochs=20)
     ```
 
-![](img/f7a8252ead9e202d89946be554f92300_42.png)
 
 ---
 
-![](img/f7a8252ead9e202d89946be554f92300_44.png)
 
-![](img/f7a8252ead9e202d89946be554f92300_45.png)
 
 ## 结果分析与可视化
 
@@ -181,11 +156,8 @@ class ConvAutoencoder(nn.Module):
 
 以下是几种可视化方法：
 
-![](img/f7a8252ead9e202d89946be554f92300_47.png)
 
-![](img/f7a8252ead9e202d89946be554f92300_49.png)
 
-![](img/f7a8252ead9e202d89946be554f92300_51.png)
 
 1.  **比较原始图像与重建图像**：
     ```python
@@ -206,7 +178,6 @@ class ConvAutoencoder(nn.Module):
     ```
     结果显示，顶部为原始图像，底部为重建图像。重建图像较为模糊，例如数字“4”可能被误重建为“9”，这是因为它们在2维潜在空间中的表示区域有重叠。
 
-![](img/f7a8252ead9e202d89946be554f92300_53.png)
 
 2.  **可视化潜在空间**：我们可以将训练集中所有图像的2维编码绘制出来，并用颜色区分数字类别。
     ```python
@@ -234,7 +205,6 @@ class ConvAutoencoder(nn.Module):
     ```
     从图中可以看到，相似的数字（如所有的“0”和“1”）在潜在空间中会聚集在一起，但不同类别之间也存在大量重叠区域，这解释了为什么重建会出现混淆。
 
-![](img/f7a8252ead9e202d89946be554f92300_55.png)
 
 3.  **使用解码器生成新图像**：我们可以从潜在空间中任意选取一个点，通过解码器生成对应的图像。
     ```python
@@ -260,13 +230,9 @@ class ConvAutoencoder(nn.Module):
 
 本节课中我们一起学习了如何在 PyTorch 中实现一个卷积自动编码器。我们首先构建了将图像压缩到2维潜在空间的编码器，以及从该空间重建图像的解码器。接着，我们使用均方误差损失训练模型，以最小化重建误差。最后，我们通过可视化重建结果、潜在空间分布以及图像生成，深入理解了自动编码器的工作原理和局限性。
 
-![](img/f7a8252ead9e202d89946be554f92300_57.png)
 
-![](img/f7a8252ead9e202d89946be554f92300_58.png)
 
-![](img/f7a8252ead9e202d89946be554f92300_59.png)
 
-![](img/f7a8252ead9e202d89946be554f92300_60.png)
 
 ![](img/f7a8252ead9e202d89946be554f92300_62.png)
 

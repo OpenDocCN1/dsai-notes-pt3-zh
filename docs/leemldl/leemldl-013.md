@@ -32,11 +32,9 @@
 
 如果我们把 Decoder 中间部分盖起来，会发现 Encoder 和 Decoder 并没有巨大的差别。两者都包含 Multi-head Attention、Add & Norm、Feed Forward、Add & Norm 等模块，并重复 N 次。
 
-![](img/b91915e8de7cd8779a4dc390d3690076_1.png)
 
 一个显著的不同点是，在 Decoder 的 Multi-head Attention 模块上，**增加了一个 Mask（掩码）**。
 
-![](img/b91915e8de7cd8779a4dc390d3690076_3.png)
 
 *   **标准 Self-Attention**：输出序列中的每个向量（如 B1）在计算时，会关注输入序列（A1 到 A4）中的所有信息。
 *   **Masked Self-Attention**：在生成某个输出时，不能关注它“右侧”的输入信息。

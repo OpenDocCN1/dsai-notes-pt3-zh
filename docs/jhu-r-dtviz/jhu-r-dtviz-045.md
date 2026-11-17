@@ -75,9 +75,7 @@ ggplotly(
 
 ### 发布到网络
 
-![](img/bc01b258749730080cb0b7992b1de3ea_1.png)
 
-![](img/bc01b258749730080cb0b7992b1de3ea_2.png)
 
 如果你想在网络上发布Plotly图表，可以直接在RStudio的Viewer窗口中操作。
 

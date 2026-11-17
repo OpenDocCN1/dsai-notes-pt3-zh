@@ -19,7 +19,6 @@ Airflow是一个工作流管理平台，专门用于管理被称为工作流的�
 以下是一个定义Airflow有向无环图（即DAG）的Python文件示例：
 
 
-![](img/20ec6d969bb931fdc3649f35127d3417_3.png)
 
 ```python
 from airflow import DAG
@@ -81,7 +80,6 @@ Airflow的核心架构包含以下几个关键组件：
 
 ---
 
-![](img/20ec6d969bb931fdc3649f35127d3417_5.png)
 
 ## 使用Docker Compose运行Airflow
 
@@ -101,7 +99,6 @@ Airflow的核心架构包含以下几个关键组件：
     *   `airflow-worker`：执行任务的工作节点。
 3.  **数据持久化**：文件末尾定义了一个卷（`postgres-db-volume`），用于确保PostgreSQL数据库的数据在容器重启后不会丢失。
 
-![](img/20ec6d969bb931fdc3649f35127d3417_7.png)
 
 使用这个Compose文件，我们可以通过一条命令在本地启动完整的Airflow环境。
 

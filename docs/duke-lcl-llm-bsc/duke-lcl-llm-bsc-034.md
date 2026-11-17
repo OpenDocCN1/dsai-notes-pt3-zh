@@ -1,6 +1,5 @@
 # 34：章节总结 2.2
 
-![](img/743e4da790a3e9b06dd853d5454cd8d4_0.png)
 
 ![](img/743e4da790a3e9b06dd853d5454cd8d4_0.png)
 

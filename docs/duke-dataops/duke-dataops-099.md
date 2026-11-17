@@ -60,11 +60,9 @@ top_states = data.groupby('state')['cases'].sum().sort_values(ascending=False).h
 以下是可能观察到的增长模式公式：
 **指数增长最终会开始趋于平缓**。
 
-![](img/dbaf4b3376dacc68ad7cb35130a390fc_2.png)
 
 ![](img/dbaf4b3376dacc68ad7cb35130a390fc_3.png)
 
-![](img/dbaf4b3376dacc68ad7cb35130a390fc_4.png)
 
 因此，这可能意味着在已发生的死亡人数方面将会出现一个平台期。
 

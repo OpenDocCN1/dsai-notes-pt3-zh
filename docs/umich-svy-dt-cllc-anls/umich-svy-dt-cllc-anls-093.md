@@ -56,7 +56,6 @@
 
 ![](img/d44ab3d7d6b653da6448c3b4e273aae1_32.png)
 
-![](img/d44ab3d7d6b653da6448c3b4e273aae1_34.png)
 
 ![](img/d44ab3d7d6b653da6448c3b4e273aae1_36.png)
 
@@ -158,7 +157,6 @@
 
 ![](img/d44ab3d7d6b653da6448c3b4e273aae1_78.png)
 
-![](img/d44ab3d7d6b653da6448c3b4e273aae1_79.png)
 
 ![](img/d44ab3d7d6b653da6448c3b4e273aae1_81.png)
 

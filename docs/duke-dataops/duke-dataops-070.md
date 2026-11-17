@@ -11,7 +11,6 @@
 
 首先，我们需要在 Google Cloud Shell 环境中安装 Rust 编译器。Cloud Shell 是一个临时的在线环境，非常适合快速测试和开发。
 
-![](img/8822931ca1ee39dbd086b1e8b217bcd7_2.png)
 
 以下是安装 Rust 的步骤：
 
@@ -49,11 +48,9 @@ cargo run
 
 ## 使用 Cloud Shell 编辑器进行开发 ✍️
 
-![](img/8822931ca1ee39dbd086b1e8b217bcd7_14.png)
 
 上一节我们介绍了如何在终端中安装 Rust，本节中我们来看看如何使用 Cloud Shell 内置的编辑器来编写和修改代码。
 
-![](img/8822931ca1ee39dbd086b1e8b217bcd7_16.png)
 
 Cloud Shell 提供了一个基于 Web 的代码编辑器，功能比纯终端更强大。我们可以在这里编辑源代码文件。
 

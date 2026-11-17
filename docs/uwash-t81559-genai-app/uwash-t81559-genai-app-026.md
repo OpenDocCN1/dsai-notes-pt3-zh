@@ -63,9 +63,7 @@ vectorstore = Chroma.from_documents(documents, embeddings)
 现在，我们可以创建一个检索增强的问答链，并向它提问。
 
 
-![](img/9d77ef5de4d568f2b111acba691b8e8f_1.png)
 
-![](img/9d77ef5de4d568f2b111acba691b8e8f_2.png)
 
 ```python
 # 创建检索式QA链

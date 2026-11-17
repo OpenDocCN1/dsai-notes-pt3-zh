@@ -1,8 +1,6 @@
 # 032：噪声类型
 
-![](img/9e1ecfd1b56a0beb3cd4c88233b1fc0c_1.png)
 
-![](img/9e1ecfd1b56a0beb3cd4c88233b1fc0c_2.png)
 
 在本节课中，我们将通过Matlab演示，直观地了解上一节视频中介绍的不同类型的图像噪声。我们将加载一张图像，并为其添加高斯噪声和椒盐噪声，以观察它们对图像视觉效果的差异。
 
@@ -19,19 +17,13 @@ grayImage = rgb2gray(originalImage);
 ```
 通过上述操作，我们得到了原始彩色图像的黑白版本，后续的噪声添加将基于这张灰度图像进行。
 
-![](img/9e1ecfd1b56a0beb3cd4c88233b1fc0c_4.png)
 
-![](img/9e1ecfd1b56a0beb3cd4c88233b1fc0c_5.png)
 
-![](img/9e1ecfd1b56a0beb3cd4c88233b1fc0c_6.png)
 
-![](img/9e1ecfd1b56a0beb3cd4c88233b1fc0c_7.png)
 
 ## 添加高斯噪声
 
-![](img/9e1ecfd1b56a0beb3cd4c88233b1fc0c_8.png)
 
-![](img/9e1ecfd1b56a0beb3cd4c88233b1fc0c_9.png)
 
 上一节我们介绍了高斯噪声的理论，本节中我们来看看它在图像上的实际表现。高斯噪声的特点是，图像中的**每一个像素**都会受到一个服从高斯分布的随机值的影响。
 
@@ -44,15 +36,11 @@ gaussianNoiseImage = imnoise(grayImage, 'gaussian', 0, 2);
 
 ## 添加椒盐噪声
 
-![](img/9e1ecfd1b56a0beb3cd4c88233b1fc0c_11.png)
 
-![](img/9e1ecfd1b56a0beb3cd4c88233b1fc0c_12.png)
 
 接下来，我们演示椒盐噪声。与影响所有像素的高斯噪声不同，椒盐噪声只随机影响图像中**特定百分比**的像素，并将其值置为纯黑或纯白。
 
-![](img/9e1ecfd1b56a0beb3cd4c88233b1fc0c_13.png)
 
-![](img/9e1ecfd1b56a0beb3cd4c88233b1fc0c_14.png)
 
 ![](img/9e1ecfd1b56a0beb3cd4c88233b1fc0c_15.png)
 

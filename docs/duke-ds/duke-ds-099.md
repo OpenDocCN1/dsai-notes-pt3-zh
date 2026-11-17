@@ -38,7 +38,6 @@ UNIQUE_A = DISTINCT A;
 
 ---
 
-![](img/dfd04b9524762f843729143873d19bdb_3.png)
 
 ## `GROUP BY` 的工作原理 ⚙️
 

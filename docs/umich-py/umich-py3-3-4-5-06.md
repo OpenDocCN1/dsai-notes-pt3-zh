@@ -2,7 +2,6 @@
 
 ![](img/c00ea3cf492433647a0040aa4aa830aa_0.png)
 
-![](img/c00ea3cf492433647a0040aa4aa830aa_1.png)
 
 在本节课中，我们将学习如何使用Jupyter Notebook这一强大的交互式环境来执行Python代码。我们将了解其基本结构、核心功能以及与之前使用的Runestone环境的主要区别。
 

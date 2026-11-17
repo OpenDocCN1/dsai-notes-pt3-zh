@@ -5,7 +5,6 @@
 
 ---
 
-![](img/298eb51505e864a70afc8601916023bf_1.png)
 
 ## 课程结构与数据准备
 
@@ -55,7 +54,6 @@ query("SELECT * FROM species;")
 trees[trees['priority'] > 90][['x', 'y']]
 ```
 
-![](img/298eb51505e864a70afc8601916023bf_3.png)
 
 **步骤解析：**
 1. `trees['priority']` 提取`priority`列，得到一个Series。
@@ -87,7 +85,6 @@ WHERE priority > 90;
 
 使用`query`函数执行该SQL语句：
 
-![](img/298eb51505e864a70afc8601916023bf_5.png)
 
 ```python
 query("SELECT x, y FROM trees WHERE priority > 90;")
@@ -132,7 +129,6 @@ query("SELECT x + y FROM trees WHERE species = 'M';")
 trees[trees['species'] == 'M']['x'] + trees[trees['species'] == 'M']['y']
 ```
 
-![](img/298eb51505e864a70afc8601916023bf_7.png)
 
 或者，可以分步操作：
 
@@ -146,7 +142,6 @@ result
 
 ---
 
-![](img/298eb51505e864a70afc8601916023bf_9.png)
 
 ## 问题3：复杂pandas操作与SQL转换
 

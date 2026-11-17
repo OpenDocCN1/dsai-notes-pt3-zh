@@ -1,8 +1,6 @@
 # 032：变换到特征基
 
-![](img/b7defc7fbc4ccf299e6de5bccc26f612_0.png)
 
-![](img/b7defc7fbc4ccf299e6de5bccc26f612_0.png)
 
 在本节课中，我们将要学习如何将特征向量与基变换的概念相结合，从而得到一个强大的工具——对角化。这个方法能让我们高效地计算矩阵的幂运算，例如计算 `T` 的 `n` 次方。
 
@@ -80,10 +78,7 @@
 
 这个结果融合了本课程中迄今为止遇到的许多概念。在下一个视频中，我们将通过一个简单的例子来演练，以确保这种方法在应用时符合我们的预期。
 
-![](img/b7defc7fbc4ccf299e6de5bccc26f612_2.png)
 
-![](img/b7defc7fbc4ccf299e6de5bccc26f612_2.png)
 
-![](img/b7defc7fbc4ccf299e6de5bccc26f612_3.png)
 
 ![](img/b7defc7fbc4ccf299e6de5bccc26f612_3.png)

@@ -1,6 +1,5 @@
 #  013：构建Golang-GCP-App-Engine微服务 🚀
 
-![](img/b14c0f6fec0088aba4dd8fdec82fef40_0.png)
 
 ![](img/b14c0f6fec0088aba4dd8fdec82fef40_1.png)
 
@@ -57,26 +56,21 @@
 
 现在，应用已经部署成功。
 
-![](img/b14c0f6fec0088aba4dd8fdec82fef40_3.png)
 
 ---
 
 ## 浏览和查看应用
 一个简单的浏览方法是输入命令 `gcloud app browse`。如果当前环境无法直接启动浏览器，该命令会提供应用的URL。
 
-![](img/b14c0f6fec0088aba4dd8fdec82fef40_5.png)
 
 访问该URL，我们将看到“Hello world GCP certification”的响应。
 
-![](img/b14c0f6fec0088aba4dd8fdec82fef40_7.png)
 
 另一个有用的功能是实时查看日志，这在开发应用时非常方便。我们可以通过命令 `gcloud app logs tail` 来跟踪日志。
 
-![](img/b14c0f6fec0088aba4dd8fdec82fef40_8.png)
 
 反复访问应用URL，可以在日志中看到相应的网络请求记录。这对于调试和监控应用行为非常有帮助。
 
-![](img/b14c0f6fec0088aba4dd8fdec82fef40_10.png)
 
 ---
 
@@ -91,11 +85,9 @@
 
 总而言之，使用App Engine构建微服务是一个非常直接和简单的过程。
 
-![](img/b14c0f6fec0088aba4dd8fdec82fef40_12.png)
 
 ---
 
-![](img/b14c0f6fec0088aba4dd8fdec82fef40_13.png)
 
 ![](img/b14c0f6fec0088aba4dd8fdec82fef40_14.png)
 

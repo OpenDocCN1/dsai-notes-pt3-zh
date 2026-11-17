@@ -2,7 +2,6 @@
 
 在本节课中，我们将学习如何利用父母身高数据来预测子女身高。我们将通过构建散点图、理解过绘制问题、探索回归分析的基本概念，并最终拟合一条回归线来达成这一目标。课程的核心是介绍**回归分析**，特别是**通过原点的回归**，并演示如何使用 R 语言进行实现。
 
-![](img/00dcae2df8dd90da0252ae86955a9ca6_1.png)
 
 ---
 
@@ -14,13 +13,10 @@
 
 
 
-![](img/00dcae2df8dd90da0252ae86955a9ca6_1.png)
 
 为了解决这个问题，我们绘制了一个更好的图表。在这个图表中，点的大小和颜色代表了在该特定 (X, Y) 位置上的父母-子女组合的频率。
 
-![](img/00dcae2df8dd90da0252ae86955a9ca6_3.png)
 
-![](img/00dcae2df8dd90da0252ae86955a9ca6_4.png)
 
 *   点的大小越大，表示该位置的组合数量越多。
 *   颜色越浅（接近浅色），表示频率接近 40；颜色越深（相对偏蓝色），表示频率较低，接近 10 或 1。
@@ -31,11 +27,8 @@
 
 
 
-![](img/00dcae2df8dd90da0252ae86955a9ca6_6.png)
 
-![](img/00dcae2df8dd90da0252ae86955a9ca6_3.png)
 
-![](img/00dcae2df8dd90da0252ae86955a9ca6_4.png)
 
 ---
 
@@ -49,7 +42,6 @@
 
 为了找到“最佳”直线，我们只需要找到最优的斜率 `β`。我们定义“最佳”为：使观测数据点（实际子女身高 `Y_i`）与直线上拟合点（`X_i * β`）之间的**垂直距离的平方和**最小的那条直线。
 
-![](img/00dcae2df8dd90da0252ae86955a9ca6_8.png)
 
 用公式表示，即找到 `β`，使得下式最小化：
 `Σ (Y_i - X_i * β)^2`
@@ -62,7 +54,6 @@
 
 
 
-![](img/00dcae2df8dd90da0252ae86955a9ca6_6.png)
 
 ---
 
@@ -79,13 +70,11 @@
 
 
 
-![](img/00dcae2df8dd90da0252ae86955a9ca6_8.png)
 
 ---
 
 ## 使用 Manipulate 函数探索最佳斜率
 
-![](img/00dcae2df8dd90da0252ae86955a9ca6_10.png)
 
 由于这是后续几节课的核心主题，我们将反复探讨这些基础概念。因此，这里不展示运行代码的过程，你可以从 R Markdown 文件中获取代码。希望在本专项课程的这个阶段，你已经熟悉运行 R 代码。
 
@@ -105,7 +94,6 @@
 
 
 
-![](img/00dcae2df8dd90da0252ae86955a9ca6_10.png)
 
 ---
 
@@ -126,17 +114,13 @@ lm(centered_child_height ~ centered_parent_height - 1, data = galton)
 
 
 
-![](img/00dcae2df8dd90da0252ae86955a9ca6_12.png)
 
-![](img/00dcae2df8dd90da0252ae86955a9ca6_13.png)
 
 ---
 
-![](img/00dcae2df8dd90da0252ae86955a9ca6_12.png)
 
 ## 最终拟合线
 
-![](img/00dcae2df8dd90da0252ae86955a9ca6_13.png)
 
 在本次课程的最后一张幻灯片中，我们展示拟合的回归线。由于我们强制模型通过中心化数据的原点 (0,0)，这意味着它必须通过原始数据的均值点（父母平均身高，子女平均身高）。
 
@@ -144,17 +128,13 @@ lm(centered_child_height ~ centered_parent_height - 1, data = galton)
 
 
 
-![](img/00dcae2df8dd90da0252ae86955a9ca6_15.png)
 
-![](img/00dcae2df8dd90da0252ae86955a9ca6_15.png)
 
-![](img/00dcae2df8dd90da0252ae86955a9ca6_17.png)
 
 在接下来的课程中，我们将深入探讨如何得到这条线、背后的动机、以及我们可以用这条拟合线做些什么。我们可能会花接下来几节课的时间来讨论回归分析。
 
 
 
-![](img/00dcae2df8dd90da0252ae86955a9ca6_17.png)
 
 ---
 
@@ -164,6 +144,5 @@ lm(centered_child_height ~ centered_parent_height - 1, data = galton)
 
 
 
-![](img/00dcae2df8dd90da0252ae86955a9ca6_19.png)
 
 ![](img/00dcae2df8dd90da0252ae86955a9ca6_19.png)

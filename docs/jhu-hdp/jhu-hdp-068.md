@@ -2,7 +2,6 @@
 
 ![](img/6dc87fb7f68536bf17954d381eddc9ab_0.png)
 
-![](img/6dc87fb7f68536bf17954d381eddc9ab_2.png)
 
 在本节课中，我们将通过一个简单的例子来学习 Hive 的基本操作。我们将了解如何在 Hive 中创建表、加载数据、查询数据以及最终删除表。通过这个过程，你也会理解 Hive 内部的一些工作原理，例如创建表时发生了什么、加载数据时 HDFS 如何变化、查询如何触发 MapReduce 作业，以及删除表时 HDFS 的相应操作。
 
@@ -69,7 +68,6 @@ OVERWRITE INTO TABLE posts;
 
 在 Hive 中，表本质上对应 HDFS 中的一个目录，而数据记录就是该目录下的文件。因此，加载数据的过程实际上是将本地文件复制到 HDFS 中对应的表目录下。
 
-![](img/6dc87fb7f68536bf17954d381eddc9ab_4.png)
 
 执行加载命令后，数据文件 `user_post.txt` 会被复制到 HDFS 的 `/user/hive/warehouse/posts/` 目录中。我们可以通过 Hadoop 命令 `hadoop fs -cat /user/hive/warehouse/posts/user_post.txt` 来验证数据是否已成功加载。
 
@@ -95,7 +93,6 @@ SELECT * FROM posts WHERE user = ‘user2’;
 
 或者，查找在某个时间点之前发布的帖子，并限制返回结果数量：
 
-![](img/6dc87fb7f68536bf17954d381eddc9ab_6.png)
 
 ```sql
 SELECT * FROM posts WHERE time < 13413431821333839 LIMIT 2;

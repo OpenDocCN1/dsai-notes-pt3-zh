@@ -18,7 +18,6 @@
 cudaError_t cudaMalloc(void** devPtr, size_t size);
 ```
 
-![](img/c0d04891966ba03ac5a645c77b486337_1.png)
 
 ---
 
@@ -60,7 +59,6 @@ cudaMemcpy(dest, src, size, cudaMemcpyDeviceToHost); // 从设备拷贝到主机
 
 ---
 
-![](img/c0d04891966ba03ac5a645c77b486337_3.png)
 
 ## 总结
 

@@ -1,6 +1,5 @@
 # 大型语言模型实践（高级数据工程、AWS、Databricks和本地LLM）：P103：02_01_03_Databricks湖仓平台简介
 
-![](img/8fce09c2da470dc618ee49c0b24ef385_0.png)
 
 ![](img/8fce09c2da470dc618ee49c0b24ef385_0.png)
 

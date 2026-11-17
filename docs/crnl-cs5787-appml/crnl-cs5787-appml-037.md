@@ -2,13 +2,10 @@
 
 在本节课中，我们将学习支持向量机（SVM）的优化方法，特别是基于合页损失（Hinge Loss）的无约束优化问题。我们将从上一节介绍的合页损失公式出发，探讨如何通过梯度下降法来优化这个目标函数，并最终实现一个完整的SVM算法。
 
-![](img/f25e5d2e2ea4fdb53605eb9882eae806_1.png)
 
-![](img/f25e5d2e2ea4fdb53605eb9882eae806_2.png)
 
 ## 模型与损失函数回顾
 
-![](img/f25e5d2e2ea4fdb53605eb9882eae806_4.png)
 
 上一节我们介绍了SVM的一种新形式，它涉及一个无约束优化问题，其核心是最小化合页损失。让我们先回顾一下这个模型。
 
@@ -30,13 +27,10 @@ J(\theta) = \sum_{i=1}^{n} \max(0, 1 - y^{(i)} \cdot f(x^{(i)})) + \frac{\lambda
 \]
 其中，\( \lambda \) 是正则化参数。
 
-![](img/f25e5d2e2ea4fdb53605eb9882eae806_6.png)
 
-![](img/f25e5d2e2ea4fdb53605eb9882eae806_8.png)
 
 ## 梯度下降法简介
 
-![](img/f25e5d2e2ea4fdb53605eb9882eae806_10.png)
 
 在之前的课程中，我们使用梯度下降法来优化其他算法的参数。梯度下降是一种迭代算法，我们从参数的某个初始猜测开始，然后反复应用以下更新步骤：
 \[
@@ -46,7 +40,6 @@ J(\theta) = \sum_{i=1}^{n} \max(0, 1 - y^{(i)} \cdot f(x^{(i)})) + \frac{\lambda
 
 ## 合页损失的梯度
 
-![](img/f25e5d2e2ea4fdb53605eb9882eae806_12.png)
 
 现在，我们来看看如何将梯度下降法应用于合页损失。合页损失函数有两个不同的区域，这取决于预测值 \( y \cdot f(x) \) 是否小于1。
 
@@ -72,7 +65,6 @@ J(\theta) = \sum_{i=1}^{n} \max(0, 1 - y^{(i)} \cdot f(x^{(i)})) + \frac{\lambda
 \nabla \ell_{\text{hinge}} = 0
 \]
 
-![](img/f25e5d2e2ea4fdb53605eb9882eae806_14.png)
 
 ### 拐点处的梯度
 
@@ -90,7 +82,6 @@ J(\theta) = \sum_{i=1}^{n} \max(0, 1 - y^{(i)} \cdot f(x^{(i)})) + \frac{\lambda
 \]
 在拐点处，我们可以选择任意值（例如0或 \(-y \cdot x\)），这不会影响优化结果。
 
-![](img/f25e5d2e2ea4fdb53605eb9882eae806_16.png)
 
 现在，我们可以使用这个“类梯度”函数来实现次梯度下降算法。算法的伪代码如下：
 
@@ -101,15 +92,12 @@ J(\theta) = \sum_{i=1}^{n} \max(0, 1 - y^{(i)} \cdot f(x^{(i)})) + \frac{\lambda
 
 ## Python实现
 
-![](img/f25e5d2e2ea4fdb53605eb9882eae806_18.png)
 
 以下是使用Python实现SVM优化算法的步骤。
 
-![](img/f25e5d2e2ea4fdb53605eb9882eae806_20.png)
 
 ### 定义模型和损失
 
-![](img/f25e5d2e2ea4fdb53605eb9882eae806_22.png)
 
 首先，我们定义线性模型和合页损失函数。
 
@@ -129,11 +117,9 @@ def objective(theta, X, y, lambda_reg):
     return loss + reg
 ```
 
-![](img/f25e5d2e2ea4fdb53605eb9882eae806_24.png)
 
 ### 实现次梯度
 
-![](img/f25e5d2e2ea4fdb53605eb9882eae806_26.png)
 
 接下来，我们实现“类梯度”函数。
 
@@ -151,7 +137,6 @@ def approximate_gradient(theta, X, y):
 
 最后，我们实现次梯度下降算法来优化参数。
 
-![](img/f25e5d2e2ea4fdb53605eb9882eae806_28.png)
 
 ```python
 def subgradient_descent(X, y, lambda_reg, learning_rate=0.01, iterations=1000):
@@ -170,23 +155,17 @@ def subgradient_descent(X, y, lambda_reg, learning_rate=0.01, iterations=1000):
     return theta
 ```
 
-![](img/f25e5d2e2ea4fdb53605eb9882eae806_30.png)
 
 ### 可视化结果
 
-![](img/f25e5d2e2ea4fdb53605eb9882eae806_32.png)
 
 优化完成后，我们可以可视化决策边界，以验证模型是否能够正确分类数据并保持较大的间隔。
 
 
-![](img/f25e5d2e2ea4fdb53605eb9882eae806_34.png)
 
 
-![](img/f25e5d2e2ea4fdb53605eb9882eae806_36.png)
 
-![](img/f25e5d2e2ea4fdb53605eb9882eae806_37.png)
 
-![](img/f25e5d2e2ea4fdb53605eb9882eae806_39.png)
 
 ```python
 import matplotlib.pyplot as plt
@@ -200,11 +179,9 @@ plt.plot(x_boundary, y_boundary, 'k-')
 plt.show()
 ```
 
-![](img/f25e5d2e2ea4fdb53605eb9882eae806_41.png)
 
 ## 算法总结
 
-![](img/f25e5d2e2ea4fdb53605eb9882eae806_43.png)
 
 本节课我们一起学习了支持向量机的优化方法，特别是基于合页损失的无约束优化问题。我们回顾了合页损失函数的定义，探讨了其梯度在不同区域的行为，并引入了次梯度的概念。通过实现次梯度下降算法，我们成功优化了SVM的目标函数，并可视化了一个具有较大间隔的决策边界。
 

@@ -4,7 +4,6 @@
 
 ## 概述
 
-![](img/65b6acad403e1e50c106f296edd465fc_1.png)
 
 上一节我们介绍了使用梯度下降法学习线性模型。本节中，我们将探讨一种更高效的方法——普通最小二乘法。这种方法通过求解一组线性方程（正规方程）来直接找到最小化均方误差的参数，无需迭代调整学习率。
 
@@ -14,14 +13,12 @@
 
 ### 设计矩阵
 
-![](img/65b6acad403e1e50c106f296edd465fc_3.png)
 
 设计矩阵是一种方便表示训练数据集的方式。每个训练样本的输入是一个D维向量，设计矩阵就是将所有样本的输入向量按行堆叠起来。
 
 **设计矩阵的定义**：
 设我们有n个训练样本，每个样本的输入特征为D维向量。设计矩阵X是一个n×D的矩阵，其中第i行对应第i个样本的特征向量。
 
-![](img/65b6acad403e1e50c106f296edd465fc_5.png)
 
 **代码表示**：
 ```python
@@ -35,11 +32,8 @@ X = np.array([
 ])
 ```
 
-![](img/65b6acad403e1e50c106f296edd465fc_7.png)
 
-![](img/65b6acad403e1e50c106f296edd465fc_8.png)
 
-![](img/65b6acad403e1e50c106f296edd465fc_9.png)
 
 ### 目标向量
 
@@ -58,12 +52,10 @@ y = np.array([y_1, y_2, ..., y_n])
 
 现在，我们可以使用矩阵表示法来重写均方误差（MSE）目标函数。
 
-![](img/65b6acad403e1e50c106f296edd465fc_11.png)
 
 **均方误差的原始定义**：
 均方误差是预测值与真实值之间平方差的平均值。
 
-![](img/65b6acad403e1e50c106f296edd465fc_13.png)
 
 **向量化表示**：
 使用设计矩阵和目标向量，我们可以将均方误差写成更紧凑的形式：
@@ -79,7 +71,6 @@ J(θ) = (1/n) * ||Xθ - y||²
 - y是目标向量（n×1）
 - ||·||表示欧几里得范数（向量的长度）
 
-![](img/65b6acad403e1e50c106f296edd465fc_15.png)
 
 这种表示等价于原始的均方误差定义，但使用了更简洁的矩阵运算。
 
@@ -116,7 +107,6 @@ XᵀXθ = Xᵀy
 
 正规方程是一组线性方程，我们可以直接求解参数θ：
 
-![](img/65b6acad403e1e50c106f296edd465fc_17.png)
 
 **最优参数的闭式解**：
 ```
@@ -149,9 +139,7 @@ X_train_bias = np.c_[np.ones((X_train.shape[0], 1)), X_train]
 
 使用推导出的公式计算最优参数：
 
-![](img/65b6acad403e1e50c106f296edd465fc_19.png)
 
-![](img/65b6acad403e1e50c106f296edd465fc_20.png)
 
 **代码实现**：
 ```python
@@ -163,7 +151,6 @@ theta_best = np.linalg.inv(X_train_bias.T @ X_train_bias) @ X_train_bias.T @ y_t
 
 使用学习到的参数对新样本进行预测：
 
-![](img/65b6acad403e1e50c106f296edd465fc_22.png)
 
 **预测代码**：
 ```python
@@ -174,13 +161,10 @@ y_pred = X_new_bias @ theta_best
 
 ## 算法总结
 
-![](img/65b6acad403e1e50c106f296edd465fc_24.png)
 
 以下是普通最小二乘法算法的关键点总结：
 
-![](img/65b6acad403e1e50c106f296edd465fc_26.png)
 
-![](img/65b6acad403e1e50c106f296edd465fc_27.png)
 
 **算法特性**：
 - **类型**：监督学习算法
@@ -207,7 +191,6 @@ y_pred = X_new_bias @ theta_best
 - 普通最小二乘法：O(D³)，其中D是特征数量
 - 梯度下降法：O(k·D)，其中k是迭代次数
 
-![](img/65b6acad403e1e50c106f296edd465fc_29.png)
 
 **适用场景**：
 - 当特征数量较少（D < 10000）时，普通最小二乘法通常更快
@@ -220,7 +203,6 @@ y_pred = X_new_bias @ theta_best
 
 ### 处理不可逆矩阵
 
-![](img/65b6acad403e1e50c106f296edd465fc_31.png)
 
 如果XᵀX不可逆，可以采取以下措施：
 
@@ -229,7 +211,6 @@ y_pred = X_new_bias @ theta_best
 2. 使用正则化（如岭回归）
 3. 使用伪逆代替逆矩阵
 
-![](img/65b6acad403e1e50c106f296edd465fc_33.png)
 
 **代码示例**：
 ```python
@@ -239,7 +220,6 @@ theta_best = np.linalg.pinv(X_train_bias.T @ X_train_bias) @ X_train_bias.T @ y_
 
 ### 数值稳定性
 
-![](img/65b6acad403e1e50c106f296edd465fc_35.png)
 
 为了提高数值稳定性，建议：
 

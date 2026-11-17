@@ -1,12 +1,9 @@
 # 64：L9.2 - 非线性激活函数 🧠
 
-![](img/1ad76e568e4f9cdba813be05e8c1f3bb_1.png)
 
 在本节课中，我们将要学习神经网络中的非线性激活函数。我们将了解为什么需要它们，它们如何与隐藏层协同工作以创建复杂的非线性决策边界，并介绍几种常见的激活函数及其特性。
 
-![](img/1ad76e568e4f9cdba813be05e8c1f3bb_3.png)
 
-![](img/1ad76e568e4f9cdba813be05e8c1f3bb_5.png)
 
 ---
 
@@ -50,11 +47,9 @@ model = nn.Sequential(
 
 ---
 
-![](img/1ad76e568e4f9cdba813be05e8c1f3bb_7.png)
 
 ## 为什么需要非线性激活函数？🔑
 
-![](img/1ad76e568e4f9cdba813be05e8c1f3bb_9.png)
 
 现在，让我们回到核心问题：为什么神经网络需要非线性激活函数？
 
@@ -74,7 +69,6 @@ model = nn.Sequential(
 
 这是因为，如果没有非线性激活函数，多个线性层的堆叠本质上等价于一个单一的线性变换：`f(f(x))` 仍然是线性的。非线性激活函数在层与层之间引入了“弯曲”，使得网络能够组合出复杂的函数。
 
-![](img/1ad76e568e4f9cdba813be05e8c1f3bb_11.png)
 
 ---
 
@@ -99,7 +93,6 @@ model = nn.Sequential(
 
 ---
 
-![](img/1ad76e568e4f9cdba813be05e8c1f3bb_13.png)
 
 ## ReLU的变体与现代激活函数 🚀
 
@@ -121,7 +114,6 @@ model = nn.Sequential(
 
 ---
 
-![](img/1ad76e568e4f9cdba813be05e8c1f3bb_15.png)
 
 ## 前沿视角：平滑激活函数与对抗鲁棒性 🛡️
 
@@ -133,7 +125,6 @@ model = nn.Sequential(
 
 这意味着，在某些对安全性要求高的场景下，将ReLU替换为更平滑的变体可能是一个简单而有效的改进策略。
 
-![](img/1ad76e568e4f9cdba813be05e8c1f3bb_17.png)
 
 ---
 
@@ -141,7 +132,6 @@ model = nn.Sequential(
 
 本节课中我们一起学习了非线性激活函数的核心知识：
 
-![](img/1ad76e568e4f9cdba813be05e8c1f3bb_19.png)
 
 1.  **必要性**：非线性激活函数与隐藏层结合，是神经网络能够学习复杂非线性模式的**关键**。
 2.  **发展历程**：从传统的Sigmoid、Tanh，到现代默认的ReLU及其众多变体（Leaky ReLU， PReLU， ELU， SELU）。
@@ -149,7 +139,6 @@ model = nn.Sequential(
 4.  **实践选择**：**ReLU**是通用的强大起点。可根据具体问题尝试其变体以优化性能或稳定性。
 5.  **前沿联系**：激活函数的平滑性被发现与模型的**对抗鲁棒性**有关，平滑的近似版本可能在此方面更具优势。
 
-![](img/1ad76e568e4f9cdba813be05e8c1f3bb_21.png)
 
 ![](img/1ad76e568e4f9cdba813be05e8c1f3bb_22.png)
 

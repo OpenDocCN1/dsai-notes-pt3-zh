@@ -57,7 +57,6 @@ def residual_block(x):
 
 ---
 
-![](img/9e9922ed0b3d563163156ead59369603_1.png)
 
 ## 从VGG到ResNet的架构变化
 

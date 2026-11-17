@@ -1,6 +1,5 @@
 # 96：04_01_06_什么是DevOps 🛠️
 
-![](img/c05c587746f9527fdc42026c14ddfacc_0.png)
 
 ![](img/c05c587746f9527fdc42026c14ddfacc_1.png)
 

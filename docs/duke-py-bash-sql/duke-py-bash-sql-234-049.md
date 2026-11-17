@@ -1,6 +1,5 @@
 #  049：Makefile与Dockerfile 🔧🐳
 
-![](img/1a5864d6165e0e59301f4ecf665e4017_0.png)
 
 ![](img/1a5864d6165e0e59301f4ecf665e4017_1.png)
 

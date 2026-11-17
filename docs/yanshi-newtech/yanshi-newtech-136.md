@@ -12,7 +12,6 @@ SURF是“Speeded Up Robust Features”的缩写。这是一种近似技术，�
 
 SURF在其处理过程中会使用**Hessian矩阵的行列式**。这被用于兴趣点检测机制。同时，SURF会使用**盒式滤波器**来近似计算Hessian矩阵行列式。换句话说，Hessian矩阵的计算过程将通过盒式滤波来近似。
 
-![](img/f7c0cabc9510dd196bb2bd2d8eabcdd9_2.png)
 
 那么，Hessian矩阵是什么？这是一个包含二阶偏导数元素的方阵，因此在该矩阵中需要进行偏导数计算。它表征了图像表面的曲率程度，因此在SURF的关键点检测中非常重要。
 
@@ -20,9 +19,7 @@ SURF在其处理过程中会使用**Hessian矩阵的行列式**。这被用于�
 
 在上一讲中，我们已经基于SURF的整体框架介绍了特征提取和检测机制。现在，我们将进一步深入其细节。
 
-![](img/f7c0cabc9510dd196bb2bd2d8eabcdd9_4.png)
 
-![](img/f7c0cabc9510dd196bb2bd2d8eabcdd9_6.png)
 
 以下是SURF操作的主要步骤：
 1.  **积分图像生成**

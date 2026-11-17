@@ -104,11 +104,9 @@ IDE 将要求我们打开保存数据的文件。选择创建的“data”文件
 
 在 Studio 上，转到“数据采集”标签，在“上传数据”部分，从您的电脑上传所选类别的文件：
 
-![图片](img/file377.png)
 
 将原始数据集拆分为*训练和测试*的任务留给工作室，并选择关于该特定数据的标签：
 
-![图片](img/file378.png)
 
 对所有三个类别重复此过程。
 
@@ -152,13 +150,11 @@ IDE 将要求我们打开保存数据的文件。选择创建的“data”文件
 
 转到冲击设计选项卡并创建*冲击*，定义图像大小为 96x96，并压缩它们（方形形式，无需裁剪）。选择图像和迁移学习模块。保存冲击。
 
-![图片](img/file386.png)
 
 ### 图像预处理
 
 所有输入 QVGA/RGB565 图像都将转换为 27,640 个特征 <semantics><mrow><mo stretchy="true" form="prefix">(</mo><mn>96</mn><mo>×</mo><mn>96</mn><mo>×</mo><mn>3</mn><mo stretchy="true" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">(96\times 96\times 3)</annotation></semantics>。
 
-![图片](img/file387.png)
 
 点击 `[保存参数]` 并生成所有特征：
 

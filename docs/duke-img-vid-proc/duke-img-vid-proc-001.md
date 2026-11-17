@@ -1,6 +1,5 @@
 # 001：01_01_01_0-欢迎与入门指南 🎬
 
-![](img/dac422a7406030c614eca4efcfd063c2_0.png)
 
 ![](img/dac422a7406030c614eca4efcfd063c2_0.png)
 

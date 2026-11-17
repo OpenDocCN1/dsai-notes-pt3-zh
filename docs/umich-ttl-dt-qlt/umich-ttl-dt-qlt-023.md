@@ -41,7 +41,6 @@
 
 ![](img/3a617c1245a7f5a11247d1b678f6d78e_5.png)
 
-![](img/3a617c1245a7f5a11247d1b678f6d78e_6.png)
 
 ![](img/3a617c1245a7f5a11247d1b678f6d78e_7.png)
 

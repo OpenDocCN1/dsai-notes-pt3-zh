@@ -34,9 +34,7 @@ Hadoop中的`Configuration`类代表了Hadoop配置。你可以通过调用`Conf
 
 此外，你还可以通过调用配置对象的`get`方法并传递参数名，来**获取特定参数的值**，该方法会返回对应的值。
 
-![](img/3ceca9f2ba930f4e017e529675038c9d_2.png)
 
-![](img/3ceca9f2ba930f4e017e529675038c9d_3.png)
 
 以下是演示Hadoop配置对象使用的`Configuration1.java`类：
 
@@ -73,7 +71,6 @@ public class Configuration1 {
 
 让我们看一个例子。这里有另一个名为`Configuration2`的示例。我实例化了一个配置对象并将其赋值给变量`conf`。这次，我想添加一个名为`myapp-conf.xml`的资源。注意，我是在配置对象上调用此方法。这里的思路是，配置对象已经加载了默认配置，而我想加载自己的配置。
 
-![](img/3ceca9f2ba930f4e017e529675038c9d_5.png)
 
 以下是该文件的内容示例：
 
@@ -93,7 +90,6 @@ public class Configuration1 {
 
 该文件包含两个属性：一个名为`fs.default.name`，值为`hdfs://anotherhost:9020`；另一个名为`my.app.parameter1`，值为`blue`。
 
-![](img/3ceca9f2ba930f4e017e529675038c9d_7.png)
 
 然后，我可以转储配置，也可以通过for循环打印配置内容，现在还可以打印`fs.default.name`和`my.app.parameter1`的值，这些值都来自配置对象。
 
@@ -103,10 +99,8 @@ public class Configuration1 {
 
 让我们看看这个。这里有一个名为`Configuration3`的程序。注意，在我的静态初始化块中，我调用了`Configuration`类的静态方法`addDefaultResource`，并传递了XML文件的名称。
 
-![](img/3ceca9f2ba930f4e017e529675038c9d_9.png)
 
 
-![](img/3ceca9f2ba930f4e017e529675038c9d_10.png)
 
 ```java
 import org.apache.hadoop.conf.Configuration;
@@ -131,7 +125,6 @@ public class Configuration3 {
 
 ## 搭建Hadoop开发环境 💻
 
-![](img/3ceca9f2ba930f4e017e529675038c9d_12.png)
 
 现在，让我们将所有这些付诸实践，并搭建开发环境。
 
@@ -174,7 +167,6 @@ public class Configuration3 {
 
 接下来，我想编写自己的for循环来遍历配置。代码如下：
 
-![](img/3ceca9f2ba930f4e017e529675038c9d_14.png)
 
 ```java
 for (Map.Entry<String, String> entry : conf) {
@@ -186,7 +178,6 @@ for (Map.Entry<String, String> entry : conf) {
 
 问题是，它从哪里获取所有这些属性？正如之前提到的，有`core-default.xml`和`core-site.xml`。`core-default.xml`预定义了一堆属性，而我们在`core-site.xml`中覆盖了特定的属性。
 
-![](img/3ceca9f2ba930f4e017e529675038c9d_16.png)
 
 如果你查看Hadoop文档，在左侧的“Configuration”部分有一个指向`core-default.xml`的链接。点击它，你可以看到属性的名称、默认值及其描述。我们看到的许多值都是默认值。我们在系统范围的配置（`etc/hadoop`下）中覆盖这些默认值。
 

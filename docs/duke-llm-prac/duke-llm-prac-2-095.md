@@ -1,6 +1,5 @@
 # 大型语言模型实践：P95：探索Boto3 Bedrock客户端Python SDK 🚀
 
-![](img/d278e95139a8e2690a6461dc8a04e90c_0.png)
 
 在本节课中，我们将学习如何通过编程方式访问Amazon Bedrock服务中的基础模型。我们将从AWS Cloud Shell开始，逐步深入到使用Python的Boto3 SDK，并了解如何通过Bedrock Runtime来实际调用模型。
 
@@ -41,7 +40,6 @@ Amazon Bedrock提供了一个基础模型版块，其中包含多种模型，例
 
 AWS为Bedrock提供了Python客户端，其使用方式与大多数Boto3服务一致。
 
-![](img/d278e95139a8e2690a6461dc8a04e90c_5.png)
 
 以下是初始化客户端并查看可用方法的代码：
 ```python
@@ -65,10 +63,7 @@ client = boto3.client('bedrock')
 
 例如，如果你想使用Claude 2.1模型，需要先在Bedrock控制台找到该模型对应的确切ID，然后在API请求中使用这个ID。
 
-![](img/d278e95139a8e2690a6461dc8a04e90c_7.png)
 
-![](img/d278e95139a8e2690a6461dc8a04e90c_7.png)
-![](img/d278e95139a8e2690a6461dc8a04e90c_8.png)
 
 ![](img/d278e95139a8e2690a6461dc8a04e90c_8.png)
 

@@ -1,6 +1,5 @@
 # 大型语言模型实践：P22：引言_4
 
-![](img/be0060c245859c9f3cc76eaf20ed1ebd_0.png)
 
 ![](img/be0060c245859c9f3cc76eaf20ed1ebd_0.png)
 

@@ -2,7 +2,6 @@
 
 ![](img/b1b1c2ac5abfac22965947cba74d2034_0.png)
 
-![](img/b1b1c2ac5abfac22965947cba74d2034_2.png)
 
 ![](img/b1b1c2ac5abfac22965947cba74d2034_4.png)
 
@@ -78,7 +77,6 @@
 
 ![](img/b1b1c2ac5abfac22965947cba74d2034_31.png)
 
-![](img/b1b1c2ac5abfac22965947cba74d2034_32.png)
 
 ![](img/b1b1c2ac5abfac22965947cba74d2034_33.png)
 

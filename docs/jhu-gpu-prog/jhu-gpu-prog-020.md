@@ -36,7 +36,6 @@
 
 两个非常流行的用于创建神经网络和其他数学结构的库是TensorFlow和PyTorch。当系统中存在NVIDIA GPU并安装了CUDA驱动时，这些框架也会使用CUDA。
 
-![](img/aebd8c81b940f1f75b9a02f985b909e8_4.png)
 
 ## CUDA库
 
@@ -44,9 +43,7 @@
 
 使用CUDA能力的另一种常见方式是使用NVIDIA CUDA开发者工具包中的库。
 
-![](img/aebd8c81b940f1f75b9a02f985b909e8_4.png)
 
-![](img/aebd8c81b940f1f75b9a02f985b909e8_6.png)
 
 其中一些库旨在消除编写复杂CUDA代码的需要，或者让复杂的数据结构和算法能在您的CUDA代码中使用。它们几乎都由NVIDIA维护。随着新的用例或领域需要更强大或更可靠的选项，新的库会被不断添加。
 

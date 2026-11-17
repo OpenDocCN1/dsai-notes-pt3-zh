@@ -1,6 +1,5 @@
 # 22：带控制的动态模态分解系统辨识
 
-![](img/a2854c1c0ddf199a573eba5ae8a0504b_0.png)
 
 ![](img/a2854c1c0ddf199a573eba5ae8a0504b_0.png)
 

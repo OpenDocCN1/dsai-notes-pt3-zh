@@ -1,34 +1,24 @@
 # 012：训练选项详解 🎛️
 
-![](img/8d59a5f602d892489b2bfc7aa92e9925_0.png)
 
-![](img/8d59a5f602d892489b2bfc7aa92e9925_2.png)
 
 在本节课中，我们将学习使用 `caret` 包训练模型时，可以调整的各种训练控制选项。这些选项能帮助我们更精细地控制模型训练过程，以获得更可靠和可复现的结果。
 
-![](img/8d59a5f602d892489b2bfc7aa92e9925_4.png)
 
-![](img/8d59a5f602d892489b2bfc7aa92e9925_5.png)
 
 ---
 
-![](img/8d59a5f602d892489b2bfc7aa92e9925_7.png)
 
-![](img/8d59a5f602d892489b2bfc7aa92e9925_8.png)
 
 ## 概述与数据准备
 
 本节我们将再次使用垃圾邮件（spam）数据集来演示这些训练选项的工作原理。
 
-![](img/8d59a5f602d892489b2bfc7aa92e9925_10.png)
 
-![](img/8d59a5f602d892489b2bfc7aa92e9925_11.png)
 
-![](img/8d59a5f602d892489b2bfc7aa92e9925_12.png)
 
 首先，我们加载必要的R包和数据。
 
-![](img/8d59a5f602d892489b2bfc7aa92e9925_13.png)
 
 ```r
 # 加载必要的包
@@ -41,20 +31,13 @@ data(spam)
 
 接着，我们划分训练集和测试集。使用 `createDataPartition` 函数创建训练集的索引，并将大约75%的数据分配到训练集中。
 
-![](img/8d59a5f602d892489b2bfc7aa92e9925_15.png)
-
-![](img/8d59a5f602d892489b2bfc7aa92e9925_16.png)
-
-![](img/8d59a5f602d892489b2bfc7aa92e9925_17.png)
 
 
-![](img/8d59a5f602d892489b2bfc7aa92e9925_18.png)
 
-![](img/8d59a5f602d892489b2bfc7aa92e9925_19.png)
 
-![](img/8d59a5f602d892489b2bfc7aa92e9925_20.png)
 
-![](img/8d59a5f602d892489b2bfc7aa92e9925_21.png)
+
+
 
 ```r
 # 创建训练集索引
@@ -64,15 +47,11 @@ training <- spam[inTrain, ]
 testing <- spam[-inTrain, ]
 ```
 
-![](img/8d59a5f602d892489b2bfc7aa92e9925_23.png)
 
 ---
 
-![](img/8d59a5f602d892489b2bfc7aa92e9925_24.png)
 
-![](img/8d59a5f602d892489b2bfc7aa92e9925_25.png)
 
-![](img/8d59a5f602d892489b2bfc7aa92e9925_26.png)
 
 ## 基础模型训练
 
@@ -83,31 +62,21 @@ testing <- spam[-inTrain, ]
 modelFit <- train(type ~ ., data=training, method="glm")
 ```
 
-![](img/8d59a5f602d892489b2bfc7aa92e9925_28.png)
 
-![](img/8d59a5f602d892489b2bfc7aa92e9925_29.png)
 
-![](img/8d59a5f602d892489b2bfc7aa92e9925_30.png)
 
-![](img/8d59a5f602d892489b2bfc7aa92e9925_31.png)
 
-![](img/8d59a5f602d892489b2bfc7aa92e9925_32.png)
 
 然而，`train` 函数提供了许多选项，允许我们超越默认设置，对训练过程进行更深入的控制。
 
-![](img/8d59a5f602d892489b2bfc7aa92e9925_33.png)
 
 ---
 
 ## 核心训练选项
 
-![](img/8d59a5f602d892489b2bfc7aa92e9925_35.png)
 
-![](img/8d59a5f602d892489b2bfc7aa92e9925_36.png)
 
-![](img/8d59a5f602d892489b2bfc7aa92e9925_37.png)
 
-![](img/8d59a5f602d892489b2bfc7aa92e9925_38.png)
 
 `train` 函数的核心参数使我们能够定制训练过程。以下是几个关键选项：
 
@@ -141,25 +110,17 @@ modelFit2 <- train(type ~ ., data=training, method="glm", trControl = fitControl
 
 ---
 
-![](img/8d59a5f602d892489b2bfc7aa92e9925_40.png)
 
-![](img/8d59a5f602d892489b2bfc7aa92e9925_41.png)
 
-![](img/8d59a5f602d892489b2bfc7aa92e9925_42.png)
 
-![](img/8d59a5f602d892489b2bfc7aa92e9925_43.png)
 
-![](img/8d59a5f602d892489b2bfc7aa92e9925_44.png)
 
 ## 使用 `trainControl` 进行精细控制
 
-![](img/8d59a5f602d892489b2bfc7aa92e9925_45.png)
 
 `trainControl` 参数允许你更精确地定义模型训练方式。
 
-![](img/8d59a5f602d892489b2bfc7aa92e9925_47.png)
 
-![](img/8d59a5f602d892489b2bfc7aa92e9925_48.png)
 
 以下是其主要选项：
 *   **`method`**：指定重采样方法，如自助法（bootstrapping）或交叉验证（cross-validation）。
@@ -172,19 +133,13 @@ modelFit2 <- train(type ~ ., data=training, method="glm", trControl = fitControl
 
 ---
 
-![](img/8d59a5f602d892489b2bfc7aa92e9925_50.png)
 
-![](img/8d59a5f602d892489b2bfc7aa92e9925_51.png)
 
 ## 重采样方法
 
-![](img/8d59a5f602d892489b2bfc7aa92e9925_52.png)
 
-![](img/8d59a5f602d892489b2bfc7aa92e9925_53.png)
 
-![](img/8d59a5f602d892489b2bfc7aa92e9925_54.png)
 
-![](img/8d59a5f602d892489b2bfc7aa92e9925_55.png)
 
 有多种重采样方法可供选择，并通过 `trainControl` 函数传递。
 
@@ -197,38 +152,26 @@ modelFit2 <- train(type ~ ., data=training, method="glm", trControl = fitControl
 
 你还可以指定自助样本的数量、子采样的次数，或者在进行重复交叉验证时的重复次数。通常，默认设置效果很好。但是，如果你的样本量很大，或者模型需要在大量参数上进行精细调优，你可能需要增加交叉验证或自助样本的数量。
 
-![](img/8d59a5f602d892489b2bfc7aa92e9925_57.png)
 
 ---
 
-![](img/8d59a5f602d892489b2bfc7aa92e9925_58.png)
 
-![](img/8d59a5f602d892489b2bfc7aa92e9925_59.png)
 
-![](img/8d59a5f602d892489b2bfc7aa92e9925_60.png)
 
-![](img/8d59a5f602d892489b2bfc7aa92e9925_61.png)
 
-![](img/8d59a5f602d892489b2bfc7aa92e9925_62.png)
 
 ## 设置随机种子
 
-![](img/8d59a5f602d892489b2bfc7aa92e9925_63.png)
 
 训练这些模型的一个重要环节是设置随机种子。大多数程序依赖于数据的随机重采样。如果你重新运行代码，由于交叉验证时产生了随机抽取，可能会得到略有不同的答案。
 
-![](img/8d59a5f602d892489b2bfc7aa92e9925_65.png)
 
-![](img/8d59a5f602d892489b2bfc7aa92e9925_66.png)
 
 设置随机种子可以确保每次生成相同的伪随机数序列，从而获得可重复的结果。这对于分享代码和确保他人能复现你的结果至关重要。
 
-![](img/8d59a5f602d892489b2bfc7aa92e9925_67.png)
-
-![](img/8d59a5f602d892489b2bfc7aa92e9925_69.png)
 
 
-![](img/8d59a5f602d892489b2bfc7aa92e9925_70.png)
+
 
 ```r
 # 设置全局随机种子以获得可重复结果
@@ -243,31 +186,21 @@ modelFit3 <- train(type ~ ., data=training, method="glm")
 
 ---
 
-![](img/8d59a5f602d892489b2bfc7aa92e9925_72.png)
 
 ## 总结
 
-![](img/8d59a5f602d892489b2bfc7aa92e9925_73.png)
 
-![](img/8d59a5f602d892489b2bfc7aa92e9925_74.png)
 
-![](img/8d59a5f602d892489b2bfc7aa92e9925_75.png)
 
-![](img/8d59a5f602d892489b2bfc7aa92e9925_76.png)
 
 本节课我们一起学习了使用 `caret` 包训练模型时可用的多种控制选项。
 
-![](img/8d59a5f602d892489b2bfc7aa92e9925_77.png)
 
-![](img/8d59a5f602d892489b2bfc7aa92e9925_78.png)
 
-![](img/8d59a5f602d892489b2bfc7aa92e9925_79.png)
 
-![](img/8d59a5f602d892489b2bfc7aa92e9925_80.png)
 
 我们回顾了如何通过 `train` 函数的基础参数（如 `metric` 和 `weights`）进行初步定制，并深入探讨了通过 `trainControl` 函数实现精细控制的方法，包括选择不同的重采样方法（如自助法和交叉验证）、设置重采样次数以及控制随机种子以确保结果的可复现性。
 
-![](img/8d59a5f602d892489b2bfc7aa92e9925_82.png)
 
 ![](img/8d59a5f602d892489b2bfc7aa92e9925_83.png)
 

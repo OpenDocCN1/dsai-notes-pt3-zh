@@ -14,7 +14,6 @@
 library(plotly)
 ```
 
-![](img/8bb428b8824b93657ceb8c0f3ddaa048_1.png)
 
 接下来，使用 `plot_ly` 函数创建散点图。我们以 `mtcars` 数据集为例，将车重（`wt`）作为 X 轴，每加仑英里数（`mpg`）作为 Y 轴，并设置模式为标记点（`markers`）。
 
@@ -50,7 +49,6 @@ plot_ly(mtcars, x = ~wt, y = ~mpg, mode = "markers")
 
 
 
-![](img/8bb428b8824b93657ceb8c0f3ddaa048_3.png)
 
 ## 实践任务
 
@@ -66,7 +64,6 @@ plot_ly(mtcars, x = ~wt, y = ~mpg, mode = "markers")
 
 
 
-![](img/8bb428b8824b93657ceb8c0f3ddaa048_5.png)
 
 ## 总结
 

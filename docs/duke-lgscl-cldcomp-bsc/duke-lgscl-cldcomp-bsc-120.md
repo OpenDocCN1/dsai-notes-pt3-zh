@@ -23,7 +23,6 @@ cd web_docker
 
 接下来，需要为App Engine创建配置文件。创建一个名为 `app.yaml` 的文件。
 
-![](img/2db2b5617642e0efe1098497dd52340c_2.png)
 
 ```bash
 touch app.yaml
@@ -158,7 +157,6 @@ clean:
 
 在部署之前，先在本地运行应用以确保一切正常。
 
-![](img/2db2b5617642e0efe1098497dd52340c_7.png)
 
 ![](img/2db2b5617642e0efe1098497dd52340c_8.png)
 
@@ -166,7 +164,6 @@ clean:
 cargo run
 ```
 
-![](img/2db2b5617642e0efe1098497dd52340c_9.png)
 
 应用启动后，可以通过Web预览功能访问 `http://localhost:8080`。页面应显示“Welcome! Random fruit: [随机水果名]”。访问 `/health` 路由应返回“OK”。
 

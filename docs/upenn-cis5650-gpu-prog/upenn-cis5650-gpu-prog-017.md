@@ -6,15 +6,11 @@
 
 ![](img/3a23afc523800bfaacb053f8b5862fcf_3.png)
 
-![](img/3a23afc523800bfaacb053f8b5862fcf_5.png)
 
-![](img/3a23afc523800bfaacb053f8b5862fcf_7.png)
 
 在本节课中，我们将学习两个核心内容。首先，我们会介绍课程项目五——基于WebGPU的高斯溅射渲染。其次，我们将开始Vulkan图形API的实验课程第一部分，学习其初始化、资源创建和管线设置等基础知识。
 
-![](img/3a23afc523800bfaacb053f8b5862fcf_9.png)
 
-![](img/3a23afc523800bfaacb053f8b5862fcf_10.png)
 
 ---
 
@@ -32,13 +28,10 @@
 
 ![](img/3a23afc523800bfaacb053f8b5862fcf_12.png)
 
-![](img/3a23afc523800bfaacb053f8b5862fcf_13.png)
 
 ![](img/3a23afc523800bfaacb053f8b5862fcf_15.png)
 
-![](img/3a23afc523800bfaacb053f8b5862fcf_17.png)
 
-![](img/3a23afc523800bfaacb053f8b5862fcf_19.png)
 
 以下是渲染管线的核心步骤：
 1.  **加载数据**：加载提供的3D高斯数据。
@@ -133,7 +126,6 @@ imageInfo.usage = VK_IMAGE_USAGE_STORAGE_BIT | VK_IMAGE_USAGE_SAMPLED_BIT;
 vkCreateImage(device, &imageInfo, nullptr, &image);
 ```
 
-![](img/3a23afc523800bfaacb053f8b5862fcf_36.png)
 
 ![](img/3a23afc523800bfaacb053f8b5862fcf_38.png)
 
@@ -177,7 +169,6 @@ vkBindImageMemory(device, image, imageMemory, 0);
 
 ### 描述符与管线布局
 
-![](img/3a23afc523800bfaacb053f8b5862fcf_48.png)
 
 ![](img/3a23afc523800bfaacb053f8b5862fcf_49.png)
 

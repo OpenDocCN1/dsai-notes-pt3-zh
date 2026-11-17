@@ -1,6 +1,5 @@
 #  036：使用Shell控制流解决Bash问题 🐚
 
-![](img/13fce9cfed7882c2e1fed1883f3ebe92_0.png)
 
 ![](img/13fce9cfed7882c2e1fed1883f3ebe92_1.png)
 

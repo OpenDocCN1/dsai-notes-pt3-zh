@@ -4,7 +4,6 @@
 
 ---
 
-![](img/4f78d5f49e52a2991578be01e5d08b09_1.png)
 
 ## 从语言建模到BERT
 
@@ -14,7 +13,6 @@ BERT的全称是 **Bidirectional Encoder Representations from Transformers**。�
 
 ---
 
-![](img/4f78d5f49e52a2991578be01e5d08b09_3.png)
 
 ## BERT的预训练任务
 

@@ -4,7 +4,6 @@
 
 ## 框架对比：Flask 与 FastAPI
 
-![](img/f3313b62bd1e87a2e7210b267abeb036_0.png)
 
 上一节我们介绍了构建机器学习API的目标，本节中我们来看看两个核心工具：Flask和FastAPI。
 

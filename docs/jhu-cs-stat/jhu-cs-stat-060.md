@@ -8,7 +8,6 @@
 
 上一节我们介绍了期望值的理论基础，本节中我们来看看如何在R中通过数值积分来近似计算积分。数值积分是一种通过将积分区间划分为多个小矩形并求和来近似积分值的方法。
 
-![](img/4930c7043debccb1a1d9c7741dd3d7ed_1.png)
 
 以下是创建一个简单数值积分函数的步骤：
 
@@ -21,9 +20,7 @@ nu_integrate <- function(f, a, b, n=30) {
 }
 ```
 
-![](img/4930c7043debccb1a1d9c7741dd3d7ed_3.png)
 
-![](img/4930c7043debccb1a1d9c7741dd3d7ed_4.png)
 
 我们可以用标准正态分布的概率密度函数来测试这个函数。积分区间从-1.96到1.96，这覆盖了标准正态分布下约95%的面积。
 
@@ -36,22 +33,15 @@ print(result)  # 输出应接近0.95
 为了更直观地理解数值积分的过程，我们可以创建一个可视化图形。以下代码将绘制正态分布曲线，并高亮显示黎曼和中的一个矩形。
 
 
-![](img/4930c7043debccb1a1d9c7741dd3d7ed_6.png)
 
 
-![](img/4930c7043debccb1a1d9c7741dd3d7ed_8.png)
-
-![](img/4930c7043debccb1a1d9c7741dd3d7ed_9.png)
 
 
-![](img/4930c7043debccb1a1d9c7741dd3d7ed_10.png)
-
-![](img/4930c7043debccb1a1d9c7741dd3d7ed_12.png)
 
 
-![](img/4930c7043debccb1a1d9c7741dd3d7ed_14.png)
 
-![](img/4930c7043debccb1a1d9c7741dd3d7ed_16.png)
+
+
 
 ```r
 # 加载ggplot2库用于绘图
@@ -80,11 +70,8 @@ print(p)
 
 你可以尝试改变`n`的值（例如增加到100），观察矩形数量增加如何使近似值更精确。也可以尝试使用其他分布函数，如`dexp`（指数分布）或`dgamma`（伽马分布），来练习数值积分。
 
-![](img/4930c7043debccb1a1d9c7741dd3d7ed_18.png)
 
-![](img/4930c7043debccb1a1d9c7741dd3d7ed_19.png)
 
-![](img/4930c7043debccb1a1d9c7741dd3d7ed_21.png)
 
 ---
 
@@ -92,11 +79,9 @@ print(p)
 
 上一节我们手动实现了数值积分，本节中我们来看看R语言内置的、更精确的积分函数`integrate`。
 
-![](img/4930c7043debccb1a1d9c7741dd3d7ed_23.png)
 
 `integrate`函数使用更先进的算法进行数值积分，通常比简单的黎曼和更精确、更高效。
 
-![](img/4930c7043debccb1a1d9c7741dd3d7ed_24.png)
 
 ```r
 # 使用内置integrate函数计算相同积分
@@ -116,14 +101,10 @@ print(expected_value)  # 结果应接近7
 
 为了使代码更简洁和可复用，我们可以将计算期望值的逻辑封装成一个函数。
 
-![](img/4930c7043debccb1a1d9c7741dd3d7ed_26.png)
 
 
-![](img/4930c7043debccb1a1d9c7741dd3d7ed_27.png)
 
-![](img/4930c7043debccb1a1d9c7741dd3d7ed_28.png)
 
-![](img/4930c7043debccb1a1d9c7741dd3d7ed_29.png)
 
 ```r
 # 创建计算期望值的通用函数
@@ -145,15 +126,11 @@ mean_exp <- EX(dexp, rate = 0.5)
 print(mean_exp)  # 指数分布的期望值为1/rate，此处应为2
 ```
 
-![](img/4930c7043debccb1a1d9c7741dd3d7ed_31.png)
 
 ---
 
-![](img/4930c7043debccb1a1d9c7741dd3d7ed_33.png)
 
-![](img/4930c7043debccb1a1d9c7741dd3d7ed_34.png)
 
-![](img/4930c7043debccb1a1d9c7741dd3d7ed_35.png)
 
 ## 推广到函数变换与矩母函数 🧮
 
@@ -178,12 +155,10 @@ E_transform <- function(g, density_func, ...) {
 }
 ```
 
-![](img/4930c7043debccb1a1d9c7741dd3d7ed_37.png)
 
 矩母函数是概率论中的一个核心概念，定义为 **M(t) = E[e^(tX)]**。我们可以用上面的函数来计算它。
 
 
-![](img/4930c7043debccb1a1d9c7741dd3d7ed_39.png)
 
 ```r
 # 定义矩母函数计算函数
@@ -198,12 +173,10 @@ mgf_value <- moment_gen(t = 0.1, dnorm, mean = 5, sd = 3)
 print(mgf_value)
 ```
 
-![](img/4930c7043debccb1a1d9c7741dd3d7ed_41.png)
 
 矩母函数之所以强大，是因为它的各阶导数在t=0处的值给出了分布的各阶矩。特别地，一阶矩是期望值，二阶矩与方差有关。
 
 
-![](img/4930c7043debccb1a1d9c7741dd3d7ed_43.png)
 
 ```r
 # 计算一阶矩（期望值）的另一种方法：使用矩母函数在t=0处的导数
@@ -223,17 +196,14 @@ print(E(dnorm, mean=5, sd=3))
 
 上一节我们利用期望值和矩母函数计算了一阶矩，本节中我们来看看如何计算二阶矩和方差。
 
-![](img/4930c7043debccb1a1d9c7741dd3d7ed_45.png)
 
 随机变量X的方差公式为：
 **Var(X) = E[X^2] - (E[X])^2**
 
 我们可以利用之前定义的`E_transform`函数来计算`E[X^2]`（即二阶矩）。
 
-![](img/4930c7043debccb1a1d9c7741dd3d7ed_47.png)
 
 
-![](img/4930c7043debccb1a1d9c7741dd3d7ed_49.png)
 
 ```r
 # 计算方差函数
@@ -255,27 +225,21 @@ var_exp <- variance(dexp, rate=0.5)
 print(var_exp)  # 指数分布的方差为1/(rate^2)，此处应为4
 ```
 
-![](img/4930c7043debccb1a1d9c7741dd3d7ed_51.png)
 
 ---
 
-![](img/4930c7043debccb1a1d9c7741dd3d7ed_53.png)
 
-![](img/4930c7043debccb1a1d9c7741dd3d7ed_54.png)
 
 ## 总结 🎯
 
 本节课中我们一起学习了在R语言中处理期望值、方差和矩母函数的核心技能。
 
-![](img/4930c7043debccb1a1d9c7741dd3d7ed_56.png)
 
 我们首先从**数值积分**入手，通过构建黎曼和函数并可视化，理解了积分近似计算的基本原理。接着，我们引入了R内置的`integrate`函数，它提供了更精确和高效的积分计算。
 
-![](img/4930c7043debccb1a1d9c7741dd3d7ed_58.png)
 
 利用积分，我们定义了计算**期望值** `EX` 的通用函数，并推广到计算任意函数变换 `E_transform` 的期望值。在此基础上，我们实现了**矩母函数** `moment_gen` 的计算，矩母函数是推导分布各阶矩的有力工具。
 
-![](img/4930c7043debccb1a1d9c7741dd3d7ed_59.png)
 
 最后，我们结合期望值和二阶矩，构建了计算**方差**的函数 `variance`。
 

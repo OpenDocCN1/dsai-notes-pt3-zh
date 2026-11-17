@@ -1,6 +1,5 @@
 # 生成式AI基础知识：8：7_生成式AI的伦理场景设定 🧭
 
-![](img/6b8f9f76232ecfdf2fa8a44470cb4d52_0.png)
 
 ![](img/6b8f9f76232ecfdf2fa8a44470cb4d52_0.png)
 

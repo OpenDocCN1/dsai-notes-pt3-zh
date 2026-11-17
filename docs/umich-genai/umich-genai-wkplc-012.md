@@ -1,6 +1,5 @@
 # 应对颠覆：工作场所的生成式人工智能：12：0_系列概述课程简介2
 
-![](img/2942aef863d22d0c8237e54eb0aa796a_0.png)
 
 ![](img/2942aef863d22d0c8237e54eb0aa796a_0.png)
 
@@ -88,6 +87,5 @@
 
 ![](img/2942aef863d22d0c8237e54eb0aa796a_6.png)
 
-![](img/2942aef863d22d0c8237e54eb0aa796a_7.png)
 
 ![](img/2942aef863d22d0c8237e54eb0aa796a_7.png)

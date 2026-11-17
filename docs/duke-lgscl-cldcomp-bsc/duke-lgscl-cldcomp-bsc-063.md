@@ -17,21 +17,17 @@ Azure官方文档提供了两种在Python项目中添加质量控制环节的简
 1.  访问Azure官方文档，找到关于添加脚本步骤的示例。
 2.  在YAML配置文件的合适位置，添加一个执行代码检查的脚本步骤。
 
-![](img/cb10c81f2de3791485bc875b44cadf61_1.png)
 
 ## 编辑Azure Pipelines配置文件
 
 现在，我们回到Azure Cloud Shell环境，开始编辑配置文件。
 
-![](img/cb10c81f2de3791485bc875b44cadf61_3.png)
 
 在Cloud Shell中，选择编辑器图标，进入项目目录。
 
-![](img/cb10c81f2de3791485bc875b44cadf61_1.png)
 
 在项目中，找到并选择`azure-pipelines.yml`文件进行编辑。
 
-![](img/cb10c81f2de3791485bc875b44cadf61_3.png)
 
 向下滚动，找到一个合适的位置来插入新的步骤。一个理想的位置是在虚拟环境激活和依赖安装完成之后。
 
@@ -62,7 +58,6 @@ Azure官方文档提供了两种在Python项目中添加质量控制环节的简
 
 编辑完成后，在终端中运行`git status`查看更改，然后提交这次修改。
 
-![](img/cb10c81f2de3791485bc875b44cadf61_5.png)
 
 ![](img/cb10c81f2de3791485bc875b44cadf61_5.png)
 
@@ -72,7 +67,6 @@ Azure官方文档提供了两种在Python项目中添加质量控制环节的简
 
 进入构建任务详情页面，我们可以看到流水线正在执行。新添加的“Run Pylint Code Analysis”步骤会运行，并对代码进行检查。
 
-![](img/cb10c81f2de3791485bc875b44cadf61_7.png)
 
 ![](img/cb10c81f2de3791485bc875b44cadf61_7.png)
 

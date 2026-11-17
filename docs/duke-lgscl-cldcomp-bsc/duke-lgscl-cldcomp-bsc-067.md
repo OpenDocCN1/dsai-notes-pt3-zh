@@ -28,9 +28,7 @@ Hugo是一个开源的静态网站生成器，它快速、易用且无需数据�
 
 以下是安装Hugo的步骤：
 
-![](img/03a3fb64026ed1736fea3f6b05520f42_2.png)
 
-![](img/03a3fb64026ed1736fea3f6b05520f42_3.png)
 
 1.  访问Hugo GitHub发布页面，找到最新的64位Linux压缩包（`hugo_extended_*_Linux-64bit.tar.gz`），复制其链接地址。
 2.  在Cloud9终端中，使用 `wget` 命令下载该文件。
@@ -123,7 +121,6 @@ hugo server -D --bind=0.0.0.0 --baseURL=http://[您的Cloud9实例公共IP]:1313
 
 ![](img/03a3fb64026ed1736fea3f6b05520f42_30.png)
 
-![](img/03a3fb64026ed1736fea3f6b05520f42_32.png)
 
 1.  在AWS控制台进入EC2服务，找到您的Cloud9环境所使用的EC2实例。
 2.  点击该实例，在下方描述标签页中找到“安全组”并点击其链接。
@@ -163,7 +160,6 @@ phases:
       - aws cloudfront create-invalidation --distribution-id YOUR-DISTRIBUTION-ID --paths "/*"
 ```
 
-![](img/03a3fb64026ed1736fea3f6b05520f42_36.png)
 
 这个配置文件主要做了三件事：
 1.  **安装阶段**：下载并安装指定版本的Hugo。
@@ -173,7 +169,6 @@ phases:
     *   使用 `aws s3 cp` 递归地更新S3中所有文件的缓存控制头，设置较长的有效期。
     *   使用 `aws cloudfront create-invalidation` 命令使CloudFront CDN的缓存失效，确保用户立即看到新内容。
 
-![](img/03a3fb64026ed1736fea3f6b05520f42_38.png)
 
 要使用这个流程，您需要提前完成以下AWS资源配置：
 1.  **S3存储桶**：创建一个存储桶并启用“静态网站托管”功能。同时，需要配置存储桶策略，允许公开读取对象。

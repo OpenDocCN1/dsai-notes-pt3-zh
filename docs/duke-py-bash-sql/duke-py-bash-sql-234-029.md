@@ -1,6 +1,5 @@
 #  029：什么是标准流
 
-![](img/f2d52f031f531eae5d183d7fd9c0e8a5_0.png)
 
 ![](img/f2d52f031f531eae5d183d7fd9c0e8a5_1.png)
 

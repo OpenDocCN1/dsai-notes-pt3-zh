@@ -6,127 +6,75 @@
 
 上一节我们介绍了双时间尺度更新规则和弗雷歇起始距离。本节中，我们来看看另一篇理论性论文——谱归一化。我们知道，对于Wasserstein GAN，需要判别器属于1-利普希茨连续函数空间。之前我们学习了两种实现方法：权重裁剪和梯度惩罚。谱归一化是第三种方法，它通过控制神经网络权重矩阵的谱范数来直接约束网络的利普希茨常数。
 
-![](img/90b731f10a3d406ebbc8de73878d4929_1.png)
 
 ## 为何需要利普希茨连续性？
 
-![](img/90b731f10a3d406ebbc8de73878d4929_2.png)
 
-![](img/90b731f10a3d406ebbc8de73878d4929_3.png)
 
-![](img/90b731f10a3d406ebbc8de73878d4929_4.png)
 
-![](img/90b731f10a3d406ebbc8de73878d4929_5.png)
 
-![](img/90b731f10a3d406ebbc8de73878d4929_6.png)
 
-![](img/90b731f10a3d406ebbc8de73878d4929_7.png)
 
-![](img/90b731f10a3d406ebbc8de73878d4929_8.png)
 
-![](img/90b731f10a3d406ebbc8de73878d4929_9.png)
 
-![](img/90b731f10a3d406ebbc8de73878d4929_10.png)
 
 让我们回顾原始GAN的目标函数。判别器D试图区分真实图像和生成图像。最优判别器D*的形式为 `D*(x) = p_data(x) / (p_data(x) + p_g(x))`。如果我们用sigmoid函数表示，即 `D*(x) = sigmoid(f*(x))`，那么可以解出 `f*(x)`。
 
-![](img/90b731f10a3d406ebbc8de73878d4929_12.png)
 
-![](img/90b731f10a3d406ebbc8de73878d4929_13.png)
 
-![](img/90b731f10a3d406ebbc8de73878d4929_14.png)
 
 通过推导可得：
 `f*(x) = log(p_data(x)) - log(p_g(x))`
 
-![](img/90b731f10a3d406ebbc8de73878d4929_15.png)
 
-![](img/90b731f10a3d406ebbc8de73878d4929_16.png)
 
-![](img/90b731f10a3d406ebbc8de73878d4929_17.png)
 
-![](img/90b731f10a3d406ebbc8de73878d4929_18.png)
 
-![](img/90b731f10a3d406ebbc8de73878d4929_19.png)
 
-![](img/90b731f10a3d406ebbc8de73878d4929_20.png)
 
-![](img/90b731f10a3d406ebbc8de73878d4929_21.png)
 
-![](img/90b731f10a3d406ebbc8de73878d4929_22.png)
 
-![](img/90b731f10a3d406ebbc8de73878d4929_23.png)
 
 现在，考虑 `f*(x)` 对 `x` 的梯度：
 `∇f*(x) = (∇p_data(x))/p_data(x) - (∇p_g(x))/p_g(x)`
 
-![](img/90b731f10a3d406ebbc8de73878d4929_25.png)
 
-![](img/90b731f10a3d406ebbc8de73878d4929_26.png)
 
-![](img/90b731f10a3d406ebbc8de73878d4929_27.png)
 
 这里存在一个问题：当生成分布 `p_g(x)` 在某些点接近或等于零时，公式中的 `1/p_g(x)` 项会变得非常大甚至无法计算，导致梯度爆炸或变得无界。为了避免这种情况，我们需要对函数 `f` 进行正则化，限制其变化速度。利普希茨连续性正是提供了这样的约束，它确保函数梯度的上界是有限的。
 
-![](img/90b731f10a3d406ebbc8de73878d4929_28.png)
 
-![](img/90b731f10a3d406ebbc8de73878d4929_29.png)
 
-![](img/90b731f10a3d406ebbc8de73878d4929_30.png)
 
-![](img/90b731f10a3d406ebbc8de73878d4929_31.png)
 
-![](img/90b731f10a3d406ebbc8de73878d4929_32.png)
 
-![](img/90b731f10a3d406ebbc8de73878d4929_33.png)
 
-![](img/90b731f10a3d406ebbc8de73878d4929_34.png)
 
-![](img/90b731f10a3d406ebbc8de73878d4929_35.png)
 
-![](img/90b731f10a3d406ebbc8de73878d4929_36.png)
 
 因此，在优化GAN时，我们通常在利普希茨连续的函数族中进行极大极小博弈，这有助于训练的稳定性。
 
-![](img/90b731f10a3d406ebbc8de73878d4929_38.png)
 
-![](img/90b731f10a3d406ebbc8de73878d4929_39.png)
 
-![](img/90b731f10a3d406ebbc8de73878d4929_40.png)
 
-![](img/90b731f10a3d406ebbc8de73878d4929_41.png)
 
-![](img/90b731f10a3d406ebbc8de73878d4929_42.png)
 
-![](img/90b731f10a3d406ebbc8de73878d4929_43.png)
 
 ## 神经网络的利普希茨常数
 
-![](img/90b731f10a3d406ebbc8de73878d4929_45.png)
 
-![](img/90b731f10a3d406ebbc8de73878d4929_46.png)
 
 神经网络是多个函数的复合。对于一个单层变换 `h_{l} = ϕ(W_l * h_{l-1})`，其中 `ϕ` 是激活函数（如ReLU），`W_l` 是权重矩阵。
 
-![](img/90b731f10a3d406ebbc8de73878d4929_47.png)
 
-![](img/90b731f10a3d406ebbc8de73878d4929_48.png)
 
-![](img/90b731f10a3d406ebbc8de73878d4929_49.png)
 
-![](img/90b731f10a3d406ebbc8de73878d4929_50.png)
 
-![](img/90b731f10a3d406ebbc8de73878d4929_51.png)
 
-![](img/90b731f10a3d406ebbc8de73878d4929_52.png)
 
-![](img/90b731f10a3d406ebbc8de73878d4929_53.png)
 
-![](img/90b731f10a3d406ebbc8de73878d4929_54.png)
 
-![](img/90b731f10a3d406ebbc8de73878d4929_55.png)
 
-![](img/90b731f10a3d406ebbc8de73878d4929_56.png)
 
 复合函数的利普希茨常数有一个重要性质：**复合函数的利普希茨常数不超过各组成部分利普希茨常数的乘积**。
 
@@ -134,169 +82,98 @@
 `Lip(f) ≤ Lip(ϕ) * σ(W_L) * ... * Lip(ϕ) * σ(W_1)`
 其中 `σ(W)` 表示权重矩阵 `W` 的**谱范数**（即最大奇异值）。
 
-![](img/90b731f10a3d406ebbc8de73878d4929_58.png)
 
-![](img/90b731f10a3d406ebbc8de73878d4929_59.png)
 
-![](img/90b731f10a3d406ebbc8de73878d4929_60.png)
 
-![](img/90b731f10a3d406ebbc8de73878d4929_61.png)
 
-![](img/90b731f10a3d406ebbc8de73878d4929_62.png)
 
-![](img/90b731f10a3d406ebbc8de73878d4929_63.png)
 
-![](img/90b731f10a3d406ebbc8de73878d4929_64.png)
 
-![](img/90b731f10a3d406ebbc8de73878d4929_65.png)
 
-![](img/90b731f10a3d406ebbc8de73878d4929_66.png)
 
-![](img/90b731f10a3d406ebbc8de73878d4929_67.png)
 
-![](img/90b731f10a3d406ebbc8de73878d4929_68.png)
 
-![](img/90b731f10a3d406ebbc8de73878d4929_69.png)
 
 对于常用的ReLU或Leaky ReLU激活函数，其利普希茨常数恰好为1。因此，上式可以简化为：
 `Lip(f) ≤ ∏_{l=1}^{L} σ(W_l)`
 
-![](img/90b731f10a3d406ebbc8de73878d4929_71.png)
 
 这个不等式表明，**整个神经网络的利普希茨常数可以被各层权重矩阵的谱范数的乘积所控制**。
 
-![](img/90b731f10a3d406ebbc8de73878d4929_72.png)
 
-![](img/90b731f10a3d406ebbc8de73878d4929_73.png)
 
-![](img/90b731f10a3d406ebbc8de73878d4929_74.png)
 
-![](img/90b731f10a3d406ebbc8de73878d4929_75.png)
 
-![](img/90b731f10a3d406ebbc8de73878d4929_76.png)
 
-![](img/90b731f10a3d406ebbc8de73878d4929_77.png)
 
-![](img/90b731f10a3d406ebbc8de73878d4929_78.png)
 
-![](img/90b731f10a3d406ebbc8de73878d4929_79.png)
 
-![](img/90b731f10a3d406ebbc8de73878d4929_80.png)
 
 ## 谱归一化的核心思想
 
-![](img/90b731f10a3d406ebbc8de73878d4929_82.png)
 
-![](img/90b731f10a3d406ebbc8de73878d4929_83.png)
 
-![](img/90b731f10a3d406ebbc8de73878d4929_84.png)
 
-![](img/90b731f10a3d406ebbc8de73878d4929_85.png)
 
 基于上面的分析，要控制网络的利普希茨常数，一个直接的想法是控制每一层权重矩阵的谱范数。谱归一化的做法非常直观：
 
-![](img/90b731f10a3d406ebbc8de73878d4929_86.png)
 
-![](img/90b731f10a3d406ebbc8de73878d4929_87.png)
 
-![](img/90b731f10a3d406ebbc8de73878d4929_88.png)
 
-![](img/90b731f10a3d406ebbc8de73878d4929_89.png)
 
-![](img/90b731f10a3d406ebbc8de73878d4929_90.png)
 
-![](img/90b731f10a3d406ebbc8de73878d4929_91.png)
 
-![](img/90b731f10a3d406ebbc8de73878d4929_92.png)
 
-![](img/90b731f10a3d406ebbc8de73878d4929_93.png)
 
 对于每一层的权重 `W`，我们将其归一化：
 `Ŵ = W / σ(W)`
 
-![](img/90b731f10a3d406ebbc8de73878d4929_95.png)
 
-![](img/90b731f10a3d406ebbc8de73878d4929_96.png)
 
-![](img/90b731f10a3d406ebbc8de73878d4929_97.png)
 
 其中 `σ(W)` 是 `W` 的谱范数。经过这样的归一化后，新权重 `Ŵ` 的谱范数 `σ(Ŵ) = σ(W)/σ(W) = 1`。
 
-![](img/90b731f10a3d406ebbc8de73878d4929_98.png)
 
-![](img/90b731f10a3d406ebbc8de73878d4929_99.png)
 
-![](img/90b731f10a3d406ebbc8de73878d4929_100.png)
 
-![](img/90b731f10a3d406ebbc8de73878d4929_101.png)
 
-![](img/90b731f10a3d406ebbc8de73878d4929_102.png)
 
-![](img/90b731f10a3d406ebbc8de73878d4929_103.png)
 
-![](img/90b731f10a3d406ebbc8de73878d4929_104.png)
 
-![](img/90b731f10a3d406ebbc8de73878d4929_105.png)
 
-![](img/90b731f10a3d406ebbc8de73878d4929_106.png)
 
-![](img/90b731f10a3d406ebbc8de73878d4929_108.png)
 
 如果将网络中每一层的权重都进行这样的归一化，那么根据之前的乘积公式，整个网络的利普希茨常数上界将被控制为1（即 `1 * 1 * ... * 1 = 1`）。这就确保了判别器满足1-利普希茨连续性。
 
 ## 实践中的挑战与解决方案：幂迭代法
 
-![](img/90b731f10a3d406ebbc8de73878d4929_110.png)
 
-![](img/90b731f10a3d406ebbc8de73878d4929_111.png)
 
-![](img/90b731f10a3d406ebbc8de73878d4929_112.png)
 
-![](img/90b731f10a3d406ebbc8de73878d4929_113.png)
 
-![](img/90b731f10a3d406ebbc8de73878d4929_114.png)
 
-![](img/90b731f10a3d406ebbc8de73878d4929_115.png)
 
-![](img/90b731f10a3d406ebbc8de73878d4929_116.png)
 
-![](img/90b731f10a3d406ebbc8de73878d4929_117.png)
 
-![](img/90b731f10a3d406ebbc8de73878d4929_118.png)
 
-![](img/90b731f10a3d406ebbc8de73878d4929_119.png)
 
-![](img/90b731f10a3d406ebbc8de73878d4929_120.png)
 
-![](img/90b731f10a3d406ebbc8de73878d4929_121.png)
 
 理论上很完美，但实践中存在一个挑战：**如何高效地计算权重矩阵的谱范数 `σ(W)`？** 对于大型神经网络，直接计算奇异值分解（SVD）来获取最大奇异值的计算开销非常大。
 
 幸运的是，线性代数中的**幂迭代法**可以高效地近似计算矩阵的最大奇异值。我们可以在训练过程中动态地更新这个近似值。
 
-![](img/90b731f10a3d406ebbc8de73878d4929_123.png)
 
-![](img/90b731f10a3d406ebbc8de73878d4929_124.png)
 
-![](img/90b731f10a3d406ebbc8de73878d4929_125.png)
 
-![](img/90b731f10a3d406ebbc8de73878d4929_126.png)
 
-![](img/90b731f10a3d406ebbc8de73878d4929_127.png)
 
-![](img/90b731f10a3d406ebbc8de73878d4929_128.png)
 
-![](img/90b731f10a3d406ebbc8de73878d4929_129.png)
 
-![](img/90b731f10a3d406ebbc8de73878d4929_130.png)
 
-![](img/90b731f10a3d406ebbc8de73878d4929_131.png)
 
-![](img/90b731f10a3d406ebbc8de73878d4929_132.png)
 
-![](img/90b731f10a3d406ebbc8de73878d4929_133.png)
 
-![](img/90b731f10a3d406ebbc8de73878d4929_134.png)
 
 以下是谱归一化层的训练流程：
 
@@ -308,135 +185,79 @@
 4.  **归一化权重**：在正向传播时，使用归一化的权重 `Ŵ = W / σ(W)` 进行计算。
 5.  **梯度更新**：像往常一样通过反向传播计算梯度并更新原始权重 `W`。注意，`ũ` 和 `ṽ` 不通过梯度下降更新，仅通过上述幂迭代更新。
 
-![](img/90b731f10a3d406ebbc8de73878d4929_136.png)
 
-![](img/90b731f10a3d406ebbc8de73878d4929_137.png)
 
-![](img/90b731f10a3d406ebbc8de73878d4929_138.png)
 
-![](img/90b731f10a3d406ebbc8de73878d4929_139.png)
 
-![](img/90b731f10a3d406ebbc8de73878d4929_140.png)
 
-![](img/90b731f10a3d406ebbc8de73878d4929_141.png)
 
-![](img/90b731f10a3d406ebbc8de73878d4929_142.png)
 
-![](img/90b731f10a3d406ebbc8de73878d4929_143.png)
 
-![](img/90b731f10a3d406ebbc8de73878d4929_144.png)
 
-![](img/90b731f10a3d406ebbc8de73878d4929_145.png)
 
-![](img/90b731f10a3d406ebbc8de73878d4929_146.png)
 
-![](img/90b731f10a3d406ebbc8de73878d4929_147.png)
 
 通过几次幂迭代（通常1次就足够），`ũ` 和 `ṽ` 会收敛到对应最大奇异值的左右奇异向量方向，从而给出 `σ(W)` 的良好近似。随着训练的进行，这个近似会越来越准。
 
 ## 损失函数：合页损失
 
-![](img/90b731f10a3d406ebbc8de73878d4929_149.png)
 
-![](img/90b731f10a3d406ebbc8de73878d4929_150.png)
 
-![](img/90b731f10a3d406ebbc8de73878d4929_151.png)
 
-![](img/90b731f10a3d406ebbc8de73878d4929_152.png)
 
-![](img/90b731f10a3d406ebbc8de73878d4929_153.png)
 
-![](img/90b731f10a3d406ebbc8de73878d4929_154.png)
 
-![](img/90b731f10a3d406ebbc8de73878d4929_155.png)
 
-![](img/90b731f10a3d406ebbc8de73878d4929_156.png)
 
-![](img/90b731f10a3d406ebbc8de73878d4929_157.png)
 
-![](img/90b731f10a3d406ebbc8de73878d4929_158.png)
 
 谱归一化论文中使用了**合页损失** 作为目标函数，它通常能带来更稳定的训练。
 
-![](img/90b731f10a3d406ebbc8de73878d4929_159.png)
 
-![](img/90b731f10a3d406ebbc8de73878d4929_160.png)
 
 对于判别器 `D(x)`，其损失函数为：
 `L_D = E_{x~p_data} [max(0, 1 - D(x))] + E_{z~p_z} [max(0, 1 + D(G(z)))]`
 
-![](img/90b731f10a3d406ebbc8de73878d4929_162.png)
 
-![](img/90b731f10a3d406ebbc8de73878d4929_163.png)
 
-![](img/90b731f10a3d406ebbc8de73878d4929_164.png)
 
-![](img/90b731f10a3d406ebbc8de73878d4929_165.png)
 
-![](img/90b731f10a3d406ebbc8de73878d4929_166.png)
 
-![](img/90b731f10a3d406ebbc8de73878d4929_167.png)
 
-![](img/90b731f10a3d406ebbc8de73878d4929_168.png)
 
-![](img/90b731f10a3d406ebbc8de73878d4929_169.png)
 
 对于生成器 `G(z)`，其损失函数为：
 `L_G = - E_{z~p_z} [D(G(z))]`
 
-![](img/90b731f10a3d406ebbc8de73878d4929_170.png)
 
-![](img/90b731f10a3d406ebbc8de73878d4929_171.png)
 
-![](img/90b731f10a3d406ebbc8de73878d4929_172.png)
 
-![](img/90b731f10a3d406ebbc8de73878d4929_173.png)
 
-![](img/90b731f10a3d406ebbc8de73878d4929_175.png)
 
-![](img/90b731f10a3d406ebbc8de73878d4929_176.png)
 
-![](img/90b731f10a3d406ebbc8de73878d4929_177.png)
 
 合页损失的含义是，判别器不仅希望正确分类，还希望分类的“置信度”有一个边界（margin）。例如，对于真实数据，判别器输出 `D(x)` 不仅希望大于0（正确），更希望大于1，否则就会受到惩罚。这为训练提供了更强的梯度信号。
 
-![](img/90b731f10a3d406ebbc8de73878d4929_179.png)
 
-![](img/90b731f10a3d406ebbc8de73878d4929_180.png)
 
-![](img/90b731f10a3d406ebbc8de73878d4929_181.png)
 
-![](img/90b731f10a3d406ebbc8de73878d4929_182.png)
 
-![](img/90b731f10a3d406ebbc8de73878d4929_183.png)
 
-![](img/90b731f10a3d406ebbc8de73878d4929_184.png)
 
 ## 与其他方法的比较
 
 以下是谱归一化与其他几种稳定GAN训练的方法在CIFAR-10数据集上的性能对比（使用Inception Score评估，越高越好）。实验测试了多组超参数配置（A-F）。
 
-![](img/90b731f10a3d406ebbc8de73878d4929_186.png)
 
-![](img/90b731f10a3d406ebbc8de73878d4929_187.png)
 
-![](img/90b731f10a3d406ebbc8de73878d4929_188.png)
 
-![](img/90b731f10a3d406ebbc8de73878d4929_189.png)
 
-![](img/90b731f10a3d406ebbc8de73878d4929_190.png)
 
-![](img/90b731f10a3d406ebbc8de73878d4929_191.png)
 
-![](img/90b731f10a3d406ebbc8de73878d4929_192.png)
 
-![](img/90b731f10a3d406ebbc8de73878d4929_193.png)
 
-![](img/90b731f10a3d406ebbc8de73878d4929_194.png)
 
-![](img/90b731f10a3d406ebbc8de73878d4929_195.png)
 
-![](img/90b731f10a3d406ebbc8de73878d4929_196.png)
 
 | 方法 | 描述 | 对超参数的敏感性 | 平均性能 |
 | :--- | :--- | :--- | :--- |
@@ -448,39 +269,24 @@
 | Weight Norm | 权重归一化 | 中 | 中 |
 | Orthonormal | 正交正则化 | 中 | 中 |
 
-![](img/90b731f10a3d406ebbc8de73878d4929_197.png)
 
 从结果可以看出，**谱归一化在取得高性能的同时，对超参数的选择最不敏感**，这使得它非常实用且鲁棒。
 
-![](img/90b731f10a3d406ebbc8de73878d4929_199.png)
 
-![](img/90b731f10a3d406ebbc8de73878d4929_200.png)
 
-![](img/90b731f10a3d406ebbc8de73878d4929_201.png)
 
-![](img/90b731f10a3d406ebbc8de73878d4929_202.png)
 
-![](img/90b731f10a3d406ebbc8de73878d4929_203.png)
 
-![](img/90b731f10a3d406ebbc8de73878d4929_204.png)
 
-![](img/90b731f10a3d406ebbc8de73878d4929_205.png)
 
-![](img/90b731f10a3d406ebbc8de73878d4929_206.png)
 
-![](img/90b731f10a3d406ebbc8de73878d4929_207.png)
 
-![](img/90b731f10a3d406ebbc8de73878d4929_208.png)
 
 ## 总结
 
-![](img/90b731f10a3d406ebbc8de73878d4929_210.png)
 
-![](img/90b731f10a3d406ebbc8de73878d4929_211.png)
 
-![](img/90b731f10a3d406ebbc8de73878d4929_212.png)
 
-![](img/90b731f10a3d406ebbc8de73878d4929_213.png)
 
 ![](img/90b731f10a3d406ebbc8de73878d4929_215.png)
 

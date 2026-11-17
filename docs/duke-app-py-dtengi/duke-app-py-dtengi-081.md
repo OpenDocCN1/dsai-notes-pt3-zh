@@ -1,6 +1,5 @@
 #  081：使用OpenAI Whisper与GPU加速
 
-![](img/c2cefa7fde10d8add0cf5f2075b6483b_0.png)
 
 ## 概述
 在本节课中，我们将学习如何在配备GPU的Codespace环境中，使用OpenAI的Whisper模型进行大规模音频文件的转录工作，并监控GPU资源的使用情况。
@@ -11,7 +10,6 @@
 
 这里有一个NVIDIA监控工具，可以让我查看此处NVIDIA GPU的完全利用率。
 
-![](img/c2cefa7fde10d8add0cf5f2075b6483b_0.png)
 
 你可以看到这里的CUDA驱动版本是11.7，GPU使用率为43%。在另一个终端中，我正在运行Whisper，它能够利用Codespace上的GPU。我也能够转录非常大的文件，这得益于Codespace提供的存储空间。
 
@@ -23,7 +21,6 @@
 
 你可以看到有110 GB内存可用。这意味着我实际上可以再运行几个转录任务，使用OpenAI的Whisper，同时监控我的资源。之后，如果我想对转录数据进行文本摘要或运行其他Hugging Face预训练模型，一切都可以顺利进行。
 
-![](img/c2cefa7fde10d8add0cf5f2075b6483b_2.png)
 
 ---
 

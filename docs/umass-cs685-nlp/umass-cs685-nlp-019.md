@@ -2,11 +2,9 @@
 
 在本节课中，我们将要学习一种新兴且强大的语言模型范式——**基于检索增强的语言模型**。传统的语言模型（如BERT、GPT）将所有知识都编码在模型参数中，而检索增强模型则允许模型在推理时从外部知识库（如海量文档）中检索相关信息，从而做出更准确的预测。这种方法不仅能减少模型对参数存储的依赖，还能动态地利用最新、最相关的知识。
 
-![](img/f03cb874dcdddab4d9fab976a7dd4e55_1.png)
 
 ---
 
-![](img/f03cb874dcdddab4d9fab976a7dd4e55_3.png)
 
 ## 🤔 传统语言模型的局限性
 
@@ -18,13 +16,10 @@
 *   我们无法确切知道模型参数中存储了哪些知识，也无法定位这些知识。
 *   模型的知识容量受限于其参数数量。如果我们希望模型掌握更多知识，就必须不断**扩大模型规模**，这既耗时又昂贵。
 
-![](img/f03cb874dcdddab4d9fab976a7dd4e55_5.png)
 
 ---
 
-![](img/f03cb874dcdddab4d9fab976a7dd4e55_7.png)
 
-![](img/f03cb874dcdddab4d9fab976a7dd4e55_8.png)
 
 ## 📊 知识图谱与无结构文本
 
@@ -40,17 +35,13 @@
 
 ---
 
-![](img/f03cb874dcdddab4d9fab976a7dd4e55_10.png)
 
-![](img/f03cb874dcdddab4d9fab976a7dd4e55_12.png)
 
-![](img/f03cb874dcdddab4d9fab976a7dd4e55_13.png)
 
 ## 🔍 REALM模型架构概述
 
 本节中我们来看看**REALM**模型，它是检索增强语言模型的代表性工作。REALM的核心思想是：在标准的掩码语言建模流程中，插入一个**检索步骤**，让模型能够从外部文档库中查找相关信息来帮助预测。
 
-![](img/f03cb874dcdddab4d9fab976a7dd4e55_15.png)
 
 其工作流程可以概括为以下三步：
 1.  **检索**：给定一个包含掩码的输入句子，模型首先用一个**神经知识检索器**计算输入的表征，并用它查询一个大型文档集合，检索出最相关的文档。
@@ -59,70 +50,50 @@
 
 通过这种方式，模型无需将“金字塔顶是顶石”这类事实硬编码在参数里，而是可以从检索到的文档中直接获取这个信息。
 
-![](img/f03cb874dcdddab4d9fab976a7dd4e55_17.png)
 
-![](img/f03cb874dcdddab4d9fab976a7dd4e55_18.png)
 
-![](img/f03cb874dcdddab4d9fab976a7dd4e55_19.png)
 
 ---
 
 ## 🧮 REALM的数学建模
 
-![](img/f03cb874dcdddab4d9fab976a7dd4e55_21.png)
 
-![](img/f03cb874dcdddab4d9fab976a7dd4e55_22.png)
 
 REALM模型的目标是预测被掩码的词 `y`，给定原始输入 `x`。它通过引入一个检索到的文档 `z` 来辅助预测。其核心概率公式如下：
 
 `p(y|x) = Σ_{z∈Z} p(y|z, x) * p(z|x)`
 
-![](img/f03cb874dcdddab4d9fab976a7dd4e55_24.png)
 
-![](img/f03cb874dcdddab4d9fab976a7dd4e55_25.png)
 
-![](img/f03cb874dcdddab4d9fab976a7dd4e55_26.png)
 
-![](img/f03cb874dcdddab4d9fab976a7dd4e55_27.png)
 
 这个公式包含两个关键部分：
 *   `p(y|z, x)`：这是**知识增强编码器**的任务。给定原始输入 `x` 和检索到的文档 `z`，预测词 `y` 的概率。这本质上是一个条件掩码语言建模任务。
 *   `p(z|x)`：这是**神经知识检索器**的任务。评估文档 `z` 与输入 `x` 的相关性概率。
 
-![](img/f03cb874dcdddab4d9fab976a7dd4e55_29.png)
 
 模型的目标是联合训练检索器和编码器，使最终的预测 `p(y|x)` 尽可能准确。
 
-![](img/f03cb874dcdddab4d9fab976a7dd4e55_31.png)
 
 ---
 
 ## 🤖 神经知识检索器详解
 
-![](img/f03cb874dcdddab4d9fab976a7dd4e55_33.png)
 
-![](img/f03cb874dcdddab4d9fab976a7dd4e55_34.png)
 
 神经知识检索器的目标是给知识库中的每个文档 `z` 打分，评估其与输入 `x` 的相关性。它的工作原理如下：
 
-![](img/f03cb874dcdddab4d9fab976a7dd4e55_36.png)
 
-![](img/f03cb874dcdddab4d9fab976a7dd4e55_37.png)
 
-![](img/f03cb874dcdddab4d9fab976a7dd4e55_38.png)
 
-![](img/f03cb874dcdddab4d9fab976a7dd4e55_40.png)
 
 1.  **获取表征**：
     *   使用一个嵌入函数（基于BERT）将输入 `x` 编码为一个向量：`embed_input(x)`。
     *   同样，使用另一个嵌入函数将每个文档 `z` 编码为一个向量：`embed_doc(z)`。
     *   在REALM中，这两个函数都使用BERT的CLS token输出作为文本的向量表示。
 
-![](img/f03cb874dcdddab4d9fab976a7dd4e55_42.png)
 
-![](img/f03cb874dcdddab4d9fab976a7dd4e55_44.png)
 
-![](img/f03cb874dcdddab4d9fab976a7dd4e55_45.png)
 
 2.  **计算相关性分数**：
     通过计算两个向量的内积来得到相关性分数：`score(x, z) = embed_input(x)^T · embed_doc(z)`。
@@ -130,7 +101,6 @@ REALM模型的目标是预测被掩码的词 `y`，给定原始输入 `x`。它�
 3.  **转换为概率分布**：
     对所有文档的分数应用softmax函数，得到每个文档被检索的概率：`p(z|x) = softmax(score(x, z))`。
 
-![](img/f03cb874dcdddab4d9fab976a7dd4e55_47.png)
 
 这个过程类似于注意力机制，其中输入 `x` 作为“查询”，文档库作为“键值对”集合。
 
@@ -175,21 +145,16 @@ REALM模型的目标是预测被掩码的词 `y`，给定原始输入 `x`。它�
 3.  **聚合预测**：查看这K个近邻状态对应的下一个词是什么，并根据距离远近进行加权，得到一个基于检索的预测分布。
 4.  **插值融合**：将这个检索得到的分布与模型本身softmax层的预测分布进行加权平均，得到最终的预测结果。
 
-![](img/f03cb874dcdddab4d9fab976a7dd4e55_49.png)
 
 这种方法优点是完全无需训练检索器，直接利用训练模型的特征空间。但它以巨大的存储开销和推理延迟为代价，因为需要为海量训练数据缓存表征并进行近邻搜索。
 
-![](img/f03cb874dcdddab4d9fab976a7dd4e55_51.png)
 
-![](img/f03cb874dcdddab4d9fab976a7dd4e55_53.png)
 
 ---
 
-![](img/f03cb874dcdddab4d9fab976a7dd4e55_55.png)
 
 ## 🎯 总结
 
-![](img/f03cb874dcdddab4d9fab976a7dd4e55_57.png)
 
 本节课中我们一起学习了**基于检索增强的语言模型**这一前沿方向。
 *   我们探讨了传统语言模型将知识编码于参数的局限性。
@@ -198,11 +163,8 @@ REALM模型的目标是预测被掩码的词 `y`，给定原始输入 `x`。它�
 *   看到了REALM在开放域问答等任务上的显著提升。
 *   最后，我们接触了**K近邻机器翻译**，这是一种无需训练、直接利用训练数据缓存进行检索增强的简洁方法。
 
-![](img/f03cb874dcdddab4d9fab976a7dd4e55_59.png)
 
-![](img/f03cb874dcdddab4d9fab976a7dd4e55_60.png)
 
-![](img/f03cb874dcdddab4d9fab976a7dd4e55_61.png)
 
 ![](img/f03cb874dcdddab4d9fab976a7dd4e55_63.png)
 

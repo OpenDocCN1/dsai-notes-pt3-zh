@@ -2,7 +2,6 @@
 
 ![](img/1d97595e1246676c3b4d0cb98ea92bb1_0.png)
 
-![](img/1d97595e1246676c3b4d0cb98ea92bb1_2.png)
 
 在本节课中，我们将学习Pig Latin中的四个调试运算符：`DESCRIBE`、`DUMP`、`ILLUSTRATE`和`SAMPLE`。这些工具对于开发和调试Pig脚本至关重要，能帮助你理解数据结构、查看执行流程以及在小数据集上测试程序逻辑。
 
@@ -78,7 +77,6 @@ STORE historical_visits INTO '/pig/out/historical';
 
 这种方式让你能在处理海量数据前，先用极小数据集验证业务逻辑的正确性。
 
-![](img/1d97595e1246676c3b4d0cb98ea92bb1_4.png)
 
 ---
 
@@ -104,7 +102,6 @@ x = SAMPLE A 0.01;
 
 上一节我们介绍了四个调试运算符的概念，本节我们通过一个简单的例子来实际操作一下。
 
-![](img/1d97595e1246676c3b4d0cb98ea92bb1_6.png)
 
 以下是操作步骤的简要说明：
 
@@ -117,7 +114,6 @@ x = SAMPLE A 0.01;
 
 ## 总结
 
-![](img/1d97595e1246676c3b4d0cb98ea92bb1_8.png)
 
 本节课我们一起学习了Pig Latin中四个核心的调试运算符：
 *   **`DESCRIBE`**：用于获取关系的模式信息。

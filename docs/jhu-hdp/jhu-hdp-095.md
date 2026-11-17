@@ -1,8 +1,6 @@
 # 095：Spark Core 编程模型 🚀
 
-![](img/af4e862a370f9a5c738a382c8a8ff7c1_1.png)
 
-![](img/af4e862a370f9a5c738a382c8a8ff7c1_3.png)
 
 在本节课中，我们将学习 Spark Core 编程模型的核心概念，包括 Spark 配置与上下文对象、RDD 的创建、转换与行动操作，以及如何构建和运行一个 Spark 应用程序。
 
@@ -10,9 +8,7 @@
 
 ## Spark 配置对象 ⚙️
 
-![](img/af4e862a370f9a5c738a382c8a8ff7c1_5.png)
 
-![](img/af4e862a370f9a5c738a382c8a8ff7c1_7.png)
 
 Spark 配置对象代表了 Spark 环境的配置。它类似于 Hadoop 的配置对象，在实例化时会加载所有 Spark 的配置文件（如 `spark-env.sh` 和 `spark-defaults.conf`）。
 
@@ -30,19 +26,16 @@ Spark 配置对象是创建 Spark 上下文对象的基础。
 
 ## Spark 上下文对象 🔌
 
-![](img/af4e862a370f9a5c738a382c8a8ff7c1_9.png)
 
 Spark 上下文对象代表了与 Spark 集群的连接。它是访问 Spark 所有功能的主要入口点，在 Spark 应用程序中进行的绝大多数操作都需要此对象。
 
 一个关键功能是使用它来创建 RDD。例如，你可以调用 `textFile` 方法从 HDFS 文件系统读取文本文件并构建 RDD。
 
-![](img/af4e862a370f9a5c738a382c8a8ff7c1_11.png)
 
 **重要限制**：每个 JVM 中只能有一个活跃的 Spark 上下文对象。如果需要创建新的，必须先调用现有上下文的 `stop` 方法。
 
 在 Spark Shell 中，配置和上下文对象已预先创建好。但在编写批处理应用程序时，必须显式实例化它们。
 
-![](img/af4e862a370f9a5c738a382c8a8ff7c1_13.png)
 
 ---
 
@@ -52,12 +45,10 @@ Spark 上下文对象代表了与 Spark 集群的连接。它是访问 Spark 所
 
 RDD 可以通过两种主要方式创建：
 
-![](img/af4e862a370f9a5c738a382c8a8ff7c1_15.png)
 
 1.  **从外部数据源加载**：这是生产环境中最常见的方式。可以从 HDFS、本地文件系统或数据库（如 MySQL、Cassandra）加载数据。
     **示例代码（Scala）**：`val logLinesRDD = sc.textFile("hdfs://path/to/loglines.txt")`
 
-![](img/af4e862a370f9a5c738a382c8a8ff7c1_17.png)
 
 2.  **并行化驱动程序中的集合**：将驱动程序内存中的集合（如列表、数组）并行化到集群中。这种方式主要用于原型测试。
     **示例代码（Python）**：`data = ["fish", "cats", "dogs"]; rdd = sc.parallelize(data)`
@@ -70,7 +61,6 @@ RDD 可以通过两种主要方式创建：
 
 一旦创建了 RDD，就可以对其应用两种类型的操作：**转换**和**行动**。
 
-![](img/af4e862a370f9a5c738a382c8a8ff7c1_19.png)
 
 *   **转换操作**：从一个 RDD 生成一个新的 RDD。转换是**惰性**的，它们只是定义了计算逻辑，并不会立即执行。
     *   **示例**：`map`, `filter`, `flatMap`
@@ -83,13 +73,10 @@ RDD 可以通过两种主要方式创建：
 
 ## 向 Spark 传递函数 🧩
 
-![](img/af4e862a370f9a5c738a382c8a8ff7c1_21.png)
 
-![](img/af4e862a370f9a5c738a382c8a8ff7c1_23.png)
 
 我们注意到，许多转换和行动操作（如 `filter`、`map`）需要将一个函数作为参数传入。以下是不同语言中的传递方式。
 
-![](img/af4e862a370f9a5c738a382c8a8ff7c1_25.png)
 
 ### 在 Java 中传递函数
 
@@ -113,7 +100,6 @@ val wordCountsRDD = wordsRDD.map(word => (word, 1)).reduceByKey(_ + _)
 ```
 上面的例子演示了经典的“词频统计”逻辑：`flatMap` 将每行拆分成单词，`map` 将每个单词映射为 `(单词, 1)` 的键值对，`reduceByKey` 将相同单词的计数相加。
 
-![](img/af4e862a370f9a5c738a382c8a8ff7c1_27.png)
 
 ---
 
@@ -149,7 +135,6 @@ wordcount/
             └── SimpleApp.scala
 ```
 
-![](img/af4e862a370f9a5c738a382c8a8ff7c1_29.png)
 
 **`build.sbt` 文件内容**：
 ```scala
@@ -161,7 +146,6 @@ libraryDependencies += "org.apache.spark" %% "spark-core" % "1.6.3"
 
 **Scala 应用程序示例（词频统计）**：
 
-![](img/af4e862a370f9a5c738a382c8a8ff7c1_31.png)
 
 ```scala
 import org.apache.spark.{SparkConf, SparkContext}
@@ -180,7 +164,6 @@ object SimpleApp {
 }
 ```
 
-![](img/af4e862a370f9a5c738a382c8a8ff7c1_33.png)
 
 **构建命令**：在项目根目录执行 `sbt package` 生成 JAR 文件。
 
@@ -199,7 +182,6 @@ object SimpleApp {
 3.  **YARN 集群模式**：驱动程序也运行在 YARN 集群的 Application Master 中。客户端提交任务后即可断开。
     **命令示例**：`spark-submit --master yarn --deploy-mode cluster --num-executors 2 ... myapp.jar`
 
-![](img/af4e862a370f9a5c738a382c8a8ff7c1_35.png)
 
 选择合适的模式取决于你的测试、调试和生产部署需求。
 

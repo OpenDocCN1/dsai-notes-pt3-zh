@@ -1,6 +1,5 @@
 #  011：Python中的其他简单语句 🐍
 
-![](img/5a72928c5e3ba63334706a14ea5b3cde_0.png)
 
 在本节课中，我们将学习Python中除表达式、赋值和导入语句之外的其他简单语句。我们将重点探讨与异常处理相关的 `raise` 语句和 `assert` 语句，理解它们的作用和使用场景。
 
@@ -41,13 +40,11 @@ Python 提供了许多内置的异常类型。你也可以通过对象继承定�
 
 ---
 
-![](img/5a72928c5e3ba63334706a14ea5b3cde_4.png)
 
 ## `assert` 语句 ✅
 
 `assert` 语句用于确认程序中的某个条件为真。它可以是一个表达式，也可以是一个变量。
 
-![](img/5a72928c5e3ba63334706a14ea5b3cde_6.png)
 
 如果表达式为真，`assert` 语句不会执行任何操作。
 
@@ -62,11 +59,9 @@ assert my_variable > 0  # 假设 my_variable 值为 5，条件为真
 assert 1 + 1 == 3  # 条件为假，引发 AssertionError
 ```
 
-![](img/5a72928c5e3ba63334706a14ea5b3cde_8.png)
 
 你可以在 `assert` 语句后添加一个错误消息。
 
-![](img/5a72928c5e3ba63334706a14ea5b3cde_10.png)
 
 ```python
 assert temperature > 0, "温度必须高于零度"
@@ -88,7 +83,6 @@ python -O my_program.py
 
 ---
 
-![](img/5a72928c5e3ba63334706a14ea5b3cde_16.png)
 
 ## 总结 📚
 

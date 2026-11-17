@@ -1,6 +1,5 @@
 # 大型语言模型实践（高级数据工程、AWS、Databricks和本地LLM）：P161：60_03_02_Lorax与SkyPilot入门指南
 
-![](img/8d8731d7fb9e148aa40517ee42dc19f4_0.png)
 
 ![](img/8d8731d7fb9e148aa40517ee42dc19f4_0.png)
 
@@ -90,6 +89,5 @@ sky stop lorax-cluster
 
 我们看到了整个工作流程：从简单的YAML配置，到在云端一键启动高性能推理服务，再到方便地停止服务以控制成本。这对于考虑在生产环境中部署大语言模型的公司CTO或工程师来说，是一个非常具有吸引力的方案。在此，要向Perbase及其团队致敬，他们打造了一个令人印象深刻的工作流。
 
-![](img/8d8731d7fb9e148aa40517ee42dc19f4_2.png)
 
 ![](img/8d8731d7fb9e148aa40517ee42dc19f4_2.png)

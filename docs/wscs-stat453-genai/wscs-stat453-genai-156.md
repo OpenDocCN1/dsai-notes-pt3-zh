@@ -6,11 +6,9 @@
 
 ## 1. 概述与准备工作 📋
 
-![](img/49a9862e64b36005a3bc6d464085a858_1.png)
 
 上一节我们介绍了 LSTM 及其单元的基本概念。本节中，我们来看看如何用代码实现一个字符级的 RNN。
 
-![](img/49a9862e64b36005a3bc6d464085a858_3.png)
 
 首先，我们导入必要的库并设置一些超参数。
 
@@ -52,7 +50,6 @@ print(f"文本总字符数: {len(text)}")  # 例如 84000
 
 首先，定义一个函数来随机获取指定长度的文本片段。
 
-![](img/49a9862e64b36005a3bc6d464085a858_5.png)
 
 ```python
 def get_random_text_portion(text, portion_size):
@@ -60,9 +57,7 @@ def get_random_text_portion(text, portion_size):
     return text[start_idx:start_idx + portion_size]
 ```
 
-![](img/49a9862e64b36005a3bc6d464085a858_7.png)
 
-![](img/49a9862e64b36005a3bc6d464085a858_9.png)
 
 接着，定义一个函数将字符串转换为对应的整数索引。
 
@@ -87,15 +82,12 @@ def get_random_sample(text, portion_size):
     return input_tensor, target_tensor
 ```
 
-![](img/49a9862e64b36005a3bc6d464085a858_11.png)
 
 ---
 
-![](img/49a9862e64b36005a3bc6d464085a858_13.png)
 
 ## 3. 构建字符 RNN 模型 🏗️
 
-![](img/49a9862e64b36005a3bc6d464085a858_15.png)
 
 现在我们来构建核心的 RNN 模型。我们将使用 `nn.LSTMCell` 来手动处理序列的每个时间步，这比使用 `nn.LSTM` 更直观，便于理解循环过程。
 
@@ -194,9 +186,7 @@ def train(model, optimizer, criterion, text, num_iterations, text_port_size):
 
 ## 5. 文本生成与评估 🔮
 
-![](img/49a9862e64b36005a3bc6d464085a858_17.png)
 
-![](img/49a9862e64b36005a3bc6d464085a858_19.png)
 
 训练过程中，我们希望看到模型的学习效果。因此，我们实现一个 `evaluate` 函数，让模型根据给定的起始字符（prime）生成一段新文本。
 
@@ -266,24 +256,19 @@ train(model, optimizer, criterion, text, num_iterations, text_port_size)
 
 ---
 
-![](img/49a9862e64b36005a3bc6d464085a858_21.png)
 
 ## 总结 📝
 
-![](img/49a9862e64b36005a3bc6d464085a858_23.png)
 
 本节课中我们一起学习了如何在 PyTorch 中实现一个字符级的循环神经网络。我们完成了以下核心任务：
 
-![](img/49a9862e64b36005a3bc6d464085a858_25.png)
 
-![](img/49a9862e64b36005a3bc6d464085a858_26.png)
 
 1.  **数据准备**：将文本数据切割成片段，并转换为模型可处理的整数张量。
 2.  **模型构建**：使用 `nn.Embedding`、`nn.LSTMCell` 和 `nn.Linear` 搭建了一个能够处理序列的 RNN 模型。
 3.  **训练循环**：实现了按时间步展开的训练过程，包括状态管理、损失计算和参数优化。
 4.  **文本生成**：实现了基于温度采样的文本生成函数，用于评估模型性能。
 
-![](img/49a9862e64b36005a3bc6d464085a858_28.png)
 
 ![](img/49a9862e64b36005a3bc6d464085a858_30.png)
 

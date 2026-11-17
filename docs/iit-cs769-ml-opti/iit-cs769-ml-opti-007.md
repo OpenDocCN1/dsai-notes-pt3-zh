@@ -2,7 +2,6 @@
 
 在本教程中，我们将学习SPEAR库中的CAGE联合学习模块和子集选择模块。我们将了解如何使用这些工具进行半监督数据编程，以程序化方式标注和构建训练数据。
 
-![](img/6ed7ec3b5a290e24941a489e80202c72_1.png)
 
 ## 概述
 
@@ -14,7 +13,6 @@ SPEAR库的GitHub地址为 `DeL-team/spear`。该库提供了一个简单的三�
 
 以下是SPEAR库的基本工作流程：
 
-![](img/6ed7ec3b5a290e24941a489e80202c72_3.png)
 
 1.  **创建标注函数**：这些函数以原始数据为输入，基于启发式规则返回一个标签。
 2.  **生成Pickle文件**：此文件包含标注函数为原始数据关联的标签。
@@ -22,7 +20,6 @@ SPEAR库的GitHub地址为 `DeL-team/spear`。该库提供了一个简单的三�
 
 本教程假设您已了解标注函数的基础知识。我们将重点讲解CAGE联合学习模块。
 
-![](img/6ed7ec3b5a290e24941a489e80202c72_5.png)
 
 ## CAGE模块使用指南
 
@@ -40,13 +37,10 @@ test_data, test_labels = load_test_data()
 
 接下来，声明`PreLabels`类对象并生成包含标注函数结果的Pickle和JSON文件。
 
-![](img/6ed7ec3b5a290e24941a489e80202c72_7.png)
 
 
-![](img/6ed7ec3b5a290e24941a489e80202c72_9.png)
 
 
-![](img/6ed7ec3b5a290e24941a489e80202c72_11.png)
 
 ```python
 from spear.labeling import PreLabels
@@ -65,7 +59,6 @@ unlabeled_pre_labels.generate_json_file(‘unlabeled.json’)
 生成必要的文件后，我们可以使用`CAGE`类来获取最终的聚合标签。
 
 
-![](img/6ed7ec3b5a290e24941a489e80202c72_13.png)
 
 ```python
 from spear.cage import CAGE
@@ -80,7 +73,6 @@ cage = CAGE(L=num_labeling_functions)
     probabilities = cage.predict_proba(‘unlabeled.pkl’, ‘unlabeled.json’)
     ```
 
-![](img/6ed7ec3b5a290e24941a489e80202c72_15.png)
 
 *   **`predict`函数**：此函数基于`predict_proba`返回的最大概率，为每个实例分配一个最终标签。返回值是一个包含与`Enum`类对应的整数的NumPy数组。
     ```python
@@ -99,7 +91,6 @@ cage = CAGE(L=num_labeling_functions)
     cage.load_parameters(‘path/to/params.pkl’)
     ```
 
-![](img/6ed7ec3b5a290e24941a489e80202c72_17.png)
 
 *   **基于已训练参数的预测**：加载参数后，可以直接进行预测而无需重新训练。
     ```python
@@ -112,21 +103,17 @@ cage = CAGE(L=num_labeling_functions)
     enum_labels = cage.get_enum(predicted_labels_int)
     ```
 
-![](img/6ed7ec3b5a290e24941a489e80202c72_19.png)
 
 上一节我们介绍了基础的CAGE模块，本节中我们来看看功能更强大的联合学习模块。
 
 ## 联合学习模块使用指南
 
-![](img/6ed7ec3b5a290e24941a489e80202c72_21.png)
 
 联合学习模块训练两个模型：一个特征模型（如神经网络或逻辑回归）和一个类似于CAGE中使用的图模型。它需要额外的特征矩阵和少量专家标注数据。
 
 ### 数据准备
 
-![](img/6ed7ec3b5a290e24941a489e80202c72_23.png)
 
-![](img/6ed7ec3b5a290e24941a489e80202c72_24.png)
 
 除了未标注和测试数据，联合学习还需要特征矩阵、验证数据和少量标注数据。
 
@@ -137,7 +124,6 @@ validation_data = load_validation_data()
 label_data = load_expert_labeled_data() # 少量专家标注数据
 ```
 
-![](img/6ed7ec3b5a290e24941a489e80202c72_26.png)
 
 创建`PreLabels`对象时，注意我们**不**向未标注数据的`PreLabels`类传递真实标签。
 
@@ -151,7 +137,6 @@ unlabeled_pre_labels.generate_pickle_file(‘unlabeled.pkl’)
 声明`JointLearning`类并开始训练。
 
 
-![](img/6ed7ec3b5a290e24941a489e80202c72_28.png)
 
 ```python
 from spear.joint_learning import JointLearning
@@ -161,7 +146,6 @@ jl = JointLearning(feature_model=‘nn’)
 
 联合学习模块的核心方法如下：
 
-![](img/6ed7ec3b5a290e24941a489e80202c72_30.png)
 
 *   **`predict_proba`函数**：此函数训练模型并返回预测概率。参数`loss_mask`指定训练中使用的七种损失函数之一（详情请参阅相关论文）。当`return_gm=True`时，返回两个值：特征模型的概率和图模型的概率。通常建议使用特征模型的概率。
     ```python
@@ -178,7 +162,6 @@ jl = JointLearning(feature_model=‘nn’)
     labels_fm = jl.predict(…, return_gm=False)
     ```
 
-![](img/6ed7ec3b5a290e24941a489e80202c72_32.png)
 
 *   **参数保存与加载**：与CAGE模块类似。
     ```python
@@ -196,17 +179,14 @@ jl = JointLearning(feature_model=‘nn’)
     labels_gm = jl.predict_gm_from_parameters(…)
     ```
 
-![](img/6ed7ec3b5a290e24941a489e80202c72_34.png)
 
 在联合学习中，专家标注数据的质量至关重要。接下来，我们将介绍如何智能地选择需要标注的数据子集，以提升模型效果。
 
 ## 子集选择模块
 
-![](img/6ed7ec3b5a290e24941a489e80202c72_36.png)
 
 为了优化专家标注资源的利用，我们可以使用子集选择函数从未标注数据中挑选一个子集进行标注，使得该子集的标签能最好地补充标注函数的信息。
 
-![](img/6ed7ec3b5a290e24941a489e80202c72_38.png)
 
 SPEAR库提供了几种子集选择策略：
 
@@ -216,7 +196,6 @@ SPEAR库提供了几种子集选择策略：
     indices_to_label = random_subset(unlabeled_data_size, subset_size)
     ```
 
-![](img/6ed7ec3b5a290e24941a489e80202c72_40.png)
 
 *   **Uncertainty-Probit子集选择**：使用`uncertainty_probit_subset`函数，该方法需要特征矩阵。
     ```python
@@ -236,7 +215,6 @@ SPEAR库提供了几种子集选择策略：
     indices, to_label_pkl, remaining_pkl = s_subset_save_files(‘unlabeled.pkl’, ‘to_label.pkl’, ‘remaining.pkl’, subset_size)
     ```
 
-![](img/6ed7ec3b5a290e24941a489e80202c72_42.png)
 
 *   **`insert_gold_labels`函数**：当使用`s_subset_save_files`选出的子集被专家标注后，可以使用此函数将真实标签插入到对应的Pickle文件中。
     ```python
@@ -244,7 +222,6 @@ SPEAR库提供了几种子集选择策略：
     insert_gold_labels(‘to_label.pkl’, expert_gold_labels, ‘labeled.pkl’)
     ```
 
-![](img/6ed7ec3b5a290e24941a489e80202c72_44.png)
 
 *   **`replace_pickle`函数**：此工具函数可用于替换Pickle文件中的任何数组。
 

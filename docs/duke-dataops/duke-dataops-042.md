@@ -8,7 +8,6 @@
 
 ---
 
-![](img/a5e5a35560f055dbfaf9a80fecc684bc_3.png)
 
 ## 概述
 

@@ -1,6 +1,5 @@
 # 026：预测（Forecasting）教程
 
-![](img/ea32c1e1785f3b53a7c081ab7fcd88c4_0.png)
 
 在本节课中，我们将要学习**预测（Forecasting）**，这是一种特定类型的预测问题，通常应用于时间序列数据。我们将探讨其核心概念、面临的挑战、常用方法以及需要注意的陷阱。
 
@@ -8,42 +7,30 @@
 
 预测是一种针对时间序列数据的特定预测问题。时间序列数据是指按时间顺序排列的数据点序列，例如谷歌（GOOG）在纳斯达克的股价。这类数据会随时间上下波动，因此引入了特定的依赖结构和额外的预测挑战。
 
-![](img/ea32c1e1785f3b53a7c081ab7fcd88c4_2.png)
 
 ## 预测的独特挑战 ⚠️
 
-![](img/ea32c1e1785f3b53a7c081ab7fcd88c4_3.png)
 
-![](img/ea32c1e1785f3b53a7c081ab7fcd88c4_4.png)
 
-![](img/ea32c1e1785f3b53a7c081ab7fcd88c4_5.png)
 
-![](img/ea32c1e1785f3b53a7c081ab7fcd88c4_6.png)
 
 上一节我们介绍了预测的基本概念，本节中我们来看看预测面临哪些独特挑战。
 
 首先，数据在时间上是**依赖的**。仅这一点就使得预测比处理独立样本更具挑战性。
 
-![](img/ea32c1e1785f3b53a7c081ab7fcd88c4_8.png)
 
-![](img/ea32c1e1785f3b53a7c081ab7fcd88c4_9.png)
 
-![](img/ea32c1e1785f3b53a7c081ab7fcd88c4_10.png)
 
 其次，时间序列中通常存在一些特定的模式类型，需要特别关注：
 *   **趋势**：例如长期的上升或下降。
 *   **季节性模式**：这类数据中非常常见，例如按周、月、年重复出现的模式。
 *   **周期性模式**：周期超过一年的、周期性起伏的模式。
 
-![](img/ea32c1e1785f3b53a7c081ab7fcd88c4_12.png)
 
-![](img/ea32c1e1785f3b53a7c081ab7fcd88c4_13.png)
 
 此外，划分训练集和测试集也更为复杂。你不能简单地将样本随机分配到训练集和测试集，必须考虑到数据是在特定时间点采样的，且数据点在时间上是相互依赖的。
 
-![](img/ea32c1e1785f3b53a7c081ab7fcd88c4_15.png)
 
-![](img/ea32c1e1785f3b53a7c081ab7fcd88c4_16.png)
 
 ## 空间数据预测的相似性 🌍
 
@@ -53,21 +40,14 @@
 
 通常，预测的目标是预测未来一个或多个时间点的观测值。所有标准的预测算法都可以使用，但在使用时需要更加谨慎。
 
-![](img/ea32c1e1785f3b53a7c081ab7fcd88c4_18.png)
 
-![](img/ea32c1e1785f3b53a7c081ab7fcd88c4_19.png)
 
-![](img/ea32c1e1785f3b53a7c081ab7fcd88c4_20.png)
 
-![](img/ea32c1e1785f3b53a7c081ab7fcd88c4_21.png)
 
 以下是需要注意的几个关键点：
 
-![](img/ea32c1e1785f3b53a7c081ab7fcd88c4_22.png)
 
-![](img/ea32c1e1785f3b53a7c081ab7fcd88c4_23.png)
 
-![](img/ea32c1e1785f3b53a7c081ab7fcd88c4_24.png)
 
 ### 警惕虚假相关性
 
@@ -75,23 +55,15 @@
 
 例如，通过谷歌相关趋势工具，你可以发现谷歌股价（蓝色线）与“Solitaire network”（红色线）的搜索频率高度相关。这两者可能毫无关系，但相关性却很高。你可能会误以为可以用一个预测另一个，但未来它们可能会大幅背离，因为它们本质上可能并无关联。
 
-![](img/ea32c1e1785f3b53a7c081ab7fcd88c4_26.png)
 
-![](img/ea32c1e1785f3b53a7c081ab7fcd88c4_27.png)
 
-![](img/ea32c1e1785f3b53a7c081ab7fcd88c4_28.png)
 
-![](img/ea32c1e1785f3b53a7c081ab7fcd88c4_29.png)
 
 这种现象在地理分析中也很常见。例如，基于人口的热力图通常形状相似，因为人口密集区（如美国东海岸）会主导各种用户分布图（如特定网站用户、杂志订阅者），导致这些热力图看起来高度相似。
 
-![](img/ea32c1e1785f3b53a7c081ab7fcd88c4_30.png)
 
-![](img/ea32c1e1785f3b53a7c081ab7fcd88c4_31.png)
 
-![](img/ea32c1e1785f3b53a7c081ab7fcd88c4_32.png)
 
-![](img/ea32c1e1785f3b53a7c081ab7fcd88c4_33.png)
 
 ### 谨慎对待外推法
 
@@ -101,29 +73,19 @@
 
 ## 实战示例：使用R进行预测 💻
 
-![](img/ea32c1e1785f3b53a7c081ab7fcd88c4_35.png)
 
-![](img/ea32c1e1785f3b53a7c081ab7fcd88c4_36.png)
 
-![](img/ea32c1e1785f3b53a7c081ab7fcd88c4_37.png)
 
 上一节我们讨论了预测的陷阱，本节我们通过一个实战示例来看看如何进行预测。
 
-![](img/ea32c1e1785f3b53a7c081ab7fcd88c4_38.png)
 
-![](img/ea32c1e1785f3b53a7c081ab7fcd88c4_39.png)
 
-![](img/ea32c1e1785f3b53a7c081ab7fcd88c4_40.png)
 
-![](img/ea32c1e1785f3b53a7c081ab7fcd88c4_41.png)
 
-![](img/ea32c1e1785f3b53a7c081ab7fcd88c4_42.png)
 
 我将展示一个使用 `quantmod` 包和谷歌数据进行预测的快速示例。
 
-![](img/ea32c1e1785f3b53a7c081ab7fcd88c4_43.png)
 
-![](img/ea32c1e1785f3b53a7c081ab7fcd88c4_44.png)
 
 首先，加载 `quantmod` 包，并获取谷歌股票数据：
 
@@ -132,21 +94,14 @@ library(quantmod)
 getSymbols("GOOG", src = "google")
 ```
 
-![](img/ea32c1e1785f3b53a7c081ab7fcd88c4_46.png)
 
-![](img/ea32c1e1785f3b53a7c081ab7fcd88c4_47.png)
 
-![](img/ea32c1e1785f3b53a7c081ab7fcd88c4_48.png)
 
-![](img/ea32c1e1785f3b53a7c081ab7fcd88c4_49.png)
 
 变量 `GOOG` 包含了从2008年1月1日到2013年12月31日的开盘价、最高价、最低价、收盘价和成交量信息。
 
-![](img/ea32c1e1785f3b53a7c081ab7fcd88c4_50.png)
 
-![](img/ea32c1e1785f3b53a7c081ab7fcd88c4_51.png)
 
-![](img/ea32c1e1785f3b53a7c081ab7fcd88c4_52.png)
 
 接着，我们可以将数据汇总为月度时间序列：
 
@@ -157,23 +112,16 @@ goog_ts <- ts(goog_open, frequency=12)
 plot(goog_ts)
 ```
 
-![](img/ea32c1e1785f3b53a7c081ab7fcd88c4_54.png)
 
-![](img/ea32c1e1785f3b53a7c081ab7fcd88c4_55.png)
 
-![](img/ea32c1e1785f3b53a7c081ab7fcd88c4_56.png)
 
-![](img/ea32c1e1785f3b53a7c081ab7fcd88c4_57.png)
 
 这样我们就得到了谷歌股票七年间的月度开盘价时间序列图。
 
-![](img/ea32c1e1785f3b53a7c081ab7fcd88c4_58.png)
 
 ### 时间序列分解
 
-![](img/ea32c1e1785f3b53a7c081ab7fcd88c4_60.png)
 
-![](img/ea32c1e1785f3b53a7c081ab7fcd88c4_61.png)
 
 一个典型的时间序列分解会将序列分解为以下几个部分：
 *   **趋势**：任何一致的模式。
@@ -182,22 +130,16 @@ plot(goog_ts)
 
 在R中，我们可以使用 `decompose` 函数进行加法分解：
 
-![](img/ea32c1e1785f3b53a7c081ab7fcd88c4_63.png)
 
-![](img/ea32c1e1785f3b53a7c081ab7fcd88c4_64.png)
 
-![](img/ea32c1e1785f3b53a7c081ab7fcd88c4_65.png)
 
 ```r
 goog_decomp <- decompose(goog_ts, type="additive")
 plot(goog_decomp)
 ```
 
-![](img/ea32c1e1785f3b53a7c081ab7fcd88c4_66.png)
 
-![](img/ea32c1e1785f3b53a7c081ab7fcd88c4_67.png)
 
-![](img/ea32c1e1785f3b53a7c081ab7fcd88c4_68.png)
 
 分解结果显示，谷歌股价存在向上的**趋势**，明显的**季节性**模式，以及更随机的**周期性**波动。这便将原始序列分解为数据中不同类型模式的组合。
 
@@ -205,23 +147,16 @@ plot(goog_decomp)
 
 对于时间序列，必须构建包含连续时间点的训练集和测试集。例如，可以构建一个从时间点1到5的训练集，然后使用紧随其后的连续时间点作为测试集。这样才能确保训练集和测试集具有连续的时间点，并展现出数据中观察到的同类趋势。
 
-![](img/ea32c1e1785f3b53a7c081ab7fcd88c4_70.png)
 
-![](img/ea32c1e1785f3b53a7c081ab7fcd88c4_71.png)
 
 ### 预测方法
 
-![](img/ea32c1e1785f3b53a7c081ab7fcd88c4_72.png)
 
 以下是几种预测方法：
 
-![](img/ea32c1e1785f3b53a7c081ab7fcd88c4_74.png)
 
-![](img/ea32c1e1785f3b53a7c081ab7fcd88c4_75.png)
 
-![](img/ea32c1e1785f3b53a7c081ab7fcd88c4_76.png)
 
-![](img/ea32c1e1785f3b53a7c081ab7fcd88c4_77.png)
 
 **1. 简单移动平均法**
 预测值将是截至特定时间点的前几个时间点观测值的平均值。
@@ -229,23 +164,16 @@ plot(goog_decomp)
 **2. 指数平滑法**
 这种方法对近期时间点赋予更高的权重，而对较远时间点的权重较低。你可以选择多种不同类型的平滑模型。
 
-![](img/ea32c1e1785f3b53a7c081ab7fcd88c4_79.png)
 
-![](img/ea32c1e1785f3b53a7c081ab7fcd88c4_80.png)
 
 对于指数平滑，你可以拟合一个模型，并为想要拟合的趋势类型选择不同选项。进行预测时，你可以从模型中得到预测值，同时也可以得到预测值的可能范围（预测区间）。
 
-![](img/ea32c1e1785f3b53a7c081ab7fcd88c4_81.png)
 
-![](img/ea32c1e1785f3b53a7c081ab7fcd88c4_82.png)
 
-![](img/ea32c1e1785f3b53a7c081ab7fcd88c4_83.png)
 
 ### 评估预测精度
 
-![](img/ea32c1e1785f3b53a7c081ab7fcd88c4_85.png)
 
-![](img/ea32c1e1785f3b53a7c081ab7fcd88c4_86.png)
 
 你可以使用 `accuracy` 函数来评估预测精度。该函数利用测试集计算预测的准确性，并提供均方根误差等更适合预测任务的评估指标。
 
@@ -253,25 +181,17 @@ plot(goog_decomp)
 
 本节课中，我们一起学习了时间序列预测的核心概念。我们了解到预测面临数据依赖性、季节性等独特挑战，并探讨了移动平均、指数平滑等基本方法。同时，我们重点强调了需要警惕**虚假相关性**和**过度外推**这两个常见陷阱。
 
-![](img/ea32c1e1785f3b53a7c081ab7fcd88c4_88.png)
 
-![](img/ea32c1e1785f3b53a7c081ab7fcd88c4_89.png)
 
-![](img/ea32c1e1785f3b53a7c081ab7fcd88c4_90.png)
 
 显然，这里介绍得非常快。如果你想了解更多信息，预测和时间序列预测本身就是一个完整的学科领域。我强烈推荐 Rob Hyndman 的《预测：原则与实践》，这是一本免费的在线书籍，内容非常出色，提供了大量关于如何开始进行预测的信息。
 
-![](img/ea32c1e1785f3b53a7c081ab7fcd88c4_91.png)
 
-![](img/ea32c1e1785f3b53a7c081ab7fcd88c4_92.png)
 
-![](img/ea32c1e1785f3b53a7c081ab7fcd88c4_93.png)
 
-![](img/ea32c1e1785f3b53a7c081ab7fcd88c4_94.png)
 
 最后，如果你对金融预测和金融预报感兴趣，`quantmod` 和 `Quandl` 包在该领域也非常有用。
 
-![](img/ea32c1e1785f3b53a7c081ab7fcd88c4_96.png)
 
 ![](img/ea32c1e1785f3b53a7c081ab7fcd88c4_97.png)
 

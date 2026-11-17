@@ -1,6 +1,5 @@
 # 027：无监督预测
 
-![](img/fd96d66131d254a64a638dae0c6534c9_0.png)
 
 在本节课中，我们将要学习**无监督预测**的概念。这是一种在数据没有预先标注类别标签时，先通过聚类发现数据内在结构，再基于此结构构建预测模型的方法。
 
@@ -14,31 +13,21 @@
 
 这种方法为预测问题增加了几个难度层级。首先，创建聚类的过程并非完美无噪声。其次，为聚类找到合适的名称，即很好地解释聚类，是一个极具挑战性的问题。如果你学习过数据科学专项课程中的探索性数据分析，就会理解其中的原因。
 
-![](img/fd96d66131d254a64a638dae0c6534c9_2.png)
 
-![](img/fd96d66131d254a64a638dae0c6534c9_3.png)
 
 ---
 
-![](img/fd96d66131d254a64a638dae0c6534c9_4.png)
 
-![](img/fd96d66131d254a64a638dae0c6534c9_5.png)
 
-![](img/fd96d66131d254a64a638dae0c6534c9_6.png)
 
-![](img/fd96d66131d254a64a638dae0c6534c9_7.png)
 
 ## 无监督预测的基本步骤
 
-![](img/fd96d66131d254a64a638dae0c6534c9_8.png)
 
-![](img/fd96d66131d254a64a638dae0c6534c9_9.png)
 
-![](img/fd96d66131d254a64a638dae0c6534c9_10.png)
 
 上一节我们介绍了无监督预测的核心思想，本节中我们来看看其具体实施步骤。
 
-![](img/fd96d66131d254a64a638dae0c6534c9_11.png)
 
 以下是实施无监督预测的关键步骤：
 
@@ -49,23 +38,17 @@
 
 ---
 
-![](img/fd96d66131d254a64a638dae0c6534c9_13.png)
 
-![](img/fd96d66131d254a64a638dae0c6534c9_14.png)
 
-![](img/fd96d66131d254a64a638dae0c6534c9_15.png)
 
 ## 实战示例：鸢尾花数据集
 
 让我们通过一个具体的代码示例来演示这个过程。我们将使用鸢尾花（Iris）数据集，但会故意忽略其已知的物种标签。
 
-![](img/fd96d66131d254a64a638dae0c6534c9_17.png)
 
 首先，我们加载必要的库并准备数据，忽略物种信息。
 
-![](img/fd96d66131d254a64a638dae0c6534c9_18.png)
 
-![](img/fd96d66131d254a64a638dae0c6534c9_19.png)
 
 ```r
 library(caret)
@@ -79,7 +62,6 @@ testing <- iris[-inTrain, ]
 trainingPredictors <- training[, -5]
 ```
 
-![](img/fd96d66131d254a64a638dae0c6534c9_21.png)
 
 ### 第一步：执行K均值聚类
 
@@ -94,19 +76,13 @@ training$Cluster <- as.factor(kmeansResult$cluster)
 
 ### 第二步：可视化与解释聚类
 
-![](img/fd96d66131d254a64a638dae0c6534c9_23.png)
 
-![](img/fd96d66131d254a64a638dae0c6534c9_24.png)
 
-![](img/fd96d66131d254a64a638dae0c6534c9_25.png)
 
 我们可以将聚类结果可视化，并尝试理解每个簇的含义。在理想情况下，这些簇可能接近真实的物种分类，但通常解释起来很困难。
 
-![](img/fd96d66131d254a64a638dae0c6534c9_26.png)
 
-![](img/fd96d66131d254a64a638dae0c6534c9_27.png)
 
-![](img/fd96d66131d254a64a638dae0c6534c9_28.png)
 
 ```r
 # 使用前两个特征进行可视化，颜色代表聚类结果
@@ -121,21 +97,16 @@ plot(training$Petal.Length, training$Petal.Width, col=training$Cluster,
 table(Predicted_Cluster = training$Cluster, Actual_Species = training$Species)
 ```
 
-![](img/fd96d66131d254a64a638dae0c6534c9_30.png)
 
-![](img/fd96d66131d254a64a638dae0c6534c9_31.png)
 
-![](img/fd96d66131d254a64a638dae0c6534c9_32.png)
 
 输出可能显示：Cluster 2 主要对应 setosa 物种，Cluster 3 对应 versicolor，Cluster 1 对应 virginica。但在真正的无监督场景中，我们不知道这些物种名称，必须自己为簇命名。
 
 ### 第三步：构建预测模型
 
-![](img/fd96d66131d254a64a638dae0c6534c9_34.png)
 
 现在，我们将`Cluster`变量作为目标，使用有监督学习算法构建一个预测模型。
 
-![](img/fd96d66131d254a64a638dae0c6534c9_35.png)
 
 ```r
 # 使用分类树模型，基于所有预测变量来预测我们创建的Cluster标签
@@ -150,19 +121,13 @@ confusionMatrix(trainPred, training$Cluster)
 
 ### 第四步：在测试集上应用模型
 
-![](img/fd96d66131d254a64a638dae0c6534c9_37.png)
 
-![](img/fd96d66131d254a64a638dae0c6534c9_38.png)
 
-![](img/fd96d66131d254a64a638dae0c6534c9_39.png)
 
 最后，我们将模型应用于测试集。在一般情况下，我们不知道测试集的真实标签。
 
-![](img/fd96d66131d254a64a638dae0c6534c9_40.png)
 
-![](img/fd96d66131d254a64a638dae0c6534c9_41.png)
 
-![](img/fd96d66131d254a64a638dae0c6534c9_42.png)
 
 ```r
 # 在测试集上进行预测
@@ -175,25 +140,18 @@ table(Predicted_Cluster = testPred, Actual_Species = testing$Species)
 
 ---
 
-![](img/fd96d66131d254a64a638dae0c6534c9_44.png)
 
 ## 挑战与注意事项
 
-![](img/fd96d66131d254a64a638dae0c6534c9_45.png)
 
-![](img/fd96d66131d254a64a638dae0c6534c9_46.png)
 
-![](img/fd96d66131d254a64a638dae0c6534c9_47.png)
 
 上一节我们走通了无监督预测的流程，本节中我们来总结其挑战和需要注意的关键点。
 
 总的来说，无监督预测是一个相当困难的问题。在标记聚类、执行无监督分析和理解其工作原理时必须格外小心。
 
-![](img/fd96d66131d254a64a638dae0c6534c9_49.png)
 
-![](img/fd96d66131d254a64a638dae0c6534c9_50.png)
 
-![](img/fd96d66131d254a64a638dae0c6534c9_51.png)
 
 *   **聚类的稳定性**：聚类本质上是一种探索性技术。聚类结果可能因数据采样方式或算法初始化的不同而改变。
 *   **解释的陷阱**：必须非常警惕对这类聚类的过度解读。为聚类赋予有意义的名称需要深厚的领域知识，且容易出错。
@@ -209,23 +167,16 @@ table(Predicted_Cluster = testPred, Actual_Species = testing$Species)
 
 ## 总结
 
-![](img/fd96d66131d254a64a638dae0c6534c9_53.png)
 
-![](img/fd96d66131d254a64a638dae0c6534c9_54.png)
 
 本节课中，我们一起学习了**无监督预测**。
 
-![](img/fd96d66131d254a64a638dae0c6534c9_55.png)
 
-![](img/fd96d66131d254a64a638dae0c6534c9_56.png)
 
-![](img/fd96d66131d254a64a638dae0c6534c9_57.png)
 
 我们了解到，当数据没有标签时，可以先通过聚类分析发现数据的自然分组，然后将这些分组作为伪标签，使用有监督学习算法构建预测模型。我们通过鸢尾花数据集的示例演示了完整的流程：K均值聚类、结果解释、构建分类树模型以及在测试集上进行预测。
 
-![](img/fd96d66131d254a64a638dae0c6534c9_58.png)
 
-![](img/fd96d66131d254a64a638dae0c6534c9_59.png)
 
 ![](img/fd96d66131d254a64a638dae0c6534c9_60.png)
 

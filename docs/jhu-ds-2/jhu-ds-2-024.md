@@ -65,7 +65,6 @@ x <- matrix(1:6, nrow=2, ncol=3)
 
 ---
 
-![](img/88f9ff42c395723aa59bf3de3ae200f5_2.png)
 
 ## 总结
 

@@ -1,6 +1,5 @@
 # 103：使用 `csv` 模块读取文件 📖
 
-![](img/18d071f2e2da8a56652c88091ace3f11_0.png)
 
 ![](img/18d071f2e2da8a56652c88091ace3f11_0.png)
 
@@ -94,7 +93,6 @@
 
 
 
-![](img/18d071f2e2da8a56652c88091ace3f11_2.png)
 
 ![](img/18d071f2e2da8a56652c88091ace3f11_2.png)
 

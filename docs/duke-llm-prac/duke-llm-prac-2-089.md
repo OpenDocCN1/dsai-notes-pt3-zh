@@ -8,7 +8,6 @@
 
 Amazon CodeWhisperer是一个AI驱动的编程工具，它能以编程方式帮助你构建代码。它作为一个AI编码伴侣，可以与集成开发环境（IDE）协同工作。它既可以在Visual Studio Code中使用，也可以在AWS Cloud9环境中运行。
 
-![](img/571bf4e8c2281c04894b478b9df206f1_2.png)
 
 ## 探索Cloud9环境
 

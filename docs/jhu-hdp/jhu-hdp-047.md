@@ -20,13 +20,11 @@ MapReduce编程API概述。本节将概述MapReduce编程API。这将使你熟�
 
 新API是旧API的重新设计版本，它被重新设计以便于未来的演进。
 
-![](img/9c0736b8c7a177b4e3d6b4ba8dc2bead_2.png)
 
 你可能会问，为什么旧API仍然存在？这是因为新类依赖于旧类。他们并没有真正将旧API完全迁移到新API中。大部分内容已经迁移，但有些东西仍未迁移，因此旧API仍然存在。
 
 ## API分类注意事项
 
-![](img/9c0736b8c7a177b4e3d6b4ba8dc2bead_4.png)
 
 API分类注意事项。当你查看Hadoop源代码或Hadoop文档时，你会注意到有些类被标注了`InterfaceAudience`。
 
@@ -150,7 +148,6 @@ MapReduce API概览。这是API中所有对我们重要的类的一个鸟瞰图�
 
 然后，一旦完成，它就调用`cleanup`方法。然后我们就完成了。
 
-![](img/9c0736b8c7a177b4e3d6b4ba8dc2bead_8.png)
 
 ## Reducer 类
 
@@ -158,7 +155,6 @@ MapReduce API概览。这是API中所有对我们重要的类的一个鸟瞰图�
 
 `Reducer`是一个参数化类。它接受`KeyIn`、`ValueIn`、`KeyOut`、`ValueOut`作为输入。这些是它接受的各种数据类型。
 
-![](img/9c0736b8c7a177b4e3d6b4ba8dc2bead_10.png)
 
 它有`setup`方法、`reduce`方法、`cleanup`方法和`run`方法。
 
@@ -166,7 +162,6 @@ MapReduce API概览。这是API中所有对我们重要的类的一个鸟瞰图�
 *   `reduce`方法是最重要的方法，这是你将生成输出的地方。
 *   `cleanup`方法是你将进行任何需要做的清理工作的地方。这与我们在`Mapper`类中拥有的非常相似。
 
-![](img/9c0736b8c7a177b4e3d6b4ba8dc2bead_12.png)
 
 这里要记住的最重要的事情是，`reduce`方法是关键方法，并且`reduce`方法接受一个键和一个值列表。这是不同的地方。注意它接受一个值列表。它接受一个`Iterable<ValueIn>`，这是一个值列表。
 
@@ -199,9 +194,7 @@ MapReduce API概览。这是API中所有对我们重要的类的一个鸟瞰图�
 
 我们讨论了`shuffle`和`sort`。所以这里是`Reducer`类。注意`Reducer`类接受`KeyIn`、`ValueIn`、`KeyOut`、`ValueOut`，这就是你的参数化类型。
 
-![](img/9c0736b8c7a177b4e3d6b4ba8dc2bead_14.png)
 
-![](img/9c0736b8c7a177b4e3d6b4ba8dc2bead_15.png)
 
 `reduce`方法接受一个键，它还接受一个`Iterable`值列表（键和值），并且还接受上下文对象。然后它遍历这个列表。这是经典的单词计数示例，我们接下来会讨论。
 
@@ -229,7 +222,6 @@ MapReduce API概览。这是API中所有对我们重要的类的一个鸟瞰图�
 
 注意我在这里使用像`Text`、`LongWritable`和`IntWritable`这样的词。这是因为这些键和值必须是Hadoop序列化类型。我们将在下一节中更多地讨论这个问题。
 
-![](img/9c0736b8c7a177b4e3d6b4ba8dc2bead_17.png)
 
 ![](img/9c0736b8c7a177b4e3d6b4ba8dc2bead_18.png)
 

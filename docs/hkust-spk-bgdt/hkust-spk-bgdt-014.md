@@ -37,7 +37,6 @@
 以下是如何在Spark中实现前缀和算法：
 
 
-![](img/93e99b54566e7687d89e73c68317583b_1.png)
 
 ```python
 # 假设 rdd 是输入的RDD
@@ -71,7 +70,6 @@ final_result_rdd = rdd.mapPartitionsWithIndex(lambda idx, iter: compute_local_pr
 
 ![](img/93e99b54566e7687d89e73c68317583b_3.png)
 
-![](img/93e99b54566e7687d89e73c68317583b_4.png)
 
 以单调性检查为例，其Spark实现的核心思路如下：
 

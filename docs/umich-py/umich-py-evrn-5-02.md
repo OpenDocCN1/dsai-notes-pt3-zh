@@ -1,6 +1,5 @@
 # 每个人的 Python 第五部分 2：02_01_02_Unicode字符与字符串 📚
 
-![](img/d2b9777283ea1ec3922ab425fd237131_0.png)
 
 ![](img/d2b9777283ea1ec3922ab425fd237131_0.png)
 

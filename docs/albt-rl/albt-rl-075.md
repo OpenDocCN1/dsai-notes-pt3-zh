@@ -1,6 +1,5 @@
 # 075：自动驾驶、机器人技术与基于模型的强化学习 🚗🤖
 
-![](img/4bad8ec87c8fb22f54fbfb7eaf33c292_0.png)
 
 ![](img/4bad8ec87c8fb22f54fbfb7eaf33c292_1.png)
 

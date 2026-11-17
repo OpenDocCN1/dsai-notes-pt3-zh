@@ -69,7 +69,6 @@ async def predict(file: UploadFile):
 
 ![](img/85c239db90efa14ca7a8ef207e1197c9_10.png)
 
-![](img/85c239db90efa14ca7a8ef207e1197c9_11.png)
 
 在部署到云端之前，在本地环境中运行和测试应用至关重要。
 
@@ -132,7 +131,6 @@ python app.py
 
 ## 5. 使用AWS App Runner部署服务 ☁️
 
-![](img/85c239db90efa14ca7a8ef207e1197c9_22.png)
 
 ![](img/85c239db90efa14ca7a8ef207e1197c9_24.png)
 
@@ -184,7 +182,6 @@ python app.py
 3.  **存储镜像**：我们将构建好的容器镜像推送至AWS ECR进行集中管理。
 4.  **一键部署**：最后，利用AWS App Runner这个PaaS服务，我们轻松地将容器镜像部署为一个可自动扩展、自带HTTPS的云端微服务。
 
-![](img/85c239db90efa14ca7a8ef207e1197c9_34.png)
 
 ![](img/85c239db90efa14ca7a8ef207e1197c9_35.png)
 

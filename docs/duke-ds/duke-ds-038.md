@@ -40,27 +40,20 @@ SQL中提供了一种称为`CASE`的语句，其作用与其他编程语言中�
 
 如果你将这些条件拆分成三部分，并且对数据来源有所了解，就能明白它的含义：
 
-![](img/c7c3777c74a7854c15fc44c9f5ed8456_3.png)
 
 以下是三个区间包含关系的条件，用于判断两个基因组区间（范围）如何重叠：
 
 1.  **条件A**：`X.start_bp > W.start_bp AND X.end_bp < W.end_bp`
     *   这意味着蓝色区间（X表）完全位于红色区间（W表）之内。
-    *   ![](img/c7c3777c74a7854c15fc44c9f5ed8456_5.png)
 
-![](img/c7c3777c74a7854c15fc44c9f5ed8456_5.png)
 
 2.  **条件B**：`X.start_bp < W.start_bp AND X.end_bp > W.end_bp`
     *   这意味着红色区间（W表）完全位于蓝色区间（X表）之内。
-    *   ![](img/c7c3777c74a7854c15fc44c9f5ed8456_9.png)
 
-![](img/c7c3777c74a7854c15fc44c9f5ed8456_7.png)
 
-![](img/c7c3777c74a7854c15fc44c9f5ed8456_9.png)
 
 3.  **条件C**：`X.start_bp BETWEEN W.start_bp AND W.end_bp`
     *   这意味着红色区间（W表）“跨越”了蓝色区间（X表）的起始点。
-    *   ![](img/c7c3777c74a7854c15fc44c9f5ed8456_11.png)
 
 ![](img/c7c3777c74a7854c15fc44c9f5ed8456_11.png)
 
@@ -84,7 +77,6 @@ SQL中提供了一种称为`CASE`的语句，其作用与其他编程语言中�
 
 因此，这只是一个**θ-连接**的例子，其中对每一对元组应用了一个非平凡的函数 `f(x, w)` 作为连接条件。
 
-![](img/c7c3777c74a7854c15fc44c9f5ed8456_13.png)
 
 ## 总结
 

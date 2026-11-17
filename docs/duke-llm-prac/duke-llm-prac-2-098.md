@@ -1,6 +1,5 @@
 # 大型语言模型实践（高级数据工程、AWS、Databricks和本地LLM）：P98：32_03_06_Rust调用列表模型
 
-![](img/c2ff54c8eb3e93c848a84317f6bae4bf_0.png)
 
 ![](img/c2ff54c8eb3e93c848a84317f6bae4bf_0.png)
 
@@ -76,6 +75,5 @@ async fn main() -> Result<(), bedrock::Error> {
 
 使用Rust的Bedrock SDK时，一个好的起点是：不要害怕偶尔回头参考Python代码。查看它，获取一些文档信息，感受其用法，然后再回到Rust，像我们在这里所做的一样构建一个示例。
 
-![](img/c2ff54c8eb3e93c848a84317f6bae4bf_2.png)
 
 ![](img/c2ff54c8eb3e93c848a84317f6bae4bf_2.png)

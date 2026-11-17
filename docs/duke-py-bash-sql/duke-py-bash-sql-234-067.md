@@ -1,6 +1,5 @@
 #  067：Linux正则表达式使用 🧠
 
-![](img/aef3a82e002c80fe74a515fc223f7140_0.png)
 
 ![](img/aef3a82e002c80fe74a515fc223f7140_1.png)
 

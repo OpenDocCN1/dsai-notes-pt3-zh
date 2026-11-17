@@ -1,6 +1,5 @@
 # 大型语言模型实践（高级数据工程、AWS、Databricks和本地LLM）：P53：53_03_08_实验演练：构建Rust图CLI工具 🛠️
 
-![](img/2d48628428c0f1e0abb32710cd404a45_0.png)
 
 ![](img/2d48628428c0f1e0abb32710cd404a45_0.png)
 

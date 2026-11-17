@@ -2,7 +2,6 @@
 
 ![](img/2c0786b90eed8585fc0bde99c394827a_0.png)
 
-![](img/2c0786b90eed8585fc0bde99c394827a_2.png)
 
 ## 概述
 在本节课中，我们将学习如何在Databricks Spark环境中使用数据。我们将涵盖从上传数据到文件系统、访问内置数据集、集成Azure开放数据集，到探索Databricks文件系统（DBFS）以及了解其支持的数据源和ETL流程。
@@ -10,7 +9,6 @@
 ## 开始使用数据
 要开始在Databricks Spark中使用数据，首先需要进入一个目录。在这个位置，你可以看到我已经将数据上传到了DBFS（Databricks文件系统），这是一个CSV文件。上传完成后，我就可以使用笔记本（Notebook）甚至命令行工具来操作它。
 
-![](img/2c0786b90eed8585fc0bde99c394827a_4.png)
 
 接下来，当文件上传完成时，系统会提供一个访问路径。你可以看到，从PySpark、Pandas、R、Scala等任何语言中，都有示例代码展示如何将该数据加载为数据框（DataFrame）。
 
@@ -57,7 +55,6 @@
 ## Databricks ETL流程
 在Databricks ETL方面，需要指出的一点是，它能够处理日志文件和媒体，将其移动到存储中，使用Azure Databricks Spark进行预处理，然后输出一个模型。这实际上就是Databricks的ETL（提取、转换、加载）管道概念。通过Azure集成，你可以相当简单地完成这个过程。
 
-![](img/2c0786b90eed8585fc0bde99c394827a_18.png)
 
 ![](img/2c0786b90eed8585fc0bde99c394827a_19.png)
 

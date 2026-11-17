@@ -1,6 +1,5 @@
 #  002：认识课程讲师-阿尔弗雷德·德萨
 
-![](img/8835e7d5e6d39e6358da4e2e4ada9ae6_0.png)
 
 ![](img/8835e7d5e6d39e6358da4e2e4ada9ae6_0.png)
 

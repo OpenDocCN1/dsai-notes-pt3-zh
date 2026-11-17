@@ -193,7 +193,6 @@ from pyspark.mllib.evaluation import MulticlassMetrics
 
 ## 总结
 
-![](img/56ff1d0d24d03614526e5652ee774828_1.png)
 
 本节课中，我们一起学习了在云环境下使用Apache Spark完成一个端到端的机器学习项目。
 
@@ -204,7 +203,6 @@ from pyspark.mllib.evaluation import MulticlassMetrics
 5.  **训练与优化**：管道在训练集上拟合，利用内置的优化算法和损失函数自动学习模型参数。
 6.  **评估与验证**：最后，我们在独立的测试集上评估了模型性能，使用混淆矩阵等指标判断模型泛化能力。
 
-![](img/56ff1d0d24d03614526e5652ee774828_3.png)
 
 ![](img/56ff1d0d24d03614526e5652ee774828_5.png)
 

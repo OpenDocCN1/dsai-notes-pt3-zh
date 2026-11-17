@@ -1,28 +1,21 @@
 # 43：继承机制 🧬
 
-![](img/822d9cff64afb3a07c32f0ef3432c4cf_0.png)
 
 在本节课中，我们将要学习 Python 中的继承机制。我们将探讨继承的概念，以及它如何在 Python 中实现和应用。
 
-![](img/822d9cff64afb3a07c32f0ef3432c4cf_2.png)
 
-![](img/822d9cff64afb3a07c32f0ef3432c4cf_3.png)
 
 ## 什么是继承？🤔
 
-![](img/822d9cff64afb3a07c32f0ef3432c4cf_5.png)
 
 首先，让我们暂时抛开编程，从一般意义上理解“继承”这个概念。
 
-![](img/822d9cff64afb3a07c32f0ef3432c4cf_7.png)
 
 在家庭关系中，我有我的父母，而我的父母又有他们的父母，也就是我的祖父母。
 
 当提到“继承”时，人们首先想到的通常是金钱。
 
-![](img/822d9cff64afb3a07c32f0ef3432c4cf_9.png)
 
-![](img/822d9cff64afb3a07c32f0ef3432c4cf_10.png)
 
 然而，继承不一定指金钱，它也可以指从父母那里继承的某些特征或属性。例如，你可能拥有和父母相同颜色的眼睛，拥有和母亲相似的笑容，或者拥有和祖父母相似的头发。这些特征会一代一代地传递下去。
 
@@ -30,113 +23,81 @@
 
 ## Python 中的继承 🔗
 
-![](img/822d9cff64afb3a07c32f0ef3432c4cf_12.png)
 
 当我们开始讨论 Python 编程时，情况也是如此。
 
-![](img/822d9cff64afb3a07c32f0ef3432c4cf_13.png)
 
-![](img/822d9cff64afb3a07c32f0ef3432c4cf_14.png)
 
-![](img/822d9cff64afb3a07c32f0ef3432c4cf_15.png)
 
 如果你有 C++、Java、C# 或其他语言的编程背景，你会知道继承是面向对象编程中一个非常常用的概念。
 
-![](img/822d9cff64afb3a07c32f0ef3432c4cf_16.png)
 
-![](img/822d9cff64afb3a07c32f0ef3432c4cf_17.png)
 
 但是，在讨论这种关系时，通常只存在单一的关系，这意味着我只能向上追溯到一个父类或一个祖类。
 
-![](img/822d9cff64afb3a07c32f0ef3432c4cf_19.png)
 
 Python 在这方面非常独特，它允许多重继承。我可以有一个母亲或一个父亲，他们可以将特征传递给我。
 
-![](img/822d9cff64afb3a07c32f0ef3432c4cf_20.png)
 
-![](img/822d9cff64afb3a07c32f0ef3432c4cf_22.png)
 
 我可以从我父亲那边的祖父那里获得特征，也可以从我母亲那边的祖母那里获得特征，这些特征都会传递给我。
 
 ## 继承中的术语 📖
 
-![](img/822d9cff64afb3a07c32f0ef3432c4cf_24.png)
 
-![](img/822d9cff64afb3a07c32f0ef3432c4cf_25.png)
 
 在讨论 Python 中的关系时，我们使用两个常用术语。
 
-![](img/822d9cff64afb3a07c32f0ef3432c4cf_27.png)
 
 第一个是**父类**。父类是处于最高层级的类。
 
-![](img/822d9cff64afb3a07c32f0ef3432c4cf_29.png)
 
 在我们的例子中，我的母亲是一个父类。而我母亲的父类，则是我的祖母。因为我是我母亲的孩子，我仍然可以访问属于我祖母的方法或属性。
 
-![](img/822d9cff64afb3a07c32f0ef3432c4cf_30.png)
 
 父类也被称为**超类**。
 
-![](img/822d9cff64afb3a07c32f0ef3432c4cf_32.png)
 
 第二个术语是**子类**。子类是位于父类之下的类。
 
-![](img/822d9cff64afb3a07c32f0ef3432c4cf_33.png)
 
-![](img/822d9cff64afb3a07c32f0ef3432c4cf_34.png)
 
 在这个例子中，我祖母的子类是我的母亲，我母亲的子类是我自己。
 
-![](img/822d9cff64afb3a07c32f0ef3432c4cf_36.png)
 
 当我们查看多重继承时，情况也是如此。
 
-![](img/822d9cff64afb3a07c32f0ef3432c4cf_37.png)
 
 ## 继承的类型：单继承与多重继承 ⚙️
 
-![](img/822d9cff64afb3a07c32f0ef3432c4cf_39.png)
 
-![](img/822d9cff64afb3a07c32f0ef3432c4cf_41.png)
 
 正如前面提到的，Python 内置了两种类型的继承：单继承和多重继承。
 
-![](img/822d9cff64afb3a07c32f0ef3432c4cf_43.png)
 
 在单继承中，我们使用 `super()` 来调用父类。
 
-![](img/822d9cff64afb3a07c32f0ef3432c4cf_45.png)
 
-![](img/822d9cff64afb3a07c32f0ef3432c4cf_47.png)
 
 在多重继承中，我们使用方法解析顺序来组织对不同对象的调用。方法解析顺序总是从左到右查看，或者如果你构建了从上到下的层次结构，它总是从最高层级开始向下查找。
 
-![](img/822d9cff64afb3a07c32f0ef3432c4cf_49.png)
 
 在使用多重继承时，我发现最有用的一点是确保在方法内部进行显式调用。我尽量不经常使用多重继承，但如果使用，就要确保这样做。
 
-![](img/822d9cff64afb3a07c32f0ef3432c4cf_51.png)
 
 ## 代码示例 💻
 
-![](img/822d9cff64afb3a07c32f0ef3432c4cf_52.png)
 
-![](img/822d9cff64afb3a07c32f0ef3432c4cf_54.png)
 
 让我们看一下代码，并逐一讨论每种情况。
 
-![](img/822d9cff64afb3a07c32f0ef3432c4cf_56.png)
 
 ### 单继承示例
 
-![](img/822d9cff64afb3a07c32f0ef3432c4cf_58.png)
 
 第一种情况是单继承。我有我的祖母类。注意，在 `class Grandmother:` 之后，括号里没有内容，这意味着这是这个类中的最高层级。
 
-![](img/822d9cff64afb3a07c32f0ef3432c4cf_59.png)
 
-![](img/822d9cff64afb3a07c32f0ef3432c4cf_61.png)
 
 往下看，我有一个母亲类。注意，这里有括号 `(Grandmother)`，这表示 `Mother` 是 `Grandmother` 的子类。
 

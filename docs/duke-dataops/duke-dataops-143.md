@@ -1,6 +1,5 @@
 #  143：MLflow概述
 
-![](img/7ec78d1a675fff8ee2759c1bd1040f49_0.png)
 
 ![](img/7ec78d1a675fff8ee2759c1bd1040f49_0.png)
 
@@ -30,7 +29,6 @@
 
 它允许你以多种方式（如Python函数）定义模型，并指示MLflow如何加载该模型、需要使用哪些特定版本的机器学习库。例如，你可以指定模型依赖于 `scikit-learn==0.19.1`，并最终生成 `model.pkl` 文件。这种封装确保了模型运行环境的一致性，简化了部署流程。
 
-![](img/7ec78d1a675fff8ee2759c1bd1040f49_2.png)
 
 ![](img/7ec78d1a675fff8ee2759c1bd1040f49_2.png)
 

@@ -1,6 +1,5 @@
 # 4：Lasso 优化与正则化对比 🧠
 
-![](img/8074d5ece37ab440fb724f0e80292e6c_1.png)
 
 ![](img/8074d5ece37ab440fb724f0e80292e6c_2.png)
 

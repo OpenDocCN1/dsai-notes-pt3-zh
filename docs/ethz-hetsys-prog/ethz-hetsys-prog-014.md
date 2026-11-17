@@ -1,6 +1,5 @@
 # 014： 协同计算
 
-![](img/a86fdde0765168ceab74eacac7dcc3ed_0.png)
 
 ![](img/a86fdde0765168ceab74eacac7dcc3ed_0.png)
 
@@ -115,6 +114,5 @@ RANSAC算法用于寻找符合特定观测值的最佳模型，可应用于物�
 
 更多示例可以在CHAI基准测试套件中找到，该套件包含了离散和统一内存版本、CUDA/OpenCL实现，甚至GPU模拟器版本。所有课程材料均公开提供。
 
-![](img/a86fdde0765168ceab74eacac7dcc3ed_2.png)
 
 ![](img/a86fdde0765168ceab74eacac7dcc3ed_2.png)

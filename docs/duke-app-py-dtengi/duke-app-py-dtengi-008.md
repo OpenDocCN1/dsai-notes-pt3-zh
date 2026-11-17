@@ -1,6 +1,5 @@
 #  008：Spark SQL简介 🚀
 
-![](img/d1956207c0d9ce5fbeff85869abab290_0.png)
 
 在本节课中，我们将介绍Spark SQL模块。我们将了解数据集（Data Set）和数据框（Data Frame）的概念，并展示如何创建和操作PySpark数据框。
 

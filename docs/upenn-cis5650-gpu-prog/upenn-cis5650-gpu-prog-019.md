@@ -1,14 +1,11 @@
 # 019：高级CUDA概念 🚀
 
-![](img/0a975b25d69dd197a357dfb7db2b40e1_1.png)
 
-![](img/0a975b25d69dd197a357dfb7db2b40e1_3.png)
 
 在本节课中，我们将学习CUDA编程中的几个高级概念，包括原子函数、线程束（Warp）函数、动态并行、独立线程调度以及协作组。这些工具可以帮助我们编写更高效、更复杂的GPU程序。
 
 ![](img/0a975b25d69dd197a357dfb7db2b40e1_4.png)
 
-![](img/0a975b25d69dd197a357dfb7db2b40e1_6.png)
 
 ![](img/0a975b25d69dd197a357dfb7db2b40e1_8.png)
 
@@ -99,7 +96,6 @@ CUDA提供了多种作用域的原子函数：
 
 ### 线程束洗牌函数
 
-![](img/0a975b25d69dd197a357dfb7db2b40e1_10.png)
 
 ![](img/0a975b25d69dd197a357dfb7db2b40e1_12.png)
 

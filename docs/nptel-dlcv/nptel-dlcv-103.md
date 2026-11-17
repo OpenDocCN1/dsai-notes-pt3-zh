@@ -1,6 +1,5 @@
 # 103：RNN中的反向传播
 
-![](img/3f3eda4068f49ef9e0d63f553500df5b_0.png)
 
 ![](img/3f3eda4068f49ef9e0d63f553500df5b_0.png)
 
@@ -101,6 +100,5 @@
 1.  《深度学习》第10章。
 2.  Denny Britz的“Wild ML”博客中的RNN教程，它对RNN的反向传播有非常清晰的解释。
 
-![](img/3f3eda4068f49ef9e0d63f553500df5b_2.png)
 
 ![](img/3f3eda4068f49ef9e0d63f553500df5b_2.png)

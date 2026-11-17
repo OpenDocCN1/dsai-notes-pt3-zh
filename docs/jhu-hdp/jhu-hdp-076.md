@@ -2,9 +2,7 @@
 
 ![](img/3ddc53c0bfdca55c033ede8fcb2456b2_0.png)
 
-![](img/3ddc53c0bfdca55c033ede8fcb2456b2_2.png)
 
-![](img/3ddc53c0bfdca55c033ede8fcb2456b2_3.png)
 
 在本节课中，我们将学习如何下载、安装、配置并运行Apache Pig的命令行界面。Pig是一个用于分析大型数据集的高级平台，它简化了Hadoop MapReduce作业的编写过程。
 
@@ -47,11 +45,9 @@
 
 安装完成后，建议浏览Pig的安装目录结构，以了解其组成部分。
 
-![](img/3ddc53c0bfdca55c033ede8fcb2456b2_5.png)
 
 以下是Pig安装目录下的主要文件夹及其作用：
 
-![](img/3ddc53c0bfdca55c033ede8fcb2456b2_6.png)
 
 *   **`bin/`**：包含名为 `pig` 的命令行工具，这是Pig的交互式Shell（Grunt）。
 *   **`conf/`**：包含配置文件。
@@ -85,9 +81,7 @@
 
 ## 🔗 配置Pig与Hadoop通信
 
-![](img/3ddc53c0bfdca55c033ede8fcb2456b2_8.png)
 
-![](img/3ddc53c0bfdca55c033ede8fcb2456b2_10.png)
 
 Pig脚本在底层需要与Hadoop通信以运行MapReduce作业，因此需要让Pig知道Hadoop的安装位置。
 
@@ -101,7 +95,6 @@ Pig主要通过以下两种方式定位Hadoop：
 
 ---
 
-![](img/3ddc53c0bfdca55c033ede8fcb2456b2_12.png)
 
 ## 🖥️ 动手实践演示
 
@@ -127,7 +120,6 @@ Pig主要通过以下两种方式定位Hadoop：
 
 ---
 
-![](img/3ddc53c0bfdca55c033ede8fcb2456b2_14.png)
 
 ## 📝 总结
 

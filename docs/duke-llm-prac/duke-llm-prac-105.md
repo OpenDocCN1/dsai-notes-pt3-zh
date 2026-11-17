@@ -1,6 +1,5 @@
 # 大型语言模型实践（高级数据工程、AWS、Databricks和本地LLM）：P105：04_01_05：创建和管理集群
 
-![](img/ca8c551cc50c6cfb603ff9decb32a5d6_0.png)
 
 ![](img/ca8c551cc50c6cfb603ff9decb32a5d6_0.png)
 
@@ -50,7 +49,6 @@
 
 此外，还有“计算作业”选项，允许你执行和管理临时作业。还有“SQL仓库”，这是另一个选项。我们还有“池”，它允许你逻辑分组以分配计算能力。你也可以将自动缩放池中的集群分配给某个团队或单位。最后，你可以在这里创建自定义策略，例如简化启动流程或限制使用GPU的能力。所有这些都可以直接在Microsoft Azure Databricks、AWS Databricks或你使用Databricks的任何平台界面中进行管理。
 
-![](img/ca8c551cc50c6cfb603ff9decb32a5d6_5.png)
 
 ## 总结
 

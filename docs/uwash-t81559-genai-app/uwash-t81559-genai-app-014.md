@@ -4,7 +4,6 @@
 
 ---
 
-![](img/1c84a62c4b4655be0100ff5fc06c5b99_1.png)
 
 ![](img/1c84a62c4b4655be0100ff5fc06c5b99_2.png)
 

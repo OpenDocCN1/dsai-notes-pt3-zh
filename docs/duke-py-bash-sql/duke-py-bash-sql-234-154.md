@@ -85,9 +85,7 @@ curl “http://localhost:8080/add?a=2&b=2”
 
 ---
 
-![](img/c5afc4dd9b710ba3a39db2f0944a86ee_5.png)
 
-![](img/c5afc4dd9b710ba3a39db2f0944a86ee_6.png)
 
 ## 总结
 

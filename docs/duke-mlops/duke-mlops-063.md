@@ -1,6 +1,5 @@
 # 63：使用pandas应用函数 🐼
 
-![](img/fe4881e684b3b9b817be11aca7d6870c_0.png)
 
 ![](img/fe4881e684b3b9b817be11aca7d6870c_2.png)
 

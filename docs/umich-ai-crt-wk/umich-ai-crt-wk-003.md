@@ -1,6 +1,5 @@
 # 03：AI音乐生成工具对比演示 🎵
 
-![](img/ce5f4ae60187dd6885b20d7872eabf58_0.png)
 
 在本节课中，我们将通过一位音乐家的实际体验，对比两款AI音乐生成工具：Google的MusicFX和BandLab的SongStarter。我们将了解它们如何辅助创作，各自的优势与局限性，以及如何选择适合专业工作流的工具。
 
@@ -21,11 +20,9 @@
 
 ![](img/ce5f4ae60187dd6885b20d7872eabf58_0.png)
 
-![](img/ce5f4ae60187dd6885b20d7872eabf58_2.png)
 
 现在，我们来听听第二段音轨。
 
-![](img/ce5f4ae60187dd6885b20d7872eabf58_4.png)
 
 ![](img/ce5f4ae60187dd6885b20d7872eabf58_4.png)
 
@@ -41,13 +38,10 @@ MusicFX允许我下载这些音轨，这对我至关重要，使我能在创意�
 2.  **导出格式单一**：我只能以MP3一种文件格式下载音频。我希望能有更多选择，尤其是更高保真度的选项，但MusicFX（至少在免费版本中）没有提供。
 3.  **缺乏编辑功能**：我无法在MusicFX内部对根据提示生成的音轨进行任何定制或变换，必须依赖其他软件。
 
-![](img/ce5f4ae60187dd6885b20d7872eabf58_6.png)
 
-![](img/ce5f4ae60187dd6885b20d7872eabf58_8.png)
 
 如此复杂的工作流程，对我来说并不比从自己的音乐灵感开始创作更有用。并且，从我导出的MusicFX音轨中，听不到我个人显著的创作声音，这令人沮丧。
 
-![](img/ce5f4ae60187dd6885b20d7872eabf58_8.png)
 
 ---
 
@@ -57,19 +51,15 @@ MusicFX允许我下载这些音轨，这对我至关重要，使我能在创意�
 
 它来自免费、基于浏览器的数字音频工作站BandLab。该平台有一个名为SongStarter的AI功能，能根据我选择的风格建议，生成大约一分钟的音乐。
 
-![](img/ce5f4ae60187dd6885b20d7872eabf58_10.png)
 
 ## SongStarter的核心优势
 
-![](img/ce5f4ae60187dd6885b20d7872eabf58_10.png)
 
 与MusicFX不同，SongStarter允许我在BandLab常规的录音室工作区中，进一步编辑它生成的音乐。
 
 除了让我有机会在生成式AI的支持下进行自我表达，这个扩展功能意味着使用AI工具不会对我的工作流程造成重大改变。
 
-![](img/ce5f4ae60187dd6885b20d7872eabf58_12.png)
 
-![](img/ce5f4ae60187dd6885b20d7872eabf58_12.png)
 
 此外，BandLab自带一套全面的软件乐器和效果器。与MusicFX等使用从互联网各处采集的音频录音进行训练的简易AI音乐生成器不同，BandLab使用其内置的**音源库**来演奏SongStarter生成的音轨。
 
@@ -81,11 +71,9 @@ bandlab_daw.load_instrument("synth_pad") # 加载内置合成器音色
 bandlab_daw.edit(audio_track) # 进行编辑
 ```
 
-![](img/ce5f4ae60187dd6885b20d7872eabf58_14.png)
 
 这增加了编辑的便捷性，也让我更放心地在创意项目中使用AI生成的材料。
 
-![](img/ce5f4ae60187dd6885b20d7872eabf58_14.png)
 
 ---
 
@@ -95,11 +83,8 @@ bandlab_daw.edit(audio_track) # 进行编辑
 
 我的对比体验表明，借助合适的工具，创意专业人士仍能在使用生成式AI增强创作的同时，展现自己独特的技能和个人视角。关键在于选择那些**能无缝融入现有工作流、并提供足够创作控制权**的工具，而不是那些生成封闭、固定结果的工具。
 
-![](img/ce5f4ae60187dd6885b20d7872eabf58_16.png)
 
-![](img/ce5f4ae60187dd6885b20d7872eabf58_17.png)
 
-![](img/ce5f4ae60187dd6885b20d7872eabf58_16.png)
 
 ![](img/ce5f4ae60187dd6885b20d7872eabf58_18.png)
 

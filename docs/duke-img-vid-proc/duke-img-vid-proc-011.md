@@ -2,25 +2,19 @@
 
 ## 概述 📋
 
-![](img/edb4b8fcf2d0beeb55dfbe02ba13a0d1_1.png)
 
 在本节课中，我们将要学习JPEG图像压缩的前端处理过程，特别是其核心步骤——将图像分割成8x8像素块。我们将了解这一过程如何应用于彩色图像，以及为何要进行色彩空间转换。
 
-![](img/edb4b8fcf2d0beeb55dfbe02ba13a0d1_2.png)
 
 ## 从前端开始：图像分块 🧩
 
-![](img/edb4b8fcf2d0beeb55dfbe02ba13a0d1_4.png)
 
 上一节我们介绍了图像压缩的后端，即通过哈夫曼编码进行的符号编码。本节中，我们来看看图像压缩的前端。我们将要描述的是压缩流程中的这一部分。
 
-![](img/edb4b8fcf2d0beeb55dfbe02ba13a0d1_1.png)
 
-![](img/edb4b8fcf2d0beeb55dfbe02ba13a0d1_2.png)
 
 我们处理的是一幅图像。JPEG或有损变换压缩设备要做的第一件事，就是将图像分割成块。
 
-![](img/edb4b8fcf2d0beeb55dfbe02ba13a0d1_4.png)
 
 以下是关于分块的关键点：
 *   每个块的大小是 **n x n** 像素。
@@ -43,13 +37,10 @@ YCbCr不是三个RGB通道，而是三个通道：**Y**、**Cb** 和 **Cr**。
 *   **Y** 是亮度通道，基本上就是你在黑白电视或显示器上看到的图像分量。
 *   **Cb** 和 **Cr** 是色度通道，代表颜色信息。
 
-![](img/edb4b8fcf2d0beeb55dfbe02ba13a0d1_6.png)
 
-![](img/edb4b8fcf2d0beeb55dfbe02ba13a0d1_6.png)
 
 这是一个非常简单的变换，实际上是通过一个3x3矩阵完成的。
 
-![](img/edb4b8fcf2d0beeb55dfbe02ba13a0d1_8.png)
 
 你基本上会得到一个由Y、Cb、Cr组成的列向量。
 

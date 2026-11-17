@@ -1,42 +1,26 @@
 # 27：列表的创建与使用 📋
 
-![](img/7290531c06c0b30bfc98189ffed4d27a_1.png)
 
-![](img/7290531c06c0b30bfc98189ffed4d27a_2.png)
 
-![](img/7290531c06c0b30bfc98189ffed4d27a_3.png)
 
-![](img/7290531c06c0b30bfc98189ffed4d27a_5.png)
 
-![](img/7290531c06c0b30bfc98189ffed4d27a_7.png)
 
 在本节课中，我们将要学习Python中一个非常重要的数据结构——列表。我们将从列表的基本概念开始，逐步学习如何创建、修改、访问和操作列表中的数据。
 
-![](img/7290531c06c0b30bfc98189ffed4d27a_9.png)
 
-![](img/7290531c06c0b30bfc98189ffed4d27a_10.png)
 
-![](img/7290531c06c0b30bfc98189ffed4d27a_11.png)
 
-![](img/7290531c06c0b30bfc98189ffed4d27a_12.png)
 
-![](img/7290531c06c0b30bfc98189ffed4d27a_14.png)
 
 ## 什么是列表？🤔
 
-![](img/7290531c06c0b30bfc98189ffed4d27a_16.png)
 
-![](img/7290531c06c0b30bfc98189ffed4d27a_18.png)
 
-![](img/7290531c06c0b30bfc98189ffed4d27a_20.png)
 
 我们需要一种简单的方法来存储多个独立的项目，而不需要为每个项目创建大量不同的变量名。例如，如果要记录学生的成绩，为每个学生创建一个变量会非常繁琐。
 
-![](img/7290531c06c0b30bfc98189ffed4d27a_22.png)
 
-![](img/7290531c06c0b30bfc98189ffed4d27a_23.png)
 
-![](img/7290531c06c0b30bfc98189ffed4d27a_25.png)
 
 ```python
 bob_grade = 94
@@ -44,35 +28,24 @@ cindy_grade = 42
 jan_grade = 74
 ```
 
-![](img/7290531c06c0b30bfc98189ffed4d27a_26.png)
 
-![](img/7290531c06c0b30bfc98189ffed4d27a_27.png)
 
-![](img/7290531c06c0b30bfc98189ffed4d27a_29.png)
 
-![](img/7290531c06c0b30bfc98189ffed4d27a_31.png)
 
 如果要记录100个成绩，这种方法将变得非常困难。列表可以解决这个问题。我们可以创建一个列表变量，并将所有不同的成绩都分配给它。
 
-![](img/7290531c06c0b30bfc98189ffed4d27a_33.png)
 
-![](img/7290531c06c0b30bfc98189ffed4d27a_34.png)
 
-![](img/7290531c06c0b30bfc98189ffed4d27a_36.png)
 
-![](img/7290531c06c0b30bfc98189ffed4d27a_37.png)
 
 列表使用方括号 `[]` 来标识其中的元素，每个值之间用逗号分隔。
 
-![](img/7290531c06c0b30bfc98189ffed4d27a_39.png)
 
-![](img/7290531c06c0b30bfc98189ffed4d27a_40.png)
 
 ## 创建与初始化列表 🛠️
 
 列表可以被看作一个索引数组。索引从0开始，0是第一个元素的位置。
 
-![](img/7290531c06c0b30bfc98189ffed4d27a_42.png)
 
 以下是如何创建列表的示例：
 
@@ -84,13 +57,10 @@ list3 = [12, 32.3, 65, 2, 43]
 
 在这个例子中，`list1` 混合了不同的数据类型：字符串、整数和浮点数。在Python中，整数是没有小数点的数字，浮点数是有小数点的数字，字符串是一系列字符。Python不区分单引号和双引号，两者都识别为字符串。
 
-![](img/7290531c06c0b30bfc98189ffed4d27a_44.png)
 
-![](img/7290531c06c0b30bfc98189ffed4d27a_46.png)
 
 要显示这些列表，只需使用 `print` 命令。
 
-![](img/7290531c06c0b30bfc98189ffed4d27a_48.png)
 
 ```python
 print(list1)
@@ -98,39 +68,25 @@ print(list2)
 print(list3)
 ```
 
-![](img/7290531c06c0b30bfc98189ffed4d27a_50.png)
 
-![](img/7290531c06c0b30bfc98189ffed4d27a_52.png)
 
-![](img/7290531c06c0b30bfc98189ffed4d27a_54.png)
 
-![](img/7290531c06c0b30bfc98189ffed4d27a_55.png)
 
-![](img/7290531c06c0b30bfc98189ffed4d27a_57.png)
 
 ## 向列表添加元素 ➕
 
-![](img/7290531c06c0b30bfc98189ffed4d27a_59.png)
 
-![](img/7290531c06c0b30bfc98189ffed4d27a_61.png)
 
-![](img/7290531c06c0b30bfc98189ffed4d27a_62.png)
 
 上一节我们介绍了如何创建列表，本节中我们来看看如何向列表中添加新元素。
 
-![](img/7290531c06c0b30bfc98189ffed4d27a_64.png)
 
-![](img/7290531c06c0b30bfc98189ffed4d27a_65.png)
 
 以下是向列表添加元素的几种方法：
 
-![](img/7290531c06c0b30bfc98189ffed4d27a_67.png)
 
-![](img/7290531c06c0b30bfc98189ffed4d27a_69.png)
 
-![](img/7290531c06c0b30bfc98189ffed4d27a_71.png)
 
-![](img/7290531c06c0b30bfc98189ffed4d27a_73.png)
 
 *   **拼接列表**：使用 `+` 运算符可以将两个列表合并。
     ```python
@@ -149,39 +105,25 @@ print(list3)
     list2.extend([7, 6, 5])
     ```
 
-![](img/7290531c06c0b30bfc98189ffed4d27a_75.png)
 
-![](img/7290531c06c0b30bfc98189ffed4d27a_76.png)
 
-![](img/7290531c06c0b30bfc98189ffed4d27a_78.png)
 
 ## 访问与切片列表中的数据 🔍
 
-![](img/7290531c06c0b30bfc98189ffed4d27a_80.png)
 
-![](img/7290531c06c0b30bfc98189ffed4d27a_82.png)
 
-![](img/7290531c06c0b30bfc98189ffed4d27a_84.png)
 
-![](img/7290531c06c0b30bfc98189ffed4d27a_86.png)
 
-![](img/7290531c06c0b30bfc98189ffed4d27a_88.png)
 
 创建和修改列表后，我们需要从中获取数据。可以通过索引直接访问单个元素，也可以通过切片获取一个范围内的元素。
 
-![](img/7290531c06c0b30bfc98189ffed4d27a_90.png)
 
-![](img/7290531c06c0b30bfc98189ffed4d27a_92.png)
 
 以下是访问列表元素的几种方式：
 
-![](img/7290531c06c0b30bfc98189ffed4d27a_94.png)
 
-![](img/7290531c06c0b30bfc98189ffed4d27a_96.png)
 
-![](img/7290531c06c0b30bfc98189ffed4d27a_97.png)
 
-![](img/7290531c06c0b30bfc98189ffed4d27a_98.png)
 
 *   **访问单个元素**：使用 `列表名[索引]` 的格式。索引从0开始。
     ```python
@@ -196,37 +138,24 @@ print(list3)
     z = list1[2:]   # 获取list1中从索引2开始到末尾的所有元素
     ```
 
-![](img/7290531c06c0b30bfc98189ffed4d27a_100.png)
 
-![](img/7290531c06c0b30bfc98189ffed4d27a_101.png)
 
-![](img/7290531c06c0b30bfc98189ffed4d27a_103.png)
 
 ## 排序与反转列表 🔄
 
-![](img/7290531c06c0b30bfc98189ffed4d27a_105.png)
 
-![](img/7290531c06c0b30bfc98189ffed4d27a_107.png)
 
-![](img/7290531c06c0b30bfc98189ffed4d27a_108.png)
 
-![](img/7290531c06c0b30bfc98189ffed4d27a_110.png)
 
 很多时候我们需要对列表进行排序，以便快速搜索值。Python提供了简单的方法来排序和反转列表。
 
-![](img/7290531c06c0b30bfc98189ffed4d27a_112.png)
 
-![](img/7290531c06c0b30bfc98189ffed4d27a_114.png)
 
 以下是列表排序和反转的操作：
 
-![](img/7290531c06c0b30bfc98189ffed4d27a_115.png)
 
-![](img/7290531c06c0b30bfc98189ffed4d27a_117.png)
 
-![](img/7290531c06c0b30bfc98189ffed4d27a_118.png)
 
-![](img/7290531c06c0b30bfc98189ffed4d27a_120.png)
 
 *   **反转列表**：使用 `.reverse()` 方法可以反转列表中元素的顺序。
     ```python
@@ -239,37 +168,24 @@ print(list3)
     names_list.sort()  # 对字符串列表按字母顺序排序
     ```
 
-![](img/7290531c06c0b30bfc98189ffed4d27a_122.png)
 
-![](img/7290531c06c0b30bfc98189ffed4d27a_123.png)
 
-![](img/7290531c06c0b30bfc98189ffed4d27a_125.png)
 
-![](img/7290531c06c0b30bfc98189ffed4d27a_127.png)
 
 ## 其他列表操作 ⚙️
 
-![](img/7290531c06c0b30bfc98189ffed4d27a_129.png)
 
-![](img/7290531c06c0b30bfc98189ffed4d27a_130.png)
 
-![](img/7290531c06c0b30bfc98189ffed4d27a_131.png)
 
-![](img/7290531c06c0b30bfc98189ffed4d27a_133.png)
 
 除了添加、访问和排序，列表还支持其他有用的操作。
 
-![](img/7290531c06c0b30bfc98189ffed4d27a_135.png)
 
-![](img/7290531c06c0b30bfc98189ffed4d27a_137.png)
 
 以下是一些常用的列表操作：
 
-![](img/7290531c06c0b30bfc98189ffed4d27a_139.png)
 
-![](img/7290531c06c0b30bfc98189ffed4d27a_140.png)
 
-![](img/7290531c06c0b30bfc98189ffed4d27a_142.png)
 
 *   **查找索引**：使用 `.index(元素)` 方法可以查找某个元素在列表中首次出现的索引位置。
     ```python
@@ -288,60 +204,39 @@ print(list3)
     sub_list = list3[1:3]
     ```
 
-![](img/7290531c06c0b30bfc98189ffed4d27a_144.png)
 
-![](img/7290531c06c0b30bfc98189ffed4d27a_146.png)
 
-![](img/7290531c06c0b30bfc98189ffed4d27a_147.png)
 
-![](img/7290531c06c0b30bfc98189ffed4d27a_148.png)
 
 ## 显示列表数据 📺
 
-![](img/7290531c06c0b30bfc98189ffed4d27a_150.png)
 
-![](img/7290531c06c0b30bfc98189ffed4d27a_151.png)
 
-![](img/7290531c06c0b30bfc98189ffed4d27a_152.png)
 
 到目前为止，我们一直使用 `print` 函数来显示整个列表，这是最常见的方式。
 
-![](img/7290531c06c0b30bfc98189ffed4d27a_154.png)
 
-![](img/7290531c06c0b30bfc98189ffed4d27a_156.png)
 
-![](img/7290531c06c0b30bfc98189ffed4d27a_157.png)
 
-![](img/7290531c06c0b30bfc98189ffed4d27a_159.png)
 
-![](img/7290531c06c0b30bfc98189ffed4d27a_160.png)
 
 显示列表数据有多种方式：
 
-![](img/7290531c06c0b30bfc98189ffed4d27a_162.png)
 
 *   使用 `print(列表名)` 打印整个列表。
 *   使用 `print(列表名[索引])` 打印单个元素。
 *   使用切片打印多个元素，如 `print(列表名[1:4])`。
 *   将列表元素或操作结果赋值给变量，然后打印该变量。
 
-![](img/7290531c06c0b30bfc98189ffed4d27a_164.png)
 
-![](img/7290531c06c0b30bfc98189ffed4d27a_165.png)
 
-![](img/7290531c06c0b30bfc98189ffed4d27a_166.png)
 
-![](img/7290531c06c0b30bfc98189ffed4d27a_167.png)
 
-![](img/7290531c06c0b30bfc98189ffed4d27a_168.png)
 
-![](img/7290531c06c0b30bfc98189ffed4d27a_170.png)
 
 ## 总结 📝
 
-![](img/7290531c06c0b30bfc98189ffed4d27a_172.png)
 
-![](img/7290531c06c0b30bfc98189ffed4d27a_173.png)
 
 ![](img/7290531c06c0b30bfc98189ffed4d27a_174.png)
 

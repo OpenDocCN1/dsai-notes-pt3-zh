@@ -132,7 +132,6 @@ fixed4 frag (v2f i) : SV_Target
 
 **常见错误**：忘记在像素着色器中归一化法线会导致光照错误，在网格较粗糙时尤其明显。
 
-![](img/c6fe457521319875aee7de0c486463ba_1.png)
 
 ## 效果对比
 
@@ -161,7 +160,6 @@ fixed4 frag (v2f i) : SV_Target
 
 ![](img/c6fe457521319875aee7de0c486463ba_13.png)
 
-![](img/c6fe457521319875aee7de0c486463ba_15.png)
 
 ![](img/c6fe457521319875aee7de0c486463ba_17.png)
 

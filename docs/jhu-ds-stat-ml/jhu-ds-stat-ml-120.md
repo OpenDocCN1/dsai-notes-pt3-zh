@@ -24,11 +24,9 @@ Shiny Gadgets 提供了一种在数据分析中使用 Shiny 交互功能的方�
 4.  **定义服务器逻辑 (Server)**：编写处理交互的服务器函数，使用 `input`, `output`, `session` 参数。
 5.  **运行 Gadget**：使用 `runGadget()` 函数将 UI 和 Server 部分组合并启动应用。
 
-![](img/cb5074d849a70f7e4b669c5891010ddc_1.png)
 
 现在，让我们通过代码演示来具体实现。
 
-![](img/cb5074d849a70f7e4b669c5891010ddc_3.png)
 
 ## 代码演示与解析 💻
 
@@ -76,9 +74,7 @@ myFirstGadget()
 
 执行后，RStudio 的查看器窗格会显示一个标题为 “My First Gadget” 的小应用。点击 “Done” 按钮，应用会关闭并返回到 R 提示符。
 
-![](img/cb5074d849a70f7e4b669c5891010ddc_5.png)
 
-![](img/cb5074d849a70f7e4b669c5891010ddc_7.png)
 
 这个简单的 Gadget 虽然功能有限，但它是理解 Shiny Gadgets 工作原理的重要第一步。正如你已经接触过 Shiny，许多更复杂的概念（如响应性）在深入学习 Gadgets 时会自然迁移过来。
 

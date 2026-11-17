@@ -51,7 +51,6 @@ pickTrees <- function() {
 
 ### 代码详解
 
-![](img/8dcb94df650caae8da15267e4a69cf16_1.png)
 
 以下是上述代码各部分的详细解释：
 
@@ -69,19 +68,14 @@ pickTrees <- function() {
 
 ![](img/8dcb94df650caae8da15267e4a69cf16_3.png)
 
-![](img/8dcb94df650caae8da15267e4a69cf16_4.png)
 
-![](img/8dcb94df650caae8da15267e4a69cf16_6.png)
 
 ### 命名规则的重要性
 
-![](img/8dcb94df650caae8da15267e4a69cf16_8.png)
 
-![](img/8dcb94df650caae8da15267e4a69cf16_10.png)
 
 在Shiny框架中，输入（`input`）和输出（`output`）的命名必须前后严格一致。
 
-![](img/8dcb94df650caae8da15267e4a69cf16_12.png)
 
 *   **输出命名**：UI中`plotOutput("plot", ...)`创建了一个名为`"plot"`的输出区域，因此在服务器端必须用`output$plot`来定义其内容。
 *   **输入命名**：UI中`brush = "brush"`创建了一个名为`"brush"`的输入，因此在服务器端需要通过`input$brush`来调用它。
@@ -96,26 +90,20 @@ pickTrees <- function() {
 
 ## 运行示例
 
-![](img/8dcb94df650caae8da15267e4a69cf16_20.png)
 
 现在让我们运行这个`pickTrees`函数。
 
-![](img/8dcb94df650caae8da15267e4a69cf16_21.png)
 
-![](img/8dcb94df650caae8da15267e4a69cf16_23.png)
 
 1.  执行`pickTrees()`，会弹出一个窗口显示散点图。
 2.  在图形上按住鼠标左键并拖拽，可以绘制一个矩形选择框。你可以移动或调整这个框。
 3.  选择感兴趣的数据点后，点击窗口顶部的 **“Done”** 按钮。
 4.  小工具窗口关闭，函数将返回一个包含被选中数据点的数据框。你可以将其赋值给一个变量（例如`selected_trees <- pickTrees()`）以供后续分析使用。返回的数据框保留了原始`trees`数据框的行号，方便溯源。
 
-![](img/8dcb94df650caae8da15267e4a69cf16_25.png)
 
-![](img/8dcb94df650caae8da15267e4a69cf16_27.png)
 
 这个工具在数据探索中非常有用，例如，快速识别并提取图表中的离群点或特定集群的数据。
 
-![](img/8dcb94df650caae8da15267e4a69cf16_28.png)
 
 ![](img/8dcb94df650caae8da15267e4a69cf16_30.png)
 
@@ -123,7 +111,6 @@ pickTrees <- function() {
 
 ---
 
-![](img/8dcb94df650caae8da15267e4a69cf16_34.png)
 
 ## 总结
 

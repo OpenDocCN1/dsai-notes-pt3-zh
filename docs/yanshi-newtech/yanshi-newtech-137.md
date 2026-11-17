@@ -8,7 +8,6 @@
 
 ## FAST算法概述
 
-![](img/ea5e57f2113ebcdf0322b4e0e3cf49df_2.png)
 
 FAST是“Features from Accelerated Segment Test”的缩写。它是一种基于模板的角点检测方案，因此主要用于检测角点。角点可以被理解为在固定尺度下的兴趣点。
 
@@ -30,7 +29,6 @@ FAST特征检测过程主要包含以下几个步骤：像素选择、Bresenham�
 2.  **Bresenham圆计算**：围绕中心像素，在一个圆形模板（基于Bresenham圆）上选取一系列像素进行比较。
 3.  **阈值比较**：将圆形模板上的像素与中心像素的强度值进行比较。
 
-![](img/ea5e57f2113ebcdf0322b4e0e3cf49df_4.png)
 
 ---
 
@@ -71,6 +69,5 @@ FAST描述符的输出是一个相邻的位向量形式。需要再次强调的�
 
 以下是我使用并推荐给您的参考资料。
 
-![](img/ea5e57f2113ebcdf0322b4e0e3cf49df_8.png)
 
 ![](img/ea5e57f2113ebcdf0322b4e0e3cf49df_8.png)

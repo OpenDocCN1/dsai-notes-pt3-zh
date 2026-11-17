@@ -32,15 +32,12 @@
 
 KL散度的定义如下：
 
-![](img/0bff30ff5b173128d4dd5321947dc20b_1.png)
 
 **D_KL[ Q(Z_i) || P(Z_i | X_i, θ) ] = ∫ Q(Z_i) * log[ Q(Z_i) / P(Z_i | X_i, θ) ] dZ_i**
 
-![](img/0bff30ff5b173128d4dd5321947dc20b_3.png)
 
 如果我们对这个对数项进行简化，将对数除法转化为对数减法，并根据方程5（贝叶斯规则）替换 **P(Z_i | X_i, θ)**，我们可以得到：
 
-![](img/0bff30ff5b173128d4dd5321947dc20b_5.png)
 
 **D_KL[ Q(Z_i) || P(Z_i | X_i, θ) ] = ∫ Q(Z_i) * log Q(Z_i) dZ_i - ∫ Q(Z_i) * log P(X_i, Z_i | θ) dZ_i + log P(X_i | θ)**
 
@@ -50,9 +47,7 @@ KL散度的定义如下：
 
 现在，我们定义证据下界：
 
-![](img/0bff30ff5b173128d4dd5321947dc20b_7.png)
 
-![](img/0bff30ff5b173128d4dd5321947dc20b_9.png)
 
 **ELBO = ∫ Q(Z_i) * log [ P(X_i, Z_i | θ) / Q(Z_i) ] dZ_i**
 
@@ -64,9 +59,7 @@ KL散度的定义如下：
 
 我们可以用下图来可视化这个关系：整个矩形代表数据的对数似然 **log P(X_i | θ)**，它被分解为ELBO（蓝色部分）和KL散度（橙色部分）之和。
 
-![](img/0bff30ff5b173128d4dd5321947dc20b_11.png)
 
-![](img/0bff30ff5b173128d4dd5321947dc20b_13.png)
 
 ## 总结
 

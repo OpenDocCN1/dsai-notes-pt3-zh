@@ -1,6 +1,5 @@
 #  168：Python打包技术入门 🐍📦
 
-![](img/b903ed55e639d9e6e8e5e4486d3e7d4b_0.png)
 
 ![](img/b903ed55e639d9e6e8e5e4486d3e7d4b_1.png)
 

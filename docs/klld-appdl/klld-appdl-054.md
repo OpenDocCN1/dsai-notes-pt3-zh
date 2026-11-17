@@ -1,337 +1,197 @@
 # 54：L27.2 - 有限样本表示性 🧠
 
-![](img/fea6d362cc658db97c8027ebbe363c85_0.png)
 
-![](img/fea6d362cc658db97c8027ebbe363c85_2.png)
 
-![](img/fea6d362cc658db97c8027ebbe363c85_4.png)
 
-![](img/fea6d362cc658db97c8027ebbe363c85_6.png)
 
-![](img/fea6d362cc658db97c8027ebbe363c85_8.png)
 
-![](img/fea6d362cc658db97c8027ebbe363c85_10.png)
 
-![](img/fea6d362cc658db97c8027ebbe363c85_12.png)
 
-![](img/fea6d362cc658db97c8027ebbe363c85_14.png)
 
-![](img/fea6d362cc658db97c8027ebbe363c85_16.png)
 
-![](img/fea6d362cc658db97c8027ebbe363c85_18.png)
 
 在本节课中，我们将要学习一篇名为《理解深度学习需要重新思考泛化》的论文。我们将探讨神经网络为何能在训练数据上过拟合，却依然在测试数据上表现良好，即所谓的“泛化”能力。我们将通过一系列实验和分析，来理解泛化误差的来源，并检验一些常见的假设。
 
-![](img/fea6d362cc658db97c8027ebbe363c85_20.png)
 
-![](img/fea6d362cc658db97c8027ebbe363c85_22.png)
 
-![](img/fea6d362cc658db97c8027ebbe363c85_24.png)
 
-![](img/fea6d362cc658db97c8027ebbe363c85_26.png)
 
-![](img/fea6d362cc658db97c8027ebbe363c85_28.png)
 
 ## 什么是泛化误差？ 🤔
 
-![](img/fea6d362cc658db97c8027ebbe363c85_30.png)
 
-![](img/fea6d362cc658db97c8027ebbe363c85_32.png)
 
-![](img/fea6d362cc658db97c8027ebbe363c85_34.png)
 
-![](img/fea6d362cc658db97c8027ebbe363c85_36.png)
 
-![](img/fea6d362cc658db97c8027ebbe363c85_38.png)
 
 上一节我们介绍了神经网络预测的可视化。本节中，我们来看看泛化误差的定义。
 
-![](img/fea6d362cc658db97c8027ebbe363c85_40.png)
 
-![](img/fea6d362cc658db97c8027ebbe363c85_42.png)
 
-![](img/fea6d362cc658db97c8027ebbe363c85_44.png)
 
-![](img/fea6d362cc658db97c8027ebbe363c85_46.png)
 
 你会在训练数据集上训练你的网络，并在那里产生一些误差。但你并不关心训练数据上的表现，你希望你的算法能在实际生产环境中使用。因此，你首先需要在测试数据上评估它。通常，你在训练数据上产生的误差量与在测试数据上产生的误差量之间存在差异。这个差异就是**泛化误差**。
 
-![](img/fea6d362cc658db97c8027ebbe363c85_48.png)
 
-![](img/fea6d362cc658db97c8027ebbe363c85_50.png)
 
-![](img/fea6d362cc658db97c8027ebbe363c85_52.png)
 
-![](img/fea6d362cc658db97c8027ebbe363c85_54.png)
 
-![](img/fea6d362cc658db97c8027ebbe363c85_56.png)
 
-![](img/fea6d362cc658db97c8027ebbe363c85_58.png)
 
 所以，核心问题是：为什么神经网络能够泛化？你的网络中有大量参数，你在训练数据上训练它，为什么它不会过拟合？是什么原因让它能够泛化到测试数据？这仍然是一个开放性问题，而这篇论文试图在一定程度上回答它，或者至少为回答这个问题指明方向，甚至可能引出一些新的问题。
 
-![](img/fea6d362cc658db97c8027ebbe363c85_60.png)
 
-![](img/fea6d362cc658db97c8027ebbe363c85_62.png)
 
-![](img/fea6d362cc658db97c8027ebbe363c85_64.png)
 
-![](img/fea6d362cc658db97c8027ebbe363c85_66.png)
 
-![](img/fea6d362cc658db97c8027ebbe363c85_68.png)
 
 ## 随机化测试 🎲
 
-![](img/fea6d362cc658db97c8027ebbe363c85_70.png)
 
-![](img/fea6d362cc658db97c8027ebbe363c85_72.png)
 
-![](img/fea6d362cc658db97c8027ebbe363c85_74.png)
 
-![](img/fea6d362cc658db97c8027ebbe363c85_76.png)
 
-![](img/fea6d362cc658db97c8027ebbe363c85_78.png)
 
 以下是理解泛化问题的第一个关键实验：随机化测试。
 
-![](img/fea6d362cc658db97c8027ebbe363c85_80.png)
 
-![](img/fea6d362cc658db97c8027ebbe363c85_82.png)
 
-![](img/fea6d362cc658db97c8027ebbe363c85_84.png)
 
-![](img/fea6d362cc658db97c8027ebbe363c85_86.png)
 
-![](img/fea6d362cc658db97c8027ebbe363c85_88.png)
 
 观察发现，深度神经网络可以轻易地拟合随机标签。这意味着它们足够强大，甚至能对随机标签过拟合。
 
-![](img/fea6d362cc658db97c8027ebbe363c85_90.png)
 
-![](img/fea6d362cc658db97c8027ebbe363c85_92.png)
 
-![](img/fea6d362cc658db97c8027ebbe363c85_94.png)
 
-![](img/fea6d362cc658db97c8027ebbe363c85_96.png)
 
-![](img/fea6d362cc658db97c8027ebbe363c85_98.png)
 
 让我们以ImageNet为例。每张图像都有一个标签。现在，我们用随机的东西替换这些标签。标签原本是从1到1000，现在只需用随机数替换它们，然后用这些随机标签作为训练数据来训练你的网络。如果这样做，你的网络将毫无泛化的希望。例如，如果你有10个类别，随机化了标签，并且你的网络在训练数据上过拟合了，那么当你把它用于测试时，它的表现会和随机猜测一样糟糕。
 
-![](img/fea6d362cc658db97c8027ebbe363c85_100.png)
 
-![](img/fea6d362cc658db97c8027ebbe363c85_102.png)
 
-![](img/fea6d362cc658db97c8027ebbe363c85_104.png)
 
-![](img/fea6d362cc658db97c8027ebbe363c85_106.png)
 
-![](img/fea6d362cc658db97c8027ebbe363c85_108.png)
 
 一个可能的疑问是：网络是否仍然在学习图像中的模式，只是叫错了名字？例如，如果你随机地将“狗”的标签改为“电脑”，网络是否仍然能找到所有的狗，只是把它们都称为“电脑”？但论文指出，这里的“随机”意味着每个训练样本都有自己独立的随机标签。网络可以达到100%的训练准确率，但每个训练样本对应的都是其自己独有的随机标签。
 
-![](img/fea6d362cc658db97c8027ebbe363c85_110.png)
 
-![](img/fea6d362cc658db97c8027ebbe363c85_112.png)
 
-![](img/fea6d362cc658db97c8027ebbe363c85_114.png)
 
-![](img/fea6d362cc658db97c8027ebbe363c85_116.png)
 
-![](img/fea6d362cc658db97c8027ebbe363c85_118.png)
 
 现在让我们看看会发生什么。你会训练几千步，所有的损失平均值都会趋于零。这意味着你在随机标签上过拟合了。
 
-![](img/fea6d362cc658db97c8027ebbe363c85_120.png)
 
-![](img/fea6d362cc658db97c8027ebbe363c85_122.png)
 
-![](img/fea6d362cc658db97c8027ebbe363c85_124.png)
 
-![](img/fea6d362cc658db97c8027ebbe363c85_126.png)
 
-![](img/fea6d362cc658db97c8027ebbe363c85_128.png)
 
-![](img/fea6d362cc658db97c8027ebbe363c85_130.png)
 
-![](img/fea6d362cc658db97c8027ebbe363c85_132.png)
 
 一个相关的问题是：如何确保随机标签在图像中诱导出的是随机模式？例如，也许图像主体总是在画面中央。论文通过测试**随机像素**（即打乱像素位置）和**高斯噪声像素**（完全随机的图像）来回答这个问题。真正的测试目标是理解泛化：训练和测试之间存在差异。关键发现是，在随机标签上，你的网络足够强大到可以过拟合。
 
-![](img/fea6d362cc658db97c8027ebbe363c85_134.png)
 
-![](img/fea6d362cc658db97c8027ebbe363c85_136.png)
 
-![](img/fea6d362cc658db97c8027ebbe363c85_138.png)
 
-![](img/fea6d362cc658db97c8027ebbe363c85_140.png)
 
-![](img/fea6d362cc658db97c8027ebbe363c85_142.png)
 
-![](img/fea6d362cc658db97c8027ebbe363c85_144.png)
 
 那么问题来了：如果网络能过拟合随机标签，它当然也能过拟合非随机标签。但为什么在测试时它却能泛化呢？让我们继续探究。
 
-![](img/fea6d362cc658db97c8027ebbe363c85_146.png)
 
-![](img/fea6d362cc658db97c8027ebbe363c85_148.png)
 
-![](img/fea6d362cc658db97c8027ebbe363c85_150.png)
 
-![](img/fea6d362cc658db97c8027ebbe363c85_152.png)
 
-![](img/fea6d362cc658db97c8027ebbe363c85_154.png)
 
-![](img/fea6d362cc658db97c8027ebbe363c85_156.png)
 
 ## 假设检验：网络结构是正则化器吗？ 🏗️
 
-![](img/fea6d362cc658db97c8027ebbe363c85_158.png)
 
-![](img/fea6d362cc658db97c8027ebbe363c85_160.png)
 
-![](img/fea6d362cc658db97c8027ebbe363c85_162.png)
 
-![](img/fea6d362cc658db97c8027ebbe363c85_164.png)
 
-![](img/fea6d362cc658db97c8027ebbe363c85_166.png)
 
-![](img/fea6d362cc658db97c8027ebbe363c85_168.png)
 
 上一节我们看到网络能过拟合随机数据。本节中，我们检验第一个假设：神经网络结构本身是否具有特殊的正则化特性，从而促使其泛化？
 
-![](img/fea6d362cc658db97c8027ebbe363c85_170.png)
 
-![](img/fea6d362cc658db97c8027ebbe363c85_172.png)
 
-![](img/fea6d362cc658db97c8027ebbe363c85_174.png)
 
-![](img/fea6d362cc658db97c8027ebbe363c85_176.png)
 
-![](img/fea6d362cc658db97c8027ebbe363c85_178.png)
 
 我们首先尝试**拒绝**（或接受）的假设是：神经网络结构本身有特殊之处，使其成为有效的正则化器。实验表明，无论是真实标签还是随机标签，网络最终都能使损失降为零。只是拟合随机标签需要更长的收敛时间。
 
-![](img/fea6d362cc658db97c8027ebbe363c85_180.png)
 
-![](img/fea6d362cc658db97c8027ebbe363c85_182.png)
 
-![](img/fea6d362cc658db97c8027ebbe363c85_184.png)
 
-![](img/fea6d362cc658db97c8027ebbe363c85_186.png)
 
-![](img/fea6d362cc658db97c8027ebbe363c85_188.png)
 
-![](img/fea6d362cc658db97c8027ebbe363c85_190.png)
 
 我们可以让实验更复杂。例如，你可以打乱图像的像素位置，网络仍然能够过拟合。你甚至可以使用高斯分布的随机噪声作为像素，网络依然能够过拟合。实验通常使用CIFAR-10数据集，并观察不同网络结构（如Inception、AlexNet或多层感知机）的表现。
 
-![](img/fea6d362cc658db97c8027ebbe363c85_192.png)
 
-![](img/fea6d362cc658db97c8027ebbe363c85_194.png)
 
-![](img/fea6d362cc658db97c8027ebbe363c85_196.png)
 
-![](img/fea6d362cc658db97c8027ebbe363c85_198.png)
 
-![](img/fea6d362cc658db97c8027ebbe363c85_200.png)
 
-![](img/fea6d362cc658db97c8027ebbe363c85_202.png)
 
 以下是关键观察结果：
 *   网络结构本身**不是**一个充分的正则化器。因为它仍然会过拟合。
 *   随着数据损坏程度增加（如使用随机像素），过拟合所需时间更长。
 *   测试误差方面，当训练数据和测试数据之间几乎没有相关性时，网络的表现会像随机猜测一样糟糕。对于10分类问题，随机猜测的错误率是90%。
 
-![](img/fea6d362cc658db97c8027ebbe363c85_204.png)
 
-![](img/fea6d362cc658db97c8027ebbe363c85_206.png)
 
-![](img/fea6d362cc658db97c8027ebbe363c85_208.png)
 
-![](img/fea6d362cc658db97c8027ebbe363c85_210.png)
 
-![](img/fea6d362cc658db97c8027ebbe363c85_212.png)
 
 ## 显式正则化的作用 📉
 
-![](img/fea6d362cc658db97c8027ebbe363c85_214.png)
 
-![](img/fea6d362cc658db97c8027ebbe363c85_216.png)
 
-![](img/fea6d362cc658db97c8027ebbe363c85_218.png)
 
-![](img/fea6d362cc658db97c8027ebbe363c85_220.png)
 
-![](img/fea6d362cc658db97c8027ebbe363c85_222.png)
 
-![](img/fea6d362cc658db97c8027ebbe363c85_224.png)
 
 既然网络结构本身不足以保证泛化，那么常用的显式正则化技术呢？例如，我们通常通过早停、Dropout等技术来主动防止过拟合。
 
-![](img/fea6d362cc658db97c8027ebbe363c85_226.png)
 
-![](img/fea6d362cc658db97c8027ebbe363c85_228.png)
 
-![](img/fea6d362cc658db97c8027ebbe363c85_230.png)
 
-![](img/fea6d362cc658db97c8027ebbe363c85_232.png)
 
-![](img/fea6d362cc658db97c8027ebbe363c85_234.png)
 
 观察发现，显式正则化**可能改善**泛化性能，但它对于控制泛化误差来说**既非必要也非充分**。它有帮助，但并不足够，而且不是必需的。
 
-![](img/fea6d362cc658db97c8027ebbe363c85_236.png)
 
-![](img/fea6d362cc658db97c8027ebbe363c85_238.png)
 
-![](img/fea6d362cc658db97c8027ebbe363c85_240.png)
 
-![](img/fea6d362cc658db97c8027ebbe363c85_242.png)
 
-![](img/fea6d362cc658db97c8027ebbe363c85_244.png)
 
-![](img/fea6d362cc658db97c8027ebbe363c85_246.png)
 
 我们常用的显式正则化技术包括：
 *   **数据增强**：如图像随机裁剪。
 *   **权重衰减**：本质上是权重的L2正则化。
 
-![](img/fea6d362cc658db97c8027ebbe363c85_248.png)
 
-![](img/fea6d362cc658db97c8027ebbe363c85_250.png)
 
-![](img/fea6d362cc658db97c8027ebbe363c85_252.png)
 
-![](img/fea6d362cc658db97c8027ebbe363c85_254.png)
 
-![](img/fea6d362cc658db97c8027ebbe363c85_256.png)
 
-![](img/fea6d362cc658db97c8027ebbe363c85_258.png)
 
 在大多数情况下，即使使用这些技术，你仍然能在训练集上达到接近100%的准确率。但在测试准确率上，特别是在拟合随机标签的任务中，网络的表现仍然和随机猜测一样差。这就是“既非必要也非充分”的含义：并非必要，因为不用正则化网络也能表现得不错；并非充分，因为即使用了所有正则化，网络仍可能过拟合随机标签，导致最差的泛化误差。
 
-![](img/fea6d362cc658db97c8027ebbe363c85_260.png)
 
-![](img/fea6d362cc658db97c8027ebbe363c85_262.png)
 
-![](img/fea6d362cc658db97c8027ebbe363c85_264.png)
 
-![](img/fea6d362cc658db97c8027ebbe363c85_266.png)
 
-![](img/fea6d362cc658db97c8027ebbe363c85_268.png)
 
 另一种观察角度是在ImageNet和CIFAR-10上查看准确率。数据显示，正则化确实有助于提升性能。没有正则化时，训练和测试准确率之间的差距（泛化误差）较小；加入数据增强后，这个差距变大了（因为训练准确率可能变化，但测试准确率提升的模式更复杂，需结合论文图表理解）。权重衰减的帮助则不那么明显。
 
-![](img/fea6d362cc658db97c8027ebbe363c85_270.png)
 
-![](img/fea6d362cc658db97c8027ebbe363c85_272.png)
 
-![](img/fea6d362cc658db97c8027ebbe363c85_274.png)
 
-![](img/fea6d362cc658db97c8027ebbe363c85_276.png)
 
-![](img/fea6d362cc658db97c8027ebbe363c85_278.png)
 
 此外，我们还有**隐式正则化**，例如早停。这似乎更为有效，即在验证误差开始上升时停止训练。但它仍然不足以完全解释泛化现象。
 

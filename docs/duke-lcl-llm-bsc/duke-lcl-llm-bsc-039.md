@@ -1,6 +1,5 @@
 # 39：负外部性
 
-![](img/cd8b9ebb65119cc650c6deb7c7bcaf63_0.png)
 
 ![](img/cd8b9ebb65119cc650c6deb7c7bcaf63_0.png)
 
@@ -53,7 +52,6 @@
 
 ---
 
-![](img/cd8b9ebb65119cc650c6deb7c7bcaf63_2.png)
 
 ![](img/cd8b9ebb65119cc650c6deb7c7bcaf63_2.png)
 

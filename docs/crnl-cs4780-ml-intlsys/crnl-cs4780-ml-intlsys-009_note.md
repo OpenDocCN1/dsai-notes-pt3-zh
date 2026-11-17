@@ -15,63 +15,40 @@
 *   **特征加权**：团队“Steve Nash and Carl Sagan”为每个特征计算了不同的权重，并在计算距离时应用这些权重。他们尝试了不同的加权函数，例如高斯加权。这实质上是**度量学习**的第一步，即通过学习一个优化的距离度量来提升K近邻分类器的性能。
 *   **数据增强**：团队“Ha Ha Ha Witty Kitty”采用了另一种完全不同的方法。他们通过轻微修改训练样本（例如，将数字图像稍微平移或旋转）来人工增加训练数据量，同时确保标签不变。这种方法被称为**数据增强**，在实践中被广泛使用以提升模型鲁棒性。
 
-![](img/ce26f9b99f8d4ccbdd3fe6d02ad05e71_1.png)
 
-![](img/ce26f9b99f8d4ccbdd3fe6d02ad05e71_2.png)
 
-![](img/ce26f9b99f8d4ccbdd3fe6d02ad05e71_3.png)
 
 这些方法可以结合使用，并且都是对分类器合理且有效的改进。
 
-![](img/ce26f9b99f8d4ccbdd3fe6d02ad05e71_5.png)
 
-![](img/ce26f9b99f8d4ccbdd3fe6d02ad05e71_6.png)
 
-![](img/ce26f9b99f8d4ccbdd3fe6d02ad05e71_8.png)
 
-![](img/ce26f9b99f8d4ccbdd3fe6d02ad05e71_10.png)
 
-![](img/ce26f9b99f8d4ccbdd3fe6d02ad05e71_12.png)
 
 此外，下周将有三场关于机器学习的精彩讲座，涉及机器人学、医疗保健和核心机器学习等领域，详细信息将发布在Piazza上。
 
-![](img/ce26f9b99f8d4ccbdd3fe6d02ad05e71_14.png)
 
-![](img/ce26f9b99f8d4ccbdd3fe6d02ad05e71_15.png)
 
-![](img/ce26f9b99f8d4ccbdd3fe6d02ad05e71_17.png)
 
-![](img/ce26f9b99f8d4ccbdd3fe6d02ad05e71_19.png)
 
-![](img/ce26f9b99f8d4ccbdd3fe6d02ad05e71_21.png)
 
-![](img/ce26f9b99f8d4ccbdd3fe6d02ad05e71_22.png)
 
 ---
 
-![](img/ce26f9b99f8d4ccbdd3fe6d02ad05e71_24.png)
 
-![](img/ce26f9b99f8d4ccbdd3fe6d02ad05e71_26.png)
 
 ## 朴素贝叶斯实例演练 🧮
 
-![](img/ce26f9b99f8d4ccbdd3fe6d02ad05e71_28.png)
 
-![](img/ce26f9b99f8d4ccbdd3fe6d02ad05e71_30.png)
 
-![](img/ce26f9b99f8d4ccbdd3fe6d02ad05e71_32.png)
 
-![](img/ce26f9b99f8d4ccbdd3fe6d02ad05e71_34.png)
 
 现在，我们通过一个具体例子来演练朴素贝叶斯分类器的计算过程。假设苏西（Susie）根据历史约会数据训练一个朴素贝叶斯模型，来判断约会对象是“好人”还是“坏人”。数据特征包括是否穿披风（C）、是否戴面具（M）以及是否把内裤外穿（U）。
 
-![](img/ce26f9b99f8d4ccbdd3fe6d02ad05e71_36.png)
 
-![](img/ce26f9b99f8d4ccbdd3fe6d02ad05e71_38.png)
 
 首先，我们根据提供的训练数据表进行计算。
 
-![](img/ce26f9b99f8d4ccbdd3fe6d02ad05e71_40.png)
 
 **1. 先验概率 P(Y)**
 在不考虑任何特征的情况下，一个人是“好人”的先验概率是多少？根据数据表，Y的分布是均匀的。因此：
@@ -89,7 +66,6 @@
 `P(C=无披风 | Y=好人) = (1 + 1) / (3 + 2) = 2/5`
 这里，分子加1是因为观察到1次“无披风”，分母加2是因为为“披风”和“无披风”两个类别各加了1次虚拟计数。
 
-![](img/ce26f9b99f8d4ccbdd3fe6d02ad05e71_42.png)
 
 **4. 进行预测推断**
 现在，苏西遇到一个约会对象，他没有穿披风（C=无），也没有戴面具（M=无）。我们需要计算在此条件下，他是好人的后验概率 `P(Y=好人 | C=无， M=无)`。
@@ -103,106 +79,69 @@
 分母 `P(C, M)` 可以通过全概率公式计算：
 `P(C, M) = P(C, M | Y=好人)P(Y=好人) + P(C, M | Y=坏人)P(Y=坏人)`
 
-![](img/ce26f9b99f8d4ccbdd3fe6d02ad05e71_44.png)
 
-![](img/ce26f9b99f8d4ccbdd3fe6d02ad05e71_46.png)
 
-![](img/ce26f9b99f8d4ccbdd3fe6d02ad05e71_47.png)
 
-![](img/ce26f9b99f8d4ccbdd3fe6d02ad05e71_49.png)
 
-![](img/ce26f9b99f8d4ccbdd3fe6d02ad05e71_51.png)
 
-![](img/ce26f9b99f8d4ccbdd3fe6d02ad05e71_53.png)
 
 将具体数值（使用未平滑的1/3估计值）和先验概率1/2代入公式：
 `P(Y=好人 | C=无， M=无) = ( (1/3)*(1/3)*(1/2) ) / ( (1/3)*(1/3)*(1/2) + (2/3)*(2/3)*(1/2) ) = (1/18) / (1/18 + 4/18) = 1/5`
 
-![](img/ce26f9b99f8d4ccbdd3fe6d02ad05e71_55.png)
 
-![](img/ce26f9b99f8d4ccbdd3fe6d02ad05e71_57.png)
 
-![](img/ce26f9b99f8d4ccbdd3fe6d02ad05e71_58.png)
 
-![](img/ce26f9b99f8d4ccbdd3fe6d02ad05e71_59.png)
 
 因此，苏西的朴素贝叶斯分类器预测此人是好人的概率为 **1/5**。
 
-![](img/ce26f9b99f8d4ccbdd3fe6d02ad05e71_61.png)
 
-![](img/ce26f9b99f8d4ccbdd3fe6d02ad05e71_62.png)
 
 **关于数据代表性的讨论**
 一个关键点是，机器学习模型假设训练数据和测试数据来自同一分布。如果苏西的训练数据全是超级英雄，而她实际约会的是普通人，那么模型可能不适用。这是机器学习普遍存在的问题，而非朴素贝叶斯特有的缺陷。
 
-![](img/ce26f9b99f8d4ccbdd3fe6d02ad05e71_64.png)
 
-![](img/ce26f9b99f8d4ccbdd3fe6d02ad05e71_66.png)
 
-![](img/ce26f9b99f8d4ccbdd3fe6d02ad05e71_68.png)
 
 ---
 
-![](img/ce26f9b99f8d4ccbdd3fe6d02ad05e71_69.png)
 
-![](img/ce26f9b99f8d4ccbdd3fe6d02ad05e71_71.png)
 
 ## 深入理解朴素贝叶斯假设 🤔
 
-![](img/ce26f9b99f8d4ccbdd3fe6d02ad05e71_73.png)
 
-![](img/ce26f9b99f8d4ccbdd3fe6d02ad05e71_74.png)
 
-![](img/ce26f9b99f8d4ccbdd3fe6d02ad05e71_76.png)
 
 上一节课末尾，有几个关于朴素贝叶斯核心假设的重要问题。
 
-![](img/ce26f9b99f8d4ccbdd3fe6d02ad05e71_78.png)
 
-![](img/ce26f9b99f8d4ccbdd3fe6d02ad05e71_79.png)
 
-![](img/ce26f9b99f8d4ccbdd3fe6d02ad05e71_81.png)
 
 **1. 如果条件独立假设成立，朴素贝叶斯是最优分类器吗？**
 是的。朴素贝叶斯所做的唯一“近似”就是条件独立假设。如果数据确实满足该假设，那么朴素贝叶斯等价于贝叶斯最优分类器，能够做出理论上最准确的预测。
 
-![](img/ce26f9b99f8d4ccbdd3fe6d02ad05e71_83.png)
 
-![](img/ce26f9b99f8d4ccbdd3fe6d02ad05e71_84.png)
 
-![](img/ce26f9b99f8d4ccbdd3fe6d02ad05e71_86.png)
 
-![](img/ce26f9b99f8d4ccbdd3fe6d02ad05e71_88.png)
 
-![](img/ce26f9b99f8d4ccbdd3fe6d02ad05e71_89.png)
 
 **2. 条件独立假设何时会失效？能否举例说明？**
 该假设经常不成立。分解联合概率 `P(X|Y)` 为 `∏ P(X_α|Y)` 可能导致对真实概率的高估或低估。
 
-![](img/ce26f9b99f8d4ccbdd3fe6d02ad05e71_91.png)
 
-![](img/ce26f9b99f8d4ccbdd3fe6d02ad05e71_92.png)
 
-![](img/ce26f9b99f8d4ccbdd3fe6d02ad05e71_94.png)
 
-![](img/ce26f9b99f8d4ccbdd3fe6d02ad05e71_95.png)
 
-![](img/ce26f9b99f8d4ccbdd3fe6d02ad05e71_96.png)
 
 以下是几个例子：
 
 *   **高估的例子（特征互斥）**：在垃圾邮件分类中，“伟哥”和“尼日利亚”这两个词单独出现在垃圾邮件中的概率都很高。但同一封垃圾邮件同时包含这两个词的概率极低（因为它们是不同类型的垃圾邮件）。朴素贝叶斯会将其概率计算为 `P(伟哥|垃圾邮件) * P(尼日利亚|垃圾邮件)`，从而**高估**了同时出现的概率。
 *   **低估的例子（特征强相关）**：在扑克牌中，判断一手牌是否为“满堂红”。定义两个特征：“是否有三张K”和“是否有两张Q”。如果两个特征同时为真，则一定是满堂红，概率为1。但朴素贝叶斯会将其计算为两个独立概率的乘积，可能**低估**了这个概率。
 
-![](img/ce26f9b99f8d4ccbdd3fe6d02ad05e71_98.png)
 
-![](img/ce26f9b99f8d4ccbdd3fe6d02ad05e71_100.png)
 
-![](img/ce26f9b99f8d4ccbdd3fe6d02ad05e71_101.png)
 
 这些例子表明，在实际应用中，需要警惕特征间存在强依赖关系的情况。
 
-![](img/ce26f9b99f8d4ccbdd3fe6d02ad05e71_103.png)
 
 ---
 
@@ -223,7 +162,6 @@
 **2. 多项分布（Text Data - 文本数据）**
 这是文本分类（如垃圾邮件过滤）中最常用的变体。我们将一封有M个词的邮件，看作从某个“词袋”分布中重复抽样M次（每次独立）的结果。
 
-![](img/ce26f9b99f8d4ccbdd3fe6d02ad05e71_105.png)
 
 *   **模型**：特征向量 `X` 的维度等于词汇表大小V。`X_α` 表示词汇表中第α个词在邮件中出现的**次数**。所有特征值之和等于邮件总词数M。
 *   **概率计算**：给定邮件类别c，生成这封邮件的概率为：

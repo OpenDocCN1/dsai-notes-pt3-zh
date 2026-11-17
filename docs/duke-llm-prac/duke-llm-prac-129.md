@@ -1,6 +1,5 @@
 # 大型语言模型实践：P129：52_03_01_引言
 
-![](img/99d7dcde6e33bfdc1fe0f5d3322a0180_0.png)
 
 ![](img/99d7dcde6e33bfdc1fe0f5d3322a0180_0.png)
 

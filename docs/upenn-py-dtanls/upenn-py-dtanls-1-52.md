@@ -8,7 +8,6 @@
 
 散点图主要用于观察变量之间的关系，尤其是当它们呈非线性关系或数据中存在聚类时。
 
-![](img/c036f1e45022d35d76e27c3fc8b7c16f_1.png)
 
 ## 创建示例数据 📝
 
@@ -32,17 +31,13 @@ hour_score_df = pd.DataFrame(data)
 
 为了了解这两组数值之间的关系，我们将创建一个散点图。我们将使用 Seaborn 库的 `lmplot` 函数来完成这个任务。
 
-![](img/c036f1e45022d35d76e27c3fc8b7c16f_3.png)
 
 以下是绘制散点图的完整代码：
 
-![](img/c036f1e45022d35d76e27c3fc8b7c16f_5.png)
 
 
-![](img/c036f1e45022d35d76e27c3fc8b7c16f_7.png)
 
 
-![](img/c036f1e45022d35d76e27c3fc8b7c16f_9.png)
 
 ```python
 import seaborn as sns
@@ -66,7 +61,6 @@ plt.show()
 
 此外，请注意 `lmplot` 在散点图中放置的回归线。这条线描绘了散点图中两个变量之间的关系。在本例中，它展示了学习小时数与考试成绩之间的关系。
 
-![](img/c036f1e45022d35d76e27c3fc8b7c16f_11.png)
 
 ## 总结 📚
 

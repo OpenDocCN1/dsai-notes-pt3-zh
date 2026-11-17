@@ -45,9 +45,7 @@ Hugging Face Hub 的核心始于一个用户账户。首先，你需要登录并
 
 总的来说，数据集是 Hugging Face 平台最有用的功能之一。你同样可以上传自己的数据集到平台。
 
-![](img/a90bf0e56f62722e1988f318450cdc1e_2.png)
 
-![](img/a90bf0e56f62722e1988f318450cdc1e_3.png)
 
 ## 应用空间（Spaces） 🎨
 

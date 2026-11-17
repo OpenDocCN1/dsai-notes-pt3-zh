@@ -33,7 +33,6 @@ ptrees <- function() {
 
 ### 定义服务器逻辑
 
-![](img/5b2e8162dbef133442e7b80812e5e498_1.png)
 
 接下来，我们定义服务器逻辑，处理绘图渲染和刷选事件。
 
@@ -59,15 +58,11 @@ ptrees <- function() {
 }
 ```
 
-![](img/5b2e8162dbef133442e7b80812e5e498_5.png)
 
-![](img/5b2e8162dbef133442e7b80812e5e498_7.png)
 
-![](img/5b2e8162dbef133442e7b80812e5e498_9.png)
 
 在服务器函数中，`output$plot` 使用 `renderPlot` 渲染 `trees` 数据集的散点图。`observeEvent` 监听 `input$done` 事件（当用户点击“完成”时触发）。事件触发后，`stopApp` 函数会停止应用并返回 `brushedPoints` 函数的结果。`brushedPoints` 根据刷选区域（`input$brush`）和指定的 X、Y 变量（`xvar = "Girth"`, `yvar = "Volume"`）从原始数据集中提取对应的数据点。
 
-![](img/5b2e8162dbef133442e7b80812e5e498_11.png)
 
 ## 运行与测试应用
 
@@ -83,9 +78,7 @@ ptrees <- function() {
 
 在绘图区域，您可以按住鼠标左键并拖拽来绘制一个矩形选择框。框选后，可以移动或调整这个矩形。点击“Done”按钮后，应用将关闭，并在 R 控制台中返回所选数据点构成的数据框。
 
-![](img/5b2e8162dbef133442e7b80812e5e498_19.png)
 
-![](img/5b2e8162dbef133442e7b80812e5e498_21.png)
 
 例如，您可以将输出赋值给一个变量：
 ```r
@@ -93,13 +86,10 @@ selected_trees <- ptrees()
 ```
 之后，您可以查看 `selected_trees` 的内容，其中包含了所选数据点的原始行信息，便于您追溯和分析。
 
-![](img/5b2e8162dbef133442e7b80812e5e498_23.png)
 
 ## 关键概念与注意事项
 
-![](img/5b2e8162dbef133442e7b80812e5e498_25.png)
 
-![](img/5b2e8162dbef133442e7b80812e5e498_26.png)
 
 ![](img/5b2e8162dbef133442e7b80812e5e498_28.png)
 
@@ -107,7 +97,6 @@ selected_trees <- ptrees()
 
 以下是构建此类应用时需要注意的几个关键点：
 
-![](img/5b2e8162dbef133442e7b80812e5e498_32.png)
 
 *   **命名一致性**：UI 中定义的输出（如 `plotOutput("plot", ...)`）和输入（如 `brush = "brush"`）名称，必须与服务器逻辑中引用的名称（`output$plot`、`input$brush`）完全一致。如果名称不匹配，功能将无法正常工作。
 *   **数据变量名**：在 `brushedPoints` 函数中，`xvar` 和 `yvar` 参数必须与数据框中用于绘图的列名精确匹配（本例中为 `"Girth"` 和 `"Volume"`）。

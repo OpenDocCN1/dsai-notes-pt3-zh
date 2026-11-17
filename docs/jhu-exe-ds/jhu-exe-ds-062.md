@@ -1,10 +1,8 @@
 #  062：多重性
 
-![](img/35a8c6d3574bcb2cb762f3d2d3bd8d8a_0.png)
 
 ![](img/35a8c6d3574bcb2cb762f3d2d3bd8d8a_0.png)
 
-![](img/35a8c6d3574bcb2cb762f3d2d3bd8d8a_2.png)
 
 在本节课中，我们将学习多重性（Multiplicity）与多重比较（Multiple Comparisons）的概念。我们将探讨其产生的原因、潜在问题，并介绍一种简单有效的校正方法。
 

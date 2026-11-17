@@ -6,11 +6,9 @@
 
 ---
 
-![](img/09d62f86c4c50c1d2e7bccd77357f43a_2.png)
 
 ## 部署模型与Playground交互
 
-![](img/09d62f86c4c50c1d2e7bccd77357f43a_4.png)
 
 上一节我们介绍了如何部署模型，本节中我们来看看如何实际使用它。首先，我们需要在Azure OpenAI服务中找到已部署的模型。
 

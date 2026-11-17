@@ -1,6 +1,5 @@
 # 32：L18.4 - 奖励塑形：当奖励稀少时怎么办？🚀
 
-![](img/a0cd0e6116eeda97bd70569da2e9f6fb_1.png)
 
 在本节课中，我们将要学习一个名为 **奖励塑形** 的重要概念。当强化学习任务中的奖励信号非常稀疏（例如，多数时候奖励为0，只有极少数关键步骤才有奖励）时，智能体将难以学习。本节课将探讨如何通过设计额外的奖励来引导智能体更有效地学习。
 
@@ -22,7 +21,6 @@
 
 ## 解决方案：奖励塑形 🛠️
 
-![](img/a0cd0e6116eeda97bd70569da2e9f6fb_3.png)
 
 ![](img/a0cd0e6116eeda97bd70569da2e9f6fb_4.png)
 
@@ -71,7 +69,6 @@ reward_shaping = -distance(blue_block, peg) # 距离越近，惩罚越小（奖�
 
 ![](img/a0cd0e6116eeda97bd70569da2e9f6fb_14.png)
 
-![](img/a0cd0e6116eeda97bd70569da2e9f6fb_16.png)
 
 ![](img/a0cd0e6116eeda97bd70569da2e9f6fb_18.png)
 
@@ -81,7 +78,6 @@ reward_shaping = -distance(blue_block, peg) # 距离越近，惩罚越小（奖�
 
 这里有一个关键点：所谓的“新”必须是有意义的新，而不是无意义的噪声变化。例如，如果环境背景是电视雪花屏（不断随机变化），智能体可能会因为单纯“看雪花”而不断获得“看到新东西”的奖励，从而停止对真实环境的探索。因此，在实际算法中（如ICLR 2017的这篇论文），需要设计机制来过滤掉这种无意义的“新”。
 
-![](img/a0cd0e6116eeda97bd70569da2e9f6fb_20.png)
 
 ![](img/a0cd0e6116eeda97bd70569da2e9f6fb_22.png)
 
@@ -91,7 +87,6 @@ reward_shaping = -distance(blue_block, peg) # 距离越近，惩罚越小（奖�
 
 ![](img/a0cd0e6116eeda97bd70569da2e9f6fb_26.png)
 
-![](img/a0cd0e6116eeda97bd70569da2e9f6fb_27.png)
 
 ![](img/a0cd0e6116eeda97bd70569da2e9f6fb_28.png)
 
@@ -101,7 +96,6 @@ reward_shaping = -distance(blue_block, peg) # 距离越近，惩罚越小（奖�
 
 ![](img/a0cd0e6116eeda97bd70569da2e9f6fb_30.png)
 
-![](img/a0cd0e6116eeda97bd70569da2e9f6fb_31.png)
 
 ![](img/a0cd0e6116eeda97bd70569da2e9f6fb_32.png)
 

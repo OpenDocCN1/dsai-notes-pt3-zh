@@ -1,6 +1,5 @@
 #  003：大数据平台概述 🚀
 
-![](img/6662bc98ec67113a0e58cfaf6d963cd4_0.png)
 
 在本节课中，我们将介绍Apache Hadoop，讨论MapReduce数据处理流程，并引入Spark及其核心概念。我们将探讨用于处理大数据问题的平台。
 

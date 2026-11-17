@@ -47,14 +47,9 @@
 
 ---
 
-![](img/04475e5ddbbba5c316215b451441413b_2.png)
 
-![](img/04475e5ddbbba5c316215b451441413b_3.png)
 
-![](img/04475e5ddbbba5c316215b451441413b_2.png)
 
-![](img/04475e5ddbbba5c316215b451441413b_3.png)
 
-![](img/04475e5ddbbba5c316215b451441413b_4.png)
 
 ![](img/04475e5ddbbba5c316215b451441413b_4.png)

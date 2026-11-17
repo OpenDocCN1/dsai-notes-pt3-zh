@@ -6,7 +6,6 @@
 
 ## 回顾：Skip-gram模型
 
-![](img/fa3b34e896571ada2113777247f3db54_1.png)
 
 上一节我们介绍了Word2Vec的两种方法：Skip-gram和CBOW。本节中，我们来看看Skip-gram模型的具体目标函数。
 

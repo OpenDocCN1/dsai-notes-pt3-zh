@@ -6,17 +6,12 @@
 
 `split` 函数类似于 `tapply`，但它不直接应用汇总统计。它的作用是接收一个对象 `X` 和一个因子变量 `F`，然后根据 `F` 中定义的组别将 `X` 拆分开来。
 
-![](img/dc7c6e2760b4fdbf84e1da0205801126_1.png)
 
-![](img/dc7c6e2760b4fdbf84e1da0205801126_2.png)
 
-![](img/dc7c6e2760b4fdbf84e1da0205801126_3.png)
 
 例如，如果因子 `F` 有三个水平，代表三个组，那么 `split` 函数就会将 `X` 拆分成三个组。
 
-![](img/dc7c6e2760b4fdbf84e1da0205801126_5.png)
 
-![](img/dc7c6e2760b4fdbf84e1da0205801126_6.png)
 
 ```r
 split(x, f)
@@ -26,7 +21,6 @@ split(x, f)
 
 ## 一个简单的示例
 
-![](img/dc7c6e2760b4fdbf84e1da0205801126_8.png)
 
 以下是一个简单的示例。我们模拟生成了三组数据：10个均值为0的正态分布随机数、10个均匀分布随机数，以及10个均值为1的正态分布随机数。我们创建一个因子变量来标识这三组数据，然后使用 `split` 函数拆分向量。
 
@@ -36,7 +30,6 @@ f <- gl(3, 10)
 split(x, f)
 ```
 
-![](img/dc7c6e2760b4fdbf84e1da0205801126_10.png)
 
 运行后，`split` 会返回一个列表。列表的第一个元素包含10个正态随机数，第二个元素包含10个均匀随机数，第三个元素包含另外10个正态随机数。
 
@@ -46,7 +39,6 @@ split(x, f)
 
 将 `lapply` 与 `split` 结合使用是一种常见做法。其思路是先拆分数据，然后对拆分后的列表应用 `lapply` 函数。
 
-![](img/dc7c6e2760b4fdbf84e1da0205801126_12.png)
 
 虽然在这个例子中，使用 `tapply` 函数可以达到同样的效果，并且代码更简洁，但 `split` 函数的优势在于它可以拆分更复杂的对象类型。
 
@@ -60,7 +52,6 @@ split(x, f)
 
 以下是具体步骤：
 
-![](img/dc7c6e2760b4fdbf84e1da0205801126_14.png)
 
 1.  使用 `split` 函数，根据 `Month` 变量拆分 `airquality` 数据框。
 2.  对拆分后的列表应用一个匿名函数，该函数计算指定列（臭氧、太阳辐射、风速）的均值。
@@ -78,13 +69,10 @@ lapply(s, function(x) colMeans(x[, c("Ozone", "Solar.R", "Wind")]))
 sapply(s, function(x) colMeans(x[, c("Ozone", "Solar.R", "Wind")]))
 ```
 
-![](img/dc7c6e2760b4fdbf84e1da0205801126_16.png)
 
 为了处理缺失值，我们可以在计算列均值时传入 `na.rm = TRUE` 参数。
 
-![](img/dc7c6e2760b4fdbf84e1da0205801126_17.png)
 
-![](img/dc7c6e2760b4fdbf84e1da0205801126_18.png)
 
 ```r
 sapply(s, function(x) colMeans(x[, c("Ozone", "Solar.R", "Wind")], na.rm = TRUE))
@@ -96,15 +84,12 @@ sapply(s, function(x) colMeans(x[, c("Ozone", "Solar.R", "Wind")], na.rm = TRUE)
 
 ## 基于多个因子进行拆分
 
-![](img/dc7c6e2760b4fdbf84e1da0205801126_20.png)
 
-![](img/dc7c6e2760b4fdbf84e1da0205801126_21.png)
 
 之前我们只使用了单个因子进行拆分，但有时你可能需要基于多个因子进行拆分。例如，你可能有一个性别因子（男/女）和一个种族因子，你想查看这两个因子所有水平组合下的数据。
 
 以下是如何操作：
 
-![](img/dc7c6e2760b4fdbf84e1da0205801126_23.png)
 
 1.  创建两个因子变量 `f1` 和 `f2`。
 2.  使用 `interaction` 函数将两个因子的所有水平组合起来，生成一个新的交互因子。
@@ -121,9 +106,7 @@ split(x, list(f1, f2))
 
 拆分后，返回的列表会包含所有因子水平组合（即使某些组合没有观测值）。这些空的组合级别有时并不需要。
 
-![](img/dc7c6e2760b4fdbf84e1da0205801126_25.png)
 
-![](img/dc7c6e2760b4fdbf84e1da0205801126_26.png)
 
 `split` 函数有一个 `drop` 参数。设置 `drop = TRUE` 可以删除拆分过程中产生的空级别。这在组合多个因子时非常有用，因为你通常不会观测到所有可能的组合。
 
@@ -135,9 +118,7 @@ split(x, list(f1, f2), drop = TRUE)
 
 ## 总结
 
-![](img/dc7c6e2760b4fdbf84e1da0205801126_28.png)
 
-![](img/dc7c6e2760b4fdbf84e1da0205801126_29.png)
 
 ![](img/dc7c6e2760b4fdbf84e1da0205801126_30.png)
 

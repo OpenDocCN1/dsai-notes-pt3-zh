@@ -1,62 +1,43 @@
 # 69：L32.4 - DeepLab v3+ 教程 🧠
 
-![](img/cb931a2ed6f7a1d3a42ba1a442427ebd_0.png)
 
-![](img/cb931a2ed6f7a1d3a42ba1a442427ebd_2.png)
 
-![](img/cb931a2ed6f7a1d3a42ba1a442427ebd_4.png)
 
-![](img/cb931a2ed6f7a1d3a42ba1a442427ebd_6.png)
 
 在本节课中，我们将学习 DeepLab v3+ 模型。这是一种结合了空间金字塔池化与编码器-解码器架构的语义分割方法。我们将详细解析其架构设计、核心组件以及实现细节。
 
-![](img/cb931a2ed6f7a1d3a42ba1a442427ebd_8.png)
 
 ---
 
-![](img/cb931a2ed6f7a1d3a42ba1a442427ebd_10.png)
 
 上一节我们介绍了 U-Net 和 DeepLab 系列模型的基础。本节中，我们来看看 DeepLab v3+ 如何将两者的优势结合起来。
 
-![](img/cb931a2ed6f7a1d3a42ba1a442427ebd_12.png)
 
-![](img/cb931a2ed6f7a1d3a42ba1a442427ebd_14.png)
 
 DeepLab v3+ 的核心思想是同时使用空间金字塔池化和编码器-解码器架构。编码器部分负责提取特征并进行空间金字塔池化以捕获多尺度上下文信息。解码器部分则通过少量的跳跃连接来融合编码器的细节信息，以恢复空间分辨率并保留局部细节。
 
-![](img/cb931a2ed6f7a1d3a42ba1a442427ebd_16.png)
 
-![](img/cb931a2ed6f7a1d3a42ba1a442427ebd_18.png)
 
 以下是 DeepLab v3+ 架构的主要组成部分：
 
-![](img/cb931a2ed6f7a1d3a42ba1a442427ebd_20.png)
 
 *   **编码器**：包含带不同膨胀率的空洞卷积，用于捕获多尺度上下文信息。
 *   **空间金字塔池化模块**：通过并行使用不同膨胀率的卷积和全局平均池化来聚合上下文。
 *   **解码器**：对编码器输出进行上采样，并与编码器中相应层的特征图进行融合，以细化分割结果。
 
-![](img/cb931a2ed6f7a1d3a42ba1a442427ebd_22.png)
 
-![](img/cb931a2ed6f7a1d3a42ba1a442427ebd_24.png)
 
 ---
 
-![](img/cb931a2ed6f7a1d3a42ba1a442427ebd_26.png)
 
-![](img/cb931a2ed6f7a1d3a42ba1a442427ebd_28.png)
 
 接下来，我们详细看看编码器的具体结构。
 
-![](img/cb931a2ed6f7a1d3a42ba1a442427ebd_30.png)
 
-![](img/cb931a2ed6f7a1d3a42ba1a442427ebd_32.png)
 
 编码器接收输入图像，并采用空洞卷积来扩大感受野而不损失分辨率。具体而言，它并行使用以下卷积操作：
 
-![](img/cb931a2ed6f7a1d3a42ba1a442427ebd_34.png)
 
-![](img/cb931a2ed6f7a1d3a42ba1a442427ebd_36.png)
 
 *   1x1 卷积
 *   3x3 卷积，膨胀率为 6
@@ -64,23 +45,17 @@ DeepLab v3+ 的核心思想是同时使用空间金字塔池化和编码器-解�
 *   3x3 卷积，膨胀率为 18
 *   全局平均池化
 
-![](img/cb931a2ed6f7a1d3a42ba1a442427ebd_38.png)
 
 这些并行分支的输出会被拼接（Concatenate）在一起。随后，通过一个 1x1 卷积来降低通道维度，从而得到编码后的特征信息。
 
-![](img/cb931a2ed6f7a1d3a42ba1a442427ebd_40.png)
 
-![](img/cb931a2ed6f7a1d3a42ba1a442427ebd_42.png)
 
 ---
 
-![](img/cb931a2ed6f7a1d3a42ba1a442427ebd_44.png)
 
-![](img/cb931a2ed6f7a1d3a42ba1a442427ebd_46.png)
 
 在了解了编码器之后，我们进入解码器部分。
 
-![](img/cb931a2ed6f7a1d3a42ba1a442427ebd_48.png)
 
 ![](img/cb931a2ed6f7a1d3a42ba1a442427ebd_50.png)
 

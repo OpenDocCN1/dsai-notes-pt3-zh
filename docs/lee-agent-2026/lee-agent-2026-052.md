@@ -1,12 +1,9 @@
 # 52：像使用OpenAI一样使用稀疏混合专家模型Mixtral 8x7B 🚀
 
-![](img/2408182d10091c69bebcccb4a5e3d597_0.png)
 
-![](img/2408182d10091c69bebcccb4a5e3d597_2.png)
 
 在本节课中，我们将学习如何使用Mistral AI公司发布的最新模型——Mixtral 8x7B。这是一个高质量的稀疏混合专家模型。我们将重点介绍如何通过其提供的API服务来调用该模型，并演示如何将其集成到现有的应用框架中。
 
-![](img/2408182d10091c69bebcccb4a5e3d597_4.png)
 
 ## 模型简介
 
@@ -24,7 +21,6 @@ Mixtral 8x7B是一个稀疏混合专家模型。它在大多数基准测试中�
 
 由于本地运行大型模型存在困难，Mistral AI提供了便捷的API服务。该服务的使用方式与OpenAI非常相似。
 
-![](img/2408182d10091c69bebcccb4a5e3d597_6.png)
 
 开发者需要先申请访问权限。获得权限后，可以在控制台管理API密钥。控制台地址为：`console.mistral.ai`。
 
@@ -32,7 +28,6 @@ Mixtral 8x7B是一个稀疏混合专家模型。它在大多数基准测试中�
 *   价格按照每100万个Token为单位计费。不同模型（如tiny, small, medium）价格不同。
 *   限流方面，每分钟允许200万个Token，每月允许2亿个Token。如有特殊需求，可联系官方。
 
-![](img/2408182d10091c69bebcccb4a5e3d597_8.png)
 
 ## API文档与调用
 
@@ -95,10 +90,8 @@ print(response.choices[0].message.content)
 2.  在初始化`ChatOpenAI`时，将`base_url`指向Mistral AI的API端点，并设置对应的模型名称。
 
 
-![](img/2408182d10091c69bebcccb4a5e3d597_18.png)
 
 
-![](img/2408182d10091c69bebcccb4a5e3d597_20.png)
 
 ```python
 from langchain_openai import ChatOpenAI

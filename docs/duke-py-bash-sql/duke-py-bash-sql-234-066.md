@@ -1,6 +1,5 @@
 #  066：Linux中的截断、awk与sed编辑技术
 
-![](img/0bebdeec8f3048875769f9c88460d1df_0.png)
 
 ![](img/0bebdeec8f3048875769f9c88460d1df_1.png)
 

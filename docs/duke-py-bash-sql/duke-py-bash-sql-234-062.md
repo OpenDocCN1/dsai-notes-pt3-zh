@@ -1,6 +1,5 @@
 #  062：Linux数据归档 📦
 
-![](img/1bfa29c5c173546ebcb5890ae7cedaa7_0.png)
 
 ![](img/1bfa29c5c173546ebcb5890ae7cedaa7_1.png)
 

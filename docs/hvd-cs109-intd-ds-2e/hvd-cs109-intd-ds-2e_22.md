@@ -88,7 +88,6 @@ campaign_tweets |>
  labs(x = "Hour of day (EST)", y = "% of tweets", color = "")
 ```
 
-![](img/ba69ef5c5502b699a56ff30386dfa7df.png)*  *我们注意到在早上 6 点到 8 点之间，Android 设备有一个很大的峰值。这些模式似乎存在明显的差异。因此，我们将假设两个不同的实体正在使用这两款设备。
 
 现在，我们将研究当我们将 Android 与 iPhone 进行比较时，推文的文本如何不同。为此，我们引入了**tidytext**包。
 

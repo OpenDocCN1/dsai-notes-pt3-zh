@@ -1,6 +1,5 @@
 # 开源大语言模型方案：P20：总结
 
-![](img/a7b585eac3ac266310c9166ae0fb533a_0.png)
 
 ![](img/a7b585eac3ac266310c9166ae0fb533a_0.png)
 

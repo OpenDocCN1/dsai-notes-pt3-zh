@@ -52,9 +52,7 @@ Python函数是许多有趣任务的核心，它可以被视为一个中心枢�
 
 ![](img/bfd702ce187956a203b8fc6cf146b1c7_36.png)
 
-![](img/bfd702ce187956a203b8fc6cf146b1c7_38.png)
 
-![](img/bfd702ce187956a203b8fc6cf146b1c7_40.png)
 
 1.  **配置GitHub Codespaces（或等效环境）**：我们选择GitHub Codespaces作为开发环境。它可以提供强大的计算资源（如16核CPU、32GB内存），甚至支持NVIDIA GPU，非常适合需要处理复杂任务的项目。
 2.  **创建项目脚手架**：初始化项目结构，包括必要的配置文件。
@@ -172,7 +170,6 @@ Python函数是许多有趣任务的核心，它可以被视为一个中心枢�
 
 ![](img/bfd702ce187956a203b8fc6cf146b1c7_115.png)
 
-![](img/bfd702ce187956a203b8fc6cf146b1c7_117.png)
 
 ![](img/bfd702ce187956a203b8fc6cf146b1c7_119.png)
 
@@ -192,7 +189,6 @@ Python函数是许多有趣任务的核心，它可以被视为一个中心枢�
 
 库和CLI工具在本地运行良好，接下来我们需要将其能力通过Web API暴露出来，构建一个微服务。
 
-![](img/bfd702ce187956a203b8fc6cf146b1c7_134.png)
 
 ![](img/bfd702ce187956a203b8fc6cf146b1c7_136.png)
 
@@ -204,7 +200,6 @@ Python函数是许多有趣任务的核心，它可以被视为一个中心枢�
 
 ![](img/bfd702ce187956a203b8fc6cf146b1c7_144.png)
 
-![](img/bfd702ce187956a203b8fc6cf146b1c7_145.png)
 
 ![](img/bfd702ce187956a203b8fc6cf146b1c7_147.png)
 
@@ -235,7 +230,6 @@ Python函数是许多有趣任务的核心，它可以被视为一个中心枢�
 
 ![](img/bfd702ce187956a203b8fc6cf146b1c7_161.png)
 
-![](img/bfd702ce187956a203b8fc6cf146b1c7_163.png)
 
 ![](img/bfd702ce187956a203b8fc6cf146b1c7_165.png)
 
@@ -289,7 +283,6 @@ Python函数是许多有趣任务的核心，它可以被视为一个中心枢�
 
 ![](img/bfd702ce187956a203b8fc6cf146b1c7_208.png)
 
-![](img/bfd702ce187956a203b8fc6cf146b1c7_210.png)
 
 ![](img/bfd702ce187956a203b8fc6cf146b1c7_212.png)
 
@@ -309,7 +302,6 @@ Python函数是许多有趣任务的核心，它可以被视为一个中心枢�
 
 ![](img/bfd702ce187956a203b8fc6cf146b1c7_220.png)
 
-![](img/bfd702ce187956a203b8fc6cf146b1c7_222.png)
 
 至此，我们实现了一个从代码提交到服务自动更新的完整CI/CD流水线。
 
@@ -317,9 +309,7 @@ Python函数是许多有趣任务的核心，它可以被视为一个中心枢�
 
 ![](img/bfd702ce187956a203b8fc6cf146b1c7_226.png)
 
-![](img/bfd702ce187956a203b8fc6cf146b1c7_228.png)
 
-![](img/bfd702ce187956a203b8fc6cf146b1c7_230.png)
 
 ![](img/bfd702ce187956a203b8fc6cf146b1c7_231.png)
 

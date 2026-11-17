@@ -153,7 +153,6 @@ x_{k+1} = x_k - t \cdot g
 K(x, y) = \langle \phi(x), \phi(y) \rangle
 \]
 
-![](img/f5ef3ed4b09e16a96c7f4b7cbc4bf0c6_5.png)
 
 ![](img/f5ef3ed4b09e16a96c7f4b7cbc4bf0c6_6.png)
 
@@ -161,13 +160,9 @@ K(x, y) = \langle \phi(x), \phi(y) \rangle
 
 ![](img/f5ef3ed4b09e16a96c7f4b7cbc4bf0c6_7.png)
 
-![](img/f5ef3ed4b09e16a96c7f4b7cbc4bf0c6_9.png)
 
-![](img/f5ef3ed4b09e16a96c7f4b7cbc4bf0c6_10.png)
 
-![](img/f5ef3ed4b09e16a96c7f4b7cbc4bf0c6_11.png)
 
-![](img/f5ef3ed4b09e16a96c7f4b7cbc4bf0c6_13.png)
 
 例如，对于二次特征映射，核函数可以表示为：
 

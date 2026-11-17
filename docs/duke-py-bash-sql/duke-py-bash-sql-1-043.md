@@ -1,6 +1,5 @@
 #  043：Visual Studio Code介绍 🖥️
 
-![](img/17a516a4d90e34939686bd2410334be8_0.png)
 
 在本节课中，我们将学习集成开发环境的定义，并对Visual Studio Code进行一个高层次的介绍。
 

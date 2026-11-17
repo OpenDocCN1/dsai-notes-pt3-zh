@@ -54,7 +54,6 @@ scores /= scores.max()
 
 ---
 
-![](img/a9779ffe84638b03e5348a195b9a414e_4.png)
 
 ![](img/a9779ffe84638b03e5348a195b9a414e_5.png)
 

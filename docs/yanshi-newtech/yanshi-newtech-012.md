@@ -1,6 +1,5 @@
 # 12：Hadoop与SQL、RDBMS、RDSMS的比较 🆚
 
-![](img/e234016834881d85ccf9fc58ff9907e3_0.png)
 
 ![](img/e234016834881d85ccf9fc58ff9907e3_0.png)
 
@@ -85,10 +84,8 @@ Map程序的搜索结果被传递到同一DataNode上的Reduce程序。MapReduce
 
 这些是我使用的参考资料，我推荐给你们。
 
-![](img/e234016834881d85ccf9fc58ff9907e3_2.png)
 
 ![](img/e234016834881d85ccf9fc58ff9907e3_2.png)
 
-![](img/e234016834881d85ccf9fc58ff9907e3_3.png)
 
 ![](img/e234016834881d85ccf9fc58ff9907e3_3.png)

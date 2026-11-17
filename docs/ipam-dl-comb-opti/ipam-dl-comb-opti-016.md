@@ -1,6 +1,5 @@
 **IPAM课程：P16：Ecole：组合优化求解器中类似Gym的机器学习库**
 
-![](img/984219f3c066e45dbf395d3ebdc1dd2c_0.png)
 
 ![](img/984219f3c066e45dbf395d3ebdc1dd2c_0.png)
 

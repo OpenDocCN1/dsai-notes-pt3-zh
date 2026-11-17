@@ -1,34 +1,28 @@
 # 092：Spark核心概述 🚀
 
-![](img/27d64b007e63a2f311ef5a46f4aa1b16_0.png)
 
 在本节课中，我们将学习Apache Spark是什么，了解其诞生的背景和原因，并对比Spark与Hadoop生态系统。我们还将探讨Spark的关键特性、运行方式、相关研究论文、发行版本以及丰富的社区资源。
 
 ---
 
-![](img/27d64b007e63a2f311ef5a46f4aa1b16_2.png)
 
 ## Spark是什么？🤔
 
 Apache Spark是一个开源的集群计算平台。这意味着它拥有自己的调度守护进程，包括一个主节点和多个工作节点，可以在多台机器上启动不同的进程和任务。从这个角度看，它类似于Hadoop的YARN。
 
-![](img/27d64b007e63a2f311ef5a46f4aa1b16_4.png)
 
 Spark也是一个数据处理平台，拥有自己的核心引擎——Spark引擎。这使得它成为Hadoop MapReduce引擎的一个竞争者。同时，Spark也可以与Hadoop生态系统互补，运行在Hadoop之上，利用HDFS和YARN。
 
 Spark是一个统一平台，支持多种工作负载。与Hadoop核心项目主要专注于批处理不同，Spark将流处理、机器学习、SQL查询等功能都集成在一个项目中。
 
-![](img/27d64b007e63a2f311ef5a46f4aa1b16_6.png)
 
 Spark项目本身使用Scala语言编写，运行在Java虚拟机之上。它最初由加州大学伯克利分校的AMPLab实验室开发，并于2010年捐赠给Apache软件基金会。
 
-![](img/27d64b007e63a2f311ef5a46f4aa1b16_8.png)
 
 ---
 
 ## Spark的背景 📜
 
-![](img/27d64b007e63a2f311ef5a46f4aa1b16_10.png)
 
 回顾Hadoop的起源，2004年Google发布的MapReduce论文启发了Yahoo在2006年启动Hadoop项目。大约在2009年，Matei Zaharia在加州大学伯克利分校攻读博士期间创建了Spark。
 
@@ -36,21 +30,17 @@ Spark项目本身使用Scala语言编写，运行在Java虚拟机之上。它最
 
 2013年，Matei Zaharia和其他Spark项目的贡献者共同创立了Databricks公司。至此，Spark生态系统正式形成，与Hadoop生态系统既存在竞争，又相互补充。
 
-![](img/27d64b007e63a2f311ef5a46f4aa1b16_12.png)
 
 Spark的官方网站是 spark.apache.org。官网宣称它是一个“闪电般快速”的集群计算平台，比Hadoop MapReduce快10到100倍。
 
-![](img/27d64b007e63a2f311ef5a46f4aa1b16_14.png)
 
 ---
 
-![](img/27d64b007e63a2f311ef5a46f4aa1b16_16.png)
 
 ## 为什么需要Spark？⚡
 
 上一节我们介绍了Spark的背景，本节我们来看看Spark旨在解决Hadoop MapReduce的哪些痛点。
 
-![](img/27d64b007e63a2f311ef5a46f4aa1b16_18.png)
 
 **Hadoop MapReduce的局限性：**
 
@@ -60,23 +50,19 @@ Spark的官方网站是 spark.apache.org。官网宣称它是一个“闪电般�
 4.  **子项目爆炸**：Hadoop生态系统由众多独立的子项目（如Hive、Pig、Mahout、Storm）组成，需要分别安装和集成，增加了部署和维护的复杂度。
 5.  **编程模型局限**：MapReduce要求所有问题都抽象为键值对（key-value pair）的处理，编程模型不够直观和灵活。
 
-![](img/27d64b007e63a2f311ef5a46f4aa1b16_20.png)
 
 Spark正是为了克服MapReduce的上述局限性而设计的。
 
-![](img/27d64b007e63a2f311ef5a46f4aa1b16_22.png)
 
 ---
 
 ## Spark的核心特性 ✨
 
-![](img/27d64b007e63a2f311ef5a46f4aa1b16_24.png)
 
 了解了Spark要解决的问题后，我们来看看Spark提供了哪些关键特性来应对这些挑战。
 
 **以下是Spark的核心特性：**
 
-![](img/27d64b007e63a2f311ef5a46f4aa1b16_26.png)
 
 1.  **利用内存加速处理**：数据读取和写入的速度，内存（约10 GB/s）远快于SSD（约600 MB/s）和机械硬盘（约100 MB/s）。Spark通过其核心数据结构——**弹性分布式数据集（RDD）**，尽可能将数据保留在内存中进行计算，仅在内存不足时才溢出到本地磁盘，从而极大提升了处理速度。
 2.  **支持迭代处理**：Spark可以在内存中保存中间计算结果，供下一次迭代直接使用，避免了反复的磁盘I/O，特别适合机器学习等需要多次迭代的算法。
@@ -90,7 +76,6 @@ Spark正是为了克服MapReduce的上述局限性而设计的。
 10. **统一的大数据框架**：Spark将批处理、交互查询、流处理、机器学习和图计算整合在一个统一的平台中，简化了技术栈。
 11. **统一数据帧API**：在Spark 2.0中引入了**DataFrame API**（在RDD之上构建），它不仅知道数据内容，还知道数据的类型（Schema），为不同语言提供了统一且更高效的数据操作接口。
 
-![](img/27d64b007e63a2f311ef5a46f4aa1b16_28.png)
 
 ---
 
@@ -98,7 +83,6 @@ Spark正是为了克服MapReduce的上述局限性而设计的。
 
 我们已经分别了解了Hadoop和Spark的特性，现在我们来系统地对比一下两者的生态系统。
 
-![](img/27d64b007e63a2f311ef5a46f4aa1b16_30.png)
 
 **Hadoop生态系统核心包括：**
 *   **HDFS**：分布式文件系统。
@@ -116,7 +100,6 @@ Spark正是为了克服MapReduce的上述局限性而设计的。
 
 ---
 
-![](img/27d64b007e63a2f311ef5a46f4aa1b16_32.png)
 
 ## Spark 运行架构全景图 🗺️
 
@@ -124,9 +107,7 @@ Spark正是为了克服MapReduce的上述局限性而设计的。
 
 下图展示了Spark生态系统的大致全景：
 
-![](img/27d64b007e63a2f311ef5a46f4aa1b16_34.png)
 
-![](img/27d64b007e63a2f311ef5a46f4aa1b16_35.png)
 
 ```
 [数据源]
@@ -168,7 +149,6 @@ Spark正是为了克服MapReduce的上述局限性而设计的。
 *   **处理引擎统一性**：所有高级处理模块（SQL、Streaming等）都构建在Spark Core之上，共享RDD和内存计算的优势。
 *   **开发接口友好**：为不同开发者提供了Scala、Python、Java、R等多种编程语言接口。
 
-![](img/27d64b007e63a2f311ef5a46f4aa1b16_37.png)
 
 ---
 
@@ -178,7 +158,6 @@ Spark正是为了克服MapReduce的上述局限性而设计的。
 
 **以下是Spark相关的发行版与资源：**
 
-![](img/27d64b007e63a2f311ef5a46f4aa1b16_39.png)
 
 1.  **主要发行版**：
     *   **Databricks**：由Spark创始人创建的公司，提供商业支持和托管平台。
@@ -196,13 +175,9 @@ Spark正是为了克服MapReduce的上述局限性而设计的。
     *   **Wiki与邮件列表**：官方Wiki和用户邮件列表是解决问题的重要渠道。
     *   **Stack Overflow**：使用 `[apache-spark]` 标签可以找到大量问答。
 
-![](img/27d64b007e63a2f311ef5a46f4aa1b16_41.png)
 
-![](img/27d64b007e63a2f311ef5a46f4aa1b16_42.png)
 
-![](img/27d64b007e63a2f311ef5a46f4aa1b16_43.png)
 
-![](img/27d64b007e63a2f311ef5a46f4aa1b16_44.png)
 
 4.  **学习资源**：
     *   **书籍**：目前多数书籍基于Spark 1.x（如《Learning Spark》）。Spark 2.x的书籍正在陆续出版。
@@ -212,15 +187,12 @@ Spark正是为了克服MapReduce的上述局限性而设计的。
 
 5.  **应用案例**：许多知名公司都在使用Spark，如Amazon、eBay、阿里巴巴、腾讯等，用于处理大规模数据分析和机器学习任务。
 
-![](img/27d64b007e63a2f311ef5a46f4aa1b16_46.png)
 
-![](img/27d64b007e63a2f311ef5a46f4aa1b16_48.png)
 
 ---
 
 ## 总结 🎯
 
-![](img/27d64b007e63a2f311ef5a46f4aa1b16_50.png)
 
 ![](img/27d64b007e63a2f311ef5a46f4aa1b16_51.png)
 

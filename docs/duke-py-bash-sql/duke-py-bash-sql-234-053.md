@@ -1,6 +1,5 @@
 #  053：Linux文件系统搜索方法 🔍
 
-![](img/b96ee073dcad214f1886723a3c3867ea_0.png)
 
 ![](img/b96ee073dcad214f1886723a3c3867ea_1.png)
 

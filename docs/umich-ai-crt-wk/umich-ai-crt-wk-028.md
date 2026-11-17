@@ -32,7 +32,6 @@ def ai_assist_employee(employee_skill, ai_tool):
 
 **潜在问题 = 相同产出 / 更少员工 & 更低薪酬**
 
-![](img/bb1cb2dc7034689aafc6e38eb2631932_3.png)
 
 ---
 

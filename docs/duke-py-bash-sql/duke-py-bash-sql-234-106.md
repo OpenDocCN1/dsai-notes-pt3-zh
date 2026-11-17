@@ -4,7 +4,6 @@
 
 ## 使用Python标准库解析HTML
 
-![](img/a0abfd7ea98e6050188a8eb6c3800f9d_0.png)
 
 上一节我们介绍了网络爬虫的基本概念。本节中，我们来看看如何利用Python内置的工具来解析HTML文档。
 

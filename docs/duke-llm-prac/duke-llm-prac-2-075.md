@@ -85,7 +85,6 @@ result = rust_calculator.fast_add(5, 3) # 结果为8
 
 因此，出于对性能和经济性的追求，开发者们开始有机地混合使用Rust和Python。
 
-![](img/263efd6e9681aeea7bf00d743dfe4bca_7.png)
 
 ## 总结与展望 🎯
 

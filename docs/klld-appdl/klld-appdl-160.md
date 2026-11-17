@@ -1,191 +1,114 @@
 # 160：L72.2 - CTC算法详解 🧠
 
-![](img/f82f906f1a4affba647cce4cb17d818a_1.png)
 
-![](img/f82f906f1a4affba647cce4cb17d818a_2.png)
 
-![](img/f82f906f1a4affba647cce4cb17d818a_3.png)
 
-![](img/f82f906f1a4affba647cce4cb17d818a_4.png)
 
-![](img/f82f906f1a4affba647cce4cb17d818a_5.png)
 
-![](img/f82f906f1a4affba647cce4cb17d818a_6.png)
 
 在本节课中，我们将要学习连接时序分类（CTC）算法。CTC是一种用于处理未分段序列数据（如语音、手写识别）的损失函数和训练方法。我们将从基本概念入手，逐步理解其工作原理、数学公式以及如何通过动态编程高效计算。
 
 ## 什么是语音识别？ 🎤
 
-![](img/f82f906f1a4affba647cce4cb17d818a_8.png)
 
-![](img/f82f906f1a4affba647cce4cb17d818a_9.png)
 
-![](img/f82f906f1a4affba647cce4cb17d818a_10.png)
 
-![](img/f82f906f1a4affba647cce4cb17d818a_11.png)
 
-![](img/f82f906f1a4affba647cce4cb17d818a_12.png)
 
-![](img/f82f906f1a4affba647cce4cb17d818a_13.png)
 
-![](img/f82f906f1a4affba647cce4cb17d818a_14.png)
 
-![](img/f82f906f1a4affba647cce4cb17d818a_15.png)
 
-![](img/f82f906f1a4affba647cce4cb17d818a_16.png)
 
-![](img/f82f906f1a4affba647cce4cb17d818a_17.png)
 
 语音识别的目标是，当有人给你一段音频信号时，你需要将其转录成单词、子词、字母或音素等形式。
 
-![](img/f82f906f1a4affba647cce4cb17d818a_18.png)
 
-![](img/f82f906f1a4affba647cce4cb17d818a_19.png)
 
 输入是一个嘈杂的实值流（原始音频），并带有一些标注（例如某人朗读文本产生的数据）。CTC算法不仅可用于语音识别，还可用于手写识别、手势识别等任务。
 
-![](img/f82f906f1a4affba647cce4cb17d818a_21.png)
 
-![](img/f82f906f1a4affba647cce4cb17d818a_22.png)
 
 ## 什么是时序分类？ ⏱️
 
-![](img/f82f906f1a4affba647cce4cb17d818a_23.png)
 
-![](img/f82f906f1a4affba647cce4cb17d818a_24.png)
 
-![](img/f82f906f1a4affba647cce4cb17d818a_25.png)
 
-![](img/f82f906f1a4affba647cce4cb17d818a_26.png)
 
-![](img/f82f906f1a4affba647cce4cb17d818a_27.png)
 
-![](img/f82f906f1a4affba647cce4cb17d818a_28.png)
 
-![](img/f82f906f1a4affba647cce4cb17d818a_29.png)
 
-![](img/f82f906f1a4affba647cce4cb17d818a_30.png)
 
-![](img/f82f906f1a4affba647cce4cb17d818a_31.png)
 
 时序分类的定义是为未分段的序列数据打标签。语音数据不像文本那样是预先分割好的，它是一个连续的信号。因此，为这种未分段的序列数据分配标签的任务就称为时序分类。
 
 “连接主义”一词源于深度学习曾被称为连接主义，这里特指使用RNN或神经网络。因此，CTC是使用神经网络进行时序分类的方法。
 
-![](img/f82f906f1a4affba647cce4cb17d818a_33.png)
 
-![](img/f82f906f1a4affba647cce4cb17d818a_34.png)
 
-![](img/f82f906f1a4affba647cce4cb17d818a_35.png)
 
-![](img/f82f906f1a4affba647cce4cb17d818a_36.png)
 
-![](img/f82f906f1a4affba647cce4cb17d818a_37.png)
 
-![](img/f82f906f1a4affba647cce4cb17d818a_38.png)
 
-![](img/f82f906f1a4affba647cce4cb17d818a_39.png)
 
 与之相对的是逐帧分类，即独立地对每一帧进行分类。逐帧分类是迈向连接时序分类的一步。
 
-![](img/f82f906f1a4affba647cce4cb17d818a_40.png)
 
-![](img/f82f906f1a4affba647cce4cb17d818a_41.png)
 
-![](img/f82f906f1a4affba647cce4cb17d818a_42.png)
 
-![](img/f82f906f1a4affba647cce4cb17d818a_43.png)
 
-![](img/f82f906f1a4affba647cce4cb17d818a_44.png)
 
 上一节我们介绍了时序分类的基本概念，本节中我们来看看CTC如何形式化地定义和解决这个问题。
 
 ## CTC问题形式化 📝
 
-![](img/f82f906f1a4affba647cce4cb17d818a_46.png)
 
-![](img/f82f906f1a4affba647cce4cb17d818a_47.png)
 
-![](img/f82f906f1a4affba647cce4cb17d818a_48.png)
 
-![](img/f82f906f1a4affba647cce4cb17d818a_49.png)
 
-![](img/f82f906f1a4affba647cce4cb17d818a_50.png)
 
-![](img/f82f906f1a4affba647cce4cb17d818a_51.png)
 
-![](img/f82f906f1a4affba647cce4cb17d818a_52.png)
 
-![](img/f82f906f1a4affba647cce4cb17d818a_53.png)
 
-![](img/f82f906f1a4affba647cce4cb17d818a_54.png)
 
-![](img/f82f906f1a4affba647cce4cb17d818a_55.png)
 
 处理时序分类时，我们有一个数据集 **S**，它是训练数据，包含输入语音和输出文本的配对。
 
-![](img/f82f906f1a4affba647cce4cb17d818a_56.png)
 
-![](img/f82f906f1a4affba647cce4cb17d818a_57.png)
 
 *   **x** 是输入序列，属于所有M维序列的空间，其长度是未知且可变的。这通常就是我们看到的梅尔频谱图序列。
 *   **z** 是输出序列，是一个标签序列。你有一个大小为L的词汇表，输出就是这个词汇表中标签的序列。
 
-![](img/f82f906f1a4affba647cce4cb17d818a_59.png)
 
-![](img/f82f906f1a4affba647cce4cb17d818a_60.png)
 
-![](img/f82f906f1a4affba647cce4cb17d818a_61.png)
 
 在你的数据中，有 **(x, z)** 对。**x** 是语音输入序列，**z** 是目标标签序列。这里存在一个问题：我们说话时间很长，输入序列长度 **T** 通常远大于输出标签序列的长度 **U**。CTC算法正是要帮助我们解决这个对齐问题。
 
-![](img/f82f906f1a4affba647cce4cb17d818a_62.png)
 
-![](img/f82f906f1a4affba647cce4cb17d818a_63.png)
 
-![](img/f82f906f1a4affba647cce4cb17d818a_64.png)
 
-![](img/f82f906f1a4affba647cce4cb17d818a_65.png)
 
-![](img/f82f906f1a4affba647cce4cb17d818a_66.png)
 
-![](img/f82f906f1a4affba647cce4cb17d818a_67.png)
 
-![](img/f82f906f1a4affba647cce4cb17d818a_68.png)
 
-![](img/f82f906f1a4affba647cce4cb17d818a_69.png)
 
-![](img/f82f906f1a4affba647cce4cb17d818a_70.png)
 
 ## 如何评估模型性能？ 📊
 
 假设我们有一个分类器，它输入一个序列，输出另一个序列。我们希望在测试数据上评估其性能。
 
-![](img/f82f906f1a4affba647cce4cb17d818a_72.png)
 
-![](img/f82f906f1a4affba647cce4cb17d818a_73.png)
 
-![](img/f82f906f1a4affba647cce4cb17d818a_74.png)
 
-![](img/f82f906f1a4affba647cce4cb17d818a_75.png)
 
-![](img/f82f906f1a4affba647cce4cb17d818a_76.png)
 
-![](img/f82f906f1a4affba647cce4cb17d818a_77.png)
 
 以下是评估模型性能的指标：
 
-![](img/f82f906f1a4affba647cce4cb17d818a_78.png)
 
-![](img/f82f906f1a4affba647cce4cb17d818a_79.png)
 
-![](img/f82f906f1a4affba647cce4cb17d818a_80.png)
 
-![](img/f82f906f1a4affba647cce4cb17d818a_81.png)
 
-![](img/f82f906f1a4affba647cce4cb17d818a_82.png)
 
-![](img/f82f906f1a4affba647cce4cb17d818a_83.png)
 
 *   模型预测结果为 **h(x)**。
 *   真实标签为 **z**。
@@ -195,55 +118,33 @@
 
 这个指标称为**标签错误率**，可以是词错误率、字符错误率或音素错误率等。
 
-![](img/f82f906f1a4affba647cce4cb17d818a_85.png)
 
-![](img/f82f906f1a4affba647cce4cb17d818a_86.png)
 
-![](img/f82f906f1a4affba647cce4cb17d818a_87.png)
 
-![](img/f82f906f1a4affba647cce4cb17d818a_88.png)
 
-![](img/f82f906f1a4affba647cce4cb17d818a_89.png)
 
-![](img/f82f906f1a4affba647cce4cb17d818a_90.png)
 
-![](img/f82f906f1a4affba647cce4cb17d818a_91.png)
 
-![](img/f82f906f1a4affba647cce4cb17d818a_92.png)
 
-![](img/f82f906f1a4affba647cce4cb17d818a_93.png)
 
-![](img/f82f906f1a4affba647cce4cb17d818a_94.png)
 
 ## CTC的核心思想：对齐与映射 🔄
 
-![](img/f82f906f1a4affba647cce4cb17d818a_95.png)
 
 现在回到核心问题：如何对齐长度不同的 **x** 和 **z**？通常，神经网络输入一个序列，输出另一个序列，且输入输出序列长度相同（均为 **T**）。
 
-![](img/f82f906f1a4affba647cce4cb17d818a_97.png)
 
-![](img/f82f906f1a4affba647cce4cb17d818a_98.png)
 
 **y** 是输出序列，给出了概率。**y_t^k** 给出了在时间步 **t** 观察到标签 **k**（可以是词、字母等）的概率。这些概率来自循环神经网络。
 
-![](img/f82f906f1a4affba647cce4cb17d818a_99.png)
 
-![](img/f82f906f1a4affba647cce4cb17d818a_100.png)
 
-![](img/f82f906f1a4affba647cce4cb17d818a_101.png)
 
-![](img/f82f906f1a4affba647cce4cb17d818a_102.png)
 
-![](img/f82f906f1a4affba647cce4cb17d818a_103.png)
 
-![](img/f82f906f1a4affba647cce4cb17d818a_104.png)
 
-![](img/f82f906f1a4affba647cce4cb17d818a_105.png)
 
-![](img/f82f906f1a4affba647cce4cb17d818a_106.png)
 
-![](img/f82f906f1a4affba647cce4cb17d818a_107.png)
 
 但问题是我们有 **T** 个时间步的输出，太多了。技巧在于，除了词汇表中的所有标签外，我们额外添加一个**空白标签（blank）**。这样，对于输入中的某些向量，网络可以输出“空白”，表示没有有效标签（例如停顿、静音）。
 

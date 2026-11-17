@@ -1,18 +1,14 @@
 # 066：Scikit-Learn - Python机器学习库 🧠
 
-![](img/7a7717d0ea130aa6ac853ac1c5bd6d91_1.png)
 
 在本节课中，我们将要学习Scikit-Learn，一个功能强大且应用广泛的Python机器学习库。我们将了解它的核心功能、安装方法、使用流程，并通过一个简单的示例来演示如何用它构建和评估机器学习模型。
 
-![](img/7a7717d0ea130aa6ac853ac1c5bd6d91_3.png)
 
 ---
 
-![](img/7a7717d0ea130aa6ac853ac1c5bd6d91_5.png)
 
 Scikit-Learn是一个Python机器学习库。它是最有用和最健壮的机器学习库之一。它提供了用于机器学习和统计建模的各种工具。
 
-![](img/7a7717d0ea130aa6ac853ac1c5bd6d91_7.png)
 
 该库建立在NumPy、SciPy、Matplotlib和Pandas之上。
 
@@ -22,7 +18,6 @@ Scikit-Learn是一个Python机器学习库。它是最有用和最健壮的机�
 pip install scikit-learn
 ```
 
-![](img/7a7717d0ea130aa6ac853ac1c5bd6d91_9.png)
 
 机器学习主要包含五个步骤。
 
@@ -32,7 +27,6 @@ pip install scikit-learn
 4.  评估模型性能。
 5.  调整算法参数。
 
-![](img/7a7717d0ea130aa6ac853ac1c5bd6d91_11.png)
 
 在实践中，每种算法都有其自身特点并基于某些假设。没有一种分类器能在所有场景下都表现最佳，这就是“没有免费午餐定理”。始终建议你至少比较几种不同学习算法的性能，以便为特定问题选择最佳模型。
 

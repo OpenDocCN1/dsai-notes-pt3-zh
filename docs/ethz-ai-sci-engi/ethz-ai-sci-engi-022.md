@@ -1,10 +1,8 @@
 # 022：扩散模型入门 🧠
 
-![](img/df30257eab4dd6a4c8ef0f6785bda04e_1.png)
 
 在本节课中，我们将要学习扩散模型的基本概念。扩散模型是目前最先进的图像生成模型之一，例如DALL-E和Stable Diffusion。我们将探讨扩散的物理和数学定义，理解其如何与神经微分方程相关联，并学习如何训练一个扩散模型来生成图像。最后，我们将看到一个扩散模型如何被应用于解决科学问题，例如计算机断层扫描（CT）图像重建。
 
-![](img/df30257eab4dd6a4c8ef0f6785bda04e_3.png)
 
 ---
 
@@ -64,21 +62,16 @@ dx = \left[ f(x, t) - \frac{1}{2} g(t)^2 \nabla_x \log p_t(x) \right] dt
 
 ---
 
-![](img/df30257eab4dd6a4c8ef0f6785bda04e_5.png)
 
 ## 扩散模型在科学中的应用：CT图像重建 🏥
 
-![](img/df30257eab4dd6a4c8ef0f6785bda04e_7.png)
 
 扩散模型不仅是强大的生成工具，还能用于解决科学中的逆问题。我们以CT图像重建为例。
 
-![](img/df30257eab4dd6a4c8ef0f6785bda04e_9.png)
 
-![](img/df30257eab4dd6a4c8ef0f6785bda04e_11.png)
 
 在CT扫描中，我们观测到的是正弦图数据，目标是重建出内部的吸收图像。传统的逆问题求解方法可能面临不适定性或需要强先验。
 
-![](img/df30257eab4dd6a4c8ef0f6785bda04e_13.png)
 
 一种新颖的方法是将预训练的扩散模型作为**图像先验**。具体流程如下：
 
@@ -90,11 +83,9 @@ dx = \left[ f(x, t) - \frac{1}{2} g(t)^2 \nabla_x \log p_t(x) \right] dt
 
 ---
 
-![](img/df30257eab4dd6a4c8ef0f6785bda04e_15.png)
 
 ## 总结 📝
 
-![](img/df30257eab4dd6a4c8ef0f6785bda04e_17.png)
 
 ![](img/df30257eab4dd6a4c8ef0f6785bda04e_19.png)
 

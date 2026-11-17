@@ -1,6 +1,5 @@
 # 04：案例分析：垃圾邮件非关肉类 🥩
 
-![](img/e3bb249e3dfff96cb4117707f5a9a458_0.png)
 
 ![](img/e3bb249e3dfff96cb4117707f5a9a458_2.png)
 

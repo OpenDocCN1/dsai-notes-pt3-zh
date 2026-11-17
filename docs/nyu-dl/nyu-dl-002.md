@@ -20,7 +20,6 @@
 
 ![](img/a60a8a2286f4bb2c0ed6c084f31364c7_7.png)
 
-![](img/a60a8a2286f4bb2c0ed6c084f31364c7_9.png)
 
 上一节我们提到了神经网络的一些应用，其中之一就是分类。现在，我们来简要概述一下什么是分类。
 
@@ -30,11 +29,9 @@
 
 **核心概念**：图像可以表示为一个高维向量。例如，一个 `1000x1000` 的RGB图像可以扁平化为一个长度为 `3,000,000` 的向量。
 
-![](img/a60a8a2286f4bb2c0ed6c084f31364c7_11.png)
 
 ![](img/a60a8a2286f4bb2c0ed6c084f31364c7_13.png)
 
-![](img/a60a8a2286f4bb2c0ed6c084f31364c7_15.png)
 
 ```python
 # 假设 image 是一个 1000x1000x3 的数组
@@ -51,7 +48,6 @@ vector = image.flatten()  # 形状变为 (3000000,)
 
 上一节我们提到，分类的目标是将不同类别的点“移动”到空间的不同区域。那么，我们如何移动这些点呢？这就要用到线性代数。
 
-![](img/a60a8a2286f4bb2c0ed6c084f31364c7_21.png)
 
 您可能知道，线性变换包括缩放、旋转、反射、剪切和平移等操作。这些操作可以通过矩阵乘法来实现。
 
@@ -79,13 +75,11 @@ y = torch.matmul(W, x) + b  # 仿射变换结果
 
 ![](img/a60a8a2286f4bb2c0ed6c084f31364c7_23.png)
 
-![](img/a60a8a2286f4bb2c0ed6c084f31364c7_24.png)
 
 ![](img/a60a8a2286f4bb2c0ed6c084f31364c7_26.png)
 
 ## 可视化：神经网络如何变换空间 🌀
 
-![](img/a60a8a2286f4bb2c0ed6c084f31364c7_28.png)
 
 ![](img/a60a8a2286f4bb2c0ed6c084f31364c7_30.png)
 
@@ -116,21 +110,15 @@ y = torch.matmul(W, x) + b  # 仿射变换结果
 
 ![](img/a60a8a2286f4bb2c0ed6c084f31364c7_42.png)
 
-![](img/a60a8a2286f4bb2c0ed6c084f31364c7_44.png)
 
-![](img/a60a8a2286f4bb2c0ed6c084f31364c7_46.png)
 
 可视化显示，随着训练进行，网络逐渐将交织的螺旋“拉开”并“铺平”，最终在输出层，不同颜色的点（代表不同类别）变得清晰可分。
 
-![](img/a60a8a2286f4bb2c0ed6c084f31364c7_48.png)
 
 ---
 
-![](img/a60a8a2286f4bb2c0ed6c084f31364c7_50.png)
 
-![](img/a60a8a2286f4bb2c0ed6c084f31364c7_52.png)
 
-![](img/a60a8a2286f4bb2c0ed6c084f31364c7_54.png)
 
 ## 实践入门：使用PyTorch进行基本操作 ⚙️
 
@@ -138,15 +126,11 @@ y = torch.matmul(W, x) + b  # 仿射变换结果
 
 首先，我们需要设置环境。PyTorch是一个强大的深度学习库。如果您的计算机有GPU，可以利用它来加速计算。
 
-![](img/a60a8a2286f4bb2c0ed6c084f31364c7_56.png)
 
-![](img/a60a8a2286f4bb2c0ed6c084f31364c7_58.png)
 
 **核心概念**：使用 `torch.cuda.is_available()` 检查GPU，并使用 `.to(device)` 将模型和数据移动到相应的设备（CPU或GPU）上。
 
-![](img/a60a8a2286f4bb2c0ed6c084f31364c7_60.png)
 
-![](img/a60a8a2286f4bb2c0ed6c084f31364c7_62.png)
 
 ```python
 import torch
@@ -177,7 +161,6 @@ print(f‘Using device: {device}’)
     model[0].weight.data = torch.tensor([[2.0, 0.0], [0.0, 0.5]])  # 缩放变换
     ```
 
-![](img/a60a8a2286f4bb2c0ed6c084f31364c7_68.png)
 
 ![](img/a60a8a2286f4bb2c0ed6c084f31364c7_70.png)
 
@@ -189,27 +172,21 @@ print(f‘Using device: {device}’)
 
 ---
 
-![](img/a60a8a2286f4bb2c0ed6c084f31364c7_74.png)
 
 ## 结合非线性：构建真正的网络层 🧱
 
-![](img/a60a8a2286f4bb2c0ed6c084f31364c7_76.png)
 
 ![](img/a60a8a2286f4bb2c0ed6c084f31364c7_78.png)
 
 ![](img/a60a8a2286f4bb2c0ed6c084f31364c7_80.png)
 
-![](img/a60a8a2286f4bb2c0ed6c084f31364c7_82.png)
 
 单一的线性变换能力有限，只能实现上述的线性操作。为了获得强大的表达能力，我们需要引入非线性激活函数，并将多个这样的“线性+非线性”层堆叠起来。
 
-![](img/a60a8a2286f4bb2c0ed6c084f31364c7_84.png)
 
-![](img/a60a8a2286f4bb2c0ed6c084f31364c7_86.png)
 
 ![](img/a60a8a2286f4bb2c0ed6c084f31364c7_88.png)
 
-![](img/a60a8a2286f4bb2c0ed6c084f31364c7_90.png)
 
 以下是一个包含非线性的简单网络示例：
 
@@ -223,7 +200,6 @@ model = torch.nn.Sequential(
 ).to(device)
 ```
 
-![](img/a60a8a2286f4bb2c0ed6c084f31364c7_94.png)
 
 ![](img/a60a8a2286f4bb2c0ed6c084f31364c7_96.png)
 
@@ -237,13 +213,10 @@ model = torch.nn.Sequential(
 
 ![](img/a60a8a2286f4bb2c0ed6c084f31364c7_100.png)
 
-![](img/a60a8a2286f4bb2c0ed6c084f31364c7_102.png)
 
 ## 总结与展望 🎯
 
-![](img/a60a8a2286f4bb2c0ed6c084f31364c7_104.png)
 
-![](img/a60a8a2286f4bb2c0ed6c084f31364c7_106.png)
 
 ![](img/a60a8a2286f4bb2c0ed6c084f31364c7_108.png)
 

@@ -1,6 +1,5 @@
 # 30：设计思维工具集 📊
 
-![](img/c227e794ae3d702caac9af2eb4642ce7_0.png)
 
 ![](img/c227e794ae3d702caac9af2eb4642ce7_2.png)
 

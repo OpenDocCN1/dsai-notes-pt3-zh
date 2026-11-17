@@ -26,13 +26,11 @@ import urllib.request
 fhand = urllib.request.urlopen('http://data.pr4e.org/romeo.txt')
 ```
 
-![](img/1fe0bea9ec52b858117a5a1db77874ff_4.png)
 
 ## 逐行读取内容
 
 读取内容时，我们不再需要使用底层的读写代码。我们可以直接使用一个`for`循环来逐行读取文本。
 
-![](img/1fe0bea9ec52b858117a5a1db77874ff_6.png)
 
 ```python
 for line in fhand:
@@ -47,7 +45,6 @@ for line in fhand:
 
 以下是实现此功能的代码步骤：
 
-![](img/1fe0bea9ec52b858117a5a1db77874ff_8.png)
 
 1.  打开目标URL。
 2.  创建一个空字典用于存储词频。
@@ -69,7 +66,6 @@ print(counts)
 
 ## 总结
 
-![](img/1fe0bea9ec52b858117a5a1db77874ff_10.png)
 
 ![](img/1fe0bea9ec52b858117a5a1db77874ff_11.png)
 

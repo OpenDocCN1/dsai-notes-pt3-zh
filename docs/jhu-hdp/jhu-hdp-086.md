@@ -2,13 +2,10 @@
 
 ![](img/447e82bbfb5a5238be95dc410d138ba2_0.png)
 
-![](img/447e82bbfb5a5238be95dc410d138ba2_2.png)
 
-![](img/447e82bbfb5a5238be95dc410d138ba2_4.png)
 
 在本节课中，我们将学习如何在开发环境中下载、安装、配置并运行HBase。
 
-![](img/447e82bbfb5a5238be95dc410d138ba2_6.png)
 
 ## 概述
 
@@ -16,9 +13,7 @@ HBase是一个运行在Hadoop HDFS之上的分布式、可扩展的NoSQL数据�
 
 ## 下载HBase
 
-![](img/447e82bbfb5a5238be95dc410d138ba2_8.png)
 
-![](img/447e82bbfb5a5238be95dc410d138ba2_10.png)
 
 HBase是Apache的开源项目，其官方网站是 `hbase.apache.org`。
 
@@ -73,17 +68,14 @@ HBase的发行版文件命名格式为：`hbase-版本号-bin.tar.gz`。
 
 ![](img/447e82bbfb5a5238be95dc410d138ba2_12.png)
 
-![](img/447e82bbfb5a5238be95dc410d138ba2_14.png)
 
 ## 配置HBase连接HDFS
 
 由于我们要在伪分布式模式下运行HBase，需要确保HDFS正在运行。你可以通过浏览器访问NameNode控制台（默认端口9870）或执行 `hadoop fs -ls /` 命令来验证HDFS是否可用。
 
-![](img/447e82bbfb5a5238be95dc410d138ba2_16.png)
 
 HBase可以在三种模式下运行：
 
-![](img/447e82bbfb5a5238be95dc410d138ba2_18.png)
 
 1.  **本地/独立模式**：开箱即用的模式，不使用HDFS，所有守护进程（HMaster、RegionServer、ZooKeeper）都在同一个JVM中运行。仅用于快速测试，不推荐使用。
 2.  **伪分布式模式**：开发模式，需要HDFS。它模拟了完全分布式环境，但所有守护进程运行在同一台主机上。这是学习、测试和调试应用程序的理想模式，也是本教程将使用的模式。
@@ -117,7 +109,6 @@ HBase可以在三种模式下运行：
 
 ## 启动与验证HBase
 
-![](img/447e82bbfb5a5238be95dc410d138ba2_20.png)
 
 配置完成后，就可以启动HBase了。由于我们已经将HBase的 `bin` 目录加入了PATH，可以直接执行启动命令：
 ```bash
@@ -125,7 +116,6 @@ start-hbase.sh
 ```
 此命令会依次启动ZooKeeper、HMaster和RegionServer守护进程。
 
-![](img/447e82bbfb5a5238be95dc410d138ba2_22.png)
 
 可以通过以下几种方式验证HBase是否成功运行：
 
@@ -141,7 +131,6 @@ start-hbase.sh
 
 ## 停止HBase
 
-![](img/447e82bbfb5a5238be95dc410d138ba2_24.png)
 
 停止HBase非常简单，只需执行：
 ```bash

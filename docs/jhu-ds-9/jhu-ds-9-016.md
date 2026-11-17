@@ -30,7 +30,6 @@ head(Fruits)
 
 现在，我们使用`gvisMotionChart`函数来创建动态图对象。
 
-![](img/1ba551d40dd340037c09e4e3c8eea1a6_3.png)
 
 ```r
 # 创建动态图对象
@@ -39,7 +38,6 @@ M <- gvisMotionChart(Fruits,
                      timevar = "Year")
 ```
 
-![](img/1ba551d40dd340037c09e4e3c8eea1a6_5.png)
 
 代码解释：
 *   `Fruits`： 我们使用的数据框。
@@ -48,7 +46,6 @@ M <- gvisMotionChart(Fruits,
 
 创建好对象`M`后，我们可以用`plot`函数在浏览器中查看它。
 
-![](img/1ba551d40dd340037c09e4e3c8eea1a6_7.png)
 
 ```r
 # 在浏览器中绘制图表

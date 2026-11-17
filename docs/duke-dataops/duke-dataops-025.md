@@ -1,10 +1,8 @@
 #  025：GPU与Code Whisperer工具 🚀
 
-![](img/8899f7104af70b3c1c730ceeb11b98e2_0.png)
 
 在本节课中，我们将学习如何在基于GPU的Codespace环境中，利用NVIDIA监控工具和Whisper等工具进行高效的GPU计算与资源管理。
 
-![](img/8899f7104af70b3c1c730ceeb11b98e2_1.png)
 
 ---
 
@@ -12,7 +10,6 @@
 
 这里有一个NVIDIA监控工具，它允许我查看此处NVIDIA GPU的完整利用率。
 
-![](img/8899f7104af70b3c1c730ceeb11b98e2_0.png)
 
 你可以在此看到CUDA驱动版本是11.7，GPU使用率为43%。在另一个终端中，我正在运行Whisper，它能够利用Codespace上的GPU。同时，得益于Codespace提供的存储空间，我也能够转录非常大的文件。
 

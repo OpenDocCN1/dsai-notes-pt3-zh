@@ -1,6 +1,5 @@
 #  059：Linux文件系统操作概览 🗂️
 
-![](img/2c5322d49b37ed39d0bb23612cdb842d_0.png)
 
 ![](img/2c5322d49b37ed39d0bb23612cdb842d_1.png)
 

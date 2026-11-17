@@ -1,181 +1,106 @@
 # 108：L51.2 - ULMFiT 🧠
 
-![](img/c209a5bff13c89ee02574bbc09911728_1.png)
 
-![](img/c209a5bff13c89ee02574bbc09911728_2.png)
 
-![](img/c209a5bff13c89ee02574bbc09911728_3.png)
 
-![](img/c209a5bff13c89ee02574bbc09911728_4.png)
 
-![](img/c209a5bff13c89ee02574bbc09911728_5.png)
 
-![](img/c209a5bff13c89ee02574bbc09911728_6.png)
 
-![](img/c209a5bff13c89ee02574bbc09911728_7.png)
 
-![](img/c209a5bff13c89ee02574bbc09911728_8.png)
 
-![](img/c209a5bff13c89ee02574bbc09911728_9.png)
 
-![](img/c209a5bff13c89ee02574bbc09911728_10.png)
 
 在本节课中，我们将要学习一个名为 **ULMFiT** 的模型。它是“通用语言模型微调”的缩写，主要用于文本分类任务。这是最早利用语言模型进行迁移学习来完成文本分类的论文之一。我们将了解其核心思想、应用场景以及使其成功的关键技巧。
 
-![](img/c209a5bff13c89ee02574bbc09911728_11.png)
 
-![](img/c209a5bff13c89ee02574bbc09911728_12.png)
 
 ---
 
-![](img/c209a5bff13c89ee02574bbc09911728_14.png)
 
-![](img/c209a5bff13c89ee02574bbc09911728_15.png)
 
-![](img/c209a5bff13c89ee02574bbc09911728_16.png)
 
-![](img/c209a5bff13c89ee02574bbc09911728_17.png)
 
-![](img/c209a5bff13c89ee02574bbc09911728_18.png)
 
-![](img/c209a5bff13c89ee02574bbc09911728_19.png)
 
-![](img/c209a5bff13c89ee02574bbc09911728_20.png)
 
 ## 概述 📋
 
-![](img/c209a5bff13c89ee02574bbc09911728_21.png)
 
-![](img/c209a5bff13c89ee02574bbc09911728_22.png)
 
-![](img/c209a5bff13c89ee02574bbc09911728_23.png)
 
-![](img/c209a5bff13c89ee02574bbc09911728_24.png)
 
-![](img/c209a5bff13c89ee02574bbc09911728_25.png)
 
-![](img/c209a5bff13c89ee02574bbc09911728_27.png)
 
 ULMFiT 的核心思想是借鉴计算机视觉领域的成功经验：先在大型数据集（如 ImageNet）上预训练一个模型，然后将学到的知识迁移到其他任务（如分割或检测）。论文提出，我们能否对自然语言处理做同样的事情？答案是肯定的，我们可以通过语言模型进行迁移学习。
 
-![](img/c209a5bff13c89ee02574bbc09911728_28.png)
 
-![](img/c209a5bff13c89ee02574bbc09911728_29.png)
 
-![](img/c209a5bff13c89ee02574bbc09911728_31.png)
 
-![](img/c209a5bff13c89ee02574bbc09911728_32.png)
 
-![](img/c209a5bff13c89ee02574bbc09911728_33.png)
 
 上一节我们介绍了文本分类的基本概念，本节中我们来看看如何通过预训练语言模型来提升分类性能。
 
 ---
 
-![](img/c209a5bff13c89ee02574bbc09911728_35.png)
 
-![](img/c209a5bff13c89ee02574bbc09911728_36.png)
 
-![](img/c209a5bff13c89ee02574bbc09911728_37.png)
 
-![](img/c209a5bff13c89ee02574bbc09911728_38.png)
 
-![](img/c209a5bff13c89ee02574bbc09911728_39.png)
 
-![](img/c209a5bff13c89ee02574bbc09911728_40.png)
 
-![](img/c209a5bff13c89ee02574bbc09911728_41.png)
 
-![](img/c209a5bff13c89ee02574bbc09911728_42.png)
 
-![](img/c209a5bff13c89ee02574bbc09911728_43.png)
 
-![](img/c209a5bff13c89ee02574bbc09911728_44.png)
 
 ## 什么是语言模型？ 🤔
 
-![](img/c209a5bff13c89ee02574bbc09911728_45.png)
 
-![](img/c209a5bff13c89ee02574bbc09911728_46.png)
 
-![](img/c209a5bff13c89ee02574bbc09911728_48.png)
 
-![](img/c209a5bff13c89ee02574bbc09911728_49.png)
 
-![](img/c209a5bff13c89ee02574bbc09911728_51.png)
 
-![](img/c209a5bff13c89ee02574bbc09911728_52.png)
 
 语言模型是一个预测序列中下一个词的任务。例如，给定句子“Universal language model”，模型需要预测下一个词是什么。这本质上是一个概率建模问题：给定前面的词，计算下一个词出现的可能性。
 
-![](img/c209a5bff13c89ee02574bbc09911728_54.png)
 
 其核心公式可以表示为：
 `P(w_t | w_1, w_2, ..., w_{t-1})`
 
-![](img/c209a5bff13c89ee02574bbc09911728_56.png)
 
-![](img/c209a5bff13c89ee02574bbc09911728_57.png)
 
-![](img/c209a5bff13c89ee02574bbc09911728_58.png)
 
-![](img/c209a5bff13c89ee02574bbc09911728_59.png)
 
-![](img/c209a5bff13c89ee02574bbc09911728_60.png)
 
-![](img/c209a5bff13c89ee02574bbc09911728_61.png)
 
-![](img/c209a5bff13c89ee02574bbc09911728_62.png)
 
-![](img/c209a5bff13c89ee02574bbc09911728_63.png)
 
 这个任务不需要任何人工标注的标签，属于无监督学习。我们可以利用互联网上大量未标注的文本语料（如维基百科文章）来训练模型。在2018年这篇论文的背景下，使用的是 **LSTM** 网络来构建语言模型。
 
 ---
 
-![](img/c209a5bff13c89ee02574bbc09911728_65.png)
 
-![](img/c209a5bff13c89ee02574bbc09911728_66.png)
 
-![](img/c209a5bff13c89ee02574bbc09911728_67.png)
 
-![](img/c209a5bff13c89ee02574bbc09911728_68.png)
 
-![](img/c209a5bff13c89ee02574bbc09911728_69.png)
 
-![](img/c209a5bff13c89ee02574bbc09911728_70.png)
 
-![](img/c209a5bff13c89ee02574bbc09911728_71.png)
 
-![](img/c209a5bff13c89ee02574bbc09911728_72.png)
 
-![](img/c209a5bff13c89ee02574bbc09911728_73.png)
 
 ## ULMFiT 的三阶段流程 🚀
 
-![](img/c209a5bff13c89ee02574bbc09911728_74.png)
 
-![](img/c209a5bff13c89ee02574bbc09911728_75.png)
 
-![](img/c209a5bff13c89ee02574bbc09911728_76.png)
 
-![](img/c209a5bff13c89ee02574bbc09911728_78.png)
 
-![](img/c209a5bff13c89ee02574bbc09911728_79.png)
 
-![](img/c209a5bff13c89ee02574bbc09911728_80.png)
 
 ULMFiT 实现迁移学习主要分为三个步骤。以下是具体流程：
 
-![](img/c209a5bff13c89ee02574bbc09911728_81.png)
 
-![](img/c209a5bff13c89ee02574bbc09911728_82.png)
 
-![](img/c209a5bff13c89ee02574bbc09911728_84.png)
 
-![](img/c209a5bff13c89ee02574bbc09911728_85.png)
 
-![](img/c209a5bff13c89ee02574bbc09911728_86.png)
 
 1.  **通用领域语言模型预训练**：在一个大型通用文本语料库（如 WikiText-103）上训练一个语言模型。这为模型提供了通用的语言理解能力。
 2.  **目标任务语言模型微调**：使用目标任务相关的文本数据（忽略标签）对预训练的语言模型进行微调，使其适应目标领域的语言风格和特点。
@@ -183,65 +108,39 @@ ULMFiT 实现迁移学习主要分为三个步骤。以下是具体流程：
 
 ---
 
-![](img/c209a5bff13c89ee02574bbc09911728_88.png)
 
-![](img/c209a5bff13c89ee02574bbc09911728_89.png)
 
-![](img/c209a5bff13c89ee02574bbc09911728_90.png)
 
-![](img/c209a5bff13c89ee02574bbc09911728_91.png)
 
-![](img/c209a5bff13c89ee02574bbc09911728_92.png)
 
-![](img/c209a5bff13c89ee02574bbc09911728_93.png)
 
-![](img/c209a5bff13c89ee02574bbc09911728_94.png)
 
-![](img/c209a5bff13c89ee02574bbc09911728_95.png)
 
-![](img/c209a5bff13c89ee02574bbc09911728_96.png)
 
-![](img/c209a5bff13c89ee02574bbc09911728_97.png)
 
 ## 关键技巧解析 🔧
 
-![](img/c209a5bff13c89ee02574bbc09911728_98.png)
 
-![](img/c209a5bff13c89ee02574bbc09911728_99.png)
 
 仅仅有上述流程还不够，论文中使用了几个关键技巧才使得迁移学习真正有效。
 
-![](img/c209a5bff13c89ee02574bbc09911728_101.png)
 
-![](img/c209a5bff13c89ee02574bbc09911728_102.png)
 
-![](img/c209a5bff13c89ee02574bbc09911728_103.png)
 
-![](img/c209a5bff13c89ee02574bbc09911728_104.png)
 
-![](img/c209a5bff13c89ee02574bbc09911728_105.png)
 
-![](img/c209a5bff13c89ee02574bbc09911728_106.png)
 
-![](img/c209a5bff13c89ee02574bbc09911728_107.png)
 
-![](img/c209a5bff13c89ee02574bbc09911728_108.png)
 
-![](img/c209a5bff13c89ee02574bbc09911728_109.png)
 
-![](img/c209a5bff13c89ee02574bbc09911728_110.png)
 
 ### 1. 区分性微调
 
 在第二阶段微调时，不同网络层的学习率应该不同。模型底层的参数已经包含了通用的语言特征，不宜改动过大；而高层的参数需要更快地适应新任务。
 
-![](img/c209a5bff13c89ee02574bbc09911728_112.png)
 
-![](img/c209a5bff13c89ee02574bbc09911728_113.png)
 
-![](img/c209a5bff13c89ee02574bbc09911728_114.png)
 
-![](img/c209a5bff13c89ee02574bbc09911728_115.png)
 
 ![](img/c209a5bff13c89ee02574bbc09911728_116.png)
 

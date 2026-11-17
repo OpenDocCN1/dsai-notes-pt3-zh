@@ -1,6 +1,5 @@
 # 每个人的 Python 第四部分 28：28_04_02_实战示例：roster.py程序 📝
 
-![](img/574236a4365624f1dd93c385d70a2e0b_1.png)
 
 在本节课中，我们将学习如何通过一个名为 `roster.py` 的实战程序，在Python中实现数据库的“多对多”关系。我们将重点理解如何使用连接表、主键、外键以及一些关键的SQLite操作技巧来管理用户和课程之间的复杂关系。
 
@@ -17,15 +16,11 @@
 *   `Course` 表：存储课程信息。
 *   `Member` 表：作为连接表，记录哪个用户加入了哪门课程。
 
-![](img/574236a4365624f1dd93c385d70a2e0b_3.png)
 
-![](img/574236a4365624f1dd93c385d70a2e0b_4.png)
 
-![](img/574236a4365624f1dd93c385d70a2e0b_5.png)
 
 以下是各表的核心结构：
 
-![](img/574236a4365624f1dd93c385d70a2e0b_6.png)
 
 **User 表**
 ```sql
@@ -75,7 +70,6 @@ cur = conn.cursor()
 
 为了确保每次运行都能从一个干净的状态开始，程序会先删除已存在的表（如果它们存在），然后重新创建它们。这通过执行一个包含多个 `DROP TABLE` 和 `CREATE TABLE` 语句的长SQL脚本实现。
 
-![](img/574236a4365624f1dd93c385d70a2e0b_8.png)
 
 ## 核心逻辑：插入与关联数据 🔄
 
@@ -97,34 +91,25 @@ cur = conn.cursor()
     ```
     `fetchone()` 返回一个元组，`[0]` 用于获取元组中的第一个元素，即 `id`。
 
-![](img/574236a4365624f1dd93c385d70a2e0b_10.png)
 
 3.  **插入或忽略课程并获取课程ID**：对课程标题 `title` 重复步骤1和2，确保课程唯一并获取其 `course_id`。
 
-![](img/574236a4365624f1dd93c385d70a2e0b_12.png)
 
 4.  **插入或替换成员关系**：现在，我们有了 `user_id` 和 `course_id`。我们将它们插入 `Member` 表。这里使用 `INSERT OR REPLACE`。由于 `(user_id, course_id)` 是复合主键，如果该组合已存在，`REPLACE` 会更新该行（在本例中，可能用于更新`role`字段）；如果不存在，则插入新行。
     ```python
     cur.execute('''INSERT OR REPLACE INTO Member (user_id, course_id) VALUES ( ?, ? )''', (user_id, course_id))
     ```
 
-![](img/574236a4365624f1dd93c385d70a2e0b_14.png)
 
 5.  **提交事务**：在所有数据操作完成后，我们调用 `conn.commit()` 将更改永久保存到磁盘。为了提高性能，也可以选择在循环外一次性提交，而不是每次插入后都提交。
 
-![](img/574236a4365624f1dd93c385d70a2e0b_16.png)
 
-![](img/574236a4365624f1dd93c385d70a2e0b_17.png)
 
 ## 运行与验证 🚀
 
-![](img/574236a4365624f1dd93c385d70a2e0b_18.png)
 
-![](img/574236a4365624f1dd93c385d70a2e0b_19.png)
 
-![](img/574236a4365624f1dd93c385d70a2e0b_20.png)
 
-![](img/574236a4365624f1dd93c385d70a2e0b_22.png)
 
 当运行程序 `python3 roster.py` 后，它会快速处理JSON文件中的所有条目。程序运行过程中，会打印出正在处理的姓名和课程标题。
 
@@ -133,7 +118,6 @@ cur = conn.cursor()
 *   `Course` 表：包含了所有唯一的课程及其自动分配的 `id`。
 *   `Member` 表：包含了 `user_id` 和 `course_id` 的组合，清晰地记录了所有成员关系。
 
-![](img/574236a4365624f1dd93c385d70a2e0b_24.png)
 
 ## 总结 📝
 

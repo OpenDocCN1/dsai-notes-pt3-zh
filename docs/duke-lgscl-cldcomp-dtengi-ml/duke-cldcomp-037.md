@@ -42,7 +42,6 @@ triggers:
         pattern: PUSH
 ```
 
-![](img/79226208ff337a7992b7d265f23352fc_6.png)
 
 ## 配置构建环境
 
@@ -170,11 +169,9 @@ def test_cli():
 
 ![](img/79226208ff337a7992b7d265f23352fc_18.png)
 
-![](img/79226208ff337a7992b7d265f23352fc_20.png)
 
 ## 总结
 
-![](img/79226208ff337a7992b7d265f23352fc_22.png)
 
 ![](img/79226208ff337a7992b7d265f23352fc_24.png)
 

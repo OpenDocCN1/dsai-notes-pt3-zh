@@ -2,7 +2,6 @@
 
 ![](img/8ac245f73ffb5d8f8d0d6a265643287f_0.png)
 
-![](img/8ac245f73ffb5d8f8d0d6a265643287f_1.png)
 
 ![](img/8ac245f73ffb5d8f8d0d6a265643287f_3.png)
 
@@ -110,7 +109,6 @@ Varol等人（2017）估计，**9% 到 15%** 的活跃Twitter账户是机器人�
 
 ![](img/8ac245f73ffb5d8f8d0d6a265643287f_42.png)
 
-![](img/8ac245f73ffb5d8f8d0d6a265643287f_43.png)
 
 ![](img/8ac245f73ffb5d8f8d0d6a265643287f_44.png)
 

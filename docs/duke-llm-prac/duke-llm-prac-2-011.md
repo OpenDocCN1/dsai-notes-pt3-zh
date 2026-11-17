@@ -1,6 +1,5 @@
 # 大型语言模型实践（高级数据工程、AWS、Databricks和本地LLM）：P11：11_01_06_将Celery与RabbitMQ连接 🚀
 
-![](img/9f107b10d8a82b748ed7e3577a68c7e1_0.png)
 
 ![](img/9f107b10d8a82b748ed7e3577a68c7e1_0.png)
 

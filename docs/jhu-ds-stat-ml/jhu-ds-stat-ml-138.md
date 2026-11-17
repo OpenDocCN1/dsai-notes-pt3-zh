@@ -1,6 +1,5 @@
 # 138：R Markdown 进阶与发布 🚀
 
-![](img/0bd70d6d0fe85224832121af313f3bf1_0.png)
 
 ![](img/0bd70d6d0fe85224832121af313f3bf1_2.png)
 
@@ -26,13 +25,11 @@ plot(cars$weight, cars$mpg, xlab = "Weight", ylab = "Miles per Gallon")
 
 ![](img/0bd70d6d0fe85224832121af313f3bf1_12.png)
 
-![](img/0bd70d6d0fe85224832121af313f3bf1_13.png)
 
 运行后，图形会显示出来。但在最终报告中，我们通常不希望显示生成图形的源代码。
 
 ![](img/0bd70d6d0fe85224832121af313f3bf1_14.png)
 
-![](img/0bd70d6d0fe85224832121af313f3bf1_15.png)
 
 为了隐藏代码，我们可以在代码块选项中设置 `echo = FALSE`。修改后重新运行，图形会正常显示，但源代码不会出现在最终文档中。
 
@@ -62,7 +59,6 @@ plot(cars$weight, cars$mpg, xlab = "Weight", ylab = "Miles per Gallon")
 2.  将你的 R Markdown 文件以及 `knit` 生成的 `.html` 文件推送到这个分支。
 3.  访问 `https://<你的用户名>.github.io/<仓库名>/<文件路径>.html` 即可在线查看。
 
-![](img/0bd70d6d0fe85224832121af313f3bf1_20.png)
 
 例如，讲师 Sean Cross 的课程幻灯片就托管在他的 GitHub Pages 上。这种方式非常适合已经使用 GitHub 进行版本控制和协作的数据科学工作者。
 

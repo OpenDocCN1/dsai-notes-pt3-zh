@@ -1,6 +1,5 @@
 # 101：29_4.2 Wi-Fi DCF CSMA-CA（第2部分）📡
 
-![](img/28c99a50cc513e4f516c93837fc779e1_0.png)
 
 ![](img/28c99a50cc513e4f516c93837fc779e1_0.png)
 

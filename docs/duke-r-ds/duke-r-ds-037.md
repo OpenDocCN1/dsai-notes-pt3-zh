@@ -1,8 +1,6 @@
 #  037：算法偏见
 
-![](img/b66025ba1cdddbae2b29784bb85cf4c0_0.png)
 
-![](img/b66025ba1cdddbae2b29784bb85cf4c0_1.png)
 
 ![](img/b66025ba1cdddbae2b29784bb85cf4c0_3.png)
 

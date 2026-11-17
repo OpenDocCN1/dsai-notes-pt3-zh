@@ -10,7 +10,6 @@
 
 ONNX是一种开放的模型格式，旨在实现不同机器学习框架（如PyTorch、TensorFlow）之间的互操作性。通过将模型导出为ONNX格式，我们可以将其部署到多种硬件和运行时环境中，而无需依赖原始的框架。本节课将引导你了解ONNX的核心概念、如何设置环境，以及如何开始使用Hugging Face的`transformers`库与ONNX进行交互。
 
-![](img/2a9f3ba3262ebadc5ec682aae9597742_2.png)
 
 ---
 

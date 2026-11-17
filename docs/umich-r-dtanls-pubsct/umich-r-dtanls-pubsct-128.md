@@ -1,8 +1,6 @@
 # 4：数据分析伦理情境案例 📊
 
-![](img/dc9007a6bc8642c81f780000d67cbefb_0.png)
 
-![](img/dc9007a6bc8642c81f780000d67cbefb_1.png)
 
 ![](img/dc9007a6bc8642c81f780000d67cbefb_3.png)
 

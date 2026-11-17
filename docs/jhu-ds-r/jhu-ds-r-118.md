@@ -28,9 +28,7 @@ qplot(x = displ, y = hwy, data = mpg)
 
 这个绘图非常简单。可以看到，它生成的图形与传统的基础绘图系统有很大不同：它有灰色的背景和白色的网格线，点是实心圆点而非基础绘图系统中典型的空心圆，并且 x 轴和 y 轴都有标签。
 
-![](img/6d8b6bd00efc8d193a14e842fae0b9ad_1.png)
 
-![](img/6d8b6bd00efc8d193a14e842fae0b9ad_1.png)
 
 ---
 
@@ -46,13 +44,11 @@ qplot(x = displ, y = hwy, data = mpg, color = drv)
 
 在这个新图中，前轮驱动汽车显示为绿色，后轮驱动为蓝色，四轮驱动为红色。可以看到，前轮驱动汽车的油耗往往最高，四轮驱动最低，后轮驱动居中。请注意，图例是自动放置在图形上的，因子变量的不同水平也自动进行了颜色编码，无需进行任何特殊操作。
 
-![](img/6d8b6bd00efc8d193a14e842fae0b9ad_3.png)
 
 ---
 
 ### 添加统计摘要：平滑曲线
 
-![](img/6d8b6bd00efc8d193a14e842fae0b9ad_3.png)
 
 有时我们想为图形添加一个统计摘要。这里我们选择添加的摘要是一种平滑器，更技术性的名称是 **LOESS**。它可以平滑数据，以便观察数据的整体趋势。
 
@@ -64,9 +60,7 @@ qplot(x = displ, y = hwy, data = mpg, geom = c(“point”, “smooth”))
 
 这条蓝色的线就是平滑线，其 95% 的置信区间由灰色的带状区域表示。
 
-![](img/6d8b6bd00efc8d193a14e842fae0b9ad_5.png)
 
-![](img/6d8b6bd00efc8d193a14e842fae0b9ad_5.png)
 
 ---
 
@@ -76,7 +70,6 @@ qplot(x = displ, y = hwy, data = mpg, geom = c(“point”, “smooth”))
 
 同样，我想区分哪些车是四轮驱动，哪些是前轮驱动等。因此，我指定了 `fill` 参数（而不是 `color`）。`fill` 参数表示直方图的不同部分将根据驱动类型填充不同的颜色。
 
-![](img/6d8b6bd00efc8d193a14e842fae0b9ad_7.png)
 
 ```r
 qplot(x = hwy, data = mpg, fill = drv)
@@ -84,7 +77,6 @@ qplot(x = hwy, data = mpg, fill = drv)
 
 你可以再次看到类似的图像：四轮驱动车辆的油耗往往最低，前轮驱动车辆的油耗往往最高。
 
-![](img/6d8b6bd00efc8d193a14e842fae0b9ad_7.png)
 
 ---
 
@@ -112,7 +104,6 @@ qplot(x = displ, y = hwy, data = mpg, facets = . ~ drv)
 qplot(x = hwy, data = mpg, facets = drv ~ .)
 ```
 
-![](img/6d8b6bd00efc8d193a14e842fae0b9ad_9.png)
 
 ---
 
@@ -126,7 +117,6 @@ qplot(x = hwy, data = mpg, facets = drv ~ .)
 *   `pm25`：细颗粒物，这是直径小于 2.5 微米的灰尘。
 *   `mopos`：小鼠过敏原皮试阳性变量。这是一个皮肤测试，告诉我们儿童是否对小鼠过敏原过敏。
 
-![](img/6d8b6bd00efc8d193a14e842fae0b9ad_11.png)
 
 ---
 
@@ -138,9 +128,7 @@ qplot(x = hwy, data = mpg, facets = drv ~ .)
 qplot(x = log(eno), data = maacs)
 ```
 
-![](img/6d8b6bd00efc8d193a14e842fae0b9ad_9.png)
 
-![](img/6d8b6bd00efc8d193a14e842fae0b9ad_13.png)
 
 ---
 
@@ -148,7 +136,6 @@ qplot(x = log(eno), data = maacs)
 
 现在，我制作了另一个直方图，但根据 `mopos` 变量对不同的组进行了颜色编码。我区分了对小鼠过敏原敏感（过敏）和不敏感（不过敏）的人群。
 
-![](img/6d8b6bd00efc8d193a14e842fae0b9ad_11.png)
 
 你可以想象，对小鼠过敏原敏感的儿童可能过敏更严重，可能对多种环境触发因素更敏感。从数据中大致可以看出，蓝色条（过敏组）略高，红色条（非过敏组）略低。这表明，平均而言，对小鼠过敏原呈阳性的儿童肺部炎症水平略高。
 
@@ -156,11 +143,9 @@ qplot(x = log(eno), data = maacs)
 qplot(x = log(eno), data = maacs, fill = mopos)
 ```
 
-![](img/6d8b6bd00efc8d193a14e842fae0b9ad_15.png)
 
 ---
 
-![](img/6d8b6bd00efc8d193a14e842fae0b9ad_13.png)
 
 ### 使用密度平滑可视化
 
@@ -175,9 +160,7 @@ qplot(x = log(eno), data = maacs, geom = “density”)
 qplot(x = log(eno), data = maacs, geom = “density”, color = mopos)
 ```
 
-![](img/6d8b6bd00efc8d193a14e842fae0b9ad_15.png)
 
-![](img/6d8b6bd00efc8d193a14e842fae0b9ad_17.png)
 
 ---
 
@@ -212,11 +195,9 @@ qplot(x = log(pm25), y = log(eno), data = maacs, color = mopos)
 qplot(x = log(pm25), y = log(eno), data = maacs, color = mopos, geom = c(“point”, “smooth”), method = “lm”)
 ```
 
-![](img/6d8b6bd00efc8d193a14e842fae0b9ad_17.png)
 
 大致可以看出，在非过敏儿童（红点）中，存在轻微的负相关关系，但考虑到置信区间，这种关系并不特别强。而在过敏儿童中，PM2.5 与 ENO 之间似乎存在递增的关系。
 
-![](img/6d8b6bd00efc8d193a14e842fae0b9ad_19.png)
 
 ---
 

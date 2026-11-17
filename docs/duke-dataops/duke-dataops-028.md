@@ -1,6 +1,5 @@
 #  028：GitHub Actions 实战指南 🚀
 
-![](img/cfbc0da0c6795ede3e8b589345315ee7_0.png)
 
 在本节课中，我们将学习如何在实际项目中启用和使用 GitHub Actions，了解其核心概念，并通过一个具体的例子来观察自动化工作流的运行过程。
 
@@ -43,7 +42,6 @@ GitHub Actions 是一个强大的持续集成和持续交付平台，允许你�
 
 例如，如果我想在本地运行 `make format`，它会格式化我项目中的所有代码。同样，如果我想运行 `make lint`，它会检查项目中所有代码的规范性。当这些命令在 GitHub Actions 环境中运行时，会发生完全相同的事情。
 
-![](img/cfbc0da0c6795ede3e8b589345315ee7_2.png)
 
 这样设计的核心理念是：**保持本地开发与云端自动化流程的一致性**。
 
@@ -73,7 +71,6 @@ GitHub Actions 是一个强大的持续集成和持续交付平台，允许你�
 
 
 
-![](img/cfbc0da0c6795ede3e8b589345315ee7_4.png)
 
 
 
@@ -87,7 +84,6 @@ GitHub Actions 是一个强大的持续集成和持续交付平台，允许你�
 
 
 
-![](img/cfbc0da0c6795ede3e8b589345315ee7_6.png)
 
 
 
@@ -109,7 +105,6 @@ GitHub Actions 是一个强大的持续集成和持续交付平台，允许你�
 
 
 
-![](img/cfbc0da0c6795ede3e8b589345315ee7_8.png)
 
 
 

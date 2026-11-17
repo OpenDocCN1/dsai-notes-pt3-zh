@@ -51,7 +51,6 @@ cufftExecC2C(plan, data2, data2, CUFFT_FORWARD);
 
 最后，非常重要的一步是销毁你的计划并释放内存。这会释放硬件上的所有资源。你肯定不希望造成内存泄漏或长期占用不必要的资源。
 
-![](img/eacac78abc4b101629c9b7aedc7b596c_1.png)
 
 ```c
 cufftDestroy(plan);
@@ -65,7 +64,6 @@ cudaFree(data2);
 
 以下是不同维度下，复数到复数、复数到实数、实数到复数正向变换的输入和输出尺寸总结表：
 
-![](img/eacac78abc4b101629c9b7aedc7b596c_1.png)
 
 需要注意的关键点是：
 *   进行**复数到复数**变换时，输入和输出尺寸通常相同，没有问题。
@@ -87,7 +85,6 @@ CUFFT库还支持更高级的功能，以处理复杂场景。
 
 以下是多GPU函数命名示例：
 
-![](img/eacac78abc4b101629c9b7aedc7b596c_3.png)
 
 函数名以`cufftXt`开头，后跟与单GPU版本类似的函数名。例如，`cufftXtMalloc`就相当于单GPU的`cufftMalloc`。
 
@@ -95,7 +92,6 @@ CUFFT库还支持更高级的功能，以处理复杂场景。
 
 你仍然需要制定一个计划，在这种情况下，命令是`cufftXtMakePlan`。这个函数允许你创建一到多维的计划。
 
-![](img/eacac78abc4b101629c9b7aedc7b596c_4.png)
 
 在这种多GPU环境下，**务必调用`cufftDestroy`**，因为它不仅会销毁计划，还会释放所有硬件资源，这些资源可能分布在多个GPU上。
 
@@ -103,7 +99,6 @@ CUFFT库还支持更高级的功能，以处理复杂场景。
 
 **总结**
 
-![](img/eacac78abc4b101629c9b7aedc7b596c_3.png)
 
 ![](img/eacac78abc4b101629c9b7aedc7b596c_4.png)
 

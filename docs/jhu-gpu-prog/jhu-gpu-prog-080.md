@@ -53,13 +53,10 @@ for (int i = 0; i < data_per_thread - 1; i++) {
 
 请记住这些要点。也许你能由此构思出更好的冒泡排序版本。
 
-![](img/46b476ea98d7ca97a02632fad9e6d3c3_1.png)
 
-![](img/46b476ea98d7ca97a02632fad9e6d3c3_2.png)
 
 ## 总结
 
-![](img/46b476ea98d7ca97a02632fad9e6d3c3_1.png)
 
 ![](img/46b476ea98d7ca97a02632fad9e6d3c3_2.png)
 

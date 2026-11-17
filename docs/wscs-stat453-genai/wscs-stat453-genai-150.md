@@ -8,7 +8,6 @@
 
 首先，我们进行常规的导入和数据集准备。
 
-![](img/5049c02cf602d62e3419b206a736cae4_1.png)
 
 ```python
 import torch
@@ -19,13 +18,10 @@ from torch.utils.data import DataLoader
 import matplotlib.pyplot as plt
 ```
 
-![](img/5049c02cf602d62e3419b206a736cae4_3.png)
 
 我们使用 MNIST 数据集，并将图像像素值归一化到 `[-1, 1]` 的范围，这通常比 `[0, 1]` 范围效果更好。GAN 是无监督算法，因此我们只需要训练集图像，不需要标签。
 
-![](img/5049c02cf602d62e3419b206a736cae4_4.png)
 
-![](img/5049c02cf602d62e3419b206a736cae4_5.png)
 
 ```python
 transform = transforms.Compose([
@@ -234,25 +230,17 @@ for epoch in range(num_epochs):
 
 经过 100 个 epoch 的训练后，我们可以观察生成图像的演变过程。在训练初期（epoch 0），生成器输出的是无意义的噪声。随着训练进行（epoch 5, 10, 20...），图像逐渐呈现出可辨认的数字形状。在训练后期，虽然可能仍存在一些瑕疵，但大部分生成的数字已经相当清晰合理。
 
-![](img/5049c02cf602d62e3419b206a736cae4_7.png)
 
-![](img/5049c02cf602d62e3419b206a736cae4_8.png)
 
-![](img/5049c02cf602d62e3419b206a736cae4_10.png)
 
 ## 总结
 
-![](img/5049c02cf602d62e3419b206a736cae4_12.png)
 
-![](img/5049c02cf602d62e3419b206a736cae4_14.png)
 
-![](img/5049c02cf602d62e3419b206a736cae4_15.png)
 
-![](img/5049c02cf602d62e3419b206a736cae4_17.png)
 
 本节课中，我们一起学习了如何在 PyTorch 中实现一个基本的生成对抗网络。我们完成了以下工作：
 
-![](img/5049c02cf602d62e3419b206a736cae4_19.png)
 
 1.  **准备数据**：加载并归一化 MNIST 数据集。
 2.  **构建模型**：定义了全连接结构的生成器和判别器。
@@ -260,11 +248,8 @@ for epoch in range(num_epochs):
 4.  **实现训练循环**：详细编码了判别器和生成器交替更新的步骤，包括梯度清零、损失计算、反向传播和参数更新。
 5.  **监控进度**：通过使用固定噪声生成图像序列，直观地展示了 GAN 的学习过程。
 
-![](img/5049c02cf602d62e3419b206a736cae4_21.png)
 
-![](img/5049c02cf602d62e3419b206a736cae4_23.png)
 
-![](img/5049c02cf602d62e3419b206a736cae4_25.png)
 
 ![](img/5049c02cf602d62e3419b206a736cae4_27.png)
 

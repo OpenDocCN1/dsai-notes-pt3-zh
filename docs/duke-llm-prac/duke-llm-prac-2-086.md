@@ -1,6 +1,5 @@
 # 大型语言模型实践（高级数据工程、AWS、Databricks和本地LLM）：P86：20_01_09_Rust Axum Docker工作流演示
 
-![](img/0509cfb9bbfa152d9a0210ecead40cd2_0.png)
 
 ![](img/0509cfb9bbfa152d9a0210ecead40cd2_0.png)
 
@@ -114,6 +113,5 @@ docker ps
 
 容器化技术确保了开发、测试和生产环境的一致性，极大地简化了部署流程，是云原生应用开发的基础。
 
-![](img/0509cfb9bbfa152d9a0210ecead40cd2_2.png)
 
 ![](img/0509cfb9bbfa152d9a0210ecead40cd2_2.png)

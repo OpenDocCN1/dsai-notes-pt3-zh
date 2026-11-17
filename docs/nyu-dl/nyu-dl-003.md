@@ -1,6 +1,5 @@
 # 3：随机梯度下降与反向传播 🧠
 
-![](img/d9f0fe321b68fd3a7846ded98d4a20ac_1.png)
 
 ![](img/d9f0fe321b68fd3a7846ded98d4a20ac_3.png)
 

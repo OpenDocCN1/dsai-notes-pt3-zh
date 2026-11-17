@@ -1,6 +1,5 @@
 # 39：TDR替代分析方法 📊
 
-![](img/8b048183f50d60834abcabf181421a3f_0.png)
 
 ![](img/8b048183f50d60834abcabf181421a3f_2.png)
 

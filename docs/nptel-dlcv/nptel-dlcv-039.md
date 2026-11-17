@@ -1,6 +1,5 @@
 # 039：解释CNN - 早期方法
 
-![](img/2c7454854c9647c0879da728c19e7afc_0.png)
 
 ![](img/2c7454854c9647c0879da728c19e7afc_0.png)
 
@@ -80,6 +79,5 @@
 *   论文《Deep Inside Convolutional Networks》、《Visualizing and Understanding Convolutional Networks》、《Striving for Simplicity: The All Convolutional Net》。
 *   **练习**：请通过[此链接](提供的资料)学习图割算法，并尝试理解如何将其与数据梯度结合生成对象掩码。
 
-![](img/2c7454854c9647c0879da728c19e7afc_2.png)
 
 ![](img/2c7454854c9647c0879da728c19e7afc_2.png)

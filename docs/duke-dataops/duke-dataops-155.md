@@ -26,11 +26,9 @@ Hugging Face是一个为机器学习社区设计的综合性平台。它不仅�
 
 ## 多种交互方式
 
-![](img/ecd3eaca64fad3e06ec0511890d670df_2.png)
 
 上一节我们了解了平台的网页界面。本节中我们来看看如何通过编程方式与平台交互。
 
-![](img/ecd3eaca64fad3e06ec0511890d670df_4.png)
 
 创建账户后，你不仅可以通过网站使用Hugging Face，还可以通过其提供的Python库进行程序化访问。例如，使用 `huggingface_hub` 库，你可以直接通过代码来管理模型、数据集或Spaces仓库。
 

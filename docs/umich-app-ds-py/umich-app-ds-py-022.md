@@ -141,7 +141,6 @@ MG.add_edge('A', 'B', relation='neighbor')  # 同一对节点间的第二条边
 *   **多重图**：我们使用`MultiGraph`类，它可以处理每对节点之间的多条边。
 *   **加权网络**：我们在添加边时，为边赋予一个`weight`属性。
 
-![](img/09d8ba542d135cc65cd03ff41f056b9c_3.png)
 
 ![](img/09d8ba542d135cc65cd03ff41f056b9c_3.png)
 

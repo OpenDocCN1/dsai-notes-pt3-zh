@@ -2,7 +2,6 @@
 
 ![](img/0056305952c858a8537ebbb21d11735e_0.png)
 
-![](img/0056305952c858a8537ebbb21d11735e_2.png)
 
 在本节课中，我们将学习如何使用Grunt交互式终端与Pig进行交互。我们将了解Grunt Shell的两种运行模式，以及如何在Shell中直接执行Pig Latin语句或运行脚本。
 
@@ -61,7 +60,6 @@ Grunt Shell内置了一些非常实用的功能，能提升操作效率。
 
 我们执行以下Pig Latin语句：
 
-![](img/0056305952c858a8537ebbb21d11735e_4.png)
 
 ```pig
 records = LOAD '/pig/a_or_z.txt' AS (letter:chararray, count:int);
@@ -84,7 +82,6 @@ STORE records_less_than_5 INTO '/out';
 *   `pig -x local script.pig` (在本地模式下执行)
 *   `pig -x mapreduce script.pig` (显式指定MapReduce模式)
 
-![](img/0056305952c858a8537ebbb21d11735e_6.png)
 
 关于脚本文件的位置，需要注意：
 *   如果Pig运行在本地模式，它默认会在本地文件系统寻找脚本。
@@ -108,7 +105,6 @@ STORE records_less_than_5 INTO '/out';
 
 ---
 
-![](img/0056305952c858a8537ebbb21d11735e_8.png)
 
 ## 总结 🎯
 

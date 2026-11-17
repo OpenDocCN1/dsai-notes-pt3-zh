@@ -27,9 +27,7 @@ beckham = people[people['name'] == 'David Beckham']
 
 ---
 
-![](img/b8d333e7a37e3106185a53946dc3d625_7.png)
 
-![](img/b8d333e7a37e3106185a53946dc3d625_9.png)
 
 ## 计算余弦距离
 

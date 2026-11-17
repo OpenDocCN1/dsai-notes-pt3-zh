@@ -195,7 +195,6 @@ heights |>
  geom_point()
 ```
 
-![](img/40292e5adda14ac3838e3f23ce738035.png)
 
 由于上图的结果看起来接近线性，并且这是我们目前唯一知道的方法，我们将尝试回归。我们假设：
 
@@ -240,7 +239,6 @@ heights |>
  geom_abline(intercept = lm_fit$coef[1], slope = lm_fit$coef[2])
 ```
 
-![](img/bc6c30d89886729823f1e4fcbaa4db4a.png)
 
 范围是：
 
@@ -257,7 +255,6 @@ $$ g(p) = \log \frac{p}{1-p}.$$
 
 这种逻辑变换将概率转换为对数几率。正如在数据可视化讲座中讨论的那样，几率告诉我们某事发生的可能性与不发生的可能性相比有多高。$p=0.5$意味着几率是 1 比 1，因此几率是 1。如果$p=0.75$，几率是 3 比 1。这种变换的一个很好的特性是它将概率转换为围绕 0 对称。以下是$g(p)$与$p$的对比图：
 
-![](img/448903725784c71d8f2e11a3a4300af0.png)
 
 在*逻辑回归*中，我们直接用以下方式对条件概率进行建模：
 
@@ -283,7 +280,6 @@ p_hat_logit <- predict(glm_fit, newdata = test_set, type = "response")
 
 这个模型比直线拟合数据略好：
 
-![](img/20a6e0e3d2cd20634cd695d88a1f5fe8.png)
 
 因为有了$\hat{p}(x)$的估计，我们可以得到预测：
 
@@ -295,7 +291,6 @@ confusionMatrix(y_hat_logit, test_set$sex)$overall[["Accuracy"]]
 
 得出的预测结果相似。这是因为两个对$p(x)$的估计在 x 的大约相同区域内都大于 1/2：
 
-![](img/57e8f88458a4bd25314d3d7f80f56b52.png)
 
 线性和逻辑回归都提供了条件期望的估计：
 
@@ -337,7 +332,6 @@ mnist_27$true_p |> mutate(p_hat = p_hat) |>
 #>   variable into a factor?
 ```
 
-![图片](img/1369ced180b8cb88aa1e21a08396071c.png)
 
 就像回归一样，决策规则是一条线，这一点可以从数学上得到证实，因为
 
@@ -426,7 +420,6 @@ confusionMatrix(predict(train_knn, mnist_27$test, type = "raw"),
 #>   variable into a factor?
 ```
 
-![图片](img/f0638a721dad49c32d363ef858bb383e.png)
 
 ## 31.6 练习
 
@@ -521,7 +514,6 @@ p_hat_bayes <- f1*pi / (f1*pi + f0*(1 - pi))
 
 我们的朴素贝叶斯估计 $\hat{p}(x)$ 与逻辑回归估计非常相似：
 
-![](img/c9bcaf8559b2483153d928d3ae106d25.png)
 
 实际上，我们可以证明朴素贝叶斯方法在数学上与逻辑回归预测相似。然而，我们将证明留给更高级的文本，如《统计学习基础》¹⁰³。我们可以通过比较两个结果曲线来观察它们在经验上的相似性。
 
@@ -572,7 +564,6 @@ qplot(x, p_hat_bayes_unbiased, geom = "line") +
  geom_vline(xintercept = 67, lty = 2)
 ```
 
-![](img/122622dfc1ad439fd27e42b6c4eede77.png)
 
 ### 31.7.3 二次判别分析
 
@@ -607,7 +598,6 @@ mnist_27$train |> mutate(y = factor(y)) |>
  stat_ellipse(type="norm", lwd = 1.5)
 ```
 
-![图片](img/9c4c5115142ff99a1bdfaa5bc4fca27c.png)
 
 这定义了 $f(x_1, x_2)$ 的以下估计。
 
@@ -629,7 +619,6 @@ confusionMatrix(y_hat, mnist_27$test$y)$overall["Accuracy"]
 
 估计的条件概率看起来相对较好，尽管它不如核平滑器拟合得那么好：
 
-![图片](img/f471eaa817e6c5c00645845d867284e4.png)
 
 QDA 不如核方法工作得好的一个原因可能是因为正态性的假设并不完全成立。尽管对于 2s 来说似乎是合理的，但对于 7s 来说似乎并不准确。注意 7s 点的轻微曲率：
 
@@ -641,7 +630,6 @@ mnist_27$train |> mutate(y = factor(y)) |>
  facet_wrap(~y)
 ```
 
-![图片](img/e624040b991e1dc06978a6d1e4e94fba.png)
 
 QDA 在这里可以很好地工作，但随着预测因子数量的增加，它变得难以使用。这里我们有 2 个预测因子，不得不计算 4 个均值、4 个标准差和 2 个相关性。如果我们有 10 个预测因子而不是 2 个，我们会有多少个参数？主要问题来自于估计 10 个预测因子的相关性。对于 10 个，我们每个类别有 45 个相关性。一般来说，公式是 $K\times p(p-1)/2$，这会很快变得很大。一旦参数的数量接近数据的大小，由于过拟合，方法变得不切实际。
 
@@ -651,7 +639,6 @@ QDA 在这里可以很好地工作，但随着预测因子数量的增加，它�
 
 在这种情况下，我们只需计算一对标准差和一个相关性，分布看起来是这样的：
 
-![图片](img/4432b6cafb4360f02aa2a97ded98a002.png)
 
 现在椭圆的大小以及角度都是相同的。这是因为它们具有相同的标准差和相关性。
 
@@ -686,7 +673,6 @@ confusionMatrix(y_hat, mnist_27$test$y)$overall["Accuracy"]
 #>   variable into a factor?
 ```
 
-![图片](img/f8918564f6154609b043701e014b1cfb.png)
 
 在 LDA 的情况下，缺乏灵活性不允许我们捕捉到真实条件概率函数中的非线性。
 
@@ -735,7 +721,6 @@ test_set <- data.frame(y = factor(y[-index_train]),
 train_set |> ggplot(aes(x_1, x_2, color=y)) + geom_point()
 ```
 
-![图片](img/35013320ff4c4418623e6a12e20d8c21.png)
 
 我们可以使用**caret**包来训练 QDA 模型：
 
@@ -781,11 +766,9 @@ confusionMatrix(predict(train_qda, test_set), test_set$y)$table
 
 为了可视化哪些区域被称为 1、2 和 7，我们现在需要三种颜色：
 
-![图片](img/40182e1f6d89c2f602de8ebe515a050d.png)
 
 LDA 的准确率（0.629）要差得多，因为模型更僵硬。决策规则看起来是这样的：
 
-![图片](img/26eaebadb31474ec43b1727275dd9cec.png)
 
 kNN 的结果
 
@@ -796,7 +779,6 @@ train_knn <- train(y ~ ., method = "knn", data = train_set,
 
 准确率更高，为 0.749。决策规则看起来是这样的：
 
-![图片](img/e37fc5eb543b5762799c2f9654b0ce74.png)
 
 注意，这里生成模型的一个局限性是由于正态假设的拟合不足，特别是对于第 1 类。
 
@@ -879,7 +861,6 @@ p <- 1:100
 qplot(p, .1^(1/p), ylim = c(0,1))
 ```
 
-![图片](img/f1f979ca6788de7e9abbb347d3ee3958.png)
 
 当我们达到 100 个预测因子时，邻域就不再非常局部了，因为每一边几乎覆盖了整个数据集。
 
@@ -999,7 +980,6 @@ polls_2008 |>
  geom_step(aes(day, y_hat), col="red")
 ```
 
-![](img/8547edb8ffc1e0773da92bbc27ce34af.png)
 
 注意，算法在第 8 次分割后停止了。现在我们解释这个决策是如何做出的。
 
@@ -1019,7 +999,6 @@ polls_2008 |>
  geom_step(aes(day, y_hat), col="red")
 ```
 
-![图片](img/6d54e7fea60f4729f805b2468b09891c.png)
 
 直观地我们知道这不是一个好的方法，因为它通常会导致过拟合。这些 `cp`、`minsplit` 和 `minbucket`，三个参数可以用来控制最终预测器的变异性。这些值越大，用于计算预测器的数据平均就越多，从而减少变异性。缺点是它限制了灵活性。
 
@@ -1055,7 +1034,6 @@ polls_2008 |>
  geom_step(aes(day, y_hat), col="red")
 ```
 
-![图片](img/932c1151576267b5dd7c30de3487695e.png)
 
 注意，如果我们已经有一个树并且想要应用更高的 cp 值，我们可以使用 `prune` 函数。我们称这种对树的修剪为 *修剪*，因为我们正在剪掉不符合 `cp` 标准的分区。我们之前创建了一个使用 `cp = 0` 的树并将其保存到 `fit` 中。我们可以这样修剪它：
 
@@ -1091,7 +1069,6 @@ train_rpart <- train(y ~ .,
 plot(train_rpart)
 ```
 
-![](img/75b03f311e981a9c874a7eb066d091eb.png)
 
 这种方法实现的准确度比回归更好，但不如使用核方法实现的准确度高：
 
@@ -1104,7 +1081,6 @@ confusionMatrix(y_hat, mnist_27$test$y)$overall["Accuracy"]
 
 估计条件概率的图显示了分类树的局限性：
 
-![](img/c15394e2611cb5ad9c651265d66fee4b.png)
 
 注意，在决策树中，很难使边界平滑，因为每个分区都会创建一个不连续性。
 
@@ -1142,7 +1118,6 @@ rafalib::mypar()
 plot(fit)
 ```
 
-![图片](img/a2b18d33e68d52603195a2b90e0dc6f0.png)
 
 我们可以看到，在这种情况下，随着我们添加更多的树，准确性提高，直到大约 30 棵树时，准确性稳定下来。
 
@@ -1195,7 +1170,6 @@ confusionMatrix(predict(train_rf, mnist_27$test),
 #>   variable into a factor?
 ```
 
-![图片](img/aeb261afe8a66cf6de7560c232ab3ffc.png)
 
 可视化估计显示，尽管我们获得了高准确性，但似乎通过使估计更平滑还有改进的空间。这可以通过改变控制树节点中数据点最小数量的参数来实现。这个最小值越大，最终的估计就越平滑。我们可以训练随机森林的参数。下面，我们使用 **caret** 包来优化最小节点大小。因为这不是 **caret** 包默认优化的参数之一，我们将编写自己的代码：
 
@@ -1209,7 +1183,6 @@ acc <- sapply(nodesize, function(ns){
 qplot(nodesize, acc)
 ```
 
-![](img/046bc6b0264d11e477d87d7799dbcc1e.png)
 
 我们现在可以使用优化后的最小节点大小将随机森林拟合到整个训练数据，并在测试数据上评估性能。
 

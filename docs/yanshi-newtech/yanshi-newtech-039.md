@@ -34,7 +34,6 @@ GPU 负责处理图形渲染任务。
 
 ---
 
-![](img/52e668cc43b90f6ba0efa34cca6cf626_4.png)
 
 ### 显示屏、摄像头与附加功能
 
@@ -71,7 +70,6 @@ GPU 负责处理图形渲染任务。
 
 智能手表的平台同样由操作系统、芯片组和 CPU 构成。
 
-![](img/52e668cc43b90f6ba0efa34cca6cf626_6.png)
 
 以下是两款手表的平台信息：
 *   **操作系统**：Gear S3 基于 Tizen，版本 2.3.2；Apple Watch Series 3 采用 watchOS 4.0。

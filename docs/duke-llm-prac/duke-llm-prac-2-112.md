@@ -1,6 +1,5 @@
 # 大型语言模型实践（高级数据工程、AWS、Databricks和本地LLM）：P112：11_01_03_安装和使用Databricks CLI
 
-![](img/61cbbc516c26bf5f2f086e31872f6c50_0.png)
 
 ![](img/61cbbc516c26bf5f2f086e31872f6c50_0.png)
 
@@ -57,6 +56,5 @@ databricks clusters get --cluster-id <CLUSTER_ID> | jq .node_type_id
 
 本节课中我们一起学习了Databricks CLI的安装、配置和基本使用方法。我们了解到，通过命令行界面，你可以方便地列出和启动集群，并通过组合命令与 `jq` 工具来查询集群的详细配置信息。对于日常使用Databricks系统的用户来说，CLI是一个不可或缺的工具，它允许你在没有Web界面的情况下，也能高效地管理工作区、启动作业并与集群进行交互。
 
-![](img/61cbbc516c26bf5f2f086e31872f6c50_2.png)
 
 ![](img/61cbbc516c26bf5f2f086e31872f6c50_2.png)

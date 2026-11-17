@@ -6,9 +6,7 @@
 
 ---
 
-![](img/7281fe390eddfd7b2cecc255843aa0a8_1.png)
 
-![](img/7281fe390eddfd7b2cecc255843aa0a8_2.png)
 
 上一节我们介绍了条形图的基本概念，本节中我们来看看如何准备数据并创建条形图。
 
@@ -30,7 +28,6 @@
 
 以下是创建条形图的具体步骤：
 
-![](img/7281fe390eddfd7b2cecc255843aa0a8_4.png)
 
 1.  设置图形尺寸为 10（宽）x 5（高）。
 2.  调用 `sns.barplot()` 函数。
@@ -43,7 +40,6 @@
 
 ---
 
-![](img/7281fe390eddfd7b2cecc255843aa0a8_6.png)
 
 ![](img/7281fe390eddfd7b2cecc255843aa0a8_7.png)
 

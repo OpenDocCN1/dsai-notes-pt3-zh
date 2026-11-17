@@ -1,6 +1,5 @@
 # 071：深度生成模型 - 图像应用
 
-![](img/416e74ce9fba8fcb24763f84e9b6680b_0.png)
 
 ![](img/416e74ce9fba8fcb24763f84e9b6680b_0.png)
 
@@ -56,7 +55,6 @@ SRGAN是如何训练的？SRGAN有几个组成部分。其中一个损失被称�
 
 关于这些应用的更多信息，请参阅3D GANs的链接，以及一个名为“GAN Zoo”的非常好的链接，它概述了可用于不同应用的各种GANs。
 
-![](img/416e74ce9fba8fcb24763f84e9b6680b_2.png)
 
 ![](img/416e74ce9fba8fcb24763f84e9b6680b_2.png)
 

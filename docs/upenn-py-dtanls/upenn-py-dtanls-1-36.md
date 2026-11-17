@@ -128,7 +128,6 @@ duplicate_series = df_with_duplicates.duplicated()
 
 以下代码返回 `department_id` 列中的所有唯一值。
 
-![](img/821a546275af4b9d637cb21d65ccd862_1.png)
 
 ```python
 df_with_duplicates['department_id'].unique()
@@ -136,7 +135,6 @@ df_with_duplicates['department_id'].unique()
 
 如果我们只想知道某一列有多少个唯一值，可以使用 `.nunique()` 方法。
 
-![](img/821a546275af4b9d637cb21d65ccd862_3.png)
 
 ```python
 df_with_duplicates['department_id'].nunique()
@@ -145,7 +143,6 @@ df_with_duplicates['department_id'].nunique()
 
 ---
 
-![](img/821a546275af4b9d637cb21d65ccd862_5.png)
 
 ## 总结
 

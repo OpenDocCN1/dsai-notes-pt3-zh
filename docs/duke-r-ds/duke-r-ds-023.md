@@ -1,6 +1,5 @@
 #  023：数据类型
 
-![](img/483da10745cf1e491a2f96cb1da851ab_0.png)
 
 ![](img/483da10745cf1e491a2f96cb1da851ab_2.png)
 

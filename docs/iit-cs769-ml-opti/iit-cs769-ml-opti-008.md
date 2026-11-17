@@ -4,13 +4,11 @@
 
 ---
 
-![](img/f18966fb0d0bd1b69cb671210459d7ba_1.png)
 
 ## 定义标签枚举
 
 首先，我们需要定义一个枚举来存储数据集的标签。在SMS垃圾邮件数据集中，包含两个类别：`ham`（正常邮件）和`spam`（垃圾邮件）。
 
-![](img/f18966fb0d0bd1b69cb671210459d7ba_3.png)
 
 ```python
 from enum import Enum
@@ -22,7 +20,6 @@ class Labels(Enum):
 
 **注意**：虽然类别可以映射到任意数字，但建议使用从0开始的连续整数进行映射，即 `0` 到 `类别数 - 1`。
 
-![](img/f18966fb0d0bd1b69cb671210459d7ba_5.png)
 
 ---
 
@@ -30,9 +27,7 @@ class Labels(Enum):
 
 上一节我们定义了数据标签，本节中我们来看看如何为数据定义预处理函数和标注函数。为了演示，我们展示一个将文本转换为小写的预处理函数声明方式。
 
-![](img/f18966fb0d0bd1b69cb671210459d7ba_7.png)
 
-![](img/f18966fb0d0bd1b69cb671210459d7ba_8.png)
 
 ```python
 def convert_to_lower(text):
@@ -41,7 +36,6 @@ def convert_to_lower(text):
 
 以下是标注函数和连续评分函数的定义方式（此处不展开详述）。
 
-![](img/f18966fb0d0bd1b69cb671210459d7ba_10.png)
 
 ---
 
@@ -49,7 +43,6 @@ def convert_to_lower(text):
 
 高级监督模块支持两种主要的训练模式：`FD` 和 `FDU`。
 
-![](img/f18966fb0d0bd1b69cb671210459d7ba_12.png)
 
 *   **`FD` 模式**：模型仅在**已标注数据**上进行训练。
 *   **`FDU` 模式**：模型在**已标注和未标注数据**上共同进行训练。
@@ -58,16 +51,13 @@ def convert_to_lower(text):
 
 ---
 
-![](img/f18966fb0d0bd1b69cb671210459d7ba_14.png)
 
 ## 导入库与设置检查点
 
 接下来，我们需要导入必要的功能库。同时，为了便于后续使用，我们会保存模型的检查点。保存检查点的数量可以作为参数传入。
 
-![](img/f18966fb0d0bd1b69cb671210459d7ba_16.png)
 
 
-![](img/f18966fb0d0bd1b69cb671210459d7ba_18.png)
 
 ```python
 import torch
@@ -83,10 +73,8 @@ def save_checkpoints(model, path, num_checkpoints=5):
 
 我们为不同的日志记录和结果存储初始化对应的目录。如果这些目录不存在，则创建它们。
 
-![](img/f18966fb0d0bd1b69cb671210459d7ba_20.png)
 
 
-![](img/f18966fb0d0bd1b69cb671210459d7ba_22.png)
 
 ```python
 import os
@@ -96,7 +84,6 @@ os.makedirs(log_dir, exist_ok=True)
 os.makedirs(result_dir, exist_ok=True)
 ```
 
-![](img/f18966fb0d0bd1b69cb671210459d7ba_23.png)
 
 然后，我们初始化决定模型输出的各种参数和超参数。
 
@@ -131,7 +118,6 @@ mode = 'implication'  # 可选：'implication', 'learn2reweight', 'pr_loss', 'ma
 
 该模块基于两个网络：**F网络**（分类网络）和 **W网络**（规则网络）。在测试时，我们可以选择测试哪个网络。
 
-![](img/f18966fb0d0bd1b69cb671210459d7ba_25.png)
 
 ```python
 test_mode = 'both'  # 可选：'f_network', 'w_network', 'both'
@@ -162,17 +148,14 @@ data_feeder = DataFeeder(preprocessor=convert_to_lower, ...其他参数)
 *   使用的规则数量
 *   训练所用的规则数量
 
-![](img/f18966fb0d0bd1b69cb671210459d7ba_27.png)
 
 ---
 
 ## 初始化网络模型
 
-![](img/f18966fb0d0bd1b69cb671210459d7ba_29.png)
 
 接着，我们初始化之前提到的 F 网络和 W 网络。
 
-![](img/f18966fb0d0bd1b69cb671210459d7ba_31.png)
 
 ```python
 f_network = ClassificationNetwork(input_dim, num_classes)
@@ -183,7 +166,6 @@ w_network = RuleNetwork(num_rules)
 
 ## 训练与测试模型
 
-![](img/f18966fb0d0bd1b69cb671210459d7ba_33.png)
 
 我们创建一个高级监督网络类的对象 `HLS`，该对象包含 `train`、`test` 等成员函数，用于在可用数据上训练和测试模型。
 
@@ -204,9 +186,7 @@ else:
 
 同样，根据测试模式调用对应的测试函数。
 
-![](img/f18966fb0d0bd1b69cb671210459d7ba_35.png)
 
-![](img/f18966fb0d0bd1b69cb671210459d7ba_36.png)
 
 ---
 

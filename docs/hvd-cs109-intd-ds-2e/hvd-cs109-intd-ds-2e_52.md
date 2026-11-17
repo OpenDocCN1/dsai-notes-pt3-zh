@@ -30,7 +30,6 @@ table(mice_weights$diet)
 with(mice_weights, boxplot(body_weight ~ diet))
 ```
 
-![](img/d683e1dcc12e93235c8c0607134c88c8.png)*  *然而，鉴于我们是随机划分小鼠的，观察到的差异是否仅仅是由于偶然？
 
 在将线性模型联系起来之前，在下一节中，我们使用第十三章中描述的方法对这两个均值的差异进行统计分析。
 
@@ -134,7 +133,6 @@ coefficients(summary(fit))
 boxplot(fit$residuals ~ mice_weights$sex)
 ```
 
-![](img/f3cae82d08eb4da6ec98491d59fbee70.png)*  *这种误设可能具有实际影响；例如，如果接受高脂肪饮食的雄性小鼠更多，那么这可以解释这种增加。相反，如果接受较少，我们可能会低估饮食效果。性别可能是一个混杂因素，表明我们的模型肯定可以改进。
 
 From examining the data:
 
@@ -142,7 +140,6 @@ From examining the data:
 mice_weights |> ggplot](https://ggplot2.tidyverse.org/reference/ggplot.html)(aes(diet, log2(body_weight), fill = sex)) + [geom_boxplot()
 ```
 
-![](img/153dd963a79a07204f9e9c4a29dc73f4.png)*  *我们看到饮食效果在两种性别中都存在，并且雄性比雌性重。尽管并不那么明显，饮食效果在雄性中似乎也更强烈。
 
 一个允许以下四个组有不同的期望值的线性模型，1) 雌性啄食饲料，2) 雌性高脂肪饮食，3) 雄性啄食饲料，和 4) 雄性高脂肪饮食，可以写成这样：
 

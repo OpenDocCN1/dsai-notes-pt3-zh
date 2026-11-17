@@ -39,7 +39,6 @@ Azure的计算机视觉API服务中，有一个与Google Cloud的“自定义视
 
 ## 总结
 
-![](img/a41223e709b233e253730c3cf00160c3_12.png)
 
 ![](img/a41223e709b233e253730c3cf00160c3_13.png)
 

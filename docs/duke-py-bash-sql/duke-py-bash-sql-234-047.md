@@ -1,6 +1,5 @@
 #  047：构建Bash函数 🛠️
 
-![](img/ac6d331fcecdbb2b445e2cb29b65bf2e_0.png)
 
 ![](img/ac6d331fcecdbb2b445e2cb29b65bf2e_1.png)
 

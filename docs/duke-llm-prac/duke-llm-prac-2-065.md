@@ -12,7 +12,6 @@
 1.  在Airflow用户界面中，找到并启用 `wine_dataset_get` 任务。
 2.  触发该任务开始运行。
 
-![](img/b15b515f6cc652403b4de8aaf0009982_1.png)
 
 ![](img/b15b515f6cc652403b4de8aaf0009982_1.png)
 
@@ -26,7 +25,6 @@
 
 点击进入 `data_consumer` 的运行详情，可以看到其运行ID和当前状态。在任务关系图中，可以清晰地看到各个子任务的状态流转：`virtualenv_python` 已完成，`sqlite_perpoint_data` 正在运行。这个视图直观地展示了任务间的依赖关系。
 
-![](img/b15b515f6cc652403b4de8aaf0009982_3.png)
 
 ---
 
@@ -73,7 +71,6 @@ SELECT * FROM wine_notes LIMIT 3;
 ```
 查询结果将显示每条笔记及其关联的索引。
 
-![](img/b15b515f6cc652403b4de8aaf0009982_5.png)
 
 ---
 

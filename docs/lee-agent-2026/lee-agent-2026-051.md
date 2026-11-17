@@ -1,14 +1,11 @@
 # 51：无缝迁移OpenAI GPT-4 Vision到科大讯飞星火大模型 🚀🔄
 
-![](img/7116e3ee833ece4eee5ed1322d74fea4_1.png)
 
 在本节课中，我们将学习如何将一个基于OpenAI GPT-4 Vision模型的应用，以极低的代码改动成本，迁移到使用国产的科大讯飞星火认知大模型。我们将通过一个名为“Spark API Gateway”的开源项目来实现这一目标，并对比两种API调用的差异。
 
-![](img/7116e3ee833ece4eee5ed1322d74fea4_3.png)
 
 ## 概述
 
-![](img/7116e3ee833ece4eee5ed1322d74fea4_5.png)
 
 OpenAI最近发布了具备图片理解能力的GPT-4 Vision模型。与此同时，国产的科大讯飞星火认知大模型也提供了类似的图片理解API。本节课的核心是介绍一个开源网关项目，它能将星火大模型的API映射成与OpenAI API完全兼容的格式。这使得开发者可以几乎无需修改现有代码，就能将应用从OpenAI切换到星火大模型。
 
@@ -32,11 +29,9 @@ OpenAI最近发布了具备图片理解能力的GPT-4 Vision模型。与此同�
 
 ## API调用对比与实践
 
-![](img/7116e3ee833ece4eee5ed1322d74fea4_7.png)
 
 上一节我们介绍了项目的基本情况，本节中我们来看看具体的API调用有何异同。我们将通过Postman工具，对比OpenAI原生API和通过Spark API Gateway调用星火API的差异。
 
-![](img/7116e3ee833ece4eee5ed1322d74fea4_9.png)
 
 我们使用一张网络上的宝马汽车图片作为测试用例，并向模型提问：“图里的标志是什么？”
 

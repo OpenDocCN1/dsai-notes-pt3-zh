@@ -14,7 +14,6 @@
 
 ## 创建DAG文件
 
-![](img/91735dec7c258cee4c1f7c2d60d06411_2.png)
 
 接下来，我们进入`dags`子目录并创建一个新的Python文件。我们将这个文件命名为`pandas_example.py`。你可以使用任何文本编辑器来创建和编辑这个文件。
 
@@ -53,7 +52,6 @@ logger = logging.getLogger(__name__)
 
 我们将使用`PythonVirtualenvOperator`来创建一个隔离的Python环境，并在其中运行我们的任务。这确保了依赖项不会与系统或其他任务冲突。
 
-![](img/91735dec7c258cee4c1f7c2d60d06411_4.png)
 
 ![](img/91735dec7c258cee4c1f7c2d60d06411_5.png)
 
@@ -94,7 +92,6 @@ pandas_task = PythonVirtualenvOperator(
 
 ## 调试与注意事项
 
-![](img/91735dec7c258cee4c1f7c2d60d06411_9.png)
 
 ![](img/91735dec7c258cee4c1f7c2d60d06411_10.png)
 

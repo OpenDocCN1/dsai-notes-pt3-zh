@@ -1,8 +1,6 @@
 #  057：在 macOS 上使用 `mdfind` 命令 🔍
 
-![](img/c9fecfdb37f8709eb55932683cee5deb_0.png)
 
-![](img/c9fecfdb37f8709eb55932683cee5deb_1.png)
 
 在本节课中，我们将学习 macOS 操作系统独有的一个强大工具——`mdfind` 命令。它基于 Spotlight 元数据搜索引擎，能够快速、高效地搜索文件和目录，并支持实时更新和复杂的查询条件。
 
@@ -44,9 +42,7 @@ mdfind -live -name readme -onlyin .
 
 此时，命令会进入等待状态。在另一个标签页中，进入 `source` 目录并创建一个新的 `readme.txt` 文件：
 
-![](img/c9fecfdb37f8709eb55932683cee5deb_3.png)
 
-![](img/c9fecfdb37f8709eb55932683cee5deb_4.png)
 
 ```bash
 cd ~/source

@@ -20,7 +20,6 @@
 
 ---
 
-![](img/83c7db183a45c8559c9fb94552c3bcde_1.png)
 
 上一节我们明确了本模块的学习路径和目标，接下来，我们开始第一步：设置虚拟化环境。
 
@@ -40,11 +39,9 @@ VirtualBox是一款功能强大的虚拟化软件，它允许我们在现有操�
 
 成功安装VirtualBox后，我们需要一个操作系统来运行Hadoop。接下来，我们将在虚拟机中安装Ubuntu Linux。
 
-![](img/83c7db183a45c8559c9fb94552c3bcde_3.png)
 
 ## 2. 设置与运行Ubuntu Linux 🐧
 
-![](img/83c7db183a45c8559c9fb94552c3bcde_5.png)
 
 Ubuntu是一种流行的Linux操作系统发行版。我们将使用Ubuntu 20.04 LTS版本，并将其安装在VirtualBox虚拟机中。
 

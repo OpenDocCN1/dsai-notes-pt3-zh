@@ -1,6 +1,5 @@
 #  037：Shell循环的使用 🔄
 
-![](img/a882bb9e30ddb75345af60463d46231c_0.png)
 
 ![](img/a882bb9e30ddb75345af60463d46231c_1.png)
 

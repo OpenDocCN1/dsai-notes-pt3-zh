@@ -1,6 +1,5 @@
 #  027：Bash脚本中的Shell变量使用 🐚
 
-![](img/2e4fcc2241a89c382779d926fda9dc37_0.png)
 
 ![](img/2e4fcc2241a89c382779d926fda9dc37_1.png)
 

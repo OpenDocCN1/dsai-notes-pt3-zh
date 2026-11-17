@@ -1,6 +1,5 @@
 #  108：使用Scrapy在Python中创建网络爬虫项目
 
-![](img/bc659572c70993e87429f543be655389_0.png)
 
 ![](img/bc659572c70993e87429f543be655389_1.png)
 
@@ -81,9 +80,7 @@ scrapy startproject vulnerabilities
 
 ## 总结
 
-![](img/bc659572c70993e87429f543be655389_3.png)
 
-![](img/bc659572c70993e87429f543be655389_4.png)
 
 ![](img/bc659572c70993e87429f543be655389_5.png)
 

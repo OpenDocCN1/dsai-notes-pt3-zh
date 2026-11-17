@@ -2,13 +2,10 @@
 
 在本节课中，我们将要学习微积分中的第二个主要工具——积分。我们将从一个简单的几何问题开始：如何计算曲线下的面积？我们将通过使用矩形来逼近这个面积，并理解当矩形的数量趋于无穷时，这种逼近如何给出精确的面积值。
 
-![](img/ba906ad2c32bb4f3cdc77ecbd2f8404e_1.png)
 
-![](img/ba906ad2c32bb4f3cdc77ecbd2f8404e_2.png)
 
 ---
 
-![](img/ba906ad2c32bb4f3cdc77ecbd2f8404e_3.png)
 
 ![](img/ba906ad2c32bb4f3cdc77ecbd2f8404e_4.png)
 
@@ -18,7 +15,6 @@
 
 我们有一个曲线，其函数为 **y = x²**。我们关注的是该曲线在 **x = 0** 到 **x = 1** 区间内，与 x 轴所围成的面积。
 
-![](img/ba906ad2c32bb4f3cdc77ecbd2f8404e_8.png)
 
 ![](img/ba906ad2c32bb4f3cdc77ecbd2f8404e_1.png)
 ![](img/ba906ad2c32bb4f3cdc77ecbd2f3.png)
@@ -32,9 +28,7 @@
 ![](img/ba906ad2c32bb4f3cdc77ecbd2f8.png)
 ![](img/ba906ad2c32bb4f3cdc77ecbd2f9.png)
 
-![](img/ba906ad2c32bb4f3cdc77ecbd2f8404e_11.png)
 
-![](img/ba906ad2c32bb4f3cdc77ecbd2f8404e_12.png)
 
 ---
 
@@ -42,7 +36,6 @@
 
 ![](img/ba906ad2c32bb4f3cdc77ecbd2f8404e_14.png)
 
-![](img/ba906ad2c32bb4f3cdc77ecbd2f8404e_15.png)
 
 首先，我们给出一个相对粗略的逼近方法。我们将区间 [0, 1] 分成五个等宽的子区间：0, 0.2, 0.4, 0.6, 0.8, 1。然后，我们在每个子区间上构造一个矩形。
 
@@ -70,7 +63,6 @@
 *   第四个矩形：宽度 0.2，高度为 f(0.8) = (0.8)² = 0.64。
 *   第五个矩形：宽度 0.2，高度为 f(1) = (1)² = 1。
 
-![](img/ba906ad2c32bb4f3cdc77ecbd2f8404e_23.png)
 
 总面积 R₅ = 0.2 × (0.04 + 0.16 + 0.36 + 0.64 + 1) = 0.2 × 2.2 = **0.44**。
 
@@ -80,7 +72,6 @@
 ![](img/ba906ad2c32bb4f3cdc77ecbd2f20.png)
 ![](img/ba906ad2c32bb4f3cdc77ecbd2f21.png)
 
-![](img/ba906ad2c32bb4f3cdc77ecbd2f8404e_26.png)
 
 这个值 **0.44** 是对曲线下真实面积的一个**高估**，因为每个矩形都超出了曲线。但作为一个初步近似，这个结果看起来是合理的。
 
@@ -121,7 +112,6 @@
 ![](img/ba906ad2c32bb4f3cdc77ecbd2f31.png)
 ![](img/ba906ad2c32bb4f3cdc77ecbd2f32.png)
 
-![](img/ba906ad2c32bb4f3cdc77ecbd2f8404e_31.png)
 
 ![](img/ba906ad2c32bb4f3cdc77ecbd2f8404e_32.png)
 
@@ -131,9 +121,7 @@
 ![](img/ba906ad2c32bb4f3cdc77ecbd2f35.png)
 ![](img/ba906ad2c32bb4f3cdc77ecbd2f37.png)
 
-![](img/ba906ad2c32bb4f3cdc77ecbd2f8404e_34.png)
 
-![](img/ba906ad2c32bb4f3cdc77ecbd2f8404e_35.png)
 
 我们可以从中得出一个结论：当使用的矩形数量较少时，误差较大；当使用的矩形数量较多时，误差较小。
 
@@ -141,7 +129,6 @@
 
 ## ♾️ 核心思想：取极限得到精确面积
 
-![](img/ba906ad2c32bb4f3cdc77ecbd2f8404e_37.png)
 
 ![](img/ba906ad2c32bb4f3cdc77ecbd2f8404e_38.png)
 
@@ -180,7 +167,6 @@
 3.  增加矩形的数量可以改善近似的精度。
 4.  通过取矩形数量趋于无穷的极限，可以得到面积的精确值，这引出了定积分的核心概念。
 
-![](img/ba906ad2c32bb4f3cdc77ecbd2f8404e_45.png)
 
 ![](img/ba906ad2c32bb4f3cdc77ecbd2f8404e_46.png)
 

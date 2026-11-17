@@ -1,66 +1,40 @@
 #  009：强化学习中的探索 🧭
 
-![](img/aff6c92a3411e8da7c16d4fc130bf53a_1.png)
 
-![](img/aff6c92a3411e8da7c16d4fc130bf53a_3.png)
 
-![](img/aff6c92a3411e8da7c16d4fc130bf53a_5.png)
 
-![](img/aff6c92a3411e8da7c16d4fc130bf53a_7.png)
 
-![](img/aff6c92a3411e8da7c16d4fc130bf53a_9.png)
 
-![](img/aff6c92a3411e8da7c16d4fc130bf53a_11.png)
 
 在本节课中，我们将学习如何在强化学习（RL）环境中进行有效的探索。上一讲我们介绍了多臂老虎机中的探索策略，本节我们将把这些思想扩展到更复杂的强化学习场景中。
 
-![](img/aff6c92a3411e8da7c16d4fc130bf53a_13.png)
 
-![](img/aff6c92a3411e8da7c16d4fc130bf53a_15.png)
 
-![](img/aff6c92a3411e8da7c16d4fc130bf53a_17.png)
 
-![](img/aff6c92a3411e8da7c16d4fc130bf53a_19.png)
 
-![](img/aff6c92a3411e8da7c16d4fc130bf53a_20.png)
 
 ## 概述
 
-![](img/aff6c92a3411e8da7c16d4fc130bf53a_22.png)
 
-![](img/aff6c92a3411e8da7c16d4fc130bf53a_24.png)
 
 在强化学习中，探索比在多臂老虎机中更具挑战性。我们将介绍一种结合了上置信界（UCB）思想和值迭代（VI）的强大算法——UCB-VI算法，它能以多项式而非指数级的代价实现有效的探索。
 
-![](img/aff6c92a3411e8da7c16d4fc130bf53a_26.png)
 
-![](img/aff6c92a3411e8da7c16d4fc130bf53a_28.png)
 
-![](img/aff6c92a3411e8da7c16d4fc130bf53a_29.png)
 
-![](img/aff6c92a3411e8da7c16d4fc130bf53a_31.png)
 
-![](img/aff6c92a3411e8da7c16d4fc130bf53a_33.png)
 
-![](img/aff6c92a3411e8da7c16d4fc130bf53a_34.png)
 
 ## 从多臂老虎机到强化学习
 
-![](img/aff6c92a3411e8da7c16d4fc130bf53a_36.png)
 
-![](img/aff6c92a3411e8da7c16d4fc130bf53a_38.png)
 
-![](img/aff6c92a3411e8da7c16d4fc130bf53a_39.png)
 
-![](img/aff6c92a3411e8da7c16d4fc130bf53a_40.png)
 
 上一节我们介绍了多臂老虎机中的探索，具体讨论了两种算法：ε-贪心算法和上置信界（UCB）算法。
 
-![](img/aff6c92a3411e8da7c16d4fc130bf53a_42.png)
 
-![](img/aff6c92a3411e8da7c16d4fc130bf53a_43.png)
 
-![](img/aff6c92a3411e8da7c16d4fc130bf53a_45.png)
 
 以下是两种算法的遗憾界对比：
 *   **ε-贪心算法**：遗憾界为 `O(T^{2/3})`。
@@ -68,15 +42,12 @@
 
 在强化学习场景中，探索的挑战性要大得多。我们之前讨论过一个反例——组合锁（combinatorial lock）问题。如果使用随机探索或ε-贪心策略，我们至少需要 `Ω(A^H)` 次尝试才能首次识别出最优策略，这导致遗憾界呈指数级增长。这是不可接受的。
 
-![](img/aff6c92a3411e8da7c16d4fc130bf53a_47.png)
 
 本讲的核心思想是将UCB的思想融入到强化学习中。通过结合值迭代（VI）和UCB，我们可以得到类似 `O(√T)` 且关于H为多项式的遗憾界。
 
 ## UCB-VI算法详解
 
-![](img/aff6c92a3411e8da7c16d4fc130bf53a_49.png)
 
-![](img/aff6c92a3411e8da7c16d4fc130bf53a_50.png)
 
 UCB-VI算法的核心思想与多臂老虎机中的UCB类似：我们不仅估计值函数，还为其添加一个奖励（bonus），以鼓励探索不确定性较高的状态-动作对。
 

@@ -21,7 +21,6 @@
 
 使用Requests库可以轻松地获取网页的原始数据。以下是基本步骤：
 
-![](img/b13544181383a1515ddc8def9caf7afc_1.png)
 
 1.  导入`requests`库。
 2.  使用`get`方法向目标URL发送请求。

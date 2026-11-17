@@ -1,6 +1,5 @@
 # 83：MLOps简介 🚀
 
-![](img/f23efd6445c4ec2e5aef701c88eb6c21_0.png)
 
 ![](img/f23efd6445c4ec2e5aef701c88eb6c21_1.png)
 

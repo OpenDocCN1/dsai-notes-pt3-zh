@@ -69,7 +69,6 @@
 
 以下是一些有价值的资源：
 
-![](img/5994f1f1f7285a1ffb0982919765c66a_3.png)
 
 *   **德国记录链接中心**网站。
 *   欧洲的“**Data Without Boundaries**”项目，包含大量相关信息。
@@ -78,7 +77,6 @@
 
 若想深入学习，可以参考以下资源：
 
-![](img/5994f1f1f7285a1ffb0982919765c66a_5.png)
 
 *   马里兰联合项目提供的在线**记录链接课程**。
 *   由**Julia Lane**等人编辑的书籍《*Privacy, Big Data, and the Public Good*》，其中包含**Helen Nissenbaum**的相关章节。

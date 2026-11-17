@@ -1,10 +1,8 @@
 # 019：OpenStack云操作系统 🖥️
 
-![](img/9aba52db4320aeb2a5110cb408a67c11_1.png)
 
 在本节课中，我们将学习OpenStack云操作系统。OpenStack使我们能够创建自己的私有云，而不是依赖AWS、微软Azure或谷歌云等超大规模公有云。这对于需要在组织内部处理敏感数据（如医疗或汽车行业）的场景尤为重要。我们将了解OpenStack的核心组件、它如何帮助应对构建云基础设施的挑战，以及它如何与我们已经学过的概念（如虚拟化、容器化和大数据分析）相结合。
 
-![](img/9aba52db4320aeb2a5110cb408a67c11_3.png)
 
 上一节我们回顾了超参数优化和自动化机器学习的概念。本节中，我们来看看如何从云使用者的视角，切换到云构建者的视角。
 
@@ -23,11 +21,9 @@ OpenStack是一个开源的云操作系统，它提供了构建和管理私有�
 *   **应用可扩展性**：指应用程序本身根据负载动态扩展的能力，例如MapReduce中根据数据量增减工作节点。
 *   **技术可扩展性**：指基础设施能够融合不同代际的技术（例如，混合使用A100、Grace Hopper和Blackwell等不同代际的GPU）。
 
-![](img/9aba52db4320aeb2a5110cb408a67c11_5.png)
 
 ## OpenStack核心组件
 
-![](img/9aba52db4320aeb2a5110cb408a67c11_7.png)
 
 OpenStack包含众多服务，其核心围绕计算、网络和存储这三大资源池展开。
 
@@ -51,23 +47,19 @@ OpenStack包含众多服务，其核心围绕计算、网络和存储这三大�
 *   **编排服务**：
     *   **Heat**：提供编排服务，用于自动化部署和管理复合云应用。
 
-![](img/9aba52db4320aeb2a5110cb408a67c11_9.png)
 
 ## OpenStack实践示例
 
-![](img/9aba52db4320aeb2a5110cb408a67c11_11.png)
 
 通过组合不同的OpenStack服务，可以构建出类似公有云功能的基础设施。
 
 ### 示例1：模拟亚马逊EC2（基础设施即服务）
 
-![](img/9aba52db4320aeb2a5110cb408a67c11_13.png)
 
 要提供类似亚马逊EC2的虚拟机服务，需要多个OpenStack服务协同工作。
 
 以下是实现此功能所需的关键服务交互：
 
-![](img/9aba52db4320aeb2a5110cb408a67c11_15.png)
 
 1.  用户通过**Horizon**仪表板或API发起请求。
 2.  **Keystone**对用户进行身份验证。
@@ -77,35 +69,26 @@ OpenStack包含众多服务，其核心围绕计算、网络和存储这三大�
 6.  **Cinder**或**Swift**可为虚拟机提供额外的块存储或对象存储。
 7.  （可选）**Heat**服务可以编排整个虚拟机的创建流程。
 
-![](img/9aba52db4320aeb2a5110cb408a67c11_17.png)
 
 ### 示例2：支持容器化应用
 
-![](img/9aba52db4320aeb2a5110cb408a67c11_19.png)
 
 对于容器化应用，OpenStack提供了相应的服务。
 
 **Zun**服务专门用于管理容器。它可以直接在物理主机或虚拟机上启动和管理容器，与**Keystone**、**Neutron**和**Glance**等服务集成，为容器提供网络、身份验证和镜像支持。这可以与Kubernetes结合使用，构建更强大的容器平台。
 
-![](img/9aba52db4320aeb2a5110cb408a67c11_21.png)
 
-![](img/9aba52db4320aeb2a5110cb408a67c11_23.png)
 
 ### 示例3：构建大数据分析平台（如Hadoop/Spark）
 
-![](img/9aba52db4320aeb2a5110cb408a67c11_25.png)
 
 OpenStack可以轻松部署大数据框架。例如，部署Hadoop集群时，可以利用OpenStack的服务映射其架构。
 
-![](img/9aba52db4320aeb2a5110cb408a67c11_27.png)
 
 以下是Hadoop核心组件与OpenStack服务的对应关系示例：
 
-![](img/9aba52db4320aeb2a5110cb408a67c11_29.png)
 
-![](img/9aba52db4320aeb2a5110cb408a67c11_30.png)
 
-![](img/9aba52db4320aeb2a5110cb408a67c11_32.png)
 
 *   **NameNode** 和 **ResourceManager**：这些主节点可以运行在由**Nova**管理的虚拟机上，并使用**Cinder**块存储来保存元数据。
 *   **DataNode** 和 **NodeManager**：这些工作节点同样由**Nova**管理，并使用**Swift**对象存储或**Cinder**块存储来保存实际数据块。**Neutron**确保所有节点间的网络连通性。
@@ -116,9 +99,7 @@ OpenStack可以轻松部署大数据框架。例如，部署Hadoop集群时，�
 
 OpenStack拥有一个活跃的社区和丰富的生态系统。OpenStack Marketplace提供了大量预配置的解决方案和“样本配置”，例如一键部署Hadoop或Spark集群。这极大地简化了部署流程，用户无需从头开始配置每一个组件。
 
-![](img/9aba52db4320aeb2a5110cb408a67c11_34.png)
 
-![](img/9aba52db4320aeb2a5110cb408a67c11_36.png)
 
 ![](img/9aba52db4320aeb2a5110cb408a67c11_37.png)
 

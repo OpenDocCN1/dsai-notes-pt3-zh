@@ -24,7 +24,6 @@ curl -LfO ‘https://airflow.apache.org/docs/apache-airflow/2.7.1/docker-compose
 ```
 好的，让我们开始吧。很好，下载完成了。现在让我们看看我们的 Compose 文件。
 
-![](img/851ced0b0904b43485cc4948b462986f_2.png)
 
 ## 解析 Docker Compose 文件
 
@@ -46,7 +45,6 @@ curl -LfO ‘https://airflow.apache.org/docs/apache-airflow/2.7.1/docker-compose
 
 ## 启动 Airflow 环境
 
-![](img/851ced0b0904b43485cc4948b462986f_4.png)
 
 启动这些服务的常用方式是使用 `docker compose up` 命令。`docker compose up` 将允许你启动所有服务。
 

@@ -1,6 +1,5 @@
 #  013：Shell管道实例演练 🐚
 
-![](img/98ac1f271cab2f0f518d427f3b7e080f_0.png)
 
 ![](img/98ac1f271cab2f0f518d427f3b7e080f_1.png)
 

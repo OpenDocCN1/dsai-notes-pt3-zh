@@ -1,12 +1,9 @@
 # 017：基本概念 第一部分
 
-![](img/a943a945bf23f7b32f4555bcec7b1fd5_1.png)
 
 在本节课中，我们将学习数据仓库中的一个核心概念：物化视图及其增益计算。我们将通过一个简单的销售数据表例子，理解如何通过SQL的`GROUP BY`和聚合操作生成不同粒度的汇总视图，并计算物化特定视图所带来的性能增益。
 
-![](img/a943a945bf23f7b32f4555bcec7b1fd5_3.png)
 
-![](img/a943a945bf23f7b32f4555bcec7b1fd5_4.png)
 
 ## 概述与背景
 
@@ -20,9 +17,7 @@
 
 ## 理解基础查询与分组
 
-![](img/a943a945bf23f7b32f4555bcec7b1fd5_6.png)
 
-![](img/a943a945bf23f7b32f4555bcec7b1fd5_8.png)
 
 首先，我们执行一个基础的SQL查询。以下是按`part`和`customer`分组并计算总售价的语句：
 
@@ -42,9 +37,7 @@ GROUP BY part, customer;
 
 接下来，我们看另一个查询，它只按`customer`分组：
 
-![](img/a943a945bf23f7b32f4555bcec7b1fd5_10.png)
 
-![](img/a943a945bf23f7b32f4555bcec7b1fd5_12.png)
 
 ```sql
 SELECT customer, SUM(selling_price)
@@ -82,7 +75,6 @@ GROUP BY customer;
 
 我们通过一个场景来理解“增益”的计算。
 
-![](img/a943a945bf23f7b32f4555bcec7b1fd5_14.png)
 
 **场景一：只物化顶层视图（PSC）**
 此时，所有其他视图都需要通过扫描原始的 **PSC**（6M行）来计算。
@@ -97,7 +89,6 @@ GROUP BY customer;
 *   回答 **S** 查询的成本：同样可以从 **PS** (0.8M) 中聚合得到，成本为0.8M。
 *   回答 **C** 查询的成本：**PS** 视图中没有`customer`信息，因此仍需扫描 **PSC**，成本为6M。
 
-![](img/a943a945bf23f7b32f4555bcec7b1fd5_16.png)
 
 **增益** 定义为：**由于额外物化了某个（些）视图，使得回答所有查询的总成本降低的数值**。
 比较场景二和场景一：
@@ -112,7 +103,6 @@ GROUP BY customer;
 
 因此，物化 **PS** 视图带来的总增益是 5.2M + 5.2M + 0 + ... = 10.4M（此例中）。通常我们忽略对顶层视图和总计视图的增益计算。
 
-![](img/a943a945bf23f7b32f4555bcec7b1fd5_22.png)
 
 ## 选择性物化问题
 
@@ -129,7 +119,6 @@ GROUP BY customer;
 
 ## 总结
 
-![](img/a943a945bf23f7b32f4555bcec7b1fd5_24.png)
 
 ![](img/a943a945bf23f7b32f4555bcec7b1fd5_25.png)
 

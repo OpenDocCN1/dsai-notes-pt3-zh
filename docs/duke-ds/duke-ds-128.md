@@ -17,13 +17,11 @@
 
 我们需要大规模系统来处理此类数据，MapReduce就是这样一个系统。尽管对于超大规模数据处理，MapReduce可能已接近其效用极限，但我们目前仍将以其为例进行讲解。
 
-![](img/23ad04904aa0defdb08202670f7eadef_3.png)
 
 ---
 
 ## MapReduce中的PageRank实现
 
-![](img/23ad04904aa0defdb08202670f7eadef_5.png)
 
 以下是PageRank在MapReduce中的一种实现方式。
 

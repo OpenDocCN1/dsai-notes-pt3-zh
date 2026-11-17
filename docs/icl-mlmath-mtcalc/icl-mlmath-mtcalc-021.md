@@ -1,8 +1,6 @@
 # 021：多元链式法则
 
-![](img/b925a7e008b9dc3b2d27648c3fb6c2c5_0.png)
 
-![](img/b925a7e008b9dc3b2d27648c3fb6c2c5_0.png)
 
 ## 概述
 
@@ -44,7 +42,6 @@
 或者更明确地写为：
 `dF/dt = Σ (∂F/∂xi)(dxi/dt)`，其中求和 `i` 从 `1` 到 `n`。
 
-![](img/b925a7e008b9dc3b2d27648c3fb6c2c5_2.png)
 
 ![](img/b925a7e008b9dc3b2d27648c3fb6c2c5_2.png)
 

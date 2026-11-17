@@ -6,13 +6,11 @@
 
 ---
 
-![](img/a785e31d0c8171f667a92fa1dc7aca20_2.png)
 
 ## 模型加载与初始化
 
 上一节我们介绍了Llama2模型的数据表示基础。本节中，我们来看看如何实际加载一个量化模型并进行查询。
 
-![](img/a785e31d0c8171f667a92fa1dc7aca20_4.png)
 
 首先，我们需要导入Llama.cpp库并指定要使用的模型文件。在本课程中，我们准备了两个用于实验的模型：基础的130亿参数模型和经过对话微调的版本。
 
@@ -25,7 +23,6 @@ model = llama_cpp.Llama(model_path="llama-13b.gguf")
 
 加载模型后，控制台会输出详细的调试信息，包括模型架构、上下文长度（例如4096个词元）、特殊词元以及层数等。这些信息对于理解模型配置很有帮助。Llama.cpp的一个有趣特性是支持同时使用CPU和GPU进行计算。
 
-![](img/a785e31d0c8171f667a92fa1dc7aca20_6.png)
 
 为了简化输出，我们可以将详细模式关闭。
 
@@ -39,9 +36,7 @@ model.verbose = False
 
 现在我们已经加载了模型，让我们执行一些推理任务。我们将使用 `create_completion` 方法，它默认只需要一个提示词（prompt）并返回一个完成对象（completion object）。
 
-![](img/a785e31d0c8171f667a92fa1dc7aca20_8.png)
 
-![](img/a785e31d0c8171f667a92fa1dc7aca20_9.png)
 
 ```python
 prompt = "What is the capital of Michigan?"
@@ -51,7 +46,6 @@ print(completion['choices'][0]['text'])
 
 语言模型的推理具有非确定性（non-deterministic），这意味着相同的输入可能产生不同的输出。这与确定性（deterministic）的数据库查询不同。
 
-![](img/a785e31d0c8171f667a92fa1dc7aca20_11.png)
 
 ---
 
@@ -61,10 +55,8 @@ print(completion['choices'][0]['text'])
 
 以下是测试不同温度值的示例代码：
 
-![](img/a785e31d0c8171f667a92fa1dc7aca20_13.png)
 
 
-![](img/a785e31d0c8171f667a92fa1dc7aca20_15.png)
 
 ```python
 temperatures = [0, 0.5, 1]
@@ -82,7 +74,6 @@ for temp in temperatures:
 
 ## 控制生成长度与上下文窗口
 
-![](img/a785e31d0c8171f667a92fa1dc7aca20_17.png)
 
 默认情况下，`create_completion` 方法只生成16个词元。我们可以通过设置 `max_tokens=-1` 来允许模型生成尽可能多的词元，直到达到上下文窗口的限制。
 
@@ -92,7 +83,6 @@ completion = model.create_completion(prompt, max_tokens=-1, temperature=0.8)
 print(completion['choices'][0]['text'])
 ```
 
-![](img/a785e31d0c8171f667a92fa1dc7aca20_19.png)
 
 请注意，生成大量词元可能速度较慢，并且模型有时可能会陷入重复循环，因为它总是基于当前完整的词元序列来预测下一个最可能的词元。
 
@@ -105,7 +95,6 @@ model = llama_cpp.Llama(model_path="llama-13b.gguf", n_ctx=2048)
 
 ---
 
-![](img/a785e31d0c8171f667a92fa1dc7aca20_21.png)
 
 ## 使用流式输出
 

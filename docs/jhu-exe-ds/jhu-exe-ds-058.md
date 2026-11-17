@@ -2,13 +2,9 @@
 
 ![](img/e129b09e4242cf3e17c5606db100f3a3_0.png)
 
-![](img/e129b09e4242cf3e17c5606db100f3a3_2.png)
 
-![](img/e129b09e4242cf3e17c5606db100f3a3_4.png)
 
-![](img/e129b09e4242cf3e17c5606db100f3a3_6.png)
 
-![](img/e129b09e4242cf3e17c5606db100f3a3_7.png)
 
 ![](img/e129b09e4242cf3e17c5606db100f3a3_8.png)
 

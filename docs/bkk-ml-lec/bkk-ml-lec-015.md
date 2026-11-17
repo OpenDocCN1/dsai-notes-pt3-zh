@@ -1,6 +1,5 @@
 # 015：代码生成
 
-![](img/da6ba9f8d804a927e35dfbc8d49ef072_0.png)
 
 ![](img/da6ba9f8d804a927e35dfbc8d49ef072_0.png)
 
@@ -211,6 +210,5 @@ DeepMind的AlphaCode系统在竞争性编程上取得了显著成功。其系统
 
 最后，正如课程开头所言，代码生成将继续帮助我们推动机器学习的进步。希望本节课能作为一个有用的视角，帮助你理解本周所学的一些机器学习经验。
 
-![](img/da6ba9f8d804a927e35dfbc8d49ef072_2.png)
 
 ![](img/da6ba9f8d804a927e35dfbc8d49ef072_2.png)

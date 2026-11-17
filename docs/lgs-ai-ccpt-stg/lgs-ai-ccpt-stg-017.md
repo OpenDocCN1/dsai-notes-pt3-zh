@@ -1,8 +1,6 @@
 # 17：AI伦理的批判性反思 🤔
 
-![](img/8a1b68b26a4cdfbc378300752e5f4732_0.png)
 
-![](img/8a1b68b26a4cdfbc378300752e5f4732_1.png)
 
 ![](img/8a1b68b26a4cdfbc378300752e5f4732_2.png)
 

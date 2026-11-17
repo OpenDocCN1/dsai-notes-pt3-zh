@@ -1,8 +1,6 @@
 # 030：绘图1-1 🎨
 
-![](img/5f9f8a0da7abf559245e24324c5f7146_1.png)
 
-![](img/5f9f8a0da7abf559245e24324c5f7146_3.png)
 
 在本节课中，我们将要学习使用Python进行数据可视化的基础知识。我们将重点介绍如何利用Pandas和Matplotlib库来创建饼图、条形图和散点图。通过本教程，你将掌握生成和美化基本图表的核心技能。
 
@@ -12,7 +10,6 @@
 
 在开始绘图之前，我们需要导入一些必要的Python库。这些库将帮助我们处理数据和创建图表。
 
-![](img/5f9f8a0da7abf559245e24324c5f7146_5.png)
 
 ```python
 import pandas as pd
@@ -162,11 +159,9 @@ df = pd.read_sql(query, conn)
 print(df.head())
 ```
 
-![](img/5f9f8a0da7abf559245e24324c5f7146_7.png)
 
 将查询结果转换为Series并绘制前5条线路的条形图。
 
-![](img/5f9f8a0da7abf559245e24324c5f7146_9.png)
 
 ```python
 # 设置'route'列为索引

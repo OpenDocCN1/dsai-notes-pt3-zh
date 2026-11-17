@@ -2,7 +2,6 @@
 
 在本节课中，我们将要学习 Dropout 正则化技术的一种重要理论解释——共适应理论。我们将探讨 Dropout 如何通过防止神经元之间的过度依赖来提升神经网络的泛化能力。
 
-![](img/f0cbd2fcb6a6d0d0a1719af3ef2f8ad8_1.png)
 
 ---
 
@@ -39,7 +38,6 @@ model.add(Dropout(rate=0.2))  # 隐藏层2使用20%丢弃率
 
 总之，Dropout 之所以表现良好，一种解释是它防止了网络对特定节点的过度强调，从而可能使网络对输入波动更加鲁棒。
 
-![](img/f0cbd2fcb6a6d0d0a1719af3ef2f8ad8_3.png)
 
 ![](img/f0cbd2fcb6a6d0d0a1719af3ef2f8ad8_4.png)
 

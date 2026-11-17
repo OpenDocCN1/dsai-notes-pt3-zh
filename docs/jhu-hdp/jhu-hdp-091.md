@@ -4,7 +4,6 @@
 
 ---
 
-![](img/48f3771b982c25ee1496d894593c4aee_1.png)
 
 ## Spark概述 🔍
 
@@ -95,7 +94,6 @@ Spark不仅仅是一个核心计算引擎。在学习了核心编程之后，本
 
 Spark生态系统包含多个高级组件，为特定领域的计算任务提供了便利的API：
 
-![](img/48f3771b982c25ee1496d894593c4aee_3.png)
 
 *   **Spark SQL**：用于处理结构化数据的模块，支持使用SQL或DataFrame API进行查询。
 *   **Spark Streaming**：用于处理实时流数据的组件。

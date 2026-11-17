@@ -55,7 +55,6 @@ wget https://www.python.org/ftp/python/3.10.5/Python-3.10.5.tgz
 
 ![](img/cc8a9d3d32954533385a20313b85cdcf_6.png)
 
-![](img/cc8a9d3d32954533385a20313b85cdcf_8.png)
 
 ```bash
 tar xzvf Python-3.10.5.tgz
@@ -165,9 +164,7 @@ lint:
 all: install test format lint
 ```
 
-![](img/cc8a9d3d32954533385a20313b85cdcf_14.png)
 
-![](img/cc8a9d3d32954533385a20313b85cdcf_16.png)
 
 在 `requirements.txt` 中，可以列出项目依赖，例如 `ludwig`。然后运行 `make install` 来安装它们。
 
@@ -184,11 +181,9 @@ all: install test format lint
 
 ![](img/cc8a9d3d32954533385a20313b85cdcf_19.png)
 
-![](img/cc8a9d3d32954533385a20313b85cdcf_20.png)
 
 这样，每次代码更新都会自动触发测试，确保项目的兼容性和稳定性。
 
-![](img/cc8a9d3d32954533385a20313b85cdcf_21.png)
 
 ![](img/cc8a9d3d32954533385a20313b85cdcf_22.png)
 

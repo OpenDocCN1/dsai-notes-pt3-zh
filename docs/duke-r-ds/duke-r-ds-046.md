@@ -1,6 +1,5 @@
 #  046：贷款利率建模 📊
 
-![](img/71bdd42addeb2b7e64495d46e6af7d8e_0.png)
 
 ![](img/71bdd42addeb2b7e64495d46e6af7d8e_1.png)
 
@@ -47,9 +46,7 @@ loans <- loan_full_schema %>%
 接下来，让我们初步探索数据，了解典型贷款利率和借款人的特征。
 
 
-![](img/71bdd42addeb2b7e64495d46e6af7d8e_3.png)
 
-![](img/71bdd42addeb2b7e64495d46e6af7d8e_4.png)
 
 ```r
 # 查看典型贷款利率
@@ -133,9 +130,7 @@ tidy(rate_u_home_fit)
 *   **抵押贷款者 (Mortgage):**
     `interest_rate_hat = (9.93 - 0.696) + 5.34 * credit_utilization = 10.626 + 5.34 * credit_utilization`
 
-![](img/71bdd42addeb2b7e64495d46e6af7d8e_6.png)
 
-![](img/71bdd42addeb2b7e64495d46e6af7d8e_7.png)
 
 *   **房产拥有者 (Own):**
     `interest_rate_hat = (9.93 - 0.128) + 5.34 * credit_utilization = 10.058 + 5.34 * credit_utilization`

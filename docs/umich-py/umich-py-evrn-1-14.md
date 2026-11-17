@@ -134,7 +134,6 @@ print(‘Welcome,’, name)
 
 运行这段代码时，程序会打印“Who are you?”，然后暂停。假设用户输入“Chuck”并回车，变量 `name` 将包含字符串 `‘Chuck’`。随后，程序继续执行，打印出“Welcome, Chuck”。`print` 函数中逗号会自动添加一个空格。
 
-![](img/c9ee4d26f5b3f0cb54d56146e15e790b_8.png)
 
 ---
 

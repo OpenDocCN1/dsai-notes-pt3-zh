@@ -22,7 +22,6 @@ MapReduce作业可以从文件或数据库获取输入。在我们之前的演�
 
 理解了分片的概念后，我们来看看MapReduce API中负责管理它们的核心类。
 
-![](img/1fe6268218c3e4c306ab32c4e8c7defc_2.png)
 
 以下是MapReduce API中与输入输出相关的关键类结构：
 *   **`InputFormat`**：处理作业输入格式的基类。
@@ -34,7 +33,6 @@ MapReduce作业可以从文件或数据库获取输入。在我们之前的演�
     *   `FileOutputFormat`：输出到文件。
         *   `TextOutputFormat`：输出到文本文件。
 
-![](img/1fe6268218c3e4c306ab32c4e8c7defc_4.png)
 
 `InputFormat`和`OutputFormat`都是抽象类，具体的派生类实现了其中的关键抽象方法。
 

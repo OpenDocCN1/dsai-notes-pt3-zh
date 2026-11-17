@@ -1,18 +1,13 @@
 # 021：合并数据 📊
 
-![](img/7df318c525d97f62966d16e47bb68d9d_1.png)
 
 在本节课中，我们将要学习如何在R语言中合并多个数据集。这是数据清理和整合过程中的一个关键步骤，类似于在数据库（如MySQL）中连接多张表。我们将通过一个实际的同行评审实验数据集来演示两种主要的合并方法：基础的`merge`函数和`plyr`包中的`join`函数。
 
-![](img/7df318c525d97f62966d16e47bb68d9d_3.png)
 
-![](img/7df318c525d97f62966d16e47bb68d9d_4.png)
 
-![](img/7df318c525d97f62966d16e47bb68d9d_5.png)
 
 ## 概述
 
-![](img/7df318c525d97f62966d16e47bb68d9d_6.png)
 
 有时，你会在R中加载多个数据集，并希望将它们合并在一起进行分析。通常，合并操作是基于一个共同的标识符（ID）来匹配不同数据集中的记录。本节课将详细介绍如何执行这种操作。
 
@@ -24,13 +19,9 @@
 
 我们可以从Dropbox下载两个文件：`reviews.csv`（包含所有评审记录）和`solutions.csv`（包含所有被解答的问题）。将它们读入R后，我们得到两个数据框。
 
-![](img/7df318c525d97f62966d16e47bb68d9d_8.png)
 
-![](img/7df318c525d97f62966d16e47bb68d9d_9.png)
 
-![](img/7df318c525d97f62966d16e47bb68d9d_10.png)
 
-![](img/7df318c525d97f62966d16e47bb68d9d_11.png)
 
 以下是查看数据框变量名的代码：
 ```r
@@ -39,19 +30,12 @@ names(solutions)
 ```
 在`reviews`数据框中，有一个变量叫`solution_id`。这个ID对应于`solutions`数据集中的`id`变量。`solutions`数据中还有`problem_id`和`subject_id`，它们会与其他数据集匹配，但本示例不涉及。
 
-![](img/7df318c525d97f62966d16e47bb68d9d_12.png)
 
-![](img/7df318c525d97f62966d16e47bb68d9d_13.png)
 
-![](img/7df318c525d97f62966d16e47bb68d9d_14.png)
 
-![](img/7df318c525d97f62966d16e47bb68d9d_15.png)
 
-![](img/7df318c525d97f62966d16e47bb68d9d_16.png)
 
-![](img/7df318c525d97f62966d16e47bb68d9d_17.png)
 
-![](img/7df318c525d97f62966d16e47bb68d9d_18.png)
 
 我们首先想使用`merge`命令将这两个数据集合并。`merge`函数的重要参数是`x`和`y`，即两个待合并的数据框。你可以使用`by`、`by.x`或`by.y`参数来指定依据哪一列进行合并。默认情况下，它会尝试合并所有具有共同名称的列。
 
@@ -69,49 +53,31 @@ mergedData <- merge(reviews, solutions, by.x = "solution_id", by.y = "id", all =
 
 默认合并所有共同列名的行为是：如果你对`solutions`和`reviews`数据框的变量名取交集，会得到四个变量。如果不指定合并依据，`merge`会尝试依据所有这四个变量合并。结果就是，`id`变量有时能在两个数据集间匹配上，但`start`和`stop`时间不一定能匹配，最终会生成一个更大的数据框，为`reviews`的每一行和`solutions`的每一行创建组合，这通常不是我们想要的结果。
 
-![](img/7df318c525d97f62966d16e47bb68d9d_20.png)
 
-![](img/7df318c525d97f62966d16e47bb68d9d_21.png)
 
-![](img/7df318c525d97f62966d16e47bb68d9d_22.png)
 
-![](img/7df318c525d97f62966d16e47bb68d9d_23.png)
 
-![](img/7df318c525d97f62966d16e47bb68d9d_24.png)
 
-![](img/7df318c525d97f62966d16e47bb68d9d_25.png)
 
 ## 使用`plyr`包进行连接
 
-![](img/7df318c525d97f62966d16e47bb68d9d_26.png)
 
-![](img/7df318c525d97f62966d16e47bb68d9d_27.png)
 
-![](img/7df318c525d97f62966d16e47bb68d9d_29.png)
 
-![](img/7df318c525d97f62966d16e47bb68d9d_30.png)
 
 除了`merge`，你还可以使用`plyr`包中的`join`函数来连接数据集。它比`merge`速度更快，但功能稍少。具体来说，`join`只能基于两个数据集间**完全相同的列名**进行合并。
 
-![](img/7df318c525d97f62966d16e47bb68d9d_32.png)
 
 因此，我们不能用它来合并刚才讨论的两个数据集，因为我们需要依据`reviews$solution_id`和`solutions$id`进行合并，而`join`只能依据名为`id`的列合并，尽管它速度更快。
 
 以下是一个使用`join`的示例。我创建了两个虚构的数据框，它们有一个共同的标识符`ID`，但顺序被打乱了。
 
-![](img/7df318c525d97f62966d16e47bb68d9d_34.png)
 
-![](img/7df318c525d97f62966d16e47bb68d9d_35.png)
 
-![](img/7df318c525d97f62966d16e47bb68d9d_36.png)
 
-![](img/7df318c525d97f62966d16e47bb68d9d_37.png)
 
-![](img/7df318c525d97f62966d16e47bb68d9d_38.png)
 
-![](img/7df318c525d97f62966d16e47bb68d9d_39.png)
 
-![](img/7df318c525d97f62966d16e47bb68d9d_40.png)
 
 以下是创建示例数据和执行连接的代码：
 ```r
@@ -122,15 +88,11 @@ arrangedData <- arrange(joinedData, ID)
 ```
 我可以使用`join`将两个数据集连接起来，它会依据`ID`列进行连接。然后，我可以使用`arrange`命令按`ID`递增的顺序排列数据。你可以尝试使用这些命令，看看如何将数据集连接在一起。
 
-![](img/7df318c525d97f62966d16e47bb68d9d_42.png)
 
 ## 合并多个数据集
 
-![](img/7df318c525d97f62966d16e47bb68d9d_44.png)
 
-![](img/7df318c525d97f62966d16e47bb68d9d_45.png)
 
-![](img/7df318c525d97f62966d16e47bb68d9d_46.png)
 
 `plyr`包的一个优点是，如果你有多个数据框，使用`merge`命令进行合并相对复杂，但如果它们有一个共同的ID，使用`join_all`命令就非常直接。
 
@@ -144,13 +106,9 @@ allJoinedData <- join_all(dfList)
 ```
 我创建了三个数据框，并把它们放在一个列表中，形成一个包含三个数据框的列表。然后，我使用`join_all`命令，它会基于共同的变量（本例中是`ID`）合并所有不同的数据。这是一种快速合并多个数据集的便捷方法。
 
-![](img/7df318c525d97f62966d16e47bb68d9d_48.png)
 
-![](img/7df318c525d97f62966d16e47bb68d9d_49.png)
 
-![](img/7df318c525d97f62966d16e47bb68d9d_50.png)
 
-![](img/7df318c525d97f62966d16e47bb68d9d_51.png)
 
 ## 总结
 
@@ -158,13 +116,9 @@ allJoinedData <- join_all(dfList)
 1.  使用基础的`merge`函数，它可以灵活地指定合并依据的列，并处理各种合并类型（如全连接）。
 2.  使用`plyr`包中的`join`和`join_all`函数，它们在处理具有共同列名的多个数据集时更快捷，但灵活性稍低。
 
-![](img/7df318c525d97f62966d16e47bb68d9d_53.png)
 
-![](img/7df318c525d97f62966d16e47bb68d9d_54.png)
 
-![](img/7df318c525d97f62966d16e47bb68d9d_55.png)
 
-![](img/7df318c525d97f62966d16e47bb68d9d_56.png)
 
 ![](img/7df318c525d97f62966d16e47bb68d9d_57.png)
 

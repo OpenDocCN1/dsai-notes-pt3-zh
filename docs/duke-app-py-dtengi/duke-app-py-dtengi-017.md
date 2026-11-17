@@ -1,6 +1,5 @@
 #  017：写入Snowflake 🗄️
 
-![](img/dd0ba673e7b4cb02ed68cfa0e13a83a2_0.png)
 
 在本节课中，我们将学习如何使用Python连接器（Snowflake Connector for Python）与Snowflake数据仓库进行交互。主要内容包括：设置连接环境、建立与Snowflake的连接、创建表以及将Pandas DataFrame中的数据写入Snowflake。
 

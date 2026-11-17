@@ -1,8 +1,6 @@
 # 14：系统性AI风险与挑战 🧠⚡
 
-![](img/3151b5c9d2bcfd8ccb59a80fd445f850_0.png)
 
-![](img/3151b5c9d2bcfd8ccb59a80fd445f850_1.png)
 
 ![](img/3151b5c9d2bcfd8ccb59a80fd445f850_2.png)
 

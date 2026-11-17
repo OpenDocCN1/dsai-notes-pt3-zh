@@ -6,29 +6,24 @@
 
 一些数据科学家对Excel文件表现出某种轻视态度。
 
-![](img/f4641a236b649eb39db7d1aa7a4b5eff_1.png)
 
 但Excel文件可能仍然是共享数据时使用最广泛的格式。
 
 我认为原因在于许多人习惯使用电子表格。
 
-![](img/f4641a236b649eb39db7d1aa7a4b5eff_3.png)
 
 无论你是在商业应用还是科学领域工作，人们都知道如何使用电子表格来收集、输入数据并相互共享。
 
 如今，随着像谷歌电子表格这类工具的出现，这一情况甚至比以往更加普遍，因为它们允许人们在互联网上协作共享数据。
 
-![](img/f4641a236b649eb39db7d1aa7a4b5eff_1.png)
 
 ## 在R中处理Excel数据的必要性
 
 对你而言，问题在于当你使用像R这样的脚本语言分析数据时，你需要能够从这些文件中提取数据，以便进行后续的分析和处理。
 
-![](img/f4641a236b649eb39db7d1aa7a4b5eff_3.png)
 
 ## 下载Excel数据文件
 
-![](img/f4641a236b649eb39db7d1aa7a4b5eff_5.png)
 
 我们将回到巴尔的摩摄像头数据。我想我最近一定收到了很多超速罚单，因为我一直在思考这个数据集。现在，我们将实际下载这个数据的Excel版本。在本例中，URL再次略有不同，你只需从网站上获取URL。
 
@@ -57,7 +52,6 @@ library(xlsx)
 cameraData <- read.xlsx("./data/cameras.xlsx", sheetIndex=1, header=TRUE)
 ```
 
-![](img/f4641a236b649eb39db7d1aa7a4b5eff_7.png)
 
 ## 读取特定行与列
 
@@ -69,7 +63,6 @@ cameraDataSubset <- read.xlsx("./data/cameras.xlsx", sheetIndex=1,
                               colIndex=2:3, rowIndex=1:4)
 ```
 
-![](img/f4641a236b649eb39db7d1aa7a4b5eff_7.png)
 
 ## 其他注意事项与替代方案
 
@@ -81,7 +74,6 @@ cameraDataSubset <- read.xlsx("./data/cameras.xlsx", sheetIndex=1,
 
 总的来说，就本课程的目的而言，也是就大多数分析的目的而言，如果你将文件存储为逗号分隔或制表符分隔的平面文件，读取文件会更快、更容易一些。它们也更容易分发，因为不是每个人都有Excel。它不一定像使用纯文本文件（仅包含逗号分隔或制表符分隔的值）那样具有跨平台性。
 
-![](img/f4641a236b649eb39db7d1aa7a4b5eff_9.png)
 
 ## 总结
 

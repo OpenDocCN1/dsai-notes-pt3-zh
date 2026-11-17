@@ -1,6 +1,5 @@
 # GPU计算：P10：归约
 
-![](img/99b5ea50ffcbc675368a6d7923e8a78b_0.png)
 
 ![](img/99b5ea50ffcbc675368a6d7923e8a78b_0.png)
 

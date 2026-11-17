@@ -24,7 +24,6 @@
 
 设置完成后，返回个人资料页面。
 
-![](img/0ae6366d74f6d86d6bb73e29fccb7291_1.png)
 
 ## 获取API密钥
 
@@ -46,15 +45,11 @@
 
 ## 在代码中使用API密钥
 
-![](img/0ae6366d74f6d86d6bb73e29fccb7291_5.png)
 
-![](img/0ae6366d74f6d86d6bb73e29fccb7291_6.png)
 
 上一节我们成功创建了API密钥，本节中我们来看看如何在编程环境中安全地使用它。
 
-![](img/0ae6366d74f6d86d6bb73e29fccb7291_7.png)
 
-![](img/0ae6366d74f6d86d6bb73e29fccb7291_8.png)
 
 ![](img/0ae6366d74f6d86d6bb73e29fccb7291_9.png)
 
@@ -64,9 +59,7 @@
 
 以下是安全设置API密钥的步骤：
 
-![](img/0ae6366d74f6d86d6bb73e29fccb7291_11.png)
 
-![](img/0ae6366d74f6d86d6bb73e29fccb7291_12.png)
 
 1.  在Colab笔记本中，点击左侧钥匙形状的“Secrets”（秘密）图标。
 2.  点击“+ Add new secret”（添加新秘密）。

@@ -80,9 +80,7 @@
 
 最后，让我们谈谈您会有什么感受。
 
-![](img/a6ee0f4eaef28c52ea1e7fd6894f49e4_11.png)
 
-![](img/a6ee0f4eaef28c52ea1e7fd6894f49e4_12.png)
 
 ## 情绪管理：如何感受 😌
 

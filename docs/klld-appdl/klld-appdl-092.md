@@ -8,49 +8,32 @@
 
 我们之前一直在处理图像数据。从上周开始，我们开始接触不同类型的数据，例如视频。视频本质上是一系列连续的图像帧。
 
-![](img/3ba10c5bdbb2b0bf6f242ae357cf2d19_1.png)
 
-![](img/3ba10c5bdbb2b0bf6f242ae357cf2d19_2.png)
 
-![](img/3ba10c5bdbb2b0bf6f242ae357cf2d19_3.png)
 
-![](img/3ba10c5bdbb2b0bf6f242ae357cf2d19_4.png)
 
 我们目前至少在处理视频数据集时，感兴趣的任务是分类任务。一个视频输入进来，我们想要对其进行分类。例如，这可以是动作识别（视频中正在发生什么），或者判断视频是关于哪种运动等。
 
-![](img/3ba10c5bdbb2b0bf6f242ae357cf2d19_5.png)
 
-![](img/3ba10c5bdbb2b0bf6f242ae357cf2d19_6.png)
 
-![](img/3ba10c5bdbb2b0bf6f242ae357cf2d19_7.png)
 
 然而，使用视频还有更复杂的任务，例如视频到视频的翻译、视频分割（当你需要在时间上保持一致性时）、目标检测和目标跟踪。在所有这些情况下，你都需要在时间上保持一致性。
 
 因此，视频领域以及处理视频数据方面，我们面前有一整个广阔的领域。目前，我们已经在这个领域学习了四篇重要的论文。现在，让我们继续学习下一篇，这篇论文是关于非局部神经网络的。
 
-![](img/3ba10c5bdbb2b0bf6f242ae357cf2d19_9.png)
 
 ## 什么是非局部操作？
 
-![](img/3ba10c5bdbb2b0bf6f242ae357cf2d19_10.png)
 
-![](img/3ba10c5bdbb2b0bf6f242ae357cf2d19_11.png)
 
-![](img/3ba10c5bdbb2b0bf6f242ae357cf2d19_12.png)
 
-![](img/3ba10c5bdbb2b0bf6f242ae357cf2d19_13.png)
 
-![](img/3ba10c5bdbb2b0bf6f242ae357cf2d19_14.png)
 
-![](img/3ba10c5bdbb2b0bf6f242ae357cf2d19_15.png)
 
-![](img/3ba10c5bdbb2b0bf6f242ae357cf2d19_16.png)
 
 这篇论文以及下一篇论文中介绍的方法，不仅适用于视频，你也可以将它们应用于图像，甚至更广泛的数据类型。但非局部神经网络的主要应用是视频，它是为视频处理而提出的。
 
-![](img/3ba10c5bdbb2b0bf6f242ae357cf2d19_17.png)
 
-![](img/3ba10c5bdbb2b0bf6f242ae357cf2d19_18.png)
 
 在上一节课中，我们了解了Kinetics数据集。还有另一个数据集，如果你有时间，或者学期结束后有兴趣研究视频，我鼓励你对其做探索性数据分析。
 
@@ -58,39 +41,25 @@
 
 **非局部操作的通用公式**如下：
 
-![](img/3ba10c5bdbb2b0bf6f242ae357cf2d19_20.png)
 
-![](img/3ba10c5bdbb2b0bf6f242ae357cf2d19_21.png)
 
-![](img/3ba10c5bdbb2b0bf6f242ae357cf2d19_22.png)
 
-![](img/3ba10c5bdbb2b0bf6f242ae357cf2d19_23.png)
 
-![](img/3ba10c5bdbb2b0bf6f242ae357cf2d19_24.png)
 
 `y_i = \frac{1}{C(x)} \sum_{\forall j} f(x_i, x_j) g(x_j)`
 
-![](img/3ba10c5bdbb2b0bf6f242ae357cf2d19_25.png)
 
-![](img/3ba10c5bdbb2b0bf6f242ae357cf2d19_26.png)
 
-![](img/3ba10c5bdbb2b0bf6f242ae357cf2d19_27.png)
 
-![](img/3ba10c5bdbb2b0bf6f242ae357cf2d19_28.png)
 
-![](img/3ba10c5bdbb2b0bf6f242ae357cf2d19_29.png)
 
-![](img/3ba10c5bdbb2b0bf6f242ae357cf2d19_30.png)
 
 我需要解释什么是 `i`，什么是 `j`，我们在对什么求和，什么是 `x`，什么是 `y`，什么是 `f`，什么是 `g`，以及什么是 `C`。接下来我将逐一解释这些术语。
 
-![](img/3ba10c5bdbb2b0bf6f242ae357cf2d19_32.png)
 
 ## 核心术语详解
 
-![](img/3ba10c5bdbb2b0bf6f242ae357cf2d19_33.png)
 
-![](img/3ba10c5bdbb2b0bf6f242ae357cf2d19_34.png)
 
 ### 索引 `i` 和 `j`
 
@@ -98,29 +67,18 @@
 
 `j` 与 `i` 非常相似。但我们想要做的是：对于输出中的任何一个像素（位置 `i`），我们希望它关注所有其他像素，不仅在空间上，也在时间上。我们可以统称为“位置”。`i` 是输出位置，我们希望这个输出位置 `i` 关注图像或视频中所有可能的位置 `j`。
 
-![](img/3ba10c5bdbb2b0bf6f242ae357cf2d19_36.png)
 
-![](img/3ba10c5bdbb2b0bf6f242ae357cf2d19_37.png)
 
-![](img/3ba10c5bdbb2b0bf6f242ae357cf2d19_38.png)
 
-![](img/3ba10c5bdbb2b0bf6f242ae357cf2d19_39.png)
 
-![](img/3ba10c5bdbb2b0bf6f242ae357cf2d19_40.png)
 
 ### 输入 `x` 和输出 `y`
 
-![](img/3ba10c5bdbb2b0bf6f242ae357cf2d19_41.png)
 
-![](img/3ba10c5bdbb2b0bf6f242ae357cf2d19_42.png)
 
-![](img/3ba10c5bdbb2b0bf6f242ae357cf2d19_43.png)
 
-![](img/3ba10c5bdbb2b0bf6f242ae357cf2d19_44.png)
 
-![](img/3ba10c5bdbb2b0bf6f242ae357cf2d19_45.png)
 
-![](img/3ba10c5bdbb2b0bf6f242ae357cf2d19_46.png)
 
 `x` 是我们的输入信号。它可以是一张图像，可以是一个序列（如句子或语音），也可以是一个视频。这些是它们的特征。例如，如果你有单词，你首先会得到词嵌入，那将是你的特征。或者，它可能是卷积层或某一卷积层的特征图。所以，这是你的 `x`，它不仅仅是输入图像，也可能是网络层之间的特征。
 
@@ -128,33 +86,21 @@
 
 ### 函数 `f` 和 `g`
 
-![](img/3ba10c5bdbb2b0bf6f242ae357cf2d19_48.png)
 
 既然我们知道了 `x`、`y`、`i` 和 `j` 是什么，问题就变成了：`f` 和 `g` 是什么？
 
-![](img/3ba10c5bdbb2b0bf6f242ae357cf2d19_49.png)
 
-![](img/3ba10c5bdbb2b0bf6f242ae357cf2d19_50.png)
 
-![](img/3ba10c5bdbb2b0bf6f242ae357cf2d19_51.png)
 
-![](img/3ba10c5bdbb2b0bf6f242ae357cf2d19_52.png)
 
-![](img/3ba10c5bdbb2b0bf6f242ae357cf2d19_53.png)
 
-![](img/3ba10c5bdbb2b0bf6f242ae357cf2d19_54.png)
 
-![](img/3ba10c5bdbb2b0bf6f242ae357cf2d19_55.png)
 
 `f` 将是一个标量值函数（不是向量）。它接受两个参数作为输入。它是一个成对函数，表示位置 `i` 和位置 `j` 之间的某种关系。它可能表示位置 `i` 对位置 `j` 的关注程度。
 
-![](img/3ba10c5bdbb2b0bf6f242ae357cf2d19_56.png)
 
-![](img/3ba10c5bdbb2b0bf6f242ae357cf2d19_57.png)
 
-![](img/3ba10c5bdbb2b0bf6f242ae357cf2d19_58.png)
 
-![](img/3ba10c5bdbb2b0bf6f242ae357cf2d19_59.png)
 
 `g` 只接受一个参数，因此它是一个一元函数。它的输出可以是一个向量，因为 `y` 可以是一个向量。它接受位置 `j` 的信号值 `x_j` 作为输入，而 `x_j` 也可以是一个向量。
 
@@ -162,25 +108,16 @@
 
 ## 函数 `g` 和 `f` 的示例
 
-![](img/3ba10c5bdbb2b0bf6f242ae357cf2d19_61.png)
 
-![](img/3ba10c5bdbb2b0bf6f242ae357cf2d19_62.png)
 
-![](img/3ba10c5bdbb2b0bf6f242ae357cf2d19_63.png)
 
 让我们看一些 `g` 和 `f` 的例子。
 
-![](img/3ba10c5bdbb2b0bf6f242ae357cf2d19_64.png)
 
-![](img/3ba10c5bdbb2b0bf6f242ae357cf2d19_65.png)
 
-![](img/3ba10c5bdbb2b0bf6f242ae357cf2d19_66.png)
 
-![](img/3ba10c5bdbb2b0bf6f242ae357cf2d19_67.png)
 
-![](img/3ba10c5bdbb2b0bf6f242ae357cf2d19_68.png)
 
-![](img/3ba10c5bdbb2b0bf6f242ae357cf2d19_69.png)
 
 `g` 可以是一个矩阵向量乘法。如果你有全连接网络，它可以是一个 1x1 卷积。最好将其视为不仅在空间上，而且在时间上的 1x1 卷积。这就是我们的 `g`：向量输入，经过矩阵向量乘法后，向量输出。
 
@@ -188,61 +125,39 @@
 
 另一个距离是点积距离。与 `(x_i - x_j)^2` 相比，这个更容易编码，因为我们在 TensorFlow 或 PyTorch 等框架中已经实现了相关操作。你可以查看余弦相似度距离，然后取指数，这将得到你的 `f`。但之后你需要对其进行归一化，否则指数会爆炸，这就是归一化 `C`。经过这个操作，`f / C` 将给你一个权重。这些权重加起来等于 1，不会爆炸。
 
-![](img/3ba10c5bdbb2b0bf6f242ae357cf2d19_71.png)
 
-![](img/3ba10c5bdbb2b0bf6f242ae357cf2d19_72.png)
 
 这是一个例子。你可以取这些 `x_i` 和 `x_j`，将它们通过两个函数 `φ` 和 `θ`，这被称为“嵌入高斯”。`φ` 和 `θ` 是什么？它们可以是 1x1 卷积。现在你正在参数化这个，你正在通过两个嵌入矩阵学习你的距离，学习你的余弦相似度距离。同样，你的 `C` 将与之前相同。最终，你会得到一个 softmax。
 
-![](img/3ba10c5bdbb2b0bf6f242ae357cf2d19_73.png)
 
-![](img/3ba10c5bdbb2b0bf6f242ae357cf2d19_74.png)
 
-![](img/3ba10c5bdbb2b0bf6f242ae357cf2d19_75.png)
 
-![](img/3ba10c5bdbb2b0bf6f242ae357cf2d19_76.png)
 
-![](img/3ba10c5bdbb2b0bf6f242ae357cf2d19_77.png)
 
-![](img/3ba10c5bdbb2b0bf6f242ae357cf2d19_78.png)
 
 另一个例子可能是这样的 `φ` 和 `θ`：你去掉指数函数，直接计算两者的点积，这是另一个例子。在那种情况下，你的归一化因子 `C` 将是项的数量，即你的 `x` 中位置的数量，也就是像素的数量。
 
-![](img/3ba10c5bdbb2b0bf6f242ae357cf2d19_79.png)
 
-![](img/3ba10c5bdbb2b0bf6f242ae357cf2d19_80.png)
 
-![](img/3ba10c5bdbb2b0bf6f242ae357cf2d19_81.png)
 
 还有一个例子是：你取 `φ(x_i)` 和 `θ(x_j)`，将它们连接起来，乘以一个权重矩阵，然后取非线性激活函数，再在其上取正则化。同样，在这种情况下，你的 `C` 将是 `n`。
 
 ## 构建非局部块
 
-![](img/3ba10c5bdbb2b0bf6f242ae357cf2d19_83.png)
 
 在了解了一切之后，我们知道什么是 `x`，什么是 `y_i`。现在我们可以添加一个残差连接。你取 `y_i`，乘以一个权重 `W_z`，使其具有与 `x` 相同的维度。
 
-![](img/3ba10c5bdbb2b0bf6f242ae357cf2d19_84.png)
 
-![](img/3ba10c5bdbb2b0bf6f242ae357cf2d19_85.png)
 
-![](img/3ba10c5bdbb2b0bf6f242ae357cf2d19_86.png)
 
-![](img/3ba10c5bdbb2b0bf6f242ae357cf2d19_87.png)
 
-![](img/3ba10c5bdbb2b0bf6f242ae357cf2d19_88.png)
 
-![](img/3ba10c5bdbb2b0bf6f242ae357cf2d19_89.png)
 
 现在你可以将它们加在一起。所有这些部分组合在一起，就构成了一个“非局部块”。
 
-![](img/3ba10c5bdbb2b0bf6f242ae357cf2d19_90.png)
 
-![](img/3ba10c5bdbb2b0bf6f242ae357cf2d19_91.png)
 
-![](img/3ba10c5bdbb2b0bf6f242ae357cf2d19_92.png)
 
-![](img/3ba10c5bdbb2b0bf6f242ae357cf2d19_93.png)
 
 我们学习过卷积，这是另一种类型的块。你的输入进入，它可以具有时间维度、像素的高度和宽度，以及通道数。你取 `x`，实际上你是这样实现它的：你取 `x`，用一个 1x1 卷积进行卷积（实际上是 1x1x1 卷积）。现在你的维度从 `[T, H, W, C_in]` 变为 `[T, H, W, C_mid]`。这是我们的 `θ`。`φ` 是相同的，也是一个 1x1 卷积。
 
@@ -250,23 +165,15 @@
 
 你取你的 `g`，将其展平、重塑，然后乘以这个大小为 `[T*H*W, C_mid]` 的矩阵。最终你会得到 `[T*H*W, C_mid]` 的东西。这个 softmax 正是你刚刚做的嵌入高斯。你进行矩阵乘法（矩阵向量乘法），然后将其重塑回去。
 
-![](img/3ba10c5bdbb2b0bf6f242ae357cf2d19_95.png)
 
-![](img/3ba10c5bdbb2b0bf6f242ae357cf2d19_96.png)
 
-![](img/3ba10c5bdbb2b0bf6f242ae357cf2d19_97.png)
 
-![](img/3ba10c5bdbb2b0bf6f242ae357cf2d19_98.png)
 
-![](img/3ba10c5bdbb2b0bf6f242ae357cf2d19_99.png)
 
-![](img/3ba10c5bdbb2b0bf6f242ae357cf2d19_100.png)
 
-![](img/3ba10c5bdbb2b0bf6f242ae357cf2d19_101.png)
 
 现在你想添加一个维度为 `[T, H, W, C_in]` 的东西，你不能直接加。所以你将输出通过另一个 1x1 卷积来调整维度，这就是我们刚才在这里做的 `W_z`。然后你添加你的残差连接。
 
-![](img/3ba10c5bdbb2b0bf6f242ae357cf2d19_102.png)
 
 正如你所看到的，这并不难编码实现。这是一个非常简单的块，特别是如果你想用高级框架如 TensorFlow 或 PyTorch 来实现，非常容易。
 
@@ -274,57 +181,36 @@
 
 但这些注意力机制存在一个问题，那就是它们的成本。每个点都必须关注视频或图像中所有其他位置。对于每个 `x_i`，求和是在所有 `x_j` 上进行的，不像卷积那样求和是在 `x_i` 周围的一个小窗口上。这是在整个 `x_j` 上进行的，所以这不便宜，计算成本不低。
 
-![](img/3ba10c5bdbb2b0bf6f242ae357cf2d19_104.png)
 
-![](img/3ba10c5bdbb2b0bf6f242ae357cf2d19_105.png)
 
-![](img/3ba10c5bdbb2b0bf6f242ae357cf2d19_106.png)
 
-![](img/3ba10c5bdbb2b0bf6f242ae357cf2d19_107.png)
 
-![](img/3ba10c5bdbb2b0bf6f242ae357cf2d19_108.png)
 
-![](img/3ba10c5bdbb2b0bf6f242ae357cf2d19_109.png)
 
-![](img/3ba10c5bdbb2b0bf6f242ae357cf2d19_110.png)
 
 你实际上可以使其更便宜。如何做？与其对所有像素和时间快照的所有 `x_j` 进行求和，你可以在一个选定的子集上进行。你如何选择？例如，你可以将你的 `x` 通过一个池化层，这将为你降低分辨率。
 
-![](img/3ba10c5bdbb2b0bf6f242ae357cf2d19_111.png)
 
-![](img/3ba10c5bdbb2b0bf6f242ae357cf2d19_112.png)
 
-![](img/3ba10c5bdbb2b0bf6f242ae357cf2d19_113.png)
 
-![](img/3ba10c5bdbb2b0bf6f242ae357cf2d19_114.png)
 
 ## 非局部块的应用实例
 
-![](img/3ba10c5bdbb2b0bf6f242ae357cf2d19_116.png)
 
 那么，训练完成后会发生什么？这是一个视频，假设这是我们的 `x`。`x` 将是特定帧的一个像素。我们知道每个 `x` 将有三个维度（红、绿、蓝），或者可能是网络训练后的通道维度。
 
-![](img/3ba10c5bdbb2b0bf6f242ae357cf2d19_118.png)
 
-![](img/3ba10c5bdbb2b0bf6f242ae357cf2d19_119.png)
 
 例如，在这个视频中，这个球正在关注什么？它正在关注同一时间帧中人的头部，不同时间帧中仍然是人的头部，以及头和球。所以，球正在关注另一个时间点的球。
 
-![](img/3ba10c5bdbb2b0bf6f242ae357cf2d19_120.png)
 
-![](img/3ba10c5bdbb2b0bf6f242ae357cf2d19_121.png)
 
-![](img/3ba10c5bdbb2b0bf6f242ae357cf2d19_122.png)
 
-![](img/3ba10c5bdbb2b0bf6f242ae357cf2d19_123.png)
 
 让我们将其应用于视频。假设这是你的 2D 卷积主干网络，将是 ResNet-50。这完全是 ResNet-50，然后我们将其应用于视频，可能是逐帧应用。这是我们的网络，然后我们将添加非局部块。它可以添加到第一层，也可以添加到后面的层。如果你添加到网络后面的层，那是一个更便宜的操作。
 
-![](img/3ba10c5bdbb2b0bf6f242ae357cf2d19_125.png)
 
-![](img/3ba10c5bdbb2b0bf6f242ae357cf2d19_126.png)
 
-![](img/3ba10c5bdbb2b0bf6f242ae357cf2d19_127.png)
 
 这是我们在视频上的 C2D 基线，top-1 和 top-5 准确率。你可以研究我们拥有的这些不同选择：高斯、嵌入高斯、点积和连接。你可以看到，所有这些都会提升性能。
 

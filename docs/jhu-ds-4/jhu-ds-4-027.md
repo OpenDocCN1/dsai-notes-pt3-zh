@@ -1,12 +1,9 @@
 # 027：K均值聚类（第二部分）🔍
 
-![](img/701266acad0e513b3f4d01a1970dfb61_1.png)
 
-![](img/701266acad0e513b3f4d01a1970dfb61_2.png)
 
 在本节课中，我们将学习如何在R语言中实现K均值聚类算法，并探索如何可视化聚类结果。我们将重点介绍`kmeans()`函数的使用方法、结果解读以及两种可视化技巧。
 
-![](img/701266acad0e513b3f4d01a1970dfb61_3.png)
 
 ---
 
@@ -14,27 +11,18 @@
 
 在R语言中，我们使用`kmeans()`函数来实现K均值算法。以下是一个使用简单二维数据框的演示。我调用`kmeans()`函数处理数据框，并指定聚类中心（质心）的数量为3。
 
-![](img/701266acad0e513b3f4d01a1970dfb61_5.png)
 
-![](img/701266acad0e513b3f4d01a1970dfb61_6.png)
 
-![](img/701266acad0e513b3f4d01a1970dfb61_7.png)
 
-![](img/701266acad0e513b3f4d01a1970dfb61_8.png)
 
-![](img/701266acad0e513b3f4d01a1970dfb61_9.png)
 
 ```r
 kmeans_result <- kmeans(data_frame, centers = 3)
 ```
 
-![](img/701266acad0e513b3f4d01a1970dfb61_10.png)
 
-![](img/701266acad0e513b3f4d01a1970dfb61_11.png)
 
-![](img/701266acad0e513b3f4d01a1970dfb61_12.png)
 
-![](img/701266acad0e513b3f4d01a1970dfb61_13.png)
 
 `kmeans()`函数返回一个包含多个元素的列表。
 
@@ -43,31 +31,23 @@ kmeans_result <- kmeans(data_frame, centers = 3)
 *   **`cluster`**： 这是最重要的元素之一。它是一个向量，显示了我传入数据框中每个数据点所属的聚类编号。例如，打印该元素时，你可能会看到类似`3 3 3 3 1 1 1 1 2 2 2 2`的结果，这表示前四个点属于第3类，中间四个属于第1类，最后四个属于第2类。
 *   **`centers`**： 这个元素告诉你每个聚类质心在空间中的坐标位置。
 
-![](img/701266acad0e513b3f4d01a1970dfb61_15.png)
 
-![](img/701266acad0e513b3f4d01a1970dfb61_16.png)
 
-![](img/701266acad0e513b3f4d01a1970dfb61_17.png)
 
-![](img/701266acad0e513b3f4d01a1970dfb61_18.png)
 
 ---
 
-![](img/701266acad0e513b3f4d01a1970dfb61_19.png)
 
-![](img/701266acad0e513b3f4d01a1970dfb61_20.png)
 
 了解了如何运行算法和解读结果后，我们来看看如何将聚类结果可视化。
 
 如果你想绘制K均值的结果，首先需要在数据上运行算法。这里我将先绘制原始数据点。
 
-![](img/701266acad0e513b3f4d01a1970dfb61_22.png)
 
 ```r
 plot(data_frame$x, data_frame$y)
 ```
 
-![](img/701266acad0e513b3f4d01a1970dfb61_23.png)
 
 然后，我根据数据点所属的聚类（`kmeans_result$cluster`）来为它们着色。接着，使用`points()`函数将聚类质心（`kmeans_result$centers`）添加到图中，并用“+”符号表示。
 
@@ -80,33 +60,21 @@ points(kmeans_result$centers, col = 1:3, pch = 3, cex = 2, lwd = 2)
 
 ---
 
-![](img/701266acad0e513b3f4d01a1970dfb61_25.png)
 
-![](img/701266acad0e513b3f4d01a1970dfb61_26.png)
 
-![](img/701266acad0e513b3f4d01a1970dfb61_27.png)
 
-![](img/701266acad0e513b3f4d01a1970dfb61_28.png)
 
 除了散点图，另一种可视化K均值等聚类算法结果的方法是使用热图。
 
-![](img/701266acad0e513b3f4d01a1970dfb61_29.png)
 
-![](img/701266acad0e513b3f4d01a1970dfb61_30.png)
 
-![](img/701266acad0e513b3f4d01a1970dfb61_31.png)
 
-![](img/701266acad0e513b3f4d01a1970dfb61_32.png)
 
-![](img/701266acad0e513b3f4d01a1970dfb61_33.png)
 
 这里我使用相同的数据集，但进行了不同的随机抽样（有放回抽样），并再次运行K均值算法（指定3个中心），将结果存储在`kmeans_object2`中。
 
-![](img/701266acad0e513b3f4d01a1970dfb61_34.png)
 
-![](img/701266acad0e513b3f4d01a1970dfb61_35.png)
 
-![](img/701266acad0e513b3f4d01a1970dfb61_36.png)
 
 现在，我将为数据创建图像图。左侧的第一个图是原始数据的图像。在右侧，我重新排序了数据框的行，使得属于同一聚类的数据点被排列在一起。
 
@@ -116,36 +84,25 @@ points(kmeans_result$centers, col = 1:3, pch = 3, cex = 2, lwd = 2)
 
 最后，我们来总结一下K均值算法。K均值是用于组织和寻找高维数据模式的一个便捷算法。
 
-![](img/701266acad0e513b3f4d01a1970dfb61_38.png)
 
 使用K均值时需要注意以下几点：
 
-![](img/701266acad0e513b3f4d01a1970dfb61_39.png)
 
-![](img/701266acad0e513b3f4d01a1970dfb61_40.png)
 
-![](img/701266acad0e513b3f4d01a1970dfb61_41.png)
 
-![](img/701266acad0e513b3f4d01a1970dfb61_42.png)
 
-![](img/701266acad0e513b3f4d01a1970dfb61_43.png)
 
 *   **需要预先指定聚类数量**： 你必须至少大致指定聚类的数量。你可以通过尝试不同的K值来观察哪种模式看起来最合理，但这没有简单的规则。通常需要依靠经验或其他机制来选择。
 *   **存在确定最佳K值的算法**： 有一些算法可以帮助确定最佳聚类数量，例如基于交叉验证、信息论或其他度量标准的方法。这里提供一个关于[确定聚类数量的链接](https://en.wikipedia.org/wiki/Determining_the_number_of_clusters_in_a_data_set)供参考。
 *   **算法非确定性**： K均值算法不是确定性的。根据具体实现，初始点的选择有时是随机的。因此，多次运行K均值算法以确保结果稳定是很有用的。例如，如果你运行三次得到完全不同的模式，可能意味着算法对数据的“看法”不稳定。
 *   **对某些数据集可能存在问题**： 对于某些类型的数据集，K均值可能会出现问题。这里提供一些[视频和参考资料链接](https://scikit-learn.org/stable/auto_examples/cluster/plot_kmeans_assumptions.html)，它们提供了关于K均值更详细的信息。
 
-![](img/701266acad0e513b3f4d01a1970dfb61_44.png)
 
-![](img/701266acad0e513b3f4d01a1970dfb61_45.png)
 
-![](img/701266acad0e513b3f4d01a1970dfb61_46.png)
 
 ---
 
-![](img/701266acad0e513b3f4d01a1970dfb61_48.png)
 
-![](img/701266acad0e513b3f4d01a1970dfb61_49.png)
 
 ![](img/701266acad0e513b3f4d01a1970dfb61_50.png)
 

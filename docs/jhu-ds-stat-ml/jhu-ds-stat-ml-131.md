@@ -2,7 +2,6 @@
 
 在本节课中，我们将学习如何利用Plotly库，将静态的ggplot图形转换为交互式的HTML图表。我们将重点介绍`ggplotly()`函数的使用方法，并展示其在RStudio环境中的不同显示效果。
 
-![](img/b1ef85e443ada38d47127e666c5ed218_0.png)
 
 ---
 
@@ -11,7 +10,6 @@
 首先，我们从钻石数据集中创建一个基础的ggplot散点图，展示克拉重量与价格的关系。
 
 
-![](img/b1ef85e443ada38d47127e666c5ed218_2.png)
 
 ```r
 # 加载必要的库
@@ -22,11 +20,9 @@ p <- ggplot(diamonds, aes(x = carat, y = price)) +
   geom_point()
 ```
 
-![](img/b1ef85e443ada38d47127e666c5ed218_3.png)
 
 执行上述代码后，我们得到一个静态的散点图，横轴为克拉重量，纵轴为价格。
 
-![](img/b1ef85e443ada38d47127e666c5ed218_4.png)
 
 ---
 
@@ -41,7 +37,6 @@ interactive_plot <- ggplotly(p)
 
 `ggplotly()`函数接收一个ggplot对象作为输入，并返回一个Plotly交互式图形对象。
 
-![](img/b1ef85e443ada38d47127e666c5ed218_6.png)
 
 ---
 

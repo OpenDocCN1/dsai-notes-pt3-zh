@@ -25,27 +25,20 @@
 
 在配置阶段，我们需要选择运行时并编写函数逻辑。
 
-![](img/13537fd61cc5dcfb0eb9ba3675cba85d_2.png)
 
-![](img/13537fd61cc5dcfb0eb9ba3675cba85d_3.png)
 
-![](img/13537fd61cc5dcfb0eb9ba3675cba85d_4.png)
 
 我们选择Python 3.8作为运行时环境。GCP提供了一个“Hello World”模板，但我们将替换为自己的代码。核心函数接收一个包含`amount`字段的JSON载荷（例如`$1.34`），并计算并返回正确的零钱组合。
 
 函数的入口点必须与代码中的函数名匹配。在本例中，我们将入口点设置为`hello_world`。一个方便的特性是，我们可以直接在界面中指定需要安装的Python依赖包。
 
-![](img/13537fd61cc5dcfb0eb9ba3675cba85d_6.png)
 
-![](img/13537fd61cc5dcfb0eb9ba3675cba85d_7.png)
 
 配置完成后，点击“部署”按钮将函数发布到生产环境。
 
 ## 测试云函数
 
-![](img/13537fd61cc5dcfb0eb9ba3675cba85d_9.png)
 
-![](img/13537fd61cc5dcfb0eb9ba3675cba85d_11.png)
 
 部署完成后，我们可以在GCP控制台内直接测试函数。
 
@@ -57,7 +50,6 @@
 ```
 点击“测试”按钮后，页面下方会显示函数的执行结果，即计算出的零钱组合。我们可以修改`amount`的值（如`$10.44`）并再次测试，观察返回结果的变化。
 
-![](img/13537fd61cc5dcfb0eb9ba3675cba85d_13.png)
 
 ## 通过命令行调用函数
 
@@ -73,9 +65,7 @@ gcloud functions call deops-change-machine --data '{"amount":"$1.34"}'
 
 ## 通过HTTP触发器调用函数
 
-![](img/13537fd61cc5dcfb0eb9ba3675cba85d_17.png)
 
-![](img/13537fd61cc5dcfb0eb9ba3675cba85d_18.png)
 
 由于我们的函数设置了HTTP触发器，它本质上也是一个Web服务。我们可以在浏览器或使用`curl`命令通过其公开的URL来调用它。
 
@@ -88,11 +78,9 @@ curl -X POST $URL -H "Content-Type:application/json" -d '{"amount":"$1.34"}'
 
 ## 探索复杂函数示例
 
-![](img/13537fd61cc5dcfb0eb9ba3675cba85d_20.png)
 
 为了展示云函数处理更复杂任务的能力，我们来看另一个“维基百科翻译”函数的例子。
 
-![](img/13537fd61cc5dcfb0eb9ba3675cba85d_22.png)
 
 ![](img/13537fd61cc5dcfb0eb9ba3675cba85d_24.png)
 

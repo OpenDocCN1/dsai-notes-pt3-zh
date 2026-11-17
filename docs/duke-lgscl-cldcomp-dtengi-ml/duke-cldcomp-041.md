@@ -12,7 +12,6 @@ Amazon CodeWhisperer 是一个提升 DynamoDB 编程技能的绝佳工具。它�
 
 如果我们在 Visual Studio Code 环境中，如何开始使用 CodeWhisperer？首先，需要找到扩展。它集成在 AWS Toolkit 扩展中。
 
-![](img/a21e10deb03f44e4fad994100dbfd0b2_2.png)
 
 将鼠标悬停在 AWS Toolkit 上，可以看到它支持 CodeWhisperer、CodeCatalyst 以及对 Lambda、S3 等服务。这个工具的强大之处在于，我可以直接在这个环境中启用并切换不同的设置。
 

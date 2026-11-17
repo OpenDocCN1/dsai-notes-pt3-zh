@@ -13,7 +13,6 @@
 让我们来看一个例子。这是一条来自联合国发言人账户的推文：
 > Ethics are built right into the ideals and objectives of the United Nations you have seen this earlier today and then you have hashtag #UNSG and there is another little piece of text like at New York Society for ethical culture, there is a URL there and then two callouts to @UN and @UN_Women.
 
-![](img/c0ba3f1183d2b14c3bf95df25523adce_5.png)
 
 ![](img/c0ba3f1183d2b14c3bf95df25523adce_7.png)
 

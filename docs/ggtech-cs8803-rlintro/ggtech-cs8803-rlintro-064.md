@@ -10,45 +10,30 @@
 
 一种在人工智能文献中非常经典的行为概念是**计划**。计划通常指一个固定的行动序列。它类似于这样的表述：“我知道我现在的位置，接下来我将执行以下动作序列：左、右、上、上、上、下……”
 
-![](img/0dc74bbb202aa9cee11d25b5582c60b1_1.png)
 
-![](img/0dc74bbb202aa9cee11d25b5582c60b1_2.png)
 
-![](img/0dc74bbb202aa9cee11d25b5582c60b1_3.png)
 
 例如，“拾取、左、左、下、下、放下”等。一旦你选择了计划，就可以直接执行它。它只是一个固定的动作序列。
 
-![](img/0dc74bbb202aa9cee11d25b5582c60b1_5.png)
 
 在现实生活中，有时确实存在这种行为。某些类型的行为我们就是作为序列记忆并执行的。
 
-![](img/0dc74bbb202aa9cee11d25b5582c60b1_1.png)
 
-![](img/0dc74bbb202aa9cee11d25b5582c60b1_2.png)
 
-![](img/0dc74bbb202aa9cee11d25b5582c60b1_7.png)
 
-![](img/0dc74bbb202aa9cee11d25b5582c60b1_3.png)
 
-![](img/0dc74bbb202aa9cee11d25b5582c60b1_8.png)
 
-![](img/0dc74bbb202aa9cee11d25b5582c60b1_5.png)
 
 ## 计划的局限性
 
 然而，这里存在一个问题。为什么在一般情况下，我们不能仅仅通过执行计划来满足我们试图达成的目标？
 
-![](img/0dc74bbb202aa9cee11d25b5582c60b1_10.png)
 
-![](img/0dc74bbb202aa9cee11d25b5582c60b1_7.png)
 
-![](img/0dc74bbb202aa9cee11d25b5582c60b1_8.png)
 
 主要原因有两个。
 
-![](img/0dc74bbb202aa9cee11d25b5582c60b1_12.png)
 
-![](img/0dc74bbb202aa9cee11d25b5582c60b1_10.png)
 
 ---
 

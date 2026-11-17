@@ -4,9 +4,7 @@
 
 ---
 
-![](img/d594c7e651fb2cd248697edefe5accfc_1.png)
 
-![](img/d594c7e651fb2cd248697edefe5accfc_2.png)
 
 ## 概述
 
@@ -32,7 +30,6 @@ api_key = os.getenv('OPENAI_API_KEY')
 
 ## 如何评估大语言模型
 
-![](img/d594c7e651fb2cd248697edefe5accfc_4.png)
 
 面对众多模型，如何选择？以下是评估模型时需要考虑的几个关键特性。
 
@@ -48,13 +45,11 @@ api_key = os.getenv('OPENAI_API_KEY')
 
 ---
 
-![](img/d594c7e651fb2cd248697edefe5accfc_6.png)
 
 ## 常见大语言模型对比
 
 以下是当前主流大语言模型的对比，涵盖了不同供应商。
 
-![](img/d594c7e651fb2cd248697edefe5accfc_8.png)
 
 | 模型 | 供应商 | 开源/闭源 | MMLU 得分 | 上下文窗口（词元） | 每百万词元输入成本（美元） |
 | :--- | :--- | :--- | :--- | :--- | :--- |
@@ -65,42 +60,34 @@ api_key = os.getenv('OPENAI_API_KEY')
 | Llama 3 70B | Meta | **开源** | 82.0 | 8,192 | - |
 | Mistral 7B | Mistral AI | **开源** | 60.1 | 32,768 | - |
 
-![](img/d594c7e651fb2cd248697edefe5accfc_10.png)
 
 **上下文窗口**：这是一个非常重要的参数。它决定了模型在一次交互中能“记住”多少信息（包括输入、输出和对话历史）。窗口越大，能处理的文档或对话就越长。例如，128K 词元大约相当于 93 页文本。
 
-![](img/d594c7e651fb2cd248697edefe5accfc_12.png)
 
 **模型大小与速度**：通常，模型会提供不同尺寸的版本。较小的模型响应更快、成本更低，但智能程度可能不如大型模型。
 
 **动态发展**：这个领域发展迅速，模型排名和性能可能随时变化。例如，Gemini 模型凭借其巨大的上下文窗口正在引领新的竞争。
 
-![](img/d594c7e651fb2cd248697edefe5accfc_14.png)
 
 ---
 
-![](img/d594c7e651fb2cd248697edefe5accfc_16.png)
 
 ## 核心参数：温度（Temperature）
 
-![](img/d594c7e651fb2cd248697edefe5accfc_17.png)
 
 在调用模型时，你会遇到一个关键参数：**温度**。
 
 **温度** 控制模型输出的“创造性”或随机性。其值范围通常在 0 到 2 之间。
 
-![](img/d594c7e651fb2cd248697edefe5accfc_19.png)
 
 *   **低温度（如 0）**：模型输出更确定、更一致。适用于需要事实准确性的任务，如数据提取或问答。
     *   `temperature = 0`
 *   **高温度（如 0.8 或更高）**：模型输出更多样、更有创意。适用于写作、头脑风暴或生成故事。
     *   `temperature = 0.8`
 
-![](img/d594c7e651fb2cd248697edefe5accfc_20.png)
 
 ---
 
-![](img/d594c7e651fb2cd248697edefe5accfc_22.png)
 
 ## 实践示例
 
@@ -113,7 +100,6 @@ prompt = “列出世界上人口最多的五个国家及其GDP。”
 response = model.generate(prompt, temperature=0)
 ```
 
-![](img/d594c7e651fb2cd248697edefe5accfc_24.png)
 
 模型通常喜欢以 **Markdown** 格式输出，这便于显示和阅读。
 
@@ -133,7 +119,6 @@ response = model.generate(prompt, temperature=0)
 >     *   人口：约 2.4 亿
 >     *   GDP：约 0.3 万亿美元
 
-![](img/d594c7e651fb2cd248697edefe5accfc_26.png)
 
 ---
 

@@ -1,151 +1,84 @@
 #  072：回归分析 📈
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_1.png)
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_3.png)
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_4.png)
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_5.png)
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_7.png)
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_8.png)
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_10.png)
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_11.png)
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_13.png)
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_14.png)
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_16.png)
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_17.png)
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_19.png)
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_20.png)
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_22.png)
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_23.png)
 
 在本节课中，我们将要学习回归分析。回归分析是一种强大的统计工具，用于探索和量化变量之间的关系。我们将从中学学过的线性方程开始，逐步深入到统计模型、假设检验以及如何评估模型的好坏。最后，我们会看到回归分析如何成为机器学习的基础。
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_25.png)
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_26.png)
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_28.png)
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_29.png)
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_30.png)
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_31.png)
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_33.png)
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_35.png)
 
 ## 从线性方程到回归模型
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_37.png)
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_38.png)
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_39.png)
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_40.png)
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_41.png)
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_42.png)
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_43.png)
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_44.png)
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_46.png)
 
 上一节我们介绍了回归分析的基本概念，本节中我们来看看它的数学表达是如何从简单的线性方程演变而来的。
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_48.png)
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_49.png)
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_51.png)
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_53.png)
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_55.png)
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_57.png)
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_59.png)
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_60.png)
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_62.png)
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_63.png)
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_65.png)
 
 回想一下中学的线性方程：`y = Mx + B`。在这个方程中，`y` 和 `x` 是**变量**，它们会取不同的值。而 `M` 和 `B` 是**参数**，它们通常是固定不变的。
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_67.png)
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_68.png)
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_70.png)
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_71.png)
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_73.png)
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_75.png)
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_76.png)
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_78.png)
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_80.png)
 
 例如，给汽车加油。假设汽油价格是每加仑3美元，这就是斜率 `M`。我可以选择加多少加仑汽油（`x`），而我最终支付的价格（`y`）就取决于这个数量。如果我加10加仑，支付30美元；加5加仑，支付15美元。变量 `x` 和 `y` 变化了，但参数（每加仑3美元）保持不变。
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_82.png)
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_84.png)
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_86.png)
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_87.png)
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_89.png)
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_91.png)
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_92.png)
 
 在统计学中，我们将这个方程改写为更通用的形式：
 `Y = β₀ + β₁X + ε`
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_93.png)
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_95.png)
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_97.png)
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_98.png)
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_99.png)
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_101.png)
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_102.png)
 
 *   **`Y`**：因变量（我们想要预测或解释的变量）。
 *   **`X`**：自变量（我们用来进行预测的变量）。
@@ -153,193 +86,115 @@
 *   **`β₁`**：斜率参数（`X` 每变化一个单位，`Y` 的平均变化量）。
 *   **`ε`**：误差项（模型未能解释的随机波动）。
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_104.png)
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_105.png)
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_107.png)
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_109.png)
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_110.png)
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_111.png)
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_113.png)
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_115.png)
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_117.png)
 
 我们通常用 `Ŷ` 表示模型的预测值：`Ŷ = β₀ + β₁X`。因此，误差 `ε` 就是实际值 `Y` 与预测值 `Ŷ` 之间的差异：`ε = Y - Ŷ`。
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_119.png)
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_121.png)
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_122.png)
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_124.png)
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_126.png)
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_128.png)
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_129.png)
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_130.png)
 
 ## 解释方差：R² 的作用
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_132.png)
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_134.png)
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_136.png)
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_138.png)
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_140.png)
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_142.png)
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_144.png)
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_145.png)
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_147.png)
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_148.png)
 
 上一节我们建立了回归模型，本节中我们来看看如何衡量这个模型解释数据的能力。
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_150.png)
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_152.png)
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_154.png)
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_156.png)
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_157.png)
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_159.png)
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_161.png)
 
 继续用汽车加油的例子，假设我们研究行驶里程（`Y`）与耗油量（`X`）的关系。数据点会散布在一条直线附近，但不会完全在直线上，因为有误差（如上坡、海拔等因素）。
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_163.png)
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_165.png)
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_166.png)
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_167.png)
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_169.png)
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_171.png)
 
 我们关心的是，`X` 能在多大程度上解释 `Y` 的变化。`Y` 自身有一个总方差，称为**总平方和（SST）**，公式为：
 `SST = Σ(Yᵢ - Ȳ)²`
 其中 `Ȳ` 是 `Y` 的平均值。这衡量了 `Y` 自身的波动程度。
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_173.png)
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_174.png)
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_175.png)
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_177.png)
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_178.png)
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_179.png)
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_181.png)
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_182.png)
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_184.png)
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_186.png)
 
 当我们用回归线拟合数据后，可以计算**误差平方和（SSE）**，即每个数据点的实际值 `Y` 与模型预测值 `Ŷ` 之差的平方和：
 `SSE = Σ(Yᵢ - Ŷᵢ)²`
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_188.png)
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_189.png)
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_191.png)
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_193.png)
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_195.png)
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_197.png)
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_199.png)
 
 **决定系数 R²** 衡量了模型解释的方差比例，其公式为：
 `R² = 1 - (SSE / SST)`
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_200.png)
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_201.png)
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_203.png)
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_205.png)
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_206.png)
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_207.png)
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_209.png)
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_211.png)
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_213.png)
 
 *   如果模型完全拟合所有数据点（`SSE = 0`），则 `R² = 1`，表示模型解释了 `Y` 的全部方差。
 *   如果模型预测能力等同于直接用平均值预测（即回归线是水平的，`Ŷ = Ȳ`），则 `SSE = SST`，`R² = 0`，表示模型完全不能解释 `Y` 的方差。
 *   `R²` 的取值范围在0到1之间（或0%到100%），值越大，说明模型对数据的拟合越好，`X` 对 `Y` 的解释力越强。
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_215.png)
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_216.png)
 
 ## 假设检验：X 和 Y 真的有关系吗？
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_218.png)
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_219.png)
 
 ![](img/7804d003b2875e87d2aac12d41ec33a1_220.png)
 
 ![](img/7804d003b2875e87d2aac12d41ec33a1_221.png)
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_222.png)
 
 ![](img/7804d003b2875e87d2aac12d41ec33a1_223.png)
 
 ![](img/7804d003b2875e87d2aac12d41ec33a1_224.png)
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_225.png)
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_227.png)
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_229.png)
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_231.png)
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_233.png)
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_235.png)
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_237.png)
 
 仅仅有一个模型和 R² 还不够，我们需要从统计上检验自变量 `X` 是否真的对因变量 `Y` 有显著影响。这需要通过假设检验来完成。
 
@@ -347,13 +202,9 @@
 
 ![](img/7804d003b2875e87d2aac12d41ec33a1_241.png)
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_243.png)
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_245.png)
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_246.png)
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_248.png)
 
 我们的零假设（`H₀`）和备择假设（`H₁`）是：
 *   `H₀: β₁ = 0` （斜率为零，即 `X` 与 `Y` 无关）
@@ -363,33 +214,20 @@
 
 ![](img/7804d003b2875e87d2aac12d41ec33a1_251.png)
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_252.png)
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_253.png)
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_254.png)
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_255.png)
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_257.png)
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_259.png)
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_260.png)
 
 为了进行 t 检验，我们需要满足以下六个核心假设：
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_262.png)
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_263.png)
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_265.png)
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_267.png)
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_269.png)
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_270.png)
 
 以下是进行线性回归 t 检验前必须验证的六个核心假设：
 1.  **线性关系**：`X` 和 `Y` 之间存在线性关系。
@@ -399,11 +237,8 @@
 5.  **独立性**：观测值之间相互独立（通常指没有时间序列上的自相关）。
 6.  **零假设为真**：在进行检验时，我们暂时假定 `H₀` 成立。
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_272.png)
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_273.png)
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_275.png)
 
 ![](img/7804d003b2875e87d2aac12d41ec33a1_276.png)
 
@@ -413,69 +248,42 @@
 `t = (估计的β₁ - 假设的β₁) / β₁的标准误`
 在 `H₀` 下，假设的 `β₁` 为0。软件会输出回归系数、标准误、t 值和对应的 p 值。
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_279.png)
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_280.png)
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_281.png)
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_283.png)
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_285.png)
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_287.png)
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_289.png)
 
 **关键逻辑**：如果计算出的 p 值很小（例如小于0.05），并且我们已经验证了前五个假设基本成立，那么我们就有足够的证据拒绝零假设，得出结论：`β₁` 显著不为0，即 `X` 与 `Y` 之间存在统计上显著的关系。
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_291.png)
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_293.png)
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_295.png)
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_297.png)
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_298.png)
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_300.png)
 
 ## 模型诊断与变量选择
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_302.png)
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_303.png)
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_304.png)
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_305.png)
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_307.png)
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_308.png)
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_309.png)
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_310.png)
 
 上一节我们学习了如何检验关系的显著性，本节中我们来看看如何诊断模型问题以及处理多个自变量的情况。
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_312.png)
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_313.png)
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_314.png)
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_315.png)
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_316.png)
 
 ![](img/7804d003b2875e87d2aac12d41ec33a1_317.png)
 
 ![](img/7804d003b2875e87d2aac12d41ec33a1_318.png)
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_319.png)
 
 ![](img/7804d003b2875e87d2aac12d41ec33a1_321.png)
 
@@ -487,11 +295,9 @@
 
 ![](img/7804d003b2875e87d2aac12d41ec33a1_323.png)
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_324.png)
 
 ![](img/7804d003b2875e87d2aac12d41ec33a1_325.png)
 
-![](img/7804d003b2875e87d2aac12d41ec33a1_327.png)
 
 ![](img/7804d003b2875e87d2aac12d41ec33a1_328.png)
 

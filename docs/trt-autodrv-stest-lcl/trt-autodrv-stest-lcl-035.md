@@ -25,7 +25,6 @@
 
 ---
 
-![](img/df53e64a8f17f2d3c403691c8fa5a9cc_1.png)
 
 ![](img/df53e64a8f17f2d3c403691c8fa5a9cc_2.png)
 

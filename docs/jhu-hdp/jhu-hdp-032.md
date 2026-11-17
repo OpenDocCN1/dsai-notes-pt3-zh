@@ -2,7 +2,6 @@
 
 ![](img/1c6957bf8fef68656e2d4a7e96691ba7_0.png)
 
-![](img/1c6957bf8fef68656e2d4a7e96691ba7_2.png)
 
 在本节课中，我们将学习如何使用 Java API 对 Hadoop 分布式文件系统（HDFS）中的文件进行创建、读取、更新和删除操作。我们将通过具体的代码示例来理解每个步骤，并探讨 HDFS 内部如何处理这些操作。
 
@@ -74,9 +73,7 @@ fs.close();
 
 除了创建新文件，我们还可以向现有文件追加内容。
 
-![](img/1c6957bf8fef68656e2d4a7e96691ba7_4.png)
 
-![](img/1c6957bf8fef68656e2d4a7e96691ba7_5.png)
 
 以下是向文件追加内容的步骤：
 
@@ -154,9 +151,7 @@ fs.close();
 
 `FileSystem` 类的 `create` 和 `append` 方法有重载版本，可以接收一个回调接口作为参数。这个回调接口用于在写入操作进行时报告进度。
 
-![](img/1c6957bf8fef68656e2d4a7e96691ba7_7.png)
 
-![](img/1c6957bf8fef68656e2d4a7e96691ba7_9.png)
 
 **示例概念：ProgressibleCopy.java**
 ```java
@@ -175,7 +170,6 @@ FSDataOutputStream out = fs.create(destFile, new Progressable() {
 
 ## HDFS 文件操作内部机制
 
-![](img/1c6957bf8fef68656e2d4a7e96691ba7_11.png)
 
 理解 API 调用背后发生了什么，有助于我们编写更健壮的程序。
 
@@ -200,7 +194,6 @@ FSDataOutputStream out = fs.create(destFile, new Progressable() {
 
 ---
 
-![](img/1c6957bf8fef68656e2d4a7e96691ba7_13.png)
 
 ## HDFS 一致性模型
 

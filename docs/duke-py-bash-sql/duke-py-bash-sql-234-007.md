@@ -1,6 +1,5 @@
 #  007：GitHub Codespaces入门 🚀
 
-![](img/8bcb44af7e71a7478969951288662648_0.png)
 
 ![](img/8bcb44af7e71a7478969951288662648_1.png)
 
@@ -26,9 +25,7 @@ GitHub Codespaces提供了一个完全在云端运行的开发环境。它的主
 
 ---
 
-![](img/8bcb44af7e71a7478969951288662648_5.png)
 
-![](img/8bcb44af7e71a7478969951288662648_6.png)
 
 ## 创建并进入Codespace
 

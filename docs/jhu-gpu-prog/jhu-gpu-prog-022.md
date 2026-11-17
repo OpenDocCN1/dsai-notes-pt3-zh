@@ -12,7 +12,6 @@
 
 
 
-![](img/7123e495953487ad745bd4f677ffbe3c_1.png)
 
 ![](img/7123e495953487ad745bd4f677ffbe3c_1.png)
 
@@ -42,7 +41,6 @@ nvcc --help > output.txt
 
 
 
-![](img/7123e495953487ad745bd4f677ffbe3c_3.png)
 
 ## 查看提交状态与反馈
 

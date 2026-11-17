@@ -6,18 +6,14 @@
 
 ## 环境设置与认证
 
-![](img/7440a7bb924f22bc6b1050959dcdaf11_1.png)
 
-![](img/7440a7bb924f22bc6b1050959dcdaf11_2.png)
 
 上一节我们介绍了LangChain的基础概念，本节中我们来看看如何设置环境并开始使用这些解析器。首先，你需要配置大语言模型的访问权限。
 
-![](img/7440a7bb924f22bc6b1050959dcdaf11_4.png)
 
 假设你将使用OpenAI提供的大型语言模型，例如GPT-4或更高版本。以下代码从环境变量中读取认证密钥。如果你在协作环境（如Google Colab）中工作，也可以从平台提供的密钥管理工具中获取。
 
 
-![](img/7440a7bb924f22bc6b1050959dcdaf11_6.png)
 
 ```python
 import os
@@ -26,17 +22,14 @@ from google.colab import userdata
 api_key = os.getenv("OPENAI_API_KEY") or userdata.get('OPENAI_API_KEY')
 ```
 
-![](img/7440a7bb924f22bc6b1050959dcdaf11_8.png)
 
 接下来，安装所有必需的依赖库。
 
-![](img/7440a7bb924f22bc6b1050959dcdaf11_10.png)
 
 ```bash
 !pip install langchain openai pandas
 ```
 
-![](img/7440a7bb924f22bc6b1050959dcdaf11_12.png)
 
 完成安装后，我们就可以开始研究具体的解析器了。
 
@@ -44,14 +37,11 @@ api_key = os.getenv("OPENAI_API_KEY") or userdata.get('OPENAI_API_KEY')
 
 当你想让模型返回一个值列表时，逗号分隔列表解析器非常有用。这是一种常见的请求格式。
 
-![](img/7440a7bb924f22bc6b1050959dcdaf11_14.png)
 
 以下是使用该解析器的示例。我们创建一个提示模板，要求模型生成最多10个项目的列表。
 
-![](img/7440a7bb924f22bc6b1050959dcdaf11_16.png)
 
 
-![](img/7440a7bb924f22bc6b1050959dcdaf11_17.png)
 
 ```python
 from langchain.output_parsers import CommaSeparatedListOutputParser
@@ -70,13 +60,10 @@ prompt = PromptTemplate(
 )
 ```
 
-![](img/7440a7bb924f22bc6b1050959dcdaf11_19.png)
 
-![](img/7440a7bb924f22bc6b1050959dcdaf11_20.png)
 
 现在，我们可以向模型提问。例如，要求列出一些城市。
 
-![](img/7440a7bb924f22bc6b1050959dcdaf11_22.png)
 
 ```python
 # 构建问题链
@@ -88,9 +75,7 @@ print(result)
 
 模型会返回一个用逗号分隔的值列表。如果模型没有按照指定格式响应，可能会引发错误，但通常提示词已被设计为能稳定地引导模型输出正确格式。
 
-![](img/7440a7bb924f22bc6b1050959dcdaf11_24.png)
 
-![](img/7440a7bb924f22bc6b1050959dcdaf11_25.png)
 
 你可以询问几乎任何主题的集合，前提是该主题在模型的基础知识范围内。
 
@@ -101,7 +86,6 @@ print(result)
 # 输出示例: ['Python', 'JavaScript', 'Java', 'C++', ...]
 ```
 
-![](img/7440a7bb924f22bc6b1050959dcdaf11_27.png)
 
 ## JSON结果解析器
 
@@ -110,7 +94,6 @@ print(result)
 以下是一个解析JSON结果的示例。我们要求模型将输入的单词翻译成三种语言，并以JSON格式返回。
 
 
-![](img/7440a7bb924f22bc6b1050959dcdaf11_29.png)
 
 ```python
 from langchain.output_parsers import StructuredOutputParser, ResponseSchema
@@ -143,28 +126,22 @@ print(result)
 # 输出示例: {'language': 'hello', 'french': 'bonjour', 'spanish': 'hola', 'chinese': '你好'}
 ```
 
-![](img/7440a7bb924f22bc6b1050959dcdaf11_31.png)
 
 可以看到，返回的结果是结构良好的JSON格式。使用提示模板可以让我们精确控制提示词的样式。
 
 ## 查询Pandas数据框
 
-![](img/7440a7bb924f22bc6b1050959dcdaf11_33.png)
 
 LangChain还提供了查询Pandas DataFrame的功能。理论上，你可以直接向模型提问，例如“计算美国各州的平均人口增长率”，并期望它能生成复杂的类SQL查询来汇总数据并给出答案。
 
-![](img/7440a7bb924f22bc6b1050959dcdaf11_35.png)
 
 然而，我必须承认，我在使用LangChain的这个特定功能时并未取得完全的成功。虽然其结构设计支持此类操作，但模型常常无法找到合适的函数来执行你试图对数据进行的更改或查询。
 
 以下是一个使用经典鸢尾花数据集的示例。
 
-![](img/7440a7bb924f22bc6b1050959dcdaf11_37.png)
-
-![](img/7440a7bb924f22bc6b1050959dcdaf11_38.png)
 
 
-![](img/7440a7bb924f22bc6b1050959dcdaf11_40.png)
+
 
 ```python
 import pandas as pd
@@ -181,26 +158,20 @@ response = agent.run("获取花萼长度列的平均值。")
 print(response)
 ```
 
-![](img/7440a7bb924f22bc6b1050959dcdaf11_42.png)
 
 通常，像计算平均值这样的简单操作可以成功。但你必须谨慎，因为模型了解的Pandas函数范围有限，很容易因为使用了它不理解的函数而导致错误。
 
-![](img/7440a7bb924f22bc6b1050959dcdaf11_43.png)
 
 ## 日期时间解析器
 
 最后，我们来看日期时间解析器。LangChain内置的提示词确保你以期望的格式提供日期，这样它才能正确解析，因为日期的格式有无数种。
 
-![](img/7440a7bb924f22bc6b1050959dcdaf11_45.png)
 
 
-![](img/7440a7bb924f22bc6b1050959dcdaf11_46.png)
 
 
-![](img/7440a7bb924f22bc6b1050959dcdaf11_48.png)
 
 
-![](img/7440a7bb924f22bc6b1050959dcdaf11_50.png)
 
 ```python
 from langchain.output_parsers import DatetimeOutputParser
@@ -219,7 +190,6 @@ print(prompt.format(question="某个事件发生在何时？"))
 chain = prompt | llm | output_parser
 ```
 
-![](img/7440a7bb924f22bc6b1050959dcdaf11_52.png)
 
 现在我们可以进行提问。
 

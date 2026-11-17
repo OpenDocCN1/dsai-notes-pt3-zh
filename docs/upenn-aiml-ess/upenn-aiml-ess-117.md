@@ -30,17 +30,12 @@
 
 从核函数过渡到深度学习相当容易，你只需学习特征向量φ。到目前为止，我们一直在讨论如何构思新的特征向量。在深度学习中，我们将对自动学习特征向量感兴趣。
 
-![](img/9dd6c0107df1dbffe347d8e4cf8c738e_1.png)
 
-![](img/9dd6c0107df1dbffe347d8e4cf8c738e_2.png)
 
 用一句话概括，这就是深度学习的定义。
 
-![](img/9dd6c0107df1dbffe347d8e4cf8c738e_1.png)
 
-![](img/9dd6c0107df1dbffe347d8e4cf8c738e_4.png)
 
-![](img/9dd6c0107df1dbffe347d8e4cf8c738e_2.png)
 
 ## 总结
 

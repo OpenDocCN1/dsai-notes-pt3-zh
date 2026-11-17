@@ -1,6 +1,5 @@
 #  141：事后分层软件实现 📊
 
-![](img/ed0bbc3f745bc9beb93da6b30ac05050_0.png)
 
 ![](img/ed0bbc3f745bc9beb93da6b30ac05050_1.png)
 
@@ -140,7 +139,6 @@ c(cv_total_before, cv_total_after)
 
 ## 总结
 
-![](img/ed0bbc3f745bc9beb93da6b30ac05050_3.png)
 
 ![](img/ed0bbc3f745bc9beb93da6b30ac05050_4.png)
 

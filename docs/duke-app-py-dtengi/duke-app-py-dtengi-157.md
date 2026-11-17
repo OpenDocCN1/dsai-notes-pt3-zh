@@ -1,6 +1,5 @@
 #  157：使用QuickSight创建直方图 📊
 
-![](img/369263cb3be4a13661e2a08fd840a0de_0.png)
 
 在本节中，我们将学习如何使用Amazon QuickSight服务来创建一个直方图。直方图是一种用于展示数据分布情况的图表，特别适合观察连续变量的频率分布。
 
@@ -17,7 +16,6 @@
 
 ![](img/369263cb3be4a13661e2a08fd840a0de_0.png)
 
-![](img/369263cb3be4a13661e2a08fd840a0de_2.png)
 
 ![](img/369263cb3be4a13661e2a08fd840a0de_2.png)
 

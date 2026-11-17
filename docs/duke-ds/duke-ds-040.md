@@ -4,9 +4,7 @@
 
 在本节课中，我们将探讨数据库中对用户自定义函数的支持情况。我们将了解哪些数据库提供了良好的支持，以及如何在不同环境中定义和使用这些函数。
 
-![](img/b25af6ae21dd011d1da19e4aecd57a4a_3.png)
 
-![](img/b25af6ae21dd011d1da19e4aecd57a4a_5.png)
 
 ---
 
@@ -51,7 +49,6 @@
 
 ## 总结
 
-![](img/b25af6ae21dd011d1da19e4aecd57a4a_9.png)
 
 ![](img/b25af6ae21dd011d1da19e4aecd57a4a_10.png)
 

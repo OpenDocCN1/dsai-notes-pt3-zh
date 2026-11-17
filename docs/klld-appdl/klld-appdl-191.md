@@ -4,33 +4,21 @@
 
 ---
 
-![](img/5e8255c4c44a9aa2541fe1fea094aef9_1.png)
 
-![](img/5e8255c4c44a9aa2541fe1fea094aef9_2.png)
 
-![](img/5e8255c4c44a9aa2541fe1fea094aef9_3.png)
 
 ## 📚 概述与背景
 
-![](img/5e8255c4c44a9aa2541fe1fea094aef9_4.png)
 
-![](img/5e8255c4c44a9aa2541fe1fea094aef9_5.png)
 
-![](img/5e8255c4c44a9aa2541fe1fea094aef9_6.png)
 
-![](img/5e8255c4c44a9aa2541fe1fea094aef9_7.png)
 
-![](img/5e8255c4c44a9aa2541fe1fea094aef9_8.png)
 
-![](img/5e8255c4c44a9aa2541fe1fea094aef9_9.png)
 
 在之前的课程中，我们介绍了深度强化学习的两种主要框架：策略优化和价值优化（如 Q 网络）。策略优化方法通常需要与环境进行大量交互，样本复杂度很高。而基于价值的方法则对超参数的选择非常敏感，需要大量的调优工作。
 
-![](img/5e8255c4c44a9aa2541fe1fea094aef9_10.png)
 
-![](img/5e8255c4c44a9aa2541fe1fea094aef9_11.png)
 
-![](img/5e8255c4c44a9aa2541fe1fea094aef9_12.png)
 
 那么，是否存在一种方法能够结合两者的优势呢？这就是 Soft Actor-Critic 算法要解决的问题。
 
@@ -38,21 +26,14 @@
 
 ## 🔢 符号与问题定义
 
-![](img/5e8255c4c44a9aa2541fe1fea094aef9_14.png)
 
-![](img/5e8255c4c44a9aa2541fe1fea094aef9_15.png)
 
 首先，我们明确一下将使用的符号和问题设定。我们考虑一个无限视野的马尔可夫决策过程。
 
-![](img/5e8255c4c44a9aa2541fe1fea094aef9_16.png)
 
-![](img/5e8255c4c44a9aa2541fe1fea094aef9_17.png)
 
-![](img/5e8255c4c44a9aa2541fe1fea094aef9_18.png)
 
-![](img/5e8255c4c44a9aa2541fe1fea094aef9_19.png)
 
-![](img/5e8255c4c44a9aa2541fe1fea094aef9_20.png)
 
 *   **S** 表示状态空间，可以是连续的。
 *   **A** 表示动作空间，也可以是连续的。
@@ -61,15 +42,10 @@
 *   **ρ_π** 是基于策略 π 的状态轨迹的边际分布，这是一个数学上为了方便而引入的概念。
 *   **ρ_π** 同样可以定义在状态-动作对上。
 
-![](img/5e8255c4c44a9aa2541fe1fea094aef9_21.png)
 
-![](img/5e8255c4c44a9aa2541fe1fea094aef9_22.png)
 
-![](img/5e8255c4c44a9aa2541fe1fea094aef9_23.png)
 
-![](img/5e8255c4c44a9aa2541fe1fea094aef9_24.png)
 
-![](img/5e8255c4c44a9aa2541fe1fea094aef9_25.png)
 
 我们接下来要进行的，是**最大熵强化学习**。
 
@@ -79,26 +55,17 @@
 
 在传统的强化学习中，目标是最大化期望累积奖励。在最大熵框架下，目标被修改为同时最大化期望累积奖励和策略的熵。
 
-![](img/5e8255c4c44a9aa2541fe1fea094aef9_27.png)
 
-![](img/5e8255c4c44a9aa2541fe1fea094aef9_28.png)
 
-![](img/5e8255c4c44a9aa2541fe1fea094aef9_29.png)
 
-![](img/5e8255c4c44a9aa2541fe1fea094aef9_30.png)
 
 **目标函数公式：**
 `J(π) = Σ E_{(s_t, a_t) ~ ρ_π} [r(s_t, a_t) + α H(π(·|s_t))]`
 
-![](img/5e8255c4c44a9aa2541fe1fea094aef9_31.png)
 
-![](img/5e8255c4c44a9aa2541fe1fea094aef9_32.png)
 
-![](img/5e8255c4c44a9aa2541fe1fea094aef9_33.png)
 
-![](img/5e8255c4c44a9aa2541fe1fea094aef9_34.png)
 
-![](img/5e8255c4c44a9aa2541fe1fea094aef9_35.png)
 
 其中 `H(π(·|s_t))` 是策略在状态 `s_t` 下的熵，`α` 是温度参数，用于控制熵项的重要性。
 
@@ -106,33 +73,21 @@
 
 ---
 
-![](img/5e8255c4c44a9aa2541fe1fea094aef9_37.png)
 
 ## 💡 软贝尔曼方程与引理
 
-![](img/5e8255c4c44a9aa2541fe1fea094aef9_38.png)
 
-![](img/5e8255c4c44a9aa2541fe1fea094aef9_39.png)
 
-![](img/5e8255c4c44a9aa2541fe1fea094aef9_40.png)
 
-![](img/5e8255c4c44a9aa2541fe1fea094aef9_41.png)
 
-![](img/5e8255c4c44a9aa2541fe1fea094aef9_42.png)
 
-![](img/5e8255c4c44a9aa2541fe1fea094aef9_43.png)
 
 基于新的目标函数，我们可以推导出对应的软贝尔曼备份算子 `T^π` 和软状态价值函数 `V`。
 
-![](img/5e8255c4c44a9aa2541fe1fea094aef9_44.png)
 
-![](img/5e8255c4c44a9aa2541fe1fea094aef9_45.png)
 
-![](img/5e8255c4c44a9aa2541fe1fea094aef9_46.png)
 
-![](img/5e8255c4c44a9aa2541fe1fea094aef9_47.png)
 
-![](img/5e8255c4c44a9aa2541fe1fea094aef9_48.png)
 
 **软贝尔曼备份算子定义：**
 `(T^π Q)(s_t, a_t) = r(s_t, a_t) + γ E_{s_{t+1} ~ P}[V(s_{t+1})]`
@@ -144,36 +99,24 @@
 
 为了构建算法，我们需要两个核心引理：
 
-![](img/5e8255c4c44a9aa2541fe1fea094aef9_50.png)
 
-![](img/5e8255c4c44a9aa2541fe1fea094aef9_51.png)
 
 1.  **软策略评估引理**：重复应用软贝尔曼备份算子 `T^π`，软 Q 值会收敛到该策略 π 的真实软 Q 值。
 2.  **软策略改进引理**：通过最小化新旧策略之间的 KL 散度，可以改进策略。具体来说，新策略 `π_new` 可以通过以下方式得到：
     `π_new = arg min_{π'} D_KL(π'(·|s_t) || exp(Q^{π_old}(s_t, ·)/α) / Z(s_t))`
     其中 `Z(s_t)` 是归一化配分函数。可以证明，这样得到的新策略的软价值函数不低于旧策略。
 
-![](img/5e8255c4c44a9aa2541fe1fea094aef9_52.png)
 
-![](img/5e8255c4c44a9aa2541fe1fea094aef9_53.png)
 
-![](img/5e8255c4c44a9aa2541fe1fea094aef9_54.png)
 
-![](img/5e8255c4c44a9aa2541fe1fea094aef9_55.png)
 
-![](img/5e8255c4c44a9aa2541fe1fea094aef9_56.png)
 
-![](img/5e8255c4c44a9aa2541fe1fea094aef9_57.png)
 
 ---
 
-![](img/5e8255c4c44a9aa2541fe1fea094aef9_58.png)
 
-![](img/5e8255c4c44a9aa2541fe1fea094aef9_59.png)
 
-![](img/5e8255c4c44a9aa2541fe1fea094aef9_60.png)
 
-![](img/5e8255c4c44a9aa2541fe1fea094aef9_61.png)
 
 ## 🧩 软策略迭代定理
 
@@ -183,33 +126,21 @@
 
 ---
 
-![](img/5e8255c4c44a9aa2541fe1fea094aef9_63.png)
 
-![](img/5e8255c4c44a9aa2541fe1fea094aef9_64.png)
 
 ## 🤖 Soft Actor-Critic (SAC) 算法
 
-![](img/5e8255c4c44a9aa2541fe1fea094aef9_65.png)
 
-![](img/5e8255c4c44a9aa2541fe1fea094aef9_66.png)
 
-![](img/5e8255c4c44a9aa2541fe1fea094aef9_67.png)
 
-![](img/5e8255c4c44a9aa2541fe1fea094aef9_68.png)
 
-![](img/5e8255c4c44a9aa2541fe1fea094aef9_69.png)
 
-![](img/5e8255c4c44a9aa2541fe1fea094aef9_70.png)
 
 在深度强化学习的实践中，我们使用神经网络来近似各种函数。SAC 算法主要维护三个神经网络：
 
-![](img/5e8255c4c44a9aa2541fe1fea094aef9_71.png)
 
-![](img/5e8255c4c44a9aa2541fe1fea094aef9_72.png)
 
-![](img/5e8255c4c44a9aa2541fe1fea094aef9_73.png)
 
-![](img/5e8255c4c44a9aa2541fe1fea094aef9_74.png)
 
 1.  **软状态价值网络 `V_ψ(s)`**：参数为 ψ，输入状态，输出标量价值。
 2.  **软 Q 价值网络 `Q_θ(s, a)`**：参数为 θ，输入状态和动作，输出标量 Q 值。

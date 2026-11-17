@@ -2,7 +2,6 @@
 
 ![](img/9e00794724af505194aeae246901fe32_0.png)
 
-![](img/9e00794724af505194aeae246901fe32_2.png)
 
 在本节课中，我们将系统地探索AWS SageMaker Studio Lab的功能。这是一个免费的云端机器学习开发环境，我们将了解其界面、核心功能、与Google Colab的异同，以及如何上传项目、使用GPU和自定义环境。
 
@@ -29,9 +28,7 @@
 
 ## 测试GPU加速能力 ⚡
 
-![](img/9e00794724af505194aeae246901fe32_4.png)
 
-![](img/9e00794724af505194aeae246901fe32_6.png)
 
 上传Notebook后，我们自然想测试环境的计算能力，特别是GPU。SageMaker Studio Lab为免费用户提供了有限的GPU使用时长。
 
@@ -68,13 +65,9 @@ Studio Lab还提供以下功能：
 *   **内存**：Colab Pro提供更大的RAM（如25GB），而Studio Lab免费版可能较少。
 *   **生态集成**：Studio Lab更易于与AWS生态系统（如SageMaker完整服务）未来进行衔接。
 
-![](img/9e00794724af505194aeae246901fe32_8.png)
 
-![](img/9e00794724af505194aeae246901fe32_10.png)
 
-![](img/9e00794724af505194aeae246901fe32_11.png)
 
-![](img/9e00794724af505194aeae246901fe32_13.png)
 
 从成本角度看，Studio Lab提供的免费GPU实例具有相当高的价值。
 

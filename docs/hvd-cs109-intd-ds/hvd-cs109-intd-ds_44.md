@@ -66,7 +66,6 @@ train_knn <- train(y ~ ., method = "knn", data = mnist_27$train)
 ggplot(train_knn, highlight = TRUE)
 ```
 
-![](img/569a9d2f9db0942b9ab94a96cc11fe6d.png)
 
 默认情况下，交叉验证是通过取 25 个包含 25%观测值的 bootstrap 样本来执行的。对于`kNN`方法，默认值是尝试$k=5,7,9$。我们可以使用`tuneGrid`参数来改变这个值。值网格必须由一个数据框提供，其中参数名称与`modelLookup`输出中指定的名称相匹配。
 
@@ -82,7 +81,6 @@ train_knn <- train(y ~ ., method = "knn",
 ggplot(train_knn, highlight = TRUE)
 ```
 
-![](img/6037f6ad81d1fe6b80ac5cbf370d4bc1.png)
 
 要访问最大化准确度的参数，可以使用以下方法：
 
@@ -123,7 +121,6 @@ train_knn_cv <- train(y ~ ., method = "knn",
 ggplot(train_knn_cv, highlight = TRUE)
 ```
 
-![](img/b4417133785c94316cdca9ab4b89584f.png)
 
 我们注意到准确度估计的变异性更大，这是预期的，因为我们改变了用于估计准确度的样本数量。
 
@@ -149,7 +146,6 @@ names(train_knn$results)
 #>   variable into a factor?
 ```
 
-![](img/12253402f898fb6b3e84f744bae52c07.png)
 
 然而，我们确实看到边界线有些曲折。这是因为 kNN，就像基本的二进制平滑器一样，不使用核。为了改进这一点，我们可以尝试使用 loess。通过阅读手册中可用的模型部分¹⁰⁰，我们看到我们可以使用`gamLoess`方法。在手册¹⁰¹中，我们还看到如果尚未安装，我们需要安装**gam**包：
 
@@ -182,7 +178,6 @@ train_loess <- train(y ~ .,
 ggplot(train_loess, highlight = TRUE)
 ```
 
-![](img/b7b54b8595c45cebd51ba3b2487370bd.png)
 
 我们可以看到这种方法与 kNN 的性能相似：
 

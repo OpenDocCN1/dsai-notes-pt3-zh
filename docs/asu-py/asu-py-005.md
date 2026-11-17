@@ -1,40 +1,31 @@
 # 5：Python 发展历史 🐍📜
 
-![](img/2a463ba69b26283d9e8f1aee476eb976_0.png)
 
 在本节课中，我们将学习 Python 是什么、它的主要用途以及其发展历史。通过了解这些背景知识，你能更好地理解 Python 的设计哲学和它在当今技术领域中的重要地位。
 
-![](img/2a463ba69b26283d9e8f1aee476eb976_2.png)
 
 ## 什么是 Python？
 
-![](img/2a463ba69b26283d9e8f1aee476eb976_4.png)
 
 Python 是一种脚本语言，代码由解释器执行，而非编译执行。
 
-![](img/2a463ba69b26283d9e8f1aee476eb976_5.png)
 
 虽然存在 Python 编译器，但我们主要使用解释器。
 
-![](img/2a463ba69b26283d9e8f1aee476eb976_7.png)
 
 ## Python 的主要优势
 
-![](img/2a463ba69b26283d9e8f1aee476eb976_9.png)
 
 Python 最大的优势之一是它是**开源**的。
 
-![](img/2a463ba69b26283d9e8f1aee476eb976_10.png)
 
 这意味着任何人都可以为它贡献代码，也能理解已为其创建的各种程序。
 
 然而，Python 并不总是支持向后兼容性。
 
-![](img/2a463ba69b26283d9e8f1aee476eb976_12.png)
 
 ## 为什么使用脚本？
 
-![](img/2a463ba69b26283d9e8f1aee476eb976_13.png)
 
 首先，什么是 Python 脚本？Python 脚本是存储在文件中的一系列命令，设计用于在命令行或 Python 交互式 shell 中运行。
 

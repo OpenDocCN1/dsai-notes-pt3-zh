@@ -1,6 +1,5 @@
 # 每个人的 Python 第一部分 22：22_06_01_使用函数 👨‍💻
 
-![](img/f6ee03f263cf3fb3ebdca65b3201d2a7_0.png)
 
 ![](img/f6ee03f263cf3fb3ebdca65b3201d2a7_0.png)
 

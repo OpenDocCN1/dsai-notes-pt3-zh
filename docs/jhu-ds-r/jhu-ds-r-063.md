@@ -1,14 +1,11 @@
 # 063：循环函数 tapply 🧮
 
-![](img/fa1e4c15ecf5493e064df1a218dc02d2_0.png)
 
-![](img/fa1e4c15ecf5493e064df1a218dc02d2_1.png)
 
 在本节课中，我们将要学习R语言中一个非常实用的函数——`tapply`。这个函数用于对向量的子集应用某个函数，是分组汇总数据的强大工具。
 
 ## 概述
 
-![](img/fa1e4c15ecf5493e064df1a218dc02d2_3.png)
 
 `tapply`函数的核心思想是：你有一个向量（通常是数值型向量），并且你想对这个向量中属于不同组的元素分别计算某个汇总统计量。为此，你需要另一个长度相同的向量或因子来标识原始向量中每个元素属于哪个组。
 
@@ -30,7 +27,6 @@ tapply(X, INDEX, FUN, ..., simplify = TRUE)
 
 为了更好地理解，让我们通过一个具体例子来演示`tapply`的用法。
 
-![](img/fa1e4c15ecf5493e064df1a218dc02d2_5.png)
 
 首先，我们创建一个包含三个分组的数值向量：
 ```r
@@ -65,9 +61,7 @@ tapply(x, f, mean, simplify = FALSE)
 
 `tapply`不仅可以计算简单的均值，还可以应用任何返回单个值或向量的函数。
 
-![](img/fa1e4c15ecf5493e064df1a218dc02d2_7.png)
 
-![](img/fa1e4c15ecf5493e064df1a218dc02d2_8.png)
 
 以下是应用`range`函数（返回最小值和最大值）的示例：
 ```r
@@ -78,9 +72,7 @@ tapply(x, f, range)
 
 ## 总结
 
-![](img/fa1e4c15ecf5493e064df1a218dc02d2_10.png)
 
-![](img/fa1e4c15ecf5493e064df1a218dc02d2_11.png)
 
 ![](img/fa1e4c15ecf5493e064df1a218dc02d2_12.png)
 

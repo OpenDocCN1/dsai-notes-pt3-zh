@@ -1,6 +1,5 @@
 # 大型语言模型实践：P136：引言
 
-![](img/4c96e02eff8974d8bfada678adc7381f_0.png)
 
 ![](img/4c96e02eff8974d8bfada678adc7381f_0.png)
 

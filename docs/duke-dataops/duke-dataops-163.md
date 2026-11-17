@@ -1,6 +1,5 @@
 #  163：使用模型中心
 
-![](img/2de090fff33f3138af77078f852e62a1_0.png)
 
 ![](img/2de090fff33f3138af77078f852e62a1_0.png)
 
@@ -24,12 +23,8 @@
 
 另一个重要功能是代码示例。页面提供了 **Transformers** 库的使用代码片段，您可以复制粘贴到自己的项目中进行推理。如果您想克隆模型仓库，请记住，Hugging Face 的模型通常需要 **Git LFS** 支持，请确保已启用。
 
-![](img/2de090fff33f3138af77078f852e62a1_2.png)
 
-![](img/2de090fff33f3138af77078f852e62a1_2.png)
-![](img/2de090fff33f3138af77078f852e62a1_3.png)
 
-![](img/2de090fff33f3138af77078f852e62a1_3.png)
 
 ## 探索数据集（Datasets）
 
@@ -54,7 +49,6 @@
 
 ## 总结
 
-![](img/2de090fff33f3138af77078f852e62a1_5.png)
 
 ![](img/2de090fff33f3138af77078f852e62a1_8.png)
 

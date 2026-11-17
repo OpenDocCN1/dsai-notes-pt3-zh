@@ -92,7 +92,6 @@ curl http://localhost:8081
 
 本节课中我们一起学习了如何利用现有的基础工具链构建快速数据解决方案。我们首先使用MySQL和SQL语句查询并导出了数据，然后仅用Python标准库中的 `http.server` 和 `csv` 模块，就创建了一个轻量级的Web数据服务。
 
-![](img/a2d901450cbea03b89d94e8db16a4b5a_3.png)
 
 ![](img/a2d901450cbea03b89d94e8db16a4b5a_4.png)
 

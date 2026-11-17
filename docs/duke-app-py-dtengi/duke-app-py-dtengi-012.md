@@ -1,6 +1,5 @@
 #  012：Snowflake三层架构解析
 
-![](img/090cebcb090e2952c6b66ba8ece7cf6d_0.png)
 
 在本节课中，我们将要学习Snowflake数据仓库的核心架构设计。Snowflake采用独特的三层分离架构，这种设计使其在性能、扩展性和成本管理方面具有显著优势。
 

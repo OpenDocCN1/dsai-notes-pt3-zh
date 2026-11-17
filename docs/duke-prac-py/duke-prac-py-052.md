@@ -45,7 +45,6 @@ print(largest_digit)
 | :--- | :--- | :--- | :--- | :--- |
 | | | | | |
 
-![](img/3324e4e6bb9ce5e0f6602433953c6dd6_2.png)
 
 ## 第三步：逐步执行与记录
 
@@ -63,9 +62,7 @@ print(largest_digit)
 4.  进入`if`代码块，执行 `largest_digit = digit`。`largest_digit` 从0更新为 **2**。
 5.  执行 `number = number // 10`。`29612 // 10` 的结果是 **2961**。
 
-![](img/3324e4e6bb9ce5e0f6602433953c6dd6_4.png)
 
-![](img/3324e4e6bb9ce5e0f6602433953c6dd6_6.png)
 
 将本次迭代的结果填入表格第一行：
 
@@ -80,7 +77,6 @@ print(largest_digit)
 4.  `if`代码块被跳过。
 5.  执行 `number = number // 10`。`2961 // 10` 的结果是 **296**。
 
-![](img/3324e4e6bb9ce5e0f6602433953c6dd6_8.png)
 
 将本次迭代的结果填入表格第二行：
 

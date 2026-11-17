@@ -47,9 +47,7 @@ R Markdown文档的核心是代码块。代码块是包含R代码的特殊区域
 
 在模板文档中，已经包含了一个绘制图表的代码块示例：`plot(cars)`。
 
-![](img/9b85d7b4ebf4da8f06fe3edd67c43358_5.png)
 
-![](img/9b85d7b4ebf4da8f06fe3edd67c43358_5.png)
 
 ## 保存与编译文档
 
@@ -66,11 +64,9 @@ R Markdown文档的核心是代码块。代码块是包含R代码的特殊区域
 
 保存后，你可以点击编辑窗口上方的“Knit”按钮来编译文档。默认情况下，它会将文档编译成HTML格式。
 
-![](img/9b85d7b4ebf4da8f06fe3edd67c43358_10.png)
 
 ![](img/9b85d7b4ebf4da8f06fe3edd67c43358_10.png)
 
-![](img/9b85d7b4ebf4da8f06fe3edd67c43358_11.png)
 
 编译过程完成后，RStudio会预览生成的HTML文档。
 

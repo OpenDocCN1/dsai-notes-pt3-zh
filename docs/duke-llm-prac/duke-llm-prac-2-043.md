@@ -1,6 +1,5 @@
 # 大型语言模型实践（高级数据工程、AWS、Databricks和本地LLM）：P43：43_03_05_Qdrant快速入门
 
-![](img/425b9e2f410cd545c3af77862913ba3a_0.png)
 
 ![](img/425b9e2f410cd545c3af77862913ba3a_0.png)
 

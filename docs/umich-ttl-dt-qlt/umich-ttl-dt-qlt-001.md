@@ -1,6 +1,5 @@
 # 01：欢迎来到专项课程与第一门课程 👋
 
-![](img/203bee44609ca99d35be2dfcee90734e_0.png)
 
 ![](img/203bee44609ca99d35be2dfcee90734e_0.png)
 
@@ -19,7 +18,6 @@
 
 ## 核心概念与目标
 
-![](img/203bee44609ca99d35be2dfcee90734e_2.png)
 
 是的，谢谢布雷迪。在本课程中，我们将介绍许多与理解特定数据集质量相关的关键概念。这些概念有助于系统地思考潜在的错误。
 
@@ -35,14 +33,11 @@
 
 再次感谢你的参与，祝你享受这第一门课程。😊
 
-![](img/203bee44609ca99d35be2dfcee90734e_4.png)
 
 ![](img/203bee44609ca99d35be2dfcee90734e_4.png)
 
-![](img/203bee44609ca99d35be2dfcee90734e_5.png)
 
 ![](img/203bee44609ca99d35be2dfcee90734e_5.png)
 
-![](img/203bee44609ca99d35be2dfcee90734e_6.png)
 
 ![](img/203bee44609ca99d35be2dfcee90734e_6.png)

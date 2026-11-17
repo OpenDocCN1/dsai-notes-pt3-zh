@@ -1,24 +1,17 @@
 # 10：Python常量定义方法 📘
 
-![](img/b09f23c97ce3bd37973d7fdc2b1dac77_0.png)
 
-![](img/b09f23c97ce3bd37973d7fdc2b1dac77_2.png)
 
 在本节课中，我们将学习Python中的常量。我们将了解常量的概念、如何在Python中定义常量，并通过一个演示来展示如何使用常量。
 
-![](img/b09f23c97ce3bd37973d7fdc2b1dac77_4.png)
 
-![](img/b09f23c97ce3bd37973d7fdc2b1dac77_5.png)
 
 ## 什么是常量？🔍
 
-![](img/b09f23c97ce3bd37973d7fdc2b1dac77_7.png)
 
 常量是在程序每次执行时都不会改变的数据值。
 
-![](img/b09f23c97ce3bd37973d7fdc2b1dac77_9.png)
 
-![](img/b09f23c97ce3bd37973d7fdc2b1dac77_10.png)
 
 常量是固定值，这些值在程序运行或创建时的任何时刻都不能被修改。
 

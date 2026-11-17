@@ -10,9 +10,7 @@
 
 ![](img/4da8c038286b13e70319e17bcefe5034_4.png)
 
-![](img/4da8c038286b13e70319e17bcefe5034_6.png)
 
-![](img/4da8c038286b13e70319e17bcefe5034_8.png)
 
 ![](img/4da8c038286b13e70319e17bcefe5034_10.png)
 
@@ -93,11 +91,9 @@ Athena是一个无服务器的交互式查询服务，允许我们使用标准SQ
 
 ---
 
-![](img/4da8c038286b13e70319e17bcefe5034_19.png)
 
 ## 第四步：使用Athena转换和存储数据
 
-![](img/4da8c038286b13e70319e17bcefe5034_21.png)
 
 上一节我们学会了基础查询。本节中，我们来看看如何使用Athena执行更复杂的操作，即筛选数据并将结果存储到新的位置。
 
@@ -123,9 +119,7 @@ WHERE CAST(SUBSTR(“date”, 1, 4) AS INTEGER) BETWEEN 1950 AND 2015;
 
 这个操作展示了如何利用Athena的处理能力进行数据转换，而无需编写复杂的提取脚本。
 
-![](img/4da8c038286b13e70319e17bcefe5034_23.png)
 
-![](img/4da8c038286b13e70319e17bcefe5034_25.png)
 
 ---
 

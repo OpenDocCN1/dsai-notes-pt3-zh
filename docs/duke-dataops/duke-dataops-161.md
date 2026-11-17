@@ -10,7 +10,6 @@ GitHub Codespaces是一个临时的云端开发环境，你可以直接在其中
 
 ![](img/c318994f907fb1c41d026ef3fdb62e84_2.png)
 
-![](img/c318994f907fb1c41d026ef3fdb62e84_3.png)
 
 ![](img/c318994f907fb1c41d026ef3fdb62e84_4.png)
 

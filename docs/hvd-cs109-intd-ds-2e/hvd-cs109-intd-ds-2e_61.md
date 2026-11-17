@@ -183,7 +183,6 @@ rmse(test_set$rating - 3)
 hist(with(dt, tapply(rating, userId, mean)), nclass = 30, main = "User averages")
 ```
 
-![](img/9594a219d6d9fbaa027d7fb32b8b540d.png)*  *直方图显示了显著的变化。这表明，评分之间的某些差异可以通过用户对评分的慷慨程度或严格程度来解释，而不管被评分的电影是什么。
 
 为了解决这个问题，我们将我们的模型扩展到包括用户特定的效应 $\alpha_i$：
 
@@ -437,7 +436,6 @@ mu <- fit$mu; a_reg <- fit$a; b_reg <- fit$b
 
 我们可以通过将它们相互绘制来比较惩罚估计和未惩罚估计：
 
-![](img/b4853b8ee10aa9e488133c659585be30.png)
 
 我们注意到评分较少的电影被大幅缩小：正则化版本比原始版本更接近于 0。评分较多的电影基本保持不变：点接近于身份线。
 

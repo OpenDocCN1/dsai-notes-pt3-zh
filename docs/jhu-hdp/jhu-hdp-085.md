@@ -18,9 +18,7 @@ HBase运行在商用硬件集群上。因为HBase构建在Hadoop之上，运行�
 
 HBase是水平可扩展的。当你向HBase插入记录时，它会自动进行分片。如果你有多个HBase Region Server实例，它会确保数据在多个Region Server之间进行分片。因此，分片是自动完成的，无需你进行特殊操作。
 
-![](img/41f2aea74f3389715dc64400d4288c99_2.png)
 
-![](img/41f2aea74f3389715dc64400d4288c99_4.png)
 
 HBase是强一致性的。这是ACID属性，但HBase的ACID属性只发生在行级别。你可以在事务性方式下更新一行内的所有列，但无法跨行进行此操作。如果你想跨行更新记录并保持强一致性，那么你可能需要使用ZooKeeper进行分布式事务。
 
@@ -28,7 +26,6 @@ HBase具有自动故障恢复功能，这意味着当一台机器崩溃时，另
 
 从编程角度看，访问HBase的接口有Java API，也有REST API。此外，还有HBase命令行Shell，我们稍后会讨论。
 
-![](img/41f2aea74f3389715dc64400d4288c99_6.png)
 
 HBase基于谷歌的Bigtable论文。以下是谷歌Bigtable论文的链接。就像HDFS基于GFS论文，MapReduce基于谷歌的MapReduce论文一样，HBase项目基于Bigtable论文。
 
@@ -44,7 +41,6 @@ HBase基于谷歌的Bigtable论文。以下是谷歌Bigtable论文的链接。�
 
 到2010年，他们实际上将版本号改为0.89，以与Hadoop的版本号区分开来。Hadoop的版本号从0.1、0.2、0.3等开始，在某个时间点，HBase开发人员认为这个数字太低了，他们希望快速向HBase 1.0迈进，但当时尚未实现。从2010年开始，到2014年，它即将进入1.0版本。无论如何，他们将版本号移到了0.89，这就是编号从Hadoop转向其自身编号方案的方式。
 
-![](img/41f2aea74f3389715dc64400d4288c99_8.png)
 
 然后在2011年，HBase 0.90和0.92版本发布，这是相当稳定的版本。2011年至2014年间发生了很多事情。现在我们有了HBase 0.99.x，它很快将成为1.00，最终他们将发布2.0版本。2.0版本将是与Hadoop 2更兼容的版本。1.0版本是一个包含适用于Hadoop 1和Hadoop 2的软件包的版本，而2.0版本将只适用于Hadoop 2，这是HBase目前的计划。
 
@@ -93,7 +89,6 @@ HBase使用称为ZooKeeper的东西。ZooKeeper是Apache的另一个项目，用
 
 现在让我们来看看HBase架构。
 
-![](img/41f2aea74f3389715dc64400d4288c99_10.png)
 
 在最底层，你有Hadoop分布式文件系统。HBase构建在HDFS之上。在HBase中，你有一个特殊的守护进程叫做HMaster守护进程。请注意，我实际上启动了两个HMaster守护进程。你实际上可以有两个、三个、四个、五个，任意多个HMaster守护进程，但一次只能有一个处于活动状态。
 
@@ -127,9 +122,7 @@ Region Server是服务于表的一个分片部分的守护进程。Region Server
 
 因为信息在HFile中是排序的，所以信息首先被写入WAL文件（即预写日志文件）以提高速度，然后不时地排序并放入HFile中。
 
-![](img/41f2aea74f3389715dc64400d4288c99_12.png)
 
-![](img/41f2aea74f3389715dc64400d4288c99_13.png)
 
 ZooKeeper跟踪NameNode的位置，也跟踪各个Region Server的位置。
 

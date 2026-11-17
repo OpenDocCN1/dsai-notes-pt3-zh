@@ -10,12 +10,10 @@
 
 **Level 2**和**Level 3**函数通常以一个稀疏矩阵作为主要操作对象。与之进行运算的始终是稠密对象。
 
-![](img/883443d8ae36f2b025ae67b6c4d521ca_1.png)
 
 *   在**Level 2**中，是稀疏矩阵与稠密向量之间的运算。
 *   在**Level 3**中，是稀疏矩阵与稠密矩阵之间的运算。
 
-![](img/883443d8ae36f2b025ae67b6c4d521ca_1.png)
 
 接下来，我们将介绍一些主要的**Level 2**运算。请注意，所有这些运算都需要**BSR存储格式**，这是一种紧凑且能快速表示稀疏矩阵的方式。
 
@@ -37,12 +35,9 @@
 *   `cusparseTbsrmm_bufferSize`：此函数用于定义稀疏矩阵BSR格式所需的缓冲区大小。
 *   `cusparseTbsrmm_analysis` 和 `cusparseTbsrmm_solve`：你可以使用这些函数确定当前所处的分析阶段以及求解过程的阶段。
 
-![](img/883443d8ae36f2b025ae67b6c4d521ca_3.png)
-![](img/883443d8ae36f2b025ae67b6c4d521ca_4.png)
 
 ---
 
-![](img/883443d8ae36f2b025ae67b6c4d521ca_3.png)
 
 ![](img/883443d8ae36f2b025ae67b6c4d521ca_4.png)
 

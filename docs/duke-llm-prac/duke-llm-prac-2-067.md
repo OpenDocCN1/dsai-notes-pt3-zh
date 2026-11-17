@@ -1,6 +1,5 @@
 # 大型语言模型实践（高级数据工程、AWS、Databricks和本地LLM）：P67：01_01_01：课程介绍
 
-![](img/2c30ee8942fdf9e12dcd0aa252ea5c30_0.png)
 
 ![](img/2c30ee8942fdf9e12dcd0aa252ea5c30_0.png)
 

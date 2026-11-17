@@ -2,7 +2,6 @@
 
 ![](img/c794b1de02dcdbbd0926c5d7f7c1fd6a_0.png)
 
-![](img/c794b1de02dcdbbd0926c5d7f7c1fd6a_1.png)
 
 在本节课中，我们将要学习成本效果分析。这是一种用于评估不同政策或干预措施效率的经济分析方法，尤其适用于公共部门的决策支持。
 
@@ -55,7 +54,6 @@
 
 ---
 
-![](img/c794b1de02dcdbbd0926c5d7f7c1fd6a_15.png)
 
 ![](img/c794b1de02dcdbbd0926c5d7f7c1fd6a_16.png)
 

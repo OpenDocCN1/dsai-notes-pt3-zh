@@ -1,6 +1,5 @@
 # 057：R语言作用域规则在优化中的应用示例（可选）🔧
 
-![](img/cc3e52714a90d74d0dc588f2e4d7ef6a_1.png)
 
 在本节课中，我们将学习如何利用R语言的作用域规则来构建更灵活、更简洁的优化函数。我们将通过一个具体的统计示例——拟合正态分布的最大似然估计——来演示这一概念。
 
@@ -18,7 +17,6 @@ R语言中有几个优化例程，如 `optim`、`nlm` 和 `optimize`。它们都
 
 ## 核心概念：构造函数与词法作用域
 
-![](img/cc3e52714a90d74d0dc588f2e4d7ef6a_3.png)
 
 R语言中解决任何优化问题的基本思路是：你可以创建一个**构造函数**来构建目标函数。这个目标函数会将其所依赖的所有数据和其他因素“打包”到其**定义环境**中。这样，每次调用该函数时，你就不需要重复指定这些数据，只需指定参数值即可。函数会自动从其封闭环境中查找这些“自由变量”。
 
@@ -65,7 +63,6 @@ nLL
 
 当你打印 `nLL` 函数时，会发现函数体与我们构造函数中定义的代码一致。但请注意函数底部有一个**环境标签**。这指向该函数的定义环境。当你在另一个函数内部定义一个函数时，R必须保留一个指向该定义环境的指针，以便记住所有自由变量的值。
 
-![](img/cc3e52714a90d74d0dc588f2e4d7ef6a_5.png)
 
 在 `nLL` 的函数体中，变量 `data` 既不是参数，也不是局部变量，它是一个**自由变量**。它的值来源于构造函数 `make.NegLogLik`，并被存储在该函数的定义环境中。
 
@@ -95,7 +92,6 @@ optim(c(mu = 0, sigma = 1), nLL)$par
 
 构造函数的一个强大之处在于可以轻松地固定某些参数。例如，我们可以将 `sigma` 固定为其真实值2，然后仅优化 `mu`。
 
-![](img/cc3e52714a90d74d0dc588f2e4d7ef6a_7.png)
 
 首先，我们需要重新构造目标函数，这次在调用构造函数时指定 `fixed` 参数。
 
@@ -118,7 +114,6 @@ nLL_fixed_mu <- make.NegLogLik(normals, fixed = c(1, FALSE))
 optimize(nLL_fixed_mu, c(1e-6, 10))$minimum
 ```
 
-![](img/cc3e52714a90d74d0dc588f2e4d7ef6a_9.png)
 
 优化得到的 `sigma` 估计值约为1.8。
 
@@ -128,11 +123,8 @@ optimize(nLL_fixed_mu, c(1e-6, 10))$minimum
 
 由于我们的目标函数已经“打包”了所有数据，并且参数设置灵活，因此绘制似然函数曲线变得非常简单。
 
-![](img/cc3e52714a90d74d0dc588f2e4d7ef6a_11.png)
 
-![](img/cc3e52714a90d74d0dc588f2e4d7ef6a_12.png)
 
-![](img/cc3e52714a90d74d0dc588f2e4d7ef6a_13.png)
 
 例如，要绘制固定 `mu=1` 时，负对数似然函数随 `sigma` 变化的曲线：
 
@@ -147,9 +139,7 @@ y <- sapply(x, nLL_plot_sigma)
 plot(x, y, type = "l", xlab = expression(sigma), ylab = "Negative Log Likelihood")
 ```
 
-![](img/cc3e52714a90d74d0dc588f2e4d7ef6a_15.png)
 
-![](img/cc3e52714a90d74d0dc588f2e4d7ef6a_16.png)
 
 同样，我们可以绘制固定 `sigma=2` 时，负对数似然函数随 `mu` 变化的曲线：
 
@@ -178,7 +168,6 @@ plot(x, y, type = "l", xlab = expression(mu), ylab = "Negative Log Likelihood")
 
 这种方法使得统计建模和优化的代码更加清晰、模块化且易于维护。关于R语言词法作用域在统计计算中应用的更深入讨论，可以参考Robert Gentleman和Ross Ihaka的论文《Lexical Scope and Statistical Computing》。
 
-![](img/cc3e52714a90d74d0dc588f2e4d7ef6a_18.png)
 
 ![](img/cc3e52714a90d74d0dc588f2e4d7ef6a_19.png)
 

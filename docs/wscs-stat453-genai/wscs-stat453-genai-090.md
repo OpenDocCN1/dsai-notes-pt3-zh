@@ -67,7 +67,6 @@ v_t = \beta_2 v_{t-1} + (1 - \beta_2) g_t^2
 \theta_{t+1} = \theta_t - \alpha \frac{\hat{m}_t}{\sqrt{\hat{v}_t} + \epsilon}
 \]
 
-![](img/8c643593ef9e0c66f00d3c66917fecb2_1.png)
 
 在PyTorch中，使用Adam优化器非常简单：
 
@@ -95,7 +94,6 @@ optimizer = optim.Adam(model.parameters(), lr=0.001)
 
 ## 总结 🎯
 
-![](img/8c643593ef9e0c66f00d3c66917fecb2_3.png)
 
 ![](img/8c643593ef9e0c66f00d3c66917fecb2_5.png)
 

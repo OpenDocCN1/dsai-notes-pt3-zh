@@ -1,26 +1,18 @@
 # 每个人的 Python 第五部分 6：06_02_02_实例演练-PageRank网络爬取 🕷️
 
-![](img/0ef2f5700554783c92f39aaa0c1fc9c5_1.png)
 
-![](img/0ef2f5700554783c92f39aaa0c1fc9c5_2.png)
 
-![](img/0ef2f5700554783c92f39aaa0c1fc9c5_4.png)
 
 在本节课中，我们将要学习如何使用Python编写一个网络爬虫，为后续的PageRank算法准备数据。我们将解析网页、提取链接，并将所有信息存储到SQLite数据库中。
 
-![](img/0ef2f5700554783c92f39aaa0c1fc9c5_6.png)
 
-![](img/0ef2f5700554783c92f39aaa0c1fc9c5_7.png)
 
-![](img/0ef2f5700554783c92f39aaa0c1fc9c5_8.png)
 
 ## 概述
 
-![](img/0ef2f5700554783c92f39aaa0c1fc9c5_10.png)
 
 我们将分析一个名为 `sp.py` 的爬虫程序。这个程序的核心任务是：从一个起始URL开始，下载网页，使用Beautiful Soup解析HTML，提取页面中的所有链接，并将这些链接信息存入数据库。这个过程会循环进行，逐步扩大抓取范围。
 
-![](img/0ef2f5700554783c92f39aaa0c1fc9c5_12.png)
 
 ## 代码结构与数据库设计
 
@@ -28,7 +20,6 @@
 
 以下是创建数据库表的SQL语句：
 
-![](img/0ef2f5700554783c92f39aaa0c1fc9c5_14.png)
 
 ```sql
 CREATE TABLE IF NOT EXISTS pages (
@@ -81,26 +72,21 @@ CREATE TABLE IF NOT EXISTS webs (url TEXT UNIQUE);
     *   将当前页面`new_rank`初始化为1.0。
     *   对于每一个提取出的、且符合要求的站内链接，将其URL插入 `pages` 表（如果不存在），并将其关系（从当前页面ID到目标页面ID）插入 `links` 表。
 
-![](img/0ef2f5700554783c92f39aaa0c1fc9c5_16.png)
 
 7.  **循环与容错**：整个过程被包裹在一个 `try...except` 块中，以处理网络请求超时、解析错误、用户中断（Ctrl+C）等异常情况。遇到错误时，会在对应页面的 `error` 字段做标记，避免重复尝试。
 
 ## 运行演示与交互
 
-![](img/0ef2f5700554783c92f39aaa0c1fc9c5_18.png)
 
-![](img/0ef2f5700554783c92f39aaa0c1fc9c5_20.png)
 
 现在，让我们在命令行中运行这个爬虫程序，观察其工作过程。
 
-![](img/0ef2f5700554783c92f39aaa0c1fc9c5_21.png)
 
 输入以下命令启动爬虫：
 ```bash
 python3 sp.py
 ```
 
-![](img/0ef2f5700554783c92f39aaa0c1fc9c5_23.png)
 
 程序首先会提示输入一个起始URL。例如，我们输入 `http://www.dr-chuck.com/`。
 

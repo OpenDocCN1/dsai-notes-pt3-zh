@@ -2,7 +2,6 @@
 
 ![](img/780ff3ddefb6e31d47fb984f4e7953df_0.png)
 
-![](img/780ff3ddefb6e31d47fb984f4e7953df_2.png)
 
 在本节课中，我们将学习Hadoop的架构。我们将探讨经典的Hadoop架构（称为MRv1）和Hadoop YARN架构（称为MRv2）。我们还将了解Hadoop的内部模块以及构成Hadoop架构的主要组件。
 
@@ -124,7 +123,6 @@ YARN是一个可插拔的分布式计算架构。
 
 在MapReduce v1中，JobTracker是管理实际作业的组件。现在，这项工作被拆分到ResourceManager和ApplicationMaster之间。因此，ResourceManager要求NodeManager启动一个作业，作业就在那里运行。ApplicationMaster是特定作业的新管理器，它与NodeManager和ResourceManager紧密合作，协商容器（即你的任务），这些容器将运行你的Map和Reduce任务。
 
-![](img/780ff3ddefb6e31d47fb984f4e7953df_6.png)
 
 这就是YARN架构的工作原理。
 
@@ -142,7 +140,6 @@ Hadoop 3的工作始于2011年，但直到2017年底才首次发布。在此期�
 
 Hadoop 3的主要动机之一是提高平台的可扩展性和可靠性。默认的复制因子（用于容错）导致200%的存储开销。换句话说，如果你存储一个1 GB的文件，它最终会存储为3 GB。必须存储每个文件的3个副本极大地限制了HDFS的可扩展性。
 
-![](img/780ff3ddefb6e31d47fb984f4e7953df_8.png)
 
 另一个可靠性和可扩展性问题是仅支持两个NameNode（一个活动，一个备用）的限制。对于非常大的集群，可能需要不止一个备用NameNode。因此，在Hadoop 3中，他们为此提供了支持。
 
@@ -156,7 +153,6 @@ Hadoop 2的YARN也有一些严重的限制。只有两种资源类型可用于�
 
 ### Hadoop 3 重要特性
 
-![](img/780ff3ddefb6e31d47fb984f4e7953df_10.png)
 
 以下是Hadoop 3发布说明中描述的16个功能中的几个值得注意的特性。
 
@@ -186,7 +182,6 @@ Hadoop DataNode通常有多个驱动器用于本地存储冗余和并行性。Ha
 
 另一个特性是，在Hadoop 2中，必须为集群上运行的每个守护进程和其他任务预先确定Java堆大小。在Hadoop 3中，Java堆大小的确定是自动的，无需手动配置，这实际上使安装过程变得更容易一些。
 
-![](img/780ff3ddefb6e31d47fb984f4e7953df_12.png)
 
 ## Hadoop 3 发行版
 

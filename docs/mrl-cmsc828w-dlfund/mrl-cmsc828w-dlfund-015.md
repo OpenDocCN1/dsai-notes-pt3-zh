@@ -1,8 +1,6 @@
 # 015：极小极大优化
 
-![](img/cf4ac85e656ab8e750a82a47b9d1abe7_0.png)
 
-![](img/cf4ac85e656ab8e750a82a47b9d1abe7_0.png)
 
 在本节课中，我们将要学习非凸凹的极小极大优化问题。首先，让我们快速回顾一下上一讲的内容。
 
@@ -54,7 +52,6 @@ H = [ -H_xx,  -H_xy ]
 
 其中，`H_xx = ∇²_xx F`，`H_yy = ∇²_yy F`，`H_xy = ∇²_xy F`，`H_yx = ∇²_yx F`。
 
-![](img/cf4ac85e656ab8e750a82a47b9d1abe7_2.png)
 
 ![](img/cf4ac85e656ab8e750a82a47b9d1abe7_2.png)
 

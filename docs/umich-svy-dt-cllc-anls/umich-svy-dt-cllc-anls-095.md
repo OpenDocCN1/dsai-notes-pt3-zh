@@ -28,7 +28,6 @@ n = (S²) / [ (MOE / Z)² + (S² / N) ]
 
 ![](img/b5e3a5a5ffdfc2234d9fe1ed843b11c3_10.png)
 
-![](img/b5e3a5a5ffdfc2234d9fe1ed843b11c3_11.png)
 
 其中：
 *   **S²** 是总体方差的估计值。对于比例问题，`S² = p(1-p)`。

@@ -128,6 +128,5 @@ def test_string_to_bool_is_false(value):
 
 ---
 
-![](img/36f96c93716f9d4374fd8ce17213b46e_3.png)
 
 ![](img/36f96c93716f9d4374fd8ce17213b46e_3.png)

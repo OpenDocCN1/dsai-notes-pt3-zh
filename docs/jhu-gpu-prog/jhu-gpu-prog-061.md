@@ -6,9 +6,7 @@
 
 我是Chancellor Pascal。我在约翰霍普金斯大学怀廷工程学院担任了10年的讲师，同时也是一名拥有15年经验的软件开发人员。高性能计算、云计算、Web开发以及计算机视觉的应用都是我的兴趣所在。现在，我想为你概述一下Coursera平台上的GPU专项课程。
 
-![](img/bac0ac5d9819c3f579edbf75bb52c94d_1.png)
 
-![](img/bac0ac5d9819c3f579edbf75bb52c94d_1.png)
 
 ## 课程体系结构
 
@@ -45,7 +43,6 @@
 
 ![](img/bac0ac5d9819c3f579edbf75bb52c94d_4.png)
 
-![](img/bac0ac5d9819c3f579edbf75bb52c94d_5.png)
 
 ![](img/bac0ac5d9819c3f579edbf75bb52c94d_3.png)
 ![](img/bac0ac5d9819c3f579edbf75bb52c94d_4.png)

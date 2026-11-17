@@ -1,6 +1,5 @@
 #  124：数据库导入的挑战 🧩
 
-![](img/192f9074fd058263bd4fb56e3efdc2b3_0.png)
 
 ![](img/192f9074fd058263bd4fb56e3efdc2b3_1.png)
 

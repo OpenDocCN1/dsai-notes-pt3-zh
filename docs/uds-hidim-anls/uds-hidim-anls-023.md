@@ -1,8 +1,6 @@
 # 023：累积量的性质及其应用
 
-![](img/c0a3616de2fa8dd4270d1beeebeb9a1f_0.png)
 
-![](img/c0a3616de2fa8dd4270d1beeebeb9a1f_2.png)
 
 ![](img/c0a3616de2fa8dd4270d1beeebeb9a1f_4.png)
 

@@ -44,7 +44,6 @@
 
 ---
 
-![](img/712d0faeac7e23e20f73232cf0385c55_9.png)
 
 ![](img/712d0faeac7e23e20f73232cf0385c55_10.png)
 

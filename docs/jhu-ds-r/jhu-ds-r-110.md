@@ -6,7 +6,6 @@
 
 ## 概述：R 语言的绘图系统
 
-![](img/b0d7bb3356fe8eb1c72b05c5d8d80578_1.png)
 
 上一节我们介绍了 R 语言有三种不同的绘图系统：基础绘图系统、Lattice 系统和 ggplot2 系统。本节中，我们将重点探讨基础绘图系统。
 
@@ -16,7 +15,6 @@ Lattice 系统被封装在 `lattice` 包中，它使用了另一个名为 `grid`
 
 ---
 
-![](img/b0d7bb3356fe8eb1c72b05c5d8d80578_3.png)
 
 ## 绘图前的考量
 
@@ -47,13 +45,11 @@ Lattice 系统被封装在 `lattice` 包中，它使用了另一个名为 `grid`
 
 ## 基础图形示例
 
-![](img/b0d7bb3356fe8eb1c72b05c5d8d80578_5.png)
 
 以下是使用基础绘图系统创建的几个基本图形示例。
 
 ### 直方图
 
-![](img/b0d7bb3356fe8eb1c72b05c5d8d80578_7.png)
 
 使用 `hist` 函数可以创建直方图，这是一种一维图形。这里我们加载 `datasets` 包中的 `airquality` 数据集，并绘制臭氧（Ozone）的直方图。我们没有设置 `hist` 的所有参数，而是使用了默认值。
 
@@ -64,11 +60,8 @@ hist(airquality$Ozone)
 
 如果 R 中尚未打开图形设备，上述代码会打开一个图形设备窗口并显示直方图。
 
-![](img/b0d7bb3356fe8eb1c72b05c5d8d80578_9.png)
 
-![](img/b0d7bb3356fe8eb1c72b05c5d8d80578_10.png)
 
-![](img/b0d7bb3356fe8eb1c72b05c5d8d80578_11.png)
 
 ### 散点图
 
@@ -90,13 +83,10 @@ boxplot(Ozone ~ Month, data = airquality, xlab = "Month", ylab = "Ozone (ppb)")
 
 ---
 
-![](img/b0d7bb3356fe8eb1c72b05c5d8d80578_13.png)
 
 ## 关键的基础图形参数
 
-![](img/b0d7bb3356fe8eb1c72b05c5d8d80578_14.png)
 
-![](img/b0d7bb3356fe8eb1c72b05c5d8d80578_16.png)
 
 有几个关键的基础图形参数非常常用，值得牢记。
 
@@ -118,11 +108,9 @@ boxplot(Ozone ~ Month, data = airquality, xlab = "Month", ylab = "Ozone (ppb)")
 *   **`oma`**：外边界大小。当一页有多个图形并需要整体标题时有用。
 *   **`mfrow`**：控制多图布局的行数和列数（例如，`mfrow = c(2, 2)` 表示 2 行 2 列共 4 个图形）。
 
-![](img/b0d7bb3356fe8eb1c72b05c5d8d80578_18.png)
 
 可以通过调用 `par` 函数并传入参数名来查看其默认值。
 
-![](img/b0d7bb3356fe8eb1c72b05c5d8d80578_20.png)
 
 ```r
 par("lty") # 查看默认线型

@@ -1,6 +1,5 @@
 # 大型语言模型实践：P78：SageMaker Studio Code Editor入门 🚀
 
-![](img/d1ab29da20a44aa0bb98c3008367b215_0.png)
 
 在本节课中，我们将学习如何开始使用AWS SageMaker Studio的Code Editor功能。这是一个基于浏览器的、功能完整的集成开发环境，特别适合进行机器学习和大型语言模型的开发工作。
 
@@ -73,6 +72,5 @@ nvidia-smi -l
 
 本节课中，我们一起学习了SageMaker Studio Code Editor的入门知识。我们了解到，它提供了一个集成的开发环境，并配备了完整的MLOps流水线。由于环境中已预装Rust，我们可以立即开始在SageMaker Studio Code Editor内为大型语言模型开发Rust代码。
 
-![](img/d1ab29da20a44aa0bb98c3008367b215_2.png)
 
 ![](img/d1ab29da20a44aa0bb98c3008367b215_2.png)

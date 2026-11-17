@@ -49,21 +49,17 @@
 **关于成绩排名**
 请尽快将你的私人昵称发给我。我将公布按成绩排序的名单（仅显示昵称），以便你了解自己在班级中的相对位置。希望这能激发一些良性竞争，但请专注于自身的学习和进步。
 
-![](img/e4c31cea8cf15cbef625da259a34204f_1.png)
 
 ## 先修要求与教材
 
-![](img/e4c31cea8cf15cbef625da259a34204f_3.png)
 
 **先修知识**
 你需要具备使用编程语言（特别是Python）的能力、以及微积分、线性代数、优化理论、概率论与统计学的基础知识。我可能会安排一次复习讲座，但这不足以弥补相关知识的完全缺失。如果你对这些主题不熟悉，请提前复习。
 
-![](img/e4c31cea8cf15cbef625da259a34204f_5.png)
 
 **参考教材**
 我不会只依赖一本教材，而是会综合多种资源，并在幻灯片中提供链接。课程理论部分主要参考《Understanding Machine Learning》一书。此外，还会参考Christopher Bishop的《Pattern Recognition and Machine Learning》、Goodfellow等人的《Deep Learning》、David MacKay的《Information Theory, Inference, and Learning Algorithms》（可免费获取PDF），以及《Data Science for Business》。最后一本对于想了解机器学习在工业界实际应用的同学非常有帮助。
 
-![](img/e4c31cea8cf15cbef625da259a34204f_7.png)
 
 ---
 

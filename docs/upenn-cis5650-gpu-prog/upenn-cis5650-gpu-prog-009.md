@@ -123,7 +123,6 @@ Color pathTrace(Ray initialRay) {
 
 最直接的想法是为每个像素启动一个线程（一个内核），每个线程独立完成完整的路径追踪循环（迭代方法）。伪代码如下：
 
-![](img/7e218226f4567b321e7daea6bea6976b_2.png)
 
 ```cpp
 __global__ void pathTraceKernel(Color* image, ...) {
@@ -158,7 +157,6 @@ __global__ void pathTraceKernel(Color* image, ...) {
 
 ### 按材质排序
 
-![](img/7e218226f4567b321e7daea6bea6976b_4.png)
 
 即使进行了流压缩，相邻线程处理的材质仍可能不同（例如一个处理漫反射，一个处理镜面反射），导致着色内核内部仍然存在分歧。
 
@@ -233,7 +231,6 @@ __global__ void pathTraceKernel(Color* image, ...) {
 
 上一节我们明确了项目的核心要求，本节中我们将浏览一些可以大幅提升作品质量的额外功能，并从中获取灵感。
 
-![](img/7e218226f4567b321e7daea6bea6976b_6.png)
 
 ![](img/7e218226f4567b321e7daea6bea6976b_8.png)
 

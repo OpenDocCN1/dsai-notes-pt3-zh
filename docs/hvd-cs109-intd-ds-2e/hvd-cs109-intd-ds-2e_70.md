@@ -165,7 +165,6 @@ train_knn <- train(y ~ ., method = "knn", data = mnist_27$train)
 ggplot(train_knn, highlight = TRUE)
 ```
 
-![](img/dbcbb2b3b48881e8c09dc33c6a04459d.png)*  *默认情况下，重采样是通过取 25 个自助样本来进行的，每个样本包含 25%的观测值。
 
 对于`knn`方法，默认值是尝试$k=5,7,9$。我们可以使用`tuneGrid`参数来更改这一点。值网格必须由一个数据框提供，其中参数名称与`modelLookup`输出中指定的名称相匹配。
 
@@ -178,7 +177,6 @@ train_knn <- train(y ~ ., method = "knn",
 ggplot(train_knn, highlight = TRUE)
 ```
 
-![](img/7f714224b7cbe9315e50b5fb6ceaf5ee.png)*  **重采样方法涉及随机采样步骤，因此相同代码的重复运行可能会产生不同的结果。为了确保你的结果可以被精确复制，请在分析开始时始终设置随机种子，就像我们在本章开头所做的那样。*  *要访问最大化准确率的参数，可以使用以下方法：
 
 ```r
 train_knn$bestTune

@@ -1,6 +1,5 @@
 #  052：量化不确定性
 
-![](img/217ed43701cd00baa1f4026c5f3af277_0.png)
 
 ![](img/217ed43701cd00baa1f4026c5f3af277_1.png)
 

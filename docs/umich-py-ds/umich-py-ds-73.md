@@ -76,7 +76,6 @@ print("测试集准确率: {:.2f}".format(clf.score(X_test, y_test)))
 ```
 运行上述代码，你可能会发现训练集准确率是1.0（完美），而测试集准确率稍低。这表明模型可能**过拟合**了训练数据。
 
-![](img/1fda5ed7095b54e23c6e6eaf9741e5a9_2.png)
 
 ---
 
@@ -147,7 +146,6 @@ plt.show()
 
 ---
 
-![](img/1fda5ed7095b54e23c6e6eaf9741e5a9_4.png)
 
 ## 应用于乳腺癌数据集
 
@@ -155,7 +153,6 @@ plt.show()
 
 以下是应用于乳腺癌数据集的示例代码框架：
 
-![](img/1fda5ed7095b54e23c6e6eaf9741e5a9_6.png)
 
 ```python
 from sklearn.datasets import load_breast_cancer
@@ -177,7 +174,6 @@ print("测试集准确率: {:.2f}".format(clf_cancer.score(X_test, y_test)))
 
 ## 决策树的优缺点
 
-![](img/1fda5ed7095b54e23c6e6eaf9741e5a9_8.png)
 
 ### 优点 ✅
 *   **易于理解和解释**：规则清晰，可视化直观，适合向非专业人士解释。

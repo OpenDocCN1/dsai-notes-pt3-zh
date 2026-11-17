@@ -172,7 +172,6 @@ public class ProjectorMatrixSetter : MonoBehaviour
 
 以下是使用投影纹理时的一些关键点和潜在问题：
 
-![](img/ecbaa56c095ae93a36491a5ebd3ddd8f_7.png)
 
 *   **性能考虑**：示例中使用 `Shader.SetGlobalMatrix` 通过字符串名称查找着色器属性，这在性能上开销较大。对于生产环境，应使用属性ID（`Shader.PropertyToID`）进行缓存和设置。
 *   **多光源支持**：示例代码是全局设置，只适用于单个投影光源。支持多个投影灯需要更复杂的架构，例如使用每个物体的材质属性块（MaterialPropertyBlock）。

@@ -33,9 +33,7 @@
 
 ![](img/2a3dc38675023beee19ea2b59e14b241_4.png)
 
-![](img/2a3dc38675023beee19ea2b59e14b241_5.png)
 
-![](img/2a3dc38675023beee19ea2b59e14b241_6.png)
 
 ![](img/2a3dc38675023beee19ea2b59e14b241_7.png)
 

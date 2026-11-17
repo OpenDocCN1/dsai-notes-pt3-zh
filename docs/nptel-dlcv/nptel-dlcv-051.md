@@ -1,6 +1,5 @@
 # 051：用于其他图像任务的CNN
 
-![](img/5ebe077a19f0ceb6c5b6c90534e8693a_0.png)
 
 ![](img/5ebe077a19f0ceb6c5b6c90534e8693a_0.png)
 
@@ -95,7 +94,6 @@
 
 这些应用展示了CNN在解决超越简单分类的复杂视觉问题上的强大能力和灵活性。
 
-![](img/5ebe077a19f0ceb6c5b6c90534e8693a_2.png)
 
 ![](img/5ebe077a19f0ceb6c5b6c90534e8693a_2.png)
 

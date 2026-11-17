@@ -28,7 +28,6 @@
 
 如果我们再运行一次，很可能还会得到另一个例子。它可能仍会包含一些相似的特征，比如仍然会说“嘿，我没有能力做那件事”，它会输出一些它标准的解释文本。
 
-![](img/77a52de8e235f6e63ff3e79e4e59cb3e_1.png)
 
 但接着它说：“hey， if you‘re interested in how you could try observing the area or to capture images of the area. you can then count the number of vers you see. Additionally. you could consider setting up bird feeders or bird baths.”（嘿，如果你有兴趣知道如何尝试观察该区域或捕捉该区域的图像，你可以数一数你看到的鸟的数量。此外，你可以考虑设置喂鸟器或鸟浴盆。）
 

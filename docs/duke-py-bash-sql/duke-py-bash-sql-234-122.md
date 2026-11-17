@@ -1,8 +1,6 @@
 #  122：使用VSCode执行MySQL查询 🛠️
 
-![](img/f0211dbb7bd50bc8e65505739e8f6c89_0.png)
 
-![](img/f0211dbb7bd50bc8e65505739e8f6c89_1.png)
 
 在本节课中，我们将学习如何使用VSCode连接并操作MySQL数据库。我们将涵盖创建数据库、执行SQL脚本、填充数据以及运行查询等核心操作。
 
@@ -82,7 +80,6 @@ SELECT * FROM ratings LIMIT(10);
 
 执行此错误查询后，输出面板会显示具体的错误信息，帮助你快速定位和修正问题。
 
-![](img/f0211dbb7bd50bc8e65505739e8f6c89_3.png)
 
 ---
 

@@ -1,6 +1,5 @@
 # 大型语言模型实践（高级数据工程、AWS、Databricks和本地LLM）：P97：31_03_04_Python调用列表模型
 
-![](img/10bb4bcca1d23401f784aba40b0e6391_0.png)
 
 ![](img/10bb4bcca1d23401f784aba40b0e6391_0.png)
 

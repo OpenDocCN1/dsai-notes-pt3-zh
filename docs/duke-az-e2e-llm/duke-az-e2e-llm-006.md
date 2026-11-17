@@ -1,6 +1,5 @@
 # 6：使用密钥和终结点 🔑
 
-![](img/2eecccf8a4dc50062e4d7dec88cd2f0e_0.png)
 
 在本节课中，我们将学习如何在Azure OpenAI服务中使用密钥和终结点。我们将了解如何查找和管理这些关键信息，以及如何根据不同的使用场景（例如使用Python库或直接调用API）来正确配置它们。
 
@@ -32,9 +31,7 @@
 
 我想向你展示的是，在聊天会话中，点击“查看代码”。
 
-![](img/2eecccf8a4dc50062e4d7dec88cd2f0e_2.png)
 
-![](img/2eecccf8a4dc50062e4d7dec88cd2f0e_2.png)
 
 当你想要使用像Python这样的语言时，你将能够使用 `openai` 库（非Azure专用版）。你会得到需要定义的变量。这个代码示例需要一个特定的版本，这没问题。
 
@@ -56,7 +53,6 @@ https://demoalfredo.openai.azure.com
 
 如果我们切换到“Curl”和“命令行”视图，你会看到它实际上使用了完整的、特定的API终结点。
 
-![](img/2eecccf8a4dc50062e4d7dec88cd2f0e_4.png)
 
 这就是使用HTTPS的实际终结点。对于Python的OpenAI库，它会为你构建这个URL。你可以在这里看到 `/openai/deployments/demo-alfredo/...` 这样的路径。
 
